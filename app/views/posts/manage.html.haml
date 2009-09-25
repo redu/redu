@@ -1,0 +1,42 @@
+.yui-b.sidebar
+  -box do 
+    %h3=:links.l
+    %ul.checks
+      %li=link_to :view_my_blog.l, user_posts_path(current_user)
+      %li=link_to :new_post.l, new_user_post_path(current_user)    
+
+#yui-main
+  .yui-b
+    -box do 
+      %h3 
+        =:manage_posts.l
+      %p=:posts_saved_with_draft_status_wont_appear_in_your_blog_until_you_publish_them.l
+      
+
+      -if @posts.page_count > 1
+        .pagination= paginating_links @posts, :link_to_current_page => true
+
+      %table{:border => 0, :width => '100%'}
+        %thead
+          %tr
+            %th=:date_created.l
+            %th=:date_published.l            
+            %th=:title.l
+            %th=:category.l
+            %th=:tags.l
+            %th=:comments.l
+            %th=:status.l
+        %tbody
+          - @posts.each do |post|
+            %tr            
+              %td
+                %abbr{:title=>"#{post.created_at}"}= post.created_at.strftime("%Y/%m/%d")
+              %td
+                %abbr{:title=>"#{post.published_at}"}= post.published_at_display
+              %td
+                = link_to post.title, edit_user_post_path(post.user, post)
+                = link_to("(#{:preview.l})", user_post_path(post.user, post), :target => '_blank') unless post.is_live?
+              %td= post.category ? post.category.name : :uncategorized.l
+              %td= post.tags.any? ? post.tag_list : :no_tags.l
+              %td= post.comments.count
+              %td= post.is_live? ? link_to(:published.l, user_post_path(post.user, post)) : :draft.l

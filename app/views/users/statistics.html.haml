@@ -1,0 +1,28 @@
+-box do
+  - form_tag( statistics_user_path(@user), :class => "MainForm") do
+    %label= :month.l+":"
+    = select_month(@month)
+    = select_year(@month, :start_year => 1.years.ago.year, :end_year => 1.years.from_now.year)
+    %p= submit_tag :go.l
+
+    - if current_user.admin?
+      %p= link_to "&laquo; "+:back_to_all_statistics.l, statistics_path
+      %p
+        =:estimated_total_for_this_month.l+":"
+        %strong= "$#{@estimated_payment}"
+
+    %table{"width"=>"100%"}
+      - @posts.group_by(&:category).each do |category, posts|
+        %thead
+          %tr
+            %th
+              = "#{category.name}:"
+              = "#{posts.size} "+:posts.l
+            %th=:comments.l
+            %th{"width"=>"7%"} Views
+        %tbody
+          - posts.each do |post|
+            %tr
+              %td= post.title
+              %td= post.comments.count
+              %td= post.view_count

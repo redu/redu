@@ -1,0 +1,10 @@
+=render :partial => 'messages/sidebar_nav'
+
+#yui-main
+  .yui-b
+    -box do 
+      %h3= :compose_message.l
+      
+      = error_messages_for :message
+      
+      =render :partial => 'form', :locals => {:message => @message, :user => @user}

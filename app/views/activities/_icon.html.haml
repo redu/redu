@@ -1,0 +1,14 @@
+- if activity.item
+  - case activity.item_type
+    - when 'Post', 'SbPost', 'Topic'
+      = image_tag 'icons/post.png'
+    - when 'Favorite'
+      = image_tag 'icons/heart.png'
+    - when 'Photo'
+      = image_tag 'icons/picture.png'
+    - when 'Comment'
+      = image_tag 'icons/comment.png'
+    - when 'Clipping'
+      = image_tag 'icons/clipping.png'
+- else
+  =image_tag 'icons/activity_default.png'
