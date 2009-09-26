@@ -43,6 +43,7 @@ ActionController::Routing::Routes.draw do |map|
   
 
  map.resources :schools  
+ #map.resources :schools, :member => { :associate_to => :get } 
  #map.resources :associate_to_school, :controller => 'schools', :action => 'associate_to_school'
  #map.associate_to_school 'associate', :controller => 'schools', :action => 'associate_to_school'
 

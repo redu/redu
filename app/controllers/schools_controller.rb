@@ -1,6 +1,30 @@
 class SchoolsController < BaseController
   #before_filter :login_required,  :except => [:index, :new, :create]
   
+
+  def associate
+      @school = School.find(params[:id])
+      
+      if !@school.students.include? current_user
+       # @school.students << current_user
+       @user_school_association = UserSchoolAssociation.new
+       @user_school_association.user = current_user
+       @user_school_association.school = @school
+       
+     end
+     
+     respond_to do |format|
+        if @user_school_association.save!
+          flash[:notice] = 'Usuário associado à escola!' #:the_friendship_was_accepted.l
+        else
+         flash[:notice] = 'Associação à escola falhou'
+       end
+        format.html { render :action => "show" }
+      end
+      
+    end
+
+
    # GET /schools
   # GET /schools.xml
   def index
