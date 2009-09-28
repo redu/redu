@@ -85,8 +85,8 @@ pt-BR:
   admin: Admin
   #en: admin_controls: Admin Controls
   admin_controls: Admin Controls
-  #en: admin_dashboard: Admin dashboard
-  admin_dashboard: Admin dashboard
+  #en: admin_dashboard: Admin dashboard # AQUI
+  admin_dashboard: Painel de Admin    
   #en: administer_events: Administer events
   administer_events: Administer events
   #en: ads: Ads

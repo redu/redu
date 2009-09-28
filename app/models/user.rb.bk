@@ -1,6 +1,8 @@
 require 'digest/sha1'
 
 class User < ActiveRecord::Base
+  has_many :albums
+  
   MALE    = 'M'
   FEMALE  = 'F'
   attr_accessor :password
@@ -14,11 +16,11 @@ class User < ActiveRecord::Base
   #callbacks  
   before_save   :encrypt_password, :whitelist_attributes
   before_create :make_activation_code
-  before_create :activate_before_save
   after_create  :update_last_login
-  #after_save    :activate # <- ja começa ativo
-  #after_create {|user| UserNotifier.deliver_signup_notification(user) }
-  #after_save   {|user| UserNotifier.deliver_activation(user) if user.recently_activated? }  
+  after_create  :deliver_signup_notification
+ 
+  after_save    :activate
+  #after_save    :deliver_activation
   before_save   :generate_login_slug
   after_save    :recount_metro_area_users
   after_destroy :recount_metro_area_users
@@ -41,12 +43,16 @@ class User < ActiveRecord::Base
   validates_date :birthday, :before => 13.years.ago.to_date  
 
   #associations
- has_many :user_school_associations
+  #school
+ 
+  has_many :user_school_associations
   has_many :schools, :through => :user_school_association
   
+  #access_keys
+  has_many :access_keys
+
   
-  
-  
+  #
     has_enumerated :role  
     has_many :posts, :order => "published_at desc", :dependent => :destroy
     has_many :photos, :order => "created_at desc", :dependent => :destroy
@@ -358,7 +364,15 @@ class User < ActiveRecord::Base
   
   # before filter
   def generate_login_slug
-    self.login_slug = self.login.gsub(/[^a-z1-9]+/i, '-')
+    self.login_slug = self.login.gsub(/[^a-z0-9]+/i, '-')
+  end
+  
+  def deliver_activation
+    UserNotifier.deliver_activation(self) if self.recently_activated?
+  end
+  
+  def deliver_signup_notification
+    UserNotifier.deliver_signup_notification(self)    
   end
 
   def update_last_login
@@ -446,7 +460,6 @@ class User < ActiveRecord::Base
   end
   
   # school roles
-
   def get_association_with(school)
     association = UserSchoolAssociation.find(:first, :conditions => ['user_id = ? AND school_id = ?', self.id, school.id])
   end
@@ -462,7 +475,7 @@ class User < ActiveRecord::Base
     association && association.role && association.role.eql?(Role[:coodinator])
   end
   
-  def school_admin?(school = nil)
+  def school_admin?(school)
     if school
       association = get_association_with school
       association && association.role && association.role.eql?(Role[:school_admin])
@@ -479,7 +492,6 @@ class User < ActiveRecord::Base
   
   ## end
   
-  
   def male?
     gender && gender.eql?(MALE)
   end
@@ -492,12 +504,6 @@ class User < ActiveRecord::Base
   
 
   protected
-  
-  #ADICIONADO PARA PASSAR O BUG DO 'after_save :activate'
-    def activate_before_save
-      self.activated_at = Time.now.utc
-      self.activation_code = nil
-    end
 
     def make_activation_code
       self.activation_code = Digest::SHA1.hexdigest( Time.now.to_s.split(//).sort_by {rand}.join )

@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+
+
   
   
   # The priority is based upon order of creation: first created -> highest priority.
@@ -41,8 +43,9 @@ ActionController::Routing::Routes.draw do |map|
   # Note: These default routes make all actions in every controller accessible via GET requests. You should
   # consider removing or commenting them out if you're using named routes and resources.
   
-
+ map.resources :access_keys
  map.resources :schools  
+# map.resources :user_school_associations
  #map.resources :schools, :member => { :associate_to => :get } 
  #map.resources :associate_to_school, :controller => 'schools', :action => 'associate_to_school'
  #map.associate_to_school 'associate', :controller => 'schools', :action => 'associate_to_school'

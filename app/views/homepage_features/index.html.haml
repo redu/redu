@@ -1,5 +1,8 @@
 .yui-b
-  = render :partial => 'shared/admin_nav'
+  -if current_user.admin? 
+    = render :partial => 'shared/admin_nav'
+  -elsif current_user.school_admin?
+    = render :partial => 'shared/school_admin_nav'
   
 #yui-main
   .yui-b

@@ -1,4 +1,21 @@
-<%= @school.name %>
-<%= link_to 'Edit', edit_school_path(@school) %> |
+<h3><%= @school.name %></h3>
+<p><%= @school.description %></p>
+
+<!-- Se admin ou school_admin -->
+<% if current_user && current_user.school_admin?(@school) %>
+<%= link_to 'Manage', edit_school_path(@school) %> |
+<%= link_to link_to :admin_dashboard.l, admin_dashboard_path %> |
+<% end %>
+
+<!-- Se usuário não estiver vinculado à escola -->
+<% if current_user && !current_user.get_association_with(@school) %>
 <%= link_to 'Associate', { :controller => 'schools' , :action => 'associate', :id => @school }  %> |
+<% end %>
+
+<!-- Se admin -->
+<% if current_user.admin? %>
+<%= link_to 'Gerar 50 chaves para escola',  {:controller => 'access_keys', :action => 'grant_keys_to_school', :id => @school, :number => 50, :exp_date => Time.now } %>
+<%= link_to 'Conceder Admin', schools_path %>
+<%end%>
+
 <%= link_to 'Back', schools_path %>

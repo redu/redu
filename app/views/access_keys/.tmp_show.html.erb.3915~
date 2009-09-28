@@ -1,0 +1,13 @@
+<p>
+  <b>Key:</b>
+  <%=h @access_key.key %>
+</p>
+
+<p>
+  <b>Expiration date:</b>
+  <%=h @access_key.expiration_date %>
+</p>
+
+
+<%= link_to 'Edit', edit_access_key_path(@access_key) %> |
+<%= link_to 'Back', access_keys_path %>

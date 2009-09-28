@@ -7,7 +7,15 @@ class CreateRoles < ActiveRecord::Migration
     Role.enumeration_model_updates_permitted = true
     Role.create(:name => 'admin')    
     Role.create(:name => 'moderator')
-    Role.create(:name => 'member')            
+    Role.create(:name => 'member')   
+    
+    # school roles
+    Role.create(:name => 'school_admin')
+    Role.create(:name => 'coordinator')  
+    Role.create(:name => 'teacher')
+    Role.create(:name => 'student')
+    
+    
     Role.enumeration_model_updates_permitted = false
     
     add_column :users, :role_id, :integer

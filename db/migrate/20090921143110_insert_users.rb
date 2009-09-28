@@ -1,5 +1,6 @@
 class InsertUsers < ActiveRecord::Migration
   def self.up
+=begin
     User.create(:login => 'teste', 
           :email => 'teste@example.com',
           :password => 'teste123',
@@ -12,7 +13,7 @@ class InsertUsers < ActiveRecord::Migration
           :password_confirmation => 'admin123',
           :birthday => 14.years.ago)       
     
-    
+=end    
   end
 
   def self.down
