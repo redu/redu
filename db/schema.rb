@@ -9,21 +9,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090927000129) do
+ActiveRecord::Schema.define(:version => 20090929141106) do
 
   create_table "access_keys", :force => true do |t|
     t.string   "key"
     t.date     "expiration_date"
-    t.integer  "user_id"
-    t.integer  "school_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "activities", :force => true do |t|
-    t.integer  "user_id",    :limit => 10
+    t.integer  "user_id"
     t.string   "action",     :limit => 50
-    t.integer  "item_id",    :limit => 10
+    t.integer  "item_id"
     t.string   "item_type"
     t.datetime "created_at"
   end
@@ -128,6 +126,12 @@ ActiveRecord::Schema.define(:version => 20090927000129) do
 
   create_table "countries", :force => true do |t|
     t.string "name"
+  end
+
+  create_table "courses", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "events", :force => true do |t|
@@ -393,6 +397,7 @@ ActiveRecord::Schema.define(:version => 20090927000129) do
     t.integer  "user_id"
     t.integer  "school_id"
     t.integer  "role_id"
+    t.integer  "access_key_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
