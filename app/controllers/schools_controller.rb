@@ -116,10 +116,11 @@ class SchoolsController < BaseController
   def create
         @school = School.new(params[:school])
     
-    if !params[:school][:name] || params[:school][:name].empty?
-      flash[:error] = 'Name não pode ser vazio'
-      redirect_to(@school)
-    end
+    #nao eh necessario pois ja temos verificacao no modelo
+    #if !params[:school][:name] || params[:school][:name].empty?
+    #  flash[:error] = 'Name não pode ser vazio'
+    #  redirect_to(@school)
+    #end
     
 
 
