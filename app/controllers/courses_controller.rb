@@ -1,4 +1,6 @@
-class CoursesController < ApplicationController
+class CoursesController < BaseController
+  
+  
   # GET /courses
   # GET /courses.xml
   def index
@@ -40,14 +42,15 @@ class CoursesController < ApplicationController
   # POST /courses
   # POST /courses.xml
   def create
+    
     @course = Course.new(params[:course])
 
     respond_to do |format|
       if @course.save
-        flash[:notice] = 'Course was successfully created.'
+        flash[:notice] = 'Aula foi criada com sucesso.'
         format.html { redirect_to(@course) }
         format.xml  { render :xml => @course, :status => :created, :location => @course }
-      else
+      else  
         format.html { render :action => "new" }
         format.xml  { render :xml => @course.errors, :status => :unprocessable_entity }
       end

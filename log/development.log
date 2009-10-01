@@ -38021,3 +38021,2142 @@ Rendering template within layouts/courses
 Rendering courses/index
   [4;35;1mCourse Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `courses`[0m
 Completed in 125ms (View: 15, DB: 0) | 200 OK [http://127.0.0.1/courses]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing BaseController#site_index (for 127.0.0.1 at 2009-09-30 10:39:02) [GET]
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;36;1mPost Load (0.0ms)[0m   [0;1mSELECT * FROM `posts` WHERE (published_as = 'live') ORDER BY posts.published_at DESC LIMIT 5[0m
+  [4;35;1mHomepageFeature Load (0.0ms)[0m   [0mSELECT * FROM `homepage_features` WHERE (parent_id IS NULL) ORDER BY created_at DESC[0m
+  [4;36;1mActivity Load (0.0ms)[0m   [0;1mSELECT activities.user_id, count(*) as count FROM `activities` LEFT JOIN users ON users.id = activities.user_id WHERE (activities.created_at > '2009-09-23 13:39:05') GROUP BY activities.user_id ORDER BY count DESC LIMIT 5[0m
+  [4;35;1mPost Columns (16.0ms)[0m   [0mSHOW FIELDS FROM `posts`[0m
+  [4;36;1mUser Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mPost Load Including Associations (0.0ms)[0m   [0mSELECT `posts`.`id` AS t0_r0, `posts`.`created_at` AS t0_r1, `posts`.`updated_at` AS t0_r2, `posts`.`raw_post` AS t0_r3, `posts`.`post` AS t0_r4, `posts`.`title` AS t0_r5, `posts`.`category_id` AS t0_r6, `posts`.`user_id` AS t0_r7, `posts`.`view_count` AS t0_r8, `posts`.`contest_id` AS t0_r9, `posts`.`emailed_count` AS t0_r10, `posts`.`favorited_count` AS t0_r11, `posts`.`published_as` AS t0_r12, `posts`.`published_at` AS t0_r13, `users`.`id` AS t1_r0, `users`.`login` AS t1_r1, `users`.`email` AS t1_r2, `users`.`description` AS t1_r3, `users`.`avatar_id` AS t1_r4, `users`.`crypted_password` AS t1_r5, `users`.`salt` AS t1_r6, `users`.`created_at` AS t1_r7, `users`.`updated_at` AS t1_r8, `users`.`remember_token` AS t1_r9, `users`.`remember_token_expires_at` AS t1_r10, `users`.`stylesheet` AS t1_r11, `users`.`view_count` AS t1_r12, `users`.`vendor` AS t1_r13, `users`.`activation_code` AS t1_r14, `users`.`activated_at` AS t1_r15, `users`.`state_id` AS t1_r16, `users`.`metro_area_id` AS t1_r17, `users`.`login_slug` AS t1_r18, `users`.`notify_comments` AS t1_r19, `users`.`notify_friend_requests` AS t1_r20, `users`.`notify_community_news` AS t1_r21, `users`.`country_id` AS t1_r22, `users`.`featured_writer` AS t1_r23, `users`.`last_login_at` AS t1_r24, `users`.`zip` AS t1_r25, `users`.`birthday` AS t1_r26, `users`.`gender` AS t1_r27, `users`.`profile_public` AS t1_r28, `users`.`activities_count` AS t1_r29, `users`.`sb_posts_count` AS t1_r30, `users`.`sb_last_seen_at` AS t1_r31, `users`.`role_id` AS t1_r32 FROM `posts` LEFT OUTER JOIN `users` ON `users`.id = `posts`.user_id WHERE ((users.featured_writer = 1) AND (published_as = 'live')) ORDER BY posts.published_at DESC LIMIT 10[0m
+  [4;36;1mTopic Load (0.0ms)[0m   [0;1mSELECT * FROM `topics` ORDER BY replied_at DESC LIMIT 5[0m
+  [4;35;1mContest Load (0.0ms)[0m   [0mSELECT * FROM `contests` WHERE (begin_date < '2009-09-30 10:39:06' AND end_date > '2009-09-30 10:39:06') ORDER BY created_at desc LIMIT 1[0m
+  [4;36;1mPost Load (0.0ms)[0m   [0;1mSELECT * FROM `posts` WHERE ((posts.published_at > '2009-09-23 13:39:06') AND (published_as = 'live')) ORDER BY posts.view_count DESC LIMIT 10[0m
+  [4;35;1mPoll Load (0.0ms)[0m   [0mSELECT * FROM `polls` WHERE (polls.created_at > '2009-09-20 13:39:06') ORDER BY polls.votes_count desc LIMIT 8[0m
+Rendering template within layouts/application
+Rendering base/site_index
+Rendered shared/_box (16.0ms)
+Rendered shared/_box (0.0ms)
+Rendered base/_homepage_banner_message (32.0ms)
+Rendered shared/_box (0.0ms)
+  [4;36;1mCategory Load (0.0ms)[0m   [0;1mSELECT * FROM `categories` [0m
+  [4;35;1mPage Load (0.0ms)[0m   [0mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+  [4;36;1mPage Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `pages`[0m
+Rendered shared/_box (0.0ms)
+Rendered shared/_explore (1235.0ms)
+Rendered shared/_box (0.0ms)
+  [4;35;1mUser Load (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (users.featured_writer = 1) [0m
+Rendered shared/_box (0.0ms)
+Rendered shared/_box (0.0ms)
+Rendered shared/_scripts_and_styles (31.0ms)
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `categories` [0m
+Rendered shared/_header (32.0ms)
+Rendered shared/_messages (0.0ms)
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+Completed in 5609ms (View: 2031, DB: 16) | 200 OK [http://127.0.0.1/]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing BaseController#footer_content (for 127.0.0.1 at 2009-09-30 10:39:10) [POST]
+  Parameters: {"authenticity_token"=>"brEWbqOeTPhO1Hulqfr/3FljX3iXkS9EwMRRhVW01Ic="}
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;36;1mClipping Load (0.0ms)[0m   [0;1mSELECT * FROM `clippings` WHERE (created_at > '2009-09-23 13:39:10') ORDER BY created_at DESC LIMIT 10[0m
+  [4;35;1mPhoto Load (15.0ms)[0m   [0mSELECT * FROM `photos` WHERE (photos.created_at > '2009-09-23 13:39:10' AND photos.parent_id IS NULL) ORDER BY photos.created_at DESC LIMIT 10[0m
+  [4;36;1mComment Load (0.0ms)[0m   [0;1mSELECT * FROM `comments` WHERE (created_at > '2009-09-16 13:39:11') ORDER BY created_at DESC LIMIT 13[0m
+  [4;35;1mTag Load (15.0ms)[0m   [0mSELECT tags.id, tags.name, count(*) AS count 
+ FROM taggings, tags 
+ WHERE tags.id = taggings.tag_id GROUP BY tags.id, tags.name ORDER BY count DESC LIMIT 30[0m
+  [4;36;1mActivity Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `activities`[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSELECT count(activities.id) AS count_activities_id FROM `activities` [0m
+  [4;36;1mActivity Load (0.0ms)[0m   [0;1mSELECT * FROM `activities` ORDER BY activities.created_at DESC LIMIT 0, 0[0m
+Rendered shared/_box (0.0ms)
+Rendered shared/_box (0.0ms)
+Rendered shared/_footer_content (312.0ms)
+Completed in 1953ms (View: 328, DB: 30) | 200 OK [http://127.0.0.1/base/footer_content]
+  [4;35;1mSQL (0.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2009-09-30 10:43:56) [GET]
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+Rendering template within layouts/application
+Rendering sessions/new
+Rendered shared/_box (0.0ms)
+Rendered shared/_login_sidebar (0.0ms)
+Rendered shared/_box (0.0ms)
+Rendered shared/_scripts_and_styles (0.0ms)
+  [4;35;1mCategory Load (0.0ms)[0m   [0mSELECT * FROM `categories` [0m
+Rendered shared/_header (141.0ms)
+Rendered shared/_messages (0.0ms)
+  [4;36;1mPage Load (0.0ms)[0m   [0;1mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+  [4;35;1mPage Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `pages`[0m
+Completed in 1235ms (View: 860, DB: 0) | 200 OK [http://127.0.0.1/login]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SchoolsController#index (for 127.0.0.1 at 2009-09-30 10:44:03) [GET]
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;36;1mSchool Load (15.0ms)[0m   [0;1mSELECT * FROM `schools` [0m
+Rendering template within layouts/application
+Rendering schools/index
+
+ActionView::TemplateError (You have a nil object when you didn't expect it!
+The error occurred while evaluating nil.admin?) on line #22 of app/views/schools/index.html.erb:
+19: </table>
+20: 
+21: <br />
+22: <% if current_user.admin? %>
+23: <%= link_to 'Criar escola', new_school_path %>
+24: <%end%>
+
+    app/views/schools/index.html.erb:22
+    haml (2.2.6) lib/haml/helpers/action_view_mods.rb:13:in `render'
+    haml (2.2.6) lib/haml/helpers/action_view_mods.rb:13:in `render'
+    app/controllers/schools_controller.rb:81:in `index'
+    lib/localized_application.rb:25:in `set_locale'
+    haml (2.2.6) lib/sass/plugin/rails.rb:19:in `process'
+    lib/flash_session_cookie_middleware.rb:14:in `call'
+    -e:2:in `load'
+    -e:2
+
+Rendered rescues/_trace (360.0ms)
+Rendered rescues/_request_and_response (0.0ms)
+Rendering rescues/layout (internal_server_error)
+  [4;35;1mSQL (0.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2009-09-30 10:44:12) [GET]
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+Rendering template within layouts/application
+Rendering sessions/new
+Rendered shared/_box (0.0ms)
+Rendered shared/_login_sidebar (469.0ms)
+Rendered shared/_box (0.0ms)
+Rendered shared/_scripts_and_styles (15.0ms)
+  [4;35;1mCategory Load (0.0ms)[0m   [0mSELECT * FROM `categories` [0m
+Rendered shared/_header (141.0ms)
+Rendered shared/_messages (0.0ms)
+  [4;36;1mPage Load (0.0ms)[0m   [0;1mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+  [4;35;1mPage Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `pages`[0m
+Completed in 985ms (View: 782, DB: 0) | 200 OK [http://127.0.0.1/login]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#create (for 127.0.0.1 at 2009-09-30 10:44:22) [POST]
+  Parameters: {"commit"=>"Log in", "authenticity_token"=>"brEWbqOeTPhO1Hulqfr/3FljX3iXkS9EwMRRhVW01Ic=", "login"=>"andre", "password"=>"andre123"}
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;36;1mUser Load (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (login = 'andre' and activated_at IS NOT NULL) LIMIT 1[0m
+  [4;35;1mUser Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mSQL (16.0ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mUser Update (0.0ms)[0m   [0mUPDATE `users` SET `last_login_at` = '2009-09-30 13:44:23', `updated_at` = '2009-09-30 13:44:23' WHERE `id` = 1[0m
+  [4;36;1mSQL (47.0ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mUser Update (15.0ms)[0m   [0mUPDATE `users` SET sb_last_seen_at = '2009-09-30 13:44:23' WHERE (id = 1) [0m
+Redirected to http://127.0.0.1:3000/andre/dashboard
+Completed in 828ms (DB: 78) | 302 Found [http://127.0.0.1/sessions]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#dashboard (for 127.0.0.1 at 2009-09-30 10:44:25) [GET]
+  Parameters: {"id"=>"andre"}
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;36;1mUser Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 1) LIMIT 1[0m
+  [4;36;1mFriendship Columns (31.0ms)[0m   [0;1mSHOW FIELDS FROM `friendships`[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSELECT count(*) AS count_all FROM `friendships` WHERE (`friendships`.user_id = 1 AND (friendship_status_id = 2)) [0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSELECT count(activities.id) AS count_activities_id FROM `activities` WHERE ((activities.user_id in (NULL)) AND (activities.created_at > '2009-09-23 13:44:25')) [0m
+  [4;35;1mTagging Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `taggings`[0m
+  [4;36;1mTag Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `tags`[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSELECT count(*) AS count_all FROM `tags` INNER JOIN `taggings` ON `tags`.id = `taggings`.tag_id WHERE ((`taggings`.taggable_type = 'User') AND (`taggings`.taggable_id = 1)) [0m
+Rendering template within layouts/application
+Rendering users/dashboard
+  [4;36;1mRole Load (62.0ms)[0m   [0;1mSELECT * FROM `roles` [0m
+  [4;35;1mRole Columns (16.0ms)[0m   [0mSHOW FIELDS FROM `roles`[0m
+Rendered shared/_box (0.0ms)
+  [4;36;1mPost Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `posts`[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSELECT count(*) AS count_all FROM `posts` WHERE (`posts`.user_id = 1) [0m
+  [4;36;1mPhoto Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `photos`[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSELECT count(*) AS count_all FROM `photos` WHERE (`photos`.user_id = 1) [0m
+  [4;36;1mClipping Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `clippings`[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSELECT count(*) AS count_all FROM `clippings` WHERE (`clippings`.user_id = 1) [0m
+  [4;36;1mComment Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `comments`[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSELECT count(*) AS count_all FROM `comments` WHERE (`comments`.commentable_id = 1 AND `comments`.commentable_type = 'User') [0m
+Rendered shared/_box (0.0ms)
+Rendered users/_dashboard_nav (312.0ms)
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `friendships` WHERE (`friendships`.user_id = 1 AND (initiator = 0 AND friendship_status_id = 1)) [0m
+Rendered shared/_box (0.0ms)
+Rendered shared/_scripts_and_styles (0.0ms)
+Rendered shared/_user_menu (78.0ms)
+  [4;35;1mMessage Columns (16.0ms)[0m   [0mSHOW FIELDS FROM `messages`[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `messages` WHERE (recipient_id = 1 AND recipient_deleted = 0 AND read_at IS NULL) [0m
+  [4;35;1mCategory Load (0.0ms)[0m   [0mSELECT * FROM `categories` [0m
+Rendered shared/_header (625.0ms)
+Rendered shared/_messages (0.0ms)
+  [4;36;1mPage Load (0.0ms)[0m   [0;1mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+  [4;35;1mPage Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `pages`[0m
+Completed in 2109ms (View: 1609, DB: 125) | 200 OK [http://127.0.0.1/andre/dashboard]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SchoolsController#index (for 127.0.0.1 at 2009-09-30 10:46:40) [GET]
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;36;1mSchool Load (0.0ms)[0m   [0;1mSELECT * FROM `schools` [0m
+Rendering template within layouts/application
+Rendering schools/index
+  [4;35;1mUser Columns (16.0ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 1) LIMIT 1[0m
+  [4;35;1mRole Load (0.0ms)[0m   [0mSELECT * FROM `roles` [0m
+  [4;36;1mRole Columns (15.0ms)[0m   [0;1mSHOW FIELDS FROM `roles`[0m
+Rendered shared/_scripts_and_styles (16.0ms)
+Rendered shared/_user_menu (0.0ms)
+  [4;35;1mMessage Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `messages`[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `messages` WHERE (recipient_id = 1 AND recipient_deleted = 0 AND read_at IS NULL) [0m
+  [4;35;1mCategory Load (0.0ms)[0m   [0mSELECT * FROM `categories` [0m
+Rendered shared/_header (375.0ms)
+Rendered shared/_messages (0.0ms)
+  [4;36;1mPage Load (0.0ms)[0m   [0;1mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+  [4;35;1mPage Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `pages`[0m
+Completed in 1063ms (View: 938, DB: 31) | 200 OK [http://127.0.0.1/schools]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CoursesController#index (for 127.0.0.1 at 2009-09-30 10:46:46) [GET]
+  [4;36;1mCourse Load (16.0ms)[0m   [0;1mSELECT * FROM `courses` [0m
+Rendering template within layouts/courses
+Rendering courses/index
+  [4;35;1mCourse Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `courses`[0m
+Completed in 672ms (View: 531, DB: 16) | 200 OK [http://127.0.0.1/courses]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SchoolsController#index (for 127.0.0.1 at 2009-09-30 10:46:53) [GET]
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;36;1mSchool Load (0.0ms)[0m   [0;1mSELECT * FROM `schools` [0m
+Rendering template within layouts/application
+Rendering schools/index
+  [4;35;1mUser Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 1) LIMIT 1[0m
+  [4;35;1mRole Load (0.0ms)[0m   [0mSELECT * FROM `roles` [0m
+  [4;36;1mRole Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `roles`[0m
+Rendered shared/_scripts_and_styles (15.0ms)
+Rendered shared/_user_menu (0.0ms)
+  [4;35;1mMessage Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `messages`[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `messages` WHERE (recipient_id = 1 AND recipient_deleted = 0 AND read_at IS NULL) [0m
+  [4;35;1mCategory Load (0.0ms)[0m   [0mSELECT * FROM `categories` [0m
+Rendered shared/_header (360.0ms)
+Rendered shared/_messages (0.0ms)
+  [4;36;1mPage Load (0.0ms)[0m   [0;1mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+  [4;35;1mPage Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `pages`[0m
+Completed in 1047ms (View: 954, DB: 0) | 200 OK [http://127.0.0.1/schools]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CoursesController#index (for 127.0.0.1 at 2009-09-30 10:48:45) [GET]
+  [4;36;1mCourse Load (0.0ms)[0m   [0;1mSELECT * FROM `courses` [0m
+Rendering template within layouts/courses
+Rendering courses/index
+  [4;35;1mCourse Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `courses`[0m
+Completed in 343ms (View: 15, DB: 0) | 200 OK [http://127.0.0.1/courses]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SchoolsController#index (for 127.0.0.1 at 2009-09-30 10:48:55) [GET]
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;36;1mSchool Load (0.0ms)[0m   [0;1mSELECT * FROM `schools` [0m
+Rendering template within layouts/application
+Rendering schools/index
+  [4;35;1mUser Columns (15.0ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 1) LIMIT 1[0m
+  [4;35;1mRole Load (0.0ms)[0m   [0mSELECT * FROM `roles` [0m
+  [4;36;1mRole Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `roles`[0m
+Rendered shared/_scripts_and_styles (15.0ms)
+Rendered shared/_user_menu (0.0ms)
+  [4;35;1mMessage Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `messages`[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `messages` WHERE (recipient_id = 1 AND recipient_deleted = 0 AND read_at IS NULL) [0m
+  [4;35;1mCategory Load (0.0ms)[0m   [0mSELECT * FROM `categories` [0m
+Rendered shared/_header (172.0ms)
+Rendered shared/_messages (0.0ms)
+  [4;36;1mPage Load (0.0ms)[0m   [0;1mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+  [4;35;1mPage Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `pages`[0m
+Completed in 1422ms (View: 985, DB: 15) | 200 OK [http://127.0.0.1/schools]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SchoolsController#index (for 127.0.0.1 at 2009-09-30 11:00:42) [GET]
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;36;1mSchool Load (0.0ms)[0m   [0;1mSELECT * FROM `schools` [0m
+Rendering template within layouts/application
+Rendering schools/index
+  [4;35;1mUser Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 1) LIMIT 1[0m
+  [4;35;1mRole Load (0.0ms)[0m   [0mSELECT * FROM `roles` [0m
+  [4;36;1mRole Columns (16.0ms)[0m   [0;1mSHOW FIELDS FROM `roles`[0m
+Rendered shared/_scripts_and_styles (0.0ms)
+Rendered shared/_user_menu (0.0ms)
+  [4;35;1mMessage Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `messages`[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `messages` WHERE (recipient_id = 1 AND recipient_deleted = 0 AND read_at IS NULL) [0m
+  [4;35;1mCategory Load (0.0ms)[0m   [0mSELECT * FROM `categories` [0m
+Rendered shared/_header (172.0ms)
+Rendered shared/_messages (0.0ms)
+  [4;36;1mPage Load (0.0ms)[0m   [0;1mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+  [4;35;1mPage Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `pages`[0m
+Completed in 1297ms (View: 1000, DB: 16) | 200 OK [http://127.0.0.1/schools]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing BaseController#site_index (for 127.0.0.1 at 2009-10-01 17:22:13) [GET]
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;36;1mPost Load (32.0ms)[0m   [0;1mSELECT * FROM `posts` WHERE (published_as = 'live') ORDER BY posts.published_at DESC LIMIT 5[0m
+  [4;35;1mHomepageFeature Load (32.0ms)[0m   [0mSELECT * FROM `homepage_features` WHERE (parent_id IS NULL) ORDER BY created_at DESC[0m
+  [4;36;1mActivity Load (32.0ms)[0m   [0;1mSELECT activities.user_id, count(*) as count FROM `activities` LEFT JOIN users ON users.id = activities.user_id WHERE (activities.created_at > '2009-09-24 20:22:16') GROUP BY activities.user_id ORDER BY count DESC LIMIT 5[0m
+  [4;35;1mPost Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `posts`[0m
+  [4;36;1mUser Columns (15.0ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mPost Load Including Associations (0.0ms)[0m   [0mSELECT `posts`.`id` AS t0_r0, `posts`.`created_at` AS t0_r1, `posts`.`updated_at` AS t0_r2, `posts`.`raw_post` AS t0_r3, `posts`.`post` AS t0_r4, `posts`.`title` AS t0_r5, `posts`.`category_id` AS t0_r6, `posts`.`user_id` AS t0_r7, `posts`.`view_count` AS t0_r8, `posts`.`contest_id` AS t0_r9, `posts`.`emailed_count` AS t0_r10, `posts`.`favorited_count` AS t0_r11, `posts`.`published_as` AS t0_r12, `posts`.`published_at` AS t0_r13, `users`.`id` AS t1_r0, `users`.`login` AS t1_r1, `users`.`email` AS t1_r2, `users`.`description` AS t1_r3, `users`.`avatar_id` AS t1_r4, `users`.`crypted_password` AS t1_r5, `users`.`salt` AS t1_r6, `users`.`created_at` AS t1_r7, `users`.`updated_at` AS t1_r8, `users`.`remember_token` AS t1_r9, `users`.`remember_token_expires_at` AS t1_r10, `users`.`stylesheet` AS t1_r11, `users`.`view_count` AS t1_r12, `users`.`vendor` AS t1_r13, `users`.`activation_code` AS t1_r14, `users`.`activated_at` AS t1_r15, `users`.`state_id` AS t1_r16, `users`.`metro_area_id` AS t1_r17, `users`.`login_slug` AS t1_r18, `users`.`notify_comments` AS t1_r19, `users`.`notify_friend_requests` AS t1_r20, `users`.`notify_community_news` AS t1_r21, `users`.`country_id` AS t1_r22, `users`.`featured_writer` AS t1_r23, `users`.`last_login_at` AS t1_r24, `users`.`zip` AS t1_r25, `users`.`birthday` AS t1_r26, `users`.`gender` AS t1_r27, `users`.`profile_public` AS t1_r28, `users`.`activities_count` AS t1_r29, `users`.`sb_posts_count` AS t1_r30, `users`.`sb_last_seen_at` AS t1_r31, `users`.`role_id` AS t1_r32 FROM `posts` LEFT OUTER JOIN `users` ON `users`.id = `posts`.user_id WHERE ((users.featured_writer = 1) AND (published_as = 'live')) ORDER BY posts.published_at DESC LIMIT 10[0m
+  [4;36;1mTopic Load (16.0ms)[0m   [0;1mSELECT * FROM `topics` ORDER BY replied_at DESC LIMIT 5[0m
+  [4;35;1mContest Load (16.0ms)[0m   [0mSELECT * FROM `contests` WHERE (begin_date < '2009-10-01 17:22:16' AND end_date > '2009-10-01 17:22:16') ORDER BY created_at desc LIMIT 1[0m
+  [4;36;1mPost Load (0.0ms)[0m   [0;1mSELECT * FROM `posts` WHERE ((posts.published_at > '2009-09-24 20:22:16') AND (published_as = 'live')) ORDER BY posts.view_count DESC LIMIT 10[0m
+  [4;35;1mPoll Load (0.0ms)[0m   [0mSELECT * FROM `polls` WHERE (polls.created_at > '2009-09-21 20:22:16') ORDER BY polls.votes_count desc LIMIT 8[0m
+Rendering template within layouts/application
+Rendering base/site_index
+Rendered shared/_box (0.0ms)
+Rendered shared/_box (0.0ms)
+Rendered base/_homepage_banner_message (31.0ms)
+Rendered shared/_box (0.0ms)
+  [4;36;1mCategory Load (16.0ms)[0m   [0;1mSELECT * FROM `categories` [0m
+  [4;35;1mPage Load (16.0ms)[0m   [0mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+  [4;36;1mPage Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `pages`[0m
+Rendered shared/_box (0.0ms)
+Rendered shared/_explore (1281.0ms)
+Rendered shared/_box (0.0ms)
+  [4;35;1mUser Load (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (users.featured_writer = 1) [0m
+Rendered shared/_box (0.0ms)
+Rendered shared/_box (0.0ms)
+Rendered shared/_scripts_and_styles (31.0ms)
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `categories` [0m
+Rendered shared/_header (16.0ms)
+Rendered shared/_messages (15.0ms)
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+Completed in 6078ms (View: 2093, DB: 175) | 200 OK [http://127.0.0.1/]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing BaseController#footer_content (for 127.0.0.1 at 2009-10-01 17:22:22) [POST]
+  Parameters: {"authenticity_token"=>"NKPfJNTwMNA0251mO8NPcWF5EOGSFVcmZcDET2czYXc="}
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;36;1mClipping Load (16.0ms)[0m   [0;1mSELECT * FROM `clippings` WHERE (created_at > '2009-09-24 20:22:22') ORDER BY created_at DESC LIMIT 10[0m
+  [4;35;1mPhoto Load (15.0ms)[0m   [0mSELECT * FROM `photos` WHERE (photos.created_at > '2009-09-24 20:22:22' AND photos.parent_id IS NULL) ORDER BY photos.created_at DESC LIMIT 10[0m
+  [4;36;1mComment Load (16.0ms)[0m   [0;1mSELECT * FROM `comments` WHERE (created_at > '2009-09-17 20:22:23') ORDER BY created_at DESC LIMIT 13[0m
+  [4;35;1mTag Load (15.0ms)[0m   [0mSELECT tags.id, tags.name, count(*) AS count 
+ FROM taggings, tags 
+ WHERE tags.id = taggings.tag_id GROUP BY tags.id, tags.name ORDER BY count DESC LIMIT 30[0m
+  [4;36;1mActivity Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `activities`[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSELECT count(activities.id) AS count_activities_id FROM `activities` [0m
+  [4;36;1mActivity Load (0.0ms)[0m   [0;1mSELECT * FROM `activities` ORDER BY activities.created_at DESC LIMIT 0, 0[0m
+Rendered shared/_box (0.0ms)
+Rendered shared/_box (0.0ms)
+Rendered shared/_footer_content (313.0ms)
+Completed in 1859ms (View: 328, DB: 62) | 200 OK [http://127.0.0.1/base/footer_content]
+  [4;35;1mSQL (0.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2009-10-01 17:22:29) [GET]
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+Rendering template within layouts/application
+Rendering sessions/new
+Rendered shared/_box (0.0ms)
+Rendered shared/_login_sidebar (15.0ms)
+Rendered shared/_box (0.0ms)
+Rendered shared/_scripts_and_styles (16.0ms)
+  [4;35;1mCategory Load (0.0ms)[0m   [0mSELECT * FROM `categories` [0m
+Rendered shared/_header (156.0ms)
+Rendered shared/_messages (0.0ms)
+  [4;36;1mPage Load (0.0ms)[0m   [0;1mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+  [4;35;1mPage Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `pages`[0m
+Completed in 1328ms (View: 906, DB: 0) | 200 OK [http://127.0.0.1/login]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#create (for 127.0.0.1 at 2009-10-01 17:22:40) [POST]
+  Parameters: {"commit"=>"Log in", "authenticity_token"=>"NKPfJNTwMNA0251mO8NPcWF5EOGSFVcmZcDET2czYXc=", "login"=>"andre", "password"=>"andre123"}
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;36;1mUser Load (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (login = 'andre' and activated_at IS NOT NULL) LIMIT 1[0m
+  [4;35;1mUser Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mUser Update (0.0ms)[0m   [0mUPDATE `users` SET `last_login_at` = '2009-10-01 20:22:40', `updated_at` = '2009-10-01 20:22:40' WHERE `id` = 1[0m
+  [4;36;1mSQL (47.0ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mUser Update (15.0ms)[0m   [0mUPDATE `users` SET sb_last_seen_at = '2009-10-01 20:22:40' WHERE (id = 1) [0m
+Redirected to http://127.0.0.1:3000/andre/dashboard
+Completed in 1094ms (DB: 62) | 302 Found [http://127.0.0.1/sessions]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#dashboard (for 127.0.0.1 at 2009-10-01 17:22:43) [GET]
+  Parameters: {"id"=>"andre"}
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;36;1mUser Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 1) LIMIT 1[0m
+  [4;36;1mFriendship Columns (31.0ms)[0m   [0;1mSHOW FIELDS FROM `friendships`[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSELECT count(*) AS count_all FROM `friendships` WHERE (`friendships`.user_id = 1 AND (friendship_status_id = 2)) [0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSELECT count(activities.id) AS count_activities_id FROM `activities` WHERE ((activities.user_id in (NULL)) AND (activities.created_at > '2009-09-24 20:22:43')) [0m
+  [4;35;1mTagging Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `taggings`[0m
+  [4;36;1mTag Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `tags`[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSELECT count(*) AS count_all FROM `tags` INNER JOIN `taggings` ON `tags`.id = `taggings`.tag_id WHERE ((`taggings`.taggable_type = 'User') AND (`taggings`.taggable_id = 1)) [0m
+Rendering template within layouts/application
+Rendering users/dashboard
+  [4;36;1mRole Load (32.0ms)[0m   [0;1mSELECT * FROM `roles` [0m
+  [4;35;1mRole Columns (15.0ms)[0m   [0mSHOW FIELDS FROM `roles`[0m
+Rendered shared/_box (0.0ms)
+  [4;36;1mPost Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `posts`[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSELECT count(*) AS count_all FROM `posts` WHERE (`posts`.user_id = 1) [0m
+  [4;36;1mPhoto Columns (16.0ms)[0m   [0;1mSHOW FIELDS FROM `photos`[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSELECT count(*) AS count_all FROM `photos` WHERE (`photos`.user_id = 1) [0m
+  [4;36;1mClipping Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `clippings`[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSELECT count(*) AS count_all FROM `clippings` WHERE (`clippings`.user_id = 1) [0m
+  [4;36;1mComment Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `comments`[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSELECT count(*) AS count_all FROM `comments` WHERE (`comments`.commentable_id = 1 AND `comments`.commentable_type = 'User') [0m
+Rendered shared/_box (0.0ms)
+Rendered users/_dashboard_nav (578.0ms)
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `friendships` WHERE (`friendships`.user_id = 1 AND (initiator = 0 AND friendship_status_id = 1)) [0m
+Rendered shared/_box (0.0ms)
+Rendered shared/_scripts_and_styles (16.0ms)
+Rendered shared/_user_menu (31.0ms)
+  [4;35;1mMessage Columns (16.0ms)[0m   [0mSHOW FIELDS FROM `messages`[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `messages` WHERE (recipient_id = 1 AND recipient_deleted = 0 AND read_at IS NULL) [0m
+  [4;35;1mCategory Load (0.0ms)[0m   [0mSELECT * FROM `categories` [0m
+Rendered shared/_header (203.0ms)
+Rendered shared/_messages (0.0ms)
+  [4;36;1mPage Load (0.0ms)[0m   [0;1mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+  [4;35;1mPage Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `pages`[0m
+Completed in 1625ms (View: 1390, DB: 110) | 200 OK [http://127.0.0.1/andre/dashboard]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CoursesController#index (for 127.0.0.1 at 2009-10-01 17:23:10) [GET]
+  [4;36;1mCourse Load (0.0ms)[0m   [0;1mSELECT * FROM `courses` [0m
+Rendering template within layouts/courses
+Rendering courses/index
+  [4;35;1mCourse Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `courses`[0m
+Completed in 485ms (View: 360, DB: 0) | 200 OK [http://127.0.0.1/courses]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#dashboard (for 127.0.0.1 at 2009-10-01 17:23:20) [GET]
+  Parameters: {"id"=>"andre"}
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;36;1mUser Columns (15.0ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 1) LIMIT 1[0m
+  [4;36;1mFriendship Columns (15.0ms)[0m   [0;1mSHOW FIELDS FROM `friendships`[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSELECT count(*) AS count_all FROM `friendships` WHERE (`friendships`.user_id = 1 AND (friendship_status_id = 2)) [0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSELECT count(activities.id) AS count_activities_id FROM `activities` WHERE ((activities.user_id in (NULL)) AND (activities.created_at > '2009-09-24 20:23:20')) [0m
+  [4;35;1mTag Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `tags`[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `tags` INNER JOIN `taggings` ON `tags`.id = `taggings`.tag_id WHERE ((`taggings`.taggable_type = 'User') AND (`taggings`.taggable_id = 1)) [0m
+Rendering template within layouts/application
+Rendering users/dashboard
+  [4;35;1mRole Load (0.0ms)[0m   [0mSELECT * FROM `roles` [0m
+  [4;36;1mRole Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `roles`[0m
+Rendered shared/_box (0.0ms)
+  [4;35;1mPost Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `posts`[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `posts` WHERE (`posts`.user_id = 1) [0m
+  [4;35;1mPhoto Columns (16.0ms)[0m   [0mSHOW FIELDS FROM `photos`[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `photos` WHERE (`photos`.user_id = 1) [0m
+  [4;35;1mClipping Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `clippings`[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `clippings` WHERE (`clippings`.user_id = 1) [0m
+  [4;35;1mComment Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `comments`[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `comments` WHERE (`comments`.commentable_id = 1 AND `comments`.commentable_type = 'User') [0m
+Rendered shared/_box (0.0ms)
+Rendered users/_dashboard_nav (485.0ms)
+  [4;35;1mSQL (0.0ms)[0m   [0mSELECT count(*) AS count_all FROM `friendships` WHERE (`friendships`.user_id = 1 AND (initiator = 0 AND friendship_status_id = 1)) [0m
+Rendered shared/_box (0.0ms)
+Rendered shared/_scripts_and_styles (0.0ms)
+Rendered shared/_user_menu (0.0ms)
+  [4;36;1mMessage Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `messages`[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSELECT count(*) AS count_all FROM `messages` WHERE (recipient_id = 1 AND recipient_deleted = 0 AND read_at IS NULL) [0m
+  [4;36;1mCategory Load (0.0ms)[0m   [0;1mSELECT * FROM `categories` [0m
+Rendered shared/_header (422.0ms)
+Rendered shared/_messages (0.0ms)
+  [4;35;1mPage Load (15.0ms)[0m   [0mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+  [4;36;1mPage Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `pages`[0m
+Completed in 1390ms (View: 1063, DB: 61) | 200 OK [http://127.0.0.1/andre/dashboard]
+  [4;35;1mSQL (0.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CoursesController#index (for 127.0.0.1 at 2009-10-01 17:57:04) [GET]
+  [4;35;1mCourse Load (0.0ms)[0m   [0mSELECT * FROM `courses` [0m
+Rendering template within layouts/courses
+Rendering courses/index
+  [4;36;1mCourse Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `courses`[0m
+Completed in 109ms (View: 16, DB: 0) | 200 OK [http://127.0.0.1/courses]
+  [4;35;1mSQL (0.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CoursesController#new (for 127.0.0.1 at 2009-10-01 17:57:10) [GET]
+  [4;35;1mCourse Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `courses`[0m
+Rendering template within layouts/courses
+Rendering courses/new
+Completed in 109ms (View: 16, DB: 0) | 200 OK [http://127.0.0.1/courses/new]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CoursesController#create (for 127.0.0.1 at 2009-10-01 17:57:19) [POST]
+  Parameters: {"commit"=>"Create", "authenticity_token"=>"NKPfJNTwMNA0251mO8NPcWF5EOGSFVcmZcDET2czYXc=", "course"=>{"name"=>""}}
+  [4;36;1mCourse Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `courses`[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mBEGIN[0m
+  [4;36;1mCourse Create (15.0ms)[0m   [0;1mINSERT INTO `courses` (`name`, `updated_at`, `created_at`) VALUES('', '2009-10-01 20:57:19', '2009-10-01 20:57:19')[0m
+  [4;35;1mSQL (31.0ms)[0m   [0mCOMMIT[0m
+Redirected to http://127.0.0.1:3000/courses/2
+Completed in 328ms (DB: 46) | 302 Found [http://127.0.0.1/courses]
+
+
+Processing CoursesController#show (for 127.0.0.1 at 2009-10-01 17:57:19) [GET]
+  Parameters: {"id"=>"2"}
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mCourse Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `courses`[0m
+  [4;35;1mCourse Load (0.0ms)[0m   [0mSELECT * FROM `courses` WHERE (`courses`.`id` = 2) [0m
+Rendering template within layouts/courses
+Rendering courses/show
+Completed in 141ms (View: 31, DB: 0) | 200 OK [http://127.0.0.1/courses/2]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CoursesController#index (for 127.0.0.1 at 2009-10-01 17:57:33) [GET]
+  [4;36;1mCourse Load (0.0ms)[0m   [0;1mSELECT * FROM `courses` [0m
+Rendering template within layouts/courses
+Rendering courses/index
+  [4;35;1mCourse Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `courses`[0m
+Completed in 297ms (View: 31, DB: 0) | 200 OK [http://127.0.0.1/courses]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CoursesController#show (for 127.0.0.1 at 2009-10-01 17:57:40) [GET]
+  Parameters: {"id"=>"2"}
+  [4;36;1mCourse Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `courses`[0m
+  [4;35;1mCourse Load (0.0ms)[0m   [0mSELECT * FROM `courses` WHERE (`courses`.`id` = 2) [0m
+Rendering template within layouts/courses
+Rendering courses/show
+Completed in 94ms (View: 0, DB: 0) | 200 OK [http://127.0.0.1/courses/2]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CoursesController#index (for 127.0.0.1 at 2009-10-01 18:01:34) [GET]
+  [4;36;1mCourse Load (0.0ms)[0m   [0;1mSELECT * FROM `courses` [0m
+Rendering template within layouts/courses
+Rendering courses/index
+  [4;35;1mCourse Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `courses`[0m
+Completed in 297ms (View: 16, DB: 0) | 200 OK [http://127.0.0.1/courses]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CoursesController#new (for 127.0.0.1 at 2009-10-01 18:06:31) [GET]
+  [4;36;1mCourse Columns (16.0ms)[0m   [0;1mSHOW FIELDS FROM `courses`[0m
+Rendering template within layouts/courses
+Rendering courses/new
+Completed in 141ms (View: 16, DB: 16) | 200 OK [http://127.0.0.1/courses/new]
+  [4;35;1mSQL (0.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CoursesController#create (for 127.0.0.1 at 2009-10-01 18:06:34) [POST]
+  Parameters: {"commit"=>"Create", "authenticity_token"=>"NKPfJNTwMNA0251mO8NPcWF5EOGSFVcmZcDET2czYXc=", "course"=>{"name"=>""}}
+
+NoMethodError (undefined method `validates_presence_of' for #<CoursesController:0x641c3f4>):
+  app/controllers/courses_controller.rb:44:in `create'
+  haml (2.2.6) lib/sass/plugin/rails.rb:19:in `process'
+  lib/flash_session_cookie_middleware.rb:14:in `call'
+  -e:2:in `load'
+  -e:2
+
+Rendered rescues/_trace (109.0ms)
+Rendered rescues/_request_and_response (0.0ms)
+Rendering rescues/layout (internal_server_error)
+  [4;35;1mSQL (0.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CoursesController#new (for 127.0.0.1 at 2009-10-01 18:06:40) [GET]
+  [4;35;1mCourse Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `courses`[0m
+Rendering template within layouts/courses
+Rendering courses/new
+Completed in 109ms (View: 15, DB: 0) | 200 OK [http://127.0.0.1/courses/new]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CoursesController#index (for 127.0.0.1 at 2009-10-01 18:06:44) [GET]
+  [4;36;1mCourse Load (0.0ms)[0m   [0;1mSELECT * FROM `courses` [0m
+Rendering template within layouts/courses
+Rendering courses/index
+  [4;35;1mCourse Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `courses`[0m
+Completed in 110ms (View: 16, DB: 0) | 200 OK [http://127.0.0.1/courses]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing ApplicationController#new (for 127.0.0.1 at 2009-10-01 18:08:31) [GET]
+
+SyntaxError (C:/Documents and Settings/adm2.BAIA6/My Documents/Aptana Studio Workspace/Redu/app/controllers/courses_controller.rb:89: syntax error, unexpected $end, expecting kEND):
+  desert (0.5.2) lib/desert/rails/dependencies.rb:67:in `define_constant_from_file'
+  desert (0.5.2) lib/desert/rails/dependencies.rb:66:in `each'
+  desert (0.5.2) lib/desert/rails/dependencies.rb:66:in `define_constant_from_file'
+  desert (0.5.2) lib/desert/rails/dependencies.rb:45:in `define_constant_with_desert_loading'
+  desert (0.5.2) lib/desert/rails/dependencies.rb:8:in `load_missing_constant'
+  C:/ruby/lib/ruby/gems/1.8/gems/aws-s3-0.6.2/lib/aws/s3/extensions.rb:206:in `const_missing'
+  lib/flash_session_cookie_middleware.rb:14:in `call'
+  -e:2:in `load'
+  -e:2
+
+Rendered rescues/_trace (109.0ms)
+Rendered rescues/_request_and_response (0.0ms)
+Rendering rescues/layout (internal_server_error)
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2009-10-01 18:08:39) [GET]
+
+SyntaxError (C:/Documents and Settings/adm2.BAIA6/My Documents/Aptana Studio Workspace/Redu/app/controllers/courses_controller.rb:89: syntax error, unexpected $end, expecting kEND):
+  desert (0.5.2) lib/desert/rails/dependencies.rb:67:in `define_constant_from_file'
+  desert (0.5.2) lib/desert/rails/dependencies.rb:66:in `each'
+  desert (0.5.2) lib/desert/rails/dependencies.rb:66:in `define_constant_from_file'
+  desert (0.5.2) lib/desert/rails/dependencies.rb:45:in `define_constant_with_desert_loading'
+  desert (0.5.2) lib/desert/rails/dependencies.rb:8:in `load_missing_constant'
+  C:/ruby/lib/ruby/gems/1.8/gems/aws-s3-0.6.2/lib/aws/s3/extensions.rb:206:in `const_missing'
+  lib/flash_session_cookie_middleware.rb:14:in `call'
+  -e:2:in `load'
+  -e:2
+
+Rendered rescues/_trace (297.0ms)
+Rendered rescues/_request_and_response (0.0ms)
+Rendering rescues/layout (internal_server_error)
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing ApplicationController#show (for 127.0.0.1 at 2009-10-01 18:08:43) [GET]
+  Parameters: {"id"=>"2"}
+
+SyntaxError (C:/Documents and Settings/adm2.BAIA6/My Documents/Aptana Studio Workspace/Redu/app/controllers/courses_controller.rb:89: syntax error, unexpected $end, expecting kEND):
+  desert (0.5.2) lib/desert/rails/dependencies.rb:67:in `define_constant_from_file'
+  desert (0.5.2) lib/desert/rails/dependencies.rb:66:in `each'
+  desert (0.5.2) lib/desert/rails/dependencies.rb:66:in `define_constant_from_file'
+  desert (0.5.2) lib/desert/rails/dependencies.rb:45:in `define_constant_with_desert_loading'
+  desert (0.5.2) lib/desert/rails/dependencies.rb:8:in `load_missing_constant'
+  C:/ruby/lib/ruby/gems/1.8/gems/aws-s3-0.6.2/lib/aws/s3/extensions.rb:206:in `const_missing'
+  lib/flash_session_cookie_middleware.rb:14:in `call'
+  -e:2:in `load'
+  -e:2
+
+Rendered rescues/_trace (109.0ms)
+Rendered rescues/_request_and_response (0.0ms)
+Rendering rescues/layout (internal_server_error)
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing ApplicationController#new (for 127.0.0.1 at 2009-10-01 18:08:46) [GET]
+
+SyntaxError (C:/Documents and Settings/adm2.BAIA6/My Documents/Aptana Studio Workspace/Redu/app/controllers/courses_controller.rb:89: syntax error, unexpected $end, expecting kEND):
+  desert (0.5.2) lib/desert/rails/dependencies.rb:67:in `define_constant_from_file'
+  desert (0.5.2) lib/desert/rails/dependencies.rb:66:in `each'
+  desert (0.5.2) lib/desert/rails/dependencies.rb:66:in `define_constant_from_file'
+  desert (0.5.2) lib/desert/rails/dependencies.rb:45:in `define_constant_with_desert_loading'
+  desert (0.5.2) lib/desert/rails/dependencies.rb:8:in `load_missing_constant'
+  C:/ruby/lib/ruby/gems/1.8/gems/aws-s3-0.6.2/lib/aws/s3/extensions.rb:206:in `const_missing'
+  lib/flash_session_cookie_middleware.rb:14:in `call'
+  -e:2:in `load'
+  -e:2
+
+Rendered rescues/_trace (109.0ms)
+Rendered rescues/_request_and_response (0.0ms)
+Rendering rescues/layout (internal_server_error)
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2009-10-01 18:08:51) [GET]
+
+SyntaxError (C:/Documents and Settings/adm2.BAIA6/My Documents/Aptana Studio Workspace/Redu/app/controllers/courses_controller.rb:89: syntax error, unexpected $end, expecting kEND):
+  desert (0.5.2) lib/desert/rails/dependencies.rb:67:in `define_constant_from_file'
+  desert (0.5.2) lib/desert/rails/dependencies.rb:66:in `each'
+  desert (0.5.2) lib/desert/rails/dependencies.rb:66:in `define_constant_from_file'
+  desert (0.5.2) lib/desert/rails/dependencies.rb:45:in `define_constant_with_desert_loading'
+  desert (0.5.2) lib/desert/rails/dependencies.rb:8:in `load_missing_constant'
+  C:/ruby/lib/ruby/gems/1.8/gems/aws-s3-0.6.2/lib/aws/s3/extensions.rb:206:in `const_missing'
+  lib/flash_session_cookie_middleware.rb:14:in `call'
+  -e:2:in `load'
+  -e:2
+
+Rendered rescues/_trace (297.0ms)
+Rendered rescues/_request_and_response (0.0ms)
+Rendering rescues/layout (internal_server_error)
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2009-10-01 18:08:59) [GET]
+
+SyntaxError (C:/Documents and Settings/adm2.BAIA6/My Documents/Aptana Studio Workspace/Redu/app/controllers/courses_controller.rb:89: syntax error, unexpected $end, expecting kEND):
+  desert (0.5.2) lib/desert/rails/dependencies.rb:67:in `define_constant_from_file'
+  desert (0.5.2) lib/desert/rails/dependencies.rb:66:in `each'
+  desert (0.5.2) lib/desert/rails/dependencies.rb:66:in `define_constant_from_file'
+  desert (0.5.2) lib/desert/rails/dependencies.rb:45:in `define_constant_with_desert_loading'
+  desert (0.5.2) lib/desert/rails/dependencies.rb:8:in `load_missing_constant'
+  C:/ruby/lib/ruby/gems/1.8/gems/aws-s3-0.6.2/lib/aws/s3/extensions.rb:206:in `const_missing'
+  lib/flash_session_cookie_middleware.rb:14:in `call'
+  -e:2:in `load'
+  -e:2
+
+Rendered rescues/_trace (110.0ms)
+Rendered rescues/_request_and_response (0.0ms)
+Rendering rescues/layout (internal_server_error)
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2009-10-01 18:09:15) [GET]
+
+SyntaxError (C:/Documents and Settings/adm2.BAIA6/My Documents/Aptana Studio Workspace/Redu/app/controllers/courses_controller.rb:89: syntax error, unexpected $end, expecting kEND):
+  desert (0.5.2) lib/desert/rails/dependencies.rb:67:in `define_constant_from_file'
+  desert (0.5.2) lib/desert/rails/dependencies.rb:66:in `each'
+  desert (0.5.2) lib/desert/rails/dependencies.rb:66:in `define_constant_from_file'
+  desert (0.5.2) lib/desert/rails/dependencies.rb:45:in `define_constant_with_desert_loading'
+  desert (0.5.2) lib/desert/rails/dependencies.rb:8:in `load_missing_constant'
+  C:/ruby/lib/ruby/gems/1.8/gems/aws-s3-0.6.2/lib/aws/s3/extensions.rb:206:in `const_missing'
+  lib/flash_session_cookie_middleware.rb:14:in `call'
+  -e:2:in `load'
+  -e:2
+
+Rendered rescues/_trace (94.0ms)
+Rendered rescues/_request_and_response (0.0ms)
+Rendering rescues/layout (internal_server_error)
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing BaseController#site_index (for 127.0.0.1 at 2009-10-01 18:09:44) [GET]
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;36;1mPost Load (0.0ms)[0m   [0;1mSELECT * FROM `posts` WHERE (published_as = 'live') ORDER BY posts.published_at DESC LIMIT 5[0m
+  [4;35;1mHomepageFeature Load (31.0ms)[0m   [0mSELECT * FROM `homepage_features` WHERE (parent_id IS NULL) ORDER BY created_at DESC[0m
+  [4;36;1mActivity Load (16.0ms)[0m   [0;1mSELECT activities.user_id, count(*) as count FROM `activities` LEFT JOIN users ON users.id = activities.user_id WHERE (activities.created_at > '2009-09-24 21:09:45') GROUP BY activities.user_id ORDER BY count DESC LIMIT 5[0m
+  [4;35;1mPost Columns (16.0ms)[0m   [0mSHOW FIELDS FROM `posts`[0m
+  [4;36;1mUser Columns (15.0ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mPost Load Including Associations (0.0ms)[0m   [0mSELECT `posts`.`id` AS t0_r0, `posts`.`created_at` AS t0_r1, `posts`.`updated_at` AS t0_r2, `posts`.`raw_post` AS t0_r3, `posts`.`post` AS t0_r4, `posts`.`title` AS t0_r5, `posts`.`category_id` AS t0_r6, `posts`.`user_id` AS t0_r7, `posts`.`view_count` AS t0_r8, `posts`.`contest_id` AS t0_r9, `posts`.`emailed_count` AS t0_r10, `posts`.`favorited_count` AS t0_r11, `posts`.`published_as` AS t0_r12, `posts`.`published_at` AS t0_r13, `users`.`id` AS t1_r0, `users`.`login` AS t1_r1, `users`.`email` AS t1_r2, `users`.`description` AS t1_r3, `users`.`avatar_id` AS t1_r4, `users`.`crypted_password` AS t1_r5, `users`.`salt` AS t1_r6, `users`.`created_at` AS t1_r7, `users`.`updated_at` AS t1_r8, `users`.`remember_token` AS t1_r9, `users`.`remember_token_expires_at` AS t1_r10, `users`.`stylesheet` AS t1_r11, `users`.`view_count` AS t1_r12, `users`.`vendor` AS t1_r13, `users`.`activation_code` AS t1_r14, `users`.`activated_at` AS t1_r15, `users`.`state_id` AS t1_r16, `users`.`metro_area_id` AS t1_r17, `users`.`login_slug` AS t1_r18, `users`.`notify_comments` AS t1_r19, `users`.`notify_friend_requests` AS t1_r20, `users`.`notify_community_news` AS t1_r21, `users`.`country_id` AS t1_r22, `users`.`featured_writer` AS t1_r23, `users`.`last_login_at` AS t1_r24, `users`.`zip` AS t1_r25, `users`.`birthday` AS t1_r26, `users`.`gender` AS t1_r27, `users`.`profile_public` AS t1_r28, `users`.`activities_count` AS t1_r29, `users`.`sb_posts_count` AS t1_r30, `users`.`sb_last_seen_at` AS t1_r31, `users`.`role_id` AS t1_r32 FROM `posts` LEFT OUTER JOIN `users` ON `users`.id = `posts`.user_id WHERE ((users.featured_writer = 1) AND (published_as = 'live')) ORDER BY posts.published_at DESC LIMIT 10[0m
+  [4;36;1mTopic Load (15.0ms)[0m   [0;1mSELECT * FROM `topics` ORDER BY replied_at DESC LIMIT 5[0m
+  [4;35;1mContest Load (16.0ms)[0m   [0mSELECT * FROM `contests` WHERE (begin_date < '2009-10-01 18:09:46' AND end_date > '2009-10-01 18:09:46') ORDER BY created_at desc LIMIT 1[0m
+  [4;36;1mPost Load (0.0ms)[0m   [0;1mSELECT * FROM `posts` WHERE ((posts.published_at > '2009-09-24 21:09:46') AND (published_as = 'live')) ORDER BY posts.view_count DESC LIMIT 10[0m
+  [4;35;1mPoll Load (15.0ms)[0m   [0mSELECT * FROM `polls` WHERE (polls.created_at > '2009-09-21 21:09:46') ORDER BY polls.votes_count desc LIMIT 8[0m
+Rendering template within layouts/application
+Rendering base/site_index
+  [4;36;1mUser Load (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 1) LIMIT 1[0m
+Rendered shared/_box (0.0ms)
+  [4;35;1mCategory Load (31.0ms)[0m   [0mSELECT * FROM `categories` [0m
+  [4;36;1mPage Load (93.0ms)[0m   [0;1mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+  [4;35;1mPage Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `pages`[0m
+Rendered shared/_box (0.0ms)
+Rendered shared/_explore (453.0ms)
+Rendered shared/_box (0.0ms)
+  [4;36;1mUser Load (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (users.featured_writer = 1) [0m
+Rendered shared/_box (0.0ms)
+Rendered shared/_box (0.0ms)
+Rendered shared/_scripts_and_styles (16.0ms)
+  [4;35;1mRole Load (32.0ms)[0m   [0mSELECT * FROM `roles` [0m
+  [4;36;1mRole Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `roles`[0m
+Rendered shared/_user_menu (125.0ms)
+  [4;35;1mMessage Columns (16.0ms)[0m   [0mSHOW FIELDS FROM `messages`[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `messages` WHERE (recipient_id = 1 AND recipient_deleted = 0 AND read_at IS NULL) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `categories` [0m
+Rendered shared/_header (187.0ms)
+Rendered shared/_messages (0.0ms)
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+Completed in 2203ms (View: 531, DB: 296) | 200 OK [http://127.0.0.1/]
+  [4;35;1mSQL (0.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing BaseController#footer_content (for 127.0.0.1 at 2009-10-01 18:09:50) [POST]
+  Parameters: {"authenticity_token"=>"NKPfJNTwMNA0251mO8NPcWF5EOGSFVcmZcDET2czYXc="}
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;35;1mClipping Load (16.0ms)[0m   [0mSELECT * FROM `clippings` WHERE (created_at > '2009-09-24 21:09:50') ORDER BY created_at DESC LIMIT 10[0m
+  [4;36;1mPhoto Load (0.0ms)[0m   [0;1mSELECT * FROM `photos` WHERE (photos.created_at > '2009-09-24 21:09:49' AND photos.parent_id IS NULL) ORDER BY photos.created_at DESC LIMIT 10[0m
+  [4;35;1mComment Load (0.0ms)[0m   [0mSELECT * FROM `comments` WHERE (created_at > '2009-09-17 21:09:50') ORDER BY created_at DESC LIMIT 13[0m
+  [4;36;1mTag Load (16.0ms)[0m   [0;1mSELECT tags.id, tags.name, count(*) AS count 
+ FROM taggings, tags 
+ WHERE tags.id = taggings.tag_id GROUP BY tags.id, tags.name ORDER BY count DESC LIMIT 30[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSELECT count(activities.id) AS count_activities_id FROM `activities` [0m
+  [4;36;1mActivity Load (0.0ms)[0m   [0;1mSELECT * FROM `activities` ORDER BY activities.created_at DESC LIMIT 0, 0[0m
+Rendered shared/_box (0.0ms)
+Rendered shared/_box (0.0ms)
+Rendered shared/_footer_content (328.0ms)
+Completed in 828ms (View: 344, DB: 32) | 200 OK [http://127.0.0.1/base/footer_content]
+
+
+Processing CoursesController#index (for 127.0.0.1 at 2009-10-01 18:09:51) [GET]
+  [4;35;1mSQL (0.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mCourse Load (0.0ms)[0m   [0mSELECT * FROM `courses` [0m
+Rendering template within layouts/courses
+Rendering courses/index
+  [4;36;1mCourse Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `courses`[0m
+Completed in 110ms (View: 16, DB: 0) | 200 OK [http://127.0.0.1/courses]
+  [4;35;1mSQL (0.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CoursesController#new (for 127.0.0.1 at 2009-10-01 18:09:55) [GET]
+  [4;35;1mCourse Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `courses`[0m
+Rendering template within layouts/courses
+Rendering courses/new
+Completed in 110ms (View: 16, DB: 0) | 200 OK [http://127.0.0.1/courses/new]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CoursesController#create (for 127.0.0.1 at 2009-10-01 18:10:03) [POST]
+  Parameters: {"commit"=>"Create", "authenticity_token"=>"NKPfJNTwMNA0251mO8NPcWF5EOGSFVcmZcDET2czYXc=", "course"=>{"name"=>"Geometria"}}
+  [4;36;1mCourse Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `courses`[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mBEGIN[0m
+  [4;36;1mCourse Create (0.0ms)[0m   [0;1mINSERT INTO `courses` (`name`, `updated_at`, `created_at`) VALUES('Geometria', '2009-10-01 21:10:03', '2009-10-01 21:10:03')[0m
+  [4;35;1mSQL (125.0ms)[0m   [0mCOMMIT[0m
+Redirected to http://127.0.0.1:3000/courses/3
+Completed in 453ms (DB: 125) | 302 Found [http://127.0.0.1/courses]
+
+
+Processing CoursesController#show (for 127.0.0.1 at 2009-10-01 18:10:03) [GET]
+  Parameters: {"id"=>"3"}
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mCourse Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `courses`[0m
+  [4;35;1mCourse Load (0.0ms)[0m   [0mSELECT * FROM `courses` WHERE (`courses`.`id` = 3) [0m
+Rendering template within layouts/courses
+Rendering courses/show
+Completed in 140ms (View: 15, DB: 0) | 200 OK [http://127.0.0.1/courses/3]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CoursesController#index (for 127.0.0.1 at 2009-10-01 18:10:09) [GET]
+  [4;36;1mCourse Load (0.0ms)[0m   [0;1mSELECT * FROM `courses` [0m
+Rendering template within layouts/courses
+Rendering courses/index
+  [4;35;1mCourse Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `courses`[0m
+Completed in 109ms (View: 15, DB: 0) | 200 OK [http://127.0.0.1/courses]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CoursesController#new (for 127.0.0.1 at 2009-10-01 18:10:13) [GET]
+  [4;36;1mCourse Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `courses`[0m
+Rendering template within layouts/courses
+Rendering courses/new
+Completed in 109ms (View: 15, DB: 0) | 200 OK [http://127.0.0.1/courses/new]
+  [4;35;1mSQL (0.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CoursesController#create (for 127.0.0.1 at 2009-10-01 18:10:16) [POST]
+  Parameters: {"commit"=>"Create", "authenticity_token"=>"NKPfJNTwMNA0251mO8NPcWF5EOGSFVcmZcDET2czYXc=", "course"=>{"name"=>""}}
+  [4;35;1mCourse Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `courses`[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mCourse Create (0.0ms)[0m   [0mINSERT INTO `courses` (`name`, `updated_at`, `created_at`) VALUES('', '2009-10-01 21:10:16', '2009-10-01 21:10:16')[0m
+  [4;36;1mSQL (156.0ms)[0m   [0;1mCOMMIT[0m
+Redirected to http://127.0.0.1:3000/courses/4
+Completed in 281ms (DB: 156) | 302 Found [http://127.0.0.1/courses]
+  [4;35;1mSQL (0.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CoursesController#show (for 127.0.0.1 at 2009-10-01 18:10:19) [GET]
+  Parameters: {"id"=>"4"}
+  [4;35;1mCourse Columns (15.0ms)[0m   [0mSHOW FIELDS FROM `courses`[0m
+  [4;36;1mCourse Load (0.0ms)[0m   [0;1mSELECT * FROM `courses` WHERE (`courses`.`id` = 4) [0m
+Rendering template within layouts/courses
+Rendering courses/show
+Completed in 125ms (View: 0, DB: 15) | 200 OK [http://127.0.0.1/courses/4]
+  [4;35;1mSQL (0.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CoursesController#index (for 127.0.0.1 at 2009-10-01 18:10:22) [GET]
+  [4;35;1mCourse Load (0.0ms)[0m   [0mSELECT * FROM `courses` [0m
+Rendering template within layouts/courses
+Rendering courses/index
+  [4;36;1mCourse Columns (16.0ms)[0m   [0;1mSHOW FIELDS FROM `courses`[0m
+Completed in 313ms (View: 0, DB: 16) | 200 OK [http://127.0.0.1/courses]
+  [4;35;1mSQL (0.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing ApplicationController#new (for 127.0.0.1 at 2009-10-01 18:11:35) [GET]
+
+SyntaxError (C:/Documents and Settings/adm2.BAIA6/My Documents/Aptana Studio Workspace/Redu/app/controllers/courses_controller.rb:89: syntax error, unexpected $end, expecting kEND):
+  desert (0.5.2) lib/desert/rails/dependencies.rb:67:in `define_constant_from_file'
+  desert (0.5.2) lib/desert/rails/dependencies.rb:66:in `each'
+  desert (0.5.2) lib/desert/rails/dependencies.rb:66:in `define_constant_from_file'
+  desert (0.5.2) lib/desert/rails/dependencies.rb:45:in `define_constant_with_desert_loading'
+  desert (0.5.2) lib/desert/rails/dependencies.rb:8:in `load_missing_constant'
+  C:/ruby/lib/ruby/gems/1.8/gems/aws-s3-0.6.2/lib/aws/s3/extensions.rb:206:in `const_missing'
+  lib/flash_session_cookie_middleware.rb:14:in `call'
+  -e:2:in `load'
+  -e:2
+
+Rendered rescues/_trace (109.0ms)
+Rendered rescues/_request_and_response (0.0ms)
+Rendering rescues/layout (internal_server_error)
+  [4;35;1mSQL (0.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2009-10-01 18:11:39) [GET]
+
+SyntaxError (C:/Documents and Settings/adm2.BAIA6/My Documents/Aptana Studio Workspace/Redu/app/controllers/courses_controller.rb:89: syntax error, unexpected $end, expecting kEND):
+  desert (0.5.2) lib/desert/rails/dependencies.rb:67:in `define_constant_from_file'
+  desert (0.5.2) lib/desert/rails/dependencies.rb:66:in `each'
+  desert (0.5.2) lib/desert/rails/dependencies.rb:66:in `define_constant_from_file'
+  desert (0.5.2) lib/desert/rails/dependencies.rb:45:in `define_constant_with_desert_loading'
+  desert (0.5.2) lib/desert/rails/dependencies.rb:8:in `load_missing_constant'
+  C:/ruby/lib/ruby/gems/1.8/gems/aws-s3-0.6.2/lib/aws/s3/extensions.rb:206:in `const_missing'
+  lib/flash_session_cookie_middleware.rb:14:in `call'
+  -e:2:in `load'
+  -e:2
+
+Rendered rescues/_trace (93.0ms)
+Rendered rescues/_request_and_response (16.0ms)
+Rendering rescues/layout (internal_server_error)
+  [4;35;1mSQL (0.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (16.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing BaseController#site_index (for 127.0.0.1 at 2009-10-01 18:12:48) [GET]
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;35;1mPost Load (0.0ms)[0m   [0mSELECT * FROM `posts` WHERE (published_as = 'live') ORDER BY posts.published_at DESC LIMIT 5[0m
+  [4;36;1mHomepageFeature Load (0.0ms)[0m   [0;1mSELECT * FROM `homepage_features` WHERE (parent_id IS NULL) ORDER BY created_at DESC[0m
+  [4;35;1mActivity Load (16.0ms)[0m   [0mSELECT activities.user_id, count(*) as count FROM `activities` LEFT JOIN users ON users.id = activities.user_id WHERE (activities.created_at > '2009-09-24 21:12:49') GROUP BY activities.user_id ORDER BY count DESC LIMIT 5[0m
+  [4;36;1mPost Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `posts`[0m
+  [4;35;1mUser Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mPost Load Including Associations (0.0ms)[0m   [0;1mSELECT `posts`.`id` AS t0_r0, `posts`.`created_at` AS t0_r1, `posts`.`updated_at` AS t0_r2, `posts`.`raw_post` AS t0_r3, `posts`.`post` AS t0_r4, `posts`.`title` AS t0_r5, `posts`.`category_id` AS t0_r6, `posts`.`user_id` AS t0_r7, `posts`.`view_count` AS t0_r8, `posts`.`contest_id` AS t0_r9, `posts`.`emailed_count` AS t0_r10, `posts`.`favorited_count` AS t0_r11, `posts`.`published_as` AS t0_r12, `posts`.`published_at` AS t0_r13, `users`.`id` AS t1_r0, `users`.`login` AS t1_r1, `users`.`email` AS t1_r2, `users`.`description` AS t1_r3, `users`.`avatar_id` AS t1_r4, `users`.`crypted_password` AS t1_r5, `users`.`salt` AS t1_r6, `users`.`created_at` AS t1_r7, `users`.`updated_at` AS t1_r8, `users`.`remember_token` AS t1_r9, `users`.`remember_token_expires_at` AS t1_r10, `users`.`stylesheet` AS t1_r11, `users`.`view_count` AS t1_r12, `users`.`vendor` AS t1_r13, `users`.`activation_code` AS t1_r14, `users`.`activated_at` AS t1_r15, `users`.`state_id` AS t1_r16, `users`.`metro_area_id` AS t1_r17, `users`.`login_slug` AS t1_r18, `users`.`notify_comments` AS t1_r19, `users`.`notify_friend_requests` AS t1_r20, `users`.`notify_community_news` AS t1_r21, `users`.`country_id` AS t1_r22, `users`.`featured_writer` AS t1_r23, `users`.`last_login_at` AS t1_r24, `users`.`zip` AS t1_r25, `users`.`birthday` AS t1_r26, `users`.`gender` AS t1_r27, `users`.`profile_public` AS t1_r28, `users`.`activities_count` AS t1_r29, `users`.`sb_posts_count` AS t1_r30, `users`.`sb_last_seen_at` AS t1_r31, `users`.`role_id` AS t1_r32 FROM `posts` LEFT OUTER JOIN `users` ON `users`.id = `posts`.user_id WHERE ((users.featured_writer = 1) AND (published_as = 'live')) ORDER BY posts.published_at DESC LIMIT 10[0m
+  [4;35;1mTopic Load (0.0ms)[0m   [0mSELECT * FROM `topics` ORDER BY replied_at DESC LIMIT 5[0m
+  [4;36;1mContest Load (0.0ms)[0m   [0;1mSELECT * FROM `contests` WHERE (begin_date < '2009-10-01 18:12:49' AND end_date > '2009-10-01 18:12:49') ORDER BY created_at desc LIMIT 1[0m
+  [4;35;1mPost Load (0.0ms)[0m   [0mSELECT * FROM `posts` WHERE ((posts.published_at > '2009-09-24 21:12:49') AND (published_as = 'live')) ORDER BY posts.view_count DESC LIMIT 10[0m
+  [4;36;1mPoll Load (0.0ms)[0m   [0;1mSELECT * FROM `polls` WHERE (polls.created_at > '2009-09-21 21:12:49') ORDER BY polls.votes_count desc LIMIT 8[0m
+Rendering template within layouts/application
+Rendering base/site_index
+  [4;35;1mUser Load (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 1) LIMIT 1[0m
+Rendered shared/_box (0.0ms)
+  [4;36;1mCategory Load (0.0ms)[0m   [0;1mSELECT * FROM `categories` [0m
+  [4;35;1mPage Load (0.0ms)[0m   [0mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+  [4;36;1mPage Columns (16.0ms)[0m   [0;1mSHOW FIELDS FROM `pages`[0m
+Rendered shared/_box (0.0ms)
+Rendered shared/_explore (344.0ms)
+Rendered shared/_box (0.0ms)
+  [4;35;1mUser Load (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (users.featured_writer = 1) [0m
+Rendered shared/_box (0.0ms)
+Rendered shared/_box (0.0ms)
+Rendered shared/_scripts_and_styles (16.0ms)
+  [4;36;1mRole Load (0.0ms)[0m   [0;1mSELECT * FROM `roles` [0m
+  [4;35;1mRole Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `roles`[0m
+Rendered shared/_user_menu (422.0ms)
+  [4;36;1mMessage Columns (16.0ms)[0m   [0;1mSHOW FIELDS FROM `messages`[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSELECT count(*) AS count_all FROM `messages` WHERE (recipient_id = 1 AND recipient_deleted = 0 AND read_at IS NULL) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `categories` [0m
+Rendered shared/_header (438.0ms)
+Rendered shared/_messages (0.0ms)
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+Completed in 1953ms (View: 828, DB: 64) | 200 OK [http://127.0.0.1/]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing BaseController#footer_content (for 127.0.0.1 at 2009-10-01 18:12:53) [POST]
+  Parameters: {"authenticity_token"=>"NKPfJNTwMNA0251mO8NPcWF5EOGSFVcmZcDET2czYXc="}
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;36;1mClipping Load (0.0ms)[0m   [0;1mSELECT * FROM `clippings` WHERE (created_at > '2009-09-24 21:12:53') ORDER BY created_at DESC LIMIT 10[0m
+  [4;35;1mPhoto Load (0.0ms)[0m   [0mSELECT * FROM `photos` WHERE (photos.created_at > '2009-09-24 21:12:53' AND photos.parent_id IS NULL) ORDER BY photos.created_at DESC LIMIT 10[0m
+  [4;36;1mComment Load (0.0ms)[0m   [0;1mSELECT * FROM `comments` WHERE (created_at > '2009-09-17 21:12:53') ORDER BY created_at DESC LIMIT 13[0m
+  [4;35;1mTag Load (0.0ms)[0m   [0mSELECT tags.id, tags.name, count(*) AS count 
+ FROM taggings, tags 
+ WHERE tags.id = taggings.tag_id GROUP BY tags.id, tags.name ORDER BY count DESC LIMIT 30[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSELECT count(activities.id) AS count_activities_id FROM `activities` [0m
+  [4;35;1mActivity Load (0.0ms)[0m   [0mSELECT * FROM `activities` ORDER BY activities.created_at DESC LIMIT 0, 0[0m
+Rendered shared/_box (0.0ms)
+Rendered shared/_box (0.0ms)
+Rendered shared/_footer_content (344.0ms)
+Completed in 765ms (View: 359, DB: 0) | 200 OK [http://127.0.0.1/base/footer_content]
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2009-10-01 18:12:54) [GET]
+
+SyntaxError (C:/Documents and Settings/adm2.BAIA6/My Documents/Aptana Studio Workspace/Redu/app/controllers/courses_controller.rb:91: syntax error, unexpected $end, expecting kEND):
+  desert (0.5.2) lib/desert/rails/dependencies.rb:67:in `define_constant_from_file'
+  desert (0.5.2) lib/desert/rails/dependencies.rb:66:in `each'
+  desert (0.5.2) lib/desert/rails/dependencies.rb:66:in `define_constant_from_file'
+  desert (0.5.2) lib/desert/rails/dependencies.rb:45:in `define_constant_with_desert_loading'
+  desert (0.5.2) lib/desert/rails/dependencies.rb:8:in `load_missing_constant'
+  C:/ruby/lib/ruby/gems/1.8/gems/aws-s3-0.6.2/lib/aws/s3/extensions.rb:206:in `const_missing'
+  lib/flash_session_cookie_middleware.rb:14:in `call'
+  -e:2:in `load'
+  -e:2
+
+Rendered rescues/_trace (406.0ms)
+Rendered rescues/_request_and_response (0.0ms)
+Rendering rescues/layout (internal_server_error)
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing BaseController#site_index (for 127.0.0.1 at 2009-10-01 18:13:38) [GET]
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;36;1mPost Load (0.0ms)[0m   [0;1mSELECT * FROM `posts` WHERE (published_as = 'live') ORDER BY posts.published_at DESC LIMIT 5[0m
+  [4;35;1mHomepageFeature Load (0.0ms)[0m   [0mSELECT * FROM `homepage_features` WHERE (parent_id IS NULL) ORDER BY created_at DESC[0m
+  [4;36;1mActivity Load (0.0ms)[0m   [0;1mSELECT activities.user_id, count(*) as count FROM `activities` LEFT JOIN users ON users.id = activities.user_id WHERE (activities.created_at > '2009-09-24 21:13:39') GROUP BY activities.user_id ORDER BY count DESC LIMIT 5[0m
+  [4;35;1mPost Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `posts`[0m
+  [4;36;1mUser Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mPost Load Including Associations (0.0ms)[0m   [0mSELECT `posts`.`id` AS t0_r0, `posts`.`created_at` AS t0_r1, `posts`.`updated_at` AS t0_r2, `posts`.`raw_post` AS t0_r3, `posts`.`post` AS t0_r4, `posts`.`title` AS t0_r5, `posts`.`category_id` AS t0_r6, `posts`.`user_id` AS t0_r7, `posts`.`view_count` AS t0_r8, `posts`.`contest_id` AS t0_r9, `posts`.`emailed_count` AS t0_r10, `posts`.`favorited_count` AS t0_r11, `posts`.`published_as` AS t0_r12, `posts`.`published_at` AS t0_r13, `users`.`id` AS t1_r0, `users`.`login` AS t1_r1, `users`.`email` AS t1_r2, `users`.`description` AS t1_r3, `users`.`avatar_id` AS t1_r4, `users`.`crypted_password` AS t1_r5, `users`.`salt` AS t1_r6, `users`.`created_at` AS t1_r7, `users`.`updated_at` AS t1_r8, `users`.`remember_token` AS t1_r9, `users`.`remember_token_expires_at` AS t1_r10, `users`.`stylesheet` AS t1_r11, `users`.`view_count` AS t1_r12, `users`.`vendor` AS t1_r13, `users`.`activation_code` AS t1_r14, `users`.`activated_at` AS t1_r15, `users`.`state_id` AS t1_r16, `users`.`metro_area_id` AS t1_r17, `users`.`login_slug` AS t1_r18, `users`.`notify_comments` AS t1_r19, `users`.`notify_friend_requests` AS t1_r20, `users`.`notify_community_news` AS t1_r21, `users`.`country_id` AS t1_r22, `users`.`featured_writer` AS t1_r23, `users`.`last_login_at` AS t1_r24, `users`.`zip` AS t1_r25, `users`.`birthday` AS t1_r26, `users`.`gender` AS t1_r27, `users`.`profile_public` AS t1_r28, `users`.`activities_count` AS t1_r29, `users`.`sb_posts_count` AS t1_r30, `users`.`sb_last_seen_at` AS t1_r31, `users`.`role_id` AS t1_r32 FROM `posts` LEFT OUTER JOIN `users` ON `users`.id = `posts`.user_id WHERE ((users.featured_writer = 1) AND (published_as = 'live')) ORDER BY posts.published_at DESC LIMIT 10[0m
+  [4;36;1mTopic Load (0.0ms)[0m   [0;1mSELECT * FROM `topics` ORDER BY replied_at DESC LIMIT 5[0m
+  [4;35;1mContest Load (0.0ms)[0m   [0mSELECT * FROM `contests` WHERE (begin_date < '2009-10-01 18:13:39' AND end_date > '2009-10-01 18:13:39') ORDER BY created_at desc LIMIT 1[0m
+  [4;36;1mPost Load (0.0ms)[0m   [0;1mSELECT * FROM `posts` WHERE ((posts.published_at > '2009-09-24 21:13:39') AND (published_as = 'live')) ORDER BY posts.view_count DESC LIMIT 10[0m
+  [4;35;1mPoll Load (0.0ms)[0m   [0mSELECT * FROM `polls` WHERE (polls.created_at > '2009-09-21 21:13:39') ORDER BY polls.votes_count desc LIMIT 8[0m
+Rendering template within layouts/application
+Rendering base/site_index
+  [4;36;1mUser Load (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 1) LIMIT 1[0m
+Rendered shared/_box (0.0ms)
+  [4;35;1mCategory Load (0.0ms)[0m   [0mSELECT * FROM `categories` [0m
+  [4;36;1mPage Load (0.0ms)[0m   [0;1mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+  [4;35;1mPage Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `pages`[0m
+Rendered shared/_box (0.0ms)
+Rendered shared/_explore (531.0ms)
+Rendered shared/_box (0.0ms)
+  [4;36;1mUser Load (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (users.featured_writer = 1) [0m
+Rendered shared/_box (0.0ms)
+Rendered shared/_box (0.0ms)
+Rendered shared/_scripts_and_styles (15.0ms)
+  [4;35;1mRole Load (0.0ms)[0m   [0mSELECT * FROM `roles` [0m
+  [4;36;1mRole Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `roles`[0m
+Rendered shared/_user_menu (94.0ms)
+  [4;35;1mMessage Columns (16.0ms)[0m   [0mSHOW FIELDS FROM `messages`[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `messages` WHERE (recipient_id = 1 AND recipient_deleted = 0 AND read_at IS NULL) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `categories` [0m
+Rendered shared/_header (110.0ms)
+Rendered shared/_messages (0.0ms)
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+Completed in 1750ms (View: 687, DB: 16) | 200 OK [http://127.0.0.1/]
+  [4;35;1mSQL (0.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing BaseController#footer_content (for 127.0.0.1 at 2009-10-01 18:13:43) [POST]
+  Parameters: {"authenticity_token"=>"NKPfJNTwMNA0251mO8NPcWF5EOGSFVcmZcDET2czYXc="}
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;35;1mClipping Load (0.0ms)[0m   [0mSELECT * FROM `clippings` WHERE (created_at > '2009-09-24 21:13:43') ORDER BY created_at DESC LIMIT 10[0m
+  [4;36;1mPhoto Load (16.0ms)[0m   [0;1mSELECT * FROM `photos` WHERE (photos.created_at > '2009-09-24 21:13:42' AND photos.parent_id IS NULL) ORDER BY photos.created_at DESC LIMIT 10[0m
+  [4;35;1mComment Load (0.0ms)[0m   [0mSELECT * FROM `comments` WHERE (created_at > '2009-09-17 21:13:43') ORDER BY created_at DESC LIMIT 13[0m
+  [4;36;1mTag Load (0.0ms)[0m   [0;1mSELECT tags.id, tags.name, count(*) AS count 
+ FROM taggings, tags 
+ WHERE tags.id = taggings.tag_id GROUP BY tags.id, tags.name ORDER BY count DESC LIMIT 30[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSELECT count(activities.id) AS count_activities_id FROM `activities` [0m
+  [4;36;1mActivity Load (0.0ms)[0m   [0;1mSELECT * FROM `activities` ORDER BY activities.created_at DESC LIMIT 0, 0[0m
+Rendered shared/_box (0.0ms)
+Rendered shared/_box (0.0ms)
+Rendered shared/_footer_content (547.0ms)
+Completed in 813ms (View: 563, DB: 16) | 200 OK [http://127.0.0.1/base/footer_content]
+
+
+Processing CoursesController#index (for 127.0.0.1 at 2009-10-01 18:13:44) [GET]
+  [4;35;1mSQL (0.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mCourse Load (0.0ms)[0m   [0mSELECT * FROM `courses` [0m
+Rendering template within layouts/courses
+Rendering courses/index
+  [4;36;1mCourse Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `courses`[0m
+Completed in 125ms (View: 16, DB: 0) | 200 OK [http://127.0.0.1/courses]
+  [4;35;1mSQL (0.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CoursesController#destroy (for 127.0.0.1 at 2009-10-01 18:13:48) [DELETE]
+  Parameters: {"authenticity_token"=>"NKPfJNTwMNA0251mO8NPcWF5EOGSFVcmZcDET2czYXc=", "id"=>"2"}
+  [4;35;1mCourse Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `courses`[0m
+  [4;36;1mCourse Load (0.0ms)[0m   [0;1mSELECT * FROM `courses` WHERE (`courses`.`id` = 2) [0m
+  [4;35;1mSQL (0.0ms)[0m   [0mBEGIN[0m
+  [4;36;1mCourse Destroy (16.0ms)[0m   [0;1mDELETE FROM `courses` WHERE `id` = 2[0m
+  [4;35;1mSQL (47.0ms)[0m   [0mCOMMIT[0m
+Redirected to http://127.0.0.1:3000/courses
+Completed in 406ms (DB: 63) | 302 Found [http://127.0.0.1/courses/2]
+
+
+Processing CoursesController#index (for 127.0.0.1 at 2009-10-01 18:13:48) [GET]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mCourse Load (0.0ms)[0m   [0;1mSELECT * FROM `courses` [0m
+Rendering template within layouts/courses
+Rendering courses/index
+  [4;35;1mCourse Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `courses`[0m
+Completed in 125ms (View: 16, DB: 0) | 200 OK [http://127.0.0.1/courses]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CoursesController#destroy (for 127.0.0.1 at 2009-10-01 18:13:52) [DELETE]
+  Parameters: {"authenticity_token"=>"NKPfJNTwMNA0251mO8NPcWF5EOGSFVcmZcDET2czYXc=", "id"=>"4"}
+  [4;36;1mCourse Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `courses`[0m
+  [4;35;1mCourse Load (0.0ms)[0m   [0mSELECT * FROM `courses` WHERE (`courses`.`id` = 4) [0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mCourse Destroy (0.0ms)[0m   [0mDELETE FROM `courses` WHERE `id` = 4[0m
+  [4;36;1mSQL (31.0ms)[0m   [0;1mCOMMIT[0m
+Redirected to http://127.0.0.1:3000/courses
+Completed in 156ms (DB: 31) | 302 Found [http://127.0.0.1/courses/4]
+
+
+Processing CoursesController#index (for 127.0.0.1 at 2009-10-01 18:13:52) [GET]
+  [4;35;1mSQL (0.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mCourse Load (0.0ms)[0m   [0mSELECT * FROM `courses` [0m
+Rendering template within layouts/courses
+Rendering courses/index
+  [4;36;1mCourse Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `courses`[0m
+Completed in 375ms (View: 16, DB: 0) | 200 OK [http://127.0.0.1/courses]
+  [4;35;1mSQL (0.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing BaseController#site_index (for 127.0.0.1 at 2009-10-01 18:13:56) [GET]
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;35;1mPost Load (0.0ms)[0m   [0mSELECT * FROM `posts` WHERE (published_as = 'live') ORDER BY posts.published_at DESC LIMIT 5[0m
+  [4;36;1mHomepageFeature Load (0.0ms)[0m   [0;1mSELECT * FROM `homepage_features` WHERE (parent_id IS NULL) ORDER BY created_at DESC[0m
+  [4;35;1mActivity Load (0.0ms)[0m   [0mSELECT activities.user_id, count(*) as count FROM `activities` LEFT JOIN users ON users.id = activities.user_id WHERE (activities.created_at > '2009-09-24 21:13:56') GROUP BY activities.user_id ORDER BY count DESC LIMIT 5[0m
+  [4;36;1mPost Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `posts`[0m
+  [4;35;1mUser Columns (15.0ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mPost Load Including Associations (0.0ms)[0m   [0;1mSELECT `posts`.`id` AS t0_r0, `posts`.`created_at` AS t0_r1, `posts`.`updated_at` AS t0_r2, `posts`.`raw_post` AS t0_r3, `posts`.`post` AS t0_r4, `posts`.`title` AS t0_r5, `posts`.`category_id` AS t0_r6, `posts`.`user_id` AS t0_r7, `posts`.`view_count` AS t0_r8, `posts`.`contest_id` AS t0_r9, `posts`.`emailed_count` AS t0_r10, `posts`.`favorited_count` AS t0_r11, `posts`.`published_as` AS t0_r12, `posts`.`published_at` AS t0_r13, `users`.`id` AS t1_r0, `users`.`login` AS t1_r1, `users`.`email` AS t1_r2, `users`.`description` AS t1_r3, `users`.`avatar_id` AS t1_r4, `users`.`crypted_password` AS t1_r5, `users`.`salt` AS t1_r6, `users`.`created_at` AS t1_r7, `users`.`updated_at` AS t1_r8, `users`.`remember_token` AS t1_r9, `users`.`remember_token_expires_at` AS t1_r10, `users`.`stylesheet` AS t1_r11, `users`.`view_count` AS t1_r12, `users`.`vendor` AS t1_r13, `users`.`activation_code` AS t1_r14, `users`.`activated_at` AS t1_r15, `users`.`state_id` AS t1_r16, `users`.`metro_area_id` AS t1_r17, `users`.`login_slug` AS t1_r18, `users`.`notify_comments` AS t1_r19, `users`.`notify_friend_requests` AS t1_r20, `users`.`notify_community_news` AS t1_r21, `users`.`country_id` AS t1_r22, `users`.`featured_writer` AS t1_r23, `users`.`last_login_at` AS t1_r24, `users`.`zip` AS t1_r25, `users`.`birthday` AS t1_r26, `users`.`gender` AS t1_r27, `users`.`profile_public` AS t1_r28, `users`.`activities_count` AS t1_r29, `users`.`sb_posts_count` AS t1_r30, `users`.`sb_last_seen_at` AS t1_r31, `users`.`role_id` AS t1_r32 FROM `posts` LEFT OUTER JOIN `users` ON `users`.id = `posts`.user_id WHERE ((users.featured_writer = 1) AND (published_as = 'live')) ORDER BY posts.published_at DESC LIMIT 10[0m
+  [4;35;1mTopic Load (0.0ms)[0m   [0mSELECT * FROM `topics` ORDER BY replied_at DESC LIMIT 5[0m
+  [4;36;1mContest Load (0.0ms)[0m   [0;1mSELECT * FROM `contests` WHERE (begin_date < '2009-10-01 18:13:57' AND end_date > '2009-10-01 18:13:57') ORDER BY created_at desc LIMIT 1[0m
+  [4;35;1mPost Load (0.0ms)[0m   [0mSELECT * FROM `posts` WHERE ((posts.published_at > '2009-09-24 21:13:57') AND (published_as = 'live')) ORDER BY posts.view_count DESC LIMIT 10[0m
+  [4;36;1mPoll Load (0.0ms)[0m   [0;1mSELECT * FROM `polls` WHERE (polls.created_at > '2009-09-21 21:13:57') ORDER BY polls.votes_count desc LIMIT 8[0m
+Rendering template within layouts/application
+Rendering base/site_index
+  [4;35;1mUser Load (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 1) LIMIT 1[0m
+Rendered shared/_box (0.0ms)
+  [4;36;1mCategory Load (0.0ms)[0m   [0;1mSELECT * FROM `categories` [0m
+  [4;35;1mPage Load (0.0ms)[0m   [0mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+  [4;36;1mPage Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `pages`[0m
+Rendered shared/_box (0.0ms)
+Rendered shared/_explore (547.0ms)
+Rendered shared/_box (0.0ms)
+  [4;35;1mUser Load (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (users.featured_writer = 1) [0m
+Rendered shared/_box (0.0ms)
+Rendered shared/_box (0.0ms)
+Rendered shared/_scripts_and_styles (15.0ms)
+  [4;36;1mRole Load (0.0ms)[0m   [0;1mSELECT * FROM `roles` [0m
+  [4;35;1mRole Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `roles`[0m
+Rendered shared/_user_menu (110.0ms)
+  [4;36;1mMessage Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `messages`[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSELECT count(*) AS count_all FROM `messages` WHERE (recipient_id = 1 AND recipient_deleted = 0 AND read_at IS NULL) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `categories` [0m
+Rendered shared/_header (110.0ms)
+Rendered shared/_messages (15.0ms)
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+Completed in 1750ms (View: 703, DB: 15) | 200 OK [http://127.0.0.1/]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing BaseController#footer_content (for 127.0.0.1 at 2009-10-01 18:14:00) [POST]
+  Parameters: {"authenticity_token"=>"NKPfJNTwMNA0251mO8NPcWF5EOGSFVcmZcDET2czYXc="}
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;36;1mClipping Load (0.0ms)[0m   [0;1mSELECT * FROM `clippings` WHERE (created_at > '2009-09-24 21:14:00') ORDER BY created_at DESC LIMIT 10[0m
+  [4;35;1mPhoto Load (0.0ms)[0m   [0mSELECT * FROM `photos` WHERE (photos.created_at > '2009-09-24 21:14:00' AND photos.parent_id IS NULL) ORDER BY photos.created_at DESC LIMIT 10[0m
+  [4;36;1mComment Load (0.0ms)[0m   [0;1mSELECT * FROM `comments` WHERE (created_at > '2009-09-17 21:14:01') ORDER BY created_at DESC LIMIT 13[0m
+  [4;35;1mTag Load (0.0ms)[0m   [0mSELECT tags.id, tags.name, count(*) AS count 
+ FROM taggings, tags 
+ WHERE tags.id = taggings.tag_id GROUP BY tags.id, tags.name ORDER BY count DESC LIMIT 30[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSELECT count(activities.id) AS count_activities_id FROM `activities` [0m
+  [4;35;1mActivity Load (0.0ms)[0m   [0mSELECT * FROM `activities` ORDER BY activities.created_at DESC LIMIT 0, 0[0m
+Rendered shared/_box (0.0ms)
+Rendered shared/_box (0.0ms)
+Rendered shared/_footer_content (547.0ms)
+Completed in 797ms (View: 563, DB: 0) | 200 OK [http://127.0.0.1/base/footer_content]
+
+
+Processing SchoolsController#index (for 127.0.0.1 at 2009-10-01 18:14:01) [GET]
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSchool Load (0.0ms)[0m   [0;1mSELECT * FROM `schools` [0m
+Rendering template within layouts/application
+Rendering schools/index
+  [4;35;1mUser Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 1) LIMIT 1[0m
+  [4;35;1mRole Load (0.0ms)[0m   [0mSELECT * FROM `roles` [0m
+  [4;36;1mRole Columns (16.0ms)[0m   [0;1mSHOW FIELDS FROM `roles`[0m
+Rendered shared/_scripts_and_styles (0.0ms)
+Rendered shared/_user_menu (16.0ms)
+  [4;35;1mMessage Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `messages`[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `messages` WHERE (recipient_id = 1 AND recipient_deleted = 0 AND read_at IS NULL) [0m
+  [4;35;1mCategory Load (16.0ms)[0m   [0mSELECT * FROM `categories` [0m
+Rendered shared/_header (188.0ms)
+Rendered shared/_messages (0.0ms)
+  [4;36;1mPage Load (0.0ms)[0m   [0;1mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+  [4;35;1mPage Columns (15.0ms)[0m   [0mSHOW FIELDS FROM `pages`[0m
+Completed in 1734ms (View: 1531, DB: 47) | 200 OK [http://127.0.0.1/schools]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SchoolsController#new (for 127.0.0.1 at 2009-10-01 18:14:07) [GET]
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;36;1mUser Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 1) LIMIT 1[0m
+  [4;36;1mRole Load (0.0ms)[0m   [0;1mSELECT * FROM `roles` [0m
+  [4;35;1mRole Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `roles`[0m
+  [4;36;1mSchool Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `schools`[0m
+Rendering template within layouts/application
+Rendering schools/new
+Rendered shared/_scripts_and_styles (15.0ms)
+Rendered shared/_user_menu (0.0ms)
+  [4;35;1mMessage Columns (16.0ms)[0m   [0mSHOW FIELDS FROM `messages`[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `messages` WHERE (recipient_id = 1 AND recipient_deleted = 0 AND read_at IS NULL) [0m
+  [4;35;1mCategory Load (0.0ms)[0m   [0mSELECT * FROM `categories` [0m
+Rendered shared/_header (172.0ms)
+Rendered shared/_messages (0.0ms)
+  [4;36;1mPage Load (15.0ms)[0m   [0;1mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+  [4;35;1mPage Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `pages`[0m
+Completed in 1140ms (View: 891, DB: 31) | 200 OK [http://127.0.0.1/schools/new]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SchoolsController#create (for 127.0.0.1 at 2009-10-01 18:14:12) [POST]
+  Parameters: {"commit"=>"Create", "authenticity_token"=>"NKPfJNTwMNA0251mO8NPcWF5EOGSFVcmZcDET2czYXc=", "school"=>{"name"=>""}}
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;36;1mUser Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 1) LIMIT 1[0m
+  [4;36;1mRole Load (0.0ms)[0m   [0;1mSELECT * FROM `roles` [0m
+  [4;35;1mRole Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `roles`[0m
+  [4;36;1mSchool Columns (16.0ms)[0m   [0;1mSHOW FIELDS FROM `schools`[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mBEGIN[0m
+  [4;36;1mSchool Create (15.0ms)[0m   [0;1mINSERT INTO `schools` (`name`, `updated_at`, `description`, `created_at`) VALUES('', '2009-10-01 21:14:12', NULL, '2009-10-01 21:14:12')[0m
+  [4;35;1mSQL (32.0ms)[0m   [0mCOMMIT[0m
+Redirected to http://127.0.0.1:3000/schools/1
+Completed in 250ms (DB: 63) | 302 Found [http://127.0.0.1/schools]
+
+
+Processing SchoolsController#show (for 127.0.0.1 at 2009-10-01 18:14:12) [GET]
+  Parameters: {"id"=>"1"}
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSchool Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `schools`[0m
+  [4;35;1mSchool Load (0.0ms)[0m   [0mSELECT * FROM `schools` WHERE (`schools`.`id` = 1) [0m
+Rendering template within layouts/application
+Rendering schools/show
+  [4;36;1mUser Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 1) LIMIT 1[0m
+  [4;36;1mUserSchoolAssociation Load (0.0ms)[0m   [0;1mSELECT * FROM `user_school_associations` WHERE (user_id = 1 AND school_id = 1) LIMIT 1[0m
+  [4;35;1mUserSchoolAssociation Load (15.0ms)[0m   [0mSELECT * FROM `user_school_associations` WHERE (user_id = 1 AND school_id = 1) LIMIT 1[0m
+  [4;36;1mRole Load (0.0ms)[0m   [0;1mSELECT * FROM `roles` [0m
+  [4;35;1mRole Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `roles`[0m
+Rendered shared/_scripts_and_styles (16.0ms)
+Rendered shared/_user_menu (0.0ms)
+  [4;36;1mMessage Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `messages`[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSELECT count(*) AS count_all FROM `messages` WHERE (recipient_id = 1 AND recipient_deleted = 0 AND read_at IS NULL) [0m
+  [4;36;1mCategory Load (0.0ms)[0m   [0;1mSELECT * FROM `categories` [0m
+Rendered shared/_header (390.0ms)
+Rendered shared/_messages (0.0ms)
+  [4;35;1mPage Load (0.0ms)[0m   [0mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+  [4;36;1mPage Columns (15.0ms)[0m   [0;1mSHOW FIELDS FROM `pages`[0m
+Completed in 1968ms (View: 1813, DB: 30) | 200 OK [http://127.0.0.1/schools/1]
+  [4;35;1mSQL (0.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CoursesController#index (for 127.0.0.1 at 2009-10-01 18:28:10) [GET]
+  [4;35;1mCourse Load (0.0ms)[0m   [0mSELECT * FROM `courses` [0m
+Rendering template within layouts/courses
+Rendering courses/index
+  [4;36;1mCourse Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `courses`[0m
+Completed in 125ms (View: 16, DB: 0) | 200 OK [http://127.0.0.1/courses]
+  [4;35;1mSQL (0.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CoursesController#new (for 127.0.0.1 at 2009-10-01 18:28:13) [GET]
+  [4;35;1mCourse Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `courses`[0m
+Rendering template within layouts/courses
+Rendering courses/new
+Completed in 109ms (View: 0, DB: 0) | 200 OK [http://127.0.0.1/courses/new]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CoursesController#create (for 127.0.0.1 at 2009-10-01 18:28:15) [POST]
+  Parameters: {"commit"=>"Create", "authenticity_token"=>"NKPfJNTwMNA0251mO8NPcWF5EOGSFVcmZcDET2czYXc=", "course"=>{"name"=>""}}
+  [4;36;1mCourse Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `courses`[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mBEGIN[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mROLLBACK[0m
+Rendering template within layouts/courses
+Rendering courses/new
+Completed in 640ms (View: 15, DB: 0) | 200 OK [http://127.0.0.1/courses]
+  [4;35;1mSQL (0.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CoursesController#new (for 127.0.0.1 at 2009-10-01 18:28:27) [GET]
+  [4;35;1mCourse Columns (16.0ms)[0m   [0mSHOW FIELDS FROM `courses`[0m
+Rendering template within layouts/courses
+Rendering courses/new
+Completed in 125ms (View: 16, DB: 16) | 200 OK [http://127.0.0.1/courses/new]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CoursesController#index (for 127.0.0.1 at 2009-10-01 18:28:55) [GET]
+  [4;36;1mCourse Load (0.0ms)[0m   [0;1mSELECT * FROM `courses` [0m
+Rendering template within layouts/courses
+Rendering courses/index
+  [4;35;1mCourse Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `courses`[0m
+Completed in 109ms (View: 16, DB: 0) | 200 OK [http://127.0.0.1/courses/]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CoursesController#new (for 127.0.0.1 at 2009-10-01 18:28:58) [GET]
+  [4;36;1mCourse Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `courses`[0m
+Rendering template within layouts/courses
+Rendering courses/new
+Completed in 312ms (View: 16, DB: 0) | 200 OK [http://127.0.0.1/courses/new]
+  [4;35;1mSQL (0.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CoursesController#create (for 127.0.0.1 at 2009-10-01 18:29:02) [POST]
+  Parameters: {"commit"=>"Create", "authenticity_token"=>"NKPfJNTwMNA0251mO8NPcWF5EOGSFVcmZcDET2czYXc=", "course"=>{"name"=>""}}
+
+ActionController::ActionControllerError (Cannot redirect to nil!):
+  app/controllers/courses_controller.rb:46:in `create'
+  haml (2.2.6) lib/sass/plugin/rails.rb:19:in `process'
+  lib/flash_session_cookie_middleware.rb:14:in `call'
+  -e:2:in `load'
+  -e:2
+
+Rendered rescues/_trace (110.0ms)
+Rendered rescues/_request_and_response (0.0ms)
+Rendering rescues/layout (internal_server_error)
+  [4;35;1mSQL (0.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing BaseController#site_index (for 127.0.0.1 at 2009-10-01 18:29:31) [GET]
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;35;1mPost Load (0.0ms)[0m   [0mSELECT * FROM `posts` WHERE (published_as = 'live') ORDER BY posts.published_at DESC LIMIT 5[0m
+  [4;36;1mHomepageFeature Load (0.0ms)[0m   [0;1mSELECT * FROM `homepage_features` WHERE (parent_id IS NULL) ORDER BY created_at DESC[0m
+  [4;35;1mActivity Load (0.0ms)[0m   [0mSELECT activities.user_id, count(*) as count FROM `activities` LEFT JOIN users ON users.id = activities.user_id WHERE (activities.created_at > '2009-09-24 21:29:32') GROUP BY activities.user_id ORDER BY count DESC LIMIT 5[0m
+  [4;36;1mPost Columns (16.0ms)[0m   [0;1mSHOW FIELDS FROM `posts`[0m
+  [4;35;1mUser Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mPost Load Including Associations (16.0ms)[0m   [0;1mSELECT `posts`.`id` AS t0_r0, `posts`.`created_at` AS t0_r1, `posts`.`updated_at` AS t0_r2, `posts`.`raw_post` AS t0_r3, `posts`.`post` AS t0_r4, `posts`.`title` AS t0_r5, `posts`.`category_id` AS t0_r6, `posts`.`user_id` AS t0_r7, `posts`.`view_count` AS t0_r8, `posts`.`contest_id` AS t0_r9, `posts`.`emailed_count` AS t0_r10, `posts`.`favorited_count` AS t0_r11, `posts`.`published_as` AS t0_r12, `posts`.`published_at` AS t0_r13, `users`.`id` AS t1_r0, `users`.`login` AS t1_r1, `users`.`email` AS t1_r2, `users`.`description` AS t1_r3, `users`.`avatar_id` AS t1_r4, `users`.`crypted_password` AS t1_r5, `users`.`salt` AS t1_r6, `users`.`created_at` AS t1_r7, `users`.`updated_at` AS t1_r8, `users`.`remember_token` AS t1_r9, `users`.`remember_token_expires_at` AS t1_r10, `users`.`stylesheet` AS t1_r11, `users`.`view_count` AS t1_r12, `users`.`vendor` AS t1_r13, `users`.`activation_code` AS t1_r14, `users`.`activated_at` AS t1_r15, `users`.`state_id` AS t1_r16, `users`.`metro_area_id` AS t1_r17, `users`.`login_slug` AS t1_r18, `users`.`notify_comments` AS t1_r19, `users`.`notify_friend_requests` AS t1_r20, `users`.`notify_community_news` AS t1_r21, `users`.`country_id` AS t1_r22, `users`.`featured_writer` AS t1_r23, `users`.`last_login_at` AS t1_r24, `users`.`zip` AS t1_r25, `users`.`birthday` AS t1_r26, `users`.`gender` AS t1_r27, `users`.`profile_public` AS t1_r28, `users`.`activities_count` AS t1_r29, `users`.`sb_posts_count` AS t1_r30, `users`.`sb_last_seen_at` AS t1_r31, `users`.`role_id` AS t1_r32 FROM `posts` LEFT OUTER JOIN `users` ON `users`.id = `posts`.user_id WHERE ((users.featured_writer = 1) AND (published_as = 'live')) ORDER BY posts.published_at DESC LIMIT 10[0m
+  [4;35;1mTopic Load (0.0ms)[0m   [0mSELECT * FROM `topics` ORDER BY replied_at DESC LIMIT 5[0m
+  [4;36;1mContest Load (0.0ms)[0m   [0;1mSELECT * FROM `contests` WHERE (begin_date < '2009-10-01 18:29:32' AND end_date > '2009-10-01 18:29:32') ORDER BY created_at desc LIMIT 1[0m
+  [4;35;1mPost Load (0.0ms)[0m   [0mSELECT * FROM `posts` WHERE ((posts.published_at > '2009-09-24 21:29:32') AND (published_as = 'live')) ORDER BY posts.view_count DESC LIMIT 10[0m
+  [4;36;1mPoll Load (15.0ms)[0m   [0;1mSELECT * FROM `polls` WHERE (polls.created_at > '2009-09-21 21:29:33') ORDER BY polls.votes_count desc LIMIT 8[0m
+Rendering template within layouts/application
+Rendering base/site_index
+  [4;35;1mUser Load (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 1) LIMIT 1[0m
+Rendered shared/_box (0.0ms)
+  [4;36;1mCategory Load (0.0ms)[0m   [0;1mSELECT * FROM `categories` [0m
+  [4;35;1mPage Load (0.0ms)[0m   [0mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+  [4;36;1mPage Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `pages`[0m
+Rendered shared/_box (0.0ms)
+Rendered shared/_explore (547.0ms)
+Rendered shared/_box (0.0ms)
+  [4;35;1mUser Load (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (users.featured_writer = 1) [0m
+Rendered shared/_box (0.0ms)
+Rendered shared/_box (0.0ms)
+Rendered shared/_scripts_and_styles (16.0ms)
+  [4;36;1mRole Load (0.0ms)[0m   [0;1mSELECT * FROM `roles` [0m
+  [4;35;1mRole Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `roles`[0m
+Rendered shared/_user_menu (109.0ms)
+  [4;36;1mMessage Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `messages`[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSELECT count(*) AS count_all FROM `messages` WHERE (recipient_id = 1 AND recipient_deleted = 0 AND read_at IS NULL) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `categories` [0m
+Rendered shared/_header (125.0ms)
+Rendered shared/_messages (0.0ms)
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+Completed in 1797ms (View: 688, DB: 47) | 200 OK [http://127.0.0.1/]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing BaseController#footer_content (for 127.0.0.1 at 2009-10-01 18:29:36) [POST]
+  Parameters: {"authenticity_token"=>"NKPfJNTwMNA0251mO8NPcWF5EOGSFVcmZcDET2czYXc="}
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;36;1mClipping Load (0.0ms)[0m   [0;1mSELECT * FROM `clippings` WHERE (created_at > '2009-09-24 21:29:36') ORDER BY created_at DESC LIMIT 10[0m
+  [4;35;1mPhoto Load (0.0ms)[0m   [0mSELECT * FROM `photos` WHERE (photos.created_at > '2009-09-24 21:29:35' AND photos.parent_id IS NULL) ORDER BY photos.created_at DESC LIMIT 10[0m
+  [4;36;1mComment Load (0.0ms)[0m   [0;1mSELECT * FROM `comments` WHERE (created_at > '2009-09-17 21:29:36') ORDER BY created_at DESC LIMIT 13[0m
+  [4;35;1mTag Load (0.0ms)[0m   [0mSELECT tags.id, tags.name, count(*) AS count 
+ FROM taggings, tags 
+ WHERE tags.id = taggings.tag_id GROUP BY tags.id, tags.name ORDER BY count DESC LIMIT 30[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSELECT count(activities.id) AS count_activities_id FROM `activities` [0m
+  [4;35;1mActivity Load (0.0ms)[0m   [0mSELECT * FROM `activities` ORDER BY activities.created_at DESC LIMIT 0, 0[0m
+Rendered shared/_box (0.0ms)
+Rendered shared/_box (0.0ms)
+Rendered shared/_footer_content (343.0ms)
+Completed in 562ms (View: 359, DB: 0) | 200 OK [http://127.0.0.1/base/footer_content]
+
+
+Processing CoursesController#index (for 127.0.0.1 at 2009-10-01 18:29:37) [GET]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mCourse Load (0.0ms)[0m   [0;1mSELECT * FROM `courses` [0m
+Rendering template within layouts/courses
+Rendering courses/index
+  [4;35;1mCourse Columns (15.0ms)[0m   [0mSHOW FIELDS FROM `courses`[0m
+Completed in 406ms (View: 0, DB: 15) | 200 OK [http://127.0.0.1/courses]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CoursesController#new (for 127.0.0.1 at 2009-10-01 18:29:40) [GET]
+  [4;36;1mCourse Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `courses`[0m
+Rendering template within layouts/courses
+Rendering courses/new
+Completed in 109ms (View: 15, DB: 0) | 200 OK [http://127.0.0.1/courses/new]
+  [4;35;1mSQL (0.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CoursesController#create (for 127.0.0.1 at 2009-10-01 18:29:42) [POST]
+  Parameters: {"commit"=>"Create", "authenticity_token"=>"NKPfJNTwMNA0251mO8NPcWF5EOGSFVcmZcDET2czYXc=", "course"=>{"name"=>""}}
+  [4;35;1mCourse Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `courses`[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mROLLBACK[0m
+Rendering template within layouts/courses
+Rendering courses/new
+Completed in 453ms (View: 16, DB: 0) | 200 OK [http://127.0.0.1/courses]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing BaseController#site_index (for 127.0.0.1 at 2009-10-01 18:31:41) [GET]
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;36;1mPost Load (0.0ms)[0m   [0;1mSELECT * FROM `posts` WHERE (published_as = 'live') ORDER BY posts.published_at DESC LIMIT 5[0m
+  [4;35;1mHomepageFeature Load (0.0ms)[0m   [0mSELECT * FROM `homepage_features` WHERE (parent_id IS NULL) ORDER BY created_at DESC[0m
+  [4;36;1mActivity Load (0.0ms)[0m   [0;1mSELECT activities.user_id, count(*) as count FROM `activities` LEFT JOIN users ON users.id = activities.user_id WHERE (activities.created_at > '2009-09-24 21:31:42') GROUP BY activities.user_id ORDER BY count DESC LIMIT 5[0m
+  [4;35;1mPost Columns (16.0ms)[0m   [0mSHOW FIELDS FROM `posts`[0m
+  [4;36;1mUser Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mPost Load Including Associations (15.0ms)[0m   [0mSELECT `posts`.`id` AS t0_r0, `posts`.`created_at` AS t0_r1, `posts`.`updated_at` AS t0_r2, `posts`.`raw_post` AS t0_r3, `posts`.`post` AS t0_r4, `posts`.`title` AS t0_r5, `posts`.`category_id` AS t0_r6, `posts`.`user_id` AS t0_r7, `posts`.`view_count` AS t0_r8, `posts`.`contest_id` AS t0_r9, `posts`.`emailed_count` AS t0_r10, `posts`.`favorited_count` AS t0_r11, `posts`.`published_as` AS t0_r12, `posts`.`published_at` AS t0_r13, `users`.`id` AS t1_r0, `users`.`login` AS t1_r1, `users`.`email` AS t1_r2, `users`.`description` AS t1_r3, `users`.`avatar_id` AS t1_r4, `users`.`crypted_password` AS t1_r5, `users`.`salt` AS t1_r6, `users`.`created_at` AS t1_r7, `users`.`updated_at` AS t1_r8, `users`.`remember_token` AS t1_r9, `users`.`remember_token_expires_at` AS t1_r10, `users`.`stylesheet` AS t1_r11, `users`.`view_count` AS t1_r12, `users`.`vendor` AS t1_r13, `users`.`activation_code` AS t1_r14, `users`.`activated_at` AS t1_r15, `users`.`state_id` AS t1_r16, `users`.`metro_area_id` AS t1_r17, `users`.`login_slug` AS t1_r18, `users`.`notify_comments` AS t1_r19, `users`.`notify_friend_requests` AS t1_r20, `users`.`notify_community_news` AS t1_r21, `users`.`country_id` AS t1_r22, `users`.`featured_writer` AS t1_r23, `users`.`last_login_at` AS t1_r24, `users`.`zip` AS t1_r25, `users`.`birthday` AS t1_r26, `users`.`gender` AS t1_r27, `users`.`profile_public` AS t1_r28, `users`.`activities_count` AS t1_r29, `users`.`sb_posts_count` AS t1_r30, `users`.`sb_last_seen_at` AS t1_r31, `users`.`role_id` AS t1_r32 FROM `posts` LEFT OUTER JOIN `users` ON `users`.id = `posts`.user_id WHERE ((users.featured_writer = 1) AND (published_as = 'live')) ORDER BY posts.published_at DESC LIMIT 10[0m
+  [4;36;1mTopic Load (0.0ms)[0m   [0;1mSELECT * FROM `topics` ORDER BY replied_at DESC LIMIT 5[0m
+  [4;35;1mContest Load (0.0ms)[0m   [0mSELECT * FROM `contests` WHERE (begin_date < '2009-10-01 18:31:43' AND end_date > '2009-10-01 18:31:43') ORDER BY created_at desc LIMIT 1[0m
+  [4;36;1mPost Load (0.0ms)[0m   [0;1mSELECT * FROM `posts` WHERE ((posts.published_at > '2009-09-24 21:31:43') AND (published_as = 'live')) ORDER BY posts.view_count DESC LIMIT 10[0m
+  [4;35;1mPoll Load (0.0ms)[0m   [0mSELECT * FROM `polls` WHERE (polls.created_at > '2009-09-21 21:31:43') ORDER BY polls.votes_count desc LIMIT 8[0m
+Rendering template within layouts/application
+Rendering base/site_index
+  [4;36;1mUser Load (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 1) LIMIT 1[0m
+Rendered shared/_box (0.0ms)
+  [4;35;1mCategory Load (0.0ms)[0m   [0mSELECT * FROM `categories` [0m
+  [4;36;1mPage Load (0.0ms)[0m   [0;1mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+  [4;35;1mPage Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `pages`[0m
+Rendered shared/_box (0.0ms)
+Rendered shared/_explore (609.0ms)
+Rendered shared/_box (0.0ms)
+  [4;36;1mUser Load (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (users.featured_writer = 1) [0m
+Rendered shared/_box (0.0ms)
+Rendered shared/_box (0.0ms)
+Rendered shared/_scripts_and_styles (219.0ms)
+  [4;35;1mRole Load (0.0ms)[0m   [0mSELECT * FROM `roles` [0m
+  [4;36;1mRole Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `roles`[0m
+Rendered shared/_user_menu (94.0ms)
+  [4;35;1mMessage Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `messages`[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `messages` WHERE (recipient_id = 1 AND recipient_deleted = 0 AND read_at IS NULL) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `categories` [0m
+Rendered shared/_header (109.0ms)
+Rendered shared/_messages (0.0ms)
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+Completed in 2359ms (View: 1125, DB: 31) | 200 OK [http://127.0.0.1/]
+  [4;35;1mSQL (0.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing BaseController#footer_content (for 127.0.0.1 at 2009-10-01 18:31:47) [POST]
+  Parameters: {"authenticity_token"=>"NKPfJNTwMNA0251mO8NPcWF5EOGSFVcmZcDET2czYXc="}
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;35;1mClipping Load (0.0ms)[0m   [0mSELECT * FROM `clippings` WHERE (created_at > '2009-09-24 21:31:47') ORDER BY created_at DESC LIMIT 10[0m
+  [4;36;1mPhoto Load (0.0ms)[0m   [0;1mSELECT * FROM `photos` WHERE (photos.created_at > '2009-09-24 21:31:46' AND photos.parent_id IS NULL) ORDER BY photos.created_at DESC LIMIT 10[0m
+  [4;35;1mComment Load (0.0ms)[0m   [0mSELECT * FROM `comments` WHERE (created_at > '2009-09-17 21:31:47') ORDER BY created_at DESC LIMIT 13[0m
+  [4;36;1mTag Load (0.0ms)[0m   [0;1mSELECT tags.id, tags.name, count(*) AS count 
+ FROM taggings, tags 
+ WHERE tags.id = taggings.tag_id GROUP BY tags.id, tags.name ORDER BY count DESC LIMIT 30[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSELECT count(activities.id) AS count_activities_id FROM `activities` [0m
+  [4;36;1mActivity Load (0.0ms)[0m   [0;1mSELECT * FROM `activities` ORDER BY activities.created_at DESC LIMIT 0, 0[0m
+Rendered shared/_box (0.0ms)
+Rendered shared/_box (0.0ms)
+Rendered shared/_footer_content (328.0ms)
+Completed in 750ms (View: 344, DB: 0) | 200 OK [http://127.0.0.1/base/footer_content]
+  [4;35;1mSQL (0.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing BaseController#site_index (for 127.0.0.1 at 2009-10-01 18:32:13) [GET]
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;35;1mPost Load (15.0ms)[0m   [0mSELECT * FROM `posts` WHERE (published_as = 'live') ORDER BY posts.published_at DESC LIMIT 5[0m
+  [4;36;1mHomepageFeature Load (0.0ms)[0m   [0;1mSELECT * FROM `homepage_features` WHERE (parent_id IS NULL) ORDER BY created_at DESC[0m
+  [4;35;1mActivity Load (0.0ms)[0m   [0mSELECT activities.user_id, count(*) as count FROM `activities` LEFT JOIN users ON users.id = activities.user_id WHERE (activities.created_at > '2009-09-24 21:32:14') GROUP BY activities.user_id ORDER BY count DESC LIMIT 5[0m
+  [4;36;1mPost Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `posts`[0m
+  [4;35;1mUser Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mPost Load Including Associations (0.0ms)[0m   [0;1mSELECT `posts`.`id` AS t0_r0, `posts`.`created_at` AS t0_r1, `posts`.`updated_at` AS t0_r2, `posts`.`raw_post` AS t0_r3, `posts`.`post` AS t0_r4, `posts`.`title` AS t0_r5, `posts`.`category_id` AS t0_r6, `posts`.`user_id` AS t0_r7, `posts`.`view_count` AS t0_r8, `posts`.`contest_id` AS t0_r9, `posts`.`emailed_count` AS t0_r10, `posts`.`favorited_count` AS t0_r11, `posts`.`published_as` AS t0_r12, `posts`.`published_at` AS t0_r13, `users`.`id` AS t1_r0, `users`.`login` AS t1_r1, `users`.`email` AS t1_r2, `users`.`description` AS t1_r3, `users`.`avatar_id` AS t1_r4, `users`.`crypted_password` AS t1_r5, `users`.`salt` AS t1_r6, `users`.`created_at` AS t1_r7, `users`.`updated_at` AS t1_r8, `users`.`remember_token` AS t1_r9, `users`.`remember_token_expires_at` AS t1_r10, `users`.`stylesheet` AS t1_r11, `users`.`view_count` AS t1_r12, `users`.`vendor` AS t1_r13, `users`.`activation_code` AS t1_r14, `users`.`activated_at` AS t1_r15, `users`.`state_id` AS t1_r16, `users`.`metro_area_id` AS t1_r17, `users`.`login_slug` AS t1_r18, `users`.`notify_comments` AS t1_r19, `users`.`notify_friend_requests` AS t1_r20, `users`.`notify_community_news` AS t1_r21, `users`.`country_id` AS t1_r22, `users`.`featured_writer` AS t1_r23, `users`.`last_login_at` AS t1_r24, `users`.`zip` AS t1_r25, `users`.`birthday` AS t1_r26, `users`.`gender` AS t1_r27, `users`.`profile_public` AS t1_r28, `users`.`activities_count` AS t1_r29, `users`.`sb_posts_count` AS t1_r30, `users`.`sb_last_seen_at` AS t1_r31, `users`.`role_id` AS t1_r32 FROM `posts` LEFT OUTER JOIN `users` ON `users`.id = `posts`.user_id WHERE ((users.featured_writer = 1) AND (published_as = 'live')) ORDER BY posts.published_at DESC LIMIT 10[0m
+  [4;35;1mTopic Load (15.0ms)[0m   [0mSELECT * FROM `topics` ORDER BY replied_at DESC LIMIT 5[0m
+  [4;36;1mContest Load (0.0ms)[0m   [0;1mSELECT * FROM `contests` WHERE (begin_date < '2009-10-01 18:32:14' AND end_date > '2009-10-01 18:32:14') ORDER BY created_at desc LIMIT 1[0m
+  [4;35;1mPost Load (16.0ms)[0m   [0mSELECT * FROM `posts` WHERE ((posts.published_at > '2009-09-24 21:32:14') AND (published_as = 'live')) ORDER BY posts.view_count DESC LIMIT 10[0m
+  [4;36;1mPoll Load (0.0ms)[0m   [0;1mSELECT * FROM `polls` WHERE (polls.created_at > '2009-09-21 21:32:14') ORDER BY polls.votes_count desc LIMIT 8[0m
+Rendering template within layouts/application
+Rendering base/site_index
+  [4;35;1mUser Load (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 1) LIMIT 1[0m
+Rendered shared/_box (0.0ms)
+  [4;36;1mCategory Load (0.0ms)[0m   [0;1mSELECT * FROM `categories` [0m
+  [4;35;1mPage Load (16.0ms)[0m   [0mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+  [4;36;1mPage Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `pages`[0m
+Rendered shared/_box (0.0ms)
+Rendered shared/_explore (328.0ms)
+Rendered shared/_box (0.0ms)
+  [4;35;1mUser Load (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (users.featured_writer = 1) [0m
+Rendered shared/_box (0.0ms)
+Rendered shared/_box (0.0ms)
+Rendered shared/_scripts_and_styles (16.0ms)
+  [4;36;1mRole Load (0.0ms)[0m   [0;1mSELECT * FROM `roles` [0m
+  [4;35;1mRole Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `roles`[0m
+Rendered shared/_user_menu (297.0ms)
+  [4;36;1mMessage Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `messages`[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSELECT count(*) AS count_all FROM `messages` WHERE (recipient_id = 1 AND recipient_deleted = 0 AND read_at IS NULL) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `categories` [0m
+Rendered shared/_header (313.0ms)
+Rendered shared/_messages (0.0ms)
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+Completed in 1735ms (View: 656, DB: 62) | 200 OK [http://127.0.0.1/]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing BaseController#footer_content (for 127.0.0.1 at 2009-10-01 18:32:18) [POST]
+  Parameters: {"authenticity_token"=>"NKPfJNTwMNA0251mO8NPcWF5EOGSFVcmZcDET2czYXc="}
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;36;1mClipping Load (0.0ms)[0m   [0;1mSELECT * FROM `clippings` WHERE (created_at > '2009-09-24 21:32:18') ORDER BY created_at DESC LIMIT 10[0m
+  [4;35;1mPhoto Load (0.0ms)[0m   [0mSELECT * FROM `photos` WHERE (photos.created_at > '2009-09-24 21:32:18' AND photos.parent_id IS NULL) ORDER BY photos.created_at DESC LIMIT 10[0m
+  [4;36;1mComment Load (0.0ms)[0m   [0;1mSELECT * FROM `comments` WHERE (created_at > '2009-09-17 21:32:18') ORDER BY created_at DESC LIMIT 13[0m
+  [4;35;1mTag Load (0.0ms)[0m   [0mSELECT tags.id, tags.name, count(*) AS count 
+ FROM taggings, tags 
+ WHERE tags.id = taggings.tag_id GROUP BY tags.id, tags.name ORDER BY count DESC LIMIT 30[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSELECT count(activities.id) AS count_activities_id FROM `activities` [0m
+  [4;35;1mActivity Load (0.0ms)[0m   [0mSELECT * FROM `activities` ORDER BY activities.created_at DESC LIMIT 0, 0[0m
+Rendered shared/_box (0.0ms)
+Rendered shared/_box (0.0ms)
+Rendered shared/_footer_content (344.0ms)
+Completed in 766ms (View: 359, DB: 0) | 200 OK [http://127.0.0.1/base/footer_content]
+
+
+Processing CoursesController#index (for 127.0.0.1 at 2009-10-01 18:32:19) [GET]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mCourse Load (0.0ms)[0m   [0;1mSELECT * FROM `courses` [0m
+Rendering template within layouts/courses
+Rendering courses/index
+  [4;35;1mCourse Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `courses`[0m
+Completed in 422ms (View: 31, DB: 0) | 200 OK [http://127.0.0.1/courses]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CoursesController#new (for 127.0.0.1 at 2009-10-01 18:32:22) [GET]
+  [4;36;1mCourse Columns (16.0ms)[0m   [0;1mSHOW FIELDS FROM `courses`[0m
+Rendering template within layouts/courses
+Rendering courses/new
+Completed in 109ms (View: 0, DB: 16) | 200 OK [http://127.0.0.1/courses/new]
+  [4;35;1mSQL (0.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CoursesController#create (for 127.0.0.1 at 2009-10-01 18:32:25) [POST]
+  Parameters: {"commit"=>"Create", "authenticity_token"=>"NKPfJNTwMNA0251mO8NPcWF5EOGSFVcmZcDET2czYXc=", "course"=>{"name"=>""}}
+  [4;35;1mCourse Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `courses`[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mROLLBACK[0m
+Rendering template within layouts/courses
+Rendering courses/new
+Completed in 453ms (View: 15, DB: 0) | 200 OK [http://127.0.0.1/courses]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CoursesController#index (for 127.0.0.1 at 2009-10-01 18:33:33) [GET]
+  [4;36;1mCourse Load (16.0ms)[0m   [0;1mSELECT * FROM `courses` [0m
+Rendering template within layouts/courses
+Rendering courses/index
+  [4;35;1mCourse Columns (16.0ms)[0m   [0mSHOW FIELDS FROM `courses`[0m
+Completed in 360ms (View: 0, DB: 32) | 200 OK [http://127.0.0.1/courses]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing BaseController#site_index (for 127.0.0.1 at 2009-10-01 18:34:38) [GET]
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;36;1mPost Load (0.0ms)[0m   [0;1mSELECT * FROM `posts` WHERE (published_as = 'live') ORDER BY posts.published_at DESC LIMIT 5[0m
+  [4;35;1mHomepageFeature Load (0.0ms)[0m   [0mSELECT * FROM `homepage_features` WHERE (parent_id IS NULL) ORDER BY created_at DESC[0m
+  [4;36;1mActivity Load (15.0ms)[0m   [0;1mSELECT activities.user_id, count(*) as count FROM `activities` LEFT JOIN users ON users.id = activities.user_id WHERE (activities.created_at > '2009-09-24 21:34:39') GROUP BY activities.user_id ORDER BY count DESC LIMIT 5[0m
+  [4;35;1mPost Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `posts`[0m
+  [4;36;1mUser Columns (16.0ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mPost Load Including Associations (0.0ms)[0m   [0mSELECT `posts`.`id` AS t0_r0, `posts`.`created_at` AS t0_r1, `posts`.`updated_at` AS t0_r2, `posts`.`raw_post` AS t0_r3, `posts`.`post` AS t0_r4, `posts`.`title` AS t0_r5, `posts`.`category_id` AS t0_r6, `posts`.`user_id` AS t0_r7, `posts`.`view_count` AS t0_r8, `posts`.`contest_id` AS t0_r9, `posts`.`emailed_count` AS t0_r10, `posts`.`favorited_count` AS t0_r11, `posts`.`published_as` AS t0_r12, `posts`.`published_at` AS t0_r13, `users`.`id` AS t1_r0, `users`.`login` AS t1_r1, `users`.`email` AS t1_r2, `users`.`description` AS t1_r3, `users`.`avatar_id` AS t1_r4, `users`.`crypted_password` AS t1_r5, `users`.`salt` AS t1_r6, `users`.`created_at` AS t1_r7, `users`.`updated_at` AS t1_r8, `users`.`remember_token` AS t1_r9, `users`.`remember_token_expires_at` AS t1_r10, `users`.`stylesheet` AS t1_r11, `users`.`view_count` AS t1_r12, `users`.`vendor` AS t1_r13, `users`.`activation_code` AS t1_r14, `users`.`activated_at` AS t1_r15, `users`.`state_id` AS t1_r16, `users`.`metro_area_id` AS t1_r17, `users`.`login_slug` AS t1_r18, `users`.`notify_comments` AS t1_r19, `users`.`notify_friend_requests` AS t1_r20, `users`.`notify_community_news` AS t1_r21, `users`.`country_id` AS t1_r22, `users`.`featured_writer` AS t1_r23, `users`.`last_login_at` AS t1_r24, `users`.`zip` AS t1_r25, `users`.`birthday` AS t1_r26, `users`.`gender` AS t1_r27, `users`.`profile_public` AS t1_r28, `users`.`activities_count` AS t1_r29, `users`.`sb_posts_count` AS t1_r30, `users`.`sb_last_seen_at` AS t1_r31, `users`.`role_id` AS t1_r32 FROM `posts` LEFT OUTER JOIN `users` ON `users`.id = `posts`.user_id WHERE ((users.featured_writer = 1) AND (published_as = 'live')) ORDER BY posts.published_at DESC LIMIT 10[0m
+  [4;36;1mTopic Load (0.0ms)[0m   [0;1mSELECT * FROM `topics` ORDER BY replied_at DESC LIMIT 5[0m
+  [4;35;1mContest Load (0.0ms)[0m   [0mSELECT * FROM `contests` WHERE (begin_date < '2009-10-01 18:34:39' AND end_date > '2009-10-01 18:34:39') ORDER BY created_at desc LIMIT 1[0m
+  [4;36;1mPost Load (0.0ms)[0m   [0;1mSELECT * FROM `posts` WHERE ((posts.published_at > '2009-09-24 21:34:39') AND (published_as = 'live')) ORDER BY posts.view_count DESC LIMIT 10[0m
+  [4;35;1mPoll Load (0.0ms)[0m   [0mSELECT * FROM `polls` WHERE (polls.created_at > '2009-09-21 21:34:39') ORDER BY polls.votes_count desc LIMIT 8[0m
+Rendering template within layouts/application
+Rendering base/site_index
+  [4;36;1mUser Load (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 1) LIMIT 1[0m
+Rendered shared/_box (0.0ms)
+  [4;35;1mCategory Load (0.0ms)[0m   [0mSELECT * FROM `categories` [0m
+  [4;36;1mPage Load (0.0ms)[0m   [0;1mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+  [4;35;1mPage Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `pages`[0m
+Rendered shared/_box (16.0ms)
+Rendered shared/_explore (547.0ms)
+Rendered shared/_box (0.0ms)
+  [4;36;1mUser Load (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (users.featured_writer = 1) [0m
+Rendered shared/_box (0.0ms)
+Rendered shared/_box (0.0ms)
+Rendered shared/_scripts_and_styles (15.0ms)
+  [4;35;1mRole Load (0.0ms)[0m   [0mSELECT * FROM `roles` [0m
+  [4;36;1mRole Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `roles`[0m
+Rendered shared/_user_menu (110.0ms)
+  [4;35;1mMessage Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `messages`[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `messages` WHERE (recipient_id = 1 AND recipient_deleted = 0 AND read_at IS NULL) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `categories` [0m
+Rendered shared/_header (125.0ms)
+Rendered shared/_messages (0.0ms)
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+Completed in 1750ms (View: 703, DB: 31) | 200 OK [http://127.0.0.1/]
+  [4;35;1mSQL (0.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing BaseController#footer_content (for 127.0.0.1 at 2009-10-01 18:34:43) [POST]
+  Parameters: {"authenticity_token"=>"NKPfJNTwMNA0251mO8NPcWF5EOGSFVcmZcDET2czYXc="}
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;35;1mClipping Load (0.0ms)[0m   [0mSELECT * FROM `clippings` WHERE (created_at > '2009-09-24 21:34:43') ORDER BY created_at DESC LIMIT 10[0m
+  [4;36;1mPhoto Load (0.0ms)[0m   [0;1mSELECT * FROM `photos` WHERE (photos.created_at > '2009-09-24 21:34:42' AND photos.parent_id IS NULL) ORDER BY photos.created_at DESC LIMIT 10[0m
+  [4;35;1mComment Load (0.0ms)[0m   [0mSELECT * FROM `comments` WHERE (created_at > '2009-09-17 21:34:43') ORDER BY created_at DESC LIMIT 13[0m
+  [4;36;1mTag Load (0.0ms)[0m   [0;1mSELECT tags.id, tags.name, count(*) AS count 
+ FROM taggings, tags 
+ WHERE tags.id = taggings.tag_id GROUP BY tags.id, tags.name ORDER BY count DESC LIMIT 30[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSELECT count(activities.id) AS count_activities_id FROM `activities` [0m
+  [4;36;1mActivity Load (0.0ms)[0m   [0;1mSELECT * FROM `activities` ORDER BY activities.created_at DESC LIMIT 0, 0[0m
+Rendered shared/_box (0.0ms)
+Rendered shared/_box (0.0ms)
+Rendered shared/_footer_content (563.0ms)
+Completed in 782ms (View: 578, DB: 0) | 200 OK [http://127.0.0.1/base/footer_content]
+
+
+Processing SchoolsController#index (for 127.0.0.1 at 2009-10-01 18:34:44) [GET]
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;35;1mSQL (0.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSchool Load (0.0ms)[0m   [0mSELECT * FROM `schools` [0m
+Rendering template within layouts/application
+Rendering schools/index
+  [4;36;1mSchool Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `schools`[0m
+  [4;35;1mUser Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 1) LIMIT 1[0m
+  [4;35;1mRole Load (0.0ms)[0m   [0mSELECT * FROM `roles` [0m
+  [4;36;1mRole Columns (16.0ms)[0m   [0;1mSHOW FIELDS FROM `roles`[0m
+Rendered shared/_scripts_and_styles (0.0ms)
+Rendered shared/_user_menu (16.0ms)
+  [4;35;1mMessage Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `messages`[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `messages` WHERE (recipient_id = 1 AND recipient_deleted = 0 AND read_at IS NULL) [0m
+  [4;35;1mCategory Load (0.0ms)[0m   [0mSELECT * FROM `categories` [0m
+Rendered shared/_header (172.0ms)
+Rendered shared/_messages (0.0ms)
+  [4;36;1mPage Load (0.0ms)[0m   [0;1mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+  [4;35;1mPage Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `pages`[0m
+Completed in 1656ms (View: 1547, DB: 16) | 200 OK [http://127.0.0.1/schools]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CoursesController#index (for 127.0.0.1 at 2009-10-01 18:38:13) [GET]
+  [4;36;1mCourse Load (0.0ms)[0m   [0;1mSELECT * FROM `courses` [0m
+Rendering template within layouts/courses
+Rendering courses/index
+  [4;35;1mCourse Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `courses`[0m
+Completed in 344ms (View: 32, DB: 0) | 200 OK [http://127.0.0.1/courses]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SchoolsController#index (for 127.0.0.1 at 2009-10-01 18:38:18) [GET]
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;36;1mSchool Load (0.0ms)[0m   [0;1mSELECT * FROM `schools` [0m
+Rendering template within layouts/application
+Rendering schools/index
+  [4;35;1mSchool Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `schools`[0m
+  [4;36;1mUser Columns (16.0ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 1) LIMIT 1[0m
+  [4;36;1mRole Load (0.0ms)[0m   [0;1mSELECT * FROM `roles` [0m
+  [4;35;1mRole Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `roles`[0m
+Rendered shared/_scripts_and_styles (0.0ms)
+Rendered shared/_user_menu (16.0ms)
+  [4;36;1mMessage Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `messages`[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSELECT count(*) AS count_all FROM `messages` WHERE (recipient_id = 1 AND recipient_deleted = 0 AND read_at IS NULL) [0m
+  [4;36;1mCategory Load (0.0ms)[0m   [0;1mSELECT * FROM `categories` [0m
+Rendered shared/_header (172.0ms)
+Rendered shared/_messages (0.0ms)
+  [4;35;1mPage Load (0.0ms)[0m   [0mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+  [4;36;1mPage Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `pages`[0m
+Completed in 1328ms (View: 1015, DB: 16) | 200 OK [http://127.0.0.1/schools]
+  [4;35;1mSQL (0.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CoursesController#index (for 127.0.0.1 at 2009-10-01 18:40:05) [GET]
+  [4;35;1mCourse Load (0.0ms)[0m   [0mSELECT * FROM `courses` [0m
+Rendering template within layouts/courses
+Rendering courses/index
+  [4;36;1mCourse Columns (15.0ms)[0m   [0;1mSHOW FIELDS FROM `courses`[0m
+Completed in 188ms (View: 16, DB: 15) | 200 OK [http://127.0.0.1/courses]
+  [4;35;1mSQL (0.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SchoolsController#index (for 127.0.0.1 at 2009-10-01 18:40:11) [GET]
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;35;1mSchool Load (0.0ms)[0m   [0mSELECT * FROM `schools` [0m
+Rendering template within layouts/application
+Rendering schools/index
+  [4;36;1mSchool Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `schools`[0m
+  [4;35;1mUser Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 1) LIMIT 1[0m
+  [4;35;1mRole Load (0.0ms)[0m   [0mSELECT * FROM `roles` [0m
+  [4;36;1mRole Columns (16.0ms)[0m   [0;1mSHOW FIELDS FROM `roles`[0m
+Rendered shared/_scripts_and_styles (31.0ms)
+Rendered shared/_user_menu (0.0ms)
+  [4;35;1mMessage Columns (16.0ms)[0m   [0mSHOW FIELDS FROM `messages`[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `messages` WHERE (recipient_id = 1 AND recipient_deleted = 0 AND read_at IS NULL) [0m
+  [4;35;1mCategory Load (0.0ms)[0m   [0mSELECT * FROM `categories` [0m
+Rendered shared/_header (266.0ms)
+Rendered shared/_messages (0.0ms)
+  [4;36;1mPage Load (0.0ms)[0m   [0;1mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+  [4;35;1mPage Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `pages`[0m
+Completed in 1766ms (View: 1578, DB: 32) | 200 OK [http://127.0.0.1/schools]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SchoolsController#index (for 127.0.0.1 at 2009-10-01 18:42:09) [GET]
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;36;1mSchool Load (0.0ms)[0m   [0;1mSELECT * FROM `schools` [0m
+Rendering template within layouts/application
+Rendering schools/index
+  [4;35;1mSchool Columns (16.0ms)[0m   [0mSHOW FIELDS FROM `schools`[0m
+  [4;36;1mUser Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 1) LIMIT 1[0m
+  [4;36;1mRole Load (0.0ms)[0m   [0;1mSELECT * FROM `roles` [0m
+  [4;35;1mRole Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `roles`[0m
+Rendered shared/_scripts_and_styles (16.0ms)
+Rendered shared/_user_menu (0.0ms)
+  [4;36;1mMessage Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `messages`[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSELECT count(*) AS count_all FROM `messages` WHERE (recipient_id = 1 AND recipient_deleted = 0 AND read_at IS NULL) [0m
+  [4;36;1mCategory Load (0.0ms)[0m   [0;1mSELECT * FROM `categories` [0m
+Rendered shared/_header (172.0ms)
+Rendered shared/_messages (0.0ms)
+  [4;35;1mPage Load (0.0ms)[0m   [0mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+  [4;36;1mPage Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `pages`[0m
+Completed in 1093ms (View: 984, DB: 16) | 200 OK [http://127.0.0.1/schools]
+  [4;35;1mSQL (0.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing ForumsController#index (for 127.0.0.1 at 2009-10-01 18:42:14) [GET]
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;35;1mForum Columns (32.0ms)[0m   [0mSHOW FIELDS FROM `forums`[0m
+  [4;36;1mForum Load (0.0ms)[0m   [0;1mSELECT * FROM `forums` ORDER BY position[0m
+Rendering template within layouts/application
+Rendering forums/index
+  [4;35;1mUser Columns (15.0ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 1) LIMIT 1[0m
+  [4;35;1mRole Load (0.0ms)[0m   [0mSELECT * FROM `roles` [0m
+  [4;36;1mRole Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `roles`[0m
+Rendered shared/_box (0.0ms)
+  [4;35;1mTopic Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `topics`[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `topics` [0m
+  [4;35;1mSbPost Columns (15.0ms)[0m   [0mSHOW FIELDS FROM `sb_posts`[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `sb_posts` [0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSELECT count(*) AS count_all FROM `users` WHERE (sb_posts_count>0) [0m
+  [4;36;1mUser Load (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (sb_last_seen_at > '2009-10-01 21:37:15') [0m
+Rendered shared/_box (0.0ms)
+Rendered shared/_scripts_and_styles (16.0ms)
+Rendered shared/_user_menu (15.0ms)
+  [4;35;1mMessage Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `messages`[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `messages` WHERE (recipient_id = 1 AND recipient_deleted = 0 AND read_at IS NULL) [0m
+  [4;35;1mCategory Load (0.0ms)[0m   [0mSELECT * FROM `categories` [0m
+Rendered shared/_header (203.0ms)
+Rendered shared/_messages (0.0ms)
+  [4;36;1mPage Load (0.0ms)[0m   [0;1mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+  [4;35;1mPage Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `pages`[0m
+Completed in 2719ms (View: 2345, DB: 62) | 200 OK [http://127.0.0.1/forums]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SchoolsController#index (for 127.0.0.1 at 2009-10-01 18:42:29) [GET]
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;36;1mSchool Load (0.0ms)[0m   [0;1mSELECT * FROM `schools` [0m
+Rendering template within layouts/application
+Rendering schools/index
+  [4;35;1mSchool Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `schools`[0m
+  [4;36;1mUser Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 1) LIMIT 1[0m
+  [4;36;1mRole Load (0.0ms)[0m   [0;1mSELECT * FROM `roles` [0m
+  [4;35;1mRole Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `roles`[0m
+Rendered shared/_scripts_and_styles (0.0ms)
+Rendered shared/_user_menu (0.0ms)
+  [4;36;1mMessage Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `messages`[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSELECT count(*) AS count_all FROM `messages` WHERE (recipient_id = 1 AND recipient_deleted = 0 AND read_at IS NULL) [0m
+  [4;36;1mCategory Load (0.0ms)[0m   [0;1mSELECT * FROM `categories` [0m
+Rendered shared/_header (171.0ms)
+Rendered shared/_messages (0.0ms)
+  [4;35;1mPage Load (0.0ms)[0m   [0mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+  [4;36;1mPage Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `pages`[0m
+Completed in 1344ms (View: 1047, DB: 0) | 200 OK [http://127.0.0.1/schools]
+  [4;35;1mSQL (0.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CoursesController#index (for 127.0.0.1 at 2009-10-01 18:42:35) [GET]
+  [4;35;1mCourse Load (0.0ms)[0m   [0mSELECT * FROM `courses` [0m
+Rendering template within layouts/courses
+Rendering courses/index
+  [4;36;1mCourse Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `courses`[0m
+Completed in 125ms (View: 15, DB: 0) | 200 OK [http://127.0.0.1/courses]
+  [4;35;1mSQL (0.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SchoolsController#index (for 127.0.0.1 at 2009-10-01 18:42:39) [GET]
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;35;1mSchool Load (0.0ms)[0m   [0mSELECT * FROM `schools` [0m
+Rendering template within layouts/application
+Rendering schools/index
+  [4;36;1mSchool Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `schools`[0m
+  [4;35;1mUser Columns (15.0ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 1) LIMIT 1[0m
+  [4;35;1mRole Load (0.0ms)[0m   [0mSELECT * FROM `roles` [0m
+  [4;36;1mRole Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `roles`[0m
+Rendered shared/_scripts_and_styles (0.0ms)
+Rendered shared/_user_menu (0.0ms)
+  [4;35;1mMessage Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `messages`[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `messages` WHERE (recipient_id = 1 AND recipient_deleted = 0 AND read_at IS NULL) [0m
+  [4;35;1mCategory Load (0.0ms)[0m   [0mSELECT * FROM `categories` [0m
+Rendered shared/_header (172.0ms)
+Rendered shared/_messages (0.0ms)
+  [4;36;1mPage Load (0.0ms)[0m   [0;1mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+  [4;35;1mPage Columns (15.0ms)[0m   [0mSHOW FIELDS FROM `pages`[0m
+Completed in 1125ms (View: 985, DB: 30) | 200 OK [http://127.0.0.1/schools]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CoursesController#index (for 127.0.0.1 at 2009-10-01 18:47:57) [GET]
+  [4;36;1mCourse Load (0.0ms)[0m   [0;1mSELECT * FROM `courses` [0m
+Rendering template within layouts/courses
+Rendering courses/index
+  [4;35;1mCourse Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `courses`[0m
+Completed in 125ms (View: 32, DB: 0) | 200 OK [http://127.0.0.1/courses]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (16.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SchoolsController#index (for 127.0.0.1 at 2009-10-01 18:48:01) [GET]
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;36;1mSchool Load (16.0ms)[0m   [0;1mSELECT * FROM `schools` [0m
+Rendering template within layouts/application
+Rendering schools/index
+  [4;35;1mSchool Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `schools`[0m
+  [4;36;1mUser Columns (16.0ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 1) LIMIT 1[0m
+  [4;36;1mRole Load (0.0ms)[0m   [0;1mSELECT * FROM `roles` [0m
+  [4;35;1mRole Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `roles`[0m
+Rendered shared/_scripts_and_styles (0.0ms)
+Rendered shared/_user_menu (15.0ms)
+  [4;36;1mMessage Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `messages`[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSELECT count(*) AS count_all FROM `messages` WHERE (recipient_id = 1 AND recipient_deleted = 0 AND read_at IS NULL) [0m
+  [4;36;1mCategory Load (0.0ms)[0m   [0;1mSELECT * FROM `categories` [0m
+Rendered shared/_header (172.0ms)
+Rendered shared/_messages (0.0ms)
+  [4;35;1mPage Load (0.0ms)[0m   [0mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+  [4;36;1mPage Columns (16.0ms)[0m   [0;1mSHOW FIELDS FROM `pages`[0m
+Completed in 1172ms (View: 1031, DB: 64) | 200 OK [http://127.0.0.1/schools]
+  [4;35;1mSQL (0.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CoursesController#index (for 127.0.0.1 at 2009-10-01 18:52:26) [GET]
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;35;1mCourse Load (0.0ms)[0m   [0mSELECT * FROM `courses` [0m
+Rendering template within layouts/courses
+Rendering courses/index
+  [4;36;1mCourse Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `courses`[0m
+Completed in 125ms (View: 16, DB: 0) | 200 OK [http://127.0.0.1/courses]
+  [4;35;1mSQL (0.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SchoolsController#index (for 127.0.0.1 at 2009-10-01 18:52:31) [GET]
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;35;1mSchool Load (0.0ms)[0m   [0mSELECT * FROM `schools` [0m
+Rendering template within layouts/application
+Rendering schools/index
+  [4;36;1mSchool Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `schools`[0m
+  [4;35;1mUser Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 1) LIMIT 1[0m
+  [4;35;1mRole Load (0.0ms)[0m   [0mSELECT * FROM `roles` [0m
+  [4;36;1mRole Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `roles`[0m
+Rendered shared/_scripts_and_styles (15.0ms)
+Rendered shared/_user_menu (0.0ms)
+  [4;35;1mMessage Columns (16.0ms)[0m   [0mSHOW FIELDS FROM `messages`[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `messages` WHERE (recipient_id = 1 AND recipient_deleted = 0 AND read_at IS NULL) [0m
+  [4;35;1mCategory Load (0.0ms)[0m   [0mSELECT * FROM `categories` [0m
+Rendered shared/_header (391.0ms)
+Rendered shared/_messages (0.0ms)
+  [4;36;1mPage Load (0.0ms)[0m   [0;1mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+  [4;35;1mPage Columns (16.0ms)[0m   [0mSHOW FIELDS FROM `pages`[0m
+Completed in 1125ms (View: 984, DB: 32) | 200 OK [http://127.0.0.1/schools]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SchoolsController#index (for 127.0.0.1 at 2009-10-01 18:52:45) [GET]
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;36;1mSchool Load (0.0ms)[0m   [0;1mSELECT * FROM `schools` [0m
+Rendering template within layouts/application
+Rendering schools/index
+  [4;35;1mSchool Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `schools`[0m
+  [4;36;1mUser Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 1) LIMIT 1[0m
+  [4;36;1mRole Load (0.0ms)[0m   [0;1mSELECT * FROM `roles` [0m
+  [4;35;1mRole Columns (15.0ms)[0m   [0mSHOW FIELDS FROM `roles`[0m
+Rendered shared/_scripts_and_styles (0.0ms)
+Rendered shared/_user_menu (0.0ms)
+  [4;36;1mMessage Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `messages`[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSELECT count(*) AS count_all FROM `messages` WHERE (recipient_id = 1 AND recipient_deleted = 0 AND read_at IS NULL) [0m
+  [4;36;1mCategory Load (0.0ms)[0m   [0;1mSELECT * FROM `categories` [0m
+Rendered shared/_header (407.0ms)
+Rendered shared/_messages (0.0ms)
+  [4;35;1mPage Load (0.0ms)[0m   [0mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+  [4;36;1mPage Columns (15.0ms)[0m   [0;1mSHOW FIELDS FROM `pages`[0m
+Completed in 1125ms (View: 1001, DB: 30) | 200 OK [http://127.0.0.1/schools]
+  [4;35;1mSQL (0.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CoursesController#index (for 127.0.0.1 at 2009-10-01 18:52:50) [GET]
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;35;1mCourse Load (0.0ms)[0m   [0mSELECT * FROM `courses` [0m
+Rendering template within layouts/courses
+Rendering courses/index
+  [4;36;1mCourse Columns (15.0ms)[0m   [0;1mSHOW FIELDS FROM `courses`[0m
+Completed in 156ms (View: 0, DB: 15) | 200 OK [http://127.0.0.1/courses]
+  [4;35;1mSQL (0.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SchoolsController#index (for 127.0.0.1 at 2009-10-01 18:52:54) [GET]
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;35;1mSchool Load (0.0ms)[0m   [0mSELECT * FROM `schools` [0m
+Rendering template within layouts/application
+Rendering schools/index
+  [4;36;1mSchool Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `schools`[0m
+  [4;35;1mUser Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 1) LIMIT 1[0m
+  [4;35;1mRole Load (0.0ms)[0m   [0mSELECT * FROM `roles` [0m
+  [4;36;1mRole Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `roles`[0m
+Rendered shared/_scripts_and_styles (15.0ms)
+Rendered shared/_user_menu (0.0ms)
+  [4;35;1mMessage Columns (16.0ms)[0m   [0mSHOW FIELDS FROM `messages`[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `messages` WHERE (recipient_id = 1 AND recipient_deleted = 0 AND read_at IS NULL) [0m
+  [4;35;1mCategory Load (0.0ms)[0m   [0mSELECT * FROM `categories` [0m
+Rendered shared/_header (391.0ms)
+Rendered shared/_messages (0.0ms)
+  [4;36;1mPage Load (0.0ms)[0m   [0;1mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+  [4;35;1mPage Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `pages`[0m
+Completed in 1125ms (View: 1000, DB: 16) | 200 OK [http://127.0.0.1/schools]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CoursesController#index (for 127.0.0.1 at 2009-10-01 18:54:22) [GET]
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;36;1mCourse Load (0.0ms)[0m   [0;1mSELECT * FROM `courses` [0m
+Rendering template within layouts/courses
+Rendering courses/index
+  [4;35;1mCourse Columns (16.0ms)[0m   [0mSHOW FIELDS FROM `courses`[0m
+Completed in 110ms (View: 0, DB: 16) | 200 OK [http://127.0.0.1/courses]
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CoursesController#index (for 127.0.0.1 at 2009-10-01 18:56:22) [GET]
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;36;1mCourse Load (0.0ms)[0m   [0;1mSELECT * FROM `courses` [0m
+Rendering template within layouts/application
+Rendering courses/index
+  [4;35;1mCourse Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `courses`[0m
+Rendered shared/_scripts_and_styles (16.0ms)
+  [4;36;1mUser Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 1) LIMIT 1[0m
+  [4;36;1mRole Load (0.0ms)[0m   [0;1mSELECT * FROM `roles` [0m
+  [4;35;1mRole Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `roles`[0m
+Rendered shared/_user_menu (94.0ms)
+  [4;36;1mMessage Columns (15.0ms)[0m   [0;1mSHOW FIELDS FROM `messages`[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSELECT count(*) AS count_all FROM `messages` WHERE (recipient_id = 1 AND recipient_deleted = 0 AND read_at IS NULL) [0m
+  [4;36;1mCategory Load (0.0ms)[0m   [0;1mSELECT * FROM `categories` [0m
+Rendered shared/_header (469.0ms)
+Rendered shared/_messages (0.0ms)
+  [4;35;1mPage Load (0.0ms)[0m   [0mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+  [4;36;1mPage Columns (16.0ms)[0m   [0;1mSHOW FIELDS FROM `pages`[0m
+Completed in 1047ms (View: 922, DB: 31) | 200 OK [http://127.0.0.1/courses]
+  [4;35;1mSQL (0.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CoursesController#new (for 127.0.0.1 at 2009-10-01 18:57:02) [GET]
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;35;1mCourse Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `courses`[0m
+Rendering template within layouts/application
+Rendering courses/new
+Rendered shared/_scripts_and_styles (16.0ms)
+  [4;36;1mUser Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 1) LIMIT 1[0m
+  [4;36;1mRole Load (0.0ms)[0m   [0;1mSELECT * FROM `roles` [0m
+  [4;35;1mRole Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `roles`[0m
+Rendered shared/_user_menu (312.0ms)
+  [4;36;1mMessage Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `messages`[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mSELECT count(*) AS count_all FROM `messages` WHERE (recipient_id = 1 AND recipient_deleted = 0 AND read_at IS NULL) [0m
+  [4;36;1mCategory Load (0.0ms)[0m   [0;1mSELECT * FROM `categories` [0m
+Rendered shared/_header (484.0ms)
+Rendered shared/_messages (0.0ms)
+  [4;35;1mPage Load (0.0ms)[0m   [0mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+  [4;36;1mPage Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `pages`[0m
+Completed in 1093ms (View: 984, DB: 0) | 200 OK [http://127.0.0.1/courses/new]
+  [4;35;1mSQL (0.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CoursesController#create (for 127.0.0.1 at 2009-10-01 18:57:20) [POST]
+  Parameters: {"commit"=>"Create", "authenticity_token"=>"NKPfJNTwMNA0251mO8NPcWF5EOGSFVcmZcDET2czYXc=", "course"=>{"name"=>"Biologia"}}
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;35;1mCourse Columns (15.0ms)[0m   [0mSHOW FIELDS FROM `courses`[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mCourse Create (0.0ms)[0m   [0mINSERT INTO `courses` (`name`, `updated_at`, `created_at`) VALUES('Biologia', '2009-10-01 21:57:20', '2009-10-01 21:57:20')[0m
+  [4;36;1mSQL (47.0ms)[0m   [0;1mCOMMIT[0m
+Redirected to http://127.0.0.1:3000/courses/5
+Completed in 156ms (DB: 62) | 302 Found [http://127.0.0.1/courses]
+
+
+Processing CoursesController#show (for 127.0.0.1 at 2009-10-01 18:57:20) [GET]
+  Parameters: {"id"=>"5"}
+[I18n] loading locale: pt-BR from config
+[I18n] Locale set to pt-BR
+  [4;35;1mSQL (0.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mCourse Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `courses`[0m
+  [4;36;1mCourse Load (0.0ms)[0m   [0;1mSELECT * FROM `courses` WHERE (`courses`.`id` = 5) [0m
+Rendering template within layouts/application
+Rendering courses/show
+Rendered shared/_scripts_and_styles (16.0ms)
+  [4;35;1mUser Columns (15.0ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 1) LIMIT 1[0m
+  [4;35;1mRole Load (0.0ms)[0m   [0mSELECT * FROM `roles` [0m
+  [4;36;1mRole Columns (0.0ms)[0m   [0;1mSHOW FIELDS FROM `roles`[0m
+Rendered shared/_user_menu (110.0ms)
+  [4;35;1mMessage Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `messages`[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `messages` WHERE (recipient_id = 1 AND recipient_deleted = 0 AND read_at IS NULL) [0m
+  [4;35;1mCategory Load (0.0ms)[0m   [0mSELECT * FROM `categories` [0m
+Rendered shared/_header (1234.0ms)
+Rendered shared/_messages (0.0ms)
+  [4;36;1mPage Load (0.0ms)[0m   [0;1mSELECT * FROM `pages` WHERE (published_as = 'live') [0m
+  [4;35;1mPage Columns (0.0ms)[0m   [0mSHOW FIELDS FROM `pages`[0m
+Completed in 2344ms (View: 2219, DB: 15) | 200 OK [http://127.0.0.1/courses/5]

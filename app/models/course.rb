@@ -10,6 +10,8 @@ class Course < ActiveRecord::Base
   
   has_many :acess_key
   
+  validates_presence_of :name
+  
   #has_and_belongs_to_many :subject
   #has_and_belongs_to_many :resource
   #has_and_belongs_to_many :question

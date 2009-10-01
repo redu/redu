@@ -285,6 +285,8 @@ pt-BR:
   contest_entries: Contest Entries
   #en: country: Country
   country: Country
+  #en: course: Course
+  course: Aula
   #en: create: Create
   create: Create
   #en: create_an_account: Create an account

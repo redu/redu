@@ -5,7 +5,6 @@ class AlbumsController < BaseController
   before_filter :require_current_user, :only => [:new, :edit, :update, :destroy]
   uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:show])
 
-
   # GET /albums/1
   # GET /albums/1.xml
   def show
