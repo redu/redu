@@ -10,7 +10,7 @@
   	<td> <%= school.name %></td>
     <td><%= link_to 'Show', school %></td>
 	<!-- nao é uma boa pratica, vai fazer consultas no bd pra cada escola listada TODO mudar -->
-	<% if current_user.admin? || current_user.school_admin?(school) %>
+	<% if current_user && ( current_user.admin? || current_user.school_admin?(school)) %>
     <td><%= link_to 'Gerenciar', edit_school_path(school) %></td>
     <td><%= link_to 'Destroy', school, :confirm => 'Are you sure?', :method => :delete %></td>
   	<%end%>
@@ -19,6 +19,6 @@
 </table>
 
 <br />
-<% if current_user.admin? %>
+<% if current_user && current_user.admin? %>
 <%= link_to 'Criar escola', new_school_path %>
 <%end%>

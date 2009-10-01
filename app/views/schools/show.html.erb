@@ -1,3 +1,21 @@
+<script>
+	function grantKeysToSchool(school_id){
+		alert(school_id);
+	nKeys = document.getElementById('keys_number').value;
+	
+    new Ajax.Request("<%= url_for :controller => :access_keys, :action => :grant_keys_to_school %>", {
+        method: 'get',
+        parameters: "?id= "+school_id+"&number=" + nKeys,
+        onComplete: function(request){
+           //res = eval("(" + request.responseText + ")");
+            alert('Chaves garantidas!');
+			document.getElementById('keys_school_block').style.display = 'none';
+        }
+    }); 
+}
+	
+</script>
+
 <h3><%= @school.name %></h3>
 <p><%= @school.description %></p>
 
@@ -8,14 +26,20 @@
 <% end %>
 
 <!-- Se usuário não estiver vinculado à escola -->
-<% if current_user && !current_user.get_association_with(@school) %>
+<% if current_user && !current_user.get_association_with(@school) && !current_user.admin? %>
 <%= link_to 'Associate', { :controller => 'schools' , :action => 'associate', :id => @school }  %> |
 <% end %>
 
 <!-- Se admin -->
 <% if current_user.admin? %>
 <%= link_to 'Gerar 50 chaves para escola',  {:controller => 'access_keys', :action => 'grant_keys_to_school', :id => @school, :number => 50, :exp_date => Time.now } %>
+
+<div id="keys_school_block" >
+	Número de chaves: <input type="text" name="keys_number" id="keys_number" MAXLENGTH=5/>
+	<button onclick="grantKeysToSchool(<%= @school.id %>);">OK</button>
+</div>
+
 <%= link_to 'Conceder Admin', schools_path %>
 <%end%>
 
-<%= link_to 'Back', schools_path %>
+<%= link_to 'Back', schools_path -%>

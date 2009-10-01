@@ -8,5 +8,7 @@ class School < ActiveRecord::Base
 
 
     has_many :access_keys
+    
+    validates_presence_of :name
   
 end

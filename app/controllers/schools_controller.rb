@@ -114,7 +114,14 @@ class SchoolsController < BaseController
   # POST /schools
   # POST /schools.xml
   def create
-    @school = School.new(params[:school])
+        @school = School.new(params[:school])
+    
+    if !params[:school][:name] || params[:school][:name].empty?
+      flash[:error] = 'Name não pode ser vazio'
+      redirect_to(@school)
+    end
+    
+
 
     respond_to do |format|
       if @school.save
