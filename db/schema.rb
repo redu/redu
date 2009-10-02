@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090929141106) do
+ActiveRecord::Schema.define(:version => 20091002190727) do
 
   create_table "access_keys", :force => true do |t|
     t.string   "key"
@@ -357,6 +357,12 @@ ActiveRecord::Schema.define(:version => 20090929141106) do
     t.string "name"
   end
 
+  create_table "subjects", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "taggings", :force => true do |t|
     t.integer "tag_id"
     t.integer "taggable_id"
@@ -392,6 +398,11 @@ ActiveRecord::Schema.define(:version => 20090929141106) do
   add_index "topics", ["forum_id", "replied_at"], :name => "index_topics_on_forum_id_and_replied_at"
   add_index "topics", ["forum_id", "sticky", "replied_at"], :name => "index_topics_on_sticky_and_replied_at"
   add_index "topics", ["forum_id"], :name => "index_topics_on_forum_id"
+
+  create_table "user_course_associations", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "user_school_associations", :force => true do |t|
     t.integer  "user_id"

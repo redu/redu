@@ -20,6 +20,7 @@
       
       = topnav_tab :school.l, { :url => schools_path, :section => 'schools' }
       = topnav_tab :course.l, { :url => courses_path, :section => 'courses' }
+      = topnav_tab :subject.l, { :url => subjects_path, :section => 'subjects' }
       
       - if current_user 
         = topnav_tab :my_profile.l, { :url => user_path(current_user), :section => 'my_profile'}   

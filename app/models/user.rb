@@ -41,7 +41,7 @@ class User < ActiveRecord::Base
   validates_date :birthday, :before => 13.years.ago.to_date  
 
   #associations
- has_many :user_school_associations
+  has_many :user_school_associations
   has_many :schools, :through => :user_school_association
   
   

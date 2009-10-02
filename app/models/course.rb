@@ -2,6 +2,8 @@ class Course < ActiveRecord::Base
   
   has_many :user_course_association
   has_many :users, :through => :user_course_association
+  has_many :course_subject_association
+  has_many :subjects, :through => :course_subject_association
   
   has_many :students, :through => :user_course_association, :source => :user, :conditions => ["role_id = ?",7]
   has_many :teachers, :through => :user_course_association, :source => :user, :conditions => ["role_id = ?",6] 
