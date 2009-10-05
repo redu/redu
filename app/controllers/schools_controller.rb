@@ -51,26 +51,66 @@ class SchoolsController < BaseController
   
 
   def associate
-      @school = School.find(params[:id])
+    @school = School.find(params[:id])
+    #@user = User.find(params[:user_id])  # TODO precisa mesmo recuperar o usuário no bd?
+    puts params[:user_key]
+    
+    #@user_school_association = UserSchoolAssociation.find(:first, :joins => :access_key, :conditions => ["access_keys.key = ?", params[:user_key]])  
+    @user_school_association = UserSchoolAssociation.find(:first, :include => :access_key, :conditions => ["access_keys.key = ?", params[:user_key]])  
+    
+    if @user_school_association
       
-      if !@school.students.include? current_user
-       # @school.students << current_user
-       @user_school_association = UserSchoolAssociation.new
-       @user_school_association.user = current_user
-       @user_school_association.school = @school
-       @user_school_association.role = Role[:student]
-     end
-     
-     respond_to do |format|
-        if @user_school_association.save!
-          flash[:notice] = 'Usuário associado à escola!' #:the_friendship_was_accepted.l
+      if @user_school_association.access_key.expiration_date.to_time < Time.now # verifica a data da validade da chave
+        
+        if @school &&  @user_school_association.school == @school
+          
+          if current_user && !@user_school_association.user # cada chave só poderá ser usada uma vez, sem troca de aluno
+            
+            
+            @user_school_association.user = current_user
+            
+            if @user_school_association.save
+              flash[:notice] = 'Usuário associado à escola!'
+            else 
+              flash[:notice] = 'Associação à escola falhou'
+            end
+          else 
+            flash[:notice] = 'Essa chave já está em uso'
+          end
         else
-         flash[:notice] = 'Associação à escola falhou'
-       end
-        format.html { render :action => "show" }
+          flash[:notice] = 'Essa chave pertence à outra escola'
+        end
+      else
+        flash[:notice] = 'O prazo de validade desta chave expirou. Contate o administrador da sua escola.'
       end
-      
+    else
+      flash[:notice] = 'Chave inválida'
     end
+    
+    
+    respond_to do |format|
+      format.html { redirect_to(@school) }
+    end
+    
+  end
+
+  ## LISTS
+
+  def students
+    @school = School.find(params[:id])
+    @students = @school.students
+   
+   #@users = User.recent.find(:all, :page => {:current => params[:page], :size => 100}, :conditions => cond.to_sql)
+   
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @students }
+    end
+    
+  end
+
+  ###
+
 
 
    # GET /schools

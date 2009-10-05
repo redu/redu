@@ -9,7 +9,7 @@ class AccessKeysController < BaseController
  def grant_keys_to_school
    n = params[:number].to_i
    for k in 0...n do
-      ak = AccessKey.create(:expiration_date => params[:exp_date])
+      ak = AccessKey.create(:expiration_date => (params[:exp_date] ? params[:exp_date] : Time.now))
       UserSchoolAssociation.create(:school_id => params[:id].to_i, :access_key => ak)
   end
   

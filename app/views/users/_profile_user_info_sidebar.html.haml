@@ -29,6 +29,17 @@
 
   - if current_user and current_user.can_request_friendship_with(@user)
     = add_friend_link(@user)
+    
+     
+  - if current_user 
+    - if !current_user.follows.include?(@user)
+      = link_to 'Seguir', { :controller => :users, :action => :follow, :id => current_user, :follow_id => @user }
+    - else 
+      = link_to 'Parar de seguir', { :controller => :users, :action => :unfollow, :id => current_user, :follow_id => @user }
+  
+  = link_to 'ver seguidores', followers_user_path(@user)
+  = link_to 'ver seguidos', follows_user_path(@user)
+  
 
   %h3=:my_details.l
   .vcard.author

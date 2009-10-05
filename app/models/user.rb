@@ -41,11 +41,18 @@ class User < ActiveRecord::Base
   validates_date :birthday, :before => 13.years.ago.to_date  
 
   #associations
-  has_many :user_school_associations
+ has_many :user_school_associations
   has_many :schools, :through => :user_school_association
   
-  
-  
+  #has_and_belongs_to_many :users
+  #has_and_belongs_to_many :follows, :class_name => "User",  :foreign_key => "this_user_id",  :association_foreign_key => "other_user_id" 
+  #has_and_belongs_to_many :followed, :class_name => "User",  :foreign_key => "this_user_id",  :association_foreign_key => "other_user_id" 
+ 
+ # Fans and Favourites 
+  has_and_belongs_to_many :follows, :class_name => "User", :join_table => "followship", :association_foreign_key => "follows_id", :foreign_key => "followed_by_id", :uniq => true
+  has_and_belongs_to_many :followed_by, :class_name => "User", :join_table => "followship", :association_foreign_key => "followed_by_id", :foreign_key => "follows_id", :uniq => true
+ 
+ # has_many :follo, :class_name => "Friendship", :foreign_key => "user_id",
   
     has_enumerated :role  
     has_many :posts, :order => "published_at desc", :dependent => :destroy

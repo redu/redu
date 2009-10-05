@@ -32,6 +32,65 @@ class UsersController < BaseController
   before_filter :admin_required, :only => [:assume, :destroy, :featured, :toggle_featured, :toggle_moderator]
   before_filter :admin_or_current_user_required, :only => [:statistics]  
 
+  ### Followship
+  def can_follow
+    user_id = params[:id]
+    follow_id = params[:follow_id]
+    
+    
+  end
+  
+  def follows
+    @user = User.find(params[:id])
+    @follows= @user.follows
+    
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @follows }
+    end
+  end
+  
+  def followers
+    @user = User.find(params[:id])
+    @followers = @user.followed_by
+    
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @followers }
+    end
+  end
+  
+
+  def follow # TODO evitar duplicata
+     @user = User.find(params[:id])
+     @follow_user = User.find(params[:follow_id])
+     
+     @user.follows << @follow_user
+     if @user.save #@user.update_attributes(:follows)
+        flash[:notice] = 'Você está seguindo esse usuário'
+    else
+      flash[:erro] = 'Não é possível seguir esse usuário'
+    end
+    redirect_to user_path(@follow_user)
+    
+  end
+  
+  def unfollow
+     @user = User.find(params[:id])
+     @follow_user = User.find(params[:follow_id])
+     
+     @user.follows.delete @follow_user
+     if @user.save #@user.update_attributes(:follows)
+        flash[:notice] = 'Você não está mais seguindo esse usuário'
+    else
+      flash[:erro] = 'Não foi possível parar de seguir esse usuário'
+    end
+    redirect_to user_path(@follow_user)
+    
+  end
+  
+
+  ## User
   def activate
     redirect_to signup_path and return if params[:id].blank?
     @user = User.find_by_activation_code(params[:id]) 

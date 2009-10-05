@@ -9,11 +9,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091002190727) do
+ActiveRecord::Schema.define(:version => 20091001203517) do
 
   create_table "access_keys", :force => true do |t|
     t.string   "key"
     t.date     "expiration_date"
+    t.integer  "user_id"
+    t.integer  "school_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -128,6 +130,8 @@ ActiveRecord::Schema.define(:version => 20091002190727) do
     t.string "name"
   end
 
+
+
   create_table "courses", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -156,6 +160,11 @@ ActiveRecord::Schema.define(:version => 20091002190727) do
   end
 
   add_index "favorites", ["user_id"], :name => "fk_favorites_user"
+
+  create_table "followship", :id => false, :force => true do |t|
+    t.integer "followed_by_id"
+    t.integer "follows_id"
+  end
 
   create_table "forums", :force => true do |t|
     t.string  "name"
@@ -408,9 +417,9 @@ ActiveRecord::Schema.define(:version => 20091002190727) do
     t.integer  "user_id"
     t.integer  "school_id"
     t.integer  "role_id"
-    t.integer  "access_key_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "access_key_id"
   end
 
   create_table "users", :force => true do |t|

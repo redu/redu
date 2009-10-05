@@ -49,11 +49,14 @@ ActionController::Routing::Routes.draw do |map|
   
  map.resources :access_keys
  map.resources :schools  
-# map.resources :user_school_associations
- #map.resources :schools, :member => { :associate_to => :get } 
- #map.resources :associate_to_school, :controller => 'schools', :action => 'associate_to_school'
- #map.associate_to_school 'associate', :controller => 'schools', :action => 'associate_to_school'
 
+=begin
+  map.resources :schools, :member_path => '/:id', :nested_member_path => '/:school_id', :member => { 
+      :students => :get
+  } do |school|
+    #school.resources :students :subjects
+  end
+=end
 
   # Add this after any of your own existing routes, but before the default rails routes:
   #map.routes_from_plugin :community_engine
@@ -161,6 +164,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :activities
   
   map.resources :users, :member_path => '/:id', :nested_member_path => '/:user_id', :member => { 
+    :followers => :get,
+    :follows => :get,
     :dashboard => :get,
     :assume => :get,
     :toggle_moderator => :put,

@@ -1,0 +1,18 @@
+<h1>Listing follows</h1>
+
+<table>
+  <tr>
+  </tr>
+
+<% @follows.each do |person| %>
+	
+  <tr>
+  	<td> <%= person.login %></td>
+    <td><%= link_to 'Show', person %></td>
+	<!-- nao é uma boa pratica, vai fazer consultas no bd pra cada escola listada TODO mudar -->
+	
+  </tr>
+<% end %>
+</table>
+
+<br />
