@@ -52,7 +52,7 @@ class SchoolsController < BaseController
 
   def associate
     @school = School.find(params[:id])
-    #@user = User.find(params[:user_id])  # TODO precisa mesmo recuperar o usuário no bd?
+    @user = User.find(params[:user_id])  # TODO precisa mesmo recuperar o usuário no bd?
     puts params[:user_key]
     
     #@user_school_association = UserSchoolAssociation.find(:first, :joins => :access_key, :conditions => ["access_keys.key = ?", params[:user_key]])  
@@ -64,10 +64,10 @@ class SchoolsController < BaseController
         
         if @school &&  @user_school_association.school == @school
           
-          if current_user && !@user_school_association.user # cada chave só poderá ser usada uma vez, sem troca de aluno
+          if @user && !@user_school_association.user # cada chave só poderá ser usada uma vez, sem troca de aluno
             
             
-            @user_school_association.user = current_user
+            @user_school_association.user = @user
             
             if @user_school_association.save
               flash[:notice] = 'Usuário associado à escola!'
