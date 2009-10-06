@@ -1,4 +1,4 @@
-<%= calendar_date_select_includes %>
+<%# calendar_date_select_includes %>
 
 <script>
     function grantKeysToSchool(school_id){
@@ -44,7 +44,8 @@
 	<a href="#" id="associate_link" onclick="javascript:showAssociateBox();false;">Associar-se</a>
 	
 	<div id="associate_box" style="display:none;">
-	    <% form_tag({:controller => 'schools' , :action => 'associate', :id => @school, :user_id => current_user}, :method => "get") do %>
+	    <% form_tag({:controller => 'schools' , :action => 'associate', :id => @school}, :method => "get") do %>
+		   <%= hidden_field_tag(:user_id, current_user.id) %>
 		    Digite sua chave: 
 			<%= text_field_tag(:user_key) %>
 		<%= submit_tag("OK") %>
