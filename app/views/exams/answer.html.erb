@@ -1,0 +1,14 @@
+<h1>Exam</h1>
+
+  <p><%= @step.statement %></p>
+
+  <% form_tag :action => "check" do %>
+   <%= hidden_field_tag(:id, session[:exam].id) %>
+   <BR>
+    <% for alternative in @step.alternatives %>
+	<%= alternative.id %>
+      <%= radio_button_tag("answer", alternative.id, checked = false) %>
+        <%= alternative.statement %><BR>
+    <% end %>
+    <%= submit_tag "Answer" %>
+  <% end %> 

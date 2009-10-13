@@ -1,0 +1,23 @@
+<h1>New question</h1>
+
+<% form_for(@question) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :statement %><br />
+    <%= f.text_field :statement %>
+  </p>
+  <p>
+    <%= f.label :answer_id %><br />
+    <%= f.text_field :answer_id %>
+  </p>
+  <p>
+    <%= f.label :isPublic %><br />
+    <%= f.text_field :isPublic %>
+  </p>
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', questions_path %>

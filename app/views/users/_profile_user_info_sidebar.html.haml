@@ -27,8 +27,8 @@
       %br        
     = image_tag( @user.avatar_photo_url(:medium), :class => "polaroid")    
 
-  - if current_user and current_user.can_request_friendship_with(@user)
-    = add_friend_link(@user)
+  /- if current_user and current_user.can_request_friendship_with(@user)
+  /= add_friend_link(@user)
     
      
   - if current_user 
@@ -37,8 +37,8 @@
     - else 
       = link_to 'Parar de seguir', { :controller => :users, :action => :unfollow, :id => current_user, :follow_id => @user }
   
-  = link_to 'ver seguidores', followers_user_path(@user)
-  = link_to 'ver seguidos', follows_user_path(@user)
+  = link_to 'ver seguidores('+@user.followers_count.to_s+')' , followers_user_path(@user)
+  = link_to 'ver seguidos('+@user.follows_count.to_s+')', follows_user_path(@user)
   
 
   %h3=:my_details.l

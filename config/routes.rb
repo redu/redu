@@ -1,4 +1,12 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :abilities
+
+  map.resources :competences
+
+  map.resources :questions
+
+  map.resources :exams
+
   map.resources :subjects
 
   map.resources :courses

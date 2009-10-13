@@ -1,0 +1,24 @@
+<h1>Editing question</h1>
+
+<% form_for(@question) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :statement %><br />
+    <%= f.text_field :statement %>
+  </p>
+  <p>
+    <%= f.label :answer_id %><br />
+    <%= f.text_field :answer_id %>
+  </p>
+  <p>
+    <%= f.label :isPublic %><br />
+    <%= f.text_field :isPublic %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @question %> |
+<%= link_to 'Back', questions_path %>

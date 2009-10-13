@@ -9,13 +9,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091001203517) do
+ActiveRecord::Schema.define(:version => 20091009182613) do
+
+  create_table "abilities", :force => true do |t|
+    t.string   "name"
+    t.float    "value"
+    t.float    "weight"
+    t.integer  "competence_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "access_keys", :force => true do |t|
     t.string   "key"
     t.date     "expiration_date"
-    t.integer  "user_id"
-    t.integer  "school_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -52,6 +59,13 @@ ActiveRecord::Schema.define(:version => 20091001203517) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "view_count"
+  end
+
+  create_table "alternatives", :force => true do |t|
+    t.string   "statement",   :null => false
+    t.integer  "question_id", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "assets", :force => true do |t|
@@ -114,6 +128,12 @@ ActiveRecord::Schema.define(:version => 20091001203517) do
   add_index "comments", ["recipient_id"], :name => "index_comments_on_recipient_id"
   add_index "comments", ["user_id"], :name => "fk_comments_user"
 
+  create_table "competences", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "contests", :force => true do |t|
     t.string   "title"
     t.datetime "created_at"
@@ -130,7 +150,10 @@ ActiveRecord::Schema.define(:version => 20091001203517) do
     t.string "name"
   end
 
-
+  create_table "course_subject_associations", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "courses", :force => true do |t|
     t.string   "name"
@@ -148,6 +171,13 @@ ActiveRecord::Schema.define(:version => 20091001203517) do
     t.text     "description"
     t.integer  "metro_area_id"
     t.string   "location"
+  end
+
+  create_table "exams", :force => true do |t|
+    t.integer  "author_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "name"
   end
 
   create_table "favorites", :force => true do |t|
@@ -317,6 +347,29 @@ ActiveRecord::Schema.define(:version => 20091001203517) do
   add_index "posts", ["published_at"], :name => "index_posts_on_published_at"
   add_index "posts", ["user_id"], :name => "index_posts_on_user_id"
 
+  create_table "question_exam_associations", :id => false, :force => true do |t|
+    t.integer  "total_answers_count"
+    t.integer  "correct_answers_count"
+    t.integer  "question_id"
+    t.integer  "exam_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "questions", :force => true do |t|
+    t.string   "statement"
+    t.integer  "answer_id"
+    t.boolean  "is_public"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "resources", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "roles", :force => true do |t|
     t.string "name"
   end
@@ -417,9 +470,14 @@ ActiveRecord::Schema.define(:version => 20091001203517) do
     t.integer  "user_id"
     t.integer  "school_id"
     t.integer  "role_id"
+    t.integer  "access_key_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "access_key_id"
+  end
+
+  create_table "user_subject_associations", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", :force => true do |t|
@@ -455,6 +513,8 @@ ActiveRecord::Schema.define(:version => 20091001203517) do
     t.integer  "sb_posts_count",                          :default => 0
     t.datetime "sb_last_seen_at"
     t.integer  "role_id"
+    t.integer  "followers_count",                         :default => 0
+    t.integer  "follows_count",                           :default => 0
   end
 
   add_index "users", ["activated_at"], :name => "index_users_on_activated_at"

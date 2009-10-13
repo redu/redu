@@ -16,11 +16,14 @@ class User < ActiveRecord::Base
   before_create :make_activation_code
   before_create :activate_before_save
   after_create  :update_last_login
+ 
   #after_save    :activate # <- ja começa ativo
   #after_create {|user| UserNotifier.deliver_signup_notification(user) }
   #after_save   {|user| UserNotifier.deliver_activation(user) if user.recently_activated? }  
+  
   before_save   :generate_login_slug
   after_save    :recount_metro_area_users
+  after_save    :recount_followers_and_follows
   after_destroy :recount_metro_area_users
 
 
@@ -28,7 +31,7 @@ class User < ActiveRecord::Base
   validates_presence_of     :login, :email
   validates_presence_of     :password,                   :if => :password_required?
   validates_presence_of     :password_confirmation,      :if => :password_required?
-  validates_length_of       :password, :within => 6..20, :if => :password_required?
+  validates_length_of       :password, :within => 5..20, :if => :password_required?
   validates_confirmation_of :password,                   :if => :password_required?
   validates_presence_of     :metro_area,                 :if => Proc.new { |user| user.state }
   validates_length_of       :login,    :within => 5..20
@@ -40,20 +43,21 @@ class User < ActiveRecord::Base
   validates_exclusion_of    :login, :in => AppConfig.reserved_logins
   validates_date :birthday, :before => 13.years.ago.to_date  
 
-  #associations
- has_many :user_school_associations
+ 
+  # SCHOOL
+  has_many :user_school_association
+  has_many :user_school_associations
   has_many :schools, :through => :user_school_association
   
-  #has_and_belongs_to_many :users
-  #has_and_belongs_to_many :follows, :class_name => "User",  :foreign_key => "this_user_id",  :association_foreign_key => "other_user_id" 
-  #has_and_belongs_to_many :followed, :class_name => "User",  :foreign_key => "this_user_id",  :association_foreign_key => "other_user_id" 
- 
- # Fans and Favourites 
+  # FOLLOWSHIP
   has_and_belongs_to_many :follows, :class_name => "User", :join_table => "followship", :association_foreign_key => "follows_id", :foreign_key => "followed_by_id", :uniq => true
-  has_and_belongs_to_many :followed_by, :class_name => "User", :join_table => "followship", :association_foreign_key => "followed_by_id", :foreign_key => "follows_id", :uniq => true
- 
- # has_many :follo, :class_name => "Friendship", :foreign_key => "user_id",
+  has_and_belongs_to_many :followers, :class_name => "User", :join_table => "followship", :association_foreign_key => "followed_by_id", :foreign_key => "follows_id", :uniq => true
   
+  # EXAMS
+  has_many :exams
+  
+  # COMMUNITY ENGINE:
+
     has_enumerated :role  
     has_many :posts, :order => "published_at desc", :dependent => :destroy
     has_many :photos, :order => "created_at desc", :dependent => :destroy
@@ -240,6 +244,14 @@ class User < ActiveRecord::Base
     options[:except] ||= []
     super
   end
+  
+  
+ 
+  def recount_followers_and_follows
+  update_attribute(:follows_count, self.follows.length)
+  update_attribute(:followers_count, self.followers.length)
+  end
+  
 
   def recount_metro_area_users
     return unless self.metro_area

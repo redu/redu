@@ -32,7 +32,7 @@ class UsersController < BaseController
   before_filter :admin_required, :only => [:assume, :destroy, :featured, :toggle_featured, :toggle_moderator]
   before_filter :admin_or_current_user_required, :only => [:statistics]  
 
-  ### Followship
+ ### Followship
   def can_follow
     user_id = params[:id]
     follow_id = params[:follow_id]
@@ -52,11 +52,10 @@ class UsersController < BaseController
   
   def followers
     @user = User.find(params[:id])
-    @followers = @user.followed_by
     
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @followers }
+      format.xml  { render :xml => @user.followers }
     end
   end
   

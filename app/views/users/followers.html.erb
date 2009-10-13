@@ -1,10 +1,11 @@
-<h1>Listing followers</h1>
+<h1>Listing followers of <%= @user.login %></h1>
 
+
+<% if @user.followers %> 
 <table>
   <tr>
   </tr>
-
-<% @followers.each do |person| %>
+<% @user.followers.each do |person| %>
 	
   <tr>
   	<td> <%= person.login %></td>
@@ -14,5 +15,10 @@
   </tr>
 <% end %>
 </table>
-
 <br />
+<% else %>
+Não há seguidores ainda. Seja o primeiro! [link]
+
+<% end %>
+
+<%= link_to 'Back', @user %>

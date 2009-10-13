@@ -9,7 +9,7 @@ require File.join(File.dirname(__FILE__), 'boot')
 require 'desert'
 require 'ostruct'
 require 'yaml'  
-require 'community_engine'
+#require 'community_engine'
 
 
 
@@ -45,11 +45,13 @@ Rails::Initializer.run do |config|
   end
 
 ActiveRecord::Base.send(:extend, CommunityEngine::ActiveRecordExtensions)
-
+=begin
   config.action_controller.session = {
     :key    => '_your_app_session',
-    :secret => '75bb655faa4386fd061de6b576c4a3115fa2a380343359d3f0ab1c0a1be1e70e2cf7f4ecd14131f923570e8e5573331070802ebb5f8b543e2ba93d79b8194190'
+    :secret => '75bb655faa4386fd061de6b576c4a3115fa2a380343359d3f0ab1c0a1be1e70e2cf7f4ecd14131f923570e8e5573331070802ebb5f8b543e2ba93d79b819419a'
   }
+=end
+  config.action_controller.session_store = :active_record_store
 
   
   # Settings in config/environments/* take precedence over those specified here.

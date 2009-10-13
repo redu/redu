@@ -1,0 +1,18 @@
+<p>
+  <b>Name:</b>
+  <%=h @ability.name %>
+</p>
+
+<p>
+  <b>Value:</b>
+  <%=h @ability.value %>
+</p>
+
+<p>
+  <b>Weight:</b>
+  <%=h @ability.weight %>
+</p>
+
+
+<%= link_to 'Edit', edit_ability_path(@ability) %> |
+<%= link_to 'Back', abilities_path %>

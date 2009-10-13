@@ -1,0 +1,22 @@
+
+
+<div id="question_block" style="background: #EFEFEF; padding: 5px; margin-bottom: 10px" >
+<p>
+  <h1 style="font-size: 14px;">Questão: #<BR>
+  <%=h @next_question.statement %>
+  </h1>
+</p>
+<% @next_question.alternatives.each do |alternative| %>
+<%= alternative.statement %> <BR>
+<% end %>
+
+<p>
+  <b>Resposta:</b>
+  <%=h @next_question.answer.statement %>
+</p>
+
+
+<%= link_to 'Next', :action => :answer %> 
+ 
+
+</div>
