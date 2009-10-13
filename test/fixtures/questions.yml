@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  statement: MyString
+  answer_id: 1
+  isPublic: 
+
+two:
+  statement: MyString
+  answer_id: 1
+  isPublic: 
