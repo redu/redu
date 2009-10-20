@@ -72,7 +72,7 @@ class UsersController < BaseController
     end
     redirect_to user_path(@follow_user)
     
-  end
+  end 
   
   def unfollow
      @user = User.find(params[:id])
@@ -85,6 +85,48 @@ class UsersController < BaseController
       flash[:erro] = 'Não foi possível parar de seguir esse usuário'
     end
     redirect_to user_path(@follow_user)
+    
+  end
+  
+  ##Associação com a disciplina
+  def add_subject
+    
+    @user = User.find(params[:id])
+    @subject = Subject.find(params[:subject_id])
+    puts params[:user_key]
+    
+    @user_subject_association = UserSubjectAssociation.find(:first, :include => :access_key, :conditions => ["access_keys.key = ?", params[:user_key]])  
+    
+    if @user_subject_association
+      if @user_subject_association.access_key.expiration_date.to_time < Time.now # verifica a data da validade da chave  
+        if @subject &&  @user_subject_association.user == @user         
+          if @user && !@user_subject_association.user # cada chave só poderá ser usada uma vez, sem troca de aluno                     
+            @user_subject_association.user = @user        
+            if @user_subject_association.save
+              flash[:notice] = 'Usuário associado à disciplina!'
+            else 
+              flash[:notice] = 'Associação à disciplina falhou.'
+            end
+            
+          else 
+            flash[:notice] = 'Essa chave já está em uso.'
+          end
+          
+        else
+          flash[:notice] = 'Essa chave pertence à outra disciplina.'
+        end
+        
+      else
+        flash[:notice] = 'O prazo de validade desta chave expirou. Contate o administrador da sua escola.'
+      end
+      
+    else
+      flash[:notice] = 'Chave inválida'
+    end
+    
+    respond_to do |format|
+      format.html { redirect_to(@user) }
+    end
     
   end
   

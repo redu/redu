@@ -2,8 +2,9 @@ class Forum < ActiveRecord::Base
   acts_as_taggable
   acts_as_list
 
-  validates_presence_of :name
+  #validates_presence_of :name
 
+  has_many :subjects
   has_many :moderatorships, :dependent => :destroy
   has_many :moderators, :through => :moderatorships, :source => :user
 

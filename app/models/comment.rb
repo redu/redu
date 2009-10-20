@@ -1,20 +1,22 @@
 class Comment < ActiveRecord::Base
 
+  belongs_to :course
+
   belongs_to :commentable, :polymorphic => true
   belongs_to :user
   belongs_to :recipient, :class_name => "User", :foreign_key => "recipient_id"
   
-  validates_presence_of :comment
-  validates_presence_of :commentable_id, :commentable_type
+  #validates_presence_of :comment
+  #validates_presence_of :commentable_id, :commentable_type
   
-  validates_length_of :comment, :maximum => 2000
+  #validates_length_of :comment, :maximum => 2000
   
   before_save :whitelist_attributes  
 
-  validates_presence_of :user, :unless => Proc.new{|record| AppConfig.allow_anonymous_commenting }
-  validates_presence_of :author_email, :unless => Proc.new{|record| record.user }  #require email unless logged in
-  validates_presence_of :author_ip, :unless => Proc.new{|record| record.user} #log ip unless logged in
-  validates_format_of :author_url, :with => /(^$)|(^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$)/ix, :unless => Proc.new{|record| record.user }
+  #validates_presence_of :user, :unless => Proc.new{|record| AppConfig.allow_anonymous_commenting }
+  #validates_presence_of :author_email, :unless => Proc.new{|record| record.user }  #require email unless logged in
+  #validates_presence_of :author_ip, :unless => Proc.new{|record| record.user} #log ip unless logged in
+  #validates_format_of :author_url, :with => /(^$)|(^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$)/ix, :unless => Proc.new{|record| record.user }
 
   acts_as_activity :user, :if => Proc.new{|record| record.user } #don't record an activity if there's no user
 

@@ -1,7 +1,6 @@
 class CreateUserCourseAssociations < ActiveRecord::Migration
   def self.up
     create_table :user_course_associations do |t|
-
       t.timestamps
     end
   end

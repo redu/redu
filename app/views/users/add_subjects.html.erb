@@ -1,0 +1,22 @@
+<h1>Listando Disciplinas</h1>
+
+ <% form_tag({:action => 'add_subjects', :id => @user}, :method => "get") do %>
+	
+	<table>
+  <tr>
+    <th>Nome</th>
+  </tr>
+
+<% @subjects.each do |subject| %>
+  <tr>
+  	<td><%= check_box_tag("subject[id][]", value =  subject.id, checked = nil) %></td>
+    <td><%=h subject.name %></td>
+  </tr>
+<% end %>
+</table>
+	<%= submit_tag("OK") %>
+	
+<% end %>
+
+<br />
+<%= link_to 'Back', user_path %>

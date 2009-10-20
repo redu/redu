@@ -171,6 +171,8 @@ class CommentsController < BaseController
           @commentable.login
         when 'post'
           @commentable.title
+        when 'course'
+          @commentable.name
         when 'clipping'
           @commentable.description || "Clipping from #{@user.login}"
         when 'photo'

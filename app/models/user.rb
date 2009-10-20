@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
   
   before_save   :generate_login_slug
   after_save    :recount_metro_area_users
-  after_save    :recount_followers_and_follows
+  #after_save    :recount_followers_and_follows
   after_destroy :recount_metro_area_users
 
 

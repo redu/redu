@@ -1,8 +1,21 @@
 <p>
-  <b>Name:</b>
+  <b>Nome da Disciplina:</b>
   <%=h @subject.name %>
+</p>
+<p>
+  <b>Aulas da Disciplina:</b>
+  <% if @subject.courses %>
+	  <% @subject.courses.each do |course|%>
+	 	 <%= course.name %>
+	  <% end  %>
+  <% else %>
+  		Não há aulas cadastradas ainda.
+  <% end %>
 </p>
 
 
+
+
+<%= link_to 'Criar Fórum', {:action => :create_forum, :id => @subject} %> |
 <%= link_to 'Edit', edit_subject_path(@subject) %> |
 <%= link_to 'Back', subjects_path %>

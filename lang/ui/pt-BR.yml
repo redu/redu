@@ -260,11 +260,11 @@ pt-BR:
   #en: comment_save_error: Your comment couldn't be saved.
   comment_save_error: Your comment couldn't be saved.
   #en: comment_was_successfully_created: Comment was successfully created.
-  comment_was_successfully_created: Comment was successfully created.
+  comment_was_successfully_created: Commentário foi criado com sucesso.
   #en: comments: Comments
   comments: Comentários
   #en: comments_deleted: Comments deleted
-  comments_deleted: Comments deleted
+  comments_deleted: Commentários deletados
   #en: comments_rss: Comments RSS
   comments_rss: Comments RSS
   #en: community_tagline: CommunityEngine Rocks!
@@ -498,9 +498,9 @@ pt-BR:
   #en: forgot_your_username: Forgot your username?
   forgot_your_username: Forgot your username?
   #en: forum: Forum
-  forum: Forum
+  forum: Fórum
   #en: forums: Forums
-  forums: Forums
+  forums: Foruns
   #en: found: found
   found: found
   #en: frequency: Frequency
@@ -946,7 +946,7 @@ pt-BR:
   #en: profile: Profile
   profile: Profile
   #en: profile_comments: Profile Comments
-  profile_comments: Profile Comments
+  profile_comments: Comentários do meu perfil
   #en: profile_photo: Profile Photo
   profile_photo: Profile Photo
   #en: profile_photo_change: Change profile photo

@@ -1,12 +1,24 @@
 <p>
-  <b>Name:</b>
+  <b>Nome:</b>
   <%=h @course.name %>
 </p>
+<hr>
+Deixe o seu comentário:<BR>
+<% form_tag :action => "put_comment", :id => @course do %>
+<%= text_area_tag :comment, nil, :rows => 4, :cols => 50 %>
+<BR>
+<%= submit_tag 'OK' %>
+<% end%>
 
-<p>
-  
-</p>
-
-
+<hr>
+Comentários<BR>
+<% if (@comments.length > 0) %>
+	<% @comments.each do |comment| %>
+	<%= comment.user.login %>: <%= comment.comment %><br><BR>
+	<%end%>
+<%else%>
+Não tem comentários ainda.
+<%end%>
+<BR>
 <%= link_to 'Edit', edit_course_path(@course) %> |
 <%= link_to 'Back', courses_path %>
