@@ -34,7 +34,9 @@
   
 = javascript_include_tag "prototip-min"
 = stylesheet_link_tag 'prototip', :media => 'screen'
-	
+
+- if (controller_name == 'courses')
+  = ajaxful_rating_style
 
 = javascript_include_tiny_mce_if_used
 = tiny_mce if using_tiny_mce?

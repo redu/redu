@@ -9,6 +9,7 @@
 <% @courses.each do |course| %>
   <tr>
     <td><%=h course.name %></td>
+	<td> <%= ratings_for course, :static %></td>
     <td><%= link_to 'Show', course %></td>
     <td><%= link_to 'Edit', edit_course_path(course) %></td>
     <td><%= link_to 'Destroy', course, :confirm => 'Are you sure?', :method => :delete %></td>

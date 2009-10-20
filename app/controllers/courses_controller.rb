@@ -1,6 +1,17 @@
 class CoursesController < BaseController
   
   
+  def rate
+    @course = Course.find(params[:id])
+    @course.rate(params[:stars], current_user, params[:dimension])
+     id = "ajaxful-rating-#{!params[:dimension].blank? ? "#{params[:dimension]}-" : ''}course-#{@course.id}"
+    
+    render :update do |page|
+      page.replace_html id, ratings_for(@course, :wrap => false, :dimension => params[:dimension])
+      page.visual_effect :highlight, id
+    end
+  end
+  
   def put_comment
     
     if current_user
@@ -9,18 +20,12 @@ class CoursesController < BaseController
     @commentable = Course.find(params[:id])
     @commentable.comments.create(:comment => thecomment, :user => current_user)
     
-  else
-    flash[:error] = 'Usuário não logado'
-  end
-  redirect_to @commentable
+    else
+      flash[:error] = 'Usuário não logado'
+    end
+      redirect_to @commentable
     
-#    if @course.save
-#      flash[:notice] = 'Comentário adicionado.'
-#    else
-#      flash[:error] = 'Algum problema aconteceu!'
-#    end
-    
-   end
+    end
   
   # Verificar as validações do model 'comment'
   def add_comment

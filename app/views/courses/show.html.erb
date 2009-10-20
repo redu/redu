@@ -2,6 +2,9 @@
   <b>Nome:</b>
   <%=h @course.name %>
 </p>
+
+<%= ratings_for @course %>
+
 <hr>
 Deixe o seu comentário:<BR>
 <% form_tag :action => "put_comment", :id => @course do %>

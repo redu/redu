@@ -3,6 +3,9 @@ class Course < ActiveRecord::Base
   acts_as_commentable
 
   has_and_belongs_to_many :subjects
+  
+  ajaxful_rateable :stars => 5#, :dimensions => [:speed, :beauty, :price]
+  
   #has_and_belongs_to_many :comments
   
   #has_many :students,  :source => :user, :conditions => ["role_id = ?",7]

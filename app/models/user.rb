@@ -6,6 +6,10 @@ class User < ActiveRecord::Base
   attr_accessor :password
   attr_protected :admin, :featured, :role_id
   
+  
+  ajaxful_rater
+  #has_many :rates
+  
   acts_as_taggable  
   acts_as_commentable
   has_private_messages
@@ -51,6 +55,9 @@ class User < ActiveRecord::Base
   # FOLLOWSHIP
   has_and_belongs_to_many :follows, :class_name => "User", :join_table => "followship", :association_foreign_key => "follows_id", :foreign_key => "followed_by_id", :uniq => true
   has_and_belongs_to_many :followers, :class_name => "User", :join_table => "followship", :association_foreign_key => "followed_by_id", :foreign_key => "follows_id", :uniq => true
+  
+  #COURSES
+
   
   # EXAMS
   has_many :exams
