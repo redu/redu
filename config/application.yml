@@ -26,6 +26,8 @@ robots_meta_list_content: 'noindex,follow'
 # when links are included and they point to external sites, the robot should not follow
 robots_meta_show_content: 'index,nofollow'
 
+
+
 photo:
   missing_thumb: '/images/icon_missing_thumb.gif'
   missing_medium: "/images/icon_missing_medium.gif"
