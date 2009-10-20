@@ -2,18 +2,19 @@ class CreateRoles < ActiveRecord::Migration
   def self.up
     create_table :roles do |t|
       t.column :name, :string
+      t.column :school_role, :boolean , :null => false
     end
 
     Role.enumeration_model_updates_permitted = true
-    Role.create(:name => 'admin')    
-    Role.create(:name => 'moderator')
-    Role.create(:name => 'member')   
+    Role.create(:name => 'admin', :school_role => false)    
+    Role.create(:name => 'moderator', :school_role => false)
+    Role.create(:name => 'member', :school_role => false)   
     
     # school roles
-    Role.create(:name => 'school_admin')
-    Role.create(:name => 'coordinator')  
-    Role.create(:name => 'teacher')
-    Role.create(:name => 'student')
+    Role.create(:name => 'school_admin', :school_role => true)
+    Role.create(:name => 'coordinator', :school_role => true)  
+    Role.create(:name => 'teacher', :school_role => true)
+    Role.create(:name => 'student', :school_role => true)
     
     
     Role.enumeration_model_updates_permitted = false

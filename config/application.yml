@@ -26,7 +26,17 @@ robots_meta_list_content: 'noindex,follow'
 # when links are included and they point to external sites, the robot should not follow
 robots_meta_show_content: 'index,nofollow'
 
-
+image:
+  #missing_thumb: '/images/icon_missing_thumb.gif'
+  #missing_medium: "/images/icon_missing_medium.gif"
+  attachment_fu_options:
+    resize_to: "465>"
+    #min_size: 1    
+    #size in megabytes
+    max_size: 3
+    #options - 's3', 'file_system', 'db_system' - see attachment_fu for details
+    storage: 'file_system'
+    content_type: ['image/jpg', 'image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png']
 
 photo:
   missing_thumb: '/images/icon_missing_thumb.gif'

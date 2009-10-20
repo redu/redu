@@ -5,6 +5,7 @@
   <h1 style="font-size: 14px;">
   <%=h @question.statement %>
   </h1>
+  <%= image_tag @question.public_filename() %>
 </p>
 <% @question.alternatives.each do |alternative| %>
 <%= alternative.statement %> <BR>
@@ -18,6 +19,11 @@
 <p>
   
   <%= @question.is_public ? 'Pública' : 'Privada' %>
+</p>
+
+<p>
+  Justificativa: <BR>
+  <%= @question.justification ? @question.justification: 'Sem justificativa' %>
 </p>
 
 

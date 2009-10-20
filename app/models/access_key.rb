@@ -6,7 +6,7 @@ class AccessKey < ActiveRecord::Base
   
   before_create :make_key_code
   
- # validates_uniqueness_of :key
+ validates_uniqueness_of :key
   
   
   protected

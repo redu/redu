@@ -12,42 +12,40 @@ class SchoolsController < BaseController
     end
   end
   
+  
+  
+  
+=begin  
   def create_school_admin
     
-    user = params[:user]
-    school = params[:id]
+    user_login = params[:login]
+    user_key = params[:key]
+    school_id = params[:id]
+    
+    # TODO validar se login valido, chave válida e desocupada, escola válida
     
     @user_school_association = UserSchoolAssociation.new
     
-    #@school = School.new(params[:school])
+    @user_school_association.user = User.find_by_login(user_login)
+    @user_school_association.school = School.find(school_id)
+    @user_school_association.access_key = AccessKey
 
-    respond_to do |format|
       if @user_school_association.save
         flash[:notice] = 'Administrador da escola criado'
-        format.html { redirect_to(@school) }
-        format.xml  { render :xml => @school, :status => :created, :location => @school }
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @school.errors, :status => :unprocessable_entity }
+         flash[:error] = 'Administrador da escola não foi criado'
       end
-    end
+      render :text => "OK" 
     
   end
-
+=end
 
   ### School Admin actions
   def invalidate_keys(access_key) # 'troca' um conjunto de chaves
     
   end
 
-  def index_school_keys(school)
-    @access_keys = AccessKey.all(:conditions => ['school_id = ?', school.id])
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @access_keys }
-    end
-  end
   
 
   def associate

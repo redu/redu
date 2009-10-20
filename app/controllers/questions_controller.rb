@@ -1,29 +1,5 @@
 class QuestionsController < BaseController
-=begin 
-  def answer
-    @exam = session[:exam]
-    
-    if session[:current_question]  <  @exam.questions.length  
-        session[:current_question] = session[:current_question] + 1
-    else
-        flash[:notice] = 'fim do exame'
-        redirect_to(@exam)
-    end
-    
-    @next_question = @exam.questions[session[:current_question]]
-    
-  end
-=end 
-  def checkanswer # http://www.ruby-forum.com/topic/195776
-    @quiz = Quiz.find(params[:quiz_id]) # get the quiz from the response 
-    form
-    answers = @quiz.answers
-    responses = params[:responses]  # get the responses from the 
-    response form
-    @correct_answer_count = answers.zip(responses).map(0) {|sum, a, r| a == r ? sum + 1 : sum}
-    @percentage = (@correct_answer_count / @quiz.questions.size) * 100
 
-  end
 
   
   
@@ -73,6 +49,13 @@ class QuestionsController < BaseController
   def create
     
     @question = Question.new(params[:question])
+    #@question.uploaded_data = params[:question]
+    
+    if params[:image] 
+      puts 'tem imagem!!!'
+      @image       = Image.new(params[:image])
+      @question.image = @image
+    end
     
     @alternatives = params[:alternative][:statement]
     

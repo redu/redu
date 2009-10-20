@@ -13,13 +13,19 @@ class AccessKeysController < BaseController
       UserSchoolAssociation.create(:school_id => params[:id].to_i, :access_key => ak)
   end
   
-  #redirecionar
+ #render :text => "OK" 
+ render :nothing
 end
 
  
  def renew_keys(keys)
    
  end
+ 
+  
+  def change_key_role
+    
+  end
  
 
   # GET /access_keys
@@ -33,10 +39,12 @@ end
     end
   end
   
+  
+  
   def index_school
-    school = params[:id]
-    if school
-      @user_school_associations = UserSchoolAssociation.find(:all, :conditions => ['school_id = ?', school])
+    @school = School.find(params[:id])
+    if @school
+      @user_school_associations = UserSchoolAssociation.find(:all, :conditions => ['school_id = ?', @school.id])
     end
     
     respond_to do |format|

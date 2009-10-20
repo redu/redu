@@ -23,7 +23,6 @@ class User < ActiveRecord::Base
   
   before_save   :generate_login_slug
   after_save    :recount_metro_area_users
-  #after_save    :recount_followers_and_follows
   after_destroy :recount_metro_area_users
 
 
@@ -245,14 +244,6 @@ class User < ActiveRecord::Base
     super
   end
   
-  
- 
-  def recount_followers_and_follows
-  update_attribute(:follows_count, self.follows.length)
-  update_attribute(:followers_count, self.followers.length)
-  end
-  
-
   def recount_metro_area_users
     return unless self.metro_area
     ma = self.metro_area

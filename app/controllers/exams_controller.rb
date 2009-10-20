@@ -1,26 +1,72 @@
 class ExamsController < BaseController
-=begin  
-  @@quiz = [
-  { :question => "What's the square root of 9?",
-        :options => ['2','3','4'],
-        :answer => "3" },
-  { :question => "What's the square root of 4?",
-        :options => ['16','2','8'],
-        :answer => '16' },
-  { :question => "How many feet in a mile?",
-        :options => ['90','130','5,280', '23,890'],
-        :answer => '5,280' },
-  { :question => "What's the total area of irrigated land in Nepal?",
-        :options => ['742 sq km','11,350 sq km','5,000 sq km','none of the above'],
-        :answer => '11,350 sq km' },
-  ] 
-=end  
 
-# COLOCAR QUIZ (EXAM) NA SESSAO OU FAZER REQUESTS AO BD A CADA VEZ
-# colocar array de ids de questao na sessao?
+  def take 
+   rst
+   @exam = Exam.find(params[:id])
 
-  #@@quiz = nil
+   #array_ex = [[17, 53], [18, 57], [19, 61]]
+   session[:questions] = @exam.questions.collect {|q| [q.id, q.answer_id ]  } 
+   
+   @nqid = session[:questions][0][0]
+   
+   redirect_to :action => :next_question, :id => @exam, :ci => 0, :nqid => @nqid
+   
+  end
   
+  def next_question
+    
+    @eid = params[:id] # exam's id
+    @qid = params[:qid] # current question's id
+    @nqid = params[:nqid] # next question's id
+    @theanswer = params[:answer] # current answer (alternative's id)
+    
+    if @theanswer 
+        session[:answers][@qid] = @theanswer
+    end
+    
+    if @nqid && !@nqid.eql?("") # prepare attributes for the next question
+      
+      @question = Question.find(@nqid)
+      
+      nextIndex = params[:ci].to_i + 1
+      @next_qid =  session[:questions][nextIndex][0] if((nextIndex) < session[:questions].length) #primeiro valor
+      
+      @current_i = nextIndex
+      # why the session cannot keep the index ? A.: because if the user hits 'back' in the browser, the questio    
+    else # go to results
+      
+      redirect_to :action => :end_exam, :id => @eid
+      
+    end
+    
+    
+  end
+  
+  def end_exam
+    @exam = Exam.find(params[:id])
+    @correct = 0
+    @corrects = Array.new
+    
+    for k in 0..(@exam.questions.length - 1)
+      question = session[:questions][k][0]
+      correct_answer = session[:questions][k][1]
+      
+      if session[:answers][question.to_s].to_i == correct_answer
+        @corrects << question
+        @correct += 1
+      end
+      
+    end
+    
+  end
+  
+  def rst
+    session[:q_index] = 0
+    session[:questions] = []
+    session[:answers] = Hash.new
+  end
+
+  ###############################################
   def answer
     if params[:first]
       reset_session
@@ -73,43 +119,6 @@ class ExamsController < BaseController
     session[:correct] = nil
     session[:exam] = nil
   end
-  
-  
-=begin
-  def answer
-    @exam = session[:exam]
-    
-    if session[:current_question]  <  @exam.questions.length  
-        session[:current_question] = session[:current_question] + 1
-    else
-        flash[:notice] = 'fim do exame'
-        redirect_to(@exam)
-    end
-    
-    @next_question = @exam.questions[session[:current_question]]
-    
-  end
- 
-  
-  def take
-    @exam = Exam.find(params[:id])
-   # @exam.current_question = 0
-   session[:current_question] = 0
-    
-    session[:exam] = @exam
-    
-     @next_question = @exam.questions[session[:current_question]]
-    
-    render  :action => :answer
-   # redirect_to(:controller => :questions, :action => :answer, :id =>@next_question)
-    
-=begin    
-    @exam.questions.each do |question|
-
-    end
- 
-  end
-=end 
 
 
 

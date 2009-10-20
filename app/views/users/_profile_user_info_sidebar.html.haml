@@ -37,9 +37,11 @@
     - else 
       = link_to 'Parar de seguir', { :controller => :users, :action => :unfollow, :id => current_user, :follow_id => @user }
   
-  = link_to 'ver seguidores('+@user.followers_count.to_s+')' , followers_user_path(@user)
-  = link_to 'ver seguidos('+@user.follows_count.to_s+')', follows_user_path(@user)
-  
+  /= link_to 'ver seguidores('+@user.followers_count.to_s+')' , followers_user_path(@user)
+  /= link_to 'ver seguidos('+@user.follows_count.to_s+')', follows_user_path(@user)
+  = link_to 'ver seguidores('+@user.followers.length.to_s+')' , followers_user_path(@user)
+  = link_to 'ver seguidos('+@user.follows.length.to_s+')', follows_user_path(@user)
+ 
 
   %h3=:my_details.l
   .vcard.author

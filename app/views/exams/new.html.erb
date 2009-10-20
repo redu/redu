@@ -181,6 +181,17 @@ TODO:
 		return true;
 	}
 	
+    function textCounter(field, cntfieldId, maxlimit){
+		var cntfield = document.getElementById(cntfieldId);
+		
+        if (field.value.length > maxlimit) // if too long...trim it!
+            field.value = field.value.substring(0, maxlimit);
+        // otherwise, update 'characters left' counter
+        else 
+            cntfield.innerHTML = maxlimit - field.value.length;
+    }
+
+	
  </script>
 
 <h1>Novo teste</h1>
@@ -217,7 +228,8 @@ TODO:
                        :url => { :controller => :questions, :action => :create },
                        :position => "bottom", #before e after nao funcionam com o :update
 						:loading => 'itemLoading()', 
-					    :complete => "closePopup()" do %>
+					    :complete => "closePopup()",
+						:html => {:multipart =>true} do %>
 	
 	<div id="popup_content" style="padding: 8px 5px 8px 5px">
   	  Nova questao | <a href="#" onclick="closePopup(); return false;">Fechar</a>
@@ -226,12 +238,22 @@ TODO:
 	  <!-- isso aqui poderia ser um render partial? -->
 	  <div id="question">
 	  	<label>Enunciado: </label><BR>
-		<textarea rows="2" cols="50" name="question[statement]" id="question_statement"></textarea>
+		<textarea rows="2" cols="50" name="question[statement]" id="question_statement"
+		onKeyDown="textCounter(this,'st_chars_left',400)"
+		onKeyUp="textCounter(this,'st_chars_left',400)" ></textarea>
+		(<span id="st_chars_left"></span>) caracteres restantes
+		 <br>
+		 Anexar imagem (max. <%= (AppConfig.photo['attachment_fu_options']['max_size'])%>MB): 
+		 <%= file_field :image, :uploaded_data %>
 		 <br>
 		Alternativas: <br>
 		<div id="alternatives"></div>
 		<BR>
 		<a href="#" id="add_alternative_link" onclick="addAlternative();">Adicionar alternativa (max. 7)</a>
+		<hr>
+		Justificativa da resposta:
+		<%= text_area_tag "question[justification]", nil, :rows =>2, :cols => 50  %>
+		(<span id="jt_chars_left">400</span>) caracteres restantes
 		<hr>
 		Pública?<input type="checkbox" name="question[is_public]" value="true" /><BR>
 		Associar competências | <!-- <a href="#" onclick="saveQuestion();">Salvar</a>--> <%= submit_tag 'Salvar', :onclick => "return validateForm()"  %>

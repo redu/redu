@@ -27,6 +27,32 @@
 		document.getElementById('grant_keys_link').style.display = 'none';
         document.getElementById('keys_school_box').style.display = 'inline';
 	}
+	
+	function showAdminLoginBox(){
+		
+		document.getElementById('grant_admin_link').style.display = 'none';
+        document.getElementById('admin_login_box').style.display = 'inline';
+	}
+	
+	function grantSchoolAdmin(schoolId) {
+		var adminLogin = $('admin_login').val();
+		var adminKey = $('admin_key').val();
+		
+		
+		new Ajax.Request("<%= url_for :controller => :schools, :action => :create_school_admin %>", {
+            method: 'get',
+            parameters: "?id= " + school_id + "&login=" + adminLogin + "&key=" + adminKey,
+            onComplete: function(request){
+                //res = eval("(" + request.responseText + ")");
+                alert('admin atribuido!');
+				// TODO colocar para flash aparecer
+				// page["notice"].replace_html flash[:notice] 
+               // document.getElementById('keys_school_box').style.display = 'none';
+            }
+        });
+	}
+	
+	
     
 </script>
 <h1>Nome da escola: <%= @school.name %></h1>
@@ -34,10 +60,7 @@
     <%= @school.description %>
 </p>
 
-<!-- Se admin ou school_admin -->
-<% if current_user && current_user.school_admin?(@school) %>
-	<%= link_to 'Manage', edit_school_path(@school) %> |<%= link_to link_to :admin_dashboard.l, admin_dashboard_path %> |
-<% end %>
+
 
 <!-- Se usuário não estiver vinculado à escola -->
 <% if current_user && !current_user.get_association_with(@school) && !current_user.admin? %>
@@ -53,8 +76,15 @@
 	</div>
 <% end %>
 
+<!-- Se admin ou school_admin -->
+<% if current_user && (current_user.school_admin?(@school) || current_user.admin?) %>
+	<%= link_to 'Manage', edit_school_path(@school) %>
+	<%= link_to 'Gerenciar Chaves', {:controller => :access_keys, :action => :index_school, :id => @school}%>
+<% end %>
+
+
 <!-- Se admin -->
-<% if current_user.admin? %>
+<% if current_user && current_user.admin? %>
 	<a href="#" id="grant_keys_link" onclick="javascript:showKeysSchoolBox();false;">Gerar chaves</a>
 	
 	<div id="keys_school_box" style="display:none;">
@@ -67,7 +97,24 @@
 		    </button>
 	</div>
 	<%= link_to 'Gerar 50 chaves para escola',  {:controller => 'access_keys', :action => 'grant_keys_to_school', :id => @school, :number => 50, :exp_date => Time.now } %>
-	<%= link_to 'Conceder Admin', schools_path %>
+	
+	
+	<!-- link_to 'Conceder Admin', schools_path -->
+	<!--
+	<a href="#" id="grant_admin_link" onclick="javascript:showAdminLoginBox();false;">Conceder Admin</a>
+	
+	<div id="admin_login_box" style="display:none;">
+		    Login: 
+			<input type="text" id="admin_login" maxlength="5" size="5"/>
+			Chave: 
+			<input type="text" id="admin_key" maxlength="6" size="6"/>
+			Data de expiração: ?
+		    <button onclick="grantSchoolAdmin(<%= @school.id %>);">
+		        OK
+		    </button>
+	</div>
+	-->
+	
 <%end %>
 <BR>
 <!-- MOSTRAR APENAS ALGUNS -->
@@ -92,4 +139,4 @@ Listando alunos:
 <%= link_to 'Todos os estudantes', school_path(@school) %>
 <% end %>
 <BR>
-<%= link_to 'Back', schools_path %>
+<%= link_to 'Back', schools_path -%>

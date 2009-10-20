@@ -11,6 +11,7 @@
   	<td><%=h exam.name %></td>
     <td><%=h exam.author_id %></td>
 	<td><%= link_to 'Fazer prova', :action => :answer, :id => exam, :first => true %></td>
+    <td><%= link_to 'take', :action => :take, :id => exam %></td>
     <td><%= link_to 'Show', exam %></td>
     <td><%= link_to 'Edit', edit_exam_path(exam) %></td>
     <td><%= link_to 'Destroy', exam, :confirm => 'Are you sure?', :method => :delete %></td>

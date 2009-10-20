@@ -32,7 +32,7 @@ class Photo < ActiveRecord::Base
   
   belongs_to :user
   has_one :user_as_avatar, :class_name => "User", :foreign_key => "avatar_id"
-  
+ 
   #Named scopes
   named_scope :recent, :order => "photos.created_at DESC", :conditions => ["photos.parent_id IS NULL"]
   named_scope :new_this_week, :order => "photos.created_at DESC", :conditions => ["photos.created_at > ? AND photos.parent_id IS NULL", 7.days.ago.to_s(:db)]
