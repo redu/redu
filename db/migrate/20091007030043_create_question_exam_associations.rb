@@ -5,6 +5,7 @@ class CreateQuestionExamAssociations < ActiveRecord::Migration
       t.integer :correct_answers_count
       t.integer :question_id
       t.integer :exam_id
+      t.integer :position
       t.timestamps
     end
   end

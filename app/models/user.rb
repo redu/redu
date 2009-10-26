@@ -48,8 +48,7 @@ class User < ActiveRecord::Base
 
  
   # SCHOOL
-  has_many :user_school_association
-  has_many :user_school_associations
+  has_many :user_school_association, :dependent => :destroy
   has_many :schools, :through => :user_school_association
   
   # FOLLOWSHIP
@@ -61,6 +60,9 @@ class User < ActiveRecord::Base
   
   # EXAMS
   has_many :exams
+  
+    # QUESTIONS
+  has_many :questions
   
   # COMMUNITY ENGINE:
 

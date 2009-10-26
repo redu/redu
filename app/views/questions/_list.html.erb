@@ -1,0 +1,43 @@
+<script>
+function removeRowFromList(rowId){
+	
+	var rowObj = document.getElementById(rowId);
+	var rIndex = rowObj.sectionRowIndex;
+	rowObj.parentNode.deleteRow(rIndex);
+	
+	Element.hide('spinner');
+}	
+</script>
+
+
+<% if @questions && @questions.length > 0 %>
+
+<table>
+  <tr>
+    <th>Questão</th> <!-- snippet da questão? -->
+    <th>Data de criação</th>
+  </tr>
+<% @questions.each do |question| %>
+  <tr id="tr_<%= question.id %>">
+  	<td>
+    	<%= question.statement[0..50] %> <!-- TODO texto sem formatacao -->
+	</td>
+    <td><%=h question.created_at %></td>
+	 
+    <td><%= link_to "visualizar", question %></td>
+     
+	  <td>
+<%= link_to_remote 'Adicionar', :url => { :controller => :exams, :action => :add_question, :question_id => question.id }, 
+						:before => "Element.show('spinner')",
+        				:success => "removeRowFromList('tr_" + question.id.to_s + "')" %>
+						<!-- :method => :delete --> 
+						 <!-- :update => "local_search_results" -->
+</td>
+     </tr>
+<% end %>
+</table>
+<% else %>
+
+Não há questões públicas no momento.
+
+<% end %> 

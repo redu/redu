@@ -1,7 +1,23 @@
  <h1><%= @exam.name %></h1>
 
   <p><strong>Resultados:</strong>
-    Você acertou <%= @correct %> questões de <%= @exam.questions.length %>!</p> 
+    Você acertou <%= @correct %> questões de <%= @exam.questions.length %>!
+	<BR>
+	<% my_average = @correct/@exam.questions.length %> 
+	<%= my_average %> % de acertos!
+	
+	<BR>
+	a média de acertos nesse exame é 
+	<% average = (@exam.total_correct/@exam.done_count)/@exam.questions.length*1000.round/10 %>
+	<%= (@exam.done_count == 0) ? 0 : average %> %
+	<BR>
+	<%= (my_average >= average)? 'Você está acima da média, parabéns!' : 'Você precisa estudar mais...' %>
+	
+	<p>
+  Realizado <%=h @exam.done_count %> vezes
+</p>
+	
+	</p> 
 	
 	
 	<% @exam.questions.each do |question| %>
@@ -51,4 +67,5 @@
 	
 	<% end %>
 
-  <%= button_to "Fazer novamente", :action => "take", :id => @exam %> 
+  <%= button_to "Fazer novamente", :action => "take", :id => @exam %>  | 
+  <%= link_to "Lista de Testes", exams_path %>

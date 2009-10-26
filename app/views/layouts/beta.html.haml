@@ -21,7 +21,8 @@
           %ul
             
       #bd
-        = render :partial => "shared/messages"
+        #flash_messages
+          = render :partial => "shared/messages"
                   
         = @content_for_layout
                             

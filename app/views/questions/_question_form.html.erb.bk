@@ -1,0 +1,177 @@
+<script>
+		/* *****************************
+	 * 		Utils
+	 * 
+	 *******************************/
+	function createTable(opt_className){
+	    var el = document.createElement("table");
+	    if (opt_className) {
+	        el.className = opt_className;
+	    }
+	    return el;
+	}
+	
+	function createTableRow(table, opt_rowId){
+	    var tr = table.insertRow(-1);
+		if (opt_rowId) {
+			tr.id = opt_rowId;
+		}
+		
+	    return tr;
+	}
+	
+	function createTableCell(tr, opt_className){
+	    var td = tr.insertCell(-1);
+	    if (opt_className) {
+	        td.className = opt_className;
+	    }
+	    return td;
+	}
+	
+	
+	var alternativesTable;
+	var altCount = 0;
+	var altId = 0;
+	function addAlternative(){
+		// TODO usar setAttribute
+		var alternative = document.createElement("input");
+		 alternative.type = 'radio';
+		 alternative.name = 'answer';
+		 alternative.value = altId;
+		 alternative.id = 'answer_radio_'+altId;
+		 
+		 var statement = document.createElement("input");
+		 statement.type = 'text';
+		 statement.name = 'alternative[statement][]';
+		 statement.id = 'alternative_statement_' + altId ;
+		 
+		 //questionsDiv.appendChild(alternative);
+		 //questionsDiv.appendChild(statement);
+		 
+		 
+		 var alternativeRow = createTableRow(alternativesTable, altId);
+		
+		 var alternative1Cell = createTableCell(alternativeRow);
+		 alternative1Cell.appendChild(alternative);
+		 
+		 var alternative2Cell = createTableCell(alternativeRow);
+		 alternative2Cell.appendChild(statement);  
+		 
+		  var alternative3Cell = createTableCell(alternativeRow);
+		 alternative3Cell.innerHTML = '(<a href="#" onclick="removeAlternative(this)">remove</a>)';  
+		 
+		 altCount++;
+		 altId++;
+		 
+		 if (altCount >= 7) {
+		 	$('add_alternative_link').hide();
+		 }
+		 
+	}
+	
+	 function removeAlternative(linkObj){
+    
+        //var altRow = document.getElementById(rowId);
+        //	altRow.innerHTML ="";
+       
+		
+		var rowObj = linkObj.parentNode.parentNode;
+		var rIndex = rowObj.sectionRowIndex;
+		rowObj.parentNode.deleteRow(rIndex);
+		
+		altCount--;
+		
+		 if (altCount < 7) {
+		 	$('add_alternative_link').show();
+		 }
+		
+    }
+	
+	
+	function resetFields(){
+		document.getElementById('alternatives').innerHTML = '';
+		altCount = 0;
+		altId = 0;
+		$('add_alternative_link').show();
+		document.getElementById('question_statement').value = '';
+		//$('question_statement').val('');
+	}
+	function itemLoading(){
+		// TODO
+		
+	}
+	
+	function validateForm(){
+		//se o cara assinalou a alternativa correta 
+		//se tem pelo menos uma alternativa
+		
+		var checked = false;
+		var els = document.getElementsByName('answer');
+		for (var i = 0; i < els.length && !checked ; i++) {
+			checked = checked || els[i].checked;
+		}
+		if (!checked) {
+			alert('Você precisa selecionar uma alternativa correta');
+			return false;
+		}
+		
+		return true;
+	}
+	
+    function textCounter(field, cntfieldId, maxlimit){
+		var cntfield = document.getElementById(cntfieldId);
+		
+        if (field.value.length > maxlimit) // if too long...trim it!
+            field.value = field.value.substring(0, maxlimit);
+        // otherwise, update 'characters left' counter
+        else 
+            cntfield.innerHTML = maxlimit - field.value.length;
+    }
+	
+
+	</script>
+
+
+<% form_for(@question) do |f| %>
+  <%= f.error_messages %>
+
+	<div id="popup_content" style="padding: 8px 5px 8px 5px">
+	  
+	  <!-- isso aqui poderia ser um render partial? -->
+	  <div id="question">
+	  	<label>Enunciado: </label><BR>
+		
+		<%= f.text_area :statement, :size => "60x12", 
+		:onKeyDown => "textCounter(this,'st_chars_left',400);",
+		:onKeyUp => "textCounter(this,'st_chars_left',400);" %> 
+		
+		(<span id="st_chars_left">400</span>) caracteres restantes
+		 <br>
+		 Anexar imagem (max. <%= (AppConfig.photo['attachment_fu_options']['max_size'])%>MB): 
+		 <%= f.file_field :image, :uploaded_data %>
+		 <br>
+		 
+		Alternativas: <br>
+		<div id="alternatives"></div>
+		<BR>
+		<a href="#" id="add_alternative_link" onclick="addAlternative();">Adicionar alternativa (max. 7)</a>
+		<hr>
+		Justificativa da resposta:
+		<%= f.text_area :justification, :rows =>2, :cols => 50  %>
+		(<span id="jt_chars_left">400</span>) caracteres restantes
+		<hr>
+		Pública?<input type="checkbox" name="question[public]" value="true" /><BR>
+		Associar competências | 
+
+		<p>
+		    <%= f.submit 'Salvar' %>
+		  </p>
+  	  </div>
+	  
+  	</div>  
+
+
+
+  
+<% end %>
+

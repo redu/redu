@@ -3,7 +3,7 @@ class CreateSchools < ActiveRecord::Migration
     create_table :schools do |t|
       t.string :name
       t.text :description
-
+      t.decimal :key_price, :precision => 8, :scale => 2
       t.timestamps
     end
   end

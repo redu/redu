@@ -1,0 +1,36 @@
+<%= hidden_field_tag('questions[]', question.id) %>
+
+<div id="question_<%= @question.id %>" style="background: #EFEFEF; padding: 5px; margin-bottom: 10px" >
+<p>
+  <h1 style="font-size: 14px;">
+  <%=h @question.statement %>
+  </h1>
+  
+</p>
+<BR>
+  <%= image_tag @question.image.url(:normal) %>
+	<BR>
+
+<% @question.alternatives.each do |alternative| %>
+<%= alternative.statement %> <BR>
+<% end %>
+
+<p>
+  <b>Resposta:</b>
+  <%=h @question.answer.statement %>
+</p>
+
+<p>
+  
+  <%= @question.is_public ? 'Pública' : 'Privada' %>
+</p>
+
+<p>
+  Justificativa: <BR>
+  <%= @question.justification ? @question.justification: 'Sem justificativa' %>
+</p>
+
+
+<%= link_to 'Edit', edit_question_path(@question) %> 
+
+</div>

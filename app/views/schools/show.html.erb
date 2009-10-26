@@ -76,27 +76,25 @@
 	</div>
 <% end %>
 
-<!-- Se admin ou school_admin -->
-<% if current_user && (current_user.school_admin?(@school) || current_user.admin?) %>
-	<%= link_to 'Manage', edit_school_path(@school) %>
-	<%= link_to 'Gerenciar Chaves', {:controller => :access_keys, :action => :index_school, :id => @school}%>
-<% end %>
+
 
 
 <!-- Se admin -->
 <% if current_user && current_user.admin? %>
+<!--
+
 	<a href="#" id="grant_keys_link" onclick="javascript:showKeysSchoolBox();false;">Gerar chaves</a>
 	
 	<div id="keys_school_box" style="display:none;">
 		    Número de chaves: 
 			<input type="text" id="keys_number" maxlength="5" size="5"/>
 			Data de expiração:
-			<!-- calendar_date_select :start_time, :time => true, :popup => "force" -->
 		    <button onclick="grantKeysToSchool(<%= @school.id %>);">
 		        OK
 		    </button>
 	</div>
-	<%= link_to 'Gerar 50 chaves para escola',  {:controller => 'access_keys', :action => 'grant_keys_to_school', :id => @school, :number => 50, :exp_date => Time.now } %>
+	
+ <!-- link_to 'Gerar 50 chaves para escola',  {:controller => 'access_keys', :action => 'grant_keys_to_school', :id => @school, :number => 50, :exp_date => Time.now } -->
 	
 	
 	<!-- link_to 'Conceder Admin', schools_path -->
@@ -139,4 +137,12 @@ Listando alunos:
 <%= link_to 'Todos os estudantes', school_path(@school) %>
 <% end %>
 <BR>
+
+
+<!-- Se admin ou school_admin -->
+<% if current_user && (current_user.school_admin?(@school) || current_user.admin?) %>
+	<%= link_to 'Edit', edit_school_path(@school) %>
+	<%= link_to 'Gerenciar Chaves', {:controller => :access_keys, :action => :index_school, :id => @school}%>
+<% end %>
+
 <%= link_to 'Back', schools_path -%>

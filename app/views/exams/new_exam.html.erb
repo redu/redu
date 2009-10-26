@@ -1,0 +1,56 @@
+ <script>
+ 	function saveDraft(opt){
+		
+        var theform = document.getElementById('exam_form');
+		var theattribute = document.getElementById('sbt_opt');
+		
+		theattribute.value = opt;
+		theform.submit();
+    }
+ </script>
+ 
+ <% form_for :exam, @exam,  :url => { :action => "new_exam" },  :html => {:id => 'exam_form'} do |f| %>
+
+ <%= link_to_function 'Nova questão', 'saveDraft(1)' %> | 
+ <%= link_to_function 'Adicionar questão', 'saveDraft(2)' %>
+ 
+ <%= hidden_field_tag('sbt_opt', 0) %>
+  <%= f.hidden_field(:id, :value => @exam.id) %>
+ 
+ <BR><hr><BR>
+ 
+ Title: <%= f.text_field :name %>
+ <br/><BR>
+
+ <div id="questions" style="min-height: 100px;">
+ <%= render :partial => 'questions/question_show', :collection => @exam.questions, :as => :question %> 
+ 
+ </div>
+ 
+ <!-- drop_receiving_element('questions',                             # The id of the receiving element
+  :with   => "'question=' + (element.id.split('_').last())",     # The query string parameters
+  :url    => {:action=>:trash_comment}                          # The action to call
+ )-->
+ 
+ <%= sortable_element 'questions',
+:url => { :action => "sort" , :id => @exam },
+:complete => visual_effect(:highlight, 'questions'),
+ :tag => 'div'
+%>
+
+  <%= submit_tag "Save Exam" %>
+  <%= link_to 'Descartar', :action => :discard_draft %>
+  
+ <% end %>
+ 
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -5,9 +5,12 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :competences
 
-  map.resources :questions
+  map.resources :questions, :collection => { :search => [:get, :post], :add => :get } #, :member => {:add => :get}
 
-  map.resources :exams
+ # map.resources :exams
+  
+  map.resources :exams, :collection => {:new_exam => :get, :add_question => :get, :discard_draft => :get}
+    
 
   map.resources :subjects
 
@@ -15,6 +18,9 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :user_school_association
 
+  #map.resources :access_keys
+  
+  map.resources :schools  
 
 
   
@@ -58,9 +64,6 @@ ActionController::Routing::Routes.draw do |map|
   # Install the default routes as the lowest priority.
   # Note: These default routes make all actions in every controller accessible via GET requests. You should
   # consider removing or commenting them out if you're using named routes and resources.
-  
- map.resources :access_keys
- map.resources :schools  
 
 =begin
   map.resources :schools, :member_path => '/:id', :nested_member_path => '/:school_id', :member => { 

@@ -1,0 +1,45 @@
+
+<% question_id = "question_#{question.id}" %>
+
+<div id="<%= question_id %>" style="background: #EFEFEF; padding: 5px; margin-bottom: 10px; cursor: -moz-grab;" >
+<%= hidden_field_tag('questions[]', question.id) %>
+<p>
+  <h1 style="font-size: 14px;">
+  <%= question.statement %>
+  </h1>
+  
+</p>
+<BR>
+<BR>
+<% question.alternatives.each do |alternative| %>
+<% (question.answer_id == alternative.id) ? check = true : check = false %>
+
+<%= radio_button_tag("alternative", "id", check, :disabled => true) %> 
+<%= alternative.statement %> <BR>
+<% end %>
+<BR>
+<p>
+  <b>Resposta:</b>
+  <%=h question.answer.statement %>
+</p>
+
+<p>
+  
+  <%= question.public ? 'Pública' : 'Privada' %>
+</p>
+
+<p>
+  Justificativa: <BR>
+  <%= question.justification ? question.justification: 'Sem justificativa' %>
+</p>
+
+
+<%= link_to 'Editar', edit_question_path(question) %> |
+
+<%= link_to_remote 'Remover do Exame',
+                       :url => { :controller => :exams, :action => :remove_question, :id => question.id },  :method => :delete %>
+
+
+
+</div>
+<!-- draggable_element(question_id, :revert=>true) -->

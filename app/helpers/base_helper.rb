@@ -2,6 +2,10 @@ require 'md5'
 
 # Methods added to this helper will be available to all templates in the application.
 module BaseHelper
+  
+  def reload_flash
+    page.replace "flash_messages", :partial => "shared/messages"
+  end
 
   def commentable_url(comment)
     if comment.commentable_type != "User"

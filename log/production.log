@@ -1,0 +1,300 @@
+# Logfile created on Thu Oct 08 19:47:00 -0300 2009
+
+Processing SessionsController#new (for 127.0.0.1 at 2009-10-08 19:48:36) [GET]
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 734ms (View: 656, DB: 16) | 200 OK [http://127.0.0.1/login]
+
+
+Processing SessionsController#create (for 127.0.0.1 at 2009-10-08 19:48:49) [POST]
+  Parameters: {"commit"=>"Log in", "authenticity_token"=>"6GiX0X+d6tT+XiVwkdQ8m1WTCrN87DKaYt2O7dGsOlw=", "login"=>"ksiomelo", "password"=>"ksiomelo"}
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 47ms (View: 31, DB: 0) | 200 OK [http://127.0.0.1/sessions]
+
+
+Processing UsersController#new (for 127.0.0.1 at 2009-10-08 20:19:22) [GET]
+Rendering template within layouts/application
+Rendering users/new
+Completed in 140ms (View: 78, DB: 0) | 200 OK [http://127.0.0.1/signup]
+
+
+Processing UsersController#create (for 127.0.0.1 at 2009-10-08 20:19:44) [POST]
+  Parameters: {"user"=>{"birthday(2i)"=>"10", "birthday(3i)"=>"8", "password_confirmation"=>"123456", "password"=>"123456", "login"=>"ksiomelo", "birthday(1i)"=>"1983", "email"=>"ksiomelo"}, "commit"=>"Sign Up!", "inviter_code"=>"", "authenticity_token"=>"6GiX0X+d6tT+XiVwkdQ8m1WTCrN87DKaYt2O7dGsOlw=", "inviter_id"=>""}
+Rendering template within layouts/application
+Rendering users/new
+Completed in 140ms (View: 46, DB: 78) | 200 OK [http://127.0.0.1/users]
+
+
+Processing UsersController#create (for 127.0.0.1 at 2009-10-08 20:20:14) [POST]
+  Parameters: {"user"=>{"birthday(2i)"=>"10", "birthday(3i)"=>"8", "password_confirmation"=>"123456", "password"=>"123456", "login"=>"ksiomelo", "birthday(1i)"=>"1983", "email"=>"ksiomelo@hotmail.com"}, "commit"=>"Sign Up!", "inviter_code"=>"", "authenticity_token"=>"6GiX0X+d6tT+XiVwkdQ8m1WTCrN87DKaYt2O7dGsOlw=", "inviter_id"=>""}
+Redirected to http://127.0.0.1:3000/ksiomelo/signup_completed
+Completed in 547ms (DB: 94) | 302 Found [http://127.0.0.1/users]
+
+
+Processing UsersController#signup_completed (for 127.0.0.1 at 2009-10-08 20:20:14) [GET]
+  Parameters: {"id"=>"ksiomelo"}
+Rendering template within layouts/application
+Rendering users/signup_completed
+Completed in 31ms (View: 15, DB: 16) | 200 OK [http://127.0.0.1/ksiomelo/signup_completed]
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2009-10-08 20:20:48) [GET]
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 46ms (View: 31, DB: 0) | 200 OK [http://127.0.0.1/login]
+
+
+Processing SessionsController#create (for 127.0.0.1 at 2009-10-08 20:20:54) [POST]
+  Parameters: {"commit"=>"Log in", "authenticity_token"=>"6GiX0X+d6tT+XiVwkdQ8m1WTCrN87DKaYt2O7dGsOlw=", "login"=>"ksiomelo", "password"=>"123456"}
+Redirected to http://127.0.0.1:3000/ksiomelo/dashboard
+Completed in 47ms (DB: 31) | 302 Found [http://127.0.0.1/sessions]
+
+
+Processing UsersController#dashboard (for 127.0.0.1 at 2009-10-08 20:20:54) [GET]
+  Parameters: {"id"=>"ksiomelo"}
+Rendering template within layouts/application
+Rendering users/dashboard
+Completed in 281ms (View: 125, DB: 141) | 200 OK [http://127.0.0.1/ksiomelo/dashboard]
+
+
+Processing ExamsController#index (for 127.0.0.1 at 2009-10-08 20:21:06) [GET]
+Rendering template within layouts/application
+Rendering exams/index
+Completed in 94ms (View: 32, DB: 31) | 200 OK [http://127.0.0.1/exams]
+
+
+Processing ExamsController#new (for 127.0.0.1 at 2009-10-08 20:21:09) [GET]
+Rendering template within layouts/application
+Rendering exams/new
+Completed in 94ms (View: 78, DB: 0) | 200 OK [http://127.0.0.1/exams/new]
+
+
+Processing BaseController#site_index (for 127.0.0.1 at 2009-10-12 12:08:25) [GET]
+Rendering template within layouts/application
+Rendering base/site_index
+Completed in 1172ms (View: 875, DB: 32) | 200 OK [http://127.0.0.1/]
+
+
+Processing BaseController#footer_content (for 127.0.0.1 at 2009-10-12 12:08:26) [POST]
+  Parameters: {"authenticity_token"=>"bmOvflO9MbAGb0J9gyjjk0lgmx+zRQmV9nnzhi3ycvU="}
+Completed in 188ms (View: 156, DB: 32) | 200 OK [http://127.0.0.1/base/footer_content]
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2009-10-12 12:08:29) [GET]
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 78ms (View: 31, DB: 31) | 200 OK [http://127.0.0.1/login]
+
+
+Processing BaseController#site_index (for 127.0.0.1 at 2009-10-12 12:11:22) [GET]
+Rendering template within layouts/application
+Rendering base/site_index
+Completed in 1078ms (View: 906, DB: 48) | 200 OK [http://127.0.0.1/]
+
+
+Processing BaseController#footer_content (for 127.0.0.1 at 2009-10-12 12:11:23) [POST]
+  Parameters: {"authenticity_token"=>"bmOvflO9MbAGb0J9gyjjk0lgmx+zRQmV9nnzhi3ycvU="}
+Completed in 203ms (View: 187, DB: 16) | 200 OK [http://127.0.0.1/base/footer_content]
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2009-10-12 12:11:25) [GET]
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 125ms (View: 94, DB: 47) | 200 OK [http://127.0.0.1/login]
+
+
+Processing BaseController#site_index (for 127.0.0.1 at 2009-10-12 21:59:25) [GET]
+Rendering template within layouts/application
+Rendering base/site_index
+Completed in 1406ms (View: 641, DB: 94) | 200 OK [http://127.0.0.1/]
+
+
+Processing BaseController#footer_content (for 127.0.0.1 at 2009-10-12 21:59:27) [POST]
+  Parameters: {"authenticity_token"=>"zQtJVkIZP4tQiDvQfESvm3KoDhfT3ShnXXyzCOJ1M3w="}
+Completed in 266ms (View: 234, DB: 0) | 200 OK [http://127.0.0.1/base/footer_content]
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2009-10-12 21:59:31) [GET]
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 78ms (View: 47, DB: 0) | 200 OK [http://127.0.0.1/login]
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2009-10-13 01:02:17) [GET]
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 968ms (View: 500, DB: 78) | 200 OK [http://127.0.0.1/login]
+
+
+Processing SessionsController#create (for 127.0.0.1 at 2009-10-13 01:02:30) [POST]
+  Parameters: {"commit"=>"Log in", "authenticity_token"=>"bdKcOsQJugE7Z5qBT1/bWGbrYKyilGKcGkp3VmzfYw4=", "login"=>"ksiomelo", "password"=>"ksiomelo"}
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 281ms (View: 250, DB: 47) | 200 OK [http://127.0.0.1/sessions]
+
+
+Processing SessionsController#create (for 127.0.0.1 at 2009-10-13 01:02:40) [POST]
+  Parameters: {"commit"=>"Log in", "authenticity_token"=>"bdKcOsQJugE7Z5qBT1/bWGbrYKyilGKcGkp3VmzfYw4=", "login"=>"ksiomelo", "password"=>"123456"}
+Redirected to http://127.0.0.1:3000/ksiomelo/dashboard
+Completed in 250ms (DB: 79) | 302 Found [http://127.0.0.1/sessions]
+
+
+Processing UsersController#dashboard (for 127.0.0.1 at 2009-10-13 01:02:41) [GET]
+  Parameters: {"id"=>"ksiomelo"}
+Rendering template within layouts/application
+Rendering users/dashboard
+Completed in 360ms (View: 141, DB: 202) | 200 OK [http://127.0.0.1/ksiomelo/dashboard]
+
+
+Processing SessionsController#destroy (for 127.0.0.1 at 2009-10-13 01:03:09) [GET]
+Redirected to http://127.0.0.1:3000/sessions/new
+Completed in 16ms (DB: 0) | 302 Found [http://127.0.0.1/logout]
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2009-10-13 01:03:09) [GET]
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 31ms (View: 31, DB: 62) | 200 OK [http://127.0.0.1/sessions/new]
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2009-10-13 01:03:37) [GET]
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 32ms (View: 32, DB: 31) | 200 OK [http://127.0.0.1/login]
+
+
+Processing SessionsController#create (for 127.0.0.1 at 2009-10-13 01:03:49) [POST]
+  Parameters: {"commit"=>"Log in", "authenticity_token"=>"esDsSGUMnI27pmIiCGKGVnZ0V+ig3ZAdoAwOIIVS3oo=", "login"=>"admin", "password"=>"admin"}
+Redirected to http://127.0.0.1:3000/admin/dashboard
+Completed in 63ms (DB: 32) | 302 Found [http://127.0.0.1/sessions]
+
+
+Processing HomepageFeaturesController#index (for 127.0.0.1 at 2009-10-13 01:03:49) [GET]
+Rendering template within layouts/application
+Rendering homepage_features/index
+Completed in 94ms (View: 47, DB: 78) | 200 OK [http://127.0.0.1/admin/dashboard]
+
+
+Processing AccessKeysController#index (for 127.0.0.1 at 2009-10-13 01:03:56) [GET]
+Rendering template within layouts/application
+Rendering access_keys/index
+Completed in 62ms (View: 47, DB: 0) | 200 OK [http://127.0.0.1/access_keys]
+
+
+Processing HomepageFeaturesController#index (for 127.0.0.1 at 2009-10-13 12:07:10) [GET]
+Rendering template within layouts/application
+Rendering homepage_features/index
+Completed in 110ms (View: 32, DB: 78) | 200 OK [http://127.0.0.1/admin/dashboard]
+
+
+Processing AccessKeysController#index (for 127.0.0.1 at 2009-10-13 12:07:16) [GET]
+Rendering template within layouts/application
+Rendering access_keys/index
+Completed in 266ms (View: 266, DB: 31) | 200 OK [http://127.0.0.1/access_keys]
+
+
+Processing HomepageFeaturesController#index (for 127.0.0.1 at 2009-10-13 12:07:21) [GET]
+Rendering template within layouts/application
+Rendering homepage_features/index
+Completed in 47ms (View: 47, DB: 31) | 200 OK [http://127.0.0.1/admin/dashboard]
+
+
+Processing SchoolsController#index (for 127.0.0.1 at 2009-10-13 12:07:30) [GET]
+Rendering template within layouts/application
+Rendering schools/index
+Completed in 125ms (View: 31, DB: 124) | 200 OK [http://127.0.0.1/schools]
+
+
+Processing BaseController#site_index (for 127.0.0.1 at 2009-10-13 14:03:21) [GET]
+Rendering template within layouts/application
+Rendering base/site_index
+Completed in 860ms (View: 657, DB: 94) | 200 OK [http://127.0.0.1/]
+
+
+Processing BaseController#footer_content (for 127.0.0.1 at 2009-10-13 14:04:03) [POST]
+  Parameters: {"authenticity_token"=>"esDsSGUMnI27pmIiCGKGVnZ0V+ig3ZAdoAwOIIVS3oo="}
+Completed in 359ms (View: 328, DB: 31) | 200 OK [http://127.0.0.1/base/footer_content]
+
+
+Processing HomepageFeaturesController#index (for 127.0.0.1 at 2009-10-13 14:06:19) [GET]
+Rendering template within layouts/application
+Rendering homepage_features/index
+Completed in 94ms (View: 63, DB: 16) | 200 OK [http://127.0.0.1/admin/dashboard]
+
+
+Processing BaseController#site_index (for 127.0.0.1 at 2009-10-13 14:09:05) [GET]
+Rendering template within layouts/application
+Rendering base/site_index
+Completed in 797ms (View: 656, DB: 0) | 200 OK [http://127.0.0.1/]
+
+
+Processing BaseController#footer_content (for 127.0.0.1 at 2009-10-13 14:09:07) [POST]
+  Parameters: {"authenticity_token"=>"esDsSGUMnI27pmIiCGKGVnZ0V+ig3ZAdoAwOIIVS3oo="}
+Completed in 250ms (View: 188, DB: 31) | 200 OK [http://127.0.0.1/base/footer_content]
+
+
+Processing ExamsController#index (for 127.0.0.1 at 2009-10-13 14:10:16) [GET]
+Rendering template within layouts/application
+Rendering exams/index
+Completed in 172ms (View: 47, DB: 250) | 200 OK [http://127.0.0.1/exams]
+
+
+Processing ExamsController#destroy (for 127.0.0.1 at 2009-10-13 14:10:28) [DELETE]
+  Parameters: {"authenticity_token"=>"esDsSGUMnI27pmIiCGKGVnZ0V+ig3ZAdoAwOIIVS3oo=", "id"=>"2"}
+Redirected to http://127.0.0.1:3000/exams
+Completed in 32ms (DB: 32) | 302 Found [http://127.0.0.1/exams/2]
+
+
+Processing ExamsController#index (for 127.0.0.1 at 2009-10-13 14:10:28) [GET]
+Rendering template within layouts/application
+Rendering exams/index
+Completed in 31ms (View: 31, DB: 0) | 200 OK [http://127.0.0.1/exams]
+
+
+Processing HomepageFeaturesController#index (for 127.0.0.1 at 2009-10-13 17:40:08) [GET]
+Rendering template within layouts/application
+Rendering homepage_features/index
+Completed in 140ms (View: 47, DB: 109) | 200 OK [http://127.0.0.1/admin/dashboard]
+
+
+Processing SchoolsController#index (for 127.0.0.1 at 2009-10-13 17:40:24) [GET]
+Rendering template within layouts/application
+Rendering schools/index
+Completed in 78ms (View: 47, DB: 16) | 200 OK [http://127.0.0.1/schools]
+
+
+Processing SchoolsController#new (for 127.0.0.1 at 2009-10-13 17:40:31) [GET]
+Rendering template within layouts/application
+Rendering schools/new
+Completed in 62ms (View: 46, DB: 0) | 200 OK [http://127.0.0.1/schools/new]
+
+
+Processing SchoolsController#create (for 127.0.0.1 at 2009-10-13 17:40:48) [POST]
+  Parameters: {"commit"=>"Create", "authenticity_token"=>"esDsSGUMnI27pmIiCGKGVnZ0V+ig3ZAdoAwOIIVS3oo=", "school"=>{"name"=>"Renascer"}}
+Redirected to http://127.0.0.1:3000/schools/1
+Completed in 31ms (DB: 47) | 302 Found [http://127.0.0.1/schools]
+
+
+Processing SchoolsController#show (for 127.0.0.1 at 2009-10-13 17:40:49) [GET]
+  Parameters: {"id"=>"1"}
+Rendering template within layouts/application
+Rendering schools/show
+Completed in 282ms (View: 282, DB: 0) | 200 OK [http://127.0.0.1/schools/1]
+
+
+Processing BaseController#site_index (for 127.0.0.1 at 2009-10-15 12:18:09) [GET]
+Rendering template within layouts/application
+Rendering base/site_index
+Completed in 1031ms (View: 890, DB: 0) | 200 OK [http://localhost/]
+
+
+Processing BaseController#footer_content (for 127.0.0.1 at 2009-10-15 12:18:10) [POST]
+  Parameters: {"authenticity_token"=>"bI57a/niYOO7u84TnSga+MNHBrdiv9vG1T2EZeAcn08="}
+Completed in 172ms (View: 156, DB: 0) | 200 OK [http://localhost/base/footer_content]
+
+
+Processing UsersController#new (for 127.0.0.1 at 2009-10-15 12:18:13) [GET]
+Rendering template within layouts/application
+Rendering users/new
+Completed in 109ms (View: 78, DB: 0) | 200 OK [http://localhost/signup]

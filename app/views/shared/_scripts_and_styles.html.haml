@@ -23,6 +23,22 @@
   = javascript_include_tag 'swfupload'
   = javascript_include_tag 'uploader'
 
+- if (controller_name == 'exams' && (action_name == 'new_exam' || action_name == 'edit'))
+  = javascript_include_tag "dragdrop"
+
+= init_tinymce_hammer_if_required
+
+- if (controller_name == 'questions' && action_name == 'new')
+  = javascript_tag "var AScgiloc = 'http://www.imathas.com/imathas/filter/graph/svgimg.php';"
+  = javascript_tag "var AMTcgiloc = 'http://www.imathas.com/cgi-bin/mimetex.cgi';"
+  = javascript_include_tag "tiny_mce/plugins/asciimath/js/ASCIIMathMLwFallback"
+  = javascript_include_tag "tiny_mce/plugins/asciisvg/js/ASCIIsvgPI"
+  /= javascript_include_tag "lazyload"
+  /= javascript_include_tag "behaviours"
+  
+
+  
+
 = stylesheet_link_tag 'reset-fonts-grids.css'
 = stylesheet_link_tag 'screen'
 = stylesheet_link_tag 'print', :media => 'print'
@@ -37,6 +53,8 @@
 
 - if (controller_name == 'courses')
   = ajaxful_rating_style
+
+
 
 = javascript_include_tiny_mce_if_used
 = tiny_mce if using_tiny_mce?
