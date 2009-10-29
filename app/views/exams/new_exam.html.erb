@@ -19,12 +19,21 @@
  
  <BR><hr><BR>
  
- Title: <%= f.text_field :name %>
+ Título: <BR> <%= f.text_field :name %>
+ <br/><BR>
+ Descrição: <BR><!-- f.text_area :description, :size => "50x3" --->
  <br/><BR>
 
  <div id="questions" style="min-height: 100px;">
- <%= render :partial => 'questions/question_show', :collection => @exam.questions, :as => :question %> 
  
+ <% if @exam.questions && @exam.questions.length > 0 %>
+ <%= render :partial => 'questions/question_show', :collection => @exam.questions, :as => :question %> 
+ <% else %>
+ Não há questões nesse teste ainda. 
+ Clique em "Adicionar Questão" para adicionar uma questão a 
+ partir do banco de dados ou "Nova Questão" para criar uma questão.
+ 
+ <% end %>
  </div>
  
  <!-- drop_receiving_element('questions',                             # The id of the receiving element
@@ -38,8 +47,8 @@
  :tag => 'div'
 %>
 
-  <%= submit_tag "Save Exam" %>
-  <%= link_to 'Descartar', :action => :discard_draft %>
+  <%= submit_tag "Salvar Teste" %>
+  <%= link_to 'Descartar e Voltar', :action => :discard_draft %>
   
  <% end %>
  

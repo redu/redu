@@ -17,9 +17,14 @@
 
 <p>
   <b>Author:</b>
-  <%=h @exam.author_id %>
+  <%=h @exam.author.login %>
 </p>
 
-<%= link_to 'Fazer prova (Cada)', :action => :take, :id => @exam %> | 
-<%= link_to 'Edit', edit_exam_path(@exam) %> |
-<%= link_to 'Back', exams_path %>
+<%= link_to 'Fazer prova', :action => :take, :id => @exam %> <Br> 
+<hr>
+<% if @exam.author == current_user %>
+<%= link_to 'Editar', edit_exam_path(@exam) %> |
+<%= link_to 'Remover', @exam, :confirm => 'Are you sure?', :method => :delete %> |
+<% end %> 
+<%= link_to 'Voltar', exams_path %>
+<BR><BR>

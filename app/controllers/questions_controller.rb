@@ -1,4 +1,5 @@
 class QuestionsController < BaseController
+  before_filter :login_required, :except => [:index]
   
   uses_tiny_mce(:options => AppConfig.question_mce_options, :only => [:new, :edit])
 
@@ -84,38 +85,31 @@ class QuestionsController < BaseController
   def create
     
     @question = Question.new(params[:question])
-    #@question.uploaded_data = params[:question]
-=begin
-    if params[:image] 
-      puts 'tem imagem!!!'
-      @image       = Image.new(params[:image])
-      @question.image = @image
-    end
-=end    
+    @question.author = current_user
     @alternatives = params[:alternative][:statement]
     
     @alternatives.each do |alternative|
-     # QuestionExamAssociation
-     if !alternative.empty?
+      if !alternative.empty?
         @question.alternatives << Alternative.new(:statement => alternative)
-     end
+      end
     end
     
     respond_to do |format|
       if @question.save! && params[:answer]
-       # TODO fazer verificação disto (é sempre na ordem correta?)
-       @answer = @question.alternatives[params[:answer].to_i]
-       @question.update_attribute(:answer, @answer)
-       
-       if session[:exam_draft]
-       session[:exam_draft].questions << @question
-       end
-       
-        flash[:notice] = 'Question was successfully created.'
+        # TODO fazer verificação disto (é sempre na ordem correta?)
+        @answer = @question.alternatives[params[:answer].to_i]
+        @question.update_attribute(:answer, @answer)
+        
+        if session[:exam_draft]
+          session[:exam_draft].questions << @question
+        end
+        
+        flash[:notice] = 'A questão foi criada e adicionada ao teste.'
         format.html { #redirect_to(@question) 
           redirect_to :controller => :exams, :action => :new_exam
         }
         format.xml  { render :xml => @question, :status => :created, :location => @question }
+=begin        
         format.js do
           responds_to_parent do
             render :update do |page| 
@@ -124,25 +118,31 @@ class QuestionsController < BaseController
             end
           end          
         end
-
-      else
+=end
         
+      else
+       # flash[:error] = 'Um erro aconteceu ao salvar a questão.'
+       
+=begin        
         format.html { 
-         redirect_to :controller => :exams, :action => :new_exam
+          redirect_to :controller => :exams, :action => :new_exam
         }
+=end       
+        format.html { render :action => "new" }
+        format.xml  { render :xml => @question.errors, :status => :unprocessable_entity }
+        
+=begin
         format.js do
-        responds_to_parent do
-          render :update do |page|
+          responds_to_parent do
+            render :update do |page|
               # update the page with an error message
               flash[:notice] = 'Um erro aconteceu'
               page.reload_flash
-
-          end
-        end          
+              
+            end
+          end          
         end
-
-        #format.html { render :action => "new" }
-        #format.xml  { render :xml => @question.errors, :status => :unprocessable_entity }
+=end
       end
     end
   end
@@ -151,12 +151,33 @@ class QuestionsController < BaseController
   # PUT /questions/1.xml
   def update
     @question = Question.find(params[:id])
+    @alternatives = Array.new
+    #@alternatives = params[:alternative][:statement].reject { |alternative| alternative.empty? }
+    
+    params[:alternative][:statement].each do |alternative|
+      if !alternative.empty?
+        @alternatives << Alternative.new(:statement => alternative)
+      end
+    end
+    
+    @question.alternatives = @alternatives
 
     respond_to do |format|
-      if @question.update_attributes(params[:question])
-        flash[:notice] = 'Question was successfully updated.'
-        format.html { redirect_to :controller => :exams, :action => :new_exam }
-        format.xml  { head :ok }
+      if @question.update_attributes!(params[:question]) && params[:answer]
+        # TODO fazer verificação disto (é sempre na ordem correta?)
+        @answer = @question.alternatives[params[:answer].to_i]
+        @question.update_attribute(:answer, @answer)
+        
+        if session[:exam_draft]
+          session[:exam_draft].questions << @question
+        end
+        
+         flash[:notice] = 'A questão foi atualizada com sucesso!'
+        format.html { #redirect_to(@question) 
+          redirect_to :controller => :exams, :action => :new_exam
+        }
+        format.xml  { render :xml => @question, :status => :created, :location => @question }
+        
       else
         format.html { render :action => "edit" }
         format.xml  { render :xml => @question.errors, :status => :unprocessable_entity }

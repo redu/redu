@@ -1,4 +1,6 @@
 class ExamsController < BaseController
+  
+  before_filter :login_required, :except => [:index]
 
   def take 
    rst
@@ -231,7 +233,7 @@ class ExamsController < BaseController
       else
         
         @exam = Exam.new(params[:exam])
-        # @exam.author = current_user
+        @exam.author = current_user
         
         @questions =  params[:questions]
         
@@ -306,6 +308,8 @@ class ExamsController < BaseController
   
   def remove_question
     
+   # session[:exam_draft].questions.delete(Question.find(params[:id])) # TODO manter sincronizado, vale  a pena?
+    
     respond_to do |format|
 =begin      
       format.html {
@@ -315,7 +319,7 @@ class ExamsController < BaseController
 =end
       format.js do
         render :update do |page|
-          page.remove "question_" + params[:id]  #question_39
+          page.remove "question_" + params[:id]
           flash[:notice] = "Questão removida do exame"
           page.reload_flash
           # page.remove "question_#{@question.id}"  
@@ -352,7 +356,7 @@ class ExamsController < BaseController
   # GET /exams
   # GET /exams.xml
   def index
-    @exams = Exam.all
+    @exams = Exam.all(:limit => 20, :order => 'created_at DESC', :include => :author)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -434,7 +438,11 @@ class ExamsController < BaseController
   # DELETE /exams/1.xml
   def destroy
     @exam = Exam.find(params[:id])
-    @exam.destroy
+    
+    if current_user == @exam.author
+    
+       @exam.destroy
+    end
 
     respond_to do |format|
       format.html { redirect_to(exams_url) }

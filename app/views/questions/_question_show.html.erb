@@ -14,7 +14,7 @@
 <% question.alternatives.each do |alternative| %>
 <% (question.answer_id == alternative.id) ? check = true : check = false %>
 
-<%= radio_button_tag("alternative", "id", check, :disabled => true) %> 
+<%= radio_button_tag(("alternative_q" + question.id.to_s), "id", check, :disabled => true) %> 
 <%= alternative.statement %> <BR>
 <% end %>
 <BR>

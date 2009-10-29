@@ -1,4 +1,6 @@
-<h1>New Exam >> New question</h1>
+<h1>
+<%= link_to 'Novo Teste', {:controller => :exams, :action => :new_exam } %>
+ >> Nova Questão</h1>
 
 <%= render :partial => 'question_form' %>
 

@@ -53,7 +53,6 @@ class User < ActiveRecord::Base
   
   # SUBJECT
   has_many :user_subject_association
-  has_many :user_subject_associations
   has_many :subjects, :through => :user_subject_association
   
   # FOLLOWSHIP
@@ -64,7 +63,7 @@ class User < ActiveRecord::Base
 
   
   # EXAMS
-  has_many :exams
+  has_many :exams, :foreign_key => "author_id"
   
     # QUESTIONS
   has_many :questions

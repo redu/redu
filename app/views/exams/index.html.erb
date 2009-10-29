@@ -1,25 +1,27 @@
-<h1>Listing exams</h1>
+<h1>Listando Testes Mais Recentes</h1>
 
 <table>
   <tr>
   	<th>Título</th>
-    <th>Author</th>
+    <th>Autor</th>
+	<th>Criado em</th>
   </tr>
 
 <% @exams.each do |exam| %>
   <tr>
   	<td><%= link_to exam.name, exam %></td>
-    <td><%=h exam.author_id %></td>
+    <td><%=h exam.author.login %></td>
+	 <td><%= time_ago_in_words(exam.created_at) %></td>
 	<!--
 	<td>< link_to 'Fazer prova (Sessao)', :action => :answer, :id => exam, :first => true ></td>
-    <td>< link_to 'Fazer prova (Cada)', :action => :take, :id => exam ></td> -->
-    <td><%= link_to 'Edit', edit_exam_path(exam), :confirm => 'Ao editar um exame você perderá informações, deseja continuar?' %></td>
-    <td><%= link_to 'Destroy', exam, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td>< link_to 'Fazer prova (Cada)', :action => :take, :id => exam ></td> 
+    <td>< link_to 'Edit', edit_exam_path(exam), :confirm => 'Ao editar um exame você perderá informações, deseja continuar?' ></td>
+    <td>< link_to 'Destroy', exam, :confirm => 'Are you sure?', :method => :delete></td-->
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'Novo exame (Antigo - Popup)', new_exam_path %>
-<%= link_to 'Novo exame (Sessão)', :action => 'new_exam' %>
+<!-- link_to 'Novo exame (Antigo - Popup)', new_exam_path -->
+<%= link_to 'Novo Teste', :action => 'new_exam' %>

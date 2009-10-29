@@ -1,105 +1,64 @@
 <script>
 	
-		/* *****************************
-	 * 		Utils
-	 * 
-	 *******************************/
-	function createTable(opt_className){
-	    var el = document.createElement("table");
-	    if (opt_className) {
-	        el.className = opt_className;
-	    }
-	    return el;
-	}
-	
-	function createTableRow(table, opt_rowId){
-	    var tr = table.insertRow(-1);
-		if (opt_rowId) {
-			tr.id = opt_rowId;
-		}
 		
-	    return tr;
-	}
+	var alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i"];
 	
-	function createTableCell(tr, opt_className){
-	    var td = tr.insertCell(-1);
-	    if (opt_className) {
-	        td.className = opt_className;
-	    }
-	    return td;
-	}
-		
-	//document.body.onload=newQuestion();
-	
-	var alternativesTable;
+	var MAX_NUMBER_ALT = 7
 	var altCount = 0;
-	var altId = 0;
-	function newQuestion(){
-		
-		//resetFields();
-		
-		//$('thepopup').appear();
-		
-		alternativesTable = createTable();
-		
-		// adiciona alternativas
-		 for (var i = 0; i < 4; i++) {
-		 	addAlternative();
-		 }
-		
-		 var questionsDiv = document.getElementById('alternatives');
-		 questionsDiv.appendChild(alternativesTable);
-	}
-	
-	
-   
-	
+	//var altId = 0;
+
 	function addAlternative(){
-		// TODO usar setAttribute
-		var alternative = document.createElement("input");
-		 alternative.type = 'radio';
-		 alternative.name = 'answer';
-		 alternative.value = altId;
-		 alternative.id = 'answer_radio_'+altId;
-		 
-		 var statement = document.createElement("input");
-		 statement.type = 'text';
-		 statement.name = 'alternative[statement][]';
-		 statement.id = 'alternative_statement_' + altId ;
-		 
-		 //questionsDiv.appendChild(alternative);
-		 //questionsDiv.appendChild(statement);
-		 
-		 
-		 var alternativeRow = createTableRow(alternativesTable, altId);
 		
-		 var alternative1Cell = createTableCell(alternativeRow);
-		 alternative1Cell.appendChild(alternative);
-		 
-		 var alternative2Cell = createTableCell(alternativeRow);
-		 alternative2Cell.appendChild(statement);  
-		 
-		  var alternative3Cell = createTableCell(alternativeRow);
-		 alternative3Cell.innerHTML = '(<a href="#" onclick="removeAlternative(this)">remove</a>)';  
-		 
-		 altCount++;
-		 altId++;
-		 
-		 if (altCount >= 7) {
-		 	$('add_alternative_link').hide();
-		 }
+		altCount = document.getElementsByName('answer').length;
+		
+		if (altCount >= MAX_NUMBER_ALT) {
+			return;
+		}
+		else {
+		
+			// TODO usar setAttribute
+			var alternative = document.createElement("input");
+			alternative.type = 'radio';
+			alternative.name = 'answer';
+			//alternative.value = altId;
+			alternative.id = 'answer_radio';
+			
+			var statement = document.createElement("input");
+			statement.type = 'text';
+			statement.name = 'alternative[statement][]';
+			statement.id = 'alternative_statement';
+			
+			
+			 var alternativeDiv = document.createElement("div");
+		 	alternativeDiv.id = 'alternative';
+			
+			
+			alternativeDiv.appendChild(alternative);
+			alternativeDiv.innerHTML += " ";
+			alternativeDiv.appendChild(statement);
+			alternativeDiv.innerHTML += ' (<a href="#" onclick="removeAlternative(this); return false;">remove</a>)';
+
+			document.getElementById("alternatives").appendChild(alternativeDiv);
+			
+			altCount++;
+			altId++;
+			
+			recalculateAnswerIndex();
+			
+			if (altCount >= 7) {
+				$('add_alternative_link').hide();
+			}
+		}
 		 
 	}
+	
 	
 	 function removeAlternative(linkObj){
     
-        //var altRow = document.getElementById(rowId);
-        //	altRow.innerHTML ="";
-       
+		var divObj = linkObj.parentNode;
+		document.getElementById('alternatives').removeChild(divObj);
 		
-		var rowObj = linkObj.parentNode.parentNode;
-		var rIndex = rowObj.sectionRowIndex;
-		rowObj.parentNode.deleteRow(rIndex);
+		recalculateAnswerIndex();
 		
 		altCount--;
 		
@@ -109,23 +68,15 @@
 		
     }
 	
-	function closePopup(){
-		$('thepopup').hide();
-		resetFields();
+	function recalculateAnswerIndex(){
+		var answersEl = document.getElementsByName("answer");
+		
+		for (var i = 0; i < answersEl.length; i++) {
+			answersEl[i].value = i;
+			answersEl[i].tabindex = i + 1;
+		}
 	}
 	
-	function resetFields(){
-		document.getElementById('alternatives').innerHTML = '';
-		altCount = 0;
-		altId = 0;
-		$('add_alternative_link').show();
-		document.getElementById('question_statement').value = '';
-		//$('question_statement').val('');
-	}
-	function itemLoading(){
-		// TODO
-		
-	}
 	
 	function validateForm(){
 		//se o cara assinalou a alternativa correta 
@@ -158,7 +109,7 @@
  </script>
 
 
-<% form_for(@question) do |f| %>
+<% form_for(@question, :html => {:onsubmit => "return validateForm();"}) do |f| %>
   <%= f.error_messages %>
 
 	<div id="popup_content" style="padding: 8px 5px 8px 5px">
@@ -167,9 +118,11 @@
 	  <div id="question">
 	  	<label>Enunciado: </label><BR>
 		
-		<%= f.text_area :statement, :size => "60x12", 
+		<%= f.text_area :statement, :size => "60x12" %>
+ 
+ 			<!--
 		:onKeyDown => "textCounter(this,'st_chars_left',400);",
-		:onKeyUp => "textCounter(this,'st_chars_left',400);" %> 
+		:onKeyUp => "textCounter(this,'st_chars_left',400);" --> 
 		<!-- f.tinymce :statement -->
 
 		
@@ -179,18 +132,47 @@
 		 
 		Alternativas: <br>
 		<div id="alternatives">
+			<!-- table?? -->
+			<% if @question.alternatives && @question.alternatives.length > 0%> 
 			
+				<% @question.alternatives.each do |alternative| %>
+					<% a_index = @question.alternatives.index(alternative) %>
+					
+					<div id="alternative">
+						<span id = "alt_letter_<%= a_index %>"><script>alphabet[1]</script></span>
+						<% if @question.answer_id == alternative.id %>
+							<%= radio_button_tag("answer", a_index, true) %> 
+					    <% else %>
+							<%= radio_button_tag("answer", a_index, false) %> 
+						<% end %>
+						
+						<%= text_field_tag 'alternative[statement][]', alternative.statement, {:tabindex => a_index + 1}   %>
+						(<a href="#" onclick="removeAlternative(this)">remove</a>)
+					
+					</div>
+				<% end %>
+			<% else %>
+				<% for a_index in 0..4 %>
+					<div id="alternative">
+						<span id = "alt_letter_<%= a_index %>"><script>alphabet[1]</script></span>
+						<%= radio_button_tag("answer", a_index, false) %>	
+						<%= text_field_tag 'alternative[statement][]', nil, {:tabindex => a_index + 1}  %>
+						(<a href="#" onclick="removeAlternative(this); return false;">remove</a>)
+					</div>
+				<% end %>
+			<% end %>
 		</div>
 		<BR>
-		<a href="#" id="add_alternative_link" onclick="newQuestion();">new question (temp)</a>
-		<a href="#" id="add_alternative_link" onclick="addAlternative();">Adicionar alternativa (max. 7)</a>
+		<!-- <a href="#" id="add_alternative_link" onclick="newQuestion();">new question (temp)</a> -->
+		<a href="#" id="add_alternative_link" onclick="addAlternative(); return false;">Adicionar alternativa (max. 7)</a>
 		<hr>
 		Justificativa da resposta (tirar o tiny?):
 		<%= f.text_area :justification, :rows =>2, :cols => 50  %>
 		(<span id="jt_chars_left">400</span>) caracteres restantes
 		<hr>
-		Pública?<input type="checkbox" name="question[public]" value="true" /><BR>
-		Associar competências | 
+		<%= f.check_box :public %> Pública?
+		<BR>
+		Associar competências 
 
 		<p>
 		    <%= f.submit 'Salvar' %>
