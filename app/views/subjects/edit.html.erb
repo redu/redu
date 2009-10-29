@@ -13,6 +13,7 @@
   </p>
 <% end %>
 
-<%= link_to 'Adicionar aula...', {:action => :list_courses, :id => @subject} %> |
+<%= link_to 'Adicionar Aula', {:action => :list_courses, :id => @subject} %> |
+<%= link_to 'Adicionar Recurso', {:action => :list_resources, :id => @subject} %> |
 <%= link_to 'Show', @subject %> |
 <%= link_to 'Back', subjects_path %>

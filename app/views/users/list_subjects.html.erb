@@ -1,6 +1,6 @@
 <h1>Listando Disciplinas</h1>
 
- <% form_tag({:action => 'add_subjects', :id => @user}, :method => "get") do %>
+ <% form_tag({:action => 'add_subject', :id => @user}, :method => "get") do %>
 	
 	<table>
   <tr>
@@ -9,7 +9,7 @@
 
 <% @subjects.each do |subject| %>
   <tr>
-  	<td><%= check_box_tag("subject[id][]", value =  subject.id, checked = nil) %></td>
+  	<td><%= check_box_tag("subject[id][]", subject.id, checked = nil) %></td>
     <td><%=h subject.name %></td>
   </tr>
 <% end %>
@@ -19,4 +19,3 @@
 <% end %>
 
 <br />
-<%= link_to 'Back', user_path %>

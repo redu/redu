@@ -1,4 +1,34 @@
 class ResourcesController < ApplicationController
+  
+  
+  def rate
+    @resource = Resource.find(params[:id])
+    @resource.rate(params[:stars], current_user, params[:dimension])
+     id = "ajaxful-rating-#{!params[:dimension].blank? ? "#{params[:dimension]}-" : ''}recourse-#{@resource.id}"
+    
+    render :update do |page|
+      page.replace_html id, ratings_for(@resource, :wrap => false, :dimension => params[:dimension])
+      page.visual_effect :highlight, id
+    end
+  end
+  
+  # 
+  def put_comment
+    
+    if current_user
+   
+    thecomment = params[:comment]
+    @commentable = Resource.find(params[:id])
+    @commentable.comments.create(:comment => thecomment, :user => current_user)
+    
+    else
+      flash[:error] = 'Usuário não logado'
+    end
+      redirect_to :back
+    
+  end
+  
+  
   # GET /resources
   # GET /resources.xml
   def index

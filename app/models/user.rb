@@ -51,6 +51,11 @@ class User < ActiveRecord::Base
   has_many :user_school_association, :dependent => :destroy
   has_many :schools, :through => :user_school_association
   
+  # SUBJECT
+  has_many :user_subject_association
+  has_many :user_subject_associations
+  has_many :subjects, :through => :user_subject_association
+  
   # FOLLOWSHIP
   has_and_belongs_to_many :follows, :class_name => "User", :join_table => "followship", :association_foreign_key => "follows_id", :foreign_key => "followed_by_id", :uniq => true
   has_and_belongs_to_many :followers, :class_name => "User", :join_table => "followship", :association_foreign_key => "followed_by_id", :foreign_key => "follows_id", :uniq => true

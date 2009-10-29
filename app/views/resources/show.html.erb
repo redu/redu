@@ -7,5 +7,31 @@
   <b>file:</b>
   <%=h @resource.attachment_file_name %> ( <%= link_to('Download', ('../system/attachments/' + @resource.id.to_s + '/original/' + @resource.attachment_file_name)) %>)
 </p>
+
+<hr>
+Deixe o seu comentário:<BR>
+<% form_tag :action => "put_comment", :id => @resource do %>
+<%= text_area_tag :comment, nil, :rows => 4, :cols => 50 %>
+<BR>
+<%= submit_tag 'OK' %>
+<% end%>
+
+<hr>
+Comentários<BR>
+<% if @comments %>
+
+<% if (@comments.length > 0) %>
+	<% @comments.each do |comment| %>
+	<%= comment.user.login %>: <%= comment.comment %><br><BR>
+	<%end%>
+<%else%>
+Não tem comentários ainda.
+<%end%>
+<%else%>
+Não tem comentários ainda.
+<%end%>
+<BR>
+
+
 <%= link_to 'Edit', edit_resource_path(@resource) %> |
 <%= link_to 'Back', resources_path %>

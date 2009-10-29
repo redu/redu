@@ -1,5 +1,8 @@
 class Resource < ActiveRecord::Base
   
+  acts_as_commentable
+  
+  ajaxful_rateable :stars => 5
   
   has_and_belongs_to_many :courses
   has_and_belongs_to_many :categories

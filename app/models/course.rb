@@ -3,6 +3,7 @@ class Course < ActiveRecord::Base
   acts_as_commentable
 
   has_and_belongs_to_many :subjects
+  has_and_belongs_to_many :resources
   
   ajaxful_rateable :stars => 5#, :dimensions => [:speed, :beauty, :price]
   

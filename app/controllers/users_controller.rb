@@ -88,11 +88,22 @@ class UsersController < BaseController
     
   end
   
+  
+  def list_subjects
+    @subjects = Subject.all
+    @user = params[:id]
+  end
+
+  
+  
   ##Associação com a disciplina
   def add_subject
     
-    @user = User.find(params[:id])
-    @subject = Subject.find(params[:subject_id])
+    #@user = User.find(params[:id])
+    @user = current_user
+
+    @subject = Subject.find(params[:subject][:id])
+        puts 'Teste'
     puts params[:user_key]
     
     @user_subject_association = UserSubjectAssociation.find(:first, :include => :access_key, :conditions => ["access_keys.key = ?", params[:user_key]])  

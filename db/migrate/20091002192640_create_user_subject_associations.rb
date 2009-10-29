@@ -1,7 +1,10 @@
 class CreateUserSubjectAssociations < ActiveRecord::Migration
   def self.up
     create_table :user_subject_associations do |t|
-
+      t.integer :user_id
+      t.integer :subject_id
+      t.integer :role_id, :default => 7 # estudante
+      t.integer :access_key_id
       t.timestamps
     end
   end

@@ -28,22 +28,45 @@ class SubjectsController < BaseController
   end
   
   
-  #Associar usuário à disciplina - Não está sendo utilizado
+  #Associar usuário à disciplina 
   def add_user
     
     @subject = Subject.find(params[:id])
-    @user = User.find(params[:user_id])
+   # @user = User.find(params[:user_id])  # TODO precisa mesmo recuperar o usuário no bd?
+    @user = current_user
+    puts params[:user_key]
     
-    if @subject
-      @subject.users << @user
-      if @subject.save
-          flash[:notice] = 'Usuário(a) adicionado(a).'
-        else
-          flash[:error] = 'Algum problema aconteceu!'
-      end 
+    @user_subject_association = UserSubjectAssociation.find(:first,:include => [:user_id => @user.id, :subject_id => @subject.id])  
+    
+    if @user_subject_association
+      
+     #if @user_subject_association.access_key.expiration_date.to_time < Time.now # verifica a data da validade da chave
+        
+        #if @subject &&  @user_subject_association.subject == @subject
+          
+         # if @user && @user_subject_association.user # cada chave só poderá ser usada uma vez, sem troca de aluno
+            
+            
+           # @user_subject_association.user = @user
+            
+            if @user_subject_association.save
+              flash[:notice] = 'Usuário associado à disciplina!'
+            else 
+              flash[:notice] = 'Associação à disciplina falhou'
+            end
+        #  else 
+       #     flash[:notice] = 'Essa chave já está em uso'
+       #   end
+     #   else
+     #     flash[:notice] = 'Essa chave pertence à outra disciplina'
+    #    end
+    # else
+     #   flash[:notice] = 'O prazo de validade desta chave expirou. Contate o administrador da sua escola.'
+      #end
     else
-      flash[:error] = 'Disciplina inválida.'
-    end 
+     flash[:notice] = 'Chave inválida'
+   end
+    
     
     respond_to do |format|
       format.html { redirect_to(@subject) }
@@ -54,6 +77,12 @@ class SubjectsController < BaseController
   # Lista todas as aulas existentes para relacionar com
   def list_courses
     @courses = Course.all
+    @subject = params[:id]
+  end
+  
+  # Lista todos os recursos existentes para relacionar com
+  def list_resources
+    @resources = Resource.all
     @subject = params[:id]
   end
   
@@ -90,27 +119,35 @@ class SubjectsController < BaseController
       format.html { redirect_to(@subject) }
     end
   
-=begin      
-      if @course
-        
-        
-        if @subject.save
-          flash[:notice] = 'Aula '+ @course.name + ' adicionada.'
-        else
-          flash[:notice] = 'Subject was successfully created.'
-        end
-      else
-        flash[:error] = 'Aula inválida.'
+end
+
+  def add_resource
+    
+    @selected_resources = params[:resource][:id]
+    puts @selected_resources
+    
+    @subject = Subject.find(params[:id])
+    
+    if @subject
+       @selected_resources.each do |c| 
+        @resource = Resource.find(c)
+        @subject.resources << @resource
       end
+      
+       if @subject.save
+          flash[:notice] = 'Recurso(s) adicionada(s).'
+        else
+          flash[:error] = 'Algum problema aconteceu!'
+        end
     else
       flash[:error] = 'Disciplina inválida.'
-    end
+    end  
     
     respond_to do |format|
       format.html { redirect_to(@subject) }
     end
-=end    
   end
+
 
   
  # def self.find_subjects

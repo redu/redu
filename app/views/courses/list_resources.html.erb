@@ -1,0 +1,22 @@
+<h1>Listando Recursos</h1>
+
+ <% form_tag({:action => 'add_resource', :id => @course}, :method => "get") do %>
+	
+	<table>
+  <tr>
+    <th>Nome</th>
+  </tr>
+
+<% @resources.each do |resource| %>
+  <tr>
+  	<td><%= check_box_tag("resource[id][]", value =  resource.id, checked = nil) %></td>
+    <td><%=h resource.name %></td>
+  </tr>
+<% end %>
+</table>
+	<%= submit_tag("OK") %>
+	
+<% end %>
+
+<br />
+<%= link_to 'Back', course_path %>

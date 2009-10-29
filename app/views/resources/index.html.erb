@@ -8,6 +8,7 @@
 <% @resources.each do |resource| %>
   <tr>
     <td><%=h resource.name %></td>
+	<td> <%= ratings_for resource, :static %></td>
     <td><%= link_to 'Show', resource %></td>
     <td><%= link_to 'Edit', edit_resource_path(resource) %></td>
     <td><%= link_to 'Destroy', resource, :confirm => 'Are you sure?', :method => :delete %></td>

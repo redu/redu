@@ -15,6 +15,8 @@ Deixe o seu comentário:<BR>
 
 <hr>
 Comentários<BR>
+<% if @comments %>
+
 <% if (@comments.length > 0) %>
 	<% @comments.each do |comment| %>
 	<%= comment.user.login %>: <%= comment.comment %><br><BR>
@@ -22,6 +24,11 @@ Comentários<BR>
 <%else%>
 Não tem comentários ainda.
 <%end%>
+<%else%>
+Não tem comentários ainda.
+<%end%>
+
 <BR>
+
 <%= link_to 'Edit', edit_course_path(@course) %> |
 <%= link_to 'Back', courses_path %>

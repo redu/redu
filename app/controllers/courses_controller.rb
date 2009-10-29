@@ -23,7 +23,7 @@ class CoursesController < BaseController
     else
       flash[:error] = 'Usuário não logado'
     end
-      redirect_to @commentable
+      redirect_to :back
     
     end
   
@@ -52,6 +52,41 @@ class CoursesController < BaseController
     end
     
   end
+  
+   # Lista todos os recursos existentes para relacionar com
+  def list_resources
+    @resources = Resource.all
+    @course = params[:id]
+  end
+  
+  # Adicionar um recurso na aula.
+  def add_resource
+    @selected_resources = params[:resource][:id]
+    puts @selected_resources
+    
+    @course = Course.find(params[:id])
+    
+    if @course
+       @selected_resources.each do |c| 
+        @resource = Resource.find(c)
+        @course.resources << @resource
+      end
+      
+       if @course.save
+          flash[:notice] = 'Recurso(s) adicionada(s).'
+        else
+          flash[:error] = 'Algum problema aconteceu!'
+        end
+    else
+      flash[:error] = 'Aula inválida.'
+    end  
+    
+    respond_to do |format|
+      format.html { redirect_to(@course) }
+    end
+  
+  end
+  
   
   # GET /courses
   # GET /courses.xml

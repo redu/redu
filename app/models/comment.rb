@@ -1,6 +1,7 @@
 class Comment < ActiveRecord::Base
 
   belongs_to :course
+  belongs_to :resource
 
   belongs_to :commentable, :polymorphic => true
   belongs_to :user
