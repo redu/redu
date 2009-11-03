@@ -11,7 +11,7 @@ class VideosController < BaseController
   def create
     @video = Video.new(params[:video])
     if @video.save
-      @video.convert
+      @video.convert # TODO verificar @video.failure
       flash[:notice] = 'O video foi uplodeado!'
       redirect_to :action => 'index'
     else
@@ -23,7 +23,7 @@ class VideosController < BaseController
     @video = Video.find(params[:id])
   end
   
-  def delete
+  def destroy
     @video = Video.find(params[:id])
     @video.destroy
     redirect_to :action => 'index'

@@ -5,7 +5,7 @@ class Video < ActiveRecord::Base
 
   # Paperclip Validations
   validates_attachment_presence :source
-  validates_attachment_content_type :source, :content_type => 'video/quicktime'
+  validates_attachment_content_type :source, :content_type => ['video/quicktime', 'video/mpeg']
   
   
   
@@ -25,7 +25,7 @@ class Video < ActiveRecord::Base
   end
   
   event :failure do
-    transitions :from => :converting, :to => :error
+    transitions :from => :converting, :to => :error # TODO salvar estado de "erro" no bd
   end
   
   # This method is called from the controller and takes care of the converting
@@ -34,6 +34,7 @@ class Video < ActiveRecord::Base
     success = system(convert_command)
     if success && $?.exitstatus == 0
       self.converted!
+     
     else
       self.failure!
     end
@@ -44,10 +45,15 @@ class Video < ActiveRecord::Base
   def convert_command
     flv = File.join(File.dirname(source.path), "#{id}.flv")
     File.open(flv, 'w')
+    
+   # puts source.path
+   # puts flv
+   #  command = <<-end_command
+   #  ffmpeg -i #{ RAILS_ROOT + '/public' + public_filename }  -ar 22050 -ab 32 -s 480x360 -vcodec flv -r 25 -qscale 8 -f flv -y #{ RAILS_ROOT + '/public' + public_filename + flv }
+    
 
     command = <<-end_command
-      ffmpeg -i #{ source.path }  -ar 22050 -ab 32 -acodec mp3
-      -s 480x360 -vcodec flv -r 25 -qscale 8 -f flv -y  #{ flv }
+      ffmpeg -i "#{ source.path }" -ar 22050 -ab 32 -s 480x360 -vcodec flv -r 25 -qscale 8 -f flv -y "#{ flv }"
     end_command
     command.gsub!(/\s+/, " ")
   end

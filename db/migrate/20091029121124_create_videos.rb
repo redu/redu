@@ -5,6 +5,8 @@ class CreateVideos < ActiveRecord::Migration
       t.string :source_file_name
       t.integer :source_file_size
       t.string :state
+      t.string :title, :null => false
+      t.text :description    
       t.timestamps
     end
   end

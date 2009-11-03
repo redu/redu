@@ -11,7 +11,6 @@ class AddCounterCacheForFollowersAndFollows < ActiveRecord::Migration
     User.find(:all).each do |c|
       c.update_attribute :follows_count, c.follows.length
     end
-    
   end
   def self.down
     remove_column :users, :followers_count

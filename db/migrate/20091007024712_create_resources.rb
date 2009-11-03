@@ -2,7 +2,6 @@ class CreateResources < ActiveRecord::Migration
   def self.up
     create_table :resources do |t|
       t.string :name
-
       t.timestamps
     end
   end
