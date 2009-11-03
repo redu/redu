@@ -1,13 +1,13 @@
 class Video < ActiveRecord::Base
-  has_attachment :content_type => :video, 
-                 :storage => :file_system, 
-                 :max_size => 300.megabytes
+  # Paperclip
+  # http://www.thoughtbot.com/projects/paperclip
+  has_attached_file :source
+
+  # Paperclip Validations
+  validates_attachment_presence :source
+  validates_attachment_content_type :source, :content_type => 'video/quicktime'
   
-  #turn off attachment_fu's auto file renaming 
-  #when you change the value of the filename field
-  def rename_file
-    true
-  end
+  
   
   #acts as state machine plugin
   acts_as_state_machine :initial => :pending
@@ -42,41 +42,20 @@ class Video < ActiveRecord::Base
   protected
   
   def convert_command
-  
-  #construct new file extension
-    flv =  "." + id.to_s + ".flv"
+    flv = File.join(File.dirname(source.path), "#{id}.flv")
+    File.open(flv, 'w')
 
-  #build the command to execute ffmpeg
     command = <<-end_command
-     ffmpeg -i #{ RAILS_ROOT + '/public' + public_filename }  -ar 22050 -ab 32 -s 480x360 -vcodec flv -r 25 -qscale 8 -f flv -y #{ RAILS_ROOT + '/public' + public_filename + flv }
-      
+      ffmpeg -i #{ source.path }  -ar 22050 -ab 32 -acodec mp3
+      -s 480x360 -vcodec flv -r 25 -qscale 8 -f flv -y  #{ flv }
     end_command
-    
-    logger.debug "Converting video...command: " + command
-    command
+    command.gsub!(/\s+/, " ")
   end
 
-  # This updates the stored filename with the new flash video file
-  def set_new_filename
-    update_attribute(:filename, "#{filename}.#{id}.flv")
-    update_attribute(:content_type, "application/x-flash-video")
-  end
+  # This update the stored filename with the new flash video file
   
-  # This method is called from the controller and takes care of the converting
-  def convert
-    self.convert!
-
-  #spawn a new thread to handle conversion
-  spawn do
-
-     success = system(convert_command)
-     logger.debug 'Converting File: ' + success.to_s
-     if success && $?.exitstatus == 0
-       self.converted!
-     else
-       self.failure!
-     end
-  end #spawn
+  def set_new_filename
+    update_attribute(:source_file_name, "#{id}.flv")
   end
   
 end
