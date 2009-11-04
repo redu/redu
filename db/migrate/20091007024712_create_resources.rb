@@ -1,7 +1,10 @@
 class CreateResources < ActiveRecord::Migration
   def self.up
     create_table :resources do |t|
-      t.string :name
+      t.string :title, :null => false
+      t.text :description   
+      t.string :state
+      #t.references :resourceable, :polymorphic => true 
       t.timestamps
     end
   end

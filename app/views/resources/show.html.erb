@@ -1,20 +1,13 @@
-<p>
-  <b>Name:</b>
-  <%=h @resource.name %>
-</p>
+<h1>Titulo: <%= @resource.title %></h1>
+<p>Descrição: <%= @resource.description %></p>
 
-<p>
-  <b>file:</b>
-  <%=h @resource.attachment_file_name %> ( <%= link_to('Download', ('../system/attachments/' + @resource.id.to_s + '/original/' + @resource.attachment_file_name)) %>)
-</p>
+<% if @resource.video? %>
+<%= render :partial => "resources/video" %>
+<% else %>
+ <%= link_to "Download", @resource.media.url %>
+ <% end %>
+  
 
-<hr>
-Deixe o seu comentário:<BR>
-<% form_tag :action => "put_comment", :id => @resource do %>
-<%= text_area_tag :comment, nil, :rows => 4, :cols => 50 %>
-<BR>
-<%= submit_tag 'OK' %>
-<% end%>
 
 <hr>
 Comentários<BR>
@@ -31,7 +24,13 @@ Não tem comentários ainda.
 Não tem comentários ainda.
 <%end%>
 <BR>
-
+<hr>
+Deixe o seu comentário:<BR>
+<% form_tag :action => "put_comment", :id => @resource do %>
+<%= text_area_tag :comment, nil, :rows => 4, :cols => 50 %>
+<BR>
+<%= submit_tag 'OK' %>
+<% end%>
 
 <%= link_to 'Edit', edit_resource_path(@resource) %> |
 <%= link_to 'Back', resources_path %>

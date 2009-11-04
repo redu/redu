@@ -8,7 +8,6 @@ class User < ActiveRecord::Base
   
   
   ajaxful_rater
-  #has_many :rates
   
   acts_as_taggable  
   acts_as_commentable

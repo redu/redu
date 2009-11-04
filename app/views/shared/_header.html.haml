@@ -18,11 +18,12 @@
       = topnav_tab :popular.l, { :url => popular_path, :section => 'popular' }
       = topnav_tab :people.l, { :url => users_path, :section => 'users' }
       
-      = topnav_tab :school.l, { :url => schools_path, :section => 'schools' }
-      = topnav_tab :course.l, { :url => courses_path, :section => 'courses' }
-      = topnav_tab :subject.l, { :url => subjects_path, :section => 'subjects' }
+      = topnav_tab 'Escolas', { :url => schools_path, :section => 'schools' }
+      = topnav_tab 'Aulas', { :url => courses_path, :section => 'courses' }
+      = topnav_tab 'Disciplinas', { :url => subjects_path, :section => 'subjects' }
+      = topnav_tab 'Materiais', { :url => resources_path, :section => 'resources' }
       = topnav_tab 'Testes', { :url => exams_path, :section => 'exams' }
-      = topnav_tab 'Competências', { :url => competences_path, :section => 'competences' }
+      /= topnav_tab 'Competências', { :url => competences_path, :section => 'competences' }
       
       - if current_user 
         = topnav_tab :my_profile.l, { :url => user_path(current_user), :section => 'my_profile'}   

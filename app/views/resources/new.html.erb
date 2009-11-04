@@ -3,16 +3,17 @@
 <% form_for @resource, :html => { :multipart => true } do |f| %>
   <%= f.error_messages %>
 
-  <p>
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </p>
-  
-    <%= f.file_field :attachment %>
-  
-  <p>
-    <%= f.submit 'Create' %>
-  </p>
+ <p>
+   <%= f.label :title %>: 
+   <%= f.text_field :title %> 
+   </p>
+   <p>
+   <%= f.label :description %>:  <%= f.text_area :description, :size => "50x3" %>
+   </p>
+   <p>
+     Arquivo:  <%= f.file_field :media  %> 
+     </p>
+     <%= f.submit 'Submit' %> 
 <% end %>
 
 <%= link_to 'Back', resources_path %>

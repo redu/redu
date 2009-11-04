@@ -19,15 +19,11 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :user_school_association
 
   #map.resources :access_keys
-  
-  map.resources :videos
-  
+    
   map.resources :schools  
   
 =begin  #map.resources :videos "Paiva"
-  map.root :controller => "videos"
-  map.resources :videos
-=end  
+  map.root :controller => "videos"=end  
 
 
   

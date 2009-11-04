@@ -1,4 +1,4 @@
-class ResourcesController < ApplicationController
+class ResourcesController < BaseController
   
   
   def rate
@@ -73,7 +73,10 @@ class ResourcesController < ApplicationController
     @resource = Resource.new(params[:resource])
 
     respond_to do |format|
-      if @resource.save
+      if @resource.save!
+        if @resource.video?
+          @resource.convert
+        end
         flash[:notice] = 'Resource was successfully created.'
         format.html { redirect_to(@resource) }
         format.xml  { render :xml => @resource, :status => :created, :location => @resource }

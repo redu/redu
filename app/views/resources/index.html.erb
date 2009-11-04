@@ -2,12 +2,15 @@
 
 <table>
   <tr>
-    <th>Name</th>
+    <th>Título</th>
+	 <th>Tipo</th>
+	  <th>Ratings</th>
   </tr>
 
 <% @resources.each do |resource| %>
   <tr>
-    <td><%=h resource.name %></td>
+    <td><%=h resource.title %></td>
+	<td><%=h resource.media_content_type %></td>
 	<td> <%= ratings_for resource, :static %></td>
     <td><%= link_to 'Show', resource %></td>
     <td><%= link_to 'Edit', edit_resource_path(resource) %></td>
@@ -18,4 +21,4 @@
 
 <br />
 
-<%= link_to 'New resource', new_resource_path %>
+<%= link_to 'Novo material', new_resource_path %>
