@@ -32,7 +32,7 @@ class ResourcesController < BaseController
   # GET /resources
   # GET /resources.xml
   def index
-    @resources = Resource.all
+    @resources = Resource.all(:conditions => "state = 'converted'")
 
     respond_to do |format|
       format.html # index.html.erb
