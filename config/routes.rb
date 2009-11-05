@@ -1,7 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :abilities
 
-  map.resources :resources
+  map.resources :resources, :member => {:rate => :post}
 
   map.resources :competences
 

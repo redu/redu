@@ -14,16 +14,11 @@ Deixe o seu comentário:<BR>
 <% end%>
 
 <hr>
-Comentários<BR>
-<% if @comments %>
-
-<% if (@comments.length > 0) %>
-	<% @comments.each do |comment| %>
+Comentários (<%= @course.comments.length %>)<BR>
+<% if @course.comments && @course.comments.length > 0 %>
+	<% @course.comments.each do |comment| %>
 	<%= comment.user.login %>: <%= comment.comment %><br><BR>
 	<%end%>
-<%else%>
-Não tem comentários ainda.
-<%end%>
 <%else%>
 Não tem comentários ainda.
 <%end%>

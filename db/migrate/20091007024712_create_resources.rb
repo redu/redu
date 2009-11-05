@@ -4,6 +4,7 @@ class CreateResources < ActiveRecord::Migration
       t.string :title, :null => false
       t.text :description   
       t.string :state
+      t.integer :owner, :null => false
       #t.references :resourceable, :polymorphic => true 
       t.timestamps
     end

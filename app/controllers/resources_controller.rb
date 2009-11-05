@@ -71,7 +71,8 @@ class ResourcesController < BaseController
   # POST /resources.xml
   def create
     @resource = Resource.new(params[:resource])
-
+    @resource.owner = current_user
+    
     respond_to do |format|
       if @resource.save!
         if @resource.video?

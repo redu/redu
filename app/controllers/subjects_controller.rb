@@ -36,7 +36,7 @@ class SubjectsController < BaseController
     @user = current_user
     puts params[:user_key]
     
-    @user_subject_association = UserSubjectAssociation.find(:first,:include => [:user_id => @user.id, :subject_id => @subject.id])  
+    @user_subject_association = UserSubjectAssociation.new(:user_id => @user.id, :subject_id => @subject.id)  
     
     if @user_subject_association
       

@@ -4,7 +4,7 @@ class CoursesController < BaseController
   def rate
     @course = Course.find(params[:id])
     @course.rate(params[:stars], current_user, params[:dimension])
-     id = "ajaxful-rating-#{!params[:dimension].blank? ? "#{params[:dimension]}-" : ''}course-#{@course.id}"
+    id = "ajaxful-rating-#{!params[:dimension].blank? ? "#{params[:dimension]}-" : ''}course-#{@course.id}"
     
     render :update do |page|
       page.replace_html id, ratings_for(@course, :wrap => false, :dimension => params[:dimension])
@@ -15,17 +15,20 @@ class CoursesController < BaseController
   def put_comment
     
     if current_user
-   
-    thecomment = params[:comment]
-    @commentable = Course.find(params[:id])
-    @commentable.comments.create(:comment => thecomment, :user => current_user)
-    
+      
+      thecomment = params[:comment]
+      @commentable = Course.find(params[:id])
+      @commentable.comments.create(:comment => thecomment, :user => current_user)
+      
     else
       flash[:error] = 'Usuário não logado'
     end
-      redirect_to :back
     
+    respond_to do |format|
+      format.html { redirect_to(@commentable) }
     end
+    
+  end
   
   # Verificar as validações do model 'comment'
   def add_comment
@@ -53,7 +56,7 @@ class CoursesController < BaseController
     
   end
   
-   # Lista todos os recursos existentes para relacionar com
+  # Lista todos os recursos existentes para relacionar com
   def list_resources
     @resources = Resource.all
     @course = params[:id]
@@ -67,16 +70,16 @@ class CoursesController < BaseController
     @course = Course.find(params[:id])
     
     if @course
-       @selected_resources.each do |c| 
+      @selected_resources.each do |c| 
         @resource = Resource.find(c)
         @course.resources << @resource
       end
       
-       if @course.save
-          flash[:notice] = 'Recurso(s) adicionada(s).'
-        else
-          flash[:error] = 'Algum problema aconteceu!'
-        end
+      if @course.save
+        flash[:notice] = 'Recurso(s) adicionada(s).'
+      else
+        flash[:error] = 'Algum problema aconteceu!'
+      end
     else
       flash[:error] = 'Aula inválida.'
     end  
@@ -84,7 +87,7 @@ class CoursesController < BaseController
     respond_to do |format|
       format.html { redirect_to(@course) }
     end
-  
+    
   end
   
   

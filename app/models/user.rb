@@ -60,6 +60,8 @@ class User < ActiveRecord::Base
   
   #COURSES
 
+  #RESOURCES
+  has_many :resources, :foreign_key => "owner"
   
   # EXAMS
   has_many :exams, :foreign_key => "author_id"

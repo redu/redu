@@ -67,7 +67,7 @@ module ActivityTracker # :nodoc:
         activity = Activity.new
         activity.action = action.to_s
         activity.user_id = self.id
-#       activity.save!
+        activity.save!
       else
         raise "The action #{action} can't be tracked."
       end
