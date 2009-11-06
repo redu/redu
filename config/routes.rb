@@ -8,7 +8,6 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :competences
 
   map.resources :questions, :collection => { :search => [:get, :post], :add => :get } #, :member => {:add => :get}
-
   
   map.resources :exams, :collection => {:new_exam => :get, :add_question => :get, :add_resource => :get, :discard_draft => :get}
     
@@ -21,9 +20,6 @@ ActionController::Routing::Routes.draw do |map|
   #map.resources :access_keys
     
   map.resources :schools  
-  
-=begin  #map.resources :videos "Paiva"
-  map.root :controller => "videos"=end  
 
 
   
@@ -214,6 +210,7 @@ ActionController::Routing::Routes.draw do |map|
     user.resources :clippings
     user.resources :activities, :collection => {:network => :get}
     user.resources :invitations
+    user.resources :resources
     user.resources :offerings, :collection => {:replace => :put}
     user.resources :favorites, :name_prefix => 'user_'
     user.resources :messages, :collection => { :delete_selected => :post, :auto_complete_for_username => :any }  

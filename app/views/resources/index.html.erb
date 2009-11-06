@@ -1,24 +1,28 @@
-<h1>Listing resources</h1>
-
-<table>
-  <tr>
-    <th>Título</th>
-	 <th>Tipo</th>
-	  <th>Ratings</th>
-  </tr>
-
-<% @resources.each do |resource| %>
-  <tr>
-    <td><%=h resource.title %></td>
-	<td><%=h resource.media_content_type %></td>
-	<td> <%= ratings_for resource, :static %></td>
-    <td><%= link_to 'Show', resource %></td>
-    <td><%= link_to 'Edit', edit_resource_path(resource) %></td>
-    <td><%= link_to 'Destroy', resource, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
+<h1>Listando todos os materiais da rede (convertidos)</h1>
+<% if current_user %>
+<%= link_to "Meus Materiais", user_resources_path(current_user) %>
 <% end %>
-</table>
+
+<p>
+	<div id="local_search_form">
+	<%= render :partial => "resources/search" %>
+	</div>
+</p>
+
+<%= render :partial => "resources/sort" %>
+<hr>
+
+<div id="local_search_results" style="min-height: 200px">
+
+ <% if @resources && @resources.length > 0 %>
+ <%= render :partial => 'resources/item', :collection => @resources, :as => :resource %> 
+ <% else %>
+ Não há materiais uploadeados ainda. 
+ <% end %>
+
+</div>
+
+
 
 <br />
-
 <%= link_to 'Novo material', new_resource_path %>

@@ -82,7 +82,7 @@ class Resource < ActiveRecord::Base
   # This update the stored filename with the new flash video file
   
   def set_new_filename
-    update_attribute(:media_file_name, "#{id}.flv")
+    self.update_attribute(:media_file_name, "#{self.id}.flv")
   end
   
 

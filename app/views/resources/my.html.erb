@@ -1,5 +1,4 @@
-Novo Exame >> Adicionar Material
-<h1>Listando questões</h1>
+<h1>Listando materiais uploadeados por <%= @user.login %></h1>
 
 <p>
 		<div id="local_search_form">
@@ -15,12 +14,13 @@ Novo Exame >> Adicionar Material
  <% if @resources && @resources.length > 0 %>
  <%= render :partial => 'resources/item', :collection => @resources, :as => :resource %> 
  <% else %>
- Não há materiais cadastrados ainda. 
+ Não há materiais uploadeados ainda. 
  <% end %>
 
 </div>
 
-<%= link_to 'Voltar para o teste', :controller => :exams, :action => :new_exam %>
 
 
-
+<br />
+<%= link_to 'Materiais', resources_path %> |
+<%= link_to 'Novo material', new_resource_path %>

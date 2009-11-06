@@ -1,0 +1,6 @@
+<% form_remote_tag :url => { :controller => :resources, :action => :sort } do %>
+Ordenar:
+<%= select_tag(:sort_by, options_for_select([['Data de criação', 1], ['Nome', 2], ['Ratings', 3]], 1)) %>
+<%= select_tag(:order, options_for_select([['Dec', 1], ['Cre', 2]], 1)) %>
+<%= submit_tag "OK"%>
+<% end %>

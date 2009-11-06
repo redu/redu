@@ -11,7 +11,7 @@ class CoursesController < BaseController
       page.visual_effect :highlight, id
     end
   end
-  
+=begin  
   def put_comment
     
     if current_user
@@ -29,7 +29,7 @@ class CoursesController < BaseController
     end
     
   end
-  
+
   # Verificar as validações do model 'comment'
   def add_comment
     
@@ -55,7 +55,8 @@ class CoursesController < BaseController
     end
     
   end
-  
+=end 
+ 
   # Lista todos os recursos existentes para relacionar com
   def list_resources
     @resources = Resource.all

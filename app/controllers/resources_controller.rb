@@ -44,7 +44,7 @@ class ResourcesController < BaseController
     end
   end
   
-  # 
+=begin desnecessario pois tem um controller central de comentarios que faz isso 
   def put_comment
     
     if current_user
@@ -59,17 +59,29 @@ class ResourcesController < BaseController
       redirect_to :back
     
   end
-  
+=end
   
   # GET /resources
   # GET /resources.xml
   def index
-    @resources = Resource.all(:conditions => "state = 'converted'")
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @resources }
+    
+    if params[:user_id]
+      #@resources = Resource.all(:conditions => ["owner = ?", params[:user_id]])
+      @user = User.find(params[:user_id])
+      @resources = @user.resources
+       respond_to do |format|
+        format.html { render :action => "my" }
+        format.xml  { render :xml => @resources }
+      end
+    else
+      #@resources = Resource.all(:conditions => "state = 'converted'")
+      @resources = Resource.all.reject {|resource|  (resource.video? and not resource.state.eql?("converted")) }
+        respond_to do |format|
+        format.html # index.html.erb
+        format.xml  { render :xml => @resources }
+      end
     end
+    
   end
 
   # GET /resources/1

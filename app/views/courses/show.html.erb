@@ -1,3 +1,5 @@
+Aula
+
 <p>
   <b>Nome:</b>
   <%=h @course.name %>
@@ -5,23 +7,13 @@
 
 <%= ratings_for @course %>
 
-<hr>
-Deixe o seu comentário:<BR>
-<% form_tag :action => "put_comment", :id => @course do %>
-<%= text_area_tag :comment, nil, :rows => 4, :cols => 50 %>
-<BR>
-<%= submit_tag 'OK' %>
-<% end%>
 
 <hr>
-Comentários (<%= @course.comments.length %>)<BR>
-<% if @course.comments && @course.comments.length > 0 %>
-	<% @course.comments.each do |comment| %>
-	<%= comment.user.login %>: <%= comment.comment %><br><BR>
-	<%end%>
-<%else%>
-Não tem comentários ainda.
-<%end%>
+Comentários:
+<%= render :partial => "comments/comment" , :collection => @course.comments %>
+<BR>
+<hr>
+<%= render :partial => 'comments/comment_form', :locals => {:commentable => @course} %>
 
 <BR>
 
