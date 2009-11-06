@@ -1,0 +1,23 @@
+<p>
+  <b>First name:</b>
+  <%=h @profile.first_name %>
+</p>
+
+<p>
+  <b>Last name:</b>
+  <%=h @profile.last_name %>
+</p>
+
+<p>
+  <b>Birthdate:</b>
+  <%=h @profile.birthdate %>
+</p>
+
+<p>
+  <b>Occupation:</b>
+  <%=h @profile.occupation %>
+</p>
+
+
+<%= link_to 'Edit', edit_profile_path(@profile) %> |
+<%= link_to 'Back', profiles_path %>

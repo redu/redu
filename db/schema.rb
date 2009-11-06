@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091021173252) do
+ActiveRecord::Schema.define(:version => 20091104190012) do
 
   create_table "abilities", :force => true do |t|
     t.string   "name"
@@ -167,6 +167,11 @@ ActiveRecord::Schema.define(:version => 20091021173252) do
     t.integer  "rating_average", :limit => 10, :precision => 10, :scale => 0, :default => 0
   end
 
+  create_table "courses_resources", :id => false, :force => true do |t|
+    t.integer "course_id"
+    t.integer "subject_id"
+  end
+
   create_table "courses_subjects", :id => false, :force => true do |t|
     t.integer "course_id"
     t.integer "subject_id"
@@ -185,11 +190,19 @@ ActiveRecord::Schema.define(:version => 20091021173252) do
   end
 
   create_table "exams", :force => true do |t|
-    t.integer  "author_id"
+    t.integer  "author_id",                        :null => false
+    t.string   "name",                             :null => false
+    t.text     "description"
+    t.boolean  "published",     :default => false
+    t.integer  "done_count",    :default => 0
+    t.float    "total_correct", :default => 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "name"
-    t.boolean  "published",  :default => false
+  end
+
+  create_table "exams_resources", :id => false, :force => true do |t|
+    t.integer "exam_id"
+    t.integer "resource_id"
   end
 
   create_table "favorites", :force => true do |t|
@@ -271,12 +284,6 @@ ActiveRecord::Schema.define(:version => 20091021173252) do
     t.string   "message"
     t.integer  "user_id"
     t.datetime "created_at"
-  end
-
-  create_table "medias", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "messages", :force => true do |t|
@@ -382,26 +389,36 @@ ActiveRecord::Schema.define(:version => 20091021173252) do
   add_index "posts", ["published_at"], :name => "index_posts_on_published_at"
   add_index "posts", ["user_id"], :name => "index_posts_on_user_id"
 
+  create_table "profiles", :force => true do |t|
+    t.integer  "user_id",     :null => false
+    t.string   "first_name"
+    t.string   "last_name"
+    t.date     "birthday"
+    t.string   "occupation"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "question_exam_associations", :id => false, :force => true do |t|
     t.integer  "total_answers_count"
     t.integer  "correct_answers_count"
     t.integer  "question_id"
     t.integer  "exam_id"
+    t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "questions", :force => true do |t|
-    t.text     "statement"
+    t.text     "statement",                        :null => false
     t.integer  "answer_id"
-    t.boolean  "is_public",          :default => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer  "author_id"
+    t.boolean  "public",        :default => false
     t.text     "justification"
     t.integer  "image_id"
-    t.string   "image_file_name"
-    t.string   "image_content_type"
-    t.integer  "image_file_size"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "rates", :force => true do |t|
@@ -418,13 +435,21 @@ ActiveRecord::Schema.define(:version => 20091021173252) do
   add_index "rates", ["user_id"], :name => "index_rates_on_user_id"
 
   create_table "resources", :force => true do |t|
-    t.string   "name"
+    t.string   "title",              :null => false
+    t.integer  "resourceable_id"
+    t.string   "resourceable_type"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "attachment_file_name"
-    t.string   "attachment_content_type"
-    t.integer  "attachment_file_size"
-    t.datetime "attachment_updated_at"
+    t.string   "media_content_type"
+    t.string   "media_file_name"
+    t.integer  "media_file_size"
+    t.text     "description"
+    t.string   "state"
+  end
+
+  create_table "resources_subjects", :id => false, :force => true do |t|
+    t.integer "resource_id"
+    t.integer "subject_id"
   end
 
   create_table "roles", :force => true do |t|
@@ -458,6 +483,7 @@ ActiveRecord::Schema.define(:version => 20091021173252) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "key_price",   :limit => 10, :precision => 10, :scale => 0
   end
 
   create_table "sessions", :force => true do |t|
@@ -534,6 +560,10 @@ ActiveRecord::Schema.define(:version => 20091021173252) do
   end
 
   create_table "user_subject_associations", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "subject_id"
+    t.integer  "role_id",       :default => 7
+    t.integer  "access_key_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -581,6 +611,17 @@ ActiveRecord::Schema.define(:version => 20091021173252) do
   add_index "users", ["featured_writer"], :name => "index_users_on_featured_writer"
   add_index "users", ["login_slug"], :name => "index_users_on_login_slug"
   add_index "users", ["vendor"], :name => "index_users_on_vendor"
+
+  create_table "videos", :force => true do |t|
+    t.string   "source_content_type"
+    t.string   "source_file_name"
+    t.integer  "source_file_size"
+    t.string   "state"
+    t.string   "title",               :null => false
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "votes", :force => true do |t|
     t.integer  "user_id"

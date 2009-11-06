@@ -10,9 +10,10 @@
  </script>
  
  <% form_for :exam, @exam,  :url => { :action => "new_exam" },  :html => {:id => 'exam_form'} do |f| %>
-
+ <%= f.error_messages %>
  <%= link_to_function 'Nova questão', 'saveDraft(1)' %> | 
- <%= link_to_function 'Adicionar questão', 'saveDraft(2)' %>
+ <%= link_to_function 'Adicionar questão', 'saveDraft(2)' %> | 
+ <%= link_to_function 'Adicionar materiais', 'saveDraft(3)' %>
  
  <%= hidden_field_tag('sbt_opt', 0) %>
   <%= f.hidden_field(:id, :value => @exam.id) %>
@@ -21,8 +22,19 @@
  
  Título: <BR> <%= f.text_field :name %>
  <br/><BR>
- Descrição: <BR><!-- f.text_area :description, :size => "50x3" --->
+ Descrição: <BR><%= f.text_area :description, :size => "50x3" %>
  <br/><BR>
+Materiais: <br/>
+
+<% if @exam.resources && @exam.resources.length > 0 %>
+
+ <%= render :partial => 'resources/item', :collection => @exam.resources, :as => :resource %> 
+ <% else %>
+ Não há materiais associados. 
+ <% end %>
+
+ <br/><BR>
+<hr>
 
  <div id="questions" style="min-height: 100px;">
  

@@ -1,17 +1,17 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :profiles
+
   map.resources :abilities
 
-  map.resources :resources, :member => {:rate => :post}
+  map.resources :resources, :collection => { :search => [:get, :post], :add => :get }, :member => {:rate => :post}
 
   map.resources :competences
 
   map.resources :questions, :collection => { :search => [:get, :post], :add => :get } #, :member => {:add => :get}
 
- # map.resources :exams
   
-  map.resources :exams, :collection => {:new_exam => :get, :add_question => :get, :discard_draft => :get}
+  map.resources :exams, :collection => {:new_exam => :get, :add_question => :get, :add_resource => :get, :discard_draft => :get}
     
-
   map.resources :subjects
 
   map.resources :courses, :member => {:rate => :post}

@@ -6,10 +6,12 @@ class CreateMetroAreas < ActiveRecord::Migration
       t.column :country_id, :integer
     end
     add_column "users", "metro_area_id", :integer
+   # add_column profile, "metro_area_id", :integer
   end
 
   def self.down
     drop_table :metro_areas
     remove_column "users", "metro_area_id"
+    #remove_column "users", "metro_area_id"
   end
 end

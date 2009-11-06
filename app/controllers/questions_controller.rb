@@ -20,7 +20,7 @@ class QuestionsController < BaseController
 
   def search
     
-    @questions = Question.find(:all, :conditions => ["statement LIKE %?%", params[:query]])
+    @questions = Question.find(:all, :conditions => ["statement LIKE ?", "%" + params[:query] + "%"])
     #, :conditions => ["statement LIKE '%?%'", params[:query]]
     
     respond_to do |format|

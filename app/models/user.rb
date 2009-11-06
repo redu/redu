@@ -45,6 +45,9 @@ class User < ActiveRecord::Base
   validates_exclusion_of    :login, :in => AppConfig.reserved_logins
   validates_date :birthday, :before => 13.years.ago.to_date  
 
+   # PROFILE
+  has_one :profile
+ 
  
   # SCHOOL
   has_many :user_school_association, :dependent => :destroy

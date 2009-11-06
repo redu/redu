@@ -1,0 +1,58 @@
+Novo Exame >> Adicionar Material
+<h1>Listando questões</h1>
+
+<p>
+	
+		<div id="local_search_form">
+			
+			<!-- form_remote_tag :update => "questions",
+                       :url => { :controller => :questions, :action => :create },
+                       :position => "bottom", #before e after nao funcionam com o :update
+						:loading => 'itemLoading()', 
+					    :complete => "closePopup()" do -->
+			
+		
+        <% form_remote_tag :url => { :controller => :resources, :action => :search },
+					:before => "Element.show('spinner')",
+					:success => "Element.hide('spinner')" do -%>
+           	Buscar
+			<%= text_field_tag :query %>
+		    <%= submit_tag 'Search' %>
+        <% end -%>
+		
+		
+		</div>
+</p>
+
+
+
+<% form_remote_tag :url => { :controller => :resources, :action => :sort } do %>
+Ordenar:
+<%= select_tag(:sort_by, options_for_select([['Data de criação', 1], ['Nome', 2], ['Ratings', 3]], 1)) %>
+<%= select_tag(:order, options_for_select([['Dec', 1], ['Cre', 2]], 1)) %>
+<%= submit_tag "OK"%>
+<% end %>
+
+
+<hr>
+
+
+<div id="local_search_results" style="min-height: 200px">
+
+ <% if @resources && @resources.length > 0 %>
+ <%= render :partial => 'resources/item', :collection => @resources, :as => :resource %> 
+ <% else %>
+ Não há materiais cadastrados ainda. 
+ <% end %>
+
+</div>
+
+
+<%= link_to 'Voltar para o teste', :controller => :exams, :action => :new_exam %>
+
+<%= image_tag("spinner.gif",
+              :align => "absmiddle",
+              :border => 0,
+              :id => "spinner",
+              :style =>"display: none;" ) %>
+

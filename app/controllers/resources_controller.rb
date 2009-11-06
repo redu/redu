@@ -1,5 +1,37 @@
 class ResourcesController < BaseController
   
+  def add
+    @resources = Resource.all
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @resources }
+    end
+  end
+  
+  def sort
+    
+  end
+
+  def search
+    
+    @resources = Resource.find(:all, :conditions => ["title LIKE ?", "%" + params[:query] + "%"])
+    #, :conditions => ["statement LIKE '%?%'", params[:query]]
+    
+    respond_to do |format|
+      format.js do
+          render :update do |page| 
+            page.replace_html 'local_search_results', :partial => 'resources/item', :collection => @resources, :as => :resource
+           # :partial => "questions/list_item", :collection => @products, :as => :item 
+            #page.insert_html :bottom, "questions", :partial => 'questions/question_show', :object => @question
+            #page.visual_effect :highlight, "question_#{@question.id}" 
+          end
+      end
+    end
+  end
+  
+  
+  
   
   def rate
     @resource = Resource.find(params[:id])

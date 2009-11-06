@@ -1,0 +1,14 @@
+<div id="resource_<%= resource.id %>" style="height: 100px; background: #efefef; margin-bottom: 15px; padding: 5px;">
+<b><%= resource.title %> </b> <BR>
+<%= resource.description %> - 
+<%= resource.media_content_type %> 
+ <BR>
+<BR>
+<%= link_to "visualizar", resource %> 
+
+
+| <%= link_to_remote 'Adicionar', :url => { :controller => :exams, :action => :add_resource, :resource_id => resource.id }, 
+						:before => "Element.show('spinner');",
+        				:success => "Element.hide('spinner');" %>
+
+</div>

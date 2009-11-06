@@ -203,6 +203,10 @@ class ExamsController < BaseController
       save_dft
       redirect_to :controller => :questions, :action => :add
       
+    elsif params[:sbt_opt] == "3" # add resource  
+      save_dft
+      redirect_to :controller => :resources, :action => :add
+      
     else # save exam  
       
       if !params[:exam][:id].empty?
@@ -327,6 +331,34 @@ class ExamsController < BaseController
       end
   end
   end
+     
+  def add_resource
+    @resource = Resource.find(params[:resource_id])
+    
+    if session[:exam_draft]
+      session[:exam_draft].resources << @resource
+    end
+    
+    respond_to do |format|
+      format.html do
+        render :update do |page|
+          flash[:notice] = 'Material adicionada'
+          page.remove "resource_" + params[:resource_id]
+          page.reload_flash
+        end
+      end 
+      format.js do
+        render :update do |page|
+          flash[:notice] = 'Material adicionada'
+          page.remove "resource_" + params[:resource_id]
+          page.reload_flash
+        end
+      end    
+    end
+    
+  end
+  
+     
      
   
   def sort 
