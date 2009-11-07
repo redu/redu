@@ -114,10 +114,35 @@ class ResourcesController < BaseController
   # POST /resources
   # POST /resources.xml
   def create
+  
+    # there is a better place?
+  	if params[:resource][:type] == "media" then
+  		params[:resource][:external_resource] = nil
+  	else
+  		params[:resource][:media] = nil
+  	end
+  	
     @resource = Resource.new(params[:resource])
     @resource.owner = current_user
     
     respond_to do |format|
+			puts "=========controller==========="
+			puts @resource.external_resource.nil?
+			puts @resource.video?
+			@resource.save
+
+      
+      if @resource.save!
+      	puts "salvou"
+      	
+      	if @resource.video?
+      		@resource.convert
+      	end
+				flash[:notice] = 'Resource was successfully created.'
+		    format.html { redirect_to(@resource) }
+		    format.xml  { render :xml => @resource, :status => :created, :location => @resource }
+      end
+			"""
       if @resource.save!
         if @resource.video?
           @resource.convert
@@ -126,10 +151,12 @@ class ResourcesController < BaseController
         format.html { redirect_to(@resource) }
         format.xml  { render :xml => @resource, :status => :created, :location => @resource }
       else
-        format.html { render :action => "new" }
+        format.html { render :action => 'new' }
         format.xml  { render :xml => @resource.errors, :status => :unprocessable_entity }
-      end
+      end """
     end
+   
+    
   end
 
   # PUT /resources/1

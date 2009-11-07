@@ -12,21 +12,18 @@ class Resource < ActiveRecord::Base
   #has_and_belongs_to_many :workspaces
   belongs_to :owner, :class_name=> "User", :foreign_key => "owner"
   
+	# validates_presence_of :name
+	belongs_to :resourceable, :polymorphic => true
+	has_attached_file :media, :if => :external_resource.nil?, :message => "has_attached_file"
+	
+	validates_presence_of :external_resource, :if => "media.nil?"
+	
+	# Wrapper to paperclip validation
+	validate :paperclip_validations
   
- # validates_presence_of :name
-  
-   belongs_to :resourceable, :polymorphic => true
-   
-   has_attached_file :media
-   
-  # Paperclip Validations
-  validates_attachment_presence :media
-  validates_attachment_content_type :media, :content_type => ['video/quicktime', 'video/mpeg', 'application/pdf']
-  validates_attachment_size :media, :less_than => 10.megabytes
-  
-  
-   #acts as state machine plugin
-  acts_as_state_machine :initial => :pending
+  # Acts as state machine plugin
+  acts_as_state_machine :initial => :pending, 
+  	:if => :external_resource.nil?
   state :pending
   state :converting
   state :converted, :enter => :set_new_filename
@@ -56,11 +53,24 @@ class Resource < ActiveRecord::Base
     end
   end
 
+	def paperclip_validations
+		# paperclip validators doesn't accept conditional validations
+		# so we need this hack.
+		if :external_resource.nil?
+			# Paperclip Validations
+			validates_attachment_presence :media
+			validates_attachment_content_type :media, 
+				:content_type => ['video/quicktime', 'video/mpeg', 'application/pdf']
+			validates_attachment_size :media, :less_than => 10.megabytes
+		else
+			true
+		end
+	end
+	
   def video?
     SUPPORTED_VIDEOS.include?(self.media_content_type)
   end
-
-
+	
   protected
   
   def convert_command

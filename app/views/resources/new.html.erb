@@ -1,5 +1,10 @@
 <h1>New resource</h1>
 
+
+<style type="text/css">
+	.hide { display: none; }
+</style>
+
 <% form_for @resource, :html => { :multipart => true } do |f| %>
   <%= f.error_messages %>
 
@@ -10,10 +15,32 @@
    <p>
    <%= f.label :description %>:  <%= f.text_area :description, :size => "50x3" %>
    </p>
-   <p>
-     Arquivo:  <%= f.file_field :media  %> 
-     </p>
+
+   <fieldset>
+   	<legend>Tipo de material</legend>
+   	
+   	<label><input type="radio" name="resource[type]" value="media" checked />Vídeo</label>
+    <label><input type="radio" name="resource[type]" value="youtube" />YouTube</label><br />
+    
+   	<label>Video <%= f.file_field :media, :class => "resources"  %> </label>
+    <label class="hide">Youtube	<%= f.text_field :external_resource, :class => "resources"  %></label>
+   
+    </fieldset>
      <%= f.submit 'Submit' %> 
 <% end %>
+
+<script type="text/javascript">
+	$('new_resource').getInputs('radio', 'resource[type]').each(
+		function(e){
+			e.observe('click', changeMediaType);
+		}
+	);
+	
+	function changeMediaType(event){
+		$$("input.resources").each(function(e){
+			e.ancestors()[0].toggleClassName("hide");
+		});
+	}
+</script>
 
 <%= link_to 'Back', resources_path %>

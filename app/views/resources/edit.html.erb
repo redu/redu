@@ -4,9 +4,15 @@
   <%= f.error_messages %>
 
   <p>
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
   </p>
+  <% if not @resource.external_resource.nil? %>
+  	<p>
+  	<%= f.label :external_resource %>
+  	<%= f.text_field :external_resource %>
+  	</p>
+  <% end %>
   <p>
     <%= f.submit 'Update' %>
   </p>
