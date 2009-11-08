@@ -1,6 +1,6 @@
 <p>
   <b>Name:</b>
-  <%=h @exam.name %>
+  <%=h @exam.name %> <%= ratings_for @exam %>
 </p>
 
 <p>
@@ -17,14 +17,16 @@
 
 <p>
   <b>Author:</b>
-  <%=h @exam.author.login %>
+  <%=h @exam.owner.login %>
 </p>
 
-<%= link_to 'Fazer prova', :action => :take, :id => @exam %> <Br> 
+<%= link_to 'Fazer prova', :action => :answer, :id => @exam, :first => true %> <Br> 
 <hr>
-<% if @exam.author == current_user %>
+<% if @exam.owner == current_user %>
 <%= link_to 'Editar', edit_exam_path(@exam) %> |
 <%= link_to 'Remover', @exam, :confirm => 'Are you sure?', :method => :delete %> |
 <% end %> 
 <%= link_to 'Voltar', exams_path %>
 <BR><BR>
+
+<%= render :partial => 'exams/comment' %>

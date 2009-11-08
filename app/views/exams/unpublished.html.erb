@@ -1,0 +1,34 @@
+<h1> Testes por <%= @user.login %></h1>
+
+<p>
+		<div id="local_search_form">
+		<%= render :partial => "exams/search" %>
+		</div>
+</p>
+
+<%= render :partial => "exams/sort" %>
+<hr>
+
+<div id="local_search_results" style="min-height: 200px">
+
+ <% if @exams && @exams.length > 0 %>
+ <%= render :partial => 'exams/item', :collection => @exams, :as => :exam %> 
+ <% else %>
+ Não há testes ainda. 
+ <% end %>
+
+</div>
+
+
+
+<br />
+
+<!-- link_to 'Novo exame (Antigo - Popup)', new_exam_path -->
+<% if current_user %>
+<%= link_to 'Testes', exams_path %> | 
+<%= link_to 'Novo Teste', :action => 'new_exam' %> | 
+<%= link_to 'Testes publicados', user_exams_path(current_user) %> |
+<%= link_to 'Testes não publicados', user_exams_path(current_user) %> |
+<%= link_to 'Testes realizados', user_exams_path(current_user) %> |
+<%= link_to 'Minhas questões', user_exams_path(current_user) %>
+<% end %>

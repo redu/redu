@@ -1,0 +1,7 @@
+<% @exam ||= session[:exam] %>
+<hr>
+Comentários:
+<%= render :partial => "comments/comment" , :collection => @exam.comments %>
+<BR>
+<hr>
+<%= render :partial => 'comments/comment_form', :locals => {:commentable => @exam} %>

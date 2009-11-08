@@ -88,7 +88,12 @@ class ExamsController < BaseController
     
     if session[:question_index].nil?
       session[:question_index] = 0
+    elsif params[:q_index]
+      session[:question_index] = params[:q_index].to_i
     end
+    
+    @has_next = (session[:question_index] < (session[:exam].questions.length - 1))
+    
     @step =  session[:exam].questions[session[:question_index]]
     @step
   end
@@ -96,12 +101,21 @@ class ExamsController < BaseController
   def check
     session[:correct] ||= 0
     
-    @theanswer = params[:answer]
-    @therealanswer = session[:exam].questions[session[:question_index]].answer_id
+    @thequestion = session[:exam].questions[session[:question_index]]
+    @has_next = (session[:question_index] < (session[:exam].questions.length - 1))
     
-    if @theanswer.to_i == @therealanswer
-      session[:correct] += 1
+    @theanswer = params[:answer]
+    
+    if @theanswer 
+        session[:answers][@thequestion.id] = @theanswer
     end
+    
+    
+   
+   # if @theanswer.to_i == @therealanswer
+   #   session[:correct] += 1
+   # end
+   
     session[:question_index] += 1
     @step = session[:exam].questions[session[:question_index]]
     if @step.nil?
@@ -112,12 +126,31 @@ class ExamsController < BaseController
   end
   
   def results
-    @correct = session[:correct]
-    @possible = session[:exam].questions.length
-    @exam = params[:id]
+   
     
-    session[:question_index] = nil
-    session[:correct] = nil
+     @exam = session[:exam]
+    @correct = 0
+    @corrects = Array.new
+    
+    for k in 0..(@exam.questions.length - 1)
+      question = @exam.questions[k]
+      correct_answer = question.answer.id
+      
+      if session[:answers][question.to_s].to_i == correct_answer
+        @corrects << question
+        @correct += 1
+      end
+      
+    end
+    
+    @exam.update_attributes({:done_count => @exam.done_count + 1,
+    :total_correct => @exam.total_correct + @correct })
+    
+    respond_to do |format|
+          
+            format.html 
+            format.xml  { head :ok }
+     end
   end
   
   def start_over
@@ -237,7 +270,7 @@ class ExamsController < BaseController
       else
         
         @exam = Exam.new(params[:exam])
-        @exam.author = current_user
+        @exam.owner = current_user
         
         @questions =  params[:questions]
         
@@ -382,19 +415,57 @@ class ExamsController < BaseController
     render :nothing => true
   end
 
- ###########################################################################
 
+ ###########################################################################
+=begin 
+  def published
+    @exams = Exam.all(:limit => 20, :order => 'created_at DESC', :include => :author, :conditions => ["author_id = ? AND published = 1", params[:user_id]])
+    @user = User.find(params[:user_id]) # TODO é mesmo necessario? # performance
+     respond_to do |format|
+        format.html { render :action => "my" }
+        format.xml  { render :xml => @exams }
+      end
+  end
+=end  
+  def unpublished
+     @exams = Exam.all(:limit => 20, :order => 'created_at DESC', :include => :owner, :conditions => ["author_id = ? AND published = 0", params[:user_id]])
+    @user = User.find(params[:user_id]) # TODO é mesmo necessario? # performance
+     respond_to do |format|
+        format.html { render :action => "my" }
+        format.xml  { render :xml => @exams }
+      end
+    
+  end
+  
 
   # GET /exams
   # GET /exams.xml
   def index
-    @exams = Exam.all(:limit => 20, :order => 'created_at DESC', :include => :author)
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @exams }
+    
+    if params[:user_id]
+      @exams = Exam.all(:limit => 20, :order => 'created_at DESC', :include => :owner, :conditions => ["author_id = ? AND published = 1", params[:user_id]])
+      @user = User.find(params[:user_id]) # TODO é mesmo necessario? # performance
+      
+      respond_to do |format|
+        format.html { render :action => "my" }
+        format.xml  { render :xml => @exams }
+      end
+    else
+      
+      @exams = Exam.all(:limit => 20, :order => 'created_at DESC', :include => :owner)
+      
+      respond_to do |format|
+        format.html # index.html.erb
+        format.xml  { render :xml => @exams }
+      end
+      
     end
   end
+  
+  
+  
+  
+   ###########################################################################
   # GET /exams/1
   # GET /exams/1.xml
   def show
@@ -428,7 +499,7 @@ class ExamsController < BaseController
   # POST /exams.xml
   def create
     @exam = session[:exam_draft] #Exam.new(params[:exam])
-   # @exam.author = current_user
+   @exam.owner = current_user
     
     @questions =  params[:questions]
     
@@ -471,7 +542,7 @@ class ExamsController < BaseController
   def destroy
     @exam = Exam.find(params[:id])
     
-    if current_user == @exam.author
+    if current_user == @exam.owner
     
        @exam.destroy
     end

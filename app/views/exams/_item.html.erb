@@ -1,0 +1,21 @@
+<div id="exam_<%= exam.id %>" style="height: 120px; background: #efefef; margin-bottom: 15px; padding: 5px;">
+<b><%= link_to exam.name, exam %> </b> <%= ratings_for exam, :static %> <BR>
+ <%=h exam.questions.length %> questões -   Realizado <%=h exam.done_count %> vezes , 
+ Criado <%= time_ago_in_words(exam.created_at) %>
+<b>Author:</b>
+  <%=h exam.owner.login %>
+ <BR><BR>
+
+<% if (action_name == 'index' and @user ) %>
+
+<%= link_to 'Editar', edit_exam_path(exam) %> |
+<%= link_to 'Remover', exam, :confirm => 'Are you sure?', :method => :delete %>
+  	
+<% elsif (action_name == 'add') %>
+
+| <%= link_to_remote 'Adicionar', :url => { :controller => :exams, :action => :add_resource, :resource_id => resource.id }, 
+						:before => "Element.show('spinner');",
+        				:success => "Element.hide('spinner');" %>
+<% end %>
+
+</div>

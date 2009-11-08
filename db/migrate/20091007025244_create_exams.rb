@@ -4,7 +4,7 @@ class CreateExams < ActiveRecord::Migration
       t.integer :author_id, :null => false
       t.string :name, :null => false
       t.text :description
-      t.boolean :published, :default => 0
+      t.boolean :published, :default => false
       t.integer :done_count, :default => 0
       t.float :total_correct, :default => 0
       t.timestamps

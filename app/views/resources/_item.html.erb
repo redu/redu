@@ -1,19 +1,18 @@
 <div id="resource_<%= resource.id %>" style="height: 120px; background: #efefef; margin-bottom: 15px; padding: 5px;">
-<b><%= resource.title %> </b> <%= ratings_for resource, :static %> <BR>
+<b><%= link_to resource.title, resource %>  </b> <%= ratings_for resource, :static %> <BR>
 <%= resource.description %> - 
 <%= resource.media_content_type %> <%= (resource.state.eql?("converted")) ? "" : "- Estado: " + resource.state %>
  <BR><BR>
 
-<i>TODO modificar barra abaixo de acordo com o contexto</i><BR>
-<%= link_to "visualizar", resource %> |
+<% if (action_name == 'index' and @user ) %>
 
-<%= link_to 'Edit', edit_resource_path(resource) %> |
-<%= link_to 'Destroy', resource, :confirm => 'Are you sure?', :method => :delete %>
+<%= link_to 'Editar', edit_resource_path(resource) %> |
+<%= link_to 'Remover', resource, :confirm => 'Are you sure?', :method => :delete %>
   	
-
+<% elsif (action_name == 'add') %>
 
 | <%= link_to_remote 'Adicionar', :url => { :controller => :exams, :action => :add_resource, :resource_id => resource.id }, 
 						:before => "Element.show('spinner');",
         				:success => "Element.hide('spinner');" %>
-
+<% end %>
 </div>

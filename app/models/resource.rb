@@ -1,7 +1,47 @@
 class Resource < ActiveRecord::Base
   
-  SUPPORTED_VIDEOS = ['video/quicktime', 'video/mpeg']
+  SUPPORTED_DOCUMENTS = ['application/pdf']
   
+  SUPPORTED_AUDIO = [] # colocar mp3
+  
+  SUPPORTED_VIDEOS = [ 'application/x-mp4',
+      'video/mpeg',
+      'video/quicktime',
+      'video/x-la-asf',
+      'video/x-ms-asf',
+      'video/x-msvideo',
+      'video/x-sgi-movie',
+      'video/x-flv',
+      'flv-application/octet-stream',
+      'video/3gpp',
+      'video/3gpp2',
+      'video/3gpp-tt',
+      'video/BMPEG',
+      'video/BT656',
+      'video/CelB',
+      'video/DV',
+      'video/H261',
+      'video/H263',
+      'video/H263-1998',
+      'video/H263-2000',
+      'video/H264',
+      'video/JPEG',
+      'video/MJ2',
+      'video/MP1S',
+      'video/MP2P',
+      'video/MP2T',
+      'video/mp4',
+      'video/MP4V-ES',
+      'video/MPV',
+      'video/mpeg4',
+      'video/mpeg4-generic',
+      'video/nv',
+      'video/parityfec',
+      'video/pointer',
+      'video/raw',
+      'video/rtx' ]
+      
+      
   acts_as_commentable
   
   ajaxful_rateable :stars => 5
@@ -21,6 +61,20 @@ class Resource < ActiveRecord::Base
 	# Wrapper to paperclip validation
 	validate :paperclip_validations
   
+ # validates_presence_of :name
+  
+   belongs_to :resourceable, :polymorphic => true
+   
+   has_attached_file :media
+   
+  # Paperclip Validations
+  validates_attachment_presence :media
+  validates_attachment_content_type :media, :content_type => (SUPPORTED_VIDEOS + SUPPORTED_AUDIO + SUPPORTED_DOCUMENTS)
+  validates_attachment_size :media, :less_than => 10.megabytes
+  
+  
+   #acts as state machine plugin
+  #acts_as_state_machine :initial => :pending
   # Acts as state machine plugin
   acts_as_state_machine :initial => :pending, 
   	:if => :external_resource.nil?

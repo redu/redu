@@ -10,5 +10,16 @@
       <%= radio_button_tag("answer", alternative.id, checked = false) %>
         <%= alternative.statement %><BR>
     <% end %>
-    <%= submit_tag "Answer" %>
+    <%= button_to_function 'Back', 'history.back(); return false;' %>
+  |  <%= submit_tag @has_next ? "Next" : "End"  %>
   <% end %> 
+  <hr>
+  <% session[:exam].questions.each_index do |x| %>
+    <% if session[:question_index] == x %>
+		<%= "(" + x.to_s + ")" %> |
+	<% else %>
+  		<%= link_to ("(" + x.to_s + ")"), {:action => :answer, :id =>  session[:exam].id, :q_index => x}%> | 
+	<% end %>
+  <% end %>
+  
+  <%= render :partial => 'exams/comment' %>
