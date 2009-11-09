@@ -126,15 +126,10 @@ class ResourcesController < BaseController
     @resource.owner = current_user
     
     respond_to do |format|
-			puts "=========controller==========="
-			puts @resource.external_resource.nil?
-			puts @resource.video?
 			@resource.save
 
       
       if @resource.save!
-      	puts "salvou"
-      	
       	if @resource.video?
       		@resource.convert
       	end
