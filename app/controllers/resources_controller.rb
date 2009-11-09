@@ -116,7 +116,7 @@ class ResourcesController < BaseController
   def create
   
     # there is a better place?
-  	if params[:resource][:type] == "media" then
+  	if params[:resource][:external_resource_type] == "media" then
   		params[:resource][:external_resource] = nil
   	else
   		params[:resource][:media] = nil
@@ -150,8 +150,6 @@ class ResourcesController < BaseController
         format.xml  { render :xml => @resource.errors, :status => :unprocessable_entity }
       end """
     end
-   
-    
   end
 
   # PUT /resources/1

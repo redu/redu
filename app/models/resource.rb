@@ -41,6 +41,7 @@ class Resource < ActiveRecord::Base
       'video/raw',
       'video/rtx' ]
       
+  SUPPORTED_EXTERNAL_RESOURCES = ['youtube', 'vimeo', 'slideshare']
       
   acts_as_commentable
   
@@ -57,9 +58,7 @@ class Resource < ActiveRecord::Base
 	has_attached_file :media, :if => :external_resource.nil?, :message => "has_attached_file"
 	
 	validates_presence_of :external_resource, :if => "media.nil?"
-	
-	# Wrapper to paperclip validation
-	validate :paperclip_validations
+	validates_presence_of :title
   
  # validates_presence_of :name
   
@@ -68,13 +67,16 @@ class Resource < ActiveRecord::Base
    has_attached_file :media
    
   # Paperclip Validations
-  validates_attachment_presence :media
-  validates_attachment_content_type :media, :content_type => (SUPPORTED_VIDEOS + SUPPORTED_AUDIO + SUPPORTED_DOCUMENTS)
-  validates_attachment_size :media, :less_than => 10.megabytes
-  
-  
-   #acts as state machine plugin
-  #acts_as_state_machine :initial => :pending
+	# paperclip validators doesn't accept conditional validations
+	# so we need this hack.
+  if :external_media.nil?
+		validates_attachment_presence :media
+		validates_attachment_content_type :media, 
+			:content_type => (SUPPORTED_VIDEOS + SUPPORTED_AUDIO + SUPPORTED_DOCUMENTS)
+		validates_attachment_size :media, 
+			:less_than => 10.megabytes
+ 	end
+
   # Acts as state machine plugin
   acts_as_state_machine :initial => :pending, 
   	:if => :external_resource.nil?
@@ -106,23 +108,21 @@ class Resource < ActiveRecord::Base
       self.failure!
     end
   end
-
-	def paperclip_validations
-		# paperclip validators doesn't accept conditional validations
-		# so we need this hack.
-		if :external_resource.nil?
-			# Paperclip Validations
-			validates_attachment_presence :media
-			validates_attachment_content_type :media, 
-				:content_type => ['video/quicktime', 'video/mpeg', 'application/pdf']
-			validates_attachment_size :media, :less_than => 10.megabytes
-		else
-			true
-		end
-	end
 	
   def video?
     SUPPORTED_VIDEOS.include?(self.media_content_type)
+  end
+  
+  def type
+  	if video? then
+  		self.media_content_type
+  	else
+  		self.external_resource_type
+  	end  	
+  end
+  
+  def supported_external_resources
+  	SUPPORTED_EXTERNAL_RESOURCES
   end
 	
   protected

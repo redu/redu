@@ -18,29 +18,47 @@
 
    <fieldset>
    	<legend>Tipo de material</legend>
-   	
-   	<label><input type="radio" name="resource[type]" value="media" checked />Vídeo</label>
-    <label><input type="radio" name="resource[type]" value="youtube" />YouTube</label><br />
-    
-   	<label>Video <%= f.file_field :media, :class => "resources"  %> </label>
-    <label class="hide">Youtube	<%= f.text_field :external_resource, :class => "resources"  %></label>
+   	<%= f.radio_button :external_resource_type, "media" %>
+   	<%= f.label :external_resource_type, "Media" %>
+   	<% @resource.supported_external_resources.each do |e| %>
+   		<%= f.radio_button :external_resource_type, e %>
+   		<%= f.label :external_resource_type, e %>
+   	<% end %>
+		
+   	<br />
+   
+   	<label class="upload">Video <%= f.file_field :media, :class => "resources"  %> </label>
+    <label class="import">Youtube	<%= f.text_field :external_resource, :class => "resources"  %></label>
    
     </fieldset>
      <%= f.submit 'Submit' %> 
 <% end %>
 
 <script type="text/javascript">
-	$('new_resource').getInputs('radio', 'resource[type]').each(
+	$$("label.import")[0].hide();
+	$('new_resource').getInputs('radio', 'resource[external_resource_type]').each(
 		function(e){
 			e.observe('click', changeMediaType);
 		}
 	);
-	
+
 	function changeMediaType(event){
-		$$("input.resources").each(function(e){
+		/*$$("input.resources").each(function(e){
 			e.ancestors()[0].toggleClassName("hide");
-		});
+		});*/
+		
+		var element = Event.element(event);
+		
+		if (element.getValue() == "media"){
+			$$("label.upload")[0].show();
+			$$("label.import")[0].hide();
+		}else{
+			$$("label.upload")[0].hide();
+			$$("label.import")[0].show();			
+		}
+		
 	}
+
 </script>
 
 <%= link_to 'Back', resources_path %>

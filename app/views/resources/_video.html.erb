@@ -1,7 +1,7 @@
-<% if @resource.external_resource.nil? %> 
-  <%= render :partial => "resources/player" %>
-<% else %>
+<% if @resource.type == "youtube" %> 
   <%= render :partial => "resources/youtube" %>
+<% else %>
+  <%= render :partial => "resources/player" %>
 <% end %>
 
 

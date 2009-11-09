@@ -1,7 +1,9 @@
 <div id="resource_<%= resource.id %>" style="height: 120px; background: #efefef; margin-bottom: 15px; padding: 5px;">
 <b><%= link_to resource.title, resource %>  </b> <%= ratings_for resource, :static %> <BR>
-<%= resource.description %> - 
+<%= resource.description %>  
+<% if resource.video?  %>-
 <%= resource.media_content_type %> <%= (resource.state.eql?("converted")) ? "" : "- Estado: " + resource.state %>
+<% end%>
  <BR><BR>
 
 <% if (action_name == 'index' and @user ) %>
