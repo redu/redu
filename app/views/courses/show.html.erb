@@ -8,8 +8,11 @@ Aula
 <%= ratings_for @course %>
 
 
+
 <hr>
 Comentários:
+( <%=h @course.comments.length %> )
+
 <%= render :partial => "comments/comment" , :collection => @course.comments %>
 <BR>
 <hr>
