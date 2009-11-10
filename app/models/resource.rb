@@ -139,6 +139,7 @@ class Resource < ActiveRecord::Base
  
   end
   
+  # Send the .flv to S3 and remove localy converted file
   def upload
   	puts "upload"
   	
@@ -154,7 +155,7 @@ class Resource < ActiveRecord::Base
   																 
   	s3.put(config['development']['bucket'], "#{id}.flv", File.open(file_name), "x-amz-acl" => "public-read")
   	File.delete(file_name)
-  	puts "end upload" 	
+  	
   end
 
   # This update the stored filename with the new flash video file
