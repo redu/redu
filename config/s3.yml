@@ -1,0 +1,15 @@
+development:
+    access_key_id: 
+    secret_access_key: 
+    bucket: redu
+    url: http://s3.amazonaws.com/redu/
+test:
+    access_key_id: 
+    secret_access_key: 
+    bucket: redu
+    url: http://s3.amazonaws.com/redu/
+production:
+    access_key_id: 
+    secret_access_key: 
+    bucket: redu
+    url: http://s3.amazonaws.com/redu/
