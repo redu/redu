@@ -41,7 +41,7 @@ class Resource < ActiveRecord::Base
       'video/raw',
       'video/rtx' ]
       
-  SUPPORTED_EXTERNAL_RESOURCES = ['youtube', 'vimeo', 'slideshare']
+  SUPPORTED_EXTERNAL_RESOURCES = ['youtube']
       
   acts_as_commentable
   
@@ -55,16 +55,13 @@ class Resource < ActiveRecord::Base
   
 	# validates_presence_of :name
 	belongs_to :resourceable, :polymorphic => true
-	has_attached_file :media, :if => :external_resource.nil?, :message => "has_attached_file"
-	
+	has_attached_file :media, 
+		:if => :external_resource.nil?
+
 	validates_presence_of :external_resource, :if => "media.nil?"
 	validates_presence_of :title
-  
- # validates_presence_of :name
-  
-   belongs_to :resourceable, :polymorphic => true
-   
-   has_attached_file :media
+	
+  belongs_to :resourceable, :polymorphic => true
    
   # Paperclip Validations
 	# paperclip validators doesn't accept conditional validations
@@ -82,7 +79,8 @@ class Resource < ActiveRecord::Base
   	:if => :external_resource.nil?
   state :pending
   state :converting
-  state :converted, :enter => :set_new_filename
+  #state :converted, :enter => :upload, :after => :set_new_filename
+  state :converted, :after => :set_new_local_filename
   state :error
   
   event :convert do
@@ -101,7 +99,9 @@ class Resource < ActiveRecord::Base
   def convert
     self.convert!
     success = system(convert_command)
+
     if success && $?.exitstatus == 0
+    	
       self.converted!
      
     else
@@ -126,30 +126,46 @@ class Resource < ActiveRecord::Base
   end
 	
   protected
-  
-  def convert_command
-    flv = File.join(File.dirname(media.path), "#{id}.flv")
-    File.open(flv, 'w')
-    
-   # puts source.path
-   # puts flv
-   #  command = <<-end_command
-   #  ffmpeg -i #{ RAILS_ROOT + '/public' + public_filename }  -ar 22050 -ab 32 -s 480x360 -vcodec flv -r 25 -qscale 8 -f flv -y #{ RAILS_ROOT + '/public' + public_filename + flv }
-    
 
+  def convert_command
+    
+    file = File.join(File.dirname(media.path), "#{id}.flv")
+    File.open(file, 'w')
+    
     command = <<-end_command
-      ffmpeg -i "#{ media.path }" -ar 22050 -ab 32 -s 480x360 -vcodec flv -r 25 -qscale 8 -f flv -y "#{ flv }"
+      ffmpeg -i "#{ media.path }" -ar 22050 -ab 32 -s 480x360 -vcodec flv -r 25 -qscale 8 -f flv -y "#{ file }"
     end_command
     command.gsub!(/\s+/, " ")
+ 
+  end
+  
+  def upload
+  	puts "upload"
+  	
+  	file_name = File.join(File.dirname(media.path), "#{id}.flv")
+  	puts file_name
+  	file = File.open(file_name, 'r')
+  	
+  	# Is that accessible in a built in way?
+  	config = YAML.load_file("#{RAILS_ROOT}/config/s3.yml")
+
+  	s3 = RightAws::S3Interface.new(config['development']['access_key_id'], 
+  																 config['development']['secret_access_key'])
+  																 
+  	s3.put(config['development']['bucket'], "#{id}.flv", File.open(file_name), "x-amz-acl" => "public-read")
+  	File.delete(file_name)
+  	puts "end upload" 	
   end
 
   # This update the stored filename with the new flash video file
-  
   def set_new_filename
-    self.update_attribute(:media_file_name, "#{self.id}.flv")
+  	# Is that accessible in a built in way?
+  	config = YAML.load_file("#{RAILS_ROOT}/config/s3.yml")
+    self.update_attribute(:media_file_name, config['development']['url'] + "#{id}.flv")
   end
   
-
-  
+  def set_new_local_filename
+    self.update_attribute(:media_file_name, "#{id}.flv")
+  end
   
 end
