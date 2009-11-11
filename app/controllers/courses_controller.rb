@@ -63,6 +63,7 @@ class CoursesController < BaseController
     @course = params[:id]
   end
   
+  
   # Adicionar um recurso na aula.
   def add_resource
     @selected_resources = params[:resource][:id]
@@ -145,6 +146,7 @@ class CoursesController < BaseController
   def create
     
     @course = Course.new(params[:course])
+    @course.owner = current_user
     
     respond_to do |format|
       if @course.save
