@@ -5,12 +5,13 @@
 
 <%= ratings_for @resource %>
 
-
 <% if @resource.video? or @resource.external_resource %>
 <%= render :partial => "resources/video" %>
+<% elsif @resource.audio? %>
+<%= render :partial => "resources/audio" %>
 <% else %>
  <%= link_to "Download", @resource.media.url %>
- <% end %>
+<% end %>
   
 
 
