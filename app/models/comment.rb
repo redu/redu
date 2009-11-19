@@ -1,7 +1,7 @@
 class Comment < ActiveRecord::Base
 
-  belongs_to :course
-  belongs_to :resource
+  #belongs_to :course
+  #belongs_to :resource
 
   belongs_to :commentable, :polymorphic => true
   belongs_to :user
@@ -19,7 +19,7 @@ class Comment < ActiveRecord::Base
   #validates_presence_of :author_ip, :unless => Proc.new{|record| record.user} #log ip unless logged in
   #validates_format_of :author_url, :with => /(^$)|(^(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$)/ix, :unless => Proc.new{|record| record.user }
 
-  acts_as_activity :user, :if => Proc.new{|record| record.user } #don't record an activity if there's no user
+ # acts_as_activity :user, :if => Proc.new{|record| record.user } #don't record an activity if there's no user
 
   # named_scopes
   named_scope :recent, :order => 'created_at DESC'
