@@ -240,7 +240,8 @@ class ExamsController < BaseController
       save_dft
       redirect_to :controller => :resources, :action => :add
       
-    else # save exam  
+      
+    else # save / publish exam  
       
       if !params[:exam][:id].empty?
         # TODO redirecionar para actions correspondentes, esta muito codigo aqui!!!
@@ -254,6 +255,10 @@ class ExamsController < BaseController
         
         @questions.each do |question|
           @exam.questions << Question.find(question.to_i) # TODO performance
+        end
+        
+        if params[:sbt_opt] == "4" # publish exam
+          @exam.published = true;
         end
         
         respond_to do |format|
@@ -275,13 +280,17 @@ class ExamsController < BaseController
         @questions =  params[:questions]
         
         @questions.each do |question|
-          @exam.questions << Question.find(question.to_i)
+          @exam.questions << Question.find(question.to_i) # TODO performance
+        end
+        
+         if params[:sbt_opt] == "4" # publish exam
+          @exam.published = true;
         end
         
         respond_to do |format|
           if @exam.save # new exam
             flash[:notice] = 'Exam was successfully created.'
-            format.html { redirect_to exams_path }
+            format.html { render :action => "new_exam" }
             format.xml  { render :xml => @exam, :status => :created, :location => @exam }
           else
             format.html { render :action => "new_exam" }

@@ -4,7 +4,7 @@ require 'md5'
 module BaseHelper
   
   def reload_flash
-    page.replace "flash_messages", :partial => "shared/messages"
+    page.replace_html "flash_messages", :partial => "shared/messages"
   end
 
   def commentable_url(comment)

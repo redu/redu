@@ -21,8 +21,14 @@ pt-BR:
     attributes:
       photo:
         created_at: "created at: "
+    errors:
+      models:
+        question:
+          attributes:
+            statement:
+              blank: "Por favor escolha um enunciado maior que 6 caracteres" 
   #en: a_few_seconds_ago:  a few seconds ago
-  a_few_seconds_ago:  a few seconds ago
+  a_few_seconds_ago:  alguns segundos atrás
   #en: about: About
   about: About
   #en: about_me: About Me

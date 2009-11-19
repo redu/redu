@@ -2,6 +2,22 @@ class SkillsController < BaseController
   before_filter :login_required, :only => [:new, :create, :edit, :update, :destroy]
   before_filter :admin_required, :only => [:new, :create, :edit, :update, :destroy]
 
+  ##################
+  def sub_categories_of
+    
+    @id = params[:parent_id].to_i
+    @subcategories = Skill.all(:conditions => ["parent_id = ?", @id]).map { |skill| [skill.name, skill.id] }
+    
+    respond_to do |format|
+      format.json  { render :json => @subcategories }
+    end
+    
+  end
+
+  ########################
+
+
+
   # GET /skills
   # GET /skills.xml
   def index
@@ -81,6 +97,8 @@ class SkillsController < BaseController
       end
     end
   end
+  
+  
   
   # DELETE /skills/1
   # DELETE /skills/1.xml

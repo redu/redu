@@ -1,7 +1,7 @@
 class ActivitiesController < BaseController
-  before_filter :login_required,  :except => :index
-  before_filter :find_user,       :except => [:index, :destroy]
-  before_filter :require_current_user,            :except => [:index, :destroy]
+  before_filter :login_required,  :except => [:index, :recent]
+  before_filter :find_user,       :except => [:index, :destroy, :recent]
+  before_filter :require_current_user,            :except => [:index, :destroy, :recent]
   before_filter :require_ownership_or_moderator,  :only   => [:destroy]  
   
   
@@ -11,7 +11,26 @@ class ActivitiesController < BaseController
   
   def index
     @activities = User.recent_activity(:size => 30, :current => params[:page], :limit => 1000)
-    @popular_tags = popular_tags(30, ' count DESC')    
+    @popular_tags = popular_tags(30, ' count DESC')  
+    
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @activities }
+      format.json  { render :json => @activities }
+    end
+  end
+  
+  def recent
+     #@activities = User.recent_activity(:size => 30, :current => params[:page], :limit => 1000)
+    @activities =  Activity.recent.find(:all, :limit => 1000)  
+    @users = User.all(:conditions => ["id IN (?)", @activities.collect { |act| act.user_id }])
+   # @items = 
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => Array[@activities, @users] }
+      format.json  { render :json => Array[@activities, @users] }
+    end
+    
   end
   
   def destroy

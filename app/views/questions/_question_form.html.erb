@@ -92,6 +92,16 @@
 			return false;
 		}
 		
+		var selector = document.getElementById('question_skill_id');
+		var selected = false;
+		for (var i = 0; i < selector.options.length && !selected ; i++) {
+			selected = selected || selector.options[i].selected;
+		}
+		if (!selected) {	
+			alert('Por favor, selecione uma sub categoria');
+			return false;
+		}
+		
 		return true;
 	}
 	
@@ -104,6 +114,48 @@
         else 
             cntfield.innerHTML = maxlimit - field.value.length;
     }
+	// page["notice"].replace_html flash[:notice] 
+	
+	function selectCategory(selector, selectType){
+        // selectType
+		// 1 = category1
+		// 2 = category2
+		// 3 = question_skill_id
+		
+		var selectedValue = selector.options[selector.selectedIndex].value;
+		
+		if (selectedValue < 0 || selectType > 2) {
+			return;
+		} else { 
+		
+		var nextSelector;
+		if (selectType == 1) {
+			nextSelector = document.getElementById('category2');
+			document.getElementById('question_skill_id').options.length = 0; // reseta
+		} else { // selectType == 2
+			nextSelector = document.getElementById('question_skill_id');
+		}
+        
+  		new Ajax.Request("<%= url_for :controller => :skills, :action => :sub_categories_of %>", {
+            method: 'get',
+            parameters: "?parent_id= " + selectedValue,
+			onLoading: Element.show('spinner'),
+            onComplete: function(request){
+				Element.hide('spinner');
+				//alert(request.responseText);
+                res = eval("(" + request.responseText + ")");
+				
+				nextSelector.options.length = 0;
+				
+				for (var i = 0; i < res.length; i++ ) {
+					nextSelector.options[i]=new Option(res[i][0],res[i][1], false, false);
+				}
+				
+            }
+        });
+		}
+    }
+	
 
 	
  </script>
@@ -124,9 +176,6 @@
 		:onKeyDown => "textCounter(this,'st_chars_left',400);",
 		:onKeyUp => "textCounter(this,'st_chars_left',400);" --> 
 		<!-- f.tinymce :statement -->
-
-		
-		(<span id="st_chars_left">400</span>) caracteres restantes
 		 
 		 <br>
 		 
@@ -168,12 +217,20 @@
 		<hr>
 		Justificativa da resposta (tirar o tiny?):
 		<%= f.text_area :justification, :rows =>2, :cols => 50  %>
-		(<span id="jt_chars_left">400</span>) caracteres restantes
 		<hr>
-		<%= f.check_box :public %> Pública?
+		<%= f.check_box :public, :options => {:checked => true} %> Pública?
 		<BR>
-		Associar competências 
-
+		<BR>
+		Categoria <%= image_tag("spinner.gif",
+              :align => "absmiddle",
+              :border => 0,
+              :id => "spinner",
+              :style =>"display: none;" ) %><BR>
+		
+		<%= select_tag(:category1, '<option value="-1">-- Selecione uma categoria --</option>' + options_from_collection_for_select((Skill.all(:conditions => "parent_id IS NULL")), :id, :name), :size => 5, :onchange => "selectCategory(this, 1);", :style => "width: 200px;") %> 
+		<%= select_tag(:category2, '<option value="-1">-- Sem subcategorias ainda --</option>', :size => 5, :onchange => "selectCategory(this, 2);", :style => "width: 200px;") %> 
+		<%= f.select(:skill_id, '<option value="-1">-- Sem subcategorias ainda --</option>', {}, :size => 5, :onchange => "selectCategory(this, 3);", :style => "width: 200px;") %> 
+		<BR>
 		<p>
 		    <%= f.submit 'Salvar' %>
 		  </p>

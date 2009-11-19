@@ -68,6 +68,7 @@ AppConfig.question_mce_options = {
 =end
   :AScgiloc => 'http://www.imathas.com/editordemo/php/svgimg.php',          
   :ASdloc => 'http://www.imathas.com/editordemo/jscripts/tiny_mce/plugins/asciisvg/js/d.svg'
+  
 }  
   
   

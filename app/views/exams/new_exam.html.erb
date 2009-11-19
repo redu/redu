@@ -7,9 +7,18 @@
 		theattribute.value = opt;
 		theform.submit();
     }
+	
+	function publishExam() {
+		var confirm_msg = "Uma vez publicado, o exame não poderá ser editado nem removido. Deseja continuar?";
+		if (confirm(confirm_msg)) {
+			saveDraft(4);
+		} 
+		
+	}
+	
  </script>
  
- <% form_for :exam, @exam,  :url => { :action => "new_exam" },  :html => {:id => 'exam_form'} do |f| %>
+ <% form_for :exam, @exam, :url => { :action => "new_exam" },  :html => {:id => 'exam_form'} do |f| %>
  <%= f.error_messages %>
  <%= link_to_function 'Nova questão', 'saveDraft(1)' %> | 
  <%= link_to_function 'Adicionar questão', 'saveDraft(2)' %> | 
@@ -58,8 +67,12 @@ Materiais: <br/>
 :complete => visual_effect(:highlight, 'questions'),
  :tag => 'div'
 %>
-
-  <%= submit_tag "Salvar Teste" %>
+  
+  <%= submit_tag "Salvar" %> 
+  
+  <% if not @exam.new_record? %>
+  | <%= button_to_function "Publicar", 'publishExam()' %> |
+  <% end %>
   <%= link_to 'Descartar e Voltar', :action => :discard_draft %>
   
  <% end %>
