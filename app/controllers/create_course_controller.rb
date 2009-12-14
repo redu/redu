@@ -7,10 +7,7 @@ class CreateCourseController < BaseController
 		:persist_model => :per_page
 		
 		on_get(:step1) do
-			puts "on_get"
-			puts session[:user]
 			@course.owner = current_user
-			puts @course.owner
 		end
 		
 		on_get(:step2) do
