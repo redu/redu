@@ -1,6 +1,7 @@
 <h1>Listando Testes Mais Recentes</h1>
+
 <% if current_user %>
-<%= link_to "Meus Testes", user_exams_path(current_user) %>
+<%= link_to 'Novo Teste', :action => 'new_exam' %> | <%= link_to 'Meus testes', user_exams_path(current_user) %>
 <% end %>
 
 <p>
@@ -25,8 +26,9 @@
 
 
 <br/>
-
-<!-- link_to 'Novo exame (Antigo - Popup)', new_exam_path -->
-<% if current_user %>
-<%= link_to 'Novo Teste', :action => 'new_exam' %> | <%= link_to 'Meus testes', user_exams_path(current_user) %>
+<hr/>
+<% tag_cloud @tags, %w(css1 css2 css3 css4) do |tag, css_class| %>
+    <%= link_to tag, { :action => :tag, :id => tag }, :class => css_class %>
 <% end %>
+<hr/>
+

@@ -33,6 +33,14 @@
  <br/><BR>
  Descrição: <BR><%= f.text_area :description, :size => "50x3" %>
  <br/><BR>
+  Tags (separados por vírgula): <BR><%= f.text_field :tag_list %>
+ <br/><BR>
+  Dificuldade: <BR><%= f.select :level, options_for_select([['Iniciante', 1], ['Intermediário', 2], ['Avançado', 3]], 1) %>
+ <br/><BR>
+  Intruções: <BR><%= f.text_area :instruction, :size => "50x3" %>
+ <br/><BR>
+ 
+
 Materiais: <br/>
 
 <% if @exam.resources && @exam.resources.length > 0 %>
@@ -63,7 +71,7 @@ Materiais: <br/>
  )-->
  
  <%= sortable_element 'questions',
-:url => { :action => "sort" , :id => @exam },
+:url => { :action => "sort_question" , :id => @exam },
 :complete => visual_effect(:highlight, 'questions'),
  :tag => 'div'
 %>

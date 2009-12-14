@@ -1,6 +1,6 @@
 <p>
   <b>Name:</b>
-  <%=h @exam.name %> <%= ratings_for @exam %>
+  <%=h @exam.name %> 
 </p>
 
 <p>
@@ -9,6 +9,10 @@
 
 <p>
   Realizado <%=h @exam.done_count %> vezes
+</p>
+
+<p>
+  Dificuldade: <%=h (@exam.level == 1) ? "Iniciante" : ((@exam.level == 2) ? "Intermediário" : "Avançado") %> 
 </p>
 
 <p>

@@ -1,16 +1,23 @@
 <div id="exam_<%= exam.id %>" style="height: 120px; background: #efefef; margin-bottom: 15px; padding: 5px;">
-<b><%= link_to exam.name, exam %> </b> <%= ratings_for exam, :static %> <BR>
+<b><%= link_to exam.name, exam %> </b>  <BR>
  <%=h exam.questions.length %> questões -   Realizado <%=h exam.done_count %> vezes , 
  Criado <%= time_ago_in_words(exam.created_at) %>
 <b>Author:</b>
   <%=h exam.owner.login %>
- <BR><BR>
+ <BR><b>Tags:</b>
+  <%=h exam.tag_list %>
+ <BR>
+ <p>
+  Dificuldade: <%=h (exam.level == 1) ? "Iniciante" : ((exam.level == 2) ? "Intermediário" : "Avançado") %> 
+</p><BR><BR>
+
+
 
 <% if (action_name == 'index' and @user ) %>
-
-<%= link_to 'Editar', edit_exam_path(exam) %> |
-<%= link_to 'Remover', exam, :confirm => 'Are you sure?', :method => :delete %>
-  	
+	<% if not exam.published %>
+		<%= link_to 'Editar', edit_exam_path(exam) %> |
+		<%= link_to 'Remover', exam, :confirm => 'Are you sure?', :method => :delete %>
+	<% end %> 	
 <% elsif (action_name == 'add') %>
 
 | <%= link_to_remote 'Adicionar', :url => { :controller => :exams, :action => :add_resource, :resource_id => resource.id }, 

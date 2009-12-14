@@ -40,7 +40,7 @@
         <% question.alternatives.each do |alternative| %>
 	        
 			
-			<% if session[:answers][question.id.to_s].to_i == alternative.id %>
+			<% if session[:answers][question.id].to_i == alternative.id %>
 	       
 				<% if alternative.id != question.answer_id %>
 		        	
@@ -67,7 +67,6 @@
 	
 	<% end %>
 
-  <%= button_to "Fazer novamente", :action => "take", :id => @exam %>  | 
-  <%= link_to "Lista de Testes", exams_path %>
+  <%= link_to "Testes", exams_path %>
   
   <%= render :partial => 'exams/comment' %>

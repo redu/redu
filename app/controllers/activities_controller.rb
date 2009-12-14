@@ -21,10 +21,16 @@ class ActivitiesController < BaseController
   end
   
   def recent
-     #@activities = User.recent_activity(:size => 30, :current => params[:page], :limit => 1000)
-    @activities =  Activity.recent.find(:all, :limit => 1000)  
+    ''' V1
+    @activities =  Activity.recent.find(:all, :limit => 1000) 
     @users = User.all(:conditions => ["id IN (?)", @activities.collect { |act| act.user_id }])
-   # @items = 
+    '''
+    
+    @users = Array.new
+    @users << current_user
+    @activities =  Activity.recent.find(:all, :conditions => ["id IN (?)", current_user.follows.collect{ |flw| flw.id } ],:include => :users, :limit => 15) 
+    @items = Item.find(:all, :conditions => ["id IN (?)", @activities.collect{ |itm| itm.item_id } ]) #ver item type
+    
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => Array[@activities, @users] }

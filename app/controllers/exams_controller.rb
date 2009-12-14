@@ -110,8 +110,6 @@ class ExamsController < BaseController
         session[:answers][@thequestion.id] = @theanswer
     end
     
-    
-   
    # if @theanswer.to_i == @therealanswer
    #   session[:correct] += 1
    # end
@@ -126,9 +124,7 @@ class ExamsController < BaseController
   end
   
   def results
-   
-    
-     @exam = session[:exam]
+    @exam = session[:exam]
     @correct = 0
     @corrects = Array.new
     
@@ -136,18 +132,51 @@ class ExamsController < BaseController
       question = @exam.questions[k]
       correct_answer = question.answer.id
       
-      if session[:answers][question.to_s].to_i == correct_answer
-        @corrects << question
-        @correct += 1
+      if question.category
+          @competence = UserCompetence.first(:conditions => ["user_id = ? AND skill_id = ?", current_user.id, question.category.id])
+        
+          if @competence#@idx
+            @competence.done_count += 1
+          else
+           @competence = UserCompetence.new
+           @competence.skill = question.category
+           @competence.user = current_user
+           @competence.done_count += 1
+          end
       end
       
+      if session[:answers][question.id].to_i == correct_answer
+        @corrects << question
+        @correct += 1
+        
+        if @competence
+          @competence.correct_count += 1
+        end
+        
+     end
+     
+     if @competence
+       if @competence.new_record?
+         @competence.save
+       else
+         @competence.update_attributes(:done_count => @competence.done_count, :correct_count => @competence.correct_count)
+       end
+     end
     end
     
+    # Atualiza contadores do exame
     @exam.update_attributes({:done_count => @exam.done_count + 1,
     :total_correct => @exam.total_correct + @correct })
     
+    # Adiciona no histórico do usuário/exame
+    @exam_user = ExamUser.new
+    @exam_user.user = current_user
+    @exam_user.exam = @exam
+    @exam_user.done_at = Time.now
+    @exam_user.correct_count = @correct
+    @exam_user.save
+    
     respond_to do |format|
-          
             format.html 
             format.xml  { head :ok }
      end
@@ -164,6 +193,7 @@ class ExamsController < BaseController
     session[:question_index] = nil
     session[:correct] = nil
     session[:exam] = nil
+    session[:answers] = Hash.new
   end
 
 
@@ -403,7 +433,7 @@ class ExamsController < BaseController
      
      
   
-  def sort 
+  def sort_question 
     # TODO esse método não faz nada! Simplesmente alterando a posicao de cada questão no formulario,
    # altera igualmente o array de questoes que vai pra action e atualiza o modelo de exames
     
@@ -426,6 +456,42 @@ class ExamsController < BaseController
 
 
  ###########################################################################
+
+def sort
+  
+  case params[:sort_by]
+    
+  when '1' # Data
+    @exams = Exam.all(:conditions => ['published = ?', true], :limit => 20, :order => 'created_at DESC')
+  when '2' # Dificuldade
+    @exams = Exam.published(:limit => 20, :order => 'level DESC')
+  when '3' # Realizações
+    @exams = Exam.all(:conditions => ['published = ?', true], :limit => 20, :order => 'done_count DESC')
+  when '4' # Título
+    @exams = Exam.published(:limit => 20, :order => 'name DESC')
+  when '5' # Categoria
+    @exams = Exam.published(:limit => 20, :order => 'created_at DESC')
+  end
+  
+  respond_to do |format|
+      format.js do
+          render :update do |page| 
+            page.replace_html 'local_search_results', 
+           :partial => 'exams/item', :collection => @exams, :as => :exam
+           # :partial => "questions/list_item", :collection => @products, :as => :item 
+            #page.insert_html :bottom, "questions", :partial => 'questions/question_show', :object => @question
+            #page.visual_effect :highlight, "question_#{@question.id}" 
+          end
+      end
+    end
+end
+
+def order
+  
+end
+
+ ###########################################################################
+
 =begin 
   def published
     @exams = Exam.all(:limit => 20, :order => 'created_at DESC', :include => :author, :conditions => ["author_id = ? AND published = 1", params[:user_id]])
@@ -436,11 +502,27 @@ class ExamsController < BaseController
       end
   end
 =end  
-  def unpublished
-     @exams = Exam.all(:limit => 20, :order => 'created_at DESC', :include => :owner, :conditions => ["author_id = ? AND published = 0", params[:user_id]])
-    @user = User.find(params[:user_id]) # TODO é mesmo necessario? # performance
+  
+    def exam_history
+    @exams = current_user.exam_history
+    @user = current_user
+    #Exam.all(:limit => 20, :order => 'created_at DESC', :conditions => ["author_id = ? AND published = 0", current_user.id], :include => :owner)
+    
      respond_to do |format|
-        format.html { render :action => "my" }
+        format.html #{ render :action => "exam_history" }
+        format.xml  { render :xml => @exams }
+      end
+    
+    end 
+
+  def unpublished
+     #@exams = Exam.all(:limit => 20, :order => 'created_at DESC', :include => :owner, :conditions => ["author_id = ? AND published = 0", params[:user_id]])
+    #@user = User.find(params[:user_id]) # TODO é mesmo necessario? # performance
+    
+    @exams = Exam.all(:limit => 20, :order => 'created_at DESC', :conditions => ["author_id = ? AND published = 0", current_user.id], :include => :owner)
+    
+     respond_to do |format|
+        format.html #{ render :action => "my" }
         format.xml  { render :xml => @exams }
       end
     
@@ -451,18 +533,21 @@ class ExamsController < BaseController
   # GET /exams.xml
   def index
     
-    if params[:user_id]
+    if params[:user_id] # TODO current_user
       @exams = Exam.all(:limit => 20, :order => 'created_at DESC', :include => :owner, :conditions => ["author_id = ? AND published = 1", params[:user_id]])
       @user = User.find(params[:user_id]) # TODO é mesmo necessario? # performance
       
       respond_to do |format|
-        format.html { render :action => "my" }
+        format.html { render :action => "published" }
         format.xml  { render :xml => @exams }
       end
     else
       
-      @exams = Exam.all(:limit => 20, :order => 'created_at DESC', :include => :owner)
+     # @exams = Exam.all(:limit => 20, :order => 'created_at DESC', :include => :owner)
       
+       @exams = Exam.published(:limit => 20, :order => 'created_at DESC', :include => :owner)
+        @tags = Exam.tag_counts
+
       respond_to do |format|
         format.html # index.html.erb
         format.xml  { render :xml => @exams }

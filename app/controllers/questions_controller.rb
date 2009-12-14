@@ -39,11 +39,22 @@ class QuestionsController < BaseController
   # GET /questions
   # GET /questions.xml
   def index # listagem do banco de questoes
-    @questions = Question.all(:conditions => ['public = ?', 1])
+    
+    if params[:user_id]
+      @questions = Question.all(:conditions => ['author_id = ?', params[:user_id]])
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @questions }
+      respond_to do |format|
+        format.html  { render "my_questions" }
+        format.xml  { render :xml => @questions }
+      end
+    else
+    
+      @questions = Question.all(:conditions => ['public = ?', 1])
+  
+      respond_to do |format|
+        format.html # index.html.erb
+        format.xml  { render :xml => @questions }
+      end
     end
   end
 

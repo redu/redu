@@ -48,6 +48,9 @@ class User < ActiveRecord::Base
    # PROFILE
   has_one :profile
  
+  # COMPETENCES
+  has_many :user_competences, :dependent => :destroy
+  has_many :competences, :class_name => "Skill", :source => :skill, :foreign_key => "skill_id", :through => :user_competences
  
   # SCHOOL
   has_many :user_school_association, :dependent => :destroy
@@ -70,8 +73,11 @@ class User < ActiveRecord::Base
   # EXAMS
   has_many :exams, :foreign_key => "author_id"
   
+  has_many :exam_users#, :dependent => :destroy
+  has_many :exam_history, :through => :exam_users, :source => :exam
+  
     # QUESTIONS
-  has_many :questions
+  has_many :questions, :foreign_key => :author_id
   
   # COMMUNITY ENGINE:
 

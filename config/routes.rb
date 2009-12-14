@@ -10,7 +10,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :questions, :collection => { :search => [:get, :post], :add => :get } #, :member => {:add => :get}
   
   map.resources :exams, :member => {:add_question => :get, :add_resource => :get, :rate => :post},
-                        :collection => {:unpublished => :get, :new_exam => :get, :discard_draft => :get}
+                        :collection => {:unpublished => :get, :new_exam => :get, :discard_draft => :get, :exam_history => :get, :sort => :get, :order => :get}
     
   map.resources :subjects
 
@@ -213,7 +213,8 @@ ActionController::Routing::Routes.draw do |map|
     user.resources :invitations
     user.resources :resources
     user.resources :courses
-    user.resources :exams
+    user.resources :exams#, :member_path => '/:id', :nested_member_path => '/:user_login'
+    user.resources :questions
     user.resources :offerings, :collection => {:replace => :put}
     user.resources :favorites, :name_prefix => 'user_'
     user.resources :messages, :collection => { :delete_selected => :post, :auto_complete_for_username => :any }  

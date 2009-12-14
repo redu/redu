@@ -26,13 +26,22 @@ function removeRowFromList(rowId){
 	 
     <td><%= link_to "visualizar", question %></td>
      
-	  <td>
+<% if (action_name == 'index' and current_user and question.author == current_user and not question.public) %>
+   
+   <td><%= link_to 'Editar', edit_question_path(question) %> </td>
+    <td>	<%= link_to 'Remover', question, :confirm => 'Are you sure?', :method => :delete %></td>
+<% end %>	
+
+<% if (action_name == 'add' and @user ) %>
+  <td>		
 <%= link_to_remote 'Adicionar', :url => { :controller => :exams, :action => :add_question, :question_id => question.id }, 
 						:before => "Element.show('spinner')",
         				:success => "removeRowFromList('tr_" + question.id.to_s + "')" %>
 						<!-- :method => :delete --> 
 						 <!-- :update => "local_search_results" -->
 </td>
+<% end %>
+
      </tr>
 <% end %>
 </table>

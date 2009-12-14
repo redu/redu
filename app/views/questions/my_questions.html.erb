@@ -1,0 +1,11 @@
+<h1>Minhas Questões</h1>
+
+<%= link_to 'Criar Questão', new_question_path %> | <%= link_to 'Meus Testes', user_exams_path(current_user.id) %>
+
+<div id="local_search_results" style="min-height: 200px">
+
+<%= render :partial => "questions/list" %>
+
+</div>
+
+

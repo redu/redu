@@ -1,0 +1,14 @@
+<% if current_user %>
+<%= link_to 'Testes', exams_path %> | 
+<%= link_to 'Novo Teste', :action => 'new_exam' %> | 
+<!-- counters -->
+<% published_count = Exam.published.count %>
+<% unpublished_count = Exam.published.count %>
+<% done_count = current_user.exam_history.count %>
+<% questions_count = current_user.questions.count %>
+
+<%= link_to 'Testes publicados (' + published_count.to_s + ')', user_exams_path(current_user.id) %> |
+<%= link_to 'Testes não publicados (' + unpublished_count.to_s + ')', :action => 'unpublished' %> |
+<%= link_to 'Testes realizados (' + done_count.to_s + ')', :action => 'exam_history' %> |
+<%= link_to 'Minhas questões (' + questions_count.to_s + ')', user_questions_path(current_user.id) %>
+<% end %>

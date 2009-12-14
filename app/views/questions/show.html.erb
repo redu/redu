@@ -5,8 +5,8 @@
   <h1 style="font-size: 14px;">
   <%=h @question.statement %>
   </h1>
-  <%= image_tag @question.public_filename() %>
 </p>
+
 <% @question.alternatives.each do |alternative| %>
 <%= alternative.statement %> <BR>
 <% end %>
@@ -18,7 +18,7 @@
 
 <p>
   
-  <%= @question.is_public ? 'Pública' : 'Privada' %>
+  <%= @question.public ? 'Pública' : 'Privada' %>
 </p>
 
 <p>
@@ -26,7 +26,8 @@
   <%= @question.justification ? @question.justification: 'Sem justificativa' %>
 </p>
 
-
-<%= link_to 'Edit', edit_question_path(@question) %> 
+<%= link_to_function 'Voltar', "history.back();" %> |
+<%= link_to 'Editar', edit_question_path(@question) %> 
+<%= link_to 'Remover', @question, :confirm => 'Are you sure?', :method => :delete %></td>
 
 </div>
