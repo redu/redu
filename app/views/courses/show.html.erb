@@ -4,11 +4,20 @@ Aula
   <b>Nome:</b>
   <%=h @course.name %>
 </p>
-
+<p>
+	<strong>Descrição</strong>
+	<%= @course.description %>
+	
 <%= ratings_for @course %>
 
-
-
+<b>Recurso principal</b>
+<% @course.resources.each do |resource| %>
+	<% if resource.video? or resource.external_resource %>
+	<%= render :partial => "resources/video", :object => @resource = resource %>
+	<% else %>
+	 <%= link_to "Download", resource.media.url %>
+	<% end %>
+<% end %>
 <hr>
 Comentários:
 ( <%=h @course.comments.length %> )

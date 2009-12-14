@@ -1,0 +1,27 @@
+<h1>Step1</h1>
+
+
+<%= "<p style=\"color: green\">#{flash[:notice]}<p>" if flash[:notice] %>
+
+<% form_for :course, :url=>{:action=>:step1}  do |f| %>
+  <%= f.error_messages %>
+
+  
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  
+  <p>
+    <%= f.label :description %><br />
+    <%= f.text_area :description %>
+  </p>
+  
+  <p>
+    <%= wizardly_submit %>
+  </p>
+<% end %>
+
+<script type='text/javascript'>
+  document.getElementById('course_name').focus()
+</script>

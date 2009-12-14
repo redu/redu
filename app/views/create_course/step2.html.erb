@@ -1,0 +1,67 @@
+<h1>Step2</h1>
+
+
+<%= "<p style=\"color: green\">#{flash[:notice]}<p>" if flash[:notice] %>
+
+<% form_for :course, :url=>{:action=>:step2}  do |f| %>
+  <%= f.error_messages %>
+	
+	  <p>
+   <%= label_tag :title %>: 
+   <%= text_field_tag :title %> 
+   </p>
+   <p>
+   <%= label_tag :description %>:  
+   <%= text_area_tag :description, nil, :rows => 10, :cols => 50  %>
+   </p>
+
+   <fieldset>
+   	<legend>Tipo de material</legend>
+   	<%= radio_button_tag :external_resource_type, "media" %>
+   	<%= label_tag :external_resource_type, "Media" %>
+   	<% @resource.supported_external_resources.each do |e| %>
+   		<%= radio_button_tag :external_resource_type, e %>
+   		<%= label_tag :external_resource_type, e %>
+   	<% end %>
+		
+   	<br />
+   
+   	<label class="upload">Video <%= file_field_tag :media, :class => "resources"  %> </label>
+    <label class="import">Youtube	<%= text_field_tag :external_resource, nil, :class => "resources"  %></label>
+   
+    </fieldset>
+    
+  <p>
+    <%= wizardly_submit %>
+  </p>
+<% end %>
+
+<script type='text/javascript'>
+  document.getElementById('course_courses_resources').focus()
+</script>
+<script type="text/javascript">
+	$$("label.import")[0].hide();
+	$('new_resource').getInputs('radio', 'resource[external_resource_type]').each(
+		function(e){
+			e.observe('click', changeMediaType);
+		}
+	);
+
+	function changeMediaType(event){
+		/*$$("input.resources").each(function(e){
+			e.ancestors()[0].toggleClassName("hide");
+		});*/
+		
+		var element = Event.element(event);
+		
+		if (element.getValue() == "media"){
+			$$("label.upload")[0].show();
+			$$("label.import")[0].hide();
+		}else{
+			$$("label.upload")[0].hide();
+			$$("label.import")[0].show();			
+		}
+		
+	}
+
+</script>
