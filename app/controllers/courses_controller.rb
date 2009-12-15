@@ -120,12 +120,7 @@ class CoursesController < BaseController
   # GET /courses/new
   # GET /courses/new.xml
   def new
-    @course = Course.new
-    
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @course }
-    end
+		redirect_to :controller => 'create_course', :action => 'step1'
   end
   
   # GET /courses/1/edit
