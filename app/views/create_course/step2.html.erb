@@ -3,7 +3,7 @@
 
 <%= "<p style=\"color: green\">#{flash[:notice]}<p>" if flash[:notice] %>
 
-<% form_for :course, :url=>{:action=>:step2}  do |f| %>
+<% form_for :course, :url=>{:action=>:step2}, :html => { :multipart => true }  do |f| %>
   <%= f.error_messages %>
 	
 	  <p>
@@ -39,29 +39,4 @@
 <script type='text/javascript'>
   document.getElementById('course_courses_resources').focus()
 </script>
-<script type="text/javascript">
-	$$("label.import")[0].hide();
-	$('new_resource').getInputs('radio', 'resource[external_resource_type]').each(
-		function(e){
-			e.observe('click', changeMediaType);
-		}
-	);
 
-	function changeMediaType(event){
-		/*$$("input.resources").each(function(e){
-			e.ancestors()[0].toggleClassName("hide");
-		});*/
-		
-		var element = Event.element(event);
-		
-		if (element.getValue() == "media"){
-			$$("label.upload")[0].show();
-			$$("label.import")[0].hide();
-		}else{
-			$$("label.upload")[0].hide();
-			$$("label.import")[0].show();			
-		}
-		
-	}
-
-</script>
