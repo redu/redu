@@ -126,8 +126,12 @@ class ResourcesController < BaseController
     @resource.owner = current_user
     
     respond_to do |format|
-			@resource.save
-
+      if @resource.audio?
+        puts "entrou linha 130"
+          @resource.state = "converted"
+      else
+           puts "nao entrou linha 130"
+      end  
       
       if @resource.save!
       	if @resource.video?

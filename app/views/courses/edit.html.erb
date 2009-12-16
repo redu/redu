@@ -1,20 +1,9 @@
-<h1>Editing course</h1>
+<h1>Edititando Aula</h1>
 
-<% form_for(@course) do |f| %>
-  <%= f.error_messages %>
+<%= render :partial => "form", :locals => { :botao => "Atualizar" } %>
 
-  <p>
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </p>
-  <p>
-    
-  </p>
-  <p>
-    <%= f.submit 'Update' %>
-  </p>
-<% end %>
+
 
 <%= link_to 'Adicionar Recurso', {:action => :list_resources, :id => @course} %> |
-<%= link_to 'Show', @course %> |
-<%= link_to 'Back', courses_path %>
+<%= link_to 'Visualizar', @course %> |
+<%= link_to 'Voltar', courses_path %>

@@ -1,14 +1,18 @@
-Aula
-
+<h1>Detalhes da Aula</h1>
 <p>
-  <b>Nome:</b>
-  <%=h @course.name %>
+    <b>Nome:</b>
+    <%=h @course.name %>
 </p>
 <p>
 	<strong>Descrição</strong>
 	<%= @course.description %>
 	
-<%= ratings_for @course %>
+
+
+<% if not current_user.acquisitions.include?(@course) %>
+<%= button_to 'Comprar', :action => :buy, :id => @course.id %>
+<% else %>
+Voce já comprou este video!<% end %>
 
 <b>Recurso principal</b>
 <% @course.resources.each do |resource| %>
@@ -18,16 +22,25 @@ Aula
 	 <%= link_to "Download", resource.media.url %>
 	<% end %>
 <% end %>
-<hr>
-Comentários:
-( <%=h @course.comments.length %> )
+<h2><%= @course.name %></h2>
+<p>
+    <%= @course.description %>
+</p>
+<% @course.course_prices.each do | p | %>
+<p>
+    <%= p.price %> para <%= p.key_number %>
+</p>
+<% end %>
 
-<%= render :partial => "comments/comment" , :collection => @course.comments %>
-<BR>
-<hr>
-<%= render :partial => 'comments/comment_form', :locals => {:commentable => @course} %>
+<%= ratings_for @course %>
 
+<hr>Comentários: 
+( 
+<%=h @course.comments.length %>)<%= render :partial => "comments/comment" , :collection => @course.comments %>
 <BR>
+<hr><%= render :partial => 'comments/comment_form', :locals => {:commentable => @course} %>
+<BR>
+<%= link_to 'Editar', edit_course_path(@course) %> |<%= link_to 'Voltar', courses_path %>
 
 <%= link_to 'Edit', edit_course_path(@course) %> |
 <%= link_to 'Back', courses_path %>

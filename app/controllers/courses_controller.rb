@@ -56,7 +56,7 @@ class CoursesController < BaseController
     
   end
 =end 
- 
+  
   # Lista todos os recursos existentes para relacionar com
   def list_resources
     @resources = Resource.all
@@ -140,8 +140,32 @@ class CoursesController < BaseController
   # POST /courses.xml
   def create
     
+    # @course = course.create!(params[:course])
+    
+#modificações feitas em 12 de dez
+    
     @course = Course.new(params[:course])
     @course.owner = current_user
+    
+    if params[:price_user]
+      @price_user = Courseprice.new  
+      @price_user.course = @course
+      @price_user.key_number = 1
+      @price_user.price = params[:price_user].to_f
+      @price_user.save
+    end      
+    
+    if params[:price_500]
+      @price_500 = Courseprice.new  
+      @price_500.course = @course
+      @price_500.key_number = 500
+      @price_500.price = params[:price_500].to_f
+      @price_500.save
+    end 
+    
+    #fim das modificações
+    
+    
     
     respond_to do |format|
       if @course.save
@@ -160,9 +184,25 @@ class CoursesController < BaseController
   def update
     @course = Course.find(params[:id])
     
+    if params[:price_user]
+      @price_user = Courseprice.new  
+      @price_user.course = @course
+      @price_user.key_number = 1
+      @price_user.price = params[:price_user].to_f
+      @price_user.save
+    end      
+    
+    if params[:price_500]
+      @price_500 = Courseprice.new  
+      @price_500.course = @course
+      @price_500.key_number = 500
+      @price_500.price = params[:price_500].to_f
+      @price_500.save
+    end
+    
     respond_to do |format|
       if @course.update_attributes(params[:course])
-        flash[:notice] = 'Course was successfully updated.'
+        flash[:notice] = 'Curso atualizado com sucesso.'
         format.html { redirect_to(@course) }
         format.xml  { head :ok }
       else
@@ -177,10 +217,35 @@ class CoursesController < BaseController
   def destroy
     @course = Course.find(params[:id])
     @course.destroy
+    flash[:notice] = 'A aula foi removida'
     
     respond_to do |format|
       format.html { redirect_to(courses_url) }
       format.xml  { head :ok }
     end
   end
+  
+  def buy
+    @course = Course.find(params[:id])
+    
+    #o nome dessa variável, deixar como acquisition
+    @acquisition = Acquisition.new
+    '''
+    if current_user.is_school_admin?
+      aquisicao.entity = "School"
+      aquisicao.entity_id = current_user.school # TODO implementar admin de uma unica escola
+    end
+    '''
+    @acquisition.acquired_by_type = "User"
+    @acquisition.acquired_by_id = current_user.id
+    @acquisition.produto = @course
+    
+    if @acquisition.save
+      flash[:notice] = "A aula foi comprada!"
+      redirect_to @course
+    end
+    
+    
+  end
+  
 end

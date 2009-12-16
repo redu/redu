@@ -1,8 +1,8 @@
-<h1>New course</h1>
+<h1>Nova Aula</h1><br />
 
-<% form_for(@course) do |f| %>
-  <%= f.error_messages %>
+<%= render :partial => "form", :locals => { :botao => "Salvar!" } %>
 
+<%= link_to 'Voltar', courses_path %>
   <p>
     <%= f.label :name %><br />
     <%= f.text_field :name %>

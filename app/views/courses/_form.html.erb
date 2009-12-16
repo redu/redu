@@ -1,0 +1,29 @@
+<% form_for @course do |f| %>
+
+<%= f.error_messages %>
+	<label>
+		Nome:
+		<%= f.text_field :name%>
+	</label><br /><br />
+	<label>
+		Descrição:
+		<br>
+		<%= f.text_area :description, :rows => 7, :cols => 40 %>
+	</label><br /><br />
+	<label>
+		Preço
+		<br>
+		<% if @course.course_prices    %>
+		 <% p1 = @course.course_prices.reject {|p| p.key_number != 1} %>
+		 <% p2 = @course.course_prices.reject {|p| p.key_number != 500} %>
+		 <% p3 = @course.course_prices.reject {|p| p.key_number != 1000} %>
+		 <% p4 = @course.course_prices.reject {|p| p.key_number != 1001} %>
+		<% end %>
+		Usuário: <%= text_field_tag "preco_user", (p1.length > 0) ? p1.first.price : "0.00" %><br>
+		Escola (ate 500): <%= text_field_tag "preco_500", (p2.length > 0) ? p2.first.price : "0.00" %><br>
+		Usuário (de 500 a 1000): <%= text_field_tag "preco_1000", (p3.length > 0) ? p3.first.price : "0.00" %><br>
+		Usuário (mais de 1000): <%= text_field_tag "preco_1001", (p4.length > 0) ? p4.first.price : "0.00" %><br>
+	</label>
+	
+	<button type="submit"><%= botao %></button>
+<% end %>

@@ -10,13 +10,13 @@
   <tr>
     <td><%=h course.name %></td>
 	<td> <%= ratings_for course, :static %></td>
-    <td><%= link_to 'Show', course %></td>
-    <td><%= link_to 'Edit', edit_course_path(course) %></td>
-    <td><%= link_to 'Destroy', course, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Visualizar', course %></td>
+    <td><%= link_to 'Editar', edit_course_path(course) %></td>
+    <td><%= link_to 'Deletar', course, :confirm => 'Você tem certeza?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New course', new_course_path %>
+<%= link_to 'Nova Aula', new_course_path %>
