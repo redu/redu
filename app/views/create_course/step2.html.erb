@@ -3,7 +3,7 @@
 
 <%= "<p style=\"color: green\">#{flash[:notice]}<p>" if flash[:notice] %>
 
-<% form_for :course, :url=>{:action=>:step2}, :html => { :multipart => true }  do |f| %>
+<% form_for :resource, :url=>{:action=>:step2}, :html => { :multipart => true }  do |f| %>
   <%= f.error_messages %>
 	
 	  <p>
