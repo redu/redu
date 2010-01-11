@@ -6,8 +6,6 @@ class Course < ActiveRecord::Base
   # PLUGINS
   acts_as_commentable
   ajaxful_rateable :stars => 5#, :dimensions => [:speed, :beauty, :price]
-  validation_group :step1, :fields=>[:name, :description, :owner]
-  validation_group :step2, :fields=>[:courses_resources]
   
   # ASSOCIATIONS
   has_and_belongs_to_many :subjects
