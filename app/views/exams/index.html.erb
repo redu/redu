@@ -1,34 +1,56 @@
-<h1>Listando Testes Mais Recentes</h1>
+<div id="all_content3">
+<div id="col_content">
+	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">aprender</a> > <a href="#">exames</a> </div>
+   	<div id="title">EXAMES
+	
+	<%  if logged_in? %>
+    	<div id="task_bar_exames"><%= link_to 'Novo Exame', :action => 'new' %> | <%= link_to 'Meus Exames', published_user_exams_path(current_user.id) %></div>
+	<% end %>
+	
+	<%= render :partial => "exams/search" %></div>
+	
+<!-- LISTAGEM RECURSO ############################################################################################################################################## -->
 
-<% if current_user %>
-<%= link_to 'Novo Teste', :action => 'new_exam' %> | <%= link_to 'Meus testes', user_exams_path(current_user) %>
-<% end %>
+	<div id="filter_bar">
+		
+	    <span id="title_list" class="title_list"> MAIS RECENTES</span>
+	    <span class="title_filter">Ordenar:</span>
+		
+		<%= render :partial => "exams/sort" %>
+	      
+    </div>
+    <div id="all_list">
+    	
+		<% if @exams && @exams.length > 0 %>
+ 			<%= render :partial => 'exams/item', :collection => @exams, :as => :exam %> 
+ 		<% else %>
+ 			Não há exames publicados ainda. <%= link_to 'Crie um agora!', :action => 'new' %>
+		<% end %>
+    	
+    </div> <!-- fim da listagem --> 
+	
+	<%= will_paginate  @exams, :prev_label => "< Anterior" ,:next_label => "Próximo >", :separator=>"|" %> 
+    
+<!-- PAGINACAO ##################################################################################################################################################### -->
+    <div id="pagination" align="center">
 
-<p>
-	<div id="local_search_form">
-	<%= render :partial => "exams/search" %>
-	</div>
-</p>
 
-<%= render :partial => "exams/sort" %>
-<hr>
-
-<div id="local_search_results" style="min-height: 200px">
-
- <% if @exams && @exams.length > 0 %>
- <%= render :partial => 'exams/item', :collection => @exams, :as => :exam %> 
- <% else %>
- Não há materiais uploadeados ainda. 
- <% end %>
-
+    	<ul id="pagination_number">
+    		<li><a href="" class="nav">< Anterior</a></li>
+            <li><a href="" class="number">1</a></li>
+            <li><a href="" class="number">2</a></li>
+            <li><a href="" class="number">3</a></li>
+            <li><a href="" class="number">4</a></li>
+            <li><a href="" class="number">5</a></li>
+            <li><a href="" class="nav">PrÃ³ximo ></a></li>
+    	</ul>
+    </div>
+	
 </div>
 
-
-
-<br/>
-<hr/>
-<% tag_cloud @tags, %w(css1 css2 css3 css4) do |tag, css_class| %>
-    <%= link_to tag, { :action => :tag, :id => tag }, :class => css_class %>
-<% end %>
-<hr/>
-
+<!-- COLUNA DIREITA ################################################################################################################################################ -->
+<div id="col_box3">
+<%= render :partial => 'shared/activities' %> 
+<%# render :partial => 'exams/tagcloud' %>
+</div> <!-- fim da coluna da direita --> 
+</div>

@@ -1,85 +1,23 @@
-class ExamsController < BaseController
+  class ExamsController < BaseController
   
   before_filter :login_required, :except => [:index]
 
-  def take 
-   rst
-   @exam = Exam.find(params[:id])
-
-   #array_ex = [[17, 53], [18, 57], [19, 61]]
-   session[:questions] = @exam.questions.collect {|q| [q.id, q.answer_id ]  } 
-   
-   @nqid = session[:questions][0][0]
-   
-   redirect_to :action => :next_question, :id => @exam, :ci => 0, :nqid => @nqid
-   
-  end
+  def review
+    if session[:question_index].nil?
+      session[:question_index] = 0
+    elsif params[:q_index]
+      session[:question_index] = params[:q_index].to_i
+    end
+    
+    @has_next = (session[:question_index] < (session[:exam].questions.length - 1))
+    
+    @step =  session[:exam].questions[session[:question_index]]
   
-  def next_question
-    
-    @eid = params[:id] # exam's id
-    @qid = params[:qid] # current question's id
-    @nqid = params[:nqid] # next question's id
-    @theanswer = params[:answer] # current answer (alternative's id)
-    
-    if @theanswer 
-        session[:answers][@qid] = @theanswer
-    end
-    
-    if @nqid && !@nqid.eql?("") # prepare attributes for the next question
-      
-      @question = Question.find(@nqid)
-      
-      nextIndex = params[:ci].to_i + 1
-      @next_qid =  session[:questions][nextIndex][0] if((nextIndex) < session[:questions].length) #primeiro valor
-      
-      @current_i = nextIndex
-      # why the session cannot keep the index ? A.: because if the user hits 'back' in the browser, the questio    
-    else # go to results
-      
-      redirect_to :action => :end_exam, :id => @eid
-      
-    end
-    
+     render :action => :results unless @step
     
   end
   
-  def end_exam
-    @exam = Exam.find(params[:id])
-    @correct = 0
-    @corrects = Array.new
-    
-    for k in 0..(@exam.questions.length - 1)
-      question = session[:questions][k][0]
-      correct_answer = session[:questions][k][1]
-      
-      if session[:answers][question.to_s].to_i == correct_answer
-        @corrects << question
-        @correct += 1
-      end
-      
-    end
-    
-    @exam.update_attributes({:done_count => @exam.done_count + 1,
-    :total_correct => @exam.total_correct + @correct })
-    
-    
-    respond_to do |format|
-          
-            format.html 
-            format.xml  { head :ok }
-        
-     end
-    
-  end
   
-  def rst
-    session[:q_index] = 0
-    session[:questions] = []
-    session[:answers] = Hash.new
-  end
-
-  ###############################################
   def answer
     if params[:first]
       reset_session
@@ -113,6 +51,8 @@ class ExamsController < BaseController
    # if @theanswer.to_i == @therealanswer
    #   session[:correct] += 1
    # end
+   
+   puts params[:chrono]
    
     session[:question_index] += 1
     @step = session[:exam].questions[session[:question_index]]
@@ -176,6 +116,9 @@ class ExamsController < BaseController
     @exam_user.correct_count = @correct
     @exam_user.save
     
+    #TODO performance?
+    session[:corrects] = @corrects
+    
     respond_to do |format|
             format.html 
             format.xml  { head :ok }
@@ -194,6 +137,7 @@ class ExamsController < BaseController
     session[:correct] = nil
     session[:exam] = nil
     session[:answers] = Hash.new
+    session[:corrects] = nil
   end
 
 
@@ -241,7 +185,7 @@ class ExamsController < BaseController
     redirect_to exams_path
   end
   
-  def new_exam
+  def new
     
     if request.get?
       @exam = session[:exam_draft] || Exam.new
@@ -320,10 +264,10 @@ class ExamsController < BaseController
         respond_to do |format|
           if @exam.save # new exam
             flash[:notice] = 'Exam was successfully created.'
-            format.html { render :action => "new_exam" }
+            format.html { render :action => "new" }
             format.xml  { render :xml => @exam, :status => :created, :location => @exam }
           else
-            format.html { render :action => "new_exam" }
+            format.html { render :action => "new" }
             format.xml  { render :xml => @exam.errors, :status => :unprocessable_entity }
           end
         end
@@ -389,7 +333,7 @@ class ExamsController < BaseController
     respond_to do |format|
 =begin      
       format.html {
-        redirect_to :action => :new_exam
+        redirect_to :action => :new
       }
       format.xml  { render :xml => @exam }
 =end
@@ -456,8 +400,38 @@ class ExamsController < BaseController
 
 
  ###########################################################################
+def search
+    
+    @exams = Exam.find(:all, :conditions => ["name LIKE ?", "%" + params[:query] + "%"])
+    #, :conditions => ["statement LIKE '%?%'", params[:query]]
+    
+    respond_to do |format|
+      format.js do
+          render :update do |page| 
+            page.replace_html 'all_list', 
+           :partial => 'exams/item', :collection => @exams, :as => :exam
+            page.replace_html 'title_list', "Resultados para: \"#{params[:query]}\""
+           # :partial => "questions/list_item", :collection => @products, :as => :item 
+            #page.insert_html :bottom, "questions", :partial => 'questions/question_show', :object => @question
+            #page.visual_effect :highlight, "question_#{@question.id}" 
+          end
+      end
+    end
+  end
+
 
 def sort
+  
+  case params[:exam_type]
+    
+  when '1' # Published
+    @cond = {:conditions => ['published = ?', true]}
+  when '2' # Unpublished
+     @cond = {:conditions => ['published = ? AND author_id', true]}
+  when '3' # Done
+     @cond = {:conditions => ['published = ?', true]}
+  #else # Published?
+  end
   
   case params[:sort_by]
     
@@ -476,7 +450,7 @@ def sort
   respond_to do |format|
       format.js do
           render :update do |page| 
-            page.replace_html 'local_search_results', 
+            page.replace_html 'all_list', 
            :partial => 'exams/item', :collection => @exams, :as => :exam
            # :partial => "questions/list_item", :collection => @products, :as => :item 
             #page.insert_html :bottom, "questions", :partial => 'questions/question_show', :object => @question
@@ -492,67 +466,52 @@ end
 
  ###########################################################################
 
-=begin 
+ 
   def published
-    @exams = Exam.all(:limit => 20, :order => 'created_at DESC', :include => :author, :conditions => ["author_id = ? AND published = 1", params[:user_id]])
-    @user = User.find(params[:user_id]) # TODO é mesmo necessario? # performance
-     respond_to do |format|
-        format.html { render :action => "my" }
-        format.xml  { render :xml => @exams }
-      end
-  end
-=end  
-  
-    def exam_history
-    @exams = current_user.exam_history
-    @user = current_user
-    #Exam.all(:limit => 20, :order => 'created_at DESC', :conditions => ["author_id = ? AND published = 0", current_user.id], :include => :owner)
-    
-     respond_to do |format|
-        format.html #{ render :action => "exam_history" }
-        format.xml  { render :xml => @exams }
-      end
-    
-    end 
+   @exams = Exam.paginate(:conditions => ["author_id = ? AND published = 1", params[:user_id]], :include => :owner, :page => params[:page], :order => 'updated_at DESC', :per_page => AppConfig.items_per_page)
 
-  def unpublished
-     #@exams = Exam.all(:limit => 20, :order => 'created_at DESC', :include => :owner, :conditions => ["author_id = ? AND published = 0", params[:user_id]])
-    #@user = User.find(params[:user_id]) # TODO é mesmo necessario? # performance
-    
-    @exams = Exam.all(:limit => 20, :order => 'created_at DESC', :conditions => ["author_id = ? AND published = 0", current_user.id], :include => :owner)
-    
      respond_to do |format|
         format.html #{ render :action => "my" }
         format.xml  { render :xml => @exams }
       end
-    
   end
+
+  def unpublished
+    @exams = Exam.paginate(:conditions => ["author_id = ? AND published = 0", current_user.id], :include => :owner, :page => params[:page], :order => 'updated_at DESC', :per_page => AppConfig.items_per_page)
+
+     respond_to do |format|
+        format.html #{ render :action => "my" }
+        format.xml  { render :xml => @exams }
+      end
+  end
+  
+  def history
+    #@exams = Exam.paginate(:conditions => ["author_id = ? AND published = 0", current_user.id], :include => :owner, :page => params[:page], :order => 'updated_at DESC', :per_page => AppConfig.items_per_page)
+
+    
+    @exams = current_user.exam_history.paginate :page => params[:page], :order => 'updated_at DESC', :per_page => AppConfig.items_per_page
+    #@user = current_user
+    
+    respond_to do |format|
+      format.html #{ render :action => "exam_history" }
+      format.xml  { render :xml => @exams }
+    end
+    
+  end 
   
 
   # GET /exams
   # GET /exams.xml
   def index
+    @recent_activity = User.recent_activity(:size => 15, :current => 1)
+    @exams = Exam.paginate :conditions => ['published = ?', true], :include => :owner, :page => params[:page], :order => 'updated_at DESC', :per_page => AppConfig.items_per_page
     
-    if params[:user_id] # TODO current_user
-      @exams = Exam.all(:limit => 20, :order => 'created_at DESC', :include => :owner, :conditions => ["author_id = ? AND published = 1", params[:user_id]])
-      @user = User.find(params[:user_id]) # TODO é mesmo necessario? # performance
-      
-      respond_to do |format|
-        format.html { render :action => "published" }
-        format.xml  { render :xml => @exams }
-      end
-    else
-      
-     # @exams = Exam.all(:limit => 20, :order => 'created_at DESC', :include => :owner)
-      
-       @exams = Exam.published(:limit => 20, :order => 'created_at DESC', :include => :owner)
-        @tags = Exam.tag_counts
-
-      respond_to do |format|
-        format.html # index.html.erb
-        format.xml  { render :xml => @exams }
-      end
-      
+    # @exams = Exam.published(:limit => 20, :order => 'created_at DESC', :include => :owner)
+    @tags = Exam.tag_counts
+    
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @exams }
     end
   end
   
@@ -571,22 +530,12 @@ end
     end
   end
 
-  # GET /exams/new
-  # GET /exams/new.xml
-  def new
-    @exam = Exam.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @exam }
-    end
-  end
 
   # GET /exams/1/edit
   def edit
     @exam = Exam.find(params[:id])
     
-    render :action => :new_exam
+    render :action => :new
   end
 
   # POST /exams

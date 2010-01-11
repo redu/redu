@@ -15,4 +15,6 @@ Requirements:
 	  calendar_date_select
 	  icalendar
 	  aws-s3 (if using s3 for photos)
+	  
+	  will-paginate
 

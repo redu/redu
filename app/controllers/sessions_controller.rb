@@ -35,7 +35,8 @@ class SessionsController < BaseController
     cookies.delete :auth_token
     reset_session
     flash[:notice] = :youve_been_logged_out_hope_you_come_back_soon.l
-    redirect_to new_session_path
+    #redirect_to new_session_path
+    redirect_to application_url
   end
 
 end

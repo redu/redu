@@ -6,7 +6,6 @@ class QuestionsController < BaseController
 #question_mce_options
   def add
     @questions = Question.all(:conditions => ['public = ?', 1])
-
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @questions }
@@ -117,7 +116,7 @@ class QuestionsController < BaseController
         
         flash[:notice] = 'A questão foi criada e adicionada ao teste.'
         format.html { #redirect_to(@question) 
-          redirect_to :controller => :exams, :action => :new_exam
+          redirect_to :controller => :exams, :action => :new
         }
         format.xml  { render :xml => @question, :status => :created, :location => @question }
 =begin        
@@ -136,7 +135,7 @@ class QuestionsController < BaseController
        
 =begin        
         format.html { 
-          redirect_to :controller => :exams, :action => :new_exam
+          redirect_to :controller => :exams, :action => :new
         }
 =end       
         format.html { render :action => "new" }
@@ -185,7 +184,7 @@ class QuestionsController < BaseController
         
          flash[:notice] = 'A questão foi atualizada com sucesso!'
         format.html { #redirect_to(@question) 
-          redirect_to :controller => :exams, :action => :new_exam
+          redirect_to :controller => :exams, :action => :new
         }
         format.xml  { render :xml => @question, :status => :created, :location => @question }
         

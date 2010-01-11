@@ -1,7 +1,11 @@
 <% @exam ||= session[:exam] %>
-<hr>
-Comentários:
+
+<div id="comments">
+	<div id="filter_bar_comments"><span class="title_filter">COMENTÁRIOS</span></div>
+
+<% if @exam.comments.length > 0 %>
 <%= render :partial => "comments/comment" , :collection => @exam.comments %>
-<BR>
-<hr>
-<%= render :partial => 'comments/comment_form', :locals => {:commentable => @exam} %>
+<% else %>
+Nenhum comentário ainda.
+<% end %>
+<%= render :partial => 'comments/comment_form', :locals => {:commentable => @exam, :comments => @exam.comments } %>

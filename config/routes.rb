@@ -213,7 +213,7 @@ ActionController::Routing::Routes.draw do |map|
     user.resources :invitations
     user.resources :resources
     user.resources :courses
-    user.resources :exams#, :member_path => '/:id', :nested_member_path => '/:user_login'
+    user.resources :exams, :collection => {:published => :get, :unpublished => :get, :history => :get} 
     user.resources :questions
     user.resources :offerings, :collection => {:replace => :put}
     user.resources :favorites, :name_prefix => 'user_'

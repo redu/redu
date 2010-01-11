@@ -1,6 +1,6 @@
 community_name: "Redu"
-community_tagline: "The Learnin Social Network"
-community_description:  "The Learnin Social Network"
+community_tagline: "A Rede Social Educacional"
+community_description:  "A Rede Social Educacional"
 support_email:  "support@community.com"
 meta_description: 'A description of your community for use in META tags.'
 meta_keywords: 'keywords for use in META tags'
@@ -25,6 +25,8 @@ robots_meta_list_content: 'noindex,follow'
 # the post itself should be indexed; 
 # when links are included and they point to external sites, the robot should not follow
 robots_meta_show_content: 'index,nofollow'
+items_per_page: 2
+comments_number: 15
 
 image:
   #missing_thumb: '/images/icon_missing_thumb.gif'

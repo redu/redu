@@ -1,72 +1,262 @@
- <h1><%= @exam.name %></h1>
+<div id="all_content4">
+<div id="content_preview_exame">
+	<div id="breadcrumbs_video"><a href="#">home</a> > <a href="#">aprender</a> > <a href="#">exames</a>  > <strong><%= session[:exam].name %></strong></div>   
+   	<div id="title_video"><%= @exam.name %></div>
+	<%= render :partial => 'exams/author', :locals => {:author => @exam.owner}  %>
 
-  <p><strong>Resultados:</strong>
-    Você acertou <%= @correct %> questões de <%= @exam.questions.length %>!
-	<BR>
-	<% my_average = @correct/@exam.questions.length %> 
-	<%= my_average %> % de acertos!
-	
-	<BR>
-	a média de acertos nesse exame é 
-	<% average = (@exam.total_correct/@exam.done_count)/@exam.questions.length*1000.round/10 %>
-	<%= (@exam.done_count == 0) ? 0 : average %> %
-	<BR>
-	<%= (my_average >= average)? 'Você está acima da média, parabéns!' : 'Você precisa estudar mais...' %>
-	
-	<p>
-  Realizado <%=h @exam.done_count %> vezes
-</p>
-	
-	</p> 
-	
-	
-	<% @exam.questions.each do |question| %>
-	
-	
-    <div id="question_block" style="background: #EFEFEF; padding: 5px; margin-bottom: 10px">
-    	<% if (@corrects.include?(question.id)) %> 
-		resposta certa!
-		<% else %>
-		resposta errada
-		<% end %>
-		<BR>
-	    <p>
-            <h1 style="font-size: 14px;"><%=h question.statement %>
-            </h1>
-            <%# image_tag question.public_filename() %>
-        </p>
-		
-		<div id="alternatives_block" style="margin: 10px 0 10px 0">
-        <% question.alternatives.each do |alternative| %>
-	        
-			
-			<% if session[:answers][question.id].to_i == alternative.id %>
-	       
-				<% if alternative.id != question.answer_id %>
-		        	
-					<%= image_tag "icons/wrong.gif"  %>
-		     	<% end %> 
 
-	     	<% end %>
-			
-			<% if alternative.id == question.answer_id %>
-				<%= image_tag "icons/correct.jpg"  %>
-			<% end %>
-			<%= radio_button_tag :alternative, alternative.id  %>
-			<%= alternative.statement %>
-	        <BR>
-        <% end %>
-		</div>
-		
-        <p>
-            Justificativa: 
-            <BR>
-            <%= question.justification ? question.justification: 'Sem justificativa' %>
-        </p>
+<!-- CABEÃ‡ALHO ############################################################################################################################### -->
+	
+	<%= render :partial => 'exams/exam_header', :locals => {:exam => @exam} %>
+	<!--
+	<div id="item_video">
+    	<div id="title_video">
+        	<ul id="titlevideo_menu">
+        		<li><a href="#" class="title_resource">MatemÃ¡tica Financeira</a></li>
+        		<li><a href="#" class="edit"> editar</a></li>
+        	</ul>
+        </div>
+        <div id="identification1">
+        	<ul id="identification_resource1">
+				<li><a href="#">Robson Ribeiro</a></li>
+        		<li>|</li>
+				<li>hÃ¡ 1 hora atrÃ¡s</li>
+            	<li>|</li>
+				<li>ExibiÃ§Ãµes(4)</li>
+			</ul>
+        </div>
+         <div id="description_video">Descricao do video aula, o que vai ser passado para o alunos, conteudo da aula e outra coisas mais significantes para seu aprendizado. Descricao do video aula, o que vai ser passado para o alunos.</div>
+         <div id="identification1">
+        	<ul id="identification_resource1">
+				<li><strong>Categoria:</strong> PortuguÃªs</li>
+        		<li>|</li>
+				<li><strong>Tag:</strong> Ensino MÃ©dio, PortuguÃªs, ENEM, Vestibular</li>
+			</ul>
+         </div>
+   	  </div>
+	  -->
+	  
+<!-- CABEÃ‡ALHO ############################################################################################################################### --> 
+<div id="aviso_finalizado">
+	<div id="info_aviso">
+    	<div id="imagem"></div>
+    	<div id="info">Exame Finalizado!</div>
+        <div id="link_comentado">
+			<%= link_to "< Ver exame com as respostas comentadas?", :action => :review, :id => @exam.id, :q_index => 0 %>
+			</div>
+        <div class="txt_info">
+          Você acertou <strong><%= @correct %></strong> questões de <strong><%= @exam.questions.length %></strong>! 
+		  Veja abaixo o seu rendimento e análise deste exame.</div>
     </div>
-	
-	<% end %>
+    <div id="aba"><img src="img/aba_resultado.png" width="136" height="33" /></div>
+</div>
 
-  <%= link_to "Testes", exams_path %>
+<div id="base_box">
+	<div id="box_rendimento">
+    <table width="249" border="0" cellspacing="0" cellpadding="0">
+  		<tr>
+  		  <td width="8" height="35" bgcolor="#f8f7d2">&nbsp;</td>
+    		<td height="35" colspan="2" bgcolor="#f8f7d2" class="txt_01">SUA PONTUAÇÃO</td>
+    		<td width="8" height="35" bgcolor="#f8f7d2">&nbsp;</td>
+  		</tr>
+  		<tr>
+  		  <td width="8" height="30">&nbsp;</td>
+  		  <td width="169" height="30" class="txt_01">ACERTOS</td>
+  		  <td width="64" height="30" align="center" class="txt_01">
+			
+			<%= @correct %>
+		 </td>
+  		  <td width="8" height="30">&nbsp;</td>
+		  </tr>
+  		<tr>
+  		  <td height="1"> </td>
+  		  <td height="1" bgcolor="#d7d5b8"> </td>
+  		  <td height="1" align="center" bgcolor="#d7d5b8"> </td>
+  		  <td height="1"> </td>
+		</tr>
+  		<tr>
+  		  <td height="30">&nbsp;</td>
+  		  <td height="30" class="txt_01">ERROS</td>
+  		  <td height="30" align="center" class="txt_01">
+			<%= @exam.questions.length - @correct %>
+		  </td>
+  		  <td height="30">&nbsp;</td>
+		  </tr>
+  		<tr>
+  		  <td height="1"> </td>
+  		  <td height="1" bgcolor="#d7d5b8"> </td>
+  		  <td height="1" align="center" bgcolor="#d7d5b8"> </td>
+  		  <td height="1"> </td>
+		</tr>
+  		<!--
+		<tr>
+  		  <td height="30">&nbsp;</td>
+  		  <td height="30" class="txt_01">NÃO MARCADAS</td>
+  		  <td height="30" align="center" class="txt_01">02</td>
+  		  <td height="30">&nbsp;</td>
+		  </tr>
+		  -->
+  		<tr>
+  		  <td height="2" colspan="4" bgcolor="#FFFFFF"> </td>
+  		</tr>
+  		<tr>
+  		  <td height="40" bgcolor="#faf3a6">&nbsp;</td>
+  		  <td height="40" bgcolor="#faf3a6" class="txt_rendimento">RENDIMENTO:</td>
+  		  <td height="40" align="center" bgcolor="#faf3a6" class="txt_valor">
+  		  	<% my_average = @correct/@exam.questions.length %> 
+			<%= my_average %>
+			
+  		  </td>
+  		  <td height="40" bgcolor="#faf3a6">&nbsp;</td>
+		  </tr>
+  		<tr>
+  		  <td height="2" colspan="4" bgcolor="#FFFFFF"> </td>
+  		</tr>
+  		<tr>
+  		  <td>&nbsp;</td>
+  		  <td height="25" colspan="2" class="txt_tempo">TEMPO GASTO = 01:23:56</td>
+  		  <td>&nbsp;</td>
+		  </tr>
+  		<tr>
+  		  <td height="2" colspan="4" bgcolor="#FFFFFF"> </td>
+  		</tr>
+  		<tr>
+  		  <td bgcolor="#f8f8f8">&nbsp;</td>
+  		  <td height="25" colspan="2" valign="middle" bgcolor="#f8f8f8" class="txt_tempo"><input type="radio" name="radio" id="radio" value="radio" />
+  		    Disponibilizar meu rendimento?</td>
+  		  <td bgcolor="#f8f8f8">&nbsp;</td>
+		  </tr>
+	</table>
+
+    </div>
+	<div id="box_media">
+	  <table width="249" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="8" height="35" bgcolor="#f4f4f4">&nbsp;</td>
+          <td height="35" colspan="2" bgcolor="#f4f4f4" class="txt_01">PONTUAÇÃO DO EXAME</td>
+          <td width="8" height="35" bgcolor="#f4f4f4">&nbsp;</td>
+        </tr>
+        <tr>
+          <td width="8" height="30">&nbsp;</td>
+          <td width="169" height="30" class="txt_01">ACERTOS</td>
+          <td width="64" height="30" align="center" class="txt_01"><%= @exam.total_correct/@exam.questions.length %></td>
+          <td width="8" height="30">&nbsp;</td>
+        </tr>
+        <tr>
+          <td height="1"></td>
+          <td height="1" bgcolor="#e7e8e8"></td>
+          <td height="1" align="center" bgcolor="#e7e8e8"></td>
+          <td height="1"></td>
+        </tr>
+        <tr>
+          <td height="30">&nbsp;</td>
+          <td height="30" class="txt_01">ERROS</td>
+          <td height="30" align="center" class="txt_01">04</td>
+          <td height="30">&nbsp;</td>
+        </tr>
+        <tr>
+          <td height="1"></td>
+          <td height="1" bgcolor="#e7e8e8"></td>
+          <td height="1" align="center" bgcolor="#e7e8e8"></td>
+          <td height="1"></td>
+        </tr>
+        <!--
+		<tr>
+          <td height="30">&nbsp;</td>
+          <td height="30" class="txt_01">NÃO MARCADAS</td>
+          <td height="30" align="center" class="txt_01">02</td>
+          <td height="30">&nbsp;</td>
+        </tr>
+		-->
+        <tr>
+          <td height="2" colspan="4" bgcolor="#FFFFFF"></td>
+        </tr>
+        <tr>
+          <td height="40" bgcolor="#f1f5f5">&nbsp;</td>
+          <td height="40" bgcolor="#f1f5f5" class="txt_rendimento">MÉDIA GERAL</td>
+          <td height="40" align="center" bgcolor="#f1f5f5" class="txt_rendimento">
+			<% average = (@exam.total_correct/@exam.done_count)/@exam.questions.length*1000.round/10 %>
+			<%= (@exam.done_count == 0) ? 0 : average %>
+			</td>
+          <td height="40" bgcolor="#f1f5f5">&nbsp;</td>
+        </tr>
+        <tr>
+          <td height="2" colspan="4" bgcolor="#FFFFFF"></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td height="25" colspan="2" class="txt_tempo">TEMPO GASTO = 01:43:37</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td height="2" colspan="4" bgcolor="#FFFFFF"></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td height="25" colspan="2" class="txt_tempo">Exame realizado <strong><%=@exam.done_count%></strong> vezes</td>
+          <td>&nbsp;</td>
+        </tr>
+      </table>
+	</div>
+	<div id="box_melhores">
+	  <table width="249" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="8" height="35" bgcolor="#f4f4f4">&nbsp;</td>
+          <td height="35" bgcolor="#f4f4f4" class="txt_01">MELHORES RENDIMENTOS</td>
+          <td width="8" height="35" bgcolor="#f4f4f4">&nbsp;</td>
+        </tr>
+        <tr>
+          <td height="30">&nbsp;</td>
+          <td height="50" class="txt_01">        
+          	<div id="photo"><a href="#"><img src="img/foto_40x40.png" border="0" /></a></div>
+    		<div id="name"><a href="#">CÃ¡ssio Melo</a></div>
+            <div id="rendimento">RENDIMENTO: 72%</div>          </td>
+          <td height="30">&nbsp;</td>
+        </tr>
+        <tr>
+          <td height="1"> </td>
+          <td height="1" bgcolor="#eeeeee" class="txt_01"> </td>
+          <td height="1"> </td>
+        </tr>
+        <tr>
+          <td height="30">&nbsp;</td>
+          <td height="50" class="txt_01">
+            <div id="photo"><a href="#"><img src="img/foto_40x40.png" border="0" /></a></div>
+    		<div id="name"><a href="#">AndrÃ© Diniz</a></div>
+            <div id="rendimento">RENDIMENTO: 71%</div>          </td>
+          <td height="30">&nbsp;</td>
+        </tr>
+        <tr>
+          <td height="1"> </td>
+          <td height="1" bgcolor="#eeeeee" class="txt_01"> </td>
+          <td height="1"> </td>
+        </tr>
+        <tr>
+          <td width="8" height="30">&nbsp;</td>
+          <td height="50" class="txt_01">
+            <div id="photo"><a href="#"><img src="img/foto_40x40.png" border="0" /></a></div>
+    		<div id="name"><a href="#">Robson Ribeiro</a></div>
+            <div id="rendimento">RENDIMENTO: 70%</div></td>
+          <td width="8" height="30">&nbsp;</td>
+        </tr>
+        <tr>
+          <td height="1"> </td>
+          <td height="1" bgcolor="#eeeeee" class="txt_01"> </td>
+          <td height="1"> </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td height="25" class="txt_tempo"><strong><a href="#" class="link_01">ver todos(25)</a></strong></td>
+          <td>&nbsp;</td>
+        </tr>
+      </table>
+	</div>
+</div>
+
+<!-- COMENTARIOS ############################################################################################################################# -->
+<%= render :partial => 'exams/comment' %>
+<!-- COMENTARIOS ############################################################################################################################# -->
+</div>
+</div>
+
   
-  <%= render :partial => 'exams/comment' %>

@@ -1,0 +1,73 @@
+<!-- ITEM ////////////////////////////////////////////////////////////////// -->
+        <div id="item">
+    		<div id="title"><%= link_to resource.title, resource %> </div>
+             
+            <div id="video"><!-- Video Insert -->
+           	  <div id="video_info">00:00:00</div>
+            </div>
+            
+            <div id="identification">
+              <ul id="identification_resource">
+				<li><a href="#">Robson Ribeiro</a></li>
+        		<li>|</li>
+				<li>hÃ¡ 1 hora atrÃ¡s</li>
+                <li>|</li>
+				<li>ExibiÃ§Ãµes(4)</li>
+			  </ul>
+            </div>
+            
+            <div id="description">
+            	<%= resource.description %>  
+			</div>
+            
+            <div id="actions">
+              <ul id="actions_resource">
+				<li><a href="#" class="share">Compartilhar</a></li>
+        		<li>|</li>
+				<li><a href="#" class="favorites">Favoritos</a></li>
+                <li>|</li>
+				<li><a href="#" class="download">Download</a></li>
+                <li>|</li>
+				<li><a href="#" class="comments">ComentÃ¡rios(30)</a></li>
+			  </ul>
+            </div>
+            
+            <div id="ratting">
+             	
+				<!--
+				<ul id="ratting_menu">
+					<li><img src="img/icon_star_on.png" /></li>
+        			<li><img src="img/icon_star_on.png" /></li>
+					<li><img src="img/icon_star_on.png" /></li>
+					<li><img src="img/icon_star_off.png" /></li>
+					<li><img src="img/icon_star_off.png" /></li>
+                    <li class="evaluation_rating">AvaliaÃ§Ãµes(30)</li>
+				</ul>
+				-->
+				<%= ratings_for resource, :static %>
+            </div>
+            
+    	</div>
+        <!-- ITEM ////////////////////////////////////////////////////////////////// -->
+
+
+<div id="resource_<%= resource.id %>" style="height: 120px; background: #efefef; margin-bottom: 15px; padding: 5px;">
+<b><%= link_to resource.title, resource %>  </b> <%= ratings_for resource, :static %> <BR>
+<%= resource.description %>  
+<% if resource.video?  %>-
+<%= resource.media_content_type %> <%= (resource.state.eql?("converted")) ? "" : "- Estado: " + resource.state %>
+<% end%>
+ <BR><BR>
+
+<% if (action_name == 'index' and @user ) %>
+
+<%= link_to 'Editar', edit_resource_path(resource) %> |
+<%= link_to 'Remover', resource, :confirm => 'Are you sure?', :method => :delete %>
+  	
+<% elsif (action_name == 'add') %>
+
+| <%= link_to_remote 'Adicionar', :url => { :controller => :exams, :action => :add_resource, :resource_id => resource.id }, 
+						:before => "Element.show('spinner');",
+        				:success => "Element.hide('spinner');" %>
+<% end %>
+</div>

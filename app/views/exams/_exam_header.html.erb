@@ -1,0 +1,26 @@
+<div id="item_exame">
+		<!--
+    	<div id="title_video">
+        	<ul id="titlevideo_menu">
+        		<li><a href="#" class="title_resource"><%= session[:exam].name %></a></li>
+        	</ul>
+        </div>
+		-->
+        <div id="identification1">
+        	<ul id="identification_resource1">
+				<li><a href="#">Robson Ribeiro</a></li>
+        		<li>|</li>
+				<li><%= time_ago_in_words(exam.created_at) %></li>
+            	<li>|</li>
+				<li>Questões(<%= exam.questions.length %>)</li>
+			</ul>
+        </div>
+         <div id="description_video"> <%= exam.description %></div>
+         <div id="identification1">
+        	<ul id="identification_resource1">
+				<li><strong>Categoria:</strong> Português</li>
+        		<li>|</li>
+				<li><strong>Tags:</strong> <%= exam.tag_list %></li>
+			</ul>
+         </div>
+  </div>

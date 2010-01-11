@@ -1,0 +1,202 @@
+<script>
+	
+	var loginBoxVisible = true;
+	function toggleLoginSignupBox(){
+		
+		if (loginBoxVisible) {
+			document.getElementById('box_login').style.display = 'none';
+			document.getElementById('box_cadastro').style.display = 'none';
+			document.getElementById('box_signup').style.display = 'block';
+		} else {
+			document.getElementById('box_login').style.display = 'block';
+			document.getElementById('box_cadastro').style.display = 'block';
+			document.getElementById('box_signup').style.display = 'none';
+		}
+		loginBoxVisible = !loginBoxVisible;
+	}
+	
+	
+</script>
+
+<div id="all_content2">
+<div id="col_content">
+	<div id="breadcrumbs"><a href="#">home</a></div>
+    <div id="tree_navigation"></div>
+<!-- LISTAGEM RECURSO ############################################################################################################################################## -->
+    <div id="filter_bar">
+    <span class="title_list">MAIS RESCENTES</span>
+    <!--<span class="title_filter">FILTRAR POR:</span>
+      <select name="select" id="select">
+        <option selected="selected">Selecione:</option>
+        <option>Aulas - Video</option>
+        <option>Video</option>
+        <option>Audio</option>
+        <option>Exames</option>
+      </select>-->
+      </div>
+    <div id="all_list">
+    	
+		
+		<% 3.times do %>
+    	<!-- ITEM ////////////////////////////////////////////////////////////////// -->
+        <div id="item">
+    		<div id="title"><a href="#">Português - Conjunções</a></div>
+             
+            <div id="video"><!-- Video Insert -->
+           	  <div id="video_info">00:00:00</div>
+            </div>
+            
+            <div id="identification">
+              <ul id="identification_resource">
+				<li><a href="#">Robson Ribeiro</a></li>
+        		<li>|</li>
+				<li>há 1 hora atráss</li>
+                <li>|</li>
+				<li>Exibições(4)</li>
+			  </ul>
+            </div>
+            
+            <div id="description">Descricao do video aula, o que vai ser passado para o alunos, conteudo da aula e outra coisas mais significantes para seu aprendizado
+            </div>
+            
+            <div id="actions">
+              <ul id="actions_resource">
+				<li><a href="#" class="share">Compartilhar</a></li>
+        		<li>|</li>
+				<li><a href="#" class="favorites">Favoritos</a></li>
+                <li>|</li>
+				<li><a href="#" class="download">Download</a></li>
+                <li>|</li>
+				<li><a href="#" class="comments">Comentários(30)</a></li>
+			  </ul>
+            </div>
+            
+            <div id="ratting">
+             	<ul id="ratting_menu">
+					<li><img src="images/icon_star_on.png" /></li>
+        			<li><img src="images/icon_star_on.png" /></li>
+					<li><img src="images/icon_star_on.png" /></li>
+					<li><img src="images/icon_star_off.png" /></li>
+					<li><img src="images/icon_star_off.png" /></li>
+                    <li class="evaluation_rating">Avaliações(30)</li>
+				</ul>
+            </div>
+            
+    	</div>
+		
+		<% end %>
+        <!-- ITEM ////////////////////////////////////////////////////////////////// -->
+    </div>
+    <!-- LISTAGEM RECURSO ############################################################################################################################################## -->
+    
+<!-- PAGINACAO ##################################################################################################################################################### -->
+    <div id="pagination" align="center">
+    	<ul id="pagination_number">
+    		<li><a href="" class="nav">Ver todos ></a></li>
+            <!--<li><a href="" class="number">1</a><li>
+            <li><a href="" class="number">2</a><li>
+            <li><a href="" class="number">3</a><li>
+            <li><a href="" class="number">4</a><li>
+            <li><a href="" class="number">5</a><li>
+            <li><a href="" class="nav">PrÃ³ximo ></a><li>-->
+    	</ul>
+    </div>
+<!-- PAGINACAO ##################################################################################################################################################### -->
+</div>
+
+<!-- COLUNA DIREITA ################################################################################################################################################ -->
+<div id="col_box2">
+
+
+	<% if not logged_in? %>
+<!-- LOGIN ///////////////////////////////////////////////////////////////////////////////////// -->
+        
+	<div id="box_login">
+		<% form_tag sessions_path, :class => 'MainForm' do %>
+    	<div id="box_top_login">ACESSE AGORA</div>  
+        <div id="box_list_login">
+        	<label>Login:</label><br />
+			<%= text_field_tag 'login', nil, :size => 25, :class => 'edit_login_imput' %>
+			<br /><br />
+        	<label>Senha:</label><br />	
+			<%= password_field_tag 'password', nil, :size => 25, :class => 'edit_login_imput' %>
+			<br /><br />
+			<%= check_box_tag 'remember_me' %> <label>Lembrar-me</label> <br />	
+			<div id="box_list_login" align="center">
+				<!-- <a href="#" class="bt_login">Enviar</a> -->
+				 <%= submit_tag :log_in.l, :class => 'bt_login' %>
+			</div>
+            <div id="box_list_login" align="center">
+            	Esqueceu <%= link_to "login", forgot_username_url %> ou <%= link_to "senha", forgot_password_url %>?
+			</div>
+        </div>
+		<% end %>
+    </div>
+	
+<!-- LOGIN ///////////////////////////////////////////////////////////////////////////////////// -->
+
+<!-- CADASTRO ///////////////////////////////////////////////////////////////////////////////////// -->
+	<div id="box_signup" style="display: none;">
+		<%- form_for :user, :url => users_path, :html => {:class => 'MainForm'} do |f| %>
+	
+    	<div id="box_top_login">CADASTRO</div>  
+        
+		<div id="box_list_login">
+        	
+			<label>Login:</label><br />
+			 <%= f.text_field :login, :size => 25, :class => 'edit_login_imput' %>
+			<br /><br />
+			
+			<label>E-mail:</label><br />
+			<%= f.text_field :email, :size => 25, :class => 'edit_login_imput' %>
+			<br /><br />
+        	
+			<label>Data de nascimento:</label><br />
+			<%= date_select :user, :birthday, {:start_year => 1926, :end_year => (Time.now.year - 13)}%>
+			<br /><br />
+        	
+			 <% if AppConfig.require_captcha_on_signup %>
+          		<%= recaptcha_tags %>
+        	 <% end %>
+			 
+			<label>Senha:</label><br />
+			<%= f.password_field :password, :size => 25, :class => 'edit_login_imput' %>
+			<br /><br />
+			
+			<label>Confirme a senha:</label><br />
+			<%= f.password_field :password_confirmation, :size => 25, :class => 'edit_login_imput' %>
+			<br /><br />
+
+			<div id="box_list_login" align="center">
+				<!-- <a href="#" class="bt_login">Enviar</a> -->
+				 <%= submit_tag :sign_up.l, :class => 'bt_login' %> 
+				 <a href="#" class="link_01" onclick="toggleLoginSignupBox();">ou retornar ao login</a>
+			</div>
+			
+           
+        </div>
+		
+		<% end %>
+		
+     </div>
+
+
+	<div id="box_cadastro">
+    	<div id="box_top_cadastro">CADASTRE-SE</div>
+        <div id="box_list_cadastro"><a href="#" class="link_01" onclick="toggleLoginSignupBox();">Para ter acesso aos recusos do Redu é necessário estar cadastrado.</a></div>
+	</div>
+<!-- CADASTRO ///////////////////////////////////////////////////////////////////////////////////// -->
+	<% end %>
+	
+<!-- BOX MOVIMENTACAO RESCENTE ///////////////////////////////////////////////////////////////////////////////////// -->
+	
+<!-- BOX MOVIMENTACAO RESCENTE ///////////////////////////////////////////////////////////////////////////////////// -->
+
+    <!--<div id="friends"></div>
+    <div id="workspace"></div>
+    <div id="mytasks"></div>-->
+</div>
+<!--<div id="title_page">Assistindo Aula</div>-->
+</div>
+
+

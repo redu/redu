@@ -30,9 +30,8 @@ function removeRowFromList(rowId){
    
    <td><%= link_to 'Editar', edit_question_path(question) %> </td>
     <td>	<%= link_to 'Remover', question, :confirm => 'Are you sure?', :method => :delete %></td>
-<% end %>	
 
-<% if (action_name == 'add' and @user ) %>
+<% elsif (action_name == 'add' and current_user ) %>
   <td>		
 <%= link_to_remote 'Adicionar', :url => { :controller => :exams, :action => :add_question, :question_id => question.id }, 
 						:before => "Element.show('spinner')",

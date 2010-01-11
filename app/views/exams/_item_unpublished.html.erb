@@ -1,0 +1,33 @@
+<!-- ITEM ////////////////////////////////////////////////////////////////// -->
+        <div id="item">
+    		<div id="title"><%= link_to exam.name, exam %></div>
+            
+            <div id="identification">
+              <ul id="identification_resource">
+				<li><%= link_to exam.owner.login, exam.owner %></li>
+        		<li>|</li>
+				<li><%= time_ago_in_words(exam.created_at) %></li>
+                <li>|</li>
+				<li><%=h exam.questions.length %> Questões</li>
+			  </ul>
+            </div>
+            
+            <div id="description"><%= exam.description %>
+            </div>
+			
+			<div id="identification">
+              <ul id="identification_resource">
+				<li><strong>Categoria:</strong> Matemática</li>
+        		<li>|</li>
+				<li><strong>Tags:</strong> <%=h exam.tag_list %></li>
+			  </ul>
+            </div>
+            
+            <div id="actions">
+              <ul id="actions_resource">
+				<li><a href="#" class="share">Publicar</a></li>
+        		
+			  </ul>
+            </div>           
+    	</div>
+

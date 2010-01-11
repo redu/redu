@@ -1,14 +1,16 @@
-<% if current_user %>
-<%= link_to 'Testes', exams_path %> | 
-<%= link_to 'Novo Teste', :action => 'new_exam' %> | 
-<!-- counters -->
-<% published_count = Exam.published.count %>
-<% unpublished_count = Exam.published.count %>
+<% published_count = Exam.published_by(current_user.id).count %>
+<% unpublished_count = Exam.unpublished_by(current_user.id).count %>
 <% done_count = current_user.exam_history.count %>
 <% questions_count = current_user.questions.count %>
 
-<%= link_to 'Testes publicados (' + published_count.to_s + ')', user_exams_path(current_user.id) %> |
-<%= link_to 'Testes não publicados (' + unpublished_count.to_s + ')', :action => 'unpublished' %> |
-<%= link_to 'Testes realizados (' + done_count.to_s + ')', :action => 'exam_history' %> |
-<%= link_to 'Minhas questões (' + questions_count.to_s + ')', user_questions_path(current_user.id) %>
-<% end %>
+<div id="task_bar_exames">
+	<%= link_to 'Novo Exame', :action => 'new' %> | 	
+	<%= link_to 'Todos', exams_path %> | 
+	
+	<%= link_to 'Publicados (' + published_count.to_s + ')', published_user_exams_path(current_user.id) %> |
+	<%= link_to 'Não publicados (' + unpublished_count.to_s + ')', unpublished_user_exams_path(current_user.id) %> |
+	<%= link_to 'Histórico (' + done_count.to_s + ')', history_user_exams_path(current_user.id) %> |
+	<%= link_to 'Minhas questões (' + questions_count.to_s + ')', user_questions_path(current_user.id) %>
+	
+</div>
+	

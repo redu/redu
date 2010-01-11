@@ -32,19 +32,14 @@ function sort(selector){
 
 <%= select_tag(:sort_by, options_for_select([['Data', 1], ['Dificuldade', 2], ['Realizações', 3], ['Título', 4], ['Categoria', 5]], 1), :onchange => "sort(this)") %>
 
-<span id = "ASC_unselected" style="display:inline;">
-<a href = "#" onclick="order(1)">ASC</a>
+<span id = "asc" style="display:none;">
+<a href = "#" onclick="order(1)"><%= image_tag("icons/sort_asc.gif", :alt => 'Crescente', :border => '0') %></a>
 </span>
-<span id = "ASC_selected" style="display:none;">
-ASC
+<span id = "dsc" style="display:inline;">
+<a href = "#" onclick="order(2)"><%= image_tag("icons/sort_desc.gif", :alt => 'Decrescente', :border => '0') %></a>
 </span>
 
-<span id = "DESC_unselected" style="display:inline;">
-<a href = "#" onclick="order(2)">DESC</a>
-</span>
-<span id = "DESC_selected" style="display:none;">
-DESC
-</span>
+
 <%= image_tag("spinner.gif",
               :align => "absmiddle",
               :border => 0,

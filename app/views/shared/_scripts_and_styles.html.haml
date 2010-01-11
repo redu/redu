@@ -23,7 +23,7 @@
   = javascript_include_tag 'swfupload'
   = javascript_include_tag 'uploader'
 
-- if (controller_name == 'exams' && (action_name == 'new_exam' || action_name == 'edit'))
+- if (controller_name == 'exams' && (action_name == 'new' || action_name == 'edit'))
   = javascript_include_tag "dragdrop"
 
 
@@ -36,7 +36,7 @@
 
   
 
-= stylesheet_link_tag 'reset-fonts-grids.css'
+/= stylesheet_link_tag 'reset-fonts-grids.css'
 = stylesheet_link_tag 'screen'
 = stylesheet_link_tag 'print', :media => 'print'
 

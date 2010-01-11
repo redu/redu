@@ -1,0 +1,98 @@
+<div id="header">
+<div id="header_content">	
+	<div id="logo"><a href="<%=application_url%>">
+		  <%= image_tag("logo_redu.png", :alt => 'Início', :height => '77', :width => '179', :border => '0') %>
+		</a></div>
+    
+	<div id="menu_container">
+    <ul id="secundary_menu">
+    	
+		<%  if logged_in? %>
+   			 <!-- render :partial => 'shared/user_menu' -->
+			<li><strong><a href="<%=user_path(current_user)%>"><%=current_user.login%></a></strong></li>
+        	<li>|</li>
+			<li><a href="#">convidar</a></li>
+			<li><a href="<%=user_messages_path(current_user)%>">mensagens(<%=current_user.unread_message_count%>)</a></li>
+			<li><a href="#">favoritos</a></li>
+			<li><a href="<%=edit_account_user_path(current_user)%>">configurações</a></li>
+			<li><a href="<%=logout_path%>">sair</a></li>
+			 
+		<% else %> 
+             <li><%=:welcome_message.l(:login_link => (link_to :log_in.l, login_path), :signup_link => (link_to :sign_up.l, signup_path))%></li>
+	    <% end %>
+		
+	</ul>
+	</div>
+
+<div id="search">
+<div id="edit_search"><input type="text" size="28" class="edit_search_imput"/>
+</div>
+<div id="button_base"><a href="#">
+	 <%= image_tag("btn_search.gif", :border => '0') %>
+	</a></div>
+
+<!--
+<div id="seletors">
+  <input type="radio" name="radio" id="radio" value="radio" />
+  Aulas  
+  <input type="radio" name="radio" id="radio2" value="radio" />
+  Exames</div>
+  -->
+
+</div>
+
+<!-- MENU Principal ****************************************** -->
+<div id="info">
+
+<div id="menu">
+	<ul class="level1">
+		<li class="level1-li"><a class="level1-a" href="<%=application_url%>">INÍCIO</a></li>
+
+		<li class="level1-li"><a class="level1-a fly" href="<%=courses_path%>">APRENDER<!--[if gte IE 7]><!--></a><!--<![endif]-->
+		<!--[if lte IE 6]><table><tr><td><![endif]-->
+		<div>
+			<ul>
+				<li><a href="<%=courses_path%>">AULAS</a></li>
+                <li> | </li>  
+
+				<li><a href="<%=exams_path%>">EXAMES</a></li>
+                <li> | </li>
+				<li><a href="<%=resources_path%>">MATERIAIS</a></li>
+			</ul>
+		</div>
+		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+		</li>
+		<li class="level1-li"><a class="level1-a fly" href="<%=schools_path%>">REDES<!--[if gte IE 7]><!--></a><!--<![endif]-->
+		<!--[if lte IE 6]><table><tr><td><![endif]-->
+		<div>
+			<ul>
+				<li><a href="#url">TODOS</a></li>
+                <li> | </li>
+				<li><a href="#url">MEUS</a></li>
+		<li> | </li>
+				<li><a href="#url">CRIAR</a></li>
+			</ul>
+		</div>
+		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+		</li>
+		<li class="level1-li left"><a class="level1-a fly" href="#url">ENSINAR<!--[if gte IE 7]><!--></a><!--<![endif]-->
+		<!--[if lte IE 6]><table><tr><td><![endif]-->
+		<div>
+			<ul>
+				<li><a href="<%= new_course_path %>">AULA</a></li>
+                <li> | </li>
+				<li><a href="<%= new_exam_path %>">EXAME</a></li>
+		<li> | </li>
+				<li><a href="<%= new_resource_path %>">MATERIAL</a></li>
+			</ul>
+		</div>
+		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+		</li>
+	</ul>
+</div>
+</div><!-- end of info -->
+
+<!-- MENU PRINCIPAL ****************************************** -->
+
+</div>
+</div>

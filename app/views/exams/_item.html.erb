@@ -1,28 +1,43 @@
-<div id="exam_<%= exam.id %>" style="height: 120px; background: #efefef; margin-bottom: 15px; padding: 5px;">
-<b><%= link_to exam.name, exam %> </b>  <BR>
- <%=h exam.questions.length %> questões -   Realizado <%=h exam.done_count %> vezes , 
- Criado <%= time_ago_in_words(exam.created_at) %>
-<b>Author:</b>
-  <%=h exam.owner.login %>
- <BR><b>Tags:</b>
-  <%=h exam.tag_list %>
- <BR>
- <p>
-  Dificuldade: <%=h (exam.level == 1) ? "Iniciante" : ((exam.level == 2) ? "Intermediário" : "Avançado") %> 
-</p><BR><BR>
+<!-- ITEM ////////////////////////////////////////////////////////////////// -->
+        <div id="item">
+    		<div id="title"><%= link_to exam.name, exam %></div>
+            <div id="average">
+            	<div id="title_average" align="center">MÉDIA</div>
+                <div id="number_average" align="center">88%</div>
+                <div id="title_average" align="center">Realizações(<%=h exam.done_count %>)</div>
+                <div id="difficulty_level" align="center"><%=h (exam.level == 1) ? "Iniciante" : ((exam.level == 2) ? "Intermediário" : "Avançado") %></div>
+            </div> 
+            <div id="identification">
+              <ul id="identification_resource">
+				<li><%= link_to exam.owner.login, exam.owner %></li>
+        		<li>|</li>
+				<li><%= time_ago_in_words(exam.created_at) %></li>
+                <li>|</li>
+				<li><%=h exam.questions.length %> Questões</li>
+			  </ul>
+            </div>
+            
+            <div id="description"><%= (exam.description[0..250] + "...") if exam.description.length > 250 %>
+            </div>
+			
+			<div id="identification">
+              <ul id="identification_resource">
+				<li><strong>Categoria:</strong> Matemática</li>
+        		<li>|</li>
+				<li><strong>Tags:</strong> <%=h exam.tag_list %></li>
+			  </ul>
+            </div>
+            
+            <div id="actions">
+              <ul id="actions_resource">
+				<li><a href="#" class="share">Compartilhar</a></li>
+        		<li>|</li>
+				<li><a href="#" class="favorites">Favoritos</a></li>
+                <li>|</li>
+				<li><a href="#" class="download">Download</a></li>
+                <li>|</li>
+				<li><a href="#" class="comments">Comentários(<%= exam.comments.count %>)</a></li>
+			  </ul>
+            </div>           
+    	</div>
 
-
-
-<% if (action_name == 'index' and @user ) %>
-	<% if not exam.published %>
-		<%= link_to 'Editar', edit_exam_path(exam) %> |
-		<%= link_to 'Remover', exam, :confirm => 'Are you sure?', :method => :delete %>
-	<% end %> 	
-<% elsif (action_name == 'add') %>
-
-| <%= link_to_remote 'Adicionar', :url => { :controller => :exams, :action => :add_resource, :resource_id => resource.id }, 
-						:before => "Element.show('spinner');",
-        				:success => "Element.hide('spinner');" %>
-<% end %>
-
-</div>

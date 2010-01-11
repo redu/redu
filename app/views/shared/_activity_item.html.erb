@@ -1,0 +1,81 @@
+<div id="move_item">
+    <div id="move_foto">
+        <img src="images/foto_40x40.png" width="40" height="40" class="move_foto"/>
+    </div>
+    <div id="move_txt2">
+    	<!-- null exception?! -->
+			<%# link_to activity.user.login, user_path(activity.user)%> 
+		
+		 <%- if activity.item 
+       case activity.item_type 
+        when 'Post'%>
+          <%=:wrote_a_post.l%>
+          <%= link_to activity.item.title, user_post_path(activity.item.user, activity.item)%>
+        <%- when 'Photo'%>
+          <%=:uploaded_a_photo.l%>
+          <%= link_to image_tag(activity.item.public_filename(:thumb), :width => '50px'), user_photo_path(activity.item.user, activity.item)%>
+        <%- when 'Album'%>
+          <%=:created_an_album.l%>
+          <%= link_to activity.item.title, user_album_path(activity.item.user, activity.item)%>
+        <%- when 'Topic'%>
+          <%=:started_a_topic.l%>
+          <%-topic = activity.item%>
+          <%= link_to truncate_words(topic.title), forum_topic_path(topic.forum, topic)%>
+        <%- when 'SbPost'%>
+          <%=:added_to_a_forum_topic.l%>
+          <%- topic = activity.item.topic%>
+          <%= link_to truncate_words(activity.item.body), forum_topic_path(topic.forum, topic)%>
+        <%- when 'Comment'%>
+          <%=:left_a_comment.l%>
+          <%= link_to truncate_words(activity.item.comment), commentable_url(activity.item)%>
+        <%- when 'Favorite'%>
+          <%=:favorited.l%>
+          <%= link_to " a #{activity.item.favoritable.class.to_s.humanize.downcase}", user_favorite_path(activity.item.user, activity.item)%>
+        <%- when 'Clipping'%>
+          <%=:added_a_clipping.l%>
+          <%= link_to image_tag( activity.item.image_uri(:thumb), :width => '50px'), user_clipping_path(activity.item.user, activity.item)%>        
+        <%- when 'Invitation' %>
+          <%=:invited_friends.l %>
+        <%- when 'Event' %>
+          <%=:posted_an_event.l %>
+          <%= link_to activity.item.name, event_path(activity.item) %>
+        <%- when 'Rsvp' %>
+          <%=:rsvped_for_an_event.l %>
+          <%= link_to activity.item.event.name, event_path(activity.item.event) %>
+        <%-else %>
+          <%=render :partial => 'activities/unhandled_item', :locals => {:activity => activity} %>
+    	<%- end %>
+	
+	<% else 
+       case activity.action 
+        when 'updated_profile' %>
+          <%=:updated_their_profile.l %>
+        <%- when 'logged_in' %>
+          <%=:logged_into_the_site.l %>
+        <%- else %>
+          <%= " #{activity.action.humanize.downcase }" %>
+		<% end %>
+	
+	<% end %>
+		
+		
+    </div>
+    <div id="time">
+        <%= time_ago_in_words_or_date(activity.created_at) %>
+    </div>
+	
+	<% if logged_in? %>
+    <div id="link_respond_to_<%=activity.id%>" class="replay">
+        <a href="#" onclick="showResponseBox(<%=activity.id%>); return false;">Responder</a>
+    </div>
+	<div id="box_respond_to_<%=activity.id%>" style="display:none;">
+        	<div id="box_baseline_base"><textarea cols="27" rows="2"></textarea></div>
+			<div id="bt_send_mv" align="center"><a href="#" class="bt_send">Enviar</a></div>
+			<div id="bt_send_mv" align="center"><a href="#" onclick="hideResponseBox(<%=activity.id%>); return false;" >Cancelar</a></div>
+			
+	</div>
+	<% end %>
+	
+</div>
+
+		

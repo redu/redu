@@ -1,0 +1,135 @@
+<div id="all_content4">
+<div id="content_preview_exame">
+	<div id="breadcrumbs_video"><a href="#">home</a> > <a href="#">aprender</a> > <a href="#">exames</a>  > <a href="#"><strong><%= session[:exam].name %></strong></a></div>  
+   	<div id="title_exame"><%= session[:exam].name %></div>
+	<!-- CABEÃ‡ALHO ############################################################################################################################### -->
+
+	<%= render :partial => 'exams/exam_header', :locals => {:exam => session[:exam]} %>
+	
+	
+	<div id="clock">00:30:34</div>
+	
+	<!-- PAGINACAO ##################################################################################################################################################### -->
+    <div id="questions" align="center">
+    	<ul id="questions_number">
+            <li><a href="" class="number"><img src="img/icon_info.png" border="0" title="Instruções"/></a><li>
+            
+			
+			<% session[:exam].questions.each_index do |x| %>
+    		<% if session[:question_index] == x %>
+				<li><span class="click_number"><%= x + 1 %></span></li>
+			<% elsif session[:corrects].include?(session[:exam].questions[x]) %>
+				<li><%= link_to x + 1, {:action => :answer, :id =>  session[:exam].id, :q_index => x}, {:class => 'true_number'}%></li> 
+			<% else %>
+  				<li><%= link_to x + 1, {:action => :answer, :id =>  session[:exam].id, :q_index => x}, {:class => 'false_number'}%></li> 
+			<% end %>
+  			<% end %>
+            
+    	</ul>
+    </div>
+<!-- PAGINACAO ##################################################################################################################################################### -->
+
+<!-- ############################################################################################################################################################### -->
+    
+	<!--
+	<div id="navegador">
+    	<ul id="navegadores">
+            <li><a href="">< Anterior</a><li>
+            <li>|<li>
+            <li><a href="">PrÃ³ximo ></a><li>	
+        </ul>
+    </div> 
+	-->
+<!-- ############################################################################################################################################################### -->
+<div id="title_questions" align="left">Questão <%= session[:question_index] + 1 %>.</div> 
+<% if session[:corrects].include?(@step) %>
+<div id="flag_true" align="left">CERTO</div>      
+<% else %>
+<div id="flag_false" align="left">ERRADO</div>
+<% end %>
+
+<div id="texto_instrucoes">
+	<%= @step.statement %>
+</div>
+
+
+<% form_tag :action => :review do %>
+   <%= hidden_field_tag(:id, session[:exam].id) %>
+   <%= hidden_field_tag(:q_index, session[:q_index].to_i + 1) %>
+   <BR>
+   
+   <div id="all_respostas">
+    <% for alternative in @step.alternatives %>
+	
+	
+	<%= alternative.id %>
+      <%= radio_button_tag("answer", alternative.id, checked = false, :disabled => true) %>
+        <%= alternative.statement %><BR>
+    
+	
+	<% end %>
+	</div>
+	
+	<div id="aviso_finalizado">
+	<div id="info_justificativa">
+	  <div id="info">JUSTIFICATIVA</div>
+        <div class="txt_justificativa">
+        	<%= (@step.justification) ? @step.justification : "Sem justificativa para esta questão."  %>
+		</div>
+    </div>
+    <div id="aba"><img src="img/aba_resultado.png" width="136" height="33" /></div>
+	</div>
+
+<!-- ############################################################################################################################################################### -->   
+<div id="navegador">
+    	
+		<!--
+		<ul id="navegadores">
+            <li><a href="">< Anterior</a><li>
+            <li>|<li>
+            <li><a href="">PrÃ³ximo ></a><li>	
+        </ul>
+		-->
+		<%= button_to_function 'Anterior', 'history.back(); return false;' %>
+		|  <%= submit_tag @has_next ? "Próximo" : "Terminar Revisão"  %>
+  	<% end %> 
+		
+    </div> 
+<!-- ############################################################################################################################################################### -->
+
+<!-- PAGINACAO ##################################################################################################################################################### -->
+    <div id="questions" align="center">
+    	<ul id="questions_number">
+            <li><a href="" class="number"><img src="images/icon_info.png" border="0" title="Instruções"/></a></li>
+            	
+				
+			<% session[:exam].questions.each_index do |x| %>
+    		<% if session[:question_index] == x %>
+				<li><span class="click_number"><%= x + 1 %></span></li>
+			<% else %>
+  				<li><%= link_to x + 1, {:action => :answer, :id =>  session[:exam].id, :q_index => x}, {:class => 'number'}%></li> 
+			<% end %>
+  			<% end %>
+				
+            
+    	</ul>
+    </div>
+
+<!-- PAGINACAO ##################################################################################################################################################### -->
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

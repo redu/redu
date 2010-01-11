@@ -1,28 +1,62 @@
-<h1>Listando todos os materiais da rede (convertidos)</h1>
-<% if current_user %>
-<%= link_to "Meus Materiais", user_resources_path(current_user) %>
-<% end %>
-
-<p>
-	<div id="local_search_form">
+<div id="all_content3">
+<div id="col_content">
+	<div id="breadcrumbs"><a href="#">home</a> > <a href="#">aprender</a> > <a href="#">materiais</a></div>
+    <div id="title">MATERIAIS
+	
+	<%  if logged_in? %>
+    	<div id="task_bar_exames">
+    		<%= link_to 'Novo material', new_resource_path %> | <%= link_to "Meus Materiais", user_resources_path(current_user) %>
+		</div>
+	<% end %>
 	<%= render :partial => "resources/search" %>
 	</div>
-</p>
+	
+<!-- LISTAGEM RECURSO ############################################################################################################################################## -->
 
-<%= render :partial => "resources/sort" %>
-<hr>
+<div id="filter_bar">
+    <span class="title_list">MAIS RESCENTES</span>
+    <span class="title_filter">Ordenar:</span>
+		
+		<%= render :partial => "resources/sort" %>
+ </div>
+	  
+    <div id="all_list">
+    	
+    	<% if @resources && @resources.length > 0 %>
+ 			<%= render :partial => 'resources/item', :collection => @resources, :as => :resource %> 
+ 		<% else %>
+ 			Não há itens uploadeados ainda. <%= link_to 'Crie um agora!', :action => 'new' %>
+		<% end %>
+		
+    </div>
+<!-- LISTAGEM RECURSO ############################################################################################################################################## -->
+    
+<!-- PAGINACAO ##################################################################################################################################################### -->
+    <%= will_paginate  @resources, :prev_label => "< Anterior" ,:next_label => "Próximo >", :separator=>"|" %> 
+	
+	<div id="pagination" align="center">
+    	<ul id="pagination_number">
+    		<li><a href="" class="nav">< Anterior</a></li>
+            <li><a href="" class="number">1</a></li>
+            <li><a href="" class="number">2</a></li>
+            <li><a href="" class="number">3</a></li>
+            <li><a href="" class="number">4</a></li>
+            <li><a href="" class="number">5</a></li>
+            <li><a href="" class="nav">PrÃ³ximo ></a></li>
+    	</ul>
+    </div>
+<!-- PAGINACAO ##################################################################################################################################################### -->
+</div>
 
-<div id="local_search_results" style="min-height: 200px">
+<!-- COLUNA DIREITA ################################################################################################################################################ -->
+<div id="col_box3">
+<!-- BOX MOVIMENTACAO RECENTE ///////////////////////////////////////////////////////////////////////////////////// -->
+	<%= render :partial => 'shared/activities' %> 
 
- <% if @resources && @resources.length > 0 %>
- <%= render :partial => 'resources/item', :collection => @resources, :as => :resource %> 
- <% else %>
- Não há materiais uploadeados ainda. 
- <% end %>
-
+</div>
+<!--<div id="title_page">Assistindo Aula</div>-->
 </div>
 
 
 
-<br />
-<%= link_to 'Novo material', new_resource_path %>
+
