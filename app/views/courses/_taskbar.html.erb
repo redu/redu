@@ -1,0 +1,4 @@
+ 	<%  if logged_in? %>
+  <div id="task_bar_exames"><%= link_to 'Nova Aula', :action => 'new' %> | 
+  <%= link_to 'Minhas Aulas', published_user_courses_path(current_user.id) %></div>
+	<% end %>

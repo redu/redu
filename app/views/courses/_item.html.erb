@@ -1,0 +1,49 @@
+        <div id="item">
+    		<div id="title"><%= link_to course.name, course %></div>
+						<div id="video"><!-- Video Insert -->
+						<div id="video_info">00:00:00</div>
+						</div>
+                       
+            <div id="identification">
+              <ul id="identification_resource">
+								<li><%= link_to course.owner.login, course.owner %></li>
+										<li>|</li>
+								<li><%= time_ago_in_words(course.created_at) %></li>
+							</ul>
+            </div>
+            
+            <div id="description"><%= (course.description[0..250] + "...") if course.description.length > 250 %>
+            </div>
+			
+			<div id="identification">
+              <ul id="identification_resource">
+				<li><strong>Categoria:</strong> Matemática</li>
+        		<li>|</li>
+				<li><strong>Tags:</strong> <%= course.tag_list %></li>
+			  </ul>
+            </div>
+            
+            <div id="actions">
+              <ul id="actions_resource">
+							<li><a href="#" class="share">Compartilhar</a></li>
+						  		<li>|</li>
+							<li><a href="#" class="favorites">Favoritos</a></li>
+						          <li>|</li>
+							<li><a href="#" class="download">Download</a></li>
+						          <li>|</li>
+							<li><a href="#" class="comments">Comentários(<%= course.comments.count %>)</a></li>
+							</ul>
+            </div> 
+            
+					<div id="ratting">
+							<ul id="ratting_menu">
+							<li><img src="img/icon_star_on.png"/></li>
+									<li><img src="img/icon_star_on.png"/></li>
+							<li><img src="img/icon_star_on.png"/></li>
+							<li><img src="img/icon_star_off.png"/></li>
+							<li><img src="img/icon_star_off.png"/></li>
+									      <li class="evaluation_rating">Avaliações(30)</li>
+						</ul>
+					</div>          
+    	</div>
+

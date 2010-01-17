@@ -1,0 +1,25 @@
+<%= f.label :title %>: <br/>
+<%= f.text_field :title %> <br/><br/>
+
+<%= f.label :description %>:  <br/>
+<%= f.text_area :description, :size => "50x3" %><br/><br/>
+
+<%= f.label :tag_list %>: <br/>
+<%= f.text_field :tag_list %> <br/><br/>
+
+<%= f.radio_button :external_resource_type, :slideshare %>
+<%= f.label :external_resource_type_slideshare, "Slideshare" %>	
+<%= f.radio_button :external_resource_type, :youtube %>
+<%= f.label :external_resource_type_youtube, "Youtube" %>
+<%= f.radio_button :external_resource_type, :upload %>
+<%= f.label :external_resource_type_upload, "Upload" %><br/><br/>
+
+<%= f.label :media, "Upload de Material" %><br/>
+<%= f.file_field :media  %><br/><br/>
+
+<%= f.label :external_resource, "Material Externo (Youtube, Slideshare, etc)" %><br/>
+<%= f.text_field :external_resource  %><br/><br/>
+
+<%= f.label :published, "Público?" %><br/>
+<%= f.check_box :published  %><br/><br/>
+
