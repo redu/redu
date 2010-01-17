@@ -2,7 +2,7 @@ class Resource < ActiveRecord::Base
 
   SUPPORTED_DOCUMENTS = ['application/pdf']
 
-  SUPPORTED_AUDIO = [] # colocar mp3
+  SUPPORTED_AUDIO = ['audio/mpeg', 'audio/mp3'] # colocar mp3
 
   SUPPORTED_VIDEOS = [ 'application/x-mp4',
     'video/mpeg',
@@ -43,47 +43,45 @@ class Resource < ActiveRecord::Base
 
   SUPPORTED_EXTERNAL_RESOURCES = ['youtube']
 
+	# Plugins
   acts_as_commentable
-
+  acts_as_taggable
   ajaxful_rateable :stars => 5
+  validation_group :external, :fields => [:title, :external_resource, :external_resource_type]
+  validation_group :uploaded, :fields => [:title, :media]
 
-  has_and_belongs_to_many :exams
-	has_many :course_resource_association
-	has_many :courses, :through => :course_resource_association
+	# Relationships
+  has_and_belongs_to_many :courses
   has_and_belongs_to_many :subjects
-  #has_and_belongs_to_many :workspaces
+  has_and_belongs_to_many :exams
   belongs_to :owner, :class_name=> "User", :foreign_key => "owner"
-
-  # validates_presence_of :name
-  belongs_to :resourceable, :polymorphic => true
-  has_attached_file :media,
-  :if => :external_resource.nil?
-
-  validates_presence_of :external_resource, :if => "media.nil?"
-  validates_presence_of :title
-
   belongs_to :resourceable, :polymorphic => true
 
-  # Paperclip Validations
-  # paperclip validators doesn't accept conditional validations
-  # so we need this hack.
-  if :external_media.nil?
-    validates_attachment_presence :media
-    validates_attachment_content_type :media,
-    :content_type => (SUPPORTED_VIDEOS + SUPPORTED_AUDIO + SUPPORTED_DOCUMENTS)
-    validates_attachment_size :media,
-    :less_than => 10.megabytes
-  end
+	# Callbacks
+	before_validation :enable_correct_validation_group
+	after_create :convert
+	
+	# Validations
+  validates_presence_of :title, :external_resource_type, :external_resource
+  validates_inclusion_of :external_resource_type, :in => SUPPORTED_EXTERNAL_RESOURCES
+  has_attached_file :media
+  validates_attachment_presence :media
+  validates_attachment_content_type :media,
+ 	 :content_type => (SUPPORTED_VIDEOS + SUPPORTED_AUDIO + SUPPORTED_DOCUMENTS)
+  validates_attachment_size :media,
+ 	 :less_than => 10.megabytes
 
+	named_scope :published, :conditions => ['published = ?', true], :include => :owner
+	
   # Acts as state machine plugin
-  acts_as_state_machine :initial => :pending,
-  :if => :external_resource.nil?
+  acts_as_state_machine :initial => :pending
   state :pending
   state :converting
   #state :converted, :enter => :upload, :after => :set_new_filename
   state :converted, :after => :set_new_local_filename
   state :error
 
+	
   event :convert do
     transitions :from => :pending, :to => :converting
   end
@@ -98,24 +96,35 @@ class Resource < ActiveRecord::Base
 
   # This method is called from the controller and takes care of the converting
   def convert
-    self.convert!
-    success = system(convert_command)
+		if video?
+		  self.convert!
+		  success = system(convert_command)
 
-    if success && $?.exitstatus == 0
+		  if success && $?.exitstatus == 0
 
-      self.converted!
+		    self.converted!
 
-    else
-      self.failure!
-    end
+		  else
+		    self.failure!
+		  end
+		else
+			# audio or application
+			self.convert!
+			self.converted!
+			self.save!
+		end
   end
 
   def video?
     SUPPORTED_VIDEOS.include?(self.media_content_type)
   end
+  
+  def audio?
+  	SUPPORTED_AUDIO.include?(self.media_content_type)
+  end
 
   def type
-    if video? then
+    if video?
       self.media_content_type
     else
       self.external_resource_type
@@ -126,6 +135,16 @@ class Resource < ActiveRecord::Base
     SUPPORTED_EXTERNAL_RESOURCES
   end
 
+	# Inspects object attributes and decides which validation group enable
+	def enable_correct_validation_group
+	
+		if self.external_resource_type != "upload"
+			self.enable_validation_group :external
+		else
+			self.enable_validation_group :uploaded
+		end 
+		
+	end
   protected
 
   def convert_command

@@ -1,22 +1,24 @@
-<h1>Listando Aulas</h1>
+<div id="all_content3">
+<div id="col_content">
+	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">aprender</a> > <a href="#">aulas</a> </div>
+ 	<div id="title">AULAS
+	<%= render :partial => "courses/taskbar" %>
+	</div>
+	<div id="filter_bar">
+		
+	    <span id="title_list" class="title_list"> MAIS RECENTES</span>
+	    <span class="title_filter">Ordenar:</span>
+	      
+    </div>
+    <div id="all_list">
+    	
+		<% if @courses && @courses.length > 0 %>
+ 			<%= render :partial => 'courses/item', :collection => @courses, :as => :course %> 
+ 		<% else %>
+ 			Não há exames publicados ainda. <%= link_to 'Crie um agora!', :action => 'new' %>
+		<% end %>
+    	
+    </div> <!-- fim da listagem --> 
 
-<table>
-  <tr>
-    <th>Nome</th>
-    <th>Recursos</th>
-  </tr>
-
-<% @courses.each do |course| %>
-  <tr>
-    <td><%=h course.name %></td>
-	<td> <%= ratings_for course, :static %></td>
-    <td><%= link_to 'Visualizar', course %></td>
-    <td><%= link_to 'Editar', edit_course_path(course) %></td>
-    <td><%= link_to 'Deletar', course, :confirm => 'Você tem certeza?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'Nova Aula', new_course_path %>
+</div>
+</div>

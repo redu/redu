@@ -1,64 +1,17 @@
-<h1>New resource</h1>
+<div id="all_content3">
+<div id="col_content">
+	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">aprender</a> > <a href="#">materiais</a> </div>
+ 	<div id="title">MATERIAIS
+	<%= render :partial => "resources/taskbar" %>
 
-
-<style type="text/css">
-	.hide { display: none; }
-</style>
-
-<% form_for @resource, :html => { :multipart => true } do |f| %>
-  <%= f.error_messages %>
-
- <p>
-   <%= f.label :title %>: 
-   <%= f.text_field :title %> 
-   </p>
-   <p>
-   <%= f.label :description %>:  <%= f.text_area :description, :size => "50x3" %>
-   </p>
-
-   <fieldset>
-   	<legend>Tipo de material</legend>
-   	<%= f.radio_button :external_resource_type, "media" %>
-   	<%= f.label :external_resource_type, "Media" %>
-   	<% @resource.supported_external_resources.each do |e| %>
-   		<%= f.radio_button :external_resource_type, e %>
-   		<%= f.label :external_resource_type, e %>
-   	<% end %>
-		
-   	<br />
-   
-   	<label class="upload">Video <%= f.file_field :media, :class => "resources"  %> </label>
-    <label class="import">Youtube	<%= f.text_field :external_resource, :class => "resources"  %></label>
-   
-    </fieldset>
-     <%= f.submit 'Submit' %> 
-<% end %>
-
-<script type="text/javascript">
-	$$("label.import")[0].hide();
-	$('new_resource').getInputs('radio', 'resource[external_resource_type]').each(
-		function(e){
-			e.observe('click', changeMediaType);
-		}
-	);
-
-	function changeMediaType(event){
-		/*$$("input.resources").each(function(e){
-			e.ancestors()[0].toggleClassName("hide");
-		});*/
-		
-		var element = Event.element(event);
-		
-		if (element.getValue() == "media"){
-			$$("label.upload")[0].show();
-			$$("label.import")[0].hide();
-		}else{
-			$$("label.upload")[0].hide();
-			$$("label.import")[0].show();			
-		}
-		
-	}
-
-</script>
+	</div>
+	<% form_for @resource, :html => { :multipart => true } do |f| %>
+	<%= f.error_messages %>
+	<%= render :partial => "resources/form", :locals => {:f => f}%>
+	<%= f.submit 'Adicionar' %> 
+	<% end %>
 
 <%= link_to 'Back', resources_path %>
+
+</div>
+</div>

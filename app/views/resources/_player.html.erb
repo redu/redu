@@ -1,22 +1,10 @@
-<% if  @resource.state.eql?("converted") %>
- 
-  <div id="player">
-Você precisa instalar o <%= link_to 'Flash Player', 'http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash' %> para ver este vídeo.</div>
-<script type="text/javascript">
- var so = new SWFObject('/flash/player.swf', 'mpl', '480', '360', '8');
-
-  
-  so.addParam('allowscriptaccess', 'always');
-  so.addParam('allowfullscreen', 'true');
-  so.addVariable('height', '360');
-  so.addVariable('width', '480');
-  so.addVariable('type', 'video');
-  so.addVariable('file', encodeURIComponent('<%= @resource.media.url %>'));
-  so.write('player');
-</script>
-
+<% if resource.video? %>
+	<%= render :partial => 'resources/video', :locals => {:resource => resource} %>
+<% elsif resource.audio? %>
+	<%= render :partial => 'resources/audio', :locals => {:resource => resource} %>
+<% elsif resource.type.eql?('youtube') %>
+	<%= render :partial => "resources/youtube", :locals => {:resource => resource} %>
 <% else %>
-
-<%= (@resource.state.eql?("converting")) ? 'O video esta sendo processado' : 'O video nao pode ser processado' %>
-
+	<%= link_to "Download", resource.media.url %>
 <% end %>
+

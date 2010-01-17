@@ -11,58 +11,12 @@ class CoursesController < BaseController
       page.visual_effect :highlight, id
     end
   end
-=begin  
-  def put_comment
-    
-    if current_user
-      
-      thecomment = params[:comment]
-      @commentable = Course.find(params[:id])
-      @commentable.comments.create(:comment => thecomment, :user => current_user)
-      
-    else
-      flash[:error] = 'Usuário não logado'
-    end
-    
-    respond_to do |format|
-      format.html { redirect_to(@commentable) }
-    end
-    
-  end
-
-  # Verificar as validações do model 'comment'
-  def add_comment
-    
-    @course = Course.find(params[:id])
-    @comment = Comment.new
-    
-    if @course
-      
-      @course.comments << @comment
-      
-      if @course.save
-        flash[:notice] = 'Comentário adicionado.'
-      else
-        flash[:error] = 'Algum problema aconteceu!'
-      end
-      
-    else
-      flash[:error] = 'Aula inválida.'
-    end
-    
-    respond_to do |format|
-      format.html { redirect_to(@course) }
-    end
-    
-  end
-=end 
   
   # Lista todos os recursos existentes para relacionar com
   def list_resources
     @resources = Resource.all
     @course = params[:id]
   end
-  
   
   # Adicionar um recurso na aula.
   def add_resource
@@ -120,7 +74,7 @@ class CoursesController < BaseController
   # GET /courses/new
   # GET /courses/new.xml
   def new
-		redirect_to :controller => 'create_course', :action => 'step1'
+		@course = Course.new
   end
   
   # GET /courses/1/edit
@@ -128,46 +82,20 @@ class CoursesController < BaseController
     @course = Course.find(params[:id])
   end
   
-=begin
-  def check_name_subject(course)
-    @subjects = Subject.all
-    while not @subjects.nil?
-    course 
-  end
-=end  
-  
   # POST /courses
   # POST /courses.xml
   def create
+    puts params[:course].inspect
     
-    # @course = course.create!(params[:course])
-    
-#modificações feitas em 12 de dez
-    
+		params[:course][:owner] = current_user
+		params[:course][:main_resource_attributes][:owner] = current_user
+		
+		puts params[:course].inspect
     @course = Course.new(params[:course])
-    @course.owner = current_user
     
-    if params[:price_user]
-      @price_user = Courseprice.new  
-      @price_user.course = @course
-      @price_user.key_number = 1
-      @price_user.price = params[:price_user].to_f
-      @price_user.save
-    end      
-    
-    if params[:price_500]
-      @price_500 = Courseprice.new  
-      @price_500.course = @course
-      @price_500.key_number = 500
-      @price_500.price = params[:price_500].to_f
-      @price_500.save
-    end 
-    
-    #fim das modificações
-    
-    
-    
+    puts @course.resources.inspect
     respond_to do |format|
+    	
       if @course.save
         flash[:notice] = 'Aula foi criada com sucesso.'
         format.html { redirect_to(@course) }
@@ -184,22 +112,7 @@ class CoursesController < BaseController
   def update
     @course = Course.find(params[:id])
     
-    if params[:price_user]
-      @price_user = Courseprice.new  
-      @price_user.course = @course
-      @price_user.key_number = 1
-      @price_user.price = params[:price_user].to_f
-      @price_user.save
-    end      
-    
-    if params[:price_500]
-      @price_500 = Courseprice.new  
-      @price_500.course = @course
-      @price_500.key_number = 500
-      @price_500.price = params[:price_500].to_f
-      @price_500.save
-    end
-    
+    puts params[:course].inspect
     respond_to do |format|
       if @course.update_attributes(params[:course])
         flash[:notice] = 'Curso atualizado com sucesso.'
@@ -244,8 +157,19 @@ class CoursesController < BaseController
       flash[:notice] = "A aula foi comprada!"
       redirect_to @course
     end
-    
-    
+  end
+  
+  def published
+  	@courses = Course.paginate(:conditions => ["owner = ? AND published = 1", params[:user_id]], 
+  		:include => :owner, 
+  		:page => params[:page], 
+  		:order => 'updated_at DESC', 
+  		:per_page => AppConfig.items_per_page)
+  		
+			respond_to do |format|
+				format.html #{ render :action => "my" }
+				format.xml  { render :xml => @resources }
+			end
   end
   
 end

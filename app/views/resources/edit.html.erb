@@ -1,22 +1,18 @@
-<h1>Editing resource</h1>
+<div id="all_content3">
+<div id="col_content">
+	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">aprender</a> > <a href="#">materiais</a> </div>
+ 	<div id="title">EDITAR MATERIAL
+	<%= render :partial => "resources/taskbar" %>
 
-<% form_for(@resource) do |f| %>
+	</div>
+
+<% form_for @resource do |f| %>
   <%= f.error_messages %>
-
-  <p>
-    <%= f.label :title %><br />
-    <%= f.text_field :title %>
-  </p>
-  <% if not @resource.external_resource.nil? %>
-  	<p>
-  	<%= f.label :external_resource %>
-  	<%= f.text_field :external_resource %>
-  	</p>
-  <% end %>
-  <p>
-    <%= f.submit 'Update' %>
-  </p>
+	<%= render :partial => "resources/form", :locals => {:f => f} %>
+	<%= f.submit "Editar" %>
 <% end %>
 
 <%= link_to 'Show', @resource %> |
 <%= link_to 'Back', resources_path %>
+</div>
+</div>

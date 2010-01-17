@@ -99,6 +99,7 @@ class ResourcesController < BaseController
   # GET /resources/new.xml
   def new
     @resource = Resource.new
+		puts :current_user
 
     respond_to do |format|
       format.html # new.html.erb
@@ -114,45 +115,19 @@ class ResourcesController < BaseController
   # POST /resources
   # POST /resources.xml
   def create
-  
-    # there is a better place?
-  	if params[:resource][:external_resource_type] == "media" then
-  		params[:resource][:external_resource] = nil
-  	else
-  		params[:resource][:media] = nil
-  	end
-  	
     @resource = Resource.new(params[:resource])
     @resource.owner = current_user
-    
+
     respond_to do |format|
-      if @resource.audio?
-        puts "entrou linha 130"
-          @resource.state = "converted"
-      else
-           puts "nao entrou linha 130"
-      end  
-      
-      if @resource.save!
-      	if @resource.video?
-      		@resource.convert
-      	end
+      if @resource.save
 				flash[:notice] = 'Resource was successfully created.'
 		    format.html { redirect_to(@resource) }
 		    format.xml  { render :xml => @resource, :status => :created, :location => @resource }
+			else
+	      format.html { render :action => 'new' }
+	      format.xml  { render :xml => @resource.errors, :status => :unprocessable_entity }
       end
-			"""
-      if @resource.save!
-        if @resource.video?
-          @resource.convert
-        end
-        flash[:notice] = 'Resource was successfully created.'
-        format.html { redirect_to(@resource) }
-        format.xml  { render :xml => @resource, :status => :created, :location => @resource }
-      else
-        format.html { render :action => 'new' }
-        format.xml  { render :xml => @resource.errors, :status => :unprocessable_entity }
-      end """
+
     end
   end
 
@@ -183,5 +158,18 @@ class ResourcesController < BaseController
       format.html { redirect_to(resources_url) }
       format.xml  { head :ok }
     end
+  end
+  
+  def published
+  	@resources = Resource.paginate(:conditions => ["owner = ? AND published = 1", params[:user_id]], 
+  		:include => :owner, 
+  		:page => params[:page], 
+  		:order => 'updated_at DESC', 
+  		:per_page => AppConfig.items_per_page)
+  		
+			respond_to do |format|
+				format.html #{ render :action => "my" }
+				format.xml  { render :xml => @resources }
+			end
   end
 end
