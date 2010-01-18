@@ -12,7 +12,7 @@
 							</ul>
             </div>
             
-            <div id="description"><%= (course.description[0..250] + "...") if course.description.length > 250 %>
+            <div id="description"><%= (course.description[0..250] + "...") if (course.description and course.description.length > 250) %>
             </div>
 			
 			<div id="identification">
