@@ -2,7 +2,7 @@ module CoursesHelper
 	def setup_course(course)
 		returning course do | course |
 			setup_main_resource(course)
-			#setup_prices(course)
+			setup_prices(course)
 		end
 	end
 	
