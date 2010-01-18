@@ -1,8 +1,8 @@
 class SchoolsController < BaseController
   #before_filter :login_required,  :except => [:index, :new, :create]
- # before_filter :admin_required,  :only => [:new, :create]
- 
- ##  Admin actions  
+  # before_filter :admin_required,  :only => [:new, :create]
+  
+  ##  Admin actions  
   def new_school_admin
     @user_school_association = UserSchoolAssociation.new
     
@@ -39,15 +39,15 @@ class SchoolsController < BaseController
     
   end
 =end
-
+  
   ### School Admin actions
   def invalidate_keys(access_key) # 'troca' um conjunto de chaves
     
   end
-
-
   
-
+  
+  
+  
   def associate
     @school = School.find(params[:id])
     @user = User.find(params[:user_id])  # TODO precisa mesmo recuperar o usuário no bd?
@@ -91,7 +91,7 @@ class SchoolsController < BaseController
     end
     
   end
-
+  
   ## LISTS
   
   
@@ -103,75 +103,75 @@ class SchoolsController < BaseController
     @user_school_association_array = UserSchoolAssociation.find(:all, :conditions => ["user_id = ? AND role_id = ?", current_user.id, 4])
   end
   
-
+  
   def students
     @school = School.find(params[:id])
     @students = @school.students
-   
-   #@users = User.recent.find(:all, :page => {:current => params[:page], :size => 100}, :conditions => cond.to_sql)
-   
+    
+    #@users = User.recent.find(:all, :page => {:current => params[:page], :size => 100}, :conditions => cond.to_sql)
+    
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @students }
     end
     
   end
-
+  
   ###
-
-
-
-   # GET /schools
+  
+  
+  
+  # GET /schools
   # GET /schools.xml
   def index
     @schools = School.all
-
+    
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @schools }
     end
   end
-
+  
   # GET /schools/1
   # GET /schools/1.xml
   def show
     @school = School.find(params[:id])
-
+    
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @school }
     end
   end
-
+  
   # GET /schools/new
   # GET /schools/new.xml
   def new
     @school = School.new
-
+    @school.owner = current_user
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @school }
     end
   end
-
+  
   # GET /schools/1/edit
   def edit
     @school = School.find(params[:id])
   end
-
+  
   # POST /schools
   # POST /schools.xml
   def create
-        @school = School.new(params[:school])
-    
+    @school = School.new(params[:school])
+    @school.owner = current_user
     #nao eh necessario pois ja temos verificacao no modelo
     #if !params[:school][:name] || params[:school][:name].empty?
     #  flash[:error] = 'Name não pode ser vazio'
     #  redirect_to(@school)
     #end
     
-
-
+    
+    
     respond_to do |format|
       if @school.save
         flash[:notice] = 'School was successfully created.'
@@ -183,12 +183,12 @@ class SchoolsController < BaseController
       end
     end
   end
-
+  
   # PUT /schools/1
   # PUT /schools/1.xml
   def update
     @school = School.find(params[:id])
-
+    
     respond_to do |format|
       if @school.update_attributes(params[:school])
         flash[:notice] = 'School was successfully updated.'
@@ -200,13 +200,13 @@ class SchoolsController < BaseController
       end
     end
   end
-
+  
   # DELETE /schools/1
   # DELETE /schools/1.xml
   def destroy
     @school = School.find(params[:id])
     @school.destroy
-
+    
     respond_to do |format|
       format.html { redirect_to(schools_url) }
       format.xml  { head :ok }
