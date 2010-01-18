@@ -1,6 +1,6 @@
         <div id="item">
     		<div id="title"><%= link_to resource.title, resource %></div>
-						<div id="video"><!-- Video Insert -->
+						<div id="video" style="background: url('<%= File.join(File.dirname(resource.media.url), "#{resource.id}128x96.jpg") %>') 0 0"><!-- Video Insert -->
 						<div id="video_info">00:00:00</div>
 						</div>
                        

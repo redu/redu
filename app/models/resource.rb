@@ -61,7 +61,7 @@ class Resource < ActiveRecord::Base
 
 	# Callbacks
 	before_validation :enable_correct_validation_group
-	after_create :convert
+	#after_create :convert
 	
 	# Validations
   validates_presence_of :title, :external_resource_type, :external_resource
@@ -98,23 +98,13 @@ class Resource < ActiveRecord::Base
 
   # This method is called from the controller and takes care of the converting
   def convert
-		if video?
-		  self.convert!
-		  success = system(convert_command)
-
-		  if success && $?.exitstatus == 0
-
-		    self.converted!
-
-		  else
-		    self.failure!
-		  end
-		else
-			# audio or application
-			self.convert!
+    if video?    
+      proxy = MiddleMan.worker(:converter_worker)
+      self.convert!
+      proxy.enq_convert(:arg => self.id, :job_key => self.id) #TODO set timeout :timeout => ?
+    else
 			self.converted!
-			self.save!
-		end
+    end
   end
 
   def video?

@@ -12,6 +12,7 @@ so.addVariable('height', '360');
 so.addVariable('width', '480');
 so.addVariable('type', 'video');
 so.addVariable('file', encodeURIComponent('<%= resource.media.url %>'));
+so.addVariable('image', encodeURIComponent('<%= File.join(File.dirname(resource.media.url), "#{resource.id}480x360.jpg") %>'));
 so.write('player');
 </script>
 
