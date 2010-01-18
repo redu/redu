@@ -1,5 +1,8 @@
 class Clipping < ActiveRecord::Base
 
+  #belongs_to :resource
+
+
   acts_as_commentable
   belongs_to :user
   validates_presence_of :user

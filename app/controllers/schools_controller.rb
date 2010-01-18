@@ -1,6 +1,6 @@
 class SchoolsController < BaseController
   #before_filter :login_required,  :except => [:index, :new, :create]
-  before_filter :admin_required,  :only => [:new, :create]
+ # before_filter :admin_required,  :only => [:new, :create]
  
  ##  Admin actions  
   def new_school_admin
@@ -93,6 +93,16 @@ class SchoolsController < BaseController
   end
 
   ## LISTS
+  
+  
+  def member
+    @user_school_association_array = current_user.schools
+  end
+  
+  def owner
+    @user_school_association_array = UserSchoolAssociation.find(:all, :conditions => ["user_id = ? AND role_id = ?", current_user.id, 4])
+  end
+  
 
   def students
     @school = School.find(params[:id])

@@ -12,8 +12,8 @@
     </div>
     <div id="all_list">
     	
-		<% if @schools && @schools.length > 0 %>
- 			<%= render :partial => 'schools/item', :collection => @schools, :as => :school %> 
+		<% if @user_school_association_array && @user_school_association_array.length > 0 %>
+ 			<%= render :partial => 'schools/item_association', :collection => @user_school_association_array, :as => :association %> 
  		<% else %>
  			Não há redes cadastradas ainda. <%= link_to 'Crie uma agora!', :action => 'new' %>
 		<% end %>

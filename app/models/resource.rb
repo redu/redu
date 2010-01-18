@@ -42,6 +42,8 @@ class Resource < ActiveRecord::Base
   'video/rtx' ]
 
   SUPPORTED_EXTERNAL_RESOURCES = ['youtube']
+  
+  #has_one :clipping
 
 	# Plugins
   acts_as_commentable

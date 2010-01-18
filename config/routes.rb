@@ -213,6 +213,7 @@ ActionController::Routing::Routes.draw do |map|
     user.resources :invitations
     user.resources :resources, :collection => {:published => :get, :unpublished => :get, :history => :get} 
     user.resources :courses, :collection => {:published => :get, :unpublished => :get, :history => :get} 
+    user.resources :schools, :collection => {:member => :get, :owner => :get}
     user.resources :exams, :collection => {:published => :get, :unpublished => :get, :history => :get} 
     user.resources :questions
     user.resources :offerings, :collection => {:replace => :put}
