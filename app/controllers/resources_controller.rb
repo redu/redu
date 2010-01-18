@@ -120,6 +120,7 @@ class ResourcesController < BaseController
 
     respond_to do |format|
       if @resource.save
+        @resource.convert
 				flash[:notice] = 'Resource was successfully created.'
 		    format.html { redirect_to(@resource) }
 		    format.xml  { render :xml => @resource, :status => :created, :location => @resource }

@@ -93,10 +93,10 @@ class CoursesController < BaseController
 		puts params[:course].inspect
     @course = Course.new(params[:course])
     
-    puts @course.resources.inspect
     respond_to do |format|
     	
       if @course.save
+        @course.main_resource.convert
         flash[:notice] = 'Aula foi criada com sucesso.'
         format.html { redirect_to(@course) }
         format.xml  { render :xml => @course, :status => :created, :location => @course }
@@ -112,7 +112,6 @@ class CoursesController < BaseController
   def update
     @course = Course.find(params[:id])
     
-    puts params[:course].inspect
     respond_to do |format|
       if @course.update_attributes(params[:course])
         flash[:notice] = 'Curso atualizado com sucesso.'
