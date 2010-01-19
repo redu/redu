@@ -21,8 +21,6 @@ class CoursesController < BaseController
   # Adicionar um recurso na aula.
   def add_resource
     @selected_resources = params[:resource][:id]
-    puts @selected_resources
-    
     @course = Course.find(params[:id])
     
     if @course
@@ -85,12 +83,9 @@ class CoursesController < BaseController
   # POST /courses
   # POST /courses.xml
   def create
-    puts params[:course].inspect
-    
 		params[:course][:owner] = current_user
 		params[:course][:main_resource_attributes][:owner] = current_user
 		
-		puts params[:course].inspect
     @course = Course.new(params[:course])
     
     respond_to do |format|

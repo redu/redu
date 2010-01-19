@@ -137,6 +137,8 @@ class Resource < ActiveRecord::Base
 		end 
 		
 	end
+	
+  
   protected
 
   def convert_command

@@ -7,10 +7,9 @@
 
 
 	so.addParam('allowscriptaccess', 'always');
-	so.addParam('allowfullscreen', 'true');
-	so.addVariable('height', '360');
+	so.addVariable('height', '20');
 	so.addVariable('width', '480');
-	so.addVariable('type', 'sound');
+	so.addVariable('provider', 'sound');
 	so.addVariable('file', encodeURIComponent('<%= @resource.media.url %>'));
 	so.write('player');
 </script>

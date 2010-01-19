@@ -99,8 +99,6 @@ class ResourcesController < BaseController
   # GET /resources/new.xml
   def new
     @resource = Resource.new
-		puts :current_user
-
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @resource }
