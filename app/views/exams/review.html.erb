@@ -12,7 +12,7 @@
 	<!-- PAGINACAO ##################################################################################################################################################### -->
     <div id="questions" align="center">
     	<ul id="questions_number">
-            <li><a href="" class="number"><img src="img/icon_info.png" border="0" title="Instruções"/></a><li>
+            <li><a href="" class="number"><%= image_tag "icon_info.png", :border => "0", :title => "Instruções" %></a><li>
             
 			
 			<% session[:exam].questions.each_index do |x| %>
@@ -100,7 +100,7 @@
 <!-- PAGINACAO ##################################################################################################################################################### -->
     <div id="questions" align="center">
     	<ul id="questions_number">
-            <li><a href="" class="number"><img src="images/icon_info.png" border="0" title="Instruções"/></a></li>
+            <li><%= image_tag "icon_info.png", :border => "0", :title => "Instruções" %></a></li>
             	
 				
 			<% session[:exam].questions.each_index do |x| %>
