@@ -1,5 +1,8 @@
 class School < ActiveRecord::Base
   
+  
+    #acts_as_activity :owner
+    
     has_many :user_school_association, :dependent => :destroy
     has_many :users, :through => :user_school_association
     

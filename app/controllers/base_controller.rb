@@ -5,6 +5,7 @@ require 'pp'
 class BaseController < ApplicationController
   include AuthenticatedSystem
   include LocalizedApplication
+  #include LogActivityStreams
   around_filter :set_locale  
   before_filter :login_from_cookie  
   skip_before_filter :verify_authenticity_token, :only => :footer_content
@@ -125,7 +126,7 @@ class BaseController < ApplicationController
     @homepage_features = HomepageFeature.find_features
     @homepage_features_data = @homepage_features.collect {|f| [f.id, f.public_filename(:large) ]  }    
     
-    @active_users = User.active.find_by_activity({:limit => 5, :require_avatar => false})
+   # @active_users = User.active.find_by_activity({:limit => 5, :require_avatar => false})
     @featured_writers = User.find_featured
 
     @featured_posts = Post.find_featured

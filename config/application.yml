@@ -28,6 +28,16 @@ robots_meta_show_content: 'index,nofollow'
 items_per_page: 2
 comments_number: 15
 
+points:
+  created_course: 80
+  #comment: 10
+  #logged_in: 0
+  #resource_upload: 50
+  #course: 75
+  #course_view: 20
+  #exam_create: 60
+  #exam_take: 20
+
 image:
   #missing_thumb: '/images/icon_missing_thumb.gif'
   #missing_medium: "/images/icon_missing_medium.gif"

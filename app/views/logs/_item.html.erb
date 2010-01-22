@@ -1,0 +1,55 @@
+<div id="move_item">
+    <div id="move_foto">
+        Foto 
+    </div>
+    <div id="move_txt">
+        <% if item.table.eql?('course') %>
+        <li>
+            <%= link_to item.object_name, :controller => "courses", :action => "show", :id => item.object_id %>
+            <%= item.comment %>
+            <%= link_to item.actor_name, :controller => "users", :action => "show", :id => item.actor_id %>
+        </li>
+        <% end %>
+        <% if item.table.eql?('resource') %>
+        <li>
+            <%= link_to item.object_name, :controller => "resources", :action => "show", :id => item.object_id %>
+            <%= item.comment %>
+            <%= link_to item.actor_name, :controller => "users", :action => "show", :id => item.actor_id %>
+        </li>
+        <% end %>
+        <% if item.table.eql?('exam') %>
+        <li>
+            <%= link_to item.object_name, :controller => "exams", :action => "show", :id => item.object_id %>
+            <%= item.comment %>
+            <%= link_to item.actor_name, :controller => "users", :action => "show", :id => item.actor_id %>
+        </li>
+        <% end %>
+        <% if item.table.eql?('user') %>
+        <li>
+            <%= link_to item.object_name, :controller => "users", :action => "show", :id => item.object_id %>
+            <%= item.comment %>
+            <%= link_to item.actor_name, :controller => "users", :action => "show", :id => item.actor_id %>
+        </li>
+        <% end %>
+        <div id="time">
+            <%= time_ago_in_words_or_date(item.created_at) %>
+        </div>
+        <% if logged_in? %>
+        <div id="link_respond_to_<%=item.id%>" class="replay">
+            <a href="#" onclick="showResponseBox(<%=item.id%>); return false;">Responder</a>
+        </div>
+        <div id="box_respond_to_<%= item.id %>" style="display:none;">
+            <div id="box_baseline_base">
+                <textarea cols="27" rows="2">
+                </textarea>
+            </div>
+            <div id="bt_send_mv" align="center">
+                <a href="#" class="bt_send">Enviar</a>
+            </div>
+            <div id="bt_send_mv" align="center">
+                <a href="#" onclick="hideResponseBox(<%=item.id%>); return false;">Cancelar</a>
+            </div>
+        </div>
+        <% end %>
+    </div>
+</div>

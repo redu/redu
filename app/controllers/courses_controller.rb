@@ -1,5 +1,9 @@
 class CoursesController < BaseController
+  before_filter :login_required, :except => [:index]
+ 
   
+  CourseObserver.observed_class
+    
   
   def rate
     @course = Course.find(params[:id])
@@ -11,6 +15,7 @@ class CoursesController < BaseController
       page.visual_effect :highlight, id
     end
   end
+ 
   
   # Lista todos os recursos existentes para relacionar com
   def list_resources
@@ -59,14 +64,39 @@ class CoursesController < BaseController
   # GET /courses/1
   # GET /courses/1.xml
   def show
+    puts "passou aqui."
     @course = Course.find(params[:id])
-    
+    #@favorites = Favorite.find(:conditions => ['user_id = ?',current_user.id])
     @comments  = @course.comments.find(:all, :limit => 10, :order => 'created_at DESC')
+    
+     Log.create(:table => 'course',
+      :action => 'show',
+      :actor_name => current_user.login,
+      :actor_id => current_user.id,
+      :object_name => @course.name,
+      :object_id => @course.id,
+      :comment => 'Aula Mostrada...')
     
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @course }
     end
+      
+  end
+  
+  def view
+    @course = Course.find(params[:id])
+    
+    @comments  = @course.comments.find(:all, :limit => 10, :order => 'created_at DESC')
+    
+    
+    respond_to do |format|
+      format.html # show.html.erb
+      format.xml  { render :xml => @course }
+    end
+    
+ 
+    
   end
   
   # GET /courses/new
@@ -80,10 +110,11 @@ class CoursesController < BaseController
     @course = Course.find(params[:id])
   end
   
+   
   # POST /courses
   # POST /courses.xml
   def create
-		params[:course][:owner] = current_user
+  	params[:course][:owner] = current_user
 		params[:course][:main_resource_attributes][:owner] = current_user
 		
     @course = Course.new(params[:course])
@@ -137,7 +168,7 @@ class CoursesController < BaseController
     
     #o nome dessa variável, deixar como acquisition
     @acquisition = Acquisition.new
-    '''
+   	'''
     if current_user.is_school_admin?
       aquisicao.entity = "School"
       aquisicao.entity_id = current_user.school # TODO implementar admin de uma unica escola

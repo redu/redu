@@ -30,8 +30,6 @@
       %li= @user.created_at.strftime(:member_since.l+": %m/%d/%y")
       -unless @user.posts.empty?
         %li=:you_have_written.l+" #{@user.posts.count} "+:blog_posts.l+"."
-      -unless @user.photos.empty?
-        %li=:you_have_uploaded.l+" #{@user.photos.count} "+:photos.l+"."
       -unless @user.clippings.empty?
         %li=:you_have_created.l+" #{@user.clippings.count} "+:clippings.l+"."
       -unless @user.comments.empty?

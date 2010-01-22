@@ -21,4 +21,12 @@
     </div> <!-- fim da listagem --> 
 
 </div>
+<div id="col_box3">
+	<% if current_user %>
+	<% @logs = current_user.log_activity %>
+	<%= render :partial => 'logs/log', :locals => {:logs => @logs} %>
+	<% else %>
+	<%= render :partial => 'logs/not_logged_in', :locals => {:logs => @logs} %>
+	<% end %>
+	</div>
 </div>

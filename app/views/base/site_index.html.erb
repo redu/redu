@@ -191,10 +191,14 @@
 <!-- BOX MOVIMENTACAO RESCENTE ///////////////////////////////////////////////////////////////////////////////////// -->
 	
 <!-- BOX MOVIMENTACAO RESCENTE ///////////////////////////////////////////////////////////////////////////////////// -->
-
-    <!--<div id="friends"></div>
-    <div id="workspace"></div>
-    <div id="mytasks"></div>-->
+	
+	<% if current_user %>
+	<% @logs = current_user.log_activity %>
+	<%= render :partial => 'logs/log', :locals => {:logs => @logs} %>
+	<% else %>
+	<%= render :partial => 'logs/not_logged_in' %>
+	<% end %>
+   
 </div>
 <!--<div id="title_page">Assistindo Aula</div>-->
 </div>

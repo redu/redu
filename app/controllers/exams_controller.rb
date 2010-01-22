@@ -1,6 +1,7 @@
   class ExamsController < BaseController
   
   before_filter :login_required, :except => [:index]
+  ExamObserver.observed_class
 
   def review
     if session[:question_index].nil?
@@ -249,7 +250,7 @@
       else
         
         @exam = Exam.new(params[:exam])
-        @exam.owner = current_user
+        @exam.owner_id = current_user
         
         @questions =  params[:questions]
         
@@ -503,7 +504,6 @@ end
   # GET /exams
   # GET /exams.xml
   def index
-    @recent_activity = User.recent_activity(:size => 15, :current => 1)
     @exams = Exam.paginate :conditions => ['published = ?', true], :include => :owner, :page => params[:page], :order => 'updated_at DESC', :per_page => AppConfig.items_per_page
     
     # @exams = Exam.published(:limit => 20, :order => 'created_at DESC', :include => :owner)
@@ -523,6 +523,14 @@ end
   # GET /exams/1.xml
   def show
     @exam = Exam.find(params[:id])
+
+    Log.create(:table => 'exam',
+    :action => 'show',
+    :actor_name => current_user.login,
+    :actor_id => current_user.id,
+    :object_name => @exam.title,
+    :object_id => @exam.id,
+    :comment => 'Exame Mostrado...')
 
     respond_to do |format|
       format.html # show.html.erb

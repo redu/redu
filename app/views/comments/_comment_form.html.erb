@@ -4,7 +4,7 @@
 	<% if logged_in? %>
 	
 		<div id="comments_top">
-			<div id="comments_numbers">Mostrando <strong>(<%=AppConfig.comments_number%>)</strong> de <strong>(<%=comments.length%>)</strong></div> <div id="comments_view_all">Exibir todos os <strong>(<%=comments.length%>)</strong> comentários</div>
+			
 		</div>
 		<% form_remote_for(:comment, :loading => "$$('div#comments div.errors')[0].innerHTML = ''; $('comment_spinner').show();", :url => comments_url(commentable.class.to_s.underscore, commentable.id ), :html => {:id => 'new_comment_form', :class => "MainForm"}) do |f| %>
 		

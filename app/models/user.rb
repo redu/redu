@@ -12,7 +12,10 @@ class User < ActiveRecord::Base
   acts_as_taggable  
   acts_as_commentable
   has_private_messages
-  tracks_unlinked_activities [:logged_in, :invited_friends, :updated_profile, :joined_the_site]  
+#  tracks_unlinked_activities [:logged_in, :invited_friends, :updated_profile, :joined_the_site, 
+#  :create_course, :view_course, :update_course,
+#  :create_resource, :view_resource, :update_resource,
+#  :create_exam, :view_exam, :update_exam, :end_exam]  
   
   #callbacks  
   before_save   :encrypt_password, :whitelist_attributes
@@ -65,14 +68,14 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :followers, :class_name => "User", :join_table => "followship", :association_foreign_key => "followed_by_id", :foreign_key => "follows_id", :uniq => true
   
   #COURSES
-  has_many :courses, :foreign_key => "owner"
+  has_many :courses, :foreign_key => "owner_id"
   has_many :acquisitions, :as => :acquired_by
 
   #RESOURCES
-  has_many :resources, :foreign_key => "owner"
+  has_many :resources, :foreign_key => "owner_id"
   
   # EXAMS
-  has_many :exams, :foreign_key => "author_id"
+  has_many :exams, :foreign_key => "owner_id"
   
   has_many :exam_users#, :dependent => :destroy
   has_many :exam_history, :through => :exam_users, :source => :exam
@@ -191,20 +194,20 @@ class User < ActiveRecord::Base
     cond
   end  
   
-  def self.find_by_activity(options = {})
-    options.reverse_merge! :limit => 30, :require_avatar => true, :since => 7.days.ago   
-    #Activity.since.find(:all,:select => Activity.columns.map{|column| Activity.table_name + "." + column.name}.join(",")+', count(*) as count',:group => Activity.columns.map{|column| Activity.table_name + "." + column.name}.join(","),:order => 'count DESC',:joins => "LEFT JOIN users ON users.id = activities.user_id" )
-    #Activity.since(7.days.ago).find(:all,:select => 'activities.user_id, count(*) as count',:group => 'activities.user_id',:order => 'count DESC',:joins => "LEFT JOIN users ON users.id = activities.user_id" )
-    activities = Activity.since(options[:since]).find(:all, 
-      :select => 'activities.user_id, count(*) as count', 
-      :group => 'activities.user_id', 
-      :conditions => "#{options[:require_avatar] ? ' users.avatar_id IS NOT NULL' : nil}", 
-      :order => 'count DESC', 
-      :joins => "LEFT JOIN users ON users.id = activities.user_id",
-      :limit => options[:limit]
-      )
-    activities.map{|a| find(a.user_id) }
-  end  
+#  def self.find_by_activity(options = {})
+#    options.reverse_merge! :limit => 30, :require_avatar => true, :since => 7.days.ago   
+#    #Activity.since.find(:all,:select => Activity.columns.map{|column| Activity.table_name + "." + column.name}.join(",")+', count(*) as count',:group => Activity.columns.map{|column| Activity.table_name + "." + column.name}.join(","),:order => 'count DESC',:joins => "LEFT JOIN users ON users.id = activities.user_id" )
+#    #Activity.since(7.days.ago).find(:all,:select => 'activities.user_id, count(*) as count',:group => 'activities.user_id',:order => 'count DESC',:joins => "LEFT JOIN users ON users.id = activities.user_id" )
+#    activities = Activity.since(options[:since]).find(:all, 
+#      :select => 'activities.user_id, count(*) as count', 
+#      :group => 'activities.user_id', 
+#      :conditions => "#{options[:require_avatar] ? ' users.avatar_id IS NOT NULL' : nil}", 
+#      :order => 'count DESC', 
+#      :joins => "LEFT JOIN users ON users.id = activities.user_id",
+#      :limit => options[:limit]
+#      )
+#    activities.map{|a| find(a.user_id) }
+#  end  
     
   def self.find_featured
     self.featured
@@ -232,10 +235,10 @@ class User < ActiveRecord::Base
   end  
 
   
-  def self.recent_activity(page = {}, options = {})
-    page.reverse_merge! :size => 10, :current => 1
-    Activity.recent.find(:all, :page => page, *options)      
-  end
+#  def self.recent_activity(page = {}, options = {})
+#    page.reverse_merge! :size => 10, :current => 1
+#    Activity.recent.find(:all, :page => page, *options)      
+#  end
 
   def self.currently_online
     User.find(:all, :conditions => ["sb_last_seen_at > ?", Time.now.utc-5.minutes])
@@ -425,24 +428,24 @@ class User < ActiveRecord::Base
     friendships_initiated_by_me.count(:conditions => ['created_at > ?', Time.now.beginning_of_day]) >= Friendship.daily_request_limit
   end
 
-  def network_activity(page = {}, since = 1.week.ago)
-    page.reverse_merge :size => 10, :current => 1
-    friend_ids = self.friends_ids
-    metro_area_people_ids = self.metro_area ? self.metro_area.users.map(&:id) : []
-    
-    ids = ((friends_ids | metro_area_people_ids) - [self.id])[0..100] #don't pull TOO much activity for now
-    
-    Activity.recent.since(since).by_users(ids).find(:all, :page => page)          
-  end
+#  def network_activity(page = {}, since = 1.week.ago)
+#    page.reverse_merge :size => 10, :current => 1
+#    friend_ids = self.friends_ids
+#    metro_area_people_ids = self.metro_area ? self.metro_area.users.map(&:id) : []
+#    
+#    ids = ((friends_ids | metro_area_people_ids) - [self.id])[0..100] #don't pull TOO much activity for now
+#    
+#    Activity.recent.since(since).by_users(ids).find(:all, :page => page)          
+#  end
 
-  def comments_activity(page = {}, since = 1.week.ago)
-    page.reverse_merge :size => 10, :current => 1
-
-    Activity.recent.since(since).find(:all, 
-      :conditions => ['comments.recipient_id = ? AND activities.user_id != ?', self.id, self.id], 
-      :joins => "LEFT JOIN comments ON comments.id = activities.item_id AND activities.item_type = 'Comment'",
-      :page => page)      
-  end
+#  def comments_activity(page = {}, since = 1.week.ago)
+#    page.reverse_merge :size => 10, :current => 1
+#
+#    Activity.recent.since(since).find(:all, 
+#      :conditions => ['comments.recipient_id = ? AND activities.user_id != ?', self.id, self.id], 
+#      :joins => "LEFT JOIN comments ON comments.id = activities.item_id AND activities.item_type = 'Comment'",
+#      :page => page)      
+#  end
 
   def friends_ids
     return [] if accepted_friendships.empty?
@@ -525,6 +528,18 @@ class User < ActiveRecord::Base
   
   ## End Instance Methods
   
+  def log_activity
+    
+    @follows = self.follows  
+    @logs = []
+    @follows.each do |follows|
+      @logs += Log.find(:all, :conditions => ["actor_id = ?", follows.id],:limit => 5, :order => 'created_at DESC') 
+    end
+    return @logs
+  end
+  
+  
+
 
   protected
   
@@ -553,6 +568,8 @@ class User < ActiveRecord::Base
   
     def password_required?
       crypted_password.blank? || !password.blank?
-    end
+  end
+  
+ 
   
 end

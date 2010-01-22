@@ -1,5 +1,8 @@
 class ResourcesController < BaseController
   
+  
+  ResourceObserver.observed_class
+  
   def add
     @resources = Resource.all
 
@@ -88,7 +91,15 @@ class ResourcesController < BaseController
   # GET /resources/1.xml
   def show
     @resource = Resource.find(params[:id])
-
+    
+    Log.create(:table => 'resource',
+    :action => 'show',
+    :actor_name => current_user.login,
+    :actor_id => current_user.id,
+    :object_name => @resource.title,
+    :object_id => @resource.id,
+    :comment => 'Material Mostrado...')
+    
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @resource }

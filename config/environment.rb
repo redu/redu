@@ -1,7 +1,7 @@
 # Be sure to restart your server when you modify this file
 
 # Specifies gem version of Rails to use when vendor/rails is not present
-RAILS_GEM_VERSION = '2.3.3' unless defined? RAILS_GEM_VERSION
+RAILS_GEM_VERSION = '2.3.5' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
@@ -10,11 +10,11 @@ require 'desert'
 require 'ostruct'
 require 'yaml'  
 #require 'community_engine'
-
+#config.active_record.observers = :course_observer, :resource_observer
 
 
 Rails::Initializer.run do |config|
-  
+
 =begin  
   config.plugins = [:community_engine, :white_list, :all]
   config.plugin_paths += ["#{RAILS_ROOT}/vendor/plugins/community_engine/plugins"]
@@ -25,7 +25,7 @@ Rails::Initializer.run do |config|
   config.gem 'calendar_date_select'
   config.gem 'icalendar'        
   config.gem 'will_paginate', :version => '~> 2.3.11', :source => 'http://gemcutter.org'
-
+ # config.active_record.observers = :course_observer, :resource_observer
 
 
   if File.exists?( File.join(RAILS_ROOT, 'config', 'application.yml') )
@@ -53,6 +53,11 @@ ActiveRecord::Base.send(:extend, CommunityEngine::ActiveRecordExtensions)
   }
 =end
   config.action_controller.session_store = :active_record_store
+  config.active_record.observers = :course_observer,
+    :resource_observer,
+    :exam_observer,
+    :user_observer
+
 
   
   # Settings in config/environments/* take precedence over those specified here.

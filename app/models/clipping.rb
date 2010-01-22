@@ -1,8 +1,5 @@
 class Clipping < ActiveRecord::Base
 
-  #belongs_to :resource
-
-
   acts_as_commentable
   belongs_to :user
   validates_presence_of :user
@@ -18,7 +15,7 @@ class Clipping < ActiveRecord::Base
   has_many :favorites, :as => :favoritable, :dependent => :destroy
   
   acts_as_taggable
-  acts_as_activity :user
+  
     
   named_scope :recent, :order => 'clippings.created_at DESC'    
   named_scope :tagged_with, lambda {|tag_name|

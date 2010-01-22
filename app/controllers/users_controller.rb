@@ -2,7 +2,7 @@ require "RMagick"
 
 class UsersController < BaseController
   include Viewable
-  cache_sweeper :taggable_sweeper, :only => [:activate, :update, :destroy]  
+  UserObserver.observed_class  
   
   if AppConfig.closed_beta_mode
     skip_before_filter :beta_login_required, :only => [:new, :create, :activate]
@@ -13,11 +13,11 @@ class UsersController < BaseController
       redirect_to home_path and return false unless User.find(params[:inviter_id]).valid_invite_code?(params[:inviter_code])
     end
   end    
-
+  
   uses_tiny_mce(:options => AppConfig.default_mce_options.merge({:editor_selector => "rich_text_editor"}), 
     :only => [:new, :create, :update, :edit, :welcome_about])
   uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:show])
-
+  
   # Filters
   before_filter :login_required, :only => [:edit, :edit_account, :update, :welcome_photo, :welcome_about, 
                                           :welcome_invite, :return_admin, :assume, :featured,
@@ -31,8 +31,68 @@ class UsersController < BaseController
                                                 :crop_profile_photo, :upload_profile_photo]
   before_filter :admin_required, :only => [:assume, :destroy, :featured, :toggle_featured, :toggle_moderator]
   before_filter :admin_or_current_user_required, :only => [:statistics]  
-
- ### Followship
+  
+  ## ATIVIDADES 
+   #Follows
+#    log_activity_streams :current_user, :name, :follow_user, 
+#           :@user, :name, :follow, :following_user, {:total => 1 }
+#   #Entrou na rede
+#    log_activity_streams :current_user, :name, :join_site, 
+#           :@user, :name, :activate, :joined_site, {:total => 1 }
+  
+#  def show_favorites
+#    @favorites = Favorite.find(:conditions => ['favoritable_id = ?', current_user.id])
+#    
+#    @favorites.each do |favorite|
+#      if favorite.favoritable_type == 'Course'
+#        @courses_id << favorite.favoritable_id
+#      else if favorite.favoritable_type == 'Resource'
+#        @resources_id << favorite.favoritable_id
+#      else if favorite.favoritable_type == 'Exam'
+#        @exams_id << favorite.favoritable_id
+#      end
+#    end
+#    
+#    @courses_id.each do |course_id|
+#      @courses << Course.find(:conditions => ['id = ?', course_id])
+#    end  
+#    
+#    @resources_id.each do |resource_id|
+#      @resources << Resource.find(:conditions => ['id = ?', resource_id])
+#    end  
+#    
+#    @exams_id.each do |exam_id|
+#      @exams << Exam.find(:conditions => ['id = ?', exam_id])
+#    end  
+#    
+#  end
+  
+  
+  def show_log_activity
+    
+    current_user.log_activity
+    
+  end
+  
+  
+  def get_activities
+  @user = current_user
+  @follows = @user.follows
+    
+  if @follows
+    @follows.each do |follows|
+      @activities_stream << ActivityStream.find(:conditions => ["actor_id = ?", follows.id ]) 
+    end
+  else
+    @activities_stream << ActivityStream.find(:conditions => ["actor_id = ?" ,params[:id] ] )
+  end
+   puts @activities_stream
+   
+          
+    return @activities_stream
+  end
+  
+  ### Followship
   def can_follow
     user_id = params[:id]
     follow_id = params[:follow_id]
@@ -59,14 +119,14 @@ class UsersController < BaseController
     end
   end
   
-
+  
   def follow # TODO evitar duplicata
-     @user = User.find(params[:id])
-     @follow_user = User.find(params[:follow_id])
-     
-     @user.follows << @follow_user
-     if @user.save #@user.update_attributes(:follows)
-        flash[:notice] = 'Você está seguindo esse usuário'
+    @user = User.find(params[:id])
+    @follow_user = User.find(params[:follow_id])
+    
+    @user.follows << @follow_user
+    if @user.save #@user.update_attributes(:follows)
+      flash[:notice] = 'Você está seguindo esse usuário'
     else
       flash[:erro] = 'Não é possível seguir esse usuário'
     end
@@ -75,12 +135,12 @@ class UsersController < BaseController
   end 
   
   def unfollow
-     @user = User.find(params[:id])
-     @follow_user = User.find(params[:follow_id])
-     
-     @user.follows.delete @follow_user
-     if @user.save #@user.update_attributes(:follows)
-        flash[:notice] = 'Você não está mais seguindo esse usuário'
+    @user = User.find(params[:id])
+    @follow_user = User.find(params[:follow_id])
+    
+    @user.follows.delete @follow_user
+    if @user.save #@user.update_attributes(:follows)
+      flash[:notice] = 'Você não está mais seguindo esse usuário'
     else
       flash[:erro] = 'Não foi possível parar de seguir esse usuário'
     end
@@ -93,62 +153,63 @@ class UsersController < BaseController
     @subjects = Subject.all
     @user = params[:id]
   end
-
+  
   
   
   ##Associação com a disciplina
-  def add_subject
-    
-    #@user = User.find(params[:id])
-    @user = current_user
-
-    @subject = Subject.find(params[:subject][:id])
-        puts 'Teste'
-    puts params[:user_key]
-    
-    @user_subject_association = UserSubjectAssociation.find(:first, :include => :access_key, :conditions => ["access_keys.key = ?", params[:user_key]])  
-    
-    if @user_subject_association
-      if @user_subject_association.access_key.expiration_date.to_time < Time.now # verifica a data da validade da chave  
-        if @subject &&  @user_subject_association.user == @user         
-          if @user && !@user_subject_association.user # cada chave só poderá ser usada uma vez, sem troca de aluno                     
-            @user_subject_association.user = @user        
-            if @user_subject_association.save
-              flash[:notice] = 'Usuário associado à disciplina!'
-            else 
-              flash[:notice] = 'Associação à disciplina falhou.'
-            end
-            
-          else 
-            flash[:notice] = 'Essa chave já está em uso.'
-          end
-          
-        else
-          flash[:notice] = 'Essa chave pertence à outra disciplina.'
-        end
-        
-      else
-        flash[:notice] = 'O prazo de validade desta chave expirou. Contate o administrador da sua escola.'
-      end
-      
-    else
-      flash[:notice] = 'Chave inválida'
-    end
-    
-    respond_to do |format|
-      format.html { redirect_to(@user) }
-    end
-    
-  end
+  #  def add_subject
+  #    
+  #    #@user = User.find(params[:id])
+  #    @user = current_user
+  #    
+  #    @subject = Subject.find(params[:subject][:id])
+  #    puts 'Teste'
+  #    puts params[:user_key]
+  #    
+  #    @user_subject_association = UserSubjectAssociation.find(:first, :include => :access_key, :conditions => ["access_keys.key = ?", params[:user_key]])  
+  #    
+  #    if @user_subject_association
+  #      if @user_subject_association.access_key.expiration_date.to_time < Time.now # verifica a data da validade da chave  
+  #        if @subject &&  @user_subject_association.user == @user         
+  #          if @user && !@user_subject_association.user # cada chave só poderá ser usada uma vez, sem troca de aluno                     
+  #            @user_subject_association.user = @user        
+  #            if @user_subject_association.save
+  #              flash[:notice] = 'Usuário associado à disciplina!'
+  #            else 
+  #              flash[:notice] = 'Associação à disciplina falhou.'
+  #            end
+  #          else 
+  #            flash[:notice] = 'Essa chave já está em uso.'
+  #          end
+  #      
+  #        else
+  #          flash[:notice] = 'Essa chave pertence à outra disciplina.'
+  #        end
+  #        
+  #      else
+  #        flash[:notice] = 'O prazo de validade desta chave ontate o administrador da sua escola.'
+  #      end
+  #      
+  #      
+  #    else
+  #      flash[:notice] = 'Chave inválida'
+  #    end
+  #    
+  #    
+  #    respond_to do |format|
+  #      format.html { redirect_to(@user) }
+  #    end
+  #    
+  #  end
   
-
+  
   ## User
   def activate
     redirect_to signup_path and return if params[:id].blank?
     @user = User.find_by_activation_code(params[:id]) 
     if @user and @user.activate
       self.current_user = @user
-      current_user.track_activity(:joined_the_site)      
+      #current_user.track_activity(:joined_the_site)   Utilizaremos outro Activity    
       redirect_to welcome_photo_user_path(@user)
       flash[:notice] = :thanks_for_activating_your_account.l 
       return
@@ -165,7 +226,7 @@ class UsersController < BaseController
     flash[:notice] = :deactivate_completed.l
     redirect_to login_path
   end
-
+  
   def index
     cond, @search, @metro_areas, @states = User.paginated_users_conditions_with_search(params)    
     
@@ -173,7 +234,7 @@ class UsersController < BaseController
       :conditions => cond.to_sql, 
       :include => [:tags], 
       :page => {:current => params[:page], :size => 20}
-      )
+    )
     
     @tags = User.tag_counts :limit => 10
     
@@ -182,7 +243,7 @@ class UsersController < BaseController
   
   def dashboard
     @user = current_user
-    @network_activity = @user.network_activity
+    # @network_activity = @user.network_activity
     @recommended_posts = @user.recommended_posts
   end
   
@@ -190,18 +251,19 @@ class UsersController < BaseController
     @friend_count               = @user.accepted_friendships.count
     @accepted_friendships       = @user.accepted_friendships.find(:all, :limit => 5).collect{|f| f.friend }
     @pending_friendships_count  = @user.pending_friendships.count()
-
+    
     @comments       = @user.comments.find(:all, :limit => 10, :order => 'created_at DESC')
     @photo_comments = Comment.find_photo_comments_for(@user)    
     @users_comments = Comment.find_comments_by_user(@user, :limit => 5)
-
+    
     @recent_posts   = @user.posts.find(:all, :limit => 2, :order => "published_at DESC")
     @clippings      = @user.clippings.find(:all, :limit => 5)
     @photos         = @user.photos.find(:all, :limit => 5)
     @comment        = Comment.new(params[:comment])
+    # @course         = Course.new(params[:])
     
-    @my_activity = Activity.recent.by_users([@user.id]).find(:all, :limit => 10) 
-
+    
+    
     update_view_count(@user) unless current_user && current_user.eql?(@user)
   end
   
@@ -209,16 +271,16 @@ class UsersController < BaseController
     @user         = User.new( {:birthday => Date.parse((Time.now - 25.years).to_s) }.merge(params[:user] || {}) )
     @inviter_id   = params[:id]
     @inviter_code = params[:code]
-
+    
     render :action => 'new', :layout => 'beta' and return if AppConfig.closed_beta_mode    
   end
-
+  
   def create
     @user       = User.new(params[:user])
-    @user.role  = Role[:member]
+   # @user.role  = Role[:member]
     
     
-
+    
     if (!AppConfig.require_captcha_on_signup || verify_recaptcha(@user)) && @user.save
       create_friendship_with_inviter(@user, params)
       flash[:notice] = :email_signup_thanks.l_with_args(:email => @user.email) 
@@ -226,8 +288,9 @@ class UsersController < BaseController
     else
       render :action => 'new'
     end
-  end
     
+  end
+  
   def edit 
     @metro_areas, @states = setup_locations_for(@user)
     @skills               = Skill.find(:all)
@@ -238,7 +301,7 @@ class UsersController < BaseController
   def update
     @user.attributes      = params[:user]
     @metro_areas, @states = setup_locations_for(@user)
-
+    
     unless params[:metro_area_id].blank?
       @user.metro_area  = MetroArea.find(params[:metro_area_id])
       @user.state       = (@user.metro_area && @user.metro_area.state) ? @user.metro_area.state : nil
@@ -246,16 +309,16 @@ class UsersController < BaseController
     else
       @user.metro_area = @user.state = @user.country = nil
     end
-  
+    
     @avatar       = Photo.new(params[:avatar])
     @avatar.user  = @user
-
+    
     @user.avatar  = @avatar if @avatar.save
     
     @user.tag_list = params[:tag_list] || ''
-
+    
     if @user.save!
-      @user.track_activity(:updated_profile)
+      #@user.track_activity(:updated_profile) Utilizaremos outro Activity
       
       flash[:notice] = :your_changes_were_saved.l
       unless params[:welcome] 
@@ -284,7 +347,7 @@ class UsersController < BaseController
     @user   = User.find(params[:id])
     @photo  = Photo.find(params[:photo_id])
     @user.avatar = @photo
-
+    
     if @user.save!
       flash[:notice] = :your_changes_were_saved.l
       redirect_to user_photo_path(@user, @photo)
@@ -310,7 +373,7 @@ class UsersController < BaseController
         @photo.save!
       end
     end
-
+    
     redirect_to user_path(@user)
   end
   
@@ -325,7 +388,7 @@ class UsersController < BaseController
       redirect_to crop_profile_photo_user_path(@user)
     end
   end
-    
+  
   def edit_account
     @user             = current_user
     @is_current_user  = true
@@ -334,7 +397,7 @@ class UsersController < BaseController
   def update_account
     @user             = current_user
     @user.attributes  = params[:user]
-
+    
     if @user.save
       flash[:notice] = :your_changes_were_saved.l
       respond_to do |format|
@@ -348,17 +411,17 @@ class UsersController < BaseController
       end
     end
   end
-
+  
   def edit_pro_details
     @user = User.find(params[:id])
   end
-
+  
   def update_pro_details
     @user = User.find(params[:id])
     @user.add_offerings(params[:offerings]) if params[:offerings]
     
     @user.attributes = params[:user]
-
+    
     if @user.save!
       respond_to do |format|
         format.html { 
@@ -369,27 +432,27 @@ class UsersController < BaseController
           render :text => 'success'
         }
       end
-
+      
     end
   rescue ActiveRecord::RecordInvalid
     render :action => 'edit_pro_details'
   end
-    
+  
   def create_friendship_with_inviter(user, options = {})
     unless options[:inviter_code].blank? or options[:inviter_id].blank?
       friend = User.find(options[:inviter_id])
-
+      
       if friend && friend.valid_invite_code?(options[:inviter_code])
         accepted    = FriendshipStatus[:accepted]
         @friendship = Friendship.new(:user_id => friend.id, 
           :friend_id => user.id,
           :friendship_status => accepted, 
           :initiator => true)
-
+        
         reverse_friendship = Friendship.new(:user_id => user.id, 
           :friend_id => friend.id, 
           :friendship_status => accepted )
-          
+        
         @friendship.save
         reverse_friendship.save
       end
@@ -405,12 +468,12 @@ class UsersController < BaseController
   def welcome_photo
     @user = User.find(params[:id])
   end
-
+  
   def welcome_about
     @user = User.find(params[:id])
     @metro_areas, @states = setup_locations_for(@user)
   end
-    
+  
   def welcome_invite
     @user = User.find(params[:id])    
   end
@@ -426,7 +489,7 @@ class UsersController < BaseController
   
   def forgot_password  
     return unless request.post?   
-
+    
     @user = User.active.find_by_email(params[:email])  
     if @user && @user.reset_password
       UserNotifier.deliver_reset_password(@user)
@@ -437,7 +500,7 @@ class UsersController < BaseController
       flash[:error] = :sorry_we_dont_recognize_that_email_address.l
     end 
   end
-
+  
   def forgot_username  
     return unless request.post?   
     
@@ -449,10 +512,10 @@ class UsersController < BaseController
       flash[:error] = :sorry_we_dont_recognize_that_email_address.l
     end 
   end
-
+  
   def resend_activation
     return unless request.post?       
-
+    
     if params[:email]
       @user = User.find_by_email(params[:email])    
     else
@@ -472,7 +535,7 @@ class UsersController < BaseController
     self.current_user = User.find(params[:id])
     redirect_to user_path(current_user)
   end
-
+  
   def return_admin
     unless session[:admin_id].nil? or current_user.admin?
       admin = User.find(session[:admin_id])
@@ -484,9 +547,9 @@ class UsersController < BaseController
       redirect_to login_path
     end
   end
-
-  def metro_area_update
   
+  def metro_area_update
+    
     country = Country.find(params[:country_id]) unless params[:country_id].blank?
     state   = State.find(params[:state_id]) unless params[:state_id].blank?
     states  = country ? country.states.sort_by{|s| s.name} : []
@@ -496,7 +559,7 @@ class UsersController < BaseController
     else
       metro_areas = country ? country.metro_areas : []
     end
-
+    
     respond_to do |format|
       format.js {
         render :partial => 'shared/location_chooser', :locals => {
@@ -514,14 +577,14 @@ class UsersController < BaseController
     @user.toggle!(:featured_writer)
     redirect_to user_path(@user)
   end
-
+  
   def toggle_moderator
     @user = User.find(params[:id])
     @user.role = @user.moderator? ? Role[:member] : Role[:moderator]
     @user.save!
     redirect_to user_path(@user)
   end
-
+  
   def statistics
     if params[:date]
       date = Date.new(params[:date][:year].to_i, params[:date][:month].to_i)
@@ -541,25 +604,25 @@ class UsersController < BaseController
     end
   end  
   
-
-  protected  
-    def setup_metro_areas_for_cloud
-      @metro_areas_for_cloud = MetroArea.find(:all, :conditions => "users_count > 0", :order => "users_count DESC", :limit => 100)
-      @metro_areas_for_cloud = @metro_areas_for_cloud.sort_by{|m| m.name}
-    end  
   
-    def setup_locations_for(user)
-      metro_areas = states = []
-          
-      states = user.country.states if user.country
-      
-      metro_areas = user.state.metro_areas.all(:order => "name") if user.state
+  protected  
+  def setup_metro_areas_for_cloud
+    @metro_areas_for_cloud = MetroArea.find(:all, :conditions => "users_count > 0", :order => "users_count DESC", :limit => 100)
+    @metro_areas_for_cloud = @metro_areas_for_cloud.sort_by{|m| m.name}
+  end  
+  
+  def setup_locations_for(user)
+    metro_areas = states = []
     
-      return metro_areas, states
-    end
-
-    def admin_or_current_user_required
-      current_user && (current_user.admin? || @is_current_user) ? true : access_denied     
-    end
-
+    states = user.country.states if user.country
+    
+    metro_areas = user.state.metro_areas.all(:order => "name") if user.state
+    
+    return metro_areas, states
+  end
+  
+  def admin_or_current_user_required
+    current_user && (current_user.admin? || @is_current_user) ? true : access_denied     
+  end
+  
 end

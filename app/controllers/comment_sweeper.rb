@@ -18,7 +18,7 @@ class CommentSweeper < ActionController::Caching::Sweeper
   private
   def expire_cache_for(record)
     # Expire the footer content
-    expire_action :controller => 'base', :action => 'footer_content'
+   expire_action :controller => 'base', :action => 'footer_content'
 
     if record.commentable_type.eql?('Post') 
       expire_action :controller => 'posts', :action => 'show', :id => record.commentable , :user_id => record.commentable.user

@@ -1,5 +1,5 @@
 class Course < ActiveRecord::Base
-  
+ 
   # PLUGINS
   acts_as_commentable
   acts_as_taggable
@@ -51,4 +51,7 @@ class Course < ActiveRecord::Base
         errors.add(:resource_ids, r.title + ": " + msg) if r.published == false
       end    
   end
+  
+  
+  
 end

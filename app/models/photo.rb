@@ -20,8 +20,7 @@ class Photo < ActiveRecord::Base
 
 
   acts_as_taggable
-
-  acts_as_activity :user, :if => Proc.new{|record| record.parent.nil? && record.album_id.nil?}
+  
   
   validates_presence_of :size
   validates_presence_of :content_type

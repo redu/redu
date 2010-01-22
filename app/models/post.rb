@@ -1,7 +1,7 @@
 class Post < ActiveRecord::Base
   acts_as_commentable
   acts_as_taggable
-  acts_as_activity :user, :if => Proc.new{|r| r.is_live?}
+  #acts_as_activity :user, :if => Proc.new{|r| r.is_live?}
   acts_as_publishable :live, :draft
 
   belongs_to :user
@@ -18,14 +18,14 @@ class Post < ActiveRecord::Base
   before_save :transform_post
   before_validation :set_published_at
   
-  after_save do |post|
-    activity = Activity.find_by_item_type_and_item_id('Post', post.id)
-    if post.is_live? && !activity
-      post.create_activity_from_self 
-    elsif post.is_draft? && activity
-      activity.destroy
-    end
-  end
+#  after_save do |post|
+#    activity = Activity.find_by_item_type_and_item_id('Post', post.id)
+#    if post.is_live? && !activity
+#      post.create_activity_from_self 
+#    elsif post.is_draft? && activity
+#      activity.destroy
+#    end
+#  end
     
   attr_accessor :invalid_emails
   

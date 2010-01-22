@@ -12,6 +12,11 @@ class CommentsController < BaseController
 
   cache_sweeper :comment_sweeper, :only => [:create, :destroy]
 
+  # ATIVIDADES
+  # Criação do Comentário
+  log_activity_streams :current_user, :name, :create_comment, 
+         :@comment, :name, :create, :created_comment, {:total => 1 } 
+
   def index
   
     @commentable = comment_type.constantize.find(comment_id)
@@ -66,6 +71,10 @@ class CommentsController < BaseController
         redirect_to :controller => 'base', :action => 'site_index' and return
       }
     end
+  end
+  
+  def show
+    render(:action => '_comment')
   end
 
   def new

@@ -1,0 +1,9 @@
+<h1>Aulas Favoritas: </h1>
+
+
+<% @courses.each do |course| %>
+  <tr>
+    <td><%=h course.name %></td>
+    <td><%= link_to 'Visualizar', course %></td>
+  </tr>
+<% end %>
