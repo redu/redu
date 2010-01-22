@@ -68,14 +68,14 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :followers, :class_name => "User", :join_table => "followship", :association_foreign_key => "followed_by_id", :foreign_key => "follows_id", :uniq => true
   
   #COURSES
-  has_many :courses, :foreign_key => "owner_id"
+  has_many :courses, :foreign_key => "owner"
   has_many :acquisitions, :as => :acquired_by
 
   #RESOURCES
-  has_many :resources, :foreign_key => "owner_id"
+  has_many :resources, :foreign_key => "owner"
   
   # EXAMS
-  has_many :exams, :foreign_key => "owner_id"
+  has_many :exams, :foreign_key => "owner"
   
   has_many :exam_users#, :dependent => :destroy
   has_many :exam_history, :through => :exam_users, :source => :exam
