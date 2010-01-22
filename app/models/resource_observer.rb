@@ -1,7 +1,7 @@
 class ResourceObserver < ActiveRecord::Observer
   
    def after_create(resource)
-    user = User.find(resource.owner)
+    user = resource.owner
     Log.create(:table => 'resource',
     :action => 'create',
     :actor_name => user.login,
@@ -16,7 +16,7 @@ class ResourceObserver < ActiveRecord::Observer
   end
   
   def after_update(resource)
-    user = User.find(resource.owner)
+    user = resource.owner
     Log.create(:table => 'resource',
     :action => 'update',
     :actor_name => user.login,

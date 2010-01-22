@@ -3,7 +3,7 @@ class CourseObserver < ActiveRecord::Observer
   
   
   def after_create(course)
-    user = User.find(course.owner)
+    user = course.owner
     Log.create(:table => 'course',
     :action => 'create',
     :actor_name => user.login,
@@ -19,7 +19,7 @@ class CourseObserver < ActiveRecord::Observer
   end
   
   def after_update(course)
-    user = User.find(course.owner)
+    user = course.owner
     Log.create(:table => 'course',
     :action => 'update',
     :actor_name => user.login,
