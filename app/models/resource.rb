@@ -61,7 +61,6 @@ class Resource < ActiveRecord::Base
 
 	# Callbacks
 	before_validation :enable_correct_validation_group
-	#after_create :convert
 	
 	# Validations
   validates_presence_of :title, :external_resource_type, :external_resource
@@ -101,7 +100,7 @@ class Resource < ActiveRecord::Base
     if video?    
       proxy = MiddleMan.worker(:converter_worker)
       self.convert!
-      proxy.enq_convert(:arg => self.id, :job_key => self.id) #TODO set timeout :timeout => ?
+      proxy.enq_convert_resource(:arg => self.id, :job_key => self.id) #TODO set timeout :timeout => ?
     else
 			self.converted!
     end

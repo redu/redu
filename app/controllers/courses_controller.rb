@@ -1,10 +1,7 @@
 class CoursesController < BaseController
   before_filter :login_required, :except => [:index]
- 
-  
   CourseObserver.observed_class
     
-  
   def rate
     @course = Course.find(params[:id])
     @course.rate(params[:stars], current_user, params[:dimension])
@@ -115,14 +112,13 @@ class CoursesController < BaseController
   # POST /courses.xml
   def create
   	params[:course][:owner] = current_user
-		params[:course][:main_resource_attributes][:owner] = current_user
 		
     @course = Course.new(params[:course])
     
     respond_to do |format|
     	
       if @course.save
-        @course.main_resource.convert
+        @course.convert
         flash[:notice] = 'Aula foi criada com sucesso.'
         format.html { redirect_to(@course) }
         format.xml  { render :xml => @course, :status => :created, :location => @course }

@@ -1,13 +1,23 @@
 class ConverterWorker < BackgrounDRb::MetaWorker
   set_worker_name :converter_worker
+  
   def create(args = nil)
     # this method is called, when worker is loaded for the first time
-    
   end
   
-  def convert(resource_id)
-    resource = Resource.find(resource_id)
-    
+  def convert_course(id)
+    resource = Course.find(id)
+    self.convert(resource)
+  end
+  
+  def convert_resource(id)
+    resource = Resource.find(id)
+    self.convert(resource)
+  end
+  
+  protected
+  
+  def convert(resource)
     success = self.convert_command(resource)
     
     if success
@@ -20,10 +30,8 @@ class ConverterWorker < BackgrounDRb::MetaWorker
  		
   end
   
-  protected
-  
   def convert_command(resource)
-    file = File.join(File.dirname(resource.media.path), "#{resource.id}.flv") #TODO make converted file path a constant.
+    file = File.join(File.dirname(resource.media.path), "#{ resource.id }.flv") #TODO make converted file path a constant.
     thumb = File.join(File.dirname(resource.media.path), "#{ resource.id }")
     # Conversion command
     `ffmpeg -i #{ resource.media.path } -ar 22050 -ab 32 -s 480x360 -vcodec flv -r 25 -qscale 8 -f flv -y #{ file }`

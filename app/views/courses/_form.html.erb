@@ -12,33 +12,23 @@
 	<%= f.label :published %>:<br/>
 	<%= f.check_box :published %><br/><br/>
 
-	<% @user_resources = current_user.resources.delete_if { |r| r.id == @course.main_resource.id } if @course.main_resource %>
+	<% @user_resources = current_user.resources %>
 
 <fieldset>
 	<legend>Material Principal</legend>
-	<% if edit %>
-	  <strong><%= @course.main_resource.title %></strong>
-    <%= link_to "Editar", :controller => 'resources', :id => @course.main_resource.id, :action => 'edit' %>
-    <br/><br/>	
-    
-    <% unless @user_resources.empty? %>
-    <strong>Novo material principal</strong>
-    <div style="overflow: scroll; height: 200px; width: 250px;">
-      <ul>
-      <% @user_resources.each do | resource | %>
-	      <li>
-	       <%= radio_button_tag "course[main_resource_id]", "#{resource.id}" -%>
-	      <%= resource.title %>	</li>
-      <% end %>
-      </ul>
-    </div>
-    <% end %>
-    <%= link_to "Adicionar novo material principal", :controller => "resources", :action => "new" %>
-	<% else %>
-	  <% f.fields_for :main_resource do | main | %>
-	  <%= render :partial => "resources/form", :locals => { :f => main } %>
-	  <% end  %>
-	<% end %>
+
+  <%= f.radio_button :external_resource_type, :slideshare %>
+  <%= f.label :external_resource_type_slideshare, "Slideshare" %>	
+  <%= f.radio_button :external_resource_type, :youtube %>
+  <%= f.label :external_resource_type_youtube, "Youtube" %>
+  <%= f.radio_button :external_resource_type, :upload %>
+  <%= f.label :external_resource_type_upload, "Upload" %><br/><br/>
+
+  <%= f.label :media, "Upload de Material" %><br/>
+  <%= f.file_field :media  %><br/><br/>
+
+  <%= f.label :external_resource, "Material Externo (Youtube, Slideshare, etc)" %><br/>
+  <%= f.text_field :external_resource  %><br/><br/>
 </fieldset>	
 
 <fieldset>
