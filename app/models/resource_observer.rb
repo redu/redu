@@ -1,7 +1,7 @@
 class ResourceObserver < ActiveRecord::Observer
   
    def after_create(resource)
-    user = User.find(resource.owner_id)
+    user = User.find(resource.owner)
     Log.create(:table => 'resource',
     :action => 'create',
     :actor_name => user.login,
@@ -11,13 +11,12 @@ class ResourceObserver < ActiveRecord::Observer
     :comment => 'Material Adicionado...')
   end
   
-  
   def after_destroy(resource)
      Log.delete_all(["object_id = ?", resource.id])
   end
   
   def after_update(resource)
-    user = User.find(resource.owner_id)
+    user = User.find(resource.owner)
     Log.create(:table => 'resource',
     :action => 'update',
     :actor_name => user.login,
