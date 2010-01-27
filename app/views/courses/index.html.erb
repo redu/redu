@@ -6,8 +6,8 @@
   		<div id="task_bar_exames"><%= link_to 'Nova Aula', :action => 'new' %> | 
   		<%= link_to 'Minhas Aulas', published_user_courses_path(current_user.id) %> |
 		<%  if current_user.admin? %>
-			<span style="color: #FF0000">
-			<%= link_to 'Moderar Vídeos', pending_courses_path %>
+			<span style="color:red;">
+			<%= link_to 'Moderar Vídeos' , pending_courses_path %>
 			</span>
 		<% end %>
 		</div>

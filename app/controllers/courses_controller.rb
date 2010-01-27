@@ -61,6 +61,10 @@ class CoursesController < BaseController
   # GET /courses/1
   # GET /courses/1.xml
   def show
+    '''
+    Cuidado para o usuário digitar a url e poder assistir o vídeo mesmo o vídeo não estando
+    aprovado ainda. TODO
+    '''
     @course = Course.find(params[:id])
     #@favorites = Favorite.find(:conditions => ['user_id = ?',current_user.id])
     @comments  = @course.comments.find(:all, :limit => 10, :order => 'created_at DESC')
@@ -181,6 +185,22 @@ class CoursesController < BaseController
       redirect_to @course
     end
   end
+  
+  
+  def approve
+    @course = Course.find(params[:id])
+    @course.approve!
+    flash[:notice] = 'A aula foi aprovada!'
+    redirect_to pending_courses_path
+  end
+  
+  def disapprove
+    @course = Course.find(params[:id])
+    @course.disapprove!
+    flash[:notice] = 'A aula não foi aprovada!'
+    redirect_to pending_courses_path
+  end
+  
   
   # LISTAGENS
   

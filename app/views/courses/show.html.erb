@@ -14,6 +14,12 @@
     	<%= link_to 'Editar', {:action => "edit"}, :class => "link_edit" %><br/>
     	
     	<% end %>
+		<%  if current_user.admin? %>
+			<!-- Linkar para onde? -->
+			<%= link_to 'Aprovar' , {:action => "approve", :id => @course.id} %>
+			<%= link_to 'Rejeitar' , {:action => "disapprove", :id => @course.id} %>
+			
+		<% end %>
     	</div>
         <div id="identification1">
         	<ul id="identification_resource1">
