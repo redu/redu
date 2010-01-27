@@ -2,7 +2,16 @@
 <div id="col_content">
 	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">aprender</a> > <a href="#">aulas</a> </div>
  	<div id="title">AULAS
-	<%= render :partial => "courses/taskbar" %>
+	<%  if logged_in? %>
+  		<div id="task_bar_exames"><%= link_to 'Nova Aula', :action => 'new' %> | 
+  		<%= link_to 'Minhas Aulas', published_user_courses_path(current_user.id) %> |
+		<%  if current_user.admin? %>
+			<span style="color: #FF0000">
+			<%= link_to 'Moderar Vídeos', pending_courses_path %>
+			</span>
+		<% end %>
+		</div>
+	<% end %>
 	</div>
 	<div id="filter_bar">
 		

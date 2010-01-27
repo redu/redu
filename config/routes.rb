@@ -16,7 +16,7 @@ ActionController::Routing::Routes.draw do |map|
     
   map.resources :subjects
 
-  map.resources :courses, :member => {:rate => :post}
+  map.resources :courses, :member => {:rate => :post},  :collection => {:pending => :get}
   
   map.resources :user_school_association
 
@@ -214,7 +214,7 @@ ActionController::Routing::Routes.draw do |map|
     user.resources :activities, :collection => {:network => :get}
     user.resources :invitations
     user.resources :resources, :collection => {:published => :get, :unpublished => :get, :history => :get} 
-    user.resources :courses, :collection => {:published => :get, :unpublished => :get, :history => :get} 
+    user.resources :courses, :collection => {:published => :get, :unpublished => :get, :waiting => :get} 
     user.resources :schools, :collection => {:member => :get, :owner => :get}
     user.resources :exams, :collection => {:published => :get, :unpublished => :get, :history => :get} 
     user.resources :questions

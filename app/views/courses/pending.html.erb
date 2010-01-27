@@ -1,8 +1,10 @@
 <div id="all_content3">
 <div id="col_content">
 	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">aprender</a> > <a href="#">aulas</a> </div>
- 	<div id="title">AULAS PUBLICADAS
-	<%= render :partial => "courses/taskbar" %>
+ 	<div id="title">MODERAÇÃO DE AULAS
+		<div id="task_bar_exames"><%= link_to 'Nova Aula', :action => 'new' %> | 
+  		<%= link_to 'Minhas Aulas', published_user_courses_path(current_user.id) %> |
+		</div>
 	</div>
 	<div id="filter_bar">
 		

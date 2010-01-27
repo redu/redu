@@ -21,7 +21,8 @@ development:
   database: redu
   pool: 5
   username: root
-  password: redulambda
+  password: 
+  #password: redulambda
   host: localhost
   
   

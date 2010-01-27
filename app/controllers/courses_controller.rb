@@ -50,7 +50,7 @@ class CoursesController < BaseController
   # GET /courses
   # GET /courses.xml
   def index
-    @courses = Course.all
+    @courses = Course.all(:conditions => ["state LIKE ?", "approved"])
     
     respond_to do |format|
       format.html # index.html.erb
@@ -61,7 +61,6 @@ class CoursesController < BaseController
   # GET /courses/1
   # GET /courses/1.xml
   def show
-    puts "passou aqui."
     @course = Course.find(params[:id])
     #@favorites = Favorite.find(:conditions => ['user_id = ?',current_user.id])
     @comments  = @course.comments.find(:all, :limit => 10, :order => 'created_at DESC')
@@ -119,8 +118,11 @@ class CoursesController < BaseController
     	
       if @course.save
         @course.convert
-        flash[:notice] = 'Aula foi criada com sucesso.'
-        format.html { redirect_to(@course) }
+        flash[:notice] = 'Aula foi criada com sucesso e está em processo de moderação.'
+        format.html { 
+        #redirect_to(@course)
+        redirect_to waiting_user_courses_path(current_user.id)
+        }
         format.xml  { render :xml => @course, :status => :created, :location => @course }
       else  
         format.html { render :action => "new" }
@@ -180,8 +182,25 @@ class CoursesController < BaseController
     end
   end
   
+  # LISTAGENS
+  
+  def pending
+    @courses = Course.paginate(:conditions => ["published = 1 AND state LIKE ?", "waiting"], 
+      :include => :owner, 
+      :page => params[:page], 
+      :order => 'updated_at DESC', 
+      :per_page => AppConfig.items_per_page)
+      
+      respond_to do |format|
+        format.html #{ render :action => "my" }
+        format.xml  { render :xml => @resources }
+      end
+    
+  end
+  
+  
   def published
-  	@courses = Course.paginate(:conditions => ["owner = ? AND published = 1", params[:user_id]], 
+  	@courses = Course.paginate(:conditions => ["owner = ? AND published = 1 AND state LIKE ?", params[:user_id], "approved"], 
   		:include => :owner, 
   		:page => params[:page], 
   		:order => 'updated_at DESC', 
@@ -191,6 +210,32 @@ class CoursesController < BaseController
 				format.html #{ render :action => "my" }
 				format.xml  { render :xml => @resources }
 			end
+	end
+ 
+ def unpublished
+    @courses = Course.paginate(:conditions => ["owner = ? AND published = 0", params[:user_id]], 
+      :include => :owner, 
+      :page => params[:page], 
+      :order => 'updated_at DESC', 
+      :per_page => AppConfig.items_per_page)
+      
+      respond_to do |format|
+        format.html #{ render :action => "my" }
+        format.xml  { render :xml => @resources }
+      end
+  end
+  
+  def waiting
+    @courses = Course.paginate(:conditions => ["owner = ? AND published = 1 AND state LIKE ?", params[:user_id], "waiting"], 
+      :include => :owner, 
+      :page => params[:page], 
+      :order => 'updated_at DESC', 
+      :per_page => AppConfig.items_per_page)
+      
+      respond_to do |format|
+        format.html #{ render :action => "my" }
+        format.xml  { render :xml => @resources }
+      end
   end
   
 end

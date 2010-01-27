@@ -50,15 +50,33 @@ class Course < ActiveRecord::Base
     #state :converted, :enter => :upload, :after => :set_new_filename
     state :converted, :after => :set_new_local_filename
     state :error
+    
+    state :waiting
+    state :approved
+    state :disapproved
 	
+   event :approve do
+      transitions :from => :waiting, :to => :approved
+   end
+   
+   event :disapprove do
+      transitions :from => :waiting, :to => :disapproved
+   end
+   
+   event :wait do
+      transitions :from => :converting, :to => :waiting
+    end
+    
+    
     event :convert do
       transitions :from => :pending, :to => :converting
     end
 
+    '''
     event :converted do
-      transitions :from => :converting, :to => :converted
+      transitions :from => :converting, :to => :waiting
     end
-
+'''
     event :failure do
       transitions :from => :converting, :to => :error # TODO salvar estado de "erro" no bd
     end
@@ -90,12 +108,15 @@ class Course < ActiveRecord::Base
 
   # This method is called from the controller and takes care of the converting
   def convert
+    self.convert!
     if video?    
       proxy = MiddleMan.worker(:converter_worker)
       self.convert!
       proxy.enq_convert_course(:arg => self.id, :job_key => self.id) #TODO set timeout :timeout => ?
     else
-			self.converted!
+			#self.converted!
+      self.wait!
+      #self.update_attribute(:state, "waiting")
     end
   end
 
