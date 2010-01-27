@@ -75,7 +75,7 @@ class Resource < ActiveRecord::Base
 	named_scope :published, :conditions => ['published = ?', true], :include => :owner
 	
   # Acts as state machine plugin
-  acts_as_state_machine :initial => :pending
+  acts_as_state_machine :initial => :pending, :column => 'state'
   state :pending
   state :converting
   #state :converted, :enter => :upload, :after => :set_new_filename
@@ -97,13 +97,17 @@ class Resource < ActiveRecord::Base
 
   # This method is called from the controller and takes care of the converting
   def convert
+    self.convert!
     if video?    
       proxy = MiddleMan.worker(:converter_worker)
       self.convert!
       proxy.enq_convert_resource(:arg => self.id, :job_key => self.id) #TODO set timeout :timeout => ?
     else
+      puts "convert-else"
 			self.converted!
+			puts self.current_state
     end
+    save
   end
 
   def video?
