@@ -1,7 +1,7 @@
 class CoursesController < BaseController
   before_filter :login_required, :except => [:index]
   CourseObserver.observed_class
-    
+  
   def rate
     @course = Course.find(params[:id])
     @course.rate(params[:stars], current_user, params[:dimension])
@@ -12,7 +12,7 @@ class CoursesController < BaseController
       page.visual_effect :highlight, id
     end
   end
- 
+  
   
   # Lista todos os recursos existentes para relacionar com
   def list_resources
@@ -61,15 +61,19 @@ class CoursesController < BaseController
   # GET /courses/1
   # GET /courses/1.xml
   def show
+
     '''
     Cuidado para o usuário digitar a url e poder assistir o vídeo mesmo o vídeo não estando
     aprovado ainda. TODO
     '''
-    @course = Course.find(params[:id])
-    #@favorites = Favorite.find(:conditions => ['user_id = ?',current_user.id])
-    @comments  = @course.comments.find(:all, :limit => 10, :order => 'created_at DESC')
     
-     Log.create(:table => 'course',
+      #@course = Course.find(:conditions => ['user_id = ?', current_user.id])
+      @course = Course.find(params[:id])
+      @comments  = @course.comments.find(:all, :limit => 10, :order => 'created_at DESC')
+    
+ 
+    
+    Log.create(:table => 'course',
       :action => 'show',
       :actor_name => current_user.login,
       :actor_id => current_user.id,
@@ -81,7 +85,7 @@ class CoursesController < BaseController
       format.html # show.html.erb
       format.xml  { render :xml => @course }
     end
-      
+    
   end
   
   def view
@@ -95,14 +99,14 @@ class CoursesController < BaseController
       format.xml  { render :xml => @course }
     end
     
- 
+    
     
   end
   
   # GET /courses/new
   # GET /courses/new.xml
   def new
-		@course = Course.new
+    @course = Course.new
   end
   
   # GET /courses/1/edit
@@ -110,22 +114,22 @@ class CoursesController < BaseController
     @course = Course.find(params[:id])
   end
   
-   
+  
   # POST /courses
   # POST /courses.xml
   def create
-  	params[:course][:owner] = current_user
-		
+    params[:course][:owner] = current_user
+    
     @course = Course.new(params[:course])
     
     respond_to do |format|
-    	
+      
       if @course.save
         @course.convert
         flash[:notice] = 'Aula foi criada com sucesso e está em processo de moderação.'
         format.html { 
-        #redirect_to(@course)
-        redirect_to waiting_user_courses_path(current_user.id)
+          #redirect_to(@course)
+          redirect_to waiting_user_courses_path(current_user.id)
         }
         format.xml  { render :xml => @course, :status => :created, :location => @course }
       else  
@@ -165,6 +169,8 @@ class CoursesController < BaseController
     end
   end
   
+  
+  #Buy one course  
   def buy
     @course = Course.find(params[:id])
     
@@ -178,10 +184,11 @@ class CoursesController < BaseController
     '''
     @acquisition.acquired_by_type = "User"
     @acquisition.acquired_by_id = current_user.id
-    @acquisition.produto = @course
+    @acquisition.course = @course
+    current_user.owner = 1
     
     if @acquisition.save
-      flash[:notice] = "A aula foi comprada!"
+      flash[:notice] = 'A aula foi comprada!'
       redirect_to @course
     end
   end
@@ -210,39 +217,39 @@ class CoursesController < BaseController
       :page => params[:page], 
       :order => 'updated_at DESC', 
       :per_page => AppConfig.items_per_page)
-      
-      respond_to do |format|
-        format.html #{ render :action => "my" }
-        format.xml  { render :xml => @resources }
-      end
+    
+    respond_to do |format|
+      format.html #{ render :action => "my" }
+      format.xml  { render :xml => @resources }
+    end
     
   end
   
   
   def published
-  	@courses = Course.paginate(:conditions => ["owner = ? AND published = 1 AND state LIKE ?", params[:user_id], "approved"], 
+    @courses = Course.paginate(:conditions => ["owner = ? AND published = 1 AND state LIKE ?", params[:user_id], "approved"], 
   		:include => :owner, 
   		:page => params[:page], 
   		:order => 'updated_at DESC', 
   		:per_page => AppConfig.items_per_page)
-  		
-			respond_to do |format|
-				format.html #{ render :action => "my" }
-				format.xml  { render :xml => @resources }
-			end
-	end
- 
- def unpublished
+    
+    respond_to do |format|
+      format.html #{ render :action => "my" }
+      format.xml  { render :xml => @resources }
+    end
+  end
+  
+  def unpublished
     @courses = Course.paginate(:conditions => ["owner = ? AND published = 0", params[:user_id]], 
       :include => :owner, 
       :page => params[:page], 
       :order => 'updated_at DESC', 
       :per_page => AppConfig.items_per_page)
-      
-      respond_to do |format|
-        format.html #{ render :action => "my" }
-        format.xml  { render :xml => @resources }
-      end
+    
+    respond_to do |format|
+      format.html #{ render :action => "my" }
+      format.xml  { render :xml => @resources }
+    end
   end
   
   def waiting
@@ -251,11 +258,11 @@ class CoursesController < BaseController
       :page => params[:page], 
       :order => 'updated_at DESC', 
       :per_page => AppConfig.items_per_page)
-      
-      respond_to do |format|
-        format.html #{ render :action => "my" }
-        format.xml  { render :xml => @resources }
-      end
+    
+    respond_to do |format|
+      format.html #{ render :action => "my" }
+      format.xml  { render :xml => @resources }
+    end
   end
   
 end
