@@ -148,6 +148,16 @@ class ClippingsController < BaseController
     @clipping = @user.clippings.new(params[:clipping])
     @clipping.user = @user
     @clipping.tag_list = params[:tag_list] || ''
+    
+    
+    # primeiro salva clipping !
+    
+    
+    #@res = Resource.new
+    #@res.title = @clipping.title
+    #@res.owner = @clipping.user
+    
+  #  @res.resource = 
 
     respond_to do |format|
       if @clipping.save!
