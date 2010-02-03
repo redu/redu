@@ -34,6 +34,9 @@ class ForumsController < BaseController
   
   def create
     @forum.attributes = params[:forum]
+    
+    @forum.school_id = 1 
+    
     @forum.tag_list = params[:tag_list] || ''
     @forum.save!
     respond_to do |format|

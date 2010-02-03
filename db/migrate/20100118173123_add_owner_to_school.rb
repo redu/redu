@@ -1,6 +1,6 @@
 class AddOwnerToSchool < ActiveRecord::Migration
   def self.up
-    add_column :schools, :owner, :integer
+    add_column :schools, :owner, :integer, :null => false
   end
   
   def self.down

@@ -59,6 +59,8 @@ class User < ActiveRecord::Base
   has_many :user_school_association, :dependent => :destroy
   has_many :schools, :through => :user_school_association
   
+  has_many :schools_owned, :class_name => "School" , :foreign_key => "owner"
+  
   # SUBJECT
   has_many :user_subject_association
   has_many :subjects, :through => :user_subject_association

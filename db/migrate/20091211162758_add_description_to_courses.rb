@@ -1,6 +1,6 @@
 class AddDescriptionToCourses < ActiveRecord::Migration
   def self.up
-    add_column :courses, :description, :text
+    add_column :courses, :description, :text, :null => false
   end
 
   def self.down

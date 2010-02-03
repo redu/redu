@@ -136,7 +136,7 @@ class SchoolsController < BaseController
   # GET /schools/1.xml
   def show
     @school = School.find(params[:id])
-    
+    @forums = @school.forums
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @school }
@@ -147,7 +147,10 @@ class SchoolsController < BaseController
   # GET /schools/new.xml
   def new
     @school = School.new
-    @school.owner = current_user
+    #@school.owner = current_user
+    
+    
+    
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @school }
@@ -163,7 +166,9 @@ class SchoolsController < BaseController
   # POST /schools.xml
   def create
     @school = School.new(params[:school])
+    
     @school.owner = current_user
+    
     #nao eh necessario pois ja temos verificacao no modelo
     #if !params[:school][:name] || params[:school][:name].empty?
     #  flash[:error] = 'Name não pode ser vazio'
@@ -173,7 +178,8 @@ class SchoolsController < BaseController
     
     
     respond_to do |format|
-      if @school.save
+      if @school.save#! and UserSchoolAssociation.create(:user => current_user, :school => @school, :role_id => 4)
+        
         flash[:notice] = 'School was successfully created.'
         format.html { redirect_to(@school) }
         format.xml  { render :xml => @school, :status => :created, :location => @school }

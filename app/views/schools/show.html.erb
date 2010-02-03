@@ -55,10 +55,7 @@
 	
     
 </script>
-<h1>Nome da escola: <%= @school.name %></h1>
-<p>
-    <%= @school.description %>
-</p>
+
 
 
 
@@ -114,6 +111,8 @@
 	-->
 	
 <%end %>
+
+
 <BR>
 <!-- MOSTRAR APENAS ALGUNS -->
 <% if @school.students.length == 0 %>
@@ -145,4 +144,195 @@ Listando alunos:
 	<%= link_to 'Gerenciar Chaves', {:controller => :access_keys, :action => :index_school, :id => @school}%>
 <% end %>
 
-<%= link_to 'Back', schools_path -%>
+
+
+
+
+
+
+
+
+
+<div id="all_content4">
+<div id="content_preview_exame">
+	<div id="breadcrumbs_video"><a href="<%=application_url%>">home</a> > <a href="#">redes</a> > <%= link_to 'redes', schools_path %> > <strong><a href="#"><%= @school.name%></a></strong></div>  
+   	<div id="title_video">REDE</div>
+	<%# render :partial => 'exams/author', :locals => {:author => @school.owner} %>
+	
+	
+<!-- CABEÃ‡ALHO ############################################################################################################################### -->
+
+	<div id="item_video">
+    	<div id="title_video">
+        	<ul id="titlevideo_menu">
+        		<li><%= @school.name %></li>
+        		<!-- <li><a href="#" class="edit"> editar</a></li> -->
+        	</ul>
+        </div>
+        <div id="identification1">
+        	<ul id="identification_resource1">
+				<li><%= link_to @school.owner.login, user_path(@school.owner) %></li>
+        		<li>|</li>
+				<li><%= time_ago_in_words(@school.created_at) %></li>
+            <!--	<li>|</li>
+				<li>ExibiÃ§Ãµes(4)</li> -->
+			</ul>
+        </div>
+         <div id="description_video"><%#h @school.description %> </div>
+         <div id="identification1">
+        	<ul id="identification_resource1">
+				<li><strong>Categoria:</strong> Português</li>
+        		<li>|</li>
+				<li><strong>Tags:</strong> <%# @exam.tag_list %></li>
+			</ul>
+         </div>
+         <div id="base_btn_exame"><%= link_to 'COMPRAR', {:action => :answer, :id => @exam, :first => true}, {:class =>'btn_exame'} %></div>     
+   	  </div>
+	  
+<!-- CABEÃ‡ALHO ############################################################################################################################### --> 
+
+<!-- BARRA ################################################################################################################################### -->
+
+<div id="filter_bar_video">
+	<div id="actions_video">
+    	<ul id="actions_resource">
+			<li><a href="#" class="share_video">Compartilhar</a></li>
+        	<li>|</li>
+			<li><a href="#" class="favorites_video">Favoritos</a></li>
+            <li>|</li>
+			<li><a href="#" class="download_video">Download</a></li>
+            <li>|</li>
+			<li><a href="#" class="comments_video">Comentários(<%# @exam.comments.length %>)</a></li>
+		</ul>
+    </div>
+	
+	<!--
+	<div id="ratting_video">
+		<ul id="ratting_video_menu">
+			<li class="evaluation_rating">AvaliaÃ§Ãµes(30)</li>
+			<li><img src="img/icon_star_on.png" /></li>
+			<li><img src="img/icon_star_on.png" /></li>
+			<li><img src="img/icon_star_on.png" /></li>
+			<li><img src="img/icon_star_off.png" /></li>
+			<li><img src="img/icon_star_off.png" /></li>
+		</ul>
+	</div>
+	
+	-->  
+</div>
+
+<!-- BARRA ################################################################################################################################### -->
+<div id="bars"> 
+<div id="info_exame_bar">
+	<ul id="info_exame_bar_actions">
+    	<li>Questões(<%# @exam.questions.length %>)</li>
+        <li>|</li>
+        <li>Grau de Dificuldade: <strong><%#h (@exam.level == 1) ? "Iniciante" : ((@exam.level == 2) ? "Intermediário" : "Avançado") %></strong></li>
+        <li>|</li>
+        <li>Realizado(<%# @exam.done_count %>)</li>
+        <li>|</li>
+        <li id="media"><strong>MÉDIA GERAL: <%# (@exam.done_count == 0) ? 0 : (@exam.total_correct/@exam.done_count)/@exam.questions.length*1000.round/10 %>%</strong></li>
+    </ul>
+</div>
+
+<div id="admin_bar">
+	<ul id="admin_bar_actions">
+    	<li><%= link_to 'Voltar', schools_path %></li>
+       <!--
+	    <li><a href="#" class="remover">Remover</a></li>
+        <li><a href="#" class="editar">Editar</a></li>
+		-->
+    </ul>
+</div>
+</div>
+<!-- VIDEO ################################################################################################################################### -->
+<!-- COMENTARIOS ############################################################################################################################# -->
+<%= render :partial => 'forums/index' %>
+<!-- COMENTARIOS ############################################################################################################################# -->
+
+<!-- MATERIAIS AUXILIARES #################################################################################################################### -->
+
+<div id="materials">
+	<div id="filter_bar_materials"><span class="title_materials">MATERIAL AUXILIAR</span></div>
+	<div id="materials_form">
+
+    <div id="materialslist" align="left">
+    	<ul id="materials_item">
+    		<li><a href="#" class="pdf">Exercicio Complementar(100KB)</a></li>
+            <li><a href="#" class="word">Apostilia 021(30KB)</a></li>
+            <li><a href="#" class="excel">Planilha para coleta dos dados(10KB)</a></li>
+            <li><a href="#" class="text">Resumo da palestra (5KB)</a></li>
+            <li><a href="#" class="ppt">Slide da Aula</a></li>
+            <li><a href="#" class="photo">Fotos da Turma</a></li>
+    	</ul>
+    </div>
+	
+	</div>
+
+
+<!-- MATERIAIS AUXILIARES #################################################################################################################### -->
+
+<!-- CONTEUDO COMPLEMENTAR ################################################################################################################### -->
+<div id="video_aula_list">
+        <div id="item_list">
+    		<div id="title_list_item"><a href="#">PortuguÃªs - ConjunÃ§Ãµes</a></div>
+             
+            <div id="video"><!-- Video Insert -->
+           	  <div id="video_info">00:00:00</div>
+            </div>
+            
+            <div id="identification_list">
+              <ul id="identification_resource">
+				<li><a href="#">Robson Ribeiro</a></li>
+        		<li>|</li>
+				<li>hÃ¡ 1 hora atrÃ¡s</li>
+                <li>|</li>
+				<li>ExibiÃ§Ãµes(4)</li>
+			  </ul>
+            </div>
+            
+            <div id="description_list">Descricao do video aula, o que vai ser passado para o alunos, conteudo da aula e outra coisas mais significantes para seu aprendizado
+            </div>
+            <!--<div id="categoria_tags">
+        		<ul id="categoria_tags_list">
+					<li><strong>Categoria:</strong> PortuguÃªs</li>
+        			<li>|</li>
+					<li><strong>Tag:</strong> Ensino MÃ©dio, PortuguÃªs, ENEM, Vestibular</li>
+				</ul>
+			</div>-->  
+            <!--<div id="actions">
+              <ul id="actions_resource">
+				<li><a href="#" class="share">Compartilhar</a></li>
+        		<li>|</li>
+				<li><a href="#" class="favorites">Favoritos</a></li>
+                <li>|</li>
+				<li><a href="#" class="download">Download</a></li>
+                <li>|</li>
+				<li><a href="#" class="comments">ComentÃ¡rios(30)</a></li>
+			  </ul>
+            </div>-->
+            
+			<div id="ratting_video">
+				<ul id="ratting_video_menu">
+					<li class="evaluation_rating">AvaliaÃ§Ãµes(30)</li>
+					<li><img src="images/icon_star_on.png" /></li>
+					<li><img src="images/icon_star_on.png" /></li>
+					<li><img src="images/icon_star_on.png" /></li>
+					<li><img src="images/icon_star_off.png" /></li>
+					<li><img src="images/icon_star_off.png" /></li>
+				</ul>
+			</div>
+            
+    	</div>
+</div>
+<!-- CONTEUDO COMPLEMENTAR ################################################################################################################### -->
+<div id="btn_list_all" align="right"><a href="#" class="btn_list">Ver todos (12)</a></div>
+<!-- VIDEO ################################################################################################################################### -->
+
+</div>
+</div>
+</div>
+
+
+
+

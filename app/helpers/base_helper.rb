@@ -16,7 +16,7 @@ module BaseHelper
   end
   
   def forum_page?
-    %w(forums topics sb_posts).include?(@controller.controller_name)
+    %w(forums topics sb_posts schools).include?(@controller.controller_name)
   end
   
   def is_current_user_and_featured?(u)
