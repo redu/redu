@@ -261,6 +261,11 @@ class User < ActiveRecord::Base
   
   ## Instance Methods
   
+  def has_access_to_course(course)
+    #TODO
+    @acq = Acquisition.find(:first, :conditions => ['acquired_by_id = ? AND course_id = ?', self.id, course.id])
+  end
+  
   def moderator_of?(forum)
     moderatorships.count(:all, :conditions => ['forum_id = ?', (forum.is_a?(Forum) ? forum.id : forum)]) == 1
   end

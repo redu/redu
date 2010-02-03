@@ -63,7 +63,7 @@ class CoursesController < BaseController
   def show
     
     @course = Course.find(params[:id])
-    if current_user.owner.eql?(@course.owner)
+    #if current_user.owner.eql?(@course.owner)
       @comments  = @course.comments.find(:all, :limit => 10, :order => 'created_at DESC')
       
       Log.create(:table => 'course',
@@ -78,10 +78,10 @@ class CoursesController < BaseController
         format.html # show.html.erb
         format.xml  { render :xml => @course }
       end
-    else
-      flash[:notice] = 'Você ainda não comprou essa aula!'
-      redirect_to '/courses/'
-    end
+   # else
+   #   flash[:notice] = 'Você ainda não comprou essa aula!'
+   #   redirect_to courses_path
+   # end
   end
   
   def view
@@ -172,17 +172,9 @@ class CoursesController < BaseController
     
     #o nome dessa variável, deixar como acquisition
     @acquisition = Acquisition.new
-   	'''
-    if current_user.is_school_admin?
-      aquisicao.entity = "School"
-      aquisicao.entity_id = current_user.school # TODO implementar admin de uma unica escola
-    end
-    '''
     @acquisition.acquired_by_type = "User"
     @acquisition.acquired_by_id = current_user.id
     @acquisition.course = @course
-    #olhar ainda esse current_user.owner = 1
-    current_user.owner = 1
     
     if @acquisition.save
       flash[:notice] = 'A aula foi comprada!'

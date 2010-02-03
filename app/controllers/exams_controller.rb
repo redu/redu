@@ -528,7 +528,7 @@ end
     :action => 'show',
     :actor_name => current_user.login,
     :actor_id => current_user.id,
-    :object_name => @exam.title,
+    :object_name => @exam.name,
     :object_id => @exam.id,
     :comment => 'Exame Mostrado...')
 
