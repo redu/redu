@@ -61,31 +61,27 @@ class CoursesController < BaseController
   # GET /courses/1
   # GET /courses/1.xml
   def show
-
-    '''
-    Cuidado para o usuário digitar a url e poder assistir o vídeo mesmo o vídeo não estando
-    aprovado ainda. TODO
-    '''
     
-      #@course = Course.find(:conditions => ['user_id = ?', current_user.id])
-      @course = Course.find(params[:id])
+    @course = Course.find(params[:id])
+    if current_user.owner.eql?(@course.owner)
       @comments  = @course.comments.find(:all, :limit => 10, :order => 'created_at DESC')
-    
- 
-    
-    Log.create(:table => 'course',
+      
+      Log.create(:table => 'course',
       :action => 'show',
       :actor_name => current_user.login,
       :actor_id => current_user.id,
       :object_name => @course.name,
       :object_id => @course.id,
       :comment => 'Aula Mostrada...')
-    
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @course }
+      
+      respond_to do |format|
+        format.html # show.html.erb
+        format.xml  { render :xml => @course }
+      end
+    else
+      flash[:notice] = 'Você ainda não comprou essa aula!'
+      redirect_to '/courses/'
     end
-    
   end
   
   def view
@@ -185,6 +181,7 @@ class CoursesController < BaseController
     @acquisition.acquired_by_type = "User"
     @acquisition.acquired_by_id = current_user.id
     @acquisition.course = @course
+    #olhar ainda esse current_user.owner = 1
     current_user.owner = 1
     
     if @acquisition.save
