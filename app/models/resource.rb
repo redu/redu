@@ -58,6 +58,8 @@ class Resource < ActiveRecord::Base
   has_and_belongs_to_many :exams
   belongs_to :owner, :class_name=> "User", :foreign_key => "owner"
   belongs_to :resourceable, :polymorphic => true
+  
+  #has_one :clipping
 
 	# Callbacks
 	before_validation :enable_correct_validation_group
