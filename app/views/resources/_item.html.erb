@@ -6,7 +6,11 @@
                        
             <div id="identification">
               <ul id="identification_resource">
-								<li><%= link_to resource.owner.login, resource.owner %></li>
+								<li><% if resource.owner %>
+									<%= link_to resource.owner.login, resource.owner %>
+									<% else %>
+									<% end %>
+								</li>
 										<li>|</li>
 								<li><%= time_ago_in_words(resource.created_at) %></li>
 							</ul>
@@ -27,7 +31,7 @@
               <ul id="actions_resource">
 							<li><a href="#" class="share">Compartilhar</a></li>
 						  		<li>|</li>
-							<li><a href="#" class="favorites">Favoritos</a></li>
+							<li><%= link_to 'Favoritos', {:action =>'put_as_favorite', :id => resource.id}, :class => 'favorites'%></li>
 						          <li>|</li>
 							<li><a href="#" class="download">Download</a></li>
 						          <li>|</li>
