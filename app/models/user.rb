@@ -12,10 +12,7 @@ class User < ActiveRecord::Base
   acts_as_taggable  
   acts_as_commentable
   has_private_messages
-#  tracks_unlinked_activities [:logged_in, :invited_friends, :updated_profile, :joined_the_site, 
-#  :create_course, :view_course, :update_course,
-#  :create_resource, :view_resource, :update_resource,
-#  :create_exam, :view_exam, :update_exam, :end_exam]  
+ 
   
   #callbacks  
   before_save   :encrypt_password, :whitelist_attributes
@@ -82,8 +79,11 @@ class User < ActiveRecord::Base
   has_many :exam_users#, :dependent => :destroy
   has_many :exam_history, :through => :exam_users, :source => :exam
   
-    # QUESTIONS
+  # QUESTIONS
   has_many :questions, :foreign_key => :author_id
+  
+  # FAVORITES
+  has_many :favorites, :order => "created_at desc", :dependent => :destroy
   
   # COMMUNITY ENGINE:
 
@@ -535,6 +535,8 @@ class User < ActiveRecord::Base
   
   ## End Instance Methods
   
+  ### Métodos Adicionais 
+  
   def log_activity
     
     @follows = self.follows  
@@ -543,6 +545,16 @@ class User < ActiveRecord::Base
       @logs += Log.find(:all, :conditions => ["actor_id = ?", follows.id],:limit => 5, :order => 'created_at DESC') 
     end
     return @logs
+  end
+  
+  def add_favorite(favoritable_type, favoritable_id)
+   Favorite.create(:favorite_type => favoritable_type, 
+      :favorite_id => favoritable_id, 
+      :user_id => self.id)
+  end
+  
+  def get_favorites
+    @favorites = Favorite.find(:all, :conditions => ["user_id = ?", self.id], :order => 'created_at DESC') 
   end
   
   

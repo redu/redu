@@ -9,6 +9,10 @@ class ResourceObserver < ActiveRecord::Observer
     :object_name => resource.title,
     :object_id => resource.id,
     :comment => 'Material Adicionado...')
+    thepoints = AppConfig.points['created_resource']
+    new_score = user.score + thepoints
+    user.score = new_score
+    user.save
   end
   
   def after_destroy(resource)

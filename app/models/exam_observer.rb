@@ -1,7 +1,7 @@
 class ExamObserver < ActiveRecord::Observer
   
   def after_create(exam)
-    user = User.find(exam.owner_id)
+    user = User.find(exam.author_id)
     Log.create(:table => 'exam',
     :action => 'create',
     :actor_name => user.login,
@@ -9,6 +9,10 @@ class ExamObserver < ActiveRecord::Observer
     :object_name => exam.name,
     :object_id => exam.id,
     :comment => 'Exame Adicionado...')
+    thepoints = AppConfig.points['created_exam']
+    new_score = user.score + thepoints
+    user.score = new_score
+    user.save
   end
   
   
@@ -17,7 +21,7 @@ class ExamObserver < ActiveRecord::Observer
   end
   
   def after_update(exam)
-    user = User.find(exam.owner_id)
+    user = User.find(exam.author_id)
     Log.create(:table => 'exam',
     :action => 'update',
     :actor_name => user.login,
@@ -25,6 +29,10 @@ class ExamObserver < ActiveRecord::Observer
     :object_name => exam.name,
     :object_id => exam.id,
     :comment => 'Exame Atualizado...')
+    thepoints = AppConfig.points['updated_exam']
+    new_score = user.score + thepoints
+    user.score = new_score
+    user.save
   end
   
 end

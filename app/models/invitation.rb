@@ -1,5 +1,4 @@
 class Invitation < ActiveRecord::Base
-  acts_as_activity :user
   
   belongs_to :user
   

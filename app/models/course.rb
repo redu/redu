@@ -89,6 +89,8 @@ class Course < ActiveRecord::Base
   has_many :course_prices
   has_many :acquisitions
   has_attached_file :media
+	has_many :favorites, :as => :favoritable, :dependent => :destroy
+
 
   # Callbacks
   before_validation :enable_correct_validation_group

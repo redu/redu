@@ -1,5 +1,4 @@
 class Topic < ActiveRecord::Base
-#  acts_as_activity :user
   
   acts_as_taggable
   belongs_to :forum, :counter_cache => true

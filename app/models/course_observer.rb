@@ -11,6 +11,10 @@ class CourseObserver < ActiveRecord::Observer
     :object_name => course.name,
     :object_id => course.id,
     :comment => 'Aula Criada...')
+    thepoints = AppConfig.points['created_course']
+    new_score = user.score + thepoints
+    user.score = new_score
+    user.save
   end
   
   
@@ -27,7 +31,11 @@ class CourseObserver < ActiveRecord::Observer
     :object_name => course.name,
     :object_id => course.id,
     :comment => 'Aula Atualizada...')
+    thepoints = AppConfig.points['updated_course']
+    new_score = user.score + thepoints
+    user.score = new_score
+    user.save
   end
- 
+  
   
 end

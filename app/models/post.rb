@@ -1,7 +1,6 @@
 class Post < ActiveRecord::Base
   acts_as_commentable
   acts_as_taggable
-  #acts_as_activity :user, :if => Proc.new{|r| r.is_live?}
   acts_as_publishable :live, :draft
 
   belongs_to :user
