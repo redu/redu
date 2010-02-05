@@ -219,7 +219,7 @@ ActionController::Routing::Routes.draw do |map|
     user.resources :exams, :collection => {:published => :get, :unpublished => :get, :history => :get} 
     user.resources :questions
     user.resources :offerings, :collection => {:replace => :put}
-    user.resources :favorites, :name_prefix => 'user_'
+    user.resources :favorites#, :name_prefix => 'user_'
     user.resources :messages, :collection => { :delete_selected => :post, :auto_complete_for_username => :any }  
     user.resources :comments
     user.resources :photo_manager, :only => ['index']

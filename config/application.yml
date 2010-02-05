@@ -30,12 +30,13 @@ comments_number: 15
 
 points:
   created_course: 80
-  #comment: 10
-  #logged_in: 0
-  #resource_upload: 50
-  #course: 75
-  #course_view: 20
-  #exam_create: 60
+  updated_course: 15
+  show_course: 10
+  created_exam: 40
+  updated_exam: 15
+  show_exam: 10
+  created_resource: 30
+  show_resource: 15
   #exam_take: 20
 
 image:
