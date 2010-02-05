@@ -32,7 +32,7 @@
               <ul id="actions_resource">
 				<li><a href="#" class="share">Compartilhar</a></li>
         		<li>|</li>
-				<li><a href="#" class="favorites">Favoritos</a></li>
+				<li><%= link_to 'Favoritos', {:action =>'put_as_favorite', :id => exam.id}, :class => 'favorites'%></li>
                 <li>|</li>
 				<li><a href="#" class="download">Download</a></li>
                 <li>|</li>
