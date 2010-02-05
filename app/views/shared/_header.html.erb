@@ -13,7 +13,9 @@
         	<li>|</li>
 			<li><a href="#">convidar</a></li>
 			<li><a href="<%=user_messages_path(current_user)%>">mensagens(<%=current_user.unread_message_count%>)</a></li>
-			<li><a href="#">favoritos</a></li>
+			<li>
+				<%= link_to 'favoritos', :controller => "users", :action => "show_favorites", :id => current_user.id, :class => 'favorites' %>
+				</li>
 			<li><a href="<%=edit_account_user_path(current_user)%>">configurações</a></li>
 			<li><a href="<%=logout_path%>">sair</a></li>
 			 
