@@ -33,12 +33,17 @@ function hideResponseBox(activityId){
 	<%  if logged_in? %>
 	<div id="box_baseline">
         	<div id="box_baseline_base">O que você está fazendo agora?</div>
-        	<div id="box_baseline_base"><textarea cols="27" rows="3">
-        		
-				
-			
+			<% text_area_tag 'body',nil, :size => "27x3" %>
+        	<div id="box_baseline_base"><textarea name="body" id="box_baseline_base" cols="27" rows="3">
         	</textarea></div>
-			<div id="bt_send_mv" align="center"><a href="#" class="bt_send">Enviar</a></div>
+			<div id="bt_send_mv" align="center">
+			<% submit_tag  %>	
+			
+			<a href="#" class="bt_send">Enviar</a></div>
+			
+			
+
+
     </div>
     
 	<%  end %>
