@@ -32,13 +32,6 @@ class UsersController < BaseController
   before_filter :admin_required, :only => [:assume, :destroy, :featured, :toggle_featured, :toggle_moderator]
   before_filter :admin_or_current_user_required, :only => [:statistics]  
   
-  ## ATIVIDADES 
-   #Follows
-#    log_activity_streams :current_user, :name, :follow_user, 
-#           :@user, :name, :follow, :following_user, {:total => 1 }
-#   #Entrou na rede
-#    log_activity_streams :current_user, :name, :join_site, 
-#           :@user, :name, :activate, :joined_site, {:total => 1 }
   
 #  def show_favorites
 #    @favorites = Favorite.find(:conditions => ['favoritable_id = ?', current_user.id])
@@ -64,33 +57,17 @@ class UsersController < BaseController
 #    @exams_id.each do |exam_id|
 #      @exams << Exam.find(:conditions => ['id = ?', exam_id])
 #    end  
-#    
+#    return @favorites
 #  end
   
-  
   def show_log_activity
-    
-    current_user.log_activity
-    
+    current_user.log_activity 
   end
   
-  
-  def get_activities
-  @user = current_user
-  @follows = @user.follows
-    
-  if @follows
-    @follows.each do |follows|
-      @activities_stream << ActivityStream.find(:conditions => ["actor_id = ?", follows.id ]) 
-    end
-  else
-    @activities_stream << ActivityStream.find(:conditions => ["actor_id = ?" ,params[:id] ] )
+  def show_favorites
+    current_user.get_favorites
   end
-   puts @activities_stream
-   
-          
-    return @activities_stream
-  end
+ 
   
   ### Followship
   def can_follow

@@ -3,6 +3,16 @@ class ResourcesController < BaseController
   
   ResourceObserver.observed_class
   
+  def put_as_favorite
+   @favoritable = Favorite.find(:first,:conditions => ["favorite_id = ? AND user_id = ? AND favorite_type = ?", params[:id], current_user.id, 'Resource'])
+    if @favoritable ## TODO empty to work!
+    else
+      current_user.add_favorite('Resource', params[:id] )
+    end
+    @resources = Resource.all
+    render :action => 'index'
+  end
+  
   def add
     @resources = Resource.all
 
@@ -99,6 +109,10 @@ class ResourcesController < BaseController
     :object_name => @resource.title,
     :object_id => @resource.id,
     :comment => 'Material Mostrado...')
+    thepoints = AppConfig.points['show_resource']
+    new_score = current_user.score + thepoints
+    current_user.score = new_score
+    current_user.save
     
     respond_to do |format|
       format.html # show.html.erb

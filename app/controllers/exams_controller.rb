@@ -3,6 +3,16 @@
   before_filter :login_required, :except => [:index]
   ExamObserver.observed_class
 
+   def put_as_favorite
+   @favoritable = Favorite.find(:first,:conditions => ["favorite_id = ? AND user_id = ? AND favorite_type = ?", params[:id], current_user.id, 'Exam'])
+    if @favoritable
+    else
+      current_user.add_favorite('Exam', params[:id] )
+    end
+    @exams = Exam.all
+    render :action => 'index'
+  end
+
   def review
     if session[:question_index].nil?
       session[:question_index] = 0
@@ -531,6 +541,10 @@ end
     :object_name => @exam.name,
     :object_id => @exam.id,
     :comment => 'Exame Mostrado...')
+    thepoints = AppConfig.points['show_exam']
+    new_score = current_user.score + thepoints
+    current_user.score = new_score
+    current_user.save
 
     respond_to do |format|
       format.html # show.html.erb

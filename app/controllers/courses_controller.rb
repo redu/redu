@@ -2,6 +2,16 @@ class CoursesController < BaseController
   before_filter :login_required, :except => [:index]
   CourseObserver.observed_class
   
+  def put_as_favorite
+   @favoritable = Favorite.find(:first,:conditions => ["favorite_id = ? AND user_id = ? AND favorite_type = ?", params[:id], current_user.id, 'Course'])
+    if @favoritable
+    else
+      current_user.add_favorite('Course', params[:id] )
+    end
+    @courses = Course.all
+    render :action => 'index'
+  end
+    
   def rate
     @course = Course.find(params[:id])
     @course.rate(params[:stars], current_user, params[:dimension])
@@ -12,7 +22,7 @@ class CoursesController < BaseController
       page.visual_effect :highlight, id
     end
   end
-  
+ 
   
   # Lista todos os recursos existentes para relacionar com
   def list_resources
@@ -63,25 +73,25 @@ class CoursesController < BaseController
   def show
     
     @course = Course.find(params[:id])
-    #if current_user.owner.eql?(@course.owner)
-      @comments  = @course.comments.find(:all, :limit => 10, :order => 'created_at DESC')
-      
-      Log.create(:table => 'course',
+    @comments  = @course.comments.find(:all, :limit => 10, :order => 'created_at DESC')
+    
+     Log.create(:table => 'course',
       :action => 'show',
       :actor_name => current_user.login,
       :actor_id => current_user.id,
       :object_name => @course.name,
       :object_id => @course.id,
       :comment => 'Aula Mostrada...')
+      thepoints = AppConfig.points['show_course']
+      new_score = current_user.score + thepoints
+      current_user.score = new_score
+      current_user.save
+    
+    respond_to do |format|
+      format.html # show.html.erb
+      format.xml  { render :xml => @course }
+    end
       
-      respond_to do |format|
-        format.html # show.html.erb
-        format.xml  { render :xml => @course }
-      end
-   # else
-   #   flash[:notice] = 'Você ainda não comprou essa aula!'
-   #   redirect_to courses_path
-   # end
   end
   
   def view
@@ -95,7 +105,7 @@ class CoursesController < BaseController
       format.xml  { render :xml => @course }
     end
     
-    
+ 
     
   end
   
@@ -110,7 +120,7 @@ class CoursesController < BaseController
     @course = Course.find(params[:id])
   end
   
-  
+   
   # POST /courses
   # POST /courses.xml
   def create

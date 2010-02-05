@@ -10,12 +10,8 @@ class CommentsController < BaseController
 
   uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:index])
 
-  cache_sweeper :comment_sweeper, :only => [:create, :destroy]
+ 
 
-  # ATIVIDADES
-  # Criação do Comentário
-  log_activity_streams :current_user, :name, :create_comment, 
-         :@comment, :name, :create, :created_comment, {:total => 1 } 
 
   def index
   
