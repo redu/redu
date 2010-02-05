@@ -1,0 +1,114 @@
+<% if favorite.favorite_type.eql?("Course") %>
+<% course = Course.find(favorite.favorite_id) %>
+
+       <div id="item">
+    		<div id="title"><%= link_to course.name, course %></div>
+						<div id="video" style="background: url('<%= File.join(File.dirname(course.main_resource.media.url), "#{course.main_resource.id}128x96.jpg") %>') 0 0"><!-- Video Insert -->
+						<div id="video_info">00:00:00</div>
+						</div>
+                       
+            <div id="identification">
+              <ul id="identification_resource">
+              						<li><% if course.owner %>
+									<%= link_to course.owner.login, course.owner %>
+									<% else %>
+									<% end %>
+									</li>
+										<li>|</li>
+								<li><%= time_ago_in_words(course.created_at) %></li>
+							</ul>
+            </div>
+            
+            <div id="description"><%= (course.description[0..250] + "...") if (course.description and course.description.length > 250) %>
+            </div>
+			
+			<div id="identification">
+              <ul id="identification_resource">
+				<li><strong>Categoria:</strong> Matemática</li>
+        		<li>|</li>
+				<li><strong>Tags:</strong> <%= course.tag_list %></li>
+			  </ul>
+            </div>
+            
+            <div id="actions">
+              <ul id="actions_resource">
+							<li><a href="#" class="share">Compartilhar</a></li>
+						  		<li>|</li>
+							<li><%= link_to 'Aula',:class => 'favorites'%></li>
+						          <li>|</li>
+							<li><a href="#" class="download">Download</a></li>
+						          <li>|</li>
+							<li><a href="#" class="comments">Comentários(<%= course.comments.count %>)</a></li>
+							</ul>
+            </div> 
+            
+					<div id="ratting">
+							<ul id="ratting_menu">
+							<li><img src="img/icon_star_on.png"/></li>
+									<li><img src="img/icon_star_on.png"/></li>
+							<li><img src="img/icon_star_on.png"/></li>
+							<li><img src="img/icon_star_off.png"/></li>
+							<li><img src="img/icon_star_off.png"/></li>
+									      <li class="evaluation_rating">Avaliações(30)</li>
+						</ul>
+					</div>          
+    	</div>
+
+<% else if favorite.favorite_type.eql?("Resource") %>
+<% resource = Resource.find(favorite.favorite_id) %>
+
+        <div id="item">
+    		<div id="title"><%= link_to resource.title, resource %></div>
+						<div id="video" style="background: url('<%= File.join(File.dirname(resource.media.url), "#{resource.id}128x96.jpg") %>') 0 0"><!-- Video Insert -->
+						<div id="video_info">00:00:00</div>
+						</div>
+                       
+            <div id="identification">
+              <ul id="identification_resource">
+								<li><% if resource.owner %>
+									<%= link_to resource.owner.login, resource.owner %>
+									<% else %>
+									<% end %>
+								</li>
+										<li>|</li>
+								<li><%= time_ago_in_words(resource.created_at) %></li>
+							</ul>
+            </div>
+            
+            <div id="description"><%= (resource.description[0..250] + "...") if resource.description.length > 250 %>
+            </div>
+			
+			<div id="identification">
+              <ul id="identification_resource">
+				<li><strong>Categoria:</strong> Matemática</li>
+        		<li>|</li>
+				<li><strong>Tags:</strong> <%= resource.tag_list %></li>
+			  </ul>
+            </div>
+            
+            <div id="actions">
+              <ul id="actions_resource">
+							<li><a href="#" class="share">Compartilhar</a></li>
+						  		<li>|</li>
+							<li><%= link_to 'Material', :class => 'favorites'%></li>
+						          <li>|</li>
+							<li><a href="#" class="download">Download</a></li>
+						          <li>|</li>
+							<li><a href="#" class="comments">Comentários(<%= resource.comments.count %>)</a></li>
+							</ul>
+            </div> 
+            
+					<div id="ratting">
+							<ul id="ratting_menu">
+							<li><img src="img/icon_star_on.png"/></li>
+									<li><img src="img/icon_star_on.png"/></li>
+							<li><img src="img/icon_star_on.png"/></li>
+							<li><img src="img/icon_star_off.png"/></li>
+							<li><img src="img/icon_star_off.png"/></li>
+									      <li class="evaluation_rating">Avaliações(30)</li>
+						</ul>
+					</div>          
+    	</div>
+<% end %>
+
+<% end %>

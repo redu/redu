@@ -1,0 +1,47 @@
+
+<script>
+function sort(selector){
+		
+		var selectedValue = selector.options[selector.selectedIndex].value;
+		
+		if (selectedValue < 1 || selectedValue > 4) {
+			return;
+		} else { 
+		
+		/*if (selectType == 1) {
+			nextSelector = document.getElementById('category2');
+			document.getElementById('question_skill_id').options.length = 0; // reseta
+		} else { // selectType == 2
+			nextSelector = document.getElementById('question_skill_id');
+		}*/
+        
+  		new Ajax.Request("<%= url_for :action => :sort %>", {
+            method: 'get',
+            parameters: "?sort_by=" + selectedValue,
+			onLoading: function(request){
+				Element.show('spinner');
+				document.getElementById('local_search_results').innerHTML = "Carregando..."
+            },
+            onComplete: function(request){
+				Element.hide('spinner');
+            }
+        });
+		}
+}
+</script>
+
+<%= select_tag(:sort_by, options_for_select([['Data', 1], ['Dificuldade', 2], ['Realizações', 3], ['Título', 4], ['Categoria', 5]], 1), :onchange => "sort(this)") %>
+
+<span id = "asc" style="display:none;">
+<a href = "#" onclick="order(1)"><%= image_tag("icons/sort_asc.gif", :alt => 'Crescente', :border => '0') %></a>
+</span>
+<span id = "dsc" style="display:inline;">
+<a href = "#" onclick="order(2)"><%= image_tag("icons/sort_desc.gif", :alt => 'Decrescente', :border => '0') %></a>
+</span>
+
+
+<%= image_tag("spinner.gif",
+              :align => "absmiddle",
+              :border => 0,
+              :id => "spinner",
+              :style =>"display: none;" ) %>
