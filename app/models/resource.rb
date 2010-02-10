@@ -41,7 +41,8 @@ class Resource < ActiveRecord::Base
     'video/raw',
   'video/rtx' ]
 
-  SUPPORTED_EXTERNAL_RESOURCES = ['youtube']
+  SUPPORTED_EXTERNAL_RESOURCES = ['youtube','clipping']
+  
   
   #has_one :clipping
 
@@ -63,6 +64,7 @@ class Resource < ActiveRecord::Base
 
 	# Callbacks
 	before_validation :enable_correct_validation_group
+  #before_save :transform_resource
 	
 	# Validations
   validates_presence_of :title, :external_resource_type, :external_resource
@@ -96,6 +98,7 @@ class Resource < ActiveRecord::Base
   event :failure do
     transitions :from => :converting, :to => :error # TODO salvar estado de "erro" no bd
   end
+
 
   # This method is called from the controller and takes care of the converting
   def convert
@@ -141,8 +144,22 @@ class Resource < ActiveRecord::Base
 			self.enable_validation_group :uploaded
 		end 
 		
-	end
-	
+end
+
+	## transform the text and title into valid html
+  def transform_resource
+    # self.raw_post  = force_relative_urls(self.raw_post)
+   self.url  = white_list(self.url)
+   self.title = white_list(self.title)
+ end
+ 
+ def self.new_from_bookmarklet(params)
+    self.new(
+      :title => "#{params[:title] || params[:uri]}",
+      :url => "<a href='#{params[:uri]}'>#{params[:uri]}</a>#{params[:selection] ? "<p>#{params[:selection]}</p>" : ''}"
+      )
+  end
+  
   
   protected
 

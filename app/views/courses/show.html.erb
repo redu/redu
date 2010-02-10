@@ -113,7 +113,7 @@
                         |
                     </li>
                     <li>
-                        <a href="#" class="favorites_video">Favoritos</a>
+                        <%= link_to 'Favoritos', {:action =>'put_as_favorite', :id => @course.id}, :class => 'favorites'%>
                     </li>
                     <li>
                         |

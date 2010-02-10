@@ -123,10 +123,12 @@ class ClippingsController < BaseController
   end
 
   def new_clipping
-    @user = current_user
-    @clipping = @user.clippings.new({:url => params[:uri], :description => params[:selection]})
-    @post = @user.posts.new_from_bookmarklet(params)
-    render :action => "new_clipping", :layout => false
+    #@user = current_user
+    #@clipping = @user.clippings.new({:url => params[:uri], :description => params[:selection]})
+    @resource = Resource.new(:title => params[:title], :external_resource => params[:uri], :external_resource_type => 'clipping', :owner => current_user)
+    @resource.save
+    render :action => "clipping_index"
+    #render :action => "new_clipping", :layout => false
   end
 
   # GET /clippings/new

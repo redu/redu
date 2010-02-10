@@ -75,8 +75,10 @@
 							</ul>
             </div>
             
+			<% if resource.description %>
             <div id="description"><%= (resource.description[0..250] + "...") if resource.description.length > 250 %>
             </div>
+			<% end %>
 			
 			<div id="identification">
               <ul id="identification_resource">

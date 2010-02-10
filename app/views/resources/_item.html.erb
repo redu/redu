@@ -1,5 +1,12 @@
         <div id="item">
-    		<div id="title"><%= link_to resource.title, resource %></div>
+    		<div id="title">
+    			<% if resource.external_resource_type.eql?("clipping")%>
+				<%= link_to resource.title , resource.external_resource.to_s %>
+				<% else %>
+				<%= link_to resource.title, resource %>
+				<% end %>
+				</div>
+				
 						<div id="video" style="background: url('<%= File.join(File.dirname(resource.media.url), "#{resource.id}128x96.jpg") %>') 0 0"><!-- Video Insert -->
 						<div id="video_info">00:00:00</div>
 						</div>
@@ -16,8 +23,10 @@
 							</ul>
             </div>
             
+			<% if resource.description %>
             <div id="description"><%= (resource.description[0..250] + "...") if resource.description.length > 250 %>
             </div>
+			<% end %>
 			
 			<div id="identification">
               <ul id="identification_resource">

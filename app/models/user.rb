@@ -71,7 +71,7 @@ class User < ActiveRecord::Base
   has_many :acquisitions, :as => :acquired_by
 
   #RESOURCES
-  has_many :resources, :foreign_key => "owner"
+  has_many :resources#, :foreign_key => "owner"
   
   # EXAMS
   has_many :exams, :foreign_key => "owner"
@@ -556,6 +556,14 @@ class User < ActiveRecord::Base
   def get_favorites
     @favorites = Favorite.find(:all, :conditions => ["user_id = ?", self.id], :order => 'created_at DESC') 
   end
+  
+#  def bookmark_clip(clip)
+#    puts 'aqui'
+#    Resource.create(:url => clip.url, 
+#      :title => clip.url, 
+#      :owner_id => self.id)
+#      puts 'sli'
+#  end
   
   
 
