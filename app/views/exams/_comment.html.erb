@@ -3,9 +3,12 @@
 <div id="comments">
 	<div id="filter_bar_comments"><span class="title_filter">COMENTÁRIOS</span></div>
 
+<div id="newest_comment">
 <% if @exam.comments.length > 0 %>
 <%= render :partial => "comments/comment" , :collection => @exam.comments %>
 <% else %>
 Nenhum comentário ainda.
 <% end %>
+</div>
 <%= render :partial => 'comments/comment_form', :locals => {:commentable => @exam, :comments => @exam.comments } %>
+

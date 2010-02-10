@@ -24,7 +24,7 @@
     <div id="tree_navigation"></div>
 <!-- LISTAGEM RECURSO ############################################################################################################################################## -->
     <div id="filter_bar">
-    <span class="title_list">MAIS RESCENTES</span>
+    <span class="title_list">AULAS MAIS RECENTES</span>
     <!--<span class="title_filter">FILTRAR POR:</span>
       <select name="select" id="select">
         <option selected="selected">Selecione:</option>
@@ -36,63 +36,24 @@
       </div>
     <div id="all_list">
     	
-		
-		<% 3.times do %>
-    	<!-- ITEM ////////////////////////////////////////////////////////////////// -->
-        <div id="item">
-    		<div id="title"><a href="#">Português - Conjunções</a></div>
-             
-            <div id="video"><!-- Video Insert -->
-           	  <div id="video_info">00:00:00</div>
-            </div>
-            
-            <div id="identification">
-              <ul id="identification_resource">
-				<li><a href="#">Robson Ribeiro</a></li>
-        		<li>|</li>
-				<li>há 1 hora atráss</li>
-                <li>|</li>
-				<li>Exibições(4)</li>
-			  </ul>
-            </div>
-            
-            <div id="description">Descricao do video aula, o que vai ser passado para o alunos, conteudo da aula e outra coisas mais significantes para seu aprendizado
-            </div>
-            
-            <div id="actions">
-              <ul id="actions_resource">
-				<li><a href="#" class="share">Compartilhar</a></li>
-        		<li>|</li>
-				<li><a href="#" class="favorites">Favoritos</a></li>
-                <li>|</li>
-				<li><a href="#" class="download">Download</a></li>
-                <li>|</li>
-				<li><a href="#" class="comments">Comentários(30)</a></li>
-			  </ul>
-            </div>
-            
-            <div id="ratting">
-             	<ul id="ratting_menu">
-					<li><img src="images/icon_star_on.png" /></li>
-        			<li><img src="images/icon_star_on.png" /></li>
-					<li><img src="images/icon_star_on.png" /></li>
-					<li><img src="images/icon_star_off.png" /></li>
-					<li><img src="images/icon_star_off.png" /></li>
-                    <li class="evaluation_rating">Avaliações(30)</li>
-				</ul>
-            </div>
-            
-    	</div>
-		
+		<% if @courses && @courses.length > 0 %>
+ 			<%= render :partial => 'courses/item', :collection => @courses, :as => :course %> 
+ 		<% else %>
+ 			Não há aulas publicadas ainda. <%= link_to 'Crie uma agora!', :action => 'new' %>
 		<% end %>
-        <!-- ITEM ////////////////////////////////////////////////////////////////// -->
+		
+		
+		
+		
     </div>
     <!-- LISTAGEM RECURSO ############################################################################################################################################## -->
     
 <!-- PAGINACAO ##################################################################################################################################################### -->
     <div id="pagination" align="center">
     	<ul id="pagination_number">
-    		<li><a href="" class="nav">Ver todos ></a></li>
+    		<li>
+    			<%= link_to "Ver todos >", courses_path,  :class => "nav" %>
+				</li>
             <!--<li><a href="" class="number">1</a><li>
             <li><a href="" class="number">2</a><li>
             <li><a href="" class="number">3</a><li>

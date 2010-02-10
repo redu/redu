@@ -3,10 +3,29 @@
 	
 	<% if logged_in? %>
 	
+		<script type="text/javascript">
+			function scrollToNewestComment(){
+		        loc = document.location.toString();
+		        if (loc.indexOf("#") != -1){
+		          parts = loc.split('#')
+		          loc = parts[0] + "#newest_comment"
+		        } else {
+		          loc = loc + "#newest_comment";
+		        }
+	        	document.location.href = loc;
+      		}
+		</script>
+	
+	
 		<div id="comments_top">
 			
 		</div>
-		<% form_remote_for(:comment, :loading => "$$('div#comments div.errors')[0].innerHTML = ''; $('comment_spinner').show();", :url => comments_url(commentable.class.to_s.underscore, commentable.id ), :html => {:id => 'new_comment_form', :class => "MainForm"}) do |f| %>
+		<div id="errors">
+			
+		</div>
+		
+		<!-- $$('div#comments div.errors')[0].innerHTML = ''; -->
+		<% form_remote_for(:comment, :loading => "$('comment_spinner').show();", :url => comments_url(commentable.class.to_s.underscore, commentable.id ), :html => {:id => 'new_comment_form', :class => "MainForm"}) do |f| %>
 		
 		<div id="comments_title">INSERIR COMENTÁRIO</div> 
 	    <div id="comments_form_fields">
@@ -18,8 +37,7 @@
 		
 		<% end %>
 	
- 		</div>
-		
+ 			
 	<% else %>
 		<%= link_to "Log in to leave a comment".l, new_comment_path(commentable.class, commentable.id) %>
 	  	<%= :or.l %>

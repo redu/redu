@@ -1,10 +1,26 @@
+<script>
+	function switchCourseFields(fieldType){
+		//alert(fieldType.value);
+		
+		// fieldType = 1 Upload
+		// fieldType = 2 External link
+		if (fieldType == 1) {
+			document.getElementById("upload_resource_field").style.display = "block";
+			document.getElementById("external_resource_field").style.display = "none";
+		} else {
+			document.getElementById("upload_resource_field").style.display = "none";
+			document.getElementById("external_resource_field").style.display = "block";
+		}
+		
+	}
 
+</script>
 
-	<%= f.label :name %>:<br/>
+	<%= f.label "Nome" %>:<br/>
 	<%= f.text_field :name %><br/><br/>
 
-	<%= f.label :description %>:<br/>
-	<%= f.text_area :description %><br/><br/>
+	<%= f.label "Descrição" %>:<br/>
+	<%= f.text_area :description, :size => "50x3" %><br/><br/>
 	
 	<%= f.label :tag_list %>:<br/>
 	<%= f.text_field :tag_list %><br/><br/>
@@ -17,18 +33,23 @@
 <fieldset>
 	<legend>Material Principal</legend>
 
-  <%= f.radio_button :external_resource_type, :slideshare %>
+  <%= f.radio_button :external_resource_type, :slideshare, {:onchange => "switchCourseFields(2);"} %>
   <%= f.label :external_resource_type_slideshare, "Slideshare" %>	
-  <%= f.radio_button :external_resource_type, :youtube %>
+  <%= f.radio_button :external_resource_type, :youtube, {:onchange => "switchCourseFields(2);"} %>
   <%= f.label :external_resource_type_youtube, "Youtube" %>
-  <%= f.radio_button :external_resource_type, :upload %>
+  <%= f.radio_button :external_resource_type, :upload, {:onchange => "switchCourseFields(1);"} %>
   <%= f.label :external_resource_type_upload, "Upload" %><br/><br/>
 
+  <div id="upload_resource_field" style="display:none;">
   <%= f.label :media, "Upload de Material" %><br/>
   <%= f.file_field :media  %><br/><br/>
+  </div>
 
+  <div id="external_resource_field" style="display:none;">
   <%= f.label :external_resource, "Material Externo (Youtube, Slideshare, etc)" %><br/>
   <%= f.text_field :external_resource  %><br/><br/>
+  </div>
+  
 </fieldset>	
 
 <fieldset>

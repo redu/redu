@@ -1,7 +1,39 @@
+<script>
+	function dimLights(turnOff){
+		Effect.toggle('lights-dimmed','Appear',{
+				duration:2,
+				afterFinish: function() {
+					
+					var linkTurnOff = document.getElementById("lights-off");
+					var linkTurnOn = document.getElementById("lights-on");
+					
+					if (turnOff) { // apagar as luzes
+						linkTurnOff.style.display = 'none';
+						linkTurnOn.style.display = 'inline';
+					} else {
+						linkTurnOff.style.display = 'inline';
+						linkTurnOn.style.display = 'none';
+					}
+					
+					/*
+					if(linkTurnOff.style.display == 'none') {// $('lights-dimmed').visible()
+						//$('dim-lights').update('Lights up');
+						linkTurnOn
+					} else {
+						$('dim-lights').update('Dim the lights');
+					}*/
+					
+				}
+			});
+	}
+</script>
+<div id="lights-dimmed" style="display:none;">&nbsp;</div>
+
 <div id="all_content3">
     <div id="col_content_video">
         <div id="breadcrumbs_video">
-            <a href="#">home</a>
+        	
+            <a href="<%=application_url%>">home</a>
             > <a href="#">aprender</a>
             > <a href="#">aulas</a>
         </div>
@@ -16,7 +48,7 @@
                 <%= link_to 'Editar', {:action => "edit"}, :class => "link_edit" %>
                 <br/>
                 <% end %>
-                <% if current_user.admin? %>
+                <% if current_user.admin? and not @course.state.eql?("approved") %>
                 <!-- Linkar para onde? --><%= link_to 'Aprovar' , {:action => "approve", :id => @course.id} %>
                 <%= link_to 'Rejeitar' , {:action => "disapprove", :id => @course.id} %>
                 <% end %>
@@ -63,6 +95,17 @@
         <div id="filter_bar_video">
             <div id="actions_video">
                 <ul id="actions_resource">
+                	<li>
+                		<span id="lights-off">
+                        <a href="#" class="share" onclick="javascript:dimLights(true);">Apagar as luzes</a>
+						</span>
+						<span id="lights-on" style="display:none;">
+                        <a href="#" class="share" onclick="javascript:dimLights(false);">Acender as luzes</a>
+						</span>
+                    </li>
+					<li>
+                        |
+                    </li>
                     <li>
                         <a href="#" class="share_video">Compartilhar</a>
                     </li>
@@ -82,12 +125,14 @@
                         |
                     </li>
                     <li>
-                        <a href="#" class="comments_video">Comentários(30)</a>
+                        <a href="#" class="comments_video">Comentários(<%= @course.comments.count %>)</a>
                     </li>
                 </ul>
             </div>
             <div id="ratting_video">
-                <ul id="ratting_video_menu">
+                
+				<!--
+				<ul id="ratting_video_menu">
                     <li class="evaluation_rating">
                         Avaliações(30)
                     </li>
@@ -107,6 +152,8 @@
                         <img src="img/icon_star_off.png" />
                     </li>
                 </ul>
+				-->
+				<%= ratings_for @course %>
             </div>
         </div><!-- BARRA ################################################################################################################################### --><!-- VIDEO ################################################################################################################################### -->
         <div id="view_video" align="center">
@@ -114,7 +161,9 @@
             <%= render :partial => "resources/player", :locals => {:resource => @course} %>
         </div>
         <!-- COMENTARIOS ############################################################################################################################# -->
-        <div id="comments">
+        
+		
+		<div id="comments">
             <div id="filter_bar_comments">
                 <span class="title_filter">COMENTÁRIOS</span>
             </div>

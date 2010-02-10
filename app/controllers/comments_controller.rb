@@ -8,7 +8,7 @@ class CommentsController < BaseController
     skip_before_filter :login_required, :only => [:create]
   end
 
-  uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:index])
+  #uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:index])
 
  
 
@@ -91,11 +91,11 @@ class CommentsController < BaseController
 
     respond_to do |format|
       if (logged_in? || verify_recaptcha(@comment)) && @comment.save
-        @comment.send_notifications
+       # @comment.send_notifications
 
         flash.now[:notice] = :comment_was_successfully_created.l
         format.html { redirect_to commentable_url(@comment) }
-        format.js
+        format.js 
       else
         flash.now[:error] = :comment_save_error.l_with_args(:error => @comment.errors.full_messages.to_sentence)
         format.html { redirect_to :controller => comment_type.underscore.pluralize, :action => 'show', :id => comment_id }

@@ -12,7 +12,7 @@
         <ul id="identification_resource">
             <!--Fiz uma modificação antes ficava link_to course.owner.login -->
             <li>
-                <%= link_to course.owner course.owner %>
+                <%= link_to course.owner.login, user_path(course.owner) %>
             </li>
             <li>
                 |
@@ -23,7 +23,7 @@
         </ul>
     </div>
     <div id="description">
-        <%= (course.description[0..250] + "...") if (course.description and course.description.length > 250) %>
+        <%= (course.description.length > 250) ? (course.description[0..250] + "...") : course.description  %>
     </div>
     <div id="identification">
         <ul id="identification_resource">
@@ -51,12 +51,14 @@
             <li>
                 <a href="#" class="favorites">Favoritos</a>
             </li>
-            <li>
+            <!--
+			<li>
                 |
             </li>
             <li>
                 <a href="#" class="download">Download</a>
             </li>
+			-->
             <li>
                 |
             </li>
@@ -64,20 +66,25 @@
                 <a href="#" class="comments">Comentários(<%= course.comments.count %>)</a>
             </li>
             <!--Começando a fazer os testes com compra de aula -->
-            <li>
+            
+			
+			<% if current_user and not current_user.has_access_to_course(course) %>
+			<li>
                 |
             </li>
-			
-			<% if not current_user.has_access_to_course(course) %>
             <li>
-            	<%= link_to "Comprar", :action => :buy, :id => course %>
+            	<%= link_to "Comprar", { :action => :buy, :id => course}, :class => "download" %>
             </li>
 			<% end %>
 			
         </ul>
     </div>
     <div id="ratting">
+    	
+		
+		
         <ul id="ratting_menu">
+        	<!--
             <li>
                 <img src="images/icon_star_on.png"/>
             </li>
@@ -92,10 +99,16 @@
             </li>
             <li>
                 <img src="images/icon_star_off.png"/>
+            </li>
+			-->
+			<li>
+               <%= ratings_for course, :static %>
             </li>
             <li class="evaluation_rating">
-                Avaliações(30)
+                Avaliações(<%= course.rates.count %>)
             </li>
         </ul>
+		
+		
     </div>
 </div>
