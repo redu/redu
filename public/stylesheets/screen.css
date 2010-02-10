@@ -36,12 +36,12 @@ version: 001
 
 *{margin:0 auto; padding:0px; }
 
-html, body {width:100%; height:100%; padding: 0px; margin: 0px; border:0; font-family:"Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; background-color:#eaeaea}
+html, body {padding: 0px; margin: 0px; width:100%; height:100%; border:0; font-family:"Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; background-color:#eaeaea}
 
 
 #container_main{position: relative; margin: 0 auto; width: 100%; text-align: left;
-  min-height: 100%; /* For Modern Browsers */
-  height: auto !important; /* For Modern Browsers */
+  /*min-height: 100%; /* For Modern Browsers */
+  /*height: auto !important; /* For Modern Browsers */
   height: 100%; /* For IE */
 }
 
@@ -83,7 +83,7 @@ float:left; width:100%; height:100%; min-height:100%; _margin-top:-2px; margin-t
 				
 #filter_bar_comments{float:left; width:425px; height:19px; background:url(../images/bg_filter_bar.gif) repeat-x right; padding:8px 5px 5px 5px; margin:0px 0px 8px 0px; border:solid 1px #dedede; text-align:left;}
 	
-.share{background:url(../images/icon_share_off.png) no-repeat; color:#BFBFBF; text-decoration:none; padding-left:20px}
+.share{background:url(../images/icon_share_off.png) no-repeat; color:#BFBFBF; text-decoration:none; padding-left: 20px}
 .share:hover{background:url(../images/icon_share_on.png) no-repeat; color:#5782D5; text-decoration:underline; padding-left:20px}
 
 .favorites{background:url(../images/icon_favorites_off.png) no-repeat; color:#BFBFBF; text-decoration:none; padding-left:20px} 
@@ -132,8 +132,18 @@ float:left; width:100%; height:100%; min-height:100%; _margin-top:-2px; margin-t
 /* BOX GRAU DE DIFICULDADE  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 
 /* VIDEO  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
-#view_video{float:left; width:100%; height:342px; background-color:#242424;}
-#view_video_slide{float:left; width:100%; height:415px; background-color:#242424;}
+#view_video{float:left; width:100%; height:342px; background-color:#242424; position:relative; z-index:3000;}
+#view_video_slide{float:left; width:100%; height:415px; background-color:#242424; position:relative; z-index:4000;}
+
+#lights-dimmed {
+	position:absolute;
+	top:0;
+	left:0;
+	background:url(../images/overlay-85.png) left top repeat;
+	width:100%;
+	height:100%;
+	z-index:2000;
+}
 
 #ratting_video{position:relative; float:right; width:200px; height:auto; padding:0px; margin:3px 0px 0px 0px; color:#858787; right:0px;top:0px;}
 #ratting_video_menu{list-style-type:none; top:0px; padding:0px; right:0px;}
@@ -164,17 +174,17 @@ float:left; width:100%; height:100%; min-height:100%; _margin-top:-2px; margin-t
 #identification_resource1 li a, #identification_resource1 li a:visited {padding:0; font-size:11px; text-decoration:none; color:#5683d5;font-weight:bold;}
 #identification_resource1 li a:hover {padding:0; font-size:11px; text-decoration:underline; color:#5683d5; font-weight:bold;}
 	
-#actions{float:left; width:399px; height:auto; padding:0px 0px 0px 0px; margin:16px 0px 0px 8px;}
-#actions_resource{list-style-type:none; top:0px; padding:0px; right:0px;}
+#actions{float:left; width:399px; height:auto; padding:0px 0px 0px 0px; margin:16px 0px 0px 8px; }
+#actions_resource{list-style-type:none; top:0px; padding:0px; right:0px; position:relative; z-index: 3001;}
 #actions_resource li {float:left; margin-right:8px; list-style:none; font-size:11px; text-decoration:none; color:#bababa;}
 /*#actions_resource li span {padding: 5px 10px; font-size:11px; text-decoration:none; color:#5683d5;}
 #actions_resource li a, #evaluation_menu li a:visited {padding:0; font-size:11px; text-decoration:none; color:#5683d5;}
 #actions_resource li a:hover {padding:0; font-size:11px; text-decoration:underline; color:#5683d5;}*/
-#actions_video{float:left; width:400px; height:auto; padding:0px 0px 0px 0px; margin:4px 0px 0px 8px;}
+#actions_video{float:left;  height:auto; padding:0px 0px 0px 0px; margin:4px 0px 0px 8px;}
 
-#filter_bar_video{float:left; width:99%; height:22px; background:url(../images/bg_filter_bar.gif) repeat-x right; padding:5px;margin:0px 8px 8px 0px; border:solid 1px #dedede; text-align:right}
+#filter_bar_video{float:left; width:99%; height:22px; background:url(../images/bg_filter_bar.gif) repeat-x right; padding:5px;margin:0px 8px 8px 0px; border:solid 1px #dedede; text-align:right; }
 
-.share_video{background:url(../images/icon_share_on.png) no-repeat; color:#5782D5; text-decoration:none; padding-left:20px}
+.share_video{ background:url(../images/icon_share_on.png) no-repeat; color:#5782D5; text-decoration:none; padding-left:20px; }
 .share_video:hover{background:url(../images/icon_share_on.png) no-repeat; color:#5782D5; text-decoration:underline; padding-left:20px}
 	
 .favorites_video{background:url(../images/icon_favorites_on.png) no-repeat; color:#5782D5; text-decoration:none; padding-left:20px} 
@@ -227,6 +237,13 @@ float:left; width:100%; height:100%; min-height:100%; _margin-top:-2px; margin-t
 #comments_item{float:left; width:415px; height:auto; padding:5px; border-bottom:solid 1px #e7e8e8;}
 #comments_item a{text-decoration:none; font: 12px "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; color:#5683d5;}
 #comments_item a:hover{text-decoration:underline; font: 12px "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; color:#5683d5;}
+
+.comments_item{float:left; width:415px; height:auto; padding:5px; border-bottom:solid 1px #e7e8e8;}
+.comments_item a{text-decoration:none; font: 12px "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; color:#5683d5;}
+.comments_item a:hover{text-decoration:underline; font: 12px "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; color:#5683d5;}
+
+
+
 #comments_txt{float:left; width:360px; height:auto; font:normal 12px "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; color:#858787;}
 #comments_foto{float:left; width:40px; height:40px; margin-right:8px; border:0;}
 #comments_time{float:left; width:120px; height:auto; font:11px normal; font-family:"Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; color:#c5c7c8; margin:12px 0px 0px 0px}
