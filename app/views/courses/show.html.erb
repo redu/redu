@@ -156,9 +156,14 @@
 				<%= ratings_for @course %>
             </div>
         </div><!-- BARRA ################################################################################################################################### --><!-- VIDEO ################################################################################################################################### -->
-        <div id="view_video" align="center">
+        
+		<div id="view_video" align="center">
         	<!-- colocar if aqui -->
+			<% if current_user and not current_user.has_access_to_course(@course) %>
+			<%= link_to "Comprar", { :action => :buy, :id => @course.id, :class => "download" }%>
+			<% else %>
             <%= render :partial => "resources/player", :locals => {:resource => @course} %>
+			<% end %>
         </div>
         <!-- COMENTARIOS ############################################################################################################################# -->
         

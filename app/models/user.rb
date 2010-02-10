@@ -69,6 +69,10 @@ class User < ActiveRecord::Base
   #COURSES
   has_many :courses, :foreign_key => "owner"
   has_many :acquisitions, :as => :acquired_by
+  
+  #CREDIT
+  has_many :credits
+
 
   #RESOURCES
   has_many :resources#, :foreign_key => "owner"

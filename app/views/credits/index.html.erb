@@ -1,0 +1,14 @@
+Voce tem <%= @balance %> de creditos
+
+Compre :
+<% form_for(@credit) do |f| %>
+  <%= f.error_messages %>
+
+  <%= f.radio_button :credit, :value, "30"%> 30 <BR>
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>
+
+
+

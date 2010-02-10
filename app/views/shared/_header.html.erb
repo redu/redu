@@ -12,6 +12,7 @@
 			<li><strong><a href="<%=user_path(current_user)%>"><%=current_user.login%></a></strong></li>
         	<li>|</li>
 			<li><a href="#">convidar</a></li>
+			<li><%= link_to "créditos", user_credits_path(current_user)%></li>
 			<li><a href="<%=user_messages_path(current_user)%>">mensagens(<%=current_user.unread_message_count%>)</a></li>
 			<li>
 				<%= link_to 'favoritos', :controller => "users", :action => "show_favorites", :id => current_user.id, :class => 'favorites' %>
