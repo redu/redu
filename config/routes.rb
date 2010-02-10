@@ -16,11 +16,11 @@ ActionController::Routing::Routes.draw do |map|
     
   map.resources :subjects
 
-  map.resources :courses, :member => {:rate => :post},  :collection => {:pending => :get}
+  map.resources :courses, :member => {:rate => :post, :buy => :get},  :collection => {:pending => :get}
   
   map.resources :user_school_association
 
-  #map.resources :access_keys
+  map.resources :credits
     
   map.resources :schools  
 
@@ -129,7 +129,8 @@ ActionController::Routing::Routes.draw do |map|
   
   map.forgot_password '/forgot_password', :controller => 'users', :action => 'forgot_password'
   map.forgot_username '/forgot_username', :controller => 'users', :action => 'forgot_username'  
-  map.resend_activation '/resend_activation', :controller => 'users', :action => 'resend_activation'  
+  map.resend_activation '/resend_activation', :controller => 'users', :action => 'resend_activation' 
+  
   
   #clippings routes
   map.connect '/new_clipping', :controller => 'clippings', :action => 'new_clipping'
@@ -218,6 +219,7 @@ ActionController::Routing::Routes.draw do |map|
     user.resources :schools, :collection => {:member => :get, :owner => :get}
     user.resources :exams, :collection => {:published => :get, :unpublished => :get, :history => :get} 
     user.resources :questions
+    user.resources :credits
     user.resources :offerings, :collection => {:replace => :put}
     user.resources :favorites#, :name_prefix => 'user_'
     user.resources :messages, :collection => { :delete_selected => :post, :auto_complete_for_username => :any }  
