@@ -92,6 +92,9 @@ Rails::Initializer.run do |config|
 end
 #require "#{RAILS_ROOT}/vendor/plugins/community_engine/config/boot.rb"
 
-
+WillPaginate::ViewHelpers.pagination_options[:prev_label] = 'Anterior'  
+WillPaginate::ViewHelpers.pagination_options[:next_label] = 'Próximo'
+WillPaginate::ViewHelpers.pagination_options[:separator] = nil
+WillPaginate::ViewHelpers.pagination_options[:renderer] = 'PaginationListLinkRenderer'
 
 require 'rails_asset_extensions'

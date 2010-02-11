@@ -25,7 +25,7 @@ robots_meta_list_content: 'noindex,follow'
 # the post itself should be indexed; 
 # when links are included and they point to external sites, the robot should not follow
 robots_meta_show_content: 'index,nofollow'
-items_per_page: 2
+items_per_page: 3
 comments_number: 15
 
 points:
