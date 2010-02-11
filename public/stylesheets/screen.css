@@ -24,6 +24,24 @@
 #box_baseline_login{width:auto; height:20px; background-color:#FFF;font:normal 12px "Trebuchet MS", Tahoma; padding:6px 0px 0px 8px; color:#858787;}
 */
 
+
+.link_edit {
+	color: #0055FF;
+}
+.link_remove {
+	color: #FF0000;
+}
+
+
+#flash_messages {
+  border: 1px solid #FFCC66;
+  background-color: #FFFFCC;
+  font-size: 12px;
+  padding: 6px;
+
+}
+
+
 /* CSS Document */
 
 /*///////////////////////////////////////////////////////////////////////////
@@ -230,6 +248,8 @@ float:left; width:100%; height:100%; min-height:100%; _margin-top:-2px; margin-t
 
 /* COMENTARIOS ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 #comments{float:left; width:425px; height:auto; background-color:#FFF; margin:0px 0px 0px 0px; font:normal 12px;}
+
+#left_column{float:left; width:425px; height:auto; background-color:#FFF; margin:0px 0px 0px 0px; font:normal 12px;}
 
 #filter_bar_comments{float:left; width:413px; height:19px; background:url(../images/bg_filter_bar.gif) repeat-x right; padding:8px 5px 5px 5px; margin:8px 0px 8px 0px; border:solid 1px #dedede; text-align:left;}
 
@@ -549,8 +569,8 @@ background:url(../images/bg_menu_li.gif) no-repeat;}
 #menu ul :hover div ul div {left:-9999px;} 
 #menu ul :hover div ul li:hover {position:relative;} 
 #menu ul :hover div ul li a.drop {background:url(topdown.gif) no-repeat center bottom;}
-#menu ul :hover div ul li a:hover {position:relative; background:url(sub.gif); padding:0 6px 1px 6px; border:0; color:#3e68bb; text-decoration:underline;}
-#menu ul :hover div ul li:hover > a {position:relative; background:url(sub.gif); padding:0 6px 1px 6px; border:0; color:#3e68bb;
+#menu ul :hover div ul li a:hover {position:relative; background:url(../images/trans.gif); padding:0 6px 1px 6px; border:0; color:#3e68bb; text-decoration:underline;}
+#menu ul :hover div ul li:hover > a {position:relative; background:url(../images/trans.gif); padding:0 6px 1px 6px; border:0; color:#3e68bb;
 text-decoration:underline;}
 
 /* ################################################################################################################################################### */

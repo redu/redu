@@ -17,4 +17,6 @@ Requirements:
 	  aws-s3 (if using s3 for photos)
 	  
 	  will-paginate
+	  chronic
+	  backgroundrb
 
