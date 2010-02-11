@@ -1,8 +1,8 @@
 class CreateStatuses < ActiveRecord::Migration
   def self.up
     create_table :statuses do |t|
-      t.string :name
-      t.text :description
+      t.string :text
+      t.references :in_response_to, :polymorphic => true
       t.timestamps
     end
   end
