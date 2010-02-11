@@ -48,8 +48,10 @@
         <div id="time">
             <%= time_ago_in_words_or_date(item.created_at) %>
         </div>
-        <% if logged_in? %>
-        <div id="link_respond_to_<%=item.id%>" class="replay">
+        
+		<% if logged_in? %>
+        <!--
+		<div id="link_respond_to_<%=item.id%>" class="replay">
             <a href="#" onclick="showResponseBox(<%=item.id%>); return false;">Responder</a>
         </div>
         <div id="box_respond_to_<%= item.id %>" style="display:none;">
@@ -63,7 +65,7 @@
             <div id="bt_send_mv" align="center">
                 <a href="#" onclick="hideResponseBox(<%=item.id%>); return false;">Cancelar</a>
             </div>
-        </div>
+        </div> -->
         <% end %>
     </div>
 </div>
