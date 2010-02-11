@@ -90,7 +90,7 @@ class Course < ActiveRecord::Base
   has_many :acquisitions
   has_attached_file :media
 	has_many :favorites, :as => :favoritable, :dependent => :destroy
-
+  has_many :logs, :as => :logeable, :dependent => :destroy
 
   # Callbacks
   before_validation :enable_correct_validation_group
@@ -128,6 +128,20 @@ class Course < ActiveRecord::Base
   
   def audio?
   	SUPPORTED_AUDIO.include?(self.media_content_type)
+ end
+ 
+ def can_be_deleted_by(user)
+    (self.owner == user or user.admin?)
+ end
+ 
+ def currently_watching
+   
+   sql = "SELECT DISTINCT u.id, u.login, u.login_slug FROM users u, logs l WHERE"
+   sql += " l.user_id = u.id AND l.logeable_type LIKE 'course' AND l.logeable_id = '#{self.id}'"
+   sql +=" AND l.created_at > '#{Time.now.utc-10.minutes}'"
+   
+   #TODO excluir o usuario atual?
+    User.find_by_sql(sql)
   end
 	
 	# Inspects object attributes and decides which validation group to enable

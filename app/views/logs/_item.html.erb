@@ -1,35 +1,49 @@
 <div id="move_item">
     <div id="move_foto">
-        Foto 
+        <%= link_to image_tag(item.user.avatar_photo_url(:thumb), :height => '20', :width => '20', :alt => "#{item.user.login}"), user_path(item.user), :rel => 'bookmark', :class => 'move_foto', :title => "#{item.user.login}'s profile" %> 
     </div>
     <div id="move_txt">
-        <% if item.table.eql?('course') %>
+    	
+		<% activity = " atividade? " %>
+		
+        <% if item.logeable_type.eql?('course') %>
+		
+		<% activity = " está assistindo a aula " if item.action == "show" %>
+		<% activity = " criou a aula " if item.action == "create" %>
+				
         <li>
-            <%= link_to item.object_name, :controller => "courses", :action => "show", :id => item.object_id %>
-            <%= item.comment %>
-            <%= link_to item.actor_name, :controller => "users", :action => "show", :id => item.actor_id %>
+        	<%= link_to item.user.login, user_path(item.user) %>
+             <%= activity %>
+			<%= link_to item.logeable_name, course_path(item.logeable_id) %>
         </li>
-        <% end %>
-        <% if item.table.eql?('resource') %>
+		<% elsif item.logeable_type.eql?('resource') %>
+		
+		<% activity = " disponibilizou o material " if item.action == "create" %>
+		
+       	<li>
+        	<%= link_to item.user.login, user_path(item.user) %>
+             <%= activity %>
+			<%= link_to item.logeable_name, resource_path(item.logeable_id) %>
+        </li>
+        <% elsif item.logeable_type.eql?('exam') %>
+		
+        <% activity = " está respondendo ao exame " if item.action == "answer" %>
+		<% activity = " criou o exame " if item.action == "exame" %>
+				
         <li>
-            <%= link_to item.object_name, :controller => "resources", :action => "show", :id => item.object_id %>
-            <%= item.comment %>
-            <%= link_to item.actor_name, :controller => "users", :action => "show", :id => item.actor_id %>
+        	<%= link_to item.user.login, user_path(item.user) %>
+             <%= activity %>
+			<%= link_to item.logeable_name, exam_path(item.logeable_id) %>
         </li>
-        <% end %>
-        <% if item.table.eql?('exam') %>
-        <li>
-            <%= link_to item.object_name, :controller => "exams", :action => "show", :id => item.object_id %>
-            <%= item.comment %>
-            <%= link_to item.actor_name, :controller => "users", :action => "show", :id => item.actor_id %>
+        <% elsif item.logeable_type.eql?('user') %>
+        <% activity = " acabou de entrar no redu" if item.action == "login" %>
+		<% activity = " atualizou dados de seu perfil" if item.action == "update" %>		
+        
+		<li>
+        	<%= link_to item.user.login, user_path(item.user) %>
+             <%= activity %>
         </li>
-        <% end %>
-        <% if item.table.eql?('user') %>
-        <li>
-            <%= link_to item.object_name, :controller => "users", :action => "show", :id => item.object_id %>
-            <%= item.comment %>
-            <%= link_to item.actor_name, :controller => "users", :action => "show", :id => item.actor_id %>
-        </li>
+        
         <% end %>
         <div id="time">
             <%= time_ago_in_words_or_date(item.created_at) %>

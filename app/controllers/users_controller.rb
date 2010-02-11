@@ -2,7 +2,6 @@ require "RMagick"
 
 class UsersController < BaseController
   include Viewable
-  UserObserver.observed_class  
   
   if AppConfig.closed_beta_mode
     skip_before_filter :beta_login_required, :only => [:new, :create, :activate]
@@ -296,6 +295,7 @@ class UsersController < BaseController
     
     if @user.save!
       #@user.track_activity(:updated_profile) Utilizaremos outro Activity
+      Log.log_activity(@user, 'update')
       
       flash[:notice] = :your_changes_were_saved.l
       unless params[:welcome] 
@@ -437,6 +437,7 @@ class UsersController < BaseController
   end
   
   def signup_completed
+    
     @user = User.find(params[:id])
     redirect_to home_path and return unless @user
     render :action => 'signup_completed', :layout => 'beta' if AppConfig.closed_beta_mode    

@@ -1,3 +1,4 @@
+
 <div id="comment_<%=comment.id%>" class="comments_item"> <!-- comments_item -->
 		<div id="comments_foto">
 			<%= link_to image_tag(comment.user.avatar_photo_url(:thumb), :height => '40', :width => '40', :alt => "#{comment.user.login}"), user_path(comment.user), :rel => 'bookmark', :class => 'move_foto', :title => "#{comment.user.login}'s profile" %>
@@ -10,7 +11,7 @@
 		<div id="comments_actions"><a href="#">Responder</a> | <a href="#">Spam</a> | 
 		
 		<% if ( comment.can_be_deleted_by(current_user) ) %>
-		<%= link_to_remote("Delete".l, {:url => comment_path(comment.commentable_type, comment.commentable_id, comment), :method => :delete, 500 => 'alert(\'Sorry, there was a server error\'); return false',  :success => visual_effect(:fade, "comment_#{comment.id}"), :confirm => :are_you_sure_you_want_to_permanently_delete_this_comment.l} ) %>
+		<%= link_to_remote("Delete".l, {:url => comment_path(comment.commentable_type, comment.commentable_id, comment), :method => :delete, 500 => 'alert(\'Desculpe-nos, houve um problema no servidor\'); return false',  :success => visual_effect(:fade, "comment_#{comment.id}"), :confirm => :are_you_sure_you_want_to_permanently_delete_this_comment.l} ) %>
 		<% end %>
 		
 		</div>            

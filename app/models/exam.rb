@@ -11,6 +11,11 @@ class Exam < ActiveRecord::Base
   
   has_many :exam_users#, :dependent => :destroy
   has_many :user_history, :through => :exam_users, :source => :user
+ 
+  has_many :logs, :as => :logeable, :dependent => :destroy
+
+
+
 
   # :counter_cache => true para ter uma coluna que conta o numero
   

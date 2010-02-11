@@ -1,8 +1,6 @@
 class ResourcesController < BaseController
   
   
-  ResourceObserver.observed_class
-  
   def put_as_favorite
    @favoritable = Favorite.find(:first,:conditions => ["favorite_id = ? AND user_id = ? AND favorite_type = ?", params[:id], current_user.id, 'Resource'])
     if @favoritable ## TODO empty to work!
@@ -102,18 +100,6 @@ class ResourcesController < BaseController
   def show
     @resource = Resource.find(params[:id])
     
-    Log.create(:table => 'resource',
-    :action => 'show',
-    :actor_name => current_user.login,
-    :actor_id => current_user.id,
-    :object_name => @resource.title,
-    :object_id => @resource.id,
-    :comment => 'Material Mostrado...')
-    thepoints = AppConfig.points['show_resource']
-    new_score = current_user.score + thepoints
-    current_user.score = new_score
-    current_user.save
-    
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @resource }
@@ -144,6 +130,9 @@ class ResourcesController < BaseController
     respond_to do |format|
       if @resource.save
         @resource.convert
+        
+        Log.log_activity(@resource, 'create', current_user)
+        
 				flash[:notice] = 'Resource was successfully created.'
 		    format.html { redirect_to(@resource) }
 		    format.xml  { render :xml => @resource, :status => :created, :location => @resource }

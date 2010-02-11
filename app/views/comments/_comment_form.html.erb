@@ -1,9 +1,4 @@
-<div id="comments_form">
-	
-	
-	<% if logged_in? %>
-	
-		<script type="text/javascript">
+<script type="text/javascript">
 			function scrollToNewestComment(){
 		        loc = document.location.toString();
 		        if (loc.indexOf("#") != -1){
@@ -14,11 +9,25 @@
 		        }
 	        	document.location.href = loc;
       		}
-		</script>
+</script>
+
+<div id="comments_form">
 	
+	
+	<% if logged_in? %>
 	
 		<div id="comments_top">
-			
+			<div id="comments_numbers">
+				
+				<% if commentable.comments.count > AppConfig.items_per_page %>
+				
+				Mostrando <strong>(<%= AppConfig.items_per_page %>)</strong> de <strong>(<%= commentable.comments.count%>)</strong></div> <div id="comments_view_all">Exibir todos os <strong>(<%= commentable.comments.count %>)</strong> comentários
+				<% elsif  commentable.comments.count == 0%>
+					Nenhum comentário ainda.
+				<% else %>
+					<%= commentable.comments.count %> Comentários.
+				<% end %>
+			</div>
 		</div>
 		<div id="errors">
 			

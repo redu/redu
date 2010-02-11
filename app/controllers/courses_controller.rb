@@ -1,6 +1,5 @@
 class CoursesController < BaseController
   before_filter :login_required, :except => [:index]
-  CourseObserver.observed_class
   
   def put_as_favorite
    @favoritable = Favorite.find(:first,:conditions => ["favorite_id = ? AND user_id = ? AND favorite_type = ?", params[:id], current_user.id, 'Course'])
@@ -75,17 +74,9 @@ class CoursesController < BaseController
     @course = Course.find(params[:id])
     @comments  = @course.comments.find(:all, :limit => 10, :order => 'created_at DESC')
     
-     Log.create(:table => 'course',
-      :action => 'show',
-      :actor_name => current_user.login,
-      :actor_id => current_user.id,
-      :object_name => @course.name,
-      :object_id => @course.id,
-      :comment => 'Aula Mostrada...')
-      thepoints = AppConfig.points['show_course']
-      new_score = current_user.score + thepoints
-      current_user.score = new_score
-      current_user.save
+    @course.update_attribute(:view_count, @course.view_count + 1) #TODO performance
+    
+    Log.log_activity(@course, 'show', current_user) if current_user
     
     respond_to do |format|
       format.html # show.html.erb
@@ -105,7 +96,6 @@ class CoursesController < BaseController
       format.xml  { render :xml => @course }
     end
     
- 
     
   end
   
@@ -132,6 +122,9 @@ class CoursesController < BaseController
       
       if @course.save
         @course.convert
+        
+        Log.log_activity(@course, 'create', current_user)
+        
         flash[:notice] = 'Aula foi criada com sucesso e está em processo de moderação.'
         format.html { 
           #redirect_to(@course)
