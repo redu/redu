@@ -17,6 +17,22 @@
 .nube6 {
   font-size: 1.5em; }
 
+.sort_link {
+	background:url(../images/icons/bullet_arrow_down.png) no-repeat; color:#BFBFBF; text-decoration:none; padding-left: 16px; font-weight:bold;
+}
+
+		
+.pagination{display:block; float:left; width:100%; height:auto; padding:0px 0px 0px 0px; margin:8px 0px 0px 8px;}
+.pagination_number{list-style-type:none; top:0px; padding:0px; right:0px;}
+.pagination_number li {float:left; margin-right:8px; list-style:none; font-size:14px; text-decoration:none; color:#94a2ca;}
+.pagination_number li span {padding: 5px 10px; font-size:11px; text-decoration:none; color:#5683d5;}
+.pagination_number li .number, #pagination_number li .number:visited { display:block; width:20px; height:20px; font-size:14px; text-decoration:none; color:#396bbd;font-weight:bold;  background:#EEE; padding:4px 4px 2px 4px}
+.pagination_number li .number:hover {display:block; width:20px; height:20px; font-size:14px; text-decoration:underline; color:#396bbd; font-weight:bold;  background:#EEE; padding:4px 4px 2px 4px}
+.pagination_number .current { display:block; width:20px; height:20px; font-size:14px; text-decoration:none; color:#EEE;font-weight:bold;  background:#396bbd; padding:4px 4px 2px 4px}
+.pagination_number li .nav, #pagination_number li .nav:visited {font-size:14px; text-decoration:none; color:#396bbd; font-weight:bold; padding:2px 4px 2px 4px}
+.pagination_number li .nav:hover {font-size:14px; text-decoration:underline; color:#396bbd; font-weight:bold; padding:2px 4px 2px 4px}
+
+
 /*
 #box_signup{float:left; width:256px; height:200px; background-color:#f6f8fd; padding:0px; overflow:visible; border-bottom:8px solid #FFF}
 #box_top_login{width:auto; height:20px; background-color:#edf1fa; font:bold 14px "Trebuchet MS", Tahoma; padding:6px 0px 0px 8px; color:#5683d5;}
@@ -64,8 +80,8 @@ html, body {padding: 0px; margin: 0px; width:100%; height:100%; border:0; font-f
 }
 
 /* HEADER ############################################################################################################################## */
-#header{float:left; width:100%; height:88px; border-bottom:solid 1px #dedede; background-color:#FFFFFF; margin-bottom:8px;}
-#header_content{width:996px; height:84px; /*min-height:980px;*/ background-color:#FFF; padding:4px 0px 0px 0px;}
+#header{float:left; width:100%; height:88px; border-bottom:solid 1px #dedede;  background:url(../images/bg_header2.gif) repeat-x right; background-color:#FFFFFF; margin-bottom:8px;}
+#header_content{width:996px; height:84px; /*min-height:980px;*/ /*background-color:#FFF;*/ padding:4px 0px 0px 0px;}
 #logo{ position:absolute; width:auto; height:auto;}
 
 /* HEADER ############################################################################################################################## */
@@ -390,15 +406,6 @@ float:left; width:100%; height:100%; min-height:100%; _margin-top:-2px; margin-t
 #box_list_cadastro{width:238px; height:auto; background-color:#edf1fa; overflow:visible; font-size:11px; color:#5683d5; padding:0px 8px 0px 8px}
 #box_baseline_cadastro{width:auto; height:20px; background-color:#FFF; font:normal 12px "Trebuchet MS", Tahoma; padding:6px 0px 0px 8px; color:#858787;}
 
-		
-#pagination{float:left; width:100%; height:auto; padding:0px 0px 0px 0px; margin:8px 0px 0px 8px;}
-#pagination_number{list-style-type:none; top:0px; padding:0px; right:0px;}
-#pagination_number li {float:left; margin-right:8px; list-style:none; font-size:14px; text-decoration:none; color:#94a2ca;}
-#pagination_number li span {padding: 5px 10px; font-size:11px; text-decoration:none; color:#5683d5;}
-#pagination_number li .number, #pagination_number li .number:visited { display:block; width:20px; height:20px; font-size:14px; text-decoration:none; color:#396bbd;font-weight:bold;  background:#EEE; padding:4px 4px 2px 4px}
-#pagination_number li .number:hover {display:block; width:20px; height:20px; font-size:14px; text-decoration:underline; color:#396bbd; font-weight:bold;  background:#EEE; padding:4px 4px 2px 4px}
-#pagination_number li .nav, #pagination_number li .nav:visited {font-size:14px; text-decoration:none; color:#396bbd; font-weight:bold; padding:2px 4px 2px 4px}
-#pagination_number li .nav:hover {font-size:14px; text-decoration:underline; color:#396bbd; font-weight:bold; padding:2px 4px 2px 4px}
 
 /* EXAMES /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 
