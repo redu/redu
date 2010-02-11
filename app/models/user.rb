@@ -70,8 +70,14 @@ class User < ActiveRecord::Base
   has_many :courses, :foreign_key => "owner"
   has_many :acquisitions, :as => :acquired_by
   
+  
+  #LOG
+  has_many :logs, :dependent => :destroy
+
+  
   #CREDIT
   has_many :credits
+
 
 
   #RESOURCES
@@ -88,6 +94,11 @@ class User < ActiveRecord::Base
   
   # FAVORITES
   has_many :favorites, :order => "created_at desc", :dependent => :destroy
+  
+   # STATUS
+  has_many :statuses, :as => :in_response_to
+
+  
   
   # COMMUNITY ENGINE:
 
@@ -264,6 +275,11 @@ class User < ActiveRecord::Base
   
   
   ## Instance Methods
+  
+  def earn_points(activity)
+    thepoints = AppConfig.points[activity]
+    self.update_attribute(:score, self.score + thepoints)
+  end
   
   def has_access_to_course(course)
     #TODO
@@ -542,13 +558,22 @@ class User < ActiveRecord::Base
   ### Métodos Adicionais 
   
   def log_activity
+    # a maneira correta de se fazer isso é via consulta no sql pois é muito mais rapido pq nao precisa ficar iterando
     
-    @follows = self.follows  
-    @logs = []
-    @follows.each do |follows|
-      @logs += Log.find(:all, :conditions => ["actor_id = ?", follows.id],:limit => 5, :order => 'created_at DESC') 
-    end
-    return @logs
+   sql =  "SELECT DISTINCT l.id, l.logeable_id, l.logeable_name, l.logeable_type, l.user_id, l.action, l.created_at FROM"
+   sql += " users u, followship f, logs l WHERE"
+   sql += " f.follows_id = '#{self.id}' AND l.user_id = f.followed_by_id"
+  # sql += " AND l.created_at > '#{Time.now.utc-10.minutes}'"
+   
+   #TODO tempo?
+    Log.find_by_sql(sql)
+    
+    #@follows = self.follows  
+    #@logs = []
+    #@follows.each do |follows|
+    #  @logs += Log.find(:all, :conditions => ["user_id = ?", follows.id],:limit => 5, :order => 'created_at DESC') 
+    #end
+    #return @logs
   end
   
   def add_favorite(favoritable_type, favoritable_id)
