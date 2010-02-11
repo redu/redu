@@ -453,6 +453,9 @@ def sort
   case params[:sort_by]
     
   when '1' # Data
+    @exams = Exam.paginate :conditions => ['published = ?', true], :include => :owner, :page => params[:page], :order => 'updated_at DESC', :per_page => AppConfig.items_per_page
+    
+    
     @exams = Exam.all(:conditions => ['published = ?', true], :limit => 20, :order => 'created_at DESC')
   when '2' # Dificuldade
     @exams = Exam.published(:limit => 20, :order => 'level DESC')
@@ -478,6 +481,8 @@ def sort
 end
 
 def order
+  
+  #if params[:order] 
   
 end
 
@@ -516,18 +521,49 @@ end
     
   end 
   
+  def get_query(sort, page)
+    
+    case sort
+      
+    when '1' # Data
+      
+      @exams = Exam.paginate :conditions => ['published = ?', true], :include => :owner, :page => page, :order => 'created_at DESC', :per_page => AppConfig.items_per_page
+    when '2' # Dificuldade
+      @exams = Exam.paginate :conditions => ['published = ?', true], :include => :owner, :page => page, :order => 'level DESC', :per_page => AppConfig.items_per_page
+    when '3' # Realizações
+      @exams = Exam.paginate :conditions => ['published = ?', true], :include => :owner, :page => page, :order => 'done_count DESC', :per_page => AppConfig.items_per_page
+    when '4' # Título
+      @exams = Exam.paginate :conditions => ['published = ?', true], :include => :owner, :page => page, :order => 'name DESC', :per_page => AppConfig.items_per_page
+      when '5' # Categoria
+      @exams = Exam.paginate :conditions => ['published = ?', true], :include => :owner, :page => page, :order => 'name DESC', :per_page => AppConfig.items_per_page
+      else
+      @exams = Exam.paginate :conditions => ['published = ?', true], :include => :owner, :page => page, :order => 'created_at DESC', :per_page => AppConfig.items_per_page
+    end
+    
+  end
+  
+  
 
   # GET /exams
   # GET /exams.xml
   def index
-    @exams = Exam.paginate :conditions => ['published = ?', true], :include => :owner, :page => params[:page], :order => 'updated_at DESC', :per_page => AppConfig.items_per_page
+    @sort_by = params[:sort_by]
+    @exams = get_query(params[:sort_by], params[:page]) 
     
-    # @exams = Exam.published(:limit => 20, :order => 'created_at DESC', :include => :owner)
+    
+    #@exams = Exam.paginate({
+    #:conditions => ['published = ?', true] + sort, 
+    #:include => :owner, 
+    #:page => params[:page], 
+    #:order => 'updated_at DESC', 
+    #:per_page => AppConfig.items_per_page})
+    
     @tags = Exam.tag_counts
     
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @exams }
+      
     end
   end
   
