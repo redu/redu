@@ -45,12 +45,16 @@
             <!--	<div id="title_video"><a href="#">História - Revolução Francesa</a></div>    -->
             <div id="edit_admin">
                 <% if current_user.eql?(@course.owner) %>
-                <%= link_to 'Editar', {:action => "edit"}, :class => "link_edit" %>
-                <br/>
+                	<%= link_to 'Editar', {:action => "edit"}, :class => "link_edit" %>
                 <% end %>
-                <% if current_user.admin? and not @course.state.eql?("approved") %>
-                <!-- Linkar para onde? --><%= link_to 'Aprovar' , {:action => "approve", :id => @course.id} %>
-                <%= link_to 'Rejeitar' , {:action => "disapprove", :id => @course.id} %>
+				<% if @course.can_be_deleted_by(current_user) %>
+					<%= link_to 'Remover', @course, :confirm => 'Você tem certeza que quer remover esta aula permanentemente?', :method => :delete %>
+				<% end %>
+				
+				
+                <% if current_user.admin? and @course.state.eql?("waiting") %>
+	                <%= link_to 'Aprovar' , {:action => "approve", :id => @course.id} %> |
+	                <%= link_to 'Rejeitar' , {:action => "disapprove", :id => @course.id} %>
                 <% end %>
             </div>
             <div id="identification1">
@@ -68,7 +72,7 @@
                         |
                     </li>
                     <li>
-                        Exibições(4)
+                        Exibições(<%= @course.view_count %>)
                     </li>
                 </ul>
             </div>
@@ -92,7 +96,10 @@
             </div>
         </div>
         <!-- CABEÇALHO ############################################################################################################################### --><!-- BARRA ################################################################################################################################### -->
-        <div id="filter_bar_video">
+        
+		
+		
+		<div id="filter_bar_video">
             <div id="actions_video">
                 <ul id="actions_resource">
                 	<li>
@@ -125,34 +132,11 @@
                         |
                     </li>
                     <li>
-                        <a href="#" class="comments_video">Comentários(<%= @course.comments.count %>)</a>
+                        <a href="#comments" class="comments_video">Comentários(<%= @course.comments.count %>)</a>
                     </li>
                 </ul>
             </div>
             <div id="ratting_video">
-                
-				<!--
-				<ul id="ratting_video_menu">
-                    <li class="evaluation_rating">
-                        Avaliações(30)
-                    </li>
-                    <li>
-                        <img src="img/icon_star_on.png" />
-                    </li>
-                    <li>
-                        <img src="img/icon_star_on.png" />
-                    </li>
-                    <li>
-                        <img src="img/icon_star_on.png" />
-                    </li>
-                    <li>
-                        <img src="img/icon_star_off.png" />
-                    </li>
-                    <li>
-                        <img src="img/icon_star_off.png" />
-                    </li>
-                </ul>
-				-->
 				<%= ratings_for @course %>
             </div>
         </div><!-- BARRA ################################################################################################################################### --><!-- VIDEO ################################################################################################################################### -->
@@ -165,54 +149,28 @@
             <%= render :partial => "resources/player", :locals => {:resource => @course} %>
 			<% end %>
         </div>
-        <!-- COMENTARIOS ############################################################################################################################# -->
         
 		
-		<div id="comments">
-            <div id="filter_bar_comments">
-                <span class="title_filter">COMENTÁRIOS</span>
-            </div>
-            <div id="comments_item">
-                <div id="comments_foto">
-                    <a href="#"><img src="img/foto_40x40.png" width="40" height="40" class="move_foto" border="0"/></a>
-                </div>
-                <div id="comments_txt">
-                    <a href="#">Jõao Vitor,</a>
-                    Essa aula foi muito importante para meu aprendizado, agora conseguir entender perfeitamente o assunto e também posso assitir várias vezes, vou adicionar nos meus favoritos ;-)
-                </div>
-                <div id="comments_time">
-                    (3 minutos atrás)
-                </div>
-                <div id="comments_actions">
-                    <a href="#">Responder</a>
-                    | <a href="#">Spam</a>
-                    | <a href="#">Excluir</a>
-                </div>
-            </div>
-            <div id="comments_form">
-                <div id="comments_top">
-                    <div id="comments_numbers">
-                        Mostrando <strong>(1)</strong>
-                        de <strong>(30)</strong>
-                    </div>
-                    <div id="comments_view_all">
-                        Exibir todos os <strong>(30)</strong>
-                        comentários
-                    </div>
-                </div>
-                <div id="comments_title">
-                    INSERIR COMENTÁRIO
-                </div>
-                <div id="comments_form_fields">
-                    <textarea cols="76" rows="5"class="comments_imput">
-                    </textarea>
-                    <br/>
-                    <a href="#" class="bt_comments">Enviar</a>
-                </div>
-            </div>
-        </div>
-        <!-- COMENTARIOS ############################################################################################################################# --><!-- MATERIAIS AUXILIARES #################################################################################################################### -->
-        <div id="materials">
+		<div id="left_column"> <!-- COLUNA DA ESQUERDA  ## -->
+			<!-- ONLINE USERS ############################################################################################################################# --><!-- MATERIAIS AUXILIARES #################################################################################################################### -->
+			<% cur_watching = @course.currently_watching %>
+			
+			<% if cur_watching.length > 1 %>
+				<div id="filter_bar_comments"><span class="title_filter">ASSISTINDO AGORA</span></div>
+			
+				<% cur_watching.each do |user| %>
+				<%= link_to image_tag(user.avatar_photo_url(:thumb), :height => '40', :width => '40', :alt => "#{user.login}"), user_path(user), :rel => 'bookmark', :class => 'move_foto', :title => "#{user.login}'s profile" %>
+				<%= user.login %>
+				
+				<% end %>
+			<% end %>
+			<!-- COMENTARIOS ############################################################################################################################# -->
+			<a name="comments"></a>
+			<%= render :partial => 'shared/comment', :locals => { :commentable => @course } %>
+		
+        </div> <!-- FIM COLUNA DA ESQUERDA  ## -->
+		
+		<div id="materials">
             <div id="filter_bar_materials">
                 <span class="title_materials">MATERIAL AUXILIAR</span>
             </div>

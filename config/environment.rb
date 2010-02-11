@@ -53,10 +53,8 @@ Rails::Initializer.run do |config|
   }
 =end
   config.action_controller.session_store = :active_record_store
-  config.active_record.observers = :course_observer,
-    :resource_observer,
-    :exam_observer,
-    :user_observer
+  
+    
   
   
   

@@ -37,7 +37,7 @@ points:
   show_exam: 10
   created_resource: 30
   show_resource: 15
-  #exam_take: 20
+  answer_exam: 20
 
 image:
   #missing_thumb: '/images/icon_missing_thumb.gif'

@@ -2,7 +2,15 @@
     <div id="title">
         <%= link_to course.name, course %>
     </div>
-    <div id="video" style="background: url('<%= File.join(File.dirname(course.media.url), "#{course.id}128x96.jpg") %>') 0 0">
+    
+	<% if (course.type == 'youtube') %>
+    <%  thumb_url = 'http://i1.ytimg.com/vi/' + course.external_resource + '/default.jpg' %> 
+	<% else %>
+	<%  thumb_url = File.join(File.dirname(course.media.url), "#{course.id}128x96.jpg") %>
+	<% end %>
+	
+	
+	<div id="video" style="background: url(<%=thumb_url%>) 0 0">
         <!-- Video Insert -->
         <div id="video_info">
             00:00:00
@@ -19,6 +27,12 @@
             </li>
             <li>
                 <%= time_ago_in_words(course.created_at) %>
+            </li>
+			<li>
+                |
+            </li>
+            <li>
+                Exibições (<%= course.view_count %>)
             </li>
         </ul>
     </div>
