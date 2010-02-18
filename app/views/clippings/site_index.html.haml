@@ -13,8 +13,7 @@
           .row  
             - group.compact.each do |clipping|
               =render :partial => 'clippings/clipping', :locals => {:clipping => clipping}
-            .clear
-      
+            .clear      
       -if @clippings.page_count > 1      
         .pagination=paginating_links @clippings
       .clear
