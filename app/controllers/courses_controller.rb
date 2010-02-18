@@ -178,6 +178,7 @@ class CoursesController < BaseController
     @acquisition.acquired_by_type = "User"
     @acquisition.acquired_by_id = current_user.id
     @acquisition.course = @course
+    #@acquisition.value = @course.???
     
     if @acquisition.save
       flash[:notice] = 'A aula foi comprada!'

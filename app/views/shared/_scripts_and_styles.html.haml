@@ -56,7 +56,6 @@
   = ajaxful_rating_style
 
 
-
 = javascript_include_tiny_mce_if_used
 = tiny_mce if using_tiny_mce?
 
@@ -66,3 +65,5 @@
   - unless @feed_icons.blank?
     - @feed_icons.each do |feed|
       = auto_discovery_link_tag :rss, feed[:url], :title => "Subscribe to '#{feed[:title]}'"
+      
+   

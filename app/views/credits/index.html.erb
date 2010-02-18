@@ -1,12 +1,17 @@
-Voce tem <%= @balance %> de creditos
+Voce tem <%= @balance %> de creditos<br>
 
-Compre :
+Compre aqui:
 <% form_for(@credit) do |f| %>
   <%= f.error_messages %>
 
-  <%= f.radio_button :credit, :value, "30"%> 30 <BR>
+  <%= f.radio_button :value, "10"%> 10 <BR>
+  <%= f.radio_button :value, "20"%> 20 <BR>
+  <%= f.radio_button :value, "30"%> 30 <BR>
+  <%= f.radio_button :value, "40"%> 40 <BR>
+  <%= f.radio_button :value, "50"%> 50 <BR>
+  <%= f.text_field :value %>Escolha quanto você quer comprar<BR>
   <p>
-    <%= f.submit 'Create' %>
+    <%= f.submit 'Comprar' %>
   </p>
 <% end %>
 

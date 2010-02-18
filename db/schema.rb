@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091104190012) do
+ActiveRecord::Schema.define(:version => 20100218163949) do
 
   create_table "abilities", :force => true do |t|
     t.string   "name"
@@ -25,6 +25,15 @@ ActiveRecord::Schema.define(:version => 20091104190012) do
     t.date     "expiration_date"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "acquisitions", :force => true do |t|
+    t.integer  "course_id"
+    t.integer  "acquired_by_id"
+    t.string   "acquired_by_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.decimal  "value",            :precision => 8, :scale => 2, :default => 0.0
   end
 
   create_table "activities", :force => true do |t|
@@ -80,6 +89,26 @@ ActiveRecord::Schema.define(:version => 20091104190012) do
     t.datetime "created_at"
     t.string   "thumbnail"
     t.integer  "parent_id"
+  end
+
+  create_table "bdrb_job_queues", :force => true do |t|
+    t.text     "args"
+    t.string   "worker_name"
+    t.string   "worker_method"
+    t.string   "job_key"
+    t.integer  "taken"
+    t.integer  "finished"
+    t.integer  "timeout"
+    t.integer  "priority"
+    t.datetime "submitted_at"
+    t.datetime "started_at"
+    t.datetime "finished_at"
+    t.datetime "archived_at"
+    t.string   "tag"
+    t.string   "submitter_info"
+    t.string   "runner_info"
+    t.string   "worker_key"
+    t.datetime "scheduled_at"
   end
 
   create_table "categories", :force => true do |t|
@@ -155,7 +184,19 @@ ActiveRecord::Schema.define(:version => 20091104190012) do
     t.string "name"
   end
 
-  create_table "course_subject_associations", :force => true do |t|
+  create_table "course_prices", :force => true do |t|
+    t.integer  "course_id"
+    t.integer  "key_number"
+    t.decimal  "price",      :precision => 8, :scale => 2, :default => 0.0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "course_prices", ["course_id", "key_number", "price"], :name => "index_course_prices_on_course_id_and_key_number_and_price", :unique => true
+
+  create_table "course_resource_associations", :force => true do |t|
+    t.integer  "course_id"
+    t.integer  "resource_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -164,17 +205,35 @@ ActiveRecord::Schema.define(:version => 20091104190012) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "rating_average", :limit => 10, :precision => 10, :scale => 0, :default => 0
+    t.integer  "rating_average",         :limit => 10, :precision => 10, :scale => 0, :default => 0
+    t.integer  "owner",                                                                                 :null => false
+    t.text     "description",                                                                           :null => false
+    t.boolean  "published",                                                           :default => true
+    t.string   "media_file_name"
+    t.string   "media_content_type"
+    t.integer  "media_file_size"
+    t.datetime "media_updated_at"
+    t.string   "external_resource"
+    t.string   "external_resource_type"
+    t.string   "state"
+    t.integer  "view_count",                                                          :default => 0
   end
 
   create_table "courses_resources", :id => false, :force => true do |t|
     t.integer "course_id"
-    t.integer "subject_id"
+    t.integer "resource_id"
   end
 
   create_table "courses_subjects", :id => false, :force => true do |t|
     t.integer "course_id"
     t.integer "subject_id"
+  end
+
+  create_table "credits", :force => true do |t|
+    t.decimal  "value",      :precision => 8, :scale => 2, :default => 0.0
+    t.integer  "user_id",                                                   :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "events", :force => true do |t|
@@ -189,8 +248,16 @@ ActiveRecord::Schema.define(:version => 20091104190012) do
     t.string   "location"
   end
 
+  create_table "exam_users", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "exam_id"
+    t.datetime "done_at"
+    t.integer  "correct_count", :default => 0
+    t.boolean  "public",        :default => false
+  end
+
   create_table "exams", :force => true do |t|
-    t.integer  "author_id",                        :null => false
+    t.integer  "owner_id",                         :null => false
     t.string   "name",                             :null => false
     t.text     "description"
     t.boolean  "published",     :default => false
@@ -198,6 +265,8 @@ ActiveRecord::Schema.define(:version => 20091104190012) do
     t.float    "total_correct", :default => 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "instruction"
+    t.integer  "level",         :default => 2
   end
 
   create_table "exams_resources", :id => false, :force => true do |t|
@@ -206,15 +275,12 @@ ActiveRecord::Schema.define(:version => 20091104190012) do
   end
 
   create_table "favorites", :force => true do |t|
-    t.datetime "updated_at"
-    t.datetime "created_at"
-    t.string   "favoritable_type"
     t.integer  "favoritable_id"
+    t.string   "favoritable_type"
     t.integer  "user_id"
-    t.string   "ip_address",       :default => ""
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
-
-  add_index "favorites", ["user_id"], :name => "fk_favorites_user"
 
   create_table "followship", :id => false, :force => true do |t|
     t.integer "followed_by_id"
@@ -230,6 +296,7 @@ ActiveRecord::Schema.define(:version => 20091104190012) do
     t.text    "description_html"
     t.string  "owner_type"
     t.integer "owner_id"
+    t.integer "school_id",                       :null => false
   end
 
   create_table "forums_subjects", :id => false, :force => true do |t|
@@ -284,6 +351,16 @@ ActiveRecord::Schema.define(:version => 20091104190012) do
     t.string   "message"
     t.integer  "user_id"
     t.datetime "created_at"
+  end
+
+  create_table "logs", :force => true do |t|
+    t.string   "logeable_type"
+    t.string   "action"
+    t.integer  "user_id"
+    t.string   "logeable_name"
+    t.integer  "logeable_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "messages", :force => true do |t|
@@ -419,6 +496,7 @@ ActiveRecord::Schema.define(:version => 20091104190012) do
     t.integer  "image_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "skill_id"
   end
 
   create_table "rates", :force => true do |t|
@@ -435,16 +513,18 @@ ActiveRecord::Schema.define(:version => 20091104190012) do
   add_index "rates", ["user_id"], :name => "index_rates_on_user_id"
 
   create_table "resources", :force => true do |t|
-    t.string   "title",              :null => false
-    t.integer  "resourceable_id"
-    t.string   "resourceable_type"
+    t.string   "title",                                                                              :null => false
+    t.text     "description"
+    t.string   "state"
+    t.integer  "user_id",                                                                            :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "rating_average",         :limit => 10, :precision => 10, :scale => 0, :default => 0
     t.string   "media_content_type"
     t.string   "media_file_name"
     t.integer  "media_file_size"
-    t.text     "description"
-    t.string   "state"
+    t.string   "external_resource"
+    t.string   "external_resource_type"
   end
 
   create_table "resources_subjects", :id => false, :force => true do |t|
@@ -454,7 +534,7 @@ ActiveRecord::Schema.define(:version => 20091104190012) do
 
   create_table "roles", :force => true do |t|
     t.string  "name"
-    t.boolean "school_role"
+    t.boolean "school_role", :null => false
   end
 
   create_table "rsvps", :force => true do |t|
@@ -481,9 +561,10 @@ ActiveRecord::Schema.define(:version => 20091104190012) do
   create_table "schools", :force => true do |t|
     t.string   "name"
     t.text     "description"
+    t.decimal  "key_price",   :precision => 8, :scale => 2
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "key_price",   :limit => 10, :precision => 10, :scale => 0
+    t.integer  "owner",                                     :null => false
   end
 
   create_table "sessions", :force => true do |t|
@@ -496,11 +577,20 @@ ActiveRecord::Schema.define(:version => 20091104190012) do
   add_index "sessions", ["sessid"], :name => "index_sessions_on_sessid"
 
   create_table "skills", :force => true do |t|
-    t.string "name"
+    t.string  "name"
+    t.integer "parent_id"
   end
 
   create_table "states", :force => true do |t|
     t.string "name"
+  end
+
+  create_table "statuses", :force => true do |t|
+    t.string   "text"
+    t.integer  "in_response_to_id"
+    t.string   "in_response_to_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "subjects", :force => true do |t|
@@ -544,6 +634,15 @@ ActiveRecord::Schema.define(:version => 20091104190012) do
   add_index "topics", ["forum_id", "replied_at"], :name => "index_topics_on_forum_id_and_replied_at"
   add_index "topics", ["forum_id", "sticky", "replied_at"], :name => "index_topics_on_sticky_and_replied_at"
   add_index "topics", ["forum_id"], :name => "index_topics_on_forum_id"
+
+  create_table "user_competences", :force => true do |t|
+    t.integer  "user_id",                      :null => false
+    t.integer  "skill_id",                     :null => false
+    t.integer  "done_count",    :default => 0
+    t.integer  "correct_count", :default => 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "user_course_associations", :force => true do |t|
     t.datetime "created_at"
@@ -603,6 +702,7 @@ ActiveRecord::Schema.define(:version => 20091104190012) do
     t.integer  "role_id"
     t.integer  "followers_count",                         :default => 0
     t.integer  "follows_count",                           :default => 0
+    t.integer  "score",                                   :default => 0
   end
 
   add_index "users", ["activated_at"], :name => "index_users_on_activated_at"
@@ -611,17 +711,6 @@ ActiveRecord::Schema.define(:version => 20091104190012) do
   add_index "users", ["featured_writer"], :name => "index_users_on_featured_writer"
   add_index "users", ["login_slug"], :name => "index_users_on_login_slug"
   add_index "users", ["vendor"], :name => "index_users_on_vendor"
-
-  create_table "videos", :force => true do |t|
-    t.string   "source_content_type"
-    t.string   "source_file_name"
-    t.integer  "source_file_size"
-    t.string   "state"
-    t.string   "title",               :null => false
-    t.text     "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "votes", :force => true do |t|
     t.integer  "user_id"

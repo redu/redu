@@ -3,11 +3,12 @@
 <head>
 <link href="#{application_url}favicon.ico" rel='shortcut icon' />	
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title><%= page_title %></title>
+<title><%= @page_title %></title>
     <meta content='keywords for use in META tags' name='keywords' />
     <meta content='noindex,follow' name='robots' />
     <meta content='A description of your community for use in META tags.' name='description' />
 
+	
   <%= render :partial => "shared/scripts_and_styles" %>
   
   <% if @rss_title && @rss_url %>
