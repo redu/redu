@@ -1,6 +1,10 @@
 class CoursesController < BaseController
   before_filter :login_required, :except => [:index]
   
+  def show_favorites
+    current_user.get_favorites
+  end
+  
   def put_as_favorite
    @favoritable = Favorite.find(:first,:conditions => ["favorite_id = ? AND user_id = ? AND favorite_type = ?", params[:id], current_user.id, 'Course'])
     if @favoritable
@@ -178,7 +182,6 @@ class CoursesController < BaseController
     @acquisition.acquired_by_type = "User"
     @acquisition.acquired_by_id = current_user.id
     @acquisition.course = @course
-    #@acquisition.value = @course.???
     
     if @acquisition.save
       flash[:notice] = 'A aula foi comprada!'

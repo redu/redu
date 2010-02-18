@@ -1,7 +1,11 @@
   class ExamsController < BaseController
   
   before_filter :login_required, :except => [:index]
-
+  
+  def show_favorites
+    current_user.get_favorites
+  end
+  
    def put_as_favorite
    @favoritable = Favorite.find(:first,:conditions => ["favorite_id = ? AND user_id = ? AND favorite_type = ?", params[:id], current_user.id, 'Exam'])
     if @favoritable

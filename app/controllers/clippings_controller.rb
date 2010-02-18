@@ -37,13 +37,12 @@ class ClippingsController < BaseController
 
       }
     end
-
   end
 
   # GET /clippings
   # GET /clippings.xml
   def index
-    @user = User.find(params[:user_id])
+    @user = current_user
 
     cond = Caboose::EZ::Condition.new
     cond.user_id == @user.id
@@ -125,15 +124,13 @@ class ClippingsController < BaseController
   def new_clipping
     #@user = current_user
     #@clipping = @user.clippings.new({:url => params[:uri], :description => params[:selection]})
-    @resource = Resource.new(:title => params[:title], :external_resource => params[:uri], :external_resource_type => 'clipping', :owner => current_user)
-    @resource.save
+    @resource = Resource.create(:title => params[:title], :external_resource => params[:uri], :external_resource_type => 'clipping', :owner => current_user)
     render :action => "clipping_index"
-    #render :action => "new_clipping", :layout => false
   end
 
   # GET /clippings/new
   def new
-    @user = User.find(params[:user_id])
+    @user = current_user
     @clipping = @user.clippings.new
   end
 
@@ -154,13 +151,6 @@ class ClippingsController < BaseController
     
     # primeiro salva clipping !
     
-    
-    #@res = Resource.new
-    #@res.title = @clipping.title
-    #@res.owner = @clipping.user
-    
-  #  @res.resource = 
-
     respond_to do |format|
       if @clipping.save!
         flash[:notice] = :clipping_was_successfully_created.l

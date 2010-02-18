@@ -1,6 +1,10 @@
 class ResourcesController < BaseController
   
   
+  def show_favorites
+    current_user.get_favorites
+  end
+  
   def put_as_favorite
    @favoritable = Favorite.find(:first,:conditions => ["favorite_id = ? AND user_id = ? AND favorite_type = ?", params[:id], current_user.id, 'Resource'])
     if @favoritable ## TODO empty to work!
@@ -86,7 +90,7 @@ class ResourcesController < BaseController
       end
     else
       #@resources = Resource.all(:conditions => "state = 'converted'")
-      @resources = Resource.all.reject {|resource|  (resource.video? and not resource.state.eql?("converted")) }
+      @resources = Resource.all(:limit => 9).reject {|resource|  (resource.video? and not resource.state.eql?("converted")) }
         respond_to do |format|
         format.html # index.html.erb
         format.xml  { render :xml => @resources }
