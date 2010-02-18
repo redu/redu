@@ -3,7 +3,7 @@
 
        <div id="item">
     		<div id="title"><%= link_to course.name, course %></div>
-						<div id="video" style="background: url('<%= File.join(File.dirname(course.main_resource.media.url), "#{course.main_resource.id}128x96.jpg") %>') 0 0"><!-- Video Insert -->
+						<div id="video" style="background: url('<%= File.join(File.dirname(course.media.url), "#{course.id}128x96.jpg") %>') 0 0"><!-- Video Insert -->
 						<div id="video_info">00:00:00</div>
 						</div>
                        
@@ -58,7 +58,14 @@
 <% resource = Resource.find(favorite.favorite_id) %>
 
         <div id="item">
-    		<div id="title"><%= link_to resource.title, resource %></div>
+    		<div id="title">
+    			<% if resource.external_resource_type.eql?('clipping')%>
+				<%= link_to resource.title, resource.external_resource.to_s %>
+				<% else %>
+				<%= link_to resource.title, resource %>
+				<% end %>
+				
+				</div>
 						<div id="video" style="background: url('<%= File.join(File.dirname(resource.media.url), "#{resource.id}128x96.jpg") %>') 0 0"><!-- Video Insert -->
 						<div id="video_info">00:00:00</div>
 						</div>
