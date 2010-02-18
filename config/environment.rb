@@ -22,6 +22,11 @@ Rails::Initializer.run do |config|
   
   #config.plugins = [:community_engine, :white_list, :all]
   #config.plugin_paths += ["#{RAILS_ROOT}/vendor/plugins/community_engine/plugins"]
+  config.gem "brcobranca"
+  config.gem "rghost"
+  config.gem "rghost_barcode"
+  config.gem "parseline"
+  
   config.gem 'calendar_date_select'
   config.gem 'icalendar'        
   config.gem 'will_paginate', :version => '~> 2.3.11', :source => 'http://gemcutter.org'

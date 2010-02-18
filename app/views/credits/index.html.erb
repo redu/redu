@@ -9,7 +9,12 @@ Compre aqui:
   <%= f.radio_button :value, "30"%> 30 <BR>
   <%= f.radio_button :value, "40"%> 40 <BR>
   <%= f.radio_button :value, "50"%> 50 <BR>
-  <%= f.text_field :value %>Escolha quanto você quer comprar<BR>
+  <%# f.text_field :value %><!--Escolha quanto você quer comprar<BR>-->
+  <br>
+  Escolha a forma de pagamento:
+  <%= f.radio_button :payment_type, "teste"%> teste <BR>
+  <%= f.radio_button :payment_type, "boleto"%> boleto bancario <BR>
+  
   <p>
     <%= f.submit 'Comprar' %>
   </p>

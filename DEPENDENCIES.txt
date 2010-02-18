@@ -5,6 +5,7 @@ Requirements:
 	- RAILS VERSION 2.3.2
 	- ImageMagick (>6.4) 
 	- FFmpeg
+	- 
 	- Several gems:
       desert 0.5.2
 	  rmagick
@@ -19,4 +20,9 @@ Requirements:
 	  will-paginate
 	  chronic
 	  backgroundrb
+	  
+	  brcobranca
+	  rghost
+	  rghost_barcode
+	  parseline
 
