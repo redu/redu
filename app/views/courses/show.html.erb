@@ -178,13 +178,11 @@
                 <div id="materialslist" align="left">
                     <ul id="materials_item">
                         <% @course.resources.each do | resource | %>
-                        <% unless @course.main_resource.eql?(resource) %>
                         <li>
                             <%= link_to resource.title,
                             resource_path(resource),
                             :class => 'word' %>
                         </li>
-                        <% end %>
                         <% end %>
                     </ul>
                     <%= link_to 'Adicionar materiais complementares', :action => 'edit' %>
