@@ -145,6 +145,9 @@
 	<div id="box_cadastro">
     	<div id="box_top_cadastro">CADASTRE-SE</div>
         <div id="box_list_cadastro"><a href="#" class="link_01" onclick="toggleLoginSignupBox();">Para ter acesso aos recusos do Redu é necessário estar cadastrado.</a></div>
+	
+	
+	
 	</div>
 <!-- CADASTRO ///////////////////////////////////////////////////////////////////////////////////// -->
 	<% end %>
@@ -159,6 +162,11 @@
 	<% else %>
 	<%= render :partial => 'logs/not_logged_in' %>
 	<% end %>
+	<div id="box_cadastro">
+    	<div id="box_top_cadastro">CRIE UM CLIPPING</div>
+        <div id="box_list_cadastro"><%= link_to 'Criar Clipping', clippings_link %></div>
+	</div>
+   	
    
 </div>
 <!--<div id="title_page">Assistindo Aula</div>-->
