@@ -6,6 +6,7 @@
 <div id="task_bar_exames">
 	<%= link_to 'Novo Exame', :action => 'new' %> | 	
 	<%= link_to 'Todos', exams_path %> | 
+	<%= link_to 'Meus Favoritos', :action =>'show_favorites', :id => current_user %> |
 	
 	<%= link_to 'Publicados (' + published_count.to_s + ')', published_user_exams_path(current_user.id) %> |
 	<%= link_to 'Não publicados (' + unpublished_count.to_s + ')', unpublished_user_exams_path(current_user.id) %> |
