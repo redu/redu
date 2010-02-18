@@ -30,11 +30,11 @@ class Exam < ActiveRecord::Base
   
 
   named_scope :published_by, lambda { |my_id|
-    { :conditions => ["published = ? AND author_id = ?", true, my_id] }
+    { :conditions => ["published = ? AND owner = ?", true, my_id] }
   }
   
   named_scope :unpublished_by, lambda { |my_id|
-    { :conditions => ["published = ? AND author_id = ?", false, my_id] }
+    { :conditions => ["published = ? AND owner = ?", false, my_id] }
   }
   
   
