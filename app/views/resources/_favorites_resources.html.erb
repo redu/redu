@@ -1,9 +1,0 @@
-<h1>Materiais Favoritos: </h1>
-
-
-<% @resources.each do |resource| %>
-  <tr>
-    <td><%=h resource.name %></td>
-    <td><%= link_to 'Visualizar', resource %></td>
-  </tr>
-<% end %>

@@ -1,3 +1,4 @@
 <%  if logged_in? %>
-<div id="task_bar_exames"><%= link_to 'Novo Material', :action => 'new' %> | <%= link_to 'Meus Materiais', published_user_resources_path(current_user.id) %></div>
+<div id="task_bar_exames"><%= link_to 'Novo Material', :action => 'new' %> | <%= link_to 'Meus Materiais', published_user_resources_path(current_user.id) %>
+| <%= link_to 'Meus Favoritos' , :action =>'show_favorites', :id => current_user %></div>
 <% end %>

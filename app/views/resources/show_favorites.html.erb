@@ -1,3 +1,4 @@
+
 <div id="all_content3">
 <div id="col_content">
 <div id="breadcrumbs"><a href="#">home</a> > <a href="#">aprender</a> > <a href="#">materiais</a></div>
@@ -9,7 +10,7 @@
 <!-- LISTAGEM RECURSO ############################################################################################################################################## -->
 
 <div id="filter_bar">
-    <span class="title_list">MAIS RESCENTES</span>
+    <span class="title_list">MEUS FAVORITOS</span>
     <span class="title_filter">Ordenar:</span>
 		
 		<%= render :partial => "resources/sort" %>
@@ -17,10 +18,11 @@
 	  
     <div id="all_list">
     	
-    	<% if @resources && @resources.length > 0 %>
- 			<%= render :partial => 'resources/item', :collection => @resources, :as => :resource %> 
+    	<% @favorites = current_user.get_favorites %>
+		<% if @favorites && @favorites.length > 0 %>
+ 			<%= render :partial => 'resources/favorite',:collection => @favorites, :as => :favorite  %> 
  		<% else %>
- 			Não há itens uploadeados ainda. <%= link_to 'Crie um agora!', :action => 'new' %>
+ 			Não há favoritos ainda.
 		<% end %>
 		
     </div>
@@ -53,13 +55,7 @@
 	<% else %>
 	<%= render :partial => 'logs/not_logged_in', :locals => {:logs => @logs} %>
 	<% end %>
-	<div id="box_cadastro">
-    	<div id="box_top_cadastro">CRIE UM CLIPPING</div>
-        <div id="box_list_cadastro"><%= link_to 'Criar Clipping', clippings_link %></div>
 	</div>
-	</div>
-	
-	
 
 </div>
 <!--<div id="title_page">Assistindo Aula</div>-->
