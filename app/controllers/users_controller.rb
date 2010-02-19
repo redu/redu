@@ -421,6 +421,13 @@ class UsersController < BaseController
       friend = User.find(options[:inviter_id])
       
       if friend && friend.valid_invite_code?(options[:inviter_code])
+      	# add as follower and following
+      	friend.followers << user
+      	friend.save!
+      	
+      	user.followers << friend 
+      	user.save!
+=begin
         accepted    = FriendshipStatus[:accepted]
         @friendship = Friendship.new(:user_id => friend.id, 
           :friend_id => user.id,
@@ -429,10 +436,11 @@ class UsersController < BaseController
         
         reverse_friendship = Friendship.new(:user_id => user.id, 
           :friend_id => friend.id, 
-          :friendship_status => accepted )
+          :friendship_status => accepted ) 
         
         @friendship.save
         reverse_friendship.save
+=end
       end
     end
   end

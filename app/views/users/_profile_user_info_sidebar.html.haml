@@ -31,7 +31,7 @@
   /= add_friend_link(@user)
     
      
-  - if current_user 
+  - if current_user and (!@user.eql?(current_user))
     - unless @user.followers.include?(current_user)
       = link_to 'Seguir', { :action => :follow, :id => @user }
     - else 
