@@ -1,6 +1,6 @@
 class CreditsController < BaseController
   def index
-    @balance = 10
+    @balance = Credit.total(current_user.id) - Acquisition.total(current_user.id)
     
     @credit = Credit.new
     
@@ -20,7 +20,7 @@ class CreditsController < BaseController
   
   def create
     @credit = Credit.new(params[:credit])
-    @credit.user_id = current_user
+    @credit.user_id = current_user.id
     
     if @credit.payment_type == 'boleto'
       
@@ -51,12 +51,12 @@ class CreditsController < BaseController
     
     
       headers['Content-Type']='application/pdf'
-      send_data @boleto.to('pdf'), :filename => "boleto_bb.pdf"
+      send_data @boleto.to('pdf'), :filename => "boleto_bb.pdf" and return
       
       
     elsif @credit.payment_type == 'teste'
       
-      @credit.approve # ou @credit.state = 'approved'
+      @credit.state = 'approved'
       
     end
 
