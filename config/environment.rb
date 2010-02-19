@@ -30,6 +30,7 @@ Rails::Initializer.run do |config|
   config.gem 'calendar_date_select'
   config.gem 'icalendar'        
   config.gem 'will_paginate', :version => '~> 2.3.11', :source => 'http://gemcutter.org'
+  config.gem "adzap-ar_mailer"
   # config.active_record.observers = :course_observer, :resource_observer
   
   
@@ -83,16 +84,15 @@ Rails::Initializer.run do |config|
   # Skip frameworks you're not going to use. To use Rails without a database,
   # you must remove the Active Record framework.
   # config.frameworks -= [ :active_record, :active_resource, :action_mailer ]
-    config.action_mailer.delivery_method = :smtp
-    config.action_mailer.smtp_settings = {
-        :enable_starttls_auto => true,
-        :address => 'smtp.gmail.com',
-        :port => 587,
-        :authentication => :login,
-        :user_name => 'no-reply@redu.com.br',
-        :password => '7987Y5'
-    }  
-  
+  config.action_mailer.delivery_method = :activerecord
+  config.action_mailer.smtp_settings = {
+      :enable_starttls_auto => true,
+      :address => 'smtp.gmail.com',
+      :port => 587,
+      :authentication => :login,
+      :user_name => 'no-reply@redu.com.br',
+      :password => '7987Y5'
+  }  
   # Activate observers that should always be running
   # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
   

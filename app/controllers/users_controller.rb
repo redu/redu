@@ -97,30 +97,31 @@ class UsersController < BaseController
   
   
   def follow # TODO evitar duplicata
-    @user = User.find(params[:id])
-    @follow_user = User.find(params[:follow_id])
+    user = User.find(params[:id])
+    #@follow_user = User.find(params[:follow_id])
     
-    @user.follows << @follow_user
-    if @user.save #@user.update_attributes(:follows)
+    user.followers << current_user
+    if user.save #@user.update_attributes(:follows)
+    	UserNotifier.deliver_followship_notice(user, current_user)
       flash[:notice] = 'Você está seguindo esse usuário'
     else
       flash[:erro] = 'Não é possível seguir esse usuário'
     end
-    redirect_to user_path(@follow_user)
+    redirect_to user_path(user)
     
   end 
   
   def unfollow
-    @user = User.find(params[:id])
-    @follow_user = User.find(params[:follow_id])
+    user = User.find(params[:id])
+    #@follow_user = User.find(params[:follow_id])
     
-    @user.follows.delete @follow_user
-    if @user.save #@user.update_attributes(:follows)
+    user.followers.delete current_user
+    if user.save #@user.update_attributes(:follows)
       flash[:notice] = 'Você não está mais seguindo esse usuário'
     else
       flash[:erro] = 'Não foi possível parar de seguir esse usuário'
     end
-    redirect_to user_path(@follow_user)
+    redirect_to user_path(user)
     
   end
   

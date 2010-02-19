@@ -1,4 +1,5 @@
 class UserNotifier < ActionMailer::Base
+  self.delivery_method = :activerecord
   include ActionView::Helpers::TextHelper
   include ActionView::Helpers::SanitizeHelper
   extend  ActionView::Helpers::SanitizeHelper::ClassMethods # Required for rails 2.2
@@ -29,6 +30,12 @@ class UserNotifier < ActionMailer::Base
     @body[:requester] = friendship.user
     @body[:friend]    = friendship.friend
     @body[:url]       = user_url(friendship.friend)
+  end
+  
+  def followship_notice(user, follower)
+  	setup_email(user)
+  	@subject     += "#{follower.login} está seguindo você no Redu"
+  	@body[:follower] = follower
   end
 
   def comment_notice(comment)
@@ -122,7 +129,7 @@ class UserNotifier < ActionMailer::Base
   end
   
   def setup_sender_info
-    @from       = "The #{AppConfig.community_name} Team <#{AppConfig.support_email}>" 
+    @from       = "#{AppConfig.support_email}" 
     headers     "Reply-to" => "#{AppConfig.support_email}"
     @content_type = "text/plain"           
   end

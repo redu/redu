@@ -16,12 +16,12 @@ class User < ActiveRecord::Base
   
   #callbacks  
   before_save   :encrypt_password, :whitelist_attributes
-  before_create :make_activation_code
-  before_create :activate_before_save
+  before_create :make_activation_code 
+  #before_create :activate_before_save #not necessary
   after_create  :update_last_login
  
   #after_save    :activate # <- ja começa ativo
-  #after_create {|user| UserNotifier.deliver_signup_notification(user) }
+  after_create {|user| UserNotifier.deliver_signup_notification(user) }
   #after_save   {|user| UserNotifier.deliver_activation(user) if user.recently_activated? }  
   
   before_save   :generate_login_slug
@@ -233,8 +233,8 @@ class User < ActiveRecord::Base
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
   def self.authenticate(login, password)
     # hide records with a nil activated_at
-    u = find :first, :conditions => ['login = ? and activated_at IS NOT NULL', login]
-    u = find :first, :conditions => ['email = ? and activated_at IS NOT NULL', login] if u.nil?
+    u = find :first, :conditions => ['login = ?', login]
+    u = find :first, :conditions => ['email = ?', login] if u.nil?
     u && u.authenticated?(password) && u.update_last_login ? u : nil
   end
   
@@ -343,7 +343,7 @@ class User < ActiveRecord::Base
   end
   
   def active?
-    activation_code.nil?
+    activation_code.nil? or (self.created_at > (Time.now - 30.days))
   end
 
   def recently_activated?

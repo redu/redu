@@ -1,5 +1,6 @@
+# Now using ar_mailer
 
-
+=begin
 class EmailWorker < BackgrounDRb::MetaWorker
   set_worker_name :email_worker
   
@@ -12,30 +13,34 @@ class EmailWorker < BackgrounDRb::MetaWorker
   
   def send_message(email)
     # restarting SMTP connection if needed
-    start_smtp unless smtp_started?
+    unless smtp_started?
+      logger.info "#{Time.now} restarting SMTP"
+      smtp_restart
+    end
     
     destinations = email.destinations
     email.ready_to_send
     sender = (email['return-path'] && email['return-path'].spec) || email['from']
     
-    logger.info "scheduling email %s -> %s" % [sender, destinations]
+    logger.info "#{Time.now}\nscheduling email %s -> %s" % [sender, destinations]
     
     begin
       res = @smtp.send_message email.encoded, sender, destinations
-      logger.info "sent email %011d from %s to %s: %p" %
+      logger.info "#{Time.now}\nsent email %011d from %s to %s: %p" %
             [job_key, sender, destinations, res]
+      persistent_job.finish!
     rescue Net::SMTPFatalError => e
-      logger.info "5xx error sending email %d:\n\t%s" %
+      logger.info "#{Time.now}\n5xx error sending email %d:\n\t%s" %
             [job_key, e.backtrace.join("\n\t")]
     rescue Net::SMTPServerBusy => e
       smtp_restart
-      MiddleMan.worker(:email_worker).enq(email)
-      logger.info "server too busy, trying to restart the connection and enqueueing again"
+      persistent_job.release_job
+      logger.info "#{Time.now}\nserver too busy, trying to restart the connection and enqueueing again"
     rescue Net::SMTPUnknownError, Net::SMTPSyntaxError, TimeoutError, Timeout::Error => e
-      loggger.info "error sending email %d: %p(%s):\n\t%s" %
-            [job_key, email.encoded, e.class, e.backtrace.join("\n\t")]
+      loggger.info "#{Time.now}\nerror sending email %d:\n\t%s" %
+            [job_key, e.class, e.backtrace.join("\n\t")]
+      persistent_job.release_job
     end    
-   
   end
   
   protected
@@ -48,10 +53,13 @@ class EmailWorker < BackgrounDRb::MetaWorker
   # Starts a new SMTP server
   def start_smtp
     require 'net/smtp'
-    logger.info "Opening SMTP connection on port #{smtp_settings[:port]}"
+    
+    @smtp.finish if @smtp 
+    
+    logger.info "# #{Time.now}\nOpening SMTP connection on port #{smtp_settings[:port]}"
     settings = [
       smtp_settings[:domain],
-      (smtp_settings[:user] || smtp_settings[:user_name]),
+      (smtp_setdelaytings[:user] || smtp_settings[:user_name]),
       smtp_settings[:password],
       smtp_settings[:authentication]
     ]
@@ -65,17 +73,18 @@ class EmailWorker < BackgrounDRb::MetaWorker
     
     begin
       @smtp.start(*settings)
-      logger.info "SMTP connection started" if smtp_started?
+      logger.info "#{Time.now}\nSMTP connection started" if smtp_started?
     rescue Net::SMTPAuthenticationError => e
       @failed_auth_count += 1
       if @failed_auth_count >= MAX_AUTH_FAILURES then
-        logger.info "authentication error, giving up: #{email[:message]}"
+        logger.info "#{Time.now}\nauthentication error, giving up."
         raise e
       else
-        logger.info "authentication error, retrying: #{email[:message]}"
+        logger.info "#{Time.now}\nauthentication error, retrying."
       end
-    rescue Net::SMTPServerBusy, SystemCallError, OpenSSL::SSL::SSLError
-      # ignore SMTPServerBusy/EPIPE/ECONNRESET from Net::SMTP.start's ensure
+    rescue Net::SMTPServerBusy, SystemCallError, OpenSSL::SSL::SSLError, Net::SMTPFatalError, Net::SMTPUnknownError, Net::SMTPSyntaxError, TimeoutError, IOError => e
+        logger.info "#{Time.now}\nother error, giving up."
+        raise e
     end
   end
   
@@ -89,4 +98,5 @@ class EmailWorker < BackgrounDRb::MetaWorker
   end
   
 end
+=end
 
