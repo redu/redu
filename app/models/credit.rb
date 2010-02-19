@@ -16,8 +16,14 @@ class Credit < ActiveRecord::Base
       transitions :from => :pending, :to => :disapproved
    end
 
-    event :failure do
+   event :failure do
       transitions :from => :pending, :to => :error # TODO salvar estado de "erro" no bd
-    end
+   end
+  
+   def self.total(user_id)
+    self.connection.execute("select sum(value) from credits where user_id = #{user_id}").fetch_row
+   end
+  
+  
   
 end
