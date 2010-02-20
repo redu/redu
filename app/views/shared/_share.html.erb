@@ -1,0 +1,109 @@
+<script>
+	function switchShareFields(option) {
+		if (option == 1) {
+			document.getElementById('share_by_redu').style.display = "block";
+			document.getElementById('share_by_email').style.display = "none";
+			document.getElementById('share_by_twitter').style.display = "none";	
+		} else if (option == 2) {
+			document.getElementById('share_by_redu').style.display = "none";
+			document.getElementById('share_by_email').style.display = "block";
+			document.getElementById('share_by_twitter').style.display = "none";
+			
+		} else {
+			document.getElementById('share_by_redu').style.display = "none";
+			document.getElementById('share_by_email').style.display = "none";
+			document.getElementById('share_by_twitter').style.display = "block";
+			
+		}
+		document.getElementById('share_submit').style.display = "block";
+	}
+	
+	
+	function shareOnTwitter(){
+	    var username = document.getElementById("twitter_username").value;
+	    var password = document.getElementById("twitter_password").value;
+	    
+	    var status = document.getElementById("twitter_status").value;
+	    
+	    if (username.length == 0) {
+	        alert("Por favor, coloque seu login do twitter");
+	    }
+	    else 
+	        if (password.length == 0) {
+	            showPopup("Por favor, coloque sua senha do twitter");
+	        }
+	        else {
+				alert('vai');
+				
+	            var url = "http://twitter.com/statuses/update.xml";
+	            var params = "status=" + status;
+	            
+	            var xmlHttp = new XMLHttpRequest();
+				alert(xmlHttp);
+	            xmlHttp.open("POST", url, true);
+	            
+	            xmlHttp.setRequestHeader("Authorization", "Basic " + Base64.encode(username + ":" + password));
+	            xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	            
+	            xmlHttp.onreadystatechange = function(){
+	            
+	                //The request is completed
+	                if (xmlHttp.readyState == 4) {
+						alert('po');
+	                    //The HTTP status code is ok
+	                    if (xmlHttp.status == 200) {
+							alert('vai2');
+	                    }
+	                }
+	            }
+	            xmlHttp.send(params);
+	            alert("Aula compartilhada com sucesso!");
+	        }
+}
+
+	
+</script>
+
+<div id="share_box" style="float: left; width: 500px; /*height: 80px;*/ background-color: #EEE; display: none;">
+			<div>
+				
+				<% form_remote_tag :url => { :controller => :exams, :action => :search },
+					:before => "Element.show('spinner')",
+					:success => "Element.hide('spinner')" do -%>
+           	
+			<%= radio_button_tag(:share, :redu, false, :onchange => "switchShareFields(1);") %>Redu<BR>
+			<%= radio_button_tag(:share, :email, false, :onchange => "switchShareFields(2);") %>Email<BR>
+			<%= radio_button_tag(:share, :twitter, false, :onchange => "switchShareFields(3);") %>Twitter<BR>
+			
+			
+			<!-- redu -->
+			<div id= "share_by_redu" style ="display: none">
+			Login do destinatário no Redu: 
+			<%= text_field_tag :rcpt_login %>
+			</div>
+			<!-- email -->
+			<div id= "share_by_email" style ="display: none">
+			Email do destinatário: 
+			<%= text_field_tag :rcpt_email %>
+			</div>
+			<!-- twitter -->
+			<div id= "share_by_twitter" style = "display: none">
+			Twitter <BR>
+			Login: <%= text_field_tag :twitter_username %><BR>
+			Senha: <%= password_field_tag :twitter_password %><BR>
+			Status: <%= text_area_tag(:twitter_status, nil, :size => "50x3") %>
+			<button onclick="shareOnTwitter(); return false;">teste</button>
+			</div>
+			
+			
+		    <%= submit_tag 'OK', {:id => "share_submit", :style => "display: none"} %>
+			<%= image_tag("spinner.gif",
+              :align => "absmiddle",
+              :border => 0,
+              :id => "spinner",
+              :style =>"display: none;" ) %>
+        <% end -%>
+				
+				
+			</div>
+		</div>

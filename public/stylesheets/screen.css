@@ -17,8 +17,11 @@
 .nube6 {
   font-size: 1.5em; }
 
-.sort_link {
-	background:url(../images/icons/bullet_arrow_down.png) no-repeat; color:#BFBFBF; text-decoration:none; padding-left: 16px; font-weight:bold;
+.sort_link_down {
+	background:url(../images/icons/bullet_arrow_down.png) no-repeat; color:#444444; padding-left: 16px; font-weight:bold;
+}
+.sort_link_up {
+	background:url(../images/icons/bullet_arrow_up.png) no-repeat; color:#444444; padding-left: 16px; font-weight:bold;
 }
 
 		
@@ -473,7 +476,7 @@ float:left; width:100%; height:100%; min-height:100%; _margin-top:-2px; margin-t
 #info_aviso{width:auto; height:auto; background:#fdffc5; text-align:left; height:68px; padding:12px 8px 0px 8px}
 #info_justificativa{width:auto; height:100px; background:#fdffc5; text-align:left; padding:12px 8px 0px 8px}
 #imagem{float:left; width:auto; height:40px;background:url(../images/14.png) no-repeat top left; padding:10px 0px 0px 60px; display:block}
-#info{float:left; width:500px; height:auto; font:bold 24px "Trebuchet MS", Tahoma; color:#7EBF26; padding:4px 0px 0px 0px;}
+/* #info{float:left; width:500px; height:auto; font:bold 24px "Trebuchet MS", Tahoma; color:#7EBF26; padding:4px 0px 0px 0px;}*/
 .txt_info{float:left; width:500px; height:auto; font:normal 12px "Trebuchet MS", Tahoma; color:#7EBF26;}
 .txt_justificativa{float:left; width:100%; height:auto; font:normal 12px "Trebuchet MS", Tahoma; color:#929290;}
 #link_comentado{float:right; z-index:12; width:240px; height:16px; border:2px solid #FFF; background:#f4f7fe; padding:8px}
@@ -538,7 +541,7 @@ Author: Robson Ribeiro
 version: 001
 /////////////////////////////////////////////////////////////////////////// */
 
-#header_content #info {position:relative; height:auto; width:380px; top:10px; left: 200px; margin:0}
+#header_content #info {position:relative; height:auto; width:380px; top:4px; left: 200px; margin:0}
 
 /* MENU  ############################################################################################################################################ */
 #menu {width:auto; height:58px; text-align:left; border:0; font:normal 11px "Trebuchet MS", Tahoma,verdana,arial,sans-serif; color:#3e68bb;} 

@@ -562,7 +562,7 @@ class User < ActiveRecord::Base
     
    sql =  "SELECT DISTINCT l.id, l.logeable_id, l.logeable_name, l.logeable_type, l.user_id, l.action, l.created_at FROM"
    sql += " users u, followship f, logs l WHERE"
-   sql += " f.follows_id = '#{self.id}' AND l.user_id = f.followed_by_id"
+   sql += " f.follows_id = '#{self.id}' AND l.user_id = f.followed_by_id LIMIT 0,5"
   # sql += " AND l.created_at > '#{Time.now.utc-10.minutes}'"
    
    #TODO tempo?

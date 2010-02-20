@@ -33,8 +33,8 @@
   = javascript_include_tag "tiny_mce/plugins/asciimath/js/ASCIIMathMLwFallback"
   = javascript_include_tag "tiny_mce/plugins/asciisvg/js/ASCIIsvgPI"
   
-
-  
+- if (action_name == 'show')
+  = javascript_include_tag 'base64'
 
 /= stylesheet_link_tag 'reset-fonts-grids.css'
 = stylesheet_link_tag 'screen'
