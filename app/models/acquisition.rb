@@ -5,7 +5,7 @@ class Acquisition < ActiveRecord::Base
   #TODO colocar verificacao para que nao hajam duplicatas (index?)
   
   def self.total(user_id)
-    self.connection.execute("select sum(value) from acquisitions where acquired_by_id = #{user_id}").fetch_row
+    self.connection.execute("select sum(value) from acquisitions where acquired_by_id = #{user_id}").fetch_row.first
    end
   
 end
