@@ -24,6 +24,27 @@
 	background:url(../images/icons/bullet_arrow_up.png) no-repeat; color:#444444; padding-left: 16px; font-weight:bold;
 }
 
+#socialite {
+  background: whitesmoke;
+ float: left;
+  padding: 5px 5px 5px 5px;
+  margin-bottom: 5px;
+  text-align: right;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+}
+
+
+#socialite img{
+  padding-right: 5px;
+  border: 0;
+}
+
+#socialite span{
+  font-size: 12px;
+  padding-right: 10px;
+}
+
 		
 .pagination{display:block; float:left; width:100%; height:auto; padding:0px 0px 0px 0px; margin:8px 0px 0px 8px;}
 .pagination_number{list-style-type:none; top:0px; padding:0px; right:0px;}
@@ -96,7 +117,7 @@ float:left; width:100%; height:100%; min-height:100%; _margin-top:-2px; margin-t
 
 #all_content{width:980px; height:auto; min-height:1050px; background-color:#FFF; padding:8px; overflow:visible; border:solid 1px #dedede;}
 #all_content2{width:980px; height:auto; min-height:850px; background-color:#FFF; padding:8px; overflow:visible; border:solid 1px #dedede;}
-#all_content3{width:980px; height:auto; min-height:1100px; background-color:#FFF; padding:8px; overflow:visible; border:solid 1px #dedede;}
+#all_content3{width:980px; height:auto; min-height:1100px; background-color:#FFF; padding:8px;  border:solid 1px #dedede;}
 #all_content4{width:980px; height:auto; background-color:#FFF; padding:8px; overflow:visible; border:solid 1px #dedede;}
 
 #col_content{float:left; width:716px; height:auto; background-color:#FFF; padding:0px; margin-right:8px; overflow:visible; border:0;}
@@ -117,8 +138,8 @@ float:left; width:100%; height:100%; min-height:100%; _margin-top:-2px; margin-t
 #tree_navigation{float:left; width:716px; height:250px; background-color:#CCC; padding:0px 0px 0px 0px; margin:0px 0px 8px 0px}
 	
 #filter_bar{float:left; width:704px; height:22px; background:url(../images/bg_filter_bar.gif) repeat-x right; padding:5px; margin:0px 0px 8px 0px; border:solid 1px #dedede; text-align:right}
-				
-#filter_bar_comments{float:left; width:425px; height:19px; background:url(../images/bg_filter_bar.gif) repeat-x right; padding:8px 5px 5px 5px; margin:0px 0px 8px 0px; border:solid 1px #dedede; text-align:left;}
+		
+
 	
 .share{background:url(../images/icon_share_off.png) no-repeat; color:#BFBFBF; text-decoration:none; padding-left: 20px}
 .share:hover{background:url(../images/icon_share_on.png) no-repeat; color:#5782D5; text-decoration:underline; padding-left:20px}
@@ -139,7 +160,7 @@ float:left; width:100%; height:100%; min-height:100%; _margin-top:-2px; margin-t
 
 #all_list{float:left; width:716px; height:auto; padding:0px 0px 0px 0px; margin:0px 0px 8px 0px}
 	
-#item{float:left; width:716px; height:auto; padding:0px 0px 0px 0px; margin:0px 0px 8px 0px; border-bottom:solid 1px #EEE;}
+#item{float:left; width:100%; height:auto; padding:0px 0px 0px 0px; margin:0px 0px 8px 0px; border-bottom:solid 1px #EEE;}
 
 	
 #title{float:left; width:716px; height:auto; font:bold 20px "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; color:#7a87a1; vertical-align:middle; text-decoration:none; padding:0px 0px 0px 0px; margin:0px 0px 0px 0px}
@@ -270,7 +291,7 @@ float:left; width:100%; height:100%; min-height:100%; _margin-top:-2px; margin-t
 
 #left_column{float:left; width:425px; height:auto; background-color:#FFF; margin:0px 0px 0px 0px; font:normal 12px;}
 
-#filter_bar_comments{float:left; width:413px; height:19px; background:url(../images/bg_filter_bar.gif) repeat-x right; padding:8px 5px 5px 5px; margin:8px 0px 8px 0px; border:solid 1px #dedede; text-align:left;}
+#filter_bar_comments{float:left; width:100%; height:19px; background:url(../images/bg_filter_bar.gif) repeat-x right; padding:8px 5px 5px 5px; margin:8px 0px 8px 0px; border:solid 1px #dedede; text-align:left;}
 
 				
 #comments_item{float:left; width:415px; height:auto; padding:5px; border-bottom:solid 1px #e7e8e8;}
@@ -306,7 +327,7 @@ float:left; width:100%; height:100%; min-height:100%; _margin-top:-2px; margin-t
 
 /* MATERIALS /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */		
 
-#materials{float:right; width:511px; height:auto; margin:0px 0px 0px 0px}
+#right_column{float:right; width:511px; height:auto; margin:0px 0px 0px 0px}
 
 #filter_bar_materials{float:left; width:500px; height:19px; background:url(../images/bg_filter_bar_materials.gif) repeat-x right; padding:8px 5px 5px 5px; margin:8px 8px 0px 0px; border:solid 1px #f9efd1; text-align:left;}
 				

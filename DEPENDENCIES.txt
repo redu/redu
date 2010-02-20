@@ -5,7 +5,7 @@ Requirements:
 	- RAILS VERSION 2.3.2
 	- ImageMagick (>6.4) 
 	- FFmpeg
-	- 
+	- GhostScript
 	- Several gems:
       desert 0.5.2
 	  rmagick
@@ -25,4 +25,6 @@ Requirements:
 	  rghost
 	  rghost_barcode
 	  parseline
+
+ 	  adzap-ar_mailer
 

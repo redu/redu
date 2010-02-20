@@ -11,8 +11,16 @@ class CoursesController < BaseController
     else
       current_user.add_favorite('Course', params[:id] )
     end
-    @courses = Course.all
-    render :action => 'index'
+    
+   respond_to do |format|
+    format.js do
+      render :update do |page|
+        # update the page with an error message
+        flash[:notice] = 'Curso adicionado ao seus favoritos'
+        page.reload_flash
+      end
+    end 
+    end
   end
     
   def rate
@@ -96,6 +104,8 @@ class CoursesController < BaseController
   # GET /courses/1
   # GET /courses/1.xml
   def show
+    
+    @related_courses = Course.find(:all, :limit => 3)
     
     @course = Course.find(params[:id])
     @comments  = @course.comments.find(:all, :limit => 10, :order => 'created_at DESC')

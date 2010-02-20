@@ -1,11 +1,5 @@
 <script>
 	
-	function showShareBox(){
-		var box = document.getElementById("share_box");
-		alert(box);
-		Effect.appear(box);
-	}
-	
 	function dimLights(turnOff){
 		Effect.toggle('lights-dimmed','Appear',{
 				duration:2,
@@ -121,20 +115,22 @@
                         |
                     </li>
                     <li>
-                        <a href="#" class="share_video" onclick="Effect.SlideDown('share_box');">Compartilhar</a>
+                        <a href="#" class="share_video" onclick="toggleShareBox();">Compartilhar</a>
                     </li>
                     <li>
                         |
                     </li>
                     <li>
-                        <%= link_to 'Favoritos', {:action =>'put_as_favorite', :id => @course.id}, :class => 'favorites'%>
+                        <%# link_to 'Favoritos', {:action =>'put_as_favorite', :id => @course.id}, :class => 'favorites'%>
+						<%= link_to_remote 'Favoritos', :url => { :action => "put_as_favorite", :id => @course.id }, :class => 'favorites'%>
                     </li>
-                    <li>
+                    <!--
+					<li>
                         |
                     </li>
                     <li>
                         <a href="#" class="download_video">Download</a>
-                    </li>
+                    </li>-->
                     <li>
                         |
                     </li>
@@ -148,8 +144,8 @@
             </div>
         </div><!-- BARRA ################################################################################################################################### --><!-- VIDEO ################################################################################################################################### -->
         
-		<%= render :partial => 'shared/share' %>
-		
+		<%= render :partial => 'shared/share', :locals => {:title => @course.name, :url => url_for(:action => action_name)} %>
+		<%# socialite(:url => url_for(:action => action_name), :title => @course.name) %>
 		
 		<div id="view_video" align="center">
         	<!-- colocar if aqui -->
@@ -180,7 +176,11 @@
 		
         </div> <!-- FIM COLUNA DA ESQUERDA  ## -->
 		
-		<div id="materials">
+		<div id="right_column"> <!-- COLUNA DA DIREITA  ## -->
+		
+			<% if  (@course.owner == current_user or @course.resources.length > 0) %>
+			<!-- MATERIAIS AUXILIARES #################################################################################################################### -->
+           
             <div id="filter_bar_materials">
                 <span class="title_materials">MATERIAL AUXILIAR</span>
             </div>
@@ -199,7 +199,12 @@
                 </div>
             </div>
             <!-- MATERIAIS AUXILIARES #################################################################################################################### -->
-            <!-- CONTEUDO COMPLEMENTAR ################################################################################################################### -->
-        </div>
-    </div>
+           <% end %>
+		   
+		    <!-- CONTEUDO COMPLEMENTAR ################################################################################################################### -->
+        	<div id="filter_bar_comments"><span class="title_filter">AULAS RELACIONADAS</span></div>
+			<%= render :partial => 'courses/item', :collection => @related_courses, :as => :course %>
+		
+		     </div> <!-- FIM COLUNA DA DIREITA  ## -->
+		</div>
 </div>
