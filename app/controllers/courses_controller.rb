@@ -86,7 +86,6 @@ class CoursesController < BaseController
   end
   
   
-  
   # GET /courses
   # GET /courses.xml
   def index
@@ -153,7 +152,7 @@ class CoursesController < BaseController
     params[:course][:owner] = current_user
     
     @course = Course.new(params[:course])
-    
+     
     respond_to do |format|
       
       if @course.save
@@ -213,6 +212,7 @@ class CoursesController < BaseController
     @acquisition = Acquisition.new
     @acquisition.acquired_by_type = "User"
     @acquisition.acquired_by_id = current_user.id
+    @acquisition.value =  Course.price_of_acquisition(@course.id)
     @acquisition.course = @course
     
     if @acquisition.save
@@ -220,6 +220,8 @@ class CoursesController < BaseController
       redirect_to @course
     end
   end
+  
+  
   
   
   def approve
