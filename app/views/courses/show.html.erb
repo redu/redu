@@ -1,4 +1,11 @@
 <script>
+	
+	function showShareBox(){
+		var box = document.getElementById("share_box");
+		alert(box);
+		Effect.appear(box);
+	}
+	
 	function dimLights(turnOff){
 		Effect.toggle('lights-dimmed','Appear',{
 				duration:2,
@@ -27,7 +34,7 @@
 			});
 	}
 </script>
-<div id="lights-dimmed" style="display:none;">&nbsp;</div>
+<div id="lights-dimmed" style="display:none; height: 100%;">&nbsp;</div>
 
 <div id="all_content3">
     <div id="col_content_video">
@@ -114,7 +121,7 @@
                         |
                     </li>
                     <li>
-                        <a href="#" class="share_video">Compartilhar</a>
+                        <a href="#" class="share_video" onclick="Effect.SlideDown('share_box');">Compartilhar</a>
                     </li>
                     <li>
                         |
@@ -141,6 +148,9 @@
             </div>
         </div><!-- BARRA ################################################################################################################################### --><!-- VIDEO ################################################################################################################################### -->
         
+		<%= render :partial => 'shared/share' %>
+		
+		
 		<div id="view_video" align="center">
         	<!-- colocar if aqui -->
 			<% if current_user and not current_user.has_access_to_course(@course) %>

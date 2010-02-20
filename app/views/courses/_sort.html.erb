@@ -1,0 +1,19 @@
+<span class="title_filter">Ordenar:</span>
+
+<!-- @TODO colocar isso como lista html -->
+	<%=  (@sort_by == '1') ? '<span class="sort_link">' : '<span>' %>	
+	<%= link_to "Data", {:controller => controller_name, :action => action_name, :sort_by => 1}%>
+	</span> | 
+	<%=  (@sort_by == '2') ? '<span class="sort_link">' : '<span>' %>	
+	<%= link_to "Avaliações", {:controller => controller_name, :action => action_name, :sort_by => 2}%>
+	</span> | 
+	<%=  (@sort_by == '3') ? '<span class="sort_link">' : '<span>' %>	
+	<%= link_to "Visualizações", {:controller => controller_name, :action => action_name, :sort_by => 3}%>
+	</span> |
+	<%=  (@sort_by == '4') ? '<span class="sort_link">' : '<span>' %>	
+	<%= link_to "Título", {:controller => controller_name, :action => action_name, :sort_by => 4}%>
+	</span> 
+	
+	
+
+

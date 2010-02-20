@@ -20,8 +20,9 @@
 	</div>
 	<div id="filter_bar">
 		
-	    <span id="title_list" class="title_list"> MAIS RECENTES</span>
-	    <span class="title_filter">Ordenar:</span>
+	    <span id="title_list" class="title_list"> TODOS</span>
+	   
+		<%= render :partial => "courses/sort" %>
 	      
     </div>
     <div id="all_list">
@@ -33,6 +34,14 @@
 		<% end %>
     	
     </div> <!-- fim da listagem --> 
+	
+	<!-- PAGINACAO ##################################################################################################################################################### -->
+    <div id="pagination" align="center">
+
+		<%= will_paginate  @courses, :params => {:sort_by => @sort_by}, :class => "pagination_number"  %>
+
+		
+    </div>
 	
 	<!-- Movimentação Recente --> 
 	

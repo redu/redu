@@ -20,9 +20,7 @@
         <ul id="identification_resource">
             <!--Fiz uma modificação antes ficava link_to course.owner.login -->
             <li>
-            	<% if course.owner %>
                 <%= link_to course.owner.login, user_path(course.owner) %>
-				<% end %>
             </li>
             <li>
                 |
@@ -96,27 +94,8 @@
         </ul>
     </div>
     <div id="ratting">
-    	
-		
 		
         <ul id="ratting_menu">
-        	<!--
-            <li>
-                <img src="images/icon_star_on.png"/>
-            </li>
-            <li>
-                <img src="images/icon_star_on.png"/>
-            </li>
-            <li>
-                <img src="images/icon_star_on.png"/>
-            </li>
-            <li>
-                <img src="images/icon_star_off.png"/>
-            </li>
-            <li>
-                <img src="images/icon_star_off.png"/>
-            </li>
-			-->
 			<li>
                <%= ratings_for course, :static %>
             </li>
