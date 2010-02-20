@@ -75,6 +75,7 @@
 	<% f.fields_for :course_prices do | course_price | %>
 		<%= course_price.label :price %>
 		<%= course_price.text_field :price %>
+		<%= course_price.hidden_field :key_number %>
 	<% end %>
 </fieldset>
 
