@@ -1,3 +1,4 @@
+<% @balance = Credit.total(current_user.id).to_f - Acquisition.total(current_user.id).to_f  %>
 Voce tem <%= @balance %> de creditos<br>
 
 Compre aqui:
@@ -9,7 +10,7 @@ Compre aqui:
   <%= f.radio_button :value, "30"%> 30 <BR>
   <%= f.radio_button :value, "40"%> 40 <BR>
   <%= f.radio_button :value, "50"%> 50 <BR>
-  <%# f.text_field :value %><!--Escolha quanto você quer comprar<BR>-->
+  <%= f.text_field :value %> Coloque o valor desejado de créditos para comprar<BR>
   <br>
   Escolha a forma de pagamento:
   <%= f.radio_button :payment_type, "teste"%> teste <BR>
