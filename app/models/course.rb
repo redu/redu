@@ -184,6 +184,15 @@ class Course < ActiveRecord::Base
       end    
   end
   
+  def self.price_of_acquisition(course_id)
+  @course_prices = CoursePrice.find(:all,:conditions => ["course_id = ?",course_id])
+  @course_prices.each do |course_price| 
+    if course_price.key_number == 1
+      @price = course_price.price
+    end
+  end 
+  return @price
+  end
   
   
 end
