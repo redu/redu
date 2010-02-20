@@ -6,9 +6,11 @@
 				<%= link_to resource.title, resource %>
 				<% end %>
 				</div>
+				<%# icon_url = if resource.media_content_type == 'video/mpeg' %>
 				
-						<div id="video" style="background: url('<%= File.join(File.dirname(resource.media.url), "#{resource.id}128x96.jpg") %>') 0 0"><!-- Video Insert -->
-						<div id="video_info">00:00:00</div>
+						<div id="video">
+							<%= image_tag "icons/doc.gif", :border => 0 %>
+						
 						</div>
                        
             <div id="identification">
@@ -48,15 +50,15 @@
 							</ul>
             </div> 
             
-					<div id="ratting">
-							<ul id="ratting_menu">
-							<li><img src="img/icon_star_on.png"/></li>
-									<li><img src="img/icon_star_on.png"/></li>
-							<li><img src="img/icon_star_on.png"/></li>
-							<li><img src="img/icon_star_off.png"/></li>
-							<li><img src="img/icon_star_off.png"/></li>
-									      <li class="evaluation_rating">Avaliações(30)</li>
-						</ul>
-					</div>          
+            <div id="ratting">
+                <ul id="ratting_menu">
+                    <li>
+                        <%= ratings_for resource, :static %>
+                    </li>
+                    <li class="evaluation_rating">
+                        Avaliações(<%= resource.rates.count %>)
+                    </li>
+                </ul>
+            </div>   
     	</div>
 

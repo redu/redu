@@ -9,8 +9,7 @@
 <!-- LISTAGEM RECURSO ############################################################################################################################################## -->
 
 <div id="filter_bar">
-    <span class="title_list">MAIS RESCENTES</span>
-    <span class="title_filter">Ordenar:</span>
+    <span class="title_list">MAIS RECENTES</span>
 		
 		<%= render :partial => "resources/sort" %>
  </div>
@@ -28,18 +27,12 @@
     
 <!-- PAGINACAO ##################################################################################################################################################### -->
    
-	
 	<div id="pagination" align="center">
-    	<ul id="pagination_number">
-    		<li><a href="" class="nav">< Anterior</a></li>
-            <li><a href="" class="number">1</a></li>
-            <li><a href="" class="number">2</a></li>
-            <li><a href="" class="number">3</a></li>
-            <li><a href="" class="number">4</a></li>
-            <li><a href="" class="number">5</a></li>
-            <li><a href="" class="nav">Próximo ></a></li>
-    	</ul>
+		<%= will_paginate  @resources, :params => {:sort_by => @sort_by}, :class => "pagination_number"  %>
     </div>
+	
+	
+	
 <!-- PAGINACAO ##################################################################################################################################################### -->
 </div>
 
@@ -58,6 +51,8 @@
         <div id="box_list_cadastro"><%= link_to 'Criar Clipping', clippings_link %></div>
 	</div>
 	</div>
+	
+	
 	
 	
 
