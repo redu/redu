@@ -441,60 +441,12 @@ def search
   end
 
 
-def sort
-  
-  case params[:exam_type]
-    
-  when '1' # Published
-    @cond = {:conditions => ['published = ?', true]}
-  when '2' # Unpublished
-     @cond = {:conditions => ['published = ? AND author_id', true]}
-  when '3' # Done
-     @cond = {:conditions => ['published = ?', true]}
-  #else # Published?
-  end
-  
-  case params[:sort_by]
-    
-  when '1' # Data
-    @exams = Exam.paginate :conditions => ['published = ?', true], :include => :owner, :page => params[:page], :order => 'updated_at DESC', :per_page => AppConfig.items_per_page
-    
-    
-    @exams = Exam.all(:conditions => ['published = ?', true], :limit => 20, :order => 'created_at DESC')
-  when '2' # Dificuldade
-    @exams = Exam.published(:limit => 20, :order => 'level DESC')
-  when '3' # Realizações
-    @exams = Exam.all(:conditions => ['published = ?', true], :limit => 20, :order => 'done_count DESC')
-  when '4' # Título
-    @exams = Exam.published(:limit => 20, :order => 'name DESC')
-  when '5' # Categoria
-    @exams = Exam.published(:limit => 20, :order => 'created_at DESC')
-  end
-  
-  respond_to do |format|
-      format.js do
-          render :update do |page| 
-            page.replace_html 'all_list', 
-           :partial => 'exams/item', :collection => @exams, :as => :exam
-           # :partial => "questions/list_item", :collection => @products, :as => :item 
-            #page.insert_html :bottom, "questions", :partial => 'questions/question_show', :object => @question
-            #page.visual_effect :highlight, "question_#{@question.id}" 
-          end
-      end
-    end
-end
-
-def order
-  
-  #if params[:order] 
-  
-end
 
  ###########################################################################
 
  
   def published
-   @exams = Exam.paginate(:conditions => ["author_id = ? AND published = 1", params[:user_id]], :include => :owner, :page => params[:page], :order => 'updated_at DESC', :per_page => AppConfig.items_per_page)
+   @exams = Exam.paginate(:conditions => ["owner_id = ? AND published = 1", params[:user_id]], :include => :owner, :page => params[:page], :order => 'updated_at DESC', :per_page => AppConfig.items_per_page)
 
      respond_to do |format|
         format.html #{ render :action => "my" }
@@ -503,7 +455,7 @@ end
   end
 
   def unpublished
-    @exams = Exam.paginate(:conditions => ["author_id = ? AND published = 0", current_user.id], :include => :owner, :page => params[:page], :order => 'updated_at DESC', :per_page => AppConfig.items_per_page)
+    @exams = Exam.paginate(:conditions => ["owner_id = ? AND published = 0", current_user.id], :include => :owner, :page => params[:page], :order => 'updated_at DESC', :per_page => AppConfig.items_per_page)
 
      respond_to do |format|
         format.html #{ render :action => "my" }
@@ -512,7 +464,7 @@ end
   end
   
   def history
-    #@exams = Exam.paginate(:conditions => ["author_id = ? AND published = 0", current_user.id], :include => :owner, :page => params[:page], :order => 'updated_at DESC', :per_page => AppConfig.items_per_page)
+    #@exams = Exam.paginate(:conditions => ["owner_id = ? AND published = 0", current_user.id], :include => :owner, :page => params[:page], :order => 'updated_at DESC', :per_page => AppConfig.items_per_page)
 
     
     @exams = current_user.exam_history.paginate :page => params[:page], :order => 'updated_at DESC', :per_page => AppConfig.items_per_page
@@ -530,7 +482,6 @@ end
     case sort
       
     when '1' # Data
-      
       @exams = Exam.paginate :conditions => ['published = ?', true], :include => :owner, :page => page, :order => 'created_at DESC', :per_page => AppConfig.items_per_page
     when '2' # Dificuldade
       @exams = Exam.paginate :conditions => ['published = ?', true], :include => :owner, :page => page, :order => 'level DESC', :per_page => AppConfig.items_per_page
@@ -552,6 +503,7 @@ end
   # GET /exams.xml
   def index
     @sort_by = params[:sort_by]
+    #@order = params[:order]
     @exams = get_query(params[:sort_by], params[:page]) 
     
     

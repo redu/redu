@@ -75,27 +75,36 @@ class ResourcesController < BaseController
     
   end
 =end
-  
+  def get_query(sort, page)
+    
+    case sort
+      
+    when '1' # Data
+      @courses = Resource.paginate :conditions => ["published = ?", true], :include => :owner, :page => page, :order => 'created_at DESC', :per_page => AppConfig.items_per_page
+    when '2' # Avaliações
+     @courses = Resource.paginate :conditions => ["published = ?", true], :include => :owner, :page => page, :order => 'rating_average DESC', :per_page => AppConfig.items_per_page
+    when '3' # Downloads #TODO
+      @courses = Resource.paginate :conditions => ["published = ?", true], :include => :owner, :page => page, :order => 'rating_average DESC', :per_page => AppConfig.items_per_page
+     when '4' # Título
+      @courses = Resource.paginate :conditions => ["published = ?", true], :include => :owner, :page => page, :order => 'title DESC', :per_page => AppConfig.items_per_page
+     else
+      @courses = Resource.paginate :conditions => ["published = ?", true], :include => :owner, :page => page, :order => 'created_at DESC', :per_page => AppConfig.items_per_page
+    end
+    
+  end  
+
+
   # GET /resources
   # GET /resources.xml
   def index
+    @sort_by = params[:sort_by]
+    #@order = params[:order]
+    @resources = get_query(params[:sort_by], params[:page]) 
     
-    if params[:user_id]
-      #@resources = Resource.all(:conditions => ["owner = ?", params[:user_id]])
-      @user = User.find(params[:user_id])
-      @resources = @user.resources
-       respond_to do |format|
-        format.html { render :action => "my" }
-        format.xml  { render :xml => @resources }
-      end
-    else
-      #@resources = Resource.all(:conditions => "state = 'converted'")
-      @resources = Resource.all(:limit => 9).reject {|resource|  (resource.video? and not resource.state.eql?("converted")) }
         respond_to do |format|
         format.html # index.html.erb
         format.xml  { render :xml => @resources }
       end
-    end
     
   end
 

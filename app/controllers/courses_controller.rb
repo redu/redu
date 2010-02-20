@@ -59,11 +59,33 @@ class CoursesController < BaseController
     
   end
   
+  def get_query(sort, page)
+    
+    case sort
+      
+    when '1' # Data
+      @courses = Course.paginate :conditions => ["state LIKE ?", "approved"], :include => :owner, :page => page, :order => 'created_at DESC', :per_page => AppConfig.items_per_page
+    when '2' # Avaliações
+     @courses = Course.paginate :conditions => ["state LIKE ?", "approved"], :include => :owner, :page => page, :order => 'rating_average DESC', :per_page => AppConfig.items_per_page
+    when '3' # Visualizações
+      @courses = Course.paginate :conditions => ["state LIKE ?", "approved"], :include => :owner, :page => page, :order => 'view_count DESC', :per_page => AppConfig.items_per_page
+     when '4' # Título
+      @courses = Course.paginate :conditions => ["state LIKE ?", "approved"], :include => :owner, :page => page, :order => 'name DESC', :per_page => AppConfig.items_per_page
+     else
+      @courses = Course.paginate :conditions => ["state LIKE ?", "approved"], :include => :owner, :page => page, :order => 'created_at DESC', :per_page => AppConfig.items_per_page
+    end
+    
+  end
+  
+  
   
   # GET /courses
   # GET /courses.xml
   def index
-    @courses = Course.all(:conditions => ["state LIKE ?", "approved"])
+    
+    @sort_by = params[:sort_by]
+    #@order = params[:order]
+    @courses = get_query(params[:sort_by], params[:page]) 
     
     respond_to do |format|
       format.html # index.html.erb
