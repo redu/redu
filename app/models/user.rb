@@ -577,22 +577,19 @@ class User < ActiveRecord::Base
   end
   
   def add_favorite(favoritable_type, favoritable_id)
-   Favorite.create(:favorite_type => favoritable_type, 
-      :favorite_id => favoritable_id, 
+   Favorite.create(:favoritable_type => favoritable_type, 
+      :favoritable_id => favoritable_id, 
       :user_id => self.id)
+  end
+  
+  def has_favorite(favoritable)
+    Favorite.find(:first, :conditions => ["favoritable_id = ? AND favoritable_type = ? AND user_id = ?", favoritable.id, favoritable.class.to_s,self.id  ])
   end
   
   def get_favorites
     @favorites = Favorite.find(:all, :conditions => ["user_id = ?", self.id], :order => 'created_at DESC') 
   end
   
-#  def bookmark_clip(clip)
-#    puts 'aqui'
-#    Resource.create(:url => clip.url, 
-#      :title => clip.url, 
-#      :owner_id => self.id)
-#      puts 'sli'
-#  end
   
   
 

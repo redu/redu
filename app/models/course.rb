@@ -108,6 +108,20 @@ class Course < ActiveRecord::Base
   validates_attachment_size :media,
    :less_than => 10.megabytes
 
+  
+  
+  def self.price_of_acquisition(course_id)
+  @course_prices = CoursePrice.find(:all,:conditions => ["course_id = ?",course_id])
+  @course_prices.each do |course_price| 
+    if course_price.key_number == 1
+      @price = course_price.price
+    end
+  end 
+  return @price
+  end
+  
+  
+  
   # This method is called from the controller and takes care of the converting
   def convert
     self.convert!
@@ -184,15 +198,16 @@ class Course < ActiveRecord::Base
       end    
   end
   
-  def self.price_of_acquisition(course_id)
-  @course_prices = CoursePrice.find(:all,:conditions => ["course_id = ?",course_id])
-  @course_prices.each do |course_price| 
-    if course_price.key_number == 1
-      @price = course_price.price
-    end
-  end 
-  return @price
+  def thumb_url
+    
+     if self.type == 'youtube'
+       'http://i1.ytimg.com/vi/' + self.external_resource + '/default.jpg' 
+      else
+       File.join(File.dirname(self.media.url), "#{self.id}128x96.jpg")
+     end
   end
+  
+  
   
   
 end

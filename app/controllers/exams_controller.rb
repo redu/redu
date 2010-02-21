@@ -6,15 +6,7 @@
     current_user.get_favorites
   end
   
-   def put_as_favorite
-   @favoritable = Favorite.find(:first,:conditions => ["favorite_id = ? AND user_id = ? AND favorite_type = ?", params[:id], current_user.id, 'Exam'])
-    if @favoritable
-    else
-      current_user.add_favorite('Exam', params[:id] )
-    end
-    @exams = Exam.all
-    render :action => 'index'
-  end
+  
 
   def review
     if session[:question_index].nil?

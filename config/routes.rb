@@ -20,7 +20,9 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :credits
     
-  map.resources :schools  
+  map.resources :schools 
+  
+  #map.resources :favorites, 
 
 
   

@@ -1,4 +1,4 @@
-/* Tag Clouds */
+                                               /* Tag Clouds */
 .nube1 {
   font-size: 0.8em; }
 
@@ -146,6 +146,8 @@ float:left; width:100%; height:100%; min-height:100%; _margin-top:-2px; margin-t
 
 .favorites{background:url(../images/icon_favorites_off.png) no-repeat; color:#BFBFBF; text-decoration:none; padding-left:20px} 
 .favorites:hover{background:url(../images/icon_favorites_on.png) no-repeat; color:#5782D5; text-decoration:underline; padding-left:20px}
+.favorites_off{background:url(../images/icon_favorites_off.png) no-repeat; color:#BFBFBF; text-decoration:none; padding-left:20px} 
+
 	
 .download{background:url(../images/icon_download_off.png) no-repeat; color:#BFBFBF; text-decoration:none; padding-left:20px}
 .download:hover{background:url(../images/icon_download_on.png) no-repeat; color:#5782D5; text-decoration:underline; padding-left:20px}
@@ -160,7 +162,7 @@ float:left; width:100%; height:100%; min-height:100%; _margin-top:-2px; margin-t
 
 #all_list{float:left; width:716px; height:auto; padding:0px 0px 0px 0px; margin:0px 0px 8px 0px}
 	
-#item{float:left; width:100%; height:auto; padding:0px 0px 0px 0px; margin:0px 0px 8px 0px; border-bottom:solid 1px #EEE;}
+#item{float:left; width:100%; /*height:auto;*/ height: 140px; padding:0px 0px 0px 0px; margin:0px 0px 8px 0px; border-bottom:solid 1px #EEE;}
 
 	
 #title{float:left; width:716px; height:auto; font:bold 20px "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; color:#7a87a1; vertical-align:middle; text-decoration:none; padding:0px 0px 0px 0px; margin:0px 0px 0px 0px}

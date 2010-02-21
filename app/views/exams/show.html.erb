@@ -41,9 +41,11 @@
 <div id="filter_bar_video">
 	<div id="actions_video">
     	<ul id="actions_resource">
-			<li><a href="#" class="share_video">Compartilhar</a></li>
+			<li><a href="#" class="share_video" onclick="toggleShareBox();">Compartilhar</a></li>
         	<li>|</li>
-			<li><%= link_to 'Favoritos', {:action =>'put_as_favorite', :id => @exam.id}, :class => 'favorites'%></li>
+			<li>
+			<%= render :partial => "shared/favorite" , :locals => {:favoritable => @exam}%>
+			</li>
             <li>|</li>
 			<li><a href="#" class="download_video">Download</a></li>
             <li>|</li>
@@ -65,6 +67,9 @@
 	
 	-->  
 </div>
+
+<%= render :partial => 'shared/share', :locals => {:title => @exam.name, :url => application_url[0..application_url.length-2] + request.request_uri, :thumb_url => nil} %>
+		
 
 <!-- BARRA ################################################################################################################################### -->
 <div id="bars"> 

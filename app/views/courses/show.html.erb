@@ -117,20 +117,17 @@
                     <li>
                         <a href="#" class="share_video" onclick="toggleShareBox();">Compartilhar</a>
                     </li>
-                    <li>
-                        |
-                    </li>
-                    <li>
-                        <%# link_to 'Favoritos', {:action =>'put_as_favorite', :id => @course.id}, :class => 'favorites'%>
-						<%= link_to_remote 'Favoritos', :url => { :action => "put_as_favorite", :id => @course.id }, :class => 'favorites'%>
-                    </li>
-                    <!--
+                    
+					
 					<li>
                         |
                     </li>
                     <li>
-                        <a href="#" class="download_video">Download</a>
-                    </li>-->
+                    	<%= render :partial => "shared/favorite" , :locals => {:favoritable => @course}%>
+						
+					</li>
+				
+                    
                     <li>
                         |
                     </li>
@@ -144,7 +141,8 @@
             </div>
         </div><!-- BARRA ################################################################################################################################### --><!-- VIDEO ################################################################################################################################### -->
         
-		<%= render :partial => 'shared/share', :locals => {:title => @course.name, :url => url_for(:action => action_name)} %>
+		
+		<%= render :partial => 'shared/share', :locals => {:title => @course.name, :url => application_url[0..application_url.length-2] + request.request_uri, :thumb_url => @course.thumb_url} %>
 		<%# socialite(:url => url_for(:action => action_name), :title => @course.name) %>
 		
 		<div id="view_video" align="center">

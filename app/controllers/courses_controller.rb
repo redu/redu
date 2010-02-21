@@ -5,23 +5,6 @@ class CoursesController < BaseController
     current_user.get_favorites
   end
   
-  def put_as_favorite
-   @favoritable = Favorite.find(:first,:conditions => ["favorite_id = ? AND user_id = ? AND favorite_type = ?", params[:id], current_user.id, 'Course'])
-    if @favoritable
-    else
-      current_user.add_favorite('Course', params[:id] )
-    end
-    
-   respond_to do |format|
-    format.js do
-      render :update do |page|
-        # update the page with an error message
-        flash[:notice] = 'Curso adicionado ao seus favoritos'
-        page.reload_flash
-      end
-    end 
-    end
-  end
     
   def rate
     @course = Course.find(params[:id])

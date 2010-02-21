@@ -3,34 +3,7 @@ require 'md5'
 # Methods added to this helper will be available to all templates in the application.
 module BaseHelper
   
-  def socialite(options)
-    url   = options[:url]
-    title = options[:title]
-
-    unless url.present? && title.present?
-      RAILS_DEFAULT_LOGGER.warn "Socialite requires a URL and title!"
-    else
-      links = {
-        :delicious   => "http://www.delicious.com/post?url=#{url}&title=#{title}",
-        :digg        => "http://www.digg.com/submit?url=#{url}&title=#{title}",
-        :facebook    => "http://www.facebook.com/share.php?u=#{url}",
-        :reddit      => "http://www.reddit.com/submit?url=#{url}&title=#{title}",
-        :stumbleupon => "http://www.stumbleupon.com/submit?url=#{url}&title=#{title}",
-        :technorati  => "http://www.technorati.com/faves?add=#{url}&title=#{title}",
-        :twitter     => "http://www.twitter.com/?status=#{title}: #{url} via redu.com.br",
-        :email       => "mailto:?subject=#{title}&body=#{title}: #{url}"
-      }.map do |(site, submit_url)|
-        "<a href='#{submit_url}' target='_blank'><img src='/images/socialite/#{site}_16.png'></a>"
-      end
-
-      <<-END
-        <div id="socialite" style="display:none"> <span>Compartilhe usando: </span>
-            #{links}
-        </div>
-      END
-    end
-
-  end
+  
   
   def reload_flash
     page.replace_html "flash_messages", :partial => "shared/messages"

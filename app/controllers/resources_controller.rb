@@ -5,15 +5,7 @@ class ResourcesController < BaseController
     current_user.get_favorites
   end
   
-  def put_as_favorite
-   @favoritable = Favorite.find(:first,:conditions => ["favorite_id = ? AND user_id = ? AND favorite_type = ?", params[:id], current_user.id, 'Resource'])
-    if @favoritable ## TODO empty to work!
-    else
-      current_user.add_favorite('Resource', params[:id] )
-    end
-    @resources = Resource.all
-    render :action => 'index'
-  end
+  
   
   def add
     @resources = Resource.all

@@ -12,36 +12,46 @@
 	}
 </script>
 
+
+
 <div id="socialite" style="display:none">
 	<div>
     <span style="">Compartilhe usando: </span>
     
-	<a href="http://www.twitter.com/?status=<%=title%>: #{url} via redu.com.br" target="_blank">
+	<% twitter_url = "http://www.twitter.com/?status=#{title}: #{url} via redu.com.br" %>
+	<% twitter_url = URI.escape(twitter_url) %>
+	
+	<a href="<%=twitter_url%>" target="_blank">
     <img src="/images/socialite/twitter_16.png"></a>
 	
-	<a href="http://promote.orkut.com/preview?nt=orkut.com&tt=Something%20Interesting&du=http://example.com&cn=An%20interesting%20page%20to%20visit" target="_blank">
+	 <% promote_url = "http://promote.orkut.com/preview?nt=orkut.com&tt=#{title}&du=#{url}" %>
+	<% if thumb_url %>
+	  <% promote_url = promote_url + "&tn=#{thumb_url}" %>
+	 <% end %>
+	<a href="<%=promote_url%>" target="_blank">
     <img src="/images/socialite/orkut_16.png" alt="Orkut"></a>
 	
-	<a href="http://www.digg.com/submit?url=/courses/3&amp;title=teste" target="_blank">
+	<a href="http://www.digg.com/submit?url=<%=url%>&title=<%=title%>" target="_blank">
 	<img src="/images/socialite/digg_16.png" alt="Digg"></a>
 	
-	<a href="http://www.facebook.com/share.php?u=/courses/3" target="_blank">
+	<a href="http://www.facebook.com/share.php?u=<%=url%>" target="_blank">
 	<img src="/images/socialite/facebook_16.png"></a>
 	
-	<a href="http://www.reddit.com/submit?url=/courses/3&amp;title=teste" target="_blank">
+	<a href="http://www.reddit.com/submit?url=<%=url%>&title=<%=title%>" target="_blank">
 	<img src="/images/socialite/reddit_16.png"></a>
 	
-	<a href="http://www.stumbleupon.com/submit?url=/courses/3&amp;title=teste" target="_blank">
+	<a href="http://www.stumbleupon.com/submit?url=<%=url%>&title=<%=title%>" target="_blank">
 	<img src="/images/socialite/stumbleupon_16.png"></a>
 	
-	<a href="http://www.technorati.com/faves?add=/courses/3&amp;title=teste" target="_blank">
+	<a href="http://www.technorati.com/faves?add=<%=url%>&title=<%=title%>" target="_blank">
 	<img src="/images/socialite/technorati_16.png"></a>
 	
-	<a href="mailto:?subject=teste&amp;body=teste:%20/courses/3" target="_blank">
+	<a href="http://www.delicious.com/post?url=<%=url%>&title=<%=title%>" target="_blank">
+	<img src="/images/socialite/delicious_16.png"></a>
+	
+	<a href="mailto:?subject=<%=title%>&body=<%=title%>: <%=url%>" target="_blank">
 	<img src="/images/socialite/email_16.png"></a>
 	
-	<a href="http://www.delicious.com/post?url=#{url}&title=#{title}" target="_blank">
-	<img src="/images/socialite/delicious_16.png"></a>
 	</div>
 	
 </div>

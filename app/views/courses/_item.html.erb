@@ -3,18 +3,13 @@
         <%= link_to course.name, course %>
     </div>
     
-	<% if (course.type == 'youtube') %>
-    <%  thumb_url = 'http://i1.ytimg.com/vi/' + course.external_resource + '/default.jpg' %> 
-	<% else %>
-	<%  thumb_url = File.join(File.dirname(course.media.url), "#{course.id}128x96.jpg") %>
-	<% end %>
-	
-	
-	<div id="video" style="background: url(<%=thumb_url%>) 0 0">
+	<div id="video" style="background: url(<%=course.thumb_url%>) 0 0">
         <!-- Video Insert -->
-        <div id="video_info">
+        <!--
+		<div id="video_info">
             00:00:00
         </div>
+		-->
     </div>
     <div id="identification">
         <ul id="identification_resource">
@@ -54,45 +49,10 @@
             </li>
         </ul>
     </div>
-    <div id="actions">
-        <ul id="actions_resource">
-            <li>
-                <a href="#" class="share">Compartilhar</a>
-            </li>
-            <li>
-                |
-            </li>
-            <li>
-                <%= link_to 'Favoritos', {:action =>'put_as_favorite', :id => course.id}, :class => 'favorites'%>
-            </li>
-            <!--
-			<li>
-                |
-            </li>
-            <li>
-                <a href="#" class="download">Download</a>
-            </li>
-			-->
-            <li>
-                |
-            </li>
-            <li>
-                <a href="#" class="comments">Comentários(<%= course.comments.count %>)</a>
-            </li>
-            <!--Começando a fazer os testes com compra de aula -->
-            
-			
-			<% if current_user and not current_user.has_access_to_course(course) %>
-			<li>
-                |
-            </li>
-            <li>
-            	<%= link_to "Comprar", { :action => :buy, :id => course}, :class => "download" %>
-            </li>
-			<% end %>
-			
-        </ul>
-    </div>
+	
+	
+	
+	
     <div id="ratting">
 		
         <ul id="ratting_menu">
