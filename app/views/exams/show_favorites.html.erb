@@ -2,10 +2,19 @@
 <div id="all_content3">
 <div id="col_content">
 <div id="breadcrumbs"><a href="#">home</a> > <a href="#">aprender</a> > <a href="#">exames</a></div>
-<div id="title">EXAMES
-<%= render :partial => "exams/taskbar" %>
-<%= render :partial => "exams/search" %>
-</div>
+<div id="title">EXAMES 
+
+
+<%  if logged_in? %>
+    	<div id="task_bar_exames"><%= link_to 'Novo Exame', :action => 'new' %> |
+			 <%= link_to 'Meus Exames', published_user_exams_path(current_user.id) %> |
+			 <%= link_to 'Meus Favoritos', :action => 'show_favorites', :id => current_user %>
+			 </div>
+<% end %>
+
+<%= render :partial => "exams/search" %> </div>
+
+
 	
 <!-- LISTAGEM RECURSO ############################################################################################################################################## -->
 
@@ -18,7 +27,12 @@
     <div id="all_list">
     	
     	<% @favorites = current_user.get_favorites %>
-		<% if @favorites && @favorites.length > 0 %>
+		<% @favorites.each do |favorite| %>
+		<% if favorite.favoritable_type == 'Exam'%>
+		<% @hasExam = true %>
+		<% end %>
+		<% end %>
+		<% if @favorites && @favorites.length > 0 && @hasExam %>
  			<%= render :partial => 'exams/favorite',:collection => @favorites, :as => :favorite  %> 
  		<% else %>
  			Não há favoritos ainda.
@@ -43,7 +57,7 @@
     </div>
 <!-- PAGINACAO ##################################################################################################################################################### -->
 </div>
-
+	
 <!-- COLUNA DIREITA ################################################################################################################################################ -->
 <div id="col_box3">
 <!-- BOX MOVIMENTACAO RECENTE ///////////////////////////////////////////////////////////////////////////////////// -->
