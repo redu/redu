@@ -11,7 +11,7 @@
   		<div id="task_bar_exames">
   		<%= link_to 'Nova Aula', :action => 'new' %> | 
   		<%= link_to 'Minhas Aulas', published_user_courses_path(current_user.id) %> |
-		<%= link_to 'Aulas Favoritas', "#" %> |
+		<%= link_to 'Aulas Favoritas', :action => 'show_favorites', :id => current_user %> |
 		<%  if current_user.admin? %>
 			<%= link_to 'Moderar Vídeos' , pending_courses_path, :class => "link_remove" %>
 		<% end %>

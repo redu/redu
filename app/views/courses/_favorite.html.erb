@@ -1,5 +1,5 @@
-<% if favorite.favorite_type.eql?("Course") %>
-<% course = Course.find(favorite.favorite_id) %>
+<% if favorite.favoritable_type.eql?("Course") %>
+<% course = Course.find(favorite.favoritable_id) %>
 
        <div id="item">
     		<div id="title"><%= link_to course.name, course %></div>
@@ -34,8 +34,6 @@
               <ul id="actions_resource">
 							<li><a href="#" class="share">Compartilhar</a></li>
 						  		<li>|</li>
-							<li><%= link_to 'Aula',:class => 'favorites'%></li>
-						          <li>|</li>
 							<li><a href="#" class="download">Download</a></li>
 						          <li>|</li>
 							<li><a href="#" class="comments">Comentários(<%= course.comments.count %>)</a></li>
@@ -53,9 +51,4 @@
 						</ul>
 					</div>          
     	</div>
-
-<% else if favorite.favorite_type.eql?("Resource") %>
-
-<% end %>
-
 <% end %>

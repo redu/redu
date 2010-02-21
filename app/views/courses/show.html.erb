@@ -147,8 +147,12 @@
 		
 		<div id="view_video" align="center">
         	<!-- colocar if aqui -->
-			<% if current_user and not current_user.has_access_to_course(@course) %>
-			<%= link_to "Comprar", { :action => :buy, :id => @course.id, :class => "download" }%>
+			<% if current_user and current_user.has_credits_for_course(@course) and not current_user.has_access_to_course(@course)  %>
+				<% if current_user.has_credits_for_course(@course) %>
+					<%= link_to "Comprar", { :action => :buy, :id => @course.id, :class => "download" }%>
+				<% else %>
+				
+				<% end %>
 			<% else %>
             <%= render :partial => "resources/player", :locals => {:resource => @course} %>
 			<% end %>
