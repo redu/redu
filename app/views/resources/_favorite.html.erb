@@ -1,7 +1,7 @@
-<% if favorite.favorite_type.eql?("Course") %>
+<% if favorite.favoritable_type.eql?("Course") %>
 
-<% else if favorite.favorite_type.eql?("Resource") %>
-<% resource = Resource.find(favorite.favorite_id) %>
+<% else if favorite.favoritable_type.eql?("Resource") %>
+<% resource = Resource.find(favorite.favoritable_id) %>
 
         <div id="item">
     		<div id="title">
