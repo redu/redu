@@ -1,5 +1,5 @@
-<% if favorite.favorite_type.eql?("Course") %>
-<% course = Course.find(favorite.favorite_id) %>
+<% if favorite.favoritable_type.eql?("Course") %>
+<% course = Course.find(favorite.favoritable_id) %>
 
        <div id="item">
     		<div id="title"><%= link_to course.name, course %></div>
@@ -54,8 +54,8 @@
 					</div>          
     	</div>
 
-<% else if favorite.favorite_type.eql?("Resource") %>
-<% resource = Resource.find(favorite.favorite_id) %>
+<% else if favorite.favoritable_type.eql?("Resource") %>
+<% resource = Resource.find(favorite.favoritable_id) %>
 
         <div id="item">
     		<div id="title">
