@@ -6,36 +6,37 @@
     	
 		<% activity = " atividade? " %>
 		
-        <% if item.logeable_type.eql?('course') %>
+        <% if item.logeable_type.eql?('Course') %>
 		
-		<% activity = " está assistindo a aula " if item.action == "show" %>
-		<% activity = " criou a aula " if item.action == "create" %>
+		<% activity = " está assistindo a aula " + link_to(item.logeable_name, course_path(item.logeable_id)) if item.action == "show" %>
+		<% activity = " criou a aula " + link_to(item.logeable_name, course_path(item.logeable_id)) if item.action == "create" %>
+		<% activity = " adicionou a aula " + link_to(item.logeable_name, course_path(item.logeable_id)) + " ao seus favoritos" if item.action == "favorite" %>
 				
         <li>
         	<%= link_to item.user.login, user_path(item.user) %>
              <%= activity %>
-			<%= link_to item.logeable_name, course_path(item.logeable_id) %>
         </li>
-		<% elsif item.logeable_type.eql?('resource') %>
+		<% elsif item.logeable_type.eql?('Resource') %>
 		
-		<% activity = " disponibilizou o material " if item.action == "create" %>
+		<% activity = " disponibilizou o material " + link_to(item.logeable_name, resource_path(item.logeable_id)) if item.action == "create" %>
+		<% activity = " adicionou o material " + link_to(item.logeable_name, resource_path(item.logeable_id)) + " ao seus favoritos" if item.action == "favorite" %>
+		
 		
        	<li>
         	<%= link_to item.user.login, user_path(item.user) %>
              <%= activity %>
-			<%= link_to item.logeable_name, resource_path(item.logeable_id) %>
         </li>
-        <% elsif item.logeable_type.eql?('exam') %>
+        <% elsif item.logeable_type.eql?('Exam') %>
 		
-        <% activity = " está respondendo ao exame " if item.action == "answer" %>
-		<% activity = " criou o exame " if item.action == "exame" %>
+        <% activity = " está respondendo ao exame " + link_to(item.logeable_name, exam_path(item.logeable_id)) if item.action == "answer" %>
+		<% activity = " criou o exame " + link_to(item.logeable_name, exam_path(item.logeable_id)) if item.action == "exame" %>
+		<% activity = " adicionou o exame " + link_to(item.logeable_name, exam_path(item.logeable_id)) + " ao seus favoritos" if item.action == "favorite" %>
 				
         <li>
         	<%= link_to item.user.login, user_path(item.user) %>
              <%= activity %>
-			<%= link_to item.logeable_name, exam_path(item.logeable_id) %>
         </li>
-        <% elsif item.logeable_type.eql?('user') %>
+        <% elsif item.logeable_type.eql?('User') %>
         <% activity = " acabou de entrar no redu" if item.action == "login" %>
 		<% activity = " atualizou dados de seu perfil" if item.action == "update" %>		
         

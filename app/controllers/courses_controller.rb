@@ -94,7 +94,7 @@ class CoursesController < BaseController
     
     @course.update_attribute(:view_count, @course.view_count + 1) #TODO performance
     
-    Log.log_activity(@course, 'show', current_user) if current_user
+    Log.log_activity(@course, 'show', current_user)
     
     respond_to do |format|
       format.html # show.html.erb

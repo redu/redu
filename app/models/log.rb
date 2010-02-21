@@ -5,60 +5,73 @@ class Log < ActiveRecord::Base
   belongs_to :logeable, :polymorphic => true
 
   
-  def self.log_activity(object, action, user) 
+  def self.log_activity(log_object, action, user)
     
-    if object.instance_of?(Course)
+    if user 
+    
+    if log_object.instance_of?(Course)
       
-      Log.create(:logeable_type => 'course',
+      # necessário replicar a linha seguinte para cada tipo, pois as acoes reflexivas sao diferentes.
+      Log.create(:logeable_type => log_object.class.to_s,
         :action => action,
-        :user_id => object.owner.id,
-        :logeable_name => object.name,
-        :logeable_id => object.id)
-      
-      
+        :user_id => log_object.owner.id,
+        :logeable_name => log_object.name,
+        :logeable_id => log_object.id)
+        
       case action
         when 'create'
-        object.owner.earn_points('created_course')
+        log_object.owner.earn_points('created_course')
         #when 'show'
-        #object.owner.earn_points('created_course')
+        #log_object.owner.earn_points('created_course')
       end
       
-    elsif object.instance_of?(Resource)
+    elsif log_object.instance_of?(Resource)
        
-       Log.create(:logeable_type => 'resource',
+       Log.create(:logeable_type => log_object.class.to_s,
         :action => action,
-        :user_id => object.owner.id,
-        :logeable_name => object.name,
-        :logeable_id => object.id)
+        :user_id => log_object.owner.id,
+        :logeable_name => log_object.name,
+        :logeable_id => log_object.id)
       
       case action
         when 'create'
-        object.owner.earn_points('created_resource')
+        log_object.owner.earn_points('created_resource')
       end
       
-      elsif object.instance_of?(Exam)
+      elsif log_object.instance_of?(Favorite)
        
-       Log.create(:logeable_type => 'exam',
+       Log.create(:logeable_type => log_object.favoritable.class.to_s,
         :action => action,
-        :user_id => object.owner.id,
-        :logeable_name => object.name,
-        :logeable_id => object.id)
+        :user_id => log_object.user.id,
+        :logeable_name => log_object.favoritable.name,
+        :logeable_id => log_object.favoritable.id)
+      
+      
+      
+      elsif log_object.instance_of?(Exam)
+       
+       Log.create(:logeable_type => log_object.class.to_s,
+        :action => action,
+        :user_id => log_object.owner.id,
+        :logeable_name => log_object.name,
+        :logeable_id => log_object.id)
       
       case action
         when 'create'
-        object.owner.earn_points('created_resource')
+        log_object.owner.earn_points('created_resource')
         when 'answer'
-        object.owner.earn_points('answer_exam')
+        log_object.owner.earn_points('answer_exam')
       end
       
-      elsif object.instance_of?(User)
+      elsif log_object.instance_of?(User)
        
-       Log.create(:logeable_type => 'user',
+       Log.create(:logeable_type => log_object.class.to_s,
         :action => action,
-        :user_id => object.id,
-        :logeable_name => object.login,
-        :logeable_id => object.id)
+        :user_id => log_object.id,
+        :logeable_name => log_object.login,
+        :logeable_id => log_object.id)
       
+    end
     end
   end
 end

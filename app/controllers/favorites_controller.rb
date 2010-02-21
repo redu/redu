@@ -12,6 +12,8 @@ class FavoritesController < BaseController
     end
     
     if @favorite
+      Log.log_activity(@favorite, 'favorite', current_user)
+      
       flash.now[:notice] = favoritable + " adicionado ao seus favoritos!"
       respond_to do |format|
         format.js 

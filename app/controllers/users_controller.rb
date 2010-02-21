@@ -589,7 +589,17 @@ class UsersController < BaseController
     @estimated_payment = @posts.sum do |p| 
       7
     end
-  end  
+  end
+  
+  def activity_xml
+    #elimina atividades reflexivas (ex. usuario atualiza proprio perfil)
+    @logs = Log.find(:all, 
+    :conditions => ["user_id != logeable_id AND logeable_type NOT LIKE 'User'"],
+    :select => 'DISTINCT logeable_id, user_id, logeable_type, logeable_name, action')
+    respond_to do |format|
+      format.xml
+    end
+  end
   
   
   protected  

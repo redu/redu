@@ -203,6 +203,7 @@ ActionController::Routing::Routes.draw do |map|
     :welcome_invite => :get,
     :welcome_complete => :get,
     :statistics => :any,
+    :activity_xml => :get,
     :deactivate => :put,
     :crop_profile_photo => [:get, :put],
     :upload_profile_photo => [:get, :put]
