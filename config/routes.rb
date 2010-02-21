@@ -24,7 +24,7 @@ ActionController::Routing::Routes.draw do |map|
   
   #map.resources :favorites, 
 
-
+  map.connect 'activity_xml.xml', :controller => "users", :action => "activity_xml", :format => 'xml'
   
   
   # The priority is based upon order of creation: first created -> highest priority.

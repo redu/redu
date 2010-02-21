@@ -8,7 +8,7 @@ xml.graph_data do
       "label" => log.user.login, 
       "tooltip" => log.user.login,
       "graphic_type" => "image",
-      "graphic_image_url" => log.user.avatar_photo_url(:thumb)
+      "graphic_image_url" => application_url[0..application_url.length-2] + log.user.avatar_photo_url(:thumb)
       )
       
       # task node
@@ -16,14 +16,14 @@ xml.graph_data do
       "id" => log.logeable_id, 
       "label" => log.logeable.name,
       "tooltip" => log.logeable.name,
-      "url" => url_for(log.logeable)
+      "url" => application_url[0..application_url.length-2] + url_for(log.logeable)
       )
     end
   end
   
   xml.edges do
      for log in @logs
-       if log.user != current_user
+       if log.user != current_user # TODO verificar se nao havera arestas multiplas para a mesma pessoa
         #user to other user
         xml.edge(
         "id" => current_user.id + log.user_id,

@@ -43,10 +43,12 @@
   = javascript_include_tag 'lightbox'
   = stylesheet_link_tag 'lightbox'	
   
-- if ((controller_name == 'resources' or controller_name == 'courses') && action_name == 'show')
+- if ((controller_name == 'resources' or controller_name == 'courses') && action_name == 'show' )
   = javascript_include_tag 'swfobject'
-  /= javascript_tag "var so = new SWFObject('/flash/player.swf', 'mpl', '480', '360', '8'); so.addParam('allowscriptaccess', 'always'); so.addParam('allowfullscreen', 'true');  so.addVariable('height', '360');  so.addVariable('width', '480');  so.addVariable('file', '<%= @video.source.url %>'); so.write('player');"
-  
+
+- if (action_name == 'site_index')
+  = javascript_include_tag 'swfobject' 
+   
 = javascript_include_tag "prototip-min"
 = stylesheet_link_tag 'prototip', :media => 'screen'
 

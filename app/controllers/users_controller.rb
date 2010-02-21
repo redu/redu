@@ -592,10 +592,14 @@ class UsersController < BaseController
   end
   
   def activity_xml
+    #TODO colocar user_id 
+    #TODO limitar a consulta
     #elimina atividades reflexivas (ex. usuario atualiza proprio perfil)
     @logs = Log.find(:all, 
-    :conditions => ["user_id != logeable_id AND logeable_type NOT LIKE 'User'"],
-    :select => 'DISTINCT logeable_id, user_id, logeable_type, logeable_name, action')
+    :conditions => ["user_id != logeable_id AND logeable_type NOT LIKE 'User'"])
+    #:select => 'DISTINCT logeable_id, user_id, logeable_type, logeable_name, action')
+    #puts "id: " + params[:user_id]
+    # TODO eliminar duplicatas
     respond_to do |format|
       format.xml
     end

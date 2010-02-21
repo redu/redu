@@ -15,6 +15,35 @@
       <%= auto_discovery_link_tag(:rss, @rss_url, {:title => @rss_title}) %>
   <% end %>
   
+  <% if (action_name == 'site_index') %>
+  <script>
+  	var flashvars = {
+				config_url: "<%=application_url + 'constellation/constellation_config.xml'%>",
+				selected_node_id: '1',
+				instance_id: '1',
+				passthru: 'user_id=<%=current_user.id%>',
+				debug: 'false'
+			};
+			
+			var params = {
+				bgcolor: '#ffffff',
+				allowScriptAccess: 'sameDomain',
+				quality: 'high',
+				scale: 'noscale'
+			};
+			
+			var attributes = {
+				id: "constellation_roamer",
+				name: "constellation_roamer"
+			};
+			
+			swfobject.embedSWF(
+				"<%=application_url + 'constellation/constellation_roamer.swf'%>", "constellation", "100%", "100%",
+				"9", "<%=application_url + 'constellation/expressInstall.swf'%>", flashvars, params, attributes);
+  </script>
+  <% end %>
+  
+  
 </head>
 <body>
 <div id="container_main">
