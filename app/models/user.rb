@@ -590,7 +590,12 @@ class User < ActiveRecord::Base
     @favorites = Favorite.find(:all, :conditions => ["user_id = ?", self.id], :order => 'created_at DESC') 
   end
   
-  
+  def has_credits_for_course(course)
+    @course_price = CoursePrice.find(:first,:conditions => ['course_id = ?', course.id]).price.to_f
+    puts @course_price.inspect
+    @user_credit = Credit.total(self.id).to_f - Acquisition.total(self.id).to_f
+    (@user_credit >= @course_price)
+  end
   
 
 
