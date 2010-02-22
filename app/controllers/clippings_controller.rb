@@ -124,7 +124,7 @@ class ClippingsController < BaseController
   def new_clipping
     #@user = current_user
     #@clipping = @user.clippings.new({:url => params[:uri], :description => params[:selection]})
-    @resource = Resource.create(:title => params[:title], :external_resource => params[:uri], :external_resource_type => 'clipping', :owner => current_user)
+    @resource = Resource.create(:title => params[:title], :external_resource => params[:uri], :external_resource_type => 'clipping', :user_id => current_user)
     render :action => "clipping_index"
   end
 
