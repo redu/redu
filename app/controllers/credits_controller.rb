@@ -1,6 +1,5 @@
 class CreditsController < BaseController
   def index
-    @balance = Credit.total(current_user.id) - Acquisition.total(current_user.id)
     
     @credit = Credit.new
     
@@ -9,6 +8,7 @@ class CreditsController < BaseController
       format.xml  { render :xml => @credits }
     end
   end
+  
   def show
     @credit = Credit.find(params[:id])
 
