@@ -11,7 +11,7 @@ class CreditsController < BaseController
   
   def show
     @credit = Credit.find(params[:id])
-
+    
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @credit }
@@ -48,8 +48,8 @@ class CreditsController < BaseController
       @boleto.instrucao5 = "Após vencimento pagável somente nas agências do Banco do Brasil"
       @boleto.instrucao6 = "ACRESCER R$ 4,00 REFERENTE AO BOLETO BANCÁRIO"
       @boleto.sacado_endereco = "Av. Rubéns de Mendonça, 157 - 78008-000 - Cuiabá/MT"
-    
-    
+      
+      
       headers['Content-Type']='application/pdf'
       send_data @boleto.to('pdf'), :filename => "boleto_bb.pdf" and return
       
@@ -59,7 +59,7 @@ class CreditsController < BaseController
       @credit.state = 'approved'
       
     end
-
+    
     respond_to do |format|
       if @credit.save
         flash[:notice] = 'Credito comprado com sucesso'
@@ -69,7 +69,7 @@ class CreditsController < BaseController
         format.html { render :action => "index" }
         format.xml  { render :xml => @credit.errors, :status => :unprocessable_entity }
       end
-    
+      
     end
   end
   

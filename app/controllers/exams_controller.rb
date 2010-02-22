@@ -2,8 +2,24 @@
   
   before_filter :login_required, :except => [:index]
   
-  def show_favorites
-    current_user.get_favorites
+  def favorites
+    
+    if params[:from] == 'favorites'
+      @taskbar = "favorites/taskbar"
+    else
+      @taskbar = "exams/taskbar_index"
+    end
+    
+    @exams = Exam.paginate(:all, 
+    :joins => :favorites,
+    :conditions => ["favorites.favoritable_type = 'Exam' AND favorites.user_id = ? AND exams.id = favorites.favoritable_id", current_user.id], 
+    :page => params[:page], :order => 'created_at DESC', :per_page => AppConfig.items_per_page)
+    
+    
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @exams }
+    end
   end
   
   
@@ -292,7 +308,7 @@
     
     #save_draft :id => params[:id], :exam => params[:exam], :hide => true
     
-    redirect_to :controller => :questions, :action => :new#, :exam_id => params[:id]
+    redirect_to :controller => :questions, :action => :new #, :exam_id => params[:id]
   end
   
   def add_question

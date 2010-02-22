@@ -11,7 +11,7 @@ class Exam < ActiveRecord::Base
   
   has_many :exam_users#, :dependent => :destroy
   has_many :user_history, :through => :exam_users, :source => :user
- 
+ has_many :favorites, :as => :favoritable, :dependent => :destroy
   has_many :logs, :as => :logeable, :dependent => :destroy
 
 

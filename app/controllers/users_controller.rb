@@ -64,7 +64,7 @@ class UsersController < BaseController
   end
   
   def show_favorites
-    current_user.get_favorites
+    #current_user.get_favorites
   end
  
   
@@ -72,8 +72,6 @@ class UsersController < BaseController
   def can_follow
     user_id = params[:id]
     follow_id = params[:follow_id]
-    
-    
   end
   
   def follows

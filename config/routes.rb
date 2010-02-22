@@ -3,18 +3,18 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :abilities
 
-  map.resources :resources, :collection => { :search => [:get, :post], :add => :get }, :member => {:rate => :post}
+  map.resources :resources, :collection => { :search => [:get, :post], :add => :get, :favorites => :get }, :member => {:rate => :post}
 
   map.resources :competences
 
   map.resources :questions, :collection => { :search => [:get, :post], :add => :get } #, :member => {:add => :get}
   
   map.resources :exams, :member => {:add_question => :get, :add_resource => :get, :rate => :post},
-                        :collection => {:unpublished => :get, :new_exam => :get, :discard_draft => :get, :exam_history => :get, :sort => :get, :order => :get}
+                        :collection => {:unpublished => :get, :new_exam => :get, :discard_draft => :get, :exam_history => :get, :sort => :get, :order => :get, :favorites => :get}
     
   map.resources :subjects
 
-  map.resources :courses, :member => {:rate => :post, :buy => :get},  :collection => {:pending => :get}
+  map.resources :courses, :member => {:rate => :post, :buy => :get},  :collection => {:pending => :get, :favorites => :get}
   
   map.resources :user_school_association
 
@@ -215,14 +215,14 @@ ActionController::Routing::Routes.draw do |map|
     user.resources :clippings
     user.resources :activities, :collection => {:network => :get}
     user.resources :invitations
-    user.resources :resources, :collection => {:published => :get, :unpublished => :get, :history => :get} 
-    user.resources :courses, :collection => {:published => :get, :unpublished => :get, :waiting => :get} 
+    user.resources :resources, :collection => {:published => :get, :unpublished => :get, :history => :get, :favorites => :get} 
+    user.resources :courses, :collection => {:published => :get, :unpublished => :get, :waiting => :get, :favorites => :get} 
     user.resources :schools, :collection => {:member => :get, :owner => :get}
-    user.resources :exams, :collection => {:published => :get, :unpublished => :get, :history => :get} 
+    user.resources :exams, :collection => {:published => :get, :unpublished => :get, :history => :get, :favorites => :get} 
     user.resources :questions
     user.resources :credits
     user.resources :offerings, :collection => {:replace => :put}
-    user.resources :favorites#, :name_prefix => 'user_'
+    user.resources :favorites,:collection => {:courses => :get} 
     user.resources :messages, :collection => { :delete_selected => :post, :auto_complete_for_username => :any }  
     user.resources :comments
     user.resources :photo_manager, :only => ['index']

@@ -1,9 +1,0 @@
-<h1>Exames Favoritos: </h1>
-
-
-<% @exams.each do |exam| %>
-  <tr>
-    <td><%=h exam.name %></td>
-    <td><%= link_to 'Visualizar', exam %></td>
-  </tr>
-<% end %>

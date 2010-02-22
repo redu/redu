@@ -1,15 +1,30 @@
 class ResourcesController < BaseController
   
-  
-  def show_favorites
-    current_user.get_favorites
+  def favorites
+    
+    if params[:from] == 'favorites'
+      @taskbar = "favorites/taskbar"
+    else
+      @taskbar = "resources/taskbar_index"
+    end
+    
+    @resources = Resource.paginate(:all, 
+    :joins => :favorites,
+    :conditions => ["favorites.favoritable_type = 'Resource' AND favorites.user_id = ? AND resources.id = favorites.favoritable_id", current_user.id], 
+    :page => params[:page], :order => 'created_at DESC', :per_page => AppConfig.items_per_page)
+    
+    
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @resources }
+    end
   end
   
   
   
   def add
     @resources = Resource.all
-
+    
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @resources }
@@ -19,7 +34,7 @@ class ResourcesController < BaseController
   def sort
     
   end
-
+  
   def search
     
     @resources = Resource.find(:all, :conditions => ["title LIKE ?", "%" + params[:query] + "%"])
@@ -27,12 +42,12 @@ class ResourcesController < BaseController
     
     respond_to do |format|
       format.js do
-          render :update do |page| 
-            page.replace_html 'local_search_results', :partial => 'resources/item', :collection => @resources, :as => :resource
-           # :partial => "questions/list_item", :collection => @products, :as => :item 
-            #page.insert_html :bottom, "questions", :partial => 'questions/question_show', :object => @question
-            #page.visual_effect :highlight, "question_#{@question.id}" 
-          end
+        render :update do |page| 
+          page.replace_html 'local_search_results', :partial => 'resources/item', :collection => @resources, :as => :resource
+          # :partial => "questions/list_item", :collection => @products, :as => :item 
+          #page.insert_html :bottom, "questions", :partial => 'questions/question_show', :object => @question
+          #page.visual_effect :highlight, "question_#{@question.id}" 
+        end
       end
     end
   end
@@ -43,7 +58,7 @@ class ResourcesController < BaseController
   def rate
     @resource = Resource.find(params[:id])
     @resource.rate(params[:stars], current_user, params[:dimension])
-     id = "ajaxful-rating-#{!params[:dimension].blank? ? "#{params[:dimension]}-" : ''}recourse-#{@resource.id}"
+    id = "ajaxful-rating-#{!params[:dimension].blank? ? "#{params[:dimension]}-" : ''}recourse-#{@resource.id}"
     
     render :update do |page|
       page.replace_html id, ratings_for(@resource, :wrap => false, :dimension => params[:dimension])
@@ -71,21 +86,21 @@ class ResourcesController < BaseController
     
     case sort
       
-    when '1' # Data
+      when '1' # Data
       @courses = Resource.paginate :conditions => ["published = ?", true], :include => :owner, :page => page, :order => 'created_at DESC', :per_page => AppConfig.items_per_page
-    when '2' # Avaliações
-     @courses = Resource.paginate :conditions => ["published = ?", true], :include => :owner, :page => page, :order => 'rating_average DESC', :per_page => AppConfig.items_per_page
-    when '3' # Downloads #TODO
+      when '2' # Avaliações
       @courses = Resource.paginate :conditions => ["published = ?", true], :include => :owner, :page => page, :order => 'rating_average DESC', :per_page => AppConfig.items_per_page
-     when '4' # Título
+      when '3' # Downloads #TODO
+      @courses = Resource.paginate :conditions => ["published = ?", true], :include => :owner, :page => page, :order => 'rating_average DESC', :per_page => AppConfig.items_per_page
+      when '4' # Título
       @courses = Resource.paginate :conditions => ["published = ?", true], :include => :owner, :page => page, :order => 'title DESC', :per_page => AppConfig.items_per_page
-     else
+    else
       @courses = Resource.paginate :conditions => ["published = ?", true], :include => :owner, :page => page, :order => 'created_at DESC', :per_page => AppConfig.items_per_page
     end
     
   end  
-
-
+  
+  
   # GET /resources
   # GET /resources.xml
   def index
@@ -93,13 +108,13 @@ class ResourcesController < BaseController
     #@order = params[:order]
     @resources = get_query(params[:sort_by], params[:page]) 
     
-        respond_to do |format|
-        format.html # index.html.erb
-        format.xml  { render :xml => @resources }
-      end
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @resources }
+    end
     
   end
-
+  
   # GET /resources/1
   # GET /resources/1.xml
   def show
@@ -110,7 +125,7 @@ class ResourcesController < BaseController
       format.xml  { render :xml => @resource }
     end
   end
-
+  
   # GET /resources/new
   # GET /resources/new.xml
   def new
@@ -120,40 +135,40 @@ class ResourcesController < BaseController
       format.xml  { render :xml => @resource }
     end
   end
-
+  
   # GET /resources/1/edit
   def edit
     @resource = Resource.find(params[:id])
   end
-
+  
   # POST /resources
   # POST /resources.xml
   def create
     @resource = Resource.new(params[:resource])
     @resource.owner = current_user
-
+    
     respond_to do |format|
       if @resource.save
         @resource.convert
         
         Log.log_activity(@resource, 'create', current_user)
         
-				flash[:notice] = 'Resource was successfully created.'
-		    format.html { redirect_to(@resource) }
-		    format.xml  { render :xml => @resource, :status => :created, :location => @resource }
-			else
-	      format.html { render :action => 'new' }
-	      format.xml  { render :xml => @resource.errors, :status => :unprocessable_entity }
+        flash[:notice] = 'Resource was successfully created.'
+        format.html { redirect_to(@resource) }
+        format.xml  { render :xml => @resource, :status => :created, :location => @resource }
+      else
+        format.html { render :action => 'new' }
+        format.xml  { render :xml => @resource.errors, :status => :unprocessable_entity }
       end
-
+      
     end
   end
-
+  
   # PUT /resources/1
   # PUT /resources/1.xml
   def update
     @resource = Resource.find(params[:id])
-
+    
     respond_to do |format|
       if @resource.update_attributes(params[:resource])
         flash[:notice] = 'Resource was successfully updated.'
@@ -165,13 +180,13 @@ class ResourcesController < BaseController
       end
     end
   end
-
+  
   # DELETE /resources/1
   # DELETE /resources/1.xml
   def destroy
     @resource = Resource.find(params[:id])
     @resource.destroy
-
+    
     respond_to do |format|
       format.html { redirect_to(resources_url) }
       format.xml  { head :ok }
@@ -179,15 +194,15 @@ class ResourcesController < BaseController
   end
   
   def published
-  	@resources = Resource.paginate(:conditions => ["owner = ? AND published = 1", params[:user_id]], 
+    @resources = Resource.paginate(:conditions => ["owner = ? AND published = 1", params[:user_id]], 
   		:include => :owner, 
   		:page => params[:page], 
   		:order => 'updated_at DESC', 
   		:per_page => AppConfig.items_per_page)
-  		
-			respond_to do |format|
-				format.html #{ render :action => "my" }
-				format.xml  { render :xml => @resources }
-			end
+    
+    respond_to do |format|
+      format.html #{ render :action => "my" }
+      format.xml  { render :xml => @resources }
+    end
   end
 end

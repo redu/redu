@@ -3,17 +3,19 @@
 	<div id="breadcrumbs">
 		<a href="<%=application_url%>">home</a> >
 		 
-		<a href="#">aprender</a> > 
-		<a href="#">aulas</a> 
+		<a href="#">aulas </a> > 
+		<a href="#">favoritos</a> 
 		</div>
- 	<div id="title">AULAS
-	<%= render :partial => "courses/taskbar_index" %>
+ 	<div id="title">AULAS FAVORITAS
+	
+	<%= render :partial => @taskbar %>
+
 	</div>
 	<div id="filter_bar">
 		
 	    <span id="title_list" class="title_list"> TODOS</span>
 	   
-		<%= render :partial => "courses/sort" %>
+		
 	      
     </div>
     <div id="all_list">
@@ -21,7 +23,7 @@
 		<% if @courses && @courses.length > 0 %>
  			<%= render :partial => 'courses/item', :collection => @courses, :as => :course %> 
  		<% else %>
- 			Não há aulas publicadas ainda. <%= link_to 'Crie uma agora!', :action => 'new' %>
+ 			Não há aulas favoritadas ainda. 
 		<% end %>
     	
     </div> <!-- fim da listagem --> 
