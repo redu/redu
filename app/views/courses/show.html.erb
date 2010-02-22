@@ -51,6 +51,13 @@
 				<% if @course.can_be_deleted_by(current_user) %>
 					<%= link_to 'Remover', @course, :confirm => 'Você tem certeza que quer remover esta aula permanentemente?', :method => :delete %>
 				<% end %>
+				<% if current_user and current_user.has_credits_for_course(@course) and not current_user.has_access_to_course(@course) %>
+					<%= link_to "Comprar", { :action => :buy, :id => @course.id, :class => "download" }%>
+				<% else %>
+					<% @flash = flash[:message] = 'Você não tem créditos suficientes para comprar a aula, compre créditos.' %>
+					<%= link_to "Comprar", {:controller => 'credits', :action => 'index' ,:flash => @flash , :class => "download"} %>
+				<% end %>
+				
 				
 				
                 <% if current_user.admin? and @course.state.eql?("waiting") %>
@@ -147,13 +154,7 @@
 		
 		<div id="view_video" align="center">
         	<!-- colocar if aqui -->
-			<% if current_user and current_user.has_credits_for_course(@course) and not current_user.has_access_to_course(@course)  %>
-				<% if current_user.has_credits_for_course(@course) %>
-					<%= link_to "Comprar", { :action => :buy, :id => @course.id, :class => "download" }%>
-				<% else %>
-				
-				<% end %>
-			<% else %>
+			<% if current_user and current_user.has_credits_for_course(@course) and current_user.has_access_to_course(@course)  %>
             <%= render :partial => "resources/player", :locals => {:resource => @course} %>
 			<% end %>
         </div>
