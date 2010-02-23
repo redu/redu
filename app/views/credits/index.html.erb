@@ -1,5 +1,4 @@
 <% @balance = Credit.total(current_user.id).to_f - Acquisition.total(current_user.id).to_f  %>
-<%= @flash %>
 Voce tem <%= @balance %> de creditos<br>
 
 Compre aqui:
