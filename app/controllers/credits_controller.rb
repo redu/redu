@@ -11,7 +11,7 @@ class CreditsController < BaseController
   
   def show
     @credit = Credit.find(params[:id])
-    
+
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @credit }
@@ -26,30 +26,31 @@ class CreditsController < BaseController
       
       @boleto = BancoBrasil.new
       
-      @boleto.cedente = "Kivanio Barbosa"
-      @boleto.documento_cedente = "12345678912"
-      @boleto.sacado = "Claudio Pozzebom"
-      @boleto.sacado_documento = "12345678900"
-      @boleto.valor = 11135.00
+      @boleto.cedente = "Guilherme Cavalcanti" 
+      @boleto.documento_cedente = "12345678912" # CPF, text_field
+      @boleto.sacado = "Commprador" # nome, text_field
+      @boleto.sacado_documento = "12345678900" 
+      @boleto.valor = 11135.00 
       @boleto.aceite = "S"
-      @boleto.agencia = "4042"
-      @boleto.conta_corrente = "61900"
+      # No número da agência e conta corrente só é preciso colocar os valores
+      # antes do '-' o último número é calculado utilizando módulo.
+      @boleto.agencia = "0697"   # agência, text_field
+      @boleto.conta_corrente = "34595"  # conta corrente, text_field
       
-      # se banco do brasil
+      # se banco do brasils
       @boleto.convenio = "1238798"
       @boleto.numero_documento = "7777700168"
       
-      @boleto.dias_vencimento = 5
-      @boleto.data_documento = "2008-02-01".to_date
+      @boleto.dias_vencimento = 1
+      @boleto.data_documento = Date.today
       @boleto.instrucao1 = "Pagável na rede bancária até a data de vencimento."
       @boleto.instrucao2 = "Juros de mora de 2.0% mensal(R$ 0,09 ao dia)"
-      @boleto.instrucao3 = "DESCONTO DE R$ 29,50 APÓS 05/11/2006 ATÉ 15/11/2006"
-      @boleto.instrucao4 = "NÃO RECEBER APÓS 15/11/2006"
+      @boleto.instrucao4 = Date.today
       @boleto.instrucao5 = "Após vencimento pagável somente nas agências do Banco do Brasil"
-      @boleto.instrucao6 = "ACRESCER R$ 4,00 REFERENTE AO BOLETO BANCÁRIO"
+      # Endereço do comprador 
       @boleto.sacado_endereco = "Av. Rubéns de Mendonça, 157 - 78008-000 - Cuiabá/MT"
-      
-      
+    
+    
       headers['Content-Type']='application/pdf'
       send_data @boleto.to('pdf'), :filename => "boleto_bb.pdf" and return
       
@@ -59,7 +60,7 @@ class CreditsController < BaseController
       @credit.state = 'approved'
       
     end
-    
+
     respond_to do |format|
       if @credit.save
         flash[:notice] = 'Credito comprado com sucesso'
@@ -69,7 +70,7 @@ class CreditsController < BaseController
         format.html { render :action => "index" }
         format.xml  { render :xml => @credit.errors, :status => :unprocessable_entity }
       end
-      
+    
     end
   end
   
