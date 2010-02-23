@@ -15,7 +15,7 @@ class UsersController < BaseController
   
   uses_tiny_mce(:options => AppConfig.default_mce_options.merge({:editor_selector => "rich_text_editor"}), 
     :only => [:new, :create, :update, :edit, :welcome_about])
-  uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:show])
+  #uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:show])
   
   # Filters
   before_filter :login_required, :only => [:edit, :edit_account, :update, :welcome_photo, :welcome_about, 
@@ -294,7 +294,7 @@ class UsersController < BaseController
     
     if @user.save!
       #@user.track_activity(:updated_profile) Utilizaremos outro Activity
-      Log.log_activity(@user, 'update')
+      Log.log_activity(@user, 'update', nil)
       
       flash[:notice] = :your_changes_were_saved.l
       unless params[:welcome] 

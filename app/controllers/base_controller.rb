@@ -34,7 +34,9 @@ class BaseController < ApplicationController
 
   def site_index
     #@posts = Post.find_recent
-    @courses = Course.find(:all, :limit => 5, :order => 'created_at DESC')
+    #@courses = Course.find(:all, :limit => 5, :order => 'created_at DESC')
+    @courses = Course.all :conditions => ["state LIKE ?", "approved"], :include => :owner, :order => 'created_at DESC', :limit => 5
+   
     
     @rss_title = "#{AppConfig.community_name} "+:recent_posts.l
     @rss_url = rss_url

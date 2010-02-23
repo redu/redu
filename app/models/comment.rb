@@ -52,20 +52,31 @@ class Comment < ActiveRecord::Base
   end    
     
   def commentable_name
-    type = self.commentable_type.underscore
-    case type
-      when 'user'
-        commentable.login
-      when 'post'
+    if commentable
+      type = self.commentable_type.underscore
+      case type
+        when 'user'
+          commentable.login
+        when 'course'
+        commentable.name
+        when 'resource'
         commentable.title
-      when 'clipping'
-        commentable.description || "Clipping from #{commentable.user.login}"
-      when 'photo'
-        commentable.description || "Photo from #{commentable.user.login}"
-      else 
-        commentable.class.to_s.humanize
-    end
+        when 'exam'
+        commentable.name
+        when 'post'
+          commentable.title
+        when 'clipping'
+          commentable.description || "Clipping from #{commentable.user.login}"
+        when 'photo'
+          commentable.description || "Photo from #{commentable.user.login}"
+        else 
+          commentable.class.to_s.humanize
+      end
+    else
+      "item removido"
+      end
   end
+  
 
   def title_for_rss
     "Comment from #{username}"

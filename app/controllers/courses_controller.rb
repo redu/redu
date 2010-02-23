@@ -92,6 +92,7 @@ class CoursesController < BaseController
     @sort_by = params[:sort_by]
     #@order = params[:order]
     @courses = get_query(params[:sort_by], params[:page]) 
+    @popular_tags = Course.tag_counts
     
     respond_to do |format|
       format.html # index.html.erb

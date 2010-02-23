@@ -17,6 +17,8 @@ module BaseHelper
     end
   end
   
+  
+  
   def forum_page?
     %w(forums topics sb_posts schools).include?(@controller.controller_name)
   end

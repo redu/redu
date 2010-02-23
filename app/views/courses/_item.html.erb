@@ -32,7 +32,7 @@
         </ul>
     </div>
     <div id="description">
-        <%= (course.description.length > 250) ? (course.description[0..250] + "...") : course.description  %>
+        <%= truncate_words( course.description, 10, '...')  %>
     </div>
     <div id="identification">
         <ul id="identification_resource">

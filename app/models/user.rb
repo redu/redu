@@ -84,7 +84,7 @@ class User < ActiveRecord::Base
   has_many :resources, :foreign_key => "owner"
   
   # EXAMS
-  has_many :exams, :foreign_key => "owner"
+  has_many :exams, :foreign_key => "owner_id"
   
   has_many :exam_users#, :dependent => :destroy
   has_many :exam_history, :through => :exam_users, :source => :exam
@@ -556,6 +556,10 @@ class User < ActiveRecord::Base
   ## End Instance Methods
   
   ### Métodos Adicionais 
+    
+  def recent_activity
+    Log.find(:all, :conditions => ["user_id = ?", self.id], :limit => 10, :order_by => "created_at DESC")
+  end
   
   def log_activity
     # a maneira correta de se fazer isso é via consulta no sql pois é muito mais rapido pq nao precisa ficar iterando

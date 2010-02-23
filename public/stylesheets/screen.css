@@ -125,6 +125,8 @@ float:left; width:100%; height:100%; min-height:100%; _margin-top:-2px; margin-t
 
 #col_content{float:left; width:716px; height:auto; background-color:#FFF; padding:0px; margin-right:8px; overflow:visible; border:0;}
 #col_content_video{float:left; width:100%; height:auto; background-color:#FFF; padding:0px; margin:0px 8px 0px 0px; overflow:visible; border:0;}
+#col_content_user{float:left; width:716px; height:auto; background-color:#FFF; padding:0px; margin-right:8px; overflow:visible; border:0;}
+
 #content_preview_exame{display:table; width:980px; height:auto; background-color:#FFF; padding:0px; margin:0px 8px 0px 0px; overflow:visible; border:0;}
 
 #breadcrumbs{float:left; width:712px; height:21px; background-color:#f8f8f8; padding:5px 0px 0px 5px; margin:0px 0px 8px 0px;
@@ -185,6 +187,120 @@ float:left; width:100%; height:100%; min-height:100%; _margin-top:-2px; margin-t
 #ratting_menu li a:hover {padding:0; font-size:11px; text-decoration:underline; color:#5683d5;}
 .evaluation_rating{margin:2px 0px 0px 40px;}
 
+/* PERFIL DO USUÁRIO //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+#profile_user_info{float:left; width:716px; height:auto; padding:0px 0px 0px 0px; margin:0px 0px 8px 0px; background:#edf2fe}
+#user_photo{float:left; width:64px; height:64px; background-color:#e7e8e8; padding:0px 0px 0px 0px; margin:8px 8px 8px 8px; border:solid 1px #5683d5;}
+
+/* BOX REDUPOINTS ////////// /// */
+#profile_user_info #redupoints{position:absoluto; float:right; width:89px; height:86px; border:3px solid #577abb; background:#f6f8fd; padding:0px;margin:8px; right:8px;top:2px; font-family:"Trebuchet MS", Tahoma; color:#858787; z-index:12;}
+#title_redupoints{ font-size:11px; border-bottom:1px solid #CCC}
+#text_redupoints{font-size:10px; line-height:10px; padding:3px 0px 3px 0px; background-color:#ecf0f8; color:#7a7a7a;}
+#number_redupoints{font-size:22px; font-weight:bold; color:#577abb; padding:4px 0px 4px 0px;}
+#top_redupoints{ height:21px; background-color:#577abb; font-size:11px; font-weight:bold; color:#edf2fe; padding:4px 0 0 0 }
+/* BOX REDUPOINTS ////////// /// */
+
+#name_user{float:left; width:473px; height:auto; padding:0px 0px 0px 0px; margin:8px 0px 0px 8px;}
+#name_user_item{list-style-type:none; top:0px; padding:0px; right:0px;}
+#name_user_item li {float:left; margin-right:8px; list-style:none; font-size:11px; text-decoration:none; color:#94a2ca;}
+#name_user_item li span {padding: 5px 10px; font-size:11px; text-decoration:none; color:#5683d5;}
+#name_user_item li .name, #name_user_item li .name:visited {padding:0; font-size:14px; text-decoration:none; color:#5683d5; font-weight:bold}
+
+
+#name_user_item li .edit, #name_user_item li .edit:visited {padding:0; font-size:10px; text-decoration:none; color:#00CC00;}
+#name_user_item li .edit:hover {padding:0; font-size:10px; text-decoration:underline; color:#00CC00;}
+
+#description_user{float:left; width:100px; height:auto; padding:0px; margin:0px 0px 0px 8px; font-size:12px; color:#5683d5; line-height:13px; font-weight:normal;}
+
+#follow_user{float:left; width:708px; height:20px; padding:2px 0px 0px 8px; margin:0; font-size:12px; color:#5683d5; line-height:13px; font-weight:normal; background:url(../images/bg_user_follow.png) no-repeat #e7eefd}
+
+#info_user{float:left; width:400px; height:auto; padding:0px; margin:8px 0px 0px 8px; font-size:12px; color:#5683d5; line-height:13px; font-weight:normal;}
+#tags_user{float:right; width:250px; height:auto; padding:0px; margin:8px 0px 0px 8px; font-size:12px; color:#5683d5; line-height:13px; font-weight:normal;}
+
+#actions_user{float:left; width:708px; height:22px; padding:8px 0px 0px 8px; margin:8px 0px 0px 0px; font-size:12px; color:#5683d5; line-height:13px; font-weight:normal; background:#e7eefd}
+
+.link_user, .link_user:visited{font:normal 12px "Trebuchet MS", Tahoma; color:#5683d5; text-decoration:none;}
+.link_user:hover{font:normal 12px "Trebuchet MS", Tahoma; color:#5683d5; text-decoration:underline; }
+
+.contact_user, .contact_user:visited {
+background:url(../images/icon_contact.png) no-repeat;font-size:12px; text-decoration:none; color:#5683d5;padding-left:20px; font-weight:bold}
+.contact_user:hover {background:url(../images/icon_contact.png) no-repeat; font-size:12px; text-decoration:underline; color:#5683d5; padding-left:20px; font-weight:bold}
+
+.mensage_user, .mensage_user:visited {
+background:url(../images/icon_share_on.png) no-repeat;font-size:12px; text-decoration:none; color:#5683d5;padding-left:20px; font-weight:bold}
+.mensage_user:hover {background:url(../images/icon_share_on.png) no-repeat; font-size:12px; text-decoration:underline; color:#5683d5; padding-left:20px; font-weight:bold}
+
+#comments_user{float:left; width:716px; height:auto; padding:0px 0px 0px 0px; margin:0px 0px 8px 0px; background:#f6f8fd}
+
+#user_box_top{width:auto; height:20px; border-bottom:solid 1px #e7e8e8; font:bold 16px "Trebuchet MS", Tahoma; padding:6px 0px 4px 8px; color:#5683d5;}
+
+.comment_user{float:left; width:706px; height:auto; padding:5px; border-bottom:solid 1px #e7e8e8;}
+.comment_user a{text-decoration:none; font: 12px "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; color:#5683d5;}
+.comment_user a:hover{text-decoration:underline; font: 12px "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; color:#5683d5;}
+#comment_user_txt{float:left; width:auto; height:auto; font:normal 12px "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; color:#858787;}
+#comment_user_photo{float:left; width:50px; height:50px; margin:0px 8px 8px 0px; border:0;}
+#comment_user_time{float:left; width:120px; height:auto; font:11px normal; font-family:"Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; color:#c5c7c8; margin:12px 0px 0px 0px}
+#comment_user_actions{float:right; width:200px; height:auto; font:11px normal; font-family:"Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; color:#c5c7c8; margin:12px 0px 0px 0px; text-align:right}
+#comment_user_actions a{font:normal 10px ; text-decoration:none; font-family:"Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; color:#5683d5;}
+#comment_user_actions a:hover{font:normal 10px; text-decoration:underline; font-family:"Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; color:#5683d5;}
+
+#link_ver_todos{float:left; width:706px; height:auto; padding:0; margin:8px 0px 8px 8px;}
+#link_ver_todos a{font:bold 12px "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; text-decoration:none; color:#5683d5;}
+#link_ver_todos a:hover{font:bold 12px "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; text-decoration:underline; color:#5683d5;}
+
+#materials_user{float:left; width:716px; height:auto; padding:0px 0px 0px 0px; margin:0px 0px 8px 0px; background:#ffffd5}
+#materials_user_box_top{width:auto; height:20px; font:bold 16px "Trebuchet MS", Tahoma; padding:6px 0px 4px 8px; color:#b5af4a; background:#f6f6bc}
+#link_materials_ver_todos{float:left; width:706px; height:auto; padding:0; margin:8px 0px 8px 8px;}
+#link_materials_ver_todos a{font:bold 12px "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; text-decoration:none; color:#b5af4a;}
+#link_materials_ver_todos a:hover{font:bold 12px "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; text-decoration:underline; color:#b5af4a;}
+
+#user_materialslist{float:left; width:700px; height:auto; padding:0px 8px 0px 8px; margin:0px; overflow:visible;}
+#user_materials_item{list-style-type:none; width:auto; height:auto; top:0px; padding:0px; overflow:visible;}
+#user_materials_item li {list-style:none; float:left; width:100%; height:25px; text-decoration:none; padding:4px 0px 4px 0px; color:#858787; border-bottom:solid 1px #f9efd1;}
+	
+#user_materials_item li .ppt, #user_materials_item li .ppt visited {background:url(../images/icon_ppt.png) no-repeat; vertical-align:middle;font-size:12px; text-decoration:none; color:#858787; padding-left:20px}
+#user_materials_item li .ppt:hover {background:url(../images/icon_ppt.png) no-repeat; font-size:12px; text-decoration:underline; color:#858787; padding-left:20px}
+	
+#user_materials_item li .word, #user_materials_item li .word visited {background:url(../images/icon_word.png) no-repeat; font-size:12px; text-decoration:none; color:#858787; padding-left:20px}
+#user_materials_item li .word:hover {background:url(../images/icon_word.png) no-repeat; font-size:12px; text-decoration:underline; color:#858787; padding-left:20px} 
+	
+#user_materials_item li .excel, #user_materials_item li .excel visited {background:url(../images/icon_excel.png) no-repeat; font-size:12px; text-decoration:none; color:#858787; padding-left:20px}
+#user_materials_item li .excel:hover {background:url(../images/icon_excel.png) no-repeat; font-size:12px; text-decoration:underline; color:#858787; padding-left:20px}
+	
+#user_materials_item li .text, #user_materials_item li .text visited {background:url(../images/icon_text.png) no-repeat; font-size:12px; text-decoration:none; color:#858787; padding-left:20px}
+#user_materials_item li .text:hover {background:url(../images/icon_text.png) no-repeat; font-size:12px; text-decoration:underline; color:#858787; padding-left:20px}
+	
+#user_materials_item li .pdf, #user_materials_item li .pdf visited {background:url(../images/icon_pdf.png) no-repeat;font-size:12px; text-decoration:none; color:#858787;padding-left:20px}
+#user_materials_item li .pdf:hover {background:url(../images/icon_pdf.png) no-repeat; font-size:12px; text-decoration:underline; color:#858787; padding-left:20px}
+	
+#user_materials_item li .photo, #user_materials_item li .photo visited {background:url(../images/icon_photo.png) no-repeat; font-size:12px; text-decoration:none; color:#858787; padding-left:20px}
+#user_materials_item li .photo:hover {background:url(../images/icon_photo.png) no-repeat; font-size:12px; text-decoration:underline; color:#858787; padding-left:20px}
+
+#user_materials_item li .target, #user_materials_item li .target visited {font-size:12px; font-weight:bold; text-decoration:none; color:#858787; padding-left:0px}
+#user_materials_item li .target:hover {font-size:12px; font-weight:bold; text-decoration:underline; color:#858787; padding-left:0px}
+
+#title_item_user{float:left; width:706px; height:auto; font:bold 14px "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; color:#7a87a1; vertical-align:middle; text-decoration:none; padding:0px 0px 0px 8px; margin:0px 0px 0px 0px}
+#title_item_user a{font:bold 14px "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; color:#5683d5; vertical-align:middle; text-decoration:none} 
+#title_item_user a:hover{font:bold 14px "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; color:#5683d5; vertical-align:middle; text-decoration:underline}
+
+#description_user{float:left; width:400px; height:auto;padding:0px 0px 0px 0px; margin:0px 0px 8px 8px; font-size:12px; color:#858787}
+
+#item_user{float:left; width:716px; height:76px; padding:8px 0px 0px 0px; margin:0px 0px 8px 0px; border-bottom:solid 1px #EEE;}
+#item_user #average{position:relative; float:right; width:89px; height:69px; border:3px solid #bababa; background:#f8f8f8; padding:0px;margin:8px 0px 0px 8px; right:0px;top:-30px; font-family:"Trebuchet MS", Tahoma; color:#858787;}
+#title_average{ font-size:11px; border-bottom:1px solid #CCC}
+#number_average{font-size:22px; font-weight:bold; padding:4px 0px 4px 0px; border-bottom:1px solid #CCC}
+#difficulty_level{ height:21px; background-color:#bababa; font-size:11px; font-weight:bold; color:#EEE; padding:4px 0 0 0 }
+
+#item #ratting_user{position:relative; float:right; width:130px; height:auto;padding:0px;margin:12px 0px 0px 0px;color:#858787;left:8px;top:-30px;}
+#ratting_menu{list-style-type:none; top:0px; padding:0px; right:0px;}
+#ratting_menu li {float:left; margin-right:8px; list-style:none; font-size:11px; text-decoration:none; color:#bababa;}
+#ratting_menu li span {padding: 5px 10px; font-size:11px; text-decoration:none; color:#5683d5;}
+#ratting_menu li a, #ratting_menu li a:visited {padding:0; font-size:11px; text-decoration:none; color:#5683d5;}
+#ratting_menu li a:hover {padding:0; font-size:11px; text-decoration:underline; color:#5683d5;}
+.evaluation_rating{margin:2px 0px 0px 40px;}
+
+
+
+/* PERFIL DO USUÁRIO //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 
 
 /* BOX GRAU DE DIFICULDADE  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
@@ -245,7 +361,8 @@ float:left; width:100%; height:100%; min-height:100%; _margin-top:-2px; margin-t
 #actions_resource li a:hover {padding:0; font-size:11px; text-decoration:underline; color:#5683d5;}*/
 #actions_video{float:left;  height:auto; padding:0px 0px 0px 0px; margin:4px 0px 0px 8px;}
 
-#filter_bar_video{float:left; width:99%; height:22px; background:url(../images/bg_filter_bar.gif) repeat-x right; padding:5px;margin:0px 8px 8px 0px; border:solid 1px #dedede; text-align:right; }
+#filter_bar_video{float:left; width:99%; height:22px; background:url(../images/bg_filter_bar.gif) repeat-x right; padding:5px;margin:0px 8px 8px 0px; border:solid 1px #dedede;  }
+
 
 .share_video{ background:url(../images/icon_share_on.png) no-repeat; color:#5782D5; text-decoration:none; padding-left:20px; }
 .share_video:hover{background:url(../images/icon_share_on.png) no-repeat; color:#5782D5; text-decoration:underline; padding-left:20px}
@@ -612,7 +729,7 @@ text-decoration:underline;}
 /* ################################################################################################################################################### */
 
 #menu_container{float:right; top:0px; right:0px; width:100%; height:20px;}
-	#secundary_menu{list-style-type:none; top:0px; padding:0px 0px 0px 570px; right:0px;}
+	#secundary_menu{list-style-type:none; top:0px; padding:0px 0px 0px 610px; right:0px;}
 	#secundary_menu li {background:#FFF; float:left; margin-right:8px; list-style:none; font-size:12px; text-decoration:none; color:#5683d5;}
 	#secundary_menu li span {background:#FFF;  padding: 5px 10px; font-size:12px; text-decoration:none; color:#5683d5;}
 	#secundary_menu li a, #secundary_menu li a:visited {background:#FFF; padding:0; font-size:12px; text-decoration:none; color:#5683d5;}

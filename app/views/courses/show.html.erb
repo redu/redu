@@ -112,21 +112,22 @@
 		
 		
 		<div id="filter_bar_video">
+			
             <div id="actions_video">
                 <ul id="actions_resource">
                 	<li>
                 		<span id="lights-off">
-                        <a href="#" class="share" onclick="javascript:dimLights(true);">Apagar as luzes</a>
+                        <a href="#" class="share" onclick="javascript:dimLights(true); return false;">Apagar as luzes</a>
 						</span>
 						<span id="lights-on" style="display:none;">
-                        <a href="#" class="share" onclick="javascript:dimLights(false);">Acender as luzes</a>
+                        <a href="#" class="share" onclick="javascript:dimLights(false);return false;">Acender as luzes</a>
 						</span>
                     </li>
 					<li>
                         |
                     </li>
                     <li>
-                        <a href="#" class="share_video" onclick="toggleShareBox();">Compartilhar</a>
+                        <a href="#" class="share_video" onclick="toggleShareBox();return false;">Compartilhar</a>
                     </li>
                     
 					
@@ -177,6 +178,7 @@
 			
 				<% cur_watching.each do |user| %>
 				<%= link_to image_tag(user.avatar_photo_url(:thumb), :height => '40', :width => '40', :alt => "#{user.login}"), user_path(user), :rel => 'bookmark', :class => 'move_foto', :title => "#{user.login}'s profile" %>
+				<br>
 				<%= user.login %>
 				
 				<% end %>

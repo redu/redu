@@ -27,6 +27,10 @@ pt-BR:
           attributes:
             statement:
               blank: "Por favor escolha um enunciado maior que 6 caracteres" 
+  
+  Course:  aula
+  Resource:  material
+  Exam:  exame
   #en: a_few_seconds_ago:  a few seconds ago
   a_few_seconds_ago:  alguns segundos atrás
   #en: about: About
@@ -822,7 +826,7 @@ pt-BR:
   #en: offering_was_successfully_created: Offering was successfully created.
   offering_was_successfully_created: Offering was successfully created.
   #en: on_commentable: On
-  on_commentable: 'On'
+  on_commentable: 'Em'
   #en: one_day_ago: one day ago
   one_day_ago: one day ago
   #en: one_hour_ago: one hour ago
@@ -956,11 +960,11 @@ pt-BR:
   #en: profile_comments: Profile Comments
   profile_comments: Comentários do meu perfil
   #en: profile_photo: Profile Photo
-  profile_photo: Profile Photo
+  profile_photo: Foto do perfil
   #en: profile_photo_change: Change profile photo
-  profile_photo_change: Change profile photo
+  profile_photo_change: Mudar foto
   #en: profile_photo_crop: Crop profile photo
-  profile_photo_crop: Crop profile photo
+  profile_photo_crop: Recortar foto
   #en: profile_privacy: Profile Privacy
   profile_privacy: Profile Privacy
   #en: profile_views: profile views
@@ -1088,7 +1092,7 @@ pt-BR:
   #en: send: "Send"
   send: "Send"
   #en: send_me_a_message: "Send me a message"
-  send_me_a_message: "Send me a message"
+  send_me_a_message: "Enviar uma mensagem"
   #en: send_invitations: Send Invitations!
   send_invitations: Send Invitations!
   #en: send_me_my_username: Send me my username
@@ -1298,7 +1302,7 @@ pt-BR:
   #en: update_profile_and_tag_yourself: Update your profile and tag yourself
   update_profile_and_tag_yourself: Update your profile and tag yourself
   #en: update_your_profile: update your profile
-  update_your_profile: update your profile
+  update_your_profile: atualizar perfil
   #en: updated_at: Updated at
   updated_at: Updated at
   #en: updated_their_profile: updated their profile

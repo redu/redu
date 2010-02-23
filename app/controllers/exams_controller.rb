@@ -522,7 +522,7 @@ def search
     #:order => 'updated_at DESC', 
     #:per_page => AppConfig.items_per_page})
     
-    @tags = Exam.tag_counts
+    @popular_tags = Exam.tag_counts
     
     respond_to do |format|
       format.html # index.html.erb

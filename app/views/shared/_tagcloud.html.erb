@@ -1,10 +1,9 @@
 <div id="box_move">
-    	<div id="box_top">POPULAR</div>
+    	<div id="box_top">TAGS</div>
 		
 <div id="tagcloud">
 <% tag_cloud @popular_tags, %w(nube1 nube2 nube3 nube4 nube5) do |tag, css_class| %>
     <%= link_to tag, { :action => :tag, :id => tag }, :class => css_class %>
 <% end %>
 </div>
-<div>
-<div>
+</div>
