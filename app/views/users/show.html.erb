@@ -69,7 +69,7 @@
 	<a href="#" class="contact_user">ADICIONAR COMO CONTATO</a> |
 	-->
 	<% if @is_current_user %>
-	<a href="#" class="contact_user">MINHAS ANOTAÇÕES</a> | <a href="#" class="contact_user">CAIXA DE MENSAGENS</a>
+	<a href="#" class="contact_user">MINHAS ANOTAÇÕES</a> | <a href="#" class="mensage_user">CAIXA DE MENSAGENS (<%=current_user.unread_message_count %>)</a>
 	<% else %>
 	<%= link_to(:send_me_a_message.l, new_user_message_path(current_user, :to=>@user), :class => "mensage_user")%>
 	<% end %>
@@ -77,6 +77,17 @@
 </div>
      
 </div>
+
+<!-- BOX MINHA MOV. RESCENTE ####################################################################################################################################### -->
+<div id="comments_user">
+	<div id="user_box_top">ATIVIDADES RECENTES</div>
+<%= render :partial => 'logs/item_user', :collection => @user.recent_activity, :as => :item %>
+
+
+<div id="link_ver_todos"><a href="#">Ver todos(8) &gt;</a></div>
+</div>
+<!-- BOX MINHA MOV. RESCENTE ####################################################################################################################################### -->
+
 
 <!-- BOX COMENTÁRIOS ############################################################################################################################################### -->
 <div id="comments_user">
@@ -95,42 +106,6 @@
 </div>
 <!-- BOX COMENTÁRIOS ############################################################################################################################################### -->
 
-<!-- BOX MINHA MOV. RESCENTE ####################################################################################################################################### -->
-<div id="comments_user">
-	<div id="user_box_top">MINHA MOVIMENTAÇÃO RECENTE(8)</div>
-<!-- ITEM ////////////////////////////////////////////////////////////////// -->
-<%= render :partial => 'logs/item', :collection => @user.recent_activity %>
-<!-- ITEM ////////////////////////////////////////////////////////////////// -->
-
-<!-- ITEM ////////////////////////////////////////////////////////////////// -->
-<div id="item">
-	<div id="title_item_user"><a href="#">ENGENHARIA DE SOFTWARE</a></div>
-    <div id="ratting_user">
-    	<ul id="ratting_menu">
-			<li><img src="img/icon_star_on.png" /></li>
-        	<li><img src="img/icon_star_on.png" /></li>
-			<li><img src="img/icon_star_on.png" /></li>
-			<li><img src="img/icon_star_off.png" /></li>
-			<li><img src="img/icon_star_off.png" /></li>
-            <li class="evaluation_rating">Avaliações(30)</li>
-		</ul>
-    </div>            
-<div id="identification">
-	<ul id="identification_resource">
-		<li><a href="#">Robson Ribeiro</a></li>
-        <li>|</li>
-		<li>há 1 hora atrás</li>
-        <li>|</li>
-		<li>Exibições(30)</li>
-	</ul>
-</div>
-<div id="description_user">Descricao do video aula, o que vai ser passado para o alunos, conteudo da aula e outra coisas mais significantes para seu aprendizado</div>
-</div>
-<!-- ITEM ////////////////////////////////////////////////////////////////// -->
-
-<div id="link_ver_todos"><a href="#">Ver todos(8) &gt;</a></div>
-</div>
-<!-- BOX MINHA MOV. RESCENTE ####################################################################################################################################### -->
 
 <!-- MATERIAIS ##################################################################################################################################################### -->
 <div id="materials_user">

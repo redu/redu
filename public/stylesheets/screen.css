@@ -525,6 +525,16 @@ background:url(../images/icon_share_on.png) no-repeat;font-size:12px; text-decor
 #move_txt{float:left; width:168px; height:auto; font:normal 11px "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; color:#858787;}
 #move_txt2{float:left; width:190px; height:auto; font:normal 11px "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; color:#858787;}
 #move_foto{float:left; width:40px; height:40px; margin-right:8px; border:0;}
+
+#move_item_user{float:left; width:100%; height:auto; padding:5px; border-bottom:solid 1px #e7e8e8;}
+#move_item_user a{text-decoration:none; font:bold 11px "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; color:#5683d5;}
+#move_item_user a:hover{text-decoration:underline; font:bold 11px "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; color:#5683d5;}
+
+#move_txt_user{float:left; width:90%; height:auto; font:normal 14px "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; color:#858787;}
+#move_txt_user a{font-size: 14px;}
+#move_txt_user a:hover{font:normal 14px "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif;}
+
+
 #time{float:left; width:70px; height:auto; font:10px normal; font-family:"Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; color:#c5c7c8; margin:12px 0px 0px 0px}
 #replay{float:right; width:50px; height:auto; font:10px normal; font-family:"Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; color:#c5c7c8; margin:12px 0px 0px 0px}
 #replay a{font-size:10px; font-weight:bold; text-decoration:none; font-family:"Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; color:#bac5d4;}

@@ -558,7 +558,7 @@ class User < ActiveRecord::Base
   ### Métodos Adicionais 
     
   def recent_activity
-    Log.find(:all, :conditions => ["user_id = ?", self.id], :limit => 10, :order_by => "created_at DESC")
+    Log.find(:all, :conditions => ["user_id = ?", self.id], :order => "created_at DESC", :limit => 10)
   end
   
   def log_activity

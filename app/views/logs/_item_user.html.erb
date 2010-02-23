@@ -1,10 +1,14 @@
-<div id="move_item">
-    <div id="move_foto">
-        <%= link_to image_tag(item.user.avatar_photo_url(:thumb), :height => '20', :width => '20', :alt => "#{item.user.login}"), user_path(item.user), :rel => 'bookmark', :class => 'move_foto', :title => "#{item.user.login}'s profile" %> 
-    </div>
-    <div id="move_txt">
+<div id="move_item_user">
+    
+    <div id="move_txt_user">
     	
-		<%= activity_name(item) %>
+	    <% if item_user_counter == 0 %>
+		    <span style="font-size:22px">
+		    	<%= activity_name(item) %>
+		    </span>
+	    <%else %>
+	    	<%= activity_name(item) %>
+	    <% end  %>
 		
         <div id="time">
             <%= time_ago_in_words_or_date(item.created_at) %>

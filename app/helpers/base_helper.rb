@@ -3,7 +3,38 @@ require 'md5'
 # Methods added to this helper will be available to all templates in the application.
 module BaseHelper
   
-  
+  def activity_name(item)
+    link_user = link_to item.user.login, user_path(item.user)
+    type = item.logeable_type.underscore
+      case type
+        when 'user'
+         @activity = link_user + " acabou de entrar no redu" if item.action == "login"  
+         @activity = link_user + " atualizou dados de seu perfil" if item.action == "update"   
+        
+        when 'course'
+          link_obj = link_to(item.logeable_name, item.logeable)
+          
+          @activity = link_user + " está assistindo a aula " + link_obj if item.action == "show" 
+          @activity = link_user + " criou a aula " + link_obj if item.action == "create" 
+          @activity = link_user + " adicionou a aula " + link_obj + " ao seus favoritos" if item.action == "favorite"         
+
+        when 'resource'
+          link_obj = link_to(item.logeable_name, resource_path(item.logeable_id))
+          
+          @activity = link_user + " disponibilizou o material " + link_obj if item.action == "create" 
+          @activity = link_user + " adicionou o material " + link_obj + " ao seus favoritos" if item.action == "favorite"
+    
+      when 'exam'
+          link_obj = link_to(item.logeable_name, exam_path(item.logeable_id))
+          
+          @activity = link_user + " está respondendo ao exame " + link_obj if item.action == "answer" 
+          @activity = link_user + " criou o exame " + link_obj if item.action == "exame" 
+          @activity = link_user + " adicionou o exame " + link_obj + " ao seus favoritos" if item.action == "favorite"
+        else 
+          @activity = " atividade? "
+      end
+      @activity
+  end
   
   def reload_flash
     page.replace_html "flash_messages", :partial => "shared/messages"
@@ -34,13 +65,13 @@ module BaseHelper
       }
     </style>
     <script type=\"text/javascript\">
-    	//<![CDATA[
+      //<![CDATA[
         Event.observe(window, 'load', function(){
-      		$$('img.#{classname}').each(function(image){
-      			CommunityEngine.resize_image(image, {max_width: #{width}, max_height:#{height}});
-      		});          
+          $$('img.#{classname}').each(function(image){
+            CommunityEngine.resize_image(image, {max_width: #{width}, max_height:#{height}});
+          });          
         }, false);
-    	//]]>
+      //]]>
     </script>"
   end
 
@@ -116,25 +147,25 @@ module BaseHelper
     end
   end
 
-	def page_title
-		app_base = AppConfig.community_name
-		tagline = " | #{AppConfig.community_tagline}"
-	
-		title = app_base
-		case @controller.controller_name
-			when 'base'
-					title += tagline
+  def page_title
+    app_base = AppConfig.community_name
+    tagline = " | #{AppConfig.community_tagline}"
+  
+    title = app_base
+    case @controller.controller_name
+      when 'base'
+          title += tagline
                         when 'pages'
                           if @page and @page.title
                             title = @page.title + ' &raquo; ' + app_base + tagline
                           end
-			when 'posts'
+      when 'posts'
         if @post and @post.title
           title = @post.title + ' &raquo; ' + app_base + tagline
           title += (@post.tags.empty? ? '' : " &laquo; "+:keywords.l+": " + @post.tags[0...4].join(', ') )
           @canonical_url = user_post_url(@post.user, @post)
         end
-			when 'users'
+      when 'users'
         if @user && !@user.new_record? && @user.login 
           title = @user.login
           title += ', expert in ' + @user.offerings.collect{|o| o.skill.name }.join(', ') if @user.vendor? and !@user.offerings.empty?
@@ -143,17 +174,17 @@ module BaseHelper
         else
           title = :showing_users.l+' &raquo; ' + app_base + tagline
         end
-			when 'photos'
+      when 'photos'
         if @user and @user.login
           title = @user.login + '\'s '+:photos.l+' &raquo; ' + app_base + tagline
         end
-			when 'clippings'
+      when 'clippings'
         if @user and @user.login
           title = @user.login + '\'s '+:clippings.l+' &raquo; ' + app_base + tagline
         end
-			when 'tags'
-				case @controller.action_name
-			    when 'show'
+      when 'tags'
+        case @controller.action_name
+          when 'show'
             title = @tags.map(&:name).join(', ') + ' '
             title += params[:type] ? params[:type].pluralize : :posts_photos_and_bookmarks.l
             title += ' (Related: ' + @related_tags.join(', ') + ')' if @related_tags
@@ -161,7 +192,7 @@ module BaseHelper
             @canonical_url = tag_url(URI.escape(@tags_raw, /[\/.?#]/)) if @tags_raw
           else
           title = 'Showing tags &raquo; ' + app_base + tagline            
-			  end
+        end
       when 'categories'
         if @category and @category.name
           title = @category.name + ' '+:posts_photos_and_bookmarks.l+' &raquo; ' + app_base + tagline
@@ -182,29 +213,29 @@ module BaseHelper
         end
       when 'sessions'
         title = :login.l+' &raquo; ' + app_base + tagline            
-		end
+    end
 
     if @page_title
       title = @page_title + ' &raquo; ' + app_base + tagline
     elsif title == app_base          
-		  title = :showing.l+' ' + @controller.controller_name.capitalize + ' &raquo; ' + app_base + tagline
-    end	
-		title
-	end
+      title = :showing.l+' ' + @controller.controller_name.capitalize + ' &raquo; ' + app_base + tagline
+    end 
+    title
+  end
 
   def add_friend_link(user = nil)
-		html = "<span class='friend_request' id='friend_request_#{user.id}'>"
+    html = "<span class='friend_request' id='friend_request_#{user.id}'>"
     html += link_to_remote :request_friendship.l,
-				{:update => "friend_request_#{user.id}",
-					:loading => "$$('span#friend_request_#{user.id} span.spinner')[0].show(); $$('span#friend_request_#{user.id} a.add_friend_btn')[0].hide()", 
-					:complete => visual_effect(:highlight, "friend_request_#{user.id}", :duration => 1),
+        {:update => "friend_request_#{user.id}",
+          :loading => "$$('span#friend_request_#{user.id} span.spinner')[0].show(); $$('span#friend_request_#{user.id} a.add_friend_btn')[0].hide()", 
+          :complete => visual_effect(:highlight, "friend_request_#{user.id}", :duration => 1),
           500 => "alert('"+:sorry_there_was_an_error_requesting_friendship.l+"')",
-					:url => hash_for_user_friendships_url(:user_id => current_user.id, :friend_id => user.id), 
-					:method => :post }, {:class => "add_friend button"}
-		html +=	"<span style='display:none;' class='spinner'>"
-		html += image_tag 'spinner.gif'
-		html += :requesting_friendship.l+" ...</span></span>"
-		html
+          :url => hash_for_user_friendships_url(:user_id => current_user.id, :friend_id => user.id), 
+          :method => :post }, {:class => "add_friend button"}
+    html += "<span style='display:none;' class='spinner'>"
+    html += image_tag 'spinner.gif'
+    html += :requesting_friendship.l+" ...</span></span>"
+    html
   end
 
   def topnav_tab(name, options)
@@ -221,15 +252,15 @@ module BaseHelper
   def more_comments_links(commentable)
     html = link_to "&raquo; " + :all_comments.l, comments_url(commentable.class.to_s.underscore, commentable.to_param)
     html += "<br />"
-		html += link_to "&raquo; " + :comments_rss.l, comments_url(commentable.class.to_s.underscore, commentable.to_param, :format => :rss)
-		html
+    html += link_to "&raquo; " + :comments_rss.l, comments_url(commentable.class.to_s.underscore, commentable.to_param, :format => :rss)
+    html
   end
   
   def more_user_comments_links(user = @user)
     html = link_to "&raquo; " + :all_comments.l, user_comments_url(user)
     html += "<br />"
-		html += link_to "&raquo; " + :comments_rss.l, user_comments_url(user.to_param, :format => :rss)
-		html  
+    html += link_to "&raquo; " + :comments_rss.l, user_comments_url(user.to_param, :format => :rss)
+    html  
   end
   
   def activities_line_graph(options = {})
@@ -270,17 +301,17 @@ module BaseHelper
   
   def paginating_links(paginator, options = {}, html_options = {})
     if paginator.page_count > 1
-  		name = options[:name] || PaginatingFind::Helpers::DEFAULT_OPTIONS[:name]
+      name = options[:name] || PaginatingFind::Helpers::DEFAULT_OPTIONS[:name]
  
-    	our_params = (options[:params] || params).clone
+      our_params = (options[:params] || params).clone
       
       our_params.delete("authenticity_token")
       our_params.delete("commit")
 
-    	links = paginating_links_each(paginator, options) do |n|
-    	  our_params[name] = n
-    	  link_to(n, our_params, html_options.merge(:class => (paginator.page.eql?(n) ? 'active' : '')))
-    	end
+      links = paginating_links_each(paginator, options) do |n|
+        our_params[name] = n
+        link_to(n, our_params, html_options.merge(:class => (paginator.page.eql?(n) ? 'active' : '')))
+      end
     end
     
     if options[:show_info].eql?(false)

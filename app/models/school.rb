@@ -17,6 +17,8 @@ class School < ActiveRecord::Base
 
     has_many :access_keys, :dependent => :destroy
     
+    has_many :assets, :as => :asset, :class_name => 'SchoolAssets'
+    
     validates_presence_of :name
   
 end
