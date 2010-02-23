@@ -104,9 +104,21 @@ class CoursesController < BaseController
   # GET /courses/1.xml
   def show
     
-    @related_courses = Course.find(:all, :limit => 3)
-    
     @course = Course.find(params[:id])
+    
+#### Começo da parte de relacionamento de tags ####    
+#    course_tag_list = @course.tag_list.first.split
+#    puts course_tag_list
+#    @courses = Course.all
+#    @courses.each do |course|
+#      @related_tags << course.tag_list.split
+#    end
+#    puts related_courses_tagged.inspect
+#    @related_courses = Course.find_tagged_with(course_tag_list)
+#    puts @related_courses.inspect
+
+    related_name = @course.name
+    @related_courses = Course.find(:all,:conditions => ["name LIKE ? ","%#{related_name}%"] , :limit => 3, :order => 'created_at DESC')
     @comments  = @course.comments.find(:all, :limit => 10, :order => 'created_at DESC')
     
     @course.update_attribute(:view_count, @course.view_count + 1) #TODO performance
