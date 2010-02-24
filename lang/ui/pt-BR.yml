@@ -260,9 +260,9 @@ pt-BR:
   #en: clippings_let_you_to_save_cool_images_from_around_the_web: Clippings let you to save cool images from around the Web.
   clippings_let_you_to_save_cool_images_from_around_the_web: Clippings let you to save cool images from around the Web.
   #en: close_this_message: Close this message
-  close_this_message: Close this message
+  close_this_message: Fechar esta mensagem
   #en: comma_separated: (comma separated)
-  comma_separated: (comma separated)
+  comma_separated: (separado por vírgula)
   #en: comma_separated_keywords_that_describe_you: Comma-separated keywords that describe you.
   comma_separated_keywords_that_describe_you: Comma-separated keywords that describe you.
   #en: comment_character_limit: (2000 character limit)
@@ -446,7 +446,7 @@ pt-BR:
   #en: enter_a_message: Enter a message
   enter_a_message: Enter a message
   #en: enter_e_mail_addresses: Enter e-mail addresses
-  enter_e_mail_addresses: Enter e-mail addresses
+  enter_e_mail_addresses: Digite os endereços de e-mail
   #en: enter_e_mail_addresses_comma_sep: Enter e-mail addresses (comma-separated)
   enter_e_mail_addresses_comma_sep: Enter e-mail addresses (comma-separated)
   #en: enter_your_email_address: "Enter your email address"
@@ -606,7 +606,7 @@ pt-BR:
   #en: invite_some_customers: Invite some customers!
   invite_some_customers: Invite some customers!
   #en: invite_your_friends_to_join: Invite Your Friends To Join!
-  invite_your_friends_to_join: Invite Your Friends To Join!
+  invite_your_friends_to_join: Convite Seus Amigos Para Participarem!
   #en: invited_friends: invited some friends to join!
   invited_friends: invited some friends to join!
   #en: is_great_check_it_out_youll_love_it: is great, check it out you'll love it!
@@ -846,9 +846,9 @@ pt-BR:
   #en: optional_keywords_describing_this_topic_separated_by_commas: optional keywords describing this topic, separated by commas
   optional_keywords_describing_this_topic_separated_by_commas: optional keywords describing this topic, separated by commas
   #en: or: or
-  or: or
+  or: ou
   #en: page: page
-  page: page
+  page: página
   #en: page_not_found: The page you are trying to view has been moved or no longer exists.
   page_not_found: The page you are trying to view has been moved or no longer exists.
   #en: page_was_successfully_created: Page was successfully created.
@@ -1094,7 +1094,7 @@ pt-BR:
   #en: send_me_a_message: "Send me a message"
   send_me_a_message: "Enviar uma mensagem"
   #en: send_invitations: Send Invitations!
-  send_invitations: Send Invitations!
+  send_invitations: Enviar Convites!
   #en: send_me_my_username: Send me my username
   send_me_my_username: Send me my username
   #en: sent_messages: Sent messages
@@ -1425,7 +1425,7 @@ pt-BR:
   #en: write_a_blog_post: Write a blog post!
   write_a_blog_post: Write a blog post!
   #en: write_a_message: "Write a message:"
-  write_a_message: "Write a message:"
+  write_a_message: "Escreva uma mensagem:"
   #en: write_new_post: Write a '{{category}}' post
   write_new_post: "Write a '{{category}}' post"
   #en: wrote_a_post: "wrote a post:"

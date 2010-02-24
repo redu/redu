@@ -136,6 +136,9 @@ class SchoolsController < BaseController
   # GET /schools/1.xml
   def show
     @school = School.find(params[:id])
+    
+    @courses = Course.all
+    
     @forums = @school.forums
     respond_to do |format|
       format.html # show.html.erb
@@ -176,11 +179,10 @@ class SchoolsController < BaseController
     #end
     
     
-    
     respond_to do |format|
       if @school.save#! and UserSchoolAssociation.create(:user => current_user, :school => @school, :role_id => 4)
         
-        flash[:notice] = 'School was successfully created.'
+        flash[:notice] = 'A escola foi atualizada com sucesso!'
         format.html { redirect_to(@school) }
         format.xml  { render :xml => @school, :status => :created, :location => @school }
       else

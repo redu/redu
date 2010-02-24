@@ -1,18 +1,17 @@
 <div id="all_content3">
 	<div id="col_content">
-	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">aprender</a> > <a href="#">exames</a> </div>
+	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">redes</a> > <a href="#">nova rede</a> </div>
    	<div id="title">NOVA REDE</div>
 
-<% form_for(@school) do |f| %>
+<% form_for(@school, :html => { :multipart => true }) do |f| %>
 
-Nome
-<%= f.text_field :name %> <BR>
+<%= render :partial => "schools/form", :locals => { :f => f, :school => @school } %>
 
-<%= f.submit "Criar" %>
+<%= f.submit "Criar" %> ou <%= link_to 'Voltar', :action => 'index' %>
 
 <% end %>
 
-<%= link_to 'Voltar', :action => 'index' %>
+
 
 
 </div>

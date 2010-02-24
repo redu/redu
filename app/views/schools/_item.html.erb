@@ -1,14 +1,15 @@
         <div id="item">
     		<div id="title"><%= link_to school.name, school %></div>
 						<div id="video"><!-- Video Insert -->
-						<div id="video_info">00:00:00</div>
 						</div>
                        
             <div id="identification">
               <ul id="identification_resource">
-								<li><%# link_to school.owner.login, school.owner %></li>
+								<li><%= link_to school.owner.login, school.owner %></li>
 										<li>|</li>
 								<li><%= time_ago_in_words(school.created_at) %></li>
+								<li>|</li>
+								<li>Membros (<%= school.users.count %>)</li>
 							</ul>
             </div>
             
@@ -19,11 +20,14 @@
               <ul id="identification_resource">
 				<li><strong>Categoria:</strong> Matemática</li>
         		<li>|</li>
-				<li><strong>Tags:</strong> <%# school.tag_list %></li>
+				<li><strong>Tags:</strong> <%= school.tag_list %></li>
 			  </ul>
             </div>
             
-            <div id="actions">
+            
+            
+					<!--
+					<div id="actions">
               <ul id="actions_resource">
 							<li><a href="#" class="share">Compartilhar</a></li>
 						  		<li>|</li>
@@ -32,7 +36,6 @@
 							<li><a href="#" class="comments">Comentários(<%# school.comments.count %>)</a></li>
 							</ul>
             </div> 
-            
 					<div id="ratting">
 							<ul id="ratting_menu">
 							<li><img src="images/icon_star_on.png"/></li>
@@ -42,6 +45,7 @@
 							<li><img src="images/icon_star_off.png"/></li>
 									      <li class="evaluation_rating">Avaliações(30)</li>
 						</ul>
-					</div>          
+					</div>
+					-->          
     	</div>
 

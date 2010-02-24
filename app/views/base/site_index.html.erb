@@ -28,29 +28,35 @@
 <!-- LISTAGEM RECURSO ############################################################################################################################################## -->
     <div id="filter_bar">
     <span class="title_list">AULAS MAIS RECENTES</span>
-    <!--<span class="title_filter">FILTRAR POR:</span>
-      <select name="select" id="select">
-        <option selected="selected">Selecione:</option>
-        <option>Aulas - Video</option>
-        <option>Video</option>
-        <option>Audio</option>
-        <option>Exames</option>
-      </select>-->
       </div>
     <div id="all_list">
     	
 		<% if @courses && @courses.length > 0 %>
  			<%= render :partial => 'courses/item', :collection => @courses, :as => :course %> 
  		<% else %>
- 			Não há aulas publicadas ainda. <%= link_to 'Crie uma agora!', :action => 'new' %>
+ 			Não há aulas publicadas ainda. <%= link_to 'Crie uma agora!', new_course_path %>
 		<% end %>
-		
-		
-		
 		
     </div>
     <!-- LISTAGEM RECURSO ############################################################################################################################################## -->
     
+	<!-- LISTAGEM REDES ############################################################################################################################################## -->
+    <div id="filter_bar">
+    <span class="title_list">REDES POPULARES</span>
+      </div>
+    <div id="all_list">
+    	
+		<% if @schools && @schools.length > 0 %>
+ 			<%= render :partial => 'schools/item', :collection => @schools, :as => :school %> 
+ 		<% else %>
+ 			Não há redes ainda. <%= link_to 'Crie uma agora!', new_school_path %>
+		<% end %>
+		
+    </div>
+    <!-- LISTAGEM REDES ############################################################################################################################################## -->
+    
+	
+	
 <!-- PAGINACAO ##################################################################################################################################################### -->
     <div id="pagination" align="center">
     	<ul id="pagination_number">

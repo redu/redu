@@ -10,9 +10,9 @@
 	    	<%= activity_name(item) %>
 	    <% end  %>
 		
-        <div id="time">
+        <span class="time_activity">
             <%= time_ago_in_words_or_date(item.created_at) %>
-        </div>
+        </span>
         
 		<% if logged_in? %>
         <!--

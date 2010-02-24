@@ -69,7 +69,7 @@
 	<a href="#" class="contact_user">ADICIONAR COMO CONTATO</a> |
 	-->
 	<% if @is_current_user %>
-	<a href="#" class="contact_user">MINHAS ANOTAÇÕES</a> | <a href="#" class="mensage_user">CAIXA DE MENSAGENS (<%=current_user.unread_message_count %>)</a>
+	<a href="#" class="contact_user">MINHAS ANOTAÇÕES</a> | <a href="#" class="mensage_user">CAIXA DE MENSAGENS(<%=current_user.unread_message_count %>)</a>
 	<% else %>
 	<%= link_to(:send_me_a_message.l, new_user_message_path(current_user, :to=>@user), :class => "mensage_user")%>
 	<% end %>
@@ -80,7 +80,7 @@
 
 <!-- BOX MINHA MOV. RESCENTE ####################################################################################################################################### -->
 <div id="comments_user">
-	<div id="user_box_top">ATIVIDADES RECENTES</div>
+	<div id="user_box_top">ATIVIDADES RECENTES DE <%= @user.login.upcase %></div>
 <%= render :partial => 'logs/item_user', :collection => @user.recent_activity, :as => :item %>
 
 
@@ -108,20 +108,19 @@
 
 
 <!-- MATERIAIS ##################################################################################################################################################### -->
+<!--
 <div id="materials_user">
 	<div id="materials_user_box_top">MATERIAIS PUBLICADOS(8)</div>
     <div id="user_materialslist" align="left">
     	<ul id="user_materials_item">
     		<li><a href="#" class="pdf">Exercicio Complementar(100KB)</a> | <a href="#" class="target">Aula: ENGENHARIA DE REQUISITOS</a></li>
             <li><a href="#" class="word">Apostilia 021(30KB)</a> | <a href="#" class="target">Aula: CICLO DE VIDA DO SOFTWARE</a></li>
-            <!--<li><a href="#" class="excel">Planilha para coleta dos dados(10KB)</a> | <a href="#" class="target">Aula: FÍSICA</a></li>
-            <li><a href="#" class="text">Resumo da palestra (5KB)</a> | <a href="#" class="target">Aula: GEOGRAFIA</a></li>-->
             <li><a href="#" class="ppt">Slide da Aula</a> | <a href="#" class="target">Aula: PADRÕES DE PROJETOS</a></li>
             <li><a href="#" class="photo">Fotos da Turma</a> | <a href="#" class="target">WORKSHOP ENGENHARIA DE SOFTWARE</a></li>
     	</ul>
     </div>
     <div id="link_materials_ver_todos"><a href="#">Ver todos(8) &gt;</a></div>
-</div>
+</div> -->
 <!-- MATERIAIS ##################################################################################################################################################### -->
 
 
