@@ -23,13 +23,14 @@ class SessionsController < BaseController
             :value => self.current_user.remember_token , 
             :expires => self.current_user.remember_token_expires_at }
       end
-      redirect_to dashboard_user_path(current_user)
+      #redirect_to dashboard_user_path(current_user)
+      redirect_to application_url
       flash[:notice] = :thanks_youre_now_logged_in.l
       Log.log_activity(@user, 'login', @user)
       
     else
 			unless self.current_user.active?
-		    flash[:notice] = 'O seu seu cadastro precisa confirmado'
+		    flash[:notice] = 'Seu cadastro precisa ser confirmado'
 		    self.current_user = nil
 		    render "users/resend_activation"
 			else

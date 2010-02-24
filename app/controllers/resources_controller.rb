@@ -1,5 +1,7 @@
 class ResourcesController < BaseController
   
+  before_filter :login_required, :except => [:index]
+  
   def favorites
     
     if params[:from] == 'favorites'

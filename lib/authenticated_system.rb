@@ -102,6 +102,7 @@ module AuthenticatedSystem
       respond_to do |accepts|
         accepts.html do
           store_location
+          flash[:error] = :please_log_in.l
           redirect_to login_path and return false
         end
         accepts.xml do

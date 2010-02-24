@@ -14,7 +14,7 @@ module BaseHelper
         when 'course'
           link_obj = link_to(item.logeable_name, item.logeable)
           
-          @activity = link_user + " está assistindo a aula " + link_obj if item.action == "show" 
+          @activity = link_user + " está visualizando a aula " + link_obj if item.action == "show" 
           @activity = link_user + " criou a aula " + link_obj if item.action == "create" 
           @activity = link_user + " adicionou a aula " + link_obj + " ao seus favoritos" if item.action == "favorite"         
 

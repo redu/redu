@@ -1,17 +1,17 @@
 <div id="all_content3">
 <div id="col_content">
 	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">aprender</a> > <a href="#">materiais</a> </div>
- 	<div id="title">MATERIAIS
-	<%= render :partial => "resources/taskbar_index" %>
+ 	<div id="title">NOVO MATERIAL
 
 	</div>
 	<% form_for @resource, :html => { :multipart => true } do |f| %>
 	<%= f.error_messages %>
 	<%= render :partial => "resources/form", :locals => {:f => f}%>
-	<%= f.submit 'Adicionar' %> 
+	<br/>
+	<%= f.submit 'Adicionar' %> ou <%= link_to 'Voltar', resources_path %>
 	<% end %>
 
-<%= link_to 'Back', resources_path %>
+
 
 </div>
 </div>

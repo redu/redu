@@ -236,13 +236,13 @@ pt-BR:
   #en: click_here_to_enter_this_contest: "Click here to enter this contest!"
   click_here_to_enter_this_contest: "Click here to enter this contest!"
   #en: click_here_to_retrieve_it: Click here to retrieve it
-  click_here_to_retrieve_it: Click here to retrieve it
+  click_here_to_retrieve_it: Clique aqui para recuperar
   #en: click_here_to_sign_up: Click here to sign up
-  click_here_to_sign_up: Click here to sign up
+  click_here_to_sign_up: Clique aqui para se cadastrar!
   #en: click_here_to_sign_up_for_an_account_and_enter: Click here to sign up for an account and enter
-  click_here_to_sign_up_for_an_account_and_enter: Click here to sign up for an account and enter
+  click_here_to_sign_up_for_an_account_and_enter: Clique aqui para se cadastrar e entrar
   #en: click_here_to_upload_one: Click here to upload one!
-  click_here_to_upload_one: Click here to upload one!
+  click_here_to_upload_one: Clique aqui para fazer o upload!
   #en: click_here_to_view_as_a_list: Click here to view as a list
   click_here_to_view_as_a_list: Click here to view as a list
   #en: click_on_an_image_below_to_clip_it: Click on an image below to clip it
@@ -290,7 +290,7 @@ pt-BR:
   #en: compose_message: Compose message
   compose_message: Compose message
   #en: confirm_password: Confirm Password
-  confirm_password: Confirm Password
+  confirm_password: Confirme a Senha
   #en: contest_was_successfully_created: Contest was successfully created.
   contest_was_successfully_created: Contest was successfully created.
   #en: contests: Contests
@@ -366,7 +366,7 @@ pt-BR:
   #en: destroy: Destroy
   destroy: Destroy
   #en: dont_have_an_account: Don't have an account?
-  dont_have_an_account: Don't have an account?
+  dont_have_an_account: Não possui uma conta?
   #en: dont_wait_its: Don't wait! It's
   dont_wait_its: Don't wait! It's
   #en: draft: draft
@@ -508,9 +508,9 @@ pt-BR:
   #en: for_more_information_on_tags_check_out_the: For more information on tags check out the
   for_more_information_on_tags_check_out_the: For more information on tags check out the
   #en: forgot_your_password: Forgot your password?
-  forgot_your_password: Forgot your password?
+  forgot_your_password: Esqueceu a senha?
   #en: forgot_your_username: Forgot your username?
-  forgot_your_username: Forgot your username?
+  forgot_your_username: Esqueceu o login?
   #en: forum: Forum
   forum: Fórum
   #en: forums: Forums
@@ -640,7 +640,7 @@ pt-BR:
   #en: location: Location
   location: Location
   #en: log_in: Log in
-  log_in: Log in
+  log_in: Entre
   #en: log_in_to_create_a_new_topic: Log in to create a new topic
   log_in_to_create_a_new_topic: Log in to create a new topic
   #en: log_in_to_leave_a_comment: Log in to leave a comment
@@ -864,7 +864,7 @@ pt-BR:
   #en: page_tips: "Pages are a good place to put static content that you would rather not post to the blog or the forums."
   page_tips: "Pages are a good place to put static content that you would rather not post to the blog or the forums."
   #en: password: Password
-  password: Password
+  password: Senha
   #en: pending: pending
   pending: pending
   #en: pending_friendships: Pending Friendships
@@ -898,7 +898,7 @@ pt-BR:
   #en: photo_tip_2: Use tags to organize your photos. Separate tags with commas.
   photo_tip_2: Use tags to organize your photos. Separate tags with commas.
   #en: please_log_in: Please log in.
-  please_log_in: Please log in.
+  please_log_in: Por favor, faça o login.
   #en: please_post_something_at_least: Please post something at least...
   please_post_something_at_least: Please post something at least...
   #en: plural_posts: "{{count}} posts"
@@ -1124,7 +1124,7 @@ pt-BR:
   #en: showing_users: Showing users
   showing_users: Showing users
   #en: sign_up: Sign Up!
-  sign_up: Sign Up!
+  sign_up: Cadastre-se!
   #en: sign_up_for_an_account: Sign up for an account.
   sign_up_for_an_account: Sign up for an account.
   #en: sign_up_for_a_: Sign up for a
@@ -1210,7 +1210,7 @@ pt-BR:
   #en: thanks_for_activating_your_account: Thanks for activating your account!
   thanks_for_activating_your_account: Thanks for activating your account!
   #en: thanks_youre_now_logged_in: Thanks! You're now logged in.
-  thanks_youre_now_logged_in: Thanks! You're now logged in.
+  thanks_youre_now_logged_in: Obrigado! Você está logado agora.
   #en: the_comment_was_deleted: The comment was deleted.
   the_comment_was_deleted: The comment was deleted.
   #en: the_community_team: "The {{community}} team"
@@ -1322,9 +1322,9 @@ pt-BR:
   #en: user_e_mail: "User e-mail:"
   user_e_mail: "User e-mail:"
   #en: username: Username
-  username: Username
+  username: Login
   #en: user: User
-  user: User
+  user: Usuário
   #en: users: Users
   users: Users
   #en: users_blog: "{{user}}'s Blog"
@@ -1394,7 +1394,7 @@ pt-BR:
   #en: we_need_you: We need you
   we_need_you: We need you
   #en: welcome_message: Welcome! {{login_link}} or {{signup_link}}
-  welcome_message: "Welcome! {{login_link}} or {{signup_link}}"
+  welcome_message: "Bem-vindo! {{login_link}} ou {{signup_link}}"
   #en: what_are_tags: 'What are "Tags"?'
   what_are_tags: 'What are "Tags"?'
   #en: what_is: What is
