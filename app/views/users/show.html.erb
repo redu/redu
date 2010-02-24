@@ -99,7 +99,7 @@
 	
 	<%= render :partial => "users/comment", :collection => @users_comments, :as => :comment %>
 	
-	<div id="link_ver_todos"><a href="#">Ver todos(<%= @users_comments.length %>) &gt;</a></div>
+	<div id="link_ver_todos"><%= link_to "Ver todos(#{@users_comments.length})", comments_path(:commentable_id => @user.id, :commentable_type => 'User') %> </div>
 	<% end %>
 	
 	<%= render :partial => 'users/comment_form', :locals => { :commentable => @user } %>

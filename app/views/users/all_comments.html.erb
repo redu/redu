@@ -1,0 +1,33 @@
+<% @user = current_user%>
+<%- @meta = { :description => "#{@user.login}'s profile on #{AppConfig.community_name}.", :keywords => "#{@user.login}, #{@user.tags.join(", ") unless @user.tags.nil?}", :robots => AppConfig.robots_meta_show_content }%>
+<%- @section = @user.eql?(current_user) ? 'my_profile' : 'users' %>
+
+<div id="all_content3">
+<div id="col_content_user">
+	<div id="breadcrumbs"><a href="#">home</a> > <a href="#">perfil do usuário</a></div>
+    <!--<div id="title">AULAS</div>-->
+<!-- LISTAGEM RECURSO ############################################################################################################################################## -->
+<div id="all_list">
+
+
+<!-- BOX COMENTÁRIOS ############################################################################################################################################### -->
+<div id="comments_user">
+	<div id="user_box_top">COMENTÁRIOS(<%= @users_comments.length %>)</div>
+	
+	<% if @users_comments.empty? %>
+	Sem comentários ainda.
+	<% else %>
+	
+	<%= render :partial => "users/comment", :collection => @users_comments, :as => :comment %>
+	
+	<div id="link_ver_todos"><%= link_to "Ver todos(" + "#{@users_comments.length})", :action => 'all_comments', :collection => @users_comments %> </div>
+	<% end %>
+	
+	<%= render :partial => 'users/comment_form', :locals => { :commentable => @user } %>
+</div>
+<!-- BOX COMENTÁRIOS ############################################################################################################################################### -->
+
+
+</div>
+</div>
+</div>
