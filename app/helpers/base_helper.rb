@@ -199,12 +199,30 @@ module BaseHelper
         else
           title = :showing_categories.l+' &raquo; ' + app_base + tagline            
         end
-     when 'courses'
-        if @course and @course.name
-          title = 'Aula: ' + @course.name + ' &raquo; ' + app_base + tagline
-        else
-          title = 'Mostrando aulas' +' &raquo; ' + app_base + tagline            
-        end
+      when 'courses'
+      if @course and @course.name
+        title = 'Aula: ' + @course.name + ' &raquo; ' + app_base + tagline
+      else
+        title = 'Mostrando Aulas' +' &raquo; ' + app_base + tagline            
+      end
+      when 'exams'
+      if @exam and @exam.name
+        title = 'Exame: ' + @course.name + ' &raquo; ' + app_base + tagline
+      else
+        title = 'Mostrando Exames' +' &raquo; ' + app_base + tagline            
+      end
+      when 'resources'
+      if @resource and @resource.title
+        title = 'Material: ' + @resource.title + ' &raquo; ' + app_base + tagline
+      else
+        title = 'Mostrando Materiais' +' &raquo; ' + app_base + tagline            
+      end
+      when 'schools'
+      if @school and @school.name
+        title = 'Rede: ' + @school.name + ' &raquo; ' + app_base + tagline
+      else
+        title = 'Mostrando Redes' +' &raquo; ' + app_base + tagline            
+      end
       when 'skills'
         if @skill and @skill.name
           title = :find_an_expert_in.l+' ' + @skill.name + ' &raquo; ' + app_base + tagline

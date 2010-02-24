@@ -1,6 +1,7 @@
         <div id="item">
     		<div id="title"><%= link_to school.name, school %></div>
-						<div id="video"><!-- Video Insert -->
+						<div id="video">
+ <%= image_tag( school.avatar_photo_url(:thumb), {:width => "64", :height=>"64" })%>
 						</div>
                        
             <div id="identification">

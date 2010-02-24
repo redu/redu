@@ -199,7 +199,7 @@ class SchoolsController < BaseController
     
     respond_to do |format|
       if @school.update_attributes(params[:school])
-        flash[:notice] = 'School was successfully updated.'
+        flash[:notice] = 'A escola foi atualizada com sucesso!'
         format.html { redirect_to(@school) }
         format.xml  { head :ok }
       else

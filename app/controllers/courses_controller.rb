@@ -108,10 +108,13 @@ class CoursesController < BaseController
       flash[:notice] = params[:flash_msg]
     end
     
-    @related_courses = Course.find(:all,:conditions => ["name LIKE ? ","%#{related_name}%"] , :limit => 3, :order => 'created_at DESC')
-    
+   
     @course = Course.find(params[:id])
     @comments  = @course.comments.find(:all, :limit => 10, :order => 'created_at DESC')
+    
+    related_name = @course.name
+    @related_courses = Course.find(:all,:conditions => ["name LIKE ? ","%#{related_name}%"] , :limit => 3, :order => 'created_at DESC')
+    
     
     @course.update_attribute(:view_count, @course.view_count + 1) #TODO performance
     

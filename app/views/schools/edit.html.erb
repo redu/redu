@@ -4,7 +4,7 @@
  	<div id="title">EDITANDO REDE
 	</div>
 
-<% form_for(@school) do |f| %>
+<% form_for(@school, :html => { :multipart => true }) do |f| %>
   <%= f.error_messages %>
 
 <%= render :partial => "schools/form", :locals => { :f => f, :school => @school } %>

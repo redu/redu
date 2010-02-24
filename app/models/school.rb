@@ -30,7 +30,7 @@ class School < ActiveRecord::Base
   
   
   def avatar_photo_url(size = nil)
-    if self.avatar
+    if self.avatar_file_name
       self.avatar.url(size)
     else
       case size
