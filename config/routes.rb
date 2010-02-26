@@ -75,6 +75,7 @@ ActionController::Routing::Routes.draw do |map|
   end
 =end
 
+
   # Add this after any of your own existing routes, but before the default rails routes:
   #map.routes_from_plugin :community_engine
   #Forum routes go first

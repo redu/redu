@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100218174726) do
+ActiveRecord::Schema.define(:version => 20100224143155) do
 
   create_table "abilities", :force => true do |t|
     t.string   "name"
@@ -231,11 +231,19 @@ ActiveRecord::Schema.define(:version => 20100218174726) do
 
   create_table "credits", :force => true do |t|
     t.decimal  "value",        :precision => 8, :scale => 2, :default => 0.0
-    t.integer  "user_id",                                                     :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "state"
     t.string   "payment_type"
+    t.integer  "user_id"
+  end
+
+  create_table "emails", :force => true do |t|
+    t.string   "from"
+    t.string   "to"
+    t.integer  "last_send_attempt", :default => 0
+    t.text     "mail"
+    t.datetime "created_on"
   end
 
   create_table "events", :force => true do |t|
@@ -515,10 +523,10 @@ ActiveRecord::Schema.define(:version => 20100218174726) do
   add_index "rates", ["user_id"], :name => "index_rates_on_user_id"
 
   create_table "resources", :force => true do |t|
-    t.string   "title",                                                                              :null => false
+    t.string   "title",                                                                                 :null => false
     t.text     "description"
     t.string   "state"
-    t.integer  "user_id",                                                                            :null => false
+    t.integer  "user_id",                                                                               :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "rating_average",         :limit => 10, :precision => 10, :scale => 0, :default => 0
@@ -527,6 +535,8 @@ ActiveRecord::Schema.define(:version => 20100218174726) do
     t.integer  "media_file_size"
     t.string   "external_resource"
     t.string   "external_resource_type"
+    t.integer  "owner"
+    t.boolean  "published",                                                           :default => true
   end
 
   create_table "resources_subjects", :id => false, :force => true do |t|
@@ -560,13 +570,26 @@ ActiveRecord::Schema.define(:version => 20100218174726) do
   add_index "sb_posts", ["forum_id", "created_at"], :name => "index_sb_posts_on_forum_id"
   add_index "sb_posts", ["user_id", "created_at"], :name => "index_sb_posts_on_user_id"
 
+  create_table "school_assets", :force => true do |t|
+    t.string   "asset_type",                :null => false
+    t.integer  "asset_id",                  :null => false
+    t.integer  "school_id",                 :null => false
+    t.integer  "view_count", :default => 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "schools", :force => true do |t|
     t.string   "name"
     t.text     "description"
-    t.decimal  "key_price",   :precision => 8, :scale => 2
+    t.decimal  "key_price",           :precision => 8, :scale => 2
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "owner",                                     :null => false
+    t.integer  "owner",                                             :null => false
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
   end
 
   create_table "sessions", :force => true do |t|

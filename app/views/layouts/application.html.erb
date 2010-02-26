@@ -44,7 +44,13 @@
 		<% end %>
 		
 		 <div id="footer_menu">
-			<div id="copyright">Copyright © 2010 - Redu.com.br. Todos os direitos reservados.</div>
+			<div id="copyright">
+				Copyright © 2010 - Redu.com.br. Todos os direitos reservados. |
+				Sobre o Redu |
+				<%= link_to "Termos de Uso", application_url + "policy/tos.txt"  %> |
+				<%= link_to "Privacidade", application_url + "policy/privacy.txt"  %>
+				
+			</div>
 		</div>
     </div>    
 </div>
