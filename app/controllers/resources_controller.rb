@@ -106,6 +106,17 @@ class ResourcesController < BaseController
   # GET /resources
   # GET /resources.xml
   def index
+    
+    if params[:user_id] # TODO garantir que é sempre login e nao id?
+      @user = User.find_by_login(params[:user_id])
+      @resources = @user.resources.paginate :page => params[:page], :per_page => AppConfig.items_per_page
+      
+      respond_to do |format|
+        format.html { render :action => "user_resources"} 
+        format.xml  { render :xml => @user.resources }
+      end
+    else 
+    
     @sort_by = params[:sort_by]
     #@order = params[:order]
     @resources = get_query(params[:sort_by], params[:page])
@@ -115,6 +126,7 @@ class ResourcesController < BaseController
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @resources }
+    end
     end
     
   end

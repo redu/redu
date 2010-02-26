@@ -1,0 +1,73 @@
+<div id="profile_user_info">
+	
+	<div id="user_photo">
+		<!--
+		<img src="img/foto_guilherme_cavalcanti.png" width="64" height="64" />
+		-->
+    <%= link_to image_tag( @user.avatar_photo_url(:thumb), {:width => "64", :height=>"64", :border => 0 }), @user %><BR>
+	 
+	 <% if @is_current_user %> 
+	  	<% if @user.avatar %> 
+	  		<%= link_to :profile_photo_crop.l, crop_profile_photo_user_path(@user)%>
+	  	<% else %>
+			<%= link_to :click_here_to_upload_one.l, edit_user_path(@user)%>
+		<% end %>
+	 <% end %>
+	
+	</div>
+    <div id="name_user">
+		<ul id="name_user_item">
+			<li class="name">
+				<%= link_to @user.login.upcase, @user, :class => "name"%>
+				</li>
+			<li>
+				<%= link_to :update_your_profile.l, edit_user_path(@user), :class => "edit"%>
+			</li>
+		</ul>
+	</div>
+<div id="description_user">
+<% if @user.description %>
+<%= @user.description %>
+<% else %>
+	Que tal escrever algo sobre você? <%= link_to "Clique aqui!", edit_user_path(@user), :class => "edit"%>
+<% end %>
+
+</div> 
+
+<% if not @is_current_user %>
+<div id="follow_user">
+
+    <% unless @user.followers.include?(current_user) %>
+      <%= link_to 'Seguir',  follow_user_path(@user) %>
+    <% else %>
+      <%= link_to 'Parar de seguir', unfollow_user_path(@user)%>
+	  <% end %>
+	
+</div> 
+<% end %>
+
+
+<div id="info_user">
+<strong>Professor em:</strong> TODO<br /><br />
+
+<strong>Áreas de Interesse:</strong> Ciência da Computação, Física, Mátemática<br />
+<strong>Tags:</strong> <%= user.tag_list %>
+</div> 
+
+
+<div id="actions_user">
+	<!--
+	<a href="#" class="contact_user">ADICIONAR COMO CONTATO</a> |
+	-->
+	<% if @is_current_user %>
+	<a href="#" class="contact_user">ANOTAÇÕES</a> | 
+	<% else %>
+	<%= link_to(:send_me_a_message.l.upcase, new_user_message_path(current_user, :to=>@user), :class => "mensage_user")%> |
+	<% end %>
+	<%= link_to "AULAS (#{@user.courses.count})", user_courses_path(@user), :class => "contact_user" %> |
+	<%= link_to "EXAMES (#{@user.exams.count})", user_exams_path(@user), :class => "contact_user" %> |
+	<%= link_to "MATERIAIS (#{@user.resources.count})", user_resources_path(@user), :class => "contact_user" %>
+	<br />
+</div>
+     
+</div>

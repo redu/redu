@@ -62,7 +62,7 @@
 	<% @user_resources.each do | resource | %>
 		<li>
 		  <%= check_box_tag "course[resource_ids][]", "#{resource.id}", users_resource?(resource) -%>
-		  <%= resource.title %>
+		  <%= resource.name %>
 		</li>
 	<% end %>
 	</ul>

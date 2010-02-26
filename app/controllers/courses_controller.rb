@@ -89,14 +89,25 @@ class CoursesController < BaseController
   # GET /courses.xml
   def index
     
-    @sort_by = params[:sort_by]
-    #@order = params[:order]
-    @courses = get_query(params[:sort_by], params[:page]) 
-    @popular_tags = Course.tag_counts
+    if params[:user_id] # TODO garantir que é sempre login e nao id?
+      @user = User.find_by_login(params[:user_id])
+      @courses = @user.courses.paginate :page => params[:page], :per_page => AppConfig.items_per_page
+      
+      respond_to do |format|
+        format.html { render :action => "user_courses"} 
+        format.xml  { render :xml => @user.courses }
+      end
+    else 
     
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @courses }
+      @sort_by = params[:sort_by]
+      #@order = params[:order]
+      @courses = get_query(params[:sort_by], params[:page]) 
+      @popular_tags = Course.tag_counts
+      
+      respond_to do |format|
+        format.html # index.html.erb
+        format.xml  { render :xml => @courses }
+      end
     end
   end
   

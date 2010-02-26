@@ -241,7 +241,7 @@
                     <ul id="materials_item">
                         <% @course.resources.each do | resource | %>
                         <li>
-                            <%= link_to resource.title,
+                            <%= link_to resource.name,
                             resource_path(resource),
                             :class => 'word' %>
                         </li>

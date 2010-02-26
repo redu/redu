@@ -1,0 +1,38 @@
+<div id="all_content3">
+<div id="col_content">
+	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > usuários > <%= link_to @user.login, @user %> > materiais </div>
+ 	
+	<%= render :partial => "users/user_info", :locals => {:user => @user}%>
+ 
+ <!-- TODO: colocar tabs para isso
+ 	<div id="title">AULAS PUBLICADAS POR <%= @user.login %>
+
+	</div>
+	-->
+	<div id="filter_bar">
+		
+	    <span id="title_list" class="title_list">MATERIAIS DE <%= @user.login.upcase %></span>
+	      
+    </div>
+    <div id="all_list">
+    	
+			
+    	<% if @resources && @resources.length > 0 %>
+ 			<%= render :partial => 'resources/item', :collection => @resources, :as => :resource %> 
+ 		<% else %>
+ 			Não há itens uploadeados ainda. <%= link_to 'Crie um agora!', :action => 'new' %>
+		<% end %>
+		
+    	
+    </div> <!-- fim da listagem --> 
+	
+	<div id="pagination" align="center">
+		<%= will_paginate  @resources, :params => {:sort_by => @sort_by}, :class => "pagination_number"  %>
+    </div>
+
+</div>
+<div id="col_box3">
+	
+
+</div>
+</div>

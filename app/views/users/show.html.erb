@@ -8,75 +8,7 @@
 <!-- LISTAGEM RECURSO ############################################################################################################################################## -->
 <div id="all_list">
 
-<div id="profile_user_info">
-	
-	<div id="user_photo">
-		<!--
-		<img src="img/foto_guilherme_cavalcanti.png" width="64" height="64" />
-		-->
-    <%= image_tag( @user.avatar_photo_url(:thumb), {:width => "64", :height=>"64" })%><BR>
-	 
-	 <% if @is_current_user %> 
-	  	<% if @user.avatar %> 
-	  		<%= link_to :profile_photo_crop.l, crop_profile_photo_user_path(@user)%>
-	  	<% else %>
-			<%= link_to :click_here_to_upload_one.l, edit_user_path(@user)%>
-		<% end %>
-	 <% end %>
-	
-	</div>
-    <div id="name_user">
-		<ul id="name_user_item">
-			<li class="name"><span class="name"><%= @user.login.upcase %></span></li>
-			<li>
-				<%= link_to :update_your_profile.l, edit_user_path(@user), :class => "edit"%>
-			</li>
-		</ul>
-	</div>
-<div id="description_user">
-<% if @user.description %>
-<%= @user.description %>
-<% else %>
-	Que tal escrever algo sobre você? <%= link_to "Clique aqui!", edit_user_path(@user), :class => "edit"%>
-<% end %>
-
-</div> 
-
-<% if not @is_current_user %>
-<div id="follow_user">
-
-    <% unless @user.followers.include?(current_user) %>
-      <%= link_to 'Seguir', { :action => :follow, :id => @user }%>
-    <% else %>
-      <%= link_to 'Parar de seguir', { :action => :unfollow, :id => @user }%>
-	  <% end %>
-	
-</div> 
-<% end %>
-
-<div id="info_user">
-<strong>Publicações:</strong>  Aulas(<%=@user.courses.count%>) | Exames(<%=@user.exams.count%>) | Materiais(<%=@user.resources.count%>)<br /><br />
-<strong>Professor em:</strong> TODO<br /><br />
-<strong>Redes em que participa:</strong> TODO<br /><br />
-
-<strong>Áreas de Interesse:</strong> Ciência da Computação, Física, Mátemática<br />
-</div> 
-
-<div id="tags_user"><strong>Tags:</strong> <%= @user.tag_list %></div>
-
-<div id="actions_user">
-	<% if @is_current_user %>
-		<a href="#" class="contact_user">MINHAS ANOTAÇÕES</a> | 
-	<% else %>
-	<%= link_to(:send_me_a_message.l, new_user_message_path(current_user, :to=>@user), :class => "mensage_user")%>
-	<% end %>
-	<a href="#" class="mensage_user">AULAS(<%=@user.courses.count %>)</a> |
-	<a href="#" class="mensage_user">EXAMES(<%=@user.exams.count %>)</a> |
-	<a href="#" class="mensage_user">MATERIAIS(<%=@user.resources.count %>)</a>
-	<br />
-</div>
-     
-</div>
+<%= render :partial => "users/user_info", :locals => {:user => @user}%>
 
 <!-- BOX MINHA MOV. RESCENTE ####################################################################################################################################### -->
 <div id="comments_user">
@@ -133,7 +65,7 @@
 <div id="col_box3">
 <!-- BOX MOVIMENTACAO RESCENTE ///////////////////////////////////////////////////////////////////////////////////// -->
 	<div id="box_move">
-    	<div id="box_top">SEGUINDO/SEGUIDORES</div>
+    	<div id="box_top">MOVIMENTAÇÃO RESCENTE</div>
         
         <div id="box_list">
         	<div id="move_item">
@@ -154,36 +86,28 @@
                 <div id="time">3 minutos atrás</div>
             	<div id="replay"><a href="#">Responder</a></div>            
             </div>
- 			
+ 			<div id="move_item">
+            	<div id="move_foto"><img src="img/foto_40x40.png" width="40" height="40" class="move_foto"/></div>
+                <div id="move_txt"><a href="#">Jõao Vitor</a> adicionou um video sobre Biologia Marinha e seus Benefícios</div>
+                <div id="time">3 minutos atrás</div>
+            	<div id="replay"><a href="#">Responder</a></div>            
+            </div>
+ 			<div id="move_item">
+            	<div id="move_foto"><img src="img/foto_40x40.png" width="40" height="40" class="move_foto"/></div>
+                <div id="move_txt"><a href="#">Jõao Vitor</a> adicionou um video sobre Biologia Marinha e seus Benefícios</div>
+                <div id="time">3 minutos atrás</div>
+            	<div id="replay"><a href="#">Responder</a></div>            
+            </div>
         </div>
+        
+        <div id="box_baseline">
+        	<div id="box_baseline_base">O que você esta fazendo agora?</div>
+        	<div id="box_baseline_base"><textarea cols="27" rows="3"></textarea></div>
+		<div id="bt_send_mv" align="center"><a href="#" class="bt_send">Enviar</a></div>
+        </div>
+        
     </div>
 <!-- BOX MOVIMENTACAO RESCENTE ///////////////////////////////////////////////////////////////////////////////////// -->
-	<div id="box_move">
-    	<div id="box_top">ESCOLAS</div>
-        
-        <div id="box_list">
-        	<div id="move_item">
-           	  <div id="move_foto"><img src="img/foto_40x40.png" width="40" height="40" class="move_foto"/></div>
-                <div id="move_txt"><a href="#">Jõao Vitor</a> adicionou um video sobre Biologia Marinha e seus Benefícios</div>
-                <div id="time">3 minutos atrás</div>
-            	<div id="replay"><a href="#">Responder</a></div>            
-            </div>
- 			<div id="move_item">
-            	<div id="move_foto"><img src="img/foto_40x40.png" width="40" height="40" class="move_foto"/></div>
-                <div id="move_txt"><a href="#">Jõao Vitor</a> adicionou um video sobre Biologia Marinha e seus Benefícios</div>
-                <div id="time">3 minutos atrás</div>
-            	<div id="replay"><a href="#">Responder</a></div>            
-            </div>
- 			<div id="move_item">
-            	<div id="move_foto"><img src="img/foto_40x40.png" width="40" height="40" class="move_foto"/></div>
-                <div id="move_txt"><a href="#">Jõao Vitor</a> adicionou um video sobre Biologia Marinha e seus Benefícios</div>
-                <div id="time">3 minutos atrás</div>
-            	<div id="replay"><a href="#">Responder</a></div>            
-            </div>
- 			
-        </div>
-    	</div>
-
 
     <!--<div id="friends"></div>
     <div id="workspace"></div>

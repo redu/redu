@@ -1,9 +1,9 @@
         <div id="item">
     		<div id="title">
     			<% if resource.external_resource_type.eql?("clipping")%>
-				<%= link_to resource.title , resource.external_resource.to_s %>
+				<%= link_to resource.name , resource.external_resource.to_s %>
 				<% else %>
-				<%= link_to resource.title, resource %>
+				<%= link_to resource.name, resource %>
 				<% end %>
 				</div>
 				<%# icon_url = if resource.media_content_type == 'video/mpeg' %>

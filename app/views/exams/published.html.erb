@@ -29,22 +29,15 @@
     	
     </div> <!-- fim da listagem --> 
 	
-	<%= will_paginate  @exams, :prev_label => "< Anterior" ,:next_label => "Próximo >", :separator=>"|" %> 
+	<div id="pagination" align="center">
+
+		<%= will_paginate  @exams, :params => {:sort_by => @sort_by}, :class => "pagination_number"  %>
+
+		
+    </div>
     
 <!-- PAGINACAO ##################################################################################################################################################### -->
-    <div id="pagination" align="center">
-
-
-    	<ul id="pagination_number">
-    		<li><a href="" class="nav">< Anterior</a><li>
-            <li><a href="" class="number">1</a><li>
-            <li><a href="" class="number">2</a><li>
-            <li><a href="" class="number">3</a><li>
-            <li><a href="" class="number">4</a><li>
-            <li><a href="" class="number">5</a><li>
-            <li><a href="" class="nav">PrÃ³ximo ></a><li>
-    	</ul>
-    </div>
+    
 	
 </div>
 

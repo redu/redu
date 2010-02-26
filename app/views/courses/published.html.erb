@@ -7,7 +7,6 @@
 	<div id="filter_bar">
 		
 	    <span id="title_list" class="title_list">PUBLICADAS</span>
-	    <span class="title_filter">Ordenar:</span>
 	      
     </div>
     <div id="all_list">
@@ -15,7 +14,7 @@
 		<% if @courses && @courses.length > 0 %>
  			<%= render :partial => 'courses/item', :collection => @courses, :as => :course %> 
  		<% else %>
- 			Não há exames publicados ainda. <%= link_to 'Crie um agora!', :action => 'new' %>
+ 			Não há aulas publicadas ainda. <%= link_to 'Crie uma agora!', :action => 'new' %>
 		<% end %>
     	
     </div> <!-- fim da listagem --> 

@@ -14,8 +14,8 @@ xml.graph_data do
       # task node
       xml.node(
       "id" => log.logeable_id, 
-      "label" => log.logeable.name,
-      "tooltip" => log.logeable.name,
+      "label" => log.logeable_name,
+      "tooltip" => log.logeable_name,
       "url" => application_url[0..application_url.length-2] + url_for(log.logeable)
       )
     end
@@ -31,7 +31,7 @@ xml.graph_data do
         "head_node_id" => log.user_id,
         "tooltip" => "segue",
         "edge_line_color" => "#0000ff",
-        "edge_line_thickness" => "2"
+        "edge_line_thickness" => "1"
         )
       end
       #user to object
@@ -40,9 +40,10 @@ xml.graph_data do
       "tail_node_id" => log.user_id,
       "head_node_id" => log.logeable_id,
       "tooltip" => log.action, #TODO mensagem 
-      "bidirectional" => "true",
+      #"bidirectional" => "true",
+      "arrowhead"=>"false",
       "edge_line_color" => "#ff0000",
-      "edge_line_thickness" => "3"
+      "edge_line_thickness" => "1"
       )
      end
   end

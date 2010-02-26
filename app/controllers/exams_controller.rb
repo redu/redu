@@ -510,6 +510,17 @@ def search
   # GET /exams
   # GET /exams.xml
   def index
+    
+    if params[:user_id] # TODO garantir que é sempre login e nao id?
+      @user = User.find_by_login(params[:user_id])
+      @exams = @user.exams.paginate :page => params[:page], :per_page => AppConfig.items_per_page
+      
+      respond_to do |format|
+        format.html { render :action => "user_exams"} 
+        format.xml  { render :xml => @user.exams }
+      end
+    else 
+    
     @sort_by = params[:sort_by]
     #@order = params[:order]
     @exams = get_query(params[:sort_by], params[:page]) 
@@ -527,7 +538,7 @@ def search
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @exams }
-      
+      end
     end
   end
   

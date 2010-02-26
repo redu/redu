@@ -3,6 +3,6 @@
   <%= link_to 'Todas', courses_path %> |
   <%= link_to 'Publicadas', published_user_courses_path(current_user.id) %> |
   <%= link_to 'Não Publicadas', unpublished_user_courses_path(current_user.id) %> |
-  <%= link_to 'Em Moderação', waiting_user_courses_path(current_user.id) %> | 
-  <%= link_to 'Minhas Favoritas' , :action =>'show_favorites', :id => current_user %></div>
+  <%= link_to 'Em Moderação', waiting_user_courses_path(current_user.id) %> 
+  </div>
 	<% end %>

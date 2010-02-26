@@ -10,7 +10,7 @@
 <% @resources.each do |resource| %>
   <tr>
   	<td><%= check_box_tag("resource[id][]", value =  resource.id, checked = nil) %></td>
-    <td><%=h resource.title %></td>
+    <td><%=h resource.name %></td>
   </tr>
 <% end %>
 </table>

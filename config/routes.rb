@@ -22,6 +22,8 @@ ActionController::Routing::Routes.draw do |map|
     
   map.resources :schools 
   
+  map.resources :annotations
+  
   #map.resources :favorites, 
 
   map.connect 'activity_xml.xml', :controller => "users", :action => "activity_xml", :format => 'xml'
@@ -74,7 +76,6 @@ ActionController::Routing::Routes.draw do |map|
     #school.resources :students :subjects
   end
 =end
-
 
   # Add this after any of your own existing routes, but before the default rails routes:
   #map.routes_from_plugin :community_engine
@@ -185,6 +186,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :users, :member_path => '/:id', :nested_member_path => '/:user_id', :member => { 
     :followers => :get,
     :follows => :get,
+    :follow => :get,
+    :unfollow => :get,
     :dashboard => :get,
     :assume => :get,
     :toggle_moderator => :put,
