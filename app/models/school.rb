@@ -1,6 +1,9 @@
 class School < ActiveRecord::Base
   
    acts_as_taggable
+   
+   has_enumerated :subscription 
+   
    # ajaxful_rateable :stars => 5#, :dimensions => [:speed, :beauty, :price]
     has_attached_file :avatar, :styles => { :medium => "200x200>", :thumb => "100x100>" }
     

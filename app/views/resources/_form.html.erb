@@ -31,7 +31,7 @@
   <%= f.label :external_resource_type_upload, "Upload" %>	
   <%= f.radio_button :external_resource_type, :link, {:onchange => "switchResourceFields(2);"} %>
   <%= f.label :external_resource_type_link, "Link" %><br/><br/>
-  </fieldset>	<br/><br/>
+  
 
 <div id="upload_resource_field" style="display:none;">
 <%= f.label :media, "Upload de Material" %><br/>
@@ -42,3 +42,5 @@
 <%= f.label :external_resource, "Link para página" %><br/>
 <%= f.text_field :external_resource  %><br/><br/>
 </div>
+
+</fieldset>	

@@ -104,18 +104,20 @@ class CoursesController < BaseController
   # GET /courses/1.xml
   def show
     
-    if params[:flash_msg] 
-      flash[:notice] = params[:flash_msg]
-    end
-    
-   
     @course = Course.find(params[:id])
+    
+    #comentários
     @comments  = @course.comments.find(:all, :limit => 10, :order => 'created_at DESC')
     
+    # anotações
+    @annotation = @course.has_annotations_by(current_user) 
+    @annotation = Annotation.new unless @annotation
+    
+    #relacionados
     related_name = @course.name
     @related_courses = Course.find(:all,:conditions => ["name LIKE ? ","%#{related_name}%"] , :limit => 3, :order => 'created_at DESC')
     
-    
+    # atualiza número de exibições TODO cache
     @course.update_attribute(:view_count, @course.view_count + 1) #TODO performance
     
     Log.log_activity(@course, 'show', current_user)#TODO se usuario nao comprou não logar atividade
@@ -156,7 +158,6 @@ class CoursesController < BaseController
   # POST /courses
   # POST /courses.xml
   def create
-    params[:course][:owner] = current_user
     
     @course = Course.new(params[:course])
      
@@ -224,7 +225,7 @@ class CoursesController < BaseController
     
     if @acquisition.save
       #flash[:notice] = 'A aula foi comprada!'
-      redirect_to @course, :flash_msg => 'A aula foi comprada!'
+      redirect_to @course
     end
   end
   

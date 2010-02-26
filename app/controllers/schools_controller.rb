@@ -126,6 +126,8 @@ class SchoolsController < BaseController
   def index
     @schools = School.all
     
+     @popular_tags = School.tag_counts
+    
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @schools }

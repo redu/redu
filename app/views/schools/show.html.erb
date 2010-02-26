@@ -18,11 +18,20 @@
         });
     }
     
-    function showAssociateBox(){
-        //$('#associate_box').style.display = 'block';
-        document.getElementById('associate_link').style.display = 'none';
-        document.getElementById('associate_box').style.display = 'inline';
-    }
+	
+	function toggleAssociateBox(){
+		
+		var box = document.getElementById("associate_box");
+		
+		if (box.style.display == 'none') {
+			//Effect.Appear(box);
+			box.style.display = 'block';
+			
+		} else {
+			//Effect.Fade(box);
+			box.style.display = 'none';
+		}
+	}
 	
 	function showKeysSchoolBox(){
 		
@@ -89,13 +98,37 @@
 </div> 
 <div id="description">
 <%= @school.description %>
-</div> 
-<div id="actions_user">
-	<a href="#" class="participar_rede">PARTICIPAR</a> | 
-	<a href="#" class="share">COMPARTILHAR</a> 
 </div>
+<% if logged_in?  %>
+<div id="actions_user">
+	<% if !current_user.get_association_with(@school) && !current_user.admin? %>
+	<a href="#" class="participar_rede" onclick="toggleAssociateBox();false;">PARTICIPAR</a> 
+	|
+	<% end %>
+	<a href="#" class="share" onclick="toggleShareBox();return false;">COMPARTILHAR</a>
+	<% if current_user.admin? %>
+	| <a href="#" class="share">GERAR CHAVES</a>
+	<% end %>
+	<% if current_user.school_admin? @school %>
+	| <a href="#" class="share">GERENCIAR</a>
+	<% end %>
+</div>
+<% end %>
      
 </div>
+
+<div id="associate_box" style="display:none;">
+		<div>
+	    <% form_tag({:controller => 'schools' , :action => 'associate', :id => @school}, :method => "get") do %>
+		   <%= hidden_field_tag(:user_id, current_user.id) %>
+		    Digite sua chave: 
+			<%= text_field_tag(:user_key) %>
+		<%= submit_tag("OK") %>
+	    <% end %>
+		</div>
+</div>
+<%= render :partial => 'shared/share', :locals => {:title => @school.name, :url => application_url[0..application_url.length-2] + request.request_uri, :thumb_url => @school.avatar_photo_url} %>
+		
 
 <!-- BOX RECURSOS ############################################################################## -->
 <div id="comments_user">
@@ -104,7 +137,7 @@
 	<% if @courses && @courses.length > 0 %>
  			<%= render :partial => 'courses/item', :collection => @courses, :as => :course %> 
  		<% else %>
- 			Não há aulas publicadas ainda. <%= link_to 'Crie uma agora!', :action => 'new' %>
+ 			Não há aulas publicadas ainda. <%= link_to 'Crie uma agora!', new_course_path %>
 	<% end %>
 
 <div id="link_ver_todos"><a href="#">Ver todos(8) &gt;</a></div>
@@ -135,6 +168,18 @@
 	<!-- BOX MEMBROS ####################################################################### -->
 <div id="box_move">
     	<div id="box_top">MEMBROS (<%= @school.users.count %>)</div>
+
+        <div id="box_list">
+		<%= render :partial => 'schools/member_short', :collection => @school.users, :as => :member %>
+		</div>
+		
+    <div id="link_ver_todos"><a href="#">Ver todos(8) &gt;</a></div>
+</div>
+<!-- BOX MEMBROS ############################################################################### -->
+
+	<!-- BOX MEMBROS ####################################################################### -->
+<div id="box_move">
+    	<div id="box_top">PROFESSORES (<%= @school.users.count %>)</div>
 
         <div id="box_list">
 		<%= render :partial => 'schools/member_short', :collection => @school.users, :as => :member %>

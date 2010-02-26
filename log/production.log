@@ -298,3 +298,527 @@ Processing UsersController#new (for 127.0.0.1 at 2009-10-15 12:18:13) [GET]
 Rendering template within layouts/application
 Rendering users/new
 Completed in 109ms (View: 78, DB: 0) | 200 OK [http://localhost/signup]
+
+
+Processing ExamsController#new_exam (for 127.0.0.1 at 2009-10-27 14:37:43) [GET]
+Rendering template within layouts/application
+Rendering exams/new_exam
+Completed in 891ms (View: 797, DB: 78) | 200 OK [http://127.0.0.1/exams/new_exam]
+
+
+Processing ExamsController#discard_draft (for 127.0.0.1 at 2009-10-27 14:37:53) [GET]
+Redirected to http://127.0.0.1:3000/exams
+Completed in 16ms (DB: 16) | 302 Found [http://127.0.0.1/exams/discard_draft]
+
+
+Processing ExamsController#index (for 127.0.0.1 at 2009-10-27 14:37:53) [GET]
+Rendering template within layouts/application
+Rendering exams/index
+Completed in 62ms (View: 62, DB: 0) | 200 OK [http://127.0.0.1/exams]
+
+
+Processing ExamsController#new_exam (for 127.0.0.1 at 2009-10-27 14:38:57) [GET]
+Rendering template within layouts/application
+Rendering exams/new_exam
+Completed in 63ms (View: 47, DB: 0) | 200 OK [http://127.0.0.1/exams/new_exam]
+
+
+Processing ExamsController#new_exam (for 127.0.0.1 at 2009-10-27 14:39:07) [POST]
+  Parameters: {"exam"=>{"name"=>"", "id"=>""}, "authenticity_token"=>"yawYWUUVsgDVYfUu3IvTEpyu2vzgR08FGoVxHp4w0k4=", "sbt_opt"=>"1"}
+Redirected to http://127.0.0.1:3000/questions/new
+Completed in 16ms (DB: 47) | 302 Found [http://127.0.0.1/exams/new_exam]
+
+
+Processing QuestionsController#new (for 127.0.0.1 at 2009-10-27 14:39:07) [GET]
+Rendering template within layouts/application
+Rendering questions/new
+Completed in 188ms (View: 157, DB: 31) | 200 OK [http://127.0.0.1/questions/new]
+
+
+Processing ExamsController#new_exam (for 127.0.0.1 at 2009-10-27 14:39:34) [POST]
+  Parameters: {"exam"=>{"name"=>"", "id"=>""}, "authenticity_token"=>"yawYWUUVsgDVYfUu3IvTEpyu2vzgR08FGoVxHp4w0k4=", "sbt_opt"=>"2"}
+Redirected to http://127.0.0.1:3000/questions/add
+Completed in 15ms (DB: 0) | 302 Found [http://127.0.0.1/exams/new_exam]
+
+
+Processing QuestionsController#add (for 127.0.0.1 at 2009-10-27 14:39:35) [GET]
+Rendering template within layouts/application
+Rendering questions/add
+Completed in 79ms (View: 79, DB: 47) | 200 OK [http://127.0.0.1/questions/add]
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2009-10-27 14:39:35) [GET]
+
+ActionController::RoutingError (No route matches "/photos/0000/0005/barreto_thu%20%3C!--%20TODO%20texto%20sem%20formatacao%20--%3E%3C/td%3E%20%20%20%20%3Ctd%3E2009-10-26%2004:04:25%20UTC%3C/td%3E%20%20%20%20%20%3Ctd%3E%3Ca%20href=" with {:method=>:get}):
+  lib/flash_session_cookie_middleware.rb:14:in `call'
+  lib/flash_session_cookie_middleware.rb:14:in `call'
+  C:\Documents and Settings\Administrator\My Documents\Aptana Studio Workspace\Redu\script\server:3
+  -e:2:in `load'
+  -e:2
+
+Rendering rescues/layout (not_found)
+
+
+Processing QuestionsController#search (for 127.0.0.1 at 2009-10-27 14:40:03) [POST]
+  Parameters: {"commit"=>"Search", "authenticity_token"=>"yawYWUUVsgDVYfUu3IvTEpyu2vzgR08FGoVxHp4w0k4=", "query"=>"batata"}
+
+ActiveRecord::StatementInvalid (Mysql::Error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '%'batata'%)' at line 1: SELECT * FROM `questions` WHERE (statement LIKE %'batata'%) ):
+  app/controllers/questions_controller.rb:22:in `search'
+  lib/localized_application.rb:25:in `set_locale'
+  haml (2.2.6) lib/sass/plugin/rails.rb:19:in `process'
+  lib/flash_session_cookie_middleware.rb:14:in `call'
+  lib/flash_session_cookie_middleware.rb:14:in `call'
+  C:\Documents and Settings\Administrator\My Documents\Aptana Studio Workspace\Redu\script\server:3
+  -e:2:in `load'
+  -e:2
+
+Rendering rescues/layout (internal_server_error)
+
+
+Processing ExamsController#add_question (for 127.0.0.1 at 2009-10-27 14:40:29) [POST]
+  Parameters: {"question_id"=>"12", "authenticity_token"=>"yawYWUUVsgDVYfUu3IvTEpyu2vzgR08FGoVxHp4w0k4="}
+Completed in 32ms (View: 16, DB: 46) | 200 OK [http://127.0.0.1/exams/add_question?question_id=12]
+
+
+Processing ExamsController#add_question (for 127.0.0.1 at 2009-10-27 14:40:35) [POST]
+  Parameters: {"question_id"=>"18", "authenticity_token"=>"yawYWUUVsgDVYfUu3IvTEpyu2vzgR08FGoVxHp4w0k4="}
+Completed in 47ms (View: 31, DB: 31) | 200 OK [http://127.0.0.1/exams/add_question?question_id=18]
+
+
+Processing ExamsController#add_question (for 127.0.0.1 at 2009-10-27 14:40:36) [POST]
+  Parameters: {"question_id"=>"19", "authenticity_token"=>"yawYWUUVsgDVYfUu3IvTEpyu2vzgR08FGoVxHp4w0k4="}
+Completed in 47ms (View: 31, DB: 31) | 200 OK [http://127.0.0.1/exams/add_question?question_id=19]
+
+
+Processing ExamsController#new_exam (for 127.0.0.1 at 2009-10-27 14:40:38) [GET]
+Rendering template within layouts/application
+Rendering exams/new_exam
+Completed in 141ms (View: 110, DB: 62) | 200 OK [http://127.0.0.1/exams/new_exam]
+
+
+Processing ExamsController#sort (for 127.0.0.1 at 2009-10-27 14:41:01) [POST]
+  Parameters: {"questions"=>["18", "12", "19"], "authenticity_token"=>"yawYWUUVsgDVYfUu3IvTEpyu2vzgR08FGoVxHp4w0k4="}
+Completed in 31ms (View: 15, DB: 47) | 200 OK [http://127.0.0.1/exams/sort]
+
+
+Processing ExamsController#sort (for 127.0.0.1 at 2009-10-27 14:41:05) [POST]
+  Parameters: {"questions"=>["12", "18", "19"], "authenticity_token"=>"yawYWUUVsgDVYfUu3IvTEpyu2vzgR08FGoVxHp4w0k4="}
+Completed in 16ms (View: 16, DB: 47) | 200 OK [http://127.0.0.1/exams/sort]
+
+
+Processing ExamsController#sort (for 127.0.0.1 at 2009-10-27 14:41:12) [POST]
+  Parameters: {"questions"=>["12", "19", "18"], "authenticity_token"=>"yawYWUUVsgDVYfUu3IvTEpyu2vzgR08FGoVxHp4w0k4="}
+Completed in 250ms (View: 234, DB: 32) | 200 OK [http://127.0.0.1/exams/sort]
+
+
+Processing ExamsController#new_exam (for 127.0.0.1 at 2009-10-27 14:41:36) [POST]
+  Parameters: {"commit"=>"Save Exam", "exam"=>{"name"=>"Novo exame 2010", "id"=>""}, "questions"=>["12", "19", "18"], "authenticity_token"=>"yawYWUUVsgDVYfUu3IvTEpyu2vzgR08FGoVxHp4w0k4=", "sbt_opt"=>"0"}
+Redirected to http://127.0.0.1:3000/exams
+Completed in 78ms (DB: 31) | 302 Found [http://127.0.0.1/exams/new_exam]
+
+
+Processing ExamsController#index (for 127.0.0.1 at 2009-10-27 14:41:36) [GET]
+Rendering template within layouts/application
+Rendering exams/index
+Completed in 47ms (View: 31, DB: 0) | 200 OK [http://127.0.0.1/exams]
+
+
+Processing ExamsController#show (for 127.0.0.1 at 2009-10-27 14:41:39) [GET]
+  Parameters: {"id"=>"14"}
+Rendering template within layouts/application
+Rendering exams/show
+Completed in 79ms (View: 47, DB: 32) | 200 OK [http://127.0.0.1/exams/14]
+
+
+Processing ExamsController#take (for 127.0.0.1 at 2009-10-27 14:41:55) [GET]
+  Parameters: {"id"=>"14"}
+Redirected to http://127.0.0.1:3000/exams/next_question/14?ci=0&nqid=12
+Completed in 15ms (DB: 0) | 302 Found [http://127.0.0.1/exams/take/14]
+
+
+Processing ExamsController#next_question (for 127.0.0.1 at 2009-10-27 14:41:55) [GET]
+  Parameters: {"id"=>"14", "ci"=>"0", "nqid"=>"12"}
+Rendering template within layouts/application
+Rendering exams/next_question
+Completed in 62ms (View: 47, DB: 46) | 200 OK [http://127.0.0.1/exams/next_question/14?ci=0&nqid=12]
+
+
+Processing ExamsController#next_question (for 127.0.0.1 at 2009-10-27 14:42:04) [POST]
+  Parameters: {"qid"=>"12", "answer"=>"31", "commit"=>"Next", "authenticity_token"=>"yawYWUUVsgDVYfUu3IvTEpyu2vzgR08FGoVxHp4w0k4=", "id"=>"14", "ci"=>"1", "nqid"=>"19"}
+Rendering template within layouts/application
+Rendering exams/next_question
+Completed in 46ms (View: 46, DB: 0) | 200 OK [http://127.0.0.1/exams/next_question/14]
+
+
+Processing ExamsController#next_question (for 127.0.0.1 at 2009-10-27 14:42:13) [POST]
+  Parameters: {"qid"=>"19", "answer"=>"61", "commit"=>"Next", "authenticity_token"=>"yawYWUUVsgDVYfUu3IvTEpyu2vzgR08FGoVxHp4w0k4=", "id"=>"14", "ci"=>"2", "nqid"=>"18"}
+Rendering template within layouts/application
+Rendering exams/next_question
+Completed in 62ms (View: 32, DB: 77) | 200 OK [http://127.0.0.1/exams/next_question/14]
+
+
+Processing ExamsController#next_question (for 127.0.0.1 at 2009-10-27 14:42:21) [POST]
+  Parameters: {"qid"=>"18", "answer"=>"54", "commit"=>"End", "authenticity_token"=>"yawYWUUVsgDVYfUu3IvTEpyu2vzgR08FGoVxHp4w0k4=", "id"=>"14", "ci"=>"3", "nqid"=>""}
+Redirected to http://127.0.0.1:3000/exams/end_exam/14
+Completed in 16ms (DB: 47) | 302 Found [http://127.0.0.1/exams/next_question/14]
+
+
+Processing ExamsController#end_exam (for 127.0.0.1 at 2009-10-27 14:42:21) [GET]
+  Parameters: {"id"=>"14"}
+Rendering template within layouts/application
+Rendering exams/end_exam
+Completed in 63ms (View: 31, DB: 47) | 200 OK [http://127.0.0.1/exams/end_exam/14]
+
+
+Processing ExamsController#index (for 127.0.0.1 at 2009-10-27 14:43:15) [GET]
+Rendering template within layouts/application
+Rendering exams/index
+Completed in 63ms (View: 47, DB: 0) | 200 OK [http://127.0.0.1/exams]
+
+
+Processing CoursesController#index (for 127.0.0.1 at 2009-10-27 14:47:07) [GET]
+Rendering template within layouts/application
+Rendering courses/index
+Completed in 359ms (View: 16, DB: 140) | 200 OK [http://127.0.0.1/courses]
+
+
+Processing CoursesController#new (for 127.0.0.1 at 2009-10-27 14:47:10) [GET]
+Rendering template within layouts/application
+Rendering courses/new
+Completed in 31ms (View: 31, DB: 0) | 200 OK [http://127.0.0.1/courses/new]
+
+
+Processing CoursesController#create (for 127.0.0.1 at 2009-10-27 14:47:16) [POST]
+  Parameters: {"commit"=>"Create", "authenticity_token"=>"yawYWUUVsgDVYfUu3IvTEpyu2vzgR08FGoVxHp4w0k4=", "course"=>{"name"=>"aula nova"}}
+Redirected to http://127.0.0.1:3000/courses/2
+Completed in 31ms (DB: 31) | 302 Found [http://127.0.0.1/courses]
+
+
+Processing CoursesController#show (for 127.0.0.1 at 2009-10-27 14:47:16) [GET]
+  Parameters: {"id"=>"2"}
+Rendering template within layouts/application
+Rendering courses/show
+Completed in 110ms (View: 62, DB: 48) | 200 OK [http://127.0.0.1/courses/2]
+
+
+Processing UsersController#show (for 127.0.0.1 at 2009-10-27 14:47:32) [GET]
+  Parameters: {"id"=>"admin"}
+Rendering template within layouts/application
+Rendering users/show
+Completed in 625ms (View: 328, DB: 158) | 200 OK [http://127.0.0.1/admin]
+
+
+Processing BaseController#footer_content (for 127.0.0.1 at 2009-10-27 14:47:33) [POST]
+  Parameters: {"authenticity_token"=>"yawYWUUVsgDVYfUu3IvTEpyu2vzgR08FGoVxHp4w0k4="}
+Completed in 188ms (View: 63, DB: 108) | 200 OK [http://127.0.0.1/base/footer_content]
+
+
+Processing ExamsController#index (for 127.0.0.1 at 2009-10-27 17:24:50) [GET]
+Rendering template within layouts/application
+Rendering exams/index
+Completed in 109ms (View: 47, DB: 62) | 200 OK [http://127.0.0.1/exams]
+
+
+Processing ExamsController#show (for 127.0.0.1 at 2009-10-27 17:24:52) [GET]
+  Parameters: {"id"=>"14"}
+Rendering template within layouts/application
+Rendering exams/show
+Completed in 62ms (View: 46, DB: 32) | 200 OK [http://127.0.0.1/exams/14]
+
+
+Processing ExamsController#take (for 127.0.0.1 at 2009-10-27 17:24:55) [GET]
+  Parameters: {"id"=>"14"}
+Redirected to http://127.0.0.1:3000/exams/next_question/14?ci=0&nqid=12
+Completed in 16ms (DB: 0) | 302 Found [http://127.0.0.1/exams/take/14]
+
+
+Processing ExamsController#next_question (for 127.0.0.1 at 2009-10-27 17:24:55) [GET]
+  Parameters: {"id"=>"14", "ci"=>"0", "nqid"=>"12"}
+Rendering template within layouts/application
+Rendering exams/next_question
+Completed in 31ms (View: 31, DB: 32) | 200 OK [http://127.0.0.1/exams/next_question/14?ci=0&nqid=12]
+
+
+Processing ExamsController#index (for 127.0.0.1 at 2009-10-27 17:25:00) [GET]
+Rendering template within layouts/application
+Rendering exams/index
+Completed in 47ms (View: 31, DB: 16) | 200 OK [http://127.0.0.1/exams]
+
+
+Processing ExamsController#new_exam (for 127.0.0.1 at 2009-10-27 17:25:16) [GET]
+Rendering template within layouts/application
+Rendering exams/new_exam
+Completed in 47ms (View: 47, DB: 47) | 200 OK [http://127.0.0.1/exams/new_exam]
+
+
+Processing ExamsController#sort (for 127.0.0.1 at 2009-10-27 17:25:26) [POST]
+  Parameters: {"questions"=>["18", "12", "19"], "authenticity_token"=>"yawYWUUVsgDVYfUu3IvTEpyu2vzgR08FGoVxHp4w0k4="}
+Completed in 78ms (View: 78, DB: 16) | 200 OK [http://127.0.0.1/exams/sort]
+
+
+Processing ExamsController#sort (for 127.0.0.1 at 2009-10-27 17:25:34) [POST]
+  Parameters: {"questions"=>["18", "19", "12"], "authenticity_token"=>"yawYWUUVsgDVYfUu3IvTEpyu2vzgR08FGoVxHp4w0k4="}
+Completed in 16ms (View: 16, DB: 16) | 200 OK [http://127.0.0.1/exams/sort]
+
+
+Processing ExamsController#discard_draft (for 127.0.0.1 at 2009-10-27 17:26:03) [GET]
+Redirected to http://127.0.0.1:3000/exams
+Completed in 0ms (DB: 32) | 302 Found [http://127.0.0.1/exams/discard_draft]
+
+
+Processing ExamsController#index (for 127.0.0.1 at 2009-10-27 17:26:03) [GET]
+Rendering template within layouts/application
+Rendering exams/index
+Completed in 266ms (View: 266, DB: 31) | 200 OK [http://127.0.0.1/exams]
+
+
+Processing ExamsController#edit (for 127.0.0.1 at 2009-10-27 17:26:09) [GET]
+  Parameters: {"id"=>"14"}
+Rendering template within layouts/application
+Rendering exams/new_exam
+Completed in 78ms (View: 62, DB: 47) | 200 OK [http://127.0.0.1/exams/14/edit]
+
+
+Processing QuestionsController#edit (for 127.0.0.1 at 2009-10-27 17:26:12) [GET]
+  Parameters: {"id"=>"19"}
+Rendering template within layouts/application
+Rendering questions/edit
+Completed in 47ms (View: 47, DB: 47) | 200 OK [http://127.0.0.1/questions/19/edit]
+
+
+Processing ExamsController#discard_draft (for 127.0.0.1 at 2009-10-27 17:26:36) [GET]
+Redirected to http://127.0.0.1:3000/exams
+Completed in 0ms (DB: 0) | 302 Found [http://127.0.0.1/exams/discard_draft]
+
+
+Processing ExamsController#index (for 127.0.0.1 at 2009-10-27 17:26:36) [GET]
+Rendering template within layouts/application
+Rendering exams/index
+Completed in 31ms (View: 31, DB: 0) | 200 OK [http://127.0.0.1/exams]
+
+
+Processing CoursesController#index (for 127.0.0.1 at 2009-10-27 17:26:55) [GET]
+Rendering template within layouts/application
+Rendering courses/index
+Completed in 47ms (View: 31, DB: 47) | 200 OK [http://127.0.0.1/courses]
+
+
+Processing ExamsController#index (for 127.0.0.1 at 2009-10-27 17:26:58) [GET]
+Rendering template within layouts/application
+Rendering exams/index
+Completed in 31ms (View: 31, DB: 31) | 200 OK [http://127.0.0.1/exams]
+
+
+Processing ExamsController#index (for 127.0.0.1 at 2009-10-29 14:50:13) [GET]
+Rendering template within layouts/application
+Rendering exams/index
+Completed in 812ms (View: 735, DB: 15) | 200 OK [http://127.0.0.1/exams]
+
+
+Processing ExamsController#new_exam (for 127.0.0.1 at 2009-10-29 14:50:17) [GET]
+Rendering template within layouts/application
+Rendering exams/new_exam
+
+ActionView::TemplateError (missing attribute: description) on line #24 of app/views/exams/new_exam.html.erb:
+21:  
+22:  Título: <BR> <%= f.text_field :name %>
+23:  <br/><BR>
+24:  Descrição: <BR><%= f.text_area :description, :size => "50x3" %>
+25:  <br/><BR>
+26: 
+27:  <div id="questions" style="min-height: 100px;">
+
+    app/views/exams/new_exam.html.erb:24
+    haml (2.2.6) lib/haml/helpers/action_view_mods.rb:169:in `form_for'
+    app/views/exams/new_exam.html.erb:12
+    haml (2.2.6) lib/haml/helpers/action_view_mods.rb:13:in `render'
+    haml (2.2.6) lib/haml/helpers/action_view_mods.rb:13:in `render'
+    lib/localized_application.rb:25:in `set_locale'
+    haml (2.2.6) lib/sass/plugin/rails.rb:19:in `process'
+    lib/flash_session_cookie_middleware.rb:14:in `call'
+    lib/flash_session_cookie_middleware.rb:14:in `call'
+    C:\Documents and Settings\Administrator\My Documents\Aptana Studio Workspace\Redu\script\server:3
+    -e:2:in `load'
+    -e:2
+
+Rendering rescues/layout (internal_server_error)
+
+
+Processing ExamsController#index (for 127.0.0.1 at 2009-10-29 14:55:15) [GET]
+Rendering template within layouts/application
+Rendering exams/index
+Completed in 797ms (View: 733, DB: 48) | 200 OK [http://127.0.0.1/exams/]
+
+
+Processing ExamsController#new_exam (for 127.0.0.1 at 2009-10-29 14:55:20) [GET]
+Rendering template within layouts/application
+Rendering exams/new_exam
+
+ActionView::TemplateError (missing attribute: description) on line #24 of app/views/exams/new_exam.html.erb:
+21:  
+22:  Título: <BR> <%= f.text_field :name %>
+23:  <br/><BR>
+24:  Descrição: <BR><%= f.text_area :description, :size => "50x3" %>
+25:  <br/><BR>
+26: 
+27:  <div id="questions" style="min-height: 100px;">
+
+    app/views/exams/new_exam.html.erb:24
+    haml (2.2.6) lib/haml/helpers/action_view_mods.rb:169:in `form_for'
+    app/views/exams/new_exam.html.erb:12
+    haml (2.2.6) lib/haml/helpers/action_view_mods.rb:13:in `render'
+    haml (2.2.6) lib/haml/helpers/action_view_mods.rb:13:in `render'
+    lib/localized_application.rb:25:in `set_locale'
+    haml (2.2.6) lib/sass/plugin/rails.rb:19:in `process'
+    lib/flash_session_cookie_middleware.rb:14:in `call'
+    lib/flash_session_cookie_middleware.rb:14:in `call'
+    C:\Documents and Settings\Administrator\My Documents\Aptana Studio Workspace\Redu\script\server:3
+    -e:2:in `load'
+    -e:2
+
+Rendering rescues/layout (internal_server_error)
+
+
+Processing ExamsController#new_exam (for 127.0.0.1 at 2009-10-29 14:55:48) [GET]
+Rendering template within layouts/application
+Rendering exams/new_exam
+
+ActionView::TemplateError (missing attribute: description) on line #24 of app/views/exams/new_exam.html.erb:
+21:  
+22:  Título: <BR> <%= f.text_field :name %>
+23:  <br/><BR>
+24:  Descrição: <BR><%= f.text_area :description, :size => "50x3" %>
+25:  <br/><BR>
+26: 
+27:  <div id="questions" style="min-height: 100px;">
+
+    app/views/exams/new_exam.html.erb:24
+    haml (2.2.6) lib/haml/helpers/action_view_mods.rb:169:in `form_for'
+    app/views/exams/new_exam.html.erb:12
+    haml (2.2.6) lib/haml/helpers/action_view_mods.rb:13:in `render'
+    haml (2.2.6) lib/haml/helpers/action_view_mods.rb:13:in `render'
+    lib/localized_application.rb:25:in `set_locale'
+    haml (2.2.6) lib/sass/plugin/rails.rb:19:in `process'
+    lib/flash_session_cookie_middleware.rb:14:in `call'
+    lib/flash_session_cookie_middleware.rb:14:in `call'
+    C:\Documents and Settings\Administrator\My Documents\Aptana Studio Workspace\Redu\script\server:3
+    -e:2:in `load'
+    -e:2
+
+Rendering rescues/layout (internal_server_error)
+
+
+Processing ExamsController#index (for 127.0.0.1 at 2009-11-10 14:27:48) [GET]
+Rendering template within layouts/application
+Rendering exams/index
+Completed in 1078ms (View: 923, DB: 125) | 200 OK [http://127.0.0.1/exams]
+
+
+Processing ExamsController#show (for 127.0.0.1 at 2009-11-10 14:29:32) [GET]
+  Parameters: {"id"=>"1"}
+Rendering template within layouts/application
+Rendering exams/show
+Completed in 156ms (View: 156, DB: 0) | 200 OK [http://127.0.0.1/exams/1]
+
+
+Processing ExamsController#rate (for 127.0.0.1 at 2009-11-10 14:29:53) [POST]
+  Parameters: {"small_stars"=>"false", "authenticity_token"=>"x83U9fXQWiLd75Vq3SuZyYXsPDJZ/2Dwta/j6jtUU64=", "id"=>"1", "stars"=>"4", "dimension"=>""}
+
+ActionController::UnknownAction (No action responded to rate. Actions: add_question, add_resource, admin_or_moderator_required, admin_required, advertise, answer, cache_action?, check, commentable_comments_url, commentable_url, create, css_help, destroy, discard_draft, edit, end_exam, find_user, footer_content, get_additional_homepage_data, get_matching_ui_locale, get_recent_footer_content, get_sorted_langs_from_accept_header, get_valid_lang_from_accept_header, homepage_features, index, login_by_token, new, new_exam, new_question, next_question, plaxo, popular_tags, remove_question, require_current_user, reset_session, results, rss_site_index, rst, save_dft, save_draft, set_locale, show, site_index, sort, start_over, take, teaser, unpublished, update, and update_last_seen_at):
+  lib/localized_application.rb:25:in `set_locale'
+  haml (2.2.6) lib/sass/plugin/rails.rb:19:in `process'
+  lib/flash_session_cookie_middleware.rb:14:in `call'
+  lib/flash_session_cookie_middleware.rb:14:in `call'
+  C:\Documents and Settings\Administrator\My Documents\Aptana Studio Workspace\Redu\script\server:3
+  -e:2:in `load'
+  -e:2
+
+Rendering rescues/layout (not_found)
+
+
+Processing CommentsController#create (for 127.0.0.1 at 2009-11-10 14:30:05) [POST]
+  Parameters: {"commentable_type"=>"exam", "commit"=>"Adicionar Comentário", "authenticity_token"=>"x83U9fXQWiLd75Vq3SuZyYXsPDJZ/2Dwta/j6jtUU64=", "commentable_id"=>"1", "comment"=>{"comment"=>"mais de um"}}
+Redirected to http://127.0.0.1:3000/ksiomelo/exams/1#comment_6
+Completed in 562ms (DB: 16) | 302 Found [http://127.0.0.1/exam/1/comments]
+
+
+Processing ExamsController#show (for 127.0.0.1 at 2009-11-10 14:30:06) [GET]
+  Parameters: {"id"=>"1", "user_id"=>"ksiomelo"}
+Rendering template within layouts/application
+Rendering exams/show
+Completed in 78ms (View: 48, DB: 31) | 200 OK [http://127.0.0.1/ksiomelo/exams/1]
+
+
+Processing CommentsController#create (for 127.0.0.1 at 2009-11-10 14:30:26) [POST]
+  Parameters: {"commentable_type"=>"exam", "commit"=>"Adicionar Comentário", "authenticity_token"=>"x83U9fXQWiLd75Vq3SuZyYXsPDJZ/2Dwta/j6jtUU64=", "commentable_id"=>"1", "comment"=>{"comment"=>"tres"}}
+Redirected to http://127.0.0.1:3000/ksiomelo/exams/1#comment_7
+Completed in 141ms (DB: 78) | 302 Found [http://127.0.0.1/exam/1/comments]
+
+
+Processing ExamsController#show (for 127.0.0.1 at 2009-11-10 14:30:26) [GET]
+  Parameters: {"id"=>"1", "user_id"=>"ksiomelo"}
+Rendering template within layouts/application
+Rendering exams/show
+Completed in 110ms (View: 62, DB: 16) | 200 OK [http://127.0.0.1/ksiomelo/exams/1]
+
+
+Processing ExamsController#answer (for 127.0.0.1 at 2009-11-10 14:30:35) [GET]
+  Parameters: {"id"=>"1", "first"=>"true"}
+Rendering template within layouts/application
+Rendering exams/answer
+Completed in 109ms (View: 93, DB: 32) | 200 OK [http://127.0.0.1/exams/answer/1?first=true]
+
+
+Processing ExamsController#answer (for 127.0.0.1 at 2009-11-10 14:31:08) [GET]
+  Parameters: {"id"=>"1", "q_index"=>"1"}
+Rendering template within layouts/application
+Rendering exams/answer
+Completed in 47ms (View: 47, DB: 47) | 200 OK [http://127.0.0.1/exams/answer/1?q_index=1]
+
+
+Processing ExamsController#check (for 127.0.0.1 at 2009-11-10 14:31:29) [POST]
+  Parameters: {"answer"=>"3", "commit"=>"End", "authenticity_token"=>"x83U9fXQWiLd75Vq3SuZyYXsPDJZ/2Dwta/j6jtUU64=", "id"=>"1"}
+Redirected to http://127.0.0.1:3000/exams/results/1
+Completed in 15ms (DB: 46) | 302 Found [http://127.0.0.1/exams/check]
+
+
+Processing ExamsController#results (for 127.0.0.1 at 2009-11-10 14:31:29) [GET]
+  Parameters: {"id"=>"1"}
+Rendering template within layouts/application
+Rendering exams/results
+Completed in 422ms (View: 94, DB: 93) | 200 OK [http://127.0.0.1/exams/results/1]
+
+
+Processing ResourcesController#index (for 127.0.0.1 at 2009-11-10 14:31:59) [GET]
+Rendering template within layouts/application
+Rendering resources/index
+Completed in 125ms (View: 78, DB: 0) | 200 OK [http://127.0.0.1/resources]
+
+
+Processing ExamsController#index (for 127.0.0.1 at 2009-11-10 14:32:11) [GET]
+Rendering template within layouts/application
+Rendering exams/index
+Completed in 109ms (View: 93, DB: 31) | 200 OK [http://127.0.0.1/exams]
+
+
+Processing ExamsController#index (for 127.0.0.1 at 2009-11-10 14:32:20) [GET]
+  Parameters: {"user_id"=>"ksiomelo"}
+Rendering template within layouts/application
+Rendering exams/my
+Completed in 78ms (View: 62, DB: 0) | 200 OK [http://127.0.0.1/ksiomelo/exams]
+
+
+Processing ExamsController#show (for 127.0.0.1 at 2009-11-10 14:32:32) [GET]
+  Parameters: {"id"=>"new_exam"}
+
+ActiveRecord::RecordNotFound (Couldn't find Exam with ID=new_exam):
+  app/controllers/exams_controller.rb:472:in `show'
+  lib/localized_application.rb:25:in `set_locale'
+  haml (2.2.6) lib/sass/plugin/rails.rb:19:in `process'
+  lib/flash_session_cookie_middleware.rb:14:in `call'
+  lib/flash_session_cookie_middleware.rb:14:in `call'
+  C:\Documents and Settings\Administrator\My Documents\Aptana Studio Workspace\Redu\script\server:3
+  -e:2:in `load'
+  -e:2
+
+Rendering rescues/layout (not_found)

@@ -30,7 +30,7 @@ class Log < ActiveRecord::Base
        Log.create(:logeable_type => log_object.class.to_s,
         :action => action,
         :user_id => log_object.owner.id,
-        :logeable_name => log_object.name,
+        :logeable_name => log_object.title,
         :logeable_id => log_object.id)
       
       case action

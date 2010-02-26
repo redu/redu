@@ -15,7 +15,7 @@ pt-BR:
       short_published_date: "%d/%m/%y"
       literal_date: "%d %B %Y"
       short_literal_date: "%d %b %Y"
-      time_ago: "le %e %b %Y à %H:%M"
+      time_ago: "%e %b %Y às %H:%M"
     pm: pm
     am: am
 
@@ -328,7 +328,7 @@ pt-BR:
   #en: date_published: Date Published
   date_published: Date Published
   #en: days_ago: days ago
-  days_ago: days ago
+  days_ago: dias atrás
   #en: deactivate_link: Click here to deactivate your account
   deactivate_link: Click here to deactivate your account
   #en: deactivate_tip: Deactivating your account will remove your profile from the site. 
@@ -608,7 +608,7 @@ pt-BR:
   #en: invite_some_customers: Invite some customers!
   invite_some_customers: Invite some customers!
   #en: invite_your_friends_to_join: Invite Your Friends To Join!
-  invite_your_friends_to_join: Convite Seus Amigos Para Participarem!
+  invite_your_friends_to_join: Convide Seus Amigos Para Participarem!
   #en: invited_friends: invited some friends to join!
   invited_friends: invited some friends to join!
   #en: is_great_check_it_out_youll_love_it: is great, check it out you'll love it!
@@ -720,7 +720,7 @@ pt-BR:
   #en: metro_area_was_successfully_created: MetroArea was successfully created.
   metro_area_was_successfully_created: MetroArea was successfully created.
   #en: minutes_ago: minutes ago
-  minutes_ago: minutes ago
+  minutes_ago: minutos atrás
   #en: moderator: Moderator
   moderator: Moderator
   #en: moderators: Moderators
@@ -1495,7 +1495,7 @@ pt-BR:
   #en: your_username_was_emailed_to_you: Your username was emailed to you.
   your_username_was_emailed_to_you: Your username was emailed to you.
   #en: youve_been_logged_out_hope_you_come_back_soon: You've been logged out. Hope you come back soon!
-  youve_been_logged_out_hope_you_come_back_soon: You've been logged out. Hope you come back soon!
+  youve_been_logged_out_hope_you_come_back_soon: Você foi deslogado. Espero que volte em breve!
   #en: zippostal_code: "ZIP/Postal code:"
   zippostal_code: "ZIP/Postal code:"
 

@@ -108,7 +108,9 @@ class ResourcesController < BaseController
   def index
     @sort_by = params[:sort_by]
     #@order = params[:order]
-    @resources = get_query(params[:sort_by], params[:page]) 
+    @resources = get_query(params[:sort_by], params[:page])
+    
+     @popular_tags = Resource.tag_counts
     
     respond_to do |format|
       format.html # index.html.erb
@@ -151,11 +153,10 @@ class ResourcesController < BaseController
     
     respond_to do |format|
       if @resource.save
-        @resource.convert
         
         Log.log_activity(@resource, 'create', current_user)
         
-        flash[:notice] = 'Resource was successfully created.'
+        flash[:notice] = 'O material foi criado com sucesso!'
         format.html { redirect_to(@resource) }
         format.xml  { render :xml => @resource, :status => :created, :location => @resource }
       else

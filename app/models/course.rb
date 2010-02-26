@@ -91,6 +91,7 @@ class Course < ActiveRecord::Base
   has_attached_file :media
 	has_many :favorites, :as => :favoritable, :dependent => :destroy
   has_many :logs, :as => :logeable, :dependent => :destroy
+  has_many :annotations
 
   # Callbacks
   before_validation :enable_correct_validation_group
@@ -207,7 +208,9 @@ class Course < ActiveRecord::Base
      end
   end
   
-  
+  def has_annotations_by(user)
+    Annotation.find(:first, :conditions => ["course_id = ? AND user_id = ?", self.id, user.id])
+  end
   
   
 end

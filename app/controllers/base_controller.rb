@@ -17,7 +17,10 @@ class BaseController < ApplicationController
   
   if AppConfig.closed_beta_mode
     before_filter :beta_login_required, :except => [:teaser]
-  end    
+  end  
+  
+  def tos
+  end
   
   def teaser
     redirect_to home_path and return if logged_in?

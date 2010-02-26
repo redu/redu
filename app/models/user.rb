@@ -45,6 +45,9 @@ class User < ActiveRecord::Base
   validates_exclusion_of    :login, :in => AppConfig.reserved_logins
   validates_date :birthday, :before => 13.years.ago.to_date  
 
+    # ANNOTATIONS
+  has_many :annotations, :dependent => :destroy
+   
    # PROFILE
   has_one :profile
  

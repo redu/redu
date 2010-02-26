@@ -1,5 +1,21 @@
 <script>
 	
+	function toggleAnnotationBox(){
+		
+		var box = document.getElementById("annotation_box");
+		
+		if (box.style.display == 'none') {
+			//Effect.Appear(box);
+			box.style.display = 'block';
+			
+		} else {
+			//Effect.Fade(box);
+			box.style.display = 'none';
+		}
+		
+	}
+	
+	
 	function dimLights(turnOff){
 		Effect.toggle('lights-dimmed','Appear',{
 				duration:2,
@@ -115,12 +131,21 @@
 			
             <div id="actions_video">
                 <ul id="actions_resource">
+                	 <li>
+                	 	<%= render :partial => "shared/annotation" , :locals => {:course => @course}%>
+                        <!--
+						<a href="#" class="share_video" onclick="toggleAnnotationBox();return false;">Anotações</a>
+						-->
+                    </li>
+					<li>
+                        |
+                    </li>
                 	<li>
                 		<span id="lights-off">
-                        <a href="#" class="share" onclick="javascript:dimLights(true); return false;">Apagar as luzes</a>
+                        <a href="#" class="lights_on" onclick="javascript:dimLights(true); return false;">Apagar as luzes</a>
 						</span>
 						<span id="lights-on" style="display:none;">
-                        <a href="#" class="share" onclick="javascript:dimLights(false);return false;">Acender as luzes</a>
+                        <a href="#" class="lights_off" onclick="javascript:dimLights(false);return false;">Acender as luzes</a>
 						</span>
                     </li>
 					<li>
@@ -129,8 +154,6 @@
                     <li>
                         <a href="#" class="share_video" onclick="toggleShareBox();return false;">Compartilhar</a>
                     </li>
-                    
-					
 					<li>
                         |
                     </li>
@@ -153,17 +176,33 @@
             </div>
         </div><!-- BARRA ################################################################################################################################### --><!-- VIDEO ################################################################################################################################### -->
         
+		<div id="annotation_box" style="display:none">
+			<% remote_form_for(@annotation, :loading => "$('annotation_link').hide(); $('annotation_spinner').show();") do |f| %>
+ 			<%= f.hidden_field(:user_id, :value => current_user.id) %>
+			<%= f.hidden_field(:course_id, :value => @course.id) %>
+
+			<div id="annotation_content">
+				<%= f.label "Anotações" %>:<br/>
+				<%= f.text_area :content, :size => "25x3" %><br/>
+			</div>
+			<div id="annotation_menu">
+				<%= f.submit 'Salvar' %> | <%= link_to_function "Cancelar", "toggleAnnotationBox()" %> 
+			</div>
+			
+			 <% end %>
+			
+		</div>
 		
 		<%= render :partial => 'shared/share', :locals => {:title => @course.name, :url => application_url[0..application_url.length-2] + request.request_uri, :thumb_url => @course.thumb_url} %>
-		<%# socialite(:url => url_for(:action => action_name), :title => @course.name) %>
 		
 		<div id="view_video" align="center">
+			
         	<!-- colocar if aqui -->
 			<% if current_user and @course.external_resource_type.eql?('youtube')%>
-				<%= render :partial => "resources/player", :locals => {:resource => @course} %>
+				<%= render :partial => "courses/player", :locals => {:course => @course} %>
 			<% else %>
 				<% if current_user and current_user.has_credits_for_course(@course) and current_user.has_access_to_course(@course)  %>
-		   			<%= render :partial => "resources/player", :locals => {:resource => @course} %>
+		   			<%= render :partial => "courses/player", :locals => {:course => @course} %>
 				<% end %>
 			<% end %>
         </div>

@@ -65,14 +65,14 @@
 <div id="tags_user"><strong>Tags:</strong> <%= @user.tag_list %></div>
 
 <div id="actions_user">
-	<!--
-	<a href="#" class="contact_user">ADICIONAR COMO CONTATO</a> |
-	-->
 	<% if @is_current_user %>
-	<a href="#" class="contact_user">MINHAS ANOTAÇÕES</a> | <a href="#" class="mensage_user">CAIXA DE MENSAGENS(<%=current_user.unread_message_count %>)</a>
+		<a href="#" class="contact_user">MINHAS ANOTAÇÕES</a> | 
 	<% else %>
 	<%= link_to(:send_me_a_message.l, new_user_message_path(current_user, :to=>@user), :class => "mensage_user")%>
 	<% end %>
+	<a href="#" class="mensage_user">AULAS(<%=@user.courses.count %>)</a> |
+	<a href="#" class="mensage_user">EXAMES(<%=@user.exams.count %>)</a> |
+	<a href="#" class="mensage_user">MATERIAIS(<%=@user.resources.count %>)</a>
 	<br />
 </div>
      
@@ -133,7 +133,7 @@
 <div id="col_box3">
 <!-- BOX MOVIMENTACAO RESCENTE ///////////////////////////////////////////////////////////////////////////////////// -->
 	<div id="box_move">
-    	<div id="box_top">MOVIMENTAÇÃO RESCENTE</div>
+    	<div id="box_top">SEGUINDO/SEGUIDORES</div>
         
         <div id="box_list">
         	<div id="move_item">
@@ -154,28 +154,36 @@
                 <div id="time">3 minutos atrás</div>
             	<div id="replay"><a href="#">Responder</a></div>            
             </div>
- 			<div id="move_item">
-            	<div id="move_foto"><img src="img/foto_40x40.png" width="40" height="40" class="move_foto"/></div>
-                <div id="move_txt"><a href="#">Jõao Vitor</a> adicionou um video sobre Biologia Marinha e seus Benefícios</div>
-                <div id="time">3 minutos atrás</div>
-            	<div id="replay"><a href="#">Responder</a></div>            
-            </div>
- 			<div id="move_item">
-            	<div id="move_foto"><img src="img/foto_40x40.png" width="40" height="40" class="move_foto"/></div>
-                <div id="move_txt"><a href="#">Jõao Vitor</a> adicionou um video sobre Biologia Marinha e seus Benefícios</div>
-                <div id="time">3 minutos atrás</div>
-            	<div id="replay"><a href="#">Responder</a></div>            
-            </div>
+ 			
         </div>
-        
-        <div id="box_baseline">
-        	<div id="box_baseline_base">O que você esta fazendo agora?</div>
-        	<div id="box_baseline_base"><textarea cols="27" rows="3"></textarea></div>
-		<div id="bt_send_mv" align="center"><a href="#" class="bt_send">Enviar</a></div>
-        </div>
-        
     </div>
 <!-- BOX MOVIMENTACAO RESCENTE ///////////////////////////////////////////////////////////////////////////////////// -->
+	<div id="box_move">
+    	<div id="box_top">ESCOLAS</div>
+        
+        <div id="box_list">
+        	<div id="move_item">
+           	  <div id="move_foto"><img src="img/foto_40x40.png" width="40" height="40" class="move_foto"/></div>
+                <div id="move_txt"><a href="#">Jõao Vitor</a> adicionou um video sobre Biologia Marinha e seus Benefícios</div>
+                <div id="time">3 minutos atrás</div>
+            	<div id="replay"><a href="#">Responder</a></div>            
+            </div>
+ 			<div id="move_item">
+            	<div id="move_foto"><img src="img/foto_40x40.png" width="40" height="40" class="move_foto"/></div>
+                <div id="move_txt"><a href="#">Jõao Vitor</a> adicionou um video sobre Biologia Marinha e seus Benefícios</div>
+                <div id="time">3 minutos atrás</div>
+            	<div id="replay"><a href="#">Responder</a></div>            
+            </div>
+ 			<div id="move_item">
+            	<div id="move_foto"><img src="img/foto_40x40.png" width="40" height="40" class="move_foto"/></div>
+                <div id="move_txt"><a href="#">Jõao Vitor</a> adicionou um video sobre Biologia Marinha e seus Benefícios</div>
+                <div id="time">3 minutos atrás</div>
+            	<div id="replay"><a href="#">Responder</a></div>            
+            </div>
+ 			
+        </div>
+    	</div>
+
 
     <!--<div id="friends"></div>
     <div id="workspace"></div>

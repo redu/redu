@@ -1,0 +1,10 @@
+<% if course.video? %>
+	<%= render :partial => 'courses/video', :locals => {:resource => course} %>
+<% elsif course.audio? %>
+	<%= render :partial => 'courses/audio', :locals => {:resource => course} %>
+<% elsif course.type.eql?('youtube') %>
+	<%= render :partial => "courses/youtube", :locals => {:resource => course} %>
+<% else %>
+	<%= link_to "Download", course.media.url %>
+<% end %>
+

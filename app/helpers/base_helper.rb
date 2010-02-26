@@ -207,7 +207,7 @@ module BaseHelper
       end
       when 'exams'
       if @exam and @exam.name
-        title = 'Exame: ' + @course.name + ' &raquo; ' + app_base + tagline
+        title = 'Exame: ' + @exam.name + ' &raquo; ' + app_base + tagline
       else
         title = 'Mostrando Exames' +' &raquo; ' + app_base + tagline            
       end

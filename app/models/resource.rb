@@ -29,9 +29,9 @@ class Resource < ActiveRecord::Base
   validates_presence_of :title#, :external_resource_type, :external_resource
   #validates_inclusion_of :external_resource_type, :in => SUPPORTED_EXTERNAL_RESOURCES
   has_attached_file :media
-  validates_attachment_presence :media
-  validates_attachment_content_type :media,
- 	 :content_type => (SUPPORTED_DOCUMENTS)
+  #validates_attachment_presence :media
+  #validates_attachment_content_type :media,
+ 	# :content_type => (SUPPORTED_DOCUMENTS)
   validates_attachment_size :media,
  	 :less_than => 10.megabytes
 

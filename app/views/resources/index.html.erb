@@ -39,21 +39,17 @@
 <!-- COLUNA DIREITA ################################################################################################################################################ -->
 <div id="col_box3">
 <!-- BOX MOVIMENTACAO RECENTE ///////////////////////////////////////////////////////////////////////////////////// -->
-	<div id="col_box3">
 	<% if current_user %>
 	<% @logs = current_user.log_activity %>
 	<%= render :partial => 'logs/log', :locals => {:logs => @logs} %>
 	<% else %>
 	<%= render :partial => 'logs/not_logged_in', :locals => {:logs => @logs} %>
 	<% end %>
-	<div id="box_cadastro">
-    	<div id="box_top_cadastro">CRIE UM CLIPPING</div>
-        <div id="box_list_cadastro"><%= link_to 'Criar Clipping', clippings_link %></div>
-	</div>
-	</div>
 	
-	
-	
+<%= render :partial => 'shared/clipping' %>
+
+<%= render :partial => 'shared/tagcloud' %>
+
 	
 
 </div>
