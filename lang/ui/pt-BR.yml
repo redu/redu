@@ -38,7 +38,7 @@ pt-BR:
   #en: about: About
   about: About
   #en: about_me: About Me
-  about_me: About Me
+  about_me: Sobre Mim
   #en: about_site: About {{site}}
   about_site: "About {{site}}"
   #en: about_you: About You
@@ -64,7 +64,7 @@ pt-BR:
   #en: activate: Activate
   activate: Activate
   #en: activation_email_not_sent_message: Activation e-mail could not be sent. Perhaps that user is already active?
-  activation_email_not_sent_message: Activation e-mail could not be sent. Perhaps that user is already active?
+  activation_email_not_sent_message: Ativação de e-mail não foi enviada. Talvez o usuário já esteja ativo?
   #en: activation_email_resent_message: An activation e-mail was resent to the e-mail address you used to sign up.
   activation_email_resent_message: An activation e-mail was resent to the e-mail address you used to sign up.  
   #en: active: active
@@ -176,9 +176,9 @@ pt-BR:
   #en: bigger_font_size_more_popular_tag: "Bigger font size = more popular tag"
   bigger_font_size_more_popular_tag: "Bigger font size = more popular tag"
   #en: birthday: Birthday
-  birthday: Birthday
+  birthday: Nascimento
   #en: birthday_gender: Birthday & Gender
-  birthday_gender: "Birthday & Gender"
+  birthday_gender: "Gênero e Nascimento"
   #en: blog: Blog
   blog: Blog
   #en: blog_posts: Blog posts
@@ -196,7 +196,7 @@ pt-BR:
   #en: by: by
   by: by
   #en: by_looking_at_the: by looking at the
-  by_looking_at_the: by looking at the
+  by_looking_at_the: olhando na
   #en: cancel: Cancel
   cancel: Cancelar
   #en: cancel_and_go_back_to: cancel and go back to
@@ -226,7 +226,7 @@ pt-BR:
   #en: choices: Choices
   choices: Choices
   #en: choose_a_photo_for_your_profile: "Choose a photo for your profile:"
-  choose_a_photo_for_your_profile: "Choose a photo for your profile:"
+  choose_a_photo_for_your_profile: "Escolha uma foto para seu perfil:"
   #en: choose_a_photo_to_upload: "Choose a photo to upload:"
   choose_a_photo_to_upload: "Choose a photo to upload:"
   #en: choose_your_location: Choose your location
@@ -408,7 +408,7 @@ pt-BR:
   #en: edit_topic: Edit topic
   edit_topic: Edit topic
   #en: edit_your_account_settings_instead: "Edit your account settings instead?"
-  edit_your_account_settings_instead: "Edit your account settings instead?"
+  edit_your_account_settings_instead: "Prefere editar as configurações de sua conta?"
   #en: edit_your_user_profile: Edit your user profile?
   edit_your_user_profile: Edit your user profile?
   #en: editing_ad: Editing ad
@@ -431,6 +431,8 @@ pt-BR:
   editing_tag: Editing tag
   #en: email_addresses: Email Addresses
   email_addresses: Email Addresses
+  #en: email: E-mail
+  email: E-mail
   #en: email_signup_thanks: Thanks for signing up! You should receive an e-mail confirmation shortly at {{email}}
   email_signup_thanks: "Thanks for signing up! You should receive an e-mail confirmation shortly at {{email}}"
   #en: email_this_story_to_friends: "E-mail this story to friends"
@@ -452,7 +454,7 @@ pt-BR:
   #en: enter_e_mail_addresses_comma_sep: Enter e-mail addresses (comma-separated)
   enter_e_mail_addresses_comma_sep: Enter e-mail addresses (comma-separated)
   #en: enter_your_email_address: "Enter your email address"
-  enter_your_email_address: "Enter your email address"
+  enter_your_email_address: "Digite seu e-mail"
   #en: error: Error!
   error: Error!
   #en: estimated_total_for_this_month: Estimated total for this month
@@ -492,7 +494,7 @@ pt-BR:
   #en: feel_free_to_embed_images_or_videos: Feel free to embed images or videos.
   feel_free_to_embed_images_or_videos: Feel free to embed images or videos.
   #en: female: Female
-  female: Female
+  female: Feminino
   #en: filename: Filename
   filename: Filename
   #en: find_an_expert: Find an Expert
@@ -538,7 +540,7 @@ pt-BR:
   #en: from2: From
   from2: From
   #en: gender: Gender
-  gender: Gender
+  gender: Gênero
   #en: get_help_from_someone_who_knows: Get help from someone who knows
   get_help_from_someone_who_knows: Get help from someone who knows
   #en: get_popular: Get popular.
@@ -556,7 +558,7 @@ pt-BR:
   #en: go2: Go
   go2: Go
   #en: go_check_your_e_mail: Go check your e-mail!
-  go_check_your_e_mail: Go check your e-mail!
+  go_check_your_e_mail: Olhe seu e-mail!
   #en: go_to_the_forums: go to the forums
   go_to_the_forums: go to the forums
   #en: go_to_your_clippings_page_to_get_started: Go to your clippings page to get started.
@@ -638,7 +640,7 @@ pt-BR:
   #en: loading_recent_content: Loading recent content...
   loading_recent_content: Loading recent content...
   #en: location: Location
-  location: Location
+  location: Localidade
   #en: log_in: Log in
   log_in: Entre
   #en: log_in_to_create_a_new_topic: Log in to create a new topic
@@ -672,7 +674,7 @@ pt-BR:
   #en: locked2: (locked)
   locked2: (locked)
   #en: look_for_a_message_from: "Look for a message from: {{from}}"
-  look_for_a_message_from: "Look for a message from: {{from}}"
+  look_for_a_message_from: "Veja a mensagem do {{from}}."
   #en: looking_for_most_x: Looking for {{link}}
   looking_for_most_x: "Looking for {{link}}"
   #en: make_moderator: Make moderator
@@ -684,7 +686,7 @@ pt-BR:
   #en: make_this_my_profile_photo: Make this my profile photo
   make_this_my_profile_photo: Make this my profile photo
   #en: male: Male
-  male: Male
+  male: Masculino
   #en: manage_my: "Manage my:"
   manage_my: "Manage my:"
   #en: manage_pages: Manage Pages
@@ -800,7 +802,7 @@ pt-BR:
   #en: next_page: Next page
   next_page: Next page
   #en: no_activation_email: No activation e-mail?
-  no_activation_email: No activation e-mail?
+  no_activation_email: Sem e-mail de ativação?
   #en: no_comments_found: Sorry, we couldn't find any comments for that {{type}}
   no_comments_found: "Sorry, we couldn't find any comments for that {{type}}"
   #en: no_images_uploaded_yet: No images uploaded yet.
@@ -1030,9 +1032,9 @@ pt-BR:
   #en: required_your_username_must_not_contain_numerals_spaces_or_special_characters: "(Required: Your username must not contain numerals, spaces or special characters.)"
   required_your_username_must_not_contain_numerals_spaces_or_special_characters: "(Required: Your username must not contain numerals, spaces or special characters.)"
   #en: resend_my_activation_e_mail: Resend my activation e-mail
-  resend_my_activation_e_mail: Resend my activation e-mail
+  resend_my_activation_e_mail: Reenvie minha ativação de e-mail
   #en: resend_your_activation_e_mail: Resend your activation e-mail
-  resend_your_activation_e_mail: Resend your activation e-mail
+  resend_your_activation_e_mail: Reenvie seu e-mail de ativação
   #en: reset_my_password: Reset my password
   reset_my_password: Reset my password
   #en: retract_rsvp: Retract RSVP
@@ -1056,7 +1058,7 @@ pt-BR:
   #en: save_and_continue_to_step_three: Save, and continue to step three
   save_and_continue_to_step_three: "Save, and continue to step three"
   #en: save_changes: Save Changes
-  save_changes: Save Changes
+  save_changes: Salvar Modificações
   #en: save_forum: Save Forum
   save_forum: Save Forum
   #en: save_page_as: "Save page as:"
@@ -1088,7 +1090,7 @@ pt-BR:
   #en: see_all_recent_posts: See all recent posts
   see_all_recent_posts: See all recent posts
   #en: see_you_back_here_in_a_short_while: See you back here in a short while.
-  see_you_back_here_in_a_short_while: See you back here in a short while.
+  see_you_back_here_in_a_short_while: Encontraremos com você aqui em breve.
   #en: select_images_to_upload: Select Images to Upload
   select_images_to_upload: Select Images to Upload
   #en: send: "Send"
@@ -1196,7 +1198,7 @@ pt-BR:
   #en: tag_was_successfully_deleted: Tag was successfully deleted
   tag_was_successfully_deleted: Tag was successfully deleted
   #en: tags_are_comma_separated_keywords_that_describe_you: Tags are comma-separated keywords that describe you.
-  tags_are_comma_separated_keywords_that_describe_you: Tags are comma-separated keywords that describe you.
+  tags_are_comma_separated_keywords_that_describe_you: Tags são palavras chaves separadas por vírgula que descrevem você.
   #en: tags_are_keywords_you_use_to_organize_your_clippings_separate_multiple_tags_with_commas: Tags are keywords you use to organize your clippings. Separate multiple tags with commas.
   tags_are_keywords_you_use_to_organize_your_clippings_separate_multiple_tags_with_commas: Tags are keywords you use to organize your clippings. Separate multiple tags with commas.
   #en: tags_are_keywords_you_use_to_organize_your_photos: Tags are keywords you use to organize your photos. Separate multiple tags with commas.
@@ -1206,7 +1208,7 @@ pt-BR:
   #en: tagged: tagged
   tagged: tagged
   #en: tags_page: tags page
-  tags_page: tags page
+  tags_page: página de tags
   #en: thanks_for_activating_your_account: Thanks for activating your account!
   thanks_for_activating_your_account: Thanks for activating your account!
   #en: thanks_youre_now_logged_in: Thanks! You're now logged in.
@@ -1250,7 +1252,7 @@ pt-BR:
   #en: time_constrained: Time constrained
   time_constrained: Time constrained
   #en: tips: "Tips:"
-  tips: "Tips:"
+  tips: "Dicas:"
   #en: title: Title
   title: Title
   #en: title_required: "Title (required)"
@@ -1437,15 +1439,15 @@ pt-BR:
   #en: you_are_editing_your_account: You are editing your account.
   you_are_editing_your_account: You are editing your account.
   #en: you_are_editing_your_profile: "You're editing your profile."
-  you_are_editing_your_profile: "You're editing your profile."
+  you_are_editing_your_profile: "Você está editando seu perfil"
   #en: you_can_browse_all_content_and_users_on: You can browse all content and users on
-  you_can_browse_all_content_and_users_on: You can browse all content and users on
+  you_can_browse_all_content_and_users_on: Você pode visualizar todo conteúdo e usuários no
   #en: you_cant_delete_that_user: You can't delete that user.
   you_cant_delete_that_user: You can't delete that user.
   #en: you_can_select_up_to_5_files_at_a_time: You can select up to 5 files at a time.
   you_can_select_up_to_5_files_at_a_time: You can select up to 5 files at a time.
   #en: you_could_tag_yourself: You could tag yourself
-  you_could_tag_yourself: You could tag yourself
+  you_could_tag_yourself: Você pode usar tags para se descrever.
   #en: you_have: You have
   you_have: You have
   #en: you_have_already_rsvped_for_this_event: You have already RSVPed for this event.
@@ -1497,7 +1499,7 @@ pt-BR:
   #en: youve_been_logged_out_hope_you_come_back_soon: You've been logged out. Hope you come back soon!
   youve_been_logged_out_hope_you_come_back_soon: Você foi deslogado. Espero que volte em breve!
   #en: zippostal_code: "ZIP/Postal code:"
-  zippostal_code: "ZIP/Postal code:"
+  zippostal_code: "CEP/Código postal:"
 
 
   #This stuff needs to be checked
