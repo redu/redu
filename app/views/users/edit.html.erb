@@ -1,0 +1,108 @@
+<div id="all_content3">
+    <div id="col_content">
+        <div id="breadcrumbs">
+            <a href="<%=application_url%>">home</a>
+            > edit
+        </div>
+        
+        <div>
+        	<%- form_tag user_url(@user), :method => 'put', :multipart =>true , :class => 'MainForm' do %>
+			
+			<div id="title">
+            <%= :you_are_editing_your_profile.l %>
+        	</div>
+			
+			<br/>
+			<%= link_to "&raquo; " + :edit_your_account_settings_instead.l, edit_account_user_path(@user) %>
+			<%= error_messages_for :user %>
+			<br/>
+			<%= submit_tag :save_changes.l %>
+			<br/>
+			<%= :profile_photo.l %>
+			<br/>
+			<%= image_tag( @user.avatar_photo_url(:thumb), :class => "polaroid" ) %>
+			<br/>
+			<label for='username'>
+                <%= :choose_a_photo_for_your_profile.l %>
+            </label>
+			<br/>
+			<%= file_field :avatar, :uploaded_data, :size => "20"%>
+			<br/>
+			<br/>
+			<div id="title">
+            <%= :location.l %>
+        	</div>
+			
+			<br/>
+			<%= render :partial => 'shared/location_chooser', :locals => {:selected_country => @user.country_id, :selected_state => @user.state_id, :selected_metro_area => @user.metro_area_id, :states => @states, :metro_areas => @metro_areas}%>
+			<br/>
+			<label for='username'>
+                <%= :zippostal_code.l %>
+            </label>
+			<%= text_field :user, :zip, :style=>"width:90px" %>
+			<br/>
+			<br/>
+			<label for='username'>
+                <%= :gender.l %>
+				<br/>
+				<%= radio_button :user, :gender, User::MALE %>
+         		<%= :male.l %>
+				<%= radio_button :user, :gender, User::FEMALE %>
+         		<%= :female.l %> 
+            </label>
+			<br/>
+			<br/>
+			<label for='username'>
+                <%= :birthday.l %>
+            </label>
+			<br/>
+			<br/>
+			<%= date_select :user, :birthday, {:start_year => 1926, :end_year => Time.now.year - 1}%> 
+			<br/>
+			
+			<div id="title">
+            <%= :about_me.l %>
+        	</div>
+			
+			<br/>
+			<%-box do %>
+			<%= text_area :user, :description, :size => "60x12"  %>
+			<% end %>
+			<br/>
+			
+			<div id="title">
+            <%= :tips.l %>
+        	</div> 
+			
+			<br/>
+			<%= "Escreva sobre o que você gosta de estudar, as áreas de interesse e conhecimento" %>
+			<br/>
+			
+			<div id="title">
+            <%= :tags.l %>
+        	</div>
+			
+			<br/>
+			<%= text_field_tag 'tag_list', @user.tag_list, {:autocomplete => "off"}%>
+			<%= auto_complete_field 'tag_list', {:url => { :controller => "tags", :action => 'auto_complete_for_tag_name'}, :tokens => [','] }%>
+			
+			<label for='username'>
+                <%= :you_could_tag_yourself.l %>
+				<%- if @user.vendor? %>
+				<%= :custom_friendly_local.l %>
+				<%- else %>
+				<br/>
+				<%= :tags_are_comma_separated_keywords_that_describe_you.l %>
+				<br/>
+				<%= :you_can_browse_all_content_and_users_on.l %>
+				<%= AppConfig.community_name %>
+				<%= :by_looking_at_the.l %>
+				<%= link_to :tags_page.l, tags_path %>
+				<% end %>
+            </label>
+			<br/>
+			<%= submit_tag :save_changes.l %>
+			<% end %>
+        </div>
+    </div>
+</div>
