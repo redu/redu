@@ -116,17 +116,17 @@ class ResourcesController < BaseController
         format.xml  { render :xml => @user.resources }
       end
     else 
-    
-    @sort_by = params[:sort_by]
-    #@order = params[:order]
-    @resources = get_query(params[:sort_by], params[:page])
-    
-     @popular_tags = Resource.tag_counts
-    
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @resources }
-    end
+      
+      @sort_by = params[:sort_by]
+      #@order = params[:order]
+      @resources = get_query(params[:sort_by], params[:page])
+      
+      @popular_tags = Resource.tag_counts
+      
+      respond_to do |format|
+        format.html # index.html.erb
+        format.xml  { render :xml => @resources }
+      end
     end
     
   end
@@ -220,4 +220,61 @@ class ResourcesController < BaseController
       format.xml  { render :xml => @resources }
     end
   end
+  
+  def unpublished
+    @resources = Course.paginate(:conditions => ["owner = ? AND published = 0", params[:user_id]], 
+      :include => :owner, 
+      :page => params[:page], 
+      :order => 'updated_at DESC', 
+      :per_page => AppConfig.items_per_page)
+    
+    respond_to do |format|
+      format.html #{ render :action => "my" }
+      format.xml  { render :xml => @resources }
+    end
+  end
+  
+  #moderating resource
+  def approve
+    @resource = Resource.find(params[:id])
+    @resource.approve!
+    flash[:notice] = 'O material auxiliar foi aprovado!'
+    redirect_to pending_resources_path
+  end
+  
+  def disapprove
+    @resource = Resource.find(params[:id])
+    @resource.disapprove!
+    flash[:notice] = 'O material auxiliar não foi aprovado!'
+    redirect_to pending_resources_path
+  end
+  
+  def pending
+    @resources = Resource.paginate(:conditions => ["published = 1 AND state LIKE ?", "waiting"], 
+      :include => :owner, 
+      :page => params[:page], 
+      :order => 'updated_at DESC', 
+      :per_page => AppConfig.items_per_page)
+    
+    respond_to do |format|
+      format.html #{ render :action => "my" }
+      format.xml  { render :xml => @resources }
+    end
+  end
+  
+  def waiting
+    @resources = Resource.paginate(:conditions => ["owner = ? AND published = 1 AND state LIKE ?", params[:user_id], "waiting"], 
+      :include => :owner, 
+      :page => params[:page], 
+      :order => 'updated_at DESC', 
+      :per_page => AppConfig.items_per_page)
+    
+    respond_to do |format|
+      format.html #{ render :action => "my" }
+      format.xml  { render :xml => @resources }
+    end
+  end
+  
+  
+  
 end
