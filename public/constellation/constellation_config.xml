@@ -144,7 +144,7 @@
 		   - [timestamp]    - the current unix timestamp.  use to break caching
 		   http://127.0.0.1:3000/activity_xml.xml
 		   -->
-		<url> http://127.0.0.1:3000/activity_xml.xml</url>
+		<url> http://ec2-184-73-30-17.compute-1.amazonaws.com/activity_xml.xml</url>
 		
 		<!-- the depth of the tree to load from the server. in any tree
 		   - interface mode, the client will request a tree of this

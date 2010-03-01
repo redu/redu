@@ -1,7 +1,22 @@
-<h1>
-<%= link_to 'Novo Teste', {:controller => :exams, :action => :new } %>
- >> Nova Questão</h1>
+<div id="all_content3">
+<div id="col_content">
+	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">ensinar</a> > <a href="#">exame</a> > <a href="#">nova questão</a></div>
+   	
+ 
+ <div id="title">NOVA QUESTÃO
+	
+    <div id="task_bar_exames">
+		
+		<%= link_to 'Voltar para Exame', new_exam_path %> 
+	
+	</div>
+ 
+ </div>
+
 
 <%= render :partial => 'question_form' %>
 
 <%= link_to_function 'Back', 'history.back();' %>
+
+</div>
+</div>

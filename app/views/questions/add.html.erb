@@ -1,16 +1,5 @@
 <script>
 
-//TODO validar numero de chaves > 0
-function requestKeysToSchool(schoolId){
-	var keysNumber = $('keys_number').val();//document.geteleme
-	alert('você solicitou '+keysNumber +' chaves para a escola: '+schoolId);
-}
-
-function showRequestKeysBox(){
-		document.getElementById('request_keys_link').style.display = 'none';
-        document.getElementById('request_keys_box').style.display = 'inline';
-}
-
 function selectAll(){
 	var checkboxes = document.getElementsByName("ids[]");
 	for (var i =0; i< checkboxes.length; i++) {
@@ -67,55 +56,54 @@ function showRequestKeysForm(){
 
 
 </script>
-Novo Exame >> Adicionar Questão
-<h1>Listando questões</h1>
 
-<p>
+<div id="all_content3">
+<div id="col_content">
+	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">ensinar</a> > <a href="#">exame</a> > <a href="#">adicionar questão</a></div>
+   	
+ 
+ <div id="title">ADICIONAR QUESTÃO
 	
-		<div id="local_search_form">
-			
-			<!-- form_remote_tag :update => "questions",
-                       :url => { :controller => :questions, :action => :create },
-                       :position => "bottom", #before e after nao funcionam com o :update
-						:loading => 'itemLoading()', 
-					    :complete => "closePopup()" do -->
-			
+    <div id="task_bar_exames">
 		
-        <% form_remote_tag :url => { :controller => :questions, :action => :search },
-					:before => "Element.show('spinner')",
-					:success => "Element.hide('spinner')" do -%>
-           	Buscar
-			<%= text_field_tag :query %>
-		    <%= submit_tag 'Search' %>
-        <% end -%>
-		
-		
+		<%= link_to 'Voltar para Exame', new_exam_path %> |
+		<%= link_to 'Nova Questão', new_question_path %> 
+	
+	</div>
+ 
+ </div>
+ 
+ <div id="local_search_form">
+     <!-- form_remote_tag :update => "questions",
+     :url => { :controller => :questions, :action => :create },
+     :position => "bottom", #before e after nao funcionam com o :update
+     :loading => 'itemLoading()',
+     :complete => "closePopup()" do -->
+	 <% form_remote_tag :url => { :controller => :questions, :action => :search },
+     :before => "Element.show('spinner')",
+     :success => "Element.hide('spinner')" do -%>
+     Buscar<%= text_field_tag :query %>
+     <%= submit_tag 'Search' %>
+     <% end -%>
+ </div>
+ <div id="filter_bar">
+     <span id="title_list" class="title_list"> TODOS</span>
+     <%= render :partial => "questions/sort" %>
+ </div>
+    <div id="all_list">
+		<div id="local_search_results">
+		<%= render :partial => "questions/list" %>
 		</div>
-</p>
+	</div>
 
-
-
-<% form_remote_tag :url => { :controller => :questions, :action => :sort } do %>
-Ordenar:
-<%= select_tag(:sort_by, options_for_select([['Data de criação', 1], ['Nome', 2], ['Ratings', 3]], 1)) %>
-<%= select_tag(:order, options_for_select([['Dec', 1], ['Cre', 2]], 1)) %>
-<%= submit_tag "OK"%>
-<% end %>
-
-
-<hr>
-
-
-<div id="local_search_results" style="min-height: 200px">
-
-<%= render :partial => "questions/list" %>
-
-</div>
-<%= link_to 'Back', :controller => :exams, :action => :new %>
+<%= link_to 'Voltar', :controller => :exams, :action => :new %>
 
 <%= image_tag("spinner.gif",
               :align => "absmiddle",
               :border => 0,
               :id => "spinner",
               :style =>"display: none;" ) %>
+			  
+</div>
+</div>
 

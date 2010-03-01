@@ -58,16 +58,13 @@
         <div id="item_video">
             <div id="title_video">
                 <%= @course.name %>
+				<% if @course.can_be_deleted_by(current_user) %>
+                	<%= link_to 'Editar', {:action => "edit"}, :class => "edit" %> |
+					<%= link_to 'Remover', @course, {:confirm => 'Você tem certeza que quer remover esta aula permanentemente?', :method => :delete, :class => "edit"} %>
+				<% end %>	
             </div>
             <!--	<div id="title_video"><a href="#">História - Revolução Francesa</a></div>    -->
             <div id="edit_admin">
-                <% if current_user.eql?(@course.owner) %>
-                	<%= link_to 'Editar', {:action => "edit"}, :class => "link_edit" %>
-                <% end %>
-				<% if @course.can_be_deleted_by(current_user) %>
-					<%= link_to 'Remover', @course, :confirm => 'Você tem certeza que quer remover esta aula permanentemente?', :method => :delete %>
-				<% end %>
-				
 				<% if current_user and not @course.external_resource_type.eql?('youtube')%>
 				
 				<% if current_user and current_user.has_credits_for_course(@course) and not current_user.has_access_to_course(@course) %>
@@ -241,7 +238,7 @@
                     <ul id="materials_item">
                         <% @course.resources.each do | resource | %>
                         <li>
-                            <%= link_to resource.title,
+                            <%= link_to resource.name,
                             resource_path(resource),
                             :class => 'word' %>
                         </li>
