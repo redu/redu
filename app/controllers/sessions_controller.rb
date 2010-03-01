@@ -29,7 +29,7 @@ class SessionsController < BaseController
       Log.log_activity(@user, 'login', @user)
       
     else
-			unless self.current_user.active?
+			if current_user && !self.current_user.active?
 		    flash[:notice] = 'Seu cadastro precisa ser confirmado'
 		    self.current_user = nil
 		    render "users/resend_activation"
