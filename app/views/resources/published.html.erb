@@ -19,26 +19,17 @@
 		<% if @resources && @resources.length > 0 %>
  			<%= render :partial => 'resources/item', :collection => @resources, :as => :resource %> 
  		<% else %>
- 			Não há exames publicados ainda. <%= link_to 'Crie um agora!', :action => 'new' %>
+ 			Não há materais auxiliares publicados ainda. <%= link_to 'Crie um agora!', :action => 'new' %>
 		<% end %>
     	
     </div> <!-- fim da listagem --> 
 	
-	<%= will_paginate  @exams, :prev_label => "< Anterior" ,:next_label => "Próximo >", :separator=>"|" %> 
+	 
     
 <!-- PAGINACAO ##################################################################################################################################################### -->
     <div id="pagination" align="center">
 
-
-    	<ul id="pagination_number">
-    		<li><a href="" class="nav">< Anterior</a></li>
-            <li><a href="" class="number">1</a></li>
-            <li><a href="" class="number">2</a></li>
-            <li><a href="" class="number">3</a></li>
-            <li><a href="" class="number">4</a></li>
-            <li><a href="" class="number">5</a></li>
-            <li><a href="" class="nav">PrÃ³ximo ></a></li>
-    	</ul>
+    	<%= will_paginate  @resources, :params => {:sort_by => @sort_by}, :class => "pagination_number"  %>
     </div>
 	
 </div>

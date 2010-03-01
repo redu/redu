@@ -89,15 +89,15 @@ class ResourcesController < BaseController
     case sort
       
       when '1' # Data
-      @courses = Resource.paginate :conditions => ["published = ?", true], :include => :owner, :page => page, :order => 'created_at DESC', :per_page => AppConfig.items_per_page
+      @courses = Resource.paginate :conditions => ["published = ? and state LIKE 'approved'", true], :include => :owner, :page => page, :order => 'created_at DESC', :per_page => AppConfig.items_per_page
       when '2' # Avaliações
-      @courses = Resource.paginate :conditions => ["published = ?", true], :include => :owner, :page => page, :order => 'rating_average DESC', :per_page => AppConfig.items_per_page
+      @courses = Resource.paginate :conditions => ["published = ? and state LIKE 'approved'", true], :include => :owner, :page => page, :order => 'rating_average DESC', :per_page => AppConfig.items_per_page
       when '3' # Downloads #TODO
-      @courses = Resource.paginate :conditions => ["published = ?", true], :include => :owner, :page => page, :order => 'rating_average DESC', :per_page => AppConfig.items_per_page
+      @courses = Resource.paginate :conditions => ["published = ? and state LIKE 'approved'", true], :include => :owner, :page => page, :order => 'rating_average DESC', :per_page => AppConfig.items_per_page
       when '4' # Título
-      @courses = Resource.paginate :conditions => ["published = ?", true], :include => :owner, :page => page, :order => 'title DESC', :per_page => AppConfig.items_per_page
+      @courses = Resource.paginate :conditions => ["published = ? and state LIKE 'approved'", true], :include => :owner, :page => page, :order => 'title DESC', :per_page => AppConfig.items_per_page
     else
-      @courses = Resource.paginate :conditions => ["published = ?", true], :include => :owner, :page => page, :order => 'created_at DESC', :per_page => AppConfig.items_per_page
+      @courses = Resource.paginate :conditions => ["published = ? and state LIKE 'approved'", true], :include => :owner, :page => page, :order => 'created_at DESC', :per_page => AppConfig.items_per_page
     end
     
   end  
@@ -109,7 +109,7 @@ class ResourcesController < BaseController
     
     if params[:user_id] # TODO garantir que é sempre login e nao id?
       @user = User.find_by_login(params[:user_id])
-      @resources = @user.resources.paginate :page => params[:page], :per_page => AppConfig.items_per_page
+      @resources = @user.resources.paginate :conditions => ["state LIKE 'approved'"], :page => params[:page], :per_page => AppConfig.items_per_page
       
       respond_to do |format|
         format.html { render :action => "user_resources"} 
@@ -209,7 +209,7 @@ class ResourcesController < BaseController
   end
   
   def published
-    @resources = Resource.paginate(:conditions => ["owner = ? AND published = 1", params[:user_id]], 
+    @resources = Resource.paginate(:conditions => ["owner_id = ? AND published = 1 AND state LIKE 'approved'", params[:user_id]], 
   		:include => :owner, 
   		:page => params[:page], 
   		:order => 'updated_at DESC', 
@@ -222,7 +222,7 @@ class ResourcesController < BaseController
   end
   
   def unpublished
-    @resources = Course.paginate(:conditions => ["owner = ? AND published = 0", params[:user_id]], 
+    @resources = Resource.paginate(:conditions => ["owner = ? AND published = 0", params[:user_id]], 
       :include => :owner, 
       :page => params[:page], 
       :order => 'updated_at DESC', 
@@ -239,31 +239,18 @@ class ResourcesController < BaseController
     @resource = Resource.find(params[:id])
     @resource.approve!
     flash[:notice] = 'O material auxiliar foi aprovado!'
-    redirect_to pending_resources_path
+    redirect_to waiting_resources_path
   end
   
   def disapprove
     @resource = Resource.find(params[:id])
     @resource.disapprove!
     flash[:notice] = 'O material auxiliar não foi aprovado!'
-    redirect_to pending_resources_path
-  end
-  
-  def pending
-    @resources = Resource.paginate(:conditions => ["published = 1 AND state LIKE ?", "waiting"], 
-      :include => :owner, 
-      :page => params[:page], 
-      :order => 'updated_at DESC', 
-      :per_page => AppConfig.items_per_page)
-    
-    respond_to do |format|
-      format.html #{ render :action => "my" }
-      format.xml  { render :xml => @resources }
-    end
+    redirect_to waiting_resources_path
   end
   
   def waiting
-    @resources = Resource.paginate(:conditions => ["owner = ? AND published = 1 AND state LIKE ?", params[:user_id], "waiting"], 
+    @resources = Resource.paginate(:conditions => ["published = 1 AND state LIKE 'waiting'"], 
       :include => :owner, 
       :page => params[:page], 
       :order => 'updated_at DESC', 

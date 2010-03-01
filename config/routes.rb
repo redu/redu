@@ -3,7 +3,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :abilities
 
-  map.resources :resources, :collection => { :search => [:get, :post], :add => :get, :favorites => :get }, :member => {:rate => :post}
+  map.resources :resources, :collection => { :search => [:get, :post], :add => :get, :waiting => :get, :favorites => :get }, :member => {:rate => :post}
 
   map.resources :competences
 
@@ -219,7 +219,7 @@ ActionController::Routing::Routes.draw do |map|
     user.resources :clippings
     user.resources :activities, :collection => {:network => :get}
     user.resources :invitations
-    user.resources :resources, :collection => {:published => :get, :unpublished => :get, :history => :get, :favorites => :get} 
+    user.resources :resources, :collection => {:published => :get, :unpublished => :get, :waiting => :get, :history => :get, :favorites => :get} 
     user.resources :courses, :collection => {:published => :get, :unpublished => :get, :waiting => :get, :favorites => :get} 
     user.resources :schools, :collection => {:member => :get, :owner => :get}
     user.resources :exams, :collection => {:published => :get, :unpublished => :get, :history => :get, :favorites => :get} 

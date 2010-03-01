@@ -26,7 +26,7 @@ class Resource < ActiveRecord::Base
   #before_save :transform_resource
   
   # Validations
-  validates_presence_of :title#, :external_resource_type, :external_resource
+  validates_presence_of :name#, :external_resource_type, :external_resource
   #validates_inclusion_of :external_resource_type, :in => SUPPORTED_EXTERNAL_RESOURCES
   has_attached_file :media
   #validates_attachment_presence :media
@@ -104,8 +104,7 @@ class Resource < ActiveRecord::Base
   end
   
   #state machine 
-  acts_as_state_machine :initial => :pending
-    state :pending
+  acts_as_state_machine :initial => :waiting
     state :waiting
     state :approved
     state :disapproved
@@ -118,12 +117,6 @@ class Resource < ActiveRecord::Base
       transitions :from => :waiting, :to => :disapproved
    end
    
-   event :wait do
-      transitions :from => :converting, :to => :waiting
-    end
-  
-  
-  
   
   
 end

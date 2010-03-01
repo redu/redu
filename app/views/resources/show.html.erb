@@ -1,21 +1,18 @@
-
+<% if @resource.state.eql?("approved") %>
 <h1>Titulo: <%= @resource.name %></h1>
-<p>Descrição: <%= @resource.description %></p>
+<p>
+    Descrição: <%= @resource.description %>
+</p>
+<%end%>
 
-
+<div id="edit_admin">
+    <% if current_user.admin? and @resource.state.eql?("waiting") %>
+    <%= link_to 'Aprovar' , {:action => "approve", :id => @resource.id} %>|<%= link_to 'Rejeitar' , {:action => "disapprove", :id => @resource.id} %>
+    <% end %>
+</div>
 <%= ratings_for @resource %>
-
 <%# render :partial => "resources/player", :locals => {:resource => @resource} %>
-
-  
-
-
-<hr>
-Comentários:
-<%= render :partial => "comments/comment" , :collection => @resource.comments %>
+<hr>Comentários:<%= render :partial => "comments/comment" , :collection => @resource.comments %>
 <BR>
-<hr>
-<%= render :partial => 'comments/comment_form', :locals => {:commentable => @resource} %>
-
-<%= link_to 'Edit', edit_resource_path(@resource) %> |
-<%= link_to 'Back', resources_path %>
+<hr><%= render :partial => 'comments/comment_form', :locals => {:commentable => @resource} %>
+<%= link_to 'Editar', edit_resource_path(@resource) %> |<%= link_to 'Voltar', resources_path %>

@@ -1,63 +1,65 @@
-        <div id="item">
-    		<div id="title">
-    			<% if resource.external_resource_type.eql?("clipping")%>
-				<%= link_to resource.name , resource.external_resource.to_s %>
-				<% else %>
-				<%= link_to resource.name, resource %>
-				<% end %>
-				</div>
-				<%# icon_url = if resource.media_content_type == 'video/mpeg' %>
-				
-						<div id="video">
-							<%= image_tag "icons/doc.gif", :border => 0 %>
-						
-						</div>
-                       
-            <div id="identification">
-              <ul id="identification_resource">
-								<li><% if resource.owner %>
-									<%= link_to resource.owner.login, resource.owner %>
-									<% else %>
-									<% end %>
-								</li>
-										<li>|</li>
-								<li><%= time_ago_in_words(resource.created_at) %></li>
-							</ul>
-            </div>
-            
-			<% if resource.description %>
-            <div id="description"><%= (resource.description[0..250] + "...") if resource.description.length > 250 %>
-            </div>
-			<% end %>
-			
-			<div id="identification">
-              <ul id="identification_resource">
-				<li><strong>Categoria:</strong> Matemática</li>
-        		<li>|</li>
-				<li><strong>Tags:</strong> <%= resource.tag_list %></li>
-			  </ul>
-            </div>
-           
-		   <!-- 
-            <div id="actions">
-              <ul id="actions_resource">
-							<li><a href="#" class="share">Compartilhar</a></li>
-						  		<li>|</li>
-							<li><a href="#" class="download">Download</a></li>
-						          
-							</ul>
-            </div> 
-			-->
-            
-            <div id="ratting">
-                <ul id="ratting_menu">
-                    <li>
-                        <%= ratings_for resource, :static %>
-                    </li>
-                    <li class="evaluation_rating">
-                        Avaliações(<%= resource.rates.count %>)
-                    </li>
-                </ul>
-            </div>   
-    	</div>
-
+<div id="item">
+    <div id="title">
+        <% if resource.external_resource_type.eql?("clipping") %>
+        <%= link_to resource.name , resource.external_resource.to_s %>
+        <% else %>
+        <%= link_to resource.name, resource %>
+        <% end %>
+    </div>
+    <%# icon_url = if resource.media_content_type == 'video/mpeg' %>
+    <div id="video">
+        <%= image_tag "icons/doc.gif", :border => 0 %>
+    </div>
+    <div id="identification">
+        <ul id="identification_resource">
+            <li>
+                <%= link_to resource.owner.login, user_path(resource.owner) %>
+            </li>
+            <li>
+                |
+            </li>
+            <li>
+                <%= time_ago_in_words(resource.created_at) %>
+            </li>
+        </ul>
+    </div>
+    <% if resource.description %>
+    <div id="description">
+        <%= (resource.description[0..250] + "...") if resource.description.length > 250 %>
+    </div>
+    <% end %>
+    <div id="identification">
+        <ul id="identification_resource">
+            <li>
+                <strong>Categoria:</strong>
+                Matemática
+            </li>
+            <li>
+                |
+            </li>
+            <li>
+                <strong>Tags:</strong>
+                <%= resource.tag_list %>
+            </li>
+        </ul>
+    </div>
+    <!--
+    <div id="actions">
+    <ul id="actions_resource">
+    <li><a href="#" class="share">Compartilhar</a></li>
+    <li>|</li>
+    <li><a href="#" class="download">Download</a></li>
+    </ul>
+    </div>
+    -->
+    <div id="ratting">
+        <ul id="ratting_menu">
+            <li>
+                <%= ratings_for resource, :static %>
+            </li>
+            <li class="evaluation_rating">
+                Avaliações(<%= resource.rates.count %>)
+            </li>
+        </ul>
+    </div>
+</div>
