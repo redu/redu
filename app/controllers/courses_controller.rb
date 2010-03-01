@@ -171,6 +171,7 @@ class CoursesController < BaseController
   def create
     
     @course = Course.new(params[:course])
+    @course.owner = current_user
      
     respond_to do |format|
       

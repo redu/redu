@@ -72,11 +72,11 @@ class Course < ActiveRecord::Base
       transitions :from => :pending, :to => :converting
     end
 
-    '''
+
     event :converted do
       transitions :from => :converting, :to => :waiting
     end
-'''
+
     event :failure do
       transitions :from => :converting, :to => :error # TODO salvar estado de "erro" no bd
     end
@@ -131,7 +131,7 @@ class Course < ActiveRecord::Base
       self.convert!
       proxy.enq_convert_course(:arg => self.id, :job_key => self.id) #TODO set timeout :timeout => ?
     else
-			#self.converted!
+			self.converted!
       self.wait!
       #self.update_attribute(:state, "waiting")
     end

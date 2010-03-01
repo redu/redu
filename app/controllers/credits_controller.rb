@@ -20,7 +20,7 @@ class CreditsController < BaseController
   
   def create
     @credit = Credit.new(params[:credit])
-    @credit.user_id = current_user.id
+    @credit.user = current_user
     
     if @credit.payment_type == 'boleto'
       

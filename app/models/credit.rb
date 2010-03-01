@@ -1,5 +1,5 @@
 class Credit < ActiveRecord::Base
-  belongs_to :user
+  belongs_to :user, :foreign_key => "customer_id"
   
   
    acts_as_state_machine :initial => :pending
@@ -21,7 +21,7 @@ class Credit < ActiveRecord::Base
    end
   
    def self.total(user_id)
-    self.connection.execute("select sum(value) from credits where user_id = #{user_id}").fetch_row.first
+   	self.connection.execute("SELECT SUM(value) FROM credits WHERE customer_id = #{user_id}").fetch_row.first
    end
   
   
