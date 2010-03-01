@@ -16,6 +16,7 @@
   <% end %>
   
   <% if (action_name == 'site_index') %>
+  <% if current_user %>
   <script>
   	var flashvars = {
 				config_url: "<%=application_url + 'constellation/constellation_config.xml'%>",
@@ -41,6 +42,7 @@
 				"<%=application_url + 'constellation/constellation_roamer.swf'%>", "constellation", "100%", "100%",
 				"9", "expressInstall.swf", flashvars, params, attributes);
   </script>
+  <% end %>
   <% end %>
  
  
