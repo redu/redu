@@ -55,9 +55,10 @@
 
 /* Main Form ========================= */
 
+
 .MainForm{
 }
-
+/*
 .MainForm label{
 display: block;
 margin: 1em 0 2px 0;
@@ -88,7 +89,7 @@ background: #f8f8f8;
 color: #777;
 border-color: #777;
 background: #fff;
-}
+}*/
 
 .MainForm input.wrong, .MainForm .fieldWithErrors input {
 border-color: #f00;
@@ -97,6 +98,7 @@ background: #ffd5d5;
 }
 
 /* submit */
+/*
 .MainForm p input, .MainForm p button {
 padding-left: 1em;
 padding-right: 1em;
@@ -124,27 +126,29 @@ font-weight: bold;}
 .MainForm textarea{
 width: 550px;
 color: #777;
-}
+}*/
 
 
 /* checks */
 
+/*
 .MainForm fieldset {margin: 1em 0 0 0;}
 
 .MainForm fieldset label{
 margin: 4px 0;
 color: #777;
-}
+}*/
 
 .MainForm fieldset input{
 border: none;
 width: auto;
 }
 
+/*
 .MainForm fieldset.inline label{
 display: inline;
 margin-right: 1em;
-}
+}*/
 
 .warning, #errorExplanation, .errorExplanation{
 padding: 1em 1em 1em 1em;
