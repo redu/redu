@@ -40,26 +40,26 @@
                 <%= :zippostal_code.l %>
             </label>
 			<%= text_field :user, :zip, :style=>"width:90px" %>
-			<br/>
+			<br/><br/>
+			<div id='title'>
+                <%= :gender.l %>
+            </div>
 			<br/>
 			<label for='username'>
-                <%= :gender.l %>
-				<br/>
 				<%= radio_button :user, :gender, User::MALE %>
          		<%= :male.l %>
 				<%= radio_button :user, :gender, User::FEMALE %>
-         		<%= :female.l %> 
-            </label>
+         		<%= :female.l %>
+			</label>
 			<br/>
 			<br/>
-			<label for='username'>
+			<div id='title'>
                 <%= :birthday.l %>
-            </label>
-			<br/>
+            </div>
 			<br/>
 			<%= date_select :user, :birthday, {:start_year => 1926, :end_year => Time.now.year - 1}%> 
 			<br/>
-			
+			<br/>
 			<div id="title">
             <%= :about_me.l %>
         	</div>
