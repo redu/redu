@@ -21,7 +21,7 @@ class Credit < ActiveRecord::Base
    end
   
    def self.total(user_id)
-   	self.connection.execute("SELECT SUM(value) FROM credits WHERE customer_id = #{user_id}").fetch_row.first
+   	self.connection.execute("SELECT SUM(value) FROM credits WHERE user_id = #{user_id}").fetch_row.first
    end
   
   
