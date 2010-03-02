@@ -24,7 +24,7 @@ function hideResponseBox(activityId){
     </div>
     <div id="box_list2">
     	<% if @logs.empty? %>
-		Não há atividades recentes de quem você está seguindo.
+			<span class="alert">Não há atividades recentes de quem você está seguindo.</span>
 		<% else %>
        <%= render :partial => 'logs/item', :collection => @logs %>
 		<div id="box_more" style="margin-top: 5px">

@@ -905,3 +905,12 @@ text-decoration:underline;}
 			font: normal 12px "Trebuchet MS", Tahoma, Times New Roman, Times, serif; color:#858787}
 	
 /* background-image:url(../images/bg_search.gif); background-position:249px 27px; background-repeat:no-repeat */
+
+
+#box_list2 span.alert {
+	width: 90%;
+	display: block;
+	margin: 4px;
+	font-size: .8em;
+	color: 	#7A87A1;
+}
