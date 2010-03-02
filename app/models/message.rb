@@ -5,7 +5,7 @@ class Message < ActiveRecord::Base
   attr_accessor :reply_to
 
   validates_presence_of :body, :subject
-  validates_presence_of :recipient, :message => "is invalid"
+  validates_presence_of :recipient
   validate :ensure_not_sending_to_self
 
   after_create :notify_recipient
