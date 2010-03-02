@@ -24,11 +24,40 @@ pt-BR:
       photo:
         created_at: "created at: "
     errors:
+      template:
+        header:
+          one: "1 erro proibiu esse {{model}} de ser salvo" 
+          other: "{{count}} erros proibiram esse {{model}} de ser salvo." 
+        body: "Há problemas para os seguintes campos:" 
       models:
         question:
           attributes:
             statement:
-              blank: "Por favor escolha um enunciado maior que 6 caracteres" 
+              blank: "Por favor escolha um enunciado maior que 6 caracteres."
+        user:
+          attributes:
+            login:
+              blank: ": Por favor, digite um login." 
+              too_short: ": Login muito curto (mínimo de 5 caracteres)."
+              invalid:  ": Login inválido."
+            email:
+              blank: ": Por favor, digite um e-mail."
+              too_short: ": E-mail muito curto (mínimo de 3 caracteres)."
+              invalid: ": E-mail inválido."
+              taken: ": Este e-mail já está cadastrado."  
+            password:
+              blank: ": Por favor, digite a senha."
+              too_short: ": Senha muito curta (mínimo de 5 caracteres)." 
+            password_confirmation:
+              blank: ": Por favor, digite a senha de confirmação." 
+        message:
+          attributes:
+            body:
+              blank: ": Por favor, digite uma mensagem."
+            subject: 
+              blank: ": Por favor, digite um assunto."
+            recipient: 
+              blank: ": Destinatário inválido."   
   
   Course:  aula
   Resource:  material
@@ -288,7 +317,7 @@ pt-BR:
   #en: compose: Compose
   compose: Compose
   #en: compose_message: Compose message
-  compose_message: Compose message
+  compose_message: Escrever mensagem
   #en: confirm_password: Confirm Password
   confirm_password: Confirme a Senha
   #en: contest_was_successfully_created: Contest was successfully created.
@@ -322,7 +351,7 @@ pt-BR:
   #en: dashboard_friends: Once you start adding friends, you'll be able to track their activity on {{site}} here
   dashboard_friends: "Once you start adding friends, you'll be able to track their activity on {{site}} here"
   #en: date: Date
-  date_title: Date
+  date_title: Data
   #en: date_created: Date Created
   date_created: Date Created
   #en: date_published: Date Published
@@ -330,9 +359,9 @@ pt-BR:
   #en: days_ago: days ago
   days_ago: dias atrás
   #en: deactivate_link: Click here to deactivate your account
-  deactivate_link: Click here to deactivate your account
+  deactivate_link: Clique aqui para desativar sua conta
   #en: deactivate_tip: Deactivating your account will remove your profile from the site. 
-  deactivate_tip: Deactivating your account will remove your profile from the site. 
+  deactivate_tip: Desativando sua conta, você vai remover ser perfil do site. 
   #en: deactivate_confirmation: Are you sure you want to deactivate your account?
   deactivate_confirmation: Are you sure you want to deactivate your account?
   #en: deactivate_completed: Thanks. Your account has been deactivated and you have been logged out.
@@ -340,7 +369,7 @@ pt-BR:
   #en: delete: Delete
   delete: Remover
   #en: delete_selected: Delete selected
-  delete_selected: Delete selected
+  delete_selected: Deletar selecionado
   #en: delete_this_event: Delete this event
   delete_this_event: Delete this event
   #en: delete_this_forum: Delete this forum
@@ -380,9 +409,9 @@ pt-BR:
   #en: e_mail: E-mail
   e_mail: E-mail
   #en: e_mail_address: E-mail address
-  e_mail_address: E-mail address
+  e_mail_address: Endereço de E-mail
   #en: e_mail_notification: E-mail Notification
-  e_mail_notification: E-mail Notification
+  e_mail_notification: Notificação de E-mail
   #en: edit: Edit
   edit: Edit
   #en: edit_account: Edit account
@@ -434,7 +463,7 @@ pt-BR:
   #en: email: E-mail
   email: E-mail
   #en: email_signup_thanks: Thanks for signing up! You should receive an e-mail confirmation shortly at {{email}}
-  email_signup_thanks: "Thanks for signing up! You should receive an e-mail confirmation shortly at {{email}}"
+  email_signup_thanks: "Obrigado pelo cadastro! Você deve receber um e-mail de confirmação em {{email}}."
   #en: email_this_story_to_friends: "E-mail this story to friends"
   email_this_story_to_friends: "E-mail this story to friends"
   #en: email_to_friends: E-mail to friends
@@ -536,7 +565,7 @@ pt-BR:
   #en: friendship_requested: Requested friendship with {{friend}}.
   friendship_requested: "Requested friendship with {{friend}}."
   #en: from: From
-  from: From
+  from: De
   #en: from2: From
   from2: From
   #en: gender: Gender
@@ -598,7 +627,7 @@ pt-BR:
   #en: inactive: inactive
   inactive: inactive
   #en: inbox: Inbox
-  inbox: Inbox
+  inbox: Caixa de Entrada
   #en: insert: Insert
   insert: Insert
   #en: invite_a_friend: Invite a friend
@@ -682,7 +711,7 @@ pt-BR:
   #en: make_page_public: Make this page public
   make_page_public: Make this page public
   #en: make_my_profile_public: Make my profile public
-  make_my_profile_public: Make my profile public
+  make_my_profile_public: Tornar meu perfil público
   #en: make_this_my_profile_photo: Make this my profile photo
   make_this_my_profile_photo: Make this my profile photo
   #en: male: Male
@@ -708,13 +737,13 @@ pt-BR:
   #en: member_since: Member since
   member_since: Member since
   #en: message: Message
-  message: Message
+  message: Mensagem
   #en: messages_deleted: Messages deleted
   messages_deleted: Messages deleted
   #en: messages_sent: Messages sent!
   messages_sent: Messages sent!
   #en: message_sent: Message sent!
-  message_sent: Message sent!
+  message_sent: Mensagem enviada!
   #en: metro_area: Metro Area
   metro_area: Metro Area
   #en: metro_areas: Metro Areas
@@ -808,7 +837,7 @@ pt-BR:
   #en: no_images_uploaded_yet: No images uploaded yet.
   no_images_uploaded_yet: No images uploaded yet.
   #en: no_messages: no messages
-  no_messages: no messages
+  no_messages: Sem mensagens
   #en: no_profile_photo: "No profile photo?"
   no_profile_photo: "No profile photo?"
   #en: no_recent_activity: No recent activity
@@ -816,13 +845,13 @@ pt-BR:
   #en: no_tags: No tags
   no_tags: No tags
   #en: notify_email_updates: Notify of community news
-  notify_email_updates: Notify of community news
+  notify_email_updates: Notificação de novidades nas redes
   #en: notify_me_of_follow_ups_via_email: Notify me of follow ups via e-mail  
   notify_me_of_follow_ups_via_email: Notify me of follow ups via e-mail  
   #en: notify_of_comments: Notify of comments
-  notify_of_comments: Notify of comments
+  notify_of_comments: Notificação de comentários
   #en: notify_of_friend_requests: Notify of friend requests
-  notify_of_friend_requests: Notify of friend requests
+  notify_of_friend_requests: Notificação de pedido de amizade
   #en: number_of_attendees: Number of attendees (including you)
   number_of_attendees: Number of attendees (including you)
   #en: of: of
@@ -970,7 +999,7 @@ pt-BR:
   #en: profile_photo_crop: Crop profile photo
   profile_photo_crop: Recortar foto
   #en: profile_privacy: Profile Privacy
-  profile_privacy: Profile Privacy
+  profile_privacy: Visibilidade do perfil
   #en: profile_views: profile views
   profile_views: profile views
   #en: pros: Pros
@@ -982,7 +1011,7 @@ pt-BR:
   #en: question: Question
   question: Question
   #en: re_type_your_password_to_confirm: "Re-type your password to confirm:"
-  re_type_your_password_to_confirm: "Re-type your password to confirm:"
+  re_type_your_password_to_confirm: "Digite novamente sua senha para confirmar:"
   #en: read_more: read more
   read_more: read more
   #en: recent: Recent
@@ -1026,11 +1055,11 @@ pt-BR:
   #en: required: required
   required: required
   #en: required_we_will_send_a_confirmation_e_mail_to_the_address_you_enter: "(Required: We will send a confirmation e-mail to the address you enter.)"
-  required_we_will_send_a_confirmation_e_mail_to_the_address_you_enter: "(Required: We will send a confirmation e-mail to the address you enter.)"
+  required_we_will_send_a_confirmation_e_mail_to_the_address_you_enter: "(Obrigatório: Nós vamos enviar um e-mail de confirmação para o endereço que foi digitado.)"
   #en: required_you_must_be_at_least_years_old_to_sign_up: "(Required: you must be at least 13 years old to sign up.)"
   required_you_must_be_at_least_years_old_to_sign_up: "(Required: you must be at least 13 years old to sign up.)"
   #en: required_your_username_must_not_contain_numerals_spaces_or_special_characters: "(Required: Your username must not contain numerals, spaces or special characters.)"
-  required_your_username_must_not_contain_numerals_spaces_or_special_characters: "(Required: Your username must not contain numerals, spaces or special characters.)"
+  required_your_username_must_not_contain_numerals_spaces_or_special_characters: "(Obrigatório: Seu login não pode conter números, espaços ou caracteres especiais.)"
   #en: resend_my_activation_e_mail: Resend my activation e-mail
   resend_my_activation_e_mail: Reenvie minha ativação de e-mail
   #en: resend_your_activation_e_mail: Resend your activation e-mail
@@ -1102,7 +1131,7 @@ pt-BR:
   #en: send_me_my_username: Send me my username
   send_me_my_username: Send me my username
   #en: sent_messages: Sent messages
-  sent_messages: Sent messages
+  sent_messages: Mensagens enviadas
   #en: send_this_story_to_friends: Send this message to friends
   send_this_story_to_friends: Send this message to friends
   #en: service_could_not_be_deleted: Service could not be deleted.
@@ -1179,6 +1208,8 @@ pt-BR:
   sticky: Sticky
   #en: subject: Subject
   subject: Disciplina
+  #en: suject_of_message: Subject of Message
+  subject_of_message: Assunto
   #en: subscribe_to: Subscribe to
   subscribe_to: Subscribe to
   #en: subscribe_events_instructions:  Keep up to date with events using your favorite software (Outlook, Lightning / Thunderbird, Sunbird, iCal, etc.) or online service (Google Calendar, AirSet, iScrybe, etc.).
@@ -1258,7 +1289,7 @@ pt-BR:
   #en: title_required: "Title (required)"
   title_required: "Title (required)"
   #en: to: To
-  to: To
+  to: Para
   #en: to_accept: to accept
   to_accept: to accept
   #en: to_get_recommended_content_on_your_dashboard: to start getting recommended content on your dashboard.
@@ -1268,7 +1299,7 @@ pt-BR:
   #en: to_start_adding_friends: To start adding friends, you can
   to_start_adding_friends: "To start adding friends, you can"
   #en: to_you: You
-  to_you: You
+  to_you: Você
   #en: toggle: Toggle
   toggle: Toggle
   #en_ top_pros: Top Pros
@@ -1288,11 +1319,11 @@ pt-BR:
   #en: total_votes: Total votes
   total_votes: Total votes
   #en: type_a_username: Type usernames separated by commas
-  type_a_username: Type usernames separated by commas
+  type_a_username: Digite logins separados por vírgula
   #en: type_your_password: "Type your password:"
-  type_your_password: "Type your password:"
+  type_your_password: "Digite sua senha:"
   #en: uh_oh_we_couldnt_log_you_in_with_the_username_and_password_you_entered_try_again: "Uh oh. We couldn't log you in with the username and password you entered. Try again?"
-  uh_oh_we_couldnt_log_you_in_with_the_username_and_password_you_entered_try_again: Uh oh. We couldn't log you in with the username and password you entered. Try again?
+  uh_oh_we_couldnt_log_you_in_with_the_username_and_password_you_entered_try_again: Desculpe, não podemos logar você com o login e a senha digitados. Tentar novamente?
   #en: un_favorite_this: Un-favorite this
   un_favorite_this: Un-favorite this
   #en: unactivated_users: Unactivated users
@@ -1416,12 +1447,12 @@ pt-BR:
   #en: when_checked_this_page_will_be_visible_to_anyone: "When checked, this page will be visible to anyone."
   when_checked_this_page_will_be_visible_to_anyone: "When checked, this page will be visible to anyone."
   #en: when_checked_your_profile_will_be_visible_to_anyone: "When checked, your profile will be visible to anyone."
-  when_checked_your_profile_will_be_visible_to_anyone: "When checked, your profile will be visible to anyone."
+  when_checked_your_profile_will_be_visible_to_anyone: "Quando marcar, seu perfil vai estar visível para todos."
   #en: when_unchecked_this_page_will_only_be_visible_to_people_who_are_logged_in_to: When unchecked, this page will only be visible to people who are logged in to
   when_unchecked_this_page_will_only_be_visible_to_people_who_are_logged_in_to: When unchecked, this page will only be visible to people who are logged in to
 
   #en: when_unchecked_your_profile_will_only_be_visible_to_people_who_are_logged_in_to: When unchecked, your profile will only be visible to people who are logged in to
-  when_unchecked_your_profile_will_only_be_visible_to_people_who_are_logged_in_to: "When unchecked, your profile will only be visible to people who are logged in to"
+  when_unchecked_your_profile_will_only_be_visible_to_people_who_are_logged_in_to: "Quando desmarcado, seu perfil só vai ser visível para as pessoas que estiverem logadas no"
   #en: when_you_see_an_image_you_like_on_the_web: When you see an image you like on the Web, click the bookmarklet to save it to {{site}}
   when_you_see_an_image_you_like_on_the_web: "When you see an image you like on the Web, click the bookmarklet to save it to {{site}}"
   #en: why_sign_up: Why Sign up?
@@ -1437,7 +1468,7 @@ pt-BR:
   #en: yesterday: Yesterday
   yesterday: Yesterday
   #en: you_are_editing_your_account: You are editing your account.
-  you_are_editing_your_account: You are editing your account.
+  you_are_editing_your_account: Você está editando sua conta.
   #en: you_are_editing_your_profile: "You're editing your profile."
   you_are_editing_your_profile: "Você está editando seu perfil"
   #en: you_can_browse_all_content_and_users_on: You can browse all content and users on
