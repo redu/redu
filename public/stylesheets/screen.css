@@ -1,3 +1,11 @@
+a {
+	color: #5683D5;
+	text-decoration: none;
+}
+
+body {
+	font-size: 13px;
+}
                                                /* Tag Clouds */
 .nube1 {
   font-size: 0.8em; }
@@ -151,14 +159,18 @@ margin-right: 1em;
 }*/
 
 .warning, #errorExplanation, .errorExplanation{
-padding: 1em 1em 1em 1em;
-margin: 1em 0;
-border: 1px solid #fc0;
-background: #fff3c5;
-color: #6b5e2b;
+	padding: 1em 1em 1em 1em;
+	margin: 1em 0;
+	border: 1px solid #fc0;
+	background: #fff3c5;
+	color: #6b5e2b;
 }
 
-		
+
+
+#pagination_number {
+	list-style: none;
+}
 .pagination{display:block; float:left; width:100%; height:auto; padding:0px 0px 0px 0px; margin:8px 0px 0px 8px;}
 .pagination_number{list-style-type:none; top:0px; padding:0px; right:0px;}
 .pagination_number li {float:left; margin-right:8px; list-style:none; font-size:14px; text-decoration:none; color:#94a2ca;}
@@ -663,9 +675,9 @@ background:url(../images/denunciar.png) no-repeat;font-size:12px; text-decoratio
 /* LISTAGEM AULAS ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 
 #box_move{float:left; width:254px; height:auto; background-color:#FFF; padding:0px; margin-bottom:8px; overflow:visible; border:solid 1px #e7e8e8;}
-#col_box{float:left; width:256px; height:1050px; background-color:#f4f4f4;}
-#col_box2{float:left; width:256px; height:850px; background-color:#f4f4f4;}
-#col_box3{float:left; width:256px; height:1100px; background-color:#f4f4f4;}
+#col_box{float:left; width:256px; height:1050px; background-color:white;}
+#col_box2{float:left; width:256px; height:850px; background-color:white;}
+#col_box3{float:left; width:256px; height:1100px; background-color:white;}
 
 #box_top{width:auto; height:20px; background-color:#FFF; border-bottom:solid 1px #e7e8e8; font:bold 14px "Trebuchet MS", Tahoma; padding:6px 0px 0px 8px; color:#5683d5;}
 #box_list{width:254px; min-height:308px; background-color:#f6f8fd;   border-bottom:solid 1px #e7e8e8;}
@@ -907,10 +919,23 @@ text-decoration:underline;}
 /* background-image:url(../images/bg_search.gif); background-position:249px 27px; background-repeat:no-repeat */
 
 
-#box_list2 span.alert {
+/** Logs **/
+#box_list2 span.new-alert,
+#box_move span.new-alert { /* Clipping */
 	width: 90%;
 	display: block;
 	margin: 4px;
-	font-size: .8em;
+	font-size: 1em;
 	color: 	#7A87A1;
 }
+
+/** Clipping **/
+#box_move span.new-alert {
+	color: black;
+}
+
+#box_move span.new-alert a {
+	display: block;
+}
+
+
