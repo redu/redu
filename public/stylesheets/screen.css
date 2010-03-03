@@ -246,10 +246,19 @@ float:left; width:100%; height:100%; min-height:100%; _margin-top:-2px; margin-t
 
 #all_content{width:980px; height:auto; min-height:1050px; background-color:#FFF; padding:8px; overflow:visible; border:solid 1px #dedede;}
 #all_content2{width:980px; height:auto; min-height:850px; background-color:#FFF; padding:8px; overflow:visible; border:solid 1px #dedede;}
-#all_content3{width:980px; height:auto; min-height:1100px; background-color:#FFF; padding:8px;  border:solid 1px #dedede;}
+#all_content3 {width:980px; height:auto; min-height:1100px; background-color:#FFF; padding:8px;  border:solid 1px #dedede;}
 #all_content4{width:980px; height:auto; background-color:#FFF; padding:8px; overflow:visible; border:solid 1px #dedede;}
 
 
+#author_materials{float:right; width:197px; height:72px; padding:8px; background:#FFFFd5; z-index:10; font-family:"Trebuchet MS", Tahoma;}
+#author_title{float:left; width:100%; height:auto; padding:0; font: bold 14px "Trebuchet MS", Tahoma; color:#91a7d1;}
+#author_photo{float:left;margin:0px 8px 0px 0px; width:40px; height:40px;}
+#add_user_follow{position:relative; margin:0px;	width:16px;	height:16px; z-index:11; left: 30px; top: 30px;}
+#author_actions{float:left;width:auto; height:auto; padding:0;}
+#author_materials a, #author_materials a:visited {padding:0; font-size:11px; text-decoration:none; color:#5683d5;font-weight:bold;}
+#author_materials a:hover {padding:0; font-size:11px; text-decoration:underline; color:#5683d5; font-weight:bold;}
+#author_materials .follow, #author_materials .follow:visited {padding:0; font-size:9px; text-decoration:none; color:#5782d5;}
+#author_materials .follow:hover {padding:0; font-size:9px; text-decoration:underline; color:#5782d5;}
 
 #col_content{float:left; width:716px; height:auto; background-color:#FFF; padding:0px; margin-right:8px; overflow:visible; border:0;}
 #col_content_video{float:left; width:100%; height:auto; background-color:#FFF; padding:0px; margin:0px 8px 0px 0px; overflow:visible; border:0;}
