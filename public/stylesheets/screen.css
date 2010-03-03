@@ -702,8 +702,15 @@ background:url(../images/denunciar.png) no-repeat;font-size:12px; text-decoratio
 #replay{float:right; width:50px; height:auto; font:10px normal; font-family:"Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; color:#c5c7c8; margin:12px 0px 0px 0px}
 #replay a{font-size:10px; font-weight:bold; text-decoration:none; font-family:"Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; color:#bac5d4;}
 #replay a:hover{font-size:10px; font-weight:bold; text-decoration:underline; font-family:"Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; color:#bac5d4;}
-.link_01{float:right; font-size:11px; text-decoration:none; color:#5683d5; padding:0 8px 0 0}
-.link_01:hover{float:right; font-size:11px; text-decoration:underline; color:#5683d5; padding:0 8px 0 0}
+.link_01{
+	float:right; 
+	font-size:11px; 
+	color:#5683d5; 
+	padding:0 8px 0 0;
+	cursor: pointer;
+	font-weight: bold;
+}
+/*.link_01:hover{float:right; font-size:11px; text-decoration:underline; color:#5683d5; padding:0 8px 0 0}*/
 			
 #box_baseline{width:auto; height:130px; background-color:#FFF; border-bottom:solid 1px #e7e8e8; font:normal 12px "Trebuchet MS", Tahoma; padding:6px 0px 0px 8px; color:#858787;}	
 #box_baseline_base{float:left; width:200px; height:auto; padding:0px 0px 8px 0px;} 
@@ -712,13 +719,27 @@ background:url(../images/denunciar.png) no-repeat;font-size:12px; text-decoratio
 .bt_send:hover{width:56px; height:21px; font:bold 11px; color:#5683d5; background:url(../images/bg_bt_send.png); text-decoration:underline; display:block; ppadding-top:4px;}
 #box_baseline2{	width:auto; height:20px; background-color:#FFF; border-top:solid 1px #e7e8e8; font:normal 12px "Trebuchet MS", Tahoma; padding:6px 0px 0px 8px; color:#858787;}
 
-#box_login, #box_signup{float:left; width:256px; height:200px; background-color:#f6f8fd; padding:0px; overflow:visible; border-bottom:8px solid #FFF}
+#box_login, 
+#box_signup{
+	width:256px;  
+	background-color:#f6f8fd; 
+	padding-bottom: 20px; 
+	overflow:visible; 
+	border-bottom:8px solid #FFF;
+	margin-bottom: 5px;
+}
 #box_top_login{width:auto; height:20px; background-color:#edf1fa; font:bold 14px "Trebuchet MS", Tahoma; padding:6px 0px 0px 8px; color:#5683d5;}
 #box_list_login{width:236px; height:auto; background-color:#f6f8fd; overflow:visible; padding:8px 0px 0px 0px; font-size:11px; color:#5683d5;}
 #box_baseline_login{width:auto; height:20px; background-color:#FFF;font:normal 12px "Trebuchet MS", Tahoma; padding:6px 0px 0px 8px; color:#858787;}
-.edit_login_imput{border:1px solid #c1c1c2; background-color:#fffedc; font: bold 16px "Trebuchet MS", Tahoma; color:#5683d5}
-.bt_login{ float:left; margin:0px 40px 0px 0px; width:56px; height:21px; font:bold 11px; color:#5683d5; background:url(../images/bg_bt_send.png); text-decoration:none; display:block; padding-top:4px;}
-.bt_login:hover{float:left; margin:0px 40px 0px 0px; width:56px; height:21px; font:bold 11px; color:#5683d5; background:url(../images/bg_bt_send.png); text-decoration:underline; display:block; padding-top:4px;}
+.edit_login_imput{
+	border:1px solid #c1c1c2; 
+	background-color:#fffedc; 
+	font: bold 16px "Trebuchet MS", Tahoma; 
+	color:#5683d5
+}
+.bt_login{ float:left; margin:0px 40px 0px 0px; color:#5683d5; text-decoration:none; display:block; }
+
+/*.bt_login:hover{float:left; margin:0px 40px 0px 0px; width:56px; height:21px; font:bold 11px; color:#5683d5; background:url(../images/bg_bt_send.png); text-decoration:underline; display:block; padding-top:4px;}*/
 	
 #box_cadastro{float:left; width:256px; height:80px; background-color:#edf1fa; padding:0px;overflow:visible; border-bottom:8px solid #FFF}
 #box_top_cadastro{width:auto; height:20px; background-color:#edf1fa; font:bold 14px "Trebuchet MS", Tahoma; padding:6px 0px 0px 8px; color:#5683d5;}
@@ -938,4 +959,55 @@ text-decoration:underline;}
 	display: block;
 }
 
+/** Regra overall para input text e textarea **/
+input[type=text],
+input[type=password],
+textarea {
+		background-image:url("../images/input_bg.gif");
+		background-repeat:repeat-x;
+		border-color:#A1A1A1 #C1C1C1 #D1D1D1;
+		border-style:solid;
+		border-width:1px;
+		font-weight:normal;
+		padding: 2px;
+}
 
+input[type=submit],
+input[type=button],
+input[type=submit]:hover,
+input[type=button]:hover {
+	background-color: #F5F5F5;
+	border-top: 1px solid #EEEEEE;
+	border-left: 1px solid #EEEEEE;
+	border-right: 1px solid #DEDEDE;
+	border-bottom: 1px solid #DEDEDE;
+	font-size: 12px;
+	font-weight: bold;
+	font-family: "Tahoma", sans-serif;
+	padding: 3px 5px;
+}
+
+form fieldset {
+	border: none;
+	background-color: #F8FAFF;
+	margin: 10px 0;
+	padding: 7px;
+}
+
+form fieldset legend {
+	font-weight: bold;
+	color: #7A87A1;
+}
+
+hr {
+	border: none;
+	border-bottom: 1px solid #E7E8E8;
+}
+/**  clearfix hack **/
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}

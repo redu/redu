@@ -86,10 +86,10 @@
     	<div id="box_top_login">ACESSE AGORA</div>  
         <div id="box_list_login">
         	<label>Login:</label><br />
-			<%= text_field_tag 'login', nil, :size => 25, :class => 'edit_login_imput' %>
+			<%= text_field_tag 'login', nil, :size => 27, :class => 'edit_login_imput' %>
 			<br /><br />
         	<label>Senha:</label><br />	
-			<%= password_field_tag 'password', nil, :size => 25, :class => 'edit_login_imput' %>
+			<%= password_field_tag 'password', nil, :size => 27, :class => 'edit_login_imput' %>
 			<br /><br />
 			<%= check_box_tag 'remember_me' %> <label>Lembrar-me</label> <br />	
 			<div id="box_list_login" align="center">
@@ -106,7 +106,7 @@
 <!-- LOGIN ///////////////////////////////////////////////////////////////////////////////////// -->
 
 <!-- CADASTRO ///////////////////////////////////////////////////////////////////////////////////// -->
-	<div id="box_signup" style="display: none;">
+	<div id="box_signup" style="display: none;" class="clearfix">
 		<%- form_for :user, :url => users_path, :html => {:class => 'MainForm'} do |f| %>
 	
     	<div id="box_top_login">CADASTRO</div>  
@@ -114,11 +114,11 @@
 		<div id="box_list_login">
         	
 			<label>Login:</label><br />
-			 <%= f.text_field :login, :size => 25, :class => 'edit_login_imput' %>
+			 <%= f.text_field :login, :size => 27, :class => 'edit_login_imput' %>
 			<br /><br />
 			
 			<label>E-mail:</label><br />
-			<%= f.text_field :email, :size => 25, :class => 'edit_login_imput' %>
+			<%= f.text_field :email, :size => 27, :class => 'edit_login_imput' %>
 			<br /><br />
         	
 			<label>Data de nascimento:</label><br />
@@ -130,17 +130,17 @@
         	 <% end %>
 			 
 			<label>Senha:</label><br />
-			<%= f.password_field :password, :size => 25, :class => 'edit_login_imput' %>
+			<%= f.password_field :password, :size => 27, :class => 'edit_login_imput' %>
 			<br /><br />
 			
 			<label>Confirme a senha:</label><br />
-			<%= f.password_field :password_confirmation, :size => 25, :class => 'edit_login_imput' %>
+			<%= f.password_field :password_confirmation, :size => 27, :class => 'edit_login_imput' %>
 			<br /><br />
 
 			<div id="box_list_login" align="center">
 				<!-- <a href="#" class="bt_login">Enviar</a> -->
 				 <%= submit_tag :sign_up.l, :class => 'bt_login' %> 
-				 <a href="#" class="link_01" onclick="toggleLoginSignupBox();">ou retornar ao login</a>
+				 <span class="link_01" onclick="toggleLoginSignupBox();">ou retornar ao login</span>
 			</div>
 			
            
@@ -153,7 +153,7 @@
 
 	<div id="box_cadastro">
     	<div id="box_top_cadastro">CADASTRE-SE</div>
-        <div id="box_list_cadastro"><a href="#" class="link_01" onclick="toggleLoginSignupBox();">Para ter acesso aos recusos do Redu é necessário estar cadastrado.</a></div>
+        <div id="box_list_cadastro"><span class="link_01" onclick="toggleLoginSignupBox();">Para ter acesso aos recusos do Redu é necessário estar cadastrado.</span></div>
 	</div>
 <!-- CADASTRO ///////////////////////////////////////////////////////////////////////////////////// -->
 	<% end %>

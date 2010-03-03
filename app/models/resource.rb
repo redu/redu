@@ -38,7 +38,9 @@ class Resource < ActiveRecord::Base
   named_scope :published, :conditions => ['published = ?', true], :include => :owner
   
   
-  
+  def name 
+  	self.title
+  end	
   
   def supported_external_resources
     SUPPORTED_EXTERNAL_RESOURCES
