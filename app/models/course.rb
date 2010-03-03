@@ -145,7 +145,7 @@ class Course < ActiveRecord::Base
   	SUPPORTED_AUDIO.include?(self.media_content_type)
  end
  
- def can_be_deleted_by(user)
+ def can_be_deleted_by(user) #TODO verificar papel na escola
     (self.owner == user or user.admin?)
  end
  

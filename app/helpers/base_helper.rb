@@ -3,6 +3,8 @@ require 'md5'
 # Methods added to this helper will be available to all templates in the application.
 module BaseHelper
   
+  
+  
   def activity_name(item)
     link_user = link_to item.user.login, user_path(item.user)
     type = item.logeable_type.underscore

@@ -37,14 +37,30 @@ class Resource < ActiveRecord::Base
   
   named_scope :published, :conditions => ['published = ?', true], :include => :owner
   
+    #state machine 
+  acts_as_state_machine :initial => :waiting
+    state :waiting
+    state :approved
+    state :disapproved
+    
+    event :approve do
+      transitions :from => :waiting, :to => :approved
+   end
+   
+   event :disapprove do
+      transitions :from => :waiting, :to => :disapproved
+  end
   
-  def name 
-  	self.title
-  end	
   
   def supported_external_resources
     SUPPORTED_EXTERNAL_RESOURCES
   end
+  
+  
+  def can_be_deleted_by(user)
+    (self.owner == user or user.admin?)
+ end
+  
   
   # Inspects object attributes and decides which validation group enable
   def enable_correct_validation_group
@@ -70,6 +86,7 @@ class Resource < ActiveRecord::Base
       :url => "<a href='#{params[:uri]}'>#{params[:uri]}</a>#{params[:selection] ? "<p>#{params[:selection]}</p>" : ''}"
     )
   end
+  
   
   
   protected
@@ -105,19 +122,8 @@ class Resource < ActiveRecord::Base
     
   end
   
-  #state machine 
-  acts_as_state_machine :initial => :waiting
-    state :waiting
-    state :approved
-    state :disapproved
-    
-    event :approve do
-      transitions :from => :waiting, :to => :approved
-   end
-   
-   event :disapprove do
-      transitions :from => :waiting, :to => :disapproved
-   end
+  
+  
    
   
   

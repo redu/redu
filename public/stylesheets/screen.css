@@ -66,7 +66,9 @@ body {
 
 .MainForm{
 }
+
 /*
+
 .MainForm label{
 display: block;
 margin: 1em 0 2px 0;
@@ -145,14 +147,13 @@ color: #777;
 .MainForm fieldset label{
 margin: 4px 0;
 color: #777;
-}*/
+}
 
 .MainForm fieldset input{
 border: none;
 width: auto;
 }
 
-/*
 .MainForm fieldset.inline label{
 display: inline;
 margin-right: 1em;
@@ -166,12 +167,13 @@ margin-right: 1em;
 	color: #6b5e2b;
 }
 
+		
 
 
 #pagination_number {
 	list-style: none;
 }
-.pagination{display:block; float:left; width:100%; height:auto; padding:0px 0px 0px 0px; margin:8px 0px 0px 8px;}
+.pagination{display:block; float:left; width:100%; height:auto; padding:0px 0px 0px 0px; margin:8px 0px 0px 8px; text-align:center;}
 .pagination_number{list-style-type:none; top:0px; padding:0px; right:0px;}
 .pagination_number li {float:left; margin-right:8px; list-style:none; font-size:14px; text-decoration:none; color:#94a2ca;}
 .pagination_number li span {padding: 5px 10px; font-size:11px; text-decoration:none; color:#5683d5;}
@@ -431,6 +433,44 @@ background:url(../images/icon_share_on.png) no-repeat;font-size:12px; text-decor
 
 /* PERFIL DO USUÁRIO //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 
+/* MATERIALS /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */		
+
+#materials{float:right; width:511px; height:auto; margin:0px 0px 0px 0px}
+
+#filter_bar_materials{float:left; width:500px; height:19px; background:url(../img/bg_filter_bar_materials.gif) repeat-x right; padding:8px 5px 5px 5px; margin:8px 8px 0px 0px; border:solid 1px #f9efd1; text-align:left;}
+
+#filter_bar_material{float:left; width:99%; height:22px; background:url(../img/bg_filter_bar_materials.gif) repeat-x right; padding:5px; margin:0px 8px 8px 0px; border:solid 1px #f9efd1; text-align:right}
+				
+.title_materials{font:bold 14px "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; color:#b5af4a; vertical-align:middle; text-decoration:none}
+
+#materials_form{float:left; width:511px; height:auto; background-color:#FFFFd5; padding:0px 0px 8px 0px; overflow:visible; margin:0px 0px 0px 0px}
+	
+#materialslist{float:left; width:511px; height:auto; padding:0px 8px 0px 8px; margin:0px; overflow:visible;}
+#materials_item{list-style-type:none; width:auto; height:auto; top:0px; padding:0px; overflow:visible;}
+#materials_item li {list-style:none; float:left; width:494px; height:25px; text-decoration:none; padding:4px 0px 4px 0px; color:#858787; border-bottom:solid 1px #f9efd1;}
+	
+#materials_item li .ppt, #materials_item li .ppt visited {background:url(../img/icon_ppt.png) no-repeat; vertical-align:middle;font-size:12px; text-decoration:none; color:#858787; padding-left:20px}
+#materials_item li .ppt:hover {background:url(../img/icon_ppt.png) no-repeat; font-size:12px; text-decoration:underline; color:#858787; padding-left:20px}
+	
+#materials_item li .word, #materials_item li .word visited {background:url(../img/icon_word.png) no-repeat; font-size:12px; text-decoration:none; color:#858787; padding-left:20px}
+#materials_item li .word:hover {background:url(../img/icon_word.png) no-repeat; font-size:12px; text-decoration:underline; color:#858787; padding-left:20px} 
+	
+#materials_item li .excel, #materials_item li .excel visited {background:url(../img/icon_excel.png) no-repeat; font-size:12px; text-decoration:none; color:#858787; padding-left:20px}
+#materials_item li .excel:hover {background:url(../img/icon_excel.png) no-repeat; font-size:12px; text-decoration:underline; color:#858787; padding-left:20px}
+	
+#materials_item li .text, #materials_item li .text visited {background:url(../img/icon_text.png) no-repeat; font-size:12px; text-decoration:none; color:#858787; padding-left:20px}
+#materials_item li .text:hover {background:url(../img/icon_text.png) no-repeat; font-size:12px; text-decoration:underline; color:#858787; padding-left:20px}
+	
+#materials_item li .pdf, #materials_item li .pdf visited {background:url(../img/icon_pdf.png) no-repeat;font-size:12px; text-decoration:none; color:#858787;padding-left:20px}
+#materials_item li .pdf:hover {background:url(../img/icon_pdf.png) no-repeat; font-size:12px; text-decoration:underline; color:#858787; padding-left:20px}
+	
+#materials_item li .photo, #materials_item li .photo visited {background:url(../img/icon_photo.png) no-repeat; font-size:12px; text-decoration:none; color:#858787; padding-left:20px}
+#materials_item li .photo:hover {background:url(../img/icon_photo.png) no-repeat; font-size:12px; text-decoration:underline; color:#858787; padding-left:20px}
+	
+/* MATERIALS /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+
+
+
 /* REDES //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 #photo_rede{float:left; width:100px; height:68px; background-color:#e7e8e8; padding:0px 0px 0px 0px; margin:0px 0px 8px 0px; border:solid 1px #7b828e;}
 #actions_rede{float:left; width:399px; height:auto; padding:0px 0px 8px 0px; margin:16px 0px 0px 8px;}
@@ -487,6 +527,9 @@ background:url(../images/denunciar.png) no-repeat;font-size:12px; text-decoratio
 #video_info{float:right; z-index:100; width:43px; height:16px; background-color:#7b828e; padding:6px 4px 4px 6px; margin:62px 0px 0px 0px; 
 				 font-size:11px; color:#FFFFFF;}
 				 
+#resource_thumb{position: relative;  float:left; width:60px; height:50px;  padding:8px 0px 8px 0px; margin:0px 0px 8px 0px; text-align: center;}
+#resource_thumb img{text-align: center; vertical-align: middle;}
+
 
 #description_video{float:left; width:80%; height:auto;padding:0px 0px 0px 0px; margin:0px 0px 0px 0px; font-size:13px; color:#858787}
 	

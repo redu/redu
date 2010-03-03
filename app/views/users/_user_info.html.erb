@@ -6,7 +6,7 @@
 		-->
     <%= link_to image_tag( @user.avatar_photo_url(:thumb), {:width => "64", :height=>"64", :border => 0 }), @user %><BR>
 	 
-	 <% if @is_current_user %> 
+	 <% if (@user && @user.eql?(current_user)) %> 
 	  	<% if @user.avatar %> 
 	  		<%= link_to :profile_photo_crop.l, crop_profile_photo_user_path(@user)%>
 	  	<% else %>
@@ -21,7 +21,7 @@
 				<%= link_to @user.login.upcase, @user, :class => "name"%>
 				</li>
 			<li>
-				<% if  @is_current_user %>
+				<% if  (@user && @user.eql?(current_user)) %>
 				<%= link_to :update_your_profile.l, edit_user_path(@user), :class => "edit"%>
 				<% end %>
 			</li>
@@ -36,7 +36,7 @@
 
 </div> 
 
-<% if not @is_current_user %>
+<% if not (@user && @user.eql?(current_user)) %>
 <div id="follow_user">
 
     <% unless @user.followers.include?(current_user) %>
@@ -61,7 +61,7 @@
 	<!--
 	<a href="#" class="contact_user">ADICIONAR COMO CONTATO</a> |
 	-->
-	<% if @is_current_user %>
+	<% if (@user && @user.eql?(current_user)) %>
 	<a href="#" class="contact_user">ANOTAÇÕES</a> | 
 	<% else %>
 	<%= link_to(:send_me_a_message.l.upcase, new_user_message_path(current_user, :to=>@user), :class => "mensage_user")%> |

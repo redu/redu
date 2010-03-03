@@ -1,14 +1,13 @@
 <div id="item">
     <div id="title">
-        <% if resource.external_resource_type.eql?("clipping") %>
-        <%= link_to resource.name , resource.external_resource.to_s %>
-        <% else %>
         <%= link_to resource.name, resource %>
-        <% end %>
     </div>
-    <%# icon_url = if resource.media_content_type == 'video/mpeg' %>
-    <div id="video">
-        <%= image_tag "icons/doc.gif", :border => 0 %>
+    <div id="resource_thumb">
+    	<% if resource.external_resource_type == "clipping" %>
+        <%= link_to image_tag("icon_web_48.png", :border => 0), resource %>
+		<% else %>
+		<%= link_to image_tag("icon_pdf_48.png", :border => 0), resource %>
+		<% end %>
     </div>
     <div id="identification">
         <ul id="identification_resource">
@@ -19,7 +18,7 @@
                 |
             </li>
             <li>
-                <%= time_ago_in_words(resource.created_at) %>
+                Criado: <%= time_ago_in_words(resource.created_at) %>
             </li>
         </ul>
     </div>
