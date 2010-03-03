@@ -20,8 +20,8 @@ class Credit < ActiveRecord::Base
       transitions :from => :pending, :to => :error # TODO salvar estado de "erro" no bd
    end
   
-   def self.total(user_id)
-   	self.connection.execute("SELECT SUM(value) FROM credits WHERE user_id = #{user_id}").fetch_row.first
+   def self.total(customer_id)
+   	self.connection.execute("SELECT SUM(value) FROM credits WHERE customer_id = #{custumer_id}").fetch_row.first
    end
   
   
