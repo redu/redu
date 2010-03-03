@@ -244,10 +244,10 @@ html, body {padding: 0px; margin: 0px; width:100%; height:100%; min-height: 100%
 #container_content{
 float:left; width:100%; height:100%; min-height:100%; _margin-top:-2px; margin-top:0px; *margin-top:-2px; border:0; overflow:visible}
 
-#all_content{width:980px; height:auto; min-height:1050px; background-color:#FFF; padding:8px; overflow:visible; border:solid 1px #dedede;}
-#all_content2{width:980px; height:auto; min-height:850px; background-color:#FFF; padding:8px; overflow:visible; border:solid 1px #dedede;}
-#all_content3 {width:980px; height:auto; min-height:1100px; background-color:#FFF; padding:8px;  border:solid 1px #dedede;}
-#all_content4{width:980px; height:auto; background-color:#FFF; padding:8px; overflow:visible; border:solid 1px #dedede;}
+#all_content{width:980px; height:auto; min-height:1050px; background-color:#FFF; padding:8px; overflow:visible; border:solid 1px #dedede; padding-bottom: 100px;}
+#all_content2{width:980px; height:auto; min-height:850px; background-color:#FFF; padding:8px; overflow:visible; border:solid 1px #dedede; padding-bottom: 100px;}
+#all_content3 {width:980px; height:auto; min-height:1100px; background-color:#FFF; padding:8px;  border:solid 1px #dedede; padding-bottom: 100px;}
+#all_content4{width:980px; height:auto; background-color:#FFF; padding:8px; overflow:visible; border:solid 1px #dedede; padding-bottom: 100px;}
 
 
 #author_materials{float:right; width:197px; height:72px; padding:8px; background:#FFFFd5; z-index:10; font-family:"Trebuchet MS", Tahoma;}
@@ -630,6 +630,7 @@ background:url(../images/denunciar.png) no-repeat;font-size:12px; text-decoratio
 
 #filter_bar_comments{float:left; width:100%; height:19px; background:url(../images/bg_filter_bar.gif) repeat-x right; padding:8px 5px 5px 5px; margin:8px 0px 8px 0px; border:solid 1px #dedede; text-align:left;}
 
+#filter_bar_comments2{float:left; width:100%; height:19px; background:url(../images/bg_filter_bar.gif) repeat-x right; padding:8px 5px 5px 5px; margin:8px 0px 8px 0px; border:solid 1px #dedede; text-align:left;}
 				
 #comments_item{float:left; width:415px; height:auto; padding:5px; border-bottom:solid 1px #e7e8e8;}
 #comments_item a{text-decoration:none; font: 12px "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; color:#5683d5;}
@@ -647,7 +648,13 @@ background:url(../images/denunciar.png) no-repeat;font-size:12px; text-decoratio
 #comments_actions{float:right; width:200px; height:auto; font:11px normal; font-family:"Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; color:#c5c7c8; margin:12px 0px 0px 0px; text-align:right}
 #comments_actions a{font:normal 10px ; text-decoration:none; font-family:"Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; color:#5683d5;}
 #comments_actions a:hover{font:normal 10px; text-decoration:underline; font-family:"Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; color:#5683d5;}
-.comments_imput{border:1px solid #F1F1F1; background-color:#fffedc; font:12px "Trebuchet MS", Tahoma; color:#858787}
+.comments_imput{
+	border:1px solid #F1F1F1; 
+	background-color:#fffedc; 
+	font:12px "Trebuchet MS", Tahoma; 
+	color:#858787
+	width: 100%;
+}
 	
 #comments_form{float:left; width:410px; height:210px; background-color:#f6f8fd; padding:8px; overflow:visible; margin:8px 0px 0px 0px}
 #comments_top{width:auto; height:24px; background-color:#edf1fa; font: normal 12px "Trebuchet MS", Tahoma; padding:6px 8px 0px 8px; color:#858787; margin:0px;}
@@ -656,8 +663,7 @@ background:url(../images/denunciar.png) no-repeat;font-size:12px; text-decoratio
 #comments_title{width:auto; height:20px; font:bold 12px "Trebuchet MS", Tahoma; padding:6px 0px 0px 8px; color:#858787; margin:0px 0px 0px 0px}
 #comments_form_fields{width:auto; height:auto; background-color:#f6f8fd; overflow:visible; padding:8px 0px 0px 0px; font-size:11px; color:#5683d5;}
 #comments_box_baseline{width:auto; height:20px; background-color:#FFF;font:normal 12px "Trebuchet MS", Tahoma; padding:6px 0px 0px 8px; color:#858787;}
-.bt_comments{ float:left; margin:8px 0px 0px 0px; width:42px; height:17px; font:bold 11px; color:#5683d5; background:url(../images/bg_bt_send.png); text-decoration:none; display:block; padding:4px 4px 4px 10px;}
-.bt_comments:hover{float:left; margin:8px 0px 0px 0px; width:42px; height:17px; font:bold 11px; color:#5683d5; background:url(../images/bg_bt_send.png); text-decoration:underline; display:block; padding:4px 4px 4px 10px;}
+.bt_comments{ float:left; margin:8px 0px 0px 0px; font:bold 11px; color:#5683d5; background:url(../images/bg_bt_send.png); text-decoration:none; display:block; padding:4px 4px 4px 10px;}
 	
 /* COMENTARIOS ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 
