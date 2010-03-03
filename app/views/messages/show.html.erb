@@ -23,18 +23,8 @@
 				<%= :date_title.l + ":" %>
 				<%= @message.created_at.to_s(:long) %>
 			</p>
-			<pre>
 				<%= auto_link(h(@message.body)) %>
-			</pre>
-			<%- if @reply %>
-				<ul>
-					<%- if @message.recipient.eql? @user %>
-					<li>
-						<%= link_to :reply.l, new_user_message_path(@user, :reply_to => @message), :onclick => "$('reply').toggle(); $('message_body').activate().scrollTo();return false;" %>
-					</li>
-					<% end %>
-				</ul>
-			<% end %>
+				
         </div>
     </div>
 </div>
