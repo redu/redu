@@ -594,8 +594,7 @@ class User < ActiveRecord::Base
   end
   
   def has_credits_for_course(course)
-    @course_price = CoursePrice.find(:first,:conditions => ['course_id = ?', course.id]).price.to_f
-    puts @course_price.inspect
+    @course_price = CoursePrice.find(:first, :conditions => ['course_id = ?', course.id]).price.to_f
     @user_credit = Credit.total(self.id).to_f - Acquisition.total(self.id).to_f
     (@user_credit >= @course_price)
   end

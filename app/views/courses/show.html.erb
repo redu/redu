@@ -192,7 +192,7 @@
 		
 		<%= render :partial => 'shared/share', :locals => {:title => @course.name, :url => application_url[0..application_url.length-2] + request.request_uri, :thumb_url => @course.thumb_url} %>
 		
-		<div id="view_video" align="center">
+		<div id="view_video" align="center" >
 			
         	<!-- colocar if aqui -->
 			<% if current_user and @course.external_resource_type.eql?('youtube')%>

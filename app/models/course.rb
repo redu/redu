@@ -48,10 +48,9 @@ class Course < ActiveRecord::Base
     state :pending
     state :converting
     #state :converted, :enter => :upload, :after => :set_new_filename
-    state :converted, :after => :set_new_local_filename
     state :error
     
-    state :waiting
+    state :waiting,:enter => :set_new_local_filename
     state :approved
     state :disapproved
 	
@@ -62,16 +61,14 @@ class Course < ActiveRecord::Base
    event :disapprove do
       transitions :from => :waiting, :to => :disapproved
    end
-   
+
    event :wait do
       transitions :from => :converting, :to => :waiting
     end
     
-    
     event :convert do
       transitions :from => :pending, :to => :converting
     end
-
 
     event :converted do
       transitions :from => :converting, :to => :waiting
@@ -126,13 +123,12 @@ class Course < ActiveRecord::Base
   # This method is called from the controller and takes care of the converting
   def convert
     self.convert!
+    puts self.state
     if video?    
       proxy = MiddleMan.worker(:converter_worker)
-      self.convert!
       proxy.enq_convert_course(:arg => self.id, :job_key => self.id) #TODO set timeout :timeout => ?
     else
 			self.converted!
-      self.wait!
       #self.update_attribute(:state, "waiting")
     end
   end
@@ -161,7 +157,6 @@ class Course < ActiveRecord::Base
 	
 	# Inspects object attributes and decides which validation group to enable
 	def enable_correct_validation_group
-	  puts "enable_correct_validation_group", self.external_resource_type
 		if self.external_resource_type != "upload"
 			self.enable_validation_group :external
 		else
@@ -187,6 +182,7 @@ class Course < ActiveRecord::Base
   end
   
   def set_new_local_filename
+  	puts "set_new_local_filename"
     self.update_attribute(:media_file_name, "#{id}.flv")
   end
   
