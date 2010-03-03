@@ -80,7 +80,7 @@ class User < ActiveRecord::Base
   has_many :credits
 
   #RESOURCES
-  has_many :resources, :foreign_key => "owner"
+  has_many :resources, :foreign_key => "owner_id"
   
   # EXAMS
   has_many :exams, :foreign_key => "owner_id"
