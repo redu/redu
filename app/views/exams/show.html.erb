@@ -18,7 +18,7 @@
         	<ul id="identification_resource1">
 				<li><%= link_to @exam.owner.login, user_path(@exam.owner) %></li>
         		<li>|</li>
-				<li><%= time_ago_in_words(@exam.created_at) %></li>
+				<li>Criado: <%= time_ago_in_words(@exam.created_at) %></li>
             <!--	<li>|</li>
 				<li>ExibiÃ§Ãµes(4)</li> -->
 			</ul>

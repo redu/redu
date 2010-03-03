@@ -1,14 +1,20 @@
 <div id="all_content3">
 <div id="col_content_video">
-	<div id="breadcrumbs_video"><a href="#">home</a> > <a href="#">material</a> > <%= @resource.name %></div>  
+	<div id="breadcrumbs_video"><a href="#">home</a> > aprender > <%= link_to "materiais", resources_path %> > <%= @resource.name %></div>  
 	
 	<%# render :partial => 'exams/author', :locals => {:author => @resource.owner} %>
 	
 	<div id="author_materials">
     	<div id="author_title">AUTOR</div>
-        <div id="add_user_follow"><a href="#"><img src="img/add1.png" border="0"/></a></div>
-        <div id="author_photo"><a href="#"><img src="img/foto_40x40.png" border="0" /></a></div>
-    	<div id="author_name"><a href="#">Robson Ribeiro</a></div>
+        <div id="add_user_follow">
+        	 <% unless @resource.owner.followers.include?(current_user) %>
+		      <%= link_to image_tag("add1.png", :border => "0"),  follow_user_path(@resource.owner) %>
+		     <% end %>
+		</div>
+        <div id="author_photo">
+        	<%= link_to image_tag( @resource.owner.avatar_photo_url(:thumb), {:width => "40", :height=>"40", :border => 0 }), @resource.owner %>
+		</div>
+    	<div id="author_name"><%= link_to @resource.owner.login, user_path(@resource.owner) %></div>
     	<div id="author_actions"><a href="#" class="follow">Seguindo(10)</a><br /><a href="#" class="follow">Seguidores(50)</a></div>
     </div>
 	
@@ -32,11 +38,11 @@
         </div>
         <div id="identification1">
         	<ul id="identification_resource1">
-				<li><a href="#">Robson Ribeiro</a></li>
+				<li><%= link_to @resource.owner.login, user_path(@resource.owner) %></li>
         		<li>|</li>
-				<li>hÃ¡ 1 hora atrÃ¡s</li>
+				<li>Criado: <%= time_ago_in_words(@resource.created_at) %></li>
             	<li>|</li>
-				<li>ExibiÃ§Ãµes(4)</li>
+				<li>Downloads(4)</li>
 			</ul>
         </div>
          <div id="description_video"><%= @resource.description %></div>
@@ -64,7 +70,13 @@
 			<%= render :partial => "shared/favorite" , :locals => {:favoritable => @resource}%>
 			</li>
             <li>|</li>
-			<li><a href="#" class="download_video">Download</a></li>
+			<li>
+			<% if @resource.external_resource_type == "clipping" %>
+				<%= link_to "Ir para o site", @resource.external_resource, :target => "_blank" %>
+			<% else %>
+				<%= link_to "Download", @resource.media.url, :target => "_blank" , :class => "download_video"%>
+			<% end %>	
+			</li>
             <li>|</li>
 			<li><a href="#" class="comments_video">Comentários(<%= @resource.comments.count %>)</a></li>
 		</ul>
