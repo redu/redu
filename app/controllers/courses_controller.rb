@@ -126,7 +126,7 @@ class CoursesController < BaseController
     
     #relacionados
     related_name = @course.name
-    @related_courses = Course.find(:all,:conditions => ["name LIKE ? ","%#{related_name}%"] , :limit => 3, :order => 'created_at DESC')
+    @related_courses = Course.find(:all,:conditions => ["name LIKE ? AND id NOT LIKE ?","%#{related_name}%", @course.id] , :limit => 3, :order => 'created_at DESC')
     
     # atualiza número de exibições TODO cache
     @course.update_attribute(:view_count, @course.view_count + 1) #TODO performance
