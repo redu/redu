@@ -21,6 +21,10 @@ class Resource < ActiveRecord::Base
   
   #has_one :clipping
   
+  validation_group :external, :fields=>[:external_resource]
+  validation_group :uploaded, :fields=>[:media]     
+
+
   # Callbacks
   before_validation :enable_correct_validation_group
   #before_save :transform_resource
@@ -30,8 +34,9 @@ class Resource < ActiveRecord::Base
   #validates_inclusion_of :external_resource_type, :in => SUPPORTED_EXTERNAL_RESOURCES
   has_attached_file :media
   #validates_attachment_presence :media
-  #validates_attachment_content_type :media,
-  # :content_type => (SUPPORTED_DOCUMENTS)
+  validates_attachment_content_type :media,
+   :content_type => (SUPPORTED_DOCUMENTS)
+   
   validates_attachment_size :media,
  	 :less_than => 10.megabytes
   
