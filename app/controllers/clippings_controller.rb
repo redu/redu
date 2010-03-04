@@ -124,9 +124,9 @@ class ClippingsController < BaseController
   def new_clipping
     #@user = current_user
     #@clipping = @user.clippings.new({:url => params[:uri], :description => params[:selection]})
-    @resource = Resource.create(:title => params[:title], :external_resource => params[:uri], :external_resource_type => 'clipping', :owner => current_user)
+    @resource = Resource.create(:name => params[:title], :description => params[:selection], :external_resource => params[:uri], :external_resource_type => 'clipping', :owner => current_user)
     #render :action => "clipping_index"
-    flash[:notice] = 'A aula foi comprada!'
+    flash[:notice] = 'Material adicionado ao Redu!'
     redirect_to user_resources_path(current_user)
   end
 

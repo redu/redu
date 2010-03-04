@@ -228,16 +228,28 @@ class CoursesController < BaseController
   def buy
     @course = Course.find(params[:id])
     
-    #o nome dessa variável, deixar como acquisition
-    @acquisition = Acquisition.new
-    @acquisition.acquired_by_type = "User"
-    @acquisition.acquired_by_id = current_user.id
-    @acquisition.value =  Course.price_of_acquisition(@course.id)
-    @acquisition.course = @course
+    if not current_user.has_access_to_course(@course)
     
-    if @acquisition.save
-      #flash[:notice] = 'A aula foi comprada!'
-      redirect_to @course
+      if current_user.has_credits_for_course(@course)
+        #o nome dessa variável, deixar como acquisition
+        @acquisition = Acquisition.new
+        @acquisition.acquired_by_type = "User"
+        @acquisition.acquired_by_id = current_user.id
+        @acquisition.value =  Course.price_of_acquisition(@course.id)
+        @acquisition.course = @course
+        
+        if @acquisition.save
+          flash[:notice] = 'A aula foi comprada!'
+          redirect_to @course
+        end
+      else
+         flash[:notice] = 'Você não tem créditos suficientes para comprar esta aula. Recarrege agora!'
+         # TODO passar como parametro url da aula para retornar após compra
+         redirect_to credits_path(:course_id => @course.id)
+      end
+    else
+       flash[:notice] = 'Você já possui acesso a esta aula!'
+       redirect_to @course
     end
   end
   

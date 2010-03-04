@@ -60,7 +60,7 @@ class Comment < ActiveRecord::Base
         when 'course'
         commentable.name
         when 'resource'
-        commentable.title
+        commentable.name
         when 'exam'
         commentable.name
         when 'post'
