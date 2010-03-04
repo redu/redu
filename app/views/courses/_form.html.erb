@@ -42,9 +42,11 @@
 		// fieldType = 1 Upload
 		// fieldType = 2 External link
 		if (fieldType == 1) {
+			$('price_box').show();
 			document.getElementById("upload_resource_field").style.display = "block";
 			document.getElementById("external_resource_field").style.display = "none";
 		} else {
+			$('price_box').hide();
 			document.getElementById("upload_resource_field").style.display = "none";
 			document.getElementById("external_resource_field").style.display = "block";
 		}
@@ -70,7 +72,7 @@
 	<% end %>
 </fieldset>	
 
-<fieldset>
+<fieldset id="price_box">
 	<legend>Preços</legend>
 	<% f.fields_for :course_prices do | course_price | %>
 		<%= course_price.label :price %>

@@ -65,15 +65,9 @@
             </div>
             <!--	<div id="title_video"><a href="#">História - Revolução Francesa</a></div>    -->
             <div id="edit_admin">
-				<% if current_user and not @course.external_resource_type.eql?('youtube')%>
 				
-				<% if current_user and current_user.has_credits_for_course(@course) and not current_user.has_access_to_course(@course) %>
-					<%= link_to "Comprar", { :action => :buy, :id => @course.id, :class => "download" }%>
-				<% else %>
-					<% @flash = flash[:message] = 'Você não tem créditos suficientes para comprar a aula, compre créditos.' %>
-					<%= link_to "Comprar", {:controller => 'credits', :action => 'index' ,:flash => @flash , :class => "download"} %>
-				<% end %>
-				
+				<% if current_user and not current_user.has_access_to_course(@course) and not @course.external_resource_type.eql?('youtube') %>
+					<%= link_to "Comprar", { :action => :buy, :id => @course.id }, :class => "download"%>
 				<% end %>
 				
 				
