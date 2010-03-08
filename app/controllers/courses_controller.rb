@@ -117,6 +117,11 @@ class CoursesController < BaseController
     
     @course = Course.find(params[:id])
     
+    if not @course.can_be_deleted_by(current_user)
+      flash[:error] = "Você não tem acesso a este vídeo"
+      redirect_to courses_path
+    else 
+    
     #comentários
     @comments  = @course.comments.find(:all, :limit => 10, :order => 'created_at DESC')
     
@@ -136,6 +141,7 @@ class CoursesController < BaseController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @course }
+    end
     end
       
   end
