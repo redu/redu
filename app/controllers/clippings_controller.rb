@@ -127,7 +127,7 @@ class ClippingsController < BaseController
     @resource = Resource.create(:name => params[:title], :description => params[:selection], :external_resource => params[:uri], :external_resource_type => 'clipping', :owner => current_user)
     #render :action => "clipping_index"
     flash[:notice] = 'Material adicionado ao Redu!'
-    redirect_to user_resources_path(current_user)
+    redirect_to resource_path(@resource)
   end
 
   # GET /clippings/new
