@@ -104,7 +104,7 @@ class Course < ActiveRecord::Base
   validates_attachment_content_type :media,
    :content_type => (SUPPORTED_VIDEOS + SUPPORTED_AUDIO)
   validates_attachment_size :media,
-   :less_than => 10.megabytes
+   :less_than => 100.megabytes
 
   
   
