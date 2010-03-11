@@ -1,5 +1,5 @@
 <script>
-	
+	/*
 	function toggleAnnotationBox(){
 		
 		var box = document.getElementById("annotation_box");
@@ -14,35 +14,45 @@
 		}
 		
 	}
-	
-	
-	function dimLights(turnOff){
-		Effect.toggle('lights-dimmed','Appear',{
-				duration:2,
-				afterFinish: function() {
-					
-					var linkTurnOff = document.getElementById("lights-off");
-					var linkTurnOn = document.getElementById("lights-on");
-					
-					if (turnOff) { // apagar as luzes
-						linkTurnOff.style.display = 'none';
-						linkTurnOn.style.display = 'inline';
-					} else {
-						linkTurnOff.style.display = 'inline';
-						linkTurnOn.style.display = 'none';
-					}
-					
-					/*
-					if(linkTurnOff.style.display == 'none') {// $('lights-dimmed').visible()
-						//$('dim-lights').update('Lights up');
-						linkTurnOn
-					} else {
-						$('dim-lights').update('Dim the lights');
-					}*/
-					
-				}
-			});
-	}
+	*/
+		
+	$(document).ready(function(){
+		$("a.lights_on").click(
+			function(e){
+				$("#lights-dimmed").fadeOut("slow");
+				$(this).toggle();
+				$("a.lights_off").toggle();
+				
+				e.preventDefault();
+			}
+		)
+		
+		$("a.lights_off").click(
+			function(e){
+				$("#lights-dimmed").fadeIn("fast");
+				$(this).toggle();
+				$("a.lights_on").toggle();
+				
+				e.preventDefault();
+			}
+		)
+		
+		$("a.annotation, a.annotation_plus").click(
+			function(e){
+				$("#annotation_box").slideDown("fast");
+				e.preventDefault();
+			}
+		)
+		
+		$("#annotation_menu a").click(function(e){
+			$("#annotation_box").slideUp("slow");
+			e.preventDefault();
+			
+		})
+		
+	})
+		
+		
 </script>
 <div id="lights-dimmed" style="display:none; height: 100%;">&nbsp;</div>
 
@@ -117,8 +127,23 @@
         <!-- CABEÇALHO ############################################################################################################################### --><!-- BARRA ################################################################################################################################### -->
         
 		
+
 		
-		<div id="filter_bar_video">
+		<%= render :partial => 'shared/share', :locals => {:title => @course.name, :url => application_url[0..application_url.length-2] + request.request_uri, :thumb_url => @course.thumb_url} %>
+		
+		<div id="view_video" align="center" >
+			
+        	<!-- colocar if aqui -->
+			<% if current_user and @course.external_resource_type.eql?('youtube')%>
+				<%= render :partial => "courses/player", :locals => {:course => @course} %>
+			<% else %>
+				<% if current_user and current_user.has_credits_for_course(@course) and current_user.has_access_to_course(@course)  %>
+		   			<%= render :partial => "courses/player", :locals => {:course => @course} %>
+				<% end %>
+			<% end %>
+    </div><!-- end view_video -->
+
+<div id="filter_bar_video">
 			
             <div id="actions_video">
                 <ul id="actions_resource">
@@ -132,12 +157,8 @@
                         |
                     </li>
                 	<li>
-                		<span id="lights-off">
-                        <a href="#" class="lights_on" onclick="javascript:dimLights(true); return false;">Apagar as luzes</a>
-						</span>
-						<span id="lights-on" style="display:none;">
-                        <a href="#" class="lights_off" onclick="javascript:dimLights(false);return false;">Acender as luzes</a>
-						</span>
+                        <a href="#" class="lights_on"  style="display:none;" >Acender as luzes</a>
+                        <a href="#" class="lights_off">Apagar as luzes</a>
                     </li>
 					<li>
                         |
@@ -165,38 +186,24 @@
             <div id="ratting_video">
 				<%= ratings_for @course %>
             </div>
-        </div><!-- BARRA ################################################################################################################################### --><!-- VIDEO ################################################################################################################################### -->
+        </div><!-- end bar -->
+		
         
-		<div id="annotation_box" style="display:none">
+		<div id="annotation_box" style="display: none;">
 			<% remote_form_for(@annotation, :loading => "$('annotation_link').hide(); $('annotation_spinner').show();") do |f| %>
  			<%= f.hidden_field(:user_id, :value => current_user.id) %>
 			<%= f.hidden_field(:course_id, :value => @course.id) %>
 
-			<div id="annotation_content">
 				<%= f.label "Anotações" %>:<br/>
 				<%= f.text_area :content, :size => "25x3" %><br/>
-			</div>
 			<div id="annotation_menu">
-				<%= f.submit 'Salvar' %> | <%= link_to_function "Cancelar", "toggleAnnotationBox()" %> 
+				<%= f.submit 'Salvar' %> | <a href="#" >Cancelar</a>
 			</div>
 			
 			 <% end %>
 			
-		</div>
-		
-		<%= render :partial => 'shared/share', :locals => {:title => @course.name, :url => application_url[0..application_url.length-2] + request.request_uri, :thumb_url => @course.thumb_url} %>
-		
-		<div id="view_video" align="center" >
-			
-        	<!-- colocar if aqui -->
-			<% if current_user and @course.external_resource_type.eql?('youtube')%>
-				<%= render :partial => "courses/player", :locals => {:course => @course} %>
-			<% else %>
-				<% if current_user and current_user.has_credits_for_course(@course) and current_user.has_access_to_course(@course)  %>
-		   			<%= render :partial => "courses/player", :locals => {:course => @course} %>
-				<% end %>
-			<% end %>
-        </div>
+		</div><!-- end annotation_box -->
+        
         
 		
 		<div id="left_column"> <!-- COLUNA DA ESQUERDA  ## -->

@@ -31,13 +31,27 @@ body {
 .sort_link_up {
 	background:url(../images/icons/bullet_arrow_up.png) no-repeat; color:#444444; padding-left: 16px; font-weight:bold;
 }
+
 #annotation_box {
+		position: relative;
     background:    #fffacd;
-    /*width:    200px;
-    height:    100px;*/
-    float: left;
+		clear:both;
     padding:    5px 5px 5px 5px;
-}	
+    overflow: hidden;
+    z-index: 2000;
+}
+
+#annotation_content { 
+	width: 99%; 
+	height: 100px;	
+	margin-bottom: 5px;
+}
+
+#annotation_menu {
+	width: 99%;
+	clear: both;
+	text-align: right;
+}
 
 #socialite {
   background: whitesmoke;
@@ -515,16 +529,26 @@ background:url(../images/denunciar.png) no-repeat;font-size:12px; text-decoratio
 #view_video_slide{float:left; width:100%; height:415px; background-color:#242424; position:relative; z-index:4000;}
 
 #lights-dimmed {
-	position:absolute;
+	background:url(../images/overlay-85.png) left top repeat;
+
+	height:100%;
+	width:100%;
+	position:fixed;
 	top:0;
 	left:0;
-	background:url(../images/overlay-85.png) left top repeat;
-	width:100%;
-	height:100%;
-	z-index:2000;
+	display:none;
+	z-index:1;
 }
 
-#ratting_video{position:relative; float:right; width:200px; height:auto; padding:0px; margin:3px 0px 0px 0px; color:#858787; right:0px;top:0px;}
+#ratting_video{
+	position:relative; 
+	float:right; 
+	width:130px; 
+	height:auto; 
+	padding:0px; 
+	margin: 0;
+	color:#858787; 
+}
 #ratting_video_menu{list-style-type:none; top:0px; padding:0px; right:0px;}
 #ratting_video_menu li {float:left; margin-right:8px; list-style:none; font-size:11px; text-decoration:none; color:#bababa;}
 #ratting_video_menu li span {padding: 5px 10px; font-size:11px; text-decoration:none; color:#5683d5;}
@@ -564,7 +588,16 @@ background:url(../images/denunciar.png) no-repeat;font-size:12px; text-decoratio
 #actions_resource li a:hover {padding:0; font-size:11px; text-decoration:underline; color:#5683d5;}*/
 #actions_video{float:left;  height:auto; padding:0px 0px 0px 0px; margin:4px 0px 0px 8px;}
 
-#filter_bar_video{float:left; width:99%; height:22px; background:url(../images/bg_filter_bar.gif) repeat-x right; padding:5px;margin:0px 8px 8px 0px; border:solid 1px #dedede;  }
+#filter_bar_video {
+	float: left;
+	width:99%; 
+	height:22px; 
+	background:url(../images/bg_filter_bar.gif) repeat-x right; 
+	padding:5px;
+	margin:8px 8px 8px 0px; 
+	border:solid 1px #dedede;  
+	
+}
 
 
 .lights_on{ background:url(../images/icon_light_on.png) no-repeat; color:#5782D5; text-decoration:none; padding-left:20px; }
@@ -889,7 +922,7 @@ background:url(../images/denunciar.png) no-repeat;font-size:12px; text-decoratio
 
 #photo{float:left; margin:0px 8px 0px 0px; width:40px; height:40px;}
 #photo #follow{position:relative; margin:0px; width:16px; height:16px; z-index:11; left: 30px; top: 30px;}
-#name a, a:visited{padding:0; font-size:11px; text-decoration:none; color:#5683d5;font-weight:bold;}
+#name a, #name a:visited{padding:0; font-size:11px; text-decoration:none; color:#5683d5;font-weight:bold;}
 #name a:hover{padding:0; font-size:11px; text-decoration:underline; color:#5683d5; font-weight:bold;}
 #rendimento{font:normal 12px "Trebuchet MS", Tahoma; color:#929290;}
 
