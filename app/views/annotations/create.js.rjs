@@ -4,10 +4,10 @@ if @annotation.new_record?
   flash[:error] = "ocorreu um erro"
   page.reload_flash
 else
-  page.select('#annotation_link').invoke('update', "<a href='#' class='annotation_plus' onclick='toggleAnnotationBox();return false;'>Anotações</a>")
+  page.select('#annotation_link').invoke('update', "<a href='#' class='annotation_plus'>Anotações</a>")
   page.reload_flash
   #page.select('#flash_messages').invoke('update', flash[:notice])
-  page << "$('annotation_link').show(); toggleAnnotationBox();"
+  page << "jQuery('#annotation_link').show(); jQuery('#annotation_box').slideUp('slow');"
 end
 
 page.select('#annotation_spinner').invoke('hide')

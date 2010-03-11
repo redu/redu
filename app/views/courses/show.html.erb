@@ -16,36 +16,36 @@
 	}
 	*/
 		
-	$(document).ready(function(){
-		$("a.lights_on").click(
+	jQuery(document).ready(function(){
+		jQuery("a.lights_on").click(
 			function(e){
-				$("#lights-dimmed").fadeOut("slow");
-				$(this).toggle();
-				$("a.lights_off").toggle();
+				jQuery("#lights-dimmed").fadeOut("slow");
+				jQuery(this).toggle();
+				jQuery("a.lights_off").toggle();
 				
 				e.preventDefault();
 			}
 		)
 		
-		$("a.lights_off").click(
+		jQuery("a.lights_off").click(
 			function(e){
-				$("#lights-dimmed").fadeIn("fast");
-				$(this).toggle();
-				$("a.lights_on").toggle();
+				jQuery("#lights-dimmed").fadeIn("fast");
+				jQuery(this).toggle();
+				jQuery("a.lights_on").toggle();
 				
 				e.preventDefault();
 			}
 		)
 		
-		$("a.annotation, a.annotation_plus").click(
+		jQuery("#annotation_link").click(
 			function(e){
-				$("#annotation_box").slideDown("fast");
+				jQuery("#annotation_box").slideDown("fast");
 				e.preventDefault();
 			}
 		)
 		
-		$("#annotation_menu a").click(function(e){
-			$("#annotation_box").slideUp("slow");
+		jQuery("#annotation_menu a").click(function(e){
+			jQuery("#annotation_box").slideUp("slow");
 			e.preventDefault();
 			
 		})
@@ -157,8 +157,8 @@
                         |
                     </li>
                 	<li>
-                        <a href="#" class="lights_on"  style="display:none;" >Acender as luzes</a>
-                        <a href="#" class="lights_off">Apagar as luzes</a>
+                        <a href="#" class="lights_off" >Apagar as luzes</a>
+                        <a href="#" class="lights_on" style="display:none;" >Acender as luzes</a>
                     </li>
 					<li>
                         |
