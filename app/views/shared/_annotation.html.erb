@@ -1,5 +1,5 @@
 <span id ="annotation_link">
 	<% annotation_link_class = (course.has_annotations_by(current_user)) ? "annotation_plus" : "annotation" %>
-	<a href="#" class="<%=annotation_link_class%>" onclick="toggleAnnotationBox();return false;">Anotações</a>
+	<a href="#" class="<%=annotation_link_class%>" >Anotações</a>
 </span>
 <%= image_tag 'loading_bar.gif', :style => 'display:none;', :id => 'annotation_spinner' %>
