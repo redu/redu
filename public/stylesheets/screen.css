@@ -1107,3 +1107,27 @@ hr {
     clear: both;
     visibility: hidden;
 }
+
+html, body {
+	height: 100%;
+}
+
+#all_content,
+#all_content3,
+#all_content2,
+#all_content4 { 
+	height: auto;
+	min-height: 100%;
+}
+
+
+#all_content:after,
+#all_content3:after,
+#all_content2:after,
+#all_content4:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;	
+}
