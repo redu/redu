@@ -663,7 +663,7 @@ background:url(../images/denunciar.png) no-repeat;font-size:12px; text-decoratio
 
 #filter_bar_comments{float:left; width:100%; height:19px; background:url(../images/bg_filter_bar.gif) repeat-x right; padding:8px 5px 5px 5px; margin:8px 0px 8px 0px; border:solid 1px #dedede; text-align:left;}
 
-#filter_bar_comments2{float:left; width:100%; height:19px; background:url(../images/bg_filter_bar.gif) repeat-x right; padding:8px 5px 5px 5px; margin:8px 0px 8px 0px; border:solid 1px #dedede; text-align:left;}
+#filter_bar_comments2{float:left; width:98%; height:19px; background:url(../images/bg_filter_bar.gif) repeat-x right; padding:8px 5px 5px 5px; margin:8px 0px 8px 0px; border:solid 1px #dedede; text-align:left;}
 				
 #comments_item{float:left; width:415px; height:auto; padding:5px; border-bottom:solid 1px #e7e8e8;}
 #comments_item a{text-decoration:none; font: 12px "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; color:#5683d5;}
@@ -1022,7 +1022,7 @@ text-decoration:underline;}
 
 #search{float:right; top:30px; right:123px; width:337px; height:37px; background:url(../images/bg_search.png) no-repeat; margin:0px; padding:5px 0px 0px 0px;}
 	#edit_search{float:left; width:247px; height:30px; margin:0; padding:2px 0px 0px 8px;}
-	.edit_search_imput{border:0; background-color:#f8faff; font: bold 16px "Trebuchet MS", Tahoma, Times New Roman, Times, serif; color:#5683d5}
+
 	#button_search{float:left;width:73px; height:37px; margin:0; padding:0;}
 
 #seletors{float:right; top:0px; right:20px; width:320px; height:17px; margin:0px; padding:0px 0px 0px 0px;
@@ -1078,8 +1078,13 @@ input[type=button]:hover {
 	padding: 3px 5px;
 }
 
+.edit_search_imput{
+ border: 0 solid white;
+ 	
+}
+	
 form fieldset {
-	border: none;
+	border-size: 0;
 	background-color: #F8FAFF;
 	margin: 10px 0;
 	padding: 7px;
