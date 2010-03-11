@@ -174,10 +174,8 @@ margin-right: 1em;
 }*/
 
 .warning, #errorExplanation, .errorExplanation{
-	padding: 1em 1em 1em 1em;
+	padding: 1.2em 1em 1em 1em;
 	margin: 1em 0;
-	border: 1px solid #fc0;
-	background: #fff3c5;
 	color: #6b5e2b;
 }
 
