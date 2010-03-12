@@ -191,15 +191,15 @@
 		    
 		<div id="annotation_box" style="display: none;">
 			<% remote_form_for(@annotation, :loading => "$('annotation_link').hide(); $('annotation_spinner').show();") do |f| %>
-			<div id="annotation_menu" class="clearfix">
-				<%= f.submit 'Salvar' %> | <a href="#" >Cancelar</a>
-			</div>
  			<%= f.hidden_field(:user_id, :value => current_user.id) %>
 			<%= f.hidden_field(:course_id, :value => @course.id) %>
 
 				<%= f.label "Anotações" %>:<br/>
 				<%= f.text_area :content, :size => "25x3" %><br/>
 			
+			<div id="annotation_menu" class="clearfix">
+				<%= f.submit 'Salvar' %> | <a href="#" >Cancelar</a>
+			</div>
 			 <% end %>
 			
 		</div><!-- end annotation_box -->
