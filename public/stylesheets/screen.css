@@ -622,12 +622,18 @@ background:url(../images/denunciar.png) no-repeat;font-size:12px; text-decoratio
 .comments_video{background:url(../images/icon_comments_on.png) no-repeat; color:#5782D5; text-decoration:none; padding-left:20px}
 .comments_video:hover{background:url(../images/icon_comments_on.png) no-repeat; color:#5782D5; text-decoration:underline; padding-left:20px}
 
-#item_video{float:left; width:760px; height:auto; padding:0px 0px 0px 0px; margin:0px 0px 8px 0px;}
+#item_video{clear:both; height:auto; padding:0px 0px 0px 0px; margin:0px 0px 8px 0px;}
 
-#title_video{float:left; width:620px; height:auto; font:bold 20px "Trebuchet MS", Tahoma; color:#7a87a1;text-decoration:none; padding:0px; margin:0px}
+#title_video{clear: both; font:bold 20px "Trebuchet MS", Tahoma; color:#7a87a1;text-decoration:none; padding:0px; margin:0px}
+/*
 #title_video a{font:bold 20px "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; color:#2d59ab; vertical-align:middle; text-decoration:none} 
 #title_video a:hover{font:bold 20px "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; color:#2d59ab; vertical-align:middle; text-decoration:underline}
+*/
 
+#title_video a.button {
+	float: right;
+	margin-left: 10px;
+}
 /*#titlevideo{float:right; top:0px; right:0px; width:100%; height:20px;}*/
 #titlevideo_menu{list-style-type:none; top:0px; padding:0px 0px 0px 0px; right:0px; width:auto;}
 #titlevideo_menu li {list-style:none; float:left; background:#FFF; margin-right:8px; font-size:12px; text-decoration:none; color:#5683d5;}
@@ -1064,7 +1070,8 @@ textarea {
 input[type=submit],
 input[type=button],
 input[type=submit]:hover,
-input[type=button]:hover {
+input[type=button]:hover,
+a.button {
 	background-color: #F5F5F5;
 	border-top: 1px solid #EEEEEE;
 	border-left: 1px solid #EEEEEE;
@@ -1073,15 +1080,25 @@ input[type=button]:hover {
 	font-size: 12px;
 	font-weight: bold;
 	font-family: "Tahoma", sans-serif;
-	padding: 3px 5px;
+	padding: 5px 5px;
 }
 
+a.icon-delete {
+	padding-left: 25px;
+	background: #F5F5F5 url("../images/icons/delete.png") no-repeat 5px 4px;
+}
+
+a.icon-edit {
+	padding-left: 25px;
+	background: #F5F5F5 url("../images/icons/post.png") no-repeat 5px 4px;
+}
 .edit_search_imput{
  border: 0 solid white;
  	
 }
 	
 form fieldset {
+	border: none;
 	border-size: 0;
 	background-color: #F8FAFF;
 	margin: 10px 0;

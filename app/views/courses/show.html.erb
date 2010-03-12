@@ -65,12 +65,12 @@
             > <a href="#">aulas</a>
         </div>
         <!-- CABEÇALHO ############################################################################################################################### -->
-        <div id="item_video">
+        <div id="item_video" class="clearfix">
             <div id="title_video">
                 <%= @course.name %>
 				<% if @course.can_be_deleted_by(current_user) %>
-                	<%= link_to 'Editar', {:action => "edit"}, :class => "edit" %> |
-					<%= link_to 'Remover', @course, {:confirm => 'Você tem certeza que quer remover esta aula permanentemente?', :method => :delete, :class => "edit"} %>
+                	<%= link_to 'Editar', {:action => "edit"}, :class => "button icon-edit" %>
+					<%= link_to 'Remover', @course, {:confirm => 'Você tem certeza que quer remover esta aula permanentemente?', :method => :delete, :class => "button icon-delete"} %>
 				<% end %>	
             </div>
             <!--	<div id="title_video"><a href="#">História - Revolução Francesa</a></div>    -->
