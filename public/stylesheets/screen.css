@@ -48,9 +48,10 @@ body {
 }
 
 #annotation_menu {
-	width: 99%;
+	width: 100%;
 	clear: both;
-	text-align: right;
+	text-align: left;
+	margin-bottom: 5px;
 }
 
 #socialite {
