@@ -1092,6 +1092,12 @@ a.icon-edit {
 	padding-left: 25px;
 	background: #F5F5F5 url("../images/icons/post.png") no-repeat 5px 4px;
 }
+
+a.icon-buy {
+	padding-left: 25px;
+	background: #F5F5F5 url("../images/icons/buy.png") no-repeat 5px 4px;
+	
+}
 .edit_search_imput{
  border: 0 solid white;
  	

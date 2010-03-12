@@ -72,12 +72,8 @@
                 	<%= link_to 'Editar', {:action => "edit"}, :class => "button icon-edit" %>
 					<%= link_to 'Remover', @course, {:confirm => 'Você tem certeza que quer remover esta aula permanentemente?', :method => :delete, :class => "button icon-delete"} %>
 				<% end %>	
-            </div>
-            <!--	<div id="title_video"><a href="#">História - Revolução Francesa</a></div>    -->
-            <div id="edit_admin">
-				
 				<% if current_user and not current_user.has_access_to_course(@course) and not @course.external_resource_type.eql?('youtube') %>
-					<%= link_to "Comprar", { :action => :buy, :id => @course.id }, :class => "download"%>
+					<%= link_to "Comprar", { :action => :buy, :id => @course.id }, :class => "button icon-buy"%>
 				<% end %>
 				
 				
@@ -86,6 +82,10 @@
 	                <%= link_to 'Rejeitar' , {:action => "disapprove", :id => @course.id} %>
                 <% end %>
             </div>
+            <!--	<div id="title_video"><a href="#">História - Revolução Francesa</a></div>    -->
+            <!--<div id="edit_admin">
+				
+            </div>-->
             <div id="identification1">
                 <ul id="identification_resource1">
                     <li>
