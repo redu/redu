@@ -55,14 +55,11 @@ body {
 }
 
 #socialite {
-  background: whitesmoke;
- float: left;
-  padding: 5px 5px 5px 5px;
+  background: #F5F5F5;
+	clear: both;
+	overflow: hidden;
+  padding: 5px;
   margin-bottom: 5px;
-  text-align: right;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  /*z-index: 6000; TODO*/
 }
 
 
@@ -73,7 +70,6 @@ body {
 
 #socialite span{
   font-size: 12px;
-  padding-right: 10px;
 }
 
 /* Main Form ========================= */

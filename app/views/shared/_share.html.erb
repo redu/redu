@@ -3,9 +3,9 @@
 		var box = document.getElementById("socialite");
 		
 		if (box.style.display == 'none') {
-			Effect.SlideDown(box,1.5);
+			Effect.SlideDown(box,0.5);
 		} else {
-			Effect.SlideUp(box,1.5);
+			Effect.SlideUp(box,0.5);
 		}
 		
 		
@@ -16,7 +16,6 @@
 
 <div id="socialite" style="display:none" >
 	<div>
-    <span style="">Compartilhe usando: </span>
     
 	<% twitter_url = "http://www.twitter.com/?status=#{title}: #{url} via redu.com.br" %>
 	<% twitter_url = URI.escape(twitter_url) %>
@@ -48,8 +47,6 @@
 	
 	<a href="http://www.delicious.com/post?url=<%=url%>&title=<%=title%>" target="_blank">
 	<img src="/images/socialite/delicious_16.png"></a>
-	
-	|
 	
 	<a href="mailto:?subject=<%=title%>&body=<%=title%>: <%=url%>" target="_blank">
 	<img src="/images/socialite/email_16.png"></a>
