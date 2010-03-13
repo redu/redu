@@ -312,11 +312,11 @@ table.nopad td {
 
 table.wide {	
 	width:100%; }
+	
 table.wide tr th {
-	background:#333;
-	color:white;
+	background: #E7EEFD;
+	color: #5683D5;
 	padding:3px 10px;
-	border:1px solid #222;
 }
 table.wide tr td {
 	padding:7px;

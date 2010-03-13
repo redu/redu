@@ -1,7 +1,11 @@
 = javascript_include_tag "prototype"
 = javascript_include_tag "application"
 = javascript_include_tag "effects"	
-= javascript_include_tag "event-selectors" 		
+= javascript_include_tag "event-selectors" 	
+= javascript_include_tag 'jquery-1.4.2.min.js'
+= javascript_tag "jQuery.noConflict()"	
+= javascript_include_tag 'jixedbar-0.0.2.js'
+= javascript_include_tag 'smartbar.js'
 
 = javascript_include_tag "controls" unless current_page?({:controller => 'application', :action => 'index'})
 
@@ -45,8 +49,7 @@
   
 - if ((controller_name == 'resources' or controller_name == 'courses') && action_name == 'show' )
   = javascript_include_tag 'swfobject'
-  = javascript_include_tag 'jquery-1.4.2.min.js'
-  = javascript_tag "jQuery.noConflict()"
+
 
 - if (action_name == 'site_index')
   = javascript_include_tag 'swfobject' 

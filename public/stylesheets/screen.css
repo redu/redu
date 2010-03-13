@@ -1149,3 +1149,93 @@ html, body {
   clear: both;
   visibility: hidden;	
 }
+
+#smartbar {
+	font-family: "Trebuchet MS", Arial, sans-serif;
+	width: 100%;
+	margin: 0 auto;
+	background: #D6D8D7 url("../images/smartbar_bg.gif") repeat-x;
+	height: 35px;
+
+	z-index: 9000;
+}
+
+#smartbar ul {
+	width: 996px;
+	margin: 0 auto;
+	list-style: none;
+}
+
+#smartbar ul li.busca { 	border-left: none; }
+#smartbar ul li.busca a {
+	background: url('../images/icons/zoom.png') no-repeat 20px 10px;
+}
+
+#smartbar ul li.desempenho a {
+	background: url('../images/icons/flag.png') no-repeat 20px 10px;
+}
+
+#smartbar ul li.conhecimento a {
+	background: url('../images/icons/info.png') no-repeat 20px 10px;
+}
+
+#smartbar ul li {
+	float: left;
+	display: block;
+	border-right: 1px solid #CCCCCC;
+	border-left: 1px solid #FFFFFF;
+}
+
+#smartbar ul li a {
+	font-size: .8em;
+	padding: 10px 50px;
+	display: block;
+	color: #5683D5;
+	background-color: transparent;
+}
+
+#smartbar ul li:hover,
+#smartbar ul li a.unfire{
+	background-color: white;
+}
+
+#busca {
+	margin-left: 0;
+}
+
+#conhecimento {
+	margin-left: 70px;
+}
+
+#conhecimento div.content {
+	background: white url("../images/fake1.gif") no-repeat;
+}
+
+#desempenho {
+	margin-left: 220px;
+}
+
+#desempenho div.content {
+	background: white url("../images/fake2.gif") no-repeat;
+}
+
+#busca div.content {
+	background: white url("../images/fake2.gif") no-repeat;
+}
+
+div.messagebox {
+	position: absolute;
+	bottom: 35px;
+	left: 10%;
+	z-index: 10;
+	height: 0;
+	width: 660px;
+	overflow: hidden;
+	background: url("../images/smartbar_shadow.png") 0 0 no-repeat;
+}
+
+div.messagebox div.content {
+	background: white;
+	height: 100%;
+	border: 5px solid #F8F8F8;
+}
