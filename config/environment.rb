@@ -19,6 +19,8 @@ Rails::Initializer.run do |config|
   config.plugins = [:community_engine, :white_list, :all]
   config.plugin_paths += ["#{RAILS_ROOT}/vendor/plugins/community_engine/plugins"]
 =end
+
+
   
   #config.plugins = [:community_engine, :white_list, :all]
   #config.plugin_paths += ["#{RAILS_ROOT}/vendor/plugins/community_engine/plugins"]
@@ -106,6 +108,9 @@ Rails::Initializer.run do |config|
   # config.i18n.default_locale = :de
 end
 #require "#{RAILS_ROOT}/vendor/plugins/community_engine/config/boot.rb"
+
+OpenSocialContainer::Configuration.person_class = 'User'
+OpenSocialContainer::Configuration.secret = 'secret_password'
 
 WillPaginate::ViewHelpers.pagination_options[:prev_label] = 'Anterior'  
 WillPaginate::ViewHelpers.pagination_options[:next_label] = 'Próximo'

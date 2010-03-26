@@ -1,11 +1,12 @@
 ActionController::Routing::Routes.draw do |map|
+  
+ map.opensocial_container "contain.localhost" # this will be turned in to <instance_id>.contain.localhost
+  
   map.resources :profiles
 
   map.resources :abilities
 
   map.resources :resources, :collection => { :search => [:get, :post], :add => :get, :waiting => :get, :favorites => :get }, :member => {:rate => :post}
-
-  map.resources :competences
 
   map.resources :questions, :collection => { :search => [:get, :post], :add => :get } #, :member => {:add => :get}
   
@@ -20,7 +21,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :credits
     
-  map.resources :schools 
+  map.resources :schools, :member => {:join => :get, :unjoin => :get}
   
   map.resources :annotations
   

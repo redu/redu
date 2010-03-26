@@ -3,7 +3,6 @@ class CreateSubscriptions < ActiveRecord::Migration
     create_table :subscriptions do |t|
       t.integer :type
       t.string :name
-      t.timestamps
     end
     
     Subscription.enumeration_model_updates_permitted = true

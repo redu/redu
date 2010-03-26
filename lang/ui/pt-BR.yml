@@ -861,13 +861,13 @@ pt-BR:
   #en: on_commentable: On
   on_commentable: 'Em'
   #en: one_day_ago: one day ago
-  one_day_ago: one day ago
+  one_day_ago: um dia atrás
   #en: one_hour_ago: one hour ago
-  one_hour_ago: one hour ago
+  one_hour_ago: uma hora atrás
   #en: one_minute_ago: one minute ago
-  one_minute_ago: one minute ago
+  one_minute_ago: um minuto atrás
   #en: optional: optional
-  optional: optional
+  optional: opcional
   #en: optional_keywords_describing_this_clipping_separated_by_commas: optional keywords describing this clipping, separated by commas
   optional_keywords_describing_this_clipping_separated_by_commas: optional keywords describing this clipping, separated by commas
   #en: optional_keywords_describing_this_forum_separated_by_commas: optional keywords describing this forum, separated by commas
