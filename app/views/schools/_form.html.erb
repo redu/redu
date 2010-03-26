@@ -12,5 +12,19 @@
 	
 	<%= f.label "Preço da assinatura" %>:<br/>
 	<%= f.text_field :key_price %><br/><br/>
-
-
+	
+	<fieldset><legend>Configurações</legend>
+	
+	<%= f.label "Quem pode entrar na rede?" %><br/>
+	<%= f.radio_button :subscription_id, "1" %> Todos<br/>
+	<%= f.radio_button :subscription_id, "2" %> Moderação<br/><br/><br/>
+	
+	<%= f.label "Quem pode postar na rede?" %><br/>
+	<%= f.radio_button :submission_type, "1" %> Todos - sem moderação<br/>
+	<%= f.radio_button :submission_type, "2" %> Todos - com moderação<br/>
+	<%= f.radio_button :submission_type, "3" %> Apenas professores e administradores<br/><br/><br/>
+	
+	<%= f.label "Perfil da rede" %><br/>
+	<%= f.radio_button :public_profile, true %> Público<br/>
+	<%= f.radio_button :public_profile, false %> Privado (apenas nome e descrição serão mostrados)<br/><br/><br/>
+	</fieldset>

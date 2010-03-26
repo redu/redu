@@ -29,12 +29,24 @@
 			<%= file_field :avatar, :uploaded_data, :size => "20"%>
 			<br/>
 			<br/>
+			<label for='first_name'>
+                Nome
+            </label>
+			<%= text_field :user, :first_name %>
+			<br/>
+			<label for='last_name'>
+               Sobrenome
+            </label>
+			<%= text_field :user, :last_name %>
+			<br/>
+			<br/>
 			<div id="title">
             <%= :location.l %>
         	</div>
 			
 			<br/>
 			<%= render :partial => 'shared/location_chooser', :locals => {:selected_country => @user.country_id, :selected_state => @user.state_id, :selected_metro_area => @user.metro_area_id, :states => @states, :metro_areas => @metro_areas}%>
+			
 			<br/>
 			<label for='username'>
                 <%= :zippostal_code.l %>

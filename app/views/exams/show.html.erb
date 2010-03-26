@@ -16,7 +16,7 @@
         </div>
         <div id="identification1">
         	<ul id="identification_resource1">
-				<li><%= link_to @exam.owner.login, user_path(@exam.owner) %></li>
+				<li><%= link_to @exam.owner.display_name, user_path(@exam.owner) %></li>
         		<li>|</li>
 				<li>Criado: <%= time_ago_in_words(@exam.created_at) %></li>
             <!--	<li>|</li>
@@ -129,7 +129,7 @@
 <!-- CONTEUDO COMPLEMENTAR ################################################################################################################### -->
 <div id="video_aula_list">
         <div id="item_list">
-    		<div id="title_list_item"><a href="#">PortuguÃªs - ConjunÃ§Ãµes</a></div>
+    		<div id="title_list_item"><a href="#">Português - Conjunções</a></div>
              
             <div id="video"><!-- Video Insert -->
            	  <div id="video_info">00:00:00</div>
@@ -139,9 +139,9 @@
               <ul id="identification_resource">
 				<li><a href="#">Robson Ribeiro</a></li>
         		<li>|</li>
-				<li>hÃ¡ 1 hora atrÃ¡s</li>
+				<li>há 1 hora atrás</li>
                 <li>|</li>
-				<li>ExibiÃ§Ãµes(4)</li>
+				<li>Exibições(4)</li>
 			  </ul>
             </div>
             

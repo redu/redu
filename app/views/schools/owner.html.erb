@@ -1,19 +1,19 @@
 <div id="all_content3">
 <div id="col_content">
 	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">redes</a> </div>
- 	<div id="title">REDES
+ 	<div id="title">REDES CRIADAS POR MIM
 	<%= render :partial => "schools/taskbar" %>
 	</div>
 	<div id="filter_bar">
 		
-	    <span id="title_list" class="title_list"> MAIS RECENTES</span>
-	    <span class="title_filter">Ordenar:</span>
+	    <span id="title_list" class="title_list"> </span>
+	    <span class="title_filter"></span>
 	      
     </div>
     <div id="all_list">
     	
-		<% if @user_school_association_array && @user_school_association_array.length > 0 %>
- 			<%= render :partial => 'schools/item_association', :collection => @user_school_association_array, :as => :association %> 
+		<% if @schools && @schools.length > 0 %>
+ 			<%= render :partial => 'schools/item', :collection => @schools, :as => :school %> 
  		<% else %>
  			Não há redes cadastradas ainda. <%= link_to 'Crie uma agora!', :action => 'new' %>
 		<% end %>

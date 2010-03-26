@@ -9,7 +9,7 @@
             </div> 
             <div id="identification">
               <ul id="identification_resource">
-				<li><%= link_to exam.owner.login, exam.owner %></li>
+				<li><%= link_to exam.owner.display_name, exam.owner %></li>
         		<li>|</li>
 				<li>Criado: <%= time_ago_in_words(exam.created_at) %></li>
                 <li>|</li>

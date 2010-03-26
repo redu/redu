@@ -9,10 +9,19 @@
 	<%= f.label "Tags:" %><br/>
 	<%= f.text_field :tag_list %><br/><br/>
 	
-	<%= f.label "Publicar?" %><br/>
+	<%= f.label "Pública" %><br/>
 	<%= f.check_box :published %><br/><br/>
 	
+	<%= f.label "Postar em:" %><br/>
+	<% @schools.each do | school | %>
+		<%= radio_button_tag :post_to, school.id %> <%= school.name %><br/>
+	<% end %>
+	<br/><br/>
+	
 	<% @user_resources = current_user.resources %>
+	
+	
+	
 
 <fieldset>
 	<legend>Material Principal</legend>

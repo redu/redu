@@ -89,6 +89,8 @@ class Course < ActiveRecord::Base
 	has_many :favorites, :as => :favoritable, :dependent => :destroy
   has_many :logs, :as => :logeable, :dependent => :destroy
   has_many :annotations
+  
+  belongs_to :asset, :polymorphic => true
 
   # Callbacks
   before_validation :enable_correct_validation_group

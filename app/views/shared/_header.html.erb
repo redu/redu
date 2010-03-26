@@ -9,7 +9,7 @@
                 <% if logged_in? %>
                 <% render :partial => 'shared/user_menu' %>
                 <li>
-                    <strong><a href="<%= user_path(current_user) %>"><%=current_user.login %></a></strong>
+                    <strong><a href="<%= user_path(current_user) %>"><%=current_user.display_name %></a></strong>
                 </li>
                 <li>
                     |

@@ -1,5 +1,3 @@
-require 'digest/sha1'
-
 class User < ActiveRecord::Base
   MALE    = 'M'
   FEMALE  = 'F'
@@ -30,7 +28,7 @@ class User < ActiveRecord::Base
 
 
   #validation
-  validates_presence_of     :login, :email
+  validates_presence_of     :login, :email, :first_name, :last_name
   validates_presence_of     :password,                   :if => :password_required?
   validates_presence_of     :password_confirmation,      :if => :password_required?
   validates_length_of       :password, :within => 5..20, :if => :password_required?
@@ -270,10 +268,23 @@ class User < ActiveRecord::Base
     query
   end  
   
+  def self.opensocial_id_column_name; 'id'; end
+  def title; self.display_name; end
+  
+  
   ## End Class Methods  
   
   
   ## Instance Methods
+  def can_manage(entity)
+    return true if self.admin?
+    
+    case entity.class 
+    when 'Course'
+      (self.school_admin?(entity) || entity.owner == self)    
+    end
+  end
+  
   
   def earn_points(activity)
     thepoints = AppConfig.points[activity]
@@ -494,7 +505,12 @@ class User < ActiveRecord::Base
   end
   
   def display_name
-    login
+    if self.first_name and self.last_name
+      self.first_name + " " + self.last_name
+    else
+      login
+    end
+    
   end
   
   def admin?

@@ -11,7 +11,8 @@
 
 
   <p>
-    <%= f.submit 'Atualizar' %> ou <%= link_to 'Voltar', @school %>
+    <%= f.submit 'Atualizar' %> ou <%= link_to 'Voltar', @school %><BR/><BR/>
+	<%= link_to 'Deletar rede', @school, :confirm => 'Você tem certeza que deseja remover esta rede?', :method => :delete %>
   </p>
 <% end %>
 

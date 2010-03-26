@@ -1,6 +1,6 @@
 class AccessKey < ActiveRecord::Base
   #belongs_to :user
-  #belongs_to :school
+ belongs_to :school
   #belongs_to :user_school_association, :dependent => :destroy
   has_one :user_school_association, :dependent => :destroy
   

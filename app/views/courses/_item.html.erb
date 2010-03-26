@@ -13,7 +13,7 @@
         <ul id="identification_resource">
             <!-- Uma modificação, antes ficava link_to course.owner.login -->
             <li>
-                <%= link_to course.owner.login, user_path(course.owner) %>
+                <%= link_to course.owner.display_name, user_path(course.owner) %>
             </li>
             <li>
                 |

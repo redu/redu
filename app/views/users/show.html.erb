@@ -12,7 +12,7 @@
 
 <!-- BOX MINHA MOV. RESCENTE ####################################################################################################################################### -->
 <div id="comments_user">
-	<div id="user_box_top">ATIVIDADES RECENTES DE <%= @user.login.upcase %></div>
+	<div id="user_box_top">ATIVIDADES RECENTES DE <%= @user.display_name.upcase %></div>
 <%= render :partial => 'logs/item_user', :collection => @user.recent_activity, :as => :item %>
 
 
@@ -37,6 +37,9 @@
 	<%= render :partial => 'users/comment_form', :locals => { :commentable => @user } %>
 </div>
 <!-- BOX COMENTÁRIOS ############################################################################################################################################### -->
+
+<%# opensocial_container('http://www.last.fm/opensocial/myfavouritemusic.xml', :owner => @user, :viewer => current_user, :instance_id => instance.id) %>
+
 
 
 <!-- MATERIAIS ##################################################################################################################################################### -->
@@ -64,6 +67,8 @@
 <!-- COLUNA DIREITA ################################################################################################################################################ -->
 <div id="col_box3">
 <!-- BOX MOVIMENTACAO RESCENTE ///////////////////////////////////////////////////////////////////////////////////// -->
+	
+	<!--
 	<div id="box_move">
     	<div id="box_top">MOVIMENTAÇÃO RESCENTE</div>
         
@@ -106,7 +111,7 @@
 		<div id="bt_send_mv" align="center"><a href="#" class="bt_send">Enviar</a></div>
         </div>
         
-    </div>
+    </div> -->
 <!-- BOX MOVIMENTACAO RESCENTE ///////////////////////////////////////////////////////////////////////////////////// -->
 
     <!--<div id="friends"></div>

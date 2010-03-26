@@ -6,7 +6,7 @@ module BaseHelper
   
   
   def activity_name(item)
-    link_user = link_to item.user.login, user_path(item.user)
+    link_user = link_to item.user.display_name, user_path(item.user)
     type = item.logeable_type.underscore
       case type
         when 'user'

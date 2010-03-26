@@ -14,6 +14,7 @@ class School < ActiveRecord::Base
     
     has_many :forums
     
+    has_many :admins, :through => :user_school_association, :source => :user, :conditions => [ "user_school_associations.role_id = ?", 4 ]
     has_many :coordinators, :through => :user_school_association, :source => :user, :conditions => [ "user_school_associations.role_id = ?", 5 ]
     has_many :teachers, :through => :user_school_association, :source => :user, :conditions => [ "user_school_associations.role_id = ?", 6 ]
     has_many :students, :through => :user_school_association, :source => :user, :conditions => [ "user_school_associations.role_id = ?", 7 ]
@@ -22,14 +23,14 @@ class School < ActiveRecord::Base
 
     has_many :access_keys, :dependent => :destroy
     
-    has_many :assets, :as => :asset, :class_name => 'SchoolAssets'
+    has_many :assets, :as => :asset, :class_name => 'SchoolAsset', :dependent => :destroy
     
     validates_presence_of :name
     
-    def can_be_managed_by(user)
-      #TODO verificar se é professor ou coord, ou school admin tbm
-      (self.owner == user)
-  end
+#    def can_be_managed_by(user)
+#      #TODO verificar se é professor ou coord, ou school admin tbm
+#      (self.owner == user || user.)
+#  end
   
   
   def avatar_photo_url(size = nil)

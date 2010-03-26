@@ -160,6 +160,8 @@ class CoursesController < BaseController
   # GET /courses/new.xml
   def new
     @course = Course.new
+    
+    @schools = current_user.schools
   end
   
   # GET /courses/1/edit
@@ -177,10 +179,17 @@ class CoursesController < BaseController
      
     respond_to do |format|
       
-      if @course.save
+      if @course.save!
         @course.convert
         
-        Log.log_activity(@course, 'create', current_user)
+        if params[:post_to]
+          SchoolAsset.create({:asset_type => "Course", :asset_id => @course.id, :school_id => params[:post_to].to_i})
+          #@school = School.find(params[:post_to].to_i)
+          #@school.assets << @course
+          #@school.update_attribute(:assets, @school.assets)
+        end
+        
+        #Log.log_activity(@course, 'create', current_user) # só aparece quando é aprovada
         
         flash[:notice] = 'Aula foi criada com sucesso e está em processo de moderação.'
         format.html { 
@@ -261,6 +270,9 @@ class CoursesController < BaseController
   def approve
     @course = Course.find(params[:id])
     @course.approve!
+    
+    Log.log_activity(@course, 'create', @course.owner)
+    
     flash[:notice] = 'A aula foi aprovada!'
     redirect_to pending_courses_path
   end

@@ -45,6 +45,40 @@ class SchoolsController < BaseController
     
   end
   
+  def join
+    @school = School.find(params[:id])
+    
+    @association = UserSchoolAssociation.new
+    @association.user = current_user
+    @association.school = @school
+    
+    if @association.save
+      flash[:notice] = "Você está participando da rede agora!"
+    end
+    
+    respond_to do |format|
+      format.html { redirect_to(@school) }
+    end
+  end
+  
+  
+  def unjoin
+    @school = School.find(params[:id])
+    
+    @association = UserSchoolAssociation.find(:first, :conditions => ["user_id = ? AND school_id = ?",current_user.id, @school.id ])
+    
+    if @association.destroy
+      flash[:notice] = "Você saiu da rede"
+    end
+    
+    respond_to do |format|
+      format.html { redirect_to(@school) }
+    end
+    
+  end
+  
+  
+  
   
   
   
@@ -96,11 +130,16 @@ class SchoolsController < BaseController
   
   
   def member
-    @user_school_association_array = current_user.schools
+    @schools = current_user.schools
+    
   end
   
   def owner
-    @user_school_association_array = UserSchoolAssociation.find(:all, :conditions => ["user_id = ? AND role_id = ?", current_user.id, 4])
+    #@user_school_association_array = UserSchoolAssociation.find(:all, :conditions => ["user_id = ? AND role_id = ?", current_user.id, 4])
+   @schools = current_user.schools_owned
+   
+   
+   
   end
   
   
@@ -139,7 +178,9 @@ class SchoolsController < BaseController
   def show
     @school = School.find(params[:id])
     
-    @courses = Course.all
+    @courses = Course.find_by_sql("select c.* from courses c, school_assets sa where sa.asset_type = 'Course' and c.id = sa.asset_id and sa.school_id = '#{@school.id}'")
+    #@courses = @school.assets#.collect{|asset| asset.asset_type = "Course"} #TODO limit
+   
     
     @forums = @school.forums
     respond_to do |format|
@@ -173,16 +214,10 @@ class SchoolsController < BaseController
     @school = School.new(params[:school])
     
     @school.owner = current_user
-    
-    #nao eh necessario pois ja temos verificacao no modelo
-    #if !params[:school][:name] || params[:school][:name].empty?
-    #  flash[:error] = 'Name não pode ser vazio'
-    #  redirect_to(@school)
-    #end
-    
+    @school.admins << current_user
     
     respond_to do |format|
-      if @school.save#! and UserSchoolAssociation.create(:user => current_user, :school => @school, :role_id => 4)
+      if @school.save
         
         flash[:notice] = 'A escola foi atualizada com sucesso!'
         format.html { redirect_to(@school) }
