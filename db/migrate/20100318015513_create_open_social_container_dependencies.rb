@@ -1,5 +1,7 @@
 class CreateOpenSocialContainerDependencies < ActiveRecord::Migration
   def self.up
+  	drop_table :apps
+  	
     create_table :apps do |t|
       t.string :source_url
       t.string :title
@@ -24,11 +26,15 @@ class CreateOpenSocialContainerDependencies < ActiveRecord::Migration
       t.timestamps
     end
     
+    drop_table :persistences
+    
     create_table :persistences do |t|
       t.integer :person_id, :app_id
       t.string :type, :instance_id, :key, :value
       t.timestamps
     end
+    
+    drop_table :activities
     
     create_table :activities do |t|
       t.integer :user_id, :source_id
