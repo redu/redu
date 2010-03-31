@@ -20,6 +20,11 @@ class BaseController < ApplicationController
   end  
   
   def tos
+    
+  end
+  
+  def privacy
+    
   end
   
   def teaser

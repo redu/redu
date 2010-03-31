@@ -1,0 +1,24 @@
+<!--div id="all_content3"-->
+    <h1>Nova Sugestão</h1>
+    <% form_for(suggestion) do |f| %>
+    <%= f.error_messages %>
+    <p>
+        <%= f.label :title, "Título" %>
+        <br/>
+        <%= f.text_field :title, :size => "59" %>
+        <br/>
+    </p>
+    <br>
+    <p>
+        <%= f.label :message, "Sua Sugestão" %>
+        <br/>
+        <%= f.text_area :message, :rows => "7", :cols => "45" %>
+    </p>
+    <br>
+    <p>
+        <%= f.submit 'Enviar Sugestão' %>
+        <br>
+        <br>
+    </p>
+    <% end %>
+<!--/div-->

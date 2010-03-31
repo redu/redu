@@ -21,7 +21,7 @@ class CoursesController < BaseController
     end
   end
   
-    
+  
   def rate
     @course = Course.find(params[:id])
     @course.rate(params[:stars], current_user, params[:dimension])
@@ -32,7 +32,7 @@ class CoursesController < BaseController
       page.visual_effect :highlight, id
     end
   end
- 
+  
   
   # Lista todos os recursos existentes para relacionar com
   def list_resources
@@ -70,15 +70,15 @@ class CoursesController < BaseController
     
     case sort
       
-    when '1' # Data
+      when '1' # Data
       @courses = Course.paginate :conditions => ["state LIKE ?", "approved"], :include => :owner, :page => page, :order => 'created_at DESC', :per_page => AppConfig.items_per_page
-    when '2' # Avaliações
-     @courses = Course.paginate :conditions => ["state LIKE ?", "approved"], :include => :owner, :page => page, :order => 'rating_average DESC', :per_page => AppConfig.items_per_page
-    when '3' # Visualizações
+      when '2' # Avaliações
+      @courses = Course.paginate :conditions => ["state LIKE ?", "approved"], :include => :owner, :page => page, :order => 'rating_average DESC', :per_page => AppConfig.items_per_page
+      when '3' # Visualizações
       @courses = Course.paginate :conditions => ["state LIKE ?", "approved"], :include => :owner, :page => page, :order => 'view_count DESC', :per_page => AppConfig.items_per_page
-     when '4' # Título
+      when '4' # Título
       @courses = Course.paginate :conditions => ["state LIKE ?", "approved"], :include => :owner, :page => page, :order => 'name DESC', :per_page => AppConfig.items_per_page
-     else
+    else
       @courses = Course.paginate :conditions => ["state LIKE ?", "approved"], :include => :owner, :page => page, :order => 'created_at DESC', :per_page => AppConfig.items_per_page
     end
     
@@ -98,7 +98,7 @@ class CoursesController < BaseController
         format.xml  { render :xml => @user.courses }
       end
     else 
-    
+      
       @sort_by = params[:sort_by]
       #@order = params[:order]
       @courses = get_query(params[:sort_by], params[:page]) 
@@ -116,30 +116,32 @@ class CoursesController < BaseController
   def show
     
     @course = Course.find(params[:id])
-    
-
-    
-    #comentários
-    @comments  = @course.comments.find(:all, :limit => 10, :order => 'created_at DESC')
-    
-    # anotações
-    @annotation = @course.has_annotations_by(current_user) 
-    @annotation = Annotation.new unless @annotation
-    
-    #relacionados
-    related_name = @course.name
-    @related_courses = Course.find(:all,:conditions => ["name LIKE ? AND id NOT LIKE ?","%#{related_name}%", @course.id] , :limit => 3, :order => 'created_at DESC')
-    
-    # atualiza número de exibições TODO cache
-    @course.update_attribute(:view_count, @course.view_count + 1) #TODO performance
-    
-    Log.log_activity(@course, 'show', current_user)#TODO se usuario nao comprou não logar atividade
-    
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @course }
-    end
+    if not @course.can_be_deleted_by(current_user)
+      flash[:error] = "Você não tem acesso a este vídeo"
+      redirect_to courses_path
+    else 
+      #comentários
+      @comments  = @course.comments.find(:all, :limit => 10, :order => 'created_at DESC')
       
+      # anotações
+      @annotation = @course.has_annotations_by(current_user) 
+      @annotation = Annotation.new unless @annotation
+      
+      #relacionados
+      related_name = @course.name
+      @related_courses = Course.find(:all,:conditions => ["name LIKE ? AND id NOT LIKE ?","%#{related_name}%", @course.id] , :limit => 3, :order => 'created_at DESC')
+      
+      # atualiza número de exibições TODO cache
+      @course.update_attribute(:view_count, @course.view_count + 1) #TODO performance
+      
+      Log.log_activity(@course, 'show', current_user)#TODO se usuario nao comprou não logar atividade
+      
+      respond_to do |format|
+        format.html # show.html.erb
+        format.xml  { render :xml => @course }
+      end
+    end
+    
   end
   
   def view
@@ -169,14 +171,14 @@ class CoursesController < BaseController
     @course = Course.find(params[:id])
   end
   
-   
+  
   # POST /courses
   # POST /courses.xml
   def create
     
     @course = Course.new(params[:course])
     @course.owner = current_user
-     
+    
     respond_to do |format|
       
       if @course.save!
@@ -240,7 +242,7 @@ class CoursesController < BaseController
     @course = Course.find(params[:id])
     
     if not current_user.has_access_to_course(@course)
-    
+      
       if current_user.has_credits_for_course(@course)
         #o nome dessa variável, deixar como acquisition
         @acquisition = Acquisition.new
@@ -254,13 +256,13 @@ class CoursesController < BaseController
           redirect_to @course
         end
       else
-         flash[:notice] = 'Você não tem créditos suficientes para comprar esta aula. Recarrege agora!'
-         # TODO passar como parametro url da aula para retornar após compra
-         redirect_to credits_path(:course_id => @course.id)
+        flash[:notice] = 'Você não tem créditos suficientes para comprar esta aula. Recarrege agora!'
+        # TODO passar como parametro url da aula para retornar após compra
+        redirect_to credits_path(:course_id => @course.id)
       end
     else
-       flash[:notice] = 'Você já possui acesso a esta aula!'
-       redirect_to @course
+      flash[:notice] = 'Você já possui acesso a esta aula!'
+      redirect_to @course
     end
   end
   

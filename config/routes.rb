@@ -25,6 +25,8 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :annotations
   
+  map.resources :suggestions
+  
   #map.resources :favorites, 
 
   map.connect 'activity_xml.xml', :controller => "users", :action => "activity_xml", :format => 'xml'

@@ -242,6 +242,10 @@ class UsersController < BaseController
     update_view_count(@user) unless current_user && current_user.eql?(@user)
   end
   
+  def tos
+    nil
+  end
+  
   def new
     @user         = User.new( {:birthday => Date.parse((Time.now - 25.years).to_s) }.merge(params[:user] || {}) )
     @inviter_id   = params[:id]

@@ -5,6 +5,12 @@
     <div id="resource_thumb">
     	<% if resource.external_resource_type == "clipping" %>
         <%= link_to image_tag("icon_web_48.png", :border => 0), resource %>
+		<% elsif resource.media_content_type == "application/vnd.ms-powerpoint" %>
+		<%= link_to image_tag("icon_ppt_48.png", :border => 0), resource %>
+		<% elsif resource.media_content_type == "application/msword" %>
+		<%= link_to image_tag("icon_doc_48.png", :border => 0), resource %>
+		<% elsif resource.media_content_type == "application/rtf" %>
+		<%= link_to image_tag("icon_rtf_48.png", :border => 0), resource %>
 		<% else %>
 		<%= link_to image_tag("icon_pdf_48.png", :border => 0), resource %>
 		<% end %>

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100224143155) do
+ActiveRecord::Schema.define(:version => 20100309181658) do
 
   create_table "abilities", :force => true do |t|
     t.string   "name"
@@ -73,6 +73,14 @@ ActiveRecord::Schema.define(:version => 20100224143155) do
   create_table "alternatives", :force => true do |t|
     t.string   "statement",   :null => false
     t.integer  "question_id", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "annotations", :force => true do |t|
+    t.integer  "user_id",    :null => false
+    t.integer  "course_id",  :null => false
+    t.text     "content"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -235,7 +243,7 @@ ActiveRecord::Schema.define(:version => 20100224143155) do
     t.datetime "updated_at"
     t.string   "state"
     t.string   "payment_type"
-    t.integer  "user_id"
+    t.integer  "customer_id"
   end
 
   create_table "emails", :force => true do |t|
@@ -523,10 +531,10 @@ ActiveRecord::Schema.define(:version => 20100224143155) do
   add_index "rates", ["user_id"], :name => "index_rates_on_user_id"
 
   create_table "resources", :force => true do |t|
-    t.string   "title",                                                                                 :null => false
+    t.string   "name",                                                                                  :null => false
     t.text     "description"
     t.string   "state"
-    t.integer  "user_id",                                                                               :null => false
+    t.integer  "owner_id",                                                                              :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "rating_average",         :limit => 10, :precision => 10, :scale => 0, :default => 0
@@ -537,6 +545,7 @@ ActiveRecord::Schema.define(:version => 20100224143155) do
     t.string   "external_resource_type"
     t.integer  "owner"
     t.boolean  "published",                                                           :default => true
+    t.integer  "download_count"
   end
 
   create_table "resources_subjects", :id => false, :force => true do |t|
@@ -590,6 +599,7 @@ ActiveRecord::Schema.define(:version => 20100224143155) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.integer  "subscription_id"
   end
 
   create_table "sessions", :force => true do |t|
@@ -622,6 +632,23 @@ ActiveRecord::Schema.define(:version => 20100224143155) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "subscriptions", :force => true do |t|
+    t.integer  "type"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "suggestions", :force => true do |t|
+    t.string   "title"
+    t.text     "message"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "yes"
+    t.integer  "no"
   end
 
   create_table "taggings", :force => true do |t|

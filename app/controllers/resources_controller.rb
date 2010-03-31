@@ -146,10 +146,6 @@ class ResourcesController < BaseController
   # GET /resources/new.xml
   def new
     @resource = Resource.new
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @resource }
-    end
   end
   
   # GET /resources/1/edit
@@ -169,7 +165,10 @@ class ResourcesController < BaseController
         Log.log_activity(@resource, 'create', current_user)
         
         flash[:notice] = 'O material foi criado com sucesso!'
-        format.html { redirect_to(@resource) }
+        format.html { 
+        #redirect_to(@resource) }
+        redirect_to waiting_user_resources_path(current_user.id)
+        }
         format.xml  { render :xml => @resource, :status => :created, :location => @resource }
       else
         format.html { render :action => 'new' }
@@ -260,6 +259,13 @@ class ResourcesController < BaseController
       format.html #{ render :action => "my" }
       format.xml  { render :xml => @resources }
     end
+  end
+  
+  def download
+    @resource = Resource.find(params[:id])
+    send_file 'http://localhost:3000/public/system/medias/11/original/test.txt', :type => 'application/pdf', :x_sendfile => true
+    
+    @resource.update_attribute(:download_count, @resource.download_count + 1)
   end
   
   

@@ -42,8 +42,11 @@ class User < ActiveRecord::Base
   validates_uniqueness_of   :login_slug
   validates_exclusion_of    :login, :in => AppConfig.reserved_logins
   validates_date :birthday, :before => 13.years.ago.to_date  
-
-    # ANNOTATIONS
+  
+  #REGISTER
+  validates_acceptance_of :tos, :message => "Você precisa aceitar os Termos de Uso"
+  
+  # ANNOTATIONS
   has_many :annotations, :dependent => :destroy
    
    # PROFILE
@@ -94,6 +97,9 @@ class User < ActiveRecord::Base
   
    # STATUS
   has_many :statuses, :as => :in_response_to
+  
+  #SUGGESTIONS
+  has_many :suggestions
 
   
   
@@ -139,6 +145,7 @@ class User < ActiveRecord::Base
   named_scope :tagged_with, lambda {|tag_name|
     {:conditions => ["tags.name = ?", tag_name], :include => :tags}
   }
+  
   
 
   ## Class Methods

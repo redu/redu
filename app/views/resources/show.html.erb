@@ -42,7 +42,8 @@
         		<li>|</li>
 				<li>Criado: <%= time_ago_in_words(@resource.created_at) %></li>
             	<li>|</li>
-				<li>Downloads(4)</li>
+				
+				<li>Downloads <%= @resource.download_count %></li>
 			</ul>
         </div>
          <div id="description_video"><%= @resource.description %></div>
@@ -74,7 +75,9 @@
 			<% if @resource.external_resource_type == "clipping" %>
 				<%= link_to "Ir para o site", @resource.external_resource, :target => "_blank" %>
 			<% else %>
-				<%= link_to "Download", @resource.media.url, :target => "_blank" , :class => "download_video"%>
+				<%# link_to "Download", @resource.media.url, :action => "download", :controller => "resource", :target => "_blank" , :class => "download_video"%>
+				<!--<%= link_to "Download", {:action => :download, :id => @resource.id}, :target => "_blank" , :class => "download_video"%>-->
+				<%= link_to "Download", :action => "download", :controller => "resources", :id => @resource.id %>
 			<% end %>	
 			</li>
             <li>|</li>

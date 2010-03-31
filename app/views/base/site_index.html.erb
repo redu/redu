@@ -16,7 +16,7 @@
 	}
 	
 	function verifyTOS (){
-		if (document.getElementById('tos_accepted').checked) {
+		if (document.getElementById('user_tos').checked) {
 			return true;
 		} else {
 			alert('Você não pode se cadastrar se não aceitar os Termos de Uso do Redu');
@@ -117,7 +117,7 @@
 
 <!-- CADASTRO ///////////////////////////////////////////////////////////////////////////////////// -->
 	<div id="box_signup" style="display: none;" class="clearfix">
-		<%- form_for :user, :url => users_path, :html => {:class => 'MainForm', :onsubmit => 'verifyTOS();'} do |f| %>
+		<%- form_for :user, :url => users_path, :html => {:class => 'MainForm', :onsubmit => 'return verifyTOS();'} do |f| %>
 	
     	<div id="box_top_login">CADASTRO</div>  
         
@@ -154,8 +154,8 @@
 			<label>Confirme a senha:</label><br />
 			<%= f.password_field :password_confirmation, :size => 27, :class => 'edit_login_imput' %>
 			<br /><br />
-			
-			<input type="checkbox" name="tos_accepted" id="tos_accepted" value="0"/>Li e aceito os Termos de Uso
+			<%= check_box "user", "tos" %>Li e aceito os Termos de Uso
+			<!--<input type="checkbox" name="tos_accepted" id="tos_accepted" value="0"/>Li e aceito os Termos de Uso-->
 
 			<div id="box_list_login" align="center">
 				<!-- <a href="#" class="bt_login">Enviar</a> -->

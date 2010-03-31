@@ -1,6 +1,12 @@
 class Resource < ActiveRecord::Base
   
-  SUPPORTED_DOCUMENTS = ['application/pdf']
+  SUPPORTED_DOCUMENTS = ['application/pdf',
+  'application/vnd.ms-powerpoint',
+  'application/vnd.ms-excel',
+  'application/msword',
+  'text/plain',
+  'application/rtf']
+  #verificar com ms word!!!!
   
   # Plugins
   acts_as_commentable
@@ -56,6 +62,10 @@ class Resource < ActiveRecord::Base
       transitions :from => :waiting, :to => :disapproved
   end
   
+  #começando os testes com upload do outros formatos
+  def document?
+    SUPPORTED_DOCUMENTS.include?(self.media_content_type)
+  end
   
   def supported_external_resources
     SUPPORTED_EXTERNAL_RESOURCES
