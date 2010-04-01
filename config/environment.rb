@@ -89,7 +89,6 @@ Rails::Initializer.run do |config|
   config.action_mailer.delivery_method = :activerecord
   config.action_mailer.smtp_settings = {
       :enable_starttls_auto => true,
-      :tls => true,
       :address => 'smtp.gmail.com',
       :port => 587,
       :authentication => :login,
