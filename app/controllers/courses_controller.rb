@@ -180,6 +180,11 @@ class CoursesController < BaseController
   def create
     
     @course = Course.new(params[:course])
+	if @course.external_resource_type.eql?('youtube')
+		capture = @course.external_resource.scan(/watch\?v=([a-zA-Z0-9]*)/o)[0][0]
+		puts capture.inspect
+		@course.external_resource = capture
+	end
     @course.owner = current_user
     
     respond_to do |format|
