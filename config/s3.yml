@@ -1,15 +1,9 @@
-development:
-    access_key_id: 
-    secret_access_key: 
-    bucket: redu
-    url: http://s3.amazonaws.com/redu/
-test:
-    access_key_id: 
-    secret_access_key: 
-    bucket: redu
-    url: http://s3.amazonaws.com/redu/
+staging:
+  aws_access_key: AKIAIRKVQDTWT2NN4J4Q
+  aws_secret_access_key: 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
+  bucket_base_name: redufiles
+
 production:
-    access_key_id: 
-    secret_access_key: 
-    bucket: redu
-    url: http://s3.amazonaws.com/redu/
+  aws_access_key: AKIAIRKVQDTWT2NN4J4Q
+  aws_secret_access_key: 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
+  bucket_base_name: redufiles
