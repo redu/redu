@@ -51,5 +51,5 @@ production:
   database: redu
   pool: 5
   username: root
-  password: 
-  host: localhost
+  password: sociallearning
+  host: db_primary
