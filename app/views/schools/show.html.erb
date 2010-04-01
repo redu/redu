@@ -77,45 +77,20 @@
 <!-- LISTAGEM RECURSO ############################################################################################################################################## -->
 <div id="all_list">
 
-<div id="profile_user_info">
-	<div id="user_photo">
-		 <%= image_tag( @school.avatar_photo_url(:thumb), {:width => "64", :height=>"64" })%><BR>
-	</div>
-    <div id="name_user">
-		<ul id="name_user_item">
-			<li class="name"><span class="name"><%= @school.name.upcase %></span></li>
-			<% if current_user.can_manage(@school)%>
-			<li>
-				<%= link_to "Editar >", edit_school_path(@school), :class => 'edit'%>
-			</li>
-			<% end %>
-		</ul>
-	</div>
-<div id="description_user">
-	<%= link_to @school.owner.login, user_path(@school.owner), :class => 'link_user' %>
-	 | <%= time_ago_in_words(@school.created_at) %> | Membros(<%= @school.users.count %>) <br />
-</div> 
-<div id="description">
-<%= @school.description %>
-</div>
+<%= render :partial => "schools/school_info", :locals => {:school => @school}%>
+
 <% if logged_in?  %>
 <div id="actions_user">
-	<% if !current_user.get_association_with(@school)  %>
-		<% if @school.subscription_id == 1 %>
-		<%= link_to "PARTICIPAR", join_school_path, :class => "participar_rede" %>
-		<% else %>
-		<a href="#" class="participar_rede" onclick="toggleAssociateBox();false;">PARTICIPAR</a>
-		<% end %>
-	<% else %>
-		<%= link_to "ABADONAR", unjoin_school_path, :class => "participar_rede" %>
-	<% end %>
+	
+	
+	<%= subscription_link %>
+	
+	
 	|
 	<a href="#" class="share" onclick="toggleShareBox();return false;">COMPARTILHAR</a>
-	<% if current_user.admin? %>
-	| <a href="#" class="share">GERAR CHAVES</a>
-	<% end %>
+	
 	<% if current_user.school_admin? @school %>
-	| <a href="#" class="share">GERENCIAR</a>
+	|<%= link_to "GERENCIAR", manage_school_path(@school), :class => "share"  %>
 	<% end %>
 </div>
 <% end %>

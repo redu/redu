@@ -1,0 +1,22 @@
+<div id="profile_user_info">
+	<div id="user_photo">
+		 <%= image_tag( school.avatar_photo_url(:thumb), {:width => "64", :height=>"64" })%><BR>
+	</div>
+    <div id="name_user">
+		<ul id="name_user_item">
+			<li class="name"><span class="name"><%= school.name.upcase %></span></li>
+			<% if current_user.can_manage(school)%>
+			<li>
+				<%= link_to "Editar >", edit_school_path(school), :class => 'edit'%>
+			</li>
+			<% end %>
+			
+		</ul>
+	</div>
+<div id="description_user">
+	<%= link_to school.owner.display_name, user_path(school.owner), :class => 'link_user' %>
+	 | <%= time_ago_in_words(school.created_at) %> | Membros(<%= school.users.count %>) <br />
+</div> 
+<div id="description">
+<%= school.description %>
+</div>

@@ -21,7 +21,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :credits
     
-  map.resources :schools, :member => {:join => :get, :unjoin => :get}
+  map.resources :schools, :member => {:join => :get, :unjoin => :get,:manage => :get, :pending_courses => :get, :pending_members => :get }
   
   map.resources :annotations
   

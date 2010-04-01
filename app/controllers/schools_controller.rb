@@ -1,5 +1,5 @@
 class SchoolsController < BaseController
-  #before_filter :login_required,  :except => [:index, :new, :create]
+  before_filter :login_required,  :except => [:join, :unjoin, :member, :new, :create]
   # before_filter :admin_required,  :only => [:new, :create]
   
   ##  Admin actions  
@@ -52,13 +52,30 @@ class SchoolsController < BaseController
     @association.user = current_user
     @association.school = @school
     
-    if @association.save
-      flash[:notice] = "Você está participando da rede agora!"
+    case @school.subscription_type 
+      
+      when 1 # anyone can join
+        @association.status = "approved"
+        
+        if @association.save
+          flash[:notice] = "Você está participando da rede agora!"
+        end
+      
+      when 2 # moderated
+        @association.status = "pending"
+        
+        if @association.save
+          flash[:notice] = "Seu pedido de participação está sendo moderado pelos administradores da rede."
+        end
+      
     end
     
     respond_to do |format|
-      format.html { redirect_to(@school) }
+          format.html { redirect_to(@school) }
     end
+    
+    
+    
   end
   
   
@@ -77,6 +94,43 @@ class SchoolsController < BaseController
     
   end
   
+  
+  def manage
+     @school = School.find(params[:id])
+  end
+  
+  ##
+  #   MODERAÇÃO
+  ##
+  
+  def pending_courses 
+    @courses = Course.paginate(:conditions => ["published = 1 AND state LIKE ?", "waiting"], 
+      :include => :owner, 
+      :page => params[:page], 
+      :order => 'updated_at DESC', 
+      :per_page => AppConfig.items_per_page)
+    
+    respond_to do |format|
+      format.html #{ render :action => "my" }
+      format.xml  { render :xml => @resources }
+    end
+    
+  end
+  
+  
+  def pending_members 
+    @school = School.find(params[:id])
+    @pending_members = UserSchoolAssociation.paginate(:conditions => ["status like 'pending' AND school_id = ?", params[:id]], 
+      :page => params[:page], 
+      :order => 'updated_at DESC', 
+      :per_page => AppConfig.items_per_page)
+    
+    respond_to do |format|
+      format.html #{ render :action => "my" }
+      format.xml  { render :xml => @resources }
+    end
+    
+  end
   
   
   
@@ -180,7 +234,6 @@ class SchoolsController < BaseController
     
     @courses = Course.find_by_sql("select c.* from courses c, school_assets sa where sa.asset_type = 'Course' and c.id = sa.asset_id and sa.school_id = '#{@school.id}'")
     #@courses = @school.assets#.collect{|asset| asset.asset_type = "Course"} #TODO limit
-   
     
     @forums = @school.forums
     respond_to do |format|
@@ -194,8 +247,6 @@ class SchoolsController < BaseController
   def new
     @school = School.new
     #@school.owner = current_user
-    
-    
     
     respond_to do |format|
       format.html # new.html.erb
@@ -214,12 +265,14 @@ class SchoolsController < BaseController
     @school = School.new(params[:school])
     
     @school.owner = current_user
-    @school.admins << current_user
+    #@school.admins << current_user
     
     respond_to do |format|
-      if @school.save
+      if @school.save!
         
-        flash[:notice] = 'A escola foi atualizada com sucesso!'
+        UserSchoolAssociation.create({:user => current_user, :school => @school, :status => "approved", :role => Role[:school_admin]})
+        
+        flash[:notice] = 'A rede foi criada com sucesso!'
         format.html { redirect_to(@school) }
         format.xml  { render :xml => @school, :status => :created, :location => @school }
       else

@@ -1,6 +1,26 @@
 module SchoolsHelper
   
   
+  def subscription_link
+    if not @school.users.include?(current_user) #TODO verificar se nao esta pending
+      
+      case @school.subscription_type 
+        
+        when 1 # anyone can join
+        link_to "PARTICIPAR", join_school_path, :class => "participar_rede" 
+        when 2 # moderated
+        link_to "PARTICIPAR", join_school_path, :class => "participar_rede" 
+        when 3 #key
+        link_to "PARTICIPAR", "#", {:class => "participar_rede", :onclick => "toggleAssociateBox();false;"} 
+      end
+      
+    else 
+      link_to "ABADONAR", unjoin_school_path, :class => "participar_rede" 
+    end 
+    
+  end
+  
+  
    # used to know if a topic has changed since we read it last
   def recent_topic_activity(topic)
     return false if not logged_in?

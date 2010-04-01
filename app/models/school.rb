@@ -2,13 +2,12 @@ class School < ActiveRecord::Base
   
    acts_as_taggable
    
-   has_enumerated :subscription 
    
    # ajaxful_rateable :stars => 5#, :dimensions => [:speed, :beauty, :price]
     has_attached_file :avatar, :styles => { :medium => "200x200>", :thumb => "100x100>" }
     
     has_many :user_school_association, :dependent => :destroy
-    has_many :users, :through => :user_school_association
+    has_many :users, :through => :user_school_association, :conditions => ["user_school_associations.status LIKE 'approved'"]
     
     belongs_to :owner , :class_name => "User" , :foreign_key => "owner"
     

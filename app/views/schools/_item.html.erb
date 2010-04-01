@@ -1,6 +1,7 @@
         <div id="item">
     		<div id="title"><%= link_to school.name, school %></div>
-						<div id="video" style="background: url(<%=school.avatar_photo_url(:thumb)%>) 0 0">
+						<div id="video">
+							<%= image_tag school.avatar_photo_url(:thumb) %>
 						</div>
                        
             <div id="identification">

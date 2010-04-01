@@ -552,6 +552,12 @@ background:url(../images/denunciar.png) no-repeat;font-size:12px; text-decoratio
 .evaluation_rating{margin:2px 0px 0px 0px;}
 
 #video{float:left; width:125px; height:88px; background-color:#e7e8e8; padding:0px 0px 0px 0px; margin:0px 0px 8px 0px; border:solid 1px #7b828e;}
+#video img{
+	width: 125px;
+	height: 88px;
+	border: none;
+}
+
 #video_info{float:right; z-index:100; width:43px; height:16px; background-color:#7b828e; padding:6px 4px 4px 6px; margin:62px 0px 0px 0px; 
 				 font-size:11px; color:#FFFFFF;}
 				 
