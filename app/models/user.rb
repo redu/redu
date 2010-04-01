@@ -215,21 +215,6 @@ class User < ActiveRecord::Base
     cond
   end  
   
-#  def self.find_by_activity(options = {})
-#    options.reverse_merge! :limit => 30, :require_avatar => true, :since => 7.days.ago   
-#    #Activity.since.find(:all,:select => Activity.columns.map{|column| Activity.table_name + "." + column.name}.join(",")+', count(*) as count',:group => Activity.columns.map{|column| Activity.table_name + "." + column.name}.join(","),:order => 'count DESC',:joins => "LEFT JOIN users ON users.id = activities.user_id" )
-#    #Activity.since(7.days.ago).find(:all,:select => 'activities.user_id, count(*) as count',:group => 'activities.user_id',:order => 'count DESC',:joins => "LEFT JOIN users ON users.id = activities.user_id" )
-#    activities = Activity.since(options[:since]).find(:all, 
-#      :select => 'activities.user_id, count(*) as count', 
-#      :group => 'activities.user_id', 
-#      :conditions => "#{options[:require_avatar] ? ' users.avatar_id IS NOT NULL' : nil}", 
-#      :order => 'count DESC', 
-#      :joins => "LEFT JOIN users ON users.id = activities.user_id",
-#      :limit => options[:limit]
-#      )
-#    activities.map{|a| find(a.user_id) }
-#  end  
-    
   def self.find_featured
     self.featured
   end
@@ -254,13 +239,7 @@ class User < ActiveRecord::Base
     cond = build_conditions_for_search(search)
     return cond, search, metro_areas, states
   end  
-
   
-#  def self.recent_activity(page = {}, options = {})
-#    page.reverse_merge! :size => 10, :current => 1
-#    Activity.recent.find(:all, :page => page, *options)      
-#  end
-
   def self.currently_online
     User.find(:all, :conditions => ["sb_last_seen_at > ?", Time.now.utc-5.minutes])
   end
@@ -278,7 +257,6 @@ class User < ActiveRecord::Base
   def self.opensocial_id_column_name; 'id'; end
   def title; self.display_name; end
   
-  
   ## End Class Methods  
   
   
@@ -291,7 +269,6 @@ class User < ActiveRecord::Base
       (self.school_admin?(entity) || entity.owner == self)    
     end
   end
-  
   
   def earn_points(activity)
     thepoints = AppConfig.points[activity]
@@ -332,7 +309,10 @@ class User < ActiveRecord::Base
   end
   
   def last_months_posts
-    self.posts.find(:all, :conditions => ["published_at > ? and published_at < ?", DateTime.now.to_time.at_beginning_of_month.months_ago(1), DateTime.now.to_time.at_beginning_of_month])
+    self.posts.find(:all, 
+    				:conditions => ["published_at > ? and published_at < ?",
+    				DateTime.now.to_time.at_beginning_of_month.months_ago(1),
+    				DateTime.now.to_time.at_beginning_of_month])
   end
   
   def avatar_photo_url(size = nil)
@@ -472,25 +452,6 @@ class User < ActiveRecord::Base
     friendships_initiated_by_me.count(:conditions => ['created_at > ?', Time.now.beginning_of_day]) >= Friendship.daily_request_limit
   end
 
-#  def network_activity(page = {}, since = 1.week.ago)
-#    page.reverse_merge :size => 10, :current => 1
-#    friend_ids = self.friends_ids
-#    metro_area_people_ids = self.metro_area ? self.metro_area.users.map(&:id) : []
-#    
-#    ids = ((friends_ids | metro_area_people_ids) - [self.id])[0..100] #don't pull TOO much activity for now
-#    
-#    Activity.recent.since(since).by_users(ids).find(:all, :page => page)          
-#  end
-
-#  def comments_activity(page = {}, since = 1.week.ago)
-#    page.reverse_merge :size => 10, :current => 1
-#
-#    Activity.recent.since(since).find(:all, 
-#      :conditions => ['comments.recipient_id = ? AND activities.user_id != ?', self.id, self.id], 
-#      :joins => "LEFT JOIN comments ON comments.id = activities.item_id AND activities.item_type = 'Comment'",
-#      :page => page)      
-#  end
-
   def friends_ids
     return [] if accepted_friendships.empty?
     accepted_friendships.map{|fr| fr.friend_id }
@@ -626,7 +587,6 @@ class User < ActiveRecord::Base
 
   protected
   
-  #ADICIONADO PARA PASSAR O BUG DO 'after_save :activate'
     def activate_before_save
       self.activated_at = Time.now.utc
       self.activation_code = nil
