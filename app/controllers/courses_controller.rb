@@ -162,13 +162,16 @@ class CoursesController < BaseController
   # GET /courses/new.xml
   def new
     @course = Course.new
-    
+    @course.build_price
+    #TODO mostrar apenas as escolas nas quais o usuario tem permissao de postagem
     @schools = current_user.schools
   end
   
   # GET /courses/1/edit
   def edit
     @course = Course.find(params[:id])
+    #TODO mostrar apenas as escolas nas quais o usuario tem permissao de postagem
+    @schools = current_user.schools 
   end
   
   

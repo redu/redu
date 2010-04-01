@@ -3,7 +3,7 @@
 	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">aprender</a> > <a href="#">materiais</a> </div>
  	<div id="title">NOVA AULA
  	</div>
-<% form_for setup_course(@course), :html => { :multipart => true } do |f| %>
+<% form_for @course, :html => { :multipart => true } do |f| %>
 <%= f.error_messages %>
 <%= render :partial => "courses/form", :locals => { :f => f, :course => @course, :botao => "Salvar!", :edit => false } %>
 <%= f.submit 'Adicionar' %> 

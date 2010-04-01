@@ -83,7 +83,7 @@ class Course < ActiveRecord::Base
   has_many :acess_key
   has_and_belongs_to_many :resources
   belongs_to :owner , :class_name => "User" , :foreign_key => "owner"
-  has_many :course_prices
+  has_one :price, :class_name => "CoursePrice"
   has_many :acquisitions
   has_attached_file :media
   has_many :favorites, :as => :favoritable, :dependent => :destroy
@@ -100,7 +100,7 @@ class Course < ActiveRecord::Base
   validation_group :uploaded, :fields => [:title, :description, :media]
   
   # VALIDATIONS
-  accepts_nested_attributes_for :course_prices
+  accepts_nested_attributes_for :price
   validates_presence_of :name
   validates_presence_of :description
   validates_attachment_presence :media
