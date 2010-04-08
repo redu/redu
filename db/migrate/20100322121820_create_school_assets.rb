@@ -1,6 +1,6 @@
 class CreateSchoolAssets < ActiveRecord::Migration
   def self.up
-  	drop_table :school_assets
+  #	drop_table :school_assets
   	
     create_table :school_assets do |t|
     t.string :asset_type, :null => false
