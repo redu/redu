@@ -3,7 +3,7 @@
         </div>
 		<ul>
 			<div id="task_bar_exames">
-				<%= link_to "Inbox", user_messages_path(@user) %> 
+				<%= link_to :inbox.l, user_messages_path(@user) %> 
 				<%= "(#{@user.unread_message_count})" if @user.unread_messages? %> |
 				<%= link_to :sent_messages.l, user_messages_path(@user, :mailbox => :sent) %> |
 				<%= link_to :compose.l, new_user_message_path(@user) %>
