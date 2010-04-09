@@ -7,7 +7,7 @@ class Log < ActiveRecord::Base
   
   def self.log_activity(log_object, action, user)
     
-    if user 
+    if user and user.my_activity.eql?(true)
     
     if log_object.instance_of?(Course)
       
