@@ -21,8 +21,10 @@ class Log < ActiveRecord::Base
       case action
         when 'create'
         log_object.owner.earn_points('created_course')
-        #when 'show'
-        #log_object.owner.earn_points('created_course')
+        when 'show'
+        log_object.owner.earn_points('show_course')
+        when 'update'
+        log_object.owner.earn_points('updated_course')
       end
       
     elsif log_object.instance_of?(Resource)
@@ -36,6 +38,8 @@ class Log < ActiveRecord::Base
       case action
         when 'create'
         log_object.owner.earn_points('created_resource')
+        when 'show'
+        log_object.owner.earn_points('show_resource')
       end
       
       elsif log_object.instance_of?(Favorite)
@@ -46,7 +50,7 @@ class Log < ActiveRecord::Base
         :logeable_name => log_object.favoritable.name,
         :logeable_id => log_object.favoritable.id)
       
-      
+      ## POINTS TO Favorites
       
       elsif log_object.instance_of?(Exam)
        
@@ -58,9 +62,13 @@ class Log < ActiveRecord::Base
       
       case action
         when 'create'
-        log_object.owner.earn_points('created_resource')
+        log_object.owner.earn_points('created_exam')
         when 'answer'
         log_object.owner.earn_points('answer_exam')
+        when 'show'
+        log_object.owner.earn_points('show_exam')
+        when 'update'
+        log_object.owner.earn_points('updated_exam')
       end
       
       elsif log_object.instance_of?(User)
