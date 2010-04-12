@@ -19,6 +19,7 @@
 		<ul id="name_user_item">
 			<li class="name">
 				<%= link_to @user.display_name.upcase, @user, :class => "name"%>
+				
 				</li>
 			<li>
 				<% if  (@user && @user.eql?(current_user)) %>
@@ -26,6 +27,7 @@
 				<% end %>
 			</li>
 		</ul>
+		<%= @user.score %>
 	</div>
 <div id="description_user">
 <% if @user.description %>
