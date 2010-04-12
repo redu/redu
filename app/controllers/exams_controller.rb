@@ -550,12 +550,8 @@ def search
   # GET /exams/1.xml
   def show
     @exam = Exam.find(params[:id])
-
     
-    #thepoints = AppConfig.points['show_exam']
-    #new_score = current_user.score + thepoints
-    #current_user.score = new_score
-    #current_user.save
+    Log.log_activity(@exam, 'create', current_user)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -602,8 +598,9 @@ def search
   # PUT /exams/1.xml
   def update
     @exam = Exam.find(params[:id])
-    puts 'update actoin!!!!' 
 
+    Log.log_activity(@exam, 'create', @exam.owner)
+    
     respond_to do |format|
       if @exam.update_attributes(params[:exam])
         flash[:notice] = 'Exam was successfully updated.'

@@ -135,7 +135,7 @@ class CoursesController < BaseController
       @course.update_attribute(:view_count, @course.view_count + 1) #TODO performance
       
       Log.log_activity(@course, 'show', current_user)#TODO se usuario nao comprou não logar atividade
-      
+
       respond_to do |format|
         format.html # show.html.erb
         format.xml  { render :xml => @course }
@@ -199,7 +199,7 @@ class CoursesController < BaseController
           #@school.update_attribute(:assets, @school.assets)
         end
         
-        #Log.log_activity(@course, 'create', current_user) # só aparece quando é aprovada
+        Log.log_activity(@course, 'create', current_user) # só aparece quando é aprovada
         
         flash[:notice] = 'Aula foi criada com sucesso e está em processo de moderação.'
         format.html { 
@@ -218,6 +218,8 @@ class CoursesController < BaseController
   # PUT /courses/1.xml
   def update
     @course = Course.find(params[:id])
+    
+     Log.log_activity(@course, 'update', @course.owner)
     
     respond_to do |format|
       if @course.update_attributes(params[:course])
