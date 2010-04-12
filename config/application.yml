@@ -36,9 +36,10 @@ points:
   created_exam: 40
   updated_exam: 15
   show_exam: 10
+  answer_exam: 20
   created_resource: 30
   show_resource: 15
-  answer_exam: 20
+  
 
 image:
   #missing_thumb: '/images/icon_missing_thumb.gif'
