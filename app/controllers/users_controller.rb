@@ -5,12 +5,12 @@ class UsersController < BaseController
   
   if AppConfig.closed_beta_mode
     skip_before_filter :beta_login_required, :only => [:new, :create, :activate]
-    before_filter :require_invitation, :only => [:new, :create]
+    #before_filter :require_invitation, :only => [:new, :create]
     
-    def require_invitation
-      redirect_to home_path and return false unless params[:inviter_id] && params[:inviter_code]
-      redirect_to home_path and return false unless User.find(params[:inviter_id]).valid_invite_code?(params[:inviter_code])
-    end
+    #def require_invitation
+    #  redirect_to home_path and return false unless params[:inviter_id] && params[:inviter_code]
+    #  redirect_to home_path and return false unless User.find(params[:inviter_id]).valid_invite_code?(params[:inviter_code])
+    #end
   end    
   
   uses_tiny_mce(:options => AppConfig.default_mce_options.merge({:editor_selector => "rich_text_editor"}), 
@@ -255,13 +255,39 @@ class UsersController < BaseController
   end
   
   def create
-    @user       = User.new(params[:user])
+    
+    if AppConfig.closed_beta_mode
+      if params[:beta_key]
+        @key = BetaKey.find(:first, :conditions => ["beta_keys.key like ?", params[:beta_key]])
+        if @key
+          if @key.user
+            flash[:error] = "Esta chave de acesso já está sendo usada por outro usuário."
+            render :action => 'new' and return
+          end
+        else
+          flash[:error] = "Chave de acesso inválida!"
+          render :action => 'new' and return
+        end
+      else
+        flash[:error] = "Chave de acesso inválida!"
+        render :action => 'new' and return
+      end
+    end
+    
+    
+    @user = User.new(params[:user])
    # @user.role  = Role[:member]
+   
+   user_id = @user.save!
     
-    
-    
-    if (!AppConfig.require_captcha_on_signup || verify_recaptcha(@user)) && @user.save
+    if (!AppConfig.require_captcha_on_signup || verify_recaptcha(@user)) && user_id
       create_friendship_with_inviter(@user, params)
+      
+      if @key 
+        @key.user = @user
+        @key.save
+      end
+      
       flash[:notice] = :email_signup_thanks.l_with_args(:email => @user.email) 
       redirect_to signup_completed_user_path(@user)
     else
@@ -452,6 +478,7 @@ class UsersController < BaseController
     @user = User.find(params[:id])
     redirect_to home_path and return unless @user
     render :action => 'signup_completed', :layout => 'beta' if AppConfig.closed_beta_mode    
+  
   end
   
   def welcome_photo

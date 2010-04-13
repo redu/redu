@@ -133,6 +133,21 @@ class SchoolsController < BaseController
   end
   
   
+ def moderate_members
+   @approve_ids = params[:approve]#.collect{|c| c.to_i}
+   @disapprove_ids = params[:disapprove]
+   
+   UserSchoolAssociation.update_all( "status = 'approved'", ["id IN (?)", @approve_ids.join(',') ]) if @approve_ids
+   UserSchoolAssociation.update_all( "status = 'disaproved'",["id IN (?)", @approve_ids.join(',') ]) if @disapprove_ids
+   
+   flash[:notice] = "Alterações salvas!"
+   
+   redirect_to pending_members_school_path(params[:id])
+   
+   
+ end
+  
+  
   
   
   

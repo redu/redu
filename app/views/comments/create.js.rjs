@@ -2,7 +2,12 @@ if @comment.new_record?
   page.select('div#comments div.errors').invoke('update', flash[:error])
   page << "new Effect.Highlight($$('div#comments div.errors')[0]);"
 else
-  page.insert_html :before, 'newest_comment', :partial => 'comments/comment', :locals => {:comment => @comment, :highlighted => true}  
+   if params[:from_user] == 'true'
+     page.insert_html :after, 'top_comments', :partial => 'users/comment', :locals => {:comment => @comment, :highlighted => true}  
+  else
+     page.insert_html :before, 'newest_comment', :partial => 'comments/comment', :locals => {:comment => @comment, :highlighted => true}  
+   end
+  
   page << "scrollToNewestComment();"
   page << "document.getElementById('comment_comment').value = '';"
   page.select('#emptycomments').invoke('hide')

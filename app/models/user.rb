@@ -48,6 +48,9 @@ class User < ActiveRecord::Base
   
   # ANNOTATIONS
   has_many :annotations, :dependent => :destroy
+  
+  # BETA KEY
+  has_one :beta_key, :dependent => :destroy
    
    # PROFILE
   has_one :profile

@@ -27,7 +27,7 @@
 		<div id="comments_title">INSERIR COMENTÁRIO</div> 
 	    <div id="comments_form_fields">
 			 <%= text_area :comment, :comment, {:size => "76x5", :class => "comments_imput"} %><br />
-			
+			 <%= hidden_field_tag("from_user", "true") %>
 			<%= submit_tag "Enviar", :class => 'bt_comments'  %>
 			<%= image_tag 'spinner.gif', :style => 'display:none;', :id => 'comment_spinner' %>
 		</div>

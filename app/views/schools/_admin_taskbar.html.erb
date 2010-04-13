@@ -3,10 +3,11 @@
   
   <%= link_to 'Conteúdo postados (5)', pending_courses_school_path(@school) %> | 
   <%= link_to 'Solicitações pendentes (9)', pending_members_school_path(@school) %> |
+  <%= link_to 'Gerenciar Papéis', owner_user_schools_path(current_user.id) %>
   <%= link_to 'Configurações', edit_school_path(@school) %> |
   <%= link_to 'Gadgets', owner_user_schools_path(current_user.id) %> |
-  <%= link_to 'Gerar Chaves', owner_user_schools_path(current_user.id) %> |
-  <%= link_to 'Gerenciar Papéis', owner_user_schools_path(current_user.id) %>
+  <%= link_to 'Aparência', owner_user_schools_path(current_user.id) %> |
+  <%= link_to 'Conta (Premium)', owner_user_schools_path(current_user.id) %>
   
   </div>
 	<% end %>

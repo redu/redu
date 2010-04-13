@@ -95,13 +95,17 @@
                                 <li>
                                     <a href="<%=schools_path%>">TODAS</a>
                                 </li>
-                                <li>
+                                
+								<% if current_user %>
+								<li>
                                     | 
                                 </li>
                                 <li>
-                                	
+                                	MINHAS
                                 	<%= link_to 'MINHAS', member_user_schools_path(current_user.id) %> 
                                 </li>
+								<% end %>
+								
                                 <li>
                                     | 
                                 </li>

@@ -59,6 +59,13 @@
             <br/>
             <%= date_select :user, :birthday, {:start_year => 1926, :end_year => (Time.now.year - 13)} %>
             <br/>
+			
+			<% if AppConfig.closed_beta_mode %>
+			 <label>Chave de acesso:</label><br />
+			<%= text_field_tag :beta_key, nil, {:size => 6} %>
+			<br />
+			<% end %>
+			
             <label for ='user_password'>
                 <%= :type_your_password.l %>
             </label>

@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <link href="#{application_url}favicon.ico" rel='shortcut icon' />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title><%= page_title %></title>
+        <meta content='keywords for use in META tags' name='keywords' />
+        <meta content='noindex,follow' name='robots' />
+        <meta content='A description of your community for use in META tags.' name='description' />
+        <%= render :partial => "shared/scripts_and_styles" %>
+        
+    </head>
+    <body>
+        <div id="busca" class="messagebox">
+            <div class="content">
+            </div>
+        </div>
+        <div id="conhecimento" class="messagebox">
+            <div class="content">
+            </div>
+        </div>
+        <div id="desempenho" class="messagebox">
+            <div class="content">
+            </div>
+        </div>
+        <div id="smartbar">
+            
+        </div>
+        <div id="container_main">
+        	<%= render :partial => "shared/header_beta" %>
+            <div id = "flash_messages">
+                <%= render :partial => "shared/messages" %>
+            </div>
+            <div id="container_content">
+                <%= @content_for_layout %>
+                <div id="footer">
+                    <div id="footer_all_content">
+                        <div id="footer_logo">
+                            <%= image_tag("logo_redu1.png", :height => '65', :width => '150') %>
+                        </div>
+                        <div id="politicas">
+                        </div>
+                        
+                        <div id="footer_menu">
+                            <div id="copyright">
+                                Copyright © 2010 - Redu.com.br. Todos os direitos reservados. |
+                                Sobre o Redu |
+                                <%= link_to "Termos de Uso", :controller => "base", :action => "tos" %>
+                                <!--%= link_to "Termos de Uso", application_url + "policy/tos.txt"  %-->
+                                |<!--%= link_to "Privacidade", application_url + "policy/privacy.txt"  %-->
+                                <%= link_to "Privacidade", :controller => "base", :action => "privacy" %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- FIM: all_content-->
+        </div>
+    </body>
+</html>

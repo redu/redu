@@ -11,7 +11,7 @@ class SessionsController < BaseController
   # render new.rhtml
   def new
     redirect_to user_path(current_user) and return if current_user
-    render :layout => 'beta' if AppConfig.closed_beta_mode
+    #render :layout => 'beta' if AppConfig.closed_beta_mode
   end
 
   def create

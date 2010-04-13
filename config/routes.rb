@@ -105,7 +105,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'sitemap', :controller => "sitemap", :action => "index"
   
   if AppConfig.closed_beta_mode
-    map.connect '', :controller => "base", :action => "teaser"
+    map.connect '', :controller => "base", :action => "beta_index"
     map.home 'home', :controller => "base", :action => "site_index"
   else
     map.home '', :controller => "base", :action => "site_index"
@@ -126,7 +126,7 @@ ActionController::Routing::Routes.draw do |map|
   map.admin_events      'admin/events', :controller => 'admin', :action=>'events'
   
   # sessions routes
-  map.teaser '', :controller=>'base', :action=>'teaser'
+  map.teaser '', :controller=>'base', :action=>'beta_index'
   map.login  '/login',  :controller => 'sessions', :action => 'new'
   map.signup '/signup', :controller => 'users', :action => 'new'
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'

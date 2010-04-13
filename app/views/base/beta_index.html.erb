@@ -1,0 +1,140 @@
+<script>
+	var loginBoxVisible = true;
+	function toggleLoginSignupBox(){
+		
+		if (loginBoxVisible) {
+			document.getElementById('box_login').style.display = 'none';
+			document.getElementById('box_cadastro').style.display = 'none';
+			document.getElementById('box_signup').style.display = 'block';
+		} else {
+			document.getElementById('box_login').style.display = 'block';
+			document.getElementById('box_cadastro').style.display = 'block';
+			document.getElementById('box_signup').style.display = 'none';
+		}
+		loginBoxVisible = !loginBoxVisible;
+	}
+	function verifyTOS (){
+		if (document.getElementById('user_tos').checked) {
+			return true;
+		} else {
+			alert('Você não pode se cadastrar se não aceitar os Termos de Uso do Redu');
+			return false;
+		}
+	}
+	
+	
+</script>
+
+    
+
+<div id="all_content2" >
+<div id="col_content">
+    
+	<h1>beta!</h1>
+	
+</div>
+
+<!-- COLUNA DIREITA ################################################################################################################################################ -->
+<div id="col_box2">
+
+
+	<% if not logged_in? %>
+<!-- LOGIN ///////////////////////////////////////////////////////////////////////////////////// -->
+        
+	<div id="box_login">
+		<% form_tag sessions_path, :class => 'MainForm' do %>
+    	<div id="box_top_login">ACESSE AGORA</div>  
+        <div id="box_list_login">
+        	<label>Login:</label><br />
+			<%= text_field_tag 'login', nil, :size => 27, :class => 'edit_login_imput' %>
+			<br /><br />
+        	<label>Senha:</label><br />	
+			<%= password_field_tag 'password', nil, :size => 27, :class => 'edit_login_imput' %>
+			<br /><br />
+			<%= check_box_tag 'remember_me' %> <label>Lembrar-me</label> <br />	
+			<div id="box_list_login" align="center">
+				<!-- <a href="#" class="bt_login">Enviar</a> -->
+				 <%= submit_tag :log_in.l, :class => 'bt_login' %>
+			</div>
+            <div id="box_list_login" align="center">
+            	Esqueceu <%= link_to "login", forgot_username_url %> ou <%= link_to "senha", forgot_password_url %>?
+			</div>
+        </div>
+		<% end %>
+    </div>
+	
+<!-- LOGIN ///////////////////////////////////////////////////////////////////////////////////// -->
+
+<!-- CADASTRO ///////////////////////////////////////////////////////////////////////////////////// -->
+	<div id="box_signup" style="display: none;" class="clearfix">
+		<%- form_for :user, :url => users_path, :html => {:class => 'MainForm', :onsubmit => 'return verifyTOS();'} do |f| %>
+	
+    	<div id="box_top_login">CADASTRO</div>  
+        
+		<div id="box_list_login">
+        	
+			<label>Nome:</label><br />
+			 <%= f.text_field :first_name, :size => 27, :class => 'edit_login_imput' %>
+			<br /><br />
+			
+			<label>Sobrenome:</label><br />
+			 <%= f.text_field :last_name, :size => 27, :class => 'edit_login_imput' %>
+			<br /><br />
+			
+			<label>Login:</label><br />
+			 <%= f.text_field :login, :size => 27, :class => 'edit_login_imput' %>
+			<br /><br />
+			
+			<label>E-mail:</label><br />
+			<%= f.text_field :email, :size => 27, :class => 'edit_login_imput' %>
+			<br /><br />
+        	
+			<label>Data de nascimento:</label><br />
+			<%= date_select :user, :birthday, {:start_year => 1926, :end_year => (Time.now.year - 13)}%>
+			<br /><br />
+        	
+			 <% if AppConfig.require_captcha_on_signup %>
+          		<%= recaptcha_tags %>
+        	 <% end %>
+			 
+			 <label>Chave de acesso:</label><br />
+			<%= text_field_tag :beta_key, nil, {:size => 6, :class => 'edit_login_imput'} %>
+			<br /><br />
+			 
+			<label>Senha:</label><br />
+			<%= f.password_field :password, :size => 27, :class => 'edit_login_imput' %>
+			<br /><br />
+			
+			<label>Confirme a senha:</label><br />
+			<%= f.password_field :password_confirmation, :size => 27, :class => 'edit_login_imput' %>
+			<br /><br />
+			<%= check_box "user", "tos" %>Li e aceito os Termos de Uso
+			<!--<input type="checkbox" name="tos_accepted" id="tos_accepted" value="0"/>Li e aceito os Termos de Uso-->
+
+			<div id="box_list_login" align="center">
+				<!-- <a href="#" class="bt_login">Enviar</a> -->
+				 <%= submit_tag :sign_up.l, :class => 'bt_login' %> 
+				 <span class="link_01" onclick="toggleLoginSignupBox();">ou retornar ao login</span>
+			</div>
+			
+           
+        </div>
+		
+		<% end %>
+		
+     </div>
+
+
+	<div id="box_cadastro">
+    	<div id="box_top_cadastro">CADASTRE-SE</div>
+        <div id="box_list_cadastro"><span class="link_01" onclick="toggleLoginSignupBox();"> Recebeu uma chave de acesso? Cadastre-se agora!</span></div>
+	</div>
+<!-- CADASTRO ///////////////////////////////////////////////////////////////////////////////////// -->
+	<% end %>
+
+   
+</div>
+<!--<div id="title_page">Assistindo Aula</div>-->
+</div>
+
+

@@ -171,8 +171,8 @@ margin-right: 1em;
 }*/
 
 .warning, #errorExplanation, .errorExplanation{
-	padding: 1.2em 1em 1em 1em;
-	margin: 1em 0;
+	/*padding: 1.2em 1em 1em 1em;
+	margin: 1em 0;*/
 	color: #6b5e2b;
 }
 
