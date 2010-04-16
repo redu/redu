@@ -8,8 +8,6 @@ module CoursesHelper
 	end
 	
 	def type_class(resource)
-			
-			puts resource.media_content_type
 			icon = case resource.media_content_type
 			when "clipping" then 'clipping'
 			when "application/vnd.ms-powerpoint" then 'ppt'
