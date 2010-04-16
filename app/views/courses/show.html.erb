@@ -234,8 +234,8 @@
                         <% @course.resources.each do | resource | %>
                         <li>
                             <%= link_to resource.name,
-                            resource_path(resource),
-                            :class => 'word' %>
+                           		resource.media.url,
+                            :class => type_class(resource) %>
                         </li>
                         <% end %>
                     </ul>

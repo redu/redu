@@ -23,7 +23,7 @@
 	
 	
 	
-
+<% unless edit %>
 <fieldset>
 	<legend>Material Principal</legend>
 
@@ -46,12 +46,9 @@
   </div>
   
 </fieldset>	
+<% end %>
 <script type="text/javascript">
 	function switchCourseFields(fieldType){
-		//alert(fieldType.value);
-		
-		// fieldType = 1 Upload
-		// fieldType = 2 External link
 		if (fieldType == 1) {
 			$('price_box').show();
 			document.getElementById("upload_resource_field").style.display = "block";
@@ -63,24 +60,27 @@
 		}
 		
 	}
+	
+	function removeField(link){
+		jQuery(link).parent("fieldset:first").hide()
+		jQuery(link).siblings("input[type=hidden]:first").val("1")
+	}
+	
+	function add_fields(link, association, content) {
+		var new_id = new Date().getTime();
+		var regexp = new RegExp("new_" + association, "g")
+		jQuery(link).before("<fieldset>" + content.replace(regexp, new_id) + "</fieldset>");
+	}
 
 </script>
 <fieldset>
 	<legend>Material Complementar</legend>
-	<%= link_to "Adicionar materiais complementares", :controller => "resources", :action => "new" %>
-	<% unless @user_resources.empty? %>
-	<div style="overflow: scroll; height: 200px; width: 250px;">
-	<%= hidden_field_tag "course[resource_ids][]", "" %>
-	<ul>
-	<% @user_resources.each do | resource | %>
-		<li>
-		  <%= check_box_tag "course[resource_ids][]", "#{resource.id}", users_resource?(resource) -%>
-		  <%= resource.name %>
-		</li>
+	<% f.fields_for :resources do | build |%>
+		<fieldset>
+		<%= render :partial => 'resource_fields', :locals => {:f => build} %>
+		</fieldset>
 	<% end %>
-	</ul>
-	</div>
-	<% end %>
+	<%= link_to_add_fields "Adicionar material", f, :resources %>
 </fieldset>	
 
 <fieldset id="price_box">

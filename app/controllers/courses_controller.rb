@@ -163,6 +163,7 @@ class CoursesController < BaseController
   def new
     @course = Course.new
     @course.build_price
+    3.times { @course.resources.build }
     #TODO mostrar apenas as escolas nas quais o usuario tem permissao de postagem
     @schools = current_user.schools
   end

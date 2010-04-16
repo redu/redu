@@ -81,7 +81,7 @@ class Course < ActiveRecord::Base
   # ASSOCIATIONS
   has_and_belongs_to_many :subjects
   has_many :acess_key
-  has_and_belongs_to_many :resources
+  has_many :resources, :class_name => "CourseResource"
   belongs_to :owner , :class_name => "User" , :foreign_key => "owner"
   has_one :price, :class_name => "CoursePrice"
   has_many :acquisitions
@@ -101,6 +101,10 @@ class Course < ActiveRecord::Base
   
   # VALIDATIONS
   accepts_nested_attributes_for :price
+  accepts_nested_attributes_for :resources, 
+  	:reject_if => lambda { |a| a[:media].blank? },
+  	:allow_destroy => true
+  	
   validates_presence_of :name
   validates_presence_of :description
   validates_attachment_presence :media

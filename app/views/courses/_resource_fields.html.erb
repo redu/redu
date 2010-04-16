@@ -1,0 +1,5 @@
+<%= f.label :resource %>
+<%= f.text_field :name %>
+<%= f.file_field :media %>
+<%= f.hidden_field :_destroy %>
+<%= link_to_function "remover", "removeField(this)"%>
