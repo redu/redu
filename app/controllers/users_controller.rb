@@ -278,7 +278,7 @@ class UsersController < BaseController
     @user = User.new(params[:user])
    # @user.role  = Role[:member]
    
-   user_id = @user.save!
+   user_id = @user.save
     
     if (!AppConfig.require_captcha_on_signup || verify_recaptcha(@user)) && user_id
       create_friendship_with_inviter(@user, params)
