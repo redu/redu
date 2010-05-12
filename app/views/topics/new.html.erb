@@ -1,0 +1,40 @@
+<div id="all_content3">
+    <div id="col_content">
+        <div id="breadcrumbs">
+            <a href="<%=application_url%>">rede</a>
+            > fórum > novo tópico
+        </div>
+		
+		<%-box :class => 'alt first_alt' do %>
+			<%= link_to :forums.l, forum_home_path %>
+			<span class='arrow'>
+				<%= link_to h(@forum.name), forum_path(@forum) %>
+			</span>
+			<span class='arrow'>
+				<%= :new_topic.l %>
+			</span>
+		<% end %>
+		
+		<%-box do %>
+			<h3>
+				<div id='new_topic'>
+					<%= :new_topic.l %>
+				</div>	
+			</h3>	
+				<p class='subtitle'>
+					<%= :by.l %>
+					<%= current_user.display_name %>
+				</p>
+				<%= error_messages_for :topic %>
+				<%- form_for :topic, :url  => forum_topics_path(@forum), :html => {:class => "MainForm"} do |f| %>
+					<%= render :partial => "form", :object => f %>
+					<p>
+						<%= submit_tag :post_topic.l, :or => link_to(:cancel.l, forum_path(@forum)) %>
+					</p>
+				<% end %>
+				<%= javascript_tag "$('topic_title').focus();" %>
+			
+		<% end %>
+		
+	</div>
+</div>			

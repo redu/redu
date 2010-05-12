@@ -71,7 +71,7 @@
           %td{"colspan"=>"2"}
             %a{"name"=>"#{post.dom_id}", "id"=>"#{post.dom_id}"} &nbsp;
           
-      %tr.post{"id"=>"posts-#{post.dom_id}-row"}
+      %tr.post{"id"=>"posts-<%=post.dom_id%>-row"}
         %td.author.vcard{:width => "15%"}
           .date
             %a{"href"=>"##{post.dom_id}", "rel"=>"bookmark"}
