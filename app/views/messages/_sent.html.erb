@@ -1,22 +1,29 @@
-	<div id='title'>
+<div id='yui-main'>	
+	<div class='yui-b'>
+	
+	<h3>
 		<%= :sent_messages.l %>
-	</div>
-	<table>
+	</h3>
+	<table class='messages' border='0' width='100%'>
 		<tbody>
 			<%- if @messages.empty? %>
 				<tr>
-					<%= :no_messages.l %>
+					<td colspan ="4">
+						<%= :no_messages.l %>
+					</td>
 				</tr>
 			<%- else %>
 				<%- @messages.each do |message| %>
 					<tr>
 						<td width = '10px'>
-							<fieldset>
+							<fieldset class='inline'>
 								<%= check_box_tag "delete[]", message.id %>
 							</fieldset>
 						</td>
 						<td width = '60px'>
+							<div class='photo'>
 							<%= link_to image_tag( message.recipient.avatar_photo_url(:thumb), "height"=>"50px", "alt"=>"#{message.recipient.login}", "width"=>"50px" ), user_path(message.recipient), :title => "#{message.recipient.login}'s " + :profile.l %>
+							</div>
 						</td>
 						<td>
 							<%= link_to h(message.subject), user_message_path(@user, message)%>
@@ -24,7 +31,7 @@
 							<%= :to.l %>
 							<%= link_to h(message.recipient.login), user_path(@user)%>
 						</td>
-						<td width = '150px'>
+						<td class='meta' width = '150px'>
 							<%= h message.created_at.to_s(:long) %>
 						</td>
 					</tr>
@@ -43,3 +50,6 @@
 			</tr>
 		</tfoot>
 	</table>
+	
+	</div>
+</div>	

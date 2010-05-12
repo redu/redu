@@ -1,36 +1,63 @@
-
-	<div id='title'>
+<div id='yui-main'>
+	<div class='yui-b'>
+	<h3>
 		<%= :inbox.l %>
-	</div>	
-	<table border = 0, width = '100%'>
+	</h3>
+		
+	<table class='messages' border = 0, width = '100%'>
 		<tbody>
 			<%- if @messages.empty? %>
 			<tr>
-				<%= :no_messages.l %>
+				<td colspan='5'>
+					<%= :no_messages.l %>
+				</td>	
 			</tr>
 			<%- else %>
 				<%- @messages.each do |message| %>
-						<%= check_box_tag "delete[]", message.id %>
-					<%= link_to image_tag( message.sender.avatar_photo_url(:thumb), "height"=>"50px", "alt"=>"#{message.sender.login}", "width"=>"50px" ), user_path(message.sender), :title => "#{message.sender.login}'s " + :profile.l %>
-					<%= link_to h(message.subject), user_message_path(@user, message) %>
-					<br>
-					<%= :from.l %>
-					<%= link_to h(message.sender.login), user_path(message.sender) %>
-					<em>
-						<%= message.read? ? 'Lida' : 'Não-Lida' %>
-					</em>				
-					<%= h message.created_at.to_s(:long) %>
+					<tr>
+						<td width='10px'>
+							<fieldset class='inline'>
+								<%= check_box_tag "delete[]", message.id %>
+							</fieldset>
+						</td>
+						<td width='60px'>
+							<div class='photo'>
+								<%= link_to image_tag( message.sender.avatar_photo_url(:thumb), "height"=>"50px", "alt"=>"#{message.sender.login}", "width"=>"50px" ), user_path(message.sender), :title => "#{message.sender.login}'s " + :profile.l %>
+							</div>
+						</td>
+						<td>
+							<%= link_to h(message.subject), user_message_path(@user, message) %>
+							<br>
+							<%= :from.l %>
+							<%= link_to h(message.sender.login), user_path(message.sender) %>
+						</td>
+						<td width='20px'>
+							<em>
+								<%= message.read? ? 'Lida' : 'Não-Lida' %>
+							</em>	
+						</td>
+						<td class='meta'>
+							<%= h message.created_at.to_s(:long) %>
+						</td>
+					</tr>
 				<% end %>			
 			<% end %>
 		</tbody>
 		<tfoot>
 			<tr>
+				<td colspan="5">
 					<%-if @messages.any? %>
 						<p>
 							<%= submit_tag :delete_selected.l %>
 						</p>
 					<% end %>
+				</td>	
 			</tr>
 		</tfoot>
 	</table>	
+	<div class='pagination'>
 	<%= paginating_links @messages if @messages.page_count > 1 %>
+	</div>
+	
+	</div>
+<div>

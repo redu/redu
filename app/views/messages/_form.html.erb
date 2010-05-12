@@ -3,7 +3,7 @@
 		<%= f.hidden_field :to %>
 	<%- else %>
 		<p>
-			<label for='username'>
+			<label for='message_to'>
 			<%= :to.l %>
 			<em>
 				<%= "(" + :type_a_username.l + ")" %>
@@ -11,15 +11,17 @@
 			</label>
 		</p>
 		<%= text_field_tag 'message[to]', @message.to, {:autocomplete => "off", :size => 35, :id => "message_to"} %>
-		<%= auto_complete_field 'message_to', {:url => auto_complete_for_username_user_messages_path(@user), :tokens=>','} %>	
+		<div class='auto_complete' id='message_to_auto_complete'>
+			<%= auto_complete_field 'message_to', {:url => auto_complete_for_username_user_messages_path(@user), :tokens=>','} %>	
+		</div>
 		<p>
-			<label for='username'>
+			<label for='message_subject'>
 				<%= :subject_of_message.l + ":" %>
 			</label>
 		</p>
 		<%= f.text_field :subject %>
 		<p>
-			<label for='username'>
+			<label for='message_body'>
 				<%= :message.l + ":" %>
 			</label>
 		</p>
