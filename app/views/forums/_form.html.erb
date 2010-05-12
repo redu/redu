@@ -1,0 +1,31 @@
+<div class='forum_name'>
+	<table class='noborder nopad wide' cellspacing="0" border="0" cellpadding="0">
+		<td>
+			<label>
+				<%= :title.l%>
+				<%= form.text_field :name, :class => "primary" %>
+			</label>
+		</td>	
+
+		<td style="text-align:left">
+			<label>
+				<%= :tags.l%>
+				<em>
+					<%= :optional_keywords_describing_this_forum_separated_by_commas.l %>
+				</em>
+			</label>
+				<%= text_field_tag 'tag_list', @forum.tag_list, {:autocomplete => "off", :size => 35} %>
+				<div id='tag_list_auto_complete' class='auto_complete'>
+					<%= auto_complete_field 'tag_list', {:url => { :controller => "tags", :action => 'auto_complete_for_tag_name'}, :tokens => [','] } %>
+				</div>
+		</td>
+		
+	</table>	
+</div>	
+
+	<div id='forum_descripion'>
+		<label>
+			<%= :description.l %>
+		</label>
+		<%= form.text_area :description, :rows => 7 %>
+	</div>

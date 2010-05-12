@@ -1,8 +1,21 @@
+<div id="all_content3">
+    <div id="col_content">
+        <div id="breadcrumbs">
+            <a href="<%=application_url%>">rede</a>
+            > fórum
+        </div>
+
+<div class='box_forum'>
+	
+<div id='comments_user'>
+	
 <%- @meta = { :description => "#{AppConfig.community_name} forums.",:keywords => "#{AppConfig.meta_keywords}", :robots => AppConfig.robots_meta_list_content} %>
 <%- @section = 'forums' %>
 <%- if admin? %>
 	<%-box :class => "alt first_alt" do %>
-	<h3><%= :admin.l %></h3>
+	<div class='name'>
+		<%= :admin.l.upcase %>
+	</div>
 	<p>
 	    <%= link_to :create_new_forum.l, new_forum_path, :class => "utility" %>
 	</p>
@@ -87,4 +100,10 @@
     </div>
     <% end %>
     <% end %>
+	
+	</div>
+</div>	
+
+</div>	
+</div>
 	 
