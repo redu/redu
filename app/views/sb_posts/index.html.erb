@@ -1,0 +1,93 @@
+<div id="all_content3">
+    <div id="col_content">
+        <div id="breadcrumbs">
+            <a href="<%=application_url%>">rede</a>
+            > fórum
+        </div>
+		
+		<%-@section = 'forums'%>
+		<%- @page_title = search_posts_title %>
+		<%-box :class => "alt first_alt" do %>
+			<%= link_to :forums.l, forum_home_path %>
+			<span class='arrow'>
+				<%= h @page_title %>
+			</span>
+		<% end %>
+		<%-box do %>
+			<div class='right'>
+				<%= link_to :forums.l, forums_path %>
+			</div>
+			<h3>
+				<%- if params[:q].blank? %>
+					<%= @page_title %>
+				<%- else %>	
+				<%= "#{:searching_for.l} '#{h params[:q]}'" %>
+				<% end %>
+			</h3>
+			<p class='subtitle'>
+				<%= feed_icon_tag @page_title, all_sb_posts_path(:format => 'rss') %>
+				<%= pluralize(@posts.size, "post")+' '+:found.l %>
+			</p>
+			<%- if @posts.page_count > 1 %>
+				<div class='pagination'>
+					<%= paginating_links @posts %>
+				</div>
+			<% end %>
+			<table class='posts wide' cellspacing="0" border="0" cellpadding="0" width='100%'>
+				<%- for post in @posts do %>
+					<%- unless post == @posts.to_a.first %>
+						<tr class='spacer'>
+							<td colspan="2">
+								\&nbsp;
+							</td>
+						</tr>
+					<% end %>
+					<tr class='post' id='post.dom_id' >
+						<td class='author vcard'>
+							<div class='date'>
+								<abbr class='updated' title='post.created_at.xmlschema' >
+									<%- if post.created_at > Time.now.utc-24.hours %>
+										<%= time_ago_in_words(post.created_at).sub(/about /, '')%>
+										atrás
+									<%- else %>
+										<%= post.created_at.strftime("%b %e, %Y") %>	
+									<% end %>
+								</abbr>
+							</div>	
+							<%= avatar_for @users[post.user_id] %>
+							<span class='fn'>
+								<%= link_to truncate(h(@users[post.user_id].display_name), :length => 15), user_path(post.user) %>
+							</span>
+							<span class='posts'>
+								<%= pluralize @users[post.user_id].sb_posts_count, 'post' %>
+							</span>
+						</td>
+						<td class='body entry-content'>
+							<p class='topic'>
+								<%= link_to(h(post.forum_name), forum_path(post.forum)) %>
+								>
+								<%= link_to h(post.topic_title), forum_topic_path(post.forum, post.topic) %>
+							</p>
+							<%= post.body_html %>
+						</td>
+					</tr>
+				<% end %>
+			</table>
+			<%- if @posts and @posts.next_page %>
+				<p style="float:right;" >
+					<%= link_to 'Next page'.l, { :page => @posts.next_page }.merge(params.reject{|k,v| k=="page"}) %>
+				</p>	
+			<% end %>
+			<%- if @posts.page_count > 1 %>
+				<div class='pagination'>
+					<%= :pages.l %>
+				<strong>
+					<%= paginating_links @posts %>
+				</strong>
+				</div>	
+			<% end %>
+		<% end %>
+			
+		
+	</div>
+</div>		
