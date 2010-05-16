@@ -27,4 +27,5 @@ Requirements:
 	  parseline
 
  	  adzap-ar_mailer
+ 	  tiny_mce
 
