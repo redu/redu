@@ -6,6 +6,51 @@ a {
 body {
 	font-size: 13px;
 }
+
+ol, ul, li {
+list-style-type:none;
+}
+
+
+#lesson_types {
+	font-size: 10px;
+	border-bottom:1px dotted #AAAAAA;
+	padding:8px;
+	margin:5px;
+}
+
+#lesson_types img {
+	padding: 0 6px;
+	border: 0;
+}
+#topic_bar {
+	float: left; width: 25%;
+}
+#topic_body {
+	float: left; width: 70%; border: 1px solid #ddd;
+}
+
+.topic_item {
+	background:#ccc none repeat scroll 0 0;
+	margin:5px;
+	padding:4px 8px;
+	text-align:center;
+	border:2px solid #EEEEEE;
+	display:block;
+	line-height:18px;
+	
+}
+.topic_item_sel {
+	background:#F7F198 none repeat scroll 0 0;
+	
+}
+
+.topic_item img {
+	border: 0;
+	
+}
+
+
                                                /* Tag Clouds */
 .nube1 {
   font-size: 0.8em; }
@@ -31,6 +76,9 @@ body {
 .sort_link_up {
 	background:url(../images/icons/bullet_arrow_up.png) no-repeat; color:#444444; padding-left: 16px; font-weight:bold;
 }
+
+
+
 
 #annotation_box {
 		position: relative;
@@ -1061,8 +1109,8 @@ text-decoration:underline;}
 input[type=text],
 input[type=password],
 textarea {
-		background-image:url("../images/input_bg.gif");
-		background-repeat:repeat-x;
+		/*background-image:url("../images/input_bg.gif");
+		background-repeat:repeat-x;*/
 		border-color:#A1A1A1 #C1C1C1 #D1D1D1;
 		border-style:solid;
 		border-width:1px;
