@@ -165,6 +165,8 @@ class CoursesController < BaseController
     @course.build_price
     3.times { @course.resources.build }
     #TODO mostrar apenas as escolas nas quais o usuario tem permissao de postagem
+    #if params[:school]
+    
     @schools = current_user.schools
   end
   

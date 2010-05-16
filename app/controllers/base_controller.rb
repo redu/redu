@@ -41,7 +41,7 @@ class BaseController < ApplicationController
   end
 
   def site_index
-    #@posts = Post.find_recent
+    @posts = Post.find_recent
     #@courses = Course.find(:all, :limit => 5, :order => 'created_at DESC')
     @courses = Course.all :conditions => ["state LIKE ?", "approved"], :include => :owner, :order => 'created_at DESC', :limit => 5
     @schools = School.all :order => 'created_at DESC', :limit => 5 #TODO ordenar por numero de membros

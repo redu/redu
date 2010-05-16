@@ -73,6 +73,7 @@ AppConfig.question_mce_options = {
   
   
 AppConfig.simple_mce_options = {
+  #:mode => 'textareas',
   :theme => 'advanced',
   :browsers => %w{msie gecko safari},
   :cleanup_on_startup => true,
@@ -85,5 +86,5 @@ AppConfig.simple_mce_options = {
   :theme_advanced_buttons1 => %w{bold italic underline separator bullist numlist separator link unlink image},
   :theme_advanced_buttons2 => [],
   :theme_advanced_buttons3 => [],
-  :plugins => %w{inlinepopups safari curblyadvimage}
+  :plugins => %w{inlinepopups safari}
   }

@@ -32,10 +32,10 @@
 
 
 - if (controller_name == 'questions' && action_name == 'new')
-  = javascript_tag "var AScgiloc = 'http://www.imathas.com/imathas/filter/graph/svgimg.php';"
-  = javascript_tag "var AMTcgiloc = 'http://www.imathas.com/cgi-bin/mimetex.cgi';"
-  = javascript_include_tag "tiny_mce/plugins/asciimath/js/ASCIIMathMLwFallback"
-  = javascript_include_tag "tiny_mce/plugins/asciisvg/js/ASCIIsvgPI"
+  /= javascript_tag "var AScgiloc = 'http://www.imathas.com/imathas/filter/graph/svgimg.php';"
+  /= javascript_tag "var AMTcgiloc = 'http://www.imathas.com/cgi-bin/mimetex.cgi';"
+  /= javascript_include_tag "tiny_mce/plugins/asciimath/js/ASCIIMathMLwFallback"
+  /= javascript_include_tag "tiny_mce/plugins/asciisvg/js/ASCIIsvgPI"
   
 
 /= stylesheet_link_tag 'reset-fonts-grids.css'
@@ -63,8 +63,10 @@
 - if ((controller_name == 'schools') && action_name == 'show'  )
   = ajaxful_rating_style
 
-= javascript_include_tiny_mce_if_used
-= tiny_mce if using_tiny_mce?
+/= javascript_include_tiny_mce_if_used
+/= tiny_mce if using_tiny_mce?
+= include_tiny_mce_if_needed
+
 
 - if forum_page?
   = javascript_include_tag 'lowpro', 'forum'  

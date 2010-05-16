@@ -89,6 +89,11 @@
 	|
 	<a href="#" class="share" onclick="toggleShareBox();return false;">COMPARTILHAR</a>
 	
+	<% if current_user.can_post? @school %>
+	|<%= link_to "NOVA AULA", new_course_path(:school => @school), :class => "share"  %>
+	|<%= link_to "NOVO EXAME", new_exam_path(@school), :class => "share"  %>
+	<% end %>
+	
 	<% if current_user.school_admin? @school %>
 	|<%= link_to "GERENCIAR", manage_school_path(@school), :class => "share"  %>
 	<% end %>

@@ -2,6 +2,11 @@ ActionController::Routing::Routes.draw do |map|
   
  map.opensocial_container "contain.localhost" # this will be turned in to <instance_id>.contain.localhost
   
+   map.resources :interactive_classes
+   
+    map.resources :lessons
+  
+  
   map.resources :profiles
 
   map.resources :abilities
@@ -11,7 +16,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :questions, :collection => { :search => [:get, :post], :add => :get } #, :member => {:add => :get}
   
   map.resources :exams, :member => {:add_question => :get, :add_resource => :get, :rate => :post},
-                        :collection => {:unpublished => :get, :new_exam => :get, :discard_draft => :get, :exam_history => :get, :sort => :get, :order => :get, :favorites => :get}
+                        :collection => {:unpublished => :get, :new_exam => :get, :discard_draft => :get, :exam_history => :get, :sort => :get, :order => :get, :favorites => :get, :review_question => :get}
     
   map.resources :subjects
 
@@ -22,6 +27,12 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :credits
     
   map.resources :schools, :member => {:join => :get, :unjoin => :get,:manage => :get, :pending_courses => :get, :pending_members => :get }
+  
+   map.resources :schools, :member_path => '/:id', :nested_member_path => '/:school_id', :member => {:join => :get, :unjoin => :get,:manage => :get, :pending_courses => :get, :pending_members => :get
+   } do |school|
+    #school.resources :students :subjects
+  end
+  
   
   map.resources :annotations
   

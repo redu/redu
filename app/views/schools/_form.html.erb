@@ -1,5 +1,70 @@
+<script>
+	
+	
+
+String.prototype.NormaliseUrl = function () {
+    var url = this;
+    var preserveNormalForm = /[,_`;\':-]+/gi
+    url = url.replace(preserveNormalForm, ' ');
+
+    // strip accents
+    url = stripVowelAccent(url);
+
+    //remove all special chars
+    url = url.replace(/[^a-z|^0-9|^-|\s]/gi, '').trim();
+
+    //replace spaces with a -
+    url = url.replace(/\s+/gi, '-');
+    return url.toLowerCase();
+}
+
+String.prototype.trim = function () {
+    return this.replace(/^\s+|\s+$/g, "");
+}
+
+function stripVowelAccent(str) {
+    var rExps = [{ re: /[\xC0-\xC6]/g, ch: 'A' },
+                 { re: /[\xE0-\xE6]/g, ch: 'a' },
+                 { re: /[\xC8-\xCB]/g, ch: 'E' },
+                 { re: /[\xE8-\xEB]/g, ch: 'e' },
+                 { re: /[\xCC-\xCF]/g, ch: 'I' },
+                 { re: /[\xEC-\xEF]/g, ch: 'i' },
+                 { re: /[\xD2-\xD6]/g, ch: 'O' },
+                 { re: /[\xF2-\xF6]/g, ch: 'o' },
+                 { re: /[\xD9-\xDC]/g, ch: 'U' },
+                 { re: /[\xF9-\xFC]/g, ch: 'u' },
+				 { re: /[\xE7]/g, ch: 'c' },
+				 { re: /[\xC7]/g, ch: 'C' },
+                 { re: /[\xD1]/g, ch: 'N' },
+                 { re: /[\xF1]/g, ch: 'n'}];
+				 
+
+
+    for (var i = 0, len = rExps.length; i < len; i++)
+        str = str.replace(rExps[i].re, rExps[i].ch);
+
+    return str;
+}
+
+
+	
+	
+	
+	
+	function generatePath(nameField){
+		document.getElementById("school_path").value = (nameField.value).NormaliseUrl();
+		
+		//document.getElementById("school_path").value = (nameField.value).replace(/[^a-zA-Z0-9_]+/g, '');
+	}
+
+
+</script>
+
 	<%= f.label "Nome" %>:<br/>
-	<%= f.text_field :name %><br/><br/>
+	<%= f.text_field :name , :onkeyup => "generatePath(this)" %><br/><br/>
+	
+	<%= f.label "Caminho" %>:<br/>
+	www.redu.com.br/<%= f.text_field :path %><br/><br/>
 
 	<%= f.label "Descrição" %>:<br/>
 	<%= f.text_area :description, :size => "50x3" %><br/><br/>

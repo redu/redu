@@ -28,7 +28,7 @@ Rails::Initializer.run do |config|
   config.gem "rghost"
   config.gem "rghost_barcode"
   config.gem "parseline"
-  
+  config.gem 'tiny_mce'
   config.gem 'calendar_date_select'
   config.gem 'icalendar'        
   config.gem 'will_paginate', :version => '~> 2.3.11', :source => 'http://gemcutter.org'

@@ -5,7 +5,7 @@
     <div id="name_user">
 		<ul id="name_user_item">
 			<li class="name"><span class="name"><%= school.name %></span></li>
-			<% if current_user.can_manage(school)%>
+			<% if current_user.can_manage?(school)%>
 			<li>
 				<%= link_to "Editar >", edit_school_path(school), :class => 'edit'%>
 			</li>

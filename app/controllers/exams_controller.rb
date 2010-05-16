@@ -94,14 +94,17 @@
   
   def results
     @exam = session[:exam]
+    @answers = session[:answers]
     @correct = 0
     @corrects = Array.new
     
+
     for k in 0..(@exam.questions.length - 1)
       question = @exam.questions[k]
       correct_answer = question.answer.id
       
-      if question.category
+=begin     
+    if question.category
           @competence = UserCompetence.first(:conditions => ["user_id = ? AND skill_id = ?", current_user.id, question.category.id])
         
           if @competence#@idx
@@ -113,7 +116,7 @@
            @competence.done_count += 1
           end
       end
-      
+=end      
       if session[:answers][question.id].to_i == correct_answer
         @corrects << question
         @correct += 1
@@ -123,7 +126,8 @@
         end
         
      end
-     
+
+=begin
      if @competence
        if @competence.new_record?
          @competence.save
@@ -131,6 +135,7 @@
          @competence.update_attributes(:done_count => @competence.done_count, :correct_count => @competence.correct_count)
        end
      end
+=end
     end
     
     # Atualiza contadores do exame
@@ -147,11 +152,27 @@
     
     #TODO performance?
     session[:corrects] = @corrects
-    
     respond_to do |format|
             format.html 
             format.xml  { head :ok }
      end
+  end
+  
+  def review_question
+    
+    @exam = session[:exam]
+    
+    @question_index = @exam.get_question(params[:question_id].to_i)
+    
+    @question = @question_index[0] if @question_index
+    @index = @question_index[1] if @question_index
+    
+    @answer = session[:answers][@question.id].to_i
+    
+    
+     respond_to do |format|
+        format.js
+    end
   end
   
   def start_over
@@ -387,14 +408,14 @@
     respond_to do |format|
       format.html do
         render :update do |page|
-          flash[:notice] = 'Material adicionada'
+          flash[:notice] = 'Material adicionado'
           page.remove "resource_" + params[:resource_id]
           page.reload_flash
         end
       end 
       format.js do
         render :update do |page|
-          flash[:notice] = 'Material adicionada'
+          flash[:notice] = 'Material adicionado'
           page.remove "resource_" + params[:resource_id]
           page.reload_flash
         end

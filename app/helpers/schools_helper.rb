@@ -15,7 +15,7 @@ module SchoolsHelper
       end
       
     else 
-      link_to "ABADONAR", unjoin_school_path, :class => "participar_rede" 
+      link_to "ABADONAR", unjoin_school_path, :class => "participar_rede" , :confirm => "Você tem certeza que quer deixar essa rede?"
     end 
     
   end

@@ -1,0 +1,137 @@
+<script>
+	
+	var topics = {};
+	
+	
+	var topicCount = 1;
+	var currentTopic = 0;
+	
+	
+	function removeField(link){
+		jQuery(link).parent("fieldset:first").hide()
+		jQuery(link).siblings("input[type=hidden]:first").val("1")
+	}
+	
+	function add_fields(link, association, content) {
+		var new_id = new Date().getTime();
+		var regexp = new RegExp("new_" + association, "g");
+
+		
+		// adiciona o novo item ao body
+		//$('topic_body').append("<div id='topic_body_" + topicCount + "'>" + content.replace(regexp, new_id) + "</div>");  // pq nao pega????
+		document.getElementById('topic_body').innerHTML += "<div id='topic_body_" + topicCount + "' style='display: none;'>" + content.replace(regexp, new_id) + "</div>";
+		
+		
+		var topicItem =	"<a href=\"#\" id=\"topic_item_" + topicCount + "\" class=\"topic_item\" onclick=\"selectTopic("+topicCount+");\">" +
+	  		"<span id=\"topic_name_" + topicCount + "\"> Sem título</span> <img src=\"../../images/icons/trash.gif\">"  +
+		    "</a>";
+		
+		//$('topic_list').append(topicItem);  // pq nao pega????
+		document.getElementById('topic_list').innerHTML += topicItem;
+		
+		selectTopic(topicCount);
+		
+		topicCount++;
+		
+		//reloadMce();
+	}
+	
+	function topicTitle(textBox){
+		document.getElementById('topic_name_'+ currentTopic).innerHTML = textBox.value;
+	}
+	
+	function selectTopic(topic){
+		document.getElementById('topic_item_'+ currentTopic).className = "topic_item";
+		document.getElementById('topic_item_'+ topic).className += " topic_item_sel";
+		
+		document.getElementById('topic_body_'+ currentTopic).style.display = "none";
+		document.getElementById('topic_body_'+ topic).style.display = "block";
+		
+		currentTopic = topic;
+	}
+	
+	function reloadMce(){
+		<%=   raw_tiny_mce_init %>
+	}
+	
+
+
+	</script>
+	
+	
+<div id="all_content3">
+<div id="col_content_video">
+	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">aprender</a> > <a href="#">nova aula interativa</a> </div>
+ 	<div id="title">NOVA AULA INTERATIVA</div>
+
+
+
+<% form_for(@iclass) do |f| %>
+	
+	<div style="float: left; width: 40%;">
+	<p>I would like to say: </p>
+
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :tagline %><br />
+    <%= f.text_field :tagline %>
+  </p>
+  <p>
+    <%= f.label :description %><br />
+    <%= f.text_field :description %>
+  </p>
+  
+  </div>
+  
+  <div style="float: left; padding-top: 5%;">
+  <p>
+    <%= f.submit 'Salvar Aula' %> | <input type="button" value="Visualizar"/>
+  </p>
+  </div>
+  
+  <div style="float: left; width: 100%; margin-top: 12px; background-color: #F8FAFF;">
+	
+	<div id="topic_bar">
+  
+    <h3>Tópicos</h3>
+  <div id="lesson_types">
+  	Novo tópico:
+	 
+	 <%= link_to_add_lesson((image_tag 'icons/iclass.gif', :title => "Texto interativo"), f, :lessons) %>
+	<%= image_tag 'icons/exam.gif', :title => "Exame" %>
+	<%= image_tag 'icons/seminar.gif', :title => "Seminário" %>
+	<%= image_tag 'icons/discussion.png', :title => "Discussão" %>
+  </div>
+  	<div id="topic_list">
+	  	 <a href="#" onclick="selectTopic(0);" id="topic_item_0" class="topic_item topic_item_sel">
+	  		<span id="topic_name_0"> Sem título</span> <%= image_tag 'icons/trash.gif' %>
+		 </a>
+  	</div>
+  
+  </div>
+  
+  <div id="topic_body">
+ 	<% f.fields_for :lessons do | build |%>
+		<div id="topic_body_0">
+		<%= render :partial => 'lesson_form', :locals => {:f => build} %>
+		</div>
+	<% end %>
+	
+  </div>
+  
+  </div>
+  
+  
+<% end %>
+
+
+</div>
+</div>
+
+
+	

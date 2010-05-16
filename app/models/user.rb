@@ -264,7 +264,7 @@ class User < ActiveRecord::Base
   
   
   ## Instance Methods
-  def can_manage(entity)
+  def can_manage?(entity)
     return true if self.admin?
     
     case entity.class 
@@ -497,6 +497,21 @@ class User < ActiveRecord::Base
   end
   
   # school roles
+
+  def can_post?(school)
+    
+    if school.submission_type == 1 or school.submission_type == 2 # all
+      return true
+    elsif school.submission_type == 3 #teachers and admin
+      user_role = self.get_association_with(school).role
+      if user_role.eql?(Role[:teacher]) or user_role.eql?(Role[:school_admin])
+        return true
+      else
+        return false
+      end
+    end
+    
+  end
 
   def get_association_with(school)
     association = UserSchoolAssociation.find(:first, :conditions => ['user_id = ? AND school_id = ?', self.id, school.id])

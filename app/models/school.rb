@@ -24,12 +24,23 @@ class School < ActiveRecord::Base
     
     has_many :assets, :as => :asset, :class_name => 'SchoolAsset', :dependent => :destroy
     
-    validates_presence_of :name
+    validates_format_of       :path, :with => /^[\sA-Za-z0-9_-]+$/
+    validates_presence_of :name, :path
+    validates_uniqueness_of   :path, :case_sensitive => false
     
 #    def can_be_managed_by(user)
 #      #TODO verificar se é professor ou coord, ou school admin tbm
 #      (self.owner == user || user.)
 #  end
+  
+  # override activerecord's find to allow us to find by name or id transparently
+  def self.find(*args)
+    if args.is_a?(Array) and args.first.is_a?(String) and (args.first.index(/[a-zA-Z\-_]+/) or args.first.to_i.eql?(0) )
+      find_by_path(args)
+    else
+      super
+    end
+  end
   
   
   def avatar_photo_url(size = nil)
@@ -44,6 +55,6 @@ class School < ActiveRecord::Base
       end
     end
   end
-    
+  
   
 end
