@@ -28,7 +28,7 @@ function hideResponseBox(activityId){
 		<% else %>
        <%= render :partial => 'logs/item', :collection => @logs %>
 		<div id="box_more" style="margin-top: 5px">
-		<%= link_to 'Ver Mais', logs_user_path(current_user), :class=>'link_01' %>
+		<%= link_to 'Voltar', current_user %>
 		</div>
 		<% end %>
 		
