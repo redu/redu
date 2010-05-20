@@ -86,10 +86,11 @@ class UsersController < BaseController
   
   def followers
     @user = User.find(params[:id])
+    @followers= @user.followers
     
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @user.followers }
+      format.xml  { render :xml => @followers }
     end
   end
   
@@ -129,6 +130,9 @@ class UsersController < BaseController
     @user = params[:id]
   end
   
+  def logs
+    
+  end
   
   
   ##Associação com a disciplina
