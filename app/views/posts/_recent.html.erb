@@ -1,0 +1,53 @@
+<div id="all_content3">
+    <div id="col_content">
+        <div id="breadcrumbs">
+            <a href="<%=application_url%>">rede</a>
+            > fórum > postagens > popular
+        </div>
+		
+		<div class='box_forum'>
+			<%- @section = 'posts' %>
+			<%-box do %>
+				<%- if logged_in? %>
+					<label for='title'>
+						<%= :get_popular.l %>
+					</label>
+					<ul>
+						<li>
+							<%= link_to :write_a_blog_post.l, new_user_post_path({:user_id => current_user}) %>
+						</li>
+					</ul>
+				<%- else %>
+				<label for='title'>
+					<%= :want_to_be_popular.l %>
+				</label>
+				<ul>
+					<li>
+						<a>
+							<%= :sign_up_for_an_account.l %>
+						</a>
+					</li>
+				</ul>
+				<br/>
+				<small>
+					<%= :have_an_account.l %>
+				</small>
+				<a>
+					<%= :log_in.l %>
+				</a>
+				<% end %>
+			<% end %>		
+			<%-box :class => "hfeed" do %>
+				<%= :recent_posts.l %>
+				<ul>
+					<li>
+						<%= :looking_for_most_x.l :link => link_to("#{:popular.l}?", popular_path) %>
+					</li>
+				</ul>
+				<%= render :partial => 'posts/post', :collection => @posts %>
+				<%= paginating_links @posts %>
+			<% end %>	
+			
+		</div>
+	</div>
+</div>	

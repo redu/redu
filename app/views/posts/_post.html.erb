@@ -1,0 +1,34 @@
+<div id='title'>
+	<%= link_to post.title, user_post_path(post.user, post), :rel => 'bookmark' %>
+</div>
+<label for='username'>
+	<a>
+		<%= image_tag((post.first_image_in_body || post.user.avatar_photo_url(:thumb)), :alt=>"", :width=>"50", :height=>"50") %>
+	</a>
+	<ul>
+		<li>
+			<%= link_to post.user.login, user_path(post.user) %>
+		</li>
+		<li>
+			<a>
+				<abbr>
+					<%= post.published_at_display("%B %d, %Y") %>
+				</abbr>
+			</a>
+		</li>
+		<li>
+			<%= :views.l %>
+			<%= "(#{post.view_count})" %>
+		</li>
+		<li>
+			<%= link_to :comments.l+" (#{post.comments.count})", user_post_path(post.user, post)+'#comments' %>
+		</li>
+		<%- if current_user and current_user.can_request_friendship_with(post.user) %>
+			<%= add_friend_link(post.user) %>
+		<% end %>
+	</ul>
+	<%= truncate_words(post.post, 75, '...' ) %>
+	<%= render :partial => 'polls/excerpt', :locals => {:poll => post.poll} if post.poll %>
+	<%= link_to :read_more.l, user_post_path(post.user, post), :rel=> 'bookmark' %>
+	
+</label>
