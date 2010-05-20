@@ -1,0 +1,19 @@
+<label for='poll_question'>
+	<%= :question.l %>
+</label>
+
+<%= text_field_tag 'poll[question]', nil, :class => 'text' %>
+<label>
+	<%= :choices.l %>
+</label>
+<ul>
+	<div class='list'>
+		<div id='options'>
+			<%-3.times do %>
+				<li>
+					<%= text_field_tag 'choices[]', nil, :class => 'text'%>
+				</li>
+			<% end %>
+		</div>
+	</div>
+</ul>
