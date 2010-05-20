@@ -201,6 +201,7 @@ ActionController::Routing::Routes.draw do |map|
     :followers => :get,
     :follows => :get,
     :follow => :get,
+    :logs => :get,
     :unfollow => :get,
     :dashboard => :get,
     :assume => :get,
