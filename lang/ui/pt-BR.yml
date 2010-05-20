@@ -127,7 +127,7 @@ pt-BR:
   #en: added_to_a_forum_topic: "added to a forum topic:"
   added_to_a_forum_topic: "added to a forum topic:"
   #en: admin: Admin
-  admin: Admin
+  admin: Administrador
   #en: admin_controls: Admin Controls
   admin_controls: Admin Controls
   #en: admin_dashboard: Admin dashboard # AQUI
@@ -185,7 +185,7 @@ pt-BR:
   #en: audience: Audience
   audience: Audience
   #en: author: Author
-  author: Author
+  author: Autor
   #en: back: Back
   back: Voltar
   #en: back_to_all_users: Back to all users
@@ -215,7 +215,7 @@ pt-BR:
   #en: blog_posts: Blog posts
   blog_posts: Items de Blog
   #en: body_text: Body Text
-  body_text: Body Text
+  body_text: Corpo do texto
   #en: body_text_reqiured: Body Text (required)
   body_text_required: Body Text (required)
   #en: bookmarklet: bookmarklet
@@ -225,7 +225,7 @@ pt-BR:
   #en: browse_content_by_tags: Browse content by tags
   browse_content_by_tags: Browse content by tags
   #en: by: by
-  by: by
+  by: por
   #en: by_looking_at_the: by looking at the
   by_looking_at_the: olhando na
   #en: cancel: Cancel
@@ -255,7 +255,7 @@ pt-BR:
   #en: category_was_successfully_created: Category was successfully created.
   category_was_successfully_created: Categoria criada com sucesso.
   #en: choices: Choices
-  choices: Choices
+  choices: Escolhas
   #en: choose_a_photo_for_your_profile: "Choose a photo for your profile:"
   choose_a_photo_for_your_profile: "Escolha uma foto para seu perfil:"
   #en: choose_a_photo_to_upload: "Choose a photo to upload:"
@@ -333,7 +333,7 @@ pt-BR:
   #en: course: Course
   course: Aula
   #en: create: Create
-  create: Create
+  create: Criar
   #en: create_an_account: Create an account
   create_an_account: Create an account
   #en: create_a_clipping: Create a clipping
@@ -341,7 +341,7 @@ pt-BR:
   #en: create_a_post: Create a post
   create_a_post: Create a post
   #en: create_new_forum: Create new forum
-  create_new_forum: Create new forum
+  create_new_forum: Criar Fórum
   #en: create_your_account: Create Your Account
   create_your_account: Create Your Account
   #en create_log: Mostrar minhas atividades recentes
@@ -359,9 +359,9 @@ pt-BR:
   #en: date: Date
   date_title: Data
   #en: date_created: Date Created
-  date_created: Date Created
+  date_created: Data de Criação
   #en: date_published: Date Published
-  date_published: Date Published
+  date_published: Data de Publicação
   #en: days_ago: days ago
   days_ago: dias atrás
   #en: deactivate_link: Click here to deactivate your account
@@ -379,7 +379,7 @@ pt-BR:
   #en: delete_this_event: Delete this event
   delete_this_event: Delete this event
   #en: delete_this_forum: Delete this forum
-  delete_this_forum: Delete this forum
+  delete_this_forum: Deletar este fórum
   #en: delete_this_photo: Delete this photo
   delete_this_photo: Delete this photo
   #en: delete_this_page: Delete this page
@@ -387,7 +387,7 @@ pt-BR:
   #en: delete_this_post: Delete this post?
   delete_this_post: Delete this post?
   #en: delete_this_topic_forever: Delete this topic forever?
-  delete_this_topic_forever: Delete this topic forever?
+  delete_this_topic_forever: Apagar este tópico para sempre?
   #en: delete_this_user: Delete this user
   delete_this_user: Delete this user
   #en: deny: Deny
@@ -397,7 +397,7 @@ pt-BR:
   #en: denied_friendships: Denied Friendships
   denied_friendships: Denied Friendships
   #en: description: Description
-  description: Description
+  description: Descrição
   #en: destroy: Destroy
   destroy: Destroy
   #en: dont_have_an_account: Don't have an account?
@@ -419,7 +419,7 @@ pt-BR:
   #en: e_mail_notification: E-mail Notification
   e_mail_notification: Notificação de E-mail
   #en: edit: Edit
-  edit: Edit
+  edit: Editar
   #en: edit_account: Edit account
   edit_account: Edit account
   #en: edit_contest: Edit Contest
@@ -427,11 +427,11 @@ pt-BR:
   #en: edit_event: Edit event
   edit_event: Edit event
   #en: edit_forum: Edit forum
-  edit_forum: Edit forum
+  edit_forum: Editar fórum
   #en: edit_page: Edit page
   edit_page: Edit page
   #en: edit_post: Edit post
-  edit_post: Edit post
+  edit_post: Editar postagem
   #en: edit_profile: Edit profile
   edit_profile: Edit profile
   #en: edit_rsvp_for: Edit RSVP for
@@ -441,7 +441,7 @@ pt-BR:
   #en: edit_this_photo_details: Edit this photo's details
   edit_this_photo_details: Edit this photo's details
   #en: edit_topic: Edit topic
-  edit_topic: Edit topic
+  edit_topic: Editar tópico
   #en: edit_your_account_settings_instead: "Edit your account settings instead?"
   edit_your_account_settings_instead: "Prefere editar as configurações de sua conta?"
   #en: edit_your_user_profile: Edit your user profile?
@@ -459,7 +459,7 @@ pt-BR:
   #en: editing_photo: Editing photo
   editing_photo: Editing photo
   #en: editing_post: Editing post
-  editing_post: Editing post
+  editing_post: Editando postagem
   #en: editing_skill: Editing skill
   editing_skill: Editing skill
   #en: editing_tag: Editing tag
@@ -519,11 +519,11 @@ pt-BR:
   #en: favorite_this: Favorite this
   favorite_this: Favorite this
   #en: featured_posts: Featured posts
-  featured_posts: Featured posts
+  featured_posts: Postagens destaques
   #en: featured_writer: Featured writer
-  featured_writer: Featured writer
+  featured_writer: Usuário destaque
   #en: featured_writers: Featured writers
-  featured_writers: Featured writers
+  featured_writers: Usuários destaques
   #en: features: Features
   features: Features
   #en: feel_free_to_embed_images_or_videos: Feel free to embed images or videos.
@@ -551,9 +551,9 @@ pt-BR:
   #en: forum: Forum
   forum: Fórum
   #en: forums: Forums
-  forums: Foruns
+  forums: Fóruns
   #en: found: found
-  found: found
+  found: encontrado(s)
   #en: frequency: Frequency
   frequency: Frequency
   #en: frequent_asked_questions: Frequent Asked Questions
@@ -579,7 +579,7 @@ pt-BR:
   #en: get_help_from_someone_who_knows: Get help from someone who knows
   get_help_from_someone_who_knows: Get help from someone who knows
   #en: get_popular: Get popular.
-  get_popular: Get popular.
+  get_popular: Obter popular.
   #en: get_started_banner: Get started with <a href="/">{{site}}</a> today!
   get_started_banner: "Get started with <a href='/'>{{site}}</a> today!"
   #en: get_started_invite_some_friends: "Get Started: Invite some friends!"
@@ -601,7 +601,7 @@ pt-BR:
   #en: go_to_your_profile: Go to your profile
   go_to_your_profile: Go to your profile
   #en: have_an_account: "Have an account? "
-  have_an_account: "Have an account? "
+  have_an_account: "Tem uma conta? "
   #en: have_something_to_contribute: Have something to contribute?
   have_something_to_contribute: Have something to contribute?
   #en: help: Help
@@ -663,7 +663,7 @@ pt-BR:
   #en: last: last
   last: last
   #en: last_post: Last post
-  last_post: Last post
+  last_post: Última postagem
   #en: left_a_comment: "left a comment:"
   left_a_comment: "left a comment:"
   #en: links: Links
@@ -707,7 +707,7 @@ pt-BR:
   #en: location: Location
   location: Localidade
   #en: locked: Locked
-  locked: Locked
+  locked: Fechado
   #en: locked2: (locked)
   locked2: (locked)
   #en: look_for_a_message_from: "Look for a message from: {{from}}"
@@ -715,7 +715,7 @@ pt-BR:
   #en: looking_for_most_x: Looking for {{link}}
   looking_for_most_x: "Looking for {{link}}"
   #en: make_moderator: Make moderator
-  make_moderator: Make moderator
+  make_moderator: Tornar moderador
   #en: make_page_public: Make this page public
   make_page_public: Make this page public
   #en: make_my_profile_public: Make my profile public
@@ -729,7 +729,7 @@ pt-BR:
   #en: manage_pages: Manage Pages
   manage_pages: Manage Pages
   #en: manage_posts: Manage Posts
-  manage_posts: Manage Posts
+  manage_posts: Gerenciar postagens
   #en: medium: Medium
   #en: map_it: Map It!
   map_it: Map It!
@@ -763,7 +763,7 @@ pt-BR:
   #en: moderator: Moderator
   moderator: Moderator
   #en: moderators: Moderators
-  moderators: Moderators
+  moderators: Moderadores
   #en: monitored_topics: Monitored Topics
   monitored_topics: Monitored Topics
   #en: month: Month
@@ -805,7 +805,7 @@ pt-BR:
   #en: new_event: New Event
   new_event: New Event
   #en: new_forum: New Forum
-  new_forum: New Forum
+  new_forum: Novo Fórum
   #en: new_homepage_feature: New Homepage Feature
   new_homepage_feature: New Homepage Feature
   #en: new_invitation: New Invitation
@@ -823,7 +823,7 @@ pt-BR:
   #en: new_post: New post
   new_post: New post
   #en: new_post_for_category: New {{category}}
-  new_post_for_category: "New {{category}}"
+  new_post_for_category: "Nova {{category}}"
   #en: new_post_text: New Post text
   new_post_text: New Post text
   #en: new_skill: New skill
@@ -831,7 +831,7 @@ pt-BR:
   #en: new_today: New today
   new_today: New today
   #en: new_topic: New topic
-  new_topic: New topic
+  new_topic: Novo tópico
   #en: new_yesterday: New yesterday
   new_yesterday: New yesterday
   #en: next: next
@@ -851,7 +851,7 @@ pt-BR:
   #en: no_recent_activity: No recent activity
   no_recent_activity: No recent activity
   #en: no_tags: No tags
-  no_tags: No tags
+  no_tags: Sem tags
   #en: notify_email_updates: Notify of community news
   notify_email_updates: Notificação de novidades nas redes
   #en: notify_me_of_follow_ups_via_email: Notify me of follow ups via e-mail  
@@ -879,13 +879,13 @@ pt-BR:
   #en: optional_keywords_describing_this_clipping_separated_by_commas: optional keywords describing this clipping, separated by commas
   optional_keywords_describing_this_clipping_separated_by_commas: optional keywords describing this clipping, separated by commas
   #en: optional_keywords_describing_this_forum_separated_by_commas: optional keywords describing this forum, separated by commas
-  optional_keywords_describing_this_forum_separated_by_commas: optional keywords describing this forum, separated by commas
+  optional_keywords_describing_this_forum_separated_by_commas: (palavras chaves opcionais descrevendo este fórum, separado por vírgulas)
   #en: optional_keywords_describing_this_photo_separated_by_commas: optional keywords describing this photo, separated by commas
   optional_keywords_describing_this_photo_separated_by_commas: optional keywords describing this photo, separated by commas
   #en: optional_keywords_describing_this_post_separated_by_commas: optional keywords describing this post, separated by commas
-  optional_keywords_describing_this_post_separated_by_commas: "optional keywords describing this post, separated by commas"
+  optional_keywords_describing_this_post_separated_by_commas: "palavras chaves opcionais descrevendo esta postagem, separado por vírgulas"
   #en: optional_keywords_describing_this_topic_separated_by_commas: optional keywords describing this topic, separated by commas
-  optional_keywords_describing_this_topic_separated_by_commas: optional keywords describing this topic, separated by commas
+  optional_keywords_describing_this_topic_separated_by_commas: palavras chaves opcionais descrevendo este tópico, separado por vírgulas
   #en: or: or
   or: ou
   #en: page: page
@@ -899,7 +899,7 @@ pt-BR:
   #en: page_was_successfully_updated: Page was successfully updated.
   page_was_successfully_updated: Page was successfully updated.
   #en: pages: "Pages:"
-  pages: "Pages:"
+  pages: "Páginas:"
   #en: page_tips: "Pages are a good place to put static content that you would rather not post to the blog or the forums."
   page_tips: "Pages are a good place to put static content that you would rather not post to the blog or the forums."
   #en: password: Password
@@ -941,25 +941,25 @@ pt-BR:
   #en: please_post_something_at_least: Please post something at least...
   please_post_something_at_least: Please post something at least...
   #en: plural_posts: "{{count}} posts"
-  plural_posts: "{{count}} posts"
+  plural_posts: "{{count}} postagens"
   #en: popular: Popular
   popular: Popular
   #en: popular_catgory: Popular {{name}}
   popular_catgory: "Popular {{name}}"
   #en: popular_posts: Popular Posts
-  popular_posts: Popular Posts
+  popular_posts: Postagens Populares
   #en: popular_posts_on: Popular Posts on
-  popular_posts_on: Popular Posts on
+  popular_posts_on: Postagens populares em
   #en: popular_polls: Popular Polls
   popular_polls: Popular Polls
   #en position: Position
-  position: Position
+  position: Posição
   #en: post: Post
-  post: Post
+  post: Postagem
   #en: posts: Posts
-  posts: Posts
+  posts: Postagens
   #en: post_a_new_topic: Post a new topic
-  post_a_new_topic: Post a new topic
+  post_a_new_topic: Postar novo tópico
   #en: post_an_event: Post an event
   post_an_event: Post an event
   #en: posted_an_event: "posted an event:"
@@ -977,13 +977,13 @@ pt-BR:
   #en: posting_tips: "Posting Tips"
   posting_tips: "Posting Tips"
   #en: post_topic: Post topic
-  post_topic: Post topic
+  post_topic: Postar tópico
   #en: posts_photos_and_bookmarks: posts, photos and bookmarks
   posts_photos_and_bookmarks: posts, photos and bookmarks
   #en: pages_saved_with_draft_status_wont_appear_on_the_site_until_you_publish_them: Pages saved with 'draft' status won't appear on the site until you publish them.
   pages_saved_with_draft_status_wont_appear_on_the_site_until_you_publish_them: Pages saved with 'draft' status won't appear on the site until you publish them.
   #en: posts_saved_with_draft_status_wont_appear_in_your_blog_until_you_publish_them: "Posts saved with 'draft' status won't appear in your blog until you publish them."
-  posts_saved_with_draft_status_wont_appear_in_your_blog_until_you_publish_them: "Posts saved with 'draft' status won't appear in your blog until you publish them."
+  posts_saved_with_draft_status_wont_appear_in_your_blog_until_you_publish_them: "Postagens salvas com o status 'rascunho 'não vai aparecer no seu blog até publicá-las."
   #en: public: Public
   public: Public
   #en: preview: Preview
@@ -1015,9 +1015,9 @@ pt-BR:
   #en: pros_skilled_in: Pros skilled in
   pros_skilled_in: Pros skilled in
   #en: published: Published
-  published: Published
+  published: Publicado(a)
   #en: question: Question
-  question: Question
+  question: Pergunta
   #en: re_type_your_password_to_confirm: "Re-type your password to confirm:"
   re_type_your_password_to_confirm: "Digite novamente sua senha para confirmar:"
   #en: read_more: read more
@@ -1045,13 +1045,13 @@ pt-BR:
   #en: remember_you_can_always_change_this_later: Remember, you can always change this later.
   remember_you_can_always_change_this_later: "Remember, you can always change this later."
   #en: remove_moderator: Remove moderator
-  remove_moderator: Remove moderator
+  remove_moderator: Remover moderador
   #en: remove_this_friend: Remove this friend
   remove_this_friend: Remove this friend
   #en: reply: Reply
   reply: Reply
   #en: reply_to_topic: Reply
-  reply_to_topic: Reply
+  reply_to_topic: Responder
   #en: request_friendship: Request friendship
   request_friendship: Request friendship
   #en: requested: requested
@@ -1061,7 +1061,7 @@ pt-BR:
   #en: requesting_friendship: Requesting friendship
   requesting_friendship: Requesting friendship
   #en: required: required
-  required: required
+  required: obrigatório
   #en: required_we_will_send_a_confirmation_e_mail_to_the_address_you_enter: "(Required: We will send a confirmation e-mail to the address you enter.)"
   required_we_will_send_a_confirmation_e_mail_to_the_address_you_enter: "(Obrigatório: Nós vamos enviar um e-mail de confirmação para o endereço que foi digitado.)"
   #en: required_you_must_be_at_least_years_old_to_sign_up: "(Required: you must be at least 13 years old to sign up.)"
@@ -1097,11 +1097,11 @@ pt-BR:
   #en: save_changes: Save Changes
   save_changes: Salvar Modificações
   #en: save_forum: Save Forum
-  save_forum: Save Forum
+  save_forum: Salvar Fórum
   #en: save_page_as: "Save page as:"
   save_page_as: "Save page as:"
   #en: save_post_as: "Save post as:"
-  save_post_as: "Save post as:"
+  save_post_as: "Salvar a postagem como:"
   #en: save_reply: Save reply
   save_reply: Save reply
   #en: says: says
@@ -1173,7 +1173,7 @@ pt-BR:
   #en: sign_up_reason_2: Some reason to sign up
   sign_up_reason_2: Some reason to sign up
   #en: singular_posts: "{{count}} post"
-  singular_posts: "{{count}} post"
+  singular_posts: "{{count}} postagem"
   #en: site_members: "{{site}} members"
   site_members: "{{site}} members"
   #en: skill_was_successfully_created: Skill was successfully created.
@@ -1213,7 +1213,7 @@ pt-BR:
   #en: status: Status
   status: Status
   #en: sticky: Sticky
-  sticky: Sticky
+  sticky: Aberto
   #en: subject: Subject
   subject: Disciplina
   #en: suject_of_message: Subject of Message
@@ -1279,7 +1279,7 @@ pt-BR:
   #en: this_is_your_dashboard: This is your dashboard.
   this_is_your_dashboard: This is your dashboard.
   #en: this_month_best: "This month's Best"
-  this_month_best: "This month's Best"
+  this_month_best: "Melhor deste mês"
   #en: this_story_is_awesome: "This story is awesome!"
   this_story_is_awesome: "This story is awesome!"
   #en: this_topic_is_locked: This topic is locked.
@@ -1293,7 +1293,7 @@ pt-BR:
   #en: tips: "Tips:"
   tips: "Dicas:"
   #en: title: Title
-  title: Title
+  title: Título
   #en: title_required: "Title (required)"
   title_required: "Title (required)"
   #en: to: To
@@ -1315,9 +1315,9 @@ pt-BR:
   #en: top_writers: Top Writers
   top_writers: Top Writers
   #en: topic: Topics
-  topic: Topics
+  topic: Tópico
   #en: topics: Topics
-  topics: Topics
+  topics: Tópicos
   #en: topic_deleted: Topic '{{topic}}' was deleted.
   topic_deleted: "Topic '{{topic}}' was deleted."
   #en: topic_locked: Topic locked
@@ -1337,7 +1337,7 @@ pt-BR:
   #en: unactivated_users: Unactivated users
   unactivated_users: Unactivated users
   #en: uncategorized: Uncategorized
-  uncategorized: Uncategorized
+  uncategorized: Sem categoria
   #en: update: Update
   update: Update
   #en: update_rsvp: Update RSVP
@@ -1383,9 +1383,9 @@ pt-BR:
   #en: user_bio_help: "<p>Your bio is first thing people see on your profile. Some ideas:<ul><li> Describe your sense of style</li><li> Explain what you love about life.</li><li> What's the last thing you purchased for a friend?</li></ul></p>"
   user_bio_help: "<p>Your bio is first thing people see on your profile. Some ideas:<ul><li> Describe your sense of style</li><li> Explain what you love about life.</li><li> What's the last thing you purchased for a friend?</li></ul></p>"
   #en: view: View
-  view: View
+  view: Visualizar
   #en: views: Views
-  views: Views
+  views: Exibições
   #en: view_all_my_clippings: View all my clippings
   view_all_my_clippings: View all my clippings
   #en: view_all_my_friend_requests: View all my friend requests
@@ -1401,9 +1401,9 @@ pt-BR:
   #en: view_profile: View profile
   view_profile: View profile
   #en: voice: voice
-  voice: voice
+  voice: Voz
   #en: voices: Voices
-  voices: Voices
+  voices: Vozes
   #en_ vote: Vote
   vote: Vote
   #en: vote_now: Vote now!
@@ -1415,7 +1415,7 @@ pt-BR:
   #en: walkthrough_complete: You've completed the {{site}} walk-through. Now you can continue exploring!
   walkthrough_complete: "You've completed the {{site}} walk-through. Now you can continue exploring!"
   #en: want_to_be_popular: Want to be popular?
-  want_to_be_popular: Want to be popular?
+  want_to_be_popular: Quer ficar popular?
   #en: want_to_list_your_services_on: Want to list your services on
   want_to_list_your_services_on: Want to list your services on
   #en: want_to_post_in_this_category: Want to post in this category?
@@ -1423,7 +1423,7 @@ pt-BR:
   #en: want_to_upload_multiple_files_at_once: Want to upload multiple files at once?
   want_to_upload_multiple_files_at_once: Want to upload multiple files at once?
   #en: watch: Watch
-  watch: Watch
+  watch: Assistir
   #en: watch_ing: ing
   watch_ing: ing
   #en: watch_topic: Watch topic
@@ -1441,7 +1441,7 @@ pt-BR:
   #en: what_is: What is
   what_is: What is
   #en: what_is_popular: What's Popular
-  what_is_popular: What's Popular
+  what_is_popular: O que está Popular
   #en: whats_fresh: What's fresh
   whats_fresh: What's fresh
   #en: whats_hot: What's Hot
@@ -1466,7 +1466,7 @@ pt-BR:
   #en: why_sign_up: Why Sign up?
   why_sign_up: Why Sign up?
   #en: write_a_blog_post: Write a blog post!
-  write_a_blog_post: Write a blog post!
+  write_a_blog_post: Escreva uma postagem do blog!
   #en: write_a_message: "Write a message:"
   write_a_message: "Escreva uma mensagem:"
   #en: write_new_post: Write a '{{category}}' post
