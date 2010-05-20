@@ -20,6 +20,17 @@
 </div>
 <!-- BOX MINHA MOV. RESCENTE ####################################################################################################################################### -->
 
+<!-- BOX FOLLOWS E FOLLOWERS -->
+<% @follows = @user.follows %>
+<%= render :partial => "users/follows", :locals => {:user => @user}%>
+<!-- END -->
+
+<!-- BOX MINHAS REDES  -->
+<% owner = params[:owner] %>
+<% @schools = School.find(:all, :conditions => ["owner= ?", @user.id] )%>
+<%= render :partial => "users/my_schools", :locals => {:user => @user}%>
+<!-- END -->
+
 
 <!-- BOX COMENTÁRIOS ############################################################################################################################################### -->
 <div id="comments_user">

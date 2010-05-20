@@ -1,11 +1,7 @@
-<div id="all_content3">
-	<div id="col_content_user">
-		<div id="breadcrumbs"><a href="#">home</a> > <a href="#">seguidos</a></div>
-
 <div id="profile_user_info">
+	
 <h3>Quem você segue:</h3>
 	<table class='posts wide' cellspacing='0' border='0' cellpadding='0' >
-		<tbody>
 		<% @follows.each do |person| %>
 		<tr class='post' >
 			<td class='author vcard'  width="10%">
@@ -20,15 +16,7 @@
 			</td>
 		</tr>
 		<% end %>
-		</tbody>
 	</table>
-	<%= link_to 'Voltar',  @user %>
-</div>	
-  
-  	
-    
-	
-	<!-- nao é uma boa pratica, vai fazer consultas no bd pra cada escola listada TODO mudar -->
-
-	</div>
-</div>
+	<%= link_to 'Ver mais',  follows_user_path(@user) %> <br/>
+	<%= link_to 'Ver seguidores',  followers_user_path(@user) %>
+</div>				
