@@ -1,0 +1,65 @@
+<div id="all_content3">
+<div id="col_content_video">
+	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">ensinar</a> > <a href="#">nova aula</a> </div>
+ 	<div id="title">NOVA AULA - PASSO 1
+	
+		<% form_for @course do |f| %>
+		<%= f.error_messages %>
+	
+ 	</div>
+
+	<div id="bd">
+		<div id="bd_left" style="float: left; width: 500px;">
+		
+		
+			<%= f.label "Título: " %><br/>
+			<%= f.text_field :name %><br/><br/>
+
+			<%= f.label "Descrição:" %><br/>
+			<%= f.text_area :description, :size => "50x3" %><br/><br/>
+	
+			<%= f.label "Tags:" %><br/>
+			<%= f.text_field :tag_list %><br/><br/>
+			
+			<%= hidden_field_tag("step", "1", options = {})%>
+		
+		
+ 		</div>
+		
+		
+		
+		<div id="bd_right" style="float: left; width: 400px;">
+		
+		<div style="margin-bottom: 20px;">
+			
+			<h3><%= radio_button_tag("course_type", "seminar", checked = true, options = {})%> Seminário</h3>
+			Seminário é um vídeo- ou áudio-aula acompanhado de documentos para download.
+		
+		</div>
+		
+		<div style="margin-bottom: 20px;">
+			
+			<h3><%= radio_button_tag("course_type", "interactive", checked = false, options = {})%> Aula Interativa</h3>
+			Uma aula interativa pode possuir várias páginas com recursos interativos tais como vídeos, texto, questões e exames.
+		</div>
+		
+		<div style="margin-bottom: 20px;">
+			
+			<h3><%= radio_button_tag("course_type", "page", checked = false, options = {})%> Página simples</h3>
+			Uma página permite a postagem de conteúdo de leitura rápida ou um recurso interativo, como o flash.
+		</div>
+		
+		
+ 		</div>
+ 	</div>
+	
+	<div id="fd" style="float:left; margin-left:500px; width:100%;">
+		<%= f.submit 'Próximo >' %> 
+ 	</div>
+	
+	<% end %>
+
+
+</div>
+	
+</div>

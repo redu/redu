@@ -247,13 +247,23 @@ class SchoolsController < BaseController
   def show
     @school = School.find(params[:id])
     
-    @courses = Course.find_by_sql("select c.* from courses c, school_assets sa where sa.asset_type = 'Course' and c.id = sa.asset_id and sa.school_id = '#{@school.id}'")
-    #@courses = @school.assets#.collect{|asset| asset.asset_type = "Course"} #TODO limit
-    
-    @forums = @school.forums
     respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @school }
+      if @school
+        @courses = Course.find_by_sql("select c.* from courses c, school_assets sa where sa.asset_type = 'Course' and c.id = sa.asset_id and sa.school_id = '#{@school.id}'")
+        #@courses = @school.assets#.collect{|asset| asset.asset_type = "Course"} #TODO limit
+        #@courses = Course.find_All
+        
+        @forums = @school.forums
+        
+        format.html # show.html.erb
+        format.xml  { render :xml => @school }
+      else
+        format.html { 
+        flash[:error] = "A escola \"" + params[:id] + "\" não existe ou não está cadastrada no Redu."
+        redirect_to schools_path
+        }
+      end
+      
     end
   end
   

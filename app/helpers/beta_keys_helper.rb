@@ -1,0 +1,2 @@
+module BetaKeysHelper
+end

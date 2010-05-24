@@ -26,6 +26,9 @@
 - if (controller_name == 'photos' && action_name == 'new')
   = javascript_include_tag 'swfupload'
   = javascript_include_tag 'uploader'
+  
+- if (controller_name == 'schools' && action_name == 'show')
+  = stylesheet_link_tag 'flow'
 
 - if (controller_name == 'exams' && (action_name == 'new' || action_name == 'edit'))
   = javascript_include_tag "dragdrop"

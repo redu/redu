@@ -16,6 +16,17 @@ class UserNotifier < ActionMailer::Base
     @body[:url]  = signup_by_id_url(user, user.invite_code)
     @body[:message] = message
   end
+  
+  def beta_invitation(email, beta_key)
+    setup_sender_info
+    @recipients  = "#{email}"
+    @subject     = "Você recebeu um convite para acessar a versão beta do Redu"
+    @sent_on     = Time.now
+    @body[:bkey] = beta_key
+    @body[:url]  = APP_URL
+  end
+  
+  
 
   def friendship_request(friendship)
     setup_email(friendship.friend)

@@ -91,6 +91,8 @@ class Course < ActiveRecord::Base
   has_many :annotations
   
   
+  has_one :interactive_class
+  
   belongs_to :asset, :polymorphic => true
 
   # Callbacks
@@ -98,6 +100,11 @@ class Course < ActiveRecord::Base
   
   validation_group :external, :fields => [:title, :description, :external_resource, :external_resource_type]
   validation_group :uploaded, :fields => [:title, :description, :media]
+  
+  validation_group :step1, :fields=>[:name, :description]
+  #validation_group :step2_interactive, :fields=>[:name, :description]
+  validation_group :step2_seminar, :fields=>[:media]
+  validation_group :step3, :fields=>[:price]
   
   # VALIDATIONS
   accepts_nested_attributes_for :price

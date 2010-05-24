@@ -5,7 +5,8 @@ ActionController::Routing::Routes.draw do |map|
    map.resources :interactive_classes
    
     map.resources :lessons
-  
+    
+    map.resources :beta_keys, :collection => {:generate => :get, :remove_all => :get, :print_blank => :get, :invite => :get}
   
   map.resources :profiles
 
@@ -20,18 +21,13 @@ ActionController::Routing::Routes.draw do |map|
     
   map.resources :subjects
 
-  map.resources :courses, :member => {:rate => :post, :buy => :get},  :collection => {:pending => :get, :favorites => :get}
+  map.resources :courses, :member => {:rate => :post, :buy => :get},  :collection => {:pending => :get, :favorites => :get, :cancel => :get}
   
   map.resources :user_school_association
 
   map.resources :credits
     
-  map.resources :schools, :member => {:join => :get, :unjoin => :get,:manage => :get, :pending_courses => :get, :pending_members => :get }
-  
-   map.resources :schools, :member_path => '/:id', :nested_member_path => '/:school_id', :member => {:join => :get, :unjoin => :get,:manage => :get, :pending_courses => :get, :pending_members => :get
-   } do |school|
-    #school.resources :students :subjects
-  end
+ 
   
   
   map.resources :annotations
@@ -129,7 +125,9 @@ ActionController::Routing::Routes.draw do |map|
   
   # admin routes
   
-  map.admin_dashboard   '/admin/dashboard', :controller => 'homepage_features', :action => 'index'
+ # map.admin_dashboard   '/admin/dashboard', :controller => 'homepage_features', :action => 'index'
+  map.admin_dashboard   '/admin/dashboard', :controller => 'admin', :action => 'dashboard'
+  
   map.admin_users       '/admin/users', :controller => 'admin', :action => 'users'
   map.admin_messages    '/admin/messages', :controller => 'admin', :action => 'messages'
   map.admin_comments    '/admin/comments', :controller => 'admin', :action => 'comments'
@@ -167,6 +165,9 @@ ActionController::Routing::Routes.draw do |map|
   map.about '/about', :controller => 'base', :action => 'about'
   map.faq '/faq', :controller => 'base', :action => 'faq'
   
+
+  
+  
   
   map.edit_account_from_email '/account/edit', :controller => 'users', :action => 'edit_account'
   
@@ -196,6 +197,20 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :ads
   map.resources :contests, :collection => { :current => :get }
   map.resources :activities, :collection => { :recent => :get }
+  
+  
+    # SCHOOL
+  
+   map.resources :schools, :member => {:join => :get, :unjoin => :get,:manage => :get, :pending_courses => :get, :pending_members => :get }
+  
+   map.resources :schools, :member_path => '/:id', :nested_member_path => '/:school_id', :member => {:join => :get, :unjoin => :get,:manage => :get, :pending_courses => :get, :pending_members => :get
+   } do |school|
+    #school.resources :students :subjects
+  end
+  
+  
+  ##END SCHOOL
+  
   
   map.resources :users, :member_path => '/:id', :nested_member_path => '/:user_id', :member => { 
     :followers => :get,

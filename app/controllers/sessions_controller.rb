@@ -29,10 +29,15 @@ class SessionsController < BaseController
       Log.log_activity(@user, 'login', @user)
       
     else
-			if current_user && !self.current_user.active?
+			if current_user && !current_user.active?
 		    flash[:notice] = 'Seu cadastro precisa ser confirmado'
 		    self.current_user = nil
-		    render "users/resend_activation"
+        
+        if AppConfig.closed_beta_mode
+          render "users/resend_activation" , :layout => 'beta'
+        else   
+          render "users/resend_activation"
+        end
 			else
 		    flash[:notice] = :uh_oh_we_couldnt_log_you_in_with_the_username_and_password_you_entered_try_again.l
 		    redirect_to teaser_path and return if AppConfig.closed_beta_mode        

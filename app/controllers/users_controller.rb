@@ -14,7 +14,7 @@ class UsersController < BaseController
   end    
   
   uses_tiny_mce(:options => AppConfig.default_mce_options.merge({:editor_selector => "rich_text_editor"}), 
-    :only => [:new, :create, :update, :edit, :welcome_about])
+    :only => [:create, :update, :edit, :welcome_about])
   #uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:show])
   
   # Filters
@@ -254,6 +254,8 @@ class UsersController < BaseController
     @user         = User.new( {:birthday => Date.parse((Time.now - 25.years).to_s) }.merge(params[:user] || {}) )
     @inviter_id   = params[:id]
     @inviter_code = params[:code]
+    
+    @beta_key = params[:beta_key]
     
     render :action => 'new', :layout => 'beta' and return if AppConfig.closed_beta_mode    
   end
@@ -548,6 +550,10 @@ class UsersController < BaseController
       redirect_to login_path and return
     else
       flash[:notice] = :activation_email_not_sent_message.l
+      if AppConfig.closed_beta_mode
+        render :layout => 'beta'
+      end  
+      
     end
   end
   

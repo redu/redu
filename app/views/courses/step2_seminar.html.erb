@@ -1,0 +1,86 @@
+<div id="all_content3">
+<div id="col_content_video">
+	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">ensinar</a> > <a href="#">nova aula</a> </div>
+ 	<div id="title">NOVA AULA (SEMINÁRIO) - PASSO 2
+ 	</div>
+	
+<div style="width: 100%; float: left;">
+
+
+<% form_for :course, @course, :url => { :action => "create" }, :html => { :multipart => true } do |f| %>
+<%= f.error_messages %>
+
+<%= hidden_field_tag("step", "2", options = {})%>
+<%= hidden_field_tag("course_type", "seminar", options = {})%>
+	
+<% unless @edit %>
+<fieldset>
+	<legend>Material Principal</legend>
+
+  <%= f.radio_button :external_resource_type, :slideshare, {:onchange => "switchCourseFields(2);"} %>
+  <%= f.label :external_resource_type_slideshare, "Slideshare" %>	
+  <%= f.radio_button :external_resource_type, :youtube, {:onchange => "switchCourseFields(2);"} %>
+  <%= f.label :external_resource_type_youtube, "Youtube" %>
+  <%= f.radio_button :external_resource_type, :upload, {:onchange => "switchCourseFields(1);"} %>
+  <%= f.label :external_resource_type_upload, "Upload" %><br/><br/>
+
+  <div id="upload_resource_field" style="display:none;">
+  <%= f.label :media, "Upload de Material" %><br/>
+  <%= f.file_field :media  %><br/><br/>
+  (tamanho máximo: 50MB)
+  </div>
+
+  <div id="external_resource_field" style="display:block;">
+  <%= f.label :external_resource, "Material Externo (Youtube, Slideshare, etc)" %><br/>
+  <%= f.text_field :external_resource  %><br/><br/>
+  </div>
+  
+</fieldset>	
+<% end %>
+<script type="text/javascript">
+	function switchCourseFields(fieldType){
+		if (fieldType == 1) {
+			document.getElementById("upload_resource_field").style.display = "block";
+			document.getElementById("external_resource_field").style.display = "none";
+		} else {
+			document.getElementById("upload_resource_field").style.display = "none";
+			document.getElementById("external_resource_field").style.display = "block";
+		}
+		
+	}
+	
+	function removeField(link){
+		jQuery(link).parent("fieldset:first").hide()
+		jQuery(link).siblings("input[type=hidden]:first").val("1")
+	}
+	
+	function add_fields(link, association, content) {
+		var new_id = new Date().getTime();
+		var regexp = new RegExp("new_" + association, "g")
+		jQuery(link).before("<fieldset>" + content.replace(regexp, new_id) + "</fieldset>");
+	}
+
+</script>
+<fieldset>
+	<legend>Material Complementar</legend>
+	<% f.fields_for :resources do | build |%>
+		<fieldset>
+		<%= render :partial => 'resource_fields', :locals => {:f => build} %>
+		</fieldset>
+	<% end %>
+	<%= link_to_add_fields "Adicionar material", f, :resources %>
+</fieldset>	
+
+<%= link_to '< Anterior', new_course_path(:step => '1'), :class => "button" %> 
+<%= f.submit 'Próximo >' %> 
+
+<br><%= link_to 'Cancelar', cancel_courses_path, :confirm => "Tem certeza que deseja sair do editor de aulas?" %>
+
+<% end %>
+</div>
+
+</div>
+
+	
+	
+</div>

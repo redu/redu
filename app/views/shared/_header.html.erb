@@ -9,8 +9,9 @@
                 <% if logged_in? %>
                 <% render :partial => 'shared/user_menu' %>
                 <li>
-                    <strong><a href="<%= user_path(current_user) %>"><%=current_user.display_name %></a></strong>
+                    <strong><a href="<%= user_path(current_user) %>"><%=current_user.display_name %> (<a href="<%= admin_dashboard_path %>"><span style="color: red">admin</span></a>)</a></strong>
                 </li>
+              
                 <li>
                     |
                 </li>
@@ -38,22 +39,7 @@
                 <% end %>
             </ul>
         </div>
-        <div id="search">
-            <div id="edit_search">
-                <input type="text" size="28" class="edit_search_imput" style="border: none;"/>
-            </div>
-            <div id="button_base">
-                <a href="#"><%= image_tag("btn_search.gif", :border => '0') %>
-                </a>
-            </div>
-            <!--
-            <div id="seletors">
-            <input type="radio" name="radio" id="radio" value="radio" />
-            Aulas
-            <input type="radio" name="radio" id="radio2" value="radio" />
-            Exames</div>
-            -->
-        </div>
+        
         <!-- MENU Principal ****************************************** -->
         <div id="info">
             <div id="menu">

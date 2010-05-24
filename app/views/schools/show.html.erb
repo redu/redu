@@ -18,6 +18,19 @@
     }
     
 	
+	function toggleBox(boxname){
+		var box = document.getElementById(boxname);
+		
+		if (box.style.display == 'none') {
+			Effect.SlideDown(box,0.5);
+		} else {
+			Effect.SlideUp(box,0.5);
+		}
+		
+		
+	}
+	
+	
 	function toggleAssociateBox(){
 		
 		var box = document.getElementById("associate_box");
@@ -86,16 +99,17 @@
 	<%= subscription_link %>
 	
 	
-	|
-	<a href="#" class="share" onclick="toggleShareBox();return false;">COMPARTILHAR</a>
+	<a href="#" class="share" onclick="">BLOG</a>
 	
 	<% if current_user.can_post? @school %>
-	|<%= link_to "NOVA AULA", new_course_path(:school => @school), :class => "share"  %>
-	|<%= link_to "NOVO EXAME", new_exam_path(@school), :class => "share"  %>
+	| <%= link_to "NOVA AULA", new_course_path(:school => @school), :class => "share"  %>
+	| <%= link_to "NOVO EXAME", new_exam_path(@school), :class => "share"  %>
+	| <%= link_to "MATERIAIS", new_exam_path(@school), :class => "share"  %>
+	| <%= link_to "FORUM", new_exam_path(@school), :class => "share"  %>
 	<% end %>
 	
 	<% if current_user.school_admin? @school %>
-	|<%= link_to "GERENCIAR", manage_school_path(@school), :class => "share"  %>
+	| <%= link_to "GERENCIAR", manage_school_path(@school), :class => "share"  %>
 	<% end %>
 </div>
 <% end %>
@@ -112,7 +126,6 @@
 	    <% end %>
 		</div>
 </div>
-<%= render :partial => 'shared/share', :locals => {:title => @school.name, :url => application_url[0..application_url.length-2] + request.request_uri, :thumb_url => @school.avatar_photo_url} %>
 		
 
 <!-- BOX RECURSOS ############################################################################## -->
@@ -135,6 +148,17 @@
 <!-- BOX MOV. RESCENTE ############################################## -->
 <div id="comments_user">
 	<div id="user_box_top">ATIVIDADES RECENTES DE <%= @school.name.upcase %></div>
+	
+	<a href="#" class="share" onclick="toggleBox('flow_container');return false;">Novo fluxo</a> | Filtrar
+	
+	<%= render :partial => 'shared/flow' %>
+
+
+
+
+
+
+
 <%= render :partial => 'logs/item_user', :collection => current_user.recent_activity, :as => :item %>
 
 

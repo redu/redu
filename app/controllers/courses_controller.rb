@@ -161,13 +161,49 @@ class CoursesController < BaseController
   # GET /courses/new
   # GET /courses/new.xml
   def new
-    @course = Course.new
-    @course.build_price
-    3.times { @course.resources.build }
-    #TODO mostrar apenas as escolas nas quais o usuario tem permissao de postagem
-    #if params[:school]
     
-    @schools = current_user.schools
+    case params[:step]
+      when "2"
+        
+        if params[:course_type] == 'seminar'
+        
+          @course = Course.find(session[:course_id])
+        
+          3.times { @course.resources.build }
+        
+          @course.enable_validation_group :step2_seminar
+           @edit = false
+          render "step2_seminar" and return
+        
+        elsif params[:course_type] == 'interactive'
+        
+        
+        
+        end
+        
+      when "3"
+        @course = Course.find(session[:course_id])
+         @course.build_price
+        @schools = current_user.schools
+        
+        @course_type = params[:course_type]
+        
+         @course.enable_validation_group :step3
+        render "step3" and return
+        
+      else # 1
+     # session[:course_id] = nil
+        if session[:course_id]
+          @course = Course.find(session[:course_id])
+        else
+          @course = Course.new
+        end
+      
+        @course.enable_validation_group :step1
+        render "step1" and return
+    end
+    
+  
   end
   
   # GET /courses/1/edit
@@ -182,40 +218,100 @@ class CoursesController < BaseController
   # POST /courses.xml
   def create
     
-    @course = Course.new(params[:course])
-	if @course.external_resource_type.eql?('youtube')
-		capture = @course.external_resource.scan(/watch\?v=([a-zA-Z0-9]*)/o)[0][0]
-		puts capture.inspect
-		@course.external_resource = capture
-	end
-    @course.owner = current_user
     
-    respond_to do |format|
+    case params[:step]
+      when "1"
+          @course = Course.new(params[:course])
+          @course.owner = current_user
+          @course.enable_validation_group :step1
+          
+          respond_to do |format|
+            if @course.save
+              
+              session[:course_id] = @course.id
+              
+              format.html { 
+                redirect_to :action => :new , :course_type => params[:course_type], :step => "2"
+              }
+            else  
+              format.html { render "step1" }
+            end
+          end
+          
       
-      if @course.save!
-        @course.convert
+      when "2"
         
-        if params[:post_to]
-          SchoolAsset.create({:asset_type => "Course", :asset_id => @course.id, :school_id => params[:post_to].to_i})
-          #@school = School.find(params[:post_to].to_i)
-          #@school.assets << @course
-          #@school.update_attribute(:assets, @school.assets)
+        if params[:course_type] == 'seminar'
+          
+          @course = Course.find(session[:course_id])
+          
+          if @course.external_resource_type.eql?('youtube')
+            capture = @course.external_resource.scan(/watch\?v=([a-zA-Z0-9]*)/o)[0][0]
+            #puts capture.inspect
+            @course.external_resource = capture
+          end
+          
+          respond_to do |format|
+            
+            if @course.update_attributes(params[:course])
+              @course.convert
+              
+              format.html { 
+                 redirect_to :action => :new , :course_type => params[:course_type], :step => "3"
+              }
+            else  
+              @edit = false
+              format.html { render "step2_seminar" }
+            end
+          end
+          
+          
+        elsif params[:course_type] == 'interactive'
+          
         end
         
-        Log.log_activity(@course, 'create', current_user) # só aparece quando é aprovada
         
-        flash[:notice] = 'Aula foi criada com sucesso e está em processo de moderação.'
-        format.html { 
-          #redirect_to(@course)
-          redirect_to waiting_user_courses_path(current_user.id)
-        }
-        format.xml  { render :xml => @course, :status => :created, :location => @course }
-      else  
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @course.errors, :status => :unprocessable_entity }
+      when "3"
+      @course = Course.find(session[:course_id])
+      
+      if params[:post_to]
+        SchoolAsset.create({:asset_type => "Course", :asset_id => @course.id, :school_id => params[:post_to].to_i})
       end
+      
+      respond_to do |format|
+        
+        if @course.update_attributes(params[:course])
+          
+          #Log.log_activity(@course, 'create', current_user) # só aparece quando é aprovada
+          # remover curso da sessao
+          session[:course_id] = nil
+          
+          flash[:notice] = 'Aula foi criada com sucesso e está em processo de moderação.'
+          format.html { 
+            #redirect_to(@course)
+            redirect_to waiting_user_courses_path(current_user.id)
+          }
+        else  
+          format.html { render "step3" }
+        end
+        
+      end
+      
+      
     end
-  end
+
+
+end
+
+
+def cancel
+   Course.find(session[:course_id]).destroy
+   session[:course_id] = nil
+   flash[:notice] = "Criação de aula cancelada."
+   redirect_to courses_path
+end
+
+
   
   # PUT /courses/1
   # PUT /courses/1.xml

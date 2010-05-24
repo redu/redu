@@ -62,7 +62,7 @@
 			
 			<% if AppConfig.closed_beta_mode %>
 			 <label>Chave de acesso:</label><br />
-			<%= text_field_tag :beta_key, nil, {:size => 6} %>
+			<%= text_field_tag :beta_key, @beta_key, {:size => 6} %>
 			<br />
 			<% end %>
 			

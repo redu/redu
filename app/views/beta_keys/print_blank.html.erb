@@ -1,0 +1,32 @@
+<style>
+
+.key_box {
+    float: left;
+    border-right: 1px dotted;
+    border-bottom: 1px dotted;
+    padding: 30px;
+    font-family: "Courier New", Courier, monospace;
+	font-size: 16px;
+}
+	
+	
+</style>
+<div style="width: 100%;">
+
+	
+ 	
+
+<% @beta_keys.each do |key| %>
+<div class="key_box">
+	        <%= key.key %>
+</div>
+<% end %>
+
+
+	
+	
+	
+</div>
+<script type="text/javascript">
+	print();
+</script>

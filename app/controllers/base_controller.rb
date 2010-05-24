@@ -29,7 +29,8 @@ class BaseController < ApplicationController
   
   def beta_index
     redirect_to home_path and return if logged_in?
-    render :layout => 'beta'
+    #render :layout => 'beta'
+     render :layout => false
   end
   
   def rss_site_index

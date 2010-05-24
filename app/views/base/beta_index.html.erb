@@ -1,140 +1,198 @@
-<script>
-	var loginBoxVisible = true;
-	function toggleLoginSignupBox(){
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <link href="#{application_url}favicon.ico" rel='shortcut icon' />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title><%= page_title %></title>
+        <meta content='keywords for use in META tags' name='keywords' />
+        <meta content='noindex,follow' name='robots' />
+        <meta content='A description of your community for use in META tags.' name='description' />
+        <%# render :partial => "shared/scripts_and_styles" %>
+		<%= javascript_include_tag :defaults %>
 		
-		if (loginBoxVisible) {
-			document.getElementById('box_login').style.display = 'none';
-			document.getElementById('box_cadastro').style.display = 'none';
-			document.getElementById('box_signup').style.display = 'block';
-		} else {
-			document.getElementById('box_login').style.display = 'block';
-			document.getElementById('box_cadastro').style.display = 'block';
-			document.getElementById('box_signup').style.display = 'none';
-		}
-		loginBoxVisible = !loginBoxVisible;
-	}
-	function verifyTOS (){
-		if (document.getElementById('user_tos').checked) {
-			return true;
-		} else {
-			alert('Você não pode se cadastrar se não aceitar os Termos de Uso do Redu');
-			return false;
-		}
-	}
+		<%= stylesheet_link_tag 'beta_styles', 'galleryview.css'	%>
+		<%= javascript_include_tag 'jquery-1.4.2.min.js', 'jquery.galleryview-2.1.1-pack.js', 'jquery.timers-1.2.js'  %>
+
+		<script type="text/javascript">
+			$(document).ready(function(){
+				
+                $('#redu_gallery').galleryView({
+                    gallery_width: 400,
+                    gallery_height: 300,
+                    frame_width: 60,
+                    frame_height: 90,
+                    background_color: 'white',
+                    border: '0px',
+                    fade_panels: false
+                });
+				
+			});
+			
+			
+            
+		</script>
+
+
+
+ </head>
+	
+
+<body>
 	
 	
-</script>
-
-    
-
-<div id="all_content2" >
-<div id="col_content">
-    
-	<h1>beta!</h1>
-	
-</div>
-
-<!-- COLUNA DIREITA ################################################################################################################################################ -->
-<div id="col_box2">
-
-
-	<% if not logged_in? %>
-<!-- LOGIN ///////////////////////////////////////////////////////////////////////////////////// -->
-        
-	<div id="box_login">
-		<% form_tag sessions_path, :class => 'MainForm' do %>
-    	<div id="box_top_login">ACESSE AGORA</div>  
-        <div id="box_list_login">
-        	<label>Login:</label><br />
-			<%= text_field_tag 'login', nil, :size => 27, :class => 'edit_login_imput' %>
-			<br /><br />
-        	<label>Senha:</label><br />	
-			<%= password_field_tag 'password', nil, :size => 27, :class => 'edit_login_imput' %>
-			<br /><br />
-			<%= check_box_tag 'remember_me' %> <label>Lembrar-me</label> <br />	
-			<div id="box_list_login" align="center">
-				<!-- <a href="#" class="bt_login">Enviar</a> -->
-				 <%= submit_tag :log_in.l, :class => 'bt_login' %>
-			</div>
-            <div id="box_list_login" align="center">
-            	Esqueceu <%= link_to "login", forgot_username_url %> ou <%= link_to "senha", forgot_password_url %>?
-			</div>
-        </div>
-		<% end %>
+	<div id="header">
+      <div class="wrapper">
+        <h1><a href="http://sclipo.com/" title="Sclipo: the social learning revolution"><strong>Sclipo:</strong> the social learning revolution</a></h1>
+        <ul id="navigation">
+        	<form action="/signup" method="post" >
+			
+          <li><span style="display: block; margin-top: 10px; margin-right: 10px; color: #ddd;">Recebeu uma <span style="color: #fff">chave de acesso</span>? Digite-a aqui:</span></li>
+          <li> <input tabindex="5" title="beta_key" value="" name="beta_key" id="beta_key" type="text" size="6" maxlength="6" style="margin-top: 8px; width: auto;"/></li>
+          <li>
+          	<a href="#" class="login" id="login_button" onclick="document.forms[0].submit();">Acessar</a>
+		  </li>
+			
+			</form>
+        </ul>
+      </div>
     </div>
 	
-<!-- LOGIN ///////////////////////////////////////////////////////////////////////////////////// -->
-
-<!-- CADASTRO ///////////////////////////////////////////////////////////////////////////////////// -->
-	<div id="box_signup" style="display: none;" class="clearfix">
-		<%- form_for :user, :url => users_path, :html => {:class => 'MainForm', :onsubmit => 'return verifyTOS();'} do |f| %>
-	
-    	<div id="box_top_login">CADASTRO</div>  
-        
-		<div id="box_list_login">
-        	
-			<label>Nome:</label><br />
-			 <%= f.text_field :first_name, :size => 27, :class => 'edit_login_imput' %>
-			<br /><br />
-			
-			<label>Sobrenome:</label><br />
-			 <%= f.text_field :last_name, :size => 27, :class => 'edit_login_imput' %>
-			<br /><br />
-			
-			<label>Login:</label><br />
-			 <%= f.text_field :login, :size => 27, :class => 'edit_login_imput' %>
-			<br /><br />
-			
-			<label>E-mail:</label><br />
-			<%= f.text_field :email, :size => 27, :class => 'edit_login_imput' %>
-			<br /><br />
-        	
-			<label>Data de nascimento:</label><br />
-			<%= date_select :user, :birthday, {:start_year => 1926, :end_year => (Time.now.year - 13)}%>
-			<br /><br />
-        	
-			 <% if AppConfig.require_captcha_on_signup %>
-          		<%= recaptcha_tags %>
-        	 <% end %>
-			 
-			 <label>Chave de acesso:</label><br />
-			<%= text_field_tag :beta_key, nil, {:size => 6, :class => 'edit_login_imput'} %>
-			<br /><br />
-			 
-			<label>Senha:</label><br />
-			<%= f.password_field :password, :size => 27, :class => 'edit_login_imput' %>
-			<br /><br />
-			
-			<label>Confirme a senha:</label><br />
-			<%= f.password_field :password_confirmation, :size => 27, :class => 'edit_login_imput' %>
-			<br /><br />
-			<%= check_box "user", "tos" %>Li e aceito os Termos de Uso
-			<!--<input type="checkbox" name="tos_accepted" id="tos_accepted" value="0"/>Li e aceito os Termos de Uso-->
-
-			<div id="box_list_login" align="center">
-				<!-- <a href="#" class="bt_login">Enviar</a> -->
-				 <%= submit_tag :sign_up.l, :class => 'bt_login' %> 
-				 <span class="link_01" onclick="toggleLoginSignupBox();">ou retornar ao login</span>
-			</div>
-			
-           
-        </div>
-		
-		<% end %>
-		
+	 <div id = "flash_messages" >
+                <%= render :partial => "shared/messages" %>
      </div>
 
-
-	<div id="box_cadastro">
-    	<div id="box_top_cadastro">CADASTRE-SE</div>
-        <div id="box_list_cadastro"><span class="link_01" onclick="toggleLoginSignupBox();"> Recebeu uma chave de acesso? Cadastre-se agora!</span></div>
-	</div>
-<!-- CADASTRO ///////////////////////////////////////////////////////////////////////////////////// -->
-	<% end %>
-
    
+
+
+<div id="welcome">
+  <div class="wrapper">
+    <div id="introduction">
+    	
+		<div style="float: left;">
+		<%= image_tag 'logo_redu_l.png', :style => "float: left; max-width: 300px;"%>
+		<h3 style="margin-top: 30px;">Redu is the leading Web Learning Application for independent teachers, and small schools &amp; companies</h3>
+		</div>
+		
+		<div style="float: left;">
+			
+        <ul id="redu_gallery" >
+            <li>
+            	<%= image_tag 'foto_40x40.png' %>
+                <div class="panel-content">
+                    <h2>A News Article</h2>
+                    <p>
+                        Lorem ipsum dolor amet...
+                    </p>
+                    <p>
+                        More content...
+                    </p>
+                </div>
+            </li>
+            <li>
+                <%= image_tag 'foto_40x40.png' %>
+                <div class="panel-content">
+                    <h2>A News Article</h2>
+                    <p>
+                        Lorem ipsum dolor amet...
+                    </p>
+                    <p>
+                        More content2...
+                    </p>
+                </div>
+            </li>
+            <li>
+                <%= image_tag 'foto_40x40.png' %>
+                <div class="panel-content">
+                    <h2>A News Article</h2>
+                    <p>
+                        Lorem ipsum dolor amet...
+                    </p>
+                    <p>
+                        More content3...
+                    </p>
+                </div>
+            </li>
+        </ul>
+			
+		</div>
+		
+		
+		
+      
+    </div>
+
+    <div id="login-form">
+        <div id="formulario">
+        	
+			<% form_tag sessions_path, :class => 'MainForm' do %>
+			
+                <h4>Acesso Beta</h4>
+                <p>Se você já se cadastrou através de uma chave de acesso, faça o login aqui:</p>
+                <fieldset class="first">
+                    
+                    <div>
+                      <label for="login">Login</label>
+                     <%= text_field_tag 'login' %>
+                    </div>
+                
+					<div>
+                      <label for="senha">Senha</label>
+                      <%= password_field_tag 'password'%>
+                    </div>
+					
+					<ul class="text-margin">
+                      <li>
+                             <%= check_box_tag 'remember_me', nil, nil, :class => "checkbox" %><label for="lembrar-me">Lembrar-me</label>
+                      </li>
+                    </ul>
+					
+					
+					
+                    <div>
+                    	<button id="joinsclipo" value="Join" class="button-form" onclick="document.forms[1].submit();"><span>Entrar</span></button>
+                    	<%# submit_tag :log_in.l, :class => 'button-form' %>
+                    </div>
+					
+                    
+                    <div>
+                    	Esqueceu <%= link_to "login", forgot_username_url %> ou <%= link_to "senha", forgot_password_url %>?
+                    </div>
+					
+                </fieldset>
+                <% end %>
+            </form>
+        </div> <!-- en formulario -->
+
+        
+    </div> <!-- login-form -->
+  </div>
 </div>
-<!--<div id="title_page">Assistindo Aula</div>-->
-</div>
+
+<div id="footer">
+  <div class="wrapper">
+
+                <p>Teach better! <a href="http://sclipo.com/features">Learn more »</a></p>
+        
+        <ul>
+            <li><a href="http://sclipo.com/about">About</a></li>
+            <li><a href="http://sclipo.com/blog/">Blog</a></li>
+            <li><a href="http://sclipo.com/features">Features</a></li>
+            <li><a href="http://sclipo.com/academy/view/sclipo">Help</a></li>
+            <li><a href="http://sclipo.com/liveteaching/systemcheck">System Check</a></li>
+            <li><a href="http://sclipo.com/academy/browse">Academies</a></li>
+            <li><a href="http://sclipo.com/courses/browse">Courses</a></li>
+            <li><a href="http://sclipo.com/content/documents">Library</a></li>
+            <li><a href="http://sclipo.com/plugins/moodle">Moodle Plugin</a></li>
+            <li><a href="http://sclipo.com/privacy">Privacy</a></li>
+            <li><a href="http://sclipo.com/terms">Terms of Use</a></li>
+                    </ul>
+
+        <cite>English | <a href="#" class="select-language" rel="es_ES">Español</a> | <a href="#" class="select-language" rel="de_DE">Deutsch</a></cite>
+        <cite style="margin-top: 5px;">©2010 Sclipo.</cite>
+        </div>
+
+
+</div></body></html>
+
 
 

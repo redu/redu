@@ -7,7 +7,7 @@ meta_description: 'A description of your community for use in META tags.'
 meta_keywords: 'keywords for use in META tags'
 sections_enabled: ['photos', 'posts', 'clippings', 'contests', 'categories', 'events']
 show_advertising: false
-closed_beta_mode: false
+closed_beta_mode: true
 # Comment this out if you want to infer the locale
 # off of the http headers
 community_locale: "pt-BR"
@@ -89,10 +89,13 @@ clipping:
 reserved_logins: [
   'about', 
   'account', 
+  'admin',
   'advertise', 
   'ads', 
   'application', 
   'assets', 
+  'access_keys',
+  'beta_keys',
   'categories', 
   'choices', 
   'clippings', 
@@ -100,8 +103,10 @@ reserved_logins: [
   'comments', 
   'contests', 
   'countries', 
+  'credits',
   'css_help', 
   'events', 
+  'exams',
   'favorites', 
   'faq', 
   'featured', 
@@ -115,6 +120,7 @@ reserved_logins: [
   'javascripts', 
   'login', 
   'logout', 
+  'lessons',
   'manage_photos', 
   'messages', 
   'metro_areas', 
@@ -126,11 +132,13 @@ reserved_logins: [
   'popular', 
   'popular_rss', 
   'posts', 
-  'recent', 
+  'recent',
+  'resources', 
   'roles', 
   'search', 
   'signup', 
-  'sb_posts', 
+  'sb_posts',
+  'schools', 
   'skills', 
   'sitemap', 
   'states',

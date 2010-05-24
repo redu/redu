@@ -5,5 +5,6 @@ class AddPublishedToCourse < ActiveRecord::Migration
 
   def self.down
     remove_column :courses, :published
+    
   end
 end

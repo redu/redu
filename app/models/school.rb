@@ -27,6 +27,7 @@ class School < ActiveRecord::Base
     validates_format_of       :path, :with => /^[\sA-Za-z0-9_-]+$/
     validates_presence_of :name, :path
     validates_uniqueness_of   :path, :case_sensitive => false
+    validates_exclusion_of    :path, :in => AppConfig.reserved_logins
     
 #    def can_be_managed_by(user)
 #      #TODO verificar se é professor ou coord, ou school admin tbm

@@ -72,12 +72,8 @@
                 <%= @content_for_layout %>
                 <div id="footer">
                     <div id="footer_all_content">
-                        <div id="footer_logo">
-                            <%= image_tag("logo_redu1.png", :height => '65', :width => '150') %>
-                        </div>
-                        <div id="politicas">
-                        </div>
-                        <%= link_to "Sugestões", :controller => "suggestions", :action => "index" %>|<% if @rss_title && @rss_url %>
+                        
+                        <% if @rss_title && @rss_url %>
                         <%= link_to :rss.l, @rss_url, {:title => @rss_title} %>
                         <% end %>
                         
