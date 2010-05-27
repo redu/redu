@@ -26,8 +26,8 @@ pt-BR:
     errors:
       template:
         header:
-          one: "1 erro proibiu esse {{model}} de ser salvo" 
-          other: "{{count}} erros proibiram esse {{model}} de ser salvo." 
+          one: "Um erro ocorreu, verifique abaixo como proceder." 
+          other: "{{count}} erros ocorreram, veja como proceder abaixo." 
         body: "Há problemas para os seguintes campos:" 
       models:
         question:
@@ -56,10 +56,10 @@ pt-BR:
               blank: ": Por favor, digite uma mensagem."
             subject: 
               blank: ": Por favor, digite um assunto."
-            recipient_id: 
-              blank: ": Destinatário inválido." 
-            sender_id:
-              invalid: ": Você..."    
+            recipient:
+              blank: ": Por favor, digite o nome destinatário."
+           
+          
   
   Course:  aula
   Resource:  material
