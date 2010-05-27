@@ -7,11 +7,12 @@ class Message < ActiveRecord::Base
   validates_presence_of :body, :subject
   validates_presence_of :recipient
   validate :ensure_not_sending_to_self
+  
 
   after_create :notify_recipient
   
   def ensure_not_sending_to_self
-    errors.add_to_base("You may not send a message to yourself.") if self.recipient && self.recipient.eql?(self.sender)    
+    errors.add_to_base("Não é possível enviar mensagem para você, tente o nome de outra pessoa.") if self.recipient && self.recipient.eql?(self.sender)    
   end
   
   def notify_recipient
