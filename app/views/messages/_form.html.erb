@@ -4,16 +4,18 @@
 	<%- else %>
 		<p>
 			<label for='message_to'>
-			<%= :to.l %>
-			<em>
-				<%= "(" + :type_a_username.l + ")" %>
-			</em>
+				<%= :to.l %>
+				<em>
+					<%= "(" + :type_a_username.l + ")" %>
+				</em>
 			</label>
 		</p>
 		<%= text_field_tag 'message[to]', @message.to, {:autocomplete => "off", :size => 35, :id => "message_to"} %>
 		<div class='auto_complete' id='message_to_auto_complete'>
 			<%= auto_complete_field 'message_to', {:url => auto_complete_for_username_user_messages_path(@user), :tokens=>','} %>	
 		</div>
+	<% end %>
+	
 		<p>
 			<label for='message_subject'>
 				<%= :subject_of_message.l + ":" %>
@@ -29,5 +31,5 @@
 		<p>
 			<%= submit_tag :send.l %>
 		</p>
-	<% end %>
+	
 <% end %>
