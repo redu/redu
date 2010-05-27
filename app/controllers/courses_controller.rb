@@ -1,6 +1,8 @@
 class CoursesController < BaseController
   before_filter :login_required, :except => [:index]
   
+  uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit])
+  
   def favorites
     
     if params[:from] == 'favorites'
@@ -172,18 +174,25 @@ class CoursesController < BaseController
           3.times { @course.resources.build }
         
           @course.enable_validation_group :step2_seminar
-           @edit = false
+          @edit = false
           render "step2_seminar" and return
         
         elsif params[:course_type] == 'interactive'
+          @interactive_class = InteractiveClass.new
+          
+           3.times { @interactive_class.lessons.build}
+          
+          render "step2_interactive" and return
         
-        
+        elsif params[:course_type] == 'page'
+          @page = Page.new
+          render "step2_page" and return
         
         end
         
       when "3"
         @course = Course.find(session[:course_id])
-         @course.build_price
+        # @course.build_price
         @schools = current_user.schools
         
         @course_type = params[:course_type]
@@ -217,8 +226,7 @@ class CoursesController < BaseController
   # POST /courses
   # POST /courses.xml
   def create
-    
-    
+
     case params[:step]
       when "1"
           @course = Course.new(params[:course])
@@ -267,6 +275,39 @@ class CoursesController < BaseController
           
           
         elsif params[:course_type] == 'interactive'
+           @course = Course.find(session[:course_id])
+          @iclass = InteractiveClass.new(params[:interactive_class])
+          @iclass.course = @course
+          
+           respond_to do |format|
+            
+            if @iclass.save
+              
+              format.html { 
+                 redirect_to :action => :new , :course_type => params[:course_type], :step => "3"
+              }
+            else  
+              format.html { render "step2_interactive" }
+            end
+          end
+          
+        elsif params[:course_type] == 'page'
+          
+          @course = Course.find(session[:course_id])
+          @page = Page.new(params[:page])
+          @page.course = @course
+          
+           respond_to do |format|
+            
+            if @page.save
+              
+              format.html { 
+                 redirect_to :action => :new , :course_type => params[:course_type], :step => "3"
+              }
+            else  
+              format.html { render "step2_page" }
+            end
+          end
           
         end
         
@@ -357,7 +398,8 @@ end
         @acquisition = Acquisition.new
         @acquisition.acquired_by_type = "User"
         @acquisition.acquired_by_id = current_user.id
-        @acquisition.value =  Course.price_of_acquisition(@course.id)
+       # @acquisition.value =  Course.price_of_acquisition(@course.id) nao mais usado
+       @acquisition.value =  Course.price
         @acquisition.course = @course
         
         if @acquisition.save

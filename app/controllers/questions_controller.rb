@@ -1,10 +1,12 @@
 class QuestionsController < BaseController
   before_filter :login_required, :except => [:index]
   
-  uses_tiny_mce(:options => AppConfig.question_mce_options, :only => [:new, :edit])
+  uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit])
 
 #question_mce_options
   def add
+    @exam_type = params[:exam_type]
+    
     @questions = Question.all(:conditions => ['public = ?', 1])
     respond_to do |format|
       format.html # index.html.erb
@@ -75,7 +77,7 @@ class QuestionsController < BaseController
   # GET /questions/new.xml
   def new
     
-   # @exam = 
+    @exam_type = params[:exam_type]
     
     @question = Question.new
 
@@ -110,13 +112,18 @@ class QuestionsController < BaseController
         @answer = @question.alternatives[params[:answer].to_i]
         @question.update_attribute(:answer, @answer)
         
-        if session[:exam_draft]
-          session[:exam_draft].questions << @question
+        if session[:exam_id]
+          
+          @exam = Exam.find(session[:exam_id])
+          
+          @exam.questions << @question
+          @exam.update_attribute(:questions, @exam.questions)
+          
         end
         
         flash[:notice] = 'A questão foi criada e adicionada ao teste.'
         format.html { #redirect_to(@question) 
-          redirect_to :controller => :exams, :action => :new
+          redirect_to :controller => :exams, :action => :new, :step => '2', :exam_type => params[:exam_type] 
         }
         format.xml  { render :xml => @question, :status => :created, :location => @question }
 =begin        

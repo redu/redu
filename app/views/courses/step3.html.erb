@@ -1,6 +1,6 @@
 <div id="all_content3">
 <div id="col_content_video">
-	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">aprender</a> > <a href="#">materiais</a> </div>
+	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">ensinar</a> > <a href="#">nova aula</a> > publicação </div>
  	<div id="title">NOVA AULA - PASSO 3
  	</div>
 
@@ -23,12 +23,9 @@
 	<br/><br/>
 	
 <fieldset id="price_box">
-	<legend>Preços</legend>
-	<% f.fields_for :price do | course_price | %>
-		<%= course_price.label :price %>
-		<%= course_price.text_field :price %>
-		<%= course_price.hidden_field :key_number %>
-	<% end %>
+	<legend>Preço</legend>
+		<%= f.label :price %>
+		<%= f.text_field :price %>
 </fieldset>
 
 <%= link_to '< Anterior', new_course_path(:step => '2', :course_type => @course_type), :class => "button" %> 

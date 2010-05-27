@@ -1,4 +1,4 @@
-<%- box :class => 'alt first_alt' do %>
+<% box :class => 'alt first_alt' do %>
 	<label for='title'>
 		<%= :author.l %>
 	</label>
@@ -11,7 +11,7 @@
 			<%= " <small>(" + :featured_writer.l + ")</small>" if user.featured_writer?  %>
 		</dd>
 		<dd>
-			<%- if user.description %>
+			<% if user.description %>
 				<%= truncate_words( user.description, 12, '...') %>
 			<% end %>
 		</dd>
@@ -19,11 +19,12 @@
 			<%= user.created_at.strftime(:member_since.l + ": %m/%d/%y") %>
 		</dd>
 		<dd>
-			<%- if user.posts.count == 1 %>
+			<% if user.posts.count == 1 %>
 				<%= link_to :singular_posts.l(:count => user.posts.count), user_posts_path(user) %>
-			<%- else %>
-				<% = link_to :plural_posts.l(:count => user.posts.count), user_posts_path(user) %>
+			<% else %>
+				<%= link_to :plural_posts.l(:count => user.posts.count), user_posts_path(user) %>
 			<% end %>
+			
 		</dd>
 		<dd>
 			<%= link_to :rss_feed.l, user_posts_path(user, :format => :rss) %>

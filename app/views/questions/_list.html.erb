@@ -33,7 +33,7 @@ function removeRowFromList(rowId){
 
 <% elsif (action_name == 'add' and current_user ) %>
   <td>		
-<%= link_to_remote 'Adicionar', :url => { :controller => :exams, :action => :add_question, :question_id => question.id }, 
+<%= link_to_remote 'Adicionar', :url => { :controller => :exams, :action => :add_question, :question_id => question.id, :exam_type => exam_type }, 
 						:before => "Element.show('spinner')",
         				:success => "removeRowFromList('tr_" + question.id.to_s + "')" %>
 						<!-- :method => :delete --> 

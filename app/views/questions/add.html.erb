@@ -66,8 +66,8 @@ function showRequestKeysForm(){
 	
     <div id="task_bar_exames">
 		
-		<%= link_to 'Voltar para Exame', new_exam_path %> |
-		<%= link_to 'Nova Questão', new_question_path %> 
+		<%= link_to 'Voltar para Exame', new_exam_path(:step => '2', :exam_type => @exam_type) %> |
+		<%= link_to 'Nova Questão', new_question_path(:exam_type => @exam_type) %> 
 	
 	</div>
  
@@ -92,11 +92,11 @@ function showRequestKeysForm(){
  </div>
     <div id="all_list">
 		<div id="local_search_results">
-		<%= render :partial => "questions/list" %>
+		<%= render :partial => "questions/list", :locals => {:exam_type => @exam_type} %>
 		</div>
 	</div>
 
-<%= link_to 'Voltar', :controller => :exams, :action => :new %>
+<%= link_to 'Voltar para Exame', new_exam_path(:step => '2', :exam_type => @exam_type) %>
 
 <%= image_tag("spinner.gif",
               :align => "absmiddle",

@@ -166,13 +166,16 @@
 <% form_for(@question, :html => {:onsubmit => "return validateForm();"}) do |f| %>
   <%= f.error_messages %>
 
+<%= hidden_field_tag("exam_type", exam_type, options = {})%>
+
+
 	<div id="popup_content" style="padding: 8px 5px 8px 5px">
 	  
 	  <!-- isso aqui poderia ser um render partial? -->
 	  <div id="question">
 	  	<label>Enunciado: </label><BR>
 		
-		<%= f.text_area :statement, :size => "60x12" %>
+		<%= f.text_area :statement, :size => "60x12", :class => "mceEditor" %>
  
  			<!--
 		:onKeyDown => "textCounter(this,'st_chars_left',400);",
@@ -218,7 +221,7 @@
 		<a href="#" id="add_alternative_link" onclick="addAlternative(); return false;">Adicionar alternativa (max. 7)</a>
 		<hr>
 		Justificativa da resposta (tirar o tiny?):
-		<%= f.text_area :justification, :rows =>2, :cols => 50  %>
+		<%= f.text_area :justification, :rows =>2, :cols => 50, :class => "mceEditor" %>
 		<hr>
 		<%= f.check_box :public, :options => {:checked => true} %> Pública?
 		<BR>

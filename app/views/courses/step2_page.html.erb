@@ -1,0 +1,34 @@
+<div id="all_content3">
+<div id="col_content_video">
+	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">ensinar</a> > <a href="#">nova aula</a> </div>
+ 	<div id="title">NOVA AULA (PÁGINA) - PASSO 2
+ 	</div>
+	
+<div style="width: 100%; float: left;">
+
+
+<% form_for :page, @page, :url => { :action => "create" }, :html => { :multipart => true } do |f| %>
+<%= f.error_messages %>
+
+<%= hidden_field_tag("step", "2", options = {})%>
+<%= hidden_field_tag("course_type", "page", options = {})%>
+	
+	<div>
+    <h3> Editor de Página</h3>
+	<p>Use o editor abaixo para criar página interativa</p>
+    <%= f.text_area :body, :class => "mceEditor"%>
+	</div>
+
+<%= link_to '< Anterior', new_course_path(:step => '1'), :class => "button" %> 
+<%= f.submit 'Próximo >' %> 
+
+<br><%= link_to 'Cancelar', cancel_courses_path, :confirm => "Tem certeza que deseja sair do editor de aulas?" %>
+
+<% end %>
+</div>
+
+</div>
+
+	
+	
+</div>

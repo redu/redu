@@ -2,6 +2,8 @@
   
   before_filter :login_required, :except => [:index]
   
+  uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit])
+  
   def favorites
     
     if params[:from] == 'favorites'
@@ -230,11 +232,219 @@
       end
   end
   
-  def discard_draft
-    session[:exam_draft] = nil
-    redirect_to exams_path
-  end
+
+def cancel
+   Exam.find(session[:exam_id]).destroy
+   session[:exam_id] = nil
+   flash[:notice] = "Criação de exame cancelada."
+   redirect_to exams_path
+end
   
+  def new
+    
+    case params[:step]
+      when "2"
+        
+        if params[:exam_type] == 'simple'
+        
+          @exam = Exam.find(session[:exam_id])
+        
+          @exam.enable_validation_group :step2
+          @edit = false
+          render "step2_simple" and return
+        
+        elsif params[:exam_type] == 'formative'
+         
+        
+        elsif params[:exam_type] == 'quiz'
+         
+        
+        end
+        
+      when "3"
+        @exam = Exam.find(session[:exam_id])
+        @schools = current_user.schools
+        
+        @exam_type = params[:exam_type]
+        
+         @exam.enable_validation_group :step3
+        render "step3" and return
+        
+      else # 1
+     # session[:course_id] = nil
+        if session[:exam_id]
+          @exam = Exam.find(session[:exam_id])
+        else
+          @exam = Exam.new
+        end
+      
+       
+        render "step1" and return
+    end
+    
+  
+end
+
+
+def create
+
+    case params[:step]
+      when "1"
+          @exam = Exam.new(params[:exam])
+          @exam.owner = current_user
+          @exam.enable_validation_group :step1
+          
+          respond_to do |format|
+            if @exam.save
+              
+              session[:exam_id] = @exam.id
+              
+              format.html { 
+                redirect_to :action => :new , :exam_type => params[:exam_type], :step => "2"
+              }
+            else  
+              format.html { render "step1" }
+            end
+          end
+          
+      
+      when "2"
+      
+      if params[:exam_type] == 'simple'
+        
+        @exam = Exam.find(session[:exam_id])
+        @exam.questions.clear
+        
+        @questions =  params[:questions]
+        
+        if @questions
+          for question in @questions
+          
+            @exam.questions << Question.find(question.to_i) # TODO performance
+          end
+        end
+        
+        
+        
+        if params[:sbt_opt] == "0" # save exam
+          
+          @exam.enable_validation_group :step2
+          
+          respond_to do |format|
+            
+            if @exam.update_attributes(params[:exam])
+              
+              format.html { 
+                redirect_to :action => :new , :exam_type => params[:exam_type], :step => "3"
+              }
+            else  
+              @edit = false
+              format.html { render "step2_simple" }
+            end
+          end
+          
+          
+        elsif params[:sbt_opt] == "1" # new question
+          
+          @exam.update_attributes(params[:exam])
+          
+          redirect_to :controller => :questions, :action => :new, :exam_type => params[:exam_type]
+          
+        elsif params[:sbt_opt] == "2" # add question  
+          #save_dft
+          @exam.update_attributes(params[:exam])
+          redirect_to :controller => :questions, :action => :add, :exam_type => params[:exam_type]
+          
+        elsif params[:sbt_opt] == "3" # add resource  TODO mudar
+          #save_dft
+          @exam.update_attributes(params[:exam])
+          redirect_to :controller => :resources, :action => :add, :exam_type => params[:exam_type]
+          
+         elsif params[:sbt_opt] == "4" # edit question
+          @exam.update_attributes(params[:exam])
+          redirect_to :controller => :resources, :action => :add, :exam_type => params[:exam_type]
+        
+          
+        end
+        
+        
+      elsif params[:exam_type] == 'formative'
+        @course = Course.find(session[:course_id])
+        @iclass = InteractiveClass.new(params[:interactive_class])
+        @iclass.course = @course
+        
+        respond_to do |format|
+          
+          if @iclass.save
+            
+            format.html { 
+              redirect_to :action => :new , :exam_type => params[:exam_type], :step => "3"
+            }
+          else  
+            format.html { render "step2_interactive" }
+          end
+        end
+        
+      elsif params[:exam_type] == 'quiz'
+        
+        @course = Course.find(session[:course_id])
+        @page = Page.new(params[:page])
+        @page.course = @course
+        
+        respond_to do |format|
+          
+          if @page.save
+            
+            format.html { 
+              redirect_to :action => :new , :exam_type => params[:exam_type], :step => "3"
+            }
+          else  
+            format.html { render "step2_page" }
+          end
+        end
+        
+      end
+        
+        ############# PASSO 3 ##############
+      when "3"
+        
+       @exam = Exam.find(session[:exam_id])
+        @exam.enable_validation_group :step3
+        
+      
+      if params[:post_to]
+        SchoolAsset.create({:asset_type => "Exam", :asset_id => @exam.id, :school_id => params[:post_to].to_i})
+      end
+      
+      respond_to do |format|
+        
+        if @exam.update_attributes(params[:exam])
+          
+          #Log.log_activity(@course, 'create', current_user) # só aparece quando é aprovada
+          # remover curso da sessao
+          session[:exam_id] = nil
+          
+          flash[:notice] = 'O exame foi criado com sucesso! '
+          format.html { 
+            #redirect_to(@course)
+            redirect_to @exam
+          }
+        else  
+          format.html { render "step3" }
+        end
+        
+      end
+      
+      
+    end
+
+
+end
+
+  
+  
+  
+=begin  
   def new
     
     if request.get?
@@ -243,11 +453,9 @@
       
       # @questions =  params[:questions]
       
-=begin      
-      @questions.each do |question|
-        session[:exam_draft].questions << Question.find(question.to_i) # TODO performance
-      end
-=end
+      #@questions.each do |question|
+      #  session[:exam_draft].questions << Question.find(question.to_i) # TODO performance
+      #end
       
       #params[:ids].map(&:to_i) 
       # @user.post_ids = your_post_ids
@@ -324,7 +532,8 @@
       end
     end
   end 
-  
+
+=end
   def new_question
     
     #save_draft :id => params[:id], :exam => params[:exam], :hide => true
@@ -333,13 +542,29 @@
   end
   
   def add_question
-    @question = Question.find(params[:question_id], :include => :answer)
+    @question = Question.find(params[:question_id], :include => [:answer, :alternatives])
+    #TODO copiar questão
     
-    if session[:exam_draft]
-       session[:exam_draft].questions << @question
-   end
-   
-   
+    #@q_copy = Question.create({:statement => @question.statement, :answer => @question.answer, :author => @question.author, :public => false, :justification => @question.justification, :alternatives => @question.alternatives.clone})
+
+    @q_copy = @question.clone
+    @q_copy.answer = @question.answer.clone
+    @question.alternatives.each {|a| 
+    @q_copy.alternatives << a.clone
+    }
+    #@q_copy.alternatives = @question.alternatives.clone
+    @q_copy.public = 0
+    @q_copy.save
+    
+     if session[:exam_id]
+          
+          @exam = Exam.find(session[:exam_id])
+          
+          @exam.questions << @q_copy
+          @exam.update_attribute(:questions, @exam.questions)
+          
+      end
+    
    
   respond_to do |format|
     format.html do
@@ -380,23 +605,51 @@
     
    # session[:exam_draft].questions.delete(Question.find(params[:id])) # TODO manter sincronizado, vale  a pena?
     
+        if session[:exam_id]
+          @exam = Exam.find(session[:exam_id])
+          @exam.questions.delete(Question.find(params[:qid]))
+          # @exam.update_attribute(:questions, @exam.questions)
+        end
+
     respond_to do |format|
-=begin      
-      format.html {
-        redirect_to :action => :new
-      }
-      format.xml  { render :xml => @exam }
-=end
+
       format.js do
         render :update do |page|
-          page.remove "question_" + params[:id]
+          page.remove "question_" + params[:qid]
           flash[:notice] = "Questão removida do exame"
           page.reload_flash
           # page.remove "question_#{@question.id}"  
         end    
       end
   end
+end
+
+
+
+
+def update_question
+    
+   # session[:exam_draft].questions.delete(Question.find(params[:id])) # TODO manter sincronizado, vale  a pena?
+    
+        if session[:exam_id]
+          @exam = Exam.find(session[:exam_id])
+          @exam.questions.delete(Question.find(params[:qid]))
+          # @exam.update_attribute(:questions, @exam.questions)
+        end
+
+    respond_to do |format|
+
+      format.js do
+        render :update do |page|
+          page.remove "question_" + params[:qid]
+          flash[:notice] = "Questão removida do exame"
+          page.reload_flash
+          # page.remove "question_#{@question.id}"  
+        end    
+      end
   end
+end
+
      
   def add_resource
     @resource = Resource.find(params[:resource_id])
@@ -590,6 +843,7 @@ def search
 
   # POST /exams
   # POST /exams.xml
+=begin
   def create
     @exam = session[:exam_draft] #Exam.new(params[:exam])
    @exam.owner = current_user
@@ -614,6 +868,7 @@ def search
       end
     end
   end
+=end
 
   # PUT /exams/1
   # PUT /exams/1.xml

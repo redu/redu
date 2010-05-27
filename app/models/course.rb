@@ -83,15 +83,15 @@ class Course < ActiveRecord::Base
   has_many :acess_key
   has_many :resources, :class_name => "CourseResource"
   belongs_to :owner , :class_name => "User" , :foreign_key => "owner"
-  has_one :price, :class_name => "CoursePrice"
   has_many :acquisitions
   has_attached_file :media
   has_many :favorites, :as => :favoritable, :dependent => :destroy
   has_many :logs, :as => :logeable, :dependent => :destroy
   has_many :annotations
   
-  
+  # tipos de aula (como subclasses) 
   has_one :interactive_class
+  has_one :page
   
   belongs_to :asset, :polymorphic => true
 
@@ -107,7 +107,7 @@ class Course < ActiveRecord::Base
   validation_group :step3, :fields=>[:price]
   
   # VALIDATIONS
-  accepts_nested_attributes_for :price
+ # accepts_nested_attributes_for :price
   accepts_nested_attributes_for :resources, 
   	:reject_if => lambda { |a| a[:media].blank? },
   	:allow_destroy => true
@@ -121,7 +121,7 @@ class Course < ActiveRecord::Base
    :less_than => 50.megabytes
   
   
-  
+=begin  nao é usado mais, preço unico
   def self.price_of_acquisition(course_id)
     @course_prices = CoursePrice.find(:all,:conditions => ["course_id = ?",course_id])
     @course_prices.each do |course_price| 
@@ -131,7 +131,7 @@ class Course < ActiveRecord::Base
     end 
     return @price
   end
-  
+=end   
   
   
   # This method is called from the controller and takes care of the converting

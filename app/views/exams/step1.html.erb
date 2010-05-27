@@ -1,0 +1,70 @@
+<div id="all_content3">
+<div id="col_content_video">
+	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">ensinar</a> > <a href="#">novo exame</a> > passo 1 </div>
+ 	<div id="title">NOVO EXAME - PASSO 1
+	
+		<% form_for :exam, @exam, :url => { :action => "create" }, :html => { :multipart => true } do |f| %>
+		
+		<%= f.error_messages %>
+	
+ 	</div>
+
+	<div id="bd">
+		<div id="bd_left" style="float: left; width: 500px;">
+		
+		<%= hidden_field_tag("step", "1", options = {})%>
+		
+		 Título: <BR> <%= f.text_field :name %>
+		 <br/><BR>
+		 Descrição: <BR><%= f.text_area :description, :size => "50x3" %>
+		 <br/><BR>
+		  Tags (separados por vírgula): <BR><%= f.text_field :tag_list %>
+		 <br/><BR>
+		  Dificuldade: <BR><%= f.select :level, options_for_select([['Iniciante', 1], ['Intermediário', 2], ['Avançado', 3]], 1) %>
+		 <br/><BR>
+		  Intruções: <BR><%= f.text_area :instruction, :size => "50x3", :class => "mceEditor" %>
+		 <br/><BR>
+		
+		
+ 		</div>
+		
+		
+		
+		<div id="bd_right" style="float: left; width: 400px;">
+		
+		<div style="margin-bottom: 20px;">
+			
+			<h3><%= radio_button_tag("exam_type", "simple", checked = true, options = {})%> Exame simples</h3>
+			Contém um conjunto de questões e o resultado é exibido ao final do exame.
+		
+		</div>
+		
+		<div style="margin-bottom: 20px;">
+			
+			<h3><%= radio_button_tag("exam_type", "formative", checked = false, :disabled => true)%> Exame formativo</h3>
+			Nessa modalidade, a resposta e justificativa são dadas após completar cada questão.
+		</div>
+		
+		<div style="margin-bottom: 20px;">
+			
+			<h3><%= radio_button_tag("exam_type", "quiz", checked = false, :disabled => true)%> Quiz</h3>
+			Esse tipo de exame possibilita exibir um resultado personalizado de acordo com a definição de um número de pontos em cada alternativa.
+		</div>
+		
+		
+ 		</div>
+ 	</div>
+	
+	<div id="fd" style="float:left; margin-left:500px; width:100%;">
+		<%= f.submit 'Próximo >' %> 
+ 	</div>
+	
+	<% end %>
+
+
+</div>
+	
+</div>
+
+
+

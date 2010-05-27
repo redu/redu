@@ -3,7 +3,7 @@
 	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">ensinar</a> > <a href="#">nova aula</a> </div>
  	<div id="title">NOVA AULA - PASSO 1
 	
-		<% form_for @course do |f| %>
+		<% form_for @course, :url => { :action => "create" }, :html => { :multipart => true } do |f| %>
 		<%= f.error_messages %>
 	
  	</div>

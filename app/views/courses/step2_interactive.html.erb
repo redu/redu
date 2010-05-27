@@ -33,7 +33,7 @@
 		
 		topicCount++;
 		
-		//reloadMce();
+		reloadMce();
 	}
 	
 	function topicTitle(textBox){
@@ -67,27 +67,12 @@
 	
 	
 
-<% form_for(@iclass) do |f| %>
-	
-	<div style="float: left; width: 40%;">
-	<p>I would like to say: </p>
-
+<% form_for @interactive_class, :url => { :action => "create" }, :html => { :multipart => true } do |f| %>
   <%= f.error_messages %>
-
-  <p>
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </p>
-  <p>
-    <%= f.label :tagline %><br />
-    <%= f.text_field :tagline %>
-  </p>
-  <p>
-    <%= f.label :description %><br />
-    <%= f.text_field :description %>
-  </p>
   
-  </div>
+  <%= hidden_field_tag("step", "2", options = {})%>
+<%= hidden_field_tag("course_type", "interactive", options = {})%>
+
   
   <div style="float: left; padding-top: 5%;">
   <p>
@@ -117,18 +102,27 @@
   </div>
   
   <div id="topic_body">
- 	<% f.fields_for :lessons do | build |%>
+			
+		<% f.fields_for :lessons do | build |%>
 		<div id="topic_body_0">
-		<%= render :partial => 'lesson_form', :locals => {:f => build} %>
+			<%= render :partial => 'courses/lesson_form', :locals => {:f => build} %>
 		</div>
-	<% end %>
-	
+		<% end %>
+
+
   </div>
   
   </div>
   
-  
+  <div style="float: left;">
+   <%= link_to '< Anterior', new_course_path(:step => '1'), :class => "button" %> 
+<%= f.submit 'Próximo >' %> 
+
+<br><%= link_to 'Cancelar', cancel_courses_path, :confirm => "Tem certeza que deseja sair do editor de aulas?" %>
+</div>
+
 <% end %>
+ 
 
 
 

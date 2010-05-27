@@ -2,7 +2,8 @@
 <div id="content_preview_exame">
 	<div id="breadcrumbs_video"><a href="<%=application_url%>">home</a> > <a href="#">aprender</a> > <%= link_to 'exames', exams_path %> > <strong><a href="#"><%= @exam.name%></a></strong></div>  
    	<div id="title_video">EXAME</div>
-	<%= render :partial => 'exams/author', :locals => {:author => @exam.owner} %>
+	
+	<%# render :partial => 'exams/author', :locals => {:author => @exam.owner} %>
 	
 	
 <!-- CABEÃ‡ALHO ############################################################################################################################### -->

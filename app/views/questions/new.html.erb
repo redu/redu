@@ -7,14 +7,14 @@
 	
     <div id="task_bar_exames">
 		
-		<%= link_to 'Voltar para Exame', new_exam_path %> 
+		<%= link_to 'Voltar para Exame', new_exam_path(:step => '2', :exam_type => @exam_type) %> 
 	
 	</div>
  
  </div>
 
 
-<%= render :partial => 'question_form' %>
+<%= render :partial => 'question_form', :locals => {:exam_type => @exam_type} %>
 
 <%= link_to_function 'Back', 'history.back();' %>
 

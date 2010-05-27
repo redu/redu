@@ -16,8 +16,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :questions, :collection => { :search => [:get, :post], :add => :get } #, :member => {:add => :get}
   
-  map.resources :exams, :member => {:add_question => :get, :add_resource => :get, :rate => :post},
-                        :collection => {:unpublished => :get, :new_exam => :get, :discard_draft => :get, :exam_history => :get, :sort => :get, :order => :get, :favorites => :get, :review_question => :get}
+  map.resources :exams, :member => {:add_question => :get, :add_resource => :get, :rate => :post},#, :remove_question => :get},
+                        :collection => {:unpublished => :get, :new_exam => :get, :cancel => :get, :exam_history => :get, :sort => :get, :order => :get, :favorites => :get, :review_question => :get}
     
   map.resources :subjects
 
