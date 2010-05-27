@@ -313,7 +313,7 @@ class SchoolsController < BaseController
     @school = School.find(params[:id])
     
     respond_to do |format|
-      if @school and @school.update_attributes(params[:school])
+      if @school.update_attributes(params[:school])
         flash[:notice] = 'A escola foi atualizada com sucesso!'
         format.html { redirect_to(@school) }
         format.xml  { head :ok }
