@@ -2,7 +2,7 @@
   
   before_filter :login_required, :except => [:index]
   
-  uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit])
+  uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit, :create])
   
   def favorites
     
@@ -362,7 +362,10 @@ def create
           
          elsif params[:sbt_opt] == "4" # edit question
           @exam.update_attributes(params[:exam])
-          redirect_to :controller => :resources, :action => :add, :exam_type => params[:exam_type]
+          @exam_type = params[:exam_type]
+          @question = Question.find(params[:opt_param])
+          render "edit_question"
+         # redirect_to :action => :edit_question, :exam_type => params[:exam_type]
         
           
         end
@@ -624,31 +627,6 @@ end
   end
 end
 
-
-
-
-def update_question
-    
-   # session[:exam_draft].questions.delete(Question.find(params[:id])) # TODO manter sincronizado, vale  a pena?
-    
-        if session[:exam_id]
-          @exam = Exam.find(session[:exam_id])
-          @exam.questions.delete(Question.find(params[:qid]))
-          # @exam.update_attribute(:questions, @exam.questions)
-        end
-
-    respond_to do |format|
-
-      format.js do
-        render :update do |page|
-          page.remove "question_" + params[:qid]
-          flash[:notice] = "Questão removida do exame"
-          page.reload_flash
-          # page.remove "question_#{@question.id}"  
-        end    
-      end
-  end
-end
 
      
   def add_resource

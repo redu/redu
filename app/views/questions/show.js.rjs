@@ -1,0 +1,7 @@
+#page.select("#explanation_#{@question.id.to_s}").invoke('hide')
+
+page << "document.getElementById('thebug_#{@question.id.to_s}').style.display = 'none';"
+
+page.replace_html  'full_' + @question.id.to_s, :partial => 'questions/show_list', :locals => {:question => @question}  
+          
+page << "Effect.SlideDown('full_#{@question.id.to_s}');"

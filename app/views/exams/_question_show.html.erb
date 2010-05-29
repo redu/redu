@@ -38,7 +38,7 @@
 </p>
 
 
-<%= link_to 'Editar', edit_question_path(question) %> |
+<%= link_to_function 'Editar', 'saveDraft(4, ' + question.id.to_s + ' )' %> |
 
 <span id="remove_link_<%=question.id.to_s%>">
 <%= link_to_remote 'Remover do Exame', :url => { :controller => :exams, :action => :remove_question, :id => exam.id, :qid => question.id }, 

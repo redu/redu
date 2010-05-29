@@ -184,6 +184,9 @@
 		 
 		 <br>
 		 
+		 
+		 
+		 
 		Alternativas: <br>
 		<div id="alternatives">
 			<!-- table?? -->
@@ -216,6 +219,8 @@
 				<% end %>
 			<% end %>
 		</div>
+		
+		
 		<BR>
 		<!-- <a href="#" id="add_alternative_link" onclick="newQuestion();">new question (temp)</a> -->
 		<a href="#" id="add_alternative_link" onclick="addAlternative(); return false;">Adicionar alternativa (max. 7)</a>
@@ -223,7 +228,9 @@
 		Justificativa da resposta (tirar o tiny?):
 		<%= f.text_area :justification, :rows =>2, :cols => 50, :class => "mceEditor" %>
 		<hr>
+		<% if not edit %>
 		<%= f.check_box :public, :options => {:checked => true} %> Pública?
+		<% end %>
 		<BR>
 		<BR>
 		Categoria <%= image_tag("spinner.gif",
@@ -234,8 +241,8 @@
 		
 		<%= select_tag(:category1, '<option value="-1">-- Selecione uma categoria --</option>' + options_from_collection_for_select((Skill.all(:conditions => "parent_id IS NULL")), :id, :name), :size => 5, :onchange => "selectCategory(this, 1);", :style => "width: 200px;") %> 
 		<%= select_tag(:category2, '<option value="-1">-- Sem subcategorias ainda --</option>', :size => 5, :onchange => "selectCategory(this, 2);", :style => "width: 200px;") %> 
-		<%= f.select(:skill_id, '<option value="-1">-- Sem subcategorias ainda --</option>', {}, :size => 5, :onchange => "selectCategory(this, 3);", :style => "width: 200px;") %> 
-		<BR>
+		<%= f.select(:category, '<option value="-1">-- Sem subcategorias ainda --</option>', {}, :size => 5, :onchange => "selectCategory(this, 3);", :style => "width: 200px;") %> 
+		<BR><br>
 		<p>
 		    <%= f.submit 'Salvar' %>
 		  </p>

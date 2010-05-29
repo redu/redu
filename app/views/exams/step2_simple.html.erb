@@ -1,9 +1,13 @@
  <script>
- 	function saveDraft(opt){
-		
+ 	function saveDraft(opt, opt_param){
         var theform = document.getElementById('exam_form');
 		var theattribute = document.getElementById('sbt_opt');
 		
+		// Atributo opcional (usado para passar o id da questão para editar)
+		if (opt_param) {
+			var theoptattribute = document.getElementById('opt_param');
+			theoptattribute.value = opt_param;
+		}
 		theattribute.value = opt;
 		theform.submit();
     }
@@ -11,7 +15,7 @@
 	function publishExam() {
 		var confirm_msg = "Uma vez publicado, o exame não poderá ser editado nem removido. Deseja continuar?";
 		if (confirm(confirm_msg)) {
-			saveDraft(4);
+			saveDraft(5);
 		} 
 		
 	}
@@ -20,11 +24,11 @@
  
 <div id="all_content3">
 <div id="col_content">
-	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">aprender</a> > <a href="#">exames</a> </div>
+	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">ensinar</a> > <a href="#">exames</a> > novo exame </div>
    	
  <% form_for :exam, @exam, :url => { :action => "create" },  :html => {:id => 'exam_form'} do |f| %>
  
- <div id="title">NOVO EXAME
+ <div id="title">NOVO EXAME - PASSO 2
   <%= f.error_messages %>
 	
     <div id="task_bar_exames">
@@ -41,6 +45,7 @@
   <%= hidden_field_tag("step", "2", options = {})%>
   <%= hidden_field_tag("exam_type", "simple", options = {})%>
   <%= hidden_field_tag('sbt_opt', 0) %>
+  <%= hidden_field_tag('opt_param', 0) %>
   <%= f.hidden_field(:id, :value => @exam.id) %>
  
  <BR><hr><BR>

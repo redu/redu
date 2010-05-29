@@ -1,0 +1,83 @@
+
+
+
+<%= hidden_field_tag("exam_type", exam_type, options = {})%>
+
+
+	<div id="popup_content" style="padding: 8px 5px 8px 5px">
+	  
+	  <!-- isso aqui poderia ser um render partial? -->
+	  <div id="question">
+	  	<label>Enunciado: </label><BR>
+		
+		<%= f.text_area :statement, :size => "60x12", :class => "mceEditor" %>
+ 
+ 			<!--
+		:onKeyDown => "textCounter(this,'st_chars_left',400);",
+		:onKeyUp => "textCounter(this,'st_chars_left',400);" --> 
+		<!-- f.tinymce :statement -->
+		 
+		 <br>
+		 
+		Alternativas: <br>
+		<div id="alternatives">
+			<!-- table?? -->
+			<% if @question.alternatives && @question.alternatives.length > 0%> 
+			
+				<% @question.alternatives.each do |alternative| %>
+					<% a_index = @question.alternatives.index(alternative) %>
+					
+					<div id="alternative">
+						<span id = "alt_letter_<%= a_index %>"><script>alphabet[1]</script></span>
+						<% if @question.answer_id == alternative.id %>
+							<%= radio_button_tag("answer", a_index, true) %> 
+					    <% else %>
+							<%= radio_button_tag("answer", a_index, false) %> 
+						<% end %>
+						
+						<%= text_field_tag 'alternative[statement][]', alternative.statement, {:tabindex => a_index + 1}   %>
+						(<a href="#" onclick="removeAlternative(this)">remove</a>)
+					
+					</div>
+				<% end %>
+			<% else %>
+				<% for a_index in 0..4 %>
+					<div id="alternative">
+						<span id = "alt_letter_<%= a_index %>"><script>alphabet[1]</script></span>
+						<%= radio_button_tag("answer", a_index, false) %>	
+						<%= text_field_tag 'alternative[statement][]', nil, {:tabindex => a_index + 1}  %>
+						(<a href="#" onclick="removeAlternative(this); return false;">remove</a>)
+					</div>
+				<% end %>
+			<% end %>
+		</div>
+		<BR>
+		<!-- <a href="#" id="add_alternative_link" onclick="newQuestion();">new question (temp)</a> -->
+		<a href="#" id="add_alternative_link" onclick="addAlternative(); return false;">Adicionar alternativa (max. 7)</a>
+		<hr>
+		Justificativa da resposta (tirar o tiny?):
+		<%= f.text_area :justification, :rows =>2, :cols => 50, :class => "mceEditor" %>
+		<hr>
+		<%= f.check_box :public, :options => {:checked => true} %> Pública?
+		<BR>
+		<BR>
+		Categoria <%= image_tag("spinner.gif",
+              :align => "absmiddle",
+              :border => 0,
+              :id => "spinner",
+              :style =>"display: none;" ) %><BR>
+		
+		<%= select_tag(:category1, '<option value="-1">-- Selecione uma categoria --</option>' + options_from_collection_for_select((Skill.all(:conditions => "parent_id IS NULL")), :id, :name), :size => 5, :onchange => "selectCategory(this, 1);", :style => "width: 200px;") %> 
+		<%= select_tag(:category2, '<option value="-1">-- Sem subcategorias ainda --</option>', :size => 5, :onchange => "selectCategory(this, 2);", :style => "width: 200px;") %> 
+		<%= f.select(:skill_id, '<option value="-1">-- Sem subcategorias ainda --</option>', {}, :size => 5, :onchange => "selectCategory(this, 3);", :style => "width: 200px;") %> 
+		<BR>
+		<p>
+		    <%= f.submit 'Salvar' %>
+		  </p>
+  	  </div>
+	  
+  	</div>  
+
+
+  
+

@@ -7,7 +7,12 @@ class QuestionsController < BaseController
   def add
     @exam_type = params[:exam_type]
     
-    @questions = Question.all(:conditions => ['public = ?', 1])
+   # @questions = Question.all(:conditions => ['public = ?', 1])
+    
+    @questions = Question.paginate(:all,      :conditions => ['public = ?', true],
+    :page => params[:page], :order => 'created_at DESC', :per_page => 10)
+    
+    
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @questions }
@@ -59,19 +64,30 @@ class QuestionsController < BaseController
     end
   end
 
+  def show
+    
+    @question = Question.find(params[:id].to_i)
+    
+    
+     respond_to do |format|
+        format.js
+    end
+  end
+
   # GET /questions/1
   # GET /questions/1.xml
+=begin
   def show
     @question = Question.find(params[:id])
 
     render :show , :layout => false
-=begin
+
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @question }
     end
+end
 =end
-  end
 
   # GET /questions/new
   # GET /questions/new.xml
@@ -191,7 +207,7 @@ class QuestionsController < BaseController
         
          flash[:notice] = 'A questão foi atualizada com sucesso!'
         format.html { #redirect_to(@question) 
-          redirect_to :controller => :exams, :action => :new
+          redirect_to :controller => :exams, :action => :new, :step => '2', :exam_type => params[:exam_type] 
         }
         format.xml  { render :xml => @question, :status => :created, :location => @question }
         

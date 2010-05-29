@@ -4,7 +4,6 @@ require 'md5'
 module BaseHelper
   
   
-  
   def activity_name(item)
     link_user = link_to item.user.display_name, user_path(item.user)
     type = item.logeable_type.underscore

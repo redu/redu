@@ -60,7 +60,6 @@
 		}
 		
 	}
-	
 	function removeField(link){
 		jQuery(link).parent("fieldset:first").hide()
 		jQuery(link).siblings("input[type=hidden]:first").val("1")
@@ -72,6 +71,7 @@
 		jQuery(link).before("<fieldset>" + content.replace(regexp, new_id) + "</fieldset>");
 	}
 
+	
 </script>
 <fieldset>
 	<legend>Material Complementar</legend>
