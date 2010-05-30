@@ -21,7 +21,7 @@ development:
   database: reduec2
   pool: 5
   username: root
-  password: 241101
+  password: 
   host: localhost
   
   
