@@ -94,7 +94,7 @@ end
   def new
     
     @exam_type = params[:exam_type]
-    
+    @edit = false
     @question = Question.new
 
     respond_to do |format|

@@ -20,7 +20,11 @@ module BaseHelper
           @activity = link_user + " adicionou a aula " + link_obj + " ao seus favoritos" if item.action == "favorite"         
 
         when 'resource'
+          if item and item.logeable_id
           link_obj = link_to(item.logeable_name, resource_path(item.logeable_id))
+        else
+          link_obj = item.logeable_name
+          end
           
           @activity = link_user + " disponibilizou o material " + link_obj if item.action == "create" 
           @activity = link_user + " adicionou o material " + link_obj + " ao seus favoritos" if item.action == "favorite"

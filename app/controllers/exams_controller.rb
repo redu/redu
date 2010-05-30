@@ -540,7 +540,7 @@ end
   def new_question
     
     #save_draft :id => params[:id], :exam => params[:exam], :hide => true
-    
+    @edit = false
     redirect_to :controller => :questions, :action => :new #, :exam_id => params[:id]
   end
   
