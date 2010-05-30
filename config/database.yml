@@ -18,7 +18,7 @@ development:
   adapter: mysql
   encoding: utf8
   reconnect: false
-  database: redu_teste
+  database: reduec2
   pool: 5
   username: root
   password: 
@@ -47,8 +47,8 @@ production:
   adapter: mysql
   encoding: utf8
   reconnect: false
-  database: redu_teste
+  database: redu
   pool: 5
   username: root
-  password: 
+  password: sociallearning
   host: localhost
