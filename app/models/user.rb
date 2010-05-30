@@ -281,6 +281,7 @@ class User < ActiveRecord::Base
   def has_access_to_course(course)
     #TODO
     @acq = Acquisition.find(:first, :conditions => ['acquired_by_id = ? AND course_id = ?', self.id, course.id])
+    !@acq.nil? or course.owner == self
   end
   
   def moderator_of?(forum)
@@ -604,9 +605,9 @@ class User < ActiveRecord::Base
   end
   
   def has_credits_for_course(course)
-    @course_price = CoursePrice.find(:first, :conditions => ['course_id = ?', course.id]).price.to_f
+    # @course_price = CoursePrice.find(:first, :conditions => ['course_id = ?', course.id]).price.to_f
     @user_credit = Credit.total(self.id).to_f - Acquisition.total(self.id).to_f
-    (@user_credit >= @course_price)
+    (@user_credit >= course.price)
   end
   
 
