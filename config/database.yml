@@ -21,7 +21,7 @@ development:
   database: reduec2
   pool: 5
   username: root
-  password: 
+  password: 241101
   host: localhost
   
   
@@ -50,5 +50,5 @@ production:
   database: redu
   pool: 5
   username: root
-  password: sociallearning
+  password: 
   host: localhost
