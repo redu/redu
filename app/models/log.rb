@@ -5,18 +5,13 @@ class Log < ActiveRecord::Base
   belongs_to :logeable, :polymorphic => true
 
   
-  def self.log_activity(log_object, action, user)
-    
+  def self.log_activity(log_object, action, user, school)
+
     if user and user.my_activity.eql?(true)
     
     if log_object.instance_of?(Course)
       
-      # necessário replicar a linha seguinte para cada tipo, pois as acoes reflexivas sao diferentes.
-      Log.create(:logeable_type => log_object.class.to_s,
-        :action => action,
-        :user_id => log_object.owner.id,
-        :logeable_name => log_object.name,
-        :logeable_id => log_object.id)
+      create_logs(log_object, action, user, school)
         
       case action
         when 'create'
@@ -29,11 +24,7 @@ class Log < ActiveRecord::Base
       
     elsif log_object.instance_of?(Resource)
        
-       Log.create(:logeable_type => log_object.class.to_s,
-        :action => action,
-        :user_id => log_object.owner.id,
-        :logeable_name => log_object.name,
-        :logeable_id => log_object.id)
+      create_logs(log_object, action, user, school)
       
       case action
         when 'create'
@@ -44,21 +35,13 @@ class Log < ActiveRecord::Base
       
       elsif log_object.instance_of?(Favorite)
        
-       Log.create(:logeable_type => log_object.favoritable.class.to_s,
-        :action => action,
-        :user_id => log_object.user.id,
-        :logeable_name => log_object.favoritable.name,
-        :logeable_id => log_object.favoritable.id)
+      create_logs(log_object, action, user, school)
       
       ## POINTS TO Favorites
       
       elsif log_object.instance_of?(Exam)
        
-       Log.create(:logeable_type => log_object.class.to_s,
-        :action => action,
-        :user_id => log_object.owner.id,
-        :logeable_name => log_object.name,
-        :logeable_id => log_object.id)
+      create_logs(log_object, action, user, school)
       
       case action
         when 'create'
@@ -73,13 +56,30 @@ class Log < ActiveRecord::Base
       
       elsif log_object.instance_of?(User)
        
-       Log.create(:logeable_type => log_object.class.to_s,
-        :action => action,
-        :user_id => log_object.id,
-        :logeable_name => log_object.login,
-        :logeable_id => log_object.id)
-      
     end
     end
   end
+  
+  def self.create_logs(log_object, action, user, school)
+    if school
+        # necessário replicar a linha seguinte para cada tipo, pois as acoes reflexivas sao diferentes.
+        Log.create(:logeable_type => log_object.class.to_s,
+          :action => action,
+          :user_id => user.id,
+          :logeable_name => log_object.name,
+          :logeable_id => log_object.id,
+          :school_id => school.id)
+        else
+          Log.create(:logeable_type => log_object.class.to_s,
+          :action => action,
+          :user_id => user.id,
+          :logeable_name => log_object.name,
+          :logeable_id => log_object.id,
+          :school_id => 0)
+      end
+  end
+  
 end
+
+
+
