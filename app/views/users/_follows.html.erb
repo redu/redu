@@ -15,8 +15,17 @@
 				</span>
 			</td>
 		</tr>
+		<div>
+			Exames:
+			<%= render :partial => 'logs/item_user', :collection => person.recent_exams_activity, :as => :item %>
+		</div>
+		<div>
+			Aulas:
+			<%= render :partial => 'logs/item_user', :collection => person.recent_courses_activity, :as => :item %>
+		</div>	
 		<% end %>
 	</table>
 	<%= link_to 'Ver mais',  follows_user_path(@user) %> <br/>
 	<%= link_to 'Ver seguidores',  followers_user_path(@user) %>
-</div>				
+</div>			
+
