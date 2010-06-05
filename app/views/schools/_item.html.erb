@@ -49,4 +49,16 @@
 					</div>
 					-->          
     	</div>
+		
+	<div>
+			<div>
+				Exames:
+				<%= render :partial => 'logs/item_user', :collection => school.recent_school_exams_activity, :as => :item %>
+			</div>
+			<div>
+				Aulas:
+				<%= render :partial => 'logs/item_user', :collection => school.recent_school_courses_activity, :as => :item %>
+			</div>
+			
+	</div>
 

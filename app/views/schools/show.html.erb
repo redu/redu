@@ -152,14 +152,12 @@
 	<a href="#" class="share" onclick="toggleBox('flow_container');return false;">Novo fluxo</a> | Filtrar
 	
 	<%= render :partial => 'shared/flow' %>
-
-
-
-
-
-
-
-<%= render :partial => 'logs/item_user', :collection => current_user.recent_activity, :as => :item %>
+	
+	<% if @school %>
+		<%= render :partial => 'logs/item_user', :collection => @school.recent_school_activity, :as => :item %>
+	<% else %>
+		Ainda não há movimentação da rede.
+	<% end %>
 
 
 <div id="link_ver_todos"><a href="#">Ver todos(8) &gt;</a></div>
