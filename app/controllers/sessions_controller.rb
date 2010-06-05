@@ -26,7 +26,7 @@ class SessionsController < BaseController
       #redirect_to dashboard_user_path(current_user)
       redirect_to application_url
       flash[:notice] = :thanks_youre_now_logged_in.l
-      Log.log_activity(@user, 'login', @user)
+      Log.log_activity(@user, 'login', @user, @school)
       
     else
 			if current_user && !current_user.active?

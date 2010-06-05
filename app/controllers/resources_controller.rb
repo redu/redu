@@ -136,7 +136,7 @@ class ResourcesController < BaseController
   def show
     @resource = Resource.find(params[:id])
     
-    Log.log_activity(@resource, 'show', current_user)
+    Log.log_activity(@resource, 'show', current_user, @school)
     
     respond_to do |format|
       format.html # show.html.erb
@@ -161,12 +161,12 @@ class ResourcesController < BaseController
     @resource = Resource.new(params[:resource])
     @resource.owner = current_user
     
-    Log.log_activity(@resource, 'create', current_user)
+    Log.log_activity(@resource, 'create', current_user, @school)
     
     respond_to do |format|
       if @resource.save
         
-        Log.log_activity(@resource, 'create', current_user)
+        Log.log_activity(@resource, 'create', current_user, @school)
         
         flash[:notice] = 'O material foi criado com sucesso!'
         format.html { 

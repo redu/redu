@@ -47,8 +47,10 @@
       reset_session
       
       @exam = Exam.find(params[:id])
-      
-       Log.log_activity(@exam, 'answer', current_user)
+      # Só para efeitos de teste. O objeto school vai ser passado na criação das aulas quando estiver
+      # dentro de uma rede.
+      #@school = School.find(:first, :conditions => ["owner = ?", current_user.id])
+       Log.log_activity(@exam, 'answer', current_user, @school)
      
       
     end
@@ -803,7 +805,7 @@ def search
   def show
     @exam = Exam.find(params[:id])
     
-    Log.log_activity(@exam, 'create', current_user)
+    Log.log_activity(@exam, 'create', current_user, @school)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -853,7 +855,7 @@ def search
   def update
     @exam = Exam.find(params[:id])
 
-    Log.log_activity(@exam, 'create', @exam.owner)
+    Log.log_activity(@exam, 'create', @exam.owner, @school)
     
     respond_to do |format|
       if @exam.update_attributes(params[:exam])

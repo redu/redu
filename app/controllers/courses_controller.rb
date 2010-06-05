@@ -136,7 +136,7 @@ class CoursesController < BaseController
       # atualiza número de exibições TODO cache
       @course.update_attribute(:view_count, @course.view_count + 1) #TODO performance
       
-      Log.log_activity(@course, 'show', current_user)#TODO se usuario nao comprou não logar atividade
+      Log.log_activity(@course, 'show', current_user, @school)#TODO se usuario nao comprou não logar atividade
 
       respond_to do |format|
         format.html # show.html.erb
@@ -359,7 +359,7 @@ end
   def update
     @course = Course.find(params[:id])
     
-     Log.log_activity(@course, 'update', @course.owner)
+     Log.log_activity(@course, 'update', @course.owner, @school)
     
     respond_to do |format|
       if @course.update_attributes(params[:course])
@@ -424,7 +424,11 @@ end
     @course = Course.find(params[:id])
     @course.approve!
     
-    Log.log_activity(@course, 'create', @course.owner)
+    # Só para efeitos de teste. O objeto school vai ser passado na criação das aulas quando estiver
+    # dentro de uma rede.
+    #@school = School.find(:first, :conditions => ["owner = ?", current_user.id])
+    
+    Log.log_activity(@course, 'create', @course.owner, @school)
     
     flash[:notice] = 'A aula foi aprovada!'
     redirect_to pending_courses_path
