@@ -20,9 +20,9 @@ class Exam < ActiveRecord::Base
   # :counter_cache => true para ter uma coluna que conta o numero
   
   #validations
-  validates_length_of :name, :within => 6..40, :too_long => "Por favor escolha um título menor que 20 caracteres", :too_short => "Por favor escolha um título maior que 6 caracteres"
+  validates_length_of :name, :within => 6..40, :too_long => ": Por favor escolha um título menor que 20 caracteres.", :too_short => ": Por favor escolha um título maior que 6 caracteres."
   #validates_associated :questions 
-  validates_length_of :questions, :allow_nil => false, :within => 1..100, :too_long => "O exame contém {{count}} questões. O máximo de questões permitido é 100", :too_short => "Um exame deve conter ao menos uma questão"
+  validates_length_of :questions, :allow_nil => false, :within => 1..100, :too_long => "O exame contém {{count}} questões. O máximo de questões permitido é 100", :too_short => ": Um exame deve conter ao menos uma questão."
   
   validation_group :step1, :fields=>[:name, :description]
   validation_group :step2, :fields=>[:questions]
