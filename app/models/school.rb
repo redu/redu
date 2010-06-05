@@ -57,5 +57,17 @@ class School < ActiveRecord::Base
     end
   end
   
+  def recent_school_activity
+    Log.find(:all, :conditions => ["school_id = ?", self.id], :order => "created_at DESC", :limit => 10)
+  end
+  
+  def recent_school_exams_activity
+    Log.find(:all, :conditions => ["school_id = ? AND logeable_type = ?", self.id, "Exam" ], :order => "created_at DESC", :limit => 3)
+  end
+  
+  def recent_school_courses_activity
+    Log.find(:all, :conditions => ["school_id = ? AND logeable_type = ?", self.id, "Course"], :order => "created_at DESC", :limit => 3)
+  end
+  
   
 end

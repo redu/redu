@@ -564,6 +564,14 @@ class User < ActiveRecord::Base
     Log.find(:all, :conditions => ["user_id = ?", self.id], :order => "created_at DESC", :limit => 10)
   end
   
+  def recent_exams_activity
+    Log.find(:all, :conditions => ["user_id = ? AND logeable_type = ?", self.id, "Exam"], :order => "created_at DESC", :limit => 3)
+  end
+  
+   def recent_courses_activity
+    Log.find(:all, :conditions => ["user_id = ? AND logeable_type = ?", self.id, "Course"], :order => "created_at DESC", :limit => 3)
+  end
+  
   def log_activity
     # a maneira correta de se fazer isso é via consulta no sql pois é muito mais rapido pq nao precisa ficar iterando
     
