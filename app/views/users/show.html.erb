@@ -26,9 +26,8 @@
 <!-- END -->
 
 <!-- BOX MINHAS REDES  -->
-<% owner = params[:owner] %>
-<% @schools = School.find(:all, :conditions => ["owner= ?", @user.id] )%>
-<%= render :partial => "users/my_schools", :locals => {:user => @user}%>
+<% @schools = @user.schools %>
+<%= render :partial => "users/my_schools", :locals => {:user => @user, :schools => @schools}%>
 <!-- END -->
 
 
