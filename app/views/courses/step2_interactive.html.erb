@@ -16,31 +16,56 @@
 		var new_id = new Date().getTime();
 		var regexp = new RegExp("new_" + association, "g");
 
+		// BODY
+		//jQuery('topic_body').append("<div id='topic_body_" + topicCount + "'>" + content.replace(regexp, new_id) + "</div>");  // pq nao pega????
 		
-		// adiciona o novo item ao body
-		//$('topic_body').append("<div id='topic_body_" + topicCount + "'>" + content.replace(regexp, new_id) + "</div>");  // pq nao pega????
-		document.getElementById('topic_body').innerHTML += "<div id='topic_body_" + topicCount + "' style='display: none;'>" + content.replace(regexp, new_id) + "</div>";
+		var topicBody = document.createElement("div");
+		topicBody.innerHTML = content.replace(regexp, new_id);
+		topicBody.setAttribute("id", "topic_body_" + topicCount);
+		
+		document.getElementById('topic_body').appendChild(topicBody);
+		
+		// INDEX
+		
+		var topicItem =	document.createElement("a");
+		topicItem.innerHTML = "<span id=\"topic_name_" + topicCount + "\"> Sem título</span> <img src=\"../../images/icons/trash.gif\">";
+		topicItem.setAttribute("href", "#");
+		topicItem.setAttribute("id", "topic_item_" + topicCount);
+		topicItem.setAttribute("class", "topic_item");
+		topicItem.setAttribute("onclick", "selectTopic("+topicCount+");");
 		
 		
-		var topicItem =	"<a href=\"#\" id=\"topic_item_" + topicCount + "\" class=\"topic_item\" onclick=\"selectTopic("+topicCount+");\">" +
-	  		"<span id=\"topic_name_" + topicCount + "\"> Sem título</span> <img src=\"../../images/icons/trash.gif\">"  +
-		    "</a>";
+		//var topicItem =	"<a href=\"#\" id=\"topic_item_" + topicCount + "\" class=\"topic_item\" onclick=\"selectTopic("+topicCount+");\">" +
+	  	//	"<span id=\"topic_name_" + topicCount + "\"> Sem título</span> <img src=\"../../images/icons/trash.gif\">"  +
+		//    "</a>";
 		
-		//$('topic_list').append(topicItem);  // pq nao pega????
-		document.getElementById('topic_list').innerHTML += topicItem;
+		document.getElementById('topic_list').appendChild(topicItem);
 		
 		selectTopic(topicCount);
 		
 		topicCount++;
+			
+		removeAllMce();
 		
 		reloadMce();
 	}
+	
+    function removeAllMce(){
+        var i, t = tinyMCE.editors;
+        for (i in t) {
+            if (t.hasOwnProperty(i)) {
+					t[i].remove();
+            }
+        }
+        
+    }
 	
 	function topicTitle(textBox){
 		document.getElementById('topic_name_'+ currentTopic).innerHTML = textBox.value;
 	}
 	
 	function selectTopic(topic){
+		//alert('topic: '+topic + ' | current: '+ currentTopic);
 		document.getElementById('topic_item_'+ currentTopic).className = "topic_item";
 		document.getElementById('topic_item_'+ topic).className += " topic_item_sel";
 		
@@ -48,6 +73,20 @@
 		document.getElementById('topic_body_'+ topic).style.display = "block";
 		
 		currentTopic = topic;
+	}
+	
+	function newTopic(){
+		var field = document.getElementById('f2');
+		
+		var textarea = document.createElement("textarea");
+		textarea.setAttribute("rows","15");
+		textarea.setAttribute("cols","80");
+		textarea.setAttribute("id","elm" + ctn);
+		
+		
+		
+		field.appendChild(textarea);
+		reloadMce();
 	}
 	
 	function reloadMce(){
@@ -71,7 +110,7 @@
   <%= f.error_messages %>
   
   <%= hidden_field_tag("step", "2", options = {})%>
-<%= hidden_field_tag("course_type", "interactive", options = {})%>
+<%# hidden_field_tag("course_type", "interactive", options = {})%>
 
   
   <div style="float: left; padding-top: 5%;">
@@ -89,6 +128,7 @@
   	Novo tópico:
 	 
 	 <%= link_to_add_lesson((image_tag 'icons/iclass.gif', :title => "Texto interativo"), f, :lessons) %>
+	 <%# link_to_function((image_tag 'icons/iclass.gif', :title => "Texto interativo"), "newTopic()") %>
 	<%= image_tag 'icons/exam.gif', :title => "Exame" %>
 	<%= image_tag 'icons/seminar.gif', :title => "Seminário" %>
 	<%= image_tag 'icons/discussion.png', :title => "Discussão" %>

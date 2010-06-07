@@ -32,20 +32,20 @@
 		
 		<div style="margin-bottom: 20px;">
 			
-			<h3><%= radio_button_tag("course_type", "seminar", checked = true, options = {})%> Seminário</h3>
+			<h3><%= f.radio_button(:course_type, "seminar", :checked => true)%> Seminário</h3>
 			Seminário é um vídeo- ou áudio-aula acompanhado de documentos para download.
 		
 		</div>
 		
 		<div style="margin-bottom: 20px;">
 			
-			<h3><%= radio_button_tag("course_type", "interactive", checked = false, options = {})%> Aula Interativa</h3>
+			<h3><%= f.radio_button(:course_type, "interactive", :checked => false)%> Aula Interativa</h3>
 			Uma aula interativa pode possuir várias páginas com recursos interativos tais como vídeos, texto, questões e exames.
 		</div>
 		
 		<div style="margin-bottom: 20px;">
 			
-			<h3><%= radio_button_tag("course_type", "page", checked = false, options = {})%> Página simples</h3>
+			<h3><%= f.radio_button(:course_type, "page", :checked => false)%> Página simples</h3>
 			Uma página permite a postagem de conteúdo de leitura rápida ou um recurso interativo, como o flash.
 		</div>
 		

@@ -1,0 +1,33 @@
+
+#mostra nova questão
+page.replace_html 'question_box', :partial => 'exams/question_answer', :locals => {:question => @step}  
+  
+#esconde a imagem do loading e mostra o navegador novamente
+page << "hideLoading();"
+
+# highlight a questão atual no índice de questoes
+page << "selectId(#{@step.id});"
+page << "deselectId(#{@prev_step.id});"
+
+# se respondeu a questão marca como respondida
+if @theanswer and @prev_step
+  page << "strikeId(#{@prev_step.id});"
+end
+
+# caso nao tenha uma proxima questão, muda "proximo" para "finalizar" submete o formulario SEM AJAX
+if @has_next
+  #TODO submeter form em ajax
+  page << "document.getElementById('submit_answer_btn').value = 'Próximo';"
+else
+  page << "document.getElementById('form_answer').onsubmit = submitChrono();"
+  page << "document.getElementById('submit_answer_btn').value = 'Finalizar';"
+ 
+end
+
+# caso nao tenha questão anterior, desabilita o botao "anterior"
+if @has_prev
+  page << "document.getElementById('prev_answer_btn').disabled = false;"
+else
+  page << "document.getElementById('prev_answer_btn').disabled = true;"
+end
+

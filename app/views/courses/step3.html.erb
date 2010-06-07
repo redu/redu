@@ -28,7 +28,7 @@
 		<%= f.text_field :price %>
 </fieldset>
 
-<%= link_to '< Anterior', new_course_path(:step => '2', :course_type => @course_type), :class => "button" %> 
+<%= link_to '< Anterior', new_course_path(:step => '2'), :class => "button" %> 
 <%= f.submit 'Salvar' %> 
 <%= link_to 'Cancelar', cancel_courses_path, :confirm => "Tem certeza que deseja sair do editor de aulas?" %>
 

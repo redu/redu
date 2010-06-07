@@ -1,0 +1,23 @@
+   
+
+<div id="title_questions" align="left">Questão <%= session[:question_index] %>.</div>     
+<div id="texto_instrucoes">
+	<%= question.statement %>
+</div>
+
+   <%= hidden_field_tag(:id, session[:exam].id) %>
+   
+   <BR>
+   
+   <div id="all_respostas">
+    <% for alternative in question.alternatives %>
+	
+      <%= radio_button_tag("answer", alternative.id, checked = false) %>
+        <%= alternative.statement %><BR>
+	
+	<% end %>
+	
+	</div>
+	
+	
+	

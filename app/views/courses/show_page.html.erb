@@ -1,0 +1,271 @@
+<script>
+	/*
+	function toggleAnnotationBox(){
+		
+		var box = document.getElementById("annotation_box");
+		
+		if (box.style.display == 'none') {
+			//Effect.Appear(box);
+			box.style.display = 'block';
+			
+		} else {
+			//Effect.Fade(box);
+			box.style.display = 'none';
+		}
+		
+	}
+	*/
+		
+	jQuery(document).ready(function(){
+		jQuery("a.lights_on").click(
+			function(e){
+				jQuery("#lights-dimmed").fadeOut("slow");
+				jQuery(this).toggle();
+				jQuery("a.lights_off").toggle();
+				
+				e.preventDefault();
+			}
+		)
+		
+		jQuery("a.lights_off").click(
+			function(e){
+				jQuery("#lights-dimmed").fadeIn("fast");
+				jQuery(this).toggle();
+				jQuery("a.lights_on").toggle();
+				
+				e.preventDefault();
+			}
+		)
+		
+		jQuery("#annotation_link").click(
+			function(e){
+				jQuery("#annotation_box").slideDown("fast");
+				e.preventDefault();
+			}
+		)
+		
+		jQuery("#annotation_menu a").click(function(e){
+			jQuery("#annotation_box").slideUp("slow");
+			e.preventDefault();
+			
+		})
+		
+	})
+		
+		
+</script>
+<div id="lights-dimmed" style="display:none; height: 100%;">&nbsp;</div>
+
+<div id="all_content3">
+    <div id="col_content_video">
+        <div id="breadcrumbs_video">
+        	
+            <a href="<%=application_url%>">home</a>
+            > <a href="#">aprender</a>
+            > <a href="#">aulas</a>
+        </div>
+        <div id="item_video" class="clearfix">
+            <div id="title_video">
+                <%= @course.name %>
+				<% if @course.can_be_deleted_by(current_user) %>
+                	<%= link_to 'Editar', {:action => "edit"}, :class => "button icon-edit" %>
+					<%= link_to 'Remover', @course, {:confirm => 'Você tem certeza que quer remover esta aula permanentemente?', :method => :delete, :class => "button icon-delete"} %>
+				<% end %>	
+				<% if current_user and not current_user.has_access_to_course(@course) and not @course.external_resource_type.eql?('youtube') %>
+					<%= link_to "Comprar", { :action => :buy, :id => @course.id }, :class => "button icon-buy"%>
+				<% end %>
+				
+				
+                <% if current_user.admin? and @course.state.eql?("waiting") %>
+	                <%= link_to 'Aprovar' , {:action => "approve", :id => @course.id} %> |
+	                <%= link_to 'Rejeitar' , {:action => "disapprove", :id => @course.id} %>
+                <% end %>
+            </div>
+            <!--	<div id="title_video"><a href="#">História - Revolução Francesa</a></div>    -->
+            <!--<div id="edit_admin">
+				
+            </div>-->
+            <div id="identification1">
+                <ul id="identification_resource1">
+                    <li>
+                        <%= link_to @course.owner.display_name, user_path(@course.owner) %>
+                    </li>
+                    <li>
+                        |
+                    </li>
+                    <li>
+                        <%= time_ago_in_words @course.created_at %>
+                    </li>
+                    <li>
+                        |
+                    </li>
+                    <li>
+                        Exibições(<%= @course.view_count %>)
+                    </li>
+                </ul>
+            </div>
+            <div id="description_video">
+                <%= @course.description %>
+            </div>
+            <div id="identification1">
+                <ul id="identification_resource1">
+                    <li>
+                        <strong>Categoria:</strong>
+                        Português
+                    </li>
+                    <li>
+                        |
+                    </li>
+                    <li>
+                        <strong>Tags:</strong>
+                        <%= @course.tag_list %>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+		<div id="page_container" align="center" >
+			
+			<h3><%= @course.name %></h3>
+			
+        	<!-- colocar if aqui -->
+			<%= @course.page.body %>
+			
+				<%# render :partial => "courses/player", :locals => {:course => @course} %>
+			
+    	</div>	
+
+<div id="filter_bar_video">
+			
+            <div id="actions_video">
+                <ul id="actions_resource">
+                	<li>
+                	 	 <a href="#" class="complete_on" >Completei</a>
+                        <!--
+						<a href="#" class="share_video" onclick="toggleAnnotationBox();return false;">Anotações</a>
+						-->
+                    </li>
+					<li>
+                        |
+                    </li>
+					<li>
+                	 	 <a href="#" class="raise_hand" >Pedir ajuda</a>
+                        <!--
+						<a href="#" class="share_video" onclick="toggleAnnotationBox();return false;">Anotações</a>
+						-->
+                    </li>
+					<li>
+                        |
+                    </li>
+                	 <li>
+                	 	<%= render :partial => "shared/annotation" , :locals => {:course => @course}%>
+                        <!--
+						<a href="#" class="share_video" onclick="toggleAnnotationBox();return false;">Anotações</a>
+						-->
+                    </li>
+					<li>
+                        |
+                    </li>
+                	<li>
+                        <a href="#" class="lights_off" >Apagar as luzes</a>
+                        <a href="#" class="lights_on" style="display:none;" >Acender as luzes</a>
+                    </li>
+					<li>
+                        |
+                    </li>
+                    <li>
+                        <a href="#" class="share_video" onclick="toggleShareBox();return false;">Compartilhar</a>
+                    </li>
+					<li>
+                        |
+                    </li>
+                    <li>
+                    	<%= render :partial => "shared/favorite" , :locals => {:favoritable => @course}%>
+						
+					</li>
+				
+                    
+                    <li>
+                        |
+                    </li>
+                    <li>
+                        <a href="#comments" class="comments_video">Comentários(<%= @course.comments.count %>)</a>
+                    </li>
+                </ul>
+            </div>
+            <div id="ratting_video">
+				<%= ratings_for @course %>
+            </div>
+        </div><!-- end bar -->
+		
+		<%= render :partial => 'shared/share', :locals => {:title => @course.name, :url => application_url[0..application_url.length-2] + request.request_uri, :thumb_url => @course.thumb_url} %>
+		    
+		<div id="annotation_box" style="display: none;">
+			<% remote_form_for(@annotation, :loading => "$('annotation_link').hide(); $('annotation_spinner').show();") do |f| %>
+ 			<%= f.hidden_field(:user_id, :value => current_user.id) %>
+			<%= f.hidden_field(:course_id, :value => @course.id) %>
+
+				<%= f.label "Anotações" %>:<br/>
+				<%= f.text_area :content, :size => "25x3" %><br/>
+			
+			<div id="annotation_menu" class="clearfix">
+				<%= f.submit 'Salvar' %> | <a href="#" >Cancelar</a>
+			</div>
+			 <% end %>
+			
+		</div><!-- end annotation_box -->
+        
+        
+		
+		<div id="left_column"> <!-- COLUNA DA ESQUERDA  ## -->
+			<!-- ONLINE USERS ############################################################################################################################# --><!-- MATERIAIS AUXILIARES #################################################################################################################### -->
+			<% cur_watching = @course.currently_watching %>
+			
+			<% if cur_watching.length > 1 %>
+				<div id="filter_bar_comments"><span class="title_filter">ASSISTINDO AGORA</span></div>
+			
+				<% cur_watching.each do |user| %>
+				<%= link_to image_tag(user.avatar_photo_url(:thumb), :height => '40', :width => '40', :alt => "#{user.login}"), user_path(user), :rel => 'bookmark', :class => 'move_foto', :title => "#{user.login}'s profile" %>
+				<br>
+				<%= user.login %>
+				
+				<% end %>
+			<% end %>
+			<!-- COMENTARIOS ############################################################################################################################# -->
+			<a name="comments"></a>
+			<%= render :partial => 'shared/comment', :locals => { :commentable => @course } %>
+		
+        </div> <!-- FIM COLUNA DA ESQUERDA  ## -->
+		
+		<div id="right_column"> <!-- COLUNA DA DIREITA  ## -->
+		
+			<% if  (@course.owner == current_user or @course.resources.length > 0) %>
+			<!-- MATERIAIS AUXILIARES #################################################################################################################### -->
+           
+            <div id="filter_bar_materials">
+                <span class="title_materials">ANEXOS</span>
+            </div>
+            <div id="materials_form">
+                <div id="materialslist" align="left">
+                    <ul id="materials_item">
+                        <% @course.resources.each do | resource | %>
+                        <li>
+                            <%= link_to resource.name,
+                           		resource.media.url,
+                            :class => type_class(resource) %>
+                        </li>
+                        <% end %>
+                    </ul>
+                    <%= link_to 'Adicionar materiais complementares', :action => 'edit' %>
+                </div>
+            </div>
+            <!-- MATERIAIS AUXILIARES #################################################################################################################### -->
+           <% end %>
+		   
+		    <!-- CONTEUDO COMPLEMENTAR ################################################################################################################### -->
+        	<div id="filter_bar_comments2"><span class="title_filter">AULAS RELACIONADAS</span></div>
+			<%= render :partial => 'courses/item', :collection => @related_courses, :as => :course %>
+		
+		     </div> <!-- FIM COLUNA DA DIREITA  ## -->
+		</div>
+</div>

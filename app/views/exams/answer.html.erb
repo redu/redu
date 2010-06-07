@@ -1,19 +1,22 @@
 <script language="JavaScript">
-<!--
 var startTime = 0
 var start = 0
 var end = 0
 var diff = 0
 var timerID = 0
+var sec = 0
+var min = 0
+var hr = 0
 
 function chrono(){
 	end = new Date()
 	diff = end - start
 	diff = new Date(diff)
 	//var msec = diff.getMilliseconds()
-	var sec = diff.getSeconds()
-	var min = diff.getMinutes()
-	var hr = diff.getHours()-1
+	sec = diff.getSeconds()
+	min = diff.getMinutes()
+    hr = diff.getHours()-1
+	hr = "00";
 	if (min < 10){
 		min = "0" + min
 	}
@@ -49,11 +52,11 @@ function chronoContinue(){
 	chrono()
 }
 function chronoReset(){
-	document.getElementById("chronotime").innerHTML = "0:00:00:000"
+	document.getElementById("chronotime").innerHTML = "00:00:000"
 	start = new Date()
 }
 function chronoStopReset(){
-	document.getElementById("chronotime").innerHTML = "0:00:00:000"
+	document.getElementById("chronotime").innerHTML = "00:00:000"
 	document.chronoForm.startstop.onclick = chronoStart
 }
 function chronoStop(){
@@ -64,13 +67,35 @@ function chronoStop(){
 }
 
 function submitChrono(){
-	var theTime = document.getElementById("clock").innerHTML;
+	//var theTime = document.getElementById("clock").innerHTML;
+	// submit time in secondes
+	
+	var theTime = sec + min * 60 + hr * 3600;
+	//alert(theTime);
 	document.getElementById("chrono").value = theTime;
 }
 
-//window.onload = chronoStart();
-//document.body.onload = chronoStart();
-//-->
+function strikeId(id){
+	document.getElementById('qIndex'+id).className += ' indexStrike';
+}
+
+function selectId(id){
+	document.getElementById('qIndex'+id).className += ' indexSel';
+}
+function deselectId(id){
+	var idlink = document.getElementById('qIndex'+id);
+	idlink.className = idlink.className.replace(' indexSel', '');
+}
+
+function showLoading(){
+	$('q_loading').show();
+	$('navigation').hide();
+}
+function hideLoading(){
+	$('q_loading').hide();
+	$('navigation').show();
+}
+
 </script>
 
 
@@ -86,97 +111,46 @@ function submitChrono(){
 	<div id="clock">00:00:00</div>
 	<!-- <a href="#" onclick="hideChron()">(esconder)</a> -->
 	
-	<!-- PAGINACAO ##################################################################################################################################################### -->
-    <div id="questions" align="center">
+	<!-- QUESTOES ##################################################################################################################################################### -->
+ <% form_remote_tag(:url => {:action => :answer}, :loading => "showLoading();", :html => {:id => 'form_answer'}) do %>
+  <input id="chrono" name="chrono" type="hidden" value="" />
+  
+<div id ="question_box">  
+  
+<%= render :partial => "exams/question_answer", :locals => {:question => @step}%>
+	
+</div>	
+
+
+ <div id="questions" style="width: auto;">
     	<ul id="questions_number">
             <li><a href="" class="number"><%= image_tag "icon_info.png", :border => "0", :title => "Instruções" %></a><li>
             
-			<% session[:exam].questions.each_index do |x| %>
-    		<% if session[:question_index] == x %>
-				<li><span class="click_number"><%= x + 1 %></span></li>
+			<% session[:exam].questions.each_with_index do |q, x| %>
+    		<% if(0 == x) %>
+				<li><%= link_to_remote x + 1, :url => {:action => :answer, :id => session[:exam].id, :q_index => x}, :html => {:class => 'number indexSel', :id => 'qIndex'+ q.id.to_s}%></li> 
 			<% else %>
-  				<li><%= link_to x + 1, {:action => :answer, :id =>  session[:exam].id, :q_index => x}, {:class => 'number'}%></li> 
+  				<li><%= link_to_remote x + 1, :url => {:action => :answer, :id => session[:exam].id, :q_index => x}, :html => {:class => 'number', :id => 'qIndex'+ q.id.to_s}%></li> 
 			<% end %>
   			<% end %>
             
     	</ul>
     </div>
-<!-- PAGINACAO ##################################################################################################################################################### -->
-
-<!-- ############################################################################################################################################################### -->
-    
-	<!--
-	<div id="navegador">
-    	<ul id="navegadores">
-            <li><a href="">< Anterior</a><li>
-            <li>|<li>
-            <li><a href="">PrÃ³ximo ></a><li>	
-        </ul>
-    </div> 
-	-->
-<!-- ############################################################################################################################################################### -->
-<div id="title_questions" align="left">Questão <%= session[:question_index] + 1 %>.</div>     
-<div id="texto_instrucoes">
-	<%= @step.statement %>
-</div>
-
-<% form_tag :action => :check, :onSubmit => 'submitChrono()' do %>
-
-   <%= hidden_field_tag(:id, session[:exam].id) %>
-   
-   <input id="chrono" name="chrono" type="hidden" value="" />
-
-   
-   <BR>
-   
-   <div id="all_respostas">
-    <% for alternative in @step.alternatives %>
-	
-	
-
-      <%= radio_button_tag("answer", alternative.id, checked = false) %>
-        <%= alternative.statement %><BR>
-    
-	
-	<% end %>
-	</div>
-	
 
 <!-- ############################################################################################################################################################### -->    <div id="navegador">
     	
-		<!--
-		<ul id="navegadores">
-            <li><a href="">< Anterior</a><li>
-            <li>|<li>
-            <li><a href="">PrÃ³ximo ></a><li>	
-        </ul>
-		-->
-		<%= button_to_function 'Anterior', 'history.back(); return false;' %>
-		|  <%= submit_tag @has_next ? "Próximo" : "Finalizar"  %>
-  	<% end %> 
+		<div id="navigation">
+		<%= button_to_remote('Anterior', {:url => {:action => :answer, :id => session[:exam].id, :q_index => (session[:question_index]-2)}, :loading => "showLoading();"}, :id => 'prev_answer_btn', :disabled => true) %>
+		|  <%= submit_tag @has_next ? "Próximo" : "Finalizar", :id => 'submit_answer_btn'  %>
+  		</div>
+		
+		<div id="q_loading" style="display: none;"><em>Carregando questão... </em>
+			<%= image_tag 'loadingAnimation.gif' %>
+		</div>
+		
+	<% end %> 
 		
     </div> 
-<!-- ############################################################################################################################################################### -->
-
-<!-- PAGINACAO ##################################################################################################################################################### -->
-    <div id="questions" align="center">
-    	<ul id="questions_number">
-            <li><a href="" class="number"><%= image_tag "icon_info.png", :border => "0", :title => "Instruções" %></a></li>
-            	
-				
-			<% session[:exam].questions.each_index do |x| %>
-    		<% if session[:question_index] == x %>
-				<li><span class="click_number"><%= x + 1 %></span></li>
-			<% else %>
-  				<li><%= link_to x + 1, {:action => :answer, :id =>  session[:exam].id, :q_index => x}, {:class => 'number'}%></li> 
-			<% end %>
-  			<% end %>
-				
-            
-    	</ul>
-    </div>
-
-<!-- PAGINACAO ##################################################################################################################################################### -->
 </div>
 </div>
 </div>
