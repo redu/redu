@@ -1,6 +1,50 @@
+#interactive_container {
+		text-align:left;
+		border:1px solid #DDDDDD;
+		min-height:360px;
+		padding:10px;
+		width:95%;
+}
+
+#topic_list li {
+		z-index: 0; top: 0px; left: 0px;
+}
+
+
+#page_container {
+		text-align:left;
+		border:1px solid #DDDDDD;
+		min-height:360px;
+		padding:10px;
+		width:80%;
+}
+
+#page_container h3 {
+		
+		text-align: center;
+		margin-top:16px;
+		margin-bottom:20px;
+		
+}
+
+.complete_on{ background:url(../images/checkbox.png) no-repeat; color:#5782D5; text-decoration:none; padding-left:20px; }
+.complete_on:hover{text-decoration:underline;}
+
+.raise_hand{ background:url(../images/handraise.png) no-repeat; color:#5782D5; text-decoration:none; padding-left:20px; }
+.raise_hand:hover{text-decoration:underline;}
+
+
 a {
 	color: #5683D5;
 	text-decoration: none;
+}
+
+.indexSel {
+	background: #fcf679 !important;
+}
+
+.indexStrike {
+	text-decoration: line-through !important;
 }
 
 body {
@@ -24,10 +68,10 @@ list-style-type:none;
 	border: 0;
 }
 #topic_bar {
-	float: left; width: 25%;
+	float: left; width: 200px;
 }
 #topic_body {
-	float: left; width: 70%; border: 1px solid #ddd;
+	float: left; width: 720px; border: 1px solid #ddd; min-height: 360px;
 }
 
 #publish_box {
@@ -45,7 +89,7 @@ list-style-type:none;
 	background:#ccc none repeat scroll 0 0;
 	margin:5px;
 	padding:4px 8px;
-	text-align:center;
+	text-align: left;
 	border:2px solid #EEEEEE;
 	display:block;
 	line-height:18px;
@@ -354,8 +398,8 @@ float:left; width:100%; height:100%; min-height:100%; _margin-top:-2px; margin-t
 .share{background:url(../images/icon_share_off.png) no-repeat; color:#BFBFBF; text-decoration:none; padding-left: 20px}
 .share:hover{background:url(../images/icon_share_on.png) no-repeat; color:#5782D5; text-decoration:underline; padding-left:20px}
 
-.favorites{background:url(../images/icon_favorites_off.png) no-repeat; color:#BFBFBF; text-decoration:none; padding-left:20px} 
-.favorites:hover{background:url(../images/icon_favorites_on.png) no-repeat; color:#5782D5; text-decoration:underline; padding-left:20px}
+.favorites{background:url(../images/icon_favorites_on.png) no-repeat; color:#BFBFBF; text-decoration:none; padding-left:20px} 
+/*.favorites:hover{background:url(../images/icon_favorites_on.png) no-repeat; color:#5782D5; text-decoration:underline; padding-left:20px}*/
 .favorites_off{background:url(../images/icon_favorites_off.png) no-repeat; color:#BFBFBF; text-decoration:none; padding-left:20px} 
 
 	
@@ -910,13 +954,17 @@ background:url(../images/denunciar.png) no-repeat;font-size:12px; text-decoratio
 
 /* EXAMES /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 
+#question_box{float:left; width: 70%; padding:10px; margin:0px 0px 0px 0px; border:1px solid #e7e8e8; }
+
+
 #title_exame{float:left; width:600px; height:auto; font:bold 20px "Trebuchet MS", Tahoma; color:#7a87a1;text-decoration:none; padding:0px; margin:0px}
 	
-#questions{float:left; width:100%; height:auto; padding:6px 0px 0px 0px; margin:0px 0px 0px 0px; border-bottom:1px solid #e7e8e8; border-top:1px solid #e7e8e8}
+#questions{float:right; width:auto; height:auto; min-height: 150px; min-width:25%; padding:6px 0px 0px 0px; margin:0px 0px 0px 0px; border:1px solid #e7e8e8; }
 #questions_number{list-style-type:none; top:0px; padding:0px; right:0px;}
 #questions_number li {float:left; margin:0px 4px 6px 0px; list-style:none; font-size:14px; text-decoration:none; color:#94a2ca;}
 #questions_number li span {padding: 5px 10px; font-size:11px; text-decoration:none; color:#5683d5;}
-#questions_number li .number, #questions_number li .number:visited {display:block; width:20px; height:20px; font-size:14px; text-decoration:none; color:#396bbd;font-weight:bold;  background:#EEE; padding:4px 4px 2px 4px}
+
+#questions_number li .number {display:block; width:20px; height:20px; font-size:14px; text-decoration:none; color:#396bbd;font-weight:bold;  background:#EEE; padding:4px 4px 2px 4px}
 #questions_number li .number:hover {display:block; width:20px; height:20px; font-size:14px; text-decoration:none; color:#396bbd; font-weight:bold;  background:#D1D9EC; padding:4px 4px 2px 4px}
 
 #questions_number li .click_number, #questions_number li .click_number:visited{display:block; width:20px; height:20px; font-size:14px; text-decoration:none; color:#396bbd; font-weight:bold;  background:#fcf679; padding:4px 4px 2px 4px}

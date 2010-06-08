@@ -90,8 +90,8 @@ class Course < ActiveRecord::Base
   has_many :annotations
   
   # tipos de aula (como subclasses) 
-  has_one :interactive_class
-  has_one :page
+  has_one :interactive_class, :dependent => :destroy
+  has_one :page, :dependent => :destroy
   
   belongs_to :asset, :polymorphic => true
 
@@ -196,7 +196,7 @@ class Course < ActiveRecord::Base
   end
   
   def set_new_local_filename
-    puts "set_new_local_filename"
+   # puts "set_new_local_filename"
     self.update_attribute(:media_file_name, "#{id}.flv")
   end
   

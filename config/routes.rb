@@ -21,7 +21,7 @@ ActionController::Routing::Routes.draw do |map|
     
   map.resources :subjects
 
-  map.resources :courses, :member => {:rate => :post, :buy => :get},  :collection => {:pending => :get, :favorites => :get, :cancel => :get}
+  map.resources :courses, :member => {:rate => :post, :buy => :get},  :collection => {:pending => :get, :favorites => :get, :cancel => :get, :sort_lesson => :post}
   
   map.resources :user_school_association
 
@@ -210,9 +210,8 @@ ActionController::Routing::Routes.draw do |map|
   
   
   ##END SCHOOL
-  
-  
-  map.resources :users, :member_path => '/:id', :nested_member_path => '/:user_id', :member => { 
+  map.resources :users, :member => {  
+  #map.resources :users, :member_path => '/:id', :nested_member_path => '/:user_id', :member => { 
     :followers => :get,
     :follows => :get,
     :follow => :get,

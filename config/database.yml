@@ -18,7 +18,7 @@ development:
   adapter: mysql
   encoding: utf8
   reconnect: false
-  database: reduec2
+  database: redu_teste
   pool: 5
   username: root
   password: 

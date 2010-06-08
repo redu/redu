@@ -54,6 +54,8 @@ AppConfig.question_mce_options = {
   
 AppConfig.simple_mce_options = {
   #:mode => 'textareas',
+  :width => '100%',
+  :height => '377',
   :theme => 'advanced',
   :browsers => %w{msie gecko safari},
   :cleanup_on_startup => true,

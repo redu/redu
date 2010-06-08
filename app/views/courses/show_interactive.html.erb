@@ -147,18 +147,18 @@
 				<div id="topic_list">
 					<% @course.interactive_class.lessons.each_with_index do |lesson, x| %>
 					
-						<a href="#" onclick="selectTopic(<%=x%>);" id="topic_item_<%=x%>" class="topic_item<%= (x == 0) ? ' topic_item_sel' : ''%>">
+						<a href="#" onclick="selectTopic(<%=x%>); return false;" id="topic_item_<%=x%>" class="topic_item<%= (x == 0) ? ' topic_item_sel' : ''%>">
 		  				<%= image_tag 'checkbox.png', :title => "completei!" %> <span id="topic_name_<%=x%>"> <%= lesson.title %></span> 
 			 			</a>
-					
+						
 					<% end %>
 				</div>
 			
 			</div>
 			
 			 <div id="topic_body"><!-- TODO: carregar via ajax? -->
-			 	<% @course.interactive_class.lessons.each_with_index do |l, x| %>
-				
+			 	<%# @course.interactive_class.lessons.sort(|a,b| a<b).each_with_index do |l, x| %>
+				<% @lessons.each_with_index do |l, x| %>
 				<div id="topic_body_<%=x%>" style="display: <%= (x == 0) ? 'block' : 'none'%>">
 					<%= l.body %>
 				</div>
@@ -174,15 +174,6 @@
 			
             <div id="actions_video">
                 <ul id="actions_resource">
-                	 <li>
-                	 	 <a href="#" class="complete_on" >Completei</a>
-                        <!--
-						<a href="#" class="share_video" onclick="toggleAnnotationBox();return false;">Anotações</a>
-						-->
-                    </li>
-					<li>
-                        |
-                    </li>
 					<li>
                 	 	 <a href="#" class="raise_hand" >Pedir ajuda</a>
                         <!--
@@ -278,7 +269,7 @@
 			<!-- MATERIAIS AUXILIARES #################################################################################################################### -->
            
             <div id="filter_bar_materials">
-                <span class="title_materials">MATERIAL AUXILIAR</span>
+                <span class="title_materials">ANEXOS</span>
             </div>
             <div id="materials_form">
                 <div id="materialslist" align="left">

@@ -96,7 +96,7 @@ Materiais: <br/>
  <%= sortable_element 'questions',
 :url => { :action => "sort_question" , :id => @exam },
 :complete => visual_effect(:highlight, 'questions'),
- :tag => 'div'
+ :tag => 'div', :scroll => true
 %>
   
  

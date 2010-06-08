@@ -35,6 +35,21 @@ class CoursesController < BaseController
     end
   end
   
+  def sort_lesson 
+#    @iclass = InteractiveClass.find(params[:iclass])
+#    @iclass.lessons.each do |lesson|
+#      lesson.position = params[:topic_list].index(lesson.id.to_s) + 1
+#      lesson.save
+#    end
+#    render :nothing => true
+    
+    params['topic_list'].each_with_index do |id, index|
+    Lesson.update_all(['position=?', index+1], ['id=?', id])
+    end
+    render :nothing => true
+
+  end
+  
   
   # Lista todos os recursos existentes para relacionar com
   def list_resources
@@ -117,7 +132,9 @@ class CoursesController < BaseController
   # GET /courses/1.xml
   def show
     
-    @course = Course.find(params[:id])
+      @course = Course.find(params[:id], :include => {:interactive_class => [:lessons]})
+    
+    
    # if not @course.can_be_deleted_by(current_user)
    #   flash[:error] = "Você não tem acesso a este vídeo"
    #   redirect_to courses_path # TODO voltar para link anterior
@@ -139,7 +156,15 @@ class CoursesController < BaseController
       Log.log_activity(@course, 'show', current_user, @school)#TODO se usuario nao comprou não logar atividade
 
       respond_to do |format|
-        format.html # show.html.erb
+        if @course.course_type == 'page'
+          format.html {render 'show_page'}
+        elsif @course.course_type == 'interactive'
+          @lessons = Lesson.all(:conditions => ['interactive_class_id = ?',@course.interactive_class.id ], :order => 'position ASC')
+           format.html {render 'show_interactive'}
+        else # TODO colocar type == seminar / estamos considerando que o resto é seminário
+          format.html {render 'show_seminar'}
+        end
+        
         format.xml  { render :xml => @course }
       end
    # end
@@ -167,9 +192,11 @@ class CoursesController < BaseController
     case params[:step]
       when "2"
         
-        if params[:course_type] == 'seminar'
+         @course = Course.find(session[:course_id])
         
-          @course = Course.find(session[:course_id])
+        if @course.course_type == 'seminar'
+        
+         # @course = Course.find(session[:course_id])
         
           3.times { @course.resources.build }
         
@@ -177,14 +204,14 @@ class CoursesController < BaseController
           @edit = false
           render "step2_seminar" and return
         
-        elsif params[:course_type] == 'interactive'
+        elsif @course.course_type == 'interactive'
           @interactive_class = InteractiveClass.new
           
-           3.times { @interactive_class.lessons.build}
+           @interactive_class.lessons.build
           
           render "step2_interactive" and return
         
-        elsif params[:course_type] == 'page'
+        elsif @course.course_type == 'page'
           @page = Page.new
           render "step2_page" and return
         
@@ -195,13 +222,18 @@ class CoursesController < BaseController
         # @course.build_price
         @schools = current_user.schools
         
-        @course_type = params[:course_type]
+        #@course_type = params[:course_type]
         
          @course.enable_validation_group :step3
         render "step3" and return
         
       else # 1
      # session[:course_id] = nil
+        #if params[:prev] == '2' #voltou
+        #  
+        #end
+     
+     
         if session[:course_id]
           @course = Course.find(session[:course_id])
         else
@@ -239,7 +271,7 @@ class CoursesController < BaseController
               session[:course_id] = @course.id
               
               format.html { 
-                redirect_to :action => :new , :course_type => params[:course_type], :step => "2"
+                redirect_to :action => :new, :step => "2"
               }
             else  
               format.html { render "step1" }
@@ -248,21 +280,22 @@ class CoursesController < BaseController
           
       
       when "2"
+        @course = Course.find(session[:course_id])
         
-        if params[:course_type] == 'seminar'
-          
-          @course = Course.find(session[:course_id])
+        if @course.course_type == 'seminar'
           
           if @course.external_resource_type.eql?('youtube')
             capture = @course.external_resource.scan(/watch\?v=([a-zA-Z0-9]*)/o)[0][0]
             #puts capture.inspect
             @course.external_resource = capture
+          elsif @course.external_resource_type.eql?('youtube')
+            @course.convert # converter aqui tem problema? acho que nao..
           end
           
           respond_to do |format|
             
             if @course.update_attributes(params[:course])
-              @course.convert
+              
               
               format.html { 
                  redirect_to :action => :new , :course_type => params[:course_type], :step => "3"
@@ -274,8 +307,7 @@ class CoursesController < BaseController
           end
           
           
-        elsif params[:course_type] == 'interactive'
-           @course = Course.find(session[:course_id])
+        elsif @course.course_type == 'interactive'
           @iclass = InteractiveClass.new(params[:interactive_class])
           @iclass.course = @course
           
@@ -291,9 +323,8 @@ class CoursesController < BaseController
             end
           end
           
-        elsif params[:course_type] == 'page'
+        elsif @course.course_type == 'page'
           
-          @course = Course.find(session[:course_id])
           @page = Page.new(params[:page])
           @page.course = @course
           
@@ -326,12 +357,20 @@ class CoursesController < BaseController
           #Log.log_activity(@course, 'create', current_user) # só aparece quando é aprovada
           # remover curso da sessao
           session[:course_id] = nil
+          if @course.course_type == 'seminar'
+             flash[:notice] = 'Aula foi criada com sucesso e está em processo de moderação.'
+              format.html { 
+                #redirect_to(@course)
+                redirect_to waiting_user_courses_path(current_user.id)
+              }
+          else
+             flash[:notice] = 'Aula foi criada com sucesso!'
+              format.html { 
+                redirect_to(@course)
+              }
+          end
           
-          flash[:notice] = 'Aula foi criada com sucesso e está em processo de moderação.'
-          format.html { 
-            #redirect_to(@course)
-            redirect_to waiting_user_courses_path(current_user.id)
-          }
+         
         else  
           format.html { render "step3" }
         end
@@ -486,7 +525,7 @@ end
   end
   
   def waiting
-    @courses = Course.paginate(:conditions => ["owner = ? AND published = 1 AND state LIKE ?", params[:user_id], "waiting"], 
+    @courses = Course.paginate(:conditions => ["owner = ? AND public = 1 AND state LIKE ?", params[:user_id], "waiting"], 
       :include => :owner, 
       :page => params[:page], 
       :order => 'updated_at DESC', 
