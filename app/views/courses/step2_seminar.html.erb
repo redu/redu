@@ -15,7 +15,7 @@
 	
 <% unless @edit %>
 <fieldset>
-	<legend>Material Principal</legend>
+	<legend>Vídeo</legend>
 
   <%= f.radio_button :external_resource_type, :slideshare, {:onchange => "switchCourseFields(2);"} %>
   <%= f.label :external_resource_type_slideshare, "Slideshare" %>	
@@ -25,13 +25,13 @@
   <%= f.label :external_resource_type_upload, "Upload" %><br/><br/>
 
   <div id="upload_resource_field" style="display:none;">
-  <%= f.label :media, "Upload de Material" %><br/>
+  <%= f.label :media, "Upload de vídeo" %><br/>
   <%= f.file_field :media  %><br/><br/>
   (tamanho máximo: 50MB)
   </div>
 
   <div id="external_resource_field" style="display:block;">
-  <%= f.label :external_resource, "Material Externo (Youtube, Slideshare, etc)" %><br/>
+  <%= f.label :external_resource, "Vídeo de link" %><br/>
   <%= f.text_field :external_resource  %><br/><br/>
   </div>
   
@@ -61,15 +61,7 @@
 	}
 
 </script>
-<fieldset>
-	<legend>Material Complementar</legend>
-	<% f.fields_for :resources do | build |%>
-		<fieldset>
-		<%= render :partial => 'resource_fields', :locals => {:f => build} %>
-		</fieldset>
-	<% end %>
-	<%= link_to_add_fields "Adicionar material", f, :resources %>
-</fieldset>	
+<%= render :partial => 'attachment_form', :locals => {:f => f, :course => @course}%>
 
 <%= link_to '< Anterior', new_course_path(:step => '1'), :class => "button" %> 
 <%= f.submit 'Próximo >' %> 

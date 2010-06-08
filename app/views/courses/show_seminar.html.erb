@@ -233,13 +233,12 @@
                     <ul id="materials_item">
                         <% @course.resources.each do | resource | %>
                         <li>
-                            <%= link_to resource.name,
-                           		resource.media.url,
-                            :class => type_class(resource) %>
+                            <%= link_to resource.file_name,
+                           		download_attachment_course_path(:id => @course.id, :res_id => resource.id),:class => type_class(resource) %>
                         </li>
                         <% end %>
                     </ul>
-                    <%= link_to 'Adicionar materiais complementares', :action => 'edit' %>
+                    <%= link_to '(adicionar anexo)', :action => 'edit' %>
                 </div>
             </div>
             <!-- MATERIAIS AUXILIARES #################################################################################################################### -->

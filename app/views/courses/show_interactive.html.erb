@@ -265,7 +265,7 @@
 		
 		<div id="right_column"> <!-- COLUNA DA DIREITA  ## -->
 		
-			<% if  (@course.owner == current_user or @course.resources.length > 0) %>
+			<% if  (@course.owner == current_user or @course.interactive_class.resources.length > 0) %>
 			<!-- MATERIAIS AUXILIARES #################################################################################################################### -->
            
             <div id="filter_bar_materials">
@@ -274,10 +274,9 @@
             <div id="materials_form">
                 <div id="materialslist" align="left">
                     <ul id="materials_item">
-                        <% @course.resources.each do | resource | %>
+                        <% @course.interactive_class.resources.each do | resource | %>
                         <li>
-                            <%= link_to resource.name,
-                           		resource.media.url,
+                            <%= link_to resource.name,	resource.media.url,
                             :class => type_class(resource) %>
                         </li>
                         <% end %>
@@ -291,6 +290,9 @@
 		    <!-- CONTEUDO COMPLEMENTAR ################################################################################################################### -->
         	<div id="filter_bar_comments2"><span class="title_filter">AULAS RELACIONADAS</span></div>
 			<%= render :partial => 'courses/item', :collection => @related_courses, :as => :course %>
+		
+		     </div> <!-- FIM COLUNA DA DIREITA  ## -->
+			 <div id="filter_bar_comments2"><span class="title_filter">ASSISTIRAM RECENTEMENTE A ESTA AULA</span></div>
 		
 		     </div> <!-- FIM COLUNA DA DIREITA  ## -->
 		</div>

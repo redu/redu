@@ -1,8 +1,12 @@
 class CourseResource < ActiveRecord::Base
-	has_attached_file :media
+	has_attached_file :attachment
+  belongs_to :attachable, :polymorphic => true
 
-	validates_presence_of :name
-	validates_attachment_presence :media
-	validates_attachment_size :media,
+	validates_presence_of :attachment
+	validates_attachment_presence :attachment
+	validates_attachment_size :attachment,
 		:less_than => 50.megabytes
+    
+    
+    
 end

@@ -7,7 +7,16 @@ SCHOOL => NETWORK
 
 JUSTIFICATION => EXPLANATION
 
+COURSERESOURCE => ATTACHMENT
 
+
+PROGRAMAÇÃO
+===========
+
+Wizards devem ser como em: http://railscasts.com/episodes/217-multistep-forms
+Repensar o sistema de Logs (atividades) e pontuação
+Fazer melhor uso dos parciais
+Buscar por 'TODO' no projeto inteiro
 
 SCRIPTS
 =======

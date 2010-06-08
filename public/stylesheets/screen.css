@@ -86,11 +86,11 @@ list-style-type:none;
 }
 
 .topic_item {
-	background:#ccc none repeat scroll 0 0;
+	background:#eee none repeat scroll 0 0;
 	margin:5px;
 	padding:4px 8px;
 	text-align: left;
-	border:2px solid #EEEEEE;
+	/*border:2px solid #EEEEEE;*/
 	display:block;
 	line-height:18px;
 	

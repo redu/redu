@@ -9,6 +9,7 @@
 <% form_for :course, @course, :url => { :action => "create" } do |f| %>
 <%= f.error_messages %>
 
+<em>Uma vez salvo, as opções de publicação não poderão mais serem editadas.</em>
 
 <%= hidden_field_tag("step", "3", options = {})%>
 

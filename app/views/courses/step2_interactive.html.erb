@@ -184,7 +184,11 @@
   
   
   
+
   <div style="float: left;">
+  
+<%= render :partial => 'attachment_form', :locals => {:f => f, :course => @interactive_class}%>
+  
    <%= link_to '< Anterior', new_course_path(:step => '1', :prev => '2'), :class => "button" %> 
 <%= f.submit 'Próximo >' %> 
 

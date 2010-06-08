@@ -21,7 +21,7 @@ ActionController::Routing::Routes.draw do |map|
     
   map.resources :subjects
 
-  map.resources :courses, :member => {:rate => :post, :buy => :get},  :collection => {:pending => :get, :favorites => :get, :cancel => :get, :sort_lesson => :post}
+  map.resources :courses, :member => {:rate => :post, :buy => :get, :download_attachment => :get},  :collection => {:pending => :get, :favorites => :get, :cancel => :get, :sort_lesson => :post}
   
   map.resources :user_school_association
 

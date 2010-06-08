@@ -18,11 +18,12 @@ module CoursesHelper
   
 	
 	def type_class(resource)
-			icon = case resource.media_content_type
+			icon = case resource.attachment_content_type
 			when "clipping" then 'clipping'
 			when "application/vnd.ms-powerpoint" then 'ppt'
 			when "application/msword" then 'word'
-			when "application/rtf" then 'word'
+	    when "application/rtf" then 'word'
+      when "text/plain" then 'word' 
 			when "application/pdf" then 'pdf'
 			else ''
 			end

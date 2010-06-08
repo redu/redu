@@ -81,7 +81,7 @@ class Course < ActiveRecord::Base
   # ASSOCIATIONS
   has_and_belongs_to_many :subjects
   has_many :acess_key
-  has_many :resources, :class_name => "CourseResource"
+  has_many :resources, :class_name => "CourseResource", :as => :attachable
   belongs_to :owner , :class_name => "User" , :foreign_key => "owner"
   has_many :acquisitions
   has_attached_file :media

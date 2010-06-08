@@ -3,6 +3,13 @@ class CoursesController < BaseController
   
   uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit])
   
+  
+  def download_attachment
+    @attachment = CourseResource.find(params[:res_id])
+   # puts @attachment.attachment.path + ' e ' + @attachment.attachment.content_type
+    send_file @attachment.attachment.path, :type=> @attachment.attachment.content_type, :x_sendfile=>true
+  end
+  
   def favorites
     
     if params[:from] == 'favorites'
@@ -207,6 +214,7 @@ class CoursesController < BaseController
         elsif @course.course_type == 'interactive'
           @interactive_class = InteractiveClass.new
           
+           3.times { @interactive_class.resources.build }
            @interactive_class.lessons.build
           
           render "step2_interactive" and return

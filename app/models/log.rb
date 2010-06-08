@@ -16,10 +16,10 @@ class Log < ActiveRecord::Base
       case action
         when 'create'
         log_object.owner.earn_points('created_course')
-        when 'show'
-        log_object.owner.earn_points('show_course')
-        when 'update'
-        log_object.owner.earn_points('updated_course')
+#        when 'show'
+#       log_object.owner.earn_points('show_course')
+#        when 'update'
+#        log_object.owner.earn_points('updated_course') # COMO ASSIM? O CARA GANHA PONTOS SE ATUALIZAR?
       end
       
     elsif log_object.instance_of?(Resource)
@@ -29,8 +29,8 @@ class Log < ActiveRecord::Base
       case action
         when 'create'
         log_object.owner.earn_points('created_resource')
-        when 'show'
-        log_object.owner.earn_points('show_resource')
+#        when 'show'
+#        log_object.owner.earn_points('show_resource')
       end
       
       elsif log_object.instance_of?(Favorite)
@@ -48,10 +48,10 @@ class Log < ActiveRecord::Base
         log_object.owner.earn_points('created_exam')
         when 'answer'
         log_object.owner.earn_points('answer_exam')
-        when 'show'
-        log_object.owner.earn_points('show_exam')
-        when 'update'
-        log_object.owner.earn_points('updated_exam')
+#        when 'show'
+#        log_object.owner.earn_points('show_exam')
+#        when 'update'
+#        log_object.owner.earn_points('updated_exam')
       end
       
       elsif log_object.instance_of?(User)
@@ -60,23 +60,13 @@ class Log < ActiveRecord::Base
     end
   end
   
-  def self.create_logs(log_object, action, user, school)
-    if school
-        # necessário replicar a linha seguinte para cada tipo, pois as acoes reflexivas sao diferentes.
+  def self.create_logs(log_object, action, user, school = nil)
         Log.create(:logeable_type => log_object.class.to_s,
           :action => action,
           :user_id => user.id,
           :logeable_name => log_object.name,
           :logeable_id => log_object.id,
-          :school_id => school.id)
-        else
-          Log.create(:logeable_type => log_object.class.to_s,
-          :action => action,
-          :user_id => user.id,
-          :logeable_name => log_object.name,
-          :logeable_id => log_object.id,
-          :school_id => 0)
-      end
+          :school_id => (school) ? school.id : nil)
   end
   
 end

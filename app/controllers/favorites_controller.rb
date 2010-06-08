@@ -22,7 +22,7 @@ class FavoritesController < BaseController
     end
     
     if @favorite
-      Log.log_activity(@favorite, 'favorite', current_user, @school)
+      Log.log_activity(@favorite, 'favorite', current_user)
       
       flash.now[:notice] = msg_ok
       respond_to do |format|
