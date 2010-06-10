@@ -258,8 +258,22 @@ class CoursesController < BaseController
   # GET /courses/1/edit
   def edit
     @course = Course.find(params[:id])
-    #TODO mostrar apenas as escolas nas quais o usuario tem permissao de postagem
-    @schools = current_user.schools 
+    
+    
+    respond_to do |format|
+        if @course.course_type == 'page'
+          format.html {render 'edit_page'}
+        elsif @course.course_type == 'interactive'
+          @interactive_class = @course.interactive_class
+          #@lessons = Lesson.all(:conditions => ['interactive_class_id = ?',@course.interactive_class.id ], :order => 'position ASC')
+           format.html {render 'edit_interactive'}
+        else # TODO colocar type == seminar / estamos considerando que o resto é seminário
+          format.html {render 'edit_seminar'}
+        end
+        
+        format.xml  { render :xml => @course }
+      end
+    
   end
   
   
@@ -393,8 +407,12 @@ end
 
 
 def cancel
-   Course.find(session[:course_id]).destroy
+  if session[:course_id]
+   course = Course.find(session[:course_id])
+   course.destroy if course
    session[:course_id] = nil
+ end
+
    flash[:notice] = "Criação de aula cancelada."
    redirect_to courses_path
 end
@@ -404,20 +422,44 @@ end
   # PUT /courses/1
   # PUT /courses/1.xml
   def update
-    @course = Course.find(params[:id])
     
-     Log.log_activity(@course, 'update', @course.owner, @school)
+   # Log.log_activity(@course, 'update', @course.owner, @school)
     
-    respond_to do |format|
+   @course = Course.find(params[:id])
+    
+   if @course.course_type == 'interactive'
+     
+     respond_to do |format|
+      if @course.interactive_class.update_attributes(params[:interactive_class])
+        flash[:notice] = 'Curso atualizado com sucesso.'
+        format.html { redirect_to(@course) }
+        format.xml  { head :ok }
+      else
+        format.html { render :action => "edit_interactive" }
+        format.xml  { render :xml => @course.errors, :status => :unprocessable_entity }
+      end
+    end
+   elsif @course.course_type == 'page'
+     # TODO
+   else # seminar
+     respond_to do |format|
       if @course.update_attributes(params[:course])
         flash[:notice] = 'Curso atualizado com sucesso.'
         format.html { redirect_to(@course) }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
+        format.html { render :action => "edit_seminar" }
         format.xml  { render :xml => @course.errors, :status => :unprocessable_entity }
       end
     end
+     
+   end
+   
+   
+   
+    
+    
+    
   end
   
   # DELETE /courses/1

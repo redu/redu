@@ -36,16 +36,35 @@
 <div id="col_content">
 	<div id="breadcrumbs"><a href="#">home</a></div>
 <!-- LISTAGEM RECURSO ############################################################################################################################################## -->
-    <div id="filter_bar">
-    <span class="title_list">AULAS MAIS RECENTES</span>
-      </div>
+    
     <div id="all_list">
-    	
+    	<div id="filter_bar">
+    <span class="title_list">VÍDEO-AULAS RECENTES</span>
+      </div>
 		<% if @courses && @courses.length > 0 %>
  			<%= render :partial => 'courses/item', :collection => @courses, :as => :course %> 
  		<% else %>
  			Não há aulas publicadas ainda. <%= link_to 'Crie uma agora!', new_course_path %>
 		<% end %>
+		
+		<div id="filter_bar">
+    <span class="title_list">AULAS INTERATIVAS RECENTES</span>
+      </div>
+		<% if @iclasses && @iclasses.length > 0 %>
+ 			<%= render :partial => 'courses/item_page', :collection => @iclasses, :as => :course %> 
+ 		<% else %>
+ 			Não há aulas publicadas ainda. <%= link_to 'Crie uma agora!', new_course_path %>
+		<% end %>
+		
+		<div id="filter_bar">
+    <span class="title_list">PÁGINAS RECENTES</span>
+      </div>
+		<% if @pages && @pages.length > 0 %>
+ 			<%= render :partial => 'courses/item_page', :collection => @pages, :as => :course %> 
+ 		<% else %>
+ 			Não há páginas publicadas ainda. <%= link_to 'Crie uma agora!', new_course_path %>
+		<% end %>
+		
 		
     </div>
     <!-- LISTAGEM RECURSO ############################################################################################################################################## -->

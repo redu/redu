@@ -1,7 +1,49 @@
+.meter-wrap{
+    position: relative;
+}
+
+.meter-wrap, .meter-value, .meter-text {
+    /* The width and height of your image */
+    width: 155px; height: 30px; 
+}
+
+.meter-wrap, .meter-value {
+    background: #bdbdbd url(../images/meter-outline.png) top left no-repeat;
+}
+            
+.meter-text {
+    position: absolute;
+    top:0; left:0;
+
+    padding-top: 5px;
+                
+    color: #fff;
+    text-align: center;
+    width: 100%;
+}
+
+#accessbility_bar {
+    background: #fff;
+    float: right;
+    opacity: 0.5;
+    border-left: 1px solid #ccc;
+    padding: 5px;
+    border-bottom: 1px solid #ccc;
+}
+
+#navigation_bar {
+	background:#F8F8F8 none repeat scroll 0 0;
+	border-bottom:1px dotted #DDDDDD;
+	border-top:1px dotted #DDDDDD;
+	margin-top:30px;
+	padding:10px;
+	text-align:center;
+}
+
 #interactive_container {
 		text-align:left;
-		border:1px solid #DDDDDD;
-		min-height:360px;
+		/*border:1px solid #DDDDDD;*/
+		/*min-height:360px;*/
 		padding:10px;
 		width:95%;
 }
@@ -71,7 +113,7 @@ list-style-type:none;
 	float: left; width: 200px;
 }
 #topic_body {
-	float: left; width: 720px; border: 1px solid #ddd; min-height: 360px;
+	float: left; width: 720px; border: 1px solid #ddd; min-height: 360px; position: relative; z-index: 10000;
 }
 
 #publish_box {

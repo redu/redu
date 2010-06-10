@@ -1,9 +1,11 @@
 <fieldset>
 	<legend>Anexos</legend>
-	<% if course and course.resources %>
+	<% if  course.resources %>
 		<% course.resources.each do |res| %>
-		<div> <%= res.attachment_file_name %>  <%= image_tag 'icons/delete.png'%>
+		<% if res.attachment_file_name %>
+		 <div> <%= res.attachment_file_name %>  <%= image_tag 'icons/delete.png'%>
 		</div>
+		<% end %>
 		<% end %>
 	<% end %>
 	

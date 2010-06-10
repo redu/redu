@@ -121,6 +121,12 @@ class Course < ActiveRecord::Base
    :less_than => 50.megabytes
   
   
+   named_scope :seminars,:conditions => ["state LIKE 'approved' AND course_type LIKE 'seminar' AND public = true"], :include => :owner, :order => 'created_at DESC'
+   named_scope :iclasses, :conditions => ["course_type LIKE 'interactive' AND public = true"], :include => :owner, :order => 'created_at DESC'
+   named_scope :pages, :conditions => ["course_type LIKE 'page' AND public = true"], :include => :owner, :order => 'created_at DESC'
+    named_scope :limited, lambda { |num| { :limit => num } }
+
+  
 =begin  nao é usado mais, preço unico
   def self.price_of_acquisition(course_id)
     @course_prices = CoursePrice.find(:all,:conditions => ["course_id = ?",course_id])
@@ -220,6 +226,11 @@ class Course < ActiveRecord::Base
   
   def has_annotations_by(user)
     Annotation.find(:first, :conditions => ["course_id = ? AND user_id = ?", self.id, user.id])
+  end
+  
+  
+  def to_param #friendly url
+    "#{id}-#{name.parameterize}"
   end
   
   

@@ -50,6 +50,9 @@ class Exam < ActiveRecord::Base
     end
   end
   
+    def to_param #friendly url
+    "#{id}-#{name.parameterize}"
+  end
   
 
 end

@@ -1,0 +1,93 @@
+<script>
+	function removeField(link){
+		jQuery(link).parent("fieldset:first").hide()
+		jQuery(link).siblings("input[type=hidden]:first").val("1")
+	}
+	// TODO evitar esta duplicacao
+	function add_fields(link, association, content) {
+		var new_id = new Date().getTime();
+		var regexp = new RegExp("new_" + association, "g")
+		jQuery(link).before("<fieldset>" + content.replace(regexp, new_id) + "</fieldset>");
+	}
+	
+</script>
+
+<div id="all_content3">
+<div id="col_content">
+	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">aprender</a> > <a href="#"><%= @course.name %></a> </div>
+ 	<div id="title">EDITANDO VÍDEO-AULA
+	</div>
+
+
+<% form_for @interactive_class, :url => { :action => "update", :id => @course }, :html => { :multipart => true } do |f| %>
+  <%= f.error_messages %>
+  
+  <%# hidden_field_tag("step", "2", options = {})%>
+<%# hidden_field_tag("course_type", "interactive", options = {})%>
+
+  
+  <div style="float: left; padding-top: 5%;">
+  <p>
+    <%= f.submit 'Salvar Aula' %> | <input type="button" value="Visualizar"/>
+  </p>
+  </div>
+  
+  <div style="float: left; width: 100%; margin-top: 12px; background-color: #F8FAFF;">
+	
+	<div id="topic_bar">
+  
+    <h3>Tópicos</h3>
+  <div id="lesson_types">
+  	Novo tópico:
+	 
+	 <%= link_to_add_lesson((image_tag 'icons/iclass.gif', :title => "Texto interativo"), f, :lessons) %>
+	 <%# link_to_function((image_tag 'icons/iclass.gif', :title => "Texto interativo"), "newTopic()") %>
+	<%= image_tag 'icons/exam.gif', :title => "Exame" %>
+	<%= image_tag 'icons/seminar.gif', :title => "Seminário" %>
+	<%= image_tag 'icons/discussion.png', :title => "Discussão" %>
+  </div>
+  	<ul id="topic_list">
+  		<% @interactive_class.lessons.each do |lesson| %>
+  		<%# content_tag_for :li, lesson do %>
+		<li id="topic_list_item_<%= (lesson.id) ? lesson.id : 0 %>">
+		  	 <a href="#" onclick="selectTopic(<%= (lesson.id) ? lesson.id : 0 %>); return false;" id="topic_item_<%= (lesson.id) ? lesson.id : 0 %>" class="topic_item topic_item_sel">
+		  		<span id="topic_name_<%= (lesson.id) ? lesson.id : 0 %>"> Sem título</span> <%= image_tag 'icons/trash.gif' %>
+			 </a>
+		 </li>
+		 
+		 <% end %>
+  	</ul>
+  
+  </div>
+  
+	  <div id="topic_body">
+				
+			<% f.fields_for :lessons do | build |%>
+			<div id="topic_body_0">
+				<%= render :partial => 'courses/lesson_form', :locals => {:f => build} %>
+			</div>
+			<% end %>
+	
+	
+	  </div>
+  
+  </div>
+  
+  
+  
+
+  <div style="float: left;">
+  
+<%= render :partial => 'attachment_form', :locals => {:f => f, :course => @interactive_class}%>
+  
+<%= f.submit 'Atualizar' %> 
+
+<br><%= link_to 'Cancelar', course_path(@interactive_class.course) %>
+</div>
+
+<% end %>
+
+
+
+</div>
+</div>

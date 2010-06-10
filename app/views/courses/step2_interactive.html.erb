@@ -32,11 +32,11 @@
 		//topicItem.setAttribute("style", "position: relative; z-index: 0; top: 0px; left: 0px;");
 		
 		var topicItem =	document.createElement("a");
-		topicItem.innerHTML = "<span id=\"topic_name_" + topicCount + "\"> Sem título</span> <img src=\"../../images/icons/trash.gif\">";
+		topicItem.innerHTML = "<span id=\"topic_name_" + topicCount + "\"> Sem título</span> <img src=\"../../images/icons/delete.png\">";
 		topicItem.setAttribute("href", "#");
 		topicItem.setAttribute("id", "topic_item_" + topicCount);
 		topicItem.setAttribute("class", "topic_item");
-		topicItem.setAttribute("onclick", "selectTopic("+topicCount+");");
+		topicItem.setAttribute("onclick", "selectTopic("+topicCount+"); return false;");
 		
 		
 		topicItemL.appendChild(topicItem);
@@ -159,8 +159,8 @@
   		<% @interactive_class.lessons.each do |lesson| %>
   		<%# content_tag_for :li, lesson do %>
 		<li id="topic_list_item_<%= (lesson.id) ? lesson.id : 0 %>">
-		  	 <a href="#" onclick="selectTopic(<%= (lesson.id) ? lesson.id : 0 %>);" id="topic_item_<%= (lesson.id) ? lesson.id : 0 %>" class="topic_item topic_item_sel">
-		  		<span id="topic_name_<%= (lesson.id) ? lesson.id : 0 %>"> Sem título</span> <%= image_tag 'icons/trash.gif' %>
+		  	 <a href="#" onclick="selectTopic(<%= (lesson.id) ? lesson.id : 0 %>); return false;" id="topic_item_<%= (lesson.id) ? lesson.id : 0 %>" class="topic_item topic_item_sel">
+		  		<span id="topic_name_<%= (lesson.id) ? lesson.id : 0 %>"> Sem título</span> <%= image_tag 'icons/delete.png' %>
 			 </a>
 		 </li>
 		 

@@ -129,6 +129,11 @@ module BaseHelper
       yield c, classes[(c.users.size.to_i - min) / divisor]
     }
   end
+  
+  def truncate_chars(text, length = 30, end_string = '...')
+     return if text.blank?
+     (text.length > length) ? text[0..length] + end_string  : text
+  end
 
   def truncate_words(text, length = 30, end_string = '...')
     return if text.blank?
