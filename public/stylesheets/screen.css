@@ -36,7 +36,7 @@
 	border-bottom:1px dotted #DDDDDD;
 	border-top:1px dotted #DDDDDD;
 	margin-top:30px;
-	padding:10px;
+	padding:5px;
 	text-align:center;
 }
 
@@ -101,7 +101,7 @@ list-style-type:none;
 #lesson_types {
 	font-size: 10px;
 	border-bottom:1px dotted #AAAAAA;
-	padding:8px;
+	padding:0;
 	margin:5px;
 }
 
@@ -113,7 +113,7 @@ list-style-type:none;
 	float: left; width: 200px;
 }
 #topic_body {
-	float: left; width: 720px; border: 1px solid #ddd; min-height: 360px; position: relative; z-index: 10000;
+	float: left; width: 700px; padding: 10px; border-left: 1px dotted #ddd; min-height: 360px; position: relative; z-index: 10000;
 }
 
 #publish_box {
@@ -138,12 +138,13 @@ list-style-type:none;
 	
 }
 .topic_item_sel {
-	background:#F7F198 none repeat scroll 0 0;
+	background:#F7F198 none repeat scroll 0 0; position: relative; z-index: 1000;
 	
 }
 
 .topic_item img {
 	border: 0;
+	/*float:right;*/
 	
 }
 

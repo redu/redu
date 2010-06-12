@@ -1,0 +1,156 @@
+<script type="text/javascript">
+	var topics = {};
+	
+	
+	var topicCount = 1;
+	var currentTopic = 0;
+	
+	jQuery(document).ready(function(){
+		removeAllMce();
+		reloadMce();
+		reloadSortable();
+		
+	});
+	
+	
+	function removeField(link){
+		jQuery(link).parent("fieldset:first").hide()
+		jQuery(link).siblings("input[type=hidden]:first").val("1")
+	}
+	
+	function add_fields(link, association, content, type) {
+		//alert(link + association + content);
+		var new_id = new Date().getTime();
+		var regexp = new RegExp("new_" + association, "g");
+		if (type == 'anexo') {
+			jQuery(link).before("<fieldset>" + content.replace(regexp, new_id) + "</fieldset>");
+			return;
+		}
+		// BODY
+		
+		var topicBody = document.createElement("div");
+		topicBody.innerHTML = content.replace(regexp, new_id);
+		topicBody.setAttribute("id", "topic_body_" + topicCount);
+		
+		document.getElementById('topic_body').appendChild(topicBody);
+		
+		// INDEX
+		
+		var topicItemL = document.createElement("li");
+		topicItemL.setAttribute("id", "topic_list_item_"+ topicCount);
+		//topicItem.setAttribute("class", "lesson");
+		//topicItem.setAttribute("style", "position: relative; z-index: 0; top: 0px; left: 0px;");
+		
+		var topicItem =	document.createElement("a");
+		// TODO como reaproveitar esse innerHTML abaixo de um item do rails?
+		topicItem.innerHTML = "<img title=\"Texto interativo\" src=\"/images/icons/iclass.gif\" alt=\"Iclass\">" + 
+		"<span id=\"topic_name_" + topicCount + "\"> Sem título</span> <img src=\"../../images/icons/delete.png\" style=\"float:right;\">";
+		topicItem.setAttribute("href", "#");
+		topicItem.setAttribute("id", "topic_item_" + topicCount);
+		topicItem.setAttribute("class", "topic_item");
+		topicItem.setAttribute("onclick", "selectTopic("+topicCount+"); return false;");
+		
+		
+		topicItemL.appendChild(topicItem);
+		document.getElementById('topic_list').appendChild(topicItemL);
+		
+		selectTopic(topicCount);
+		
+		topicCount++;
+			
+		removeAllMce();
+		
+		reloadMce();
+		
+		reloadSortable();
+	}
+	
+	
+	function reloadSortable(){
+		
+		Sortable.create("topic_list", {onUpdate: function(a){
+			//interactive_class_lessons_attributes_0_position
+			var listItems = a.getElementsByTagName("li");
+			for (var i =0; i < listItems.length; i++) {
+				var liEl = listItems[i].id.split('_');
+				var theId = liEl[liEl.length-1];
+				//alert(theId);
+				
+				var tbody = document.getElementById('topic_body_'+theId);
+				//alert(tbody);
+				//alert(tbody.getElementsByTagName('input')[1].innerHTML+ ' |ordem: '+i);
+				var liEl2 = tbody.getElementsByTagName('input')[1].value = i;
+				
+			}
+			
+
+		}});
+ //Sortable.create("topic_list", {onUpdate:function(){new Ajax.Request('/courses/sort_lesson?iclass=', {asynchronous:true, evalScripts:true, parameters:Sortable.serialize("topic_list")})}})
+
+	}
+	
+    function removeAllMce(){
+        var i, t = tinyMCE.editors;
+        for (i in t) {
+            if (t.hasOwnProperty(i)) {
+					t[i].remove();
+            }
+        }
+        
+    }
+	
+	function topicTitle(textBox){
+		document.getElementById('topic_name_'+ currentTopic).innerHTML = textBox.value;
+	}
+	
+	function selectTopic(topic){
+		//alert('topic: '+topic + ' | current: '+ currentTopic);
+		var curListItem = document.getElementById('topic_item_'+ currentTopic);
+		var selListItem = document.getElementById('topic_item_'+ topic);
+		
+		if (curListItem != null && typeof(curListItem) != 'undefined' ) {
+		curListItem.className = "topic_item"; 
+		}
+		if (selListItem != null && typeof(selListItem) != 'undefined' ) {
+		selListItem.className += " topic_item_sel";
+		}
+		
+		document.getElementById('topic_body_'+ currentTopic).style.display = "none";
+		document.getElementById('topic_body_'+ topic).style.display = "block";
+		
+		currentTopic = topic;
+	}
+	
+	function reloadMce(){
+		<%=   raw_tiny_mce_init %>
+	}
+	
+	function leavePage(){
+		return "Se você sair da página vai perder todas as informações não salvas. Deseja continuar?";
+	}
+	
+	function removeTopic(link){
+		
+		var topic = document.getElementById("topic_list_item_"+link);
+		var tbody = document.getElementById("topic_body_" + link);
+		
+		document.getElementById("topic_list").removeChild(topic);
+		//document.getElementById("topic_body").removeChild(tbody);
+
+		document.getElementById("destroy_"+link).value = true;
+		
+		jQuery(tbody).hide();
+		
+		//jQuery(tbody).siblings("input[type=hidden]:first").val("1");
+		
+		var thelist = document.getElementById('topic_list').getElementsByTagName('li');
+		if (thelist.length >0) {
+			var theid = thelist[0].id.split('_');
+			seltopic = theid[theid.length-1];
+		}
+		selectTopic(seltopic);
+		
+		
+	}
+	
+</script>

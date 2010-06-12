@@ -1,7 +1,7 @@
 class CoursesController < BaseController
   before_filter :login_required, :except => [:index]
   
-  uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit])
+  uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit, :update])
   
   
   def download_attachment
@@ -428,9 +428,9 @@ end
    @course = Course.find(params[:id])
     
    if @course.course_type == 'interactive'
-     
+     @interactive_class = @course.interactive_class
      respond_to do |format|
-      if @course.interactive_class.update_attributes(params[:interactive_class])
+      if @interactive_class.update_attributes(params[:interactive_class])
         flash[:notice] = 'Curso atualizado com sucesso.'
         format.html { redirect_to(@course) }
         format.xml  { head :ok }

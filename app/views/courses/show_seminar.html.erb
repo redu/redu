@@ -233,7 +233,7 @@
                     <ul id="materials_item">
                         <% @course.resources.each do | resource | %>
                         <li>
-                            <%= link_to resource.file_name,
+                            <%= link_to resource.name,
                            		download_attachment_course_path(:id => @course.id, :res_id => resource.id),:class => type_class(resource) %>
                         </li>
                         <% end %>

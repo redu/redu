@@ -1,29 +1,4 @@
-<script type="text/javascript">
-jQuery(document).ready(function(){
-    var ex1running = false;
 
-    jQuery('#class_progress').click(function(){
-      if(!ex1running){
-        ex1running = true;
-        var $this = $(this);
-        var count = 0;
-        var inter = null;
-        function run(){
-            count++;
-            jQuery(document).find('.meter-value').css('width', count+"%");
-            jQuery(document).find('.meter-text').text(count+"%");
-            if(count == 100){
-                clearInterval(inter);
-                ex1running = false;
-            }
-        }
-        inter = setInterval(run, 50);
-      }
-    });
-
-    
-});
-</script>
 
 
 <script>
@@ -96,8 +71,15 @@ function decreaseFontSize(){
 	
 	function selectTopic(topic){
 		//alert('topic: '+topic + ' | current: '+ currentTopic);
-		document.getElementById('topic_item_'+ currentTopic).className = "topic_item";
-		document.getElementById('topic_item_'+ topic).className += " topic_item_sel";
+		
+		var curListItem = document.getElementById('topic_item_'+ currentTopic);
+		var selListItem = document.getElementById('topic_item_'+ topic);
+		if (typeof(curListItem) != 'undefined' ) {
+		curListItem.className = "topic_item"; 
+		}
+		if (typeof(selListItem) != 'undefined' ) {
+		selListItem.className += " topic_item_sel";
+		}
 		
 		document.getElementById('topic_body_'+ currentTopic).style.display = "none";
 		document.getElementById('topic_body_'+ topic).style.display = "block";
@@ -214,13 +196,7 @@ function decreaseFontSize(){
             </div>
         </div>
 		
-        <div id="class_progress" class="meter-wrap">
-            <div class="meter-value" style="background-color: #0a0; width: 40%; margin: 0;">
-                <div class="meter-text">
-                    
-                </div>
-            </div>
-        </div>
+        
 		</div>
 
 		<div id="interactive_container" align="center" >
@@ -250,7 +226,8 @@ function decreaseFontSize(){
 			 	<%# @course.interactive_class.lessons.sort(|a,b| a<b).each_with_index do |l, x| %>
 				<% @lessons.each_with_index do |l, x| %>
 				<div id="topic_body_<%=x%>" style="display: <%= (x == 0) ? 'block' : 'none'%>; background: white;">
-					<div id="topic_body_text" style="padding: 24px 15px 15px 15px; min-height:360px;">
+					<div id="topic_body_text" style="padding: 0 15px 15px 15px; min-height:360px;">
+					<h3 style="color: #bbb; margin-top: 0; margin-bottom:15px;"><%= l.title %></h3>
 					<%= l.body %>
 					</div>
 					<div id="navigation_bar">
