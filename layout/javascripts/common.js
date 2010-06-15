@@ -50,29 +50,38 @@ $(document).ready(function(){
     
     $("ul.groups > li:odd").addClass("odd")
     
-          $("input[title], textarea[title]").each(function(){
-                if($(this).val() === ''){
-                    $(this).val($(this).attr('title'))
-                }
-                
-                $(this).focus(function(){
-                      if($(this).val() === $(this).attr('title')){
-                          $(this).val('').toggleClass('inner-label')
-                      }
-                })
-                
-                $(this).blur(function(){
-                      if($(this).val() === ''){
-                          $(this).val($(this).attr('title')).toggleClass('inner-label')
-                      }
-                })
-            })
-            
-            i = 2
-            $("form.post-poll span.add").click(function(){
-                $(this).before("<input type=\"text\" name=\"choice_"+i+"\" title=\"Alternativa "+i+"\"/>")
-                i++
-            })
-            
-            $("ul.groups > li:odd").addClass("odd")
-})
+    $("input[title], textarea[title]").each(function(){
+        if($(this).val() === ''){
+            $(this).val($(this).attr('title'))
+        }
+        
+        $(this).focus(function(){
+              if($(this).val() === $(this).attr('title')){
+                  $(this).val('').toggleClass('inner-label')
+              }
+        })
+        
+        $(this).blur(function(){
+              if($(this).val() === ''){
+                  $(this).val($(this).attr('title')).toggleClass('inner-label')
+              }
+        })
+    })
+
+    i = 2
+    $("form.post-poll span.add").click(function(){
+        $(this).before("<input type=\"text\" name=\"choice_"+i+"\" title=\"Alternativa "+i+"\"/>")
+        i++
+    })
+
+    $("ul.groups > li:odd").addClass("odd")
+    
+    $("#header div.user-actions a.pandora").click(function(e){
+        e.preventDefault()
+        var id = $(this).attr('href')
+        $(id).slideToggle()
+        $(this).toggleClass("opened")
+        $(this).toggleClass("closed")
+        
+    })
+    })

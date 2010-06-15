@@ -925,8 +925,11 @@ div.content div.content {
      }
 
 /** @group **/
+#group {
+}
+
 #group-header {
-    
+    height: 80px;
 }
 
 #group-header h2.name{
