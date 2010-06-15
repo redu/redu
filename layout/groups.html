@@ -83,9 +83,13 @@
         <ul class="sortable clearfix">
         <script type="text/javascript">
             $(document).ready(function(){
+            $("#group .sidebar ul.sub-groups li ul, #group .sidebar ul.sub-groups li a.more").hide()
             
-            $("#group .sidebar ul.sub-groups li a").click(function(e){
-                
+            $("#group .sidebar ul.sub-groups > li a.sb").click(function(e){
+                e.preventDefault()
+                $(this).toggleClass('opened')
+                $(this).next().slideToggle()
+                $(this).next().next().toggle()
             })
             
             })
@@ -94,13 +98,32 @@
         <span class="call"><span>Seus grupos (4)</span></span>
         <ul class="sub-groups">
             <li>
-                <a href="">Matemática</a>
-
-            
+                <a href="" class="closed sb">Matemática</a>
+                <ul>
+	                <li>
+	                    <a href="" class="course">Revolução Francesa</a>
+	                    <span class="bar-chart">
+	                        <span style="width: 70%"><span>70%</span></span>
+	                    </span>
+	                </li>
+	                <li>
+	                    <a href="" class="course">Fisiologia da Obesidade</a>
+	                    <span class="bar-chart">
+	                        <span style="width: 30%"><span>30%</span></span>
+	                    </span>
+	                </li>
+	                <li>
+	                    <a href="" class="course">Segunda Guerra</a>
+	                    <span class="bar-chart">
+	                        <span style="width: 90%"><span>90%</span></span>
+	                    </span>
+	                </li>
+                </ul>
+                <a href="" class="more">Ver mais</a>
             </li>
-            <li><a href="">História</a></li>
-            <li><a href="">Geografia</a></li>
-            <li><a href="">Xadrez</a></li>
+            <li><a href="" class="closed sb">História</a></li>
+            <li><a href="" class="closed sb">Geografia</a></li>
+            <li><a href="" class="closed sb">Xadrez</a></li>
         </ul>
         </li>
         

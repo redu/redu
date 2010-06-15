@@ -171,39 +171,39 @@ a {
     background-position:left center;
 }
 
-.follow {
+.ico-follow {
     background-image: url("../images/ui-elements_r24_c38.png");
 }
 
-.recomend {
+.ico-recomend {
     background-image: url("../images/ui-elements_r22_c30.png");
 }
 
-.contact {
+.ico-contact {
     background-image: url("../images/ui-elements_r35_c35.png");
 }
 
-.comment {
+.ico-comment {
     background-image: url("../images/ui-elements_r15_c27.png");
 }
 
-.bookmark {
+.ico-bookmark {
     background-image: url("../images/ui-elements_r19_c28.png");
 }
 
-.activity {
+.ico-activity {
     background-image: url("../images/")
 }
 
-.course {
+.ico-course {
     background-image: url("../images/ui-elements_r34_c19.png");
 }
 
-.network {
+.ico-network {
     background-image: url("../images/ui-elements_r6_c50.png");
 }
 
-.exam {
+.ico-exam {
     background-image: url("../images/ui-elements_r36_c8.png");
 }
 
@@ -915,23 +915,72 @@ div.content div.content {
     
 }
 
-#group .sidebar ul.sub-groups li {
+#group .sidebar ul.sub-groups > li {
     border-bottom: 1px solid #E9E9E9;
     display: block;
 }
 
-#group .sidebar ul.sub-groups li li { 
-    border: none;
-}
-
-#group .sidebar ul.sub-groups li a {
+#group .sidebar ul.sub-groups > li > a {
     padding: 8px 0;
     display: block;
     font-size: .9em;
     padding-left: 20px;
-    background: 
 }
-     
+
+#group .sidebar ul.sub-groups > li > a.closed {
+    background: url("../images/arrow-right.png") no-repeat 1px center;
+}
+
+#group .sidebar ul.sub-groups > li > a.opened {
+    background: url("../images/arrow-down.png") no-repeat 1px center;
+}
+
+#group .sidebar ul.sub-groups > li > a.more {
+    font-size: .8em;
+    text-align: right;
+}
+
+#group .sidebar ul.sub-groups li ul {
+    margin-left: 20px;
+}
+
+#group .sidebar ul.sub-groups li ul li {
+    margin-bottom: 10px;
+}
+
+#group .sidebar ul.sub-groups span.bar-chart {
+    display: block;
+    padding: 2px;
+    border: 1px solid #E9E9E9;
+    height: 15px;
+}
+
+#group .sidebar ul.sub-groups span.bar-chart > span {
+    background-color: #FFFA7F;
+    display: block;
+    height: 15px;
+    position: relative;
+}
+
+#group .sidebar ul.sub-groups span.bar-chart span span {
+    position: absolute;
+    font-size: .8em;
+    right: 5px;
+    top: 2px;
+    color: gray;
+}
+
+#group .sidebar ul.sub-groups a.course {
+    color: #18C8EF;
+    font-size: .9em;
+    padding-bottom: 5px;
+    display: block;
+}
+
+
+#group .sidebar ul.sub-groups li li { 
+    border: none;
+}
     
 /** helpers **/
     /** replacement **/
