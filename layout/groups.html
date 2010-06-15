@@ -12,6 +12,8 @@
     </script>
     <script type="text/javascript" src="javascripts/jquery-ui-1.8.1.custom.min.js" charset="utf-8">
     </script>
+    <script type="text/javascript" src="javascripts/common.js" charset="utf-8">
+    </script>
 </head>
 <body>
 <div id="header" class="container_16">
@@ -36,29 +38,7 @@
             </div>
         </form>
     </div>
-    <script type="text/javascript">
-        $(document).ready(function(){
-        
-        $("#user-info").hide()
-        
-        $("#header a.login").click(function(e){
-            e.preventDefault()
-            $("#user-info").toggle()
-            $(this).toggleClass('opened')
-        })
-        
-        $("#user-info").mouseup(function(){
-            return false  
-        })
-        
-        $(document).mouseup(function(e){
-            if($(e.target).parent("#header a.login").length==0) {
-                $("#user-info").hide();
-            }
-        })
-        
-        })/* end document */
-    </script>
+
     <a href="" class="login grid_2 " >Login</a>
     <div id="user-info" class="">
         <a href="">Caixa de entrada</a>
@@ -79,21 +59,9 @@
         </span>
         </div><!-- end info -->
     </div><!-- end group-header -->
+
     <div class="sidebar grid_4">
         <ul class="sortable clearfix">
-        <script type="text/javascript">
-            $(document).ready(function(){
-            $("#group .sidebar ul.sub-groups li ul, #group .sidebar ul.sub-groups li a.more").hide()
-            
-            $("#group .sidebar ul.sub-groups > li a.sb").click(function(e){
-                e.preventDefault()
-                $(this).toggleClass('opened')
-                $(this).next().slideToggle()
-                $(this).next().next().toggle()
-            })
-            
-            })
-        </script>
         <li class="clearfix">
         <span class="call"><span>Seus grupos (4)</span></span>
         <ul class="sub-groups">
@@ -172,18 +140,339 @@
             </div>
         </li>
         </ul><!-- end sortable -->
-        <script type="text/javascript">
-            $(function() {
-                $("ul.sortable").sortable({
-                    placeholder: 'ui-state-highlight'
-                });
-                $("ul.sortable").disableSelection();
-            });
-        </script>
     </div><!-- end sidebar -->
     <div class="main grid_12">
-        main
-    
+    <div class="tabs">
+	    <ul>
+		    <li><a href="#tabs-1">Início</a></li>
+		    <li><a href="#tabs-2">Movimentação</a></li>
+		    <li><a href="#tabs-3">Grupos</a></li>
+		    <li><a href="#tabs-4">Cursos</a></li>
+		    <li><a href="#tabs-5">Recursos</a></li>
+	    </ul>
+	    <div class="content clearfix">
+	        <div id="tabs-1">
+	            <div class="filter-box clearfix">
+	                <ul>
+	                    <li class="selected"><a href="">Todas</a></li>
+	                    <li><a href="">Redes</a></li>
+	                    <li><a href="">Amigos</a></li>
+	                    <li><a href="">Perguntas</a></li>
+	                    <li><a href="">Enquetes</a></li>
+                    </ul>
+	            </div>
+	            <ul class="activities">
+	                <li class="clearfix">
+                        <div class="photo overlay">
+                        <img src="images/question-mark.png" class="mark" alt="" />
+                        <img src="http://a1.twimg.com/profile_images/778854786/foto3_normal.JPG" alt="" />
+                        </div>
+	                    <div class="activity clearfix question">
+	                        <div class="actions">
+	                            <a href="" class="icon ico-bookmark">favoritos</a>
+	                            <a href="" class="icon ico-comment">comentar</a>
+	                        </div>
+	                        <span class="msg">
+	                            <a href="" class="author">marcelcaraciolo</a>
+	                            Qual é a resposta para a vida, o universo e tudo mais?
+	                            <span class="when quiet">há 6 horas</span>
+	                        </span>
+	                        <div class="question-action">
+	                            <a href="">Responder</a>
+	                            <div class="answer hide">
+	                            <form action="" method="post">
+	                                <fieldset>
+	                                <input type="text" name="response" class="answer" />
+	                                <button type="submit">Responder</button>
+	                                </fieldset>
+	                            </form>
+	                            </div>
+	                        </div>
+	                        <ul class="response clearfix">
+                                <li class="clearfix">
+                                <div class="photo">
+                                <img src="http://a3.twimg.com/profile_images/143752933/3403776828_54443f6bdc_mini.jpg" alt="" />
+                                </div>
+                                <div class="activity clearfix">
+                                <span class="msg">
+                                <a href="" class="author">marcelcaraciolo</a>
+                                Resposta número um para a vida, o universo e tudo mais.
+                                <span class="when quiet">há 6 horas</span>
+                                </span>
+
+                                </div>
+                                </li>
+                                <li class="clearfix">
+                                <div class="photo">
+                                <img src="http://a3.twimg.com/profile_images/143752933/3403776828_54443f6bdc_mini.jpg" alt="" />
+                                </div>
+                                <div class="activity clearfix">
+                                <span class="msg">
+                                <a href="" class="author">marcelcaraciolo</a>
+                                Google launches the Latitude API now for developers :) orem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum et ultrices libero. 
+                                <span class="when quiet">há 6 horas</span>
+                                </span>
+                                </div>
+                                </li>
+	                        </ul><!-- end response -->
+	                    </div><!-- end activity -->
+	                </li>
+                    <li class="clearfix">
+                        <div class="photo">
+                        <img src="http://a1.twimg.com/profile_images/778854786/foto3_normal.JPG" alt="" />
+                        </div>
+	                    <div class="activity clearfix question">
+	                        <div class="actions">
+	                            <a href="" class="icon ico-bookmark">favoritos</a>
+	                            <a href="" class="icon ico-comment">comentar</a>
+	                        </div>
+	                        <span class="msg">
+	                            <a href="" class="author">marcelcaraciolo</a>
+	                            Qual é a resposta para a vida, o universo e tudo mais?
+	                            <span class="when quiet">há 6 horas</span>
+	                        </span>
+	                    </div>
+	                  </li>
+                </ul><!-- end activities -->
+
+	        
+	        </div>
+	        <div id="tabs-2">
+                <div class="post-activity">
+                    <ul class="clearfix">
+	                    <li><a href="#actv-1" class="status">Status</a></li>
+	                    <li><a href="#actv-2" class="question">Pergunta</a></li>
+	                    <li><a href="#actv-3" class="poll">Enquete</a></li>
+                    </ul>
+                    
+                    <div id="actv-1" class="clearfix">
+                        <form class="post-status" action="" method="post">
+                            <fieldset>
+                            <textarea name="status" rows="" cols="" title="O que você está fazendo agora?" class="inner-label"></textarea>
+                            <button type="submit">Postar</button>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div id="actv-2" class="clearfix">
+                        <form class="post-question" action="" method="post">
+                            <fieldset>
+                            <textarea name="question" rows="" cols="" title="Qual é a sua dúvida?" class="inner-label"></textarea>
+                            <button type="submit">Perguntar</button>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div id="actv-3" class="clearfix">
+                        <form method="post" action="" class="post-poll">
+                            <fieldset>
+                            <label for="title">Pergunta</label>
+                            <input type="text" name="title" />
+                            <input type="text" name="choice_0" title="Alternativa 1" class="inner-label"/>
+                            <input type="text" name="choice_1" title="Alternativa 2" class="inner-label"/>
+                            <input type="text" name="choice_2" title="Alternativa 3" class="inner-label" />
+                            <span class="add">
+                            Adicionar
+                            </span>
+                            <button type="submit">Postar</button>
+                            </fieldset>
+                        </form>
+                    </div><!-- end post-activity -->
+                </div>
+	            <div class="filter-box clearfix">
+	                <ul>
+	                    <li class="selected"><a href="">Todas</a></li>
+	                    <li><a href="">Redes</a></li>
+	                    <li><a href="">Amigos</a></li>
+	                    <li><a href="">Perguntas</a></li>
+	                    <li><a href="">Enquetes</a></li>
+                    </ul>
+	            </div>
+	            <ul class="activities">
+	                <li class="clearfix">
+                        <div class="photo overlay">
+                        <img src="images/question-mark.png" class="mark" alt="" />
+                        <img src="http://a1.twimg.com/profile_images/778854786/foto3_normal.JPG" alt="" />
+                        </div>
+	                    <div class="activity clearfix question">
+	                        <div class="actions">
+	                            <a href="" class="icon ico-bookmark">favoritos</a>
+	                            <a href="" class="icon ico-comment">comentar</a>
+	                        </div>
+	                        <span class="msg">
+	                            <a href="" class="author">marcelcaraciolo</a>
+	                            Qual é a resposta para a vida, o universo e tudo mais?
+	                            <span class="when quiet">há 6 horas</span>
+	                        </span>
+	                        <div class="question-action">
+	                            <a href="">Responder</a>
+	                            <div class="answer hide">
+	                            <form action="" method="post">
+	                                <fieldset>
+	                                <input type="text" name="response" class="answer" />
+	                                <button type="submit">Responder</button>
+	                                </fieldset>
+	                            </form>
+	                            </div>
+	                        </div>
+	                        <ul class="response clearfix">
+                                <li class="clearfix">
+                                <div class="photo">
+                                <img src="http://a3.twimg.com/profile_images/143752933/3403776828_54443f6bdc_mini.jpg" alt="" />
+                                </div>
+                                <div class="activity clearfix">
+                                <span class="msg">
+                                <a href="" class="author">marcelcaraciolo</a>
+                                Resposta número um para a vida, o universo e tudo mais.
+                                <span class="when quiet">há 6 horas</span>
+                                </span>
+
+                                </div>
+                                </li>
+                                <li class="clearfix">
+                                <div class="photo">
+                                <img src="http://a3.twimg.com/profile_images/143752933/3403776828_54443f6bdc_mini.jpg" alt="" />
+                                </div>
+                                <div class="activity clearfix">
+                                <span class="msg">
+                                <a href="" class="author">marcelcaraciolo</a>
+                                Google launches the Latitude API now for developers :) orem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum et ultrices libero. 
+                                <span class="when quiet">há 6 horas</span>
+                                </span>
+                                </div>
+                                </li>
+	                        </ul><!-- end response -->
+	                    </div><!-- end activity -->
+	                </li>
+                    <li class="clearfix">
+                        <div class="photo">
+                        <img src="http://a1.twimg.com/profile_images/778854786/foto3_normal.JPG" alt="" />
+                        </div>
+	                    <div class="activity clearfix question">
+	                        <div class="actions">
+	                            <a href="" class="icon ico-bookmark">favoritos</a>
+	                            <a href="" class="icon ico-comment">comentar</a>
+	                        </div>
+	                        <span class="msg">
+	                            <a href="" class="author">marcelcaraciolo</a>
+	                            Qual é a resposta para a vida, o universo e tudo mais?
+	                            <span class="when quiet">há 6 horas</span>
+	                        </span>
+	                    </div>
+	                  </li>
+                </ul><!-- end activities -->
+	            
+	            
+	        
+	        </div>
+            <div id="tabs-3">
+                <ul class="groups">
+	                <li class="clearfix">
+	                <div class="photo">
+	                    <img src="http://a1.twimg.com/profile_images/778854786/foto3_normal.JPG" alt="" />
+	                    <a href="" class="more">Ver</a>
+	                </div>
+	                <a href="" class="name grid_7 omega">Colégio de Aplicação</a>
+	                
+	                <div class="spotlight">
+	                    <a href="" class="type grid_1">Exames</a>
+	                    <ul class="grid_5">
+		                    <li><a href="">Prova de Crase </a><span class="when quiet">há 11 horas</span></li>
+		                    <li><a href="">Resolução de exercícios </a><span class="when quiet">há 11 horas</span></li>
+		                    <li><a href="">Outra prova </a><span class="when quiet">há 11 horas</span></li>
+	                    </ul>
+	                    <a href="" class="more grid_1 omega">Ver mais</a>
+                    </div>
+	                
+	                
+	                </li>
+	                <li class="clearfix">
+	                <div class="photo">
+	                    <img src="http://a1.twimg.com/profile_images/778854786/foto3_normal.JPG" alt="" />
+	                    <a href="" class="more">Ver</a>
+	                </div>
+	                <a href="" class="name grid_7 omega">Colégio de Aplicação</a>
+	                
+	                <div class="spotlight">
+	                    <a href="" class="type grid_1">Exames</a>
+	                    <ul class="grid_5">
+		                    <li><a href="">Prova de Crase </a><span class="when quiet">há 11 horas</span></li>
+		                    <li><a href="">Resolução de exercícios </a><span class="when quiet">há 11 horas</span></li>
+		                    <li><a href="">Outra prova </a><span class="when quiet">há 11 horas</span></li>
+	                    </ul>
+	                    <a href="" class="more grid_1 omega">Ver mais</a>
+                    </div>
+	                
+	                
+	                </li>
+	                <li class="clearfix">
+	                <div class="photo">
+	                    <img src="http://a1.twimg.com/profile_images/778854786/foto3_normal.JPG" alt="" />
+	                    <a href="" class="more">Ver</a>
+	                </div>
+	                <a href="" class="name grid_7 omega">Colégio de Aplicação</a>
+	                
+	                <div class="spotlight">
+	                    <a href="" class="type grid_1">Exames</a>
+	                    <ul class="grid_5">
+		                    <li><a href="">Prova de Crase </a><span class="when quiet">há 11 horas</span></li>
+		                    <li><a href="">Resolução de exercícios </a><span class="when quiet">há 11 horas</span></li>
+		                    <li><a href="">Outra prova </a><span class="when quiet">há 11 horas</span></li>
+	                    </ul>
+	                    <a href="" class="more grid_1 omega">Ver mais</a>
+                    </div>
+	                
+	                
+	                </li>
+                </ul>
+            </div>
+            <div id="tabs-4" >Cursos</div>
+            <div id="tabs-5" >
+                <div class="curriculum pretty-text">
+                    <h1>Descrição Geral</h1>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec malesuada ligula. Aenean sollicitudin condimentum elit, sit amet fringilla mi blandit sed. Sed adipiscing laoreet ipsum sed volutpat. Integer non odio sodales nibh congue scelerisque. Curabitur blandit, nisi id faucibus consectetur, ligula purus sagittis metus, sit amet auctor nunc nisi viverra nunc. Aenean odio justo, elementum sit amet rhoncus at, porta bibendum elit. Nunc lobortis diam eget ligula sodales sit amet blandit ante tempor. Nullam elementum lacinia commodo.                    
+                    </p>
+                    <ul>
+                        <li>Elemento 1</li>
+                        <li>Elemento 2</li>
+                        <li>Elemento 3</li>
+                    </ul>
+                    <ol>
+                        <li>Elemento 1</li>
+                        <li>Elemento 2</li>
+                        <li>Elemento 3</li>
+                    </ol>
+                    <h1>Instituições</h1>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec malesuada ligula. Aenean sollicitudin condimentum elit, sit amet fringilla mi blandit sed. Sed adipiscing laoreet ipsum sed volutpat. Integer non odio sodales nibh congue scelerisque. Curabitur blandit, nisi id faucibus consectetur, ligula purus sagittis metus, sit amet auctor nunc nisi viverra nunc. Aenean odio justo, elementum sit amet rhoncus at, porta bibendum elit. Nunc lobortis diam eget ligula sodales sit amet blandit ante tempor. Nullam elementum lacinia commodo.                    
+                    </p>
+                    <h2>Formação</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec malesuada ligula. Aenean sollicitudin condimentum elit, sit amet fringilla mi blandit sed. Sed adipiscing laoreet ipsum sed volutpat. Integer non odio sodales nibh congue scelerisque. Curabitur blandit, nisi id faucibus consectetur, ligula purus sagittis metus, sit amet auctor nunc nisi viverra nunc. Aenean odio justo, elementum sit amet rhoncus at, porta bibendum elit. Nunc lobortis diam eget ligula sodales sit amet blandit ante tempor. Nullam elementum lacinia commodo.                    
+                    </p>
+                    <h3>Formação</h3>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec malesuada ligula. Aenean sollicitudin condimentum elit, sit amet fringilla mi blandit sed. Sed adipiscing laoreet ipsum sed volutpat. Integer non odio sodales nibh congue scelerisque. Curabitur blandit, nisi id faucibus consectetur, ligula purus sagittis metus, sit amet auctor nunc nisi viverra nunc. Aenean odio justo, elementum sit amet rhoncus at, porta bibendum elit. Nunc lobortis diam eget ligula sodales sit amet blandit ante tempor. Nullam elementum lacinia commodo.                    
+                    </p>
+                    <h4>Formação</h4>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec malesuada ligula. Aenean sollicitudin condimentum elit, sit amet fringilla mi blandit sed. Sed adipiscing laoreet ipsum sed volutpat. Integer non odio sodales nibh congue scelerisque. Curabitur blandit, nisi id faucibus consectetur, ligula purus sagittis metus, sit amet auctor nunc nisi viverra nunc. Aenean odio justo, elementum sit amet rhoncus at, porta bibendum elit. Nunc lobortis diam eget ligula sodales sit amet blandit ante tempor. Nullam elementum lacinia commodo.                    
+                    </p>
+                    <h5>Formação</h5>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec malesuada ligula. Aenean sollicitudin condimentum elit, sit amet fringilla mi blandit sed. Sed adipiscing laoreet ipsum sed volutpat. Integer non odio sodales nibh congue scelerisque. Curabitur blandit, nisi id faucibus consectetur, ligula purus sagittis metus, sit amet auctor nunc nisi viverra nunc. Aenean odio justo, elementum sit amet rhoncus at, porta bibendum elit. Nunc lobortis diam eget ligula sodales sit amet blandit ante tempor. Nullam elementum lacinia commodo.                    
+                    </p>                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec malesuada ligula. Aenean sollicitudin condimentum elit, sit amet fringilla mi blandit sed. Sed adipiscing laoreet ipsum sed volutpat. Integer non odio sodales nibh congue scelerisque. Curabitur blandit, nisi id faucibus consectetur, ligula purus sagittis metus, sit amet auctor nunc nisi viverra nunc. Aenean odio justo, elementum sit amet rhoncus at, porta bibendum elit. Nunc lobortis diam eget ligula sodales sit amet blandit ante tempor. Nullam elementum lacinia commodo.                    
+                    </p>
+                    <h6>Formação</h6>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec malesuada ligula. Aenean sollicitudin condimentum elit, sit amet fringilla mi blandit sed. Sed adipiscing laoreet ipsum sed volutpat. Integer non odio sodales nibh congue scelerisque. Curabitur blandit, nisi id faucibus consectetur, ligula purus sagittis metus, sit amet auctor nunc nisi viverra nunc. Aenean odio justo, elementum sit amet rhoncus at, porta bibendum elit. Nunc lobortis diam eget ligula sodales sit amet blandit ante tempor. Nullam elementum lacinia commodo.                    
+                    </p>
+                </div>
+            </div>
+	    
+	    </div>
+    </div>
+
     </div><!-- end main -->
     </div><!-- end content -->
 </body>

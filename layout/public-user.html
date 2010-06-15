@@ -12,6 +12,8 @@
     </script>
     <script type="text/javascript" src="javascripts/jquery-ui-1.8.1.custom.min.js" charset="utf-8">
     </script>
+    <script type="text/javascript" src="javascripts/common.js" charset="utf-8">
+    </script>
 </head>
 <body>
 <div id="header" class="container_16">
@@ -36,29 +38,6 @@
             </div>
         </form>
     </div>
-    <script type="text/javascript">
-        $(document).ready(function(){
-        
-        $("#user-info").hide()
-        
-        $("#header a.login").click(function(e){
-            e.preventDefault()
-            $("#user-info").toggle()
-            $(this).toggleClass('opened')
-        })
-        
-        $("#user-info").mouseup(function(){
-            return false  
-        })
-        
-        $(document).mouseup(function(e){
-            if($(e.target).parent("#header a.login").length==0) {
-                $("#user-info").hide();
-            }
-        })
-        
-        })/* end document */
-    </script>
     <a href="" class="login grid_2 " >Login</a>
     <div id="user-info" class="">
         <a href="">Caixa de entrada</a>
@@ -103,12 +82,6 @@
         </div><!-- end social-overview -->
     </div><!-- profile -->
     
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $(".tabs").tabs();
-        })
-    </script>
-    
     <div class="tabs">
 	    <ul>
 		    <li><a href="#tabs-1">Atividades</a></li>
@@ -120,15 +93,6 @@
 	    <div class="content clearfix">
 	
 	        <div id="tabs-1">
-                <script type="text/javascript">
-                    $(document).ready(function(){
-                        $(".question-action a:first").click(function(e){
-                            $(this).next("div.answer:first").slideToggle()
-                            e.preventDefault()
-                        })
-                        $("div.post-activity").tabs({fx : { opacity : 'toggle'}})
-                    })
-                </script>
                 <div class="post-activity">
                     <ul class="clearfix">
 	                    <li><a href="#actv-1" class="status">Status</a></li>
@@ -138,48 +102,23 @@
                     
                     <div id="actv-1" class="clearfix">
                         <form class="post-status" action="" method="post">
-                            <textarea name="status" title="O que você está fazendo agora?" class="inner-label"></textarea>
+                            <fieldset>
+                            <textarea name="status" rows="" cols="" title="O que você está fazendo agora?" class="inner-label"></textarea>
                             <button type="submit">Postar</button>
+                            </fieldset>
                         </form>
                     </div>
                     <div id="actv-2" class="clearfix">
                         <form class="post-question" action="" method="post">
-                            <textarea name="question" title="Qual é a sua dúvida?" class="inner-label"></textarea>
+                            <fieldset>
+                            <textarea name="question" rows="" cols="" title="Qual é a sua dúvida?" class="inner-label"></textarea>
                             <button type="submit">Perguntar</button>
+                            </fieldset>
                         </form>
                     </div>
                     <div id="actv-3" class="clearfix">
-                        <script type="text/javascript">
-                            $(document).ready(function(){
-                                $("input[title], textarea[title]").each(function(){
-                                    if($(this).val() === ''){
-                                        $(this).val($(this).attr('title'))
-                                    }
-                                    
-                                    $(this).focus(function(){
-                                          if($(this).val() === $(this).attr('title')){
-                                              $(this).val('').toggleClass('inner-label')
-                                          }
-                                    })
-                                    
-                                    $(this).blur(function(){
-                                          if($(this).val() === ''){
-                                              $(this).val($(this).attr('title')).toggleClass('inner-label')
-                                          }
-                                    })
-                                })
-                                
-                                i = 2
-                                $("form.post-poll span.add").click(function(){
-                                    $(this).before("<input type=\"text\" name=\"choice_"+i+"\" title=\"Alternativa "+i+"\"/>")
-                                    i++
-                                })
-                                
-                                $("ul.groups > li:odd").addClass("odd")
-                                
-                            })
-                        </script>
-                        <form method="post" class="post-poll">
+                        <form method="post" action="" class="post-poll">
+                            <fieldset>
                             <label for="title">Pergunta</label>
                             <input type="text" name="title" />
                             <input type="text" name="choice_0" title="Alternativa 1" class="inner-label"/>
@@ -189,9 +128,9 @@
                             Adicionar
                             </span>
                             <button type="submit">Postar</button>
-                            
+                            </fieldset>
                         </form>
-                    </div>
+                    </div><!-- end post-activity -->
                 </div>
 	            <div class="filter-box clearfix">
 	                <ul>
@@ -222,8 +161,10 @@
 	                            <a href="">Responder</a>
 	                            <div class="answer hide">
 	                            <form action="" method="post">
+	                                <fieldset>
 	                                <input type="text" name="response" class="answer" />
 	                                <button type="submit">Responder</button>
+	                                </fieldset>
 	                            </form>
 	                            </div>
 	                        </div>
@@ -270,6 +211,7 @@
 	                            Qual é a resposta para a vida, o universo e tudo mais?
 	                            <span class="when quiet">há 6 horas</span>
 	                        </span>
+	                    </div>
 	                  </li>
                 </ul><!-- end activities -->
 	            
@@ -390,13 +332,13 @@
     </div><!-- end main -->
     <div class="sidebar grid_4 omega">
         <div class="report">
-            <span class="info clearfix">
+            <div class="info clearfix">
                 <div class="points-m">
                 <span class="legend">você tem</span>
                 <span class="number">37</span>
                 <span class="legend">redu points</span>
                 </div>
-            </span>
+            </div>
         </div>
         <ul class="sortable clearfix">
         <li class="clearfix">
@@ -461,14 +403,6 @@
         </div>
         </li>
         </ul><!-- end sortable -->
-        <script type="text/javascript">
-            $(function() {
-                $("ul.sortable").sortable({
-                    placeholder: 'ui-state-highlight'
-                });
-                $("ul.sortable").disableSelection();
-            });
-        </script>
     </div><!-- end sidebar -->
     </div><!-- end content -->
 </body>
