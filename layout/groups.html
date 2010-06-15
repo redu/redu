@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="stylesheets/reset.css" type="text/css" media="screen, projection"></link>
+    <link rel="stylesheet" href="stylesheets/960.css" type="text/css" media="screen, projection"></link>
+    <link rel="stylesheet" href="stylesheets/style.css" type="text/css" media="screen"></link>
+    <script type="text/javascript" src="javascripts/jquery-1.4.2.min.js" charset="utf-8">
+    </script>
+    <script type="text/javascript" src="javascripts/jquery-ui-1.8.1.custom.min.js" charset="utf-8">
+    </script>
+</head>
+<body>
+<div id="header" class="container_16">
+    <h1 id="logo" class="grid_3"><a href="#" class="replacement">Redu - Rede Social Educacional</a></h1>
+    <div id="global-nav" class="grid_6">
+        <ul class="clearfix">
+	    <li class="item-1">
+	        <a href="">Início</a>
+	    </li>
+	    <li class="item-2 selected">
+	        <a href="">Aprender</a>
+	    </li>
+	    <li class="item-3"><a href="">Ensinar</a></li>
+	    <li class="item-4"><a href="">Redes</a></li>
+	    </ul>
+    </div>
+    <div id="global-search" class="grid_5">
+        <form action="" id="search">
+            <div class="searchbox">
+            <input type="text" name="search" />
+            <input type="submit" value="Buscar" class="replacement" />
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function(){
+        
+        $("#user-info").hide()
+        
+        $("#header a.login").click(function(e){
+            e.preventDefault()
+            $("#user-info").toggle()
+            $(this).toggleClass('opened')
+        })
+        
+        $("#user-info").mouseup(function(){
+            return false  
+        })
+        
+        $(document).mouseup(function(e){
+            if($(e.target).parent("#header a.login").length==0) {
+                $("#user-info").hide();
+            }
+        })
+        
+        })/* end document */
+    </script>
+    <a href="" class="login grid_2 " >Login</a>
+    <div id="user-info" class="">
+        <a href="">Caixa de entrada</a>
+        <a href="">Configurações</a>
+        <a href="">Sair</a>
+    </div>
+</div><!-- end header -->
+<div id="group" class="container_16 content clearfix">
+    <div id="group-header" class="gird_16 clearfix">
+        <div class="logo grid_4">
+            <img src="http://webmail.cap.ufpe.br/servicos/soae/images/logo.gif" alt="" />
+        </div>
+        <div class="info grid_9">
+        <h2 class="name"><a href="">Colégio de Aplicação da UFPE</a></h2>
+        <a href="" class="config">Configurações</a>
+        <span class="areas">
+        <a href="">Ensino Médio, Escolas</a>
+        </span>
+        </div><!-- end info -->
+    </div><!-- end group-header -->
+    <div class="sidebar grid_4">
+        <ul class="sortable clearfix">
+        <script type="text/javascript">
+            $(document).ready(function(){
+            
+            $("#group .sidebar ul.sub-groups li a").click(function(e){
+                
+            })
+            
+            })
+        </script>
+        <li class="clearfix">
+        <span class="call"><span>Seus grupos (4)</span></span>
+        <ul class="sub-groups">
+            <li>
+                <a href="">Matemática</a>
+
+            
+            </li>
+            <li><a href="">História</a></li>
+            <li><a href="">Geografia</a></li>
+            <li><a href="">Xadrez</a></li>
+        </ul>
+        </li>
+        
+        <li class="clearfix">
+        <span class="call"><span>Professores (5)</span></span>
+        <div class="followship box clearfix">
+            <ul class="clearfix">
+	            <li><a href=""><img src="http://a1.twimg.com/profile_images/353872910/python-avatar_mini.png" alt="" /></a></li>
+	            <li><a href=""><img src="http://a3.twimg.com/profile_images/143752933/3403776828_54443f6bdc_mini.jpg" alt="" /></a></li>
+	            <li><a href=""><img src="http://a3.twimg.com/profile_images/381705289/avatar_ff_mini.jpg" alt="" /></a></li>
+	            <li><a href=""><img src="http://a3.twimg.com/profile_images/381705289/avatar_ff_mini.jpg" alt="" /></a></li>
+	            <li><a href=""><img src="http://a1.twimg.com/profile_images/353872910/python-avatar_mini.png" alt="" /></a></li>
+	            <li><a href=""><img src="http://a3.twimg.com/profile_images/143752933/3403776828_54443f6bdc_mini.jpg" alt="" /></a></li>
+	            <li><a href=""><img src="http://a3.twimg.com/profile_images/381705289/avatar_ff_mini.jpg" alt="" /></a></li>
+	            <li><a href=""><img src="http://a1.twimg.com/profile_images/353872910/python-avatar_mini.png" alt="" /></a></li>
+	            <li><a href=""><img src="http://a3.twimg.com/profile_images/143752933/3403776828_54443f6bdc_mini.jpg" alt="" /></a></li>
+	            <li><a href=""><img src="http://a3.twimg.com/profile_images/381705289/avatar_ff_mini.jpg" alt="" /></a></li>
+	            <li><a href=""><img src="http://a1.twimg.com/profile_images/353872910/python-avatar_mini.png" alt="" /></a></li>
+            </ul>
+            <a href="" class="icon more">Ver mais</a>
+
+            </div>
+        </li>
+        <li class="clearfix">
+        <span class="call"><span>Membros (50)</span></span>
+        <div class="followship box clearfix">
+            <ul class="clearfix">
+	            <li><a href=""><img src="http://a1.twimg.com/profile_images/353872910/python-avatar_mini.png" alt="" /></a></li>
+	            <li><a href=""><img src="http://a3.twimg.com/profile_images/143752933/3403776828_54443f6bdc_mini.jpg" alt="" /></a></li>
+	            <li><a href=""><img src="http://a3.twimg.com/profile_images/381705289/avatar_ff_mini.jpg" alt="" /></a></li>
+	            <li><a href=""><img src="http://a3.twimg.com/profile_images/381705289/avatar_ff_mini.jpg" alt="" /></a></li>
+	            <li><a href=""><img src="http://a1.twimg.com/profile_images/353872910/python-avatar_mini.png" alt="" /></a></li>
+	            <li><a href=""><img src="http://a3.twimg.com/profile_images/143752933/3403776828_54443f6bdc_mini.jpg" alt="" /></a></li>
+	            <li><a href=""><img src="http://a3.twimg.com/profile_images/381705289/avatar_ff_mini.jpg" alt="" /></a></li>
+	            <li><a href=""><img src="http://a1.twimg.com/profile_images/353872910/python-avatar_mini.png" alt="" /></a></li>
+	            <li><a href=""><img src="http://a3.twimg.com/profile_images/143752933/3403776828_54443f6bdc_mini.jpg" alt="" /></a></li>
+	            <li><a href=""><img src="http://a3.twimg.com/profile_images/381705289/avatar_ff_mini.jpg" alt="" /></a></li>
+	            <li><a href=""><img src="http://a1.twimg.com/profile_images/353872910/python-avatar_mini.png" alt="" /></a></li>
+	            <li><a href=""><img src="http://a3.twimg.com/profile_images/143752933/3403776828_54443f6bdc_mini.jpg" alt="" /></a></li>
+	            <li><a href=""><img src="http://a3.twimg.com/profile_images/381705289/avatar_ff_mini.jpg" alt="" /></a></li>
+	            <li><a href=""><img src="http://a1.twimg.com/profile_images/353872910/python-avatar_mini.png" alt="" /></a></li>
+	            <li><a href=""><img src="http://a3.twimg.com/profile_images/143752933/3403776828_54443f6bdc_mini.jpg" alt="" /></a></li>
+	            <li><a href=""><img src="http://a3.twimg.com/profile_images/381705289/avatar_ff_mini.jpg" alt="" /></a></li>
+            </ul>
+            <a href="" class="icon more">Ver mais</a>
+            </div>
+        </li>
+        </ul><!-- end sortable -->
+        <script type="text/javascript">
+            $(function() {
+                $("ul.sortable").sortable({
+                    placeholder: 'ui-state-highlight'
+                });
+                $("ul.sortable").disableSelection();
+            });
+        </script>
+    </div><!-- end sidebar -->
+    <div class="main grid_12">
+        main
+    
+    </div><!-- end main -->
+    </div><!-- end content -->
+</body>
+</html>
+

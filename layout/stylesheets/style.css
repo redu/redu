@@ -5,10 +5,10 @@
 
 /**
    Default color table:
-    @border: #EFF0F0 
-    @link1: #F63B0B
-    @link2: #18C8EF
-    @header: #F63B0B
+    @border: #EFF0F0 cinza
+    @link2: #0B85C1 azul
+    @link1: #18C8EF azul claro
+    @header: #F63B0B vermelho
     @background: #EBF7FD
     
 **/
@@ -36,11 +36,10 @@ ul, ol {
 
 a, a:hover {
     text-decoration: none;
-    color: #F63B0B;
 }
 
-a:hover {
-    color: #18C8EF;
+a {
+    color: #0B85C1;
 }
 
 .pretty-text h1,
@@ -441,16 +440,17 @@ div.recomendations-m .number {
 
 /** @header **/
 #header {
-/*    border-bottom: 1px solid #EFF0F0;*/
     background-color: white;
-    height: 70px;
+    height: 50px;
     overflow: hidden;
+    background: url("../images/ui-elements_r16_c2.png") no-repeat;
+    position: relative;
 }
 
     #logo {
         background: url("../images/logotipo.png") no-repeat;
         height: 29px;
-        margin-top: 10px;
+        margin-top: 5px;
         display: block;
     }
     
@@ -462,117 +462,21 @@ div.recomendations-m .number {
     
     #global-nav ul li {
         float: left;
-        margin-right: 5px;
     }
     
     #global-nav ul li a {
-        text-indent: -9999px;
-        overflow: hidden;
-        display: block;
-    }
-    
-    #global-nav ul li.selected,
-    #global-nav ul li.item-1,
-    #global-nav ul li.item-2,
-    #global-nav ul li.item-3,
-    #global-nav ul li.item-4,
-    #global-nav ul li.item-1:hover,
-    #global-nav ul li.item-2:hover,
-    #global-nav ul li.item-3:hover,
-    #global-nav ul li.item-4:hover {
-        width: 92px;
-        height: 33px;
-    }
-    
-    #global-nav ul li.item-1 a,
-    #global-nav ul li.item-2 a,
-    #global-nav ul li.item-3 a,
-    #global-nav ul li.item-4 a,
-    #global-nav ul li.item-1:hover a,
-    #global-nav ul li.item-2:hover a,
-    #global-nav ul li.item-3:hover a,
-    #global-nav ul li.item-4:hover a {
-        display: block;
-        margin: 10px auto; 
-        background-position: 50% 50%;
-        background-repeat: no-repeat;
-    }
-    
-    #global-nav ul li.item-1 a{
-        background-image: url("../images/Untitled-2_r1_c1.png");
-    }
-    
-    #global-nav ul li.item-1:hover a{    
-        background-image: url("../images/Untitled-2_r7_c1.png");
-    }
-    
-    #global-nav ul li.item-2 a{
-        background-image: url("../images/Untitled-2_r3_c7.png");
-    }
-    
-    #global-nav ul li.item-2:hover a{    
-        background-image: url("../images/Untitled-2_r10_c8.png");
-    }
-    
-    #global-nav ul li.item-3 a{
-        background-image: url("../images/Untitled-2_r3_c5.png");
-    }
-    
-    #global-nav ul li.item-3:hover a{    
-        background-image: url("../images/Untitled-2_r9_c5.png");
-    }
-    
-    #global-nav ul li.item-4 a{
-        background-image: url("../images/Untitled-2_r2_c3.png");
-    }
-    
-    #global-nav ul li.item-4:hover a{    
-        background-image: url("../images/Untitled-2_r8_c3.png");
-    }
-    
-    #global-nav ul li.selected,
-    #global-nav ul li.item-1:hover,
-    #global-nav ul li.item-2:hover,
-    #global-nav ul li.item-3:hover,
-    #global-nav ul li.item-4:hover {
-        background-image: url("../images/global-nav_r2_c1.png");
-    }  
-    
-    div.local-nav {
-        width: 100%;
-        background-color: #EBF7FD;
-        height: 30px;
-    }
-    
-    div.local-nav ul#item-2 {
-        margin-left: 280px;
-    }
-    
-    div.local-nav ul#item-3 {
-        margin-left: 390px;
-    }
-    
-    div.local-nav ul#item-4 {
-        margin-left: 480px;
-    }
-    
-    div.local-nav ul li {
-        float: left;
-    }
-    
-    div.local-nav ul li a {
-        font-size: .9em;
+        padding: 10px 15px;
         font-weight: bold;
-        color: #7F7F7F;
-        display: block;
-        margin: 10px 20px 10px 0;
     }
     
-    div.local-nav ul li a:hover {
-        color: #A1A1A1;
+    
+    #global-nav ul li a:hover,
+    #global-nav ul li a.selected {
+        background-color: #F8FAFC;
     }
     
     #global-search {
+        margin-top: 8px;
     }
     
     #search .searchbox {
@@ -592,16 +496,25 @@ div.recomendations-m .number {
          background-color: transparent;
          height: 32px;
      }
+    
+    #header a.login {
+        font-weight: bold;
+        font-size: .8em;
+        color: #F63B0B;
+        margin-top: 10px;
+    } 
+    
+    #header a.opened {
+
+    }
+    
+    #user-info {
+    }
+    
+    #user-info a {
+        display: block;
+    }
      
-     #user-info {
-         margin: 5px 0;
-         text-align: right;
-         font-size: .8em;
-     }
-     
-     #user-info a {
-        margin-left: 10px;
-     }
     
 
     
@@ -610,10 +523,10 @@ div.content {
     min-height:100%;
     height: auto;
     padding-top: 10px;
-    border: 1px solid #EFF0F0;
-    border-top: none;
     position: relative;
     background: white;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
 }
 
 div.content div.content {
@@ -893,48 +806,66 @@ div.content div.content {
     }
     
 /** @sidebar **/
-    #sidebar {
+    #public-profile .sidebar {
         padding-top: 120px;
     }
     
-    #sidebar ul.sortable li {
+    .sidebar ul li {
     }
     
-    #sidebar ul.sortable li.ui-state-highlight {
+    .sidebar ul.sortable li {
+        background-color: white;
+    }
+    
+    .sidebar ul.sortable li.ui-state-highlight {
         border: 3px #EFF0F0 dashed;
         height: 5em;
     }
     
-    #sidebar span.call {
-        font-size: 1em;
+    .sidebar span.call {
+        font-size: .9em;
         text-transform: uppercase;
         font-weight: bold;
-        color: #348E94;
+        color: #F63B0B;
         margin: 20px 0 10px 0;
+        padding-bottom: 5px;
         display:block;
+        background: url("../images/ui-elements_r9_c55.png") no-repeat 15px bottom;
+        color: white;
+        margin-bottom: 5px;
     }
     
-    #sidebar span.call:hover {
+    .sidebar span.gray {
+        color: gray;
+    }
+    
+     .sidebar span.call span {
+        padding: 5px;
+        display: block;
+        background: #18C8EF;
+     }
+    
+    .sidebar span.call:hover {
         cursor: move;
     }
     
-    #sidebar div.followship a.more {
+    .sidebar div.followship a.more {
         margin: 10px;
         display: block;
         font-size: .8em;
     }
     
-    #sidebar div.followship ul {
+    .sidebar div.followship ul {
         margin: 10px;
     }
     
-    #sidebar div.followship ul li {
+    .sidebar div.followship ul li {
         float: left;
         margin-right: 6px;
         margin-top: 6px;
     }
     
-    #sidebar div.report {
+    .sidebar div.report {
         background: url("../images/ui-elements_r5_c7.png") no-repeat;
         width: 255px;
         height: 104px;
@@ -943,19 +874,63 @@ div.content div.content {
         top: 10px;
     }
     
-    #sidebar div.report .info {
+    .sidebar div.report .info {
         margin: 10px 20px 10px 10px;
         display:block;
     }
     
-     #sidebar div.report .info .points-m {
+     .sidebar div.report .info .points-m {
          float: left;
          margin: 10px 0;
      }
      
-     #sidebar div.report .info .points-m .number {
+     .sidebar div.report .info .points-m .number {
         font-size: 2.5em;
      }
+
+/** @group **/
+#group-header {
+    
+}
+
+#group-header h2.name{
+    font-size: 1.4em;
+    font-weight: bold;
+    display: inline;
+}
+
+#group-header a.config {
+    font-size: .8em;
+    margin-left: 10px;
+    color: #18C8EF;
+}
+
+#group-header span.areas {
+    display: block;
+    font-size: .8em;
+    margin-top:8px;
+}
+
+#group .sidebar ul.sub-groups {
+    
+}
+
+#group .sidebar ul.sub-groups li {
+    border-bottom: 1px solid #E9E9E9;
+    display: block;
+}
+
+#group .sidebar ul.sub-groups li li { 
+    border: none;
+}
+
+#group .sidebar ul.sub-groups li a {
+    padding: 8px 0;
+    display: block;
+    font-size: .9em;
+    padding-left: 20px;
+    background: 
+}
      
     
 /** helpers **/

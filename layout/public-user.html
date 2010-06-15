@@ -14,16 +14,9 @@
     </script>
 </head>
 <body>
-<div id="header">
-    <div class="container_16">
-    <h1 id="logo" class="grid_3 alpha"><a href="#" class="replacement">Redu - Rede Social Educacional</a></h1>
-    <div id="user-info" class="grid_13 omega">
-        <a href="">Robson Ribeiro</a>
-        <a href="">Caixa de entrada</a>
-        <a href="">Configurações</a>
-        <a href="">Sair</a>
-    </div>
-    <div id="global-nav" class="grid_8">
+<div id="header" class="container_16">
+    <h1 id="logo" class="grid_3"><a href="#" class="replacement">Redu - Rede Social Educacional</a></h1>
+    <div id="global-nav" class="grid_6">
         <ul class="clearfix">
 	    <li class="item-1">
 	        <a href="">Início</a>
@@ -35,7 +28,7 @@
 	    <li class="item-4"><a href="">Redes</a></li>
 	    </ul>
     </div>
-    <div id="global-search" class="grid_5 omega">
+    <div id="global-search" class="grid_5">
         <form action="" id="search">
             <div class="searchbox">
             <input type="text" name="search" />
@@ -43,49 +36,36 @@
             </div>
         </form>
     </div>
+    <script type="text/javascript">
+        $(document).ready(function(){
+        
+        $("#user-info").hide()
+        
+        $("#header a.login").click(function(e){
+            e.preventDefault()
+            $("#user-info").toggle()
+            $(this).toggleClass('opened')
+        })
+        
+        $("#user-info").mouseup(function(){
+            return false  
+        })
+        
+        $(document).mouseup(function(e){
+            if($(e.target).parent("#header a.login").length==0) {
+                $("#user-info").hide();
+            }
+        })
+        
+        })/* end document */
+    </script>
+    <a href="" class="login grid_2 " >Login</a>
+    <div id="user-info" class="">
+        <a href="">Caixa de entrada</a>
+        <a href="">Configurações</a>
+        <a href="">Sair</a>
     </div>
 </div><!-- end header -->
-<div class="local-nav">
-<script type="text/javascript">
-$(document).ready(function(){
-    /* #TODO make it beautiful. */
-    $("#global-nav ul li").hover(function(e){
-        $("#global-nav ul li.selected").removeClass("selected")
-        $(this).addClass("selected")
-        if($(this).hasClass("item-2")){
-            $("div.local-nav #item-2").show()
-            $("div.local-nav #item-3").hide()
-            $("div.local-nav #item-4").hide()
-        }else if($(this).hasClass("item-3")){
-            $("div.local-nav #item-3").show()
-            $("div.local-nav #item-2").hide()
-            $("div.local-nav #item-4").hide()
-        }else if($(this).hasClass("item-4")){
-            $("div.local-nav #item-4").show()
-            $("div.local-nav #item-3").hide()
-            $("div.local-nav #item-2").hide()
-        }
-        
-    })
-})
-</script>
-<div class="container_16 clearfix">
-<ul id="item-2" class="clearfix">
-    <li class="item-11"><a href="">Redes</a></li>
-    <li class="item-12"><a href="">Aulas</a></li>
-    <li class="item-13"><a href="">Recursos</a></li>
-</ul>
-<ul id="item-3" class="clearfix">
-    <li class="item-11"><a href="">Redes</a></li>
-    <li class="item-12"><a href="">Aulas</a></li>
-    <li class="item-13"><a href="">Recursos</a></li>
-</ul>
-<ul id="item-4" class="clearfix">
-    <li class="item-11"><a href="">Minhas Redes</a></li>
-    <li class="item-12"><a href="">Nova Rede</a></li>
-</ul>
-</div>
-</div><!-- end local-nav -->
 <div id="public-profile" class="container_12 content clearfix">
     <div class="main grid_8">
     <div class="overview yellow clearfix">
@@ -408,7 +388,7 @@ $(document).ready(function(){
     </div>
     
     </div><!-- end main -->
-    <div id="sidebar" class="grid_4 omega">
+    <div class="sidebar grid_4 omega">
         <div class="report">
             <span class="info clearfix">
                 <div class="points-m">
@@ -420,7 +400,7 @@ $(document).ready(function(){
         </div>
         <ul class="sortable clearfix">
         <li class="clearfix">
-        <span class="call">Quem você segue</span>
+        <span class="call"><span>Quem você segue</span></span>
         <div class="followship box clearfix">
             <ul class="clearfix">
 	            <li><a href=""><img src="http://a1.twimg.com/profile_images/353872910/python-avatar_mini.png" alt="" /></a></li>
@@ -475,7 +455,7 @@ $(document).ready(function(){
         </li>
         
         <li class="clearfix">
-        <span class="call">Seu Progresso</span>
+        <span class="call"><span>Seu Progresso</span></span>
         <div class="followship box clearfix">
             Progresso
         </div>
