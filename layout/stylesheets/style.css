@@ -442,7 +442,6 @@ div.recomendations-m .number {
 #header {
     background-color: white;
     height: 50px;
-    overflow: hidden;
     background: url("../images/ui-elements_r16_c2.png") no-repeat;
     position: relative;
 }
@@ -484,40 +483,77 @@ div.recomendations-m .number {
         height: 32px;
     }
     
-     #search .searchbox input[type=text] {
-         background-color: transparent;
-         border: none;
-         font-size: .9em;
-         color: #8F8F8F;
-     }
-     
-     #search .searchbox input[type=submit] {
-         border: none;
-         background-color: transparent;
-         height: 32px;
-     }
-    
-    #header a.login {
+    #search .searchbox input[type=text] {
+        background-color: transparent;
+        border: none;
+        font-size: .9em;
+        color: #8F8F8F;
+    }
+
+    #search .searchbox input[type=submit] {
+        border: none;
+        background-color: transparent;
+        height: 32px;
+    }
+
+    #header .user-actions > a.opened,
+    #header .user-actions > a {
         font-weight: bold;
         font-size: .8em;
-        color: #F63B0B;
         margin-top: 10px;
+        background: #EFEFEF;
+        padding: 5px;
+        display: block;
+        -moz-border-radius-topleft: 5px;
+        -moz-border-radius-topright: 5px;
+        -webkit-border-top-left-radius: 5px;
+        -webkit-border-top-right-radius: 5px;
+        text-align: center;
     } 
-    
+
+    #header .user-actions > a.closed {
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+    }
+
     #header a.opened {
 
     }
-    
-    #user-info {
-    }
-    
-    #user-info a {
-        display: block;
-    }
-     
-    
 
+    #header .user-actions div.option {
+        z-index: 1000;
+        position: absolute;
+        background: white;
+        border: 5px solid #EFEFEF;
+        right: 10px;
+        -moz-border-radius-topleft: 5px;
+        -moz-border-radius-bottomleft: 5px;
+        -moz-border-radius-bottomright: 5px;
+        -webkit-border-top-left-radius: 5px;
+        -webkit-border-bottom-left-radius: 5px;
+        -webkit-border-bottom-right-radius: 5px;
+        font-size: .8em;
+
+    }
     
+    #header .user-actions #user-settings {
+        width: 125px;
+    }
+    
+    #header .user-actions #user-settings ul {
+        background: white;
+        margin: 5px;
+    }
+    
+    #header .user-actions #user-settings ul li {
+        margin-bottom: 5px;
+    }
+    
+    #header .user-actions #user-login {
+        padding: 10px;
+    }
+
+     
 /**  main **/
 div.content {
     min-height:100%;
@@ -1005,4 +1041,4 @@ div.content div.content {
     .hide { 
         display: none;
     }
-    
+    #header .user-actions #user-settings

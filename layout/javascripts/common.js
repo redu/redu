@@ -1,22 +1,7 @@
 $(document).ready(function(){
-    $("#user-info").hide()
-    
-    $("#header a.login").click(function(e){
-        e.preventDefault()
-        $("#user-info").toggle()
-        $(this).toggleClass('opened')
-    })
-    
-    $("#user-info").mouseup(function(){
-        return false  
-    })
-    
-    $(document).mouseup(function(e){
-        if($(e.target).parent("#header a.login").length==0) {
-            $("#user-info").hide();
-        }
-    })
-    
+
+    // User box
+
     $("#group .sidebar ul.sub-groups li ul, #group .sidebar ul.sub-groups li a.more").hide()
 
     $("#group .sidebar ul.sub-groups > li a.sb").click(function(e){
