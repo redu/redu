@@ -197,7 +197,8 @@ class FoldersController < BaseController
   def update
     @folder = Folder.find(params[:id])
       if @folder.update_attributes(:name => params[:folder][:name], :date_modified => Time.now)
-        redirect_to :action => 'list', :id => params[:folder][:parent_id], :school_id => params[:folder][:school_id]
+        #redirect_to :action => 'list', :id => params[:folder][:parent_id], :school_id => params[:folder][:school_id]
+        redirect_to school_folders_path(:id => params[:folder][:parent_id], :school_id => params[:folder][:school_id])
     end
   end
 
