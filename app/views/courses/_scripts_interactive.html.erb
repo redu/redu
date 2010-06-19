@@ -44,7 +44,7 @@
 		var topicItem =	document.createElement("a");
 		// TODO como reaproveitar esse innerHTML abaixo de um item do rails?
 		topicItem.innerHTML = "<img title=\"Texto interativo\" src=\"/images/icons/iclass.gif\" alt=\"Iclass\">" + 
-		"<span id=\"topic_name_" + topicCount + "\"> Sem título</span> <img src=\"../../images/icons/delete.png\" style=\"float:right;\">";
+		"<span id=\"topic_name_" + topicCount + "\"> Sem título</span> <img src=\"../../images/icons/delete.png\" style=\"float:right; border: 0;\"  onclick=\"removeTopic(51); return false;\" alt=\"Delete\">";
 		topicItem.setAttribute("href", "#");
 		topicItem.setAttribute("id", "topic_item_" + topicCount);
 		topicItem.setAttribute("class", "topic_item");

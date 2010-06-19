@@ -37,8 +37,17 @@
 			<% counter = 0 %>
 			<% f.fields_for :lessons do | build |%>
 					<div id="topic_body_<%= (build.object.id) ? build.object.id : counter %>" style="display: <%= (counter ==0) ? 'block' : 'none' %>; margin-top: 10px;">
-						<%= render :partial => 'courses/form_lesson', :locals => {:f => build} %>
-                       
+						
+						 Titulo:
+						<br>
+						<%= build.text_field :title, :onkeyup => "topicTitle(this);" %>
+						<br>
+						<br>
+						<% build.object.lesson = Page.new %>
+						<%# if build.object.lesson_type == 'Seminar' %>
+						<%# else %>
+							<%= render :partial => 'courses/form_page_lesson', :locals => {:f => build} %>
+                       	<%# end %>
 					</div>
 					<% counter += 1 %>
 			<% end %>

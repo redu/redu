@@ -1,0 +1,7 @@
+<p>  <%= f.error_messages %></p>
+
+<label for="folder_name">Nome:</label><br />
+<%= f.text_field :name  %><br />
+<%= f.hidden_field :school_id, :value => @school_id %>
+<%= f.hidden_field :parent_id, :value => @parent_id %>
+<br />

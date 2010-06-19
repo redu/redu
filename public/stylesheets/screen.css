@@ -1,3 +1,24 @@
+.grid {
+	border-collapse: collapse;
+	
+}
+
+.grid td {
+	padding: 5px;
+	
+}
+
+.even
+{
+    background-color: #EDEDED;
+}
+
+.odd
+{
+    background-color: #D9D9D9;
+}
+
+
 .meter-wrap{
     position: relative;
 }
@@ -416,7 +437,7 @@ float:left; width:100%; height:100%; min-height:100%; _margin-top:-2px; margin-t
 #author_materials .follow:hover {padding:0; font-size:9px; text-decoration:underline; color:#5782d5;}
 
 #col_content{float:left; width:716px; height:auto; background-color:#FFF; padding:0px; margin-right:8px; overflow:visible; border:0;}
-#col_content_video{float:left; width:100%; height:auto; background-color:#FFF; padding:0px; margin:0px 8px 0px 0px; overflow:visible; border:0;}
+#col_content_video{float:left; width:100%; min-height: 500px; height:auto; background-color:#FFF; padding:0px; margin:0px 8px 0px 0px; overflow:visible; border:0;}
 #col_content_user{float:left; width:716px; height:auto; background-color:#FFF; padding:0px; margin-right:8px; overflow:visible; border:0;}
 
 #content_preview_exame{display:table; width:980px; height:auto; background-color:#FFF; padding:0px; margin:0px 8px 0px 0px; overflow:visible; border:0;}
@@ -484,7 +505,7 @@ float:left; width:100%; height:100%; min-height:100%; _margin-top:-2px; margin-t
 .evaluation_rating{margin:2px 0px 0px 40px;}
 
 /* PERFIL DO USUÁRIO //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
-#profile_user_info{float:left; width:716px; height:auto; padding:0px 0px 0px 0px; margin:0px 0px 8px 0px; background:#edf2fe}
+#profile_user_info{float:left; width:100%; height:auto; padding:0px 0px 0px 0px; margin:0px 0px 8px 0px; background:#edf2fe}
 #user_photo{float:left; width:64px; height:64px; background-color:#e7e8e8; padding:0px 0px 0px 0px; margin:8px 8px 8px 8px; border:solid 1px #5683d5;}
 
 /* BOX REDUPOINTS ////////// /// */
@@ -1111,7 +1132,7 @@ background:url(../images/denunciar.png) no-repeat;font-size:12px; text-decoratio
 
 #footer_logo{float:left; width:990px; height:auto; margin:8px 0px 0px 8px}
 
-#footer_menu{ float:left; border-top:1px solid #5683d5; height:40px; width:990px; padding:4px; margin-top:8px}
+#footer_menu{ float:left; /*border-top:1px solid #5683d5;*/ height:40px; width:990px; padding:4px; margin-top:8px}
 
 #copyright{float:left; font-size:11px; color:#5683d5; margin:12px 0px 0px 8px; height:auto;}
 

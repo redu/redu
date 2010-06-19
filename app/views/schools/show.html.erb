@@ -104,7 +104,7 @@
 	<% if current_user.can_post? @school %>
 	| <%= link_to "NOVA AULA", new_course_path(:school => @school), :class => "share"  %>
 	| <%= link_to "NOVO EXAME", new_exam_path(@school), :class => "share"  %>
-	| <%= link_to "MATERIAIS", new_exam_path(@school), :class => "share"  %>
+	| <%= link_to "ARQUIVOS", school_folders_path(@school), :class => "share"  %>
 	| <%= link_to "FORUM", new_exam_path(@school), :class => "share"  %>
 	<% end %>
 	

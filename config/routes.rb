@@ -1,12 +1,20 @@
 ActionController::Routing::Routes.draw do |map|
   
+   # This route helps determine if it's a folder or a file that is
+  # being added/remove to/from the clipboard.
+  map.connect 'clipboard/:action/:folder_or_file/:id',
+              :controller => 'clipboard',
+              :requirements => { :action         => /(add|remove)/,
+                                 :folder_or_file => /(folder|file)/ }
+  
+  
  map.opensocial_container "contain.localhost" # this will be turned in to <instance_id>.contain.localhost
   
-   map.resources :interactive_classes
+ map.resources :interactive_classes
    
-    map.resources :lessons
+ map.resources :lessons
     
-    map.resources :beta_keys, :collection => {:generate => :get, :remove_all => :get, :print_blank => :get, :invite => :get}
+ map.resources :beta_keys, :collection => {:generate => :get, :remove_all => :get, :print_blank => :get, :invite => :get}
   
   map.resources :profiles
 
@@ -27,7 +35,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :credits
     
- 
+  map.resources :folders
   
   
   map.resources :annotations
@@ -201,11 +209,10 @@ ActionController::Routing::Routes.draw do |map|
   
     # SCHOOL
   
-   map.resources :schools, :member => {:join => :get, :unjoin => :get,:manage => :get, :pending_courses => :get, :pending_members => :get }
   
    map.resources :schools, :member_path => '/:id', :nested_member_path => '/:school_id', :member => {:join => :get, :unjoin => :get,:manage => :get, :pending_courses => :get, :pending_members => :get
    } do |school|
-    #school.resources :students :subjects
+    school.resources :folders, :member =>{:upload => :get, :download => :get, :rename => :get, :destroy_folder => :get, :destroy_file => :get}
   end
   
   

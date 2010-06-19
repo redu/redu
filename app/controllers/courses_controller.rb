@@ -330,12 +330,12 @@ class CoursesController < BaseController
           
           
         elsif @course.course_type == 'interactive'
-          @iclass = InteractiveClass.new(params[:interactive_class])
-          @iclass.course = @course
+          @interactive_class = InteractiveClass.new(params[:interactive_class])
+          @interactive_class.course = @course
           
            respond_to do |format|
             
-            if @iclass.save
+            if @interactive_class.save
               
               format.html { 
                  redirect_to :action => :new , :course_type => params[:course_type], :step => "3"

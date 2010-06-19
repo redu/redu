@@ -137,6 +137,8 @@ reserved_logins: [
   'resources', 
   'roles', 
   'search', 
+  'seminars', 
+  'seminarios',
   'signup', 
   'sb_posts',
   'schools', 
