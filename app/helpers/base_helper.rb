@@ -4,6 +4,19 @@ require 'md5'
 module BaseHelper
   
   
+  def type_class(resource)
+      case resource.attachment_content_type
+      when "clipping" then 'clipping'
+      when "application/vnd.ms-powerpoint" then 'ppt'
+      when "application/msword" then 'word'
+      when "application/rtf" then 'word'
+      when "text/plain" then 'text' 
+      when "application/pdf" then 'pdf'
+      else ''
+      end
+  end
+  
+  
   def activity_name(item)
     link_user = link_to item.user.display_name, user_path(item.user)
     type = item.logeable_type.underscore

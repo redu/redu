@@ -1,0 +1,119 @@
+<script>
+function showLoading(){
+	document.getElementById('file_list_tbl').style.display = "none";
+	document.getElementById('spinner').style.display = "block";
+	//jQuery('file_list_tbl').hide();
+	//Element.show('spinner');
+}	
+</script>
+<div id="all_content3">
+<div id="col_content_video">
+	<div id="breadcrumbs_video"><a href="<%=application_url%>">home</a> > <%= link_to 'redes', schools_path %> > <strong><a href="#"><%= @school.name%></a></strong></div>  
+    <div id="title">ARQUIVOS</div>
+<!-- LISTAGEM RECURSO ############################################################################################################################################## -->
+
+<% if flash[:folder_error] %>
+    <div id="error"><%= flash[:folder_error] %></div>
+<% end %>
+
+
+
+
+<div id="all_list">
+	
+<%= render :partial => "schools/school_info", :locals => {:school => @school}%>
+
+<% if logged_in?  %>
+<div id="actions_user">
+	
+	<%  if current_user.school_admin? @school %>
+	   	 <%= link_to 'Criar diretório', new_school_folder_path(:id => @folder.id, :school_id => @school.id), :class => "share" %>
+   		 <%= link_to 'Upload de arquivo', upload_school_folder_path(:id => @folder.id, :school_id => @school.id), :class => "share" %>
+		 
+		  <a href="#" onclick="ShowProperties();" class="share" id="rights_link">Permissions</a>
+	    
+	
+	<% end %>
+	<%# link_to 'RSS', { :controller => 'folder', :action => 'feed', :id => @folder.id, :access_key => @logged_in_user.rss_access_key }, { :class => 'small' } %>
+	<%# link_to '(!)', { :controller => 'folder', :action => 'feed_warning' }, { :class => 'small', :style => 'margin-left:1px;' } %>
+
+	
+</div>
+<% end %>
+</div>  
+
+<div>
+<h3 id="file_path"> <%= path(@folder, false) %></h3>
+</div>
+
+	
+<div id="file_list">
+	<%= render :partial => "folders/list"  %>
+</div>
+Tamanho total: <%= total_size(@school.id) %> KB de 2 GB (2%)
+</div>
+
+<%  if current_user.school_admin? @school %>
+<div id="folder_rights" style="display:none;position:relative;"><div>
+    <% form_tag :action => 'update_permissions', :id => params[:id] do %>
+        <table>
+            <tr>
+                <th></th>
+                <th></th>
+                <th class="rights">Create</th>
+                <th class="rights">Read</th>
+                <th class="rights">Update</th>
+                <th class="rights">Delete</th>
+            </tr>
+    <% Group.find(:all, :order => 'name').each do |group| %>
+            <tr class="<%= cycle('even', 'odd') %>">
+        <% disabled = group.is_the_administrators_group? %>
+        <% if disabled %>
+                <td><%= image_tag('group_grey.png') %></td>
+                <td style="color:#818181;"><%= h(group.name) %></td>
+        <% else %>
+                <td><%= image_tag('group.png') %></td>
+                <td><%= h(group.name) %></td>
+        <% end %>
+                <td class="rights"><%= CRUD_check_box('create', group.id, controller.folder_id, disabled) %></td>
+                <td class="rights"><%= CRUD_check_box('read', group.id, controller.folder_id, disabled) %></td>
+                <td class="rights"><%= CRUD_check_box('update', group.id, controller.folder_id, disabled) %></td>
+                <td class="rights"><%= CRUD_check_box('delete', group.id, controller.folder_id, disabled) %></td>
+            </tr>
+    <% end %>
+        </table>
+        <br>
+        <%= submit_tag 'Save' %> <%= check_box('update_recursively', 'checked', {}, 'yes', 'no') %> Apply changes to subfolders
+    <% end %>
+</div></div>
+<% end %>
+	
+	
+	
+	
+	 
+</div>
+
+
+
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+   
+
+
+
+
+
+
+
+
+

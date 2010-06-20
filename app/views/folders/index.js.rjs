@@ -1,0 +1,6 @@
+
+#page << "document.getElementById('thebug_#{@question.id.to_s}').style.display = 'none';"
+
+page.replace_html  'file_list', :partial => 'folders/list'#, :locals => {:school => @shc}  
+          
+page << "document.getElementById('file_path').innerHTML = '"+path(@folder, false)+"';"

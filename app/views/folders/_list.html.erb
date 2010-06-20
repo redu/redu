@@ -1,0 +1,93 @@
+<%= image_tag("loadingAnimation.gif",
+              :align => "absmiddle",
+              :border => 0,
+              :id => "spinner",
+              :style =>"display: none;" ) %>
+	
+    <table id="file_list_tbl" class="grid">
+        <tr style="border-bottom: 1px solid rgb(187, 187, 187); height: 26px;">
+            <th></th>
+            <th width="239"><%= link_order 'Nome', 'name' %></th>
+            <th width="82"><%= link_order 'Tamanho', 'filesize' %></th>
+            <th><%= link_order 'Modificado', 'date_modified' %></th>
+            <th></th>
+            <th></th>
+        </tr>
+<% if @folder.parent %>
+        <tr>
+            <td class="directory collapsed">&nbsp;</td>
+            <td><%= link_to_remote "..", :url => {:action => :index, :id => @folder.parent, :school_id => @school.id}, :before => "showLoading()" %>
+	        </td>
+            <td>--</td>
+            <td>--</td>
+            <td></td>
+            <td></td>
+        </tr>
+<% end %>
+<% @folders.each do |folder| %>
+        <tr>
+            <td class="directory collapsed"></td>
+            <td>
+            	<%# link_to h(folder.name), school_folders_path(:id => folder, :school_id => @school.id) %>
+			<%= link_to_remote h(folder.name), :url => {:action => :index, :id => folder, :school_id => @school.id}, :before => "showLoading()" %>
+	
+			</td>
+            <td>--</td>
+            <td><%= time_ago_in_words(folder.date_modified) %></td>
+            
+    <% if @can_update %>
+	<td>
+                <%= link_to image_tag('edit.png', :style => "border: 0"), rename_school_folder_path(:id => folder.id, :school_id => @school.id), { :title => 'Renomear esta pasta' } %>
+     </td>
+	<% end %>
+           
+            
+    <% if @can_delete %>
+	<td>
+                <%= link_to image_tag('delete.png', :style => "border: 0"), destroy_folder_school_folder_path(:id => folder.id, :school_id => @school.id), { :title => 'Remover esta pasta', :confirm => "Todos os arquivos e subpastas serão removidos.\nDeseja continuar?" } %>
+   </td>
+    <% end %>
+            
+        </tr>
+<% end %>
+<% @myfiles.each do |myfile| %>
+        <tr >
+            <td class="file <%= type_class(myfile)%>"></td>
+            <td><%= link_to h(myfile.attachment_file_name), download_school_folder_path(:id => @folder.id, :file_id => myfile.id, :school_id => @school.id)%></td>
+            <td><%= myfile.attachment_file_size %> KB</td>
+            <td><%= time_ago_in_words(myfile.attachment_updated_at) %></td>
+            
+    <% if @can_update %>
+	<td>
+                <%# link_to image_tag('edit.png', :style => "border: 0"), rename_school_folder_path(:id => @folder.id, :school_id => @school.id), { :title => 'Rename this file' } %>
+     </td>
+	<% end %>
+           
+            
+    <% if @can_delete %>
+	<td>
+                <%= link_to image_tag('delete.png', :style => "border: 0"), destroy_file_school_folder_path(:id => @folder.id, :file_id => myfile.id, :school_id => @school.id), { :title => 'Remover este arquivo', :confirm => 'Tem certeza?' } %>
+     </td>
+	<% end %>
+           
+        </tr>
+<% end %>
+    </table>
+
+
+
+
+
+
+
+
+   
+
+
+
+
+
+
+
+
+

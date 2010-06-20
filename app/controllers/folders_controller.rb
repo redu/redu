@@ -76,7 +76,11 @@ class FoldersController < BaseController
   # The default action, redirects to list.
   def index
     list
-    render :action => :list
+   # render :action => :list
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   # List the files and sub-folders in a folder.
@@ -113,11 +117,7 @@ class FoldersController < BaseController
     # List of files in the folder
     @myfiles = @folder.list_files(current_user, file_order.rstrip)
 
-    #get the correct URL
-    url = school_folders_path(:id => @folder.parent_id, :school_id => @school.id)#url_for(:controller => 'folder', :action => 'list', :id => nil)
-
-    # it's nice to have the possibility to go up one level
-    @folder_up = '<a href="' + url + '">..</a>' if @folder.parent
+    
   end
 
   # Authorizes, sets the appropriate variables and headers.

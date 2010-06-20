@@ -4,6 +4,9 @@ module FoldersHelper
   # by the field supplied in order_by. If the contents of the folder are already ordered by 'order_by',
   # clicking the link will reverse the order. This helper only generates the links for this. The actual
   # functionality is implemented in FolderController.list
+  
+  
+  
   def link_order(name, order_by)
     if params[:order] == nil and params[:order_by] == order_by
       link_to(name, :action => 'list', :id => params[:id], :order_by => order_by, :order => 'DESC') + image_tag('asc.png')
@@ -34,10 +37,14 @@ module FoldersHelper
     end
   end
   
+  def total_size(school_id)
+    Myfile.sum(:attachment_file_size, :include => :folder, :conditions => ["folders.school_id = ?", school_id])
+  end
+  
   
   def path(folder, link_to_self)
     # the base url for a path is always the same:TODO
-    url = url_for(:controller => 'folder', :action => 'list', :id => nil)
+    url = url_for(:controller => 'folders', :action => 'index', :id => nil)
 
     # start with the deepest folder and work your way up
     if link_to_self
