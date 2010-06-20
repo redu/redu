@@ -1,15 +1,44 @@
+/**
+ * ARQUIVOS DA REDE
+ */
 
-
-.even
-{
-    background-color: #EDEDED;
+#file_list{
+            background-color:#FFFFFF;
+            border-color:#BBBBBB #FFFFFF #BBBBBB #BBBBBB;
+            border-style:solid;
+            border-width:1px;
+            height:400px;
+            overflow-y:scroll;
+            padding:5px;
+            /*width:500px;*/
 }
 
-.odd
-{
-    background-color: #D9D9D9;
+
+
+.grid{
+    border-collapse: collapse;
 }
 
+.grid TR{
+    padding-bottom: 5px;
+}
+
+
+.grid TD A:hover {
+	background: #BDF;
+}
+
+
+
+/* Core Styles */
+.directory { background: url(jqueryFileTreeImages/directory.png) left top no-repeat; width: 16px; }
+
+/*
+ * 
+ * 
+ * 
+ * 
+ */
 
 .meter-wrap{
     position: relative;

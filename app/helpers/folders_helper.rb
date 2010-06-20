@@ -37,38 +37,20 @@ module FoldersHelper
     end
   end
   
-  def total_size(school_id)
-    Myfile.sum(:attachment_file_size, :include => :folder, :conditions => ["folders.school_id = ?", school_id])
+  def bytes_to_kb(size_in_bytes)
+     "%0.2f" % (size_in_bytes / (1024.0));
   end
   
   
-  def path(folder, link_to_self)
-    # the base url for a path is always the same:TODO
-    url = url_for(:controller => 'folders', :action => 'index', :id => nil)
-
-    # start with the deepest folder and work your way up
-    if link_to_self
-      path = folder.name
-      id = folder.id.to_s
-
-      # get the folders until folder doesn't have a parent anymore
-      # (you're working your way up now)
-      until folder.parent == nil
-        folder = folder.parent
-        path = folder.name + "/" + path
-      end
-
-      # Finally, make it a link...
-      path = '<a href="' + url + '/' + id + '">' + h(path) + '</a>'
-    else
-      path = h(folder.name)
-
-      # get the folders until folder doesn't have a parent anymore
-      # (you're working your way up now)
-      until folder.parent == nil
-        folder = folder.parent
-        path = '<a href="' + url + '/' + folder.id.to_s + '">' + h(folder.name) + '</a> &#187; ' + path
-      end
+  
+  def path(folder)
+     
+    #path = link_to(h(folder.name), school_folders_path(:id => folder.id, :school_id => folder.school_id)) 
+   path = h(folder.name)
+      
+    until folder.parent == nil
+      folder = folder.parent
+      path = link_to(h(folder.name), school_folders_path(:id => folder.id, :school_id => folder.school_id)) + ' &#187; ' + path
     end
 
     return path

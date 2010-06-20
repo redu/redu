@@ -28,10 +28,15 @@ class FoldersController < BaseController
 #
 
   def destroy_file
-    @myfile = Myfile.find(params[:file_id])
+    @myfile = Myfile.find(params[:file_id], :include => :folder)
+    
+    @folder_id = @myfile.folder.id
+    @school_id = @myfile.folder.school_id
+    
     @myfile.destroy
     
-    redirect_to :action => 'list', :id => params[:id], :school_id => params[:school_id]
+    redirect_to school_folders_path(:id => @folder_id, :school_id => @school_id)
+    
     
   end
 
@@ -111,6 +116,14 @@ class FoldersController < BaseController
       folder_order += params[:order] if params[:order]
     end
 
+    if request.format == 'text/html' # evita fazer consultas se for chamada ajax
+      @files_count = Myfile.count(:include => :folder, :conditions => ["folders.school_id = ?", params[:school_id]])
+      bytes = Myfile.sum(:attachment_file_size, :include => :folder, :conditions => ["folders.school_id = ?",  params[:school_id]])
+      @total_size = "%0.2f" % (bytes / (1024.0 * 1024));
+      gigabytes = 2
+      @use_percentage = "%0.2f" % (bytes / ( gigabytes * 1024.0 * 1024.0 * 1024.0))
+    end 
+    
     # List of subfolders
     @folders = @folder.list_subfolders(current_user, folder_order.rstrip)
 
@@ -177,8 +190,8 @@ class FoldersController < BaseController
         #copy_permissions_to_new_folder(@folder)
 
         # back to the list
-       #redirect_to school_folders_path(:school_id => params[:folder][:school_id], :id => params[:id])
-        redirect_to :action => 'list', :id => params[:folder][:parent_id], :school_id => params[:folder][:school_id]
+       redirect_to school_folders_path(:school_id => params[:folder][:school_id], :id => @folder.parent.id)
+        #redirect_to :action => 'list', :id => params[:folder][:parent_id], :school_id => params[:folder][:school_id]
       else
         render 'new'
       end
@@ -209,7 +222,7 @@ class FoldersController < BaseController
     @school_id = @folder.school_id
     @folder.destroy
     
-    redirect_to :action => 'list', :id => @parent_id, :school_id => @school_id
+    redirect_to school_folders_path(:id => @parent_id, :school_id => @school_id)
   end
 
   # Saved the new permissions given by the user

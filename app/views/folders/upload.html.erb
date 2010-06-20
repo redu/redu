@@ -20,7 +20,7 @@
 <h3>Upload de arquivo</h3>
 
 <% form_for :myfile, @myfile, :url => { :action => "do_the_upload" }, :html => { :multipart => true } do |f| %>
-  <%= f.file_field :attachment %>
+  <%= f.file_field :attachment %> (max. 10MB)
   <%= f.hidden_field :folder_id, :value => @folder_id %>
   <%= hidden_field_tag :school_id,  @school.id %>
    <br>

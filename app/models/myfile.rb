@@ -10,7 +10,7 @@ class Myfile < ActiveRecord::Base
   belongs_to :folder
   belongs_to :user
 
-  has_many :usages, :dependent => :destroy
+  #has_many :usages, :dependent => :destroy
 
   validates_uniqueness_of :attachment_file_name, :scope => 'folder_id'
 

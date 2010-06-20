@@ -54,7 +54,7 @@
         <tr >
             <td class="file <%= type_class(myfile)%>"></td>
             <td><%= link_to h(myfile.attachment_file_name), download_school_folder_path(:id => @folder.id, :file_id => myfile.id, :school_id => @school.id)%></td>
-            <td><%= myfile.attachment_file_size %> KB</td>
+            <td><%= bytes_to_kb(myfile.attachment_file_size) %> KB</td>
             <td><%= time_ago_in_words(myfile.attachment_updated_at) %></td>
             
     <% if @can_update %>
