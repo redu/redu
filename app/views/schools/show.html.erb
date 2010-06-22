@@ -143,11 +143,17 @@
 <!-- BOX RECURSOS ############################################################### -->
 
 
-
+<!-- BOX MAIS VISTOS ############################################################### -->
+<div id="comments_user">
+	<div id="user_box_top"> MAIS VISTOS </div>
+		<% @spot = @school.spotlight_courses %>
+		<%= render :partial => 'schools/spotlight_courses', :collection => @spot, :as => :course %>
+</div>
+<!-- END -->
 
 <!-- BOX MOV. RESCENTE ############################################## -->
 <div id="comments_user">
-	<div id="user_box_top">ATIVIDADES RECENTES DE <%= @school.name.upcase %></div>
+	<div id="user_box_top">MOVIMENTAÇÃO DO <%= @school.name.upcase %></div>
 	
 	<a href="#" class="share" onclick="toggleBox('flow_container');return false;">Novo fluxo</a> | Filtrar
 	
