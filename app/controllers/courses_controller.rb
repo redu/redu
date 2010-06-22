@@ -57,6 +57,23 @@ class CoursesController < BaseController
 
   end
   
+  def search
+    
+    @courses = Course.find_tagged_with(params[:query])
+    @courses += Course.find(:all, :conditions => ["name LIKE ?", "%" + params[:query] + "%"])
+    
+    respond_to do |format|
+      format.js do
+          render :update do |page| 
+            page.replace_html 'all_list', 
+           :partial => 'courses/item', :collection => @courses, :as => :course
+            page.replace_html 'title_list', "Resultados para: \"#{params[:query]}\""
+          end
+      end
+    end
+  end
+  
+  
   
   # Lista todos os recursos existentes para relacionar com
   def list_resources

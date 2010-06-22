@@ -723,7 +723,8 @@ end
  ###########################################################################
 def search
     
-    @exams = Exam.find(:all, :conditions => ["name LIKE ?", "%" + params[:query] + "%"])
+    @exams = Exam.find_tagged_with(params[:query])
+    @exams += Exam.find(:all, :conditions => ["name LIKE ?", "%" + params[:query] + "%"])
     #, :conditions => ["statement LIKE '%?%'", params[:query]]
     
     respond_to do |format|
@@ -738,7 +739,7 @@ def search
           end
       end
     end
-  end
+end
 
 
 
