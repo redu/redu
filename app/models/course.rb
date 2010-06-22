@@ -94,6 +94,7 @@ class Course < ActiveRecord::Base
   has_one :page, :dependent => :destroy
   
   belongs_to :asset, :polymorphic => true
+  belongs_to :category, :class_name => "Skill", :foreign_key => "skill_id"
 
   # Callbacks
   before_validation :enable_correct_validation_group

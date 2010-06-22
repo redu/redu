@@ -594,7 +594,7 @@ class User < ActiveRecord::Base
   def more_log_activity
    sql =  "SELECT DISTINCT l.id, l.logeable_id, l.logeable_name, l.logeable_type, l.user_id, l.action, l.created_at FROM"
    sql += " users u, followship f, logs l WHERE"
-   sql += " f.follows_id = '#{self.id}' AND l.user_id = f.followed_by_id ORDER BY created_at DESC LIMIT 0,20 "
+   sql += " f.follows_id = '#{self.id}' AND l.user_id = f.followed_by_id ORDER BY view_count DESC LIMIT 0,2 "
     Log.find_by_sql(sql)
   end
   
