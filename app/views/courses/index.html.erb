@@ -5,9 +5,10 @@
 		 
 		<a href="#">aprender</a> > 
 		<a href="#">aulas</a> 
-		</div>
+	</div>
  	<div id="title">AULAS
 	<%= render :partial => "courses/taskbar_index" %>
+	<%= render :partial => "courses/search" %>
 	</div>
 	<div id="filter_bar">
 		
@@ -37,6 +38,7 @@
 	<!-- Movimentação Recente --> 
 	
 </div>
+
 <div id="col_box3">
 	<% if current_user %>
 	<% @logs = current_user.log_activity %>

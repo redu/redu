@@ -1,3 +1,74 @@
+<script>
+	
+	function validateForm(){
+		//se o cara assinalou a alternativa correta 
+		//se tem pelo menos uma alternativa
+		
+		var checked = false;
+		var els = document.getElementsByName('answer');
+		for (var i = 0; i < els.length && !checked ; i++) {
+			checked = checked || els[i].checked;
+		}
+		if (!checked) {
+			alert('Você precisa selecionar uma alternativa correta');
+			return false;
+		}
+		
+		// Selecionar uma categoria:
+		
+		var selector = document.getElementById('question_skill_id');
+		var selected = false;
+		for (var i = 0; i < selector.options.length && !selected ; i++) {
+			selected = selected || selector.options[i].selected;
+		}
+		if (!selected) {	
+			alert('Por favor, selecione uma sub categoria');
+			return false;
+		}
+		return true;
+	}
+	
+	function selectCategory(selector, selectType){
+        selectType = 0
+		 category1 = 1
+		 category2 = 2
+		 question_skill_id = 3
+		
+		var selectedValue = selector.options[selector.selectedIndex].value;
+		
+		if (selectedValue < 0 || selectType > 2) {
+			return;
+		} else { 
+		
+		var nextSelector;
+		if (selectType == 1) {
+			nextSelector = document.getElementById('category2');
+			document.getElementById('question_skill_id').options.length = 0; // reseta
+		} else { selectType == 2
+			nextSelector = document.getElementById('question_skill_id');
+		}
+        
+  		new Ajax.Request("<%= url_for :controller => :skills, :action => :sub_categories_of %>", {
+            method: 'get',
+            parameters: "?parent_id= " + selectedValue,
+			onLoading: Element.show('spinner'),
+            onComplete: function(request){
+				Element.hide('spinner');
+				alert(request.responseText);
+                res = eval("(" + request.responseText + ")");
+				
+				nextSelector.options.length = 0;
+				
+				for (var i = 0; i < res.length; i++ ) {
+					nextSelector.options[i]=new Option(res[i][0],res[i][1], false, false);
+				}
+				
+            }
+        });
+		}
+    }
+</script>
+
 <div id="all_content3">
 <div id="col_content_video">
 	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">ensinar</a> > <a href="#">nova aula</a> </div>
@@ -18,12 +89,15 @@
 			<%= f.label "Descrição:" %><br/>
 			<%= f.text_area :description, :size => "50x3" %><br/><br/>
 	
-			<%= f.label "Tags:" %><br/>
+			<%= f.label "Tags" %>
+			<em>
+					<%= "(" + :optional_keywords_describing_this_course_separated_by_commas.l + "):" %>
+			</em><br/>
 			<%= f.text_field :tag_list %><br/><br/>
 			
 			<%= hidden_field_tag("step", "1", options = {})%>
-		
-		
+			
+			
  		</div>
 		
 		
