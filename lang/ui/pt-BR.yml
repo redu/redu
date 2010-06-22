@@ -879,6 +879,10 @@ pt-BR:
   one_minute_ago: um minuto atrás
   #en: optional: optional
   optional: opcional
+  #en: optional_keywords_describing_this_course_separated_by_commas:
+  optional_keywords_describing_this_course_separated_by_commas: "palavras chaves opcionais descrevendo esta aula, separado por vírgulas"
+  #en: optional_keywords_describing_this_exam_separated_by_commas:
+  optional_keywords_describing_this_exam_separated_by_commas: "palavras chaves opcionais descrevendo este exame, separado por vírgulas"
   #en: optional_keywords_describing_this_clipping_separated_by_commas: optional keywords describing this clipping, separated by commas
   optional_keywords_describing_this_clipping_separated_by_commas: optional keywords describing this clipping, separated by commas
   #en: optional_keywords_describing_this_forum_separated_by_commas: optional keywords describing this forum, separated by commas
