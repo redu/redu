@@ -48,7 +48,11 @@
  <br/><BR>
  Descrição: <BR><%= f.text_area :description, :size => "50x3" %>
  <br/><BR>
-  Tags (separados por vírgula): <BR><%= f.text_field :tag_list %>
+  Tags
+  <em>
+	<%= "(" + :optional_keywords_describing_this_exam_separated_by_commas.l + "):" %>
+  </em><br/>
+  <BR><%= f.text_field :tag_list %>
  <br/><BR>
   Dificuldade: <BR><%= f.select :level, options_for_select([['Iniciante', 1], ['Intermediário', 2], ['Avançado', 3]], 1) %>
  <br/><BR>
