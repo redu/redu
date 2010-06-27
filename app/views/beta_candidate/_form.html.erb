@@ -1,0 +1,18 @@
+<% form_for :candidate, :url => {:action => 'create_beta_candidate'}, :html => {:class => 'common'} do |f| %>
+    <%= f.error_messages %>
+    <fieldset>
+        <%= f.label :name, 'Nome' %>
+        <%= f.text_field :name %>
+        <%= f.label :email, 'E-mail' %>
+        <%= f.text_field :email %>
+        <fieldset class="inline">
+        <%= f.radio_button :role, false %>
+        <%= f.label :role, 'Estudante' %>
+        <%= f.radio_button :role, true %>
+        <%= f.label :role, 'Professor' %>
+        </fieldset>
+        <button type="submit">
+        Cadastrar
+        </button>
+    </fieldset>
+<% end %>
