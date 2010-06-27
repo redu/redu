@@ -16,7 +16,8 @@ class BaseController < ApplicationController
   end  
   
   if AppConfig.closed_beta_mode
-    before_filter :beta_login_required, :except => [:beta_index]
+    before_filter :beta_login_required, :except => [:beta_index, 
+      :create_beta_candidate]
   end  
   
   def tos
@@ -28,10 +29,27 @@ class BaseController < ApplicationController
   end
   
   def beta_index
-    redirect_to home_path and return if logged_in?
-    #render :layout => 'beta'
-     render :layout => false
+    @candidate = BetaCandidate.new    
+    
+    respond_to do |format|
+      format.html { render :object => @candidate, :layout => false }
+    end
   end
+  
+  def create_beta_candidate
+    @candidate = BetaCandidate.new(params[:candidate])
+    
+    respond_to do |format|
+      if @candidate.save
+        flash[:notice] = 'Seus dados foram recebidos. Em breve você ' + \
+            'receberá as informações de login.'
+      end
+      
+      format.html { render :action => 'beta_index', :layout => false }
+    end
+  
+  end
+  
   
   def rss_site_index
     redirect_to :controller => 'base', :action => 'site_index', :format => 'rss'
