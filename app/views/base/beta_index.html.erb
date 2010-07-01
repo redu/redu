@@ -1,198 +1,72 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <link href="#{application_url}favicon.ico" rel='shortcut icon' />
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title><%= page_title %></title>
-        <meta content='keywords for use in META tags' name='keywords' />
-        <meta content='noindex,follow' name='robots' />
-        <meta content='A description of your community for use in META tags.' name='description' />
-        <%# render :partial => "shared/scripts_and_styles" %>
-		<%= javascript_include_tag :defaults %>
-		
-		<%= stylesheet_link_tag 'beta_styles', 'galleryview.css'	%>
-		<%= javascript_include_tag 'jquery-1.4.2.min.js', 'jquery.galleryview-2.1.1-pack.js', 'jquery.timers-1.2.js'  %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
-		<script type="text/javascript">
-			$(document).ready(function(){
-				
-                $('#redu_gallery').galleryView({
-                    gallery_width: 400,
-                    gallery_height: 300,
-                    frame_width: 60,
-                    frame_height: 90,
-                    background_color: 'white',
-                    border: '0px',
-                    fade_panels: false
-                });
-				
-			});
-			
-			
-            
-		</script>
-
-
-
- </head>
-	
-
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href='http://fonts.googleapis.com/css?family=Molengo' rel='stylesheet' type='text/css'>
+    <%= stylesheet_link_tag 'reset.css'	%>
+    <%= stylesheet_link_tag '960.css'	%>
+    <%= stylesheet_link_tag 'style-closed.css'	%>
+    <%= javascript_include_tag 'jquery-1.4.2.min.js', 'jquery-ui-1.8.1.custom.min.js'  %>
+</head>
 <body>
-	
-	
-	<div id="header">
-      <div class="wrapper">
-        <h1><a href="http://sclipo.com/" title="Sclipo: the social learning revolution"><strong>Sclipo:</strong> the social learning revolution</a></h1>
-        <ul id="navigation">
-        	<form action="/signup" method="post" >
-			
-          <li><span style="display: block; margin-top: 10px; margin-right: 10px; color: #ddd;">Recebeu uma <span style="color: #fff">chave de acesso</span>? Digite-a aqui:</span></li>
-          <li> <input tabindex="5" title="beta_key" value="" name="beta_key" id="beta_key" type="text" size="6" maxlength="6" style="margin-top: 8px; width: auto;"/></li>
-          <li>
-          	<a href="#" class="login" id="login_button" onclick="document.forms[0].submit();">Acessar</a>
-		  </li>
-			
-			</form>
-        </ul>
-      </div>
-    </div>
-	
-	 <div id = "flash_messages" >
-                <%= render :partial => "shared/messages" %>
-     </div>
+<div id="closed-beta" class="container_16 content clearfix">
+<h1 id="logo" class="grid_5"><a href="#" class="replacement">Redu - Rede Social Educacional</a></h1>
 
-   
-
-
-<div id="welcome">
-  <div class="wrapper">
-    <div id="introduction">
-    	
-		<div style="float: left;">
-		<%= image_tag 'logo_redu_l.png', :style => "float: left; max-width: 300px;"%>
-		<h3 style="margin-top: 30px;">Redu is the leading Web Learning Application for independent teachers, and small schools &amp; companies</h3>
-		</div>
-		
-		<div style="float: left;">
-			
-        <ul id="redu_gallery" >
-            <li>
-            	<%= image_tag 'foto_40x40.png' %>
-                <div class="panel-content">
-                    <h2>A News Article</h2>
-                    <p>
-                        Lorem ipsum dolor amet...
-                    </p>
-                    <p>
-                        More content...
-                    </p>
-                </div>
-            </li>
-            <li>
-                <%= image_tag 'foto_40x40.png' %>
-                <div class="panel-content">
-                    <h2>A News Article</h2>
-                    <p>
-                        Lorem ipsum dolor amet...
-                    </p>
-                    <p>
-                        More content2...
-                    </p>
-                </div>
-            </li>
-            <li>
-                <%= image_tag 'foto_40x40.png' %>
-                <div class="panel-content">
-                    <h2>A News Article</h2>
-                    <p>
-                        Lorem ipsum dolor amet...
-                    </p>
-                    <p>
-                        More content3...
-                    </p>
-                </div>
-            </li>
-        </ul>
-			
-		</div>
-		
-		
-		
-      
-    </div>
-
-    <div id="login-form">
-        <div id="formulario">
-        	
-			<% form_tag sessions_path, :class => 'MainForm' do %>
-			
-                <h4>Acesso Beta</h4>
-                <p>Se você já se cadastrou através de uma chave de acesso, faça o login aqui:</p>
-                <fieldset class="first">
-                    
-                    <div>
-                      <label for="login">Login</label>
-                     <%= text_field_tag 'login' %>
-                    </div>
-                
-					<div>
-                      <label for="senha">Senha</label>
-                      <%= password_field_tag 'password'%>
-                    </div>
-					
-					<ul class="text-margin">
-                      <li>
-                             <%= check_box_tag 'remember_me', nil, nil, :class => "checkbox" %><label for="lembrar-me">Lembrar-me</label>
-                      </li>
-                    </ul>
-					
-					
-					
-                    <div>
-                    	<button id="joinsclipo" value="Join" class="button-form" onclick="document.forms[1].submit();"><span>Entrar</span></button>
-                    	<%# submit_tag :log_in.l, :class => 'button-form' %>
-                    </div>
-					
-                    
-                    <div>
-                    	Esqueceu <%= link_to "login", forgot_username_url %> ou <%= link_to "senha", forgot_password_url %>?
-                    </div>
-					
-                </fieldset>
-                <% end %>
-            </form>
-        </div> <!-- en formulario -->
-
-        
-    </div> <!-- login-form -->
-  </div>
+<div id="main" class="grid_16">
+<div id="flash_messages" >
+<%= render :partial => "shared/messages" %>
 </div>
-
-<div id="footer">
-  <div class="wrapper">
-
-                <p>Teach better! <a href="http://sclipo.com/features">Learn more »</a></p>
+<script type="text/javascript">
+$(document).ready(function(){
+    $("div.tabs").tabs()
+    $("#closed-beta div.user-actions a.pandora").click(function(e){
+        e.preventDefault()
+        var id = $(this).attr('href')
+        $(id).slideToggle()
+        $(this).toggleClass("opened")
+        $(this).toggleClass("closed")
         
-        <ul>
-            <li><a href="http://sclipo.com/about">About</a></li>
-            <li><a href="http://sclipo.com/blog/">Blog</a></li>
-            <li><a href="http://sclipo.com/features">Features</a></li>
-            <li><a href="http://sclipo.com/academy/view/sclipo">Help</a></li>
-            <li><a href="http://sclipo.com/liveteaching/systemcheck">System Check</a></li>
-            <li><a href="http://sclipo.com/academy/browse">Academies</a></li>
-            <li><a href="http://sclipo.com/courses/browse">Courses</a></li>
-            <li><a href="http://sclipo.com/content/documents">Library</a></li>
-            <li><a href="http://sclipo.com/plugins/moodle">Moodle Plugin</a></li>
-            <li><a href="http://sclipo.com/privacy">Privacy</a></li>
-            <li><a href="http://sclipo.com/terms">Terms of Use</a></li>
-                    </ul>
+    })
+})
+</script>
+<div class="tabs">
 
-        <cite>English | <a href="#" class="select-language" rel="es_ES">Español</a> | <a href="#" class="select-language" rel="de_DE">Deutsch</a></cite>
-        <cite style="margin-top: 5px;">©2010 Sclipo.</cite>
-        </div>
-
-
-</div></body></html>
-
-
+    <ul class="clearfix">
+	<li><a href="#conheca">Conheça</a></li>
+	<li><a href="#aprenda">Aprenda</a></li>
+	<li><a href="#ensine">Ensine</a></li>
+    </ul>
+    
+    <div id="conheca" class="clearfix">
+    <span class="call">O Redu <span style="font-size: 1.1em; color: #F63B0B;">promove</span> um<br/>ambiente <span style="font-size: 1.1em; color: #F63B0B;">social</span> para a <span style="font-size: 1.1em; color: #F63B0B;">aprendizagem</span></span>
+    </div>
+    <div id="aprenda" class="clearfix">
+    <span class="call">Tire <span style="font-size: 1.1em; color: #F63B0B;">dúvidas</span> e<br/>veja o seu <span style="font-size: 1.1em; color: #F63B0B;">desempenho</span></span>
+    </div>
+    
+    <div id="ensine">
+    <span class="call"><span style="font-size: 1.1em; color: #F63B0B;">Atinja</span> e <span style="font-size: 1.1em; color: #F63B0B;">acompanhe</span><br/>muito mais alunos</span>
+    </div>
+</div>
+<div class="register clearfix">
+<div class="signin">
+<span>Já possui cadastro?</span>
+<div class="bt-acesse"><%= link_to 'Acesse o Redu', {:controller => 'sessions', :action => 'new'}  %></div>
+</div>
+<span class="call">Quer fazer parte do Redu?</span>
+<span class="call2">Inscreva-se e receba o convite</span>
+<%= render :partial => "beta_candidate/form" %>
+</div>
+</div><!-- end main-->
+</div><!-- end content -->
+<div class="footer clearfix">
+<div class="container_16">
+<a href="">Sobre o Redu</a><a href="">Blog</a><a href="">Trabalhe Conosco</a><a href="">Contato</a>
+</div>
+</div>
+</body>
+</html>
 
