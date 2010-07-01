@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+    <title><%= page_title %></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <%= stylesheet_link_tag 'reset.css'	%>
+    <%= stylesheet_link_tag '960.css'	%>    
+    <%= stylesheet_link_tag 'style.css'	%>    
+    <%= javascript_include_tag 'jquery-1.4.2.min.js', 'jquery-ui-1.8.1.custom.min.js', 'common.js'  %>
+    <% if @rss_title && @rss_url %>
+    <%= auto_discovery_link_tag(:rss, @rss_url, {:title => @rss_title}) %>
+    <% end %>
+    </script>
+</head>
+<body>
+<%= render :partial => 'shared/new/header' %>
+<div id="<%= yield :page_id %>" class="container_16 content clearfix">
+<%= @content_for_layout %>
+</div><!-- end content -->
+<%= render :partial => 'shared/new/footer' %>
+</body>
+</html>
+
