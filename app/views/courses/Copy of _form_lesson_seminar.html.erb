@@ -1,0 +1,55 @@
+
+		<%= form_lesson.hidden_field(:position, :value => "0") %>
+
+
+<% form_remote_tag :url => { :controller => :courses, :action => :search },
+					:before => "Element.show('spinner')",
+					:success => "Element.hide('spinner')" do -%>
+		
+		<h3 style="color: #bbb;">Vídeo</h3>
+		
+		 Título:
+		<br>
+		<%= form_lesson.text_field :title, :onkeyup => "topicTitle(this);" %>
+		<br>
+		<br>
+		<% form_lesson.object.lesson = Seminar.new unless form_lesson.object.lesson %>
+		<% form_lesson.fields_for :lesson do | build |%>
+
+			
+			Conteúdo:
+			<br>
+			
+
+<%= build.radio_button :external_resource_type, :slideshare, {:onchange => "switchCourseFields(2);"} %>
+  <%= build.label :external_resource_type_slideshare, "Slideshare" %>	
+  <%= build.radio_button :external_resource_type, :youtube, {:onchange => "switchCourseFields(2);"} %>
+  <%= build.label :external_resource_type_youtube, "Youtube" %>
+  <%= build.radio_button :external_resource_type, :upload, {:onchange => "switchCourseFields(1);"} %>
+  <%= build.label :external_resource_type_upload, "Upload" %><br/><br/>
+
+  <div id="upload_resource_field" style="display:none;">
+  <%= build.label :media, "Upload de vídeo" %><br/>
+  <%= build.file_field :media  %><br/><br/>
+  (tamanho máximo: 50MB)
+  </div>
+
+  <div id="external_resource_field" style="display:block;">
+  <%= build.label :external_resource, "Vídeo de link" %><br/>
+  <%= build.text_field :external_resource  %><br/><br/>
+  </div>
+
+
+			<br>
+			<br>
+			
+			<%= form_lesson.hidden_field(:_destroy, :value => false, :id => "destroy_" + ((build.object.id) ? build.object.id.to_s : '0'))  %> 
+			<%= build.hidden_field(:lesson_type, :value => "Seminar") %>
+			<br>
+			<br>
+			
+		<% end %>
+
+		
+  
+		

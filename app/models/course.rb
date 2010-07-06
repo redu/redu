@@ -1,5 +1,6 @@
 class Course < ActiveRecord::Base
   SUPPORTED_VIDEOS = [ 'application/x-mp4',
+    'video/avi',
     'video/mpeg',
     'video/quicktime',
     'video/x-la-asf',
@@ -52,18 +53,22 @@ class Course < ActiveRecord::Base
   
   state :waiting,:enter => :set_new_local_filename
   state :approved
-  state :disapproved
+  state :rejected
   
   event :approve do
     transitions :from => :waiting, :to => :approved
   end
   
-  event :disapprove do
-    transitions :from => :waiting, :to => :disapproved
+  event :reject do
+    transitions :from => :waiting, :to => :rejected
   end
   
   event :wait do
     transitions :from => :converting, :to => :waiting
+  end
+  
+  event :moderate do
+    transitions :from => :pending, :to => :waiting
   end
   
   event :convert do
@@ -125,26 +130,45 @@ class Course < ActiveRecord::Base
    named_scope :seminars,:conditions => ["state LIKE 'approved' AND course_type LIKE 'seminar' AND public = true"], :include => :owner, :order => 'created_at DESC'
    named_scope :iclasses, :conditions => ["course_type LIKE 'interactive' AND public = true"], :include => :owner, :order => 'created_at DESC'
    named_scope :pages, :conditions => ["course_type LIKE 'page' AND public = true"], :include => :owner, :order => 'created_at DESC'
-    named_scope :limited, lambda { |num| { :limit => num } }
+   named_scope :limited, lambda { |num| { :limit => num } }
 
+   before_create :video_tasks
+   before_save :go_to_moderation 
   
-=begin  nao é usado mais, preço unico
-  def self.price_of_acquisition(course_id)
-    @course_prices = CoursePrice.find(:all,:conditions => ["course_id = ?",course_id])
-    @course_prices.each do |course_price| 
-      if course_price.key_number == 1
-        @price = course_price.price
-      end
-    end 
-    return @price
+  def video_tasks
+    if self.external_resource_type.eql?('youtube')
+      capture = self.external_resource.scan(/watch\?v=([a-zA-Z0-9]*)/o)[0][0]
+      #puts capture.inspect
+      self.external_resource = capture
+    elsif self.external_resource_type.eql?('upload') # TODO não seria melhor converter apenas quando for publicado?
+      self.convert 
+    end
   end
-=end   
+  
+  def go_to_moderation
+    if self.published and self.course_type != 'seminar'
+      self.moderate!
+      
+    end
+  end
+  
+  def send_approval_email
+    UserNotifier.deliver_approve_course(self)
+  end
+  
+  def send_rejection_email(comments = nil)
+    UserNotifier.deliver_reject_course(self, comments)
+  end
+  
+  def permalink
+    APP_URL + "couses/"+ self.id
+  end
   
   
   # This method is called from the controller and takes care of the converting
   def convert
     self.convert!
-    puts self.state
+   # puts self.state
     if video?    
       proxy = MiddleMan.worker(:converter_worker)
       proxy.enq_convert_course(:arg => self.id, :job_key => self.id) #TODO set timeout :timeout => ?

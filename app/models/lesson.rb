@@ -25,7 +25,14 @@ class Lesson < ActiveRecord::Base
 def build_lesson(params)
     self.position = params[:position]
     params.delete(:position)
-    self.lesson = Page.new(params)
+    case params[:lesson_type]  # importante manter nome lesson_tp e nao lesson_type
+    when 'Page'
+      params.delete(:lesson_type)
+      self.lesson = Page.new(params)
+    when 'Seminar'
+      params.delete(:lesson_type)
+      self.lesson = Seminar.new(params)
+    end
   end
 
 end

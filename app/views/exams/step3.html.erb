@@ -49,11 +49,12 @@
 	</div>
 	</div>
 </fieldset>	
-	
+<% if AppConfig.activate_payment %>	
 <fieldset id="price_box">
 	<legend>Preço</legend>
 		R$<%= f.text_field :price, :style => "width: 35px", :maxlength => 5  %>
 </fieldset>
+<% end %>
 	
 <fieldset id="share_box_2">
 	<legend>Compartilhar</legend>

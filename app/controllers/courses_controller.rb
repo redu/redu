@@ -4,6 +4,36 @@ class CoursesController < BaseController
   uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit, :update])
   
   
+  def upload_video
+    
+    @seminar = Seminar.new( params[:seminar] )
+    
+    respond_to do |format|
+      if @seminar.save
+        format.js do
+          responds_to_parent do
+            render :update do |page|
+              page.replace_html('video_upload_' + params[:child_index], :partial => 'form_lesson_seminar_uploaded', :locals => {:seminar => @seminar, :ch_index => params[:child_index]})
+              page << "Element.hide('spinner');"
+            end
+          end
+        end
+      else
+         format.js do
+          responds_to_parent do
+            render :update do |page|
+              page << "alert('houve uma falha ao enviar o arquivo');"
+            end
+          end
+        end
+      end
+    end
+  end
+  
+  
+
+  
+  
   def download_attachment
     @attachment = CourseResource.find(params[:res_id])
    # puts @attachment.attachment.path + ' e ' + @attachment.attachment.content_type
@@ -232,7 +262,7 @@ class CoursesController < BaseController
           @interactive_class = InteractiveClass.new
           
            3.times { @interactive_class.resources.build }
-           @interactive_class.lessons.build
+          # @interactive_class.lessons.build
           
           render "step2_interactive" and return
         
@@ -322,14 +352,15 @@ class CoursesController < BaseController
         @course = Course.find(session[:course_id])
         
         if @course.course_type == 'seminar'
-          
-          if @course.external_resource_type.eql?('youtube')
-            capture = @course.external_resource.scan(/watch\?v=([a-zA-Z0-9]*)/o)[0][0]
-            #puts capture.inspect
-            @course.external_resource = capture
-          elsif @course.external_resource_type.eql?('youtube')
-            @course.convert # converter aqui tem problema? acho que nao..
-          end
+
+        # Coloquei como um before_create de course
+#          if @course.external_resource_type.eql?('youtube')
+#            capture = @course.external_resource.scan(/watch\?v=([a-zA-Z0-9]*)/o)[0][0]
+#            #puts capture.inspect
+#            @course.external_resource = capture
+#          elsif @course.external_resource_type.eql?('youtube')
+#            @course.convert # nao seria melhro chamar o metodo em um "before_create"?
+#          end
           
           respond_to do |format|
             
@@ -388,6 +419,8 @@ class CoursesController < BaseController
       if params[:post_to]
         SchoolAsset.create({:asset_type => "Course", :asset_id => @course.id, :school_id => params[:post_to].to_i})
       end
+      
+      @course.published = true # se o usuário completou os 3 passos então o curso está publicado
       
       respond_to do |format|
         
@@ -524,6 +557,26 @@ end
   end
   
   
+  def moderate_all
+    #TODO otimizar codigo abaixo? algo do tipo Course.all(:conditions => ["id IN (?)", params[:approve]] 
+    @approved_courses = Course.all(:conditions => ["id IN (?)", params[:approve].join(',')]) 
+    @rejected_courses = Course.all(:conditions => ["id IN (?)", params[:reject].join(',')]) 
+    
+    for course in @approved_courses
+       #@course = Course.find(course_id)
+       course.approve!
+       course.send_approval_email
+    end
+    
+    for course in @rejected_courses
+       #@course = Course.find(course_id)
+       course.reject!
+       course.send_rejection_email
+    end
+    
+    flash[:notice] = 'Aulas moderadas!'
+    redirect_to pending_courses_path
+  end
   
   
   def approve
@@ -542,19 +595,19 @@ end
   
   def disapprove
     @course = Course.find(params[:id])
-    @course.disapprove!
-    flash[:notice] = 'A aula não foi aprovada!'
+    @course.reject!
+    flash[:notice] = 'A aula foi rejeitada!'
     redirect_to pending_courses_path
   end
   
   
   # LISTAGENS
-  
+  # lista pendendes para MODERAÇÃO da administração do Redu
   def pending
-    @courses = Course.paginate(:conditions => ["published = 1 AND state LIKE ?", "waiting"], 
+    @courses = Course.paginate(:conditions => ["public = 1 AND published = 1 AND state LIKE 'waiting'"], 
       :include => :owner, 
       :page => params[:page], 
-      :order => 'updated_at DESC', 
+      :order => 'updated_at ASC', 
       :per_page => AppConfig.items_per_page)
     
     respond_to do |format|
@@ -564,9 +617,9 @@ end
     
   end
   
-  
+  # lista cursos publicados por autor (sejam em redes ou público no redu)
   def published
-    @courses = Course.paginate(:conditions => ["owner = ? AND published = 1 AND state LIKE ?", params[:user_id], "approved"], 
+    @courses = Course.paginate(:conditions => ["owner = ? AND published = 1", params[:user_id]], 
   		:include => :owner, 
   		:page => params[:page], 
   		:order => 'updated_at DESC', 
@@ -578,8 +631,9 @@ end
     end
   end
   
+  # lista cursos não publicados (em edição)
   def unpublished
-    @courses = Course.paginate(:conditions => ["owner = ? AND published = 0", params[:user_id]], 
+    @courses = Course.paginate(:conditions => ["owner = ? AND published = 0", current_user.id], 
       :include => :owner, 
       :page => params[:page], 
       :order => 'updated_at DESC', 
@@ -591,8 +645,9 @@ end
     end
   end
   
+  # cursos publicados no redu esperando a moderação dos admins do redu
   def waiting
-    @courses = Course.paginate(:conditions => ["owner = ? AND public = 1 AND state LIKE ?", params[:user_id], "waiting"], 
+    @courses = Course.paginate(:conditions => ["owner = ? AND public = 1 AND published = 1 AND state LIKE 'waiting'", params[:user_id]], 
       :include => :owner, 
       :page => params[:page], 
       :order => 'updated_at DESC', 

@@ -28,7 +28,7 @@ class Exam < ActiveRecord::Base
   validation_group :step2, :fields=>[:questions]
   validation_group :step3, :fields=>[:price]
   
-  has_and_belongs_to_many :resources
+  #has_and_belongs_to_many :resources
  
   named_scope :published, :conditions => ['published = ?', true], :include => :owner
   

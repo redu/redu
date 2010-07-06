@@ -1,0 +1,31 @@
+<% if @seminar.external_resource_type.eql?('youtube') %>
+
+<object width="425" height="344">
+<param name="movie" value="http://www.youtube.com/v/<%=@seminar.external_resource%>&hl=en&fs=1">
+</param><param name="allowFullScreen" value="true">
+</param><param name="allowscriptaccess" value="always">
+</param><embed src="http://www.youtube.com/v/<%=@seminar.external_resource%>&hl=en&fs=1" 
+type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="344">
+</embed></object> 
+
+
+
+<% else %>
+
+O vídeo foi uploadeado está em processo de conversão!
+
+<% end %>	
+	
+<input type="hidden" name="interactive_class[lessons_attributes][<%= ch_index %>][lesson_id]" value="<%=seminar.id%>" id="l_id">
+<input type="hidden" name="interactive_class[lessons_attributes][<%= ch_index %>][lesson_type]" value="Seminar" id="l_type">
+
+					
+		
+			
+	
+
+
+
+
+  
+		

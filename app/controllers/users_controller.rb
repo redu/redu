@@ -631,18 +631,23 @@ class UsersController < BaseController
   end
   
   def activity_xml
-    #TODO colocar user_id 
-    #TODO limitar a consulta
-    #elimina atividades reflexivas (ex. usuario atualiza proprio perfil)
-    @logs = Log.find(:all, 
-    :conditions => ["user_id != logeable_id AND logeable_type NOT LIKE 'User'"])
-    #:select => 'DISTINCT logeable_id, user_id, logeable_type, logeable_name, action')
-    #puts "id: " + params[:user_id]
-    # TODO eliminar duplicatas
+    
+    # talvez seja necessario setar o atributo depth nos nós para que funcione corretamente.
+    # ver: http://asterisq.com/products/constellation/roamer/integration#data_rest_tree
+    
+    puts "id: " + params[:id]
+    puts "node_id: " + params[:node_id] if params[:node_id]
+    
+    #@logs = Log.find(:all, 
+    #:conditions => ["user_id != logeable_id AND logeable_type NOT LIKE 'User'"])
+    @user = User.find((params[:node_id]) ?  params[:node_id] :  params[:id] )
+    @logs = @user.log_activity
+    
     respond_to do |format|
       format.xml
     end
   end
+  
   
   
   protected  

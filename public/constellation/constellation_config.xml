@@ -130,7 +130,7 @@
 		   - implementing the interface is available at the
 		   - Constellation website
 		   -->
-		<interface_mode>static_xml</interface_mode>
+		<interface_mode>rest_tree</interface_mode>
 		
 		<!-- the URL where the graph data is loaded.  when the request
 		   - is made, the following strings will be replaced with
@@ -144,7 +144,7 @@
 		   - [timestamp]    - the current unix timestamp.  use to break caching
 		   http://127.0.0.1:3000/activity_xml.xml
 		   -->
-		<url> http://ec2-184-73-30-17.compute-1.amazonaws.com/activity_xml.xml</url>
+		<url> http://ec2-184-73-30-17.compute-1.amazonaws.com/users/[node_id]/activity_xml.xml?id=[passthru]</url>
 		
 		<!-- the depth of the tree to load from the server. in any tree
 		   - interface mode, the client will request a tree of this

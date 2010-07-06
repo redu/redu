@@ -7,6 +7,28 @@ class UserNotifier < ActionMailer::Base
   include BaseHelper
   ActionMailer::Base.default_url_options[:host] = APP_URL.sub('http://', '')
 
+  def approve_course(course)
+    setup_sender_info
+    @recipients  = "#{course.owner.email}"
+    @subject     = "A aula #{course.name} foi aprovada!"
+    @sent_on     = Time.now
+    @body[:user] = course.owner
+    @body[:url]  = course.permalink 
+    @body[:course]  = course
+  end
+  
+  def reject_course(course, comments)
+    setup_sender_info
+    @recipients  = "#{course.owner.email}"
+    @subject     = "A aula #{course.name} foi rejeitada para publicação no Redu"
+    @sent_on     = Time.now
+    @body[:user] = course.owner
+    @body[:url]  = course.permalink 
+    @body[:course]  = course
+    @body[:comments]  = comments
+  end
+
+
   def signup_invitation(email, user, message)
     setup_sender_info
     @recipients  = "#{email}"

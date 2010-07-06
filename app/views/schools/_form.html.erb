@@ -75,8 +75,10 @@ function stripVowelAccent(str) {
 	<%= f.label "Tags (separadas por vírgula)" %>:<br/>
 	<%= f.text_field :tag_list %><br/><br/>
 	
+	<% if AppConfig.activate_payment %>
 	<%= f.label "Preço da assinatura" %>:<br/>
 	<%= f.text_field :key_price %><br/><br/>
+	<% end %>
 	
 	<fieldset><legend>Configurações</legend>
 	

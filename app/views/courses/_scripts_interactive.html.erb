@@ -2,7 +2,7 @@
 	var topics = {};
 	
 	
-	var topicCount = 1;
+	var topicCount = 0;
 	var currentTopic = 0;
 	
 	jQuery(document).ready(function(){
@@ -43,15 +43,37 @@
 		
 		var topicItem =	document.createElement("a");
 		// TODO como reaproveitar esse innerHTML abaixo de um item do rails?
-		topicItem.innerHTML = "<img title=\"Texto interativo\" src=\"/images/icons/iclass.gif\" alt=\"Iclass\">" + 
-		"<span id=\"topic_name_" + topicCount + "\"> Sem título</span> <img src=\"../../images/icons/delete.png\" style=\"float:right; border: 0;\"  onclick=\"removeTopic(51); return false;\" alt=\"Delete\">";
+		
+		var topicItemHTML;
+		
+		if (type == 'seminar') {
+			topicItemHTML = "<img title=\"Vídeo\" src=\"/images/icons/seminar.gif\" alt=\"Vídeo\">" + 
+		"<span id=\"topic_name_" + topicCount + "\"> Sem título</span>";
+		
+		} else {
+			topicItemHTML = "<img title=\"Texto interativo\" src=\"/images/icons/iclass.gif\" alt=\"Iclass\">" + 
+		"<span id=\"topic_name_" + topicCount + "\"> Sem título</span>";
+		}
+		
+		
+		topicItem.innerHTML = topicItemHTML;
 		topicItem.setAttribute("href", "#");
 		topicItem.setAttribute("id", "topic_item_" + topicCount);
 		topicItem.setAttribute("class", "topic_item");
 		topicItem.setAttribute("onclick", "selectTopic("+topicCount+"); return false;");
-		
+
+		/*<img src=\"../../images/icons/delete.png\" style=\"float:right; border: 0;\"  onclick=\"removeTopic("+topicCount+"); return false;\" alt=\"Delete\">
+		 * delete topic button
+		 */
+		var topicItemDel =	document.createElement("img");
+		topicItemDel.setAttribute("src", "../../images/icons/delete.png");
+		topicItemDel.setAttribute("style", "position:absolute; top:5px; right:5px; border: 0; z-index:1000");
+		topicItemDel.setAttribute("onclick", "removeTopic("+topicCount+"); return false;");
+		topicItemDel.setAttribute("alt", "Delete");
 		
 		topicItemL.appendChild(topicItem);
+		topicItemL.appendChild(topicItemDel);
+
 		document.getElementById('topic_list').appendChild(topicItemL);
 		
 		selectTopic(topicCount);
@@ -63,29 +85,15 @@
 		reloadMce();
 		
 		reloadSortable();
+		
+		document.getElementById("empty_lessons").style.display = 'none';
 	}
 	
 	
 	function reloadSortable(){
 		
-		Sortable.create("topic_list", {onUpdate: function(a){
-			//interactive_class_lessons_attributes_0_position
-			var listItems = a.getElementsByTagName("li");
-			for (var i =0; i < listItems.length; i++) {
-				var liEl = listItems[i].id.split('_');
-				var theId = liEl[liEl.length-1];
-				//alert(theId);
-				
-				var tbody = document.getElementById('topic_body_'+theId);
-				//alert(tbody);
-				//alert(tbody.getElementsByTagName('input')[1].innerHTML+ ' |ordem: '+i);
-				var liEl2 = tbody.getElementsByTagName('input')[1].value = i;
-				
-			}
-			
-
-		}});
- //Sortable.create("topic_list", {onUpdate:function(){new Ajax.Request('/courses/sort_lesson?iclass=', {asynchronous:true, evalScripts:true, parameters:Sortable.serialize("topic_list")})}})
+		Sortable.create("topic_list", {onUpdate: setTopicsPosition});
+        //Sortable.create("topic_list", {onUpdate:function(){new Ajax.Request('/courses/sort_lesson?iclass=', {asynchronous:true, evalScripts:true, parameters:Sortable.serialize("topic_list")})}})
 
 	}
 	
@@ -105,20 +113,27 @@
 	
 	function selectTopic(topic){
 		//alert('topic: '+topic + ' | current: '+ currentTopic);
-		var curListItem = document.getElementById('topic_item_'+ currentTopic);
-		var selListItem = document.getElementById('topic_item_'+ topic);
 		
-		if (curListItem != null && typeof(curListItem) != 'undefined' ) {
-		curListItem.className = "topic_item"; 
+		if (topic >= 0) {
+		
+			var curListItem = document.getElementById('topic_item_' + currentTopic);
+			var selListItem = document.getElementById('topic_item_' + topic);
+			
+			if (curListItem != null && typeof(curListItem) != 'undefined') {
+				curListItem.className = "topic_item";
+			}
+			if (selListItem != null && typeof(selListItem) != 'undefined') {
+				selListItem.className += " topic_item_sel";
+			}
+			
+			document.getElementById('topic_body_' + currentTopic).style.display = "none";
+			document.getElementById('topic_body_' + topic).style.display = "block";
+			
+			currentTopic = topic;
+		} else {
+			document.getElementById('empty_lessons').style.display = "block";
+			return false;
 		}
-		if (selListItem != null && typeof(selListItem) != 'undefined' ) {
-		selListItem.className += " topic_item_sel";
-		}
-		
-		document.getElementById('topic_body_'+ currentTopic).style.display = "none";
-		document.getElementById('topic_body_'+ topic).style.display = "block";
-		
-		currentTopic = topic;
 	}
 	
 	function reloadMce(){
@@ -126,31 +141,75 @@
 	}
 	
 	function leavePage(){
-		return "Se você sair da página vai perder todas as informações não salvas. Deseja continuar?";
+		//return "Se você sair da página vai perder todas as informações não salvas. Deseja continuar?";
 	}
 	
 	function removeTopic(link){
 		
-		var topic = document.getElementById("topic_list_item_"+link);
+		var topic = document.getElementById("topic_list_item_" + link);
 		var tbody = document.getElementById("topic_body_" + link);
 		
-		document.getElementById("topic_list").removeChild(topic);
-		//document.getElementById("topic_body").removeChild(tbody);
-
-		document.getElementById("destroy_"+link).value = true;
 		
-		jQuery(tbody).hide();
+		document.getElementById("topic_list").removeChild(topic);
+		//document.getElementById("topic_body").removeChild(tbody); //nao remover div, pois pode conter um input que avisa ao rails que o elemento deve ser destruido
+
+		var destroyEl = document.getElementById("destroy_"+link);
+		if (destroyEl != null && typeof(destroyEl) != 'undefined') {
+			destroyEl.value = "1";
+		}
+		
+		tbody.style.display = "none";
 		
 		//jQuery(tbody).siblings("input[type=hidden]:first").val("1");
 		
 		var thelist = document.getElementById('topic_list').getElementsByTagName('li');
-		if (thelist.length >0) {
+		if (thelist.length > 0) {
 			var theid = thelist[0].id.split('_');
-			seltopic = theid[theid.length-1];
+			seltopic = theid[theid.length - 1];
+		}
+		else {
+			seltopic = -1;
 		}
 		selectTopic(seltopic);
-		
+		return false;
 		
 	}
+	
+	function setTopicsPosition(sortable){
+		
+		if (typeof sortable == 'undefined') {
+			sortable = document.getElementById('topic_list');
+		}
+		
+		var listItems = sortable.getElementsByTagName("li");
+			for (var i =0; i < listItems.length; i++) {
+				var liEl = listItems[i].id.split('_');
+				var theId = liEl[liEl.length-1];
+				//alert(theId);
+				
+				var tbody = document.getElementById('topic_body_'+theId);
+				//alert(tbody);
+				//alert(tbody.getElementsByTagName('input')[1].innerHTML+ ' |ordem: '+i);
+				var liEl2 = tbody.getElementsByTagName('input')[0].value = i; // TODO esse codigo restringe sempre o segundo campo de input. Se mudar ordem dos campos pode gerar falha
+				
+			}
+	}
+	
+	
+	/* ******************************************************************************
+	 * VIDEO (TODO replicado em step2seminar.html.erb)
+	 * ******************************************************************************/
+	
+	function switchCourseFields(fieldType){
+		if (fieldType == 1) {
+			document.getElementById("upload_resource_field").style.display = "block";
+			document.getElementById("external_resource_field").style.display = "none";
+		} else {
+			document.getElementById("upload_resource_field").style.display = "none";
+			document.getElementById("external_resource_field").style.display = "block";
+		}
+		
+	}
+	
 	
 </script>

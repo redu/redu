@@ -5,10 +5,11 @@ module BaseHelper
   
   
   def type_class(resource)
-      case resource.attachment_content_type
+      case resource.attachment_content_type #TODO fazer por extensao em nao por tipo
       when "clipping" then 'clipping'
       when "application/vnd.ms-powerpoint" then 'ppt'
       when "application/msword" then 'word'
+      when "application/vnd.openxmlformats-officedocument.wordprocessingml.document" then 'word'
       when "application/rtf" then 'word'
       when "text/plain" then 'text' 
       when "application/pdf" then 'pdf'

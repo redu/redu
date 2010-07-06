@@ -28,24 +28,18 @@
     </div> <!-- fim da listagem --> 
 	
 	<!-- PAGINACAO ##################################################################################################################################################### -->
-    <div id="pagination" align="center">
+    <div id="pagination" align="center" class="pagination">
 
 		<%= will_paginate  @courses, :params => {:sort_by => @sort_by}, :class => "pagination_number"  %>
-
 		
     </div>
 	
-	<!-- Movimentação Recente --> 
+
 	
 </div>
 
 <div id="col_box3">
-	<% if current_user %>
-	<% @logs = current_user.log_activity %>
-	<%= render :partial => 'logs/log', :locals => {:logs => @logs} %>
-	<% else %>
-	<%= render :partial => 'logs/not_logged_in', :locals => {:logs => @logs} %>
-	<% end %>
+	
 	
 	<%= render :partial => 'shared/tagcloud' %>
 

@@ -36,7 +36,11 @@
 <div id="col_content">
 	<div id="breadcrumbs"><a href="#">home</a></div>
 <!-- LISTAGEM RECURSO ############################################################################################################################################## -->
-    
+    <% if AppConfig.show_constellation %>
+	<div id="constellation">
+		</div>
+	<%end%>
+	
     <div id="all_list">
     	<div id="filter_bar">
     <span class="title_list">VÍDEO-AULAS RECENTES</span>

@@ -27,8 +27,6 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :exams, :member => {:add_question => :get, :add_resource => :get, :rate => :post},#, :remove_question => :get},
                         :collection => {:unpublished => :get, :new_exam => :get, :cancel => :get, :exam_history => :get, :sort => :get, :order => :get, :favorites => :get, :review_question => :get}
     
-  map.resources :subjects
-
   map.resources :courses, :member => {:rate => :post, :buy => :get, :download_attachment => :get},  :collection => {:pending => :get, :favorites => :get, :cancel => :get, :sort_lesson => :post}
   
   map.resources :user_school_association
@@ -44,7 +42,7 @@ ActionController::Routing::Routes.draw do |map|
   
   #map.resources :favorites, 
 
-  map.connect 'activity_xml.xml', :controller => "users", :action => "activity_xml", :format => 'xml'
+ # map.connect 'activity_xml.xml', :controller => "users", :action => "activity_xml", :format => 'xml'
   
   
   # The priority is based upon order of creation: first created -> highest priority.
@@ -222,6 +220,7 @@ ActionController::Routing::Routes.draw do |map|
     :followers => :get,
     :follows => :get,
     :follow => :get,
+    :activity_xml => :get,
     :logs => :get,
     :unfollow => :get,
     :dashboard => :get,

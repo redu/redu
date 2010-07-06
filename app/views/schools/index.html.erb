@@ -25,12 +25,7 @@
 <!-- COLUNA DIREITA ################################################################################################################################################ -->
 <div id="col_box3">
 <!-- BOX MOVIMENTACAO RECENTE ///////////////////////////////////////////////////////////////////////////////////// -->
-	<% if current_user %>
-	<% @logs = current_user.log_activity %>
-	<%= render :partial => 'logs/log', :locals => {:logs => @logs} %>
-	<% else %>
-	<%= render :partial => 'logs/not_logged_in', :locals => {:logs => @logs} %>
-	<% end %>
+	
 	
 
 <%= render :partial => 'shared/tagcloud' %>

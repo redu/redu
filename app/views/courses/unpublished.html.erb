@@ -4,12 +4,15 @@
  	<div id="title">AULAS NÃO PUBLICADAS
 	<%= render :partial => "courses/taskbar" %>
 	</div>
+	
+	<!--
 	<div id="filter_bar">
 		
 	    <span id="title_list" class="title_list">PUBLICADAS</span>
 	    <span class="title_filter">Ordenar:</span>
 	      
     </div>
+	-->
     <div id="all_list">
     	
 		<% if @courses && @courses.length > 0 %>
@@ -19,14 +22,16 @@
 		<% end %>
     	
     </div> <!-- fim da listagem --> 
+	
+	<div id="pagination" align="center">
+
+		<%= will_paginate  @courses, :params => {:sort_by => @sort_by}, :class => "pagination_number"  %>
+
+		
+    </div>
 
 </div>
 <div id="col_box3">
-	<% if current_user %>
-	<% @logs = current_user.log_activity %>
-	<%= render :partial => 'logs/log', :locals => {:logs => @logs} %>
-	<% else %>
-	<%= render :partial => 'logs/not_logged_in', :locals => {:logs => @logs} %>
-	<% end %>
+	
 	</div>
 </div>

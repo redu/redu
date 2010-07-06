@@ -2,33 +2,51 @@
 <div id="col_content">
 	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">aprender</a> > <a href="#">aulas</a> </div>
  	<div id="title">MODERAÇÃO DE AULAS
-		<div id="task_bar_exames"><%= link_to 'Nova Aula', :action => 'new' %> | 
-  		<%= link_to 'Minhas Aulas', published_user_courses_path(current_user.id) %> |
-		</div>
+		<%= render :partial => "admin/taskbar" %>
 	</div>
+	
 	<div id="filter_bar">
 		
-	    <span id="title_list" class="title_list">AULAS</span>
-	    <span class="title_filter">Ordenar:</span>
+	    <span id="title_list" class="title_list">MOSTRANDO MAIS ANTIGOS</span>
+	    <!--<span class="title_filter">Ordenar:</span>-->
 	      
     </div>
     <div id="all_list">
     	
 		<% if @courses && @courses.length > 0 %>
- 			<%= render :partial => 'courses/item', :collection => @courses, :as => :course %> 
- 		<% else %>
+		 <% form_tag :action => :moderate_all do %>
+			<table style="width: 100%; margin: 15px 10px 20px 10px;">
+				<tr>
+					<th style="max-width:25px;">Aprovar</th><th style="max-width:27px;">Rejeitar</th><th>Aula</th><th>Autor</th><th>Data</th>
+				</tr>
+		 	<% for course in @courses %>
+				<tr>
+					<tr>
+						<td><%= radio_button_tag 'approve[]', course.id %></td>
+						<td><%= radio_button_tag 'reject[]', course.id %></td>
+						<td><%= link_to course.name, course_path(course), :target => "_blank" %> </td>
+						<td><%= course.owner.display_name %> </td>
+						<td><%= time_ago_in_words(course.updated_at) %> </td>
+					</tr>
+				</tr>
+ 			<% end %>
+			</table>
+			<%= submit_tag "Moderar" %>
+		 <% end %>
+		<% else %>
  			Não há exames publicados ainda. <%= link_to 'Crie um agora!', :action => 'new' %>
 		<% end %>
     	
     </div> <!-- fim da listagem --> 
+	
+	<div id="pagination" align="center" class="pagination">
+
+		<%= will_paginate  @courses, :params => {:sort_by => @sort_by}, :class => "pagination_number"  %>
+		
+    </div>
 
 </div>
 <div id="col_box3">
-	<% if current_user %>
-	<% @logs = current_user.log_activity %>
-	<%= render :partial => 'logs/log', :locals => {:logs => @logs} %>
-	<% else %>
-	<%= render :partial => 'logs/not_logged_in', :locals => {:logs => @logs} %>
-	<% end %>
+	
 	</div>
 </div>

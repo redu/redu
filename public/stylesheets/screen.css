@@ -370,14 +370,14 @@ margin-right: 1em;
 #pagination_number {
 	list-style: none;
 }
-.pagination{display:block; float:left; width:100%; height:auto; padding:0px 0px 0px 0px; margin:8px 0px 0px 8px; text-align:center;}
+.pagination{display:block; float:left; width:100%; height:auto; padding:0px 0px 0px 0px; margin:20px 0px 0px 8px; text-align:center;}
 .pagination_number{list-style-type:none; top:0px; padding:0px; right:0px;}
 .pagination_number li {float:left; margin-right:8px; list-style:none; font-size:14px; text-decoration:none; color:#94a2ca;}
 .pagination_number li span {padding: 5px 10px; font-size:11px; text-decoration:none; color:#5683d5;}
-.pagination_number li .number, #pagination_number li .number:visited { display:block; width:20px; height:20px; font-size:14px; text-decoration:none; color:#396bbd;font-weight:bold;  background:#EEE; padding:4px 4px 2px 4px}
+.pagination_number li .number, .pagination_number li .number:visited { display:block; width:20px; height:20px; font-size:14px; text-decoration:none; color:#396bbd;font-weight:bold;  background:#EEE; padding:4px 4px 2px 4px}
 .pagination_number li .number:hover {display:block; width:20px; height:20px; font-size:14px; text-decoration:underline; color:#396bbd; font-weight:bold;  background:#EEE; padding:4px 4px 2px 4px}
 .pagination_number .current { display:block; width:20px; height:20px; font-size:14px; text-decoration:none; color:#EEE;font-weight:bold;  background:#396bbd; padding:4px 4px 2px 4px}
-.pagination_number li .nav, #pagination_number li .nav:visited {font-size:14px; text-decoration:none; color:#396bbd; font-weight:bold; padding:2px 4px 2px 4px}
+.pagination_number li .nav, .pagination_number li .nav:visited {font-size:14px; text-decoration:none; color:#396bbd; font-weight:bold; padding:2px 4px 2px 4px}
 .pagination_number li .nav:hover {font-size:14px; text-decoration:underline; color:#396bbd; font-weight:bold; padding:2px 4px 2px 4px}
 
 
