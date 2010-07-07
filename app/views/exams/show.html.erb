@@ -20,19 +20,19 @@
 				<li><%= link_to @exam.owner.display_name, user_path(@exam.owner) %></li>
         		<li>|</li>
 				<li>Criado: <%= time_ago_in_words(@exam.created_at) %></li>
-            <!--	<li>|</li>
-				<li>ExibiÃ§Ãµes(4)</li> -->
+				<li>|</li>
+				<li><strong>Tags:</strong> <%=h @exam.tag_list %></li>
+           
 			</ul>
         </div>
-         <div id="description_video"><%=h @exam.description %> </div>
+        
          <div id="identification1">
         	<ul id="identification_resource1">
-				<li><strong>Categoria:</strong> Português</li>
-        		<li>|</li>
-				<li><strong>Tags:</strong> <%=h @exam.tag_list %></li>
+				
 			</ul>
          </div>
-         <div id="base_btn_exame"><%= link_to 'FAZER EXAME', {:action => :answer, :id => @exam, :first => true}, {:class =>'btn_exame'} %></div>     
+         <div id="base_btn_exame"><%= link_to 'FAZER EXAME', {:action => :answer, :id => @exam, :first => true}, {:class =>'btn_exame'} %></div>  
+		  <div id="description_video"> <%=h @exam.description %> </div>   
    	  </div>
 	  
 <!-- CABEÃ‡ALHO ############################################################################################################################### --> 
@@ -127,12 +127,15 @@
 
 <!-- MATERIAIS AUXILIARES #################################################################################################################### -->
 
+
 <!-- CONTEUDO COMPLEMENTAR ################################################################################################################### -->
+<!-- Exames relacionados -->
 <div id="video_aula_list">
-        <div id="item_list">
+        <!--
+		<div id="item_list">
     		<div id="title_list_item"><a href="#">Português - Conjunções</a></div>
              
-            <div id="video"><!-- Video Insert -->
+            <div id="video">
            	  <div id="video_info">00:00:00</div>
             </div>
             
@@ -148,14 +151,14 @@
             
             <div id="description_list">Descricao do video aula, o que vai ser passado para o alunos, conteudo da aula e outra coisas mais significantes para seu aprendizado
             </div>
-            <!--<div id="categoria_tags">
+           <div id="categoria_tags">
         		<ul id="categoria_tags_list">
 					<li><strong>Categoria:</strong> PortuguÃªs</li>
         			<li>|</li>
 					<li><strong>Tag:</strong> Ensino MÃ©dio, PortuguÃªs, ENEM, Vestibular</li>
 				</ul>
-			</div>-->  
-            <!--<div id="actions">
+			</div>
+           <div id="actions">
               <ul id="actions_resource">
 				<li><a href="#" class="share">Compartilhar</a></li>
         		<li>|</li>
@@ -165,7 +168,7 @@
                 <li>|</li>
 				<li><a href="#" class="comments">ComentÃ¡rios(30)</a></li>
 			  </ul>
-            </div>-->
+            </div>
             
 			<div id="ratting_video">
 				<ul id="ratting_video_menu">
@@ -179,9 +182,11 @@
 			</div>
             
     	</div>
+		-->
 </div>
+
 <!-- CONTEUDO COMPLEMENTAR ################################################################################################################### -->
-<div id="btn_list_all" align="right"><a href="#" class="btn_list">Ver todos (12)</a></div>
+<!-- <div id="btn_list_all" align="right"><a href="#" class="btn_list">Ver todos (12)</a></div> -->
 <!-- VIDEO ################################################################################################################################### -->
 
 </div>
