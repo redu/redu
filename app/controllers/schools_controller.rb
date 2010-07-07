@@ -2,6 +2,20 @@ class SchoolsController < BaseController
   before_filter :login_required,  :except => [:join, :unjoin, :member, :new, :create]
   # before_filter :admin_required,  :only => [:new, :create]
   
+  def look_and_feel
+     @school = School.find(params[:id])
+  end
+
+  def set_theme
+    @school = School.find(params[:id])
+    @school.update_attributes(params[:school])
+   
+    #@school.update_attribute(:theme, params[:theme])
+    flash[:notice] = "Tema modificado com sucesso!"
+    redirect_to look_and_feel_school_path
+  end
+
+
   ##  Admin actions  
   def new_school_admin
     @user_school_association = UserSchoolAssociation.new

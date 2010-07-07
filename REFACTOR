@@ -22,8 +22,13 @@ colocar imagens em subpastas
 
 PROGRAMAÇÃO
 ===========
-
-Atualizar para Rails 3.0
+remover todos os haml
+remover plugins antigos do CE nao-utilizados.
+Unobtrusive Javascript com jquery
+SEGURANÇA http://railscasts.com/episodes/178-seven-security-tips
+Atualizar para Rails 3.0 (talvez mais posteriormente pois teria q atualizar todos os plugins)
+listagens e paginações com AJAX http://railscasts.com/episodes/174-pagination-with-ajax
+Usar Jquery ao invés de Prototype http://railscasts.com/episodes/136-jquery
 
 Wizards devem ser como em: http://railscasts.com/episodes/217-multistep-forms
 Repensar o sistema de Logs (atividades) e pontuação

@@ -208,7 +208,13 @@ ActionController::Routing::Routes.draw do |map|
     # SCHOOL
   
   
-   map.resources :schools, :member_path => '/:id', :nested_member_path => '/:school_id', :member => {:join => :get, :unjoin => :get,:manage => :get, :pending_courses => :get, :pending_members => :get
+   map.resources :schools, :member_path => '/:id', :nested_member_path => '/:school_id', :member => {
+   :join => :get,
+   :unjoin => :get,
+   :manage => :get,
+   :pending_courses => :get,
+   :pending_members => :get,
+   :look_and_feel => :get
    } do |school|
     school.resources :folders, :member =>{:upload => :get, :download => :get, :rename => :get, :destroy_folder => :get, :destroy_file => :get}
   end

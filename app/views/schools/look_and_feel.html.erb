@@ -1,0 +1,45 @@
+<div id="all_content3">
+<div id="col_content">
+	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="<%=schools_path%>">redes</a> > <a href="<%=school_path(@school)%>"><%=@school.name%></a> > <a href="<%=manage_school_path(@school)%>">gerenciamento</a> > aparência </div>
+ 	<div id="title">APARÊNCIA
+		<%= render :partial => "schools/admin_taskbar" %>
+	</div>
+	
+    <div id="all_list">
+    	
+					<%= render :partial => "schools/school_info", :locals => {:school => @school}%>
+
+		
+		
+    </div> <!-- fim da listagem --> 
+	<div>
+		Escolha o tema:
+		<% form_for @school, :url => {:action => :set_theme, :id => @school.id} do |f| %>
+		  
+		  <%= f.radio_button(:theme, "default") %>
+		  <%= image_tag 'icon_default.png'%>
+		  <%= f.label(:theme_default, "Padrão") %> 
+		  <BR><BR>
+		  
+		  <%= f.radio_button(:theme, "redish") %>
+		  <%= image_tag 'icon_redish.png'%>
+		  <%= f.label(:theme_redish, "Vermelho") %>
+		  <BR><BR>
+		<%= submit_tag 'Atualizar' %>
+		<% end %>
+		</div>
+</div>
+</div>
+
+<!-- COLUNA DIREITA ################################################################################################################################################ -->
+<div id="col_box3">
+<!-- BOX MOVIMENTACAO RECENTE ///////////////////////////////////////////////////////////////////////////////////// -->
+	
+	
+
+
+
+</div>
+</div>
+
+
