@@ -18,7 +18,7 @@ $(document).ready(function(){
     
     $(".tabs").tabs();
     
-    $(".question-action a:first").click(function(e){
+    $(".question-action a").click(function(e){
         $(this).next("div.answer:first").slideToggle()
         e.preventDefault()
     })

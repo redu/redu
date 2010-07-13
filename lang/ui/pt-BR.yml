@@ -73,9 +73,10 @@ pt-BR:
                 role:
                     blank: ": Por favor, informe seu papel (professor/aluno)."
                     inclusion: ": Por favor, informe seu papel (professor/aluno)."
-                    
-           
-          
+        status:
+          attributes:
+            text:
+              blank: ": Você precisa digitar uma mensagem."
   
   Course:  aula
   Resource:  material

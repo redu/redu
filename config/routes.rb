@@ -1,6 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
   
-   # This route helps determine if it's a folder or a file that is
+  # This route helps determine if it's a folder or a file that is
   # being added/remove to/from the clipboard.
   map.connect 'clipboard/:action/:folder_or_file/:id',
               :controller => 'clipboard',
@@ -8,13 +8,15 @@ ActionController::Routing::Routes.draw do |map|
                                  :folder_or_file => /(folder|file)/ }
   
   
- map.opensocial_container "contain.localhost" # this will be turned in to <instance_id>.contain.localhost
+  map.opensocial_container "contain.localhost" # this will be turned in to <instance_id>.contain.localhost
+
+  map.resources :interactive_classes
   
- map.resources :interactive_classes
+  map.resources :statuses
    
- map.resources :lessons
+  map.resources :lessons
     
- map.resources :beta_keys, :collection => {:generate => :get, :remove_all => :get, :print_blank => :get, :invite => :get}
+  map.resources :beta_keys, :collection => {:generate => :get, :remove_all => :get, :print_blank => :get, :invite => :get}
   
   map.resources :profiles
 
@@ -22,10 +24,12 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :resources, :collection => { :search => [:get, :post], :add => :get, :waiting => :get, :favorites => :get }, :member => {:rate => :post}
 
-  map.resources :questions, :collection => { :search => [:get, :post], :add => :get } #, :member => {:add => :get}
+  map.resources :questions, :collection => { :search => [:get, :post], :add => :get } 
   
-  map.resources :exams, :member => {:add_question => :get, :add_resource => :get, :rate => :post},#, :remove_question => :get},
-                        :collection => {:unpublished => :get, :new_exam => :get, :cancel => :get, :exam_history => :get, :sort => :get, :order => :get, :favorites => :get, :review_question => :get}
+  map.resources :exams, :member => {:add_question => :get, :add_resource => :get, :rate => :post},
+                        :collection => {:unpublished => :get, :new_exam => :get, :cancel => :get, 
+                        :exam_history => :get, :sort => :get, :order => :get, 
+                        :favorites => :get, :review_question => :get}
     
   map.resources :courses, :member => {:rate => :post, :buy => :get, :download_attachment => :get},  :collection => {:pending => :get, :favorites => :get, :cancel => :get, :sort_lesson => :post}
   
