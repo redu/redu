@@ -1,0 +1,5 @@
+<%= javascript_include_tag 'flow.js' %>
+
+<ul class="activities">
+<%= render :partial => "type_proxy", :collection => @statuses, :as => :status %>
+</ul><!-- end activities -->

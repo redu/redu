@@ -1,0 +1,28 @@
+<li class="clearfix" id="status-<%= status.id %>">
+    <div class="photo">
+    <%= image_tag( status.user.avatar_photo_url(:thumb), {:width => "50", :height=>"50" })%>
+    </div>
+    <div class="activity clearfix question">
+        <div class="actions">
+            <a href="" class="icon ico-bookmark">favoritos</a>
+            <a href="" class="icon ico-comment">comentar</a>
+        </div>
+        <span class="msg">
+            <%= link_to status.user.login_slug, user_path(status.user), :class => "author" %>
+            <%= status.text %>
+            <span class="when quiet"><%= time_ago_in_words status.created_at %></span>
+        </span>
+        <div class="question-action">
+            <a href="">Responder</a>
+            <div class="answer hide">
+            <div class="error form"></div>
+            <% form_for :status, :url => {:controller => 'statuses', :action => "respond", :id => status.id } do |f| %>
+            <%= render :partial => "statuses/form_answer", :locals => { :f => f, :question => status } %>
+            <% end %>
+            </div>
+        </div>
+        <ul class="response clearfix" >
+            <%= render :partial => 'statuses/response', :collection => status.statuses.find(:all, :order => "created_at DESC") %>
+        </ul><!-- end response -->
+    </div>
+</li>

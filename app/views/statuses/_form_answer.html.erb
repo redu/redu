@@ -1,0 +1,7 @@
+<%= f.error_messages %>
+<% field_set_tag do %>
+<%= f.text_area :text, :class => "answer", :style => "width: 80%; height: 125px;" %>
+<%= hidden_field_tag "status[kind]", Status::ANSWER %>
+<button type="submit">Responder</button>
+<% end %>
+

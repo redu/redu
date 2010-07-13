@@ -98,6 +98,8 @@ class Course < ActiveRecord::Base
   has_one :interactive_class, :dependent => :destroy
   has_one :page, :dependent => :destroy
   
+  has_one :school, :through => 'SchoolAssets'
+  
   belongs_to :asset, :polymorphic => true
   belongs_to :category, :class_name => "Skill", :foreign_key => "skill_id"
 

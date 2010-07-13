@@ -1,7 +1,7 @@
+<% content_for :page_id, 'group' %>
 <%- @meta = { :description => "#{@school.name}'s profile on #{AppConfig.community_name}.", :keywords => "#{@school.name}, #{@school.tags.join(", ") unless @school.tags.nil?}", :robots => AppConfig.robots_meta_show_content }%>
 
-<%# calendar_date_select_includes %>
-<script>
+<script type="text/javascript">
     function grantKeysToSchool(school_id){
         //alert(school_id);
         nKeys = document.getElementById('keys_number').value;
@@ -16,7 +16,6 @@
             }
         });
     }
-    
 	
 	function toggleBox(boxname){
 		var box = document.getElementById(boxname);
@@ -26,13 +25,9 @@
 		} else {
 			Effect.SlideUp(box,0.5);
 		}
-		
-		
 	}
 	
-	
 	function toggleAssociateBox(){
-		
 		var box = document.getElementById("associate_box");
 		
 		if (box.style.display == 'none') {
@@ -46,13 +41,11 @@
 	}
 	
 	function showKeysSchoolBox(){
-		
 		document.getElementById('grant_keys_link').style.display = 'none';
         document.getElementById('keys_school_box').style.display = 'inline';
 	}
 	
 	function showAdminLoginBox(){
-		
 		document.getElementById('grant_admin_link').style.display = 'none';
         document.getElementById('admin_login_box').style.display = 'inline';
 	}
@@ -60,7 +53,6 @@
 	function grantSchoolAdmin(schoolId) {
 		var adminLogin = $('admin_login').val();
 		var adminKey = $('admin_key').val();
-		
 		
 		new Ajax.Request("<%= url_for :controller => :schools, :action => :create_school_admin %>", {
             method: 'get',
@@ -74,146 +66,43 @@
             }
         });
 	}
-	
-	
-    
 </script>
 
+<%= render :partial => "schools/school_info", :locals => {:school => @school} %>
+<%= render :partial => "schools/sidebar", :locals => {:school => @school} %>
 
-
-
-
-<div id="all_content3">
-<div id="col_content_user">
-	<div id="breadcrumbs_video"><a href="<%=application_url%>">home</a> > <%= link_to 'redes', schools_path %> > <strong><a href="#"><%= @school.name%></a></strong></div>  
-    <!--<div id="title">AULAS</div>-->
-<!-- LISTAGEM RECURSO ############################################################################################################################################## -->
-<div id="all_list">
-
-<%= render :partial => "schools/school_info", :locals => {:school => @school}%>
-
-<% if logged_in?  %>
-<div id="actions_user">
-	
-	
-	<%= subscription_link %>
-	
-	
-	<a href="#" class="share" onclick="">BLOG</a>
-	
-	<% if current_user.can_post? @school %>
-	| <%= link_to "NOVA AULA", new_course_path(:school => @school), :class => "share"  %>
-	| <%= link_to "NOVO EXAME", new_exam_path(@school), :class => "share"  %>
-	| <%= link_to "ARQUIVOS", school_folders_path(@school), :class => "share"  %>
-	| <%= link_to "FORUM", new_exam_path(@school), :class => "share"  %>
-	<% end %>
-	
-	<% if current_user.school_admin? @school %>
-	| <%= link_to "GERENCIAR", manage_school_path(@school), :class => "share"  %>
-	<% end %>
-</div>
-<% end %>
-     
-</div>
-
-<div id="associate_box" style="display:none;">
-		<div>
-	    <% form_tag({:controller => 'schools' , :action => 'associate', :id => @school}, :method => "get") do %>
-		   <%= hidden_field_tag(:user_id, current_user.id) %>
-		    Digite sua chave: 
-			<%= text_field_tag(:user_key) %>
-		<%= submit_tag("OK") %>
-	    <% end %>
+<div class="main grid_12">
+<div class="tabs">
+	    <ul>
+		    <li><a href="#tabs-1">Início</a></li>
+		    <li><a href="#tabs-2">Movimentação</a></li>
+		    <!--<li><a href="#tabs-3">Grupos</a></li>-->
+		    <li><a href="#tabs-4">Cursos</a></li>
+		    <!--<li><a href="#tabs-5">Recursos</a></li>-->
+	    </ul>
+	    
+		<div id="tabs-1">
+		<%= javascript_include_tag 'flow.js' %>
+		<%= render :partial => "statuses/create_status", :locals => {:status => @status }%>
+		<ul class="activities">
+		<%= render :partial => "statuses/type_proxy", :collection => @school.recent_school_activity, :as => :status %>
+		</ul><!-- end activities -->
 		</div>
-</div>
-		
-
-<!-- BOX RECURSOS ############################################################################## -->
-<div id="comments_user">
-	<div id="user_box_top">RECURSOS DA REDE(<%=@courses.length%>)</div>
-    
-	<% if @courses && @courses.length > 0 %>
- 			<%= render :partial => 'courses/item', :collection => @courses, :as => :course %> 
- 		<% else %>
- 			Não há aulas publicadas ainda. <%= link_to 'Crie uma agora!', new_course_path %>
-	<% end %>
-
-<div id="link_ver_todos"><a href="#">Ver todos(8) &gt;</a></div>
-</div>
-<!-- BOX RECURSOS ############################################################### -->
-
-
-<!-- BOX MAIS VISTOS ############################################################### -->
-<div id="comments_user">
-	<div id="user_box_top"> MAIS VISTOS </div>
-		<% @spot = @school.spotlight_courses %>
-		<%= render :partial => 'schools/spotlight_courses', :collection => @spot, :as => :course %>
-</div>
-<!-- END -->
-
-<!-- BOX MOV. RESCENTE ############################################## -->
-<div id="comments_user">
-	<div id="user_box_top">MOVIMENTAÇÃO DO <%= @school.name.upcase %></div>
-	
-	<a href="#" class="share" onclick="toggleBox('flow_container');return false;">Novo fluxo</a> | Filtrar
-	
-	<%= render :partial => 'shared/flow' %>
-	
-	<% if @school %>
-		<%= render :partial => 'logs/item_user', :collection => @school.recent_school_activity, :as => :item %>
-	<% else %>
-		Ainda não há movimentação da rede.
-	<% end %>
-
-
-<div id="link_ver_todos"><a href="#">Ver todos(8) &gt;</a></div>
-</div>
-<!-- BOX MOV. RESCENTE ############################################################## -->
-
-
-<%= render :partial => 'forums/index' %>
-
-</div>
-</div>
-<!-- COLUNA DIREITA ##################################################################### -->
-<div id="col_box3">
-	
-	<!-- BOX MEMBROS ####################################################################### -->
-<div id="box_move">
-    	<div id="box_top">MEMBROS (<%= @school.users.count %>)</div>
-
-        <div id="box_list">
-		<%= render :partial => 'schools/member_short', :collection => @school.users, :as => :member %>
+		<div id="tabs-2">
+		<ul class="activities">
+		<%= render :partial => "statuses/type_proxy", :collection => @school.recent_school_activity, :as => :status %>
+		</ul><!-- end activities -->
 		</div>
-		
-    <div id="link_ver_todos"><a href="#">Ver todos(8) &gt;</a></div>
-</div>
-<!-- BOX MEMBROS ############################################################################### -->
-
-	<!-- BOX MEMBROS ####################################################################### -->
-<!--
-<div id="box_move">
-    	<div id="box_top">PROFESSORES (<%# @school.users.count %>)</div>
-
-        <div id="box_list">
-		<%# render :partial => 'schools/member_short', :collection => @school.users, :as => :member %>
+		<div id="tabs-3"></div>
+		<div id="tabs-4">
+			<ul class="groups">
+			<%= render :partial => 'course', :collection => @courses %>
+			</ul>
+	    <div id="pagination" align="center" class="pagination">
+		<%= will_paginate  @courses, :params => {:sort_by => 'created_at'}, :class => "pagination_number"  %>
+	    </div>
 		</div>
-		
-    <div id="link_ver_todos"><a href="#">Ver todos(8) &gt;</a></div>
-</div>-->
-<!-- BOX MEMBROS ############################################################################### -->
-
-	
-</div>
-</div>
-
-
-
-
-
-
-
-
-   
-
+		<div id="tabs-5"></div>
+</div><!-- end tabs -->
+</div><!-- end main -->
 

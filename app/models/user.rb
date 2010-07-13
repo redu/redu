@@ -96,7 +96,7 @@ class User < ActiveRecord::Base
   has_many :favorites, :order => "created_at desc", :dependent => :destroy
   
    # STATUS
-  has_many :statuses, :as => :in_response_to
+  has_many :statuses
   
   #SUGGESTIONS
   has_many :suggestions
@@ -105,37 +105,48 @@ class User < ActiveRecord::Base
   
   # COMMUNITY ENGINE:
 
-    has_enumerated :role  
-    has_many :posts, :order => "published_at desc", :dependent => :destroy
-    has_many :photos, :order => "created_at desc", :dependent => :destroy
-    has_many :invitations, :dependent => :destroy
-    has_many :offerings, :dependent => :destroy
-    has_many :rsvps, :dependent => :destroy
+  has_enumerated :role  
+  has_many :posts, :order => "published_at desc", :dependent => :destroy
+  has_many :photos, :order => "created_at desc", :dependent => :destroy
+  has_many :invitations, :dependent => :destroy
+  has_many :offerings, :dependent => :destroy
+  has_many :rsvps, :dependent => :destroy
 
-    #friendship associations
-    has_many :friendships, :class_name => "Friendship", :foreign_key => "user_id", :dependent => :destroy
-    has_many :accepted_friendships, :class_name => "Friendship", :conditions => ['friendship_status_id = ?', 2]
-    has_many :pending_friendships, :class_name => "Friendship", :conditions => ['initiator = ? AND friendship_status_id = ?', false, 1]
-    has_many :friendships_initiated_by_me, :class_name => "Friendship", :foreign_key => "user_id", :conditions => ['initiator = ?', true], :dependent => :destroy
-    has_many :friendships_not_initiated_by_me, :class_name => "Friendship", :foreign_key => "user_id", :conditions => ['initiator = ?', false], :dependent => :destroy
-    has_many :occurances_as_friend, :class_name => "Friendship", :foreign_key => "friend_id", :dependent => :destroy
+  #friendship associations
+  has_many :friendships, :class_name => "Friendship", :foreign_key => "user_id", 
+    :dependent => :destroy
+  has_many :accepted_friendships, :class_name => "Friendship", 
+    :conditions => ['friendship_status_id = ?', 2]
+  has_many :pending_friendships, :class_name => "Friendship", 
+    :conditions => ['initiator = ? AND friendship_status_id = ?', false, 1]
+  has_many :friendships_initiated_by_me, :class_name => "Friendship", 
+    :foreign_key => "user_id", :conditions => ['initiator = ?', true], :dependent => :destroy
+  has_many :friendships_not_initiated_by_me, :class_name => "Friendship", 
+    :foreign_key => "user_id", :conditions => ['initiator = ?', false], :dependent => :destroy
+  has_many :occurances_as_friend, :class_name => "Friendship", 
+    :foreign_key => "friend_id", :dependent => :destroy
 
-    #forums
-    has_many :moderatorships, :dependent => :destroy
-    has_many :forums, :through => :moderatorships, :order => 'forums.name'
-    has_many :sb_posts, :dependent => :destroy
-    has_many :topics, :dependent => :destroy
-    has_many :monitorships, :dependent => :destroy
-    has_many :monitored_topics, :through => :monitorships, :conditions => ['monitorships.active = ?', true], :order => 'topics.replied_at desc', :source => :topic
+  #forums
+  has_many :moderatorships, :dependent => :destroy
+  has_many :forums, :through => :moderatorships, :order => 'forums.name'
+  has_many :sb_posts, :dependent => :destroy
+  has_many :topics, :dependent => :destroy
+  has_many :monitorships, :dependent => :destroy
+  has_many :monitored_topics, :through => :monitorships, 
+    :conditions => ['monitorships.active = ?', true], :order => 'topics.replied_at desc', :source => :topic
 
-    belongs_to  :avatar, :class_name => "Photo", :foreign_key => "avatar_id"
-    belongs_to  :metro_area
-    belongs_to  :state
-    belongs_to  :country
-    has_many    :comments_as_author, :class_name => "Comment", :foreign_key => "user_id", :order => "created_at desc", :dependent => :destroy
-    has_many    :comments_as_recipient, :class_name => "Comment", :foreign_key => "recipient_id", :order => "created_at desc", :dependent => :destroy
-    has_many    :clippings, :order => "created_at desc", :dependent => :destroy
-    has_many    :favorites, :order => "created_at desc", :dependent => :destroy
+  belongs_to  :avatar, :class_name => "Photo", :foreign_key => "avatar_id"
+  belongs_to  :metro_area
+  belongs_to  :state
+  belongs_to  :country
+  has_many    :comments_as_author, :class_name => "Comment", 
+    :foreign_key => "user_id", :order => "created_at desc", :dependent => :destroy
+  has_many    :comments_as_recipient, :class_name => "Comment", 
+    :foreign_key => "recipient_id", :order => "created_at desc", :dependent => :destroy
+  has_many    :clippings, :order => "created_at desc", 
+    :dependent => :destroy
+  has_many    :favorites, :order => "created_at desc", 
+    :dependent => :destroy
     
   #named scopes
   named_scope :recent, :order => 'users.created_at DESC'
@@ -145,8 +156,6 @@ class User < ActiveRecord::Base
   named_scope :tagged_with, lambda {|tag_name|
     {:conditions => ["tags.name = ?", tag_name], :include => :tags}
   }
-  
-  
 
   ## Class Methods
 
@@ -262,6 +271,7 @@ class User < ActiveRecord::Base
   
   ## Instance Methods
   def can_manage?(entity)
+    puts self.admin?
     return true if self.admin?
     
     case entity.class 

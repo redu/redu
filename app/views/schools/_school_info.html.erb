@@ -1,6 +1,26 @@
+<div id="group-header" class="grid_16   ">
+    <div class="logo grid_4">
+        <%= image_tag( school.avatar_photo_url(:thumb), {:width => "64", :height=>"64" })%>
+    </div>
+    <div class="info grid_9">
+    <h2 class="name"><%= link_to  @school.name, @school %></h2>
+    <% if current_user.can_manage?(school)%>
+    <%= link_to "Configurações", manage_school_path(school), :class => 'config' %>
+    <% end %>
+    <span class="areas">
+    <a href="">Ensino Médio, Escolas</a>
+    </span>
+    <span class="areas">
+    <%= subscription_link %>
+    </span>
+    </div><!-- end info -->
+</div><!-- end group-header -->
+
+<!--<div id="profile_user_info">
 <div id="profile_school_info">
+>>>>>>> .r419
 	<div id="user_photo">
-		 <%= image_tag( school.avatar_photo_url(:thumb), {:width => "64", :height=>"64" })%><BR>
+		 <%= image_tag( school.avatar_photo_url(:thumb), {:width => "200" })%><BR>
 	</div>
     <div id="name_user">
 		<ul id="name_user_item">
@@ -24,3 +44,4 @@
 <div>
 	Assinatura mensal: $ 4,00
 </div>
+-->

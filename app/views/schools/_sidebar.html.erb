@@ -1,0 +1,59 @@
+<div class="sidebar grid_4">
+  <ul class="sortable clearfix">
+  <li class="clearfix">
+    <span class="call"><span>Seus grupos (4)</span></span>
+    <ul class="sub-groups">
+      <li>
+        <a href="" class="closed sb">Matemática</a>
+        <ul>
+        <li>
+        <a href="" class="course">Revolução Francesa</a>
+        <span class="bar-chart">
+        <span style="width: 70%"><span>70%</span></span>
+        </span>
+      </li>
+      <li>
+        <a href="" class="course">Fisiologia da Obesidade</a>
+        <span class="bar-chart">
+        <span style="width: 30%"><span>30%</span></span>
+        </span>
+        </li>
+      <li>
+        <a href="" class="course">Segunda Guerra</a>
+        <span class="bar-chart">
+        <span style="width: 90%"><span>90%</span></span>
+        </span>
+        </li>
+      </ul>
+      <a href="" class="more">Ver mais</a>
+      </li>
+      <li><a href="" class="closed sb">História</a></li>
+      <li><a href="" class="closed sb">Geografia</a></li>
+      <li><a href="" class="closed sb">Xadrez</a></li>
+    </ul>
+  </li>
+  <li class="clearfix">
+    <span class="call"><span>Membros (<%= @school.users.count %>)</span></span>
+      <div class="followship box clearfix">
+      <ul class="clearfix">
+        <%= render :partial => 'schools/member_short', :collection => @school.users, :as => :member %>
+      </ul>
+      <a href="" class="icon more">Ver mais</a>
+      </div><!-- end followship -->
+  </li>
+  <li class="clearfix">
+    <span class="call"><span>Professores (<%= teachers_preview(school).count %>)</span></span>
+    <% unless teachers_preview(school).empty? %>
+    <div class="followship box clearfix">
+        <ul class="clearfix">
+        <%= render :partial => 'schools/member_short', :collection => teachers_preview(school), :as => :member %>
+        </ul>
+        <a href="" class="icon more">Ver mais</a>
+    </div><!-- end followship -->
+    <% else %>
+      <span class="notice">Nenhum professor cadastrado</span>
+    <% end %>
+  </li>
+  </ul><!-- end sortable -->
+
+</div><!-- end sidebar -->

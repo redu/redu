@@ -29,14 +29,17 @@ class School < ActiveRecord::Base
   
   has_many :access_keys, :dependent => :destroy
   
-  has_many :assets, :as => :asset, :class_name => 'SchoolAsset', :dependent => :destroy
+  has_many :school_assets, :class_name => 'SchoolAsset', 
+    :dependent => :destroy
+  
+  has_many :courses, :through => :school_assets, 
+    :source => :asset, :source_type => "Course"
   
   # VALIDATIONS
   validates_format_of       :path, :with => /^[\sA-Za-z0-9_-]+$/
   validates_presence_of :name, :path
   validates_uniqueness_of   :path, :case_sensitive => false
   validates_exclusion_of    :path, :in => AppConfig.reserved_logins
-    
   
   # override activerecord's find to allow us to find by name or id transparently
   def self.find(*args)
@@ -46,8 +49,7 @@ class School < ActiveRecord::Base
       super
     end
   end
-  
-  
+
   def avatar_photo_url(size = nil)
     if self.avatar_file_name
       self.avatar.url(size)
@@ -61,29 +63,15 @@ class School < ActiveRecord::Base
     end
   end
   
-  #  def recent_school_activity
-#    Log.find(:all, :conditions => ["school_id = ?", self.id], :order => "created_at DESC", :limit => 10)
-#  end
-  
   def recent_school_activity
-    sql =  "SELECT l.id, l.logeable_type, l.action, l.user_id, l.logeable_name, l.logeable_id, l.created_at, l.updated_at, l.school_id FROM logs l, school_assets s WHERE 
-    l.school_id = '#{self.id}' ORDER BY l.created_at DESC LIMIT 10 "
-    @recent_school_activity = Log.find_by_sql(sql)
+    Status.group_statuses(self)
   end
-  
-#  def recent_school_exams_activity
-#    Log.find(:all, :conditions => ["school_id = ? AND logeable_type = ?", self.id, "Exam" ], :order => "created_at DESC", :limit => 3)
-#  end
-  
+
   def recent_school_exams_activity
     sql =  "SELECT l.id, l.logeable_type, l.action, l.user_id, l.logeable_name, l.logeable_id, l.created_at, l.updated_at, l.school_id FROM logs l, school_assets s WHERE 
     l.school_id = '#{self.id}' AND l.logeable_type = '#{Exam}' ORDER BY l.created_at DESC LIMIT 3 "
     @recent_exams_activity = Log.find_by_sql(sql)
   end
-  
-#  def recent_school_courses_activity
-#    Log.find(:all, :conditions => ["school_id = ? AND logeable_type = ?", self.id, "Course"], :order => "created_at DESC", :limit => 3)
-#  end
   
   def recent_school_courses_activity
     sql =  "SELECT l.id, l.logeable_type, l.action, l.user_id, l.logeable_name, l.logeable_id, l.created_at, l.updated_at, l.school_id FROM logs l, school_assets s WHERE 
@@ -92,13 +80,15 @@ class School < ActiveRecord::Base
   end
   
 
- def spotlight_courses
-   sql =  "SELECT c.name FROM courses c, school_assets s WHERE 
-    s.school_id = '#{self.id}' AND s.asset_type = '#{Course}' AND c.id = s.asset_id ORDER BY c.view_count DESC LIMIT 6 "
-   @spotlight_courses = Course.find_by_sql(sql)
+  def spotlight_courses
+    sql =  "SELECT c.name FROM courses c, school_assets s " + \
+      "WHERE s.school_id = '#{self.id}' " + \
+      "AND s.asset_type = '#{Course}' " + \
+      "AND c.id = s.asset_id " + \
+      "ORDER BY c.view_count DESC LIMIT 6 "
+    
+    Course.find_by_sql(sql)
   end
-
-  
   
   def create_root_folder
     @folder = Folder.create(:name => "root")

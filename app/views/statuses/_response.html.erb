@@ -1,0 +1,13 @@
+<li class="clearfix" id="response-<%= response.id %>">
+    <div class="photo">
+     <%= image_tag( response.user.avatar_photo_url(:thumb), {:width => "24", :height=>"24" })%>
+    </div>
+    <div class="activity clearfix">
+    <span class="msg">
+    <%= link_to response.user.login_slug, user_path(response.user), :class => 'author' %>
+    <%= response.text %>
+    <span class="when quiet"><%= time_ago_in_words(response.created_at) %></span>
+    </span>
+
+    </div>
+</li>

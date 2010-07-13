@@ -12,7 +12,6 @@
     <% if @rss_title && @rss_url %>
     <%= auto_discovery_link_tag(:rss, @rss_url, {:title => @rss_title}) %>
     <% end %>
-    </script>
 </head>
 <body>
 <%= render :partial => 'shared/new/header' %>

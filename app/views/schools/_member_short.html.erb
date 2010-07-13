@@ -1,3 +1,1 @@
-		<div id="comment_user_photo">
-			<%= link_to image_tag(member.avatar_photo_url(:thumb), :height => '50', :width => '50', :alt => "#{member.login}"), user_path(member), :rel => 'bookmark', :class => 'move_foto', :title => "Perfil de #{member.login}" %>
-		</div>
+<li><%= link_to image_tag(member.avatar_photo_url(:thumb), :height => '24', :width => '24', :alt => "#{member.login}"), user_path(member), :rel => 'bookmark', :title => "Perfil de #{member.login}" %></li>

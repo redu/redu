@@ -1,9 +1,10 @@
 class SchoolsController < BaseController
-  before_filter :login_required,  :except => [:join, :unjoin, :member, :new, :create]
+  layout 'new_application'
+  before_filter :login_required,  :except => [:join, :unjoin, :member]
   # before_filter :admin_required,  :only => [:new, :create]
   
   def look_and_feel
-     @school = School.find(params[:id])
+    @school = School.find(params[:id])
   end
 
   def set_theme
@@ -25,35 +26,6 @@ class SchoolsController < BaseController
       format.xml  { render :xml => @school }
     end
   end
-  
-  
-  
-  
-  
-=begin  
-  def create_school_admin
-    
-    user_login = params[:login]
-    user_key = params[:key]
-    school_id = params[:id]
-    
-    # TODO validar se login valido, chave válida e desocupada, escola válida
-    
-    @user_school_association = UserSchoolAssociation.new
-    
-    @user_school_association.user = User.find_by_login(user_login)
-    @user_school_association.school = School.find(school_id)
-    @user_school_association.access_key = AccessKey
-
-      if @user_school_association.save
-        flash[:notice] = 'Administrador da escola criado'
-      else
-         flash[:error] = 'Administrador da escola não foi criado'
-      end
-      render :text => "OK" 
-    
-  end
-=end
   
   ### School Admin actions
   def invalidate_keys(access_key) # 'troca' um conjunto de chaves
@@ -141,7 +113,7 @@ class SchoolsController < BaseController
       :per_page => AppConfig.items_per_page)
     
     respond_to do |format|
-      format.html #{ render :action => "my" }
+      format.html #{ render :layout => false }
       format.xml  { render :xml => @resources }
     end
     
@@ -240,10 +212,6 @@ class SchoolsController < BaseController
     
   end
   
-  ###
-  
-  
-  
   # GET /schools
   # GET /schools.xml
   def index
@@ -261,14 +229,17 @@ class SchoolsController < BaseController
   # GET /schools/1.xml
   def show
     @school = School.find(params[:id])
-    
+    @courses = @school.courses.paginate(:conditions => 
+      ["published = 1"], 
+      :include => :owner, 
+      :page => params[:page], 
+      :order => 'updated_at DESC', 
+      :per_page => AppConfig.items_per_page)
+      
     respond_to do |format|
       if @school
-        @courses = Course.find_by_sql("select c.* from courses c, school_assets sa where sa.asset_type = 'Course' and c.id = sa.asset_id and sa.school_id = '#{@school.id}'")
-        #@courses = @school.assets#.collect{|asset| asset.asset_type = "Course"} #TODO limit
-        #@courses = Course.find_All
-        
         @forums = @school.forums
+        @status = Status.new
         
         format.html # show.html.erb
         format.xml  { render :xml => @school }

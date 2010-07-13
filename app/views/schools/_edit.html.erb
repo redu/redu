@@ -1,0 +1,11 @@
+<% form_for(school, :html => { :multipart => true }) do |f| %>
+  <%= f.error_messages %>
+
+<%= render :partial => "schools/form", :locals => { :f => f, :school => school } %>
+
+
+  <p>
+  <%= f.submit 'Atualizar' %> ou <%= link_to 'Voltar', school %><BR/><BR/>
+  <%= link_to 'Deletar rede', school, :confirm => 'Você tem certeza que deseja remover esta rede?', :method => :delete %>
+  </p>
+<% end %>

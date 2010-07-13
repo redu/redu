@@ -1,65 +1,14 @@
-<div id="all_content3">
-<div id="col_content_user">
-	<div id="breadcrumbs_video"><a href="<%=application_url%>">home</a> > <%= link_to 'redes', schools_path %> > <strong><a href="#"><%= @school.name%></a></strong></div>  
-   <div id="title">MEMBROS PENDENTES</div>
-<!-- LISTAGEM RECURSO ############################################################################################################################################## -->
-<div id="all_list">
-
-<%= render :partial => "schools/school_info", :locals => {:school => @school}%>
-
-</div>
-<div style="float:left;">
-
-<% form_tag({:action => 'moderate_members', :id => @school}) do %>
-
-	<table>
-	  <tr>
-	  	<th></th>
-	    <th>Nome</th>
-		<th>Aprovar</th>
-		<th>Recusar</th>
-	  </tr>
-
-	<% @pending_members.each  do |membership| %>
-		<tr>
-		<td><%= link_to image_tag( membership.user.avatar_photo_url(:thumb), {:width => "64", :height=>"64", :border => 0 }), membership.user %></td>
-		<td><%= membership.user.display_name %></td>
-	  	<td><%= radio_button_tag "approve[]", membership.id %></td>
-		<td><%= radio_button_tag "disapprove[]", membership.id %></td>
-	    </tr>
-	<% end %>
-	
-	</table>
-	<%= submit_tag("OK") %>
-<% end %>
-</div>
-
-
-</div>
-</div>
-
-
-<!-- COLUNA DIREITA ##################################################################### -->
-<div id="col_box3">
-	<% if current_user %>
-	<% @logs = current_user.log_activity %>
-	<%= render :partial => 'logs/log', :locals => {:logs => @logs} %>
-	<% else %>
-	<%= render :partial => 'logs/not_logged_in', :locals => {:logs => @logs} %>
-	<% end %>
-
-
-	
-</div>
-</div>
-
-
-
-
-
-
-
-
-   
-
-
+<% content_for :page_id, 'group' %>
+<div class="main grid_16">
+<%= render :partial => "schools/school_info", :locals => {:school => @school} %>
+<div class="fake-tabs grid_16 alpha omega">
+	<%= render :partial => "schools/admin_taskbar" %>
+	<div class="panel">
+	<h3>Membros Pendentes</h3>
+	<%= 
+		render :partial => 'schools/pending_members', 
+		:locals => {:school => @school, :pending_members => @pending_members}
+	%>
+	</div>
+</div><!-- end tabs -->
+</div><!-- end main -->

@@ -49,5 +49,15 @@ module SchoolsHelper
     [icon, color, post  ]
   end
   
+  def teachers_preview(school, size = nil)
+    sql = "SELECT u.login, u.login_slug FROM users u " \
+          "INNER JOIN user_school_associations a " \
+          "ON u.id = a.user_id " \
+          "AND a.role_id = #{Role[:teacher].id} " \
+          "WHERE a.school_id = #{school.id} LIMIT #{size or 12} "
+          
+    User.find_by_sql(sql)
+  end
+  
   
 end

@@ -1,0 +1,7 @@
+<% if @status.valid? %>
+    $("#status-<%= @status.in_response_to.id %> ul.response").prepend("<%= escape_javascript(render :partial => 'response', :object => @status) %>")
+<% else %>
+    $("#status-<%= @status.in_response_to.id %> div.answer div.error").html("<%= escape_javascript( error_messages_for :status) %>")
+<% end %>
+$("#status-<%= @status.in_response_to.id %> form").toggleSpinner()
+$("#status-<%= @status.in_response_to.id %> form textarea").val("")
