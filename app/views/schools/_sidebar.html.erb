@@ -33,7 +33,7 @@
     </ul>
   </li>
   <li class="clearfix">
-    <span class="call"><span>Membros (<%= @school.users.count %>)</span></span>
+    <span class="call"><span>Membros (<%= @school.users.size %>)</span></span>
       <div class="followship box clearfix">
       <ul class="clearfix">
         <%= render :partial => 'schools/member_short', :collection => @school.users, :as => :member %>
@@ -42,7 +42,7 @@
       </div><!-- end followship -->
   </li>
   <li class="clearfix">
-    <span class="call"><span>Professores (<%= teachers_preview(school).count %>)</span></span>
+    <span class="call"><span>Professores (<%= teachers_preview(school).size %>)</span></span>
     <% unless teachers_preview(school).empty? %>
     <div class="followship box clearfix">
         <ul class="clearfix">

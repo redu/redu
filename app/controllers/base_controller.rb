@@ -22,9 +22,6 @@ class BaseController < ApplicationController
   
   def removed_item
     @type = params[:type]
-    
-    
-    
   end
   
   
