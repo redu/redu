@@ -11,12 +11,6 @@ class Log < ActiveRecord::Base
         when 'create'
         log_object.owner.earn_points('created_course')
       end
-    elsif log_object.instance_of?(Resource)
-      create_logs(log_object, action, user, school)
-      case action
-        when 'create'
-        log_object.owner.earn_points('created_resource')
-      end
     elsif log_object.instance_of?(Favorite)
       create_logs(log_object, action, user, school)
     elsif log_object.instance_of?(Exam)
