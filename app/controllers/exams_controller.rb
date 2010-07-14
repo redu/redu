@@ -398,7 +398,7 @@ def create
         elsif params[:sbt_opt] == "3" # add resource  TODO mudar
           #save_dft
           @exam.update_attributes(params[:exam])
-          redirect_to :controller => :resources, :action => :add, :exam_type => params[:exam_type]
+         # redirect_to :controller => :resources, :action => :add, :exam_type => params[:exam_type]
           
          elsif params[:sbt_opt] == "4" # edit question
           @exam.update_attributes(params[:exam])
@@ -669,31 +669,31 @@ end
 
 
      
-  def add_resource
-    @resource = Resource.find(params[:resource_id])
-    
-    if session[:exam_draft]
-      session[:exam_draft].resources << @resource
-    end
-    
-    respond_to do |format|
-      format.html do
-        render :update do |page|
-          flash[:notice] = 'Material adicionado'
-          page.remove "resource_" + params[:resource_id]
-          page.reload_flash
-        end
-      end 
-      format.js do
-        render :update do |page|
-          flash[:notice] = 'Material adicionado'
-          page.remove "resource_" + params[:resource_id]
-          page.reload_flash
-        end
-      end    
-    end
-    
-  end
+#  def add_resource
+#    @resource = Resource.find(params[:resource_id])
+#    
+#    if session[:exam_draft]
+#      session[:exam_draft].resources << @resource
+#    end
+#    
+#    respond_to do |format|
+#      format.html do
+#        render :update do |page|
+#          flash[:notice] = 'Material adicionado'
+#          page.remove "resource_" + params[:resource_id]
+#          page.reload_flash
+#        end
+#      end 
+#      format.js do
+#        render :update do |page|
+#          flash[:notice] = 'Material adicionado'
+#          page.remove "resource_" + params[:resource_id]
+#          page.reload_flash
+#        end
+#      end    
+#    end
+#    
+#  end
   
      
      
@@ -843,6 +843,10 @@ end
   # GET /exams/1.xml
   def show
     @exam = Exam.find(params[:id])
+    
+     if @exam.removed
+      redirect_to removed_page_path and return
+    end
     
     Log.log_activity(@exam, 'create', current_user, @school)
 

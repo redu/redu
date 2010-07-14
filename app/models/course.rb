@@ -154,16 +154,9 @@ class Course < ActiveRecord::Base
     end
   end
   
-  def send_approval_email
-    UserNotifier.deliver_approve_course(self)
-  end
-  
-  def send_rejection_email(comments = nil)
-    UserNotifier.deliver_reject_course(self, comments)
-  end
   
   def permalink
-    APP_URL + "couses/"+ self.id
+    APP_URL + "couses/"+ self.id.to_s
   end
   
   
@@ -230,7 +223,8 @@ class Course < ActiveRecord::Base
   
   def set_new_local_filename
    # puts "set_new_local_filename"
-    self.update_attribute(:media_file_name, "#{id}.flv")
+   
+    self.update_attribute(:media_file_name, "#{id}.flv") if self.video?
   end
   
   def course_cannot_have_unpublished_resources

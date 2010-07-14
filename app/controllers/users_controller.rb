@@ -38,8 +38,6 @@ class UsersController < BaseController
 #    @favorites.each do |favorite|
 #      if favorite.favoritable_type == 'Course'
 #        @courses_id << favorite.favoritable_id
-#      else if favorite.favoritable_type == 'Resource'
-#        @resources_id << favorite.favoritable_id
 #      else if favorite.favoritable_type == 'Exam'
 #        @exams_id << favorite.favoritable_id
 #      end
@@ -49,9 +47,6 @@ class UsersController < BaseController
 #      @courses << Course.find(:conditions => ['id = ?', course_id])
 #    end  
 #    
-#    @resources_id.each do |resource_id|
-#      @resources << Resource.find(:conditions => ['id = ?', resource_id])
-#    end  
 #    
 #    @exams_id.each do |exam_id|
 #      @exams << Exam.find(:conditions => ['id = ?', exam_id])
@@ -227,6 +222,10 @@ class UsersController < BaseController
   end
   
   def show  
+     if @user.removed
+      redirect_to removed_page_path and return
+    end
+    
     @friend_count               = @user.accepted_friendships.count
     @accepted_friendships       = @user.accepted_friendships.find(:all, :limit => 5).collect{|f| f.friend }
     @pending_friendships_count  = @user.pending_friendships.count()

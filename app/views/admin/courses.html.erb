@@ -1,0 +1,75 @@
+<script>
+	function selectAll(){
+	//$('select_all_link').hide();
+	//$('select_all_string').show();
+	var checkboxes = document.getElementsByName("courses[]");
+	for (var i =0; i< checkboxes.length; i++) {
+		checkboxes[i].checked = true;
+	}
+	
+}
+
+function selectNone(){
+	var checkboxes = document.getElementsByName("courses[]");
+	for (var i =0; i< checkboxes.length; i++) {
+		checkboxes[i].checked = false;
+	}
+}
+
+	
+</script>
+
+<div id="all_content3">
+<div id="col_content">
+	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">administração</a> > <a href="#">aulas</a> </div>
+ 	<div id="title">MODERAÇÃO DE AULAS
+		<%= render :partial => "admin/taskbar" %>
+	</div>
+	
+	<div id="filter_bar">
+		
+	    <span id="title_list" class="title_list">MOSTRANDO MAIS RECENTES</span>
+	    <!--<span class="title_filter">Ordenar:</span>-->
+	      
+    </div>
+    <div id="all_list">
+    	
+		<% if @courses && @courses.size > 0 %>
+		Selecionar <%=link_to_function 'Todos', 'selectAll()'%> | <%=link_to_function 'Nenhum', 'selectNone()'%> 
+		
+		 <% form_tag :action => :moderate_courses do %>
+			<table style="width: 100%; margin: 15px 10px 20px 10px;">
+				<tr>
+					<th></th><th>#ID</th><th>Aula</th><th>Autor</th><th>Data</th>
+				</tr>
+		 	<% for course in @courses %>
+				<tr>
+					<tr>
+						<td><%= check_box_tag 'courses[]', course.id, false,:id => "course_"+ course.id.to_s  %></td>
+						<td><%= course.id  %></td>
+						<td><%= link_to course.name, course_path(course), :target => "_blank" %> </td>
+						<td><%= course.owner.display_name %> </td>
+						<td><%= time_ago_in_words(course.updated_at) %> </td>
+					</tr>
+				</tr>
+ 			<% end %>
+			</table>
+			<%= submit_tag "Remover" %>
+		 <% end %>
+		<% else %>
+ 			Não há aulas publicadas ainda. 
+		<% end %>
+    	
+    </div> <!-- fim da listagem --> 
+	
+	<div id="pagination" align="center" class="pagination">
+
+		<%= will_paginate  @courses, :params => {:sort_by => @sort_by}, :class => "pagination_number"  %>
+		
+    </div>
+
+</div>
+<div id="col_box3">
+	
+	</div>
+</div>

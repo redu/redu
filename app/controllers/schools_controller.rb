@@ -99,7 +99,7 @@ class SchoolsController < BaseController
     
     respond_to do |format|
       format.html #{ render :action => "my" }
-      format.xml  { render :xml => @resources }
+      format.xml  { render :xml => @courses }
     end
     
   end
@@ -113,8 +113,8 @@ class SchoolsController < BaseController
       :per_page => AppConfig.items_per_page)
     
     respond_to do |format|
-      format.html #{ render :layout => false }
-      format.xml  { render :xml => @resources }
+      format.html #{ render :action => "my" }
+      #format.xml  { render :xml => @courses }
     end
     
   end
@@ -229,6 +229,10 @@ class SchoolsController < BaseController
   # GET /schools/1.xml
   def show
     @school = School.find(params[:id])
+     if @school.removed
+      redirect_to removed_page_path and return
+    end
+    
     @courses = @school.courses.paginate(:conditions => 
       ["published = 1"], 
       :include => :owner, 

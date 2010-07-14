@@ -485,6 +485,10 @@ class User < ActiveRecord::Base
   end
   
   def display_name
+    if self.removed
+      return '(usuário removido)'
+    end
+    
     if self.first_name and self.last_name
       self.first_name + " " + self.last_name
     else

@@ -1,0 +1,75 @@
+<script>
+	function selectAll(){
+	//$('select_all_link').hide();
+	//$('select_all_string').show();
+	var checkboxes = document.getElementsByName("schools[]");
+	for (var i =0; i< checkboxes.length; i++) {
+		checkboxes[i].checked = true;
+	}
+	
+}
+
+function selectNone(){
+	var checkboxes = document.getElementsByName("schools[]");
+	for (var i =0; i< checkboxes.length; i++) {
+		checkboxes[i].checked = false;
+	}
+}
+
+	
+</script>
+
+<div id="all_content3">
+<div id="col_content">
+	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">administração</a> > <a href="#">redes</a> </div>
+ 	<div id="title">MODERAÇÃO DE REDES
+		<%= render :partial => "admin/taskbar" %>
+	</div>
+	
+	<div id="filter_bar">
+		
+	    <span id="title_list" class="title_list">MOSTRANDO MAIS RECENTES</span>
+	    <!--<span class="title_filter">Ordenar:</span>-->
+	      
+    </div>
+    <div id="all_list">
+    	
+		<% if @schools && @schools.size > 0 %>
+		Selecionar <%=link_to_function 'Todos', 'selectAll()'%> | <%=link_to_function 'Nenhum', 'selectNone()'%> 
+		
+		 <% form_tag :action => :moderate_schools do %>
+			<table style="width: 100%; margin: 15px 10px 20px 10px;">
+				<tr>
+					<th></th><th>#ID</th><th>Rede</th><th>Dono</th><th>Data</th>
+				</tr>
+		 	<% for school in @schools %>
+				<tr>
+					<tr>
+						<td><%= check_box_tag 'schools[]', school.id  %></td>
+						<td><%= school.id  %></td>
+						<td><%= link_to school.name, school_path(school), :target => "_blank" %> </td>
+						<td><%= school.owner.display_name %> </td>
+						<td><%= time_ago_in_words(school.created_at) %> </td>
+					</tr>
+				</tr>
+ 			<% end %>
+			</table>
+			<%= submit_tag "Remover" %>
+		 <% end %>
+		<% else %>
+ 			Não há redes públicas ainda. 
+		<% end %>
+    	
+    </div> <!-- fim da listagem --> 
+	
+	<div id="pagination" align="center" class="pagination">
+
+		<%= will_paginate  @schools, :params => {:sort_by => @sort_by}, :class => "pagination_number"  %>
+		
+    </div>
+
+</div>
+<div id="col_box3">
+	
+	</div>
+</div>

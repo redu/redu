@@ -235,12 +235,6 @@ module BaseHelper
       else
         title = 'Mostrando Exames' +' &raquo; ' + app_base + tagline            
       end
-      when 'resources'
-      if @resource and @resource.name
-        title = 'Material: ' + @resource.name + ' &raquo; ' + app_base + tagline
-      else
-        title = 'Mostrando Materiais' +' &raquo; ' + app_base + tagline            
-      end
       when 'schools'
       if @school and @school.name
         title = 'Rede: ' + @school.name + ' &raquo; ' + app_base + tagline

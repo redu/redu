@@ -1,7 +1,12 @@
 class CoursesController < BaseController
   before_filter :login_required, :except => [:index]
+  #before_filter :check_if_removed, :except => [:index]
   
   uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit, :update])
+  
+#  def check_if_removed
+#    puts params[:id]
+#  end
   
   
   def upload_video
@@ -105,37 +110,37 @@ class CoursesController < BaseController
   
   
   
-  # Lista todos os recursos existentes para relacionar com
-  def list_resources
-    @resources = Resource.all
-    @course = params[:id]
-  end
-  
-  # Adicionar um recurso na aula.
-  def add_resource
-    @selected_resources = params[:resource][:id]
-    @course = Course.find(params[:id])
-    
-    if @course
-      @selected_resources.each do |c| 
-        @resource = Resource.find(c)
-        @course.resources << @resource
-      end
-      
-      if @course.save
-        flash[:notice] = 'Recurso(s) adicionada(s).'
-      else
-        flash[:error] = 'Algum problema aconteceu!'
-      end
-    else
-      flash[:error] = 'Aula inválida.'
-    end  
-    
-    respond_to do |format|
-      format.html { redirect_to(@course) }
-    end
-    
-  end
+#  # Lista todos os recursos existentes para relacionar com
+#  def list_resources
+#    @resources = Resource.all
+#    @course = params[:id]
+#  end
+#  
+#  # Adicionar um recurso na aula.
+#  def add_resource
+#    @selected_resources = params[:resource][:id]
+#    @course = Course.find(params[:id])
+#    
+#    if @course
+#      @selected_resources.each do |c| 
+#        @resource = Resource.find(c)
+#        @course.resources << @resource
+#      end
+#      
+#      if @course.save
+#        flash[:notice] = 'Recurso(s) adicionada(s).'
+#      else
+#        flash[:error] = 'Algum problema aconteceu!'
+#      end
+#    else
+#      flash[:error] = 'Aula inválida.'
+#    end  
+#    
+#    respond_to do |format|
+#      format.html { redirect_to(@course) }
+#    end
+#    
+#  end
   
   def get_query(sort, page)
     
@@ -186,7 +191,12 @@ class CoursesController < BaseController
   # GET /courses/1.xml
   def show
     
-      @course = Course.find(params[:id], :include => {:interactive_class => [:lessons]})
+    
+    @course = Course.find(params[:id], :include => {:interactive_class => [:lessons]})
+    
+    if @course.removed
+      redirect_to removed_page_path and return
+    end
     
     
    # if not @course.can_be_deleted_by(current_user)
@@ -557,65 +567,8 @@ end
   end
   
   
-  def moderate_all
-    #TODO otimizar codigo abaixo? algo do tipo Course.all(:conditions => ["id IN (?)", params[:approve]] 
-    @approved_courses = Course.all(:conditions => ["id IN (?)", params[:approve].join(',')]) 
-    @rejected_courses = Course.all(:conditions => ["id IN (?)", params[:reject].join(',')]) 
-    
-    for course in @approved_courses
-       #@course = Course.find(course_id)
-       course.approve!
-       course.send_approval_email
-    end
-    
-    for course in @rejected_courses
-       #@course = Course.find(course_id)
-       course.reject!
-       course.send_rejection_email
-    end
-    
-    flash[:notice] = 'Aulas moderadas!'
-    redirect_to pending_courses_path
-  end
   
   
-  def approve
-    @course = Course.find(params[:id])
-    @course.approve!
-    
-    # Só para efeitos de teste. O objeto school vai ser passado na criação das aulas quando estiver
-    # dentro de uma rede.
-    #@school = School.find(:first, :conditions => ["owner = ?", current_user.id])
-    
-    Log.log_activity(@course, 'create', @course.owner, @school)
-    
-    flash[:notice] = 'A aula foi aprovada!'
-    redirect_to pending_courses_path
-  end
-  
-  def disapprove
-    @course = Course.find(params[:id])
-    @course.reject!
-    flash[:notice] = 'A aula foi rejeitada!'
-    redirect_to pending_courses_path
-  end
-  
-  
-  # LISTAGENS
-  # lista pendendes para MODERAÇÃO da administração do Redu
-  def pending
-    @courses = Course.paginate(:conditions => ["public = 1 AND published = 1 AND state LIKE 'waiting'"], 
-      :include => :owner, 
-      :page => params[:page], 
-      :order => 'updated_at ASC', 
-      :per_page => AppConfig.items_per_page)
-    
-    respond_to do |format|
-      format.html #{ render :action => "my" }
-      format.xml  { render :xml => @resources }
-    end
-    
-  end
   
   # lista cursos publicados por autor (sejam em redes ou público no redu)
   def published

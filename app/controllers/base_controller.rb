@@ -20,6 +20,14 @@ class BaseController < ApplicationController
       :create_beta_candidate]
   end  
   
+  def removed_item
+    @type = params[:type]
+    
+    
+    
+  end
+  
+  
   def tos
     
   end
@@ -29,26 +37,30 @@ class BaseController < ApplicationController
   end
   
   def beta_index
-    @candidate = BetaCandidate.new    
+#    @candidate = BetaCandidate.new    
+#    
+#    respond_to do |format|
+#      format.html { render :object => @candidate, :layout => false }
+#    end
     
-    respond_to do |format|
-      format.html { render :object => @candidate, :layout => false }
-    end
+    redirect_to home_path and return if logged_in?
+    #render :layout => 'beta'
+     render :layout => false
   end
   
-  def create_beta_candidate
-    @candidate = BetaCandidate.new(params[:candidate])
-    
-    respond_to do |format|
-      if @candidate.save
-        flash[:notice] = 'Seus dados foram recebidos. Em breve você ' + \
-            'receberá as informações de login.'
-      end
-      
-      format.html { render :action => 'beta_index', :layout => false }
-    end
-  
-  end
+#  def create_beta_candidate
+#    @candidate = BetaCandidate.new(params[:candidate])
+#    
+#    respond_to do |format|
+#      if @candidate.save
+#        flash[:notice] = 'Seus dados foram recebidos. Em breve você ' + \
+#            'receberá as informações de login.'
+#      end
+#      
+#      format.html { render :action => 'beta_index', :layout => false }
+#    end
+#  
+#  end
   
   
   def rss_site_index

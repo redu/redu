@@ -4,7 +4,7 @@
   		<%= link_to 'Minhas Aulas', published_user_courses_path(current_user.id) %> |
 		<%= link_to 'Aulas Favoritas', favorites_courses_path %> 
 		<%  if current_user.admin? %>
-			| <%= link_to 'Moderar Vídeos' , pending_courses_path, :class => "link_remove" %>
+			| <%= link_to 'Moderar Vídeos' , admin_moderate_courses_path, :class => "link_remove" %>
 		<% end %>
 		</div>
 	<% end %>

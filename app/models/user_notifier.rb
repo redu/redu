@@ -7,20 +7,63 @@ class UserNotifier < ActionMailer::Base
   include BaseHelper
   ActionMailer::Base.default_url_options[:host] = APP_URL.sub('http://', '')
 
+
+  def remove_course(course)
+    setup_sender_info
+    @recipients  = "#{course.owner.email}"
+    @subject     = "A aula \"#{course.name}\" foi removida do Redu"
+    @sent_on     = Time.now
+    @body[:user] = course.owner
+   # @body[:url]  = course.permalink 
+    @body[:course]  = course
+  end
+  
+  
+  def remove_exam(exam)
+    setup_sender_info
+    @recipients  = "#{exam.owner.email}"
+    @subject     = "O exame \"#{exam.name}\" foi removido do Redu"
+    @sent_on     = Time.now
+    @body[:user] = exam.owner
+   # @body[:url]  = course.permalink 
+    @body[:exam]  = exam
+  end
+    
+  def remove_user(user)
+    setup_sender_info
+    @recipients  = "#{user.email}"
+    @subject     = "O usuário \"#{user.login}\" foi removido do Redu"
+    @sent_on     = Time.now
+    @body[:user] = user
+  end
+  
+
+  def remove_school(school)
+    setup_sender_info
+    @recipients  = "#{school.owner.email}"
+    @subject     = "A rede \"#{school.name}\" foi removida do Redu"
+    @sent_on     = Time.now
+    @body[:user] = school.owner
+    @body[:school]  = school
+  end
+
+
   def approve_course(course)
     setup_sender_info
     @recipients  = "#{course.owner.email}"
-    @subject     = "A aula #{course.name} foi aprovada!"
+    @subject     = "A aula \"#{course.name}\" foi aprovada!"
     @sent_on     = Time.now
     @body[:user] = course.owner
     @body[:url]  = course.permalink 
     @body[:course]  = course
   end
   
+
+  
   def reject_course(course, comments)
     setup_sender_info
     @recipients  = "#{course.owner.email}"
-    @subject     = "A aula #{course.name} foi rejeitada para publicação no Redu"
+    @subject     = "A aula \"#{course.name}\" foi rejeitada para publicação no Redu"
     @sent_on     = Time.now
     @body[:user] = course.owner
     @body[:url]  = course.permalink 

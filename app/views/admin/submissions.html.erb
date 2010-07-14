@@ -1,7 +1,7 @@
 <div id="all_content3">
 <div id="col_content">
-	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">aprender</a> > <a href="#">aulas</a> </div>
- 	<div id="title">MODERAÇÃO DE AULAS
+	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">administração</a> > <a href="#">aulas</a> </div>
+ 	<div id="title">MODERAÇÃO DE SUBMISSÕES
 		<%= render :partial => "admin/taskbar" %>
 	</div>
 	
@@ -13,8 +13,8 @@
     </div>
     <div id="all_list">
     	
-		<% if @courses && @courses.length > 0 %>
-		 <% form_tag :action => :moderate_all do %>
+		<% if @courses && @courses.size > 0 %>
+		 <% form_tag :action => :moderate_submissions do %>
 			<table style="width: 100%; margin: 15px 10px 20px 10px;">
 				<tr>
 					<th style="max-width:25px;">Aprovar</th><th style="max-width:27px;">Rejeitar</th><th>Aula</th><th>Autor</th><th>Data</th>
@@ -22,8 +22,8 @@
 		 	<% for course in @courses %>
 				<tr>
 					<tr>
-						<td><%= radio_button_tag 'approve[]', course.id %></td>
-						<td><%= radio_button_tag 'reject[]', course.id %></td>
+						<td><%= radio_button_tag '[course]['+ course.id.to_s+']', 'approve'  %></td>
+						<td><%= radio_button_tag '[course]['+ course.id.to_s+']', 'reject' %></td>
 						<td><%= link_to course.name, course_path(course), :target => "_blank" %> </td>
 						<td><%= course.owner.display_name %> </td>
 						<td><%= time_ago_in_words(course.updated_at) %> </td>
@@ -34,7 +34,7 @@
 			<%= submit_tag "Moderar" %>
 		 <% end %>
 		<% else %>
- 			Não há exames publicados ainda. <%= link_to 'Crie um agora!', :action => 'new' %>
+ 			Não há submissões ainda.
 		<% end %>
     	
     </div> <!-- fim da listagem --> 
