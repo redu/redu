@@ -46,6 +46,8 @@ ActionController::Routing::Routes.draw do |map|
   
   #map.resources :favorites, 
 
+  map.removed_page   '/removed_item', :controller => 'base', :action => 'removed_item'
+
  # map.connect 'activity_xml.xml', :controller => "users", :action => "activity_xml", :format => 'xml'
   
   
@@ -121,7 +123,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'sitemap.xml', :controller => "sitemap", :action => "index", :format => 'xml'
   map.connect 'sitemap', :controller => "sitemap", :action => "index"
   
-  map.removed_page   '', :controller => 'base', :action => 'removed_item'
+  
  
   
   if AppConfig.closed_beta_mode
