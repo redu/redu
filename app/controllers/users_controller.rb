@@ -31,29 +31,6 @@ class UsersController < BaseController
   before_filter :admin_required, :only => [:assume, :destroy, :featured, :toggle_featured, :toggle_moderator]
   before_filter :admin_or_current_user_required, :only => [:statistics]  
   
-  
-#  def show_favorites
-#    @favorites = Favorite.find(:conditions => ['favoritable_id = ?', current_user.id])
-#    
-#    @favorites.each do |favorite|
-#      if favorite.favoritable_type == 'Course'
-#        @courses_id << favorite.favoritable_id
-#      else if favorite.favoritable_type == 'Exam'
-#        @exams_id << favorite.favoritable_id
-#      end
-#    end
-#    
-#    @courses_id.each do |course_id|
-#      @courses << Course.find(:conditions => ['id = ?', course_id])
-#    end  
-#    
-#    
-#    @exams_id.each do |exam_id|
-#      @exams << Exam.find(:conditions => ['id = ?', exam_id])
-#    end  
-#    return @favorites
-#  end
-  
   def show_log_activity
     current_user.log_activity 
   end
@@ -61,7 +38,6 @@ class UsersController < BaseController
   def show_favorites
     #current_user.get_favorites
   end
- 
   
   ### Followship
   def can_follow
@@ -96,7 +72,7 @@ class UsersController < BaseController
     
     user.followers << current_user
     if user.save #@user.update_attributes(:follows)
-    	UserNotifier.deliver_followship_notice(user, current_user)
+      UserNotifier.deliver_followship_notice(user, current_user)
       flash[:notice] = 'Você está seguindo esse usuário'
     else
       flash[:erro] = 'Não é possível seguir esse usuário'
@@ -128,54 +104,6 @@ class UsersController < BaseController
   def logs
     
   end
-  
-  
-  ##Associação com a disciplina
-  #  def add_subject
-  #    
-  #    #@user = User.find(params[:id])
-  #    @user = current_user
-  #    
-  #    @subject = Subject.find(params[:subject][:id])
-  #    puts 'Teste'
-  #    puts params[:user_key]
-  #    
-  #    @user_subject_association = UserSubjectAssociation.find(:first, :include => :access_key, :conditions => ["access_keys.key = ?", params[:user_key]])  
-  #    
-  #    if @user_subject_association
-  #      if @user_subject_association.access_key.expiration_date.to_time < Time.now # verifica a data da validade da chave  
-  #        if @subject &&  @user_subject_association.user == @user         
-  #          if @user && !@user_subject_association.user # cada chave só poderá ser usada uma vez, sem troca de aluno                     
-  #            @user_subject_association.user = @user        
-  #            if @user_subject_association.save
-  #              flash[:notice] = 'Usuário associado à disciplina!'
-  #            else 
-  #              flash[:notice] = 'Associação à disciplina falhou.'
-  #            end
-  #          else 
-  #            flash[:notice] = 'Essa chave já está em uso.'
-  #          end
-  #      
-  #        else
-  #          flash[:notice] = 'Essa chave pertence à outra disciplina.'
-  #        end
-  #        
-  #      else
-  #        flash[:notice] = 'O prazo de validade desta chave ontate o administrador da sua escola.'
-  #      end
-  #      
-  #      
-  #    else
-  #      flash[:notice] = 'Chave inválida'
-  #    end
-  #    
-  #    
-  #    respond_to do |format|
-  #      format.html { redirect_to(@user) }
-  #    end
-  #    
-  #  end
-  
   
   ## User
   def activate
@@ -222,7 +150,7 @@ class UsersController < BaseController
   end
   
   def show  
-     if @user.removed
+    if @user.removed
       redirect_to removed_page_path and return
     end
     
@@ -281,9 +209,9 @@ class UsersController < BaseController
     
     
     @user = User.new(params[:user])
-   # @user.role  = Role[:member]
-   
-   user_id = @user.save
+    # @user.role  = Role[:member]
+    
+    user_id = @user.save
     
     if (!AppConfig.require_captcha_on_signup || verify_recaptcha(@user)) && user_id
       create_friendship_with_inviter(@user, params)
@@ -454,26 +382,12 @@ class UsersController < BaseController
       friend = User.find(options[:inviter_id])
       
       if friend && friend.valid_invite_code?(options[:inviter_code])
-      	# add as follower and following
-      	friend.followers << user
-      	friend.save!
-      	
-      	user.followers << friend 
-      	user.save!
-=begin
-        accepted    = FriendshipStatus[:accepted]
-        @friendship = Friendship.new(:user_id => friend.id, 
-          :friend_id => user.id,
-          :friendship_status => accepted, 
-          :initiator => true)
+        # add as follower and following
+        friend.followers << user
+        friend.save!
         
-        reverse_friendship = Friendship.new(:user_id => user.id, 
-          :friend_id => friend.id, 
-          :friendship_status => accepted ) 
-        
-        @friendship.save
-        reverse_friendship.save
-=end
+        user.followers << friend 
+        user.save!
       end
     end
   end
@@ -483,7 +397,7 @@ class UsersController < BaseController
     @user = User.find(params[:id])
     redirect_to home_path and return unless @user
     render :action => 'signup_completed', :layout => 'beta' if AppConfig.closed_beta_mode    
-  
+    
   end
   
   def welcome_photo
@@ -646,8 +560,6 @@ class UsersController < BaseController
       format.xml
     end
   end
-  
-  
   
   protected  
   def setup_metro_areas_for_cloud
