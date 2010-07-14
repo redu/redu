@@ -73,10 +73,14 @@ pt-BR:
                 role:
                     blank: ": Por favor, informe seu papel (professor/aluno)."
                     inclusion: ": Por favor, informe seu papel (professor/aluno)."
-        status:
-          attributes:
-            text:
-              blank: ": Você precisa digitar uma mensagem."
+                    
+           
+  courses: aulas
+  history: historico
+  status:
+    attributes:
+       text:
+          blank: ": Você precisa digitar uma mensagem."
   
   Course:  aula
   Resource:  material
@@ -192,7 +196,7 @@ pt-BR:
   #en: are_you_sure_you_want_to_permanently_delete_this_user: Are you sure you want to permanently delete this user?
   are_you_sure_you_want_to_permanently_delete_this_user: Are you sure you want to permanently delete this user?
   #en: assume_id: Assume ID
-  assume_id: Assume ID
+  assume_id: Assumir ID
   #en: assume_user_id: "Assume this user's ID"
   assume_user_id: "Assume this user's ID"
   #en: assign_role: Assign role
@@ -1036,7 +1040,7 @@ pt-BR:
   #en: pros_skilled_in: Pros skilled in
   pros_skilled_in: Pros skilled in
   #en: published: Published
-  published: Publicado(a)
+  published: publicado
   #en: question: Question
   question: Pergunta
   #en: re_type_your_password_to_confirm: "Re-type your password to confirm:"

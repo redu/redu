@@ -110,6 +110,7 @@ reserved_logins: [
   'css_help', 
   'events', 
   'exams',
+  'exames',
   'favorites', 
   'faq', 
   'featured', 

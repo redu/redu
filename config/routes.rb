@@ -22,7 +22,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :abilities
 
-  map.resources :resources, :collection => { :search => [:get, :post], :add => :get, :waiting => :get, :favorites => :get }, :member => {:rate => :post}
+ # map.resources :resources, :collection => { :search => [:get, :post], :add => :get, :waiting => :get, :favorites => :get }, :member => {:rate => :post}
 
   map.resources :questions, :collection => { :search => [:get, :post], :add => :get } 
   
@@ -31,7 +31,7 @@ ActionController::Routing::Routes.draw do |map|
                         :exam_history => :get, :sort => :get, :order => :get, 
                         :favorites => :get, :review_question => :get}
     
-  map.resources :courses, :member => {:rate => :post, :buy => :get, :download_attachment => :get},  :collection => {:pending => :get, :favorites => :get, :cancel => :get, :sort_lesson => :post}
+  map.resources :courses, :member => {:rate => :post, :buy => :get, :download_attachment => :get},  :collection => {:favorites => :get, :cancel => :get, :sort_lesson => :post}
   
   map.resources :user_school_association
 
@@ -121,6 +121,9 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'sitemap.xml', :controller => "sitemap", :action => "index", :format => 'xml'
   map.connect 'sitemap', :controller => "sitemap", :action => "index"
   
+  map.removed_page   '', :controller => 'base', :action => 'removed_item'
+ 
+  
   if AppConfig.closed_beta_mode
     map.connect '', :controller => "base", :action => "beta_index"
     map.home 'home', :controller => "base", :action => "site_index"
@@ -137,6 +140,11 @@ ActionController::Routing::Routes.draw do |map|
   
  # map.admin_dashboard   '/admin/dashboard', :controller => 'homepage_features', :action => 'index'
   map.admin_dashboard   '/admin/dashboard', :controller => 'admin', :action => 'dashboard'
+  map.admin_moderate_submissions   '/admin/moderate/submissions', :controller => 'admin', :action => 'submissions'
+  map.admin_moderate_courses   '/admin/moderate/courses', :controller => 'admin', :action => 'courses'
+  map.admin_moderate_users   '/admin/moderate/users', :controller => 'admin', :action => 'users'
+  map.admin_moderate_exams   '/admin/moderate/exams', :controller => 'admin', :action => 'exams'
+  map.admin_moderate_schools   '/admin/moderate/schools', :controller => 'admin', :action => 'schools'
   
   map.admin_users       '/admin/users', :controller => 'admin', :action => 'users'
   map.admin_messages    '/admin/messages', :controller => 'admin', :action => 'messages'
@@ -303,3 +311,6 @@ ActionController::Routing::Routes.draw do |map|
   map.connect ':controller/:action/:id.:format'     
   
 end
+ActionController::Routing::Translator.i18n('pt-BR')
+ActionController::Routing::Translator.translate_from_file('lang','i18n-routes.yml')
+
