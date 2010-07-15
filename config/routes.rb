@@ -222,7 +222,7 @@ ActionController::Routing::Routes.draw do |map|
     # SCHOOL
   
   
-   map.resources :schools, :member_path => '/:id', :nested_member_path => '/:school_id', :member => {
+   map.resources :schools,  :member_path => '/:id', :nested_member_path => '/:school_id', :member => {
    :join => :get,
    :unjoin => :get,
    :manage => :get,
