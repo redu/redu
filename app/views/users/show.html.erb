@@ -1,139 +1,32 @@
+<% content_for :page_id, 'public-profile' %>
 <%- @meta = { :description => "#{@user.login}'s profile on #{AppConfig.community_name}.", :keywords => "#{@user.login}, #{@user.tags.join(", ") unless @user.tags.nil?}", :robots => AppConfig.robots_meta_show_content }%>
 <%- @section = @user.eql?(current_user) ? 'my_profile' : 'users' %>
 
-<div id="all_content3">
-<div id="col_content_user">
-	<div id="breadcrumbs"><a href="#">home</a> > <a href="#">perfil do usuário</a></div>
-    <!--<div id="title">AULAS</div>-->
-<!-- LISTAGEM RECURSO ############################################################################################################################################## -->
-<div id="all_list">
-
+<div class="main grid_11">
 <%= render :partial => "users/user_info", :locals => {:user => @user}%>
-
-<!-- BOX MINHA MOV. RESCENTE ####################################################################################################################################### -->
-<div id="comments_user">
-	<div id="user_box_top">ATIVIDADES RECENTES DE <%= @user.display_name.upcase %></div>
-<%= render :partial => 'logs/item_user', :collection => @user.recent_activity, :as => :item %>
-
-
-<div id="link_ver_todos"><a href="#">Ver todos(8) &gt;</a></div>
-</div>
-<!-- BOX MINHA MOV. RESCENTE ####################################################################################################################################### -->
-
-<!-- BOX FOLLOWS E FOLLOWERS -->
-<% @follows = @user.follows %>
-<%= render :partial => "users/follows", :locals => {:user => @user}%>
-<!-- END -->
-
-<!-- BOX MINHAS REDES  -->
-<% @schools = @user.schools %>
-<%= render :partial => "users/my_schools", :locals => {:user => @user, :schools => @schools}%>
-<!-- END -->
-
-
-<!-- BOX COMENTÁRIOS ############################################################################################################################################### -->
-<div id="comments_user">
-	<div id="user_box_top">COMENTÁRIOS(<%= @users_comments.length %>)</div>
-	
-	<% if @users_comments.empty? %>
-	Sem comentários ainda.
-	<% else %>
-	
-		<%# render :partial => 'shared/comment', :locals => { :commentable => @user } %>
-		<div id="top_comments"></div>
-			<%= render :partial => "users/comment", :collection => @users_comments, :as => :comment %>
-		
-	
-	
-	<div id="link_ver_todos"><%= link_to "Ver todos(#{@users_comments.length})", comments_path(:commentable_id => @user.id, :commentable_type => 'User') %> </div>
-	<% end %>
-	
-	<%= render :partial => 'users/comment_form', :locals => { :commentable => @user } %>
-</div>
-<!-- BOX COMENTÁRIOS ############################################################################################################################################### -->
-
-<%# opensocial_container('http://www.last.fm/opensocial/myfavouritemusic.xml', :owner => @user, :viewer => current_user, :instance_id => instance.id) %>
-
-
-
-<!-- MATERIAIS ##################################################################################################################################################### -->
-<!--
-<div id="materials_user">
-	<div id="materials_user_box_top">MATERIAIS PUBLICADOS(8)</div>
-    <div id="user_materialslist" align="left">
-    	<ul id="user_materials_item">
-    		<li><a href="#" class="pdf">Exercicio Complementar(100KB)</a> | <a href="#" class="target">Aula: ENGENHARIA DE REQUISITOS</a></li>
-            <li><a href="#" class="word">Apostilia 021(30KB)</a> | <a href="#" class="target">Aula: CICLO DE VIDA DO SOFTWARE</a></li>
-            <li><a href="#" class="ppt">Slide da Aula</a> | <a href="#" class="target">Aula: PADRÕES DE PROJETOS</a></li>
-            <li><a href="#" class="photo">Fotos da Turma</a> | <a href="#" class="target">WORKSHOP ENGENHARIA DE SOFTWARE</a></li>
-    	</ul>
+<div class="fake-tabs grid_11 omega alpha"> 
+    <ul class="menu"> 
+	    <li><a href="#tabs-1" class="selected">Atividades</a></li> 
+	    <!--<li><a href="#tabs-5">Currículo</a></li>--> 
+	    <!--<li><a href="#tabs-2">Cursos</a></li> -->
+	    <li><a href="#tabs-3">Redes (2)</a></li> 
+	    <!--<li><a href="#tabs-4">Exames (22)</a></li> -->
+    </ul> 
+    
+    <div class="panel ">
+	<%= javascript_include_tag 'flow.js' %>
+	<%= render :partial => "statuses/create_status", :locals => {:status => @status }%>
+	<ul class="activities">
+	<%= render :partial => "statuses/type_proxy", :collection => @user.recent_activity, :as => :status %>
+	</ul><!-- end activities -->
     </div>
-    <div id="link_materials_ver_todos"><a href="#">Ver todos(8) &gt;</a></div>
-</div> -->
-<!-- MATERIAIS ##################################################################################################################################################### -->
+</div><!-- end tabs -->
+</div><!-- end main -->
 
-
-
-
-</div>
-
-</div>
-<!-- COLUNA DIREITA ################################################################################################################################################ -->
-<div id="col_box3">
-<!-- BOX MOVIMENTACAO RESCENTE ///////////////////////////////////////////////////////////////////////////////////// -->
-	
-	<!--
-	<div id="box_move">
-    	<div id="box_top">MOVIMENTAÇÃO RESCENTE</div>
-        
-        <div id="box_list">
-        	<div id="move_item">
-           	  <div id="move_foto"><img src="img/foto_40x40.png" width="40" height="40" class="move_foto"/></div>
-                <div id="move_txt"><a href="#">Jõao Vitor</a> adicionou um video sobre Biologia Marinha e seus Benefícios</div>
-                <div id="time">3 minutos atrás</div>
-            	<div id="replay"><a href="#">Responder</a></div>            
-            </div>
- 			<div id="move_item">
-            	<div id="move_foto"><img src="img/foto_40x40.png" width="40" height="40" class="move_foto"/></div>
-                <div id="move_txt"><a href="#">Jõao Vitor</a> adicionou um video sobre Biologia Marinha e seus Benefícios</div>
-                <div id="time">3 minutos atrás</div>
-            	<div id="replay"><a href="#">Responder</a></div>            
-            </div>
- 			<div id="move_item">
-            	<div id="move_foto"><img src="img/foto_40x40.png" width="40" height="40" class="move_foto"/></div>
-                <div id="move_txt"><a href="#">Jõao Vitor</a> adicionou um video sobre Biologia Marinha e seus Benefícios</div>
-                <div id="time">3 minutos atrás</div>
-            	<div id="replay"><a href="#">Responder</a></div>            
-            </div>
- 			<div id="move_item">
-            	<div id="move_foto"><img src="img/foto_40x40.png" width="40" height="40" class="move_foto"/></div>
-                <div id="move_txt"><a href="#">Jõao Vitor</a> adicionou um video sobre Biologia Marinha e seus Benefícios</div>
-                <div id="time">3 minutos atrás</div>
-            	<div id="replay"><a href="#">Responder</a></div>            
-            </div>
- 			<div id="move_item">
-            	<div id="move_foto"><img src="img/foto_40x40.png" width="40" height="40" class="move_foto"/></div>
-                <div id="move_txt"><a href="#">Jõao Vitor</a> adicionou um video sobre Biologia Marinha e seus Benefícios</div>
-                <div id="time">3 minutos atrás</div>
-            	<div id="replay"><a href="#">Responder</a></div>            
-            </div>
-        </div>
-        
-        <div id="box_baseline">
-        	<div id="box_baseline_base">O que você esta fazendo agora?</div>
-        	<div id="box_baseline_base"><textarea cols="27" rows="3"></textarea></div>
-		<div id="bt_send_mv" align="center"><a href="#" class="bt_send">Enviar</a></div>
-        </div>
-        
-    </div> -->
-<!-- BOX MOVIMENTACAO RESCENTE ///////////////////////////////////////////////////////////////////////////////////// -->
-
-    <!--<div id="friends"></div>
-    <div id="workspace"></div>
-    <div id="mytasks"></div>-->
-</div>
-<!--<div id="title_page">Assistindo Aula</div>-->
-</div>
-
-
-
+<div class="sidebar grid_5 omega">
+<% if @user.eql?(current_user) %>
+<%= render :partial => 'users/private_sidebar', :object => @user %>
+<% else %>
+<%= render :partial => 'users/public_sidebar', :object => @user %>
+<% end %>
+</div><!-- end sidebar -->

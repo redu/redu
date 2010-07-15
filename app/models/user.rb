@@ -572,7 +572,7 @@ class User < ActiveRecord::Base
   ### Métodos Adicionais 
     
   def recent_activity
-    Log.find(:all, :conditions => ["user_id = ?", self.id], :order => "created_at DESC", :limit => 10)
+    Status.friends_statuses(self, limit = 0, offset = 20)
   end
   
   def recent_exams_activity

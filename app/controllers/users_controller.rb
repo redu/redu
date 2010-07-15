@@ -2,6 +2,7 @@ require "RMagick"
 
 class UsersController < BaseController
   include Viewable
+  layout 'new_application'
   
   if AppConfig.closed_beta_mode
     skip_before_filter :beta_login_required, :only => [:new, :create, :activate]
@@ -30,7 +31,7 @@ class UsersController < BaseController
                                                 :crop_profile_photo, :upload_profile_photo]
   before_filter :admin_required, :only => [:assume, :destroy, :featured, :toggle_featured, :toggle_moderator]
   before_filter :admin_or_current_user_required, :only => [:statistics]  
-  
+
   def show_log_activity
     current_user.log_activity 
   end
@@ -166,10 +167,9 @@ class UsersController < BaseController
     @clippings      = @user.clippings.find(:all, :limit => 5)
     @photos         = @user.photos.find(:all, :limit => 5)
     @comment        = Comment.new(params[:comment])
+    @status = Status.new
     # @course         = Course.new(params[:])
-    
-    
-    
+
     update_view_count(@user) unless current_user && current_user.eql?(@user)
   end
   

@@ -1,75 +1,54 @@
-<div id="profile_user_info">
-	
-	<div id="user_photo">
-		<!--
-		<img src="img/foto_guilherme_cavalcanti.png" width="64" height="64" />
-		-->
-    <%= link_to image_tag( @user.avatar_photo_url(:thumb), {:width => "64", :height=>"64", :border => 0 }), @user %><BR>
-	 
-	 <% if (@user && @user.eql?(current_user)) %> 
-	  	<% if @user.avatar %> 
-	  		<%= link_to :profile_photo_crop.l, crop_profile_photo_user_path(@user)%>
-	  	<% else %>
-			<%= link_to :click_here_to_upload_one.l, edit_user_path(@user)%>
-		<% end %>
-	 <% end %>
-	
-	</div>
-    <div id="name_user">
-		<ul id="name_user_item">
-			<li class="name">
-				<%= link_to @user.display_name.upcase, @user, :class => "name"%>
-				</li>
-			<li>
-				<% if  (@user && @user.eql?(current_user)) %>
-				<%= link_to :update_your_profile.l, edit_user_path(@user), :class => "edit"%>
-				<% end %>
-			</li>
-		</ul>
-		<%= @user.score %>
-	</div>
-<div id="description_user">
-<% if @user.description %>
-<%= @user.description %>
-<% else %>
-	Que tal escrever algo sobre você? <%= link_to "Clique aqui!", edit_user_path(@user), :class => "edit"%>
-<% end %>
+<div class="overview yellow clearfix">
+ <div class="actions"> 
+            <ul> 
+                <% unless @user.eql?(current_user) %>
+                    <li>
+                    <% unless @user.followers.include?(current_user) %>
+                    <%= link_to 'Seguir', follow_user_path(@user), :class => "icon ico-follow"  %>
+                    <% else %>
+                    <%= link_to 'Não seguir', unfollow_user_path(@user) %>
+                    <% end %>
+                    </li>
+                <% else %>
+                    <li class="action-2"><a href="" class="icon ico-contact">Mensagem</a></li> 
+                    <li class="action-3"><a href="" class="icon ico-recomend">Recomende</a></li> 
+                <% end %>
+            </ul> 
+        </div><!-- end actions --> 
+        <div class="photo"> 
+            <%= 
+                link_to image_tag( @user.avatar_photo_url(:thumb), 
+                    {:width => "80", :height=>"80", :border => 0 }), @user 
+            %> 
+            <% if (@user && @user.eql?(current_user)) %> 
+                <% if @user.avatar %> 
+                    <%= link_to :profile_photo_crop.l, crop_profile_photo_user_path(@user), :class => 'small' %>
+                <% else %>
+                    <%= link_to :click_here_to_upload_one.l, edit_user_path(@user), :class => 'small' %>
+                <% end %>
+            <% end %>
+        </div> 
+        <div class="personal-overview clearfix"> 
+            <div class="points-m"> 
+            <span class="number"><%= @user.score %></span> 
+            <span class="legend">redu points</span> 
+            </div> 
+            <%= link_to @user.display_name, @user, :class => "name"%> 
+            <!--<span class="status student replacement">Aluno</span>--> 
+            <span class="location quiet">Recife, Pernambuco</span> 
+        </div><!-- end personal-overview --> 
+        
+        <div class="social-overview clearfix"> 
+            <div class="recomendations-m"> 
+            <span class="number">37</span> 
+            <span class="legend">recomendações</span> 
+            </div>
+            <% unless user.tag_list.empty? %>
+            <span class="areas quiet">Áreas de intersse</span> 
+            <ul class="tags"> 
+                <%= user.tag_list %>
+            </ul> 
+            <% end %>
+        </div><!-- end social-overview --> 
+</div><!-- end overview -->
 
-</div> 
-
-<% if not (@user && @user.eql?(current_user)) %>
-<div id="follow_user">
-
-    <% unless @user.followers.include?(current_user) %>
-      <%= link_to 'Seguir',  follow_user_path(@user) %>
-    <% else %>
-      <%= link_to 'Parar de seguir', unfollow_user_path(@user)%>
-	  <% end %>
-	
-</div> 
-<% end %>
-
-
-<div id="info_user">
-<strong>Professor em:</strong> TODO<br /><br />
-
-<strong>Áreas de Interesse:</strong> Ciência da Computação, Física, Mátemática<br />
-<strong>Tags:</strong> <%= user.tag_list %>
-</div> 
-
-<div id="actions_user">
-	<!--
-	<a href="#" class="contact_user">ADICIONAR COMO CONTATO</a> |
-	-->
-	<% if (@user && @user.eql?(current_user)) %>
-	<a href="#" class="contact_user">ANOTAÇÕES</a> | 
-	<% else %>
-	<%= link_to(:send_me_a_message.l.upcase, new_user_message_path(current_user, :to=>@user), :class => "mensage_user")%> |
-	<% end %>
-	<%= link_to "AULAS (#{@user.courses.count})", user_courses_path(@user), :class => "contact_user" %> |
-	<%= link_to "EXAMES (#{@user.exams.count})", user_exams_path(@user), :class => "contact_user" %> |
-	<%= link_to "REDES (#{@user.schools.count})", user_schools_path(@user), :class => "contact_user" %>
-	<br />
-</div>
-     
-</div>

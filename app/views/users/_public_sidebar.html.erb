@@ -1,0 +1,9 @@
+<ul class="sortable clearfix"> 
+<li class="clearfix">
+    <span class="call"><span>Quem segue <%= @user.first_name %></span></span>
+    <div class="followship box clearfix">
+    <ul class="clearfix">
+    <%= render :partial => 'shared/user', :collection => @user.follows %>
+    </ul>
+</div><!-- followship -->
+</li>

@@ -1080,4 +1080,5 @@ div.content div.content {
     .hide { 
         display: none;
     }
-    #header .user-actions #user-settings
+    
+    .small { font-size: .7em; }
