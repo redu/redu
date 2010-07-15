@@ -49,6 +49,10 @@ class School < ActiveRecord::Base
       super
     end
   end
+  
+  def to_param
+    self.path
+  end
 
   def avatar_photo_url(size = nil)
     if self.avatar_file_name
