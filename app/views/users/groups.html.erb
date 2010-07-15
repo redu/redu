@@ -6,19 +6,19 @@
 <%= render :partial => "users/user_info", :locals => {:user => @user}%>
 <div class="fake-tabs grid_11 omega alpha"> 
     <ul class="menu"> 
-	    <li><%= link_to 'Atividades', user_path(@user), :class => 'selected' %></li> 
+	    <li><%= link_to 'Atividades', user_path(@user) %></li> 
 	    <!--<li><a href="#tabs-5">Currículo</a></li>--> 
 	    <!--<li><a href="#tabs-2">Cursos</a></li> -->
-	    <li><%= link_to 'Redes', {:action => 'groups', :id => @user.id} %></li> 
+	    <li><%= link_to 'Redes', {:action => 'groups', :id => @user.id}, :class => 'selected' %></li> 
 	    <!--<li><a href="#tabs-4">Exames (22)</a></li> -->
     </ul> 
     
     <div class="panel">
-	<%= javascript_include_tag 'flow.js' %>
-	<%= render :partial => "statuses/create_status", :locals => {:status => @status }%>
-	<ul class="activities">
-	<%= render :partial => "statuses/type_proxy", :collection => @user.recent_activity, :as => :status %>
-	</ul><!-- end activities -->
+    <ul>
+	<% @groups.each do |school| %>
+		<li><%= link_to school.name, school %></li>
+	<% end %>
+	</ul><!-- end schools -->
     </div>
 </div><!-- end tabs -->
 </div><!-- end main -->

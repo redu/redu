@@ -187,6 +187,11 @@ class UsersController < BaseController
     render :action => 'new', :layout => 'beta' and return if AppConfig.closed_beta_mode    
   end
   
+  def groups
+    @user = User.find(params[:id])
+    @groups = @user.schools.find(:all, :select => "name, path")
+  end
+  
   def create
     
     if AppConfig.closed_beta_mode
