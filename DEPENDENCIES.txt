@@ -17,7 +17,7 @@ Requirements:
 	  icalendar
 	  aws-s3 (if using s3 for photos)
 	  
-	  will-paginate
+	  will_paginate
 	  chronic
 	  backgroundrb
 	  

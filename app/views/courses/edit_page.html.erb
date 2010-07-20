@@ -15,7 +15,7 @@
 <div id="all_content3">
 <div id="col_content">
 	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">aprender</a> > <a href="#"><%= @course.name %></a> </div>
- 	<div id="title">EDITANDO VÍDEO-AULA
+ 	<div id="title">EDITANDO PÁGINA
 	</div>
 
 <% form_for @course, :html => { :multipart => true } do |f| %>
@@ -31,6 +31,13 @@
 	
 	<%= f.label "Tags:" %><br/>
 	<%= f.text_field :tag_list %><br/><br/>
+	
+	
+	<% f.fields_for :page do |thepage| %>
+	 <%= thepage.label 'Texto:' %>
+	 <%= thepage.text_area :body, :class => "mceEditor" %>
+	<% end %>
+
 	
 
 <%= render :partial => 'attachment_form', :locals => {:f => f, :course => @course}%>

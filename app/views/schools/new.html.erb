@@ -3,13 +3,16 @@
 	<div id="breadcrumbs"><a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <a href="#">nova rede</a> </div>
    	<div id="title">NOVA REDE</div>
 
-<% form_for(@school, :html => { :multipart => true }) do |f| %>
 
-<%= render :partial => "schools/form", :locals => { :f => f, :school => @school } %>
-
-<%= f.submit "Criar" %> ou <%= link_to 'Voltar', :action => 'index' %>
-
+<% form_for @school do |f| %>
+  <%= f.error_messages %>
+  <%= render "#{@school.current_step}_step", :f => f %>
+  <p><%= f.submit "Continue" %></p>
+  <p><%= f.submit "Back", :name => "back_button" unless @school.first_step? %></p>
 <% end %>
+
+
+
 
 
 

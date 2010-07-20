@@ -98,6 +98,9 @@ class Course < ActiveRecord::Base
   has_one :interactive_class, :dependent => :destroy
   has_one :page, :dependent => :destroy
   
+  accepts_nested_attributes_for :page
+  
+  
   has_one :school, :through => 'SchoolAssets'
   
   belongs_to :asset, :polymorphic => true

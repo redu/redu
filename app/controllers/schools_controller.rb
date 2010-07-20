@@ -3,6 +3,13 @@ class SchoolsController < BaseController
   before_filter :login_required,  :except => [:join, :unjoin, :member]
   # before_filter :admin_required,  :only => [:new, :create]
   
+  def vote
+    @school = School.find(params[:id])
+    current_user.vote(@school, params[:like])
+    head :ok
+  end
+  
+  
   def look_and_feel
     @school = School.find(params[:id])
   end
@@ -260,13 +267,18 @@ class SchoolsController < BaseController
   # GET /schools/new
   # GET /schools/new.xml
   def new
-    @school = School.new
-    #@school.owner = current_user
+     session[:school_params] ||= {}
+     @school = School.new(session[:school_params])
+     @school.current_step = session[:school_step]
+
     
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @school }
-    end
+    
+#    @school = School.new
+#    
+#    respond_to do |format|
+#      format.html # new.html.erb
+#      format.xml  { render :xml => @school }
+#    end
   end
   
   # GET /schools/1/edit
@@ -277,24 +289,49 @@ class SchoolsController < BaseController
   # POST /schools
   # POST /schools.xml
   def create
-    @school = School.new(params[:school])
     
-    @school.owner = current_user
-    #@school.admins << current_user
-    
-    respond_to do |format|
-      if @school.save!
-        
-        UserSchoolAssociation.create({:user => current_user, :school => @school, :status => "approved", :role => Role[:school_admin]})
-        
-        flash[:notice] = 'A rede foi criada com sucesso!'
-        format.html { redirect_to(@school) }
-        format.xml  { render :xml => @school, :status => :created, :location => @school }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @school.errors, :status => :unprocessable_entity }
-      end
+    session[:school_params].deep_merge!(params[:school]) if params[:school]
+  @school = School.new(session[:school_params])
+  @school.owner = current_user
+  @school.current_step = session[:school_step]
+  if @school.valid?
+    if params[:back_button]
+      @school.previous_step
+    elsif @school.last_step?
+      @school.save if @school.all_valid?
+    else
+      @school.next_step
     end
+    session[:school_step] = @school.current_step
+  end
+  if @school.new_record?
+    render "new"
+  else
+    UserSchoolAssociation.create({:user => current_user, :school => @school, :status => "approved", :role => Role[:school_admin]})
+    session[:school_step] = session[:school_params] = nil
+    flash[:notice] = "School saved!"
+    redirect_to @school
+  end
+
+    
+    
+#    @school = School.new(params[:school])
+#    
+#    @school.owner = current_user
+#    
+#    respond_to do |format|
+#      if @school.save!
+#        
+#        UserSchoolAssociation.create({:user => current_user, :school => @school, :status => "approved", :role => Role[:school_admin]})
+#        
+#        flash[:notice] = 'A rede foi criada com sucesso!'
+#        format.html { redirect_to(@school) }
+#        format.xml  { render :xml => @school, :status => :created, :location => @school }
+#      else
+#        format.html { render :action => "new" }
+#        format.xml  { render :xml => @school.errors, :status => :unprocessable_entity }
+#      end
+#    end
   end
   
   # PUT /schools/1

@@ -224,6 +224,7 @@ ActionController::Routing::Routes.draw do |map|
   
    map.resources :schools,  :member_path => '/:id', :nested_member_path => '/:school_id', :member => {
    :join => :get,
+   :vote => :get,
    :unjoin => :get,
    :manage => :get,
    :pending_courses => :get,

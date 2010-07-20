@@ -1,6 +1,7 @@
 class School < ActiveRecord::Base
   
   acts_as_taggable
+  acts_as_voteable
   
   before_create :create_root_folder
   
@@ -102,5 +103,45 @@ class School < ActiveRecord::Base
   def root_folder
     Folder.find(:first, :conditions => ["school_id = ? AND parent_id IS NULL", self.id])
   end
+  
+  # METODOS DO WIZARD 
+  attr_writer :current_step
+  
+  
+  def current_step
+    @current_step || steps.first
+  end
+  
+  def steps
+    %w[general settings publication]
+  end
+  
+  def next_step
+    self.current_step = steps[steps.index(current_step)+1]
+  end
+  
+  def previous_step
+    self.current_step = steps[steps.index(current_step)-1]
+  end
+  
+  def first_step?
+    current_step == steps.first
+  end
+  
+  def last_step?
+    current_step == steps.last
+  end
+  
+  def all_valid?
+    steps.all? do |step|
+      self.current_step = step
+      valid?
+    end
+  end
+  
+  
+  
+  
+  
   
 end

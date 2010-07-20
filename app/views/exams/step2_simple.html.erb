@@ -54,14 +54,14 @@
 <!--
 Materiais: <br/>
 -->
-<% if @exam.resources && @exam.resources.length > 0 %>
+<%# if @exam.resources && @exam.resources.length > 0 %>
 
- <%= render :partial => 'resources/item', :collection => @exam.resources, :as => :resource %> 
- <% else %>
+ <%# render :partial => 'resources/item', :collection => @exam.resources, :as => :resource %> 
+ <%# else %>
  <!--
  Não há materiais associados. 
  -->
- <% end %>
+ <%# end %>
 <!--
  <br/><BR>
 <hr>

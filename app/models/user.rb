@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   attr_accessor :password
   attr_protected :admin, :featured, :role_id
   
-  
+  acts_as_voter
   ajaxful_rater
   
   acts_as_taggable  

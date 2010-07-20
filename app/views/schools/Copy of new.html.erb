@@ -1,0 +1,18 @@
+<div id="all_content3">
+	<div id="col_content">
+	<div id="breadcrumbs"><a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <a href="#">nova rede</a> </div>
+   	<div id="title">NOVA REDE</div>
+
+<% form_for(@school, :html => { :multipart => true }) do |f| %>
+
+<%= render :partial => "schools/form", :locals => { :f => f, :school => @school } %>
+
+<%= f.submit "Criar" %> ou <%= link_to 'Voltar', :action => 'index' %>
+
+<% end %>
+
+
+
+
+</div>
+</div>

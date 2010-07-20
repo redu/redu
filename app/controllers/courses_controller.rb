@@ -499,8 +499,17 @@ end
         format.xml  { render :xml => @course.errors, :status => :unprocessable_entity }
       end
     end
-   elsif @course.course_type == 'page'
-     # TODO
+  elsif @course.course_type == 'page'
+    respond_to do |format|
+      if @course.update_attributes(params[:course])
+        flash[:notice] = 'Curso atualizado com sucesso.'
+        format.html { redirect_to(@course) }
+        format.xml  { head :ok }
+      else
+        format.html { render :action => "edit_page" }
+        format.xml  { render :xml => @course.errors, :status => :unprocessable_entity }
+    end
+    end
    else # seminar
      respond_to do |format|
       if @course.update_attributes(params[:course])
