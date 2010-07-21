@@ -91,13 +91,7 @@ ActionController::Routing::Routes.draw do |map|
   # Note: These default routes make all actions in every controller accessible via GET requests. You should
   # consider removing or commenting them out if you're using named routes and resources.
 
-=begin
-  map.resources :schools, :member_path => '/:id', :nested_member_path => '/:school_id', :member => { 
-      :students => :get
-  } do |school|
-    #school.resources :students :subjects
-  end
-=end
+
 
   # Add this after any of your own existing routes, but before the default rails routes:
   #map.routes_from_plugin :community_engine
@@ -229,7 +223,9 @@ ActionController::Routing::Routes.draw do |map|
    :manage => :get,
    :pending_courses => :get,
    :pending_members => :get,
-   :look_and_feel => :get
+   :look_and_feel => :get,
+   :members => :get,
+   :teachers => :get
    } do |school|
     school.resources :folders, :member =>{:upload => :get, :download => :get, :rename => :get, :destroy_folder => :get, :destroy_file => :get}
   end

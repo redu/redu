@@ -1,14 +1,19 @@
 class InsertUsers < ActiveRecord::Migration
   def self.up
-=begin
-    User.create(:login => 'teste', 
-          :email => 'teste@example.com',
-          :password => 'teste123',
-          :password_confirmation => 'teste123',
-          :birthday => 14.years.ago)
-       
-=end         
-    theuser = User.create(:login => 'administrator', 
+   
+     theuser = User.create(:login => 'test_user', 
+          :email => 'test_user@example.com',
+          :password => 'redutest123',
+          :password_confirmation => 'redutest123',
+          :birthday => 20.years.ago,
+          :first_name => 'Test',
+          :last_name => 'User',
+          :role_id => 3)  
+    
+    puts theuser.login
+     
+     
+    theadmin = User.create(:login => 'administrator', 
           :email => 'admin@example.com',
           :password => 'reduadmin123',
           :password_confirmation => 'reduadmin123',
@@ -17,7 +22,7 @@ class InsertUsers < ActiveRecord::Migration
           :last_name => 'Redu',
           :role_id => 1)  
     
-    puts theuser.login
+    puts theadmin.login
   
   end
 

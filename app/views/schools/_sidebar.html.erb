@@ -38,7 +38,7 @@
       <ul class="clearfix">
         <%= render :partial => 'schools/member_short', :collection => @school.users, :as => :member %>
       </ul>
-      <a href="" class="icon more">Ver mais</a>
+      <a href="<%= members_school_path %>" class="icon more">Ver mais</a>
       </div><!-- end followship -->
   </li>
   <li class="clearfix">
@@ -48,7 +48,7 @@
         <ul class="clearfix">
         <%= render :partial => 'schools/member_short', :collection => teachers_preview(school), :as => :member %>
         </ul>
-        <a href="" class="icon more">Ver mais</a>
+        <a href="<%= teachers_school_path %>" class="icon more">Ver mais</a>
     </div><!-- end followship -->
     <% else %>
       <span class="notice">Nenhum professor cadastrado</span>

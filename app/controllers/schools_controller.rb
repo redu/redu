@@ -206,15 +206,40 @@ class SchoolsController < BaseController
   end
   
   
-  def students
-    @school = School.find(params[:id])
-    @students = @school.students
+  def members
+    @school = School.find(params[:id]) #TODO duas queries que poderiam ser apenas 1
     
-    #@users = User.recent.find(:all, :page => {:current => params[:page], :size => 100}, :conditions => cond.to_sql)
+     @members = @school.users.paginate(  #optei por .users ao inves de .students
+      :page => params[:page], 
+      :order => 'updated_at DESC', 
+      :per_page => AppConfig.users_per_page)
+     
+    @member_type = "membros"
     
     respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @students }
+      format.html {
+        render "view_members"
+      }
+      format.xml  { render :xml => @members }
+    end
+    
+  end
+  
+    def teachers
+    @school = School.find(params[:id]) #TODO duas queries que poderiam ser apenas 1
+    
+     @members = @school.teachers.paginate( 
+      :page => params[:page], 
+      :order => 'updated_at DESC', 
+      :per_page => AppConfig.users_per_page)
+     
+    @member_type = "professores"
+    
+    respond_to do |format|
+      format.html {
+        render "view_members"
+      }
+      format.xml  { render :xml => @members }
     end
     
   end
@@ -252,7 +277,15 @@ class SchoolsController < BaseController
         @forums = @school.forums
         @status = Status.new
         
-        format.html # show.html.erb
+        format.html {
+          # se usuário não logado ou escola é privada e o cara não está inscrito nela, mostrar perfil privado
+          if not current_user or (not @school.public and not @school.users.include? current_user) 
+            render 'show_private' and return
+          else
+            render 'show' and return
+          end
+          # show.html.erb
+        }
         format.xml  { render :xml => @school }
       else
         format.html { 

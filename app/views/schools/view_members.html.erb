@@ -1,0 +1,87 @@
+<% content_for :page_id, 'group' %>
+<%- @meta = { :description => "#{@school.name}'s profile on #{AppConfig.community_name}.", :keywords => "#{@school.name}, #{@school.tags.join(", ") unless @school.tags.nil?}", :robots => AppConfig.robots_meta_show_content }%>
+
+<script type="text/javascript">
+    function grantKeysToSchool(school_id){
+        //alert(school_id);
+        nKeys = document.getElementById('keys_number').value;
+        
+        new Ajax.Request("<%= url_for :controller => :access_keys, :action => :grant_keys_to_school %>", {
+            method: 'get',
+            parameters: "?id= " + school_id + "&number=" + nKeys,
+            onComplete: function(request){
+                //res = eval("(" + request.responseText + ")");
+                alert('Chaves garantidas!');
+               // document.getElementById('keys_school_box').style.display = 'none';
+            }
+        });
+    }
+	
+	function toggleBox(boxname){
+		var box = document.getElementById(boxname);
+		
+		if (box.style.display == 'none') {
+			Effect.SlideDown(box,0.5);
+		} else {
+			Effect.SlideUp(box,0.5);
+		}
+	}
+	
+	function toggleAssociateBox(){
+		var box = document.getElementById("associate_box");
+		
+		if (box.style.display == 'none') {
+			//Effect.Appear(box);
+			box.style.display = 'block';
+			
+		} else {
+			//Effect.Fade(box);
+			box.style.display = 'none';
+		}
+	}
+	
+	function showKeysSchoolBox(){
+		document.getElementById('grant_keys_link').style.display = 'none';
+        document.getElementById('keys_school_box').style.display = 'inline';
+	}
+	
+	function showAdminLoginBox(){
+		document.getElementById('grant_admin_link').style.display = 'none';
+        document.getElementById('admin_login_box').style.display = 'inline';
+	}
+	
+	function grantSchoolAdmin(schoolId) {
+		var adminLogin = $('admin_login').val();
+		var adminKey = $('admin_key').val();
+		
+		new Ajax.Request("<%= url_for :controller => :schools, :action => :create_school_admin %>", {
+            method: 'get',
+            parameters: "?id= " + school_id + "&login=" + adminLogin + "&key=" + adminKey,
+            onComplete: function(request){
+                //res = eval("(" + request.responseText + ")");
+                alert('admin atribuido!');
+				// TODO colocar para flash aparecer
+				// page["notice"].replace_html flash[:notice] 
+               // document.getElementById('keys_school_box').style.display = 'none';
+            }
+        });
+	}
+</script>
+
+<%= render :partial => "schools/school_info", :locals => {:school => @school} %>
+
+
+<div class="main grid_12">
+
+Listando <%= @member_type %>
+
+<%= render :partial => "schools/user_vcard", :collection => @members, :as => :user %>
+
+<div id="pagination" align="center" class="pagination">
+
+	<%= will_paginate  @members, :params => {:sort_by => @sort_by}, :class => "pagination_number"  %>
+	
+</div>
+
+</div><!-- end main -->
+

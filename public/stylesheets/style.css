@@ -1,4 +1,16 @@
 /**
+ * visualizar todos os membros da rede: 
+ */
+#comment_member{float:left; width:200px; height:auto; margin:8px; padding:5px; border:solid 1px #e7eefd; background-color:#EDF2FE}
+#comment_member .link_member, .link_member:visited{text-decoration:none; font: 12px "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; color:#5683d5;}
+#comment_member .link_member:hover{text-decoration:underline; font: 12px "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; color:#5683d5;}
+#comment_member_txt{float:left; width:auto; height:auto; font:normal 12px "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; color:#858787;}
+#comment_member_actions{float:right; width:190px; height:auto; font:11px normal; font-family:"Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; color:#c5c7c8; margin:0; text-align:left; background-color:#e7eefd; padding:5px}
+#comment_member_actions .link_actions, .link_actions:visited {font:normal 10px ; text-decoration:none; font-family:"Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; color:#5683d5;}
+#comment_member_actions .link_actions:hover{font:normal 10px; text-decoration:underline; font-family:"Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; color:#5683d5;}
+
+
+/**
    Main Redu stylesheet 
    URL: http://redu.com.br
 **/
