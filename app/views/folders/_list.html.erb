@@ -58,7 +58,7 @@
             
     <% if @can_delete %>
 	<td>
-                <%= link_to_remote image_tag('delete.png', :style => "border: 0", :title => 'Remover esta pasta'), :url => { :action => :destoy_folder, :id => folder.id, :school_id => @school.id} ,  :confirm => "Todos os arquivos e subpastas serão removidos.\nDeseja continuar?"  %>
+                <%= link_to_remote image_tag('delete.png', :style => "border: 0", :title => 'Remover esta pasta'), :url => { :action => :destroy_folder, :id => folder.id, :school_id => @school.id} ,  :confirm => "Todos os arquivos e subpastas serão removidos.\nDeseja continuar?"  %>
    </td>
     <% end %>
             
