@@ -217,12 +217,14 @@ ActionController::Routing::Routes.draw do |map|
   
   
    map.resources :schools,  :member_path => '/:id', :nested_member_path => '/:school_id', :member => {
-   :join => :get,
-   :vote => :get,
+   :join => :post,
+   :vote => :post,
    :unjoin => :get,
    :manage => :get,
-   :pending_courses => :get,
-   :pending_members => :get,
+   :admin_requests => :get,
+   :admin_members => :get,
+   :admin_submissions => :get,
+   #:search_users_admin => :get,
    :look_and_feel => :get,
    :members => :get,
    :teachers => :get
@@ -286,7 +288,7 @@ ActionController::Routing::Routes.draw do |map|
       album.resources :photos, :collection => {:swfupload => :post, :slideshow => :get}
     end
   end
-  map.resources :votes
+  #map.resources :votes
   map.resources :invitations
   
   map.users_posts_in_category '/users/:user_id/posts/category/:category_name', :controller => 'posts', :action => 'index', :category_name => :category_name

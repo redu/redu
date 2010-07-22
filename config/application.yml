@@ -58,8 +58,8 @@ image:
     content_type: ['image/jpg', 'image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png']
 
 photo:
-  missing_thumb: '/images/icon_missing_thumb.gif'
-  missing_medium: "/images/icon_missing_medium.gif"
+  missing_thumb: '/images/missing_pic.jpg' #'/images/icon_missing_thumb.gif'
+  missing_medium: '/images/missing_pic.jpg' #"/images/icon_missing_medium.gif"
   attachment_fu_options:
     resize_to: "465>"
     min_size: 1    
