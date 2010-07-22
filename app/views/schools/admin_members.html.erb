@@ -1,0 +1,87 @@
+<script>
+	function selectAll(){
+	//$('select_all_link').hide();
+	//$('select_all_string').show();
+	var checkboxes = document.getElementsByName("users[]");
+	for (var i =0; i< checkboxes.length; i++) {
+		checkboxes[i].checked = true;
+	}
+	
+}
+
+function selectNone(){
+	var checkboxes = document.getElementsByName("users[]");
+	for (var i =0; i< checkboxes.length; i++) {
+		checkboxes[i].checked = false;
+	}
+}
+function showLoadingUsers(){
+	document.getElementById('loading_bar').style.display = 'block';
+	//document.removeChild();
+	$('user_list_table').remove();
+}
+
+function setSubmissionType(type){
+	// type = 0 ; // remover
+	// type = 1 ; // mudar papel
+	
+	 var theform = document.getElementById('moderate_users_form');
+	 var theattribute = document.getElementById('submission_type');
+		
+	theattribute.value = type;
+	theform.submit();
+}
+
+	
+</script>
+
+<% content_for :page_id, 'group' %>
+<div class="main grid_16">
+<%= render :partial => "schools/school_info", :locals => {:school => @school} %>
+<div class="fake-tabs grid_16 alpha omega">
+	<%= render :partial => "schools/admin_taskbar" %>
+	<div class="panel">
+	<h3>Administracão de Membros</h3>
+	
+
+<% if @memberships && @memberships.size > 0 %>
+		
+		<% form_remote_tag :url => {:action => :search_users_admin, :id => @school.id}, :loading => "showLoadingUsers()" do %>
+		 <%= text_field_tag :search_user %><%= submit_tag 'Buscar' %><BR>
+		<% end %>
+		
+		<% form_tag url_for(:action => :moderate_members), :id => "moderate_users_form" do %>
+		 <%= hidden_field_tag :submission_type, :value => '0'%>
+		
+		Selecionar: <%=link_to_function 'Todos', 'selectAll()'%> | <%=link_to_function 'Nenhum', 'selectNone()'%> | 
+		
+		Selecionados:  <%= select_tag(:role_id, options_for_select([['Aluno', 7],['Professor', 6],['Coordenador', 5],['Administrador', 4]], 7)) %> <%= button_to_function 'Mudar Papel', 'setSubmissionType(1)'%> | <%= submit_tag "Remover" %>
+			
+			
+			<div id="user_list">
+			<%= render :partial => 'user_list_admin', :locals => {:memberships => @memberships}%>
+			
+			</div>
+			
+		 <% end %>
+		<% else %>
+ 			Não há usuários na rede.
+		<% end %>
+    	
+	
+	<div id="pagination" align="center" class="pagination">
+
+		<%= will_paginate  @memberships, :params => {:sort_by => @sort_by}, :class => "pagination_number"  %>
+		
+    </div>
+	
+	
+	
+	</div>
+</div><!-- end tabs -->
+</div><!-- end main -->
+
+
+
+
+

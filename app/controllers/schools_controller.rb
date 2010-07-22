@@ -97,7 +97,45 @@ class SchoolsController < BaseController
   #   MODERAÇÃO
   ##
   
-  def pending_courses 
+  
+  def admin_requests 
+    @school = School.find(params[:id])
+    # TODO colocar a consulta a seguir como um atributo de school (como em school.teachers)
+    @pending_members = UserSchoolAssociation.paginate(:conditions => ["status like 'pending' AND school_id = ?", params[:id]], 
+      :page => params[:page], 
+      :order => 'updated_at DESC', 
+      :per_page => AppConfig.items_per_page)
+    
+    respond_to do |format|
+      format.html #{ render :action => "my" }
+      #format.xml  { render :xml => @courses }
+    end
+    
+  end
+  
+  def admin_members
+    @school = School.find(params[:id]) # TODO 2 consultas ao inves de uma? 
+    
+    @memberships = UserSchoolAssociation.paginate(:conditions => ["status like 'approved' AND school_id = ?", @school.id],
+    :include => :user,
+  :page => params[:page], 
+  :order => 'updated_at DESC', 
+  :per_page => AppConfig.items_per_page)
+    
+#    @users = @school.users.paginate(
+#      :page => params[:page], 
+#      :order => 'created_at ASC', 
+#      :per_page => 20)
+    
+    respond_to do |format|
+      format.html 
+    end
+  end
+  
+  
+  def admin_submissions 
+    @school = School.find(params[:id])
+    
     @courses = Course.paginate(:conditions => ["published = 1 AND state LIKE ?", "waiting"], 
       :include => :owner, 
       :page => params[:page], 
@@ -112,39 +150,132 @@ class SchoolsController < BaseController
   end
   
   
-  def pending_members 
-    @school = School.find(params[:id])
-    @pending_members = UserSchoolAssociation.paginate(:conditions => ["status like 'pending' AND school_id = ?", params[:id]], 
-      :page => params[:page], 
-      :order => 'updated_at DESC', 
-      :per_page => AppConfig.items_per_page)
+  ### 
+  
+  
+  def moderate_requests
     
-    respond_to do |format|
-      format.html #{ render :action => "my" }
-      #format.xml  { render :xml => @courses }
+    approved = params[:member].reject{|k,v| v == 'reject'}
+    rejected = params[:member].reject{|k,v| v == 'approve'}
+    approved_ids = approved.keys.join(',')
+    rejected_ids = rejected.keys.join(',')
+    
+    @school = School.find(params[:school_id])
+    
+    
+    UserSchoolAssociation.update_all( "status = 'approved'", ["user_id IN (?)", @approve_ids.join(',') ]) if @approve_ids
+    UserSchoolAssociation.update_all( "status = 'disaproved'",["user_id IN (?)", @approve_ids.join(',') ]) if @disapprove_ids
+    
+    
+    @approved_members = User.all(:conditions => ["id IN (?)", approved_ids]) unless approved_ids.empty?
+    @rejected_members = User.all(:conditions => ["id IN (?)", rejected_ids]) unless rejected_ids.empty?
+    
+    for member in @approved_members
+      UserNotifier.deliver_approve_membership(member, @school) # TODO fazer isso em batch
     end
+    
+    #    for member in @rejected_members #TODO mandar email para os que não foram aceitos na rede???
+    #       UserNotifier.deliver_reject_member(course, nil) # TODO fazer isso em batch
+    #    end
+    
+    flash[:notice] = 'Solicitacões moderadas!'
+    redirect_to admin_requests_school_path
     
   end
   
   
- def moderate_members
-   @approve_ids = params[:approve]#.collect{|c| c.to_i}
-   @disapprove_ids = params[:disapprove]
-   
-   UserSchoolAssociation.update_all( "status = 'approved'", ["id IN (?)", @approve_ids.join(',') ]) if @approve_ids
-   UserSchoolAssociation.update_all( "status = 'disaproved'",["id IN (?)", @approve_ids.join(',') ]) if @disapprove_ids
-   
-   flash[:notice] = "Alterações salvas!"
-   
-   redirect_to pending_members_school_path(params[:id])
-   
-   
+  def moderate_members
+    @school = School.find(params[:id]) # TODO realmente necessário?
+    
+    case params[:submission_type]
+      
+      when '0' # remove selected
+          @removed_users = User.all(:conditions => ["id IN (?)", params[:users].join(',')]) unless params[:users].empty?
+          
+          # TODO destroy_all ou delete_all?
+          UserSchoolAssociation.delete_all(["user_id IN (?) AND school_id = ?", params[:users].join(','), @school.id]) 
+          
+          
+          for user in @removed_users # TODO fazer um remove all?
+            UserNotifier.deliver_remove_membership(user, @school) # TODO fazer isso em batch
+          end
+      
+      when '1' # moderate roles
+          UserSchoolAssociation.update_all(["role_id = ?", params[:role_id]], 
+          ["status like 'approved' AND school_id = ? AND user_id IN (?)", @school.id, params[:users].join(',') ])  if params[:role_id]
+          
+          # TODO enviar emails para usuários dizendo que foram promovidos?
+    end
+    flash[:notice] = 'Usuários moderados!'
+    redirect_to admin_moderate_users_path
+  end
+  
+  def search_users_admin
+    @school = School.find(params[:id])
+    
+    if params[:search_user].empty?
+      @memberships = UserSchoolAssociation.paginate(:conditions => ["status like 'approved' AND school_id = ?", @school.id],
+        :include => :user,
+      :page => params[:page], 
+      :order => 'updated_at DESC', 
+      :per_page => AppConfig.items_per_page)
+    else
+      qry = params[:search_user] + '%'
+       @memberships = UserSchoolAssociation.paginate(
+       :conditions => ["user_school_associations.status like 'approved' AND user_school_associations.school_id = ? AND (users.first_name LIKE ? OR users.last_name LIKE ? OR users.login LIKE ?)",
+       @school.id, qry,qry,qry ],
+       :include => :user,
+      :page => params[:page], 
+      :order => 'user_school_associations.updated_at DESC', 
+      :per_page => AppConfig.items_per_page)
+    end
+    respond_to do |format|
+      format.js do
+        render :update do |page|
+          page.replace_html 'user_list', :partial => 'user_list_admin', :locals => {:memberships => @memberships}
+        end
+      end
+    end
+  end
+ 
+ 
+ def moderate_submissions
+   approved = params[:submission].reject{|k,v| v == 'reject'}
+    rejected = params[:submission].reject{|k,v| v == 'approve'}
+    approved_ids = approved.keys.join(',')
+    rejected_ids = rejected.keys.join(',')
+    
+    @school = School.find(params[:school_id])
+    
+    
+   SchoolAsset.update_all( "status = 'approved'", ["asset_id IN (?)", @approve_ids.join(',') ]) if @approve_ids
+   SchoolAsset.update_all( "status = 'disaproved'",["asset_id IN (?)", @approve_ids.join(',') ]) if @disapprove_ids
+    
+    @approved_members = User.all(:conditions => ["id IN (?)", approved_ids]) unless approved_ids.empty?
+    @rejected_members = User.all(:conditions => ["id IN (?)", rejected_ids]) unless rejected_ids.empty?
+    
+    for member in @approved_members
+      UserNotifier.deliver_approve_membership(member, @school) # TODO fazer isso em batch
+    end
+    
+    #    for member in @rejected_members #TODO mandar email para os que não foram aceitos na rede???
+    #       UserNotifier.deliver_reject_member(course, nil) # TODO fazer isso em batch
+    #    end
+    
+    flash[:notice] = 'Solicitacões moderadas!'
+    redirect_to pending_members_school_path
  end
+ 
+ 
+ 
+ 
+ 
+ 
+ ################################################
   
   
   
-  
-  
+  # usuário entra na rede
   def associate
     @school = School.find(params[:id])
     @user = User.find(params[:user_id])  # TODO precisa mesmo recuperar o usuário no bd?
@@ -191,21 +322,20 @@ class SchoolsController < BaseController
   
   ## LISTS
   
-  
-  def member
+  # lista redes das quais o usuário corrente é membro
+  def member 
     @schools = current_user.schools
     
   end
   
+  # lista redes das quais usuário corrente é dono
   def owner
     #@user_school_association_array = UserSchoolAssociation.find(:all, :conditions => ["user_id = ? AND role_id = ?", current_user.id, 4])
    @schools = current_user.schools_owned
    
-   
-   
   end
   
-  
+  # lista todos os membros da escola
   def members
     @school = School.find(params[:id]) #TODO duas queries que poderiam ser apenas 1
     
@@ -225,6 +355,8 @@ class SchoolsController < BaseController
     
   end
   
+  
+  # lista todos os professores
     def teachers
     @school = School.find(params[:id]) #TODO duas queries que poderiam ser apenas 1
     

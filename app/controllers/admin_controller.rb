@@ -224,17 +224,17 @@ class AdminController < BaseController
     @messages = Message.find(:all, :page => {:current => params[:page], :size => 50}, :order => 'created_at DESC')
   end
   
-  def users
-    cond = Caboose::EZ::Condition.new
-    if params['login']    
-      cond.login =~ "%#{params['login']}%"
-    end
-    if params['email']
-      cond.email =~ "%#{params['email']}%"
-    end        
-    
-    @users = User.recent.find(:all, :page => {:current => params[:page], :size => 100}, :conditions => cond.to_sql)      
-  end
+#  def users
+#    cond = Caboose::EZ::Condition.new
+#    if params['login']    
+#      cond.login =~ "%#{params['login']}%"
+#    end
+#    if params['email']
+#      cond.email =~ "%#{params['email']}%"
+#    end        
+#    
+#    @users = User.recent.find(:all, :page => {:current => params[:page], :size => 100}, :conditions => cond.to_sql)      
+#  end
   
   def comments
     @comments = Comment.find(:all, :page => {:current => params[:page], :size => 100}, :order => 'created_at DESC')

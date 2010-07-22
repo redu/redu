@@ -1,0 +1,75 @@
+<script>
+	function selectAll(){
+	//$('select_all_link').hide();
+	//$('select_all_string').show();
+	var checkboxes = document.getElementsByName("users[]");
+	for (var i =0; i< checkboxes.length; i++) {
+		checkboxes[i].checked = true;
+	}
+	
+}
+
+function selectNone(){
+	var checkboxes = document.getElementsByName("users[]");
+	for (var i =0; i< checkboxes.length; i++) {
+		checkboxes[i].checked = false;
+	}
+}
+
+
+	
+</script>
+
+<% content_for :page_id, 'group' %>
+<div class="main grid_16">
+<%= render :partial => "schools/school_info", :locals => {:school => @school} %>
+<div class="fake-tabs grid_16 alpha omega">
+	<%= render :partial => "schools/admin_taskbar" %>
+	<div class="panel">
+	<!--<h3>Submissões</h3>-->
+	
+<% if @submissions && @submissions.size > 0 %>
+		 <% form_tag :action => :moderate_submissions do %>
+			<table style="width: 100%; margin: 15px 10px 20px 10px;">
+				<tr>
+					<th style="max-width:25px;">Aprovar</th><th style="max-width:27px;">Rejeitar</th><th>Autor</th><th>Data</th>
+				</tr>
+		 	<% for submission in @submissions %>
+				<tr>
+					<tr>
+						<td><%= radio_button_tag '[submission]['+ submission.id.to_s+']', 'approve'  %></td>
+						<td><%= radio_button_tag '[submission]['+ submission.id.to_s+']', 'reject' %></td>
+						<td><%= link_to submission.owner.display_name, submission.owner, :target => "_blank" %> </td>
+						<td><%= time_ago_in_words(submission.created_at) %> </td>
+					</tr>
+				</tr>
+ 			<% end %>
+			</table>
+			<%= submit_tag "Moderar" %>
+			
+			<div id="pagination" align="center" class="pagination"> 
+			<%= will_paginate  @submissions, :params => {:sort_by => @sort_by}, :class => "pagination_number"  %> 
+			</div>
+			
+		 <% end %>
+		<% else %>
+				
+				<%  if @school.submission_type == 1 %>
+			 A configuracão atual da rede permite a <strong>postagem de conteúdo por qualquer membro, sem moderacão.</strong><BR>
+			 Para restringir essa opcão clique em "<%= link_to "configuracões", edit_school_path(@school) %>"
+			 <% else %> 
+			 Não há submissões a serem moderadas.
+			 <% end %>
+		<% end %>
+		
+		
+		
+	
+	</div>
+</div><!-- end tabs -->
+</div><!-- end main -->
+
+
+
+
+

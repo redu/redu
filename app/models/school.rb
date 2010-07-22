@@ -54,6 +54,10 @@ class School < ActiveRecord::Base
   def to_param
     self.path
   end
+  
+  def permalink
+    AppConfig.community_url + '/' + self.path 
+  end
 
   def avatar_photo_url(size = nil)
     if self.avatar_file_name

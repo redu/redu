@@ -1,0 +1,17 @@
+<%= image_tag 'loadingAnimation.gif', :id => 'loading_bar', :style => "display: none; margin-top: 40px"%>
+
+<table style="width: 100%; margin: 15px 10px 20px 10px;" id ="user_list_table">
+				<tr>
+					<th></th><th>Usuário</th><th>Data de Inscricão</th><th>Papel</th><th></th>
+				</tr>
+		 	<% for member in memberships %>
+				<tr>
+					<tr>
+						<td><%= check_box_tag 'users[]', member.user.id  %></td>
+						<td><%= link_to member.user.display_name, member.user, :target => "_blank" %> </td>
+						<td><%= time_ago_in_words(member.created_at) %> </td>
+						<td><%= member.role.name %> </td>
+					</tr>
+				</tr>
+ 			<% end %>
+</table>

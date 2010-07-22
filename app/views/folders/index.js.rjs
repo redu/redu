@@ -1,9 +1,8 @@
 
-#page << "document.getElementById('thebug_#{@question.id.to_s}').style.display = 'none';"
 
 page.replace_html  'file_list', :partial => 'folders/list'
-          
-page << "document.getElementById('file_path').innerHTML = '"+path(@folder)+"';"
+#page << "$schooltabs.tabs('select', 3);"  
+#page << "document.getElementById('file_path').innerHTML = '"+path(@folder)+"';"
 
-page << "document.getElementById('new_folder_link').href = '"+new_school_folder_path(:id => @folder.id, :school_id => @school.id)+"';"
-page << "document.getElementById('upload_link').href = '"+upload_school_folder_path(:id => @folder.id, :school_id => @school.id)+"';"
+#page << "document.getElementById('new_folder_link').href = '"+new_school_folder_path(:id => @folder.id, :school_id => @school.id)+"';"
+#page << "document.getElementById('upload_link').href = '"+upload_school_folder_path(:id => @folder.id, :school_id => @school.id)+"';"#

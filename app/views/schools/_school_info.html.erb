@@ -16,7 +16,7 @@
     <div class="info grid_9">
     <h2 class="name"><%= link_to  @school.name, @school %></h2>
     <% if current_user.can_manage?(school)%>
-    <%= link_to "Configurações", manage_school_path(school), :class => 'config' %>
+    <%= link_to "Gerenciar", manage_school_path(school), :class => 'config' %>
     <% end %>
     <span class="areas">
     <a href="">Ensino Médio, Escolas</a>
@@ -24,8 +24,8 @@
     <span class="areas">
     <%= subscription_link %>
 	|
-	<%= link_to_remote 'like', :url=> {:action => :vote, :id => @school.id, :like => true}, :success => 'disableVoting();' %> (<%= @school.votes_for%>) |
-	<%= link_to_remote 'dislike', :url=> {:action => :vote, :id => @school.id, :like => false}, :success => 'disableVoting();' %> (<%= @school.votes_against%>)
+	<%= link_to_remote image_tag('thumbs-up.jpg', :border => '0'), :url=> {:action => :vote, :id => @school.id, :like => true}, :success => 'disableVoting();' %> (<%= @school.votes_for%>) |
+	<%= link_to_remote image_tag('thumbs-down.jpg', :border => '0'), :url=> {:action => :vote, :id => @school.id, :like => false}, :success => 'disableVoting();' %> (<%= @school.votes_against%>)
     </span>
     </div><!-- end info -->
 </div><!-- end group-header -->

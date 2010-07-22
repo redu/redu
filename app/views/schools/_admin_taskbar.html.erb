@@ -1,17 +1,35 @@
 <%  if logged_in? %>
 <ul class="menu">
+
 <li>
 <%= 
-link_to_unless_current 'Aparência', look_and_feel_school_path do
-  link_to 'Aparência', look_and_feel_school_path, :class => 'selected'
+link_to_unless_current 'Solicitacões', admin_requests_school_path do
+  link_to 'Solicitações', admin_requests_school_path, 
+    :class => 'selected'
+end
+%>
+</li>
+
+<li>
+<%= 
+link_to_unless_current 'Membros (' + @school.users.count.to_s + ')', admin_members_school_path do
+  link_to 'Membros', admin_members_school_path, 
+    :class => 'selected'
 end
 %>
 </li>
 <li>
 <%= 
-link_to_unless_current 'Solicitações', pending_members_school_path(@school) do
-  link_to 'Solicitações', pending_members_school_path(@school), 
+link_to_unless_current 'Submissões', admin_submissions_school_path do
+  link_to 'Submissões', admin_submissions_school_path, 
     :class => 'selected'
+end
+%>
+</li>
+<li>
+<%= 
+link_to_unless_current 'Aparência', look_and_feel_school_path do
+  link_to 'Aparência', look_and_feel_school_path, :class => 'selected'
 end
 %>
 </li>
@@ -22,7 +40,6 @@ link_to_unless_current 'Configurações', edit_school_path(@school) do
 end
 %>
 </li>
-<!--<li><%= link_to 'Conteúdo (5)', pending_courses_school_path(@school) %></li>-->
 <!--<li><%= link_to 'Papéis', owner_user_schools_path(current_user.id) %></li>-->
 <!--<li><%= link_to 'Gadgets', owner_user_schools_path(current_user.id) %></li>-->
 <!--<li><%= link_to 'Conta (Premium)', owner_user_schools_path(current_user.id) %></li>-->

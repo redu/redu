@@ -2,20 +2,24 @@
 <%- @meta = { :description => "#{@school.name}'s profile on #{AppConfig.community_name}.", :keywords => "#{@school.name}, #{@school.tags.join(", ") unless @school.tags.nil?}", :robots => AppConfig.robots_meta_show_content }%>
 
 <script type="text/javascript">
-    function grantKeysToSchool(school_id){
-        //alert(school_id);
-        nKeys = document.getElementById('keys_number').value;
-        
-        new Ajax.Request("<%= url_for :controller => :access_keys, :action => :grant_keys_to_school %>", {
-            method: 'get',
-            parameters: "?id= " + school_id + "&number=" + nKeys,
-            onComplete: function(request){
-                //res = eval("(" + request.responseText + ")");
-                alert('Chaves garantidas!');
-               // document.getElementById('keys_school_box').style.display = 'none';
-            }
-        });
-    }
+	var $schooltabs;
+	
+    $(document).ready(function() 
+{ 
+$schooltabs = $( ".school-tabs" ).tabs({
+  spinner: 'Retrieving data...',
+   select: function(event, ui) { 
+   if (ui.index == 3) {
+		jQuery.ajax({data:'', dataType:'script', success:function(request){alert("success");}, type:'get', url:'/cin/arquivos' }); 
+	 }
+	}
+});
+
+   
+
+});
+//<%= school_folders_path(:school_id => @school.id.to_s) %>
+
 	
 	function toggleBox(boxname){
 		var box = document.getElementById(boxname);
@@ -50,35 +54,19 @@
         document.getElementById('admin_login_box').style.display = 'inline';
 	}
 	
-	function grantSchoolAdmin(schoolId) {
-		var adminLogin = $('admin_login').val();
-		var adminKey = $('admin_key').val();
-		
-		new Ajax.Request("<%= url_for :controller => :schools, :action => :create_school_admin %>", {
-            method: 'get',
-            parameters: "?id= " + school_id + "&login=" + adminLogin + "&key=" + adminKey,
-            onComplete: function(request){
-                //res = eval("(" + request.responseText + ")");
-                alert('admin atribuido!');
-				// TODO colocar para flash aparecer
-				// page["notice"].replace_html flash[:notice] 
-               // document.getElementById('keys_school_box').style.display = 'none';
-            }
-        });
-	}
+	
 </script>
 
 <%= render :partial => "schools/school_info", :locals => {:school => @school} %>
 <%= render :partial => "schools/sidebar", :locals => {:school => @school} %>
 
 <div class="main grid_12">
-<div class="tabs">
+<div class="school-tabs tabs">
 	    <ul>
 		    <li><a href="#tabs-1">Início</a></li>
-		    <li><a href="#tabs-2">Movimentação</a></li>
-		    <!--<li><a href="#tabs-3">Grupos</a></li>-->
-		    <li><a href="#tabs-4">Cursos</a></li>
-		    <!--<li><a href="#tabs-5">Recursos</a></li>-->
+		    <li><a href="#tabs-2">Aulas</a></li>
+			<li><a href="#tabs-3">Exames</a></li>
+		    <li><a href="#tabs-4">Arquivos</a></li>
 	    </ul>
 	    
 		<div id="tabs-1">
@@ -88,21 +76,22 @@
 		<%= render :partial => "statuses/type_proxy", :collection => @school.recent_school_activity, :as => :status %>
 		</ul><!-- end activities -->
 		</div>
+		
 		<div id="tabs-2">
-		<ul class="activities">
-		<%= render :partial => "statuses/type_proxy", :collection => @school.recent_school_activity, :as => :status %>
-		</ul><!-- end activities -->
-		</div>
-		<div id="tabs-3"></div>
-		<div id="tabs-4">
 			<ul class="groups">
 			<%= render :partial => 'course', :collection => @courses %>
 			</ul>
-	    <div id="pagination" align="center" class="pagination">
-		<%= will_paginate  @courses, :params => {:sort_by => 'created_at'}, :class => "pagination_number"  %>
-	    </div>
+		    <div id="pagination" align="center" class="pagination">
+			<%= will_paginate  @courses, :params => {:sort_by => 'created_at'}, :class => "pagination_number"  %>
+		    </div>
 		</div>
-		<div id="tabs-5"></div>
+		<div id="tabs-3">
+			exames
+		</div>
+		<div id="tabs-4">
+			arquivos
+			<div id="file_list"></div>
+		</div>
 </div><!-- end tabs -->
 </div><!-- end main -->
 

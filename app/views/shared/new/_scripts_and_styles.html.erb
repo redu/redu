@@ -1,0 +1,7 @@
+<% if (controller_name == 'schools') %>
+  <%  if @school %>
+    <%= stylesheet_link_tag 'themes/' + @school.theme %>
+  <% else %>
+    <%= stylesheet_link_tag 'themes/default' %>
+  <% end %>
+ <% end %>

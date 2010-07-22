@@ -7,6 +7,31 @@ class UserNotifier < ActionMailer::Base
   include BaseHelper
   ActionMailer::Base.default_url_options[:host] = APP_URL.sub('http://', '')
 
+ ### ADMIN SCHOOL
+
+def approve_membership(user, school)
+    setup_sender_info
+    @recipients  = "#{user.email}"
+    @subject     = "Sua participacão na rede \"#{school.name}\" foi aprovada!"
+    @sent_on     = Time.now
+    @body[:user] = user
+    @body[:url]  = school.permalink 
+    @body[:school]  = school
+  end
+  
+def remove_membership(user, school)
+    setup_sender_info
+    @recipients  = "#{user.email}"
+    @subject     = "Sua participacão na rede \"#{school.name}\" foi cancelada"
+    @sent_on     = Time.now
+    @body[:user] = user
+    @body[:url]  = school.permalink 
+    @body[:school]  = school
+  end
+
+
+
+ ### ADMIN REDU
 
   def remove_course(course)
     setup_sender_info
