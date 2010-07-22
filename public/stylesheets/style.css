@@ -281,6 +281,7 @@ div.recomendations-m .number {
    .fake-tabs .panel {
       display: block;
       padding: 20px;
+	  min-height: 300px;
    }
    
    .fake-tabs ul.menu {
@@ -492,6 +493,7 @@ div.recomendations-m .number {
     height: 50px;
     background: url("../images/ui-elements_r16_c2.png") no-repeat;
     position: relative;
+	
 }
 
     #logo {

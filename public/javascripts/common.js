@@ -16,7 +16,7 @@ $(document).ready(function(){
     });
     $("ul.sortable").disableSelection()
     
-    $(".tabs").tabs();
+   // $(".tabs").tabs(); // esta funcao é chamada em cada view que eh usada pois é instanciada diferentemente
     
     $(".question-action a").click(function(e){
         $(this).next("div.answer:first").slideToggle()
@@ -84,4 +84,14 @@ $(document).ready(function(){
         $(this).toggleClass("closed")
         
     })
+    })
+	
+	/*
+	 * AJAX
+	 */
+	
+    jQuery.ajaxSetup({
+        'beforeSend': function(xhr){
+            xhr.setRequestHeader("Accept", "text/javascript")
+        }
     })
