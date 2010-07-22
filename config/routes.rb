@@ -229,7 +229,7 @@ ActionController::Routing::Routes.draw do |map|
    :members => :get,
    :teachers => :get
    } do |school|
-    school.resources :folders, :member =>{:upload => :get, :download => :get, :rename => :get, :destroy_folder => :get, :destroy_file => :get}
+    school.resources :folders, :member =>{:upload => :get, :download => :get, :rename => :get, :destroy_folder => :delete, :destroy_file => :delete}
   end
   
   

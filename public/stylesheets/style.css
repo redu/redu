@@ -1,5 +1,79 @@
 /**
- * visualizar todos os membros da rede: 
+ * ARQUIVOS DA REDE
+ */
+
+#file_list{
+            /*background-color:#FFFFFF;*/
+            /*border-color:#BBBBBB #FFFFFF #BBBBBB #BBBBBB;
+            border-style:solid;
+            border-width:1px;*/
+            height:400px;
+            overflow-y:scroll;
+            padding:5px;
+			margin: 20px;
+            /*width:500px;*/
+}
+
+.directory { background: url(jqueryFileTreeImages/directory.png) left top no-repeat; width: 16px; }
+
+.grid{
+    border-collapse: collapse;
+}
+
+.grid TR{
+    padding-bottom: 5px;
+}
+
+
+.grid TD A:hover {
+	background: #BDF;
+}
+
+
+
+
+
+
+
+/* 
+ * submenus das abas
+ */
+
+
+
+#actions_user {
+    float: left;
+    height: 25px;
+    margin-bottom: 30px;
+    font-size: 0.9em;
+    background-color: #FAFAFA;	
+	list-style:none;
+	padding: 10px 0 0 0;
+	width: 100%;
+}
+#actions_user li {
+	float: left;
+	margin-left: 20px;
+}
+#actions_user .sep {
+	color: #D6D7D5;
+}
+
+.hoverdiv {
+    position: absolute;
+    display: none;
+    padding: 13px;
+    background-color: white;
+	border: 5px solid #EFEFEF;
+	border-bottom-left-radius: 5px 5px;
+	border-bottom-right-radius: 5px 5px;
+	border-top-left-radius: 5px 5px;
+}
+
+
+
+/**
+ * FROM ROBSON | visualizar todos os membros da rede: 
  */
 #comment_member{float:left; width:200px; height:auto; margin:8px; padding:5px; border:solid 1px #e7eefd; background-color:#EDF2FE}
 #comment_member .link_member, .link_member:visited{text-decoration:none; font: 12px "Trebuchet MS", Tahoma, Verdana, Arial, Helvetica, sans-serif; color:#5683d5;}
