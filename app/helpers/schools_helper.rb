@@ -1,5 +1,8 @@
 module SchoolsHelper
   
+  #include FoldersHelper
+  
+  
   
   def subscription_link
     if not @school.users.include?(current_user) #TODO verificar se nao esta pending

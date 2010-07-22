@@ -4,22 +4,36 @@
 <script type="text/javascript">
 	var $schooltabs;
 	
-    $(document).ready(function() 
-{ 
-$schooltabs = $( ".school-tabs" ).tabs({
-  spinner: 'Retrieving data...',
-   select: function(event, ui) { 
-   if (ui.index == 3) {
-		jQuery.ajax({data:'', dataType:'script', success:function(request){alert("success");}, type:'get', url:'/cin/arquivos' }); 
-	 }
-	}
-});
-
-   
-
-});
+    $(document).ready(function(){
+        
+		$schooltabs = $(".school-tabs").tabs({
+            select: function(event, ui){
+				$("#tabs-4-content").html('');
+				
+                if (ui.index == 3) {
+                    jQuery.ajax({
+                        data: '',
+                        dataType: 'script',
+                        success: function(request){
+                            $("#tabs-4-loading").hide();
+                        },
+                        type: 'get',
+                        url: '/cin/arquivos'
+                    });
+                    
+                    $("#tabs-4-loading").show();
+                    
+                }
+            }
+        });
+		
+		
+        
+        
+        
+    });
 //<%= school_folders_path(:school_id => @school.id.to_s) %>
-
+	
 	
 	function toggleBox(boxname){
 		var box = document.getElementById(boxname);
@@ -55,6 +69,8 @@ $schooltabs = $( ".school-tabs" ).tabs({
 	}
 	
 	
+		
+	
 </script>
 
 <%= render :partial => "schools/school_info", :locals => {:school => @school} %>
@@ -89,8 +105,9 @@ $schooltabs = $( ".school-tabs" ).tabs({
 			exames
 		</div>
 		<div id="tabs-4">
-			arquivos
-			<div id="file_list"></div>
+			<%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-4-loading'%>
+			<div id="tabs-4-content"></div>
+			
 		</div>
 </div><!-- end tabs -->
 </div><!-- end main -->

@@ -53,12 +53,54 @@ class FoldersController < BaseController
     @myfile = Myfile.new(params[:myfile])
     @myfile.user = current_user
     
-    if @myfile.save
-      redirect_to school_folders_path(:id => @myfile.folder_id, :school_id => params[:school_id])#url_for(:controller => 'folder', :action => 'list', :id => nil)
-    else
-      render :action => "upload"
+    respond_to do |format|
+      if @myfile.save
+        flash[:notice] = 'Upload realizado!'
+        format.js do
+#          responds_to_parent do
+              redirect_to school_folders_path(:id => @myfile.folder_id, :school_id => params[:school_id])  and return
+            #end
+          end
+      else
+         format.js do
+          responds_to_parent do
+            render :update do |page|
+              page << "alert('houve uma falha ao enviar o arquivo');"
+            end
+          end
+        end
+      end
     end
-
+    
+    
+    
+#    respond_to do |format|
+#      if @myfile.save
+#        flash[:notice] = 'Upload realizado!'
+#        
+#        format.html do
+#          redirect_to school_folders_path(:id => @myfile.folder_id, :school_id => params[:school_id]) and return
+#        end
+#        
+#        format.js do 
+#          responds_to_parent do
+#             redirect_to school_folders_path(:id => @myfile.folder_id, :school_id => params[:school_id])
+#          end
+#         
+#        end
+#      else
+#        flash[:error] = 'Não foi possível realizar o upload'
+#        format.html {
+#          render :action => "upload"
+#        }
+#        format.js do
+#          responds_to_parent do
+#             redirect_to school_folders_path(:id => @myfile.folder_id, :school_id => params[:school_id])
+#          end
+#         
+#        end
+#      end
+#    end
   end
 
  def download
@@ -83,7 +125,7 @@ class FoldersController < BaseController
     list
    # render :action => :list
     respond_to do |format|
-      format.html
+      #format.html
       format.js
     end
   end
@@ -98,6 +140,8 @@ class FoldersController < BaseController
     else 
       @folder = @school.root_folder
     end
+
+  @myfile = Myfile.new
 
     # Set if the user is allowed to update or delete in this folder;
     # these instance variables are used in the view.
@@ -116,13 +160,14 @@ class FoldersController < BaseController
       folder_order += params[:order] if params[:order]
     end
 
-    if request.format == 'text/html' # evita fazer consultas se for chamada ajax
-      @files_count = Myfile.count(:include => :folder, :conditions => ["folders.school_id = ?", params[:school_id]])
-      bytes = Myfile.sum(:attachment_file_size, :include => :folder, :conditions => ["folders.school_id = ?",  params[:school_id]])
+    #TODO caching nessas consultas
+    #if request.format == 'text/html' # evita fazer consultas se for chamada ajax
+      @files_count = Myfile.count(:include => :folder, :conditions => ["folders.school_id = ?", @school.id])
+      bytes = Myfile.sum(:attachment_file_size, :include => :folder, :conditions => ["folders.school_id = ?",  @school.id])
       @total_size = "%0.2f" % (bytes / (1024.0 * 1024));
       gigabytes = 2
       @use_percentage = "%0.2f" % (bytes / ( gigabytes * 1024.0 * 1024.0 * 1024.0))
-    end 
+    #end 
     
     # List of subfolders
     @folders = @folder.list_subfolders(current_user, folder_order.rstrip)
@@ -185,15 +230,32 @@ class FoldersController < BaseController
       @folder.date_modified = Time.now
       @folder.user = current_user
 
-      if @folder.save
-        # copy groups rights on parent folder to new folder
-        #copy_permissions_to_new_folder(@folder)
 
-        # back to the list
-       redirect_to school_folders_path(:school_id => params[:folder][:school_id], :id => @folder.parent.id)
-        #redirect_to :action => 'list', :id => params[:folder][:parent_id], :school_id => params[:folder][:school_id]
-      else
-        render 'new'
+      respond_to do |format|
+
+        if @folder.save
+          # copy groups rights on parent folder to new folder
+          #copy_permissions_to_new_folder(@folder)
+  
+          # back to the list
+          flash[:notice] = 'Diretório criado!'
+          format.html {
+             redirect_to school_folders_path(:school_id => params[:folder][:school_id], :id => @folder.parent.id)
+          }
+          format.js {
+             redirect_to school_folders_path(:school_id => params[:folder][:school_id], :id => @folder.parent.id)
+          }
+          #redirect_to :action => 'list', :id => params[:folder][:parent_id], :school_id => params[:folder][:school_id]
+        else
+          flash[:error] = 'Não foi possível criar o diretório'
+          format.html {
+              render 'new'
+          }
+          format.js {
+             head :ok #TODO mensagem de erro em ajax
+          }
+         
+        end
       end
     end
   end
@@ -211,7 +273,7 @@ class FoldersController < BaseController
     @folder = Folder.find(params[:id])
       if @folder.update_attributes(:name => params[:folder][:name], :date_modified => Time.now)
         #redirect_to :action => 'list', :id => params[:folder][:parent_id], :school_id => params[:folder][:school_id]
-        redirect_to school_folders_path(:id => params[:folder][:parent_id], :school_id => params[:folder][:school_id])
+        redirect_to school_folders_path(:id => @folder.parent_id, :school_id => @folder.school_id)
     end
   end
 

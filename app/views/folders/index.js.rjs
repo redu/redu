@@ -1,6 +1,7 @@
 
 
-page.replace_html  'file_list', :partial => 'folders/list'
+page.replace_html  'tabs-4-content', :partial => 'folders/index'
+#page << '$("tabs-4-loading").hide()'
 #page << "$schooltabs.tabs('select', 3);"  
 #page << "document.getElementById('file_path').innerHTML = '"+path(@folder)+"';"
 
