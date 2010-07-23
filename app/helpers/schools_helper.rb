@@ -5,20 +5,26 @@ module SchoolsHelper
   
   
   def subscription_link
-    if not @school.users.include?(current_user) #TODO verificar se nao esta pending
-      
-      case @school.subscription_type 
+    membership = current_user.get_association_with @school
+    
+    if membership and membership.status == 'approved' # já é membro
+      link_to "ABADONAR", unjoin_school_path, :class => "participar_rede" , :confirm => "Você tem certeza que quer deixar essa rede?"
+    else 
+       case @school.subscription_type 
         
         when 1 # anyone can join
         link_to "PARTICIPAR", join_school_path, :class => "participar_rede" 
-        when 2 # moderated
-        link_to "PARTICIPAR", join_school_path, :class => "participar_rede" 
+      when 2 # moderated
+        if membership.status == 'pending'
+          "(EM MODERACÃO)"
+        else
+          link_to "PARTICIPAR", join_school_path, :class => "participar_rede"
+        end
+         
         when 3 #key
         link_to "PARTICIPAR", "#", {:class => "participar_rede", :onclick => "toggleAssociateBox();false;"} 
       end
       
-    else 
-      link_to "ABADONAR", unjoin_school_path, :class => "participar_rede" , :confirm => "Você tem certeza que quer deixar essa rede?"
     end 
     
   end

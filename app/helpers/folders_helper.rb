@@ -50,7 +50,7 @@ module FoldersHelper
       
     until folder.parent == nil
       folder = folder.parent
-      path = link_to_remote(h(folder.name), school_folders_path(:id => folder.id, :school_id => folder.school_id)) + ' &#187; ' + path
+      path = link_to_remote(h(folder.name), :url => { :action => :index, :id => folder.id, :school_id => folder.school_id}, :before => "showLoadingFiles()") + ' &#187; ' + path
     end
 
     return path

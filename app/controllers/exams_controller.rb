@@ -812,6 +812,16 @@ end
         format.html { render :action => "user_exams"} 
         format.xml  { render :xml => @user.exams }
       end
+    elsif params[:school_id]
+        @school = School.find(params[:school_id])
+      @exams = @school.exams.paginate( 
+      :include => :owner, 
+      :page => params[:page], 
+      :order => 'updated_at DESC', 
+      :per_page => AppConfig.items_per_page)
+      respond_to do |format|
+        format.js  { render 'index_school' }
+      end
     else 
     
     @sort_by = params[:sort_by]

@@ -9,7 +9,7 @@
 	
 
 <% if @pending_members && @pending_members.size > 0 %>
-		 <% form_tag :action => :moderate_members do %>
+		 <% form_tag :action => :moderate_requests, :id => @school.id do %>
 			<table style="width: 100%; margin: 15px 10px 20px 10px;">
 				<tr>
 					<th style="max-width:25px;">Aprovar</th><th style="max-width:27px;">Rejeitar</th><th>Nome</th><th>Data</th>

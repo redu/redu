@@ -3,6 +3,7 @@ require 'open-uri'
 require 'pp'
 
 class BaseController < ApplicationController
+  #layout 'new_application'
   include AuthenticatedSystem
   include LocalizedApplication
   around_filter :set_locale  

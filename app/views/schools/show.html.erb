@@ -2,15 +2,20 @@
 <%- @meta = { :description => "#{@school.name}'s profile on #{AppConfig.community_name}.", :keywords => "#{@school.name}, #{@school.tags.join(", ") unless @school.tags.nil?}", :robots => AppConfig.robots_meta_show_content }%>
 
 <script type="text/javascript">
+	var schoolFoldersPath = "<%= school_folders_path(:school_id => @school.id.to_s) %>";
+	var schoolCoursesPath = "<%= school_courses_path(:school_id => @school.id.to_s) %>";
+	var schoolExamsPath = "<%= school_exams_path(:school_id => @school.id.to_s) %>";
+	
 	var $schooltabs;
 	
     $(document).ready(function(){
         
 		$schooltabs = $(".school-tabs").tabs({
             select: function(event, ui){
-				$("#tabs-4-content").html('');
 				
-                if (ui.index == 3) {
+				
+                if (ui.index == 3) { // Arquivos
+					$("#tabs-4-content").html('');
                     jQuery.ajax({
                         data: '',
                         dataType: 'script',
@@ -18,12 +23,39 @@
                             $("#tabs-4-loading").hide();
                         },
                         type: 'get',
-                        url: '/cin/arquivos'
+                        url: schoolFoldersPath
                     });
                     
                     $("#tabs-4-loading").show();
                     
-                }
+                }else if (ui.index == 2){ // Exams
+					$("#tabs-3-content").html('');
+                    jQuery.ajax({
+                        data: '',
+                        dataType: 'script',
+                        success: function(request){
+                            $("#tabs-3-loading").hide();
+                        },
+                        type: 'get',
+                        url: schoolExamsPath
+                    });
+                    
+                    $("#tabs-3-loading").show();
+				}			
+				else if (ui.index == 1){ // Aulas
+					$("#tabs-2-content").html('');
+                    jQuery.ajax({
+                        data: '',
+                        dataType: 'script',
+                        success: function(request){
+                            $("#tabs-2-loading").hide();
+                        },
+                        type: 'get',
+                        url: schoolCoursesPath
+                    });
+                    
+                    $("#tabs-2-loading").show();
+				}
             }
         });
 		
@@ -32,7 +64,7 @@
         
         
     });
-//<%= school_folders_path(:school_id => @school.id.to_s) %>
+//
 	
 	
 	function toggleBox(boxname){
@@ -93,19 +125,19 @@
 		</ul><!-- end activities -->
 		</div>
 		
+		<!-- aulas -->
 		<div id="tabs-2">
-			<ul class="groups">
-			<%= render :partial => 'course', :collection => @courses %>
-			</ul>
-		    <div id="pagination" align="center" class="pagination">
-			<%= will_paginate  @courses, :params => {:sort_by => 'created_at'}, :class => "pagination_number"  %>
-		    </div>
+			<%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-2-loading', :style => 'padding: 20px;'%>
+			<div id="tabs-2-content"></div>
 		</div>
+		<!-- exames -->
 		<div id="tabs-3">
-			exames
+			<%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-3-loading', :style => 'padding: 20px;'%>
+			<div id="tabs-3-content"></div>
 		</div>
+		<!-- arquivos --> 
 		<div id="tabs-4">
-			<%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-4-loading'%>
+			<%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-4-loading', :style => 'padding: 20px;'%>
 			<div id="tabs-4-content"></div>
 			
 		</div>

@@ -3,6 +3,24 @@ class SchoolsController < BaseController
   before_filter :login_required,  :except => [:join, :unjoin, :member]
   # before_filter :admin_required,  :only => [:new, :create]
   
+#  
+#  def courses
+#    @school = School.find(params[:id])
+#    @courses = @school.courses.paginate( 
+#      :include => :owner, 
+#      :page => params[:page], 
+#      :order => 'updated_at DESC', 
+#      :per_page => AppConfig.items_per_page)
+#
+#     respond_to do |format|
+#      #format.html
+#      format.js
+#    end
+#  end
+  
+  
+  
+  
   def vote
     @school = School.find(params[:id])
     current_user.vote(@school, params[:like])
@@ -60,6 +78,7 @@ class SchoolsController < BaseController
         
         if @association.save
           flash[:notice] = "Seu pedido de participação está sendo moderado pelos administradores da rede."
+          #deliver..
         end
       
     end
@@ -101,7 +120,7 @@ class SchoolsController < BaseController
   def admin_requests 
     @school = School.find(params[:id])
     # TODO colocar a consulta a seguir como um atributo de school (como em school.teachers)
-    @pending_members = UserSchoolAssociation.paginate(:conditions => ["status like 'pending' AND school_id = ?", params[:id]], 
+    @pending_members = UserSchoolAssociation.paginate(:conditions => ["user_school_associations.status like 'pending' AND school_id = ?", @school.id], 
       :page => params[:page], 
       :order => 'updated_at DESC', 
       :per_page => AppConfig.items_per_page)
@@ -160,13 +179,13 @@ class SchoolsController < BaseController
     approved_ids = approved.keys.join(',')
     rejected_ids = rejected.keys.join(',')
     
-    @school = School.find(params[:school_id])
+    @school = School.find(params[:id])
     
+    #atualiza status da associacao
+    UserSchoolAssociation.update_all( "status = 'approved'", ["user_id IN (?)", approved_ids ]) if approved_ids
+    UserSchoolAssociation.update_all( "status = 'disaproved'",["user_id IN (?)", rejected_ids ]) if rejected_ids
     
-    UserSchoolAssociation.update_all( "status = 'approved'", ["user_id IN (?)", @approve_ids.join(',') ]) if @approve_ids
-    UserSchoolAssociation.update_all( "status = 'disaproved'",["user_id IN (?)", @approve_ids.join(',') ]) if @disapprove_ids
-    
-    
+    #pega usuários para enviar emails
     @approved_members = User.all(:conditions => ["id IN (?)", approved_ids]) unless approved_ids.empty?
     @rejected_members = User.all(:conditions => ["id IN (?)", rejected_ids]) unless rejected_ids.empty?
     

@@ -10,15 +10,18 @@ class School < ActiveRecord::Base
   has_attached_file :avatar, :styles => { :medium => "200x200>", :thumb => "100x100>" }
   
   #USERS
-  has_many :user_school_association, :dependent => :destroy
-  has_many :users, :through => :user_school_association, :conditions => ["user_school_associations.status LIKE 'approved'"]
+  has_many :user_school_associations, :dependent => :destroy
+  has_many :users, :through => :user_school_associations, :conditions => ["user_school_associations.status LIKE 'approved'"]
   
   belongs_to :owner , :class_name => "User" , :foreign_key => "owner"
    
-  has_many :admins, :through => :user_school_association, :source => :user, :conditions => [ "user_school_associations.role_id = ?", 4 ]
-  has_many :coordinators, :through => :user_school_association, :source => :user, :conditions => [ "user_school_associations.role_id = ?", 5 ]
-  has_many :teachers, :through => :user_school_association, :source => :user, :conditions => [ "user_school_associations.role_id = ?", 6 ]
-  has_many :students, :through => :user_school_association, :source => :user, :conditions => [ "user_school_associations.role_id = ?", 7 ]
+  has_many :admins, :through => :user_school_associations, :source => :user, :conditions => [ "user_school_associations.role_id = ?", 4 ]
+  has_many :coordinators, :through => :user_school_associations, :source => :user, :conditions => [ "user_school_associations.role_id = ?", 5 ]
+  has_many :teachers, :through => :user_school_associations, :source => :user, :conditions => [ "user_school_associations.role_id = ?", 6 ]
+  has_many :students, :through => :user_school_associations, :source => :user, :conditions => [ "user_school_associations.role_id = ?", 7 ]
+  
+  has_many :pending_requests, :class_name => "UserSchoolAssociation", :conditions => ["user_school_associations.status LIKE 'pending'"] 
+
 
   #FOLDERS
   has_many :folders
@@ -34,7 +37,10 @@ class School < ActiveRecord::Base
     :dependent => :destroy
   
   has_many :courses, :through => :school_assets, 
-    :source => :asset, :source_type => "Course"
+    :source => :asset, :source_type => "Course", :conditions =>  "published = 1"
+  
+  has_many :exams, :through => :school_assets, 
+  :source => :asset, :source_type => "Exam", :conditions =>  "published = 1"
   
   # VALIDATIONS
   validates_format_of       :path, :with => /^[\sA-Za-z0-9_-]+$/

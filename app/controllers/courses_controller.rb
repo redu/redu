@@ -1,4 +1,6 @@
 class CoursesController < BaseController
+ #layout 'new_application'
+    
   before_filter :login_required, :except => [:index]
   #before_filter :check_if_removed, :except => [:index]
   
@@ -165,7 +167,7 @@ class CoursesController < BaseController
   # GET /courses.xml
   def index
     
-    if params[:user_id] # TODO garantir que é sempre login e nao id?
+    if params[:user_id] # aulas do usuario
       @user = User.find_by_login(params[:user_id])
       @courses = @user.courses.paginate :page => params[:page], :per_page => AppConfig.items_per_page
       
@@ -173,7 +175,17 @@ class CoursesController < BaseController
         format.html { render :action => "user_courses"} 
         format.xml  { render :xml => @user.courses }
       end
-    else 
+    elsif params[:school_id] # aulas da escola
+      @school = School.find(params[:school_id])
+    @courses = @school.courses.paginate( 
+      :include => :owner, 
+      :page => params[:page], 
+      :order => 'updated_at DESC', 
+      :per_page => AppConfig.items_per_page)
+      respond_to do |format|
+        format.js  { render 'index_school' }
+      end
+    else
       
       @sort_by = params[:sort_by]
       #@order = params[:order]
