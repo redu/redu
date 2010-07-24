@@ -60,6 +60,7 @@ function stripVowelAccent(str) {
 
 </script>
 
+<div style="width: 100%">
 	<%= f.label "Nome" %>:<br/>
 	<%= f.text_field :name , :onkeyup => "generatePath(this)" %><br/><br/>
 	
@@ -75,5 +76,25 @@ function stripVowelAccent(str) {
 	<%= f.label "Tags (separadas por vírgula)" %>:<br/>
 	<%= f.text_field :tag_list %><br/><br/>
 	
+	
+	<%=  "Categorias"%>
+	<div style="width: 100%; float: left;">
+	<%= columnize_categories %>
+	</div>
+	
+	<div style="width: 100%; float: left; margin-top: 20px;">
+	<%=  "Audiência"%><span class="snippet">(Selecionar um público que não corresponde ao propósito da rede pode levar à uma má avaliação) </span>
+	
+	<% for audience in Audience.find(:all) %>
+		<div>
+		  <%= check_box_tag "school[audience_ids][]", audience.id, @school.audiences.include?(audience) %>
+		  <%= audience.name %>
+		</div>
+	<% end %>
+	</div>
+	
+</div>
+	
+
 	
 	

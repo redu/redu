@@ -454,8 +454,6 @@ class SchoolsController < BaseController
      session[:school_params] ||= {}
      @school = School.new(session[:school_params])
      @school.current_step = session[:school_step]
-
-    
     
 #    @school = School.new
 #    
@@ -521,6 +519,8 @@ class SchoolsController < BaseController
   # PUT /schools/1
   # PUT /schools/1.xml
   def update
+    params[:school][:category_ids] ||= []
+    params[:school][:audience_ids] ||= []
     @school = School.find(params[:id])
     
     respond_to do |format|

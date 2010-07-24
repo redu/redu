@@ -1,7 +1,24 @@
 module SchoolsHelper
   
-  #include FoldersHelper
-  
+  def columnize_categories(number_of_columns = 3)
+    
+   @categories = ReduCategory.find(:all)
+   
+    html = ''
+    
+   breakdiv = @categories.size/number_of_columns + 1 
+   @categories.each_with_index do |category, idx| 
+     html += (idx%breakdiv == 0 and idx != 0) ? '</div>' : ''
+     html +=  (idx%breakdiv == 0) ? '<div style="float: left;">' : ''
+     html +=  '<div>'
+     html +=  check_box_tag "school[category_ids][]", category.id, @school.categories.include?(category) 
+     html += category.name.downcase.gsub(' ','_').to_sym.l #eita carai :P
+     html += '</div>'
+    
+  end 
+  html += '</div>' 
+    
+  end
   
   
   def subscription_link

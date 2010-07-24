@@ -5,6 +5,9 @@ class School < ActiveRecord::Base
   
   before_create :create_root_folder
   
+  # CATEGORIES
+  has_and_belongs_to_many :categories, :class_name => "ReduCategory"
+  has_and_belongs_to_many :audiences
   
   #AVATAR
   has_attached_file :avatar, :styles => { :medium => "200x200>", :thumb => "100x100>" }

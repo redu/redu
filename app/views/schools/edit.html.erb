@@ -5,9 +5,15 @@
 <div class="fake-tabs grid_16 alpha omega">
 	<%= render :partial => "schools/admin_taskbar" %>
 	<div class="panel">
+	
 	<% form_for(@school, :html => { :multipart => true }) do |f| %>
 		<%= f.error_messages %>
-		<%= render :partial => "schools/form", :locals => { :f => f, :school => @school } %>
+		<%# render :partial => "schools/form", :locals => { :f => f, :school => @school } %>
+		<%= render :partial => "general_step", :locals => { :f => f} %>
+		<hr/>
+		<%= render :partial => "settings_step", :locals => { :f => f } %>
+		<hr/>
+		<%= render :partial => "publication_step", :locals => { :f => f } %>
 
 
 	  <p>
