@@ -82,6 +82,88 @@ pt-BR:
        text:
           blank: ": Você precisa digitar uma mensagem."
   
+  
+  # categories
+  aeronautics_and_astronautics: Aeronáutica e Astronáutica
+  anthropology: Antropologia
+  architecture: Arquitetura
+  automotive: Automotivo
+  biology: Biologia
+  business_and_management: Gestão e Negócios
+  chemistry: Química
+  civil_and_environmental_engineering: Engenharia Ambiental e Civil
+  communication: Comunicação
+  comparative_media_studies: Estudos Comparativos de Mídia
+  criminal_justice: Justiça Criminal
+  culinary_arts: Artes Culinárias
+  earth_atmospheric_and_planetary_sciences: Ciências da Terra e da Atmosfera Planetária
+  economics: Economia
+  education: Educação
+  electrical_engineering_and_computer_science: Ciência da Computação e Engenharia Elétrica
+  elementary_math: Matemática Elementar
+  elementary_reading: Leitura Elementar
+  elementary_spelling: Ortografia Elementar
+  environmental_studies: Estudos do Meio Ambiente
+  foreign_languages: Línguas Estrangeiras
+  health_sciences: Ciências da Saúde
+  history: História
+  hobbies: Hobbies
+  homeschool: Ensino Domiciliar
+  hospitality: Hospitalidade
+  how-to: Como-Fazer
+  journalism: Jornalismo
+  library_science: Biblioteconomia
+  linguistics: Linguística
+  literature: Literatura
+  materials_science_and_engineering: Engenharia e Ciência dos Materiais
+  mathematics: Matemática
+  mechanical_engineering: Engenharia Mecânica
+  media_arts: Artes de Mídia
+  miscellaneous: Diversos
+  music_and_theater_arts: Música e Teatro
+  nuclear_science_and_engineering: Engenharia e Ciência Nuclear
+  nursing: Enfermagem
+  nutrition: Nutrição
+  philosophy: Filosofia
+  physical_education: Educação Física
+  physics: Física
+  political_science: Ciências Políticas
+  psychology: Psicologia
+  religion_and_spirituality: Religião e Espiritualidade
+  self-help: Auto-Ajuda
+  sociology: Sociologia
+  systems_engineering: Engenharia de Sistemas
+  test-prep: Teste Preparatório
+  trades: Comércio
+  unit_studies: Unidade de Estudos
+  urban_studies_and_planning: Estudos e Planejamento Urbano
+  women's_and_gender_studies: Mulheres e Estudos de Gênero
+  writing: Escrita
+    
+  #Tranlate based on Sclipo
+  arts_design_animation: Artes / Design / Animação
+  beauty_fashion: Beleza / Moda
+  business_economics_law: Negócios / Economia / Legislação
+  cars_bikes: Carros e Bicicletas
+  health_wellness_relationships: Saúde / Bem-Estar / Relacionamentos
+  hobbies_gaming: Hobbies / Jogos
+  home_gardening: Lar / Jardinagem
+  languages: Línguas
+  music: Música
+  nutrition_food_drinks: Nutrição / Comidas / Bebidas
+  online_marketing: Marketing Online
+  religion_philosophy: Religião / Filosofia
+  science_technology_engineering: Ciência / Tecnologia / Engenharia
+  society_history_politics: Sociedade / História / Política
+  sports: Esportes
+  other: Outros
+  ###
+  
+  
+  
+  
+  
+  
   Course:  aula
   Resource:  material
   Exam:  exame
