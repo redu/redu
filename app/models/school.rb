@@ -46,8 +46,8 @@ class School < ActiveRecord::Base
   :source => :asset, :source_type => "Exam", :conditions =>  "published = 1"
   
   # VALIDATIONS
-  validates_format_of       :path, :with => /^[\sA-Za-z0-9_-]+$/
   validates_presence_of :name, :path
+  validates_format_of       :path, :with => /^[\sA-Za-z0-9_-]+$/
   validates_uniqueness_of   :path, :case_sensitive => false
   validates_exclusion_of    :path, :in => AppConfig.reserved_logins
   

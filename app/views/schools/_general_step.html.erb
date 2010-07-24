@@ -59,42 +59,39 @@ function stripVowelAccent(str) {
 
 
 </script>
+<% field_set_tag 'Informações Gerais' do %>
+	<%= f.label "Nome" %>
+	<%= f.text_field :name , :onkeyup => "generatePath(this)" %>
 
-<div style="width: 100%">
-	<%= f.label "Nome" %>:<br/>
-	<%= f.text_field :name , :onkeyup => "generatePath(this)" %><br/><br/>
-	
-	<%= f.label "Caminho" %>:<br/>
-	www.redu.com.br/<%= f.text_field :path %><br/><br/>
+	<%= f.label "Caminho" %>
+	<div id="school-path">
+	<span class="generate-path">www.redu.com.br/</span><%= f.text_field :path %>
+	</div>
 
-	<%= f.label "Descrição" %>:<br/>
-	<%= f.text_area :description, :size => "50x3" %><br/><br/>
-	
-	<%= f.label "Imagem" %> (recomendado: 200 x 64)<br/>
-	<%= f.file_field :avatar %><br/><br/>
-	
-	<%= f.label "Tags (separadas por vírgula)" %>:<br/>
-	<%= f.text_field :tag_list %><br/><br/>
-	
-	
-	<%=  "Categorias"%>
-	<div style="width: 100%; float: left;">
+	<%= f.label "Descrição" %>
+	<%= f.text_area :description, :size => "50x3" %>
+
+	<%= f.label "Imagem (recomendado: 200 x 64)" %> 
+	<%= f.file_field :avatar %>
+
+	<%= f.label "Tags (separadas por vírgula)" %>
+	<%= f.text_field :tag_list %>
+
+<% end %>
+
+<% field_set_tag 'Categorias' do %>
 	<%= columnize_categories %>
-	</div>
-	
-	<div style="width: 100%; float: left; margin-top: 20px;">
-	<%=  "Audiência"%><span class="snippet">(Selecionar um público que não corresponde ao propósito da rede pode levar à uma má avaliação) </span>
-	
-	<% for audience in Audience.find(:all) %>
-		<div>
-		  <%= check_box_tag "school[audience_ids][]", audience.id, @school.audiences.include?(audience) %>
-		  <%= audience.name %>
-		</div>
-	<% end %>
-	</div>
-	
-</div>
-	
+<% end %>
 
-	
-	
+<% field_set_tag 'Audiência' do %>
+<span class="snippet">(Selecionar um público que não corresponde ao propósito da rede pode levar à uma má avaliação) </span>
+
+<ul>
+<% for audience in Audience.find(:all) %>
+	<li>
+	  <%= check_box_tag "school[audience_ids][]", audience.id, @school.audiences.include?(audience) %>
+	  <%= audience.name %>
+	</li>
+<% end %>
+</ul>
+<% end %>
