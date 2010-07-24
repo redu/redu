@@ -1,5 +1,6 @@
 class CoursesController < BaseController
  #layout 'new_application'
+ include Viewable
     
   before_filter :login_required, :except => [:index]
   #before_filter :check_if_removed, :except => [:index]
@@ -10,7 +11,32 @@ class CoursesController < BaseController
 #    puts params[:id]
 #  end
   
+  # adiciona um objeto embarcado (ex: scribd)
+  def embed_content
+    @external_object = ExternalObject.new( params[:external_object] )
+    
+    respond_to do |format|
+      if @external_object.save
+        format.js do
+            render :update do |page|
+              puts 'external_object_' + params[:child_index]
+              page.replace_html('external_object_' + params[:child_index], :partial => 'form_lesson_object_loaded', :locals => {:ch_index => params[:child_index]})
+              page << "Element.hide('spinner');"
+            end
+        end
+      else
+         format.js do
+            render :update do |page|
+              page << "alert('houve uma falha no conteúdo');"
+            end
+        end
+      end
+    end
+    
+  end
   
+  
+  # faz upload de video em ajax em uma aula interativa
   def upload_video
     
     @seminar = Seminar.new( params[:seminar] )
@@ -226,10 +252,9 @@ class CoursesController < BaseController
       related_name = @course.name
       @related_courses = Course.find(:all,:conditions => ["name LIKE ? AND id NOT LIKE ?","%#{related_name}%", @course.id] , :limit => 3, :order => 'created_at DESC')
       
-      # atualiza número de exibições TODO cache
-      @course.update_attribute(:view_count, @course.view_count + 1) #TODO performance
+     #@course.update_attribute(:view_count, @course.view_count + 1) #TODO em Viewable
       
-      Log.log_activity(@course, 'show', current_user, @school)#TODO se usuario nao comprou não logar atividade
+     # Log.log_activity(@course, 'show', current_user, @school)#TODO se usuario nao comprou não logar atividade
 
       respond_to do |format|
         if @course.course_type == 'page'

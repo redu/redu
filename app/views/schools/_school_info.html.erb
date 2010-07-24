@@ -19,9 +19,10 @@
     <%= link_to "Gerenciar", manage_school_path(school), :class => 'config' %>
     <% end %>
     <span class="areas">
-    <a href="">Ensino Médio, Escolas</a>
+    <a href="">Ensino Médio, Escolas</a> | Criador: <%= owner_link %>
     </span>
     <span class="areas">
+    	
     <%= subscription_link %>
 	|
 	<%= link_to_remote image_tag('thumbs-up.jpg', :border => '0'), :url=> {:action => :vote, :id => @school.id, :like => true}, :success => 'disableVoting();' %> (<%= @school.votes_for%>) |
@@ -29,33 +30,3 @@
     </span>
     </div><!-- end info -->
 </div><!-- end group-header -->
-
-<!--<div id="profile_user_info">
-<div id="profile_school_info">
->>>>>>> .r419
-	<div id="user_photo">
-		 <%= image_tag( school.avatar_photo_url(:thumb), {:width => "200" })%><BR>
-	</div>
-    <div id="name_user">
-		<ul id="name_user_item">
-			<li class="name"><span class="name"><%= school.name %></span></li>
-			<% if current_user.can_manage?(school)%>
-			<li>
-				<%= link_to "Editar >", edit_school_path(school), :class => 'edit'%>
-			</li>
-			<% end %>
-			
-		</ul>
-	</div>
-<div id="description_user">
-	<%= link_to school.owner.display_name, user_path(school.owner), :class => 'link_user' %>
-	 | <%= time_ago_in_words(school.created_at) %> | Membros(<%= school.users.count %>) <br />
-</div> 
-<div id="description">
-<%= school.description %>
-</div>
-
-<div>
-	Assinatura mensal: $ 4,00
-</div>
--->

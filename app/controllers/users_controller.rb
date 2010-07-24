@@ -29,7 +29,7 @@ class UsersController < BaseController
                                                 :edit_pro_details, :update_pro_details,
                                                 :welcome_photo, :welcome_about, :welcome_invite, :deactivate, 
                                                 :crop_profile_photo, :upload_profile_photo]
-  before_filter :admin_required, :only => [:assume, :destroy, :featured, :toggle_featured, :toggle_moderator]
+  before_filter :admin_required, :only => [:assume, :featured, :toggle_featured, :toggle_moderator]
   before_filter :admin_or_current_user_required, :only => [:statistics]  
 
   def show_log_activity
@@ -276,14 +276,18 @@ class UsersController < BaseController
   end
   
   def destroy
-    unless @user.admin? || @user.featured_writer?
+    if current_user == @user
+       @user.destroy
+        flash[:notice] = :the_user_was_deleted.l
+        redirect_to :controller => 'sessions', :action => 'new' and return
+    elsif @user.admin? || @user.featured_writer?
       @user.destroy
       flash[:notice] = :the_user_was_deleted.l
     else
       flash[:error] = :you_cant_delete_that_user.l
     end
     respond_to do |format|
-      format.html { redirect_to users_url }
+      format.html { redirect_to admin_moderate_users_path }
     end
   end
   

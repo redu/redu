@@ -217,7 +217,7 @@ function decreaseFontSize(){
 			</div>
 			
 			 <div id="topic_body"><!-- TODO: carregar via ajax? -->
-			 	<div id="accessbility_bar">
+			 	<b></b><div id="accessbility_bar">
 				<%= link_to_function((image_tag 'icons/audio.jpg', :title => 'Leitura', :border => 0), "alert('em breve!');" )%>
 				<%= link_to_function((image_tag 'icons/icon_fontSizeUp.gif', :title => 'Aumentar fonte', :border => 0), "increaseFontSize();")%>
 				<%= link_to_function((image_tag 'icons/icon_fontSizeDown.gif', :title => 'Diminuir fonte', :border => 0), "decreaseFontSize();")%>
@@ -228,7 +228,15 @@ function decreaseFontSize(){
 				<div id="topic_body_<%=x%>" style="display: <%= (x == 0) ? 'block' : 'none'%>; background: white;">
 					<div id="topic_body_text" style="padding: 0 15px 15px 15px; min-height:360px;">
 					<h3 style="color: #bbb; margin-top: 0; margin-bottom:15px;"><%= l.title %></h3>
-					<%= l.body %>
+					
+					<% if l.lesson_type == 'Page'%>
+					<%= l.lesson.body %>
+					<% elsif l.lesson_type == 'Seminar' %>
+						<%= render :partial => "courses/player", :locals => {:course => l.lesson, :is_interactive_class => true} %>
+					<% elsif l.lesson_type == 'ExternalObject'%>
+					<%= l.lesson.html_embed %>
+					<% end %>
+					
 					</div>
 					<div id="navigation_bar">
 						<%= button_to_function "< Anterior","selectTopic(" + (x - 1).to_s + ");", :disabled => (x==0) ? true : false %>

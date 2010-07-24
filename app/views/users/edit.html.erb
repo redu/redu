@@ -113,8 +113,11 @@
 				<% end %>
             </label>
 			<br/>
-			<%= submit_tag :save_changes.l %>
+			<%= submit_tag :save_changes.l %> 
 			<% end %>
+			<%= link_to "Remover Usuário", @user, :confirm => "Você tem certeza que deseja sair do Redu? Todo o seu material criado será removido de forma irreversível.", :method => :delete, :style => "color: red;" %>
+			
+			
         </div>
     </div>
 </div>

@@ -6,8 +6,7 @@
                        
             <div id="identification">
               <ul id="identification_resource">
-								<li><%= link_to school.owner.login, school.owner %></li>
-										<li>|</li>
+							
 								<li><%= time_ago_in_words(school.created_at) %></li>
 								<li>|</li>
 								<li>Membros (<%= school.users.count %>)</li>

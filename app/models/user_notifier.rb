@@ -7,8 +7,24 @@ class UserNotifier < ActionMailer::Base
   include BaseHelper
   ActionMailer::Base.default_url_options[:host] = APP_URL.sub('http://', '')
 
- ### ADMIN SCHOOL
 
+
+
+ ### SENT BY MEMBERS OF SCHOOL
+ def pending_membership(user,school)
+    setup_sender_info
+    @recipients  = "#{school.owner.email}"
+    @subject     = "Redes Redu: Participação pendente"
+    @sent_on     = Time.now
+    @body[:user] = user
+    @body[:url]  = admin_requests_school_path(school)
+    @body[:school]  = school
+ end
+
+ ### SENT BY ADMIN SCHOOL
+ 
+
+ 
 def approve_membership(user, school)
     setup_sender_info
     @recipients  = "#{user.email}"

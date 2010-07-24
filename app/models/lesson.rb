@@ -32,6 +32,9 @@ def build_lesson(params)
     when 'Seminar'
       params.delete(:lesson_type)
       self.lesson = Seminar.new(params)
+    when 'ExternalObject'
+      params.delete(:lesson_type)
+      self.lesson = ExternalObject.new(params)
     end
   end
 

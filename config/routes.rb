@@ -226,7 +226,8 @@ ActionController::Routing::Routes.draw do |map|
    :admin_submissions => :get,
    :look_and_feel => :get,
    :members => :get,
-   :teachers => :get
+   :teachers => :get,
+   :take_ownership => :get,
    } do |school|
     school.resources :folders, :member =>{:upload => :get, :download => :get, :rename => :get, :destroy_folder => :delete, :destroy_file => :delete}
     school.resources :courses

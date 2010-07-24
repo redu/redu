@@ -1,0 +1,37 @@
+<% child_index = form_lesson.options[:child_index]%>
+<%= form_lesson.hidden_field(:position, :value => "0") %>
+<%= form_lesson.hidden_field(:_destroy, :value => false, :id => "destroy_" + form_lesson.object.id) unless form_lesson.object.new_record? %> 
+				
+		<h3 style="color: #bbb;">Objeto Externo</h3>
+		
+		 Título:
+		<br>
+		<%= form_lesson.text_field :title, :onkeyup => "topicTitle(this);" %>
+		<br>
+		<br>
+		
+<div id="external_object_<%=child_index%>"> 
+<% @ext_obj = ExternalObject.new %>		
+<% remote_form_for @ext_obj, :url => { :controller => :courses, :action => :embed_content },
+					:loading => "Element.show('spinner')" do |f_remote|%>
+					
+		
+		<%= hidden_field_tag(:child_index, child_index) %>
+					
+			Conteúdo:
+			<br>
+			
+<%= f_remote.text_area :html_embed, :size => "60x4" %>
+		
+	<%= submit_tag 'Criar', :id => "submit"%>
+	<%= image_tag("spinner.gif",
+	      :align => "absmiddle",
+	      :border => 0,
+	      :id => "spinner",
+	      :style =>"display: none;" ) %>
+
+ <% end -%>
+ 
+ </div>
+  
+		

@@ -270,16 +270,16 @@ class User < ActiveRecord::Base
   
   
   ## Instance Methods
-  def can_manage?(entity)
-    puts self.admin?
+  def can_manage?(entity, school=nil)
     return true if self.admin?
-    
-    case entity.class 
+    case entity.class.to_s 
     when 'Course'
-      (self.school_admin?(entity) || entity.owner == self)    
-    end
-  end
-  
+      (entity.owner == self || (entity.school == school && self.school_admin?(school) ))    
+    when 'School'
+       (entity.owner == self || self.school_admin?(school))    
+   end 
+ end
+ 
   def earn_points(activity)
     thepoints = AppConfig.points[activity]
     self.update_attribute(:score, self.score + thepoints)
@@ -659,6 +659,5 @@ class User < ActiveRecord::Base
       crypted_password.blank? || !password.blank?
   end
   
- 
   
 end

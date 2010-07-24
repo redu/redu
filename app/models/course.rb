@@ -142,7 +142,9 @@ class Course < ActiveRecord::Base
   
   def video_tasks
     if self.external_resource_type.eql?('youtube')
-      capture = self.external_resource.scan(/watch\?v=([a-zA-Z0-9]*)/o)[0][0]
+      #/youtube\.com\/watch\?v=([A-Za-z0-9._%-]*)[&\w;=\+_\-]*/
+      # /watch\?v=([a-zA-Z0-9]*)/o
+      capture = self.external_resource.scan(/youtube\.com\/watch\?v=([A-Za-z0-9._%-]*)[&\w;=\+_\-]*/)[0][0]
       #puts capture.inspect
       self.external_resource = capture
     elsif self.external_resource_type.eql?('upload') # TODO não seria melhor converter apenas quando for publicado?

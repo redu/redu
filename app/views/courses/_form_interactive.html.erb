@@ -9,9 +9,10 @@
   	Novo tópico:
 	 
 	 <%= link_to_add_lesson((image_tag 'icons/iclass.gif', :title => "Texto interativo"), f, 'page') %>
-	<%= link_to_function((image_tag 'icons/exam.gif', :title => "Exame"), 'alert("alora")') %>
-	<%= link_to_add_lesson((image_tag 'icons/seminar.gif', :title => "Seminário"), f, 'seminar') %>
-	<%= image_tag 'icons/discussion.png', :title => "Discussão" %>
+	 <%= link_to_add_lesson((image_tag 'icons/seminar.gif', :title => "Seminário"), f, 'seminar') %>
+	<%# link_to_function((image_tag 'icons/exam.gif', :title => "Exame"), 'alert("alora")') %>
+	<%= link_to_add_lesson((image_tag 'icons/objects.png', :title => "Objetos"), f, 'object') %>
+	<%# image_tag 'icons/discussion.png', :title => "Discussão" %>
   </div>
   	<ul id="topic_list">
   		<% interactive_class.lessons.each_with_index do |lesson, index| %>

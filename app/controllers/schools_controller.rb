@@ -19,7 +19,12 @@ class SchoolsController < BaseController
 #  end
   
   
-  
+  def take_ownership
+     @school = School.find(params[:id])
+     @school.update_attribute(:owner, current_user)
+     flash[:notice] = "Você é o novo dono desta rede!"
+     redirect_to @school
+  end
   
   def vote
     @school = School.find(params[:id])
@@ -78,7 +83,7 @@ class SchoolsController < BaseController
         
         if @association.save
           flash[:notice] = "Seu pedido de participação está sendo moderado pelos administradores da rede."
-          #deliver..
+           UserNotifier.deliver_pending_membership(current_user, @school) # TODO fazer isso em batc
         end
       
     end
@@ -489,7 +494,7 @@ class SchoolsController < BaseController
   if @school.new_record?
     render "new"
   else
-    UserSchoolAssociation.create({:user => current_user, :school => @school, :status => "approved", :role => Role[:school_admin]})
+    UserSchoolAssociation.create({:user => current_user, :school => @school, :status => "approved", :role_id => 4}) #:role => Role[:school_admin]
     session[:school_step] = session[:school_params] = nil
     flash[:notice] = "School saved!"
     redirect_to @school

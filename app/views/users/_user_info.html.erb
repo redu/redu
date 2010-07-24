@@ -33,7 +33,15 @@
             <span class="number"><%= @user.score %></span> 
             <span class="legend">redu points</span> 
             </div> 
-            <%= link_to @user.display_name, @user, :class => "name"%> 
+						<div class= "name">
+							<%= link_to @user.display_name, @user%> 
+						
+						 <% if (@user && @user.eql?(current_user)) %> 
+						<%= link_to 'Editar', edit_user_path(@user), :class => 'small' %>
+						<% end %>
+						</div>
+            
+						
             <!--<span class="status student replacement">Aluno</span>--> 
             <span class="location quiet">Recife, Pernambuco</span> 
         </div><!-- end personal-overview --> 

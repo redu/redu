@@ -1,18 +1,39 @@
 module SchoolsHelper
   
+  def owner_link
+    if @school.owner
+      link_to @school.owner.display_name, @school.owner
+    else
+      if current_user.can_manage? @school
+        'Sem dono ' + link_to("(pegar)", take_ownership_school_path)
+      else
+        'Sem dono'  
+      end
+      # e se ninguem estiver apto a pegar ownership?
+    end
+    
+  end
+  
+  
   def columnize_categories(number_of_columns = 3)
     
    @categories = ReduCategory.find(:all)
    
     html = ''
     
-   breakdiv = @categories.size/number_of_columns + 1 
-   @categories.each_with_index do |category, idx| 
+   breakdiv = @categories.size/number_of_columns + 1
+   
+   @translated_categories = @categories.each {|c| c.name = c.name.downcase.gsub(' ','_').to_sym.l }
+   @translated_categories.sort! { |a,b| a.name <=> b.name }
+   
+   
+   
+   @translated_categories.each_with_index do |category, idx| 
      html += (idx%breakdiv == 0 and idx != 0) ? '</div>' : ''
      html +=  (idx%breakdiv == 0) ? '<div style="float: left;">' : ''
      html +=  '<div>'
      html +=  check_box_tag "school[category_ids][]", category.id, @school.categories.include?(category) 
-     html += category.name.downcase.gsub(' ','_').to_sym.l #eita carai :P
+     html += category.name#.downcase.gsub(' ','_').to_sym.l #eita carai :P
      html += '</div>'
     
   end 
