@@ -297,7 +297,7 @@ class CoursesController < BaseController
         
         if @course.course_type == 'seminar'
           @seminar = Seminar.new
-          3.times { @seminar.resources.build }
+          #3.times { @seminar.resources.build }
         
         
 #          3.times { @course.resources.build }
@@ -402,7 +402,7 @@ class CoursesController < BaseController
         if @course.course_type == 'seminar'
           
            @seminar = Seminar.new(params[:seminar])
-          @seminar.course = @seminar
+          @seminar.course = @course
           
            respond_to do |format|
             

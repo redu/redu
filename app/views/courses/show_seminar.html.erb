@@ -127,12 +127,12 @@
 		<div id="view_video" align="center" >
 			
         	<!-- colocar if aqui -->
-			<% if current_user and @course.external_resource_type.eql?('youtube')%>
-				<%= render :partial => "courses/player", :locals => {:course => @course} %>
-			<% else %>
-				<% if current_user and current_user.has_credits_for_course(@course) and current_user.has_access_to_course(@course)  %>
-		   			<%= render :partial => "courses/player", :locals => {:course => @course} %>
-				<% end %>
+			<% if current_user and @course.seminar.external_resource_type.eql?('youtube')%>
+				<%= render :partial => "courses/player", :locals => {:course => @course.seminar, :is_interactive_class => false} %>
+			<%# else %>
+				<%# if current_user and current_user.has_credits_for_course(@course) and current_user.has_access_to_course(@course)  %>
+		   			<%# render :partial => "courses/player", :locals => {:course => @courseseminar} %>
+				<%# end %>
 			<% end %>
     </div><!-- end view_video -->
 

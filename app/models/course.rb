@@ -97,6 +97,7 @@ class Course < ActiveRecord::Base
   # tipos de aula (como subclasses) 
   has_one :interactive_class, :dependent => :destroy
   has_one :page, :dependent => :destroy
+   has_one :seminar, :dependent => :destroy
   
   accepts_nested_attributes_for :page
   
