@@ -123,9 +123,11 @@
     <div class="followship box clearfix">
         <ul class="clearfix">
             <li><a href=""><img src="images/redes/rede01.jpg" alt=""></a></li>
-            <li><a href=""><img src="images/redes/rede02.jpg" alt=""></a></li>
-            <li><a href=""><img src="images/redes/rede03.jpg" alt=""></a></li>
-            <li><a href=""><img src="images/redes/rede04.jpg" alt=""></a></li>
+			<% unless @schools.empty? %>
+				<% @schools.each do |school| %>
+					<li><%= link_to image_tag(school.avatar_photo_url(:thumb), {:width => "50", :height=>"45", :border => 0 }), school %>
+				<% end %>
+			<% end %>
         </ul>
         <a href="" class="icon more">Ver mais</a>
         </div>

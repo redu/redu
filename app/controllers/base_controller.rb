@@ -35,6 +35,7 @@ class BaseController < ApplicationController
   end
   
   def learn_index 
+    @schools = current_user.schools
     
     respond_to do |format|
       format.html { render :layout => 'new_application'}
