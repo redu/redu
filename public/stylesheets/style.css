@@ -183,6 +183,13 @@ a {
 		font-size: .9em;
 	}
 	
+	form label.inline {
+		display: inline;
+		margin: 5px 5px 5px 15px;
+		color: #4F4F4F;
+		font-size: .9em;
+	}
+	
 	form fieldset legend {
 		font-weight: bold;
 		font-size: 1.1em;
