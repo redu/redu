@@ -34,6 +34,13 @@ class BaseController < ApplicationController
     
   end
   
+  def teach_index
+     @schools = current_user.schools
+    respond_to do |format|
+      format.html { render :layout => 'new_application'}
+    end   
+  end
+  
   def learn_index 
     @schools = current_user.schools
     
