@@ -74,9 +74,9 @@ class School < ActiveRecord::Base
     else
       case size
         when :thumb
-          AppConfig.photo['missing_thumb']
+          AppConfig.photo['missing_thumb_school']
         else
-          AppConfig.photo['missing_medium']
+          AppConfig.photo['missing_medium_school']
       end
     end
   end

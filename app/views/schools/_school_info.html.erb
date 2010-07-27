@@ -10,9 +10,25 @@
 </script>
 
 <div id="group-header" class="grid_16   ">
-    <div class="logo grid_4">
-        <%= image_tag( school.avatar_photo_url(:thumb), {:width => "64", :height=>"64" })%>
+    
+		<div class="logo grid_4" onmouseover="$('#change_avatar_link').show();" onmouseout="$('#change_avatar_link').hide()">
+        <%= image_tag( school.avatar_photo_url(:thumb) )%>
+				<div class="upload-avatar-outter">
+                         <a href="#" onclick="$('div.upload-avatar-inner').slideToggle(); return false;" id="change_avatar_link" class="config" style="display:none">Mudar imagem</a>
+					
+                 <div class="upload-avatar-inner hoverdiv">
+                            
+									  <% form_for @school, :html => { :multipart => true, :onsubmit => "$('#upload-avatar-spinner').show()"  } do |f| %>
+									  <%= f.file_field :avatar %> (200x64)
+									   <br>
+									   <%= submit_tag 'OK' %>
+									   <%= image_tag 'spinner.gif', :id => 'upload-avatar-spinner', :style => 'display: none' %>
+									  <% end %>
+							 
+                 </div>
+					</div>
     </div>
+		
     <div class="info grid_9">
     <h2 class="name"><%= link_to  @school.name, @school %></h2>
     <% if current_user.can_manage?(school)%>

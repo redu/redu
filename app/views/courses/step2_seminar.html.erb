@@ -1,19 +1,18 @@
 <div id="all_content3">
 <div id="col_content_video">
 	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">ensinar</a> > <a href="#">nova aula</a> </div>
- 	<div id="title">NOVA AULA (SEMINÁRIO) - PASSO 2
+ 	<div id="title">NOVA AULA (VÍDEO-AULA) - PASSO 2
  	</div>
 	
 <div style="width: 100%; float: left;">
 
 
-<% form_for :course, @course, :url => { :action => "create" }, :html => { :multipart => true } do |f| %>
+<% form_for :seminar, @seminar, :url => { :action => "create" }, :html => { :multipart => true } do |f| %>
 <%= f.error_messages %>
 
 <%= hidden_field_tag("step", "2", options = {})%>
 <%# hidden_field_tag("course_type", "seminar", options = {})%>
 	
-<% unless @edit %>
 <fieldset>
 	<legend>Vídeo</legend>
 
@@ -36,7 +35,7 @@
   </div>
   
 </fieldset>	
-<% end %>
+
 <script type="text/javascript">
 	function switchCourseFields(fieldType){
 		if (fieldType == 1) {
@@ -61,7 +60,7 @@
 	}
 
 </script>
-<%= render :partial => 'attachment_form', :locals => {:f => f, :course => @course}%>
+<%# render :partial => 'attachment_form', :locals => {:f => f, :course => @seminar}%>
 
 <%= link_to '< Anterior', new_course_path(:step => '1'), :class => "button" %> 
 <%= f.submit 'Próximo >' %> 

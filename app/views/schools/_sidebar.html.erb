@@ -1,5 +1,14 @@
 <div class="sidebar grid_4">
   <ul class="sortable clearfix">
+   <li class="clearfix" style="background-color: #FFFFDF;">
+    <span class="call"><span>Menu do professor</span></span>
+    <ul class="menu">
+      <li><a href="" class="closed sb">Acompanhar alunos</a></li>
+      <li><a href="" class="closed sb">Acompanhar aulas</a></li>
+      <li><a href="" class="closed sb">Criar nova aula</a></li>
+			<li><a href="" class="closed sb">Criar novo exame</a></li>
+    </ul>
+  </li>
   <li class="clearfix">
     <span class="call"><span>Seus grupos (4)</span></span>
     <ul class="sub-groups">
@@ -51,7 +60,7 @@
         <a href="<%= teachers_school_path %>" class="icon more">Ver mais</a>
     </div><!-- end followship -->
     <% else %>
-      <span class="notice">Nenhum professor cadastrado</span>
+      <div class="notice box">Nenhum professor cadastrado</span>
     <% end %>
   </li>
   </ul><!-- end sortable -->

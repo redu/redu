@@ -296,13 +296,14 @@ class CoursesController < BaseController
          @course = Course.find(session[:course_id])
         
         if @course.course_type == 'seminar'
+          @seminar = Seminar.new
+          3.times { @seminar.resources.build }
         
-         # @course = Course.find(session[:course_id])
         
-          3.times { @course.resources.build }
-        
-          @course.enable_validation_group :step2_seminar
-          @edit = false
+#          3.times { @course.resources.build }
+#        
+#          @course.enable_validation_group :step2_seminar
+#          @edit = false
           render "step2_seminar" and return
         
         elsif @course.course_type == 'interactive'
@@ -395,10 +396,25 @@ class CoursesController < BaseController
           end
           
       
-      when "2"
+    when "2"
         @course = Course.find(session[:course_id])
         
         if @course.course_type == 'seminar'
+          
+           @seminar = Seminar.new(params[:seminar])
+          @seminar.course = @seminar
+          
+           respond_to do |format|
+            
+            if @seminar.save
+              
+              format.html { 
+                 redirect_to :action => :new , :course_type => params[:course_type], :step => "3"
+              }
+            else  
+              format.html { render "step2_seminar" }
+            end
+          end
 
         # Coloquei como um before_create de course
 #          if @course.external_resource_type.eql?('youtube')
@@ -409,19 +425,17 @@ class CoursesController < BaseController
 #            @course.convert # nao seria melhro chamar o metodo em um "before_create"?
 #          end
           
-          respond_to do |format|
-            
-            if @course.update_attributes(params[:course])
-              
-              
-              format.html { 
-                 redirect_to :action => :new , :course_type => params[:course_type], :step => "3"
-              }
-            else  
-              @edit = false
-              format.html { render "step2_seminar" }
-            end
-          end
+#          respond_to do |format|
+#            
+#            if @course.update_attributes(params[:course])
+#              format.html { 
+#                 redirect_to :action => :new , :course_type => params[:course_type], :step => "3"
+#              }
+#            else  
+#              @edit = false
+#              format.html { render "step2_seminar" }
+#            end
+#          end
           
           
         elsif @course.course_type == 'interactive'
