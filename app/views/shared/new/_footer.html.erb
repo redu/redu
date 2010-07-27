@@ -1,13 +1,18 @@
-<div id="footer" class="container_16">
-                            <div id="copyright">
-                                Copyright © 2010 - Redu.com.br. Todos os direitos reservados. |
-                                Sobre o Redu |
-                                <%= link_to "Termos de Uso", :controller => "base", :action => "tos" %>
-                                <!--%= link_to "Termos de Uso", application_url + "policy/tos.txt"  %-->
-                                |<!--%= link_to "Privacidade", application_url + "policy/privacy.txt"  %-->
-                                <%= link_to "Privacidade", :controller => "base", :action => "privacy" %>
-																<% if @rss_title && @rss_url %>
-                        				| <%= link_to :rss.l, @rss_url, {:title => @rss_title} %>
-                        				<% end %>
-                            </div>
-                        </div>
+<div id="footer" >
+	<div class="container_16">
+		<div class="menu">
+			Sobre o Redu |
+			<%= link_to "Termos de Uso", :controller => "base", :action => "tos" %>
+			<!--%= link_to "Termos de Uso", application_url + "policy/tos.txt"  %-->
+			|<!--%= link_to "Privacidade", application_url + "policy/privacy.txt"  %-->
+			<%= link_to "Privacidade", :controller => "base", :action => "privacy" %>
+			<% if @rss_title && @rss_url %>
+			| <%= link_to :rss.l, @rss_url, {:title => @rss_title} %>
+			<% end %>
+		</div>
+		<div class="copyright">
+		Copyright © 2010 - Redu.com.br. Todos os direitos reservados
+		</div><!-- end copyright -->
+
+	</div><!-- end container -->
+</div>

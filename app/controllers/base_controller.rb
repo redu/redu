@@ -34,6 +34,13 @@ class BaseController < ApplicationController
     
   end
   
+  def learn_index 
+    
+    respond_to do |format|
+      format.html { render :layout => 'new_application'}
+    end
+  end
+  
   def beta_index
 #    @candidate = BetaCandidate.new    
 #    

@@ -103,6 +103,25 @@ a {
     color: gray;
 }
 
+.calls span.call {
+    font-size: .9em;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #F63B0B;
+    margin: 20px 0 10px 0;
+    padding-bottom: 5px;
+    display:block;
+    background: url("../images/ui-elements_r9_c55.png") no-repeat 15px bottom;
+    color: white;
+	position:relative;
+}
+
+.calls span.call span {
+	background-color: #18C8EF;
+	display: block;
+	padding: 5px;
+}
+
 /** @forms **/
     input[type=text],
     input[type=password],
@@ -484,8 +503,232 @@ div.recomendations-m .number {
         border: none;
         padding: 0;
     }
-    
-    /** @status **/
+
+	/* @learn-index  */
+	#learn {
+		padding-top: 0;
+	}
+	
+	#learn ul.box-explore {
+		
+	}
+	
+	#learn ul.box-explore li {
+		float: left;
+		width: 190px;
+		margin-right: 5px;
+		margin-bottom: 10px;
+	}
+	
+	#learn ul.box-explore li a.area {
+		display: block;
+		font-size: 1.1em;
+		font-weight: bold;
+	}
+	
+	#learn ul.box-explore li a.categories {
+		font-size: .8em;
+		font-weight: normal;
+		color: gray;
+	}
+	
+	#learn ul.box-popular-resources li { 
+		overflow:hidden;
+		margin-bottom:15px; 
+	}
+	
+	#learn ul.box-popular-resources a.tt-popular {  
+		color:#0B85C0; 
+		display:block; 
+		font-size:.8em;
+		margin-bottom:6px;
+	}	
+	
+	#learn ul.box-popular-resources a.views { 
+		color:#666666;
+		font-size:.7em;
+	}
+	
+	#learn ul.box-popular-resources a.source {   
+		color:#18C8EF; 
+		display:block; 
+		font-size:.7em; 
+		padding-top:6px;
+	}
+	
+	#learn ul.box-popular-resources img {
+		float:left;
+		padding-right:15px;
+	}	
+	
+	#learn .logo-learn span { 
+		float:left; 
+		color:#F63B0B;
+		font-size:1.5em;
+		display:inline-block;
+		border-right:3px #F63B0B solid;
+		padding:13px 23px;
+	}
+	
+	#learn #group-header-learn {
+		overflow:hidden;
+		background:#F8FAFC;
+		margin:0;
+		padding:15px 0;
+		position:relative;
+		-moz-border-radius:8px 8px 0 0;
+		-webkit-border-radius: 8px 8px 0 0;
+	}
+	
+	#learn h2.text-header {
+		float:left;
+		display:inline-block;
+		padding:5px 14px;
+	}
+	
+	#learn h2.text-header a {
+		color:#F63A0B;
+		font-weight:100;
+		font-size:.9em;
+	}
+	
+	#learn .box-user-login {
+		margin:0 0 15px -3px!important;
+		overflow:hidden;
+		background: url(../images/bg-user-login.png) repeat top center;
+		padding:16px;
+		width:194px;
+	}
+	
+	#learn .sidebar {
+		top:16px;
+		position:absolute;
+		z-index:20;
+		right:0;
+	}
+	
+	#learn .box-user-login a.name-user {
+		font-weight:bold;
+		color:#18C6ED;
+		display:block;
+		font-size:.8em;
+		margin-bottom:10px;
+	}
+	
+	#learn .box-user-login img {
+		float:left;
+		padding-right:6px;
+	}
+	
+	#learn .box-user-login a.text-profile {
+		margin-bottom:6px;
+		color:#18C6ED;
+		display:block;
+		font-size:.6em;
+	}
+
+	#learn .box-user-login span.text-plans {
+		color:#333;
+		display:block;
+		font-size:.7em;
+	}
+	
+	#learn .box-user-login span.text-type-plans {
+		color:#0B85BF;
+		font-weight:bold;
+		font-size:.9em;
+	}
+	
+	#learn .box-user-teach {
+		min-height:109px;
+	}
+	
+	#learn #box-nav-networks {
+		display:block;
+		clear:both;
+		overflow:hidden;
+		padding:20px 0 0 20px;
+	}
+	
+	#learn #box-nav-networks li {
+		margin-right:15px;
+		float:left;
+		width:160px;
+		padding:8px 0 10px 60px;
+		background: url(../images/bg-nav-networks.png) no-repeat top left;
+	}
+	
+	#learn #box-nav-networks li#bt-networks {
+		background-position: 0 0;
+	}
+	
+	#learn #box-nav-networks li#bt-aulas {
+		background-position: 0 -78px;
+	}
+	
+	#learn #box-nav-networks li#bt-exames {
+		background-position: 0 -160px;
+	}
+
+	#learn #box-nav-networks li a.text-tt {
+		margin-bottom:5px;
+		display:block;
+		font-weight:700;
+		font-size:1.1em;
+	}
+
+	#learn #box-nav-networks li a.text-desc {
+		color:#333;
+		display:block;
+		font-size:.7em;
+	}
+
+	#learn ul.groups-aulas li {
+		margin-bottom:20px;
+	}
+
+	#learn ul.groups-aulas span.text-comments {
+		color:#666;
+		font-size:.7em;
+	}
+
+	#learn ul.box-my-networking li {
+		margin-bottom:15px;
+		overflow:hidden;
+	}
+
+	#learn ul.box-my-networking li img {
+		float:left;
+		padding-right:15px;
+	}
+
+	#learn ul.box-my-networking a.tt-aulas, 
+	#learn ul.groups-aulas a.tt-aulas{
+		color:#0B85C0;
+		display:block;
+		font-size:.9em;
+		margin-bottom:6px;
+	}
+
+	#learn ul.box-my-networking span.text-comments, 
+	#learn ul.groups-aulas span.text-comments {
+		color:#666666;
+		font-size:.75em;
+	}
+	
+	#learn ul.box-my-networking span.text-comments-dest, 
+	#learn ul.groups-aulas span.text-comments-dest {
+		color:#555;
+	}
+	
+	#learn ul.box-my-networking a.name-alunos {
+		color:#0B85C0;
+		display:block;
+		font-size:.8em;
+		margin-bottom:6px;
+	}
+	
+	/** @status **/
     #actv-1,
     #actv-2,
     #actv-3 {
@@ -587,7 +830,6 @@ div.recomendations-m .number {
     height: 50px;
     background: url("../images/ui-elements_r16_c2.png") no-repeat;
     position: relative;
-	
 }
 
     #logo {
@@ -1012,7 +1254,22 @@ div.content div.content {
         display:block;
         background: url("../images/ui-elements_r9_c55.png") no-repeat 15px bottom;
         color: white;
-        margin-bottom: 5px;
+		position:relative;
+    }
+    .sidebar a.option {
+		display:block;
+        font-size:11px;
+		background: url(../images/seta-option.png) no-repeat right center;
+		padding:6px 15px;
+        text-transform:none;
+        font-weight:100;
+		font-family:Tahoma;
+		font-style:italic;
+		right:10px;
+		top:0;
+        background:;
+        color: white;
+		position:absolute;
     }
     
     .sidebar span.gray {
@@ -1131,21 +1388,21 @@ div.content div.content {
     margin-bottom: 10px;
 }
 
-#group .sidebar ul.sub-groups span.bar-chart {
+ul.progress-bar span.bar-chart {
     display: block;
     padding: 2px;
     border: 1px solid #E9E9E9;
     height: 15px;
 }
 
-#group .sidebar ul.sub-groups span.bar-chart > span {
+ul.progress-bar span.bar-chart > span {
     background-color: #FFFA7F;
     display: block;
     height: 15px;
     position: relative;
 }
 
-#group .sidebar ul.sub-groups span.bar-chart span span {
+ul.progress-bar span.bar-chart span span {
     position: absolute;
     font-size: .8em;
     right: 5px;
@@ -1153,11 +1410,33 @@ div.content div.content {
     color: gray;
 }
 
-#group .sidebar ul.sub-groups a.course {
+ul.sub-groups .course {
     color: #18C8EF;
     font-size: .9em;
     padding-bottom: 5px;
     display: block;
+}
+
+/* @footer */
+#footer {
+	background-color:#D1E0EF;
+	width: 100%;
+	padding: 100px 0 10px 0;
+	margin-top: 20px;
+	font-size: .9em;
+}
+
+#footer .copyright {
+	text-align: right;
+	margin-top: 20px;
+}
+
+#footer .menu {
+	text-align: right;
+}
+
+#footer .menu a {
+
 }
 
 /* @schools */
