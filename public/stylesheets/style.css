@@ -1421,7 +1421,7 @@ ul.sub-groups .course {
 #footer {
 	background-color:#D1E0EF;
 	width: 100%;
-	padding: 100px 0 10px 0;
+	padding: 20px 0 0px 0;
 	margin-top: 20px;
 	font-size: .9em;
 }
@@ -1429,6 +1429,9 @@ ul.sub-groups .course {
 #footer .copyright {
 	text-align: right;
 	margin-top: 20px;
+	background-color: #6B97BF;
+	padding: 10px 0;
+	color: white;
 }
 
 #footer .menu {
