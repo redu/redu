@@ -230,7 +230,7 @@ class CoursesController < BaseController
   def show
     
     
-    @course = Course.find(params[:id], :include => {:interactive_class => [:lessons]})
+    @course = Course.find(params[:id])
     
     if @course.removed
       redirect_to removed_page_path and return
@@ -257,12 +257,13 @@ class CoursesController < BaseController
      # Log.log_activity(@course, 'show', current_user, @school)#TODO se usuario nao comprou não logar atividade
 
       respond_to do |format|
-        if @course.course_type == 'page'
+        if @course.courseable_type == 'Page'
           format.html {render 'show_page'}
-        elsif @course.course_type == 'interactive'
-          @lessons = Lesson.all(:conditions => ['interactive_class_id = ?',@course.interactive_class.id ], :order => 'position ASC')
+        elsif @course.courseable_type == 'InteractiveClass'
+          @lessons = Lesson.all(:conditions => ['interactive_class_id = ?',@course.courseable_id ], :order => 'position ASC')
            format.html {render 'show_interactive'}
         else # TODO colocar type == seminar / estamos considerando que o resto é seminário
+          @seminar = @course.courseable
           format.html {render 'show_seminar'}
         end
         
@@ -295,7 +296,7 @@ class CoursesController < BaseController
         
          @course = Course.find(session[:course_id])
         
-        if @course.course_type == 'seminar'
+        if @course.courseable_type == 'Seminar'
           @seminar = Seminar.new
           #3.times { @seminar.resources.build }
         
@@ -306,7 +307,7 @@ class CoursesController < BaseController
 #          @edit = false
           render "step2_seminar" and return
         
-        elsif @course.course_type == 'interactive'
+        elsif @course.courseable_type == 'InteractiveClass'
           @interactive_class = InteractiveClass.new
           
            3.times { @interactive_class.resources.build }
@@ -314,7 +315,7 @@ class CoursesController < BaseController
           
           render "step2_interactive" and return
         
-        elsif @course.course_type == 'page'
+        elsif @course.courseable_type == 'Page'
           @page = Page.new
           render "step2_page" and return
         
@@ -331,10 +332,6 @@ class CoursesController < BaseController
         render "step3" and return
         
       else # 1
-     # session[:course_id] = nil
-        #if params[:prev] == '2' #voltou
-        #  
-        #end
      
      
         if session[:course_id]
@@ -356,10 +353,10 @@ class CoursesController < BaseController
     
     
     respond_to do |format|
-        if @course.course_type == 'page'
+        if @course.courseable_type == 'Page'
           format.html {render 'edit_page'}
-        elsif @course.course_type == 'interactive'
-          @interactive_class = @course.interactive_class
+        elsif @course.courseable_type == 'InteractiveClass'
+          @interactive_class = @course.courseable
           #@lessons = Lesson.all(:conditions => ['interactive_class_id = ?',@course.interactive_class.id ], :order => 'position ASC')
            format.html {render 'edit_interactive'}
         else # TODO colocar type == seminar / estamos considerando que o resto é seminário
@@ -399,14 +396,13 @@ class CoursesController < BaseController
     when "2"
         @course = Course.find(session[:course_id])
         
-        if @course.course_type == 'seminar'
+        if @course.courseable_type == 'Seminar'
           
-           @seminar = Seminar.new(params[:seminar])
-          @seminar.course = @course
+          @course.courseable = Seminar.new(params[:seminar])
           
            respond_to do |format|
             
-            if @seminar.save
+            if @course.save
               
               format.html { 
                  redirect_to :action => :new , :course_type => params[:course_type], :step => "3"
@@ -416,55 +412,32 @@ class CoursesController < BaseController
             end
           end
 
-        # Coloquei como um before_create de course
-#          if @course.external_resource_type.eql?('youtube')
-#            capture = @course.external_resource.scan(/watch\?v=([a-zA-Z0-9]*)/o)[0][0]
-#            #puts capture.inspect
-#            @course.external_resource = capture
-#          elsif @course.external_resource_type.eql?('youtube')
-#            @course.convert # nao seria melhro chamar o metodo em um "before_create"?
-#          end
+        elsif @course.courseable_type == 'InteractiveClass'
           
-#          respond_to do |format|
-#            
-#            if @course.update_attributes(params[:course])
-#              format.html { 
-#                 redirect_to :action => :new , :course_type => params[:course_type], :step => "3"
-#              }
-#            else  
-#              @edit = false
-#              format.html { render "step2_seminar" }
-#            end
-#          end
-          
-          
-        elsif @course.course_type == 'interactive'
-          @interactive_class = InteractiveClass.new(params[:interactive_class])
-          @interactive_class.course = @course
-          
+          @course.courseable = InteractiveClass.new(params[:interactive_class])
+           
            respond_to do |format|
             
-            if @interactive_class.save
+            if @course.save
               
               format.html { 
-                 redirect_to :action => :new , :course_type => params[:course_type], :step => "3"
+                 redirect_to :action => :new , :course_type => params[:courseable_type], :step => "3"
               }
             else  
               format.html { render "step2_interactive" }
             end
           end
           
-        elsif @course.course_type == 'page'
+        elsif @course.courseable_type == 'Page'
           
-          @page = Page.new(params[:page])
-          @page.course = @course
+          @course.courseable =  Page.new(params[:page])
           
            respond_to do |format|
             
-            if @page.save
+            if @course.save
               
               format.html { 
-                 redirect_to :action => :new , :course_type => params[:course_type], :step => "3"
+                 redirect_to :action => :new , :courseable_type => params[:courseable_type], :step => "3"
               }
             else  
               format.html { render "step2_page" }
@@ -490,7 +463,7 @@ class CoursesController < BaseController
           #Log.log_activity(@course, 'create', current_user) # só aparece quando é aprovada
           # remover curso da sessao
           session[:course_id] = nil
-          if @course.course_type == 'seminar'
+          if @course.courseable_type == 'Seminar' or  @course.courseable_type == 'InteractiveClass'
              flash[:notice] = 'Aula foi criada com sucesso e está em processo de moderação.'
               format.html { 
                 #redirect_to(@course)
@@ -538,7 +511,7 @@ end
     
    @course = Course.find(params[:id])
     
-   if @course.course_type == 'interactive'
+   if @course.courseable_type == 'InteractiveClass'
      @interactive_class = @course.interactive_class
      respond_to do |format|
       if @interactive_class.update_attributes(params[:interactive_class])
@@ -550,7 +523,7 @@ end
         format.xml  { render :xml => @course.errors, :status => :unprocessable_entity }
       end
     end
-  elsif @course.course_type == 'page'
+  elsif @course.courseable_type == 'Page'
     respond_to do |format|
       if @course.update_attributes(params[:course])
         flash[:notice] = 'Curso atualizado com sucesso.'

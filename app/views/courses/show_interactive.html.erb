@@ -203,7 +203,7 @@ function decreaseFontSize(){
 			
 			<div id="topic_bar">
 				<div id="topic_list">
-					<% @course.interactive_class.lessons.each_with_index do |lesson, x| %>
+					<% @course.courseable.lessons.each_with_index do |lesson, x| %>
 					
 						<a href="#" onclick="selectTopic(<%=x%>); return false;" id="topic_item_<%=x%>" class="topic_item<%= (x == 0) ? ' topic_item_sel' : ''%>" title="<%=lesson.title%>">
 		  				
@@ -346,7 +346,7 @@ function decreaseFontSize(){
 		
 		<div id="right_column"> <!-- COLUNA DA DIREITA  ## -->
 		
-			<% if  (@course.owner == current_user or @course.interactive_class.resources.length > 0) %>
+			<% if  (@course.owner == current_user or @course.resources.length > 0) %>
 			<!-- MATERIAIS AUXILIARES #################################################################################################################### -->
            
             <div id="filter_bar_materials">
@@ -355,7 +355,7 @@ function decreaseFontSize(){
             <div id="materials_form">
                 <div id="materialslist" align="left">
                     <ul id="materials_item">
-                        <% @course.interactive_class.resources.each do | resource | %>
+                        <% @course.resources.each do | resource | %>
                         <li>
                             <%= link_to resource.name,	resource.media.url,
                             :class => type_class(resource) %>

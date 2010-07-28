@@ -1,6 +1,7 @@
 class Seminar < ActiveRecord::Base
   
-  belongs_to :course
+  #belongs_to :course
+  has_one :course, :as => :courseable
   
   has_many :lesson, :as => :lesson
   
@@ -44,41 +45,41 @@ class Seminar < ActiveRecord::Base
     
      SUPPORTED_AUDIO = ['audio/mpeg', 'audio/mp3']
      
-     # Acts as state machine plugin
-  acts_as_state_machine :initial => :pending
-  state :pending
-  state :converting
-  #state :converted, :enter => :upload, :after => :set_new_filename
-  state :error
-  
-  state :waiting,:enter => :set_new_local_filename
-  state :approved
-  state :disapproved
-  
-  event :approve do
-    transitions :from => :waiting, :to => :approved
-  end
-  
-  event :disapprove do
-    transitions :from => :waiting, :to => :disapproved
-  end
-  
-  event :wait do
-    transitions :from => :converting, :to => :waiting
-  end
-  
-  event :convert do
-    transitions :from => :pending, :to => :converting
-  end
-  
-  event :converted do
-    transitions :from => :converting, :to => :waiting
-  end
-  
-  event :failure do
-    transitions :from => :converting, :to => :error # TODO salvar estado de "erro" no bd
-  end
-  
+#     # Acts as state machine plugin
+#  acts_as_state_machine :initial => :pending
+#  state :pending
+#  state :converting
+#  #state :converted, :enter => :upload, :after => :set_new_filename
+#  state :error
+#  
+#  state :waiting,:enter => :set_new_local_filename
+#  state :approved
+#  state :disapproved
+#  
+#  event :approve do
+#    transitions :from => :waiting, :to => :approved
+#  end
+#  
+#  event :disapprove do
+#    transitions :from => :waiting, :to => :disapproved
+#  end
+#  
+#  event :wait do
+#    transitions :from => :converting, :to => :waiting
+#  end
+#  
+#  event :convert do
+#    transitions :from => :pending, :to => :converting
+#  end
+#  
+#  event :converted do
+#    transitions :from => :converting, :to => :waiting
+#  end
+#  
+#  event :failure do
+#    transitions :from => :converting, :to => :error # TODO salvar estado de "erro" no bd
+#  end
+#  
    has_attached_file :media
    
    
@@ -112,7 +113,7 @@ class Seminar < ActiveRecord::Base
       proxy = MiddleMan.worker(:converter_worker)
       proxy.enq_convert_course(:arg => self.id, :job_key => self.id) #TODO set timeout :timeout => ?
     else
-      self.converted!
+      self.course.converted!
       #self.update_attribute(:state, "waiting")
     end
   end
@@ -143,19 +144,6 @@ class Seminar < ActiveRecord::Base
   end
   
   
-  def set_new_local_filename
-   # puts "set_new_local_filename"
-    self.update_attribute(:media_file_name, "#{id}.flv")
-  end
-  
-  def thumb_url
-    
-    if self.type == 'youtube'
-       'http://i1.ytimg.com/vi/' + self.external_resource + '/default.jpg' 
-    else
-      File.join(File.dirname(self.media.url), "#{self.id}128x96.jpg")
-    end
-  end
 
   
   
