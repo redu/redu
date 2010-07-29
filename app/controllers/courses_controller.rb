@@ -1,6 +1,6 @@
 class CoursesController < BaseController
- #layout 'new_application'
- include Viewable
+ layout 'new_application'
+ include Viewable # serve pra atualizar o view_count
     
   before_filter :login_required, :except => [:index]
   #before_filter :check_if_removed, :except => [:index]
@@ -260,7 +260,7 @@ class CoursesController < BaseController
         if @course.courseable_type == 'Page'
           format.html {render 'show_page'}
         elsif @course.courseable_type == 'InteractiveClass'
-          @lessons = Lesson.all(:conditions => ['interactive_class_id = ?',@course.courseable_id ], :order => 'position ASC')
+          @lessons = Lesson.all(:conditions => ['interactive_class_id = ?',@course.courseable_id ], :order => 'position ASC') # TODO 2 consultas?
            format.html {render 'show_interactive'}
         else # TODO colocar type == seminar / estamos considerando que o resto é seminário
           @seminar = @course.courseable
@@ -310,8 +310,7 @@ class CoursesController < BaseController
         elsif @course.courseable_type == 'InteractiveClass'
           @interactive_class = InteractiveClass.new
           
-           3.times { @interactive_class.resources.build }
-          # @interactive_class.lessons.build
+           #3.times { @interactive_class.resources.build }
           
           render "step2_interactive" and return
         
@@ -396,6 +395,14 @@ class CoursesController < BaseController
     when "2"
         @course = Course.find(session[:course_id])
         
+        
+        @res = []
+        if  params[:attachments]
+          params[:attachments].each do |a|
+            @res = CourseResource.create(:attachment => a, :attachable => @course)
+          end
+        end
+        
         if @course.courseable_type == 'Seminar'
           
           @course.courseable = Seminar.new(params[:seminar])
@@ -405,10 +412,12 @@ class CoursesController < BaseController
             if @course.save
               
               format.html { 
-                 redirect_to :action => :new , :course_type => params[:course_type], :step => "3"
+                 redirect_to :action => :new , :course_type => params[:courseable_type], :step => "3"
               }
+                
             else  
               format.html { render "step2_seminar" }
+              
             end
           end
 
@@ -420,11 +429,23 @@ class CoursesController < BaseController
             
             if @course.save
               
-              format.html { 
+              format.html do 
                  redirect_to :action => :new , :course_type => params[:courseable_type], :step => "3"
-              }
+              end
+              format.js do
+                  render :update do |page| 
+                    page << "alert('salvo!')"
+                  end
+                end
             else  
-              format.html { render "step2_interactive" }
+              format.html do
+                render "step2_interactive" 
+              end
+              format.js do
+                  render :update do |page| 
+                    page << "alert('erro')"
+                  end
+                end
             end
           end
           
@@ -489,7 +510,16 @@ class CoursesController < BaseController
 
 end
 
-
+def unpublished_preview
+  @course = Course.find(session[:course_id])
+  
+  
+  @lessons = Lesson.all(:conditions => ['interactive_class_id = ?',@course.courseable_id ], :order => 'position ASC')
+  respond_to do |format|         
+    format.html {render 'unpublished_preview_interactive'}
+    
+  end
+end
 def cancel
   if session[:course_id]
    course = Course.find(session[:course_id])

@@ -27,8 +27,7 @@
 			
 <%= f_remote.radio_button :external_resource_type, :redu, {:onchange => "switchCourseFields(2);"} %>
   <%= f_remote.label :external_resource_type_redu, "Redu" %>
-<%= f_remote.radio_button :external_resource_type, :slideshare, {:onchange => "switchCourseFields(2);"} %>
-  <%= f_remote.label :external_resource_type_slideshare, "Slideshare" %>	
+
   <%= f_remote.radio_button :external_resource_type, :youtube, {:onchange => "switchCourseFields(2);"} %>
   <%= f_remote.label :external_resource_type_youtube, "Youtube" %>
   <%= f_remote.radio_button :external_resource_type, :upload, {:onchange => "switchCourseFields(1);"} %>
@@ -46,7 +45,7 @@
   </div>
 
 		
-	<%= submit_tag 'Upload', :id => "submi"%>
+	<%= submit_tag 'Criar', :id => "submit"%>
 	<%= image_tag("spinner.gif",
 	      :align => "absmiddle",
 	      :border => 0,

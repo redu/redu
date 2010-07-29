@@ -1,108 +1,49 @@
-<script>
+<script type="text/javascript">
 	
-	function validateForm(){
-		//se o cara assinalou a alternativa correta 
-		//se tem pelo menos uma alternativa
-		
-		var checked = false;
-		var els = document.getElementsByName('answer');
-		for (var i = 0; i < els.length && !checked ; i++) {
-			checked = checked || els[i].checked;
-		}
-		if (!checked) {
-			alert('Você precisa selecionar uma alternativa correta');
-			return false;
-		}
-		
-		// Selecionar uma categoria:
-		
-		var selector = document.getElementById('question_skill_id');
-		var selected = false;
-		for (var i = 0; i < selector.options.length && !selected ; i++) {
-			selected = selected || selector.options[i].selected;
-		}
-		if (!selected) {	
-			alert('Por favor, selecione uma sub categoria');
-			return false;
-		}
-		return true;
-	}
-	
-	function selectCategory(selector, selectType){
-        selectType = 0
-		 category1 = 1
-		 category2 = 2
-		 question_skill_id = 3
-		
-		var selectedValue = selector.options[selector.selectedIndex].value;
-		
-		if (selectedValue < 0 || selectType > 2) {
-			return;
-		} else { 
-		
-		var nextSelector;
-		if (selectType == 1) {
-			nextSelector = document.getElementById('category2');
-			document.getElementById('question_skill_id').options.length = 0; // reseta
-		} else { selectType == 2
-			nextSelector = document.getElementById('question_skill_id');
-		}
-        
-  		new Ajax.Request("<%= url_for :controller => :skills, :action => :sub_categories_of %>", {
-            method: 'get',
-            parameters: "?parent_id= " + selectedValue,
-			onLoading: Element.show('spinner'),
-            onComplete: function(request){
-				Element.hide('spinner');
-				alert(request.responseText);
-                res = eval("(" + request.responseText + ")");
-				
-				nextSelector.options.length = 0;
-				
-				for (var i = 0; i < res.length; i++ ) {
-					nextSelector.options[i]=new Option(res[i][0],res[i][1], false, false);
-				}
-				
-            }
-        });
-		}
-    }
+$(document).ready(function(){
+ 	$('#course_description').keyup(function(){
+  limitChars('course_description', <%=AppConfig.desc_char_limit %>, 'char_limit');
+  })
+ });
 </script>
 
-<div id="all_content3">
-<div id="col_content_video">
-	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">ensinar</a> > <a href="#">nova aula</a> </div>
- 	<div id="title">NOVA AULA - PASSO 1
-	
-		<% form_for :course, @course, :url => {:controller => :courses, :action => :create }, :html => { :multipart => true } do |f| %>
+
+
+<div class="grid_16">
+<div id="breadcrumbs"><a href="<%=application_url%>">início</a> > <a href="#">ensinar</a> > nova aula</div>
+<h3 class="call">Nova Aula</h3>
+
+	<% form_for :course, @course, :url => {:controller => :courses, :action => :create }, :html => { :multipart => true } do |f| %>
 		<%= f.error_messages %>
 	
- 	</div>
 
 	<div id="bd">
 		<div id="bd_left" style="float: left; width: 500px;">
 		
+		<% field_set_tag 'Informações Gerais' do %>
 		
-			<%= f.label "Título: " %><br/>
-			<%= f.text_field :name %><br/><br/>
+			<%= f.label "Título: " %>
+			<%= f.text_field :name %>
 
-			<%= f.label "Descrição:" %><br/>
-			<%= f.text_area :description, :size => "50x3" %><br/><br/>
+			<%= f.label "Descrição:" %>
+			<div style="">
+			<%= f.text_area :description, :size => "50x3", :maxlength=> AppConfig.desc_char_limit %>
+			<div id="char_limit" style="text-align:right;">(<%=AppConfig.desc_char_limit %>)</div>
+			</div>
 	
-			<%= f.label "Tags" %>
-			<em>
-					<%= "(" + :optional_keywords_describing_this_course_separated_by_commas.l + "):" %>
-			</em><br/>
-			<%= f.text_field :tag_list %><br/><br/>
+			<%= f.label "Tags <span class='snippet'>(separadas por vírgula)</span>" %>
+			<%= f.text_field :tag_list %>
 			
 			<%= hidden_field_tag("step", "1", options = {})%>
-			
+			<%end%>
 			
  		</div>
 		
 		
 		
 		<div id="bd_right" style="float: left; width: 400px;">
+		
+			<% field_set_tag 'Tipo de Aula' do %>		
 		
 		<div style="margin-bottom: 20px;">
 			
@@ -113,16 +54,16 @@
 		
 		<div style="margin-bottom: 20px;">
 			
-			<h3><%= f.radio_button(:courseable_type, "InteractiveClass", :checked => false)%> Aula Interativa</h3>
-			Uma aula interativa pode possuir várias páginas com recursos interativos tais como vídeos, texto, questões e exames.
+			<h3><%= f.radio_button(:courseable_type, "InteractiveClass", :checked => false)%> Aula passo-a-passo</h3>
+			Uma aula passo-a-passo pode possuir várias páginas com recursos interativos tais como vídeos, texto, questões e exames.
 		</div>
 		
 		<div style="margin-bottom: 20px;">
 			
 			<h3><%= f.radio_button(:courseable_type, "Page", :checked => false)%> Página simples</h3>
-			Uma página permite a postagem de conteúdo de leitura rápida ou um recurso interativo, como o flash.
+			Uma página permite a postagem de conteúdo de leitura rápida como um tutorial ou um recurso interativo.
 		</div>
-		
+		<%end%>
 		
  		</div>
  	</div>
@@ -133,7 +74,5 @@
 	
 	<% end %>
 
-
 </div>
-	
 </div>

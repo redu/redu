@@ -1,14 +1,12 @@
 <%= render :partial => 'scripts_interactive' %>
 
-<div id="all_content3">
-<div id="col_content_video">
-	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">aprender</a> > <a href="#">materiais</a> </div>
- 	<div id="title">NOVA AULA (INTERATIVA) - PASSO 2
- 	</div>
-	
-	
 
-<% form_for :interactive_class, @interactive_class, :url => { :action => "create" }, :html => { :multipart => true, :onsubmit => "setTopicsPosition();" } do |f| %>
+<div class="grid_16">
+<div id="breadcrumbs"><a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <a href="#">nova rede</a> </div>
+<h3 class="call">Nova aula passo-a-passo </h3>
+
+	
+<% form_for :interactive_class, @interactive_class, :url => { :action => "create" }, :html => { :multipart => true, :onsubmit => "setTopicsPosition();", :id => "interactive_class_form" } do |f| %>
   <%= f.error_messages %>
   
   <%= hidden_field_tag("step", "2", options = {})%>
@@ -17,7 +15,7 @@
   
   <div style="float: left; padding-top: 5%;">
   <p>
-    <%= f.submit 'Salvar Aula' %> | <input type="button" value="Visualizar"/>
+    <%= f.submit 'Salvar Aula' %> | <%= link_to "Visualizar", unpublished_preview_courses_path, :target => "_blank"%> | <%= link_to_function "Salvar parcialmente", "save()"%>
   </p>
   </div>
   
@@ -31,11 +29,18 @@
 
 </div>
 <% end %>
- 
 
 </div>
-	
 </div>
+
+
+
+	
+	
+
+ 
+<!--
 <script>
-	//window.onbeforeunload=leavePage;
+	window.onbeforeunload=leavePage;
 </script>
+-->

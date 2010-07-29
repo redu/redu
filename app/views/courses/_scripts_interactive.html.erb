@@ -95,9 +95,13 @@
 	
 	
 	function reloadSortable(){
-		
-		Sortable.create("topic_list", {onUpdate: setTopicsPosition});
-        //Sortable.create("topic_list", {onUpdate:function(){new Ajax.Request('/courses/sort_lesson?iclass=', {asynchronous:true, evalScripts:true, parameters:Sortable.serialize("topic_list")})}})
+		    $("#topic_list").sortable({
+					update: setTopicsPosition,
+        	placeholder: 'ui-state-highlight'
+   			 });
+    	/*	$("#topic_list").disableSelection()*/
+				
+		/*Sortable.create("topic_list", {onUpdate: setTopicsPosition});*/
 
 	}
 	
@@ -110,6 +114,19 @@
         }
         
     }
+		
+		
+	function save(){
+		jQuery.ajax({
+			beforeSend:function(request){
+				//showLoadingUsers();
+				}, 
+			data:jQuery.param(jQuery("#interactive_class_form").serializeArray()), 
+			dataType:'script', 
+			type:'post', 
+			url:'<%= url_for(:action => :create, :course_id => @course.id)%>'});
+	}
+	
 	
 	function topicTitle(textBox){
 		document.getElementById('topic_name_'+ currentTopic).innerHTML = textBox.value;
@@ -179,11 +196,9 @@
 		
 	}
 	
-	function setTopicsPosition(sortable){
+	function setTopicsPosition(event,ui){
 		
-		if (typeof sortable == 'undefined') {
-			sortable = document.getElementById('topic_list');
-		}
+		sortable = document.getElementById('topic_list');
 		
 		var listItems = sortable.getElementsByTagName("li");
 			for (var i =0; i < listItems.length; i++) {

@@ -6,6 +6,7 @@
 			<!--%= link_to "Termos de Uso", application_url + "policy/tos.txt"  %-->
 			|<!--%= link_to "Privacidade", application_url + "policy/privacy.txt"  %-->
 			<%= link_to "Privacidade", :controller => "base", :action => "privacy" %>
+			| Blog
 			<% if @rss_title && @rss_url %>
 			| <%= link_to :rss.l, @rss_url, {:title => @rss_title} %>
 			<% end %>

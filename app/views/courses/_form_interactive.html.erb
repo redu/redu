@@ -8,8 +8,8 @@
   <div id="lesson_types">
   	Novo tópico:
 	 
-	 <%= link_to_add_lesson((image_tag 'icons/iclass.gif', :title => "Texto interativo"), f, 'page') %>
-	 <%= link_to_add_lesson((image_tag 'icons/seminar.gif', :title => "Seminário"), f, 'seminar') %>
+	 <%= link_to_add_lesson((image_tag 'icons/iclass.gif', :title => "Texto"), f, 'page') %>
+	 <%= link_to_add_lesson((image_tag 'icons/seminar.gif', :title => "Vídeo"), f, 'seminar') %>
 	<%# link_to_function((image_tag 'icons/exam.gif', :title => "Exame"), 'alert("alora")') %>
 	<%= link_to_add_lesson((image_tag 'icons/objects.png', :title => "Objetos"), f, 'object') %>
 	<%# image_tag 'icons/discussion.png', :title => "Discussão" %>
@@ -21,7 +21,7 @@
 			<% end %>
 			<li id="topic_list_item_<%= (lesson.id) ? lesson.id : 0 %>" >
 			  	 <a href="#" onclick="selectTopic(<%= (lesson.id) ? lesson.id : 0 %>); return false;" id="topic_item_<%= (lesson.id) ? lesson.id : 0 %>" class="topic_item <%= (index ==0) ? 'topic_item_sel' : '' %>" >
-			  		<%= image_tag 'icons/iclass.gif', :title => "Texto interativo" %>
+			  		<%= image_tag 'icons/iclass.gif', :title => "Texto" %>
 					<span id="topic_name_<%= (lesson.id) ? lesson.id : 0 %>"> <%= (lesson.title) ? lesson.title : 'Sem título' %></span>  
 					<%= image_tag 'icons/delete.png', :border => 0, :onclick => "removeTopic("+ ((lesson.id) ? lesson.id.to_s : '0') +")", :style => "float: right;" %>
 				 </a>
@@ -35,7 +35,7 @@
 	  	
 		<% if interactive_class.lessons.length == 0%>
 		<div id="empty_lessons">
-		 <h3 style="color: #bbb;">Clique em um tipo de lição para adicionar</h3>
+		 <h3 style="color: #bbb;">Clique em um tipo de tópico para adicionar</h3>
 		 </div>
 		<% else %>
 				<% counter = 0 %>
@@ -56,8 +56,10 @@
 
   <div style="float: left; width: 100%">
   
-<%= render :partial => 'attachment_form', :locals => {:f => f, :course => interactive_class}%>
-  
+<%# render :partial => 'attachment_form', :locals => {:f => f, :course => interactive_class}%>
+  <%= file_field_tag "attachments[]"%>
+				<%= file_field_tag "attachments[]"%>
+				<%= file_field_tag "attachments[]"%>
 
 </div>
 <iframe id='upload_frame' name="upload_frame" style="width:1px;height:1px;border:0px" src="about:blank"></iframe>

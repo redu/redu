@@ -5,8 +5,8 @@
 	<% form_for @school do |f|%>
 	<%= f.error_messages %>
 	<%= render "#{@school.current_step}_step", :f => f %>
-	<p><%= f.submit "Continue" %></p>
-	<p><%= f.submit "Back", :name => "back_button" unless @school.first_step? %></p>
+	<p><%= f.submit "Próximo >" %></p>
+	<p><%= f.submit "< Anterior", :name => "back_button" unless @school.first_step? %></p>
 	<% end %>
 
 </div>
