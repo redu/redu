@@ -1,123 +1,74 @@
-<div id="all_content3">
-    <div id="col_content">
-        <div id="breadcrumbs">
-            <a href="<%=application_url%>">início</a>
-            > editar perfil
-        </div>
-        
-        <div>
-        	<%- form_tag user_url(@user), :method => 'put', :multipart =>true , :class => 'MainForm' do %>
-			
-			<div id="title">
-            <%= :you_are_editing_your_profile.l %>
-        	</div>
-			
-			<br/>
-			<%= link_to "&raquo; " + :edit_your_account_settings_instead.l, edit_account_user_path(@user) %>
-			<%= error_messages_for :user %>
-			<br/>
-			<%= submit_tag :save_changes.l %>
-			<br/>
-			<%= :profile_photo.l %>
-			<br/>
-			<%= image_tag( @user.avatar_photo_url(:thumb), :class => "polaroid" ) %>
-			<br/>
-			<label for='username'>
-                <%= :choose_a_photo_for_your_profile.l %>
-            </label>
-			<br/>
-			<%= file_field :avatar, :uploaded_data, :size => "20"%>
-			<br/>
-			<br/>
-			<label for='first_name'>
-                Nome
-            </label>
-			<%= text_field :user, :first_name %>
-			<br/>
-			<label for='last_name'>
-               Sobrenome
-            </label>
-			<%= text_field :user, :last_name %>
-			<br/>
-			<br/>
-			<div id="title">
-            <%= :location.l %>
-        	</div>
-			
-			<br/>
-			<%= render :partial => 'shared/location_chooser', :locals => {:selected_country => @user.country_id, :selected_state => @user.state_id, :selected_metro_area => @user.metro_area_id, :states => @states, :metro_areas => @metro_areas}%>
-			
-			<br/>
-			<label for='username'>
-                <%= :zippostal_code.l %>
-            </label>
-			<%= text_field :user, :zip, :style=>"width:90px" %>
-			<br/><br/>
-			<div id='title'>
-                <%= :gender.l %>
-            </div>
-			<br/>
-			<label for='username'>
-				<%= radio_button :user, :gender, User::MALE %>
-         		<%= :male.l %>
-				<%= radio_button :user, :gender, User::FEMALE %>
-         		<%= :female.l %>
-			</label>
-			<br/>
-			<br/>
-			<div id='title'>
-                <%= :birthday.l %>
-            </div>
-			<br/>
-			<%= date_select :user, :birthday, {:start_year => 1926, :end_year => Time.now.year - 1}%> 
-			<br/>
-			<br/>
-			<div id="title">
-            <%= :about_me.l %>
-        	</div>
-			
-			<br/>
-			<%-box do %>
-			<%= text_area :user, :description, :size => "60x12"  %>
-			<% end %>
-			<br/>
-			
-			<div id="title">
-            <%= :tips.l %>
-        	</div> 
-			
-			<br/>
-			<%= "Escreva sobre o que você gosta de estudar, as áreas de interesse e conhecimento" %>
-			<br/>
-			
-			<div id="title">
-            <%= :tags.l %>
-        	</div>
-			
-			<br/>
-			<%= text_field_tag 'tag_list', @user.tag_list, {:autocomplete => "off"}%>
-			<%= auto_complete_field 'tag_list', {:url => { :controller => "tags", :action => 'auto_complete_for_tag_name'}, :tokens => [','] }%>
-			
-			<label for='username'>
-                <%= :you_could_tag_yourself.l %>
-				<%- if @user.vendor? %>
-				<%= :custom_friendly_local.l %>
-				<%- else %>
-				<br/>
-				<%= :tags_are_comma_separated_keywords_that_describe_you.l %>
-				<br/>
-				<%= :you_can_browse_all_content_and_users_on.l %>
-				<%= AppConfig.community_name %>
-				<%= :by_looking_at_the.l %>
-				<%= link_to :tags_page.l, tags_path %>
-				<% end %>
-            </label>
-			<br/>
-			<%= submit_tag :save_changes.l %> 
-			<% end %>
-			<%= link_to "Remover Usuário", @user, :confirm => "Você tem certeza que deseja sair do Redu? Todo o seu material criado será removido de forma irreversível.", :method => :delete, :style => "color: red;" %>
-			
-			
-        </div>
-    </div>
+<div class="grid_12">
+	<%- form_tag user_url(@user), :method => 'put', :multipart =>true , :class => 'MainForm' do %>
+	<%= error_messages_for :user %>	
+	<% field_set_tag "Foto do seu perfil" do %>
+		<h3><%= :profile_photo.l %></h3>
+		<%= image_tag( @user.avatar_photo_url(:thumb), :class => "polaroid" ) %>
+
+		<%= label_tag :avatar, :choose_a_photo_for_your_profile.l %>
+		<%= file_field :avatar, :uploaded_data, :size => "20"%>
+		
+		<%= submit_tag :save_changes.l %>
+	<% end %>
+
+	<% field_set_tag "Dados pessoais" do %>
+		<%= label_tag :first_name, "Nome" %>
+		<%= text_field :user, :first_name %>
+
+		<%= label_tag :last_name, "Sobrenome" %>
+		<%= text_field :user, :last_name %>
+		
+		<%= label_tag :birthday, "Data de nascimento" %>
+		<%= date_select :user, :birthday, {:start_year => 1926, :end_year => Time.now.year - 1}%> 
+		
+		<% field_set_tag "Sexo" do %>
+			<%= label_tag :user_gender_m, :male.l, :class => "inline" %>
+			<%= radio_button :user, :gender, User::MALE %>
+			<%= label_tag :user_gender_f, :female.l, :class => "inline" %>
+			<%= radio_button :user, :gender, User::FEMALE %>
+		<% end %>
+	<% end %>
+
+	<% field_set_tag "Localização" do %>
+
+	<%= render :partial => 'shared/location_chooser', :locals => {:selected_country => @user.country_id, :selected_state => @user.state_id, :selected_metro_area => @user.metro_area_id, :states => @states, :metro_areas => @metro_areas}%>
+
+	<% label_tag :zip, :zippostal_code.l %>
+	<%= text_field :user, :zip, :style=>"width:90px" %>
+	
+	<% end %>
+	
+	<% field_set_tag "Sobre" do %>
+		<%= label_tag :description, "Fale sobre você" %>
+		<em><%= "Escreva sobre o que você gosta de estudar, as áreas de interesse e conhecimento" %></em>
+		<%= text_area :user, :description, :size => "60x12"  %>
+
+		<%= label_tag :tag_list, :tags.l %>
+		<%= text_field_tag 'tag_list', @user.tag_list, {:autocomplete => "off"}%>
+		<%= auto_complete_field 'tag_list', {:url => { :controller => "tags", :action => 'auto_complete_for_tag_name'}, :tokens => [','] }%>
+		
+		<em><%= :you_could_tag_yourself.l %>
+		<%- if @user.vendor? %>
+		<%= :custom_friendly_local.l %>
+		<%- else %>
+
+		<%= :tags_are_comma_separated_keywords_that_describe_you.l %>
+
+		<%= :you_can_browse_all_content_and_users_on.l %>
+		<%= AppConfig.community_name %>
+		<%= :by_looking_at_the.l %>
+		<%= link_to :tags_page.l, tags_path %>
+		<% end %>
+		</em>
+		<%= submit_tag :save_changes.l, :style => "float: right;" %> 
+	<% end %>
+
+	
+	<% field_set_tag "Sair do Redu" do %>
+	<%= link_to "Remover Usuário", @user, :confirm => "Você tem certeza que deseja sair do Redu? Todo o seu material criado será removido de forma irreversível.", :method => :delete, :style => "color: red;" %>
+	<% end %>
+	<% end %>
+</div>
+
+<div class="grid_4">
 </div>
