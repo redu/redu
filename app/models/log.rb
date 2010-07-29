@@ -3,7 +3,7 @@ class Log < ActiveRecord::Base
   has_many :statuses, :as => :in_response_to
   belongs_to :logeable, :polymorphic => true
   
-  def self.log_activity(log_object, action, user, school)
+  def self.log_activity(log_object, action, user, school=nil)
   
     if log_object.instance_of?(Course)
       create_logs(log_object, action, user, school)
