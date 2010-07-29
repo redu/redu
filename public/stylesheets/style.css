@@ -1706,7 +1706,25 @@ ul.sub-groups > li {
 .user_instructions h3 {
 	font-size: 1.2;
 	font-weight: bold;
-	margin: 15px 0 5px 0;
+	margin: 15px 0 10px 0;
+}
+
+/* @notice-page */
+.notice-page {
+	padding-top: 20px;
+}
+
+.notice-page h3.call {
+	font-size: 1.4em;
+	font-weight: bold;
+	margin: 10px 0 5px 0;
+	color: #F63B0B;
+}
+
+.notice-page p {
+	font-size: 1.1em;
+	line-height: 180%;
+	margin: 10px 0;
 }
 
 /* @schools */

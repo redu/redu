@@ -1,24 +1,13 @@
-<div id="all_content3">
-    <div id="col_content">
-        <div id="breadcrumbs">
-            <a href="<%=application_url%>">início</a>
-            > cadastro concluído
-        </div>
-        <div id="title">
-            <%= :go_check_your_e_mail.l %>
-        </div>
-        <div>
-        	<br/>
+<div class="grid_10 push_3 notice-page">
+        <h3 class="call"><%= :go_check_your_e_mail.l %></h3>
+        <p>
         	<%= :look_for_a_message_from.l :from => AppConfig.community_name %>
-			<br/>
         	<%= :see_you_back_here_in_a_short_while.l %>
-			<br/>
-			<div id="title">
             <%= :no_activation_email.l %>
-        	</div>
-			<br/>
 			<%= link_to(:resend_my_activation_e_mail.l, "/resend_activation?id=#{@user.to_param}", :method => 'post')%>
-        </div>
-		
-    </div>
+        </p>
+		<h3 class="call">Utilize o Redu</h3>
+		<p>
+			Você já pode utilizar o Redu mesmo sem confirmar seu e-mai, vá até a <%= link_to "Página inicial", home_path %> e faça login.
+		</p	>
 </div>
