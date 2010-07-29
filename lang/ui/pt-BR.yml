@@ -26,8 +26,8 @@ pt-BR:
     errors:
       template:
         header:
-          one: "Um erro ocorreu, verifique abaixo como proceder." 
-          other: "{{count}} erros ocorreram, veja como proceder abaixo." 
+          one: "Oops!" #"Um erro ocorreu, verifique abaixo como proceder." 
+          other: "Oops!" #"{{count}} erros ocorreram, veja como proceder abaixo." 
         body: "Há problemas para os seguintes campos:" 
       messages: 
         blank: "não pode ser deixado em branco."

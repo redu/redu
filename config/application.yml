@@ -30,7 +30,7 @@ items_per_page: 3
 users_per_page: 10
 show_constellation: false
 activate_payment: false
-
+desc_char_limit: 200
 comments_number: 15
 
 points:

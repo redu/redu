@@ -31,7 +31,7 @@ ActionController::Routing::Routes.draw do |map|
                         :exam_history => :get, :sort => :get, :order => :get, 
                         :favorites => :get, :review_question => :get}
     
-  map.resources :courses, :member => {:rate => :post, :buy => :get, :download_attachment => :get},  :collection => {:favorites => :get, :cancel => :get, :sort_lesson => :post}
+  map.resources :courses, :member => {:rate => :post, :buy => :get, :download_attachment => :get},  :collection => { :unpublished_preview => :get, :favorites => :get, :cancel => :get, :sort_lesson => :post}
   
   map.resources :user_school_association
 
