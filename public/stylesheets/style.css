@@ -367,7 +367,7 @@ a.more {
 	form fieldset .snippet {
 		font-size: .9em;
 	}
-	
+
 	form label {
 		display: block;
 		margin: 10px 0 5px 0;
@@ -375,11 +375,22 @@ a.more {
 		font-size: .9em;
 	}
 	
+	form .inline {
+		display: inline;
+	}
+	
 	form label.inline {
 		display: inline;
-		margin: 5px 5px 5px 15px;
+		margin: 5px;
 		color: #4F4F4F;
 		font-size: .9em;
+	}
+	
+	form em {
+		font-size: .8em;
+		color: gray;
+		margin: 5px 0;
+		display: block;
 	}
 	
 	form fieldset legend {
@@ -391,6 +402,10 @@ a.more {
 	form fieldset label,
 	form label {
 		font-weight: bold;
+	}
+	
+	form input[type=checkbox] {
+		display: inline;
 	}
 	
 	form div.errorExplanation {
@@ -1682,6 +1697,16 @@ ul.sub-groups > li {
 
 #footer .menu a {
 
+}
+
+/* @registration */
+.user_instructions {
+
+}
+.user_instructions h3 {
+	font-size: 1.2;
+	font-weight: bold;
+	margin: 15px 0 5px 0;
 }
 
 /* @schools */

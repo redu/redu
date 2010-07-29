@@ -10,94 +10,64 @@
     }
     
 </script>
-<div id="all_content3">
-    <div id="col_content">
-        <div id="breadcrumbs">
-            <a href="<%=application_url%>">home</a>
-            > cadastrar
-        </div>
-        <div id="title">
-            CADASTRAR
-        </div>
-        <br/>
-        <br/>
-        <div>
-            <%= error_messages_for :user %>
-            <% form_for :user, :url => users_path, :html => {:class => 'MainForm', :onsubmit => 'return verifyTOS();'} do |f| %>
-            <br/>
-			<label for='first_name'>
-                Nome
-            </label>
-            <br/>
-			<%= f.text_field :first_name, :size => 35 %>
-			<br/>
-			<label for='last_name'>
-                Sobrenome
-            </label>
-            <br/>
-			<%= f.text_field :last_name, :size => 35 %>
-			<br/>
-            <label for='username'>
-                <%=:username.l %>
-            </label>
-            <br/>
-            <em><%= :required_your_username_must_not_contain_numerals_spaces_or_special_characters.l %>
-            </em>
-            <%= f.text_field :login, :size => 35 %>
-            <br/>
-            <label for='username'>
-                <%=:email.l %>
-            </label>
-            <br/>
-            <em><%=:required_we_will_send_a_confirmation_e_mail_to_the_address_you_enter.l %>
-            </em>
-            <%= f.text_field :email, :size => 35 %>
-            <br/>
-            <label for ='username'>
-                <%= :birthday.l %>
-            </label>
-            <br/>
-            <%= date_select :user, :birthday, {:start_year => 1926, :end_year => (Time.now.year - 13)} %>
-            <br/>
-			
-			<% if AppConfig.closed_beta_mode %>
-			 <label>Chave de acesso:</label><br />
-			<%= text_field_tag :beta_key, @beta_key, {:size => 6} %>
-			<br />
-			<% end %>
-			
-            <label for ='user_password'>
-                <%= :type_your_password.l %>
-            </label>
-            <br/>
-            <%= f.password_field :password %>
-            <br/>
-            <label for ='user_password'>
-                <%= :re_type_your_password_to_confirm.l %>
-            </label>
-            <br/>
-            <%= f.password_field :password_confirmation %>
-            <%= hidden_field_tag :inviter_id, params[:inviter_id] %>
-            <%= hidden_field_tag :inviter_code, params[:inviter_code] %>
-            <br/>
-            <%= submit_tag :sign_up.l %>
-            <%= check_box "user", "tos" %>Li e aceito os Termos de Uso<% end %>
-            <br/>
-            <p>
-                <%=:dont_have_an_account.l %>
-                <br/>
-                <%= link_to "&raquo; " + :click_here_to_sign_up.l, "/signup" %>
-            </p>
-            <p>
-                <%=:forgot_your_password.l %>
-                <br/>
-                <%= link_to "&raquo; " + :click_here_to_retrieve_it.l, forgot_password_url %>
-            </p>
-            <p>
-                <%=:forgot_your_username.l %>
-                <br/>
-                <%= link_to "&raquo; " + :click_here_to_retrieve_it.l, forgot_username_url %>
-            </p>
-        </div>
-    </div>
+<% content_for :page_id, 'group' %>
+<div class="grid_10">
+	<%= error_messages_for :user %>
+<% form_for :user, :url => users_path, 
+	:html => {:class => 'MainForm', :onsubmit => 'return verifyTOS();'} do |f| %>
+	
+	<% field_set_tag "Informações pessoais" do %>
+		<%= f.label :first_name, "Nome" %>
+		<%= f.text_field :first_name %>
+		<%= f.label :last_name, "Sobrenome" %>
+		<%= f.text_field :last_name %>
+		
+		<%= f.label :birthday, :birthday.l %>
+	    <%= date_select :user, :birthday, {:start_year => 1926, :end_year => (Time.now.year - 13)} %>
+
+	<% end %>
+	
+	<% field_set_tag "Informações de Contato" do %>
+		<%= f.label :login, :username.l %>
+	    <em><%= :required_your_username_must_not_contain_numerals_spaces_or_special_characters.l %></em>
+	    <%= f.text_field :login %>
+		<%= f.label :email, :email.l %>
+	    <em><%=:required_we_will_send_a_confirmation_e_mail_to_the_address_you_enter.l %></em>
+	    <%= f.text_field :email %>
+	<% end %>
+	<% field_set_tag "Senhas" do %>
+		<% if AppConfig.closed_beta_mode %>
+			<%= f.label :beta_keu, "Chave de acesso:" %>
+		 	<%= text_field_tag :beta_key, @beta_key, {:size => 6} %>
+		<% end %>
+	
+		<%= f.label :passowrd, :type_your_password.l %>
+	    <%= f.password_field :password %>
+	    <%= f.label :password_confirmation, :re_type_your_password_to_confirm.l %>
+	    <%= f.password_field :password_confirmation %>
+	<% end %>
+	
+	<% field_set_tag "Termos" do %>
+	    <%= f.label "tos", "Li e aceito os Termos de Uso", :class => "inline" %>
+		<%= check_box "user", "tos" %>
+	    <%= submit_tag :sign_up.l, :style => "float: right;" %>
+	    <%= hidden_field_tag :inviter_id, params[:inviter_id] %>
+	    <%= hidden_field_tag :inviter_code, params[:inviter_code] %>
+	<% end %>
+
+<% end %>
+</div><!-- end -->
+<div class="grid_6 user_instructions">
+    <h3><%=:dont_have_an_account.l %></h3>
+
+    <%= link_to "&raquo; " + :click_here_to_sign_up.l, "/signup" %>
+
+
+    <h3><%=:forgot_your_password.l %></h3>
+
+    <%= link_to "&raquo; " + :click_here_to_retrieve_it.l, forgot_password_url %>
+
+    <h3><%=:forgot_your_username.l %></h3>
+
+    <%= link_to "&raquo; " + :click_here_to_retrieve_it.l, forgot_username_url %>
 </div>
