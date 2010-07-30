@@ -84,6 +84,12 @@ pt-BR:
        text:
           blank: ": Você precisa digitar uma mensagem."
   
+  ajaxful_rating:
+    stars:
+      current_average: "Avaliação: {{average}}/{{max}}"
+      title:
+        one: "1 estrela de {{max}}"
+        other: "{{count}} estrelas de {{max}}"
   
   # categories
   aeronautics_and_astronautics: Aeronáutica e Astronáutica

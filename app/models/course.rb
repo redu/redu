@@ -31,6 +31,7 @@ class Course < ActiveRecord::Base
   # VALIDATIONS 
   validates_presence_of :name
   validates_presence_of :description
+  
 
   validation_group :step1, :fields=>[:name, :description]
   #validation_group :step2_interactive, :fields=>[:name, :description]

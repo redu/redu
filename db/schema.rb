@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100716031417) do
+ActiveRecord::Schema.define(:version => 20100728144154) do
 
   create_table "abilities", :force => true do |t|
     t.string   "name"
@@ -98,6 +98,15 @@ ActiveRecord::Schema.define(:version => 20100716031417) do
     t.datetime "created_at"
     t.string   "thumbnail"
     t.integer  "parent_id"
+  end
+
+  create_table "audiences", :force => true do |t|
+    t.string "name"
+  end
+
+  create_table "audiences_schools", :id => false, :force => true do |t|
+    t.integer "audience_id"
+    t.integer "school_id"
   end
 
   create_table "bdrb_job_queues", :force => true do |t|
@@ -217,23 +226,18 @@ ActiveRecord::Schema.define(:version => 20100716031417) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "rating_average",         :limit => 10, :precision => 10, :scale => 0, :default => 0
-    t.integer  "owner",                                                                                  :null => false
-    t.text     "description",                                                                            :null => false
-    t.integer  "main_resource_id"
-    t.boolean  "published",                                                           :default => false
-    t.string   "media_file_name"
-    t.string   "media_content_type"
-    t.integer  "media_file_size"
+    t.integer  "rating_average",   :limit => 10, :precision => 10, :scale => 0, :default => 0
+    t.integer  "owner",                                                                            :null => false
+    t.text     "description",                                                                      :null => false
+    t.boolean  "published",                                                     :default => false
     t.datetime "media_updated_at"
-    t.string   "external_resource"
-    t.string   "external_resource_type"
     t.string   "state"
-    t.integer  "view_count",                                                          :default => 0
-    t.boolean  "public",                                                              :default => true
-    t.decimal  "price",                                :precision => 8,  :scale => 2, :default => 0.0
-    t.string   "course_type"
-    t.boolean  "removed",                                                             :default => false
+    t.integer  "view_count",                                                    :default => 0
+    t.boolean  "public",                                                        :default => true
+    t.decimal  "price",                          :precision => 8,  :scale => 2, :default => 0.0
+    t.boolean  "removed",                                                       :default => false
+    t.string   "courseable_type"
+    t.integer  "courseable_id"
   end
 
   create_table "credits", :force => true do |t|
@@ -289,6 +293,12 @@ ActiveRecord::Schema.define(:version => 20100716031417) do
     t.decimal  "price",         :precision => 8, :scale => 2, :default => 0.0
     t.boolean  "public",                                      :default => true
     t.boolean  "removed",                                     :default => false
+  end
+
+  create_table "external_objects", :force => true do |t|
+    t.text     "html_embed"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "favorites", :force => true do |t|
@@ -389,7 +399,6 @@ ActiveRecord::Schema.define(:version => 20100716031417) do
   create_table "interactive_classes", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "course_id",  :null => false
   end
 
   create_table "invitations", :force => true do |t|
@@ -471,7 +480,6 @@ ActiveRecord::Schema.define(:version => 20100716031417) do
     t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "course_id",  :null => false
   end
 
   create_table "photos", :force => true do |t|
@@ -578,6 +586,15 @@ ActiveRecord::Schema.define(:version => 20100716031417) do
   add_index "rates", ["rateable_id"], :name => "index_rates_on_rateable_id"
   add_index "rates", ["user_id"], :name => "index_rates_on_user_id"
 
+  create_table "redu_categories", :force => true do |t|
+    t.string "name"
+  end
+
+  create_table "redu_categories_schools", :id => false, :force => true do |t|
+    t.integer "redu_category_id"
+    t.integer "school_id"
+  end
+
   create_table "roles", :force => true do |t|
     t.string  "name"
     t.boolean "school_role", :null => false
@@ -640,7 +657,6 @@ ActiveRecord::Schema.define(:version => 20100716031417) do
     t.time     "media_updated_at"
     t.string   "external_resource"
     t.string   "external_resource_type"
-    t.integer  "course_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "state"
@@ -656,6 +672,10 @@ ActiveRecord::Schema.define(:version => 20100716031417) do
   end
 
   add_index "sessions", ["sessid"], :name => "index_sessions_on_sessid"
+
+  create_table "simple_categories", :force => true do |t|
+    t.string "name"
+  end
 
   create_table "skills", :force => true do |t|
     t.string  "name"

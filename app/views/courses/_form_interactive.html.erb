@@ -56,10 +56,8 @@
 
   <div style="float: left; width: 100%">
   
-<%# render :partial => 'attachment_form', :locals => {:f => f, :course => interactive_class}%>
-  <%= file_field_tag "attachments[]"%>
-				<%= file_field_tag "attachments[]"%>
-				<%= file_field_tag "attachments[]"%>
+<%= render :partial => 'attachment_form', :locals => {:f => f}%>
+
 
 </div>
 <iframe id='upload_frame' name="upload_frame" style="width:1px;height:1px;border:0px" src="about:blank"></iframe>

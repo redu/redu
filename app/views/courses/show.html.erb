@@ -1,3 +1,6 @@
+
+
+
 <script>
 	/*
 	function toggleAnnotationBox(){
@@ -15,6 +18,74 @@
 		
 	}
 	*/
+	
+var min = 8;
+var max = 18;
+function increaseFontSize(){
+    var thecontainer = document.getElementById('topic_body');
+    var p = thecontainer.getElementsByTagName('p');
+    for (i = 0; i < p.length; i++) {
+        if (p[i].style.fontSize) {
+            var s = parseInt(p[i].style.fontSize.replace("px", ""));
+        }
+        else {
+            var s = 12;
+        }
+        if (s != max) {
+            s += 2;
+        }
+        p[i].style.fontSize = s + "px";
+    }
+}
+
+function decreaseFontSize(){
+	var thecontainer = document.getElementById('topic_body');
+    var p = thecontainer.getElementsByTagName('p');
+    for (i = 0; i < p.length; i++) {
+        if (p[i].style.fontSize) {
+            var s = parseInt(p[i].style.fontSize.replace("px", ""));
+        }
+        else {
+            var s = 12;
+        }
+        if (s != min) {
+            s -= 2;
+        }
+        p[i].style.fontSize = s + "px"
+    }
+}
+	
+	function checkTopic(tIndex){
+		document.getElementById('topic_check_'+tIndex).innerHTML = '<img title="completei!" src="/images/checkbox.png" alt="Checkbox" onclick="unCheckTopic(' + tIndex + '); return false;">'
+	}
+	
+	function unCheckTopic(tIndex){
+		document.getElementById('topic_check_'+tIndex).innerHTML = '<img title="completei!" src="/images/checkbox_clear.png" alt="Checkbox" onclick="checkTopic(' + tIndex + '); return false;">'
+	}
+	
+	var topics = {};
+	
+	
+	var topicCount = 1;
+	var currentTopic = 0;
+	
+	function selectTopic(topic){
+		//alert('topic: '+topic + ' | current: '+ currentTopic);
+		
+		var curListItem = document.getElementById('topic_item_'+ currentTopic);
+		var selListItem = document.getElementById('topic_item_'+ topic);
+		if (typeof(curListItem) != 'undefined' ) {
+		curListItem.className = "topic_item"; 
+		}
+		if (typeof(selListItem) != 'undefined' ) {
+		selListItem.className += " topic_item_sel";
+		}
+		
+		document.getElementById('topic_body_'+ currentTopic).style.display = "none";
+		document.getElementById('topic_body_'+ topic).style.display = "block";
+		
+		currentTopic = topic;
+	}
 		
 	jQuery(document).ready(function(){
 		jQuery("a.lights_on").click(
@@ -37,18 +108,7 @@
 			}
 		)
 		
-		jQuery("#annotation_link").click(
-			function(e){
-				jQuery("#annotation_box").slideDown("fast");
-				e.preventDefault();
-			}
-		)
 		
-		jQuery("#annotation_menu a").click(function(e){
-			jQuery("#annotation_box").slideUp("slow");
-			e.preventDefault();
-			
-		})
 		
 	})
 		
@@ -56,14 +116,17 @@
 </script>
 <div id="lights-dimmed" style="display:none; height: 100%;">&nbsp;</div>
 
-<div id="all_content3">
-    <div id="col_content_video">
-        <div id="breadcrumbs_video">
-        	
-            <a href="<%=application_url%>">home</a>
-            > <a href="#">aprender</a>
-            > <a href="#">aulas</a>
-        </div>
+
+
+<div class="grid_16">
+<div id="breadcrumbs"><a href="<%=application_url%>">início</a> > <a href="#">aulas</a> > <a href="#"><%= @course.name %></a> </div>
+
+<!--
+<h3 class="call">Aula: </h3>
+-->
+
+
+				
         <div id="item_video" class="clearfix">
             <div id="title_video">
                 <%= @course.name %>
@@ -71,9 +134,9 @@
                 	<%= link_to 'Editar', {:action => "edit"}, :class => "button icon-edit" %>
 					<%= link_to 'Remover', @course, {:confirm => 'Você tem certeza que quer remover esta aula permanentemente?', :method => :delete, :class => "button icon-delete"} %>
 				<% end %>	
-				<%# if current_user and not current_user.has_access_to_course(@seminar) and not @seminar.external_resource_type.eql?('youtube') %>
-					<%# link_to "Comprar", { :action => :buy, :id => @course.id }, :class => "button icon-buy"%>
-				<%# end %>
+				<% if current_user and not current_user.has_access_to_course(@course) and not @course.external_resource_type.eql?('youtube') %>
+					<%= link_to "Comprar", { :action => :buy, :id => @course.id }, :class => "button icon-buy"%>
+				<% end %>
 				
 				
                 <% if current_user.admin? and @course.state.eql?("waiting") %>
@@ -85,6 +148,7 @@
             <!--<div id="edit_admin">
 				
             </div>-->
+			<div>
             <div id="identification1">
                 <ul id="identification_resource1">
                     <li>
@@ -123,25 +187,29 @@
                 </ul>
             </div>
         </div>
-
-		<div id="view_video" align="center" >
-			
-        	<!-- colocar if aqui -->
-			<% if current_user and @seminar.external_resource_type.eql?('youtube')%>
-				<%= render :partial => "courses/player", :locals => {:course => @seminar, :is_interactive_class => false} %>
-			<%# else %>
-				<%# if current_user and current_user.has_credits_for_course(@course) and current_user.has_access_to_course(@course)  %>
-		   			<%# render :partial => "courses/player", :locals => {:course => @courseseminar} %>
-				<%# end %>
-			<% end %>
-    </div><!-- end view_video -->
+		
+        
+		</div>
+		
+		
+		<%= render_course %>
+		
 
 <div id="filter_bar_video">
 			
             <div id="actions_video">
                 <ul id="actions_resource">
-                	 <li>
-                	 	<%= render :partial => "shared/annotation" , :locals => {:course => @course}%>
+					<li>
+                	 	 <a href="#" class="raise_hand" >Pedir ajuda</a>
+                        <!--
+						<a href="#" class="share_video" onclick="toggleAnnotationBox();return false;">Anotações</a>
+						-->
+                    </li>
+					<li>
+                        |
+                    </li>
+					 <li>
+                	 	<%= render :partial => "shared/annotation"%>
                         <!--
 						<a href="#" class="share_video" onclick="toggleAnnotationBox();return false;">Anotações</a>
 						-->
@@ -157,16 +225,14 @@
                         |
                     </li>
                     <li>
-                        <a href="#" class="share_video" onclick="toggleShareBox();return false;">Compartilhar</a>
+												<%= render :partial => 'shared/share'%>
                     </li>
 					<li>
                         |
                     </li>
                     <li>
                     	<%= render :partial => "shared/favorite" , :locals => {:favoritable => @course}%>
-						
 					</li>
-				
                     
                     <li>
                         |
@@ -176,31 +242,16 @@
                     </li>
                 </ul>
             </div>
-            <div id="ratting_video">
+            <div id="rating_video">
 				<%= ratings_for @course %>
             </div>
         </div><!-- end bar -->
 		
-		<%= render :partial => 'shared/share', :locals => {:title => @course.name, :url => application_url[0..application_url.length-2] + request.request_uri, :thumb_url => @course.thumb_url} %>
-		    
-		<div id="annotation_box" style="display: none;">
-			<% remote_form_for(@annotation, :loading => "$('annotation_link').hide(); $('annotation_spinner').show();") do |f| %>
- 			<%= f.hidden_field(:user_id, :value => current_user.id) %>
-			<%= f.hidden_field(:course_id, :value => @course.id) %>
-
-				<%= f.label "Anotações" %>:<br/>
-				<%= f.text_area :content, :size => "25x3" %><br/>
-			
-			<div id="annotation_menu" class="clearfix">
-				<%= f.submit 'Salvar' %> | <a href="#" >Cancelar</a>
-			</div>
-			 <% end %>
-			
-		</div><!-- end annotation_box -->
-        
-        
+	    
 		
-		<div id="left_column"> <!-- COLUNA DA ESQUERDA  ## -->
+        
+        
+				<div id="left_column" class= "grid_6"> <!-- COLUNA DA ESQUERDA  ## -->
 			<!-- ONLINE USERS ############################################################################################################################# --><!-- MATERIAIS AUXILIARES #################################################################################################################### -->
 			<% cur_watching = @course.currently_watching %>
 			
@@ -218,9 +269,9 @@
 			<a name="comments"></a>
 			<%= render :partial => 'shared/comment', :locals => { :commentable => @course } %>
 		
-        </div> <!-- FIM COLUNA DA ESQUERDA  ## -->
+     </div> <!-- FIM COLUNA DA ESQUERDA  ## -->
 		
-		<div id="right_column"> <!-- COLUNA DA DIREITA  ## -->
+		<div id="right_column" class="grid_6"> <!-- COLUNA DA DIREITA  ## -->
 		
 			<% if  (@course.owner == current_user or @course.resources.length > 0) %>
 			<!-- MATERIAIS AUXILIARES #################################################################################################################### -->
@@ -233,12 +284,12 @@
                     <ul id="materials_item">
                         <% @course.resources.each do | resource | %>
                         <li>
-                            <%= link_to resource.name,
-                           		download_attachment_course_path(:id => @course.id, :res_id => resource.id),:class => type_class(resource) %>
+                            <%= link_to resource.attachment_file_name,	resource.attachment.url,
+                            :class => type_class(resource) %>
                         </li>
                         <% end %>
                     </ul>
-                    <%= link_to '(adicionar anexo)', :action => 'edit' %>
+                    <%= link_to 'Adicionar materiais complementares', :action => 'edit' %>
                 </div>
             </div>
             <!-- MATERIAIS AUXILIARES #################################################################################################################### -->
@@ -248,6 +299,13 @@
         	<div id="filter_bar_comments2"><span class="title_filter">AULAS RELACIONADAS</span></div>
 			<%= render :partial => 'courses/item', :collection => @related_courses, :as => :course %>
 		
-		     </div> <!-- FIM COLUNA DA DIREITA  ## -->
-		</div>
+		  </div> <!-- FIM COLUNA DA DIREITA  ## -->
+
+			
+			<!--
+			 <div id="filter_bar_comments2"><span class="title_filter">ASSISTIRAM RECENTEMENTE A ESTA AULA</span></div>
+			-->
+
 </div>
+</div>
+

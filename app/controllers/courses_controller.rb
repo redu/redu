@@ -101,7 +101,8 @@ class CoursesController < BaseController
     
     render :update do |page|
       page.replace_html id, ratings_for(@course, :wrap => false, :dimension => params[:dimension])
-      page.visual_effect :highlight, id
+     # page << "$('##{id}').effect('highlight', {}, 2000);" #TODO precisa do plugin de effects do jquery
+      #page.visual_effect :highlight, id
     end
   end
   
@@ -258,15 +259,13 @@ class CoursesController < BaseController
 
       respond_to do |format|
         if @course.courseable_type == 'Page'
-          format.html {render 'show_page'}
         elsif @course.courseable_type == 'InteractiveClass'
           @lessons = Lesson.all(:conditions => ['interactive_class_id = ?',@course.courseable_id ], :order => 'position ASC') # TODO 2 consultas?
-           format.html {render 'show_interactive'}
         else # TODO colocar type == seminar / estamos considerando que o resto é seminário
           @seminar = @course.courseable
-          format.html {render 'show_seminar'}
         end
         
+        format.html
         format.xml  { render :xml => @course }
       end
    # end
@@ -434,7 +433,9 @@ class CoursesController < BaseController
               end
               format.js do
                   render :update do |page| 
-                    page << "alert('salvo!')"
+                    #page << "alert('salvo!')"
+                    #page << "jQuery('#save_btn').val('Salvo em ')"
+                    page << "jQuery('#save_info').html('Salvo em #{Time.now.utc}')"
                   end
                 end
             else  
@@ -443,7 +444,7 @@ class CoursesController < BaseController
               end
               format.js do
                   render :update do |page| 
-                    page << "alert('erro')"
+                    page << "alert('Erro ao salvar. Tente novamente em alguns instantes.')"
                   end
                 end
             end

@@ -12,10 +12,113 @@
     @background: #EBF7FD
     
 **/
+/*
+ * Botoes
+ */
+#breadcrumbs{font-size: 0.8em; float:left; width:100%; height:21px; background-color:#f8f8f8; padding:5px 0px 0px 5px; margin:0px 0px 8px 0px;
+				color:#bac5d4;}
+#breadcrumbs a{color:#bac5d4; text-decoration:none} 
+#breadcrumbs a:hover{color:#bac5d4;text-decoration:underline}
 
+a.icon-delete {
+	padding-left: 25px;
+	background: #F5F5F5 url("../images/icons/delete.png") no-repeat 5px 4px;
+}
+
+a.icon-edit {
+	padding-left: 25px;
+	background: #F5F5F5 url("../images/icons/post.png") no-repeat 5px 4px;
+}
 
 /*
  * aulas
+ */
+
+/*
+ * Show de aula (Robson)
+ *
+ */
+
+#rating_video{
+	position:relative; 
+	float:right; 
+	width:130px; 
+	height:auto; 
+	padding:0px; 
+	margin: 0;
+	color:#858787; 
+}
+
+.lights_on{ background:url(../images/icon_light_on.png) no-repeat; color:#5782D5; text-decoration:none; padding-left:20px; }
+.lights_on:hover{text-decoration:underline;}
+
+.lights_off{ background:url(../images/icon_light_off.png) no-repeat; color:#5782D5; text-decoration:none; padding-left:20px; }
+.lights_off:hover{text-decoration:underline;}
+
+.annotation{ background:url(../images/icon_annotation.gif) no-repeat; color:#5782D5; text-decoration:none; padding-left:20px; }
+.annotation:hover{text-decoration:underline;}
+
+.annotation_plus{ background:url(../images/icon_annotation_plus.gif) no-repeat; color:#5782D5; text-decoration:none; padding-left:20px; }
+.annotation_plus:hover{text-decoration:underline;}
+
+.share_video{ background:url(../images/icon_share_on.png) no-repeat; color:#5782D5; text-decoration:none; padding-left:20px; }
+.share_video:hover{text-decoration:underline;}
+	
+.favorites_video{background:url(../images/icon_favorites_on.png) no-repeat; color:#5782D5; text-decoration:none; padding-left:20px} 
+.favorites_video:hover{background:url(../images/icon_favorites_on.png) no-repeat; color:#5782D5; text-decoration:underline; padding-left:20px}
+	
+.download_video{background:url(../images/icon_download_on.png) no-repeat; color:#5782D5; text-decoration:none; padding-left:20px}
+.download_video:hover{background:url(../images/icon_download_on.png) no-repeat; color:#5782D5; text-decoration:underline; padding-left:20px}
+	
+.comments_video{background:url(../images/icon_comments_on.png) no-repeat; color:#5782D5; text-decoration:none; padding-left:20px}
+.comments_video:hover{background:url(../images/icon_comments_on.png) no-repeat; color:#5782D5; text-decoration:underline; padding-left:20px}
+
+#item_video{clear:both; height:auto; padding:0px 0px 0px 0px; margin:0px 0px 8px 0px;}
+
+#title_video{clear: both; font:bold 20px "Trebuchet MS", Tahoma; color:#7a87a1;text-decoration:none; padding:0px; margin:0px}
+
+#lights-dimmed {
+	background:url(../images/overlay-85.png) left top repeat;
+
+	height:100%;
+	width:100%;
+	position:fixed;
+	top:0;
+	left:0;
+	display:none;
+	z-index:1;
+}
+
+#identification1{float:left; width:573px; height:auto; padding:0px 0px 0px 0px; margin:4px 0px 0px 0px;}
+#identification_resource1{list-style-type:none; top:0px; padding:0px; right:0px;}
+#identification_resource1 li {float:left; margin-right:8px; list-style:none; font-size:11px; text-decoration:none; color:#94a2ca;}
+#identification_resource1 li span {padding: 5px 10px; font-size:11px; text-decoration:none; color:#5683d5;}
+#identification_resource1 li a, #identification_resource1 li a:visited {padding:0; font-size:11px; text-decoration:none; color:#5683d5;font-weight:bold;}
+#identification_resource1 li a:hover {padding:0; font-size:11px; text-decoration:underline; color:#5683d5; font-weight:bold;}
+
+#description_video{float:left; width:80%; height:auto;padding:0px 0px 0px 0px; margin:0px 0px 0px 0px; font-size:13px; color:#858787}
+#actions{float:left; width:399px; height:auto; padding:0px 0px 0px 0px; margin:16px 0px 0px 8px; }
+#actions_resource{list-style-type:none; top:0px; padding:0px; right:0px; position:relative; z-index: 3001;}
+#actions_resource li {float:left; margin-right:8px; list-style:none; font-size:11px; text-decoration:none; color:#bababa;}
+/*#actions_resource li span {padding: 5px 10px; font-size:11px; text-decoration:none; color:#5683d5;}
+#actions_resource li a, #evaluation_menu li a:visited {padding:0; font-size:11px; text-decoration:none; color:#5683d5;}
+#actions_resource li a:hover {padding:0; font-size:11px; text-decoration:underline; color:#5683d5;}*/
+#actions_video{float:left;  height:auto; padding:0px 0px 0px 0px; margin:4px 0px 0px 8px;}
+
+#filter_bar_video {
+	float: left;
+	width:99%; 
+	height:22px; 
+	background:url(../images/bg_filter_bar.gif) repeat-x right; 
+	padding:5px;
+	margin:8px 8px 8px 0px; 
+	border:solid 1px #dedede;  
+	
+}
+
+/* 
+ * editar
+ * 
  */
 
 #accessbility_bar {
@@ -99,7 +202,13 @@
 	float: left; width: 200px;
 }
 #topic_body {
-	float: left; width: 700px; padding: 10px; border-left: 1px dotted #ddd; min-height: 360px; position: relative; z-index: 10000;
+    float: left;
+    min-width: 650px; /* FIXME colocar no esquema do 960*/
+    padding: 10px;
+    border-left: 1px dotted #ddd;
+    min-height: 360px;
+    position: relative;
+    z-index: 10000;
 }
 
 #publish_box {
@@ -192,7 +301,7 @@ html {
 }
 
 body {
-     background-color: #EBECFD;/*#E5ECF3;*/
+     background-color: #E0E9E9;/*#E5ECF3;*/
 }
 
 ul, ol, li {
@@ -316,7 +425,7 @@ a.more {
     }
 
     a.button, button{
-        display:block;
+        /*display:block;*/
         margin:0 7px 0 0;
         background-color: #F5F5F5;
         border-top: 1px solid #EEEEEE;
@@ -1186,6 +1295,7 @@ div.content {
     min-height:100%;
     height: auto;
     padding-top: 10px;
+		padding-bottom: 30px;
     position: relative;
     background: white;
     -moz-border-radius: 8px;

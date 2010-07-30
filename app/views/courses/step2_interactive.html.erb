@@ -15,17 +15,18 @@
   
   <div style="float: left; padding-top: 5%;">
   <p>
-    <%= f.submit 'Salvar Aula' %> | <%= link_to "Visualizar", unpublished_preview_courses_path, :target => "_blank"%> | <%= link_to_function "Salvar parcialmente", "save()"%>
+    <%= button_to_function "Visualizar", "save(true)"%>
+		 | <%= button_to_function "Salvar parcialmente", "save(false)", :id => "save_btn"%><%= image_tag 'spinner.gif', :id => 'save-spinner', :style => 'display: none' %>
+ 		<span class="snippet" id="save_info"></span>
   </p>
   </div>
   
   <%= render :partial => 'form_interactive', :locals => {:f => f, :interactive_class => @interactive_class} %>
 
  <div style="float: left;">
- <%= link_to '< Anterior', new_course_path(:step => '1', :prev => '2'), :class => "button" %> 
-<%= f.submit 'Próximo >' %> 
+ <%= link_to '< Anterior', new_course_path(:step => '1', :prev => '2'), :class=> "button" %><%= f.submit 'Próximo >' %> 
 
-<br><%= link_to 'Cancelar', cancel_courses_path, :confirm => "Tem certeza que deseja sair do editor de aulas?" %>
+ou <%= link_to 'Cancelar', cancel_courses_path, :confirm => "Tem certeza que deseja sair do editor de aulas?" %>
 
 </div>
 <% end %>

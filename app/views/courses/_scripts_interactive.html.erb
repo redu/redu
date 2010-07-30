@@ -19,6 +19,15 @@
 	}
 	
 	function add_fields(link, association, content, type) {
+		var fieldsNumber = document.getElementById('topic_list').children.length;//jQuery("#topic_list > li").length;
+		var maxFieldsNumber = <%= AppConfig.max_lesson_number %>;
+		
+		//"verificar" topic_list_item_0
+		if (fieldsNumber >= maxFieldsNumber){
+			alert('O número máximo de tópicos em uma aula é 10'); // TODO tirar alerts
+			return;
+		}
+		
 		//alert(link + association + content);
 		var new_id = new Date().getTime();
 		var regexp = new RegExp("new_" + association, "g");
@@ -115,12 +124,19 @@
         
     }
 		
-		
-	function save(){
+	var isPreview = false;	
+	function save(preview){
+		isPreview = preview;
 		jQuery.ajax({
 			beforeSend:function(request){
-				//showLoadingUsers();
+				$('#save-spinner').show();
 				}, 
+			complete:function(request){
+				$('#save-spinner').hide();
+				if (isPreview) {
+					window.open('<%= unpublished_preview_courses_path %>');
+				}
+				},
 			data:jQuery.param(jQuery("#interactive_class_form").serializeArray()), 
 			dataType:'script', 
 			type:'post', 
@@ -228,6 +244,25 @@
 			document.getElementById("external_resource_field").style.display = "block";
 		}
 		
+	}
+	
+
+	
+	
+	function addAttachmentField(){
+		
+		var fieldsNumber = jQuery("input[name=attachments\\[\\]]").length;
+		var maxFieldsNumber = <%= AppConfig.attachments_number %>;
+		
+		if (fieldsNumber < maxFieldsNumber) {
+		
+		jQuery('#attachments').append('<div><input id="attachments_" name="attachments[]" type="file"></div>');
+		
+		if (fieldsNumber == maxFieldsNumber-1) {
+			jQuery('#new_attachment_link').hide();
+		}
+		
+		}
 	}
 	
 	
