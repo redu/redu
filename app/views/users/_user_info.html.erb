@@ -10,8 +10,9 @@
                     <% end %>
                     </li>
                 <% else %>
-                    <li class="action-2"><a href="" class="icon ico-contact">Mensagem</a></li> 
-                    <li class="action-3"><a href="" class="icon ico-recomend">Recomende</a></li> 
+                    <li class="action-2">
+						<%= link_to "Mensagens", user_messages_path(current_user), :class => "icon ico-contact" %>
+					</li> 
                 <% end %>
             </ul> 
         </div><!-- end actions --> 
@@ -47,10 +48,10 @@
         </div><!-- end personal-overview --> 
         
         <div class="social-overview clearfix"> 
-            <div class="recomendations-m"> 
+            <!-- <div class="recomendations-m"> 
             <span class="number">37</span> 
             <span class="legend">recomendações</span> 
-            </div>
+            </div> -->
             <% unless user.tag_list.empty? %>
             <span class="areas quiet">Áreas de intersse</span> 
             <ul class="tags"> 
