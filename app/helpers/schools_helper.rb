@@ -46,21 +46,23 @@ module SchoolsHelper
     membership = current_user.get_association_with @school
     
     if membership and membership.status == 'approved' # já é membro
-      link_to "ABADONAR", unjoin_school_path, :class => "participar_rede" , :confirm => "Você tem certeza que quer deixar essa rede?"
+      link_to "Abandonar", unjoin_school_path, 
+        :class => "participar_rede button" , 
+        :confirm => "Você tem certeza que quer deixar essa rede?"
     else 
        case @school.subscription_type 
         
         when 1 # anyone can join
-        link_to "PARTICIPAR", join_school_path, :class => "participar_rede" 
+        link_to "Participar", join_school_path, :class => "participar_rede button" 
       when 2 # moderated
         if membership.status == 'pending'
-          "(EM MODERACÃO)"
+          "(em moderação)"
         else
-          link_to "PARTICIPAR", join_school_path, :class => "participar_rede"
+          link_to "Participar", join_school_path, :class => "participar_rede button"
         end
          
         when 3 #key
-        link_to "PARTICIPAR", "#", {:class => "participar_rede", :onclick => "toggleAssociateBox();false;"} 
+        link_to "Participar", "#", {:class => "participar_rede button", :onclick => "toggleAssociateBox();false;"} 
       end
       
     end 

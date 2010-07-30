@@ -1437,6 +1437,32 @@ div.content div.content {
     margin-top:8px;
 }
 
+#group-header div.options {
+	margin-top: 8px;
+}
+
+#group-header div.options a.participar_rede {
+	font-size: .8em;
+	float: right;
+	width: 90%;
+	text-align: center;
+}
+
+#group-header span.likeable {
+	display: block;
+	margin-top: 5px;
+	padding: 5px 30px;
+	font-size: .8em;
+	color: gray;
+}
+
+#group-header span.likeable span {
+	display: block;
+	float: left;
+	margin-right: 10px;
+	text-align: center;
+}
+
 #group .sidebar ul.menu {
     
 }
@@ -1699,10 +1725,26 @@ ul.sub-groups > li {
 /*
  * Botoes
  */
-#breadcrumbs{font-size: 0.8em; float:left; width:100%; height:21px; background-color:#f8f8f8; padding:5px 0px 0px 5px; margin:0px 0px 8px 0px;
-				color:#bac5d4;}
-#breadcrumbs a{color:#bac5d4; text-decoration:none} 
-#breadcrumbs a:hover{color:#bac5d4;text-decoration:underline}
+#breadcrumbs {
+	font-size: 0.8em;
+	float: left;
+	width: 100%;
+	height: 21px;
+	background-color: #f8f8f8;
+	padding: 5px 0px 0px 5px;
+	margin: 0px 0px 8px 0px;
+	color: #bac5d4;
+}
+
+#breadcrumbs a {
+	color: #bac5d4;
+	text-decoration: none
+}
+
+#breadcrumbs a:hover {
+	color: #bac5d4;
+	text-decoration: underline
+}
 
 a.icon-delete {
 	padding-left: 25px;
