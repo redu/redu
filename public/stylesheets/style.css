@@ -12,8 +12,8 @@
     @background: #EBF7FD
     
 **/
-
 /** @typo **/
+
 html, body {  height:100%; /* 100% height hack */ }
 
 html {
@@ -440,10 +440,15 @@ div.recomendations-m .number {
       padding-right: 20px;
       color: gray;     
     }
+
 /** @tabs **/
     .ui-tabs .ui-tabs-hide {
          display: none;
     }
+
+	.ui-tabs-nav li {
+		float: left;
+	}
 
     .tabs {
         border-left: 1px solid #EFF0F0;
@@ -816,23 +821,26 @@ div.recomendations-m .number {
     #actv-1 form.post-status {
         
     }
+
+	#actv-1 form.post-status fieldset,
+	#actv-2 form.post-question fieldset {
+		margin: 0;
+		padding: 0;
+	}
     
     #actv-1 form.post-status textarea,
     #actv-2 form.post-question textarea {
-        width: 450px;
+        width: 95%;
         height: 80px;
-        float: left;
-        margin-right: 10px;
     }
     
     #actv-1 form.post-status button,
     #actv-2 form.post-question button,
     #actv-3 form.post-poll button {
         width: 100px;
-        margin: 5px 0;
-        position: absolute;
-        right: 10px;
-        bottom: 10px;
+        margin-top: 10px;
+		float: right;
+		display: block;
     }
     
     #actv-3 form.post-poll label {
@@ -1214,13 +1222,21 @@ div.content div.content {
         ul.activities li div.question .question-action div.answer form {
             display: block;
         }
+
+
+		ul.activities li div.question .question-action div.answer form fieldset {
+			margin: 0;
+			padding: 0;
+		}
         
         ul.activities li div.question .question-action div.answer button {
             float: right;
+			display: block;
+			margin-top: 20px;
         }
         
         ul.activities li div.question .question-action div.answer textarea.answer{
-            width: 400px;
+            width: 95%;
         }
     
     
