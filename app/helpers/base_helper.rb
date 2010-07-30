@@ -3,6 +3,7 @@ require 'md5'
 # Methods added to this helper will be available to all templates in the application.
 module BaseHelper
   
+
   
   def type_class(resource)
       case resource.attachment_content_type #TODO fazer por extensao em nao por tipo

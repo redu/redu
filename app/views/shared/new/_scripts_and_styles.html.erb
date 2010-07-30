@@ -1,4 +1,4 @@
-<% if (controller_name == 'schools') %>
+<% if controller_name == 'schools' %>
   <%  if @school %>
     <%= stylesheet_link_tag 'themes/' + @school.theme %>
   <% else %>
@@ -8,6 +8,10 @@
  
  <%= include_tiny_mce_if_needed %>
  
- <% if (controller_name == 'courses' || controller_name == 'resources'   )%>
+ <% if controller_name == 'courses' || controller_name == 'resources'  %>
   <%= ajaxful_rating_style %>
   <% end %>
+	
+	<% if controller_name == 'courses' && action_name == 'show'%>
+  <%= javascript_include_tag 'swfobject'%>
+	<% end %>

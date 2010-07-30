@@ -261,7 +261,7 @@ class CoursesController < BaseController
         if @course.courseable_type == 'Page'
         elsif @course.courseable_type == 'InteractiveClass'
           @lessons = Lesson.all(:conditions => ['interactive_class_id = ?',@course.courseable_id ], :order => 'position ASC') # TODO 2 consultas?
-        else # TODO colocar type == seminar / estamos considerando que o resto é seminário
+        elsif @course.courseable_type == 'Seminar'
           @seminar = @course.courseable
         end
         

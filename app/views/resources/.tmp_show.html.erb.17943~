@@ -1,8 +1,0 @@
-<p>
-  <b>Name:</b>
-  <%=h @resource.name %>
-</p>
-
-
-<%= link_to 'Edit', edit_resource_path(@resource) %> |
-<%= link_to 'Back', resources_path %>

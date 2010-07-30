@@ -86,7 +86,7 @@ class Seminar < ActiveRecord::Base
     # Callbacks
   before_validation :enable_correct_validation_group
   
-  validation_group :external, :fields => [:external_resource, :external_resource_type] #title, description devem estar em course
+  validation_group :external, :fields => [:external_resource, :external_resource_type]
   validation_group :uploaded, :fields => [:media]
   
    validates_attachment_presence :media

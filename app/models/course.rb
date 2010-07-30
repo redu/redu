@@ -20,8 +20,9 @@ class Course < ActiveRecord::Base
   belongs_to :owner , :class_name => "User" , :foreign_key => "owner"
   belongs_to :courseable, :polymorphic => true
   belongs_to :asset, :polymorphic => true
-  belongs_to :category, :class_name => "Skill", :foreign_key => "skill_id"
-  
+  #belongs_to :category, :class_name => "Skill", :foreign_key => "skill_id"
+  belongs_to :simple_category
+
   # NESTED
   #accepts_nested_attributes_for :page
   accepts_nested_attributes_for :resources, 
@@ -31,9 +32,10 @@ class Course < ActiveRecord::Base
   # VALIDATIONS 
   validates_presence_of :name
   validates_presence_of :description
+  validates_presence_of :simple_category
   
 
-  validation_group :step1, :fields=>[:name, :description]
+  validation_group :step1, :fields=>[:name, :description, :simple_category]
   #validation_group :step2_interactive, :fields=>[:name, :description]
   # validation_group :step2_seminar, :fields=>[:media]
   validation_group :step3, :fields=>[:price]
@@ -95,14 +97,14 @@ class Course < ActiveRecord::Base
   end
   
    def set_new_local_filename
-     if self.courseable_type == 'Seminar' and self.courseable.external_resource_type = 'upload'
+     if self.courseable_type == 'Seminar' and self.courseable.external_resource_type == 'upload'
        self.courseable.update_attribute(:media_file_name, "#{self.courseable.id}.flv")
     end
   end
   
   
   def permalink
-    APP_URL + "courses/"+ self.id.to_s
+    APP_URL + "/courses/"+ self.id.to_s+"-"+self.name.parameterize
   end
   
   

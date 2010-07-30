@@ -91,7 +91,27 @@ pt-BR:
         one: "1 estrela de {{max}}"
         other: "{{count}} estrelas de {{max}}"
   
-  # categories
+  #simple categories
+  arts_design_animation: Artes / Design / Animação
+  architecture_urban_studies: Arquitetura / Estudos Urbanos
+  beauty_fashion: Beleza / Moda
+  business_economics_law: Negócios / Economia / Legislação
+  cars_bikes: Carros e Bicicletas
+  health_wellness_relationships: Saúde / Bem-Estar / Relacionamentos
+  hobbies_gaming: Hobbies / Jogos
+  home_gardening: Lar / Jardinagem
+  languages: Línguas
+  music: Música
+  nutrition_food_drinks: Nutrição / Comidas / Bebidas
+  online-marketing: Marketing Online
+  religion_philosophy: Religião / Filosofia
+  science_technology_engineering: Ciência / Tecnologia / Engenharia
+  society_history_politics: Sociedade / História / Política
+  sports: Esportes
+  other: Outros
+  
+  
+  #redu categories
   aeronautics_and_astronautics: Aeronáutica e Astronáutica
   anthropology: Antropologia
   architecture: Arquitetura
@@ -148,25 +168,7 @@ pt-BR:
   women's_and_gender_studies: Mulheres e Estudos de Gênero
   writing: Escrita
     
-  #Tranlate based on Sclipo
-  arts_design_animation: Artes / Design / Animação
-  beauty_fashion: Beleza / Moda
-  business_economics_law: Negócios / Economia / Legislação
-  cars_bikes: Carros e Bicicletas
-  health_wellness_relationships: Saúde / Bem-Estar / Relacionamentos
-  hobbies_gaming: Hobbies / Jogos
-  home_gardening: Lar / Jardinagem
-  languages: Línguas
-  music: Música
-  nutrition_food_drinks: Nutrição / Comidas / Bebidas
-  online_marketing: Marketing Online
-  religion_philosophy: Religião / Filosofia
-  science_technology_engineering: Ciência / Tecnologia / Engenharia
-  society_history_politics: Sociedade / História / Política
-  sports: Esportes
-  other: Outros
-  ###
-  
+
   
   
   

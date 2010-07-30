@@ -1,47 +1,108 @@
-<div id="all_content3">
-<div id="col_content_video">
-	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">ensinar</a> > <a href="#">nova aula</a> > publicação </div>
- 	<div id="title">NOVA AULA - PASSO 3
- 	</div>
+<div class="grid_16">
+<div id="breadcrumbs"><a href="<%=application_url%>">início</a> > <a href="#">ensinar</a> > nova aula</div>
+<!--
+<h3 class="call">Nova Aula - Publicação</h3>
+-->
+<div id="title_video">Nova Aula - Publicação</div>
+<div class="grid_8">
 
-<div style="width: 100%; float: left;">
-
-<% form_for :course, @course, :url => { :action => "create" } do |f| %>
+<% form_for :course, @course, :url => { :action => "create" }, :html => {:id => "form_step_3"} do |f| %>
 <%= f.error_messages %>
-
-<em>Uma vez salvo, as opções de publicação não poderão mais serem editadas.</em><BR><BR>
-
 <%= hidden_field_tag("step", "3", options = {})%>
 
-<%= f.label "Pública" %><br/>
-	<%= f.check_box :public %><br/><br/>
+	<% field_set_tag 'Visibilidade' do %>
+	<%= f.label "Pública <span class='snippet'>(Visível em todo o Redu)</span>" %>
+		<%= f.check_box :public, :onchange => "jQuery('input[name=post_to]').attr('checked', false)" %>
+		
+		<% @schools = current_user.schools %>
+		<% if @schools and @schools.size > 0 %>
+		<%= f.label "Postar em:" %>
+			<div style="overflow-y:scroll; max-height: 200px;">
+			<% @schools.each do | school | %>
+				<div><%= radio_button_tag :post_to, school.id, false, :onchange => "jQuery('#course_public').attr('checked', false)" %> <%= school.name %></div>
+			<% end %>
+			</div>
+		<% end %>
+		<%end%>
 	
-	<%= f.label "Postar em:" %><br/>
-	<% @schools = current_user.schools %>
-	<% @schools.each do | school | %>
-		<%= radio_button_tag :post_to, school.id %> <%= school.name %><br/>
-	<% end %>
-	<br/><br/>
+	
+    <% if AppConfig.activate_payment %>
+	    <% field_set_tag 'Preço' do %>
+	        <%= f.label :price %>
+	        <%= f.text_field :price %>
+	    <% end %>
+    <%end %>
 
-<% if AppConfig.activate_payment %>
-<fieldset id="price_box">
-	<legend>Preço</legend>
-		<%= f.label :price %>
-		<%= f.text_field :price %>
-</fieldset>
+
+	<% field_set_tag 'Compartilhe!' do %>
+		<div>
+			<div><%= f.label :permalink %>
+			<%= text_field_tag "course_permalink", @course.permalink, :style => "font-size: 0.9em; width: 400px;", :disabled => true%>
+			</div>
+			
+			<div style="padding: 10px;">
+				 
+	<% promote_url = "http://promote.orkut.com/preview?nt=orkut.com&tt=#{@course.name}&du=#{@course.permalink}" %>
+	
+    <button type="button" class="watch-share-button yt-uix-button" onclick="window.open('<%= promote_url %>');">
+        <img src="/images/socialite/orkut_16.png" alt="Orkut" title="Orkut"><span class="yt-uix-button-content">orkut</span>
+    </button>
+		
+		<button type="button" class="watch-share-button yt-uix-button" onclick='window.open("http://www.facebook.com/share.php?u=<%=@course.permalink%>");'>
+       <img src="/images/socialite/facebook_16.png" title="Facebook"><span class="yt-uix-button-content">facebook</span>
+    </button>
+		
+		<% twitter_url = "http://www.twitter.com/?status=#{@course.name}: #{@course.permalink} via redu.com.br" %>
+	<% twitter_url = URI.escape(twitter_url) %>
+		
+			<button type="button" class="watch-share-button yt-uix-button" onclick='window.open("<%=twitter_url%>");'>
+        <img src="/images/socialite/twitter_16.png" alt="Twitter" title="Twitter"><span class="yt-uix-button-content">twitter</span>
+    </button>
+		
+		<button type="button" class="watch-share-button yt-uix-button" onclick="jQuery('div.emails').slideToggle(); return false;">
+        <img src="/images/socialite/email_16.png" title="E-mail"><span class="yt-uix-button-content">e-mail</span>
+    </button>
+
+		</div>
+		
+		<div class="emails innerdiv">
+		 <%= label_tag "Lista de e-mails:" %>	
+		<%= text_area_tag "emails", nil, :size => "40x3"%>
+		</div>
+		
+		</div>
+		<%end%>
+
+</div>
+
+<div class="grid_6 push_1">
+											<div class="y_addinfo">
+                                <div class="addinfocontent">
+                                    <h1>
+                                        Termos e Condições do Redu</h1>
+                                    <p>
+                                       Por favor não publique conteúdo que esteja protegido por direitos autoriais, conteúdo obceno ou que viole
+																			 os <%= link_to "termos e condições", {:controller => "base", :action => "tos"}, :target => "_blank"%> do Redu.
+                                    		
+																			Ao clicar no botão abaixo você estará concordando com esses termos.</p>
+																			
+																			<p><span style="font-style: italic;">Uma vez publicado, as opções de publicação não poderão mais serem editadas.</span></p>
+																			
+																		<p class="large_btn"><a href="#" id="adm_showpay" style="color: #fff;" onclick="jQuery('#form_step_3').submit();">Publicar</a></p>
+                                </div>
+                            </div>
+</div>
+
+<div class="grid_16">
+<%= link_to '< Anterior', new_course_path(:step => '2'), :class => "button", :disabled => true %> 
+<%# f.submit 'Salvar' %> ou
+<%= link_to 'Cancelar', cancel_courses_path, :confirm => "Tem certeza que deseja sair do editor de aulas? Todas as alterações não salvas serão perdidas." %>
+</div>
+
 <% end %>
 
-<%= link_to '< Anterior', new_course_path(:step => '2'), :class => "button" %> 
-<%= f.submit 'Salvar' %> 
-<%= link_to 'Cancelar', cancel_courses_path, :confirm => "Tem certeza que deseja sair do editor de aulas?" %>
-
-
-<% end %>
+</div>
 </div>
 
 
-</div>
 
-	
-	
-</div>

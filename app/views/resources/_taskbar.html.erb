@@ -1,9 +1,0 @@
-<% if logged_in? %>
-<div id="task_bar_exames">
-    <%= link_to 'Novo Material', :action => 'new' %> | 
-	<%= link_to 'Todos', resources_path %> |
-	<%= link_to 'Publicados', published_user_resources_path(current_user.id) %> |
-	<%= link_to 'Não Publicados', unpublished_user_resources_path(current_user.id) %> |
-	<%= link_to 'Em Moderação', waiting_user_resources_path(current_user.id) %>
-</div>
-<% end %>
