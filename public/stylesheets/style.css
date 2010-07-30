@@ -12,8 +12,377 @@
     @background: #EBF7FD
     
 **/
-/** @typo **/
+/*
+ * Botoes
+ */
+#breadcrumbs{font-size: 0.8em; float:left; width:100%; height:21px; background-color:#f8f8f8; padding:5px 0px 0px 5px; margin:0px 0px 8px 0px;
+				color:#bac5d4;}
+#breadcrumbs a{color:#bac5d4; text-decoration:none} 
+#breadcrumbs a:hover{color:#bac5d4;text-decoration:underline}
 
+a.icon-delete {
+	padding-left: 25px;
+	background: #F5F5F5 url("../images/icons/delete.png") no-repeat 5px 4px;
+}
+
+a.icon-edit {
+	padding-left: 25px;
+	background: #F5F5F5 url("../images/icons/post.png") no-repeat 5px 4px;
+}
+
+.yt-uix-button:active, .yt-uix-button-active, .yt-uix-button-active:hover, .yt-uix-button-active:focus {
+background: #DDD -webkit-gradient(linear, 0% 0%, 0% 100%, from(#CCC), to(white));
+background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#CCC), to(white));
+background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#CCC), to(white));
+border-color: #999;
+}
+.yt-uix-button:hover, .yt-uix-button:focus {
+-webkit-box-shadow: #999 0px 0px 3px;
+background: #F3F3F3 -webkit-gradient(linear, 0% 0%, 0% 100%, from(white), to(#EBEBEB));
+background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(white), to(#EBEBEB));
+background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(white), to(#EBEBEB));
+border-color: #999;
+outline: 0px;
+}
+
+.watch-share-button{
+margin-bottom: 7px;
+margin-right: 2px;
+}
+
+.yt-uix-button {
+background: #F6F6F6 -webkit-gradient(linear, 0% 0%, 0% 100%, from(white), to(#EFEFEF));
+background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(white), to(#EFEFEF));
+background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(white), to(#EFEFEF));
+border: 1px solid #CCC;
+border-bottom-left-radius: 3px 3px;
+border-bottom-left-radius: 3px 3px;
+border-bottom-right-radius: 3px 3px;
+border-bottom-right-radius: 3px 3px;
+border-top-left-radius: 3px 3px;
+border-top-left-radius: 3px 3px;
+border-top-right-radius: 3px 3px;
+border-top-right-radius: 3px 3px;
+cursor: pointer;
+height: 2.0833em;
+overflow: visible;
+padding: 0px 0.5em;
+vertical-align: middle;
+white-space: nowrap;
+}
+
+
+
+
+/*
+ * INFO BOXES
+ */
+
+.y_addinfo {
+background: #FCFCFC;
+border: 1px solid #EFEFEF;
+float: left;
+margin-top: 20px;
+/*width: 258px;*/
+}
+.y_addinfo .addinfocontent {
+float: left;
+padding: 15px;
+} 
+
+.addinfocontent h1 {
+border-bottom: 1px solid #EFEFEF;
+padding-bottom: 5px;
+color: #1C67AB;
+font-size: 18px;
+font-weight: normal;
+}
+
+.y_addinfo .addinfocontent p {
+float: left;
+width: 100%;
+color: #444;
+font-size: 0.9em;
+} 
+.addinfocontent p {
+float: left;
+line-height: 17px;
+padding-top: 8px;
+}
+
+.y_addinfo .addinfocontent .large_btn {
+background-color: #F68721;
+border: 5px double white;
+color: white;
+font-size: 14px;
+font-weight: bold;
+width: auto;
+margin: 10px 5px 5px 5px;
+padding: 5px;
+text-align: center;
+}
+/*
+ * aulas
+ */
+
+/*
+ * Show de aula (Robson)
+ *
+ */
+
+#rating_video{
+	position:relative; 
+	float:right; 
+	width:130px; 
+	height:auto; 
+	padding:0px; 
+	margin: 0;
+	color:#858787; 
+}
+
+.lights_on{ background:url(../images/icon_light_on.png) no-repeat; color:#5782D5; text-decoration:none; padding-left:20px; }
+.lights_on:hover{text-decoration:underline;}
+
+.lights_off{ background:url(../images/icon_light_off.png) no-repeat; color:#5782D5; text-decoration:none; padding-left:20px; }
+.lights_off:hover{text-decoration:underline;}
+
+.annotation{ background:url(../images/icon_annotation.gif) no-repeat; color:#5782D5; text-decoration:none; padding-left:20px; }
+.annotation:hover{text-decoration:underline;}
+
+.annotation_plus{ background:url(../images/icon_annotation_plus.gif) no-repeat; color:#5782D5; text-decoration:none; padding-left:20px; }
+.annotation_plus:hover{text-decoration:underline;}
+
+.share_video{ background:url(../images/icon_share_on.png) no-repeat; color:#5782D5; text-decoration:none; padding-left:20px; }
+.share_video:hover{text-decoration:underline;}
+	
+.favorites_video{background:url(../images/icon_favorites_on.png) no-repeat; color:#5782D5; text-decoration:none; padding-left:20px} 
+.favorites_video:hover{background:url(../images/icon_favorites_on.png) no-repeat; color:#5782D5; text-decoration:underline; padding-left:20px}
+	
+.download_video{background:url(../images/icon_download_on.png) no-repeat; color:#5782D5; text-decoration:none; padding-left:20px}
+.download_video:hover{background:url(../images/icon_download_on.png) no-repeat; color:#5782D5; text-decoration:underline; padding-left:20px}
+	
+.comments_video{background:url(../images/icon_comments_on.png) no-repeat; color:#5782D5; text-decoration:none; padding-left:20px}
+.comments_video:hover{background:url(../images/icon_comments_on.png) no-repeat; color:#5782D5; text-decoration:underline; padding-left:20px}
+
+#item_video{clear:both; height:auto; padding:0px 0px 0px 0px; margin:0px 0px 8px 0px;}
+
+#title_video{clear: both; font:bold 20px "Trebuchet MS", Tahoma; color:#7a87a1;text-decoration:none; padding:0px; margin:0px}
+
+#lights-dimmed {
+	background:url(../images/overlay-85.png) left top repeat;
+
+	height:100%;
+	width:100%;
+	position:fixed;
+	top:0;
+	left:0;
+	display:none;
+	z-index:1;
+}
+
+#identification1{float:left; width:573px; height:auto; padding:0px 0px 0px 0px; margin:4px 0px 0px 0px;}
+#identification_resource1{list-style-type:none; top:0px; padding:0px; right:0px;}
+#identification_resource1 li {float:left; margin-right:8px; list-style:none; font-size:11px; text-decoration:none; color:#94a2ca;}
+#identification_resource1 li span {padding: 5px 10px; font-size:11px; text-decoration:none; color:#5683d5;}
+#identification_resource1 li a, #identification_resource1 li a:visited {padding:0; font-size:11px; text-decoration:none; color:#5683d5;font-weight:bold;}
+#identification_resource1 li a:hover {padding:0; font-size:11px; text-decoration:underline; color:#5683d5; font-weight:bold;}
+
+#description_video{float:left; width:80%; height:auto;padding:0px 0px 0px 0px; margin:0px 0px 0px 0px; font-size:13px; color:#858787}
+#actions{float:left; width:399px; height:auto; padding:0px 0px 0px 0px; margin:16px 0px 0px 8px; }
+#actions_resource{list-style-type:none; top:0px; padding:0px; right:0px; position:relative; z-index: 3001;}
+#actions_resource li {float:left; margin-right:8px; list-style:none; font-size:11px; text-decoration:none; color:#bababa;}
+/*#actions_resource li span {padding: 5px 10px; font-size:11px; text-decoration:none; color:#5683d5;}
+#actions_resource li a, #evaluation_menu li a:visited {padding:0; font-size:11px; text-decoration:none; color:#5683d5;}
+#actions_resource li a:hover {padding:0; font-size:11px; text-decoration:underline; color:#5683d5;}*/
+#actions_video{float:left;  height:auto; padding:0px 0px 0px 0px; margin:4px 0px 0px 8px;}
+
+#filter_bar_video {
+	float: left;
+	width:99%; 
+	height:22px; 
+	background:url(../images/bg_filter_bar.gif) repeat-x right; 
+	padding:5px;
+	margin:8px 8px 8px 0px; 
+	border:solid 1px #dedede;  
+	
+}
+
+/* 
+ * editar
+ * 
+ */
+
+#accessbility_bar {
+    background: #fff;
+    float: right;
+    opacity: 0.5;
+    border-left: 1px solid #ccc;
+    padding: 5px;
+    border-bottom: 1px solid #ccc;
+}
+
+#navigation_bar {
+	background:#F8F8F8 none repeat scroll 0 0;
+	border-bottom:1px dotted #DDDDDD;
+	border-top:1px dotted #DDDDDD;
+	margin-top:30px;
+	padding:5px;
+	text-align:center;
+}
+
+#interactive_container {
+		text-align:left;
+		/*border:1px solid #DDDDDD;*/
+		/*min-height:360px;*/
+		padding:10px;
+		width:95%;
+}
+
+#topic_list li {
+		z-index: 0; top: 0px; left: 0px;
+}
+
+
+#page_container {
+		text-align:left;
+		border:1px solid #DDDDDD;
+		min-height:360px;
+		padding:10px;
+		width:80%;
+}
+
+#page_container h3 {
+		
+		text-align: center;
+		margin-top:16px;
+		margin-bottom:20px;
+		
+}
+
+.complete_on{ background:url(../images/checkbox.png) no-repeat; color:#5782D5; text-decoration:none; padding-left:20px; }
+.complete_on:hover{text-decoration:underline;}
+
+.raise_hand{ background:url(../images/handraise.png) no-repeat; color:#5782D5; text-decoration:none; padding-left:20px; }
+.raise_hand:hover{text-decoration:underline;}
+
+/* 
+ * EXAMES
+ */
+
+
+.indexSel {
+	background: #fcf679 !important;
+}
+
+.indexStrike {
+	text-decoration: line-through !important;
+}
+
+#lesson_types {
+	font-size: 10px;
+	border-bottom:1px dotted #AAAAAA;
+	padding:0;
+	margin:5px;
+}
+
+#lesson_types img {
+	padding: 0 6px;
+	border: 0;
+}
+#topic_bar {
+	float: left; width: 200px;
+}
+#topic_body {
+    float: left;
+    min-width: 650px; /* FIXME colocar no esquema do 960*/
+    padding: 10px;
+    border-left: 1px dotted #ddd;
+    min-height: 360px;
+    position: relative;
+    z-index: 10000;
+}
+
+#publish_box {
+	background:#F8FAFF none repeat scroll 0 0;
+	border:1px solid #EEEEEE;
+	margin-left:0;
+	height:100px;
+	overflow-x:hidden;
+	overflow-y:auto;
+	padding:10px;
+	width:300px;
+}
+#topic_list{
+	list-style: none;
+}
+
+.topic_item {
+	background:#eee none repeat scroll 0 0;
+	margin:5px;
+	padding:4px 8px;
+	text-align: left;
+	/*border:2px solid #EEEEEE;*/
+	display:block;
+	line-height:18px;
+	
+}
+.topic_item_sel {
+	background:#F7F198 none repeat scroll 0 0; position: relative; z-index: 1000;
+	
+}
+
+.topic_item img {
+	border: 0;
+	/*float:right;*/
+	
+}
+
+
+
+#annotation_box {
+		position: relative;
+    background:    #fffacd;
+		clear:both;
+    padding:    5px 5px 5px 5px;
+    overflow: hidden;
+    z-index: 2000;
+}
+
+#annotation_content { 
+	width: 99%; 
+	height: 100px;	
+	margin-bottom: 5px;
+}
+
+#annotation_menu {
+	width: 100%;
+	clear: both;
+	text-align: right;
+	margin-bottom: 5px;
+}
+
+#socialite {
+  background: #F5F5F5;
+	clear: both;
+	overflow: hidden;
+  padding: 5px;
+  margin-bottom: 5px;
+}
+
+
+#socialite img{
+  padding-right: 5px;
+  border: 0;
+}
+
+#socialite span{
+  font-size: 12px;
+}
+
+
+
+
+/** @typo **/
 html, body {  height:100%; /* 100% height hack */ }
 
 html {
@@ -440,7 +809,6 @@ div.recomendations-m .number {
       padding-right: 20px;
       color: gray;     
     }
-
 /** @tabs **/
     .ui-tabs .ui-tabs-hide {
          display: none;
@@ -1660,6 +2028,16 @@ ul.sub-groups > li {
 .hoverdiv {
     position: absolute;
     display: none;
+    padding: 13px;
+    background-color: white;
+	border: 5px solid #EFEFEF;
+	border-bottom-left-radius: 5px 5px;
+	border-bottom-right-radius: 5px 5px;
+	border-top-left-radius: 5px 5px;
+}
+
+.innerdiv {
+	display: none;
     padding: 13px;
     background-color: white;
 	border: 5px solid #EFEFEF;
