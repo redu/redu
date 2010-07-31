@@ -1,4 +1,5 @@
 module CoursesHelper
+  include SchoolsHelper
 	
   def link_to_add_fields(name, f, association, type = nil)
 		new_object = f.object.class.reflect_on_association(association).klass.new
@@ -55,7 +56,7 @@ module CoursesHelper
     def simple_categories_i18n(f)
    # collection_select(:course, :simple_category, SimpleCategory.all, :id, :name)
    categories_array = SimpleCategory.all.map { |cat| [category_i18n(cat.name), cat.id] } 
-    f.select(:simple_category_id, options_for_select(categories_array) )
+    f.select(:simple_category_id, options_for_select(categories_array, :include_blank => true) )
   end
   
   def category_i18n(category)

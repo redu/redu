@@ -2,15 +2,24 @@
 
 
 <div class="grid_16">
-<div id="breadcrumbs"><a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <a href="#">nova rede</a> </div>
-<h3 class="call">Nova aula passo-a-passo </h3>
+<div id="breadcrumbs">
+	<% if @school %>
+	<a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <%= link_to @school.name, @school %> > nova aula
+	<% else %>
+	<a href="<%=application_url%>">início</a> > <a href="#">ensinar</a> > nova aula
+	<%end %>
+	
+	</div>
 
+<%= render(:partial => "schools/school_info", :locals=>{:show => false}) if @school%>	
+
+<h3 class="call">Nova aula passo-a-passo </h3>
 	
 <% form_for :interactive_class, @interactive_class, :url => { :action => "create" }, :html => { :multipart => true, :onsubmit => "setTopicsPosition();", :id => "interactive_class_form" } do |f| %>
   <%= f.error_messages %>
   
   <%= hidden_field_tag("step", "2", options = {})%>
-<%# hidden_field_tag("course_type", "interactive", options = {})%>
+	<%= hidden_field_tag("school_id", @school.id) if @school %>
 
   
   <div style="float: left; padding-top: 5%;">

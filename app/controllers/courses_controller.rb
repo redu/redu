@@ -204,13 +204,20 @@ class CoursesController < BaseController
       end
     elsif params[:school_id] # aulas da escola
       @school = School.find(params[:school_id])
-    @courses = @school.courses.paginate( 
+      @courses = @school.courses.paginate( 
       :include => :owner, 
       :page => params[:page], 
       :order => 'updated_at DESC', 
       :per_page => AppConfig.items_per_page)
+      
       respond_to do |format|
-        format.js  { render 'index_school' }
+        format.html { 
+           #redirect_to(school_path(@school, :anchor => "tabs-2")) #mostra aulas no tab
+           render 'index_school'
+        }
+        format.js  { 
+          render 'index_school'
+        }
       end
     else
       
@@ -289,6 +296,9 @@ class CoursesController < BaseController
   # GET /courses/new
   # GET /courses/new.xml
   def new
+    if params[:school_id]
+     @school = School.find(params[:school_id]) 
+    end
     
     case params[:step]
       when "2"
@@ -383,7 +393,7 @@ class CoursesController < BaseController
               session[:course_id] = @course.id
               
               format.html { 
-                redirect_to :action => :new, :step => "2"
+                redirect_to :action => :new, :step => "2", :school_id => params[:school_id]
               }
             else  
               format.html { render "step1" }
@@ -411,7 +421,7 @@ class CoursesController < BaseController
             if @course.save
               
               format.html { 
-                 redirect_to :action => :new , :course_type => params[:courseable_type], :step => "3"
+                 redirect_to :action => :new , :course_type => params[:courseable_type], :step => "3", :school_id => params[:school_id]
               }
                 
             else  
@@ -429,7 +439,7 @@ class CoursesController < BaseController
             if @course.save
               
               format.html do 
-                 redirect_to :action => :new , :course_type => params[:courseable_type], :step => "3"
+                 redirect_to :action => :new , :course_type => params[:courseable_type], :step => "3", :school_id => params[:school_id]
               end
               format.js do
                   render :update do |page| 
@@ -459,7 +469,7 @@ class CoursesController < BaseController
             if @course.save
               
               format.html { 
-                 redirect_to :action => :new , :courseable_type => params[:courseable_type], :step => "3"
+                 redirect_to :action => :new , :courseable_type => params[:courseable_type], :step => "3", :school_id => params[:school_id]
               }
             else  
               format.html { render "step2_page" }
@@ -472,11 +482,32 @@ class CoursesController < BaseController
       when "3"
       @course = Course.find(session[:course_id])
       
+      
+      @submited_to_school = false
       if params[:post_to]
         SchoolAsset.create({:asset_type => "Course", :asset_id => @course.id, :school_id => params[:post_to].to_i})
+        @school = School.find(params[:post_to])
       end
       
       @course.published = true # se o usuário completou os 3 passos então o curso está publicado
+        
+      if @school
+        if @school.submission_type = 1 # todos podem postar
+          params[:course][:state] = "approved"
+        elsif @school.submission_type = 2 # todos com moderação
+           params[:course][:state] = "waiting"
+        elsif @school.submission_type = 3 # apenas professores
+          if current_user.can_post @school
+           params[:course][:state] = "rejected"
+          else
+           params[:course][:state] = "approved"
+          end
+        else
+          params[:course][:state] = "approved"
+        end
+      end
+        
+        
       
       respond_to do |format|
         
@@ -486,16 +517,35 @@ class CoursesController < BaseController
           # remover curso da sessao
           session[:course_id] = nil
           if @course.courseable_type == 'Seminar' or  @course.courseable_type == 'InteractiveClass'
-             flash[:notice] = 'Aula foi criada com sucesso e está em processo de moderação.'
-              format.html { 
-                #redirect_to(@course)
-                redirect_to waiting_user_courses_path(current_user.id)
-              }
+             
+              format.html do 
+                if @school
+                    if @school.submission_type = 1 # todos podem postar
+                       #mostra aulas da escola
+                       flash[:notice] = 'Aula foi criada com sucesso e está disponível na rede.'
+                      redirect_to school_courses_path(:school_id => params[:post_to].to_i, :id => @course.id)
+                    
+                  elsif @school.submission_type = 2 # todos com moderação
+                    flash[:notice] = 'Aula foi criada com sucesso e está em processo de moderação.'
+                       redirect_to waiting_user_courses_path(current_user.id)
+                    elsif @school.submission_type = 3 # apenas professores
+                      flash[:notice] = 'Aula não pode ser publicada nessa escola pois apenas professores podem postar.'
+                       redirect_to @course
+                  else
+                     redirect_to school_course_path(:school_id => params[:post_to].to_i, :id => @course.id)
+                  end
+                  
+                  
+                else
+                  flash[:notice] = 'Aula foi criada com sucesso e está em processo de moderação.'
+                  redirect_to waiting_user_courses_path(current_user.id)
+                end
+              end
           else
              flash[:notice] = 'Aula foi criada com sucesso!'
-              format.html { 
+              format.html do 
                 redirect_to(@course)
-              }
+              end
           end
           
          

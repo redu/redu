@@ -1,31 +1,32 @@
-<div id="all_content3">
-<div id="col_content_video">
-	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">ensinar</a> > <a href="#">nova aula</a> </div>
- 	<div id="title">NOVA AULA (PÁGINA) - PASSO 2
- 	</div>
-	
-<div style="width: 100%; float: left;">
+<div class="grid_16">
+<div id="breadcrumbs">
+		<% if @school %>
+	<a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <%= link_to @school.name, @school %> > nova aula
+	<% else %>
+	<a href="<%=application_url%>">início</a> > <a href="#">ensinar</a> > nova aula
+	<%end %>
+</div>
 
+	
+<%= render(:partial => "schools/school_info", :locals=>{:show => false}) if @school%>
+
+<h3 class="call">Nova aula passo-a-passo </h3>
 
 <% form_for :page, @page, :url => { :action => "create" }, :html => { :multipart => true } do |f| %>
 <%= f.error_messages %>
 
 <%= hidden_field_tag("step", "2", options = {})%>
-<%# hidden_field_tag("course_type", "page", options = {})%>
+	<%= hidden_field_tag("school_id", @school.id) if @school %>
 	
-	<div>
-    <h3> Editor de Página</h3>
-	<p>Use o editor abaixo para criar página interativa</p>
+	<div class="grid_11 push_2">
     <%= f.text_area :body, :class => "mceEditor"%>
-	</div>
-
+  </div>
+	
+	<div class="grid_16"> 
 <%= link_to '< Anterior', new_course_path(:step => '1'), :class => "button" %> 
-<%= f.submit 'Próximo >' %> 
-
-<br><%= link_to 'Cancelar', cancel_courses_path, :confirm => "Tem certeza que deseja sair do editor de aulas?" %>
-
-<% end %>
+<%= f.submit 'Próximo >' %> ou <%= link_to 'Cancelar', cancel_courses_path, :confirm => "Tem certeza que deseja sair do editor de aulas?" %>
 </div>
+<% end %>
 
 </div>
 

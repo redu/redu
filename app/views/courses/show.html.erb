@@ -225,7 +225,18 @@ function decreaseFontSize(){
                         |
                     </li>
                     <li>
-												<%= render :partial => 'shared/share'%>
+												<%# render :partial => 'shared/share'%>
+												
+                          <% thumb_url = @course.thumb_url %>
+                          <% url = application_url[0..application_url.length-2] + request.request_uri %>
+                          <div class="share-outter">
+                              <%= link_to_function "Compartilhar", "jQuery('div.share-inner').slideToggle()", :class => "share_video" %>
+													<div class="share-inner hoverdiv">
+															<%= render :partial => 'shared/share', :locals => {:resource => @course}%>
+														</div>
+													</div>
+
+												
                     </li>
 					<li>
                         |

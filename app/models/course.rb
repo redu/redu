@@ -6,10 +6,9 @@ class Course < ActiveRecord::Base
   ajaxful_rateable :stars => 5
   
   # CALLBACKS
-  before_save :go_to_moderation
+ # before_save :go_to_moderation
   
   # ASSOCIATIONS
-  has_and_belongs_to_many :subjects
   has_many :acess_key
   has_many :resources, :class_name => "CourseResource", :as => :attachable
   has_many :acquisitions
@@ -20,7 +19,6 @@ class Course < ActiveRecord::Base
   belongs_to :owner , :class_name => "User" , :foreign_key => "owner"
   belongs_to :courseable, :polymorphic => true
   belongs_to :asset, :polymorphic => true
-  #belongs_to :category, :class_name => "Skill", :foreign_key => "skill_id"
   belongs_to :simple_category
 
   # NESTED

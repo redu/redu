@@ -59,9 +59,17 @@
             }
         });
 		
-		
-        
-        
+			// Se a url for do tipo http://www.redu.com.br/rede#tabs-2
+			// dispara o evento para carregar tab correspondente
+			/*
+var selTab = window.location.href.split("#");
+      if (typeof(selTab) != 'undefined' && selTab.length >1){
+				selTabId = selTab[1].split("-")[1];
+				$schooltabs.tabs('select', (selTabId-1));
+			}
+*/
+
+      
         
     });
 //
@@ -105,7 +113,7 @@
 	
 </script>
 
-<%= render :partial => "schools/school_info", :locals => {:school => @school} %>
+<%= render :partial => "schools/school_info", :locals => {:show => true} %>
 <%= render :partial => "schools/sidebar", :locals => {:school => @school} %>
 
 <div class="main grid_12">
@@ -127,6 +135,7 @@
 		
 		<!-- aulas -->
 		<div id="tabs-2">
+			
 			<%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-2-loading', :style => 'padding: 20px;'%>
 			<div id="tabs-2-content"></div>
 		</div>

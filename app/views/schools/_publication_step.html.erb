@@ -1,10 +1,48 @@
 
-	<% if AppConfig.activate_payment %>
-	<%= f.label "Preço da assinatura" %>:<br/>
-	<%= f.text_field :key_price %><br/><br/>
-	<% end %>
+	<% field_set_tag 'Visibilidade' do %>
+	<%= f.label "Pública <span class='snippet'>(Visível em todo o Redu)</span>" %>
+		<%= f.check_box :public %>
+		
+		<% @schools = current_user.schools %>
+		
+		<%end%>
 	
-	Compartilhar
-	<%# text_area :invite_emails , :size => "4x50"%>
+	
+    <% if AppConfig.activate_payment %>
+	    <% field_set_tag 'Preço' do %>
+	        <%= f.label :price %>
+	        <%= f.text_field :price %>
+	    <% end %>
+    <%end %>
+
+
+	<% field_set_tag 'Compartilhe!' do %>
+		<%= render :partial => 'shared/share', :locals => {:resource => @school}%>
+		<%end%>
+
+</div>
+
+<!--
+<div class="grid_6 push_1">
+	<div class="y_addinfo">
+            <div class="addinfocontent">
+                <h1>
+                    Termos e Condições do Redu</h1>
+                <p>
+                   Por favor não publique conteúdo que esteja protegido por direitos autoriais, conteúdo obceno ou que viole
+									 os <%= link_to "termos e condições", {:controller => "base", :action => "tos"}, :target => "_blank"%> do Redu.
+                		
+									Ao clicar no botão abaixo você estará concordando com esses termos.</p>
+									
+									<p><span style="font-style: italic;">Uma vez publicado, as opções de publicação não poderão mais serem editadas.</span></p>
+									
+								<p class="large_btn"><a href="#" id="adm_showpay" style="color: #fff;" onclick="jQuery('#form_step_3').submit();">Publicar</a></p>
+            </div>
+        </div>
+</div>-->
+
+
+
+
 	
 	

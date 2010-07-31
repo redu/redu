@@ -1,5 +1,14 @@
 <div class="grid_16">
-<div id="breadcrumbs"><a href="<%=application_url%>">início</a> > <a href="#">ensinar</a> > nova aula</div>
+<div id="breadcrumbs">
+		<% if @school %>
+	<a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <%= link_to @school.name, @school %> > nova aula
+	<% else %>
+	<a href="<%=application_url%>">início</a> > <a href="#">ensinar</a> > nova aula
+	<%end %>
+</div>
+
+<%= render(:partial => "schools/school_info", :locals=>{:show => false}) if @school%>	
+
 <!--
 <h3 class="call">Nova Aula - Publicação</h3>
 -->
@@ -9,6 +18,9 @@
 <% form_for :course, @course, :url => { :action => "create" }, :html => {:id => "form_step_3"} do |f| %>
 <%= f.error_messages %>
 <%= hidden_field_tag("step", "3", options = {})%>
+	<%= hidden_field_tag("post_to", @school.id) if @school %>
+
+	<% unless @school %>
 
 	<% field_set_tag 'Visibilidade' do %>
 	<%= f.label "Pública <span class='snippet'>(Visível em todo o Redu)</span>" %>
@@ -25,6 +37,9 @@
 		<% end %>
 		<%end%>
 	
+	<%else%>
+	 <%= f.hidden_field(:public, :value => 0)%>
+	<% end %>
 	
     <% if AppConfig.activate_payment %>
 	    <% field_set_tag 'Preço' do %>
@@ -35,42 +50,7 @@
 
 
 	<% field_set_tag 'Compartilhe!' do %>
-		<div>
-			<div><%= f.label :permalink %>
-			<%= text_field_tag "course_permalink", @course.permalink, :style => "font-size: 0.9em; width: 400px;", :disabled => true%>
-			</div>
-			
-			<div style="padding: 10px;">
-				 
-	<% promote_url = "http://promote.orkut.com/preview?nt=orkut.com&tt=#{@course.name}&du=#{@course.permalink}" %>
-	
-    <button type="button" class="watch-share-button yt-uix-button" onclick="window.open('<%= promote_url %>');">
-        <img src="/images/socialite/orkut_16.png" alt="Orkut" title="Orkut"><span class="yt-uix-button-content">orkut</span>
-    </button>
-		
-		<button type="button" class="watch-share-button yt-uix-button" onclick='window.open("http://www.facebook.com/share.php?u=<%=@course.permalink%>");'>
-       <img src="/images/socialite/facebook_16.png" title="Facebook"><span class="yt-uix-button-content">facebook</span>
-    </button>
-		
-		<% twitter_url = "http://www.twitter.com/?status=#{@course.name}: #{@course.permalink} via redu.com.br" %>
-	<% twitter_url = URI.escape(twitter_url) %>
-		
-			<button type="button" class="watch-share-button yt-uix-button" onclick='window.open("<%=twitter_url%>");'>
-        <img src="/images/socialite/twitter_16.png" alt="Twitter" title="Twitter"><span class="yt-uix-button-content">twitter</span>
-    </button>
-		
-		<button type="button" class="watch-share-button yt-uix-button" onclick="jQuery('div.emails').slideToggle(); return false;">
-        <img src="/images/socialite/email_16.png" title="E-mail"><span class="yt-uix-button-content">e-mail</span>
-    </button>
-
-		</div>
-		
-		<div class="emails innerdiv">
-		 <%= label_tag "Lista de e-mails:" %>	
-		<%= text_area_tag "emails", nil, :size => "40x3"%>
-		</div>
-		
-		</div>
+		<%= render :partial => 'shared/share', :locals => {:resource => @course}%>
 		<%end%>
 
 </div>
