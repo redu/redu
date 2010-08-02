@@ -101,18 +101,10 @@ class CoursesController < BaseController
     
     render :update do |page|
       page.replace_html id, ratings_for(@course, :wrap => false, :dimension => params[:dimension])
-     # page << "$('##{id}').effect('highlight', {}, 2000);" #TODO precisa do plugin de effects do jquery
-      #page.visual_effect :highlight, id
     end
   end
   
   def sort_lesson 
-#    @iclass = InteractiveClass.find(params[:iclass])
-#    @iclass.lessons.each do |lesson|
-#      lesson.position = params[:topic_list].index(lesson.id.to_s) + 1
-#      lesson.save
-#    end
-#    render :nothing => true
     
     params['topic_list'].each_with_index do |id, index|
     Lesson.update_all(['position=?', index+1], ['id=?', id])
@@ -136,40 +128,6 @@ class CoursesController < BaseController
       end
     end
   end
-  
-  
-  
-#  # Lista todos os recursos existentes para relacionar com
-#  def list_resources
-#    @resources = Resource.all
-#    @course = params[:id]
-#  end
-#  
-#  # Adicionar um recurso na aula.
-#  def add_resource
-#    @selected_resources = params[:resource][:id]
-#    @course = Course.find(params[:id])
-#    
-#    if @course
-#      @selected_resources.each do |c| 
-#        @resource = Resource.find(c)
-#        @course.resources << @resource
-#      end
-#      
-#      if @course.save
-#        flash[:notice] = 'Recurso(s) adicionada(s).'
-#      else
-#        flash[:error] = 'Algum problema aconteceu!'
-#      end
-#    else
-#      flash[:error] = 'Aula inválida.'
-#    end  
-#    
-#    respond_to do |format|
-#      format.html { redirect_to(@course) }
-#    end
-#    
-#  end
   
   def get_query(sort, page)
     
@@ -244,11 +202,7 @@ class CoursesController < BaseController
       redirect_to removed_page_path and return
     end
     
-    
-   # if not @course.can_be_deleted_by(current_user)
-   #   flash[:error] = "Você não tem acesso a este vídeo"
-   #   redirect_to courses_path # TODO voltar para link anterior
-   # else 
+
       #comentários
       @comments  = @course.comments.find(:all, :limit => 10, :order => 'created_at DESC')
       

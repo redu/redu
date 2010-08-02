@@ -2,23 +2,7 @@ class SchoolsController < BaseController
   layout 'new_application'
   before_filter :login_required,  :except => [:join, :unjoin, :member]
   # before_filter :admin_required,  :only => [:new, :create]
-  
-#  
-#  def courses
-#    @school = School.find(params[:id])
-#    @courses = @school.courses.paginate( 
-#      :include => :owner, 
-#      :page => params[:page], 
-#      :order => 'updated_at DESC', 
-#      :per_page => AppConfig.items_per_page)
-#
-#     respond_to do |format|
-#      #format.html
-#      format.js
-#    end
-#  end
-  
-  
+
   def take_ownership
      @school = School.find(params[:id])
      @school.update_attribute(:owner, current_user)
@@ -403,9 +387,11 @@ class SchoolsController < BaseController
   # GET /schools
   # GET /schools.xml
   def index
-    @schools = School.all
-    
-     @popular_tags = School.tag_counts
+    @schools = School.paginate :page => params[:page], 
+      :order => 'created_at DESC',
+      :per_page => AppConfig.items_per_page
+      
+    @popular_tags = School.tag_counts
     
     respond_to do |format|
       format.html # index.html.erb

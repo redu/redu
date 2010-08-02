@@ -85,7 +85,7 @@ a {
    @overall 
 **/
 
-.odd {
+.even {
     background-color: #F9F9FA;
 }
 
@@ -122,6 +122,11 @@ a {
 	padding: 5px;
 }
 
+h3.call {
+	font-size: 1.1em;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
 a.more {
 	font-size: .8em;
 }
@@ -138,6 +143,10 @@ ul.default > li {
 ul.default > li .thumb {
 	margin: 0 10px;
 	float: left;
+	width: 70px;
+	background-color: white;
+	padding: 10px;
+	text-align: center;
 }
 
 ul.default > li .name {
@@ -159,7 +168,7 @@ ul.default > li div.headlines {
 	background: white;
 	border: 1px solid #EFF0F0;
 	float: right;
-	width: 520px;
+	width: 560px;
 	padding: 10px;
 	margin-right: 10px;
 	-moz-border-radius: 5px; 
@@ -167,7 +176,8 @@ ul.default > li div.headlines {
 
 }
 
-ul.default > li div.headlines a {
+ul.default > li div.headlines a,
+ul.default > li div.headlines .things {
 	font-size: .8em;
 	color: gray;
 }
@@ -181,28 +191,34 @@ ul.default > li div.headlines ul li {
 ul.default > li div.headlines > .call {
 	font-weight: bold;
 	font-size: .9em;
+	color: #ff8000;
 }
 
-div.pagination {
+ul.pagination {
 	margin-top: 30px;
 	height: 50px;
 	float: right;
 }
 
-div.pagination ol {
-	
-}
-
-div.pagination ol li {
+ul.pagination li {
 	float: left;
 	margin: 3px;
 }
 
-div.pagination ol li a.current {
+ul.pagination li.nav,
+ul.pagination li.current {
+	background-color: #F9F9FA;
+	border: 1px solid #DFDFDF;
+	padding: 8px 10px;
+	font-size: .9em;
+	font-weight: bold;
+}
+
+ul.pagination li a.current {
 	background-color: #EFEFEF;
 }
 
-div.pagination ol li a {
+ul.pagination li a {
 	display: block;
 	padding: 8px 10px;
 	background-color: #F9F9FA;

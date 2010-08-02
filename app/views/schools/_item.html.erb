@@ -1,63 +1,21 @@
-        <div id="item">
-    		<div id="title"><%= link_to school.name, school %></div>
-						<div id="video">
-							<%= image_tag school.avatar_photo_url(:thumb) %>
-						</div>
-                       
-            <div id="identification">
-              <ul id="identification_resource">
-							
-								<li><%= time_ago_in_words(school.created_at) %></li>
-								<li>|</li>
-								<li>Membros (<%= school.users.count %>)</li>
-							</ul>
-            </div>
-            
-            <div id="description"><%= (school.description[0..250] + "...") if (school.description and school.description.length > 250) %>
-            </div>
-			
-			<div id="identification">
-              <ul id="identification_resource">
-				<li><strong>Categoria:</strong> Matemática</li>
-        		<li>|</li>
-				<li><strong>Tags:</strong> <%= school.tag_list %></li>
-			  </ul>
-            </div>
-            
-            
-            
-					<!--
-					<div id="actions">
-              <ul id="actions_resource">
-							<li><a href="#" class="share">Compartilhar</a></li>
-						  		<li>|</li>
-							<li><a href="#" class="favorites">Favoritos</a></li>
-						          <li>|</li>
-							<li><a href="#" class="comments">Comentários(<%# school.comments.count %>)</a></li>
-							</ul>
-            </div> 
-					<div id="ratting">
-							<ul id="ratting_menu">
-							<li><img src="images/icon_star_on.png"/></li>
-									<li><img src="images/icon_star_on.png"/></li>
-							<li><img src="images/icon_star_on.png"/></li>
-							<li><img src="images/icon_star_off.png"/></li>
-							<li><img src="images/icon_star_off.png"/></li>
-									      <li class="evaluation_rating">Avaliações(30)</li>
-						</ul>
-					</div>
-					-->          
-    	</div>
+<li class="clearfix">
+	<%= link_to school.name, school, :class => "name" %>
+	<div class="thumb photo"><%= link_to(image_tag school.avatar_photo_url(:thumb), :width => "70px") %></div>
+	<div class="headlines" style="width: 490px">
+		<span class="call">Descrição:</span>
+		<span class="things">
+		<%= 
+			(school.description[0..250] + "...") if (school.description) 
+		%>
+		</span>
+		<% unless school.tag_list.empty? %>
+			<span class="call">Tags:</span>
+				<span class="things">
+				<% school.tag_list.each do | tag | %>
+				 <%= tag %>, 
+				<% end %>
+				</span>
+		<% end %>
 		
-	<div>
-			<div>
-				Exames:
-				<%= render :partial => 'logs/item_user', :collection => school.recent_school_exams_activity, :as => :item %>
-			</div>
-			<div>
-				Aulas:
-				<%= render :partial => 'logs/item_user', :collection => school.recent_school_courses_activity, :as => :item %>
-			</div>
-			
 	</div>
-
+</li> 
