@@ -105,8 +105,8 @@ $(document).ready(function(){
 		Learn/teach dropdown
 	*/
 	
-	$("#learn span.call ul.options").hide()
-	$("#learn span.call span.option").toggle(
+	$("#teach span.call ul.options").hide()
+	$("#teach span.call span.option").toggle(
 		function(){
 			$(this).next("ul.options:first").slideToggle("fast")
 		},

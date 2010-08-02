@@ -802,62 +802,62 @@ div.recomendations-m .number {
 		margin-bottom:6px;
 	}
 
-	#learn {
+	#teach {
 		
 	}
 	
-	#learn ul.headlines {
+	#teach ul.headlines {
 		
 	}
 	
-	#learn ul.headlines > li {
+	#teach ul.headlines > li {
 		background-color: white;
 	}
 
-	#learn ul.headlines li img.photo {
+	#teach ul.headlines li img.photo {
 		float: left;
 		margin-right: 10px;
 	}
 
-	#learn ul.headlines li a.name {
+	#teach ul.headlines li a.name {
 		font-size: .9em;
 	}
 	
-	#learn ul.headlines li .info {
+	#teach ul.headlines li .info {
 		color: gray;
 		font-size: .7em;
 		display: block;
 		margin: 5px;
 	}
 	
-	#learn ul.headlines li ul li {
+	#teach ul.headlines li ul li {
 		clear: left;
 		margin: 5px 0;
 		padding: 1px;
 	}
 	
-	#learn ul.headlines .photo {
+	#teach ul.headlines .photo {
 		width: 24px;
 		height: 24px;
 	}
 	
-	#learn li.personal-overview a.name {
+	#teach li.personal-overview a.name {
 		font-size: 1.2em;
 		font-weight: bold;
 	}	
 
-	#learn li.personal-overview a.edit {
+	#teach li.personal-overview a.edit {
 		font-size: .8em;
 	}
 
-	#learn li.personal-overview .photo {
+	#teach li.personal-overview .photo {
 		width: 40px;
 		height: 40px;
 		float: left;
 		margin-right: 10px;
 	}
 
-	#learn li.personal-overview .plan {
+	#teach li.personal-overview .plan {
 		text-transform: uppercase;
 		display: block;
 		font-size: .9em;
