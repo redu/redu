@@ -125,6 +125,14 @@ text-align: center;
  * aulas
  */
 
+.submenu {
+	padding: 10px;
+	background-color: #FFFFDF;
+	border-bottom: 1px dotted #DDD;
+	margin-bottom: 15px;
+margin-top: 10px;
+}
+
 /*
  * Show de aula (Robson)
  *
@@ -1971,12 +1979,11 @@ ul.sub-groups > li {
 
 /* @schools */
 #file_list{
-            border-style:solid;
-            border-width:1px;*/
+            border-width:1px solid #ddd;
             height:400px;
             overflow-y:scroll;
             padding:5px;
-			margin: 20px;
+					margin: 20px;
 }
 
 .directory { background: url(jqueryFileTreeImages/directory.png) left top no-repeat; width: 16px; }
