@@ -115,6 +115,13 @@ $(document).ready(function(){
 		}
 	)
 	
+	/*
+		Default list style (odd lines coloring)
+	*/
+	
+	$("ul.default > li:odd").addClass("odd")
+	$("ul.default > li:even").addClass("even")
+	
 })
 	
 	/*

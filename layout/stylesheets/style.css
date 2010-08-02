@@ -103,6 +103,24 @@ a {
     color: gray;
 }
 
+ul.default {
+	
+}
+
+ul.default li {
+	display: block;
+	padding: 5px;
+	background-color: red;
+}
+
+ul.default li:odd {
+	background-color: white;
+}
+
+ul.default li:even {
+	background-color: #F4F4F4;
+}
+
 /** @forms **/
     input[type=text],
     input[type=password],

@@ -126,6 +126,99 @@ a.more {
 	font-size: .8em;
 }
 
+ul.default > li {
+	display: block;
+	clear: both;
+	background-image: url("../images/ui-elements_r43_c24.png");
+	background-repeat: repeat-x;
+	background-position: bottom;
+	padding: 15px 0;
+}
+
+ul.default > li .thumb {
+	margin: 0 10px;
+	float: left;
+}
+
+ul.default > li .name {
+	font-weight: bold;
+	display: block;
+	margin-bottom: 10px;
+	margin-left: 10px;
+}
+
+ul.default > li.odd {
+
+}
+
+ul.default > li.even {
+
+}
+
+ul.default > li div.headlines {
+	background: white;
+	border: 1px solid #EFF0F0;
+	float: right;
+	width: 520px;
+	padding: 10px;
+	margin-right: 10px;
+	-moz-border-radius: 5px; 
+	-webkit-border-radius: 5px;
+
+}
+
+ul.default > li div.headlines a {
+	font-size: .8em;
+	color: gray;
+}
+
+ul.default > li div.headlines ul li {
+	display: block;
+	float: left;
+	margin: 5px 15px 0px 0;
+}
+
+ul.default > li div.headlines > .call {
+	font-weight: bold;
+	font-size: .9em;
+}
+
+div.pagination {
+	margin-top: 30px;
+	height: 50px;
+	float: right;
+}
+
+div.pagination ol {
+	
+}
+
+div.pagination ol li {
+	float: left;
+	margin: 3px;
+}
+
+div.pagination ol li a.current {
+	background-color: #EFEFEF;
+}
+
+div.pagination ol li a {
+	display: block;
+	padding: 8px 10px;
+	background-color: #F9F9FA;
+	border: 1px solid #DFDFDF;
+	font-weight: bold;
+	font-size: .9em;
+}
+
+div#filter ul li {
+	margin: 10px 0;
+}
+
+div#filter .call {
+	font-size: .8em;
+}
+
 /** @forms **/
     input[type=text],
     input[type=password],
@@ -938,13 +1031,20 @@ div.recomendations-m .number {
 
     
     div.filter-box {
-        border: 1px solid #EFF0F0 ;
         margin: 10px;
         
     }
 
+	div.filter-box span.call {
+		font-weight: bold;
+		font-size: .8em;
+		display: block;
+		margin-bottom: 10px;
+	}
+
     div.filter-box ul li {
         float: left;
+		margin-right: 5px;
     }
 
     div.filter-box ul li:hover,
@@ -956,13 +1056,15 @@ div.recomendations-m .number {
     div.filter-box ul li.selected a {
         background: #18C8EF;
         color: white;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
     }
 
     div.filter-box ul li a {
         display:block;
         color: #18C8EF;
         text-transform: uppercase;
-        font-size: .8em;
+        font-size: .7em;
         padding: 10px;
     }
 
