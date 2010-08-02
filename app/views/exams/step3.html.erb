@@ -1,78 +1,86 @@
-<script type="text/javascript">
-	function switchPublish(){
-		
-		var box = document.getElementById("publish_box");
-		
-		if (box.style.display == 'none') {
-			Effect.SlideDown(box);
-			//box.style.display = 'block';
-			
-		} else {
-			Effect.SlideUp(box);
-			//box.style.display = 'none';
-		}
-		
-	}
+<div class="grid_16">
+<div id="breadcrumbs">
+		<% if @school %>
+	<a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <%= link_to @school.name, @school %> > novo exame
+	<% else %>
+	<a href="<%=application_url%>">início</a> > <a href="#">ensinar</a> > novo exame
+	<%end %>
+</div>
+
+<%= render(:partial => "schools/school_info", :locals=>{:show => false}) if @school%>	
+
+<!--
+<h3 class="call">Nova Aula - Publicação</h3>
+-->
+<div id="title_video">Novo Exame - Publicação</div>
+<div class="grid_8">
 	
-	
-</script>
+	<% form_for :exam, @exam, :url => { :action => "create" }, :html => {:id => "form_step_3"} do |f| %>
 
-<div id="all_content3">
-<div id="col_content_video">
-	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">aprender</a> > <a href="#">materiais</a> </div>
- 	<div id="title">NOVO EXAME - PASSO 3
- 	</div>
-
-<div style="width: 100%; float: left;">
-
-<% form_for :exam, @exam, :url => { :action => "create" } do |f| %>
 <%= f.error_messages %>
-
-
 <%= hidden_field_tag("step", "3", options = {})%>
+	<%= hidden_field_tag("post_to", @school.id) if @school %>
 
-<fieldset id="price_box">
-	<legend>Visibilidade</legend>
+	<% unless @school %>
 
-<%= f.label "Público" %><br/>
-	<%= f.check_box :public %><br/><br/>
+	<% field_set_tag 'Visibilidade' do %>
+	<%= f.label "Pública <span class='snippet'>(Visível em todo o Redu)</span>" %>
+		<%= f.check_box :public, :onchange => "jQuery('input[name=post_to]').attr('checked', false)" %>
+		
+		<% @schools = current_user.schools %>
+		<% if @schools and @schools.size > 0 %>
+		<%= f.label "Postar em:" %>
+			<div style="overflow-y:scroll; max-height: 200px;">
+			<% @schools.each do | school | %>
+				<div><%= radio_button_tag :post_to, school.id, false, :onchange => "jQuery('#exam_public').attr('checked', false)" %> <%= school.name %></div>
+			<% end %>
+			</div>
+		<% end %>
+		<%end%>
 	
-	<%= link_to_function('Postar em Rede ' + image_tag('icons/bullet_arrow_down.png', :style => "border: 0"), 'switchPublish()')%>
-	<br/>
-	
-	<div id="publish_box" style="display: none;">
-	<div>
-	<% @schools = current_user.schools %>
-	<% @schools.each do | school | %>
-		<%= radio_button_tag :post_to, school.id %> <%= school.name %><br/>
+	<%else%>
+	 <%= f.hidden_field(:public, :value => 0)%>
 	<% end %>
-	</div>
-	</div>
-</fieldset>	
-<% if AppConfig.activate_payment %>	
-<fieldset id="price_box">
-	<legend>Preço</legend>
-		R$<%= f.text_field :price, :style => "width: 35px", :maxlength => 5  %>
-</fieldset>
-<% end %>
 	
-<fieldset id="share_box_2">
-	<legend>Compartilhar</legend>
-	<%= render :partial => 'shared/share', :locals => {:title => @exam.name, :url => exam_url(@exam), :thumb_url => nil, :display => true} %>
-		
-		
-</fieldset>
+    <% if AppConfig.activate_payment %>
+	    <% field_set_tag 'Preço' do %>
+	        <%= f.label :price %>
+	        <%= f.text_field :price %>
+	    <% end %>
+    <%end %>
 
-<%= link_to '< Anterior', new_exam_path(:step => '2', :exam_type => @exam_type), :class => "button" %> 
-<%= f.submit 'Salvar' %> 
+
+	<% field_set_tag 'Compartilhe!' do %>
+		<%= render :partial => 'shared/share', :locals => {:resource => @exam}%>
+		<%end%>
+
+</div>
+
+<div class="grid_6 push_1">
+											<div class="y_addinfo">
+                                <div class="addinfocontent">
+                                    <h1>
+                                        Termos e Condições do Redu</h1>
+                                    <p>
+                                       Por favor não publique conteúdo que esteja protegido por direitos autoriais, conteúdo obceno ou que viole
+																			 os <%= link_to "termos e condições", {:controller => "base", :action => "tos"}, :target => "_blank"%> do Redu.
+                                    		
+																			Ao clicar no botão abaixo você estará concordando com esses termos.</p>
+																			
+																			<p><span style="font-style: italic;">Uma vez publicado, as opções de publicação não poderão mais serem editadas.</span></p>
+																			
+																		<p class="large_btn"><a href="#" id="adm_showpay" style="color: #fff;" onclick="jQuery('#form_step_3').submit();">Publicar</a></p>
+                                </div>
+                            </div>
+</div>
+
+<div class="grid_16">
+<%= link_to '< Anterior', new_exam_path(:step => '2', :exam_type => @exam_type), :class => "button", :disabled => true %> 
+<%# f.submit 'Salvar' %> ou
 <%= link_to 'Cancelar', cancel_exams_path, :confirm => "Tem certeza que deseja sair do editor de aulas? Todas as informações serão perdidas." %>
+</div>
 
 <% end %>
-</div>
-
 
 </div>
-
-	
-	
 </div>

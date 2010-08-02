@@ -54,5 +54,9 @@ class Exam < ActiveRecord::Base
     "#{id}-#{name.parameterize}"
   end
   
+    def permalink
+    APP_URL + "/exams/"+ self.id.to_s+"-"+self.name.parameterize
+  end
+  
 
 end

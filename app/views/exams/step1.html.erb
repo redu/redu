@@ -1,40 +1,78 @@
-<div id="all_content3">
-<div id="col_content_video">
-	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">ensinar</a> > <a href="#">novo exame</a> > passo 1 </div>
- 	<div id="title">NOVO EXAME - PASSO 1
+<script type="text/javascript">
+	
+$(document).ready(function(){
+ 	$('#course_description').keyup(function(){
+  limitChars('course_description', <%=AppConfig.desc_char_limit %>, 'char_limit');
+  })
+ });
+</script>
+
+
+
+<div class="grid_16">
+<div id="breadcrumbs">
+	<% if @school %>
+	<a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <%= link_to @school.name, @school %> > novo exame
+	<% else %>
+	<a href="<%=application_url%>">início</a> > <a href="#">ensinar</a> > novo exame
+	<%end %>
+</div>
+
+<%= render(:partial => "schools/school_info", :locals=>{:show => false}) if @school%>
+
+
+<h3 class="call">Novo Exame</h3>
+
+
 	
 		<% form_for :exam, @exam, :url => { :action => "create" }, :html => { :multipart => true } do |f| %>
 		
 		<%= f.error_messages %>
-	
- 	</div>
-
-	<div id="bd">
-		<div id="bd_left" style="float: left; width: 500px;">
-		
 		<%= hidden_field_tag("step", "1", options = {})%>
-		
-		 Título: <BR> <%= f.text_field :name %>
-		 <br/><BR>
-		 Descrição: <BR><%= f.text_area :description, :size => "50x3" %>
-		 <br/><BR>
-		 Tags 
-		 	<em>
-				<%= "(" + :optional_keywords_describing_this_exam_separated_by_commas.l + "):" %>
-  		   	</em>
-		 <BR><%= f.text_field :tag_list %>
-		 <br/><BR>
-		  Dificuldade: <BR><%= f.select :level, options_for_select([['Iniciante', 1], ['Intermediário', 2], ['Avançado', 3]], 1) %>
-		 <br/><BR>
-		  Intruções: <BR><%= f.text_area :instruction, :size => "50x3", :class => "mceEditor" %>
-		 <br/><BR>
+		<%= hidden_field_tag("school_id", @school.id) if @school %>
 		
 		
- 		</div>
+			<div class="grid_8">
+		
+		<% field_set_tag 'Informações Gerais' do %>
+		
+			<%= f.label "Título: " %>
+			<%= f.text_field :name %>
+
+			<%= f.label "Descrição:" %>
+			<div style="">
+			<%= f.text_area :description, :size => "50x3", :maxlength=> AppConfig.desc_char_limit %>
+			<div id="char_limit" style="text-align:right;">(<%=AppConfig.desc_char_limit %>)</div>
+			</div>
+	
+			<%= f.label "Tags <span class='snippet'>(separadas por vírgula)</span>" %>
+			<%= f.text_field :tag_list %>
+			
+			
+			<%# f.select(:simple_category, )%>
+			<%= f.label "Categoria:" %>
+			<%= simple_categories_i18n(f) %>
+			
+	
+			
+			<%= f.label "Dificuldade" %>
+			<%= f.select :level, options_for_select([['Iniciante', 1], ['Intermediário', 2], ['Avançado', 3]], 1) %>
+			
+				<%end%>
+			<% field_set_tag 'Instruções' do %>
+			
+			<%# f.label "Instruções" %>
+			<%= f.text_area :instruction, :size => "30x2", :class => "mceEditor" %>
+		
+		
+			<%end%>
+			</div>
 		
 		
 		
-		<div id="bd_right" style="float: left; width: 400px;">
+		<div class="grid_6 push_1">
+		
+			<% field_set_tag 'Tipo de Exame' do %>		
 		
 		<div style="margin-bottom: 20px;">
 			
@@ -54,12 +92,12 @@
 			<h3><%= radio_button_tag("exam_type", "quiz", checked = false, :disabled => true)%> Quiz</h3>
 			Esse tipo de exame possibilita exibir um resultado personalizado de acordo com a definição de um número de pontos em cada alternativa.
 		</div>
-		
+		<%end%>
 		
  		</div>
- 	</div>
 	
-	<div id="fd" style="float:left; margin-left:500px; width:100%;">
+	
+		<div class="grid_16">
 		<%= f.submit 'Próximo >' %> 
  	</div>
 	

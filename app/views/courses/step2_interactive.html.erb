@@ -22,12 +22,10 @@
 	<%= hidden_field_tag("school_id", @school.id) if @school %>
 
   
-  <div style="float: left; padding-top: 5%;">
-  <p>
+  <div class="submenu grid_16">
     <%= button_to_function "Visualizar", "save(true)"%>
 		 | <%= button_to_function "Salvar parcialmente", "save(false)", :id => "save_btn"%><%= image_tag 'spinner.gif', :id => 'save-spinner', :style => 'display: none' %>
  		<span class="snippet" id="save_info"></span>
-  </p>
   </div>
   
   <%= render :partial => 'form_interactive', :locals => {:f => f, :interactive_class => @interactive_class} %>

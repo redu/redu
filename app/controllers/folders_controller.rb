@@ -57,9 +57,13 @@ class FoldersController < BaseController
       if @myfile.save
         flash[:notice] = 'Upload realizado!'
         format.js do
-#          responds_to_parent do
-              redirect_to school_folders_path(:id => @myfile.folder_id, :school_id => params[:school_id])  and return
-            #end
+          responds_to_parent do
+             render :update do |page|
+               redirect_to school_folders_path(:id => @myfile.folder_id, :school_id => params[:school_id])  and return
+              page << "$('div.new-file-inner').slideToggle();"
+            end
+              #redirect_to school_folders_path(:id => @myfile.folder_id, :school_id => params[:school_id])  and return
+            end
           end
       else
          format.js do

@@ -20,11 +20,20 @@ class Myfile < ActiveRecord::Base
   
 
   before_destroy :delete_file_on_disk
+  before_create :overwrite
+  
   # When removing a myfile record from the database,
   # the actual file on disk has to be removed too.
   # That is exactly what this method does.
   def delete_file_on_disk
    # File.delete self.path
-  end
+ end
+ 
+ def overwrite # TODO ao fazer o upload verificar e perguntar se sobrescreve ou nao
+   existing = Myfile.find_by_attachment_file_name(self.attachment_file_name)
+   if existing
+    existing.destroy 
+   end
+ end
 
 end

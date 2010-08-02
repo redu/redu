@@ -22,24 +22,37 @@
 	
  </script>
  
-<div id="all_content3">
-<div id="col_content">
-	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">ensinar</a> > <a href="#">exames</a> > novo exame </div>
-   	
+
+<div class="grid_16">
+<div id="breadcrumbs">
+		<% if @school %>
+	<a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <%= link_to @school.name, @school %> > novo exame simples
+	<% else %>
+	<a href="<%=application_url%>">início</a> > <a href="#">ensinar</a> > novo exame simples
+	<%end %>
+</div>
+
+	
+<%= render(:partial => "schools/school_info", :locals=>{:show => false}) if @school%>
+
+<h3 class="call">Novo exame simples </h3>
+
+  <div class="submenu grid_15">
+  	<%= link_to_function 'Nova questão', 'saveDraft(1)' %> | 
+ 		<%= link_to_function 'Adicionar questão', 'saveDraft(2)' %> |
+    <%= button_to_function "Visualizar", "save(true)"%> |
+		<%= button_to_function "Salvar parcialmente", "save(false)", :id => "save_btn"%><%= image_tag 'spinner.gif', :id => 'save-spinner', :style => 'display: none' %>
+ 		<span class="snippet" id="save_info"></span>
+		
+			
+  </div>
+
+
+	
+<div class="grid_8">
  <% form_for :exam, @exam, :url => { :action => "create" },  :html => {:id => 'exam_form'} do |f| %>
  
- <div id="title">NOVO EXAME - PASSO 2
   <%= f.error_messages %>
-	
-    <div id="task_bar_exames">
-		
-		<%= link_to_function 'Nova questão', 'saveDraft(1)' %> | 
- 		<%= link_to_function 'Adicionar questão', 'saveDraft(2)' %> 
- 		<%# link_to_function '| Adicionar materiais', 'saveDraft(3)' %>
-	
-	</div>
- 
- </div>
 
  
   <%= hidden_field_tag("step", "2", options = {})%>
@@ -48,30 +61,9 @@
   <%= hidden_field_tag('opt_param', 0) %>
   <%= f.hidden_field(:id, :value => @exam.id) %>
  
- <BR><hr><BR>
  
- 
-<!--
-Materiais: <br/>
--->
-<%# if @exam.resources && @exam.resources.length > 0 %>
-
- <%# render :partial => 'resources/item', :collection => @exam.resources, :as => :resource %> 
- <%# else %>
- <!--
- Não há materiais associados. 
- -->
- <%# end %>
-<!--
- <br/><BR>
-<hr>
--->
 
  <div id="questions" style="min-height: 100px;">
- 
- 
- 
- 
  
  <% if @exam.questions && @exam.questions.length > 0 %>
  
@@ -88,10 +80,6 @@ Materiais: <br/>
  <% end %>
  </div>
  
- <!-- drop_receiving_element('questions',                             # The id of the receiving element
-  :with   => "'question=' + (element.id.split('_').last())",     # The query string parameters
-  :url    => {:action=>:trash_comment}                          # The action to call
- )-->
  
  <%= sortable_element 'questions',
 :url => { :action => "sort_question" , :id => @exam },
@@ -99,14 +87,27 @@ Materiais: <br/>
  :tag => 'div', :scroll => true
 %>
   
- 
-  
+</div>
+<div class="grid_6 push_1">
+	<div class="y_addinfo">
+                                <div class="addinfocontent">
+                                    <h1>
+                                       Adicione questões do banco de dados!</h1>
+                                    <p>
+                                       Por favor não publique conteúdo que esteja protegido por direitos autoriais, conteúdo obceno ou que viole
+																			 os do Redu.</p>
+																			
+                                </div>
+                            </div>
+</div>
+
+<div class="grid_16">
+
 <%= link_to '< Anterior', new_exam_path(:step => '1'), :class => "button" %> 
 <%= f.submit 'Próximo >' %> 
 
-
   <%= link_to 'Descartar e Voltar', cancel_exams_path, :confirm => "Tem certeza que deseja sair do editor de exames?" %>
-
+</div>
   
   
  <% end %>

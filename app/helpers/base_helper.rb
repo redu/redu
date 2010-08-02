@@ -3,7 +3,16 @@ require 'md5'
 # Methods added to this helper will be available to all templates in the application.
 module BaseHelper
   
-
+    def simple_categories_i18n(f)
+   # collection_select(:course, :simple_category, SimpleCategory.all, :id, :name)
+   categories_array = SimpleCategory.all.map { |cat| [category_i18n(cat.name), cat.id] } 
+    f.select(:simple_category_id, options_for_select(categories_array, :include_blank => true) )
+  end
+  
+  def category_i18n(category)
+    category.downcase.gsub(' ','').gsub('/','_').to_sym.l
+  end
+  
   
   def type_class(resource)
       case resource.attachment_content_type #TODO fazer por extensao em nao por tipo
