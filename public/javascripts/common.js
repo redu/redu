@@ -98,7 +98,24 @@ $(document).ready(function(){
         $(this).toggleClass("closed")
         
     })
-    })
+
+
+
+	/*
+		Learn/teach dropdown
+	*/
+	
+	$("#learn span.call ul.options").hide()
+	$("#learn span.call span.option").toggle(
+		function(){
+			$(this).next("ul.options:first").slideToggle("fast")
+		},
+		function(){
+			$(this).next("ul.options:first").slideToggle("fast")
+		}
+	)
+	
+})
 	
 	/*
 	 * AJAX

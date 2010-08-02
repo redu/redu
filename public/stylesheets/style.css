@@ -801,6 +801,71 @@ div.recomendations-m .number {
 		font-size:.8em;
 		margin-bottom:6px;
 	}
+
+	#learn {
+		
+	}
+	
+	#learn ul.headlines {
+		
+	}
+	
+	#learn ul.headlines > li {
+		background-color: white;
+	}
+
+	#learn ul.headlines li img.photo {
+		float: left;
+		margin-right: 10px;
+	}
+
+	#learn ul.headlines li a.name {
+		font-size: .9em;
+	}
+	
+	#learn ul.headlines li .info {
+		color: gray;
+		font-size: .7em;
+		display: block;
+		margin: 5px;
+	}
+	
+	#learn ul.headlines li ul li {
+		clear: left;
+		margin: 5px 0;
+		padding: 1px;
+	}
+	
+	#learn ul.headlines .photo {
+		width: 24px;
+		height: 24px;
+	}
+	
+	#learn li.personal-overview a.name {
+		font-size: 1.2em;
+		font-weight: bold;
+	}	
+
+	#learn li.personal-overview a.edit {
+		font-size: .8em;
+	}
+
+	#learn li.personal-overview .photo {
+		width: 40px;
+		height: 40px;
+		float: left;
+		margin-right: 10px;
+	}
+
+	#learn li.personal-overview .plan {
+		text-transform: uppercase;
+		display: block;
+		font-size: .9em;
+		font-weight: bold;
+		margin: 5px;
+		color: #FFDB4F;
+	} 
+		
 	
 	/** @status **/
     #actv-1,
@@ -1344,8 +1409,9 @@ div.content div.content {
         color: white;
 		position:relative;
     }
-
-    .call a.option {
+	
+	/* dropdown's trigger */
+    .call .option {
 		display:block;
         font-size: .8em;
 		background: url(../images/seta-option.png) no-repeat right center;
@@ -1356,7 +1422,32 @@ div.content div.content {
 		top:0;
         color: white;
 		position:absolute;
+		z-index: 10;
+		cursor: pointer;
     }
+	
+	/* dropdown itself */
+	.call ul.options {
+		background: white;
+		padding: 5px;
+		z-index: 10;
+		position: absolute;
+		right: 0px;
+		top: 23px;
+		border: 3px solid #18C8EF;
+		-moz-border-radius-bottomleft: 5px;
+		-moz-border-radius-bottomright: 5px;
+	}
+
+	.call ul.options li {
+		margin: 5px 0;
+	}
+	
+	.call ul.options a {
+		font-weight: normal;
+		text-transform: none;
+		font-size: .9em;
+	}
     
     .sidebar span.gray {
         color: gray;
