@@ -704,12 +704,12 @@ div.recomendations-m .number {
 		display:block;
 		clear:both;
 		overflow:hidden;
-		padding:15px;
+		padding:15px 50px;
 	}
 	
 	#learn #box-nav-networks li,
 	#teach #box-nav-networks li {
-		margin-right:15px;
+		margin-right: 60px;
 		float:left;
 		width:160px;
 		padding:8px 0 10px 60px;
