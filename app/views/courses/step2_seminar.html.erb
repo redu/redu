@@ -67,12 +67,12 @@
 <fieldset>
 	<legend>Vídeo</legend>
 
-  <%= f.radio_button :external_resource_type, :slideshare, {:onchange => "switchCourseFields(2);"} %>
-  <%= f.label :external_resource_type_slideshare, "Slideshare" %>	
+  <%= f.radio_button :external_resource_type, :slideshare, {:onchange => "switchCourseFields(2);" }%>
+  <%= f.label :external_resource_type_slideshare, "Slideshare", :class => "inline"  %>	
   <%= f.radio_button :external_resource_type, :youtube, {:onchange => "switchCourseFields(2);"} %>
-  <%= f.label :external_resource_type_youtube, "Youtube" %>
+  <%= f.label :external_resource_type_youtube, "Youtube", :class => "inline"  %>
   <%= f.radio_button :external_resource_type, :upload, {:onchange => "switchCourseFields(1);"} %>
-  <%= f.label :external_resource_type_upload, "Upload" %><br/><br/>
+  <%= f.label :external_resource_type_upload, "Upload", :class => "inline"  %><br/><br/>
 
   <div id="upload_resource_field" style="display:none;">
   <%= f.label :media, "Upload de vídeo" %><br/>
@@ -91,12 +91,12 @@
 <div class="grid_6">
 
 <div id="youtube_preview" style="display: none;">
-<object width="425" height="344">
+<object width="520" height="344">
 <param name="movie" value="none" id="yt_preview_param">
 </param><param name="allowFullScreen" value="true">
 </param><param name="allowscriptaccess" value="always">
 </param><embed src="none" 
-type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="344">
+type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="520" height="344">
 </embed></object> 
 </div>
 
@@ -110,7 +110,7 @@ type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen=
 
 
 <%= link_to '< Anterior', new_course_path(:step => '1'), :class => "button" %> 
-<%= f.submit 'Próximo >' %> 
+<%= f.submit 'Próximo >', :class => "button" %> 
 
 <br><%= link_to 'Cancelar', cancel_courses_path, :confirm => "Tem certeza que deseja sair do editor de aulas?" %>
 </div>
