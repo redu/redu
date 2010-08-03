@@ -2,86 +2,63 @@
 <%- @meta = { :description => "#{@school.name}'s profile on #{AppConfig.community_name}.", :keywords => "#{@school.name}, #{@school.tags.join(", ") unless @school.tags.nil?}", :robots => AppConfig.robots_meta_show_content }%>
 
 <script type="text/javascript">
-	var schoolFoldersPath = "<%= school_folders_path(:school_id => @school.id.to_s) %>";
-	var schoolCoursesPath = "<%= school_courses_path(:school_id => @school.id.to_s) %>";
-	var schoolExamsPath = "<%= school_exams_path(:school_id => @school.id.to_s) %>";
-	
-	var $schooltabs;
-	
-    $(document).ready(function(){
-        
-		$schooltabs = $(".school-tabs").tabs({
-            select: function(event, ui){
-				
-				
-                if (ui.index == 3) { // Arquivos
-					$("#tabs-4-content").html('');
-                    jQuery.ajax({
-                        data: '',
-                        dataType: 'script',
-                        success: function(request){
-                            $("#tabs-4-loading").hide();
-                        },
-                        type: 'get',
-                        url: schoolFoldersPath
-                    });
-                    
-                    $("#tabs-4-loading").show();
-                    
-                }else if (ui.index == 2){ // Exams
-					$("#tabs-3-content").html('');
-                    jQuery.ajax({
-                        data: '',
-                        dataType: 'script',
-                        success: function(request){
-                            $("#tabs-3-loading").hide();
-                        },
-                        type: 'get',
-                        url: schoolExamsPath
-                    });
-                    
-                    $("#tabs-3-loading").show();
-				}			
-				else if (ui.index == 1){ // Aulas
-					$("#tabs-2-content").html('');
-                    jQuery.ajax({
-                        data: '',
-                        dataType: 'script',
-                        success: function(request){
-                            $("#tabs-2-loading").hide();
-                        },
-                        type: 'get',
-                        url: schoolCoursesPath
-                    });
-                    
-                    $("#tabs-2-loading").show();
-				}
-            }
-        });
-		
-			// Se a url for do tipo http://www.redu.com.br/rede#tabs-2
-			// dispara o evento para carregar tab correspondente
-			/*
-var selTab = window.location.href.split("#");
-      if (typeof(selTab) != 'undefined' && selTab.length >1){
-				selTabId = selTab[1].split("-")[1];
-				$schooltabs.tabs('select', (selTabId-1));
-			}
-*/
+var schoolFoldersPath = "<%= school_folders_path(:school_id => @school.id.to_s) %>";
+var schoolCoursesPath = "<%= school_courses_path(:school_id => @school.id.to_s) %>";
+var schoolExamsPath = "<%= school_exams_path(:school_id => @school.id.to_s) %>";
 
-      
-        
+var $schooltabs;
+
+$(document).ready(function() {
+
+    $schooltabs = $(".school-tabs").tabs({
+        select: function(event, ui) {
+            if (ui.index == 3) {
+                // Arquivos
+                $("#tabs-4-content").html('');
+                jQuery.ajax({
+                    data: '',
+                    dataType: 'script',
+                    success: function(request) {
+                        $("#tabs-4-loading").hide();
+                    },
+                    type: 'get',
+                    url: schoolFoldersPath
+                });
+
+                $("#tabs-4-loading").show();
+            } else if (ui.index == 2) {
+                // Exams
+                $("#tabs-3-content").html('');
+                jQuery.ajax({
+                    data: '',
+                    dataType: 'script',
+                    success: function(request) {
+                        $("#tabs-3-loading").hide();
+                    },
+                    type: 'get',
+                    url: schoolExamsPath
+                });
+
+                $("#tabs-3-loading").show();
+            }
+            else if (ui.index == 1) {
+                // Aulas
+                $("#tabs-2-content").html('');
+                jQuery.ajax({
+                    data: '',
+                    dataType: 'script',
+                    success: function(request) {
+                        $("#tabs-2-loading").hide();
+                    },
+                    type: 'get',
+                    url: schoolCoursesPath
+                });
+
+                $("#tabs-2-loading").show();
+            }
+        }
     });
-//
-	
-	
-	
-	
-	
-	
-	
-		
-	
+});
 </script>
 
 <%= render :partial => "schools/school_info", :locals => {:show => true} %>
