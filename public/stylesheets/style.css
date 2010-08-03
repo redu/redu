@@ -418,6 +418,17 @@ form div.errorExplanation {
     color: #D8000C;
     background-color: #FFDFDF;
 }  
+
+.fieldWithErrors {
+  margin: 0;
+  display: inline;
+}
+.fieldWithErrors label {
+    color: #8a1f11;
+}
+.fieldWithErrors  input, .fieldWithErrors textarea, .fieldWithErrors select {
+    background-color: #FEEFB3 !important;
+}
   
 /** @icon **/
 .icon {

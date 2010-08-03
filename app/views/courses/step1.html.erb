@@ -9,8 +9,7 @@ $(document).ready(function(){
 
 
 
-<div class="grid_16">
-<div id="breadcrumbs">
+<div id="breadcrumbs" class="grid_16">
 	<% if @school %>
 	<a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <%= link_to @school.name, @school %> > nova aula
 	<% else %>
@@ -21,10 +20,26 @@ $(document).ready(function(){
 <%= render(:partial => "schools/school_info", :locals=>{:show => false}) if @school%>
 
 
-<h3 class="call">Nova Aula</h3>
+<span class="grid_3 call">Nova Aula</span>
+
+
+<div class="grid_9">
+<table class="booking_steps" cellpadding="0" cellspacing="0">
+							<tbody><tr>
+								<td><span class="book_step current"><span><em>1</em>Informações Gerais</span></span></td>
+								<td class="spacer">&nbsp;</td>
+								<td><span class="book_step disabled"><span><em>2</em>Editor de Aula</span></span></td>
+								<td class="spacer">&nbsp;</td>
+								<td><span class="book_step disabled"><span><em>3</em>Publicação</span></span></td>
+							</tr>
+						</tbody></table>
+</div>
 
 	<% form_for :course, @course, :url => {:controller => :courses, :action => :create }, :html => { :multipart => true } do |f| %>
+		
+		<div class="grid_16">
 		<%= f.error_messages %>
+		</div>
 	<%= hidden_field_tag("school_id", @school.id) if @school %>
 <%= hidden_field_tag("step", "1", options = {})%>
 
@@ -88,5 +103,5 @@ $(document).ready(function(){
 	
 	<% end %>
 
-</div>
-</div>
+
+

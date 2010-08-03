@@ -10,7 +10,19 @@
 	
 <%= render(:partial => "schools/school_info", :locals=>{:show => false}) if @school%>
 
-<h3 class="call">Nova aula passo-a-passo </h3>
+<h3 class="call">Nova página simples </h3>
+
+<table class="booking_steps" cellpadding="0" cellspacing="0">
+							<tbody><tr>
+								<td><span class="book_step"><span><em>1</em>Informações Gerais</span></span></td>
+								<td class="spacer">&nbsp;</td>
+								<td><span class="book_step current"><span><em>2</em>Editor de Aula</span></span></td>
+								<td class="spacer">&nbsp;</td>
+								<td><span class="book_step disabled"><span><em>3</em>Publicação</span></span></td>
+							</tr>
+						</tbody></table>
+</div>
+
 
 <% form_for :page, @page, :url => { :action => "create" }, :html => { :multipart => true } do |f| %>
 <%= f.error_messages %>

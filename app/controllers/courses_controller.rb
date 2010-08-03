@@ -5,7 +5,7 @@ class CoursesController < BaseController
   before_filter :login_required, :except => [:index]
   #before_filter :check_if_removed, :except => [:index]
   
-  uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit, :update])
+  uses_tiny_mce(:options => AppConfig.default_mce_options, :only => [:new, :edit, :update])
   
 #  def check_if_removed
 #    puts params[:id]
@@ -352,6 +352,7 @@ class CoursesController < BaseController
                 redirect_to :action => :new, :step => "2", :school_id => params[:school_id]
               }
             else  
+              @school = School.find(params[:school_id])
               format.html { render "step1" }
             end
           end
