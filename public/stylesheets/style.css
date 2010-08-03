@@ -1971,6 +1971,89 @@ a.icon-edit {
 	padding-left: 25px;
 	background: #F5F5F5 url("../images/icons/post.png") no-repeat 5px 4px;
 }
+/*
+ * WIZARDS
+ */
+
+.book_step,
+.book_step:link,
+.book_step:visited {
+    background: #FFF url(../images/steps_bg.gif) no-repeat right -160px;
+    color: #999;
+    display: block;
+    font-family: arial;
+    font-size: 12px;
+    float: left;
+    padding-right: 25px;
+    text-decoration: none;
+    text-align: center;
+    white-space: nowrap;
+    }
+a.book_step {
+    cursor: pointer !important;
+    color: #7BA1D2;
+    background: #FFF url(../images/steps_bg.gif) no-repeat right -80px;
+    }
+a.book_step span {
+    background: #FFF url(../images/steps_bg.gif) no-repeat left -80px;
+    }
+    
+a:hover.book_step {
+    background: #FFF url(../images/steps_bg.gif) no-repeat right -40px;
+    }
+a:hover.book_step span {
+    background: #FFF url(../images/steps_bg.gif) no-repeat left -40px;
+    }
+    
+.book_step span {
+    background: #FFF url(../images/steps_bg.gif) no-repeat left 0px;
+    display: block;
+    float: left;
+    padding-top: 10px;
+    padding-bottom: 12px;
+    padding-left: 43px;
+    position: relative;
+    }
+    
+.book_step span em {
+    color: #FFF;
+    font-style: normal; 
+    font-weight: bold;
+    font-size: 17px;
+    left: 13px;
+    position: absolute; 
+    top: 8px;
+    }
+    
+/*.book_step:hover span {
+    background: #FFF url(../images/steps_bg.gif) no-repeat left -40px;
+    }*/
+    
+/*** Current Step ***/
+.book_step.current {
+    background: #FFF url(../images/steps_bg.gif) no-repeat right -160px;
+    color: #555;
+    cursor:default;
+    }
+.book_step.current span {
+    background: #FFF url(../images/steps_bg.gif) no-repeat left -40px;
+    }
+    
+/*** Disabled Step ***/
+.book_step.disabled {
+    background: #FFF url(../images/steps_bg.gif) no-repeat right -120px;
+    color: #AAA;
+    cursor: default;
+    }
+.book_step.disabled span {
+    background: #FFF url(../images/steps_bg.gif) no-repeat left -120px;
+    }
+            
+table.booking_steps {
+    width: 100%;
+    background: #FFF url(../images/steps_line_bg.gif) repeat-x left 49% ;
+    }
+table.booking_steps td.spacer { background: none; width: 61px}
 
 /*
  * aulas
