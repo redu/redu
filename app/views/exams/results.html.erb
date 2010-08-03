@@ -96,49 +96,50 @@ padding:1px 2px;
 </style>
 <script>
 function reviewQuestion(questionId){
-	//new Ajax.Updater('posts', '/exams/review_question', {asynchronous:true, evalScripts:true}); return false;
 		
 		var explanation = document.getElementById("explanation_"+questionId);
 		if (explanation != null && typeof(explanation) != 'undefined') {
 			// já expandido
 			
-			if (explanation.style.display == 'none') {
-				Effect.SlideDown("explanation_"+questionId);
-			}
-			else {
-				Effect.SlideUp("explanation_"+questionId);
-			}
+
+			jQuery("#explanation_"+questionId).slideToggle();
 		}
 		else {
+			
+			jQuery.ajax({
+                        data: "question_id=" + questionId,
+                        dataType: 'script',
+												beforeSend: function(request){
+                            var loadingbar = "<tr><td colspan='5'><img id='thebug_"+ questionId + "' src='../../images/loadingAnimation.gif'/>"+
+														"<div id='explanation_" + questionId + "'></div></td></tr>";
+				
+														jQuery("#question_"+questionId).after(loadingbar);
+                        },
+                        type: 'get',
+                        url: "<%= url_for :controller => :exams, :action => :review_question %>"
+                    });
 		
-			new Ajax.Request("<%= url_for :controller => :exams, :action => :review_question %>", {
-				method: 'get',
-				parameters: "?question_id=" + questionId,
-				onLoading: function(){
-				
-				var loadingbar = "<tr><div id='explanation_"+ questionId + "'><div><td id='thebug_"+ questionId + "' colspan='5'> <img src='../../images/loadingAnimation.gif'/></td></div></div></tr>";
-				
-				Element.insert("question_"+questionId, {after: loadingbar});
-				
-				}/*,
-				onComplete: function(request){
-				
-				
-				}*/
-			});
+			
 		}
 }	
 </script>
 
-<div id="all_content4">
-<div id="content_preview_exame">
-	<div id="breadcrumbs_video"><a href="#">home</a> > <a href="#">aprender</a> > <a href="#">exames</a>  > <strong><%= session[:exam].name %></strong></div>   
-   	<div id="title_video">Resultados para <%= @exam.name %></div>
 
+<div class="grid_16">
+<div id="breadcrumbs">
+	<a href="<%=application_url%>">início</a> > <a href="#">aprender</a> > <a href="#">aprender</a>  > <a href="#"><%= @exam.name %></a> > resultado 
+</div>
 
+<%= render :partial => "exam_header"%>
+
+<div id="title_video">Resultados para <%= @exam.name %></div>
+
+<div class= "grid_16">
 <% total = @exam.questions.length %>
  Certas <%= @correct %> | Erradas <%= total - @correct %> | Total: <%= total %> | Tempo: <%= seconds_to_time(@time)%>
-<BR><BR>
+</div>
+
+<div class= "grid_10 push_1">
 
 <table cellpadding="0" cellspacing="0" border="0" class="tbl_toggle">
       	<thead>
@@ -205,17 +206,24 @@ function reviewQuestion(questionId){
 		</table>
 
 
-
-
-
-
 </div>
 
-<!-- COMENTARIOS ############################################################################################################################# -->
-<a name="comments"></a>
-<%= render :partial => 'shared/comment', :locals => { :commentable => @exam } %>
-<!-- COMENTARIOS ############################################################################################################################# -->
+<div class= "grid_5">
+	<div class="y_addinfo">
+                                <div class="addinfocontent">
+                                    <h1>
+                                        Ranking</h1>
+                                    <p>
+                                       Por favor não publique conteúdo que esteja protegido por direitos autoriais, conteúdo obceno ou que viole
+																			 os <%= link_to "termos e condições", {:controller => "base", :action => "tos"}, :target => "_blank"%> do Redu.
+                                    	</p>
+                                </div>
+                            </div>
 </div>
+
+<!-- <a name="comments"></a>
+<%# render :partial => 'shared/comment', :locals => { :commentable => @exam } %>
+-->
 </div>
 
   

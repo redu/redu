@@ -282,6 +282,9 @@ def cancel
 end
   
   def new
+    if params[:school_id]
+     @school = School.find(params[:school_id]) 
+    end
     
     case params[:step]
       when "2"
@@ -341,7 +344,7 @@ def create
               session[:exam_id] = @exam.id
               
               format.html { 
-                redirect_to :action => :new , :exam_type => params[:exam_type], :step => "2"
+                redirect_to :action => :new , :exam_type => params[:exam_type], :step => "2", :school_id => params[:school_id]
               }
             else  
               format.html { render "step1" }
@@ -375,12 +378,24 @@ def create
             
             if @exam.update_attributes(params[:exam])
               
-              format.html { 
-                redirect_to :action => :new , :exam_type => params[:exam_type], :step => "3"
-              }
+              format.html do
+                redirect_to :action => :new , :exam_type => params[:exam_type], :step => "3", :school_id => params[:school_id]
+              end
+              format.js do
+                render :update do |page|
+                   page << "jQuery('#save_info').html('Salvo em #{Time.now.utc}')"
+                end
+              end
             else  
               @edit = false
-              format.html { render "step2_simple" }
+              format.html do
+                render "step2_simple" 
+              end
+               format.js do
+                  render :update do |page| 
+                    page << "alert('Erro ao salvar. Tente novamente em alguns instantes.')"
+                  end
+                end
             end
           end
           
@@ -389,12 +404,12 @@ def create
           
           @exam.update_attributes(params[:exam])
           
-          redirect_to :controller => :questions, :action => :new, :exam_type => params[:exam_type]
+          redirect_to :controller => :questions, :action => :new, :exam_type => params[:exam_type], :school_id => params[:school_id]
           
         elsif params[:sbt_opt] == "2" # add question  
           #save_dft
           @exam.update_attributes(params[:exam])
-          redirect_to :controller => :questions, :action => :add, :exam_type => params[:exam_type]
+          redirect_to :controller => :questions, :action => :add, :exam_type => params[:exam_type], :school_id => params[:school_id]
           
         elsif params[:sbt_opt] == "3" # add resource  TODO mudar
           #save_dft
@@ -413,39 +428,8 @@ def create
         
         
       elsif params[:exam_type] == 'formative'
-        @course = Course.find(session[:course_id])
-        @iclass = InteractiveClass.new(params[:interactive_class])
-        @iclass.course = @course
-        
-        respond_to do |format|
-          
-          if @iclass.save
-            
-            format.html { 
-              redirect_to :action => :new , :exam_type => params[:exam_type], :step => "3"
-            }
-          else  
-            format.html { render "step2_interactive" }
-          end
-        end
         
       elsif params[:exam_type] == 'quiz'
-        
-        @course = Course.find(session[:course_id])
-        @page = Page.new(params[:page])
-        @page.course = @course
-        
-        respond_to do |format|
-          
-          if @page.save
-            
-            format.html { 
-              redirect_to :action => :new , :exam_type => params[:exam_type], :step => "3"
-            }
-          else  
-            format.html { render "step2_page" }
-          end
-        end
         
       end
         
@@ -485,7 +469,13 @@ def create
 
 end
 
+  def unpublished_preview
+  @exam = Exam.find(session[:exam_id])
   
+  respond_to do |format|         
+    format.html {render 'unpublished_preview_interactive'}
+  end
+end
   
   
 =begin  

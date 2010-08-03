@@ -75,38 +75,9 @@ var selTab = window.location.href.split("#");
 //
 	
 	
-	function toggleBox(boxname){
-		var box = document.getElementById(boxname);
-		
-		if (box.style.display == 'none') {
-			Effect.SlideDown(box,0.5);
-		} else {
-			Effect.SlideUp(box,0.5);
-		}
-	}
 	
-	function toggleAssociateBox(){
-		var box = document.getElementById("associate_box");
-		
-		if (box.style.display == 'none') {
-			//Effect.Appear(box);
-			box.style.display = 'block';
-			
-		} else {
-			//Effect.Fade(box);
-			box.style.display = 'none';
-		}
-	}
 	
-	function showKeysSchoolBox(){
-		document.getElementById('grant_keys_link').style.display = 'none';
-        document.getElementById('keys_school_box').style.display = 'inline';
-	}
 	
-	function showAdminLoginBox(){
-		document.getElementById('grant_admin_link').style.display = 'none';
-        document.getElementById('admin_login_box').style.display = 'inline';
-	}
 	
 	
 		

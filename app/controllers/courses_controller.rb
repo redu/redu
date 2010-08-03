@@ -101,6 +101,8 @@ class CoursesController < BaseController
     
     render :update do |page|
       page.replace_html id, ratings_for(@course, :wrap => false, :dimension => params[:dimension])
+     # page << "$('##{id}').effect('highlight', {}, 2000);" #TODO precisa do plugin de effects do jquery
+      #page.visual_effect :highlight, id
     end
   end
   
@@ -223,7 +225,7 @@ class CoursesController < BaseController
         elsif @course.courseable_type == 'InteractiveClass'
           @lessons = Lesson.all(:conditions => ['interactive_class_id = ?',@course.courseable_id ], :order => 'position ASC') # TODO 2 consultas?
         elsif @course.courseable_type == 'Seminar'
-          @seminar = @course.courseable
+          #@seminar = @course.courseable
         end
         
         format.html
@@ -459,6 +461,8 @@ class CoursesController < BaseController
         else
           params[:course][:state] = "approved"
         end
+      else #publico
+        params[:course][:state] = "waiting"
       end
         
         

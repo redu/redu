@@ -20,9 +20,22 @@ $(document).ready(function(){
 
 <%= render(:partial => "schools/school_info", :locals=>{:show => false}) if @school%>
 
+<div id="title_video">Novo Exame</div>
 
+<div class="grid_9 push_3">
+<table class="booking_steps" cellpadding="0" cellspacing="0">
+							<tbody><tr>
+								<td><span class="book_step current"><span><em>1</em>Informações Gerais</span></span></td>
+								<td class="spacer">&nbsp;</td>
+								<td><span class="book_step disabled"><span><em>2</em>Editor de Exame</span></span></td>
+								<td class="spacer">&nbsp;</td>
+								<td><span class="book_step disabled"><span><em>3</em>Publicação</span></span></td>
+							</tr>
+						</tbody></table>
+</div>
+<!--
 <h3 class="call">Novo Exame</h3>
-
+-->
 
 	
 		<% form_for :exam, @exam, :url => { :action => "create" }, :html => { :multipart => true } do |f| %>

@@ -3,7 +3,7 @@
 				
 				<%  if current_user.can_post? @school %>
 				   	 <li>
-				   	 	<%= link_to "Novo Exame", new_school_exam_path %>
+				   	 	<%= link_to "Novo Exame", new_school_exam_path(:school_id => @school.id) %>
 					 </li>
 					 <!--
 					 <li class="sep">|</li>

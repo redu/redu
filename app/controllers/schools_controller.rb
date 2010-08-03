@@ -2,7 +2,21 @@ class SchoolsController < BaseController
   layout 'new_application'
   before_filter :login_required,  :except => [:join, :unjoin, :member]
   # before_filter :admin_required,  :only => [:new, :create]
+  
 
+
+  def moderate_resource
+    params[:approve]
+    params[:resource_id]
+    params[:resource_type]
+    case params[:resource_type].downcase
+      when 'course'
+    when 'exam'
+     # Exam.update_attribute
+    end
+  end
+  
+  
   def take_ownership
      @school = School.find(params[:id])
      @school.update_attribute(:owner, current_user)

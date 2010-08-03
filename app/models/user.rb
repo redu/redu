@@ -275,6 +275,8 @@ class User < ActiveRecord::Base
     case entity.class.to_s 
     when 'Course'
       (entity.owner == self || (entity.school == school && self.school_admin?(school) ))    
+    when 'Exam'
+      (entity.owner == self || (entity.school == school && self.school_admin?(school) ))   
     when 'School'
        (entity.owner == self || self.school_admin?(school))    
    end 

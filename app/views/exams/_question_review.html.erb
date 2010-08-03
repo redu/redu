@@ -1,10 +1,5 @@
-   <div>
-   <td colspan='5'>
-    <!-- if the quiz is test like AND the current user is an admin, there is a difficulty column and a time spent column so the colspan is 7. If the quiz is test like but the user is not an admin, there is no difficulty column so the colspan is 6. If the quiz is a skills assessment quiz, then there is no time elapsed column and so the colspan is 5 -->
-        <div class="tbl_toggle_detail">
-            <!-- there will always be two columns. if there is a passage, passage goes in one column and everything else goes in the other -->
-            <div class="line">
-                <div class="item twoCol_left_half">
+   	
+ <div style="width: 50%; float:left;">
                     <h3>Question #<%= question_index + 1 %>
 					<%= (answer && question.id == answer) ? '(correta)' : '(incorreta)' %>
 					</h3>
@@ -13,8 +8,8 @@
                             <%= question.statement %>
                         </p>
                     </div>
-                    <!-- if its a testlike question, the answer is in the left col and the explanation is in the right col.
-					 otherwise, the answer is in the right col and there is no explanation -->
+										
+										
                     <div class="item_answer">
                         <form>
                             <ul>
@@ -43,8 +38,11 @@
                     </div>
                     <!-- end item_answer -->
                 </div>
+								
+								
+								
                 <!-- end of twoCol_left_half -->
-                <div class="item twoCol_right_half">
+                <div style="width: 50%; float:left;">
                     <h3>Explicação</h3>
                     <div class="item_feedback">
                         <%= question.justification %>
@@ -52,8 +50,3 @@
                 </div>
                 <!-- end of twoCol_right_half -->
                 <!-- end check for passage-ness -->
-            </div>
-            <!-- end of line -->
-        </div>
-</td>
-</div>

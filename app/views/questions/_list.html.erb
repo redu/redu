@@ -177,7 +177,7 @@ function viewQuestion(questionId){
   <td>		
   <%= link_to_function 'Visualizar', "viewQuestion(" + question.id.to_s + ")"%>
 <%= link_to_remote 'Adicionar', :url => { :controller => :exams, :action => :add_question, :question_id => question.id, :exam_type => exam_type }, 
-						:before => "Element.show('spinner')",
+						:before => "jQuery('#spinner').show()",
         				:success => "removeRowFromList('tr_" + question.id.to_s + "')" %>
 						<!-- :method => :delete --> 
 						 <!-- :update => "local_search_results" -->

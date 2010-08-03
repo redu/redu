@@ -80,12 +80,12 @@ function showRequestKeysForm(){
      :loading => 'itemLoading()',
      :complete => "closePopup()" do -->
 	 <% form_remote_tag :url => { :controller => :questions, :action => :search },
-     :before => "Element.show('spinner')",
-     :success => "Element.hide('spinner')" do -%>
+     :before => "jQuery('#spinner').show()",
+     :success => "jQuery('#spinner').hide()" do -%>
      Buscar<%= text_field_tag :query %>
      <%= submit_tag 'Search' %>
      <% end -%>
- </div>
+ </div>	
  <div id="filter_bar">
      <span id="title_list" class="title_list"> TODOS</span>
      <%= render :partial => "questions/sort" %>

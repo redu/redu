@@ -8,10 +8,11 @@
     @border: #EFF0F0 cinza
     @link2: #0B85C1 azul
     @link1: #18C8EF azul claro
-    @header: #F63B0B vermelho
+    @header: #F63B0B vermelho | #FF8000 laranja
     @background: #EBF7FD
     
 **/
+
 
 /** @typo **/
 html, body {  height:100%; /* 100% height hack */ }
@@ -107,7 +108,7 @@ a {
     font-size: .9em;
     text-transform: uppercase;
     font-weight: bold;
-    color: #F63B0B;
+    color: #FF8000;
     margin: 20px 0 10px 0;
     padding-bottom: 5px;
     display:block;
@@ -336,7 +337,7 @@ div#filter .call {
 	form fieldset legend {
 		font-weight: bold;
 		font-size: 1.1em;
-		color: #F63B0B;
+		color: #FF8000/*#FF8000*/;
 	}
 	
 	form fieldset label,
@@ -706,10 +707,10 @@ div.recomendations-m .number {
 	#learn .logo-learn span,
 	#teach .logo-learn span { 
 		float: left; 
-		color: #F63B0B;
+		color: /*#FF8000*/#FF8000;
 		font-size: 1.5em;
 		display: inline-block;
-		border-right: 3px #F63B0B solid;
+		border-right: 3px #FF8000 solid;
 		padding: 5px 23px;
 	}
 	
@@ -1072,8 +1073,6 @@ div.recomendations-m .number {
     div.filter-box ul li.selected a {
         background: #18C8EF;
         color: white;
-        -moz-border-radius: 5px;
-        -webkit-border-radius: 5px;
     }
 
     div.filter-box ul li a {
@@ -1519,7 +1518,7 @@ div.content div.content {
         font-size: .9em;
         text-transform: uppercase;
         font-weight: bold;
-        color: #F63B0B;
+        color: #FF8000;
         margin: 20px 0 10px 0;
         padding-bottom: 5px;
         display:block;
@@ -1800,7 +1799,7 @@ ul.sub-groups > li {
 	font-size: 1.4em;
 	font-weight: bold;
 	margin: 10px 0 5px 0;
-	color: #F63B0B;
+	color: #FF8000;
 }
 
 .notice-page p {

@@ -1,6 +1,6 @@
-   
 
-<div id="title_questions" align="left">Questão <%= session[:question_index] %>.</div>     
+<% field_set_tag "Questão #{session[:question_index]}", :class => "heighted" do %>   
+
 <div id="texto_instrucoes">
 	<%= question.statement %>
 </div>
@@ -20,4 +20,4 @@
 	</div>
 	
 	
-	
+	<% end %>

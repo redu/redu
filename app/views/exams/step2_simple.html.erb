@@ -20,6 +20,28 @@
 		
 	}
 	
+	
+	var isPreview = false;	
+	function save(preview){
+		jQuery('#sbt_opt').val('0');
+		
+		isPreview = preview;
+		jQuery.ajax({
+			beforeSend:function(request){
+				$('#save-spinner').show();
+				}, 
+			complete:function(request){
+				$('#save-spinner').hide();
+				if (isPreview) {
+					window.open('<%= answer_exam_path(:id => @exam.id, :first => true) %>');
+				}
+				},
+			data:jQuery.param(jQuery("#exam_form").serializeArray()), 
+			dataType:'script', 
+			type:'post', 
+			url:'<%= url_for(:action => :create, :exam_id => @exam.id)%>'});
+	}
+	
  </script>
  
 
@@ -35,7 +57,23 @@
 	
 <%= render(:partial => "schools/school_info", :locals=>{:show => false}) if @school%>
 
-<h3 class="call">Novo exame simples </h3>
+<div id="title_video">Novo Exame</div>
+
+<div class="grid_9 push_3">
+<table class="booking_steps" cellpadding="0" cellspacing="0">
+							<tbody><tr>
+								<td><span class="book_step"><span><em>1</em>Informações Gerais</span></span></td>
+								<td class="spacer">&nbsp;</td>
+								<td><span class="book_step current"><span><em>2</em>Editor de Exame</span></span></td>
+								<td class="spacer">&nbsp;</td>
+								<td><span class="book_step disabled"><span><em>3</em>Publicação</span></span></td>
+							</tr>
+						</tbody></table>
+</div>
+<!--
+<h3 class="call">Novo Exame</h3>
+-->
+
 
   <div class="submenu grid_15">
   	<%= link_to_function 'Nova questão', 'saveDraft(1)' %> | 
@@ -53,7 +91,7 @@
  <% form_for :exam, @exam, :url => { :action => "create" },  :html => {:id => 'exam_form'} do |f| %>
  
   <%= f.error_messages %>
-
+<%= hidden_field_tag("school_id", @school.id) if @school %>
  
   <%= hidden_field_tag("step", "2", options = {})%>
   <%= hidden_field_tag("exam_type", "simple", options = {})%>
