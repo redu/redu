@@ -68,17 +68,22 @@ $(document).ready(function() {
 <div class="school-tabs tabs">
 	    <ul>
 		    <li><a href="#tabs-1">Início</a></li>
+		    <li><a href="#tabs-5">Movimentação</a></li>
 		    <li><a href="#tabs-2">Aulas</a></li>
 			<li><a href="#tabs-3">Exames</a></li>
 		    <li><a href="#tabs-4">Arquivos</a></li>
 	    </ul>
 	    
-		<div id="tabs-1">
-		<%= javascript_include_tag 'flow.js' %>
-		<%= render :partial => "statuses/create_status", :locals => {:status => @status }%>
-		<ul class="activities">
-		<%= render :partial => "statuses/type_proxy", :collection => @school.recent_school_activity, :as => :status %>
-		</ul><!-- end activities -->
+		<div id="tabs-1" class="clearfix first-page">
+			<%= render :partial => 'start_page', :locals => {:featured => @featured, :brand_new => @brand_new} %>
+		</div>
+		
+		<div id="tabs-5">
+			<%= javascript_include_tag 'flow.js' %>
+			<%= render :partial => "statuses/create_status", :locals => {:status => @status }%>
+			<ul class="activities">
+			<%= render :partial => "statuses/type_proxy", :collection => @school.recent_school_activity, :as => :status %>
+			</ul><!-- end activities -->			
 		</div>
 		
 		<!-- aulas -->

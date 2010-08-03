@@ -1,0 +1,27 @@
+<span class="call featured"><span>Aulas</span></span>
+<div class="featured">
+	<div class="photo">
+		<%= link_to(image_tag brand_new.thumb_url, :width => "229px", :height => "141px") %>
+	</div>
+	<%= link_to brand_new.name, brand_new, :class => "name" %>
+	<span class="author">por <%= link_to brand_new.owner.login, brand_new.owner, :class => "author" %></span>
+</div><!-- end featured1 -->
+<div class="featured2">
+	<ul>
+		<%= render :partial => 'featured', :collection => featured %>
+	</ul>
+</div><!-- end featured2 -->
+<div class="statistics">
+	<span class="call"><span>Estatísticas</span></span>
+</div><!-- end news -->
+<div class="news">
+	<span class="call"><span>Notícias</span></span>
+	<ul>
+		<li><a href="">Uma notícia</a></li>
+		<li><a href="">Um comunicado</a></li>
+		<li><a href="">Algo de interesse</a></li>
+		<li><a href="">Direcionado para os alunos</a></li>
+		<li><a href="">Informações pertinentes</a></li>
+		<li><a href="">Alguma coisa</a></li>
+	</ul>
+</div><!-- end noticias -->

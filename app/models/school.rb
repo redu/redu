@@ -152,9 +152,8 @@ class School < ActiveRecord::Base
     end
   end
   
-  
-  
-  
-  
-  
+  def featured_courses(qty=4)
+    #TODO melhorar esta lógica
+    self.courses.find(:all, :order => "view_count DESC", :limit => "#{qty}")
+  end
 end

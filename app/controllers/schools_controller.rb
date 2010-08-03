@@ -417,6 +417,9 @@ class SchoolsController < BaseController
   # GET /schools/1.xml
   def show
     @school = School.find(params[:id])
+    @featured = @school.featured_courses(3)
+    @brand_new = @school.courses.find(:first, :order => "created_at DESC")
+    
      if @school.removed
       redirect_to removed_page_path and return
     end

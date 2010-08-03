@@ -1637,6 +1637,10 @@ div.content div.content {
     height: 80px;
 }
 
+#group-header div.logo {
+	text-align: center;
+}
+
 #group-header h2.name{
     font-size: 1.4em;
     font-weight: bold;
@@ -1682,7 +1686,7 @@ div.content div.content {
 }
 
 #group .sidebar ul.menu {
-    
+    margin-bottom: 10px;
 }
 
 #group .sidebar ul.menu  > li {
@@ -1690,7 +1694,7 @@ div.content div.content {
 }
 
 #group .sidebar ul.menu > li > a {
-    padding: 5px 0;
+    padding: 8px 0;
     display: block;
     font-size: .9em;
     padding-left: 20px;
@@ -1733,6 +1737,129 @@ div.content div.content {
     margin-bottom: 10px;
 }
 
+/* @first-page */
+#group div.first-page {
+	
+}
+
+#group div.first-page span.call {
+    font-size: .9em;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin: 20px 0 10px 0;
+    padding-bottom: 5px;
+    display:block;
+    background: url("../images/arrow-down.png") no-repeat 15px bottom;
+	position:relative;
+}
+
+#group div.first-page span.call span {
+	background-color: #F5F5F5;
+	display: block;
+	padding: 5px;
+	color: #D23D24;
+}
+
+#group div.first-page .photo {
+	-moz-border-radius: 3px; 
+	-webkit-border-radius: 3px;	
+	border: 1px solid lightgray;
+	padding: 5px;
+	margin-bottom: 10px;
+}
+
+#group div.first-page span.featured {
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+#group div.first-page div.featured,
+#group div.first-page div.featured2 {
+	margin: 0 10px;
+	float: left	;
+	height: 300px;
+}
+
+#group div.first-page div.featured a.name,
+#group div.first-page div.featured2 a.name {
+	font-weight: bold;
+	display: block;
+	margin-bottom: 10px;
+}
+
+#group div.first-page div.featured {
+	width: 250px;
+}
+
+#group div.first-page div.featured .photo {
+	display: block;
+	padding: 5px;
+	width: 229px;
+	height: 141px;
+}
+
+#group div.first-page div.featured a.name {
+	font-size: 1.2em;
+}
+
+#group div.first-page div.featured span.author {
+	font-size: .8em;
+}
+
+#group div.first-page div.featured2 {
+	width: 400px;
+}
+
+#group div.first-page div.featured2 a.name {
+	float: left;
+	display: block;
+	width: 250px;
+}
+
+#group div.first-page div.featured2 .photo {
+	width: 128px;
+	height: 72px;
+	margin-right: 10px;
+	float: left;
+}
+
+#group div.first-page div.featured2 .author,
+#group div.first-page div.featured2 .views {
+	display: block;
+	float: left;
+	font-size: .8em;
+	width: 250px;
+	margin-bottom: 5px;
+	color: gray;
+}
+
+#group div.first-page div.statistics,
+#group div.first-page div.news {
+	width: 325px;
+	float: left;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+#group div.first-page div.news ul {
+	margin: 0 5px;
+}
+
+#group div.first-page div.news ul li {
+	border-bottom: 1px solid #E9E9E9;
+}
+
+#group div.first-page div.news ul li a {
+	font-size: .9em;
+	padding: 10px 0px;
+	display: block;
+}
+
+#group div.first-page span.call {
+	
+}
+ 
+
 ul.progress-bar span.bar-chart {
     display: block;
     padding: 2px;
@@ -1763,7 +1890,7 @@ ul.sub-groups .course {
 }
 
 ul.sub-groups > li {
-	margin-bottom: 10px;
+	margin-bottom: 5px;
 }
 
 /* @footer */
