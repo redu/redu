@@ -8,6 +8,8 @@
 			(school.description[0..250] + "...") if (school.description) 
 		%>
 		</span>
+	</div>
+	<div class="headlines" style="width: 490px">
 		<% unless school.tag_list.empty? %>
 			<span class="call">Tags:</span>
 				<span class="things">
@@ -16,6 +18,11 @@
 				<% end %>
 				</span>
 		<% end %>
-		
+		<span class="call">Gostaram:</span>
+		<span class="things"><%= school.votes_for %></span>
+		<span class="call">Membros:</span>
+		<span class="things"><%= school.members_count %></span>
+		<span class="call">Cursos:</span>
+		<span class="things"><%= school.courses_count %></span>
 	</div>
 </li> 

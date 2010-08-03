@@ -172,6 +172,7 @@ ul.default > li div.headlines {
 	width: 560px;
 	padding: 10px;
 	margin-right: 10px;
+	margin-bottom: 5px;
 	-moz-border-radius: 5px; 
 	-webkit-border-radius: 5px;
 
@@ -181,6 +182,10 @@ ul.default > li div.headlines a,
 ul.default > li div.headlines .things {
 	font-size: .8em;
 	color: gray;
+}
+
+ul.default > li div.headlines .things {
+	margin-right: 10px;
 }
 
 ul.default > li div.headlines ul li {
