@@ -75,15 +75,13 @@
 -->
 
 
-  <div class="submenu grid_15">
-  	<%= link_to_function 'Nova questão', 'saveDraft(1)' %> | 
- 		<%= link_to_function 'Adicionar questão', 'saveDraft(2)' %> |
-    <%= button_to_function "Visualizar", "save(true)"%> |
+	<div class="submenu grid_15">
+		<%= link_to_function 'Nova questão', 'saveDraft(1)', :class => "button" %>
+		<%= link_to_function 'Adicionar questão', 'saveDraft(2)', :class => "button" %>
+		<%= button_to_function "Visualizar", "save(true)"%>
 		<%= button_to_function "Salvar parcialmente", "save(false)", :id => "save_btn"%><%= image_tag 'spinner.gif', :id => 'save-spinner', :style => 'display: none' %>
- 		<span class="snippet" id="save_info"></span>
-		
-			
-  </div>
+		<span class="snippet" id="save_info"></span>
+	</div>
 
 
 	
