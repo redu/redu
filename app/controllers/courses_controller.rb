@@ -155,7 +155,9 @@ class CoursesController < BaseController
   def index
     
     if params[:user_id] # aulas do usuario
-      @user = User.find_by_login(params[:user_id])
+      @user = User.find_by_login(params[:user_id]) 
+      @user = User.find(params[:user_id]) unless @user
+      
       @courses = @user.courses.paginate :page => params[:page], :per_page => AppConfig.items_per_page
       
       respond_to do |format|
