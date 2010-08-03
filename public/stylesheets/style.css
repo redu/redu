@@ -1938,39 +1938,7 @@ ul.sub-groups > li {
 	color: #5683d5;
 }
 
-/*
- * Botoes
- */
-#breadcrumbs {
-	font-size: 0.8em;
-	float: left;
-	width: 100%;
-	height: 21px;
-	background-color: #f8f8f8;
-	padding: 5px 0px 0px 5px;
-	margin: 0px 0px 8px 0px;
-	color: #bac5d4;
-}
 
-#breadcrumbs a {
-	color: #bac5d4;
-	text-decoration: none
-}
-
-#breadcrumbs a:hover {
-	color: #bac5d4;
-	text-decoration: underline
-}
-
-a.icon-delete {
-	padding-left: 25px;
-	background: #F5F5F5 url("../images/icons/delete.png") no-repeat 5px 4px;
-}
-
-a.icon-edit {
-	padding-left: 25px;
-	background: #F5F5F5 url("../images/icons/post.png") no-repeat 5px 4px;
-}
 /*
  * WIZARDS
  */
@@ -2264,25 +2232,7 @@ table.booking_steps td.spacer { background: none; width: 61px}
 	text-decoration: none;
 	color: #bababa;
 }
-/*#actions_resource li span {
-padding: 5px 10px;
-font-size: 11px;
-text-decoration: none;
-color: #5683d5;
-}
-#actions_resource li a, #evaluation_menu li a:visited {
-padding: 0;
-font-size: 11px;
-text-decoration: none;
-color: #5683d5;
-}
-#actions_resource li a:hover {
-padding: 0;
-font-size: 11px;
-text-decoration: underline;
-color: #5683d5;
-}
-*/
+
 #actions_video {
 	float: left;
 	height: auto;
@@ -2493,11 +2443,14 @@ color: #5683d5;
 #breadcrumbs {
 	font-size: 0.8em;
 	float: left;
-	width: 100%;
+	/*width: 100%;*/
 	height: 21px;
 	background-color: #f8f8f8;
-	padding: 5px 0px 0px 5px;
-	margin: 0px 0px 8px 0px;
+	/*padding: 5px 0px 0px 5px;
+	margin: 0px 0px 8px 0px;*/
+	margin-bottom: 8px;
+	padding-top: 5px;
+	padding-bottom: 5px;
 	color: #bac5d4;
 }
 #breadcrumbs a {
