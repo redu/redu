@@ -417,19 +417,22 @@ class SchoolsController < BaseController
   # GET /schools/1.xml
   def show
     @school = School.find(params[:id])
-    @featured = @school.featured_courses(3)
-    @brand_new = @school.courses.find(:first, :order => "created_at DESC")
     
-     if @school.removed
-      redirect_to removed_page_path and return
+    if @school
+      @featured = @school.featured_courses(3)
+      @brand_new = @school.courses.find(:first, :order => "created_at DESC")
+      @courses = @school.courses.paginate(:conditions => 
+        ["published = 1"], 
+        :include => :owner, 
+        :page => params[:page], 
+        :order => 'updated_at DESC', 
+        :per_page => AppConfig.items_per_page)
+              
+      if @school.removed
+        redirect_to removed_page_path and return
+      end
+
     end
-    
-    @courses = @school.courses.paginate(:conditions => 
-      ["published = 1"], 
-      :include => :owner, 
-      :page => params[:page], 
-      :order => 'updated_at DESC', 
-      :per_page => AppConfig.items_per_page)
       
     respond_to do |format|
       if @school
