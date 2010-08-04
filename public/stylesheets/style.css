@@ -43,6 +43,7 @@ a {
     color: #0B85C1;
 }
 
+
 .pretty-text h1,
 .pretty-text h2,
 .pretty-text h3,
@@ -2471,8 +2472,28 @@ table.booking_steps td.spacer { background: none; width: 61px}
 
 
 /* 
- * EXAMES
+ * EXAMES <-- UNICO	
  */
+
+
+
+#clock{float:right; width:113px; height:39px; padding:12px 0px 0px 55px; background:url(../images/bg_clock.png) no-repeat left; z-index:10; font:bold 24px "Trebuchet MS", Tahoma; color:#7384ae;}
+
+.heighted {min-height: 300px;}
+#questions_number{list-style-type:none; top:0px; padding:0px; right:0px;}
+#questions_number li {float:left; margin:0px 4px 6px 0px; list-style:none; font-size:14px; text-decoration:none; color:#94a2ca;}
+#questions_number li span {padding: 5px 10px; font-size:11px; text-decoration:none; color:#5683d5;}
+
+#questions_number li .number {display:block; width:20px; height:20px; font-size:14px; text-decoration:none; color:#396bbd;font-weight:bold;  background:#EEE; padding:4px 4px 2px 4px}
+#questions_number li .number:hover {display:block; width:20px; height:20px; font-size:14px; text-decoration:none; color:#396bbd; font-weight:bold;  background:#D1D9EC; padding:4px 4px 2px 4px}
+
+#questions_number li .indexSel {
+	background: #fcf679 !important;
+}
+
+#questions_number li .indexStrike {
+	text-decoration: line-through !important;
+}
 
 
 .indexSel {
@@ -2588,7 +2609,7 @@ table.booking_steps td.spacer { background: none; width: 61px}
 #breadcrumbs {
 	font-size: 0.8em;
 	float: left;
-	/*width: 100%;*/
+	width: 100%;
 	height: 21px;
 	background-color: #f8f8f8;
 	/*padding: 5px 0px 0px 5px;
