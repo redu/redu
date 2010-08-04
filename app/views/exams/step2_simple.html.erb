@@ -41,8 +41,79 @@
 			type:'post', 
 			url:'<%= url_for(:action => :create, :exam_id => @exam.id)%>'});
 	}
+	/////
 	
- </script>
+
+function remove_fields(link) {
+  $(link).prev("input[type=hidden]").val("1");
+  $(link).closest(".fields").hide();
+}
+
+function add_fields(link, association, content, type) {
+  var new_id = new Date().getTime();
+  var regexp = new RegExp("new_" + association, "g")
+ 
+ 	if (jQuery('#question').length > 6) {
+  	return;
+  }
+ 
+	if (type == 'Alternative') {
+		 $(link).before(content.replace(regexp, new_id));
+  } else if (type == 'Question') {
+		 $(link).parent().after(content.replace(regexp, new_id));
+  	removeAllMce();
+  	reloadMce();
+  }
+}
+
+function removeAllMce(){
+        var i, t = tinyMCE.editors;
+        for (i in t) {
+            if (t.hasOwnProperty(i)) {
+					t[i].remove();
+            }
+        }
+        
+    }
+		
+			function reloadMce(){
+		<%=   raw_tiny_mce_init %>
+	}
+	
+	
+	
+	/*
+$('body').click(function(event) {
+    if (!$(event.target).closest('.expanded').length) {
+        
+				$('.expanded').hide()
+				$('.mirrowed').show()
+				var elName = $(event.target)
+				alert(elName);
+
+    };
+  });
+	
+	
+
+*/
+	
+jQuery(document).ready(function(){
+		 $('.question').click(function(e){
+		 	//var elId = $(this).attr("name")
+			$(event.target).toggle();
+			/*
+alert(elId); //question_19
+				nameE = "[name='"+elName+"'] .expanded"
+				nameM = "[name='"+elName+"'] .mirrowed"
+				$(nameE).hide();
+				$(nameM).show();
+*/
+		 });
+	});
+
+		
+	 </script>
  
 
 <div class="grid_16">
@@ -53,7 +124,7 @@
 	<a href="<%=application_url%>">início</a> > <a href="#">ensinar</a> > novo exame simples
 	<%end %>
 </div>
-
+</div>
 	
 <%= render(:partial => "schools/school_info", :locals=>{:show => false}) if @school%>
 
@@ -85,11 +156,14 @@
 
 
 	
-<div class="grid_8">
+
  <% form_for :exam, @exam, :url => { :action => "create" },  :html => {:id => 'exam_form'} do |f| %>
  
+ <div class="grid_16">
   <%= f.error_messages %>
-<%= hidden_field_tag("school_id", @school.id) if @school %>
+	</div>
+ 
+  <%= hidden_field_tag("school_id", @school.id) if @school %>
  
   <%= hidden_field_tag("step", "2", options = {})%>
   <%= hidden_field_tag("exam_type", "simple", options = {})%>
@@ -97,23 +171,22 @@
   <%= hidden_field_tag('opt_param', 0) %>
   <%= f.hidden_field(:id, :value => @exam.id) %>
  
- 
-
+ <div class="grid_8">
  <div id="questions" style="min-height: 100px;">
  
- <% if @exam.questions && @exam.questions.length > 0 %>
  
- 	
+  <% f.fields_for :questions do |builder| %>
+    <%= render "question_fields", :f => builder %>
+  <% end %>
  
- <%= render :partial => 'exams/question_show', :collection => @exam.questions, :as => :question, :locals => {:form => f, :exam => @exam} %> 
  
  
- <% else %>
- Não há questões nesse teste ainda. 
- Clique em "Adicionar Questão" para adicionar uma questão a 
- partir do banco de dados ou "Nova Questão" para criar uma questão.
+
+ 	 <%= link_to_add_fields 'Nova Questão', f, :questions, 'Question' %>
  
- <% end %>
+ 
+ 
+ 
  </div>
  
  
@@ -151,7 +224,6 @@
 
 </div>
 
-</div>
  
  
  

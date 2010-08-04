@@ -1,0 +1,42 @@
+<% question_id = "question_#{f.object.id}" %>
+
+
+	<% field_set_tag 'Questão', :style => "background-color: #F1F1F1" do %>
+	
+<div name="<%= question_id %>" class="fields question expanded">
+	<%= link_to_remove_fields "remover", f %>
+	
+	
+	<%= f.label :statement, "Conteúdo" %>
+  <%= f.text_area :statement, :size => "60x12", :class => "mceEditor" %>
+	 <%= f.label :alternatives, "Alternativas" %>
+	
+	<div id= "alternatives"> 
+	<% 5.times { f.object.alternatives.build } %>
+	<% f.fields_for :alternatives do |builder| %>
+	<% @oi = f%>
+  <%= render :partial => 'alternative_fields', :locals => {:f => builder, :f_question => f} %>
+  <% end %>
+	
+	<%= link_to_add_fields "Nova Alternativa", f, :alternatives, 'Alternative' %>
+	</div>
+	
+	<%= f.hidden_field :_destroy %>
+	<%= f.text_area :justification, :rows =>2, :cols => 50, :class => "mceEditor" %>
+	<%= f.check_box :public, :options => {:checked => true} %> Pública?
+</div>	
+	
+
+
+
+<div name="<%= question_id %>" class="question mirrowed">
+
+
+<p>
+	
+   <span id="<%= question_id %>_stat">Ola gente</span>
+  
+</p>
+
+</div>
+<%end%>

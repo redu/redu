@@ -1,2 +1,11 @@
-<%= f.radio_button :answer, f.object.id, :checked => false %>
+<div id="alternative" class="fields">
+	
+
+<%= @oi.radio_button :answer_id, f.object.id, :checked => false %>
+	 
  <%= f.text_field :statement %>
+
+  <%= f.hidden_field :_destroy %>
+	
+	<%= link_to_remove_fields "remover", f %>
+</div>

@@ -8,11 +8,14 @@ class Question < ActiveRecord::Base
   
   belongs_to :category, :class_name => "Skill", :foreign_key => "skill_id"
   
-  accepts_nested_attributes_for :alternatives, :allow_destroy => true
+    accepts_nested_attributes_for :alternatives, 
+    :reject_if => lambda { |q| q[:statement].blank? },
+    :allow_destroy => true
 
   
   #validations  
   validates_presence_of :statement
+  validates_presence_of :answer
   validates_length_of :statement, :minimum => 6, :too_short => "Por favor escolha um enunciado maior que 6 caracteres"
   
   validates_associated :alternatives 

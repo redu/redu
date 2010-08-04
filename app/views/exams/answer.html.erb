@@ -8,6 +8,7 @@ var sec = 0
 var min = 0
 var hr = 0
 
+var chronoStarted = false;
 function chrono(){
 	end = new Date()
 	diff = end - start
@@ -40,8 +41,11 @@ function chronoStart(){
 	//document.chronoForm.startstop.value = "stop!"
 	//document.chronoForm.startstop.onclick = chronoStop
 	//document.chronoForm.reset.onclick = chronoReset
-	start = new Date()
-	chrono()
+	if (!chronoStarted) {
+  	start = new Date();
+  	chrono();
+		chronoStarted = true;
+  }
 }
 function chronoContinue(){
 	document.chronoForm.startstop.value = "stop!"
@@ -75,16 +79,11 @@ function submitChrono(){
 	document.getElementById("chrono").value = theTime;
 }
 
-function strikeId(id){
-	document.getElementById('qIndex'+id).className += ' indexStrike';
-}
 
 function selectId(id){
-	document.getElementById('qIndex'+id).className += ' indexSel';
-}
-function deselectId(id){
-	var idlink = document.getElementById('qIndex'+id);
-	idlink.className = idlink.className.replace(' indexSel', '');
+	jQuery('.number').removeClass('indexSel')
+	jQuery('#qIndex'+id).addClass('indexSel')
+	//document.getElementById('qIndex'+id).className += ' indexSel';
 }
 
 function showLoading(){
@@ -112,26 +111,29 @@ function hideLoading(){
 	<!-- <a href="#" onclick="hideChron()">(esconder)</a> -->
 	
 	<!-- QUESTOES ##################################################################################################################################################### -->
- <% form_remote_tag(:url => {:action => :answer}, :loading => "showLoading();", :html => {:id => 'form_answer'}) do %>
+ <% form_remote_tag(:url => {:action => :answer}, :loading => "showLoading()", :html => {:id => 'form_answer'}) do %>
   <input id="chrono" name="chrono" type="hidden" value="" />
   
 	
 	
 <div id= "question_box" class ="grid_10 ">  
-<%= render :partial => "exams/question_answer", :locals => {:question => @step}%>
+<%# render :partial => "exams/question_answer", :locals => {:question => @step}%>
+<%= render :partial => 'exams/instructions' %>
 </div>	
 
 
  <div id="questions" class ="grid_5">
  	<% field_set_tag 'Questões', :class => "heighted" do %> 
     	<ul id="questions_number">
-            <li><a href="" class="number"><%= image_tag "icon_info.png", :border => "0", :title => "Instruções" %></a><li>
+            <li>
+            	<%= link_to_remote image_tag("icon_info.png", :border => "0", :title => "Instruções"), :url => {:action => :answer, :id => session[:exam].id, :q_index => 'i'}, :html => {:class => 'number indexSel', :id => 'qIndexi'}%></li> 
+						<li>
             
 			<% session[:exam].questions.each_with_index do |q, x| %>
     		<% if(0 == x) %>
-				<li><%= link_to_remote x + 1, :url => {:action => :answer, :id => session[:exam].id, :q_index => x}, :html => {:class => 'number indexSel', :id => 'qIndex'+ q.id.to_s}%></li> 
+				<li><%= link_to_remote x + 1, :url => {:action => :answer, :id => session[:exam].id, :q_index => x}, :loading => "showLoading()", :html => {:class => 'number', :id => 'qIndex'+ q.id.to_s}%></li> 
 			<% else %>
-  				<li><%= link_to_remote x + 1, :url => {:action => :answer, :id => session[:exam].id, :q_index => x}, :html => {:class => 'number', :id => 'qIndex'+ q.id.to_s}%></li> 
+  				<li><%= link_to_remote x + 1, :url => {:action => :answer, :id => session[:exam].id, :q_index => x}, :loading => "showLoading()", :html => {:class => 'number', :id => 'qIndex'+ q.id.to_s}%></li> 
 			<% end %>
   			<% end %>
             
@@ -144,7 +146,10 @@ function hideLoading(){
     	
 		<div id="navigation" class="grid_16">
 		<%= button_to_remote('Anterior', {:url => {:action => :answer, :id => session[:exam].id, :q_index => (session[:question_index]-2)}, :loading => "showLoading();"}, :id => 'prev_answer_btn', :disabled => true) %>
-		|  <%= submit_tag @has_next ? "Próximo" : "Finalizar", :id => 'submit_answer_btn'  %>
+		|  <%= submit_tag @has_next ? "Próximo" : "Finalizar", :id => 'submit_answer_btn',:style => "display:none"  %>
+		
+		<%= button_to_remote('Próximo', {:url => {:action => :answer, :id => session[:exam].id, :q_index => 0}, :loading => "showLoading();"}, :id => 'first_question_btn') %>
+		
   		</div>
 		
 		<div id="q_loading" style="display: none;" class="grid_16"><em>Carregando questão... </em>
@@ -157,9 +162,6 @@ function hideLoading(){
 </div>
 
 
-<script>
-	document.body.onload = chronoStart();
-</script>
 
 
 

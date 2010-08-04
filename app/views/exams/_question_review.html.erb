@@ -1,11 +1,11 @@
    	
  <div style="width: 50%; float:left;">
-                    <h3>Question #<%= question_index + 1 %>
-					<%= (answer && question.id == answer) ? '(correta)' : '(incorreta)' %>
+                    <h3>Question #<%= @index + 1 %>
+					<%= (@answer && @question.id == @answer) ? '(correta)' : '(incorreta)' %>
 					</h3>
                     <div class="item_question">
                         <p>
-                            <%= question.statement %>
+                            <%= @question.statement %>
                         </p>
                     </div>
 										
@@ -13,19 +13,19 @@
                     <div class="item_answer">
                         <form>
                             <ul>
-                            	<% letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'] %>
-								<% question.alternatives.each_with_index do |alternative, i|%>
-                                <li class="clear"> 
+                            	<% letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'] %>
+								<% @question.alternatives.each_with_index do |alternative, i|%>
+                                <li> 
 									
 								
-                                    <input type="radio" disabled="" value="a_68734" id="68734" name="quiz_attempt_mdl_question_answer_id" class="radio" <%= (alternative.id == answer) ? 'checked' : ''%> >
+                                    <input type="radio" disabled="" value="a_68734" id="68734" name="quiz_attempt_mdl_question_answer_id" class="radio" <%= (alternative.id == @answer) ? 'checked' : ''%> >
                                     
-									<label for="a_68734" class="choice">
+									<label for="a_68734" class="inline">
                                         (<%= letters[i%letters.length] %>) <%= alternative.statement %>
                                             
                                     </label>
-									<%= '<span class="answer_chosen">Sua resposta</span>' if alternative.id == answer %>
-									<%= '<span class="answer_correct">Correta</span>' if alternative == question.answer %>
+									<%= '<span class="answer_chosen">Sua resposta</span>' if alternative.id == @answer %>
+									<%= '<span class="answer_correct">Correta</span>' if alternative == @question.answer %>
 									
                                     <!-- increment the question letter --><!-- TODO switch to use new question ordering bits --><!-- TODO GMAT and GRE shouldn't have question letter -->
                                 </li>
@@ -45,7 +45,7 @@
                 <div style="width: 50%; float:left;">
                     <h3>Explicação</h3>
                     <div class="item_feedback">
-                        <%= question.justification %>
+                        <%= @question.justification %>
                     </div>
                 </div>
                 <!-- end of twoCol_right_half -->

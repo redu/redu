@@ -1,27 +1,41 @@
-
-#mostra nova questão
-page.replace_html 'question_box', :partial => 'exams/question_answer', :locals => {:question => @step}  
-  
 #esconde a imagem do loading e mostra o navegador novamente
 page << "hideLoading();"
 
-# highlight a questão atual no índice de questoes
-page << "selectId(#{@step.id});"
-page << "deselectId(#{@prev_step.id});"
+#mostra nova questão / instruction
+if @show_i
+  page.replace_html 'question_box', :partial => 'exams/instructions'
+  page << "selectId('i');"
+else
+  page.replace_html 'question_box', :partial => 'exams/question_answer', :locals => {:question => @step} 
+  page << "selectId(#{@step.id});"
+end
+
+page << "chronoStart();"
+
 
 # se respondeu a questão marca como respondida
 if @theanswer and @prev_step
-  page << "strikeId(#{@prev_step.id});"
+  page << "jQuery(\"#qIndex#{@prev_step.id}\").addClass(\"indexStrike\")"
 end
 
 # caso nao tenha uma proxima questão, muda "proximo" para "finalizar" submete o formulario SEM AJAX
 if @has_next
-  #TODO submeter form em ajax
-  page << "document.getElementById('submit_answer_btn').value = 'Próximo';"
+  
+  if @show_i
+    
+    page << "jQuery('#submit_answer_btn').hide()"
+    page << "jQuery('#first_question_btn').show()"
+  else
+    page << "jQuery('#submit_answer_btn').show()"
+    page << "jQuery('#submit_answer_btn').val('Próximo')"
+    page << "jQuery('#first_question_btn').hide()"
+    #page << "document.getElementById('submit_answer_btn').value = 'Próximo';"
+  end
+  
 else
   page << "document.getElementById('form_answer').onsubmit = submitChrono();"
   page << "document.getElementById('submit_answer_btn').value = 'Finalizar';"
- 
+  
 end
 
 # caso nao tenha questão anterior, desabilita o botao "anterior"

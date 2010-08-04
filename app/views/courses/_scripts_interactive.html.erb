@@ -13,10 +13,10 @@
 	});
 	
 	
-	function removeField(link){
-		jQuery(link).parent("fieldset:first").hide()
-		jQuery(link).siblings("input[type=hidden]:first").val("1")
-	}
+function remove_fields(link) {
+  $(link).prev("input[type=hidden]").val("1");
+  $(link).closest(".fields").hide();
+}
 	
 	function add_fields(link, association, content, type) {
 		var fieldsNumber = document.getElementById('topic_list').children.length;//jQuery("#topic_list > li").length;

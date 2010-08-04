@@ -80,13 +80,13 @@ left:100%;
 position:relative;
 }
 
-.line .item_answer span.answer_chosen {
+.item_answer span.answer_chosen {
 background-color:#F7F198;
 font-size:9px;
 padding:1px 2px;
 }
 
-.line .item_answer span.answer_correct {
+.item_answer span.answer_correct {
 background-color:#8FD182;
 font-size:9px;
 margin-left:4px;
@@ -95,6 +95,12 @@ padding:1px 2px;
 	
 </style>
 <script>
+	
+function publishScore(checkbx){
+	alert(checkbx.checked)
+	jQuery('#publish_score_form').submit()
+}
+	
 function reviewQuestion(questionId){
 		
 		var explanation = document.getElementById("explanation_"+questionId);
@@ -181,14 +187,20 @@ function reviewQuestion(questionId){
 		  </td>
 		  
           <td class="question_user_answer show_row">
-          	 <% if  session[:answers][question.id] %>
-			 letra!
+         	
+						
+        <% if session[:answers][question.id] %>
+				
+			  (<%= @alternative_letters[session[:answers][question.id].to_i]%>)
 			 <% else %>
 			  Sem resposta
 			 <% end %>
 		  
 		  </td>
-          <td class="question_correct_answer show_row">	letra! </td>
+          <td class="question_correct_answer show_row">	
+					(<%= @alternative_letters[question.answer.id] %>)
+					
+					</td>
           <td class="question_concept show_row">
 				<a href="/sat/work/view_content/926" class="content_link" name="926">Categorias</a>
 		  </td>
@@ -213,10 +225,22 @@ function reviewQuestion(questionId){
                                 <div class="addinfocontent">
                                     <h1>
                                         Ranking</h1>
-                                    <p>
-                                       Por favor não publique conteúdo que esteja protegido por direitos autoriais, conteúdo obceno ou que viole
-																			 os <%= link_to "termos e condições", {:controller => "base", :action => "tos"}, :target => "_blank"%> do Redu.
-                                    	</p>
+                                    	
+																			<% if @ranking.size > 0 %>
+																			<% @ranking.each_with_index do |exam_usr, i|%>
+																			<p><%=i+1%>. <%= exam_usr.user.display_name %> | Score: <%= exam_usr.correct_count %> | Tempo: <%= exam_usr.time/60 %> </p>
+																			<% end %>
+																			<% else %>
+																			Seja o primeiro a publicar os resultados deste exame!
+																			<%end%>
+																			
+																			<% form_remote_tag :url => {:action=> :publish_score}, :html => {:id => "publish_score_form"} do  %>
+																				<%= check_box_tag :public, false, false, :onchange => "publishScore(this);" %>
+																				
+																				<%= hidden_field_tag :exam_user_id, @exam_user.id %>
+																				<%= label_tag "Publicar meu score!"%>
+																			<%end%>
+																			
                                 </div>
                             </div>
 </div>

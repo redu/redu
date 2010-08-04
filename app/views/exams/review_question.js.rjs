@@ -1,6 +1,6 @@
 
 page << "jQuery('#thebug_" + @question.id.to_s+ "').hide();"
 #
-page.replace_html  'explanation_' + @question.id.to_s, :partial => 'exams/question_review', :locals => {:question => @question, :answer => @answer, :question_index => @index}  
+page.replace_html  'explanation_' + @question.id.to_s, :partial => 'exams/question_review' 
 #          
 #page << "jQuery('#explanation_" + @question.id.to_s+ "').slideDown();"
