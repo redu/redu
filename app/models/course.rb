@@ -130,10 +130,13 @@ class Course < ActiveRecord::Base
        File.join(File.dirname(self.media.url), "#{self.id}128x96.jpg") 
      end
    when 'InteractiveClass'
-     APP_URL + '/images/icon_ppt_48.png' #FIXME
+     'http://i1.ytimg.com/vi/0QQcj_tLIYo/default.jpg' 
+    # APP_URL + '/images/icon_ppt_48.png' #FIXME
+     
      # icone aula interativa
    when 'Page'
-     APP_URL + '/images/icon_doc_48.png' #FIXME
+     'http://i1.ytimg.com/vi/0QQcj_tLIYo/default.jpg' 
+     #APP_URL + '/images/icon_doc_48.png' #FIXME
     end
 
   end
