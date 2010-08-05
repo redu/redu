@@ -558,7 +558,7 @@ div.recomendations-m .number {
    .fake-tabs ul.menu li a {
       display: block;
       font-weight: bold;
-      color: #D23D24;
+      color: #FF8000;
       padding: 21px;
    }
    
@@ -597,7 +597,7 @@ div.recomendations-m .number {
     .tabs ul.ui-tabs-nav li a {
         display: block;
         font-weight: bold;
-        color: #D23D24;
+        color: #FF8000;
         padding: 21px;
     }
 
@@ -1765,7 +1765,7 @@ div.content div.content {
 	background-color: #F5F5F5;
 	display: block;
 	padding: 5px;
-	color: #D23D24;
+	color: #FF8000;
 }
 
 #group div.first-page .photo {
@@ -2475,7 +2475,9 @@ table.booking_steps td.spacer { background: none; width: 61px}
  * EXAMES <-- UNICO	
  */
 
-
+.question {
+	padding: 0 20px 0 20px;
+}
 
 #clock{float:right; width:113px; height:39px; padding:12px 0px 0px 55px; background:url(../images/bg_clock.png) no-repeat left; z-index:10; font:bold 24px "Trebuchet MS", Tahoma; color:#7384ae;}
 
