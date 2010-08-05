@@ -1,14 +1,12 @@
-<% question_id = "question_#{f.object.id}" %>
+<% @child_index = f.options[:child_index]%>
 
-
-	<% field_set_tag 'Questão', :style => "background-color: #F1F1F1" do %>
+	<% field_set_tag 'Questão', :style => "background-color: #F1F1F1", :class => "fields" do %>
 	
-<div name="<%= question_id %>" class="fields question expanded">
-	<%= link_to_remove_fields "remover", f %>
-	
-	
+<div id= "q_<%=@child_index%>_expanded" name="q_<%=@child_index%>" class="question expanded">
+		<%= link_to_remove_fields "remover", f %>
+		
 	<%= f.label :statement, "Conteúdo" %>
-  <%= f.text_area :statement, :size => "60x12", :class => "mceEditor" %>
+  <%= f.text_area :statement, :size => "60x12", :class => "mceEditor", :id => "q_"+((@child_index) ? @child_index : '') +"_statement" %>
 	 <%= f.label :alternatives, "Alternativas" %>
 	
 	<div id= "alternatives"> 
@@ -20,23 +18,20 @@
 	
 	<%= link_to_add_fields "Nova Alternativa", f, :alternatives, 'Alternative' %>
 	</div>
-	
+	<%= f.hidden_field :author_id, :value => current_user.id %>
 	<%= f.hidden_field :_destroy %>
 	<%= f.text_area :justification, :rows =>2, :cols => 50, :class => "mceEditor" %>
-	<%= f.check_box :public, :options => {:checked => true} %> Pública?
+	<%= f.check_box :public, :checked =>  true %> Pública?
 </div>	
 	
 
 
 
-<div name="<%= question_id %>" class="question mirrowed">
+<div id = "q_<%=@child_index%>_collapsed" name="q_<%=@child_index%>" class="question collapsed" style ="display:none; min-height: 40px; border: 1px dotted #eee; padding:15px;">
 
-
-<p>
 	
-   <span id="<%= question_id %>_stat">Ola gente</span>
+   <span id="q_<%=@child_index%>_stat"></span>
   
-</p>
-
 </div>
+
 <%end%>

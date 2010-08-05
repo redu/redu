@@ -13,7 +13,7 @@
 <div id="external_object_<%=child_index%>"> 
 <% @ext_obj = ExternalObject.new %>		
 <% remote_form_for @ext_obj, :url => { :controller => :courses, :action => :embed_content },
-					:loading => "Element.show('spinner')" do |f_remote|%>
+					:loading => "jQuery('#spinner').show()" do |f_remote|%>
 					
 		
 		<%= hidden_field_tag(:child_index, child_index) %>

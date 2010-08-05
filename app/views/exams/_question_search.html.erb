@@ -1,0 +1,73 @@
+
+ <div id="local_search_form">
+     <!-- form_remote_tag :update => "questions",
+     :url => { :controller => :questions, :action => :create },
+     :position => "bottom", #before e after nao funcionam com o :update
+     :loading => 'itemLoading()',
+     :complete => "closePopup()" do -->
+	 <% form_remote_tag :url => { :controller => :questions, :action => :search },
+     :before => "jQuery('#spinner').show()",
+     :success => "jQuery('#spinner').hide()" do -%>
+     Buscar<%= text_field_tag :query %>
+     <%= submit_tag 'Search' %>
+     <% end -%>
+ </div>	
+ 
+ 
+ 
+ <% if @questions && @questions.length > 0 %>
+
+<table style="width: 100%">
+  <tr>
+    <th>Questão</th> <!-- snippet da questão? -->
+	<th>Autor</th>
+	<th>Dificuldade</th>
+	<th>Categoria</th>
+    <th>Data de criação</th>
+  </tr>
+<% @questions.each do |question| %>
+  <tr id = "question_<%= question.id %>" >
+  	<td>
+    	<%= link_to_function (truncate_words(question.statement, 70, '...')), "$('#view_#{question.id}').slideToggle()"   %> 
+			<div id = "view_<%=question.id%>" class="hoverdiv"> 
+			<%=question.statement%>
+			</div>
+	</td>
+	<td>
+    	<%= question.author.display_name %> <!-- TODO texto sem formatacao -->
+	</td>
+	<td>
+    	Fácil
+	</td>
+	<td>
+    	Matemática
+	</td>
+    <td><%=h time_ago_in_words(question.created_at)  %></td>
+	 
+ 
+	<td>
+<%= link_to_remote 'Adicionar', :url => { :controller => :exams, :action => :add_question, :question_id => question.id }, 
+						:before => "jQuery('#spinner_" +question.id.to_s+"').show()",
+        				:success => "jQuery('#tr_" + question.id.to_s + "').remove()" %>
+		
+		<%= image_tag("spinner.gif",
+              :align => "absmiddle",
+              :border => 0,
+              :id => "spinner_" +question.id.to_s,
+              :style =>"display: none;" ) %>
+</td>
+
+     </tr>
+<% end %>
+</table>
+<% else %>
+
+Não há questões públicas no momento.
+
+<% end %> 
+
+<div id="pagination" align="center" style="padding-top: 20px; padding-bottom: 15px;">
+
+		<%= will_paginate  @questions,  :class => "pagination_number"  %>
+		
+    </div>

@@ -398,6 +398,19 @@ class ExamsController < BaseController
     redirect_to :controller => :questions, :action => :new #, :exam_id => params[:id]
   end
   
+  
+  def questions_database
+    
+    @questions = Question.paginate(:all, :include=> :author, :conditions => ['public = ?', true],
+    :page => params[:page], :order => 'created_at DESC', :per_page => 10)
+    
+    
+    respond_to do |format|
+      format.js
+    end
+  end
+  
+  
   def add_question
     @question = Question.find(params[:question_id], :include => [:answer, :alternatives])
     #TODO copiar questão
@@ -434,6 +447,7 @@ class ExamsController < BaseController
       format.js do
         render :update do |page|
           # update the page with an error message
+          page << " jQuery('#spinner_" +@question.id.to_s+"').hide()"
           flash[:notice] = 'Questão adicionada'
           page.reload_flash
         end

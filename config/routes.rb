@@ -28,7 +28,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :exams, :member => {:add_question => :get, :add_resource => :get, :rate => :post, :answer => [:get,:post]},
                         :collection => {:unpublished_preview => :get, :unpublished => :get, :new_exam => :get, :cancel => :get, 
-                        :exam_history => :get, :sort => :get, :order => :get, 
+                        :exam_history => :get, :sort => :get, :order => :get, :questions_database => :get,
                         :favorites => :get, :review_question => :get}
     
   map.resources :courses, :member => {:rate => :post, :buy => :get, :download_attachment => :get},  :collection => { :unpublished_preview => :get, :favorites => :get, :cancel => :get, :sort_lesson => :post}

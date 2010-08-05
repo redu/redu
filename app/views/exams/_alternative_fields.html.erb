@@ -1,7 +1,9 @@
 <div id="alternative" class="fields">
 	
+<%puts f.options[:child_index]%>
+<%puts f.object.id%>
 
-<%= @oi.radio_button :answer_id, f.object.id, :checked => false %>
+<%= @oi.radio_button :answer_id,   f.object.id ,  :checked => false  %>
 	 
  <%= f.text_field :statement %>
 

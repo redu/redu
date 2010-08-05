@@ -15,8 +15,8 @@ class Question < ActiveRecord::Base
   
   #validations  
   validates_presence_of :statement
-  validates_presence_of :answer
-  validates_length_of :statement, :minimum => 6, :too_short => "Por favor escolha um enunciado maior que 6 caracteres"
+  validates_presence_of :answer_id
+ # validates_length_of :statement, :minimum => 6, :too_short => "Por favor escolha um enunciado maior que 6 caracteres"
   
   validates_associated :alternatives 
   validates_length_of :alternatives, :allow_nil => false, :within => 1..7#, :too_long => "O exame contém {{count}} questões. O máximo de questões permitido é 100", :too_short => "Um exame deve conter ao menos uma questão"

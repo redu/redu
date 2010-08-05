@@ -19,9 +19,9 @@ class CoursesController < BaseController
       if @external_object.save
         format.js do
             render :update do |page|
-              puts 'external_object_' + params[:child_index]
+              #puts 'external_object_' + params[:child_index]
               page.replace_html('external_object_' + params[:child_index], :partial => 'form_lesson_object_loaded', :locals => {:ch_index => params[:child_index]})
-              page << "Element.hide('spinner');"
+              page << "jQuery('#spinner').hide();"
             end
         end
       else
@@ -201,6 +201,7 @@ class CoursesController < BaseController
     
     
     @course = Course.find(params[:id])
+    update_view_count(@course)
     
     if @course.removed
       redirect_to removed_page_path and return

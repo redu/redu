@@ -12,7 +12,7 @@
 			jQuery('embed').attr("src",url);
 			jQuery('#youtube_preview').show();
 			
-		}
+		} 
 			
 	}
 	
@@ -79,8 +79,8 @@
 <fieldset>
 	<legend>Vídeo</legend>
 
-  <%= f.radio_button :external_resource_type, :slideshare, {:onchange => "switchCourseFields(2);" }%>
-  <%= f.label :external_resource_type_slideshare, "Slideshare", :class => "inline"  %>	
+  <%# f.radio_button :external_resource_type, :slideshare, {:onchange => "switchCourseFields(2);" }%>
+  <%# f.label :external_resource_type_slideshare, "Slideshare", :class => "inline"  %>	
   <%= f.radio_button :external_resource_type, :youtube, {:onchange => "switchCourseFields(2);"} %>
   <%= f.label :external_resource_type_youtube, "Youtube", :class => "inline"  %>
   <%= f.radio_button :external_resource_type, :upload, {:onchange => "switchCourseFields(1);"} %>
@@ -94,7 +94,7 @@
 
   <div id="external_resource_field" style="display:block;">
   <%= f.label :external_resource, "Link do Vídeo" %><br/>
-  <%= f.text_field :external_resource, :onkeydown => "youtubePreview(this)"  %><br/><br/>
+  <%= f.text_field :external_resource, :onkeyup => "youtubePreview(this)"  %><br/><br/>
   </div>
   
 </fieldset>	

@@ -229,7 +229,7 @@ class SchoolsController < BaseController
           # TODO enviar emails para usuários dizendo que foram promovidos?
     end
     flash[:notice] = 'Usuários moderados!'
-    redirect_to admin_moderate_users_path
+    redirect_to admin_members_school_path
   end
   
   def search_users_admin

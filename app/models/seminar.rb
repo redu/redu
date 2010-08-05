@@ -98,6 +98,15 @@ class Seminar < ActiveRecord::Base
    before_create :truncate_youtube_url
    
    
+  validate do |seminar|
+    if seminar.external_resource_type.eql?('youtube')
+      capture = seminar.external_resource.scan(/youtube\.com\/watch\?v=([A-Za-z0-9._%-]*)[&\w;=\+_\-]*/)[0][0]
+      
+      seminar.errors.add_to_base("Link invalido") unless capture
+    end
+    
+  end
+   
    def truncate_youtube_url
      if self.external_resource_type.eql?('youtube')
          capture = self.external_resource.scan(/youtube\.com\/watch\?v=([A-Za-z0-9._%-]*)[&\w;=\+_\-]*/)[0][0]

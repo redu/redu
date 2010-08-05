@@ -1,3 +1,35 @@
+ <style>
+
+
+.modal_window {
+top: 25%;
+left: 18%;
+position:absolute;
+/*width:440px;
+height:200px;*/
+display:none;
+z-index:9999;
+padding:20px;
+background: #ECF0F8;
+	border: 5px solid #EFEFEF;
+	border-bottom-left-radius: 5px 5px;
+	border-bottom-right-radius: 5px 5px;
+	border-top-left-radius: 5px 5px;
+		border-top-right-radius: 5px 5px;
+}
+
+/* Personalize a janela modal aqui. Você pode adicionar uma imagem de fundo. */
+ #dialog {
+/*width:375px;
+height:203px;*/
+}
+/* posiciona o link para fechar a janela */
+.close {
+display:block;
+text-align:right;
+}
+</style>
+ 
  <script>
  	function saveDraft(opt, opt_param){
         var theform = document.getElementById('exam_form');
@@ -60,7 +92,7 @@ function add_fields(link, association, content, type) {
 	if (type == 'Alternative') {
 		 $(link).before(content.replace(regexp, new_id));
   } else if (type == 'Question') {
-		 $(link).parent().after(content.replace(regexp, new_id));
+		 $(link).before(content.replace(regexp, new_id));
   	removeAllMce();
   	reloadMce();
   }
@@ -80,37 +112,104 @@ function removeAllMce(){
 		<%=   raw_tiny_mce_init %>
 	}
 	
+	function makeIt(){
+
+					$('.expanded').hide()
+			$('.collapsed').show()
+				
+			$('.expanded').each(function(index){
+				var name= $(this).attr('name')
+				var content = tinyMCE.get(name + '_statement').getContent()
+            
+            $('#' + name + '_stat').html(content)
+			}); 
+			
 	
-	
-	/*
-$('body').click(function(event) {
-    if (!$(event.target).closest('.expanded').length) {
+	}
+  
+    jQuery(document).ready(function(){
+			
         
-				$('.expanded').hide()
-				$('.mirrowed').show()
-				var elName = $(event.target)
-				alert(elName);
-
-    };
-  });
-	
-	
-
-*/
-	
-jQuery(document).ready(function(){
-		 $('.question').click(function(e){
-		 	//var elId = $(this).attr("name")
-			$(event.target).toggle();
-			/*
-alert(elId); //question_19
-				nameE = "[name='"+elName+"'] .expanded"
-				nameM = "[name='"+elName+"'] .mirrowed"
-				$(nameE).hide();
-				$(nameM).show();
-*/
-		 });
-	});
+				/*$('body').click(function(event){
+            if (!$(event.target).closest('.question').length) {
+								alert('body ')
+							makeIt();
+								
+            };
+            });*/
+			
+        $('.question').live('click', function(e){
+					
+					var elId = $(this).attr("name")
+					//alert('click: '+ elId) 
+				  
+					if ($('#' + elId + '_expanded').is(":hidden")) {
+						//alert('not visible')
+		  			makeIt();
+		  			$('#' + elId + '_expanded').slideDown();
+		  			//$('#' + elId + '_collapsed').hide()
+		  }
+				
+				//if ($('#'+elId + '_expanded').not(":visible")) {
+				//		$('#'+elId + '_expanded').slideDown();
+			//	}
+			
+				//$('div[name=' + elId + ']').slideToggle()
+					
+					
+            /*var elId = $(this).attr("name")
+            var content = tinyMCE.get(elId + '_statement').getContent()
+            
+            $('#' + elId + '_stat').html(content)
+            
+            $('div[name=' + elId + ']').slideToggle()*/
+            
+        });
+				
+        
+        //seleciona os elementos a com atributo name="modal"
+        $('a[name=modal]').click(function(e){
+            //cancela o comportamento padrão do link
+            e.preventDefault();
+            
+            //armazena o atributo href do link
+            var id = $(this).attr('href');
+            
+           
+						$('#lights-dimmed').show();
+            $(id).fadeIn(2000);
+						
+						
+						jQuery.ajax({
+                    data: '',
+                    dataType: 'script',
+                    beforeSend: function(request) {
+                       $('#loading_questions').show();
+                    },
+                    type: 'get',
+                    url: '<%= questions_database_exams_path %>' 
+                });
+						
+						
+        });
+        
+        //se o botãoo fechar for clicado
+        $('.close').click(function(e){
+            //cancela o comportamento padrão do link
+            e.preventDefault();
+            $('#lights-dimmed, .modal_window').hide();
+        });
+        
+        //se div#lights-dimmed for clicado
+        /*$('#lights-dimmed').click(function(){
+            $(this).hide();
+            $('.window').hide();
+        });*/
+        
+        
+        
+        
+    });
 
 		
 	 </script>
@@ -171,7 +270,7 @@ alert(elId); //question_19
   <%= hidden_field_tag('opt_param', 0) %>
   <%= f.hidden_field(:id, :value => @exam.id) %>
  
- <div class="grid_8">
+ <div class="grid_9">
  <div id="questions" style="min-height: 100px;">
  
  
@@ -179,13 +278,9 @@ alert(elId); //question_19
     <%= render "question_fields", :f => builder %>
   <% end %>
  
- 
- 
 
  	 <%= link_to_add_fields 'Nova Questão', f, :questions, 'Question' %>
- 
- 
- 
+  <%= link_to 'Buscar Questão', "#dialog", :name=>"modal", :class => "button" %>
  
  </div>
  
@@ -197,14 +292,14 @@ alert(elId); //question_19
 %>
   
 </div>
-<div class="grid_6 push_1">
+<div class="grid_6">
 	<div class="y_addinfo">
                                 <div class="addinfocontent">
                                     <h1>
                                        Adicione questões do banco de dados!</h1>
                                     <p>
-                                       Por favor não publique conteúdo que esteja protegido por direitos autoriais, conteúdo obceno ou que viole
-																			 os do Redu.</p>
+                                       Varias questes estao disponiveis.</p>
+																			 <p> <%= link_to 'Clique aqui!', "#dialog", :name=>"modal" %></p>
 																			
                                 </div>
                             </div>
@@ -222,9 +317,15 @@ alert(elId); //question_19
  <% end %>
  
 
-</div>
-
- 
+ <div id="lights-dimmed">
+     <div id="dialog" class="modal_window grid_12">
+         <a href="#" class="close">Fechar [X]</a>
+				 <%= image_tag "loadingAnimation.gif", :id => "loading_questions"   %>
+         <div id="dialog_content">
+             
+         </div>
+     </div>
+ </div>
  
  
  

@@ -38,8 +38,7 @@
 			</li>
 			<% end %>
 			<li>
-			<%= link_to "Mensagens", user_messages_path(current_user) %>
-			(<%=current_user.unread_message_count %>)</a>
+			<%= link_to "Mensagens ("+current_user.unread_message_count.to_s+")", user_messages_path(current_user) %>
 			</li>
 			<li>
 			<%= link_to 'Favoritos', favorites_courses_path(:from => 'favorites') %>

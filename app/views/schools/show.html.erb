@@ -75,7 +75,9 @@ $(document).ready(function() {
 	    </ul>
 	    
 		<div id="tabs-1" class="clearfix first-page">
+			<% if @brand_new and @featured %>
 			<%= render :partial => 'start_page', :locals => {:featured => @featured, :brand_new => @brand_new} %>
+			<% end %>
 		</div>
 		
 		<div id="tabs-5">
