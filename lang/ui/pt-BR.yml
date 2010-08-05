@@ -55,6 +55,8 @@ pt-BR:
         exam:
           attributes:
             name: ": Por favor escolha um título maior que 6 caracteres."
+            questions:
+              invalid: ": Escolha uma alternativa correta em cada questão!"
         message:
           attributes:
             body:
@@ -103,7 +105,7 @@ pt-BR:
   languages: Línguas
   music: Música
   nutrition_food_drinks: Nutrição / Comidas / Bebidas
-  online_marketing: Marketing Online
+  onlinemarketing: Marketing Online
   religion_philosophy: Religião / Filosofia
   science_technology_engineering: Ciência / Tecnologia / Engenharia
   society_history_politics: Sociedade / História / Política
