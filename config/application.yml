@@ -7,7 +7,7 @@ meta_description: 'A description of your community for use in META tags.'
 meta_keywords: 'keywords for use in META tags'
 sections_enabled: ['photos', 'posts', 'clippings', 'contests', 'categories', 'events']
 show_advertising: false
-closed_beta_mode: true
+closed_beta_mode: false
 # Comment this out if you want to infer the locale
 # off of the http headers
 community_locale: "pt-BR"
@@ -26,7 +26,7 @@ robots_meta_list_content: 'noindex,follow'
 # the post itself should be indexed; 
 # when links are included and they point to external sites, the robot should not follow
 robots_meta_show_content: 'index,nofollow'
-items_per_page: 3
+items_per_page: 10
 users_per_page: 10
 show_constellation: false
 activate_payment: false

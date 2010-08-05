@@ -1,15 +1,24 @@
 # This is a sample Capistrano config file for EC2 on Rails.
 # It should be edited and customized.
 
-set :application, "Redu"
+set :application, "redu"
+set :user, "ubuntu"
+set :use_sudo, false
 
-set :repository, "http://ec2-67-202-28-13.compute-1.amazonaws.com/svn/redu/#{application}"
+# Repository
+set :repository, "http://ec2-67-202-28-13.compute-1.amazonaws.com/svn/redu/Redu"
 
 # NOTE: for some reason Capistrano requires you to have both the public and
 # the private key in the same folder, the public key should have the 
 # extension ".pub".
 ssh_options[:keys] = ["#{ENV['HOME']}/.ec2/ec2-key-pair-novo"]
 
+role :web, "ec2-184-73-64-233.compute-1.amazonaws.com"
+role :app, "ec2-184-73-64-233.compute-1.amazonaws.com"
+role :db, "ec2-184-73-64-233.compute-1.amazonaws.com", :primary => true
+
+
+=begin
 # Your EC2 instances. Use the ec2-xxx....amazonaws.com hostname, not
 # any other name (in case you have your own DNS alias) or it won't
 # be able to resolve to the internal IP address.
@@ -106,3 +115,4 @@ set :ec2onrails_config, {
   
   
 }
+=end
