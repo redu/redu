@@ -6,7 +6,7 @@
 #  you do not remove any proprietary notices.  Your use of this software
 #  code is at your own risk and you waive any claim against Amazon
 #  Digital Services, Inc. or its affiliates with respect to your use of
-#  this software code. (c) 2006 Amazon Digital Services, Inc. or its
+#  this software code. (c) 2006-2007 Amazon Digital Services, Inc. or its
 #  affiliates.
 
 require 'base64'
@@ -16,6 +16,7 @@ require 'digest/sha1'
 require 'net/https'
 require 'rexml/document'
 require 'time'
+require 'uri'
 
 # this wasn't added until v 1.8.3
 if (RUBY_VERSION < '1.8.3')
@@ -37,8 +38,14 @@ module S3
   METADATA_PREFIX = 'x-amz-meta-'
   AMAZON_HEADER_PREFIX = 'x-amz-'
 
+  # Location constraint for CreateBucket
+  module BucketLocation 
+    DEFAULT = nil
+    EU = 'EU'
+  end
+  
   # builds the canonical string for signing.
-  def S3.canonical_string(method, path, headers={}, expires=nil)
+  def S3.canonical_string(method, bucket="", path="", path_args={}, headers={}, expires=nil)
     interesting_headers = {}
     headers.each do |key, value|
       lk = key.downcase
@@ -73,19 +80,27 @@ module S3
         buf << "#{value}\n"
       end
     end
-
-    # ignore everything after the question mark...
-    buf << path.gsub(/\?.*$/, '')
-
-    # ...unless there is an acl or torrent parameter
-    if path =~ /[&?]acl($|&|=)/
-      buf << '?acl'
-    elsif path =~ /[&?]torrent($|&|=)/
-      buf << '?torrent'
-    elsif path =~ /[&?]logging($|&|=)/
-      buf << '?logging'
+    
+    # build the path using the bucket and key
+    if not bucket.empty?
+      buf << "/#{bucket}"
     end
+    # append the key (it might be empty string) 
+    # append a slash regardless
+    buf << "/#{path}"
 
+    # if there is an acl, logging, or torrent parameter
+    # add them to the string
+    if path_args.has_key?('acl')
+      buf << '?acl'
+    elsif path_args.has_key?('torrent')
+      buf << '?torrent'
+    elsif path_args.has_key?('logging')
+      buf << '?logging'
+    elsif path_args.has_key?('location')
+      buf << '?location'
+    end
+    
     return buf
   end
 
@@ -106,6 +121,18 @@ module S3
     end
   end
 
+  # build the path_argument string
+  def S3.path_args_hash_to_string(path_args={})
+    arg_string = ''
+    path_args.each { |k, v|
+      arg_string << (arg_string.empty? ? '?' : '&')
+      arg_string << k
+      if not v.nil?
+        arg_string << "=#{CGI::escape(v)}"
+      end
+    }
+    return arg_string
+  end
 
   # uses Net::HTTP to interface with S3.  note that this interface should only
   # be used for smaller objects, as it does not stream the data.  if you were
@@ -113,54 +140,77 @@ module S3
   # creates a new http connection each time.  it would be greatly improved with
   # some connection pooling.
   class AWSAuthConnection
+    attr_accessor :calling_format
+    
     def initialize(aws_access_key_id, aws_secret_access_key, is_secure=true,
-                   server=DEFAULT_HOST, port=PORTS_BY_SECURITY[is_secure])
+                   server=DEFAULT_HOST, port=PORTS_BY_SECURITY[is_secure],
+                   calling_format=CallingFormat::SUBDOMAIN)
       @aws_access_key_id = aws_access_key_id
       @aws_secret_access_key = aws_secret_access_key
-      @http = Net::HTTP.new(server, port)
-      @http.use_ssl = is_secure
+      @server = server
+      @is_secure = is_secure
+      @calling_format = calling_format
+      @port = port
     end
 
     def create_bucket(bucket, headers={})
-      return Response.new(make_request('PUT', bucket, headers))
+      return Response.new(make_request('PUT', bucket, '', {}, headers))
     end
 
+    def create_located_bucket(bucket, location=BucketLocation::DEFAULT, headers={})
+      if (location != BucketLocation::DEFAULT)
+          xmlbody = "<CreateBucketConstraint><LocationConstraint>#{location}</LocationConstraint></CreateBucketConstraint>"
+      end
+      return Response.new(make_request('PUT', bucket, '', {}, headers, xmlbody))
+    end
+
+    def check_bucket_exists(bucket)
+      begin
+        make_request('HEAD', bucket, '', {}, {})
+        return true
+      rescue Net::HTTPServerException
+        response = $!.response
+        return false if (response.code.to_i == 404)
+        raise
+      end
+    end
+      
     # takes options :prefix, :marker, :max_keys, and :delimiter
     def list_bucket(bucket, options={}, headers={})
-      path = bucket
-      if options.size > 0
-          path += '?' + options.map { |k, v| "#{k}=#{CGI::escape v.to_s}" }.join('&')
-      end
+      path_args = {}
+      options.each { |k, v|
+          path_args[k] = v.to_s
+      }
 
-      return ListBucketResponse.new(make_request('GET', path, headers))
+      return ListBucketResponse.new(make_request('GET', bucket, '', path_args, headers))
     end
 
     def delete_bucket(bucket, headers={})
-      return Response.new(make_request('DELETE', bucket, headers))
+      return Response.new(make_request('DELETE', bucket, '', {}, headers))
     end
 
     def put(bucket, key, object, headers={})
       object = S3Object.new(object) if not object.instance_of? S3Object
 
       return Response.new(
-        make_request('PUT', "#{bucket}/#{CGI::escape key}", headers, object.data, object.metadata)
+        make_request('PUT', bucket, CGI::escape(key), {}, headers, object.data, object.metadata)
       )
     end
 
     def get(bucket, key, headers={})
-      return GetResponse.new(make_request('GET', "#{bucket}/#{CGI::escape key}", headers))
+      return GetResponse.new(make_request('GET', bucket, CGI::escape(key), {}, headers))
     end
 
     def delete(bucket, key, headers={})
-      return Response.new(make_request('DELETE', "#{bucket}/#{CGI::escape key}", headers))
+      return Response.new(make_request('DELETE', bucket, CGI::escape(key), {}, headers))
     end
 
     def get_bucket_logging(bucket, headers={})
-      return GetResponse.new(make_request('GET', "#{bucket}?logging", headers))
+      return GetResponse.new(make_request('GET', bucket, '', {'logging' => nil}, headers))
     end
 
     def put_bucket_logging(bucket, logging_xml_doc, headers={})
-      return Response.new(make_request('PUT', "#{bucket}?logging", headers, logging_xml_doc))
+      return Response.new(make_request('PUT', bucket, '', {'logging' => nil}, headers, logging_xml_doc))
     end
 
     def get_bucket_acl(bucket, headers={})
@@ -170,7 +220,7 @@ module S3
     # returns an xml document representing the access control list.
     # this could be parsed into an object.
     def get_acl(bucket, key, headers={})
-      return GetResponse.new(make_request('GET', "#{bucket}/#{CGI::escape key}?acl", headers))
+      return GetResponse.new(make_request('GET', bucket, CGI::escape(key), {'acl' => nil}, headers))
     end
 
     def put_bucket_acl(bucket, acl_xml_doc, headers={})
@@ -181,35 +231,90 @@ module S3
     # be a string in the acl xml format.
     def put_acl(bucket, key, acl_xml_doc, headers={})
       return Response.new(
-        make_request('PUT', "#{bucket}/#{CGI::escape key}?acl", headers, acl_xml_doc, {})
+        make_request('PUT', bucket, CGI::escape(key), {'acl' => nil}, headers, acl_xml_doc, {})
       )
     end
 
+    def get_bucket_location(bucket)
+      return LocationResponse.new(make_request('GET', bucket, '', {'location' => nil}, {}))
+    end
+
     def list_all_my_buckets(headers={})
-      return ListAllMyBucketsResponse.new(make_request('GET', '', headers))
+      return ListAllMyBucketsResponse.new(make_request('GET', '', '', {}, headers))
     end
 
     private
-    def make_request(method, path, headers={}, data='', metadata={})
-      @http.start do
-        req = method_to_request_class(method).new("/#{path}")
-
-        set_headers(req, headers)
-        set_headers(req, metadata, METADATA_PREFIX)
-
-        set_aws_auth_header(req, @aws_access_key_id, @aws_secret_access_key)
-        if req.request_body_permitted?
-          return @http.request(req, data)
-        else
-          return @http.request(req)
-        end
+    def make_request(method, bucket='', key='', path_args={}, headers={}, data='', metadata={})
+      
+      # build the domain based on the calling format
+      server = ''
+      if bucket.empty?
+        # for a bucketless request (i.e. list all buckets)
+        # revert to regular domain case since this operation
+        # does not make sense for vanity domains
+        server = @server
+      elsif @calling_format == CallingFormat::SUBDOMAIN
+        server = "#{bucket}.#{@server}" 
+      elsif @calling_format == CallingFormat::VANITY
+        server = bucket 
+      else
+        server = @server
       end
+
+      # build the path based on the calling format
+      path = ''
+      if (not bucket.empty?) and (@calling_format == CallingFormat::PATH)
+        path << "/#{bucket}"
+      end
+      # add the slash after the bucket regardless
+      # the key will be appended if it is non-empty
+      path << "/#{key}"
+
+      # build the path_argument string
+      # add the ? in all cases since 
+      # signature and credentials follow path args
+      path << S3.path_args_hash_to_string(path_args) 
+
+      while true
+        http = Net::HTTP.new(server, @port)
+        http.use_ssl = @is_secure
+        http.start do
+          req = method_to_request_class(method).new(path)
+
+          set_headers(req, headers)
+          set_headers(req, metadata, METADATA_PREFIX)
+
+          set_aws_auth_header(req, @aws_access_key_id, @aws_secret_access_key, bucket, key, path_args)
+          if req.request_body_permitted?
+            resp = http.request(req, data)
+          else
+            resp = http.request(req)
+          end
+
+          case resp.code.to_i
+          when 100..299
+            return resp
+          when 300..399 # redirect
+	    location = resp['location']
+	    # handle missing location like a normal http error response
+	    resp.error! if !location
+            uri = URI.parse(resp['location'])
+            server = uri.host
+            path = uri.request_uri
+            # try again...
+          else
+            resp.error!
+          end
+        end # http.start
+      end # while
     end
 
     def method_to_request_class(method)
       case method
       when 'GET'
         return Net::HTTP::Get
+      when 'HEAD'
+        return Net::HTTP::Head
       when 'PUT'
         return Net::HTTP::Put
       when 'DELETE'
@@ -220,7 +325,7 @@ module S3
     end
 
     # set the Authorization header using AWS signed header authentication
-    def set_aws_auth_header(request, aws_access_key_id, aws_secret_access_key)
+    def set_aws_auth_header(request, aws_access_key_id, aws_secret_access_key, bucket='', key='', path_args={})
       # we want to fix the date here if it's not already been done.
       request['Date'] ||= Time.now.httpdate
 
@@ -231,7 +336,7 @@ module S3
       request['Content-Type'] ||= ''
 
       canonical_string =
-        S3.canonical_string(request.method, request.path, request.to_hash)
+        S3.canonical_string(request.method, bucket, key, path_args, request.to_hash, nil)
       encoded_canonical = S3.encode(aws_secret_access_key, canonical_string)
 
       request['Authorization'] = "AWS #{aws_access_key_id}:#{encoded_canonical}"
@@ -250,20 +355,26 @@ module S3
   # be used to perform the operation with the query string authentication
   # parameters set.
   class QueryStringAuthGenerator
+    attr_accessor :calling_format
     attr_accessor :expires
     attr_accessor :expires_in
     attr_reader :server
     attr_reader :port
+    attr_reader :is_secure
 
     # by default, expire in 1 minute
     DEFAULT_EXPIRES_IN = 60
 
-    def initialize(aws_access_key_id, aws_secret_access_key, is_secure=true, server=DEFAULT_HOST, port=PORTS_BY_SECURITY[is_secure])
+    def initialize(aws_access_key_id, aws_secret_access_key, is_secure=true, 
+                   server=DEFAULT_HOST, port=PORTS_BY_SECURITY[is_secure], 
+                   format=CallingFormat::SUBDOMAIN)
       @aws_access_key_id = aws_access_key_id
       @aws_secret_access_key = aws_secret_access_key
       @protocol = is_secure ? 'https' : 'http'
       @server = server
       @port = port
+      @calling_format = format 
+      @is_secure = is_secure
       # by default expire
       @expires_in = DEFAULT_EXPIRES_IN
     end
@@ -283,21 +394,20 @@ module S3
     end
 
     def create_bucket(bucket, headers={})
-      return generate_url('PUT', bucket, headers)
+      return generate_url('PUT', bucket, '', {}, headers)
     end
 
     # takes options :prefix, :marker, :max_keys, and :delimiter
     def list_bucket(bucket, options={}, headers={})
-      path = bucket
-      if options.size > 0
-        path += '?' + options.map { |k, v| "#{k}=#{CGI::escape v}" }.join('&')
-      end
-
-      return generate_url('GET', path, headers)
+      path_args = {}
+      options.each { |k, v|
+        path_args[k] = v.to_s
+      }
+      return generate_url('GET', bucket, '', path_args, headers)
     end
 
     def delete_bucket(bucket, headers={})
-      return generate_url('DELETE', bucket, headers)
+      return generate_url('DELETE', bucket, '', {}, headers)
     end
 
     # don't really care what object data is.  it's just for conformance with the
@@ -305,27 +415,27 @@ module S3
     # putting a Content-Type header on the wire.
     def put(bucket, key, object=nil, headers={})
       object = S3Object.new(object) if not object.instance_of? S3Object
-      return generate_url('PUT', "#{bucket}/#{CGI::escape key}", merge_meta(headers, object))
+      return generate_url('PUT', bucket, CGI::escape(key), {}, merge_meta(headers, object))
     end
 
     def get(bucket, key, headers={})
-      return generate_url('GET',  "#{bucket}/#{CGI::escape key}", headers)
+      return generate_url('GET', bucket, CGI::escape(key), {}, headers)
     end
 
     def delete(bucket, key, headers={})
-      return generate_url('DELETE',  "#{bucket}/#{CGI::escape key}", headers)
+      return generate_url('DELETE', bucket, CGI::escape(key), {}, headers)
     end
 
     def get_bucket_logging(bucket, headers={})
-      return generate_url('GET', "#{bucket}?logging", headers)
+      return generate_url('GET', bucket, '', {'logging' => nil}, headers)
     end
 
     def put_bucket_logging(bucket, logging_xml_doc, headers={})
-      return generate_url('PUT', "#{bucket}?logging", headers)
+      return generate_url('PUT', bucket, '', {'logging' => nil}, headers)
     end
 
     def get_acl(bucket, key='', headers={})
-      return generate_url('GET', "#{bucket}/#{CGI::escape key}?acl", headers)
+      return generate_url('GET', bucket, CGI::escape(key), {'acl' => nil}, headers)
     end
 
     def get_bucket_acl(bucket, headers={})
@@ -335,7 +445,7 @@ module S3
     # don't really care what acl_xml_doc is.
     # again, check the wire for Content-Type if this fails.
     def put_acl(bucket, key, acl_xml_doc, headers={})
-      return generate_url('PUT', "#{bucket}/#{CGI::escape key}?acl", headers)
+      return generate_url('PUT', bucket, CGI::escape(key), {'acl' => nil}, headers)
     end
 
     def put_bucket_acl(bucket, acl_xml_doc, headers={})
@@ -343,14 +453,14 @@ module S3
     end
 
     def list_all_my_buckets(headers={})
-      return generate_url('GET', '', headers)
+      return generate_url('GET', '', '', {}, headers)
     end
 
 
     private
     # generate a url with the appropriate query string authentication
     # parameters set.
-    def generate_url(method, path, headers)
+    def generate_url(method, bucket="", key="", path_args={}, headers={})
       expires = 0
       if not @expires_in.nil?
         expires = Time.now.to_i + @expires_in
@@ -361,13 +471,18 @@ module S3
       end
 
       canonical_string =
-        S3::canonical_string(method, "/" + path, headers, expires)
+        S3::canonical_string(method, bucket, key, path_args, headers, expires)
       encoded_canonical =
-        S3::encode(@aws_secret_access_key, canonical_string, true)
+        S3::encode(@aws_secret_access_key, canonical_string)
+      
+      url = CallingFormat.build_url_base(@protocol, @server, @port, bucket, @calling_format)
+      
+      path_args["Signature"] = encoded_canonical.to_s
+      path_args["Expires"] = expires.to_s
+      path_args["AWSAccessKeyId"] = @aws_access_key_id.to_s
+      arg_string = S3.path_args_hash_to_string(path_args) 
 
-      arg_sep = path.index('?') ? '&' : '?'
-
-      return "#{@protocol}://#{@server}:#{@port}/#{path}#{arg_sep}Signature=#{encoded_canonical}&Expires=#{expires}&AWSAccessKeyId=#{@aws_access_key_id}"
+      return "#{url}/#{key}#{arg_string}"
     end
 
     def merge_meta(headers, object)
@@ -386,6 +501,28 @@ module S3
     attr_accessor :metadata
     def initialize(data, metadata={})
       @data, @metadata = data, metadata
+    end
+  end
+
+  # class for storing calling format constants
+  module CallingFormat 
+    PATH      = 0 # http://s3.amazonaws.com/bucket/key
+    SUBDOMAIN = 1 # http://bucket.s3.amazonaws.com/key
+    VANITY    = 2  # http://<vanity_domain>/key  -- vanity_domain resolves to s3.amazonaws.com
+
+    # build the url based on the calling format, and bucket
+    def CallingFormat.build_url_base(protocol, server, port, bucket, format)
+      build_url_base = "#{protocol}://"
+      if bucket.empty?
+        build_url_base << "#{server}:#{port}"
+      elsif format == SUBDOMAIN
+        build_url_base << "#{bucket}.#{server}:#{port}"
+      elsif format == VANITY
+        build_url_base << "#{bucket}:#{port}"
+      else
+        build_url_base << "#{server}:#{port}/#{bucket}"
+      end
+      return build_url_base 
     end
   end
 
@@ -442,43 +579,44 @@ module S3
 
     # we have one, add him to the entries list
     def tag_end(name)
+      text = @curr_text.strip
       # this prefix is the one we echo back from the request
       if name == 'Name'
-        @properties.name = @curr_text
-      elsif name == 'Prefix' && @is_echoed_prefix
-        @properties.prefix = @curr_text       
+        @properties.name = text
+      elsif name == 'Prefix' and @is_echoed_prefix
+        @properties.prefix = text       
         @is_echoed_prefix = nil
       elsif name == 'Marker'
-        @properties.marker = @curr_text
+        @properties.marker = text
       elsif name == 'MaxKeys'
-        @properties.max_keys = @curr_text.to_i
+        @properties.max_keys = text.to_i
       elsif name == 'Delimiter'
-        @properties.delimiter = @curr_text
+        @properties.delimiter = text
       elsif name == 'IsTruncated'
-        @properties.is_truncated = @curr_text == 'true'
+        @properties.is_truncated = text == 'true'
       elsif name == 'NextMarker'        
-        @properties.next_marker = @curr_text
+        @properties.next_marker = text
       elsif name == 'Contents'
         @entries << @curr_entry
       elsif name == 'Key'
-        @curr_entry.key = @curr_text
+        @curr_entry.key = text
       elsif name == 'LastModified'
-        @curr_entry.last_modified = @curr_text
+        @curr_entry.last_modified = text
       elsif name == 'ETag'
-        @curr_entry.etag = @curr_text
+        @curr_entry.etag = text
       elsif name == 'Size'
-        @curr_entry.size = @curr_text.to_i
+        @curr_entry.size = text.to_i
       elsif name == 'StorageClass'
-        @curr_entry.storage_class = @curr_text
+        @curr_entry.storage_class = text
       elsif name == 'ID'
-        @curr_entry.owner.id = @curr_text
+        @curr_entry.owner.id = text
       elsif name == 'DisplayName'
-        @curr_entry.owner.display_name = @curr_text
+        @curr_entry.owner.display_name = text
       elsif name == 'CommonPrefixes'
         @common_prefixes << @common_prefix_entry         
       elsif name == 'Prefix'
         # this is the common prefix for keys that match up to the delimiter
-        @common_prefix_entry.prefix = @curr_text
+        @common_prefix_entry.prefix = text
       end
       @curr_text = ''
     end
@@ -502,11 +640,6 @@ module S3
     end
   end
 
-  class Bucket
-    attr_accessor :name
-    attr_accessor :creation_date
-  end
-
   class ListAllMyBucketsParser
     attr_reader :entries
 
@@ -522,12 +655,13 @@ module S3
 
     # we have one, add him to the entries list
     def tag_end(name)
+      text = @curr_text.strip
       if name == 'Bucket'
         @entries << @curr_bucket
       elsif name == 'Name'
-        @curr_bucket.name = @curr_text
+        @curr_bucket.name = text
       elsif name == 'CreationDate'
-        @curr_bucket.creation_date = @curr_text
+        @curr_bucket.creation_date = text
       end
       @curr_text = ''
     end
@@ -549,11 +683,115 @@ module S3
     end
   end
 
+  class ErrorResponseParser
+    attr_reader :code
+
+    def self.parse(msg)
+        parser = ErrorResponseParser.new
+        REXML::Document.parse_stream(msg, parser)
+        parser.code
+    end
+
+    def initialize
+      @state = :init
+      @code = nil
+    end
+
+    def tag_start(name, attributes)
+      case @state
+      when :init
+        if name == 'Error'
+          @state = :tag_error
+        else
+          @state = :bad
+        end
+      when :tag_error
+        if name == 'Code'
+          @state = :tag_code
+          @code = ''
+        else
+          @state = :bad
+        end
+      end
+    end
+
+    # we have one, add him to the entries list
+    def tag_end(name)
+      case @state
+      when :tag_code
+        @state = :done
+      end
+    end
+
+    def text(text)
+      @code += text if @state == :tag_code
+    end
+
+    def xmldecl(version, encoding, standalone)
+      # ignore
+    end
+  end
+
+  class LocationParser
+    attr_reader :location
+
+    def self.parse(msg)
+        parser = LocationParser.new
+        REXML::Document.parse_stream(msg, parser)
+        return parser.location
+    end
+
+    def initialize
+      @state = :init
+      @location = nil
+    end
+
+    def tag_start(name, attributes)
+      if @state == :init
+        if name == 'LocationConstraint'
+          @state = :tag_locationconstraint
+          @location = ''
+        else
+          @state = :bad
+        end
+      end
+    end
+
+    # we have one, add him to the entries list
+    def tag_end(name)
+      case @state
+      when :tag_locationconstraint
+        @state = :done
+      end
+    end
+
+    def text(text)
+      @location += text if @state == :tag_locationconstraint
+    end
+
+    def xmldecl(version, encoding, standalone)
+      # ignore
+    end
+  end
+
   class Response
     attr_reader :http_response
     def initialize(response)
       @http_response = response
     end
+    
+    def message
+      if @http_response.body
+        @http_response.body
+      else
+        "#{@http_response.code} #{@http_response.message}"
+      end
+    end
+  end
+
+  class Bucket
+    attr_accessor :name
+    attr_accessor :creation_date
   end
 
   class GetResponse < Response
@@ -606,6 +844,17 @@ module S3
         @entries = parser.entries
       else
         @entries = []
+      end
+    end
+  end
+
+  class LocationResponse < Response
+    attr_reader :location
+
+    def initialize(response)
+      super(response)
+      if response.is_a? Net::HTTPSuccess
+        @location = LocationParser.parse(response.body)
       end
     end
   end
