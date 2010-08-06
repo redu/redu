@@ -1,5 +1,5 @@
 # Settings specified here will take precedence over those in config/environment.rb
-APP_URL = "http://ec2-204-236-250-180.compute-1.amazonaws.com" 
+APP_URL = "http://beta.redu.com.br" 
 # The production environment is meant for finished, "live" apps.
 # Code is not reloaded between requests
 config.cache_classes = true
@@ -19,7 +19,7 @@ config.action_view.cache_template_loading            = true
 # config.cache_store = :mem_cache_store
 
 # Enable serving of images, stylesheets, and javascripts from an asset server
-# config.action_controller.asset_host = "http://assets.example.com"
+config.action_controller.asset_host = "http://redu_assets.s3.amazonaws.com"
 
 # Disable delivery errors, bad email addresses will be ignored
 # config.action_mailer.raise_delivery_errors = false
