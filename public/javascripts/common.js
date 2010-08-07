@@ -13,6 +13,8 @@ function limitChars(textid, limit, infodiv){
 }
 
 $(document).ready(function(){
+	
+
 
     // User box
 
@@ -98,6 +100,13 @@ $(document).ready(function(){
         $(this).toggleClass("closed")
         
     })
+		
+		// header "click off"
+    //$('body').click(function(event){
+    //    if (!$(event.target).closest("#header div.user-actions a.pandora").length) {
+    //       $("#user-settings").slideUp('slow')
+    //    };
+    //    });
 
 
 
