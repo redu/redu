@@ -582,6 +582,7 @@ div.recomendations-m .number {
         border-left: 1px solid #EFF0F0;
         border-bottom: 1px solid #EFF0F0;
         border-right: 1px solid #EFF0F0;
+				min-height: 400px;
     }
 
     .tabs ul.ui-tabs-nav {
@@ -1963,7 +1964,7 @@ ul.sub-groups > li {
 					margin: 20px;
 }
 
-.directory { background: url(jqueryFileTreeImages/directory.png) left top no-repeat; width: 16px; }
+.directory { background: url(file_images/directory.png) left top no-repeat; width: 16px; }
 
 .grid{
     border-collapse: collapse;
@@ -2014,6 +2015,7 @@ ul.sub-groups > li {
     display: none;
     padding: 13px;
     background-color: white;
+		z-index: 1000;
 	border: 5px solid #EFEFEF;
 	border-bottom-left-radius: 5px 5px;
 	border-bottom-right-radius: 5px 5px;
