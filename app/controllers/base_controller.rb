@@ -171,7 +171,7 @@ class BaseController < ApplicationController
   
 
   def get_recent_footer_content
-    @recent_clippings = Clipping.find_recent(:limit => 10)
+    #@recent_clippings = Clipping.find_recent(:limit => 10)
     @recent_photos = Photo.find_recent(:limit => 10)
     @recent_comments = Comment.find_recent(:limit => 13)
     @popular_tags = popular_tags(30, ' count DESC')

@@ -1,47 +1,36 @@
 class School < ActiveRecord::Base
   
+  # PLUGINS
   acts_as_taggable
   acts_as_voteable
-  
-  before_create :create_root_folder
-  
-  # CATEGORIES
-  has_and_belongs_to_many :categories, :class_name => "ReduCategory"
-  has_and_belongs_to_many :audiences
-  
-  #AVATAR
   has_attached_file :avatar, :styles => { :medium => "200x200>", :thumb => "100x100>" }
   
+  # CALLBACKS
+  before_create :create_root_folder
+
+  # ASSOCIATIONS
   #USERS
   has_many :user_school_associations, :dependent => :destroy
   has_many :users, :through => :user_school_associations, :conditions => ["user_school_associations.status LIKE 'approved'"]
-  
-  belongs_to :owner , :class_name => "User" , :foreign_key => "owner"
-   
   has_many :admins, :through => :user_school_associations, :source => :user, :conditions => [ "user_school_associations.role_id = ?", 4 ]
   has_many :coordinators, :through => :user_school_associations, :source => :user, :conditions => [ "user_school_associations.role_id = ?", 5 ]
   has_many :teachers, :through => :user_school_associations, :source => :user, :conditions => [ "user_school_associations.role_id = ?", 6 ]
   has_many :students, :through => :user_school_associations, :source => :user, :conditions => [ "user_school_associations.role_id = ?", 7 ]
-  
   has_many :pending_requests, :class_name => "UserSchoolAssociation", :conditions => ["user_school_associations.status LIKE 'pending'"] 
-
-
-  #FOLDERS
+ 
+  # CATEGORIES
+  has_and_belongs_to_many :categories, :class_name => "ReduCategory"
+  has_and_belongs_to_many :audiences
+  
+  belongs_to :owner , :class_name => "User" , :foreign_key => "owner"
   has_many :folders
-  
-  
   has_many :forums
-   
   has_many :acquisitions, :as => :acquired_by
-  
   has_many :access_keys, :dependent => :destroy
-  
   has_many :school_assets, :class_name => 'SchoolAsset', 
     :dependent => :destroy
-  
   has_many :courses, :through => :school_assets, 
     :source => :asset, :source_type => "Course", :conditions =>  "published = 1"
-  
   has_many :exams, :through => :school_assets, 
   :source => :asset, :source_type => "Exam", :conditions =>  "published = 1"
   
@@ -50,6 +39,8 @@ class School < ActiveRecord::Base
   validates_format_of       :path, :with => /^[\sA-Za-z0-9_-]+$/
   validates_uniqueness_of   :path, :case_sensitive => false
   validates_exclusion_of    :path, :in => AppConfig.reserved_logins
+  validates_presence_of :categories
+  #validates_presence_of :audience
   
   # override activerecord's find to allow us to find by name or id transparently
   def self.find(*args)

@@ -139,8 +139,8 @@ class User < ActiveRecord::Base
     :foreign_key => "user_id", :order => "created_at desc", :dependent => :destroy
   has_many    :comments_as_recipient, :class_name => "Comment", 
     :foreign_key => "recipient_id", :order => "created_at desc", :dependent => :destroy
-  has_many    :clippings, :order => "created_at desc", 
-    :dependent => :destroy
+  #has_many    :clippings, :order => "created_at desc", 
+  #  :dependent => :destroy
   has_many    :favorites, :order => "created_at desc", 
     :dependent => :destroy
     

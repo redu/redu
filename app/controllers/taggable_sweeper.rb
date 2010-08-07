@@ -1,5 +1,5 @@
 class TaggableSweeper < ActionController::Caching::Sweeper
-  observe User, Post, Clipping, Photo # This sweeper is going to keep an eye on taggable models
+  observe User, Post, Photo # This sweeper is going to keep an eye on taggable models
 
   # If our sweeper detects that a taggable (User) was activated 
   def after_activate(taggable)

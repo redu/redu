@@ -178,8 +178,8 @@ class CommentsController < BaseController
           @commentable.title
         when 'course'
           @commentable.name
-        when 'clipping'
-          @commentable.description || "Clipping from #{@user.login}"
+       # when 'clipping'
+       #   @commentable.description || "Clipping from #{@user.login}"
         when 'photo'
           @commentable.description || "Photo from #{@user.login}"
         else 

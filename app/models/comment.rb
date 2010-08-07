@@ -65,8 +65,8 @@ class Comment < ActiveRecord::Base
         commentable.name
         when 'post'
           commentable.title
-        when 'clipping'
-          commentable.description || "Clipping from #{commentable.user.login}"
+        #when 'clipping'
+        #  commentable.description || "Clipping from #{commentable.user.login}"
         when 'photo'
           commentable.description || "Photo from #{commentable.user.login}"
         else 

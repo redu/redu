@@ -75,6 +75,11 @@ $(document).ready(function(){
 						</tbody></table>
 </div>
 
+<div class="grid_16">
+<%= f.error_messages %>
+</div>
+<div class="grid_16">
+
 <% field_set_tag 'Informações Gerais' do %>
 	<%= f.label "Nome" %>
 	<%= f.text_field :name , :onkeyup => "generatePath(this)" %>
@@ -113,3 +118,5 @@ $(document).ready(function(){
 <% end %>
 </ul>
 <% end %>
+
+</div>

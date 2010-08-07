@@ -161,9 +161,9 @@ ActionController::Routing::Routes.draw do |map|
   
   
   #clippings routes
-  map.connect '/new_clipping', :controller => 'clippings', :action => 'new_clipping'
-  map.site_clippings '/clippings', :controller => 'clippings', :action => 'site_index'
-  map.rss_site_clippings '/clippings.rss', :controller => 'clippings', :action => 'site_index', :format => 'rss'
+  #map.connect '/new_clipping', :controller => 'clippings', :action => 'new_clipping'
+  #map.site_clippings '/clippings', :controller => 'clippings', :action => 'site_index'
+  #map.rss_site_clippings '/clippings.rss', :controller => 'clippings', :action => 'site_index', :format => 'rss'
   
   map.featured '/featured', :controller => 'posts', :action => 'featured'
   map.featured_rss '/featured.rss', :controller => 'posts', :action => 'featured', :format => 'rss'
@@ -227,7 +227,10 @@ ActionController::Routing::Routes.draw do |map|
    :look_and_feel => :get,
    :members => :get,
    :teachers => :get,
-   :take_ownership => :get,
+   :take_ownership => :get
+   },
+   :collection =>{
+   :cancel => :get
    } do |school|
     school.resources :folders, :member =>{:upload => :get, :download => :get, :rename => :get, :destroy_folder => :delete, :destroy_file => :delete}
     school.resources :courses
@@ -272,7 +275,7 @@ ActionController::Routing::Routes.draw do |map|
     user.resources :photos, :collection => {:swfupload => :post, :slideshow => :get}
     user.resources :posts, :collection => {:manage => :get}, :member => {:contest => :get, :send_to_friend => :any, :update_views => :any}
     user.resources :events # Needed this to make comments work
-    user.resources :clippings
+    #user.resources :clippings
     user.resources :activities, :collection => {:network => :get}
     user.resources :invitations
     user.resources :courses, :collection => {:published => :get, :unpublished => :get, :waiting => :get, :favorites => :get} 

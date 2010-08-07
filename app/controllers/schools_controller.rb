@@ -459,6 +459,11 @@ class SchoolsController < BaseController
     end
   end
   
+  def cancel
+     session[:school_step] = session[:school_params] = nil
+    redirect_to schools_path
+  end
+  
   # GET /schools/new
   # GET /schools/new.xml
   def new

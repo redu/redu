@@ -1,4 +1,7 @@
 <% if controller_name == 'schools' %>
+	<% if action_name == 'show'%>
+	<%= stylesheet_link_tag 'files' %>
+	<% end %>
   <%  if @school %>
     <%= stylesheet_link_tag 'themes/' + @school.theme %>
   <% else %>

@@ -10,7 +10,7 @@ height:200px;*/
 display:none;
 z-index:9999;
 padding:20px;
-background: #ECF0F8;
+background: white; /*#ECF0F8;*/
 	border: 5px solid #EFEFEF;
 	border-bottom-left-radius: 5px 5px;
 	border-bottom-right-radius: 5px 5px;
@@ -83,6 +83,7 @@ function remove_fields(link) {
 
 function add_fields(link, association, content, type) {
   var new_id = new Date().getTime();
+	
   var regexp = new RegExp("new_" + association, "g")
  
  	if (jQuery('#question').length > 6) {
@@ -91,8 +92,28 @@ function add_fields(link, association, content, type) {
  
 	if (type == 'Alternative') {
 		 $(link).before(content.replace(regexp, new_id));
+		 $(link).parent().find('input[type=radio]').each(function(idx) {
+		 	 $(this).attr('value', idx)
+		 })
+		 
   } else if (type == 'Question') {
+		//alert(content)
+		 //var regexp2 = new RegExp("value=\"new_alternatives\"", "g")
+		//	content = content.replace(regexp2,new_id)
+		
 		 $(link).before(content.replace(regexp, new_id));
+		 
+		 exam[questions_attributes][0][answer_id]
+		 
+		 $('[value=new_alternatives]').each(function(idx){
+		 //	var altId = $(this).attr('id').split('_')[6]
+		 	//alert(altId);
+			$(this).attr('value',idx)
+		  });
+		 
+	
+		 
+		 
   	removeAllMce();
   	reloadMce();
   }
@@ -129,7 +150,10 @@ function removeAllMce(){
   
     jQuery(document).ready(function(){
 			
-        
+         $('[value=new_alternatives]').each(function(idx){
+						$(this).attr('value',idx)
+		 			 });
+				
 				/*$('body').click(function(event){
             if (!$(event.target).closest('.question').length) {
 								alert('body ')
@@ -176,8 +200,8 @@ function removeAllMce(){
             var id = $(this).attr('href');
             
            
-						$('#lights-dimmed').show();
-            $(id).fadeIn(2000);
+						$('#lights-dimmed').fadeIn(2000);
+            $(id).show();
 						
 						
 						jQuery.ajax({

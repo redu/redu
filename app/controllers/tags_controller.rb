@@ -22,7 +22,7 @@ class TagsController < BaseController
 
     @photo_tags = popular_tags(75, ' count DESC', 'Photo')
 
-    @clipping_tags = popular_tags(75, ' count DESC', 'Clipping')  
+    #@clipping_tags = popular_tags(75, ' count DESC', 'Clipping')  
   end
 
   def manage
@@ -76,16 +76,16 @@ class TagsController < BaseController
       case params[:type]
         when 'Post', 'posts'
           @pages = @posts = Post.recent.find_tagged_with(tag_names, :match_all => true, :page => {:size => 20, :current => params[:page]})
-          @photos, @users, @clippings = [], [], []
+          @photos, @users = [], []
         when 'Photo', 'photos'
           @pages = @photos = Photo.recent.find_tagged_with(tag_names, :match_all => true, :page => {:size => 30, :current => params[:page]})
-          @posts, @users, @clippings = [], [], []
+          @posts, @users = [], []
         when 'User', 'users'
           @pages = @users = User.recent.find_tagged_with(tag_names, :match_all => true, :page => {:size => 30, :current => params[:page]})
-          @posts, @photos, @clippings = [], [], []
-        when 'Clipping', 'clippings'
-          @pages = @clippings = Clipping.recent.find_tagged_with(tag_names, :match_all => true, :page => {:size => 10, :current => params[:page]})
-          @posts, @photos, @users = [], [], []
+          @posts, @photos = [], []
+        #when 'Clipping', 'clippings'
+        #  @pages = @clippings = Clipping.recent.find_tagged_with(tag_names, :match_all => true, :page => {:size => 10, :current => params[:page]})
+        #  @posts, @photos, @users = [], [], []
       else
         @clippings, @posts, @photos, @users = [], [], [], []
       end
@@ -93,7 +93,7 @@ class TagsController < BaseController
       @posts = Post.recent.find_tagged_with(tag_names, :match_all => true, :limit => 5)
       @photos = Photo.recent.find_tagged_with(tag_names, :match_all => true, :limit => 10)
       @users = User.recent.find_tagged_with(tag_names, :match_all => true, :limit => 10).uniq
-      @clippings = Clipping.recent.find_tagged_with(tag_names, :match_all => true, :limit => 10)
+     # @clippings = Clipping.recent.find_tagged_with(tag_names, :match_all => true, :limit => 10)
     end
   end
 

@@ -10,11 +10,12 @@
 	 <%= f.label :alternatives, "Alternativas" %>
 	
 	<div id= "alternatives"> 
-	<% 5.times { f.object.alternatives.build } %>
-	<% f.fields_for :alternatives do |builder| %>
-	<% @oi = f%>
-  <%= render :partial => 'alternative_fields', :locals => {:f => builder, :f_question => f} %>
-  <% end %>
+	<% 5.times { f.object.alternatives.build } unless f.object.alternatives.size > 0%>
+	
+		<% f.fields_for :alternatives do |builder| %>
+			<% @oi = f%>
+		  <%= render :partial => 'alternative_fields', :locals => {:f => builder, :f_question => f} %>
+	  <% end %>
 	
 	<%= link_to_add_fields "Nova Alternativa", f, :alternatives, 'Alternative' %>
 	</div>

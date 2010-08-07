@@ -38,7 +38,7 @@ class StatisticsController < BaseController
     @comments = Activity.count(:group => "date(created_at)", :conditions => ["action = ? AND created_at > ?", 'comment', range.days.ago ] )    
     @posts = Activity.count(:group => "date(created_at)", :conditions => ["action = ? AND created_at > ?", 'post', range.days.ago ] )        
     @photos = Activity.count(:group => "date(created_at)", :conditions => ["action = ? AND created_at > ?", 'photo', range.days.ago ] )            
-    @clippings = Activity.count(:group => "date(created_at)", :conditions => ["action = ? AND created_at > ?", 'clipping', range.days.ago ] )            
+  #  @clippings = Activity.count(:group => "date(created_at)", :conditions => ["action = ? AND created_at > ?", 'clipping', range.days.ago ] )            
 
     current = (Time.now.midnight) - ( (range).days + 1.day )
     days = []
@@ -55,7 +55,7 @@ class StatisticsController < BaseController
     chart.add( :series, :comments.l, days.collect{|d| @comments[d] || 0 } )    
     chart.add( :series, :posts.l, days.collect{|d| @posts[d] || 0 } )        
     chart.add( :series, :photos.l, days.collect{|d| @photos[d] || 0 } )        
-    chart.add( :series, :clippings.l, days.collect{|d| @clippings[d] || 0 } )            
+  #  chart.add( :series, :clippings.l, days.collect{|d| @clippings[d] || 0 } )            
     render :xml => chart.to_s    
   end
   

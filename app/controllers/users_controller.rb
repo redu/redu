@@ -164,7 +164,7 @@ class UsersController < BaseController
     @users_comments = Comment.find_comments_by_user(@user, :limit => 5)
     
     @recent_posts   = @user.posts.find(:all, :limit => 2, :order => "published_at DESC")
-    @clippings      = @user.clippings.find(:all, :limit => 5)
+    #@clippings      = @user.clippings.find(:all, :limit => 5)
     @photos         = @user.photos.find(:all, :limit => 5)
     @comment        = Comment.new(params[:comment])
     @status = Status.new

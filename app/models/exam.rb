@@ -60,4 +60,8 @@ class Exam < ActiveRecord::Base
   end
   
   
+#  def questions_attributes=(attributes)
+#  puts attributes.inspect
+#    end
+  
 end

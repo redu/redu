@@ -6,4 +6,6 @@ class Alternative < ActiveRecord::Base
   #validations
   validates_presence_of :statement 
   
+  
+
 end

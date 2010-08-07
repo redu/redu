@@ -198,7 +198,7 @@ class PostsController < BaseController
   def recent
     @posts = Post.recent.find :all, :page => {:current => params[:page], :size => 20}
 
-    @recent_clippings = Clipping.find_recent(:limit => 15)
+    #@recent_clippings = Clipping.find_recent(:limit => 15)
     @recent_photos = Photo.find_recent(:limit => 10)
     
     @rss_title = "#{AppConfig.community_name} "+:recent_posts.l

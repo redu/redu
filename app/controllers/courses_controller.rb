@@ -5,7 +5,7 @@ class CoursesController < BaseController
   before_filter :login_required, :except => [:index]
   #before_filter :check_if_removed, :except => [:index]
   
-  uses_tiny_mce(:options => AppConfig.default_mce_options, :only => [:new, :edit, :update])
+  uses_tiny_mce(:options => AppConfig.advanced_mce_options, :only => [:new, :edit, :update])
   
 #  def check_if_removed
 #    puts params[:id]

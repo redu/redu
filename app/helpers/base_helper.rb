@@ -15,16 +15,17 @@ module BaseHelper
   
   
   def type_class(resource)
-      case resource.attachment_content_type #TODO fazer por extensao em nao por tipo
-      when "clipping" then 'clipping'
-      when "application/vnd.ms-powerpoint" then 'ppt'
-      when "application/msword" then 'word'
-      when "application/vnd.openxmlformats-officedocument.wordprocessingml.document" then 'word'
-      when "application/rtf" then 'word'
-      when "text/plain" then 'text' 
-      when "application/pdf" then 'pdf'
-      else ''
-      end
+#      case resource.attachment_content_type
+#      when "application/vnd.ms-powerpoint" then 'ppt'
+#      when "application/msword" then 'word'
+#      when "application/vnd.openxmlformats-officedocument.wordprocessingml.document" then 'word'
+#      when "application/rtf" then 'word'
+#      when "text/plain" then 'text' 
+#      when "application/pdf" then 'pdf'
+#      else ''
+#      end
+
+        'ext_'+ resource.attachment_file_name.split('.')[1] if resource.attachment_file_name.split('.').length > 0
   end
   
   
@@ -212,10 +213,10 @@ module BaseHelper
         if @user and @user.login
           title = @user.login + '\'s '+:photos.l+' &raquo; ' + app_base + tagline
         end
-      when 'clippings'
-        if @user and @user.login
-          title = @user.login + '\'s '+:clippings.l+' &raquo; ' + app_base + tagline
-        end
+     # when 'clippings'
+     #   if @user and @user.login
+     #     title = @user.login + '\'s '+:clippings.l+' &raquo; ' + app_base + tagline
+     #   end
       when 'tags'
         case @controller.action_name
           when 'show'
@@ -341,9 +342,9 @@ module BaseHelper
     return false
   end
   
-  def clippings_link
-    "javascript:(function() {d=document, w=window, e=w.getSelection, k=d.getSelection, x=d.selection, s=(e?e():(k)?k():(x?x.createRange().text:0)), e=encodeURIComponent, document.location='#{application_url}new_clipping?uri='+e(document.location)+'&title='+e(document.title)+'&selection='+e(s);} )();"    
-  end
+ # def clippings_link
+ #   "javascript:(function() {d=document, w=window, e=w.getSelection, k=d.getSelection, x=d.selection, s=(e?e():(k)?k():(x?x.createRange().text:0)), e=encodeURIComponent, document.location='#{application_url}new_clipping?uri='+e(document.location)+'&title='+e(document.title)+'&selection='+e(s);} )();"    
+ # end
   
   def paginating_links(paginator, options = {}, html_options = {})
     if paginator.page_count > 1

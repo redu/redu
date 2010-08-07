@@ -23,6 +23,16 @@ class Question < ActiveRecord::Base
 
 
   named_scope :public, :conditions => ['public = ?', true]
+  
+  before_save :set_answer_id
+
+
+def set_answer_id # answer id vem como o indice
+  self.answer_id = self.alternatives[answer_id.to_i].id if answer_id === 'String'
+  
+end
+
+
 
   
 end
