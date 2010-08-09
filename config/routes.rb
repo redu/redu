@@ -117,7 +117,8 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'sitemap.xml', :controller => "sitemap", :action => "index", :format => 'xml'
   map.connect 'sitemap', :controller => "sitemap", :action => "index"
   
-  
+  map.learn_index '/learn', :controller => 'base', :action => 'learn_index'
+  map.teach_index '/teach', :controller => 'base', :action => 'teach_index'
  
   
   if AppConfig.closed_beta_mode

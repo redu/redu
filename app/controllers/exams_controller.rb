@@ -6,8 +6,19 @@ class ExamsController < BaseController
   
   
   def publish_score
-    ExamUser.update(params[:exam_user_id], :public => params[:public])
-    head :ok
+    ExamUser.update(params[:exam_user_id], :public => true)
+    #@ranking = Exam.ranking(params[:exam_user_id]??) #TODO atualizar ranking
+     
+     #@ranking = ExamUser.ranking(@exam.id)
+     
+    respond_to do |format|
+      format.js do
+        render :update do |page|
+          page << "$('#pub_score').attr('value','Score publicado!')"
+          #page << "$('pub_score').attr('onclick', 'return false')"
+        end
+      end
+    end
   end
   
   
@@ -92,7 +103,8 @@ class ExamsController < BaseController
     session[:question_index] += 1
     
     if @step.nil?
-      redirect_to :action => "results", :id => params[:id], :chrono => params[:chrono]
+      #redirect_to :action => :compute_results, :id => params[:id], :chrono => params[:chrono]
+      compute_results
     else
       respond_to do |format|
         format.js
@@ -102,20 +114,17 @@ class ExamsController < BaseController
     end
   end
   
-  
-  def results
-    #TODO colocar :select => "DISTINCT(user_id)"
-    @ranking = ExamUser.all( :conditions => ["exam_id = ? AND public = ?",session[:exam].id, true], :include => :user, :order => "correct_count DESC, time ASC", :limit => 10)
+  def compute_results
     
     @exam = session[:exam]
     @answers = session[:answers]
     @correct = 0
     @corrects = Array.new
-    @time = params[:chrono].to_i
+    #@time = params[:chrono].to_i
     
-    @alternative_letters = {} 
-    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
-    
+#    @alternative_letters = {} 
+#    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+#    
     
     @exam.questions.each_with_index do |question, k|
     
@@ -124,9 +133,9 @@ class ExamsController < BaseController
         @correct += 1
       end
       
-      question.alternatives.each_with_index do |alternative, l| #TODO dá pra otimizar aqui,isso nao eh muito necessario
-        @alternative_letters[alternative.id] = letters[l]
-      end
+#      question.alternatives.each_with_index do |alternative, l| #TODO dá pra otimizar aqui,isso nao eh muito necessario
+#        @alternative_letters[alternative.id] = letters[l]
+#      end
 
     end
     
@@ -145,11 +154,36 @@ class ExamsController < BaseController
     
     #TODO performance?
     session[:corrects] = @corrects
+    redirect_to :action => :results, :correct => @correct, :time => params[:chrono], :exam_user_id => @exam_user.id
+  end
+  
+  def results
+    # TODO isso nao é muito necessario e compromete a peformace
+      @alternative_letters = {} 
+      letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
+      @exam = session[:exam]
+      
+      @exam.questions.each_with_index do |question, k|
+        question.alternatives.each_with_index do |alternative, l| #TODO dá pra otimizar aqui,isso nao eh muito necessario
+          @alternative_letters[alternative.id] = letters[l]
+        end
+      end
+
+     #TODO colocar :select => "DISTINCT(user_id)"
+   # @ranking = ExamUser.all( :conditions => ["exam_id = ? AND public = ?",session[:exam].id, true], :include => :user, :order => "correct_count DESC, time ASC", :limit => 10)
+     @ranking = ExamUser.ranking(@exam.id)
+    
+    @exam_user_id = params[:exam_user_id]
+    @correct = params[:correct].to_i
+
+    @time = params[:time].to_i
+    
     respond_to do |format|
       format.html 
       format.xml  { head :ok }
     end
   end
+  
   
     # revisar questão no resultado do exame
   def review_question

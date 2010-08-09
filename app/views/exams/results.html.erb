@@ -1,5 +1,11 @@
 <style>
 	
+.tbl_toggle {
+	border:1px solid #EEEEEE;
+margin-top:20px;
+width:100%;
+}
+	
 .tbl_toggle thead th {
 background-color:#E5EDF7;
 border-color:#FFFFFF #FFFFFF #AEBBCC;
@@ -96,10 +102,12 @@ padding:1px 2px;
 </style>
 <script>
 	
+/*
 function publishScore(checkbx){
 	alert(checkbx.checked)
 	jQuery('#publish_score_form').submit()
 }
+*/
 	
 function reviewQuestion(questionId){
 		
@@ -133,19 +141,22 @@ function reviewQuestion(questionId){
 
 <div class="grid_16">
 <div id="breadcrumbs">
-	<a href="<%=application_url%>">início</a> > <a href="#">aprender</a> > <a href="#">aprender</a>  > <a href="#"><%= @exam.name %></a> > resultado 
+	<a href="<%=application_url%>">início</a> > <a href="#">aprender</a>  > <a href="#"><%= @exam.name %></a> > resultado 
+</div>
 </div>
 
 <%= render :partial => "exam_header"%>
 
-<div id="title_video">Resultados para <%= @exam.name %></div>
+
 
 <div class= "grid_16">
+	<div id="title_video">Resultados para <%= @exam.name %></div>
+	
 <% total = @exam.questions.length %>
  Certas <%= @correct %> | Erradas <%= total - @correct %> | Total: <%= total %> | Tempo: <%= seconds_to_time(@time)%>
 </div>
 
-<div class= "grid_10 push_1">
+<div class= "grid_11">
 
 <table cellpadding="0" cellspacing="0" border="0" class="tbl_toggle">
       	<thead>
@@ -231,14 +242,22 @@ function reviewQuestion(questionId){
 																			<p><%=i+1%>. <%= exam_usr.user.display_name %> | Score: <%= exam_usr.correct_count %> | Tempo: <%= exam_usr.time/60 %> </p>
 																			<% end %>
 																			<% else %>
+																			<p>
 																			Seja o primeiro a publicar os resultados deste exame!
+																			</p>
 																			<%end%>
 																			
 																			<% form_remote_tag :url => {:action=> :publish_score}, :html => {:id => "publish_score_form"} do  %>
-																				<%= check_box_tag :public, false, false, :onchange => "publishScore(this);" %>
+																				<%# check_box_tag :public, false, false, :onchange => "publishScore(this);" %>
 																				
-																				<%= hidden_field_tag :exam_user_id, @exam_user.id %>
-																				<%= label_tag "Publicar meu score!"%>
+																				<%= hidden_field_tag :exam_user_id, @exam_user_id %>
+																				
+																				<p class="large_btn">
+																					<%= submit_tag "Publicar"	, :id => "pub_score" %>
+																					<!--
+																					<a href="#" id="pub_score" style="color: #fff;" onclick="jQuery('#publish_score_form').submit(); return false;">Publicar</a>
+																					-->
+																					</p>
 																			<%end%>
 																			
                                 </div>
@@ -248,6 +267,5 @@ function reviewQuestion(questionId){
 <!-- <a name="comments"></a>
 <%# render :partial => 'shared/comment', :locals => { :commentable => @exam } %>
 -->
-</div>
 
   
