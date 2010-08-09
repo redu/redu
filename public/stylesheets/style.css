@@ -1238,6 +1238,7 @@ div.content div.content {
     margin: 0;
     background: transparent;
     padding: 0;
+		min-height: 350px;
 }
 
 * html .content {height:100%;} /* ie6 and under*/
