@@ -47,6 +47,8 @@ ActionController::Routing::Routes.draw do |map|
   #map.resources :favorites, 
 
   map.removed_page   '/removed_item', :controller => 'base', :action => 'removed_item'
+  
+  map.resources :bulletins, :member => {:rate => :post}
 
  # map.connect 'activity_xml.xml', :controller => "users", :action => "activity_xml", :format => 'xml'
   

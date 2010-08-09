@@ -10,6 +10,6 @@ class Bulletin < ActiveRecord::Base
 	belongs_to :school
 
 	#VALIDATIONS
-	validate_presence_of :title, :description
+	validates_presence_of :title, :description
 	
 end

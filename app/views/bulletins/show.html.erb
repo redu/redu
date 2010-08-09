@@ -1,2 +1,22 @@
-<h1>Bulletins#show</h1>
-<p>Find me in app/views/bulletins/show.html.erb</p>
+<div class="main grid_16">
+	<div id="title">VER NOTÍCIA</div>
+	
+	<p>
+	<%= render :partial => 'bulletins/item', :bulletin => @bulletin %>
+	
+	<div id="rating_video">
+		<%= ratings_for @bulletin %>
+	</div>	
+	
+	<div class="grid_3 omega options">
+		<span class="likeable">
+		   	<span class="like">
+			<%= link_to_remote image_tag('thumbs_up.png', :border => '0'), :url=> {:action => :vote, :id => @bulletin.id, :like => true}, :success => 'disableVoting();' %><br/><%= @bulletin.votes_for%>
+			</span>
+			<span class="deslike">
+			<%= link_to_remote image_tag('thumbs_down.png', :border => '0'), :url=> {:action => :vote, :id => @bulletin.id, :like => false}, :success => 'disableVoting();' %><br/><%= @bulletin.votes_against%></span>
+	    </span>
+    </div>
+
+	</p>
+</div>
