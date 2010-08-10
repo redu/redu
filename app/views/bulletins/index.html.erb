@@ -1,2 +1,8 @@
-<h1>Bulletins#index</h1>
-<p>Find me in app/views/bulletins/index.html.erb</p>
+<% if @bulletins && @bulletins.size > 0 %>
+<ul class="default">
+	<%= render :partial => 'bulletins/list', :collection => @bulletins, :as => :bulletin, :locals => {
+:is_index => true } %> 
+</ul>
+<% else %>
+	Nenhuma notícia foi enviada ainda. <%= link_to 'Envie uma agora!', :action => 'new' %>
+<% end %>
