@@ -64,6 +64,9 @@ namespace :redu do
   
   after "deploy:update" do
     run "export SSL_CERT_DIR=$HOME/certs && cd #{current_path} && #{rake} s3commit"
+  end
+  
+  before "deploy:update" do
     run "cd #{current_path} && #{rake} RAILS_ENV=production s3:backup:db"
   end
   
