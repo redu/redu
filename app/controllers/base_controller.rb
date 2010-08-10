@@ -10,6 +10,8 @@ class BaseController < ApplicationController
   before_filter :login_from_cookie  
   skip_before_filter :verify_authenticity_token, :only => :footer_content
   helper_method :commentable_url
+  
+  before_filter :login_required,  :only => [:teach_index]
 
   caches_action :site_index, :footer_content, :if => Proc.new{|c| c.cache_action? }
   def cache_action?
@@ -35,6 +37,8 @@ class BaseController < ApplicationController
   end
   
   def teach_index
+    
+    
      @schools = current_user.schools
     respond_to do |format|
       format.html { render :layout => 'new_application'}

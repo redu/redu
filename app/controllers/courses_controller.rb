@@ -10,6 +10,7 @@ class CoursesController < BaseController
 #  def check_if_removed
 #    puts params[:id]
 #  end
+
   
   # adiciona um objeto embarcado (ex: scribd)
   def embed_content

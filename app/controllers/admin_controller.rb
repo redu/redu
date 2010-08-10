@@ -125,14 +125,14 @@ class AdminController < BaseController
     Log.log_activity(@course, 'create', @course.owner, @school)
     
     flash[:notice] = 'A aula foi aprovada!'
-    redirect_to pending_courses_path
+    redirect_to admin_moderate_submissions_path
   end
   
   def disapprove
     @course = Course.find(params[:id])
     @course.reject!
     flash[:notice] = 'A aula foi rejeitada!'
-    redirect_to pending_courses_path
+    redirect_to admin_moderate_submissions_path
   end
   
   

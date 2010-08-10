@@ -1,7 +1,7 @@
 <% content_for :page_id, 'teach' %>
 <div class="container_16" id="group-header-learn">
 	<div class="logo-learn">
-	    <span>Ensinar</span>
+	    <span>Ensine</span>
 	</div>
 	<div class="info grid_5">
 		<h2 class="text-header"><a href="">Gerencie suas redes e estimule seus aprendizes!</a></h2>
@@ -15,7 +15,7 @@
 	        </li>
 	        <li class="bt-aulas">
 	            <%= link_to "Crie Aulas!", new_course_path, :class => "text-tt" %>
-				<%= link_to "Atinja muito mais pessoas com sua aula", new_course_path, :class => "text-desc" %>
+				<%= link_to "Produza e compartilhe conteúdo educacional", new_course_path, :class => "text-desc" %>
 	        </li>
 	        <li class="bt-exames">
 	            <%= link_to "Crie Exames!", new_exam_path, :class => "text-tt" %>
@@ -28,6 +28,24 @@
 </div>
 
 <ul class="grid_16 sortable calls headlines">
+	
+	<li class="clearfix grid_5 personal-overview">
+		<span class="call">
+			<span>Meu Perfil</span>
+			<span class="option" id="">Opções</span>
+			<ul class="options">
+				<li><a href="">Nova aula</a></li>
+				<li><a href="">Outra opçao</a></li>
+				<li><a href="">Outra opçao</a></li>
+			</ul>
+		</span>
+		  <%=  link_to image_tag( current_user.avatar_photo_url(:thumb), 
+                    {:class=> "photo", :border => 0 }), current_user   %> 
+		<%= link_to current_user.display_name, current_user, :class => "name" %>
+		<%= link_to "Editar", edit_user_path(current_user), :class => "edit" %>
+		<!-- <a href="" class="plan">PRO</a> -->
+	</li>	
+	
 	<li class="clearfix grid_5 students-overview">
 		<span class="call">
 			<span>Meus alunos</span>
@@ -56,61 +74,61 @@
 	
 	<li class="clearfix grid_5 lectures-overview">
 		<span class="call">
-			<span>Minhas aulas</span>
+			<span>Minhas aulas (<%= current_user.courses.count%>)</span>
 		</span>
+		<% if current_user.courses.size > 0 %>
 		<ul>
+			<%# TODO performance %>
+			<% for course in current_user.courses[0..4] do%>
 			<li class="clearfix">
-				<img src="/images/thumb.gif" alt="" class="photo"/><a href="" class="name">Direito penal</a>
+				 <%=  link_to image_tag( course.thumb_url, 
+                    {:class=> "photo", :border => 0 }), course   %> 
+				<%= link_to course.name, course, :class => "name" %>
 			</li>
+			<% end %>
 			<li class="clearfix">
-				<img src="/images/thumb.gif" alt="" class="photo"/><a href="" class="name">Portugês para vestibular</a>
-			</li>
-			<li class="clearfix">
-				<img src="/images/thumb.gif" alt="" class="photo"/><a href="" class="name">História do Brasil</a>
+				<%= link_to "(ver todos)", user_courses_path(current_user), :class => "info" %>
 			</li>
 		</ul>
+		<% else %>
+		Você não possui aulas ainda. Crie uma <%= link_to "agora!", new_course_path %>
+		<% end %>
 	</li>
 
-	<li class="clearfix grid_5 personal-overview">
-		<span class="call">
-			<span>Meu Perfil</span>
-			<span class="option" id="">Opções</span>
-			<ul class="options">
-				<li><a href="">Nova aula</a></li>
-				<li><a href="">Outra opçao</a></li>
-				<li><a href="">Outra opçao</a></li>
-			</ul>
-		</span>
-		<img src="/images/thumb.gif" alt="" class="photo" />
-		<a href="" class="name">Guilherme Cavalcanti</a>
-		<a href="" class="edit">Editar</a>
-		<a href="" class="plan">PRO</a>
-	</li>	
+
+	<!--
 	<li class="clearfix grid_5 statistics">
 		<span class="call"><span>Estatísticas</span></span>
 		<div></div>
 	</li>
+	-->
 	
 	<li class="clearfix grid_5 groups">
 		<span class="call">
-			<span>Minhas Redes</span>
+			<span>Minhas Redes (<%= current_user.schools_owned.count%>)</span>
 		</span>
+			
+			<% if current_user.schools_owned.size > 0 %>
 		<ul>
-			<li class="clearfix"><img src="/images/thumb.gif" class="photo">
-				<a href="" class="name">Colégio Aplicacao</a>
-				<a href="" class="info">3 novas mensagens</a>
+			<% for school in current_user.schools_owned[0..4] do%>
+			<li class="clearfix">
+				 <%=  link_to image_tag(  school.avatar_photo_url(:thumb), 
+                    {:class=> "photo", :border => 0 }), school   %> 
+				<%= link_to school.name, school, :class => "name" %>
+					<span class="info"> <%= school.users.count %> membros</span>
 			</li>
-			<li class="clearfix"><img src="/images/thumb.gif" class="photo">
-				<a href="" class="name">Colégio Damas</a>
-				<a href="" class="info">3 novas mensagens</a>
-			</li>
-			<li class="clearfix"><img src="/images/thumb.gif" class="photo">
-				<a href="" class="name">NUCE</a>
-				<a href="" class="info">3 novas mensagens</a>
+			<% end %>
+			<li class="clearfix">
+				<%= link_to "(ver todas)", user_schools_path(current_user), :class => "info" %>
 			</li>
 		</ul>
+		<% else %>
+		Você não possui redes ainda. Crie uma <%= link_to "agora!", new_school_path %>
+		<% end %>
+			
+		
 	</li>
-	
+	<!--
 	<li class="clearfix grid_5 courses">
 		<span class="call">
 			<span>Meus Cursos</span>
@@ -120,5 +138,6 @@
 			<li><a href="" class="name">Colégio Damas</a></li>
 			<li><a href="" class="name">NUCE</a></li>
 		</ul>
-	</li>
+	</li> 
+	-->
 </ul>

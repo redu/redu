@@ -1,4 +1,4 @@
-
+<% unless edit %>
 
 <div class="grid_9 push_3">
 <table class="booking_steps" cellpadding="0" cellspacing="0">
@@ -16,7 +16,9 @@
 <%= f.error_messages %>
 </div>
 
-<div class="grid_9">
+<%end %>
+
+<div class="<%= (edit) ? 'grid_16' : 'grid_9'%>">
 <fieldset>
 	<legend>Configurações</legend>
 
@@ -58,7 +60,10 @@
 </fieldset>
 
 </div>
+
+<% unless edit %>
 <div class="grid_6">
+
 	<div class="y_addinfo">
                                 <div class="addinfocontent">
                                     <h1>
@@ -70,4 +75,4 @@
                                 </div>
                             </div>
 </div>
-
+<% end %>

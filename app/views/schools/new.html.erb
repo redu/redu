@@ -2,7 +2,7 @@
 <h3 class="call">Nova Rede</h3>
 
 	<% form_for @school, :html => {:id => "form_school"} do |f|%>
-	<%= render "#{@school.current_step}_step", :f => f %>
+	<%= render "#{@school.current_step}_step", :f => f, :edit => false %>
 
 <div class="grid_16">
 	<%= f.submit "< Anterior", :name => "back_button" unless @school.first_step? %>
