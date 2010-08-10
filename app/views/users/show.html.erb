@@ -2,25 +2,105 @@
 <%- @meta = { :description => "#{@user.login}'s profile on #{AppConfig.community_name}.", :keywords => "#{@user.login}, #{@user.tags.join(", ") unless @user.tags.nil?}", :robots => AppConfig.robots_meta_show_content }%>
 <%- @section = @user.eql?(current_user) ? 'my_profile' : 'users' %>
 
+<script type="text/javascript">
+var userlearningPath = "<%= learning_user_path %>";
+var userteachingPath = "<%= teaching_user_path %>";
+var userSchoolsPath = "<%= user_schools_path(:user_id => @user.id) %>";
+
+var $usertabs;
+
+$(document).ready(function() {
+
+    $usertabs = $(".user-tabs").tabs({
+        select: function(event, ui) {
+            if (ui.index == 3) {
+                // Redes
+                $("#tabs-4-content").html('');
+                jQuery.ajax({
+                    data: '',
+                    dataType: 'script',
+                    success: function(request) {
+                        $("#tabs-4-loading").hide();
+                    },
+                    type: 'get',
+                    url: userSchoolsPath
+                });
+
+                $("#tabs-4-loading").show();
+            } else if (ui.index == 2) {
+                // Ensinando
+                $("#tabs-3-content").html('');
+                jQuery.ajax({
+                    data: '',
+                    dataType: 'script',
+                    success: function(request) {
+                        $("#tabs-3-loading").hide();
+                    },
+                    type: 'get',
+                    url: userteachingPath
+                });
+
+                $("#tabs-3-loading").show();
+            }
+            else if (ui.index == 1) {
+                // Aprendendo
+                $("#tabs-2-content").html('');
+                jQuery.ajax({
+                    data: '',
+                    dataType: 'script',
+                    success: function(request) {
+                        $("#tabs-2-loading").hide();
+                    },
+                    type: 'get',
+                    url: userlearningPath
+                });
+
+                $("#tabs-2-loading").show();
+            }
+        }
+    });
+});
+</script>
+
+
 <div class="main grid_11">
 <%= render :partial => "users/user_info", :locals => {:user => @user}%>
-<div class="fake-tabs grid_11 omega alpha"> 
-    <ul class="menu"> 
-	    <li><%= link_to 'Atividades', user_path(@user), :class => 'selected' %></li> 
-	    <!--<li><a href="#tabs-5">Currículo</a></li>--> 
-	    <!--<li><a href="#tabs-2">Cursos</a></li> -->
-	    <li><%= link_to 'Redes', {:action => 'groups', :id => @user.id} %></li> 
-	    <!--<li><a href="#tabs-4">Exames (22)</a></li> -->
-    </ul> 
-    
-    <div class="panel">
-	<%= javascript_include_tag 'flow.js' %>
-	<%= render :partial => "statuses/create_status", :locals => {:status => @status }%>
-	<ul class="activities">
-	<%= render :partial => "statuses/type_proxy", :collection => @user.recent_activity, :as => :status %>
-	</ul><!-- end activities -->
-    </div>
+
+<div class="user-tabs tabs">
+	    <ul>
+		    <li><a href="#tabs-1">Início</a></li>
+		    <li><a href="#tabs-2">Aprendendo</a></li>
+				<li><a href="#tabs-3">Ensinando</a></li>
+		    <li><a href="#tabs-4">Redes</a></li>
+	    </ul>
+	    
+		<div id="tabs-1" class="clearfix first-page">
+			<%= javascript_include_tag 'flow.js' %>
+			<%= render :partial => "statuses/create_status", :locals => {:status => @status }%>
+			<ul class="activities">
+			<%= render :partial => "statuses/type_proxy", :collection => @user.recent_activity, :as => :status %>
+			</ul><!-- end activities -->
+		</div>
+		
+		<!-- aprendendo -->
+		<div id="tabs-2">
+			
+			<%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-2-loading', :style => 'padding: 20px;'%>
+			<div id="tabs-2-content"></div>
+		</div>
+		<!-- ensinando -->
+		<div id="tabs-3">
+			<%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-3-loading', :style => 'padding: 20px;'%>
+			<div id="tabs-3-content"></div>
+		</div>
+		<!-- redes --> 
+		<div id="tabs-4">
+			<%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-4-loading', :style => 'padding: 20px;'%>
+			<div id="tabs-4-content"></div>
+			
+		</div>
 </div><!-- end tabs -->
+
 </div><!-- end main -->
 
 <div class="sidebar grid_5 omega">

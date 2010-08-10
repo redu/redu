@@ -400,17 +400,36 @@ class SchoolsController < BaseController
   # GET /schools
   # GET /schools.xml
   def index
-    @schools = School.paginate :page => params[:page], 
+    
+    if params[:user_id] # redes do usuario
+      @user = User.find(params[:user_id])
+      @schools = @user.schools.paginate( 
+      :include => :owner, 
+      :page => params[:page], 
+      :order => 'updated_at DESC', 
+      :per_page => AppConfig.items_per_page)
+      
+      respond_to do |format|
+        format.js  do 
+          render :update do |page| 
+            page.replace_html 'tabs-4-content', :partial => 'user_schools'
+          end 
+        end
+        end
+      else 
+        
+        @schools = School.paginate :page => params[:page], 
       :order => 'created_at DESC',
       :per_page => AppConfig.items_per_page
-      
-    @popular_tags = School.tag_counts
-    
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @schools }
+        
+        @popular_tags = School.tag_counts
+        
+        respond_to do |format|
+          format.html # index.html.erb
+          format.xml  { render :xml => @schools }
+        end
+      end
     end
-  end
   
   # GET /schools/1
   # GET /schools/1.xml

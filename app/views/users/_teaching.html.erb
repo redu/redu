@@ -1,0 +1,23 @@
+<%if current_user == @user %>
+<div>
+	<%= link_to "Acessar espaço ensino", teach_index_path %>
+	</div>
+<% end %>
+
+<% if @courses.size > 0 %>
+aulas:
+    <ul>
+	<% @courses.each do |course| %>
+		<li> <%= course.name %> em <%= time_ago_in_words_or_date(course.created_at)  %></li>
+	<% end %>
+	</ul>
+<% end %>
+<% if @exams.size > 0 %>
+exames:
+    <ul>
+	<% @exams.each do |exam| %>
+		<li><%= exam.name %> em <%= time_ago_in_words_or_date(exam.created_at)  %></li>
+	<% end %>
+	</ul>
+    </div>
+<% end %>

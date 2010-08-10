@@ -178,8 +178,10 @@ class CoursesController < BaseController
            #redirect_to(school_path(@school, :anchor => "tabs-2")) #mostra aulas no tab
            render 'index_school'
         }
-        format.js  { 
-          render 'index_school'
+        format.js  {
+          render :update do |page|
+            page.replace_html  'tabs-2-content', :partial => 'courses_school'
+          end
         }
       end
     else

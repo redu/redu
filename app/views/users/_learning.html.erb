@@ -1,0 +1,11 @@
+<%if current_user == @user %>
+<div>
+	<%= link_to "Acessar espaço aprender", learn_index_path %>
+	</div>
+<% end %>
+
+    <ul>
+	<% @learning.each do |log| %>
+		<li><%= log.logeable_type.downcase %> | <%= log.logeable_name %> em <%= time_ago_in_words_or_date(log.created_at)  %></li>
+	<% end %>
+	</ul>

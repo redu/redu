@@ -32,6 +32,39 @@ class UsersController < BaseController
   before_filter :admin_required, :only => [:assume, :featured, :toggle_featured, :toggle_moderator]
   before_filter :admin_or_current_user_required, :only => [:statistics]  
 
+
+  def learning
+    @user = User.find(params[:id]) #TODO performance routes (passar parametro direto para query)
+    @learning = Log.all(:conditions => ["user_id = ?", @user.id])
+    respond_to do |format|
+      format.js do
+        render :update do |page|
+          page.replace_html  'tabs-2-content', :partial => 'learning'
+        end
+      end
+    end
+  end
+  
+  def teaching
+   
+    @user = User.find(params[:id]) #TODO performance routes (passar parametro direto para query)
+    
+    @courses = @user.courses[0..5] # TODO limitar pela query (limit = 5)
+    @exams = @user.exams[0..5]
+    
+    respond_to do |format|
+      format.js do
+        render :update do |page|
+          page.replace_html  'tabs-3-content', :partial => 'teaching'
+        end
+      end
+    end
+    
+  end
+  
+  
+
+
   def show_log_activity
     current_user.log_activity 
   end

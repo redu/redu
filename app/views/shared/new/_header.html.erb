@@ -25,7 +25,7 @@
     
     <div class="user-actions grid_2">
 	<% if current_user %>
-		<a href="#user-settings" class="pandora closed"><%= current_user.first_name %></a>
+		<a href="#user-settings" class="pandora closed"><%= current_user.first_name[0..14] %></a>
 			<div id="user-settings" class="option hide">
 			<ul>
 			<li>

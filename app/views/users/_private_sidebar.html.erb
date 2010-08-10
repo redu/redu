@@ -2,14 +2,27 @@
 <li class="clearfix">
 <span class="call"><span>Quem você segue</span></span>
 <div class="followship box clearfix">
+	
+<% if @user.follows.size > 0 %>
 <ul class="clearfix">
-<%= render :partial => 'shared/user', :collection => @user.follows %>
-</ul>
-</div><!-- followship -->
+
+<% for user in @user.follows[0..9]%>
+<li>
+	<%= link_to image_tag(user.avatar_photo_url(:thumb), :height => '24', :width => '24', :alt => "#{user.login}"), user_path(user), :rel => 'bookmark', :title => "Perfil de #{user.login}" %>
 </li>
+<%end%>
+
+</ul>
+<% else %>
+Você não está seguindo ninguém no momento.
+<% end %>
+</div>
+</li>
+<!--
 <li class="clearfix"> 
 <span class="call"><span>Seu Progresso</span></span> 
 <div class="followship box clearfix"> 
     Progresso
 </div> 
 </li>
+-->

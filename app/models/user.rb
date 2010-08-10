@@ -1,9 +1,11 @@
 class User < ActiveRecord::Base
+  
+  # ATTRIBUTES
   MALE    = 'M'
   FEMALE  = 'F'
-  #attr_accessor :password
   attr_protected :admin, :featured, :role_id
   
+  # PLUGINS
   acts_as_authentic do |c|
     c.crypto_provider = CommunityEngineSha1CryptoMethod
 
@@ -17,30 +19,25 @@ class User < ActiveRecord::Base
     c.validates_format_of_email_field_options = { :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/ }
   end
   
-  
   ajaxful_rater
-  
   acts_as_taggable  
   acts_as_commentable
   has_private_messages
   acts_as_voter
   
-  #callbacks  
+  # CALLBACKS  
   before_save   :whitelist_attributes
   before_create :make_activation_code 
   #before_create :activate_before_save #not necessary
   after_create  :update_last_login
- 
   #after_save    :activate # <- ja começa ativo
   after_create {|user| UserNotifier.deliver_signup_notification(user) }
   #after_save   {|user| UserNotifier.deliver_activation(user) if user.recently_activated? }  
-  
   before_save   :generate_login_slug
   after_save    :recount_metro_area_users
   after_destroy :recount_metro_area_users
 
-
-  #validation
+  # VALIDATIONS
   validates_presence_of     :login, :email, :first_name, :last_name
 #  validates_presence_of     :password,                   :if => :password_required?
 #  validates_presence_of     :password_confirmation,      :if => :password_required?
@@ -56,26 +53,16 @@ class User < ActiveRecord::Base
   validates_exclusion_of    :login, :in => AppConfig.reserved_logins
   validates_date :birthday, :before => 13.years.ago.to_date  
   
-  #REGISTER
   validates_acceptance_of :tos, :message => "Você precisa aceitar os Termos de Uso"
   
-  # ANNOTATIONS
+  # ASSOCIATIONS
   has_many :annotations, :dependent => :destroy
-  
-  # BETA KEY
   has_one :beta_key, :dependent => :destroy
-   
-   # PROFILE
-  has_one :profile
- 
-  # COMPETENCES
-  has_many :user_competences, :dependent => :destroy
-  has_many :competences, :class_name => "Skill", :source => :skill, :foreign_key => "skill_id", :through => :user_competences
- 
-  # SCHOOL
+  #has_one :profile # deprecated 
+  #has_many :user_competences, :dependent => :destroy # deprecated 
+  #has_many :competences, :class_name => "Skill", :source => :skill, :foreign_key => "skill_id", :through => :user_competences # deprecated 
   has_many :user_school_association, :dependent => :destroy
   has_many :schools, :through => :user_school_association
-  
   has_many :schools_owned, :class_name => "School" , :foreign_key => "owner"
   
   # FOLLOWSHIP
@@ -86,37 +73,18 @@ class User < ActiveRecord::Base
   has_many :courses, :foreign_key => "owner"
   has_many :acquisitions, :as => :acquired_by
   
-  #LOG
   has_many :logs, :dependent => :destroy
-
-  #CREDIT
   has_many :credits
-
-  # EXAMS
   has_many :exams, :foreign_key => "owner_id"
-  
   has_many :exam_users#, :dependent => :destroy
   has_many :exam_history, :through => :exam_users, :source => :exam
-  
-  # QUESTIONS
   has_many :questions, :foreign_key => :author_id
-  
-  # FAVORITES
   has_many :favorites, :order => "created_at desc", :dependent => :destroy
-  
-   # STATUS
   has_many :statuses
-  
-  #SUGGESTIONS
   has_many :suggestions
-
-  
-  
-  # COMMUNITY ENGINE:
-
   has_enumerated :role  
   has_many :posts, :order => "published_at desc", :dependent => :destroy
-  has_many :photos, :order => "created_at desc", :dependent => :destroy
+  has_many :photos, :order => "created_at desc", :dependent => :destroy # deprecated
   has_many :invitations, :dependent => :destroy
   has_many :offerings, :dependent => :destroy
   has_many :rsvps, :dependent => :destroy
