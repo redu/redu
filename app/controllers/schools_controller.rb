@@ -301,7 +301,6 @@ class SchoolsController < BaseController
   def associate
     @school = School.find(params[:id])
     @user = User.find(params[:user_id])  # TODO precisa mesmo recuperar o usuário no bd?
-    puts params[:user_key]
     
     #@user_school_association = UserSchoolAssociation.find(:first, :joins => :access_key, :conditions => ["access_keys.key = ?", params[:user_key]])  
     @user_school_association = UserSchoolAssociation.find(:first, :include => :access_key, :conditions => ["access_keys.key = ?", params[:user_key]])  

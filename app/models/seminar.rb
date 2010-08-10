@@ -117,7 +117,7 @@ class Seminar < ActiveRecord::Base
    
    def convert
     self.convert!
-    puts self.state
+    # puts self.state
     if video?    
       proxy = MiddleMan.worker(:converter_worker)
       proxy.enq_convert_course(:arg => self.id, :job_key => self.id) #TODO set timeout :timeout => ?

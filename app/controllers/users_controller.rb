@@ -557,8 +557,8 @@ class UsersController < BaseController
     # talvez seja necessario setar o atributo depth nos nós para que funcione corretamente.
     # ver: http://asterisq.com/products/constellation/roamer/integration#data_rest_tree
     
-    puts "id: " + params[:id]
-    puts "node_id: " + params[:node_id] if params[:node_id]
+    # puts "id: " + params[:id]
+    # puts "node_id: " + params[:node_id] if params[:node_id]
     
     #@logs = Log.find(:all, 
     #:conditions => ["user_id != logeable_id AND logeable_type NOT LIKE 'User'"])
