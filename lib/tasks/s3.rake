@@ -295,7 +295,7 @@ end
   # open a S3 connection 
   def conn
     @s3_configs ||= YAML::load(ERB.new(IO.read("#{RAILS_ROOT}/config/s3.yml")).result)
-    @conn ||= S3::AWSAuthConnection.new(@s3_configs['aws_access_key'], @s3_configs['aws_secret_access_key'], @s3_configs['options']['use_ssl'])
+    @conn ||= S3::AWSAuthConnection.new(@s3_configs['backup']['aws_access_key'], @s3_configs['backup']['aws_secret_access_key'], @s3_configs['backup']['options']['use_ssl'])
   end
 
   # programatically figure out what to call the backup bucket and 

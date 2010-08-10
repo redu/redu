@@ -7,3 +7,9 @@ production:
   aws_access_key: AKIAIRKVQDTWT2NN4J4Q
   aws_secret_access_key: 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
   bucket_base_name: redufiles
+
+backup:
+  aws_access_key: 'AKIAIRKVQDTWT2NN4J4Q'
+  aws_secret_access_key: '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'
+  options: 
+    use_ssl: false
