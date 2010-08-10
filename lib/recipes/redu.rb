@@ -42,6 +42,9 @@ namespace :redu do
     run "gem install hpricot --no-rdoc"
     run "gem install htmlentities --no-rdoc"
     run "gem install rmagick -v=2.13.1"
+    run "gem install authlogic --no-rdoc"
+    run "gem install oauth --no-rdoc"
+    run "gem install authlogic-oauth --no-rdoc"
   end
   
   desc "Create base dir with the right owner"
@@ -56,6 +59,10 @@ namespace :redu do
   
   desc "Push static files to S3"
   task :s3commit do
+    run "export SSL_CERT_DIR=$HOME/certs && cd #{current_path} && #{rake} s3commit"
+  end
+  
+  after "deploy:update" do
     run "export SSL_CERT_DIR=$HOME/certs && cd #{current_path} && #{rake} s3commit"
   end
   
