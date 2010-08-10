@@ -116,7 +116,7 @@ task :s3commit do
   o = RakeS3Sync.options
   
   puts 'STARTING SYNC'
-  cmds = RakeS3Sync::build_cmds("ruby lib/s3sync/s3sync.rb -r --ssl --delete _SOURCE_ #{o['BUCKET_NAME']}:_DESTINATION_")
+  cmds = RakeS3Sync::build_cmds("ruby lib/s3sync/s3sync.rb -r --ssl --public-read --delete _SOURCE_ #{o['BUCKET_NAME']}:_DESTINATION_")
   `
   #{RakeS3Sync::export_cmd}
   #{cmds}
