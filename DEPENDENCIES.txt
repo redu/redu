@@ -29,3 +29,6 @@ Requirements:
  	  adzap-ar_mailer
  	  tiny_mce
 
+		authlogic
+		outh
+		authlogic-oauth
