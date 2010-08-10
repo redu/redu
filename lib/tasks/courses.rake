@@ -3,6 +3,4 @@ namespace :courses do
   task :remove_all => :environment do
     Course.destroy_all
   end
-
- 
 end
