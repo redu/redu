@@ -24,6 +24,7 @@ Rails::Initializer.run do |config|
   
   #config.plugins = [:community_engine, :white_list, :all]
   #config.plugin_paths += ["#{RAILS_ROOT}/vendor/plugins/community_engine/plugins"]
+   config.gem "authlogic"
   config.gem "brcobranca"
   config.gem "rghost"
   config.gem "rghost_barcode"
@@ -33,8 +34,8 @@ Rails::Initializer.run do |config|
   config.gem 'icalendar'        
   config.gem 'will_paginate', :version => '~> 2.3.11', :source => 'http://gemcutter.org'
   config.gem "adzap-ar_mailer"
-  # config.active_record.observers = :course_observer, :resource_observer
-  
+  config.gem "oauth"
+  config.gem "authlogic-oauth", :lib => "authlogic_oauth"
   
   if File.exists?( File.join(RAILS_ROOT, 'config', 'application.yml') )
     file = File.join(RAILS_ROOT, 'config', 'application.yml')

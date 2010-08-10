@@ -1,8 +1,21 @@
 class User < ActiveRecord::Base
   MALE    = 'M'
   FEMALE  = 'F'
-  attr_accessor :password
+  #attr_accessor :password
   attr_protected :admin, :featured, :role_id
+  
+  acts_as_authentic do |c|
+    c.crypto_provider = CommunityEngineSha1CryptoMethod
+
+    c.validates_length_of_password_field_options = { :within => 6..20, :if => :password_required? }
+    c.validates_length_of_password_confirmation_field_options = { :within => 6..20, :if => :password_required? }
+
+    c.validates_length_of_login_field_options = { :within => 5..20 }
+    c.validates_format_of_login_field_options = { :with => /^[\sA-Za-z0-9_-]+$/ }
+
+    c.validates_length_of_email_field_options = { :within => 3..100 }
+    c.validates_format_of_email_field_options = { :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/ }
+  end
   
   
   ajaxful_rater
@@ -13,7 +26,7 @@ class User < ActiveRecord::Base
   acts_as_voter
   
   #callbacks  
-  before_save   :encrypt_password, :whitelist_attributes
+  before_save   :whitelist_attributes
   before_create :make_activation_code 
   #before_create :activate_before_save #not necessary
   after_create  :update_last_login
@@ -29,15 +42,15 @@ class User < ActiveRecord::Base
 
   #validation
   validates_presence_of     :login, :email, :first_name, :last_name
-  validates_presence_of     :password,                   :if => :password_required?
-  validates_presence_of     :password_confirmation,      :if => :password_required?
-  validates_length_of       :password, :within => 5..20, :if => :password_required?
-  validates_confirmation_of :password,                   :if => :password_required?
+#  validates_presence_of     :password,                   :if => :password_required?
+#  validates_presence_of     :password_confirmation,      :if => :password_required?
+#  validates_length_of       :password, :within => 5..20, :if => :password_required?
+#  validates_confirmation_of :password,                   :if => :password_required?
   validates_presence_of     :metro_area,                 :if => Proc.new { |user| user.state }
-  validates_length_of       :login,    :within => 5..20
-  validates_length_of       :email,    :within => 3..100
-  validates_format_of       :email, :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/
-  validates_format_of       :login, :with => /^[\sA-Za-z0-9_-]+$/
+#  validates_length_of       :login,    :within => 5..20
+#  validates_length_of       :email,    :within => 3..100
+#  validates_format_of       :email, :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/
+#  validates_format_of       :login, :with => /^[\sA-Za-z0-9_-]+$/
   validates_uniqueness_of   :login, :email, :case_sensitive => false
   validates_uniqueness_of   :login_slug
   validates_exclusion_of    :login, :in => AppConfig.reserved_logins
@@ -135,14 +148,9 @@ class User < ActiveRecord::Base
   belongs_to  :metro_area
   belongs_to  :state
   belongs_to  :country
-  has_many    :comments_as_author, :class_name => "Comment", 
-    :foreign_key => "user_id", :order => "created_at desc", :dependent => :destroy
-  has_many    :comments_as_recipient, :class_name => "Comment", 
-    :foreign_key => "recipient_id", :order => "created_at desc", :dependent => :destroy
-  #has_many    :clippings, :order => "created_at desc", 
-  #  :dependent => :destroy
-  has_many    :favorites, :order => "created_at desc", 
-    :dependent => :destroy
+  has_many    :comments_as_author, :class_name => "Comment", :foreign_key => "user_id", :order => "created_at desc", :dependent => :destroy
+  has_many    :comments_as_recipient, :class_name => "Comment",:foreign_key => "recipient_id", :order => "created_at desc", :dependent => :destroy
+  has_many    :favorites, :order => "created_at desc", :dependent => :destroy
     
   #named scopes
   named_scope :recent, :order => 'users.created_at DESC'
@@ -349,8 +357,9 @@ class User < ActiveRecord::Base
   end
   
   def active? 
-     ( self.activated_at.nil? and (self.created_at < (Time.now - 30.days))) ? false : true
-    
+     ( activated_at.nil? and (created_at < (Time.now - 30.days))) ? false : true
+    #activation_code.nil? && !activated_at.nil?
+    #true
   end
 
   def recently_activated?

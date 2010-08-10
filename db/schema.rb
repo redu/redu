@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100728144154) do
+ActiveRecord::Schema.define(:version => 20100810152117) do
 
   create_table "abilities", :force => true do |t|
     t.string   "name"
@@ -144,6 +144,14 @@ ActiveRecord::Schema.define(:version => 20100728144154) do
     t.string  "email"
   end
 
+  create_table "bulletins", :force => true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "school_id"
+  end
+
   create_table "categories", :force => true do |t|
     t.string "name"
     t.text   "tips"
@@ -226,18 +234,19 @@ ActiveRecord::Schema.define(:version => 20100728144154) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "rating_average",   :limit => 10, :precision => 10, :scale => 0, :default => 0
-    t.integer  "owner",                                                                            :null => false
-    t.text     "description",                                                                      :null => false
-    t.boolean  "published",                                                     :default => false
+    t.integer  "rating_average",     :limit => 10, :precision => 10, :scale => 0, :default => 0
+    t.integer  "owner",                                                                              :null => false
+    t.text     "description",                                                                        :null => false
+    t.boolean  "published",                                                       :default => false
     t.datetime "media_updated_at"
     t.string   "state"
-    t.integer  "view_count",                                                    :default => 0
-    t.boolean  "public",                                                        :default => true
-    t.decimal  "price",                          :precision => 8,  :scale => 2, :default => 0.0
-    t.boolean  "removed",                                                       :default => false
+    t.integer  "view_count",                                                      :default => 0
+    t.boolean  "public",                                                          :default => true
+    t.decimal  "price",                            :precision => 8,  :scale => 2, :default => 0.0
+    t.boolean  "removed",                                                         :default => false
     t.string   "courseable_type"
     t.integer  "courseable_id"
+    t.integer  "simple_category_id"
   end
 
   create_table "credits", :force => true do |t|
@@ -280,19 +289,21 @@ ActiveRecord::Schema.define(:version => 20100728144154) do
   end
 
   create_table "exams", :force => true do |t|
-    t.integer  "owner_id",                                                       :null => false
-    t.string   "name",                                                           :null => false
+    t.integer  "owner_id",                                                            :null => false
+    t.string   "name",                                                                :null => false
     t.text     "description"
-    t.boolean  "published",                                   :default => false
-    t.integer  "done_count",                                  :default => 0
-    t.float    "total_correct",                               :default => 0.0
+    t.boolean  "published",                                        :default => false
+    t.integer  "done_count",                                       :default => 0
+    t.float    "total_correct",                                    :default => 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "instruction"
-    t.integer  "level",                                       :default => 2
-    t.decimal  "price",         :precision => 8, :scale => 2, :default => 0.0
-    t.boolean  "public",                                      :default => true
-    t.boolean  "removed",                                     :default => false
+    t.integer  "level",                                            :default => 2
+    t.decimal  "price",              :precision => 8, :scale => 2, :default => 0.0
+    t.boolean  "public",                                           :default => true
+    t.boolean  "removed",                                          :default => false
+    t.integer  "simple_category_id"
+    t.string   "state"
   end
 
   create_table "external_objects", :force => true do |t|
@@ -648,6 +659,8 @@ ActiveRecord::Schema.define(:version => 20100728144154) do
     t.string   "theme",                                             :default => "default"
     t.boolean  "removed",                                           :default => false
     t.boolean  "public",                                            :default => true
+    t.integer  "courses_count",                                     :default => 0
+    t.integer  "members_count",                                     :default => 0
   end
 
   create_table "seminars", :force => true do |t|
@@ -771,48 +784,61 @@ ActiveRecord::Schema.define(:version => 20100728144154) do
     t.string   "email"
     t.text     "description"
     t.integer  "avatar_id"
-    t.string   "crypted_password",          :limit => 40
-    t.string   "salt",                      :limit => 40
+    t.string   "crypted_password"
+    t.string   "password_salt"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "remember_token"
-    t.datetime "remember_token_expires_at"
+    t.string   "persistence_token"
     t.text     "stylesheet"
-    t.integer  "view_count",                              :default => 0
-    t.boolean  "vendor",                                  :default => false
-    t.string   "activation_code",           :limit => 40
+    t.integer  "view_count",                           :default => 0
+    t.boolean  "vendor",                               :default => false
+    t.string   "activation_code",        :limit => 40
     t.datetime "activated_at"
     t.integer  "state_id"
     t.integer  "metro_area_id"
     t.string   "login_slug"
-    t.boolean  "notify_comments",                         :default => true
-    t.boolean  "notify_friend_requests",                  :default => true
-    t.boolean  "notify_community_news",                   :default => true
+    t.boolean  "notify_comments",                      :default => true
+    t.boolean  "notify_friend_requests",               :default => true
+    t.boolean  "notify_community_news",                :default => true
     t.integer  "country_id"
-    t.boolean  "featured_writer",                         :default => false
+    t.boolean  "featured_writer",                      :default => false
     t.datetime "last_login_at"
     t.string   "zip"
     t.date     "birthday"
     t.string   "gender"
-    t.boolean  "profile_public",                          :default => true
-    t.integer  "activities_count",                        :default => 0
-    t.integer  "sb_posts_count",                          :default => 0
+    t.boolean  "profile_public",                       :default => true
+    t.integer  "activities_count",                     :default => 0
+    t.integer  "sb_posts_count",                       :default => 0
     t.datetime "sb_last_seen_at"
     t.integer  "role_id"
-    t.integer  "followers_count",                         :default => 0
-    t.integer  "follows_count",                           :default => 0
-    t.integer  "score",                                   :default => 0
+    t.integer  "followers_count",                      :default => 0
+    t.integer  "follows_count",                        :default => 0
+    t.integer  "score",                                :default => 0
     t.string   "first_name"
     t.string   "last_name"
-    t.boolean  "my_activity",                             :default => true
-    t.boolean  "removed",                                 :default => false
+    t.boolean  "my_activity",                          :default => true
+    t.boolean  "removed",                              :default => false
+    t.string   "single_access_token"
+    t.string   "perishable_token"
+    t.integer  "login_count",                          :default => 0
+    t.integer  "failed_login_count",                   :default => 0
+    t.datetime "last_request_at"
+    t.datetime "current_login_at"
+    t.string   "current_login_ip"
+    t.string   "last_login_ip"
+    t.string   "oauth_token"
+    t.string   "oauth_secret"
   end
 
   add_index "users", ["activated_at"], :name => "index_users_on_activated_at"
   add_index "users", ["avatar_id"], :name => "index_users_on_avatar_id"
   add_index "users", ["created_at"], :name => "index_users_on_created_at"
   add_index "users", ["featured_writer"], :name => "index_users_on_featured_writer"
+  add_index "users", ["last_request_at"], :name => "index_users_on_last_request_at"
+  add_index "users", ["login"], :name => "index_users_on_login"
   add_index "users", ["login_slug"], :name => "index_users_on_login_slug"
+  add_index "users", ["oauth_token"], :name => "index_users_on_oauth_token"
+  add_index "users", ["persistence_token"], :name => "index_users_on_persistence_token"
   add_index "users", ["vendor"], :name => "index_users_on_vendor"
 
   create_table "votes", :force => true do |t|
