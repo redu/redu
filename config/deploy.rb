@@ -4,6 +4,7 @@
 set :application, "redu"
 set :user, "ubuntu"
 set :use_sudo, false
+set :rake, "/home/ubuntu/.gem/ruby/1.8/bin/rake"
 
 # Repository
 set :repository, "http://ec2-67-202-28-13.compute-1.amazonaws.com/svn/redu/Redu"

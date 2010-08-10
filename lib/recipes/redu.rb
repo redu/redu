@@ -54,6 +54,16 @@ namespace :redu do
     run "echo \"export PATH=$PATH:$HOME/home/ubuntu/.gem/ruby/1.8/bin\" >> ~/.bashrc"
   end
   
+  desc "Push static files to S3"
+  task :s3commit do
+    run "export SSL_CERT_DIR=$HOME/certs && cd #{current_path} && #{rake} s3commit"
+  end
+  
+  desc "Run bootstrap rake task"
+  task :bootstrap do
+    run "cd #{current_path} && #{rake} bootstrap:all"
+  end
+  
   desc "Streams error log file"
   task :errors do
     stream "tail -f #{current_path}/log/error.log"
