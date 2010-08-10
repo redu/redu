@@ -16,12 +16,12 @@
 </div><!-- end news -->
 <div class="news">
 	<span class="call"><span>Notícias</span></span>
-	<ul>
-		<li><a href="">Uma notícia</a></li>
-		<li><a href="">Um comunicado</a></li>
-		<li><a href="">Algo de interesse</a></li>
-		<li><a href="">Direcionado para os alunos</a></li>
-		<li><a href="">Informações pertinentes</a></li>
-		<li><a href="">Alguma coisa</a></li>
-	</ul>
+	<% if bulletins && bulletins.size > 0 %>
+		<ul>
+			<%= render :partial => 'bulletins/list', :collection => bulletins, :as => :bulletin , :locals => { :is_index => false } %>
+		</ul>
+		<%= link_to 'Ver todas', bulletins_path %>
+	<% else %>
+			Nenhuma notícia foi enviada ainda. <%= link_to 'Envie uma agora!', new_bulletin_path %>
+	<% end %>
 </div><!-- end noticias -->
