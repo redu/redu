@@ -1,0 +1,14 @@
+<% ["info", "notice", "error"].each do |type| %>
+  <% if flash[type.to_sym] %>
+		<div id="flash" class="flash_message notice <%=type.to_s%>">
+			<span>
+			 <%= h(flash[type.to_sym]) %>
+			 </span>
+      <small>
+      	 <a href="#" onclick="jQuery('#flash').slideUp();">Fechar</a>
+      </small>
+			</div>
+<% end %>
+<% end %>
+      
+
