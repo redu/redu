@@ -120,6 +120,9 @@ class User < ActiveRecord::Base
   has_many    :comments_as_recipient, :class_name => "Comment",:foreign_key => "recipient_id", :order => "created_at desc", :dependent => :destroy
   has_many    :favorites, :order => "created_at desc", :dependent => :destroy
     
+	#bulletins
+	has_many :bulletins, :dependent => :destroy
+
   #named scopes
   named_scope :recent, :order => 'users.created_at DESC'
   named_scope :featured, :conditions => ["users.featured_writer = ?", true]
