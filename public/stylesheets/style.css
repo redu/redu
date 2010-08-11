@@ -83,6 +83,22 @@ a {
     line-height: 170%;
 }
 
+
+
+.flash_message {
+    background: #FFFFDF;
+border: 1px solid #FEFF9F;
+font-size: 0.9em;
+padding: 10px;
+position: absolute;
+top: 47px;
+margin: 0;
+z-index: 1000;
+		-webkit-box-shadow: #AAA 0px 4px 10px;
+		border-bottom-left-radius: 8px 8px;
+		border-bottom-right-radius: 8px 8px;
+}
+
 /**
    @overall 
 **/
@@ -1106,10 +1122,18 @@ div.recomendations-m .number {
 
 /** @header **/
 #header {
-    background-color: white;
-    height: 50px;
-    background: url("../images/ui-elements_r16_c2.png") no-repeat;
+    /*height: 50px;
+    background: url("../images/ui-elements_r16_c2.png") no-repeat;*/
+		
     position: relative;
+		-webkit-box-shadow: #CCC 0px 4px 10px;
+		background-color: white;
+		border-bottom-left-radius: 8px 8px;
+		border-bottom-right-radius: 8px 8px;
+		height: 42px;
+		margin-bottom: 5px;
+		
+		
 }
 
     #logo {
@@ -1232,6 +1256,8 @@ div.content {
     background: white;
     -moz-border-radius: 8px;
     -webkit-border-radius: 8px;
+		-webkit-box-shadow: #CCC 0px 4px 10px;
+
 }
 
 div.content div.content {

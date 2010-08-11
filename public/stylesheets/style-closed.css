@@ -281,11 +281,13 @@ form.login button {
 }
 
 #flash_messages div.flash_message {
-    padding: 10px;
-    font-size: .9em;
-    margin: 15px 0;
     background: #FFFFDF;
-    border: 1px solid #FEFF9F;
+border: 1px solid #FEFF9F;
+font-size: 0.9em;
+padding: 10px;
+position: fixed;
+top: 0px;
+z-index: 1000;
 }
 
 #closed-beta .user-actions > a.opened,
