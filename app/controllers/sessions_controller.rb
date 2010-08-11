@@ -63,6 +63,7 @@
 
 
 class SessionsController < BaseController
+  layout 'new_application'
   if AppConfig.closed_beta_mode
     skip_before_filter :beta_login_required
   end  
@@ -88,8 +89,7 @@ class SessionsController < BaseController
       redirect_back_or_default(user_path(current_user))
     else
       flash[:notice] = :uh_oh_we_couldnt_log_you_in_with_the_username_and_password_you_entered_try_again.l
-      #redirect_to application_url and return if AppConfig.closed_beta_mode     
-      redirect_to teaser_path and return
+     # redirect_to teaser_path and return
       render :action => :new
     end
   end

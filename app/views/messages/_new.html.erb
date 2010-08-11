@@ -5,7 +5,7 @@
 				<%= error_messages_for :message %>
 				<%#render :partial => 'form', :locals => {:message => @message, :user => @user} %>
 		
-		<% form_for @message, :url => user_messages_path(@user), :html => {:class => "MainForm"} do |f| %>
+		<% form_remote_for @message, :url => user_messages_path(@user), :html => {:class => "MainForm"}, :loading => "jQuery('#msg_spinner').show()" do |f| %>
 	<% if @message.reply_to %>
 		<%= f.hidden_field :to %>
 	<% else %>
@@ -36,7 +36,7 @@
 		</p>
 		<%= f.text_area :body, :size => "70x6", :class => "mceEditor" %>	
 		<p>
-			<%= submit_tag :send.l %>
+			<%= submit_tag :send.l %><%= image_tag "spinner.gif", :id => "msg_spinner", :style => "display: none"%>
 		</p>
 	
 <% end %>

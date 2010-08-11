@@ -57,7 +57,18 @@ class MessagesController < BaseController
       # If 'to' field is empty, call validations to catch other
       @message = Message.new(params[:message])        
       @message.valid?
-      render :action => :new and return
+      
+      respond_to do |format|
+        format.html do
+          render :action => :new and return
+        end
+        format.js do
+          render :update do |page|
+            #page.replace_html  'tabs-3-content', :partial => 'new'
+            page << "alert('mensagem')" #TODO
+          end
+        end
+      end
     else
       # If 'to' field isn't empty then make sure each recipient is valid
       params[:message][:to].split(',').uniq.each do |to|
@@ -65,7 +76,16 @@ class MessagesController < BaseController
         @message.recipient = User.find_by_login(to.strip)
         @message.sender = @user
         unless @message.valid?
-          render :action => :new and return        
+          respond_to do |format|
+        format.html do
+          render :action => :new and return
+        end
+        format.js do
+          render :update do |page|
+            page << "alert('é necessário preencher todos os campos')"# TODO notice?
+          end
+        end
+      end
         else
           messages << @message
         end
@@ -73,7 +93,17 @@ class MessagesController < BaseController
       # If all messages are valid then send messages
       messages.each {|msg| msg.save!}
       flash[:notice] = :message_sent.l
-      redirect_to user_messages_path(@user) and return
+      respond_to do |format|
+        format.html do
+          redirect_to user_messages_path(@user) and return
+        end
+        format.js do
+          render :update do |page|
+            page.replace_html  'tabs-3-content', 'mensagem enviada!'
+          end
+        end
+      end
+     
     end
   end
 
