@@ -103,6 +103,9 @@ z-index: 1000;
 /**
    @overall 
 **/
+.photo {
+        width: 48px;
+    }
 
 .even {
     background-color: #F9F9FA;
