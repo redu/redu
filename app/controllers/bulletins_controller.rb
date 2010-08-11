@@ -6,6 +6,7 @@ class BulletinsController < BaseController
   
   
   def index
+		@bulletins = Bulletin.find(:all)
   end
 
   def show
