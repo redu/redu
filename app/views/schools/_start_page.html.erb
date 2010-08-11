@@ -1,7 +1,7 @@
 <span class="call featured"><span>Aulas</span></span>
 <div class="featured">
 	<div class="photo">
-		<%= link_to(image_tag brand_new.thumb_url, :width => "229px", :height => "141px") %>
+		<%= link_to((image_tag brand_new.thumb_url, :width => "229px", :height => "141px"), brand_new) %>
 	</div>
 	<%= link_to brand_new.name, brand_new, :class => "name" %>
 	<span class="author">por <%= link_to brand_new.owner.login, brand_new.owner, :class => "author" %></span>
