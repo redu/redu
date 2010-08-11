@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100810152117) do
+ActiveRecord::Schema.define(:version => 20100811143337) do
 
   create_table "abilities", :force => true do |t|
     t.string   "name"
@@ -150,6 +150,8 @@ ActiveRecord::Schema.define(:version => 20100810152117) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "school_id"
+    t.string   "state"
+    t.integer  "user_id"
   end
 
   create_table "categories", :force => true do |t|
@@ -164,17 +166,6 @@ ActiveRecord::Schema.define(:version => 20100810152117) do
     t.string  "description"
     t.integer "votes_count", :default => 0
   end
-
-  create_table "clippings", :force => true do |t|
-    t.string   "url"
-    t.integer  "user_id"
-    t.string   "image_url"
-    t.string   "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "clippings", ["created_at"], :name => "index_clippings_on_created_at"
 
   create_table "comments", :force => true do |t|
     t.string   "title",            :limit => 50, :default => ""
@@ -234,16 +225,16 @@ ActiveRecord::Schema.define(:version => 20100810152117) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "rating_average",     :limit => 10, :precision => 10, :scale => 0, :default => 0
-    t.integer  "owner",                                                                              :null => false
-    t.text     "description",                                                                        :null => false
-    t.boolean  "published",                                                       :default => false
+    t.integer  "rating_average",                                   :default => 0
+    t.integer  "owner",                                                               :null => false
+    t.text     "description",                                                         :null => false
+    t.boolean  "published",                                        :default => false
     t.datetime "media_updated_at"
     t.string   "state"
-    t.integer  "view_count",                                                      :default => 0
-    t.boolean  "public",                                                          :default => true
-    t.decimal  "price",                            :precision => 8,  :scale => 2, :default => 0.0
-    t.boolean  "removed",                                                         :default => false
+    t.integer  "view_count",                                       :default => 0
+    t.boolean  "public",                                           :default => true
+    t.decimal  "price",              :precision => 8, :scale => 2, :default => 0.0
+    t.boolean  "removed",                                          :default => false
     t.string   "courseable_type"
     t.integer  "courseable_id"
     t.integer  "simple_category_id"
@@ -510,7 +501,6 @@ ActiveRecord::Schema.define(:version => 20100810152117) do
     t.integer  "view_count"
   end
 
-  add_index "photos", ["created_at"], :name => "index_photos_on_created_at"
   add_index "photos", ["parent_id"], :name => "index_photos_on_parent_id"
 
   create_table "plugin_schema_migrations", :id => false, :force => true do |t|
@@ -547,7 +537,6 @@ ActiveRecord::Schema.define(:version => 20100810152117) do
   add_index "posts", ["category_id"], :name => "index_posts_on_category_id"
   add_index "posts", ["published_as"], :name => "index_posts_on_published_as"
   add_index "posts", ["published_at"], :name => "index_posts_on_published_at"
-  add_index "posts", ["user_id"], :name => "index_posts_on_user_id"
 
   create_table "profiles", :force => true do |t|
     t.integer  "user_id",     :null => false
@@ -672,7 +661,6 @@ ActiveRecord::Schema.define(:version => 20100810152117) do
     t.string   "external_resource_type"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "state"
     t.boolean  "published",              :default => false
     t.boolean  "public",                 :default => false
   end
@@ -726,15 +714,12 @@ ActiveRecord::Schema.define(:version => 20100810152117) do
   end
 
   add_index "taggings", ["tag_id"], :name => "index_taggings_on_tag_id"
-  add_index "taggings", ["taggable_id", "taggable_type"], :name => "index_taggings_on_taggable_id_and_taggable_type"
   add_index "taggings", ["taggable_id"], :name => "index_taggings_on_taggable_id"
   add_index "taggings", ["taggable_type"], :name => "index_taggings_on_taggable_type"
 
   create_table "tags", :force => true do |t|
     t.string "name"
   end
-
-  add_index "tags", ["name"], :name => "index_tags_on_name"
 
   create_table "topics", :force => true do |t|
     t.integer  "forum_id"
@@ -832,7 +817,6 @@ ActiveRecord::Schema.define(:version => 20100810152117) do
 
   add_index "users", ["activated_at"], :name => "index_users_on_activated_at"
   add_index "users", ["avatar_id"], :name => "index_users_on_avatar_id"
-  add_index "users", ["created_at"], :name => "index_users_on_created_at"
   add_index "users", ["featured_writer"], :name => "index_users_on_featured_writer"
   add_index "users", ["last_request_at"], :name => "index_users_on_last_request_at"
   add_index "users", ["login"], :name => "index_users_on_login"
