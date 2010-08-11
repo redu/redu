@@ -67,7 +67,9 @@ module BaseHelper
   end
   
   def reload_flash
-    page.replace_html "flash_messages", :partial => "shared/messages"
+    #page.replace_html "flash_messages", :partial => "shared/messages"
+    #page.replace_html :notice, flash[:notice]
+    #flash.discard
   end
 
   def commentable_url(comment)

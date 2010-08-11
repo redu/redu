@@ -56,15 +56,15 @@ $(document).ready(function() {
 <div class="grid_10">
 <div class="message-tabs tabs">
 	    <ul>
-		    <li><a href="#tabs-1">Caixa de Entrada</a></li>
+		    <li><a href="#tabs-1">Caixa de Entrada <%= "(#{@user.unread_message_count})" if @user.unread_messages? %></a></li>
 		    <li><a href="#tabs-2">Caixa de Saída</a></li>
 				<li><a href="#tabs-3">Escrever</a></li>
 	    </ul>
 	    
 		<div id="tabs-1" class="clearfix first-page">
-		<% form_tag delete_selected_user_messages_path(@user), :class => "MainForm" do %>
+	
 		<%= render :partial => "inbox" %>  
-		<% end %>	 
+		
 		</div>
 		
 		<!-- caixa de saída -->
@@ -86,17 +86,14 @@ $(document).ready(function() {
 											<div class="y_addinfo">
                                 <div class="addinfocontent">
                                     <h1>
-                                        Termos e Condições do Redu</h1>
+                                        Configurar participação</h1>
                                     <p>
-                                       Por favor não publique conteúdo que esteja protegido por direitos autoriais, conteúdo obceno ou que viole
-																			 os <%= link_to "termos e condições", {:controller => "base", :action => "tos"}, :target => "_blank"%> do Redu.
-                                    		
-																			Ao clicar no botão abaixo você estará concordando com esses termos.</p>
+                                        Por padrão, o Redu envia todas as mensagens que você recebe por email. Você pode alterar essas
+																				configurações clicando <%= link_to "aqui", edit_user_path(current_user) %>.
+																				
+																		</p>
 																			
-																			<p><span style="font-style: italic;">Uma vez publicado, as opções de publicação não poderão mais serem editadas.</span></p>
-																			
-																		<p class="large_btn"><a href="#" id="adm_showpay" style="color: #fff;" onclick="jQuery('#form_step_3').submit();">Publicar</a></p>
-                                </div>
+																			</div>
                             </div>
 </div>
 

@@ -88,7 +88,7 @@ $(document).ready(function(){
 
 <% field_set_tag 'Informações Gerais' do %>
 	<%= f.label "Nome" %>
-	<%= f.text_field :name , :onkeyup => "generatePath(this)" %>
+	<%= f.text_field :name ,  :onkeyup => ((edit) ? nil : "generatePath(this)") %>
 
 	<%= f.label "Caminho" %>
 	<div id="school-path">

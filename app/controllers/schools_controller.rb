@@ -553,8 +553,10 @@ class SchoolsController < BaseController
   # PUT /schools/1
   # PUT /schools/1.xml
   def update
-    params[:school][:category_ids] ||= []
-    params[:school][:audience_ids] ||= []
+    unless params[:only_image]
+      params[:school][:category_ids] ||= []
+      params[:school][:audience_ids] ||= []
+    end
     @school = School.find(params[:id])
     
     respond_to do |format|

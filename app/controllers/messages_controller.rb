@@ -5,7 +5,7 @@ class MessagesController < BaseController
   before_filter :login_required
   before_filter :require_ownership_or_moderator, :except => [:auto_complete_for_username]
   
-  uses_tiny_mce(:options => AppConfig.default_mce_options, :only => [:new, :index])
+  uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :index])
 
   skip_before_filter :verify_authenticity_token, :only => [:auto_complete_for_username]
   
@@ -32,7 +32,19 @@ class MessagesController < BaseController
   
   def show
     @message = Message.read(params[:id], current_user)
-    @reply = Message.new_reply(@user, @message, params)    
+    @reply = Message.new_reply(@user, @message, params)  
+    
+     respond_to do |format|
+        format.js do
+          render :update do |page|
+            if params[:mailbox] == "sent"
+            page.replace_html  'tabs-2-content', :partial => 'show', :locals => {:mailbox => params[:mailbox]} 
+          else
+             page.replace_html  'tabs-1-content', :partial => 'show', :locals => {:mailbox => params[:mailbox]}
+            end
+          end
+        end
+      end
   end
   
   def new
@@ -45,6 +57,7 @@ class MessagesController < BaseController
         format.js do
           render :update do |page|
             page.replace_html  'tabs-3-content', :partial => 'new'
+            page << "reloadMce();"
           end
         end
       end
@@ -64,8 +77,8 @@ class MessagesController < BaseController
         end
         format.js do
           render :update do |page|
-            #page.replace_html  'tabs-3-content', :partial => 'new'
-            page << "alert('mensagem')" #TODO
+            page << "jQuery('#msg_spinner').hide()"
+            page.replace_html "errors", error_messages_for(:message) 
           end
         end
       end
@@ -82,7 +95,9 @@ class MessagesController < BaseController
         end
         format.js do
           render :update do |page|
-            page << "alert('é necessário preencher todos os campos')"# TODO notice?
+            page << "jQuery('#msg_spinner').hide()"
+            page.replace_html "errors", error_messages_for(:message) 
+           #page << "alert('é necessário preencher todos os campos')"# TODO notice?
           end
         end
       end
@@ -99,6 +114,8 @@ class MessagesController < BaseController
         end
         format.js do
           render :update do |page|
+              #page.replace_html :notice, flash[:notice]
+              flash.discard
             page.replace_html  'tabs-3-content', 'mensagem enviada!'
           end
         end
@@ -116,7 +133,8 @@ class MessagesController < BaseController
         }
         flash[:notice] = :messages_deleted.l
       end
-      redirect_to user_messages_path(@user)
+      
+      redirect_to user_messages_path(@user, :mailbox => params[:mailbox])
     end
   end
   

@@ -20,6 +20,7 @@
           
 		<% form_for @school, :html => { :multipart => true, :onsubmit => "$('#upload-avatar-spinner').show()"  } do |f| %>
 		<%= f.file_field :avatar %> (200x64)
+		<%= hidden_field_tag :only_image, true %>
 		<br>
 		<%= submit_tag 'OK' %>
 		<%= image_tag 'spinner.gif', :id => 'upload-avatar-spinner', :style => 'display: none' %>

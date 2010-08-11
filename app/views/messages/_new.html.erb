@@ -1,11 +1,19 @@
-
+<script>
+	function reloadMce(){
+		<%=   raw_tiny_mce_init %>
+	}
+</script>
         	<h3>
             	NOVA MENSAGEM
         	</h3>
-				<%= error_messages_for :message %>
+				<%# error_messages_for :message %>
+				
 				<%#render :partial => 'form', :locals => {:message => @message, :user => @user} %>
 		
 		<% form_remote_for @message, :url => user_messages_path(@user), :html => {:class => "MainForm"}, :loading => "jQuery('#msg_spinner').show()" do |f| %>
+	<div id="errors"></div>
+	<%= f.error_messages %>
+	
 	<% if @message.reply_to %>
 		<%= f.hidden_field :to %>
 	<% else %>

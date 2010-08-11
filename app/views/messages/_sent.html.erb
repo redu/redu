@@ -1,3 +1,5 @@
+		<% form_remote_tag :url => {:action => :delete_selected, :user_id => @user.id}, :loading => "jQuery('#del-spinner').show()" do %>
+		<%= hidden_field_tag :mailbox, :sent %>
 	<h3>
 		<%= :sent_messages.l %>
 	</h3>
@@ -19,17 +21,15 @@
 							</fieldset>
 						</td>
 						<td width = '60px'>
-							<div class='photo'>
-							<%= link_to image_tag( message.recipient.avatar_photo_url(:thumb), "height"=>"50px", "alt"=>"#{message.recipient.login}", "width"=>"50px" ), user_path(message.recipient), :title => "#{message.recipient.login}'s " + :profile.l %>
-							</div>
+							<%= link_to image_tag( message.recipient.avatar_photo_url(:thumb), :alt=>"#{message.recipient.login}", :class=> "photo" ), user_path(message.recipient), :title => "#{message.recipient.login}'s " + :profile.l %>
 						</td>
 						<td>
-							<%= link_to h(message.subject), user_message_path(@user, message)%>
+							<%= link_to_remote h(message.subject), :url =>  user_message_path(@user, message, :mailbox => :sent), :method => :get %>
 							<br>
 							<%= :to.l %>
 							<%= link_to h(message.recipient.login), user_path(message.recipient)%>
 						</td>
-						<td class='meta' >
+						<td class='snippet' >
 							<%= h message.created_at.to_s(:long) %>
 						</td>
 					</tr>
@@ -41,11 +41,12 @@
 				<td colspan = "4">
 					<% if @messages.any? %>
 						<p>
-							<%= submit_tag :delete.l %>
+							<%= submit_tag :delete.l %><%= image_tag 'spinner.gif', :id => 'del-spinner', :style => 'display: none' %>
 						</p>
 					<% end %>
 				</td>
 			</tr>
 		</tfoot>
 	</table>
+	<% end %>	 
 
