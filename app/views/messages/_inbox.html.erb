@@ -1,19 +1,17 @@
-<div id='yui-main'>
-	<div class='yui-b'>
 	<h3>
 		<%= :inbox.l %>
 	</h3>
 		
-	<table class='messages' border = 0, width = '100%'>
+	<table class='messages' border = "0" width = "100%">
 		<tbody>
-			<%- if @messages.empty? %>
+			<% if @messages.empty? %>
 			<tr>
 				<td colspan='5'>
 					<%= :no_messages.l %>
 				</td>	
 			</tr>
-			<%- else %>
-				<%- @messages.each do |message| %>
+			<% else %>
+				<% @messages.each do |message| %>
 					<tr>
 						<td width='10px'>
 							<fieldset class='inline'>
@@ -55,9 +53,8 @@
 			</tr>
 		</tfoot>
 	</table>	
+	
 	<div class='pagination'>
 	<%= paginating_links @messages if @messages.page_count > 1 %>
 	</div>
 	
-	</div>
-<div>

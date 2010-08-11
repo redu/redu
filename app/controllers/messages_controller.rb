@@ -1,7 +1,11 @@
 class MessagesController < BaseController
+  layout 'new_application'
+  
   before_filter :find_user, :except => [:auto_complete_for_username]
   before_filter :login_required
   before_filter :require_ownership_or_moderator, :except => [:auto_complete_for_username]
+  
+  uses_tiny_mce(:options => AppConfig.default_mce_options, :only => [:new, :index])
 
   skip_before_filter :verify_authenticity_token, :only => [:auto_complete_for_username]
   
@@ -13,6 +17,14 @@ class MessagesController < BaseController
   def index
     if params[:mailbox] == "sent"
       @messages = @user.sent_messages.find(:all, :page => {:current => params[:page], :size => 20})
+      
+      respond_to do |format|
+        format.js do
+          render :update do |page|
+            page.replace_html  'tabs-2-content', :partial => 'sent'
+          end
+        end
+      end
     else
       @messages = @user.received_messages.find(:all, :page => {:current => params[:page], :size => 20})
     end
@@ -27,7 +39,15 @@ class MessagesController < BaseController
     if params[:reply_to]
       in_reply_to = Message.find_by_id(params[:reply_to])
     end
-    @message = Message.new_reply(@user, in_reply_to, params)    
+    @message = Message.new_reply(@user, in_reply_to, params)  
+    
+     respond_to do |format|
+        format.js do
+          render :update do |page|
+            page.replace_html  'tabs-3-content', :partial => 'new'
+          end
+        end
+      end
   end
   
   def create

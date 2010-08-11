@@ -1,0 +1,42 @@
+
+        	<h3>
+            	NOVA MENSAGEM
+        	</h3>
+				<%= error_messages_for :message %>
+				<%#render :partial => 'form', :locals => {:message => @message, :user => @user} %>
+		
+		<% form_for @message, :url => user_messages_path(@user), :html => {:class => "MainForm"} do |f| %>
+	<% if @message.reply_to %>
+		<%= f.hidden_field :to %>
+	<% else %>
+		<p>
+			<label for='message_to'>
+				<%= :to.l %>
+				<em>
+					<%= "(" + :type_a_username.l + ")" %>
+				</em>
+			</label>
+		</p>
+		<%= text_field_tag 'message[to]', @message.to, {:autocomplete => "off", :size => 35, :id => "message_to"} %>
+		<div class='auto_complete' id='message_to_auto_complete'>
+			<%= auto_complete_field 'message_to', {:url => auto_complete_for_username_user_messages_path(@user), :tokens=>','} %>	
+		</div>
+	<% end %>
+	
+		<p>
+			<label for='message_subject'>
+				<%= :subject_of_message.l + ":" %>
+			</label>
+		</p>
+		<%= f.text_field :subject %>
+		<p>
+			<label for='message_body'>
+				<%= :message.l + ":" %>
+			</label>
+		</p>
+		<%= f.text_area :body, :size => "70x6", :class => "mceEditor" %>	
+		<p>
+			<%= submit_tag :send.l %>
+		</p>
+	
+<% end %>

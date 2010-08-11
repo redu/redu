@@ -1,4 +1,5 @@
 <ul class="sortable clearfix"> 
+
 <li class="clearfix">
 <span class="call"><span>Quem você segue</span></span>
 <div class="followship box clearfix">
@@ -18,6 +19,30 @@ Você não está seguindo ninguém no momento.
 <% end %>
 </div>
 </li>
+
+
+<li class="clearfix">
+<span class="call"><span>Minhas anotações</span></span>
+<div class="followship box clearfix">
+	
+<% if @user.annotations.size > 0 %>
+<ul class="clearfix">
+
+<% for annotation in @user.annotations[0..9]%>
+<li>
+	<%= link_to image_tag(annotation.course.thumb_url, :height => '24', :width => '24'), annotation.course, :rel => 'bookmark', :title => annotation.course.name %>
+  <%= truncate_chars(annotation.content)%>
+</li>
+<%end%>
+
+</ul>
+<% else %>
+Você não possui nenhuma anotação de aula ainda.
+<% end %>
+<%= link_to "(ver todos)", annotations_user_path, :class => "info"%>
+</div>
+</li>
+
 <!--
 <li class="clearfix"> 
 <span class="call"><span>Seu Progresso</span></span> 

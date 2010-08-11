@@ -1,19 +1,17 @@
-<div id='yui-main'>	
-	<div class='yui-b'>
-	
 	<h3>
 		<%= :sent_messages.l %>
 	</h3>
+	
 	<table class='messages' border='0' width='100%'>
 		<tbody>
-			<%- if @messages.empty? %>
+			<% if @messages.empty? %>
 				<tr>
 					<td colspan ="4">
 						<%= :no_messages.l %>
 					</td>
 				</tr>
-			<%- else %>
-				<%- @messages.each do |message| %>
+			<% else %>
+				<% @messages.each do |message| %>
 					<tr>
 						<td width = '10px'>
 							<fieldset class='inline'>
@@ -41,7 +39,7 @@
 		<tfoot>
 			<tr>
 				<td colspan = "4">
-					<%- if @messages.any? %>
+					<% if @messages.any? %>
 						<p>
 							<%= submit_tag :delete.l %>
 						</p>
@@ -50,6 +48,4 @@
 			</tr>
 		</tfoot>
 	</table>
-	
-	</div>
-</div>	
+

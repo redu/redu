@@ -1,21 +1,105 @@
-<div id="all_content3">
-    <div id="col_content">
-        <div id="breadcrumbs">
-            <a href="<%=application_url%>">início</a>
-            > mensagens
-        </div>
-		<%= render :partial => 'messages/sidebar_nav'%>
-		<br/>
-        <div>
-			<%- form_tag delete_selected_user_messages_path(@user), :class => "MainForm" do %>
-			<%- if params[:mailbox] == "sent" %>
-    			<%= render :partial => "sent" %>
-			<%- else %>
-				<%= render :partial => "inbox" %>  
-			<% end %>	  
-			<% end %>
-			
-        </div>
-		
-    </div>
+<script type="text/javascript">
+var messagesPath = "<%= user_messages_path %>";
+var writeMessagePath = "<%= new_user_message_path %>";
+
+var $messagetabs;
+
+$(document).ready(function() {
+
+    $messagetabs = $(".message-tabs").tabs({
+        select: function(event, ui) {
+            if (ui.index == 2) {
+                // Escrever
+                $("#tabs-3-content").html('');
+                jQuery.ajax({
+                    data: '',
+                    dataType: 'script',
+                    success: function(request) {
+                        $("#tabs-3-loading").hide();
+                    },
+                    type: 'get',
+                    url: writeMessagePath
+                });
+
+                $("#tabs-3-loading").show();
+            }
+            else if (ui.index == 1) {
+                // Caixa de Saída
+                $("#tabs-2-content").html('');
+                jQuery.ajax({
+                    data: 'mailbox=sent',
+                    dataType: 'script',
+                    success: function(request) {
+                        $("#tabs-2-loading").hide();
+                    },
+                    type: 'get',
+                    url: messagesPath
+                });
+
+                $("#tabs-2-loading").show();
+            }
+        }
+    });
+});
+</script>
+
+<div class="grid_16">
+<div id="breadcrumbs">
+	<a href="#">mensagens</a> > caixa de entrada
 </div>
+
+<div id="title_video">Mensagens</div>
+</div>
+
+
+
+<div class="grid_10">
+<div class="message-tabs tabs">
+	    <ul>
+		    <li><a href="#tabs-1">Caixa de Entrada</a></li>
+		    <li><a href="#tabs-2">Caixa de Saída</a></li>
+				<li><a href="#tabs-3">Escrever</a></li>
+	    </ul>
+	    
+		<div id="tabs-1" class="clearfix first-page">
+		<% form_tag delete_selected_user_messages_path(@user), :class => "MainForm" do %>
+		<%= render :partial => "inbox" %>  
+		<% end %>	 
+		</div>
+		
+		<!-- caixa de saída -->
+		<div id="tabs-2">
+			
+			<%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-2-loading', :style => 'padding: 20px;'%>
+			<div id="tabs-2-content"></div>
+		</div>
+		<!-- escrever -->
+		<div id="tabs-3">
+			<%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-3-loading', :style => 'padding: 20px;'%>
+			<div id="tabs-3-content"></div>
+		</div>
+		
+</div><!-- end tabs -->	
+</div>
+
+<div class="grid_6 ">
+											<div class="y_addinfo">
+                                <div class="addinfocontent">
+                                    <h1>
+                                        Termos e Condições do Redu</h1>
+                                    <p>
+                                       Por favor não publique conteúdo que esteja protegido por direitos autoriais, conteúdo obceno ou que viole
+																			 os <%= link_to "termos e condições", {:controller => "base", :action => "tos"}, :target => "_blank"%> do Redu.
+                                    		
+																			Ao clicar no botão abaixo você estará concordando com esses termos.</p>
+																			
+																			<p><span style="font-style: italic;">Uma vez publicado, as opções de publicação não poderão mais serem editadas.</span></p>
+																			
+																		<p class="large_btn"><a href="#" id="adm_showpay" style="color: #fff;" onclick="jQuery('#form_step_3').submit();">Publicar</a></p>
+                                </div>
+                            </div>
+</div>
+
+
+
+

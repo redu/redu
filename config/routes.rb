@@ -244,6 +244,7 @@ ActionController::Routing::Routes.draw do |map|
   ##END SCHOOL
   map.resources :users, :member => {  
   #map.resources :users, :member_path => '/:id', :nested_member_path => '/:user_id', :member => { 
+    :annotations => :get,
     :followers => :get,
     :follows => :get,
     :follow => :get,

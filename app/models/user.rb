@@ -56,7 +56,7 @@ class User < ActiveRecord::Base
   validates_acceptance_of :tos, :message => "Você precisa aceitar os Termos de Uso"
   
   # ASSOCIATIONS
-  has_many :annotations, :dependent => :destroy
+  has_many :annotations, :dependent => :destroy, :include=> :course
   has_one :beta_key, :dependent => :destroy
   #has_one :profile # deprecated 
   #has_many :user_competences, :dependent => :destroy # deprecated 
