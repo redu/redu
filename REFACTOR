@@ -35,6 +35,8 @@ Repensar o sistema de Logs (atividades) e pontuação
 Fazer melhor uso dos parciais
 Buscar por 'TODO' no projeto inteiro
 
+substituir consultas do tipo @user.follows[0..9] por limit = 10 no sql 
+
 CONSULTAS
 =========
 
