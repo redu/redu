@@ -1,4 +1,5 @@
 class BulletinsController < BaseController
+  layout 'new_application'
   #before_filter :find_bulletin, :only => [:show, :edit, :update, :destroy]
   
   uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit])
@@ -12,10 +13,12 @@ class BulletinsController < BaseController
   end
 
   def new
-    @bulletin = Bulletin.new
+    @bulletin = Bulletin.new()
   end
 
   def create
+    @bulletin = Bulletin.new(params[:bulletin])
+    
     respond_to do |format|
       if @bulletin.save
         flash[:notice] = 'A notícia foi criada e adicionada à rede.'
