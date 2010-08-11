@@ -1,7 +1,6 @@
 <div class="main grid_16">
 	<div id="title">VER NOTÍCIA</div>
-	
-	<p>
+
 	<%= render :partial => 'bulletins/item', :bulletin => @bulletin %>
 	
 	<div id="rating_video">
@@ -18,5 +17,6 @@
 	    </span>
     </div>
 
-	</p>
+
+	<%= link_to 'Ver notícias da rede', school_bulletins_path(@bulletin.school) %>
 </div>

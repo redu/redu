@@ -44,7 +44,6 @@ class SchoolsController < BaseController
     redirect_to look_and_feel_school_path
   end
 
-
   ##  Admin actions  
   def new_school_admin
     @user_school_association = UserSchoolAssociation.new
@@ -171,6 +170,19 @@ class SchoolsController < BaseController
     
   end
   
+  def admin_bulletins
+    @school = School.find(params[:id])
+
+    @bulletins = Bulletin.paginate(:conditions => ["school_id = ?", @school.id], 
+        #:include => :owner, 
+        :page => params[:page], 
+        :order => 'updated_at ASC', 
+        :per_page => 20)
+
+      respond_to do |format|
+        format.html 
+      end
+  end
   
   ### 
   
@@ -262,7 +274,7 @@ class SchoolsController < BaseController
  
  
  def moderate_submissions
-   approved = params[:submission].reject{|k,v| v == 'reject'}
+    approved = params[:submission].reject{|k,v| v == 'reject'}
     rejected = params[:submission].reject{|k,v| v == 'approve'}
     approved_ids = approved.keys.join(',')
     rejected_ids = rejected.keys.join(',')
@@ -288,7 +300,22 @@ class SchoolsController < BaseController
     redirect_to pending_members_school_path
  end
  
- 
+ #TODO Fazer classe para moderar em batch
+ def moderate_bulletins
+   params[:bulletin].each_pair do |id, decision|
+    b = Bulletin.find(id)
+    b.status = decision
+    b.save
+   end
+
+   @approved_bulletins = Bulletin.all(:conditions => ["id IN (?)", approved_ids]) unless approved_ids.empty?
+   @rejected_bulletins = Bulletin.all(:conditions => ["id IN (?)", rejected_ids]) unless rejected_ids.empty?
+   
+   @approved_bulletins.each do |b|
+      b.status
+   end
+   
+ end
  
  
  

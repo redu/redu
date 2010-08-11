@@ -19,6 +19,7 @@ class BulletinsController < BaseController
 
   def create
     @bulletin = Bulletin.new(params[:bulletin])
+    @bulletin.school = School.find(params[:school_id])
     
     respond_to do |format|
       if @bulletin.save
@@ -52,12 +53,13 @@ class BulletinsController < BaseController
       end
   end
 
+  #TODO Colocar link para excluir notícia
   def destroy
     @bulletin = Bulletin.find(params[:id])
     
-    @bulletins.destroy
+    @bulletin.destroy
     flash[:notice] = 'A notícia foi excluída.'
-    redirect_to @bulletins.school
+    redirect_to @bulletin.school.bulletins
   end
   
   #def find_bulletin
