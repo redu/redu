@@ -121,7 +121,7 @@ class User < ActiveRecord::Base
   has_many    :favorites, :order => "created_at desc", :dependent => :destroy
     
 	#bulletins
-	has_many :bulletins, :dependent => :destroy
+	has_many :bulletins
 
   #named scopes
   named_scope :recent, :order => 'users.created_at DESC'
