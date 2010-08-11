@@ -322,6 +322,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect ':controller/:action/:id.:format'     
   
 end
-ActionController::Routing::Translator.i18n('pt-BR')
-ActionController::Routing::Translator.translate_from_file('lang','i18n-routes.yml')
 
+
+#ActionController::Routing::Translator.i18n('pt-BR') # se ativar, buga (falar com cassio)
+ActionController::Routing::Translator.translate_from_file('lang','i18n-routes.yml')

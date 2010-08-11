@@ -1,20 +1,10 @@
 
-
-<div id="all_content3">
-    <div id="col_content">
-        <div id="breadcrumbs">
-            <a href="<%=application_url%>">home</a>
-            > reenvio de ativação
-        </div>
-		<% box do %>
         <div id="title">
             <%= :resend_your_activation_e_mail.l %>
         </div>
 		
-        <div>
-        	<br/>
 			
-			<%form_tag resend_activation_url, :class => 'MainForm' do %>
+			<%form_tag resend_activation_url do %>
         <label for = 'email'>
         	<%= :enter_your_email_address.l %>
 			</label> 
@@ -22,7 +12,4 @@
         </br>
           <%= submit_tag :resend_my_activation_e_mail.l %>
 		  <% end %>
-		  <% end %>
-        </div>
-    </div>
-</div>
+		 

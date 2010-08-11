@@ -217,7 +217,7 @@ class UsersController < BaseController
     
     @beta_key = params[:beta_key]
     
-    render :action => 'new', :layout => 'beta' and return if AppConfig.closed_beta_mode    
+    render :action => 'new' and return if AppConfig.closed_beta_mode    
   end
   
   def groups
@@ -226,6 +226,7 @@ class UsersController < BaseController
   end
   
   def create
+    @user = User.new(params[:user])
     
     if AppConfig.closed_beta_mode
       if params[:beta_key]
@@ -246,7 +247,7 @@ class UsersController < BaseController
     end
     
     
-    @user = User.new(params[:user])
+    
     # @user.role  = Role[:member]
     
     user_id = @user.save
@@ -261,6 +262,7 @@ class UsersController < BaseController
       
       flash[:notice] = :email_signup_thanks.l_with_args(:email => @user.email) 
       redirect_to signup_completed_user_path(@user)
+      #redirect_to user_path(@user)
     else
       render :action => 'new'
     end
@@ -438,7 +440,7 @@ class UsersController < BaseController
     
     @user = User.find(params[:id])
     redirect_to home_path and return unless @user
-    render :action => 'signup_completed', :layout => 'beta' if AppConfig.closed_beta_mode    
+    render :action => 'signup_completed' 
     
   end
   
@@ -505,9 +507,7 @@ class UsersController < BaseController
       redirect_to login_path and return
     else
       flash[:notice] = :activation_email_not_sent_message.l
-      if AppConfig.closed_beta_mode
-        render :layout => 'beta'
-      end  
+      
       
     end
   end

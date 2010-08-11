@@ -50,5 +50,5 @@ production:
   database: redu
   pool: 5
   username: root
-  password: redulambda
+  password: 
   host: localhost

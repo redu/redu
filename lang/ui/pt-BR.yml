@@ -49,9 +49,10 @@ pt-BR:
               taken: ": Este e-mail já está cadastrado."  
             password:
               blank: ": Por favor, digite a senha."
-              too_short: ": Senha muito curta (mínimo de 5 caracteres)." 
+              too_short: ": Senha muito curta (mínimo de 6 caracteres)." 
             password_confirmation:
               blank: ": Por favor, digite a senha de confirmação." 
+              too_short: ": Senha muito curta (mínimo de 6 caracteres)." 
         exam:
           attributes:
             name: ": Por favor escolha um título maior que 6 caracteres."
