@@ -1,15 +1,15 @@
-  		<div id="task_bar_exames">
-  		<%= link_to 'Senhas Beta', beta_keys_path %> | 
-		<%= link_to 'Newsletter', :action => 'new' %> | 
-		<%= link_to 'Feedback', :action => 'new' %> |
-		<%= link_to 'Estatísticas', statistics_path %> | 
-		<span>
-		Moderar ( 
-		<%= link_to 'Submissões' , admin_moderate_submissions_path %> |
-		<%= link_to 'Aulas' , admin_moderate_courses_path %> |
-		<%= link_to 'Exames', admin_moderate_exams_path %> |
-  		<%= link_to 'Redes', admin_moderate_schools_path %> |
-		<%= link_to 'Usuários', admin_moderate_users_path %> | 
-		<%= link_to 'Comentários', admin_comments_path %> )
-		</span>
-		</div>
+<div id="task_bar_exames">
+<%= link_to 'Senhas Beta', beta_keys_path %> | 
+<%= link_to 'Newsletter', :action => 'new' %> | 
+<%= link_to 'Feedback', :action => 'new' %> |
+<%= link_to 'Estatísticas', statistics_path %> | 
+<span>
+Moderar ( 
+<%= link_to 'Submissões' , admin_dashboard_submissions_path %> |
+<%= link_to 'Aulas' , admin_moderate_courses_path %> |
+<%= link_to 'Exames', admin_moderate_exams_path %> |
+<%= link_to 'Redes', admin_moderate_schools_path %> |
+<%= link_to 'Usuários', admin_moderate_users_path %> | 
+<%= link_to 'Comentários', admin_comments_path %> )
+</span>
+</div>
