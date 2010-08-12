@@ -45,6 +45,7 @@ namespace :redu do
     run "gem install authlogic --no-rdoc"
     run "gem install oauth --no-rdoc"
     run "gem install authlogic-oauth --no-rdoc"
+    run "gem install right_aws --no-ri --no-rdoc"
   end
   
   desc "Create base dir with the right owner"
