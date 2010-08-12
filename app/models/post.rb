@@ -146,7 +146,7 @@ class Post < ActiveRecord::Base
   end
   
   def image_for_excerpt
-    first_image_in_body || user.avatar_photo_url(:medium)  
+    first_image_in_body || user.avatar.url(:medium)  
   end
   
   def create_poll(poll, choices)

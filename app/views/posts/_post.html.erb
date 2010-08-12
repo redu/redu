@@ -3,7 +3,7 @@
 </div>
 <label for='username'>
 	<a>
-		<%= image_tag((post.first_image_in_body || post.user.avatar_photo_url(:thumb)), :alt=>"", :width=>"50", :height=>"50") %>
+		<%= image_tag((post.first_image_in_body || post.user.avatar.url(:thumb)), :alt=>"", :width=>"50", :height=>"50") %>
 	</a>
 	<ul>
 		<li>

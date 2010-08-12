@@ -85,7 +85,7 @@
 <div class="sidebar grid_4 sidebar-right">
     <div class="box-user-login">
         <%= 
-            link_to image_tag( current_user.avatar_photo_url(:thumb), 
+            link_to image_tag( current_user.avatar.url(:thumb), 
                 {:width => "50", :height=>"45", :border => 0 }), @user 
         %>
 		<%= link_to current_user.display_name, current_user, :class => "name-user" %> 

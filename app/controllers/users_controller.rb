@@ -273,12 +273,14 @@ class UsersController < BaseController
     @metro_areas, @states = setup_locations_for(@user)
     @skills               = Skill.find(:all)
     @offering             = Offering.new
-    @avatar               = Photo.new
+    # @avatar               = Photo.new
   end
   
   def update
     @user.attributes      = params[:user]
     @metro_areas, @states = setup_locations_for(@user)
+    puts params.inspect
+    @user.update_attribute(:avatar, params[:user][:avatar])
     
     unless params[:metro_area_id].blank?
       @user.metro_area  = MetroArea.find(params[:metro_area_id])
@@ -288,10 +290,10 @@ class UsersController < BaseController
       @user.metro_area = @user.state = @user.country = nil
     end
     
-    @avatar       = Photo.new(params[:avatar])
-    @avatar.user  = @user
-    
-    @user.avatar  = @avatar if @avatar.save
+    # @avatar       = Photo.new(params[:avatar])
+    # @avatar.user  = @user
+    # 
+    # @user.avatar  = @avatar if @avatar.save
     
     @user.tag_list = params[:tag_list] || ''
     

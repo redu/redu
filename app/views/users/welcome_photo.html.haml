@@ -13,7 +13,7 @@
       - form_tag( user_path(:welcome => 'about'), :method => 'put', :multipart =>true, :class => "MainForm") do
         %h3=:profile_photo.l
         %p.centered
-          = image_tag( @user.avatar_photo_url(:medium), :class => "right" )
+          = image_tag( @user.avatar.url(:medium), :class => "right" )
         %label
           =:choose_a_photo_to_upload.l
           %em          

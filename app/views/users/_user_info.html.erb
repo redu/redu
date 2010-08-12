@@ -18,7 +18,7 @@
         </div><!-- end actions --> 
         <div class="photo"> 
             <%= 
-                link_to image_tag( @user.avatar_photo_url(:thumb), 
+                link_to image_tag( @user.avatar.url(:thumb), 
                     {:width => "80", :height=>"80", :border => 0 }), @user 
             %> 
             <% if (@user && @user.eql?(current_user)) %> 

@@ -1,7 +1,7 @@
 -if comment.user
   .hentry{:id => "comment_#{comment.id}"}
     .vcard.author
-      %h5= link_to image_tag(comment.user.avatar_photo_url(:thumb), :height => '50', :width => '50', :alt => "#{comment.user.login}"), user_path(comment.user), :rel => 'bookmark', :class => 'photo', :title => "#{comment.user.login}'s profile"
+      %h5= link_to image_tag(comment.user.avatar.url(:thumb), :height => '50', :width => '50', :alt => "#{comment.user.login}"), user_path(comment.user), :rel => 'bookmark', :class => 'photo', :title => "#{comment.user.login}'s profile"
       %ul
         %li.fn
           = link_to comment.user.login, user_path(comment.user), :class => 'url'

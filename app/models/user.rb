@@ -19,6 +19,14 @@ class User < ActiveRecord::Base
     c.validates_format_of_email_field_options = { :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/ }
   end
   
+  has_attached_file :avatar, 
+    :storage => :s3,
+    :styles => { :medium => "200x200>", :thumb => "100x100>", :nano => "24x24>" },
+    :s3_credentials => S3_CREDENTIALS,
+    :bucket => S3_CREDENTIALS['bucket'],
+    :path => "users/:attachment/:id/:style/:basename.:extension",
+    :default_url => AppConfig.paperclip['default_url']
+  
   ajaxful_rater
   acts_as_taggable  
   acts_as_commentable
@@ -112,7 +120,7 @@ class User < ActiveRecord::Base
   has_many :monitored_topics, :through => :monitorships, 
     :conditions => ['monitorships.active = ?', true], :order => 'topics.replied_at desc', :source => :topic
 
-  belongs_to  :avatar, :class_name => "Photo", :foreign_key => "avatar_id"
+  #belongs_to  :avatar, :class_name => "Photo", :foreign_key => "avatar_id"
   belongs_to  :metro_area
   belongs_to  :state
   belongs_to  :country

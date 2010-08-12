@@ -8,7 +8,7 @@ xml.graph_data do
       "label" => log.user.login, 
       "tooltip" => log.user.login,
       "graphic_type" => "image",
-      "graphic_image_url" => application_url[0..application_url.length-2] + log.user.avatar_photo_url(:thumb)
+      "graphic_image_url" => application_url[0..application_url.length-2] + log.user.avatar.url(:thumb)
       )
       
       # task node

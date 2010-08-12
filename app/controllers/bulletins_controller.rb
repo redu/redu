@@ -23,6 +23,7 @@ class BulletinsController < BaseController
     @bulletin.school = School.find(params[:school_id])
     @bulletin.owner = current_user
     
+    puts @bulletin.state
     respond_to do |format|
       if @bulletin.save
         flash[:notice] = 'A notícia foi criada e adicionada à rede.'

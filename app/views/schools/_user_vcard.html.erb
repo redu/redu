@@ -1,7 +1,7 @@
 <div id="comment_member">
 		<div id="comment_user_photo">
 			<%= 
-                link_to image_tag( user.avatar_photo_url(:thumb), 
+                link_to image_tag( user.avatar.url(:thumb), 
                     {:width => "50", :height=>"50", :border => 0 }), user 
             %> 
 		</div>

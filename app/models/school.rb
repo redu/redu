@@ -5,10 +5,11 @@ class School < ActiveRecord::Base
   acts_as_voteable
   has_attached_file :avatar, 
     :storage => :s3,
-    :styles => { :medium => "200x200>", :thumb => "100x100>" },
+    :styles => { :medium => "200x200>", :thumb => "100x100>", :nano => "24x24>" },
     :s3_credentials => S3_CREDENTIALS,
     :bucket => S3_CREDENTIALS['bucket'],
-    :path => ":attachment/:id/:style/:basename.:extension"
+    :path => "schools/:attachment/:id/:style/:basename.:extension",
+    :default_url => AppConfig.paperclip['default_url']
       
   # CALLBACKS
   before_create :create_root_folder

@@ -114,7 +114,7 @@ padding: 15px 10px;
 				<li><a href="">Outra opçao</a></li>
 			</ul>
 		</span>
-		  <%=  link_to image_tag( current_user.avatar_photo_url(:thumb), 
+		  <%=  link_to image_tag( current_user.avatar.url(:thumb), 
                     {:class=> "photo", :border => 0 }), current_user   %> 
 		<%= link_to current_user.display_name, current_user, :class => "name" %>
 		<%= link_to "Editar", edit_user_path(current_user), :class => "edit" %>

@@ -61,10 +61,10 @@ image:
     content_type: ['image/jpg', 'image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png']
 
 photo:
-  missing_thumb: '/images/missing_pic.jpg' #'/images/icon_missing_thumb.gif'
-  missing_medium: '/images/missing_pic.jpg' #"/images/icon_missing_medium.gif"
-  missing_thumb_school: '/images/missing_pic_school.png' #'/images/icon_missing_thumb.gif'
-  missing_medium_school: '/images/missing_pic_school.png' #"/images/icon_missing_medium.gif"
+  missing_thumb: 'http://redu_assets.s3.amazonaws.com/images/missing_pic.jpg' #'/images/icon_missing_thumb.gif'
+  missing_medium: 'http://redu_assets.s3.amazonaws.com/images/missing_pic.jpg' #"/images/icon_missing_medium.gif"
+  missing_thumb_school: 'http://redu_assets.s3.amazonaws.com/images/missing_pic_school.png' #'/images/icon_missing_thumb.gif'
+  missing_medium_school: 'http://redu_assets.s3.amazonaws.com/images/missing_pic_school.png' #"/images/icon_missing_medium.gif"
   attachment_fu_options:
     resize_to: "465>"
     min_size: 1    
@@ -94,7 +94,10 @@ clipping:
     thumbnails: {thumb: "c100x100!", medium_square: "c200x200!", medium: "200>"}
     storage: 'file_system'
     content_type: ['image/jpg', 'image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png']
-    
+
+paperclip:
+  default_url: "http://redu_assets.s3.amazonaws.com/images/missing_pic.jpg"
+  
 reserved_logins: [
   'about', 
   'account', 

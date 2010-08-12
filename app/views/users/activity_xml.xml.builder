@@ -6,7 +6,7 @@ xml.graph_data do
       "label" => @user.login, 
       "tooltip" => @user.login,
       "graphic_type" => "image",
-      "graphic_image_url" => application_url[0..application_url.length-2] + @user.avatar_photo_url(:thumb)
+      "graphic_image_url" => application_url[0..application_url.length-2] + @user.avatar.url(:thumb)
       )
       
     for log in @logs
@@ -16,7 +16,7 @@ xml.graph_data do
       "label" => log.user_id.to_s,#log.login, 
       "tooltip" => log.user_id.to_s#log.login
 #      "graphic_type" => "image", # TODO avatar??
-#      "graphic_image_url" => application_url[0..application_url.length-2] + log.user.avatar_photo_url(:thumb)
+#      "graphic_image_url" => application_url[0..application_url.length-2] + log.user.avatar.url(:thumb)
       )
       
       # task node

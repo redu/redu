@@ -1,7 +1,7 @@
 <li class="clearfix" id="status-<%= question.id %>">
     <div class="photo overlay">
     <img src="images/question-mark.png" class="mark" alt="" />
-    <%= image_tag( question.user.avatar_photo_url(:thumb), {:width => "50", :height=>"50" })%>    
+    <%= image_tag( question.user.avatar.url(:thumb), {:width => "50", :height=>"50" })%>    
     </div>
     <div class="activity clearfix question">
         <div class="actions">

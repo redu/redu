@@ -1,7 +1,7 @@
 
 <div id="comment_<%=comment.id%>" class="comments_item"> <!-- comments_item -->
 		<div id="comments_foto">
-			<%= link_to image_tag(comment.user.avatar_photo_url(:thumb), :height => '40', :width => '40', :alt => "#{comment.user.login}"), user_path(comment.user), :rel => 'bookmark', :class => 'move_foto', :title => "#{comment.user.login}'s profile" %>
+			<%= link_to image_tag(comment.user.avatar.url(:thumb), :height => '40', :width => '40', :alt => "#{comment.user.login}"), user_path(comment.user), :rel => 'bookmark', :class => 'move_foto', :title => "#{comment.user.login}'s profile" %>
 			</div>
 		<div id="comments_txt">
 			<%= link_to comment.user.login, user_path(comment.user) %>:

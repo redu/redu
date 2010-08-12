@@ -10,7 +10,7 @@
     -box :id => "profile_details" do
       %h3=:profile_photo.l
       = @user.vendor ? "<div class='right_corner'><div class='community_pro'></div></div>" : ''
-      = image_tag( @user.avatar_photo_url(:medium), :class => "polaroid" )
+      = image_tag( @user.avatar.url(:medium), :class => "polaroid" )
       %label
         =:choose_a_photo_for_your_profile.l
       = file_field :avatar, :uploaded_data, :size => "20"

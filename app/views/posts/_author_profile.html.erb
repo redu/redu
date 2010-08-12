@@ -4,7 +4,7 @@
 	</label>
 	<dl>
 		<dt>
-			<%= link_to image_tag( user.avatar_photo_url(:thumb), "height"=>"50", "alt"=>"#{user.login}", "width"=>"50" ), user_path(user), :title => "#{user.login}'s"+ :profile.l %>
+			<%= link_to image_tag( user.avatar.url(:thumb), "height"=>"50", "alt"=>"#{user.login}", "width"=>"50" ), user_path(user), :title => "#{user.login}'s"+ :profile.l %>
 		</dt>
 		<dd>
 			<%= link_to user.login, user_path(user), :class => 'url' %>

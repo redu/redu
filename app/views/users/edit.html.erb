@@ -3,10 +3,10 @@
 	<%= error_messages_for :user %>	
 	<% field_set_tag "Foto do seu perfil" do %>
 		<h3><%= :profile_photo.l %></h3>
-		<%= image_tag( @user.avatar_photo_url(:thumb), :class => "polaroid" ) %>
+		<%= image_tag( @user.avatar.url(:thumb), :class => "polaroid" ) %>
 
 		<%= label_tag :avatar, :choose_a_photo_for_your_profile.l %>
-		<%= file_field :avatar, :uploaded_data, :size => "20"%>
+		<%= file_field :user, :avatar %>
 		
 		<%= submit_tag :save_changes.l %>
 	<% end %>

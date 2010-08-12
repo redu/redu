@@ -1,6 +1,6 @@
 <div id="move_item">
     <div id="move_foto">
-        <%= link_to image_tag(item.user.avatar_photo_url(:thumb), :height => '36', :width => '36', :border => 0, :alt => "#{item.user.login}"), user_path(item.user), :rel => 'bookmark', :class => 'move_foto', :title => "Perfil de #{item.user.login}" %> 
+        <%= link_to image_tag(item.user.avatar.url(:thumb), :height => '36', :width => '36', :border => 0, :alt => "#{item.user.login}"), user_path(item.user), :rel => 'bookmark', :class => 'move_foto', :title => "Perfil de #{item.user.login}" %> 
     </div>
     <div id="move_txt">
     	
