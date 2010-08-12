@@ -132,7 +132,7 @@ class PostTest < ActiveSupport::TestCase
   end
   
   def test_image_for_excerpt_for_post_with_no_image_returns_avatar_url
-    assert_equal posts(:funny_post).user.avatar_photo_url(:medium), posts(:funny_post).image_for_excerpt
+    assert_equal posts(:funny_post).user.avatar.url(:medium), posts(:funny_post).image_for_excerpt
   end
   
   def test_has_been_favorited_by_user
