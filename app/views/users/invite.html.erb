@@ -1,55 +1,71 @@
-<script type="text/javascript" src="http://www.plaxo.com/css/m/js/util.js"></script>
-<script type="text/javascript" src="http://www.plaxo.com/css/m/js/basic.js"></script>
-<script type="text/javascript" src="http://www.plaxo.com/css/m/js/abc_launcher.js"></script>
+<div class="grid_16">
+<div id="breadcrumbs">
+	<a href="#">meu perfil</a> > convidar
+</div>
 
-<div id="all_content3">
-<div id="col_content">
-	<div id="breadcrumbs"><a href="<%=application_url%>">início</a> > convidar </div>
- 	<div id="title"><%=:invite_your_friends_to_join.l.upcase%>
-	</div>
-	
-	<BR><BR><BR>
-	<p>
-		 Quanto mais pessoas você convida, melhor o Redu se torna.
-	</p>
-	
-	<p>
-		As pessoas que se cadastrarem através de seu convite serão automaticamente seus seguidores.
-	</p>
-	
-	
-	
-	<% form_for(:invitation, :url => user_invitations_path(:user_id => @user.id ), :html => {:class => "MainForm"} ) do |f|%>
+<div id="title_video">Convidar</div>
+</div>
+
+<div class="grid_9">
 		
-		<BR/>
-		<span style="font-size:12px">
-		Clique aqui
-		<a href="#" onclick="showPlaxoABChooser('invitation_email_addresses', '/base/plaxo'); return false;">
-		<img src="http://www.plaxo.com/images/abc/buttons/add_button.gif" alt="<%=:add_from_my_address_book.l%>" border="0">
-		</a> para importar endereços da sua lista de contatos (GMail, Yahoo, AOL, etc).
-		</span>
-		<BR/><BR/>
+	<% form_for :invitation, :url => user_invitations_path(:user_id => @user.id ) do |f|%>
+		<% field_set_tag 'Contatos' do %>
 		
 		<label for='email_addresses'>
         <%=:enter_e_mail_addresses.l %>
-        <em><%=:comma_separated.l%></em>:
-      </label><BR>
-      <%= f.text_area :email_addresses , :rows => "5" %><BR/><BR/>
+        <span class="snippet"> <%=:comma_separated.l%></span>
+      </label>
+      <%= f.text_area :email_addresses , :rows => "5" %>
 	  
 	  
       <label for='message'>
           <%=:write_a_message.l %>
-      </label><BR>
-      <%= f.text_area :message, :rows => "5" %>
+      </label>
+      <%= f.text_area :message, :value => "Olá gostaria te de convidar para participar do Redu!", :rows => "5" %>
 	  
-	  <BR/>
-      <p>
-          <%= submit_tag :send_invitations.l %>
+		<div style="width: 100%">
+			<%= submit_tag :send_invitations.l %>
           <%=:or.l %>
           <%= link_to :cancel.l, user_path(@user) %>
-      </p>
-	
+		</div>
+          
+	<%end%>
 	<%end%>
 </div>
+
+<div class="grid_6 ">
+    <div class="y_addinfo">
+        <div class="addinfocontent">
+            <h1>Convide seus amigos!</h1>
+            <p>
+                Quanto mais pessoas você convida, melhor o Redu se torna.
+            </p>
+            <p>
+                As pessoas que se cadastrarem através de seu convite serão automaticamente seus seguidores.
+            </p>
+						
+        </div>
+    </div>
+		
+		<div class="y_addinfo">
+        <div class="addinfocontent">
+            <h1>Importar contatos</h1>
+						
+						<p>
+								Clique aqui
+								<a href="#" onclick="showPlaxoABChooser('invitation_email_addresses', '/base/plaxo'); return false;">
+								<img src="http://www.plaxo.com/images/abc/buttons/add_button.gif" alt="<%=:add_from_my_address_book.l%>" border="0">
+								</a> para importar endereços da sua lista de contatos (GMail, Yahoo, AOL, etc).
+							
+						</p>
+						
+						
+        </div>
+    </div>
 </div>
+
+	
+
+
+
 
