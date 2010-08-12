@@ -11,6 +11,7 @@ class BulletinsController < BaseController
 
   def show
     @bulletin = Bulletin.find(params[:id])
+    @owner = User.find(@bulletin.owner)
   end
 
   def new
@@ -20,6 +21,7 @@ class BulletinsController < BaseController
   def create
     @bulletin = Bulletin.new(params[:bulletin])
     @bulletin.school = School.find(params[:school_id])
+    @bulletin.owner = current_user
     
     respond_to do |format|
       if @bulletin.save
