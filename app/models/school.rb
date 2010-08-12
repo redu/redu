@@ -8,9 +8,8 @@ class School < ActiveRecord::Base
     :styles => { :medium => "200x200>", :thumb => "100x100>" },
     :s3_credentials => S3_CREDENTIALS,
     :bucket => S3_CREDENTIALS['bucket'],
-    :path => ":attachment/:id/:style/:basename.:extension",
-    :url => "http://redu_assets.s3.amazonaws.com/"
-  
+    :path => ":attachment/:id/:style/:basename.:extension"
+      
   # CALLBACKS
   before_create :create_root_folder
 
