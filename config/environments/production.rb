@@ -26,3 +26,11 @@ config.action_controller.asset_host = "http://redu_assets.s3.amazonaws.com"
 
 # Enable threaded mode
 # config.threadsafe!
+
+PAPERCLIP_STORAGE_OPTIONS = {
+  :storage => :s3,
+  :s3_credentials => S3_CREDENTIALS,
+  :bucket => S3_CREDENTIALS['bucket'],
+  :path => "schools/:attachment/:id/:style/:basename.:extension",
+  :default_url => "http://redu_assets.s3.amazonaws.com/images/missing_pic.jpg"
+}

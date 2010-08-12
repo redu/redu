@@ -19,3 +19,5 @@ config.action_controller.perform_caching             = false
 
 # Don't care if the mailer can't send
 config.action_mailer.raise_delivery_errors = false
+
+PAPERCLIP_STORAGE_OPTIONS = {:default_url => '/images/icon_missing_thumb.gif'}

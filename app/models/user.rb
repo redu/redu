@@ -19,13 +19,9 @@ class User < ActiveRecord::Base
     c.validates_format_of_email_field_options = { :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/ }
   end
   
-  has_attached_file :avatar, 
-    :storage => :s3,
-    :styles => { :medium => "200x200>", :thumb => "100x100>", :nano => "24x24>" },
-    :s3_credentials => S3_CREDENTIALS,
-    :bucket => S3_CREDENTIALS['bucket'],
-    :path => "users/:attachment/:id/:style/:basename.:extension",
-    :default_url => AppConfig.paperclip['default_url']
+  has_attached_file :avatar, {
+    :styles => { :medium => "200x200>", :thumb => "100x100>", :nano => "24x24>" }
+  }.merge(PAPERCLIP_STORAGE_OPTIONS)
   
   ajaxful_rater
   acts_as_taggable  

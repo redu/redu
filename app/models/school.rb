@@ -3,15 +3,10 @@ class School < ActiveRecord::Base
   # PLUGINS
   acts_as_taggable
   acts_as_voteable
-  #has_attached_file :avatar, :styles => { :medium => "200x200>", :thumb => "200x100>" }
-  
-  has_attached_file :avatar, 
-    :storage => :s3,
+  has_attached_file :avatar, {
     :styles => { :medium => "200x200>", :thumb => "100x100>", :nano => "24x24>" },
-    :s3_credentials => S3_CREDENTIALS,
-    :bucket => S3_CREDENTIALS['bucket'],
-    :path => "schools/:attachment/:id/:style/:basename.:extension",
-    :default_url => AppConfig.paperclip['default_url']
+  }.merge(PAPERCLIP_STORAGE_OPTIONS)
+
       
   # CALLBACKS
   before_create :create_root_folder
