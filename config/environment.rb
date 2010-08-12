@@ -29,6 +29,12 @@ Rails::Initializer.run do |config|
   config.gem "authlogic-oauth", :lib => "authlogic_oauth"
   config.gem "right_aws", :version => '2.0.0'
   
+  # S3 credentials
+  if File.exists?("#{RAILS_ROOT}/config/s3.yml")
+    S3_CONFIG = YAML.load_file("#{RAILS_ROOT}/config/s3.yml")
+    S3_CREDENTIALS = S3_CONFIG[Rails.env]
+  end
+  
   if File.exists?( File.join(RAILS_ROOT, 'config', 'application.yml') )
     file = File.join(RAILS_ROOT, 'config', 'application.yml')
     users_app_config = YAML.load_file file

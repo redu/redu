@@ -3,7 +3,13 @@ class School < ActiveRecord::Base
   # PLUGINS
   acts_as_taggable
   acts_as_voteable
-  has_attached_file :avatar, :styles => { :medium => "200x200>", :thumb => "100x100>" }
+  has_attached_file :avatar, 
+    :storage => :s3,
+    :styles => { :medium => "200x200>", :thumb => "100x100>" },
+    :s3_credentials => S3_CREDENTIALS,
+    :bucket => S3_CREDENTIALS['bucket'],
+    :path => ":attachment/:id/:style/:basename.:extension",
+    :url => "http://redu_assets.s3.amazonaws.com/"
   
   # CALLBACKS
   before_create :create_root_folder

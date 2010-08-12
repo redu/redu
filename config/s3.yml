@@ -6,8 +6,13 @@ staging:
 production:
   aws_access_key: AKIAIRKVQDTWT2NN4J4Q
   aws_secret_access_key: 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
-  bucket_base_name: redufiles
+  bucket: redu_assets
 
+development:
+  access_key_id: AKIAIRKVQDTWT2NN4J4Q
+  secret_access_key: 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
+  bucket: redu_assets_development
+  
 backup:
   aws_access_key: 'AKIAIRKVQDTWT2NN4J4Q'
   aws_secret_access_key: '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'
