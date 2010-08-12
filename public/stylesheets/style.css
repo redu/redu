@@ -103,6 +103,20 @@ z-index: 1000;
 /**
    @overall 
 **/
+.twitter{
+	background: url(../images/signin_twitter.png) no-repeat 0% 0%;
+border: 0 ;
+height: 22px;
+text-indent: -3000px;
+width: 150px;
+}
+.twitter:hover {
+  background-position: 0px -24px;
+}
+.twitter:active {
+  background-position: 0px -48px;
+}
+
 .photo {
         width: 48px;
     }
@@ -1711,10 +1725,10 @@ div.content div.content {
 	text-align: center;
 }
 
-#group-header span.likeable {
-	display: block;
+#group-header span.like {
+	/*display: block;
 	margin-top: 5px;
-	padding: 5px 30px;
+	padding: 5px 30px;*/
 	font-size: .8em;
 	color: gray;
 }
