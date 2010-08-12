@@ -135,6 +135,10 @@ class BaseController < ApplicationController
     current_user && current_user.admin? ? true : access_denied
   end
   
+  def school_admin_required(school_id)
+    (current_user && current_user.school_admin?(school_id)) ? true : access_denied
+  end
+  
   def admin_or_moderator_required
     current_user && (current_user.admin? || current_user.moderator?) ? true : access_denied
   end

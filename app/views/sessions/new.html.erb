@@ -2,25 +2,34 @@
 <div class="grid_10">
 	
 	
-            <% form_tag sessions_path, :class => 'MainForm' do %>
 						
-<% field_set_tag "Login" do %>
+						<% form_for @user_session, :url => sessions_path do |f| %>
+						
+					<% field_set_tag "Login" do %>
 
             <label for='username'>
                 <%=:username.l %>
             </label>
-            <%= text_field_tag 'login', nil, :size => 35 %>
+            <%= f.text_field :login, :size => 35 %>
             <label for='username'>
                 <%=:password.l %>
             </label>
-            <%= password_field_tag 'password', nil, :size => 35 %>
+            <%= f.password_field :password, :size => 35 %>
             <label for='remember_me'>
                 <%=:remember_me.l %>
-                <%= check_box_tag 'remember_me' %>
+                <%= f.check_box :remember_me %>
             </label>
-            <%= submit_tag "Entrar" %>
+            <%= f.submit "Entrar" %>
+						
+						<% unless AppConfig.closed_beta_mode %>
+						<% form_tag({:controller => :users, :action => :create}, {:method => :post}) do %>
+							<%= oauth_login_button :value => "Login with Twitter", :class => "twitter" %>
+						 <% end %>
+ 						<% end %>
+						
             <% end %>
- <% end %>
+						<% end %>
+						
 </div>
 
 <div class="grid_6 user_instructions">

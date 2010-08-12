@@ -54,15 +54,30 @@
 	<% else %>
 		<a href="#user-login" class="pandora closed">Login</a>
 		<div id="user-login" class="option hide">
-			<form action="" method="" class="common">
-			<fieldset>
-			<label for="username">Login</label>
-			<input type="text" id="username" name="" />
-			<label for="password">Senha</label>
-			<input type="password" id="password" name="" />
-			<button type="submit">Entrar</button>
-			</fieldset>
-			</form>
+			<% @user_session = UserSession.new %>
+			<% form_for @user_session, :url => sessions_path do |f| %>
+			<label for='username'>
+                <%=:username.l %>
+            </label>
+            <%= f.text_field :login, :size => 35 %>
+            <label for='username'>
+                <%=:password.l %>
+            </label>
+            <%= f.password_field :password, :size => 35 %>
+            <label for='remember_me'>
+                <%=:remember_me.l %>
+                <%= f.check_box :remember_me %>
+            </label>
+            <%= f.submit "Entrar" %>
+						<% unless AppConfig.closed_beta_mode %>
+						<% form_tag({:controller => :users, :action => :create}, {:method => :post}) do %>
+							<%= oauth_login_button :value => "Login with Twitter", :class => "twitter" %>
+						 <% end %>
+ 						<% end %>
+            <% end %>
+			
+			
+			
 		</div>
 	<% end %>
 

@@ -3,6 +3,8 @@ class School < ActiveRecord::Base
   # PLUGINS
   acts_as_taggable
   acts_as_voteable
+  #has_attached_file :avatar, :styles => { :medium => "200x200>", :thumb => "200x100>" }
+  
   has_attached_file :avatar, 
     :storage => :s3,
     :styles => { :medium => "200x200>", :thumb => "100x100>", :nano => "24x24>" },

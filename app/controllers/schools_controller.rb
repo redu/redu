@@ -1,19 +1,14 @@
 class SchoolsController < BaseController
   layout 'new_application'
-  before_filter :login_required,  :except => [:join, :unjoin, :member]
-  # before_filter :admin_required,  :only => [:new, :create]
   
+  before_filter :login_required,  :except => [:join, :unjoin, :member]
+  #before_filter :admin_required,  :only => [:new, :create]
+  #before_filter :school_admin_required,  :except => [:new, :create, :vote]
 
-
-  def moderate_resource
-    params[:approve]
-    params[:resource_id]
-    params[:resource_type]
-    case params[:resource_type].downcase
-      when 'course'
-    when 'exam'
-     # Exam.update_attribute
-    end
+  before_filter :except => [:new, :create, :vote, :show, :index, :join, :unjoin, 
+                             :member, :onwer, :members, :teachers] do |controller| 
+   # puts 'oi'#params[:id] if params
+    controller.school_admin_required(controller.params[:id])
   end
   
   
@@ -27,7 +22,16 @@ class SchoolsController < BaseController
   def vote
     @school = School.find(params[:id])
     current_user.vote(@school, params[:like])
-    head :ok
+    respond_to do |format|
+      format.js do 
+        render :update do |page|
+          page << "$('#like_spinner').hide()"
+          page << "$('#like_link').show()"
+          page << "$('#like_link').attr('onclick', 'return false;')"
+           page << "$('#like_count').html('" + @school.votes_for().to_s + "')" # TODO performance + uma consulta?
+        end
+      end
+    end
   end
   
   

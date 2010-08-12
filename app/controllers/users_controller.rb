@@ -248,24 +248,40 @@ class UsersController < BaseController
     
     
     
-    # @user.role  = Role[:member]
-    
-    user_id = @user.save
-    
-    if (!AppConfig.require_captcha_on_signup || verify_recaptcha(@user)) && user_id
-      create_friendship_with_inviter(@user, params)
-      
-      if @key 
-        @key.user = @user
-        @key.save
+    @user.save do |result| # LINE A
+      if result
+        
+        #   if (!AppConfig.require_captcha_on_signup || verify_recaptcha(@user)) && user_id
+        
+         create_friendship_with_inviter(@user, params)
+          if @key 
+            @key.user = @user
+            @key.save
+          end
+        
+          flash[:notice] = :email_signup_thanks.l_with_args(:email => @user.email) 
+           redirect_to signup_completed_user_path(@user)
+      else
+        unless @user.oauth_token.nil?
+          @user = User.find_by_oauth_token(@user.oauth_token)
+          unless @user.nil?
+              @user_session = UserSession.create(@user)
+              current_user = @user_session.record
+              flash[:notice] = :thanks_youre_now_logged_in.l
+              redirect_back_or_default user_path(current_user)      
+          else
+              flash[:notice] = :uh_oh_we_couldnt_log_you_in_with_the_username_and_password_you_entered_try_again.l
+              render :action => :new
+          end
+        else
+          #redirect_back_or_default signup_path
+           render :action => 'new'
+        end
       end
-      
-      flash[:notice] = :email_signup_thanks.l_with_args(:email => @user.email) 
-      redirect_to signup_completed_user_path(@user)
-      #redirect_to user_path(@user)
-    else
-      render :action => 'new'
     end
+    
+    
+    
     
   end
   

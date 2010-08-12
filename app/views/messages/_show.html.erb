@@ -22,7 +22,7 @@ voltar para <%= link_to_remote "caixa de entrada", :url =>  user_messages_path(@
 					<%= @message.created_at.to_s(:long) %>
 				</p>
 				<p class='message_body'>
-					<%# auto_link(h(@message.body)) %>
+					<%= auto_link(@message.body) %>
 				</p>
 				
 			

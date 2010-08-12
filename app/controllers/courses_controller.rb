@@ -4,6 +4,8 @@ class CoursesController < BaseController
     
   before_filter :login_required, :except => [:index]
   #before_filter :check_if_removed, :except => [:index]
+   # before_filter :require_no_user, :only => [:new, :create]
+ # before_filter :require_user, :only => :destroy
   
   uses_tiny_mce(:options => AppConfig.advanced_mce_options, :only => [:new, :edit, :update])
   

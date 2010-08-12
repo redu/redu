@@ -512,8 +512,8 @@ class User < ActiveRecord::Base
     
   end
 
-  def get_association_with(school)
-    association = UserSchoolAssociation.find(:first, :conditions => ['user_id = ? AND school_id = ?', self.id, school.id])
+  def get_association_with(school_id)
+    association = UserSchoolAssociation.find(:first, :conditions => ['user_id = ? AND school_id = ?', self.id, school_id])
   end
   
   
@@ -527,14 +527,9 @@ class User < ActiveRecord::Base
     association && association.role && association.role.eql?(Role[:coodinator])
   end
   
-  def school_admin?(school = nil)
-    if school
-      association = get_association_with school
+  def school_admin?(school_id)
+      association = get_association_with school_id
       association && association.role && association.role.eql?(Role[:school_admin])
-    else
-      association = UserSchoolAssociation.find(:first, :conditions => ['user_id = ?', self.id])
-      association && association.role && association.role.eql?(Role[:school_admin])
-    end
   end
   
   def student?(school)
