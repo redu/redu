@@ -89,8 +89,14 @@ module AuthenticatedSystem
     def access_denied
       respond_to do |accepts|
         accepts.html do
-          store_location
-          redirect_to login_path and return false
+          
+          flash[:notice] = "Você não tem permissão para acessar esse conteúdo"
+          if params[:controller] == 'schools' and params[:id]
+            redirect_to school_path(:id => params[:id])
+          else
+            store_location
+            redirect_to login_path and return false
+          end
         end
         accepts.xml do
           headers["Status"]           = "Unauthorized"

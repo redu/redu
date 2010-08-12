@@ -36,7 +36,7 @@
 	<% end %>
 	<% field_set_tag "Senhas" do %>
 		<% if AppConfig.closed_beta_mode %>
-			<%= f.label :beta_keu, "Chave de acesso:" %>
+			<%= f.label :beta_key, "Chave de acesso:" %>
 		 	<%= text_field_tag :beta_key, @beta_key, {:size => 6} %>
 		<% end %>
 	
@@ -59,7 +59,7 @@
 <div class="grid_6 user_instructions">
     <h3><%=:dont_have_an_account.l %></h3>
 
-    <%= link_to "&raquo; " + :click_here_to_sign_up.l, signup_url %>
+    <%= link_to "&raquo; " + :click_here_to_sign_up.l, "/signup" %>
 
 
     <h3><%=:forgot_your_password.l %></h3>
