@@ -8,13 +8,13 @@ class Bulletin < ActiveRecord::Base
 
 	#ASSOCIATIONS
 	belongs_to :school
-	belongs_to :user
+  belongs_to :owner , :class_name => "User" , :foreign_key => "owner"
 
 	#VALIDATIONS
 	validates_presence_of :title, :description
 
 	# Máquina de estados para moderação das Notícias
-  acts_as_state_machine :initial => :pending
+  acts_as_state_machine :initial => :waiting
 	
 	state :waiting
   state :approved
@@ -35,6 +35,5 @@ class Bulletin < ActiveRecord::Base
   event :moderate do
     transitions :from => :pending, :to => :waiting
   end
-	
 
 end

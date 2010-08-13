@@ -7,7 +7,7 @@ class SchoolsController < BaseController
 
   before_filter :except => [:new, :create, :vote, :show, :index, :join, :unjoin, 
                              :member, :onwer, :members, :teachers] do |controller| 
-   # puts 'oi'#params[:id] if params
+    #puts 'oi'#params[:id] if params
     controller.school_admin_required(controller.params[:id])
   end
   
@@ -115,6 +115,7 @@ class SchoolsController < BaseController
   
   
   def manage
+    puts "ISAHDIAOSDH"
      @school = School.find(params[:id])
   end
   
@@ -177,8 +178,8 @@ class SchoolsController < BaseController
   def admin_bulletins
     @school = School.find(params[:id])
 
-    @bulletins = Bulletin.paginate(:conditions => ["school_id = ?", @school.id], 
-        #:include => :owner, 
+    @bulletins = Bulletin.paginate(:conditions => ["school_id = ? AND state LIKE ?", @school.id, "waiting"], 
+        :include => :owner, 
         :page => params[:page], 
         :order => 'updated_at ASC', 
         :per_page => 20)
@@ -306,19 +307,31 @@ class SchoolsController < BaseController
  
  #TODO Fazer classe para moderar em batch
  def moderate_bulletins
-   params[:bulletin].each_pair do |id, decision|
-    b = Bulletin.find(id)
-    b.status = decision
-    b.save
-   end
+   if params[:bulletin]
+     approved = params[:bulletin].reject{|k,v| v == 'reject'}
+     rejected = params[:bulletin].reject{|k,v| v == 'approve'}
+     approved_ids = approved.keys.join(',')
+     rejected_ids = rejected.keys.join(',')
 
-   @approved_bulletins = Bulletin.all(:conditions => ["id IN (?)", approved_ids]) unless approved_ids.empty?
-   @rejected_bulletins = Bulletin.all(:conditions => ["id IN (?)", rejected_ids]) unless rejected_ids.empty?
+     @approved_bulletins = Bulletin.all(:conditions => ["id IN (?)", approved_ids]) unless approved_ids.empty?
+     @rejected_bulletins = Bulletin.all(:conditions => ["id IN (?)", rejected_ids]) unless rejected_ids.empty?
+     @school = 
+     # Feito de um por um só por enquanto!
+     @approved_bulletins.each do |b|
+       b.approve!
+     end
    
-   @approved_bulletins.each do |b|
-      b.status
+     @rejected_bulletins.each do |b|
+       b.reject!
+     end
+
+     flash[:notice] = 'Notícias moderadas!'
+   else
+     flash[:error] = "Para moderar você precisa escolher entre aprovar ou rejeitar."
    end
    
+   @school = School.find(params[:school_id])
+   redirect_to admin_bulletins_school_path(@school)
  end
  
  

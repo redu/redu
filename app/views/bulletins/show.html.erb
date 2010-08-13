@@ -1,6 +1,7 @@
 <div class="main grid_16">
-	<div id="title">VER NOTÍCIA</div>
+	<h3>VER NOTÍCIA</h3>
 
+<div id="clearfix">
 	<%= render :partial => 'bulletins/item', :bulletin => @bulletin %>
 	
 	<div id="rating_video">
@@ -16,7 +17,7 @@
 			<%= link_to_remote image_tag('thumbs_down.png', :border => '0'), :url=> {:action => :vote, :id => @bulletin.id, :like => false}, :success => 'disableVoting();' %><br/><%= @bulletin.votes_against%></span>
 	    </span>
     </div>
-
+</div>
 
 	<%= link_to 'Ver notícias da rede', school_bulletins_path(@bulletin.school) %>
 </div>
