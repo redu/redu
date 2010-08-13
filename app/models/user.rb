@@ -509,7 +509,8 @@ class User < ActiveRecord::Base
   end
 
   def get_association_with(school_id)
-    association = UserSchoolAssociation.find(:first, :conditions => ['user_id = ? AND school_id = ?', self.id, school_id])
+    @school = School.find(school_id) #TODO performance - 
+    association = UserSchoolAssociation.find(:first, :conditions => ['user_id = ? AND school_id = ?', self.id, @school.id])
   end
   
   
