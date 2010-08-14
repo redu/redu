@@ -3,12 +3,11 @@ require 'open-uri'
 require 'pp'
 
 class BaseController < ApplicationController
-  #layout 'new_application'
+  layout 'new_application'
   include AuthenticatedSystem
   include LocalizedApplication
   around_filter :set_locale 
   
-  #before_filter :login_from_cookie  
   
   skip_before_filter :verify_authenticity_token, :only => :footer_content
   helper_method :commentable_url
@@ -91,27 +90,32 @@ class BaseController < ApplicationController
   end
 
   def site_index
-    @posts = Post.find_recent
-    #@courses = Course.all :conditions => ["state LIKE 'approved' AND course_type LIKE 'seminar' AND public = true"], :include => :owner, :order => 'created_at DESC', :limit => 5
-    @courses = Course.seminars.limited(5)
-    @iclasses = Course.iclasses.limited(5)
-    @pages = Course.pages.limited(5)
+#    @posts = Post.find_recent
+#    @courses = Course.seminars.limited(5)
+#    @iclasses = Course.iclasses.limited(5)
+#    @pages = Course.pages.limited(5)
+#    
+#    @schools = School.all :order => 'created_at DESC', :limit => 5 #TODO ordenar por numero de membros
+#    
+#    @rss_title = "#{AppConfig.community_name} "+:recent_posts.l
+#    @rss_url = rss_url
+#    respond_to do |format|     
+#      format.html { get_additional_homepage_data }
+#      format.rss do
+#        render_rss_feed_for(@posts, { :feed => {:title => "#{AppConfig.community_name} "+:recent_posts.l, :link => recent_url},
+#                              :item => {:title => :title,
+#                                        :link =>  Proc.new {|post| user_post_url(post.user, post)},
+#                                         :description => :post,
+#                                         :pub_date => :published_at}
+#          })
+#      end
+#    end  
+
+  
+        @schools = School.all :order => 'created_at DESC', :limit => 6 
+        @courses = Course.all :order => 'created_at DESC', :limit => 10 #TODO ordenar por numero de membros
+        
     
-    @schools = School.all :order => 'created_at DESC', :limit => 5 #TODO ordenar por numero de membros
-    
-    @rss_title = "#{AppConfig.community_name} "+:recent_posts.l
-    @rss_url = rss_url
-    respond_to do |format|     
-      format.html { get_additional_homepage_data }
-      format.rss do
-        render_rss_feed_for(@posts, { :feed => {:title => "#{AppConfig.community_name} "+:recent_posts.l, :link => recent_url},
-                              :item => {:title => :title,
-                                        :link =>  Proc.new {|post| user_post_url(post.user, post)},
-                                         :description => :post,
-                                         :pub_date => :published_at}
-          })
-      end
-    end    
   end
   
   def footer_content

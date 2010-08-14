@@ -7,8 +7,8 @@ class SchoolsController < BaseController
 
   before_filter :except => [:new, :create, :vote, :show, :index, :join, :unjoin, 
                              :member, :onwer, :members, :teachers] do |controller| 
-    #puts 'oi'#params[:id] if params
-    controller.school_admin_required(controller.params[:id])
+   puts  params[:id] if params
+    controller.school_admin_required(controller.params[:id]) if controller.params[:id]
   end
   
   
@@ -115,7 +115,6 @@ class SchoolsController < BaseController
   
   
   def manage
-    puts "ISAHDIAOSDH"
      @school = School.find(params[:id])
   end
   
@@ -568,7 +567,7 @@ class SchoolsController < BaseController
   else
     UserSchoolAssociation.create({:user => current_user, :school => @school, :status => "approved", :role_id => 4}) #:role => Role[:school_admin]
     session[:school_step] = session[:school_params] = nil
-    flash[:notice] = "School saved!"
+    flash[:notice] = "Rede criada!"
     redirect_to @school
   end
 
