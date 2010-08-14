@@ -305,7 +305,6 @@ class SchoolsController < BaseController
     redirect_to pending_members_school_path
  end
  
- #TODO Fazer classe para moderar em batch
  def moderate_bulletins
    if params[:bulletin]
      approved = params[:bulletin].reject{|k,v| v == 'reject'}
@@ -313,24 +312,24 @@ class SchoolsController < BaseController
      approved_ids = approved.keys.join(',')
      rejected_ids = rejected.keys.join(',')
 
-     @approved_bulletins = Bulletin.all(:conditions => ["id IN (?)", approved_ids]) unless approved_ids.empty?
-     @rejected_bulletins = Bulletin.all(:conditions => ["id IN (?)", rejected_ids]) unless rejected_ids.empty?
-     @school = 
-     # Feito de um por um só por enquanto!
-     @approved_bulletins.each do |b|
-       b.approve!
-     end
-   
-     @rejected_bulletins.each do |b|
-       b.reject!
-     end
+     puts "approved"
+     puts approved_ids
+     puts "rejected"
+     puts rejected_ids
+
+     #@approved_bulletins = Bulletin.all(:conditions => ["id IN (?)", approved_ids]) unless approved_ids.empty?
+     #@rejected_bulletins = Bulletin.all(:conditions => ["id IN (?)", rejected_ids]) unless rejected_ids.empty?
+     
+     #TODO [BUG] Só está pegando um id por vez.
+     Bulletin.update_all("state = 'approved'", ["id IN (?)", approved_ids]) if approved_ids
+     Bulletin.update_all("state = 'disaproved'", ["id IN (?)", rejected_ids]) if rejected_ids
 
      flash[:notice] = 'Notícias moderadas!'
    else
      flash[:error] = "Para moderar você precisa escolher entre aprovar ou rejeitar."
    end
-   
-   @school = School.find(params[:school_id])
+
+   @school = School.find(params[:id])
    redirect_to admin_bulletins_school_path(@school)
  end
  
