@@ -1,6 +1,16 @@
 <li class="clearfix">
-	<% if is_index %>
-		<%= bulletin.title %>		
-	<% end %>
-	<%= bulletin.description[0..100] %>
+
+	<%= link_to bulletin.title, bulletin %>
+	<div class="pretty-text">		
+		<% if is_index %>
+			<% if bulletin.description.size < 300 %>
+				<%= bulletin.description %>
+			<% else %>
+				<%= bulletin.description[0..300]+"..." %>
+			<% end %>
+		<% end %>
+	</div>
+	
+	<%= bulletin.updated_at %>
+
 </li>

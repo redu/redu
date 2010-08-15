@@ -12,6 +12,8 @@ class Bulletin < ActiveRecord::Base
 
 	#VALIDATIONS
 	validates_presence_of :title, :description
+	validates_presence_of :user
+	validates_presence_of :school
 
 	# Máquina de estados para moderação das Notícias
   acts_as_state_machine :initial => :waiting
@@ -19,6 +21,7 @@ class Bulletin < ActiveRecord::Base
 	state :waiting
   state :approved
   state :rejected
+	state :error
 
   event :approve do
     transitions :from => :waiting, :to => :approved
@@ -27,13 +30,10 @@ class Bulletin < ActiveRecord::Base
   event :reject do
     transitions :from => :waiting, :to => :rejected
   end
+	
+	#Colocar a data mais simples
+	def simple_data		
+		
+	end
   
-  event :wait do
-    transitions :from => :converting, :to => :waiting
-  end
-
-  event :moderate do
-    transitions :from => :pending, :to => :waiting
-  end
-
 end

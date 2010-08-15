@@ -1,5 +1,5 @@
 <% if @bulletins && @bulletins.size > 0 %>
-<ul class="default">
+<ul class="grid_12">
 	<%= render :partial => 'bulletins/list', :collection => @bulletins, :as => :bulletin, :locals => {
 :is_index => true } %> 
 </ul>

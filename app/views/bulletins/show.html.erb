@@ -1,23 +1,31 @@
 <div class="main grid_16">
 	<h3>VER NOTÍCIA</h3>
 
-<div id="clearfix">
-	<%= render :partial => 'bulletins/item', :bulletin => @bulletin %>
-	
-	<div id="rating_video">
-		<%= ratings_for @bulletin %>
-	</div>	
-	
-	<div class="grid_3 omega options">
-		<span class="likeable">
-		   	<span class="like">
-			<%= link_to_remote image_tag('thumbs_up.png', :border => '0'), :url=> {:action => :vote, :id => @bulletin.id, :like => true}, :success => 'disableVoting();' %><br/><%= @bulletin.votes_for%>
+	<div class="grid_12 omega alpha push_5">
+		<div class="grid_3">		
+			<%= ratings_for @bulletin %>
+		</div>
+		<div class="likeable grid_3">
+			 	<span class="like">
+			<%= link_to_remote image_tag('thumbs_up.png', :border => '0'), :url=> {:action => :vote, :id => 				@bulletin.id, :like => true}, :success => 'disableVoting();' %><br/><%= @bulletin.votes_for%>
 			</span>
 			<span class="deslike">
 			<%= link_to_remote image_tag('thumbs_down.png', :border => '0'), :url=> {:action => :vote, :id => @bulletin.id, :like => false}, :success => 'disableVoting();' %><br/><%= @bulletin.votes_against%></span>
-	    </span>
-    </div>
-</div>
+		</div>
+	
+	</div>	
+	<div class="grid_12 omega alpha">
 
-	<%= link_to 'Ver notícias da rede', school_bulletins_path(@bulletin.school) %>
+		
+		<h4 class="name"><%= @bulletin.title %></h4>
+		<div class="pretty-text">
+			<%= @bulletin.description %>
+		</div>
+		<span class="author">
+			Autor: <%= @owner.display_name %>	
+		</span>	
+	
+		<%= link_to 'Ver notícias da rede', school_bulletins_path(@bulletin.school) %>
+	</div>
+
 </div>
