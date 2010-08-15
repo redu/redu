@@ -6,7 +6,7 @@ class BulletinsController < BaseController
   
   
   def index
-		@bulletins = Bulletin.find(:all)
+		@bulletins = School.find(params[:school_id]).bulletins
   end
 
   def show
