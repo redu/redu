@@ -12,7 +12,7 @@ class Bulletin < ActiveRecord::Base
 
 	#VALIDATIONS
 	validates_presence_of :title, :description
-	validates_presence_of :user
+	validates_presence_of :owner
 	validates_presence_of :school
 
 	# Máquina de estados para moderação das Notícias
