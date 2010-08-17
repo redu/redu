@@ -1246,6 +1246,7 @@ div.recomendations-m .number {
     
     #header .user-actions #user-settings {
         width: 125px;
+				-webkit-box-shadow: #CCC 0px 4px 10px;
     }
     
     #header .user-actions #user-settings ul {
@@ -2030,7 +2031,7 @@ ul.sub-groups > li {
 }
 
 
-#group .sidebar ul.sub-groups li li { 
+.content .sidebar ul.sub-groups li li { 
     border: none;
 }
     
