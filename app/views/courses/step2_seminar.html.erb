@@ -84,18 +84,19 @@
   <%= f.radio_button :external_resource_type, :youtube, {:onchange => "switchCourseFields(2);"} %>
   <%= f.label :external_resource_type_youtube, "Youtube", :class => "inline"  %>
   <%= f.radio_button :external_resource_type, :upload, {:onchange => "switchCourseFields(1);"} %>
-  <%= f.label :external_resource_type_upload, "Upload", :class => "inline"  %><br/><br/>
+  <%= f.label :external_resource_type_upload, "Upload", :class => "inline"  %><br/><br/>	
 
   <div id="upload_resource_field" style="display:none;">
-  <%= f.label :media, "Upload de vídeo" %><br/>
-  <%= f.file_field :media  %><br/><br/>
+  <%= f.label :media, "Upload de vídeo" %>
+  <%= f.file_field :media  %>
   (tamanho máximo: 50MB)
-  </div>
-
+ 	</div>	
   <div id="external_resource_field" style="display:block;">
-  <%= f.label :external_resource, "Link do Vídeo" %><br/>
-  <%= f.text_field :external_resource, :onkeyup => "youtubePreview(this)"  %><br/><br/>
+  <%= f.label :external_resource, "Link do Vídeo" %>
+  <%= f.text_field :external_resource, :onkeyup => "youtubePreview(this)"  %>
   </div>
+	
+
   
 </fieldset>	
 </div>	

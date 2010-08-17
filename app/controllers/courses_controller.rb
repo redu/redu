@@ -360,7 +360,7 @@ class CoursesController < BaseController
                 redirect_to :action => :new, :step => "2", :school_id => params[:school_id]
               }
             else  
-              @school = School.find(params[:school_id])
+              #@school = School.find(params[:school_id])
               format.html { render "step1" }
             end
           end
@@ -369,12 +369,13 @@ class CoursesController < BaseController
     when "2"
         @course = Course.find(session[:course_id])
         
-        
+        puts "Passo2", params.inspect
         @res = []
-        if  params[:attachments]
-          params[:attachments].each do |a|
+        if  params[:seminar][:attachment]
+          params[:seminar][:attachment].each do |a|
             @res = CourseResource.create(:attachment => a, :attachable => @course)
           end
+          puts @res
         end
         
         if @course.courseable_type == 'Seminar'
