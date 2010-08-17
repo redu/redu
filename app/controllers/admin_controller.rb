@@ -125,7 +125,7 @@ class AdminController < BaseController
   # LISTAGENS
   # lista pendendes para MODERAÇÃO da administração do Redu
   def submissions
-    @courses = Course.paginate(:conditions => ["public = 1 AND published = 1 AND state LIKE 'pending'"], 
+    @courses = Course.paginate(:conditions => ["public = 1 AND published = 1 AND state LIKE 'waiting'"], 
       :include => :owner, 
       :page => params[:page], 
       :order => 'updated_at ASC', 
