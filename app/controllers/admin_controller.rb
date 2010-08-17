@@ -91,26 +91,12 @@ class AdminController < BaseController
   def moderate_submissions
     approved = params[:course].reject{|k,v| v == 'reject'}
     rejected = params[:course].reject{|k,v| v == 'approve'}
-    approved_ids = approved.keys.join(',')
-    rejected_ids = rejected.keys.join(',')
-    
-    @approved_courses = Course.all(:conditions => ["id IN (?)", approved_ids]) unless approved_ids.empty?
-    @rejected_courses = Course.all(:conditions => ["id IN (?)", rejected_ids]) unless rejected_ids.empty?
-    
-    for course in @approved_courses # TODO fazer um update all em state
-       #@course = Course.find(course_id)
-       course.approve!
-       UserNotifier.deliver_approve_course(course) # TODO fazer isso em batch
-    end
-    
-    for course in @rejected_courses
-       #@course = Course.find(course_id)
-       course.reject!
-       UserNotifier.deliver_reject_course(course, nil) # TODO fazer isso em batch
-    end
-    
+
+    Course.update_all("state = 'approved'", :id => approved.keys)
+    Course.update_all("state = 'rejected'", :id => rejected.keys)
+
     flash[:notice] = 'Aulas moderadas!'
-    redirect_to admin_moderate_submissions_path
+    redirect_to admin_dashboard_submissions_path
   end
   
   
@@ -139,7 +125,7 @@ class AdminController < BaseController
   # LISTAGENS
   # lista pendendes para MODERAÇÃO da administração do Redu
   def submissions
-    @courses = Course.paginate(:conditions => ["public = 1 AND published = 1 AND state LIKE 'waiting'"], 
+    @courses = Course.paginate(:conditions => ["public = 1 AND published = 1 AND state LIKE 'pending'"], 
       :include => :owner, 
       :page => params[:page], 
       :order => 'updated_at ASC', 
