@@ -106,4 +106,5 @@ WillPaginate::ViewHelpers.pagination_options[:next_label] = 'Próximo'
 WillPaginate::ViewHelpers.pagination_options[:separator] = nil
 WillPaginate::ViewHelpers.pagination_options[:renderer] = 'PaginationListLinkRenderer'
 
+
 require 'rails_asset_extensions'

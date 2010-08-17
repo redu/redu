@@ -58,6 +58,10 @@ pt-BR:
             name: ": Por favor escolha um título maior que 6 caracteres."
             questions:
               invalid: ": Escolha uma alternativa correta em cada questão!"
+        school:
+          attributes:
+            path:
+              invalid: ": caminho inválido."
         message:
           attributes:
             body:
@@ -1659,7 +1663,7 @@ pt-BR:
   youve_been_logged_out_hope_you_come_back_soon: Você foi deslogado. Espero que volte em breve!
   #en: zippostal_code: "ZIP/Postal code:"
   zippostal_code: "CEP/Código postal:"
-
+  words: "Palavras"
 
   #This stuff needs to be checked
   #en: photo_manaer: "Photo manager"
