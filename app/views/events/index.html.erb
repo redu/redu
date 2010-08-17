@@ -1,0 +1,18 @@
+<div class="main grid_16">
+	<div class="">
+		<%= link_to "Eventos passados", past_events_path %>
+		<%= link_to "Eventos Futuros", events_path %>
+	</div>
+	<div class="">
+		<h3>Eventos</h3>
+		Informe-se sobre os eventos da rede!
+	</div>
+	
+	<%= render :partial => 'events/subscribe' %>
+		
+	<%= render :partial => 'events/list',    :collection => @events, :as => :event %>
+	
+	<div id="pagination" align="center" class="pagination">
+		<%= will_paginate  @events, :params => {:sort_by => 'start_time'}, :class => "pagination_number"  %>		
+    </div>
+</div>

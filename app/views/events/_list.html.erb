@@ -1,0 +1,13 @@
+<li class="clearfix">
+
+	<%= link_to event.name, event %>
+	<div class="pretty-text">		
+		<% if event.description.size < 300 %>
+			<%= event.description %>
+		<% else %>
+			<%= event.description[0..300]+"..." %>
+		<% end %>
+	</div>
+	<span><%= event.time_and_date %></span>
+
+</li>

@@ -1,0 +1,20 @@
+<div class="">
+	<% if show_details_link %>
+		<h4><%= link_to @event.name, event_path(@event) %></h4>	
+	<% else %>
+		<h4><%= @event.name %></h4>
+	<% end %>
+	
+	<span><%= @event.time_and_date %></span>
+	<% if @event.location %>
+		no
+		<%= @event.location %>
+	<% end %>
+	<p>
+		<% if show_details_link %>
+			<%= @event.description[0..500]+"..." %>
+		<% else %>
+			<%= @event.description %>
+		<% end %>
+	</p>
+</div>

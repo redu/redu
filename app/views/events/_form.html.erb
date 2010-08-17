@@ -1,0 +1,23 @@
+<%- form_for @event do |f| %>
+<%= f.error_messages %>
+
+	<%= f.label :name, "Nome:" %>
+	<%= f.text_field :name %>
+	
+	<%= f.label :description, "Descrição:" %>
+	<%= f.text_area :description, :size => "40x12", :class => "mceEditor" %>
+	
+	<%= f.label :start_time, "Início:" %>	
+	<%= f.calendar_date_select :start_time, :time => :mixed, :popup => "force" %>
+	
+	<%= f.label :end_time, "Término:" %>
+	<%= f.calendar_date_select :end_time, :time => :mixed, :popup => "force" %>
+	
+	<%= f.label :location, "Local:"%>
+	<%= f.text_field :location %>
+	
+	<!-- Ver a necessidade de colocar Estado, Cidade, País, algo assim. -->
+	
+	<%= f.submit "Salvar"%>
+	<a href="javascript:history.back()">Voltar</a>
+<% end %>

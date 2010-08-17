@@ -1,0 +1,6 @@
+<div class="#">
+	<%= render :partial=>'events/item', :locals => {:event => @event, :show_details_link => false} %>
+	
+	<a name="comments"></a>
+	<%= render :partial => 'shared/comment', :locals => { :commentable => @event } %>
+</div>

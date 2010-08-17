@@ -1,4 +1,5 @@
 class EventsController < BaseController
+  layout 'new_application'
 
   require 'htmlentities'
   caches_page :ical
@@ -17,8 +18,7 @@ class EventsController < BaseController
     extend ActionView::Helpers::SanitizeHelper::ClassMethods
   end
 
-  uses_tiny_mce(:options => AppConfig.default_mce_options, :only => [:new, :edit, :create, :update ])
-  uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:show])
+  uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit])
 
   before_filter :admin_required, :except => [:index, :show, :ical]
 
@@ -46,9 +46,17 @@ class EventsController < BaseController
     @comments = @event.comments.find(:all, :limit => 20, :order => 'created_at DESC', :include => :user)
   end
 
+  #TODO na view o will_paginate não funciona
   def index
-    @is_admin_user = (current_user && current_user.admin?)
-    @events = Event.upcoming.find(:all, :page => {:current => params[:page]})
+    #@is_admin_user = (current_user && current_user.admin?)
+    #@events = Event.upcoming.find(:all, :page => {:current => params[:page]})
+    
+    @events = Event.upcoming.paginate(:include => :owner, 
+      :page => params[:page], 
+      :order => 'start_time DESC', 
+      :per_page => AppConfig.items_per_page)
+    puts @events
+
   end
 
   def past
@@ -71,7 +79,7 @@ class EventsController < BaseController
     
   def create
     @event = Event.new(params[:event])
-    @event.user = current_user
+    @event.owner = current_user
     if params[:metro_area_id]
       @event.metro_area = MetroArea.find(params[:metro_area_id])
     else

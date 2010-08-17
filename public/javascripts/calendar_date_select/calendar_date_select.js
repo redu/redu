@@ -33,7 +33,8 @@ Date.prototype.stripTime = function() { return new Date(this.getFullYear(), this
 Date.prototype.daysDistance = function(compare_date) { return Math.round((compare_date - this) / Date.one_day); };
 Date.prototype.toFormattedString = function(include_time){
   var hour, str;
-  str = Date.months[this.getMonth()] + " " + this.getDate() + ", " + this.getFullYear();
+  //str = Date.months[this.getMonth()] + " " + this.getDate() + ", " + this.getFullYear();
+	str = this.getDate() + " de " + Date.months[this.getMonth()] + " de " + this.getFullYear();
   
   if (include_time) { hour = this.getHours(); str += " " + this.getAMPMHour() + ":" + this.getPaddedMinutes() + " " + this.getAMPM() }
   return str;
