@@ -103,6 +103,33 @@ z-index: 1000;
 /**
    @overall 
 **/
+.modal_window {
+top: 25%;
+left: 18%;
+position:absolute;
+/*width:440px;
+height:200px;*/
+display:none;
+z-index:9999;
+padding:20px;
+background: white; /*#ECF0F8;*/
+	border: 5px solid #EFEFEF;
+	border-bottom-left-radius: 5px 5px;
+	border-bottom-right-radius: 5px 5px;
+	border-top-left-radius: 5px 5px;
+		border-top-right-radius: 5px 5px;
+}
+
+/* Personalize a janela modal aqui. Você pode adicionar uma imagem de fundo. */
+ #dialog {
+}
+/* posiciona o link para fechar a janela */
+.close {
+display:block;
+text-align:right;
+}
+
+
 .twitter{
 	background: url(../images/signin_twitter.png) no-repeat 0% 0%;
 border: 0 ;
@@ -466,12 +493,20 @@ form div.errorExplanation {
   margin: 0;
   display: inline;
 }
+
+.errorMessageField {
+  font-size: 0.7em;
+  display: block;
+	color: #F77C22;
+}
+
 .fieldWithErrors label {
     color: #8a1f11;
 }
-.fieldWithErrors  input, .fieldWithErrors textarea, .fieldWithErrors select {
+.fieldWithErrors  input, .fieldWithErrors textarea, .fieldWithErrors select{
     background-color: #FEEFB3 !important;
 }
+
   
 /** @icon **/
 .icon {
@@ -2067,6 +2102,7 @@ ul.sub-groups > li {
 	border-bottom-left-radius: 5px 5px;
 	border-bottom-right-radius: 5px 5px;
 	border-top-left-radius: 5px 5px;
+	-webkit-box-shadow: #CCC 0px 4px 10px;
 }
 
 .innerdiv {
@@ -2493,6 +2529,30 @@ table.booking_steps td.spacer { background: none; width: 61px}
 
 #topic_list li {
 		z-index: 0; top: 0px; left: 0px;
+		position: relative;
+}
+
+.add-topic-outter a {
+	padding: 4px 10px 4px 10px;
+}
+.add-topic-inner ul li {
+	padding: 5px 0 5px 0;
+}
+.add-topic-inner ul li a img {
+	margin-right: 8px;
+}
+.add-topic-inner ul li:hover, .add-topic-outter a.selected {
+    background-color: #E0E9E9;
+}
+
+.menudiv {
+    position: absolute;
+    display: none;
+    padding: 8px;
+    background-color: white;
+    z-index: 1000;
+    border: 2px solid #E0E9E9;
+    -webkit-box-shadow: #CCC 0px 4px 10px;
 }
 
 
