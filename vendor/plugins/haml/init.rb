@@ -1,8 +1,8 @@
 begin
-  require File.join(File.dirname(__FILE__), 'lib', 'haml') # From here
+  #require File.join(File.dirname(__FILE__), 'lib', 'haml') # From here
 rescue LoadError
   begin
-    require 'haml' # From gem
+    #require 'haml' # From gem
   rescue LoadError => e
     # gems:install may be run to install Haml with the skeleton plugin
     # but not the gem itself installed.
@@ -15,4 +15,4 @@ end
 
 # Load Haml and Sass.
 # Haml may be undefined if we're running gems:install.
-Haml.init_rails(binding) if defined?(Haml)
+#Haml.init_rails(binding) if defined?(Haml)
