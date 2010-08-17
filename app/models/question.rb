@@ -24,13 +24,18 @@ class Question < ActiveRecord::Base
 
   named_scope :public, :conditions => ['public = ?', true]
   
+  #after_save :set_answer_id
   before_save :set_answer_id
 
 
 def set_answer_id # answer id vem como o indice
-  self.answer_id = self.alternatives[answer_id.to_i].id if answer_id === 'String'
-  
+  if self.alternatives and answer_id.to_i < self.alternatives.length and not self.alternatives[0].new_record?
+   self.answer_id = self.alternatives[answer_id.to_i].id
+   #puts 'setou id da resposta'
+  end
+  # puts 'question saved id: '+id.to_s + ' | answer_id: ' + answer_id.to_s
 end
+
 
 
 

@@ -1,34 +1,4 @@
- <style>
 
-
-.modal_window {
-top: 25%;
-left: 18%;
-position:absolute;
-/*width:440px;
-height:200px;*/
-display:none;
-z-index:9999;
-padding:20px;
-background: white; /*#ECF0F8;*/
-	border: 5px solid #EFEFEF;
-	border-bottom-left-radius: 5px 5px;
-	border-bottom-right-radius: 5px 5px;
-	border-top-left-radius: 5px 5px;
-		border-top-right-radius: 5px 5px;
-}
-
-/* Personalize a janela modal aqui. Você pode adicionar uma imagem de fundo. */
- #dialog {
-/*width:375px;
-height:203px;*/
-}
-/* posiciona o link para fechar a janela */
-.close {
-display:block;
-text-align:right;
-}
-</style>
  
  <script>
  	function saveDraft(opt, opt_param){
@@ -103,7 +73,7 @@ function add_fields(link, association, content, type) {
 		
 		 $(link).before(content.replace(regexp, new_id));
 		 
-		 exam[questions_attributes][0][answer_id]
+		// exam[questions_attributes][0][answer_id]
 		 
 		 $('[value=new_alternatives]').each(function(idx){
 		 //	var altId = $(this).attr('id').split('_')[6]
@@ -111,12 +81,38 @@ function add_fields(link, association, content, type) {
 			$(this).attr('value',idx)
 		  });
 		 
+		 makeIndexes();
 	
-		 
 		 
   	removeAllMce();
   	reloadMce();
   }
+}
+
+function makeIndexes(){
+	$('.q_index').each(function(idx){
+				$(this).html(idx+1)
+				
+				//var children = $(this).parent().parent().children();
+				//children[1].name = 'q_'+idx+1;
+				//children[2].name = 'q_'+idx+1;
+			//	children[1].attr('name', 'q_'+idx+1)
+			//	children[2].attr('name', 'q_'+idx+1)
+	});
+	
+	$('.alternatives').each(function(idx){
+	
+		$(this).find('input[type=radio]').each(function(idx2){
+			$(this).attr('value', idx2)
+		});
+	});
+	
+	/*$('.expanded').each(function(idx){
+		var i = 'q_' + (idx+1);
+		$(this).attr('name', i);
+		$(this).next().attr('name', i);
+		
+	});*/
 }
 
 function removeAllMce(){
@@ -130,29 +126,50 @@ function removeAllMce(){
     }
 		
 			function reloadMce(){
-		<%=   raw_tiny_mce_init %>
+		<%= raw_tiny_mce_init %>
 	}
 	
-	function makeIt(){
-
-					$('.expanded').hide()
-			$('.collapsed').show()
-				
-			$('.expanded').each(function(index){
-				var name= $(this).attr('name')
-				var content = tinyMCE.get(name + '_statement').getContent()
+    function makeIt(){
+    
+        //$('.expanded').hide()
+        //$('.collapsed').show()
+        
+        $('.expanded').each(function(index){
+            var name = $(this).attr('name')
+            var content = tinyMCE.get(name + '_statement').getContent()
             
             $('#' + name + '_stat').html(content)
-			}); 
-			
-	
-	}
-  
+        });
+    }
+		
+    function toggleMinimize(link, minimize){
+        
+				if (minimize) {
+					makeIt();
+				}
+				
+				var name = $(link).parent().attr('name')
+				//alert(name);
+        $(name).slideToggle();
+        return false;
+    }
+		
+		
     jQuery(document).ready(function(){
+			
+				// caso refresh na pagina:
+				// reinicializar
+				removeAllMce();
+  			reloadMce();
+				makeIndexes();
+			
 			
          $('[value=new_alternatives]').each(function(idx){
 						$(this).attr('value',idx)
 		 			 });
+					 
+					 
+					 
 				
 				/*$('body').click(function(event){
             if (!$(event.target).closest('.question').length) {
@@ -162,33 +179,14 @@ function removeAllMce(){
             };
             });*/
 			
-        $('.question').live('click', function(e){
+
+
+	/*	$('.question').live('click', function(e){
 					
-					var elId = $(this).attr("name")
-					//alert('click: '+ elId) 
-				  
-					if ($('#' + elId + '_expanded').is(":hidden")) {
-						//alert('not visible')
 		  			makeIt();
-		  			$('#' + elId + '_expanded').slideDown();
-		  			//$('#' + elId + '_collapsed').hide()
-		  }
-				
-				//if ($('#'+elId + '_expanded').not(":visible")) {
-				//		$('#'+elId + '_expanded').slideDown();
-			//	}
-			
-				//$('div[name=' + elId + ']').slideToggle()
-					
-					
-            /*var elId = $(this).attr("name")
-            var content = tinyMCE.get(elId + '_statement').getContent()
-            
-            $('#' + elId + '_stat').html(content)
-            
-            $('div[name=' + elId + ']').slideToggle()*/
-            
-        });
+		  			$('.question').slideToggle();
+				});
+*/				
 				
         
         //seleciona os elementos a com atributo name="modal"
@@ -198,7 +196,6 @@ function removeAllMce(){
             
             //armazena o atributo href do link
             var id = $(this).attr('href');
-            
            
 						$('#lights-dimmed').fadeIn(2000);
             $(id).show();
@@ -213,8 +210,6 @@ function removeAllMce(){
                     type: 'get',
                     url: '<%= questions_database_exams_path %>' 
                 });
-						
-						
         });
         
         //se o botãoo fechar for clicado
@@ -225,14 +220,10 @@ function removeAllMce(){
         });
         
         //se div#lights-dimmed for clicado
-        /*$('#lights-dimmed').click(function(){
+        $('#lights-dimmed').click(function(){
             $(this).hide();
             $('.window').hide();
-        });*/
-        
-        
-        
-        
+        });
     });
 
 		
@@ -297,10 +288,13 @@ function removeAllMce(){
  <div class="grid_9">
  <div id="questions" style="min-height: 100px;">
  
- 
-  <% f.fields_for :questions do |builder| %>
-    <%= render "question_fields", :f => builder %>
-  <% end %>
+  <% @exam.questions.each_with_index do |question, idx|%>
+	
+	  <% f.fields_for :questions, question do |builder| %>
+	    <%= render "question_fields", :f => builder %>
+	  <% end %>
+	
+	<% end %>
  
 
  	 <%= link_to_add_fields 'Nova Questão', f, :questions, 'Question' %>

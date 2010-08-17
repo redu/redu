@@ -18,11 +18,15 @@
 	<% field_set_tag "Informações pessoais" do %>
 		<%= f.label :first_name, "Nome" %>
 		<%= f.text_field :first_name %>
+		<%= error_for :user, :first_name %>
+		
 		<%= f.label :last_name, "Sobrenome" %>
 		<%= f.text_field :last_name %>
+		<%= error_for :user, :last_name %>
 		
 		<%= f.label :birthday, :birthday.l %>
 	    <%= date_select :user, :birthday, {:start_year => 1926, :end_year => (Time.now.year - 13)} %>
+			<%= error_for :user, :birthday %>
 
 	<% end %>
 	
@@ -30,9 +34,12 @@
 		<%= f.label :login, :username.l %>
 	    <em><%= :required_your_username_must_not_contain_numerals_spaces_or_special_characters.l %></em>
 	    <%= f.text_field :login %>
+			<%= error_for :user, :login %>
+			
 		<%= f.label :email, :email.l %>
 	    <em><%=:required_we_will_send_a_confirmation_e_mail_to_the_address_you_enter.l %></em>
 	    <%= f.text_field :email %>
+			<%= error_for :user, :email %>
 	<% end %>
 	<% field_set_tag "Senhas" do %>
 		<% if AppConfig.closed_beta_mode %>
@@ -42,8 +49,10 @@
 	
 		<%= f.label :passowrd, :type_your_password.l %>
 	    <%= f.password_field :password %>
+			<%= error_for :user, :password %>
 	    <%= f.label :password_confirmation, :re_type_your_password_to_confirm.l %>
 	    <%= f.password_field :password_confirmation %>
+			<%= error_for :user, :password_confirmation %>
 	<% end %>
 	
 	<% field_set_tag "Termos" do %>

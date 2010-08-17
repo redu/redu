@@ -1,11 +1,10 @@
 <span id ="favorito">
-<% if current_user.has_favorite(favoritable) %>
-<span class= "favorites_off" >Favorito</span>
-<%else%>
-<span id = "favorites_link" >
-<%= link_to_remote('Favorito', {:url => { :controller => :favorites, :action => :favorite, :id => favoritable.id, :type => favoritable.class.to_s }, :loading => "$('favorites_link').hide(); $('favorite_spinner').show();" }, :class => 'favorites') %>
-</span>
-<%end%>
-
+	<% if current_user.has_favorite(favoritable) %>
+		<span class= "favorites_video_on" >Favorito</span>
+	<%else%>
+		<span id = "favorites_link" >
+		<%= link_to_remote('Favorito', {:url => { :controller => :favorites, :action => :favorite, :id => favoritable.id, :type => favoritable.class.to_s }, :loading => "$('#favorites_link').hide(); $('#favorite_spinner').show();" }, :class => 'favorites_video_off') %>
+		</span>
+	<%end%>
 </span>
 <%= image_tag 'loading_bar.gif', :style => 'display:none;', :id => 'favorite_spinner' %>

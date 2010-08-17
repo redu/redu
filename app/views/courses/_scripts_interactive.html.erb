@@ -19,10 +19,13 @@ function remove_fields(link) {
 }
 	
 	function add_fields(link, association, content, type) {
+		$('div.add-topic-inner').hide();
+		$('#add_topic_link').removeClass('selected');
+		
 		var fieldsNumber = document.getElementById('topic_list').children.length;//jQuery("#topic_list > li").length;
 		var maxFieldsNumber = <%= AppConfig.max_lesson_number %>;
 		
-		//"verificar" topic_list_item_0
+		//"verificar" topic_list_item_0 
 		if (fieldsNumber >= maxFieldsNumber){
 			alert('O número máximo de tópicos em uma aula é 10'); // TODO tirar alerts
 			return;

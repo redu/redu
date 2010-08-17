@@ -2,18 +2,53 @@
   
   <div style="float: left; border:1px solid #DDDDDD; margin-top: 12px; width: 100%; background-color: #F8FAFF;">
 	
+	<div style="padding: 6px 0 6px 6px; background-color: #fff; border-bottom: 1px solid #DDD;">
+	
+		<div class="add-topic-outter" style="float:left;">
+          <a id="add_topic_link" href="#" onclick="$('div.add-topic-inner').toggle(); $(this).toggleClass('selected'); return false;">Inserir</a>
+          	<div class="add-topic-inner menudiv">
+              <ul class="selectable">
+                  <li>
+                      <%= link_to_add_lesson((image_tag 'icons/iclass.gif', :title => "Texto") + "Página", f, 'page') %>
+                  </li>
+                  <li>
+                      <%= link_to_add_lesson((image_tag 'icons/seminar.gif', :title => "Vídeo") + "Seminário", f, 'seminar') %>
+											
+                  </li>
+                 <!-- 
+									<li>
+                      <%= link_to_function((image_tag 'icons/exam.gif', :title => "Exame"), 'alert("alora")') %>
+                  </li> -->
+                  <li>
+                      <%= link_to_add_lesson((image_tag 'icons/objects.png', :title => "Objetos") + "Objeto embarcado", f, 'object') %>
+                  </li>
+									<!--
+                  <li>
+                      <%= image_tag 'icons/discussion.png', :title => "Discussão" %>
+                  </li>
+									-->
+              </ul>
+          </div>
+					
+					|
+					<%= link_to_function "Salvar", "save(false)", :id => "save_link"%>
+          |
+					<%= link_to_function "Pré-visualizar", "save(true)", :id => "preview_link"%>
+				
+     </div>	
+			
+		<div style="text-align:right; margin-right: 10px;">
+      <%= image_tag 'spinner.gif', :id => 'save-spinner', :style => 'display: none' %>
+      <span class="snippet" id="save_info"></span>
+  	</div>
+			
+
+		</div>
+	
+	
 	<div id="topic_bar">
   
     <h3 style="margin: 5px 0 0 5px;">Tópicos</h3>
-  <div id="lesson_types">
-  	Novo tópico:
-	 
-	 <%= link_to_add_lesson((image_tag 'icons/iclass.gif', :title => "Texto"), f, 'page') %>
-	 <%= link_to_add_lesson((image_tag 'icons/seminar.gif', :title => "Vídeo"), f, 'seminar') %>
-	<%# link_to_function((image_tag 'icons/exam.gif', :title => "Exame"), 'alert("alora")') %>
-	<%= link_to_add_lesson((image_tag 'icons/objects.png', :title => "Objetos"), f, 'object') %>
-	<%# image_tag 'icons/discussion.png', :title => "Discussão" %>
-  </div>
   	<ul id="topic_list">
   		<% interactive_class.lessons.each_with_index do |lesson, index| %>
 			<% if index == 0 %>

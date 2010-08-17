@@ -51,12 +51,14 @@ $(document).ready(function(){
 		
 			<%= f.label "Título: " %>
 			<%= f.text_field :name %>
+			<%= error_for :exam, :name %>
 
 			<%= f.label "Descrição:" %>
 			<div style="">
 			<%= f.text_area :description, :size => "50x3", :maxlength=> AppConfig.desc_char_limit %>
 			<div id="char_limit" style="text-align:right;">(<%=AppConfig.desc_char_limit %>)</div>
 			</div>
+			<%= error_for :exam, :description %>
 	
 			<%= f.label "Tags <span class='snippet'>(separadas por vírgula)</span>" %>
 			<%= f.text_field :tag_list %>
@@ -65,7 +67,7 @@ $(document).ready(function(){
 			<%# f.select(:simple_category, )%>
 			<%= f.label "Categoria:" %>
 			<%= simple_categories_i18n(f) %>
-			
+			<%= error_for :exam, :category %>
 	
 			
 			<%= f.label "Dificuldade" %>

@@ -2,8 +2,9 @@
 	
 <%#puts f.options[:child_index]%>
 <%#puts f.object.id%>
+<%# (f.object.id) ? f.object.id : "new_alternatives"%>
 
-<%= @oi.radio_button :answer_id,   (f.object.id) ? f.object.id : "new_alternatives"  ,  :checked => false  %>
+<%= @oi.radio_button :answer_id,   "new_alternatives"  ,  :checked => false  %>
 	 
  <%= f.text_field :statement %>
 

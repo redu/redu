@@ -3,6 +3,18 @@ require 'md5'
 # Methods added to this helper will be available to all templates in the application.
 module BaseHelper
   
+  def error_for(object, method = nil, options={})
+    if method
+      err = instance_variable_get("@#{object}").errors.on(method).to_sentence rescue instance_variable_get("@#{object}").errors.on(method)
+    else
+      err = @errors["#{object}"] rescue nil
+    end
+    options.merge!(:class=>'errorMessageField',:id=>"#{[object,method].compact.join('_')}-error",
+    :style=> (err ? "#{options[:style]}":"#{options[:style]};display: none;"))
+    content_tag("p",err || "", options ) 
+  end
+  
+  
     def simple_categories_i18n(f)
    # collection_select(:course, :simple_category, SimpleCategory.all, :id, :name)
    categories_array = SimpleCategory.all.map { |cat| [category_i18n(cat.name), cat.id] } 

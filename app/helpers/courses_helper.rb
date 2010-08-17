@@ -10,6 +10,7 @@ module CoursesHelper
   end
 
   def link_to_add_lesson(name, f, lesson_type)
+    
     new_object = f.object.class.reflect_on_association(:lessons).klass.new
     fields = f.fields_for(:lessons, new_object, :child_index => "new_#{:lessons}") do |builder|
 #      case lesson_type

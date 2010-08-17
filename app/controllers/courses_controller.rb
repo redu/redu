@@ -44,6 +44,48 @@ class CoursesController < BaseController
     
     @seminar = Seminar.new( params[:seminar] )
     
+    # importar video do Redu atraves de url
+    if @seminar.external_resource_type.eql?('redu')
+       course_id = @seminar.external_resource.scan(/aulas\/([0-9]*)/)[0][0]
+        @source = Course.find(course_id)
+        # copia (se upload ou youtube)
+        if @source and @source.public
+          if @source.courseable_type == 'Seminar'
+            if @source.courseable.external_resource_type.eql?('youtube')
+              @seminar.external_resource_type = 'youtube'
+              @seminar.external_resource = 'http://www.youtube.com/watch?v=' + @source.courseable.external_resource
+            elsif @source.courseable.external_resource_type.eql?('upload')
+               @seminar.external_resource_type = 'upload' # melhor ficar 'redu'?
+               @seminar.media_file_name = @source.courseable.media_file_name
+               @seminar.media_content_type = @source.courseable.media_content_type
+               @seminar.media_file_size = @source.courseable.media_file_size
+               @seminar.media_updated_at = @source.courseable.media_updated_at
+            end
+          else
+            respond_to do |format|
+              format.js do
+                responds_to_parent do
+                  render :update do |page|
+                    page << "alert('O link não é uma vídeo-aula!');"
+                  end
+                end
+              end
+            end
+            
+          end
+        else
+          respond_to do |format|
+              format.js do
+                responds_to_parent do
+                  render :update do |page|
+                    page << "alert('Link inválido ou a aula não é pública');"
+                  end
+                end
+              end
+            end
+        end
+    end
+    
     respond_to do |format|
       if @seminar.save
         format.js do
@@ -360,7 +402,7 @@ class CoursesController < BaseController
                 redirect_to :action => :new, :step => "2", :school_id => params[:school_id]
               }
             else  
-              #@school = School.find(params[:school_id])
+              @school = School.find(params[:school_id]) if params[:school_id]
               format.html { render "step1" }
             end
           end
@@ -369,13 +411,12 @@ class CoursesController < BaseController
     when "2"
         @course = Course.find(session[:course_id])
         
-        puts "Passo2", params.inspect
+        
         @res = []
         if  params[:seminar][:attachment]
           params[:seminar][:attachment].each do |a|
             @res = CourseResource.create(:attachment => a, :attachable => @course)
           end
-          puts @res
         end
         
         if @course.courseable_type == 'Seminar'

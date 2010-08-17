@@ -89,15 +89,18 @@ $(document).ready(function(){
 <% field_set_tag 'Informações Gerais' do %>
 	<%= f.label "Nome" %>
 	<%= f.text_field :name ,  :onkeyup => ((edit) ? nil : "generatePath(this)") %>
-
+	<%= error_for :school, :name %>
+	
 	<%= f.label "Caminho" %>
 	<div id="school-path">
 	<span class="generate-path">www.redu.com.br/</span><%= f.text_field :path %>
 	</div>
+	<%= error_for :school, :path %>
 
 	<%= f.label "Descrição" %>
 	<%= f.text_area :description, :size => "50x3", :maxlength=> AppConfig.desc_char_limit %>
 	<div id="char_limit" style="text-align:right;">(<%=AppConfig.desc_char_limit %>)</div>
+	<%= error_for :school, :description %>
 
 	<%= f.label "Imagem <span class='snippet'>(tamanho recomendado: 200 x 64)</span>" %> 
 	<%= f.file_field :avatar %>
@@ -109,12 +112,14 @@ $(document).ready(function(){
 
 <% field_set_tag 'Categorias' do %>
 <span class="snippet" style"width:100%; float: left;">Selecione uma ou mais categorias de acordo com a área de atuação da rede: </span>
+<%= error_for :school, :categories %>
 	<%= columnize_categories %>
 <% end %>
 
+
 <% field_set_tag 'Audiência' do %>
 <span class="snippet">Selecionar um público que não corresponde ao propósito da rede pode levar à uma má avaliação. </span>
-
+<%= error_for :school, :audiences %>
 <ul>
 <% for audience in Audience.find(:all) %>
 	<li>
@@ -124,5 +129,6 @@ $(document).ready(function(){
 <% end %>
 </ul>
 <% end %>
+
 
 </div>

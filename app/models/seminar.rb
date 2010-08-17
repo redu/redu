@@ -81,11 +81,20 @@ class Seminar < ActiveRecord::Base
     transitions :from => :converting, :to => :fail
   end
   
-  validate do |seminar|
+  
+    validate do |seminar|
     if seminar.external_resource_type.eql?('youtube')
       capture = seminar.external_resource.scan(/youtube\.com\/watch\?v=([A-Za-z0-9._%-]*)[&\w;=\+_\-]*/)[0][0]
-      seminar.errors.add_to_base("Link invalido") unless capture
+      
+      seminar.errors.add_to_base("Link inválido") unless capture
+    
+#    elsif seminar.external_resource_type.eql?('redu')
+#      capture = seminar.external_resource.scan(/redu\.com\.br\/aulas\/([A-Za-z0-9._%-]*)[&\w;=\+_\-]*/)[0][0]
+#      
+#      seminar.errors.add_to_base("Link inválido") unless capture
+    
     end
+    
   end
 
   def truncate_youtube_url

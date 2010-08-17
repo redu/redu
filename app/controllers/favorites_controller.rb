@@ -13,16 +13,13 @@ class FavoritesController < BaseController
       when 'Exam'
         msg_ok = "Exame adicionado ao seus favoritos!"
         msg_err = "Exame não foi adicionado ao seus favoritos"
-      when 'Resource'
-        msg_ok = "Material adicionado ao seus favoritos!"
-        msg_err = "Material não foi adicionado ao seus favoritos"
       else
         msg_ok = "Recurso adicionado ao seus favoritos!"
         msg_err = "Recurso não foi adicionado ao seus favoritos"
     end
     
     if @favorite
-      Log.log_activity(@favorite, 'favorite', current_user)
+     # Log.log_activity(@favorite, 'favorite', current_user) #TODO
       
       flash.now[:notice] = msg_ok
       respond_to do |format|

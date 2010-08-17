@@ -8,9 +8,11 @@
 type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="344">
 </embed></object> 
 
+<% elsif @seminar.external_resource_type.eql?('upload')   %>
+ <%# TODO possivel bug aqui, nao diferencia upload de import e pode mostrar um video ainda nao convertido %>
+	<%= render :partial => 'courses/video', :locals => {:resource => @seminar, :is_interactive_class => true} %>
 
-
-<% else %>
+<% else%>
 
 O vídeo foi uploadeado está em processo de conversão!
 

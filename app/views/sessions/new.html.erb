@@ -11,10 +11,13 @@
                 <%=:username.l %>
             </label>
             <%= f.text_field :login, :size => 35 %>
+						<%= error_for :user_session, :login %>
+						
             <label for='username'>
                 <%=:password.l %>
             </label>
             <%= f.password_field :password, :size => 35 %>
+							<%= error_for :user_session, :password %>
             <label for='remember_me'>
                 <%=:remember_me.l %>
                 <%= f.check_box :remember_me %>

@@ -1,14 +1,4 @@
-if @favorite.new_record?
-  #page.select('#flash_messages').invoke('update', flash[:error])
-  #page << "new Effect.Highlight($$('flash_messages')[0]);"
-  page.reload_flash
-else
-  page.select('#favorito').invoke('update', "<span class=\"favorites_off\" >Favorito</span>")
-  page.reload_flash
-  #page.select('#flash_messages').invoke('update', flash[:notice])
-  #page << "new Effect.Highlight($$('flash_messages')[0]);"
-end
-
-page.select('#favorite_spinner').invoke('hide')
+page.replace_html 'favorito', "<span class=\"favorites_video_on\" >Favorito</span>"
+page << "$('#favorite_spinner').hide()"
           
 
