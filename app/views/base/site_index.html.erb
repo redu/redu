@@ -1,220 +1,90 @@
-<script>
-	
-	var loginBoxVisible = true;
-	function toggleLoginSignupBox(){
+<!--
+<div id="breadcrumbs">
+<a href="#">mensagens</a> > caixa de entrada
+</div>-->
+<div>
+    <div class="grid_11" style="background-color: #EFEFEF; height: 120px;">
+        O redu é uma plataforma de rede social que oferece espaços customizados para distribuição de conteúdo educacional multimídia
+    </div>
+    <div class="grid_5" style="background-color: #FEFF9F; height: 120px;">
+        crie sua rede
+    </div>
+</div>
+
+<div class="grid_11 home">
+    <!--
+    <div id="breadcrumbs">
+    <a href="#">mensagens</a> > caixa de entrada
+    </div>-->
 		
-		if (loginBoxVisible) {
-			document.getElementById('box_login').style.display = 'none';
-			document.getElementById('box_cadastro').style.display = 'none';
-			document.getElementById('box_signup').style.display = 'block';
-		} else {
-			document.getElementById('box_login').style.display = 'block';
-			document.getElementById('box_cadastro').style.display = 'block';
-			document.getElementById('box_signup').style.display = 'none';
-		}
-		loginBoxVisible = !loginBoxVisible;
-	}
-	
-	function verifyTOS (){
-		if (document.getElementById('user_tos').checked) {
-			return true;
-		} else {
-			alert('Você não pode se cadastrar se não aceitar os Termos de Uso do Redu');
-			return false;
-		}
-	}
-	
-	
-	
-	
-	
-</script>
-
-    
-
-<div id="all_content2" >
-<div id="col_content">
-	<div id="breadcrumbs"><a href="#">home</a></div>
-<!-- LISTAGEM RECURSO ############################################################################################################################################## -->
-    <% if AppConfig.show_constellation %>
-	<div id="constellation">
+		<span class="call featured"><span>Explore</span></span>
+		<div style="width: 640px; height: 300px; background-color: #EAEAEA;">
+			
 		</div>
-	<%end%>
-	
-    <div id="all_list">
-    	<div id="filter_bar">
-    <span class="title_list">VÍDEO-AULAS RECENTES</span>
-      </div>
-		<% if @courses && @courses.length > 0 %>
- 			<%= render :partial => 'courses/item', :collection => @courses, :as => :course %> 
- 		<% else %>
- 			Não há aulas publicadas ainda. <%= link_to 'Crie uma agora!', new_course_path %>
-		<% end %>
-		
-		<div id="filter_bar">
-    <span class="title_list">AULAS INTERATIVAS RECENTES</span>
-      </div>
-		<% if @iclasses && @iclasses.length > 0 %>
- 			<%= render :partial => 'courses/item_page', :collection => @iclasses, :as => :course %> 
- 		<% else %>
- 			Não há aulas publicadas ainda. <%= link_to 'Crie uma agora!', new_course_path %>
-		<% end %>
-		
-		<div id="filter_bar">
-    <span class="title_list">PÁGINAS RECENTES</span>
-      </div>
-		<% if @pages && @pages.length > 0 %>
- 			<%= render :partial => 'courses/item_page', :collection => @pages, :as => :course %> 
- 		<% else %>
- 			Não há páginas publicadas ainda. <%= link_to 'Crie uma agora!', new_course_path %>
-		<% end %>
-		
-		
-    </div>
-    <!-- LISTAGEM RECURSO ############################################################################################################################################## -->
-    
-	<!-- LISTAGEM REDES ############################################################################################################################################## -->
-    <div id="filter_bar">
-    <span class="title_list">REDES POPULARES</span>
-      </div>
-    <div id="all_list">
-    	
-		<% if @schools && @schools.length > 0 %>
- 			<%= render :partial => 'schools/item', :collection => @schools, :as => :school %> 
- 		<% else %>
- 			Não há redes ainda. <%= link_to 'Crie uma agora!', new_school_path %>
-		<% end %>
-		
-    </div>
-    <!-- LISTAGEM REDES ############################################################################################################################################## -->
     
 	
-	
-<!-- PAGINACAO ##################################################################################################################################################### -->
-    <div id="pagination" align="center">
-    	<ul id="pagination_number">
-    		<li>
-    			<%= link_to "Ver todos >", courses_path,  :class => "nav" %>
-			</li>
-            <!--<li><a href="" class="number">1</a><li>
-            <li><a href="" class="number">2</a><li>
-            <li><a href="" class="number">3</a><li>
-            <li><a href="" class="number">4</a><li>
-            <li><a href="" class="number">5</a><li>
-            <li><a href="" class="nav">PrÃ³ximo ></a><li>-->
-    	</ul>
-    </div>
-<!-- PAGINACAO ##################################################################################################################################################### -->
-</div>
-
-<!-- COLUNA DIREITA ################################################################################################################################################ -->
-<div id="col_box2">
-
-
-	<% if not logged_in? %>
-<!-- LOGIN ///////////////////////////////////////////////////////////////////////////////////// -->
-        
-	<div id="box_login">
-		<% form_tag sessions_path, :class => 'MainForm' do %>
-    	<div id="box_top_login">ACESSE AGORA</div>  
-        <div id="box_list_login">
-        	<label>Login:</label><br />
-			<%= text_field_tag 'login', nil, :size => 27, :class => 'edit_login_imput' %>
-			<br /><br />
-        	<label>Senha:</label><br />	
-			<%= password_field_tag 'password', nil, :size => 27, :class => 'edit_login_imput' %>
-			<br /><br />
-			<%= check_box_tag 'remember_me' %> <label>Lembrar-me</label> <br />	
-			<div id="box_list_login" align="center">
-				<!-- <a href="#" class="bt_login">Enviar</a> -->
-				 <%= submit_tag :log_in.l, :class => 'bt_login' %>
-			</div>
-            <div id="box_list_login" align="center">
-            	Esqueceu <%= link_to "login", forgot_username_url %> ou <%= link_to "senha", forgot_password_url %>?
-			</div>
-        </div>
-		<% end %>
-    </div>
-	
-<!-- LOGIN ///////////////////////////////////////////////////////////////////////////////////// -->
-
-<!-- CADASTRO ///////////////////////////////////////////////////////////////////////////////////// -->
-	<div id="box_signup" style="display: none;" class="clearfix">
-		<%- form_for :user, :url => users_path, :html => {:class => 'MainForm', :onsubmit => 'return verifyTOS();'} do |f| %>
-	
-    	<div id="box_top_login">CADASTRO</div>  
-        
-		<div id="box_list_login">
-        	
-			<label>Nome:</label><br />
-			 <%= f.text_field :first_name, :size => 27, :class => 'edit_login_imput' %>
-			<br /><br />
-			
-			<label>Sobrenome:</label><br />
-			 <%= f.text_field :last_name, :size => 27, :class => 'edit_login_imput' %>
-			<br /><br />
-			
-			<label>Login:</label><br />
-			 <%= f.text_field :login, :size => 27, :class => 'edit_login_imput' %>
-			<br /><br />
-			
-			<label>E-mail:</label><br />
-			<%= f.text_field :email, :size => 27, :class => 'edit_login_imput' %>
-			<br /><br />
-        	
-			<label>Data de nascimento:</label><br />
-			<%= date_select :user, :birthday, {:start_year => 1926, :end_year => (Time.now.year - 13)}%>
-			<br /><br />
-        	
-			 <% if AppConfig.require_captcha_on_signup %>
-          		<%= recaptcha_tags %>
-        	 <% end %>
-			 
-			<label>Senha:</label><br />
-			<%= f.password_field :password, :size => 27, :class => 'edit_login_imput' %>
-			<br /><br />
-			
-			<label>Confirme a senha:</label><br />
-			<%= f.password_field :password_confirmation, :size => 27, :class => 'edit_login_imput' %>
-			<br /><br />
-			<%= check_box "user", "tos" %>Li e aceito os Termos de Uso
-			<!--<input type="checkbox" name="tos_accepted" id="tos_accepted" value="0"/>Li e aceito os Termos de Uso-->
-
-			<div id="box_list_login" align="center">
-				<!-- <a href="#" class="bt_login">Enviar</a> -->
-				 <%= submit_tag :sign_up.l, :class => 'bt_login' %> 
-				 <span class="link_01" onclick="toggleLoginSignupBox();">ou retornar ao login</span>
-			</div>
-			
-           
-        </div>
+		<span class="call featured" style="float:left; width: 100%"><span>Últimas Aulas</span>
+            <ul id="carousel" class="jcarousel-skin-tango">
+            	
+							
+							
+                <% for course in @courses %>
+                <li>
+                	
+									<div  style="width: 297px; ">
+					<a href="/scitable/topic/evolutionary-genetics-13" class="inline" style="float:left;">	
+					<img height="120" width="120" alt="Evolutionary Genetics" title="Evolutionary Genetics" src="/scitable/profileimage/topic/13/13_1_M.jpg" class="imageWrap topicImg">						
+					</a>
+					
+					
+					<div class="topic longWordWrapped" style="float: left; width: 154px;">
+					
+					<h2>
+					<a href="/scitable/topic/evolutionary-genetics-13" class="inline">Evolutionary Genetics</a>
+					</h2>
+					
+					<span class="topicChiefEd">	
+						Editor:&nbsp;<a onclick="return postCookieData('13');" class="inlineLinks" href="/scitable/topicpage/bob-sheehy-45169" title="Bob Sheehy">Bob Sheehy</a>,&nbsp;<a onclick="return postCookieData('13');" class="inlineLinks" href="/scitable/topicpage/norman-johnson-7733556" title="Norman Johnson">Norman Johnson</a>
+					</span>
+					<div class="aboutTopic">
+						Evolutionary genetics examines the genetic relationships among groups of organisms and ...							
+					</div>
+				</div>
+				</div>
+									
+                	<%# image_tag course.thumb_url, :width=>"75",  :height=>"75" %>
+                </li>
+								<% end %>
+            </ul>
+		</span>
 		
-		<% end %>
 		
-     </div>
-
-
-	<div id="box_cadastro">
-    	<div id="box_top_cadastro">CADASTRE-SE</div>
-        <div id="box_list_cadastro"><span class="link_01" onclick="toggleLoginSignupBox();">Para ter acesso aos recusos do Redu é necessário estar cadastrado.</span></div>
-	</div>
-<!-- CADASTRO ///////////////////////////////////////////////////////////////////////////////////// -->
-	<% end %>
-	
-<!-- BOX MOVIMENTACAO RESCENTE ///////////////////////////////////////////////////////////////////////////////////// -->
-	
-<!-- BOX MOVIMENTACAO RESCENTE ///////////////////////////////////////////////////////////////////////////////////// -->
-	
-	<% if current_user %>
-	<% @logs = current_user.log_activity %>
-	<%= render :partial => 'logs/log', :locals => {:logs => @logs} %>
-	<% else %>
-	<%= render :partial => 'logs/not_logged_in' %>
-	<% end %>
-	
-   
-</div>
-<!--<div id="title_page">Assistindo Aula</div>-->
 </div>
 
-
+<div class="grid_5 home">
+    
+        <span class="call"><span>Notícias</span></span>
+				<div>
+        <ul>
+            <li class="clearfix">
+                Titulo
+                Descrição
+            </li>
+        </ul>
+        <%= link_to 'Ver todas', "#" %>
+    </div>
+		
+		
+    
+        <span class="call"><span>Top Users</span></span>
+				<div>
+        <ul>
+            <li class="clearfix">
+                Titulo
+                Descrição
+            </li>
+        </ul>
+        <%= link_to 'Ver todas', "#" %>
+    </div>
+		
+</div>

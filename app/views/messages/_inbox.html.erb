@@ -24,7 +24,7 @@
 						</td>
 						<td width='60px'>
 							<div class='photo'>
-								<%= link_to image_tag( message.sender.avatar_photo_url(:thumb), "height"=>"50px", "alt"=>"#{message.sender.login}", "width"=>"50px" ), user_path(message.sender), :title => "#{message.sender.login}'s " + :profile.l %>
+								<%= link_to image_tag( message.sender.avatar.url(:thumb), "height"=>"50px", "alt"=>"#{message.sender.login}", "width"=>"50px" ), user_path(message.sender), :title => "#{message.sender.login}'s " + :profile.l %>
 							</div>
 						</td>
 						<td>

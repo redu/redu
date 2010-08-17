@@ -50,7 +50,7 @@ class CoursesController < BaseController
           responds_to_parent do
             render :update do |page|
               page.replace_html('video_upload_' + params[:child_index], :partial => 'form_lesson_seminar_uploaded', :locals => {:seminar => @seminar, :ch_index => params[:child_index]})
-              page << "Element.hide('spinner');"
+              page << "jQuery('#spinner').hide();"
             end
           end
         end

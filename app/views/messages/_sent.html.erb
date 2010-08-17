@@ -21,7 +21,7 @@
 							</fieldset>
 						</td>
 						<td width = '60px'>
-							<%= link_to image_tag( message.recipient.avatar_photo_url(:thumb), :alt=>"#{message.recipient.login}", :class=> "photo" ), user_path(message.recipient), :title => "#{message.recipient.login}'s " + :profile.l %>
+							<%= link_to image_tag( message.recipient.avatar.url(:thumb), :alt=>"#{message.recipient.login}", :class=> "photo" ), user_path(message.recipient), :title => "#{message.recipient.login}'s " + :profile.l %>
 						</td>
 						<td>
 							<%= link_to_remote h(message.subject), :url =>  user_message_path(@user, message, :mailbox => :sent), :method => :get %>

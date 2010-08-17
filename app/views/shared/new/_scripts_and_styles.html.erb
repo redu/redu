@@ -1,3 +1,16 @@
+<% if action_name == 'site_index' %>
+	<%= stylesheet_link_tag 'jcarousel' %>
+	<%= javascript_include_tag 'jquery.jcarousel.min.js'%>
+	<script type="text/javascript"> 
+	 
+	jQuery(document).ready(function() {
+	    jQuery('#carousel').jcarousel();
+	});
+	 
+	</script>
+
+<% end %>
+
 <% if controller_name == 'schools' %>
 	<% if action_name == 'show'%>
 	<%= stylesheet_link_tag 'files' %>

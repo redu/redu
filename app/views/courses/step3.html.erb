@@ -29,10 +29,20 @@
 
 <div class="grid_8">
 
-<% form_for :course, @course, :url => { :action => "create" }, :html => {:id => "form_step_3"} do |f| %>
+<% form_for :course, @course, :url => { :action => "create" }, :html => {:id => "form_step_3",  :multipart => true } do |f| %>
 <%= f.error_messages %>
 <%= hidden_field_tag("step", "3", options = {})%>
 	<%= hidden_field_tag("post_to", @school.id) if @school %>
+
+
+
+	<% if @course.courseable_type = 'InteractiveClass' %>
+	    <% field_set_tag 'Imagem' do %>
+	        <%= f.label 'Defina uma imagem para esta aula' %>
+	        <%= f.file_field :avatar %>
+	    <% end %>
+    <%end %>
+
 
 	<% unless @school %>
 
