@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100811143337) do
+ActiveRecord::Schema.define(:version => 20100817203224) do
 
   create_table "abilities", :force => true do |t|
     t.string   "name"
@@ -151,7 +151,7 @@ ActiveRecord::Schema.define(:version => 20100811143337) do
     t.datetime "updated_at"
     t.integer  "school_id"
     t.string   "state"
-    t.integer  "user_id"
+    t.integer  "owner"
   end
 
   create_table "categories", :force => true do |t|
@@ -225,19 +225,23 @@ ActiveRecord::Schema.define(:version => 20100811143337) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "rating_average",                                   :default => 0
-    t.integer  "owner",                                                               :null => false
-    t.text     "description",                                                         :null => false
-    t.boolean  "published",                                        :default => false
+    t.integer  "rating_average",                                    :default => 0
+    t.integer  "owner",                                                                :null => false
+    t.text     "description",                                                          :null => false
+    t.boolean  "published",                                         :default => false
     t.datetime "media_updated_at"
     t.string   "state"
-    t.integer  "view_count",                                       :default => 0
-    t.boolean  "public",                                           :default => true
-    t.decimal  "price",              :precision => 8, :scale => 2, :default => 0.0
-    t.boolean  "removed",                                          :default => false
+    t.integer  "view_count",                                        :default => 0
+    t.boolean  "public",                                            :default => true
+    t.decimal  "price",               :precision => 8, :scale => 2, :default => 0.0
+    t.boolean  "removed",                                           :default => false
     t.string   "courseable_type"
     t.integer  "courseable_id"
     t.integer  "simple_category_id"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
   end
 
   create_table "credits", :force => true do |t|
@@ -249,6 +253,21 @@ ActiveRecord::Schema.define(:version => 20100811143337) do
     t.integer  "customer_id"
     t.string   "customer_type"
   end
+
+  create_table "delayed_jobs", :force => true do |t|
+    t.integer  "priority",   :default => 0
+    t.integer  "attempts",   :default => 0
+    t.text     "handler"
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
   create_table "emails", :force => true do |t|
     t.string   "from"
@@ -262,7 +281,7 @@ ActiveRecord::Schema.define(:version => 20100811143337) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "user_id"
+    t.integer  "owner"
     t.datetime "start_time"
     t.datetime "end_time"
     t.text     "description"
@@ -663,6 +682,7 @@ ActiveRecord::Schema.define(:version => 20100811143337) do
     t.datetime "updated_at"
     t.boolean  "published",              :default => false
     t.boolean  "public",                 :default => false
+    t.string   "state"
   end
 
   create_table "sessions", :force => true do |t|
@@ -813,6 +833,10 @@ ActiveRecord::Schema.define(:version => 20100811143337) do
     t.string   "last_login_ip"
     t.string   "oauth_token"
     t.string   "oauth_secret"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
   end
 
   add_index "users", ["activated_at"], :name => "index_users_on_activated_at"

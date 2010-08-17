@@ -6,6 +6,8 @@ class Seminar < ActiveRecord::Base
   has_many :lesson, :as => :lesson
 
   SUPPORTED_VIDEOS = [ 'application/x-mp4',
+                       'video/x-flv',
+                       'application/x-flv',
                        'video/mpeg',
                        'video/quicktime',
                        'video/x-la-asf',
@@ -62,12 +64,12 @@ class Seminar < ActiveRecord::Base
     :less_than => 50.megabytes
 
   # Maquina de estados do processo de conversão
-  acts_as_state_machine :initial => :waiting, :column => 'status'
+  acts_as_state_machine :initial => :waiting, :column => 'state'
   
   state :waiting
-  state :converting, :enter => :notify_converting
-  state :converted, :enter => [:set_new_file_name, :upload_to_s3]
-  state :failed, :enter => :notify_failed
+  state :converting, :enter => :transcode
+  state :converted
+  state :failed
   
   event :convert do
     transitions :from => :waiting, :to => :converting
@@ -104,11 +106,19 @@ class Seminar < ActiveRecord::Base
       self.external_resource = capture
     end
   end
-
-  def convert
-    #TODO 
+  
+  # Converte o video para FLV (é chamado do delayed job)
+  def transcode
+    require 'open-uri'
+    # Baixando original convertendo e fazendo upload
+    open("#{URI.parse(self.media.path)}") do |original|
+      temp_file_path = RAILS_ROOT + "/tmp/" + media_file_name.split(".").first + ".flv"
+      `nice -n +19 ffmpeg -y -i #{original.path} -ab 56 -ar 22050 -r 25 -s 640x480 #{temp_file_path}`
+      open(temp_file_path){ |converted| self.media = converted }
+      File.delete(temp_file_path)
+    end
   end
-
+  
   def video?
     SUPPORTED_VIDEOS.include?(self.media_content_type)
   end
@@ -134,8 +144,5 @@ class Seminar < ActiveRecord::Base
     end
   end
 
-
-
-
-
+  protected
 end
