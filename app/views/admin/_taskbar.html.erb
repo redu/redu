@@ -1,15 +1,94 @@
-<div id="task_bar_exames">
-<%= link_to 'Senhas Beta', beta_keys_path %> | 
-<%= link_to 'Newsletter', :action => 'new' %> | 
-<%= link_to 'Feedback', :action => 'new' %> |
-<%= link_to 'Estatísticas', statistics_path %> | 
-<span>
-Moderar ( 
-<%= link_to 'Submissões' , admin_dashboard_submissions_path %> |
-<%= link_to 'Aulas' , admin_moderate_courses_path %> |
-<%= link_to 'Exames', admin_moderate_exams_path %> |
-<%= link_to 'Redes', admin_moderate_schools_path %> |
-<%= link_to 'Usuários', admin_moderate_users_path %> | 
-<%= link_to 'Comentários', admin_comments_path %> )
-</span>
-</div>
+
+<ul class="menu">
+
+<li>
+<%= 
+link_to_unless_current 'Beta', beta_keys_path do
+  link_to 'Beta', beta_keys_path, 
+    :class => 'selected'
+end
+%>
+</li>
+
+<li>
+<%= 
+link_to_unless_current 'Newsletter', "#" do
+  link_to 'Newsletter', "#", 
+    :class => 'selected'
+end
+%>
+</li>
+
+
+
+<li>
+<%= 
+link_to_unless_current 'Estatísticas', "#" do
+  link_to 'Estatísticas', statistics_path, 
+    :class => 'selected'
+end
+%>
+</li>
+
+
+<li>
+<%= 
+link_to_unless_current 'Submissões', admin_dashboard_submissions_path do
+  link_to 'Submissões', admin_dashboard_submissions_path, 
+    :class => 'selected'
+end
+%>
+</li>
+
+
+<li>
+<%= 
+link_to_unless_current 'Aulas',admin_moderate_courses_path do
+  link_to 'Aulas' , admin_moderate_courses_path, 
+    :class => 'selected'
+end
+%>
+</li>
+
+<li>
+<%= 
+link_to_unless_current 'Exames',admin_moderate_exams_path do
+  link_to 'Exames', admin_moderate_exams_path, 
+    :class => 'selected'
+end
+%>
+</li>
+
+<li>
+<%= 
+link_to_unless_current 'Redes',admin_moderate_schools_path do
+  link_to 'Redes', admin_moderate_schools_path, 
+    :class => 'selected'
+end
+%>
+</li>
+
+
+<li>
+<%= 
+link_to_unless_current 'Usuários',admin_moderate_users_path do
+  link_to 'Usuários', admin_moderate_users_path, 
+    :class => 'selected'
+end
+%>
+</li>
+
+
+<li>
+<%= 
+link_to_unless_current 'Comentários',admin_comments_path do
+  link_to 'Comentários', admin_comments_path, 
+    :class => 'selected'
+end
+%>
+</li>
+
+
+
+</ul>
+

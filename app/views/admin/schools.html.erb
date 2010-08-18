@@ -19,19 +19,21 @@ function selectNone(){
 	
 </script>
 
-<div id="all_content3">
-<div id="col_content">
-	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">administração</a> > <a href="#">redes</a> </div>
- 	<div id="title">MODERAÇÃO DE REDES
-		<%= render :partial => "admin/taskbar" %>
-	</div>
-	
-	<div id="filter_bar">
-		
-	    <span id="title_list" class="title_list">MOSTRANDO MAIS RECENTES</span>
-	    <!--<span class="title_filter">Ordenar:</span>-->
-	      
-    </div>
+<div class="grid_16">
+<div id="breadcrumbs">
+	<a href="#">Administração</a> > Redes
+</div>
+
+<div id="title_video">Moderação de Redes</div>
+</div>
+
+<div class="main grid_16">
+    <div class="fake-tabs grid_16 alpha omega">
+        <%= render :partial => "admin/taskbar" %>
+        <div class="panel">
+        	
+					<h3>Mostrando redes mais recentes</h3>
+					
     <div id="all_list">
     	
 		<% if @schools && @schools.size > 0 %>
@@ -69,7 +71,5 @@ function selectNone(){
     </div>
 
 </div>
-<div id="col_box3">
-	
 	</div>
 </div>

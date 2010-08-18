@@ -141,7 +141,7 @@ class AdminController < BaseController
     @courses = Course.paginate(:conditions => ["public = 1 AND published = 1 AND removed = 0"], 
       :include => :owner, 
       :page => params[:page], 
-      :order => 'created_at ASC', 
+      :order => 'created_at DESC', 
       :per_page => 20)
     
     respond_to do |format|
@@ -154,7 +154,7 @@ class AdminController < BaseController
     @exams = Exam.paginate(:conditions => ["public = 1 AND published = 1 AND removed = 0"], 
       :include => :owner, 
       :page => params[:page], 
-      :order => 'created_at ASC', 
+      :order => 'created_at DESC', 
       :per_page => 20)
     
     respond_to do |format|
@@ -167,7 +167,7 @@ class AdminController < BaseController
     @schools = School.paginate(:conditions => ["public = 1 AND removed = 0"], 
       :include => :owner, 
       :page => params[:page], 
-      :order => 'created_at ASC', 
+      :order => 'created_at DESC', 
       :per_page => 20)
     
     respond_to do |format|
@@ -179,7 +179,7 @@ class AdminController < BaseController
     def users
     @users = User.paginate(:conditions => ["removed = 0"],
       :page => params[:page], 
-      :order => 'created_at ASC', 
+      :order => 'created_at DESC', 
       :per_page => 20)
     
     respond_to do |format|

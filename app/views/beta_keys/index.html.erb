@@ -1,63 +1,46 @@
-<script type="text/javascript">
-	function toggleEmailBox() {
-	
-		var box = document.getElementById('email_box');
-		
-		if (box.style.display == 'none') {
-			Effect.SlideDown(box,0.5);
-		} else {
-			Effect.SlideUp(box,0.5);
-		}
-		
-		
-	}
-	
-</script>
 
-<div id="all_content3">
-<div id="col_content">
-	<div id="breadcrumbs">
-		<a href="<%=application_url%>">home</a> >
-		 
-		<%= link_to 'admin dashboard', admin_dashboard_path %> > Chaves Beta
-		</div>
- 	<div id="title">LISTANDO CHAVES BETA
-	
-	<div id="task_bar_exames" style="height: 31px;">
-		<% form_tag :action => :generate do %>
-		gerar <%= text_field_tag :number , nil, :size => 4%> chaves
-		<%= submit_tag "OK" %>
+<div class="grid_16">
+<div id="breadcrumbs">
+	<a href="#">Administração</a> > Chaves Beta
+</div>
+
+<div id="title_video">Chaves Beta</div>
+</div>
+
+<div class="main grid_16">
+    <div class="fake-tabs grid_16 alpha omega">
+        <%= render :partial => "admin/taskbar" %>
+        <div class="panel">
+						
+						<div style="margin-bottom: 20px;">
+							<% form_tag :action => :generate do %>
+								gerar <%= text_field_tag :number , nil, :size => 4%> chaves
+								<%= submit_tag "OK" %>
+								
+								
+								| <%= link_to_function 'Convidar por E-mail' , "$('#email_box').slideToggle()" %>
+						        <div id="email_box" class="hoverdiv">
+						            <% form_tag :action => :invite do %>
+						            Digite os endereços de e-mail separados por vírgula:
+						            <br>
+						            <%= text_area_tag(:emails, content = nil, :size => "50x5") %>
+						            <br>
+						            <%= submit_tag "Convidar" %>
+						            <% end %>
+						        </div>
+							
+								| <%= link_to 'Imprimir chaves vazias' , print_blank_beta_keys_path, :target => "_blank" %>
+								| <%= link_to 'Remover todas' , remove_all_beta_keys_path, :confirm => "Tem certeza que deseja excluir todas as chaves?" %>   
+								
+								<% end %> 
+								</div>
 		
 		
-		| <%= link_to_function 'Convidar por E-mail' , "toggleEmailBox()" %>
-		| <%= link_to 'Imprimir chaves vazias' , print_blank_beta_keys_path, :target => "_blank" %>
-		| <%= link_to 'Remover todas' , remove_all_beta_keys_path, :confirm => "Tem certeza que deseja excluir todas as chaves?" %>   
 		
-		<% end %> 
-		
-	</div>
+		<h3>Total <%=BetaKey.count%> chaves. Convites aceitos (<%=BetaKey.count(:conditions => ["email IS NOT NULL AND user_id IS NOT NULL"])%>/<%=BetaKey.count(:conditions => ["email IS NOT NULL"])%>) . <%=BetaKey.count(:conditions => ["email IS NULL AND user_id IS NULL "])%> livres. </h3>
 	
-	</div>
-	
-	<div id="email_box" style="display: none; padding: 20px;">
-	<div>
-		<% form_tag :action => :invite do %>
-		Digite os endereços de e-mail separados por vírgula:<br>
-		<%= text_area_tag(:emails, content = nil, :size => "50x5") %><br>
-		<%= submit_tag "Convidar" %>
-		<% end %>
-	</div>
-	</div>
-	
-	
-	
-	<h3>Total <%=BetaKey.count%> chaves. Convites aceitos (<%=BetaKey.count(:conditions => ["email IS NOT NULL AND user_id IS NOT NULL"])%>/<%=BetaKey.count(:conditions => ["email IS NOT NULL"])%>) . <%=BetaKey.count(:conditions => ["email IS NULL AND user_id IS NULL "])%> livres. </h3>
-	
-    <div id="all_list" style="padding:20px; ">
+    <div id="all_list" class="grid_9">
     	
-
-
-
 <table style="width:100% ">
   <tr>
   	<th>Chave</th>
@@ -93,14 +76,11 @@
 
     	
     </div> <!-- fim da listagem --> 
-	
-	
-	
-</div>
-<div id="col_box3">
-	
+		
+						
+						
+        </div>
+    </div> <!-- end tabs -->
+</div><!-- end main -->
 
-</div>
-	
-	
-</div>
+

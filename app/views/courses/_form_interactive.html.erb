@@ -2,31 +2,31 @@
   
   <div style="float: left; border:1px solid #DDDDDD; margin-top: 12px; width: 100%; background-color: #F8FAFF;">
 	
-	<div style="padding: 6px 0 6px 6px; background-color: #fff; border-bottom: 1px solid #DDD;">
+	<div style="padding: 6px 0 6px 6px; background-color: #fff; border-bottom: 1px solid #DDD; height: 15px;">
 	
 		<div class="add-topic-outter" style="float:left;">
           <a id="add_topic_link" href="#" onclick="$('div.add-topic-inner').toggle(); $(this).toggleClass('selected'); return false;">Inserir</a>
           	<div class="add-topic-inner menudiv">
               <ul class="selectable">
                   <li>
-                      <%= link_to_add_lesson((image_tag 'icons/iclass.gif', :title => "Texto") + "Página", f, 'page') %>
+                      <%= link_to_add_lesson((image_tag 'icons/iclass.gif', :title => "Texto") + "Texto", f, 'page') %>
                   </li>
                   <li>
-                      <%= link_to_add_lesson((image_tag 'icons/seminar.gif', :title => "Vídeo") + "Seminário", f, 'seminar') %>
+                      <%= link_to_add_lesson((image_tag 'icons/seminar.gif', :title => "Vídeo") + "Vídeo", f, 'seminar') %>
 											
                   </li>
-                 <!-- 
+                  
 									<li>
-                      <%= link_to_function((image_tag 'icons/exam.gif', :title => "Exame"), 'alert("alora")') %>
-                  </li> -->
+                      <%= link_to_function((image_tag 'icons/exam.gif', :title => "Exame") + "Avaliação", 'alert("Opção indisponível nessa versão")') %>
+                  </li> 
                   <li>
                       <%= link_to_add_lesson((image_tag 'icons/objects.png', :title => "Objetos") + "Objeto embarcado", f, 'object') %>
                   </li>
-									<!--
+									
                   <li>
-                      <%= image_tag 'icons/discussion.png', :title => "Discussão" %>
+                  	 <%= link_to_function((image_tag 'icons/discussion.png', :title => "Discussão") + "Discussão", 'alert("Opção indisponível nessa versão")') %>
                   </li>
-									-->
+									
               </ul>
           </div>
 					
@@ -70,7 +70,7 @@
 	  	
 		<% if interactive_class.lessons.length == 0%>
 		<div id="empty_lessons">
-		 <h3 style="color: #bbb;">Clique em um tipo de tópico para adicionar</h3>
+		 <h3 style="color: #bbb;">Clique em "inserir" para adicionar um novo tópico</h3>
 		 </div>
 		<% else %>
 				<% counter = 0 %>
