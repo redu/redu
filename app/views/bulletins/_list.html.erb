@@ -7,7 +7,8 @@
 				<%= bulletin.description %>
 			<% else %>
 				<%= bulletin.description[0..300]+"..." %>
-					<%= link_to 'Remover notícia.', bulletin,
+					<%= link_to 'Editar', edit_school_bulletin_path(bulletin.school, bulletin), :class => "button icon-edit"%>
+					<%= link_to 'Remover', bulletin,
 					:confirm => 'Você tem certeza que deseja remover essa notícia permanentemente?',
 					:method => :delete, :class => "button icon-delete" %>
 			<% end %>
