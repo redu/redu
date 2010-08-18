@@ -413,7 +413,7 @@ class CoursesController < BaseController
         
         
         @res = []
-        if  params[:seminar][:attachment]
+        if params[:seminar] and  params[:seminar][:attachment]
           params[:seminar][:attachment].each do |a|
             @res = CourseResource.create(:attachment => a, :attachable => @course)
           end
