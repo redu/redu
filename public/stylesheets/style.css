@@ -43,6 +43,10 @@ a {
     color: #0B85C1;
 }
 
+h3 {
+	margin: 15px 0 10px 0;
+}
+
 
 .pretty-text h1,
 .pretty-text h2,
@@ -1231,12 +1235,14 @@ div.recomendations-m .number {
         border: none;
         font-size: .9em;
         color: #8F8F8F;
+				width: 180px;
     }
 
     #search .searchbox input[type=submit] {
         border: none;
         background-color: transparent;
         height: 32px;
+				width: 70px;
     }
 
     #header .user-actions > a.opened,
