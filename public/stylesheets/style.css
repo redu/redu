@@ -94,6 +94,7 @@ h3 {
 border: 1px solid #FEFF9F;
 font-size: 0.9em;
 padding: 10px;
+min-width: 450px;
 position: absolute;
 top: 0;
 left: 25%;
