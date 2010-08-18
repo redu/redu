@@ -21,7 +21,7 @@
 			<%= render :partial => 'bulletins/list', :collection => bulletins, :as => :bulletin , :locals => { :is_index => false } %>
 		</ul>
 		<div class="grid_5"> 
-			<%= link_to '(ver todos)', bulletins_path, :class=>"more"%> 
+			<%= link_to '(ver todos)', school_bulletins_path(@school), :class=>"more"%> 
 		</div>
 
 	<% else %>

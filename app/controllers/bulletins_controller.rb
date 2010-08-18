@@ -6,7 +6,12 @@ class BulletinsController < BaseController
   
   
   def index
-		@bulletins = School.find(params[:school_id]).bulletins
+		@bulletins = Bulletin.paginate(:conditions => ["school_id = ? AND state LIKE 'approved'", School.find(params[:school_id]).id],
+			:page => params[:page], 
+		 	:order => 'updated_at DESC', 
+		 	:per_page => AppConfig.items_per_page
+		 )
+		@school = School.find(params[:school_id])
   end
 
   def show

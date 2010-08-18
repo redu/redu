@@ -1,16 +1,19 @@
 <li class="clearfix">
 
-	<%= link_to bulletin.title, bulletin %>
+	<%= link_to bulletin.title, school_bulletin_path(bulletin.school, bulletin) %>
 	<div class="pretty-text">		
 		<% if is_index %>
 			<% if bulletin.description.size < 300 %>
 				<%= bulletin.description %>
 			<% else %>
 				<%= bulletin.description[0..300]+"..." %>
+					<%= link_to 'Remover notícia.', bulletin,
+					:confirm => 'Você tem certeza que deseja remover essa notícia permanentemente?',
+					:method => :delete, :class => "button icon-delete" %>
 			<% end %>
 		<% end %>
+		
 	</div>
-	
-	<%= time_ago_in_words(bulletin.updated_at) %>
+	<span class="grid_12"> <%= time_ago_in_words(bulletin.created_at) %> </span>
 
 </li>
