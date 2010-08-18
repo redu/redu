@@ -40,9 +40,9 @@ link_to_unless_current 'Configurações', edit_school_path(@school) do
 end
 %>
 </li>
-<li><!--TODO trocar para usar um helper que conta apenas as "waiting"-->
+<li>
 <%=
-link_to_unless_current 'Notícias (' + @school.bulletins.count.to_s + ')', admin_bulletins_school_path do
+link_to_unless_current 'Notícias (' + waiting_bulletins_count.to_s + ')', admin_bulletins_school_path do
   link_to 'Notícias', admin_bulletins_school_path, :class => 'selected'
 end
 %>

@@ -108,5 +108,8 @@ module SchoolsHelper
     User.find_by_sql(sql)
   end
   
+  def waiting_bulletins_count
+    Bulletin.count(:conditions => ["state LIKE ?", "waiting"])
+  end
   
 end

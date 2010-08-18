@@ -304,35 +304,22 @@ class SchoolsController < BaseController
  end
  
  def moderate_bulletins
-   if params[:bulletin]
-     approved = params[:bulletin].reject{|k,v| v == 'reject'}
-     rejected = params[:bulletin].reject{|k,v| v == 'approve'}
-     approved_ids = approved.keys.join(',')
-     rejected_ids = rejected.keys.join(',')
+    if params[:bulletin]
+      approved = params[:bulletin].reject{|k,v| v == 'reject'}
+      rejected = params[:bulletin].reject{|k,v| v == 'approve'}
 
-     puts "approved"
-     puts approved_ids
-     puts "rejected"
-     puts rejected_ids
+      Bulletin.update_all("state = 'approved'", :id => approved.keys) if approved
+      Bulletin.update_all("state = 'rejected'", :id => rejected.keys) if rejected
 
-     #@approved_bulletins = Bulletin.all(:conditions => ["id IN (?)", approved_ids]) unless approved_ids.empty?
-     #@rejected_bulletins = Bulletin.all(:conditions => ["id IN (?)", rejected_ids]) unless rejected_ids.empty?
-     
-     #TODO [BUG] Só está pegando um id por vez.
-     Bulletin.update_all("state = 'approved'", ["id IN (?)", approved_ids]) if approved_ids
-     Bulletin.update_all("state = 'disaproved'", ["id IN (?)", rejected_ids]) if rejected_ids
+      flash[:notice] = 'Notícias moderadas!'
+    else
+      flash[:error] = "Para moderar você precisa escolher entre aprovar ou rejeitar."
+    end
 
-     flash[:notice] = 'Notícias moderadas!'
-   else
-     flash[:error] = "Para moderar você precisa escolher entre aprovar ou rejeitar."
-   end
+    @school = School.find(params[:id])
+    redirect_to admin_bulletins_school_path(@school)
+  end
 
-   @school = School.find(params[:id])
-   redirect_to admin_bulletins_school_path(@school)
- end
- 
- 
- 
  
  ################################################
   
