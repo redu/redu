@@ -28,7 +28,6 @@ Rails::Initializer.run do |config|
   config.gem "oauth"
   config.gem "authlogic-oauth", :lib => "authlogic_oauth"
   config.gem "right_aws", :version => '2.0.0'
-  config.gem 'delayed_job'
   
   # S3 credentials
   if File.exists?("#{RAILS_ROOT}/config/s3.yml")
