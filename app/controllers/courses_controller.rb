@@ -3,15 +3,21 @@ class CoursesController < BaseController
  include Viewable # serve pra atualizar o view_count
     
   before_filter :login_required, :except => [:index]
-  #before_filter :check_if_removed, :except => [:index]
-   # before_filter :require_no_user, :only => [:new, :create]
- # before_filter :require_user, :only => :destroy
-  
   uses_tiny_mce(:options => AppConfig.advanced_mce_options, :only => [:new, :edit, :update])
+  before_filter :verify_access, :only => [:show]
   
 #  def check_if_removed
 #    puts params[:id]
 #  end
+
+  def verify_access
+     @course = Course.find(params[:id])
+     unless current_user.has_access_to @course
+        flash[:notice] = "Você não tem acesso a esta aula"
+        #redirect_back_or_default courses_path
+        redirect_to courses_path
+     end
+  end
 
   
   # adiciona um objeto embarcado (ex: scribd)
@@ -221,7 +227,7 @@ class CoursesController < BaseController
   def show
     
     
-    @course = Course.find(params[:id])
+ #   @course = Course.find(params[:id]) # ja pego no verify_access
     update_view_count(@course)
     
     if @course.removed
@@ -402,24 +408,22 @@ class CoursesController < BaseController
           # importar video do Redu atraves de url
           @success = @seminar.import_redu_seminar(@seminar.external_resource) if @seminar.external_resource_type.eql?('redu')
           
-           respond_to do |format|
-             
-             if @success && !@success[0]  # importação falhou
-                 flash[:error] = @success[1]
-                 format.html { render "step2_seminar" }
-                 return
-            end
+          respond_to do |format|
             
-            
-            if @course.save
-              
-              format.html { 
-                 redirect_to :action => :new , :course_type => params[:courseable_type], :step => "3", :school_id => params[:school_id]
-              }
+            if @success && !@success[0]  # importação falhou
+              flash[:error] = @success[1]
+              format.html { render("step2_seminar")  } 
+            else 
+              if @course.save
                 
-            else  
-              format.html { render "step2_seminar" }
-              
+                format.html { 
+                  redirect_to :action => :new , :course_type => params[:courseable_type], :step => "3", :school_id => params[:school_id]
+                }
+                
+              else  
+                format.html { render "step2_seminar" }
+                
+              end
             end
           end
 

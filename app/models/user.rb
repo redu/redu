@@ -268,10 +268,27 @@ class User < ActiveRecord::Base
     self.update_attribute(:score, self.score + thepoints)
   end
   
-  def has_access_to_course(course)
+  def has_access_to(entity)
+    
+    return true if self.admin? || entity.public || entity.owner == self 
+    
+    case entity.class.to_s 
+    when 'Course'
+      
+      (entity.school and self.schools.include?(entity.school) )   
+#    when 'Exam'
+#      (entity.owner == self || (entity.school == school && self.school_admin?(school) ))   
+#    when 'School'
+#       (entity.owner == self || self.school_admin?(school))    
+#    when 'Event'
+#       (entity.owner == self || (entity.school == school && self.school_admin?(school) )) 
+   end 
+    
+    
     #TODO
-    @acq = Acquisition.find(:first, :conditions => ['acquired_by_id = ? AND course_id = ?', self.id, course.id])
-    !@acq.nil? or course.owner == self
+#    @acq = Acquisition.find(:first, :conditions => ['acquired_by_id = ? AND course_id = ?', self.id, course.id])
+#    !@acq.nil? or course.owner == self
+    
   end
   
   def moderator_of?(forum)

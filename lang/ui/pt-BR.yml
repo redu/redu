@@ -62,10 +62,10 @@ pt-BR:
           attributes:
             path:
               invalid: ": caminho inválido."
-        course:
-          attributes:
-            courseable:
-              invalid: ": link inválido."
+        #course:
+        #attributes:
+            #courseable:
+              #invalid: ": link inválido."
         message:
           attributes:
             body:

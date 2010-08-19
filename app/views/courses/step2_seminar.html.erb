@@ -12,7 +12,9 @@
 			jQuery('embed').attr("src",url);
 			jQuery('#youtube_preview').show();
 			
-		} 
+		}  else {
+			$('#youtube_preview').hide();
+		}
 			
 	}
 	
@@ -106,7 +108,7 @@
 <% form_for :seminar, @seminar, :url => { :action => "create" }, :html => { :multipart => true } do |f| %>
 <div class="grid_16">
 <%= f.error_messages %>
-<%= error_messages_for :course, :seminar %>
+<%# error_messages_for :course, :seminar %>
 </div>	
 <%= hidden_field_tag("step", "2", options = {})%>
 <%= hidden_field_tag("school_id", @school.id) if @school %>
@@ -118,7 +120,7 @@
 
 <%= f.radio_button :external_resource_type, :redu, {:onchange => "switchCourseFields(2);"} %>
   <%= f.label :external_resource_type_redu, "Redu", :class => "inline" %>
-  <%= f.radio_button :external_resource_type, :youtube, {:onchange => "switchCourseFields(2);", :checked => true} %>
+  <%= f.radio_button :external_resource_type, :youtube, {:onchange => "switchCourseFields(2);"} %>
   <%= f.label :external_resource_type_youtube, "Youtube", :class => "inline"  %>
   <%= f.radio_button :external_resource_type, :upload, {:onchange => "switchCourseFields(1);"} %>
   <%= f.label :external_resource_type_upload, "Upload", :class => "inline"  %><br/><br/>	

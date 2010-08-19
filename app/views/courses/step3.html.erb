@@ -44,26 +44,23 @@
     <%end %>
 
 
-	<% unless @school %>
 
 	<% field_set_tag 'Visibilidade' do %>
 	<%= f.label "Pública <span class='snippet'>(Visível em todo o Redu)</span>" %>
-		<%= f.check_box :public, :onchange => "jQuery('input[name=post_to]').attr('checked', false)" %>
+	<%# :onchange => "jQuery('input[name=post_to]').attr('checked', false)" %>
+		<%= f.check_box :public %>
 		
 		<% @schools = current_user.schools %>
 		<% if @schools and @schools.size > 0 %>
 		<%= f.label "Postar em:" %>
 			<div style="overflow-y:scroll; max-height: 200px;">
 			<% @schools.each do | school | %>
-				<div><%= radio_button_tag :post_to, school.id, false, :onchange => "jQuery('#course_public').attr('checked', false)" %> <%= school.name %></div>
+				<div><%= radio_button_tag :post_to, school.id, false %> <%= school.name %></div>
 			<% end %>
 			</div>
 		<% end %>
 		<%end%>
 	
-	<%else%>
-	 <%= f.hidden_field(:public, :value => 0)%>
-	<% end %>
 	
     <% if AppConfig.activate_payment %>
 	    <% field_set_tag 'Preço' do %>
