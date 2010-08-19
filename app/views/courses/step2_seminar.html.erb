@@ -113,8 +113,8 @@
 
 <% field_set_tag 'Vídeo' do %>
 
-<%= f_remote.radio_button :external_resource_type, :redu, {:onchange => "switchCourseFields(2);"} %>
-  <%= f_remote.label :external_resource_type_redu, "Redu", :class => "inline" %>
+<%= f.radio_button :external_resource_type, :redu, {:onchange => "switchCourseFields(2);"} %>
+  <%= f.label :external_resource_type_redu, "Redu", :class => "inline" %>
   <%= f.radio_button :external_resource_type, :youtube, {:onchange => "switchCourseFields(2);", :checked => true} %>
   <%= f.label :external_resource_type_youtube, "Youtube", :class => "inline"  %>
   <%= f.radio_button :external_resource_type, :upload, {:onchange => "switchCourseFields(1);"} %>
