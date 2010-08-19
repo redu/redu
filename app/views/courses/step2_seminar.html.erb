@@ -62,12 +62,13 @@
 		
 	
 		
-		 /* $('#seminar_submit').click(function(event){
-					if ($('#seminar_external_resource_type_upload').attr('checked') == 'checked') {
-		  			event.preventDefault();
+		  $('#seminar_submit').click(function(event){
+				if ( $("input:checked").val() == 'upload') {
+						event.preventDefault();
 		  			$('#seminar_media').uploadifyUpload();
-		  		}
-			});*/
+				}
+				
+			});
 				
 	});
 </script>
