@@ -361,6 +361,7 @@ class CoursesController < BaseController
   # POST /courses.xml
   def create
     #TODO diminuir a lógica desse método
+    # cam2: vou ver isso a diante, mas nao vai melhorar perfomace
     case params[:step]
       when "1"
           @course = Course.new(params[:course])
@@ -395,11 +396,20 @@ class CoursesController < BaseController
         
         if @course.courseable_type == 'Seminar'
           
-          
-          
-          @course.courseable = Seminar.new(params[:seminar])
+          @seminar = Seminar.new(params[:seminar])
+          @course.courseable = @seminar
+         
+          # importar video do Redu atraves de url
+          @success = @seminar.import_redu_seminar(@seminar.external_resource) if @seminar.external_resource_type.eql?('redu')
           
            respond_to do |format|
+             
+             if @success && !@success[0]  # importação falhou
+                 flash[:error] = @success[1]
+                 format.html { render "step2_seminar" }
+                 return
+            end
+            
             
             if @course.save
               

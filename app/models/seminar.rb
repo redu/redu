@@ -57,11 +57,11 @@ class Seminar < ActiveRecord::Base
   validation_group :external, :fields => [:external_resource, :external_resource_type]
   validation_group :uploaded, :fields => [:media]
 
+  validate :validate_youtube_url
   validates_presence_of :external_resource
 
   validates_attachment_presence :media
-  validates_attachment_content_type :media,
-    :content_type => (SUPPORTED_VIDEOS + SUPPORTED_AUDIO)
+  #validates_attachment_content_type :media, :content_type => (SUPPORTED_VIDEOS + SUPPORTED_AUDIO)
   validates_attachment_size :media,
     :less_than => 50.megabytes
 
@@ -86,7 +86,7 @@ class Seminar < ActiveRecord::Base
     transitions :from => :converting, :to => :fail
   end
   
-  validate :validate_youtube_url
+  
   
     
   def import_redu_seminar(url)

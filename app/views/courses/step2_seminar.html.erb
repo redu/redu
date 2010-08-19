@@ -18,11 +18,13 @@
 	
 	function switchCourseFields(fieldType){
 		if (fieldType == 1) {
-			document.getElementById("upload_resource_field").style.display = "block";
-			document.getElementById("external_resource_field").style.display = "none";
+			$('#upload_resource_field').show();
+			$('#external_resource_field').hide();
+			$('#youtube_preview').hide();
+			
 		} else {
-			document.getElementById("upload_resource_field").style.display = "none";
-			document.getElementById("external_resource_field").style.display = "block";
+			$('#upload_resource_field').hide();
+			$('#external_resource_field').show();
 		}
 		
 	}
@@ -48,7 +50,7 @@
 	});
 		
 		
-		
+		/*
     $('#seminar_media').click(function(event){
       event.preventDefault();
     });
@@ -59,16 +61,16 @@
     'multi'               : false,
     'cancelImg'           : '/images/cancel.png'
     });
-		
+		*/
 	
-		
+		/*
 		  $('#seminar_submit').click(function(event){
 				if ( $("input:checked").val() == 'upload') {
 						event.preventDefault();
 		  			$('#seminar_media').uploadifyUpload();
 				}
 				
-			});
+			});*/
 				
 	});
 </script>
@@ -103,7 +105,7 @@
 
 <% form_for :seminar, @seminar, :url => { :action => "create" }, :html => { :multipart => true } do |f| %>
 <div class="grid_16">
-<%# f.error_messages %>
+<%= f.error_messages %>
 <%= error_messages_for :course, :seminar %>
 </div>	
 <%= hidden_field_tag("step", "2", options = {})%>
