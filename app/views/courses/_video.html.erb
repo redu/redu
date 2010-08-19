@@ -1,5 +1,5 @@
 
-	<% if resource.state.eql?("approved") %>
+	<% if resource.state.eql?("converted") %>
 
 <script type="text/javascript">
 	<% 
@@ -7,7 +7,7 @@
 		
 	%>
    var flashvars = {
-      'file':               '<%= File.join(File.dirname(resource.media.url), "#{resource.id}.flv") %>',
+      'file':               '<%= resource.media.url.split('?').first %>',
       'autostart':          'false',
       'image':							'<%= File.join(File.dirname(resource.media.url), "#{resource.id}480x360.jpg") %>',
       'skin':								'/flash/modieus.swf'
