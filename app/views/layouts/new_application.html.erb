@@ -10,11 +10,10 @@
     <%= stylesheet_link_tag 'style.css'	%>  <!-- ver scripts_and_styles -->
 	 
 	 
-    <%# javascript_include_tag 'jquery-1.4.2.min.js', 'jquery-ui-1.8.1.custom.min.js', 'common.js'  %>
 	 <%= javascript_include_tag :defaults  %> <!-- ja adiciona o jquery -->
 	 <%= javascript_include_tag 'common'  %>
-	 
 	 <%= render :partial => "shared/new/scripts_and_styles" %>
+	 <%= yield :js %>
 	 
     <% if @rss_title && @rss_url %>
     <%= auto_discovery_link_tag(:rss, @rss_url, {:title => @rss_title}) %>

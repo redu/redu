@@ -1,15 +1,9 @@
-if @annotation.new_record?
-  #page.select('#flash_messages').invoke('update', flash[:error])
-  #page << "new Effect.Highlight($$('flash_messages')[0]);"
-  flash[:error] = "ocorreu um erro"
-  page.reload_flash
-else
-  page.select('#annotation_link').invoke('update', "<a href='#' class='annotation_plus'>Anotações</a>")
-  page.reload_flash
-  #page.select('#flash_messages').invoke('update', flash[:notice])
-  page << "jQuery('#annotation_link').show(); jQuery('#annotation_box').slideUp('slow');"
-end
+page << "jQuery('div.annotation-inner').slideToggle()"
+page << "jQuery('#annotation_spinner').hide()"
+page << "jQuery('#annotation_link').show()"
+page << "jQuery('#annotation_link').attr('class','annotation_plus')"
 
-page.select('#annotation_spinner').invoke('hide')
+
+
           
 

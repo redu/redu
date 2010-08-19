@@ -37,25 +37,57 @@
 		var regexp = new RegExp("new_" + association, "g")
 		jQuery(link).before("<fieldset>" + content.replace(regexp, new_id) + "</fieldset>");
 	}
-
+	
 </script>
 
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function() {
+		
+		$('#seminar_external_resource').change(function(obj){
+		youtubePreview(obj.target);
+	});
+		
+		
+		
+    $('#seminar_media').click(function(event){
+      event.preventDefault();
+    });
+		
+  $('#seminar_media').uploadify({
+    'uploader'            : '/javascripts/uploadify/uploadify.swf',
+    'script'              : '/uploads/create',
+    'multi'               : false,
+    'cancelImg'           : '/images/cancel.png'
+    });
+		
+	
+		
+		  $('#seminar_submit').click(function(event){
+					if ($('#seminar_external_resource_type_upload').attr('checked') == 'checked') {
+		  			event.preventDefault();
+		  			$('#seminar_media').uploadifyUpload();
+		  		}
+			});
+				
+	});
+</script>
 
 
 <div class="grid_16">
 <div id="breadcrumbs">
 		<% if @school %>
-	<a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <%= link_to @school.name, @school %> > nova aula
+	<a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <%= link_to @school.name, @school %> > nova vídeo-aula
 	<% else %>
-	<a href="<%=application_url%>">início</a> > <a href="#">ensinar</a> > nova aula
+	<a href="<%=application_url%>">início</a> > <a href="#">ensinar</a> > nova vídeo-aula
 	<%end %>
-	
-	 </div>
+</div>
+</div>
 
 <%= render(:partial => "schools/school_info", :locals=>{:show => false}) if @school%>
 
-<h3 class="call">Nova vídeo-aula </h3>
+<div id="title_video">Nova vídeo-aula</div>
 
+<div class="grid_9 push_3">
 <table class="booking_steps" cellpadding="0" cellspacing="0">
 							<tbody><tr>
 								<td><span class="book_step"><span><em>1</em>Informações Gerais</span></span></td>
@@ -67,21 +99,23 @@
 						</tbody></table>
 </div>
 
-	
-<% form_for :seminar, @seminar, :url => { :action => "create" }, :html => { :multipart => true } do |f| %>
-<%= f.error_messages %>
 
+<% form_for :seminar, @seminar, :url => { :action => "create" }, :html => { :multipart => true } do |f| %>
+<div class="grid_16">
+<%# f.error_messages %>
+<%= error_messages_for :course, :seminar %>
+</div>	
 <%= hidden_field_tag("step", "2", options = {})%>
-	<%= hidden_field_tag("school_id", @school.id) if @school %>
+<%= hidden_field_tag("school_id", @school.id) if @school %>
+
 	
 <div class="grid_6">
-	
-<fieldset>
-	<legend>Vídeo</legend>
 
-  <%# f.radio_button :external_resource_type, :slideshare, {:onchange => "switchCourseFields(2);" }%>
-  <%# f.label :external_resource_type_slideshare, "Slideshare", :class => "inline"  %>	
-  <%= f.radio_button :external_resource_type, :youtube, {:onchange => "switchCourseFields(2);"} %>
+<% field_set_tag 'Vídeo' do %>
+
+<%= f_remote.radio_button :external_resource_type, :redu, {:onchange => "switchCourseFields(2);"} %>
+  <%= f_remote.label :external_resource_type_redu, "Redu", :class => "inline" %>
+  <%= f.radio_button :external_resource_type, :youtube, {:onchange => "switchCourseFields(2);", :checked => true} %>
   <%= f.label :external_resource_type_youtube, "Youtube", :class => "inline"  %>
   <%= f.radio_button :external_resource_type, :upload, {:onchange => "switchCourseFields(1);"} %>
   <%= f.label :external_resource_type_upload, "Upload", :class => "inline"  %><br/><br/>	
@@ -91,30 +125,30 @@
   <%= f.file_field :media  %>
   (tamanho máximo: 50MB)
  	</div>	
+	
   <div id="external_resource_field" style="display:block;">
   <%= f.label :external_resource, "Link do Vídeo" %>
-  <%= f.text_field :external_resource, :onkeyup => "youtubePreview(this)"  %>
+  <%= f.text_field :external_resource  %>
   </div>
 	
-
-  
-</fieldset>	
-</div>	
-
-<div class="grid_6">
-
-<div id="youtube_preview" style="display: none;">
-<object width="520" height="344">
-<param name="movie" value="none" id="yt_preview_param">
-</param><param name="allowFullScreen" value="true">
-</param><param name="allowscriptaccess" value="always">
-</param><embed src="none" 
-type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="520" height="344">
-</embed></object> 
-</div>
+<%end %>
 
 </div>	
 
+
+
+	<div id="youtube_preview" style="display: none;" class="grid_6">
+	<% field_set_tag 'Preview' do %>
+		<object width="260" height="177">
+		<param name="movie" value="none" id="yt_preview_param"/>
+		<param name="allowFullScreen" value="true"/>
+		<param name="allowscriptaccess" value="always"/>
+		<embed src="none" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="260" height="177"/>
+		</object> 
+		<%end%>
+	</div>
+
+	
 
 
 
@@ -130,8 +164,6 @@ type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen=
 
 <% end %>
 
-</div>
 
-	
-	
-</div>
+<%=  javascript_include_tag "swfobject", "uploadify/uploadify210.js" %>
+

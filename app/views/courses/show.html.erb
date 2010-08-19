@@ -147,7 +147,7 @@ function decreaseFontSize(){
             <div id="identification1">
                 <ul id="identification_resource1">
                     <li>
-                        <%= link_to @course.owner.display_name, user_path(@course.owner) %>
+                        <%= (@course.owner) ? link_to(@course.owner.display_name, user_path(@course.owner)) : "(usuário removido)"  %>
                     </li>
                     <li>
                         |
@@ -219,20 +219,24 @@ function decreaseFontSize(){
 					<li>
                         |
                     </li>
-                    <li>
-												<%# render :partial => 'shared/share'%>
-												
-                          <% thumb_url = @course.thumb_url %>
-                          <% url = application_url[0..application_url.length-2] + request.request_uri %>
-                          <div class="share-outter">
-                              <%= link_to_function "Compartilhar", "jQuery('div.share-inner').slideToggle()", :class => "share_video" %>
-													<div class="share-inner hoverdiv">
-															<%= render :partial => 'shared/share', :locals => {:resource => @course}%>
-														</div>
-													</div>
+										<li>
+											<!-- AddThis Button BEGIN -->
+<script type="text/javascript">
+	var addthis_config = {
+  "data_track_clickback":true,
+	ui_click: true,
+	ui_cobrand: "Redu"};
+</script>
+<div class="addthis_toolbox addthis_default_style">
+<a href="http://addthis.com/bookmark.php?v=250&amp;username=redu" class="addthis_button_compact">Share</a>
+</div>
+<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=redu"></script>
+<!-- AddThis Button END -->
 
-												
-                    </li>
+
+										</li>
+										
+									
 					<li>
                         |
                     </li>

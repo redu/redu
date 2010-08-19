@@ -45,45 +45,19 @@ class CoursesController < BaseController
     @seminar = Seminar.new( params[:seminar] )
     
     # importar video do Redu atraves de url
-    if @seminar.external_resource_type.eql?('redu')
-       course_id = @seminar.external_resource.scan(/aulas\/([0-9]*)/)[0][0]
-        @source = Course.find(course_id)
-        # copia (se upload ou youtube)
-        if @source and @source.public
-          if @source.courseable_type == 'Seminar'
-            if @source.courseable.external_resource_type.eql?('youtube')
-              @seminar.external_resource_type = 'youtube'
-              @seminar.external_resource = 'http://www.youtube.com/watch?v=' + @source.courseable.external_resource
-            elsif @source.courseable.external_resource_type.eql?('upload')
-               @seminar.external_resource_type = 'upload' # melhor ficar 'redu'?
-               @seminar.media_file_name = @source.courseable.media_file_name
-               @seminar.media_content_type = @source.courseable.media_content_type
-               @seminar.media_file_size = @source.courseable.media_file_size
-               @seminar.media_updated_at = @source.courseable.media_updated_at
-            end
-          else
-            respond_to do |format|
-              format.js do
-                responds_to_parent do
-                  render :update do |page|
-                    page << "alert('O link não é uma vídeo-aula!');"
-                  end
-                end
-              end
-            end
-            
-          end
-        else
-          respond_to do |format|
-              format.js do
-                responds_to_parent do
-                  render :update do |page|
-                    page << "alert('Link inválido ou a aula não é pública');"
-                  end
-                end
-              end
-            end
+    success = @seminar.import_redu_seminar(@seminar.external_resource) if @seminar.external_resource_type.eql?('redu')
+    
+    unless success and success[0] # importação falhou
+      respond_to do |format|
+        format.js do
+          responds_to_parent do
+            render :update do |page|
+              page << "alert('"+ success[1] +"');"
+            end 
+          end 
         end
+      end
+      return
     end
     
     respond_to do |format|
@@ -410,7 +384,7 @@ class CoursesController < BaseController
       
     when "2"
         @course = Course.find(session[:course_id])
-        
+        @course.enable_validation_group :step2
         
         @res = []
         if params[:seminar] and  params[:seminar][:attachment]
@@ -420,6 +394,8 @@ class CoursesController < BaseController
         end
         
         if @course.courseable_type == 'Seminar'
+          
+          
           
           @course.courseable = Seminar.new(params[:seminar])
           

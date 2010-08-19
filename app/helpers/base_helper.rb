@@ -262,7 +262,7 @@ module BaseHelper
       end
       when 'schools'
       if @school and @school.name
-        title = 'Rede: ' + @school.name + ' &raquo; ' + app_base + tagline
+        title = @school.name + ' &raquo; ' + app_base + tagline
       else
         title = 'Mostrando Redes' +' &raquo; ' + app_base + tagline            
       end

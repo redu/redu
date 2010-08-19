@@ -32,9 +32,12 @@ class Course < ActiveRecord::Base
   validates_presence_of :description
   validates_presence_of :simple_category
 
+  validates_associated :courseable
+
   validation_group :step1, :fields=>[:name, :description, :simple_category]
+  
   #validation_group :step2_interactive, :fields=>[:name, :description]
-  # validation_group :step2_seminar, :fields=>[:media]
+  validation_group :step2, :fields=>[:courseable]
   validation_group :step3, :fields=>[:price]
 
   named_scope :seminars,

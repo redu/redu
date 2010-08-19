@@ -42,8 +42,24 @@
 <div id="filter_bar_video">
 	<div id="actions_video">
     	<ul id="actions_resource">
-			<li><a href="#" class="share_video" onclick="toggleShareBox();">Compartilhar</a></li>
-        	<li>|</li>
+			<li>
+<!-- AddThis Button BEGIN -->
+<script type="text/javascript">
+	var addthis_config = {
+  "data_track_clickback":true,
+	ui_click: true,
+	ui_cobrand: "Redu"};
+</script>
+<div class="addthis_toolbox addthis_default_style">
+<a href="http://addthis.com/bookmark.php?v=250&amp;username=redu" class="addthis_button_compact">Share</a>
+</div>
+<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=redu"></script>
+<!-- AddThis Button END -->
+
+				
+				</li>
+        	
+					<li>|</li>
 			<li>
 			<%= render :partial => "shared/favorite" , :locals => {:favoritable => @exam}%>
 			</li>

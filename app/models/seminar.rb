@@ -53,9 +53,11 @@ class Seminar < ActiveRecord::Base
   before_validation :enable_correct_validation_group
   before_create :truncate_youtube_url
 
-  # Validations Groups - Usados para habilitar diferentes validacoes dependendo do tipo do arquivo.
+  # Validations Groups - Usados para habilitar diferentes validacoes dependendo do tipo d
   validation_group :external, :fields => [:external_resource, :external_resource_type]
   validation_group :uploaded, :fields => [:media]
+
+  validates_presence_of :external_resource
 
   validates_attachment_presence :media
   validates_attachment_content_type :media,
@@ -83,23 +85,66 @@ class Seminar < ActiveRecord::Base
   event :fail do
     transitions :from => :converting, :to => :fail
   end
-
-  validate do |seminar|
-    if seminar.external_resource_type.eql?('youtube')
-      capture = seminar.external_resource.scan(/youtube\.com\/watch\?v=([A-Za-z0-9._%-]*)[&\w;=\+_\-]*/)[0][0]
-      seminar.errors.add_to_base("Link inválido") unless capture
+  
+  validate :validate_youtube_url
+  
+    
+  def import_redu_seminar(url)
+    course_id = url.scan(/aulas\/([0-9]*)/)
+    
+    @source = Course.find(course_id[0][0]) unless course_id.empty?
+    # copia (se upload ou youtube)
+    
+    if @source and @source.public
+      if @source.courseable_type == 'Seminar'
+        if @source.courseable.external_resource_type.eql?('youtube')
+          self.external_resource_type = 'youtube'
+          self.external_resource = 'http://www.youtube.com/watch?v=' + @source.courseable.external_resource
+          return [true, ""]
+        elsif @source.courseable.external_resource_type.eql?('upload')
+          self.external_resource_type = 'upload' # melhor ficar 'redu'?
+          self.media_file_name = @source.courseable.media_file_name
+          self.media_content_type = @source.courseable.media_content_type
+          self.media_file_size = @source.courseable.media_file_size
+          self.media_updated_at = @source.courseable.media_updated_at
+          return [true, ""]
+        end
+        
+      else
+        return [false, "Aula não é um seminário"]
+      end
+    else
+      return [false, "Link não válido ou aula não pública"]
     end
+    
+   end
+    
+  
+  def validate_youtube_url
+    if external_resource_type.eql?('youtube')
+      capture = external_resource.scan(/youtube\.com\/watch\?v=([A-Za-z0-9._%-]*)[&\w;=\+_\-]*/)[0]
+      
+      #errors.add_to_base("Link inválido") # unless capture
+    errors.add(:external_resource, "Link inválido") unless capture
+    
+#    elsif seminar.external_resource_type.eql?('redu')
+#      capture = seminar.external_resource.scan(/redu\.com\.br\/aulas\/([A-Za-z0-9._%-]*)[&\w;=\+_\-]*/)[0][0]
+#      
+#      seminar.errors.add_to_base("Link inválido") unless capture
+    
+    end
+    
   end
+  
 
   def truncate_youtube_url
     if self.external_resource_type.eql?('youtube')
-      #TODO regex repetida
       capture = self.external_resource.scan(/youtube\.com\/watch\?v=([A-Za-z0-9._%-]*)[&\w;=\+_\-]*/)[0][0]
       # TODO criar validacao pra essa url
       self.external_resource = capture
     end
   end
-
+  
   # Converte o video para FLV (é chamado do delayed job)
   def transcode
     require 'open-uri'
@@ -111,7 +156,7 @@ class Seminar < ActiveRecord::Base
       File.delete(temp_file_path)
     end
   end
-
+  
   def video?
     SUPPORTED_VIDEOS.include?(self.media_content_type)
   end

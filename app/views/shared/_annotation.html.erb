@@ -1,16 +1,15 @@
 <div class="annotation-outter">
                          
 
-	<span id ="annotation_link">
 		<% annotation_link_class = (@course.has_annotations_by(current_user)) ? "annotation_plus" : "annotation" %>
-		<%= link_to_function "Anotações", "jQuery('div.annotation-inner').slideToggle()", :class => annotation_link_class %>
-	</span>
+		<%= link_to_function "Anotações", "jQuery('div.annotation-inner').slideToggle()", :class => annotation_link_class, :id => "annotation_link" %>
+
 	<%= image_tag 'loading_bar.gif', :style => 'display:none;', :id => 'annotation_spinner' %>
 
 
 		<div class="annotation-inner hoverdiv">
 			
-			<% remote_form_for(@annotation, :loading => "$('annotation_link').hide(); $('annotation_spinner').show();") do |f| %>
+			<% remote_form_for(@annotation, :loading => "$('#annotation_link').hide(); $('#annotation_spinner').show();") do |f| %>
 		 			<%= f.hidden_field(:user_id, :value => current_user.id) %>
 					<%= f.hidden_field(:course_id, :value => @course.id) %>
 		

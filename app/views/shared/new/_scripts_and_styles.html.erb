@@ -8,8 +8,12 @@
 	});
 	 
 	</script>
-
 <% end %>
+
+
+<!-- upload -->
+<%= stylesheet_link_tag 'uploadify' if controller_name == 'courses' and action_name == 'new'  %>
+<!-- end upload --->
 
 <% if controller_name == 'schools' %>
 	<% if action_name == 'show'%>

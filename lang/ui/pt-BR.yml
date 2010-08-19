@@ -62,6 +62,10 @@ pt-BR:
           attributes:
             path:
               invalid: ": caminho inválido."
+        course:
+          attributes:
+            courseable:
+              invalid: ": link inválido."
         message:
           attributes:
             body:
@@ -83,7 +87,7 @@ pt-BR:
                     blank: ": Por favor, informe seu papel (professor/aluno)."
                     inclusion: ": Por favor, informe seu papel (professor/aluno)."
                     
-           
+  courseable: vídeo-aula         
   courses: aulas
   history: historico
   status:

@@ -5,7 +5,7 @@ class AnnotationsController < BaseController
     @annotation = Annotation.new(params[:annotation])
     
     if @annotation.save
-      flash.now[:notice] = "Anotação salva!"
+      #flash.now[:notice] = "Anotação salva!"
       respond_to do |format|
         format.js 
       end

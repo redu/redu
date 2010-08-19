@@ -26,7 +26,6 @@ Rails::Initializer.run do |config|
   config.gem 'will_paginate', :version => '~> 2.3.11', :source => 'http://gemcutter.org'
   config.gem "adzap-ar_mailer"
   config.gem "oauth"
-  config.gem "authlogic-oauth", :lib => "authlogic_oauth"
   config.gem "right_aws", :version => '2.0.0'
   
   # S3 credentials
@@ -101,6 +100,8 @@ end
 OpenSocialContainer::Configuration.person_class = 'User'
 OpenSocialContainer::Configuration.secret = 'secret_password'
 
+#AuthlogicOauth::ActsAsAuthentic::Methods
+
 WillPaginate::ViewHelpers.pagination_options[:prev_label] = 'Anterior'  
 WillPaginate::ViewHelpers.pagination_options[:next_label] = 'Próximo'
 WillPaginate::ViewHelpers.pagination_options[:separator] = nil
@@ -108,3 +109,5 @@ WillPaginate::ViewHelpers.pagination_options[:renderer] = 'PaginationListLinkRen
 
 
 require 'rails_asset_extensions'
+
+
