@@ -4,6 +4,14 @@ class EventsController < BaseController
   require 'htmlentities'
   caches_page :ical
   cache_sweeper :event_sweeper, :only => [:create, :update, :destroy]
+  
+  before_filter :login_required #TODO verificar se o usuário está na rede
+  #before_filter :only => [:edit, :update, :destroy] do |controller|
+    #@event = Event.find(controller.params[:id])
+    #@school = School.find(controller.params[:school_id])
+    
+    #current_user.can_manage?(@event, @school) if controller.params and controller.params[:id] and controller.params[:school_id]
+  #end
  
   #These two methods make it easy to use helpers in the controller.
   #This could be put in application_controller.rb if we want to use
@@ -43,17 +51,25 @@ class EventsController < BaseController
     @comments = @event.comments.find(:all, :limit => 20, :order => 'created_at DESC', :include => :user)
   end
 
-  def index  
-    @events = Event.upcoming.paginate(:include => :owner, 
+  def index
+    @events = Event.upcoming.paginate(:conditions => ["school_id = ? AND state LIKE 'approved'", School.find(params[:school_id]).id],
+      :include => :owner, 
+      :page => params[:page], 
+      :order => 'start_time DESC', 
+      :per_page => AppConfig.items_per_page)
+          
+    @school = School.find(params[:school_id])	
+  end
+
+  #TODO Ver um jeito de passar o school_id
+  def past
+    
+    @events = Event.past.paginate(:conditions => ["school_id = ? AND state LIKE 'approved'", School.find(params[:school_id]).id],
+      :include => :owner, 
       :page => params[:page], 
       :order => 'start_time DESC', 
       :per_page => AppConfig.items_per_page)
       
-    @school = School.find(params[:school_id])	
-  end
-
-  def past
-    @events = Event.past.find(:all, :page => {:current => params[:page]})
     render :template => 'events/index'
   end
 
@@ -72,13 +88,13 @@ class EventsController < BaseController
 
     respond_to do |format|
       if @event.save
-        flash[:notice] = :event_was_successfully_created.l
+        flash[:notice] = "O evento foi criado e adicionado à rede."
         
-        format.html { redirect_to event_path(@event) }
+        format.html { redirect_to school_event_path(@event.school, @event) }
+        format.xml  { render :xml => @event, :status => :created, :location => @event }
       else
-        format.html { 
-          render :action => "new"
-        }
+          format.html { render :action => "new" }
+          format.xml  { render :xml => @event.errors, :status => :unprocessable_entity }
       end
     end    
   end
@@ -88,22 +104,24 @@ class EventsController < BaseController
         
     respond_to do |format|
       if @event.update_attributes(params[:event])
-        format.html { redirect_to event_path(@event) }
+        flash[:notice] = 'O evento foi editado.'
+        format.html { redirect_to school_event_path(@event.school, @event) }
+        format.xml { render :xml => @event, :status => :created, :location => @event }
       else
         format.html { 
-          render :action => "edit"
+          format.html { render :action => :edit }
+          format.xml { render :xml => @event.errors, :status => :unprocessable_entity }
         }
       end
     end
   end
   
-  # DELETE /homepage_features/1
-  # DELETE /homepage_features/1.xml
   def destroy
     @event = Event.find(params[:id])
     @event.destroy
     
     respond_to do |format|
+      flash[:notice] = 'O evento foi excluído.'
       format.html { redirect_to :back }
     end
   end

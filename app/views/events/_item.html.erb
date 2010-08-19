@@ -1,9 +1,22 @@
 <li class="clearfix pretty-text">
 	<% if show_details_link %>
-		<h4><%= link_to @event.name, event_path(@event) %></h4>
+		<h4><%= link_to @event.name, school_event_path(@event.school, @event) %></h4>
 	<% else %>
 		<h4><%= @event.name %></h4>
 	<% end %>
+		
+	<% if current_user.can_manage?(@event, @event.school) %>
+		<%= link_to "Editar", edit_school_event_path, :class => "button icon-edit" %>
+		<%= link_to "Excluir", school_event_path, :method => :delete, :class => "button icon-delete" %>
+	<% end %>
+	
+	<br/> <!-- Só enquanto está sem css -->
+	
+	<span class="#"><%= @event.tag_list %></span> | Criador: <%= link_to @event.owner.display_name, @event if @event.owner %>
+	
+	<br/> <!-- Só enquanto está sem css -->
+	
+
 	
 	<span><%= @event.time_and_date %></span>
 	<% if @event.location %>

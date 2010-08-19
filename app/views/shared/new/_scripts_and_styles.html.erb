@@ -32,7 +32,7 @@
   <%= javascript_include_tag 'swfobject'%>
 	<% end %>
 	
-	<% if controller_name == 'events' && (action_name == 'new' || action_name == 'edit' || action_name == 'update') %>	
+	<% if controller_name == 'events' %>	
 		<%= javascript_include_tag 'prototype' %>
 		<%= calendar_date_select_includes 'blue' %>
 			<script type="text/javascript">
