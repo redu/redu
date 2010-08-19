@@ -77,6 +77,7 @@ class Seminar < ActiveRecord::Base
 
   event :ready do
     transitions :from => :converting, :to => :converted
+    transitions :from => :waiting, :to => :converted
   end
 
   event :fail do
@@ -92,6 +93,7 @@ class Seminar < ActiveRecord::Base
 
   def truncate_youtube_url
     if self.external_resource_type.eql?('youtube')
+      #TODO regex repetida
       capture = self.external_resource.scan(/youtube\.com\/watch\?v=([A-Za-z0-9._%-]*)[&\w;=\+_\-]*/)[0][0]
       # TODO criar validacao pra essa url
       self.external_resource = capture
@@ -133,5 +135,9 @@ class Seminar < ActiveRecord::Base
     else
       self.external_resource_type
     end
+  end
+    
+  def need_transcoding?
+    self.video? or self.audio?
   end
 end

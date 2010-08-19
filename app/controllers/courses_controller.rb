@@ -386,7 +386,7 @@ class CoursesController < BaseController
   # POST /courses
   # POST /courses.xml
   def create
-
+    #TODO diminuir a lógica desse método
     case params[:step]
       when "1"
           @course = Course.new(params[:course])
@@ -497,7 +497,16 @@ class CoursesController < BaseController
       end
       
       @course.published = true # se o usuário completou os 3 passos então o curso está publicado
-        
+      
+      # Enfileirando video para conversão
+      if @course.courseable_type.eql?('Seminar')
+        if @course.courseable.need_transcoding?
+          Delayed::Job.enqueue VideoTranscodingJob.new(@course.courseable)
+        else
+          @course.courseable.ready!
+        end
+      end
+            
       if @school
         if @school.submission_type = 1 # todos podem postar
           params[:course][:state] = "approved"
@@ -515,13 +524,10 @@ class CoursesController < BaseController
       else #publico
         params[:course][:state] = "waiting"
       end
-        
-        
-      
+
       respond_to do |format|
         
         if @course.update_attributes(params[:course])
-          
           #Log.log_activity(@course, 'create', current_user) # só aparece quando é aprovada
           # remover curso da sessao
           session[:course_id] = nil
@@ -563,11 +569,7 @@ class CoursesController < BaseController
         end
         
       end
-      
-      
     end
-
-
 end
 
 def unpublished_preview
