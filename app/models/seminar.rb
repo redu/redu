@@ -65,38 +65,29 @@ class Seminar < ActiveRecord::Base
 
   # Maquina de estados do processo de conversão
   acts_as_state_machine :initial => :waiting, :column => 'state'
-  
+
   state :waiting
   state :converting, :enter => :transcode
   state :converted
   state :failed
-  
+
   event :convert do
     transitions :from => :waiting, :to => :converting
   end
-  
+
   event :ready do
     transitions :from => :converting, :to => :converted
   end
-  
+
   event :fail do
     transitions :from => :converting, :to => :fail
   end
-  
-  
-    validate do |seminar|
+
+  validate do |seminar|
     if seminar.external_resource_type.eql?('youtube')
       capture = seminar.external_resource.scan(/youtube\.com\/watch\?v=([A-Za-z0-9._%-]*)[&\w;=\+_\-]*/)[0][0]
-      
       seminar.errors.add_to_base("Link inválido") unless capture
-    
-#    elsif seminar.external_resource_type.eql?('redu')
-#      capture = seminar.external_resource.scan(/redu\.com\.br\/aulas\/([A-Za-z0-9._%-]*)[&\w;=\+_\-]*/)[0][0]
-#      
-#      seminar.errors.add_to_base("Link inválido") unless capture
-    
     end
-    
   end
 
   def truncate_youtube_url
@@ -106,7 +97,7 @@ class Seminar < ActiveRecord::Base
       self.external_resource = capture
     end
   end
-  
+
   # Converte o video para FLV (é chamado do delayed job)
   def transcode
     require 'open-uri'
@@ -118,7 +109,7 @@ class Seminar < ActiveRecord::Base
       File.delete(temp_file_path)
     end
   end
-  
+
   def video?
     SUPPORTED_VIDEOS.include?(self.media_content_type)
   end
@@ -143,6 +134,4 @@ class Seminar < ActiveRecord::Base
       self.external_resource_type
     end
   end
-
-  protected
 end
