@@ -1,9 +1,8 @@
-<div class="">
+<div class="grid_12 pretty-text">
 	<h4>Inscreva-se e tenha os eventos da rede no seu calendário</h4>
-	<p>
-		Keep up to date with events using your favorite software (Outlook, Lightning / Thunderbird, Sunbird, iCal, etc.) or 
-		online service (Google Calendar, AirSet, iScrybe, etc.).
-	</p>
+
+		Fique atento aos eventos da sua rede através do Google Calendar ou iCal.
+
 	<%= link_to image_tag('/images/icons/ical.gif'), ical_events_url(:format=>'ics') %>
 	<%= link_to image_tag("http://www.google.com/calendar/images/ext/gc_button1.gif"), "http://www.google.com/calendar/render?cid=#{ical_events_url(:format=>'ics')}", :target=>'_blank' %>
 </div>
