@@ -22,6 +22,9 @@ colocar imagens em subpastas
 
 PROGRAMAÇÃO
 ===========
+mais rapido cookie-based session or activerecord???
+colocar javascript em <% content_for :js do %> <!-- javascript code to run, for this view only --> <% end %> e adicionar <%= yield :js %> no header
+
 remover todos os haml
 remover plugins antigos do CE nao-utilizados.
 Unobtrusive Javascript com jquery

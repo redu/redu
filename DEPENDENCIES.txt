@@ -2,7 +2,7 @@ REDU [v?]
 
 Requirements:
 
-	- RAILS VERSION 2.3.2
+	- RAILS VERSION 2.3.5
 	- ImageMagick (>6.4) 
 	- FFmpeg
 	- GhostScript
