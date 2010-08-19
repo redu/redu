@@ -187,6 +187,20 @@ class SchoolsController < BaseController
       end
   end
   
+  def admin_events
+    @school = School.find(params[:id])
+
+    @events = Event.paginate(:conditions => ["school_id = ? AND state LIKE ?", @school.id, "waiting"], 
+        :include => :owner, 
+        :page => params[:page], 
+        :order => 'updated_at ASC', 
+        :per_page => 20)
+
+      respond_to do |format|
+        format.html 
+      end
+  end
+  
   ### 
   
   
@@ -319,6 +333,23 @@ class SchoolsController < BaseController
     @school = School.find(params[:id])
     redirect_to admin_bulletins_school_path(@school)
   end
+  
+  def moderate_events
+     if params[:event]
+       approved = params[:event].reject{|k,v| v == 'reject'}
+       rejected = params[:event].reject{|k,v| v == 'approve'}
+
+       Event.update_all("state = 'approved'", :id => approved.keys) if approved
+       Event.update_all("state = 'rejected'", :id => rejected.keys) if rejected
+
+       flash[:notice] = 'Eventos moderados!'
+     else
+       flash[:error] = "Para moderar você precisa escolher entre aprovar ou rejeitar."
+     end
+
+     @school = School.find(params[:id])
+     redirect_to admin_events_school_path(@school)
+   end
 
  
  ################################################

@@ -47,6 +47,13 @@ link_to_unless_current 'Notícias (' + waiting_bulletins_count.to_s + ')', admin
 end
 %>
 </li>
+<li>
+<%=
+link_to_unless_current 'Eventos (' + waiting_events_count.to_s + ')', admin_events_school_path do
+  link_to 'Eventos', admin_events_school_path, :class => 'selected'
+end
+%>
+</li>
 <!--<li><%= link_to 'Papéis', owner_user_schools_path(current_user.id) %></li>-->
 <!--<li><%= link_to 'Gadgets', owner_user_schools_path(current_user.id) %></li>-->
 <!--<li><%= link_to 'Conta (Premium)', owner_user_schools_path(current_user.id) %></li>-->

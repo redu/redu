@@ -20,8 +20,6 @@ class EventsController < BaseController
 
   uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit])
 
-  before_filter :admin_required, :except => [:index, :show, :ical]
-
   def ical
     @calendar = Icalendar::Calendar.new
     @calendar.custom_property('x-wr-caldesc',"#{AppConfig.community_name} #{:events.l}")
@@ -50,6 +48,8 @@ class EventsController < BaseController
       :page => params[:page], 
       :order => 'start_time DESC', 
       :per_page => AppConfig.items_per_page)
+      
+    @school = School.find(params[:school_id])	
   end
 
   def past
@@ -68,6 +68,7 @@ class EventsController < BaseController
   def create
     @event = Event.new(params[:event])
     @event.owner = current_user
+    @event.school = School.find(params[:school_id])
 
     respond_to do |format|
       if @event.save

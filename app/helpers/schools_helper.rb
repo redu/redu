@@ -109,7 +109,11 @@ module SchoolsHelper
   end
   
   def waiting_bulletins_count
-    Bulletin.count(:conditions => ["state LIKE ?", "waiting"])
+    Bulletin.count(:conditions => ["school_id = ? AND state LIKE ?", @school.id, "waiting"])
+  end
+  
+  def waiting_events_count
+    Event.count(:conditions => ["school_id = ? AND state LIKE ?", @school.id, "waiting"])
   end
   
 end
