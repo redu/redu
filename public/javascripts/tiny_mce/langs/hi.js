@@ -1,4 +1,4 @@
-tinyMCE.addI18n({en:{
+tinyMCE.addI18n({hi:{
 common:{
 edit_confirm:"Do you want to use the WYSIWYG mode for this textarea?",
 apply:"Apply",
