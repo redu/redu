@@ -73,11 +73,16 @@ namespace :redu do
   
   desc "Run bootstrap rake task"
   task :bootstrap do
-    run "cd #{current_path} && #{rake} bootstrap:all"
+    run "cd #{current_path} && #{rake} RAILS_ENV=production bootstrap:all"
   end
   
   desc "Streams error log file"
   task :errors do
     stream "tail -f #{current_path}/log/error.log"
+  end
+  
+  desc "Starts delayed_job server"
+  task :delayed_jobs_start do
+    run ""
   end
 end  
