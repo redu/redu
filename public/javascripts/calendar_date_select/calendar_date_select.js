@@ -84,7 +84,7 @@ CalendarDateSelect.prototype = {
       time: false,
       buttons: true,
       clear_button: true,
-      year_range: 10,
+      year_range: 5,
       close_on_click: nil,
       minute_interval: 5,
       popup_by: this.target_element,

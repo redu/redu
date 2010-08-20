@@ -13,7 +13,7 @@
 
 <!-- upload -->
 <%= stylesheet_link_tag 'uploadify' if controller_name == 'courses' and action_name == 'new'  %>
-<!-- end upload --->
+<!-- end upload -->
 
 <% if controller_name == 'schools' %>
 	<% if action_name == 'show'%>
@@ -37,8 +37,9 @@
 	<% end %>
 	
 	<% if controller_name == 'events' %>	
-		<%= javascript_include_tag 'prototype' %>
-		<%= calendar_date_select_includes 'blue' %>
+		<%= javascript_include_tag 'prototype'  %>
+		<%= calendar_date_select_includes %>
+		
 			<script type="text/javascript">
 			  _translations = {
 			    "OK": "OK",

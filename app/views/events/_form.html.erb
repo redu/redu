@@ -10,10 +10,10 @@
 	<%= f.text_area :description, :size => "40x12", :class => "mceEditor" %>
 	
 	<%= f.label :start_time, "Início:" %>	
-	<%= f.calendar_date_select :start_time, :time => :mixed, :popup => "force" %>
+	<%= f.calendar_date_select :start_time, :time => :mixed, :popup => "force", :id => "start_time" %>
 	
 	<%= f.label :end_time, "Término:" %>
-	<%= f.calendar_date_select :end_time, :time => :mixed, :popup => "force" %>
+	<%= f.calendar_date_select :end_time, :time => :mixed, :popup => "force", :id => "end_time"  %>
 	
 	<%= f.label :location, "Local:"%>
 	<%= f.text_field :location %>
@@ -23,4 +23,22 @@
 		
 	<%= f.submit "Salvar"%>
 	<a href="javascript:history.back()">Voltar</a>
+<% end %>
+
+<!-- Script para traduzir a data (no editar ele vem em inglês) -->
+<% if action_name == 'edit' %>	
+	<script type="text/javascript">
+
+		changeDateFormat(this.start_time);
+		changeDateFormat(this.end_time);
+	
+		function changeDateFormat(field) {
+				date = new Date($F(field));
+				year = date.getFullYear();
+				month = Date.months[date.getMonth()];
+				day = date.getDate();
+				field.value = day + " de " + month + " de " + year;
+			}
+		
+	</script>
 <% end %>
