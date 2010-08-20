@@ -1,4 +1,4 @@
-class Course < ActiveRecord::Base
+ class Course < ActiveRecord::Base
 
   # PLUGINS
   acts_as_commentable
@@ -99,7 +99,7 @@ class Course < ActiveRecord::Base
     case self.courseable_type
 
     when 'Seminar'
-      if self.courseable.external_resource_type = 'youtube'
+      if self.courseable.external_resource_type == 'youtube'
         'http://i1.ytimg.com/vi/' + self.courseable.external_resource + '/default.jpg'
       else
         File.join(File.dirname(self.media.url), "#{self.id}128x96.jpg")
