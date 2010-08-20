@@ -14,7 +14,8 @@ function limitChars(textid, limit, infodiv){
 
 $(document).ready(function(){
 	
-
+		// message box fades out after 5secs
+		$("#flash").fadeOut(5000);
 
     // User box
 
