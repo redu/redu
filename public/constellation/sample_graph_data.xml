@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graph_data>
+	<nodes>
+		<node id="1"
+			label="Node 1 (Start)"
+			tooltip="Node 1 is initially selected because\nof the 'selected_node_id' flashvar passed\nto the Flash movie from the embedding\nHTML page."
+			graphic_fill_color="#66ff66" selected_graphic_fill_color="#66ff66"
+			graphic_border_color="#0000ff" />
+		<node id="2"
+			label="Node 2 (Selected)"
+			tooltip="Node 2 balloons a little bit when\nselected.  The graphic doubles in size!" 
+			graphic_size="30" selected_graphic_size="60" />
+		<node id="3"
+			label="Node 3 (Font)"
+			tooltip="Node 3 uses a different font which\nbecomes bold when the node is selected."
+			label_font_bold="false" selected_label_font_bold="true"
+			label_font_family="Times New Roman" selected_label_font_family="Times New Roman"
+			label_font_italic="true" selected_label_font_italic="true"
+			label_font_size="20" selected_label_font_size="20" />
+		<node id="4"
+			label="Node 4 (URL)"
+			tooltip="When node 4 is selected, clicking on it\nagain will load the Asterisq homepage\nin a new window."
+			url="http://asterisq.com"
+			url_target="_blank" />
+		<node id="5"
+			label="Node 5 (Shapes)"
+			tooltip="Node 5 uses a pentagon for the node graphic.\nNote that the edge arrows follow\nthe contour of the shape.  Pretty slick, huh?"
+			graphic_size="60" selected_graphic_size="60"
+			graphic_fill_color="#6666ff" selected_graphic_fill_color="#6666ff"
+			graphic_shape="pentagon" selected_graphic_shape="pentagon"
+			graphic_gradient_fill="false" selected_graphic_gradient_fill="false" />
+		<node id="6"
+			label="Node 6 (Image)"
+			tooltip="Node 6 uses an image as the node graphic.  Smiley face.  Awesome."
+			graphic_type="image"
+			graphic_image_url="images/custom_node_graphic.png"
+			graphic_size="70" selected_graphic_size="70" />
+		<node id="7"
+			label="Node 7 (HTML)"
+			tooltip="Tooltips can take a bit of HTML.  &lt;b&gt;Bold&lt;/b&gt;,\n&lt;i&gt;italic&lt;/i&gt;, and &lt;u&gt;underline&lt;/u&gt; styles are supported." />
+		<node id="8"
+			label="Node 8 (Icons)"
+			tooltip="Node 8 includes icons on both sides of the label.  They can be configured to change when the node is selected or deslected."
+			left_icon_url="images/green_circle_icon.png"
+			selected_left_icon_url="images/red_circle_icon.png"
+			right_icon_url="images/orange_triangle_icon.png"
+			selected_right_icon_url="images/purple_triangle_icon.png" />
+	</nodes>
+	<edges>
+		<edge id="1" head_node_id="1" tail_node_id="2"
+			edge_line_color="#ff0000" edge_line_thickness="5" />
+		<edge id="2" head_node_id="1" tail_node_id="3" />
+		<edge id="3" head_node_id="2" tail_node_id="4"
+			tooltip="This edge has &lt;i&gt;no&lt;/i&gt; arrows!"
+			arrowhead="false" />
+		<edge id="4" head_node_id="3" tail_node_id="6" />
+		<edge id="5" head_node_id="3" tail_node_id="7"
+			tooltip="The length of this edge is longer."
+			edge_length_weight="10" />
+		<edge id="6" head_node_id="4" tail_node_id="5"
+			tooltip="This edge has arrows on both sides."
+			bidirectional="true" />
+		<edge id="7" head_node_id="4" tail_node_id="6" edge_length_weight="5" />
+		<edge id="8" head_node_id="5" tail_node_id="7" edge_length_weight="-5" />
+		<edge id="9" head_node_id="6" tail_node_id="7" />
+		<edge id="10" head_node_id="5" tail_node_id="8" />
+	</edges>
+</graph_data>
