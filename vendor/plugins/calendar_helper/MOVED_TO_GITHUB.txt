@@ -1,0 +1,1 @@
+See http://github.com/topfunky/calendar_helper for subsequent updates to this library.

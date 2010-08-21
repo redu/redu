@@ -41,6 +41,10 @@
 		<%= calendar_date_select_includes :locale => 'pt' %>
 	<% end %>
 	
+	<% if controller_name == 'schools' || controller_name == 'events' || controller_name == 'bulletins' %>
+		<%= stylesheet_link_tag 'calendar/red/style' %>
+	<% end %>
+	
 	<script type="text/javascript">
 var uservoiceOptions = {
   /* required */

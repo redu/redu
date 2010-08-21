@@ -3,7 +3,7 @@
 
 	<div class="main grid_12">
 		<div class="menu">
-			<%= link_to "Eventos passados", past_events_path %> <!--TODO BUG Ver um jeito de passar o school_id-->
+			<%= link_to "Eventos passados", past_school_events_path %> <!--TODO BUG Ver um jeito de passar o school_id-->
 			<%= link_to "Eventos Futuros", school_events_path %>
 		</div>
 		<div class="grid_12">
@@ -14,7 +14,7 @@
 		<%= render :partial => 'events/subscribe' %>
 	
 		<ul class="grid_12">	
-			<%= render :partial => 'events/list', :collection => @events, :as => :event %>
+			<%= render :partial => 'events/list', :collection => @events, :as => :event, :locals => {:show_details_link => false} %>
 		</ul>
 	
 		<div id="pagination" align="center" class="pagination">

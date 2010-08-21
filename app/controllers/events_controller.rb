@@ -60,9 +60,7 @@ class EventsController < BaseController
     @school = School.find(params[:school_id])	
   end
 
-  #TODO Ver um jeito de passar o school_id
   def past
-    
     @events = Event.past.paginate(:conditions => ["school_id = ? AND state LIKE 'approved'", School.find(params[:school_id]).id],
       :include => :owner, 
       :page => params[:page], 
@@ -126,6 +124,35 @@ class EventsController < BaseController
       flash[:notice] = 'O evento foi excluído.'
       format.html { redirect_to school_events_path }
     end
+  end
+
+  def vote
+    @event = Event.find(params[:id])
+    current_user.vote(@event, params[:like])
+    respond_to do |format|
+      format.js do 
+        render :update do |page|
+          page << "$('#like_spinner').hide()"
+          page << "$('#like_link').show()"
+          page << "$('#like_link').attr('onclick', 'return false;')"
+           page << "$('#like_count').html('" + @event.votes_for().to_s + "')" # TODO performance + uma consulta?
+        end
+      end
+    end
+  end
+
+  def day
+    day = Time.now.midnight - 1.day #TODO Ver como cria uma data com parâmetro
+
+    puts day
+    @events = Event.paginate(:conditions => ["school_id = ? AND state LIKE 'approved' AND ? BETWEEN start_time AND end_time", School.find(params[:school_id]).id, day],
+      :include => :owner, 
+      :page => params[:page], 
+      :order => 'start_time DESC', 
+      :per_page => AppConfig.items_per_page)
+    puts @events.inspect
+    @school = School.find(params[:school_id])
+    
   end
 
 protected

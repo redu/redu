@@ -202,7 +202,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :categories
   map.resources :skills, :collection => { :sub_categories_of => :get } 
-  map.resources :events, :collection => { :past => :get, :ical => :get }
+  map.resources :events#, :collection => { :past => :get, :ical => :get }
   map.resources :favorites, :path_prefix => '/:favoritable_type/:favoritable_id'
   map.resources :comments, :path_prefix => '/:commentable_type/:commentable_id'
   map.delete_selected_comments 'comments/delete_selected', :controller => "comments", :action => 'delete_selected'
@@ -239,7 +239,9 @@ ActionController::Routing::Routes.draw do |map|
     school.resources :courses
     school.resources :exams
     school.resources :bulletins
-    school.resources :events
+    school.resources :events, 
+        :member => { :vote => :post }, 
+        :collection => { :past => :get, :ical => :get , :day => :get}
   end
   
   

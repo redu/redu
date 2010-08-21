@@ -1,34 +1,47 @@
-<li class="clearfix pretty-text">
-	<% if show_details_link %>
-		<h4><%= link_to @event.name, school_event_path(@event.school, @event) %></h4>
-	<% else %>
-		<h4><%= @event.name %></h4>
-	<% end %>
+<div class="grid_11">
+	<div class="grid_6">
+		<% if show_details_link %>
+			<h4 class="grid_6"><%= link_to @event.name, school_event_path(@event.school, @event) %></h4>
+		<% else %>
+			<h4><%= @event.name %></h4>
+		<% end %>
 		
-	<% if current_user.can_manage?(@event, @event.school) %>
-		<%= link_to "Editar", edit_school_event_path, :class => "button icon-edit" %>
-		<%= link_to 'Remover', school_event_path,
-		:confirm => 'Você tem certeza que deseja remover essa notícia permanentemente?',
-		:method => :delete, :class => "button icon-delete" %>	
-	<% end %>
+		<% if current_user.can_manage?(@event, @event.school) %>
+			<div class="grid_4">
+			<%= link_to "Editar", edit_school_event_path, :class => "button icon-edit" %>
+			<%= link_to 'Remover', school_event_path,
+			:confirm => 'Você tem certeza que deseja remover essa notícia permanentemente?',
+			:method => :delete, :class => "button icon-delete" %>	
+			</div>
+		<% end %>
+	</div>
 	
-	<br/> <!-- Só enquanto está sem css -->
+	<div class="likeable grid_2">	
+		
+		<span class="like">
+		<%= link_to_remote image_tag('thumbs-up.jpg', :border => '0'), :url=> {:action => :vote, :id => @event.id, :like => true}, :loading => '$("#like_link").hide(); $("#like_spinner").show()', :html => {:id => "like_link"}%>
+		<%= image_tag 'spinner.gif', :id => 'like_spinner', :style => 'display: none' %>
+		&#40;<span id="like_count" style="display: inline"><%= @event.votes_for%></span>&#41;
+		
+		</span>
+		
+		<span class="deslike">
+		<%= link_to_remote image_tag('thumbs_down.png', :border => '0'), :url=> {:action => :vote, :id => @event.id, :like => false}, :loading => '$("#like_link").hide(); $("#like_spinner").show()', :html => {:id => "like_link"}%>
+		<%= image_tag 'spinner.gif', :id => 'like_spinner', :style => 'display: none' %>
+		&#40;<span id="like_count" style="display: inline"><%= @event.votes_against%>&#41;
+		</span>
+	</div>
 	
-	<span class="#"><%= @event.tag_list %></span> | Criador: <%= link_to @event.owner.display_name, @event if @event.owner %>
-	
-	<br/> <!-- Só enquanto está sem css -->
-	
+	<span class="grid_9"><%= @event.tag_list %> | Criador: <%= link_to @event.owner.display_name, school_event_path if @event.owner %></span>
 	
 	<span><%= @event.time_and_date %></span>
 	<% if @event.location %>
 		no
 		<%= @event.location %>
 	<% end %>
-	<p>
 		<% if show_details_link %>
 			<%= @event.description[0..500]+"..." %>
 		<% else %>
 			<%= @event.description %>
-		<% end %>
-	</p>
-</li>
+		<% end %>	
+</div>

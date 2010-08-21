@@ -63,6 +63,12 @@
       <div class="notice box">Nenhum professor cadastrado</div>
     <% end %>
   </li>
+	<li>
+		<span class="call"><span>Eventos</span></span>
+		<%= calendar(:year => Time.now.year, :month => Time.now.month) do |d|
+		  link_to d.mday, day_school_events_path(@school) + "/?day="+ d.mday.to_s
+		end	%>
+	</li>
   </ul><!-- end sortable -->
 
 </div><!-- end sidebar -->

@@ -18,7 +18,7 @@
 					<tr>
 						<td><%= radio_button_tag '[event]['+ event.id.to_s+']', 'approve'  %></td>
 						<td><%= radio_button_tag '[event]['+ event.id.to_s+']', 'reject' %></td>
-						<td><%= link_to event.name, event_path(event), :target => "_blank" %> </td>
+						<td><%= link_to event.name, school_event_path(event), :target => "_blank" %> </td>
 						<td><%= event.owner.display_name %> </td>
 						<td><%= time_ago_in_words(event.updated_at) %> </td>
 					</tr>

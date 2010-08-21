@@ -37,6 +37,7 @@ class School < ActiveRecord::Base
   has_many :exams, :through => :school_assets, 
   :source => :asset, :source_type => "Exam", :conditions =>  "published = 1"
 	has_many :bulletins, :dependent => :destroy
+	has_many :events, :dependent => :destroy
   
   # VALIDATIONS
   validates_presence_of :name, :path

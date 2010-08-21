@@ -519,7 +519,7 @@ class SchoolsController < BaseController
         
         format.html {
           # se usuário não logado ou escola é privada e o cara não está inscrito nela, mostrar perfil privado
-          if not current_user or (not @school.public and not @school.users.include? current_user) 
+          if not current_user or (not current_user.has_access_to @school)
             render 'show_private' and return
           else
             render 'show' and return
