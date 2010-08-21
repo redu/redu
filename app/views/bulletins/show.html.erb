@@ -24,7 +24,12 @@
 		<span class="author">
 			Autor: <%= @owner.display_name %>	
 		</span>	
-
+			<% if current_user.can_manage?(@bulletin, @bulletin.school) %>
+				<%= link_to 'Editar', edit_school_bulletin_path(@bulletin.school, @bulletin), :class => "button icon-edit"%>
+				<%= link_to 'Remover', @bulletin,
+					{:confirm => 'Você tem certeza que deseja remover essa notícia permanentemente?',
+					:method => :delete, :class => "button icon-delete"} %>
+			<% end %>
 		<%= link_to 'Ver notícias da rede', school_bulletins_path(@bulletin.school) %>
 	</div>
 

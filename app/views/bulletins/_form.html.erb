@@ -1,16 +1,20 @@
-<%- form_for @bulletin do |f| %>
-	<%= f.error_messages %>
+<div class="grid_12">
+	<%- form_for @bulletin do |f| %>
+		<%= f.error_messages %>
 	
-	<%= hidden_field_tag("school_id", params[:school_id]) %>
+		<%= hidden_field_tag("school_id", params[:school_id]) %>
 
-	<%= f.label :title %>
-	<%= f.text_field :title %>
+		<%= f.label :title %>
+		<%= f.text_field :title %>
 
-	<%= f.label :description %>
-	<%= f.text_area :description, :size => "60x12", :class => "mceEditor"%>
+		<%= f.label :description %>
+		<%= f.text_area :description, :size => "60x12", :class => "mceEditor"%>
 	
-	<%= f.label "Tags <span class='snippet'>(separadas por vírgula)</span>" %>
-	<%= f.text_field :tag_list %>
+		<%= f.label "Tags <span class='snippet'>(separadas por vírgula)</span>" %>
+		<%= f.text_field :tag_list %>
 	
-	<%= f.submit "Salvar"%>
-<% end %>
+		<%= f.submit "Salvar"%>
+	<% end %>
+	
+	<%= link_to 'Ver todas as notícias', school_bulletins_path(@school) %>
+</div>

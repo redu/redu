@@ -259,7 +259,10 @@ class User < ActiveRecord::Base
     when 'School'
        (entity.owner == self || self.school_admin?(school))    
     when 'Event'
-      (entity.owner == self || (entity.school.id == school.id && self.school_admin?(school) )) 
+       (entity.owner == self || (entity.school.id == school.id && self.school_admin?(school) )) 
+	when 'Bulletin'
+		(entity.owner == self || (entity.school == school && self.school_admin?(school) )) 
+		
    end 
  end
  

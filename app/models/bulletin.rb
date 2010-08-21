@@ -1,4 +1,5 @@
 class Bulletin < ActiveRecord::Base
+	
 
 	#PLUGINS
 	#	acts_as_commentable
