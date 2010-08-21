@@ -38,21 +38,7 @@
 	
 	<% if controller_name == 'events' %>	
 		<%= javascript_include_tag 'prototype'  %>
-		<%= calendar_date_select_includes %>
-		
-			<script type="text/javascript">
-			  _translations = {
-			    "OK": "OK",
-			    "Now": "Agora",
-			    "Today": "Hoje",
-				"Clear": "Cancelar"
-			  }
-
-			  Date.weekdays = $w("D S T Q Q S S");
-			  Date.first_day_of_week = 0
-			  Date.months = $w("Janeiro Fevereiro Março Abril Maio Junho Julho Agosto Setembro Outubro Novembro Dezembro" );
-
-			</script>
+		<%= calendar_date_select_includes :locale => 'pt' %>
 	<% end %>
 	
 	<script type="text/javascript">

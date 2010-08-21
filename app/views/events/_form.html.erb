@@ -37,7 +37,14 @@
 				year = date.getFullYear();
 				month = Date.months[date.getMonth()];
 				day = date.getDate();
+				
+				hour = date.getHours();
+				min = Date.padded2(date.getMinutes());
 				field.value = day + " de " + month + " de " + year;
+				
+				if (hour != 0) {
+					field.value += " " + hour + ":" + min + " " + (hour < 12 ? "AM" : "PM");
+				}
 			}
 		
 	</script>
