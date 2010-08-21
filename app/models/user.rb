@@ -259,7 +259,7 @@ class User < ActiveRecord::Base
     when 'School'
        (entity.owner == self || self.school_admin?(school))    
     when 'Event'
-       (entity.owner == self || (entity.school == school && self.school_admin?(school) )) 
+      (entity.owner == self || (entity.school.id == school.id && self.school_admin?(school) )) 
    end 
  end
  
@@ -269,17 +269,16 @@ class User < ActiveRecord::Base
   end
   
   def has_access_to(entity)
-    
     return true if self.admin? || entity.public || entity.owner == self 
     
     case entity.class.to_s 
     when 'Course'
       
-      (entity.school and self.schools.include?(entity.school) )   
+      (entity.school and self.schools.include?(entity.school))   
 #    when 'Exam'
 #      (entity.owner == self || (entity.school == school && self.school_admin?(school) ))   
-#    when 'School'
-#       (entity.owner == self || self.school_admin?(school))    
+    when 'School'
+       (self.school_admin?(entity) || self.schools.include?(entity))    
 #    when 'Event'
 #       (entity.owner == self || (entity.school == school && self.school_admin?(school) )) 
    end 

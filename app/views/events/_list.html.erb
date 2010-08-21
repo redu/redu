@@ -5,7 +5,7 @@
 		<% if event.description.size < 300 %>
 			<%= event.description %>
 		<% else %>
-			<%= event.description[0..300]+"..." %>
+			<%= event.description[0..300] + "..." %>
 		<% end %>
 	</div>
 	<span><%= event.time_and_date %></span>

@@ -1,7 +1,8 @@
 class Event < ActiveRecord::Base
   
-  acts_as_taggable
   acts_as_commentable
+  acts_as_taggable
+  acts_as_voteable
   
   #acts_as_activity :user
   validates_presence_of :name, :identifier => 'validates_presence_of_name'

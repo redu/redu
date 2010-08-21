@@ -5,13 +5,11 @@ class EventsController < BaseController
   caches_page :ical
   cache_sweeper :event_sweeper, :only => [:create, :update, :destroy]
   
-  before_filter :login_required #TODO verificar se o usuário está na rede
-  #before_filter :only => [:edit, :update, :destroy] do |controller|
-    #@event = Event.find(controller.params[:id])
-    #@school = School.find(controller.params[:school_id])
-    
-    #current_user.can_manage?(@event, @school) if controller.params and controller.params[:id] and controller.params[:school_id]
-  #end
+  before_filter :login_required 
+  before_filter :is_member_required
+  before_filter :can_manage_required,
+                :only => [:edit, :update, :destroy]
+                
  
   #These two methods make it easy to use helpers in the controller.
   #This could be put in application_controller.rb if we want to use
@@ -49,6 +47,7 @@ class EventsController < BaseController
   def show
     @event = Event.find(params[:id])
     @comments = @event.comments.find(:all, :limit => 20, :order => 'created_at DESC', :include => :user)
+    @school = School.find(params[:school_id])
   end
 
   def index
@@ -75,10 +74,13 @@ class EventsController < BaseController
 
   def new
     @event = Event.new(params[:event])
+    @school = School.find(params[:school_id])
+    
   end
   
   def edit
     @event = Event.find(params[:id])
+    @school = @event.school
   end
     
   def create
@@ -122,7 +124,21 @@ class EventsController < BaseController
     
     respond_to do |format|
       flash[:notice] = 'O evento foi excluído.'
-      format.html { redirect_to :back }
+      format.html { redirect_to school_events_path }
     end
   end
+
+protected
+  def can_manage_required
+     @event = Event.find(params[:id])
+     
+     current_user.can_manage?(@event, @school) ? true : access_denied
+  end
+
+  def is_member_required
+    @school = School.find(params[:school_id])
+    
+    current_user.has_access_to(@school) ? true : access_denied
+  end
+
 end

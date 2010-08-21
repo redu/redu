@@ -1,4 +1,6 @@
-<div class="grid_10">
+<div class="main grid_16">
+	<%= render :partial => "schools/school_info", :locals => {:school => @event.school, :show => false} %>
+
 	<%= render :partial=>'events/item', :locals => {:event => @event, :show_details_link => false} %>
 	
 	<a name="comments"></a>

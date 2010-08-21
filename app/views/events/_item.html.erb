@@ -7,7 +7,9 @@
 		
 	<% if current_user.can_manage?(@event, @event.school) %>
 		<%= link_to "Editar", edit_school_event_path, :class => "button icon-edit" %>
-		<%= link_to "Excluir", school_event_path, :method => :delete, :class => "button icon-delete" %>
+		<%= link_to 'Remover', school_event_path,
+		:confirm => 'Você tem certeza que deseja remover essa notícia permanentemente?',
+		:method => :delete, :class => "button icon-delete" %>	
 	<% end %>
 	
 	<br/> <!-- Só enquanto está sem css -->
@@ -16,7 +18,6 @@
 	
 	<br/> <!-- Só enquanto está sem css -->
 	
-
 	
 	<span><%= @event.time_and_date %></span>
 	<% if @event.location %>
