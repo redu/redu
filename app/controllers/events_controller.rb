@@ -147,13 +147,11 @@ class EventsController < BaseController
   def day
     day = Time.utc(Time.now.year, Time.now.month, params[:day])
 
-    puts day
     @events = Event.paginate(:conditions => ["school_id = ? AND state LIKE 'approved' AND ? BETWEEN start_time AND end_time", School.find(params[:school_id]).id, day],
       :include => :owner, 
       :page => params[:page], 
       :order => 'start_time DESC', 
       :per_page => AppConfig.items_per_page)
-    puts @events.inspect
     @school = School.find(params[:school_id])
     
     @list_title = "Eventos do dia #{day.strftime("%d/%m/%Y")}"

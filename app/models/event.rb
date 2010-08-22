@@ -34,10 +34,6 @@ class Event < ActiveRecord::Base
   end
   
   def time_and_date
-    puts self.name
-    puts self.end_time
-    puts Time.now
-    puts end_time < Time.now
     if end_time < Time.now
       string = "Ocorreu"
     else
