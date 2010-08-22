@@ -1,13 +1,22 @@
 <li class="clearfix">
 
-	<%= link_to event.name, school_event_path(event.school, event) %>
-	<div class="pretty-text">		
+	<%= link_to event.name, school_event_path(event.school, event), :class => "grid_12" %>	
+	<span class="grid_6"><%= event.time_and_date %></span>
+	
+	<% if current_user.can_manage?(event, event.school) %>
+		<div class="grid_4">
+		<%= link_to "Editar", edit_school_event_path(event, event.school), :class => "button icon-edit" %>
+		<%= link_to 'Remover', school_event_path(event, event.school),
+		:confirm => 'Você tem certeza que deseja remover essa notícia permanentemente?',
+		:method => :delete, :class => "button icon-delete" %>	
+		</div>
+	<% end %>
+	
+	<div class="grid_12 pretty-text">		
 		<% if event.description.size < 300 %>
 			<%= event.description %>
 		<% else %>
 			<%= event.description[0..300] + "..." %>
 		<% end %>
 	</div>
-	<span><%= event.time_and_date %></span>
-
 </li>

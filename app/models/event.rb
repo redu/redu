@@ -34,6 +34,10 @@ class Event < ActiveRecord::Base
   end
   
   def time_and_date
+    puts self.name
+    puts self.end_time
+    puts Time.now
+    puts end_time < Time.now
     if end_time < Time.now
       string = "Ocorreu"
     else
@@ -41,7 +45,17 @@ class Event < ActiveRecord::Base
     end
           
     if spans_days?
-      string += " de #{start_time.strftime("%d/%m")} à #{end_time.strftime("%d/%m/%Y")}"
+      if start_time.hour == 0
+      string += " de #{start_time.strftime("%d/%m")} à "
+      else
+        string += " de #{start_time.strftime("%d/%m %I:%M %p")} à "
+      end
+      
+      if end_time.hour == 0
+        string += "#{end_time.strftime("%d/%m/%Y")}"
+      else
+        string += "#{end_time.strftime("%d/%m/%Y %I:%M %p")}"
+      end
     else
       string += " dia #{start_time.strftime("%d/%m/%Y")}, #{start_time.strftime("%I:%M %p")} - #{end_time.strftime("%I:%M %p")}"
     end

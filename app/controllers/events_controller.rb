@@ -57,6 +57,7 @@ class EventsController < BaseController
       :order => 'start_time DESC', 
       :per_page => AppConfig.items_per_page)
           
+    @list_title = "Eventos Futuros"
     @school = School.find(params[:school_id])	
   end
 
@@ -67,6 +68,7 @@ class EventsController < BaseController
       :order => 'start_time DESC', 
       :per_page => AppConfig.items_per_page)
       
+    @list_title = "Eventos Passados"
     render :template => 'events/index'
   end
 
@@ -78,13 +80,14 @@ class EventsController < BaseController
   
   def edit
     @event = Event.find(params[:id])
-    @school = @event.school
   end
     
   def create
     @event = Event.new(params[:event])
     @event.owner = current_user
     @event.school = School.find(params[:school_id])
+    
+    @school = @event.school
 
     respond_to do |format|
       if @event.save
@@ -142,7 +145,7 @@ class EventsController < BaseController
   end
 
   def day
-    day = Time.now.midnight - 1.day #TODO Ver como cria uma data com parâmetro
+    day = Time.utc(Time.now.year, Time.now.month, params[:day])
 
     puts day
     @events = Event.paginate(:conditions => ["school_id = ? AND state LIKE 'approved' AND ? BETWEEN start_time AND end_time", School.find(params[:school_id]).id, day],
@@ -153,6 +156,8 @@ class EventsController < BaseController
     puts @events.inspect
     @school = School.find(params[:school_id])
     
+    @list_title = "Eventos do dia #{day.strftime("%d/%m/%Y")}"
+    render :template => 'events/index'
   end
 
 protected

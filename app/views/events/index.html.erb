@@ -1,10 +1,20 @@
 <div class="main grid_16">
 	<%= render :partial => "schools/school_info", :locals => {:school => @school, :show => false} %>
+	<%= render :partial => "schools/sidebar", :locals => {:school => @school} %>
 
-	<div class="main grid_12">
+	<div class="main grid_10">
 		<div class="menu">
-			<%= link_to "Eventos passados", past_school_events_path %> <!--TODO BUG Ver um jeito de passar o school_id-->
-			<%= link_to "Eventos Futuros", school_events_path %>
+			<% if @list_title == "Eventos Passados" %>
+				Eventos passados
+			<% else %>
+				<%= link_to "Eventos passados", past_school_events_path %>
+			<% end %>
+			|
+			<% if @list_title == "Eventos Futuros" %>
+				Eventos Futuros
+			<% else %>
+				<%= link_to "Eventos futuros", school_events_path %>
+			<% end %>
 		</div>
 		<div class="grid_12">
 			<h3>EVENTOS</h3>
@@ -12,9 +22,16 @@
 		</div>
 	
 		<%= render :partial => 'events/subscribe' %>
+		
+		<h2 class="grid_12"><%= @list_title %></h2>
 	
-		<ul class="grid_12">	
-			<%= render :partial => 'events/list', :collection => @events, :as => :event, :locals => {:show_details_link => false} %>
+		<ul class="grid_12">
+			<% if @events && @events.size > 0 %>	
+				<%= render :partial => 'events/list', :collection => @events, :as => :event %>
+			<% else %>
+				Esta rede ainda não tem eventos agendados para este período!
+				<%= link_to "Crie um novo evento", new_school_event_path %>
+			<% end %>
 		</ul>
 	
 		<div id="pagination" align="center" class="pagination">

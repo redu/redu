@@ -1,6 +1,6 @@
 <div class="main grid_16">
 	<%= render :partial => "schools/school_info", :locals => {:school => @school, :show => false} %>
+	<%= render :partial => "schools/sidebar", :locals => {:school => @school} %>
 	
-	<div class="title">NOVO EVENTO</div>
-	<%= render :partial => 'events/form', :locals => {:event => @event} %>
+	<%= render :partial => 'events/form', :locals => {:event => @event, :title => "Novo"} %>
 </div>

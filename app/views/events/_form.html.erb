@@ -1,4 +1,5 @@
 <%- form_for @event do |f| %>
+	<fieldset><legend><%= title %> Evento</legend>
 	<%= f.error_messages %>
 	
 	<%= hidden_field_tag("school_id", params[:school_id]) %>
@@ -23,6 +24,7 @@
 		
 	<%= f.submit "Salvar"%>
 	<a href="javascript:history.back()">Voltar</a>
+	</fieldset>
 <% end %>
 
 <!-- Script para traduzir a data (no editar ele vem em inglês) -->

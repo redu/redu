@@ -68,6 +68,8 @@
 		<%= calendar(:year => Time.now.year, :month => Time.now.month) do |d|
 		  link_to d.mday, day_school_events_path(@school) + "/?day="+ d.mday.to_s
 		end	%>
+		<%= link_to "Ver todos", school_events_path(@school), :class => "grid_4" %>
+		<%= link_to "Criar novo evento", new_school_event_path, :class => "grid_4" %>
 	</li>
   </ul><!-- end sortable -->
 
