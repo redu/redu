@@ -32,9 +32,6 @@ class Bulletin < ActiveRecord::Base
     transitions :from => :waiting, :to => :rejected
   end
 	
-	#Colocar a data mais simples
-	def simple_data		
-		
-	end
+
   
 end

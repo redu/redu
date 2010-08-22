@@ -1,21 +1,20 @@
-<div class="main grid_16">
-	<h3>VER NOTÍCIA</h3>
+<%= render :partial => "schools/school_info", :locals => {:school => @school,:show => false} %>
+<%= render :partial => "schools/sidebar", :locals => {:school => @school} %>
 
-	<div class="grid_12 omega alpha push_5">
-		<div class="grid_3">		
-			<%= ratings_for @bulletin %>
-		</div>
-		<div class="likeable grid_3">
-			 	<span class="like">
-			<%= link_to_remote image_tag('thumbs_up.png', :border => '0'), :url=> {:action => :vote, :id => 				@bulletin.id, :like => true}, :success => 'disableVoting();' %><br/><%= @bulletin.votes_for%>
-			</span>
-			<span class="deslike">
-			<%= link_to_remote image_tag('thumbs_down.png', :border => '0'), :url=> {:action => :vote, :id => @bulletin.id, :like => false}, :success => 'disableVoting();' %><br/><%= @bulletin.votes_against%></span>
-		</div>
+<div class="main grid_12 alpha">
 	
-	</div>	
-	<div class="grid_12 omega alpha">
+	<div id="rating_video">		
+		<%= ratings_for @bulletin %>
+	</div>
+	<div class="likeable grid_3">
+	 	<span class="like">
+			<%= link_to_remote image_tag('thumbs_up.png', :border => '0'), :url=> {:action => :vote, :id => 								@bulletin.id, :like => true}, :success => 'disableVoting();' %><br/><%= @bulletin.votes_for%>
+		</span>
+		<span class="deslike">
+		<%= link_to_remote image_tag('thumbs_down.png', :border => '0'), :url=> {:action => :vote, :id => @bulletin.id, :like => false}, :success => 'disableVoting();' %><br/><%= @bulletin.votes_against%></span>
+	</div>
 
+	<div class="grid_12 omega alpha">
 		
 		<h4 class="name"><%= @bulletin.title %></h4>
 		<div class="pretty-text">

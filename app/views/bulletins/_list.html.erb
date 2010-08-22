@@ -1,22 +1,26 @@
 <li class="clearfix">
 
 	<%= link_to bulletin.title, school_bulletin_path(bulletin.school, bulletin) %>
-	<div class="pretty-text">		
+	<div class="quiet">	
+			
+		<%= link_to bulletin.owner.display_name, user_path(bulletin.owner) if is_index%>
+		<span> - <%= time_ago_in_words(bulletin.created_at) %> </span>
+	</div>
+	<div class="grid_12 omega alpha pretty-text">		
 		<% if is_index %>
 			<% if bulletin.description.size < 300 %>
 				<%= bulletin.description %>
 			<% else %>
 				<%= bulletin.description[0..300]+"..." %>
-				<% if current_user.can_manage?(bulletin, bulletin.school) %>
-					<%= link_to 'Editar', edit_school_bulletin_path(bulletin.school, bulletin), :class => "button icon-edit"%>
-					<%= link_to 'Remover', bulletin,
-						{:confirm => 'Você tem certeza que deseja remover essa notícia permanentemente?',
-						:method => :delete, :class => "button icon-delete"} %>
-				<% end %>
 			<% end %>
+			<div class="grid_8">
+				<% if current_user.can_manage?(bulletin, bulletin.school) %>
+						<%= link_to 'Editar', edit_school_bulletin_path(bulletin.school, bulletin), :class => "button icon-edit"%>
+						<%= link_to 'Remover', bulletin,
+							{:confirm => 'Você tem certeza que deseja remover essa notícia permanentemente?',
+							:method => :delete, :class => "button icon-delete"} %>
+				<% end %>
+			</div>
 		<% end %>
-		
 	</div>
-	<span class="grid_12"> <%= time_ago_in_words(bulletin.created_at) %> </span>
-
 </li>

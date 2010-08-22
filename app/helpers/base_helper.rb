@@ -477,5 +477,55 @@ module BaseHelper
     user.gender ? (user.male? ? :his.l : :her.l)  : :their.l    
   end
   
+  def owner_link
+    if @school.owner
+      link_to @school.owner.display_name, @school.owner
+    else
+      if current_user.can_manage? @school
+        'Sem dono ' + link_to("(pegar)", take_ownership_school_path)
+      else
+        'Sem dono'  
+      end
+      # e se ninguem estiver apto a pegar ownership?
+    end
+    
+  end
+
+	def teachers_preview(school, size = nil)
+    sql = "SELECT u.login, u.login_slug FROM users u " \
+          "INNER JOIN user_school_associations a " \
+          "ON u.id = a.user_id " \
+          "AND a.role_id = #{Role[:teacher].id} " \
+          "WHERE a.school_id = #{school.id} LIMIT #{size or 12} "
+          
+    User.find_by_sql(sql)
+  end
+	
+	  def subscription_link
+    membership = current_user.get_association_with @school
+    
+    if membership and membership.status == 'approved' # já é membro
+      link_to "Abandonar", unjoin_school_path, 
+        :class => "participar_rede button" , 
+        :confirm => "Você tem certeza que quer deixar essa rede?"
+    else 
+       case @school.subscription_type 
+        
+        when 1 # anyone can join
+        link_to "Participar", join_school_path, :class => "participar_rede button" 
+      when 2 # moderated
+        if membership.status == 'pending'
+          "(em moderação)"
+        else
+          link_to "Participar", join_school_path, :class => "participar_rede button"
+        end
+         
+        when 3 #key
+        link_to "Participar", "#", {:class => "participar_rede button", :onclick => "toggleAssociateBox();false;"} 
+      end
+      
+    end 
+    
+  end
 
 end

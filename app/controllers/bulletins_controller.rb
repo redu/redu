@@ -9,8 +9,8 @@ class BulletinsController < BaseController
   def index
 		@bulletins = Bulletin.paginate(:conditions => ["school_id = ? AND state LIKE 'approved'", School.find(params[:school_id]).id],
 			:page => params[:page], 
-		 	:order => 'updated_at DESC', 
-		 	:per_page => AppConfig.items_per_page
+		 	:order => 'created_at DESC', 
+		 	:per_page => 5
 		 )
 		@school = School.find(params[:school_id])
   end
@@ -18,6 +18,7 @@ class BulletinsController < BaseController
   def show
     @bulletin = Bulletin.find(params[:id])
     @owner = User.find(@bulletin.owner)
+	@school = @bulletin.school
   end
 
   def new
@@ -33,7 +34,7 @@ class BulletinsController < BaseController
     respond_to do |format|
       if @bulletin.save
         flash[:notice] = 'A notícia foi criada e adicionada à rede.'
-        format.html { redirect_to(@bulletin) }
+        format.html { redirect_to school_bulletin_path(@bulletin.school, @bulletin) }
         format.xml  { render :xml => @bulletin, :status => :created, :location => @bulletin }
       else
         format.html { render :action => "new" }
@@ -44,6 +45,7 @@ class BulletinsController < BaseController
 
   def edit
     @bulletin = Bulletin.find(params[:id])
+		@school = School.find(params[:school_id])
 	end
 
   def update
@@ -52,8 +54,8 @@ class BulletinsController < BaseController
     respond_to do |format|
       if @bulletin.update_attributes(params[:bulletin])
         flash[:notice] = 'A notícia foi editada.'
-        format.html { redirect_to (@bulletin)}
-        formal.xml { render :xml => @bulletin, :status => :created, :location => @bulletin }
+        format.html { redirect_to school_bulletin_path(@bulletin.school, @bulletin)}
+        format.xml { render :xml => @bulletin, :status => :created, :location => @bulletin, :school => params[:school_id] }
       else
         format.html { render :action => :edit }
         format.xml { render :xml => @bulletin.errors, :status => :unprocessable_entity }
