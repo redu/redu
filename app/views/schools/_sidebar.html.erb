@@ -64,9 +64,15 @@
     <% end %>
   </li>
 	<li>
+		<% @month_events = month_events(@school.id, Time.now.month) %>
+		
 		<span class="call"><span>Eventos</span></span>
 		<%= calendar(:year => Time.now.year, :month => Time.now.month) do |d|
-		  link_to d.mday, day_school_events_path(@school) + "/?day="+ d.mday.to_s
+			if has_event_in?(@month_events, d.mday)
+				link_to d.mday, day_school_events_path(@school) + "/?day="+ d.mday.to_s, {:class => "hasEvent"}
+			else
+				d.mday
+			end
 		end	%>
 		<%= link_to "Ver todos", school_events_path(@school), :class => "grid_4" %>
 		<%= link_to "Criar novo evento", new_school_event_path(@school), :class => "grid_4" %>

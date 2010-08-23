@@ -527,5 +527,19 @@ module BaseHelper
     end 
     
   end
+  
+  def month_events(school_id, month)
+    start_month = Time.utc(Time.now.year, month, 1)
+    end_month = Time.utc(Time.now.year, month, 31)
+    Event.all(:select => "id, start_time, end_time", 
+              :conditions => ["school_id = ? AND state LIKE 'approved' AND start_time BETWEEN ? AND ? OR end_time BETWEEN ? AND ?", school_id, start_month, end_month, start_month, end_month])
+  end
+  
+  # Indica se há evento no dia informado 
+  def has_event_in?(events, day)
+    d = Time.utc(Time.now.year, Time.now.month, day)
+    day_events = events.select {|e| e.start_time <= d and d  <= e.end_time}
+    day_events.size > 0
+  end
 
 end
