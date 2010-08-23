@@ -13,6 +13,29 @@
     
 **/
 
+.filter_bar {
+    height: 22px;
+    background: url(../images/bg_filter_bar.gif) repeat-x right;
+    padding: 5px;
+    margin: 0px 0px 8px 0px;
+    border: solid 1px #dedede;
+    text-align: right;
+display:block;
+}
+
+.item_info {
+	display: block;
+	
+}
+
+.item_info li {
+	font-size: .9em;
+	color:#5683d5;
+}
+
+.item_info li a {
+	font-weight:bold;
+}
 
 /** @typo **/
 html, body {  height:100%; /* 100% height hack */ }
@@ -1185,7 +1208,10 @@ div.recomendations-m .number {
 		
     position: relative;
 		-webkit-box-shadow: #CCC 0px 4px 10px;
+		-moz-box-shadow: 0px 4px 10px #CCC;
 		background-color: white;
+		-moz-border-radius-bottomleft: 8px;
+		-moz-border-radius-bottomright: 8px;
 		border-bottom-left-radius: 8px 8px;
 		border-bottom-right-radius: 8px 8px;
 		height: 42px;
@@ -1318,6 +1344,7 @@ div.content {
     -moz-border-radius: 8px;
     -webkit-border-radius: 8px;
 		-webkit-box-shadow: #CCC 0px 4px 10px;
+		-moz-box-shadow: 0px 4px 10px #CCC;
 
 }
 
