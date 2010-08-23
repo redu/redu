@@ -81,4 +81,17 @@ class BulletinsController < BaseController
   #  @bulletin = Bulletin.find(params[:id])
   #end
   
+  def vote
+    puts 'vote!'
+    
+    respond_to do |format|
+      format.js do 
+        render :update do |page|
+          page << "alert('implementar!')"
+        end
+      end
+    end
+    
+  end
+  
 end
