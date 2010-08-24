@@ -1,4 +1,4 @@
- class Course < ActiveRecord::Base
+class Course < ActiveRecord::Base
 
   # PLUGINS
   acts_as_commentable
@@ -30,7 +30,9 @@
 
   # VALIDATIONS
   validates_presence_of :name
+  validates_length_of   :description, :within => 3..200
   validates_presence_of :description
+  validates_length_of   :description, :within => 30..200
   validates_presence_of :simple_category
 
   validates_associated :courseable
@@ -41,6 +43,9 @@
   validation_group :step2, :fields=>[:courseable]
   validation_group :step3, :fields=>[:price]
 
+  named_scope :published,
+    :conditions => ["state LIKE 'approved' AND public = true"], 
+    :include => :owner, :order => 'created_at DESC'
   named_scope :seminars,
     :conditions => ["state LIKE 'approved' AND courseable_type LIKE 'Seminar' AND public = true"], 
     :include => :owner, :order => 'created_at DESC'
@@ -101,8 +106,10 @@
     when 'Seminar'
       if self.courseable.external_resource_type == 'youtube'
         'http://i1.ytimg.com/vi/' + self.courseable.external_resource + '/default.jpg'
-      else
-        File.join(File.dirname(self.media.url), "#{self.id}128x96.jpg")
+      elsif self.courseable.external_resource_type == 'upload'
+        File.join(File.dirname(self.courseable.media.url), "#{self.id}128x96.jpg")
+      else 
+        'http://i1.ytimg.com/vi/0QQcj_tLIYo/default.jpg'
       end
     when 'InteractiveClass'
       if avatar

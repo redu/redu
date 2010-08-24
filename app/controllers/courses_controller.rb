@@ -125,7 +125,9 @@ class CoursesController < BaseController
     id = "ajaxful-rating-#{!params[:dimension].blank? ? "#{params[:dimension]}-" : ''}course-#{@course.id}"
     
     render :update do |page|
-      page.replace_html id, ratings_for(@course, :wrap => false, :dimension => params[:dimension])
+     page.replace_html  @course.wrapper_dom_id(params), ratings_for(@course, params.merge(:wrap => false))
+
+     # page.replace_html id, ratings_for(@course, :wrap => false, :dimension => params[:dimension])
      # page << "$('##{id}').effect('highlight', {}, 2000);" #TODO precisa do plugin de effects do jquery
       #page.visual_effect :highlight, id
     end
@@ -140,21 +142,21 @@ class CoursesController < BaseController
 
   end
   
-  def search
-    
-    @courses = Course.find_tagged_with(params[:query])
-    @courses += Course.find(:all, :conditions => ["name LIKE ?", "%" + params[:query] + "%"])
-    
-    respond_to do |format|
-      format.js do
-          render :update do |page| 
-            page.replace_html 'all_list', 
-           :partial => 'courses/item', :collection => @courses, :as => :course
-            page.replace_html 'title_list', "Resultados para: \"#{params[:query]}\""
-          end
-      end
-    end
-  end
+#  def search
+#    
+#    @courses = Course.find_tagged_with(params[:query])
+#    @courses += Course.find(:all, :conditions => ["name LIKE ?", "%" + params[:query] + "%"])
+#    
+#    respond_to do |format|
+#      format.js do
+#          render :update do |page| 
+#            page.replace_html 'all_list', 
+#           :partial => 'courses/item', :collection => @courses, :as => :course
+#            page.replace_html 'title_list', "Resultados para: \"#{params[:query]}\""
+#          end
+#      end
+#    end
+#  end
   
   def get_query(sort, page)
     
@@ -208,16 +210,44 @@ class CoursesController < BaseController
           end
         }
       end
-    else
+    elsif params[:search] # search
+      @courses = Course.name_like_all(params[:search].to_s.split).ascend_by_name.paginate( 
+      :include => :owner, 
+      :page => params[:page], 
+      :per_page => AppConfig.items_per_page)
       
       @sort_by = params[:sort_by]
       #@order = params[:order]
-      @courses = get_query(params[:sort_by], params[:page]) 
+      
+      respond_to do |format|
+        format.html # index.html.erb
+        format.xml  { render :xml => @courses }
+      end
+    else
+      
+      
+      cond = Caboose::EZ::Condition.new
+      
+      cond.append ["simple_category_id = ?", params[:category]] if params[:category]
+      cond.append ["courseable_type = ?", params[:type]] if params[:type]
+      
+      @sort_by = params[:sort_by]
+      #@order = params[:order]
+      #@courses = get_query(params[:sort_by], params[:page]) 
+      
+      @courses = Course.published.paginate(
+      :conditions => cond.to_sql,
+      :page => params[:page], 
+      :order => 'updated_at DESC', 
+      :per_page => AppConfig.items_per_page)
+      
+      
       @popular_tags = Course.tag_counts
       
       respond_to do |format|
         format.html # index.html.erb
         format.xml  { render :xml => @courses }
+        format.js
       end
     end
   end

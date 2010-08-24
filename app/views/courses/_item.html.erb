@@ -1,60 +1,62 @@
-<div id="item">
-    <div id="title">
-        <%= link_to course.name, course %>
-    </div>
-    <div id="video" style="background: url(<%=course.thumb_url%>) 0 0">
-        <!-- Video Insert --><!--
-        <div id="video_info">
-        00:00:00
-        </div>
-        -->
-    </div>
-    <div id="identification">
-        <ul id="identification_resource">
+<li class="clearfix">
+	 <%= link_to course.name, course, :class => "name"  %>
+	<div class="thumb photo"><%= link_to(image_tag course.thumb_url, :width => "70px") %></div>
+	<div class="headlines" style="width: 490px">
+		<!--
+		<span class="call">Descrição:</span>
+		-->
+		<span class="things">
+		<%= truncate_words( course.description, 10, '...') %>
+		
+		
+		
+		
+		
+		
+		</span>
+	</div>
+	<div class="headlines" style="width: 490px">
+		
+		
+		<ul class="item_info">
             <!-- Uma modificação, antes ficava link_to course.owner.login -->
-            <li>
+            <li> Por 
                 <%= link_to course.owner.display_name, user_path(course.owner) %>
             </li>
             <li>
                 |
             </li>
-            <li> Criado: 
-                <%= time_ago_in_words(course.created_at) %>
+            <li> 
+                <%= time_ago_in_words_or_date(course.created_at) %>
             </li>
+            <% if course.school %>
+						<li>
+                |
+            </li>
+						 <li> 
+                Rede: <%= link_to(course.school.name, course.school)  %>
+            </li>
+						<%end%>
             <li>
                 |
             </li>
             <li>
                 Exibições (<%= course.view_count %>)
             </li>
-        </ul>
-    </div>
-    <div id="description">
-        <%= truncate_words( course.description, 10, '...') %>
-    </div>
-    <div id="identification">
-        <ul id="identification_resource">
-            <li>
-                <strong>Categoria:</strong>
-                Matemática
-            </li>
-            <li>
+						<li>
                 |
             </li>
-            <li>
-                <strong>Tags:</strong>
-                <%= course.tag_list %>
-            </li>
+						
         </ul>
-    </div>
-    <div id="ratting">
-        <ul id="ratting_menu">
-            <li>
-                <%= ratings_for course, :static %>
-            </li>
-            <li class="evaluation_rating">
-                Avaliações(<%= course.rates.count %>)
-            </li>
-        </ul>
-    </div>
-</div>
+				
+		<span style="float: left; margin-top:2px;">
+			 							<%= ratings_for course, :static, :small => true, :wrap => false %>
+		</span>
+		
+		
+	</div>
+</li> 
+
+
+
+

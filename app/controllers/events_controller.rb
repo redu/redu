@@ -135,10 +135,10 @@ class EventsController < BaseController
     respond_to do |format|
       format.js do 
         render :update do |page|
-          page << "$('#like_spinner').hide()"
-          page << "$('#like_link').show()"
-          page << "$('#like_link').attr('onclick', 'return false;')"
-           page << "$('#like_count').html('" + @event.votes_for().to_s + "')" # TODO performance + uma consulta?
+          page << "jQuery('#like_spinner').hide()"
+          page << "jQuery('#like_link').show()"
+          page << "jQuery('#like_link').attr('onclick', 'return false;')"
+           page << "jQuery('#like_count').html('" + @event.votes_for().to_s + "')" # TODO performance + uma consulta?
         end
       end
     end

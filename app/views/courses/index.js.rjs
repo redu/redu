@@ -1,0 +1,4 @@
+page.replace_html 'course_list', :partial => "course_list"
+page << "jQuery('#loader').hide()"
+
+

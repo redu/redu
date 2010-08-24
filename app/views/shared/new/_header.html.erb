@@ -25,13 +25,20 @@
     
     <div class="user-actions grid_2">
 	<% if current_user %>
-		<a href="#user-settings" class="pandora closed"><%= current_user.first_name[0..14] %></a>
+		<a href="#user-settings" class="pandora closed"><%= current_user.first_name[0..14] %>
+		<%= image_tag "icons/bullet_arrow_down.png", :style => "float: right; position: relative; margin-top: 3px;" %></a>
+		
 			<div id="user-settings" class="option hide">
 			<ul>
 			<li>
 			<a href="<%=user_path(current_user)%>">Meu Perfil</a>
 			</li>
+			<li style="border-bottom:1px solid #DDDDDD;">
+				
+			</li>
+			<!--
 			<hr/>
+			-->
 			<% if current_user.admin? %>
 			<li>
 				<a href="<%= admin_dashboard_path %>" style="color: red;">Admin</a>
