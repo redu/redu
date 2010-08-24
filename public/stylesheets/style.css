@@ -12,29 +12,78 @@
     @background: #EBF7FD
     
 **/
+.criteriaList {
+	font-size:0.8em;
+}
+
+
+ul.criteriaList li.selected {
+background:url("../images/selectedArrowBG.png") no-repeat scroll 3px 0.45em #EFEFEF;
+display:block;
+padding-left:14px;
+} 
+ul.criteriaList li.selected  a {
+color: #0B85C1;
+}
+
+
+ul.criteriaList li {
+letter-spacing:0.02em;
+word-spacing:0.1em;
+position:relative;
+padding: 4px 0 4px;
+}
+
+ul.criteriaList li a {
+color: #bbb;
+}
+ul.criteriaList li a:hover {
+color: #0B85C1;
+}
+
 
 .filter_bar {
     height: 22px;
     background: url(../images/bg_filter_bar.gif) repeat-x right;
     padding: 5px;
-    margin: 0px 0px 8px 0px;
-    border: solid 1px #dedede;
+    margin: 18px 0px 8px 0px;
+    border: solid 1px #EFF0F0;
     text-align: right;
 display:block;
+color: #929290;
+-moz-border-radius-topleft: 8px;
+-moz-border-radius-bottomright: 8px;
 }
+
+.filter_bar input[type=text]{
+	height:12px;
+	border: 1px solid #EFF0F0;
+}
+.filter_bar input[type=submit]{
+padding:2px;
+color: #929290;
+}
+
+.filter_bar .filter_text{
+	float:left;
+margin-top:3px;
+}
+
 
 .item_info {
 	display: block;
+	font-size: .8em;
 	
 }
 
 .item_info li {
-	font-size: .9em;
-	color:#5683d5;
+	
+	color:grey;
+	margin-right: 5px;
 }
 
 .item_info li a {
-	font-weight:bold;
+	/*font-weight:bold;*/
 }
 
 /** @typo **/
@@ -126,6 +175,8 @@ z-index: 1000;
 		-webkit-box-shadow: #AAA 0px 4px 10px;
 		border-bottom-left-radius: 8px 8px;
 		border-bottom-right-radius: 8px 8px;
+		-moz-border-radius-bottomleft: 8px; 
+		-moz-border-radius-bottomright: 8px;
 }
 
 /**
@@ -146,6 +197,7 @@ background: white; /*#ECF0F8;*/
 	border-bottom-right-radius: 5px 5px;
 	border-top-left-radius: 5px 5px;
 		border-top-right-radius: 5px 5px;
+		-moz-border-radius: 5px; 
 }
 
 /* Personalize a janela modal aqui. Você pode adicionar uma imagem de fundo. */
@@ -261,7 +313,7 @@ ul.default > li div.headlines {
 	border: 1px solid #EFF0F0;
 	float: right;
 	width: 560px;
-	padding: 10px;
+	padding: 8px;
 	margin-right: 10px;
 	margin-bottom: 5px;
 	-moz-border-radius: 5px; 
@@ -269,9 +321,9 @@ ul.default > li div.headlines {
 
 }
 
-ul.default > li div.headlines a,
+/*ul.default > li div.headlines a,*/
 ul.default > li div.headlines .things {
-	font-size: .8em;
+	/*font-size: .8em;*/
 	color: gray;
 }
 
@@ -282,7 +334,7 @@ ul.default > li div.headlines .things {
 ul.default > li div.headlines ul li {
 	display: block;
 	float: left;
-	margin: 5px 15px 0px 0;
+	/*margin: 5px 15px 0px 0;*/ /*se descomentado vai distorcer as estrelinhas das avaliações nas listagens */
 }
 
 ul.default > li div.headlines > .call {
@@ -325,7 +377,7 @@ ul.pagination li a {
 }
 
 div#filter ul li {
-	margin: 10px 0;
+ /*	margin: 10px 0;*/
 }
 
 div#filter .call {
