@@ -2,7 +2,7 @@ pt-BR:
   date:
     formats:
       published_date: "%d/%m/%Y"
-      date_ago: "%d %B"
+      date_ago: "%d de %B"
     order: [ :day, :month, :year ]
     day_names: [Domingo, Segunda, Terça, Quarta, Quinta, Sexta, Sábado]
     abbr_day_names: [Dom, Seg, Ter, Qua, Qui, Sex, Sab]
@@ -62,8 +62,10 @@ pt-BR:
           attributes:
             path:
               invalid: ": caminho inválido."
-        #course:
-        #attributes:
+        course:
+          attributes:
+            description:
+              too_short: "Descrição muito curta. Use pelo menos 30 caracteres."
             #courseable:
               #invalid: ": link inválido."
         message:
@@ -94,13 +96,11 @@ pt-BR:
     attributes:
        text:
           blank: ": Você precisa digitar uma mensagem."
-  
   ajaxful_rating:
-    stars:
-      current_average: "Avaliação: {{average}}/{{max}}"
-      title:
-        one: "1 estrela de {{max}}"
-        other: "{{count}} estrelas de {{max}}"
+    helper:
+    global_average: "Avaliação: {{value}} de {{max}}"
+    user_rating: "Sua avaliação: {{value}} de {{max}}"
+    hover: "{{value}} de {{max}}"
   
   #simple categories
   arts_design_animation: Artes / Design / Animação

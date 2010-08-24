@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100817203224) do
+ActiveRecord::Schema.define(:version => 20100820195923) do
 
   create_table "abilities", :force => true do |t|
     t.string   "name"
@@ -167,6 +167,17 @@ ActiveRecord::Schema.define(:version => 20100817203224) do
     t.integer "votes_count", :default => 0
   end
 
+  create_table "clippings", :force => true do |t|
+    t.string   "url"
+    t.integer  "user_id"
+    t.string   "image_url"
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "clippings", ["created_at"], :name => "index_clippings_on_created_at"
+
   create_table "comments", :force => true do |t|
     t.string   "title",            :limit => 50, :default => ""
     t.datetime "created_at",                                       :null => false
@@ -225,16 +236,16 @@ ActiveRecord::Schema.define(:version => 20100817203224) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "rating_average",                                    :default => 0
-    t.integer  "owner",                                                                :null => false
-    t.text     "description",                                                          :null => false
-    t.boolean  "published",                                         :default => false
+    t.integer  "rating_average",      :limit => 10, :precision => 10, :scale => 0, :default => 0
+    t.integer  "owner",                                                                               :null => false
+    t.text     "description",                                                                         :null => false
+    t.boolean  "published",                                                        :default => false
     t.datetime "media_updated_at"
     t.string   "state"
-    t.integer  "view_count",                                        :default => 0
-    t.boolean  "public",                                            :default => true
-    t.decimal  "price",               :precision => 8, :scale => 2, :default => 0.0
-    t.boolean  "removed",                                           :default => false
+    t.integer  "view_count",                                                       :default => 0
+    t.boolean  "public",                                                           :default => true
+    t.decimal  "price",                             :precision => 8,  :scale => 2, :default => 0.0
+    t.boolean  "removed",                                                          :default => false
     t.string   "courseable_type"
     t.integer  "courseable_id"
     t.integer  "simple_category_id"
@@ -285,8 +296,9 @@ ActiveRecord::Schema.define(:version => 20100817203224) do
     t.datetime "start_time"
     t.datetime "end_time"
     t.text     "description"
-    t.integer  "metro_area_id"
     t.string   "location"
+    t.string   "state"
+    t.integer  "school_id"
   end
 
   create_table "exam_users", :force => true do |t|
@@ -520,6 +532,7 @@ ActiveRecord::Schema.define(:version => 20100817203224) do
     t.integer  "view_count"
   end
 
+  add_index "photos", ["created_at"], :name => "index_photos_on_created_at"
   add_index "photos", ["parent_id"], :name => "index_photos_on_parent_id"
 
   create_table "plugin_schema_migrations", :id => false, :force => true do |t|
@@ -556,6 +569,7 @@ ActiveRecord::Schema.define(:version => 20100817203224) do
   add_index "posts", ["category_id"], :name => "index_posts_on_category_id"
   add_index "posts", ["published_as"], :name => "index_posts_on_published_as"
   add_index "posts", ["published_at"], :name => "index_posts_on_published_at"
+  add_index "posts", ["user_id"], :name => "index_posts_on_user_id"
 
   create_table "profiles", :force => true do |t|
     t.integer  "user_id",     :null => false
@@ -593,17 +607,17 @@ ActiveRecord::Schema.define(:version => 20100817203224) do
   end
 
   create_table "rates", :force => true do |t|
-    t.integer  "user_id"
+    t.integer  "rater_id"
     t.integer  "rateable_id"
     t.string   "rateable_type"
-    t.integer  "stars"
+    t.integer  "stars",         :null => false
     t.string   "dimension"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "rates", ["rateable_id"], :name => "index_rates_on_rateable_id"
-  add_index "rates", ["user_id"], :name => "index_rates_on_user_id"
+  add_index "rates", ["rateable_id", "rateable_type"], :name => "index_rates_on_rateable_id_and_rateable_type"
+  add_index "rates", ["rater_id"], :name => "index_rates_on_rater_id"
 
   create_table "redu_categories", :force => true do |t|
     t.string "name"
@@ -734,12 +748,15 @@ ActiveRecord::Schema.define(:version => 20100817203224) do
   end
 
   add_index "taggings", ["tag_id"], :name => "index_taggings_on_tag_id"
+  add_index "taggings", ["taggable_id", "taggable_type"], :name => "index_taggings_on_taggable_id_and_taggable_type"
   add_index "taggings", ["taggable_id"], :name => "index_taggings_on_taggable_id"
   add_index "taggings", ["taggable_type"], :name => "index_taggings_on_taggable_type"
 
   create_table "tags", :force => true do |t|
     t.string "name"
   end
+
+  add_index "tags", ["name"], :name => "index_tags_on_name"
 
   create_table "topics", :force => true do |t|
     t.integer  "forum_id"
@@ -815,7 +832,7 @@ ActiveRecord::Schema.define(:version => 20100817203224) do
     t.integer  "activities_count",                     :default => 0
     t.integer  "sb_posts_count",                       :default => 0
     t.datetime "sb_last_seen_at"
-    t.integer  "role_id"
+    t.integer  "role_id",                              :default => 3
     t.integer  "followers_count",                      :default => 0
     t.integer  "follows_count",                        :default => 0
     t.integer  "score",                                :default => 0
@@ -841,6 +858,7 @@ ActiveRecord::Schema.define(:version => 20100817203224) do
 
   add_index "users", ["activated_at"], :name => "index_users_on_activated_at"
   add_index "users", ["avatar_id"], :name => "index_users_on_avatar_id"
+  add_index "users", ["created_at"], :name => "index_users_on_created_at"
   add_index "users", ["featured_writer"], :name => "index_users_on_featured_writer"
   add_index "users", ["last_request_at"], :name => "index_users_on_last_request_at"
   add_index "users", ["login"], :name => "index_users_on_login"

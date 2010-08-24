@@ -239,9 +239,7 @@ ActionController::Routing::Routes.draw do |map|
     school.resources :courses
     school.resources :exams
     school.resources :bulletins
-    school.resources :events, 
-        :member => { :vote => :post }, 
-        :collection => { :past => :get, :ical => :get , :day => :get}
+    school.resources :events, :member => { :vote => [:post,:get] }, :collection => { :past => :get, :ical => :get , :day => :get}
   end
   
   
