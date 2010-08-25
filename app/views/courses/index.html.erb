@@ -94,9 +94,8 @@ function getParameters(){
 			<%= link_to_remote "Página", :url => {:action => :index, :type => 'Page'}, :loading => "select('type','page')", :method => :get%>
 		</li>
 		
-		
-		
 	</ul>
+		<% end %>
 	</form>
 	
 	
@@ -116,25 +115,21 @@ function getParameters(){
 			<%= link_to_remote "Melhores avaliadas", :url => {:action => :index, :sort => 'rating_average'}, :loading => "select('sort','rating')", :method => :get%>
 		</li>
 	</ul>
-	<% end # end fielset%>
+	<% end %>
 	</form>
-	<%end # end unless @user%>
 </div>
-
 
 <span class="grid_12 filter_bar">
 	<span class="filter_text">
 		<%= (params[:search]) ? ("Resultados para: \""+params[:search]+"\"") : "Todas as aulas mais recentes" %>
 	</span>
 	
-	<% unless @user %>
 		<% form_tag courses_path, :method => :get do %>
 		Buscar 
 		<%= text_field_tag :search, params[:search] %>
 		<%= hidden_field_tag(:school_id, @school.id) if @school%>
 		<%= submit_tag "OK", :name => nil%>
 		<% end %>
-	<% end %>
 
 </span>
 
