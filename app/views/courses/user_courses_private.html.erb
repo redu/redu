@@ -1,0 +1,80 @@
+
+<script type="text/javascript">
+var unpublishedPath = "<%= unpublished_courses_path %>";
+var waitingPath = "<%= waiting_courses_path %>";
+
+var $usertabs;
+
+$(document).ready(function() {
+
+    $usertabs = $(".user-tabs").tabs({
+        select: function(event, ui) {
+           if (ui.index == 2) {
+                // Waiting
+                $("#tabs-3-content").html('');
+                jQuery.ajax({
+                    data: '',
+                    dataType: 'script',
+                    success: function(request) {
+                        $("#tabs-3-loading").hide();
+                    },
+                    type: 'get',
+                    url: waitingPath
+                });
+
+                $("#tabs-3-loading").show();
+            }
+            else if (ui.index == 1) {
+                // Unpublished
+                $("#tabs-2-content").html('');
+                jQuery.ajax({
+                    data: '',
+                    dataType: 'script',
+                    success: function(request) {
+                        $("#tabs-2-loading").hide();
+                    },
+                    type: 'get',
+                    url: unpublishedPath
+                });
+
+                $("#tabs-2-loading").show();
+            }
+        }
+    });
+});
+</script>
+
+
+<div id="public-profile" class="main grid_11">
+<%= render :partial => "users/user_info", :locals => {:user => @user}%>
+
+<h3> Aulas</h3>
+<div class="user-tabs tabs">
+	    <ul>
+		    <li><a href="#tabs-1">Publicadas</a></li>
+		    <li><a href="#tabs-2">Não publicadas</a></li>
+				<li><a href="#tabs-3">Em moderação</a></li>
+	    </ul>
+	    
+		<div id="tabs-1" class="clearfix first-page">
+			<%= render :partial => "course_list"%>
+		</div>
+		
+		<!-- unpublished -->
+		<div id="tabs-2">
+			<%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-2-loading', :style => 'padding: 20px;'%>
+			<div id="tabs-2-content"></div>
+		</div>
+		<!-- published -->
+		<div id="tabs-3">
+			<%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-3-loading', :style => 'padding: 20px;'%>
+			<div id="tabs-3-content"></div>
+		</div>
+		
+</div><!-- end tabs -->
+
+</div><!-- end main -->
+
+<div class="sidebar grid_5 omega">
+
+</div><!-- end sidebar -->

@@ -10,6 +10,15 @@ class StatusesController < BaseController
       if @status.save
         format.html { redirect_to :back }
         format.xml { render :xml => @status.to_xml }
+        format.js {
+        render :update do |page|
+          test = escape_javascript(render(:partial =>"statuses/type_proxy", :locals => {:status => @status, :statusable => @status.statusable} ))
+          page << "$('.activities').prepend('"+test+"')"
+          page << "$('.status_spinner').hide()"
+          page << "$('#status_text').val('')"
+          page << "$('.answer').val('')"
+        end
+        }
       else
         flash[:statuses_errors] = @status.errors.full_messages.to_sentence
         format.html { redirect_to :back }
@@ -27,7 +36,7 @@ class StatusesController < BaseController
     
     respond_to do |format|
       if @status.save
-        flash[:notice] = "Atividade enviada com sucesso"
+        flash[:notice] = "Atividade enviada com sucesso" 
       end
       format.js
     end      

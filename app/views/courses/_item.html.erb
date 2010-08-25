@@ -19,17 +19,18 @@
 		
 		
 		<ul class="item_info">
-            <!-- Uma modificação, antes ficava link_to course.owner.login -->
-            <li> Por 
+            <% unless @user %>
+						<li> Por 
                 <%= link_to course.owner.display_name, user_path(course.owner) %>
             </li>
             <li>
                 |
             </li>
+						<%end%>
             <li> 
                 <%= time_ago_in_words_or_date(course.created_at) %>
             </li>
-            <% if course.school %>
+            <% if course.school && !@school%>
 						<li>
                 |
             </li>

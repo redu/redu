@@ -1,16 +1,28 @@
 <div class="sidebar grid_4">
   <ul class="sortable clearfix">
    <li class="clearfix" style="background-color: #FFFFDF;">
-    <span class="call"><span>Menu do professor</span></span>
+    <span class="call"><span>Ações</span></span>
     <ul class="menu">
+    	<li>
+			<%= subscription_link %>
+			</li>
+			<li>
+				<%= link_to_function "Criar atividade", "$schooltabs.tabs('select', 1); $('#status_text').focus()"%>
+			</li>
+			<li style="border-bottom: 1px dotted #DDD;"></li>
       <li><a href="" class="closed sb">Acompanhar alunos</a></li>
       <li><a href="" class="closed sb">Acompanhar aulas</a></li>
-      <li><a href="" class="closed sb">Criar nova aula</a></li>
-			<li><a href="" class="closed sb">Criar novo exame</a></li>
+      <li>
+      	<%= link_to "Criar nova aula", new_course_path(:school_id => @school.id)%>
+				</li>
+			<li>
+				<%= link_to "Criar novo exame", new_exam_path(:school_id => @school.id)%>
+			</li>
+			
     </ul>
   </li>
   <li class="clearfix">
-    <span class="call"><span>Seus grupos (4)</span></span>
+    <span class="call"><span>Seus cursos (4)</span></span>
     <ul class="sub-groups progress-bar">
       <li>
         <a href="" class="closed sb">Matemática</a>

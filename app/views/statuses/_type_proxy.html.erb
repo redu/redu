@@ -1,7 +1,7 @@
 <% if status.status? %>
-    <%= render :partial => "statuses/status", :locals => {:status => status} %>
+    <%= render :partial => "statuses/status", :locals => {:status => status, :statusable => statusable } %>
 <% elsif status.question? %>
-    <%= render :partial => "statuses/question", :locals => {:question => status} %>
+    <%= render :partial => "statuses/question", :locals => {:question => status, :statusable => statusable } %>
 <% elsif status.poll? %>
 
 <% end%>

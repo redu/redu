@@ -36,7 +36,7 @@
 
 
 
-	<% if @course.courseable_type = 'InteractiveClass' %>
+	<% if @course.courseable_type == 'InteractiveClass' %>
 	    <% field_set_tag 'Imagem' do %>
 	        <%= f.label 'Defina uma imagem para esta aula' %>
 	        <%= f.file_field :avatar %>

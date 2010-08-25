@@ -5,6 +5,8 @@ class Status < ActiveRecord::Base
   POLL = 2
   ANSWER = 3
   
+  belongs_to :statusable, :polymorphic => true
+  
   belongs_to :in_response_to, :polymorphic => true
   belongs_to :user
   has_many :statuses, :as => :in_response_to

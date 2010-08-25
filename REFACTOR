@@ -22,8 +22,10 @@ colocar imagens em subpastas
 
 PROGRAMAÇÃO
 ===========
+diminuir quantidade de partials (principalmente os de statuses)
 mais rapido cookie-based session or activerecord???
 colocar javascript em <% content_for :js do %> <!-- javascript code to run, for this view only --> <% end %> e adicionar <%= yield :js %> no header
+subdivisão de pastas, do tipo controller/courses/courses_controller  etc
 
 remover todos os haml
 remover plugins antigos do CE nao-utilizados.

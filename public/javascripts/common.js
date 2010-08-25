@@ -1,3 +1,13 @@
+	/*
+	 * TIMER
+	 */
+		jQuery.fn.delay = function(time,func){
+    return this.each(function(){
+        setTimeout(func,time);
+    });
+	};
+
+
 function limitChars(textid, limit, infodiv){
     var text = $('#' + textid).val();
     var textlength = text.length;
@@ -15,7 +25,9 @@ function limitChars(textid, limit, infodiv){
 $(document).ready(function(){
 	
 		// message box fades out after 5secs
-		$("#flash").fadeOut(5000);
+		//$("#flash").fadeOut(5000);
+		$('#flash').delay(5000, function(){$('#flash').fadeOut()});
+
 
     // User box
 
@@ -35,7 +47,7 @@ $(document).ready(function(){
     
    // $(".tabs").tabs(); // esta funcao é chamada em cada view que eh usada pois é instanciada diferentemente
     
-    $(".question-action a").click(function(e){
+    $(".question-action a").live('click', function(e){
         $(this).next("div.answer:first").slideToggle()
         e.preventDefault()
     })
@@ -143,3 +155,5 @@ $(document).ready(function(){
             xhr.setRequestHeader("Accept", "text/javascript")
         }
     })
+		
+

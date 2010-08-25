@@ -14,11 +14,10 @@
 
 
   <!-- upload | uploadify -->
-<% if controller_name == 'courses' and action_name == 'new'%>
+<% if controller_name == 'coursesADSLLD' and action_name == 'new'%>
 <%=  stylesheet_link_tag 'uploadify' %>
 
 <%- session_key_name = ActionController::Base.session_options[:key] -%>
-<%#javascript_include_tag "uploadify/swfobject", "uploadify/jquery.uploadify.v2.1.0.js" %>
 <%=  javascript_include_tag "swfobject", "uploadify/uploadify210.js" %>
 <% url = courses_path %>
 <script type="text/javascript">
@@ -54,16 +53,19 @@
 
 
 
-<% if controller_name == 'schools' %>
+<% if controller_name == 'schools'  %>
 	<% if action_name == 'show'%>
 	<%= stylesheet_link_tag 'files' %>
+	<%= ajaxful_rating_style %>
 	<% end %>
-  <%  if @school %>
+  
+ <% end %>
+ 
+ <%  if @school %>
     <%= stylesheet_link_tag 'themes/' + @school.theme %>
   <% else %>
     <%= stylesheet_link_tag 'themes/default' %>
   <% end %>
- <% end %>
  
  <%= include_tiny_mce_if_needed %>
  

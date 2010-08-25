@@ -31,7 +31,8 @@ ActionController::Routing::Routes.draw do |map|
                         :exam_history => :get, :sort => :get, :order => :get, :questions_database => :get,
                         :favorites => :get, :review_question => :get}
     
-  map.resources :courses, :member => {:rate => :post, :buy => :get, :download_attachment => :get},  :collection => { :unpublished_preview => :get, :favorites => :get, :cancel => :get, :sort_lesson => :post}
+  map.resources :courses, :member => {:rate => :post, :buy => :get, :download_attachment => :get},  
+  :collection => { :unpublished_preview => :get, :favorites => :get, :cancel => :get, :sort_lesson => :post, :unpublished => :get,:waiting => :get}
   
   map.resources :user_school_association
 
@@ -249,10 +250,10 @@ ActionController::Routing::Routes.draw do |map|
     :annotations => :get,
     :followers => :get,
     :follows => :get,
-    :follow => :get,
+    :follow => :post,
     :activity_xml => :get,
     :logs => :get,
-    :unfollow => :get,
+    :unfollow => :post,
     :dashboard => :get,
     :assume => :get,
     :toggle_moderator => :put,

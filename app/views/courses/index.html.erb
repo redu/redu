@@ -1,38 +1,38 @@
 <% content_for :js do %>
 <script type="text/javascript">
-function selectCategory(category) {
-	//alert(request);
-	jQuery('#cat_'+ category).parent().children().removeClass('selected')
-	jQuery('#cat_'+ category).addClass('selected')
+function select(type, id) {
+	jQuery('#'+ type+'_' + id).parent().children().removeClass('selected')
+	jQuery('#'+ type+'_' + id).addClass('selected')
 	loadList();
 
-}
-
-function selectType(theType) {
-		jQuery('#type_'+ theType).parent().children().removeClass('selected')
-	jQuery('#type_'+ theType).addClass('selected')
-	loadList();
 }
 
 function loadList(){
 	jQuery('#course_list').html(' ')
 	jQuery('#loader').show()
 }
-
+/* pega os filtros selecionados e passa-os como parametro */
 function getParameters(){
+	
+	return ''
 	
 	var params = ''
 	jQuery('.selected').each(function(i) {
-		var name = $(this).attr('id').split('_')
-		name[0]
-		params += ''
+		var id = $(this).attr('id').split('_')
+		if (id[1] != 'all' && typeof(id[0]) != 'undefined' && typeof(id[1]) != 'undefined') {
+			if (id[0] == 'cat') id[0] = 'category';
+			
+			params += id[0] + '=' + id[1];
+		}
+		
 	})
-	
+	alert(params)
 	return params;
 }
 </script>
 <% end %>
 
+<%= render(:partial => "schools/school_info", :locals=>{:show => false}) if @school%>
 
 <div class="grid_16">
 	<!--
@@ -48,7 +48,7 @@ function getParameters(){
 <h3> Aulas</h3>
 </div>
 
-<%= render(:partial => "schools/school_info", :locals=>{:show => false}) if @school%>
+
 
 
 <div class="grid_4 calls" id="filter">
@@ -59,12 +59,12 @@ function getParameters(){
 	<% field_set_tag "Área" do %>
 	<ul class="criteriaList">
 		<li id ="cat_all" class="selected">
-			<%= link_to_remote "Todas", :url => {:action => :index}, :loading => "selectCategory('all')", :method => :get%>
+			<%= link_to_remote "Todas", :url => {:action => :index}, :loading => "select('cat','all')", :method => :get%>
 		</li>
 		
 		<% for category in SimpleCategory.all do %>
 		<li id = "cat_<%=category.id%>">
-			<%= link_to_remote category_i18n(category.name), :url => {:action => :index, :category => category.id}, :loading => "selectCategory('"+category.id.to_s+"')", :with => "getParameters()",:method => :get%>
+			<%= link_to_remote category_i18n(category.name), :url => {:action => :index, :category => category.id}, :loading => "select('cat','"+category.id.to_s+"')", :with => "getParameters()",:method => :get%>
 		</li>
 		<% end %>
 		
@@ -78,49 +78,47 @@ function getParameters(){
 	<ul class="criteriaList">
 		
 		<li id ="type_all" class="selected">
-			<%= link_to_remote "Todas", :url => {:action => :index}, :loading => "selectType('all')", :method => :get%>
+			<%= link_to_remote "Todas", :url => {:action => :index}, :loading => "select('type','all')", :method => :get%>
 		</li>
 	
 		
 		<li id = "type_seminar">
-			<%= link_to_remote "Vídeo-aula", :url => {:action => :index, :type => 'Seminar'}, :loading => "selectType('seminar')", :method => :get%>
+			<%= link_to_remote "Vídeo-aula", :url => {:action => :index, :type => 'Seminar'}, :loading => "select('type','seminar')", :method => :get%>
 		</li>
 		
-		<li id = "type_interactive_class">
-			<%= link_to_remote "Aula passo-a-passo", :url => {:action => :index, :type => 'InteractiveClass'}, :loading => "selectType('interactive_class')", :method => :get%>
+		<li id = "type_interactiveclass">
+			<%= link_to_remote "Aula passo-a-passo", :url => {:action => :index, :type => 'InteractiveClass'}, :loading => "select('type','interactiveclass')", :method => :get%>
 		</li>
 		
 		<li id = "type_page">
-			<%= link_to_remote "Página", :url => {:action => :index, :type => 'Page'}, :loading => "selectType('page')", :method => :get%>
+			<%= link_to_remote "Página", :url => {:action => :index, :type => 'Page'}, :loading => "select('type','page')", :method => :get%>
 		</li>
 		
 		
 		
 	</ul>
-	<% end %>
 	</form>
 	
 	
 		<form>
 	<% field_set_tag "Ordem" do %>
 	<ul class="criteriaList">
-		<li class="selected">
-			<%= link_to "Mais recentes", "#"%>
+		
+		<li id = "sort_recent" class="selected">
+			<%= link_to_remote "Mais recentes", :url => {:action => :index, :sort => 'updated_at'}, :loading => "select('sort','recent')", :method => :get%>
 		</li>
 		
-		<li>
-			<%= link_to "Mais vistas", "#"%>
-		</li>
-		<li>
-			<%= link_to "Melhores avaliadas", "#"%>
+		<li id = "sort_view">
+			<%= link_to_remote "Mais vistas", :url => {:action => :index, :sort => 'view_count'}, :loading => "select('sort','view')", :method => :get%>
 		</li>
 		
+		<li id = "sort_rating">
+			<%= link_to_remote "Melhores avaliadas", :url => {:action => :index, :sort => 'rating_average'}, :loading => "select('sort','rating')", :method => :get%>
+		</li>
 	</ul>
-	<% end %>
+	<% end # end fielset%>
 	</form>
-	
-	
-	
+	<%end # end unless @user%>
 </div>
 
 
@@ -129,12 +127,14 @@ function getParameters(){
 		<%= (params[:search]) ? ("Resultados para: \""+params[:search]+"\"") : "Todas as aulas mais recentes" %>
 	</span>
 	
-	<% form_tag courses_path, :method => :get do %>
-	Buscar 
-	<%= text_field_tag :search, params[:search] %>
-	<%= submit_tag "OK", :name => nil%>
+	<% unless @user %>
+		<% form_tag courses_path, :method => :get do %>
+		Buscar 
+		<%= text_field_tag :search, params[:search] %>
+		<%= hidden_field_tag(:school_id, @school.id) if @school%>
+		<%= submit_tag "OK", :name => nil%>
+		<% end %>
 	<% end %>
-	
 
 </span>
 

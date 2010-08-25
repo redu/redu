@@ -5,16 +5,20 @@
 	</ul>
 
 	<div id="actv-1" class="clearfix">
-		<% form_for @status, :html => {:class => "post-status"} do |f| %>
+		<% form_remote_for @status, :html => {:class => "post-status"}, :before => "$('.status_spinner').show()" do |f| %>
 		<%= flash[:statuses_errors] %>
 		<%= hidden_field_tag "return", request.url %>
+		<%= hidden_field :status, :statusable_id, :value => statusable.id %>
+		<%= hidden_field :status, :statusable_type, :value => statusable.class.to_s %>
 		<%= render :partial => "statuses/form_status", :locals => {:f => f} %>
 		<% end %>
 	</div>
 	<div id="actv-2" class="clearfix">
-		<% form_for @status, :html => {:class => "post-question"} do |f| %>
+		<% form_remote_for @status, :html => {:class => "post-question"}, :before => "$('.status_spinner').show()" do |f| %>
 		<%= flash[:statuses_errors] %>
 		<%= hidden_field_tag "return", request.url %>
+	<%= hidden_field :status, :statusable_id, :value => statusable.id %>
+		<%= hidden_field :status, :statusable_type, :value => statusable.class.to_s %>
 		<%= render :partial => "statuses/form_question", :locals => {:f => f} %>
 		<% end %>
 	</div>

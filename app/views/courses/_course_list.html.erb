@@ -1,13 +1,10 @@
-<!--
-	<h3 class="call">Aulas</h3>
-	-->
+
 	<% if @courses && @courses.length > 0 %>
 	<ul class="default">
 		<%= render :partial => 'courses/item', :collection => @courses, :as => :course %> 
 	</ul>
 	<% else %>
-		Não há aulas nessa categoria. 
+		(Nenhuma aula)
 	<% end %>
 	
-	<%# will_paginate @courses %>
-	<%= will_paginate  @courses, :params => {:sort_by => @sort_by} %>
+	<%= will_paginate @courses %>

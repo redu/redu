@@ -107,11 +107,23 @@ class UsersController < BaseController
     user.followers << current_user
     if user.save #@user.update_attributes(:follows)
       UserNotifier.deliver_followship_notice(user, current_user)
-      flash[:notice] = 'Você está seguindo esse usuário'
+      #flash[:notice] = 'Você está seguindo esse usuário'
     else
-      flash[:erro] = 'Não é possível seguir esse usuário'
+      #flash[:erro] = 'Não é possível seguir esse usuário'
     end
-    redirect_to user_path(user)
+    
+    respond_to do |format|
+      format.html do
+        redirect_to user_path(user)
+      end
+      format.js do 
+        render :update do |page|
+          page << "$('#follow_link').hide()"
+          page << "$('#unfollow_link').show()"
+        end
+      end
+    end
+    
     
   end 
   
@@ -121,11 +133,21 @@ class UsersController < BaseController
     
     user.followers.delete current_user
     if user.save #@user.update_attributes(:follows)
-      flash[:notice] = 'Você não está mais seguindo esse usuário'
+      #flash[:notice] = 'Você não está mais seguindo esse usuário'
     else
-      flash[:erro] = 'Não foi possível parar de seguir esse usuário'
+      #flash[:erro] = 'Não foi possível parar de seguir esse usuário'
     end
-    redirect_to user_path(user)
+    respond_to do |format|
+      format.html do
+        redirect_to user_path(user)
+      end
+      format.js do 
+        render :update do |page|
+          page << "$('#follow_link').show()"
+          page << "$('#unfollow_link').hide()"
+        end
+      end
+    end
     
   end
   

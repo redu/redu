@@ -39,6 +39,8 @@ class School < ActiveRecord::Base
 	has_many :bulletins, :dependent => :destroy
 	has_many :events, :dependent => :destroy
   
+  has_many :statuses, :as => :statusable
+  
   # VALIDATIONS
   validates_presence_of :name, :path
   validates_format_of       :path, :with => /^[\sA-Za-z0-9_-]+$/
@@ -78,7 +80,9 @@ class School < ActiveRecord::Base
   end
   
   def recent_school_activity
-    Status.group_statuses(self)
+   # Status.group_statuses(self) # na verdade o flow da escola nao deveria ser a soma dos flows de cada membro e sim um proprio
+     
+     
   end
 
   def recent_school_exams_activity

@@ -3,4 +3,4 @@
 <%= f.text_area :text, :options => { :class => "inner-label", :style => "width: 90%", :title => "O que você está fazendo agora?",  }  %>
 <%= hidden_field_tag "status[kind]", Status::QUESTION %>
 <% end %>
-<button type="submit">Perguntar</button>
+<button type="submit">Perguntar</button><%= image_tag 'spinner.gif', :class => 'status_spinner', :style => 'display: none'%>

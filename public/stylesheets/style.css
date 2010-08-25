@@ -1367,6 +1367,7 @@ div.recomendations-m .number {
     #header .user-actions #user-settings {
         width: 125px;
 				-webkit-box-shadow: #CCC 0px 4px 10px;
+						-moz-box-shadow: 0px 4px 10px #CCC;
     }
     
     #header .user-actions #user-settings ul {
@@ -1814,6 +1815,14 @@ div.content div.content {
     height: 80px;
 }
 
+.info_school {
+		border:1px solid #EEEEEE;
+		-moz-border-radius: 4px; 
+	 -webkit-border-radius: 4px;	
+	/*-moz-box-shadow: 0px 3px 15px #CCC;*/
+}
+
+
 #group-header div.logo {
 	text-align: center;
 }
@@ -1871,7 +1880,7 @@ div.content div.content {
 }
 
 #group .sidebar ul.menu > li > a {
-    padding: 8px 0;
+    padding: 4px 0;
     display: block;
     font-size: .9em;
     padding-left: 20px;
@@ -2189,6 +2198,7 @@ ul.sub-groups > li {
 	border-bottom-right-radius: 5px 5px;
 	border-top-left-radius: 5px 5px;
 	-webkit-box-shadow: #CCC 0px 4px 10px;
+			-moz-box-shadow: 0px 4px 10px #CCC;
 }
 
 .innerdiv {
@@ -2639,6 +2649,7 @@ table.booking_steps td.spacer { background: none; width: 61px}
     z-index: 1000;
     border: 2px solid #E0E9E9;
     -webkit-box-shadow: #CCC 0px 4px 10px;
+		-moz-box-shadow: 0px 4px 10px #CCC;
 }
 
 
@@ -2854,46 +2865,7 @@ a.icon-edit {
 	font-size: 0.6em;
 }
 
-.yt-uix-button:active, .yt-uix-button-active, .yt-uix-button-active:hover, .yt-uix-button-active:focus {
-	background: #DDD -webkit-gradient(linear, 0% 0%, 0% 100%, from(#CCC), to(white));
-	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#CCC), to(white));
-	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#CCC), to(white));
-	border-color: #999;
-}
-.yt-uix-button:hover, .yt-uix-button:focus {
-	-webkit-box-shadow: #999 0px 0px 3px;
-	background: #F3F3F3 -webkit-gradient(linear, 0% 0%, 0% 100%, from(white), to(#EBEBEB));
-	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(white), to(#EBEBEB));
-	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(white), to(#EBEBEB));
-	border-color: #999;
-	outline: 0px;
-}
 
-.watch-share-button {
-	margin-bottom: 7px;
-	margin-right: 2px;
-}
-
-.yt-uix-button {
-	background: #F6F6F6 -webkit-gradient(linear, 0% 0%, 0% 100%, from(white), to(#EFEFEF));
-	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(white), to(#EFEFEF));
-	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(white), to(#EFEFEF));
-	border: 1px solid #CCC;
-	border-bottom-left-radius: 3px 3px;
-	border-bottom-left-radius: 3px 3px;
-	border-bottom-right-radius: 3px 3px;
-	border-bottom-right-radius: 3px 3px;
-	border-top-left-radius: 3px 3px;
-	border-top-left-radius: 3px 3px;
-	border-top-right-radius: 3px 3px;
-	border-top-right-radius: 3px 3px;
-	cursor: pointer;
-	height: 2.0833em;
-	overflow: visible;
-	padding: 0px 0.5em;
-	vertical-align: middle;
-	white-space: nowrap;
-}
 
 /*
 * INFO BOXES

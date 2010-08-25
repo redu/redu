@@ -180,74 +180,52 @@ class CoursesController < BaseController
   # GET /courses
   # GET /courses.xml
   def index
+    cond = Caboose::EZ::Condition.new
+    cond.append ["simple_category_id = ?", params[:category]] if params[:category]
+    cond.append ["courseable_type = ?", params[:type]] if params[:type]
+    
+    paginating_params = {
+      :conditions => cond.to_sql,
+      :page => params[:page], 
+      :order => (params[:sort]) ? params[:sort] + ' DESC' : 'created_at DESC', 
+      :per_page => AppConfig.items_per_page 
+    }
     
     if params[:user_id] # aulas do usuario
       @user = User.find_by_login(params[:user_id]) 
       @user = User.find(params[:user_id]) unless @user
+      @courses = @user.courses.paginate(paginating_params)
+      render((@user == current_user) ? "user_courses_private" :  "user_courses_public")
+      return
       
-      @courses = @user.courses.paginate :page => params[:page], :per_page => AppConfig.items_per_page
-      
-      respond_to do |format|
-        format.html { render :action => "user_courses"} 
-        format.xml  { render :xml => @user.courses }
-      end
     elsif params[:school_id] # aulas da escola
       @school = School.find(params[:school_id])
-      @courses = @school.courses.paginate( 
-      :include => :owner, 
-      :page => params[:page], 
-      :order => 'updated_at DESC', 
-      :per_page => AppConfig.items_per_page)
-      
-      respond_to do |format|
-        format.html { 
-           #redirect_to(school_path(@school, :anchor => "tabs-2")) #mostra aulas no tab
-           render 'index_school'
-        }
-        format.js  {
+      if params[:search] # search aulas da escola
+        @courses = @school.courses.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
+      else
+        @courses = @school.courses.paginate(paginating_params) 
+      end
+    else # index (Course)
+      if params[:search] # search
+        @courses = Course.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
+      else
+        @courses = Course.published.paginate(paginating_params)
+      end
+    end
+    
+    # @popular_tags = Course.tag_counts
+    
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @courses }
+      if params[:school_id] and not params[:tab]
+        format.js
+      else
+        format.js  do
           render :update do |page|
             page.replace_html  'tabs-2-content', :partial => 'courses_school'
           end
-        }
-      end
-    elsif params[:search] # search
-      @courses = Course.name_like_all(params[:search].to_s.split).ascend_by_name.paginate( 
-      :include => :owner, 
-      :page => params[:page], 
-      :per_page => AppConfig.items_per_page)
-      
-      @sort_by = params[:sort_by]
-      #@order = params[:order]
-      
-      respond_to do |format|
-        format.html # index.html.erb
-        format.xml  { render :xml => @courses }
-      end
-    else
-      
-      
-      cond = Caboose::EZ::Condition.new
-      
-      cond.append ["simple_category_id = ?", params[:category]] if params[:category]
-      cond.append ["courseable_type = ?", params[:type]] if params[:type]
-      
-      @sort_by = params[:sort_by]
-      #@order = params[:order]
-      #@courses = get_query(params[:sort_by], params[:page]) 
-      
-      @courses = Course.published.paginate(
-      :conditions => cond.to_sql,
-      :page => params[:page], 
-      :order => 'updated_at DESC', 
-      :per_page => AppConfig.items_per_page)
-      
-      
-      @popular_tags = Course.tag_counts
-      
-      respond_to do |format|
-        format.html # index.html.erb
-        format.xml  { render :xml => @courses }
-        format.js
+        end
       end
     end
   end
@@ -320,6 +298,11 @@ class CoursesController < BaseController
       when "2"
         
          @course = Course.find(session[:course_id])
+         
+         unless @course #curso não foi encontrado ou nao está mais na sessão
+         redirect_to new_course_path :school_id => params[:school_id]
+         end
+         
         
         if @course.courseable_type == 'Seminar'
           @seminar = Seminar.new
@@ -716,18 +699,19 @@ end
   
   
   # lista cursos publicados por autor (sejam em redes ou público no redu)
-  def published
-    @courses = Course.paginate(:conditions => ["owner = ? AND published = 1", params[:user_id]], 
-  		:include => :owner, 
-  		:page => params[:page], 
-  		:order => 'updated_at DESC', 
-  		:per_page => AppConfig.items_per_page)
-    
-    respond_to do |format|
-      format.html #{ render :action => "my" }
-      format.xml  { render :xml => @resources }
-    end
-  end
+# DEPRECATED 
+#  def published
+#    @courses = Course.paginate(:conditions => ["owner = ? AND published = 1", params[:user_id]], 
+#  		:include => :owner, 
+#  		:page => params[:page], 
+#  		:order => 'updated_at DESC', 
+#  		:per_page => AppConfig.items_per_page)
+#    
+#    respond_to do |format|
+#      format.html #{ render :action => "my" }
+#      format.xml  { render :xml => @resources }
+#    end
+#  end
   
   # lista cursos não publicados (em edição)
   def unpublished
@@ -738,22 +722,30 @@ end
       :per_page => AppConfig.items_per_page)
     
     respond_to do |format|
-      format.html #{ render :action => "my" }
-      format.xml  { render :xml => @resources }
+      format.js do
+      render :update do |page|
+        page << "$('#tabs-2-loading').hide()"
+        page.replace_html 'tabs-2-content', :partial => "course_list"
+      end
+      end
     end
   end
   
   # cursos publicados no redu esperando a moderação dos admins do redu
   def waiting
-    @courses = Course.paginate(:conditions => ["owner = ? AND public = 1 AND published = 1 AND state LIKE 'waiting'", params[:user_id]], 
+    @courses = Course.paginate(:conditions => ["owner = ? AND published = 1 AND state LIKE 'waiting'", current_user.id], 
       :include => :owner, 
       :page => params[:page], 
       :order => 'updated_at DESC', 
       :per_page => AppConfig.items_per_page)
     
     respond_to do |format|
-      format.html #{ render :action => "my" }
-      format.xml  { render :xml => @resources }
+      format.js do
+      render :update do |page|
+        page << "$('#tabs-3-loading').hide()"
+        page.replace_html 'tabs-3-content', :partial => "course_list"
+      end
+      end
     end
   end
   

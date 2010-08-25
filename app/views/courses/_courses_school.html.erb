@@ -1,42 +1,20 @@
-
 <ul id="actions_user">
-				
 				<%  if current_user.can_post? @school %>
 				   	 <li>
 				   	 	<%= link_to "Nova Aula", new_school_course_path(:school_id => @school.id) %>
 					 </li>
-					 <!--
-					 <li class="sep">|</li>
-					-->
-					 
+					 			 
 				<% end %>
-			
-				
 </ul>
 		
-
-
-
-<% if  @courses.size > 0 %>
-
-<ul class="groups">
+		<div id="course_list" >
+	<%= render :partial => "course_list"%>
+	</div>
 	
-			<% @courses.each do |course|%>
-            <li class="clearfix">
-                <div class="photo">
-                </div>
-                <a href="" class="name grid_7 omega"><%= course.name %></a>
-            </li>
-			<%end%>
-	
-			</ul>
-		    <div id="pagination" align="center" class="pagination">
-			<%= will_paginate  @courses, :params => {:sort_by => 'created_at'}, :class => "pagination_number"  %>
-</div>
+	<span style="margin: 10px;">
+	<%= link_to "Ver todas >", courses_path(:school_id => @school.id)%>
+	</span>
 
-<% else %>
-Não há aulas nesta rede. <%= link_to "Crie uma agora!", new_school_course_path %>
-<%end%>
 
 
 

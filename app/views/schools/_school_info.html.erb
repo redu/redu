@@ -1,4 +1,4 @@
-<div id="group-header" class="grid_16<%= (show) ? '' : ' even'%>">
+<div id="group-header" class="grid_16<%= (show) ? '' : ' yellow'%>">
     
 		<div class="logo grid_4 alpha" onmouseover="$('#change_avatar_link').show();" onmouseout="$('#change_avatar_link').hide()">
         <%= image_tag( @school.avatar_photo_url(:thumb) )%>
@@ -31,7 +31,7 @@
     </div><!-- end info -->
 	<% if show %>
 	<div class="grid_3 omega options">
-		<%= subscription_link %>
+		
 		   	<span class="like">
 			<%= link_to_remote image_tag('thumbs-up.jpg', :border => '0'), :url=> {:action => :vote, :id => @school.id, :like => true}, :loading => '$("#like_link").hide(); $("#like_spinner").show()', :html => {:id => "like_link"}%>
 			<%= image_tag 'spinner.gif', :id => 'like_spinner', :style => 'display: none' %>
