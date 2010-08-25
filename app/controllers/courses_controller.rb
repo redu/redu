@@ -218,7 +218,7 @@ class CoursesController < BaseController
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @courses }
-      if params[:school_id] and not params[:tab]
+      if not params[:tab]
         format.js
       else
         format.js  do
