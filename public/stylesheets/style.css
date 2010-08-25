@@ -768,7 +768,7 @@ div.recomendations-m .number {
     .post-activity ul.ui-tabs-nav {
         background: none;
         height: auto;
-        margin-top 10px;
+        margin-top: 10px;
     }
     
     .post-activity ul.ui-tabs-nav li {
@@ -2109,7 +2109,7 @@ ul.sub-groups > li {
 
 }
 .user_instructions h3 {
-	font-size: 1.2;
+	font-size: 1.2em;
 	font-weight: bold;
 	margin: 15px 0 10px 0;
 }

@@ -68,6 +68,7 @@ class User < ActiveRecord::Base
   has_many :user_school_association, :dependent => :destroy
   has_many :schools, :through => :user_school_association
   has_many :schools_owned, :class_name => "School" , :foreign_key => "owner"
+   has_many :statuses, :as => :statusable
   
   # FOLLOWSHIP
   has_and_belongs_to_many :follows, :class_name => "User", :join_table => "followship", :association_foreign_key => "follows_id", :foreign_key => "followed_by_id", :uniq => true
@@ -572,7 +573,9 @@ class User < ActiveRecord::Base
   ### Métodos Adicionais 
     
   def recent_activity
-    Status.friends_statuses(self, limit = 0, offset = 20)
+   Status.friends_statuses(self, limit = 0, offset = 20)
+   #logs = Log.friends_logs(self, limit = 0, offset = 20)
+   #statuses + logs
   end
   
   def recent_exams_activity

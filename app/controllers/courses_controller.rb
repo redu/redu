@@ -6,6 +6,9 @@ class CoursesController < BaseController
   uses_tiny_mce(:options => AppConfig.advanced_mce_options, :only => [:new, :edit, :update])
   before_filter :verify_access, :only => [:show]
   
+  # after_filter :create_activity, :only => [:create, :show]
+  
+  
 #  def check_if_removed
 #    puts params[:id]
 #  end

@@ -5,4 +5,5 @@
 <% end %>
 $("#status-<%= @status.in_response_to.id %> form").toggleSpinner()
 $("#status-<%= @status.in_response_to.id %> form textarea").val("")
+$(".answer").toggleSlide();
 <% flash.discard %>

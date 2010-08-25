@@ -46,32 +46,22 @@ module BaseHelper
     type = item.logeable_type.underscore
       case type
         when 'user'
-         @activity = link_user + " acabou de entrar no redu" if item.action == "login"  
-         @activity = link_user + " atualizou dados de seu perfil" if item.action == "update"   
+         @activity = "acabou de entrar no redu" if item.log_action == "login"  
+         @activity = "atualizou dados de seu perfil" if item.log_action == "update"   
         
         when 'course'
           link_obj = link_to(item.logeable_name, item.logeable)
           
-          @activity = link_user + " está visualizando a aula " + link_obj if item.action == "show" 
-          @activity = link_user + " criou a aula " + link_obj if item.action == "create" 
-          @activity = link_user + " adicionou a aula " + link_obj + " ao seus favoritos" if item.action == "favorite"         
+          @activity = "está visualizando a aula " + link_obj if item.log_action == "show" 
+          @activity = "criou a aula " + link_obj if item.log_action == "create" 
+          @activity =  "adicionou a aula " + link_obj + " ao seus favoritos" if item.log_action == "favorite"         
 
-        when 'resource'
-          if item and item.logeable_id
-          link_obj = link_to(item.logeable_name, resource_path(item.logeable_id))
-        else
-          link_obj = item.logeable_name
-          end
-          
-          @activity = link_user + " disponibilizou o material " + link_obj if item.action == "create" 
-          @activity = link_user + " adicionou o material " + link_obj + " ao seus favoritos" if item.action == "favorite"
-    
       when 'exam'
           link_obj = link_to(item.logeable_name, exam_path(item.logeable_id))
           
-          @activity = link_user + " está respondendo ao exame " + link_obj if item.action == "answer" 
-          @activity = link_user + " criou o exame " + link_obj if item.action == "exame" 
-          @activity = link_user + " adicionou o exame " + link_obj + " ao seus favoritos" if item.action == "favorite"
+          @activity = "está respondendo ao exame " + link_obj if item.log_action == "answer" 
+          @activity =  "criou o exame " + link_obj if item.log_action == "exame" 
+          @activity =  "adicionou o exame " + link_obj + " ao seus favoritos" if item.log_action == "favorite"
         else 
           @activity = " atividade? "
       end

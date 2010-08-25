@@ -3,6 +3,18 @@ class Log < ActiveRecord::Base
   has_many :statuses, :as => :in_response_to
   belongs_to :logeable, :polymorphic => true
   
+  def Log.friends_logs(user, limit = 0, offset = 20)
+    sql = "SELECT l.* FROM logs l, followship f " + \
+      "WHERE (f.followed_by_id = #{user.id} " + \
+      "AND l.user_id = f.follows_id) " + \
+      "OR l.user_id = #{user.id} " + \
+      "ORDER BY l.created_at DESC "
+          
+    Log.find_by_sql(sql)
+  end
+  
+
+  
   def self.log_activity(log_object, action, user, school=nil)
   
     if log_object.instance_of?(Course)

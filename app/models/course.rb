@@ -9,6 +9,7 @@ class Course < ActiveRecord::Base
   }
 
   # ASSOCIATIONS
+   has_many :statuses, :as => :statusable
   has_many :acess_key
   has_many :resources, :class_name => "CourseResource", :as => :attachable
   has_many :acquisitions

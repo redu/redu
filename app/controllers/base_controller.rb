@@ -9,6 +9,20 @@ class BaseController < ApplicationController
   around_filter :set_locale 
   
   
+  def create_activity
+  case params[:controller] 
+    when 'courses'
+      if @course
+      Status.create({:log => true,
+              :logeable_name => @course.name,
+              :logeable_type => 'Course',
+              :logeable_id => 'Course',
+              :log_action => 'xx'
+      })
+      end
+  end
+  end
+  
   skip_before_filter :verify_authenticity_token, :only => :footer_content
   helper_method :commentable_url
   

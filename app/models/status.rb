@@ -7,16 +7,34 @@ class Status < ActiveRecord::Base
   
   belongs_to :statusable, :polymorphic => true
   
+   belongs_to :logeable, :polymorphic => true
   belongs_to :in_response_to, :polymorphic => true
   belongs_to :user
   has_many :statuses, :as => :in_response_to
   
+  
   acts_as_taggable
+  
+   before_validation :enable_correct_validation_group
+   
+  validation_group :log, :fields => []
+  validation_group :status, :fields => [:text, :kind]
   
   validates_presence_of :text
   validates_inclusion_of :kind, 
     :in => [0, 1, 2, 3, 4],
     :message => "Tipo inválido"
+  
+  
+   # Inspects object attributes and decides which validation group to enable
+  def enable_correct_validation_group
+    if self.log
+      self.enable_validation_group :log
+    else
+      self.enable_validation_group :status
+    end
+  end
+  
   
   def status?
     self.kind == Status::STATUS
@@ -42,6 +60,8 @@ class Status < ActiveRecord::Base
       
     Status.find_by_sql(sql)
   end
+  
+  
     
   def Status.friends_statuses(user, limit = 0, offset = 20)
     sql = "SELECT s.* FROM statuses s, followship f " + \

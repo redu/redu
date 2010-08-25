@@ -18,7 +18,7 @@
             <div class="answer hide">
             <div class="error form"></div>
             <% form_for :status, :url => {:controller => "statuses", :action => "respond", :id => question.id } do |f| %>
-            <%= render :partial => "statuses/form_answer", :locals => { :f => f, :question => question } %>
+            <%= render :partial => "statuses/form_answer", :locals => { :f => f, :question => question, :statusable => statusable } %>
             <% end %>
             </div>
         </div>
