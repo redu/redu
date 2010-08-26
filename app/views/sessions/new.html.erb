@@ -24,7 +24,7 @@
             </label>
             <%= f.submit "Entrar" %>
 						
-						<% unless AppConfig.closed_beta_mode %>
+						<% unless Rails.env=="production"  %>
 						<% form_tag({:controller => :users, :action => :create}, {:method => :post}) do %>
 							<%= oauth_login_button :value => "Login with Twitter", :class => "twitter" %>
 						 <% end %>

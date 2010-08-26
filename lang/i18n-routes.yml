@@ -1,8 +1,8 @@
 pt-BR:
     administrator: "administracao"
-    admin_members: "membros_pendentes"
-    admin_requests: "solicitacoes_pendentes"
-    admin_submissions: "submissoes_pendentes"
+    admin_members: "admin_membros"
+    admin_requests: "admin_solicitacoes"
+    admin_submissions: "admin_submissoes"
     answer: "responder"
     courses: "aulas"
     edit: "editar"

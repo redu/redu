@@ -21,7 +21,7 @@
             %> 
             <% if (@user && @user.eql?(current_user)) %> 
                 <% if @user.avatar %> 
-                    <%= link_to :profile_photo_crop.l, crop_profile_photo_user_path(@user), :class => 'small' %>
+                    <%# link_to :profile_photo_crop.l, crop_profile_photo_user_path(@user), :class => 'small' %>
                 <% else %>
                     <%= link_to :click_here_to_upload_one.l, edit_user_path(@user), :class => 'small' %>
                 <% end %>

@@ -4,8 +4,8 @@
 	</div>
 <% end %>
 
-    <ul>
-	<% @learning.each do |log| %>
-		<li><%= log.logeable_type.downcase %> | <%= log.logeable_name %> em <%= time_ago_in_words_or_date(log.created_at)  %></li>
-	<% end %>
-	</ul>
+		<ul class="activities">
+			
+	 <%= render :partial => "statuses/status", :collection => @user.learning, :as => :status, :locals => {:statusable => @user } %>
+	 
+	 </ul>

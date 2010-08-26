@@ -22,6 +22,9 @@ colocar imagens em subpastas
 
 PROGRAMAÇÃO
 ===========
+usar size() ao inves de length()
+adicionar counter cache (ver como rails ajuda a fazer isso)
+tirar do base_controller e adicionar no application_controller
 diminuir quantidade de partials (principalmente os de statuses)
 mais rapido cookie-based session or activerecord???
 colocar javascript em <% content_for :js do %> <!-- javascript code to run, for this view only --> <% end %> e adicionar <%= yield :js %> no header

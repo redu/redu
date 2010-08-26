@@ -29,10 +29,10 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :exams, :member => {:add_question => :get, :add_resource => :get, :rate => :post, :answer => [:get,:post]},
                         :collection => {:unpublished_preview => :get, :unpublished => :get, :new_exam => :get, :cancel => :get, 
                         :exam_history => :get, :sort => :get, :order => :get, :questions_database => :get,
-                        :favorites => :get, :review_question => :get}
+                        :review_question => :get}
     
   map.resources :courses, :member => {:rate => :post, :buy => :get, :download_attachment => :get},  
-  :collection => { :unpublished_preview => :get, :favorites => :get, :cancel => :get, :sort_lesson => :post, :unpublished => :get,:waiting => :get}
+  :collection => { :unpublished_preview => :get, :cancel => :get, :sort_lesson => :post, :unpublished => :get,:waiting => :get}
   
   map.resources :user_school_association
 
@@ -45,8 +45,6 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :suggestions
   
-  #map.resources :favorites, 
-
   map.removed_page   '/removed_item', :controller => 'base', :action => 'removed_item'
   
   map.resources :bulletins, :member => {:rate => :post}
@@ -204,8 +202,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :categories
   map.resources :skills, :collection => { :sub_categories_of => :get } 
   map.resources :events#, :collection => { :past => :get, :ical => :get }
-  map.resources :favorites, :path_prefix => '/:favoritable_type/:favoritable_id'
-  map.resources :comments, :path_prefix => '/:commentable_type/:commentable_id'
+  #map.resources :favorites, :path_prefix => '/:favoritable_type/:favoritable_id'
+  #map.resources :comments, :path_prefix => '/:commentable_type/:commentable_id'
   map.delete_selected_comments 'comments/delete_selected', :controller => "comments", :action => 'delete_selected'
   
   map.resources :homepage_features
@@ -287,13 +285,13 @@ ActionController::Routing::Routes.draw do |map|
     #user.resources :clippings
     user.resources :activities, :collection => {:network => :get}
     user.resources :invitations
-    user.resources :courses, :collection => {:published => :get, :unpublished => :get, :waiting => :get, :favorites => :get} 
+    user.resources :courses, :collection => {:published => :get, :unpublished => :get, :waiting => :get} 
     user.resources :schools, :collection => {:member => :get, :owner => :get}
-    user.resources :exams, :collection => {:published => :get, :unpublished => :get, :history => :get, :favorites => :get} 
+    user.resources :exams, :collection => {:published => :get, :unpublished => :get, :history => :get} 
     user.resources :questions
     user.resources :credits
     user.resources :offerings, :collection => {:replace => :put}
-    user.resources :favorites,:collection => {:courses => :get} 
+    user.resources :favorites
     user.resources :messages, :collection => { :delete_selected => :post, :auto_complete_for_username => :any }  
     user.resources :comments
     user.resources :photo_manager, :only => ['index']

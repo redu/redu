@@ -12,6 +12,9 @@
     @background: #EBF7FD
     
 **/
+
+
+
 .criteriaList {
 	font-size:0.8em;
 }
@@ -2471,12 +2474,11 @@ table.booking_steps td.spacer { background: none; width: 61px}
 	padding-left: 20px
 }
 
-#item_video {
-	clear: both;
-	height: auto;
-	padding: 0px 0px 0px 0px;
-	margin: 0px 0px 8px 0px;
+#player span{
+	min-height: 150px;
+	margin-top: 100px;
 }
+
 
 #title_video {
 	clear: both;
@@ -2484,7 +2486,13 @@ table.booking_steps td.spacer { background: none; width: 61px}
 	color: #7a87a1;
 	text-decoration: none;
 	padding: 0px;
-	margin: 0px
+	margin: 0px;
+	float: left;
+}
+
+.admin_opts {
+	float: right;
+	padding: 8px 5px;
 }
 
 #lights-dimmed {
@@ -2582,13 +2590,11 @@ table.booking_steps td.spacer { background: none; width: 61px}
 
 
 #filter_bar_video {
-	float: left;
-	width:99%; 
-	height:22px; 
-	background:url(../images/bg_filter_bar.gif) repeat-x right; 
-	padding:5px;
-	margin:8px 8px 8px 0px; 
-	border:solid 1px #dedede;  
+	background:url("../images/bg_filter_bar.gif") repeat-x scroll right center transparent;
+	border:1px solid #DEDEDE;
+	height:22px;
+	margin-bottom:8px;
+	padding:5px 0; 
 	
 }
 
@@ -2855,14 +2861,21 @@ table.booking_steps td.spacer { background: none; width: 61px}
 }
 
 a.icon-delete {
-	padding-left: 25px;
-	background: #F5F5F5 url("../images/icons/delete.png") no-repeat 5px 4px;
+	padding-left: 20px;
+	background: url("../images/icons/delete.png") no-repeat;
 }
 
 a.icon-edit {
-	padding-left: 25px;
-	background: #F5F5F5 url("../images/icons/post.png") no-repeat 5px 4px;
-	font-size: 0.6em;
+	padding-left: 20px;
+	background: url("../images/icons/post.png") no-repeat ;
+}
+a.icon-approve {
+	padding-left: 20px;
+	background: url("../images/icons/approve.gif") no-repeat ;
+}
+a.icon-reject {
+	padding-left: 20px;
+	background: url("../images/icons/reject.gif") no-repeat ;
 }
 
 

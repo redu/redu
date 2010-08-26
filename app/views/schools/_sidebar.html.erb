@@ -9,7 +9,6 @@
 			<li>
 				<%= link_to_function "Criar atividade", "$schooltabs.tabs('select', 1); $('#status_text').focus()"%>
 			</li>
-			<li style="border-bottom: 1px dotted #DDD;"></li>
       <li><a href="" class="closed sb">Acompanhar alunos</a></li>
       <li><a href="" class="closed sb">Acompanhar aulas</a></li>
       <li>
@@ -72,7 +71,9 @@
         <a href="<%= teachers_school_path %>" class="icon more">Ver mais</a>
     </div><!-- end followship -->
     <% else %>
-      <div class="notice box">Nenhum professor cadastrado</div>
+      <div class="notice box">Nenhum professor<br/>
+			<%= link_to "Cadastre um professor", admin_members_school_path, :class => "icon more" %>
+			</div>
     <% end %>
   </li>
 	<li>
@@ -86,8 +87,8 @@
 				d.mday
 			end
 		end	%>
-		<%= link_to "Ver todos", school_events_path(@school), :class => "grid_4" %>
-		<%= link_to "Criar novo evento", new_school_event_path(@school), :class => "grid_4" %>
+		<%= link_to "Ver mais", school_events_path(@school), :class => "icon more" %> | 
+		<%= link_to "Criar evento", new_school_event_path(@school), :class => "icon more" %>
 	</li>
   </ul><!-- end sortable -->
 
