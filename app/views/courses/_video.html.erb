@@ -2,10 +2,8 @@
 	<% if resource.state.eql?("converted") %>
 
 <script type="text/javascript">
-	<% 
-		media_url = resource.media.url 
-		
-	%>
+	<% media_url = resource.media.url %>
+	
    var flashvars = {
       'file':               '<%= resource.media.url.split('?').first %>',
       'autostart':          'false',
@@ -16,8 +14,8 @@
    var params = {
       'allowfullscreen':    'true',
       'allowscriptaccess':  'always',
-      'bgcolor':            '#ffffff',
-			'wmode':							'transparent'
+      'bgcolor':            '#ffffff'
+			//'wmode':							'transparent'
    };
 
    var attributes = {

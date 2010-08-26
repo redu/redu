@@ -36,8 +36,15 @@ module BaseHelper
 #      when "application/pdf" then 'pdf'
 #      else ''
 #      end
+        icons = ['3gp', 'bat', 'bmp', 'doc', 'css', 'exe', 'gif', 'jpg', 'jpeg', 'jar','zip',
+        'mp3', 'mp4', 'avi', 'mpeg', 'mov', 'm4p', 'ogg', 'png', 'psd', 'ppt', 'txt', 'swf', 'wmv', 'xls', 'xml', 'zip']
 
-        'ext_'+ resource.attachment_file_name.split('.')[1] if resource.attachment_file_name.split('.').length > 0
+        file_ext = resource.attachment_file_name.split('.')[1] if resource.attachment_file_name.split('.').length > 0
+        if file_ext and icons.include? file_ext
+        'ext_'+ file_ext
+        else
+         'ext_txt'
+      end
   end
   
   
@@ -59,8 +66,9 @@ module BaseHelper
       when 'exam'
           link_obj = link_to(item.logeable_name, exam_path(item.logeable_id))
           
+          @activity = "acabou de responder o exame " + link_obj if item.log_action == "results" 
           @activity = "está respondendo ao exame " + link_obj if item.log_action == "answer" 
-          @activity =  "criou o exame " + link_obj if item.log_action == "exame" 
+          @activity =  "criou o exame " + link_obj if item.log_action == "create" 
           @activity =  "adicionou o exame " + link_obj + " ao seus favoritos" if item.log_action == "favorite"
         else 
           @activity = " atividade? "

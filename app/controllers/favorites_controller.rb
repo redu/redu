@@ -2,6 +2,34 @@ class FavoritesController < BaseController
   before_filter :login_required
   
   
+  def index
+    @user = current_user#User.find(:user_id)
+    respond_to do |format|
+      format.js do 
+        case params[:type]
+          when 'exams'
+            render :update do |page|
+              # page.replace_html 'course_list', partial
+            end
+          when 'statuses'
+           render :update do |page|
+              
+            end
+        end  
+      end
+      format.html do 
+        #@courses = Course.favorites_user_id_eq(current_user.id).descend_by_created_at
+        @courses = Course.paginate(:all, 
+   :joins => :favorites,
+    :conditions => ["favorites.favoritable_type = 'Course' AND favorites.user_id = ? AND courses.id = favorites.favoritable_id", current_user.id], 
+    :page => params[:page], :order => 'created_at DESC', :per_page => AppConfig.items_per_page)
+        
+        
+      end
+    end
+    
+  end
+  
   def favorite
     @favorite = current_user.add_favorite(params[:type], params[:id] )
     

@@ -4,6 +4,8 @@ class SchoolsController < BaseController
   before_filter :login_required,  :except => [:join, :unjoin, :member]
   #before_filter :admin_required,  :only => [:new, :create]
   #before_filter :school_admin_required,  :except => [:new, :create, :vote]
+   after_filter :create_activity, :only => [:create]
+
 
   before_filter :except => [:new, :create, :vote, :show, :index, :join, :unjoin, 
                              :member, :onwer, :members, :teachers] do |controller| 

@@ -14,6 +14,8 @@ class Exam < ActiveRecord::Base
   has_many :logs, :as => :logeable, :dependent => :destroy
   belongs_to :owner , :class_name => "User" , :foreign_key => "owner_id"
   belongs_to :simple_category
+  has_one :school_asset, :as => :asset
+  has_one :school, :through => :school_asset#, :as => :asset
   
   # NESTED
   accepts_nested_attributes_for :questions, 

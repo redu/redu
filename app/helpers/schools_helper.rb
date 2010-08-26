@@ -46,7 +46,9 @@ module SchoolsHelper
     membership = current_user.get_association_with @school
     
     if membership and membership.status == 'approved' # já é membro
-      link_to(image_tag("icons/house.gif") + " Abandonar rede", unjoin_school_path, 
+      link_to(
+      # image_tag("icons/house.gif") + 
+       " Abandonar rede", unjoin_school_path, 
         :confirm => "Você tem certeza que quer deixar essa rede?")
     else 
        case @school.subscription_type 

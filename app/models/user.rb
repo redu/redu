@@ -3,6 +3,10 @@ class User < ActiveRecord::Base
   # ATTRIBUTES
   MALE    = 'M'
   FEMALE  = 'F'
+  
+  LEARNING_ACTIONS = ['answer', 'results', 'show']
+  TEACHING_ACTIONS = ['create']
+  
   attr_protected :admin, :featured, :role_id
   
   # PLUGINS
@@ -136,6 +140,7 @@ class User < ActiveRecord::Base
   named_scope :tagged_with, lambda {|tag_name|
     {:conditions => ["tags.name = ?", tag_name], :include => :tags}
   }
+
 
   ## Class Methods
 
@@ -572,19 +577,28 @@ class User < ActiveRecord::Base
   
   ### Métodos Adicionais 
     
+  def learning
+    self.statuses.log_action_eq(LEARNING_ACTIONS).descend_by_created_at
+  end
+  
+  def teaching
+     self.statuses.log_action_eq(TEACHING_ACTIONS).descend_by_created_at
+  end
+  
+    
   def recent_activity
    Status.friends_statuses(self, limit = 0, offset = 20)
    #logs = Log.friends_logs(self, limit = 0, offset = 20)
    #statuses + logs
   end
   
-  def recent_exams_activity
-    Log.find(:all, :conditions => ["user_id = ? AND logeable_type = ?", self.id, "Exam"], :order => "created_at DESC", :limit => 3)
-  end
-  
-   def recent_courses_activity
-    Log.find(:all, :conditions => ["user_id = ? AND logeable_type = ?", self.id, "Course"], :order => "created_at DESC", :limit => 3)
-  end
+#  def recent_exams_activity
+#    Log.find(:all, :conditions => ["user_id = ? AND logeable_type = ?", self.id, "Exam"], :order => "created_at DESC", :limit => 3)
+#  end
+#  
+#   def recent_courses_activity
+#    Log.find(:all, :conditions => ["user_id = ? AND logeable_type = ?", self.id, "Course"], :order => "created_at DESC", :limit => 3)
+#  end
   
   def log_activity
     # a maneira correta de se fazer isso é via consulta no sql pois é muito mais rapido pq nao precisa ficar iterando

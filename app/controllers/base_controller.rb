@@ -8,21 +8,6 @@ class BaseController < ApplicationController
   include LocalizedApplication
   around_filter :set_locale 
   
-  
-  def create_activity
-  case params[:controller] 
-    when 'courses'
-      if @course
-      Status.create({:log => true,
-              :logeable_name => @course.name,
-              :logeable_type => 'Course',
-              :logeable_id => 'Course',
-              :log_action => 'xx'
-      })
-      end
-  end
-  end
-  
   skip_before_filter :verify_authenticity_token, :only => :footer_content
   helper_method :commentable_url
   
@@ -160,6 +145,49 @@ class BaseController < ApplicationController
   def admin_or_moderator_required
     current_user && (current_user.admin? || current_user.moderator?) ? true : access_denied
   end
+  
+  
+  def create_activity
+  case params[:controller] 
+    when 'courses'
+      if @course
+      Status.create({:log => true,
+              :logeable_name => @course.name,
+              :logeable_type => 'Course',
+              :logeable_id => @course.id,
+              :log_action => params[:action],
+              :statusable_type => (@course.school) ? 'School' : 'User',
+              :statusable_id => (@course.school) ? @course.school.id : @course.owner.id,
+              :user_id => current_user
+      })
+    end
+    when 'exams'
+      if @exam
+      Status.create({:log => true,
+              :logeable_name => @exam.name,
+              :logeable_type => 'Exam',
+              :logeable_id => @exam.id,
+              :log_action => params[:action],
+              :statusable_type => (@exam.school) ? 'School' : 'User',
+              :statusable_id => (@exam.school) ? @exam.school.id : @exam.owner.id,
+              :user_id => current_user
+      })
+    end
+    when 'schools'
+      if @school
+      Status.create({:log => true,
+              :logeable_name => @school.name,
+              :logeable_type => 'School',
+              :logeable_id => @school.id,
+              :log_action => params[:action],
+              :statusable_type => 'User',
+              :statusable_id => @school.owner.id,
+              :user_id => current_user
+      })
+      end
+  end
+  end
+  
   
   
   def find_user

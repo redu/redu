@@ -93,11 +93,10 @@ class Course < ActiveRecord::Base
   end
 
   def currently_watching
-    sql = "SELECT DISTINCT u.id, u.login, u.login_slug FROM users u, logs l WHERE"
-    sql += " l.user_id = u.id AND l.logeable_type LIKE 'Course' AND l.logeable_id = '#{self.id}'"
-    sql +=" AND l.created_at > '#{Time.now.utc-10.minutes}'"
+    sql = "SELECT u.id, u.login, u.login_slug FROM users u, statuses s WHERE"
+    sql += " s.user_id = u.id AND s.logeable_type LIKE 'Course' AND s.logeable_id = '#{self.id}'"
+    sql +=" AND s.created_at > '#{Time.now.utc-10.minutes}'"
 
-    #TODO excluir o usuario atual?
     User.find_by_sql(sql)
   end
 

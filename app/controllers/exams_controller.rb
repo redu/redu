@@ -1,8 +1,8 @@
 class ExamsController < BaseController
-  layout 'new_application'
   
   before_filter :login_required, :except => [:index]
   uses_tiny_mce(:options => AppConfig.question_mce_options, :only => [:new, :edit, :create])
+  after_filter :create_activity, :only => [:create, :answer, :results]
   
   
   def publish_score
@@ -54,7 +54,6 @@ class ExamsController < BaseController
       # Só para efeitos de teste. O objeto school vai ser passado na criação das aulas quando estiver
       # dentro de uma rede.
       #@school = School.find(:first, :conditions => ["owner = ?", current_user.id])
-      Log.log_activity(@exam, 'answer', current_user, @school)
       
     end
     
@@ -662,7 +661,6 @@ class ExamsController < BaseController
       redirect_to removed_page_path and return
     end
     
-    Log.log_activity(@exam, 'create', current_user, @school)
     
     respond_to do |format|
       format.html # show.html.erb
@@ -684,8 +682,6 @@ class ExamsController < BaseController
   # PUT /exams/1.xml
   def update
     @exam = Exam.find(params[:id])
-    
-    Log.log_activity(@exam, 'create', @exam.owner, @school)
     
     respond_to do |format|
       if @exam.update_attributes(params[:exam])

@@ -1,17 +1,13 @@
 class CoursesController < BaseController
- layout 'new_application'
- include Viewable # serve pra atualizar o view_count
-    
-  before_filter :login_required, :except => [:index]
+  
+  include Viewable # atualiza o view_count
   uses_tiny_mce(:options => AppConfig.advanced_mce_options, :only => [:new, :edit, :update])
+  
+  
+  before_filter :login_required, :except => [:index]
   before_filter :verify_access, :only => [:show]
+  after_filter :create_activity, :only => [:create]
   
-  # after_filter :create_activity, :only => [:create, :show]
-  
-  
-#  def check_if_removed
-#    puts params[:id]
-#  end
 
   def verify_access
      @course = Course.find(params[:id])
@@ -101,25 +97,25 @@ class CoursesController < BaseController
     send_file @attachment.attachment.path, :type=> @attachment.attachment.content_type, :x_sendfile=>true
   end
   
-  def favorites
-    
-    if params[:from] == 'favorites'
-      @taskbar = "favorites/taskbar"
-    else
-      @taskbar = "courses/taskbar_index"
-    end
-    
-    @courses = Course.paginate(:all, 
-    :joins => :favorites,
-    :conditions => ["favorites.favoritable_type = 'Course' AND favorites.user_id = ? AND courses.id = favorites.favoritable_id", current_user.id], 
-    :page => params[:page], :order => 'created_at DESC', :per_page => AppConfig.items_per_page)
-    
-    
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @courses }
-    end
-  end
+#  def favorites
+#    
+#    if params[:from] == 'favorites'
+#      @taskbar = "favorites/taskbar"
+#    else
+#      @taskbar = "courses/taskbar_index"
+#    end
+#    
+#    @courses = Course.paginate(:all, 
+#    :joins => :favorites,
+#    :conditions => ["favorites.favoritable_type = 'Course' AND favorites.user_id = ? AND courses.id = favorites.favoritable_id", current_user.id], 
+#    :page => params[:page], :order => 'created_at DESC', :per_page => AppConfig.items_per_page)
+#    
+#    
+#    respond_to do |format|
+#      format.html # index.html.erb
+#      format.xml  { render :xml => @courses }
+#    end
+#  end
   
   
   def rate
@@ -255,11 +251,11 @@ class CoursesController < BaseController
       
       #relacionados
       related_name = @course.name
-      @related_courses = Course.find(:all,:conditions => ["name LIKE ? AND id NOT LIKE ?","%#{related_name}%", @course.id] , :limit => 3, :order => 'created_at DESC')
-      
-     #@course.update_attribute(:view_count, @course.view_count + 1) #TODO em Viewable
-      
-     # Log.log_activity(@course, 'show', current_user, @school)#TODO se usuario nao comprou não logar atividade
+      @related_courses = Course.find(:all,:conditions => ["name LIKE ? AND id NOT LIKE ?","%#{related_name}%", @course.id] , :limit => 3, :order => 'rating_average DESC')
+       
+       
+       
+       @status = Status.new
 
       respond_to do |format|
         if @course.courseable_type == 'Page'
@@ -534,7 +530,6 @@ class CoursesController < BaseController
       respond_to do |format|
         
         if @course.update_attributes(params[:course])
-          #Log.log_activity(@course, 'create', current_user) # só aparece quando é aprovada
           # remover curso da sessao
           session[:course_id] = nil
           if @course.courseable_type == 'Seminar' or  @course.courseable_type == 'InteractiveClass'
@@ -604,8 +599,6 @@ end
   # PUT /courses/1
   # PUT /courses/1.xml
   def update
-    
-   # Log.log_activity(@course, 'update', @course.owner, @school)
     
    @course = Course.find(params[:id])
     

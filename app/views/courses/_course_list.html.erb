@@ -1,5 +1,5 @@
 
-	<% if @courses && @courses.length > 0 %>
+	<% if @courses && @courses.size > 0 %>
 	<ul class="default">
 		<%= render :partial => 'courses/item', :collection => @courses, :as => :course %> 
 	</ul>

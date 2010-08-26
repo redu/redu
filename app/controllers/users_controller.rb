@@ -35,7 +35,7 @@ class UsersController < BaseController
 
   def learning
     @user = User.find(params[:id]) #TODO performance routes (passar parametro direto para query)
-    @learning = Log.all(:conditions => ["user_id = ?", @user.id])
+    
     respond_to do |format|
       format.js do
         render :update do |page|
@@ -337,7 +337,6 @@ class UsersController < BaseController
     
     if @user.save!
       #@user.track_activity(:updated_profile) Utilizaremos outro Activity
-      Log.log_activity(@user, 'update', nil)
       
       flash[:notice] = :your_changes_were_saved.l
       unless params[:welcome] 
@@ -633,8 +632,6 @@ class UsersController < BaseController
     # puts "id: " + params[:id]
     # puts "node_id: " + params[:node_id] if params[:node_id]
     
-    #@logs = Log.find(:all, 
-    #:conditions => ["user_id != logeable_id AND logeable_type NOT LIKE 'User'"])
     @user = User.find((params[:node_id]) ?  params[:node_id] :  params[:id] )
     @logs = @user.log_activity
     

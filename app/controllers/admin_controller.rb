@@ -108,7 +108,6 @@ class AdminController < BaseController
     # dentro de uma rede.
     #@school = School.find(:first, :conditions => ["owner = ?", current_user.id])
     
-    Log.log_activity(@course, 'create', @course.owner, @school)
     
     flash[:notice] = 'A aula foi aprovada!'
     redirect_to admin_moderate_submissions_path
