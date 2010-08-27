@@ -157,6 +157,15 @@ class EventsController < BaseController
     @list_title = "Eventos do dia #{day.strftime("%d/%m/%Y")}"
     render :template => 'events/index'
   end
+  
+  def notify
+    event = Event.find(params[:id])
+    notification_time = event.start_time - params[:days].to_i.days
+    Delayed::Job.enqueue(EventMailingJob.new(current_user, event))#, notification_time) #TODO Descomentar quando estiver funcionando.
+    flash[:notice] = "Sua notificação foi agendada."
+    
+    redirect_to school_event_path(event.school_id, event)
+  end
 
 protected
   def can_manage_required

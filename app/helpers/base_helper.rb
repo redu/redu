@@ -503,7 +503,7 @@ module BaseHelper
     membership = current_user.get_association_with @school
     
     if membership and membership.status == 'approved' # já é membro
-      link_to "Abandonar", unjoin_school_path, 
+      link_to "Abandonar", unjoin_school_path(@school), 
         :class => "participar_rede button" , 
         :confirm => "Você tem certeza que quer deixar essa rede?"
     else 

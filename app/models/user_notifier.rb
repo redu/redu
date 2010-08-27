@@ -132,6 +132,19 @@ def remove_membership(user, school)
     @body[:url]  = APP_URL
   end
   
+  def event_notification(user, event)
+    setup_sender_info
+    @recipients  = "#{user.email}"
+    @subject     = "Lembre-se do evento da rede #{event.school.name}"
+    @sent_on     = Time.now
+    @body[:user] = user
+    @body[:event] = event
+    @body[:event_url]  = school_event_path(event.school, event)
+    @body[:school] = event.school
+  end
+  
+  
+  
   
 
   def friendship_request(friendship)

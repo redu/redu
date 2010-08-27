@@ -6,7 +6,7 @@
 			<h4 class="grid_6"><%= @event.name %></h4>
 		<% end %>
 	</div>
-	
+
 	<div class="likeable grid_2">	
 		
 		<span class="like">
@@ -52,4 +52,14 @@
 			<%= @event.description %>
 		<% end %>	
 	</div>
+	
+	<% form_tag(notify_school_event_path, :method => :post, :class => "grid_5") do %>
+		<fieldset><legend>Seja notificado sobre este evento!</legend>
+			Notifique-me
+			<%= select_tag :days, options_for_select([["1", 1], ["2", 2], ["3", 3], ["4", 4], ["5", 5], ["6", 6], ["7", 7]], 1)  %>
+			dias antes
+			<%= submit_tag "Ok"%>
+		</fieldset>
+	<% end %>
+	
 </div>

@@ -1,0 +1,10 @@
+Olá <%= @user.display_name %>,
+
+Estamos aqui para lembrá-lo do evento <%= @event.name %> da rede <%= @school.name %>. 
+Pois este <%= @event.time_and_date%>. Não deixe de participar!
+
+Para visualizar dados do evento, acesse:
+<%= @event_url %>
+
+Obrigado,
+Equipe <%= AppConfig.community_name %>.
