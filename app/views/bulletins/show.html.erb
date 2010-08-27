@@ -6,12 +6,23 @@
 	<div id="rating_video">		
 		<%= ratings_for @bulletin %>
 	</div>
-	<div class="likeable grid_3">
-	 	<span class="like">
-			<%= link_to_remote image_tag('thumbs_up.png', :border => '0'), :url=> {:action => :vote, :id => 								@bulletin.id, :like => true}, :success => 'disableVoting();' %><br/><%= @bulletin.votes_for%>
+	<div class="likeable grid_2">	
+		
+		<span class="like">
+		<%= link_to_remote image_tag('thumbs-up.jpg', :border => '0'), :url=> {:action => :vote, :id => @bulletin.id, :like => true}, :loading => 'jQuery("#like_link").hide(); jQuery("#like_spinner").show()', :html => {:id => "like_link"}%>
+		<%= image_tag 'spinner.gif', :id => 'like_spinner', :style => 'display: none' %>
+		&#40;<span id="like_count" style="display: inline"><%= @bulletin.votes_for%></span>&#41;
+		
 		</span>
-		<span class="deslike">
-		<%= link_to_remote image_tag('thumbs_down.png', :border => '0'), :url=> {:action => :vote, :id => @bulletin.id, :like => false}, :success => 'disableVoting();' %><br/><%= @bulletin.votes_against%></span>
+		
+		
+		<span class="dislike">
+		<%= link_to_remote image_tag('thumbs-down.jpg', :border => '0'), :url=> {:action => :vote, :id => @bulletin.id, :like => false}, :loading => 'jQuery("#dislike_link").hide(); jQuery("#dislike_spinner").show()', :html => {:id => "dislike_link"}%>
+		<%= image_tag 'spinner.gif', :id => 'dislike_spinner', :style => 'display: none' %>
+		&#40;<span id="dislike_count" style="display: inline"><%= @bulletin.votes_against%></span>&#41;
+		
+		</span>
+
 	</div>
 
 	<div class="grid_12 omega alpha">
