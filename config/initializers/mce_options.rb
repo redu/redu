@@ -42,10 +42,9 @@ AppConfig.default_mce_options = {
   :cleanup_on_startup => true,  
   :convert_fonts_to_spans => true,
   :theme_advanced_resize_horizontal => false,
-  :theme_advanced_buttons1 => %w{formatselect fontsizeselect | bold italic underline strikethrough | justifyleft justifycenter justifyright justifyfull | forecolor backcolor},
- :theme_advanced_buttons2 => %w{cut copy paste | undo redo | search | bullist numlist outdent indent blockquote | link unlink image code },
- :theme_advanced_buttons3 => %w{tablecontrols | hr removeformat visualaid | sub sup | charmap emotions iespell media | print | ltr rtl | fullscreen},
- :theme_advanced_buttons4 => %w{insertlayer moveforward movebackward absolute },
+  :theme_advanced_buttons1 => %w{formatselect fontsizeselect | bold italic underline strikethrough | justifyleft justifycenter justifyright justifyfull | forecolor backcolor | sub sup | print | ltr rtl | fullscreen},
+ :theme_advanced_buttons2 => %w{cut copy paste | undo redo | search | bullist numlist outdent indent blockquote | link unlink image code | charmap emotions iespell media },
+ :theme_advanced_buttons3 => %w{insertlayer moveforward movebackward absolute | tablecontrols | hr removeformat },
   
   :plugins => %w{layer table advhr safari advimage advlink emotions iespell inlinepopups preview media searchreplace print contextmenu paste directionality fullscreen noneditable visualchars nonbreaking xhtmlxtras wordcount advlist autosave},
   :editor_deselector => "mceNoEditor",

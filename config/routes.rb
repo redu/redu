@@ -138,7 +138,7 @@ ActionController::Routing::Routes.draw do |map|
   
  # map.admin_dashboard   '/admin/dashboard', :controller => 'homepage_features', :action => 'index'
   map.admin_dashboard   '/admin/dashboard', :controller => 'admin', :action => 'dashboard'
-  map.admin_dashboard_submissions   '/admin/moderate/submissions', :controller => 'admin', :action => 'submissions'
+  map.admin_moderate_submissions   '/admin/moderate/submissions', :controller => 'admin', :action => 'submissions'
   map.admin_moderate_courses   '/admin/moderate/courses', :controller => 'admin', :action => 'courses'
   map.admin_moderate_users   '/admin/moderate/users', :controller => 'admin', :action => 'users'
   map.admin_moderate_exams   '/admin/moderate/exams', :controller => 'admin', :action => 'exams'

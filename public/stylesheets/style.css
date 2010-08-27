@@ -123,6 +123,9 @@ h3 {
 }
 
 
+blockquote { /*necessário para o tinymce*/
+position:absolute;
+}
 .pretty-text h1,
 .pretty-text h2,
 .pretty-text h3,
@@ -278,6 +281,52 @@ a.more {
 	font-size: .8em;
 }
 
+
+/* Listagem de Redes  */
+
+ul.badge > li {
+	border:1px solid #EFF0F0;
+float:left;
+height:200px;
+margin-bottom:17px;
+margin-left:30px;
+overflow:hidden;
+width:200px;
+font-size: 0.8em;
+}
+
+ul.badge > li.first_item {
+	margin-left:0;
+}
+
+ul.badge li h3, ul.badge li dl.data-set {
+margin-left:8px;
+margin-right:8px;
+}
+ul.badge li h3 {
+	font-size: 1.2em;
+}
+
+div.badge_info {
+color:#231F20;
+float:left;
+padding: 0 5px;
+}
+
+div.info_exp {
+	display: none;
+	width: 200px;
+}
+
+div.badge_info span {
+	display: block;
+margin-bottom:0.4em;
+float: left;
+}
+
+
+/* Listagem de Aulas e Exames */
+
 ul.default > li {
 	display: block;
 	clear: both;
@@ -304,11 +353,11 @@ ul.default > li .name {
 }
 
 ul.default > li.odd {
-
+background-color: #F9F9FA;
 }
 
 ul.default > li.even {
-
+background-color: white;
 }
 
 ul.default > li div.headlines {
@@ -2506,6 +2555,17 @@ table.booking_steps td.spacer { background: none; width: 61px}
 	z-index:1;
 }
 
+#f-screen {
+	background-color: white;
+	height: 100%;
+	width: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	display: none;
+	z-index:100000;
+}
+
 #identification1 {
 	float: left;
 	width: 573px;
@@ -2660,11 +2720,13 @@ table.booking_steps td.spacer { background: none; width: 61px}
 
 
 #page_container {
-		text-align:left;
-		border:1px solid #DDDDDD;
+		float:left;
+		border:1px solid #EFF0F0;
 		min-height:360px;
 		padding:10px;
-		width:80%;
+		margin-bottom: 20px;
+		background-color: white;
+		z-index: 1001;
 }
 
 #page_container h3 {
