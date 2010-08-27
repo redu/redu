@@ -18,10 +18,13 @@ class Course < ActiveRecord::Base
   has_many :annotations
   has_one :school_asset, :as => :asset
   has_one :school, :through => :school_asset#, :as => :asset
+  has_many :enrollments, :as => :enrollmentable, :dependent => :destroy
+  has_one :course_subject, :as => :courseable, :dependent => :destroy
   belongs_to :owner , :class_name => "User" , :foreign_key => "owner"
   belongs_to :courseable, :polymorphic => true
   belongs_to :asset, :polymorphic => true
   belongs_to :simple_category
+
 
   # NESTED
   #accepts_nested_attributes_for :page
@@ -31,7 +34,6 @@ class Course < ActiveRecord::Base
 
   # VALIDATIONS
   validates_presence_of :name
-  validates_length_of   :description, :within => 3..200
   validates_presence_of :description
   validates_length_of   :description, :within => 30..200
   validates_presence_of :simple_category

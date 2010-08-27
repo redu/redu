@@ -40,6 +40,8 @@ class School < ActiveRecord::Base
 	has_many :events, :dependent => :destroy
   
   has_many :statuses, :as => :statusable
+
+  has_many :subjects
   
   # VALIDATIONS
   validates_presence_of :name, :path

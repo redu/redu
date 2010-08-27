@@ -22,6 +22,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :abilities
 
+  map.resources :subjects
+
  # map.resources :resources, :collection => { :search => [:get, :post], :add => :get, :waiting => :get, :favorites => :get }, :member => {:rate => :post}
 
   map.resources :questions, :collection => { :search => [:get, :post], :add => :get } 

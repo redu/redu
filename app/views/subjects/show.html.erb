@@ -1,0 +1,32 @@
+<div id="breadcrumbs"><b><strong><%= link_to "Cursos", subjects_path %></strong></b> > <b><strong><%= h @subject.title %></strong></b> </div>
+<div class="grid_11">
+  <ul class="default">
+    <li class="clearfix">
+      <label class="name"><%= @subject.title %></label>
+
+
+      <span class="call">Descrição:</span>
+      <span class="things">
+        <%= h @subject.description %>
+      </span><br />
+
+      <span class="call">Público:</span>
+      <span class="things">
+        <%= @subject.is_public? ? "Sim" : "Não" %>
+      </span><br />
+
+      <span class="call">Rede:</span>
+      <span class="things">
+        <%= @subject.school.nil? ? "Não Possui Rede" : @subject.school.name %>
+      </span><br />
+
+      <span class="call">Aulas:<br /></span>
+      <span class="things">
+        <% @subject.course_subjects.each do |cs| %>
+          <%= link_to cs.courseable.name, course_path(cs.courseable) %><br />
+
+        <%end%>
+      </span><br />
+    </li>
+  </ul>
+</div><!-- end grid_11 -->

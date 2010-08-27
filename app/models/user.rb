@@ -131,7 +131,12 @@ class User < ActiveRecord::Base
     
 	#bulletins
 	has_many :bulletins
+  #enrollments
+  has_many :enrollments, :dependent => :destroy
 
+  #subject
+  has_many :subjects, :order => 'title ASC'
+  
   #named scopes
   named_scope :recent, :order => 'users.created_at DESC'
   named_scope :featured, :conditions => ["users.featured_writer = ?", true]

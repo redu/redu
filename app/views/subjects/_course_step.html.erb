@@ -1,0 +1,57 @@
+<%
+title1 = titles.split('-')[0]
+title2 = titles.split('-')[1]
+%>
+
+
+
+<div class="grid_9 push_3">
+  <table class="booking_steps" cellpadding="0" cellspacing="0">
+    <tbody><tr>
+        <td><span class="book_step disable"><span><em>1</em><%= h title1 %></span></span></td>
+        <td class="spacer">&nbsp;</td>
+        <td><span class="book_step current"><span><em>2</em><%= h title2 %></span></span></td>
+        <td class="spacer">&nbsp;</td>
+        <td><span class="book_step disabled"><span><em>3</em>Publicação</span></span></td>
+      </tr>
+    </tbody></table>
+</div>
+
+<div class="grid_16">
+
+
+  <% field_set_tag 'Aulas' do %>
+    <ul>
+        <% current_user.courses.each do |course| %><!--cursos tem ser filtrador pro usuuarios-->
+          <li>
+            <% unless session[:subject_id].nil? %>
+              <%= check_box_tag "aulas[]", course.id, current_user.subjects.find(session[:subject_id]).course_subjects.detect{|cs| cs.courseable_id == course.id}.nil? ? false : true  %>
+            <%else%>
+              <%= check_box_tag "aulas[]", course.id %>
+            <%end%>
+            <span><%= h(course.name) %></span>
+          </li>
+        <%end%>
+      </ul
+  <%end%>
+
+
+      <% field_set_tag 'Exames' do %>
+    <ul>
+        <% current_user.exams.each do |exam| %><!--cursos tem ser filtrador pro usuuarios-->
+          <li>
+            <% unless session[:subject_id].nil? %>
+              <%= check_box_tag "exams[]", exam.id, current_user.subjects.find(session[:subject_id]).course_subjects.detect{|cs| cs.courseable_id == exam.id}.nil? ? false : true  %>
+            <%else%>
+              <%= check_box_tag "exams[]", exam.id %>
+            <%end%>
+            <span><%= h(exam.name) %></span>
+          </li>
+        <%end%>
+      </ul
+  <%end%>
+
+
+ 
+
+</div>

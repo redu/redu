@@ -1,0 +1,14 @@
+<div id="breadcrumbs"><b><strong>Cursos</strong></b> >  </div>
+
+<h1>Index - Aqui terá todos cursos criados pelo usuários</h1>
+
+<h2>Todos Cursos Disponíveis</h2><br /><br />
+
+<ul>
+  <% @subjects.each do |subject| %>
+    <li><%= link_to subject.title, subject_path(subject) %> | <%= link_to "Editar", edit_subject_path(subject)%> | <%= link_to 'Excluir', subject, :confirm => 'Tem certeza?', :method => :delete %> </li>
+  <%end%>
+</ul>
+
+
+<br /><p><%= link_to "Criar um curso", new_subject_path %></p>

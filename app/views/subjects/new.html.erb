@@ -1,0 +1,11 @@
+<div id="breadcrumbs"><b><strong><%= link_to "Cursos", subjects_path %></strong></b> > <b><strong>Novo Curso</strong></b>  </div>
+
+ 
+<%  form_for(:subject, :url => subjects_path) do |f| %>
+
+<p><%= render :partial => "#{@subject.current_step}_step", :locals=>{:f => f, :titles => "Criar Curso-Adicionar Aulas"}%></p><br /><br />
+
+<div class="grid_16">
+<br /><%= f.submit "Voltar", :name => "back_button" unless @subject.first_step? %><%= f.submit "Continuar" %>
+</div>
+<%end%>
