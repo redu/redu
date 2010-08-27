@@ -102,13 +102,31 @@
         
         
         
-    })
+    });
     
+    function fullScreen(full){
+        if (full) {
+            $('#f-screen-content').html('ola')
+            $('#f-screen').show();
+        }
+        else {
+        $('#f-screen').hide();
+        }
+    }
     
 </script>
-<div id="lights-dimmed" style="display:none; height: 100%;">
+<div id="lights-dimmed" style="display:none;">
     &nbsp;
 </div>
+ <div id="f-screen" style="display:none;">
+		<span style ="float: right;">    
+		 <%= link_to_function((image_tag 'icons/fullscreen.gif', :title => 'Tela cheia', :border => 0), "fullScreen(false)" )%>
+		 </span>
+		 <div id="f-screen-content" style ="float: left;">
+		 	
+		 </div>
+ </div>
+
 <div class="grid_16">
     <div id="breadcrumbs">
         <a href="<%=application_url%>">início</a>

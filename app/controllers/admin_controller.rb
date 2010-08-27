@@ -96,7 +96,7 @@ class AdminController < BaseController
     Course.update_all("state = 'rejected'", :id => rejected.keys)
 
     flash[:notice] = 'Aulas moderadas!'
-    redirect_to admin_dashboard_submissions_path
+    redirect_to admin_moderate_submissions_path
   end
   
   
@@ -110,14 +110,14 @@ class AdminController < BaseController
     
     
     flash[:notice] = 'A aula foi aprovada!'
-    redirect_to admin_moderate_submissions_path
+    redirect_to @course
   end
   
   def disapprove
     @course = Course.find(params[:id])
     @course.reject!
     flash[:notice] = 'A aula foi rejeitada!'
-    redirect_to admin_moderate_submissions_path
+    redirect_to @course
   end
   
   

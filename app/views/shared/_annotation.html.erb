@@ -9,7 +9,7 @@
 
 		<div class="annotation-inner hoverdiv">
 			
-			<% remote_form_for(@annotation, :loading => "$('#annotation_link').hide(); $('#annotation_spinner').show();") do |f| %>
+			<% remote_form_for(@annotation, :loading => "jQuery('div.annotation-inner').slideToggle(); $('#annotation_link').hide(); $('#annotation_spinner').show();") do |f| %>
 		 			<%= f.hidden_field(:user_id, :value => current_user.id) %>
 					<%= f.hidden_field(:course_id, :value => @course.id) %>
 		

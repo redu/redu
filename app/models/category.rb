@@ -1,4 +1,4 @@
-class Category < ActiveRecord::Base
+class Category < ActiveRecord::Base # usado apenas para o forum
   has_many :posts, :order => "published_at desc"
 
   def to_param

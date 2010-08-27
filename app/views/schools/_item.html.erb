@@ -1,28 +1,30 @@
-<li class="clearfix">
-	<%= link_to school.name, school, :class => "name" %>
-	<div class="thumb photo"><%= link_to(image_tag school.avatar_photo_url(:thumb), :width => "70px") %></div>
-	<div class="headlines" style="width: 490px">
-		<span class="call">Descrição:</span>
-		<span class="things">
-		<%= 
-			(school.description[0..250] + "...") if (school.description) 
-		%>
-		</span>
-	</div>
-	<div class="headlines" style="width: 490px">
-		<% unless school.tag_list.empty? %>
-			<span class="call">Tags:</span>
-				<span class="things">
-				<% school.tag_list.each do | tag | %>
-				 <%= tag %>, 
-				<% end %>
-				</span>
-		<% end %>
-		<span class="call">Gostaram:</span>
-		<span class="things"><%= school.votes_for %></span>
-		<span class="call">Membros:</span>
-		<span class="things"><%= school.members_count %></span>
-		<span class="call">Cursos:</span>
-		<span class="things"><%= school.courses_count %></span>
-	</div>
-</li> 
+
+<li <%= "class='first_item'" if (item_counter%3 == 0) %> >
+					<%= link_to (image_tag school.avatar_photo_url(:thumb), :width => "200", :height=>"100"), school, :class => "name" %>
+					
+								
+					
+					<ul style="height: 1px; background-color: #EFF0F0" ></ul>
+					
+					<h3><%= link_to school.name, school, :class => "name" %></h3>
+           
+					 <div class="badge_info">
+					 	<span>Faculdades, Ensino Superior</span>
+						<span>Aulas: <%= school.courses.size() %> | Membros: <%= school.users.size() %> </span>
+						<span style="float: right;"><%= link_to_function "(mais)", "$('#info_"+item_counter.to_s+"').slideToggle()" %></span>
+						
+					 </div>
+					 <div id="info_<%=item_counter%>" class="badge_info info_exp hoverdiv">
+							<span>Faculdades, Ensino Superior</span>
+							<span>Aulas: 3 | Membros: 120 </span>
+							<span>Faculdades, Ensino Superior</span>
+							<span>Aulas: 3 | Membros: 120 </span>
+							<span>Faculdades, Ensino Superior</span>
+							<span>Aulas: 3 | Membros: 120 </span>
+							<span style="float: right;"><%= link_to_function "(menos)", "$('#info_"+item_counter.to_s+"').slideToggle()" %></span>
+						</div>
+</li>
+
+
+
+

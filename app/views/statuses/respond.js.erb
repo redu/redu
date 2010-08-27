@@ -1,3 +1,5 @@
+page << "alert('oi')"
+
 <% if @status.valid? %>
     $("#status-<%= @status.in_response_to.id %> ul.response").prepend("<%= escape_javascript(render :partial => 'response', :object => @status) %>")
 <% else %>

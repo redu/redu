@@ -729,13 +729,18 @@ end
   
   # cursos publicados no redu esperando a moderação dos admins do redu
   def waiting
+    @user = current_user
     @courses = Course.paginate(:conditions => ["owner = ? AND published = 1 AND state LIKE 'waiting'", current_user.id], 
       :include => :owner, 
       :page => params[:page], 
       :order => 'updated_at DESC', 
       :per_page => AppConfig.items_per_page)
+    @tab_selected = 'waiting'
     
     respond_to do |format|
+      format.html do
+        render "user_courses_private" 
+      end
       format.js do
       render :update do |page|
         page << "$('#tabs-3-loading').hide()"

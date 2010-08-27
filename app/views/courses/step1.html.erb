@@ -79,21 +79,21 @@ $(document).ready(function(){
 		
 		<div style="margin-bottom: 20px;">
 			
-			<h3><%= f.radio_button(:courseable_type, "Seminar", :checked => true)%> Vídeo-aula</h3>
+			<h3><%= f.radio_button(:courseable_type, "Seminar")%> Vídeo-aula</h3>
 			Permite mostrar um vídeo- ou áudio-aula acompanhado de documentos para download.
 		
 		</div>
 		
 		<div style="margin-bottom: 20px;">
 			
-			<h3><%= f.radio_button(:courseable_type, "InteractiveClass", :checked => false)%> Aula passo-a-passo</h3>
+			<h3><%= f.radio_button(:courseable_type, "InteractiveClass")%> Aula passo-a-passo</h3>
 			Uma aula passo-a-passo pode possuir várias páginas com recursos interativos tais como vídeos, texto, questões e exames.
 		</div>
 		
 		<div style="margin-bottom: 20px;">
 			
-			<h3><%= f.radio_button(:courseable_type, "Page", :checked => false)%> Página simples</h3>
-			Uma página permite a postagem de conteúdo de leitura rápida como um tutorial ou um recurso interativo.
+			<h3><%= f.radio_button(:courseable_type, "Page")%> Artigo</h3>
+			Um artigo permite a postagem de conteúdo de leitura rápida como um tutorial ou uma página simples.
 		</div>
 		<%end%>
 		

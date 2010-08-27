@@ -1,4 +1,3 @@
-page << "jQuery('div.annotation-inner').slideToggle()"
 page << "jQuery('#annotation_spinner').hide()"
 page << "jQuery('#annotation_link').show()"
 page << "jQuery('#annotation_link').attr('class','annotation_plus')"

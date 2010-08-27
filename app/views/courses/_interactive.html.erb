@@ -26,10 +26,10 @@
 			
 			 <div id="topic_body"><!-- TODO: carregar via ajax? -->
 			 	<b></b><div id="accessbility_bar">
-				<%= link_to_function((image_tag 'icons/audio.jpg', :title => 'Leitura', :border => 0), "alert('em breve!');" )%>
-				<%= link_to_function((image_tag 'icons/icon_fontSizeUp.gif', :title => 'Aumentar fonte', :border => 0), "increaseFontSize();")%>
-				<%= link_to_function((image_tag 'icons/icon_fontSizeDown.gif', :title => 'Diminuir fonte', :border => 0), "decreaseFontSize();")%>
-				<%= image_tag 'icons/fullscreen.gif', :title => 'Tela cheia'%>
+				<%= link_to_function((image_tag 'icons/audio.jpg', :title => 'Leitura', :border => 0), "alert('em breve!')" )%>
+				<%= link_to_function((image_tag 'icons/icon_fontSizeUp.gif', :title => 'Aumentar fonte', :border => 0), "increaseFontSize()")%>
+				<%= link_to_function((image_tag 'icons/icon_fontSizeDown.gif', :title => 'Diminuir fonte', :border => 0), "decreaseFontSize()")%>
+				<%= link_to_function((image_tag 'icons/fullscreen.gif', :title => 'Tela cheia', :border => 0), "fullScreen(true)" )%>
 			 	</div>
 			 	<%# @course.interactive_class.lessons.sort(|a,b| a<b).each_with_index do |l, x| %>
 				<% @lessons.each_with_index do |l, x| %>
