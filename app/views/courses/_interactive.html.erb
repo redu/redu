@@ -14,9 +14,10 @@
 						
 						<%= lesson_icon(lesson)%>
 						
-						<span id="topic_name_<%=x%>"> <%= truncate_chars(lesson.title, 20) %></span> 
+						<span id="topic_name_<%=x%>"> <%= truncate_chars(lesson.title, 25, '..') %></span> 
+					  <!--
 						<span id="topic_check_<%=x%>"> <%= image_tag 'checkbox_clear.png', :title => "completei!", :onclick => "checkTopic(" + x.to_s + "); return false;"%> </span>
-						
+						-->
 			 			</a>
 						
 					<% end %>

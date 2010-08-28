@@ -88,36 +88,13 @@ class CoursesController < BaseController
   end
   
   
-
-  
-  
   def download_attachment
     @attachment = CourseResource.find(params[:res_id])
    # puts @attachment.attachment.path + ' e ' + @attachment.attachment.content_type
     send_file @attachment.attachment.path, :type=> @attachment.attachment.content_type, :x_sendfile=>true
   end
   
-#  def favorites
-#    
-#    if params[:from] == 'favorites'
-#      @taskbar = "favorites/taskbar"
-#    else
-#      @taskbar = "courses/taskbar_index"
-#    end
-#    
-#    @courses = Course.paginate(:all, 
-#    :joins => :favorites,
-#    :conditions => ["favorites.favoritable_type = 'Course' AND favorites.user_id = ? AND courses.id = favorites.favoritable_id", current_user.id], 
-#    :page => params[:page], :order => 'created_at DESC', :per_page => AppConfig.items_per_page)
-#    
-#    
-#    respond_to do |format|
-#      format.html # index.html.erb
-#      format.xml  { render :xml => @courses }
-#    end
-#  end
-  
-  
+
   def rate
     @course = Course.find(params[:id])
     @course.rate(params[:stars], current_user, params[:dimension])
@@ -141,39 +118,6 @@ class CoursesController < BaseController
 
   end
   
-#  def search
-#    
-#    @courses = Course.find_tagged_with(params[:query])
-#    @courses += Course.find(:all, :conditions => ["name LIKE ?", "%" + params[:query] + "%"])
-#    
-#    respond_to do |format|
-#      format.js do
-#          render :update do |page| 
-#            page.replace_html 'all_list', 
-#           :partial => 'courses/item', :collection => @courses, :as => :course
-#            page.replace_html 'title_list', "Resultados para: \"#{params[:query]}\""
-#          end
-#      end
-#    end
-#  end
-  
-  def get_query(sort, page)
-    
-    case sort
-      
-      when '1' # Data
-      @courses = Course.paginate :conditions => ["state LIKE ?", "approved"], :include => :owner, :page => page, :order => 'created_at DESC', :per_page => AppConfig.items_per_page
-      when '2' # Avaliações
-      @courses = Course.paginate :conditions => ["state LIKE ?", "approved"], :include => :owner, :page => page, :order => 'rating_average DESC', :per_page => AppConfig.items_per_page
-      when '3' # Visualizações
-      @courses = Course.paginate :conditions => ["state LIKE ?", "approved"], :include => :owner, :page => page, :order => 'view_count DESC', :per_page => AppConfig.items_per_page
-      when '4' # Título
-      @courses = Course.paginate :conditions => ["state LIKE ?", "approved"], :include => :owner, :page => page, :order => 'name DESC', :per_page => AppConfig.items_per_page
-    else
-      @courses = Course.paginate :conditions => ["state LIKE ?", "approved"], :include => :owner, :page => page, :order => 'created_at DESC', :per_page => AppConfig.items_per_page
-    end
-    
-  end
   
   
   # GET /courses
@@ -232,7 +176,6 @@ class CoursesController < BaseController
   # GET /courses/1
   # GET /courses/1.xml
   def show
-    
     
  #   @course = Course.find(params[:id]) # ja pego no verify_access
     update_view_count(@course)

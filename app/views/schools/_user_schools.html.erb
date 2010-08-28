@@ -1,21 +1,16 @@
 
-    	
-		<% if @schools && @schools.length > 0 %>
-		 			<ul>
-			<% @schools.each do |school| %>
-				<li><%= link_to school.name, school %></li>
-			<% end %>
-			</ul>
- 		<% else %>
- 			Não há redes criadas. <%= (link_to 'Crie uma agora!', new_course_path) if @user == current_user %>
-		<% end %>
-    	
-	
-	<!-- PAGINACAO ##################################################################################################################################################### -->
-    <div id="pagination" align="center" class="pagination">
-
-		<%= will_paginate  @schools, :params => {:sort_by => @sort_by}, :class => "pagination_number"  %>
+	<ul id="actions_user">
+				   	 <li>
+				   	 	<%= link_to "Criar Rede", new_school_path %>
+					 </li>
+	</ul>
 		
-    </div>
+		<div id="school_list" >
+	<%= render :partial => "school_list"%>
+	</div>
 	
+	
+
+
+
 

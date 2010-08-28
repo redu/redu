@@ -12,7 +12,7 @@ class StatusesController < BaseController
         format.xml { render :xml => @status.to_xml }
         format.js {
         render :update do |page|
-          test = escape_javascript(render(:partial =>"statuses/type_proxy", :locals => {:status => @status, :statusable => @status.statusable} ))
+          test = escape_javascript(render(:partial =>"statuses/type_proxy", :locals => {:type_proxy_counter => nil, :status => @status, :statusable => @status.statusable} ))
           page << "$('.activities').prepend('"+test+"')"
           page << "$('.status_spinner').hide()"
           page << "$('#status_text').val('')"

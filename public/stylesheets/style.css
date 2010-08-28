@@ -19,8 +19,19 @@
 	font-size:0.8em;
 }
 
+.redu_cat_sel {
+border:0 none;
+font-size:0.7em;
+width:200px;
+color:#0B85C1;
+}
 
-ul.criteriaList li.selected {
+.redu_cat_sel option{ 
+background-color: white;
+
+}
+
+ul.criteriaList li.selected, .redu_cat_sel {
 background:url("../images/selectedArrowBG.png") no-repeat scroll 3px 0.45em #EFEFEF;
 display:block;
 padding-left:14px;
@@ -30,7 +41,7 @@ color: #0B85C1;
 }
 
 
-ul.criteriaList li {
+ul.criteriaList li, .redu_cat_sel {
 letter-spacing:0.02em;
 word-spacing:0.1em;
 position:relative;
@@ -291,7 +302,7 @@ height:200px;
 margin-bottom:17px;
 margin-left:30px;
 overflow:hidden;
-width:200px;
+width:180px;
 font-size: 0.8em;
 }
 
@@ -335,6 +346,7 @@ ul.default > li {
 	background-position: bottom;
 	padding: 15px 0;
 }
+
 
 ul.default > li .thumb {
 	margin: 0 10px;
@@ -1517,8 +1529,15 @@ div.content div.content {
     }
     
     /** Social overview **/
+		
+		#user-description input {
+			width: 400px;
+		}
+		
      #public-profile .social-overview {
          padding-top: 10px;
+				 height: 25px;
+				 color: gray;
      }
     
     #public-profile .social-overview .areas {
@@ -2235,6 +2254,11 @@ ul.sub-groups > li {
 	float: left;
 	margin-left: 20px;
 }
+
+ul.activities > li.first_item {
+	margin: 0;
+}
+
 #actions_user .sep {
 	color: #D6D7D5;
 }
@@ -2692,6 +2716,10 @@ table.booking_steps td.spacer { background: none; width: 61px}
 #topic_list li {
 		z-index: 0; top: 0px; left: 0px;
 		position: relative;
+}
+
+#topic_list span {
+		font-size: 0.9em;
 }
 
 .add-topic-outter a {

@@ -29,6 +29,20 @@ function getParameters(){
 	alert(params)
 	return params;
 }
+
+function onChangeAjax(){
+	var path = '<%= schools_path %>'
+	var cat_id = $('#area option:selected').val()
+	
+    jQuery.ajax({
+				beforeSend: loadList(),
+        data: getParameters(),
+        dataType: 'script',
+        type: 'get',
+        url: path + '?area='+cat_id
+    });
+    return false;
+}
 </script>
 <% end %>
 
@@ -46,19 +60,11 @@ function getParameters(){
 	-->
 	<form>
 	<% field_set_tag "Área" do %>
-	<ul class="criteriaList">
-		<li id ="cat_all" class="selected">
-			<%= link_to_remote "Todas", :url => {:action => :index}, :loading => "select('cat','all')", :method => :get%>
-		</li>
-		
-		<% for category in ReduCategory.all do %>
-		<li id = "cat_<%=category.id%>">
-			<%= link_to_remote (category.name), :url => {:action => :index, :category => category.id}, :loading => "select('cat','"+category.id.to_s+"')", :with => "getParameters()",:method => :get%>
-		</li>
-		<% end %>
-		
-	</ul>
+	
+	<%= area_select({:class => "redu_cat_sel", :onchange => "onChangeAjax()"}) %>
+	
 	<% end %>
+	
 	</form>
 	
 	
@@ -88,14 +94,17 @@ function getParameters(){
 		<li id = "sort_recent" class="selected">
 			<%= link_to_remote "Mais recentes", :url => {:action => :index, :sort => 'updated_at'}, :loading => "select('sort','recent')", :method => :get%>
 		</li>
-		
-		<li id = "sort_view">
-			<%= link_to_remote "Mais vistas", :url => {:action => :index, :sort => 'view_count'}, :loading => "select('sort','view')", :method => :get%>
+		<li id = "sort_members">
+			<%= link_to_remote "Mais populares", :url => {:action => :index, :sort => 'members_count'}, :loading => "select('sort','members')", :method => :get%>
 		</li>
-		
+		<li id = "sort_courses">
+			<%= link_to_remote "Mais aulas", :url => {:action => :index, :sort => 'courses_count'}, :loading => "select('sort','courses')", :method => :get%>
+		</li>
+		<!--
 		<li id = "sort_rating">
 			<%= link_to_remote "Melhores avaliadas", :url => {:action => :index, :sort => 'rating_average'}, :loading => "select('sort','rating')", :method => :get%>
 		</li>
+		-->
 	</ul>
 	<% end %>
 	</form>
@@ -106,7 +115,7 @@ function getParameters(){
 		<%= (params[:search]) ? ("Resultados para: \""+params[:search]+"\"") : "Todas as redes mais recentes" %>
 	</span>
 	
-		<% form_tag courses_path, :method => :get do %>
+		<% form_tag schools_path, :method => :get do %>
 		Buscar 
 		<%= text_field_tag :search, params[:search] %>
 		<%= submit_tag "OK", :name => nil%>

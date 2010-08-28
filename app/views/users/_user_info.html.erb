@@ -1,3 +1,14 @@
+<% content_for :js do %>
+
+<script type="text/javascript">
+	    $("#user-description").editInPlace({
+	        url: "<%= url_for(:controller => :users, :action => :update)%>",
+					default_text: "(clique para adicionar uma descrição)"
+	    });
+</script>
+
+<% end %>
+
 <div class="overview yellow clearfix">
  <div class="actions"> 
             <ul> 
@@ -41,21 +52,23 @@
 						</div>
             
 						
-            <!--<span class="status student replacement">Aluno</span>--> 
-            <span class="location quiet">Recife, Pernambuco</span> 
-        </div><!-- end personal-overview --> 
-        
-        <div class="social-overview clearfix"> 
-            <!-- <div class="recomendations-m"> 
-            <span class="number">37</span> 
-            <span class="legend">recomendações</span> 
-            </div> -->
-            <% unless @user.tag_list.empty? %>
+            <span class="location quiet">
+            	<!-- Recife, Pernambuco -->
+							 <% unless @user.tag_list.empty? %>
             <span class="areas quiet">Áreas de interesse</span> 
             <ul class="tags"> 
                 <%= @user.tag_list %>
             </ul> 
             <% end %>
+							</span> 
+        </div><!-- end personal-overview --> 
+        
+        <div id="user-description" class="social-overview clearfix inplace-editor"> 
+            <!-- <div class="recomendations-m"> 
+            <span class="number">37</span> 
+            <span class="legend">recomendações</span> 
+            </div> -->
+           
         </div><!-- end social-overview --> 
 </div><!-- end overview -->
 

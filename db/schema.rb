@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100820195923) do
+ActiveRecord::Schema.define(:version => 20100825161931) do
 
   create_table "abilities", :force => true do |t|
     t.string   "name"
@@ -299,6 +299,7 @@ ActiveRecord::Schema.define(:version => 20100820195923) do
     t.string   "location"
     t.string   "state"
     t.integer  "school_id"
+    t.boolean  "public",      :default => false
   end
 
   create_table "exam_users", :force => true do |t|
@@ -721,6 +722,14 @@ ActiveRecord::Schema.define(:version => 20100820195923) do
     t.string "name"
   end
 
+  create_table "status_associations", :force => true do |t|
+    t.integer  "status_id",       :null => false
+    t.integer  "statusable_id",   :null => false
+    t.string   "statusable_type", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "statuses", :force => true do |t|
     t.string   "text"
     t.integer  "in_response_to_id"
@@ -729,6 +738,13 @@ ActiveRecord::Schema.define(:version => 20100820195923) do
     t.datetime "updated_at"
     t.integer  "kind"
     t.integer  "user_id"
+    t.integer  "statusable_id",                          :null => false
+    t.string   "statusable_type",                        :null => false
+    t.boolean  "log",                 :default => false
+    t.string   "logeable_type"
+    t.integer  "logeable_id"
+    t.string   "log_action"
+    t.string   "logeable_name"
   end
 
   create_table "suggestions", :force => true do |t|

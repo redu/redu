@@ -1,7 +1,10 @@
 <%if current_user == @user %>
-<div>
-	<%= link_to "Acessar espaço ensino", teach_index_path %>
-	</div>
+	
+		<ul id="actions_user">
+				   	 <li>
+				   	 <%= link_to "Acessar espaço ensino", teach_index_path %>
+					 </li>
+		</ul>	
 <% end %>
 
 		<ul class="activities">

@@ -1,0 +1,10 @@
+status_id = @status.in_response_to.id.to_s
+if @status.valid? 
+    page << "$('#status-"+ status_id+ " ul.response').prepend('"+escape_javascript(render :partial => 'response', :object => @status)+"')"
+else
+    page << "$('#status-"+status_id+" div.answer div.error').html('"+escape_javascript( error_messages_for :status)+"')"
+end
+page << "$('#status-"+ status_id+" form').toggleSpinner()"
+page << "$('#status-"+ status_id+" form textarea').val('')"
+page << "$('#status-"+ status_id+" .answer').slideToggle('')"
+flash.discard

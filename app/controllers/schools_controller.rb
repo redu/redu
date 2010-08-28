@@ -461,36 +461,52 @@ class SchoolsController < BaseController
   # GET /schools
   # GET /schools.xml
   def index
+    cond = Caboose::EZ::Condition.new
+    cond.append ["area_id = ?", params[:area]] if params[:area] and params[:area].downcase != 'all'
+    cond.append ["audience_id = ?", params[:audience]] if params[:audience]
     
-    if params[:user_id] # redes do usuario
-      @user = User.find(params[:user_id])
-      @schools = @user.schools.paginate( 
-      :include => :owner, 
+    
+    
+     paginating_params = {
+      :conditions => cond.to_sql,
       :page => params[:page], 
-      :order => 'updated_at DESC', 
-      :per_page => AppConfig.items_per_page)
+      :order => (params[:sort]) ? params[:sort] + ' DESC' : 'created_at DESC', 
+      :per_page => 12 
+    }
+    
+    @schools =  School.redu_categories_id(params[:area]).paginate(paginating_params) if params[:area] and params[:area].downcase != 'all'
+   
+    
+    
+    if params[:user_id] # aulas do usuario
+      @user = User.find_by_login(params[:user_id]) 
+      @user = User.find(params[:user_id]) unless @user
+      @schools = @user.schools.paginate(paginating_params)
       
-      respond_to do |format|
-        format.js  do 
-          render :update do |page| 
-            page.replace_html 'tabs-4-content', :partial => 'user_schools'
-          end 
+    elsif params[:search] # search
+      @schools = School.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
+    else
+      @schools = School.all.paginate(paginating_params)
+    end
+
+
+    respond_to do |format|
+      format.xml  { render :xml => @courses }
+      format.html do 
+        if @user
+          #format.js
+          redirect_to @user
         end
-        end
-      else 
-        
-        @schools = School.paginate :page => params[:page], 
-      :order => 'created_at DESC',
-      :per_page => AppConfig.items_per_page
-        
-        @popular_tags = School.tag_counts
-        
-        respond_to do |format|
-          format.html # index.html.erb
-          format.xml  { render :xml => @schools }
+      end
+      format.js  do
+        if @user
+          render :update do |page|
+            page.replace_html  'tabs-4-content', :partial => 'user_schools'
+          end
         end
       end
     end
+  end
   
   # GET /schools/1
   # GET /schools/1.xml

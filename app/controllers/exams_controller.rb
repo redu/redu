@@ -607,45 +607,58 @@ class ExamsController < BaseController
   # GET /exams.xml
   def index
     
-    if params[:user_id] # TODO garantir que é sempre login e nao id?
-      @user = User.find_by_login(params[:user_id])
-      @exams = @user.exams.paginate :page => params[:page], :per_page => AppConfig.items_per_page
-      
-      respond_to do |format|
-        format.html { render :action => "user_exams"} 
-        format.xml  { render :xml => @user.exams }
-      end
-    elsif params[:school_id]
-      @school = School.find(params[:school_id])
-      @exams = @school.exams.paginate( 
-      :include => :owner, 
+    cond = Caboose::EZ::Condition.new
+    cond.append ["simple_category_id = ?", params[:category]] if params[:category]
+   # cond.append ["courseable_type = ?", params[:type]] if params[:type]
+    
+    paginating_params = {
+      :conditions => cond.to_sql,
       :page => params[:page], 
-      :order => 'updated_at DESC', 
-      :per_page => AppConfig.items_per_page)
-      respond_to do |format|
-        format.js  { render 'index_school' }
+      :order => (params[:sort]) ? params[:sort] + ' DESC' : 'created_at DESC', 
+      :per_page => AppConfig.items_per_page 
+    }
+    
+    if params[:user_id] # exames do usuario
+      @user = User.find_by_login(params[:user_id]) 
+      @user = User.find(params[:user_id]) unless @user
+      @courses = @user.exams.paginate(paginating_params)
+      render((@user == current_user) ? "user_exams_private" :  "user_exams_public")
+      return
+      
+    elsif params[:school_id] # exames da escola
+      @school = School.find(params[:school_id])
+      if params[:search] # search exams da escola
+        @exams = @school.exams.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
+      else
+        @exams = @school.exams.paginate(paginating_params) 
       end
-    else 
-      
-      @sort_by = params[:sort_by]
-      #@order = params[:order]
-      @exams = get_query(params[:sort_by], params[:page]) 
-      
-      
-      #@exams = Exam.paginate({
-      #:conditions => ['published = ?', true] + sort, 
-      #:include => :owner, 
-      #:page => params[:page], 
-      #:order => 'updated_at DESC', 
-      #:per_page => AppConfig.items_per_page})
-      
-      @popular_tags = Exam.tag_counts
-      
-      respond_to do |format|
-        format.html # index.html.erb
-        format.xml  { render :xml => @exams }
+    else # index (Exam)
+      if params[:search] # search
+        @exams = Exam.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
+      else
+        @exams = Exam.published.paginate(paginating_params)
       end
     end
+    
+    # @popular_tags = Course.tag_counts
+    
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @exams }
+      if not params[:tab]
+        format.js
+      else
+        format.js  do
+          render :update do |page|
+            page.replace_html  'tabs-2-content', :partial => 'courses_school'
+          end
+        end
+      end
+    end
+    
+    
+    
+    
   end
   
   

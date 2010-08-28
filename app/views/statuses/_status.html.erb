@@ -1,4 +1,4 @@
-<li class="clearfix" id="status-<%= status.id %>">
+<li class="clearfix <%= (status_counter == 0) ? 'first_item' : ''%> " id="status-<%= status.id %>">
     <div class="photo">
     <%= image_tag( status.user.avatar.url(:thumb), {:width => "50", :height=>"50" })%>
     </div>

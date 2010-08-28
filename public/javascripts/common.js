@@ -143,6 +143,7 @@ $(document).ready(function(){
 	
 	$("ul.default > li:odd").addClass("odd")
 	$("ul.default > li:even").addClass("even")
+	$("ul.activities > li:first").addClass("first_item")
 	
 })
 	

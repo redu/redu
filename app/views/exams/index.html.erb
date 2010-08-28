@@ -1,56 +1,119 @@
-<div id="all_content3">
-<div id="col_content">
-	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">aprender</a> > <a href="#">exames</a> </div>
-   	<div id="title">EXAMES
-	
-	<%  if logged_in? %>
-    	<div id="task_bar_exames"><%= link_to 'Novo Exame', :action => 'new' %> |
-			 <%= link_to 'Meus Exames', published_user_exams_path(current_user.id) %> |
-			 <%= link_to 'Meus Favoritos', :action => 'show_favorites', :id => current_user %>
-			 </div>
-	<% end %>
-	
-	<%= render :partial => "exams/search" %></div>
-	
-<!-- LISTAGEM RECURSO ############################################################################################################################################## -->
+<% content_for :js do %>
+<script type="text/javascript">
+function select(type, id) {
+	jQuery('#'+ type+'_' + id).parent().children().removeClass('selected')
+	jQuery('#'+ type+'_' + id).addClass('selected')
+	loadList();
 
-	<div id="filter_bar">
+}
+
+function loadList(){
+	jQuery('#exam_list').html(' ')
+	jQuery('#loader').show()
+}
+/* pega os filtros selecionados e passa-os como parametro */
+function getParameters(){
+	
+	return ''
+	
+	var params = ''
+	jQuery('.selected').each(function(i) {
+		var id = $(this).attr('id').split('_')
+		if (id[1] != 'all' && typeof(id[0]) != 'undefined' && typeof(id[1]) != 'undefined') {
+			if (id[0] == 'cat') id[0] = 'category';
+			
+			params += id[0] + '=' + id[1];
+		}
 		
-	    <span id="title_list" class="title_list"> TODOS</span>
-	    
+	})
+	alert(params)
+	return params;
+}
+</script>
+<% end %>
+
+<%= render(:partial => "schools/school_info", :locals=>{:show => false}) if @school%>
+
+<div class="grid_16">
+	<!--
+<div id="breadcrumbs">
+		<% if @school %>
+	<a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <%= link_to @school.name, @school %> > aulas
+	<% else %>
+	<a href="<%=application_url%>">início</a> > <a href="#">aprender</a> > aulas
+	<%end %>
+</div>
+-->
+
+<h3> Exames</h3>
+</div>
+
+
+
+
+<div class="grid_4 calls" id="filter">
+	<!--
+	<span class="call"><span>Refinar</span></span>
+	-->
+	<form>
+	<% field_set_tag "Categoria" do %>
+	<ul class="criteriaList">
+		<li id ="cat_all" class="selected">
+			<%= link_to_remote "Todas", :url => {:action => :index}, :loading => "select('cat','all')", :method => :get%>
+		</li>
 		
-		<%= render :partial => "exams/sort" %>
-		
-	      
-    </div>
-    <div id="all_list">
-    	
-		<% if @exams && @exams.length > 0 %>
- 			<%= render :partial => 'exams/item', :collection => @exams, :as => :exam %> 
- 		<% else %>
- 			Não há exames publicados ainda. <%= link_to 'Crie um agora!', :action => 'new' %>
+		<% for category in SimpleCategory.all do %>
+		<li id = "cat_<%=category.id%>">
+			<%= link_to_remote category_i18n(category.name), :url => {:action => :index, :category => category.id}, :loading => "select('cat','"+category.id.to_s+"')", :with => "getParameters()",:method => :get%>
+		</li>
 		<% end %>
-    	
-    </div> <!-- fim da listagem --> 
-	
-	 
-    
-<!-- PAGINACAO ##################################################################################################################################################### -->
-    <div id="pagination" align="center" class="pagination">
-
-		<%= will_paginate  @exams, :params => {:sort_by => @sort_by}, :class => "pagination_number"  %>
-
 		
-    </div>
+	</ul>
+	<% end %>
+	</form>
 	
+	
+	
+	
+		<form>
+	<% field_set_tag "Ordem" do %>
+	<ul class="criteriaList">
+		
+		<li id = "sort_recent" class="selected">
+			<%= link_to_remote "Mais recentes", :url => {:action => :index, :sort => 'updated_at'}, :loading => "select('sort','recent')", :method => :get%>
+		</li>
+		
+		<li id = "sort_done">
+			<%= link_to_remote "Mais realizados", :url => {:action => :index, :sort => 'done_count'}, :loading => "select('sort','done')", :method => :get%>
+		</li>
+		
+		<li id = "sort_average">
+			<%= link_to_remote "Mais difíceis", :url => {:action => :index, :sort => 'total_correct'}, :loading => "select('sort','average')", :method => :get%>
+		</li>
+	</ul>
+	<% end %>
+	</form>
 </div>
 
-<!-- COLUNA DIREITA ################################################################################################################################################ -->
-<div id="col_box3">
+<span class="grid_12 filter_bar">
+	<span class="filter_text">
+		<%= (params[:search]) ? ("Resultados para: \""+params[:search]+"\"") : "Todas os exames mais recentes" %>
+	</span>
+	
+		<% form_tag exams_path, :method => :get do %>
+		Buscar 
+		<%= text_field_tag :search, params[:search] %>
+		<%= hidden_field_tag(:school_id, @school.id) if @school%>
+		<%= submit_tag "OK", :name => nil%>
+		<% end %>
 
+</span>
 
-</div> <!-- fim da coluna da direita --> 
-
-
-
+<%= image_tag "loadingAnimation.gif", :id => "loader", :style => "display: none"%>
+<div id="exam_list" class="grid_12">
+	
+	<%= render :partial => "exam_list"%>
 </div>
+
+
+

@@ -1,9 +1,9 @@
 <%= f.error_messages %>
 <% field_set_tag do %>
-<%= f.text_area :text, :class => "answer", :style => "height: 125px;" %>
+<%= f.text_area :text, :class => "answer", :style => "height: 80px;" %>
 	<%= hidden_field :status, :statusable_id, :value => statusable.id %>
 	<%= hidden_field :status, :statusable_type, :value => statusable.class.to_s %>
 <%= hidden_field_tag "status[kind]", Status::ANSWER %>
-<button type="submit">Responder</button>
+<button type="submit">Responder</button> <%= link_to_function "Cancelar", "$(this).parent().parent().parent().slideToggle()"%>
 <% end %>
 

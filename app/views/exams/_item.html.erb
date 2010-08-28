@@ -1,33 +1,59 @@
-<!-- ITEM ////////////////////////////////////////////////////////////////// -->
-        <div id="item">
-    		<div id="title"><%= link_to exam.name, exam %></div>
-            <div id="average">
-            	<div id="title_average" align="center">MÉDIA</div>
-                <div id="number_average" align="center">88%</div>
-                <div id="title_average" align="center">Realizações(<%=h exam.done_count %>)</div>
-                <div id="difficulty_level" align="center"><%=h (exam.level == 1) ? "Iniciante" : ((exam.level == 2) ? "Intermediário" : "Avançado") %></div>
-            </div> 
-            <div id="identification">
-              <ul id="identification_resource">
-				<li><%= link_to exam.owner.display_name, exam.owner %></li>
-        		<li>|</li>
-				<li>Criado: <%= time_ago_in_words(exam.created_at) %></li>
-                <li>|</li>
-				<li><%=h exam.questions.length %> Questões</li>
-			  </ul>
-            </div>
-            
-            <div id="description"><%= (exam.description[0..250] + "...") if exam.description.length > 250 %>
-            </div>
-			
-			<div id="identification">
-              <ul id="identification_resource">
-				<li><strong>Categoria:</strong> Matemática</li>
-        		<li>|</li>
-				<li><strong>Tags:</strong> <%=h exam.tag_list %></li>
-			  </ul>
-            </div>
-            
-                    
-    	</div>
+<li class="clearfix">
+	 <%= link_to exam.name, exam, :class => "name"  %>
+	<div class="headlines" style="width: 490px">
+		<!--
+		<span class="call">Descrição:</span>
+		-->
+		<span class="things">
+		<%= truncate_words( exam.description, 10, '...') %>
+		
+		</span>
+	</div>
+	<div class="headlines" style="width: 490px">
+		
+		
+		<ul class="item_info">
+            <% unless @user %>
+						<li> Por 
+                <%= link_to exam.owner.display_name, user_path(exam.owner) %>
+            </li>
+            <li>
+                |
+            </li>
+						<%end%>
+            <li> 
+                <%= time_ago_in_words_or_date(exam.created_at) %>
+            </li>
+            <% if exam.school && !@school%>
+						<li>
+                |
+            </li>
+						 <li> 
+                Rede: <%= link_to(exam.school.name, exam.school)  %>
+            </li>
+						<%end%>
+            <li>
+                |
+            </li>
+            <li>
+                Realizações (<%= exam.done_count %>)
+            </li>
+						<li>
+                |
+            </li>
+						
+        </ul>
+				
+		<span style="float: left; margin-top:2px;">
+			 							<%= ratings_for exam, :static, :small => true, :wrap => false %>
+		</span>
+		
+		
+	</div>
+</li> 
+
+
+
+
+
 

@@ -22,6 +22,7 @@ colocar imagens em subpastas
 
 PROGRAMAÇÃO
 ===========
+carregar scripts no bottom da pagina para melhor peformace
 usar size() ao inves de length()
 adicionar counter cache (ver como rails ajuda a fazer isso)
 tirar do base_controller e adicionar no application_controller

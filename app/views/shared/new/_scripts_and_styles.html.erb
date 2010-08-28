@@ -10,7 +10,9 @@
 	</script>
 <% end %>
 
-
+<% if controller_name == 'users' and action_name == 'show'%>
+<%=  javascript_include_tag "jquery.editinplace.js"%>
+<% end %>
 
 
   <!-- upload | uploadify -->

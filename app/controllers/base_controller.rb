@@ -150,7 +150,7 @@ class BaseController < ApplicationController
   def create_activity
   case params[:controller] 
     when 'courses'
-      if @course
+      if @course and @course.published
       Status.create({:log => true,
               :logeable_name => @course.name,
               :logeable_type => 'Course',
@@ -162,7 +162,7 @@ class BaseController < ApplicationController
       })
     end
     when 'exams'
-      if @exam
+      if @exam and @exam.published
       Status.create({:log => true,
               :logeable_name => @exam.name,
               :logeable_type => 'Exam',

@@ -5,7 +5,7 @@
 <script type="text/javascript">
 var userlearningPath = "<%= learning_user_path %>";
 var userteachingPath = "<%= teaching_user_path %>";
-var userSchoolsPath = "<%= user_schools_path(:user_id => @user.id) %>";
+var userSchoolsPath = "<%= schools_path(:user_id => @user.id, :tab => true) %>";
 
 var $usertabs;
 

@@ -315,9 +315,13 @@ class UsersController < BaseController
   end
   
   def update
+    case params[:element_id]
+    when 'user-description'
+      params[:user] = {:description => params[:update_value]}
+    end
+    
     @user.attributes      = params[:user]
     @metro_areas, @states = setup_locations_for(@user)
-    puts params.inspect
     @user.update_attribute(:avatar, params[:user][:avatar])
     
     unless params[:metro_area_id].blank?
@@ -335,15 +339,22 @@ class UsersController < BaseController
     
     @user.tag_list = params[:tag_list] || ''
     
-    if @user.save!
+    if @user.save
       #@user.track_activity(:updated_profile) Utilizaremos outro Activity
-      
-      flash[:notice] = :your_changes_were_saved.l
-      unless params[:welcome] 
-        redirect_to user_path(@user)
-      else
-        redirect_to :action => "welcome_#{params[:welcome]}", :id => @user
+      respond_to do |format|
+        format.html do
+           flash[:notice] = :your_changes_were_saved.l
+            unless params[:welcome] 
+              redirect_to user_path(@user)
+            else
+              redirect_to :action => "welcome_#{params[:welcome]}", :id => @user
+            end
+        end
+        format.js do
+          render :text => params[:update_value]
+        end
       end
+     
     end
   rescue ActiveRecord::RecordInvalid
     render :action => 'edit'

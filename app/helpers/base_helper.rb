@@ -18,7 +18,14 @@ module BaseHelper
     def simple_categories_i18n(f)
    # collection_select(:course, :simple_category, SimpleCategory.all, :id, :name)
    categories_array = SimpleCategory.all.map { |cat| [category_i18n(cat.name), cat.id] } 
-    f.select(:simple_category_id, options_for_select(categories_array, :include_blank => true) )
+    f.select(:simple_category_id, options_for_select(categories_array), :include_blank => true )
+  end
+  
+  
+    def area_select(select_opts)
+   # collection_select(:course, :simple_category, SimpleCategory.all, :id, :name)
+   categories_array = ReduCategory.all.map { |cat| [(cat.name), cat.id] }.insert(0, "All")
+    select_tag(:area, options_for_select(categories_array), select_opts )
   end
   
   def category_i18n(category)
