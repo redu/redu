@@ -64,6 +64,7 @@
         </div><!-- end personal-overview --> 
         
         <div id="user-description" class="social-overview clearfix inplace-editor"> 
+				 <%= truncate_chars(@user.description, 35)%>
             <!-- <div class="recomendations-m"> 
             <span class="number">37</span> 
             <span class="legend">recomendações</span> 
