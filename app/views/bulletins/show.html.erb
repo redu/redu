@@ -6,7 +6,7 @@
 	<div id="rating_video">		
 		<%= ratings_for @bulletin %>
 	</div>
-	<div class="likeable grid_2">	
+	<div class="likeable grid_4">	
 		
 		<span class="like">
 		<%= link_to_remote image_tag('thumbs-up.jpg', :border => '0'), :url=> {:action => :vote, :id => @bulletin.id, :like => true}, :loading => 'jQuery("#like_link").hide(); jQuery("#like_spinner").show()', :html => {:id => "like_link"}%>

@@ -6,7 +6,7 @@ class BulletinsController < BaseController
   before_filter :can_manage_required,
                 :only => [:edit, :update, :destroy]
   
-  uses_tiny_mce(:options => AppConfig.advanced_mce_options, :only => [:new, :edit])
+  uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit])
   
   
   def index
@@ -80,6 +80,7 @@ class BulletinsController < BaseController
   
   def vote
     @bulletin = Bulletin.find(params[:id])
+		# TODO ver porque o like quando setado para false vem nil
 		if params[:like] == nil
 			current_user.vote(@bulletin, false) 
 		else
