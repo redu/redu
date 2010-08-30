@@ -9,15 +9,14 @@ require File.join(File.dirname(__FILE__), 'boot')
 require 'desert'
 require 'ostruct'
 require 'yaml'  
-require 'rails_asset_extensions'
 
 
 Rails::Initializer.run do |config|
   
   config.gem "authlogic"
-  config.gem "brcobranca"
-  config.gem "rghost"
-  config.gem "rghost_barcode"
+  #config.gem "brcobranca"
+  #config.gem "rghost"
+  #config.gem "rghost_barcode"
   config.gem "parseline"
   config.gem 'calendar_date_select'
   config.gem 'icalendar'        
@@ -49,7 +48,6 @@ Rails::Initializer.run do |config|
     AppConfig = OpenStruct.new merged_hash
   end
   
-  ActiveRecord::Base.send(:extend, CommunityEngine::ActiveRecordExtensions)
 
   config.action_controller.session_store = :active_record_store
   
