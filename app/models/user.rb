@@ -29,7 +29,6 @@ class User < ActiveRecord::Base
   
   ajaxful_rater
   acts_as_taggable  
-  acts_as_commentable
   has_private_messages
   acts_as_voter
   

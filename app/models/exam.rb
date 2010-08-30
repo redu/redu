@@ -1,7 +1,6 @@
 class Exam < ActiveRecord::Base
   
   # PLUGINS
-  acts_as_commentable
   acts_as_taggable
   ajaxful_rateable :stars => 5
   
