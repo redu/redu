@@ -3,8 +3,6 @@ class CreateEnrollments < ActiveRecord::Migration
     create_table :enrollments do |t|
       t.integer :user_id
       t.integer :course_id
-      t.integer :role_id
-      t.references :enrollmentable, :polymorphic => true
       t.timestamps
     end
 
@@ -14,8 +12,6 @@ class CreateEnrollments < ActiveRecord::Migration
     #execute "alter table enrollments add constraint fk_enrollment_course
     #foreign key (course_id) references courses(id)"
 
-    #execute "alter table enrollments add constraint fk_enrollment_role
-    #foreign key (role_id) references roles(id)"
 
   end
 
@@ -24,8 +20,7 @@ class CreateEnrollments < ActiveRecord::Migration
     #execute "ALTER TABLE enrollments DROP FOREIGN KEY fk_enrollment_user"
 
     #execute "ALTER TABLE enrollments DROP FOREIGN KEY fk_enrollment_course"
-
-    #execute "ALTER TABLE enrollments DROP FOREIGN KEY fk_enrollment_role"
+ 
 
     drop_table :enrollments
   end

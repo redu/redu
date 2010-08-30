@@ -46,15 +46,15 @@ class User < ActiveRecord::Base
 
   # VALIDATIONS
   validates_presence_of     :login, :email, :first_name, :last_name
-#  validates_presence_of     :password,                   :if => :password_required?
-#  validates_presence_of     :password_confirmation,      :if => :password_required?
-#  validates_length_of       :password, :within => 5..20, :if => :password_required?
-#  validates_confirmation_of :password,                   :if => :password_required?
+  #  validates_presence_of     :password,                   :if => :password_required?
+  #  validates_presence_of     :password_confirmation,      :if => :password_required?
+  #  validates_length_of       :password, :within => 5..20, :if => :password_required?
+  #  validates_confirmation_of :password,                   :if => :password_required?
   validates_presence_of     :metro_area,                 :if => Proc.new { |user| user.state }
-#  validates_length_of       :login,    :within => 5..20
-#  validates_length_of       :email,    :within => 3..100
-#  validates_format_of       :email, :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/
-#  validates_format_of       :login, :with => /^[\sA-Za-z0-9_-]+$/
+  #  validates_length_of       :login,    :within => 5..20
+  #  validates_length_of       :email,    :within => 3..100
+  #  validates_format_of       :email, :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/
+  #  validates_format_of       :login, :with => /^[\sA-Za-z0-9_-]+$/
   validates_uniqueness_of   :login, :email, :case_sensitive => false
   validates_uniqueness_of   :login_slug
   validates_exclusion_of    :login, :in => AppConfig.reserved_logins
@@ -71,7 +71,7 @@ class User < ActiveRecord::Base
   has_many :user_school_association, :dependent => :destroy
   has_many :schools, :through => :user_school_association
   has_many :schools_owned, :class_name => "School" , :foreign_key => "owner"
-   has_many :statuses, :as => :statusable
+  has_many :statuses, :as => :statusable
   
   # FOLLOWSHIP
   has_and_belongs_to_many :follows, :class_name => "User", :join_table => "followship", :association_foreign_key => "follows_id", :foreign_key => "followed_by_id", :uniq => true
@@ -98,18 +98,18 @@ class User < ActiveRecord::Base
   has_many :rsvps, :dependent => :destroy
 
   #friendship associations
-#  has_many :friendships, :class_name => "Friendship", :foreign_key => "user_id", 
-#    :dependent => :destroy
-#  has_many :accepted_friendships, :class_name => "Friendship", 
-#    :conditions => ['friendship_status_id = ?', 2]
-#  has_many :pending_friendships, :class_name => "Friendship", 
-#    :conditions => ['initiator = ? AND friendship_status_id = ?', false, 1]
-#  has_many :friendships_initiated_by_me, :class_name => "Friendship", 
-#    :foreign_key => "user_id", :conditions => ['initiator = ?', true], :dependent => :destroy
-#  has_many :friendships_not_initiated_by_me, :class_name => "Friendship", 
-#    :foreign_key => "user_id", :conditions => ['initiator = ?', false], :dependent => :destroy
-#  has_many :occurances_as_friend, :class_name => "Friendship", 
-#    :foreign_key => "friend_id", :dependent => :destroy
+  #  has_many :friendships, :class_name => "Friendship", :foreign_key => "user_id",
+  #    :dependent => :destroy
+  #  has_many :accepted_friendships, :class_name => "Friendship",
+  #    :conditions => ['friendship_status_id = ?', 2]
+  #  has_many :pending_friendships, :class_name => "Friendship",
+  #    :conditions => ['initiator = ? AND friendship_status_id = ?', false, 1]
+  #  has_many :friendships_initiated_by_me, :class_name => "Friendship",
+  #    :foreign_key => "user_id", :conditions => ['initiator = ?', true], :dependent => :destroy
+  #  has_many :friendships_not_initiated_by_me, :class_name => "Friendship",
+  #    :foreign_key => "user_id", :conditions => ['initiator = ?', false], :dependent => :destroy
+  #  has_many :occurances_as_friend, :class_name => "Friendship",
+  #    :foreign_key => "friend_id", :dependent => :destroy
 
   #forums
   has_many :moderatorships, :dependent => :destroy
@@ -259,6 +259,16 @@ class User < ActiveRecord::Base
   
   
   ## Instance Methods
+  
+  def enrolled? subject_id
+    if Enrollment.all(:conditions => ["user_id = ? AND subject_id = ?", self.id, subject_id]).length > 0
+      true
+    else
+      false
+    end
+
+  end
+
   def can_manage?(entity, school=nil)
     return true if self.admin?
     case entity.class.to_s 
@@ -267,14 +277,14 @@ class User < ActiveRecord::Base
     when 'Exam'
       (entity.owner == self || (entity.school == school && self.school_admin?(school) ))   
     when 'School'
-       (entity.owner == self || self.school_admin?(school))    
+      (entity.owner == self || self.school_admin?(school))
     when 'Event'
-       (entity.owner == self || (entity.school.id == school.id && self.school_admin?(school) )) 
-	when 'Bulletin'
-		(entity.owner == self || (entity.school == school && self.school_admin?(school) )) 
+      (entity.owner == self || (entity.school.id == school.id && self.school_admin?(school) ))
+    when 'Bulletin'
+      (entity.owner == self || (entity.school == school && self.school_admin?(school) ))
 		
-   end 
- end
+    end
+  end
  
   def earn_points(activity)
     thepoints = AppConfig.points[activity]
@@ -288,18 +298,18 @@ class User < ActiveRecord::Base
     when 'Course'
       
       (entity.school and self.schools.include?(entity.school))   
-#    when 'Exam'
-#      (entity.owner == self || (entity.school == school && self.school_admin?(school) ))   
+      #    when 'Exam'
+      #      (entity.owner == self || (entity.school == school && self.school_admin?(school) ))
     when 'School'
-       (self.school_admin?(entity) || self.schools.include?(entity))    
-#    when 'Event'
-#       (entity.owner == self || (entity.school == school && self.school_admin?(school) )) 
-   end 
+      (self.school_admin?(entity) || self.schools.include?(entity))
+      #    when 'Event'
+      #       (entity.owner == self || (entity.school == school && self.school_admin?(school) ))
+    end
     
     
     #TODO
-#    @acq = Acquisition.find(:first, :conditions => ['acquired_by_id = ? AND course_id = ?', self.id, course.id])
-#    !@acq.nil? or course.owner == self
+    #    @acq = Acquisition.find(:first, :conditions => ['acquired_by_id = ? AND course_id = ?', self.id, course.id])
+    #    !@acq.nil? or course.owner == self
     
   end
   
@@ -333,9 +343,9 @@ class User < ActiveRecord::Base
   
   def last_months_posts
     self.posts.find(:all, 
-    				:conditions => ["published_at > ? and published_at < ?",
-    				DateTime.now.to_time.at_beginning_of_month.months_ago(1),
-    				DateTime.now.to_time.at_beginning_of_month])
+      :conditions => ["published_at > ? and published_at < ?",
+        DateTime.now.to_time.at_beginning_of_month.months_ago(1),
+        DateTime.now.to_time.at_beginning_of_month])
   end
   
   def avatar_photo_url(size = nil)
@@ -343,10 +353,10 @@ class User < ActiveRecord::Base
       avatar.public_filename(size)
     else
       case size
-        when :thumb
-          AppConfig.photo['missing_thumb']
-        else
-          AppConfig.photo['missing_medium']
+      when :thumb
+        AppConfig.photo['missing_thumb']
+      else
+        AppConfig.photo['missing_medium']
       end
     end
   end
@@ -363,8 +373,8 @@ class User < ActiveRecord::Base
   end
   
   def active? 
-     #( activated_at.nil? and (created_at < (Time.now - 30.days))) ? false : true
-   # activation_code.nil? && !activated_at.nil?
+    #( activated_at.nil? and (created_at < (Time.now - 30.days))) ? false : true
+    # activation_code.nil? && !activated_at.nil?
     true
   end
 
@@ -414,17 +424,17 @@ class User < ActiveRecord::Base
   end
   
   def reset_password
-     new_password = newpass(8)
-     self.password = new_password
-     self.password_confirmation = new_password
-     return self.valid?
+    new_password = newpass(8)
+    self.password = new_password
+    self.password_confirmation = new_password
+    return self.valid?
   end
 
   def newpass( len )
-     chars = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a
-     new_password = ""
-     1.upto(len) { |i| new_password << chars[rand(chars.size-1)] }
-     return new_password
+    chars = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a
+    new_password = ""
+    1.upto(len) { |i| new_password << chars[rand(chars.size-1)] }
+    return new_password
   end
   
   def owner
@@ -488,7 +498,7 @@ class User < ActiveRecord::Base
       :conditions => ['posts.user_id != ? AND published_at > ?', self.id, since ],
       :order => 'published_at DESC',      
       :limit => 10
-      )
+    )
 
     if rec_posts.empty?
       []
@@ -565,8 +575,8 @@ class User < ActiveRecord::Base
   end
   
   def school_admin?(school_id)
-      association = get_association_with school_id
-      association && association.role && association.role.eql?(Role[:school_admin])
+    association = get_association_with school_id
+    association && association.role && association.role.eql?(Role[:school_admin])
   end
   
   def student?(school)
@@ -594,33 +604,33 @@ class User < ActiveRecord::Base
   end
   
   def teaching
-     self.statuses.log_action_eq(TEACHING_ACTIONS).descend_by_created_at
+    self.statuses.log_action_eq(TEACHING_ACTIONS).descend_by_created_at
   end
   
     
   def recent_activity
-   Status.friends_statuses(self, limit = 0, offset = 20)
-   #logs = Log.friends_logs(self, limit = 0, offset = 20)
-   #statuses + logs
+    Status.friends_statuses(self, limit = 0, offset = 20)
+    #logs = Log.friends_logs(self, limit = 0, offset = 20)
+    #statuses + logs
   end
   
-#  def recent_exams_activity
-#    Log.find(:all, :conditions => ["user_id = ? AND logeable_type = ?", self.id, "Exam"], :order => "created_at DESC", :limit => 3)
-#  end
-#  
-#   def recent_courses_activity
-#    Log.find(:all, :conditions => ["user_id = ? AND logeable_type = ?", self.id, "Course"], :order => "created_at DESC", :limit => 3)
-#  end
+  #  def recent_exams_activity
+  #    Log.find(:all, :conditions => ["user_id = ? AND logeable_type = ?", self.id, "Exam"], :order => "created_at DESC", :limit => 3)
+  #  end
+  #
+  #   def recent_courses_activity
+  #    Log.find(:all, :conditions => ["user_id = ? AND logeable_type = ?", self.id, "Course"], :order => "created_at DESC", :limit => 3)
+  #  end
   
   def log_activity
     # a maneira correta de se fazer isso é via consulta no sql pois é muito mais rapido pq nao precisa ficar iterando
     
-   sql =  "SELECT DISTINCT l.id, l.logeable_id, l.logeable_name, l.logeable_type, l.user_id, l.action, l.created_at FROM"
-   sql += " users u, followship f, logs l WHERE"
-   sql += " f.follows_id = '#{self.id}' AND l.user_id = f.followed_by_id ORDER BY created_at DESC LIMIT 0,5 "
-  # sql += " AND l.created_at > '#{Time.now.utc-10.minutes}'"
+    sql =  "SELECT DISTINCT l.id, l.logeable_id, l.logeable_name, l.logeable_type, l.user_id, l.action, l.created_at FROM"
+    sql += " users u, followship f, logs l WHERE"
+    sql += " f.follows_id = '#{self.id}' AND l.user_id = f.followed_by_id ORDER BY created_at DESC LIMIT 0,5 "
+    # sql += " AND l.created_at > '#{Time.now.utc-10.minutes}'"
    
-   #TODO tempo?
+    #TODO tempo?
     Log.find_by_sql(sql)
     
     #@follows = self.follows  
@@ -632,14 +642,14 @@ class User < ActiveRecord::Base
   end
   
   def more_log_activity
-   sql =  "SELECT DISTINCT l.id, l.logeable_id, l.logeable_name, l.logeable_type, l.user_id, l.action, l.created_at FROM"
-   sql += " users u, followship f, logs l WHERE"
-   sql += " f.follows_id = '#{self.id}' AND l.user_id = f.followed_by_id ORDER BY view_count DESC LIMIT 0,2 "
+    sql =  "SELECT DISTINCT l.id, l.logeable_id, l.logeable_name, l.logeable_type, l.user_id, l.action, l.created_at FROM"
+    sql += " users u, followship f, logs l WHERE"
+    sql += " f.follows_id = '#{self.id}' AND l.user_id = f.followed_by_id ORDER BY view_count DESC LIMIT 0,2 "
     Log.find_by_sql(sql)
   end
   
   def add_favorite(favoritable_type, favoritable_id)
-   Favorite.create(:favoritable_type => favoritable_type, 
+    Favorite.create(:favoritable_type => favoritable_type,
       :favoritable_id => favoritable_id, 
       :user_id => self.id)
   end
@@ -662,30 +672,31 @@ class User < ActiveRecord::Base
 
   protected
   
-    def activate_before_save
-      self.activated_at = Time.now.utc
-      self.activation_code = nil
-    end
+  def activate_before_save
+    self.activated_at = Time.now.utc
+    self.activation_code = nil
+  end
 
-    def make_activation_code
-      self.activation_code = Digest::SHA1.hexdigest( Time.now.to_s.split(//).sort_by {rand}.join )
-    end
+  def make_activation_code
+    self.activation_code = Digest::SHA1.hexdigest( Time.now.to_s.split(//).sort_by {rand}.join )
+  end
 
-    # before filters
-    def encrypt_password
-      return if password.blank?
-      self.salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{login}--") if new_record?
-      self.crypted_password = encrypt(password)
-    end
-
+  # before filters
+  def encrypt_password
+    return if password.blank?
+    self.salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{login}--") if new_record?
+    self.crypted_password = encrypt(password)
+  end
+ 
     def whitelist_attributes
       self.login = self.login.strip
       self.description = white_list(self.description )
       #self.stylesheet = white_list(self.stylesheet )
     end
+ 
   
-    def password_required?
-      crypted_password.blank? || !password.blank?
+  def password_required?
+    crypted_password.blank? || !password.blank?
   end
   
   

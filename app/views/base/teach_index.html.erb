@@ -213,18 +213,24 @@ padding: 15px 10px;
 
 	
 	
-	<!--
+
 	<li class="clearfix grid_5 courses">
 		<span class="call">
 			<span>Meus Cursos</span>
+                        <span class="option" id="">Opções</span>
+			<ul class="options">
+				<li><%= link_to "Cria Curso", new_subject_path %></li>
+				<li><a href="javascript:;">Gestão Cursos</a></li>
+			</ul>
 		</span>
 		<ul>
-			<li><a href="" class="name">Colégio Aplicacao</a></li>
-			<li><a href="" class="name">Colégio Damas</a></li>
-			<li><a href="" class="name">NUCE</a></li>
+			<% current_user.subjects.each do |subject| %>
+                  <li><a href="" class="name"><%= subject.title %></a></li>
+                      <%end%>
+			
 		</ul>
 	</li> 
-	-->
+
 </ul>
 
 

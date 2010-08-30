@@ -1,12 +1,17 @@
 <div id="breadcrumbs"><b><strong>Cursos</strong></b> >  </div>
 
-<h1>Index - Aqui terá todos cursos criados pelo usuários</h1>
-
 <h2>Todos Cursos Disponíveis</h2><br /><br />
 
 <ul>
   <% @subjects.each do |subject| %>
-    <li><%= link_to subject.title, subject_path(subject) %> | <%= link_to "Editar", edit_subject_path(subject)%> | <%= link_to 'Excluir', subject, :confirm => 'Tem certeza?', :method => :delete %> </li>
+    <% if subject.is_public? %>
+      <%unless current_user.enrolled?(subject.id) %>
+        <li><%= link_to subject.title, subject_path(subject) %> | <%#= link_to "Editar", edit_subject_path(subject)%> | <%#= link_to 'Excluir', subject, :confirm => 'Tem certeza?', :method => :delete %> </li>
+      <%else%>
+        <li><%= link_to subject.title, classes_subject_path(subject) %> </li>
+      <%end%>
+
+    <%end%>
   <%end%>
 </ul>
 

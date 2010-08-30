@@ -97,4 +97,9 @@ class SubjectsController < BaseController
     redirect_to subjects_path
   end
 
+  def classes
+    Enrollment.create_enrollment(params[:id], current_user)
+    @subject = current_user.subjects.find(params[:id])
+  end
+
 end

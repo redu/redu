@@ -1,0 +1,29 @@
+<div id="breadcrumbs"><b><strong><%= link_to "Cursos", subjects_path %></strong></b> > <b><strong><%= h @subject.title %></strong></b> </div>
+
+<span class="call">Aulas:<br /></span>
+<span class="things">
+  <% @subject.course_subjects.each do |cs| %>
+    <%= link_to cs.courseable.name, course_path(cs.courseable) %> <a href="javascript:;" id="mais"> <b> | mais detalhe</b></a>
+    <a href="javascript:;" id="menos"> <b>| menos detalhe</b></a>
+    <%= link_to "| Assistir", course_path(cs.courseable,:subject_id => @subject.id) %><br />
+
+    <p id="description"><%= cs.courseable.description%> </p>
+  <%end%>
+</span><br />
+
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#description").hide();
+
+    $('a#mais').live('click', function(event){
+      $("#description").show();
+    });
+
+
+    $('a#menos').live('click', function(event){
+      $("#description").hide();
+    });
+  });
+
+</script>
