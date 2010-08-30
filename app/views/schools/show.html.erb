@@ -30,7 +30,7 @@ $(document).ready(function() {
                 // Exams
                 $("#tabs-3-content").html('');
                 jQuery.ajax({
-                    data: '',
+                    data: 'tab=true',
                     dataType: 'script',
                     success: function(request) {
                         $("#tabs-3-loading").hide();

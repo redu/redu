@@ -22,6 +22,9 @@ colocar imagens em subpastas
 
 PROGRAMAÇÃO
 ===========
+
+substituir caminhos absolutos por relativos atraves do rails, ex: image_path("edit.png")  
+
 carregar scripts no bottom da pagina para melhor peformace
 usar size() ao inves de length()
 adicionar counter cache (ver como rails ajuda a fazer isso)

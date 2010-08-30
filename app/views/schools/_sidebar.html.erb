@@ -3,23 +3,32 @@
    <li class="clearfix" style="background-color: #FFFFDF; -moz-box-shadow:0 4px 12px #DDDDDD; ">
     <span class="call"><span style ="background:none repeat scroll 0 0 #FFFFDF; color:orange;">Ações</span></span>
     <ul class="menu">
-    	<li>
-			<%= subscription_link %>
-			</li>
+    	
 			<li>
 				<%= link_to_function "Criar atividade", "$schooltabs.tabs('select', 1); $('#status_text').focus()"%>
 			</li>
+			<!--
       <li><a href="" class="closed sb">Acompanhar alunos</a></li>
       <li><a href="" class="closed sb">Acompanhar aulas</a></li>
+			-->
+			<% if current_user.can_post?(@school)%>
       <li>
-      	<%= link_to "Criar nova aula", new_course_path(:school_id => @school.id)%>
+      	<%= link_to "Criar aula", new_course_path(:school_id => @school.id)%>
 				</li>
 			<li>
-				<%= link_to "Criar novo exame", new_exam_path(:school_id => @school.id)%>
+				<%= link_to "Criar exame", new_exam_path(:school_id => @school.id)%>
+			</li>
+			<li>
+				<%= link_to "Criar evento", new_exam_path(:school_id => @school.id)%>
+			</li>
+			<% end %>
+			<li>
+			<%= subscription_link %>
 			</li>
 			
     </ul>
   </li>
+	<!--
   <li class="clearfix">
     <span class="call"><span>Seus cursos (4)</span></span>
     <ul class="sub-groups progress-bar">
@@ -52,6 +61,8 @@
       <li><a href="" class="closed sb">Xadrez</a></li>
     </ul>
   </li>
+	-->
+	
   <li class="clearfix">
     <span class="call"><span>Membros (<%= @school.users.size %>)</span></span>
       <div class="followship box clearfix">
@@ -72,7 +83,7 @@
     </div><!-- end followship -->
     <% else %>
       <div class="notice box">Nenhum professor<br/>
-			<%= link_to "Cadastre um professor", admin_members_school_path(@school), :class => "icon more" %>
+			<%= link_to("Cadastre um professor", admin_members_school_path(@school), :class => "icon more") if current_user.can_manage?(@school) %>
 			</div>
     <% end %>
   </li>

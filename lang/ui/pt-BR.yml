@@ -23,6 +23,8 @@ pt-BR:
     attributes:
       photo:
         created_at: "created at: "
+      course:
+        courseable_type: "O tipo de aula"
     errors:
       template:
         header:
@@ -89,6 +91,7 @@ pt-BR:
                     blank: ": Por favor, informe seu papel (professor/aluno)."
                     inclusion: ": Por favor, informe seu papel (professor/aluno)."
                     
+  
   courseable: vídeo-aula         
   courses: aulas
   history: historico

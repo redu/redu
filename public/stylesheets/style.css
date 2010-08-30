@@ -7,7 +7,7 @@
    Default color table:
     @border: #EFF0F0 cinza
     @link2: #0B85C1 azul
-    @link1: #18C8EF azul claro
+    @link1: #18C8EF azul claro / substituido por: #96B8E2 (mais neutro)
     @header: #F63B0B vermelho | #FF8000 laranja
     @background: #EBF7FD
     
@@ -278,7 +278,7 @@ width: 150px;
 }
 
 .calls span.call span {
-	background-color: #18C8EF;
+	background-color: /*#18C8EF;*/ #96B8E2;
 	display: block;
 	padding: 5px;
 }
@@ -781,7 +781,7 @@ div.recomendations-m .legend {
 
 div.points-m .legend,
 div.points-m .number {
- color: #18C8EF;
+ color: #96B8E2;
 }
 
 div.recomendations-m .legend,
@@ -866,6 +866,11 @@ div.recomendations-m .number {
         padding-right: 20px;
         color: gray;
     }
+		
+		.ui-tabs-panel {
+			padding: 8px;
+			color: #555;
+		}
     
     /** @post-activity **/
     .post-activity {
@@ -969,7 +974,7 @@ div.recomendations-m .number {
 	
 	#learn ul.box-popular-resources a.source,
 	#teach ul.box-popular-resources a.source {   
-		color:#18C8EF; 
+		color:#96B8E2; 
 		display:block; 
 		font-size:.7em; 
 		padding-top:6px;
@@ -1308,7 +1313,7 @@ div.recomendations-m .number {
     
     #actv-3 form.post-poll span.add { 
         font-size: .8em;
-        color: #18C8EF;
+        color: #96B8E2;
         cursor: pointer;
     }
     
@@ -1348,13 +1353,13 @@ div.recomendations-m .number {
 
     div.filter-box ul li:hover a,
     div.filter-box ul li.selected a {
-        background: #18C8EF;
+        background: #96B8E2;
         color: white;
     }
 
     div.filter-box ul li a {
         display:block;
-        color: #18C8EF;
+        color: #96B8E2;
         text-transform: uppercase;
         font-size: .7em;
         padding: 10px;
@@ -1612,7 +1617,7 @@ div.content div.content {
     }
     
     #public-profile .overview .actions a {
-        color: #18C8EF;
+        color: #96B8E2;
         display: block;
         font-size: .8em;
         padding: 12px 0 12px 29px;
@@ -1694,7 +1699,7 @@ div.content div.content {
         }
         
         ul.activities li div.question .question-action a {
-            color: #18C8EF;
+            color: #96B8E2;
         }
         
         ul.activities li div.question .question-action div.answer {
@@ -1854,7 +1859,7 @@ div.content div.content {
 		position: absolute;
 		right: 0px;
 		top: 23px;
-		border: 3px solid #18C8EF;
+		border: 3px solid #96B8E2;
 		-moz-border-radius-bottomleft: 5px;
 		-moz-border-radius-bottomright: 5px;
 	}
@@ -1876,7 +1881,7 @@ div.content div.content {
      .sidebar span.call span {
         padding: 5px;
         display: block;
-        background: #18C8EF;
+        background: #96B8E2;
      }
     
     .sidebar span.call:hover {
@@ -1950,7 +1955,7 @@ div.content div.content {
 #group-header a.config {
     font-size: .8em;
     margin-left: 10px;
-    color: #18C8EF;
+    color: #96B8E2;
 }
 
 #group-header span.areas {
@@ -2183,7 +2188,7 @@ ul.progress-bar span.bar-chart span span {
 }
 
 ul.sub-groups .course {
-    color: #18C8EF;
+    color: #96B8E2;
     font-size: .9em;
     padding-bottom: 5px;
     display: block;
@@ -2473,7 +2478,8 @@ a:hover.book_step span {
             
 table.booking_steps {
     width: 100%;
-    background: #FFF url(../images/steps_line_bg.gif) repeat-x left 49% ;
+    /*background: #FFF url(../images/steps_line_bg.gif) repeat-x left 49% ;*/
+		 background: #FFF url(../images/steps_bg.gif) no-repeat right -120px;
     }
 table.booking_steps td.spacer { background: none; width: 61px}
 
@@ -2730,6 +2736,14 @@ table.booking_steps td.spacer { background: none; width: 61px}
  * 
  */
 
+#menu_bar {
+    padding: 6px 0 6px 6px;
+    background-color: #fff;
+    border-bottom: 1px solid #DDD;
+    height: 15px;
+		margin-top:20px;
+}
+
 #accessbility_bar {
     background: #fff;
     float: right;
@@ -2774,7 +2788,7 @@ table.booking_steps td.spacer { background: none; width: 61px}
 .add-topic-inner ul li a img {
 	margin-right: 8px;
 }
-.add-topic-inner ul li:hover, .add-topic-outter a.selected {
+.add-topic-inner ul li:hover, .add-topic-outter a.selected{
     background-color: #E0E9E9;
 }
 

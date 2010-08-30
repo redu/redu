@@ -55,7 +55,7 @@
   background-color: black;
 }
 .today {
-	background-color: #1e90ff;
+	background-color: /*#1e90ff;*/ #FF8000;
 	color: white;
 }
 

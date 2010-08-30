@@ -50,9 +50,11 @@
 			<li>
 			<%= link_to 'Favoritos', user_favorites_path(:user_id => current_user.id) %>
 			</li>
+			 <% unless AppConfig.closed_beta_mode %>
 			<li>
 			<%= link_to "Convidar", invite_user_path(current_user) %>
 			</li>
+			<% end %>
 			<li>
 			<a href="<%=logout_path%>">Sair</a>
 			</li>
