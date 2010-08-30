@@ -81,13 +81,15 @@ class BulletinsController < BaseController
   def vote
     @bulletin = Bulletin.find(params[:id])
 		# TODO ver porque o like quando setado para false vem nil
-		if params[:like] == nil
-			current_user.vote(@bulletin, false) 
-		else
-    	current_user.vote(@bulletin, params[:like])
-		end
+		
+    if params[:like]
+      current_user.vote_for(@bulletin)
+    else
+      current_user.vote_against(@bulletin)
+    end
+    
+
     respond_to do |format|
-		puts params[:like]
       format.js do 
         render :update do |page|
 					# if falta o if para saber se é like ou dislike
