@@ -186,7 +186,7 @@ class CoursesController < BaseController
     
 
       #comentários
-      @comments  = @course.comments.find(:all, :limit => 10, :order => 'created_at DESC')
+#      @comments  = @course.comments.find(:all, :limit => 10, :order => 'created_at DESC')
       
       # anotações
       @annotation = @course.has_annotations_by(current_user) 
