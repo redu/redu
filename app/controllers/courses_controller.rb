@@ -49,20 +49,22 @@ class CoursesController < BaseController
     
     @seminar = Seminar.new( params[:seminar] )
     
-    # importar video do Redu atraves de url
-    success = @seminar.import_redu_seminar(@seminar.external_resource) if @seminar.external_resource_type.eql?('redu')
     
-    unless success and success[0] # importação falhou
-      respond_to do |format|
-        format.js do
-          responds_to_parent do
-            render :update do |page|
-              page << "alert('"+ success[1] +"');"
+    if @seminar.external_resource_type.eql?('redu') # importar video do Redu atraves de url
+      success = @seminar.import_redu_seminar(@seminar.external_resource) 
+      
+      unless success and success[0] # importação falhou
+        respond_to do |format|
+          format.js do
+            responds_to_parent do
+              render :update do |page|
+                page << "alert('"+ success[1] +"');"
+              end 
             end 
-          end 
+          end
         end
+        return
       end
-      return
     end
     
     respond_to do |format|
