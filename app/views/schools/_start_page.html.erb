@@ -35,6 +35,6 @@
 		</div>
 
 	<% else %>
-			Nenhuma notícia foi enviada ainda. <%= link_to 'Envie uma agora!', new_bulletin_path %>
+			Nenhuma notícia foi enviada ainda. <%= link_to 'Envie uma agora!', new_bulletin_path(:school_id => @school.id) %>
 	<% end %>
 </div><!-- end noticias -->
