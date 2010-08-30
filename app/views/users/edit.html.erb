@@ -31,7 +31,7 @@
 
 	<% field_set_tag "Localização" do %>
 
-	<%= render :partial => 'shared/location_chooser', :locals => {:selected_country => @user.country_id, :selected_state => @user.state_id, :selected_metro_area => @user.metro_area_id, :states => @states, :metro_areas => @metro_areas}%>
+	<%# render :partial => 'shared/location_chooser', :locals => {:selected_country => @user.country_id, :selected_state => @user.state_id, :selected_metro_area => @user.metro_area_id, :states => @states, :metro_areas => @metro_areas}%>
 
 	<% label_tag :zip, :zippostal_code.l %>
 	<%= text_field :user, :zip, :style=>"width:90px" %>
