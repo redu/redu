@@ -1,6 +1,6 @@
 <li class="clearfix">
 	 <%= link_to exam.name, exam, :class => "name"  %>
-	<div class="headlines" style="width: 490px">
+	<div class="headlines exam" style="width: 490px">
 		<!--
 		<span class="call">Descrição:</span>
 		-->
@@ -9,13 +9,20 @@
 		
 		</span>
 	</div>
-	<div class="headlines" style="width: 490px">
+	<div class="headlines average upper">
+		95%
+	</div>
+
+
+<%= link_to "Responder!", answer_exam_path(:id=> exam.id, :first=> true), :class => "answer"%>
+	
+	<div class="headlines exam" style="width: 490px">
 		
 		
 		<ul class="item_info">
             <% unless @user %>
 						<li> Por 
-                <%= link_to exam.owner.display_name, user_path(exam.owner) %>
+                <%= link_to exam.owner.f_name, user_path(exam.owner) %>
             </li>
             <li>
                 |
@@ -41,15 +48,26 @@
 						<li>
                 |
             </li>
+						<li>
+                Questões (<%= exam.questions.size %>)
+            </li>
+							<li>
+                |
+            </li>
+						<li>
+                Nível <%= exam_level(exam) %>
+            </li>
 						
         </ul>
 				
-		<span style="float: left; margin-top:2px;">
-			 							<%= ratings_for exam, :static, :small => true, :wrap => false %>
-		</span>
 		
 		
 	</div>
+		<div class="headlines average bottom">
+		Média
+	</div>
+	
+	
 </li> 
 
 

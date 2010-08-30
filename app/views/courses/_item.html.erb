@@ -21,7 +21,7 @@
 		<ul class="item_info">
             <% unless @user %>
 						<li> Por 
-                <%= link_to course.owner.display_name, user_path(course.owner) %>
+                <%= link_to course.owner.f_name, user_path(course.owner) %>
             </li>
             <li>
                 |
