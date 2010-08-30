@@ -681,7 +681,7 @@ class User < ActiveRecord::Base
     def whitelist_attributes
       self.login = self.login.strip
       self.description = white_list(self.description )
-      self.stylesheet = white_list(self.stylesheet )
+      #self.stylesheet = white_list(self.stylesheet )
     end
   
     def password_required?

@@ -222,7 +222,6 @@ module BaseHelper
       when 'users'
         if @user && !@user.new_record? && @user.login 
           title = @user.login
-          title += ', expert in ' + @user.offerings.collect{|o| o.skill.name }.join(', ') if @user.vendor? and !@user.offerings.empty?
           title += ' &raquo; ' + app_base + tagline
           @canonical_url = user_url(@user)          
         else
