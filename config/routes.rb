@@ -1,52 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
-  
-  
-  # The priority is based upon order of creation: first created -> highest priority.
-  
-  # Sample of regular route:
-  #   map.connect 'products/:id', :controller => 'catalog', :action => 'view'
-  # Keep in mind you can assign values other than :controller and :action
-  
-  # Sample of named route:
-  #   map.purchase 'products/:id/purchase', :controller => 'catalog', :action => 'purchase'
-  # This route can be invoked with purchase_url(:id => product.id)
-  
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   map.resources :products
-  
-  # Sample resource route with options:
-  #   map.resources :products, :member => { :short => :get, :toggle => :post }, :collection => { :sold => :get }
-  
-  # Sample resource route with sub-resources:
-  #   map.resources :products, :has_many => [ :comments, :sales ], :has_one => :seller
-  
-  # Sample resource route with more complex sub-resources
-  #   map.resources :products do |products|
-  #     products.resources :comments
-  #     products.resources :sales, :collection => { :recent => :get }
-  #   end
-  
-  # Sample resource route within a namespace:
-  #   map.namespace :admin do |admin|
-  #     # Directs /admin/products/* to Admin::ProductsController (app/controllers/admin/products_controller.rb)
-  #     admin.resources :products
-  #   end
-  
-  # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
-  # map.root :controller => "welcome"
-  
-  # See how all your routes lay out with "rake routes"
-  
-  # Install the default routes as the lowest priority.
-  # Note: These default routes make all actions in every controller accessible via GET requests. You should
-  # consider removing or commenting them out if you're using named routes and resources.
-  
-  
-  # This route helps determine if it's a folder or a file that is
-  # being added/remove to/from the clipboard.
   map.connect 'clipboard/:action/:folder_or_file/:id',
-              :controller => 'clipboard',
-              :requirements => { :action         => /(add|remove)/,
+    :controller => 'clipboard',
+    :requirements => { :action         => /(add|remove)/,
                                  :folder_or_file => /(folder|file)/ }
   
   
@@ -71,33 +26,10 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :metro_areas  
   map.resources :invitations
   
- # map.connect 'activity_xml.xml', :controller => "users", :action => "activity_xml", :format => 'xml'
-  
-
-  #Forum routes 
-#  map.recent_forum_posts '/forums/recent', :controller => 'sb_posts', :action => 'index'
-#  map.resources :forums, :sb_posts, :monitorship
-#  map.resources :sb_posts, :name_prefix => 'all_', :collection => { :search => :get, :monitored => :get }
-#  
-#  %w(forum).each do |attr|
-#    map.resources :sb_posts, :name_prefix => "#{attr}_", :path_prefix => "/#{attr.pluralize}/:#{attr}_id"
-#  end
-#  
-#  map.resources :forums do |forum|
-#    forum.resources :moderators
-#    forum.resources :topics do |topic|
-#      topic.resources :sb_posts
-#      topic.resource :monitorship, :controller => :monitorships
-#    end
-#  end
-#  map.forum_home '/forums', :controller => 'forums', :action => 'index'
-#  map.resources :topics
-  
   # Index
   map.learn_index '/learn', :controller => 'base', :action => 'learn_index'
   map.teach_index '/teach', :controller => 'base', :action => 'teach_index'
  
-  
   if AppConfig.closed_beta_mode
     map.connect '', :controller => "base", :action => "beta_index"
     map.home 'home', :controller => "base", :action => "site_index"
@@ -106,15 +38,11 @@ ActionController::Routing::Routes.draw do |map|
   end
   map.application '', :controller => "base", :action => "site_index"
   
-  
-  #  map.resources :statistics, :collection => {:activities => :get, :activities_chart => :get}
   map.resources :tags, :member_path => '/tags/:id'
   map.show_tag_type '/tags/:id/:type', :controller => 'tags', :action => 'show'
   map.search_tags '/search/tags', :controller => 'tags', :action => 'show'
   
-  # admin routes
-  
- # map.admin_dashboard   '/admin/dashboard', :controller => 'homepage_features', :action => 'index'
+  # admin routes  
   map.admin_dashboard   '/admin/dashboard', :controller => 'admin', :action => 'dashboard'
   map.admin_moderate_submissions   '/admin/moderate/submissions', :controller => 'admin', :action => 'submissions'
   map.admin_moderate_courses   '/admin/moderate/courses', :controller => 'admin', :action => 'courses'
@@ -235,6 +163,7 @@ ActionController::Routing::Routes.draw do |map|
     user.resources :photo_manager, :only => ['index']
     user.resources :albums, :path_prefix => ':user_id/photo_manager', :member => {:add_photos => :get, :photos_added => :post}, :collection => {:paginate_photos => :get}  do |album| 
       album.resources :photos, :collection => {:swfupload => :post, :slideshow => :get}
+    user.resources :statuses
     end
   end
   
@@ -243,7 +172,5 @@ ActionController::Routing::Routes.draw do |map|
   map.connect ':controller/:action/:id.:format'     
   
 end
-
-
 #ActionController::Routing::Translator.i18n('pt-BR') # se ativar, buga (falar com cassio)
 ActionController::Routing::Translator.translate_from_file('lang','i18n-routes.yml')
