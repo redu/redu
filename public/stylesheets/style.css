@@ -345,6 +345,7 @@ ul.default > li {
 	background-repeat: repeat-x;
 	background-position: bottom;
 	padding: 15px 0;
+	position: relative;
 }
 
 
@@ -406,6 +407,48 @@ ul.default > li div.headlines > .call {
 	font-size: .9em;
 	color: #ff8000;
 }
+
+
+ul.default > li div.exam {
+	float:left;
+	margin-left: 10px;
+}
+
+ul.default > li div.average {
+	width: 40px;
+	background-color: #96B8E2;
+	color: white;
+	float: left;
+	text-align:center;
+}
+
+ul.default > li div.upper {
+	font-weight:bold;
+}
+ul.default > li div.bottom{
+	font-size: .8em;
+}
+
+ul.default > li a.answer {
+	display:block;
+	font-size:0.9em;
+background-color:white;
+border:1px solid green;
+color:green;
+padding:8px;
+margin: 17px 13px 0 0;
+position:absolute;
+right:0;
+	-moz-border-radius: 5px; 
+	-webkit-border-radius: 5px;
+}
+
+ul.default > li a.answer:hover {
+	background-color: green;
+border:1px solid green;
+color:white;
+}
+
 
 ul.pagination {
 	margin-top: 30px;
