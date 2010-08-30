@@ -1,15 +1,6 @@
-# This file is auto-generated from the current state of the database. Instead of editing this file, 
-# please use the migrations feature of Active Record to incrementally modify your database, and
-# then regenerate this schema definition.
-#
-# Note that this schema.rb definition is the authoritative source for your database schema. If you need
-# to create the application database on another system, you should be using db:schema:load, not running
-# all the migrations from scratch. The latter is a flawed and unsustainable approach (the more migrations
-# you'll amass, the slower it'll run and the greater likelihood for issues).
-#
-# It's strongly recommended to check this file into your version control system.
-
-ActiveRecord::Schema.define(:version => 20100830125544) do
+class AllMigrations < ActiveRecord::Migration
+  def self.up
+  
 
   create_table "acquisitions", :force => true do |t|
     t.integer  "course_id"
@@ -19,6 +10,7 @@ ActiveRecord::Schema.define(:version => 20100830125544) do
     t.datetime "updated_at"
     t.decimal  "value",            :precision => 8, :scale => 2, :default => 0.0
   end
+
 
   create_table "alternatives", :force => true do |t|
     t.string   "statement",   :null => false
@@ -34,6 +26,7 @@ ActiveRecord::Schema.define(:version => 20100830125544) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
 
   create_table "audiences", :force => true do |t|
     t.string "name"
@@ -89,6 +82,7 @@ ActiveRecord::Schema.define(:version => 20100830125544) do
     t.integer  "owner"
   end
 
+
   create_table "countries", :force => true do |t|
     t.string "name"
   end
@@ -109,16 +103,16 @@ ActiveRecord::Schema.define(:version => 20100830125544) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "rating_average",                                    :default => 0
-    t.integer  "owner",                                                                :null => false
-    t.text     "description",                                                          :null => false
-    t.boolean  "published",                                         :default => false
+    t.integer  "rating_average",      :limit => 10, :precision => 10, :scale => 0, :default => 0
+    t.integer  "owner",                                                                               :null => false
+    t.text     "description",                                                                         :null => false
+    t.boolean  "published",                                                        :default => false
     t.datetime "media_updated_at"
     t.string   "state"
-    t.integer  "view_count",                                        :default => 0
-    t.boolean  "public",                                            :default => true
-    t.decimal  "price",               :precision => 8, :scale => 2, :default => 0.0
-    t.boolean  "removed",                                           :default => false
+    t.integer  "view_count",                                                       :default => 0
+    t.boolean  "public",                                                           :default => true
+    t.decimal  "price",                             :precision => 8,  :scale => 2, :default => 0.0
+    t.boolean  "removed",                                                          :default => false
     t.string   "courseable_type"
     t.integer  "courseable_id"
     t.integer  "simple_category_id"
@@ -229,6 +223,7 @@ ActiveRecord::Schema.define(:version => 20100830125544) do
     t.integer "follows_id"
   end
 
+
   create_table "group_permissions", :force => true do |t|
     t.integer "folder_id"
     t.integer "group_id"
@@ -248,6 +243,7 @@ ActiveRecord::Schema.define(:version => 20100830125544) do
     t.integer "group_id"
     t.integer "user_id"
   end
+
 
   create_table "interactive_classes", :force => true do |t|
     t.datetime "created_at"
@@ -272,6 +268,7 @@ ActiveRecord::Schema.define(:version => 20100830125544) do
     t.integer  "lesson_id"
   end
 
+
   create_table "messages", :force => true do |t|
     t.integer  "sender_id"
     t.integer  "recipient_id"
@@ -291,6 +288,7 @@ ActiveRecord::Schema.define(:version => 20100830125544) do
     t.integer "users_count", :default => 0
   end
 
+
   create_table "myfiles", :force => true do |t|
     t.integer  "folder_id"
     t.integer  "user_id"
@@ -300,16 +298,13 @@ ActiveRecord::Schema.define(:version => 20100830125544) do
     t.datetime "attachment_updated_at"
   end
 
+
   create_table "pages", :force => true do |t|
     t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "plugin_schema_migrations", :id => false, :force => true do |t|
-    t.string "plugin_name"
-    t.string "version"
-  end
 
   create_table "question_exam_associations", :id => false, :force => true do |t|
     t.integer  "total_answers_count"
@@ -361,6 +356,7 @@ ActiveRecord::Schema.define(:version => 20100830125544) do
     t.string  "name"
     t.boolean "school_role", :null => false
   end
+
 
   create_table "school_assets", :force => true do |t|
     t.string   "asset_type",                :null => false
@@ -420,9 +416,11 @@ ActiveRecord::Schema.define(:version => 20100830125544) do
     t.string "name"
   end
 
+
   create_table "states", :force => true do |t|
     t.string "name"
   end
+
 
   create_table "statuses", :force => true do |t|
     t.string   "text"
@@ -441,6 +439,7 @@ ActiveRecord::Schema.define(:version => 20100830125544) do
     t.string   "logeable_name"
   end
 
+
   create_table "taggings", :force => true do |t|
     t.integer "tag_id"
     t.integer "taggable_id"
@@ -457,6 +456,7 @@ ActiveRecord::Schema.define(:version => 20100830125544) do
   end
 
   add_index "tags", ["name"], :name => "index_tags_on_name"
+
 
   create_table "user_school_associations", :force => true do |t|
     t.integer  "user_id"
@@ -537,5 +537,60 @@ ActiveRecord::Schema.define(:version => 20100830125544) do
 
   add_index "votes", ["voteable_id", "voteable_type"], :name => "fk_voteables"
   add_index "votes", ["voter_id", "voter_type"], :name => "fk_voters"
+    
+    
+  end
 
+  def self.down
+    drop_table :acquisitions
+    drop_table :alternatives
+    drop_table :annotations
+    drop_table :audiences
+    drop_table :audiences_schools
+    drop_table :bdrb_job_queues
+    drop_table :beta_candidates
+    drop_table :beta_keys
+    drop_table :beta_keys
+    drop_table :bulletins
+    drop_table :countries
+    drop_table :course_resources
+    drop_table :courses
+    drop_table :credits
+    drop_table :delayed_jobs
+    drop_table :emails
+    drop_table :events
+    drop_table :exam_users
+    drop_table :exams
+    drop_table :external_objects
+    drop_table :favorites
+    drop_table :folders
+    drop_table :followship
+    drop_table :group_permissions
+    drop_table :groups
+    drop_table :groups_users
+    drop_table :interactive_classes
+    drop_table :invitations
+    drop_table :lessons
+    drop_table :messages
+    drop_table :metro_areas
+    drop_table :myfiles
+    drop_table :pages
+    drop_table :question_exam_associations
+    drop_table :questions
+    drop_table :rates
+    drop_table :redu_categories_schools
+    drop_table :roles
+    drop_table :school_assets
+    drop_table :schools
+    drop_table :seminars
+    drop_table :sessions
+    drop_table :simple_categories
+    drop_table :states
+    drop_table :statuses
+    drop_table :taggings
+    drop_table :tags
+    drop_table :users
+    drop_table :user_school_associations
+    drop_table :votes
+  end
 end
