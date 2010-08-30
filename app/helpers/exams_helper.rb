@@ -20,4 +20,8 @@ module ExamsHelper
     link_to_function(name, h("add_fields(this, \"#{association}\", \"#{escape_javascript(fields)}\", \"#{type}\")"), :class => (type == 'Question') ? "button" : "")
   end
   
+  def exam_level(exam)
+    (exam.level == 1) ? "Iniciante" : ((exam.level == 2) ? "Intermediário" : "Avançado")
+  end
+  
 end

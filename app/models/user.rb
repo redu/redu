@@ -511,6 +511,14 @@ class User < ActiveRecord::Base
     
   end
   
+  def f_name
+    if self.first_name 
+      self.first_name
+    else
+      login
+    end
+  end
+  
   def admin?
     role && role.eql?(Role[:admin])
   end

@@ -22,8 +22,10 @@ class AnnotationsController < BaseController
     
     respond_to do |format|
       if @annotation.update_attributes(params[:annotation])
+        
+        format.html { 
         flash[:notice] = 'Anotações atualizadas para esta aula'
-        format.html { redirect_to(@annotation) }
+        redirect_to(@annotation) }
         format.xml  { head :ok }
         format.js { render :action => "create" }
       else
