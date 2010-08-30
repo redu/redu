@@ -1,5 +1,5 @@
 <div class="grid_12">
-	<%- form_tag user_url(@user), :method => 'put', :multipart =>true , :class => 'MainForm' do %>
+	<% form_tag user_url(@user), :method => 'put', :multipart =>true , :class => 'MainForm' do %>
 	<%= error_messages_for :user %>	
 	<% field_set_tag "Foto do seu perfil" do %>
 		<h3><%= :profile_photo.l %></h3>
@@ -48,9 +48,9 @@
 		<%= auto_complete_field 'tag_list', {:url => { :controller => "tags", :action => 'auto_complete_for_tag_name'}, :tokens => [','] }%>
 		
 		<em><%= :you_could_tag_yourself.l %>
-		<%- if @user.vendor? %>
+		<% if @user.vendor? %>
 		<%= :custom_friendly_local.l %>
-		<%- else %>
+		<% else %>
 
 		<%= :tags_are_comma_separated_keywords_that_describe_you.l %>
 
