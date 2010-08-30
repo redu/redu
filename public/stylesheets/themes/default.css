@@ -1,0 +1,7 @@
+#header {
+	opacity: 0.6;
+}
+
+#header:hover {
+	opacity: 1;
+}

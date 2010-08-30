@@ -44,6 +44,9 @@ namespace :bootstrap do
   
   desc "Insert default general categories"
   task :redu_categories do
+    
+    ReduCategory.delete_all
+    
     categories = ['Aeronautics and Astronautics', 'Anthropology', 'Architecture', 'Automotive', 'Biology', 'Business and Management', 'Chemistry', 
     'Civil and Environmental Engineering', 'Communication', 'Comparative Media Studies', 'Criminal Justice', 
     'Culinary Arts', 'Earth Atmospheric and Planetary Sciences', 'Economics', 'Education', 'Electrical Engineering and Computer Science',
@@ -61,6 +64,8 @@ namespace :bootstrap do
 
   desc "Insert default categories"
   task :simple_categories do
+    SimpleCategory.delete_all
+    
     categories = ['Arts / Design / Animation', 'Beauty / Fashion', 'Business / Economics / Law', 'Cars / Bikes', 'Health / Wellness / Relationships', 'Hobbies / Gaming',
     'Home / Gardening', 'Languages', 'Music', 'Nutrition / Food / Drinks', 'Online Marketing', 'Religion / Philosophy', 'Science / Technology / Engineering',
     'Society / History / Politics', 'Sports', 'Other']

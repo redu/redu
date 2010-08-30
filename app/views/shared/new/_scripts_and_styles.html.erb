@@ -63,10 +63,8 @@
   
  <% end %>
  
- <%  if @school %>
+ <%  if @school and not @school.new_record? %>
     <%= stylesheet_link_tag 'themes/' + @school.theme %>
-  <% else %>
-    <%= stylesheet_link_tag 'themes/default' %>
   <% end %>
  
  <%= include_tiny_mce_if_needed %>
