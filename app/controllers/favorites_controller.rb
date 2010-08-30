@@ -8,8 +8,14 @@ class FavoritesController < BaseController
       format.js do 
         case params[:type]
           when 'exams'
+             @exams = Exam.paginate(:all, 
+              :joins => :favorites,
+              :conditions => ["favorites.favoritable_type = 'Exam' AND favorites.user_id = ? AND exams.id = favorites.favoritable_id", current_user.id], 
+              :page => params[:page], :order => 'created_at DESC', :per_page => AppConfig.items_per_page)
+        
+            
             render :update do |page|
-              # page.replace_html 'course_list', partial
+              page.replace_html  'tabs-2-content', :partial => 'exams/exam_list'
             end
           when 'statuses'
            render :update do |page|

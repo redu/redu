@@ -6,7 +6,6 @@ class Question < ActiveRecord::Base
   belongs_to :answer , :class_name => "Alternative", :foreign_key => "answer_id"
   belongs_to :author , :class_name => "User" , :foreign_key => "author_id"
   
-  belongs_to :category, :class_name => "Skill", :foreign_key => "skill_id"
   
     accepts_nested_attributes_for :alternatives, 
     :reject_if => lambda { |q| q[:statement].blank? },

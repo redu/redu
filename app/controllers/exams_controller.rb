@@ -302,17 +302,6 @@ class ExamsController < BaseController
       if params[:exam_type] == 'simple'
         
         @exam = Exam.find(session[:exam_id])
-#        @exam.questions.clear
-#        
-#        @questions =  params[:questions]
-#        
-#        if @questions
-#          for question in @questions
-#            
-#            @exam.questions << Question.find(question.to_i) # TODO performance
-#          end
-#        end
-        
         
         
         if params[:sbt_opt] == "0" # save exam
@@ -384,7 +373,7 @@ class ExamsController < BaseController
       @exam = Exam.find(session[:exam_id])
       @exam.enable_validation_group :step3
       
-      @exam.published = true # se o usuário completou os 3 passos então o curso está publicado
+      @exam.published = true # se o usuário completou os 3 passos então o exame está publicado
       
       if params[:post_to]
         SchoolAsset.create({:asset_type => "Exam", :asset_id => @exam.id, :school_id => params[:post_to].to_i})
@@ -645,14 +634,14 @@ class ExamsController < BaseController
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @exams }
-      if not params[:tab]
-        format.js
-      else
+      if params[:tab]
         format.js  do
           render :update do |page|
-            page.replace_html  'tabs-2-content', :partial => 'courses_school'
+            page.replace_html  'tabs-3-content', :partial => 'exams_school'
           end
         end
+      else
+         format.js
       end
     end
     

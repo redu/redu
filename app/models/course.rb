@@ -4,7 +4,8 @@ class Course < ActiveRecord::Base
   acts_as_taggable
   ajaxful_rateable :stars => 5
   has_attached_file :avatar, {
-    :styles => { :thumb => "100x100>", :nano => "24x24>" }
+    :styles => { :thumb => "100x100>", :nano => "24x24>", 
+    :default_url => "/images/:class/missing_pic.jpg"}
   }
 
   # ASSOCIATIONS
@@ -36,10 +37,11 @@ class Course < ActiveRecord::Base
   validates_presence_of :description
   validates_length_of   :description, :within => 30..200
   validates_presence_of :simple_category
+  validates_presence_of :courseable_type
 
   validates_associated :courseable
 
-  validation_group :step1, :fields=>[:name, :description, :simple_category]
+  validation_group :step1, :fields=>[:name, :description, :simple_category, :courseable_type]
   
   #validation_group :step2_interactive, :fields=>[:name, :description]
   validation_group :step2, :fields=>[:courseable]
@@ -89,9 +91,6 @@ class Course < ActiveRecord::Base
     APP_URL + "/courses/"+ self.id.to_s+"-"+self.name.parameterize
   end
 
-  def can_be_deleted_by(user) #TODO verificar papel na escola
-    (self.owner == user or user.admin?)
-  end
 
   def currently_watching
     sql = "SELECT u.id, u.login, u.login_slug FROM users u, statuses s WHERE"
@@ -113,16 +112,20 @@ class Course < ActiveRecord::Base
         'http://i1.ytimg.com/vi/0QQcj_tLIYo/default.jpg'
       end
     when 'InteractiveClass'
-      if avatar
-        avatar.url(:thumb)
+      if self.avatar_file_name
+        self.avatar.url(:thumb)
+      else
+       # image_path("courses/missing_thumb.png")  # icone aula interativa
+       '/images/courses/missing_interactive.png'
+      end
+      
+    when 'Page'
+        if self.avatar_file_name
+        self.avatar.url(:thumb)
       else
 
         'http://i1.ytimg.com/vi/0QQcj_tLIYo/default.jpg'
       end
-      # APP_URL + '/images/icon_ppt_48.png' #FIXME
-      # icone aula interativa
-    when 'Page'
-      'http://i1.ytimg.com/vi/0QQcj_tLIYo/default.jpg'
       #APP_URL + '/images/icon_doc_48.png' #FIXME
     end
 
