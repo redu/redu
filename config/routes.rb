@@ -1,58 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
   
-  # This route helps determine if it's a folder or a file that is
-  # being added/remove to/from the clipboard.
-  map.connect 'clipboard/:action/:folder_or_file/:id',
-              :controller => 'clipboard',
-              :requirements => { :action         => /(add|remove)/,
-                                 :folder_or_file => /(folder|file)/ }
-  
-  
-  map.opensocial_container "contain.localhost" # this will be turned in to <instance_id>.contain.localhost
-
-  map.resources :interactive_classes
-  
-  map.resources :statuses
-   
-  map.resources :lessons
-    
-  map.resources :beta_keys, :collection => {:generate => :get, :remove_all => :get, :print_blank => :get, :invite => :get}
-  
-  map.resources :profiles
-
-  map.resources :abilities
-
-  map.resources :subjects
-
- # map.resources :resources, :collection => { :search => [:get, :post], :add => :get, :waiting => :get, :favorites => :get }, :member => {:rate => :post}
-
-  map.resources :questions, :collection => { :search => [:get, :post], :add => :get } 
-  
-  map.resources :exams, :member => {:add_question => :get, :add_resource => :get, :rate => :post, :answer => [:get,:post]},
-                        :collection => {:unpublished_preview => :get, :unpublished => :get, :new_exam => :get, :cancel => :get, 
-                        :exam_history => :get, :sort => :get, :order => :get, :questions_database => :get,
-                        :review_question => :get}
-    
-  map.resources :courses, :member => {:rate => :post, :buy => :get, :download_attachment => :get},  
-  :collection => { :unpublished_preview => :get, :cancel => :get, :sort_lesson => :post, :unpublished => :get,:waiting => :get}
-  
-  map.resources :user_school_association
-
-  map.resources :credits
-    
-  map.resources :folders
-  
-  
-  map.resources :annotations
-  
-  map.resources :suggestions
-  
-  map.removed_page   '/removed_item', :controller => 'base', :action => 'removed_item'
-  
-  map.resources :bulletins, :member => {:rate => :post}
-
- # map.connect 'activity_xml.xml', :controller => "users", :action => "activity_xml", :format => 'xml'
-  
   
   # The priority is based upon order of creation: first created -> highest priority.
   
@@ -93,33 +40,60 @@ ActionController::Routing::Routes.draw do |map|
   # Install the default routes as the lowest priority.
   # Note: These default routes make all actions in every controller accessible via GET requests. You should
   # consider removing or commenting them out if you're using named routes and resources.
+  
+  
+  # This route helps determine if it's a folder or a file that is
+  # being added/remove to/from the clipboard.
+  map.connect 'clipboard/:action/:folder_or_file/:id',
+              :controller => 'clipboard',
+              :requirements => { :action         => /(add|remove)/,
+                                 :folder_or_file => /(folder|file)/ }
+  
+  
+  map.resources :interactive_classes
+  map.resources :statuses
+  map.resources :lessons
+  map.resources :beta_keys, :collection => {:generate => :get, :remove_all => :get, :print_blank => :get, :invite => :get}
+  map.resources :profiles
+  map.resources :subjects
+  map.resources :questions, :collection => { :search => [:get, :post], :add => :get } 
+  map.resources :exams, :member => {:add_question => :get, :add_resource => :get, :rate => :post, :answer => [:get,:post]},
+                        :collection => {:unpublished_preview => :get, :unpublished => :get, :new_exam => :get, :cancel => :get, 
+                        :exam_history => :get, :sort => :get, :order => :get, :questions_database => :get,
+                        :review_question => :get}
+  map.resources :courses, :member => {:rate => :post, :buy => :get, :download_attachment => :get},  
+  :collection => { :unpublished_preview => :get, :cancel => :get, :sort_lesson => :post, :unpublished => :get,:waiting => :get}
+  map.resources :credits
+  map.resources :folders
+  map.resources :annotations
+  map.resources :bulletins, :member => {:rate => :post}
+  map.resources :events#, :collection => { :past => :get, :ical => :get }
+  map.resources :metro_areas  
+  map.resources :invitations
+  
+ # map.connect 'activity_xml.xml', :controller => "users", :action => "activity_xml", :format => 'xml'
+  
 
-
-
-  # Add this after any of your own existing routes, but before the default rails routes:
-  #map.routes_from_plugin :community_engine
-  #Forum routes go first
-  map.recent_forum_posts '/forums/recent', :controller => 'sb_posts', :action => 'index'
-  map.resources :forums, :sb_posts, :monitorship
-  map.resources :sb_posts, :name_prefix => 'all_', :collection => { :search => :get, :monitored => :get }
+  #Forum routes 
+#  map.recent_forum_posts '/forums/recent', :controller => 'sb_posts', :action => 'index'
+#  map.resources :forums, :sb_posts, :monitorship
+#  map.resources :sb_posts, :name_prefix => 'all_', :collection => { :search => :get, :monitored => :get }
+#  
+#  %w(forum).each do |attr|
+#    map.resources :sb_posts, :name_prefix => "#{attr}_", :path_prefix => "/#{attr.pluralize}/:#{attr}_id"
+#  end
+#  
+#  map.resources :forums do |forum|
+#    forum.resources :moderators
+#    forum.resources :topics do |topic|
+#      topic.resources :sb_posts
+#      topic.resource :monitorship, :controller => :monitorships
+#    end
+#  end
+#  map.forum_home '/forums', :controller => 'forums', :action => 'index'
+#  map.resources :topics
   
-%w(forum).each do |attr|
-    map.resources :sb_posts, :name_prefix => "#{attr}_", :path_prefix => "/#{attr.pluralize}/:#{attr}_id"
-  end
-  
-  map.resources :forums do |forum|
-    forum.resources :moderators
-    forum.resources :topics do |topic|
-      topic.resources :sb_posts
-      topic.resource :monitorship, :controller => :monitorships
-    end
-  end
-  map.forum_home '/forums', :controller => 'forums', :action => 'index'
-  map.resources :topics
-  
-  map.connect 'sitemap.xml', :controller => "sitemap", :action => "index", :format => 'xml'
-  map.connect 'sitemap', :controller => "sitemap", :action => "index"
-  
+  # Index
   map.learn_index '/learn', :controller => 'base', :action => 'learn_index'
   map.teach_index '/teach', :controller => 'base', :action => 'teach_index'
  
@@ -132,9 +106,11 @@ ActionController::Routing::Routes.draw do |map|
   end
   map.application '', :controller => "base", :action => "site_index"
   
-  # Pages
-  map.resources :pages, :path_prefix => '/admin', :name_prefix => 'admin_', :except => :show, :member => { :preview => :get }
-  map.pages "pages/:id", :controller => 'pages', :action => 'show'
+  
+  #  map.resources :statistics, :collection => {:activities => :get, :activities_chart => :get}
+  map.resources :tags, :member_path => '/tags/:id'
+  map.show_tag_type '/tags/:id/:type', :controller => 'tags', :action => 'show'
+  map.search_tags '/search/tags', :controller => 'tags', :action => 'show'
   
   # admin routes
   
@@ -162,13 +138,10 @@ ActionController::Routing::Routes.draw do |map|
   map.forgot_password '/forgot_password', :controller => 'users', :action => 'forgot_password'
   map.forgot_username '/forgot_username', :controller => 'users', :action => 'forgot_username'  
   map.resend_activation '/resend_activation', :controller => 'users', :action => 'resend_activation' 
+  map.edit_account_from_email '/account/edit', :controller => 'users', :action => 'edit_account'
+  map.resources :sessions
   
-  
-  #clippings routes
-  #map.connect '/new_clipping', :controller => 'clippings', :action => 'new_clipping'
-  #map.site_clippings '/clippings', :controller => 'clippings', :action => 'site_index'
-  #map.rss_site_clippings '/clippings.rss', :controller => 'clippings', :action => 'site_index', :format => 'rss'
-  
+  # RSS
   map.featured '/featured', :controller => 'posts', :action => 'featured'
   map.featured_rss '/featured.rss', :controller => 'posts', :action => 'featured', :format => 'rss'
   map.popular '/popular', :controller => 'posts', :action => 'popular'
@@ -178,46 +151,12 @@ ActionController::Routing::Routes.draw do |map|
   map.rss_redirect '/rss', :controller => 'base', :action => 'rss_site_index'
   map.rss '/site_index.rss', :controller => 'base', :action => 'site_index', :format => 'rss'
   
-  map.advertise '/advertise', :controller => 'base', :action => 'advertise'
-  map.css_help '/css_help', :controller => 'base', :action => 'css_help'  
+  # site routes
   map.about '/about', :controller => 'base', :action => 'about'
   map.faq '/faq', :controller => 'base', :action => 'faq'
-  
+  map.removed_page   '/removed_item', :controller => 'base', :action => 'removed_item'
 
-  
-  
-  
-  map.edit_account_from_email '/account/edit', :controller => 'users', :action => 'edit_account'
-  
-  map.friendships_xml '/friendships.xml', :controller => 'friendships', :action => 'index', :format => 'xml'
-  map.friendships '/friendships', :controller => 'friendships', :action => 'index'
-  
-  map.manage_photos 'manage_photos', :controller => 'photos', :action => 'manage_photos'
-  map.create_photo 'create_photo.js', :controller => 'photos', :action => 'create', :format => 'js'
-  
-  map.resources :sessions
-  map.resources :statistics, :collection => {:activities => :get, :activities_chart => :get}
-  map.resources :tags, :member_path => '/tags/:id'
-  map.show_tag_type '/tags/:id/:type', :controller => 'tags', :action => 'show'
-  map.search_tags '/search/tags', :controller => 'tags', :action => 'show'
-  
-  map.resources :categories
-  map.resources :skills, :collection => { :sub_categories_of => :get } 
-  map.resources :events#, :collection => { :past => :get, :ical => :get }
-  #map.resources :favorites, :path_prefix => '/:favoritable_type/:favoritable_id'
-  #map.resources :comments, :path_prefix => '/:commentable_type/:commentable_id'
-  map.delete_selected_comments 'comments/delete_selected', :controller => "comments", :action => 'delete_selected'
-  
-  map.resources :homepage_features
-  map.resources :metro_areas
-  map.resources :ads
-  map.resources :contests, :collection => { :current => :get }
-  map.resources :activities, :collection => { :recent => :get }
-  
-  
-    # SCHOOL
-  
-  
+  # SCHOOL
    map.resources :schools,  :member_path => '/:id', :nested_member_path => '/:school_id', :member => {
    :join => :get,
    :vote => :post,
@@ -242,9 +181,8 @@ ActionController::Routing::Routes.draw do |map|
     school.resources :bulletins
     school.resources :events, :member => { :vote => [:post,:get], :notify => :post }, :collection => { :past => :get, :ical => :get , :day => :get}
   end
-  
-  
-  ##END SCHOOL
+
+  # USERS
   map.resources :users, :member => {  
   #map.resources :users, :member_path => '/:id', :nested_member_path => '/:user_id', :member => { 
     :annotations => :get,
@@ -254,10 +192,8 @@ ActionController::Routing::Routes.draw do |map|
     :activity_xml => :get,
     :logs => :get,
     :unfollow => :post,
-    :dashboard => :get,
     :assume => :get,
     :toggle_moderator => :put,
-    :toggle_featured => :put,
     :change_profile_photo => :put,
     :return_admin => :get, 
     :edit_account => :get,
@@ -301,24 +237,6 @@ ActionController::Routing::Routes.draw do |map|
       album.resources :photos, :collection => {:swfupload => :post, :slideshow => :get}
     end
   end
-  #map.resources :votes
-  map.resources :invitations
-  
-  map.users_posts_in_category '/users/:user_id/posts/category/:category_name', :controller => 'posts', :action => 'index', :category_name => :category_name
-  
-  map.with_options(:controller => 'theme', :filename => /.*/, :conditions => {:method => :get}) do |theme|
-    theme.connect 'stylesheets/theme/:filename', :action => 'stylesheets'
-    theme.connect 'javascripts/theme/:filename', :action => 'javascript'
-    theme.connect 'images/theme/:filename',      :action => 'images'
-  end
-  
-  # Deprecated routes
-  map.deprecated_popular_rss '/popular_rss', :controller => 'base', :action => 'popular', :format => 'rss'    
-  map.deprecated_category_rss '/categories/:id;rss', :controller => 'categories', :action => 'show', :format => 'rss'  
-  map.deprecated_posts_rss '/:user_id/posts;rss', :controller => 'posts', :action => 'index', :format => 'rss'
-  
-  
-  
   
   # Install the default routes as the lowest priority.
   map.connect ':controller/:action/:id'
