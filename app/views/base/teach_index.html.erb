@@ -156,10 +156,10 @@ padding: 15px 10px;
 		<span class="call">
 			<span>Minhas aulas (<%= current_user.courses.count%>)</span>
 		</span>
-		<% if current_user.courses.size > 0 %>
+		<% unless @courses.empty? %>
 		<ul>
 			<%# TODO performance %>
-			<% for course in current_user.courses[0..4] do%>
+			<% @courses.each do |course| %>
 			<li class="clearfix">
 				 <%=  link_to image_tag( course.thumb_url, 
                     {:class=> "photo", :border => 0 }), course   %> 

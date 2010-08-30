@@ -37,9 +37,9 @@ class BaseController < ApplicationController
   end
   
   def teach_index
-    
-    
-     @schools = current_user.schools
+    @schools = current_user.schools
+    @courses = current_user.courses.find(:all, :order => "created_at DESC", :limit => 4)
+    puts @courses
     respond_to do |format|
       format.html { render :layout => 'new_application'}
     end   
