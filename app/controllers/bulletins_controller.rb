@@ -130,8 +130,6 @@ protected
   end
 
   def is_member_required
-		puts params[:school_id]
-	  puts params[:id]
 		if params[:school_id]
 			@school = School.find(params[:school_id])
 		else
