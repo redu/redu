@@ -11,9 +11,11 @@
 	<%= render :partial => "course_list"%>
 	</div>
 	
+	<% if @school.courses.size > 0 %>
 	<span style="margin: 10px;">
 	<%= link_to "Ver todas >", courses_path(:school_id => @school.id)%>
 	</span>
+	<% end %>
 
 
 

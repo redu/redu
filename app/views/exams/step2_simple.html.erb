@@ -1,5 +1,5 @@
 
- 
+ <% content_for :js do %>
  <script>
  	function saveDraft(opt, opt_param){
         var theform = document.getElementById('exam_form');
@@ -67,24 +67,16 @@ function add_fields(link, association, content, type) {
 		 })
 		 
   } else if (type == 'Question') {
-		//alert(content)
-		 //var regexp2 = new RegExp("value=\"new_alternatives\"", "g")
-		//	content = content.replace(regexp2,new_id)
-		
-		 $(link).before(content.replace(regexp, new_id));
-		 
-		// exam[questions_attributes][0][answer_id]
+		$('div.add-topic-inner').hide();
+		// $(link).before(content.replace(regexp, new_id));
+		 $('#questions > fieldset:last').after(content.replace(regexp, new_id));
 		 
 		 $('[value=new_alternatives]').each(function(idx){
-		 //	var altId = $(this).attr('id').split('_')[6]
-		 	//alert(altId);
 			$(this).attr('value',idx)
 		  });
 		 
 		 makeIndexes();
-	
 		 
-  //	removeAllMce();
   	reloadMce();
   }
 }
@@ -168,9 +160,6 @@ function removeAllMce(){
 						$(this).attr('value',idx)
 		 			 });
 					 
-					 
-					 
-				
 				/*$('body').click(function(event){
             if (!$(event.target).closest('.question').length) {
 								alert('body ')
@@ -178,8 +167,6 @@ function removeAllMce(){
 								
             };
             });*/
-			
-
 
 	/*	$('.question').live('click', function(e){
 					
@@ -228,7 +215,7 @@ function removeAllMce(){
 
 		
 	 </script>
- 
+ <% end %>
 
 <div class="grid_16">
 <div id="breadcrumbs">
@@ -238,11 +225,11 @@ function removeAllMce(){
 	<a href="<%=application_url%>">início</a> > <a href="#">ensinar</a> > novo exame simples
 	<%end %>
 </div>
-</div>
 	
 <%= render(:partial => "schools/school_info", :locals=>{:show => false}) if @school%>
 
-<div id="title_video">Novo Exame</div>
+<h3 class="call">Nova aula passo-a-passo </h3>
+</div>
 
 <div class="grid_9 push_3">
 <table class="booking_steps" cellpadding="0" cellspacing="0">
@@ -251,27 +238,51 @@ function removeAllMce(){
 								<td class="spacer">&nbsp;</td>
 								<td><span class="book_step current"><span><em>2</em>Editor de Exame</span></span></td>
 								<td class="spacer">&nbsp;</td>
-								<td><span class="book_step disabled"><span><em>3</em>Publicação</span></span></td>
+								<td><span class="book_step"><span><em>3</em>Publicação</span></span></td>
 							</tr>
 						</tbody></table>
 </div>
-<!--
-<h3 class="call">Novo Exame</h3>
--->
+	
+<% form_for :exam, @exam, :url => { :action => "create" },  :html => {:id => 'exam_form'} do |f| %>
 
+	<div id="menu_bar" class="grid_16">
+	
+		<div class="add-topic-outter" style="float:left;">
+          
+					
+					<a id="add_topic_link" href="#" onclick="$('div.add-topic-inner').toggle(); $(this).toggleClass('selected'); return false;">Questão</a>
+          	<div class="add-topic-inner menudiv">
+              <ul class="selectable">
+                  <li>
+											<%= link_to_add_fields((image_tag 'icons/iclass.gif', :title => "Nova questão") + 'Nova questão', f, :questions, 'Question') %>
 
-	<div class="submenu grid_15">
-		<%= link_to_function 'Nova questão', 'saveDraft(1)', :class => "button" %>
-		<%= link_to_function 'Adicionar questão', 'saveDraft(2)', :class => "button" %>
-		<%= button_to_function "Visualizar", "save(true)"%>
-		<%= button_to_function "Salvar parcialmente", "save(false)", :id => "save_btn"%><%= image_tag 'spinner.gif', :id => 'save-spinner', :style => 'display: none' %>
-		<span class="snippet" id="save_info"></span>
-	</div>
+                  </li>
+                  <li>
+                  	  <%= link_to (image_tag 'icons/iclass.gif', :title => 'Buscar Questão') + 'Buscar Questão', "#dialog", :name=>"modal" %>
+                  </li>
+              </ul>
+          </div>
+					
+					|
+					<%= link_to_function "Salvar", "save(false)", :id => "save_link"%>
+          |
+					<%= link_to_function "Pré-visualizar", "save(true)", :id => "preview_link"%>
+				
+     </div>	
+			
+		<div style="text-align:right; margin-right: 10px;">
+      <%= image_tag 'spinner.gif', :id => 'save-spinner', :style => 'display: none' %>
+      <span class="snippet" id="save_info"></span>
+  	</div>
+			
+
+		</div>
+
 
 
 	
 
- <% form_for :exam, @exam, :url => { :action => "create" },  :html => {:id => 'exam_form'} do |f| %>
+ 
  
  <div class="grid_16">
   <%= f.error_messages %>
@@ -297,7 +308,7 @@ function removeAllMce(){
 	<% end %>
  
 
- 	 <%= link_to_add_fields 'Nova Questão', f, :questions, 'Question' %>
+ 	 <%= link_to_add_fields 'Nova Questão', f, :questions, 'button' %>
   <%= link_to 'Buscar Questão', "#dialog", :name=>"modal", :class => "button" %>
  
  </div>
@@ -310,7 +321,7 @@ function removeAllMce(){
 %>
   
 </div>
-<div class="grid_6">
+<div class="grid_6 push_1">
 	<div class="y_addinfo">
                                 <div class="addinfocontent">
                                     <h1>

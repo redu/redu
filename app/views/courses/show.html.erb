@@ -1,3 +1,5 @@
+
+<% content_for :js do %>
 <script>
     /*
      function toggleAnnotationBox(){
@@ -115,6 +117,8 @@
     }
     
 </script>
+<% end %>
+
 <div id="lights-dimmed" style="display:none;">
     &nbsp;
 </div>
@@ -141,7 +145,7 @@
             <%= @course.name %>
         </div>
         <div class="admin_opts yellow">
-            <% if @course.can_be_deleted_by(current_user) %>
+            <% if current_user.can_manage?(@exam) %>
             <%= link_to 'Editar', {:action => "edit"}, :class => "icon-edit" %> | 
 						<%= link_to 'Remover', @course, {:confirm => 'Você tem certeza que quer remover esta aula permanentemente?',
             :method => :delete, :class => "icon-delete"} %>

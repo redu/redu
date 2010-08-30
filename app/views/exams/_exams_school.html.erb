@@ -1,42 +1,29 @@
 
 <ul id="actions_user">
-				
 				<%  if current_user.can_post? @school %>
 				   	 <li>
 				   	 	<%= link_to "Novo Exame", new_school_exam_path(:school_id => @school.id) %>
 					 </li>
-					 <!--
-					 <li class="sep">|</li>
-					-->
-					 
+					 			 
 				<% end %>
-			
-				
 </ul>
 		
-
-
-
-<% if  @exams.size > 0 %>
-
-<ul class="groups">
+		<div id="exam_list" >
+			<%= render :partial => "exam_list"%>
+		</div>
 	
-			<% @exams.each do |exam|%>
-            <li class="clearfix">
-                <div class="photo">
-                </div>
-                <a href="" class="name grid_7 omega"><%= course.name %></a>
-            </li>
-			<%end%>
-	
-			</ul>
-		    <div id="pagination" align="center" class="pagination">
-			<%= will_paginate  @exams, :params => {:sort_by => 'created_at'}, :class => "pagination_number"  %>
-</div>
-
-<% else %>
-Não há exames nesta rede. <%= link_to "Crie um agora!", new_school_exam_path %>
+	<% if @school.exams.size > 0 %>
+	<span style="margin: 10px;">
+	<%= link_to "Ver todos >", exams_path(:school_id => @school.id)%>
+	</span>
 <%end%>
+
+
+
+
+
+
+
 
 
 

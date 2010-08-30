@@ -14,7 +14,7 @@
 	</div>
 
 
-<%= link_to "Responder!", answer_exam_path(:id=> exam.id, :first=> true), :class => "answer"%>
+<%= link_to("Responder!", answer_exam_path(:id=> exam.id, :first=> true), :class => "answer") unless @user%>
 	
 	<div class="headlines exam" style="width: 490px">
 		

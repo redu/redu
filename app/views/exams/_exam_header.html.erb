@@ -1,63 +1,65 @@
 <%= render(:partial => "schools/school_info", :locals=>{:show => false}) if @school%>
 
 <div class="grid_16">
-  <div id="item_video" class="clearfix">
-            <div id="title_video">
-                <%= @exam.name %>
-				<% if current_user.can_manage? @exam %>
-                	<%= link_to 'Editar', {:action => "edit"}, :class => "button icon-edit" %>
-									<%= link_to 'Remover', @exam, {:confirm => 'Você tem certeza que quer remover esta aula permanentemente?', :method => :delete, :class => "button icon-delete"} %>
-				<% end %>	
-				<%# if current_user and not current_user.has_access_to_exam(@exam) and not @course.external_resource_type.eql?('youtube') %>
-					<%# link_to "Comprar", { :action => :buy, :id => @course.id }, :class => "button icon-buy"%>
-				<%# end %>
-				
-				
-                <% if current_user.admin? and @exam.state.eql?("waiting") %>
-	                <%= link_to 'Aprovar' , {:action => "approve", :id => @exam.id} %> |
-	                <%= link_to 'Rejeitar' , {:action => "disapprove", :id => @exam.id} %>
-                <% end %>
-            </div>
-			<div>
-            <div id="identification1">
-                <ul id="identification_resource1">
-                    <li>
-                        <%= link_to @exam.owner.display_name, user_path(@exam.owner) %>
-                    </li>
-                    <li>
-                        |
-                    </li>
-                    <li>
-                        <%= time_ago_in_words @exam.created_at %>
-                    </li>
-                    <li>
+	
+	<div id="item_video" class="clearfix">
+        <div id="title_video">
+            <%= @exam.name %>
+        </div>
+        <div class="admin_opts yellow">
+            <% if current_user.can_manage?(@exam) %>
+            <%= link_to 'Editar', {:action => "edit"}, :class => "icon-edit" %> | 
+						<%= link_to 'Remover', @exam, {:confirm => 'Você tem certeza que quer remover esta aula permanentemente?',
+            :method => :delete, :class => "icon-delete"} %>
+            <% end %>
+            <% if current_user.admin? and @exam.state.eql?("waiting") %>
+            | <%= link_to 'Aprovar' , {:controller => :admin, :action => "approve", :id => @exam.id}, :class => "icon-approve"%> |
+						<%= link_to 'Rejeitar' , {:controller => :admin, :action => "disapprove", :id => @exam.id}, :class => "icon-reject" %>
+            <% end %>
+        </div>
+    </div>
+    <div style="margin-bottom: 10px; float:left;">
+        <div id="identification1">
+            <ul id="identification_resource1">
+                <li>
+                    <%= (@exam.owner) ? link_to(@exam.owner.display_name, user_path(@exam.owner)) : "(usuário removido)" %>
+                </li>
+                <li>
+                    |
+                </li>
+                <li>
+                    <%= time_ago_in_words @exam.created_at %>
+                </li>
+              
+								<li>
                         |
                     </li>
                     <li>
                         Realizado(<%= @exam.done_count %>)
                     </li>
-                </ul>
-            </div>
-            <div id="description_video">
-                <%= @exam.description %>
-            </div>
-            <div id="identification1">
-                <ul id="identification_resource1">
-                    <li>
-                        <strong>Categoria:</strong>
-                        <%=category_i18n(@exam.simple_category.name) %>
-                    </li>
-                    <li>
-                        |
-                    </li>
-                    <li>
-                        <strong>Tags:</strong>
-                        <%= @exam.tag_list %>
-                    </li>
-                </ul>
-            </div>
+            </ul>
         </div>
-		
-        
-		</div>
+        <div id="description_video">
+            <%= @exam.description %>
+        </div>
+        <div id="identification1">
+            <ul id="identification_resource1">
+                <li>
+                    <strong>Categoria:</strong>
+                    <%=category_i18n(@exam.simple_category.name) %>
+                </li>
+                <% unless @exam.tag_list.empty? %>
+                <li>
+                    |
+                </li>
+                <li>
+                    <strong>Tags:</strong>
+                    <%= @exam.tag_list %>
+                </li>
+                <% end %>
+            </ul>
+        </div>
+    </div>
+	
+ 
 		</div>
