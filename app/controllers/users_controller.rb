@@ -351,7 +351,9 @@ class UsersController < BaseController
             end
         end
         format.js do
-          render :text => params[:update_value]
+          render :update do |page|
+            page.replace_html '#user-description', params[:update_value]
+           end
         end
       end
      
