@@ -245,6 +245,11 @@ function removeAllMce(){
 	
 <% form_for :exam, @exam, :url => { :action => "create" },  :html => {:id => 'exam_form'} do |f| %>
 
+ <div class="grid_16">
+  <%= f.error_messages %>
+	</div>
+
+
 	<div id="menu_bar" class="grid_16">
 	
 		<div class="add-topic-outter" style="float:left;">
@@ -284,9 +289,7 @@ function removeAllMce(){
 
  
  
- <div class="grid_16">
-  <%= f.error_messages %>
-	</div>
+
  
   <%= hidden_field_tag("school_id", @school.id) if @school %>
  

@@ -26,7 +26,9 @@ class MessagesController < BaseController
         end
       end
     else
-      @messages = @user.received_messages.find(:all, :page => {:current => params[:page], :size => 20})
+      @messages = @user.received_messages.paginate(:all, :page => params[:page], 
+      :order =>  'created_at DESC', 
+      :per_page => AppConfig.items_per_page )
     end
   end
   

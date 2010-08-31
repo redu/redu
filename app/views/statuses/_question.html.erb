@@ -23,7 +23,7 @@
             </div>
         </div>
         <ul class="response clearfix" >
-            <%= render :partial => 'statuses/response', :collection => question.statuses.find(:all, :order => "created_at DESC") %>
+            <%= render :partial => 'statuses/response', :collection => question.statuses.find(:all, :order => "created_at ASC") %>
         </ul><!-- end response -->
     </div><!-- end activity -->
 </li>
