@@ -1096,12 +1096,12 @@ div.recomendations-m .number {
 		display:block;
 		clear:both;
 		overflow:hidden;
-		padding:15px 50px;
+		padding:15px 20px;
 	}
 	
 	#learn #box-nav-networks li,
 	#teach #box-nav-networks li {
-		margin-right: 60px;
+		margin-right: 10px;
 		float:left;
 		width:160px;
 		padding:8px 0 10px 60px;
