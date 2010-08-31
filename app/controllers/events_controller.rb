@@ -46,7 +46,6 @@ class EventsController < BaseController
 
   def show
     @event = Event.find(params[:id])
-    @comments = @event.comments.find(:all, :limit => 20, :order => 'created_at DESC', :include => :user)
     @school = School.find(params[:school_id])
   end
 
