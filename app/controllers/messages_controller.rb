@@ -1,22 +1,22 @@
 class MessagesController < BaseController
-  layout 'new_application'
   
-  before_filter :find_user, :except => [:auto_complete_for_username]
+  before_filter :find_user#, :except => [:auto_complete_for_username]
   before_filter :login_required
-  before_filter :require_ownership_or_moderator, :except => [:auto_complete_for_username]
   
   uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :index])
-
-  skip_before_filter :verify_authenticity_token, :only => [:auto_complete_for_username]
   
-  def auto_complete_for_username
-    @users = User.find(:all, :conditions => [ 'LOWER(login) LIKE ?', '%' + (params[:message][:to]) + '%' ])
-    render :inline => "<%= auto_complete_result(@users, 'login') %>"
-  end
-    
+#  skip_before_filter :verify_authenticity_token, :only => [:auto_complete_for_username]
+  
+#  def auto_complete_for_username
+#    @users = User.find(:all, :conditions => [ 'LOWER(login) LIKE ?', '%' + (params[:message][:to]) + '%' ])
+#    render :inline => "<%= auto_complete_result(@users, 'login') %>"
+#  end
+  
   def index
     if params[:mailbox] == "sent"
-      @messages = @user.sent_messages.find(:all, :page => {:current => params[:page], :size => 20})
+      @messages = @user.sent_messages.paginate(:all, :page => params[:page], 
+      :order =>  'created_at DESC', 
+      :per_page => AppConfig.items_per_page)
       
       respond_to do |format|
         format.js do
@@ -36,17 +36,17 @@ class MessagesController < BaseController
     @message = Message.read(params[:id], current_user)
     @reply = Message.new_reply(@user, @message, params)  
     
-     respond_to do |format|
-        format.js do
-          render :update do |page|
-            if params[:mailbox] == "sent"
+    respond_to do |format|
+      format.js do
+        render :update do |page|
+          if params[:mailbox] == "sent"
             page.replace_html  'tabs-2-content', :partial => 'show', :locals => {:mailbox => params[:mailbox]} 
           else
-             page.replace_html  'tabs-1-content', :partial => 'show', :locals => {:mailbox => params[:mailbox]}
-            end
+            page.replace_html  'tabs-1-content', :partial => 'show', :locals => {:mailbox => params[:mailbox]}
           end
         end
       end
+    end
   end
   
   def new
@@ -55,19 +55,19 @@ class MessagesController < BaseController
     end
     @message = Message.new_reply(@user, in_reply_to, params)  
     
-     respond_to do |format|
-        format.js do
-          render :update do |page|
-            page.replace_html  'tabs-3-content', :partial => 'new'
-            page << "reloadMce();"
-          end
+    respond_to do |format|
+      format.js do
+        render :update do |page|
+          page.replace_html  'tabs-3-content', :partial => 'new'
+          page << "reloadMce();"
         end
       end
+    end
   end
   
   def create
     messages = []
-
+    
     if params[:message][:to].blank?
       # If 'to' field is empty, call validations to catch other
       @message = Message.new(params[:message])        
@@ -92,17 +92,18 @@ class MessagesController < BaseController
         @message.sender = @user
         unless @message.valid?
           respond_to do |format|
-        format.html do
-          render :action => :new and return
-        end
-        format.js do
-          render :update do |page|
-            page << "jQuery('#msg_spinner').hide()"
-            page.replace_html "errors", error_messages_for(:message) 
-           #page << "alert('é necessário preencher todos os campos')"# TODO notice?
+            format.html do
+              render :action => :new and return
+            end
+            format.js do
+              render :update do |page|
+                page << "jQuery('#msg_spinner').hide()"
+                page.replace_html "errors", error_messages_for(:message) 
+                #page << "alert('é necessário preencher todos os campos')"# TODO notice?
+              end
+            end
           end
-        end
-      end
+          return
         else
           messages << @message
         end
@@ -116,16 +117,16 @@ class MessagesController < BaseController
         end
         format.js do
           render :update do |page|
-              #page.replace_html :notice, flash[:notice]
-              flash.discard
+            #page.replace_html :notice, flash[:notice]
+            flash.discard
             page.replace_html  'tabs-3-content', 'mensagem enviada!'
           end
         end
       end
-     
+      
     end
   end
-
+  
   def delete_selected
     if request.post?
       if params[:delete]
@@ -141,14 +142,14 @@ class MessagesController < BaseController
   end
   
   private
-    def find_user
-      @user = User.find(params[:user_id])
+  def find_user
+    @user = User.find(params[:user_id])
+  end
+  
+  def require_ownership_or_moderator
+    unless admin? || moderator? || (@user && (@user.eql?(current_user)))
+      redirect_to :controller => 'sessions', :action => 'new' and return false
     end
-
-    def require_ownership_or_moderator
-      unless admin? || moderator? || (@user && (@user.eql?(current_user)))
-        redirect_to :controller => 'sessions', :action => 'new' and return false
-      end
-      return @user
-    end    
+    return @user
+  end    
 end

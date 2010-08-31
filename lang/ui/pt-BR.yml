@@ -77,7 +77,7 @@ pt-BR:
             subject: 
               blank: ": Por favor, digite um assunto."
             recipient:
-              blank: ": Por favor, digite o nome destinatário."
+              blank: ": Destinatário inexistente"
         beta_candidate:
             attributes:
                 email:
