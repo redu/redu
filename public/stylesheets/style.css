@@ -273,6 +273,13 @@ blockquote {/*necessário para o tinymce*/
     min-height: 50px;
 }
 
+.box_notice {
+    border: 1px solid #EFEFEF ;
+    background: #FFFFDF;
+    font-size: .8em;
+    padding: 10px;  
+}
+
 .yellow {
     border: 1px solid #FEFAB7;
     background-color: #FFFFF3;
@@ -2144,7 +2151,7 @@ color: gray;
 
 #group div.first-page div.statistics,
 #group div.first-page div.news {
-    width: 325px;
+    width: 320px;
     float: left;
     margin-left: 10px;
     margin-right: 10px;
