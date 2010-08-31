@@ -477,7 +477,7 @@ $.extend(InlineEditor.prototype, {
 			url: that.settings.url,
 			type: "PUT",
 			data: data,
-			dataType: "html",
+			dataType: "script",
 			complete: function(request){
 				that.didEndSaving();
 			},
@@ -486,13 +486,13 @@ $.extend(InlineEditor.prototype, {
 				
 				/* put the newly updated info into the original element */
 				// FIXME: should be affected by the preferences switch
-				that.dom.html(new_text);
+				//that.dom.html(new_text);
 				// REFACT: remove dom parameter, already in this, not documented, should be easy to remove
 				// REFACT: callback should be able to override what gets put into the DOM
 				that.triggerCallback(that.settings.success, html);
 			},
 			error: function(request) {
-				that.dom.html(that.originalHTML); // REFACT: what about a restorePreEditingContent()
+				//that.dom.html(that.originalHTML); // REFACT: what about a restorePreEditingContent()
 				if (that.settings.error)
 					// REFACT: remove dom parameter, already in this, not documented, can remove without deprecation
 					// REFACT: callback should be able to override what gets entered into the DOM
