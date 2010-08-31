@@ -29,13 +29,16 @@
 			<%= submit_tag "Moderar" %>
 		 <% end %>
 		<% else %>
-			 Não há eventos a serem moderados.		
+			 <div class="box_notice">
+					Não há eventos a serem moderados.
+				
+					<% if @school %>
+					<!--TODO Colocar ajax para o form aparecer e sumir -->
+					<%= link_to "Criar um evento", new_school_event_path(@school) %>
+					<% end %>
+				</div>
  		<% end %>
-    	
-		<% if @school %>
-		<!--TODO Colocar ajax para o form aparecer e sumir -->
-		<%= link_to "Criar um evento", new_school_event_path(@school) %>
-		<% end %>
+
 		
     </div> <!-- fim da listagem --> 
 	

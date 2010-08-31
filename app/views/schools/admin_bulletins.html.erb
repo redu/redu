@@ -29,13 +29,16 @@
 			<%= submit_tag "Moderar" %>
 		 <% end %>
 		<% else %>
-			 Não há notícias a serem moderadas.		
+			 <div class="box_notice">
+				Não há notícias a serem moderadas.
+				<% if @school %>
+				<!--TODO Colocar ajax para o form aparecer e sumir -->
+				<%= link_to "Criar uma notícia", new_school_bulletin_path(@school) %>
+				<% end %>
+				</div>
  		<% end %>
     	
-		<% if @school %>
-		<!--TODO Colocar ajax para o form aparecer e sumir -->
-		<%= link_to "Criar uma notícia", new_school_bulletin_path(@school) %>
-		<% end %>
+
 		
     </div> <!-- fim da listagem --> 
 	

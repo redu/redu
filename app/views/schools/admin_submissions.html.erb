@@ -54,11 +54,11 @@ function selectNone(){
 		 <% end %>
 		<% else %>
 				
-				<%  if @school.submission_type == 1 %>
-			 A configuracão atual da rede permite a <strong>postagem de conteúdo por qualquer membro, sem moderacão.</strong><BR>
-			 Para restringir essa opcão clique em "<%= link_to "configuracões", edit_school_path(@school) %>"
+			<div class="box_notice">	<%  if @school.submission_type == 1 %>
+			 A configuracão atual da rede permite a <strong>postagem de conteúdo por qualquer membro, sem moderacão.</strong>
+			 Para restringir essa opcão clique em "<%= link_to "configuracões", edit_school_path(@school) %>"</div>
 			 <% else %> 
-			 Não há submissões a serem moderadas.
+			 <div class="box_notice">Não há submissões a serem moderadas.</div>
 			 <% end %>
 		<% end %>
 		
