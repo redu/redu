@@ -77,14 +77,14 @@ $(document).ready(function(){
 						</tbody></table>
 </div>
 
-<div class="grid_16">
+<div class="<%= (edit) ? 'grid_15 alpha omega': 'grid_9' %>">
 <%= f.error_messages %>
 </div>
 
 <% end %>
 
 
-<div class="grid_16">
+<div class="<%= (edit) ? 'grid_15 alpha omega': 'grid_9' %>">
 
 <% field_set_tag 'Informações Gerais' do %>
 	<%= f.label "Nome" %>
