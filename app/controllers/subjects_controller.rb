@@ -6,11 +6,11 @@ class SubjectsController < BaseController
 
   def index
     session[:subject_step] = session[:subject_params]= session[:subject_aulas]= session[:subject_id] = nil
-    @subjects = current_user.subjects
+    @subjects = Subject.find(:all, :conditions => "is_public like true")
   end
 
   def show
-    @subject = current_user.subjects.find(params[:id])
+      @subject = Subject.find(:first, :conditions => "is_public like true AND id =#{params[:id].to_i}")
   end
 
   def new
@@ -99,7 +99,11 @@ class SubjectsController < BaseController
 
   def classes
     Enrollment.create_enrollment(params[:id], current_user)
-    @subject = current_user.subjects.find(params[:id])
+    @subject = Subject.find(:first, :conditions => "is_public like true AND id =#{params[:id].to_i}")
+  end
+  
+  def admin_subjects
+    @subjects = current_user.subjects
   end
 
 end

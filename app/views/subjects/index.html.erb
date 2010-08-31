@@ -6,7 +6,7 @@
   <% @subjects.each do |subject| %>
     <% if subject.is_public? %>
       <%unless current_user.enrolled?(subject.id) %>
-        <li><%= link_to subject.title, subject_path(subject) %> | <%#= link_to "Editar", edit_subject_path(subject)%> | <%#= link_to 'Excluir', subject, :confirm => 'Tem certeza?', :method => :delete %> </li>
+        <li><%= link_to subject.title, subject_path(subject) %> | <%#= link_to "Editar", edit_subject_path(subject)%> | <%#=link_to'Excluir', subject, :confirm => 'Tem certeza?', :method => :delete %> </li>
       <%else%>
         <li><%= link_to subject.title, classes_subject_path(subject) %> </li>
       <%end%>
@@ -16,4 +16,4 @@
 </ul>
 
 
-<br /><p><%= link_to "Criar um curso", new_subject_path %></p>
+ 
