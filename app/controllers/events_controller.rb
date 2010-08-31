@@ -7,6 +7,8 @@ class EventsController < BaseController
   
   before_filter :login_required 
   before_filter :is_member_required
+  before_filter :is_event_approved,
+                :only => [:show, :edit, :update, :destroy]
   before_filter :can_manage_required,
                 :only => [:edit, :update, :destroy]
                 
@@ -90,7 +92,7 @@ class EventsController < BaseController
 
     respond_to do |format|
       if @event.save
-        flash[:notice] = "O evento foi criado e adicionado à rede."
+        flash[:notice] = "O evento foi criado e será divulgado assim que for aprovado pelo moderador."
         
         format.html { redirect_to school_event_path(@event.school, @event) }
         format.xml  { render :xml => @event, :status => :created, :location => @event }
@@ -177,6 +179,14 @@ protected
     @school = School.find(params[:school_id])
     
     current_user.has_access_to(@school) ? true : access_denied
+  end
+
+  def is_event_approved
+    @event = Event.find(params[:id])
+    
+    if not @event.state == "approved"
+      redirect_to school_events_path
+    end
   end
 
 end

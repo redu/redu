@@ -5,7 +5,7 @@
 	
 	<% if current_user.can_manage?(event, event.school) %>
 		<div class="grid_4">
-		<%= link_to "Editar", edit_school_event_path(event, event.school), :class => "button icon-edit" %>
+		<%= link_to "Editar", edit_school_event_path(event.school, event), :class => "button icon-edit" %>
 		<%= link_to 'Remover', school_event_path(event, event.school),
 		:confirm => 'Você tem certeza que deseja remover essa notícia permanentemente?',
 		:method => :delete, :class => "button icon-delete" %>	
