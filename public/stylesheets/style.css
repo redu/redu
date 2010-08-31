@@ -2478,8 +2478,8 @@ a:hover.book_step span {
             
 table.booking_steps {
     width: 100%;
-    /*background: #FFF url(../images/steps_line_bg.gif) repeat-x left 49% ;*/
-		 background: #FFF url(../images/steps_bg.gif) no-repeat right -120px;
+    background: #FFF url(../images/steps_line_bg.gif) repeat-x left 49% ;
+		 /*background: #FFF url(../images/steps_bg.gif) no-repeat right -120px;*/
     }
 table.booking_steps td.spacer { background: none; width: 61px}
 
