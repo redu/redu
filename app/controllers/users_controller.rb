@@ -226,7 +226,6 @@ class UsersController < BaseController
     @status = Status.new
     # @course         = Course.new(params[:])
 
-    update_view_count(@user) unless current_user && current_user.eql?(@user)
   end
   
   def tos
