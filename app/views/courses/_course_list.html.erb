@@ -4,7 +4,7 @@
 		<%= render :partial => 'courses/item', :collection => @courses, :as => :course %> 
 	</ul>
 	<% else %>
-		(Nenhuma aula)
+		<div class="box_notice">(Nenhuma aula)</div>
 	<% end %>
 	
 	<%= will_paginate @courses %>
