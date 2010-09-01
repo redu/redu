@@ -3,6 +3,6 @@
 		<%= render :partial => 'schools/item', :collection => @schools, :as => :school %> 
 	</ul>
 	<% else %>
-		Não há redes cadastradas ainda. <%= link_to 'Crie uma agora!', :action => 'new' %>
+		<div class="box_notice">Não há redes cadastradas ainda. <%= link_to 'Crie uma agora!', :action => 'new' %></div>
 	<% end %>
 	<%= will_paginate @schools %>
