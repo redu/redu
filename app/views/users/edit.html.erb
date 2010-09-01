@@ -45,12 +45,8 @@
 
 		<%= label_tag :tag_list, :tags.l %>
 		<%= text_field_tag 'tag_list', @user.tag_list, {:autocomplete => "off"}%>
-		<%= auto_complete_field 'tag_list', {:url => { :controller => "tags", :action => 'auto_complete_for_tag_name'}, :tokens => [','] }%>
 		
 		<em><%= :you_could_tag_yourself.l %>
-		<% if @user.vendor? %>
-		<%= :custom_friendly_local.l %>
-		<% else %>
 
 		<%= :tags_are_comma_separated_keywords_that_describe_you.l %>
 
@@ -58,7 +54,6 @@
 		<%= AppConfig.community_name %>
 		<%= :by_looking_at_the.l %>
 		<%= link_to :tags_page.l, tags_path %>
-		<% end %>
 		</em>
 		<%= submit_tag :save_changes.l, :style => "float: right;" %> 
 	<% end %>
