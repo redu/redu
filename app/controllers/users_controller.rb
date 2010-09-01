@@ -1,7 +1,6 @@
 require "RMagick"
 
 class UsersController < BaseController
-  include Viewable
   layout 'new_application'
   
   if AppConfig.closed_beta_mode
@@ -19,6 +18,8 @@ class UsersController < BaseController
   #uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:show])
   
   # Filters
+  after_filter :create_activity, :only => [:update]
+  
   before_filter :login_required, :only => [:edit, :edit_account, :update, :welcome_photo, :welcome_about, 
                                           :welcome_invite, :return_admin, :assume, :featured,
                                           :toggle_featured, :edit_pro_details, :update_pro_details, :dashboard, :deactivate, 
