@@ -152,7 +152,7 @@ class CoursesController < BaseController
       end
     else # index (Course)
       if params[:search] # search
-        @courses = Course.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
+        @courses = Course.published.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
       else
         @courses = Course.published.paginate(paginating_params)
       end

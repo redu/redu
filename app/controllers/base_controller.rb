@@ -6,10 +6,11 @@ class BaseController < ApplicationController
   layout 'new_application'
   include AuthenticatedSystem
   include LocalizedApplication
+  
   around_filter :set_locale 
   
   skip_before_filter :verify_authenticity_token, :only => :footer_content
-  helper_method :commentable_url
+ #helper_method :commentable_url
   
   before_filter :login_required,  :only => [:teach_index]
 

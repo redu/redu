@@ -1,5 +1,29 @@
 module SchoolsHelper
   
+  
+  def submission_type(school)
+    case school.submission_type
+      when 1
+        'Todos, sem moderação'
+       when 2
+        'Todos, com moderação'
+        when 3
+        'Apenas professores'
+        end
+  end
+  
+   def subscription_type(school)
+    case school.subscription_type
+      when 1
+        'Livre'
+       when 2
+        'Moderado'
+        when 3
+        'Restrito'
+        end
+  end
+  
+  
   def owner_link
     if @school.owner
       link_to @school.owner.display_name, @school.owner

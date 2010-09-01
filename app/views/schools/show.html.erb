@@ -1,6 +1,7 @@
 <% content_for :page_id, 'group' %>
 <%- @meta = { :description => "#{@school.name}'s profile on #{AppConfig.community_name}.", :keywords => "#{@school.name}, #{@school.tags.join(", ") unless @school.tags.nil?}", :robots => AppConfig.robots_meta_show_content }%>
 
+
 <script type="text/javascript">
 var schoolFoldersPath = "<%= school_folders_path(:school_id => @school.id.to_s) %>";
 var schoolCoursesPath = "<%= school_courses_path(:school_id => @school.id.to_s) %>";
@@ -69,8 +70,8 @@ $(document).ready(function() {
 	    <ul>
 		    <li><a href="#tabs-1">Início</a></li>
 		    <li><a href="#tabs-5">Atividades</a></li>
-		    <li><a href="#tabs-2">Aulas</a></li>
-			<li><a href="#tabs-3">Exames</a></li>
+		    <li><a href="#tabs-2">Conteúdo</a></li>
+				<li><a href="#tabs-3">Grupos</a></li>
 		    <li><a href="#tabs-4">Arquivos</a></li>
 	    </ul>
 	    

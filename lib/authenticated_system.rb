@@ -91,7 +91,7 @@ module AuthenticatedSystem
         accepts.html do
           
           flash[:notice] = "Você não tem permissão para acessar esse conteúdo"
-          if params[:controller] == 'schools' and params[:id]
+          if params[:controller] == 'schools' and params[:id] and current_user
             redirect_to school_path(:id => params[:id])
           else
             store_location

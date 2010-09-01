@@ -292,12 +292,12 @@ class User < ActiveRecord::Base
   end
   
   def has_access_to(entity)
-    return true if self.admin? || entity.public || entity.owner == self 
+    return true if self.admin? || entity.owner == self 
     
     case entity.class.to_s 
     when 'Course'
       
-      (entity.school and self.schools.include?(entity.school))   
+      (entity.public || (entity.school && self.schools.include?(entity.school)))   
       #    when 'Exam'
       #      (entity.owner == self || (entity.school == school && self.school_admin?(school) ))
     when 'School'

@@ -513,6 +513,11 @@ class SchoolsController < BaseController
   def show
     @school = School.find(params[:id])
     
+    if @school.removed
+        redirect_to removed_page_path and return
+    end
+    
+    
     if @school
       @featured = @school.featured_courses(3)
       @brand_new = @school.courses.find(:first, :order => "created_at DESC")
@@ -523,21 +528,17 @@ class SchoolsController < BaseController
         :order => 'updated_at DESC', 
         :per_page => AppConfig.items_per_page)
 			@bulletins = @school.bulletins.find(:all, :conditions => "state LIKE 'approved'", :order => "created_at DESC", :limit => 5)
-              
-      if @school.removed
-        redirect_to removed_page_path and return
-      end
 
     end
       
     respond_to do |format|
       if @school
-        @forums = @school.forums
+        #@forums = @school.forums
         @status = Status.new
         
         format.html {
           # se usuário não logado ou escola é privada e o cara não está inscrito nela, mostrar perfil privado
-          if not current_user or (not current_user.has_access_to @school)
+         unless current_user.has_access_to @school
             render 'show_private' and return
           else
             render 'show' and return

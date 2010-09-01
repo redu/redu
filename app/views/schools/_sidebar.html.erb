@@ -1,6 +1,8 @@
 <div class="sidebar grid_4">
   <ul class="sortable clearfix">
-   <li class="clearfix" style="background-color: #FFFFDF; -moz-box-shadow:0 4px 12px #DDDDDD; ">
+   
+	 
+	 <li class="clearfix" style="background-color: #FFFFDF; -moz-box-shadow:0 4px 12px #DDDDDD; ">
     <span class="call"><span style ="background:none repeat scroll 0 0 #FFFFDF; color:orange;">Ações</span></span>
     <ul class="menu">
     	
@@ -22,10 +24,11 @@
 				<%= link_to "Criar evento", new_exam_path(:school_id => @school.id)%>
 			</li>
 			<% end %>
+			<% unless @school.owner == current_user %>
 			<li>
 			<%= subscription_link %>
 			</li>
-			
+			<% end %>
     </ul>
   </li>
 	<!--
@@ -63,6 +66,7 @@
   </li>
 	-->
 	
+	
   <li class="clearfix">
     <span class="call"><span>Membros (<%= @school.users.size %>)</span></span>
       <div class="followship box clearfix">
@@ -87,6 +91,8 @@
 			</div>
     <% end %>
   </li>
+	
+	
 	<li>
 		<% @month_events = month_events(@school.id, Time.now.month) %>
 		
@@ -101,6 +107,8 @@
 		<%= link_to "Ver mais", school_events_path(@school), :class => "icon more" %> | 
 		<%= link_to "Criar evento", new_school_event_path(@school), :class => "icon more" %>
 	</li>
+	
+	
   </ul><!-- end sortable -->
 
 </div><!-- end sidebar -->

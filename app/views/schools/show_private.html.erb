@@ -1,77 +1,88 @@
+<style>
+#resume {
+	background-color:#BBCCFF;
+	padding: 15px;
+	-moz-border-radius: 8px 8px 8px 8px;
+	border-radius: 8px 8px 8px 8px;
+	margin-top: 60px;
+	
+}
+
+#resume div.right div {
+	background-color: white;
+	-moz-border-radius: 8px 8px 8px 8px;
+	padding: 10px;
+	float: right;
+	width: 400px;
+		border-radius: 8px 8px 8px 8px;
+}
+
+#resume div.right div a.join-btn {
+	display: block;
+	paddin: 20px;
+	background-color: orange;
+	color: white;
+	font-size: 1.4em;
+	margin-top: 20px;
+	text-align: center;
+}
+#resume div.right {
+margin-right: 30px;
+}
+
+#resume div.right ul {
+	/*width: 450px;*/
+}
+
+#resume img {
+	float: left;
+margin-right: 20px;
+margin-top: 30px;
+}
+
+#resume div h3 {
+ font-size: 1.2em;
+ color: #514721;
+}
+
+#resume div.right span {
+display: block;
+font-size: 0.8em;
+}
+
+#resume div.right span.desc {
+	font-size: 1em;
+	margin-bottom:  5px;
+}
+
+</style>
+
 <% content_for :page_id, 'group' %>
-<%- @meta = { :description => "#{@school.name}'s profile on #{AppConfig.community_name}.", :keywords => "#{@school.name}, #{@school.tags.join(", ") unless @school.tags.nil?}", :robots => AppConfig.robots_meta_show_content }%>
+<%- @meta = { :description => "Perfil da rede #{@school.name} no #{AppConfig.community_name}.", :keywords => "#{@school.name}, #{@school.tags.join(", ") unless @school.tags.nil?}", :robots => AppConfig.robots_meta_show_content }%>
 
-<script type="text/javascript">
-    function grantKeysToSchool(school_id){
-        //alert(school_id);
-        nKeys = document.getElementById('keys_number').value;
-        
-        new Ajax.Request("<%= url_for :controller => :access_keys, :action => :grant_keys_to_school %>", {
-            method: 'get',
-            parameters: "?id= " + school_id + "&number=" + nKeys,
-            onComplete: function(request){
-                //res = eval("(" + request.responseText + ")");
-                alert('Chaves garantidas!');
-               // document.getElementById('keys_school_box').style.display = 'none';
-            }
-        });
-    }
-	
-	function toggleBox(boxname){
-		var box = document.getElementById(boxname);
-		
-		if (box.style.display == 'none') {
-			Effect.SlideDown(box,0.5);
-		} else {
-			Effect.SlideUp(box,0.5);
-		}
-	}
-	
-	function toggleAssociateBox(){
-		var box = document.getElementById("associate_box");
-		
-		if (box.style.display == 'none') {
-			//Effect.Appear(box);
-			box.style.display = 'block';
-			
-		} else {
-			//Effect.Fade(box);
-			box.style.display = 'none';
-		}
-	}
-	
-	function showKeysSchoolBox(){
-		document.getElementById('grant_keys_link').style.display = 'none';
-        document.getElementById('keys_school_box').style.display = 'inline';
-	}
-	
-	function showAdminLoginBox(){
-		document.getElementById('grant_admin_link').style.display = 'none';
-        document.getElementById('admin_login_box').style.display = 'inline';
-	}
-	
-	function grantSchoolAdmin(schoolId) {
-		var adminLogin = $('admin_login').val();
-		var adminKey = $('admin_key').val();
-		
-		new Ajax.Request("<%= url_for :controller => :schools, :action => :create_school_admin %>", {
-            method: 'get',
-            parameters: "?id= " + school_id + "&login=" + adminLogin + "&key=" + adminKey,
-            onComplete: function(request){
-                //res = eval("(" + request.responseText + ")");
-                alert('admin atribuido!');
-				// TODO colocar para flash aparecer
-				// page["notice"].replace_html flash[:notice] 
-               // document.getElementById('keys_school_box').style.display = 'none';
-            }
-        });
-	}
-</script>
 
-<%= render :partial => "schools/school_info", :locals => {:school => @school,:show => false} %>
-<%= render :partial => "schools/sidebar_private", :locals => {:school => @school} %>
 
-<div class="main grid_12">
-Perfil privado
+<div class="main grid_16">
+
+
+<div id="resume" class="grid_11 push_2">
+    <div class="left">
+        <%= image_tag @school.avatar_photo_url(:medium) %>
+    </div>
+    <div class="right">
+        <div>
+            <h3><%= @school.name %></h3>
+            <span class="desc"><%= @school.description %></span>
+            <span>12 membros</span>
+            <span>Participação: <%= subscription_type(@school) %></span>
+            <span>Submissão: <%= submission_type(@school) %></span>
+						<%= link_to "ENTRAR", join_school_path(@school), :class => "join-btn"%>
+        </div>
+        <ul class="clearfix">
+            <%= render :partial => 'schools/member_short', :collection => @school.users, :as => :member %>
+        </ul>
+    </div>
+</div>
+
 </div><!-- end main -->
 
