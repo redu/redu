@@ -40,7 +40,7 @@ function selectNone(){
 		Selecionar <%=link_to_function 'Todos', 'selectAll()'%> | <%=link_to_function 'Nenhum', 'selectNone()'%> 
 		
 		 <% form_tag :action => :moderate_exams do %>
-			<table style="width: 100%; margin: 15px 10px 20px 10px;">
+			<table style="width: 100%; margin: 15px 10px 20px 10px;" class="common">
 				<tr>
 					<th></th><th>#ID</th><th>Exame</th><th>Autor</th><th>Data</th>
 				</tr>
@@ -59,7 +59,7 @@ function selectNone(){
 			<%= submit_tag "Remover" %>
 		 <% end %>
 		<% else %>
- 			Não há exames publicados ainda.
+ 			<div class="box_notice">Não há exames publicados ainda.</div>
 		<% end %>
     	
     </div> <!-- fim da listagem --> 

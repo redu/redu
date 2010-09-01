@@ -1910,6 +1910,10 @@ div.curriculum h6 {
     margin: 10px;
 }
 
+.sidebar .box {
+    padding: 5px;
+}
+
 .sidebar div.followship ul li {
     float: left;
     margin-right: 6px;
@@ -2460,7 +2464,7 @@ a:hover.book_step span {
     font-size: 17px;
     left: 13px;
     position: absolute;
-    top: 4px;
+    top: 8px;
 }
 
 /*** Current Step ***/

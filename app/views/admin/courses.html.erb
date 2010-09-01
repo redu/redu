@@ -43,16 +43,16 @@ function selectNone(){
 		Selecionar <%=link_to_function 'Todos', 'selectAll()'%> | <%=link_to_function 'Nenhum', 'selectNone()'%> 
 		
 		 <% form_tag :action => :moderate_courses do %>
-			<table style="width: 100%; margin: 15px 10px 20px 10px;">
+			<table style="width: 100%; margin: 15px 10px 20px 10px;" class="common">
 				<tr>
 					<th></th><th>#ID</th><th>Aula</th><th>Autor</th><th>Data</th>
 				</tr>
 		 	<% for course in @courses %>
 				<tr>
 					<tr>
-						<td><%= check_box_tag 'courses[]', course.id, false,:id => "course_"+ course.id.to_s  %></td>
-						<td><%= course.id  %></td>
-						<td><%= link_to course.name, course_path(course), :target => "_blank" %> </td>
+						<td class="check"><%= check_box_tag 'courses[]', course.id, false,:id => "course_"+ course.id.to_s  %></td>
+						<td class="id"><%= course.id  %></td>
+						<td class="name"><%= link_to course.name, course_path(course), :target => "_blank" %> </td>
 						<td><%= course.owner.display_name %> </td>
 						<td><%= time_ago_in_words(course.updated_at) %> </td>
 					</tr>
