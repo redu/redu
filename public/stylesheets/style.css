@@ -1546,6 +1546,8 @@ div.content div.content {
     padding: 10px 0;
     margin-bottom: 20px;
     position: relative;
+		border-top-left-radius: 8px 8px;
+		-moz-border-radius-topleft: 8px; 
 }
 
 #public-profile .overview .photo {
