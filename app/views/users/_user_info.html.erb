@@ -1,11 +1,13 @@
 <% content_for :js do %>
 
+ <% if @user.eql?(current_user) %>
 <script type="text/javascript">
 	    $("#user-description").editInPlace({
 	        url: "<%= url_for(:controller => :users, :action => :update)%>"
 					//default_text: "(clique para adicionar uma descrição)"
 	    });
 </script>
+<% end %>
 
 <% end %>
 
