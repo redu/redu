@@ -168,7 +168,12 @@ class CoursesController < BaseController
       else
         format.js  do
           render :update do |page|
-            page.replace_html  'tabs-2-content', :partial => 'courses_school'
+            if params[:school_content]
+             page.replace_html  'content_list', :partial => 'course_list'
+           else
+              page.replace_html  'tabs-2-content', :partial => 'courses_school'
+              
+            end
           end
         end
       end

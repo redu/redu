@@ -13,7 +13,22 @@ Default color table:
 
 **/
 
+#filters{
+	
+}
 
+#filters li{
+	float:left;
+	margin-right:16px;
+}
+
+#filters li.current{
+}
+#filters li.current a {
+	-moz-border-radius:4px 4px 4px 4px;
+	background:none repeat scroll 0 0 #BBBBBB;
+	color:#FFFFFF;
+}
 
 .criteriaList {
     font-size: 0.8em;

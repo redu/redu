@@ -9,3 +9,11 @@ body {
 .sidebar span.call span {
         background: #5F0000;
 }
+
+#header {
+	opacity: 0.6;
+}
+
+#header:hover {
+	opacity: 1;
+}

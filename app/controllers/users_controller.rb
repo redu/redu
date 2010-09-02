@@ -315,6 +315,8 @@ class UsersController < BaseController
   end
   
   def update
+    access_denied if current_user.id.to_s != params[:user][:id]
+      
     case params[:element_id]
     when 'user-description'
       params[:user] = {:description => params[:update_value]}

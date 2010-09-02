@@ -6,16 +6,38 @@
 					 			 
 				<% end %>
 </ul>
-		
+
+<ul id="filters">
+				<%  if current_user.can_post? @school %>
+				   	 <li>
+				   	 	<%= link_to_remote "Aulas", :url => school_courses_path(:school_id => @school.id.to_s, :school_content => "true"), :method => :get %>
+					 </li>
+					  <li>
+				   	 	<%= link_to "Cursos", "#" %>
+					 </li>
+					  <li>
+				   	 	<%= link_to_remote "Exames", :url => school_exams_path(:school_id => @school.id), :method => :get %>
+					 </li>
+					 			 
+				<% end %>
+</ul>
+
+
+
+		<!--
 		<div id="course_list" >
+		-->
+		<div id="content_list" >
 	<%= render :partial => "course_list"%>
-	</div>
+	
 	
 	<% if @school.courses.size > 0 %>
 	<span style="margin: 10px;">
 	<%= link_to "Ver todas >", courses_path(:school_id => @school.id)%>
 	</span>
 	<% end %>
+	
+	</div>
 
 
 

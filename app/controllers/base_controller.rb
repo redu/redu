@@ -163,7 +163,7 @@ class BaseController < ApplicationController
               :statusable_id => (@course.school) ? @course.school.id : @course.owner.id,
               :user_id => current_user
       })
-    end
+      end
     when 'exams'
       if @exam and @exam.published
       Status.create({:log => true,
@@ -175,7 +175,19 @@ class BaseController < ApplicationController
               :statusable_id => (@exam.school) ? @exam.school.id : @exam.owner.id,
               :user_id => current_user
       })
-    end
+      end
+     when 'users'
+      if @user and params[:update_value]
+      Status.create({:log => true,
+              :logeable_name => params[:update_value],
+              :logeable_type => 'User',
+              :logeable_id => @user.id,
+              :log_action => params[:action],
+              :statusable_type => 'User',
+              :statusable_id => @user.id,
+              :user_id => current_user
+      })
+      end
     when 'schools'
       if @school
       Status.create({:log => true,
