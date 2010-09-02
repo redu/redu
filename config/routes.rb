@@ -84,6 +84,7 @@ ActionController::Routing::Routes.draw do |map|
   map.about '/about', :controller => 'base', :action => 'about'
   map.faq '/faq', :controller => 'base', :action => 'faq'
   map.removed_page   '/removed_item', :controller => 'base', :action => 'removed_item'
+  map.contact 'contact',  :controller => 'base', :action => 'contact'
 
   # SCHOOL
    map.resources :schools,  :member_path => '/:id', :nested_member_path => '/:school_id', :member => {

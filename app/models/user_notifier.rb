@@ -143,7 +143,12 @@ def remove_membership(user, school)
     @body[:school] = event.school
   end
   
-  
+  def contact_redu(contact)
+    setup_sender_info
+    @recipients = "julianalucenaa@gmail.com"
+    @subject    = "[#{contact[:kind]}] #{contact[:subject]}"
+    @body       = "#{contact[:body]} \n #{contact[:name]} <#{contact[:email]}>"
+  end
   
   
 

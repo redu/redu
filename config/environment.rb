@@ -8,7 +8,8 @@ require File.join(File.dirname(__FILE__), 'boot')
 
 require 'desert'
 require 'ostruct'
-require 'yaml'  
+require 'yaml'
+require "validatable"
 
 
 Rails::Initializer.run do |config|
@@ -71,14 +72,17 @@ Rails::Initializer.run do |config|
   # Skip frameworks you're not going to use. To use Rails without a database,
   # you must remove the Active Record framework.
   # config.frameworks -= [ :active_record, :active_resource, :action_mailer ]
-  config.action_mailer.delivery_method = :activerecord
+  config.action_mailer.raise_delivery_errors = true
+  
+  config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-      :enable_starttls_auto => true,
+      #:enable_starttls_auto => true,
       :address => 'smtp.gmail.com',
       :port => 587,
+      :domain => 'www.gmail.com',
       :authentication => :login,
-      :user_name => 'no-reply@redu.com.br',
-      :password => '7987Y5'
+      :user_name => 'diagnosticarapuama@gmail.com',
+      :password => 'apuamaeth0'
   }  
   # Activate observers that should always be running
   # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
