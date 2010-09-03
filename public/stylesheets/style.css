@@ -1857,12 +1857,13 @@ div.curriculum h6 {
     text-transform: uppercase;
     font-weight: bold;
     color: #FF8000;
-    margin: 20px 0 10px 0;
-    padding-bottom: 5px;
+    margin: 25px 0 10px 0;
+   /* padding-bottom: 5px;*/
     display: block;
-    background: url("../images/ui-elements_r9_c55.png") no-repeat 15px bottom;
+   /* background: url("../images/ui-elements_r9_c55.png") no-repeat 15px bottom;*/
     color: white;
     position: relative;
+	
 }
 
 /* dropdown's trigger */
@@ -1912,6 +1913,10 @@ div.curriculum h6 {
     padding: 5px;
     display: block;
     background: #96B8E2;
+		-moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+		border-top-left-radius: 5px 5px;
+    border-top-right-radius: 5px 5px;
 }
 
 .sidebar span.call:hover {
@@ -2024,31 +2029,33 @@ color: gray;
     text-align: center;
 }
 
-#group .sidebar ul.menu {
+.sidebar ul.menu {
     margin-bottom: 10px;
 }
 
-#group .sidebar ul.menu > li {
+.sidebar ul.menu > li {
     display: block;
-}
-
-#group .sidebar ul.menu > li > a {
-    padding: 4px 0;
+		 font-size: .9em;
+		 padding: 4px 0;
     display: block;
-    font-size: .9em;
-    padding-left: 20px;
+   
+    padding-left: 20px; 
+}
+
+.sidebar ul.menu > li > a {
+    
 }
 
 
-#group .sidebar ul.sub-groups {
+.sidebar ul.sub-groups {
 }
 
-#group .sidebar ul.sub-groups > li {
+.sidebar ul.sub-groups > li {
     border-bottom: 1px solid #E9E9E9;
     display: block;
 }
 
-#group .sidebar ul.sub-groups > li > a {
+.sidebar ul.sub-groups > li > a {
     padding: 8px 0;
     display: block;
     font-size: .9em;
@@ -2144,7 +2151,7 @@ color: gray;
 }
 
 #group div.first-page div.featured2 {
-    width: 400px;
+    width: 380px;
 }
 
 #group div.first-page div.featured2 a.name {

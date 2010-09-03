@@ -25,6 +25,7 @@ pt-BR:
         created_at: "created at: "
       course:
         courseable_type: "O tipo de aula"
+        simple_category: "A categoria"
     errors:
       template:
         header:
@@ -1226,7 +1227,7 @@ pt-BR:
   #en: save_and_continue_to_step_three: Save, and continue to step three
   save_and_continue_to_step_three: "Save, and continue to step three"
   #en: save_changes: Save Changes
-  save_changes: Salvar Modificações
+  save_changes: Salvar
   #en: save_forum: Save Forum
   save_forum: Salvar Fórum
   #en: save_page_as: "Save page as:"

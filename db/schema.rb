@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100840175523) do
+ActiveRecord::Schema.define(:version => 20100903144336) do
 
   create_table "acquisitions", :force => true do |t|
     t.integer  "course_id"
@@ -105,15 +105,6 @@ ActiveRecord::Schema.define(:version => 20100840175523) do
     t.string   "attachable_type"
   end
 
-  create_table "course_subjects", :force => true do |t|
-    t.integer  "subject_id"
-    t.integer  "position"
-    t.integer  "courseable_id"
-    t.string   "courseable_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "courses", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -168,13 +159,6 @@ ActiveRecord::Schema.define(:version => 20100840175523) do
     t.integer  "last_send_attempt", :default => 0
     t.text     "mail"
     t.datetime "created_on"
-  end
-
-  create_table "enrollments", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "course_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "events", :force => true do |t|
@@ -457,16 +441,6 @@ ActiveRecord::Schema.define(:version => 20100840175523) do
     t.string   "logeable_name"
   end
 
-  create_table "subjects", :force => true do |t|
-    t.string   "title"
-    t.text     "description"
-    t.integer  "user_id"
-    t.boolean  "is_public"
-    t.integer  "school_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "taggings", :force => true do |t|
     t.integer "tag_id"
     t.integer "taggable_id"
@@ -504,32 +478,32 @@ ActiveRecord::Schema.define(:version => 20100840175523) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "persistence_token"
-    t.string   "activation_code",        :limit => 40
+    t.string   "activation_code",       :limit => 40
     t.datetime "activated_at"
     t.integer  "state_id"
     t.integer  "metro_area_id"
     t.string   "login_slug"
-    t.boolean  "notify_comments",                      :default => true
-    t.boolean  "notify_friend_requests",               :default => true
-    t.boolean  "notify_community_news",                :default => true
+    t.boolean  "notify_messages",                     :default => true
+    t.boolean  "notify_followships",                  :default => true
+    t.boolean  "notify_community_news",               :default => true
     t.integer  "country_id"
     t.datetime "last_login_at"
     t.string   "zip"
     t.date     "birthday"
     t.string   "gender"
-    t.boolean  "profile_public",                       :default => true
-    t.integer  "role_id",                              :default => 3
-    t.integer  "followers_count",                      :default => 0
-    t.integer  "follows_count",                        :default => 0
-    t.integer  "score",                                :default => 0
+    t.boolean  "profile_public",                      :default => true
+    t.integer  "role_id",                             :default => 3
+    t.integer  "followers_count",                     :default => 0
+    t.integer  "follows_count",                       :default => 0
+    t.integer  "score",                               :default => 0
     t.string   "first_name"
     t.string   "last_name"
-    t.boolean  "my_activity",                          :default => true
-    t.boolean  "removed",                              :default => false
+    t.boolean  "my_activity",                         :default => true
+    t.boolean  "removed",                             :default => false
     t.string   "single_access_token"
     t.string   "perishable_token"
-    t.integer  "login_count",                          :default => 0
-    t.integer  "failed_login_count",                   :default => 0
+    t.integer  "login_count",                         :default => 0
+    t.integer  "failed_login_count",                  :default => 0
     t.datetime "last_request_at"
     t.datetime "current_login_at"
     t.string   "current_login_ip"
@@ -540,6 +514,9 @@ ActiveRecord::Schema.define(:version => 20100840175523) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.boolean  "has_invited",                         :default => false
+    t.boolean  "teacher_profile",                     :default => false
+    t.boolean  "auto_status",                         :default => true
   end
 
   add_index "users", ["activated_at"], :name => "index_users_on_activated_at"
