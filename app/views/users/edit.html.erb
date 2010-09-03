@@ -1,69 +1,61 @@
-<div class="grid_12">
-	<% form_tag user_url(@user), :method => 'put', :multipart =>true , :class => 'MainForm' do %>
-	<%= error_messages_for :user %>	
-	<% field_set_tag "Foto do seu perfil" do %>
-		<h3><%= :profile_photo.l %></h3>
-		<%= image_tag( @user.avatar.url(:thumb), :class => "polaroid" ) %>
+<% content_for :js do %>
 
-		<%= label_tag :avatar, :choose_a_photo_for_your_profile.l %>
-		<%= file_field :user, :avatar %>
-		
-		<%= submit_tag :save_changes.l %>
-	<% end %>
+<script type="text/javascript">
 
-	<% field_set_tag "Dados pessoais" do %>
-		<%= label_tag :first_name, "Nome" %>
-		<%= text_field :user, :first_name %>
+var $usertabs;
 
-		<%= label_tag :last_name, "Sobrenome" %>
-		<%= text_field :user, :last_name %>
-		
-		<%= label_tag :birthday, "Data de nascimento" %>
-		<%= date_select :user, :birthday, {:start_year => 1926, :end_year => Time.now.year - 1}%> 
-		
-		<% field_set_tag "Sexo" do %>
-			<%= label_tag :user_gender_m, :male.l, :class => "inline" %>
-			<%= radio_button :user, :gender, User::MALE %>
-			<%= label_tag :user_gender_f, :female.l, :class => "inline" %>
-			<%= radio_button :user, :gender, User::FEMALE %>
-		<% end %>
-	<% end %>
+$(document).ready(function() {
 
-	<% field_set_tag "Localização" do %>
+    $usertabs = $(".user-tabs").tabs();
 
-	<%# render :partial => 'shared/location_chooser', :locals => {:selected_country => @user.country_id, :selected_state => @user.state_id, :selected_metro_area => @user.metro_area_id, :states => @states, :metro_areas => @metro_areas}%>
+});
+</script>
+<% end %>
 
-	<% label_tag :zip, :zippostal_code.l %>
-	<%= text_field :user, :zip, :style=>"width:90px" %>
+<div class="grid_10">
+	<h3>Editando perfil de <%= link_to @user.display_name, @user%> </h3>
 	
-	<% end %>
-	
-	<% field_set_tag "Sobre" do %>
-		<%= label_tag :description, "Fale sobre você" %>
-		<em><%= "Escreva sobre o que você gosta de estudar, as áreas de interesse e conhecimento" %></em>
-		<%= text_area :user, :description, :size => "60x12"  %>
-
-		<%= label_tag :tag_list, :tags.l %>
-		<%= text_field_tag 'tag_list', @user.tag_list, {:autocomplete => "off"}%>
-		
-		<em><%= :you_could_tag_yourself.l %>
-
-		<%= :tags_are_comma_separated_keywords_that_describe_you.l %>
-
-		<%= :you_can_browse_all_content_and_users_on.l %>
-		<%= AppConfig.community_name %>
-		<%= :by_looking_at_the.l %>
-		<%= link_to :tags_page.l, tags_path %>
-		</em>
-		<%= submit_tag :save_changes.l, :style => "float: right;" %> 
-	<% end %>
-
-	
-	<% field_set_tag "Sair do Redu" do %>
-	<%= link_to "Remover Usuário", @user, :confirm => "Você tem certeza que deseja sair do Redu? Todo o seu material criado será removido de forma irreversível.", :method => :delete, :style => "color: red;" %>
-	<% end %>
-	<% end %>
+    <div class="user-tabs tabs">
+        <ul>
+            <li>
+                <a href="#tabs-1">Perfil</a>
+            </li>
+            <li>
+                <a href="#tabs-2">Conta</a>
+            </li>
+            <li>
+                <a href="#tabs-3">Plano</a>
+            </li>
+        </ul>
+        <div id="tabs-1" class="clearfix first-page">
+        	
+					
+					<%= render :partial => "form" %>
+					
+					
+        </div>
+        <div id="tabs-2">
+        	<%= render :partial => "account" %>
+        </div>
+        <div id="tabs-3">
+        	plano
+        </div>
+    </div>
+    <!-- end tabs -->
 </div>
 
-<div class="grid_4">
+<div class="grid_6">
+	<div class="y_addinfo" style="margin-top: 100px;">
+      <div class="addinfocontent">
+          <h1>
+              Informações do Perfil</h1>
+          <p>
+           É importante completar todas as informações do seu perfil! Desta forma, outros estudantes e professores poderão
+					 encontrar você na rede, e o Redu poderá sugerir materiais de estudo de acordo com o seu perfil.
+					  </p>
+						
+						<p>Comece agora e mantenha seu perfil sempre atualizado com as suas necessidades!</p>
+						
+      </div>
+  </div>
 </div>

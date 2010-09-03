@@ -151,6 +151,8 @@ class BaseController < ApplicationController
   
   
   def create_activity
+    return unless current_user.auto_status
+    
   case params[:controller] 
     when 'courses'
       if @course and @course.published
@@ -185,7 +187,7 @@ class BaseController < ApplicationController
               :log_action => params[:action],
               :statusable_type => 'User',
               :statusable_id => @user.id,
-              :user_id => current_user
+              :user_id => @user.id
       })
       end
     when 'schools'

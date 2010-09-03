@@ -1,0 +1,64 @@
+
+	
+	<% form_for @user, :multipart =>true  do |f|  %>
+	<%= f.error_messages %>	
+	
+	<% field_set_tag :profile_photo.l do %>
+		<%= image_tag @user.avatar.url(:thumb) %>
+
+		<%= label_tag :avatar, :choose_a_photo_for_your_profile.l %>
+		<%= f.file_field :avatar %>
+		
+		<%= submit_tag :save_changes.l %>
+	<% end %>
+
+	<% field_set_tag "Dados pessoais" do %>
+		<%= label_tag :first_name, "Nome" %>
+		<%= f.text_field :first_name %>
+
+		<%= label_tag :last_name, "Sobrenome" %>
+		<%= f.text_field :last_name %>
+		
+		<%= label_tag :birthday, "Data de nascimento" %>
+		<%= f.date_select :birthday, {:start_year => 1926, :end_year => Time.now.year - 1}%> 
+		
+		<%= label_tag :user_gender, "Sexo" %>
+			<%= label_tag :user_gender_m, :male.l, :class => "inline" %>
+			<%= f.radio_button :gender, User::MALE %>
+			<%= label_tag :user_gender_f, :female.l, :class => "inline" %>
+			<%= f.radio_button :gender, User::FEMALE %>
+	<% end %>
+
+<% field_set_tag "Perfil" do %>
+<%= label_tag :teacher_profile_0, "Aluno", :class => "inline" %>
+<%= f.radio_button :teacher_profile, false %>
+<%= label_tag :teacher_profile_1, "Professor", :class => "inline" %>
+<%= f.radio_button :teacher_profile, true %>
+<% end %>
+
+
+<!--
+	<% field_set_tag "Localização" do %>
+
+	<%# render :partial => 'shared/location_chooser', :locals => {:selected_country => @user.country_id, :selected_state => @user.state_id, :selected_metro_area => @user.metro_area_id, :states => @states, :metro_areas => @metro_areas}%>
+
+	<% label_tag :zip, :zippostal_code.l %>
+	<%= text_field :user, :zip, :style=>"width:90px" %>
+	
+	<% end %>
+	-->
+	
+	<% field_set_tag "Sobre" do %>
+		<%= label_tag :description, "Fale sobre você", :size => "60x3" %>
+		<em><%= "Escreva sobre o que você gosta de estudar, as áreas de interesse e conhecimento" %></em>
+		<%= f.text_area :description, :rows => "3", :cols => "60"  %>
+
+		<%= label_tag :tag_list, :tags.l %>
+		<%= text_field_tag 'tag_list', @user.tag_list%>
+		
+		
+	<% end %>
+
+	<%= f.submit :save_changes.l, :style => "float: right;" %> 
+	
+	<% end %>

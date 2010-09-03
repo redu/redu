@@ -61,7 +61,7 @@ module BaseHelper
       case type
         when 'user'
          @activity = "acabou de entrar no redu" if item.log_action == "login"  
-         @activity = "atualizou seu status para: " + item.logeable_name if item.log_action == "update"   
+         @activity = "atualizou seu status para: <span style='font-weight: bold;'>\"" + item.logeable_name + "\"</span>" if item.log_action == "update"   
         
         when 'course'
           link_obj = link_to(item.logeable_name, item.logeable)

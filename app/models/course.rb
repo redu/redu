@@ -14,7 +14,6 @@ class Course < ActiveRecord::Base
   has_many :resources, :class_name => "CourseResource", :as => :attachable
   has_many :acquisitions
   has_many :favorites, :as => :favoritable, :dependent => :destroy
-  has_many :logs, :as => :logeable, :dependent => :destroy
   has_many :annotations
   has_one :school_asset, :as => :asset
   has_one :school, :through => :school_asset#, :as => :asset

@@ -1,5 +1,41 @@
 <ul class="sortable clearfix"> 
 
+
+
+<li class="clearfix" style="background-color: #FFFFDF; -moz-box-shadow:0 4px 12px #DDDDDD; ">
+    <span class="call"><span style ="background:none repeat scroll 0 0 #FFFFDF; color:orange;">Ações</span></span>
+    <ul class="menu">
+    	<% mct = current_user.unread_message_count %>
+    	<% unless mct == 0%>
+			<li><%= link_to "Caixa de mensagens ("+mct.to_s+")", user_messages_path%></li>
+			<% end %>
+      <li><a href="" class="closed sb">Acompanhar alunos</a></li>
+      <li><a href="" class="closed sb">Acompanhar aulas</a></li>
+    </ul>
+  </li>
+
+
+<% unless current_user.avatar_file_name and current_user.activated_at and current_user.has_invited and current_user.profile_complete? %>
+<li class="clearfix">
+<span class="call"><span>TODO</span></span>
+    <ul class="menu">
+    	<% unless current_user.profile_complete? %>
+			<li><%= link_to "Completar dados do perfil", edit_user_path(current_user)%></li>
+			<% end %>
+    	<% unless current_user.avatar_file_name %>
+			<li><%= link_to "Fazer upload de foto", edit_user_path(current_user)%></li>
+			<% end %>
+      <% unless current_user.activated_at %>
+			<li>Ativar conta <%= link_to "reenviar e-mail de ativação", resend_activation_path(:email => current_user.email, :id => current_user.id), :class => "icon more"%></li>
+			<% end %>
+			 <% unless current_user.has_invited %>
+			<li><%= link_to "Convidar amigos e contatos", invite_user_path%></li>
+			<% end %>
+    </ul>
+  </li>
+<% end %>
+
+
 <li class="clearfix">
 <span class="call"><span>Quem você segue</span></span>
 <div class="followship box clearfix">
@@ -36,10 +72,11 @@
 <%end%>
 
 </ul>
+<%= link_to "(ver todos)", annotations_user_path, :class => "icon more"%>
 <% else %>
 <div class="box_notice">Você não possui nenhuma anotação de aula ainda.</div>
 <% end %>
-<%= link_to "(ver todos)", annotations_user_path, :class => "info"%>
+
 </div>
 </li>
 

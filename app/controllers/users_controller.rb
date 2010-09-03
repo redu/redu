@@ -107,7 +107,7 @@ class UsersController < BaseController
     
     user.followers << current_user
     if user.save #@user.update_attributes(:follows)
-      UserNotifier.deliver_followship_notice(user, current_user)
+      UserNotifier.deliver_followship_notice(user, current_user) if user.notify_followship
       #flash[:notice] = 'Você está seguindo esse usuário'
     else
       #flash[:erro] = 'Não é possível seguir esse usuário'
@@ -315,7 +315,7 @@ class UsersController < BaseController
   end
   
   def update
-    access_denied if current_user.id.to_s != params[:user][:id]
+    #access_denied if params[:user] and current_user.id.to_s != params[:user][:id]
       
     case params[:element_id]
     when 'user-description'
@@ -347,16 +347,16 @@ class UsersController < BaseController
         format.html do
            flash[:notice] = :your_changes_were_saved.l
             unless params[:welcome] 
-              redirect_to user_path(@user)
-            else
-              redirect_to :action => "welcome_#{params[:welcome]}", :id => @user
+              redirect_to(user_path(@user))
+            else 
+              redirect_to(:action => "welcome_#{params[:welcome]}", :id => @user)
             end
         end
         format.js do
           render :update do |page|
             page.replace_html '#user-description', params[:update_value]
            end
-        end
+        end 
       end
      
     end

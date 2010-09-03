@@ -2,7 +2,7 @@ class ExamsController < BaseController
   
   before_filter :login_required, :except => [:index]
   uses_tiny_mce(:options => AppConfig.question_mce_options, :only => [:new, :edit, :create])
-  after_filter :create_activity, :only => [:create, :answer, :results]
+  after_filter :create_activity, :only => [:create, :results]
   
   
   def publish_score

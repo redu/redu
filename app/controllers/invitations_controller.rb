@@ -29,6 +29,7 @@ class InvitationsController < BaseController
     
     respond_to do |format|
       if @invitation.save
+        @user.update_attribute(:has_invited, true)
         flash[:notice] = :invitation_was_successfully_created.l
         format.html { 
           unless params[:welcome]

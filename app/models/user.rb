@@ -46,15 +46,7 @@ class User < ActiveRecord::Base
 
   # VALIDATIONS
   validates_presence_of     :login, :email, :first_name, :last_name
-  #  validates_presence_of     :password,                   :if => :password_required?
-  #  validates_presence_of     :password_confirmation,      :if => :password_required?
-  #  validates_length_of       :password, :within => 5..20, :if => :password_required?
-  #  validates_confirmation_of :password,                   :if => :password_required?
   validates_presence_of     :metro_area,                 :if => Proc.new { |user| user.state }
-  #  validates_length_of       :login,    :within => 5..20
-  #  validates_length_of       :email,    :within => 3..100
-  #  validates_format_of       :email, :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/
-  #  validates_format_of       :login, :with => /^[\sA-Za-z0-9_-]+$/
   validates_uniqueness_of   :login, :email, :case_sensitive => false
   validates_uniqueness_of   :login_slug
   validates_exclusion_of    :login, :in => AppConfig.reserved_logins
@@ -81,7 +73,6 @@ class User < ActiveRecord::Base
   has_many :courses, :foreign_key => "owner"
   has_many :acquisitions, :as => :acquired_by
   
-  has_many :logs, :dependent => :destroy
   has_many :credits
   has_many :exams, :foreign_key => "owner_id"
   has_many :exam_users#, :dependent => :destroy
@@ -91,25 +82,9 @@ class User < ActiveRecord::Base
   has_many :statuses
   has_many :suggestions
   has_enumerated :role  
-  has_many :posts, :order => "published_at desc", :dependent => :destroy
-  has_many :photos, :order => "created_at desc", :dependent => :destroy # deprecated
+  #has_many :posts, :order => "published_at desc", :dependent => :destroy
   has_many :invitations, :dependent => :destroy
-  has_many :offerings, :dependent => :destroy
-  has_many :rsvps, :dependent => :destroy
 
-  #friendship associations
-  #  has_many :friendships, :class_name => "Friendship", :foreign_key => "user_id",
-  #    :dependent => :destroy
-  #  has_many :accepted_friendships, :class_name => "Friendship",
-  #    :conditions => ['friendship_status_id = ?', 2]
-  #  has_many :pending_friendships, :class_name => "Friendship",
-  #    :conditions => ['initiator = ? AND friendship_status_id = ?', false, 1]
-  #  has_many :friendships_initiated_by_me, :class_name => "Friendship",
-  #    :foreign_key => "user_id", :conditions => ['initiator = ?', true], :dependent => :destroy
-  #  has_many :friendships_not_initiated_by_me, :class_name => "Friendship",
-  #    :foreign_key => "user_id", :conditions => ['initiator = ?', false], :dependent => :destroy
-  #  has_many :occurances_as_friend, :class_name => "Friendship",
-  #    :foreign_key => "friend_id", :dependent => :destroy
 
   #forums
   has_many :moderatorships, :dependent => :destroy
@@ -124,8 +99,8 @@ class User < ActiveRecord::Base
   belongs_to  :metro_area
   belongs_to  :state
   belongs_to  :country
-  has_many    :comments_as_author, :class_name => "Comment", :foreign_key => "user_id", :order => "created_at desc", :dependent => :destroy
-  has_many    :comments_as_recipient, :class_name => "Comment",:foreign_key => "recipient_id", :order => "created_at desc", :dependent => :destroy
+  #has_many    :comments_as_author, :class_name => "Comment", :foreign_key => "user_id", :order => "created_at desc", :dependent => :destroy
+  #has_many    :comments_as_recipient, :class_name => "Comment",:foreign_key => "recipient_id", :order => "created_at desc", :dependent => :destroy
   has_many    :favorites, :order => "created_at desc", :dependent => :destroy
     
 	#bulletins
@@ -140,7 +115,6 @@ class User < ActiveRecord::Base
   named_scope :recent, :order => 'users.created_at DESC'
   named_scope :featured, :conditions => ["users.featured_writer = ?", true]
   named_scope :active, :conditions => ["users.activated_at IS NOT NULL"]  
-  named_scope :vendors, :conditions => ["users.vendor = ?", true]
   named_scope :tagged_with, lambda {|tag_name|
     {:conditions => ["tags.name = ?", tag_name], :include => :tags}
   }
@@ -252,13 +226,15 @@ class User < ActiveRecord::Base
     query
   end  
   
-  def self.opensocial_id_column_name; 'id'; end
-  def title; self.display_name; end
   
   ## End Class Methods  
   
   
   ## Instance Methods
+  def profile_complete?
+    (self.first_name and self.last_name and self.gender and self.description and self.tags)
+  end
+  
   
   def enrolled? subject_id
     if Enrollment.all(:conditions => ["user_id = ? AND subject_id = ?", self.id, subject_id]).length > 0
@@ -286,10 +262,7 @@ class User < ActiveRecord::Base
     end
   end
  
-  def earn_points(activity)
-    thepoints = AppConfig.points[activity]
-    self.update_attribute(:score, self.score + thepoints)
-  end
+
   
   def has_access_to(entity)
     return true if self.admin? || entity.owner == self 
@@ -319,6 +292,11 @@ class User < ActiveRecord::Base
   
   def monitoring_topic?(topic)
     monitored_topics.find_by_id(topic.id)
+  end
+
+  def earn_points(activity)
+    thepoints = AppConfig.points[activity]
+    self.update_attribute(:score, self.score + thepoints)
   end
 
   def to_xml(options = {})
@@ -609,7 +587,9 @@ class User < ActiveRecord::Base
   
     
   def recent_activity
-    Status.friends_statuses(self, limit = 0, offset = 20)
+     Status.friends_statuses(self, limit = 0, offset = 20)
+  #TODO melhorar essa consulta, usar join
+  
     #logs = Log.friends_logs(self, limit = 0, offset = 20)
     #statuses + logs
   end
