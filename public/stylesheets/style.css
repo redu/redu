@@ -2329,18 +2329,28 @@ ul.sub-groups > li {
 
 #actions_user {
     float: left;
-    height: 25px;
     margin-bottom: 30px;
     font-size: 0.9em;
     background-color: #FAFAFA;
     list-style: none;
-    padding: 10px 0 0 0;
     width: 100%;
 }
 #actions_user li {
     float: left;
     margin-left: 20px;
+		padding: 10px;
 }
+
+#actions_user li.selected {
+    background-color: #aaa;
+		 -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+}
+
+#actions_user li.selected a {
+		color: white;
+}
+
 
 ul.activities > li.first_item {
     margin: 0;

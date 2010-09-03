@@ -1,23 +1,38 @@
+<script>
+	function select(content) {
+		$('#content_list').html(' ');
+		$('.selected').removeClass('selected')
+		$('#'+content+'_sel').addClass('selected');
+			$('#spinner').show();
+	}
+</script>
+
+<!--
 <ul id="actions_user">
 				<%  if current_user.can_post? @school %>
 				   	 <li>
 				   	 	<%= link_to "Nova Aula", new_school_course_path(:school_id => @school.id) %>
 					 </li>
+					 
+					 <li>
+				   	 	<%= link_to "Novo Exame", new_school_exam_path(:school_id => @school.id) %>
+					 </li>
 					 			 
 				<% end %>
-</ul>
+</ul> -->
 
-<ul id="filters">
+<ul id="actions_user">
 				<%  if current_user.can_post? @school %>
-				   	 <li>
-				   	 	<%= link_to_remote "Aulas", :url => school_courses_path(:school_id => @school.id.to_s, :school_content => "true"), :method => :get %>
+				   	 <li id="courses_sel" class="selected">
+				   	 	<%= link_to_remote "Aulas", :url => school_courses_path(:school_id => @school.id.to_s, :school_content => "true"), :method => :get, :loading => "select('courses')" %>
 					 </li>
-					  <li>
+					  <li id="subjects_sel">
 				   	 	<%= link_to "Cursos", "#" %>
 					 </li>
-					  <li>
-				   	 	<%= link_to_remote "Exames", :url => school_exams_path(:school_id => @school.id), :method => :get %>
+					  <li id="exams_sel">
+				   	 	<%= link_to_remote "Exames", :url => school_exams_path(:school_id => @school.id, :school_content => "true"), :method => :get, :loading => "select('exams')" %>
 					 </li>
+					 <li><%= image_tag 'spinner.gif', :id => 'spinner', :style => "display: none; float:right;"%></li>
 					 			 
 				<% end %>
 </ul>

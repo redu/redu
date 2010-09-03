@@ -634,10 +634,11 @@ class ExamsController < BaseController
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @exams }
-      if params[:tab]
+      if params[:school_content]
         format.js  do
           render :update do |page|
-            page.replace_html  'tabs-3-content', :partial => 'exams_school'
+            page.replace_html  'content_list', :partial => 'exams_school'
+             page << "$('#spinner').hide()"
           end
         end
       else

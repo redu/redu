@@ -1,13 +1,5 @@
 
-<ul id="actions_user">
-				<%  if current_user.can_post? @school %>
-				   	 <li>
-				   	 	<%= link_to "Novo Exame", new_school_exam_path(:school_id => @school.id) %>
-					 </li>
-					 			 
-				<% end %>
-</ul>
-		
+
 		<div id="exam_list" >
 			<%= render :partial => "exam_list"%>
 		</div>
@@ -16,7 +8,7 @@
 	<span style="margin: 10px;">
 	<%= link_to "Ver todos >", exams_path(:school_id => @school.id)%>
 	</span>
-<%end%>
+	<%end%>
 
 
 

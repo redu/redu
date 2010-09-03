@@ -5,7 +5,7 @@
 <script type="text/javascript">
 var schoolFoldersPath = "<%= school_folders_path(:school_id => @school.id.to_s) %>";
 var schoolCoursesPath = "<%= school_courses_path(:school_id => @school.id.to_s) %>";
-var schoolExamsPath = "<%= school_exams_path(:school_id => @school.id.to_s) %>";
+var schoolGroupsPath = "";
 
 var $schooltabs;
 
@@ -28,7 +28,7 @@ $(document).ready(function() {
 
                 $("#tabs-4-loading").show();
             } else if (ui.index == 3) {
-                // Exams
+                // groups
                 $("#tabs-3-content").html('');
                 jQuery.ajax({
                     data: 'tab=true',
@@ -37,13 +37,13 @@ $(document).ready(function() {
                         $("#tabs-3-loading").hide();
                     },
                     type: 'get',
-                    url: schoolExamsPath
+                    url: schoolGroupsPath
                 });
 
                 $("#tabs-3-loading").show();
             }
             else if (ui.index == 2) {
-                // Aulas
+                // content
                 $("#tabs-2-content").html('');
                 jQuery.ajax({
                     data: 'tab=true',

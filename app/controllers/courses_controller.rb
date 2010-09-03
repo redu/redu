@@ -163,18 +163,19 @@ class CoursesController < BaseController
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @courses }
-      if not params[:tab]
-        format.js
-      else
-        format.js  do
+      
+      format.js  do
+        if params[:school_content]
           render :update do |page|
-            if params[:school_content]
-             page.replace_html  'content_list', :partial => 'course_list'
-           else
-              page.replace_html  'tabs-2-content', :partial => 'courses_school'
-              
-            end
+            page.replace_html  'content_list', :partial => 'course_list'
+            page << "$('#spinner').hide()"
           end
+        elsif params[:tab]
+          render :update do |page|
+            page.replace_html  'tabs-2-content', :partial => 'courses_school'
+          end
+        else
+          render :index
         end
       end
     end
