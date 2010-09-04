@@ -3,7 +3,7 @@
 		<div class="logo grid_4 alpha" onmouseover="$('#change_avatar_link').show();" onmouseout="$('#change_avatar_link').hide()">
         <%= image_tag( @school.avatar_photo_url(:medium) )%>
 				
-				<% if current_user.can_manage? @school %>
+				<% if current_user.school_adminÅ? @school %>
 				<div class="upload-avatar-outter">
          <a href="#" onclick="$('div.upload-avatar-inner').slideToggle(); return false;" id="change_avatar_link" class="config" style="display:none">Mudar imagem</a>
 
