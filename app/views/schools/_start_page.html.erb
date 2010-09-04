@@ -1,13 +1,3 @@
-<!-- end noticias
-<div class="statistics">
-	<span class="call"><span>Info</span></span>
-	<%= @school.users.count%> membros
-</div>
-<div class="news">
-	<span class="call"><span>Notícias</span></span>
-
-</div> -->
-
 <span class="call featured"><span>Aulas</span></span>
 <div class="featured">
 	<div class="photo">
@@ -21,20 +11,3 @@
 		<%= render :partial => 'featured', :collection => featured %>
 	</ul>
 </div><!-- end featured2 -->
-<div class="statistics">
-	<span class="call"><span>Eventos</span></span>
-</div><!-- end news -->
-<div class="news">
-	<span class="call"><span>Notícias</span></span>
-	<% if bulletins && bulletins.size > 0 %>
-		<ul>
-			<%= render :partial => 'bulletins/list', :collection => bulletins, :as => :bulletin , :locals => { :is_index => false } %>
-		</ul>
-		<div class="grid_5"> 
-			<%= link_to '(ver todos)', school_bulletins_path(@school), :class=>"more"%> 
-		</div>
-
-	<% else %>
-			Nenhuma notícia foi enviada ainda. <%= link_to 'Envie uma agora!', new_bulletin_path(:school_id => @school.id) %>
-	<% end %>
-</div><!-- end noticias -->
