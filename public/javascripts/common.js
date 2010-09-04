@@ -24,6 +24,14 @@ function limitChars(textid, limit, infodiv){
 
 $(document).ready(function(){
 	
+  $(".pagination a").live("click", function() {
+    $(".pagination").html("Carregando...");
+    $.get(this.href, null, null, "script");
+    return false;
+  });
+
+	
+	
 		// message box fades out after 5secs
 		//$("#flash").fadeOut(5000);
 		$('#flash').delay(5000, function(){$('#flash').fadeOut()});

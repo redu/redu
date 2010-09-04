@@ -24,7 +24,7 @@ class UsersController < BaseController
                                           :welcome_invite, :return_admin, :assume, :featured,
                                           :toggle_featured, :edit_pro_details, :update_pro_details, :dashboard, :deactivate, 
                                           :crop_profile_photo, :upload_profile_photo]
-  before_filter :find_user, :only => [:edit, :edit_pro_details, :show, :update, :destroy, :statistics, :deactivate, 
+  before_filter :find_user, :only => [:activity, :edit, :edit_pro_details, :show, :update, :destroy, :statistics, :deactivate, 
                                       :crop_profile_photo, :upload_profile_photo ]
   before_filter :require_current_user, :only => [:edit, :update, :update_account,
                                                 :edit_pro_details, :update_pro_details,
@@ -223,10 +223,26 @@ class UsersController < BaseController
 #    #@clippings      = @user.clippings.find(:all, :limit => 5)
 #    @photos         = @user.photos.find(:all, :limit => 5)
 #    @comment        = Comment.new(params[:comment])
+    @statuses = @user.recent_activity
     @status = Status.new
     # @course         = Course.new(params[:])
 
+end
+
+def activity
+  @statuses = @user.recent_activity(params[:limit])
+  
+  respond_to do |format|
+    format.js do
+      render :update do |page|
+        page.insert_html :after,  '#activities', :partial => "statuses/type_proxy", :collection => @statuses, :as => :status, :locals => {:statusable => @user }
+       # page << "$('#more_link')."
+      end
+    end
   end
+  
+end
+
   
   def tos
     nil
@@ -324,7 +340,7 @@ class UsersController < BaseController
     
     @user.attributes      = params[:user]
     @metro_areas, @states = setup_locations_for(@user)
-    @user.update_attribute(:avatar, params[:user][:avatar])
+   #@user.update_attribute(:avatar, params[:user][:avatar])
     
     unless params[:metro_area_id].blank?
       @user.metro_area  = MetroArea.find(params[:metro_area_id])

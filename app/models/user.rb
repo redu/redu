@@ -586,40 +586,10 @@ class User < ActiveRecord::Base
   end
   
     
-  def recent_activity
-     Status.friends_statuses(self, limit = 0, offset = 20)
-  #TODO melhorar essa consulta, usar join
-  
-    #logs = Log.friends_logs(self, limit = 0, offset = 20)
-    #statuses + logs
+  def recent_activity(limit = 0, offset = 20)
+     Status.friends_statuses(self, limit, offset)
   end
   
-  #  def recent_exams_activity
-  #    Log.find(:all, :conditions => ["user_id = ? AND logeable_type = ?", self.id, "Exam"], :order => "created_at DESC", :limit => 3)
-  #  end
-  #
-  #   def recent_courses_activity
-  #    Log.find(:all, :conditions => ["user_id = ? AND logeable_type = ?", self.id, "Course"], :order => "created_at DESC", :limit => 3)
-  #  end
-  
-  def log_activity
-    # a maneira correta de se fazer isso é via consulta no sql pois é muito mais rapido pq nao precisa ficar iterando
-    
-    sql =  "SELECT DISTINCT l.id, l.logeable_id, l.logeable_name, l.logeable_type, l.user_id, l.action, l.created_at FROM"
-    sql += " users u, followship f, logs l WHERE"
-    sql += " f.follows_id = '#{self.id}' AND l.user_id = f.followed_by_id ORDER BY created_at DESC LIMIT 0,5 "
-    # sql += " AND l.created_at > '#{Time.now.utc-10.minutes}'"
-   
-    #TODO tempo?
-    Log.find_by_sql(sql)
-    
-    #@follows = self.follows  
-    #@logs = []
-    #@follows.each do |follows|
-    #  @logs += Log.find(:all, :conditions => ["user_id = ?", follows.id],:limit => 5, :order => 'created_at DESC') 
-    #end
-    #return @logs
-  end
   
   def more_log_activity
     sql =  "SELECT DISTINCT l.id, l.logeable_id, l.logeable_name, l.logeable_type, l.user_id, l.action, l.created_at FROM"

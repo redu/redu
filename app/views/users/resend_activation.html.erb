@@ -1,15 +1,12 @@
-
-        <div id="title">
-            <%= :resend_your_activation_e_mail.l %>
-        </div>
-		
-			
-			<%form_tag resend_activation_url do %>
-        <label for = 'email'>
-        	<%= :enter_your_email_address.l %>
-			</label> 
-        <%= text_field_tag 'email', nil, :size => 35 %>
-        </br>
-          <%= submit_tag :resend_my_activation_e_mail.l %>
-		  <% end %>
-		 
+<div class="grid_16">
+<%form_tag resend_activation_url do %>
+<%field_set_tag :resend_your_activation_e_mail.l do %>
+<label for = 'email'>
+    <%= :enter_your_email_address.l %>
+</label>
+<%= text_field_tag 'email', nil, :size => 35 %>
+</br>
+<%= submit_tag :resend_my_activation_e_mail.l %>
+<% end %>
+<% end %>
+		 </div>

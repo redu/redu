@@ -78,14 +78,14 @@ $(document).ready(function() {
 			<%= javascript_include_tag 'flow.js' %>
 			<%= render :partial => "statuses/create_status", :locals => {:status => @status, :statusable => @user }%>
 			<ul class="activities">
-			<%# if @user == current_user %>
-			<%# collection = @user.statuses %>
-			<%# else %>
-			<% collection = @user.recent_activity %>
-			<%#end%>
-			<%= render :partial => "statuses/type_proxy", :collection => collection, :as => :status, :locals => {:statusable => @user } %>
+			<%= render :partial => "statuses/type_proxy", :collection => @statuses, :as => :status, :locals => {:statusable => @user } %>
 			
 			</ul><!-- end activities -->
+			<%# if statuses%>
+			
+			<%= link_to_remote "mais", :url => {:controller => :users, :action => :activity, :id => current_user.id, :limit => 10}, :method =>:get, :id => "more_link"%>
+			
+			<%#end %>
 		</div>
 		
 		<!-- aprendendo -->

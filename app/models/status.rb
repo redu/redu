@@ -68,7 +68,7 @@ class Status < ActiveRecord::Base
       "WHERE (f.followed_by_id = #{user.id} " + \
       "AND s.user_id = f.follows_id) " + \
       "OR s.user_id = #{user.id} " + \
-      "ORDER BY s.created_at DESC "
+      "ORDER BY s.created_at DESC LIMIT #{limit} OFFSET #{offset}"
           
     Status.find_by_sql(sql)
   end

@@ -105,6 +105,15 @@ ActiveRecord::Schema.define(:version => 20100903144336) do
     t.string   "attachable_type"
   end
 
+  create_table "course_subjects", :force => true do |t|
+    t.integer  "subject_id"
+    t.integer  "position"
+    t.integer  "courseable_id"
+    t.string   "courseable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "courses", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -159,6 +168,13 @@ ActiveRecord::Schema.define(:version => 20100903144336) do
     t.integer  "last_send_attempt", :default => 0
     t.text     "mail"
     t.datetime "created_on"
+  end
+
+  create_table "enrollments", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "subject_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "events", :force => true do |t|
@@ -439,6 +455,16 @@ ActiveRecord::Schema.define(:version => 20100903144336) do
     t.integer  "logeable_id"
     t.string   "log_action"
     t.string   "logeable_name"
+  end
+
+  create_table "subjects", :force => true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.integer  "user_id"
+    t.boolean  "is_public"
+    t.integer  "school_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "taggings", :force => true do |t|

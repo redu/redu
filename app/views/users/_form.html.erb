@@ -1,6 +1,6 @@
 
 	
-	<% form_for @user, :multipart =>true  do |f|  %>
+	<% form_for @user, :html => {:multipart =>true}  do |f|  %>
 	<%= f.error_messages %>	
 	
 	<% field_set_tag :profile_photo.l do %>

@@ -7,7 +7,7 @@ config.cache_classes = false
 config.log_level = :error
 
 # para ver as queries realizadas no console, digite esta linha no console: ActiveRecord::Base.logger = Logger.new(STDOUT) 
-ActiveRecord::Base.logger = Logger.new(STDOUT)
+#ActiveRecord::Base.logger = Logger.new(STDOUT)
 
 # Log error messages when you accidentally call methods on nil.
 config.whiny_nils = true
