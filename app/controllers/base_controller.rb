@@ -19,10 +19,10 @@ class BaseController < ApplicationController
     !logged_in? && controller_name.eql?('base') && params[:format].blank? 
   end  
   
-  if AppConfig.closed_beta_mode
-    before_filter :beta_login_required, :except => [:beta_index, 
-      :create_beta_candidate]
-  end  
+#  if AppConfig.closed_beta_mode
+#    before_filter :beta_login_required, :except => [:beta_index, 
+#      :create_beta_candidate]
+#  end  
   
   def removed_item
     @type = params[:type]

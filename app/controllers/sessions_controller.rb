@@ -63,9 +63,9 @@
 
 class SessionsController < BaseController
   layout 'new_application'
-  if AppConfig.closed_beta_mode
-    skip_before_filter :beta_login_required
-  end  
+#  if AppConfig.closed_beta_mode
+#    skip_before_filter :beta_login_required
+#  end  
 
   def index
     redirect_to :action => "new"
