@@ -1,0 +1,107 @@
+# Logfile created on Mon Sep 06 12:47:56 -0300 2010
+ActionView::TemplateError (undefined method `avatar' for nil:NilClass) on line #4 of app/views/statuses/_question.html.erb:
+1: <li class="clearfix" id="status-<%= question.id %>">
+2:     <div class="photo overlay">
+3:     <img src="images/question-mark.png" class="mark" alt="" />
+4:     <%= image_tag( question.user.avatar.url(:thumb), {:width => "50", :height=>"50" })%>    
+5:     </div>
+6:     <div class="activity clearfix question">
+7:         <div class="actions">
+
+    app/views/statuses/_question.html.erb:4
+    app/views/statuses/_type_proxy.html.erb:4
+    app/controllers/statuses_controller.rb:15:in `create'
+    app/controllers/statuses_controller.rb:14:in `create'
+    app/controllers/statuses_controller.rb:9:in `create'
+    lib/localized_application.rb:25:in `set_locale'
+    lib/flash_session_cookie_middleware.rb:14:in `call'
+    lib/flash_session_cookie_middleware.rb:14:in `call'
+
+
+NoMethodError (undefined method `removed' for nil:NilClass):
+  app/controllers/schools_controller.rb:516:in `show'
+  lib/localized_application.rb:25:in `set_locale'
+  lib/flash_session_cookie_middleware.rb:14:in `call'
+  lib/flash_session_cookie_middleware.rb:14:in `call'
+
+
+ActionController::RoutingError (No route matches "/pessoas/images/question-mark.png" with {:method=>:get}):
+  lib/flash_session_cookie_middleware.rb:14:in `call'
+  lib/flash_session_cookie_middleware.rb:14:in `call'
+
+
+ActionController::RoutingError (No route matches "/pessoas/images/question-mark.png" with {:method=>:get}):
+  lib/flash_session_cookie_middleware.rb:14:in `call'
+  lib/flash_session_cookie_middleware.rb:14:in `call'
+
+
+NoMethodError (undefined method `notify_followship' for #<User:0x104103740>):
+  app/controllers/users_controller.rb:110:in `follow'
+  lib/localized_application.rb:25:in `set_locale'
+  lib/flash_session_cookie_middleware.rb:14:in `call'
+  lib/flash_session_cookie_middleware.rb:14:in `call'
+
+
+NoMethodError (undefined method `notify_followship' for #<User:0x103d80820>):
+  app/controllers/users_controller.rb:110:in `follow'
+  lib/localized_application.rb:25:in `set_locale'
+  lib/flash_session_cookie_middleware.rb:14:in `call'
+  lib/flash_session_cookie_middleware.rb:14:in `call'
+
+
+NoMethodError (undefined method `notify_followship' for #<User:0x104366aa0>):
+  app/controllers/users_controller.rb:110:in `follow'
+  lib/localized_application.rb:25:in `set_locale'
+  lib/flash_session_cookie_middleware.rb:14:in `call'
+  lib/flash_session_cookie_middleware.rb:14:in `call'
+
+
+NoMethodError (undefined method `notify_followship' for #<User:0x104000848>):
+  app/controllers/users_controller.rb:110:in `follow'
+  lib/localized_application.rb:25:in `set_locale'
+  lib/flash_session_cookie_middleware.rb:14:in `call'
+  lib/flash_session_cookie_middleware.rb:14:in `call'
+
+
+ActionView::TemplateError (Missing template shared/_user.erb in view path app/views:vendor/plugins/backgroundrb/app/views:vendor/plugins/ziya/app/views:/Users/guiocavalcanti/.gem/ruby/1.8/gems/will_paginate-2.3.11/app/views:vendor/plugins/white_list/app/views:vendor/plugins/vote_fu/app/views:vendor/plugins/validationgroup/app/views:vendor/plugins/validates_date_time/app/views:vendor/plugins/translate_routes/app/views:vendor/plugins/simple_private_messages/app/views:vendor/plugins/searchlogic/app/views:vendor/plugins/rubyzip-0.9.1/app/views:/Users/guiocavalcanti/.gem/ruby/1.8/gems/right_aws-2.0.0/app/views:vendor/plugins/responds_to_parent/app/views:vendor/plugins/resource_hacks/app/views:/Users/guiocavalcanti/.gem/ruby/1.8/gems/parseline-1.0.3/app/views:vendor/plugins/paperclip/app/views:/Users/guiocavalcanti/.gem/ruby/1.8/gems/oauth-0.4.1/app/views:vendor/plugins/kete-tiny_mce/app/views:vendor/plugins/jrails/app/views:/Users/guiocavalcanti/.gem/ruby/1.8/gems/icalendar-1.1.5/app/views:vendor/plugins/ez_where/app/views:vendor/plugins/enumerations_mixin/app/views:vendor/plugins/delayed_job/app/views:vendor/plugins/calendar_helper/app/views:/Users/guiocavalcanti/.gem/ruby/1.8/gems/calendar_date_select-1.16.1/app/views:vendor/plugins/backgroundrb/app/views:vendor/plugins/authlogic_oauth/app/views:/Users/guiocavalcanti/.gem/ruby/1.8/gems/authlogic-2.1.6/app/views:vendor/plugins/ajaxful_rating/app/views:/Users/guiocavalcanti/.gem/ruby/1.8/gems/adzap-ar_mailer-2.1.8/app/views:vendor/plugins/acts_as_tree/app/views:vendor/plugins/acts_as_taggable_on_steroids/app/views:vendor/plugins/acts_as_state_machine/app/views:vendor/plugins/acts_as_list/app/views) on line #6 of app/views/users/_public_sidebar.html.erb:
+3:     <span class="call"><span>Quem segue <%= @user.first_name %></span></span>
+4:     <div class="followship box clearfix">
+5:     <ul class="clearfix">
+6:     <%= render :partial => 'shared/user', :collection => @user.follows %>
+7:     </ul>
+8: </div><!-- followship -->
+9: </li>
+
+    /Users/guiocavalcanti/.gem/ruby/1.8/gems/will_paginate-2.3.11/lib/will_paginate/finder.rb:168:in `method_missing'
+    /Users/guiocavalcanti/.gem/ruby/1.8/gems/will_paginate-2.3.11/lib/will_paginate/finder.rb:168:in `method_missing'
+    app/views/users/_public_sidebar.html.erb:6
+    app/views/users/show.html.erb:116
+    lib/localized_application.rb:25:in `set_locale'
+    lib/flash_session_cookie_middleware.rb:14:in `call'
+    lib/flash_session_cookie_middleware.rb:14:in `call'
+
+
+NoMethodError (undefined method `notify_followship' for #<User:0x10b97f430>):
+  app/controllers/users_controller.rb:110:in `follow'
+  lib/localized_application.rb:25:in `set_locale'
+  lib/flash_session_cookie_middleware.rb:14:in `call'
+  lib/flash_session_cookie_middleware.rb:14:in `call'
+
+
+ActionView::TemplateError (Missing template shared/_user.erb in view path app/views:vendor/plugins/backgroundrb/app/views:vendor/plugins/ziya/app/views:/Users/guiocavalcanti/.gem/ruby/1.8/gems/will_paginate-2.3.11/app/views:vendor/plugins/white_list/app/views:vendor/plugins/vote_fu/app/views:vendor/plugins/validationgroup/app/views:vendor/plugins/validates_date_time/app/views:vendor/plugins/translate_routes/app/views:vendor/plugins/simple_private_messages/app/views:vendor/plugins/searchlogic/app/views:vendor/plugins/rubyzip-0.9.1/app/views:/Users/guiocavalcanti/.gem/ruby/1.8/gems/right_aws-2.0.0/app/views:vendor/plugins/responds_to_parent/app/views:vendor/plugins/resource_hacks/app/views:/Users/guiocavalcanti/.gem/ruby/1.8/gems/parseline-1.0.3/app/views:vendor/plugins/paperclip/app/views:/Users/guiocavalcanti/.gem/ruby/1.8/gems/oauth-0.4.1/app/views:vendor/plugins/kete-tiny_mce/app/views:vendor/plugins/jrails/app/views:/Users/guiocavalcanti/.gem/ruby/1.8/gems/icalendar-1.1.5/app/views:vendor/plugins/ez_where/app/views:vendor/plugins/enumerations_mixin/app/views:vendor/plugins/delayed_job/app/views:vendor/plugins/calendar_helper/app/views:/Users/guiocavalcanti/.gem/ruby/1.8/gems/calendar_date_select-1.16.1/app/views:vendor/plugins/backgroundrb/app/views:vendor/plugins/authlogic_oauth/app/views:/Users/guiocavalcanti/.gem/ruby/1.8/gems/authlogic-2.1.6/app/views:vendor/plugins/ajaxful_rating/app/views:/Users/guiocavalcanti/.gem/ruby/1.8/gems/adzap-ar_mailer-2.1.8/app/views:vendor/plugins/acts_as_tree/app/views:vendor/plugins/acts_as_taggable_on_steroids/app/views:vendor/plugins/acts_as_state_machine/app/views:vendor/plugins/acts_as_list/app/views) on line #6 of app/views/users/_public_sidebar.html.erb:
+3:     <span class="call"><span>Quem segue <%= @user.first_name %></span></span>
+4:     <div class="followship box clearfix">
+5:     <ul class="clearfix">
+6:     <% render :partial => 'shared/user', :collection => @user.follows %>
+7:     </ul>
+8: </div><!-- followship -->
+9: </li>
+
+    /Users/guiocavalcanti/.gem/ruby/1.8/gems/will_paginate-2.3.11/lib/will_paginate/finder.rb:168:in `method_missing'
+    /Users/guiocavalcanti/.gem/ruby/1.8/gems/will_paginate-2.3.11/lib/will_paginate/finder.rb:168:in `method_missing'
+    app/views/users/_public_sidebar.html.erb:6
+    app/views/users/show.html.erb:116
+    lib/localized_application.rb:25:in `set_locale'
+    lib/flash_session_cookie_middleware.rb:14:in `call'
+    lib/flash_session_cookie_middleware.rb:14:in `call'
+
