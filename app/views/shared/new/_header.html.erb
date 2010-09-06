@@ -32,6 +32,7 @@
 			<ul>
 			<li>
 			<a href="<%=user_path(current_user)%>">Meu Perfil</a>
+			<%= link_to "editar", edit_user_path(current_user), :class => "icon more", :style=>"margin-left: 7px;"%>
 			</li>
 			<li style="border-bottom:1px solid #DDDDDD;">
 				
@@ -45,7 +46,7 @@
 			</li>
 			<% end %>
 			<li>
-			<%= link_to "Mensagens ("+current_user.unread_message_count.to_s+")", user_messages_path(current_user) %>
+			<%= link_to "Mensagens ("+current_user.unread_message_count.to_s+")", user_messages_path(:user_id => current_user.id) %>
 			</li>
 			<li>
 			<%= link_to 'Favoritos', user_favorites_path(:user_id => current_user.id) %>

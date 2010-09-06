@@ -79,14 +79,13 @@ $(document).ready(function() {
 			<%= render :partial => "statuses/create_status", :locals => {:status => @status, :statusable => @user }%>
 			<ul class="activities">
 			<%= render :partial => "statuses/type_proxy", :collection => @statuses, :as => :status, :locals => {:statusable => @user } %>
+			
 			</ul><!-- end activities -->
+			<%# if statuses%>
 			
-			<% unless @statuses.length < 10%>
-			<div id="more">
-			<%= link_to_remote "mais...", :url => {:controller => :statuses, :action => :more, :id => current_user.id, :type => 'user', :limit => 10}, :method =>:get, :loading => "$('#more').html('"+escape_javascript(image_tag('spinner.gif'))+"')"%>
-			</div>
-			<% end %>
+			<%= link_to_remote "mais", :url => {:controller => :users, :action => :activity, :id => current_user.id, :limit => 10}, :method =>:get, :id => "more_link"%>
 			
+			<%#end %>
 		</div>
 		
 		<!-- aprendendo -->

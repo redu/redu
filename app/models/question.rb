@@ -30,9 +30,7 @@ class Question < ActiveRecord::Base
 def set_answer_id # answer id vem como o indice
   if self.alternatives and answer_id.to_i < self.alternatives.length and not self.alternatives[0].new_record?
    self.answer_id = self.alternatives[answer_id.to_i].id
-   #puts 'setou id da resposta'
   end
-  # puts 'question saved id: '+id.to_s + ' | answer_id: ' + answer_id.to_s
 end
 
 

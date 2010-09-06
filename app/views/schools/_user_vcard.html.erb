@@ -1,13 +1,11 @@
-<div id="comment_member">
-		<div id="comment_user_photo">
-			<%= 
-                link_to image_tag( user.avatar.url(:thumb), 
-                    {:width => "50", :height=>"50", :border => 0 }), user 
-            %> 
-		</div>
-		<div id="comment_user_txt">
-			<%= link_to user.display_name, user, :class => "link_member" %> 
-		</div>
-		<div id="comment_member_actions"><a href="#" class="link_actions">Seguir</a> <!-- | <a href="#" class="link_actions">Adicionar como contato</a> -->
-		</div>           
+<div class="vcard<%= ( association.role_id == 6) ? ' teacher' : ''%>">
+    <div class="photo">
+        <%= link_to image_tag( association.user.avatar.url(:thumb),
+        {:width => "50", :height=>"50", :border => 0 }),  association.user %>
     </div>
+    <div class="info">
+        <%= link_to  association.user.display_name,  association.user, :class => "link_member" %>
+				<span><%=  association.user.score%> pontos</span>
+    </div>
+</div>
+

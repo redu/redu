@@ -421,10 +421,16 @@ class SchoolsController < BaseController
   def members
     @school = School.find(params[:id]) #TODO duas queries que poderiam ser apenas 1
     
-     @members = @school.users.paginate(  #optei por .users ao inves de .students
+#     @members = @school.users.paginate(  #optei por .users ao inves de .students
+#      :page => params[:page], 
+#      :order => 'updated_at DESC', 
+#      :per_page => AppConfig.users_per_page)
+    
+     @members = @school.user_school_associations.paginate(  #optei por .users ao inves de .students
       :page => params[:page], 
       :order => 'updated_at DESC', 
       :per_page => AppConfig.users_per_page)
+    
      
     @member_type = "membros"
     
@@ -519,6 +525,8 @@ class SchoolsController < BaseController
     
     
     if @school
+      @statuses = @school.recent_activity(0,10)
+      
       @featured = @school.featured_courses(3)
       @brand_new = @school.courses.find(:first, :order => "created_at DESC")
       @courses = @school.courses.paginate(:conditions => 

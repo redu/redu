@@ -56,8 +56,8 @@ $(document).ready(function() {
 <div class="grid_10">
 <div class="message-tabs tabs">
 	    <ul>
-		    <li><a href="#tabs-1">Caixa de Entrada <%= "(#{@user.unread_message_count})" if @user.unread_messages? %></a></li>
-		    <li><a href="#tabs-2">Caixa de Saída</a></li>
+		    <li><a href="#tabs-1">Entrada <%= "(#{@user.unread_message_count})" if @user.unread_messages? %></a></li>
+		    <li><a href="#tabs-2">Saída</a></li>
 				<li><a href="#tabs-3">Escrever</a></li>
 	    </ul>
 	    

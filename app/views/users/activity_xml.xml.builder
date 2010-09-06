@@ -9,34 +9,34 @@ xml.graph_data do
       "graphic_image_url" => application_url[0..application_url.length-2] + @user.avatar.url(:thumb)
       )
       
-    for log in @logs
+    for activity in @activities
       # user node
       xml.node(
-      "id" => "user_"+ log.user_id.to_s, 
-      "label" => log.user_id.to_s,#log.login, 
-      "tooltip" => log.user_id.to_s#log.login
+      "id" => "user_"+ activity.user_id.to_s, 
+      "label" => activity.user_id.to_s,#activity.activityin, 
+      "tooltip" => activity.user_id.to_s#activity.activityin
 #      "graphic_type" => "image", # TODO avatar??
-#      "graphic_image_url" => application_url[0..application_url.length-2] + log.user.avatar.url(:thumb)
+#      "graphic_image_url" => application_url[0..application_url.length-2] + activity.user.avatar.url(:thumb)
       )
       
       # task node
       xml.node(
-      "id" => log.logeable_type.downcase + "_" + log.logeable_id.to_s, 
-      "label" => log.logeable_name,
-      "tooltip" => log.logeable_name,
-      "url" => application_url[0..application_url.length-2] + '/'+log.logeable_type.downcase.pluralize + "/" + log.logeable_id.to_s#url_for(log.logeable)
+      "id" => activity.logeable_type.downcase + "_" + activity.logeable_id.to_s, 
+      "label" => activity.logeable_name,
+      "tooltip" => activity.logeable_name,
+      "url" => application_url[0..application_url.length-2] + '/'+activity.logeable_type.downcase.pluralize + "/" + activity.logeable_id.to_s#url_for(activity.logeable)
       )
     end
   end
   
   xml.edges do
-     for log in @logs
-       if log.user_id != @user.id 
+     for activity in @activities
+       if activity.user_id != @user.id 
         #user follows user
         xml.edge(     # TODO evitar arestas duplicadas
-        "id" => "follow_" + log.id.to_s,
+        "id" => "follow_" + activity.id.to_s,
         "tail_node_id" => "user_" + @user.id.to_s,
-        "head_node_id" => "user_"+ log.user_id.to_s,
+        "head_node_id" => "user_"+ activity.user_id.to_s,
         "tooltip" => "segue",
         "edge_line_color" => "#0000ff",
         "edge_line_thickness" => "1"
@@ -44,10 +44,10 @@ xml.graph_data do
       end
       #user to object
        xml.edge(
-      "id" =>  "log_" + log.id.to_s,
-      "tail_node_id" => "user_"+ log.user_id.to_s,
-      "head_node_id" => log.logeable_type.downcase + "_" + log.logeable_id.to_s,
-      "tooltip" => log.action, #TODO mensagem de acordo com a action 
+      "id" =>  "activity_" + activity.id.to_s,
+      "tail_node_id" => "user_"+ activity.user_id.to_s,
+      "head_node_id" => activity.logeable_type.downcase + "_" + activity.logeable_id.to_s,
+      "tooltip" => activity.log_action, #TODO mensagem de acordo com a log_action 
       #"bidirectional" => "true",
       "arrowhead"=>"false",
       "edge_line_color" => "#ff0000",

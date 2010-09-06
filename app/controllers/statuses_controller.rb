@@ -42,6 +42,33 @@ class StatusesController < BaseController
     end      
   end
   
+  def more
+    case params[:type]
+      when 'user'
+        @statusable = User.find(params[:id])
+      when 'school'
+        @statusable = School.find(params[:id])
+    end
+    
+    @statuses = @statusable.recent_activity(params[:limit])
+    new_limit = params[:limit].to_i * 10
+    
+    respond_to do |format|
+      format.js do
+        render :update do |page|
+          page << "$('.activities').append('"+escape_javascript(render(:partial => "statuses/type_proxy", :collection => @statuses, :as => :status, :locals => {:statusable => @statusable }))+"')"
+          if @statuses.length < 10
+            page.replace_html "#more",  ''
+          else
+            page.replace_html "#more",  link_to_remote("mais ainda!", :url => {:controller => :statuses, :action => :more, :id => @statusable.id, :type => params[:type], :limit => new_limit}, :method =>:get, :loading => "$('#more').html('"+escape_javascript(image_tag('spinner.gif'))+"')")
+          end
+         end
+      end
+  end
+    
+    
+  end
+  
   def new
     @status = Status.new
   end
