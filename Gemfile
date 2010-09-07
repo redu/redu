@@ -3,7 +3,7 @@ source "http://gems.github.com"
 
 gem "rails", "2.3.5"
 gem "desert"
-gem "rake"
+gem "rake", "0.8.7"
 gem "validatable"
 gem "mysql"
 gem "authlogic"

@@ -56,7 +56,7 @@ DEPENDENCIES
   packet
   parseline
   rails (= 2.3.5)
-  rake
+  rake (= 0.8.7)
   right_aws (~> 2.0.0)
   rmagick (= 2.12.2)
   validatable
