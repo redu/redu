@@ -15,7 +15,7 @@ gem "adzap-ar_mailer"
 gem "oauth"
 gem "right_aws", "~> 2.0.0"
 gem "collectiveidea-delayed_job"
-gem "rmagick"
+gem "rmagick", "2.12.2"
 gem "packet"
 gem "hpricot"
 

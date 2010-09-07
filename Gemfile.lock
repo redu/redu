@@ -36,7 +36,7 @@ GEM
     right_aws (2.0.0)
       right_http_connection (>= 1.2.1)
     right_http_connection (1.2.4)
-    rmagick (2.13.1)
+    rmagick (2.12.2)
     validatable (1.6.7)
     will_paginate (2.3.14)
 
@@ -58,6 +58,6 @@ DEPENDENCIES
   rails (= 2.3.5)
   rake
   right_aws (~> 2.0.0)
-  rmagick
+  rmagick (= 2.12.2)
   validatable
   will_paginate (~> 2.3.11)
