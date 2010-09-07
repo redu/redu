@@ -1,8 +1,8 @@
-Hi there!
-You asked us to remind you of your <%= AppConfig.community_name %> username.
-Your username is: <%= @user.login %>. 
+Olá, <%= @user.display_name %>!
+Você nos pediu para lembrá-lo do seu login no <%= AppConfig.community_name %>.
+Seu login é: <%= @user.login %>. 
 
-If you have any questions, or you think this reminder was sent in error, please contact <%= AppConfig.community_name %> support at <%= AppConfig.support_email %>.
+Se você tiver alguma dúvida ou acha que esse lembrete foi enviado por engano, por favor entre em contato conosco: <%= AppConfig.support_email %>.
 
-Thanks,
-The <%= AppConfig.community_name %> team
+Obrigado,
+Equipe <%= AppConfig.community_name %>

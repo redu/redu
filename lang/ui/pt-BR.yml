@@ -1205,7 +1205,7 @@ pt-BR:
   #en: resend_your_activation_e_mail: Resend your activation e-mail
   resend_your_activation_e_mail: Reenvie seu e-mail de ativação
   #en: reset_my_password: Reset my password
-  reset_my_password: Reset my password
+  reset_my_password: Redefina a minha senha
   #en: retract_rsvp: Retract RSVP
   retract_rsvp: Retract RSVP
   #en: rss: RSS
@@ -1269,7 +1269,7 @@ pt-BR:
   #en: send_invitations: Send Invitations!
   send_invitations: Enviar Convites!
   #en: send_me_my_username: Send me my username
-  send_me_my_username: Send me my username
+  send_me_my_username: Envie-me meu login
   #en: sent_messages: Sent messages
   sent_messages: Mensagens enviadas
   #en: send_this_story_to_friends: Send this message to friends
@@ -1327,7 +1327,7 @@ pt-BR:
   #en: sorry_we_dont_have_any_pros_in_this_skill_category_yet: "Sorry, we don't have any pros in this skill category yet."
   sorry_we_dont_have_any_pros_in_this_skill_category_yet: "Sorry, we don't have any pros in this skill category yet."
   #en: sorry_we_dont_recognize_that_email_address: "Sorry. That e-mail address is not associated with an active account. Are you sure you typed it correctly? Have you signed up and activated your account?"
-  sorry_we_dont_recognize_that_email_address: "Sorry. That e-mail address is not associated with an active account. Are you sure you typed it correctly? Have you signed up and activated your account?"
+  sorry_we_dont_recognize_that_email_address: "Desculpe. Este e-mail não está associado a nenhuma conta ativa. Você digitou corretamente? Você se cadastrou e ativou sua conta?"
   #en: spread_the_word: Spread the word
   spread_the_word: Spread the word
   #en: start_date: Start date
@@ -1652,7 +1652,7 @@ pt-BR:
   #en: your_changes_were_saved: Your changes were saved.
   your_changes_were_saved: Suas alterações foram salvas.
   #en: your_password_has_been_reset_and_emailed_to_you: Your password has been reset and emailed to you.
-  your_password_has_been_reset_and_emailed_to_you: Your password has been reset and emailed to you.
+  your_password_has_been_reset_and_emailed_to_you: Sua senha foi redefinida e enviada para você.
   #en: your_post_was_deleted: Your post was deleted.
   your_post_was_deleted: Your post was deleted.
   #en: your_post_was_successfully_created: Your post was successfully created.
@@ -1666,7 +1666,7 @@ pt-BR:
   #en: your_rsvp_was_successfully_updated: Your RSVP was successfully updated.
   your_rsvp_was_successfully_updated: Your RSVP was successfully updated.
   #en: your_username_was_emailed_to_you: Your username was emailed to you.
-  your_username_was_emailed_to_you: Your username was emailed to you.
+  your_username_was_emailed_to_you: Seu login foi enviado para você.
   #en: youve_been_logged_out_hope_you_come_back_soon: You've been logged out. Hope you come back soon!
   youve_been_logged_out_hope_you_come_back_soon: Você foi deslogado. Espero que volte em breve!
   #en: zippostal_code: "ZIP/Postal code:"

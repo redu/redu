@@ -537,12 +537,20 @@ end
   end
   
   def forgot_password  
-    return unless request.post?   
+    return unless request.post?
     
     @user = User.active.find_by_email(params[:email])  
+    
     if @user && @user.reset_password
-      UserNotifier.deliver_reset_password(@user)
+      UserNotifier.deliver_reset_password(@user)      
       @user.save
+      
+      # O usuario estava ficando logado, apos o comando @user.save.
+      # Destruindo sessao caso ela exista.
+      if UserSession.find
+        UserSession.find.destroy
+      end
+
       redirect_to login_url
       flash[:info] = :your_password_has_been_reset_and_emailed_to_you.l      
     else
