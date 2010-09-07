@@ -13,19 +13,7 @@ require "validatable"
 
 
 Rails::Initializer.run do |config|
-  
-  config.gem "authlogic"
-  #config.gem "brcobranca"
-  #config.gem "rghost"
-  #config.gem "rghost_barcode"
-  config.gem "parseline"
-  config.gem 'calendar_date_select'
-  config.gem 'icalendar'        
-  config.gem 'will_paginate', :version => '~> 2.3.11', :source => 'http://gemcutter.org'
-  config.gem "adzap-ar_mailer"
-  config.gem "oauth"
-  config.gem "right_aws", :version => '2.0.0'
-  
+
   # S3 credentials
   if File.exists?("#{RAILS_ROOT}/config/s3.yml")
     S3_CONFIG = YAML.load_file("#{RAILS_ROOT}/config/s3.yml")

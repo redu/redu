@@ -1,0 +1,63 @@
+GEM
+  remote: http://rubygems.org/
+  remote: http://gems.github.com/
+  specs:
+    actionmailer (2.3.5)
+      actionpack (= 2.3.5)
+    actionpack (2.3.5)
+      activesupport (= 2.3.5)
+      rack (~> 1.0.0)
+    activerecord (2.3.5)
+      activesupport (= 2.3.5)
+    activeresource (2.3.5)
+      activesupport (= 2.3.5)
+    activesupport (2.3.5)
+    adzap-ar_mailer (2.1.8)
+    authlogic (2.1.6)
+      activesupport
+    calendar_date_select (1.16.1)
+    collectiveidea-delayed_job (1.8.2)
+    desert (0.5.4)
+    hpricot (0.8.2)
+    icalendar (1.1.5)
+    mysql (2.8.1)
+    oauth (0.4.3)
+    packet (0.1.15)
+    parseline (1.0.3)
+    rack (1.0.1)
+    rails (2.3.5)
+      actionmailer (= 2.3.5)
+      actionpack (= 2.3.5)
+      activerecord (= 2.3.5)
+      activeresource (= 2.3.5)
+      activesupport (= 2.3.5)
+      rake (>= 0.8.3)
+    rake (0.8.7)
+    right_aws (2.0.0)
+      right_http_connection (>= 1.2.1)
+    right_http_connection (1.2.4)
+    rmagick (2.13.1)
+    validatable (1.6.7)
+    will_paginate (2.3.14)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  adzap-ar_mailer
+  authlogic
+  calendar_date_select
+  collectiveidea-delayed_job
+  desert
+  hpricot
+  icalendar
+  mysql
+  oauth
+  packet
+  parseline
+  rails (= 2.3.5)
+  rake
+  right_aws (~> 2.0.0)
+  rmagick
+  validatable
+  will_paginate (~> 2.3.11)
