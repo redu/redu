@@ -162,7 +162,7 @@ class EventsController < BaseController
   def notify
     event = Event.find(params[:id])
     notification_time = event.start_time - params[:days].to_i.days
-    Delayed::Job.enqueue(EventMailingJob.new(current_user, event))#, notification_time) #TODO Descomentar quando estiver funcionando.
+    Delayed::Job.enqueue(EventMailingJob.new(current_user, event), nil, notification_time) #TODO Verificar se a prioridade nil (zero) pode trazer problemas
     flash[:notice] = "Sua notificação foi agendada."
     
     redirect_to school_event_path(event.school_id, event)
