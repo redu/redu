@@ -6,7 +6,7 @@
 			<!--%= link_to "Termos de Uso", application_url + "policy/tos.txt"  %-->
 			|<!--%= link_to "Privacidade", application_url + "policy/privacy.txt"  %-->
 			<%= link_to "Privacidade", :controller => "base", :action => "privacy" %>
-			| Contato
+			| <%= link_to "Contato", :controller => "base", :action => "contact" %>
 			| Trabalhe conosco
 			| Blog
 			<% if @rss_title && @rss_url %>

@@ -291,23 +291,23 @@ class BaseController < ApplicationController
   end  
 
   def contact
-    @contact = Contact.new
-  end
-
-  def send_contact_mail
-    @contact = Contact.new
-    @contact.name = params[:contact][:name]
-    @contact.email = params[:contact][:email]
-    @contact.kind = params[:contact][:kind]
-    @contact.subject = params[:contact][:subject]
-    @contact.body = params[:contact][:body]
-    if @contact.valid?
-      @contact.deliver
-      flash[:notice] = "Seu e-mail foi enviado, aguarde o nosso contato. Obrigado."
-      redirect_to home_path
+    if request.get?
+      @contact = Contact.new
     else
-      render :action => :contact
+      @contact = Contact.new
+      @contact.name = params[:contact][:name]
+      @contact.email = params[:contact][:email]
+      @contact.kind = params[:contact][:kind]
+      @contact.subject = params[:contact][:subject]
+      @contact.body = params[:contact][:body]
+      if @contact.valid?
+        @contact.deliver
+        flash[:notice] = "Seu e-mail foi enviado, aguarde o nosso contato. Obrigado."
+        redirect_to home_path
+      else
+        render :action => :contact, :method => :get
+      end
     end
   end
-
+  
 end
