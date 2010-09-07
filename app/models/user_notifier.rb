@@ -1,5 +1,5 @@
 class UserNotifier < ActionMailer::Base
-  self.delivery_method = :activerecord
+  self.delivery_method = :activerecord # É necessário iniciar o ar_sendmail para que os e-mail sejam enviados
   include ActionView::Helpers::TextHelper
   include ActionView::Helpers::SanitizeHelper
   extend  ActionView::Helpers::SanitizeHelper::ClassMethods # Required for rails 2.2
@@ -139,15 +139,15 @@ def remove_membership(user, school)
     @sent_on     = Time.now
     @body[:user] = user
     @body[:event] = event
-    @body[:event_url]  = school_event_path(event.school, event)
+    @body[:event_url]  = school_event_url(event.school, event)
     @body[:school] = event.school
   end
   
   def contact_redu(contact)
     setup_sender_info
-    @recipients = "julianalucenaa@gmail.com"
-    @subject    = "[#{contact[:kind]}] #{contact[:subject]}"
-    @body       = "#{contact[:body]} \n #{contact[:name]} <#{contact[:email]}>"
+    @recipients = "#{AppConfig.contact_emails}"
+    @subject    = "[#{contact.kind}] #{contact.subject}"
+    @body       = "#{contact.body} From #{contact.name} <#{contact.email}>"
   end
   
   
@@ -244,13 +244,19 @@ def remove_membership(user, school)
   end
   
   def reset_password(user)
-    setup_email(user)
-    @subject    += "#{AppConfig.community_name} User information"
+    setup_sender_info
+    @recipients  = "#{user.email}"
+    @subject     = "Sua senha do #{AppConfig.community_name} foi redefinida!"
+    @sent_on     = Time.now
+    @body[:user] = user
   end
 
   def forgot_username(user)
-    setup_email(user)
-    @subject    += "#{AppConfig.community_name} User information"
+    setup_sender_info
+    @recipients  = "#{user.email}"
+    @subject     = "Lembrete de login do #{AppConfig.community_name}"
+    @sent_on     = Time.now
+    @body[:user] = user
   end
 
   
