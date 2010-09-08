@@ -19,6 +19,7 @@ GEM
     collectiveidea-delayed_job (1.8.2)
     desert (0.5.4)
     hpricot (0.8.2)
+    htmlentities (4.2.1)
     icalendar (1.1.5)
     mysql (2.8.1)
     oauth (0.4.3)
@@ -50,6 +51,7 @@ DEPENDENCIES
   collectiveidea-delayed_job
   desert
   hpricot
+  htmlentities (= 4.2.1)
   icalendar
   mysql
   oauth
