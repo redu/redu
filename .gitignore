@@ -1,3 +1,12 @@
 db/schema.rb
 log/*.log
 log/**/*
+.DS_Store
+app/.DS_Store
+app/models/.DS_Store
+redu.tmproj
+vendor/.DS_Store
+vendor/plugins/.DS_Store
+config/database.yml
+
+

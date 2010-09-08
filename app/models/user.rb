@@ -70,7 +70,7 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :followers, :class_name => "User", :join_table => "followship", :association_foreign_key => "followed_by_id", :foreign_key => "follows_id", :uniq => true
   
   #COURSES
-  has_many :courses, :foreign_key => "owner"
+  has_many :courses, :foreign_key => "owner", :conditions => {:is_clone => false}
   has_many :acquisitions, :as => :acquired_by
   
   has_many :credits
@@ -110,6 +110,10 @@ class User < ActiveRecord::Base
 
   #subject
   has_many :subjects, :order => 'title ASC'
+  
+  #groups
+  has_many :group_user
+  has_many :groups, :through => :group_user
   
   #named scopes
   named_scope :recent, :order => 'users.created_at DESC'

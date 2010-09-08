@@ -25,7 +25,7 @@ title2 = titles.split('-')[1]
         <% current_user.courses.each do |course| %><!--cursos tem ser filtrador pro usuuarios-->
           <li>
             <% unless session[:subject_id].nil? %>
-              <%= check_box_tag "aulas[]", course.id, current_user.subjects.find(session[:subject_id]).course_subjects.detect{|cs| cs.courseable_id == course.id}.nil? ? false : true  %>
+              <%= check_box_tag "aulas[]", course.id, current_user.subjects.find(session[:subject_id]).course_subjects.detect{|cs| cs.courseable.name == course.name}.nil? ? false : true  %>
             <%else%>
               <%= check_box_tag "aulas[]", course.id %>
             <%end%>

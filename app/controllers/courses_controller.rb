@@ -128,6 +128,7 @@ class CoursesController < BaseController
     cond = Caboose::EZ::Condition.new
     cond.append ["simple_category_id = ?", params[:category]] if params[:category]
     cond.append ["courseable_type = ?", params[:type]] if params[:type]
+    cond.append ["is_clone = false"]
     
     paginating_params = {
       :conditions => cond.to_sql,
@@ -166,6 +167,7 @@ class CoursesController < BaseController
       
       format.js  do
         if params[:school_content]
+          
           render :update do |page|
             page.replace_html  'content_list', :partial => 'course_list'
             page << "$('#spinner').hide()"

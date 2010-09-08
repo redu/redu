@@ -1,0 +1,28 @@
+= Deep Cloning Plugin
+
+This plugin gives every ActiveRecord::Base object the possibility to do a deep clone.
+
+Repository is on github: http://github.com/DefV/deep_cloning/tree/master
+
+Install with:
+  script/plugin install git://github.com/DefV/deep_cloning.git
+
+== Example
+
+=== Cloning a model without an attribute
+   pirate.clone :except => :name
+ 
+=== Cloning a model without multiple attributes
+   pirate.clone :except => [:name, :nick_name]
+=== Cloning one single association
+   pirate.clone :include => :mateys
+
+=== Cloning multiple associations
+   pirate.clone :include => [:mateys, :treasures]
+
+=== Cloning really deep
+   pirate.clone :include => {:treasures => :gold_pieces}
+
+=== Cloning really deep with multiple associations
+   pirate.clone :include => [:mateys, {:treasures => :gold_pieces}]
+Copyright (c) 2008 Jan De Poorter, released under the MIT license
