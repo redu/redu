@@ -1,0 +1,98 @@
+10
+
+dir
+0
+http://ec2-67-202-28-13.compute-1.amazonaws.com/svn/redu/Redu/vendor/plugins/deep_cloning/test/fixtures
+http://ec2-67-202-28-13.compute-1.amazonaws.com/svn/redu
+add
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+b630d61d-3281-de11-9aae-0019d1013b4f
+
+matey.rb
+file
+
+
+
+add
+
+mateys.yml
+file
+
+
+
+add
+
+pirate.rb
+file
+
+
+
+add
+
+pirates.yml
+file
+
+
+
+add
+
+parrot.rb
+file
+
+
+
+add
+
+parrots.yml
+file
+
+
+
+add
+
+gold_piece.rb
+file
+
+
+
+add
+
+treasure.rb
+file
+
+
+
+add
+
+gold_pieces.yml
+file
+
+
+
+add
+
+treasures.yml
+file
+
+
+
+add
+

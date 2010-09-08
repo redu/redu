@@ -28,6 +28,7 @@
 					 </li>
 					  <li id="subjects_sel">
 				   	 	<%= link_to "Cursos", "#" %>
+			 
 					 </li>
 					  <li id="exams_sel">
 				   	 	<%= link_to_remote "Exames", :url => school_exams_path(:school_id => @school.id, :school_content => "true"), :method => :get, :loading => "select('exams')" %>

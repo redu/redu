@@ -6,7 +6,7 @@ class Subject < ActiveRecord::Base
 
   #associations
   has_many :course_subjects, :dependent => :destroy
-  has_many :enrollments, :as => :enrollmentable, :dependent => :destroy
+  has_many :enrollments, :dependent => :destroy
   belongs_to :user
   belongs_to :school
 
@@ -48,16 +48,20 @@ class Subject < ActiveRecord::Base
 
 
   
-  def create_course_subject_type_course aulas, subject_id
+   def create_course_subject_type_course aulas, subject_id, current_user
     
-    aulas.each do |aula|
-     cs = CourseSubject.new
-     cs.subject_id = subject_id
-     cs.courseable_id = aula
-     cs.courseable_type = "Course"
-     cs.save
+     aulas.each do |aula|
+        course = current_user.courses.find(aula) #find the course by id
+        clone_course = course.clone #clone it
+        clone_course.is_clone = true
+        clone_course.save#and save it    
+        cs = CourseSubject.new
+        cs.subject_id = subject_id
+        cs.courseable_id = clone_course.id
+        cs.courseable_type = "Course"
+        cs.save    
     end
-
+        
   end
 
   def create_course_subject_type_exam exams, subject_id

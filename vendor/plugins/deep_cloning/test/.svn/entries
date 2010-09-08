@@ -1,0 +1,77 @@
+10
+
+dir
+0
+http://ec2-67-202-28-13.compute-1.amazonaws.com/svn/redu/Redu/vendor/plugins/deep_cloning/test
+http://ec2-67-202-28-13.compute-1.amazonaws.com/svn/redu
+add
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+b630d61d-3281-de11-9aae-0019d1013b4f
+
+test_helper.rb
+file
+
+
+
+add
+
+schema.rb
+file
+
+
+
+add
+
+database.yml
+file
+
+
+
+add
+
+deep_cloning_test.rb
+file
+
+
+
+add
+
+fixtures
+dir
+
+
+
+add
+
+deep_cloning.sqlite.db
+file
+
+
+
+add
+
+
+
+
+
+has-props
+has-prop-mods
+

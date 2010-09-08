@@ -1,3 +1,4 @@
+<% unless @subject.nil? %>
 <div id="breadcrumbs"><b><strong><%= link_to "Cursos", subjects_path %></strong></b> > <b><strong><%= h @subject.title %></strong></b> </div>
 <div class="grid_11">
   <ul class="default">
@@ -18,4 +19,7 @@
   </ul>
 </div><!-- end grid_11 -->
 
+<% else%>
+curso nao publico atualizado.
+<%end%>
 

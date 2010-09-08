@@ -107,6 +107,7 @@ ActionController::Routing::Routes.draw do |map|
    } do |school|
     school.resources :folders, :member =>{:upload => :get, :download => :get, :rename => :get, :destroy_folder => :delete, :destroy_file => :delete}
     school.resources :courses
+    school.resources :subjects
     school.resources :exams
     school.resources :bulletins
     school.resources :events, :member => { :vote => [:post,:get], :notify => :post }, :collection => { :past => :get, :ical => :get , :day => :get}
