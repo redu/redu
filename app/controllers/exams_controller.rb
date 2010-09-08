@@ -216,192 +216,245 @@ class ExamsController < BaseController
   
   
   def cancel
-    Exam.find(session[:exam_id]).destroy
-    session[:exam_id] = nil
+#    Exam.find(session[:exam_id]).destroy
+#    session[:exam_id] = nil
+    Exam.find(session[:exam_params][:id]).destroy if session[:exam_params] and session[:exam_params][:id]
+    session[:exam_params] = nil
+    
     flash[:notice] = "Criação de exame cancelada."
     redirect_to exams_path
   end
   
+  
+  
+  
+  
   def new
-    if params[:school_id]
-      @school = School.find(params[:school_id]) 
-    end
-    
-    case params[:step]
-      when "2"
-      
-      if params[:exam_type] == 'simple'
-        
-        
-        @exam = Exam.find(session[:exam_id])
-        
-        question = @exam.questions.build
-        #4.times { question.alternatives.build }
-        
-        @exam.enable_validation_group :step2
-        @edit = false
-        render "step2_simple" and return
-        
-      elsif params[:exam_type] == 'formative'
-        
-        
-      elsif params[:exam_type] == 'quiz'
-        
-        
-      end
-      
-      when "3"
-      @exam = Exam.find(session[:exam_id])
-      @schools = current_user.schools
-      
-      @exam_type = params[:exam_type]
-      
-      @exam.enable_validation_group :step3
-      render "step3" and return
-      
-    else # 1
-      # session[:course_id] = nil
-      if session[:exam_id]
-        @exam = Exam.find(session[:exam_id])
-      else
-        @exam = Exam.new
-      end
-      
-      
-      render "step1" and return
-    end
-    
-    
-  end
+  session[:exam_params] ||= {}
+  @exam = Exam.new(session[:exam_params])
+  @exam.current_step =  params[:step]#session[:exam_step]
+ 
+end
+
+def create
+  
+  session[:exam_params].deep_merge!(params[:exam]) if params[:exam]
+  @exam = Exam.new(session[:exam_params])
+  @exam.current_step =  params[:step]#session[:exam_step]
+  @exam.owner = current_user
   
   
-  def create
-    
-    case params[:step]
-      when "1"
-      @exam = Exam.new(params[:exam])
-      @exam.owner = current_user
-      @exam.enable_validation_group :step1
-      
-      respond_to do |format|
-        if @exam.save
-          
-          session[:exam_id] = @exam.id
-          
-          format.html { 
-            redirect_to :action => :new , :exam_type => params[:exam_type], :step => "2", :school_id => params[:school_id]
-          }
-        else  
-          format.html { render "step1" }
-        end
-      end
-      
-      
-      when "2"
-      
-      if params[:exam_type] == 'simple'
-        
-        @exam = Exam.find(session[:exam_id])
-        
-        
-        if params[:sbt_opt] == "0" # save exam
-          
-          @exam.enable_validation_group :step2
-          
-          respond_to do |format|
-            
-            if @exam.update_attributes(params[:exam])
-              
-              format.html do
-                redirect_to :action => :new , :exam_type => params[:exam_type], :step => "3", :school_id => params[:school_id]
-              end
-              format.js do
-                render :update do |page|
-                  page << "jQuery('#save_info').html('Salvo em #{Time.now.utc}')"
-                end
-              end
-            else  
-              @edit = false
-              format.html do
-                render "step2_simple" 
-              end
-              format.js do
-                render :update do |page| 
-                  page << "alert('Erro ao salvar. Tente novamente em alguns instantes.')"
-                end
-              end
-            end
-          end
-          
-          
-        elsif params[:sbt_opt] == "1" # new question
-          
-          @exam.update_attributes(params[:exam])
-          
-          redirect_to :controller => :questions, :action => :new, :exam_type => params[:exam_type], :school_id => params[:school_id]
-          
-        elsif params[:sbt_opt] == "2" # add question  
-          #save_dft
-          @exam.update_attributes(params[:exam])
-          redirect_to :controller => :questions, :action => :add, :exam_type => params[:exam_type], :school_id => params[:school_id]
-          
-        elsif params[:sbt_opt] == "3" # add resource  TODO mudar
-          #save_dft
-          @exam.update_attributes(params[:exam])
-          # redirect_to :controller => :resources, :action => :add, :exam_type => params[:exam_type]
-          
-        elsif params[:sbt_opt] == "4" # edit question
-          @exam.update_attributes(params[:exam])
-          @exam_type = params[:exam_type]
-          @question = Question.find(params[:opt_param])
-          render "edit_question"
-          # redirect_to :action => :edit_question, :exam_type => params[:exam_type]
-          
-          
-        end
-        
-        
-      elsif params[:exam_type] == 'formative'
-        
-      elsif params[:exam_type] == 'quiz'
-        
-      end
-      
-      ############# PASSO 3 ##############
-      when "3"
-      
-      @exam = Exam.find(session[:exam_id])
-      @exam.enable_validation_group :step3
-      
-      @exam.published = true # se o usuário completou os 3 passos então o exame está publicado
-      
-      if params[:post_to]
-        SchoolAsset.create({:asset_type => "Exam", :asset_id => @exam.id, :school_id => params[:post_to].to_i})
-      end
-      
-      respond_to do |format|
-        
-        if @exam.update_attributes(params[:exam])
-          
-          # remove exame da sessao
-          session[:exam_id] = nil
-          
-          flash[:notice] = 'O exame foi criado com sucesso! '
-          format.html { 
-            #redirect_to(@course)
-            redirect_to @exam
-          }
-        else  
-          format.html { render "step3" }
-        end
-        
-      end
-      
-      
+  if @exam.valid?
+    if params[:back_button]
+      @exam.previous_step
+    elsif @exam.last_step?
+      @exam.save if @exam.all_valid? and @exam.new_record?
+    else
+      @exam.next_step
     end
     
-    
+   # session[:exam_step] = @exam.current_step
   end
+  if @exam.new_record?
+    if params[:step] == 'general' and  @exam.questions.empty?
+       @exam.questions.build
+    end
+    render "new"
+  else
+    session[:exam_params] = nil
+    flash[:notice] = "Exame criado!"
+    redirect_to @exam
+  end
+end
+  
+  
+  
+  
+  
+  
+  
+  
+  
+#  def new
+#    if params[:school_id]
+#      @school = School.find(params[:school_id]) 
+#    end
+#    
+#    case params[:step]
+#      when "2"
+#      
+#      if params[:exam_type] == 'simple'
+#        
+#        
+#        @exam = Exam.find(session[:exam_id])
+#        
+#        question = @exam.questions.build
+#        #4.times { question.alternatives.build }
+#        
+#        @exam.enable_validation_group :step2
+#        @edit = false
+#        render "step2_simple" and return
+#        
+#      elsif params[:exam_type] == 'formative'
+#        
+#        
+#      elsif params[:exam_type] == 'quiz'
+#        
+#        
+#      end
+#      
+#      when "3"
+#      @exam = Exam.find(session[:exam_id])
+#      @schools = current_user.schools
+#      
+#      @exam_type = params[:exam_type]
+#      
+#      @exam.enable_validation_group :step3
+#      render "step3" and return
+#      
+#    else # 1
+#      # session[:course_id] = nil
+#      if session[:exam_id]
+#        @exam = Exam.find(session[:exam_id])
+#      else
+#        @exam = Exam.new
+#      end
+#      
+#      
+#      render "step1" and return
+#    end
+#    
+#    
+#  end
+#  
+#  
+#  def create
+#    
+#    case params[:step]
+#      when "1"
+#      @exam = Exam.new(params[:exam])
+#      @exam.owner = current_user
+#      @exam.enable_validation_group :step1
+#      
+#      respond_to do |format|
+#        if @exam.save
+#          
+#          session[:exam_id] = @exam.id
+#          
+#          format.html { 
+#            redirect_to :action => :new , :exam_type => params[:exam_type], :step => "2", :school_id => params[:school_id]
+#          }
+#        else  
+#          format.html { render "step1" }
+#        end
+#      end
+#      
+#      
+#      when "2"
+#      
+#      if params[:exam_type] == 'simple'
+#        
+#        @exam = Exam.find(session[:exam_id])
+#        
+#        
+#        if params[:sbt_opt] == "0" # save exam
+#          
+#          @exam.enable_validation_group :step2
+#          
+#          respond_to do |format|
+#            
+#            if @exam.update_attributes(params[:exam])
+#              
+#              format.html do
+#                redirect_to :action => :new , :exam_type => params[:exam_type], :step => "3", :school_id => params[:school_id]
+#              end
+#              format.js do
+#                render :update do |page|
+#                  page << "jQuery('#save_info').html('Salvo em #{Time.now.utc}')"
+#                end
+#              end
+#            else  
+#              @edit = false
+#              format.html do
+#                render "step2_simple" 
+#              end
+#              format.js do
+#                render :update do |page| 
+#                  page << "alert('Erro ao salvar. Tente novamente em alguns instantes.')"
+#                end
+#              end
+#            end
+#          end
+#          
+#          
+#        elsif params[:sbt_opt] == "1" # new question
+#          
+#          @exam.update_attributes(params[:exam])
+#          
+#          redirect_to :controller => :questions, :action => :new, :exam_type => params[:exam_type], :school_id => params[:school_id]
+#          
+#        elsif params[:sbt_opt] == "2" # add question  
+#          #save_dft
+#          @exam.update_attributes(params[:exam])
+#          redirect_to :controller => :questions, :action => :add, :exam_type => params[:exam_type], :school_id => params[:school_id]
+#          
+#        elsif params[:sbt_opt] == "3" # add resource  TODO mudar
+#          #save_dft
+#          @exam.update_attributes(params[:exam])
+#          # redirect_to :controller => :resources, :action => :add, :exam_type => params[:exam_type]
+#          
+#        elsif params[:sbt_opt] == "4" # edit question
+#          @exam.update_attributes(params[:exam])
+#          @exam_type = params[:exam_type]
+#          @question = Question.find(params[:opt_param])
+#          render "edit_question"
+#          # redirect_to :action => :edit_question, :exam_type => params[:exam_type]
+#          
+#          
+#        end
+#        
+#        
+#      elsif params[:exam_type] == 'formative'
+#        
+#      elsif params[:exam_type] == 'quiz'
+#        
+#      end
+#      
+#      ############# PASSO 3 ##############
+#      when "3"
+#      
+#      @exam = Exam.find(session[:exam_id])
+#      @exam.enable_validation_group :step3
+#      
+#      @exam.published = true # se o usuário completou os 3 passos então o exame está publicado
+#      
+#      if params[:post_to]
+#        SchoolAsset.create({:asset_type => "Exam", :asset_id => @exam.id, :school_id => params[:post_to].to_i})
+#      end
+#      
+#      respond_to do |format|
+#        
+#        if @exam.update_attributes(params[:exam])
+#          
+#          # remove exame da sessao
+#          session[:exam_id] = nil
+#          
+#          flash[:notice] = 'O exame foi criado com sucesso! '
+#          format.html { 
+#            #redirect_to(@course)
+#            redirect_to @exam
+#          }
+#        else  
+#          format.html { render "step3" }
+#        end
+#        
+#      end
+#      
+#      
+#    end
+#    
+#    
+#  end
   
   def unpublished_preview
     @exam = Exam.find(session[:exam_id])
@@ -659,6 +712,9 @@ class ExamsController < BaseController
   # GET /exams/1.xml
   def show
     @exam = Exam.find(params[:id])
+    
+    @related_exams = []
+    @status = Status.new
     
     if @exam.removed
       redirect_to removed_page_path and return

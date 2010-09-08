@@ -145,10 +145,13 @@
             <%= @course.name %>
         </div>
         <div class="admin_opts yellow">
-            <% if current_user.can_manage?(@exam) %>
+            <% if @course.owner == current_user %>
             <%= link_to 'Editar', {:action => "edit"}, :class => "icon-edit" %> | 
 						<%= link_to 'Remover', @course, {:confirm => 'Você tem certeza que quer remover esta aula permanentemente?',
             :method => :delete, :class => "icon-delete"} %>
+            <% end %>
+						 <% if current_user.can_manage? @course %>
+						<%= link_to 'Remover da rede', @course, {:method => :delete, :class => "icon-delete"} %>
             <% end %>
             <% if current_user.admin? and @course.state.eql?("waiting") %>
             | <%= link_to 'Aprovar' , {:controller => :admin, :action => "approve", :id => @course.id}, :class => "icon-approve"%> |

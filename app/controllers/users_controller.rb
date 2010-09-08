@@ -223,25 +223,13 @@ class UsersController < BaseController
 #    #@clippings      = @user.clippings.find(:all, :limit => 5)
 #    @photos         = @user.photos.find(:all, :limit => 5)
 #    @comment        = Comment.new(params[:comment])
-    @statuses = @user.recent_activity
+    @statuses = @user.recent_activity(0,10)
     @status = Status.new
     # @course         = Course.new(params[:])
 
 end
 
-def activity
-  @statuses = @user.recent_activity(params[:limit])
-  
-  respond_to do |format|
-    format.js do
-      render :update do |page|
-        page.insert_html :after,  '#activities', :partial => "statuses/type_proxy", :collection => @statuses, :as => :status, :locals => {:statusable => @user }
-       # page << "$('#more_link')."
-      end
-    end
-  end
-  
-end
+
 
   
   def tos
@@ -672,7 +660,8 @@ end
     # puts "node_id: " + params[:node_id] if params[:node_id]
     
     @user = User.find((params[:node_id]) ?  params[:node_id] :  params[:id] )
-    @logs = @user.log_activity
+    
+    @activities = Status.activities(@user)
     
     respond_to do |format|
       format.xml

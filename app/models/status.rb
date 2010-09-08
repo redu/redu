@@ -61,14 +61,17 @@ class Status < ActiveRecord::Base
     Status.find_by_sql(sql)
   end
   
-  
+  #lista somente atividades (logs automaticos)
+  def Status.activities(user)
+    Status.all(:conditions => ["log = 1 AND user_id = ?", user.id])
+  end
     
   def Status.friends_statuses(user, limit = 0, offset = 20)
     sql = "SELECT s.* FROM statuses s, followship f " + \
       "WHERE (f.followed_by_id = #{user.id} " + \
       "AND s.user_id = f.follows_id) " + \
       "OR s.user_id = #{user.id} " + \
-      "ORDER BY s.created_at DESC LIMIT #{limit} OFFSET #{offset}"
+      "ORDER BY s.created_at DESC LIMIT #{limit},#{offset}"
           
     Status.find_by_sql(sql)
   end

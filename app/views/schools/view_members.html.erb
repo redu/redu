@@ -70,12 +70,13 @@
 
 <%= render :partial => "schools/school_info", :locals => {:school => @school,:show => false} %>
 
+<div  class="grid_16">
+	<h3>Todos os <%= @member_type %></h3>
+</div>
 
-<div class="main grid_12">
+<div class="main grid_16">
 
-Listando <%= @member_type %>
-
-<%= render :partial => "schools/user_vcard", :collection => @members, :as => :user %>
+<%= render :partial => "schools/user_vcard", :collection => @members, :as => :association %>
 
 <div id="pagination" align="center" class="pagination">
 

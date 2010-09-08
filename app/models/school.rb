@@ -81,11 +81,22 @@ class School < ActiveRecord::Base
     end
   end
   
-  def recent_school_activity
-   # Status.group_statuses(self) # na verdade o flow da escola nao deveria ser a soma dos flows de cada membro e sim um proprio
+#  def recent_school_activity
+#   # Status.group_statuses(self) # na verdade o flow da escola nao deveria ser a soma dos flows de cada membro e sim um proprio
+# end
+   def recent_activity(limit = 0, offset = 20)
      
-     
+     page = limit.to_i/10 + 1
+     #puts page
+      self.statuses.descend_by_created_at.paginate(:per_page => offset, :page =>page)
+      #self.statuses.order("created_at DESC limit "+limit.to_s+","+offset.to_s)
+     #Status.statusable_id_eq(self.id).statusable_type_like('School').descend_by_created_at.all.paginate(:page => 1, :per_page => 10)
+
+
   end
+  
+ 
+ 
 
   def recent_school_exams_activity
     sql =  "SELECT l.id, l.logeable_type, l.action, l.user_id, l.logeable_name, l.logeable_id, l.created_at, l.updated_at, l.school_id FROM logs l, school_assets s WHERE 

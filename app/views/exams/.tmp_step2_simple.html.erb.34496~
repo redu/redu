@@ -1,0 +1,368 @@
+
+ <% content_for :js do %>
+ <script>
+ 	function saveDraft(opt, opt_param){
+        var theform = document.getElementById('exam_form');
+		var theattribute = document.getElementById('sbt_opt');
+		
+		// Atributo opcional (usado para passar o id da questão para editar)
+		if (opt_param) {
+			var theoptattribute = document.getElementById('opt_param');
+			theoptattribute.value = opt_param;
+		}
+		theattribute.value = opt;
+		theform.submit();
+    }
+	
+	function publishExam() {
+		var confirm_msg = "Uma vez publicado, o exame não poderá ser editado nem removido. Deseja continuar?";
+		if (confirm(confirm_msg)) {
+			saveDraft(5);
+		} 
+		
+	}
+	
+	
+	var isPreview = false;	
+	function save(preview){
+		jQuery('#sbt_opt').val('0');
+		
+		isPreview = preview;
+		jQuery.ajax({
+			beforeSend:function(request){
+				$('#save-spinner').show();
+				}, 
+			complete:function(request){
+				$('#save-spinner').hide();
+				if (isPreview) {
+					window.open('<%= answer_exam_path(:id => @exam.id, :first => true) %>');
+				}
+				},
+			data:jQuery.param(jQuery("#exam_form").serializeArray()), 
+			dataType:'script', 
+			type:'post', 
+			url:'<%= url_for(:action => :create, :exam_id => @exam.id)%>'});
+	}
+	/////
+	
+
+function remove_fields(link) {
+  $(link).prev("input[type=hidden]").val("1");
+  $(link).closest(".fields").hide();
+}
+
+function add_fields(link, association, content, type) {
+  var new_id = new Date().getTime();
+	
+  var regexp = new RegExp("new_" + association, "g")
+ 
+ 	if (jQuery('#question').length > 6) {
+  	return;
+  }
+ 
+	if (type == 'Alternative') {
+		 $(link).before(content.replace(regexp, new_id));
+		 $(link).parent().find('input[type=radio]').each(function(idx) {
+		 	 $(this).attr('value', idx)
+		 })
+		 
+  } else if (type == 'Question') {
+		$('div.add-topic-inner').hide();
+		// $(link).before(content.replace(regexp, new_id));
+		 $('#questions > fieldset:last').after(content.replace(regexp, new_id));
+		 
+		 $('[value=new_alternatives]').each(function(idx){
+			$(this).attr('value',idx)
+		  });
+		 
+		 makeIndexes();
+		 
+  	reloadMce();
+  }
+}
+
+function makeIndexes(){
+	$('.q_index').each(function(idx){
+				$(this).html(idx+1)
+				
+				//var children = $(this).parent().parent().children();
+				//children[1].name = 'q_'+idx+1;
+				//children[2].name = 'q_'+idx+1;
+			//	children[1].attr('name', 'q_'+idx+1)
+			//	children[2].attr('name', 'q_'+idx+1)
+	});
+	
+	$('.alternatives').each(function(idx){
+	
+		$(this).find('input[type=radio]').each(function(idx2){
+			$(this).attr('value', idx2)
+		});
+	});
+	
+	/*$('.expanded').each(function(idx){
+		var i = 'q_' + (idx+1);
+		$(this).attr('name', i);
+		$(this).next().attr('name', i);
+		
+	});*/
+}
+
+function removeAllMce(){
+        var i, t = tinyMCE.editors;
+        for (i in t) {
+            if (t.hasOwnProperty(i)) {
+					t[i].remove();
+            }
+        }
+        
+    }
+		
+			function reloadMce(){
+		<%= raw_tiny_mce_init %>
+	}
+	
+    function makeIt(){
+    
+        //$('.expanded').hide()
+        //$('.collapsed').show()
+        
+        $('.expanded').each(function(index){
+            var name = $(this).attr('name')
+            var content = tinyMCE.get(name + '_statement').getContent()
+            
+            $('#' + name + '_stat').html(content)
+        });
+    }
+		
+    function toggleMinimize(link, minimize){
+        
+				if (minimize) {
+					makeIt();
+				}
+				
+				var name = $(link).parent().attr('name')
+				//alert(name);
+        $(name).slideToggle();
+        return false;
+    }
+		
+		
+    jQuery(document).ready(function(){
+			
+				// caso refresh na pagina:
+				// reinicializar
+				removeAllMce();
+  			reloadMce();
+				makeIndexes();
+			
+			
+         $('[value=new_alternatives]').each(function(idx){
+						$(this).attr('value',idx)
+		 			 });
+					 
+				/*$('body').click(function(event){
+            if (!$(event.target).closest('.question').length) {
+								alert('body ')
+							makeIt();
+								
+            };
+            });*/
+
+	/*	$('.question').live('click', function(e){
+					
+		  			makeIt();
+		  			$('.question').slideToggle();
+				});
+*/				
+				
+        
+        //seleciona os elementos a com atributo name="modal"
+        $('a[name=modal]').click(function(e){
+            //cancela o comportamento padrão do link
+            e.preventDefault();
+            
+            //armazena o atributo href do link
+            var id = $(this).attr('href');
+           
+						$('#lights-dimmed').fadeIn(2000);
+            $(id).show();
+						
+						
+						jQuery.ajax({
+                    data: '',
+                    dataType: 'script',
+                    beforeSend: function(request) {
+                       $('#loading_questions').show();
+                    },
+                    type: 'get',
+                    url: '<%= questions_database_exams_path %>' 
+                });
+        });
+        
+        //se o botãoo fechar for clicado
+        $('.close').click(function(e){
+            //cancela o comportamento padrão do link
+            e.preventDefault();
+            $('#lights-dimmed, .modal_window').hide();
+        });
+        
+        //se div#lights-dimmed for clicado
+        $('#lights-dimmed').click(function(){
+            $(this).hide();
+            $('.window').hide();
+        });
+    });
+
+		
+	 </script>
+ <% end %>
+
+<div class="grid_16">
+<div id="breadcrumbs">
+		<% if @school %>
+	<a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <%= link_to @school.name, @school %> > novo exame simples
+	<% else %>
+	<a href="<%=application_url%>">início</a> > <a href="#">ensinar</a> > novo exame simples
+	<%end %>
+</div>
+	
+<%= render(:partial => "schools/school_info", :locals=>{:show => false}) if @school%>
+
+<h3 class="call">Nova aula passo-a-passo </h3>
+</div>
+
+<div class="grid_9 push_3">
+<table class="booking_steps" cellpadding="0" cellspacing="0">
+							<tbody><tr>
+								<td><span class="book_step"><span><em>1</em>Informações Gerais</span></span></td>
+								<td class="spacer">&nbsp;</td>
+								<td><span class="book_step current"><span><em>2</em>Editor de Exame</span></span></td>
+								<td class="spacer">&nbsp;</td>
+								<td><span class="book_step"><span><em>3</em>Publicação</span></span></td>
+							</tr>
+						</tbody></table>
+</div>
+	
+<% form_for :exam, @exam, :url => { :action => "create" },  :html => {:id => 'exam_form'} do |f| %>
+
+ <div class="grid_16">
+  <%= f.error_messages %>
+	</div>
+
+
+	<div id="menu_bar" class="grid_16">
+	
+		<div class="add-topic-outter" style="float:left;">
+          
+					
+					<a id="add_topic_link" href="#" onclick="$('div.add-topic-inner').toggle(); $(this).toggleClass('selected'); return false;">Questão</a>
+          	<div class="add-topic-inner menudiv">
+              <ul class="selectable">
+                  <li>
+											<%= link_to_add_fields((image_tag 'icons/iclass.gif', :title => "Nova questão") + 'Nova questão', f, :questions, 'Question') %>
+
+                  </li>
+                  <li>
+                  	  <%= link_to (image_tag 'icons/iclass.gif', :title => 'Buscar Questão') + 'Buscar Questão', "#dialog", :name=>"modal" %>
+                  </li>
+              </ul>
+          </div>
+					
+					|
+					<%= link_to_function "Salvar", "save(false)", :id => "save_link"%>
+          |
+					<%= link_to_function "Pré-visualizar", "save(true)", :id => "preview_link"%>
+				
+     </div>	
+			
+		<div style="text-align:right; margin-right: 10px;">
+      <%= image_tag 'spinner.gif', :id => 'save-spinner', :style => 'display: none' %>
+      <span class="snippet" id="save_info"></span>
+  	</div>
+			
+
+		</div>
+
+
+
+	
+
+ 
+ 
+
+ 
+  <%= hidden_field_tag("school_id", @school.id) if @school %>
+ 
+  <%= hidden_field_tag("step", "2", options = {})%>
+  <%= hidden_field_tag("exam_type", "simple", options = {})%>
+  <%= hidden_field_tag('sbt_opt', 0) %>
+  <%= hidden_field_tag('opt_param', 0) %>
+  <%= f.hidden_field(:id, :value => @exam.id) %>
+ 
+ <div class="grid_9">
+ <div id="questions" style="min-height: 100px;">
+ 
+  <% @exam.questions.each_with_index do |question, idx|%>
+	
+	  <% f.fields_for :questions, question do |builder| %>
+	    <%= render "question_fields", :f => builder %>
+	  <% end %>
+	
+	<% end %>
+ 
+
+ 	 <%= link_to_add_fields 'Nova Questão', f, :questions, 'button' %>
+  <%= link_to 'Buscar Questão', "#dialog", :name=>"modal", :class => "button" %>
+ 
+ </div>
+ 
+ 
+ <%= sortable_element 'questions',
+:url => { :action => "sort_question" , :id => @exam },
+:complete => visual_effect(:highlight, 'questions'),
+ :tag => 'div', :scroll => true
+%>
+  
+</div>
+<div class="grid_6 push_1">
+	<div class="y_addinfo">
+                                <div class="addinfocontent">
+                                    <h1>
+                                       Adicione questões do banco de dados!</h1>
+                                    <p>
+                                       Varias questes estao disponiveis.</p>
+																			 <p> <%= link_to 'Clique aqui!', "#dialog", :name=>"modal" %></p>
+																			
+                                </div>
+                            </div>
+</div>
+
+<div class="grid_16">
+
+<%= link_to '< Anterior', new_exam_path(:step => '1'), :class => "button" %> 
+<%= f.submit 'Próximo >' %> 
+
+  <%= link_to 'Descartar e Voltar', cancel_exams_path, :confirm => "Tem certeza que deseja sair do editor de exames?" %>
+</div>
+  
+  
+ <% end %>
+ 
+
+ <div id="lights-dimmed">
+     <div id="dialog" class="modal_window grid_12">
+         <a href="#" class="close">Fechar [X]</a>
+				 <%= image_tag "loadingAnimation.gif", :id => "loading_questions"   %>
+         <div id="dialog_content">
+             
+         </div>
+     </div>
+ </div>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

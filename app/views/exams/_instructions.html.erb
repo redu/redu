@@ -2,7 +2,7 @@
 <% field_set_tag "Instruções", :class => "heighted" do %>   
 
 <div id="texto_instrucoes">
-	<%= (session[:exam].instruction.empty? ) ? 'Clique em próximo para começar este exame!' :  session[:exam].instruction %>
+	<%= (session[:exam].instruction and not session[:exam].instruction.empty? ) ?  session[:exam].instruction : 'Clique em próximo para começar este exame!' %>
 </div>
 
 	

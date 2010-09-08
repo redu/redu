@@ -104,8 +104,16 @@ $(document).ready(function() {
 			<%= javascript_include_tag 'flow.js' %>
 			<%= render :partial => "statuses/create_status", :locals => {:status => @status, :statusable => @school }%>
 			<ul class="activities">
-			<%= render :partial => "statuses/type_proxy", :collection => @school.statuses.descend_by_created_at, :as => :status, :locals => {:statusable => @school } %>
+			<%= render :partial => "statuses/type_proxy", :collection => @statuses, :as => :status, :locals => {:statusable => @school } %>
 			</ul><!-- end activities -->			
+			
+			<% unless @statuses.length < 10%>
+			<div id="more">
+			<%= link_to_remote "mais", :url => {:controller => :statuses, :action => :more, :id => @school.id, :type => 'school', :limit => 10}, :method =>:get, :loading => "$('#more').html('"+escape_javascript(image_tag('spinner.gif'))+"')"%>
+			</div>
+			<% end %>
+			
+			
 		</div>
 		
 		<!-- aulas -->

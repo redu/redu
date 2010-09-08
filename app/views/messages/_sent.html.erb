@@ -15,12 +15,10 @@
 			<% else %>
 				<% @messages.each do |message| %>
 					<tr>
-						<td width = '10px'>
-							<fieldset class='inline'>
+						<td>
 								<%= check_box_tag "delete[]", message.id %>
-							</fieldset>
 						</td>
-						<td width = '60px'>
+						<td>
 							<%= link_to image_tag( message.recipient.avatar.url(:thumb), :alt=>"#{message.recipient.login}", :class=> "photo" ), user_path(message.recipient), :title => "#{message.recipient.login}'s " + :profile.l %>
 						</td>
 						<td>

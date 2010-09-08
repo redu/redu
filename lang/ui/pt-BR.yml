@@ -503,7 +503,7 @@ pt-BR:
   #en: delete: Delete
   delete: Remover
   #en: delete_selected: Delete selected
-  #delete_selected: Deletar selecionado
+  delete_selected: Remover selecionados
   #en: delete_this_event: Delete this event
   delete_this_event: Delete this event
   #en: delete_this_forum: Delete this forum

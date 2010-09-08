@@ -13,6 +13,56 @@ class SchoolsController < BaseController
   end
   
   
+  def remove_asset
+    case params[:type]
+      
+    when 'course'
+      SchoolAsset.first(:conditions => [:asset_type])
+      @asset = Course.find(params[:id])
+      msg = "Aula removida da rede"
+      when 'exam'
+      @asset = Exam.find(params[:id])
+      msg = "Exame removido da rede"
+    end
+    
+    if @asset
+      @asset.destroy
+      flash[:notice] = msg
+    else
+      flash[:notice] = "Não foi possível remover o conteúdo selecionado"
+    end
+    
+    
+    redirect_to school_courses_path
+    
+  end
+  
+  
+  def remove_asset
+    case params[:type]
+      
+    when 'course'
+      SchoolAsset.first(:conditions => [:asset_type])
+      @asset = Course.find(params[:id])
+      msg = "Aula removida da rede"
+      when 'exam'
+      @asset = Exam.find(params[:id])
+      msg = "Exame removido da rede"
+    end
+    
+    if @asset
+      @asset.destroy
+      flash[:notice] = msg
+    else
+      flash[:notice] = "Não foi possível remover o conteúdo selecionado"
+    end
+    
+    
+    redirect_to school_courses_path
+    
+  end
+  
+  
   def take_ownership
      @school = School.find(params[:id])
      @school.update_attribute(:owner, current_user)
@@ -421,10 +471,16 @@ class SchoolsController < BaseController
   def members
     @school = School.find(params[:id]) #TODO duas queries que poderiam ser apenas 1
     
-     @members = @school.users.paginate(  #optei por .users ao inves de .students
+#     @members = @school.users.paginate(  #optei por .users ao inves de .students
+#      :page => params[:page], 
+#      :order => 'updated_at DESC', 
+#      :per_page => AppConfig.users_per_page)
+    
+     @members = @school.user_school_associations.paginate(  #optei por .users ao inves de .students
       :page => params[:page], 
       :order => 'updated_at DESC', 
       :per_page => AppConfig.users_per_page)
+    
      
     @member_type = "membros"
     
@@ -519,6 +575,8 @@ class SchoolsController < BaseController
     
     
     if @school
+      @statuses = @school.recent_activity(0,10)
+      
       @featured = @school.featured_courses(3)
       @brand_new = @school.courses.find(:first, :order => "created_at DESC")
       @courses = @school.courses.paginate(:conditions => 

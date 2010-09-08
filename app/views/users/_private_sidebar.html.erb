@@ -7,7 +7,7 @@
     <ul class="menu">
     	<% mct = current_user.unread_message_count %>
     	<% unless mct == 0%>
-			<li><%= link_to "Caixa de mensagens ("+mct.to_s+")", user_messages_path%></li>
+			<li><%= link_to "Caixa de mensagens ("+mct.to_s+")", user_messages_path(:user_id => current_user.id)%></li>
 			<% end %>
       <li><a href="" class="closed sb">Acompanhar alunos</a></li>
       <li><a href="" class="closed sb">Acompanhar aulas</a></li>
