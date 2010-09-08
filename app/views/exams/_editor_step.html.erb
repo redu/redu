@@ -14,6 +14,7 @@
          if (jQuery('#question').length > 6) {
              return;
          }
+				 
          
          if (type == 'Alternative') {
              $(link).before(content.replace(regexp, new_id));
@@ -24,17 +25,21 @@
          }
          else 
              if (type == 'Question') {
+						 	
                  $('div.add-topic-inner').hide();
                  // $(link).before(content.replace(regexp, new_id));
                  $('#questions > fieldset:last').after(content.replace(regexp, new_id));
-                 
+								 
                  $('[value=new_alternatives]').each(function(idx){
                      $(this).attr('value', idx)
                  });
                  
-                 makeIndexes();
+								 
+                
                  
-                 reloadMce();
+              removeAllMce();
+              reloadMce();
+							 makeIndexes();
              }
      }
      
@@ -92,8 +97,8 @@
      
          // caso refresh na pagina:
          // reinicializar
-         removeAllMce();
-         reloadMce();
+        // removeAllMce();
+       //  reloadMce();
          makeIndexes();
          
          
@@ -140,7 +145,52 @@
  </script>
 
 
+<div class="grid_16">
+    <div id="breadcrumbs">
+        <% if @school %>
+        <a href="<%=application_url%>">início</a>
+        > <a href="#">redes</a>
+        > <%= link_to @school.name, @school %>> novo exame<% else %>
+        <a href="<%=application_url%>">início</a>
+        > <a href="#">ensinar</a>
+        > novo exame<%end %>
+    </div>
+    <%= render(:partial => "schools/school_info", :locals=>{:show => false}) if @school %>
+    <div id="title_video">
+        Novo Exame
+    </div>
+</div>
 
+<div class="grid_9 push_3">
+    <table class="booking_steps" cellpadding="0" cellspacing="0">
+        <tbody>
+            <tr>
+                <td>
+                    <span class="book_step disabled"><span><em>1</em>Informações Gerais</span></span>
+                </td>
+                <td class="spacer">
+                    &nbsp;
+                </td>
+                <td>
+                    <span class="book_step current"><span><em>2</em>Editor de Exame</span></span>
+                </td>
+                <td class="spacer">
+                    &nbsp;
+                </td>
+                <td>
+                    <span class="book_step disabled"><span><em>3</em>Publicação</span></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="<%= (edit) ? 'grid_15 alpha omega': 'grid_9' %>">
+    <%= f.error_messages %>
+</div>
+
+
+<%= hidden_field_tag("step", "editor")%>
 
 	<div id="menu_bar" class="grid_16">
 	
@@ -196,8 +246,8 @@
 	<% end %>
  
 
- 	 <%= link_to_add_fields 'Nova Questão', f, :questions, 'button' %>
-  <%= link_to 'Buscar Questão', "#dialog", :name=>"modal", :class => "button" %>
+ 	 <%# link_to_add_fields 'Nova Questão', f, :questions, 'button' %>
+  <%# link_to 'Buscar Questão', "#dialog", :name=>"modal", :class => "button" %>
  
  </div>
  

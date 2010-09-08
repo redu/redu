@@ -1,8 +1,8 @@
 class Question < ActiveRecord::Base
   # associations
   has_many :alternatives, :dependent => :destroy
-  has_many :question_exam_association
-  has_many :exams, :through => :question_exam_association
+  has_many :question_exam_associations
+  has_many :exams, :through => :question_exam_associations
   belongs_to :answer , :class_name => "Alternative", :foreign_key => "answer_id"
   belongs_to :author , :class_name => "User" , :foreign_key => "author_id"
   
@@ -23,8 +23,8 @@ class Question < ActiveRecord::Base
 
   named_scope :public, :conditions => ['public = ?', true]
   
-  #after_save :set_answer_id
   before_save :set_answer_id
+  
 
 
 def set_answer_id # answer id vem como o indice

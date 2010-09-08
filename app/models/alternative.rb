@@ -6,14 +6,14 @@ class Alternative < ActiveRecord::Base
   #validations
   validates_presence_of :statement 
   
-  after_save :test
-  
-  
-  def test
-    
-    puts 'alternative saved id: '+id.to_s
-    
-  end
+#  after_save :test
+#  
+#  
+#  def test
+#    
+#    puts 'alternative saved id: '+id.to_s
+#    
+#  end
   
   
 

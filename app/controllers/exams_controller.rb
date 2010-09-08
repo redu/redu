@@ -216,8 +216,11 @@ class ExamsController < BaseController
   
   
   def cancel
-    Exam.find(session[:exam_id]).destroy
-    session[:exam_id] = nil
+#    Exam.find(session[:exam_id]).destroy
+#    session[:exam_id] = nil
+    Exam.find(session[:exam_params][:id]).destroy if session[:exam_params] and session[:exam_params][:id]
+    session[:exam_params] = nil
+    
     flash[:notice] = "Criação de exame cancelada."
     redirect_to exams_path
   end
@@ -229,31 +232,36 @@ class ExamsController < BaseController
   def new
   session[:exam_params] ||= {}
   @exam = Exam.new(session[:exam_params])
-  @exam.current_step = session[:exam_step]
-  if @exam.current_step == 'editor'
-    @exam.questions.build
-  end
+  @exam.current_step =  params[:step]#session[:exam_step]
+ 
 end
 
 def create
+  
   session[:exam_params].deep_merge!(params[:exam]) if params[:exam]
   @exam = Exam.new(session[:exam_params])
-  @exam.current_step = session[:exam_step]
+  @exam.current_step =  params[:step]#session[:exam_step]
   @exam.owner = current_user
+  
+  
   if @exam.valid?
     if params[:back_button]
       @exam.previous_step
     elsif @exam.last_step?
-      @exam.save if @exam.all_valid?
+      @exam.save if @exam.all_valid? and @exam.new_record?
     else
       @exam.next_step
     end
-    session[:exam_step] = @exam.current_step
+    
+   # session[:exam_step] = @exam.current_step
   end
   if @exam.new_record?
+    if params[:step] == 'general' and  @exam.questions.empty?
+       @exam.questions.build
+    end
     render "new"
   else
-    session[:exam_step] = session[:exam_params] = nil
+    session[:exam_params] = nil
     flash[:notice] = "Exame criado!"
     redirect_to @exam
   end

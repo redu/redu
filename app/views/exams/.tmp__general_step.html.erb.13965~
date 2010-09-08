@@ -1,0 +1,27 @@
+
+
+
+<div>
+
+<% field_set_tag 'Informações Gerais' do %>
+	<%= f.label "Nome" %>
+	<%= f.text_field :name ,  :onkeyup => ((edit) ? nil : "generatePath(this)") %>
+	<%= error_for :exam, :name %>
+	
+
+	<%= f.label "Descrição" %>
+	<%= f.text_area :description, :size => "50x3", :maxlength=> AppConfig.desc_char_limit %>
+	<div id="char_limit" style="text-align:right;">(<%=AppConfig.desc_char_limit %>)</div>
+	<%= error_for :exam, :description %>
+
+
+	<%= f.label "Tags <span class='snippet'>(separadas por vírgula)</span>" %>
+	<%= f.text_field :tag_list %>
+
+<% end %>
+
+
+
+
+
+</div>

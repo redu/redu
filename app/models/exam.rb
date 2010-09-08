@@ -8,8 +8,8 @@ class Exam < ActiveRecord::Base
   
   # ASSOCIATIONS
    has_many :statuses, :as => :statusable
-  has_many :question_exam_association, :dependent => :destroy
-  has_many :questions, :through => :question_exam_association, :include => :alternatives, :order => :position
+  has_many :question_exam_associations, :dependent => :destroy
+  has_many :questions, :through => :question_exam_associations, :include => :alternatives, :order => :position
   has_many :exam_users, :dependent => :destroy
   has_many :user_history, :through => :exam_users, :source => :user
   has_many :favorites, :as => :favoritable, :dependent => :destroy
@@ -30,13 +30,14 @@ class Exam < ActiveRecord::Base
   validates_presence_of :description
   #validates_length_of :name, :within => 6..40, :too_long => ": Por favor escolha um título menor que 20 caracteres.", :too_short => ": Por favor escolha um título maior que 6 caracteres."
  
-#  validates_associated :questions 
+# validates_associated :questions 
 #  validates_length_of :questions, :allow_nil => false, :within => 1..100, :too_long => "O exame contém {{count}} questões. O máximo de questões permitido é 100", :too_short => ": Um exame deve conter ao menos uma questão."
 #  
   validation_group :step1, :fields=>[:name, :description]
   validation_group :step2, :fields=>[:questions]
   validation_group :step3, :fields=>[:price]
   
+
   # NAMED SCOPES
   named_scope :published, :conditions => ['published = ?', true], :include => :owner
   
@@ -50,13 +51,13 @@ class Exam < ActiveRecord::Base
   
   
   
-  def get_question(qid)
-    if qid
-      self.questions.each_with_index do |question, index| 
-        return [question,index]  if question.id == qid
-      end
-    end
-  end
+#  def get_question(qid)
+#    if qid
+#      self.questions.each_with_index do |question, index| 
+#        return [question,index]  if question.id == qid
+#      end
+#    end
+#  end
   
   def to_param #friendly url
     "#{id}-#{name.parameterize}"
@@ -66,17 +67,18 @@ class Exam < ActiveRecord::Base
     APP_URL + "/exams/"+ self.id.to_s+"-"+self.name.parameterize
   end
   
+    
+  #  def questions_attributes=(attributes)
+  #  puts attributes.inspect
+  #    end
   
-#  def questions_attributes=(attributes)
-#  puts attributes.inspect
-#    end
-
-def current_step
+  
+  def current_step
   @current_step || steps.first
 end
 
 def steps
-  %w[general editor publication]
+ %w[general editor publication]
 end
 
 def next_step
@@ -101,6 +103,9 @@ def all_valid?
     valid?
   end
 end
+
+  
+
 
   
 end
