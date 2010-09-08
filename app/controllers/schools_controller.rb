@@ -13,6 +13,31 @@ class SchoolsController < BaseController
   end
   
   
+  def remove_asset
+    case params[:type]
+      
+    when 'course'
+      SchoolAsset.first(:conditions => [:asset_type])
+      @asset = Course.find(params[:id])
+      msg = "Aula removida da rede"
+      when 'exam'
+      @asset = Exam.find(params[:id])
+      msg = "Exame removido da rede"
+    end
+    
+    if @asset
+      @asset.destroy
+      flash[:notice] = msg
+    else
+      flash[:notice] = "Não foi possível remover o conteúdo selecionado"
+    end
+    
+    
+    redirect_to school_courses_path
+    
+  end
+  
+  
   def take_ownership
      @school = School.find(params[:id])
      @school.update_attribute(:owner, current_user)
