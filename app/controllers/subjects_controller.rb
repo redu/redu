@@ -7,6 +7,9 @@ class SubjectsController < BaseController
   def index
     session[:subject_step] = session[:subject_params]= session[:subject_aulas]= session[:subject_id] = nil
     @subjects = Subject.find(:all, :conditions => "is_public like true")
+    
+ 
+  
   end
 
   def show
@@ -31,7 +34,7 @@ class SubjectsController < BaseController
         
         if @subject.all_valid?
           @subject.save
-          @subject.create_course_subject_type_course(session[:subject_aulas], @subject.id) unless session[:subject_aulas].nil?
+          @subject.create_course_subject_type_course(session[:subject_aulas], @subject.id, current_user) unless session[:subject_aulas].nil?
           # @subject.create_course_subject_type_exam(session[:subject_aulas], @subject.id) unless session[:subject_aulas].nil?
         end
       else
@@ -44,7 +47,7 @@ class SubjectsController < BaseController
       render "new"
     else
       session[:subject_step] = session[:subject_params] = nil
-      redirect_to subject_path(@subject)
+       redirect_to :action =>"admin_subjects"
     end
   end
 
@@ -72,7 +75,7 @@ class SubjectsController < BaseController
           @subject = current_user.subjects.find(session[:subject_id])
           @subject.update_attributes(session[:subject_params])
           @subject.course_subjects.destroy_all
-          @subject.create_course_subject_type_course(session[:subject_aulas], @subject.id) unless session[:subject_aulas].nil?
+           @subject.create_course_subject_type_course(session[:subject_aulas], @subject.id,current_user) unless session[:subject_aulas].nil?
           # @subject.create_course_subject_type_exam(params[:exames], @subject.id) unless params[:exames].nil?
           updated = true
         end
@@ -85,16 +88,17 @@ class SubjectsController < BaseController
     unless updated
       render "edit"
     else
+      flash[:notice] = "Atualizado com sucesso!"
       session[:subject_step] = session[:subject_params]= session[:subject_aulas]= session[:subject_id] = nil
-      redirect_to subject_path(@subject)
+      redirect_to :action =>"admin_subjects"
     end
 
   end
  
   def destroy
-    subject = current_user.subjects.find(params[:id])
+    subject = current_user.subjects.find(params[:id].to_i)
     subject.destroy
-    redirect_to subjects_path
+    redirect_to :action =>"admin_subjects"
   end
 
   def classes
