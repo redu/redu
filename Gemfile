@@ -18,6 +18,7 @@ gem "collectiveidea-delayed_job"
 gem "rmagick"
 gem "packet"
 gem "hpricot"
+gem "ruby-debug"
 
 group :development do
 end

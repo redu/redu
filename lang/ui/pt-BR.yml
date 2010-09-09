@@ -301,7 +301,7 @@ pt-BR:
   #en: are_you_sure_you_want_to_permanently_delete_this_comment: "Are you sure you want to permanently delete this comment?"
   are_you_sure_you_want_to_permanently_delete_this_comment: "Você tem certeza que quer remover esse comentário?"
   #en: are_you_sure_you_want_to_permanently_delete_this_user: Are you sure you want to permanently delete this user?
-  are_you_sure_you_want_to_permanently_delete_this_user: Are you sure you want to permanently delete this user?
+  are_you_sure_you_want_to_permanently_delete_this_user: Tem certeza que deseja remover este usuário permanentemente?
   #en: assume_id: Assume ID
   assume_id: Assumir ID
   #en: assume_user_id: "Assume this user's ID"
@@ -1401,7 +1401,7 @@ pt-BR:
   #en: the_user_was_activated: The user was activated
   the_user_was_activated: The user was activated
   #en: the_user_was_deleted: The user was deleted.
-  the_user_was_deleted: The user was deleted.
+  the_user_was_deleted: Seu usuário foi removido.
   #en: this_contest_is_closed: This contest is closed
   this_contest_is_closed: This contest is closed
   #en: this_forum_is_still_getting_started: "This forum is still getting started ... here are some blog posts to get you thinking ..."
