@@ -21,6 +21,7 @@ gem "hpricot"
 gem "ruby-debug"
 
 group :development do
+gem "mongrel"
 end
 
 group :production do
