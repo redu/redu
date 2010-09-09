@@ -59,7 +59,7 @@ function setSubmissionType(type){
 		<% end %>
 		
 		<% form_tag url_for(:action => :moderate_users), :id => "moderate_users_form" do %>
-		 <%= hidden_field_tag :submission_type, :value => '0'%>
+		 <%= hidden_field_tag :submission_type, '0'%>
 		
 		Selecionar: <%=link_to_function 'Todos', 'selectAll()'%> | <%=link_to_function 'Nenhum', 'selectNone()'%> | 
 		

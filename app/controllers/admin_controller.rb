@@ -51,20 +51,22 @@ class AdminController < BaseController
  end
   
   def moderate_users
-    
     case params[:submission_type]
       
       when '0' # remove selected
-      @removed_users = User.all(:conditions => ["id IN (?)", params[:users].join(',')]) unless params[:users].empty?
+      @removed_users = User.find(params[:users]) unless params[:users].empty?
       
-      User.update_all("removed = 1", "id IN (?)", params[:users].join(', '))
+      # Desta forma os status vão permanecer mesmo depois do usuário ser "removido", pois as dependências dele
+      # só serão deletadas quando ele for realmente deletado.
+      #User.update_all("removed = 1", :id => params[:users].join(', '))
       
       for user in @removed_users # TODO fazer um remove all?
+        user.destroy
         UserNotifier.deliver_remove_user(user) # TODO fazer isso em batch
         #course.destroy #TODO fazer isso automaticamente após 30 dias
       end
       when '1' # moderate roles
-        User.update_all(["role_id = ?", params[:role_id]], [ "id IN (?)", params[:users].join(', ')]) if params[:role_id]
+        User.update_all(["role_id = ?", params[:role_id]], [:id => params[:users].join(', ')]) if params[:role_id]
         # TODO enviar emails para usuários dizendo que foram promovidos.
     end
     flash[:notice] = 'Usuários moderados!'

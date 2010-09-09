@@ -63,7 +63,7 @@ class User < ActiveRecord::Base
   has_many :user_school_association, :dependent => :destroy
   has_many :schools, :through => :user_school_association
   has_many :schools_owned, :class_name => "School" , :foreign_key => "owner"
-  has_many :statuses, :as => :statusable
+  has_many :statuses, :as => :statusable, :dependent => :destroy
   
   # FOLLOWSHIP
   has_and_belongs_to_many :follows, :class_name => "User", :join_table => "followship", :association_foreign_key => "follows_id", :foreign_key => "followed_by_id", :uniq => true
@@ -87,13 +87,13 @@ class User < ActiveRecord::Base
 
 
   #forums
-  has_many :moderatorships, :dependent => :destroy
-  has_many :forums, :through => :moderatorships, :order => 'forums.name'
-  has_many :sb_posts, :dependent => :destroy
-  has_many :topics, :dependent => :destroy
-  has_many :monitorships, :dependent => :destroy
-  has_many :monitored_topics, :through => :monitorships, 
-    :conditions => ['monitorships.active = ?', true], :order => 'topics.replied_at desc', :source => :topic
+  #has_many :moderatorships, :dependent => :destroy
+  #has_many :forums, :through => :moderatorships, :order => 'forums.name'
+  #has_many :sb_posts, :dependent => :destroy
+  #has_many :topics, :dependent => :destroy
+  #has_many :monitorships, :dependent => :destroy
+  #has_many :monitored_topics, :through => :monitorships, 
+    #:conditions => ['monitorships.active = ?', true], :order => 'topics.replied_at desc', :source => :topic
 
   #belongs_to  :avatar, :class_name => "Photo", :foreign_key => "avatar_id"
   belongs_to  :metro_area
