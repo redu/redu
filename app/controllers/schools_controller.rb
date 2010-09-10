@@ -8,7 +8,7 @@ class SchoolsController < BaseController
 
 
   before_filter :except => [:new, :create, :vote, :show, :index, :join, :unjoin, 
-                             :member, :onwer, :members, :teachers, :take_ownership, :manage] do |controller| 
+                             :member, :onwer, :members, :teachers, :take_ownership] do |controller| 
     controller.school_admin_required(controller.params[:id]) if controller.params and controller.params[:id]
   end
   

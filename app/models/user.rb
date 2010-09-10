@@ -250,7 +250,7 @@ class User < ActiveRecord::Base
   end
 
   def can_manage?(entity, school=nil)
-    return true if self.admin?
+
     case entity.class.to_s 
     when 'Course'
       (entity.owner == self || (entity.school == school && self.school_admin?(school) ))    
