@@ -1,0 +1,8 @@
+environments:
+  production:
+    copy_exclude:
+      - .git
+    branch: production
+    migrate: false
+    migration_command: rake db:migrate --trace
+      
