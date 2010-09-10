@@ -16,16 +16,14 @@ class SchoolsController < BaseController
   
   
   def remove_asset
-    case params[:type]
-      
-    when 'course'
-      SchoolAsset.first(:conditions => [:asset_type])
-      @asset = Course.find(params[:id])
+    case params[:asset_type]
+      when 'Course'
       msg = "Aula removida da rede"
-      when 'exam'
-      @asset = Exam.find(params[:id])
+      when 'Exam'
       msg = "Exame removido da rede"
     end
+    
+     @asset = SchoolAsset.first(:conditions => ["asset_type LIKE ? AND asset_id = ? and school_id = ?", params[:asset_type], params[:asset_id], params[:id]])
     
     if @asset
       @asset.destroy
@@ -35,34 +33,12 @@ class SchoolsController < BaseController
     end
     
     
-    redirect_to school_courses_path
+    redirect_to school_courses_path(:school_id => params[:id])
     
   end
   
   
-  def remove_asset
-    case params[:type]
-      
-    when 'course'
-      SchoolAsset.first(:conditions => [:asset_type])
-      @asset = Course.find(params[:id])
-      msg = "Aula removida da rede"
-      when 'exam'
-      @asset = Exam.find(params[:id])
-      msg = "Exame removido da rede"
-    end
-    
-    if @asset
-      @asset.destroy
-      flash[:notice] = msg
-    else
-      flash[:notice] = "Não foi possível remover o conteúdo selecionado"
-    end
-    
-    
-    redirect_to school_courses_path
-    
-  end
+
   
   
   def take_ownership
