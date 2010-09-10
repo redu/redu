@@ -56,6 +56,8 @@ GEM
       linecache (>= 0.3)
     validatable (1.6.7)
     will_paginate (2.3.14)
+    zencoder (2.1.14)
+      activesupport
 
 PLATFORMS
   ruby
@@ -81,3 +83,4 @@ DEPENDENCIES
   ruby-debug
   validatable
   will_paginate (~> 2.3.11)
+  zencoder

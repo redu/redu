@@ -20,7 +20,7 @@ gem "packet"
 gem "hpricot"
 gem "htmlentities", "4.2.1"
 gem "ruby-debug"
-gem "htmlentities"
+gem "zencoder"
 
 group :development do
 gem "mongrel"
