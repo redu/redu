@@ -1,5 +1,5 @@
 <li class="clearfix">
-	 <%= link_to course.name, course, :class => "name"  %>
+	 <%= link_to course.name, (@school) ? course_path(:id => course.id, :school_id => @school.id) : course, :class => "name"  %>
 	<div class="thumb photo"><%= link_to(image_tag course.thumb_url, :width => "70px") %></div>
 	<div class="headlines" style="width: 490px">
 		<!--
@@ -7,10 +7,6 @@
 		-->
 		<span class="things">
 		<%= truncate_words( course.description, 10, '...') %>
-		
-		
-		
-		
 		
 		
 		</span>

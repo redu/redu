@@ -146,17 +146,22 @@
         </div>
         <div class="admin_opts yellow">
             <% if @course.owner == current_user %>
-            <%= link_to 'Editar', {:action => "edit"}, :class => "icon-edit" %> | 
-						<%= link_to 'Remover', @course, {:confirm => 'Você tem certeza que quer remover esta aula permanentemente?',
+            <%= link_to 'Editar', {:action => "edit"}, :class => "icon-edit" %>
+			 <% end %>
+			 
+			 <% if current_user.can_manage? @course and @school %>
+			| <%= link_to 'Remover da rede', remove_asset_school_path(:id => @school.id, :asset_id => @course.id, :asset_type => "Course"), {:confirm => "Você tem certeza que quer remover esta aula da rede?\n(Ela continuará no seu diretório de aulas)", :class => "icon-delete"} %>
+			<% end %>
+			
+			<% if current_user.admin? %>
+			| <%= link_to 'Remover', @course, {:confirm => 'Você tem certeza que quer remover esta aula do Redu permanentemente?',
             :method => :delete, :class => "icon-delete"} %>
-            <% end %>
-						 <% if current_user.can_manage? @course %>
-						<%= link_to 'Remover da rede', @course, {:method => :delete, :class => "icon-delete"} %>
-            <% end %>
-            <% if current_user.admin? and @course.state.eql?("waiting") %>
-            | <%= link_to 'Aprovar' , {:controller => :admin, :action => "approve", :id => @course.id}, :class => "icon-approve"%> |
-						<%= link_to 'Rejeitar' , {:controller => :admin, :action => "disapprove", :id => @course.id}, :class => "icon-reject" %>
-            <% end %>
+            
+				<% if @course.state.eql?("waiting") %>
+	            | <%= link_to 'Aprovar' , {:controller => :admin, :action => "approve", :id => @course.id}, :class => "icon-approve"%> |
+				  <%= link_to 'Rejeitar' , {:controller => :admin, :action => "disapprove", :id => @course.id}, :class => "icon-reject" %>
+	            <% end %>
+			<% end %>
         </div>
     </div>
     <div style="margin-bottom: 10px; float:left;">

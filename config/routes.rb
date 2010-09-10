@@ -100,7 +100,8 @@ ActionController::Routing::Routes.draw do |map|
    :look_and_feel => :get,
    :members => :get,
    :teachers => :get,
-   :take_ownership => :get
+   :take_ownership => :get,
+   :remove_asset => :get
    },
    :collection =>{
    :cancel => :get

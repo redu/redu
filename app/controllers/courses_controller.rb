@@ -187,6 +187,8 @@ class CoursesController < BaseController
   # GET /courses/1.xml
   def show
     
+    @school = School.find(params[:school_id]) if params[:school_id]
+    
  #   @course = Course.find(params[:id]) # ja pego no verify_access
     update_view_count(@course)
     
