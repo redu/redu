@@ -21,23 +21,7 @@ module SchoolsHelper
         when 3
         'Restrito'
         end
-  end
-  
-  
-  def owner_link
-    if @school.owner
-      link_to @school.owner.display_name, @school.owner
-    else
-      if current_user.can_manage? @school
-        'Sem dono ' + link_to("(pegar)", take_ownership_school_path)
-      else
-        'Sem dono'  
-      end
-      # e se ninguem estiver apto a pegar ownership?
-    end
-    
-  end
-  
+  end  
   
   def columnize_categories(number_of_columns = 3)
     

@@ -257,7 +257,7 @@ class User < ActiveRecord::Base
     when 'Exam'
       (entity.owner == self || (entity.school == school && self.school_admin?(school) ))   
     when 'School'
-      (entity.owner == self || self.school_admin?(school))
+      (entity.owner == self || self.school_admin?(entity))
     when 'Event'
       (entity.owner == self || (entity.school.id == school.id && self.school_admin?(school) ))
     when 'Bulletin'
@@ -282,12 +282,15 @@ class User < ActiveRecord::Base
       #    when 'Event'
       #       (entity.owner == self || (entity.school == school && self.school_admin?(school) ))
     end
-    
-    
+        
     #TODO
     #    @acq = Acquisition.find(:first, :conditions => ['acquired_by_id = ? AND course_id = ?', self.id, course.id])
     #    !@acq.nil? or course.owner == self
     
+  end
+  
+  def can_be_owner?(entity)
+    self.admin? || self.school_admin?(entity.id) || self.teacher?(entity) || self.coordinator?(entity)
   end
   
   def moderator_of?(forum)
@@ -551,9 +554,9 @@ class User < ActiveRecord::Base
     association && association.role && association.role.eql?(Role[:teacher])
   end
   
-  def coodinator?(school)
+  def coordinator?(school)
     association = get_association_with school
-    association && association.role && association.role.eql?(Role[:coodinator])
+    association && association.role && association.role.eql?(Role[:coordinator])
   end
   
   def school_admin?(school_id)

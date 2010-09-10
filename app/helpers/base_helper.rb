@@ -485,12 +485,12 @@ module BaseHelper
     if @school.owner
       link_to @school.owner.display_name, @school.owner
     else
-      if current_user.can_manage? @school
+      if current_user.can_be_owner? @school
         'Sem dono ' + link_to("(pegar)", take_ownership_school_path)
       else
         'Sem dono'  
       end
-      # e se ninguem estiver apto a pegar ownership?
+      #TODO e se ninguem estiver apto a pegar ownership?
     end
     
   end

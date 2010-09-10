@@ -8,9 +8,11 @@ class SchoolsController < BaseController
 
 
   before_filter :except => [:new, :create, :vote, :show, :index, :join, :unjoin, 
-                             :member, :onwer, :members, :teachers] do |controller| 
+                             :member, :onwer, :members, :teachers, :take_ownership, :manage] do |controller| 
     controller.school_admin_required(controller.params[:id]) if controller.params and controller.params[:id]
   end
+  
+  before_filter :can_be_owner_required, :only => :take_ownership
   
   
   def remove_asset
@@ -719,4 +721,13 @@ class SchoolsController < BaseController
       format.xml  { head :ok }
     end
   end
+
+protected
+
+def can_be_owner_required
+   @school = School.find(params[:id])
+   
+   current_user.can_be_owner?(@school) ? true : access_denied
+end
+
 end
