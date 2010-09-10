@@ -63,7 +63,7 @@ class User < ActiveRecord::Base
   has_many :user_school_association, :dependent => :destroy
   has_many :schools, :through => :user_school_association
   has_many :schools_owned, :class_name => "School" , :foreign_key => "owner"
-  has_many :statuses, :as => :statusable
+  has_many :statuses, :as => :statusable, :dependent => :destroy
   
   # FOLLOWSHIP
   has_and_belongs_to_many :follows, :class_name => "User", :join_table => "followship", :association_foreign_key => "follows_id", :foreign_key => "followed_by_id", :uniq => true
@@ -87,13 +87,13 @@ class User < ActiveRecord::Base
 
 
   #forums
-  has_many :moderatorships, :dependent => :destroy
-  has_many :forums, :through => :moderatorships, :order => 'forums.name'
-  has_many :sb_posts, :dependent => :destroy
-  has_many :topics, :dependent => :destroy
-  has_many :monitorships, :dependent => :destroy
-  has_many :monitored_topics, :through => :monitorships, 
-    :conditions => ['monitorships.active = ?', true], :order => 'topics.replied_at desc', :source => :topic
+  #has_many :moderatorships, :dependent => :destroy
+  #has_many :forums, :through => :moderatorships, :order => 'forums.name'
+  #has_many :sb_posts, :dependent => :destroy
+  #has_many :topics, :dependent => :destroy
+  #has_many :monitorships, :dependent => :destroy
+  #has_many :monitored_topics, :through => :monitorships, 
+    #:conditions => ['monitorships.active = ?', true], :order => 'topics.replied_at desc', :source => :topic
 
   #belongs_to  :avatar, :class_name => "Photo", :foreign_key => "avatar_id"
   belongs_to  :metro_area
@@ -250,14 +250,14 @@ class User < ActiveRecord::Base
   end
 
   def can_manage?(entity, school=nil)
-    return true if self.admin?
+
     case entity.class.to_s 
     when 'Course'
       (entity.owner == self || (entity.school == school && self.school_admin?(school) ))    
     when 'Exam'
       (entity.owner == self || (entity.school == school && self.school_admin?(school) ))   
     when 'School'
-      (entity.owner == self || self.school_admin?(school))
+      (entity.owner == self || self.school_admin?(entity))
     when 'Event'
       (entity.owner == self || (entity.school.id == school.id && self.school_admin?(school) ))
     when 'Bulletin'
@@ -282,12 +282,15 @@ class User < ActiveRecord::Base
       #    when 'Event'
       #       (entity.owner == self || (entity.school == school && self.school_admin?(school) ))
     end
-    
-    
+        
     #TODO
     #    @acq = Acquisition.find(:first, :conditions => ['acquired_by_id = ? AND course_id = ?', self.id, course.id])
     #    !@acq.nil? or course.owner == self
     
+  end
+  
+  def can_be_owner?(entity)
+    self.admin? || self.school_admin?(entity.id) || self.teacher?(entity) || self.coordinator?(entity)
   end
   
   def moderator_of?(forum)
@@ -551,9 +554,9 @@ class User < ActiveRecord::Base
     association && association.role && association.role.eql?(Role[:teacher])
   end
   
-  def coodinator?(school)
+  def coordinator?(school)
     association = get_association_with school
-    association && association.role && association.role.eql?(Role[:coodinator])
+    association && association.role && association.role.eql?(Role[:coordinator])
   end
   
   def school_admin?(school_id)

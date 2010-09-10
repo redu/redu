@@ -8,14 +8,12 @@
 	</div>
 	<div class="grid_12 omega alpha pretty-text">		
 		<% if is_index %>
-			<% if bulletin.description.size < 300 %>
-				<%= bulletin.description %>
-			<% else %>
-				<%= bulletin.description[0..300]+"..." %>
-			<% end %>
-			<div class="grid_8">
+				<p>
+				<%=	bulletin.tagline %>
+				</p>
+				<div class="grid_10">
 				<% if current_user.can_manage?(bulletin, bulletin.school) %>
-						<%= link_to 'Editar', edit_school_bulletin_path(bulletin.school, bulletin), :class => "button icon-edit"%>
+						<%= link_to 'Editar', edit_school_bulletin_path(bulletin.school, bulletin), {:class => "button icon-edit"} %>
 						<%= link_to 'Remover', bulletin,
 							{:confirm => 'Você tem certeza que deseja remover essa notícia permanentemente?',
 							:method => :delete, :class => "button icon-delete"} %>

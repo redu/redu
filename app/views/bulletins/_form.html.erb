@@ -4,11 +4,14 @@
 
 	<%= hidden_field_tag("school_id", params[:school_id]) %>
 
-	<%= f.label :title %>
+	<%= f.label "Título" %>
 	<%= f.text_field :title %>
 
-	<%= f.label :description %>
-	<%= f.text_area :description, :size => "60x12", :class => "mceEditor"%>
+	<%= f.label "Breve Descrição  <span class='snippet'>(até 250 caracters)</span>" %>
+	<%= f.text_area :tagline, :size => "70x5" %>
+
+	<%= f.label "Descrição" %>
+	<%= f.text_area :description, :size => "70x14", :class => "mceEditor"%>
 
 	<%= f.label "Tags <span class='snippet'>(separadas por vírgula)</span>" %>
 	<%= f.text_field :tag_list %>

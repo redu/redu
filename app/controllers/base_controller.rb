@@ -142,7 +142,7 @@ class BaseController < ApplicationController
   end
   
   def school_admin_required(school_id)
-    (current_user && current_user.school_admin?(school_id)) ? true : access_denied
+    (current_user && current_user.school_admin?(school_id) || School.find(school_id).owner == current_user) ? true : access_denied
   end
   
   def admin_or_moderator_required
