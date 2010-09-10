@@ -1,19 +1,45 @@
 class SubjectsController < BaseController
 
   layout 'new_application'
-
   before_filter :login_required
+ 
 
   def index
-    session[:subject_step] = session[:subject_params]= session[:subject_aulas]= session[:subject_id] = nil
-    @subjects = Subject.find(:all, :conditions => "is_public like true")
+    session[:subject_step] = session[:subject_params]= session[:subject_aulas]= session[:subject_id]= session[:subject_exames]  = nil
     
- 
+    if params[:school_id].nil?
+    @subjects = Subject.find(:all, :conditions => "is_public like true") 
+   else
+     @subjects = current_user.schools.find(params[:school_id]).subjects#.paginate(paginating_params)
+   end
+   
+   
+    respond_to do |format|
+     format.html # index.html.erb
+
+     format.js  do     
+       render :update do |page|
+         page.replace_html  'content_list', :partial => 'subjects/school/subject_list/'
+         page << "$('#spinner').hide()"
+       end
+     end  
+     
+   end
+   
+ end
   
-  end
 
   def show
+    
       @subject = Subject.find(:first, :conditions => "is_public like true AND id =#{params[:id].to_i}")
+     respond_to do |format|    
+         if current_user.enrollments.detect{|e| e.subject_id.eql?(params[:id].to_i)}.nil?
+         format.html
+         else
+          format.html{  render :action => "classes" }
+         end
+     end
+     
   end
 
   def new
@@ -24,6 +50,7 @@ class SubjectsController < BaseController
   def create
     session[:subject_params].deep_merge!(params[:subject]) if params[:subject]
     session[:subject_aulas]= params[:aulas] unless params[:aulas].nil?
+    session[:subject_exames] = params[:exams] unless params[:exams].nil?
     
     @subject = current_user.subjects.new(session[:subject_params])
     @subject.current_step = session[:subject_step]
@@ -35,7 +62,7 @@ class SubjectsController < BaseController
         if @subject.all_valid?
           @subject.save
           @subject.create_course_subject_type_course(session[:subject_aulas], @subject.id, current_user) unless session[:subject_aulas].nil?
-          # @subject.create_course_subject_type_exam(session[:subject_aulas], @subject.id) unless session[:subject_aulas].nil?
+          @subject.create_course_subject_type_exam(session[:subject_exames], @subject.id, current_user) unless session[:subject_exames].nil?
         end
       else
         @subject.next_step
@@ -46,7 +73,7 @@ class SubjectsController < BaseController
     if @subject.new_record?
       render "new"
     else
-      session[:subject_step] = session[:subject_params] = nil
+      session[:subject_step] = session[:subject_params]= session[:subject_aulas]=session[:subject_exames] = nil
        redirect_to :action =>"admin_subjects"
     end
   end
@@ -62,6 +89,7 @@ class SubjectsController < BaseController
     session[:subject_params].deep_merge!(params[:subject]) if params[:subject]
     session[:subject_aulas]= params[:aulas] unless params[:aulas].nil?
     session[:subject_id]= params[:id] unless params[:id].nil?
+    session[:subject_exames] = params[:exams] unless params[:exams].nil?
 
     @subject = current_user.subjects.new(session[:subject_params])
     @subject.current_step = session[:subject_step]
@@ -75,10 +103,10 @@ class SubjectsController < BaseController
           @subject = current_user.subjects.find(session[:subject_id])
           @subject.update_attributes(session[:subject_params])
           @subject.course_subjects.destroy_all
-           @subject.create_course_subject_type_course(session[:subject_aulas], @subject.id,current_user) unless session[:subject_aulas].nil?
-          # @subject.create_course_subject_type_exam(params[:exames], @subject.id) unless params[:exames].nil?
-          updated = true
+          @subject.create_course_subject_type_course(session[:subject_aulas], @subject.id,current_user) unless session[:subject_aulas].nil?
+          @subject.create_course_subject_type_exam(session[:subject_exames], @subject.id, current_user) unless session[:subject_exames].nil?
         end
+          updated = true
       else
         @subject.next_step
       end
@@ -89,7 +117,7 @@ class SubjectsController < BaseController
       render "edit"
     else
       flash[:notice] = "Atualizado com sucesso!"
-      session[:subject_step] = session[:subject_params]= session[:subject_aulas]= session[:subject_id] = nil
+      session[:subject_step] = session[:subject_params]= session[:subject_aulas]= session[:subject_exames]= session[:subject_id] = nil
       redirect_to :action =>"admin_subjects"
     end
 
@@ -109,5 +137,13 @@ class SubjectsController < BaseController
   def admin_subjects
     @subjects = current_user.subjects
   end
+  
+  def admin_show
+    @subject = current_user.subjects.find(params[:id])
+    
+  end
+  
+ 
+    
 
 end

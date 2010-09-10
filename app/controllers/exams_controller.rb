@@ -224,10 +224,7 @@ class ExamsController < BaseController
     flash[:notice] = "Criação de exame cancelada."
     redirect_to exams_path
   end
-  
-  
-  
-  
+ 
   
   def new
   session[:exam_params] ||= {}

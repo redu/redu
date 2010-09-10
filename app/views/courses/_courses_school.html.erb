@@ -1,5 +1,6 @@
 <script>
 	function select(content) {
+	 
 		$('#content_list').html(' ');
 		$('.selected').removeClass('selected')
 		$('#'+content+'_sel').addClass('selected');
@@ -27,8 +28,8 @@
 				   	 	<%= link_to_remote "Aulas", :url => school_courses_path(:school_id => @school.id.to_s, :school_content => "true"), :method => :get, :loading => "select('courses')" %>
 					 </li>
 					  <li id="subjects_sel">
-				   	 	<%= link_to "Cursos", "#" %>
-			 
+				   	 	<%#= link_to "Cursos", "#" %>
+			          	<%= link_to_remote "Cursos", :url => subjects_path(:school_id => @school.id.to_s), :method => :get, :loading => "select('subjects')" %>
 					 </li>
 					  <li id="exams_sel">
 				   	 	<%= link_to_remote "Exames", :url => school_exams_path(:school_id => @school.id, :school_content => "true"), :method => :get, :loading => "select('exams')" %>

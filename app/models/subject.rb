@@ -64,9 +64,13 @@ class Subject < ActiveRecord::Base
         
   end
 
-  def create_course_subject_type_exam exams, subject_id
+  def create_course_subject_type_exam exams, subject_id, current_user
 
     exams.each do |exam_id|
+     exame = current_user.exams.find(exam_id) #find exame by id
+     clone_exame = exame.clone #clone it
+     clone_exame.is_clone = true
+     clone_exame.save#and save it  
      cs = CourseSubject.new
      cs.subject_id = subject_id
      cs.courseable_id = exam_id
@@ -75,5 +79,18 @@ class Subject < ActiveRecord::Base
     end
 
   end
+  
+  def aulas 
+    self.course_subjects.select{|cs| cs.courseable_type.eql?("Course")}
+  end
+
+  def exames
+    self.course_subjects.select{|cs| cs.courseable_type.eql?("Exam")}
+  end
+  
+  def students
+    self.enrollments.map{|e| e.user}
+  end
+
 
 end
