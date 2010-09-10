@@ -278,7 +278,7 @@ class User < ActiveRecord::Base
       #    when 'Exam'
       #      (entity.owner == self || (entity.school == school && self.school_admin?(school) ))
     when 'School'
-      (self.school_admin?(entity) || self.schools.include?(entity))
+      (self.school_admin?(entity) || (self.schools.include?(entity) && self.get_association_with(entity).status == "approved"))
       #    when 'Event'
       #       (entity.owner == self || (entity.school == school && self.school_admin?(school) ))
     end

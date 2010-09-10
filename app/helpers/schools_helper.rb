@@ -126,4 +126,12 @@ module SchoolsHelper
     Event.count(:conditions => ["school_id = ? AND state LIKE ?", @school.id, "waiting"])
   end
   
+  def school_association_pending?
+    (current_user.schools.include?(@school) && current_user.get_association_with(@school).status == "pending")
+  end
+  
+  def school_association_disaproved?
+    current_user.schools.include?(@school) && current_user.get_association_with(@school).status == "disaproved"
+  end
+  
 end
