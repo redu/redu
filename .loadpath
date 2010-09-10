@@ -9,4 +9,11 @@
 	<pathentry path="GEM_LIB/activesupport-2.3.3/lib" type="var"/>
 	<pathentry path="GEM_LIB/rails-2.3.3/lib" type="var"/>
 	<pathentry path="GEM_LIB/actionmailer-2.3.3/lib" type="var"/>
+	<pathentry path="GEM_LIB/actionpack-2.3.5/lib" type="var"/>
+	<pathentry path="GEM_LIB/rack-1.0.1/lib" type="var"/>
+	<pathentry path="GEM_LIB/actionmailer-2.3.5/lib" type="var"/>
+	<pathentry path="GEM_LIB/hoe-2.6.1/lib" type="var"/>
+	<pathentry path="GEM_LIB/activerecord-2.3.5/lib" type="var"/>
+	<pathentry path="GEM_LIB/sqlite3-ruby-1.2.1/lib" type="var"/>
+	<pathentry path="GEM_LIB/activesupport-2.3.5/lib" type="var"/>
 </loadpath>

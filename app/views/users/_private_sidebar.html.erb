@@ -38,6 +38,7 @@
 
 <li class="clearfix">
 <span class="call"><span>Quem você segue</span></span>
+
 <div class="followship box clearfix">
 	
 <% if @user.follows.size > 0 %>
@@ -66,7 +67,7 @@
 
 <% for annotation in @user.annotations[0..9]%>
 <li>
-	<%= link_to image_tag(annotation.course.thumb_url, :height => '24', :width => '24'), annotation.course, :rel => 'bookmark', :title => annotation.course.name %>
+	<%= link_to_or_name(annotation) %>
   <%= truncate_chars(annotation.content)%>
 </li>
 <%end%>
