@@ -24,6 +24,7 @@ GEM
     fastthread (1.0.7)
     gem_plugin (0.2.3)
     hpricot (0.8.2)
+    htmlentities (4.2.1)
     icalendar (1.1.5)
     linecache (0.43)
     mongrel (1.1.5)
@@ -66,6 +67,7 @@ DEPENDENCIES
   collectiveidea-delayed_job
   desert
   hpricot
+  htmlentities
   icalendar
   mongrel
   mysql

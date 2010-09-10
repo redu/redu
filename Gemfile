@@ -19,6 +19,7 @@ gem "rmagick", "2.12.2"
 gem "packet"
 gem "hpricot"
 gem "ruby-debug"
+gem "htmlentities"
 
 group :development do
 gem "mongrel"
