@@ -2,6 +2,15 @@
 <% field_set_tag "Questão #{session[:question_index]}", :class => "heighted" do %>   
 
 <div id="texto_instrucoes">
+	
+	
+	<% if question.source%>
+	<span class="snippet"> 
+	Fonte: <%= question.source %> |
+	</span>
+	<% end %>
+	
+	
 	<%= question.statement %>
 </div>
 

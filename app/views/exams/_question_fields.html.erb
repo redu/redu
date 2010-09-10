@@ -27,6 +27,8 @@
 	<%= f.label :justification, "Justificativa" %>
 	<%= f.text_area :justification, :rows =>2, :cols => 50, :class => "mceEditor" %>
 	
+	<%= f.label :source, "Fonte" %>
+	<%= f.text_field :source %>
  <div>
 	<%= f.check_box :public, :checked =>  true %>
 		<%= f.label :public, "Pública", :class => "inline" %>
