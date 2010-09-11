@@ -26,7 +26,7 @@
 
 	</div>
 	
-	<span class="grid_9"><%= @event.tag_list %> | Criador: <%= link_to @event.owner.display_name, school_event_path if @event.owner %></span>
+	<span class="grid_9"><%= @event.tag_list %> | Criador: <%= link_to @event.owner.display_name, @event.owner if @event.owner %></span>
 	
 	<span class="grid_6"><%= @event.time_and_date %></span>
 	<span class="grid_6">
@@ -44,8 +44,11 @@
 		:method => :delete, :class => "button icon-delete" %>	
 		</div>
 	<% end %>
-	
 	<div class="grid_10">
+		Breve Descrição: <%= @event.tagline %>
+	</div>
+	<div class="grid_10">
+		Descrição:
 		<% if show_details_link %>
 			<%= @event.description[0..500]+"..." %>
 		<% else %>

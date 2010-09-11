@@ -28,18 +28,28 @@
 	<div class="grid_12 omega alpha">
 		
 		<h4 class="name"><%= @bulletin.title %></h4>
+		<span class="author">
+			Autor: <%= link_to @owner.display_name, @owner %>	
+		</span>
 		<div class="pretty-text">
+			Breve desrição: 
+			<%= @bulletin.tagline %>
+		</div>
+		<div class="pretty-text">
+			Descrição:
 			<%= @bulletin.description %>
 		</div>
-		<span class="author">
-			Autor: <%= @owner.display_name %>	
-		</span>	
+		<div class="grid_12">
 			<% if current_user.can_manage?(@bulletin, @bulletin.school) %>
 				<%= link_to 'Editar', edit_school_bulletin_path(@bulletin.school, @bulletin), :class => "button icon-edit"%>
 				<%= link_to 'Remover', @bulletin,
 					{:confirm => 'Você tem certeza que deseja remover essa notícia permanentemente?',
 					:method => :delete, :class => "button icon-delete"} %>
 			<% end %>
+		</div>
+		<div class="grid_12">
+			Tags:	<%= @bulletin.tag_list %>
+		</div>
 		<%= link_to 'Ver notícias da rede', school_bulletins_path(@bulletin.school) %>
 	</div>
 
