@@ -6,7 +6,7 @@
   <% @subjects.each do |subject| %>
     
       
-<li><%= link_to subject.title, subject_path(subject) %> | <%= link_to "Editar", edit_subject_path(subject)%> |                       <%=link_to'Excluir', subject, :confirm => 'Tem certeza?', :method => :delete %> </li>
+<li><%= link_to subject.title, admin_show_path(subject) %> | <%= link_to "Editar", edit_subject_path(subject)%> |                       <%=link_to'Excluir', subject, :confirm => 'Tem certeza?', :method => :delete %> </li>
       
       
 

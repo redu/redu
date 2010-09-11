@@ -11,7 +11,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :beta_keys, :collection => {:generate => :get, :remove_all => :get, :print_blank => :get, :invite => :get}
   map.resources :profiles
   map.resources :subjects, :member => {:classes => :get}
-  map.admin_subjects "admin_subjects", :controller => "subjects", :action => "admin_subjects" 
+  map.admin_subjects "admin/subjects", :controller => "subjects", :action => "admin_subjects" 
+  map.admin_show "admin/show/:id", :controller => "subjects", :action => "admin_show" 
   map.resources :questions, :collection => { :search => [:get, :post], :add => :get } 
   map.resources :exams, :member => {:add_question => :get, :add_resource => :get, :rate => :post, :answer => [:get,:post]},
                         :collection => {:unpublished_preview => :get, :unpublished => :get, :new_exam => :get, :cancel => :get, 

@@ -167,7 +167,6 @@ class CoursesController < BaseController
       
       format.js  do
         if params[:school_content]
-          
           render :update do |page|
             page.replace_html  'content_list', :partial => 'course_list'
             page << "$('#spinner').hide()"
