@@ -1,19 +1,90 @@
 <div id="breadcrumbs"><b><strong>Cursos</strong></b> >  </div>
 
-<h2>Todos Cursos Disponíveis</h2><br /><br />
-
-<ul>
-  <% @subjects.each do |subject| %>
-    <% if subject.is_public? %>
-      <%unless current_user.enrolled?(subject.id) %>
-        <li><%= link_to subject.title, subject_path(subject) %> | <%#= link_to "Editar", edit_subject_path(subject)%> | <%#=link_to'Excluir', subject, :confirm => 'Tem certeza?', :method => :delete %> </li>
-      <%else%>
-        <li><%= link_to subject.title, classes_subject_path(subject) %> </li>
-      <%end%>
-
-    <%end%>
-  <%end%>
-</ul>
-
-
  
+<% content_for :js do %>
+<script type="text/javascript">
+function select(type, id) {
+	jQuery('#'+ type+'_' + id).parent().children().removeClass('selected')
+	jQuery('#'+ type+'_' + id).addClass('selected')
+	loadList();
+
+}
+
+function loadList(){
+	jQuery('#course_list').html(' ')
+	jQuery('#loader').show()
+}
+/* pega os filtros selecionados e passa-os como parametro */
+function getParameters(){
+	
+	return ''
+	
+	var params = ''
+	jQuery('.selected').each(function(i) {
+		var id = $(this).attr('id').split('_')
+		if (id[1] != 'all' && typeof(id[0]) != 'undefined' && typeof(id[1]) != 'undefined') {
+			if (id[0] == 'cat') id[0] = 'category';
+			
+			params += id[0] + '=' + id[1];
+		}
+		
+	})
+	alert(params)
+	return params;
+}
+</script>
+<% end %>
+
+<%= render(:partial => "schools/school_info", :locals=>{:show => false}) if @school%>
+
+<div class="grid_16">
+ 
+<h3> Cursos</h3>
+</div>
+
+<div class="grid_4 calls" id="filter">
+	 
+	<form>
+	<% field_set_tag "Categoria" do %>
+	<ul class="criteriaList">
+		<li id ="cat_all" class="selected">
+			<%= link_to_remote "Todas", :url => {:action => :index}, :loading => "select('cat','all')", :method => :get%>
+		</li>
+		
+		<% for category in SimpleCategory.all do %>
+		<li id = "cat_<%=category.id%>">
+			<%= link_to_remote category_i18n(category.name), :url => {:action => :index, :category => category.id}, :loading => "select('cat','"+category.id.to_s+"')", :with => "getParameters()",:method => :get%>
+		</li>
+		<% end %>
+		
+	</ul>
+	<% end %>
+	</form>
+	
+	
+	 
+	 
+</div>
+
+<span class="grid_12 filter_bar">
+	<span class="filter_text">
+		<%= (params[:search]) ? ("Resultados para: \""+params[:search]+"\"") : "Todas os cursos mais recentes" %>
+	</span>
+	
+		<% form_tag subjects_path, :method => :get do %>
+		Buscar 
+		<%= text_field_tag :search, params[:search] %>
+		<%= hidden_field_tag(:school_id, @school.id) if @school%>
+		<%= submit_tag "OK", :name => nil%>
+		<% end %>
+
+</span>
+
+<%= image_tag "loadingAnimation.gif", :id => "loader", :style => "display: none"%>
+<div id="subject_list" class="grid_12">
+	
+	<%= render :partial => "subject_list"%>
+</div>
+
+
+

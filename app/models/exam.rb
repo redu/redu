@@ -8,14 +8,14 @@ class Exam < ActiveRecord::Base
   
   # ASSOCIATIONS
    has_many :statuses, :as => :statusable
-  has_many :question_exam_associations, :dependent => :destroy
+  has_many :question_exam_associations#, :dependent => :destroy
   has_many :questions, :through => :question_exam_associations, :include => :alternatives, :order => :position
   has_many :exam_users, :dependent => :destroy
   has_many :user_history, :through => :exam_users, :source => :user
   has_many :favorites, :as => :favoritable, :dependent => :destroy
   belongs_to :owner , :class_name => "User" , :foreign_key => "owner_id"
   belongs_to :simple_category
-  has_one :course_subject, :as => :courseable, :dependent => :destroy
+  has_one :course_subject, :as => :courseable
   has_one :school_asset, :as => :asset
   has_one :school, :through => :school_asset#, :as => :asset
  
