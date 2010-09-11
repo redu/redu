@@ -235,24 +235,29 @@ class SchoolsController < BaseController
   
   
   def moderate_requests
+    @school = School.find(params[:id])
     
     approved = params[:member].reject{|k,v| v == 'reject'}
     rejected = params[:member].reject{|k,v| v == 'approve'}
-    approved_ids = approved.keys.join(',')
-    rejected_ids = rejected.keys.join(',')
     
-    @school = School.find(params[:id])
-    
-    #atualiza status da associacao
-    UserSchoolAssociation.update_all( "status = 'approved'", ["user_id IN (?)", approved_ids ]) if approved_ids
-    UserSchoolAssociation.update_all( "status = 'disaproved'",["user_id IN (?)", rejected_ids ]) if rejected_ids
-    
+    #atualiza status da associacao    
+    approved.keys.each do |user_id|
+      UserSchoolAssociation.update_all("status = 'approved'", :user_id => user_id,  :school_id => @school.id)
+    end
+
+    rejected.keys.each do |user_id|
+      UserSchoolAssociation.update_all("status = 'disaproved'", :user_id => user_id,  :school_id => @school.id)
+    end
+
+    debugger
     #pega usuários para enviar emails
-    @approved_members = User.all(:conditions => ["id IN (?)", approved_ids]) unless approved_ids.empty?
-    @rejected_members = User.all(:conditions => ["id IN (?)", rejected_ids]) unless rejected_ids.empty?
+    @approved_members = User.all(:conditions => ["id IN (?)", approved.keys]) unless approved.empty?
+    @rejected_members = User.all(:conditions => ["id IN (?)", rejected.keys]) unless rejected.empty?
     
-    for member in @approved_members
-      UserNotifier.deliver_approve_membership(member, @school) # TODO fazer isso em batch
+    if @approved_members
+      for member in @approved_members
+        UserNotifier.deliver_approve_membership(member, @school) # TODO fazer isso em batch
+      end
     end
     
     #    for member in @rejected_members #TODO mandar email para os que não foram aceitos na rede???
@@ -260,7 +265,7 @@ class SchoolsController < BaseController
     #    end
     
     flash[:notice] = 'Solicitacões moderadas!'
-    redirect_to admin_requests_school_path
+    redirect_to admin_requests_school_path(@school)
     
   end
   
