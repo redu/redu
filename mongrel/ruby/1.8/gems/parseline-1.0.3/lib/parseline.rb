@@ -1,0 +1,113 @@
+#shairon.toledo@gmail.com
+#http://www.hashcode.eti.br
+#
+#The purpose of gem parseline is to help the developers to load external CSV and fixed width files.
+#
+#===Installation 
+# sudo gem sources --add http://gems.github.com
+# sudo gem install parseline
+#
+#
+#===How to Use
+#As single data mapper 
+#
+#====Using CSV
+#You can use the files delimited by a character or using regexp. To demonstrate its we'll use a migration/table
+#
+#class CreateProducts < ActiveRecord::Migration
+#  def self.up
+#    create_table :products do |t|
+#      t.integer :code
+#      t.string  :name
+#      t.boolean :in_stock
+#      t.date    :date
+#      t.float   :price
+#    end
+#  end
+#
+#  def self.down
+#    drop_table :products
+#  end
+#end
+#
+#and a given file called 'data.csv' with the content below.
+#
+# 1;PRODUT 1;Y;;11/21/2008;90.00
+# 2;PRODUT 2;N;;11/22/2008;341.33
+# 3;PRODUT 3;N;;11/01/2008;1.99
+# 4;PRODUT 4;Y;;11/15/2008;34.98
+# 5;PRODUT 5;N;;11/14/2008;130.44
+# 6;PRODUT 6;Y;;11/05/2008;20.11
+# 
+#The descriptions of data layout are
+#
+# product's code;name;if it is in stock;*reserved for future use*;date;price
+#
+#As you can see we need format the column 'in stock' to boolean format and convert the date format from MM/DD/YYYY to YYYY-MM-DD.
+#For every parse.field call, you receive the field to format using a lambda block. 
+#
+#so, take a look at the ActiveRecord definition using the module ParseLine::CSV
+# require 'parseline'
+#
+# class Product < ActiveRecord::Base
+#   extend ParseLine::CSV
+#   csv_layout :delimiter => ";" do |parse|
+#     parse.field :code
+#     parse.field :name
+#     parse.ignore_field
+#     parse.field :in_stock, lambda {|s| s == 'Y' }
+#     parse.field :date ,    lambda {|d| d.gsub(/(\d{2})\/(\d{2})\/(\d{4})/,'\3-\1-\2') }
+#     parse.field :price
+#   end
+# end
+#
+#Each column will be mapped into a field, except the column after :name that is being ignored.
+#
+#===== Loading external file
+#There are two ways that load data, by line use method Product.load_line to return an instance of Product
+#
+# data_file=File.readlines("data.csv")
+# @product=Product.load_line data_file.first
+# @product.save #data will go to database
+# 
+#
+#or loading from file with all records returns an array of Products
+#
+# @products=Product.load_lines "data.csv"
+#
+#
+#====Using Fixed Width
+#To load data with Fixed Width we need do a extend the module ParseLine::FixedWidth. It uses the same class methods to load data, the load_line and load_lines. See the file Fixed Width
+#
+# 000001PRODUT  1       Y 11/21/2008000090.00
+# 000002PRODUT  2       N 11/22/2008000341.33
+# 000003PRODUT  3       N 11/01/2008000001.99
+# 000004PRODUT  4       Y 11/15/2008000034.98
+# 000005PRODUT  5       N 11/14/2008000130.44
+# 000006PRODUT  6       Y 11/05/2008000020.11
+#
+#let's split those lines and define a model like
+# require 'parseline'
+#
+# class Product < ActiveRecord::Base
+#   extend ParseLine::FixedWidth
+#   fixed_width_layout do |parse|
+#     parse.field :code , 0..5
+#     parse.field :name,  6..21
+#     parse.field :in_stock, 22..22, lambda {|s| s == 'Y' }
+#     parse.field :date , 24..33,    lambda {|d| d.gsub(/(\d{2})\/(\d{2})\/(\d{4})/,'\3-\1-\2') }
+#     parse.field :price, 34..42
+#   end
+# end
+#
+#After that 
+#
+#  @products=Product.load_lines "data.csv"
+#
+#Remember to use the parse module
+#It's easy to do, so enjoy and make money with it!
+module ParseLine
+  require 'parseline/parser_line_csv'
+  require 'parseline/parser_line_fixed_width'
+end
+

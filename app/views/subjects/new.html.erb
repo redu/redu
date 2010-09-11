@@ -6,6 +6,6 @@
 <p><%= render :partial => "#{@subject.current_step}_step", :locals=>{:f => f, :titles => "Criar Curso-Adicionar Aulas"}%></p><br /><br />
 
 <div class="grid_16">
-<br /><%= f.submit "Voltar", :name => "back_button" unless @subject.first_step? %><%= f.submit "Continuar" %>
+<br /><%= f.submit "< Anterior", :name => "back_button" unless @subject.first_step? %><%= f.submit "Próximo >" %>
 </div>
 <%end%>

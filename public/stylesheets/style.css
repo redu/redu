@@ -720,7 +720,7 @@ form div.errorExplanation {
     display: inline;
 }
 
-.errorMessageField {
+.errorMessageField,.formError {
     font-size: 0.7em;
     display: block;
     color: #F77C22;
