@@ -1,37 +1,54 @@
-<%
-title1 = titles.split('-')[0]
-title2 = titles.split('-')[1]
-%>
-
 <div class="grid_9 push_3">
-  <table class="booking_steps" cellpadding="0" cellspacing="0">
-    <tbody><tr>
-        <td><span class="book_step current"><span><em>1</em><%= h title1 %></span></span></td>
-        <td class="spacer">&nbsp;</td>
-        <td><span class="book_step disabled"><span><em>2</em><%= h title2 %></span></span></td>
-        <td class="spacer">&nbsp;</td>
-        <td><span class="book_step disabled"><span><em>3</em>Publicação</span></span></td>
-      </tr>
-    </tbody></table>
+<table class="booking_steps" cellpadding="0" cellspacing="0">
+							<tbody><tr>
+								<td><span class="book_step current"><span><em>1</em>Informações Gerais</span></span></td>
+								<td class="spacer">&nbsp;</td>
+								<td><span class="book_step disabled"><span><em>2</em>Aulas</span></span></td>
+								<td class="spacer">&nbsp;</td>
+								<td><span class="book_step disabled"><span><em>3</em>Publicação</span></span></td>
+							</tr>
+						</tbody></table>
+</div>
+
+<div class="grid_9">
+<%= f.error_messages %>
 </div>
 
 
 
+<div class="grid_9">
 
-<div class="grid_16">
+<% field_set_tag 'Informações Gerais' do %>
+	<%= f.label "Nome" %>
+	<%= f.text_field :title  %>
+	 <%= error_message_on @subject, :title %>
 
-  <% field_set_tag 'Informações Curso' do %>
-    <%= f.label "Título" %>
-    <%= f.text_field :title%>
-    <%= error_message_on @subject, :title %>
-  
-    <%= f.label "Descrição" %>
-    <%= f.text_area :description%>
-    <%= error_message_on @subject, :description %>
+	<%= f.label "Descrição" %>
+	<%= f.text_area :description, :size => "50x3", :maxlength=> AppConfig.desc_char_limit %>
+	<div id="char_limit" style="text-align:right;">(<%=AppConfig.desc_char_limit %>)</div>
+	<%= error_message_on @subject, :description %>
 
-  <%end%>
+	<%= f.label "Imagem <span class='snippet'>(tamanho recomendado: 200 x 64)</span>" %> 
+	<%= f.file_field :avatar %>
+
+	<%= f.label "Tags <span class='snippet'>(separadas por vírgula)</span>" %>
+	<%= f.text_field :tag_list %>
+
+<% end %>
 
 
+<% field_set_tag 'Audiência' do %>
+<span class="snippet">Selecionar um público que não corresponde ao propósito da rede pode levar à uma má avaliação. </span>
+<%= error_for :subject, :audiences %>
+<ul>
+<% for audience in Audience.find(:all) %>
+	<li>
+	  <%= check_box_tag "subject[audience_ids][]", audience.id, @subject.audiences.include?(audience) %>
+	  <%= audience.name %>
+	</li>
+<% end %>
+</ul>
+<% end %>
 
 
 </div>
