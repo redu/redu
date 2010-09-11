@@ -8,7 +8,7 @@ function showLoadingFiles(){
 </script>
 <ul id="actions_user">
 				
-				<%  if current_user.school_admin? @school %>
+				<%  if current_user.can_manage? @school %>
 				   	 <li>
                      <div class="new-folder-outter">
                          <a href="#" onclick="$('div.new-folder-inner').slideToggle(); return false;">Criar Diretório</a>

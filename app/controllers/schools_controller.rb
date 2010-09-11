@@ -249,7 +249,6 @@ class SchoolsController < BaseController
       UserSchoolAssociation.update_all("status = 'disaproved'", :user_id => user_id,  :school_id => @school.id)
     end
 
-    debugger
     #pega usuários para enviar emails
     @approved_members = User.all(:conditions => ["id IN (?)", approved.keys]) unless approved.empty?
     @rejected_members = User.all(:conditions => ["id IN (?)", rejected.keys]) unless rejected.empty?
