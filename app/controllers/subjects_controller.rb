@@ -5,27 +5,83 @@ class SubjectsController < BaseController
  
 
   def index
-    session[:subject_step] = session[:subject_params]= session[:subject_aulas]= session[:subject_id]= session[:subject_exames]  = nil
-    
-    if params[:school_id].nil?
-    @subjects = Subject.find(:all, :conditions => "is_public like true") 
-   else
-     @subjects = current_user.schools.find(params[:school_id]).subjects#.paginate(paginating_params)
-   end
-   
-   
-    respond_to do |format|
-     format.html # index.html.erb
+#    session[:subject_step] = session[:subject_params]= session[:subject_aulas]= session[:subject_id]= session[:subject_exames]  = nil
+#    
+#    if params[:school_id].nil?
+#    @subjects = Subject.find(:all, :conditions => "is_public like true") 
+#   else
+#     @subjects = current_user.schools.find(params[:school_id]).subjects#.paginate(paginating_params)
+#   end
+#   
+#   
+#    respond_to do |format|
+#     format.html # index.html.erb
+#
+#     format.js  do     
+#       render :update do |page|
+#         page.replace_html  'content_list', :partial => 'subjects/school/subject_list/'
+#         page << "$('#spinner').hide()"
+#       end
+#     end  
+#     
+#   end
 
-     format.js  do     
-       render :update do |page|
-         page.replace_html  'content_list', :partial => 'subjects/school/subject_list/'
-         page << "$('#spinner').hide()"
-       end
-     end  
-     
-   end
-   
+
+
+    cond = Caboose::EZ::Condition.new
+    cond.append ["simple_category_id = ?", params[:category]] if params[:category]
+    
+    paginating_params = {
+      :conditions => cond.to_sql,
+      :page => params[:page], 
+      :order => (params[:sort]) ? params[:sort] + ' DESC' : 'created_at DESC', 
+      :per_page => AppConfig.items_per_page 
+    }
+    
+    if params[:user_id] # cursos do usuario
+      @user = User.find_by_login(params[:user_id]) 
+      @user = User.find(params[:user_id]) unless @user
+      @subjects = @user.subjects.paginate(paginating_params)
+      render((@user == current_user) ? "user_subjects_private" :  "user_subjects_public") #TODO
+      return
+      
+    elsif params[:school_id] # cursos da escola
+      @school = School.find(params[:school_id])
+      if params[:search] # search cursos da escola
+        @subjects = @school.subjects.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
+      else
+        @subjects = @school.subjects.paginate(paginating_params) 
+      end
+    else # index (Course)
+      if params[:search] # search
+        @subjects = Subject.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
+      else
+        @subjects = Subject.paginate(paginating_params)
+      end
+    end
+    
+    # @popular_tags = Course.tag_counts
+    
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @subjects }
+      
+      format.js  do
+        if params[:school_content]
+          render :update do |page|
+             page.replace_html  'content_list', :partial => 'subject_list'
+             page << "$('#spinner').hide()"
+          end
+#        elsif params[:tab]
+#          render :update do |page|
+#            page.replace_html  'tabs-2-content', :partial => 'courses_school'
+#          end
+        else
+          render :index
+        end
+        
+      end
+    end
  end
   
 
@@ -43,7 +99,8 @@ class SubjectsController < BaseController
   end
 
   def new
-    session[:subject_params] ||= {}
+   # session[:subject_params] ||= {}
+    cancel
     @subject = Subject.new
   end
 
@@ -77,6 +134,10 @@ class SubjectsController < BaseController
       session[:subject_step] = session[:subject_params]= session[:subject_aulas]=session[:subject_exames] = nil
        redirect_to :action =>"admin_subjects"
     end
+  end
+  
+  def cancel
+    session[:subject_step] = session[:subject_params]= session[:subject_aulas]= session[:subject_id]= session[:subject_exames]  = nil
   end
 
 

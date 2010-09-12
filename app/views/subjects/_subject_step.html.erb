@@ -37,11 +37,13 @@ $(document).ready(function(){
 	<div id="char_limit" style="text-align:right;">(<%=AppConfig.desc_char_limit %>)</div>
 	<%= error_message_on @subject, :description %>
 
-	<%= f.label "Imagem <span class='snippet'>(tamanho recomendado: 200 x 64)</span>" %> 
-	<%= f.file_field :avatar %>
-
 	<%= f.label "Tags <span class='snippet'>(separadas por vírgula)</span>" %>
 	<%= f.text_field :tag_list %>
+	
+		<%# f.select(:simple_category, )%>
+	<%= f.label "Categoria:" %>
+	<%= simple_categories_i18n(f) %>
+	<%= error_for :subject, :simple_category %>
 
 <% end %>
 

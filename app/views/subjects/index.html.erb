@@ -1,6 +1,3 @@
-<div id="breadcrumbs"><b><strong>Cursos</strong></b> >  </div>
-
- 
 <% content_for :js do %>
 <script type="text/javascript">
 function select(type, id) {
@@ -11,7 +8,7 @@ function select(type, id) {
 }
 
 function loadList(){
-	jQuery('#course_list').html(' ')
+	jQuery('#subject_list').html(' ')
 	jQuery('#loader').show()
 }
 /* pega os filtros selecionados e passa-os como parametro */
@@ -38,12 +35,26 @@ function getParameters(){
 <%= render(:partial => "schools/school_info", :locals=>{:show => false}) if @school%>
 
 <div class="grid_16">
- 
+	<!--
+<div id="breadcrumbs">
+		<% if @school %>
+	<a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <%= link_to @school.name, @school %> > aulas
+	<% else %>
+	<a href="<%=application_url%>">início</a> > <a href="#">aprender</a> > aulas
+	<%end %>
+</div>
+-->
+
 <h3> Cursos</h3>
 </div>
 
+
+
+
 <div class="grid_4 calls" id="filter">
-	 
+	<!--
+	<span class="call"><span>Refinar</span></span>
+	-->
 	<form>
 	<% field_set_tag "Categoria" do %>
 	<ul class="criteriaList">
@@ -62,9 +73,46 @@ function getParameters(){
 	</form>
 	
 	
-	 
-	 
+	<form>
+	<% field_set_tag "Audiência" do %>
+	<ul class="criteriaList">
+		
+		<li id ="audience_all" class="selected">
+			<%= link_to_remote "Todas", :url => {:action => :index}, :loading => "select('audience','all')", :method => :get%>
+		</li>
+		
+		<% for audience in Audience.all(:limit =>5) do %>
+		<li id = "audience_<%=audience.id%>">
+			<%= link_to_remote (audience.name), :url => {:action => :index, :audience => audience.id}, :loading => "select('audience','"+audience.id.to_s+"')", :with => "getParameters()",:method => :get%>
+		</li>
+		<% end %>
+		
+	</ul>
+		<% end %>
+	</form>
+	
+	
+	
+		<form>
+	<% field_set_tag "Ordem" do %>
+	<ul class="criteriaList">
+		
+		<li id = "sort_recent" class="selected">
+			<%= link_to_remote "Mais recentes", :url => {:action => :index, :sort => 'updated_at'}, :loading => "select('sort','recent')", :method => :get%>
+		</li>
+		
+		<li id = "sort_view">
+			<%= link_to_remote "Mais vistos", :url => {:action => :index, :sort => 'view_count'}, :loading => "select('sort','view')", :method => :get%>
+		</li>
+		
+		<li id = "sort_rating">
+			<%= link_to_remote "Melhores avaliados", :url => {:action => :index, :sort => 'rating_average'}, :loading => "select('sort','rating')", :method => :get%>
+		</li>
+	</ul>
+	<% end %>
+	</form>
 </div>
+
 
 <span class="grid_12 filter_bar">
 	<span class="filter_text">
