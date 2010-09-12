@@ -1,8 +1,28 @@
 class SubjectsController < BaseController
 
-  layout 'new_application'
   before_filter :login_required
- 
+  before_filter :find_subject, :only => [:show, :enroll]
+  before_filter :find_user_subject, :only => [:edit,:destroy, :admin_show]
+  
+  def find_subject
+    @subject = Subject.find(params[:id])
+    
+    unless @subject
+    flash[:notice] = "Curso não encontrado. Você digitou o endereço correto?"
+    redirect_to subjects_path and return
+    end
+  end
+  
+  def find_user_subject
+    @subject = current_user.subjects.find(params[:id])
+    
+    unless @subject
+    flash[:notice] = "Curso não encontrado. Você tem mesmo permissão para acessá-lo?"
+    redirect_to subjects_path and return
+    end
+  end
+  
+  
 
   def index
 #    session[:subject_step] = session[:subject_params]= session[:subject_aulas]= session[:subject_id]= session[:subject_exames]  = nil
@@ -86,16 +106,18 @@ class SubjectsController < BaseController
   
 
   def show
+    @school = @subject.school
     
-      @subject = Subject.find(:first, :conditions => "is_public like true AND id =#{params[:id].to_i}")
-     respond_to do |format|    
-         if current_user.enrollments.detect{|e| e.subject_id.eql?(params[:id].to_i)}.nil?
-         format.html
-         else
-          format.html{  render :action => "classes" }
-         end
-     end
-     
+    respond_to do |format|    
+      if current_user.enrollments.detect{|e| e.subject_id.eql?(params[:id].to_i)}.nil?
+        format.html{  render "preview" }
+      else
+        @status = Status.new
+        @statuses = @subject.recent_activity(0,10)
+        format.html
+      end
+    end
+    
   end
 
   def new
@@ -143,7 +165,6 @@ class SubjectsController < BaseController
 
   def edit
     session[:subject_params] ||= {}
-    @subject = current_user.subjects.find(params[:id])
   end
  
   def update 
@@ -186,14 +207,17 @@ class SubjectsController < BaseController
   end
  
   def destroy
-    subject = current_user.subjects.find(params[:id].to_i)
-    subject.destroy
+    @subject.destroy
     redirect_to :action =>"admin_subjects"
   end
 
-  def classes
-    Enrollment.create_enrollment(params[:id], current_user)
-    @subject = Subject.find(:first, :conditions => "is_public like true AND id =#{params[:id].to_i}")
+  def enroll
+   
+    redirect_to(subjects_path) and return unless @subject.is_public
+    
+    Enrollment.create_enrollment(@subject.id, current_user) 
+    flash[:notice] = "Você se inscreveu neste curso!"
+    redirect_to @subject
   end
   
   def admin_subjects
@@ -201,7 +225,6 @@ class SubjectsController < BaseController
   end
   
   def admin_show
-    @subject = current_user.subjects.find(params[:id])
     
   end
   

@@ -22,6 +22,10 @@ class Subject < ActiveRecord::Base
   belongs_to :owner, :class_name => "User" , :foreign_key => "user_id"
   belongs_to :school
   belongs_to :simple_category
+  
+   has_many :statuses, :as => :statusable
+   has_many :students, :through => :enrollments, :source => :user, :conditions => [ "enrollments.role_id = ?", 7 ]
+   has_many :teachers, :through => :enrollments, :source => :user, :conditions => [ "enrollments.role_id = ?", 6 ]
 
 
    # METODOS DO WIZARD
@@ -37,6 +41,10 @@ class Subject < ActiveRecord::Base
   end
   
   
+  def recent_activity(limit = 0, offset = 20) #TODO colocar esse metodo em status passando apenas o objeto
+     page = limit.to_i/10 + 1
+      self.statuses.descend_by_created_at.paginate(:per_page => offset, :page =>page)
+  end
 
 
 

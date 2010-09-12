@@ -6,6 +6,6 @@
 
 <div class="grid_16">
 <br /><%= f.submit "< Anterior", :name => "back_button" unless @subject.first_step? %><%= f.submit "Próximo >" unless @subject.last_step? %>
-ou <%= link_to "Cancelar", cancel_courses_path %>
+ou <%= link_to "Cancelar", cancel_subjects_path %>
 </div>
 <%end%>
