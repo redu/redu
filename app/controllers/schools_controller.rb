@@ -549,9 +549,9 @@ class SchoolsController < BaseController
   # GET /schools/1
   # GET /schools/1.xml
   def show
-    @school = School.find(params[:id])
+    @school = School.find(params[:id]) # TODO colocar como um filtro (find_school)
     
-    if @school.removed
+    if @school and @school.removed
         redirect_to removed_page_path and return
     end
     
