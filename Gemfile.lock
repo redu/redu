@@ -1,0 +1,86 @@
+GEM
+  remote: http://rubygems.org/
+  remote: http://gems.github.com/
+  specs:
+    actionmailer (2.3.5)
+      actionpack (= 2.3.5)
+    actionpack (2.3.5)
+      activesupport (= 2.3.5)
+      rack (~> 1.0.0)
+    activerecord (2.3.5)
+      activesupport (= 2.3.5)
+    activeresource (2.3.5)
+      activesupport (= 2.3.5)
+    activesupport (2.3.5)
+    adzap-ar_mailer (2.1.8)
+    authlogic (2.1.6)
+      activesupport
+    calendar_date_select (1.16.1)
+    cgi_multipart_eof_fix (2.5.0)
+    collectiveidea-delayed_job (1.8.2)
+    columnize (0.3.1)
+    daemons (1.1.0)
+    desert (0.5.4)
+    fastthread (1.0.7)
+    gem_plugin (0.2.3)
+    hpricot (0.8.2)
+    htmlentities (4.2.1)
+    icalendar (1.1.5)
+    linecache (0.43)
+    mongrel (1.1.5)
+      cgi_multipart_eof_fix (>= 2.4)
+      daemons (>= 1.0.3)
+      fastthread (>= 1.0.1)
+      gem_plugin (>= 0.2.3)
+    mysql (2.8.1)
+    oauth (0.4.3)
+    packet (0.1.15)
+    parseline (1.0.3)
+    rack (1.0.1)
+    rails (2.3.5)
+      actionmailer (= 2.3.5)
+      actionpack (= 2.3.5)
+      activerecord (= 2.3.5)
+      activeresource (= 2.3.5)
+      activesupport (= 2.3.5)
+      rake (>= 0.8.3)
+    rake (0.8.7)
+    right_aws (2.0.0)
+      right_http_connection (>= 1.2.1)
+    right_http_connection (1.2.4)
+    rmagick (2.12.2)
+    ruby-debug (0.10.3)
+      columnize (>= 0.1)
+      ruby-debug-base (~> 0.10.3.0)
+    ruby-debug-base (0.10.3)
+      linecache (>= 0.3)
+    validatable (1.6.7)
+    will_paginate (2.3.14)
+    zencoder (2.1.14)
+      activesupport
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  adzap-ar_mailer
+  authlogic
+  calendar_date_select
+  collectiveidea-delayed_job
+  desert
+  hpricot
+  htmlentities (= 4.2.1)
+  icalendar
+  mongrel
+  mysql
+  oauth
+  packet
+  parseline
+  rails (= 2.3.5)
+  rake (= 0.8.7)
+  right_aws (~> 2.0.0)
+  rmagick (= 2.12.2)
+  ruby-debug
+  validatable
+  will_paginate (~> 2.3.11)
+  zencoder
