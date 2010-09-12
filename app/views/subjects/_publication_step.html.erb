@@ -26,6 +26,14 @@
 	
 	
 <%end %>
+
+<% field_set_tag 'Imagem' do %>
+
+<%= f.label "<span class='snippet'>Escolha uma imagem representativa deste cursto (opcional)</span>" %> 
+<%= f.file_field :avatar %>
+
+<% end %>
+
 </div>
 
 
