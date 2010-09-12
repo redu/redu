@@ -1,57 +1,94 @@
-<%
-title1 = titles.split('-')[0]
-title2 = titles.split('-')[1]
-%>
+<script>
+	jQuery(document).ready(function(){
+  //se o botãoo fechar for clicado
+        $('.close').click(function(e){
+            //cancela o comportamento padrão do link
+            e.preventDefault();
+            $('#lights-dimmed, .modal_window').hide();
+        });
+        
+        //se div#lights-dimmed for clicado
+        $('#lights-dimmed').click(function(){
+            $(this).hide();
+            $('.window').hide();
+        });
+	 });	
+	
+</script>
+
 
 
 
 <div class="grid_9 push_3">
-  <table class="booking_steps" cellpadding="0" cellspacing="0">
-    <tbody><tr>
-        <td><span class="book_step disable"><span><em>1</em><%= h title1 %></span></span></td>
-        <td class="spacer">&nbsp;</td>
-        <td><span class="book_step current"><span><em>2</em><%= h title2 %></span></span></td>
-        <td class="spacer">&nbsp;</td>
-        <td><span class="book_step disabled"><span><em>3</em>Publicação</span></span></td>
-      </tr>
-    </tbody></table>
+<table class="booking_steps" cellpadding="0" cellspacing="0">
+							<tbody><tr>
+								<td><span class="book_step disabled"><span><em>1</em>Informações Gerais</span></span></td>
+								<td class="spacer">&nbsp;</td>
+								<td><span class="book_step current"><span><em>2</em>Aulas</span></span></td>
+								<td class="spacer">&nbsp;</td>
+								<td><span class="book_step disabled"><span><em>3</em>Publicação</span></span></td>
+							</tr>
+						</tbody></table>
 </div>
 
-<div class="grid_16">
+<div class="grid_9">
+<%= f.error_messages %>
+</div>
 
+<div id="menu_bar" class="grid_16">
+    <div class="add-topic-outter" style="float:left;">
+        <a id="add_topic_link" href="#" onclick="$('div.add-topic-inner').toggle(); $(this).toggleClass('selected'); return false;">Inserir</a>
+        <div class="add-topic-inner menudiv">
+            <ul class="selectable">
+                <li>
+                	<%= link_to (image_tag 'icons/iclass.gif', :title => 'Aula') + 'Aula', "#dialog", :name=>"modal" %>
+                </li>
+                <li>
+                	<%= link_to (image_tag 'icons/exam.gif', :title => 'Exame') + 'Exame', "#dialog", :name=>"modal" %>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div style="text-align:right; margin-right: 10px;">
+        <%= image_tag 'spinner.gif', :id => 'save-spinner', :style => 'display: none' %>
+        <span class="snippet" id="save_info"></span>
+    </div>
+</div>
 
-  <% field_set_tag 'Aulas' do %>
-    <ul>
-        <% current_user.courses.each do |course| %><!--cursos tem ser filtrador pro usuuarios-->
-          <li>
-            <% unless session[:subject_id].nil? %>
-              <%= check_box_tag "aulas[]", course.id, current_user.subjects.find(session[:subject_id]).course_subjects.detect{|cs| cs.courseable.name == course.name}.nil? ? false : true  %>
-            <%else%>
-              <%= check_box_tag "aulas[]", course.id %>
-            <%end%>
-            <span><%= h(course.name) %></span>
-          </li>
-        <%end%>
-      </ul
-  <%end%>
+<div class="grid_9">
 
+<% field_set_tag 'Aulas selecionadas' do %>
+	
 
-      <% field_set_tag 'Exames' do %>
-    <ul>
-        <% current_user.exams.each do |exam| %><!--cursos tem ser filtrador pro usuuarios-->
-          <li>
-            <% unless session[:subject_id].nil? %>
-              <%= check_box_tag "exams[]", exam.id, current_user.subjects.find(session[:subject_id]).course_subjects.detect{|cs| cs.courseable_id == exam.id}.nil? ? false : true  %>
-            <%else%>
-              <%= check_box_tag "exams[]", exam.id %>
-            <%end%>
-            <span><%= h(exam.name) %></span>
-          </li>
-        <%end%>
-      </ul
-  <%end%>
-
-
- 
+<% end %>
 
 </div>
+
+ <div id="lights-dimmed">
+     <div id="dialog" class="modal_window grid_12">
+         <a href="#" class="close">Fechar [X]</a>
+				 <%= image_tag "loadingAnimation.gif", :id => "loading_questions"   %>
+         <div id="dialog_content">
+             
+         <form>
+             <% field_set_tag 'Aulas' do %>
+             <ul>
+                 <% current_user.courses.each do |course| %><!--cursos tem ser filtrador pro usuuarios-->
+                 <li>
+                     <% unless session[:subject_id].nil? %>
+                     <%= check_box_tag "aulas[]", course.id, current_user.subjects.find(session[:subject_id]).course_subjects.detect{|cs| cs.courseable.name == course.name}.nil? ? false : true %>
+                     <%else %>
+                     <%= check_box_tag "aulas[]", course.id %>
+                     <%end %>
+                     <span><%= h(course.name) %></span>
+                 </li>
+                 <%end %>
+             </ul>
+             <%end %>
+         </form>
+			 
+         </div>
+     </div>
+ </div>
+
+
