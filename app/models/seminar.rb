@@ -46,10 +46,11 @@ class Seminar < ActiveRecord::Base
                        'video/rtx' ]
 
   SUPPORTED_AUDIO = ['audio/mpeg', 'audio/mp3']
-
-  has_attached_file :media, {
-    
-  }.merge(PAPERCLIP_VIDEO_STORAGE_OPTIONS)
+  
+  # Video convertido
+  has_attached_file :media, {}.merge(VIDEO_TRANSCODED)
+  # Video original
+  has_attached_file :original, {}.merge(VIDEO_ORIGINAL)
   
   # Callbacks
   before_validation :enable_correct_validation_group
@@ -57,14 +58,14 @@ class Seminar < ActiveRecord::Base
 
   # Validations Groups - Usados para habilitar diferentes validacoes dependendo do tipo d
   validation_group :external, :fields => [:external_resource, :external_resource_type]
-  validation_group :uploaded, :fields => [:media]
+  validation_group :uploaded, :fields => [:original]
 
  # validate :validate_youtube_url
  #   validates_presence_of :external_resource
 
-  validates_attachment_presence :media
+  validates_attachment_presence :original
   #validates_attachment_content_type :media, :content_type => (SUPPORTED_VIDEOS + SUPPORTED_AUDIO)
-  validates_attachment_size :media,
+  validates_attachment_size :original,
     :less_than => 50.megabytes
 
   # Maquina de estados do processo de conversão
@@ -147,24 +148,37 @@ class Seminar < ActiveRecord::Base
     end
   end
   
-  # Converte o video para FLV (é chamado do delayed job)
+  # Converte o video para FLV (Zencoder)
   def transcode
-    require 'open-uri'
-    # Baixando original convertendo e fazendo upload
-    open("#{URI.parse(self.media.path)}") do |original|
-      temp_file_path = RAILS_ROOT + "/tmp/" + media_file_name.split(".").first + ".flv"
-      `nice -n +19 ffmpeg -y -i #{original.path} -ab 56 -ar 22050 -r 25 -s 640x480 #{temp_file_path}`
-      open(temp_file_path){ |converted| self.media = converted }
-      File.delete(temp_file_path)
-    end
+    seminar_info = {
+      :id => self.id,
+      :attachment => 'medias',
+      :style => 'original',
+      :basename => self.original_file_name.split('.')[0],
+      :extension => 'flv'
+    }
+    
+    # puts seminar_info.inspect
+    
+    seminar_config = {
+      :input => self.original.url,
+      :output => {
+        :url => "s3://" + VIDEO_TRANSCODED[:bucket] + "/" + interpolate(VIDEO_TRANSCODED[:path], seminar_info),
+        :video_codec => "vp6",
+        :public => 1,
+      }
+    }
+    # puts ZENCODER_CONFIG.merge(seminar_config).inspect
+    response = Zencoder::Job.create ZENCODER_CONFIG.merge(seminar_config)
+    # puts response.inspect
   end
   
   def video?
-    SUPPORTED_VIDEOS.include?(self.media_content_type)
+    SUPPORTED_VIDEOS.include?(self.original_content_type)
   end
 
   def audio?
-    SUPPORTED_AUDIO.include?(self.media_content_type)
+    SUPPORTED_AUDIO.include?(self.original_content_type)
   end
 
   # Inspects object attributes and decides which validation group to enable
@@ -178,7 +192,7 @@ class Seminar < ActiveRecord::Base
 
   def type
     if video?
-      self.media_content_type
+      self.original_content_type
     else
       self.external_resource_type
     end
@@ -186,5 +200,14 @@ class Seminar < ActiveRecord::Base
     
   def need_transcoding?
     self.video? or self.audio?
+  end
+  
+  protected
+  
+  def interpolate(text, mapping)
+    mapping.each do |k,v|
+      text = text.gsub(':'.concat(k.to_s), v.to_s)
+    end
+    return text
   end
 end

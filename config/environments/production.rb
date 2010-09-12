@@ -35,10 +35,26 @@ PAPERCLIP_STORAGE_OPTIONS = {
   :default_url => "http://redu_assets.s3.amazonaws.com/images/missing_pic.jpg"
 }
 
-PAPERCLIP_VIDEO_STORAGE_OPTIONS = {
+VIDEO_ORIGINAL = {
   :storage => :s3,
   :s3_credentials => S3_CREDENTIALS,
   :bucket => S3_CREDENTIALS['bucket'],
-  :path => "seminars/:attachment/:id/:style/:basename.:extension",
+  :path => "seminar/:attachment/:id/:style/:basename.:extension",
   :default_url => "http://redu_assets.s3.amazonaws.com/images/missing_pic.jpg"
+}
+
+VIDEO_TRANSCODED = {
+  :storage => :s3,
+  :s3_credentials => S3_CREDENTIALS,
+  :bucket => 'redu_videos',
+  :path => "seminar/:attachment/:id/:style/:basename.:extension",
+  :default_url => "http://redu_assets.s3.amazonaws.com/images/missing_pic.jpg"
+}
+
+ZENCODER_CONFIG = {
+  :api_key => 'cf950c35c3943ff7c25a84c874ddcca3',
+  :output => {
+    :video_codec => "vp6",
+    :public => 1,
+  }
 }

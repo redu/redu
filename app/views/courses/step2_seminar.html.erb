@@ -128,11 +128,12 @@
   <%= f.label :external_resource_type_upload, "Upload", :class => "inline"  %><br/><br/>	
 
   <div id="upload_resource_field" style="display:none;">
-  <%= f.label :media, "Upload de vídeo" %>
-  <%= f.file_field :media  %>
+
+  <%= f.label :original, "Upload de vídeo" %>
+  <%= f.file_field :original  %>
   (tamanho máximo: 50MB)
  	</div>	
-	
+
   <div id="external_resource_field" style="display:block;">
   <%= f.label :external_resource, "Link do Vídeo" %>
   <%= f.text_field :external_resource  %>

@@ -368,7 +368,7 @@ class CoursesController < BaseController
         end
         
         if @course.courseable_type == 'Seminar'
-          
+          puts "if seminar"
           @seminar = Seminar.new(params[:seminar])
           @course.courseable = @seminar
          
@@ -458,7 +458,8 @@ class CoursesController < BaseController
       # Enfileirando video para conversão
       if @course.courseable_type.eql?('Seminar')
         if @course.courseable.need_transcoding?
-          Delayed::Job.enqueue VideoTranscodingJob.new(@course.courseable)
+          # Delayed::Job.enqueue VideoTranscodingJob.new(@course.courseable)
+          @course.courseable.convert!
         else
           @course.courseable.ready!
         end
@@ -703,6 +704,18 @@ end
       end
       end
     end
+  end
+  
+  def notify
+    
+  end
+  
+  protected
+  
+  def authenticate
+     authenticate_or_request_with_http_basic do |id, password| 
+         id == 'zencoder' && password == 'sociallearning'
+     end
   end
   
 end
