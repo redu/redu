@@ -21,6 +21,7 @@ gem "hpricot"
 gem "htmlentities", "4.2.1"
 gem "ruby-debug"
 gem "zencoder"
+gem "ruby-debug"
 
 group :development do
 gem "mongrel"
