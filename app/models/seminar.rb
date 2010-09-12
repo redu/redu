@@ -47,8 +47,10 @@ class Seminar < ActiveRecord::Base
 
   SUPPORTED_AUDIO = ['audio/mpeg', 'audio/mp3']
 
-  has_attached_file :media
-
+  has_attached_file :media, {
+    
+  }.merge(PAPERCLIP_VIDEO_STORAGE_OPTIONS)
+  
   # Callbacks
   before_validation :enable_correct_validation_group
   before_create :truncate_youtube_url

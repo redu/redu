@@ -24,7 +24,7 @@ namespace :bootstrap do
   end
   
   desc "Insert default Roles"
-  task :roles do
+  task :roles => :environment do
     Role.enumeration_model_updates_permitted = true
     Role.create(:name => 'admin', :school_role => false)    
     Role.create(:name => 'moderator', :school_role => false)
@@ -43,7 +43,7 @@ namespace :bootstrap do
   end
   
   desc "Insert default general categories"
-  task :redu_categories do
+  task :redu_categories => :environment do
     
     ReduCategory.delete_all
     
@@ -63,7 +63,7 @@ namespace :bootstrap do
   end
 
   desc "Insert default categories"
-  task :simple_categories do
+  task :simple_categories => :environment do
     SimpleCategory.delete_all
     
     categories = ['Arts / Design / Animation', 'Beauty / Fashion', 'Business / Economics / Law', 'Cars / Bikes', 'Health / Wellness / Relationships', 'Hobbies / Gaming',
@@ -76,7 +76,7 @@ namespace :bootstrap do
   end
   
   desc "Insert audiences"
-  task :audiences do
+  task :audiences => :environment do
     Audience.create(:name => "Ensino Superior")
     Audience.create(:name => "Ensino Médio")
     Audience.create(:name => "Ensino Fundamental")

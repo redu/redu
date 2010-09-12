@@ -34,3 +34,11 @@ PAPERCLIP_STORAGE_OPTIONS = {
   :path => "schools/:attachment/:id/:style/:basename.:extension",
   :default_url => "http://redu_assets.s3.amazonaws.com/images/missing_pic.jpg"
 }
+
+PAPERCLIP_VIDEO_STORAGE_OPTIONS = {
+  :storage => :s3,
+  :s3_credentials => S3_CREDENTIALS,
+  :bucket => S3_CREDENTIALS['bucket'],
+  :path => "seminars/:attachment/:id/:style/:basename.:extension",
+  :default_url => "http://redu_assets.s3.amazonaws.com/images/missing_pic.jpg"
+}
