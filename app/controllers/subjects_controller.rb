@@ -53,7 +53,8 @@ class SubjectsController < BaseController
     session[:subject_exames] = params[:exams] unless params[:exams].nil?
     
     @subject = current_user.subjects.new(session[:subject_params])
-    @subject.current_step = session[:subject_step]
+    @subject.current_step = params[:step]#session[:subject_step] assim evita que ao dar refresh vá para o proximo passo
+    
     if  @subject.valid?
       if params[:back_button]
         @subject.previous_step

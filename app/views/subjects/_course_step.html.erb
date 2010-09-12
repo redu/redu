@@ -7,12 +7,22 @@
             $('#lights-dimmed, .modal_window').hide();
         });
         
-        //se div#lights-dimmed for clicado
-        $('#lights-dimmed').click(function(){
-            $(this).hide();
-            $('.window').hide();
-        });
 	 });	
+	 
+	 function contentPopup(type){
+		$('div.add-topic-inner').hide();
+		$('.selected').removeClass('selected');
+		$('#lights-dimmed').fadeIn(); 
+		$('#dialog').show();
+	 }
+	 
+	 function addContent(link, thecontent){
+	 	$('.nothing').hide();
+	 	$('#subject_content').append(thecontent);
+		$(link).parent().remove();
+	 }
+	 
+	 
 	
 </script>
 
@@ -24,7 +34,7 @@
 							<tbody><tr>
 								<td><span class="book_step disabled"><span><em>1</em>Informações Gerais</span></span></td>
 								<td class="spacer">&nbsp;</td>
-								<td><span class="book_step current"><span><em>2</em>Aulas</span></span></td>
+								<td><span class="book_step current"><span><em>2</em>Conteúdo</span></span></td>
 								<td class="spacer">&nbsp;</td>
 								<td><span class="book_step disabled"><span><em>3</em>Publicação</span></span></td>
 							</tr>
@@ -35,16 +45,18 @@
 <%= f.error_messages %>
 </div>
 
+<%= hidden_field_tag("step", "course")%>
+
 <div id="menu_bar" class="grid_16">
     <div class="add-topic-outter" style="float:left;">
         <a id="add_topic_link" href="#" onclick="$('div.add-topic-inner').toggle(); $(this).toggleClass('selected'); return false;">Inserir</a>
         <div class="add-topic-inner menudiv">
             <ul class="selectable">
                 <li>
-                	<%= link_to (image_tag 'icons/iclass.gif', :title => 'Aula') + 'Aula', "#dialog", :name=>"modal" %>
+                	<%= link_to_function (image_tag 'icons/iclass.gif', :title => 'Aula') + 'Aula', "contentPopup('Course')"  %>
                 </li>
                 <li>
-                	<%= link_to (image_tag 'icons/exam.gif', :title => 'Exame') + 'Exame', "#dialog", :name=>"modal" %>
+                	<%= link_to_function (image_tag 'icons/exam.gif', :title => 'Exame') + 'Exame', "#dialog", :name=>"modal" %>
                 </li>
             </ul>
         </div>
@@ -55,32 +67,49 @@
     </div>
 </div>
 
-<div class="grid_9">
+<div class="grid_10">
 
-<% field_set_tag 'Aulas selecionadas' do %>
-	
+<% field_set_tag 'Conteúdo selecionado', :style => "margin-top:40px;" do %>
+	<ul id="subject_content" class="default sortable" style="min-height:300px;">
+		<span class="nothing snippet">Nenhuma aula adicionada ainda.</span>
+	</ul>
 
 <% end %>
 
+</div>
+<div class="grid_6">
+	<div class="y_addinfo">
+                                <div class="addinfocontent">
+                                    <h1>
+                                       Adicione aulas e exames</h1>
+                                    <p>
+                                    	Ao adicionar um conteúdo para este curso, o Redu criará automaticamente uma 
+										cópia da aula ou exame original permitindo com que você edite este conteúdo 
+										sem alterar o conteúdo original.
+                                    </p>
+																			
+                                </div>
+                            </div>
 </div>
 
  <div id="lights-dimmed">
      <div id="dialog" class="modal_window grid_12">
          <a href="#" class="close">Fechar [X]</a>
-				 <%= image_tag "loadingAnimation.gif", :id => "loading_questions"   %>
          <div id="dialog_content">
-             
          <form>
              <% field_set_tag 'Aulas' do %>
              <ul>
                  <% current_user.courses.each do |course| %><!--cursos tem ser filtrador pro usuuarios-->
-                 <li>
+                 <li id="add_course_<%=course.id%>">
+                 	<!--
                      <% unless session[:subject_id].nil? %>
                      <%= check_box_tag "aulas[]", course.id, current_user.subjects.find(session[:subject_id]).course_subjects.detect{|cs| cs.courseable.name == course.name}.nil? ? false : true %>
                      <%else %>
                      <%= check_box_tag "aulas[]", course.id %>
                      <%end %>
+					 -->
                      <span><%= h(course.name) %></span>
+					 <%= link_to_function "adicionar", "addContent(this,'"+escape_javascript(render("courses/item_subject", :course => course ))+"')"%>
                  </li>
                  <%end %>
              </ul>

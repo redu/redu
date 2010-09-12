@@ -12,7 +12,7 @@ $(document).ready(function(){
 							<tbody><tr>
 								<td><span class="book_step current"><span><em>1</em>Informações Gerais</span></span></td>
 								<td class="spacer">&nbsp;</td>
-								<td><span class="book_step disabled"><span><em>2</em>Aulas</span></span></td>
+								<td><span class="book_step disabled"><span><em>2</em>Conteúdo</span></span></td>
 								<td class="spacer">&nbsp;</td>
 								<td><span class="book_step disabled"><span><em>3</em>Publicação</span></span></td>
 							</tr>
@@ -23,7 +23,7 @@ $(document).ready(function(){
 <%= f.error_messages %>
 </div>
 
-
+<%= hidden_field_tag("step", "subject")%>
 
 <div class="grid_9">
 
