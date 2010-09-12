@@ -559,7 +559,7 @@ class SchoolsController < BaseController
     if @school
       @statuses = @school.recent_activity(0,10)
       
-      @featured = @school.featured_courses(2)
+      @featured = @school.featured_courses(3)
       @brand_new = @school.courses.find(:first, :order => "created_at DESC")
       @courses = @school.courses.paginate(:conditions => 
         ["published = 1"], 

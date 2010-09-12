@@ -2157,7 +2157,7 @@ color: gray;
 #group div.first-page div.featured2 a.name {
     float: left;
     display: block;
-    width: 250px;
+    width: 230px;
 }
 
 #group div.first-page div.featured2 .photo {
@@ -2172,7 +2172,7 @@ color: gray;
     display: block;
     float: left;
     font-size: .8em;
-    width: 250px;
+    width: 230px;
     margin-bottom: 5px;
     color: gray;
 }
