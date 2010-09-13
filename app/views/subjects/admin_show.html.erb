@@ -1,0 +1,47 @@
+<div id="breadcrumbs"><b><strong><%= link_to "Cursos", admin_subjects_path %></strong></b> > <b><strong><%= h @subject.title%></strong></b> </div>
+
+
+<h3>Curso:<i><%= @subject.title%><i/><h3/>
+ 
+	
+<h1>Dados Gerais:</h1>	
+  <ul>
+     <% if @subject.is_public?%>
+     <li>Público:Sim</li><br />
+     <%else%>
+     <li>Público:Não<li><br /> 
+     <%end%>
+     <li>Descrição:<i><%= @subject.description%><i/></li><br />
+	 <li>Autor:<i><%= @subject.user.login%><i/></li><br />
+	 <% unless @subject.school.nil? %>
+	 <li>Rede:<i><%= @subject.school.name%><i/></li><br />	
+	<%else%>
+	<li>Rede:<i>Não está associado!<i/></li><br />		
+	 <%end%>
+    
+      
+    
+ </ul>	
+<br /> 	
+<h1>Aulas</h1>	
+<ul>
+<% @subject.aulas.each do |aula|%>
+<li><%= link_to aula.courseable.name, course_path(aula.courseable) %></li>	
+<%end%> 
+</ul>
+
+<h1>Exames</h1>	
+<ul>
+<% @subject.exames.each do |exame|%>
+<li><%= exame.courseable.name%></li>	
+<%end%>
+</ul>
+
+<h1>Alunos</h1>	
+<ul>
+<% @subject.students.each do |student|%>
+<li><%= student.login%></li>	
+<%end%>
+</ul>
+
+

@@ -1,0 +1,58 @@
+
+<li class="clearfix">
+	 <%= link_to subject.title, subject, :class => "name"  %>
+	<div class="thumb photo">FOTO<%#= link_to(image_tag subject.thumb_url, :width => "70px") %></div>
+	<div class="headlines" style="width: 490px">
+		<!--
+		<span class="call">Descrição:</span>
+		-->
+		<span class="things">
+		<%= truncate_words( subject.description, 10, '...') %>
+			
+		</span>
+	</div>
+	<div class="headlines" style="width: 490px">
+		
+		
+		<ul class="item_info">
+            <% unless @user %>
+						<li> Por 
+                <%= link_to subject.user.first_name, user_path(subject.user) %>
+            </li>
+            <li>
+                |
+            </li>
+						<%end%>
+            <li> 
+                <%= time_ago_in_words_or_date(subject.created_at) %>
+            </li>
+            <% if subject.school && !@school%>
+						<li>
+                |
+            </li>
+						 <li> 
+                Rede: <%= link_to(subject.school.name, subject.school)  %>
+            </li>
+						<%end%>
+            <li>
+                |
+            </li>
+            <li>
+                Exibições (<%#= subject.view_count %>)
+            </li>
+						<li>
+                |
+            </li>
+						
+        </ul>
+				
+		<span style="float: left; margin-top:2px;">
+			 							<%#= ratings_for subject, :static, :small => true, :wrap => false %>
+		</span>
+			
+	</div>
+</li> 
+
+
+
+
