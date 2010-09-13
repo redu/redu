@@ -157,9 +157,7 @@ class Seminar < ActiveRecord::Base
       :basename => self.original_file_name.split('.')[0],
       :extension => 'flv'
     }
-    
-    # puts seminar_info.inspect
-    
+        
     seminar_config = {
       :input => self.original.url,
       :output => {
@@ -168,9 +166,14 @@ class Seminar < ActiveRecord::Base
         :public => 1,
       }
     }
-    # puts ZENCODER_CONFIG.merge(seminar_config).inspect
+
     response = Zencoder::Job.create ZENCODER_CONFIG.merge(seminar_config)
-    # puts response.inspect
+
+    if response.success?
+      self.job = response.body["id"]
+    else
+      self.fail!
+    end
   end
   
   def video?
