@@ -45,25 +45,18 @@ $(document).ready(function() {
 	    
 		<div id="tabs-1" class="clearfix first-page">
 			
-        <div class="grid_8 alpha omega">
+        <div>
             <% field_set_tag 'Conteúdo selecionado', :style => "margin-top:40px;" do %>
             <ul id="subject_content" class="default sortable" style="min-height:300px;">
-                <span class="nothing snippet">Nenhuma aula adicionada ainda.</span>
-            </ul>
+                
+			<% @subject.course_subjects.each do |content|%>
+				<%= render :partial => "courses/item_subject2", :locals => {:course => content.courseable}%>
+			<% end %>
+            
+			</ul>
             <% end %>
         </div>
-        <div class="grid_4 alpha omega">
-            <div class="y_addinfo">
-                <div class="addinfocontent">
-                    <h1>Adicione aulas e exames</h1>
-                    <p>
-                        Ao adicionar um conteúdo para este curso, o Redu criará automaticamente uma 
-                        cópia da aula ou exame original permitindo com que você edite este conteúdo 
-                        sem alterar o conteúdo original.
-                    </p>
-                </div>
-            </div>
-        </div>
+        
 			
 			
 		</div><!-- end tab1 -->
