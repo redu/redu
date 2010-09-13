@@ -369,14 +369,24 @@ end
   end
   
   def destroy
+		puts "entrou no detroy"	
+		puts @user.display_name
     if current_user == @user
+			puts "current"
        @user.destroy
         flash[:notice] = :the_user_was_deleted.l
         redirect_to :controller => 'sessions', :action => 'new' and return
-    elsif @user.admin? || @user.featured_writer?
+    elsif @user.admin? #|| @user.featured_writer?
+			puts "admin"
       @user.destroy
       flash[:notice] = :the_user_was_deleted.l
+		elsif current_user.admin?
+			puts "admin?"
+			@user.destroy
+		    flash[:notice] = :the_user_was_deleted.l
+				redirect_to :controller => 'admin', :action => 'users' and return 
     else
+			puts "you can't"
       flash[:error] = :you_cant_delete_that_user.l
     end
     respond_to do |format|

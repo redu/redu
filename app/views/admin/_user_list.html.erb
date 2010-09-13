@@ -13,7 +13,8 @@
 						<td><%= time_ago_in_words(user.created_at) %> </td>
 						<td><%= user.role.name %> </td>
 						<td><%= link_to( :assume_id.l , assume_user_path(user) ) %> </td>
-						<td><%= link_to_remote(image_tag('icons/delete.png', :border => 0), {:url => user_path(user), :method => :delete, :success => visual_effect(:fade, "user_#{user.id}"), :confirm => "Are you sure you want to permanently delete this user"} ) %> </td>
+						<td><%= link_to_remote(image_tag('icons/delete.png', :border => 0), :url => user_url(:id => user), 
+:method => :delete, :success => "location.reload()", :confirm => "Você tem certeza que deseja remover este usuário permanentemente?" ) %> </td>
 					</tr>
 				</tr>
  			<% end %>
