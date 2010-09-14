@@ -46,12 +46,12 @@ class Seminar < ActiveRecord::Base
                        'video/rtx' ]
 
   SUPPORTED_AUDIO = ['audio/mpeg', 'audio/mp3']
-  
+
   # Video convertido
   has_attached_file :media, {}.merge(VIDEO_TRANSCODED)
   # Video original
   has_attached_file :original, {}.merge(VIDEO_ORIGINAL)
-  
+
   # Callbacks
   before_validation :enable_correct_validation_group
   before_create :truncate_youtube_url
@@ -60,8 +60,8 @@ class Seminar < ActiveRecord::Base
   validation_group :external, :fields => [:external_resource, :external_resource_type]
   validation_group :uploaded, :fields => [:original]
 
- # validate :validate_youtube_url
- #   validates_presence_of :external_resource
+  # validate :validate_youtube_url
+  #   validates_presence_of :external_resource
 
   validates_attachment_presence :original
   #validates_attachment_content_type :media, :content_type => (SUPPORTED_VIDEOS + SUPPORTED_AUDIO)
@@ -88,16 +88,13 @@ class Seminar < ActiveRecord::Base
   event :fail do
     transitions :from => :converting, :to => :fail
   end
-  
-  
-  
-    
+
   def import_redu_seminar(url)
     course_id = url.scan(/aulas\/([0-9]*)/)
-    
+
     @source = Course.find(course_id[0][0]) unless course_id.empty?
     # copia (se upload ou youtube)
-    
+
     if @source and @source.public
       if @source.courseable_type == 'Seminar'
         if @source.courseable.external_resource_type.eql?('youtube')
@@ -112,33 +109,22 @@ class Seminar < ActiveRecord::Base
           self.media_updated_at = @source.courseable.media_updated_at
           return [true, ""]
         end
-        
+
       else
         return [false, "Aula não é um seminário"]
       end
     else
       return [false, "Link não válido ou aula não pública"]
     end
-    
-   end
-    
-  
+
+  end
+
   def validate_youtube_url
     if external_resource_type.eql?('youtube')
       capture = external_resource.scan(/youtube\.com\/watch\?v=([A-Za-z0-9._%-]*)[&\w;=\+_\-]*/)[0]
-      
-      #errors.add_to_base("Link inválido") # unless capture
-    errors.add(:external_resource, "Link inválido") unless capture
-    
-#    elsif seminar.external_resource_type.eql?('redu')
-#      capture = seminar.external_resource.scan(/redu\.com\.br\/aulas\/([A-Za-z0-9._%-]*)[&\w;=\+_\-]*/)[0][0]
-#      
-#      seminar.errors.add_to_base("Link inválido") unless capture
-    
+      errors.add(:external_resource, "Link inválido") unless capture
     end
-    
   end
-  
 
   def truncate_youtube_url
     if self.external_resource_type.eql?('youtube')
@@ -147,7 +133,7 @@ class Seminar < ActiveRecord::Base
       self.external_resource = capture
     end
   end
-  
+
   # Converte o video para FLV (Zencoder)
   def transcode
     seminar_info = {
@@ -157,7 +143,7 @@ class Seminar < ActiveRecord::Base
       :basename => self.original_file_name.split('.')[0],
       :extension => 'flv'
     }
-        
+
     seminar_config = {
       :input => self.original.url,
       :output => {
@@ -175,7 +161,7 @@ class Seminar < ActiveRecord::Base
       self.fail!
     end
   end
-  
+
   def video?
     SUPPORTED_VIDEOS.include?(self.original_content_type)
   end
@@ -200,13 +186,13 @@ class Seminar < ActiveRecord::Base
       self.external_resource_type
     end
   end
-    
+
   def need_transcoding?
     self.video? or self.audio?
   end
-  
+
   protected
-  
+
   def interpolate(text, mapping)
     mapping.each do |k,v|
       text = text.gsub(':'.concat(k.to_s), v.to_s)
