@@ -51,6 +51,52 @@ Rails::Initializer.run do |config|
       :password => 'apuamaeth0'
   }  
   
+  # Configurações de conversão e storage de videos (Seminar)
+    # Arquivo original do video (uploaded)
+    VIDEO_ORIGINAL = {
+      :storage => :s3,
+      :s3_credentials => S3_CREDENTIALS,
+      :bucket => S3_CREDENTIALS['bucket'],
+      :path => "seminar/:attachment/:id/:style/:basename.:extension",
+      :default_url => "http://redu_assets.s3.amazonaws.com/images/missing_pic.jpg"
+    }
+
+    # Arquivo convertido
+    VIDEO_TRANSCODED = {
+      :storage => :s3,
+      :s3_credentials => S3_CREDENTIALS,
+      :bucket => 'redu_videos',
+      :path => "seminar/:attachment/:id/:style/:basename.:extension",
+      :default_url => "http://redu_assets.s3.amazonaws.com/images/missing_pic.jpg"
+    }
+  
+    # No ambiente de desenvolvimento :test => 1 (definido em development.rb)
+    ZENCODER_CONFIG = { 
+      :api_key => 'cf950c35c3943ff7c25a84c874ddcca3',
+      :input => '',
+      :output => {
+        :url => '',
+        :video_codec => "vp6",
+        :public => 1,
+        :thumbnails => {
+          :number => 6,
+          :size => "160x120",
+          :base_url => '',
+          :prefix => "thumb"
+        },
+        :notifications => {
+            :format => 'json',
+            :url => ''
+        }
+      }
+    }
+      
+    # Usado em :controller => jobs, :action => notify
+    ZENCODER_CREDENTIALS = {
+      :username => 'zencoder',
+      :password => 'MCZC2pDQyt5bzko1'
+    }
+  
   # Activate observers that should always be running
   # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
   
