@@ -23,7 +23,7 @@ class JobsController < BaseController
   protected
 
   def authenticate
-    authenticate_or_request_with_http_basic do |username, password|
+    authenticate_with_http_basic do |username, password|
       username == ZENCODER_CREDENTIALS[:username] && password == ZENCODER_CREDENTIALS[:password]
     end
   end
