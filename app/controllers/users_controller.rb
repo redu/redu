@@ -34,6 +34,20 @@ class UsersController < BaseController
   before_filter :admin_or_current_user_required, :only => [:statistics]  
 
 
+	def annotations
+		puts params[:id]
+		@annotations = User.find(params[:id]).annotations
+		puts @annotations
+
+		respond_to do |format|
+      format.js do
+        render :update do |page|
+          page.replace_html  'tabs-5-content', :partial => 'annotations'
+        end
+      end
+    end
+	end
+
   def learning
     @user = User.find(params[:id]) #TODO performance routes (passar parametro direto para query)
     
@@ -369,24 +383,18 @@ end
   end
   
   def destroy
-		puts "entrou no detroy"	
-		puts @user.display_name
     if current_user == @user
-			puts "current"
        @user.destroy
         flash[:notice] = :the_user_was_deleted.l
         redirect_to :controller => 'sessions', :action => 'new' and return
     elsif @user.admin? #|| @user.featured_writer?
-			puts "admin"
       @user.destroy
       flash[:notice] = :the_user_was_deleted.l
 		elsif current_user.admin?
-			puts "admin?"
 			@user.destroy
 		    flash[:notice] = :the_user_was_deleted.l
 				redirect_to :controller => 'admin', :action => 'users' and return 
     else
-			puts "you can't"
       flash[:error] = :you_cant_delete_that_user.l
     end
     respond_to do |format|

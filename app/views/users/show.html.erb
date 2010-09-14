@@ -6,6 +6,7 @@
 var userlearningPath = "<%= learning_user_path %>";
 var userteachingPath = "<%= teaching_user_path %>";
 var userSchoolsPath = "<%= schools_path(:user_id => @user.id, :tab => true) %>";
+var userAnnotationPath = "<%= annotations_user_path %>";
 
 var $usertabs;
 
@@ -13,7 +14,21 @@ $(document).ready(function() {
 
     $usertabs = $(".user-tabs").tabs({
         select: function(event, ui) {
-            if (ui.index == 3) {
+						if (ui.index == 4){
+								// Anotações
+								$("#tabs-5-content").html('');
+                jQuery.ajax({
+                    data: '',
+                    dataType: 'script',
+                    success: function(request) {
+                        $("#tabs-5-loading").hide();
+                    },
+                    type: 'get',
+                    url: userAnnotationPath
+                });
+
+                $("#tabs-5-loading").show();
+						} else if (ui.index == 3) {
                 // Redes
                 $("#tabs-4-content").html('');
                 jQuery.ajax({
@@ -72,6 +87,7 @@ $(document).ready(function() {
 		    <li><a href="#tabs-2">Aprendendo</a></li>
 				<li><a href="#tabs-3">Ensinando</a></li>
 		    <li><a href="#tabs-4">Redes</a></li>
+				<li><a href="#tabs-5">Anotações</a></li>
 	    </ul>
 	    
 		<div id="tabs-1" class="clearfix first-page">
@@ -108,6 +124,13 @@ $(document).ready(function() {
 			<div id="tabs-4-content"></div>
 			
 		</div>
+
+		<!-- anotações -->
+		<div id="tabs-5">
+			<%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-5-loading', :style => 'padding: 20px;'%>
+			<div id="tabs-5-content"></div>
+		</div>
+
 </div><!-- end tabs -->
 
 </div><!-- end main -->
