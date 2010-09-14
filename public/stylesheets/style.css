@@ -335,33 +335,56 @@ a.more {
 
 /* Listagem de Redes */
 
-ul.badge > li {
+#school_list ul.badge > li {
     border: 1px solid #EFF0F0;
     float: left;
-    height: 200px;
+    height: 180px;
     margin-bottom: 17px;
     margin-left: 30px;
+    padding: 10px;
     overflow: hidden;
     width: 180px;
     font-size: 0.8em;
 }
 
-ul.badge > li.first_item {
+#school_list ul.badge > li a.logo {
+    display: block;
+    min-height: 100px;
+    text-align: center;
+}
+
+#school_list ul.badge > li .quiet {
+    font-size: .9em;
+}
+
+#school_list ul.badge > li .more { 
+   font-weight: bold;
+   float: right;
+}
+
+#school_list ul.badge > li a.name {
+    font-weight: bold;
+    font-size: 1.3em;
+    display: block;
+    margin: 10px 0;
+} 
+
+#school_list ul.badge > li.first_item {
     margin-left: 0;
 }
 
-ul.badge li h3, ul.badge li dl.data-set {
+#school_list ul.badge li h3, #school_list ul.badge li dl.data-set {
     margin-left: 8px;
     margin-right: 8px;
 }
-ul.badge li h3 {
+
+#school_list ul.badge li h3 {
     font-size: 1.2em;
 }
 
-div.badge_info {
+#school_list div.badge_info {
     color: #231F20;
     float: left;
-    padding: 0 5px;
 }
 
 div.info_exp {
