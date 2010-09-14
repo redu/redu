@@ -1,18 +1,43 @@
 class Subject < ActiveRecord::Base
 
+
+ # PLUGINS
+  acts_as_taggable
+  ajaxful_rateable :stars => 5
+  has_attached_file :avatar, {
+    :styles => { :thumb => "100x100>", :nano => "24x24>", 
+    :default_url => "/images/:class/missing_pic.jpg"}
+  }
+
+
   #validations
   validates_presence_of :title, :if => lambda {|s| s.current_step == "subject"}
   validates_presence_of :description, :if => lambda {|s| s.current_step == "subject"}
-
+    validates_presence_of :simple_category
+    
   #associations
+   has_and_belongs_to_many :audiences
   has_many :course_subjects, :dependent => :destroy
   has_many :enrollments, :dependent => :destroy
-  belongs_to :user
+  belongs_to :owner, :class_name => "User" , :foreign_key => "user_id"
   belongs_to :school
+  belongs_to :simple_category
 
 
    # METODOS DO WIZARD
   attr_writer :current_step
+
+
+  def to_param #friendly url
+    "#{id}-#{title.parameterize}"
+  end
+  
+  def permalink
+    APP_URL + "/subjects/"+ self.id.to_s+"-"+self.title.parameterize
+  end
+  
+  
+
 
 
   def current_step

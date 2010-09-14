@@ -12,7 +12,7 @@
      <li>Público:Não<li><br /> 
      <%end%>
      <li>Descrição:<i><%= @subject.description%><i/></li><br />
-	 <li>Autor:<i><%= @subject.user.login%><i/></li><br />
+	 <li>Autor:<i><%= @subject.owner.login%><i/></li><br />
 	 <% unless @subject.school.nil? %>
 	 <li>Rede:<i><%= @subject.school.name%><i/></li><br />	
 	<%else%>

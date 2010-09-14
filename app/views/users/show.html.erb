@@ -76,7 +76,9 @@ $(document).ready(function() {
 	    
 		<div id="tabs-1" class="clearfix first-page">
 			<%= javascript_include_tag 'flow.js' %>
-			<%= render :partial => "statuses/create_status", :locals => {:status => @status, :statusable => @user }%>
+			<% if current_user == @user%>
+				<%= render :partial => "statuses/create_status", :locals => {:status => @status, :statusable => @user }%>
+			<% end %>
 			<ul class="activities">
 			<%= render :partial => "statuses/type_proxy", :collection => @statuses, :as => :status, :locals => {:statusable => @user } %>
 			</ul><!-- end activities -->

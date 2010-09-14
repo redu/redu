@@ -1,9 +1,20 @@
 <ul class="sortable clearfix"> 
 <li class="clearfix">
     <span class="call"><span>Quem segue <%= @user.first_name %></span></span>
-    <div class="followship box clearfix">
-    <ul class="clearfix">
-    <%= render :partial => 'shared/user', :collection => @user.follows %>
-    </ul>
-</div><!-- followship -->
+   <div class="followship box clearfix">
+	
+<% if @user.followers.size > 0 %>
+<ul class="clearfix">
+
+<% for user in @user.followers[0..9]%>
+<li>
+	<%= link_to image_tag(user.avatar.url(:thumb), :height => '24', :width => '24', :alt => "#{user.login}"), user_path(user), :rel => 'bookmark', :title => "#{user.display_name}" %>
+</li>
+<%end%>
+
+</ul>
+<% else %>
+<div class="box_notice">Ninguém segue <%= @user.first_name %> no momento.</div>
+<% end %>
+</div>
 </li>

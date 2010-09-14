@@ -8,6 +8,7 @@ class Event < ActiveRecord::Base
   validates_presence_of :start_time
   validates_presence_of :end_time
   validates_presence_of :owner
+	validates_presence_of :tagline
 
   belongs_to :owner, :class_name => "User", :foreign_key => 'owner'
   belongs_to :school

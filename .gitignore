@@ -8,5 +8,5 @@ redu.tmproj
 vendor/.DS_Store
 vendor/plugins/.DS_Store
 config/database.yml
-
+public/system/
 

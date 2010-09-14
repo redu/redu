@@ -18,9 +18,13 @@ gem "collectiveidea-delayed_job"
 gem "rmagick", "2.12.2"
 gem "packet"
 gem "hpricot"
+gem "htmlentities", "4.2.1"
+gem "ruby-debug"
+gem "zencoder"
 gem "ruby-debug"
 
 group :development do
+gem "mongrel"
 end
 
 group :production do

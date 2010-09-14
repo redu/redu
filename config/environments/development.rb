@@ -4,7 +4,7 @@ APP_URL = "http://localhost:3000"
 # every request.  This slows down response time but is perfect for development
 # since you don't have to restart the webserver when you make code changes.
 config.cache_classes = false
-config.log_level = :error
+config.log_level = :debug
 
 # para ver as queries realizadas no console, digite esta linha no console: ActiveRecord::Base.logger = Logger.new(STDOUT) 
 #ActiveRecord::Base.logger = Logger.new(STDOUT)

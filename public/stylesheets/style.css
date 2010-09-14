@@ -720,7 +720,7 @@ form div.errorExplanation {
     display: inline;
 }
 
-.errorMessageField {
+.errorMessageField,.formError {
     font-size: 0.7em;
     display: block;
     color: #F77C22;
@@ -2477,6 +2477,7 @@ a:hover.book_step span {
     left: 13px;
     position: absolute;
     top: 8px;
+	margin: 0;
 }
 
 /*** Current Step ***/

@@ -7,14 +7,17 @@
 	<%= f.label :name, "Nome:" %>
 	<%= f.text_field :name %>
 	
+	<%= f.label "Breve Descrição  <span class='snippet'>(até 250 caracters)</span>" %>
+	<%= f.text_area :tagline, :size => "70x5" %>
+
 	<%= f.label :description, "Descrição:" %>
 	<%= f.text_area :description, :size => "40x12", :class => "mceEditor" %>
 	
 	<%= f.label :start_time, "Início:" %>	
-	<%= f.calendar_date_select :start_time, :time => :mixed, :popup => "force", :id => "start_time" %>
+	<%= f.text_field :start_time %>
 	
 	<%= f.label :end_time, "Término:" %>
-	<%= f.calendar_date_select :end_time, :time => :mixed, :popup => "force", :id => "end_time"  %>
+	<%= f.text_field :end_time %>
 	
 	<%= f.label :location, "Local:"%>
 	<%= f.text_field :location %>
@@ -24,30 +27,16 @@
 		
 	<%= f.submit "Salvar"%>
 	<a href="javascript:history.back()">Voltar</a>
+
+	
 	</fieldset>
 <% end %>
 
-<!-- Script para traduzir a data (no editar ele vem em inglês) -->
-<% if action_name == 'edit' %>	
-	<script type="text/javascript">
 
-		changeDateFormat(this.start_time);
-		changeDateFormat(this.end_time);
-	
-		function changeDateFormat(field) {
-				date = new Date($F(field));
-				year = date.getFullYear();
-				month = Date.months[date.getMonth()];
-				day = date.getDate();
-				
-				hour = date.getHours();
-				min = Date.padded2(date.getMinutes());
-				field.value = day + " de " + month + " de " + year;
-				
-				if (hour != 0) {
-					field.value += " " + hour + ":" + min + " " + (hour < 12 ? "AM" : "PM");
-				}
-			}
-		
-	</script>
-<% end %>
+<script type="text/javascript">	
+
+		$(function() {
+			$("#event_start_time").datetimepicker();
+			$("#event_end_time").datetimepicker();
+		});
+</script>

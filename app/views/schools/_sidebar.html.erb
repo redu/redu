@@ -21,7 +21,7 @@
 				<%= link_to "Criar exame", new_exam_path(:school_id => @school.id)%>
 			</li>
 			<li>
-				<%= link_to "Criar evento", new_exam_path(:school_id => @school.id)%>
+				<%= link_to "Criar evento", new_school_event_path(:school_id => @school)%>
 			</li>
 			<% end %>
 			<% unless @school.owner == current_user %>

@@ -13,11 +13,20 @@
             <%= @exam.name %>
         </div>
         <div class="admin_opts yellow">
-            <% if current_user.can_manage?(@exam) %>
-            <%= link_to 'Editar', {:action => "edit"}, :class => "icon-edit" %> | 
-						<%= link_to 'Remover', @exam, {:confirm => 'Você tem certeza que quer remover esta aula permanentemente?',
+			
+            <% if @course.owner == current_user %>
+            <%= link_to 'Editar', {:action => "edit"}, :class => "icon-edit" %>
+			 <% end %>
+			 
+			 <% if current_user.can_manage? @course and @school %>
+			| <%= link_to 'Remover da rede', remove_asset_school_path(:id => @school.id, :asset_id => @exam.id, :asset_type => "Exam"), {:confirm => "Você tem certeza que quer remover este exame da rede?\n(Ela continuará no seu diretório de aulas)", :class => "icon-delete"} %>
+			<% end %>
+			
+			<% if current_user.admin? %>
+			| <%= link_to 'Remover', @exam, {:confirm => 'Você tem certeza que quer remover este exame do Redu permanentemente?',
             :method => :delete, :class => "icon-delete"} %>
-            <% end %>
+            
+			<% end %>
            
         </div>
     </div>

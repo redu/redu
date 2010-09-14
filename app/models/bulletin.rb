@@ -11,7 +11,7 @@ class Bulletin < ActiveRecord::Base
   belongs_to :owner , :class_name => "User" , :foreign_key => "owner"
 
 	#VALIDATIONS
-	validates_presence_of :title, :description
+	validates_presence_of :title, :description, :tagline
 	validates_presence_of :owner
 	validates_presence_of :school
 

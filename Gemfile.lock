@@ -16,12 +16,22 @@ GEM
     authlogic (2.1.6)
       activesupport
     calendar_date_select (1.16.1)
+    cgi_multipart_eof_fix (2.5.0)
     collectiveidea-delayed_job (1.8.2)
     columnize (0.3.1)
+    daemons (1.1.0)
     desert (0.5.4)
+    fastthread (1.0.7)
+    gem_plugin (0.2.3)
     hpricot (0.8.2)
+    htmlentities (4.2.1)
     icalendar (1.1.5)
     linecache (0.43)
+    mongrel (1.1.5)
+      cgi_multipart_eof_fix (>= 2.4)
+      daemons (>= 1.0.3)
+      fastthread (>= 1.0.1)
+      gem_plugin (>= 0.2.3)
     mysql (2.8.1)
     oauth (0.4.3)
     packet (0.1.15)
@@ -46,6 +56,8 @@ GEM
       linecache (>= 0.3)
     validatable (1.6.7)
     will_paginate (2.3.14)
+    zencoder (2.1.14)
+      activesupport
 
 PLATFORMS
   ruby
@@ -57,7 +69,9 @@ DEPENDENCIES
   collectiveidea-delayed_job
   desert
   hpricot
+  htmlentities (= 4.2.1)
   icalendar
+  mongrel
   mysql
   oauth
   packet
@@ -69,3 +83,4 @@ DEPENDENCIES
   ruby-debug
   validatable
   will_paginate (~> 2.3.11)
+  zencoder

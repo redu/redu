@@ -8,22 +8,22 @@ class SchoolsController < BaseController
 
 
   before_filter :except => [:new, :create, :vote, :show, :index, :join, :unjoin, 
-                             :member, :onwer, :members, :teachers] do |controller| 
+                             :member, :onwer, :members, :teachers, :take_ownership] do |controller| 
     controller.school_admin_required(controller.params[:id]) if controller.params and controller.params[:id]
   end
   
+  before_filter :can_be_owner_required, :only => :take_ownership
+  
   
   def remove_asset
-    case params[:type]
-      
-    when 'course'
-      SchoolAsset.first(:conditions => [:asset_type])
-      @asset = Course.find(params[:id])
+    case params[:asset_type]
+      when 'Course'
       msg = "Aula removida da rede"
-      when 'exam'
-      @asset = Exam.find(params[:id])
+      when 'Exam'
       msg = "Exame removido da rede"
     end
+    
+     @asset = SchoolAsset.first(:conditions => ["asset_type LIKE ? AND asset_id = ? and school_id = ?", params[:asset_type], params[:asset_id], params[:id]])
     
     if @asset
       @asset.destroy
@@ -33,34 +33,12 @@ class SchoolsController < BaseController
     end
     
     
-    redirect_to school_courses_path
+    redirect_to school_courses_path(:school_id => params[:id])
     
   end
   
   
-  def remove_asset
-    case params[:type]
-      
-    when 'course'
-      SchoolAsset.first(:conditions => [:asset_type])
-      @asset = Course.find(params[:id])
-      msg = "Aula removida da rede"
-      when 'exam'
-      @asset = Exam.find(params[:id])
-      msg = "Exame removido da rede"
-    end
-    
-    if @asset
-      @asset.destroy
-      flash[:notice] = msg
-    else
-      flash[:notice] = "Não foi possível remover o conteúdo selecionado"
-    end
-    
-    
-    redirect_to school_courses_path
-    
-  end
+
   
   
   def take_ownership
@@ -257,24 +235,28 @@ class SchoolsController < BaseController
   
   
   def moderate_requests
+    @school = School.find(params[:id])
     
     approved = params[:member].reject{|k,v| v == 'reject'}
     rejected = params[:member].reject{|k,v| v == 'approve'}
-    approved_ids = approved.keys.join(',')
-    rejected_ids = rejected.keys.join(',')
     
-    @school = School.find(params[:id])
-    
-    #atualiza status da associacao
-    UserSchoolAssociation.update_all( "status = 'approved'", ["user_id IN (?)", approved_ids ]) if approved_ids
-    UserSchoolAssociation.update_all( "status = 'disaproved'",["user_id IN (?)", rejected_ids ]) if rejected_ids
-    
+    #atualiza status da associacao    
+    approved.keys.each do |user_id|
+      UserSchoolAssociation.update_all("status = 'approved'", :user_id => user_id,  :school_id => @school.id)
+    end
+
+    rejected.keys.each do |user_id|
+      UserSchoolAssociation.update_all("status = 'disaproved'", :user_id => user_id,  :school_id => @school.id)
+    end
+
     #pega usuários para enviar emails
-    @approved_members = User.all(:conditions => ["id IN (?)", approved_ids]) unless approved_ids.empty?
-    @rejected_members = User.all(:conditions => ["id IN (?)", rejected_ids]) unless rejected_ids.empty?
+    @approved_members = User.all(:conditions => ["id IN (?)", approved.keys]) unless approved.empty?
+    @rejected_members = User.all(:conditions => ["id IN (?)", rejected.keys]) unless rejected.empty?
     
-    for member in @approved_members
-      UserNotifier.deliver_approve_membership(member, @school) # TODO fazer isso em batch
+    if @approved_members
+      for member in @approved_members
+        UserNotifier.deliver_approve_membership(member, @school) # TODO fazer isso em batch
+      end
     end
     
     #    for member in @rejected_members #TODO mandar email para os que não foram aceitos na rede???
@@ -282,7 +264,7 @@ class SchoolsController < BaseController
     #    end
     
     flash[:notice] = 'Solicitacões moderadas!'
-    redirect_to admin_requests_school_path
+    redirect_to admin_requests_school_path(@school)
     
   end
   
@@ -577,7 +559,7 @@ class SchoolsController < BaseController
     if @school
       @statuses = @school.recent_activity(0,10)
       
-      @featured = @school.featured_courses(3)
+      @featured = @school.featured_courses(2)
       @brand_new = @school.courses.find(:first, :order => "created_at DESC")
       @courses = @school.courses.paginate(:conditions => 
         ["published = 1"], 
@@ -719,4 +701,13 @@ class SchoolsController < BaseController
       format.xml  { head :ok }
     end
   end
+
+protected
+
+def can_be_owner_required
+   @school = School.find(params[:id])
+   
+   current_user.can_be_owner?(@school) ? true : access_denied
+end
+
 end

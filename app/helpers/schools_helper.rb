@@ -21,23 +21,7 @@ module SchoolsHelper
         when 3
         'Restrito'
         end
-  end
-  
-  
-  def owner_link
-    if @school.owner
-      link_to @school.owner.display_name, @school.owner
-    else
-      if current_user.can_manage? @school
-        'Sem dono ' + link_to("(pegar)", take_ownership_school_path)
-      else
-        'Sem dono'  
-      end
-      # e se ninguem estiver apto a pegar ownership?
-    end
-    
-  end
-  
+  end  
   
   def columnize_categories(number_of_columns = 3)
     
@@ -140,6 +124,14 @@ module SchoolsHelper
   
   def waiting_events_count
     Event.count(:conditions => ["school_id = ? AND state LIKE ?", @school.id, "waiting"])
+  end
+  
+  def school_association_pending?
+    (current_user.schools.include?(@school) && current_user.get_association_with(@school).status == "pending")
+  end
+  
+  def school_association_disaproved?
+    current_user.schools.include?(@school) && current_user.get_association_with(@school).status == "disaproved"
   end
   
 end

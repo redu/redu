@@ -10,7 +10,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :lessons
   map.resources :beta_keys, :collection => {:generate => :get, :remove_all => :get, :print_blank => :get, :invite => :get}
   map.resources :profiles
-  map.resources :subjects, :member => {:classes => :get}
+  map.resources :subjects, :member => {:classes => :get}, :collection => {:cancel => :get}
   map.admin_subjects "admin/subjects", :controller => "subjects", :action => "admin_subjects" 
   map.admin_show "admin/show/:id", :controller => "subjects", :action => "admin_show" 
   map.resources :questions, :collection => { :search => [:get, :post], :add => :get } 
@@ -101,7 +101,8 @@ ActionController::Routing::Routes.draw do |map|
    :look_and_feel => :get,
    :members => :get,
    :teachers => :get,
-   :take_ownership => :get
+   :take_ownership => :get,
+   :remove_asset => :get
    },
    :collection =>{
    :cancel => :get
