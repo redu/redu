@@ -521,7 +521,8 @@ end
   end
   
   def welcome_photo
-    @user = User.find(params[:id])
+    #@user = User.find(params[:id])
+    redirect_to user_path(current_user)
   end
   
   def welcome_about
