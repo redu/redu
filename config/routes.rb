@@ -4,7 +4,7 @@ ActionController::Routing::Routes.draw do |map|
     :requirements => { :action         => /(add|remove)/,
                                  :folder_or_file => /(folder|file)/ }
   
-  
+  map.notify '/jobs/notify', :controller => 'jobs', :action => 'notify'
   map.resources :interactive_classes
   map.resources :statuses
   map.resources :lessons

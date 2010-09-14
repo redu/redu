@@ -58,3 +58,8 @@ ZENCODER_CONFIG = {
     :public => 1,
   }
 }
+
+ZENCODER_CREDENTIALS = {
+  :username => 'zencoder',
+  :password => 'MCZC2pDQyt5bzko1'
+}
