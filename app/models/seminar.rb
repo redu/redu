@@ -151,7 +151,10 @@ class Seminar < ActiveRecord::Base
         :video_codec => "vp6",
         :public => 1,
         :notifications => [
-          "http://#{ZENCODER_CREDENTIALS[:username]}:#{ZENCODER_CREDENTIALS[:password]}@beta.redu.com.br/jobs/notify",
+          {
+            :format => 'json',
+            :url => "http://#{ZENCODER_CREDENTIALS[:username]}:#{ZENCODER_CREDENTIALS[:password]}@beta.redu.com.br/jobs/notify",
+          }
         ]
       }
     }
