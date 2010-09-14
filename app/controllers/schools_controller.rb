@@ -549,9 +549,9 @@ class SchoolsController < BaseController
   # GET /schools/1
   # GET /schools/1.xml
   def show
-    @school = School.find(params[:id])
+    @school = School.find(params[:id]) # TODO colocar como um filtro (find_school)
     
-    if @school.removed
+    if @school and @school.removed
         redirect_to removed_page_path and return
     end
     
@@ -559,7 +559,7 @@ class SchoolsController < BaseController
     if @school
       @statuses = @school.recent_activity(0,10)
       
-      @featured = @school.featured_courses(2)
+      @featured = @school.featured_courses(3)
       @brand_new = @school.courses.find(:first, :order => "created_at DESC")
       @courses = @school.courses.paginate(:conditions => 
         ["published = 1"], 

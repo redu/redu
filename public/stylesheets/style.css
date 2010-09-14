@@ -2157,7 +2157,7 @@ color: gray;
 #group div.first-page div.featured2 a.name {
     float: left;
     display: block;
-    width: 250px;
+    width: 230px;
 }
 
 #group div.first-page div.featured2 .photo {
@@ -2172,7 +2172,7 @@ color: gray;
     display: block;
     float: left;
     font-size: .8em;
-    width: 250px;
+    width: 230px;
     margin-bottom: 5px;
     color: gray;
 }
@@ -2477,7 +2477,11 @@ a:hover.book_step span {
     left: 13px;
     position: absolute;
     top: 8px;
+<<<<<<< HEAD
 	margin: 0;
+=======
+    margin: 0;
+>>>>>>> 6f7d2a37786f46e60853a77f50a9d3f23cbb1d33
 }
 
 /*** Current Step ***/

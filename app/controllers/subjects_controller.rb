@@ -1,8 +1,28 @@
 class SubjectsController < BaseController
 
   layout 'new_application'
+
   before_filter :login_required
- 
+  before_filter :find_subject, :only => [:show, :enroll]
+  before_filter :find_user_subject, :only => [:edit,:destroy, :admin_show]
+  
+  def find_subject
+    @subject = Subject.find(params[:id])
+    
+    unless @subject
+    flash[:notice] = "Curso não encontrado. Você digitou o endereço correto?"
+    redirect_to subjects_path and return
+    end
+  end
+  
+  def find_user_subject
+    @subject = current_user.subjects.find(params[:id])
+    
+    unless @subject
+    flash[:notice] = "Curso não encontrado. Você tem mesmo permissão para acessá-lo?"
+    redirect_to subjects_path and return
+    end
+  end
 
   def index
 #    session[:subject_step] = session[:subject_params]= session[:subject_aulas]= session[:subject_id]= session[:subject_exames]  = nil
@@ -26,9 +46,6 @@ class SubjectsController < BaseController
 #     
 #   end
 
-      
-
-
     cond = Caboose::EZ::Condition.new
     cond.append ["simple_category_id = ?", params[:category]] if params[:category]
     
@@ -38,9 +55,7 @@ class SubjectsController < BaseController
       :order => (params[:sort]) ? params[:sort] + ' DESC' : 'created_at DESC', 
       :per_page => AppConfig.items_per_page 
     }
-    
-    
-    
+ 
     if params[:user_id] # cursos do usuario
       @user = User.find_by_login(params[:user_id]) 
       @user = User.find(params[:user_id]) unless @user
@@ -91,14 +106,18 @@ class SubjectsController < BaseController
   def show
     
       @subject = Subject.find(:first, :conditions => "is_public like true AND id =#{params[:id].to_i}")
-     respond_to do |format|    
-         if current_user.enrollments.detect{|e| e.subject_id.eql?(params[:id].to_i)}.nil?
-         format.html
-         else
-          format.html{  render :action => "classes" }
-         end
-     end
-     
+     @school = @subject.school
+    
+    respond_to do |format|    
+      if current_user.enrollments.detect{|e| e.subject_id.eql?(params[:id].to_i)}.nil?
+        format.html{  render "preview" }
+      else
+        @status = Status.new
+        @statuses = @subject.recent_activity(0,10)
+        format.html
+      end
+    end
+ 
   end
 
   def new
@@ -146,7 +165,6 @@ class SubjectsController < BaseController
 
   def edit
     session[:subject_params] ||= {}
-    @subject = current_user.subjects.find(params[:id])
   end
  
   def update 
@@ -189,14 +207,17 @@ class SubjectsController < BaseController
   end
  
   def destroy
-    subject = current_user.subjects.find(params[:id].to_i)
-    subject.destroy
+    @subject.destroy
     redirect_to :action =>"admin_subjects"
   end
 
-  def classes
-    Enrollment.create_enrollment(params[:id], current_user)
-    @subject = Subject.find(:first, :conditions => "is_public like true AND id =#{params[:id].to_i}")
+  def enroll
+   
+    redirect_to(subjects_path) and return unless @subject.is_public
+    
+    Enrollment.create_enrollment(@subject.id, current_user) 
+    flash[:notice] = "Você se inscreveu neste curso!"
+    redirect_to @subject
   end
   
   def admin_subjects
@@ -204,8 +225,7 @@ class SubjectsController < BaseController
   end
   
   def admin_show
-    @subject = current_user.subjects.find(params[:id])
-    
+    @subject = current_user.subjects.find(params[:id])   
   end
   
  

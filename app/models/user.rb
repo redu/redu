@@ -262,7 +262,8 @@ class User < ActiveRecord::Base
       (entity.owner == self || (entity.school.id == school.id && self.school_admin?(school) ))
     when 'Bulletin'
       (entity.owner == self || (entity.school == school && self.school_admin?(school) ))
-		
+		 when 'Subject'
+      (entity.owner == self || (entity.school == school && self.school_admin?(school) ))
     end
   end
  
