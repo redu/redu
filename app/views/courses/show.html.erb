@@ -296,21 +296,22 @@
 
 <!-- COLUNA DA DIREITA  ## -->
 <div class="grid_6">
-    
-		<% if  (@course.owner == current_user or @course.resources.length > 0) %>
+   <!-- TODO Link para adicionar anexos à aula > 
+		<%# if  (@course.owner == current_user or @course.resources.length > 0) %>
     <div class="sidebar">
         <span class="call"><span>Anexos</span></span>
         <ul class="">
-            <% @course.resources.each do | resource | %>
+            <#% @course.resources.each do | resource | %>
                 <li>
-                    <%= link_to resource.attachment_file_name,	resource.attachment.url,
+                    <#%= link_to resource.attachment_file_name,	resource.attachment.url,
                     :class => type_class(resource) %>
                 </li>
-                <% end %>
+                <%# end %>
         </ul>
-				<%= link_to 'Adicionar anexo', :action => 'edit' %>
+				<#%= link_to 'Adicionar anexo', :action => 'edit' %>
     </div>
-		<% end %>
+		<% #end %>
+		-->
 		
 		
 		<% if @related_courses.size > 0 %>
