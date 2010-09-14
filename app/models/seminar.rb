@@ -150,6 +150,9 @@ class Seminar < ActiveRecord::Base
         :url => "s3://" + VIDEO_TRANSCODED[:bucket] + "/" + interpolate(VIDEO_TRANSCODED[:path], seminar_info),
         :video_codec => "vp6",
         :public => 1,
+        :notifications => [
+          "http://#{ZENCODER_CREDENTIALS[:username]}:#{ZENCODER_CREDENTIALS[:password]}@beta.redu.com.br/jobs/notify",
+        ]
       }
     }
 
