@@ -143,24 +143,19 @@ class Seminar < ActiveRecord::Base
       :basename => self.original_file_name.split('.')[0],
       :extension => 'flv'
     }
+    
+    output_path = "s3://" + VIDEO_TRANSCODED[:bucket] + "/" + interpolate(VIDEO_TRANSCODED[:path], seminar_info)
 
-    seminar_config = {
-      :input => self.original.url,
-      :output => {
-        :url => "s3://" + VIDEO_TRANSCODED[:bucket] + "/" + interpolate(VIDEO_TRANSCODED[:path], seminar_info),
-        :video_codec => "vp6",
-        :public => 1,
-        :notifications => [
-          {
-            :format => 'json',
-            :url => "http://#{ZENCODER_CREDENTIALS[:username]}:#{ZENCODER_CREDENTIALS[:password]}@beta.redu.com.br/jobs/notify",
-          }
-        ]
-      }
-    }
-
-    response = Zencoder::Job.create ZENCODER_CONFIG.merge(seminar_config)
-
+    ZENCODER_CONFIG[:input] = self.original.url
+    ZENCODER_CONFIG[:output][:url] = output_path
+    ZENCODER_CONFIG[:output][:thumbnails][:base_url] = File.dirname(output_path)
+    ZENCODER_CONFIG[:output][:notifications][:url] = "http://#{ZENCODER_CREDENTIALS[:username]}:#{ZENCODER_CREDENTIALS[:password]}@beta.redu.com.br/jobs/notify"
+    
+    puts ZENCODER_CONFIG.inspect
+    
+    response = Zencoder::Job.create(ZENCODER_CONFIG)
+    puts response.inspect
+    
     if response.success?
       self.job = response.body["id"]
     else

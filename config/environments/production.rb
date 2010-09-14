@@ -53,9 +53,21 @@ VIDEO_TRANSCODED = {
 
 ZENCODER_CONFIG = {
   :api_key => 'cf950c35c3943ff7c25a84c874ddcca3',
+  :input => '',
   :output => {
+    :url => '',
     :video_codec => "vp6",
     :public => 1,
+    :thumbnails => {
+      :number => 6,
+      :size => "160x120",
+      :base_url => '',
+      :prefix => "thumb"
+    },
+    :notifications => {
+        :format => 'json',
+        :url => ''
+    }
   }
 }
 
