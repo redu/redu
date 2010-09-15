@@ -47,8 +47,8 @@ Rails::Initializer.run do |config|
       :port => 587,
       :domain => 'www.gmail.com',
       :authentication => :login,
-      :user_name => 'diagnosticarapuama@gmail.com',
-      :password => 'apuamaeth0'
+      :user_name => 'contato@redu.com.br',
+      :password => '5F7229'
   }  
   
   # Configurações de conversão e storage de videos (Seminar)

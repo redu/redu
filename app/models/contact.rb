@@ -12,7 +12,7 @@ class Contact
  
   def deliver
     if valid?
-      Delayed::Job.enqueue ContactMailingJob.new(self)
+      UserNotifier.deliver_contact_redu(self)
     else
       false
     end

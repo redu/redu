@@ -147,7 +147,7 @@ def remove_membership(user, school)
     setup_sender_info
     @recipients = "#{AppConfig.contact_emails}"
     @subject    = "[#{contact.kind}] #{contact.subject}"
-    @body       = "#{contact.body} From #{contact.name} <#{contact.email}>"
+    @body       = "#{contact.body} \n From #{contact.name} <#{contact.email}>"
   end
   
   
