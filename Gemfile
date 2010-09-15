@@ -23,10 +23,11 @@ gem "ruby-debug"
 gem "zencoder"
 
 group :development do
-gem "mongrel"
+  gem "mongrel"
 end
 
 group :production do
+  gem "newrelic_rpm", "2.13.1"
 end
 
 group :test do
