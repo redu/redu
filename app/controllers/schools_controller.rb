@@ -1,14 +1,14 @@
 class SchoolsController < BaseController
   layout 'new_application'
-  
+
   before_filter :login_required,  :except => [:join, :unjoin, :member]
   #before_filter :admin_required,  :only => [:new, :create]
   #before_filter :school_admin_required,  :except => [:new, :create, :vote]
    after_filter :create_activity, :only => [:create]
 
-
-  before_filter :except => [:new, :create, :vote, :index, :join, :unjoin, 
-                             :member, :onwer, :members, :teachers, :take_ownership] do |controller| 
+  # Usado para proteger acoes perigosas (só para admin) 
+  before_filter :except => 
+    [:new, :create, :show, :vote, :index, :join, :unjoin, :member, :onwer, :members, :teachers, :take_ownership] do |controller| 
     controller.school_admin_required(controller.params[:id]) if controller.params and controller.params[:id]
   end
   
@@ -570,7 +570,7 @@ class SchoolsController < BaseController
 			@bulletins = @school.bulletins.find(:all, :conditions => "state LIKE 'approved'", :order => "created_at DESC", :limit => 5)
 
     end
-      
+    
     respond_to do |format|
       if @school
         #@forums = @school.forums
