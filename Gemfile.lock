@@ -33,6 +33,7 @@ GEM
       fastthread (>= 1.0.1)
       gem_plugin (>= 0.2.3)
     mysql (2.8.1)
+    newrelic_rpm (2.13.1)
     oauth (0.4.3)
     packet (0.1.15)
     parseline (1.0.3)
@@ -73,6 +74,7 @@ DEPENDENCIES
   icalendar
   mongrel
   mysql
+  newrelic_rpm (= 2.13.1)
   oauth
   packet
   parseline
