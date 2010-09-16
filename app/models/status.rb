@@ -67,12 +67,12 @@ class Status < ActiveRecord::Base
   end
 
   def Status.friends_statuses(user, limit = 0, offset = 20)
-    sql = "SELECT s.* FROM statuses s, followship f " + \
-      "WHERE (f.followed_by_id = #{user.id} " + \
-      "AND s.user_id = f.follows_id) " + \
-      "OR s.user_id = #{user.id} " + \
-      "ORDER BY s.created_at DESC LIMIT #{limit},#{offset}"
-
+    sql = "SELECT DISTINCT s.* FROM statuses s " + \
+          "LEFT OUTER JOIN followship f " + \
+          	"ON (f.follows_id = s.user_id) " + \
+          "WHERE f.followed_by_id = #{user.id} OR s.user_id = #{user.id} " + \
+          "ORDER BY s.created_at DESC LIMIT #{limit},#{offset}"
+      
       Status.find_by_sql(sql)
   end
 
