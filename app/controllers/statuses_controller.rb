@@ -18,7 +18,7 @@ class StatusesController < BaseController
           page << "$('#status_text').val('')"
           page << "$('.answer').val('')"
           #TODO com jquery 1.4 pode-se usar a funcao unwrap
-          page << "$('#status_text').parents('div.fieldWithErrors:first').removeClass('fieldWithErrors')"
+          page << "$('textarea.status:visible').parents('div.fieldWithErrors:first').removeClass('fieldWithErrors')"
           page << "$('.errorMessageField').remove()"
         end
         }
@@ -32,7 +32,7 @@ class StatusesController < BaseController
         render :update do |page|
           page << "$('.status_spinner').hide()"
           page << "$('.errorMessageField').remove()"
-          page << "$('#status_text').wrap(\"<div class='fieldWithErrors'></div>\")" + \
+          page << "$('textarea.status:visible').wrap(\"<div class='fieldWithErrors'></div>\")" + \
                   ".after(\"<p class='errorMessageField'>#{@status.errors.full_messages.to_sentence}</p>\")"
         end
         }
