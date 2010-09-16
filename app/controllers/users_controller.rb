@@ -107,29 +107,17 @@ class UsersController < BaseController
 
   def follow # TODO evitar duplicata
     user = User.find(params[:id])
-    #@follow_user = User.find(params[:follow_id])
-
-    user.followers << current_user
-    if user.save #@user.update_attributes(:follows)
-      UserNotifier.deliver_followship_notice(user, current_user) if user.notify_followship
-      #flash[:notice] = 'Você está seguindo esse usuário'
-    else
-      #flash[:erro] = 'Não é possível seguir esse usuário'
-    end
-
-    respond_to do |format|
-      format.html do
-        redirect_to user_path(user)
-      end
-      format.js do
-        render :update do |page|
-          page << "$('#follow_link').hide()"
-          page << "$('#unfollow_link').show()"
+    respond_to do |format| 
+      unless user.followers.include?(current_user)
+        user.followers << current_user
+        format.js do
+          render :update do |page|
+            page << "$('#follow_link').hide()"
+            page << "$('#unfollow_link').show()"
+          end
         end
       end
     end
-
-
   end
 
   def unfollow
