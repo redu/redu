@@ -13,8 +13,15 @@
 		$('div.add-topic-inner').hide();
 		$('.selected').removeClass('selected');
 		$('#lights-dimmed').fadeIn(); 
-		$('#dialog').show();
+		if(type == "Course"){
+		 $('#dialog').show(); 
+		}
+		else{
+			$('#dialog_exam').show();
+		}
+		
 	 }
+	
 	 
 	 function addContent(link, thecontent){
 	 	$('.nothing').hide();
@@ -56,7 +63,7 @@
                 	<%= link_to_function (image_tag 'icons/iclass.gif', :title => 'Aula') + 'Aula', "contentPopup('Course')"  %>
                 </li>
                 <li>
-                	<%= link_to_function (image_tag 'icons/exam.gif', :title => 'Exame') + 'Exame', "#dialog", :name=>"modal" %>
+                	<%= link_to_function (image_tag 'icons/exam.gif', :title => 'Exame') + 'Exame', "contentPopup('Exam')" %>
                 </li>
             </ul>
         </div>
@@ -71,7 +78,53 @@
 
 <% field_set_tag 'Conteúdo selecionado', :style => "margin-top:40px;" do %>
 	<ul id="subject_content" class="default sortable" style="min-height:300px;">
+		
+		<% unless current_user.subjects.find(session[:subject_id]).aulas.nil?%>
+		     <%  current_user.subjects.find(session[:subject_id]).aulas.each do |aula|%>
+		
+		        <li class="clearfix">
+			
+		            <%= check_box_tag "aulas[]", aula.id, true%>
+                    <div class="thumb photo">
+                       <%= aula.name%><%= link_to(image_tag aula.thumb_url, :width => "70px") %>
+	                </div>
+			   
+			        <div class="headlines" style="width: 490px"> 
+				      <span class="things">
+				        <%= truncate_words( aula.description, 10, '...') %>
+				     </span>
+			       </div>		
+		       </li> 	
+		<%end%>
+		
+		<%else%>
 		<span class="nothing snippet">Nenhuma aula adicionada ainda.</span>
+		<%end%>
+	----------------------------	
+		<% unless current_user.subjects.find(session[:subject_id]).exames.nil?%>
+		
+		     <%  current_user.subjects.find(session[:subject_id]).exames.each do |exam|%>
+		
+		        <li class="clearfix">
+			
+		            <%= check_box_tag "exams[]", exam.id, true%>
+                    <div class="thumb photo">
+                       <%= exam.name%><%= link_to(image_tag "FOTO", :width => "70px") %>
+	                </div>
+			   
+			        <div class="headlines" style="width: 490px"> 
+				      <span class="things">
+				        <%= truncate_words( exam.description, 10, '...') %>
+				     </span>
+			       </div>		
+		       </li> 	
+		<%end%>
+		
+		<%else%>
+		<span class="nothing snippet">Nenhuma exame adicionada ainda.</span>
+		<%end%>
+		
+		
 	</ul>
 
 <% end %>
@@ -101,18 +154,14 @@
              <ul>
                  <% current_user.courses.each do |course| %><!--cursos tem ser filtrador pro usuuarios-->
                  <li id="add_course_<%=course.id%>">
-                 	<!--
-                     <% unless session[:subject_id].nil? %>
-                     <%= check_box_tag "aulas[]", course.id, current_user.subjects.find(session[:subject_id]).course_subjects.detect{|cs| cs.courseable.name == course.name}.nil? ? false : true %>
-                     <%else %>
-                     <%= check_box_tag "aulas[]", course.id %>
-                     <%end %>
-					 -->
+                
                      <span><%= h(course.name) %></span>
  
- 
- 
-					 <%= link_to_function "adicionar", "addContent(this,'"+escape_javascript(render("courses/item_subject2", :course => course ))+"')"%>
+					 <%= link_to_function "adicionar", "addContent(this,'"+escape_javascript(render("courses/item_subject2", :course => course ))+"')"%> 
+					
+					<%if current_user.subjects.find(session[:subject_id]).aulas.map{|a| a.name}.include?(course.name) %>
+					tem
+					<%end%>
  
                  </li>
                  <%end %>
@@ -122,6 +171,33 @@
 			 
          </div>
      </div>
+
+     <!--Lista de Exame-->
+
+      <div id="dialog_exam" class="modal_window grid_12">
+         <a href="#" class="close">Fechar [X]</a>
+         <div id="dialog_content">
+         <form>
+             <% field_set_tag 'Exames' do %>
+             <ul><!--exames tem ser filtrador pro usuuarios-->
+                 <% current_user.exams.each do |exam| %>
+
+                 <li id="add_course_<%=exam.id%>">
+
+                     <span><%= h(exam.name) %></span>
+
+					 <%= link_to_function "adicionar", "addContent(this,'"+escape_javascript(render("exams/item_exam", :exam => exam ))+"')"%> 
+
+                 </li>
+                 <%end %>
+             </ul>
+             <%end %>
+         </form>
+
+         </div>
+     </div>
+
+
  </div>
 
 

@@ -26,14 +26,14 @@
 <h1>Aulas</h1>	
 <ul>
 <% @subject.aulas.each do |aula|%>
-<li><%= link_to aula.courseable.name, course_path(aula.courseable) %></li>	
+<li><%= link_to aula.name, course_path(aula.courseable) %></li>	
 <%end%> 
 </ul>
 
 <h1>Exames</h1>	
 <ul>
 <% @subject.exames.each do |exame|%>
-<li><%= exame.courseable.name%></li>	
+<li><%= exame.name%></li>	
 <%end%>
 </ul>
 

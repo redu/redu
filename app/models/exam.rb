@@ -104,7 +104,9 @@ def all_valid?
   end
 end
 
-  
+def thumb_url
+  return "FOTO"
+end  
 
 
   

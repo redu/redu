@@ -54,7 +54,7 @@ $(document).ready(function(){
 <ul>
 <% for audience in Audience.find(:all) %>
 	<li>
-	  <%= check_box_tag "subject[audience_ids][]", audience.id, @subject.audiences.include?(audience) %>
+	  <%#= check_box_tag "subject[audience_ids][]", audience.id, @subject.audiences.include?(audience) %>
 	  <%= audience.name %>
 	</li>
 <% end %>
