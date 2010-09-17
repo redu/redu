@@ -9,4 +9,4 @@ vendor/.DS_Store
 vendor/plugins/.DS_Store
 config/database.yml
 public/system/
-
+mongrel/ruby/1.8/gems/ruby-debug-0.10.3/cli/ruby-debug/commands/source.RB
