@@ -224,9 +224,9 @@ pt-BR:
   #en: activate: Activate
   activate: Activate
   #en: activation_email_not_sent_message: Activation e-mail could not be sent. Perhaps that user is already active?
-  activation_email_not_sent_message: Ativação de e-mail não foi enviada. Talvez o usuário já esteja ativo?
+  activation_email_not_sent_message: O e-mail de ativação não foi enviado. O usuário realmente não está ativo?
   #en: activation_email_resent_message: An activation e-mail was resent to the e-mail address you used to sign up.
-  activation_email_resent_message: An activation e-mail was resent to the e-mail address you used to sign up.  
+  activation_email_resent_message: O e-mail de ativação foi reenviado.  
   #en: active: active
   active: active
   #en: active_users: Active Users
@@ -1382,7 +1382,7 @@ pt-BR:
   #en: tags_page: tags page
   tags_page: página de tags
   #en: thanks_for_activating_your_account: Thanks for activating your account!
-  thanks_for_activating_your_account: Thanks for activating your account!
+  thanks_for_activating_your_account: Obrigado por ativar a sua conta!
   #en: thanks_youre_now_logged_in: Thanks! You're now logged in.
   thanks_youre_now_logged_in: Obrigado! Você está logado agora.
   #en: the_comment_was_deleted: The comment was deleted.

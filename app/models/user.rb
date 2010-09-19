@@ -360,7 +360,7 @@ class User < ActiveRecord::Base
   def active? 
     #( activated_at.nil? and (created_at < (Time.now - 30.days))) ? false : true
     # activation_code.nil? && !activated_at.nil?
-    true
+    self.activated_at
   end
 
   def recently_activated?

@@ -116,7 +116,7 @@ def remove_membership(user, school)
   def signup_invitation(email, user, message)
     setup_sender_info
     @recipients  = "#{email}"
-    @subject     = "#{user.login} would like you to join #{AppConfig.community_name}!"
+    @subject     = "#{user.login} quer que você participe do #{AppConfig.community_name}!"
     @sent_on     = Time.now
     @body[:user] = user
     @body[:url]  = signup_by_id_url(user, user.invite_code)
@@ -211,7 +211,7 @@ def remove_membership(user, school)
 
   def signup_notification(user)
     setup_email(user)
-    @subject    += "Please activate your new #{AppConfig.community_name} account"
+    @subject    += "Por favor ative a sua nova conta #{AppConfig.community_name}"
     @body[:url]  = "#{application_url}users/activate/#{user.activation_code}"
   end
   
