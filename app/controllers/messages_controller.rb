@@ -141,6 +141,35 @@ class MessagesController < BaseController
     end
   end
   
+  def more
+    page = params[:limit].to_i/10 + 1
+    
+    if params[:mailbox] == 'sent'
+      @messages = @user.sent_messages.paginate(:all, :page => page, 
+      :order =>  'created_at DESC', 
+      :per_page => AppConfig.items_per_page)
+    else
+      @messages = @user.received_messages.paginate(:all, :page => page, 
+      :order =>  'created_at DESC', 
+      :per_page => AppConfig.items_per_page)
+    end
+    
+    new_limit = params[:limit].to_i * 10
+    
+    respond_to do |format|
+      format.js do
+        render :update do |page|
+          page << "$('.messages_table').append('"+escape_javascript(render(:partial => "messages/item", :collection => @messages, :as => :message))+"')"
+          if @messages.length < 10
+            page.replace_html "#more",  ''
+          else
+            page.replace_html "#more",  link_to_remote("mais ainda!", :url => {:controller => :messages, :action => :more, :user_id => params[:user_id], :limit => new_limit}, :method =>:get, :loading => "$('#more').html('"+escape_javascript(image_tag('spinner.gif'))+"')")
+          end
+         end
+      end
+    end
+  end
+  
   private
   def find_user
     @user = User.find(params[:user_id])

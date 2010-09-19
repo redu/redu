@@ -5,46 +5,33 @@
 	</h3>
 	
 	<table class='messages' border='0' width='100%'>
-		<tbody>
+		<tbody class='messages_table'>
 			<% if @messages.empty? %>
-				<tr>
-					<td colspan ="4">
-						<%= :no_messages.l %>
-					</td>
-				</tr>
+			<tr>
+				<td colspan='5'>
+					<%= :no_messages.l %>
+				</td>	
+			</tr>
 			<% else %>
-				<% @messages.each do |message| %>
-					<tr>
-						<td>
-								<%= check_box_tag "delete[]", message.id %>
-						</td>
-						<td>
-							<%= link_to image_tag( message.recipient.avatar.url(:thumb), :alt=>"#{message.recipient.login}", :class=> "photo" ), user_path(message.recipient), :title => "#{message.recipient.login}'s " + :profile.l %>
-						</td>
-						<td>
-							<%= link_to_remote h(message.subject), :url =>  user_message_path(@user, message, :mailbox => :sent), :method => :get %>
-							<br>
-							<%= :to.l %>
-							<%= link_to h(message.recipient.login), user_path(message.recipient)%>
-						</td>
-						<td class='snippet' >
-							<%= h message.created_at.to_s(:long) %>
-						</td>
-					</tr>
-				<% end %>
+					<%= render :partial => 'messages/item', :collection => @messages, :as => :message, :locals => {:show_read => false} %>
 			<% end %>
 		</tbody>
 		<tfoot>
 			<tr>
-				<td colspan = "4">
-					<% if @messages.any? %>
+				<td colspan="5">
+					<%-if @messages.any? %>
 						<p>
-							<%= submit_tag :delete.l %><%= image_tag 'spinner.gif', :id => 'del-spinner', :style => 'display: none' %>
+							<%= submit_tag :delete_selected.l %><%= image_tag 'spinner.gif', :id => 'del-spinner', :style => 'display: none' %>
 						</p>
 					<% end %>
-				</td>
+				</td>	
 			</tr>
 		</tfoot>
 	</table>
 	<% end %>	 
-
+	
+	<% unless @messages.length < 10%>
+	<div id="more">
+	<%= link_to_remote "mais...", :url => {:controller => :messages, :action => :more, :mailbox => 'sent', :user_id => current_user.id, :limit => 10}, :method =>:get, :loading => "$('#more').html('"+escape_javascript(image_tag('spinner.gif'))+"')"%>
+	</div>
+	<% end %>
