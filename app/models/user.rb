@@ -397,7 +397,7 @@ class User < ActiveRecord::Base
   end
   
   def invite_code
-    Digest::SHA1.hexdigest("#{self.id}--#{self.email}--#{self.salt}")
+    Digest::SHA1.hexdigest("#{self.id}--#{self.email}--#{self.password_salt}")
   end
   
   def location

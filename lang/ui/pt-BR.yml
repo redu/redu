@@ -768,7 +768,7 @@ pt-BR:
   #en: invite_a_friend: Invite a friend
   invite_a_friend: Invite a friend
   #en: invitation_was_successfully_created: Invitation was successfully created.
-  invitation_was_successfully_created: Invitation was successfully created.
+  invitation_was_successfully_created: Os convites serão enviados.
   #en: invite_message: The more people you invite the better {{site}} becomes.
   invite_message: "The more people you invite the better {{site}} becomes."
   #en: invite_some_customers: Invite some customers!
