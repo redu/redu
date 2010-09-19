@@ -51,13 +51,13 @@ class Exam < ActiveRecord::Base
   
   
   
-#  def get_question(qid)
-#    if qid
-#      self.questions.each_with_index do |question, index| 
-#        return [question,index]  if question.id == qid
-#      end
-#    end
-#  end
+  def get_question(qid)
+    if qid
+      self.questions.each_with_index do |question, index| 
+        return [question,index]  if question.id == qid
+      end
+    end
+  end
   
   def to_param #friendly url
     "#{id}-#{name.parameterize}"
