@@ -500,7 +500,7 @@ class SchoolsController < BaseController
   # GET /schools.xml
   def index
     cond = Caboose::EZ::Condition.new
-    cond.append ["area_id = ?", params[:area]] if params[:area] and params[:area].downcase != 'all'
+    cond.append ["redu_category_id = ?", params[:area]] if params[:area] and params[:area].downcase != 'all'
     cond.append ["audience_id = ?", params[:audience]] if params[:audience]
     
     
@@ -512,7 +512,7 @@ class SchoolsController < BaseController
       :per_page => 12 
     }
     
-    @schools =  School.redu_categories_id(params[:area]).paginate(paginating_params) if params[:area] and params[:area].downcase != 'all'
+    @schools =  School.inner_categories.paginate(paginating_params) if params[:area] and params[:area].downcase != 'all'
    
     
     
@@ -522,11 +522,14 @@ class SchoolsController < BaseController
       @schools = @user.schools.paginate(paginating_params)
       
     elsif params[:search] # search
+      
       @schools = School.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
     else
-      @schools = School.all.paginate(paginating_params)
+      if not @schools
+        @schools = School.all.paginate(paginating_params)
+        @searched_for_all = true
+      end
     end
-
 
     respond_to do |format|
       format.xml  { render :xml => @courses }

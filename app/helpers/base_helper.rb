@@ -24,7 +24,10 @@ module BaseHelper
   
     def area_select(select_opts)
    # collection_select(:course, :simple_category, SimpleCategory.all, :id, :name)
-   categories_array = ReduCategory.all.map { |cat| [(cat.name), cat.id] }.insert(0, "All")
+   categories_array = ReduCategory.all.map { |cat| [(cat.name.downcase.gsub(' ','_').to_sym.l), cat.id] }
+   categories_array.sort! { |a,b| a[0] <=> b[0] } # Ordenando pelo nome da categoria
+   categories_array.insert(0, ["All".downcase.gsub(' ','_').to_sym.l, 'all'])
+   
     select_tag(:area, options_for_select(categories_array), select_opts )
   end
   
