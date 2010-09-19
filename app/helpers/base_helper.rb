@@ -510,8 +510,8 @@ module BaseHelper
 	
 	  def subscription_link
     membership = current_user.get_association_with @school
-    
-    if membership and membership.status == 'approved' # já é membro
+
+    if membership and (membership.status == 'approved') # já é membro
       link_to "Abandonar", unjoin_school_path(@school), 
         :class => "participar_rede button" , 
         :confirm => "Você tem certeza que quer deixar essa rede?"
@@ -521,7 +521,7 @@ module BaseHelper
         when 1 # anyone can join
         link_to "Participar", join_school_path(@school), :class => "participar_rede button" 
       when 2 # moderated
-        if membership.status == 'pending'
+        if membership and (membership.status == 'pending')
           "(em moderação)"
         else
           link_to "Participar", join_school_path(@school), :class => "participar_rede button"

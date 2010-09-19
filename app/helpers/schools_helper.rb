@@ -47,37 +47,7 @@ module SchoolsHelper
   end 
   html += '</div>' 
     
-  end
-  
-  
-  def subscription_link
-    membership = current_user.get_association_with @school
-    
-    if membership and membership.status == 'approved' # já é membro
-      link_to(
-      # image_tag("icons/house.gif") + 
-       " Abandonar rede", unjoin_school_path, 
-        :confirm => "Você tem certeza que quer deixar essa rede?")
-    else 
-       case @school.subscription_type 
-        
-        when 1 # anyone can join
-        link_to "Participar", join_school_path
-      when 2 # moderated
-        if membership.status == 'pending'
-          "(em moderação)"
-        else
-          link_to "Participar", join_school_path
-        end
-         
-        when 3 #key
-        link_to "Participar", "#", {:onclick => "toggleAssociateBox();false;"} 
-      end
-      
-    end 
-    
-  end
-  
+  end  
   
    # used to know if a topic has changed since we read it last
   def recent_topic_activity(topic)

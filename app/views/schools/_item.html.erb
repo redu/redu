@@ -5,5 +5,7 @@
 	<span class="quiet">Faculdades, Ensino Superior</span>
 	<span  class="quiet">Aulas: <%= school.courses.size() %> | Membros: <%= school.users.size() %> </span>
 	</div>
-	<span><%= link_to "gerenciar", manage_school_path(school), :class => "icon more"%></span>
+	<%  if current_user.can_manage? @school %>
+		<span><%= link_to "gerenciar", manage_school_path(school), :class => "icon more"%></span>
+	<% end %>
 </li>
