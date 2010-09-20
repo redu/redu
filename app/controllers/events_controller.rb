@@ -26,7 +26,7 @@ class EventsController < BaseController
     extend ActionView::Helpers::SanitizeHelper::ClassMethods
   end
 
-  uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit])
+  uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit, :create, :update])
 
   def ical
     @calendar = Icalendar::Calendar.new

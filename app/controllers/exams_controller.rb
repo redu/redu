@@ -1,7 +1,7 @@
 class ExamsController < BaseController
   
   before_filter :login_required, :except => [:index]
-  uses_tiny_mce(:options => AppConfig.question_mce_options, :only => [:new, :edit, :create])
+  uses_tiny_mce(:options => AppConfig.question_mce_options, :only => [:new, :edit, :create, :update])
   after_filter :create_activity, :only => [:create, :results]
   
   

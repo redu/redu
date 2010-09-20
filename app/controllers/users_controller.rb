@@ -8,7 +8,7 @@ class UsersController < BaseController
   end
 
   uses_tiny_mce(:options => AppConfig.default_mce_options.merge({:editor_selector => "rich_text_editor"}),
-                :only => [:create, :update, :edit, :welcome_about])
+                :only => [:create, :update, :edit, :welcome_about, :create])
 
   # Filters
   after_filter :create_activity, :only => [:update]

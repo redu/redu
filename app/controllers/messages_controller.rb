@@ -3,7 +3,7 @@ class MessagesController < BaseController
   before_filter :find_user#, :except => [:auto_complete_for_username]
   before_filter :login_required
   
-  uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :index])
+  uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :index, :create, :update, :edit])
   
 #  skip_before_filter :verify_authenticity_token, :only => [:auto_complete_for_username]
   
