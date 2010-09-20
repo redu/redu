@@ -2,5 +2,9 @@
 	<div class="photo"><%= link_to((image_tag featured.thumb_url, :width => "128px", :height => "72px"), featured) %></div>
 	<%= link_to featured.name, featured, :class => "name" %>
 	<%= link_to featured.owner.login, featured.owner, :class => "author" %>
-	<span class="views"><%= featured.view_count %></span>
+	<% if featured.view_count > 1  %>
+		<span class="views"><%= featured.view_count %> visualizações</span>
+	<% else %>		
+		<span class="views"><%= featured.view_count %> visualização</span>
+	<% end %>
 </li>
