@@ -27,7 +27,7 @@
 	<%= f.label :justification, "Justificativa" %>
 	<%= f.text_area :justification, :rows =>2, :cols => 50, :class => "mceEditor" %>
 	
-	<%= f.label :source, "Fonte" %>
+	<%= f.label :source, "Fonte <span class=\"snippet\">(local de onde a questão foi retirada)</span>"%>
 	<%= f.text_field :source %>
  <div>
 	<%= f.check_box :public, :checked =>  true %>
