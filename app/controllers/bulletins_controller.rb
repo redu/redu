@@ -6,7 +6,7 @@ class BulletinsController < BaseController
   before_filter :can_manage_required,
                 :only => [:edit, :update, :destroy]
   
-  uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit])
+  uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit, :create, :update])
   
   
   def index

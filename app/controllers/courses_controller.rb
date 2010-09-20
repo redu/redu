@@ -1,7 +1,7 @@
 class CoursesController < BaseController
   
   include Viewable # atualiza o view_count
-  uses_tiny_mce(:options => AppConfig.advanced_mce_options, :only => [:new, :edit, :update])
+  uses_tiny_mce(:options => AppConfig.advanced_mce_options, :only => [:new, :edit, :update, :create])
   
   
   before_filter :login_required, :except => [:index]
