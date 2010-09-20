@@ -11,7 +11,15 @@
     <div class="fake-tabs grid_16 alpha omega">
         <%= render :partial => "admin/taskbar" %>
         <div class="panel">
-						
+						<div id="email_box" class="hoverdiv">
+		            <% form_tag :action => :invite do %>
+		            Digite os endereços de e-mail separados por vírgula:
+		            <br>
+		            <%= text_area_tag(:emails, content = nil, :size => "50x5") %>
+		            <br>
+		            <%= submit_tag "Convidar" %>
+		            <% end %>
+		        </div>
 						<div style="margin-bottom: 20px;">
 							<% form_tag :action => :generate do %>
 								gerar <%= text_field_tag :number , nil, :size => 4%> chaves
@@ -19,15 +27,6 @@
 								
 								
 								| <%= link_to_function 'Convidar por E-mail' , "$('#email_box').slideToggle()" %>
-						        <div id="email_box" class="hoverdiv">
-						            <% form_tag :action => :invite do %>
-						            Digite os endereços de e-mail separados por vírgula:
-						            <br>
-						            <%= text_area_tag(:emails, content = nil, :size => "50x5") %>
-						            <br>
-						            <%= submit_tag "Convidar" %>
-						            <% end %>
-						        </div>
 							
 								| <%= link_to 'Imprimir chaves vazias' , print_blank_beta_keys_path, :target => "_blank" %>
 								| <%= link_to 'Remover todas' , remove_all_beta_keys_path, :confirm => "Tem certeza que deseja excluir todas as chaves?" %>   

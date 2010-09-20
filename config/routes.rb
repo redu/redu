@@ -8,7 +8,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :interactive_classes
   map.resources :statuses
   map.resources :lessons
-  map.resources :beta_keys, :collection => {:generate => :get, :remove_all => :get, :print_blank => :get, :invite => :get}
+  map.resources :beta_keys, :collection => {:generate => :get, :remove_all => :get, :print_blank => :get, :invite => [:get, :post]}
   map.resources :profiles
   map.resources :subjects, :member => {:classes => :get}
   map.admin_subjects "admin_subjects", :controller => "subjects", :action => "admin_subjects" 
