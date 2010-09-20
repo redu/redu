@@ -1,0 +1,8 @@
+<div class="container_16" id="contact">
+	<div class="grid_11 push_2 alpha omega">
+		<span class="box_notice">Caso você ache necessário, entre em contato para nos informar sobre esse problema</span>
+	<%- form_for :contact, :url => {:controller => :base, :action => :contact} do |f| %>
+		<%= render :partial => 'base/contact_form', :locals => {:f => f} %>
+	<% end %>
+	</div>
+</div>
