@@ -7,10 +7,10 @@ contact_emails: "contato@redu.com.br"
 meta_description: 'A description of your community for use in META tags.'
 meta_keywords: 'keywords for use in META tags'
 # for SEO reasons sometime you should control the robots on how they have to handle your content
-# listing of stuff which points to single posts or entries should normally not been indexed, 
+# listing of stuff which points to single posts or entries should normally not been indexed,
 # but the robot should follow the internal link to show the post
 robots_meta_list_content: 'noindex,follow'
-# the post itself should be indexed; 
+# the post itself should be indexed;
 # when links are included and they point to external sites, the robot should not follow
 robots_meta_show_content: 'index,nofollow'
 
@@ -48,14 +48,14 @@ points:
   answer_exam: 20
   created_resource: 30
   show_resource: 15
-  
+
 
 image:
   #missing_thumb: '/images/icon_missing_thumb.gif'
   #missing_medium: "/images/icon_missing_medium.gif"
   attachment_fu_options:
     resize_to: "465>"
-    #min_size: 1    
+    #min_size: 1
     #size in megabytes
     max_size: 3
     #options - 's3', 'file_system', 'db_system' - see attachment_fu for details
@@ -69,80 +69,80 @@ photo:
   missing_medium_school: '/images/missing_pic_school.png' #"/images/icon_missing_medium.gif"
   attachment_fu_options:
     resize_to: "465>"
-    min_size: 1    
+    min_size: 1
     #size in megabytes
     max_size: 3
     thumbnails: {thumb: "c100x100!", medium: "c290x320!", large: "664>"}
     #options - 's3', 'file_system', 'db_system' - see attachment_fu for details
     storage: 'file_system'
     content_type: ['image/jpg', 'image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png']
-      
+
 
 
 reserved_logins: [
-  'about', 
-  'account', 
+  'about',
+  'account',
   'admin',
-  'advertise', 
-  'ads', 
-  'application', 
-  'assets', 
+  'advertise',
+  'ads',
+  'application',
+  'assets',
   'access_keys',
   'beta_keys',
   'beta',
   'blog',
-  'categories', 
-  'choices', 
-  'clippings', 
-  'clipping_images', 
-  'comments', 
-  'contests', 
-  'countries', 
+  'categories',
+  'choices',
+  'clippings',
+  'clipping_images',
+  'comments',
+  'contests',
+  'countries',
   'credits',
-  'css_help', 
-  'events', 
+  'css_help',
+  'events',
   'exams',
   'exames',
-  'favorites', 
-  'faq', 
-  'featured', 
-  'forums', 
-  'friendships', 
-  'friendship_statuses', 
-  'home', 
-  'homepage_features', 
-  'images', 
-  'invitations', 
-  'javascripts', 
-  'login', 
-  'logout', 
+  'favorites',
+  'faq',
+  'featured',
+  'forums',
+  'friendships',
+  'friendship_statuses',
+  'home',
+  'homepage_features',
+  'images',
+  'invitations',
+  'javascripts',
+  'login',
+  'logout',
   'lessons',
-  'manage_photos', 
-  'messages', 
-  'metro_areas', 
-  'moderatorships', 
-  'new_clipping',  
-  'offerings', 
-  'photos', 
-  'polls', 
-  'popular', 
-  'popular_rss', 
-  'posts', 
+  'manage_photos',
+  'messages',
+  'metro_areas',
+  'moderatorships',
+  'new_clipping',
+  'offerings',
+  'photos',
+  'polls',
+  'popular',
+  'popular_rss',
+  'posts',
   'recent',
-  'resources', 
-  'roles', 
-  'search', 
-  'seminars', 
+  'resources',
+  'roles',
+  'search',
+  'seminars',
   'seminarios',
-  'signup', 
+  'signup',
   'sb_posts',
-  'schools', 
-  'skills', 
-  'sitemap', 
+  'schools',
+  'skills',
+  'sitemap',
   'states',
-  'stylesheets', 
-  'tags', 
-  'theme', 
-  'topics', 
-  'users', 
+  'stylesheets',
+  'tags',
+  'theme',
+  'topics',
+  'users',
   'votes']

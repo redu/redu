@@ -1,5 +1,5 @@
 /**
-   Main Redu stylesheet 
+   Main Redu stylesheet
    URL: http://redu.com.br
 **/
 
@@ -10,7 +10,7 @@
     @link1: #18C8EF azul claro
     @header: #F63B0B vermelho
     @background: #EBF7FD
-    
+
 **/
 
 /** @typo **/
@@ -19,7 +19,7 @@ html, body {  height:100%; /* 100% height hack */ }
 html {
     font-family: 'Helvetica Neue', "Trebuchet MS", "Arial", sans-serif;
     font-size: .9em;
-   
+
 }
 
 body {
@@ -62,7 +62,7 @@ a {
     margin: 5px 0 10px 0;
 }
 
-.pretty-text ul, 
+.pretty-text ul,
 .pretty-text ol {
     margin: 5px 0 5px 30px;
     list-style-position: inside;
@@ -82,7 +82,7 @@ a {
 }
 
 /**
-   @overall 
+   @overall
 **/
 
 .odd {
@@ -104,7 +104,7 @@ a {
 }
 
 ul.default {
-	
+
 }
 
 ul.default li {
@@ -133,7 +133,7 @@ ul.default li:even {
         font-size: 1em;
         font-family: "Trebuchet Ms", sans-serif;
     }
-    
+
     input.inner-label,
     textarea.inner-label{
         color: #A1A1A1;
@@ -159,22 +159,22 @@ ul.default li:even {
         cursor:pointer;
         padding:5px 10px 6px 7px; /* Links */
     }
-    
+
     button {
         width:auto;
         overflow:visible;
         padding:4px 10px 3px 7px; /* IE6 */
     }
-    
+
     button[type]{
         padding:5px 10px 5px 7px; /* Firefox */
         line-height:17px; /* Safari */
     }
-    
+
     *:first-child+html button[type]{
         padding:4px 10px 3px 7px; /* IE7 */
     }
-    
+
     button img, a.button img{
         margin:0 3px -3px 0 !important;
         padding:0;
@@ -182,7 +182,7 @@ ul.default li:even {
         width:16px;
         height:16px;
     }
-    
+
 /** @icon **/
 .icon {
     background-repeat:no-repeat;
@@ -228,7 +228,7 @@ ul.default li:even {
 /** @tags **/
 ul.tags {
     font-size: .8em;
-    
+
 }
 
 ul.tags li {
@@ -264,7 +264,7 @@ div.recomendations-m .legend {
     display:block;
     text-transform: uppercase;
     font-size: .65em;
-    
+
 }
 
 div.points-m .legend,
@@ -295,7 +295,7 @@ div.recomendations-m .number {
 
     .tabs ul.ui-tabs-nav li {
         float: left;
-        
+
     }
 
     .tabs ul.ui-tabs-nav li a {
@@ -312,27 +312,27 @@ div.recomendations-m .number {
         padding-right: 20px;
         color: gray;
     }
-    
+
     /** @post-activity **/
     .post-activity {
         margin: 10px;
     }
-    
+
     .post-activity ul.ui-tabs-nav {
         background: none;
         height: auto;
         margin-top 10px;
     }
-    
+
     .post-activity ul.ui-tabs-nav li {
         margin-right: 10px;
     }
-    
+
     .post-activity ul.ui-tabs-nav li.ui-state-active {
         background: url("../images/stripes.jpg") repeat;
         padding: 5px;
     }
-    
+
     .post-activity ul.ui-tabs-nav li a {
         display: block;
         text-indent: -9999px;
@@ -341,7 +341,7 @@ div.recomendations-m .number {
         width: 24px;
         height: 24px;
     }
-    
+
     .post-activity ul.ui-tabs-nav li a.status {
         background: url("../images/status.gif") no-repeat;
     }
@@ -349,24 +349,24 @@ div.recomendations-m .number {
     .post-activity ul.ui-tabs-nav li a.question {
         background: url("../images/question-mark-24-24.png") no-repeat;
     }
-    
+
     .post-activity ul.ui-tabs-nav li a.poll {
         background: url("../images/poll.png") no-repeat;
     }
-    
+
     .post-activity ul.ui-tabs-nav li.ui-tabs-selected a,
     .post-activity ul.ui-tabs-nav li.ui-state-hover a {
         border: none;
         padding: 0;
     }
-    
+
     /** @status **/
     #actv-1,
     #actv-2,
     #actv-3 {
     }
-    
-    
+
+
     #actv-1,
     #actv-2,
     #actv-3 {
@@ -374,11 +374,11 @@ div.recomendations-m .number {
         background: url("../images/stripes.jpg") repeat;
         padding: 10px;
     }
-    
+
     #actv-1 form.post-status {
-        
+
     }
-    
+
     #actv-1 form.post-status textarea,
     #actv-2 form.post-question textarea {
         width: 450px;
@@ -386,7 +386,7 @@ div.recomendations-m .number {
         float: left;
         margin-right: 10px;
     }
-    
+
     #actv-1 form.post-status button,
     #actv-2 form.post-question button,
     #actv-3 form.post-poll button {
@@ -396,41 +396,41 @@ div.recomendations-m .number {
         right: 10px;
         bottom: 10px;
     }
-    
+
     #actv-3 form.post-poll label {
         display: block;
         margin-bottom: 5px;
         font-weight: bold;
     }
-    
+
     #actv-3 form.post-poll input {
         display: block;
         margin: 10px 0;
         width: 450px;
     }
-    
-    #actv-3 form.post-poll span.add { 
+
+    #actv-3 form.post-poll span.add {
         font-size: .8em;
         color: #18C8EF;
         cursor: pointer;
     }
-    
-    
-    
-    
+
+
+
+
     .post-activity ul.ui-tabs-nav li a.status {
-        
+
     }
-    
+
     .tabs .content {
         font-size: .9em;
     }
 
-    
+
     div.filter-box {
         border: 1px solid #EFF0F0 ;
         margin: 10px;
-        
+
     }
 
     div.filter-box ul li {
@@ -470,37 +470,37 @@ div.recomendations-m .number {
         margin-top: 5px;
         display: block;
     }
-    
+
     #logo a { display: block; }
-    
+
     #global-nav {
         margin-top: 15px;
     }
-    
+
     #global-nav ul li {
         float: left;
     }
-    
+
     #global-nav ul li a {
         padding: 10px 15px;
         font-weight: bold;
     }
-    
-    
+
+
     #global-nav ul li a:hover,
     #global-nav ul li a.selected {
         background-color: #F8FAFC;
     }
-    
+
     #global-search {
         margin-top: 8px;
     }
-    
+
     #search .searchbox {
         background: url("../images/ui-elements_r1_c10.png") no-repeat;
         height: 32px;
     }
-    
+
     #search .searchbox input[type=text] {
         background-color: transparent;
         border: none;
@@ -527,7 +527,7 @@ div.recomendations-m .number {
         -webkit-border-top-left-radius: 5px;
         -webkit-border-top-right-radius: 5px;
         text-align: center;
-    } 
+    }
 
     #header .user-actions > a.closed {
         -moz-border-radius: 5px;
@@ -553,25 +553,25 @@ div.recomendations-m .number {
         font-size: .8em;
 
     }
-    
+
     #header .user-actions #user-settings {
         width: 125px;
     }
-    
+
     #header .user-actions #user-settings ul {
         background: white;
         margin: 5px;
     }
-    
+
     #header .user-actions #user-settings ul li {
         margin-bottom: 5px;
     }
-    
+
     #header .user-actions #user-login {
         padding: 10px;
     }
 
-     
+
 /**  main **/
 div.content {
     min-height:100%;
@@ -594,7 +594,7 @@ div.content div.content {
 
 /** @profile **/
 #public-profile {
-    
+
 }
     /** width: 640px **/
     #public-profile div.overview {
@@ -602,24 +602,24 @@ div.content div.content {
         margin-bottom: 20px;
         position: relative;
     }
-    
+
     #public-profile .overview .photo {
         width: 80px;
         margin: 0 10px;
         float: left;
     }
-    
+
     #public-profile .personal-overview,
     #public-profile .social-overview {
         width: 420px;
         float: left;
     }
-    
+
     #public-profile .personal-overview {
      padding-bottom: 10px;
      border-bottom: 1px solid #FEFAB7;
     }
-     
+
     #public-profile .personal-overview .name,
     #public-profile .personal-overview .location,
     #public-profile .social-overview .areas,
@@ -627,33 +627,33 @@ div.content div.content {
         width: 300px;
         float: left;
     }
-     
+
     #public-profile div.overview .quiet {
         font-size: .7em;
     }
-    
+
     #public-profile div.overview .name,
     #public-profile div.overview .location,
     #public-profile div.overview .status {
         display: block;
         margin-bottom: 5px;
     }
-    
+
     #public-profile .points-m,
     #public-profile .recomendations-m {
         width: 80px;
         float: right;
     }
-    
+
     /** Social overview **/
      #public-profile .social-overview {
          padding-top: 10px;
      }
-    
+
     #public-profile .social-overview .areas {
         margin-bottom: 5px;
     }
-    
+
     /** Personal overview **/
     #public-profile .overview .personal-overview .student {
         background: url("../images/ui-elements_r25_c43.png") no-repeat;
@@ -664,7 +664,7 @@ div.content div.content {
         font-size: 1.2em;
         font-weight: bold;
     }
-    
+
     /** Actions **/
     #public-profile .overview .actions {
         float: right;
@@ -673,11 +673,11 @@ div.content div.content {
         right: 0;
         top: 0;
     }
-    
+
     #public-profile .overview .actions ul li {
         margin-bottom: 3px;
     }
-    
+
     #public-profile .overview .actions a {
         color: #18C8EF;
         display: block;
@@ -685,55 +685,55 @@ div.content div.content {
         padding: 12px 0 12px 29px;
         background-position: 4px center;
     }
-    
+
     #public-profile .overview .actions a:hover,
     #public-profile .overview .actions a.selected {
         background-color:  #FEFAB7;
     }
-    
+
     #public-profile ul.activities  {
     }
-    
+
     ul.activities li {
         padding: 10px 0;
         margin: 10px 0;
         display:block;
         background: url("../images/ui-elements_r43_c24.png") repeat-x center bottom;
     }
-    
+
     ul.activities li div.photo {
         width: 48px;
         margin: 0 10px;
         float: left;
     }
-    
+
     ul.activities li div.activity {
         position: relative;
         padding: 0 25px 0 70px;
     }
-    
+
     ul.activities li div.activity .msg {
         line-height: 140%;
     }
-    
+
     ul.activities li div.activity .msg a.author {
         font-weight: bold;
     }
-    
+
     ul.activities li div.activity .quiet {
         font-size: .8em;
     }
-    
+
     ul.activities li div.activity div.actions {
         position: absolute;
         right: 0;
         display: none;
     }
-    
+
     ul.activities li div.activity:hover div.actions {
         display: block;
     }
-    
+
     ul.activities li div.activity div.actions a {
         display: block;
         text-indent: -9000px;
@@ -742,114 +742,114 @@ div.content div.content {
         height: 16px;
         margin: 0 5px 10px 5px;
     }
-    
+
     /** Activity @question **/
         ul.activities li .overlay {
             position: relative;
         }
-        
+
         ul.activities li .overlay img.mark {
             position: absolute;
             z-index: 10;
             right: 2px;
             bottom: 2px;
         }
-        
+
         ul.activities li div.question .question-action {
             display: block;
             font-size: .8em;
         }
-        
+
         ul.activities li div.question .question-action a {
             color: #18C8EF;
         }
-        
+
         ul.activities li div.question .question-action div.answer {
             background: url("../images/stripes.jpg") repeat;
             padding: 15px 10px;
             margin: 10px 0px;
         }
-        
+
         ul.activities li div.question .question-action div.answer form {
             display: block;
         }
-        
+
         ul.activities li div.question .question-action div.answer button {
             float: right;
         }
-        
+
         ul.activities li div.question .question-action div.answer input.answer{
             width: 400px;
         }
-    
-    
+
+
     /** Activity @response **/
         ul.activities li div.activity ul.response li {
             background: #FFFFF3 url("../images/ui-elements_r41_c23.png") repeat-x center bottom;
         }
-        
+
         ul.activities li div.activity ul.response li .photo {
             width: 16px;
             margin-top: 5px;
         }
-        
+
         ul.activities li div.activity ul.response li div.activity {
             padding-left: 40px;
         }
-    
+
     ul.groups {
     }
-    
+
     ul.groups li {
         padding: 10px 0;
     }
-    
+
     ul.groups li li {
         padding-top: 0;
         padding-bottom: 0;
     }
-    
+
     ul.groups li .photo a.more {
         display: block;
         text-align: center;
         margin-top: 5px;
     }
-    
+
     ul.groups li .photo {
         float: left;
         margin: 0 10px;
         width: 48px;
     }
-    
+
     ul.groups li .quiet,
     ul.groups li .more {
         font-size: .8em;
     }
-    
+
     ul.groups li a.name {
         font-weight: bold;
         margin-bottom: 10px;
     }
-    
+
     ul.groups li .spotlight a.type {
         text-transform: uppercase;
         font-size: .8em;
     }
-    
+
     ul.groups li .spotlight ul li {
         margin-bottom: 5px;
         font-size: .9em;
     }
-    
+
     ul.groups li .spotlight {
         display: block;
         float: left;
     }
-    
+
     div.curriculum {
         margin: 20px 10px;
     }
-    
+
     div.curriculum h1,
     div.curriculum h2,
     div.curriculum h3,
@@ -858,24 +858,24 @@ div.content div.content {
     div.curriculum h6 {
         color: #348E94;
     }
-    
+
 /** @sidebar **/
     #public-profile .sidebar {
         padding-top: 120px;
     }
-    
+
     .sidebar ul li {
     }
-    
+
     .sidebar ul.sortable li {
         background-color: white;
     }
-    
+
     .sidebar ul.sortable li.ui-state-highlight {
         border: 3px #EFF0F0 dashed;
         height: 5em;
     }
-    
+
     .sidebar span.call {
         font-size: .9em;
         text-transform: uppercase;
@@ -888,37 +888,37 @@ div.content div.content {
         color: white;
         margin-bottom: 5px;
     }
-    
+
     .sidebar span.gray {
         color: gray;
     }
-    
+
      .sidebar span.call span {
         padding: 5px;
         display: block;
         background: #18C8EF;
      }
-    
+
     .sidebar span.call:hover {
         cursor: move;
     }
-    
+
     .sidebar div.followship a.more {
         margin: 10px;
         display: block;
         font-size: .8em;
     }
-    
+
     .sidebar div.followship ul {
         margin: 10px;
     }
-    
+
     .sidebar div.followship ul li {
         float: left;
         margin-right: 6px;
         margin-top: 6px;
     }
-    
+
     .sidebar div.report {
         background: url("../images/ui-elements_r5_c7.png") no-repeat;
         width: 255px;
@@ -927,17 +927,17 @@ div.content div.content {
         right: -9px;
         top: 10px;
     }
-    
+
     .sidebar div.report .info {
         margin: 10px 20px 10px 10px;
         display:block;
     }
-    
+
      .sidebar div.report .info .points-m {
          float: left;
          margin: 10px 0;
      }
-     
+
      .sidebar div.report .info .points-m .number {
         font-size: 2.5em;
      }
@@ -969,7 +969,7 @@ div.content div.content {
 }
 
 #group .sidebar ul.sub-groups {
-    
+
 }
 
 #group .sidebar ul.sub-groups > li {
@@ -1035,17 +1035,17 @@ div.content div.content {
 }
 
 
-#group .sidebar ul.sub-groups li li { 
+#group .sidebar ul.sub-groups li li {
     border: none;
 }
-    
+
 /** helpers **/
     /** replacement **/
     .replacement {
         text-indent: -9999px;
         overflow:hidden;
     }
-    
+
     .clearfix:after {
         content:"\0020";
         display:block;
@@ -1054,12 +1054,12 @@ div.content div.content {
         visibility:hidden;
         overflow:hidden;
     }
-    
+
     .clearfix {
         display:block;
     }
-    
-    .hide { 
+
+    .hide {
         display: none;
     }
     #header .user-actions #user-settings

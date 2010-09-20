@@ -1,0 +1,15 @@
+<span id ="favorito">
+	<% if current_user.has_favorite(status) %>
+		<a href="" class="icon ico-bookmarked">favoritos</a>
+	<%else%>
+		<span id = "favorites_link" >
+		<%= link_to_remote('Favorito', {:url => { :controller => :favorites, :action => :favorite, :id => status.id, :type => status.class.to_s }, :loading => "$('#status-#{status.id} #favorites_link').hide(); $('#status-#{status.id} #favorite_spinner').show();" }, :class => 'icon ico-bookmark') %>
+		</span>
+	<%end%>
+</span>
+<%= image_tag 'loading_bar.gif', :style => 'display:none;', :id => 'favorite_spinner' %>
+
+
+
+
+

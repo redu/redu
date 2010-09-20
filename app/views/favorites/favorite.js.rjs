@@ -1,4 +1,4 @@
-page.replace_html 'favorito', "<span class=\"favorites_video_on\" >Favorito</span>"
+page.replace_html 'favorito', "<a class=\"icon ico-bookmarked\" >Favorito</a>"
 page << "$('#favorite_spinner').hide()"
-          
+
 

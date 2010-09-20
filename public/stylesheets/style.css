@@ -14,7 +14,7 @@ Default color table:
 **/
 
 #filters{
-	
+
 }
 
 #filters li{
@@ -292,7 +292,7 @@ blockquote {/*necessário para o tinymce*/
     border: 1px solid #EFEFEF ;
     background: #FFFFDF;
     font-size: .8em;
-    padding: 10px;  
+    padding: 10px;
 }
 
 .yellow {
@@ -357,7 +357,7 @@ a.more {
     font-size: .9em;
 }
 
-#school_list ul.badge > li .more { 
+#school_list ul.badge > li .more {
    font-weight: bold;
    float: right;
 }
@@ -367,7 +367,7 @@ a.more {
     font-size: 1.3em;
     display: block;
     margin: 10px 0;
-} 
+}
 
 #school_list ul.badge > li.first_item {
     margin-left: 0;
@@ -781,6 +781,10 @@ form div.errorExplanation {
 
 .ico-bookmark {
     background-image: url("../images/ui-elements_r19_c28.png");
+}
+
+.ico-bookmarked {
+    background-image: url("../images/icon_star_on.png");
 }
 
 .ico-activity {
@@ -1585,7 +1589,7 @@ div.content div.content {
     margin-bottom: 20px;
     position: relative;
 		border-top-left-radius: 8px 8px;
-		-moz-border-radius-topleft: 8px; 
+		-moz-border-radius-topleft: 8px;
 }
 
 #public-profile .overview .photo {
@@ -1886,7 +1890,7 @@ div.curriculum h6 {
    /* background: url("../images/ui-elements_r9_c55.png") no-repeat 15px bottom;*/
     color: white;
     position: relative;
-	
+
 }
 
 /* dropdown's trigger */
@@ -2061,12 +2065,12 @@ color: gray;
 		 font-size: .9em;
 		 padding: 4px 0;
     display: block;
-   
-    padding-left: 20px; 
+
+    padding-left: 20px;
 }
 
 .sidebar ul.menu > li > a {
-    
+
 }
 
 
@@ -2501,7 +2505,7 @@ a:hover.book_step span {
     position: absolute;
     top: 8px;
     margin: 0;
- 
+
 }
 
 /*** Current Step ***/
@@ -2792,7 +2796,7 @@ table.booking_steps td.spacer {
     border-bottom: 1px solid #DDD;
     height: 15px;
     /*margin-top: 20px;
-     * 
+     *
      */
 }
 
