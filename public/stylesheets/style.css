@@ -2549,6 +2549,7 @@ table.booking_steps td.spacer {
     padding: 0px;
     margin: 0;
     color: #858787;
+    z-index: 3001;
 }
 
 .lights_on {
@@ -2650,6 +2651,11 @@ table.booking_steps td.spacer {
 #player span {
     min-height: 150px;
     margin-top: 100px;
+}
+
+#view_video {
+    z-index: 3001;
+    position: relative;
 }
 
 
