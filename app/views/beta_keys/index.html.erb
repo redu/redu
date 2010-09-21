@@ -11,7 +11,7 @@
     <div class="fake-tabs grid_16 alpha omega">
         <%= render :partial => "admin/taskbar" %>
         <div class="panel">
-						<div id="email_box" class="hoverdiv">
+<!--						<div id="email_box" class="hoverdiv">
 		            <% form_tag :action => :invite do %>
 		            Digite os endereços de e-mail separados por vírgula:
 		            <br>
@@ -35,18 +35,44 @@
 								</div>
 		
 		
-		
-		<h3>Total <%=BetaKey.count%> chaves. Convites aceitos (<%=BetaKey.count(:conditions => ["email IS NOT NULL AND user_id IS NOT NULL"])%>/<%=BetaKey.count(:conditions => ["email IS NOT NULL"])%>) . <%=BetaKey.count(:conditions => ["email IS NULL AND user_id IS NULL "])%> livres. </h3>
+-->
+<div class="grid_11 alpha omega">
+	<%= link_to 'Imprimir chaves vazias' , print_blank_beta_keys_path, :target => "_blank", :class => 'button' %>
+	<%= link_to 'Remover todas' , remove_all_beta_keys_path, :confirm => "Tem certeza que deseja excluir todas as chaves?", :class => 'button' %>
+	<h3>Total <%=BetaKey.count%> chaves. Convites aceitos (<%=BetaKey.count(:conditions => ["email IS NOT NULL AND user_id IS NOT NULL"])%>/<%=BetaKey.count(:conditions => ["email IS NOT NULL"])%>) . <%=BetaKey.count(:conditions => ["email IS NULL AND user_id IS NULL "])%> livres. </h3>
+</div>
+
+<% form_tag :action => :invite do %>
+	<% field_set_tag 'Convidar por email', :class => 'grid_6 alpha' do %>
+		<%= label_tag :emails, 'E-mails separados por vírgulas' %>
+		<%= text_area_tag(:emails, content = nil, :size => "50x5") %>
+		<%= label_tag :note, 'Comentário' %>
+		<%= text_area_tag(:note, content = nil, :size => "50x3") %>
+		<%= submit_tag "Convidar" %>
+	<% end %>
+<% end %>
+
+<% form_tag :action => :generate do %>
+	<% field_set_tag 'Chaves avulsas', :class => 'grid_6 omega' do %>
+		<%= label_tag :number, 'Quantidade' %>
+		<%= text_field_tag :number , nil, :size => 4 %>
+		<%= label_tag :note, 'Comentário' %>
+		<%= text_area_tag(:note, content = nil, :size => "50x3") %>
+		<%= submit_tag "OK" %>
+	<% end %>
+<% end %>
 	
-    <div id="all_list" class="grid_9">
+    <div  class="grid_15 alpha omega">
     	
 <table style="width:100% " class="common">
   <tr>
-  	<th>Chave</th>
-	<th>E-mail(convite)</th>
-	<th>Usuário</th>
-    <th>Ativado em</th>
-  </tr>
+		<th>Chave</th>
+		<th>E-mail(convite)</th>
+		<th>Usuário</th>
+		<th>Ativado em</th>
+		<th>Gerado em</th>
+		<th>Comentário</th>
+		</tr>
 
 <% @beta_keys.each do |key| %>
 	<tr>
@@ -62,6 +88,12 @@
 	    </td>
 	    <td>
 	        <%=h key.user ? time_ago_in_words(key.user.created_at) : '-' %>
+	    </td>
+			<td>
+	        <%=h key.created_at ? time_ago_in_words(key.created_at) : '-' %>
+	    </td>
+			<td>
+	        <%=h key.note ? key.note : '-' %>
 	    </td>
 		<td>
 	        <%= link_to 'Remover', beta_key_path(key), :method => :delete, :confirm => "Tem certeza que deseja remover esta chave?" %>

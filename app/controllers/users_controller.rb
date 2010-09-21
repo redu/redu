@@ -268,6 +268,7 @@ class UsersController < BaseController
             render :action => :new
           end
         else
+          @beta_key  = @key.key
           render :action => 'new'
         end
       end
