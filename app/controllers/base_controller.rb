@@ -10,9 +10,9 @@ class BaseController < ApplicationController
   around_filter :set_locale 
   
   skip_before_filter :verify_authenticity_token, :only => :footer_content
- #helper_method :commentable_url
-  
-  before_filter :login_required,  :only => [:teach_index]
+
+  # Work around (ver método self.login_required_base)
+  before_filter :login_required_base, :only => :teach_index
 
   caches_action :site_index, :footer_content, :if => Proc.new{|c| c.cache_action? }
   def cache_action?
@@ -23,7 +23,7 @@ class BaseController < ApplicationController
 #    before_filter :beta_login_required, :except => [:beta_index, 
 #      :create_beta_candidate]
 #  end  
-  
+
   def removed_item
     @type = params[:type]
   end
@@ -309,5 +309,12 @@ class BaseController < ApplicationController
       end
     end
   end
+  
+  protected
+    # Workaround para o bug #55 (before_filter não funciona no filter chain)
+    # http://railsapi.com/doc/rails-v2.3.8/classes/ActionController/Filters/ClassMethods.html
+    def login_required_base
+      login_required
+    end
   
 end
