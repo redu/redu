@@ -21,6 +21,7 @@ class Status < ActiveRecord::Base
   validates_inclusion_of :kind,
     :in => [0, 1, 2, 3, 4],
     :message => "Tipo inválido"
+  validates_length_of :text, :maximum => 400
 
   # Inspects object attributes and decides which validation group to enable
   def enable_correct_validation_group

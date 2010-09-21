@@ -51,7 +51,7 @@ class StatusesController < BaseController
       if @status.save
         flash[:notice] = "Atividade enviada com sucesso" 
       end
-      format.js
+        format.js
     end      
   end
   
