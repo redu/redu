@@ -1,7 +1,7 @@
 class SchoolsController < BaseController
   layout 'new_application'
 
-  before_filter :login_required,  :except => [:join, :unjoin, :member]
+  before_filter :login_required,  :except => [:join, :unjoin, :member, :index]
   after_filter :create_activity, :only => [:create]
 
   # Usado para proteger acoes perigosas (só para admin)
