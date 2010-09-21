@@ -2,7 +2,7 @@
 
 <table style="width: 100%; margin: 15px 10px 20px 10px;" id ="user_list_table" class="common">
 				<tr>
-					<th></th><th>#ID</th><th>Usuário</th><th>Data</th><th>Papel</th><th></th>
+					<th></th><th>#ID</th><th>Usuário</th><th>Data</th><th>Último login</th><th>Papel</th><th></th>
 				</tr>
 		 	<% for user in users %>
 				<tr>
@@ -11,6 +11,7 @@
 						<td><%= user.id  %></td>
 						<td><%= link_to user.display_name, user_path(user), :target => "_blank" %> </td>
 						<td><%= time_ago_in_words(user.created_at) %> </td>
+						<td><%= time_ago_in_words(user.last_login_at) %> </td>
 						<td><%= user.role.name %> </td>
 						<td><%= link_to( :assume_id.l , assume_user_path(user) ) %> </td>
 						<td><%= link_to_remote(image_tag('icons/delete.png', :border => 0), :url => user_url(:id => user), 
