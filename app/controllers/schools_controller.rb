@@ -501,7 +501,7 @@ class SchoolsController < BaseController
   def index
     cond = Caboose::EZ::Condition.new
     cond.append ["redu_category_id = ?", params[:area]] if params[:area] and params[:area].downcase != 'all'
-    cond.append ["audience_id = ?", params[:audience]] if params[:audience]
+    #cond.append ["audience_id = ?", params[:audience]] if params[:audience]
     
     
     
@@ -526,7 +526,7 @@ class SchoolsController < BaseController
       @schools = School.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
     else
       if not @schools
-        @schools = School.all.paginate(paginating_params)
+        params[:audience].nil? ? @schools = School.all.paginate(paginating_params) : @schools = Audience.find(params[:audience]).schools.paginate(paginating_params)
         @searched_for_all = true
       end
     end
