@@ -32,6 +32,21 @@
 		
 	<% end %>
 
+   	<% field_set_tag "Modificar a senha" do %>
+	
+	<div>
+		<%= f.label "Digite a senha Atual" %>
+		<%=  password_field_tag :current_password %>
+	</div>
+	
+	<div>	
+		<%= f.label "Digite a senha atual" %>
+		<%=  f.password_field :password %>
+		<%= f.label "Digite novamente" %>
+		<%=  f.password_field :password_confirmation %>		
+	</div>
+ 
+	<% end %>
 
 
 		

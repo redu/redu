@@ -283,7 +283,8 @@ class UsersController < BaseController
     when 'user-description'
       params[:user] = {:description => params[:update_value]}
     end
-
+    user_old = @user
+    
     @user.attributes      = params[:user]
     @metro_areas, @states = setup_locations_for(@user)
     #@user.update_attribute(:avatar, params[:user][:avatar])
@@ -298,7 +299,15 @@ class UsersController < BaseController
 
     @user.tag_list = params[:tag_list] || ''
 
-    if @user.save
+    unless params[:current_password].eql?(user_old.password)
+          @user.errors.add("password", "A senha atual estå incorreta")
+    end
+    
+    aaa = @user.password
+    
+    debugger
+
+    if @user.errors.empty? && @user.save
       #@user.track_activity(:updated_profile) Utilizaremos outro Activity
       respond_to do |format|
         format.html do
@@ -315,7 +324,8 @@ class UsersController < BaseController
           end
         end
       end
-
+     else
+       render :action => 'edit'
     end
   rescue ActiveRecord::RecordInvalid
     render :action => 'edit'
