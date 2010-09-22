@@ -293,15 +293,3 @@
         <!-- end activities -->
     </div>
 </div>
-
-<!-- COLUNA DA DIREITA  ## -->
-<div class="grid_6">
-		<% if @related_courses.size > 0 %>
-    <div class="sidebar">
-        <span class="call"><span>Aulas Relacionadas</span></span>
-        <ul class="default">
-					<%= render :partial => 'courses/item', :collection => @related_courses, :as => :course %> 
-				</ul>
-    </div>
-		<% end %>
-</div>
