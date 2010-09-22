@@ -12,7 +12,7 @@ class BaseController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => :footer_content
 
   # Work around (ver método self.login_required_base)
-  before_filter :login_required_base, :only => :teach_index
+  before_filter :login_required_base, :only => [:teach_index, :learn_index]
 
   caches_action :site_index, :footer_content, :if => Proc.new{|c| c.cache_action? }
   def cache_action?
