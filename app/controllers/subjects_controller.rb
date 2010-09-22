@@ -121,8 +121,9 @@ class SubjectsController < BaseController
   end
 
   def new
-   # session[:subject_params] ||= {}
     cancel
+   session[:subject_params] ||= {}
+    
     @subject = Subject.new
   end
 
