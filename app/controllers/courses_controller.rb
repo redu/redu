@@ -49,7 +49,6 @@ class CoursesController < BaseController
     
     @seminar = Seminar.new( params[:seminar] )
     
-    
     if @seminar.external_resource_type.eql?('redu') # importar video do Redu atraves de url
       success = @seminar.import_redu_seminar(@seminar.external_resource) 
       
@@ -69,6 +68,8 @@ class CoursesController < BaseController
     
     respond_to do |format|
       if @seminar.save
+         @seminar.convert! if @seminar.video? and not @seminar.state == 'converted'
+         
         format.js do
           responds_to_parent do
             render :update do |page|
