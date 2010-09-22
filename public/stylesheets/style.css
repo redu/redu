@@ -2476,8 +2476,8 @@ a:hover.book_step span {
     font-size: 17px;
     left: 13px;
     position: absolute;
-    top: 8px;
-	margin: 0;
+    top: 8px; 
+    margin: 0;
 }
 
 /*** Current Step ***/

@@ -1,0 +1,21 @@
+<li class="clearfix">
+         <%= check_box_tag "exams[]", exam.id, true %>
+         
+	 <p class="name"><%= exam.name%><p>
+	<div class="thumb photo"><%= link_to(image_tag exam.thumb_url, :width => "70px") %></div>
+	<div class="headlines" style="width: 490px">
+		<!--
+		<span class="call">Descrição:</span>
+		-->
+		<span class="things">
+		<%= truncate_words( exam.description, 10, '...') %>
+	
+		
+		</span>
+	</div>
+	
+</li> 
+
+
+
+
