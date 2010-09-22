@@ -1,3 +1,4 @@
+mongrel/
 db/schema.rb
 log/*.log
 log/**/*
