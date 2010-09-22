@@ -94,7 +94,8 @@ class Seminar < ActiveRecord::Base
 
     @source = Course.find(course_id[0][0]) unless course_id.empty?
     # copia (se upload ou youtube)
-
+    @source.is_clone = true #TODO evitar que sejam removido
+    
     if @source and @source.public
       if @source.courseable_type == 'Seminar'
         if @source.courseable.external_resource_type.eql?('youtube')
