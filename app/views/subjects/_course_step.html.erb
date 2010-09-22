@@ -77,53 +77,57 @@
 <div class="grid_10">
 
 <% field_set_tag 'Conteúdo selecionado', :style => "margin-top:40px;" do %>
+	
+	
 	<ul id="subject_content" class="default sortable" style="min-height:300px;">
 		
-		<% unless current_user.subjects.find(session[:subject_id]).aulas.nil?%>
-		     <%  current_user.subjects.find(session[:subject_id]).aulas.each do |aula|%>
+		<!-- heitor, comentei pq estava dando nil
+		<%# unless session[:subject_id] and current_user.subjects.find(session[:subject_id]).aulas.nil? %>
+		     <%#  current_user.subjects.find(session[:subject_id]).aulas.each do |aula|%>
 		
 		        <li class="clearfix">
 			
-		            <%= check_box_tag "aulas[]", aula.id, true%>
+		            <%# check_box_tag "aulas[]", aula.id, true%>
                     <div class="thumb photo">
-                       <%= aula.name%><%= link_to(image_tag aula.thumb_url, :width => "70px") %>
+                       <%# aula.name%><%# link_to(image_tag aula.thumb_url, :width => "70px") %>
 	                </div>
 			   
 			        <div class="headlines" style="width: 490px"> 
 				      <span class="things">
-				        <%= truncate_words( aula.description, 10, '...') %>
+				        <%# truncate_words( aula.description, 10, '...') %>
 				     </span>
 			       </div>		
 		       </li> 	
-		<%end%>
+		<%#end%>
 		
-		<%else%>
+		<%#else%>
 		<span class="nothing snippet">Nenhuma aula adicionada ainda.</span>
-		<%end%>
-	----------------------------	
-		<% unless current_user.subjects.find(session[:subject_id]).exames.nil?%>
+		<%#end%>
+		-->
+	<!--	
+		<%# unless session[:subject_id] and current_user.subjects.find(session[:subject_id]).exames.nil?%>
 		
-		     <%  current_user.subjects.find(session[:subject_id]).exames.each do |exam|%>
+		     <%#  current_user.subjects.find(session[:subject_id]).exames.each do |exam|%>
 		
 		        <li class="clearfix">
 			
-		            <%= check_box_tag "exams[]", exam.id, true%>
+		            <%# check_box_tag "exams[]", exam.id, true%>
                     <div class="thumb photo">
-                       <%= exam.name%><%= link_to(image_tag "FOTO", :width => "70px") %>
+                       <%# exam.name%><%# link_to(image_tag "FOTO", :width => "70px") %>
 	                </div>
 			   
 			        <div class="headlines" style="width: 490px"> 
 				      <span class="things">
-				        <%= truncate_words( exam.description, 10, '...') %>
+				        <%# truncate_words( exam.description, 10, '...') %>
 				     </span>
 			       </div>		
 		       </li> 	
-		<%end%>
+		<%#end%>
 		
-		<%else%>
+		<%#else%>
 		<span class="nothing snippet">Nenhuma exame adicionada ainda.</span>
-		<%end%>
-		
+		<%#end%>
+		-->
 		
 	</ul>
 
@@ -159,9 +163,9 @@
  
 					 <%= link_to_function "adicionar", "addContent(this,'"+escape_javascript(render("courses/item_subject2", :course => course ))+"')"%> 
 					
-					<%if current_user.subjects.find(session[:subject_id]).aulas.map{|a| a.name}.include?(course.name) %>
+					<%#if current_user.subjects.find(session[:subject_id]).aulas.map{|a| a.name}.include?(course.name) %>
 					tem
-					<%end%>
+					<%#end%>
  
                  </li>
                  <%end %>

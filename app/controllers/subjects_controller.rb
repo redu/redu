@@ -154,7 +154,7 @@ class SubjectsController < BaseController
       render "new"
     else
       session[:subject_step] = session[:subject_params]= session[:subject_aulas]=session[:subject_exames] = nil
-       redirect_to :action =>"admin_subjects"
+       redirect_to courses_path 
     end
   end
   
