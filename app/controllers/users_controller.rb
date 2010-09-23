@@ -302,10 +302,6 @@ class UsersController < BaseController
     unless params[:current_password].eql?(user_old.password)
           @user.errors.add("password", "A senha atual estå incorreta")
     end
-    
-    aaa = @user.password
-    
-    debugger
 
     if @user.errors.empty? && @user.save
       #@user.track_activity(:updated_profile) Utilizaremos outro Activity
