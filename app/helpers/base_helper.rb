@@ -17,8 +17,22 @@ module BaseHelper
   
     def simple_categories_i18n(f)
    # collection_select(:course, :simple_category, SimpleCategory.all, :id, :name)
-   categories_array = SimpleCategory.all.map { |cat| [category_i18n(cat.name), cat.id] } 
-    f.select(:simple_category_id, options_for_select(categories_array), :include_blank => true )
+	  categories_array = SimpleCategory.all.map { |cat| [category_i18n(cat.name), cat.id] } 
+		if params[:course] or params[:exam]
+			# To put a value in categories_array I have to subtract for 1 the params[:course][:simple_category_id],
+			# because the include_blank add a extra field
+			if params[:course][:simple_category_id].to_i > 0 or params[:exam][:simple_category_id].to_i > 0
+				
+				i = params[:course][:simple_category_id].to_i - 1 if params[:course]
+				i = params[:exam][:simple_category_id].to_i - 1 if params[:exam]
+	
+				f.select(:simple_category_id, options_for_select(categories_array, categories_array[i]), :include_blank => true)
+			else
+				f.select(:simple_category_id, options_for_select(categories_array), :include_blank => true)
+			end		
+		else
+			f.select(:simple_category_id, options_for_select(categories_array), :include_blank => true)
+		end
   end
   
   
