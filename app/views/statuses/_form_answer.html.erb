@@ -1,6 +1,10 @@
 <%= f.error_messages %>
 <% field_set_tag do %>
-<%= f.text_area :text, :class => "answer", :style => "height: 80px;" %>
+
+<% random_number = get_random_number%>
+<%= f.text_area :text, :class => "answer status-answer-#{random_number}", :style => "height: 80px;" %>
+<%= render :partial => 'shared/limit_char_field', :locals => { :class_textarea => "status-answer-#{random_number}" }%>
+
 	<%= hidden_field :status, :statusable_id, :value => statusable.id %>
 	<%= hidden_field :status, :statusable_type, :value => statusable.class.to_s %>
 <%= hidden_field_tag "status[kind]", Status::ANSWER %>

@@ -1,0 +1,10 @@
+<script type="text/javascript">
+
+$(document).ready(function(){
+ 	$('.<%= class_textarea %>').keyup(function(){
+  limitChars('<%= class_textarea %>', <%=AppConfig.desc_char_limit %>, 'char-<%= class_textarea %>');
+  })
+ });
+</script>
+
+<div class="char-<%= class_textarea %>" style="text-align:right;">(<%=AppConfig.desc_char_limit %>)</div>
