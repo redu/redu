@@ -4,15 +4,15 @@ class EventsController < BaseController
   require 'htmlentities'
   caches_page :ical
   cache_sweeper :event_sweeper, :only => [:create, :update, :destroy]
-  
-  before_filter :login_required 
+
+  before_filter :login_required
   before_filter :is_member_required
   before_filter :is_event_approved,
                 :only => [:show, :edit, :update, :destroy]
   before_filter :can_manage_required,
                 :only => [:edit, :update, :destroy]
-                
- 
+
+
   #These two methods make it easy to use helpers in the controller.
   #This could be put in application_controller.rb if we want to use
   #helpers in many controllers
@@ -53,22 +53,22 @@ class EventsController < BaseController
 
   def index
     @events = Event.upcoming.paginate(:conditions => ["school_id = ? AND state LIKE 'approved'", School.find(params[:school_id]).id],
-      :include => :owner, 
-      :page => params[:page], 
-      :order => 'start_time DESC', 
+      :include => :owner,
+      :page => params[:page],
+      :order => 'start_time DESC',
       :per_page => AppConfig.items_per_page)
-          
+
     @list_title = "Eventos Futuros"
-    @school = School.find(params[:school_id])	
+    @school = School.find(params[:school_id])
   end
 
   def past
     @events = Event.past.paginate(:conditions => ["school_id = ? AND state LIKE 'approved'", School.find(params[:school_id]).id],
-      :include => :owner, 
-      :page => params[:page], 
-      :order => 'start_time DESC', 
+      :include => :owner,
+      :page => params[:page],
+      :order => 'start_time DESC',
       :per_page => AppConfig.items_per_page)
-      
+
     @list_title = "Eventos Passados"
     render :template => 'events/index'
   end
@@ -76,54 +76,60 @@ class EventsController < BaseController
   def new
     @event = Event.new(params[:event])
     @school = School.find(params[:school_id])
-    
+
   end
-  
+
   def edit
     @event = Event.find(params[:id])
   end
-    
+
   def create
     @event = Event.new(params[:event])
     @event.owner = current_user
     @event.school = School.find(params[:school_id])
-    
+
     @school = @event.school
 
     respond_to do |format|
       if @event.save
-        flash[:notice] = "O evento foi criado e será divulgado assim que for aprovado pelo moderador."
-        
+
+        if @event.owner.can_manage? @school
+          @event.approve!
+          flash[:notice] = "O evento foi criado e divulgado."
+        else
+          flash[:notice] = "O evento foi criado e será divulgado assim que for aprovado pelo moderador."
+        end
+
         format.html { redirect_to school_event_path(@event.school, @event) }
         format.xml  { render :xml => @event, :status => :created, :location => @event }
       else
           format.html { render :action => "new" }
           format.xml  { render :xml => @event.errors, :status => :unprocessable_entity }
       end
-    end    
+    end
   end
 
   def update
     @event = Event.find(params[:id])
-        
+
     respond_to do |format|
       if @event.update_attributes(params[:event])
         flash[:notice] = 'O evento foi editado.'
         format.html { redirect_to school_event_path(@event.school, @event) }
         format.xml { render :xml => @event, :status => :created, :location => @event }
       else
-        format.html { 
+        format.html {
           format.html { render :action => :edit }
           format.xml { render :xml => @event.errors, :status => :unprocessable_entity }
         }
       end
     end
   end
-  
+
   def destroy
     @event = Event.find(params[:id])
     @event.destroy
-    
+
     respond_to do |format|
       flash[:notice] = 'O evento foi excluído.'
       format.html { redirect_to school_events_path }
@@ -134,7 +140,7 @@ class EventsController < BaseController
     @event = Event.find(params[:id])
     current_user.vote(@event, params[:like])
     respond_to do |format|
-      format.js do 
+      format.js do
         render :update do |page|
           page << "jQuery('#like_spinner').hide()"
           page << "jQuery('#like_link').show()"
@@ -149,41 +155,41 @@ class EventsController < BaseController
     day = Time.utc(Time.now.year, Time.now.month, params[:day])
 
     @events = Event.paginate(:conditions => ["school_id = ? AND state LIKE 'approved' AND ? BETWEEN start_time AND end_time", School.find(params[:school_id]).id, day],
-      :include => :owner, 
-      :page => params[:page], 
-      :order => 'start_time DESC', 
+      :include => :owner,
+      :page => params[:page],
+      :order => 'start_time DESC',
       :per_page => AppConfig.items_per_page)
     @school = School.find(params[:school_id])
-    
+
     @list_title = "Eventos do dia #{day.strftime("%d/%m/%Y")}"
     render :template => 'events/index'
   end
-  
+
   def notify
     event = Event.find(params[:id])
     notification_time = event.start_time - params[:days].to_i.days
     Delayed::Job.enqueue(EventMailingJob.new(current_user, event), nil, notification_time) #TODO Verificar se a prioridade nil (zero) pode trazer problemas
     flash[:notice] = "Sua notificação foi agendada."
-    
+
     redirect_to school_event_path(event.school_id, event)
   end
 
 protected
   def can_manage_required
      @event = Event.find(params[:id])
-     
+
      current_user.can_manage?(@event, @school) ? true : access_denied
   end
 
   def is_member_required
     @school = School.find(params[:school_id])
-    
+
     current_user.has_access_to(@school) ? true : access_denied
   end
 
   def is_event_approved
     @event = Event.find(params[:id])
-    
+
     if not @event.state == "approved"
       redirect_to school_events_path
     end
