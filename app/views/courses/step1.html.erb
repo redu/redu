@@ -1,14 +1,3 @@
-<script type="text/javascript">
-	
-$(document).ready(function(){
- 	$('#course_description').keyup(function(){
-  limitChars('course_description', <%=AppConfig.desc_char_limit %>, 'char_limit');
-  })
- });
-</script>
-
-
-
 <div id="breadcrumbs" class="grid_16">
 	<% if @school %>
 	<a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <%= link_to @school.name, @school %> > nova aula
@@ -36,7 +25,7 @@ $(document).ready(function(){
 </div>
 
 	<% form_for :course, @course, :url => {:controller => :courses, :action => :create }, :html => { :multipart => true } do |f| %>
-		
+
 		<div class="grid_16">
 		<%= f.error_messages %>
 		</div>
@@ -44,65 +33,66 @@ $(document).ready(function(){
 <%= hidden_field_tag("step", "1", options = {})%>
 
 		<div class="grid_8">
-		
+
 		<% field_set_tag 'Informações Gerais' do %>
-		
+
 			<%= f.label "Título: " %>
 			<%= f.text_field :name %>
 			 <%= error_for :course, :name %>
 
+			<% random_number = get_random_number%>
 			<%= f.label "Descrição:" %>
 			<div style="">
-			<%= f.text_area :description, :size => "50x3", :maxlength=> AppConfig.desc_char_limit %>
-			<div id="char_limit" style="text-align:right;">(<%=AppConfig.desc_char_limit %>)</div>
+			<%= f.text_area :description, :size => "50x3", :class => "desc-#{random_number}" %>
+			<%= render :partial => 'shared/limit_char_field', :locals => { :class_textarea => "desc-#{random_number}" }%>
 			</div>
 			<%= error_for :course, :description %>
-	
+
 			<%= f.label "Tags <span class='snippet'>(separadas por vírgula)</span>" %>
 			<%= f.text_field :tag_list %>
-			
-			
+
+
 			<%# f.select(:simple_category, )%>
 			<%= f.label "Categoria:" %>
 			<%= simple_categories_i18n(f) %>
 			<%= error_for :course, :category %>
-			
+
 			<%end%>
-			
+
  		</div>
-		
-		
-		
+
+
+
 		<div class="grid_6 push_1">
-		
-			<% field_set_tag 'Tipo de Aula' do %>		
-		
+
+			<% field_set_tag 'Tipo de Aula' do %>
+
 		<div style="margin-bottom: 20px;">
-			
+
 			<h3><%= f.radio_button(:courseable_type, "Seminar")%> Vídeo-aula</h3>
 			Permite mostrar um vídeo- ou áudio-aula acompanhado de documentos para download.
-		
+
 		</div>
-		
+
 		<div style="margin-bottom: 20px;">
-			
+
 			<h3><%= f.radio_button(:courseable_type, "InteractiveClass")%> Aula passo-a-passo</h3>
 			Uma aula passo-a-passo pode possuir várias páginas com recursos interativos tais como vídeos, texto, questões e exames.
 		</div>
-		
+
 		<div style="margin-bottom: 20px;">
-			
+
 			<h3><%= f.radio_button(:courseable_type, "Page")%> Artigo</h3>
 			Um artigo permite a postagem de conteúdo de leitura rápida como um tutorial ou uma página simples.
 		</div>
 		<%end%>
-		
+
  		</div>
-	
+
 	<div class="grid_16">
-		<%= f.submit 'Próximo >' %> 
+		<%= f.submit 'Próximo >' %>
  	</div>
-	
+
 	<% end %>
 
 

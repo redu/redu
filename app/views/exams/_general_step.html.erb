@@ -1,11 +1,3 @@
-<script type="text/javascript">
-    	
-    $(document).ready(function(){
-     	$('#exam_description').keyup(function(){
-      limitChars('exam_description', <%=AppConfig.desc_char_limit %>, 'char_limit');
-      })
-     });
-</script>
 <div class="grid_16">
     <div id="breadcrumbs">
         <% if @school %>
@@ -58,12 +50,15 @@
     <%= f.label "Nome" %>
     <%= f.text_field :name ,  :onkeyup => ((edit) ? nil : "generatePath(this)") %>
     <%= error_for :exam, :name %>
-    <%= f.label "Descrição" %>
-    <%= f.text_area :description, :size => "50x3", :maxlength=> AppConfig.desc_char_limit %>
-    <div id="char_limit" style="text-align:right;">
-        (<%=AppConfig.desc_char_limit %>)
-    </div>
+
+		<% random_number = get_random_number%>
+		<%= f.label "Descrição:" %>
+		<div style="">
+		<%= f.text_area :description, :size => "50x3", :class => "desc-#{random_number}" %>
+		<%= render :partial => 'shared/limit_char_field', :locals => { :class_textarea => "desc-#{random_number}" }%>
+		</div>
     <%= error_for :exam, :description %>
+
     <%= f.label "Tags <span class='snippet'>(separadas por vírgula)</span>" %>
     <%= f.text_field :tag_list %>
     <% end %>
