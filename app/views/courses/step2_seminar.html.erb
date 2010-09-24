@@ -46,36 +46,9 @@
 
 <script type="text/javascript" charset="utf-8">
   $(document).ready(function() {
-		
 		$('#seminar_external_resource').change(function(obj){
-		youtubePreview(obj.target);
-	});
-		
-		
-		
-		/*
-		
-    $('#seminar_media').click(function(event){
-      event.preventDefault();
-    });
-		
-  $('#seminar_media').uploadify({
-    'uploader'            : '/javascripts/uploadify/uploadify.swf',
-    'script'              : '/courses/create',
-    'multi'               : false,
-    'cancelImg'           : '/images/cancel.png'
-    });
-		
-	
-		
-		  $('#seminar_submit').click(function(event){
-				if ( $("input:checked").val() == 'upload') {
-						event.preventDefault();
-		  			$('#seminar_media').uploadifyUpload();
-				}
-				
-			});*/
-				
+			youtubePreview(obj.target);
+		})
 	});
 </script>
 
@@ -105,8 +78,11 @@
 							</tr>
 						</tbody></table>
 </div>
-
-
+<%= stylesheet_link_tag 'uploadify' %>
+<%= render_uploadify(:id  => "seminar_original",
+                       :url => "/aulas",
+                       :allow_multiple_files => false,
+											 :fields => ['seminar_external_resource_type_upload', 'step']) %>
 <% form_for :seminar, @seminar, :url => { :action => "create" }, :html => { :multipart => true } do |f| %>
 <div class="grid_16">
 <%= f.error_messages %>
@@ -132,6 +108,9 @@
   <%= f.label :original, "Upload de vídeo" %>
   <%= f.file_field :original  %>
   (tamanho máximo: 50MB)
+
+  <%= uploadify_submit("Upload") %>
+  <%= uploadify_cancel("Stop") %>
  	</div>	
 
   <div id="external_resource_field" style="display:block;">

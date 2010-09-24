@@ -375,7 +375,6 @@ class CoursesController < BaseController
          
           # importar video do Redu atraves de url
           @success = @seminar.import_redu_seminar(@seminar.external_resource) if @seminar.external_resource_type.eql?('redu')
-          
           respond_to do |format|
             
             if @success && !@success[0]  # importação falhou
@@ -383,13 +382,23 @@ class CoursesController < BaseController
               format.html { render("step2_seminar")  } 
             else 
               if @course.save
-                
                 format.html { 
                   redirect_to :action => :new , :course_type => params[:courseable_type], :step => "3", :school_id => params[:school_id]
                 }
                 
+                format.js do
+                  render :update do |page|
+                    page << "window.location.replace('#{ url_for :action => :new , :course_type => params[:courseable_type], :step => "3", :school_id => params[:school_id] }')"
+                  end
+                end
+                
               else  
                 format.html { render "step2_seminar" }
+                format.js do
+                  render :update do |page|
+                    page << "$('#seminar_originalWHTGXH').after('<span class="">')"
+                  end
+                end
                 
               end
             end

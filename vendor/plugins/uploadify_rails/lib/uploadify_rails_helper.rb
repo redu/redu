@@ -5,7 +5,7 @@ module UploadifyRailsHelper
                             :allowed_extensions      => [:jpg, :jpeg, :gif, :png],
                             :max_size                => 100.megabytes,
                             :allow_multiple_files    => true,
-                            :format                  => "json",
+                            :format                  => "js",
                             :url                     => nil, # required
                             :id                      => nil, # required
                             :button_text             => "Browse",
@@ -28,7 +28,6 @@ module UploadifyRailsHelper
         #{%(buttonImg : '#{uploadify_options[:button_image]}',) if uploadify_options[:button_image]}
         buttonText    : '#{uploadify_options[:button_text]}',
         fileDesc      : '#{uploadify_options[:dialog_file_description]} (#{allowed_extensions})',
-        fileExt       : '#{allowed_extensions}',
         sizeLimit     : #{uploadify_options[:max_size]},    
         multi         : #{uploadify_options[:allow_multiple_files] },
         onComplete    : function(event, queueID, fileObj, response, data) { eval(response) },

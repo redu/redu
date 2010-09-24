@@ -53,7 +53,7 @@ class Seminar < ActiveRecord::Base
   has_attached_file :original, {}.merge(VIDEO_ORIGINAL)
 
   # Callbacks
-  before_validation :enable_correct_validation_group
+  before_validation :enable_correct_validation_group, :define_content_type
   before_create :truncate_youtube_url
 
   # Validations Groups - Usados para habilitar diferentes validacoes dependendo do tipo d
@@ -64,7 +64,8 @@ class Seminar < ActiveRecord::Base
   #   validates_presence_of :external_resource
 
   validates_attachment_presence :original
-  #validates_attachment_content_type :media, :content_type => (SUPPORTED_VIDEOS + SUPPORTED_AUDIO)
+  validates_attachment_content_type :original, 
+    :content_type => (SUPPORTED_VIDEOS + SUPPORTED_AUDIO)
   validates_attachment_size :original,
     :less_than => 50.megabytes
 
@@ -192,6 +193,13 @@ class Seminar < ActiveRecord::Base
   def need_transcoding?
     self.video? or self.audio?
   end
+  
+  # Deriva o content type olhando diretamente para o arquivo
+  # Necessário por causa do uploadfy
+  # http://github.com/alainbloch/uploadify_rails
+  def define_content_type
+    self.original_content_type = MIME::Types.type_for(self.original_file_name).to_s if self.original
+  end
 
   protected
 
@@ -201,4 +209,5 @@ class Seminar < ActiveRecord::Base
     end
     return text
   end
+
 end
