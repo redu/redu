@@ -1,4 +1,0 @@
-page << "$('#status-#{favoritable_id} #favorito').html('<a class=\"icon ico-bookmarked\" >Favorito</a>')"
-page << "$('#status-#{favoritable_id} #favorite_spinner').hide()"
-
-
