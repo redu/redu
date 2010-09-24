@@ -7,8 +7,10 @@
 	<%= f.label "Título" %>
 	<%= f.text_field :title %>
 
-	<%= f.label "Breve Descrição  <span class='snippet'>(até 250 caracters)</span>" %>
-	<%= f.text_area :tagline, :size => "70x5" %>
+	<% random_number = get_random_number%>
+	<%= f.label "Breve Descrição" %>
+	<%= f.text_area :tagline, :size => "70x5", :class => "tagline-#{random_number}" %>
+	<%= render :partial => 'shared/limit_char_field', :locals => { :class_textarea => "tagline-#{random_number}" }%>
 
 	<%= f.label "Descrição" %>
 	<%= f.text_area :description, :size => "70x14", :class => "mceEditor"%>
@@ -19,6 +21,6 @@
 	<%= f.submit "Salvar"%>
 	</fieldset>
 <% end %>
-	
+
 <%= link_to 'Ver todas', school_bulletins_path(@school) %>
 
