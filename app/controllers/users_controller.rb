@@ -13,7 +13,7 @@ class UsersController < BaseController
   # Filters
   after_filter :create_activity, :only => [:update]
 
-  before_filter :login_required
+  before_filter :login_required, :except => [:new, :create]
   before_filter :find_user, :only => [:activity, :edit, :edit_pro_details, :show, :update, :destroy, :statistics, :deactivate,
                                       :crop_profile_photo, :upload_profile_photo ]
   before_filter :require_current_user, :only => [:edit, :update, :update_account,
