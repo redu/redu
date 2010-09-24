@@ -126,7 +126,7 @@ class SchoolsController < BaseController
   def manage
     @school = School.find(params[:id])
   end
-  
+
   # Modercacao
   def admin_requests
     @school = School.find(params[:id])
@@ -338,7 +338,7 @@ class SchoolsController < BaseController
     @school = School.find(params[:id])
     @user = User.find(params[:user_id])  # TODO precisa mesmo recuperar o usuário no bd?
     @user_school_association = UserSchoolAssociation.find(:first, :include => :access_key, :conditions => ["access_keys.key = ?", params[:user_key]])
-    
+
     #TODO case?
     if @user_school_association
       if @user_school_association.access_key.expiration_date.to_time < Time.now # verifica a data da validade da chave
@@ -421,7 +421,7 @@ class SchoolsController < BaseController
     cond = Caboose::EZ::Condition.new
     cond.append ["redu_category_id = ?", params[:area]] if params[:area] and params[:area].downcase != 'all'
     #cond.append ["audience_id = ?", params[:audience]] if params[:audience]
-  
+
      paginating_params = {
       :conditions => cond.to_sql,
       :page => params[:page],

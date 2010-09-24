@@ -107,7 +107,12 @@ module BaseHelper
           @activity = "está respondendo ao exame " + link_obj if item.log_action == "answer"
           @activity =  "criou o exame " + link_obj if item.log_action == "create"
           @activity =  "adicionou o exame " + link_obj + " ao seus favoritos" if item.log_action == "favorite"
-        else
+      when 'school'
+          link_obj = link_to(item.logeable_name, school_path(item.logeable_id))
+
+          @activity =  "criou a rede " + link_obj if item.log_action == "create"
+          @activity =  "adicionou a rede " + link_obj + " ao seus favoritos" if item.log_action == "favorite"
+      else
           @activity = " atividade? "
       end
       @activity
