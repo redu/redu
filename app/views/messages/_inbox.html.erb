@@ -5,17 +5,17 @@
 	<h3>
 		<%= :inbox.l %>
 	</h3>
-		
+
 	<table class='common messages' border = "0" width = "100%">
 		<tbody class='messages_table'>
 			<% if @messages.empty? %>
 			<tr>
 				<td colspan='5'>
 					<%= :no_messages.l %>
-				</td>	
+				</td>
 			</tr>
 			<% else %>
-					<%= render :partial => 'messages/item', :collection => @messages, :as => :message, :locals => {:show_read => true} %>
+					<%= render :partial => 'messages/item', :collection => @messages, :as => :message, :locals => {:mailbox => :inbox} %>
 			<% end %>
 		</tbody>
 		<tfoot>
@@ -26,15 +26,15 @@
 							<%= submit_tag :delete_selected.l %><%= image_tag 'spinner.gif', :id => 'del-spinner', :style => 'display: none' %>
 						</p>
 					<% end %>
-				</td>	
+				</td>
 			</tr>
 		</tfoot>
-	</table>	
-	<% end %>	 
-	
+	</table>
+	<% end %>
+
 	<% unless @messages.length < 10%>
 	<div id="more">
 	<%= link_to_remote "mais...", :url => {:controller => :messages, :action => :more, :mailbox => 'inbox', :user_id => current_user.id, :limit => 10}, :method =>:get, :loading => "$('#more').html('"+escape_javascript(image_tag('spinner.gif'))+"')"%>
 	</div>
 	<% end %>
-	
+

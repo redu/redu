@@ -30,6 +30,18 @@ class MessagesController < BaseController
       @messages = @user.received_messages.paginate(:all, :page => params[:page],
       :order =>  'created_at DESC',
       :per_page => AppConfig.items_per_page )
+
+      respond_to do |format|
+        format.js do
+          render :update do |page|
+            page.replace_html  'tabs-1-content', :partial => 'inbox'
+          end
+        end
+
+        format.html do
+
+        end
+      end
     end
   end
 

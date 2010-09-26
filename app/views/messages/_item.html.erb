@@ -8,16 +8,16 @@
 		</div>
 	</td>
 	<td>
-		<%= link_to_remote h(message.subject), :url =>  user_message_path(@user, message, :mailbox => :inbox), :method => :get %>
+		<%= link_to_remote h(message.subject), :url =>  user_message_path(@user, message, :mailbox => mailbox), :method => :get %>
 		<br>
 		<%= :from.l %>
 		<%= link_to h(message.sender.login), user_path(message.sender) %>
 	</td>
 	<td>
-		<% if :show_read %>
+		<% if mailbox == :inbox %>
 		<em>
 			<%= message.read? ? 'Lida, ' : 'Não-Lida, ' %>
-		</em>	
+		</em>
 		<% end %>
 	</td>
 	<td class='meta'>

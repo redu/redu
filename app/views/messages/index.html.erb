@@ -60,16 +60,16 @@ $(document).ready(function() {
 		    <li><a href="#tabs-2">Saída</a></li>
 				<li><a href="#tabs-3">Escrever</a></li>
 	    </ul>
-	    
+
 		<div id="tabs-1" class="clearfix first-page">
-	
-		<%= render :partial => "inbox" %>  
-		
+			<div id="tabs-1-content">
+				<%= render :partial => "inbox" %>
+			</div>
 		</div>
-		
+
 		<!-- caixa de saída -->
 		<div id="tabs-2">
-			
+
 			<%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-2-loading', :style => 'padding: 20px;'%>
 			<div id="tabs-2-content"></div>
 		</div>
@@ -78,8 +78,8 @@ $(document).ready(function() {
 			<%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-3-loading', :style => 'padding: 20px;'%>
 			<div id="tabs-3-content"></div>
 		</div>
-		
-</div><!-- end tabs -->	
+
+</div><!-- end tabs -->
 </div>
 
 <div class="grid_6 ">
@@ -90,14 +90,14 @@ $(document).ready(function() {
                                     <p>
                                         Por padrão, o Redu envia todas as mensagens que você recebe por email. Você pode alterar essas
 																				configurações clicando <%= link_to "aqui", edit_user_path(current_user) %>.
-																				
+
 																		</p>
-																			
+
 																			</div>
                             </div>
-														
-														
-														
+
+
+
 </div>
 
 
