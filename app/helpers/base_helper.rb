@@ -11,7 +11,7 @@ module BaseHelper
     end
     options.merge!(:class=>'errorMessageField',:id=>"#{[object,method].compact.join('_')}-error",
     :style=> (err ? "#{options[:style]}":"#{options[:style]};display: none;"))
-    content_tag("p",err || "", options )
+    content_tag("p", err || "", options )
   end
 
 

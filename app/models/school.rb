@@ -40,10 +40,13 @@ class School < ActiveRecord::Base
   has_many :subjects
 
   # VALIDATIONS
-  validates_presence_of :name, :path
-  validates_format_of       :path, :with => /^[\sA-Za-z0-9_-]+$/
-  validates_uniqueness_of   :path, :case_sensitive => false
-  validates_exclusion_of    :path, :in => AppConfig.reserved_logins
+  validates_presence_of :name, :path, :message => "Não pode ser deixado em branco"
+  validates_format_of       :path, :with => /^[\sA-Za-z0-9_-]+$/,
+    :message => "Endereço inválido."
+  validates_uniqueness_of   :path, :case_sensitive => false,
+    :message => "Endereço inválido."
+  validates_exclusion_of    :path, :in => AppConfig.reserved_logins,
+    :message => "Endereço inválido"
   validates_presence_of :categories
 
   named_scope :inner_categories, lambda { {:joins => :categories} } # Faz inner join com redu_categories_school
