@@ -7,7 +7,7 @@ var $usertabs;
 $(document).ready(function() {
 
     $usertabs = $(".user-tabs").tabs();
-
+  
 });
 </script>
 <% end %>
@@ -26,6 +26,10 @@ $(document).ready(function() {
             <li>
                 <a href="#tabs-3">Plano</a>
             </li>
+           	 <li>
+	                <a href="#tabs-4">Senha</a>
+	        </li>
+		
         </ul>
         <div id="tabs-1" class="clearfix first-page">
         	
@@ -40,6 +44,11 @@ $(document).ready(function() {
         <div id="tabs-3">
         	plano
         </div>
+
+       	<div id="tabs-4">
+        	<%= render :partial => "change_password" %>
+        </div>
+	
     </div>
     <!-- end tabs -->
 </div>
