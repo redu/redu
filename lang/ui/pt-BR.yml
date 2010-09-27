@@ -18,7 +18,9 @@ pt-BR:
       time_ago: "%e %b %Y às %H:%M" 
     pm: pm
     am: am
-
+  support:
+    array:
+      two_words_connector: "Formato inválido"
   activerecord:
     attributes:
       photo:
