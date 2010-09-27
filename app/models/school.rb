@@ -89,7 +89,6 @@ class School < ActiveRecord::Base
    def recent_activity(limit = 0, offset = 20)
 
      page = limit.to_i/10 + 1
-     #puts page
       self.statuses.descend_by_created_at.paginate(:per_page => offset, :page =>page)
       #self.statuses.order("created_at DESC limit "+limit.to_s+","+offset.to_s)
      #Status.statusable_id_eq(self.id).statusable_type_like('School').descend_by_created_at.all.paginate(:page => 1, :per_page => 10)

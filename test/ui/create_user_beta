@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>create_user_beta</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">create_user_beta</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Acesse o Redu</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=» Clique aqui para se cadastrar!</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>user_first_name</td>
+	<td>Usuario</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>user_last_name</td>
+	<td>Teste</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>user_login</td>
+	<td>usuario_teste</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>user_email</td>
+	<td>guiocavalcanti@gmail.com</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>beta_key</td>
+	<td>252446</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>user_password</td>
+	<td>123456</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>user_password_confirmation</td>
+	<td>123456</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>user_tos</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@name='commit' and @value='Cadastre-se!']</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

@@ -66,13 +66,7 @@ class Exam < ActiveRecord::Base
   def permalink
     APP_URL + "/exams/"+ self.id.to_s+"-"+self.name.parameterize
   end
-  
-    
-  #  def questions_attributes=(attributes)
-  #  puts attributes.inspect
-  #    end
-  
-  
+
   def current_step
   @current_step || steps.first
 end

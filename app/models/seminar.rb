@@ -150,10 +150,7 @@ class Seminar < ActiveRecord::Base
     ZENCODER_CONFIG[:output][:thumbnails][:base_url] = File.dirname(output_path)
     ZENCODER_CONFIG[:output][:notifications][:url] = "http://#{ZENCODER_CREDENTIALS[:username]}:#{ZENCODER_CREDENTIALS[:password]}@beta.redu.com.br/jobs/notify"
 
-    puts ZENCODER_CONFIG.inspect
-
     response = Zencoder::Job.create(ZENCODER_CONFIG)
-    puts response.inspect
 
     if response.success?
       self.job = response.body["id"]
