@@ -6,7 +6,16 @@
 		<%= :inbox.l %>
 	</h3>
 
-	<table class='common messages' border = "0" width = "100%">
+	<table class='common' border = "0" width = "100%">
+		<thead>
+			<tr>
+				<th> </th>
+				<th>Assunto</th>
+				<th>De</th>
+				<th>Estado</th>
+				<th>Quando</th>
+			</tr>
+		</thead>
 		<tbody class='messages_table'>
 			<% if @messages.empty? %>
 			<tr>
