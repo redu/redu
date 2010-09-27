@@ -12,7 +12,7 @@ class BaseController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => :footer_content
 
   # Work around (ver método self.login_required_base)
-  before_filter :login_required_base, :only => [:teach_index, :learn_index]
+  before_filter :login_required_base, :only => [:teach_index, :learn_index, :site_index]
 
   caches_action :site_index, :footer_content, :if => Proc.new{|c| c.cache_action? }
   def cache_action?
@@ -92,32 +92,7 @@ class BaseController < ApplicationController
   end
 
   def site_index
-#    @posts = Post.find_recent
-#    @courses = Course.seminars.limited(5)
-#    @iclasses = Course.iclasses.limited(5)
-#    @pages = Course.pages.limited(5)
-#
-#    @schools = School.all :order => 'created_at DESC', :limit => 5 #TODO ordenar por numero de membros
-#
-#    @rss_title = "#{AppConfig.community_name} "+:recent_posts.l
-#    @rss_url = rss_url
-#    respond_to do |format|
-#      format.html { get_additional_homepage_data }
-#      format.rss do
-#        render_rss_feed_for(@posts, { :feed => {:title => "#{AppConfig.community_name} "+:recent_posts.l, :link => recent_url},
-#                              :item => {:title => :title,
-#                                        :link =>  Proc.new {|post| user_post_url(post.user, post)},
-#                                         :description => :post,
-#                                         :pub_date => :published_at}
-#          })
-#      end
-#    end
-
-
-        @schools = School.all :order => 'created_at DESC', :limit => 6
-        @courses = Course.all :order => 'created_at DESC', :limit => 10 #TODO ordenar por numero de membros
-
-
+    redirect_to user_path(current_user) 
   end
 
   def footer_content
