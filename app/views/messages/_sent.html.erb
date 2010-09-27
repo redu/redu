@@ -4,12 +4,20 @@
 		<%= :sent_messages.l %>
 	</h3>
 
-	<table class='messages' border='0' width='100%'>
+	<table class='common' border='0' width='100%'>
+		<thead>
+			<tr>
+				<th> </th>
+				<th>Assunto</th>
+				<th>De</th>
+				<th>Quando</th>
+			</tr>
+		</thead>
 		<tbody class='messages_table'>
 			<% if @messages.empty? %>
 			<tr>
 				<td colspan='5'>
-					<%= :no_messages.l %>
+					<div class="box_notice"><%= :no_messages.l %></div>
 				</td>
 			</tr>
 			<% else %>
