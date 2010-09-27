@@ -12,7 +12,6 @@ $(document).ready(function(){
 	<%# Setando a quantidade inicial de texto (para os casos de erro de validaçao [redirect])%>
 	var text = $('.<%= class_textarea %>').val()
 	$('.char-<%= class_textarea %>').html('(' + (<%= limit %> - text.length) + ')')
-	alert((<%= limit %> - text.length))
  });
 </script>
 
