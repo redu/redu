@@ -334,8 +334,7 @@ class CoursesController < BaseController
   # POST /courses
   # POST /courses.xml
   def create
-    #TODO diminuir a lógica desse método
-    # cam2: vou ver isso a diante, mas nao vai melhorar perfomace
+    #TODO diminuir a lógica desse método, está muito GRANDE
     case params[:step]
       when "1"
           @course = Course.new(params[:course])
@@ -369,10 +368,9 @@ class CoursesController < BaseController
         end
         
         if @course.courseable_type == 'Seminar'
-          puts "if seminar"
           @seminar = Seminar.new(params[:seminar])
           @course.courseable = @seminar
-         
+
           # importar video do Redu atraves de url
           @success = @seminar.import_redu_seminar(@seminar.external_resource) if @seminar.external_resource_type.eql?('redu')
           respond_to do |format|
@@ -380,15 +378,17 @@ class CoursesController < BaseController
             if @success && !@success[0]  # importação falhou
               flash[:error] = @success[1]
               format.html { render("step2_seminar")  } 
-            else 
+            else
               if @course.save
-                format.html { 
+
+                format.html do
                   redirect_to :action => :new , :course_type => params[:courseable_type], :step => "3", :school_id => params[:school_id]
-                }
+                end
                 
                 format.js do
                   render :update do |page|
                     page << "window.location.replace('#{ url_for :action => :new , :course_type => params[:courseable_type], :step => "3", :school_id => params[:school_id] }')"
+                    page << "$('.errorMessageField').remove()"
                   end
                 end
                 
@@ -396,7 +396,7 @@ class CoursesController < BaseController
                 format.html { render "step2_seminar" }
                 format.js do
                   render :update do |page|
-                    page << "$('#seminar_originalWHTGXH').after('<span class="">')"
+                    page << "$('#uploadify_submit').before('<span class=\"errorMessageField\">Formato inválido</span>')"
                   end
                 end
                 
@@ -727,5 +727,4 @@ end
          id == 'zencoder' && password == 'sociallearning'
      end
   end
-  
 end

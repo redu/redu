@@ -37,6 +37,7 @@ class Seminar < ActiveRecord::Base
                        'video/MP4V-ES',
                        'video/MPV',
                        'video/mpeg4',
+                       'video/mpeg',
                        'video/avi',
                        'video/mpeg4-generic',
                        'video/nv',
@@ -64,8 +65,10 @@ class Seminar < ActiveRecord::Base
   #   validates_presence_of :external_resource
 
   validates_attachment_presence :original
-  validates_attachment_content_type :original, 
-    :content_type => (SUPPORTED_VIDEOS + SUPPORTED_AUDIO)
+  # validates_attachment_content_type :original, 
+  #     :content_type => (SUPPORTED_VIDEOS + SUPPORTED_AUDIO)
+  validate :accepted_content_type
+    
   validates_attachment_size :original,
     :less_than => 50.megabytes
 
@@ -193,21 +196,26 @@ class Seminar < ActiveRecord::Base
   def need_transcoding?
     self.video? or self.audio?
   end
-  
-  # Deriva o content type olhando diretamente para o arquivo
-  # Necessário por causa do uploadfy
-  # http://github.com/alainbloch/uploadify_rails
-  def define_content_type
-    self.original_content_type = MIME::Types.type_for(self.original_file_name).to_s if self.original
-  end
 
   protected
-
-  def interpolate(text, mapping)
-    mapping.each do |k,v|
-      text = text.gsub(':'.concat(k.to_s), v.to_s)
+    # Deriva o content type olhando diretamente para o arquivo
+    # Necessário por causa do uploadfy
+    # http://github.com/alainbloch/uploadify_rails
+    # Deve ser chamado antes de salvar
+    def define_content_type
+      self.original_content_type = MIME::Types.type_for(self.original_file_name).to_s
     end
-    return text
-  end
+
+    def interpolate(text, mapping)
+      mapping.each do |k,v|
+        text = text.gsub(':'.concat(k.to_s), v.to_s)
+      end
+      return text
+    end
+  
+    # Workaround: Valida content type setado pelo método define_content_type
+    def accepted_content_type
+      self.errors.add(:original, "Formato inválido") unless video? or audio?
+    end
 
 end
