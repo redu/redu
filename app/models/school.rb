@@ -7,11 +7,9 @@ class School < ActiveRecord::Base
     :styles => { :medium => "200x200>", :thumb => "100x100>", :nano => "24x24>" },
   }.merge(PAPERCLIP_STORAGE_OPTIONS)
 
-
   # CALLBACKS
   before_create :create_root_folder
 
-  # ASSOCIATIONS
   #USERS
   has_many :user_school_associations, :dependent => :destroy
   has_many :users, :through => :user_school_associations, :conditions => ["user_school_associations.status LIKE 'approved'"]
@@ -35,12 +33,10 @@ class School < ActiveRecord::Base
   has_many :courses, :through => :school_assets,
     :source => :asset, :source_type => "Course", :conditions =>  "published = 1"
   has_many :exams, :through => :school_assets,
-  :source => :asset, :source_type => "Exam", :conditions =>  "published = 1"
-	has_many :bulletins, :dependent => :destroy
-	has_many :events, :dependent => :destroy
-
+    :source => :asset, :source_type => "Exam", :conditions =>  "published = 1"
+  has_many :bulletins, :dependent => :destroy
+  has_many :events, :dependent => :destroy
   has_many :statuses, :as => :statusable
-
   has_many :subjects
 
   # VALIDATIONS
@@ -49,9 +45,11 @@ class School < ActiveRecord::Base
   validates_uniqueness_of   :path, :case_sensitive => false
   validates_exclusion_of    :path, :in => AppConfig.reserved_logins
   validates_presence_of :categories
-  #validates_presence_of :audience
 
   named_scope :inner_categories, lambda { {:joins => :categories} } # Faz inner join com redu_categories_school
+
+  # METODOS DO WIZARD
+  attr_writer :current_step
 
   # override activerecord's find to allow us to find by name or id transparently
   def self.find(*args)
@@ -75,29 +73,18 @@ class School < ActiveRecord::Base
       self.avatar.url(size)
     else
       case size
-        when :thumb
-          AppConfig.photo['missing_thumb_school']
-        else
-          AppConfig.photo['missing_medium_school']
+      when :thumb
+        AppConfig.photo['missing_thumb_school']
+      else
+        AppConfig.photo['missing_medium_school']
       end
     end
   end
 
-#  def recent_school_activity
-#   # Status.group_statuses(self) # na verdade o flow da escola nao deveria ser a soma dos flows de cada membro e sim um proprio
-# end
-   def recent_activity(limit = 0, offset = 20)
-
-     page = limit.to_i/10 + 1
-      self.statuses.descend_by_created_at.paginate(:per_page => offset, :page =>page)
-      #self.statuses.order("created_at DESC limit "+limit.to_s+","+offset.to_s)
-     #Status.statusable_id_eq(self.id).statusable_type_like('School').descend_by_created_at.all.paginate(:page => 1, :per_page => 10)
-
-
+  def recent_activity(limit = 0, offset = 20)
+    page = limit.to_i/10 + 1
+    self.statuses.descend_by_created_at.paginate(:per_page => offset, :page =>page)
   end
-
-
-
 
   def recent_school_exams_activity
     sql =  "SELECT l.id, l.logeable_type, l.action, l.user_id, l.logeable_name, l.logeable_id, l.created_at, l.updated_at, l.school_id FROM logs l, school_assets s WHERE
@@ -110,7 +97,6 @@ class School < ActiveRecord::Base
     l.school_id = '#{self.id}' AND l.logeable_type = '#{Course}' ORDER BY l.created_at DESC LIMIT 3 "
     @recent_courses_activity = Log.find_by_sql(sql)
   end
-
 
   def spotlight_courses
     sql =  "SELECT c.name FROM courses c, school_assets s " + \
@@ -130,10 +116,6 @@ class School < ActiveRecord::Base
   def root_folder
     Folder.find(:first, :conditions => ["school_id = ? AND parent_id IS NULL", self.id])
   end
-
-  # METODOS DO WIZARD
-  attr_writer :current_step
-
 
   def current_step
     @current_step || steps.first
