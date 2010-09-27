@@ -90,9 +90,11 @@ class Seminar < ActiveRecord::Base
   def import_redu_seminar(url)
     course_id = url.scan(/aulas\/([0-9]*)/)
 
-    @source = Course.find(course_id[0][0]) unless course_id.empty?
-    # copia (se upload ou youtube)
-    @source.is_clone = true #TODO evitar que sejam removido
+    unless course_id.empty?
+       @source = Course.find(course_id[0][0]) 
+      # copia (se upload ou youtube)
+       @source.is_clone = true #TODO evitar que sejam removido
+   end
 
     if @source and @source.public
       if @source.courseable_type == 'Seminar'
