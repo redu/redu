@@ -92,39 +92,38 @@
 <%= hidden_field_tag("school_id", @school.id) if @school %>
 
 	
-<div class="grid_6">
+<div class="grid_16 ">
 
 <% field_set_tag 'Vídeo' do %>
 
+<% field_set_tag 'Tipo de material' do %>
 <%= f.radio_button :external_resource_type, :redu, {:onchange => "switchCourseFields(2);"} %>
   <%= f.label :external_resource_type_redu, "Redu", :class => "inline" %>
   <%= f.radio_button :external_resource_type, :youtube, {:onchange => "switchCourseFields(2);"} %>
   <%= f.label :external_resource_type_youtube, "Youtube", :class => "inline"  %>
   <%= f.radio_button :external_resource_type, :upload, {:onchange => "switchCourseFields(1);"} %>
   <%= f.label :external_resource_type_upload, "Upload", :class => "inline"  %><br/><br/>	
+<% end %>
 
   <div id="upload_resource_field" style="display:none;">
+<% field_set_tag 'Arquivo' do %>
 
-  <%= f.label :original, "Upload de vídeo" %>
+  <%= f.label :original, "Arquivo do seu computador" %>
   <%= f.file_field :original  %>
   (tamanho máximo: 50MB)
 
   <%= uploadify_submit("Upload") %>
   <%= uploadify_cancel("Stop") %>
+<% end %>
  	</div>	
 
-  <div id="external_resource_field" style="display:block;">
-  <%= f.label :external_resource, "Link do Vídeo" %>
+  <div id="external_resource_field" class="grid_7 alpha" style="display:block;">
+	<% field_set_tag 'Link' do %>
+  <%= f.label :external_resource, "Endereço do vídeo" %>
   <%= f.text_field :external_resource  %>
-  </div>
-	
-<%end %>
-
-</div>	
-
-
-
-	<div id="youtube_preview" style="display: none;" class="grid_8">
+	<% end %>
+	</div>
+	<div id="youtube_preview" style="display: none;" class="grid_8 omega">
 	<% field_set_tag 'Prévia' do %>
 		<object width="440" height="300">
 		<param name="movie" value="none" id="yt_preview_param"/>
@@ -133,11 +132,11 @@
 		<embed src="none" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="450" height="300"/>
 		</object> 
 		<%end%>
-	</div>
-
+  </div>
 	
+<%end %>
 
-
+</div>	
 
 <div class="grid_16">
 <%# render :partial => 'attachment_form', :locals => {:f => f, :course => @seminar}%>
