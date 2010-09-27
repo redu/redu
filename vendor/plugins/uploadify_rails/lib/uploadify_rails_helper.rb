@@ -27,19 +27,23 @@ module UploadifyRailsHelper
         cancelImg     : '#{uploadify_options[:cancel_image]}',
         #{%(buttonImg : '#{uploadify_options[:button_image]}',) if uploadify_options[:button_image]}
         buttonText    : '#{uploadify_options[:button_text]}',
-        fileDesc      : '#{uploadify_options[:dialog_file_description]} (#{allowed_extensions})',
+        fileDesc      : '#{uploadify_options[:dialog_file_description]}',
+        fileExt       : '#{allowed_extensions}',
         sizeLimit     : #{uploadify_options[:max_size]},    
         multi         : #{uploadify_options[:allow_multiple_files] },
         onComplete    : function(event, queueID, fileObj, response, data) { eval(response) },
         onAllComplete : function(event, data){
           $('#uploadify_cancel').hide('blind');
-          $('#uploadify_submit').show('blind');      
+          $('#uploadify_submit').show('blind');
+           $('#uploadify_submit').hide();
         },
         onSelect: function(event, queueID, fileObj){
           if (fileObj.size > #{uploadify_options[:max_size]}) {
-            alert('The image' + fileObj.name + ' is too large.')
+            alert('O material ' + fileObj.name + ' é muito grande (tamanho máximo 100 mb).')
             return false;
           }
+          
+          $('#uploadify_submit').show();
         },
         scriptData  : {
             'format'                  : '#{uploadify_options[:format]}',

@@ -82,7 +82,9 @@
 <%= render_uploadify(:id  => "seminar_original",
                        :url => "/aulas",
                        :allow_multiple_files => false,
-											 :fields => ['seminar_external_resource_type_upload', 'step']) %>
+											 :fields => ['seminar_external_resource_type_upload', 'step'],
+											 :max_size => 100.megabytes,
+											 :allowed_extensions => [:mov, :mpeg, :mpg, :avi, '3gp', :mp4, :mpeg4, :vob, :mkv, '264', '3gp2', :dvr, :dvx, :flv, :h264, :m2v, :m4v, :movie, :mpeg1, :mpeg2, :swf, :vid, :wmv]) %>
 <% form_for :seminar, @seminar, :url => { :action => "create" }, :html => { :multipart => true } do |f| %>
 <div class="grid_16">
 <%= f.error_messages %>
@@ -108,12 +110,11 @@
   <div id="upload_resource_field" style="display:none;">
 <% field_set_tag 'Arquivo' do %>
 
-  <%= f.label :original, "Arquivo do seu computador" %>
+  <%= f.label :original, "Arquivo do seu computador (máximo: 100MB)" %>
   <%= f.file_field :original  %>
-  (tamanho máximo: 50MB)
 
-  <%= uploadify_submit("Upload") %>
-  <%= uploadify_cancel("Stop") %>
+  <%= uploadify_cancel("Parar") %>
+	<%= uploadify_submit "Enviar material", :style => "margin: 10px 0; float: left; width: 120px; text-align: center; display: none;"  %>
 <% end %>
  	</div>	
 

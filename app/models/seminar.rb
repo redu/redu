@@ -70,7 +70,7 @@ class Seminar < ActiveRecord::Base
   validate :accepted_content_type
     
   validates_attachment_size :original,
-    :less_than => 50.megabytes
+    :less_than => 100.megabytes
 
   # Maquina de estados do processo de conversão
   acts_as_state_machine :initial => :waiting, :column => 'state'
