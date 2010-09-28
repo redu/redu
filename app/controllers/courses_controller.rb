@@ -344,7 +344,7 @@ class CoursesController < BaseController
         end
 
       elsif @course.courseable_type == 'InteractiveClass'
-
+      #Course.find(session[:course_id]).courseable
         @course.courseable = InteractiveClass.new(params[:interactive_class])
 
         respond_to do |format|

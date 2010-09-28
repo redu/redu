@@ -24,17 +24,25 @@ function limitChars(textclass, limit, infodiv){
 
 $(document).ready(function(){
 
-  $(".pagination a").live("click", function() {
-    $(".pagination").html("Carregando...");
-    $.get(this.href, null, null, "script");
-    return false;
-  });
+
+	 // Paginações em AJAX
+	  $(".pagination a").live("click", function() {
+	    $(".pagination").html("Carregando...");
+	    $.get(this.href, null, null, "script");
+	    return false;
+	  });
+
+	
+	// hoverdivs "click off" (somem ao clicar fora)
+    $('body').click(function(event){
+        if (!$(event.target).closest('.hoverdiv').length) {
+            $('.hoverdiv').hide();
+        };
+    });	
 
 
-
-		// message box fades out after 5secs
-		//$("#flash").fadeOut(5000);
-		$('#flash').delay(5000, function(){$('#flash').fadeOut()});
+	// message box fades out after 5secs
+	$('#flash').delay(5000, function(){$('#flash').fadeOut()});
 
 
     // User box
@@ -123,11 +131,12 @@ $(document).ready(function(){
     })
 
 		// header "click off"
-    //$('body').click(function(event){
-    //    if (!$(event.target).closest("#header div.user-actions a.pandora").length) {
-    //       $("#user-settings").slideUp('slow')
-    //    };
-    //    });
+    $('body').click(function(event){
+        if (!$(event.target).closest('#user-settings').length) {
+            $('#user-settings').hide();
+        };
+        });
+
 
 
 
