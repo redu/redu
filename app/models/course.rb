@@ -142,4 +142,8 @@ class Course < ActiveRecord::Base
   def to_param #friendly url
     "#{id}-#{name.parameterize}"
   end
+  
+  def build_courseable(params)
+  puts ' oi'
+  end
 end
