@@ -23,12 +23,13 @@ $(document).ready(function() {
             <li>
                 <a href="#tabs-2">Conta</a>
             </li>
-            <li>
+            
+			<!--
+			<li>
                 <a href="#tabs-3">Plano</a>
             </li>
-           	 <li>
-	                <a href="#tabs-4">Senha</a>
-	        </li>
+			
+			-->
 		
         </ul>
         <div id="tabs-1" class="clearfix first-page">
@@ -41,13 +42,12 @@ $(document).ready(function() {
         <div id="tabs-2">
         	<%= render :partial => "account" %>
         </div>
-        <div id="tabs-3">
+        
+		<!--
+		<div id="tabs-3">
         	plano
         </div>
-
-       	<div id="tabs-4">
-        	<%= render :partial => "change_password" %>
-        </div>
+		-->
 	
     </div>
     <!-- end tabs -->
