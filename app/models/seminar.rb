@@ -54,7 +54,8 @@ class Seminar < ActiveRecord::Base
   has_attached_file :original, {}.merge(VIDEO_ORIGINAL)
 
   # Callbacks
-  before_validation :enable_correct_validation_group, :define_content_type
+  # Se for tipo upload, chama o metodo define_content_type
+  before_validation :enable_correct_validation_group
   before_create :truncate_youtube_url
 
   # Validations Groups - Usados para habilitar diferentes validacoes dependendo do tipo d
@@ -153,7 +154,7 @@ class Seminar < ActiveRecord::Base
     ZENCODER_CONFIG[:output][:notifications][:url] = "http://#{ZENCODER_CREDENTIALS[:username]}:#{ZENCODER_CREDENTIALS[:password]}@beta.redu.com.br/jobs/notify"
 
     response = Zencoder::Job.create(ZENCODER_CONFIG)
-
+    puts response.inspect
     if response.success?
       self.job = response.body["id"]
     else
@@ -175,6 +176,7 @@ class Seminar < ActiveRecord::Base
       self.enable_validation_group :external
     else
       self.enable_validation_group :uploaded
+      self.define_content_type
     end
   end
 
