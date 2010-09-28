@@ -3,17 +3,25 @@
 	<h3>
 		<%= :sent_messages.l %>
 	</h3>
-	
-	<table class='messages' border='0' width='100%'>
+
+	<table class='common' border='0' width='100%'>
+		<thead>
+			<tr>
+				<th> </th>
+				<th>Assunto</th>
+				<th>De</th>
+				<th>Quando</th>
+			</tr>
+		</thead>
 		<tbody class='messages_table'>
 			<% if @messages.empty? %>
 			<tr>
 				<td colspan='5'>
-					<%= :no_messages.l %>
-				</td>	
+					<div class="box_notice"><%= :no_messages.l %></div>
+				</td>
 			</tr>
 			<% else %>
-					<%= render :partial => 'messages/item', :collection => @messages, :as => :message, :locals => {:show_read => false} %>
+					<%= render :partial => 'messages/item', :collection => @messages, :as => :message, :locals => {:mailbox => :sent} %>
 			<% end %>
 		</tbody>
 		<tfoot>
@@ -24,12 +32,12 @@
 							<%= submit_tag :delete_selected.l %><%= image_tag 'spinner.gif', :id => 'del-spinner', :style => 'display: none' %>
 						</p>
 					<% end %>
-				</td>	
+				</td>
 			</tr>
 		</tfoot>
 	</table>
-	<% end %>	 
-	
+	<% end %>
+
 	<% unless @messages.length < 10%>
 	<div id="more">
 	<%= link_to_remote "mais...", :url => {:controller => :messages, :action => :more, :mailbox => 'sent', :user_id => current_user.id, :limit => 10}, :method =>:get, :loading => "$('#more').html('"+escape_javascript(image_tag('spinner.gif'))+"')"%>

@@ -72,10 +72,12 @@
 		<th>Ativado em</th>
 		<th>Gerado em</th>
 		<th>Comentário</th>
+		<th>Enviado em</th>
+		<th>Reenviar</th>
 		</tr>
 
 <% @beta_keys.each do |key| %>
-	<tr>
+	<tr id="key-<%= key.id %>">
 	    <td><span style="font-family: Courier; size: 14px;">
 	        <%=h key.key %>
 			</span>
@@ -95,6 +97,17 @@
 			<td>
 	        <%=h key.note ? key.note : '-' %>
 	    </td>
+			<td class="last_sent"><%=h key.last_sent_at ? time_ago_in_words(key.last_sent_at) : '-' %></td>
+			<td class="resend">
+				<% if key.email %>
+				<%=
+					link_to_remote(
+						image_tag('resend.png'),
+						:url => {:action => 'resend_key', :id => key.id},
+						:method => :get) 
+				%>
+				<% end %>
+			</td>
 		<td>
 	        <%= link_to 'Remover', beta_key_path(key), :method => :delete, :confirm => "Tem certeza que deseja remover esta chave?" %>
 	    </td>

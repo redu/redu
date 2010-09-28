@@ -13,7 +13,7 @@ class UsersController < BaseController
   # Filters
   after_filter :create_activity, :only => [:update]
 
-  before_filter :login_required
+  before_filter :login_required, :except => [:new, :create]
   before_filter :find_user, :only => [:activity, :edit, :edit_pro_details, :show, :update, :destroy, :statistics, :deactivate,
                                       :crop_profile_photo, :upload_profile_photo ]
   before_filter :require_current_user, :only => [:edit, :update, :update_account,
@@ -283,7 +283,6 @@ class UsersController < BaseController
     when 'user-description'
       params[:user] = {:description => params[:update_value]}
     end
-    user_old = @user
     
     @user.attributes      = params[:user]
     @metro_areas, @states = setup_locations_for(@user)
@@ -299,20 +298,28 @@ class UsersController < BaseController
 
     @user.tag_list = params[:tag_list] || ''
 
-    unless params[:current_password].eql?(user_old.password)
-          @user.errors.add("password", "A senha atual estå incorreta")
+  #alteracao de senha na conta do usuario
+     unless params[:current_password].nil?
+       
+         @flag = false
+         authenticated = UserSession.new(:login => @user.login, :password => params[:current_password]).save 
+     
+       unless authenticated
+         @current_password = params[:current_password]
+         @user.errors.add_to_base("A senha atual estå incorreta")
+         @flag = true
+         
+       end  
+    
     end
-    
-    aaa = @user.password
-    
-    debugger
-
+ 
     if @user.errors.empty? && @user.save
       #@user.track_activity(:updated_profile) Utilizaremos outro Activity
       respond_to do |format|
         format.html do
           flash[:notice] = :your_changes_were_saved.l
           unless params[:welcome]
+           
             redirect_to(user_path(@user))
           else
             redirect_to(:action => "welcome_#{params[:welcome]}", :id => @user)
@@ -325,7 +332,7 @@ class UsersController < BaseController
         end
       end
      else
-       render :action => 'edit'
+       render 'edit'
     end
   rescue ActiveRecord::RecordInvalid
     render :action => 'edit'
@@ -618,9 +625,6 @@ class UsersController < BaseController
 
     # talvez seja necessario setar o atributo depth nos nós para que funcione corretamente.
     # ver: http://asterisq.com/products/constellation/roamer/integration#data_rest_tree
-
-    # puts "id: " + params[:id]
-    # puts "node_id: " + params[:node_id] if params[:node_id]
 
     @user = User.find((params[:node_id]) ?  params[:node_id] :  params[:id] )
 

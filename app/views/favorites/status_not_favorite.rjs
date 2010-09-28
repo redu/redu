@@ -1,0 +1,6 @@
+page << "$('#status-#{favoritable_id} #favorito').html(\"<span id = 'favorites_link'> <a class='icon ico-bookmark'" + escape_javascript("onclick=\"jQuery.ajax(") + "{beforeSend:function(request){$(\'#status-#{favoritable_id} #favorites_link\').hide(); $(\'#status-#{favoritable_id} #favorite_spinner\').show();}, data:\'\', dataType:\'script\', type:\'post\', url:\'/favorites/favorite/#{favoritable_id}?type=Status\'});" +  escape_javascript("return false;\" >") + "Favorito</a></span>\");"
+page << "$('#status-#{favoritable_id} #favorite_spinner').hide();"
+page << "$('#status-#{favoritable_id} #favorites_link').show();"
+
+
+

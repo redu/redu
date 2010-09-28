@@ -1,6 +1,8 @@
 <span id ="favorito">
 	<% if current_user.has_favorite(status) %>
-		<a href="" class="icon ico-bookmarked">favoritos</a>
+		<span id = "rm_favorites_link" >
+		<%= link_to_remote('Tirar dos favoritos', {:url => { :controller => :favorites, :action => :not_favorite, :id => status.id, :type => status.class.to_s }, :loading => "$('#status-#{status.id} #rm_favorites_link').hide(); $('#status-#{status.id} #favorite_spinner').show();" }, :class => 'icon ico-bookmarked') %>
+		</span>
 	<%else%>
 		<span id = "favorites_link" >
 		<%= link_to_remote('Favorito', {:url => { :controller => :favorites, :action => :favorite, :id => status.id, :type => status.class.to_s }, :loading => "$('#status-#{status.id} #favorites_link').hide(); $('#status-#{status.id} #favorite_spinner').show();" }, :class => 'icon ico-bookmark') %>

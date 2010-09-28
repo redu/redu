@@ -37,6 +37,7 @@ class Seminar < ActiveRecord::Base
                        'video/MP4V-ES',
                        'video/MPV',
                        'video/mpeg4',
+                       'video/mpeg',
                        'video/avi',
                        'video/mpeg4-generic',
                        'video/nv',
@@ -53,6 +54,7 @@ class Seminar < ActiveRecord::Base
   has_attached_file :original, {}.merge(VIDEO_ORIGINAL)
 
   # Callbacks
+  # Se for tipo upload, chama o metodo define_content_type
   before_validation :enable_correct_validation_group
   before_create :truncate_youtube_url
 
@@ -60,13 +62,10 @@ class Seminar < ActiveRecord::Base
   validation_group :external, :fields => [:external_resource, :external_resource_type]
   validation_group :uploaded, :fields => [:original]
 
-  # validate :validate_youtube_url
-  #   validates_presence_of :external_resource
-
   validates_attachment_presence :original
-  #validates_attachment_content_type :media, :content_type => (SUPPORTED_VIDEOS + SUPPORTED_AUDIO)
+  validate :accepted_content_type
   validates_attachment_size :original,
-    :less_than => 50.megabytes
+    :less_than => 100.megabytes
 
   # Maquina de estados do processo de conversão
   acts_as_state_machine :initial => :waiting, :column => 'state'
@@ -92,10 +91,12 @@ class Seminar < ActiveRecord::Base
   def import_redu_seminar(url)
     course_id = url.scan(/aulas\/([0-9]*)/)
 
-    @source = Course.find(course_id[0][0]) unless course_id.empty?
-    # copia (se upload ou youtube)
-    @source.is_clone = true #TODO evitar que sejam removido
-    
+    unless course_id.empty?
+       @source = Course.find(course_id[0][0]) 
+      # copia (se upload ou youtube)
+       @source.is_clone = true #TODO evitar que sejam removido
+   end
+
     if @source and @source.public
       if @source.courseable_type == 'Seminar'
         if @source.courseable.external_resource_type.eql?('youtube')
@@ -144,19 +145,16 @@ class Seminar < ActiveRecord::Base
       :basename => self.original_file_name.split('.')[0],
       :extension => 'flv'
     }
-    
+
     output_path = "s3://" + VIDEO_TRANSCODED[:bucket] + "/" + interpolate(VIDEO_TRANSCODED[:path], seminar_info)
 
     ZENCODER_CONFIG[:input] = self.original.url
     ZENCODER_CONFIG[:output][:url] = output_path
     ZENCODER_CONFIG[:output][:thumbnails][:base_url] = File.dirname(output_path)
     ZENCODER_CONFIG[:output][:notifications][:url] = "http://#{ZENCODER_CREDENTIALS[:username]}:#{ZENCODER_CREDENTIALS[:password]}@beta.redu.com.br/jobs/notify"
-    
-    puts ZENCODER_CONFIG.inspect
-    
+
     response = Zencoder::Job.create(ZENCODER_CONFIG)
     puts response.inspect
-    
     if response.success?
       self.job = response.body["id"]
     else
@@ -178,6 +176,7 @@ class Seminar < ActiveRecord::Base
       self.enable_validation_group :external
     else
       self.enable_validation_group :uploaded
+      self.define_content_type
     end
   end
 
@@ -194,11 +193,23 @@ class Seminar < ActiveRecord::Base
   end
 
   protected
-
-  def interpolate(text, mapping)
-    mapping.each do |k,v|
-      text = text.gsub(':'.concat(k.to_s), v.to_s)
+    # Deriva o content type olhando diretamente para o arquivo
+    # Necessário por causa do uploadfy
+    # http://github.com/alainbloch/uploadify_rails
+    # Deve ser chamado antes de salvar
+    def define_content_type
+      self.original_content_type = MIME::Types.type_for(self.original_file_name).to_s
     end
-    return text
-  end
+
+    def interpolate(text, mapping)
+      mapping.each do |k,v|
+        text = text.gsub(':'.concat(k.to_s), v.to_s)
+      end
+      return text
+    end
+
+    # Workaround: Valida content type setado pelo método define_content_type
+    def accepted_content_type
+      self.errors.add(:original, "Formato inválido") unless video? or audio?
+    end
 end

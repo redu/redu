@@ -3,8 +3,13 @@
      
      function remove_fields(link){
          $(link).prev("input[type=hidden]").val("1");
-         $(link).closest(".fields").hide();
-     }
+         $(link).closest(".fields").remove();
+	       $('.q_index').each(function(idx){
+             $(this).html(idx + 1)
+						 console.log("Não pegou.")
+         });
+
+			}
      
      function add_fields(link, association, content, type){
          var new_id = new Date().getTime();
@@ -28,11 +33,17 @@
 						 	
                  $('div.add-topic-inner').hide();
                  // $(link).before(content.replace(regexp, new_id));
-                 $('#questions > fieldset:last').after(content.replace(regexp, new_id));
-								 
+
+								if ( $('#questions > fieldset:last').length == 0 ){
+                  $('#questions').append(content.replace(regexp, new_id)); 												
+								}
+								else {
+                  $('#questions > fieldset:last').after(content.replace(regexp, new_id));
+								}								 
                  $('[value=new_alternatives]').each(function(idx){
                      $(this).attr('value', idx)
                  });
+									
                  
 								 
                 
@@ -44,7 +55,9 @@
      }
      
      function makeIndexes(){
-         $('.q_index').each(function(idx){
+         
+				 console.log($('.q_index'))
+				 $('.q_index').each(function(idx){
              $(this).html(idx + 1)
          });
          
@@ -106,7 +119,7 @@
              $(this).attr('value', idx)
          });
          
-         //seleciona os elementos a com atributo name="modal"
+         //seleciona os eaddlementos a com atributo name="modal"
          $('a[name=modal]').click(function(e){
              //cancela o comportamento padrão do link
              e.preventDefault();
@@ -258,7 +271,7 @@
         <div class="addinfocontent">
             <h1>Adicione questões do banco de dados!</h1>
             <p>
-                Varias questes estao disponiveis.
+                Várias questões estão disponíveis.
             </p>
             <p>
                 <%= link_to 'Clique aqui!', "#dialog", :name=>"modal" %>

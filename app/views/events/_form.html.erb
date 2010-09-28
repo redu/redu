@@ -1,39 +1,41 @@
 <%- form_for @event do |f| %>
 	<fieldset><legend><%= title %> Evento</legend>
 	<%= f.error_messages %>
-	
+
 	<%= hidden_field_tag("school_id", params[:school_id]) %>
 
 	<%= f.label :name, "Nome:" %>
 	<%= f.text_field :name %>
-	
-	<%= f.label "Breve Descrição  <span class='snippet'>(até 250 caracters)</span>" %>
-	<%= f.text_area :tagline, :size => "70x5" %>
+
+	<% random_number = get_random_number%>
+	<%= f.label "Breve Descrição" %>
+	<%= f.text_area :tagline, :size => "70x5", :class => "tagline-#{random_number}" %>
+	<%= render :partial => 'shared/limit_char_field', :locals => { :class_textarea => "tagline-#{random_number}" }%>
 
 	<%= f.label :description, "Descrição:" %>
 	<%= f.text_area :description, :size => "40x12", :class => "mceEditor" %>
-	
-	<%= f.label :start_time, "Início:" %>	
+
+	<%= f.label :start_time, "Início:" %>
 	<%= f.text_field :start_time %>
-	
+
 	<%= f.label :end_time, "Término:" %>
 	<%= f.text_field :end_time %>
-	
+
 	<%= f.label :location, "Local:"%>
 	<%= f.text_field :location %>
-	
+
 	<%= f.label "Tags <span class='snippet'>(separadas por vírgula)</span>" %>
 	<%= f.text_field :tag_list %>
-		
+
 	<%= f.submit "Salvar"%>
 	<a href="javascript:history.back()">Voltar</a>
 
-	
+
 	</fieldset>
 <% end %>
 
 
-<script type="text/javascript">	
+<script type="text/javascript">
 
 		$(function() {
 			$("#event_start_time").datetimepicker();

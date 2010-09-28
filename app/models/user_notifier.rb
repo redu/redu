@@ -14,7 +14,7 @@ class UserNotifier < ActionMailer::Base
     @subject     = "Redes Redu: Participação pendente"
     @sent_on     = Time.now
     @body[:user] = user
-    @body[:url]  = admin_requests_school_path(school)
+    @body[:url]  = admin_requests_school_url(school)
     @body[:school]  = school
   end
 

@@ -2,25 +2,21 @@
 	<td>
 			<%= check_box_tag "delete[]", message.id %>
 	</td>
+
 	<td>
-		<div class='photo'>
-			<%= link_to image_tag( message.sender.avatar.url(:thumb), "height"=>"50px", "alt"=>"#{message.sender.login}", "width"=>"50px" ), user_path(message.sender), :title => "#{message.sender.login}'s " + :profile.l %>
-		</div>
+		<%= link_to_remote h(message.subject), :url =>  user_message_path(@user, message, :mailbox => mailbox), :method => :get %>
 	</td>
 	<td>
-		<%= link_to_remote h(message.subject), :url =>  user_message_path(@user, message, :mailbox => :inbox), :method => :get %>
-		<br>
-		<%= :from.l %>
-		<%= link_to h(message.sender.login), user_path(message.sender) %>
-	</td>
+		<%= link_to h(message.sender.display_name), user_path(message.sender) %>
+	</td>	
 	<td>
-		<% if :show_read %>
+		<% if mailbox == :inbox %>
 		<em>
-			<%= message.read? ? 'Lida, ' : 'Não-Lida, ' %>
-		</em>	
+			<%= message.read? ? 'Lida' : 'Não-Lida' %>
+		</em>
 		<% end %>
 	</td>
 	<td class='meta'>
-		<%= h message.created_at.to_s(:long) %>
+		<%= h time_ago_in_words(message.created_at) %>
 	</td>
 </tr>

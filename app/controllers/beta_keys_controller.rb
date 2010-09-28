@@ -34,7 +34,7 @@ class BetaKeysController < BaseController
     emails = email_addresses.split(",").collect{|email| email.strip }.uniq
 
     emails.each do |email|
-      beta_key = BetaKey.create(:email => email, :note => note)
+      beta_key = BetaKey.create(:email => email, :note => note, :last_sent_at => Time.now)
       UserNotifier.deliver_beta_invitation(email, beta_key.key)
     end
 
@@ -42,6 +42,32 @@ class BetaKeysController < BaseController
       flash[:notice] = "Convites enviados!"
       format.html { redirect_to(beta_keys_url) }
       format.xml  { head :ok }
+    end
+  end
+  
+  # Agenda novo envio de chave (se ela foi atribuida a um e-mail)
+  def resend_key
+    beta_key = BetaKey.find(params[:id])
+    
+    if beta_key and beta_key.email
+      UserNotifier.deliver_beta_invitation(beta_key.email, beta_key.key)
+      beta_key.update_attribute('last_sent_at', Time.now)
+      #TODO adicionar atributo que mostra a quantidade de envios
+      
+      respond_to do |format|
+        format.html { 
+          flash[:notice] = "Convites reenviados!"
+          redirect_to(beta_keys_url) 
+        }
+        
+        format.js {
+          render :update do |page|
+            page << "$('#key-#{beta_key.id} td.resend span').remove()"
+            page << "$('#key-#{beta_key.id} td.resend').append(\"<span class='sucess loud'>Ok</span>\")"
+            page << "$('#key-#{beta_key.id} td.last_sent').html(\"#{time_ago_in_words(beta_key.last_sent_at)}\")"
+          end
+        }
+      end
     end
   end
 

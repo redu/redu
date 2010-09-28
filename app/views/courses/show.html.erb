@@ -90,6 +90,7 @@
             jQuery("#lights-dimmed").fadeOut("slow");
             jQuery(this).toggle();
             jQuery("a.lights_off").toggle();
+						jQuery("#view_video").css('position', 'static')
             
             e.preventDefault();
         })
@@ -98,6 +99,7 @@
             jQuery("#lights-dimmed").fadeIn("fast");
             jQuery(this).toggle();
             jQuery("a.lights_on").toggle();
+						jQuery("#view_video").css('position', 'relative')
             
             e.preventDefault();
         })

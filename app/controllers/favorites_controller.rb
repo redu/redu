@@ -59,7 +59,7 @@ class FavoritesController < BaseController
       flash.now[:notice] = msg_ok
       respond_to do |format|
         if params[:type] == 'Status'
-          format.js { render :template => 'favorites/new_favorite', :locals => {:favoritable_id => @favoritable_id} }
+          format.js { render :template => 'favorites/status_favorite', :locals => {:favoritable_id => @favoritable_id} }
 
         else
           format.js
@@ -74,9 +74,9 @@ class FavoritesController < BaseController
     end
   end
 
-  def new_favorite
-    @favorite = current_user.add_favorite(params[:type], params[:id] )
-    @favoritable_id = params[:id] if params[:id].to_i == 0 # Verificando para que não injetem código malicioso
+  def not_favorite
+    @favorite = current_user.rm_favorite(params[:type], params[:id] )
+    @favoritable_id = params[:id] if params[:id].to_i != 0 # Verificando para que não injetem código malicioso
 
     msg_ok, msg_err = ''
     case params[:type]
@@ -96,7 +96,12 @@ class FavoritesController < BaseController
 
       flash.now[:notice] = msg_ok
       respond_to do |format|
-        format.js
+        if params[:type] == 'Status'
+          format.js { render :template => 'favorites/status_not_favorite', :locals => {:favoritable_id => @favoritable_id} }
+
+        else
+          format.js
+        end
       end
     else
       flash.now[:error] = msg_err
