@@ -39,7 +39,7 @@ class MessagesController < BaseController
         end
 
         format.html do
-
+          # necessario para a primeira requisicao que é html
         end
       end
     end

@@ -8,7 +8,7 @@ class Folder < ActiveRecord::Base
   belongs_to :user
   has_many :myfiles, :dependent => :destroy
   has_many :group_permissions, :dependent => :destroy
-  
+
   belongs_to :school
 
   validates_uniqueness_of :name, :scope => 'parent_id', :if => Proc.new { |folder| folder.parent_id }
@@ -66,17 +66,17 @@ class Folder < ActiveRecord::Base
 #      folder.save # this hopefully returns true
 #    end
 #  end
- 
+
 #
-#  
+#
 #  PERMISSIONS
-#  
-#  
-  
+#
+#
+
   # Use this method to determine if a user is permitted to create in the given folder
   def can_be_created_by(user, school)
     user.can_manage? school
-    
+
 #    self.groups.each do |group|
 #      group_permission = group.group_permissions.find_by_folder_id(folder_id)
 #      return true unless group_permission.blank? or not group_permission.can_create
@@ -117,6 +117,6 @@ end
 def is_root
   (self.parent_id == nil)
 end
-  
-  
+
+
 end
