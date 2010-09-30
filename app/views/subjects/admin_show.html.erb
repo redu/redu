@@ -25,6 +25,7 @@
 <br /> 	
 <h1>Aulas</h1>	
 <ul>
+	
 <% @subject.aulas.each do |aula|%>
 <li><%= link_to aula.name, course_path(aula.courseable) %></li>	
 <%end%> 

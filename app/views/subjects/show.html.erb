@@ -1,29 +1,4 @@
-<<<<<<< HEAD
-<% unless @subject.nil? %>
-<div id="breadcrumbs"><b><strong><%= link_to "Cursos", subjects_path %></strong></b> > <b><strong><%= h @subject.title%></strong></b> </div>
-<div class="grid_11">
-  <ul class="default">
-    <li class="clearfix">
-      <label class="name"><%= @subject.title %></label>
 
-
-      <span class="call">Descrição:</span>
-      <span class="things">
-        <%= h @subject.description %>
-      </span><br />
-
-
-      <br /><b><%= link_to "Matricula-se", classes_subject_path(@subject.id) %></b>
-      
-      
-    </li>
-  </ul>
-</div><!-- end grid_11 -->
-
-<% else%>
-curso nao publico atualizado.
-<%end%>
-=======
 <% content_for :page_id, 'group' %>
 <%- @meta = { :description => "Curso \"#{@subject.title}\" no  #{AppConfig.community_name}.", :keywords => "#{@subject.title}, #{@subject.tags.join(", ") unless @subject.tags.nil?}", :robots => AppConfig.robots_meta_show_content }%>
 
@@ -112,5 +87,4 @@ $(document).ready(function() {
 		</div>
 </div><!-- end tabs -->
 </div><!-- end main -->
->>>>>>> 6f7d2a37786f46e60853a77f50a9d3f23cbb1d33
-
+ 

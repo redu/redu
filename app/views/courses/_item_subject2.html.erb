@@ -1,8 +1,8 @@
 <li class="clearfix">
          <%= check_box_tag "aulas[]", course.id, true %>
          
-	 <%#= link_to course.name, course, :class => "name"  %>
-	<div class="thumb photo"><%= link_to(image_tag course.thumb_url, :width => "70px") %></div>
+	 <strong><%= course.name%></strong>
+	<div class="thumb photo"><%= link_to image_tag (course.thumb_url, :width => "70px"), course_path(course) %></div>
 	<div class="headlines" style="width: 490px">
 		<!--
 		<span class="call">Descrição:</span>

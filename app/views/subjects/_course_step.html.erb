@@ -78,8 +78,8 @@
 
 <% field_set_tag 'Conteúdo selecionado', :style => "margin-top:40px;" do %>
 	<ul id="subject_content" class="default sortable" style="min-height:300px;">
-		
-		<% unless current_user.subjects.find(session[:subject_id]).aulas.nil?%>
+ 
+		<% unless (session[:subject_id].nil? || current_user.subjects.find(session[:subject_id]).aulas.nil?) %>
 		     <%  current_user.subjects.find(session[:subject_id]).aulas.each do |aula|%>
 		
 		        <li class="clearfix">
@@ -100,8 +100,8 @@
 		<%else%>
 		<span class="nothing snippet">Nenhuma aula adicionada ainda.</span>
 		<%end%>
-	----------------------------	
-		<% unless current_user.subjects.find(session[:subject_id]).exames.nil?%>
+ 
+		<% unless session[:subject_id].nil?  || current_user.subjects.find(session[:subject_id]).exames.nil?%>
 		
 		     <%  current_user.subjects.find(session[:subject_id]).exames.each do |exam|%>
 		
@@ -159,8 +159,8 @@
  
 					 <%= link_to_function "adicionar", "addContent(this,'"+escape_javascript(render("courses/item_subject2", :course => course ))+"')"%> 
 					
-					<%if current_user.subjects.find(session[:subject_id]).aulas.map{|a| a.name}.include?(course.name) %>
-					tem
+					<% if !session[:subject_id].nil? && current_user.subjects.find(session[:subject_id]).aulas.map{|a| a.name}.include?(course.name) %>
+					<b style="color:red">Já possui copia</b>
 					<%end%>
  
                  </li>
