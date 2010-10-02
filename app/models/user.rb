@@ -529,6 +529,9 @@ class User < ActiveRecord::Base
   # school roles
 
   def can_post?(school)
+    if not self.get_association_with(school)
+      return false
+    end
 
     if school.submission_type == 1 or school.submission_type == 2 # all
       return true
