@@ -1,7 +1,5 @@
 class SubjectsController < BaseController
 
-  layout 'new_application'
-
   before_filter :login_required
   before_filter :find_subject, :only => [:show, :enroll]
   before_filter :find_user_subject, :only => [:edit,:destroy,:admin_show]
@@ -133,6 +131,7 @@ class SubjectsController < BaseController
     session[:subject_aulas]= params[:aulas] unless params[:aulas].nil?
     session[:subject_exames] = params[:exams] unless params[:exams].nil?
     
+    
     @subject = current_user.subjects.new(session[:subject_params])
     @subject.current_step = params[:step]#session[:subject_step] assim evita que ao dar refresh vá para o proximo passo
     
@@ -143,6 +142,7 @@ class SubjectsController < BaseController
         
         if @subject.all_valid?
           @subject.save
+         
           @subject.create_course_subject_type_course(session[:subject_aulas], @subject.id, current_user) unless session[:subject_aulas].nil?
           @subject.create_course_subject_type_exam(session[:subject_exames], @subject.id, current_user) unless session[:subject_exames].nil?
         end
@@ -156,7 +156,7 @@ class SubjectsController < BaseController
       render "new"
     else
       session[:subject_step] = session[:subject_params]= session[:subject_aulas]=session[:subject_exames] = nil
-       redirect_to :action =>"admin_subjects"
+       redirect_to courses_path 
     end
   end
   
@@ -189,8 +189,7 @@ class SubjectsController < BaseController
           
           @subject = current_user.subjects.find(session[:subject_id])
           @subject.update_attributes(session[:subject_params])
-          #@subject.course_subjects.destroy_all
-          
+           
           @subject.update_course_subject_type_course(session[:subject_aulas], @subject.id,current_user) #unless session[:subject_aulas].nil?
           @subject.update_course_subject_type_exam(session[:subject_exames], @subject.id, current_user) 
          updated = true

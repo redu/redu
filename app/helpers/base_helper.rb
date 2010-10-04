@@ -18,7 +18,26 @@ module BaseHelper
     def simple_categories_i18n(f)
    # collection_select(:course, :simple_category, SimpleCategory.all, :id, :name)
    categories_array = SimpleCategory.all.map { |cat| [category_i18n(cat.name), cat.id] } 
-    f.select(:simple_category_id, options_for_select(categories_array), :include_blank => true )
+   
+   indice = nil
+   unless f.object.nil?
+        categories_array.each_with_index do |ca,index|
+     
+          ca.each do |c| 
+             if  c.eql?(f.object.simple_category_id)
+              indice = index 
+             end
+         end
+   
+       end
+   end
+   
+   unless indice.nil?
+    f.select(:simple_category_id, options_for_select(categories_array,categories_array[indice]), :include_blank => true )
+   else
+    f.select(:simple_category_id, options_for_select(categories_array), :include_blank => true ) 
+   end  
+    
   end
   
   

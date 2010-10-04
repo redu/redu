@@ -17,7 +17,7 @@ class Subject < ActiveRecord::Base
 
   #associations
   has_and_belongs_to_many :audiences
-  has_many :course_subjects, :dependent => :destroy
+  has_many :course_subjects,:order =>"position", :dependent => :destroy
   has_many :enrollments, :dependent => :destroy
   belongs_to :owner, :class_name => "User" , :foreign_key => "user_id"
   belongs_to :school
@@ -31,7 +31,6 @@ class Subject < ActiveRecord::Base
   # METODOS DO WIZARD
   attr_writer :current_step
 
-
   def to_param #friendly url
     "#{id}-#{title.parameterize}"
   end
@@ -40,12 +39,10 @@ class Subject < ActiveRecord::Base
     APP_URL + "/subjects/"+ self.id.to_s+"-"+self.title.parameterize
   end
 
-
   def recent_activity(limit = 0, offset = 20) #TODO colocar esse metodo em status passando apenas o objeto
     page = limit.to_i/10 + 1
     self.statuses.descend_by_created_at.paginate(:per_page => offset, :page =>page)
   end
-
 
   def current_step
     @current_step || steps.first
@@ -111,7 +108,7 @@ class Subject < ActiveRecord::Base
 
     CourseSubject.destroy_all(:courseable_id => deleted_ids) unless deleted_ids.empty?#segurança ok, pois o array deleted_ids eh criado a partir do current_user
 
-
+   
     unless inserted_ids.empty?
       inserted_ids.each do |aula|
 
@@ -126,8 +123,34 @@ class Subject < ActiveRecord::Base
         cs.save
       end
     end
+    
+    #######rearrange courses###########
+    
+    subject = current_user.subjects.find(subject_id) #atualizado
+    aulas_ids = subject.aulas.map{|a| a.id} # aulas relaciondas com o curso, atualizado.
+    compare = aulas_futuras <=> aulas_ids 
+    
+    if compare != 0
+       
+      aulas_futuras.each_with_index do |item, index|
+         
+        obj = subject.aulas.detect{|a| a.id == item}     
+        unless obj.nil?
+          #obj.course_subject.position = index
+          #obj.save
+          aux = Course.find(obj.id).course_subject
+          aux.position = index
+          aux.save 
+        end    
+      end  
+    
+    end
+    ######end rearrange###########
 
+   
   end
+
+   
 
   def update_course_subject_type_exam exams, subject_id, current_user
 

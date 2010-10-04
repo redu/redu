@@ -1,4 +1,4 @@
-
+ 
 <% content_for :page_id, 'group' %>
 <%- @meta = { :description => "Curso \"#{@subject.title}\" no  #{AppConfig.community_name}.", :keywords => "#{@subject.title}, #{@subject.tags.join(", ") unless @subject.tags.nil?}", :robots => AppConfig.robots_meta_show_content }%>
 
@@ -51,6 +51,7 @@ $(document).ready(function() {
             <ul id="subject_content" class="default sortable" style="min-height:300px;">
                 
 			<% @subject.course_subjects.each do |content|%>
+			
 				<%= render :partial => "courses/item_subject2", :locals => {:course => content.courseable}%>
 			<% end %>
             

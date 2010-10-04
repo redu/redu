@@ -10,7 +10,6 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :lessons
   map.resources :beta_keys, :collection => {:generate => :get, :remove_all => :get, :print_blank => :get, :invite => :get}
   map.resources :profiles
- 
   map.resources :subjects, :member => {:enroll => :get}, :collection => {:cancel => :get}
  
   map.admin_subjects "admin/subjects", :controller => "subjects", :action => "admin_subjects" 

@@ -74,34 +74,54 @@
     </div>
 </div>
 
+<!--Conteudo Selecionado-->
+
+
 <div class="grid_10">
 
 <% field_set_tag 'Conteúdo selecionado', :style => "margin-top:40px;" do %>
+	
+	
 	<ul id="subject_content" class="default sortable" style="min-height:300px;">
  
+     <!-- Aulas-->
 		<% unless (session[:subject_id].nil? || current_user.subjects.find(session[:subject_id]).aulas.nil?) %>
-		     <%  current_user.subjects.find(session[:subject_id]).aulas.each do |aula|%>
 		
-		        <li class="clearfix">
-			
-		            <%= check_box_tag "aulas[]", aula.id, true%>
-                    <div class="thumb photo">
-                       <%= aula.name%><%= link_to(image_tag aula.thumb_url, :width => "70px") %>
-	                </div>
+		<ul class="sortable clearfix"><!--sortable-->    
+		 <%  current_user.subjects.find(session[:subject_id]).aulas.each do |aula|%>
+	      	
+		
+		          <li class="clearfix">
+			        <span class="call"><span style ="background:none repeat scroll 0 0 #FFFFDF; color:orange;"><%= aula.name%></span></span>
+			         <div style="background-color: #eef; border: 3px solid #eee; height: 100px; padding: 15px;">
+					
+		                 <%= check_box_tag "aulas[]", aula.id, true%>
+                        <div class="thumb photo">
+                          <%= aula.name%><% link_to(image_tag aula.thumb_url, :width => "70px") %>
+	                   </div>
 			   
-			        <div class="headlines" style="width: 490px"> 
-				      <span class="things">
-				        <%= truncate_words( aula.description, 10, '...') %>
-				     </span>
-			       </div>		
-		       </li> 	
-		<%end%>
+			           <div class="headlines" style="width: 490px"> 
+				        <span class="things">
+				         <%= truncate_words( aula.description, 10, '...') %>
+				       </span>
+			         </div>	
+			
+			      </div>	
+		         </li> 
+		    
+		
+		<%end%><!--loop aulas-->
+		<ul/><!--Fim sortable-->	
 		
 		<%else%>
 		<span class="nothing snippet">Nenhuma aula adicionada ainda.</span>
 		<%end%>
- 
+		<!-- Fim Aulas-->
+		
+		
+      <!-- Exames-->
 		<% unless session[:subject_id].nil?  || current_user.subjects.find(session[:subject_id]).exames.nil?%>
+ 
 		
 		     <%  current_user.subjects.find(session[:subject_id]).exames.each do |exam|%>
 		
@@ -109,7 +129,7 @@
 			
 		            <%= check_box_tag "exams[]", exam.id, true%>
                     <div class="thumb photo">
-                       <%= exam.name%><%= link_to(image_tag "FOTO", :width => "70px") %>
+                       <%= exam.name%><% link_to(image_tag "FOTO", :width => "70px") %>
 	                </div>
 			   
 			        <div class="headlines" style="width: 490px"> 
@@ -123,13 +143,15 @@
 		<%else%>
 		<span class="nothing snippet">Nenhuma exame adicionada ainda.</span>
 		<%end%>
-		
+	 <!-- Fim Exames-->
 		
 	</ul>
 
 <% end %>
 
 </div>
+
+<!--Fim Conteudo Selecionado-->
 <div class="grid_6">
 	<div class="y_addinfo">
                                 <div class="addinfocontent">
@@ -159,9 +181,11 @@
  
 					 <%= link_to_function "adicionar", "addContent(this,'"+escape_javascript(render("courses/item_subject2", :course => course ))+"')"%> 
 					
+ 
 					<% if !session[:subject_id].nil? && current_user.subjects.find(session[:subject_id]).aulas.map{|a| a.name}.include?(course.name) %>
 					<b style="color:red">Já possui copia</b>
 					<%end%>
+ 
  
                  </li>
                  <%end %>
