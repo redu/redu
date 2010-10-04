@@ -18,7 +18,7 @@ $(document).ready(function(){
   }
   
   /* Serializes form data and submits */
-  $("ul.activities div.question form").submit(function(e){
+  $("ul.activities div.question form").live('submit', function(e){
     $(this).toggleSpinner()
     
     $.post(this.action, $(this).serialize(), null, "script")

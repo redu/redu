@@ -1,6 +1,10 @@
 <%= f.error_messages %>
 <% field_set_tag do %>
-<%= f.text_area :text, :options =>{ :class => "inner-label", :style => "width: 90%", :title => "O que você está fazendo agora?",  }  %>
+
+<% random_number = get_random_number%>
+<%= f.text_area :text, :class => "inner-label status status-#{random_number}", :style => "width: 90%" %>
+<%= render :partial => 'shared/limit_char_field', :locals => { :class_textarea => "status-#{random_number}" }%>
+
 <%= hidden_field_tag "status[kind]", Status::STATUS %>
 <% end %>
 <button type="submit">Postar</button><%= image_tag 'spinner.gif', :class => 'status_spinner', :style => 'display: none'%>

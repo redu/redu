@@ -1,10 +1,12 @@
 <li class="clearfix <%= (status_counter == 0) ? 'first_item' : ''%> " id="status-<%= status.id %>">
-    <div class="photo <%= (@school) ? ((status.user.teacher? @school) ? 'teacher' : '') : '' %>"><!-- TODO performace -->
+    <div class="photo <%= (@school) ? ((status.user.teacher? @school) ? 'teacher' : '') : '' %>">
     <%= image_tag( status.user.avatar.url(:thumb), {:width => "50", :height=>"50" })%>
     </div>
     <div class="activity clearfix question">
         <div class="actions">
-            <a href="" class="icon ico-bookmark">favoritos</a>
+					<% if current_user %>
+          <%= render :partial => "statuses/favorite" , :locals => {:status => status} %>
+					<% end %>
             <a href="" class="icon ico-comment">comentar</a>
         </div>
         <span class="msg">
@@ -12,7 +14,7 @@
             <% if status.log %>
 						<%= activity_name(status) %>
 						<% else %>
-						<%= status.text %>
+						<%= auto_link(status.text) %>
 						<% end %>
             <span class="when quiet"><%= time_ago_in_words status.created_at %></span>
         </span>

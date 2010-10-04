@@ -4,11 +4,11 @@ ActionController::Routing::Routes.draw do |map|
     :requirements => { :action         => /(add|remove)/,
                                  :folder_or_file => /(folder|file)/ }
   
-  
+  map.notify '/jobs/notify', :controller => 'jobs', :action => 'notify'
   map.resources :interactive_classes
   map.resources :statuses
   map.resources :lessons
-  map.resources :beta_keys, :collection => {:generate => :get, :remove_all => :get, :print_blank => :get, :invite => :get}
+  map.resources :beta_keys, :collection => {:generate => :get, :remove_all => :get, :print_blank => :get, :invite => [:get, :post]}
   map.resources :profiles
   map.resources :subjects, :member => {:enroll => :get}, :collection => {:cancel => :get}
  

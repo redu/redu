@@ -1,18 +1,18 @@
 class BulletinsController < BaseController
   layout 'new_application'
   #before_filter :find_bulletin, :only => [:show, :edit, :update, :destroy]
-	before_filter :login_required 
+	before_filter :login_required
   before_filter :is_member_required
   before_filter :can_manage_required,
                 :only => [:edit, :update, :destroy]
-  
-  uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit])
-  
-  
+
+  uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit, :create, :update])
+
+
   def index
 		@bulletins = Bulletin.paginate(:conditions => ["school_id = ? AND state LIKE 'approved'", School.find(params[:school_id]).id],
-			:page => params[:page], 
-		 	:order => 'created_at DESC', 
+			:page => params[:page],
+		 	:order => 'created_at DESC',
 		 	:per_page => 5
 		 )
 		@school = School.find(params[:school_id])
@@ -36,7 +36,14 @@ class BulletinsController < BaseController
 
     respond_to do |format|
       if @bulletin.save
-        flash[:notice] = 'A notícia foi criada e adicionada à rede.'
+
+        if @bulletin.owner.can_manage? @bulletin.school
+          @bulletin.approve!
+          flash[:notice] = 'A notícia foi criada e divulgada.'
+        else
+          flash[:notice] = 'A notícia foi criada e será divulgada assim que for aprovada pelo moderador.'
+        end
+
         format.html { redirect_to school_bulletin_path(@bulletin.school, @bulletin) }
         format.xml  { render :xml => @bulletin, :status => :created, :location => @bulletin }
       else
@@ -77,20 +84,20 @@ class BulletinsController < BaseController
       format.xml  { head :ok }
     end
   end
-  
+
   def vote
     @bulletin = Bulletin.find(params[:id])
 		# TODO ver porque o like quando setado para false vem nil
-		
+
     if params[:like]
       current_user.vote_for(@bulletin)
     else
       current_user.vote_against(@bulletin)
     end
-    
+
 
     respond_to do |format|
-      format.js do 
+      format.js do
         render :update do |page|
 					# if falta o if para saber se é like ou dislike
 					if params[:like]
@@ -98,7 +105,7 @@ class BulletinsController < BaseController
 		        page << "jQuery('#like_link').show()"
 		        page << "jQuery('#like_link').attr('onclick', 'return false;')"
 		        page << "jQuery('#like_count').html('" + @bulletin.votes_for().to_s + "')" # TODO performance + uma consulta?
-					else 
+					else
 						page << "jQuery('#dislike_spinner').hide()"
 		        page << "jQuery('#dislike_link').show()"
 		        page << "jQuery('#dislike_link').attr('onclick', 'return false;')"
@@ -113,7 +120,7 @@ class BulletinsController < BaseController
     @bulletin = Bulletin.find(params[:id])
     @bulletin.rate(params[:stars], current_user, params[:dimension])
     id = "ajaxful-rating-#{!params[:dimension].blank? ? "#{params[:dimension]}-" : ''}bulletin-#{@bulletin.id}"
-    
+
     render :update do |page|
      page.replace_html  @bulletin.wrapper_dom_id(params), ratings_for(@bulletin, params.merge(:wrap => false))
 
@@ -127,7 +134,7 @@ protected
 
   def can_manage_required
      @bulletin = Bulletin.find(params[:id])
-   
+
      current_user.can_manage?(@bulletin, @bulletin.school) ? true : access_denied
   end
 
@@ -138,8 +145,8 @@ protected
 			@bulletin = Bulletin.find(params[:id])
 			@school = @bulletin.school
 		end
-    
+
     current_user.has_access_to(@school) ? true : access_denied
   end
-  
+
 end

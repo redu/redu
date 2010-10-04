@@ -51,8 +51,8 @@ class AdminController < BaseController
  end
   
   def moderate_users
+
     case params[:submission_type]
-      
       when '0' # remove selected
       @removed_users = User.find(params[:users]) unless params[:users].empty?
       

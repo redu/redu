@@ -51,13 +51,13 @@ class Exam < ActiveRecord::Base
   
   
   
-#  def get_question(qid)
-#    if qid
-#      self.questions.each_with_index do |question, index| 
-#        return [question,index]  if question.id == qid
-#      end
-#    end
-#  end
+  def get_question(qid)
+    if qid
+      self.questions.each_with_index do |question, index| 
+        return [question,index]  if question.id == qid
+      end
+    end
+  end
   
   def to_param #friendly url
     "#{id}-#{name.parameterize}"
@@ -66,13 +66,7 @@ class Exam < ActiveRecord::Base
   def permalink
     APP_URL + "/exams/"+ self.id.to_s+"-"+self.name.parameterize
   end
-  
-    
-  #  def questions_attributes=(attributes)
-  #  puts attributes.inspect
-  #    end
-  
-  
+
   def current_step
   @current_step || steps.first
 end

@@ -5,7 +5,7 @@
     <div class="activity clearfix">
     <span class="msg">
     <%= link_to response.user.login_slug, user_path(response.user), :class => 'author' %>
-    <%= response.text %>
+    <%= auto_link(response.text) %>
     <span class="when quiet"><%= time_ago_in_words(response.created_at) %></span>
     </span>
 

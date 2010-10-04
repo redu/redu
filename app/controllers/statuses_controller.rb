@@ -3,29 +3,42 @@ class StatusesController < BaseController
   before_filter :login_required
 
   def create
-    @status = Status.new(params[:status])
-    @status.user = current_user
-    
-    respond_to do |format|
-      if @status.save
-        format.html { redirect_to :back }
-        format.xml { render :xml => @status.to_xml }
-        format.js {
-        render :update do |page|
-          test = escape_javascript(render(:partial =>"statuses/type_proxy", :locals => {:type_proxy_counter => nil, :status => @status, :statusable => @status.statusable} ))
-          page << "$('.activities').prepend('"+test+"')"
-          page << "$('.status_spinner').hide()"
-          page << "$('#status_text').val('')"
-          page << "$('.answer').val('')"
+      @status = Status.new(params[:status])
+      @status.user = current_user
+
+      respond_to do |format|
+        if @status.save
+          format.html { redirect_to :back }
+          format.xml { render :xml => @status.to_xml }
+          format.js {
+          render :update do |page|
+            test = escape_javascript(render(:partial =>"statuses/type_proxy", :locals => {:type_proxy_counter => nil, :status => @status, :statusable => @status.statusable} ))
+            page << "$('.activities').prepend('"+test+"')"
+            page << "$('.status_spinner').hide()"
+            page << "$('#status_text').val('')"
+            page << "$('.answer').val('')"
+            #TODO com jquery 1.4 pode-se usar a funcao unwrap
+            page << "$('textarea.status:visible').parents('div.fieldWithErrors:first').removeClass('fieldWithErrors')"
+            page << "$('.errorMessageField').remove()"
+          end
+          }
+        else
+          format.html { 
+            flash[:statuses_errors] = @status.errors.full_messages.to_sentence
+            redirect_to :back 
+          }
+          format.xml { render :xml => @status.errors.to_xml }
+          format.js {
+          render :update do |page|
+            page << "$('.status_spinner').hide()"
+            page << "$('.errorMessageField').remove()"
+            page << "$('textarea.status:visible').wrap(\"<div class='fieldWithErrors'></div>\")" + \
+                    ".after(\"<p class='errorMessageField'>#{@status.errors.full_messages.to_sentence}</p>\")"
+          end
+          }
         end
-        }
-      else
-        flash[:statuses_errors] = @status.errors.full_messages.to_sentence
-        format.html { redirect_to :back }
-        format.xml { render :xml => @status.errors.to_xml }
       end
     end
-  end
 
   def respond
     responds_to = Status.find(params[:id])
@@ -38,7 +51,7 @@ class StatusesController < BaseController
       if @status.save
         flash[:notice] = "Atividade enviada com sucesso" 
       end
-      format.js
+        format.js
     end      
   end
   

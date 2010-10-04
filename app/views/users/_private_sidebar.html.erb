@@ -15,7 +15,7 @@
   </li>
 
 
-<% unless current_user.avatar_file_name and current_user.activated_at and current_user.has_invited and current_user.profile_complete? %>
+<% unless current_user.avatar_file_name and current_user.activated_at and (current_user.has_invited or AppConfig.closed_beta_mode) and current_user.profile_complete? %>
 <li class="clearfix">
 <span class="call"><span>TODO</span></span>
     <ul class="menu">
@@ -25,10 +25,10 @@
     	<% unless current_user.avatar_file_name %>
 			<li><%= link_to "Fazer upload de foto", edit_user_path(current_user)%></li>
 			<% end %>
-      <% unless current_user.activated_at %>
+      <% unless current_user.active? %>
 			<li>Ativar conta <%= link_to "reenviar e-mail de ativação", resend_activation_path(:email => current_user.email, :id => current_user.id), :class => "icon more"%></li>
 			<% end %>
-			 <% unless current_user.has_invited %>
+			 <% unless current_user.has_invited or AppConfig.closed_beta_mode %>
 			<li><%= link_to "Convidar amigos e contatos", invite_user_path%></li>
 			<% end %>
     </ul>

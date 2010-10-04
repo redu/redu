@@ -1,6 +1,4 @@
-
-	
-	<% form_for @user, :multipart =>true  do |f|  %>
+<% form_for @user, :multipart =>true  do |f|  %>
 	<%= f.error_messages %>	
 	
 	
@@ -32,8 +30,6 @@
 		
 	<% end %>
 
-
-
 		
 		
 	<% field_set_tag "Sair do Redu" do %>
@@ -43,3 +39,4 @@
 	<%= f.submit :save_changes.l, :style => "float: right;" %> 
 	
 	<% end %>
+	

@@ -14,50 +14,10 @@
 <%=  javascript_include_tag "jquery.editinplace.js"%>
 <% end %>
 
-<% if controller_name == 'admin' or controller_name == 'beta_keys' or controller_name == 'schools' %>
+<% if controller_name == 'admin' or controller_name == 'beta_keys' or controller_name == 'schools' or controller_name == 'messages' %>
 <%= javascript_include_tag "tablecloth.js" %>
 <%= stylesheet_link_tag "tablecloth.css" %>
 <% end %>
-
-
-  <!-- upload | uploadify -->
-<% if controller_name == 'coursesADSLLD' and action_name == 'new'%>
-<%=  stylesheet_link_tag 'uploadify' %>
-
-<%- session_key_name = ActionController::Base.session_options[:key] -%>
-<%=  javascript_include_tag "swfobject", "uploadify/uploadify210.js" %>
-<% url = courses_path %>
-<script type="text/javascript">
-  $(document).ready(function() {
-    $('#seminar_media').click(function(event){
-     event.preventDefault();
-     });
-    $('#seminar_media').uploadify({
-      'uploader' : '/javascripts/uploadify/uploadify.swf',
-      'script' : '/courses',
-      'multi' : false,
-      'cancelImg' : '/images/cancel.png',
-     'scriptData': {
-     '_session_id' :  '<%= u cookies["_session_id"] %>',
-     'authenticity_token' : '<%= u cookies["auth_token"] %>'
-     }
-    });
-        
-    $('#seminar_submit').click(function(event){
-                       if ( $("input:checked").val() == 'upload') {
-                               event.preventDefault();
-                                 $('#seminar_media').uploadifyUpload();
-                       }                
-               });
-});
-</script>
-
-
-<%end%>
-<!-- end upload -->
-		
-
-
 
 
 <% if controller_name == 'schools'  %>

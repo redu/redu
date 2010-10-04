@@ -105,7 +105,13 @@ class Course < ActiveRecord::Base
       if self.courseable.external_resource_type == 'youtube'
         'http://i1.ytimg.com/vi/' + self.courseable.external_resource + '/default.jpg'
       elsif self.courseable.external_resource_type == 'upload'
-        File.join(File.dirname(self.courseable.media.url), "#{self.id}128x96.jpg")
+        # Os thumbnails só são gerados após a conversão
+        if self.courseable.state == 'converted'
+          File.join(File.dirname(self.courseable.media.url), "thumb_0000.png")
+        else
+          '/images/missing_pic_school.png'
+        end
+        
       else 
         'http://i1.ytimg.com/vi/0QQcj_tLIYo/default.jpg'
       end

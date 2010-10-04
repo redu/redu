@@ -5,42 +5,26 @@
 	<h3>
 		<%= :inbox.l %>
 	</h3>
-		
-	<table class='common messages' border = "0" width = "100%">
-		<tbody>
+
+	<table class='common' border = "0" width = "100%">
+		<thead>
+			<tr>
+				<th> </th>
+				<th>Assunto</th>
+				<th>De</th>
+				<th>Estado</th>
+				<th>Quando</th>
+			</tr>
+		</thead>
+		<tbody class='messages_table'>
 			<% if @messages.empty? %>
 			<tr>
 				<td colspan='5'>
-					<%= :no_messages.l %>
-				</td>	
+					<div class="box_notice"><%= :no_messages.l %></div>
+				</td>
 			</tr>
 			<% else %>
-				<% @messages.each do |message| %>
-					<tr>
-						<td>
-								<%= check_box_tag "delete[]", message.id %>
-						</td>
-						<td>
-							<div class='photo'>
-								<%= link_to image_tag( message.sender.avatar.url(:thumb), "height"=>"50px", "alt"=>"#{message.sender.login}", "width"=>"50px" ), user_path(message.sender), :title => "#{message.sender.login}'s " + :profile.l %>
-							</div>
-						</td>
-						<td>
-							<%= link_to_remote h(message.subject), :url =>  user_message_path(@user, message, :mailbox => :inbox), :method => :get %>
-							<br>
-							<%= :from.l %>
-							<%= link_to h(message.sender.login), user_path(message.sender) %>
-						</td>
-						<td>
-							<em>
-								<%= message.read? ? 'Lida, ' : 'Não-Lida, ' %>
-							</em>	
-						</td>
-						<td class='meta'>
-							<%= h message.created_at.to_s(:long) %>
-						</td>
-					</tr>
-				<% end %>			
+					<%= render :partial => 'messages/item', :collection => @messages, :as => :message, :locals => {:mailbox => :inbox} %>
 			<% end %>
 		</tbody>
 		<tfoot>
@@ -51,13 +35,15 @@
 							<%= submit_tag :delete_selected.l %><%= image_tag 'spinner.gif', :id => 'del-spinner', :style => 'display: none' %>
 						</p>
 					<% end %>
-				</td>	
+				</td>
 			</tr>
 		</tfoot>
-	</table>	
-	<% end %>	 
-	
-	<div class='pagination'>
-	<%# paginating_links @messages if @messages.page_count > 1 %>
+	</table>
+	<% end %>
+
+	<% unless @messages.length < 10%>
+	<div id="more">
+	<%= link_to_remote "mais...", :url => {:controller => :messages, :action => :more, :mailbox => 'inbox', :user_id => current_user.id, :limit => 10}, :method =>:get, :loading => "$('#more').html('"+escape_javascript(image_tag('spinner.gif'))+"')"%>
 	</div>
-	
+	<% end %>
+

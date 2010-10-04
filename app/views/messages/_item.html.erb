@@ -1,0 +1,22 @@
+<tr>
+	<td>
+			<%= check_box_tag "delete[]", message.id %>
+	</td>
+
+	<td>
+		<%= link_to_remote h(message.subject), :url =>  user_message_path(@user, message, :mailbox => mailbox), :method => :get %>
+	</td>
+	<td>
+		<%= link_to h(message.sender.display_name), user_path(message.sender) %>
+	</td>	
+	<td>
+		<% if mailbox == :inbox %>
+		<em>
+			<%= message.read? ? 'Lida' : 'Não-Lida' %>
+		</em>
+		<% end %>
+	</td>
+	<td class='meta'>
+		<%= h time_ago_in_words(message.created_at) %>
+	</td>
+</tr>

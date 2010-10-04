@@ -90,6 +90,7 @@
             jQuery("#lights-dimmed").fadeOut("slow");
             jQuery(this).toggle();
             jQuery("a.lights_off").toggle();
+						jQuery("#view_video").css('position', 'static')
             
             e.preventDefault();
         })
@@ -98,6 +99,7 @@
             jQuery("#lights-dimmed").fadeIn("fast");
             jQuery(this).toggle();
             jQuery("a.lights_on").toggle();
+						jQuery("#view_video").css('position', 'relative')
             
             e.preventDefault();
         })
@@ -134,7 +136,7 @@
 <div class="grid_16">
     <div id="breadcrumbs">
         <a href="<%=application_url%>">início</a>
-        > <a href="#">aulas</a>
+        > <a href="<%= courses_path %>">aulas</a>
         > <a href="#"><%= @course.name %></a>
     </div>
     <!--
@@ -293,7 +295,7 @@
         <!-- end activities -->
     </div>
 </div>
-
+ 
 <!-- COLUNA DA DIREITA  ## -->
 <div class="grid_6">
     
@@ -323,3 +325,4 @@
 		<% end %>
     
 </div>
+ 

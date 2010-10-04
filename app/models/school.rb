@@ -1,5 +1,5 @@
 class School < ActiveRecord::Base
-  
+
   # PLUGINS
   acts_as_taggable
   acts_as_voteable
@@ -7,11 +7,9 @@ class School < ActiveRecord::Base
     :styles => { :medium => "200x200>", :thumb => "100x100>", :nano => "24x24>" },
   }.merge(PAPERCLIP_STORAGE_OPTIONS)
 
-      
   # CALLBACKS
   before_create :create_root_folder
 
-  # ASSOCIATIONS
   #USERS
   has_many :user_school_associations, :dependent => :destroy
   has_many :users, :through => :user_school_associations, :conditions => ["user_school_associations.status LIKE 'approved'"]
@@ -19,38 +17,43 @@ class School < ActiveRecord::Base
   has_many :coordinators, :through => :user_school_associations, :source => :user, :conditions => [ "user_school_associations.role_id = ?", 5 ]
   has_many :teachers, :through => :user_school_associations, :source => :user, :conditions => [ "user_school_associations.role_id = ?", 6 ]
   has_many :students, :through => :user_school_associations, :source => :user, :conditions => [ "user_school_associations.role_id = ?", 7 ]
-  has_many :pending_requests, :class_name => "UserSchoolAssociation", :conditions => ["user_school_associations.status LIKE 'pending'"] 
- 
+  has_many :pending_requests, :class_name => "UserSchoolAssociation", :conditions => ["user_school_associations.status LIKE 'pending'"]
+
   # CATEGORIES
   has_and_belongs_to_many :categories, :class_name => "ReduCategory"
   has_and_belongs_to_many :audiences
-  
+
   belongs_to :owner , :class_name => "User" , :foreign_key => "owner"
   has_many :folders
   has_many :forums
   has_many :acquisitions, :as => :acquired_by
   has_many :access_keys, :dependent => :destroy
-  has_many :school_assets, :class_name => 'SchoolAsset', 
+  has_many :school_assets, :class_name => 'SchoolAsset',
     :dependent => :destroy
-  has_many :courses, :through => :school_assets, 
+  has_many :courses, :through => :school_assets,
     :source => :asset, :source_type => "Course", :conditions =>  "published = 1"
-  has_many :exams, :through => :school_assets, 
-  :source => :asset, :source_type => "Exam", :conditions =>  "published = 1"
-	has_many :bulletins, :dependent => :destroy
-	has_many :events, :dependent => :destroy
-  
+  has_many :exams, :through => :school_assets,
+    :source => :asset, :source_type => "Exam", :conditions =>  "published = 1"
+  has_many :bulletins, :dependent => :destroy
+  has_many :events, :dependent => :destroy
   has_many :statuses, :as => :statusable
-
   has_many :subjects
-  
+
   # VALIDATIONS
-  validates_presence_of :name, :path
-  validates_format_of       :path, :with => /^[\sA-Za-z0-9_-]+$/
-  validates_uniqueness_of   :path, :case_sensitive => false
-  validates_exclusion_of    :path, :in => AppConfig.reserved_logins
+  validates_presence_of :name, :path, :message => "Não pode ser deixado em branco"
+  validates_format_of       :path, :with => /^[\sA-Za-z0-9_-]+$/,
+    :message => "Endereço inválido."
+  validates_uniqueness_of   :path, :case_sensitive => false,
+    :message => "Endereço inválido."
+  validates_exclusion_of    :path, :in => AppConfig.reserved_logins,
+    :message => "Endereço inválido"
   validates_presence_of :categories
-  #validates_presence_of :audience
-  
+
+  named_scope :inner_categories, lambda { {:joins => :categories} } # Faz inner join com redu_categories_school
+
+  # METODOS DO WIZARD
+  attr_writer :current_step
+
   # override activerecord's find to allow us to find by name or id transparently
   def self.find(*args)
     if args.is_a?(Array) and args.first.is_a?(String) and (args.first.index(/[a-zA-Z\-_]+/) or args.first.to_i.eql?(0) )
@@ -59,13 +62,13 @@ class School < ActiveRecord::Base
       super
     end
   end
-  
+
   def to_param
     self.path
   end
-  
+
   def permalink
-    AppConfig.community_url + '/' + self.path 
+    AppConfig.community_url + '/' + self.path
   end
 
   def avatar_photo_url(size = nil)
@@ -73,43 +76,30 @@ class School < ActiveRecord::Base
       self.avatar.url(size)
     else
       case size
-        when :thumb
-          AppConfig.photo['missing_thumb_school']
-        else
-          AppConfig.photo['missing_medium_school']
+      when :thumb
+        AppConfig.photo['missing_thumb_school']
+      else
+        AppConfig.photo['missing_medium_school']
       end
     end
   end
-  
-#  def recent_school_activity
-#   # Status.group_statuses(self) # na verdade o flow da escola nao deveria ser a soma dos flows de cada membro e sim um proprio
-# end
-   def recent_activity(limit = 0, offset = 20)
-     
-     page = limit.to_i/10 + 1
-     #puts page
-      self.statuses.descend_by_created_at.paginate(:per_page => offset, :page =>page)
-      #self.statuses.order("created_at DESC limit "+limit.to_s+","+offset.to_s)
-     #Status.statusable_id_eq(self.id).statusable_type_like('School').descend_by_created_at.all.paginate(:page => 1, :per_page => 10)
 
-
+  def recent_activity(limit = 0, offset = 20)
+    page = limit.to_i/10 + 1
+    self.statuses.descend_by_created_at.paginate(:per_page => offset, :page =>page)
   end
-  
- 
- 
 
   def recent_school_exams_activity
-    sql =  "SELECT l.id, l.logeable_type, l.action, l.user_id, l.logeable_name, l.logeable_id, l.created_at, l.updated_at, l.school_id FROM logs l, school_assets s WHERE 
+    sql =  "SELECT l.id, l.logeable_type, l.action, l.user_id, l.logeable_name, l.logeable_id, l.created_at, l.updated_at, l.school_id FROM logs l, school_assets s WHERE
     l.school_id = '#{self.id}' AND l.logeable_type = '#{Exam}' ORDER BY l.created_at DESC LIMIT 3 "
     @recent_exams_activity = Log.find_by_sql(sql)
   end
-  
+
   def recent_school_courses_activity
-    sql =  "SELECT l.id, l.logeable_type, l.action, l.user_id, l.logeable_name, l.logeable_id, l.created_at, l.updated_at, l.school_id FROM logs l, school_assets s WHERE 
+    sql =  "SELECT l.id, l.logeable_type, l.action, l.user_id, l.logeable_name, l.logeable_id, l.created_at, l.updated_at, l.school_id FROM logs l, school_assets s WHERE
     l.school_id = '#{self.id}' AND l.logeable_type = '#{Course}' ORDER BY l.created_at DESC LIMIT 3 "
     @recent_courses_activity = Log.find_by_sql(sql)
   end
-  
 
   def spotlight_courses
     sql =  "SELECT c.name FROM courses c, school_assets s " + \
@@ -117,54 +107,50 @@ class School < ActiveRecord::Base
       "AND s.asset_type = '#{Course}' " + \
       "AND c.id = s.asset_id " + \
       "ORDER BY c.view_count DESC LIMIT 6 "
-    
+
     Course.find_by_sql(sql)
   end
-  
+
   def create_root_folder
     @folder = Folder.create(:name => "root")
     self.folders << @folder
   end
-  
+
   def root_folder
     Folder.find(:first, :conditions => ["school_id = ? AND parent_id IS NULL", self.id])
   end
-  
-  # METODOS DO WIZARD 
-  attr_writer :current_step
-  
-  
+
   def current_step
     @current_step || steps.first
   end
-  
+
   def steps
     %w[general settings publication]
   end
-  
+
   def next_step
     self.current_step = steps[steps.index(current_step)+1]
   end
-  
+
   def previous_step
     self.current_step = steps[steps.index(current_step)-1]
   end
-  
+
   def first_step?
     current_step == steps.first
   end
-  
+
   def last_step?
     current_step == steps.last
   end
-  
+
   def all_valid?
     steps.all? do |step|
       self.current_step = step
       valid?
     end
   end
-  
+
   def featured_courses(qty=4)
     #TODO melhorar esta lógica
     self.courses.find(:all, :order => "view_count DESC", :limit => "#{qty}")

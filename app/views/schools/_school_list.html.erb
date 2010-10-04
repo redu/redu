@@ -3,6 +3,12 @@
 		<%= render :partial => 'schools/item', :collection => @schools, :as => :school %> 
 	</ul>
 	<% else %>
-		<div class="box_notice">Não há redes cadastradas ainda. <%= link_to 'Crie uma agora!', :action => 'new' %></div>
+
+		<% if @searched_for_all %>
+			<div class="box_notice">Não há redes cadastradas ainda. <%= link_to 'Crie uma agora!', :action => 'new' %></div>
+		<% else %>
+			<div class="box_notice">Não há redes cadastradas com estas especificações ainda. <%= link_to 'Crie uma agora!', :action => 'new' %></div>
+		<% end %>
+
 	<% end %>
 	<%= will_paginate @schools %>

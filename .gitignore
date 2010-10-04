@@ -1,12 +1,9 @@
+mongrel/
 db/schema.rb
 log/*.log
 log/**/*
-.DS_Store
-app/.DS_Store
-app/models/.DS_Store
-redu.tmproj
-vendor/.DS_Store
-vendor/plugins/.DS_Store
+*.tmproj
 config/database.yml
 public/system/
-mongrel/ruby/1.8/gems/ruby-debug-0.10.3/cli/ruby-debug/commands/source.RB
+mongrel/ruby/1.8/gems/ruby-debug-0.10.3/cli/ruby-debug/commands/source.RB 
+*~

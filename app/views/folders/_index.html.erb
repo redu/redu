@@ -74,8 +74,7 @@ function showLoadingFiles(){
 
 Total de <%= @files_count %> arquivos. Usando <%= @total_size %> MB de 2 GB (<%= @use_percentage %>%)
 
-
-<%  if current_user.school_admin? @school %>
+<%  if current_user.can_manage? @school %>
 <div id="folder_rights" style="display:none;position:relative;"><div>
     <% form_tag :action => 'update_permissions', :id => params[:id] do %>
         <table>

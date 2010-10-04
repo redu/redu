@@ -20,4 +20,9 @@ config.action_controller.perform_caching             = false
 # Don't care if the mailer can't send
 config.action_mailer.raise_delivery_errors = false
 
+# Armazena no sist. de arquivos
 PAPERCLIP_STORAGE_OPTIONS = {:default_url => '/images/missing_pic.jpg'}
+VIDEO_ORIGINAL = {:default_url => '/images/missing_pic.jpg'}
+
+# Só converte os 5 primeiros segundos (grátis)
+ZENCODER_CONFIG[:test] = 1

@@ -1,23 +1,24 @@
 class MessagesController < BaseController
-  
+
   before_filter :find_user#, :except => [:auto_complete_for_username]
   before_filter :login_required
-  
-  uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :index])
-  
+  before_filter :user_required # Para ter acesso, tem que ser o usuário dono das mensagens privadas
+
+  uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :index, :create, :update, :edit])
+
 #  skip_before_filter :verify_authenticity_token, :only => [:auto_complete_for_username]
-  
+
 #  def auto_complete_for_username
 #    @users = User.find(:all, :conditions => [ 'LOWER(login) LIKE ?', '%' + (params[:message][:to]) + '%' ])
 #    render :inline => "<%= auto_complete_result(@users, 'login') %>"
 #  end
-  
+
   def index
     if params[:mailbox] == "sent"
-      @messages = @user.sent_messages.paginate(:all, :page => params[:page], 
-      :order =>  'created_at DESC', 
+      @messages = @user.sent_messages.paginate(:all, :page => params[:page],
+      :order =>  'created_at DESC',
       :per_page => AppConfig.items_per_page)
-      
+
       respond_to do |format|
         format.js do
           render :update do |page|
@@ -26,21 +27,33 @@ class MessagesController < BaseController
         end
       end
     else
-      @messages = @user.received_messages.paginate(:all, :page => params[:page], 
-      :order =>  'created_at DESC', 
+      @messages = @user.received_messages.paginate(:all, :page => params[:page],
+      :order =>  'created_at DESC',
       :per_page => AppConfig.items_per_page )
+
+      respond_to do |format|
+        format.js do
+          render :update do |page|
+            page.replace_html  'tabs-1-content', :partial => 'inbox'
+          end
+        end
+
+        format.html do
+
+        end
+      end
     end
   end
-  
+
   def show
     @message = Message.read(params[:id], current_user)
-    @reply = Message.new_reply(@user, @message, params)  
-    
+    @reply = Message.new_reply(@user, @message, params)
+
     respond_to do |format|
       format.js do
         render :update do |page|
           if params[:mailbox] == "sent"
-            page.replace_html  'tabs-2-content', :partial => 'show', :locals => {:mailbox => params[:mailbox]} 
+            page.replace_html  'tabs-2-content', :partial => 'show', :locals => {:mailbox => params[:mailbox]}
           else
             page.replace_html  'tabs-1-content', :partial => 'show', :locals => {:mailbox => params[:mailbox]}
           end
@@ -48,13 +61,13 @@ class MessagesController < BaseController
       end
     end
   end
-  
+
   def new
     if params[:reply_to]
       in_reply_to = Message.find_by_id(params[:reply_to])
     end
-    @message = Message.new_reply(@user, in_reply_to, params)  
-    
+    @message = Message.new_reply(@user, in_reply_to, params)
+
     respond_to do |format|
       format.js do
         render :update do |page|
@@ -64,15 +77,15 @@ class MessagesController < BaseController
       end
     end
   end
-  
+
   def create
     messages = []
-    
+
     if params[:message][:to].blank?
       # If 'to' field is empty, call validations to catch other
-      @message = Message.new(params[:message])        
+      @message = Message.new(params[:message])
       @message.valid?
-      
+
       respond_to do |format|
         format.html do
           render :action => :new and return
@@ -80,14 +93,14 @@ class MessagesController < BaseController
         format.js do
           render :update do |page|
             page << "jQuery('#msg_spinner').hide()"
-            page.replace_html "errors", error_messages_for(:message) 
+            page.replace_html "errors", error_messages_for(:message)
           end
         end
       end
     else
       # If 'to' field isn't empty then make sure each recipient is valid
       params[:message][:to].split(',').uniq.each do |to|
-        @message = Message.new(params[:message])          
+        @message = Message.new(params[:message])
         @message.recipient = User.find_by_login(to.strip)
         @message.sender = @user
         unless @message.valid?
@@ -98,7 +111,7 @@ class MessagesController < BaseController
             format.js do
               render :update do |page|
                 page << "jQuery('#msg_spinner').hide()"
-                page.replace_html "errors", error_messages_for(:message) 
+                page.replace_html "errors", error_messages_for(:message)
                 #page << "alert('é necessário preencher todos os campos')"# TODO notice?
               end
             end
@@ -123,10 +136,10 @@ class MessagesController < BaseController
           end
         end
       end
-      
+
     end
   end
-  
+
   def delete_selected
     if request.post?
       if params[:delete]
@@ -136,20 +149,53 @@ class MessagesController < BaseController
         }
         flash[:notice] = :messages_deleted.l
       end
-      
+
       redirect_to user_messages_path(@user, :mailbox => params[:mailbox])
     end
   end
-  
+
+  def more
+    page = params[:limit].to_i/10 + 1
+
+    if params[:mailbox] == 'sent'
+      @messages = @user.sent_messages.paginate(:all, :page => page,
+      :order =>  'created_at DESC',
+      :per_page => AppConfig.items_per_page)
+    else
+      @messages = @user.received_messages.paginate(:all, :page => page,
+      :order =>  'created_at DESC',
+      :per_page => AppConfig.items_per_page)
+    end
+
+    new_limit = params[:limit].to_i * 10
+
+    respond_to do |format|
+      format.js do
+        render :update do |page|
+          page << "$('.messages_table').append('"+escape_javascript(render(:partial => "messages/item", :collection => @messages, :as => :message))+"')"
+          if @messages.length < 10
+            page.replace_html "#more",  ''
+          else
+            page.replace_html "#more",  link_to_remote("mais ainda!", :url => {:controller => :messages, :action => :more, :user_id => params[:user_id], :limit => new_limit}, :method =>:get, :loading => "$('#more').html('"+escape_javascript(image_tag('spinner.gif'))+"')")
+          end
+         end
+      end
+    end
+  end
+
   private
   def find_user
     @user = User.find(params[:user_id])
   end
-  
+
   def require_ownership_or_moderator
     unless admin? || moderator? || (@user && (@user.eql?(current_user)))
       redirect_to :controller => 'sessions', :action => 'new' and return false
     end
     return @user
-  end    
+  end
+
+  def user_required
+    User.find(params[:user_id]) == current_user ? true : access_denied
+  end
 end

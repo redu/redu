@@ -5,8 +5,8 @@ pt-BR:
       date_ago: "%d de %B"
     order: [ :day, :month, :year ]
     day_names: [Domingo, Segunda, Terça, Quarta, Quinta, Sexta, Sábado]
-    abbr_day_names: [Dom, Seg, Ter, Qua, Qui, Sex, Sab]
-    month_names: [Janeiro, Fevereiro, Março, Abril, Maio, Junho, Julho, Agosto, Setembro, Outubro, Novembro, Dezembro]
+    abbr_day_names: [Dom, Seg, Ter, Qua, Qui, Sex, Sáb]
+    month_names: [nil, Janeiro, Fevereiro, Março, Abril, Maio, Junho, Julho, Agosto, Setembro, Outubro, Novembro, Dezembro]
     abbr_month_names: [Jan, Fev, Mar, Abr, Mai, Jun, Jul, Ago, Set, Out, Nov, Dez]
 
   time:
@@ -18,7 +18,9 @@ pt-BR:
       time_ago: "%e %b %Y às %H:%M" 
     pm: pm
     am: am
-
+  support:
+    array:
+      two_words_connector: "Formato inválido"
   activerecord:
     attributes:
       photo:
@@ -34,6 +36,7 @@ pt-BR:
         body: "Há problemas para os seguintes campos:" 
       messages: 
         blank: "não pode ser deixado em branco."
+        too_long: "Texto muito longo"
       models:
         question:
           attributes:
@@ -127,6 +130,7 @@ pt-BR:
   
   
   #redu categories
+  all: Todas
   aeronautics_and_astronautics: Aeronáutica e Astronáutica
   anthropology: Antropologia
   architecture: Arquitetura
@@ -223,9 +227,9 @@ pt-BR:
   #en: activate: Activate
   activate: Activate
   #en: activation_email_not_sent_message: Activation e-mail could not be sent. Perhaps that user is already active?
-  activation_email_not_sent_message: Ativação de e-mail não foi enviada. Talvez o usuário já esteja ativo?
+  activation_email_not_sent_message: O e-mail de ativação não foi enviado. O usuário realmente não está ativo?
   #en: activation_email_resent_message: An activation e-mail was resent to the e-mail address you used to sign up.
-  activation_email_resent_message: An activation e-mail was resent to the e-mail address you used to sign up.  
+  activation_email_resent_message: O e-mail de ativação foi reenviado.  
   #en: active: active
   active: active
   #en: active_users: Active Users
@@ -767,7 +771,7 @@ pt-BR:
   #en: invite_a_friend: Invite a friend
   invite_a_friend: Invite a friend
   #en: invitation_was_successfully_created: Invitation was successfully created.
-  invitation_was_successfully_created: Invitation was successfully created.
+  invitation_was_successfully_created: Os convites serão enviados.
   #en: invite_message: The more people you invite the better {{site}} becomes.
   invite_message: "The more people you invite the better {{site}} becomes."
   #en: invite_some_customers: Invite some customers!
@@ -1381,7 +1385,7 @@ pt-BR:
   #en: tags_page: tags page
   tags_page: página de tags
   #en: thanks_for_activating_your_account: Thanks for activating your account!
-  thanks_for_activating_your_account: Thanks for activating your account!
+  thanks_for_activating_your_account: Obrigado por ativar a sua conta!
   #en: thanks_youre_now_logged_in: Thanks! You're now logged in.
   thanks_youre_now_logged_in: Obrigado! Você está logado agora.
   #en: the_comment_was_deleted: The comment was deleted.

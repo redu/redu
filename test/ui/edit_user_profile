@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>edit_user_profile</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">edit_user_profile</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/sessions/criar</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//form[@id='new_user_session']/fieldset/input[1]</td>
+	<td>test_user</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//form[@id='new_user_session']/fieldset/input[2]</td>
+	<td>redutest123</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//form[@id='new_user_session']/fieldset/input[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Editar</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>user_avatar</td>
+	<td>/Users/guiocavalcanti/Dropbox/Pictures/2009/02/minha-cara/minha-cara-pequena.jpg</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>user_first_name</td>
+	<td>Test2</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>user_last_name</td>
+	<td>User2</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>user_gender_m</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>user_description</td>
+	<td>Algo Sobre Mim</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>tag_list</td>
+	<td>minhas, tags</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>user_submit</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

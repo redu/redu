@@ -18,6 +18,7 @@ class SessionsController < BaseController
     @user_session = UserSession.new(params[:user_session])
     
     @user_session.save do |result|
+
     if result
        current_user = @user_session.record
        
