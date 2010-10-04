@@ -18,6 +18,8 @@ class FoldersController < BaseController
 #  before_filter :authorize_updating, :only => [:rename, :update, :update_rights]
 #  before_filter :authorize_deleting, :only => :destroy
 
+  before_filter :login_required
+
   # Sessions are not needed for feeds
   session :off, :only => 'feed'
   #layout 'folder', :except => 'feed'
@@ -117,8 +119,15 @@ class FoldersController < BaseController
 
     @myfile = Myfile.find(params[:file_id])
 
-    send_file @myfile.attachment.path, :type=> @myfile.attachment.content_type, :x_sendfile=>true
-
+    if  @myfile
+      school = School.find(params[:school_id]) if params[:school_id]
+      if school and current_user.has_access_to(school)
+        send_file @myfile.attachment.path, :type=> @myfile.attachment.content_type, :x_sendfile=>true
+      else
+        flash[:notice] = "Você não tem permissão para baixar o arquivo."
+        redirect_to user_path(current_user)
+      end
+    end
   end
 
 
