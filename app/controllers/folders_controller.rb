@@ -122,8 +122,14 @@ class FoldersController < BaseController
     if  @myfile
       school = School.find(params[:school_id]) if params[:school_id]
       if school and current_user.has_access_to(school)
-        redirect_to(@myfile.attachment.s3.interface.get_link(@myfile.attachment.s3_bucket.to_s, path, 10.seconds))
-        #send_file @myfile.attachment.path, :type=> @myfile.attachment.content_type, :x_sendfile=>true
+        # Gerando uma url do s3 com o timeout de 20 segundos
+        # O usuário deve COMEÇAR a baixar dentro desse tempo.
+        f = @myfile.attachment
+        if Rails.env == "production"
+          redirect_to f.s3.interface.get_link(f.s3_bucket.to_s, f.path, 20.seconds) and return false
+        end
+
+        send_file @myfile.attachment.path, :type=> @myfile.attachment.content_type, :x_sendfile=>true
       else
         flash[:notice] = "Você não tem permissão para baixar o arquivo."
         redirect_to user_path(current_user)
