@@ -34,3 +34,9 @@ PAPERCLIP_STORAGE_OPTIONS = {
   :path => "schools/:attachment/:id/:style/:basename.:extension",
   :default_url => "http://redu_assets.s3.amazonaws.com/images/missing_pic.jpg"
 }
+
+PAPERCLIP_MYFILES_OPTIONS = PAPERCLIP_STORAGE_OPTIONS.merge({
+  :bucket => S3_CREDENTIALS['files_bucket'],
+  :path => "myfiles/:attachment/:id/:style/:basename.:extension"
+
+})

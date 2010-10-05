@@ -5,7 +5,7 @@ require 'zip/zipfilesystem'
 # Files are in (belong to) a folder and are uploaded by (belong to) a User.
 class Myfile < ActiveRecord::Base
   #acts_as_ferret :store_class_name => true, :fields => { :text => { :store => :yes }, :filename => { :store => :no } }
-  has_attached_file :attachment
+  has_attached_file :attachment, {}.merge(PAPERCLIP_MYFILES_OPTIONS)
   
   belongs_to :folder
   belongs_to :user
