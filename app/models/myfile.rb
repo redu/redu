@@ -16,7 +16,7 @@ class Myfile < ActiveRecord::Base
   validates_attachment_size :attachment,
     :less_than => 10.megabytes
     
-   validates_uniqueness_of :attachment_file_name, :scope => 'folder_id'
+  validates_uniqueness_of :attachment_file_name, :scope => 'folder_id'
   
 
   before_destroy :delete_file_on_disk

@@ -54,7 +54,7 @@ class FoldersController < BaseController
   def do_the_upload
     @myfile = Myfile.new(params[:myfile])
     @myfile.user = current_user
-
+    debugger
     respond_to do |format|
       if @myfile.save
         flash[:notice] = 'Upload realizado!'

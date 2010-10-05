@@ -26,3 +26,4 @@ VIDEO_ORIGINAL = {:default_url => '/images/missing_pic.jpg'}
 
 # Só converte os 5 primeiros segundos (grátis)
 ZENCODER_CONFIG[:test] = 1
+PAPERCLIP_MYFILES_OPTIONS = {}
