@@ -5,9 +5,27 @@ var writeMessagePath = "<%= new_user_message_path %>";
 var $messagetabs;
 
 $(document).ready(function() {
-
+    
+    $("#tabs-1-loading").hide();
+    
     $messagetabs = $(".message-tabs").tabs({
         select: function(event, ui) {
+            if (ui.index == 0) {
+                // Entrada
+                $("#tabs-1-content").html('');
+                
+                jQuery.ajax({
+                    data: 'mailbox=inbox',
+                    dataType: 'script',
+                    success: function(request) {
+                        $("#tabs-1-loading").hide();
+                    },
+                    type: 'get',
+                    url: messagesPath
+                });
+
+                $("#tabs-1-loading").show();
+            }
             if (ui.index == 2) {
                 // Escrever
                 $("#tabs-3-content").html('');
@@ -62,6 +80,8 @@ $(document).ready(function() {
 	    </ul>
 
 		<div id="tabs-1" class="clearfix first-page">
+                  <%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-1-loading', :style => 'padding: 20px;'%>
+
 			<div id="tabs-1-content">
 				<%= render :partial => "inbox" %>
 			</div>
