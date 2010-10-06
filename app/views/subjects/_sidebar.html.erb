@@ -10,9 +10,9 @@
 		<%= @subject.description%></p>
 
 		<p><h3<strong>Começo:</strong></h3>
-		<%= @subject.start_time.strftime("%d/%m/%Y")%></p>
+		<%= @subject.start_time.strftime("%d/%m/%Y") unless @subject.start_time.nil?%></p>
 		<p><h3<strong>Fim:</strong></h3>
-		<%= @subject.end_time.strftime("%d/%m/%Y")%></p>
+		<%= @subject.end_time.strftime("%d/%m/%Y") unless @subject.end_time.nil? %></p>
 		
     </div>
   	</li>
