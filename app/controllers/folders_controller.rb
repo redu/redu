@@ -18,6 +18,8 @@ class FoldersController < BaseController
 #  before_filter :authorize_updating, :only => [:rename, :update, :update_rights]
 #  before_filter :authorize_deleting, :only => :destroy
 
+  before_filter :login_required
+
   # Sessions are not needed for feeds
   session :off, :only => 'feed'
   #layout 'folder', :except => 'feed'
@@ -52,7 +54,6 @@ class FoldersController < BaseController
   def do_the_upload
     @myfile = Myfile.new(params[:myfile])
     @myfile.user = current_user
-
     respond_to do |format|
       if @myfile.save
         flash[:notice] = 'Upload realizado!'
@@ -119,6 +120,23 @@ class FoldersController < BaseController
 
     send_file @myfile.attachment.path, :type=> @myfile.attachment.content_type, :x_sendfile=>true
 
+
+    if  @myfile
+      school = School.find(params[:school_id]) if params[:school_id]
+      if school and current_user.has_access_to(school)
+        # Gerando uma url do s3 com o timeout de 20 segundos
+        # O usuário deve COMEÇAR a baixar dentro desse tempo.
+        f = @myfile.attachment
+        if Rails.env == "production"
+          redirect_to f.s3.interface.get_link(f.s3_bucket.to_s, f.path, 20.seconds) and return false
+        end
+
+        send_file @myfile.attachment.path, :type=> @myfile.attachment.content_type, :x_sendfile=>true
+      else
+        flash[:notice] = "Você não tem permissão para baixar o arquivo."
+        redirect_to user_path(current_user)
+      end
+    end
   end
 
 
