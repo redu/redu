@@ -148,7 +148,8 @@
         </div>
         <div class="admin_opts yellow">
             <% if @course.owner == current_user %>
-            <%= link_to 'Editar', {:action => "edit"}, :class => "icon-edit" %>
+
+            <%= link_to_function 'Editar', "alert('Opção indisponível nesta versão.')",  {:action => "edit"}, :class => "icon-edit" %>
 			 <% end %>
 			 
 			 <% if current_user.can_manage? @course and @school %>

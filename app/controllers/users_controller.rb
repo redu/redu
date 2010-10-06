@@ -499,7 +499,7 @@ class UsersController < BaseController
   def forgot_password
     return unless request.post?
 
-    @user = User.active.find_by_email(params[:email])
+    @user = User.find_by_email(params[:email])
 
     if @user && @user.reset_password
       UserNotifier.deliver_reset_password(@user)
@@ -521,7 +521,7 @@ class UsersController < BaseController
   def forgot_username
     return unless request.post?
 
-    if @user = User.active.find_by_email(params[:email])
+    if @user = User.find_by_email(params[:email])
       UserNotifier.deliver_forgot_username(@user)
       redirect_to login_url
       flash[:info] = :your_username_was_emailed_to_you.l
