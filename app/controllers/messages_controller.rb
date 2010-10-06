@@ -34,12 +34,12 @@ class MessagesController < BaseController
       respond_to do |format|
         format.js do
           render :update do |page|
-            page.replace_html  'tabs-1-content', :partial => 'inbox'
+            page.replace_html 'tabs-1-content', :partial => 'inbox'
           end
         end
 
         format.html do
-
+          # necessario para a primeira requisicao que é html
         end
       end
     end
@@ -56,6 +56,7 @@ class MessagesController < BaseController
             page.replace_html  'tabs-2-content', :partial => 'show', :locals => {:mailbox => params[:mailbox]}
           else
             page.replace_html  'tabs-1-content', :partial => 'show', :locals => {:mailbox => params[:mailbox]}
+            page.replace_html 'tabs-1-header', :partial => 'unread_messages_count'
           end
         end
       end

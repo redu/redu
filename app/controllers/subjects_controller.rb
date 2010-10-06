@@ -104,9 +104,9 @@ class SubjectsController < BaseController
 
   def show
     
-      @subject = Subject.find(:first, :conditions => "is_public like true AND id =#{params[:id].to_i}")
-     @school = @subject.school
-    
+     @subject = Subject.find(:first, :conditions => "is_public like true AND id =#{params[:id].to_i}")
+     @school = @subject.school 
+   
     respond_to do |format|    
       if current_user.enrollments.detect{|e| e.subject_id.eql?(params[:id].to_i)}.nil?
         format.html{  render "preview" }
@@ -231,7 +231,8 @@ class SubjectsController < BaseController
   end
   
   def admin_show
-    @subject = current_user.subjects.find(params[:id])   
+    @subject = current_user.subjects.find(params[:id])  
+      
   end
      
 

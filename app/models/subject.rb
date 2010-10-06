@@ -14,6 +14,14 @@ class Subject < ActiveRecord::Base
   validates_presence_of :title, :if => lambda {|s| s.current_step == "subject"}
   validates_presence_of :description, :if => lambda {|s| s.current_step == "subject"}
   # validates_presence_of :simple_category
+  
+  
+  def validate
+    if self.start_time != nil && self.end_time != nil
+      errors.add :end_time, "Data final tem que ser maior do que data inical" if self.start_time > self.end_time
+    end
+
+  end
 
   #associations
   has_and_belongs_to_many :audiences
@@ -78,13 +86,52 @@ class Subject < ActiveRecord::Base
 
 
   def create_course_subject_type_course aulas, subject_id, current_user
-
+   
     aulas.each do |aula|
-
+     
       course = current_user.courses.find(aula) #find the course by id
-      clone_course = course.clone #clone it
+      clone_course = course.clone :except => [:view_count, :created_at, :updated_at]#clone it, methodo 'except' relacionado com o plugin vendor/deep_cloning, sem os atributos[view_count, :created_at, :updated_at]
+      
+      #### clone o conteúdo da aula #######
+      type = course.courseable #a aula, pode ser seminar, page or interactive_class
+      
+      if type.class.to_s.eql?("InteractiveClass") #INTERACTIVE CLASS
+        
+        
+        clone_type = InteractiveClass.find(type.id).clone :include => :lessons #type.clone :include => :lessons
+        clone_type.save
+        
+        clone_type.lessons.each do |l| # um lesson pode ser 'Page' or 'Seminar', 
+        
+          #bug
+          #clone_lesson = l.lesson.clone # pode ser page or seminar
+          #clone_lesson.save 
+          #l.lesson_id = clone_lesson.id
+          #l.save
+          clone_lesson = Lesson.find(l.id)
+          clone_lesson.lesson_id = clone_type.id  
+          clone_lesson.save
+          
+        end
+        
+      elsif type.class.to_s.eql?("Seminar") #SEMINAR
+        
+        #clone_type = type.clone :include => :lessons
+        #clone_type.save
+        clone_type = Seminar.find(type.id).clone :include => :lessons 
+        clone_type.save
+        
+      else #Page  
+        clone_type = type.clone 
+        clone_type.save
+      end  
+      clone_course.courseable_type = clone_type.class.to_s 
+      clone_course.courseable_id = clone_type.id
+      
+      ##### fim do clone do conteúdo da aula######
       clone_course.is_clone = true
       clone_course.save#and save it
+      
       cs = CourseSubject.new
       cs.subject_id = subject_id
       cs.courseable_id = clone_course.id
@@ -113,7 +160,43 @@ class Subject < ActiveRecord::Base
       inserted_ids.each do |aula|
 
         course = current_user.courses.find(aula) #find the course by id
-        clone_course = course.clone #clone it
+        clone_course = course.clone :except => [:view_count, :created_at, :updated_at] #clone it
+        #### clone o conteúdo da aula #######
+        type = course.courseable #a aula, pode ser seminar, page or interactive_class
+
+        if type.class.to_s.eql?("InteractiveClass") #INTERACTIVE CLASS
+
+
+          clone_type = InteractiveClass.find(type.id).clone :include => :lessons #type.clone :include => :lessons
+          clone_type.save
+
+          clone_type.lessons.each do |l| # um lesson pode ser 'Page' or 'Seminar', 
+
+            #bug
+            #clone_lesson = l.lesson.clone # pode ser page or seminar
+            #clone_lesson.save 
+            #l.lesson_id = clone_lesson.id
+            #l.save
+            clone_lesson = Lesson.find(l.id)
+            clone_lesson.lesson_id = clone_type.id  
+            clone_lesson.save
+
+          end
+
+        elsif type.class.to_s.eql?("Seminar") #SEMINAR
+
+          #clone_type = type.clone :include => :lessons
+          #clone_type.save
+          clone_type = Seminar.find(type.id).clone :include => :lessons 
+          clone_type.save
+
+        else #Page  
+          clone_type = type.clone 
+          clone_type.save
+        end  
+        clone_course.courseable_type = clone_type.class.to_s 
+        clone_course.courseable_id = clone_type.id
+        ##### fim do clone do conteúdo da aula######
         clone_course.is_clone = true
         clone_course.save#and save it
         cs = CourseSubject.new
@@ -189,6 +272,25 @@ class Subject < ActiveRecord::Base
     exams.each do |exam_id|
       exame = current_user.exams.find(exam_id) #find exame by id
       clone_exame = exame.clone #clone it
+      #### clone o conteúdo do exame #######
+=begin      
+      type = exame #a aula, pode ser seminar, page or interactive_class
+      
+      clone_type = type.clone :include => [:lessons]
+      clone_type.save
+        
+        InteractiveClass.find(clone_type.id).lessons.each do |l| # um lesson pode ser 'Page' or 'Seminar', 
+          clone_lesson = l.lesson.clone # pode ser page or seminar
+          clone_lesson.save 
+          l.lesson_id = clone_lesson.id
+          l.save
+        end
+        
+        
+      clone_course.courseable_type = clone_type.class.to_s 
+      clone_course.courseable_id = clone_type.id
+=end      
+      ##### fim do clone do conteúdo da aula######
       clone_exame.is_clone = true
       clone_exame.save#and save it
       cs = CourseSubject.new

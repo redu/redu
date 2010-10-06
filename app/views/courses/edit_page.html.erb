@@ -1,53 +1,48 @@
-<script>
-	function removeField(link){
-		jQuery(link).parent("fieldset:first").hide()
-		jQuery(link).siblings("input[type=hidden]:first").val("1")
-	}
-	// TODO evitar esta duplicacao
-	function add_fields(link, association, content) {
-		var new_id = new Date().getTime();
-		var regexp = new RegExp("new_" + association, "g")
-		jQuery(link).before("<fieldset>" + content.replace(regexp, new_id) + "</fieldset>");
-	}
+<div class="grid_16">
+<div id="breadcrumbs">
+		<% if @school %>
+	<a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <%= link_to @school.name, @school %> > <%= link_to @course.name, @course %> > editar
+	<% else %>
+	<a href="<%=application_url%>">início</a> > <a href="#">ensinar</a> > <%= link_to @course.name, @course %> > editar
+	<%end %>
+</div>
+</div>
 	
-</script>
+	<div class="grid_16"> 
+<h3 class="call">Editando artigo </h3>
 
-<div id="all_content3">
-<div id="col_content">
-	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">aprender</a> > <a href="#"><%= @course.name %></a> </div>
- 	<div id="title">EDITANDO PÁGINA
-	</div>
 
 <% form_for @course, :html => { :multipart => true } do |f| %>
 <%= f.error_messages %>
+<%= hidden_field_tag("school_id", @school.id) if @school %>
 
+<% field_set_tag "Informacoes Gerais" do %>
 
+	<%= f.label "Nome:" %>
+	<%= f.text_field :name %>
 
-	<%= f.label "Nome:" %><br/>
-	<%= f.text_field :name %><br/><br/>
-
-	<%= f.label "Descrição:" %><br/>
-	<%= f.text_area :description, :size => "50x3" %><br/><br/>
+	<%= f.label "Descrição:" %>
+	<%= f.text_area :description, :size => "50x3" %>
 	
-	<%= f.label "Tags:" %><br/>
-	<%= f.text_field :tag_list %><br/><br/>
+	<%= f.label "Tags:" %>
+	<%= f.text_field :tag_list %>
+
+<% end %>
+</div>
 	
-	
-	<% f.fields_for :page do |thepage| %>
-	 <%= thepage.label 'Texto:' %>
+	<div class="grid_12 push_2">
+	<% f.fields_for :courseable  do |thepage| %>
+	<% if @course.courseable_type == 'Page' %>
+	<%= f.hidden_field(:courseable_type, :value => "Page" )%>
+	 <%= thepage.label 'Texto' %>
 	 <%= thepage.text_area :body, :class => "mceEditor" %>
+	 <% end %>
 	<% end %>
+	</div>
 
-	
-
-<%= render :partial => 'attachment_form', :locals => {:f => f, :course => @course}%>
-
-
+	<div class="grid_16" style="margin-top: 20px;"> 
 <%= f.submit 'Atualizar' %> ou <%= link_to 'Cancelar', course_path(@course) %>
-
+</div>
 <% end %>
 
 
-
-</div>
-</div>

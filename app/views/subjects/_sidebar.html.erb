@@ -6,8 +6,14 @@
     <span class="call"><span style ="background:none repeat scroll 0 0 #FFFFDF; color:orange;">info</span></span>
     <div style="background-color: #eef; border: 1px solid #eee; height: 200px; padding: 15px;">
     	
-		<h3><%= @subject.title%></h3>
-		<%= @subject.description%>
+		<p><h3><%= @subject.title%></h3>
+		<%= @subject.description%></p>
+
+		<p><h3<strong>Começo:</strong></h3>
+		<%= @subject.start_time.strftime("%d/%m/%Y")%></p>
+		<p><h3<strong>Fim:</strong></h3>
+		<%= @subject.end_time.strftime("%d/%m/%Y")%></p>
+		
     </div>
   	</li>
    

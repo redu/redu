@@ -29,6 +29,29 @@
 		</div>
 		
 	<% end %>
+	
+	
+	<% field_set_tag "Senha" do %>
+	<div id="current">
+	<%= f.label "Senha Atual" %>
+ 
+	<% if @flag%>
+	<%=  password_field_tag :current_password, nil, :style => "background-color: #FEEFB3"  %>
+	<%else%>
+	<%= @current_password%>
+	<%=  password_field_tag :current_password %>
+   <%end%> 
+
+</div>
+		
+<div id="modify">	
+	<%= f.label "Digite a nova senha" %>
+	<%=  f.password_field :password %>
+	<%= f.label "Digite novamente" %>
+	<%=  f.password_field :password_confirmation %>		
+</div>
+	
+	<% end %>
 
 		
 		

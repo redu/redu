@@ -7,7 +7,7 @@ class Exam < ActiveRecord::Base
   ajaxful_rateable :stars => 5
   
   # ASSOCIATIONS
-   has_many :statuses, :as => :statusable
+  has_many :statuses, :as => :statusable
   has_many :question_exam_associations#, :dependent => :destroy
   has_many :questions, :through => :question_exam_associations, :include => :alternatives, :order => :position
   has_many :exam_users, :dependent => :destroy

@@ -37,6 +37,14 @@ $(document).ready(function(){
     <div id="char_limit" style="text-align:right;">(<%=AppConfig.desc_char_limit %>)</div>
     <%= error_message_on @subject, :description %>
 
+   	<%= f.label :beginning, "Início:" %>
+	<%= f.text_field :start_time %>
+	
+   	<%= f.label :end, "Fim:" %>
+	<%= f.text_field :end_time %>
+	<%= error_message_on @subject, :end_time %>
+	
+
     <%= f.label "Tags <span class='snippet'>(separadas por vírgula)</span>" %>
     <%= f.text_field :tag_list %>
 
@@ -63,3 +71,11 @@ $(document).ready(function(){
 
 
 </div>
+
+<script type="text/javascript">
+
+		$(function() {
+			$("#subject_start_time").datetimepicker();
+			$("#subject_end_time").datetimepicker();
+		});
+</script>
