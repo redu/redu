@@ -10,7 +10,9 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :lessons
   map.resources :beta_keys, :collection => {:generate => :get, :remove_all => :get, :print_blank => :get, :invite => [:get, :post]}
   map.resources :profiles
-  map.resources :subjects, :member => {:enroll => :get}, :collection => {:cancel => :get}
+  map.resources :subjects, :member => {:enroll => :get}, :collection => {:cancel => :get} do |subject|
+  subject.resources :events, :member => { :vote => [:post,:get], :notify => :post }, :collection => { :past => :get, :ical => :get , :day => :get}
+  end
  
   map.admin_subjects "admin/subjects", :controller => "subjects", :action => "admin_subjects" 
   map.admin_show "admin/show/:id", :controller => "subjects", :action => "admin_show" 

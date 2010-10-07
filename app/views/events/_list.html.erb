@@ -1,6 +1,10 @@
 <li class="clearfix">
 
+    <% if event.eventable.class.to_s.eql?("School") %><!--Evento de um escola-->	
 	<%= link_to event.name, school_event_path(event.eventable, event), :class => "grid_12" %>	
+	<%else%>
+	<%= link_to event.name, subject_event_path(event.eventable, event), :class => "grid_12" %>	
+	<% end %>	
 	<span class="grid_6"><%= event.time_and_date %></span>
 	
 	<div class="grid_10 pretty-text">				
@@ -9,10 +13,21 @@
 
 	<% if current_user.can_manage?(event, event.eventable) %>
 		<div class="grid_10">
+       <% if event.eventable.class.to_s.eql?("School") %><!--Evento de um escola-->	
+
 		<%= link_to "Editar", edit_school_event_path(event.eventable, event), :class => "button icon-edit" %>
 		<%= link_to 'Remover', school_event_path(event, event.eventable),
 		:confirm => 'Você tem certeza que deseja remover essa notícia permanentemente?',
 		:method => :delete, :class => "button icon-delete" %>	
+		
+		<%else%><!--Evento de um Curso-->
+		  
+		   <%= link_to "Editar", edit_subject_event_path(event.eventable, event), :class => "button icon-edit" %>
+		   <%= link_to 'Remover', subject_event_path(event, event.eventable),
+		    :confirm => 'Você tem certeza que deseja remover essa notícia permanentemente?',
+		    :method => :delete, :class => "button icon-delete" %>
+		<%end%>
+		
 		</div>
 	<% end %>
 	

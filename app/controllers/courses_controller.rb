@@ -210,6 +210,7 @@ class CoursesController < BaseController
   # GET /courses/new
   # GET /courses/new.xml
   def new
+    
     if params[:school_id]
       @school = School.find(params[:school_id])
     end

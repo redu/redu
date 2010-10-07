@@ -1,8 +1,12 @@
 <div class="main grid_16">
+	<% if @eventable.class.to_s.eql?("School")%>
 	<%= render :partial => "schools/school_info", :locals => {:school => @event.eventable, :show => false} %>
 	<%= render :partial => "schools/sidebar", :locals => {:school => @event.eventable} %>
-
-	<%= render :partial=>'events/item', :locals => {:event => @event, :show_details_link => false} %>
+   <%= render :partial=>'events/item', :locals => {:event => @event, :show_details_link => false} %> 
+<%else%>
+<%= render :partial=>'events/subject_event_show', :locals => {:event => @event, :show_details_link => false} %>   
+<%end%>
+	
 	
 	<a name="comments"></a>
 </div>

@@ -1,44 +1,13 @@
 <div class="main grid_16">
+	<%if @eventable.class.eql?("School")%>
 	<%= render :partial => "schools/school_info", :locals => {:school => @school, :show => false} %>
+	<%end%>
 	<%# render :partial => "schools/sidebar", :locals => {:school => @school} %>
 	<div class="sidebar grid_4">
 	</div>
 
-
-	<div class="main grid_10">
-		<div class="menu">
-			<% if @list_title == "Eventos Passados" %>
-				Eventos passados
-			<% else %>
-				<%= link_to "Eventos passados", past_school_events_path %>
-			<% end %>
-			|
-			<% if @list_title == "Eventos Futuros" %>
-				Eventos Futuros
-			<% else %>
-				<%= link_to "Eventos futuros", school_events_path %>
-			<% end %>
-		</div>
-		<div class="grid_12">
-			<h3>EVENTOS</h3>
-			<p>Informe-se sobre os eventos da rede!</p>
-		</div>
-	
-		<%= render :partial => 'events/subscribe' %>
-		
-		<h2 class="grid_12"><%= @list_title %></h2>
-	
-		<ul class="grid_12">
-			<% if @events && @events.size > 0 %>	
-				<%= render :partial => 'events/list', :collection => @events, :as => :event %>
-			<% else %>
-				Esta rede ainda não tem eventos agendados para este período!
-				<%= link_to "Crie um novo evento", new_school_event_path %>
-			<% end %>
-		</ul>
-	
-		<div id="pagination" align="center" class="pagination">
-			<%= will_paginate  @events, :params => {:sort_by => 'start_time'}, :class => "pagination_number"  %>		
-	    </div>
-	</div>
-</div>
+<% if @eventable.class.to_s.eql?("School")%>
+	<% render :partial => "school_event_index" %>
+	<%else%>
+	<% render :partial => "subject_event_index" %>
+<%end%>

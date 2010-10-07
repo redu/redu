@@ -141,10 +141,9 @@ class SubjectsController < BaseController
       elsif @subject.last_step?
         
         if @subject.all_valid?
-          @subject.save
-         
           @subject.create_course_subject_type_course(session[:subject_aulas], @subject.id, current_user) unless session[:subject_aulas].nil?
           @subject.create_course_subject_type_exam(session[:subject_exames], @subject.id, current_user) unless session[:subject_exames].nil?
+          @subject.save  
         end
       else
         @subject.next_step

@@ -8,9 +8,10 @@ class EventsController < BaseController
   before_filter :login_required
   before_filter :is_member_required
   before_filter :is_event_approved,
-                :only => [:show, :edit, :update, :destroy]
+    :only => [:show, :edit, :update, :destroy]
   before_filter :can_manage_required,
-                :only => [:edit, :update, :destroy]
+    :only => [:edit, :update, :destroy]
+  before_filter :find_eventable
 
 
   #These two methods make it easy to use helpers in the controller.
@@ -40,34 +41,35 @@ class EventsController < BaseController
       ical_event.description = (event.description.blank? ? '' : coder.decode(help.strip_tags(event.description).to_s) + "\n\n") + event_url(event)
       ical_event.location = event.location unless event.location.blank?
       @calendar.add ical_event
-   end
-   @calendar.publish
-   headers['Content-Type'] = "text/calendar; charset=UTF-8"
-   render :text => @calendar.to_ical, :layout => false
+    end
+    @calendar.publish
+    headers['Content-Type'] = "text/calendar; charset=UTF-8"
+    render :text => @calendar.to_ical, :layout => false
   end
 
   def show
     @event = Event.find(params[:id])
-    @school = School.find(params[:school_id])
+    @school = School.find(params[:school_id]) unless params[:school_do].nil?
   end
 
   def index
-    @events = Event.upcoming.paginate(:conditions => ["eventable_id = ? AND eventable_type = 'School' AND state LIKE 'approved'", School.find(params[:school_id]).id],
-      :include => :owner,
-      :page => params[:page],
-      :order => 'start_time DESC',
-      :per_page => AppConfig.items_per_page)
+    @events = Event.upcoming.paginate(:conditions => ["eventable_id = ?  AND state LIKE 'approved'", @eventable.id],
+
+                                      :include => :owner,
+                                      :page => params[:page],
+                                      :order => 'start_time DESC',
+                                      :per_page => AppConfig.items_per_page)
 
     @list_title = "Eventos Futuros"
-    @school = School.find(params[:school_id])
+    @school = School.find(params[:school_id]) unless params[:school_id].nil?
   end
 
   def past
     @events = Event.past.paginate(:conditions => ["eventable_id = ? AND eventable_type = 'School' AND state LIKE 'approved'", School.find(params[:school_id]).id],
-      :include => :owner,
-      :page => params[:page],
-      :order => 'start_time DESC',
-      :per_page => AppConfig.items_per_page)
+                                  :include => :owner,
+                                  :page => params[:page],
+                                  :order => 'start_time DESC',
+                                  :per_page => AppConfig.items_per_page)
 
     @list_title = "Eventos Passados"
     render :template => 'events/index'
@@ -75,7 +77,8 @@ class EventsController < BaseController
 
   def new
     @event = Event.new(params[:event])
-    @school = School.find(params[:school_id])
+    @school = School.find(params[:school_id]) unless params[:school_id].nil?
+    @subject = current_user.subjects.find(params[:subject_id].split("-")[0].to_i) unless params[:subject_id].nil?
   end
 
   def edit
@@ -85,31 +88,35 @@ class EventsController < BaseController
   def create
     @event = Event.new(params[:event])
     @event.owner = current_user
-    
-    
-    unless params[:school_id].nil?
-    @event.eventable_id =  School.find(params[:school_id]).id
-    @event.eventable_type = "School"
-    @school = @event.eventable
-    end
+
+    @event.eventable_id = @eventable.id
+    @event.eventable_type = @eventable.class.to_s
 
     respond_to do |format|
+
       if @event.save
 
-        if @event.owner.can_manage? @school
-          @event.approve!
-          flash[:notice] = "O evento foi criado e divulgado."
-        else
-          flash[:notice] = "O evento foi criado e será divulgado assim que for aprovado pelo moderador."
+        if @eventable.class.to_s.eql?("School") ##evento da escola###
+
+          if @event.owner.can_manage? @school
+            @event.approve!
+            flash[:notice] = "O evento foi criado e divulgado."
+          else
+            flash[:notice] = "O evento foi criado e será divulgado assim que for aprovado pelo moderador."
+          end
+          format.html { redirect_to school_event_path(@event.eventable, @event) }
+          format.xml  { render :xml => @event, :status => :created, :location => @event }
+        else ### evento de subject ####
+          flash[:notice] = "O evento foi criado e divulgado!!"
+          format.html { redirect_to admin_subjects_path }
         end
-        
-        format.html { redirect_to school_event_path(@event.eventable, @event) }
-        format.xml  { render :xml => @event, :status => :created, :location => @event }
+
       else
-        
-          format.html { render :action => "new" }
-          format.xml  { render :xml => @event.errors, :status => :unprocessable_entity }
+        format.html { render :action => "new" }
+        format.xml  { render :xml => @event.errors, :status => :unprocessable_entity }
       end
+
+
     end
   end
 
@@ -119,7 +126,13 @@ class EventsController < BaseController
     respond_to do |format|
       if @event.update_attributes(params[:event])
         flash[:notice] = 'O evento foi editado.'
-        format.html { redirect_to school_event_path(@event.eventable, @event) }
+
+        if @eventable.class.to_s.eql?("School") ##evento da escola###
+          format.html { redirect_to school_event_path(@event.eventable, @event) }
+        else
+          format.html { redirect_to subject_event_path(@event.eventable, @event) }
+        end
+
         format.xml { render :xml => @event, :status => :created, :location => @event }
       else
         format.html {
@@ -136,7 +149,11 @@ class EventsController < BaseController
 
     respond_to do |format|
       flash[:notice] = 'O evento foi excluído.'
-      format.html { redirect_to school_events_path }
+      if @eventable.class.to_s.eql?("School")
+        format.html { redirect_to school_events_path }
+      else
+        format.html { redirect_to subject_events_path }
+      end
     end
   end
 
@@ -149,7 +166,7 @@ class EventsController < BaseController
           page << "jQuery('#like_spinner').hide()"
           page << "jQuery('#like_link').show()"
           page << "jQuery('#like_link').attr('onclick', 'return false;')"
-           page << "jQuery('#like_count').html('" + @event.votes_for().to_s + "')" # TODO performance + uma consulta?
+          page << "jQuery('#like_count').html('" + @event.votes_for().to_s + "')" # TODO performance + uma consulta?
         end
       end
     end
@@ -159,10 +176,10 @@ class EventsController < BaseController
     day = Time.utc(Time.now.year, Time.now.month, params[:day])
 
     @events = Event.paginate(:conditions => ["eventable_id = ? AND eventable_type = 'School' AND state LIKE 'approved' AND ? BETWEEN start_time AND end_time", School.find(params[:school_id]).id, day],
-      :include => :owner,
-      :page => params[:page],
-      :order => 'start_time DESC',
-      :per_page => AppConfig.items_per_page)
+                             :include => :owner,
+                             :page => params[:page],
+                             :order => 'start_time DESC',
+                             :per_page => AppConfig.items_per_page)
     @school = School.find(params[:school_id])
 
     @list_title = "Eventos do dia #{day.strftime("%d/%m/%Y")}"
@@ -178,25 +195,43 @@ class EventsController < BaseController
     redirect_to school_event_path(event.school_id, event)
   end
 
-protected
-  def can_manage_required
-     @event = Event.find(params[:id])
+  protected
 
-     current_user.can_manage?(@event, @school) ? true : access_denied
-  end
+    ##determinar o pai dess evento####
+    def find_eventable
 
-  def is_member_required
-    @school = School.find(params[:school_id])
-
-    current_user.has_access_to(@school) ? true : access_denied
-  end
-
-  def is_event_approved
-    @event = Event.find(params[:id])
-
-    if not @event.state == "approved"
-      redirect_to school_events_path
+      unless params[:school_id].nil?
+        @eventable = current_user.schools.find(params[:school_id].to_i)
+        #event_index = school_events_path
+      else
+        @eventable = current_user.subjects.find(params[:subject_id].split("-")[0])
+        #event_index = subject_events_path
+      end
     end
-  end
+
+    def can_manage_required
+      @event = Event.find(params[:id])
+
+      current_user.can_manage?(@event, @school) ? true : access_denied
+    end
+
+    def is_member_required
+      unless params[:school_id].nil?
+        @school = School.find(params[:school_id])
+        current_user.has_access_to(@school) ? true : access_denied
+      end
+    end
+
+    def is_event_approved
+      @event = Event.find(params[:id])
+
+      if not @event.state == "approved"
+        if @event.eventable.class.to_s.eql?("School")
+          redirect_to school_events_path
+        else
+          redirect_to subject_events_path
+        end
+      end
+    end
 
 end

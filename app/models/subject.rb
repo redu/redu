@@ -33,7 +33,7 @@ class Subject < ActiveRecord::Base
   has_many :statuses, :as => :statusable
   has_many :students, :through => :enrollments, :source => :user, :conditions => [ "enrollments.role_id = ?", 7 ]
   has_many :teachers, :through => :enrollments, :source => :user, :conditions => [ "enrollments.role_id = ?", 6 ]
-
+  has_many :events, :as => :eventable
 
 
   # METODOS DO WIZARD
@@ -116,10 +116,8 @@ class Subject < ActiveRecord::Base
         
       elsif type.class.to_s.eql?("Seminar") #SEMINAR
         
-        #clone_type = type.clone :include => :lessons
+        #clone_type = Seminar.find(type.id).clone
         #clone_type.save
-        clone_type = Seminar.find(type.id).clone :include => :lessons 
-        clone_type.save
         
       else #Page  
         clone_type = type.clone 
@@ -131,6 +129,10 @@ class Subject < ActiveRecord::Base
       ##### fim do clone do conteúdo da aula######
       clone_course.is_clone = true
       clone_course.save#and save it
+      
+      ####depois####
+      
+      ########
       
       cs = CourseSubject.new
       cs.subject_id = subject_id
