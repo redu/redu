@@ -13,7 +13,8 @@ class Event < ActiveRecord::Base
 	validates_length_of :tagline, :maximum => AppConfig.desc_char_limit
 
   belongs_to :owner, :class_name => "User", :foreign_key => 'owner'
-  belongs_to :school
+  #belongs_to :school
+  belongs_to :eventable, :polymorphic => true
 
   #Procs used to make sure time is calculated at runtime
   named_scope :upcoming, lambda { { :order => 'start_time', :conditions => ['end_time > ?' , Time.now ] } }

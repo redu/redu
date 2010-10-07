@@ -587,7 +587,7 @@ module BaseHelper
     start_month = Time.utc(Time.now.year, month, 1)
     end_month = Time.utc(Time.now.year, month, 31)
     Event.all(:select => "id, start_time, end_time",
-              :conditions => ["school_id = ? AND state LIKE 'approved' AND (start_time BETWEEN ? AND ? OR end_time BETWEEN ? AND ?)", school_id, start_month, end_month, start_month, end_month])
+              :conditions => ["eventable_id = ? AND eventable_type = 'School' AND state LIKE 'approved' AND (start_time BETWEEN ? AND ? OR end_time BETWEEN ? AND ?)", school_id, start_month, end_month, start_month, end_month])
   end
 
   # Indica se há evento no dia informado

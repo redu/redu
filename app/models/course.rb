@@ -146,4 +146,9 @@ class Course < ActiveRecord::Base
   def build_courseable(params)
   puts ' oi'
   end
+  
+  def destroy
+     self.courseable.destroy unless self.courseable.nil?
+     super
+    end
 end

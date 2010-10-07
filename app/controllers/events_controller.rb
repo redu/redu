@@ -52,7 +52,7 @@ class EventsController < BaseController
   end
 
   def index
-    @events = Event.upcoming.paginate(:conditions => ["school_id = ? AND state LIKE 'approved'", School.find(params[:school_id]).id],
+    @events = Event.upcoming.paginate(:conditions => ["eventable_id = ? AND eventable_type = 'School' AND state LIKE 'approved'", School.find(params[:school_id]).id],
       :include => :owner,
       :page => params[:page],
       :order => 'start_time DESC',
@@ -63,7 +63,7 @@ class EventsController < BaseController
   end
 
   def past
-    @events = Event.past.paginate(:conditions => ["school_id = ? AND state LIKE 'approved'", School.find(params[:school_id]).id],
+    @events = Event.past.paginate(:conditions => ["eventable_id = ? AND eventable_type = 'School' AND state LIKE 'approved'", School.find(params[:school_id]).id],
       :include => :owner,
       :page => params[:page],
       :order => 'start_time DESC',
@@ -76,7 +76,6 @@ class EventsController < BaseController
   def new
     @event = Event.new(params[:event])
     @school = School.find(params[:school_id])
-
   end
 
   def edit
@@ -86,9 +85,13 @@ class EventsController < BaseController
   def create
     @event = Event.new(params[:event])
     @event.owner = current_user
-    @event.school = School.find(params[:school_id])
-
-    @school = @event.school
+    
+    
+    unless params[:school_id].nil?
+    @event.eventable_id =  School.find(params[:school_id]).id
+    @event.eventable_type = "School"
+    @school = @event.eventable
+    end
 
     respond_to do |format|
       if @event.save
@@ -99,10 +102,11 @@ class EventsController < BaseController
         else
           flash[:notice] = "O evento foi criado e será divulgado assim que for aprovado pelo moderador."
         end
-
-        format.html { redirect_to school_event_path(@event.school, @event) }
+        
+        format.html { redirect_to school_event_path(@event.eventable, @event) }
         format.xml  { render :xml => @event, :status => :created, :location => @event }
       else
+        
           format.html { render :action => "new" }
           format.xml  { render :xml => @event.errors, :status => :unprocessable_entity }
       end
@@ -115,7 +119,7 @@ class EventsController < BaseController
     respond_to do |format|
       if @event.update_attributes(params[:event])
         flash[:notice] = 'O evento foi editado.'
-        format.html { redirect_to school_event_path(@event.school, @event) }
+        format.html { redirect_to school_event_path(@event.eventable, @event) }
         format.xml { render :xml => @event, :status => :created, :location => @event }
       else
         format.html {
@@ -154,7 +158,7 @@ class EventsController < BaseController
   def day
     day = Time.utc(Time.now.year, Time.now.month, params[:day])
 
-    @events = Event.paginate(:conditions => ["school_id = ? AND state LIKE 'approved' AND ? BETWEEN start_time AND end_time", School.find(params[:school_id]).id, day],
+    @events = Event.paginate(:conditions => ["eventable_id = ? AND eventable_type = 'School' AND state LIKE 'approved' AND ? BETWEEN start_time AND end_time", School.find(params[:school_id]).id, day],
       :include => :owner,
       :page => params[:page],
       :order => 'start_time DESC',

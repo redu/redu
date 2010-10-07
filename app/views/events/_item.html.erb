@@ -1,7 +1,7 @@
 <div class="grid_11">
 	<div class="grid_6">
 		<% if show_details_link %>
-			<h4 class="grid_6"><%= link_to @event.name, school_event_path(@event.school, @event) %></h4>
+			<h4 class="grid_6"><%= link_to @event.name, school_event_path(@event.eventable, @event) %></h4>
 		<% else %>
 			<h4 class="grid_6"><%= @event.name %></h4>
 		<% end %>
@@ -36,9 +36,9 @@
 		<% end %>
 	</span>
 	
-	<% if current_user.can_manage?(@event, @event.school) %>
+	<% if current_user.can_manage?(@event, @event.eventable) %>
 		<div class="grid_4">
-		<%= link_to "Editar", edit_school_event_path(@event.school, @event), :class => "button icon-edit" %>
+		<%= link_to "Editar", edit_school_event_path(@event.eventable, @event), :class => "button icon-edit" %>
 		<%= link_to 'Remover', school_event_path,
 		:confirm => 'Você tem certeza que deseja remover esse evento permanentemente?',
 		:method => :delete, :class => "button icon-delete" %>	
