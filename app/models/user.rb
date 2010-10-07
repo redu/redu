@@ -357,11 +357,14 @@ class User < ActiveRecord::Base
     update_attributes(:activated_at => Time.now.utc, :activation_code => nil)
   end
 
+  def can_activate?
+    activated_at.nil? and created_at > 30.days.ago 
+  end
+
   def active?
-    # ( activated_at.nil? and (created_at < (Time.now - 30.days))) ? false : true
+     ( activated_at.nil? and (created_at < (Time.now - 30.days))) ? false : true
     # activation_code.nil? && !activated_at.nil?
     # self.activated_at
-    true
   end
 
   def recently_activated?

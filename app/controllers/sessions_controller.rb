@@ -3,6 +3,7 @@ class SessionsController < BaseController
 #  if AppConfig.closed_beta_mode
 #    skip_before_filter :beta_login_required
 #  end  
+  before_filter :less_than_30_days_of_registration_required, :only => :create
 
   def index
     redirect_to :action => "new"
@@ -57,6 +58,16 @@ class SessionsController < BaseController
     current_user_session.destroy
     flash[:notice] = :youve_been_logged_out_hope_you_come_back_soon.l
     redirect_to new_session_path
+  end
+
+ protected 
+
+  def less_than_30_days_of_registration_required
+    user = User.find_by_login(params[:user_session][:login])
+    if user and not user.active? and not user.can_activate? # Passou do tempo de autenticar
+      flash[:notice] = "Desculpe, seu tempo para ativação da conta expirou. Cadastre-se novamente."
+      redirect_to :action => :new
+    end
   end
 
 end
