@@ -16,14 +16,14 @@
        <% if event.eventable.class.to_s.eql?("School") %><!--Evento de um escola-->	
 
 		<%= link_to "Editar", edit_school_event_path(event.eventable, event), :class => "button icon-edit" %>
-		<%= link_to 'Remover', school_event_path(event, event.eventable),
+		<%= link_to 'Remover', school_event_path(event.eventable,event),
 		:confirm => 'Você tem certeza que deseja remover essa notícia permanentemente?',
 		:method => :delete, :class => "button icon-delete" %>	
 		
 		<%else%><!--Evento de um Curso-->
 		  
 		   <%= link_to "Editar", edit_subject_event_path(event.eventable, event), :class => "button icon-edit" %>
-		   <%= link_to 'Remover', subject_event_path(event, event.eventable),
+		   <%= link_to 'Remover', subject_event_path(event.eventable, event),
 		    :confirm => 'Você tem certeza que deseja remover essa notícia permanentemente?',
 		    :method => :delete, :class => "button icon-delete" %>
 		<%end%>

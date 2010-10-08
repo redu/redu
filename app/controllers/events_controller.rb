@@ -54,7 +54,6 @@ class EventsController < BaseController
 
   def index
     @events = Event.upcoming.paginate(:conditions => ["eventable_id = ?  AND state LIKE 'approved'", @eventable.id],
-
                                       :include => :owner,
                                       :page => params[:page],
                                       :order => 'start_time DESC',
@@ -62,6 +61,7 @@ class EventsController < BaseController
 
     @list_title = "Eventos Futuros"
     @school = School.find(params[:school_id]) unless params[:school_id].nil?
+    
   end
 
   def past
@@ -125,35 +125,36 @@ class EventsController < BaseController
 
     respond_to do |format|
       if @event.update_attributes(params[:event])
+        
         flash[:notice] = 'O evento foi editado.'
 
         if @eventable.class.to_s.eql?("School") ##evento da escola###
           format.html { redirect_to school_event_path(@event.eventable, @event) }
+          format.xml { render :xml => @event, :status => :created, :location => @event }
         else
           format.html { redirect_to subject_event_path(@event.eventable, @event) }
         end
-
-        format.xml { render :xml => @event, :status => :created, :location => @event }
+       
       else
-        format.html {
-          format.html { render :action => :edit }
-          format.xml { render :xml => @event.errors, :status => :unprocessable_entity }
-        }
+        format.html { render :edit }
+        format.xml { render :xml => @event.errors, :status => :unprocessable_entity }
       end
     end
   end
 
   def destroy
+    
     @event = Event.find(params[:id])
     @event.destroy
 
     respond_to do |format|
       flash[:notice] = 'O evento foi excluído.'
+      
       if @eventable.class.to_s.eql?("School")
         format.html { redirect_to school_events_path }
       else
         format.html { redirect_to subject_events_path }
-      end
+      end   
     end
   end
 
@@ -191,8 +192,11 @@ class EventsController < BaseController
     notification_time = event.start_time - params[:days].to_i.days
     Delayed::Job.enqueue(EventMailingJob.new(current_user, event), nil, notification_time) #TODO Verificar se a prioridade nil (zero) pode trazer problemas
     flash[:notice] = "Sua notificação foi agendada."
-
-    redirect_to school_event_path(event.school_id, event)
+    if @eventable.class.to_s.eql?("SChool")
+      redirect_to school_event_path(@eventable.id, event)
+    else
+     redirect_to subject_event_path(@eventable.id, event)
+   end
   end
 
   protected
@@ -201,11 +205,9 @@ class EventsController < BaseController
     def find_eventable
 
       unless params[:school_id].nil?
-        @eventable = current_user.schools.find(params[:school_id].to_i)
-        #event_index = school_events_path
+        @eventable = School.find(params[:school_id])
       else
         @eventable = current_user.subjects.find(params[:subject_id].split("-")[0])
-        #event_index = subject_events_path
       end
     end
 
