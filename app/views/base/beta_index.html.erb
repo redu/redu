@@ -12,61 +12,86 @@
     <%= javascript_include_tag 'jquery-1.4.2.min.js', 'jquery-ui-1.8.1.custom.min.js'  %>
 </head>
 <body>
-<div id="closed-beta" class="container_16 content clearfix">
-<h1 id="logo" class="grid_5"><a href="#" class="replacement">Redu - Rede Social Educacional</a></h1>
+  <div class="container_16 clearfix">
+    <div id="header" class="grid_16 alpha omega">
+      <h1 class="logotipo grid_5 alpha">
+      	<a href="">Redu</a>
+      </h1>
+      <div class="menu grid_4 prefix_6 omega">
+      	<ul>
+           <li><%= link_to "Sobre", home_path %></li>
+          <li><%= link_to "Contato", contact_path %></li>
+      	</ul>
+      </div>
+    </div>
 
-<div id="main" class="grid_16">
-<div id="flash_messages" >
-<%= render :partial => "shared/messages" %>
-</div>
-<script type="text/javascript">
-$(document).ready(function(){
-    $("div.tabs").tabs()
-    $("#closed-beta div.user-actions a.pandora").click(function(e){
-        e.preventDefault()
-        var id = $(this).attr('href')
-        $(id).slideToggle()
-        $(this).toggleClass("opened")
-        $(this).toggleClass("closed")
-        
-    })
-})
-</script>
-<div class="tabs">
-
-    <ul class="clearfix">
-	<li><a href="#conheca">Conheça</a></li>
-	<li><a href="#aprenda">Aprenda</a></li>
-	<li><a href="#ensine">Ensine</a></li>
-    </ul>
-    
-    <div id="conheca" class="clearfix">
-    <span class="call">O Redu <span style="font-size: 1.1em; color: #F63B0B;">promove</span> um<br/>ambiente <span style="font-size: 1.1em; color: #F63B0B;">social</span> para a <span style="font-size: 1.1em; color: #F63B0B;">aprendizagem</span></span>
+    <div id="content" class="grid_16 alpha omega">
+    <script type="text/javascript"  charset="utf-8">
+      $(document).ready(function(){
+          $(".tabs").tabs({
+            fx: { opacity: 'toggle' }
+          });
+          $(".tabs").tabs("rotate", 8000);
+      })
+    </script>
+      <div id="banner" class="tabs grid_11 alpha">
+        <ul>
+        	<li class="redu">
+        		<a href="#redu">O Redu</a>
+        	</li>
+        	<li class="professores">
+        		<a href="#professores">Professores</a>
+        	</li>
+        	<li class="alunos">
+        		<a href="#alunos">Alunos</a>
+        	</li>
+        </ul>
+        <div id="redu" class="banner1">
+        <span class="call">O Redu <em>promove</em> um ambiente social para a <em>aprendizagem</em></span>
+        </div>
+        <div id="professores" class="banner2">
+          <span class="call">Recursos <em>inteligentes</em> que facilitam a <em>aprendizagem</em></span>
+        </div>
+        <div id="alunos" class="banner3">
+          <span class="call">Aprender ficou mais <em>prático</em></span>
+        </div>
+      </div>
+      <div id="sidebar" class="grid_5 omega">
+       <div class="beta box">
+          <div class="call">
+          	<span class="name">Recebeu o convite?</span>
+          	<span class="tip">Informe a chave e teste o Redu</span>
+                <% form_tag new_user_path, :method => :get,
+                    :class => 'common beta_key'  do |f|  %>
+                    <% field_set_tag "Informe a chave recebida por e-mail",
+                        :class => "hide" do %>
+                      <%= label_tag :beta_key, "Chave" %>
+                      <%= text_field_tag :beta_key, nil, :class => "small" %>
+                      <button class="common small"><span>Ok!</span></button>
+                    <% end %>
+                <% end %>
+          </div>
+        </div>
+        <div class="login box">
+          <div class="call">
+          	<span class="name">Acesse o Redu</span>
+                <span class="tip">Digite seus dados para entrar</span>
+                <% @user_session = UserSession.new %>
+                <% form_for :user_session, :url => sessions_path, 
+                    :html => { :class => "common" } do |f|  %>
+                    <%= render :partial => 'users/login', :locals => {:f => f} %>
+                <% end %>
+          </div>
+        </div>
+ 
+      </div>
     </div>
-    <div id="aprenda" class="clearfix">
-    <span class="call">Tire <span style="font-size: 1.1em; color: #F63B0B;">dúvidas</span> e<br/>veja o seu <span style="font-size: 1.1em; color: #F63B0B;">desempenho</span></span>
-    </div>
-    
-    <div id="ensine">
-    <span class="call"><span style="font-size: 1.1em; color: #F63B0B;">Atinja</span> e <span style="font-size: 1.1em; color: #F63B0B;">acompanhe</span><br/>muito mais alunos</span>
-    </div>
-</div>
-<div class="register clearfix">
-<div class="signin">
-<span>Já possui cadastro?</span>
-<div class="bt-acesse"><%= link_to 'Acesse o Redu', {:controller => 'sessions', :action => 'new'}  %></div>
-</div>
-<span class="call">Quer fazer parte do Redu?</span>
-<span class="call2">Inscreva-se e receba o convite</span>
-<%= render :partial => "beta_candidate/form" %>
-</div>
-</div><!-- end main-->
-</div><!-- end content -->
-<div class="footer clearfix">
-<div class="container_16">
-<a href="">Sobre o Redu</a><a href="">Blog</a><a href="">Trabalhe Conosco</a><a href="">Contato</a>
-</div>
-</div>
+ </div>
+ <div id="footer" class="clearfix">
+   <div class="container_16">
+     <div class="grid_11"><span class="copyright">2010 - Todos os direitos reservados - Redu</span></div>
+   </div>
+ </div>
 </body>
 </html>
 

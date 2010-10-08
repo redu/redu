@@ -34,13 +34,13 @@ class User < ActiveRecord::Base
 
   # CALLBACKS
   before_save   :whitelist_attributes
-  before_create :make_activation_code
-  #before_create :activate_before_save #not necessary
-  after_create  :update_last_login
-  #after_save    :activate # <- ja começa ativo
-  after_create {|user| UserNotifier.deliver_signup_notification(user) }
-  #after_save   {|user| UserNotifier.deliver_activation(user) if user.recently_activated? }
   before_save   :generate_login_slug
+  before_create :make_activation_code
+  after_create {|user| UserNotifier.deliver_signup_notification(user) }
+  after_create  :update_last_login
+  #before_create :activate_before_save #not necessary
+  #after_save    :activate # <- ja começa ativo
+  #after_save   {|user| UserNotifier.deliver_activation(user) if user.recently_activated? }
   after_save    :recount_metro_area_users
   after_destroy :recount_metro_area_users
 
@@ -357,11 +357,17 @@ class User < ActiveRecord::Base
     update_attributes(:activated_at => Time.now.utc, :activation_code => nil)
   end
 
+  def can_activate?
+    activated_at.nil? and created_at > 30.days.ago 
+  end
+
   def active?
-    # ( activated_at.nil? and (created_at < (Time.now - 30.days))) ? false : true
+    #FIXME Workaround para quando o active? é chamado e o usuário não exite
+    # (authlogic)
+    return false unless created_at
+    ( activated_at.nil? and (created_at < (Time.now - 30.days))) ? false : true
     # activation_code.nil? && !activated_at.nil?
     # self.activated_at
-    true
   end
 
   def recently_activated?

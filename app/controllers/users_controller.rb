@@ -13,7 +13,7 @@ class UsersController < BaseController
   # Filters
   after_filter :create_activity, :only => [:update]
 
-  before_filter :login_required, :except => [:new, :create, :forgot_password, :forgot_username]
+  before_filter :login_required, :except => [:new, :create, :forgot_password, :forgot_username, :activate]
   before_filter :find_user, :only => [:activity, :edit, :edit_pro_details, :show, :update, :destroy, :statistics, :deactivate,
                                       :crop_profile_photo, :upload_profile_photo ]
   before_filter :require_current_user, :only => [:edit, :update, :update_account,
@@ -539,7 +539,7 @@ class UsersController < BaseController
       @user = User.find(params[:id])
     end
 
-    if @user && !@user.active?
+    if @user && @user.can_activate?
       flash[:notice] = :activation_email_resent_message.l
       UserNotifier.deliver_signup_notification(@user)
       redirect_to login_path and return
