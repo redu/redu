@@ -209,6 +209,11 @@ form.common input[type=password] {
   -webkit-border-radius: 5px;
    border: 1px solid #cadfe3;
    padding: 7px;
+   width: 215px;
+}
+
+form.common input.small {
+  width: 160px;
 }
 
 form.common label {

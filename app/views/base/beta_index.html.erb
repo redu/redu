@@ -57,6 +57,21 @@
         </div>
       </div>
       <div id="sidebar" class="grid_5 omega">
+       <div class="beta box">
+          <div class="call">
+          	<span class="name">Recebeu o convite?</span>
+          	<span class="tip">Informe a chave e teste o Redu</span>
+                <% form_tag new_user_path, :method => :get,
+                    :class => 'common beta_key'  do |f|  %>
+                    <% field_set_tag "Informe a chave recebida por e-mail",
+                        :class => "hide" do %>
+                      <%= label_tag :beta_key, "Chave" %>
+                      <%= text_field_tag :beta_key, nil, :class => "small" %>
+                      <button class="common small"><span>Ok!</span></button>
+                    <% end %>
+                <% end %>
+          </div>
+        </div>
         <div class="login box">
           <div class="call">
           	<span class="name">Acesse o Redu</span>
@@ -68,21 +83,7 @@
                 <% end %>
           </div>
         </div>
-        <div class="beta box">
-          <div class="call">
-          	<span class="name">Recebeu o convite?</span>
-          	<span class="tip">Informe a chave e teste o Redu</span>
-                <% form_tag new_user_path, :method => :get,
-                    :class => 'common beta_key'  do |f|  %>
-                    <% field_set_tag "Informe a chave recebida por e-mail",
-                        :class => "hide" do %>
-                      <%= label_tag :beta_key, "Chave" %>
-                      <%= text_field_tag :beta_key %>
-                      <button class="common small"><span>Ok!</span></button>
-                    <% end %>
-                <% end %>
-          </div>
-        </div>
+ 
       </div>
     </div>
  </div>
