@@ -26,21 +26,18 @@
 	
 	<%= f.label "Tags:" %>
 	<%= f.text_field :tag_list %>
-
 <% end %>
 </div>
 	
 	<div class="grid_12 push_2">
-	<% f.fields_for :courseable  do |thepage| %>
-	<% if @course.courseable_type == 'Page' %>
+	<% fields_for "course[courseable_attributes][]", @course.courseable  do |thepage| %>
 	<%= f.hidden_field(:courseable_type, :value => "Page" )%>
 	 <%= thepage.label 'Texto' %>
 	 <%= thepage.text_area :body, :class => "mceEditor" %>
-	 <% end %>
 	<% end %>
 	</div>
 
-	<div class="grid_16" style="margin-top: 20px;"> 
+<div class="grid_16" style="margin-top: 20px;"> 
 <%= f.submit 'Atualizar' %> ou <%= link_to 'Cancelar', course_path(@course) %>
 </div>
 <% end %>
