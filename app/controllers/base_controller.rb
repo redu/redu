@@ -278,7 +278,7 @@ class BaseController < ApplicationController
       if @contact.valid?
         @contact.deliver
         flash[:notice] = "Seu e-mail foi enviado, aguarde o nosso contato. Obrigado."
-        redirect_to home_path
+        redirect_to contact_path
       else
         render :action => :contact, :method => :get
       end
