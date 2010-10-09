@@ -41,6 +41,7 @@ class Seminar < ActiveRecord::Base
                        'video/avi',
                        'video/mpeg4-generic',
                        'video/nv',
+                       'video/vnd.objectvideo',
                        'video/parityfec',
                        'video/pointer',
                        'video/raw',
