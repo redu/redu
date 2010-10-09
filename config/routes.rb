@@ -12,6 +12,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :profiles
   map.resources :subjects, :member => {:enroll => :get}, :collection => {:cancel => :get} do |subject|
   subject.resources :events, :member => { :vote => [:post,:get], :notify => :post }, :collection => { :past => :get, :ical => :get , :day => :get}
+  subject.resources :bulletins, :member => {:rate => :post}
   end
  
   map.admin_subjects "admin/subjects", :controller => "subjects", :action => "admin_subjects" 

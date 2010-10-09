@@ -2,49 +2,59 @@ class BulletinsController < BaseController
   layout 'new_application'
   #before_filter :find_bulletin, :only => [:show, :edit, :update, :destroy]
 	before_filter :login_required
+	before_filter :find_bulletinable
   before_filter :is_member_required
   before_filter :can_manage_required,
                 :only => [:edit, :update, :destroy]
-
+  
+  
   uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit, :create, :update])
 
 
   def index
-		@bulletins = Bulletin.paginate(:conditions => ["school_id = ? AND state LIKE 'approved'", School.find(params[:school_id]).id],
+		@bulletins = Bulletin.paginate(:conditions => ["bulletinable_id = ? AND bulletinable_type = ? AND state LIKE 'approved'", @bulletinable.id, @bulletinable.class.to_s],
 			:page => params[:page],
 		 	:order => 'created_at DESC',
 		 	:per_page => 5
 		 )
-		@school = School.find(params[:school_id])
+		 
+	#	@school = School.find(params[:school_id])
   end
 
   def show
     @bulletin = Bulletin.find(params[:id])
     @owner = User.find(@bulletin.owner)
-		@school = @bulletin.school
+		#@school = @bulletin.school
   end
 
   def new
     @bulletin = Bulletin.new()
-		@school = School.find(params[:school_id])
+	#	@school = School.find(params[:school_id])
   end
 
   def create
     @bulletin = Bulletin.new(params[:bulletin])
-		@bulletin.school = School.find(params[:school_id])
+    @bulletin.bulletinable = @bulletinable
     @bulletin.owner = current_user
-
+   
+   
     respond_to do |format|
       if @bulletin.save
 
-        if @bulletin.owner.can_manage? @bulletin.school
+        if @bulletin.owner.can_manage? @bulletin.bulletinable 
           @bulletin.approve!
           flash[:notice] = 'A notícia foi criada e divulgada.'
         else
           flash[:notice] = 'A notícia foi criada e será divulgada assim que for aprovada pelo moderador.'
         end
 
-        format.html { redirect_to school_bulletin_path(@bulletin.school, @bulletin) }
+       ### school or subject ###
+       if @is_school
+        format.html { redirect_to school_bulletin_path(@bulletin.bulletinable, @bulletin) }
+       else
+        format.html { redirect_to subject_bulletin_path(@bulletin.bulletinable, @bulletin) }
+       end
+       
         format.xml  { render :xml => @bulletin, :status => :created, :location => @bulletin }
       else
         format.html { render :action => "new" }
@@ -55,7 +65,7 @@ class BulletinsController < BaseController
 
   def edit
     @bulletin = Bulletin.find(params[:id])
-		@school = School.find(params[:school_id])
+		#@school = School.find(params[:school_id])
 	end
 
   def update
@@ -64,7 +74,15 @@ class BulletinsController < BaseController
     respond_to do |format|
       if @bulletin.update_attributes(params[:bulletin])
         flash[:notice] = 'A notícia foi editada.'
-        format.html { redirect_to school_bulletin_path(@bulletin.school, @bulletin)}
+        
+         ### school or subject ###
+         if @is_school
+           
+          format.html { redirect_to school_bulletin_path(@bulletin.bulletinable, @bulletin) }
+         else
+          format.html { redirect_to subject_bulletin_path(@bulletin.bulletinable, @bulletin) }
+         end
+         
         format.xml { render :xml => @bulletin, :status => :created, :location => @bulletin, :school => params[:school_id] }
       else
         format.html { render :action => :edit }
@@ -80,7 +98,7 @@ class BulletinsController < BaseController
 
     flash[:notice] = 'A notícia foi excluída.'
     respond_to do |format|
-      format.html { redirect_to(@bulletin.school) }
+      format.html { redirect_to(@bulletin.bulletinable) }
       format.xml  { head :ok }
     end
   end
@@ -132,21 +150,38 @@ class BulletinsController < BaseController
 
 protected
 
+  def find_bulletinable
+    
+    unless params[:school_id].nil?
+     @bulletinable = School.find(params[:school_id])
+     @is_school = true
+    else
+      @bulletinable = current_user.subjects.find(params[:subject_id].split("-")[0])
+      @is_school = false
+    end  
+      
+  end
+
   def can_manage_required
      @bulletin = Bulletin.find(params[:id])
 
-     current_user.can_manage?(@bulletin, @bulletin.school) ? true : access_denied
+     current_user.can_manage?(@bulletin, @bulletin.bulletinable) ? true : access_denied
   end
 
   def is_member_required
-		if params[:school_id]
-			@school = School.find(params[:school_id])
-		else
-			@bulletin = Bulletin.find(params[:id])
-			@school = @bulletin.school
-		end
-
-    current_user.has_access_to(@school) ? true : access_denied
+    
+		  if @is_school
+		    if params[:school_id]
+		    	@school = School.find(params[:school_id])
+		    else
+			   @bulletin = Bulletin.find(params[:id])
+		    	@school = @bulletin.bulletinable
+		    end
+        current_user.has_access_to(@school) ? true : access_denied
+      else
+      ## 
+      end
+     
   end
 
 end

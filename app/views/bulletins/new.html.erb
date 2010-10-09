@@ -1,6 +1,7 @@
+<%if @is_school%>
 <%= render :partial => "schools/school_info", :locals => {:school => @school,:show => false} %>
 <%= render :partial => "schools/sidebar", :locals => {:school => @school} %>
-
+<%end%>
 <div class="main grid_12 alpha">
 	<%= render :partial => 'bulletins/form', :bulletin => @bulletin %>
 </div>

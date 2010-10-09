@@ -2,6 +2,7 @@
 	<fieldset><legend><%= title %> Evento</legend>
 	<%= f.error_messages %>
 
+ 
     <%  if @eventable.class.to_s.eql?("School") %>
 	<%= hidden_field_tag("school_id", params[:school_id]) %>
 	<%else%>

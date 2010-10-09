@@ -86,7 +86,7 @@ $(document).ready(function() {
 				<span class="call"><span>Notícias</span></span>
 				<% if @bulletins && @bulletins.size > 0 %>
 					<ul>
-						<%= render :partial => 'bulletins/list', :collection => @bulletins, :as => :bulletin , :locals => { :is_index => false } %>
+						<%= render :partial => 'bulletins/list', :collection => @bulletins, :as => :bulletin , :locals => { :is_index => false, :is_school_from_show => true } %>
 					</ul>
 					<div class="grid_5"> 
 						<%= link_to '(ver todos)', school_bulletins_path(@school), :class=>"more" %> 
@@ -94,7 +94,7 @@ $(document).ready(function() {
 
 				<% else %>
 					<div class="box_notice">
-						Nenhuma notícia foi enviada ainda. <%= link_to 'Envie uma agora!', new_school_bulletin_path(@school) %>
+						Nenhuma notícia foi enviada ainda. <%= link_to 'Envie uma agora!', new_school_bulletin_path(@school)%>
 					</div>
 				<% end %>
 			</div><!-- end noticias -->

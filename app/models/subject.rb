@@ -33,9 +33,11 @@ class Subject < ActiveRecord::Base
   has_many :statuses, :as => :statusable
   has_many :students, :through => :enrollments, :source => :user, :conditions => [ "enrollments.role_id = ?", 7 ]
   has_many :teachers, :through => :enrollments, :source => :user, :conditions => [ "enrollments.role_id = ?", 6 ]
-  has_many :events, :as => :eventable
+  has_many :events, :as => :eventable, :dependent => :destroy
+  has_many :bulletins, :as => :bulletinable, :dependent => :destroy
 
-
+  accepts_nested_attributes_for :events, :bulletins 
+  
   # METODOS DO WIZARD
   attr_writer :current_step
 

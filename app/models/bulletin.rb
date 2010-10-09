@@ -7,13 +7,14 @@ class Bulletin < ActiveRecord::Base
   ajaxful_rateable :stars => 5
 
 	#ASSOCIATIONS
-	belongs_to :school
+	#belongs_to :school
+  belongs_to :bulletinable, :polymorphic => true
   belongs_to :owner , :class_name => "User" , :foreign_key => "owner"
 
 	#VALIDATIONS
 	validates_presence_of :title, :description, :tagline
 	validates_presence_of :owner
-	validates_presence_of :school
+
 
 	validates_length_of :tagline, :maximum => AppConfig.desc_char_limit
 

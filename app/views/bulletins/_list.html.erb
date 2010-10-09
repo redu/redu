@@ -1,24 +1,34 @@
+<%
+ 
+if @is_school || params[:controller].eql?("schools") 
+  url_show =  school_bulletin_path(bulletin.bulletinable, bulletin)
+  url_edit = edit_school_bulletin_path(bulletin.bulletinable, bulletin)
+else
+  url_show =  subject_bulletin_path(bulletin.bulletinable, bulletin)
+  url_edit = edit_subject_bulletin_path(bulletin.bulletinable, bulletin)	
+end
+%>
+
 <li class="clearfix">
 
-	<%= link_to bulletin.title, school_bulletin_path(bulletin.school, bulletin) %>
-	<div class="quiet">	
-			
-		<%= link_to bulletin.owner.display_name, user_path(bulletin.owner) if is_index%>
-		<span> - <%= time_ago_in_words(bulletin.created_at) %> </span>
-	</div>
-	<div class="grid_12 omega alpha pretty-text">		
-		<% if is_index %>
-				<p>
-				<%=	bulletin.tagline %>
-				</p>
-				<div class="grid_10">
-				<% if current_user.can_manage?(bulletin, bulletin.school) %>
-						<%= link_to 'Editar', edit_school_bulletin_path(bulletin.school, bulletin), {:class => "button icon-edit"} %>
-						<%= link_to 'Remover', bulletin,
-							{:confirm => 'Você tem certeza que deseja remover essa notícia permanentemente?',
-							:method => :delete, :class => "button icon-delete"} %>
-				<% end %>
-			</div>
-		<% end %>
-	</div>
+  <%= link_to bulletin.title, url_show %>
+  <div class="quiet">		
+    <%= link_to bulletin.owner.display_name, user_path(bulletin.owner) if is_index%>
+    <span> - <%= time_ago_in_words(bulletin.created_at) %> </span>
+  </div>
+  <div class="grid_12 omega alpha pretty-text">		
+    <% if is_index %>
+      <p>
+        <%=	bulletin.tagline %>
+      </p>
+      <div class="grid_10">
+        <% if current_user.can_manage?(bulletin, bulletin.bulletinable) %>
+          <%= link_to 'Editar', url_edit , {:class => "button icon-edit"} %>
+          <%= link_to 'Remover', url_show,
+            {:confirm => 'Você tem certeza que deseja remover essa notícia permanentemente?',
+            :method => :delete, :class => "button icon-delete"} %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 </li>

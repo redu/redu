@@ -50,6 +50,11 @@
 <ul>
 	<%= render :partial => 'events/list', :collection => @subject.events, :as => :event %>
 </ul>
+<h1>Noticias</h1>	
+<ul>
+	
+	<%= render :partial => 'bulletins/list', :collection => @subject.bulletins, :as => :bulletin , :locals => { :is_index => false, :is_school_from_show => false }%>
+</ul>
 
 
 

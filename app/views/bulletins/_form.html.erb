@@ -1,8 +1,22 @@
+<%
+if @is_school
+url_index = school_bulletins_path(@bulletinable) 
+else
+url_index = subject_bulletins_path(@bulletinable) 	
+end
+%>
+
 <%- form_for @bulletin do |f| %>
 	<fieldset><legend>Notícia</legend>
 	<%= f.error_messages %>
-
+    
+ 
+	<%  if @is_school %>
 	<%= hidden_field_tag("school_id", params[:school_id]) %>
+	<%else%>
+	<%= hidden_field_tag("subject_id", params[:subject_id].split("-")[0]) %>
+    <%end%>
+	
 
 	<%= f.label "Título" %>
 	<%= f.text_field :title %>
@@ -22,5 +36,5 @@
 	</fieldset>
 <% end %>
 
-<%= link_to 'Ver todas', school_bulletins_path(@school) %>
+<%= link_to 'Ver todas', url_index %>
 

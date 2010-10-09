@@ -34,9 +34,9 @@ class School < ActiveRecord::Base
     :source => :asset, :source_type => "Course", :conditions =>  "published = 1"
   has_many :exams, :through => :school_assets,
     :source => :asset, :source_type => "Exam", :conditions =>  "published = 1"
-  has_many :bulletins, :dependent => :destroy
+  has_many :bulletins, :as => :bulletinable,:dependent => :destroy
   #has_many :events, :dependent => :destroy
-  has_many :events, :as => :eventable 
+  has_many :events, :as => :eventable, :dependent => :destroy 
   has_many :statuses, :as => :statusable
   has_many :subjects
 
