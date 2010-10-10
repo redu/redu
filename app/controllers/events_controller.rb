@@ -84,6 +84,10 @@ class EventsController < BaseController
   end
 
   def create
+    # Passando para o formato do banco
+    params[:event][:start_time] = Time.zone.parse(params[:event][:start_time].gsub('/', '-'))
+    params[:event][:end_time] = Time.zone.parse(params[:event][:end_time].gsub('/', '-'))
+    
     @event = Event.new(params[:event])
     @event.owner = current_user
     @event.school = School.find(params[:school_id])
