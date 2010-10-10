@@ -3,7 +3,7 @@ class Lesson < ActiveRecord::Base
    #acts_as_list :scope => :interactive_class #NAO USE 
   
  belongs_to :interactive_class
- belongs_to :lesson, :polymorphic => true
+ belongs_to :lesson, :polymorphic => true, :dependent => :destroy
  
  validates_presence_of :title
  
