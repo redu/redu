@@ -566,6 +566,9 @@ class SchoolsController < BaseController
 
     respond_to do |format|
       if @school.update_attributes(params[:school])
+        if params[:school][:subscription_type].eql? "1" # Entrada de membros passou a ser livre, aprovar todos os membros pendentes
+         UserSchoolAssociation.update_all("status = 'approved'", ["school_id = ? AND status = 'pending'", @school.id]) 
+        end
         flash[:notice] = 'A escola foi atualizada com sucesso!'
         format.html { redirect_to(@school) }
         format.xml  { head :ok }
