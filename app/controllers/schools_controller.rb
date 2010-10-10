@@ -11,6 +11,7 @@ class SchoolsController < BaseController
   end
   before_filter :can_be_owner_required, :only => :take_ownership
 
+	before_filter :is_not_member_required, :only => :join
   def remove_asset
     case params[:asset_type]
     when 'Course'
@@ -86,9 +87,10 @@ class SchoolsController < BaseController
     @association = UserSchoolAssociation.new
     @association.user = current_user
     @association.school = @school
-
+		
+		
     case @school.subscription_type
-
+		
     when 1 # anyone can join
       @association.status = "approved"
 
@@ -598,5 +600,12 @@ class SchoolsController < BaseController
 
       current_user.can_be_owner?(@school) ? true : access_denied
     end
+
+		def is_not_member_required
+      @school = School.find(params[:id])
+			if current_user.get_association_with(@school) 
+				redirect_to school_path(@school)
+			end				
+		end
 
 end

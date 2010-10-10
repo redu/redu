@@ -26,7 +26,12 @@
 			<% end %>
 			<% unless @school.owner == current_user %>
 			<li>
+			
+			<span style='display:none;margin-left:15px;' class='participate_spinner'>
+    			<%= image_tag 'spinner.gif' %>
+      </span>
 			<%= subscription_link %>
+			
 			</li>
 			<% end %>
     </ul>
