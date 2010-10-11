@@ -34,13 +34,13 @@ body {
   background: url("../images/logotipo-beta.png") no-repeat;
   height: 57px;
   margin-top: 15px;
-  text-indent: 9999px;
-  overflow: hidden;
 }
 
 #header h1.logotipo a {
   display: block;
   height: 57px;
+  text-indent: -9999px;
+  overflow: hidden;
 }
 
 #header .menu {
@@ -80,7 +80,7 @@ body {
 }
 
 #banner  em {
-  color: #ffa000;  
+  color: #ffa000;
   font-style: normal;
 }
 
