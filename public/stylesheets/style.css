@@ -565,7 +565,7 @@ div.bulletin-content div.tagline {
 }
 
 div.bulletin-actions {
-  border: 1px solid #EFF0F0;
+  padding: 5px 0;
 }
 
 div.bulletin-actions div {
