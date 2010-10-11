@@ -566,7 +566,6 @@ div.bulletin-content div.tagline {
 
 div.bulletin-actions {
   border: 1px solid #EFF0F0;
-  margin-top: 10px;
 }
 
 div.bulletin-actions div {
@@ -594,7 +593,7 @@ ul.bulletins li .date {
   border-right: 1px solid #D7D7D7;
   margin: 10px;
   margin-right: 0;
-  padding-right: 10px;
+  padding: 10px 10px 10px 0;
 }
 
 ul.bulletins li ul.tags {
@@ -636,6 +635,16 @@ ul.bulletins li .tagline {
   font-size: .8em;
   font-style: italic;
   line-height: 120%;
+}
+
+ul.bulletins-headlines li {
+  border-bottom: 1px solid #EFF0F0;
+  padding: 10px 0;
+  font-size: .9em;
+}
+ul.bulletins-headlines li .date {
+  font-size: .8em;
+  font-style: italic;
 }
 div#filter ul li {
 /* margin: 10px 0;*/
@@ -2309,28 +2318,15 @@ color: gray;
     margin-bottom: 5px;
     color: gray;
 }
-
 #group div.first-page div.statistics,
-#group div.first-page div.news {
+#group div.first-page div.news ,
+#group div.first-page div.statistics {
     width: 320px;
     float: left;
     margin-left: 10px;
     margin-right: 10px;
 }
 
-#group div.first-page div.news ul {
-    margin: 0 5px;
-}
-
-#group div.first-page div.news ul li {
-    border-bottom: 1px solid #E9E9E9;
-}
-
-#group div.first-page div.news ul li a {
-    font-size: .9em;
-    padding: 10px 0px;
-    display: block;
-}
 
 #group div.first-page span.call {
 }

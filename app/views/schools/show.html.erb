@@ -85,12 +85,8 @@ $(document).ready(function() {
 			<div class="news">
 				<span class="call"><span>Notícias</span></span>
 				<% if @bulletins && @bulletins.size > 0 %>
-					<ul>
-						<%= render :partial => 'bulletins/list', :collection => @bulletins, :as => :bulletin , :locals => { :is_index => false } %>
-					</ul>
-					<div class="grid_5"> 
-						<%= link_to '(ver todos)', school_bulletins_path(@school), :class=>"more" %> 
-					</div>
+                                            <%= render :partial => 'bulletins/headlines', :object => @bulletins  %>
+						<%= link_to 'Ver todos', school_bulletins_path(@school), :class=>"more" %> 
 
 				<% else %>
 					<div class="box_notice">

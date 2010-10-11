@@ -12,7 +12,10 @@
 			<%= @bulletin.description %>
 		</div>
                 <div class="grid_11 alpha omega">
-                  <%= render :partial => 'tags/tags', :object => @bulletin.tags %>
+                <div class="tags">
+                <span class="title">Palavras-chave</span>
+                <%= render :partial => 'tags/tags', :object => @bulletin.tags %>
+                 </div>
                 </div>
 		<%# link_to 'Ver notícias da rede', school_bulletins_path(@bulletin.school) %>
               </div><!-- end bulletin-content --> 
