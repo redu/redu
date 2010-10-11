@@ -1,56 +1,32 @@
 <%= render :partial => "schools/school_info", :locals => {:school => @school,:show => false} %>
 <%= render :partial => "schools/sidebar", :locals => {:school => @school} %>
 
-<div class="main grid_12 alpha">
-	
-	<div id="rating_video">		
-		<%= ratings_for @bulletin %>
-	</div>
-	<div class="likeable grid_4">	
-		
-		<span class="like">
-		<%= link_to_remote image_tag('thumbs-up.jpg', :border => '0'), :url=> {:action => :vote, :id => @bulletin.id, :like => "true"}, :loading => 'jQuery("#like_link").hide(); jQuery("#like_spinner").show()', :html => {:id => "like_link"}%>
-		<%= image_tag 'spinner.gif', :id => 'like_spinner', :style => 'display: none' %>
-		&#40;<span id="like_count" style="display: inline"><%= @bulletin.votes_for%></span>&#41;
-		
-		</span>
-		
-		
-		<span class="dislike">
-		<%= link_to_remote image_tag('thumbs-down.jpg', :border => '0'), :url=> {:action => :vote, :id => @bulletin.id, :like => nil}, :loading => 'jQuery("#dislike_link").hide(); jQuery("#dislike_spinner").show()', :html => {:id => "dislike_link"}%>
-		<%= image_tag 'spinner.gif', :id => 'dislike_spinner', :style => 'display: none' %>
-		&#40;<span id="dislike_count" style="display: inline"><%= @bulletin.votes_against%></span>&#41;
-		
-		</span>
+<div class="main grid_12">
 
-	</div>
-
-	<div class="grid_12 omega alpha">
-		
-		<h4 class="name"><%= @bulletin.title %></h4>
-		<span class="author">
-			Autor: <%= link_to @owner.display_name, @owner %>	
-		</span>
-		<div class="pretty-text">
-			Breve desrição: 
-			<%= @bulletin.tagline %>
+	<div class="grid_11 alpha omega bulletin-content">
+		<h4 class="name"><%= link_to @bulletin.title, school_bulletin_path(@bulletin.school, @bulletin) %></h4>
+		<div class="quiet tagline">
+                      <%= @bulletin.tagline %>
 		</div>
 		<div class="pretty-text">
-			Descrição:
 			<%= @bulletin.description %>
 		</div>
-		<div class="grid_12">
-			<% if current_user.can_manage?(@bulletin, @bulletin.school) %>
-				<%= link_to 'Editar', edit_school_bulletin_path(@bulletin.school, @bulletin), :class => "button icon-edit"%>
-				<%= link_to 'Remover', @bulletin,
-					{:confirm => 'Você tem certeza que deseja remover essa notícia permanentemente?',
-					:method => :delete, :class => "button icon-delete"} %>
-			<% end %>
+                <div class="grid_11 alpha omega">
+                  <%= render :partial => 'tags/tags', :object => @bulletin.tags %>
+                </div>
+		<%# link_to 'Ver notícias da rede', school_bulletins_path(@bulletin.school) %>
+              </div><!-- end bulletin-content --> 
+              <div class="grid_11 alpha omega bulletin-actions clearfix">
+                <div class="grid_5 alpha">
+                  <%= render :partial => 'like/likeable', :object => @bulletin %>
+                </div>
+	<div id="rating_video" class="grid_5 omega"><%= ratings_for @bulletin %></div>
+    </div><!-- end bulletin-actions -->
+    <div class="grid_11 alpha omega clearfix" style="padding: 10px 0;">
+      <% if current_user.can_manage?(@bulletin, @bulletin.school) %>
+        <%= link_to 'Editar', edit_school_bulletin_path(@bulletin.school, @bulletin), :class => "button"%>
+        <%= link_to 'Remover', @bulletin,
+          {:confirm => 'Você tem certeza que deseja remover essa notícia permanentemente?',
+            :method => :delete, :class => "button"} %>
+        <% end %></div>
 		</div>
-		<div class="grid_12">
-			Tags:	<%= @bulletin.tag_list %>
-		</div>
-		<%= link_to 'Ver notícias da rede', school_bulletins_path(@bulletin.school) %>
-	</div>
-
-</div>

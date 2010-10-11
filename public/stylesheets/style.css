@@ -118,7 +118,7 @@ html, body {
 }
 
 html {
-    font-family: 'Helvetica Neue', "Trebuchet MS", "Arial", sans-serif;
+    font-family: "Arial", "Trebuchet MS", "Arial", sans-serif;
     font-size: .9em;
 }
 
@@ -187,7 +187,7 @@ blockquote {/*necessário para o tinymce*/
 }
 
 .pretty-text p {
-    margin: 5px 0 10px 0;
+  padding-bottom: 1.5em;
 }
 
 .pretty-text ul,
@@ -206,7 +206,8 @@ blockquote {/*necessário para o tinymce*/
 
 
 .pretty-text * {
-    line-height: 170%;
+    line-height: 1.45em;
+    letter-spacing: -0.02em;
 }
 
 
@@ -545,6 +546,32 @@ ul.pagination li a {
     font-size: .9em;
 }
 
+/* Show de notícias (bulletins) */
+div.bulletin-content {
+}
+
+div.bulletin-content h4.name {
+  font-size: 1.9em;
+  margin-bottom: 10px;
+  color: #619BDF;
+}
+
+div.bulletin-content div.tagline {
+  font-size: 1.1em;
+  line-height: 120%;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #EFF0F0;
+  padding-bottom: 20px;
+}
+
+div.bulletin-actions {
+  border: 1px solid #EFF0F0;
+  margin-top: 10px;
+}
+
+div.bulletin-actions div {
+  margin: 10px 0;
+}
 /* Listagem de notícias */
 ul.bulletins {
 
@@ -869,6 +896,19 @@ form div.errorExplanation {
 }
 
 /** @tags **/
+div.tags {
+  padding: 10px;
+  border: 1px solid #EFF0F0;
+}
+
+div.tags span.title {
+  font-weight: bold;
+  font-size: .9em;
+  margin-bottom: 5px;
+  display: block;
+  color: gray;
+}
+
 ul.tags {
     font-size: .8em;
 }
@@ -884,7 +924,8 @@ ul.tags li:hover {
     background-color: #FEF888;
 }
 
-ul.tags li a {
+ul.tags li a,
+ul.tags li span {
     color: black;
     padding: 3px;
     display: block;

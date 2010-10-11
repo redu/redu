@@ -1,0 +1,8 @@
+		<div class="tags">
+                  <span class="title">Palavras-chave</span>
+                  <ul class="tags clearfix">
+                    <% @bulletin.tags.each do |tag| %>
+                      <li><span><%= tag %></span></li>
+                    <% end %>
+                  </ul>
+                </div>
