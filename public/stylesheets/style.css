@@ -545,6 +545,71 @@ ul.pagination li a {
     font-size: .9em;
 }
 
+/* Listagem de notícias */
+ul.bulletins {
+
+}
+
+ul.bulletins li {
+  border: 1px solid #D7D7D7;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+ul.bulletins li .date span {
+  text-align: center;
+  display: block;
+}
+
+ul.bulletins li .date {
+  text-align: center;
+  border-right: 1px solid #D7D7D7;
+  margin: 10px;
+  margin-right: 0;
+  padding-right: 10px;
+}
+
+ul.bulletins li ul.tags {
+  margin-top: 10px;
+}
+
+ul.bulletins li .date .month,
+ul.bulletins li .date .year ,
+ul.bulletins li .date .day {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul.bulletins li .date .day {
+  font-size: 1.6em;
+  color: gray;
+  text-transform: uppercase;
+  font-weight: bold;
+  border: none;
+  margin: 5px 0;
+}
+
+ul.bulletins li .date .month,
+ul.bulletins li .date .year {
+  border: none;
+  font-size: .8em;
+  padding: 0;
+  text-transform: uppercase;
+}
+
+ul.bulletins li .title {
+  margin: 10px 10px 5px 10px;
+  font-size: 1em;
+  font-weight: bold;
+}
+
+ul.bulletins li .tagline {
+  font-size: .8em;
+  font-style: italic;
+  line-height: 120%;
+}
 div#filter ul li {
 /* margin: 10px 0;*/
 }

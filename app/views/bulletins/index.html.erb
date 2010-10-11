@@ -1,12 +1,9 @@
 <%= render :partial => "schools/school_info", :locals => {:school => @school,:show => false} %>
-<%# render :partial => "schools/sidebar", :locals => {:school => @school} %>
-<div class="sidebar grid_4">
-	</div>
-	
-<div class="main grid_10">		
+<%= render :partial => "schools/sidebar", :locals => {:school => @school} %>
+<div class="main grid_12">		
 	<% if @bulletins && @bulletins.size > 0 %>
 
-			<ul class="grid_10">
+			<ul class="bulletins grid_12 alpha omega">
 				<%= render :partial => 'bulletins/list', :collection => @bulletins, :as => :bulletin, :locals => {
 				:is_index => true } %> 
 			</ul>
