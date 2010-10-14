@@ -51,15 +51,11 @@ class User < ActiveRecord::Base
   validates_uniqueness_of   :login_slug
   validates_exclusion_of    :login, :in => AppConfig.reserved_logins
   validates_date :birthday, :before => 13.years.ago.to_date
-
   validates_acceptance_of :tos, :message => "Você precisa aceitar os Termos de Uso"
 
   # ASSOCIATIONS
   has_many :annotations, :dependent => :destroy, :include=> :course
   has_one :beta_key, :dependent => :destroy
-  #has_one :profile # deprecated
-  #has_many :user_competences, :dependent => :destroy # deprecated
-  #has_many :competences, :class_name => "Skill", :source => :skill, :foreign_key => "skill_id", :through => :user_competences # deprecated
   has_many :user_school_association, :dependent => :destroy
   has_many :schools, :through => :user_school_association
   has_many :schools_owned, :class_name => "School" , :foreign_key => "owner"
@@ -75,36 +71,21 @@ class User < ActiveRecord::Base
 
   has_many :credits
   has_many :exams, :foreign_key => "owner_id"
-  has_many :exam_users#, :dependent => :destroy
+  has_many :exam_users
   has_many :exam_history, :through => :exam_users, :source => :exam
   has_many :questions, :foreign_key => :author_id
   has_many :favorites, :order => "created_at desc", :dependent => :destroy
   has_many :statuses
   has_many :suggestions
   has_enumerated :role
-  #has_many :posts, :order => "published_at desc", :dependent => :destroy
   has_many :invitations, :dependent => :destroy
-
-
-  #forums
-  #has_many :moderatorships, :dependent => :destroy
-  #has_many :forums, :through => :moderatorships, :order => 'forums.name'
-  #has_many :sb_posts, :dependent => :destroy
-  #has_many :topics, :dependent => :destroy
-  #has_many :monitorships, :dependent => :destroy
-  #has_many :monitored_topics, :through => :monitorships,
-    #:conditions => ['monitorships.active = ?', true], :order => 'topics.replied_at desc', :source => :topic
-
-  #belongs_to  :avatar, :class_name => "Photo", :foreign_key => "avatar_id"
   belongs_to  :metro_area
   belongs_to  :state
   belongs_to  :country
-  #has_many    :comments_as_author, :class_name => "Comment", :foreign_key => "user_id", :order => "created_at desc", :dependent => :destroy
-  #has_many    :comments_as_recipient, :class_name => "Comment",:foreign_key => "recipient_id", :order => "created_at desc", :dependent => :destroy
   has_many    :favorites, :order => "created_at desc", :dependent => :destroy
 
-	#bulletins
-	has_many :bulletins
+  #bulletins
+  has_many :bulletins
   #enrollments
   has_many :enrollments, :dependent => :destroy
 
@@ -122,9 +103,6 @@ class User < ActiveRecord::Base
   named_scope :tagged_with, lambda {|tag_name|
     {:conditions => ["tags.name = ?", tag_name], :include => :tags}
   }
-
-
-  ## Class Methods
 
   # override activerecord's find to allow us to find by name or id transparently
   def self.find(*args)
@@ -230,15 +208,10 @@ class User < ActiveRecord::Base
     query
   end
 
-
-  ## End Class Methods
-
-
   ## Instance Methods
   def profile_complete?
     (self.first_name and self.last_name and self.gender and self.description and self.tags)
   end
-
 
   def enrolled? subject_id
     if Enrollment.all(:conditions => ["user_id = ? AND subject_id = ?", self.id, subject_id]).length > 0
@@ -265,8 +238,6 @@ class User < ActiveRecord::Base
 
     end
   end
-
-
 
   def has_access_to(entity)
     return true if self.admin? || entity.owner == self
@@ -328,9 +299,9 @@ class User < ActiveRecord::Base
 
   def last_months_posts
     self.posts.find(:all,
-      :conditions => ["published_at > ? and published_at < ?",
-        DateTime.now.to_time.at_beginning_of_month.months_ago(1),
-        DateTime.now.to_time.at_beginning_of_month])
+                    :conditions => ["published_at > ? and published_at < ?",
+                      DateTime.now.to_time.at_beginning_of_month.months_ago(1),
+                      DateTime.now.to_time.at_beginning_of_month])
   end
 
   def avatar_photo_url(size = nil)
@@ -451,7 +422,6 @@ class User < ActiveRecord::Base
   end
 
   def update_last_login
-    #self.track_activity(:logged_in) if self.last_login_at.nil? || (self.last_login_at && self.last_login_at < Time.now.beginning_of_day)
     self.update_attribute(:last_login_at, Time.now)
   end
 
@@ -487,16 +457,16 @@ class User < ActiveRecord::Base
   def recommended_posts(since = 1.week.ago)
     return [] if tags.empty?
     rec_posts = Post.find_tagged_with(tags.map(&:name),
-      :conditions => ['posts.user_id != ? AND published_at > ?', self.id, since ],
-      :order => 'published_at DESC',
-      :limit => 10
-    )
+                                      :conditions => ['posts.user_id != ? AND published_at > ?', self.id, since ],
+                                      :order => 'published_at DESC',
+                                      :limit => 10
+                                     )
 
-    if rec_posts.empty?
-      []
-    else
-      rec_posts.uniq
-    end
+                                     if rec_posts.empty?
+                                       []
+                                     else
+                                       rec_posts.uniq
+                                     end
   end
 
   def display_name
@@ -533,7 +503,6 @@ class User < ActiveRecord::Base
   end
 
   # school roles
-
   def can_post?(school)
     if not self.get_association_with(school)
       return false
@@ -558,7 +527,6 @@ class User < ActiveRecord::Base
     association = UserSchoolAssociation.find(:first, :conditions => ['user_id = ? AND school_id = ?', self.id, @school.id])
   end
 
-
   def teacher?(school)
     association = get_association_with school
     association && association.role && association.role.eql?(Role[:teacher])
@@ -579,9 +547,6 @@ class User < ActiveRecord::Base
     association && association.role && association.role.eql?(Role[:student])
   end
 
-  ## end
-
-
   def male?
     gender && gender.eql?(MALE)
   end
@@ -589,10 +554,6 @@ class User < ActiveRecord::Base
   def female
     gender && gender.eql?(FEMALE)
   end
-
-  ## End Instance Methods
-
-  ### Métodos Adicionais
 
   def learning
     self.statuses.log_action_eq(LEARNING_ACTIONS).descend_by_created_at
@@ -602,23 +563,20 @@ class User < ActiveRecord::Base
     self.statuses.log_action_eq(TEACHING_ACTIONS).descend_by_created_at
   end
 
-
   def recent_activity(limit = 0, offset = 20)
-     Status.friends_statuses(self, limit, offset)
+    Status.friends_statuses(self, limit, offset)
   end
-
-
 
   def add_favorite(favoritable_type, favoritable_id)
     Favorite.create(:favoritable_type => favoritable_type,
-      :favoritable_id => favoritable_id,
-      :user_id => self.id)
+                    :favoritable_id => favoritable_id,
+                    :user_id => self.id)
   end
 
   def rm_favorite(favoritable_type, favoritable_id)
     fav = Favorite.all(:conditions => {:favoritable_type => favoritable_type,
-       :favoritable_id => favoritable_id,
-       :user_id => self.id})[0] # Sempre vai ter apenas uma linha que satisfaz
+                       :favoritable_id => favoritable_id,
+                       :user_id => self.id})[0] # Sempre vai ter apenas uma linha que satisfaz
     fav.destroy
   end
 
@@ -635,8 +593,6 @@ class User < ActiveRecord::Base
     @user_credit = Credit.total(self.id).to_f - Acquisition.total(self.id).to_f
     (@user_credit >= course.price)
   end
-
-
 
   protected
 
@@ -656,16 +612,14 @@ class User < ActiveRecord::Base
     self.crypted_password = encrypt(password)
   end
 
-    def whitelist_attributes
-      self.login = self.login.strip
-      self.description = white_list(self.description )
-      #self.stylesheet = white_list(self.stylesheet )
-    end
-
+  def whitelist_attributes
+    self.login = self.login.strip
+    self.description = white_list(self.description )
+    #self.stylesheet = white_list(self.stylesheet )
+  end
 
   def password_required?
     crypted_password.blank? || !password.blank?
   end
-
 
 end

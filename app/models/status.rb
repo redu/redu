@@ -51,7 +51,7 @@ class Status < ActiveRecord::Base
   def responses
     sql = "SELECT * FROM statuses s " + \
       "WHERE s.in_response_to_id = #{self.id} " + \
-      "ORDER BY s.created_at DESC "
+    "ORDER BY s.created_at DESC "
 
     Status.find_by_sql(sql)
   end
@@ -67,16 +67,16 @@ class Status < ActiveRecord::Base
       "LEFT OUTER JOIN followship f " + \
       "ON (f.follows_id = s.user_id) " + \
       "WHERE f.followed_by_id = #{user.id} OR s.user_id = #{user.id} " + \
-      "ORDER BY s.created_at DESC LIMIT #{limit},#{offset}"
+    "ORDER BY s.created_at DESC LIMIT #{limit},#{offset}"
 
-      Status.find_by_sql(sql)
+    Status.find_by_sql(sql)
   end
 
   # Dada uma rede, retorna os status postados na mesma
   def Status.group_statuses(group)
     sql = "SELECT s.* FROM statuses s, user_school_associations a " + \
       "WHERE a.school_id = #{group.id} " + \
-      "AND s.user_id = a.user_id " + \
+    "AND s.user_id = a.user_id " + \
       "ORDER BY s.created_at DESC "
 
     Status.find_by_sql(sql)

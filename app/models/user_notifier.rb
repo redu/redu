@@ -243,17 +243,17 @@ class UserNotifier < ActionMailer::Base
 
   protected
 
-    def setup_email(user)
-      @recipients  = "#{user.email}"
-      setup_sender_info
-      @subject     = "[#{AppConfig.community_name}] "
-      @sent_on     = Time.now
-      @body[:user] = user
-    end
+  def setup_email(user)
+    @recipients  = "#{user.email}"
+    setup_sender_info
+    @subject     = "[#{AppConfig.community_name}] "
+    @sent_on     = Time.now
+    @body[:user] = user
+  end
 
-    def setup_sender_info
-      @from       = "\"Equipe Redu\" <#{AppConfig.support_email}>"
-      headers     "Reply-to" => "#{AppConfig.support_email}"
-      @content_type = "text/plain"
-    end
+  def setup_sender_info
+    @from       = "\"Equipe Redu\" <#{AppConfig.support_email}>"
+    headers     "Reply-to" => "#{AppConfig.support_email}"
+    @content_type = "text/plain"
+  end
 end
