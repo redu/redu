@@ -14,6 +14,8 @@
 		<p><h3<strong>Fim:</strong></h3>
 		<%= @subject.end_time.strftime("%d/%m/%Y") unless @subject.end_time.nil? %></p>
 		
+		<p><h3<strong>Percentagem cursado:</strong></h3>
+		o Aluno cursou <%= percetage.to_s+"%"%> do conteudo total</p>
     </div>
   	</li>
    

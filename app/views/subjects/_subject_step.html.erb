@@ -37,13 +37,15 @@ $(document).ready(function(){
     <div id="char_limit" style="text-align:right;">(<%=AppConfig.desc_char_limit %>)</div>
     <%= error_message_on @subject, :description %>
 
-   	<%= f.label :beginning, "Início:" %>
+   	<%= f.label :start_time, "Início:" %>
 	<%= f.text_field :start_time %>
 	
-   	<%= f.label :end, "Fim:" %>
+   	<%= f.label :end_time, "Fim:" %>
 	<%= f.text_field :end_time %>
 	<%= error_message_on @subject, :end_time %>
 	
+	<%= f.label :limit, "Quantidade Total de Alunos:" %>
+	<%= f.text_field :limit %>
 
     <%= f.label "Tags <span class='snippet'>(separadas por vírgula)</span>" %>
     <%= f.text_field :tag_list %>

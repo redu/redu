@@ -176,13 +176,13 @@ class CoursesController < BaseController
     # anotações
     @annotation = @course.has_annotations_by(current_user)
     @annotation = Annotation.new unless @annotation
-
     #relacionados
     related_name = @course.name
     @related_courses = Course.find(:all,:conditions => ["name LIKE ? AND id NOT LIKE ?","%#{related_name}%", @course.id] , :limit => 3, :order => 'rating_average DESC')
-
     @status = Status.new
-
+    
+    current_user.student_profiles.find_by_subject_id(@course.course_subject.subject.id).to_count(@course) unless params[:to_count].nil?
+   
     respond_to do |format|
       if @course.courseable_type == 'Page'
       elsif @course.courseable_type == 'InteractiveClass'

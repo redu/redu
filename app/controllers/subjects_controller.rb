@@ -105,17 +105,26 @@ class SubjectsController < BaseController
   def show
     
      @subject = Subject.find(:first, :conditions => "is_public like true AND id =#{params[:id].to_i}")
-     @school = @subject.school 
-   
-    respond_to do |format|    
-      if current_user.enrollments.detect{|e| e.subject_id.eql?(params[:id].to_i)}.nil?
-        format.html{  render "preview" }
+     @school = @subject.school
+     
+     student_profile = current_user.student_profiles.find_by_subject_id(@subject.id)
+     @percentage = student_profile.nil? ? 0 : student_profile.coursed_percentage(@subject) 
+     
+    respond_to do |format|  
+       if @subject.is_valid?  
+         if current_user.enrollments.detect{|e| e.subject_id.eql?(params[:id].to_i)}.nil?
+          format.html{  render "preview" }
+        else
+          @status = Status.new
+          @statuses = @subject.recent_activity(0,10)
+         format.html
+        end
       else
-        @status = Status.new
-        @statuses = @subject.recent_activity(0,10)
-        format.html
+       flash[:notice] = "Data do curso expirada"
+       format.html{ redirect_to subjects_path}
       end
-    end
+    
+    end#format
  
   end
 
@@ -141,9 +150,10 @@ class SubjectsController < BaseController
       elsif @subject.last_step?
         
         if @subject.all_valid?
+           @subject.save 
           @subject.create_course_subject_type_course(session[:subject_aulas], @subject.id, current_user) unless session[:subject_aulas].nil?
           @subject.create_course_subject_type_exam(session[:subject_exames], @subject.id, current_user) unless session[:subject_exames].nil?
-          @subject.save  
+          
         end
       else
         @subject.next_step
@@ -216,12 +226,17 @@ class SubjectsController < BaseController
   end
 
   def enroll
-   
-    redirect_to(subjects_path) and return unless @subject.is_public
+    begin
+     redirect_to(subjects_path) and return unless @subject.is_public
+     Enrollment.create_enrollment(@subject.id, current_user) 
+     StudentProfile.create_profile(@subject.id, current_user)
+     flash[:notice] = "Você se inscreveu neste curso!"
+     redirect_to @subject
+    rescue Exception => e #execeçao crida no model de Enrollment
+      flash[:notice] =  e.message
+      redirect_to subjects_path
+    end
     
-    Enrollment.create_enrollment(@subject.id, current_user) 
-    flash[:notice] = "Você se inscreveu neste curso!"
-    redirect_to @subject
   end
   
   def admin_subjects

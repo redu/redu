@@ -114,6 +114,10 @@ class User < ActiveRecord::Base
   #groups
   has_many :group_user
   has_many :groups, :through => :group_user
+  
+  #student_profile
+  has_many :student_profiles
+  
 
   #named scopes
   named_scope :recent, :order => 'users.created_at DESC'

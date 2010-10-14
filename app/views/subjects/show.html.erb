@@ -1,91 +1,85 @@
- 
 <% content_for :page_id, 'group' %>
 <%- @meta = { :description => "Curso \"#{@subject.title}\" no  #{AppConfig.community_name}.", :keywords => "#{@subject.title}, #{@subject.tags.join(", ") unless @subject.tags.nil?}", :robots => AppConfig.robots_meta_show_content }%>
 
 
 <script type="text/javascript">
-var subjectFoldersPath = "<%# school_folders_path(:school_id => @school.id.to_s) %>";
+  var subjectFoldersPath = "<%# school_folders_path(:school_id => @school.id.to_s) %>";
 
-var $subjecttabs;
+  var $subjecttabs;
 
-$(document).ready(function() {
+  $(document).ready(function() {
 
     $subjecttabs = $(".subject-tabs").tabs({
-        select: function(event, ui) {
-            if (ui.index == 3) {
-                // Arquivos
-				alert('todo'); return;
-                $("#tabs-3-content").html('');
-                jQuery.ajax({
-                    data: '',
-                    dataType: 'script',
-                    success: function(request) {
-                        $("#tabs-3-loading").hide();
-                    },
-                    type: 'get',
-                    url: subjectFoldersPath
-                });
+      select: function(event, ui) {
+        if (ui.index == 3) {
+          // Arquivos
+          alert('todo'); return;
+          $("#tabs-3-content").html('');
+          jQuery.ajax({
+            data: '',
+            dataType: 'script',
+            success: function(request) {
+              $("#tabs-3-loading").hide();
+            },
+            type: 'get',
+            url: subjectFoldersPath
+          });
 
-                $("#tabs-3-loading").show();
-            } 
-        }
+          $("#tabs-3-loading").show();
+        } 
+      }
     });
-});
+  });
 </script>
 
 <%= render(:partial => "schools/school_info", :locals => {:show => true}) if @school %>
-<%= render :partial => "subjects/sidebar", :locals => {:subject => @subject} %>
+<%= render :partial => "subjects/sidebar", :locals => {:subject => @subject, :percetage => @percentage} %>
 
 <div class="main grid_12">
-<div class="subject-tabs tabs">
-	    <ul>
-		    <li><a href="#tabs-1">Início</a></li>
-		    <li><a href="#tabs-2">Atividades</a></li>
-		    <li><a href="#tabs-3">Arquivos</a></li>
-	    </ul>
-	    
-		<div id="tabs-1" class="clearfix first-page">
-			
-        <div>
-            <% field_set_tag 'Conteúdo selecionado', :style => "margin-top:40px;" do %>
-            <ul id="subject_content" class="default sortable" style="min-height:300px;">
-                
-			<% @subject.course_subjects.each do |content|%>
-			
-				<%= render :partial => "courses/item_subject2", :locals => {:course => content.courseable}%>
-			<% end %>
-            
-			</ul>
+  <div class="subject-tabs tabs">
+    <ul>
+      <li><a href="#tabs-1">Início</a></li>
+      <li><a href="#tabs-2">Atividades</a></li>
+      <li><a href="#tabs-3">Arquivos</a></li>
+    </ul>
+
+    <div id="tabs-1" class="clearfix first-page">
+
+      <div>
+        <% field_set_tag 'Conteúdo selecionado', :style => "margin-top:40px;" do %>
+          <ul id="subject_content" class="default sortable" style="min-height:300px;">
+
+            <% @subject.course_subjects.each do |content|%>
+
+              <%= render :partial => "courses/item_subject2", :locals => {:course => content.courseable}%>
             <% end %>
+
+          </ul>
+        <% end %>
+      </div>
+
+    </div><!-- end tab1 -->
+
+    <div id="tabs-2">
+      <%= javascript_include_tag 'flow.js' %>
+      <%= render :partial => "statuses/create_status", :locals => {:status => @status, :statusable => @subject }%>
+      <ul class="activities">
+        <%= render :partial => "statuses/type_proxy", :collection => @statuses, :as => :status, :locals => {:statusable =>@subject} %>
+      </ul><!-- end activities -->			
+
+      <% unless @statuses.length < 10%>
+        <div id="more">
+          <%= link_to_remote "mais", :url => {:controller => :statuses, :action => :more, :id => @subject.id, :type => 'subject', :limit => 10}, :method =>:get, :loading => "$('#more').html('"+escape_javascript(image_tag('spinner.gif'))+"')"%>
         </div>
-        
-			
-			
-		</div><!-- end tab1 -->
-		
-		<div id="tabs-2">
-			<%= javascript_include_tag 'flow.js' %>
-			<%= render :partial => "statuses/create_status", :locals => {:status => @status, :statusable => @subject }%>
-			<ul class="activities">
-			<%= render :partial => "statuses/type_proxy", :collection => @statuses, :as => :status, :locals => {:statusable => @subject } %>
-			</ul><!-- end activities -->			
-			
-			<% unless @statuses.length < 10%>
-			<div id="more">
-			<%= link_to_remote "mais", :url => {:controller => :statuses, :action => :more, :id => @subject.id, :type => 'subject', :limit => 10}, :method =>:get, :loading => "$('#more').html('"+escape_javascript(image_tag('spinner.gif'))+"')"%>
-			</div>
-			<% end %>
-			
-			
-		</div>
-		
-		
-		<!-- arquivos --> 
-		<div id="tabs-3">
-			<%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-3-loading', :style => 'padding: 20px;'%>
-			<div id="tabs-3-content"></div>
-			
-		</div>
-</div><!-- end tabs -->
+      <% end %>
+
+    </div>
+
+    <!-- arquivos --> 
+    <div id="tabs-3">
+      <%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-3-loading', :style => 'padding: 20px;'%>
+      <div id="tabs-3-content"></div>
+
+    </div>
+  </div><!-- end tabs -->
 </div><!-- end main -->
- 

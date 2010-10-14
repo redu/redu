@@ -19,7 +19,7 @@ class Course < ActiveRecord::Base
   has_one :school, :through => :school_asset#, :as => :asset
   has_one :course_subject, :as => :courseable
   belongs_to :owner , :class_name => "User" , :foreign_key => "owner"
-  belongs_to :courseable, :polymorphic => true
+  belongs_to :courseable, :polymorphic => true, :dependent => :destroy
   belongs_to :asset, :polymorphic => true
   belongs_to :simple_category
 
@@ -29,6 +29,8 @@ class Course < ActiveRecord::Base
   accepts_nested_attributes_for :resources,
     :reject_if => lambda { |a| a[:media].blank? },
     :allow_destroy => true
+    
+  accepts_nested_attributes_for :courseable  
 
   # VALIDATIONS
   validates_presence_of :name
@@ -147,8 +149,5 @@ class Course < ActiveRecord::Base
   puts ' oi'
   end
   
-  def destroy
-     self.courseable.destroy unless self.courseable.nil?
-     super
-    end
+
 end

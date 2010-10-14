@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  user_id: 1
+  subject_id: 1
+  course_subject_id: 1
+  graduaded: 1
+  grade: 1.5
+
+two:
+  user_id: 1
+  subject_id: 1
+  course_subject_id: 1
+  graduaded: 1
+  grade: 1.5

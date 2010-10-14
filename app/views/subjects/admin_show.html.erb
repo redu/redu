@@ -19,7 +19,8 @@
 	<li>Rede:<i>Não está associado!<i/></li><br />		
 	 <%end%>
     
-      
+      <li>Vagas:<i><%= @subject.limit.nil? ? "não definida" : @subject.limit %><i/></li><br />
+	
     
  </ul>	
 <br /> 	
@@ -27,7 +28,7 @@
 <ul>
 	
 <% @subject.aulas.each do |aula|%>
-<li><%= link_to aula.name, course_path(aula.courseable) %></li>	
+<li><%= link_to aula.name, course_path(aula) %></li>	
 <%end%> 
 </ul>
 
@@ -40,7 +41,7 @@
 
 <h1>Alunos</h1>	
 <ul>
-<% @subject.students.each do |student|%>
+<% @subject.enrolled_students.each do |student|%>
 <li><%= student.login%></li>	
 <%end%>
 </ul>
@@ -54,6 +55,22 @@
 <ul>
 	
 	<%= render :partial => 'bulletins/list', :collection => @subject.bulletins, :as => :bulletin , :locals => { :is_index => false, :is_school_from_show => false }%>
+</ul>
+
+
+
+<h1>Alunos Graduados</h1>	
+<ul>
+<% @subject.graduaded_students.each do |student|%>
+<li><%= student.login%></li>	
+<%end%>
+</ul>
+
+<h1>Alunos cursando</h1>	
+<ul>
+<% @subject.under_graduaded_students.each do |student|%>
+<li><%= student.login%></li>	
+<%end%>
 </ul>
 
 
