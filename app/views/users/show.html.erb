@@ -101,7 +101,7 @@ $(document).ready(function() {
 			
 			<% unless @statuses.length < 10%>
 			<div id="more">
-			<%= link_to_remote "mais...", :url => {:controller => :statuses, :action => :more, :id => @user.id, :type => 'user', :limit => 10}, :method =>:get, :loading => "$('#more').html('"+escape_javascript(image_tag('spinner.gif'))+"')"%>
+                          <%= link_to_remote "mais...", :url => {:controller => :statuses, :action => :more, :id => @user.id, :type => 'user', :offset => 10, :limit => 10}, :method =>:get, :loading => "$('#more').html('"+escape_javascript(image_tag('spinner.gif'))+"')"%>
 			</div>
 			<% end %>
 			

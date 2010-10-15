@@ -4,7 +4,7 @@ class Course < ActiveRecord::Base
   acts_as_taggable
   ajaxful_rateable :stars => 5
   has_attached_file :avatar, {
-    :styles => { :thumb => "100x100>", :nano => "24x24>", 
+    :styles => { :thumb => "100x100>", :nano => "24x24>",
     :default_url => "/images/:class/missing_pic.jpg"}
   }
 
@@ -23,9 +23,7 @@ class Course < ActiveRecord::Base
   belongs_to :asset, :polymorphic => true
   belongs_to :simple_category
 
-
   # NESTED
-  #accepts_nested_attributes_for :page
   accepts_nested_attributes_for :resources,
     :reject_if => lambda { |a| a[:media].blank? },
     :allow_destroy => true
@@ -36,26 +34,22 @@ class Course < ActiveRecord::Base
   validates_length_of   :description, :within => 30..200
   validates_presence_of :simple_category
   validates_presence_of :courseable_type
-
   validates_associated :courseable
-
   validation_group :step1, :fields=>[:name, :description, :simple_category, :courseable_type]
-  
-  #validation_group :step2_interactive, :fields=>[:name, :description]
   validation_group :step2, :fields=>[:courseable]
   validation_group :step3, :fields=>[:price]
 
   named_scope :published,
-    :conditions => ["state LIKE 'approved' AND public = true"], 
+    :conditions => ["state LIKE 'approved' AND public = true"],
     :include => :owner, :order => 'created_at DESC'
   named_scope :seminars,
-    :conditions => ["state LIKE 'approved' AND courseable_type LIKE 'Seminar' AND public = true"], 
+    :conditions => ["state LIKE 'approved' AND courseable_type LIKE 'Seminar' AND public = true"],
     :include => :owner, :order => 'created_at DESC'
-  named_scope :iclasses, 
-    :conditions => ["courseable_type LIKE 'InteractiveClass' AND public = true"], 
+  named_scope :iclasses,
+    :conditions => ["courseable_type LIKE 'InteractiveClass' AND public = true"],
     :include => :owner, :order => 'created_at DESC'
-  named_scope :pages, 
-    :conditions => ["courseable_type LIKE 'Page' AND public = true"], 
+  named_scope :pages,
+    :conditions => ["courseable_type LIKE 'Page' AND public = true"],
     :include => :owner, :order => 'created_at DESC'
   named_scope :limited, lambda { |num| { :limit => num } }
 
@@ -89,7 +83,6 @@ class Course < ActiveRecord::Base
     APP_URL + "/courses/"+ self.id.to_s+"-"+self.name.parameterize
   end
 
-
   def currently_watching
     sql = "SELECT u.id, u.login, u.login_slug FROM users u, statuses s WHERE"
     sql += " s.user_id = u.id AND s.logeable_type LIKE 'Course' AND s.logeable_id = '#{self.id}'"
@@ -111,20 +104,21 @@ class Course < ActiveRecord::Base
         else
           '/images/missing_pic_school.png'
         end
-        
-      else 
+
+      else
         'http://i1.ytimg.com/vi/0QQcj_tLIYo/default.jpg'
       end
+
     when 'InteractiveClass'
       if self.avatar_file_name
         self.avatar.url(:thumb)
       else
-       # image_path("courses/missing_thumb.png")  # icone aula interativa
-       '/images/courses/missing_interactive.png'
+        # image_path("courses/missing_thumb.png")  # icone aula interativa
+        '/images/courses/missing_interactive.png'
       end
-      
+
     when 'Page'
-        if self.avatar_file_name
+      if self.avatar_file_name
         self.avatar.url(:thumb)
       else
 
@@ -132,7 +126,6 @@ class Course < ActiveRecord::Base
       end
       #APP_URL + '/images/icon_doc_48.png' #FIXME
     end
-
   end
 
   def has_annotations_by(user)
@@ -142,8 +135,8 @@ class Course < ActiveRecord::Base
   def to_param #friendly url
     "#{id}-#{name.parameterize}"
   end
-  
+
   def build_courseable(params)
-  puts ' oi'
+    puts ' oi'
   end
 end

@@ -63,17 +63,16 @@ class StatusesController < BaseController
         @statusable = School.find(params[:id])
     end
     
-    @statuses = @statusable.recent_activity(params[:limit])
-    new_limit = params[:limit].to_i * 10
+    @statuses = @statusable.recent_activity(params[:offset], params[:limit])
     
     respond_to do |format|
       format.js do
         render :update do |page|
           page << "$('.activities').append('"+escape_javascript(render(:partial => "statuses/type_proxy", :collection => @statuses, :as => :status, :locals => {:statusable => @statusable }))+"')"
-          if @statuses.length < 10
+          if @statuses.length < params[:limit].to_i
             page.replace_html "#more",  ''
           else
-            page.replace_html "#more",  link_to_remote("mais ainda!", :url => {:controller => :statuses, :action => :more, :id => @statusable.id, :type => params[:type], :limit => new_limit}, :method =>:get, :loading => "$('#more').html('"+escape_javascript(image_tag('spinner.gif'))+"')")
+            page.replace_html "#more",  link_to_remote("mais ainda!", :url => {:controller => :statuses, :action => :more, :id => @statusable.id, :type => params[:type], :offset => (params[:offset].to_i + params[:limit].to_i), :limit => 100}, :method =>:get, :loading => "$('#more').html('"+escape_javascript(image_tag('spinner.gif'))+"')")
           end
          end
       end
