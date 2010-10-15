@@ -62,12 +62,12 @@ class Status < ActiveRecord::Base
   end
 
   # Dado um usuário, retorna os status deles e de quem ele segue
-  def Status.friends_statuses(user, limit = 0, offset = 20)
+  def Status.friends_statuses(user, offset = 0, limit = 20)
     sql = "SELECT DISTINCT s.* FROM statuses s " + \
       "LEFT OUTER JOIN followship f " + \
       "ON (f.follows_id = s.user_id) " + \
       "WHERE f.followed_by_id = #{user.id} OR s.user_id = #{user.id} " + \
-    "ORDER BY s.created_at DESC LIMIT #{limit},#{offset}"
+    "ORDER BY s.created_at DESC LIMIT #{offset},#{limit}"
 
     Status.find_by_sql(sql)
   end

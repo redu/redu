@@ -84,9 +84,8 @@ class School < ActiveRecord::Base
     end
   end
 
-  def recent_activity(limit = 0, offset = 20)
-    page = limit.to_i/10 + 1
-    self.statuses.descend_by_created_at.paginate(:per_page => offset, :page =>page)
+  def recent_activity(offset = 0, limit = 20)
+    self.statuses.all(:order => 'created_at DESC', :offset=> offset, :limit=> limit)
   end
 
   def recent_school_exams_activity
