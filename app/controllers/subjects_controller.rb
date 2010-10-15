@@ -136,7 +136,12 @@ class SubjectsController < BaseController
 
   def create
     
-    session[:subject_params].deep_merge!(params[:subject]) if params[:subject]
+    
+    if params[:subject]
+     params[:subject][:start_time] = Time.zone.parse(params[:subject][:start_time].gsub('/', '-')) unless params[:subject][:start_time].nil?
+     params[:subject][:end_time] = Time.zone.parse(params[:subject][:end_time].gsub('/', '-'))  unless params[:subject][:end_time].nil?
+     session[:subject_params].deep_merge!(params[:subject])  
+    end
     session[:subject_aulas]= params[:aulas] unless params[:aulas].nil?
     session[:subject_exames] = params[:exams] unless params[:exams].nil?
     
@@ -173,7 +178,6 @@ class SubjectsController < BaseController
     session[:subject_step] = session[:subject_params]= session[:subject_aulas]= session[:subject_id]= session[:subject_exames]  = nil
   end
 
-
   def edit
     session[:subject_params] ||= {} 
   end
@@ -181,7 +185,11 @@ class SubjectsController < BaseController
   def update
      
     updated = false 
-    session[:subject_params].deep_merge!(params[:subject]) if params[:subject]
+    if params[:subject]
+     params[:subject][:start_time] = Time.zone.parse(params[:subject][:start_time].gsub('/', '-')) unless params[:subject][:start_time].nil?
+     params[:subject][:end_time] = Time.zone.parse(params[:subject][:end_time].gsub('/', '-'))  unless params[:subject][:end_time].nil?
+     session[:subject_params].deep_merge!(params[:subject])  
+    end
     session[:subject_aulas]= params[:aulas] unless params[:aulas].nil?
     session[:subject_id]= params[:id].split("-")[0].to_i unless params[:id].nil?
     session[:subject_exames] = params[:exams] unless params[:exams].nil?
