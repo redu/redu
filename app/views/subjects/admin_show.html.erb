@@ -71,5 +71,11 @@
       <%end%>
     </ul>
 
+ <h1>Uploads</h1>	
+    <ul>
+      <% @subject.subject_files.each do |file|%>
+        <li><%= file.attachment%></li>	
+      <%end%>
+    </ul>
 
 

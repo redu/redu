@@ -43,6 +43,7 @@ class Subject < ActiveRecord::Base
   has_many :events, :as => :eventable, :dependent => :destroy
   has_many :bulletins, :as => :bulletinable, :dependent => :destroy
   has_many :student_profiles, :dependent => :destroy
+  has_many :subject_files, :dependent => :destroy
 
   accepts_nested_attributes_for :events, :bulletins
 

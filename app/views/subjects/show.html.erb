@@ -77,8 +77,16 @@
 
     <!-- arquivos --> 
     <div id="tabs-3">
-      <%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-3-loading', :style => 'padding: 20px;'%>
-      <div id="tabs-3-content"></div>
+      <%#=  image_tag 'loadingAnimation.gif', :id=> 'tabs-3-loading', :style => 'padding: 20px;'%>
+      <div id="tabs-3-content">
+	     <%if @subject.subject_files.length >0%>
+	      <% @subject.subject_files.each_with_index do |file, index|%>
+		   <%=  link_to "#{index} Download", download_subject_path(@subject, :file_id => file.id) %><br />
+		  <%end%>
+		 <%else%>
+		  não há arquivos
+	     <%end%>
+      </div>
 
     </div>
   </div><!-- end tabs -->

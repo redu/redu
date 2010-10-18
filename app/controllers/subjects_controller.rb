@@ -2,7 +2,7 @@ class SubjectsController < BaseController
 
   before_filter :login_required
   before_filter :find_subject, :only => [:show, :enroll]
-  before_filter :find_user_subject, :only => [:edit,:destroy,:admin_show]
+  before_filter :find_user_subject, :only => [:edit,:destroy,:admin_show, :upload, :download]
   
   def find_subject
     @subject = Subject.find(params[:id])
@@ -245,6 +245,30 @@ class SubjectsController < BaseController
       redirect_to subjects_path
     end
     
+  end
+  
+  def upload
+    @subject_file = @subject.subject_files.new
+  end
+  
+  def attachment
+    sf = current_user.subjects.find(params[:id]).subject_files.new
+    sf.attachment = params[:subject_file][:attachment]
+    if sf.save 
+      
+      format.js do
+        render :update do |page|
+          #page << "window.location.replace('#{ url_for :action => :new , :course_type => params[:courseable_type], :step => "3", :school_id => params[:school_id] }')"
+          page << "$('.errorMessageField').remove()"
+        end
+      end
+      
+    end
+    
+  end
+  
+  def download
+    send_file "public/#{@subject.subject_files.find(params[:file_id]).attachment.url.split("?")[0]}", :type=>"application/zip"
   end
   
   def admin_subjects

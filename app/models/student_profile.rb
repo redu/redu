@@ -21,7 +21,7 @@ class StudentProfile < ActiveRecord::Base
     aulas = subject.aulas.map{|a| a.id} #ids todas aulas do curso
     total = aulas.length ##TODO adicionar exames
     index =  self.course_subject_id.nil? ? 0 : aulas.index(CourseSubject.find(self.course_subject_id).courseable.id)+1  #quero obter o indice da aula q aluno cursou ate agora, atraves do course_subject_id
-    return ((100*index)/total).to_i
+    return  index == 0 ? 0 : ((100*index)/total).to_i
   end
 
 

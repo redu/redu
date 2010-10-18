@@ -101,9 +101,11 @@ class Course < ActiveRecord::Base
   end
 
   def thumb_url
+    
     case self.courseable_type
-
+    
     when 'Seminar'
+      
       if self.courseable.external_resource_type == 'youtube'
         'http://i1.ytimg.com/vi/' + self.courseable.external_resource + '/default.jpg'
       elsif self.courseable.external_resource_type == 'upload'
