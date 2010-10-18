@@ -66,68 +66,69 @@ $(document).ready(function() {
 <%= render :partial => "schools/sidebar", :locals => {:school => @school} %>
 
 <div class="main grid_12">
-<div class="school-tabs tabs">
-	    <ul>
-		    <li><a href="#tabs-1">Início</a></li>
-		    <li><a href="#tabs-5">Atividades</a></li>
-		    <li><a href="#tabs-2">Conteúdo</a></li>
-		    <!--<li><a href="#tabs-3">Grupos</a></li>-->
-		    <li><a href="#tabs-4">Arquivos</a></li>
-	    </ul>
-	    
-		<div id="tabs-1" class="clearfix first-page">
-			<% if @brand_new and @featured %>
-			<%= render :partial => 'start_page', :locals => {:featured => @featured, :brand_new => @brand_new, :bulletins => @bulletins} %>
-			<% end %>
-			<div class="statistics">
-				<span class="call"><span>Eventos</span></span>
-			</div><!-- end news -->
-			<div class="news">
-				<span class="call"><span>Notícias</span></span>
-				<% if @bulletins && @bulletins.size > 0 %>
-                                            <%= render :partial => 'bulletins/headlines', :object => @bulletins  %>
-						<%= link_to 'Ver todos', school_bulletins_path(@school), :class=>"more" %> 
+  <div class="school-tabs tabs">
+    <ul>
+      <li><a href="#tabs-1">Início</a></li>
+      <li><a href="#tabs-5">Atividades</a></li>
+      <li><a href="#tabs-2">Conteúdo</a></li>
+      <!--<li><a href="#tabs-3">Grupos</a></li>-->
+      <li><a href="#tabs-4">Arquivos</a></li>
+    </ul>
 
-				<% else %>
-					<div class="box_notice">
-						Nenhuma notícia foi enviada ainda. <%= link_to 'Envie uma agora!', new_school_bulletin_path(@school) %>
-					</div>
-				<% end %>
-			</div><!-- end noticias -->
-		</div>
-		
-		<div id="tabs-5">
-			<%= javascript_include_tag 'flow.js' %>
-			<%= render :partial => "statuses/create_status", :locals => {:status => @status, :statusable => @school }%>
-			<ul class="activities">
-			<%= render :partial => "statuses/type_proxy", :collection => @statuses, :as => :status, :locals => {:statusable => @school } %>
-			</ul><!-- end activities -->			
-			
-			<% unless @statuses.length < 10%>
-			<div id="more">
-                          <%= link_to_remote "mais", :url => {:controller => :statuses, :action => :more, :id => @school.id, :type => 'school', :offset => 10, :limit => 10}, :method =>:get, :loading => "$('#more').html('"+escape_javascript(image_tag('spinner.gif'))+"')"%>
-			</div>
-			<% end %>
-			
-			
-		</div>
-		
-		<!-- conteudo -->
-		<div id="tabs-2">
-			<%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-2-loading', :style => 'padding: 20px;'%>
-			<div id="tabs-2-content"></div>
-		</div>
-		<!-- grupos 
-		<div id="tabs-3">
-			<%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-3-loading', :style => 'padding: 20px;'%>
-			<div id="tabs-3-content"></div>
-		</div>-->
-		<!-- arquivos --> 
-		<div id="tabs-4">
-			<%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-4-loading', :style => 'padding: 20px;'%>
-			<div id="tabs-4-content"></div>
-			
-		</div>
+    <div id="tabs-1" class="clearfix first-page">
+      <% if @brand_new and @featured %>
+        <%= render :partial => 'start_page', :locals => {:featured => @featured, :brand_new => @brand_new, :bulletins => @bulletins} %>
+      <% end %>
+      <div class="statistics">
+        <span class="call"><span>Eventos</span></span>
+        <%= render :partial => 'events/upcoming', :object => @school.events %>
+      </div><!-- end news -->
+      <div class="news">
+        <span class="call"><span>Notícias</span></span>
+        <% if @bulletins && @bulletins.size > 0 %>
+          <%= render :partial => 'bulletins/headlines', :object => @bulletins  %>
+          <%= link_to 'Ver todos', school_bulletins_path(@school), :class=>"more" %> 
+
+        <% else %>
+          <div class="box_notice">
+            Nenhuma notícia foi enviada ainda. <%= link_to 'Envie uma agora!', new_school_bulletin_path(@school) %>
+        </div>
+      <% end %>
+    </div><!-- end noticias -->
+  </div>
+
+  <div id="tabs-5">
+    <%= javascript_include_tag 'flow.js' %>
+    <%= render :partial => "statuses/create_status", :locals => {:status => @status, :statusable => @school }%>
+    <ul class="activities">
+      <%= render :partial => "statuses/type_proxy", :collection => @statuses, :as => :status, :locals => {:statusable => @school } %>
+    </ul><!-- end activities -->			
+
+    <% unless @statuses.length < 10%>
+      <div id="more">
+        <%= link_to_remote "mais", :url => {:controller => :statuses, :action => :more, :id => @school.id, :type => 'school', :offset => 10, :limit => 10}, :method =>:get, :loading => "$('#more').html('"+escape_javascript(image_tag('spinner.gif'))+"')"%>
+      </div>
+    <% end %>
+
+
+  </div>
+
+  <!-- conteudo -->
+  <div id="tabs-2">
+    <%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-2-loading', :style => 'padding: 20px;'%>
+    <div id="tabs-2-content"></div>
+  </div>
+  <!-- grupos 
+  <div id="tabs-3">
+    <%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-3-loading', :style => 'padding: 20px;'%>
+    <div id="tabs-3-content"></div>
+  </div>-->
+  <!-- arquivos --> 
+  <div id="tabs-4">
+    <%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-4-loading', :style => 'padding: 20px;'%>
+    <div id="tabs-4-content"></div>
+
+  </div>
 </div><!-- end tabs -->
 </div><!-- end main -->
 
