@@ -6,23 +6,18 @@ class TagsController < BaseController
   caches_action :show, :cache_path => Proc.new { |controller| controller.send(:tag_url, controller.params[:id]) }, :if => Proc.new{|c| c.cache_action? }
   def cache_action?
     !logged_in? && params[:type].blank?
-  end  
+  end
 
   def auto_complete_for_tag_name
     @tags = Tag.find(:all, :conditions => [ 'LOWER(name) LIKE ?', '%' + (params[:id] || params[:tag_list]) + '%' ])
     render :inline => "<%= auto_complete_result(@tags, 'name') %>"
   end
-  
-  def index  
+
+  def index
     @tags = popular_tags(100, ' count DESC')
-
     @user_tags = popular_tags(75, ' count DESC', 'User')
-
     @post_tags = popular_tags(75, ' count DESC', 'Post')
-
     @photo_tags = popular_tags(75, ' count DESC', 'Photo')
-
-    #@clipping_tags = popular_tags(75, ' count DESC', 'Clipping')  
   end
 
   def manage
@@ -35,7 +30,7 @@ class TagsController < BaseController
 
   def update
     @tag = Tag.find_by_name(URI::decode(params[:id]))
-    
+
     respond_to do |format|
       if @tag.update_attributes(params[:tag])
         flash[:notice] = :tag_was_successfully_updated.l
@@ -43,7 +38,7 @@ class TagsController < BaseController
         format.xml  { render :nothing => true }
       else
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @tag.errors.to_xml }        
+        format.xml  { render :xml => @tag.errors.to_xml }
       end
     end
   end
@@ -51,9 +46,9 @@ class TagsController < BaseController
   def destroy
     @tag = Tag.find_by_name(URI::decode(params[:id]))
     @tag.destroy
-    
+
     respond_to do |format|
-      format.html { 
+      format.html {
         flash[:notice] = :tag_was_successfully_deleted.l
         redirect_to admin_tags_url
       }
@@ -63,7 +58,7 @@ class TagsController < BaseController
 
   def show
     tag_names = URI::decode(params[:id])
-    
+
     @tags = Tag.find(:all, :conditions => [ 'name IN (?)', TagList.from(tag_names) ] )
     if @tags.nil? || @tags.empty?
       flash[:notice] = :tag_does_not_exists.l_with_args(:tag => tag_names)
@@ -74,18 +69,15 @@ class TagsController < BaseController
 
     if params[:type]
       case params[:type]
-        when 'Post', 'posts'
-          @pages = @posts = Post.recent.find_tagged_with(tag_names, :match_all => true, :page => {:size => 20, :current => params[:page]})
-          @photos, @users = [], []
-        when 'Photo', 'photos'
-          @pages = @photos = Photo.recent.find_tagged_with(tag_names, :match_all => true, :page => {:size => 30, :current => params[:page]})
-          @posts, @users = [], []
-        when 'User', 'users'
-          @pages = @users = User.recent.find_tagged_with(tag_names, :match_all => true, :page => {:size => 30, :current => params[:page]})
-          @posts, @photos = [], []
-        #when 'Clipping', 'clippings'
-        #  @pages = @clippings = Clipping.recent.find_tagged_with(tag_names, :match_all => true, :page => {:size => 10, :current => params[:page]})
-        #  @posts, @photos, @users = [], [], []
+      when 'Post', 'posts'
+        @pages = @posts = Post.recent.find_tagged_with(tag_names, :match_all => true, :page => {:size => 20, :current => params[:page]})
+        @photos, @users = [], []
+      when 'Photo', 'photos'
+        @pages = @photos = Photo.recent.find_tagged_with(tag_names, :match_all => true, :page => {:size => 30, :current => params[:page]})
+        @posts, @users = [], []
+      when 'User', 'users'
+        @pages = @users = User.recent.find_tagged_with(tag_names, :match_all => true, :page => {:size => 30, :current => params[:page]})
+        @posts, @photos = [], []
       else
         @clippings, @posts, @photos, @users = [], [], [], []
       end
@@ -93,7 +85,6 @@ class TagsController < BaseController
       @posts = Post.recent.find_tagged_with(tag_names, :match_all => true, :limit => 5)
       @photos = Photo.recent.find_tagged_with(tag_names, :match_all => true, :limit => 10)
       @users = User.recent.find_tagged_with(tag_names, :match_all => true, :limit => 10).uniq
-     # @clippings = Clipping.recent.find_tagged_with(tag_names, :match_all => true, :limit => 10)
     end
   end
 

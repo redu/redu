@@ -6,18 +6,11 @@ class MessagesController < BaseController
 
   uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :index, :create, :update, :edit])
 
-#  skip_before_filter :verify_authenticity_token, :only => [:auto_complete_for_username]
-
-#  def auto_complete_for_username
-#    @users = User.find(:all, :conditions => [ 'LOWER(login) LIKE ?', '%' + (params[:message][:to]) + '%' ])
-#    render :inline => "<%= auto_complete_result(@users, 'login') %>"
-#  end
-
   def index
     if params[:mailbox] == "sent"
       @messages = @user.sent_messages.paginate(:all, :page => params[:page],
-      :order =>  'created_at DESC',
-      :per_page => AppConfig.items_per_page)
+                                               :order =>  'created_at DESC',
+                                               :per_page => AppConfig.items_per_page)
 
       respond_to do |format|
         format.js do
@@ -28,8 +21,8 @@ class MessagesController < BaseController
       end
     else
       @messages = @user.received_messages.paginate(:all, :page => params[:page],
-      :order =>  'created_at DESC',
-      :per_page => AppConfig.items_per_page )
+                                                   :order =>  'created_at DESC',
+                                                   :per_page => AppConfig.items_per_page )
 
       respond_to do |format|
         format.js do
@@ -137,7 +130,6 @@ class MessagesController < BaseController
           end
         end
       end
-
     end
   end
 
@@ -160,12 +152,12 @@ class MessagesController < BaseController
 
     if params[:mailbox] == 'sent'
       @messages = @user.sent_messages.paginate(:all, :page => page,
-      :order =>  'created_at DESC',
-      :per_page => AppConfig.items_per_page)
+                                               :order =>  'created_at DESC',
+                                               :per_page => AppConfig.items_per_page)
     else
       @messages = @user.received_messages.paginate(:all, :page => page,
-      :order =>  'created_at DESC',
-      :per_page => AppConfig.items_per_page)
+                                                   :order =>  'created_at DESC',
+                                                   :per_page => AppConfig.items_per_page)
     end
 
     respond_to do |format|
@@ -177,7 +169,7 @@ class MessagesController < BaseController
           else
             page.replace_html "#more",  link_to_remote("mais ainda!", :url => {:controller => :messages, :action => :more, :user_id => params[:user_id], :offset => 20,:limit => 100}, :method =>:get, :loading => "$('#more').html('"+escape_javascript(image_tag('spinner.gif'))+"')")
           end
-         end
+        end
       end
     end
   end

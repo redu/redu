@@ -31,7 +31,7 @@ class CoursesController < BaseController
       else
         format.js {
           render :update do |page|
-            page << "alert('houve uma falha no conteúdo');"
+          page << "alert('houve uma falha no conteúdo');"
           end
         }
       end
@@ -344,7 +344,7 @@ class CoursesController < BaseController
         end
 
       elsif @course.courseable_type == 'InteractiveClass'
-      #Course.find(session[:course_id]).courseable
+        #Course.find(session[:course_id]).courseable
         @course.courseable = InteractiveClass.new(params[:interactive_class])
 
         respond_to do |format|
@@ -389,11 +389,8 @@ class CoursesController < BaseController
 
       end
 
-
     when "3"
       @course = Course.find(session[:course_id])
-
-
       @submited_to_school = false
       if params[:post_to]
         SchoolAsset.create({:asset_type => "Course", :asset_id => @course.id, :school_id => params[:post_to].to_i})
@@ -465,8 +462,6 @@ class CoursesController < BaseController
               redirect_to(@course)
             end
           end
-
-
         else
           format.html { render "step3" }
         end
@@ -477,14 +472,12 @@ class CoursesController < BaseController
 
   def unpublished_preview
     @course = Course.find(session[:course_id])
-
-
     @lessons = Lesson.all(:conditions => ['interactive_class_id = ?',@course.courseable_id ], :order => 'position ASC')
     respond_to do |format|
       format.html {render 'unpublished_preview_interactive'}
-
     end
   end
+
   def cancel
     if session[:course_id]
       course = Course.find(session[:course_id])
@@ -553,7 +546,6 @@ class CoursesController < BaseController
       format.xml  { head :ok }
     end
   end
-
 
   #Buy one course
   def buy
@@ -626,14 +618,13 @@ class CoursesController < BaseController
   end
 
   def notify
-
+    #TODO
   end
 
   protected
-
-    def authenticate
-      authenticate_or_request_with_http_basic do |id, password|
-        id == 'zencoder' && password == 'sociallearning'
-      end
+  def authenticate
+    authenticate_or_request_with_http_basic do |id, password|
+      id == 'zencoder' && password == 'sociallearning'
     end
+  end
 end

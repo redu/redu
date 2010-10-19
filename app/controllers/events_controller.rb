@@ -8,10 +8,9 @@ class EventsController < BaseController
   before_filter :login_required
   before_filter :is_member_required
   before_filter :is_event_approved,
-                :only => [:show, :edit, :update, :destroy]
+    :only => [:show, :edit, :update, :destroy]
   before_filter :can_manage_required,
-                :only => [:edit, :update, :destroy]
-
+    :only => [:edit, :update, :destroy]
 
   #These two methods make it easy to use helpers in the controller.
   #This could be put in application_controller.rb if we want to use
@@ -40,10 +39,10 @@ class EventsController < BaseController
       ical_event.description = (event.description.blank? ? '' : coder.decode(help.strip_tags(event.description).to_s) + "\n\n") + event_url(event)
       ical_event.location = event.location unless event.location.blank?
       @calendar.add ical_event
-   end
-   @calendar.publish
-   headers['Content-Type'] = "text/calendar; charset=UTF-8"
-   render :text => @calendar.to_ical, :layout => false
+    end
+    @calendar.publish
+    headers['Content-Type'] = "text/calendar; charset=UTF-8"
+    render :text => @calendar.to_ical, :layout => false
   end
 
   def show
@@ -53,10 +52,10 @@ class EventsController < BaseController
 
   def index
     @events = Event.upcoming.paginate(:conditions => ["school_id = ? AND state LIKE 'approved'", School.find(params[:school_id]).id],
-      :include => :owner,
-      :page => params[:page],
-      :order => 'start_time DESC',
-      :per_page => AppConfig.items_per_page)
+                                      :include => :owner,
+                                      :page => params[:page],
+                                      :order => 'start_time DESC',
+                                      :per_page => AppConfig.items_per_page)
 
     @list_title = "Eventos Futuros"
     @school = School.find(params[:school_id])
@@ -64,10 +63,10 @@ class EventsController < BaseController
 
   def past
     @events = Event.past.paginate(:conditions => ["school_id = ? AND state LIKE 'approved'", School.find(params[:school_id]).id],
-      :include => :owner,
-      :page => params[:page],
-      :order => 'start_time DESC',
-      :per_page => AppConfig.items_per_page)
+                                  :include => :owner,
+                                  :page => params[:page],
+                                  :order => 'start_time DESC',
+                                  :per_page => AppConfig.items_per_page)
 
     @list_title = "Eventos Passados"
     render :template => 'events/index'
@@ -76,7 +75,6 @@ class EventsController < BaseController
   def new
     @event = Event.new(params[:event])
     @school = School.find(params[:school_id])
-
   end
 
   def edit
@@ -87,7 +85,7 @@ class EventsController < BaseController
     # Passando para o formato do banco
     params[:event][:start_time] = Time.zone.parse(params[:event][:start_time].gsub('/', '-'))
     params[:event][:end_time] = Time.zone.parse(params[:event][:end_time].gsub('/', '-'))
-    
+
     @event = Event.new(params[:event])
     @event.owner = current_user
     @event.school = School.find(params[:school_id])
@@ -107,8 +105,8 @@ class EventsController < BaseController
         format.html { redirect_to school_event_path(@event.school, @event) }
         format.xml  { render :xml => @event, :status => :created, :location => @event }
       else
-          format.html { render :action => "new" }
-          format.xml  { render :xml => @event.errors, :status => :unprocessable_entity }
+        format.html { render :action => "new" }
+        format.xml  { render :xml => @event.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -149,7 +147,7 @@ class EventsController < BaseController
           page << "jQuery('#like_spinner').hide()"
           page << "jQuery('#like_link').show()"
           page << "jQuery('#like_link').attr('onclick', 'return false;')"
-           page << "jQuery('#like_count').html('" + @event.votes_for().to_s + "')" # TODO performance + uma consulta?
+          page << "jQuery('#like_count').html('" + @event.votes_for().to_s + "')" # TODO performance + uma consulta?
         end
       end
     end
@@ -159,10 +157,10 @@ class EventsController < BaseController
     day = Time.utc(Time.now.year, Time.now.month, params[:day])
 
     @events = Event.paginate(:conditions => ["school_id = ? AND state LIKE 'approved' AND ? BETWEEN start_time AND end_time", School.find(params[:school_id]).id, day],
-      :include => :owner,
-      :page => params[:page],
-      :order => 'start_time DESC',
-      :per_page => AppConfig.items_per_page)
+                             :include => :owner,
+                             :page => params[:page],
+                             :order => 'start_time DESC',
+                             :per_page => AppConfig.items_per_page)
     @school = School.find(params[:school_id])
 
     @list_title = "Eventos do dia #{day.strftime("%d/%m/%Y")}"
@@ -178,11 +176,11 @@ class EventsController < BaseController
     redirect_to school_event_path(event.school_id, event)
   end
 
-protected
+  protected
   def can_manage_required
-     @event = Event.find(params[:id])
+    @event = Event.find(params[:id])
 
-     current_user.can_manage?(@event, @school) ? true : access_denied
+    current_user.can_manage?(@event, @school) ? true : access_denied
   end
 
   def is_member_required
@@ -198,5 +196,4 @@ protected
       redirect_to school_events_path
     end
   end
-
 end

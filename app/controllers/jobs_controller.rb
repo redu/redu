@@ -1,11 +1,11 @@
 class JobsController < BaseController
   require 'open-uri'  
   before_filter :authenticate
-  
+
   def notify
     job_id = params[:job][:id]
     seminar = Seminar.find(:first, :conditions => ["job = ?", job_id])
-    
+
     if seminar and seminar.state != 'converted'
       if params[:job][:state] == 'finished'
         output_name = params[:output][:url].split('/').last # Nome criado pelo Zencoder
@@ -19,7 +19,7 @@ class JobsController < BaseController
       end
     end
   end
-  
+
   protected
 
   def authenticate
