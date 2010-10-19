@@ -39,5 +39,13 @@
         </fieldset>
       <% end %>
     </div>
+    <div class="grid_11 alpha omega clearfix" style="padding: 10px 0;">
+      <% if current_user.can_manage?(@event, @event.school) %>
+        <%= link_to 'Editar', edit_school_event_path(@event.school, @event), :class => "button"%>
+        <%= link_to 'Remover', @event,
+          {:confirm => 'Você tem certeza que deseja remover  permanentemente?',
+            :method => :delete,  :class => "button"} %>
+        <% end %></div>
+
+    </div>
   </div>
-</div>

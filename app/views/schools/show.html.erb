@@ -83,6 +83,7 @@ $(document).ready(function() {
       <div class="statistics">
         <span class="call"><span>Eventos</span></span>
         <%= render :partial => 'events/upcoming', :object => @school.events %>
+        <%= link_to 'Ver todos', school_events_path(@school), :class=>"more" %> 
       </div><!-- end news -->
       <div class="news">
         <span class="call"><span>Notícias</span></span>

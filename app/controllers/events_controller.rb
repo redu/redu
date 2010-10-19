@@ -6,7 +6,7 @@ class EventsController < BaseController
   cache_sweeper :event_sweeper, :only => [:create, :update, :destroy]
 
   before_filter :login_required
-  before_filter :is_member_required
+  before_filter :is_member_required, :except => :destroy
   before_filter :is_event_approved,
     :only => [:show, :edit, :update, :destroy]
   before_filter :can_manage_required,
@@ -134,7 +134,7 @@ class EventsController < BaseController
 
     respond_to do |format|
       flash[:notice] = 'O evento foi excluído.'
-      format.html { redirect_to school_events_path }
+      format.html { redirect_to school_events_path(@event.school) }
     end
   end
 
