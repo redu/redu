@@ -7,7 +7,7 @@ class Enrollment < ActiveRecord::Base
 
     unless Subject.find(subject_id).limit.nil?
 
-      if Subject.find(subject_id).limit < Subject.find(subject_id).enrolled_students.length &&  current_user.enrollments.detect{|e| e.subject_id == subject_id.to_i}.nil?
+      if Subject.find(subject_id).limit > Subject.find(subject_id).enrolled_students.length &&  current_user.enrollments.detect{|e| e.subject_id == subject_id.to_i}.nil?
         current_user.enrollments.create(:subject_id => subject_id)
       else
         raise Exception.new("Inscrição Não Efetuada! Limite de Vagas Atingidas!")

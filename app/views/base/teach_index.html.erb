@@ -1,76 +1,76 @@
 <% content_for :page_id, 'teach' %>
 
 <style>
-.cx-widget {
--webkit-box-shadow: #AAA 0px 4px 10px;
-background-color: #E9E9E9;
-border-bottom-left-radius: 10px 10px;
-border-bottom-right-radius: 10px 10px;
-border-top-left-radius: 10px 10px;
-border-top-right-radius: 10px 10px;
-margin-top: 20px;
-padding: 1px;
-/*width: 306px;*/
-	}
-	
-	.widget-head {
-height: 18px;
-margin: 0px auto;
-padding: 3px 0px;
-/*width: 294px;*/
-padding-left: 10px;
-}
+  .cx-widget {
+    -webkit-box-shadow: #AAA 0px 4px 10px;
+    background-color: #E9E9E9;
+    border-bottom-left-radius: 10px 10px;
+    border-bottom-right-radius: 10px 10px;
+    border-top-left-radius: 10px 10px;
+    border-top-right-radius: 10px 10px;
+    margin-top: 20px;
+    padding: 1px;
+    /*width: 306px;*/
+  }
 
-.move {
-cursor: move;
-}
+  .widget-head {
+    height: 18px;
+    margin: 0px auto;
+    padding: 3px 0px;
+    /*width: 294px;*/
+    padding-left: 10px;
+  }
 
-.widget-content {
-background: #FDFDFD;
-border-bottom-left-radius: 10px 10px;
-border-bottom-right-radius: 10px 10px;
-border-top-left-radius: 0px 0px;
-border-top-right-radius: 0px 0px;
-overflow: hidden;
-padding: 15px 10px;
-/*width: 286px;*/
-}
+  .move {
+    cursor: move;
+  }
+
+  .widget-content {
+    background: #FDFDFD;
+    border-bottom-left-radius: 10px 10px;
+    border-bottom-right-radius: 10px 10px;
+    border-top-left-radius: 0px 0px;
+    border-top-right-radius: 0px 0px;
+    overflow: hidden;
+    padding: 15px 10px;
+    /*width: 286px;*/
+  }
 </style>
 
 
 <div class="container_16" id="group-header-learn">
-	<div class="logo-learn">
-	    <span>Ensine</span>
-	</div>
-	<div class="info grid_5">
-		<h2 class="text-header"><a href="">Gerencie suas redes e estimule seus aprendizes!</a></h2>
-	</div><!-- end info -->
+  <div class="logo-learn">
+    <span>Ensine</span>
+  </div>
+  <div class="info grid_5">
+    <h2 class="text-header"><a href="">Gerencie suas redes e estimule seus aprendizes!</a></h2>
+  </div><!-- end info -->
 
-	<div id="box-nav-networks">
-	    <ul>
-	        <li class="bt-networks">
-		        <%= link_to "Crie Redes!", new_school_path, :class => "text-tt" %>
-				<%= link_to "Crie espaços para distribuição do seu conteúdo", new_school_path, :class => "text-desc" %>
-	        </li>
-	        <li class="bt-aulas">
-	            <%= link_to "Crie Aulas!", new_course_path, :class => "text-tt" %>
-				<%= link_to "Produza e compartilhe conteúdo educacional", new_course_path, :class => "text-desc" %>
-	        </li>
-	        <li class="bt-exames">
-	            <%= link_to "Crie Exames!", new_exam_path, :class => "text-tt" %>
-	            <%= link_to "Elabore exercícios e simulados para os seus alunos", new_exam_path, :class => "text-desc" %>
-	
-	       </li>
-                <li class="bt-cursos">
-	            <%# link_to "Crie Cursos!", new_subject_path, :class => "text-tt" %>
-				<%= link_to_function "Crie Cursos!", "alert('Essa funcionalidade esta em desenvolvimento')" , :class => "text-tt" %>
-	            <%= link_to "Crie seus cursos com aulas e exames", new_subject_path, :class => "text-desc" %>
+  <div id="box-nav-networks">
+    <ul>
+      <li class="bt-networks">
+        <%= link_to "Crie Redes!", new_school_path, :class => "text-tt" %>
+        <%= link_to "Crie espaços para distribuição do seu conteúdo", new_school_path, :class => "text-desc" %>
+      </li>
+      <li class="bt-aulas">
+        <%= link_to "Crie Aulas!", new_course_path, :class => "text-tt" %>
+        <%= link_to "Produza e compartilhe conteúdo educacional", new_course_path, :class => "text-desc" %>
+      </li>
+      <li class="bt-exames">
+        <%= link_to "Crie Exames!", new_exam_path, :class => "text-tt" %>
+        <%= link_to "Elabore exercícios e simulados para os seus alunos", new_exam_path, :class => "text-desc" %>
 
-	        </li> 
+      </li>
+      <li class="bt-cursos">
+<%# link_to "Crie Cursos!", new_subject_path, :class => "text-tt" %>
+        <%= link_to_function "Crie Cursos!", "alert('Essa funcionalidade esta em desenvolvimento')" , :class => "text-tt" %>
+        <%= link_to "Crie seus cursos com aulas e exames", new_subject_path, :class => "text-desc" %>
 
-	    </ul>
-	</div>
-	
+      </li> 
+
+    </ul>
+  </div>
+
 </div>
 <!--
 <div class="cx-widget grid_5" id="inclusao"> 
@@ -109,129 +109,124 @@ padding: 15px 10px;
 </div>
 -->
 <ul class="grid_16 sortable calls headlines">
-	
-	<li class="clearfix grid_5 personal-overview">
-		<span class="call">
-			<span>Meu Perfil</span>
-			<span class="option" id="">Opções</span>
-			<ul class="options">
-				<li><a href="">Nova aula</a></li>
-				<li><a href="">Outra opçao</a></li>
-				<li><a href="">Outra opçao</a></li>
-			</ul>
-		</span>
-		  <%=  link_to image_tag( current_user.avatar.url(:thumb), 
-                    {:class=> "photo", :border => 0 }), current_user   %> 
-		<%= link_to current_user.display_name, current_user, :class => "name" %>
-		<%= link_to "Editar", edit_user_path(current_user), :class => "edit" %>
-		<!-- <a href="" class="plan">PRO</a> -->
-	</li>	
-	
-	<li class="clearfix grid_5 students-overview">
-		<span class="call">
-			<span>Meus alunos</span>
-			<span class="option" id="">Opções</span>
-			<ul class="options">
-				<li><a href="">Nova aula</a></li>
-				<li><a href="">Outra opçao</a></li>
-				<li><a href="">Outra opçao</a></li>
-			</ul>
-		</span>
-		<ul>
-			<li class="clearfix">
-				<img src="/images/thumb.gif" alt="" class="photo" /><a href="" class="name">Guilherme</a>
-				<a href="" class="info">Redu</a>
-			</li>
-			<li class="clearfix">
-				<img src="/images/thumb.gif" alt="" class="photo" /><a href=""  class="name">Cassio</a>
-				<a href="" class="info">Colégio de Aplicaçãp</a>
-			</li>
-			<li class="clearfix">
-				<img src="/images/thumb.gif" alt="" class="photo" /><a href=""  class="name">André</a>
-				<a href="" class="info">CIn</a>
-			</li>
-		</ul>
-	</li>
-	
-	<li class="clearfix grid_5 lectures-overview">
-		<span class="call">
-			<span>Minhas aulas (<%= current_user.courses.count%>)</span>
-		</span>
-		<% unless @courses.empty? %>
-		<ul>
-			<%# TODO performance %>
-			<% @courses.each do |course| %>
-			<li class="clearfix">
-				 <%=  link_to image_tag( course.thumb_url, 
-                    {:class=> "photo", :border => 0 }), course   %> 
-				<%= link_to course.name, course, :class => "name" %>
-			</li>
-			<% end %>
-			<li class="clearfix">
-				<%= link_to "(ver todos)", user_courses_path(current_user), :class => "info" %>
-			</li>
-		</ul>
-		<% else %>
-		Você não possui aulas ainda. Crie uma <%= link_to "agora!", new_course_path %>
-		<% end %>
-	</li>
+
+  <li class="clearfix grid_5 personal-overview">
+    <span class="call">
+      <span>Meu Perfil</span>
+      <span class="option" id="">Opções</span>
+      <ul class="options">
+        <li><a href="">Nova aula</a></li>
+        <li><a href="">Outra opçao</a></li>
+        <li><a href="">Outra opçao</a></li>
+      </ul>
+    </span>
+    <%=  link_to image_tag( current_user.avatar.url(:thumb), 
+      {:class=> "photo", :border => 0 }), current_user   %> 
+    <%= link_to current_user.display_name, current_user, :class => "name" %>
+    <%= link_to "Editar", edit_user_path(current_user), :class => "edit" %>
+    <!-- <a href="" class="plan">PRO</a> -->
+  </li>	
+
+  <li class="clearfix grid_5 students-overview">
+    <span class="call">
+      <span>Meus alunos</span>
+      <span class="option" id="">Opções</span>
+      <ul class="options">
+        <li><a href="">Nova aula</a></li>
+        <li><a href="">Outra opçao</a></li>
+        <li><a href="">Outra opçao</a></li>
+      </ul>
+    </span>
+    <ul>
+      <li class="clearfix">
+        <img src="/images/thumb.gif" alt="" class="photo" /><a href="" class="name">Guilherme</a>
+        <a href="" class="info">Redu</a>
+      </li>
+      <li class="clearfix">
+        <img src="/images/thumb.gif" alt="" class="photo" /><a href=""  class="name">Cassio</a>
+        <a href="" class="info">Colégio de Aplicaçãp</a>
+      </li>
+      <li class="clearfix">
+        <img src="/images/thumb.gif" alt="" class="photo" /><a href=""  class="name">André</a>
+        <a href="" class="info">CIn</a>
+      </li>
+    </ul>
+  </li>
+
+  <li class="clearfix grid_5 lectures-overview">
+    <span class="call">
+      <span>Minhas aulas (<%= current_user.courses.count%>)</span>
+    </span>
+    <% unless @courses.empty? %>
+      <ul>
+  <%# TODO performance %>
+        <% @courses.each do |course| %>
+          <li class="clearfix">
+            <%=  link_to image_tag( course.thumb_url, 
+              {:class=> "photo", :border => 0 }), course   %> 
+            <%= link_to course.name, course, :class => "name" %>
+          </li>
+        <% end %>
+        <li class="clearfix">
+          <%= link_to "(ver todos)", user_courses_path(current_user), :class => "info" %>
+        </li>
+      </ul>
+    <% else %>
+                  Você não possui aulas ainda. Crie uma <%= link_to "agora!", new_course_path %>
+    <% end %>
+  </li>
 
 
-	<!--
+  <!--
 	<li class="clearfix grid_5 statistics">
 		<span class="call"><span>Estatísticas</span></span>
 		<div></div>
 	</li>
 	-->
-	
-	<li class="clearfix grid_5 groups">
-		<span class="call">
-			<span>Minhas Redes (<%= current_user.schools_owned.count%>)</span>
-		</span>
-			
-			<% if current_user.schools_owned.size > 0 %>
-		<ul>
-			<% for school in current_user.schools_owned[0..4] do%>
-			<li class="clearfix">
-				 <%=  link_to image_tag(  school.avatar_photo_url(:thumb), 
-                    {:class=> "photo", :border => 0 }), school   %> 
-				<%= link_to school.name, school, :class => "name" %>
-					<span class="info"> <%= school.users.count %> membros</span>
-			</li>
-			<% end %>
-			<li class="clearfix">
-				<%= link_to "(ver todas)", user_schools_path(current_user), :class => "info" %>
-			</li>
-		</ul>
-		<% else %>
-		Você não possui redes ainda. Crie uma <%= link_to "agora!", new_school_path %>
-		<% end %>
-			
-		
-	</li>
-	
-	
 
-	
-	
+  <li class="clearfix grid_5 groups">
+    <span class="call">
+      <span>Minhas Redes (<%= current_user.schools_owned.count%>)</span>
+    </span>
 
-	<li class="clearfix grid_5 courses">
-		<span class="call">
-			<span>Meus Cursos</span>
-                        <span class="option" id="">Opções</span>
-			<ul class="options">
-				<li><%= link_to "Cria Curso", new_subject_path %></li>
-					<li><%= link_to "Gestão de Cursos", admin_subjects_url%></li>
-			</ul>
-		</span>
-		<ul>
-			<% current_user.subjects.each do |subject| %>
-                  <li><a href="javascript:;" class="name"><%= subject.title %></a></li>
-                      <%end%>
-			
-		</ul>
-	</li> 
-      
-</ul>
+    <% if current_user.schools_owned.size > 0 %>
+      <ul>
+        <% for school in current_user.schools_owned[0..4] do%>
+            <li class="clearfix">
+              <%=  link_to image_tag(  school.avatar_photo_url(:thumb), 
+                {:class=> "photo", :border => 0 }), school   %> 
+              <%= link_to school.name, school, :class => "name" %>
+              <span class="info"> <%= school.users.count %> membros</span>
+            </li>
+          <% end %>
+          <li class="clearfix">
+            <%= link_to "(ver todas)", user_schools_path(current_user), :class => "info" %>
+          </li>
+        </ul>
+      <% else %>
+                    Você não possui redes ainda. Crie uma <%= link_to "agora!", new_school_path %>
+      <% end %>
+
+
+    </li>
+
+    <li class="clearfix grid_5 courses">
+      <span class="call">
+        <span>Meus Cursos</span>
+        <span class="option" id="">Opções</span>
+        <ul class="options">
+          <li><%= link_to "Cria Curso", new_subject_path %></li>
+          <li><%= link_to "Gestão de Cursos", admin_subjects_url%></li>
+        </ul>
+      </span>
+      <ul>
+        <% current_user.subjects.each do |subject| %>
+          <li><%= link_to subject.title, admin_show_path(subject) %></li>
+        <%end%>
+
+      </ul>
+    </li> 
+
+  </ul>
 
 

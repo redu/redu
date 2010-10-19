@@ -170,7 +170,7 @@ class SubjectsController < BaseController
       render "new"
     else
       session[:subject_step] = session[:subject_params]= session[:subject_aulas]=session[:subject_exames] = nil
-       redirect_to courses_path 
+       redirect_to admin_subjects_path 
     end
   end
   
@@ -240,7 +240,7 @@ class SubjectsController < BaseController
      StudentProfile.create_profile(@subject.id, current_user)
      flash[:notice] = "Você se inscreveu neste curso!"
      redirect_to @subject
-    rescue Exception => e #execeçao crida no model de Enrollment
+    rescue Exception => e #exceçao criada no model de Enrollment
       flash[:notice] =  e.message
       redirect_to subjects_path
     end
@@ -255,11 +255,11 @@ class SubjectsController < BaseController
     sf = current_user.subjects.find(params[:id]).subject_files.new
     sf.attachment = params[:subject_file][:attachment]
     sf.save 
+    
     respond_to do |format|
-    format.js
+     format.js
     end  
        
-   
   end
   
   def download
@@ -272,8 +272,7 @@ class SubjectsController < BaseController
   end
   
   def admin_show
-    @subject = current_user.subjects.find(params[:id])  
-      
+    @subject = current_user.subjects.find(params[:id])       
   end
      
 
