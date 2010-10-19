@@ -647,7 +647,7 @@ ul.bulletins-headlines li .date {
   font-style: italic;
 }
 
-/* Events */
+/* Upcoming Events */
 ul.upcoming-events {
 
 }
@@ -655,21 +655,34 @@ ul.upcoming-events {
 ul.upcoming-events li {
 }
 
-ul.upcoming-events li .date {
+ul.upcoming-events li .date ,
+ul.upcoming-events li .hour ,
+ul.upcoming-events li,
+div.event-content .date,
+div.event-content .hour {
   border: 1px solid #ECECEC;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
   margin-bottom: 10px;
 }
 
-ul.upcoming-events li .date {
+ul.upcoming-events li .date ,
+ul.upcoming-events li .hour,
+div.event-content .date,
+div.event-content .hour {
   background-color: #F5F5F5;
   margin: 5px;
   float: left;
+  padding: 5px 0px;
+}
+
+ul.upcoming-events li .date ,
+ul.upcoming-events li .hour {
   padding: 5px 7px;
 }
 
-ul.upcoming-events li .date .day {
+ul.upcoming-events li .date .day,
+div.event-content .date .day{
   font-weight: bold;
   font-size: 1.2em;
   color: #A5A5A5;
@@ -678,34 +691,130 @@ ul.upcoming-events li .date .day {
   float: left;
 }
 
-ul.upcoming-events li .date .month {
+ul.upcoming-events li .date .month,
+div.event-content .date .month {
   text-transform: uppercase;
   font-weight: bold;
   font-size: .9em;
   color: #A5A5A5;
 }
 
-ul.upcoming-events li .date .year {
+ul.upcoming-events li .date .year,
+div.event-content .date .year {
   font-size: .8em;
 }
 
-ul.upcoming-events li .col {
+ul.upcoming-events li .col,
+div.event-content .col {
   width: 35px;
   float: left;
   text-align: center;
 }
 
-ul.upcoming-events li .tagline {
+ul.upcoming-events li .name {
   display: block;
   float: left;
   margin: 5px;
   padding: 10px 0;
+  font-size: .9em;
 }
 
+ul.events-index li {
+  padding: 0;
+}
+
+ul.events-index li .date, 
+ul.events-index li .hour,
+div.event-content .date,
+div.event-content .hour {
+  margin: 8px 0;
+  text-align: center;
+}
+
+ul.events-index li .date,
+div.event-content .date {
+  padding: 10px 0px;
+} 
+
+ul.events-index li .name,
+div.event-content .name {
+  font-size: 1.1em;
+  font-weight: bold;
+  padding: 0;
+}
+
+ul.events-index li .tagline {
+  display: block;
+  float: left;
+  width: 500px;
+  font-size: .9em;
+  padding: 5px;
+  color: gray;
+}
+
+ul.events-index li .hour,
+div.event-content .hour {
+  background-color: #1AB7EA;
+  border-color: #1AB7EA;
+  color: white;
+  font-weight: bold;
+  margin-top: 0;
+}
+
+ul.events-index li .date .day,
+div.event-content .date .day {
+  font-size: 2em;
+  margin-left: 15px;
+}
+
+ul.events-index li .hour,
+ul.events-index li .date {
+  padding: 5px 0;
+}
 div#filter ul li {
   /* margin: 10px 0;*/
 }
 
+div.event-content .green {
+  background-color:  #FFB73A;
+  border-color: #FFB73A;
+}
+
+div.event-content h4.name {
+  font-size: 1.9em;
+  padding-top: 10px;
+}
+
+div.event-content .tagline {
+  border-bottom: 1px solid #ECECEC;
+  border-top: 1px solid #ECECEC;
+  padding: 10px 0;
+  color: gray;
+  margin: 10px 0;
+}
+
+div.event-content .from,
+div.event-content .to {
+  margin: 5px 0;
+  font-size: .7em;
+  display: block;
+  text-transform: uppercase;
+  text-align:center;
+  font-weight: bold;
+}
+
+div.event-content form {
+  margin: 0;
+}
+
+div.event-content em {
+  font-weight: bold;
+  padding-bottom: 10px;
+  display: block;
+}
+
+div.event-content form fieldset {
+}
 div#filter .call {
   font-size: .8em;
 }

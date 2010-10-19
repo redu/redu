@@ -63,9 +63,10 @@ $(document).ready(function() {
 </script>
 
 <%= render :partial => "schools/school_info", :locals => {:show => true} %>
+<div class="grid_16">
 <%= render :partial => "schools/sidebar", :locals => {:school => @school} %>
 
-<div class="main grid_12">
+<div class="main grid_12 omega">
   <div class="school-tabs tabs">
     <ul>
       <li><a href="#tabs-1">Início</a></li>
@@ -131,4 +132,4 @@ $(document).ready(function() {
   </div>
 </div><!-- end tabs -->
 </div><!-- end main -->
-
+</div>
