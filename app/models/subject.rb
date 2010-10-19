@@ -95,7 +95,6 @@ class Subject < ActiveRecord::Base
   end
 
 
-
   def is_valid?
     if  self.end_time!= nil && self.end_time.strftime("%d/%m/%Y") < Time.now.strftime("%d/%m/%Y")
       false
@@ -105,66 +104,17 @@ class Subject < ActiveRecord::Base
   end
 
   def create_course_subject_type_course aulas, subject_id, current_user
-  
-    aulas.each_with_index do |aula,index|
-
-      course = current_user.courses.find(aula)
-      clone_course = course.clone :except => [:view_count, :created_at, :updated_at]#clone it, methodo 'except' relacionado com o plugin vendor/deep_cloning, sem os atributos[view_count, :created_at, :updated_at]
-
-      #### clone o conteúdo da aula #######
-      type = course.courseable #a aula, pode ser seminar, page or interactive_class
-
-      if type.class.to_s.eql?("InteractiveClass") #INTERACTIVE CLASS
-
-        clone_type = InteractiveClass.find(type.id).clone :include => :lessons 
-        clone_type.save
-
-        clone_type.lessons.each do |l| # um lesson pode ser 'Page' or 'Seminar',
-          clone_lesson = Lesson.find(l.id)
-
-          #salva as aulas interativas...
-          if   l.lesson.class.to_s.eql?("Page")
-            clone_lessonable = Page.find(l.lesson).clone
-            clone_lessonable.save
-          else
-            clone_lessonable = Seminar.find(l.lesson).clone
-            clone_lessonable.send(:create_without_callbacks) ##metodo do proprio active record para pular callback   
-          end
-
-          clone_lesson.lesson_id = clone_lessonable.id
-          clone_lesson.save
-        end
-
-      elsif type.class.to_s.eql?("Seminar") #SEMINAR
-
-        clone_type = Seminar.find(type.id).clone
-        clone_type.send(:create_without_callbacks) ##metodo do proprio active record para pular callback
-
-      else #Page
-        clone_type = type.clone
-        clone_type.save
-      end
-
-      clone_course.courseable_type = clone_type.class.to_s
-      clone_course.courseable_id = clone_type.id
-      ##### fim do clone do conteúdo da aula######
-
-      clone_course.is_clone = true
-      clone_course.save#and save it
-
-      cs = CourseSubject.new
-      cs.subject_id = subject_id
-      cs.courseable_id = clone_course.id
-      cs.position = index #variavel index eh contador 
-      cs.courseable_type = "Course"
-      cs.save
-    end
-
+    
+    #positions tem funcionalidade efetiva na hora de atualizar as aulas, pois existe há possibilidade inserir uma aula numa ordem qualquer
+    positions = aulas.map{|a| aulas.index(a.to_s)} 
+     
+    clone_content(aulas, subject_id, current_user,positions)
+ 
   end
 
 
   def update_course_subject_type_course aulas, subject_id, current_user
-
+   
     aulas_futuras =   aulas.nil? ? Array.new : aulas.map{|a| a.to_i}  #aulas selecionadas na tela, há um operador ternário
     #caso o usuario deschecar todas aulas ou nao houver aula associoda ao curso
 
@@ -174,82 +124,19 @@ class Subject < ActiveRecord::Base
     inserted_ids = aulas_futuras - aulas_ids #aulas q serao inseridas
 
     CourseSubject.destroy_all(:courseable_id => deleted_ids) unless deleted_ids.empty?#segurança ok, pois o array deleted_ids eh criado a partir do current_user
-
-    unless inserted_ids.empty?
-      inserted_ids.each_with_index do |aula,index|
-
-        course = current_user.courses.find(aula) #find the course by id
-        clone_course = course.clone :except => [:view_count, :created_at, :updated_at] #clone it
     
-        #### clone o conteúdo da aula #######
-        type = course.courseable #a aula, pode ser seminar, page or interactive_class
-
-        if type.class.to_s.eql?("InteractiveClass") #INTERACTIVE CLASS
-
-          clone_type = InteractiveClass.find(type.id).clone :include => :lessons #type.clone :include => :lessons
-          clone_type.save
-
-          clone_type.lessons.each do |l| #loop1 
-            clone_lesson = Lesson.find(l.id)
-
-            #salva as aulas interativas...
-            if   l.lesson.class.to_s.eql?("Page")
-              clone_lessonable = Page.find(l.lesson).clone
-              clone_lessonable.save
-            else
-              clone_lessonable = Seminar.find(l.lesson).clone
-              clone_lessonable.send(:create_without_callbacks)##metodo do proprio active record para pular callback    
-            end 
-
-            clone_lesson.lesson_id = clone_lessonable.id
-            clone_lesson.save
-          end##fim loop1
-
-        elsif type.class.to_s.eql?("Seminar") #SEMINAR
-          clone_type = Seminar.find(type.id).clone
-          clone_type.send(:create_without_callbacks)
-
-        else #Page
-          clone_type = type.clone
-          clone_type.save
-        end
-        clone_course.courseable_type = clone_type.class.to_s
-        clone_course.courseable_id = clone_type.id
-        ##### fim do clone do conteúdo da aula######
+    #positions setadas de acordo com a ordem do usuário.
+    positions = inserted_ids.map{|a| aulas.index(a.to_s)}
+   
+    clone_content(inserted_ids,subject_id,current_user,positions)
     
-        clone_course.is_clone = true
-        clone_course.save#and save it
-        cs = CourseSubject.new
-        cs.subject_id = subject_id
-        cs.courseable_id = clone_course.id
-        cs.position = index
-        cs.courseable_type = "Course"
-        cs.save
-      end
-    end
-
     #######rearrange courses###########
     subject = current_user.subjects.find(subject_id) #atualizado
     aulas_ids = subject.aulas.map{|a| a.id} # aulas relaciondas com o curso, atualizado.
-    compare = aulas_futuras <=> aulas_ids
-
-    if compare != 0
-
-      aulas_futuras.each_with_index do |item, index|
-
-        obj = subject.aulas.detect{|a| a.id == item}
-        unless obj.nil?
-          aux = Course.find(obj.id).course_subject
-          aux.position = index
-          aux.save
-        end
-      end
-
-    end
-    ######end rearrange###########
+    rearrange_course(subject, aulas_ids, aulas_futuras)  
     
   end
-
+  
   def update_course_subject_type_exam exams, subject_id, current_user
 
     exams_futuras =   exams.nil? ? Array.new : exams.map{|a| a.to_i}  #aulas selecionadas na tela, há um operador ternário
@@ -340,5 +227,81 @@ class Subject < ActiveRecord::Base
     self.student_profiles.select{|sp| sp.graduaded == -1 }.map{|e| e.user}
   end
 
+  protected
+ 
+  def clone_content(aulas, subject_id, current_user, positions)
+    
+    aulas.each_with_index do |aula,index|
+
+      course = current_user.courses.find(aula)
+      clone_course = course.clone :except => [:view_count, :created_at, :updated_at]#clone it, methodo 'except' relacionado com o plugin vendor/deep_cloning, sem os atributos[view_count, :created_at, :updated_at]
+
+      #### clone o conteúdo da aula #######
+      type = course.courseable #a aula, pode ser seminar, page or interactive_class
+
+      if type.class.to_s.eql?("InteractiveClass") #INTERACTIVE CLASS
+
+        clone_type = InteractiveClass.find(type.id).clone :include => :lessons 
+        clone_type.save
+
+        clone_type.lessons.each do |l| # um lesson pode ser 'Page' or 'Seminar',
+          clone_lesson = Lesson.find(l.id)
+
+          #salva as aulas interativas...
+          if   l.lesson.class.to_s.eql?("Page")
+            clone_lessonable = Page.find(l.lesson).clone
+            clone_lessonable.save
+          else
+            clone_lessonable = Seminar.find(l.lesson).clone
+            clone_lessonable.send(:create_without_callbacks) ##metodo do proprio active record para pular callback   
+          end
+
+          clone_lesson.lesson_id = clone_lessonable.id
+          clone_lesson.save
+        end
+
+      elsif type.class.to_s.eql?("Seminar") #SEMINAR
+
+        clone_type = Seminar.find(type.id).clone
+        clone_type.send(:create_without_callbacks) ##metodo do proprio active record para pular callback
+
+      else #Page
+        clone_type = type.clone
+        clone_type.save
+      end
+
+      clone_course.courseable_type = clone_type.class.to_s
+      clone_course.courseable_id = clone_type.id
+      ##### fim do clone do conteúdo da aula######
+
+      clone_course.is_clone = true
+      clone_course.save#and save it
+
+      cs = CourseSubject.new
+      cs.subject_id = subject_id
+      cs.courseable_id = clone_course.id
+      cs.position = positions[index] #variavel index eh contador 
+      cs.courseable_type = "Course"
+      cs.save
+    end
+    
+  end
+ 
+  def rearrange_course(subject, aulas_ids, aulas_futuras)
+    compare = aulas_futuras <=> aulas_ids
+   
+    if compare != 0
+      aulas_futuras.each_with_index do |item, index|
+
+        obj = subject.aulas.detect{|a| a.id == item}
+        unless obj.nil?
+          aux = Course.find(obj.id).course_subject
+          aux.position = index
+          aux.save
+        end
+      end
+    end #if
+   
+  end
 
 end
