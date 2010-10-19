@@ -81,7 +81,7 @@
       <div id="tabs-3-content">
 	     <%if @subject.subject_files.length >0%>
 	      <% @subject.subject_files.each_with_index do |file, index|%>
-		   <%=  link_to "#{index} Download", download_subject_path(@subject, :file_id => file.id) %><br />
+		   <%=  link_to "#{index+1}- #{file.attachment_file_name}", download_subject_path(@subject, :file_id => file.id) %><br />
 		  <%end%>
 		 <%else%>
 		  não há arquivos
