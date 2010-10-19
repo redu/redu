@@ -14,12 +14,8 @@ class Subject < ActiveRecord::Base
   validates_presence_of :title, :if => lambda {|s| s.current_step == "subject"}
   validates_presence_of :description, :if => lambda {|s| s.current_step == "subject"}
   validates_numericality_of :limit, :allow_nil => true
-  # validates_presence_of :simple_category
+  validates_presence_of :simple_category
 
-  #override find method
- 
- 
- 
 
   def validate
     if self.start_time.nil? && self.end_time != nil

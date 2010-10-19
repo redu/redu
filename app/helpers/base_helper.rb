@@ -16,12 +16,12 @@ module BaseHelper
 
 
     def simple_categories_i18n(f)
+    
    # collection_select(:course, :simple_category, SimpleCategory.all, :id, :name)
    categories_array = SimpleCategory.all.map { |cat| [category_i18n(cat.name), cat.id] }
  
-    indice = nil
-     unless f.object.nil?
-       
+     indice = nil #indice retorna a posição da categoria em categories_array
+     unless f.object.nil?  
           categories_array.each_with_index do |ca,index|
             ca.each do |c| 
                if  c.eql?(f.object.simple_category_id)
@@ -29,9 +29,9 @@ module BaseHelper
                end
             end
          end
-         
      end
-
+     
+    
 		if params[:course]
 			# To put a value in categories_array I have to subtract for 1 the params[:course][:simple_category_id],
 			# because the include_blank add a extra field
@@ -44,6 +44,7 @@ module BaseHelper
 				else
 					f.select(:simple_category_id, options_for_select(categories_array), :include_blank => true)
 				end
+				
 			else				
 				f.select(:simple_category_id, options_for_select(categories_array), :include_blank => true)
 			end

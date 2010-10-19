@@ -8,8 +8,8 @@ class SubjectsController < BaseController
     @subject = Subject.find(params[:id])
     
     unless @subject
-    flash[:notice] = "Curso não encontrado. Você digitou o endereço correto?"
-    redirect_to subjects_path and return
+      flash[:notice] = "Curso não encontrado. Você digitou o endereço correto?"
+      redirect_to subjects_path and return
     end
   end
   
@@ -17,32 +17,32 @@ class SubjectsController < BaseController
     @subject = current_user.subjects.find(params[:id])
     
     unless @subject
-    flash[:notice] = "Curso não encontrado. Você tem mesmo permissão para acessá-lo?"
-    redirect_to subjects_path and return
+      flash[:notice] = "Curso não encontrado. Você tem mesmo permissão para acessá-lo?"
+      redirect_to subjects_path and return
     end
   end
 
   def index
-#    session[:subject_step] = session[:subject_params]= session[:subject_aulas]= session[:subject_id]= session[:subject_exames]  = nil
-#    
-#    if params[:school_id].nil?
-#    @subjects = Subject.find(:all, :conditions => "is_public like true") 
-#   else
-#     @subjects = current_user.schools.find(params[:school_id]).subjects#.paginate(paginating_params)
-#   end
-#   
-#   
-#    respond_to do |format|
-#     format.html # index.html.erb
-#
-#     format.js  do     
-#       render :update do |page|
-#         page.replace_html  'content_list', :partial => 'subjects/school/subject_list/'
-#         page << "$('#spinner').hide()"
-#       end
-#     end  
-#     
-#   end
+    #    session[:subject_step] = session[:subject_params]= session[:subject_aulas]= session[:subject_id]= session[:subject_exames]  = nil
+    #    
+    #    if params[:school_id].nil?
+    #    @subjects = Subject.find(:all, :conditions => "is_public like true") 
+    #   else
+    #     @subjects = current_user.schools.find(params[:school_id]).subjects#.paginate(paginating_params)
+    #   end
+    #   
+    #   
+    #    respond_to do |format|
+    #     format.html # index.html.erb
+    #
+    #     format.js  do     
+    #       render :update do |page|
+    #         page.replace_html  'content_list', :partial => 'subjects/school/subject_list/'
+    #         page << "$('#spinner').hide()"
+    #       end
+    #     end  
+    #     
+    #   end
 
     session[:subject_step] = session[:subject_params]= session[:subject_aulas]= session[:subject_id]= session[:subject_exames]  = nil
     cond = Caboose::EZ::Condition.new
@@ -69,11 +69,11 @@ class SubjectsController < BaseController
       else
         @subjects = @school.subjects.paginate(paginating_params) 
       end
-    else # index (Course)
-      if params[:search] # search
-        @subjects = Subject.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
+    else # index    
+      if params[:search] # search   
+        @subjects = Subject.title_like_all(params[:search].to_s.split).is_public(true).ascend_by_title.paginate(paginating_params) 
       else
-        @subjects = Subject.paginate(paginating_params)
+        @subjects = Subject.is_public(true).paginate(paginating_params) #is_public metodo fornecido pelo searchlogic
       end
     end
     
@@ -86,42 +86,42 @@ class SubjectsController < BaseController
       format.js  do
         if params[:school_content]
           render :update do |page|
-             page.replace_html  'content_list', :partial => 'subject_list'
-             page << "$('#spinner').hide()"
+            page.replace_html  'content_list', :partial => 'subject_list'
+            page << "$('#spinner').hide()"
           end
-#        elsif params[:tab]
-#          render :update do |page|
-#            page.replace_html  'tabs-2-content', :partial => 'courses_school'
-#          end
+          #        elsif params[:tab]
+          #          render :update do |page|
+          #            page.replace_html  'tabs-2-content', :partial => 'courses_school'
+          #          end
         else
           render :index
         end
         
       end
     end
- end
+  end
   
 
   def show
     
-     @subject = Subject.find(:first, :conditions => "is_public like true AND id =#{params[:id].to_i}")
-     @school = @subject.school
+    @subject = Subject.find(:first, :conditions => "is_public like true AND id =#{params[:id].to_i}")
+    @school = @subject.school
      
-     student_profile = current_user.student_profiles.find_by_subject_id(@subject.id)
-     @percentage = student_profile.nil? ? 0 : student_profile.coursed_percentage(@subject) 
+    student_profile = current_user.student_profiles.find_by_subject_id(@subject.id)
+    @percentage = student_profile.nil? ? 0 : student_profile.coursed_percentage(@subject) 
      
     respond_to do |format|  
-       if @subject.is_valid?  
-         if current_user.enrollments.detect{|e| e.subject_id.eql?(params[:id].to_i)}.nil?
+      if @subject.is_valid?  
+        if current_user.enrollments.detect{|e| e.subject_id.eql?(params[:id].to_i)}.nil?
           format.html{  render "preview" }
         else
           @status = Status.new
           @statuses = @subject.recent_activity(0,10)
-         format.html
+          format.html
         end
       else
-       flash[:notice] = "Data do curso expirada"
-       format.html{ redirect_to subjects_path}
+        flash[:notice] = "Data do curso expirada"
+        format.html{ redirect_to subjects_path}
       end
     
     end#format
@@ -130,17 +130,16 @@ class SubjectsController < BaseController
 
   def new
     session[:subject_params] ||= {}
-   # cancel
+    # cancel
     @subject = Subject.new
   end
 
   def create
     
-    
     if params[:subject]
-     params[:subject][:start_time] = Time.zone.parse(params[:subject][:start_time].gsub('/', '-')) unless params[:subject][:start_time].nil?
-     params[:subject][:end_time] = Time.zone.parse(params[:subject][:end_time].gsub('/', '-'))  unless params[:subject][:end_time].nil?
-     session[:subject_params].deep_merge!(params[:subject])  
+      params[:subject][:start_time] = Time.zone.parse(params[:subject][:start_time].gsub('/', '-')) unless params[:subject][:start_time].nil?
+      params[:subject][:end_time] = Time.zone.parse(params[:subject][:end_time].gsub('/', '-'))  unless params[:subject][:end_time].nil?
+      session[:subject_params].deep_merge!(params[:subject])  
     end
     session[:subject_aulas]= params[:aulas] unless params[:aulas].nil?
     session[:subject_exames] = params[:exams] unless params[:exams].nil?
@@ -155,7 +154,7 @@ class SubjectsController < BaseController
       elsif @subject.last_step?
         
         if @subject.all_valid?
-           @subject.save 
+          @subject.save 
           @subject.create_course_subject_type_course(session[:subject_aulas], @subject.id, current_user) unless session[:subject_aulas].nil?
           @subject.create_course_subject_type_exam(session[:subject_exames], @subject.id, current_user) unless session[:subject_exames].nil?
           
@@ -170,7 +169,7 @@ class SubjectsController < BaseController
       render "new"
     else
       session[:subject_step] = session[:subject_params]= session[:subject_aulas]=session[:subject_exames] = nil
-       redirect_to admin_subjects_path 
+      redirect_to admin_subjects_path 
     end
   end
   
@@ -186,9 +185,9 @@ class SubjectsController < BaseController
      
     updated = false 
     if params[:subject]
-     params[:subject][:start_time] = Time.zone.parse(params[:subject][:start_time].gsub('/', '-')) unless params[:subject][:start_time].nil?
-     params[:subject][:end_time] = Time.zone.parse(params[:subject][:end_time].gsub('/', '-'))  unless params[:subject][:end_time].nil?
-     session[:subject_params].deep_merge!(params[:subject])  
+      params[:subject][:start_time] = Time.zone.parse(params[:subject][:start_time].gsub('/', '-')) unless params[:subject][:start_time].nil?
+      params[:subject][:end_time] = Time.zone.parse(params[:subject][:end_time].gsub('/', '-'))  unless params[:subject][:end_time].nil?
+      session[:subject_params].deep_merge!(params[:subject])  
     end
     session[:subject_aulas]= params[:aulas] unless params[:aulas].nil?
     session[:subject_id]= params[:id].split("-")[0].to_i unless params[:id].nil?
@@ -209,7 +208,7 @@ class SubjectsController < BaseController
            
           @subject.update_course_subject_type_course(session[:subject_aulas], @subject.id,current_user) #unless session[:subject_aulas].nil?
           @subject.update_course_subject_type_exam(session[:subject_exames], @subject.id, current_user) 
-         updated = true
+          updated = true
         end
           
       else
@@ -219,7 +218,7 @@ class SubjectsController < BaseController
     end
 
     unless updated
-       render "edit"
+      render "edit"
     else
       flash[:notice] = "Atualizado com sucesso!"
       session[:subject_step] = session[:subject_params]= session[:subject_aulas]= session[:subject_exames]= session[:subject_id] = nil
@@ -235,11 +234,11 @@ class SubjectsController < BaseController
 
   def enroll
     begin
-     redirect_to(subjects_path) and return unless @subject.is_public
-     Enrollment.create_enrollment(@subject.id, current_user) 
-     StudentProfile.create_profile(@subject.id, current_user)
-     flash[:notice] = "Você se inscreveu neste curso!"
-     redirect_to @subject
+      redirect_to(subjects_path) and return unless @subject.is_public
+      Enrollment.create_enrollment(@subject.id, current_user) 
+      StudentProfile.create_profile(@subject.id, current_user)
+      flash[:notice] = "Você se inscreveu neste curso!"
+      redirect_to @subject
     rescue Exception => e #exceçao criada no model de Enrollment
       flash[:notice] =  e.message
       redirect_to subjects_path
@@ -257,7 +256,7 @@ class SubjectsController < BaseController
     sf.save 
     
     respond_to do |format|
-     format.js
+      format.js
     end  
        
   end
