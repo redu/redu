@@ -254,17 +254,12 @@ class SubjectsController < BaseController
   def attachment
     sf = current_user.subjects.find(params[:id]).subject_files.new
     sf.attachment = params[:subject_file][:attachment]
-    if sf.save 
-      
-      format.js do
-        render :update do |page|
-          #page << "window.location.replace('#{ url_for :action => :new , :course_type => params[:courseable_type], :step => "3", :school_id => params[:school_id] }')"
-          page << "$('.errorMessageField').remove()"
-        end
-      end
-      
-    end
-    
+    sf.save 
+    respond_to do |format|
+    format.js
+    end  
+       
+   
   end
   
   def download
