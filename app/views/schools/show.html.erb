@@ -82,7 +82,7 @@ $(document).ready(function() {
         <% end %>
         <div class="statistics">
           <span class="call"><span>Eventos</span></span>
-          <% if @events and @events.size > 0 %>
+          <% if @school.events and @schoo.events.upcoming.size > 0 %>
             <%= render :partial => 'events/upcoming', :object => @school.events %>
             <%= link_to 'Ver todos', school_events_path(@school), :class=>"more" %> 
           <% else %>
