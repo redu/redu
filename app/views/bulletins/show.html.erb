@@ -1,35 +1,37 @@
 <%= render :partial => "schools/school_info", :locals => {:school => @school,:show => false} %>
-<%= render :partial => "schools/sidebar", :locals => {:school => @school} %>
+<div class="grid_16">
+  <%= render :partial => "schools/sidebar", :locals => {:school => @school} %>
 
-<div class="main grid_12">
+  <div class="main grid_12 omega">
 
-  <div class="grid_11 alpha omega bulletin-content">
-    <h4 class="name"><%= link_to @bulletin.title, school_bulletin_path(@bulletin.school, @bulletin) %></h4>
-    <div class="quiet tagline">
-      <%= @bulletin.tagline %>
-    </div>
-    <div class="pretty-text">
-      <%= @bulletin.description %>
-    </div>
-    <div class="grid_11 alpha omega">
-      <div class="tags">
-        <span class="title">Palavras-chave</span>
-        <%= render :partial => 'tags/tags', :object => @bulletin.tags %>
+    <div class="grid_11 alpha omega bulletin-content">
+      <h4 class="name"><%= link_to @bulletin.title, school_bulletin_path(@bulletin.school, @bulletin) %></h4>
+      <div class="quiet tagline">
+        <%= @bulletin.tagline %>
       </div>
+      <div class="pretty-text">
+        <%= @bulletin.description %>
+      </div>
+      <div class="grid_11 alpha omega">
+        <div class="tags">
+          <span class="title">Palavras-chave</span>
+          <%= render :partial => 'tags/tags', :object => @bulletin.tags %>
+        </div>
+      </div>
+      <%# link_to 'Ver notícias da rede', school_bulletins_path(@bulletin.school) %>
+    </div><!-- end bulletin-content --> 
+    <div class="grid_11 alpha omega bulletin-actions clearfix">
+      <div class="grid_5 alpha">
+        <%= render :partial => 'like/likeable', :object => @bulletin %>
+      </div>
+      <div id="rating_video" class="grid_5 omega"><%= ratings_for @bulletin %></div>
+    </div><!-- end bulletin-actions -->
+    <div class="grid_11 alpha omega clearfix" style="padding: 10px 0;">
+      <% if current_user.can_manage?(@bulletin, @bulletin.school) %>
+        <%= link_to 'Editar', edit_school_bulletin_path(@bulletin.school, @bulletin), :class => "button"%>
+        <%= link_to 'Remover', @bulletin,
+          {:confirm => 'Você tem certeza que deseja remover essa notícia permanentemente?',
+            :method => :delete, :class => "button"} %>
+        <% end %></div>
     </div>
-    <%# link_to 'Ver notícias da rede', school_bulletins_path(@bulletin.school) %>
-  </div><!-- end bulletin-content --> 
-  <div class="grid_11 alpha omega bulletin-actions clearfix">
-    <div class="grid_5 alpha">
-      <%= render :partial => 'like/likeable', :object => @bulletin %>
-    </div>
-    <div id="rating_video" class="grid_5 omega"><%= ratings_for @bulletin %></div>
-  </div><!-- end bulletin-actions -->
-  <div class="grid_11 alpha omega clearfix" style="padding: 10px 0;">
-    <% if current_user.can_manage?(@bulletin, @bulletin.school) %>
-      <%= link_to 'Editar', edit_school_bulletin_path(@bulletin.school, @bulletin), :class => "button"%>
-      <%= link_to 'Remover', @bulletin,
-        {:confirm => 'Você tem certeza que deseja remover essa notícia permanentemente?',
-          :method => :delete, :class => "button"} %>
-      <% end %></div>
   </div>
