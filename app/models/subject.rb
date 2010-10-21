@@ -10,10 +10,8 @@ class Subject < ActiveRecord::Base
   belongs_to :user
   belongs_to :school
 
-
-   # METODOS DO WIZARD
+  # METODOS DO WIZARD
   attr_writer :current_step
-
 
   def current_step
     @current_step || steps.first
@@ -27,11 +25,11 @@ class Subject < ActiveRecord::Base
     self.current_step = steps[steps.index(current_step)+1]
   end
 
-   def previous_step
+  def previous_step
     self.current_step = steps[steps.index(current_step)-1]
   end
 
-   def first_step?
+  def first_step?
     current_step == steps.first
   end
 
@@ -46,34 +44,31 @@ class Subject < ActiveRecord::Base
     end
   end
 
+  def create_course_subject_type_course aulas, subject_id, current_user
 
-  
-   def create_course_subject_type_course aulas, subject_id, current_user
-    
-     aulas.each do |aula|
-        course = current_user.courses.find(aula) #find the course by id
-        clone_course = course.clone #clone it
-        clone_course.is_clone = true
-        clone_course.save#and save it    
-        cs = CourseSubject.new
-        cs.subject_id = subject_id
-        cs.courseable_id = clone_course.id
-        cs.courseable_type = "Course"
-        cs.save    
+    aulas.each do |aula|
+      course = current_user.courses.find(aula) #find the course by id
+      clone_course = course.clone #clone it
+      clone_course.is_clone = true
+      clone_course.save#and save it
+      cs = CourseSubject.new
+      cs.subject_id = subject_id
+      cs.courseable_id = clone_course.id
+      cs.courseable_type = "Course"
+      cs.save
     end
-        
+
   end
 
   def create_course_subject_type_exam exams, subject_id
 
     exams.each do |exam_id|
-     cs = CourseSubject.new
-     cs.subject_id = subject_id
-     cs.courseable_id = exam_id
-     cs.courseable_type = "Exam"
-     cs.save
+      cs = CourseSubject.new
+      cs.subject_id = subject_id
+      cs.courseable_id = exam_id
+      cs.courseable_type = "Exam"
+      cs.save
     end
 
   end
-
 end

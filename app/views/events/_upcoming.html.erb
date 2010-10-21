@@ -1,0 +1,14 @@
+<ul class="upcoming-events">
+  <% upcoming.each do |event| %>
+  <li class="clearfix">
+    <div class="date">
+      <span class="quiet day"><%= event.start_time.day %></span>
+      <span class="col">
+        <span class="month quiet"><%= event.start_time.strftime("%b") %></span>
+        <span class="quiet year"><%= event.start_time.year %></span>
+      </span>    
+    </div>
+    <span class="name"><%= link_to event.name, school_event_path(event.school, event) %></span>
+  </li>
+  <% end %>
+</ul>

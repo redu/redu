@@ -8,9 +8,8 @@ class Event < ActiveRecord::Base
   validates_presence_of :start_time
   validates_presence_of :end_time
   validates_presence_of :owner
-	validates_presence_of :tagline
-
-	validates_length_of :tagline, :maximum => AppConfig.desc_char_limit
+  validates_presence_of :tagline
+  validates_length_of :tagline, :maximum => AppConfig.desc_char_limit
 
   belongs_to :owner, :class_name => "User", :foreign_key => 'owner'
   belongs_to :school
@@ -18,14 +17,15 @@ class Event < ActiveRecord::Base
   #Procs used to make sure time is calculated at runtime
   named_scope :upcoming, lambda { { :order => 'start_time', :conditions => ['end_time > ?' , Time.now ] } }
   named_scope :past, lambda { { :order => 'start_time DESC', :conditions => ['end_time <= ?' , Time.now ] } }
+  named_scope :approved, :conditions => { :state => 'approved' }
 
   # Máquina de estados para moderação das Notícias
   acts_as_state_machine :initial => :waiting
 
-	state :waiting
+  state :waiting
   state :approved
   state :rejected
-	state :error
+  state :error
 
   event :approve do
     transitions :from => :waiting, :to => :approved
@@ -44,7 +44,7 @@ class Event < ActiveRecord::Base
 
     if spans_days?
       if start_time.hour == 0
-      string += " de #{start_time.strftime("%d/%m")} à "
+        string += " de #{start_time.strftime("%d/%m")} à "
       else
         string += " de #{start_time.strftime("%d/%m %I:%M %p")} à "
       end
@@ -67,5 +67,4 @@ class Event < ActiveRecord::Base
   def validate
     errors.add("Início", " deve ser antes do término.") unless start_time && end_time && (start_time < end_time)
   end
-
 end

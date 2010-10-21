@@ -6,18 +6,18 @@ function showLoadingFiles(){
 		//jQuery('file_list_tbl').hide();
 		//Element.show('spinner');
 	}
-	
+
 
 </script>
 
 <ul id="actions_user">
-				
+
 				<%  if current_user.can_manage? @school %>
 				   	 <li>
                      <div class="new-folder-outter">
-                         <a href="#" onclick="$('div.new-folder-inner').slideToggle(); return false;">Criar Diretório</a>
+                         <a href="#" onclick="$('div.new-folder-inner').slideToggle(); return false;">Criar Pasta</a>
                          <div class="new-folder-inner hoverdiv">
-                            
+
 							 <% @new_folder = Folder.new %>
 							 <% form_remote_for @new_folder, :loading => "$('#new-folder-spinner').show()" do |f| %>
 		 						<%= f.text_field :name, :size => "15" %>
@@ -26,15 +26,15 @@ function showLoadingFiles(){
 								<%= f.submit 'Criar' %>
 								<%= image_tag 'spinner.gif', :id => 'new-folder-spinner', :style => 'display: none' %><BR>
 							 <% end %>
-							 
+
                          </div>
-                     </div>	 
+                     </div>
 					 </li>
-					 
+
 					 <li class="sep">|</li>
-					
+
 					 <li>
-					 
+
 					 <div class="new-file-outter">
                          <a href="#" onclick="$('div.new-file-inner').slideToggle(); return false;">Upload de Arquivo</a>
                          <div class="new-file-inner hoverdiv">
@@ -48,8 +48,8 @@ function showLoadingFiles(){
 							<% end %>
 							 <iframe id='upload_frame' name="upload_frame" style="width:1px;height:1px;border:0px" src="about:blank"></iframe>
                          </div>
-                     </div>	 
-					 
+                     </div>
+
 					 </li>
 					  <!--
 					  <a href="#" onclick="ShowProperties();" class="share" id="rights_link">Permissions</a>
@@ -57,24 +57,24 @@ function showLoadingFiles(){
 				<% end %>
 				<%# link_to 'RSS', { :controller => 'folder', :action => 'feed', :id => @folder.id, :access_key => @logged_in_user.rss_access_key }, { :class => 'small' } %>
 				<%# link_to '(!)', { :controller => 'folder', :action => 'feed_warning' }, { :class => 'small', :style => 'margin-left:1px;' } %>
-			
-				
+
+
 </ul>
-		
+
 
 <% if flash[:folder_error] %>
     <div id="error"><%= flash[:folder_error] %></div>
-<% end %>		
-			
+<% end %>
+
 <div style="margin-left: 20px;">
-<span class="snippet"> Você está no diretório: </span>
+<span class="snippet"> Você está na pasta: </span>
 <h3 id="file_path"> <%= folder_path(@folder) %></h3>
 </div>
 
 <div id="file_list" >
 	<%= render :partial => "folders/list"  %>
 </div>
-			
+
 
 Total de <%= @files_count %> arquivos. Usando <%= @total_size %> MB de 2 GB (<%= @use_percentage %>%)
 
@@ -112,4 +112,4 @@ Total de <%= @files_count %> arquivos. Usando <%= @total_size %> MB de 2 GB (<%=
     <% end %>
 </div></div>
 <% end %>
-	
+

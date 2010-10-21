@@ -50,7 +50,11 @@ function selectNone(){
 						<td><%= check_box_tag 'schools[]', school.id  %></td>
 						<td><%= school.id  %></td>
 						<td><%= link_to school.name, school_path(school), :target => "_blank" %> </td>
-						<td><%= school.owner.display_name %> </td>
+                                                <% if school.owner %>
+                                                  <td><%= school.owner.display_name %> </td>
+                                                <% else %>
+                                                  <td> Rede sem dono </td>
+                                                <% end %>
 						<td><%= time_ago_in_words(school.created_at) %> </td>
 					</tr>
 				</tr>

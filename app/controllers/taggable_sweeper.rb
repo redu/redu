@@ -15,17 +15,17 @@ class TaggableSweeper < ActionController::Caching::Sweeper
   def after_swfupload(photo)
     expire_cache_for(taggable)    
   end
-  
+
   # If our sweeper detects that a taggable was updated 
   def after_update(taggable)
     expire_cache_for(taggable)
   end
-  
+
   # If our sweeper detects that a taggable was deleted
   def after_destroy(taggable)
     expire_cache_for(taggable)
   end
-          
+
   private
   def expire_cache_for(record)
     # Expire the tag show pages
@@ -33,6 +33,6 @@ class TaggableSweeper < ActionController::Caching::Sweeper
       expire_action(tag_url(tag))
     end
   end
-  
-  
+
+
 end

@@ -3,13 +3,13 @@ class SchoolsController < BaseController
 
   before_filter :login_required,  :except => [:join, :unjoin, :member, :index]
   after_filter :create_activity, :only => [:create]
-
   # Usado para proteger acoes perigosas (só para admin)
   before_filter :except =>
   [:new, :create, :show, :vote, :index, :join, :unjoin, :member, :onwer, :members, :teachers, :take_ownership] do |controller|
     controller.school_admin_required(controller.params[:id]) if controller.params and controller.params[:id]
   end
   before_filter :can_be_owner_required, :only => :take_ownership
+  before_filter :is_not_member_required, :only => :join
 
   def remove_asset
     case params[:asset_type]
@@ -77,12 +77,11 @@ class SchoolsController < BaseController
 
   ### School Admin actions
   def invalidate_keys(access_key) # 'troca' um conjunto de chaves
-
+    #TODO
   end
 
   def join
     @school = School.find(params[:id])
-
     @association = UserSchoolAssociation.new
     @association.user = current_user
     @association.school = @school
@@ -226,7 +225,6 @@ class SchoolsController < BaseController
     @school = School.find(params[:id]) # TODO realmente necessário?
 
     case params[:submission_type]
-
     when '0' # remove selected
       @removed_users = User.all(:conditions => ["id IN (?)", params[:users].join(',')]) unless params[:users].empty?
 
@@ -237,7 +235,6 @@ class SchoolsController < BaseController
       for user in @removed_users # TODO fazer um remove all?
         UserNotifier.deliver_remove_membership(user, @school) # TODO fazer isso em batch
       end
-
     when '1' # moderate roles
       UserSchoolAssociation.update_all(["role_id = ?", params[:role_id]],
                                        ["status like 'approved' AND school_id = ? AND user_id IN (?)", @school.id, params[:users].join(',') ])  if params[:role_id]
@@ -250,7 +247,6 @@ class SchoolsController < BaseController
 
   def search_users_admin
     @school = School.find(params[:id])
-
     if params[:search_user].empty?
       @memberships = UserSchoolAssociation.paginate(:conditions => ["status like 'approved' AND school_id = ?", @school.id],
                                                     :include => :user,
@@ -261,11 +257,11 @@ class SchoolsController < BaseController
       qry = params[:search_user] + '%'
       @memberships = UserSchoolAssociation.paginate(
         :conditions => ["user_school_associations.status like 'approved' AND user_school_associations.school_id = ? AND (users.first_name LIKE ? OR users.last_name LIKE ? OR users.login LIKE ?)",
-                        @school.id, qry,qry,qry ],
-        :include => :user,
-        :page => params[:page],
-        :order => 'user_school_associations.updated_at DESC',
-      :per_page => AppConfig.items_per_page)
+          @school.id, qry,qry,qry ],
+          :include => :user,
+          :page => params[:page],
+          :order => 'user_school_associations.updated_at DESC',
+          :per_page => AppConfig.items_per_page)
     end
 
     respond_to do |format|
@@ -383,17 +379,17 @@ class SchoolsController < BaseController
   def members
     @school = School.find(params[:id]) #TODO duas queries que poderiam ser apenas 1
     @members = @school.user_school_associations.paginate(  #optei por .users ao inves de .students
-                                                           :page => params[:page],
-                                                           :order => 'updated_at DESC',
-                                                           :per_page => AppConfig.users_per_page)
-    @member_type = "membros"
+                                                         :page => params[:page],
+                                                         :order => 'updated_at DESC',
+                                                         :per_page => AppConfig.users_per_page)
+                                                         @member_type = "membros"
 
-    respond_to do |format|
-      format.html {
-        render "view_members"
-      }
-      format.xml  { render :xml => @members }
-    end
+                                                         respond_to do |format|
+                                                           format.html {
+                                                             render "view_members"
+                                                           }
+                                                           format.xml  { render :xml => @members }
+                                                         end
   end
 
   # lista todos os professores
@@ -405,14 +401,14 @@ class SchoolsController < BaseController
       :order => 'updated_at DESC',
       :per_page => AppConfig.users_per_page)
 
-    @member_type = "professores"
+      @member_type = "professores"
 
-    respond_to do |format|
-      format.html {
-        render "view_members"
-      }
-      format.xml  { render :xml => @members }
-    end
+      respond_to do |format|
+        format.html {
+          render "view_members"
+        }
+        format.xml  { render :xml => @members }
+      end
   end
 
   # GET /schools
@@ -420,9 +416,8 @@ class SchoolsController < BaseController
   def index
     cond = Caboose::EZ::Condition.new
     cond.append ["redu_category_id = ?", params[:area]] if params[:area] and params[:area].downcase != 'all'
-    #cond.append ["audience_id = ?", params[:audience]] if params[:audience]
 
-     paginating_params = {
+    paginating_params = {
       :conditions => cond.to_sql,
       :page => params[:page],
       :order => (params[:sort]) ? params[:sort] + ' DESC' : 'created_at DESC',
@@ -479,11 +474,11 @@ class SchoolsController < BaseController
       @brand_new = @school.courses.find(:first, :order => "created_at DESC")
       @courses = @school.courses.paginate(:conditions =>
                                           ["published = 1"],
-                                          :include => :owner,
-                                          :page => params[:page],
-                                          :order => 'updated_at DESC',
-                                          :per_page => AppConfig.items_per_page)
-      @bulletins = @school.bulletins.find(:all, :conditions => "state LIKE 'approved'", :order => "created_at DESC", :limit => 5)
+                                            :include => :owner,
+                                            :page => params[:page],
+                                            :order => 'updated_at DESC',
+                                            :per_page => AppConfig.items_per_page)
+                                          @bulletins = @school.bulletins.find(:all, :conditions => "state LIKE 'approved'", :order => "created_at DESC", :limit => 5)
     end
 
     respond_to do |format|
@@ -497,7 +492,7 @@ class SchoolsController < BaseController
           else
             render 'show' and return
           end
-          # show.html.erb
+        # show.html.erb
         }
         format.xml  { render :xml => @school }
       else
@@ -566,6 +561,9 @@ class SchoolsController < BaseController
 
     respond_to do |format|
       if @school.update_attributes(params[:school])
+        if params[:school][:subscription_type].eql? "1" # Entrada de membros passou a ser livre, aprovar todos os membros pendentes
+          UserSchoolAssociation.update_all("status = 'approved'", ["school_id = ? AND status = 'pending'", @school.id])
+        end
         flash[:notice] = 'A escola foi atualizada com sucesso!'
         format.html { redirect_to(@school) }
         format.xml  { head :ok }
@@ -590,10 +588,17 @@ class SchoolsController < BaseController
 
   protected
 
-    def can_be_owner_required
-      @school = School.find(params[:id])
+  def can_be_owner_required
+    @school = School.find(params[:id])
 
-      current_user.can_be_owner?(@school) ? true : access_denied
+    current_user.can_be_owner?(@school) ? true : access_denied
+  end
+
+  def is_not_member_required
+    @school = School.find(params[:id])
+    if current_user.get_association_with(@school)
+      redirect_to school_path(@school)
     end
+  end
 
 end

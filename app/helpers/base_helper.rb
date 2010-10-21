@@ -551,12 +551,12 @@ module BaseHelper
        case @school.subscription_type
 
         when 1 # anyone can join
-        link_to "Participar", join_school_path(@school), :class => "participar_rede button"
+        link_to "Participar", join_school_path(@school), :onclick => "$('.participar_rede').hide(); $('.participate_spinner').show();" , :class => "participar_rede button"
       when 2 # moderated
         if membership and (membership.status == 'pending')
           "(em moderação)"
         else
-          link_to "Participar", join_school_path(@school), :class => "participar_rede button"
+          link_to "Participar", join_school_path(@school), :onclick => "$('.participar_rede').hide(); $('.participate_spinner').show();", :class => "participar_rede button"
         end
 
         when 3 #key

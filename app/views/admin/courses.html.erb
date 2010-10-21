@@ -53,7 +53,11 @@ function selectNone(){
 						<td class="check"><%= check_box_tag 'courses[]', course.id, false,:id => "course_"+ course.id.to_s  %></td>
 						<td class="id"><%= course.id  %></td>
 						<td class="name"><%= link_to course.name, course_path(course), :target => "_blank" %> </td>
-						<td><%= course.owner.display_name %> </td>
+						<% if course.owner %>
+                                                  <td><%= course.owner.display_name %> </td>
+                                                <% else %>
+                                                  <td> Aula sem dono </td>
+                                                <% end %>
 						<td><%= time_ago_in_words(course.updated_at) %> </td>
 					</tr>
 				</tr>

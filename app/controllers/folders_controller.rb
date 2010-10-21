@@ -10,37 +10,32 @@
 # [#destroy]            delete a folder
 # [#update_permissions] save the new rights given by the user
 class FoldersController < BaseController
-#  skip_before_filter :authorize, :only => :feed
-#
-#  before_filter :does_folder_exist, :except => [:list, :feed, :feed_warning]
-#  before_filter :authorize_creating, :only => [:new, :create]
-#  before_filter :authorize_reading, :only => :list
-#  before_filter :authorize_updating, :only => [:rename, :update, :update_rights]
-#  before_filter :authorize_deleting, :only => :destroy
+  #  skip_before_filter :authorize, :only => :feed
+  #
+  #  before_filter :does_folder_exist, :except => [:list, :feed, :feed_warning]
+  #  before_filter :authorize_creating, :only => [:new, :create]
+  #  before_filter :authorize_reading, :only => :list
+  #  before_filter :authorize_updating, :only => [:rename, :update, :update_rights]
+  #  before_filter :authorize_deleting, :only => :destroy
+
+  before_filter :login_required
 
   # Sessions are not needed for feeds
   session :off, :only => 'feed'
-  #layout 'folder', :except => 'feed'
 
-
-#
-# FILE
-#
-
+  # FILE
   def destroy_file
     @myfile = Myfile.find(params[:file_id], :include => :folder)
-    
+
     @folder_id = @myfile.folder.id
     @school_id = @myfile.folder.school_id
-    
+
     @myfile.destroy
-    
+
     redirect_to school_folders_path(:id => @folder_id, :school_id => @school_id)
-    
-    
   end
 
-   # Shows the form where a user can select a new file to upload.
+  # Shows the form where a user can select a new file to upload.
   def upload
     @myfile = Myfile.new
     @folder_id = params[:id]
@@ -52,7 +47,6 @@ class FoldersController < BaseController
   def do_the_upload
     @myfile = Myfile.new(params[:myfile])
     @myfile.user = current_user
-    
     respond_to do |format|
       if @myfile.save
         flash[:notice] = 'Upload realizado!'
@@ -60,14 +54,10 @@ class FoldersController < BaseController
           responds_to_parent do
             list
             render :action => :index
-            # render :update do |page|
-              #redirect_to school_folders_path(:id => @myfile.folder_id, :school_id => params[:school_id])  and return
-            #  page << "$('div.new-file-inner').slideToggle();"
-           # end
-            end
           end
+        end
       else
-         format.js do
+        format.js do
           responds_to_parent do
             render :update do |page|
               page << "alert('houve uma falha ao enviar o arquivo');"
@@ -76,59 +66,34 @@ class FoldersController < BaseController
         end
       end
     end
-    
-    
-    
-#    respond_to do |format|
-#      if @myfile.save
-#        flash[:notice] = 'Upload realizado!'
-#        
-#        format.html do
-#          redirect_to school_folders_path(:id => @myfile.folder_id, :school_id => params[:school_id]) and return
-#        end
-#        
-#        format.js do 
-#          responds_to_parent do
-#             redirect_to school_folders_path(:id => @myfile.folder_id, :school_id => params[:school_id])
-#          end
-#         
-#        end
-#      else
-#        flash[:error] = 'Não foi possível realizar o upload'
-#        format.html {
-#          render :action => "upload"
-#        }
-#        format.js do
-#          responds_to_parent do
-#             redirect_to school_folders_path(:id => @myfile.folder_id, :school_id => params[:school_id])
-#          end
-#         
-#        end
-#      end
-#    end
   end
 
- def download
-    # Log the 'usage' and return the file.
-#    usage = Usage.new
-#    usage.download_date_time = Time.now
-#    usage.user = current_user
-#    usage.myfile = @myfile
-
+  def download
     @myfile = Myfile.find(params[:file_id])
-    
-    send_file @myfile.attachment.path, :type=> @myfile.attachment.content_type, :x_sendfile=>true
 
+    if  @myfile
+      school = School.find(params[:school_id]) if params[:school_id]
+      if school and current_user.has_access_to(school)
+        # Gerando uma url do s3 com o timeout de 20 segundos
+        # O usuário deve COMEÇAR a baixar dentro desse tempo.
+        f = @myfile.attachment
+        if Rails.env == "production"
+          redirect_to f.s3.interface.get_link(f.s3_bucket.to_s, f.path, 20.seconds) and return false
+        end
+
+        send_file @myfile.attachment.path, :type=> @myfile.attachment.content_type, :x_sendfile=>true
+      else
+        flash[:notice] = "Você não tem permissão para baixar o arquivo."
+        redirect_to user_path(current_user)
+      end
+    end
   end
 
-
-#
-# FOLDER
-#
+  # FOLDER
   # The default action, redirects to list.
   def index
     list
-   # render :action => :list
+    # render :action => :list
     respond_to do |format|
       #format.html
       format.js
@@ -138,15 +103,15 @@ class FoldersController < BaseController
   # List the files and sub-folders in a folder.
   def list
     @school = School.find(params[:school_id])
-    
+
     # Get the folder
     if params[:id]
       @folder = Folder.find(params[:id])
-    else 
+    else
       @folder = @school.root_folder
     end
 
-  @myfile = Myfile.new
+    @myfile = Myfile.new
 
     # Set if the user is allowed to update or delete in this folder;
     # these instance variables are used in the view.
@@ -155,32 +120,32 @@ class FoldersController < BaseController
 
     # determine the order in which files are shown
     file_order = 'attachment_file_name '
-    file_order = params[:order_by].sub('name', 'attachment_file_name') + ' ' if params[:order_by]
+    if params[:order_by]
+      file_order = params[:order_by].sub('name', 'attachment_file_name') + ' ' if params[:order_by] == 'name'
+      file_order = params[:order_by].sub('filesize', 'attachment_file_size') + ' ' if params[:order_by] == 'filesize'
+      file_order = params[:order_by].sub('date_modified', 'attachment_updated_at') + ' ' if params[:order_by] == 'date_modified'
+    end
     file_order += params[:order] if params[:order]
+
 
     # determine the order in which folders are shown
     folder_order = 'name '
-    if params[:order_by] and params[:order_by] != 'attachment_file_size'    
+    if params[:order_by] and params[:order_by] != 'filesize'
       folder_order = params[:order_by] + ' '
       folder_order += params[:order] if params[:order]
     end
 
-    #TODO caching nessas consultas
-    #if request.format == 'text/html' # evita fazer consultas se for chamada ajax
-      @files_count = Myfile.count(:include => :folder, :conditions => ["folders.school_id = ?", @school.id])
-      bytes = Myfile.sum(:attachment_file_size, :include => :folder, :conditions => ["folders.school_id = ?",  @school.id])
-      @total_size = "%0.2f" % (bytes / (1024.0 * 1024));
-      gigabytes = 2
-      @use_percentage = "%0.2f" % (bytes / ( gigabytes * 1024.0 * 1024.0 * 1024.0))
-    #end 
-    
+    @files_count = Myfile.count(:include => :folder, :conditions => ["folders.school_id = ?", @school.id])
+    bytes = Myfile.sum(:attachment_file_size, :include => :folder, :conditions => ["folders.school_id = ?",  @school.id])
+    @total_size = "%0.2f" % (bytes / (1024.0 * 1024));
+    gigabytes = 2
+    @use_percentage = "%0.2f" % (bytes / ( gigabytes * 1024.0 * 1024.0 * 1024.0))
+
     # List of subfolders
     @folders = @folder.list_subfolders(current_user, folder_order.rstrip)
 
     # List of files in the folder
     @myfiles = @folder.list_files(current_user, file_order.rstrip)
-
-    
   end
 
   # Authorizes, sets the appropriate variables and headers.
@@ -224,7 +189,7 @@ class FoldersController < BaseController
     @folder = Folder.new
     @school_id = params[:school_id]
     @parent_id = params[:id]
-    
+
     @school = School.find(params[:school_id]) # TODO quando colocar em ajax isso nao sera necessario
   end
 
@@ -235,31 +200,26 @@ class FoldersController < BaseController
       @folder.date_modified = Time.now
       @folder.user = current_user
 
-
       respond_to do |format|
-
         if @folder.save
           # copy groups rights on parent folder to new folder
-          #copy_permissions_to_new_folder(@folder)
-  
+
           # back to the list
           flash[:notice] = 'Diretório criado!'
           format.html {
-             redirect_to school_folders_path(:school_id => params[:folder][:school_id], :id => @folder.parent.id)
+            redirect_to school_folders_path(:school_id => params[:folder][:school_id], :id => @folder.parent.id)
           }
           format.js {
-             redirect_to school_folders_path(:school_id => params[:folder][:school_id], :id => @folder.parent.id)
+            redirect_to school_folders_path(:school_id => params[:folder][:school_id], :id => @folder.parent.id)
           }
-          #redirect_to :action => 'list', :id => params[:folder][:parent_id], :school_id => params[:folder][:school_id]
         else
           flash[:error] = 'Não foi possível criar o diretório'
           format.html {
-              render 'new'
+            render 'new'
           }
           format.js {
-             head :ok #TODO mensagem de erro em ajax
+            head :ok #TODO mensagem de erro em ajax
           }
-         
         end
       end
     end
@@ -269,16 +229,14 @@ class FoldersController < BaseController
   def rename
     @folder = Folder.find(params[:id])
     @school_id = params[:school_id]
-    
     @school = School.find(params[:school_id]) # TODO quando colocar em ajax isso nao sera necessario
   end
 
   # Update the folder attributes with the posted variables from the 'rename' view.
   def update
     @folder = Folder.find(params[:id])
-      if @folder.update_attributes(:name => params[:folder][:name], :date_modified => Time.now)
-        #redirect_to :action => 'list', :id => params[:folder][:parent_id], :school_id => params[:folder][:school_id]
-        redirect_to school_folders_path(:id => @folder.parent_id, :school_id => @folder.school_id)
+    if @folder.update_attributes(:name => params[:folder][:name], :date_modified => Time.now)
+      redirect_to school_folders_path(:id => @folder.parent_id, :school_id => @folder.school_id)
     end
   end
 
@@ -288,7 +246,6 @@ class FoldersController < BaseController
     @parent_id = @folder.parent_id
     @school_id = @folder.school_id
     @folder.destroy
-    
     redirect_to school_folders_path(:id => @parent_id, :school_id => @school_id)
   end
 
@@ -313,99 +270,99 @@ class FoldersController < BaseController
   # [#authorize_deleting]              Check logged in user's delete permissions for a particular folder
   # [#authorize_deleting_for_children] Check delete permissions for subfolders recursively
   private
-    # Update the group permissions for a given group, folder and field.
-    # If <i>recursively</i> is true, update the child folders of the given folder too. 
-    def update_group_permissions(folder_id_param, group_check_box_list, field, recursively)
-      # iteratively update the GroupPermissions
-      group_check_box_list.each do |group_id, can_do_it|
-        # get the GroupPermissions
-        group_permission = GroupPermission.find_by_group_id_and_folder_id(group_id, folder_id_param)
+  # Update the group permissions for a given group, folder and field.
+  # If <i>recursively</i> is true, update the child folders of the given folder too.
+  def update_group_permissions(folder_id_param, group_check_box_list, field, recursively)
+    # iteratively update the GroupPermissions
+    group_check_box_list.each do |group_id, can_do_it|
+      # get the GroupPermissions
+      group_permission = GroupPermission.find_by_group_id_and_folder_id(group_id, folder_id_param)
 
-        # Do the actual update if the GroupPermission exists;
-        # do not update the permissions of the admins group
-        # (it should always be able to do everything)
-        unless group_permission.blank? or group_permission.group.is_the_administrators_group?
-          case field
-          when 'create':
-            group_permission.can_create = can_do_it
-          when 'read':
-            group_permission.can_read = can_do_it
-          when 'update':
-            group_permission.can_update = can_do_it
-          when 'delete':
-            group_permission.can_delete = can_do_it
-          end
-          group_permission.save
+      # Do the actual update if the GroupPermission exists;
+      # do not update the permissions of the admins group
+      # (it should always be able to do everything)
+      unless group_permission.blank? or group_permission.group.is_the_administrators_group?
+        case field
+        when 'create':
+          group_permission.can_create = can_do_it
+        when 'read':
+          group_permission.can_read = can_do_it
+        when 'update':
+          group_permission.can_update = can_do_it
+        when 'delete':
+          group_permission.can_delete = can_do_it
+        end
+        group_permission.save
+      end
+    end
+
+    # The recursive part...
+    if recursively
+      # Update the child folders
+      folder = Folder.find_by_id(folder_id_param)
+      if folder
+        folder.children.each do |child_folder|
+          update_group_permissions(child_folder.id, group_check_box_list, field, true)
         end
       end
+    end
+  end
 
-      # The recursive part...
-      if recursively
-        # Update the child folders
-        folder = Folder.find_by_id(folder_id_param)
-        if folder
-          folder.children.each do |child_folder|
-            update_group_permissions(child_folder.id, group_check_box_list, field, true)
-          end
+  # Copy the GroupPermissions of the parent folder to the given folder
+  def copy_permissions_to_new_folder(folder)
+    # get the 'parent' GroupPermissions
+    GroupPermission.find_all_by_folder_id(folder_id).each do |parent_group_permissions|
+      # create the new GroupPermissions
+      group_permissions = GroupPermission.new
+      group_permissions.folder = folder
+      group_permissions.group = parent_group_permissions.group
+      group_permissions.can_create = parent_group_permissions.can_create
+      group_permissions.can_read = parent_group_permissions.can_read
+      group_permissions.can_update = parent_group_permissions.can_update
+      group_permissions.can_delete = parent_group_permissions.can_delete
+      group_permissions.save
+    end
+  end
+
+  # Redirect to the Root folder and show an error message
+  # if current user cannot read in current folder.
+  def authorize_reading
+    # First check if the folder exists, if it doesn't: show an appropriate message.
+    # If the folder does exist, only authorize the read-rights if it's not the Root folder.
+    unless Folder.find_by_id(folder_id)
+      flash.now[:folder_error] = 'Someone else deleted the folder you are using. Your action was cancelled and you have been taken back to the root folder.'
+      redirect_to(:controller => 'folder', :action => 'list', :id => nil) and return false
+    else
+      super unless folder_id == 1
+    end
+  end
+
+  # Redirect to the Root folder and show an error message
+  # if current user cannot delete in current folder
+  def authorize_deleting
+    folder = Folder.find_by_id(folder_id)
+    unless @logged_in_user.can_delete(folder.id)
+      flash.now[:folder_error] = "You don't have delete permissions for this folder."
+      redirect_to :controller => 'folder', :action => 'list', :id => folder_id and return false
+    else
+      authorize_deleting_for_children(folder)
+    end
+  end
+
+  # Check the delete permissions for all the child folders of the given folder
+  def authorize_deleting_for_children(folder)
+    folder.children.each do |child_folder|
+      unless @logged_in_user.can_delete(child_folder.id)
+        error_msg = "Sorry, you don't have delete permissions for one of the subfolders."
+        if child_folder.parent.id == folder_id
+          flash.now[:folder_error] = error_msg
+        else
+          flash[:folder_error] = error_msg
         end
-      end
-    end
-
-    # Copy the GroupPermissions of the parent folder to the given folder
-    def copy_permissions_to_new_folder(folder)
-      # get the 'parent' GroupPermissions
-      GroupPermission.find_all_by_folder_id(folder_id).each do |parent_group_permissions|
-        # create the new GroupPermissions
-        group_permissions = GroupPermission.new
-        group_permissions.folder = folder
-        group_permissions.group = parent_group_permissions.group
-        group_permissions.can_create = parent_group_permissions.can_create
-        group_permissions.can_read = parent_group_permissions.can_read
-        group_permissions.can_update = parent_group_permissions.can_update
-        group_permissions.can_delete = parent_group_permissions.can_delete
-        group_permissions.save
-      end
-    end
-
-    # Redirect to the Root folder and show an error message
-    # if current user cannot read in current folder.
-    def authorize_reading
-      # First check if the folder exists, if it doesn't: show an appropriate message.
-      # If the folder does exist, only authorize the read-rights if it's not the Root folder.
-      unless Folder.find_by_id(folder_id)
-        flash.now[:folder_error] = 'Someone else deleted the folder you are using. Your action was cancelled and you have been taken back to the root folder.'
-        redirect_to(:controller => 'folder', :action => 'list', :id => nil) and return false
-      else
-        super unless folder_id == 1
-      end
-    end
-
-    # Redirect to the Root folder and show an error message
-    # if current user cannot delete in current folder
-    def authorize_deleting
-      folder = Folder.find_by_id(folder_id)
-      unless @logged_in_user.can_delete(folder.id)
-        flash.now[:folder_error] = "You don't have delete permissions for this folder."
         redirect_to :controller => 'folder', :action => 'list', :id => folder_id and return false
       else
-        authorize_deleting_for_children(folder)
+        authorize_deleting_for_children(child_folder) # Checks the permissions of a child's children
       end
     end
-
-    # Check the delete permissions for all the child folders of the given folder
-    def authorize_deleting_for_children(folder)
-      folder.children.each do |child_folder|
-        unless @logged_in_user.can_delete(child_folder.id)
-          error_msg = "Sorry, you don't have delete permissions for one of the subfolders."
-          if child_folder.parent.id == folder_id
-            flash.now[:folder_error] = error_msg
-          else
-            flash[:folder_error] = error_msg
-          end
-          redirect_to :controller => 'folder', :action => 'list', :id => folder_id and return false
-        else
-          authorize_deleting_for_children(child_folder) # Checks the permissions of a child's children
-        end
-      end
-    end
+  end
 end

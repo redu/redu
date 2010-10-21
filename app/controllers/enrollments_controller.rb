@@ -8,6 +8,6 @@ class EnrollmentsController < ApplicationController
   def create
     @enrollment = Enrollment.new(params[:enrollment])
   end
-  
+
 
 end

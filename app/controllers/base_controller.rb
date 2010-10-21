@@ -10,7 +10,6 @@ class BaseController < ApplicationController
   around_filter :set_locale
 
   skip_before_filter :verify_authenticity_token, :only => :footer_content
-
   # Work around (ver método self.login_required_base)
   before_filter :login_required_base, :only => [:teach_index, :learn_index, :site_index]
 
@@ -19,30 +18,24 @@ class BaseController < ApplicationController
     !logged_in? && controller_name.eql?('base') && params[:format].blank?
   end
 
-#  if AppConfig.closed_beta_mode
-#    before_filter :beta_login_required, :except => [:beta_index,
-#      :create_beta_candidate]
-#  end
-
   def removed_item
     @type = params[:type]
   end
 
-
   def tos
-
+    #TODO 
   end
 
   def privacy
-
+    #TODO
   end
 
   def teach_index
     @schools = current_user.schools
     @courses = current_user.courses.find(:all,
-      :order => "created_at DESC",
-      :limit => 4,
-      :conditions => ["published = ?", true])
+                                         :order => "created_at DESC",
+                                         :limit => 4,
+                                         :conditions => ["published = ?", true])
     respond_to do |format|
       format.html { render :layout => 'new_application'}
     end
@@ -57,31 +50,9 @@ class BaseController < ApplicationController
   end
 
   def beta_index
-#    @candidate = BetaCandidate.new
-#
-#    respond_to do |format|
-#      format.html { render :object => @candidate, :layout => false }
-#    end
-
     redirect_to home_path and return if logged_in?
-    #render :layout => 'beta'
-     render :layout => false
+    render :layout => false
   end
-
-#  def create_beta_candidate
-#    @candidate = BetaCandidate.new(params[:candidate])
-#
-#    respond_to do |format|
-#      if @candidate.save
-#        flash[:notice] = 'Seus dados foram recebidos. Em breve você ' + \
-#            'receberá as informações de login.'
-#      end
-#
-#      format.html { render :action => 'beta_index', :layout => false }
-#    end
-#
-#  end
-
 
   def rss_site_index
     redirect_to :controller => 'base', :action => 'site_index', :format => 'rss'
@@ -107,9 +78,11 @@ class BaseController < ApplicationController
   end
 
   def advertise
+    #TODO
   end
 
   def css_help
+    #TODO
   end
 
   def admin_required
@@ -124,63 +97,60 @@ class BaseController < ApplicationController
     current_user && (current_user.admin? || current_user.moderator?) ? true : access_denied
   end
 
-
   def create_activity
     return unless current_user.auto_status
 
-  case params[:controller]
+    case params[:controller]
     when 'courses'
       if @course and @course.published
-      Status.create({:log => true,
-              :logeable_name => @course.name,
-              :logeable_type => 'Course',
-              :logeable_id => @course.id,
-              :log_action => params[:action],
-              :statusable_type => (@course.school) ? 'School' : 'User',
-              :statusable_id => (@course.school) ? @course.school.id : @course.owner.id,
-              :user_id => current_user.id
-      })
+        Status.create({:log => true,
+                      :logeable_name => @course.name,
+                      :logeable_type => 'Course',
+                      :logeable_id => @course.id,
+                      :log_action => params[:action],
+                      :statusable_type => (@course.school) ? 'School' : 'User',
+                      :statusable_id => (@course.school) ? @course.school.id : @course.owner.id,
+                      :user_id => current_user.id
+        })
       end
     when 'exams'
       if @exam and @exam.published
-      Status.create({:log => true,
-              :logeable_name => @exam.name,
-              :logeable_type => 'Exam',
-              :logeable_id => @exam.id,
-              :log_action => params[:action],
-              :statusable_type => (@exam.school) ? 'School' : 'User',
-              :statusable_id => (@exam.school) ? @exam.school.id : @exam.owner.id,
-              :user_id => current_user.id
-      })
+        Status.create({:log => true,
+                      :logeable_name => @exam.name,
+                      :logeable_type => 'Exam',
+                      :logeable_id => @exam.id,
+                      :log_action => params[:action],
+                      :statusable_type => (@exam.school) ? 'School' : 'User',
+                      :statusable_id => (@exam.school) ? @exam.school.id : @exam.owner.id,
+                      :user_id => current_user.id
+        })
       end
-     when 'users'
+    when 'users'
       if @user and params[:update_value]
-      Status.create({:log => true,
-              :logeable_name => params[:update_value],
-              :logeable_type => 'User',
-              :logeable_id => @user.id,
-              :log_action => params[:action],
-              :statusable_type => 'User',
-              :statusable_id => @user.id,
-              :user_id => @user.id
-      })
+        Status.create({:log => true,
+                      :logeable_name => params[:update_value],
+                      :logeable_type => 'User',
+                      :logeable_id => @user.id,
+                      :log_action => params[:action],
+                      :statusable_type => 'User',
+                      :statusable_id => @user.id,
+                      :user_id => @user.id
+        })
       end
     when 'schools'
       if @school and @school.created_at
-      Status.create({:log => true,
-              :logeable_name => @school.name,
-              :logeable_type => 'School',
-              :logeable_id => @school.id,
-              :log_action => params[:action],
-              :statusable_type => 'User',
-              :statusable_id => @school.owner.id,
-              :user_id => current_user.id
-      })
+        Status.create({:log => true,
+                      :logeable_name => @school.name,
+                      :logeable_type => 'School',
+                      :logeable_id => @school.id,
+                      :log_action => params[:action],
+                      :statusable_type => 'User',
+                      :statusable_id => @school.owner.id,
+                      :user_id => current_user.id
+        })
       end
+    end
   end
-  end
-
-
 
   def find_user
     # if @user = User.active.find(params[:user_id] || params[:id])
@@ -210,13 +180,12 @@ class BaseController < ApplicationController
     sql = "SELECT tags.id, tags.name, count(*) AS count
       FROM taggings, tags
       WHERE tags.id = taggings.tag_id "
-    sql += " AND taggings.taggable_type = '#{type}'" unless type.nil?
-    sql += " GROUP BY tags.id, tags.name"
-    sql += " ORDER BY #{order}"
-    sql += " LIMIT #{limit}" if limit
-    Tag.find_by_sql(sql).sort{ |a,b| a.name.downcase <=> b.name.downcase}
+      sql += " AND taggings.taggable_type = '#{type}'" unless type.nil?
+      sql += " GROUP BY tags.id, tags.name"
+      sql += " ORDER BY #{order}"
+      sql += " LIMIT #{limit}" if limit
+      Tag.find_by_sql(sql).sort{ |a,b| a.name.downcase <=> b.name.downcase}
   end
-
 
   def get_recent_footer_content
     #@recent_clippings = Clipping.find_recent(:limit => 10)
@@ -224,7 +193,6 @@ class BaseController < ApplicationController
     @recent_comments = Comment.find_recent(:limit => 13)
     @popular_tags = popular_tags(30, ' count DESC')
     @recent_activity = User.recent_activity(:size => 15, :current => 1)
-
   end
 
   def get_additional_homepage_data
@@ -232,7 +200,7 @@ class BaseController < ApplicationController
     @homepage_features = HomepageFeature.find_features
     @homepage_features_data = @homepage_features.collect {|f| [f.id, f.public_filename(:large) ]  }
 
-   # @active_users = User.active.find_by_activity({:limit => 5, :require_avatar => false})
+    # @active_users = User.active.find_by_activity({:limit => 5, :require_avatar => false})
     @featured_writers = User.find_featured
 
     @featured_posts = Post.find_featured
@@ -278,7 +246,7 @@ class BaseController < ApplicationController
       if @contact.valid?
         @contact.deliver
         flash[:notice] = "Seu e-mail foi enviado, aguarde o nosso contato. Obrigado."
-        redirect_to home_path
+        redirect_to contact_path
       else
         render :action => :contact, :method => :get
       end
@@ -286,10 +254,9 @@ class BaseController < ApplicationController
   end
 
   protected
-    # Workaround para o bug #55 (before_filter não funciona no filter chain)
-    # http://railsapi.com/doc/rails-v2.3.8/classes/ActionController/Filters/ClassMethods.html
-    def login_required_base
-      login_required
-    end
-
+  # Workaround para o bug #55 (before_filter não funciona no filter chain)
+  # http://railsapi.com/doc/rails-v2.3.8/classes/ActionController/Filters/ClassMethods.html
+  def login_required_base
+    login_required
+  end
 end

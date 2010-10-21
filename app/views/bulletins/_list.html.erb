@@ -1,24 +1,14 @@
 <li class="clearfix">
-
-	<%= link_to bulletin.title, school_bulletin_path(bulletin.school, bulletin) %>
-	<div class="quiet">	
-			
-		<%= link_to bulletin.owner.display_name, user_path(bulletin.owner) if is_index%>
-		<span> - <%= time_ago_in_words(bulletin.created_at) %> </span>
-	</div>
-	<div class="grid_12 omega alpha pretty-text">		
-		<% if is_index %>
-				<p>
-				<%=	bulletin.tagline %>
-				</p>
-				<div class="grid_10">
-				<% if current_user.can_manage?(bulletin, bulletin.school) %>
-						<%= link_to 'Editar', edit_school_bulletin_path(bulletin.school, bulletin), {:class => "button icon-edit"} %>
-						<%= link_to 'Remover', bulletin,
-							{:confirm => 'Você tem certeza que deseja remover essa notícia permanentemente?',
-							:method => :delete, :class => "button icon-delete"} %>
-				<% end %>
-			</div>
-		<% end %>
-	</div>
+  <div class="date grid_1 aplha">
+    <span class="month quiet"><%= bulletin.created_at.strftime("%b") %></span>
+    <span class="quiet day"><%= bulletin.created_at.day %></span>
+    <span class="quiet year"><%= bulletin.created_at.year %></span>
+  </div>
+  <span class="title grid_10 omega"><%= link_to bulletin.title, school_bulletin_path(bulletin.school, bulletin) %>
+</span>
+  <span class="rating"></span>
+  <span class="tagline quiet grid_10 omega"><%= bulletin.tagline %></span>
+  <div class="grid_5 omega" >
+    <%= render :partial => 'tags/tags', :object => bulletin.tags  %>
+ </div>
 </li>

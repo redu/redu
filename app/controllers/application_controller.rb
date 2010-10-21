@@ -10,22 +10,22 @@ class ApplicationController < ActionController::Base
 
   private
 
-    # Handlers para exceções (paginas de error customizadas)
-    def render_not_found(exception)
-      log_error(exception)
-      respond_to do |format|
-        format.html {
-          render :template => 'errors/404', :layout => 'errors', :status => '404'
-        }
-      end
+  # Handlers para exceções (paginas de error customizadas)
+  def render_not_found(exception)
+    log_error(exception)
+    respond_to do |format|
+      format.html {
+        render :template => 'errors/404', :layout => 'errors', :status => '404'
+      }
     end
+  end
 
-    def render_error(exception)
-      log_error(exception)
-      respond_to do |format|
-        format.html {
-          render :template => 'errors/500', :layout => 'errors', :status => '500'
-        }
-      end
+  def render_error(exception)
+    log_error(exception)
+    respond_to do |format|
+      format.html {
+        render :template => 'errors/500', :layout => 'errors', :status => '500'
+      }
     end
+  end
 end

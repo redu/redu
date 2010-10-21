@@ -1,68 +1,21 @@
-<div class="grid_11">
-	<div class="grid_6">
-		<% if show_details_link %>
-			<h4 class="grid_6"><%= link_to @event.name, school_event_path(@event.school, @event) %></h4>
-		<% else %>
-			<h4 class="grid_6"><%= @event.name %></h4>
-		<% end %>
-	</div>
+<li class="clearfix">
+  <div class="grid_2" >
+  <div class="date grid_2 alpha omega">
+    <span class="quiet day"><%= item.start_time.day %></span>
+    <span class="col">
+      <span class="month quiet"><%= item.start_time.strftime("%b") %></span>
+      <span class="quiet year"><%= item.start_time.year %></span>
+    </span>
+  </div>
+  <div class="hour grid_2 alpha omega">
+    <%= item.start_time.strftime("%I:%M%p") %>
+  </div>
+  </div>
+  <div class="grid_8 last">
+  <span class="name"><%= link_to item.name, school_event_path(item.school, item) %></span>
+  <span class="tagline"><%= item.tagline %></span>
+    <%= render :partial => 'tags/tags', :object => item.tags  %>
+  </div>
 
-	<div class="likeable grid_2">	
-		
-		<span class="like">
-		<%= link_to_remote image_tag('thumbs-up.jpg', :border => '0'), :url=> {:action => :vote, :id => @event.id, :like => true}, :loading => 'jQuery("#like_link").hide(); jQuery("#like_spinner").show()', :html => {:id => "like_link"}%>
-		<%= image_tag 'spinner.gif', :id => 'like_spinner', :style => 'display: none' %>
-		&#40;<span id="like_count" style="display: inline"><%= @event.votes_for%></span>&#41;
-		
-		</span>
-		
-		
-		<span class="dislike">
-		<%= link_to_remote image_tag('thumbs-down.jpg', :border => '0'), :url=> {:action => :vote, :id => @event.id, :like => false}, :loading => 'jQuery("#dislike_link").hide(); jQuery("#dislike_spinner").show()', :html => {:id => "dislike_link"}%>
-		<%= image_tag 'spinner.gif', :id => 'dislike_spinner', :style => 'display: none' %>
-		&#40;<span id="dislike_count" style="display: inline"><%= @event.votes_for%></span>&#41;
-		
-		</span>
+</li>
 
-	</div>
-	
-	<span class="grid_9"><%= @event.tag_list %> | Criador: <%= link_to @event.owner.display_name, @event.owner if @event.owner %></span>
-	
-	<span class="grid_6"><%= @event.time_and_date %></span>
-	<span class="grid_6">
-		<% if @event.location %>
-			Local:
-		<%= @event.location %>
-		<% end %>
-	</span>
-	
-	<% if current_user.can_manage?(@event, @event.school) %>
-		<div class="grid_4">
-		<%= link_to "Editar", edit_school_event_path(@event.school, @event), :class => "button icon-edit" %>
-		<%= link_to 'Remover', school_event_path,
-		:confirm => 'Você tem certeza que deseja remover esse evento permanentemente?',
-		:method => :delete, :class => "button icon-delete" %>	
-		</div>
-	<% end %>
-	<div class="grid_10">
-		Breve Descrição: <%= @event.tagline %>
-	</div>
-	<div class="grid_10">
-		Descrição:
-		<% if show_details_link %>
-			<%= @event.description[0..500]+"..." %>
-		<% else %>
-			<%= @event.description %>
-		<% end %>	
-	</div>
-	
-	<% form_tag(notify_school_event_path, :method => :post, :class => "grid_5") do %>
-		<fieldset><legend>Seja notificado sobre este evento!</legend>
-			Notifique-me
-			<%= select_tag :days, options_for_select([["1", 1], ["2", 2], ["3", 3], ["4", 4], ["5", 5], ["6", 6], ["7", 7]], 1)  %>
-			dias antes
-			<%= submit_tag "Ok"%>
-		</fieldset>
-	<% end %>
-	
-</div>
