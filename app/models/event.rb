@@ -17,6 +17,7 @@ class Event < ActiveRecord::Base
   #Procs used to make sure time is calculated at runtime
   named_scope :upcoming, lambda { { :order => 'start_time', :conditions => ['end_time > ?' , Time.now ] } }
   named_scope :past, lambda { { :order => 'start_time DESC', :conditions => ['end_time <= ?' , Time.now ] } }
+  named_scope :approved, :conditions => { :state => 'approved' }
 
   # Máquina de estados para moderação das Notícias
   acts_as_state_machine :initial => :waiting

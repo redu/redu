@@ -51,10 +51,10 @@ class EventsController < BaseController
   end
 
   def index
-    @events = Event.upcoming.paginate(:conditions => ["school_id = ? AND state LIKE 'approved'", School.find(params[:school_id]).id],
+    @events = Event.approved.upcoming.paginate(:conditions => ["school_id = ? AND state LIKE 'approved'", School.find(params[:school_id]).id],
                                       :include => :owner,
                                       :page => params[:page],
-                                      :order => 'start_time DESC',
+                                      :order => 'start_time',
                                       :per_page => AppConfig.items_per_page)
 
     @list_title = "Eventos Futuros"
