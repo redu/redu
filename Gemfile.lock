@@ -15,7 +15,6 @@ GEM
     adzap-ar_mailer (2.1.8)
     authlogic (2.1.6)
       activesupport
-    calendar_date_select (1.16.1)
     cgi_multipart_eof_fix (2.5.0)
     collectiveidea-delayed_job (1.8.2)
     columnize (0.3.1)
@@ -67,7 +66,6 @@ PLATFORMS
 DEPENDENCIES
   adzap-ar_mailer
   authlogic
-  calendar_date_select
   collectiveidea-delayed_job
   desert
   hpricot
