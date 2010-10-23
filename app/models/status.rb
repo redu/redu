@@ -5,7 +5,16 @@ class Status < ActiveRecord::Base
   POLL = 2
   ANSWER = 3
 
-  acts_as_taggable
+  before_validation :enable_correct_validation_group
+
+  validation_group :log, :fields => [] # Grupo para tipo log
+  validation_group :status, :fields => [:text, :kind] # Grupo para tipo status (inclui question)
+
+  validates_presence_of :text
+  validates_inclusion_of :kind,
+    :in => [0, 1, 2, 3, 4],
+    :message => "Tipo inválido"
+  validates_length_of :text, :maximum => AppConfig.desc_char_limit
 
   belongs_to :statusable, :polymorphic => true
   belongs_to :logeable, :polymorphic => true
@@ -13,15 +22,7 @@ class Status < ActiveRecord::Base
   belongs_to :user
   has_many :statuses, :as => :in_response_to
 
-  validation_group :log, :fields => [] # Grupo para tipo log
-  validation_group :status, :fields => [:text, :kind] # Grupo para tipo status (inclui question)
-
-  before_validation :enable_correct_validation_group
-  validates_presence_of :text
-  validates_inclusion_of :kind,
-    :in => [0, 1, 2, 3, 4],
-    :message => "Tipo inválido"
-  validates_length_of :text, :maximum => AppConfig.desc_char_limit
+  acts_as_taggable
 
   # Inspects object attributes and decides which validation group to enable
   def enable_correct_validation_group

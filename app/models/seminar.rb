@@ -1,9 +1,5 @@
 class Seminar < ActiveRecord::Base
 
-  has_one :course, :as => :courseable
-
-  has_many :lesson, :as => :lesson
-
   SUPPORTED_VIDEOS = [ 'application/x-mp4',
     'video/x-flv',
     'application/x-flv',
@@ -48,11 +44,6 @@ class Seminar < ActiveRecord::Base
 
   SUPPORTED_AUDIO = ['audio/mpeg', 'audio/mp3']
 
-  # Video convertido
-  has_attached_file :media, {}.merge(VIDEO_TRANSCODED)
-  # Video original
-  has_attached_file :original, {}.merge(VIDEO_ORIGINAL)
-
   # Callbacks
   # Se for tipo upload, chama o metodo define_content_type
   before_validation :enable_correct_validation_group
@@ -66,6 +57,14 @@ class Seminar < ActiveRecord::Base
   validate :accepted_content_type
   validates_attachment_size :original,
     :less_than => 100.megabytes
+
+  has_one :course, :as => :courseable
+  has_many :lesson, :as => :lesson
+
+  # Video convertido
+  has_attached_file :media, {}.merge(VIDEO_TRANSCODED)
+  # Video original
+  has_attached_file :original, {}.merge(VIDEO_ORIGINAL)
 
   # Maquina de estados do processo de conversão
   acts_as_state_machine :initial => :waiting, :column => 'state'

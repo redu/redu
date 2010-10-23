@@ -1,14 +1,17 @@
 class School < ActiveRecord::Base
 
-  # PLUGINS
-  acts_as_taggable
-  acts_as_voteable
-  has_attached_file :avatar, {
-    :styles => { :medium => "200x200>", :thumb => "100x100>", :nano => "24x24>" },
-  }.merge(PAPERCLIP_STORAGE_OPTIONS)
-
   # CALLBACKS
   before_create :create_root_folder
+
+  # VALIDATIONS
+  validates_presence_of :name, :path, :message => "Não pode ser deixado em branco"
+  validates_format_of       :path, :with => /^[\sA-Za-z0-9_-]+$/,
+    :message => "Endereço inválido."
+  validates_uniqueness_of   :path, :case_sensitive => false,
+    :message => "Endereço inválido."
+  validates_exclusion_of    :path, :in => AppConfig.reserved_logins,
+    :message => "Endereço inválido"
+  validates_presence_of :categories
 
   #USERS
   has_many :user_school_associations, :dependent => :destroy
@@ -39,20 +42,17 @@ class School < ActiveRecord::Base
   has_many :statuses, :as => :statusable
   has_many :subjects
 
-  # VALIDATIONS
-  validates_presence_of :name, :path, :message => "Não pode ser deixado em branco"
-  validates_format_of       :path, :with => /^[\sA-Za-z0-9_-]+$/,
-    :message => "Endereço inválido."
-  validates_uniqueness_of   :path, :case_sensitive => false,
-    :message => "Endereço inválido."
-  validates_exclusion_of    :path, :in => AppConfig.reserved_logins,
-    :message => "Endereço inválido"
-  validates_presence_of :categories
-
   named_scope :inner_categories, lambda { {:joins => :categories} } # Faz inner join com redu_categories_school
 
   # METODOS DO WIZARD
   attr_writer :current_step
+
+  # PLUGINS
+  acts_as_taggable
+  acts_as_voteable
+  has_attached_file :avatar, {
+    :styles => { :medium => "200x200>", :thumb => "100x100>", :nano => "24x24>" },
+  }.merge(PAPERCLIP_STORAGE_OPTIONS)
 
   # override activerecord's find to allow us to find by name or id transparently
   def self.find(*args)
@@ -154,4 +154,5 @@ class School < ActiveRecord::Base
     #TODO melhorar esta lógica
     self.courses.find(:all, :order => "view_count DESC", :limit => "#{qty}")
   end
+
 end

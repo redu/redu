@@ -1,9 +1,9 @@
 class Lesson < ActiveRecord::Base
 
+  validates_presence_of :title
+  
   belongs_to :interactive_class
   belongs_to :lesson, :polymorphic => true, :dependent => :destroy
-
-  validates_presence_of :title
 
   accepts_nested_attributes_for :lesson, :allow_destroy => true
 

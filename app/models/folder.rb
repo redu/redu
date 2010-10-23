@@ -2,18 +2,19 @@
 # Folders can also have sub-folders.
 # Via groups it is determined which actions the logged-in User can perform.
 class Folder < ActiveRecord::Base
-  acts_as_tree :order => 'name'
+  
+  validates_uniqueness_of :name, :scope => 'parent_id', :if => Proc.new { |folder| folder.parent_id }
+  validates_presence_of :name
 
   belongs_to :user
   has_many :myfiles, :dependent => :destroy
   has_many :group_permissions, :dependent => :destroy
   belongs_to :school
 
-  validates_uniqueness_of :name, :scope => 'parent_id', :if => Proc.new { |folder| folder.parent_id }
-  validates_presence_of :name
-
   attr_accessible :name, :school_id, :parent_id
 
+  acts_as_tree :order => 'name'
+  
   # List subfolders
   # for the given user in the given order.
   def list_subfolders(logged_in_user, order)
