@@ -1,8 +1,11 @@
 class BetaKey < ActiveRecord::Base
 
-  belongs_to :user
-  before_create :make_key_code
+	# VALIDATIONS
   validates_uniqueness_of :key
+
+	#	ASSOCIATIONS
+  belongs_to :user
+  before_create :make_key_code	
 
   protected
 

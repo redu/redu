@@ -1,12 +1,15 @@
 class Course < ActiveRecord::Base
   
-  # PLUGINS
-  acts_as_taggable
-  ajaxful_rateable :stars => 5
-  has_attached_file :avatar, {
-    :styles => { :thumb => "100x100>", :nano => "24x24>",
-    :default_url => "/images/:class/missing_pic.jpg"}
-  }
+  # VALIDATIONS
+  validates_presence_of :name
+  validates_presence_of :description
+  validates_length_of   :description, :within => 30..200
+  validates_presence_of :simple_category
+  validates_presence_of :courseable_type
+  validates_associated :courseable
+  validation_group :step1, :fields=>[:name, :description, :simple_category, :courseable_type]
+  validation_group :step2, :fields=>[:courseable]
+  validation_group :step3, :fields=>[:price]
   
   # ASSOCIATIONS
   has_many :statuses, :as => :statusable, :dependent => :destroy
@@ -22,23 +25,12 @@ class Course < ActiveRecord::Base
   belongs_to :courseable, :polymorphic => true, :dependent => :destroy
   belongs_to :asset, :polymorphic => true
   belongs_to :simple_category
-
-  # NESTED
   accepts_nested_attributes_for :resources,
     :reject_if => lambda { |a| a[:media].blank? },
     :allow_destroy => true
   
-  # VALIDATIONS
-  validates_presence_of :name
-  validates_presence_of :description
-  validates_length_of   :description, :within => 30..200
-  validates_presence_of :simple_category
-  validates_presence_of :courseable_type
-  validates_associated :courseable
-  validation_group :step1, :fields=>[:name, :description, :simple_category, :courseable_type]
-  validation_group :step2, :fields=>[:courseable]
-  validation_group :step3, :fields=>[:price]
   
+	# NAMED SCOPES
   named_scope :published,
     :conditions => ["state LIKE 'approved' AND public = true"],
     :include => :owner, :order => 'created_at DESC'
@@ -53,6 +45,13 @@ class Course < ActiveRecord::Base
     :include => :owner, :order => 'created_at DESC'
   named_scope :limited, lambda { |num| { :limit => num } }
   
+  # PLUGINS
+  acts_as_taggable
+  ajaxful_rateable :stars => 5
+  has_attached_file :avatar, {
+    :styles => { :thumb => "100x100>", :nano => "24x24>",
+    :default_url => "/images/:class/missing_pic.jpg"}
+  }
   # Máquina de estados para moderação do Redu.
   # O estados do processo de transcoding estao em Seminar
   acts_as_state_machine :initial => :waiting

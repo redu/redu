@@ -1,4 +1,6 @@
 class CourseSubject < ActiveRecord::Base
+	
+	# ASSOCIATIONS
   belongs_to :subject
   belongs_to :courseable, :polymorphic => true
 

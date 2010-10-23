@@ -1,9 +1,11 @@
 class Exam < ActiveRecord::Base
-  attr_writer :current_step
 
-  # PLUGINS
-  acts_as_taggable
-  ajaxful_rateable :stars => 5
+  # VALIDATIONS
+  validates_presence_of :name
+  validates_presence_of :description
+  validation_group :step1, :fields=>[:name, :description]
+  validation_group :step2, :fields=>[:questions]
+  validation_group :step3, :fields=>[:price]
 
   # ASSOCIATIONS
   has_many :statuses, :as => :statusable
@@ -17,18 +19,11 @@ class Exam < ActiveRecord::Base
   has_one :course_subject, :as => :courseable, :dependent => :destroy
   has_one :school_asset, :as => :asset
   has_one :school, :through => :school_asset#, :as => :asset
-
   # NESTED
   accepts_nested_attributes_for :questions, 
     :reject_if => lambda { |q| q[:statement].blank? },
     :allow_destroy => true
 
-  # VALIDATIONS
-  validates_presence_of :name
-  validates_presence_of :description
-  validation_group :step1, :fields=>[:name, :description]
-  validation_group :step2, :fields=>[:questions]
-  validation_group :step3, :fields=>[:price]
 
   # NAMED SCOPES
   named_scope :published, :conditions => ['published = ?', true], :include => :owner
@@ -38,6 +33,13 @@ class Exam < ActiveRecord::Base
   named_scope :unpublished_by, lambda { |my_id|
     { :conditions => ["published = ? AND owner_id = ?", false, my_id] }
   }
+
+	# ACCESSORS
+  attr_writer :current_step
+
+  # PLUGINS
+  acts_as_taggable
+  ajaxful_rateable :stars => 5
 
   def get_question(qid)
     if qid
