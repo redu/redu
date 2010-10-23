@@ -1,5 +1,5 @@
 class UserNotifier < ActionMailer::Base
-  self.delivery_method = :activerecord # É necessário iniciar o ar_sendmail para que os e-mail sejam enviados
+  self.delivery_method = :activerecord # É necessário iniciar o ar_sendmail para que os e-mails sejam enviados
   include ActionView::Helpers::TextHelper
   include ActionView::Helpers::SanitizeHelper
   extend  ActionView::Helpers::SanitizeHelper::ClassMethods # Required for rails 2.2
