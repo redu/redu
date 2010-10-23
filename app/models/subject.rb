@@ -1,17 +1,18 @@
 class Subject < ActiveRecord::Base
 
-  #validations
+  # validations
   validates_presence_of :title, :if => lambda {|s| s.current_step == "subject"}
   validates_presence_of :description, :if => lambda {|s| s.current_step == "subject"}
 
-  #associations
+  # associations
   has_many :course_subjects, :dependent => :destroy
   has_many :enrollments, :dependent => :destroy
   belongs_to :user
   belongs_to :school
 
   # METODOS DO WIZARD
-  attr_writer :current_step
+	# accessors 
+	attr_writer :current_step
 
   def current_step
     @current_step || steps.first
