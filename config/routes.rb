@@ -49,7 +49,7 @@ ActionController::Routing::Routes.draw do |map|
   map.admin_moderate_courses   '/admin/moderate/courses', :controller => 'admin', :action => 'courses'
   map.admin_moderate_users   '/admin/moderate/users', :controller => 'admin', :action => 'users'
   map.admin_moderate_exams   '/admin/moderate/exams', :controller => 'admin', :action => 'exams'
-  map.admin_moderate_schools   '/admin/moderate/schools', :controller => 'admin', :action => 'schools'
+  map.admin_moderate_spaces   '/admin/moderate/spaces', :controller => 'admin', :action => 'spaces'
   
   map.admin_users       '/admin/users', :controller => 'admin', :action => 'users'
   map.admin_messages    '/admin/messages', :controller => 'admin', :action => 'messages'
@@ -87,7 +87,7 @@ ActionController::Routing::Routes.draw do |map|
   map.contact 'contact',  :controller => 'base', :action => 'contact'
 
   # SCHOOL
-   map.resources :schools,  :member_path => '/:id', :nested_member_path => '/:school_id', :member => {
+   map.resources :spaces,  :member_path => '/:id', :nested_member_path => '/:space_id', :member => {
    :join => :get,
    :vote => :post,
    :unjoin => :get,
@@ -105,13 +105,13 @@ ActionController::Routing::Routes.draw do |map|
    },
    :collection =>{
    :cancel => :get
-   } do |school|
-    school.resources :folders, :member =>{:upload => :get, :download => :get, :rename => :get, :destroy_folder => :delete, :destroy_file => :delete}
-    school.resources :courses
-    school.resources :subjects
-    school.resources :exams
-    school.resources :bulletins
-    school.resources :events, :member => { :vote => [:post,:get], :notify => :post }, :collection => { :past => :get, :ical => :get , :day => :get}
+   } do |space|
+    space.resources :folders, :member =>{:upload => :get, :download => :get, :rename => :get, :destroy_folder => :delete, :destroy_file => :delete}
+    space.resources :courses
+    space.resources :subjects
+    space.resources :exams
+    space.resources :bulletins
+    space.resources :events, :member => { :vote => [:post,:get], :notify => :post }, :collection => { :past => :get, :ical => :get , :day => :get}
   end
 
   # USERS
@@ -156,7 +156,7 @@ ActionController::Routing::Routes.draw do |map|
     user.resources :activities, :collection => {:network => :get}
     user.resources :invitations
     user.resources :courses, :collection => {:published => :get, :unpublished => :get, :waiting => :get} 
-    user.resources :schools, :collection => {:member => :get, :owner => :get}
+    user.resources :spaces, :collection => {:member => :get, :owner => :get}
     user.resources :exams, :collection => {:published => :get, :unpublished => :get, :history => :get} 
     user.resources :questions
     user.resources :credits

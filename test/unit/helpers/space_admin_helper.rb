@@ -1,4 +1,4 @@
 require 'test_helper'
 
-class SchoolAdminHelperTest < ActionView::TestCase
+class SpaceAdminHelperTest < ActionView::TestCase
 end

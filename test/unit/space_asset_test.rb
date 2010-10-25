@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class SchoolAssetTest < ActiveSupport::TestCase
+class SpaceAssetTest < ActiveSupport::TestCase
   # Replace this with your real tests.
   test "the truth" do
     assert true
