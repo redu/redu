@@ -52,7 +52,7 @@
   	<ul id="topic_list">
   		<% interactive_class.lessons.each_with_index do |lesson, index| %>
 			<% if index == 0 %>
-			<script> currentTopic = <%= (lesson.id) ? lesson.id : index %></script>
+			<script type="text/javascript"> currentTopic = <%= (lesson.id) ? lesson.id : index %></script>
 			<% end %>
 			<li id="topic_list_item_<%= (lesson.id) ? lesson.id : 0 %>" >
 			  	 <a href="#" onclick="selectTopic(<%= (lesson.id) ? lesson.id : 0 %>); return false;" id="topic_item_<%= (lesson.id) ? lesson.id : 0 %>" class="topic_item <%= (index ==0) ? 'topic_item_sel' : '' %>" >

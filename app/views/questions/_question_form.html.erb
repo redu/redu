@@ -1,4 +1,4 @@
-<script>
+<script type="text/javascript">
 	
 		
 	var alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i"];
@@ -196,7 +196,9 @@
 					<% a_index = @question.alternatives.index(alternative) %>
 					
 					<div id="alternative">
-						<span id = "alt_letter_<%= a_index %>"><script>alphabet[1]</script></span>
+                                          <span id = "alt_letter_<%= a_index %>">
+                                            <script type="text/javascript">alphabet[1]</script>
+                                          </span>
 						<% if @question.answer_id == alternative.id %>
 							<%= radio_button_tag("answer", a_index, true) %> 
 					    <% else %>
@@ -211,7 +213,9 @@
 			<% else %>
 				<% for a_index in 0..4 %>
 					<div id="alternative">
-						<span id = "alt_letter_<%= a_index %>"><script>alphabet[1]</script></span>
+                                          <span id = "alt_letter_<%= a_index %>">
+                                            <script type="text/javascript">alphabet[1]</script>
+                                        </span>
 						<%= radio_button_tag("answer", a_index, false) %>	
 						<%= text_field_tag 'alternative[statement][]', nil, {:tabindex => a_index + 1}  %>
 						(<a href="#" onclick="removeAlternative(this); return false;">remove</a>)

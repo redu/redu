@@ -33,9 +33,7 @@
   <%= hidden_field_tag("step", "2", options = {})%>
 	<%= hidden_field_tag("school_id", @school.id) if @school %>
 
-  
  
-  
   <%= render :partial => 'form_interactive', :locals => {:f => f, :interactive_class => @interactive_class} %>
 
  <div style="float: left;">
@@ -48,14 +46,3 @@ ou <%= link_to 'Cancelar', cancel_courses_path, :confirm => "Tem certeza que des
 
 </div>
 
-
-
-	
-	
-
- 
-<!--
-<script>
-	window.onbeforeunload=leavePage;
-</script>
--->
