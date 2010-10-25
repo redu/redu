@@ -145,32 +145,27 @@ class MessagesController < BaseController
     end
 
     respond_to do |format|
-      format.js do
-        render :update do |page|
-          page << "$('.messages_table').append('"+escape_javascript(render(:partial => "messages/item", :collection => @messages, :as => :message, :locals => {:mailbox => params[:mailbox]}))+"')"
-          if @messages.length < 10
-            page.replace_html "#more",  ''
-          else
-            page.replace_html "#more",  link_to_remote("mais ainda!", :url => {:controller => :messages, :action => :more, :user_id => params[:user_id], :offset => 20,:limit => 100}, :method =>:get, :loading => "$('#more').html('"+escape_javascript(image_tag('spinner.gif'))+"')")
-          end
-        end
+      if @messages.length < 10
+        format.js { render :template => 'messages/messages_end' }
+      else
+        format.js { render :template => 'messages/messages_more' }
       end
     end
   end
 
-  private
-  def find_user
-    @user = User.find(params[:user_id])
-  end
+private
+def find_user
+  @user = User.find(params[:user_id])
+end
 
-  def require_ownership_or_moderator
-    unless admin? || moderator? || (@user && (@user.eql?(current_user)))
-      redirect_to :controller => 'sessions', :action => 'new' and return false
-    end
-    return @user
+def require_ownership_or_moderator
+  unless admin? || moderator? || (@user && (@user.eql?(current_user)))
+    redirect_to :controller => 'sessions', :action => 'new' and return false
   end
+  return @user
+end
 
-  def user_required
-    User.find(params[:user_id]) == current_user ? true : access_denied
-  end
+def user_required
+  User.find(params[:user_id]) == current_user ? true : access_denied
+end
 end
