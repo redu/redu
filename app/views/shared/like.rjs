@@ -1,0 +1,5 @@
+page << "jQuery('#like_spinner').hide()"
+page << "jQuery('#like_link').show()"
+page << "jQuery('#like_link').attr('onclick', 'return false;')"
+page << "jQuery('#like_count').html('#{votes_for}')" # TODO performance + uma consulta?
+

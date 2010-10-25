@@ -94,21 +94,11 @@ class BulletinsController < BaseController
     end
 
     respond_to do |format|
-      format.js do
-        render :update do |page|
-          # if falta o if para saber se é like ou dislike
-          if params[:like]
-            page << "jQuery('#like_spinner').hide()"
-            page << "jQuery('#like_link').show()"
-            page << "jQuery('#like_link').attr('onclick', 'return false;')"
-            page << "jQuery('#like_count').html('" + @bulletin.votes_for().to_s + "')" # TODO performance + uma consulta?
-          else
-            page << "jQuery('#dislike_spinner').hide()"
-            page << "jQuery('#dislike_link').show()"
-            page << "jQuery('#dislike_link').attr('onclick', 'return false;')"
-            page << "jQuery('#dislike_count').html('" + @bulletin.votes_against().to_s + "')" # TODO performance + uma consulta?
-          end
-        end
+      # if falta o if para saber se é like ou dislike
+      if params[:like]
+        format.js { render :template => 'shared/like', :locals => {:votes_for => @bulletin.votes_for().to_s} }
+      else
+        format.js { render :template => 'shared/dislike', :locals => {:votes_against => @bulletin.votes_against().to_s} }
       end
     end
   end
