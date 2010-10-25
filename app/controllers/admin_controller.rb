@@ -18,9 +18,9 @@ class AdminController < BaseController
   end
 
   def moderate_school
-    @removed_schools = School.all(:conditions => ["id IN (?)", params[:schools].join(',')]) unless params[:schools].empty?
+    @removed_schools = Space.all(:conditions => ["id IN (?)", params[:schools].join(',')]) unless params[:schools].empty?
 
-    School.update_all("removed = 1", "id IN (?)", params[:schools].join(', '))
+    Space.update_all("removed = 1", "id IN (?)", params[:schools].join(', '))
 
     for school in @removed_schools # TODO fazer um remove all?
       UserNotifier.deliver_remove_school(school) # TODO fazer isso em batch
@@ -142,7 +142,7 @@ class AdminController < BaseController
   end
 
   def schools
-    @schools = School.paginate(:conditions => ["public = 1 AND removed = 0"],
+    @schools = Space.paginate(:conditions => ["public = 1 AND removed = 0"],
                                :include => :owner,
                                :page => params[:page],
                                :order => 'created_at DESC',

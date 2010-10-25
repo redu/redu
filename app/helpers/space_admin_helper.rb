@@ -1,2 +1,2 @@
-module SchoolAdminHelper
+module SpaceAdminHelper
 end

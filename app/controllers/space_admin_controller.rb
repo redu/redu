@@ -1,2 +1,2 @@
-class SchoolAdminController < ApplicationController
+class SpaceAdminController < ApplicationController
 end

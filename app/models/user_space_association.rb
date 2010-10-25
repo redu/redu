@@ -1,4 +1,4 @@
-class UserSchoolAssociation < ActiveRecord::Base
+class UserSpaceAssociation < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :school

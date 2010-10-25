@@ -1,5 +1,5 @@
 module CoursesHelper
-  include SchoolsHelper
+  include SpacesHelper
 	
   def link_to_add_fields(name, f, association, type = nil)
 		new_object = f.object.class.reflect_on_association(association).klass.new

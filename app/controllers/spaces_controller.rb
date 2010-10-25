@@ -1,4 +1,4 @@
-class SchoolsController < BaseController
+class SpacesController < BaseController
   layout 'new_application'
 
   before_filter :login_required,  :except => [:join, :unjoin, :member, :index]
@@ -19,7 +19,7 @@ class SchoolsController < BaseController
       msg = "Exame removido da rede"
     end
 
-    @asset = SchoolAsset.first(:conditions => ["asset_type LIKE ? AND asset_id = ? and school_id = ?", params[:asset_type], params[:asset_id], params[:id]])
+    @asset = SpaceAsset.first(:conditions => ["asset_type LIKE ? AND asset_id = ? and school_id = ?", params[:asset_type], params[:asset_id], params[:id]])
 
     if @asset
       @asset.destroy
@@ -32,14 +32,14 @@ class SchoolsController < BaseController
   end
 
   def take_ownership
-    @school = School.find(params[:id])
+    @school = Space.find(params[:id])
     @school.update_attribute(:owner, current_user)
     flash[:notice] = "Você é o novo dono desta rede!"
     redirect_to @school
   end
 
   def vote
-    @school = School.find(params[:id])
+    @school = Space.find(params[:id])
     current_user.vote(@school, params[:like])
     respond_to do |format|
       format.js do
@@ -54,11 +54,11 @@ class SchoolsController < BaseController
   end
 
   def look_and_feel
-    @school = School.find(params[:id])
+    @school = Space.find(params[:id])
   end
 
   def set_theme
-    @school = School.find(params[:id])
+    @school = Space.find(params[:id])
     @school.update_attributes(params[:school])
 
     flash[:notice] = "Tema modificado com sucesso!"
@@ -67,7 +67,7 @@ class SchoolsController < BaseController
 
   ##  Admin actions
   def new_school_admin
-    @user_school_association = UserSchoolAssociation.new
+    @user_school_association = UserSpaceAssociation.new
 
     respond_to do |format|
       format.html # show.html.erb
@@ -75,14 +75,14 @@ class SchoolsController < BaseController
     end
   end
 
-  ### School Admin actions
+  ### Space Admin actions
   def invalidate_keys(access_key) # 'troca' um conjunto de chaves
     #TODO
   end
 
   def join
-    @school = School.find(params[:id])
-    @association = UserSchoolAssociation.new
+    @school = Space.find(params[:id])
+    @association = UserSpaceAssociation.new
     @association.user = current_user
     @association.school = @school
 
@@ -110,8 +110,8 @@ class SchoolsController < BaseController
   end
 
   def unjoin
-    @school = School.find(params[:id])
-    @association = UserSchoolAssociation.find(:first, :conditions => ["user_id = ? AND school_id = ?",current_user.id, @school.id ])
+    @school = Space.find(params[:id])
+    @association = UserSpaceAssociation.find(:first, :conditions => ["user_id = ? AND school_id = ?",current_user.id, @school.id ])
 
     if @association.destroy
       flash[:notice] = "Você saiu da rede"
@@ -123,14 +123,14 @@ class SchoolsController < BaseController
   end
 
   def manage
-    @school = School.find(params[:id])
+    @school = Space.find(params[:id])
   end
 
   # Modercacao
   def admin_requests
-    @school = School.find(params[:id])
+    @school = Space.find(params[:id])
     # TODO colocar a consulta a seguir como um atributo de school (como em school.teachers)
-    @pending_members = UserSchoolAssociation.paginate(:conditions => ["user_school_associations.status like 'pending' AND school_id = ?", @school.id],
+    @pending_members = UserSpaceAssociation.paginate(:conditions => ["user_school_associations.status like 'pending' AND school_id = ?", @school.id],
                                                       :page => params[:page],
                                                       :order => 'updated_at DESC',
                                                       :per_page => AppConfig.items_per_page)
@@ -141,8 +141,8 @@ class SchoolsController < BaseController
   end
 
   def admin_members
-    @school = School.find(params[:id]) # TODO 2 consultas ao inves de uma?
-    @memberships = UserSchoolAssociation.paginate(:conditions => ["status like 'approved' AND school_id = ?", @school.id],
+    @school = Space.find(params[:id]) # TODO 2 consultas ao inves de uma?
+    @memberships = UserSpaceAssociation.paginate(:conditions => ["status like 'approved' AND school_id = ?", @school.id],
                                                   :include => :user,
                                                   :page => params[:page],
                                                   :order => 'updated_at DESC',
@@ -153,7 +153,7 @@ class SchoolsController < BaseController
   end
 
   def admin_submissions
-    @school = School.find(params[:id])
+    @school = Space.find(params[:id])
     @courses = Course.paginate(:conditions => ["published = 1 AND state LIKE ?", "waiting"],
                                :include => :owner,
                                :page => params[:page],
@@ -167,7 +167,7 @@ class SchoolsController < BaseController
   end
 
   def admin_bulletins
-    @school = School.find(params[:id])
+    @school = Space.find(params[:id])
     @bulletins = Bulletin.paginate(:conditions => ["school_id = ? AND state LIKE ?", @school.id, "waiting"],
                                    :include => :owner,
                                    :page => params[:page],
@@ -180,7 +180,7 @@ class SchoolsController < BaseController
   end
 
   def admin_events
-    @school = School.find(params[:id])
+    @school = Space.find(params[:id])
     @events = Event.paginate(:conditions => ["school_id = ? AND state LIKE ?", @school.id, "waiting"],
                              :include => :owner,
                              :page => params[:page],
@@ -193,18 +193,18 @@ class SchoolsController < BaseController
   end
 
   def moderate_requests
-    @school = School.find(params[:id])
+    @school = Space.find(params[:id])
 
     approved = params[:member].reject{|k,v| v == 'reject'}
     rejected = params[:member].reject{|k,v| v == 'approve'}
 
     #atualiza status da associacao
     approved.keys.each do |user_id|
-      UserSchoolAssociation.update_all("status = 'approved'", :user_id => user_id,  :school_id => @school.id)
+      UserSpaceAssociation.update_all("status = 'approved'", :user_id => user_id,  :school_id => @school.id)
     end
 
     rejected.keys.each do |user_id|
-      UserSchoolAssociation.update_all("status = 'disaproved'", :user_id => user_id,  :school_id => @school.id)
+      UserSpaceAssociation.update_all("status = 'disaproved'", :user_id => user_id,  :school_id => @school.id)
     end
 
     #pega usuários para enviar emails
@@ -222,21 +222,21 @@ class SchoolsController < BaseController
   end
 
   def moderate_members
-    @school = School.find(params[:id]) # TODO realmente necessário?
+    @school = Space.find(params[:id]) # TODO realmente necessário?
 
     case params[:submission_type]
     when '0' # remove selected
       @removed_users = User.all(:conditions => ["id IN (?)", params[:users].join(',')]) unless params[:users].empty?
 
       # TODO destroy_all ou delete_all?
-      UserSchoolAssociation.delete_all(["user_id IN (?) AND school_id = ?", params[:users].join(','), @school.id])
+      UserSpaceAssociation.delete_all(["user_id IN (?) AND school_id = ?", params[:users].join(','), @school.id])
 
 
       for user in @removed_users # TODO fazer um remove all?
         UserNotifier.deliver_remove_membership(user, @school) # TODO fazer isso em batch
       end
     when '1' # moderate roles
-      UserSchoolAssociation.update_all(["role_id = ?", params[:role_id]],
+      UserSpaceAssociation.update_all(["role_id = ?", params[:role_id]],
                                        ["status like 'approved' AND school_id = ? AND user_id IN (?)", @school.id, params[:users].join(',') ])  if params[:role_id]
 
       # TODO enviar emails para usuários dizendo que foram promovidos?
@@ -246,16 +246,16 @@ class SchoolsController < BaseController
   end
 
   def search_users_admin
-    @school = School.find(params[:id])
+    @school = Space.find(params[:id])
     if params[:search_user].empty?
-      @memberships = UserSchoolAssociation.paginate(:conditions => ["status like 'approved' AND school_id = ?", @school.id],
+      @memberships = UserSpaceAssociation.paginate(:conditions => ["status like 'approved' AND school_id = ?", @school.id],
                                                     :include => :user,
                                                     :page => params[:page],
                                                     :order => 'updated_at DESC',
                                                     :per_page => AppConfig.items_per_page)
     else
       qry = params[:search_user] + '%'
-      @memberships = UserSchoolAssociation.paginate(
+      @memberships = UserSpaceAssociation.paginate(
         :conditions => ["user_school_associations.status like 'approved' AND user_school_associations.school_id = ? AND (users.first_name LIKE ? OR users.last_name LIKE ? OR users.login LIKE ?)",
           @school.id, qry,qry,qry ],
           :include => :user,
@@ -279,10 +279,10 @@ class SchoolsController < BaseController
     approved_ids = approved.keys.join(',')
     rejected_ids = rejected.keys.join(',')
 
-    @school = School.find(params[:school_id])
+    @school = Space.find(params[:school_id])
 
-    SchoolAsset.update_all( "status = 'approved'", ["asset_id IN (?)", @approve_ids.join(',') ]) if @approve_ids
-    SchoolAsset.update_all( "status = 'disaproved'",["asset_id IN (?)", @approve_ids.join(',') ]) if @disapprove_ids
+    SpaceAsset.update_all( "status = 'approved'", ["asset_id IN (?)", @approve_ids.join(',') ]) if @approve_ids
+    SpaceAsset.update_all( "status = 'disaproved'",["asset_id IN (?)", @approve_ids.join(',') ]) if @disapprove_ids
 
     @approved_members = User.all(:conditions => ["id IN (?)", approved_ids]) unless approved_ids.empty?
     @rejected_members = User.all(:conditions => ["id IN (?)", rejected_ids]) unless rejected_ids.empty?
@@ -308,7 +308,7 @@ class SchoolsController < BaseController
       flash[:error] = "Para moderar você precisa escolher entre aprovar ou rejeitar."
     end
 
-    @school = School.find(params[:id])
+    @school = Space.find(params[:id])
     redirect_to admin_bulletins_school_path(@school)
   end
 
@@ -325,15 +325,15 @@ class SchoolsController < BaseController
       flash[:error] = "Para moderar você precisa escolher entre aprovar ou rejeitar."
     end
 
-    @school = School.find(params[:id])
+    @school = Space.find(params[:id])
     redirect_to admin_events_school_path(@school)
   end
 
   # usuário entra na rede
   def associate
-    @school = School.find(params[:id])
+    @school = Space.find(params[:id])
     @user = User.find(params[:user_id])  # TODO precisa mesmo recuperar o usuário no bd?
-    @user_school_association = UserSchoolAssociation.find(:first, :include => :access_key, :conditions => ["access_keys.key = ?", params[:user_key]])
+    @user_school_association = UserSpaceAssociation.find(:first, :include => :access_key, :conditions => ["access_keys.key = ?", params[:user_key]])
 
     #TODO case?
     if @user_school_association
@@ -377,7 +377,7 @@ class SchoolsController < BaseController
 
   # lista todos os membros da escola
   def members
-    @school = School.find(params[:id]) #TODO duas queries que poderiam ser apenas 1
+    @school = Space.find(params[:id]) #TODO duas queries que poderiam ser apenas 1
     @members = @school.user_school_associations.paginate(  #optei por .users ao inves de .students
                                                          :page => params[:page],
                                                          :order => 'updated_at DESC',
@@ -394,7 +394,7 @@ class SchoolsController < BaseController
 
   # lista todos os professores
   def teachers
-    @school = School.find(params[:id]) #TODO duas queries que poderiam ser apenas 1
+    @school = Space.find(params[:id]) #TODO duas queries que poderiam ser apenas 1
 
     @members = @school.teachers.paginate(
       :page => params[:page],
@@ -424,7 +424,7 @@ class SchoolsController < BaseController
       :per_page => 12
     }
 
-    @schools =  School.inner_categories.paginate(paginating_params) if params[:area] and params[:area].downcase != 'all'
+    @schools =  Space.inner_categories.paginate(paginating_params) if params[:area] and params[:area].downcase != 'all'
 
     if params[:user_id] # aulas do usuario
       @user = User.find_by_login(params[:user_id])
@@ -433,10 +433,10 @@ class SchoolsController < BaseController
 
     elsif params[:search] # search
 
-      @schools = School.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
+      @schools = Space.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
     else
       if not @schools
-        params[:audience].nil? ? @schools = School.all.paginate(paginating_params) : @schools = Audience.find(params[:audience]).schools.paginate(paginating_params)
+        params[:audience].nil? ? @schools = Space.all.paginate(paginating_params) : @schools = Audience.find(params[:audience]).schools.paginate(paginating_params)
         @searched_for_all = true
       end
     end
@@ -461,7 +461,7 @@ class SchoolsController < BaseController
   # GET /schools/1
   # GET /schools/1.xml
   def show
-    @school = School.find(params[:id]) # TODO colocar como um filtro (find_school)
+    @school = Space.find(params[:id]) # TODO colocar como um filtro (find_school)
 
     if @school and @school.removed
       redirect_to removed_page_path and return
@@ -513,13 +513,13 @@ class SchoolsController < BaseController
   # GET /schools/new.xml
   def new
     session[:school_params] ||= {}
-    @school = School.new(session[:school_params])
+    @school = Space.new(session[:school_params])
     @school.current_step = session[:school_step]
   end
 
   # GET /schools/1/edit
   def edit
-    @school = School.find(params[:id])
+    @school = Space.find(params[:id])
   end
 
   # POST /schools
@@ -527,7 +527,7 @@ class SchoolsController < BaseController
   def create
 
     session[:school_params].deep_merge!(params[:school]) if params[:school]
-    @school = School.new(session[:school_params])
+    @school = Space.new(session[:school_params])
     @school.owner = current_user
     @school.current_step = session[:school_step]
     if @school.valid?
@@ -543,7 +543,7 @@ class SchoolsController < BaseController
     if @school.new_record?
       render "new"
     else
-      UserSchoolAssociation.create({:user => current_user, :school => @school, :status => "approved", :role_id => 4}) #:role => Role[:school_admin]
+      UserSpaceAssociation.create({:user => current_user, :school => @school, :status => "approved", :role_id => 4}) #:role => Role[:school_admin]
       session[:school_step] = session[:school_params] = nil
       flash[:notice] = "Rede criada!"
       redirect_to @school
@@ -557,12 +557,12 @@ class SchoolsController < BaseController
       params[:school][:category_ids] ||= []
       params[:school][:audience_ids] ||= []
     end
-    @school = School.find(params[:id])
+    @school = Space.find(params[:id])
 
     respond_to do |format|
       if @school.update_attributes(params[:school])
         if params[:school][:subscription_type].eql? "1" # Entrada de membros passou a ser livre, aprovar todos os membros pendentes
-          UserSchoolAssociation.update_all("status = 'approved'", ["school_id = ? AND status = 'pending'", @school.id])
+          UserSpaceAssociation.update_all("status = 'approved'", ["school_id = ? AND status = 'pending'", @school.id])
         end
         flash[:notice] = 'A escola foi atualizada com sucesso!'
         format.html { redirect_to(@school) }
@@ -577,7 +577,7 @@ class SchoolsController < BaseController
   # DELETE /schools/1
   # DELETE /schools/1.xml
   def destroy
-    @school = School.find(params[:id])
+    @school = Space.find(params[:id])
     @school.destroy
 
     respond_to do |format|
@@ -589,13 +589,13 @@ class SchoolsController < BaseController
   protected
 
   def can_be_owner_required
-    @school = School.find(params[:id])
+    @school = Space.find(params[:id])
 
     current_user.can_be_owner?(@school) ? true : access_denied
   end
 
   def is_not_member_required
-    @school = School.find(params[:id])
+    @school = Space.find(params[:id])
     if current_user.get_association_with(@school)
       redirect_to school_path(@school)
     end

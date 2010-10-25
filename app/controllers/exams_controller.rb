@@ -366,7 +366,7 @@ class ExamsController < BaseController
       return
 
     elsif params[:school_id] # exames da escola
-      @school = School.find(params[:school_id])
+      @school = Space.find(params[:school_id])
       if params[:search] # search exams da escola
         @exams = @school.exams.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
       else

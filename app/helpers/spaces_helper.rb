@@ -1,4 +1,4 @@
-module SchoolsHelper
+module SpacesHelper
   
   
   def submission_type(school)

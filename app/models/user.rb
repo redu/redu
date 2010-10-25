@@ -58,7 +58,7 @@ class User < ActiveRecord::Base
   has_one :beta_key, :dependent => :destroy
   has_many :user_school_association, :dependent => :destroy
   has_many :schools, :through => :user_school_association
-  has_many :schools_owned, :class_name => "School" , :foreign_key => "owner"
+  has_many :schools_owned, :class_name => "Space" , :foreign_key => "owner"
   has_many :statuses, :as => :statusable, :dependent => :destroy
 
   # FOLLOWSHIP
@@ -229,7 +229,7 @@ class User < ActiveRecord::Base
       (entity.owner == self || (entity.school == school && self.school_admin?(school) ))
     when 'Exam'
       (entity.owner == self || (entity.school == school && self.school_admin?(school) ))
-    when 'School'
+    when 'Space'
       (entity.owner == self || self.school_admin?(entity))
     when 'Event'
       (entity.owner == self || (entity.school.id == school.id && self.school_admin?(school) ))
@@ -248,7 +248,7 @@ class User < ActiveRecord::Base
       (entity.public || (entity.school && self.schools.include?(entity.school)))
       #    when 'Exam'
       #      (entity.owner == self || (entity.school == school && self.school_admin?(school) ))
-    when 'School'
+    when 'Space'
       (self.school_admin?(entity) || (self.schools.include?(entity) && self.get_association_with(entity).status == "approved"))
       #    when 'Event'
       #       (entity.owner == self || (entity.school == school && self.school_admin?(school) ))
@@ -523,8 +523,8 @@ class User < ActiveRecord::Base
 
   def get_association_with(school_id)
     return false unless school_id
-    @school = School.find(school_id) #TODO performance -
-    association = UserSchoolAssociation.find(:first, :conditions => ['user_id = ? AND school_id = ?', self.id, @school.id])
+    @school = Space.find(school_id) #TODO performance -
+    association = UserSpaceAssociation.find(:first, :conditions => ['user_id = ? AND school_id = ?', self.id, @school.id])
   end
 
   def teacher?(school)

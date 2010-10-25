@@ -39,7 +39,7 @@ class FoldersController < BaseController
   def upload
     @myfile = Myfile.new
     @folder_id = params[:id]
-    @school = School.find(params[:school_id]) #TODO retirar isso quando nao recarregar info de escola (ajax)
+    @school = Space.find(params[:school_id]) #TODO retirar isso quando nao recarregar info de escola (ajax)
   end
 
   # Upload the file and create a record in the database.
@@ -72,7 +72,7 @@ class FoldersController < BaseController
     @myfile = Myfile.find(params[:file_id])
 
     if  @myfile
-      school = School.find(params[:school_id]) if params[:school_id]
+      school = Space.find(params[:school_id]) if params[:school_id]
       if school and current_user.has_access_to(school)
         # Gerando uma url do s3 com o timeout de 20 segundos
         # O usuário deve COMEÇAR a baixar dentro desse tempo.
@@ -102,7 +102,7 @@ class FoldersController < BaseController
 
   # List the files and sub-folders in a folder.
   def list
-    @school = School.find(params[:school_id])
+    @school = Space.find(params[:school_id])
 
     # Get the folder
     if params[:id]
@@ -190,7 +190,7 @@ class FoldersController < BaseController
     @school_id = params[:school_id]
     @parent_id = params[:id]
 
-    @school = School.find(params[:school_id]) # TODO quando colocar em ajax isso nao sera necessario
+    @school = Space.find(params[:school_id]) # TODO quando colocar em ajax isso nao sera necessario
   end
 
   # Create a new folder with the posted variables from the 'new' view.
@@ -229,7 +229,7 @@ class FoldersController < BaseController
   def rename
     @folder = Folder.find(params[:id])
     @school_id = params[:school_id]
-    @school = School.find(params[:school_id]) # TODO quando colocar em ajax isso nao sera necessario
+    @school = Space.find(params[:school_id]) # TODO quando colocar em ajax isso nao sera necessario
   end
 
   # Update the folder attributes with the posted variables from the 'rename' view.

@@ -1,4 +1,4 @@
-class SchoolAsset < ActiveRecord::Base
+class SpaceAsset < ActiveRecord::Base
   
   validates_uniqueness_of :asset_id, :scope => :school_id
 

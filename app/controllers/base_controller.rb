@@ -90,7 +90,7 @@ class BaseController < ApplicationController
   end
 
   def school_admin_required(school_id)
-    (current_user && current_user.school_admin?(school_id) || School.find(school_id).owner == current_user) ? true : access_denied
+    (current_user && current_user.school_admin?(school_id) || Space.find(school_id).owner == current_user) ? true : access_denied
   end
 
   def admin_or_moderator_required
@@ -108,7 +108,7 @@ class BaseController < ApplicationController
                       :logeable_type => 'Course',
                       :logeable_id => @course.id,
                       :log_action => params[:action],
-                      :statusable_type => (@course.school) ? 'School' : 'User',
+                      :statusable_type => (@course.school) ? 'Space' : 'User',
                       :statusable_id => (@course.school) ? @course.school.id : @course.owner.id,
                       :user_id => current_user.id
         })
@@ -120,7 +120,7 @@ class BaseController < ApplicationController
                       :logeable_type => 'Exam',
                       :logeable_id => @exam.id,
                       :log_action => params[:action],
-                      :statusable_type => (@exam.school) ? 'School' : 'User',
+                      :statusable_type => (@exam.school) ? 'Space' : 'User',
                       :statusable_id => (@exam.school) ? @exam.school.id : @exam.owner.id,
                       :user_id => current_user.id
         })
@@ -141,7 +141,7 @@ class BaseController < ApplicationController
       if @school and @school.created_at
         Status.create({:log => true,
                       :logeable_name => @school.name,
-                      :logeable_type => 'School',
+                      :logeable_type => 'Space',
                       :logeable_id => @school.id,
                       :log_action => params[:action],
                       :statusable_type => 'User',

@@ -128,7 +128,7 @@ class CoursesController < BaseController
       return
 
     elsif params[:school_id] # aulas da escola
-      @school = School.find(params[:school_id])
+      @school = Space.find(params[:school_id])
       if params[:search] # search aulas da escola
         @courses = @school.courses.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
       else
@@ -167,7 +167,7 @@ class CoursesController < BaseController
   # GET /courses/1
   # GET /courses/1.xml
   def show
-    @school = School.find(params[:school_id]) if params[:school_id]
+    @school = Space.find(params[:school_id]) if params[:school_id]
     update_view_count(@course)
 
     if @course.removed
@@ -212,7 +212,7 @@ class CoursesController < BaseController
   # GET /courses/new.xml
   def new
     if params[:school_id]
-      @school = School.find(params[:school_id])
+      @school = Space.find(params[:school_id])
     end
 
     case params[:step]
@@ -290,7 +290,7 @@ class CoursesController < BaseController
             redirect_to :action => :new, :step => "2", :school_id => params[:school_id]
           }
         else
-          @school = School.find(params[:school_id]) if params[:school_id]
+          @school = Space.find(params[:school_id]) if params[:school_id]
           format.html { render "step1" }
         end
       end
@@ -393,8 +393,8 @@ class CoursesController < BaseController
       @course = Course.find(session[:course_id])
       @submited_to_school = false
       if params[:post_to]
-        SchoolAsset.create({:asset_type => "Course", :asset_id => @course.id, :school_id => params[:post_to].to_i})
-        @school = School.find(params[:post_to])
+        SpaceAsset.create({:asset_type => "Course", :asset_id => @course.id, :school_id => params[:post_to].to_i})
+        @school = Space.find(params[:post_to])
       end
 
       @course.published = true # se o usuário completou os 3 passos então o curso está publicado

@@ -1,5 +1,5 @@
-class SchoolSweeper < ActionController::Caching::Sweeper
-  observe School
+class SpaceSweeper < ActionController::Caching::Sweeper
+  observe Space
 
   def after_create(school)
     expire_cache_for(school)

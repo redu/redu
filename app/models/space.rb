@@ -1,4 +1,4 @@
-class School < ActiveRecord::Base
+class Space < ActiveRecord::Base
 
   # CALLBACKS
   before_create :create_root_folder
@@ -20,7 +20,7 @@ class School < ActiveRecord::Base
   has_many :coordinators, :through => :user_school_associations, :source => :user, :conditions => [ "user_school_associations.role_id = ?", 5 ]
   has_many :teachers, :through => :user_school_associations, :source => :user, :conditions => [ "user_school_associations.role_id = ?", 6 ]
   has_many :students, :through => :user_school_associations, :source => :user, :conditions => [ "user_school_associations.role_id = ?", 7 ]
-  has_many :pending_requests, :class_name => "UserSchoolAssociation", :conditions => ["user_school_associations.status LIKE 'pending'"]
+  has_many :pending_requests, :class_name => "UserSpaceAssociation", :conditions => ["user_school_associations.status LIKE 'pending'"]
 
   # CATEGORIES
   has_and_belongs_to_many :categories, :class_name => "ReduCategory"
@@ -31,7 +31,7 @@ class School < ActiveRecord::Base
   has_many :forums
   has_many :acquisitions, :as => :acquired_by
   has_many :access_keys, :dependent => :destroy
-  has_many :school_assets, :class_name => 'SchoolAsset',
+  has_many :school_assets, :class_name => 'SpaceAsset',
     :dependent => :destroy
   has_many :courses, :through => :school_assets,
     :source => :asset, :source_type => "Course", :conditions =>  "published = 1"

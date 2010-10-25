@@ -9,12 +9,12 @@ class BulletinsController < BaseController
   uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit, :create, :update])
 
   def index
-    @bulletins = Bulletin.paginate(:conditions => ["school_id = ? AND state LIKE 'approved'", School.find(params[:school_id]).id],
+    @bulletins = Bulletin.paginate(:conditions => ["school_id = ? AND state LIKE 'approved'", Space.find(params[:school_id]).id],
                                    :page => params[:page],
                                    :order => 'created_at DESC',
                                    :per_page => 5
                                   )
-    @school = School.find(params[:school_id])
+    @school = Space.find(params[:school_id])
   end
 
   def show
@@ -25,12 +25,12 @@ class BulletinsController < BaseController
 
   def new
     @bulletin = Bulletin.new()
-    @school = School.find(params[:school_id])
+    @school = Space.find(params[:school_id])
   end
 
   def create
     @bulletin = Bulletin.new(params[:bulletin])
-    @bulletin.school = School.find(params[:school_id])
+    @bulletin.school = Space.find(params[:school_id])
     @bulletin.owner = current_user
 
     respond_to do |format|
@@ -54,7 +54,7 @@ class BulletinsController < BaseController
 
   def edit
     @bulletin = Bulletin.find(params[:id])
-    @school = School.find(params[:school_id])
+    @school = Space.find(params[:school_id])
   end
 
   def update
@@ -133,7 +133,7 @@ class BulletinsController < BaseController
 
   def is_member_required
     if params[:school_id]
-      @school = School.find(params[:school_id])
+      @school = Space.find(params[:school_id])
     else
       @bulletin = Bulletin.find(params[:id])
       @school = @bulletin.school

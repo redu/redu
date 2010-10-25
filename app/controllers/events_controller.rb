@@ -47,22 +47,22 @@ class EventsController < BaseController
 
   def show
     @event = Event.find(params[:id])
-    @school = School.find(params[:school_id])
+    @school = Space.find(params[:school_id])
   end
 
   def index
-    @events = Event.approved.upcoming.paginate(:conditions => ["school_id = ? AND state LIKE 'approved'", School.find(params[:school_id]).id],
+    @events = Event.approved.upcoming.paginate(:conditions => ["school_id = ? AND state LIKE 'approved'", Space.find(params[:school_id]).id],
                                       :include => :owner,
                                       :page => params[:page],
                                       :order => 'start_time',
                                       :per_page => AppConfig.items_per_page)
 
     @list_title = "Eventos Futuros"
-    @school = School.find(params[:school_id])
+    @school = Space.find(params[:school_id])
   end
 
   def past
-    @events = Event.past.paginate(:conditions => ["school_id = ? AND state LIKE 'approved'", School.find(params[:school_id]).id],
+    @events = Event.past.paginate(:conditions => ["school_id = ? AND state LIKE 'approved'", Space.find(params[:school_id]).id],
                                   :include => :owner,
                                   :page => params[:page],
                                   :order => 'start_time DESC',
@@ -74,7 +74,7 @@ class EventsController < BaseController
 
   def new
     @event = Event.new(params[:event])
-    @school = School.find(params[:school_id])
+    @school = Space.find(params[:school_id])
   end
 
   def edit
@@ -88,7 +88,7 @@ class EventsController < BaseController
 
     @event = Event.new(params[:event])
     @event.owner = current_user
-    @event.school = School.find(params[:school_id])
+    @event.school = Space.find(params[:school_id])
 
     @school = @event.school
 
@@ -156,12 +156,12 @@ class EventsController < BaseController
   def day
     day = Time.utc(Time.now.year, Time.now.month, params[:day])
 
-    @events = Event.paginate(:conditions => ["school_id = ? AND state LIKE 'approved' AND ? BETWEEN start_time AND end_time", School.find(params[:school_id]).id, day],
+    @events = Event.paginate(:conditions => ["school_id = ? AND state LIKE 'approved' AND ? BETWEEN start_time AND end_time", Space.find(params[:school_id]).id, day],
                              :include => :owner,
                              :page => params[:page],
                              :order => 'start_time DESC',
                              :per_page => AppConfig.items_per_page)
-    @school = School.find(params[:school_id])
+    @school = Space.find(params[:school_id])
 
     @list_title = "Eventos do dia #{day.strftime("%d/%m/%Y")}"
     render :template => 'events/index'
@@ -184,7 +184,7 @@ class EventsController < BaseController
   end
 
   def is_member_required
-    @school = School.find(params[:school_id])
+    @school = Space.find(params[:school_id])
 
     current_user.has_access_to(@school) ? true : access_denied
   end

@@ -59,7 +59,7 @@ class StatusesController < BaseController
     when 'user'
       @statusable = User.find(params[:id])
     when 'school'
-      @statusable = School.find(params[:id])
+      @statusable = Space.find(params[:id])
     end
 
     @statuses = @statusable.recent_activity(params[:offset], params[:limit])
@@ -82,7 +82,7 @@ class StatusesController < BaseController
   end
 
   def index
-    @statuses = Status.group_statuses(School.find(1))
+    @statuses = Status.group_statuses(Space.find(1))
   end
 
   def destroy
