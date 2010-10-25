@@ -98,12 +98,7 @@ class UsersController < BaseController
     respond_to do |format|
       unless user.followers.include?(current_user)
         user.followers << current_user
-        format.js do
-          render :update do |page|
-            page << "$('#follow_link').hide()"
-            page << "$('#unfollow_link').show()"
-          end
-        end
+        format.js
       end
     end
   end
@@ -116,12 +111,7 @@ class UsersController < BaseController
       format.html do
         redirect_to user_path(user)
       end
-      format.js do
-        render :update do |page|
-          page << "$('#follow_link').show()"
-          page << "$('#unfollow_link').hide()"
-        end
-      end
+      format.js
     end
   end
 
