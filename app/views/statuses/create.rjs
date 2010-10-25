@@ -1,0 +1,9 @@
+test = escape_javascript(render(:partial =>"statuses/type_proxy", :locals => {:type_proxy_counter => nil, :status => @status, :statusable => @status.statusable} ))
+page << "$('.activities').prepend('"+test+"')"
+page << "$('.status_spinner').hide()"
+page << "$('#status_text').val('')"
+page << "$('.answer').val('')"
+#TODO com jquery 1.4 pode-se usar a funcao unwrap
+page << "$('textarea.status:visible').parents('div.fieldWithErrors:first').removeClass('fieldWithErrors')"
+page << "$('.errorMessageField').remove()"
+
