@@ -49,6 +49,12 @@ class Seminar < ActiveRecord::Base
   before_validation :enable_correct_validation_group
   before_create :truncate_youtube_url
 
+  # Este trecho de código não vai serguir o coding pattern, pois pode dar erro.
+  # Video convertido
+  has_attached_file :media, {}.merge(VIDEO_TRANSCODED)
+  # Video original
+  has_attached_file :original, {}.merge(VIDEO_ORIGINAL)
+
   # Validations Groups - Usados para habilitar diferentes validacoes dependendo do tipo d
   validation_group :external, :fields => [:external_resource, :external_resource_type]
   validation_group :uploaded, :fields => [:original]
@@ -61,10 +67,6 @@ class Seminar < ActiveRecord::Base
   has_one :course, :as => :courseable
   has_many :lesson, :as => :lesson
 
-  # Video convertido
-  has_attached_file :media, {}.merge(VIDEO_TRANSCODED)
-  # Video original
-  has_attached_file :original, {}.merge(VIDEO_ORIGINAL)
 
   # Maquina de estados do processo de conversão
   acts_as_state_machine :initial => :waiting, :column => 'state'
