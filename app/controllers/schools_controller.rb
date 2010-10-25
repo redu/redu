@@ -42,14 +42,7 @@ class SchoolsController < BaseController
     @school = School.find(params[:id])
     current_user.vote(@school, params[:like])
     respond_to do |format|
-      format.js do
-        render :update do |page|
-          page << "$('#like_spinner').hide()"
-          page << "$('#like_link').show()"
-          page << "$('#like_link').attr('onclick', 'return false;')"
-          page << "$('#like_count').html('" + @school.votes_for().to_s + "')" # TODO performance + uma consulta?
-        end
-      end
+      format.js { render :template => 'shared/like.rjs', :locals => { :votes_for => @school.votes_for().to_s} } 
     end
   end
 
