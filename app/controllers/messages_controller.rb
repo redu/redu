@@ -63,12 +63,7 @@ class MessagesController < BaseController
     @message = Message.new_reply(@user, in_reply_to, params)
 
     respond_to do |format|
-      format.js do
-        render :update do |page|
-          page.replace_html  'tabs-3-content', :partial => 'new'
-          page << "reloadMce();"
-        end
-      end
+      format.js { render :template => 'messages/new' }
     end
   end
 
@@ -84,12 +79,7 @@ class MessagesController < BaseController
         format.html do
           render :action => :new and return
         end
-        format.js do
-          render :update do |page|
-            page << "jQuery('#msg_spinner').hide()"
-            page.replace_html "errors", error_messages_for(:message)
-          end
-        end
+        format.js { render :template => 'messages/errors', :locals => {:message => :message} }
       end
     else
       # If 'to' field isn't empty then make sure each recipient is valid
@@ -102,13 +92,7 @@ class MessagesController < BaseController
             format.html do
               render :action => :new and return
             end
-            format.js do
-              render :update do |page|
-                page << "jQuery('#msg_spinner').hide()"
-                page.replace_html "errors", error_messages_for(:message)
-                #page << "alert('é necessário preencher todos os campos')"# TODO notice?
-              end
-            end
+            format.js { render :template => 'messages/errors', :locals => {:message => :message} }
           end
           return
         else
