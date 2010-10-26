@@ -1,9 +1,9 @@
 <div class="grid_16">
 <div id="breadcrumbs">
 		<% if @space %>
-	<a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <%= link_to @space.name, @space %> > <%= link_to @course.name, @course %> > editar
+	<a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <%= link_to @space.name, @space %> > <%= link_to @lecture.name, @lecture %> > editar
 	<% else %>
-	<a href="<%=application_url%>">início</a> > <a href="#">ensinar</a> > <%= link_to @course.name, @course %> > editar
+	<a href="<%=application_url%>">início</a> > <a href="#">ensinar</a> > <%= link_to @lecture.name, @lecture %> > editar
 	<%end %>
 </div>
 </div>
@@ -12,7 +12,7 @@
 <h3 class="call">Editando artigo </h3>
 
 
-<% form_for @course, :html => { :multipart => true } do |f| %>
+<% form_for @lecture, :html => { :multipart => true } do |f| %>
 <%= f.error_messages %>
 <%= hidden_field_tag("space_id", @space.id) if @space %>
 
@@ -30,15 +30,15 @@
 </div>
 	
 	<div class="grid_12 push_2">
-	<% fields_for "course[courseable_attributes][]", @course.courseable  do |thepage| %>
-	<%= f.hidden_field(:courseable_type, :value => "Page" )%>
+	<% fields_for "lecture[lectureable_attributes][]", @lecture.lectureable  do |thepage| %>
+	<%= f.hidden_field(:lectureable_type, :value => "Page" )%>
 	 <%= thepage.label 'Texto' %>
 	 <%= thepage.text_area :body, :class => "mceEditor" %>
 	<% end %>
 	</div>
 
 <div class="grid_16" style="margin-top: 20px;"> 
-<%= f.submit 'Atualizar' %> ou <%= link_to 'Cancelar', course_path(@course) %>
+<%= f.submit 'Atualizar' %> ou <%= link_to 'Cancelar', lecture_path(@lecture) %>
 </div>
 <% end %>
 

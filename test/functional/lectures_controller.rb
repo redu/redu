@@ -4,7 +4,7 @@ class LecturesControllerTest < ActionController::TestCase
   test "should get index" do
     get :index
     assert_response :success
-    assert_not_nil assigns(:courses)
+    assert_not_nil assigns(:lectures)
   end
 
   test "should get new" do
@@ -12,34 +12,34 @@ class LecturesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should create course" do
+  test "should create lecture" do
     assert_difference('Lecture.count') do
-      post :create, :course => { }
+      post :create, :lecture => { }
     end
 
-    assert_redirected_to course_path(assigns(:course))
+    assert_redirected_to lecture_path(assigns(:lecture))
   end
 
-  test "should show course" do
-    get :show, :id => courses(:one).to_param
+  test "should show lecture" do
+    get :show, :id => lectures(:one).to_param
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, :id => courses(:one).to_param
+    get :edit, :id => lectures(:one).to_param
     assert_response :success
   end
 
-  test "should update course" do
-    put :update, :id => courses(:one).to_param, :course => { }
-    assert_redirected_to course_path(assigns(:course))
+  test "should update lecture" do
+    put :update, :id => lectures(:one).to_param, :lecture => { }
+    assert_redirected_to lecture_path(assigns(:lecture))
   end
 
-  test "should destroy course" do
+  test "should destroy lecture" do
     assert_difference('Lecture.count', -1) do
-      delete :destroy, :id => courses(:one).to_param
+      delete :destroy, :id => lectures(:one).to_param
     end
 
-    assert_redirected_to courses_path
+    assert_redirected_to lectures_path
   end
 end

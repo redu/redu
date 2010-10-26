@@ -53,8 +53,8 @@ padding: 15px 10px;
 				<%= link_to "Crie espaços para distribuição do seu conteúdo", new_space_path, :class => "text-desc" %>
 	        </li>
 	        <li class="bt-aulas">
-	            <%= link_to "Crie Aulas!", new_course_path, :class => "text-tt" %>
-				<%= link_to "Produza e compartilhe conteúdo educacional", new_course_path, :class => "text-desc" %>
+	            <%= link_to "Crie Aulas!", new_lecture_path, :class => "text-tt" %>
+				<%= link_to "Produza e compartilhe conteúdo educacional", new_lecture_path, :class => "text-desc" %>
 	        </li>
 	        <li class="bt-exames">
 	            <%= link_to "Crie Exames!", new_exam_path, :class => "text-tt" %>
@@ -155,24 +155,24 @@ padding: 15px 10px;
 	
 	<li class="clearfix grid_5 lectures-overview">
 		<span class="call">
-			<span>Minhas aulas (<%= current_user.courses.count%>)</span>
+			<span>Minhas aulas (<%= current_user.lectures.count%>)</span>
 		</span>
-		<% unless @courses.empty? %>
+		<% unless @lectures.empty? %>
 		<ul>
 			<%# TODO performance %>
-			<% @courses.each do |course| %>
+			<% @lectures.each do |lecture| %>
 			<li class="clearfix">
-				 <%=  link_to image_tag( course.thumb_url, 
-                    {:class=> "photo", :border => 0 }), course   %> 
-				<%= link_to course.name, course, :class => "name" %>
+				 <%=  link_to image_tag( lecture.thumb_url, 
+                    {:class=> "photo", :border => 0 }), lecture   %> 
+				<%= link_to lecture.name, lecture, :class => "name" %>
 			</li>
 			<% end %>
 			<li class="clearfix">
-				<%= link_to "(ver todos)", user_courses_path(current_user), :class => "info" %>
+				<%= link_to "(ver todos)", user_lectures_path(current_user), :class => "info" %>
 			</li>
 		</ul>
 		<% else %>
-		Você não possui aulas ainda. Crie uma <%= link_to "agora!", new_course_path %>
+		Você não possui aulas ainda. Crie uma <%= link_to "agora!", new_lecture_path %>
 		<% end %>
 	</li>
 

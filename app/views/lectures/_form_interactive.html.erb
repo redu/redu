@@ -76,7 +76,7 @@
 				<% counter = 0 %>
 				<% f.fields_for :lessons do | build |%>
 							<% if build.object and build.object.lesson_type == 'Page' %>
-								<%= render :partial => 'courses/form_lesson_page', :locals => {:form_lesson => build} %>
+								<%= render :partial => 'lectures/form_lesson_page', :locals => {:form_lesson => build} %>
 	                       	<% end %>
 							<% counter += 1 %>
 				<% end %>

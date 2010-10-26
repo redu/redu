@@ -1,7 +1,7 @@
 
 <script type="text/javascript">
-var unpublishedPath = "<%= unpublished_courses_path %>";
-var waitingPath = "<%= waiting_courses_path %>";
+var unpublishedPath = "<%= unpublished_lectures_path %>";
+var waitingPath = "<%= waiting_lectures_path %>";
 
 var $usertabs;
 
@@ -61,7 +61,7 @@ $(document).ready(function() {
 	    </ul>
 	    
 		<div id="tabs-1" class="clearfix first-page">
-			<%= render :partial => "course_list"%>
+			<%= render :partial => "lecture_list"%>
 		</div>
 		
 		<!-- unpublished -->

@@ -34,11 +34,11 @@
  
  <%= include_tiny_mce_if_needed %>
  
- <% if controller_name == 'courses' || controller_name == 'exams' || controller_name == 'bulletins' || controller_name == 'favorites' %>
+ <% if controller_name == 'lectures' || controller_name == 'exams' || controller_name == 'bulletins' || controller_name == 'favorites' %>
   <%= ajaxful_rating_style %>
   <% end %>
 	
-	<% if controller_name == 'courses' && action_name == 'show'%>
+	<% if controller_name == 'lectures' && action_name == 'show'%>
   <%= javascript_include_tag 'swfobject'%>
 	<% end %>
 	

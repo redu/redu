@@ -10,7 +10,7 @@ type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen=
 
 <% elsif @seminar.external_resource_type.eql?('upload')   %>
  <%# TODO possivel bug aqui, nao diferencia upload de import e pode mostrar um video ainda nao convertido %>
-	<%= render :partial => 'courses/video', :locals => {:resource => @seminar, :is_interactive_class => true} %>
+	<%= render :partial => 'lectures/video', :locals => {:resource => @seminar, :is_interactive_class => true} %>
 
 <% else%>
 

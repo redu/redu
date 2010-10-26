@@ -1,5 +1,5 @@
 <div id="search_list" style="padding: 0 0 5px 0; text-align: right">
-<% form_remote_tag :url => { :controller => :courses, :action => :search },
+<% form_remote_tag :url => { :controller => :lectures, :action => :search },
 					:before => "Element.show('spinner')",
 					:success => "Element.hide('spinner')" do -%>
            	Buscar

@@ -3,7 +3,7 @@
 	<%= link_to space.name, space, :class => "name" %>
 	<div class="badge_info">
 	<span class="quiet">Faculdades, Ensino Superior</span>
-	<span  class="quiet">Aulas: <%= space.courses.size() %> | Membros: <%= space.users.size() %> </span>
+	<span  class="quiet">Aulas: <%= space.lectures.size() %> | Membros: <%= space.users.size() %> </span>
 	</div>
 	<%  if current_user and current_user.can_manage? @space %>
 		<span><%= link_to "gerenciar", manage_space_path(space), :class => "icon more"%></span>

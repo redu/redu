@@ -21,10 +21,10 @@ class FavoritesController < BaseController
         end
       end
       format.html do
-        #@courses = Lecture.favorites_user_id_eq(current_user.id).descend_by_created_at
-        @courses = Lecture.paginate(:all,
+        #@lectures = Lecture.favorites_user_id_eq(current_user.id).descend_by_created_at
+        @lectures = Lecture.paginate(:all,
                                    :joins => :favorites,
-                                   :conditions => ["favorites.favoritable_type = 'Lecture' AND favorites.user_id = ? AND courses.id = favorites.favoritable_id", current_user.id],
+                                   :conditions => ["favorites.favoritable_type = 'Lecture' AND favorites.user_id = ? AND lectures.id = favorites.favoritable_id", current_user.id],
                                    :page => params[:page], :order => 'created_at DESC', :per_page => AppConfig.items_per_page)
 
 

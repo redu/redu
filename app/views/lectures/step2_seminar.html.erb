@@ -88,7 +88,7 @@
 <% form_for :seminar, @seminar, :url => { :action => "create" }, :html => { :multipart => true } do |f| %>
 <div class="grid_16">
 <%= f.error_messages %>
-<%# error_messages_for :course, :seminar %>
+<%# error_messages_for :lecture, :seminar %>
 </div>	
 <%= hidden_field_tag("step", "2", options = {})%>
 <%= hidden_field_tag("space_id", @space.id) if @space %>
@@ -140,13 +140,13 @@
 </div>	
 
 <div class="grid_16">
-<%# render :partial => 'attachment_form', :locals => {:f => f, :course => @seminar}%>
+<%# render :partial => 'attachment_form', :locals => {:f => f, :lecture => @seminar}%>
 
 
-<%= link_to '< Anterior', new_course_path(:step => '1'), :class => "button" %> 
+<%= link_to '< Anterior', new_lecture_path(:step => '1'), :class => "button" %> 
 <%= f.submit 'Próximo >', :class => "button" %> 
 
-<br><%= link_to 'Cancelar', cancel_courses_path, :confirm => "Tem certeza que deseja sair do editor de aulas?" %>
+<br><%= link_to 'Cancelar', cancel_lectures_path, :confirm => "Tem certeza que deseja sair do editor de aulas?" %>
 </div>
 
 <% end %>

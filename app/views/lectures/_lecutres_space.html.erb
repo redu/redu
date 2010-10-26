@@ -1,4 +1,4 @@
-<script>
+<script type="text/javascript">
 	function select(content) {
 		$('#content_list').html(' ');
 		$('.selected').removeClass('selected')
@@ -11,7 +11,7 @@
 <ul id="actions_user">
 				<%  if current_user.can_post? @space %>
 				   	 <li>
-				   	 	<%= link_to "Nova Aula", new_space_course_path(:space_id => @space.id) %>
+				   	 	<%= link_to "Nova Aula", new_space_lecture_path(:space_id => @space.id) %>
 					 </li>
 					 
 					 <li>
@@ -24,7 +24,7 @@
 <ul id="actions_user">
 				<%  if current_user.can_post? @space %>
 				   	 <li id="courses_sel" class="selected">
-				   	 	<%= link_to_remote "Aulas", :url => space_courses_path(:space_id => @space.id.to_s, :space_content => "true"), :method => :get, :loading => "select('courses')" %>
+				   	 	<%= link_to_remote "Aulas", :url => space_lectures_path(:space_id => @space.id.to_s, :space_content => "true"), :method => :get, :loading => "select('courses')" %>
 					 </li>
 					  <li id="subjects_sel">
 				   	 	<%= link_to "Cursos", "#" %>
@@ -44,12 +44,12 @@
 		<div id="course_list" >
 		-->
 		<div id="content_list" >
-	<%= render :partial => "course_list"%>
+	<%= render :partial => "lecture_list"%>
 	
 	
-	<% if @space.courses.size > 0 %>
+	<% if @space.lectures.size > 0 %>
 	<span style="margin: 10px;">
-	<%= link_to "Ver todas >", courses_path(:space_id => @space.id)%>
+	<%= link_to "Ver todas >", lectures_path(:space_id => @space.id)%>
 	</span>
 	<% end %>
 	

@@ -1,21 +1,21 @@
 class LectureSweeper < ActionController::Caching::Sweeper
   observe Lecture
 
-  def after_create(course)
-    expire_cache_for(course)
+  def after_create(lecture)
+    expire_cache_for(lecture)
   end
 
-  # If our sweeper detects that a course was updated call this
-  def after_update(course)
-    expire_cache_for(course)
+  # If our sweeper detects that a lecture was updated call this
+  def after_update(lecture)
+    expire_cache_for(lecture)
   end
 
-  def after_show(course)
-    expire_cache_for(course)
+  def after_show(lecture)
+    expire_cache_for(lecture)
   end
 
-  # If our sweeper detects that a course was deleted call this
-  def after_destroy(course)
-    expire_cache_for(course)
+  # If our sweeper detects that a lecture was deleted call this
+  def after_destroy(lecture)
+    expire_cache_for(lecture)
   end
 end

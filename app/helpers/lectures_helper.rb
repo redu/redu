@@ -43,8 +43,8 @@ module LecturesHelper
 #    link_to_function(name, h("add_fields(this, \"#{association}\", \"#{escape_javascript(fields)}\")"))
 #  end
 
-    def render_course
-      case @course.courseable_type
+    def render_lecture
+      case @lecture.lectureable_type
         when 'Seminar'
           render :partial => "seminar"
       when 'InteractiveClass'

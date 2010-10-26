@@ -2,10 +2,10 @@ class LectureSubject < ActiveRecord::Base
 	
 	# ASSOCIATIONS
   belongs_to :subject
-  belongs_to :courseable, :polymorphic => true
+  belongs_to :lectureable, :polymorphic => true
 
-  def destroy #destroi a aula clone associada a esse course_subject
-    self.courseable.destroy unless self.courseable.nil?
+  def destroy #destroi a aula clone associada a esse lecture_subject
+    self.lectureable.destroy unless self.lectureable.nil?
     super
   end
 end

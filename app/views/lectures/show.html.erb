@@ -136,33 +136,33 @@
 <div class="grid_16">
     <div id="breadcrumbs">
         <a href="<%=application_url%>">início</a>
-        > <a href="<%= courses_path %>">aulas</a>
-        > <a href="#"><%= @course.name %></a>
+        > <a href="<%= lectures_path %>">aulas</a>
+        > <a href="#"><%= @lecture.name %></a>
     </div>
     <!--
     <h3 class="call">Aula: </h3>
     -->
     <div id="item_video" class="clearfix">
         <div id="title_video">
-            <%= @course.name %>
+            <%= @lecture.name %>
         </div>
         <div class="admin_opts yellow">
-            <% if @course.owner == current_user %>
+            <% if @lecture.owner == current_user %>
 
             <%= link_to_function 'Editar', "alert('Opção indisponível nesta versão.')",  {:action => "edit"}, :class => "icon-edit" %>
 			 <% end %>
 			 
-			 <% if current_user.can_manage? @course and @space %>
-			| <%= link_to 'Remover da rede', remove_asset_space_path(:id => @space.id, :asset_id => @course.id, :asset_type => "Lecture"), {:confirm => "Você tem certeza que quer remover esta aula da rede?\n(Ela continuará no seu diretório de aulas)", :class => "icon-delete"} %>
+			 <% if current_user.can_manage? @lecture and @space %>
+			| <%= link_to 'Remover da rede', remove_asset_space_path(:id => @space.id, :asset_id => @lecture.id, :asset_type => "Lecture"), {:confirm => "Você tem certeza que quer remover esta aula da rede?\n(Ela continuará no seu diretório de aulas)", :class => "icon-delete"} %>
 			<% end %>
 			
 			<% if current_user.admin? %>
-			| <%= link_to 'Remover', @course, {:confirm => 'Você tem certeza que quer remover esta aula do Redu permanentemente?',
+			| <%= link_to 'Remover', @lecture, {:confirm => 'Você tem certeza que quer remover esta aula do Redu permanentemente?',
             :method => :delete, :class => "icon-delete"} %>
             
-				<% if @course.state.eql?("waiting") %>
-	            | <%= link_to 'Aprovar' , {:controller => :admin, :action => "approve", :id => @course.id}, :class => "icon-approve"%> |
-				  <%= link_to 'Rejeitar' , {:controller => :admin, :action => "disapprove", :id => @course.id}, :class => "icon-reject" %>
+				<% if @lecture.state.eql?("waiting") %>
+	            | <%= link_to 'Aprovar' , {:controller => :admin, :action => "approve", :id => @lecture.id}, :class => "icon-approve"%> |
+				  <%= link_to 'Rejeitar' , {:controller => :admin, :action => "disapprove", :id => @lecture.id}, :class => "icon-reject" %>
 	            <% end %>
 			<% end %>
         </div>
@@ -171,38 +171,38 @@
         <div id="identification1">
             <ul id="identification_resource1">
                 <li>
-                    <%= (@course.owner) ? link_to(@course.owner.display_name, user_path(@course.owner)) : "(usuário removido)" %>
+                    <%= (@lecture.owner) ? link_to(@lecture.owner.display_name, user_path(@lecture.owner)) : "(usuário removido)" %>
                 </li>
                 <li>
                     |
                 </li>
                 <li>
-                    <%= time_ago_in_words @course.created_at %>
+                    <%= time_ago_in_words @lecture.created_at %>
                 </li>
                 <li>
                     |
                 </li>
                 <li>
-                    Exibições(<%= @course.view_count %>)
+                    Exibições(<%= @lecture.view_count %>)
                 </li>
             </ul>
         </div>
         <div id="description_video">
-            <%= @course.description %>
+            <%= @lecture.description %>
         </div>
         <div id="identification1">
             <ul id="identification_resource1">
                 <li>
                     <strong>Categoria:</strong>
-                    <%=category_i18n(@course.simple_category.name) %>
+                    <%=category_i18n(@lecture.simple_category.name) %>
                 </li>
-                <% unless @course.tag_list.empty? %>
+                <% unless @lecture.tag_list.empty? %>
                 <li>
                     |
                 </li>
                 <li>
                     <strong>Tags:</strong>
-                    <%= @course.tag_list %>
+                    <%= @lecture.tag_list %>
                 </li>
                 <% end %>
             </ul>
@@ -210,7 +210,7 @@
     </div>
 </div>
 
-<%= render_course %>
+<%= render_lecture %>
 
 <div id="filter_bar_video" class="grid_16">
     <div id="actions_video">
@@ -254,7 +254,7 @@
                 |
             </li>
             <li>
-                <%= render :partial => "shared/favorite" , :locals => {:favoritable => @course} %>
+                <%= render :partial => "shared/favorite" , :locals => {:favoritable => @lecture} %>
             </li>
             <li>
                 |
@@ -265,7 +265,7 @@
         </ul>
     </div>
     <div id="rating_video">
-        <%= ratings_for @course %>
+        <%= ratings_for @lecture %>
     </div>
 </div>
 <!-- end bar -->
@@ -273,7 +273,7 @@
 <div class= "grid_10">
     <!-- COLUNA DA ESQUERDA  ## --><!-- ONLINE USERS -->
     <div>
-        <% cur_watching = @course.currently_watching %>
+        <% cur_watching = @lecture.currently_watching %>
         <% if cur_watching.length > 1 %>
         <div id="filter_bar_comments">
             <span class="title_filter">ASSISTINDO AGORA</span>
@@ -288,10 +288,10 @@
     <!-- FLOW -->
     <div style ="min-height: 250px;">
         <%= javascript_include_tag 'flow.js' %>
-        <%= render :partial => "statuses/create_status", :locals => {:status => @status, :statusable => @course } %>
+        <%= render :partial => "statuses/create_status", :locals => {:status => @status, :statusable => @lecture } %>
         <ul class="activities">
-            <% collection = @course.statuses.descend_by_created_at %>
-            <%= render :partial => "statuses/type_proxy", :collection => collection, :as => :status, :locals => {:statusable => @course } %>
+            <% collection = @lecture.statuses.descend_by_created_at %>
+            <%= render :partial => "statuses/type_proxy", :collection => collection, :as => :status, :locals => {:statusable => @lecture } %>
         </ul>
         <!-- end activities -->
     </div>

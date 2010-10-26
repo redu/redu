@@ -1,7 +1,7 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  course_id: 1
+  lecture_id: 1
   name: MyString
   media_file_name: MyString
   media_file_size: 1
@@ -9,7 +9,7 @@ one:
   media_updated_at: 2010-04-01 14:30:50
 
 two:
-  course_id: 1
+  lecture_id: 1
   name: MyString
   media_file_name: MyString
   media_file_size: 1

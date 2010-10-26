@@ -12,7 +12,7 @@
 		
 <div id="external_object_<%=child_index%>"> 
 <% @ext_obj = ExternalObject.new %>		
-<% remote_form_for @ext_obj, :url => { :controller => :courses, :action => :embed_content },
+<% remote_form_for @ext_obj, :url => { :controller => :lectures, :action => :embed_content },
 					:loading => "jQuery('#spinner').show()" do |f_remote|%>
 					
 		

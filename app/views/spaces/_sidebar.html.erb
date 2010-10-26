@@ -15,7 +15,7 @@
 			-->
 			<% if current_user.can_post?(@space)%>
       <li>
-      	<%= link_to "Criar aula", new_course_path(:space_id => @space.id)%>
+      	<%= link_to "Criar aula", new_lecture_path(:space_id => @space.id)%>
 				</li>
 			<li>
 				<%= link_to "Criar exame", new_exam_path(:space_id => @space.id)%>

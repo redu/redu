@@ -1,6 +1,6 @@
 <script type="text/javascript">
 	function selectAll(){
-	var checkboxes = document.getElementsByName("courses[]");
+	var checkboxes = document.getElementsByName("lectures[]");
 	for (var i =0; i< checkboxes.length; i++) {
 		checkboxes[i].checked = true;
 	}
@@ -8,7 +8,7 @@
 }
 
 function selectNone(){
-	var checkboxes = document.getElementsByName("courses[]");
+	var checkboxes = document.getElementsByName("lectures[]");
 	for (var i =0; i< checkboxes.length; i++) {
 		checkboxes[i].checked = false;
 	}
@@ -37,26 +37,26 @@ function selectNone(){
 					
     <div id="all_list">
     	
-		<% if @courses && @courses.size > 0 %>
+		<% if @lectures && @lectures.size > 0 %>
 		Selecionar <%=link_to_function 'Todos', 'selectAll()'%> | <%=link_to_function 'Nenhum', 'selectNone()'%> 
 		
-		 <% form_tag :action => :moderate_courses do %>
+		 <% form_tag :action => :moderate_lectures do %>
 			<table style="width: 100%; margin: 15px 10px 20px 10px;" class="common">
 				<tr>
 					<th></th><th>#ID</th><th>Aula</th><th>Autor</th><th>Data</th>
 				</tr>
-		 	<% for course in @courses %>
+		 	<% for lecture in @lectures %>
 				<tr>
 					<tr>
-						<td class="check"><%= check_box_tag 'courses[]', course.id, false,:id => "course_"+ course.id.to_s  %></td>
-						<td class="id"><%= course.id  %></td>
-						<td class="name"><%= link_to course.name, course_path(course), :target => "_blank" %> </td>
-						<% if course.owner %>
-                                                  <td><%= course.owner.display_name %> </td>
+						<td class="check"><%= check_box_tag 'lectures[]', lecture.id, false,:id => "lecture_"+ lecture.id.to_s  %></td>
+						<td class="id"><%= lecture.id  %></td>
+						<td class="name"><%= link_to lecture.name, lecture_path(lecture), :target => "_blank" %> </td>
+						<% if lecture.owner %>
+                                                  <td><%= lecture.owner.display_name %> </td>
                                                 <% else %>
                                                   <td> Aula sem dono </td>
                                                 <% end %>
-						<td><%= time_ago_in_words(course.updated_at) %> </td>
+						<td><%= time_ago_in_words(lecture.updated_at) %> </td>
 					</tr>
 				</tr>
  			<% end %>
@@ -71,7 +71,7 @@ function selectNone(){
 	
 	<div id="pagination" align="center" class="pagination">
 
-		<%= will_paginate  @courses, :params => {:sort_by => @sort_by}, :class => "pagination_number"  %>
+		<%= will_paginate  @lectures, :params => {:sort_by => @sort_by}, :class => "pagination_number"  %>
 		
     </div>
 

@@ -69,7 +69,7 @@ class Seminar < ActiveRecord::Base
   validates_attachment_size :original,
     :less_than => 100.megabytes
 
-  has_one :course, :as => :courseable
+  has_one :lecture, :as => :lectureable
   has_many :lesson, :as => :lesson
 
   # Maquina de estados do processo de conversão
@@ -94,26 +94,26 @@ class Seminar < ActiveRecord::Base
   end
 
   def import_redu_seminar(url)
-    course_id = url.scan(/aulas\/([0-9]*)/)
+    lecture_id = url.scan(/aulas\/([0-9]*)/)
 
-    unless course_id.empty?
-      @source = Lecture.find(course_id[0][0])
+    unless lecture_id.empty?
+      @source = Lecture.find(lecture_id[0][0])
       # copia (se upload ou youtube)
       @source.is_clone = true #TODO evitar que sejam removido
     end
 
     if @source and @source.public
-      if @source.courseable_type == 'Seminar'
-        if @source.courseable.external_resource_type.eql?('youtube')
+      if @source.lectureable_type == 'Seminar'
+        if @source.lectureable.external_resource_type.eql?('youtube')
           self.external_resource_type = 'youtube'
-          self.external_resource = 'http://www.youtube.com/watch?v=' + @source.courseable.external_resource
+          self.external_resource = 'http://www.youtube.com/watch?v=' + @source.lectureable.external_resource
           return [true, ""]
-        elsif @source.courseable.external_resource_type.eql?('upload')
+        elsif @source.lectureable.external_resource_type.eql?('upload')
           self.external_resource_type = 'upload' # melhor ficar 'redu'?
-          self.media_file_name = @source.courseable.media_file_name
-          self.media_content_type = @source.courseable.media_content_type
-          self.media_file_size = @source.courseable.media_file_size
-          self.media_updated_at = @source.courseable.media_updated_at
+          self.media_file_name = @source.lectureable.media_file_name
+          self.media_content_type = @source.lectureable.media_content_type
+          self.media_file_size = @source.lectureable.media_file_size
+          self.media_updated_at = @source.lectureable.media_updated_at
           return [true, ""]
         end
 

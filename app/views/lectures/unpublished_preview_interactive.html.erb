@@ -122,19 +122,19 @@ function decreaseFontSize(){
         </div>
         <div id="item_video" class="clearfix">
             <div id="title_video">
-                <%= @course.name %>
-				<% if @course.can_be_deleted_by(current_user) %>
+                <%= @lecture.name %>
+				<% if @lecture.can_be_deleted_by(current_user) %>
                 	<%= link_to 'Editar', {:action => "edit"}, :class => "button icon-edit" %>
-					<%= link_to 'Remover', @course, {:confirm => 'Você tem certeza que quer remover esta aula permanentemente?', :method => :delete, :class => "button icon-delete"} %>
+					<%= link_to 'Remover', @lecture, {:confirm => 'Você tem certeza que quer remover esta aula permanentemente?', :method => :delete, :class => "button icon-delete"} %>
 				<% end %>	
-				<% if current_user and not current_user.has_access_to_course(@course) and not @course.external_resource_type.eql?('youtube') %>
-					<%= link_to "Comprar", { :action => :buy, :id => @course.id }, :class => "button icon-buy"%>
+				<% if current_user and not current_user.has_access_to_lecture(@lecture) and not @lecture.external_resource_type.eql?('youtube') %>
+					<%= link_to "Comprar", { :action => :buy, :id => @lecture.id }, :class => "button icon-buy"%>
 				<% end %>
 				
 				
-                <% if current_user.admin? and @course.state.eql?("waiting") %>
-	                <%= link_to 'Aprovar' , {:action => "approve", :id => @course.id} %> |
-	                <%= link_to 'Rejeitar' , {:action => "disapprove", :id => @course.id} %>
+                <% if current_user.admin? and @lecture.state.eql?("waiting") %>
+	                <%= link_to 'Aprovar' , {:action => "approve", :id => @lecture.id} %> |
+	                <%= link_to 'Rejeitar' , {:action => "disapprove", :id => @lecture.id} %>
                 <% end %>
             </div>
             <!--	<div id="title_video"><a href="#">História - Revolução Francesa</a></div>    -->
@@ -145,24 +145,24 @@ function decreaseFontSize(){
             <div id="identification1">
                 <ul id="identification_resource1">
                     <li>
-                        <%= link_to @course.owner.display_name, user_path(@course.owner) %>
+                        <%= link_to @lecture.owner.display_name, user_path(@lecture.owner) %>
                     </li>
                     <li>
                         |
                     </li>
                     <li>
-                        <%= time_ago_in_words @course.created_at %>
+                        <%= time_ago_in_words @lecture.created_at %>
                     </li>
                     <li>
                         |
                     </li>
                     <li>
-                        Exibições(<%= @course.view_count %>)
+                        Exibições(<%= @lecture.view_count %>)
                     </li>
                 </ul>
             </div>
             <div id="description_video">
-                <%= @course.description %>
+                <%= @lecture.description %>
             </div>
             <div id="identification1">
                 <ul id="identification_resource1">
@@ -175,7 +175,7 @@ function decreaseFontSize(){
                     </li>
                     <li>
                         <strong>Tags:</strong>
-                        <%= @course.tag_list %>
+                        <%= @lecture.tag_list %>
                     </li>
                 </ul>
             </div>
@@ -188,7 +188,7 @@ function decreaseFontSize(){
 			
 			<div id="topic_bar">
 				<div id="topic_list">
-					<% @course.courseable.lessons.each_with_index do |lesson, x| %>
+					<% @lecture.lectureable.lessons.each_with_index do |lesson, x| %>
 					
 						<a href="#" onclick="selectTopic(<%=x%>); return false;" id="topic_item_<%=x%>" class="topic_item<%= (x == 0) ? ' topic_item_sel' : ''%>" title="<%=lesson.title%>">
 		  				
@@ -208,7 +208,7 @@ function decreaseFontSize(){
 				<%= link_to_function((image_tag 'icons/icon_fontSizeDown.gif', :title => 'Diminuir fonte', :border => 0), "decreaseFontSize();")%>
 				<%= image_tag 'icons/fullscreen.gif', :title => 'Tela cheia'%>
 			 	</div>
-			 	<%# @course.interactive_class.lessons.sort(|a,b| a<b).each_with_index do |l, x| %>
+			 	<%# @lecture.interactive_class.lessons.sort(|a,b| a<b).each_with_index do |l, x| %>
 				<% @lessons.each_with_index do |l, x| %>
 				<div id="topic_body_<%=x%>" style="display: <%= (x == 0) ? 'block' : 'none'%>; background: white;">
 					<div id="topic_body_text" style="padding: 0 15px 15px 15px; min-height:360px;">
@@ -217,7 +217,7 @@ function decreaseFontSize(){
 					<% if l.lesson_type == 'Page'%>
 					<%= l.lesson.body %>
 					<% elsif l.lesson_type == 'Seminar' %>
-						<%= render :partial => "courses/player", :locals => {:course => l.lesson, :is_interactive_class => true} %>
+						<%= render :partial => "lectures/player", :locals => {:lecture => l.lesson, :is_interactive_class => true} %>
 					<% elsif l.lesson_type == 'ExternalObject'%>
 					<%= l.lesson.html_embed %>
 					<% end %>

@@ -24,7 +24,7 @@ class AdminController < BaseController
 
     for space in @removed_spaces # TODO fazer um remove all?
       UserNotifier.deliver_remove_space(space) # TODO fazer isso em batch
-      #course.destroy #TODO fazer isso automaticamente após 30 dias
+      #lecture.destroy #TODO fazer isso automaticamente após 30 dias
     end
     flash[:notice] = 'Redes moderadas!'
     redirect_to admin_moderate_spaces_path
@@ -37,7 +37,7 @@ class AdminController < BaseController
 
     for exam in @removed_exams # TODO fazer um remove all?
       UserNotifier.deliver_remove_exam(exam) # TODO fazer isso em batch
-      #course.destroy #TODO fazer isso automaticamente após 30 dias
+      #lecture.destroy #TODO fazer isso automaticamente após 30 dias
     end
     flash[:notice] = 'Exames moderados!'
     redirect_to admin_moderate_exams_path
@@ -54,7 +54,7 @@ class AdminController < BaseController
       for user in @removed_users # TODO fazer um remove all?
         user.destroy
         UserNotifier.deliver_remove_user(user) # TODO fazer isso em batch
-        #course.destroy #TODO fazer isso automaticamente após 30 dias
+        #lecture.destroy #TODO fazer isso automaticamente após 30 dias
       end
     when '1' # moderate roles
       User.update_all(["role_id = ?", params[:role_id]], [:id => params[:users].join(', ')]) if params[:role_id]
@@ -64,22 +64,22 @@ class AdminController < BaseController
     redirect_to admin_moderate_users_path
   end
 
-  def moderate_courses
-    @removed_courses = Lecture.all(:conditions => ["id IN (?)", params[:courses]]) #unless params[:courses].empty?
+  def moderate_lectures
+    @removed_lectures = Lecture.all(:conditions => ["id IN (?)", params[:lectures]]) #unless params[:lectures].empty?
 
-    Lecture.update_all("removed = 1", ["id IN (?)", params[:courses]])
+    Lecture.update_all("removed = 1", ["id IN (?)", params[:lectures]])
 
-    for course in @removed_courses
-      UserNotifier.deliver_remove_course(course) # TODO fazer isso em batch
-      #course.destroy #TODO fazer isso automaticamente após 30 dias
+    for lecture in @removed_lectures
+      UserNotifier.deliver_remove_lecture(lecture) # TODO fazer isso em batch
+      #lecture.destroy #TODO fazer isso automaticamente após 30 dias
     end
     flash[:notice] = 'Aulas removidas!'
-    redirect_to admin_moderate_courses_path
+    redirect_to admin_moderate_lectures_path
   end
 
   def moderate_submissions
-    approved = params[:course].reject{|k,v| v == 'reject'}
-    rejected = params[:course].reject{|k,v| v == 'approve'}
+    approved = params[:lecture].reject{|k,v| v == 'reject'}
+    rejected = params[:lecture].reject{|k,v| v == 'approve'}
 
     Lecture.update_all("state = 'approved'", :id => approved.keys)
     Lecture.update_all("state = 'rejected'", :id => rejected.keys)
@@ -89,24 +89,24 @@ class AdminController < BaseController
   end
 
   def approve
-    @course = Lecture.find(params[:id])
-    @course.approve!
+    @lecture = Lecture.find(params[:id])
+    @lecture.approve!
 
     flash[:notice] = 'A aula foi aprovada!'
-    redirect_to @course
+    redirect_to @lecture
   end
 
   def disapprove
-    @course = Lecture.find(params[:id])
-    @course.reject!
+    @lecture = Lecture.find(params[:id])
+    @lecture.reject!
     flash[:notice] = 'A aula foi rejeitada!'
-    redirect_to @course
+    redirect_to @lecture
   end
 
   # LISTAGENS
   # lista pendendes para MODERAÇÃO da administração do Redu
   def submissions
-    @courses = Lecture.paginate(:conditions => ["public = 1 AND published = 1 AND state LIKE 'waiting'"],
+    @lectures = Lecture.paginate(:conditions => ["public = 1 AND published = 1 AND state LIKE 'waiting'"],
                                :include => :owner,
                                :page => params[:page],
                                :order => 'updated_at ASC',
@@ -117,8 +117,8 @@ class AdminController < BaseController
     end
   end
 
-  def courses
-    @courses = Lecture.paginate(:conditions => ["public = 1 AND published = 1 AND removed = 0"],
+  def lectures
+    @lectures = Lecture.paginate(:conditions => ["public = 1 AND published = 1 AND removed = 0"],
                                :include => :owner,
                                :page => params[:page],
                                :order => 'created_at DESC',

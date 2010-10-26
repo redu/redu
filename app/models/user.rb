@@ -54,7 +54,7 @@ class User < ActiveRecord::Base
   validates_acceptance_of :tos, :message => "Você precisa aceitar os Termos de Uso"
 
   # ASSOCIATIONS
-  has_many :annotations, :dependent => :destroy, :include=> :course
+  has_many :annotations, :dependent => :destroy, :include=> :lecture
   has_one :beta_key, :dependent => :destroy
   has_many :user_space_association, :dependent => :destroy
   has_many :spaces, :through => :user_space_association
@@ -66,7 +66,7 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :followers, :class_name => "User", :join_table => "followship", :association_foreign_key => "followed_by_id", :foreign_key => "follows_id", :uniq => true
 
   #COURSES
-  has_many :courses, :foreign_key => "owner", :conditions => {:is_clone => false}
+  has_many :lectures, :foreign_key => "owner", :conditions => {:is_clone => false}
   has_many :acquisitions, :as => :acquired_by
 
   has_many :credits
@@ -255,8 +255,8 @@ class User < ActiveRecord::Base
     end
 
     #TODO
-    #    @acq = Acquisition.find(:first, :conditions => ['acquired_by_id = ? AND course_id = ?', self.id, course.id])
-    #    !@acq.nil? or course.owner == self
+    #    @acq = Acquisition.find(:first, :conditions => ['acquired_by_id = ? AND lecture_id = ?', self.id, lecture.id])
+    #    !@acq.nil? or lecture.owner == self
 
   end
 
@@ -588,10 +588,10 @@ class User < ActiveRecord::Base
     @favorites = Favorite.find(:all, :conditions => ["user_id = ?", self.id], :order => 'created_at DESC')
   end
 
-  def has_credits_for_course(course)
-    # @course_price = LecturePrice.find(:first, :conditions => ['course_id = ?', course.id]).price.to_f
+  def has_credits_for_lecture(lecture)
+    # @lecture_price = LecturePrice.find(:first, :conditions => ['lecture_id = ?', lecture.id]).price.to_f
     @user_credit = Credit.total(self.id).to_f - Acquisition.total(self.id).to_f
-    (@user_credit >= course.price)
+    (@user_credit >= lecture.price)
   end
 
   protected

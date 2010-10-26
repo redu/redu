@@ -28,32 +28,32 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>course_name</td>
+	<td>lecture_name</td>
 	<td>Minha nova aula</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>course_description</td>
+	<td>lecture_description</td>
 	<td>Um teste de aula criado pelo Selenium IDE.</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>course_tag_list</td>
+	<td>lecture_tag_list</td>
 	<td>minhas, tags,</td>
 </tr>
 <tr>
 	<td>select</td>
-	<td>course_simple_category_id</td>
+	<td>lecture_simple_category_id</td>
 	<td>label=Sociedade / História / Política</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>course_courseable_type_seminar</td>
+	<td>lecture_lectureable_type_seminar</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>course_submit</td>
+	<td>lecture_submit</td>
 	<td></td>
 </tr>
 <tr>

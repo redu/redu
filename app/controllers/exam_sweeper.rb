@@ -17,7 +17,7 @@ class ExamSweeper < ActionController::Caching::Sweeper
 
   #  def expire_cache_for(record)
   #    # Expire the footer content
-  #    expire_action :controller => 'courses', :action => 'show', :id => record.course_id
+  #    expire_action :controller => 'lectures', :action => 'show', :id => record.lecture_id
   #  end  
 
 end

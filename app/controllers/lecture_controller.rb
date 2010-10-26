@@ -8,11 +8,11 @@ class LecturesController < BaseController
   after_filter :create_activity, :only => [:create]
 
   def verify_access
-    @course = Lecture.find(params[:id])
-    unless current_user.has_access_to @course
+    @lecture = Lecture.find(params[:id])
+    unless current_user.has_access_to @lecture
       flash[:notice] = "Você não tem acesso a esta aula"
-      #redirect_back_or_default courses_path
-      redirect_to courses_path
+      #redirect_back_or_default lectures_path
+      redirect_to lectures_path
     end
   end
 
@@ -89,12 +89,12 @@ class LecturesController < BaseController
   end
 
   def rate
-    @course = Lecture.find(params[:id])
-    @course.rate(params[:stars], current_user, params[:dimension])
-    id = "ajaxful-rating-#{!params[:dimension].blank? ? "#{params[:dimension]}-" : ''}course-#{@course.id}"
+    @lecture = Lecture.find(params[:id])
+    @lecture.rate(params[:stars], current_user, params[:dimension])
+    id = "ajaxful-rating-#{!params[:dimension].blank? ? "#{params[:dimension]}-" : ''}course-#{@lecture.id}"
 
     render :update do |page|
-      page.replace_html  @course.wrapper_dom_id(params), ratings_for(@course, params.merge(:wrap => false))
+      page.replace_html  @lecture.wrapper_dom_id(params), ratings_for(@lecture, params.merge(:wrap => false))
     end
   end
 
@@ -105,12 +105,12 @@ class LecturesController < BaseController
     render :nothing => true
   end
 
-  # GET /courses
-  # GET /courses.xml
+  # GET /lectures
+  # GET /lectures.xml
   def index
     cond = Caboose::EZ::Condition.new
     cond.append ["simple_category_id = ?", params[:category]] if params[:category]
-    cond.append ["courseable_type = ?", params[:type]] if params[:type]
+    cond.append ["lectureable_type = ?", params[:type]] if params[:type]
     cond.append ["is_clone = false"]
 
     paginating_params = {
@@ -123,39 +123,39 @@ class LecturesController < BaseController
     if params[:user_id] # aulas do usuario
       @user = User.find_by_login(params[:user_id])
       @user = User.find(params[:user_id]) unless @user
-      @courses = @user.courses.paginate(paginating_params)
-      render((@user == current_user) ? "user_courses_private" :  "user_courses_public")
+      @lectures = @user.lectures.paginate(paginating_params)
+      render((@user == current_user) ? "user_lectures_private" :  "user_lectures_public")
       return
 
     elsif params[:space_id] # aulas da escola
       @space = Space.find(params[:space_id])
       if params[:search] # search aulas da escola
-        @courses = @space.courses.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
+        @lectures = @space.lectures.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
       else
-        @courses = @space.courses.paginate(paginating_params)
+        @lectures = @space.lectures.paginate(paginating_params)
       end
     else # index (Lecture)
       if params[:search] # search
-        @courses = Lecture.published.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
+        @lectures = Lecture.published.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
       else
-        @courses = Lecture.published.paginate(paginating_params)
+        @lectures = Lecture.published.paginate(paginating_params)
       end
     end
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @courses }
+      format.xml  { render :xml => @lectures }
 
       format.js  do
         if params[:space_content]
 
           render :update do |page|
-            page.replace_html  'content_list', :partial => 'course_list'
+            page.replace_html  'content_list', :partial => 'lecture_list'
             page << "$('#spinner').hide()"
           end
         elsif params[:tab]
           render :update do |page|
-            page.replace_html  'tabs-2-content', :partial => 'courses_space'
+            page.replace_html  'tabs-2-content', :partial => 'lectures_space'
           end
         else
           render :index
@@ -164,52 +164,52 @@ class LecturesController < BaseController
     end
   end
 
-  # GET /courses/1
-  # GET /courses/1.xml
+  # GET /lectures/1
+  # GET /lectures/1.xml
   def show
     @space = Space.find(params[:space_id]) if params[:space_id]
-    update_view_count(@course)
+    update_view_count(@lecture)
 
-    if @course.removed
+    if @lecture.removed
       redirect_to removed_page_path and return
     end
 
     # anotações
-    @annotation = @course.has_annotations_by(current_user)
+    @annotation = @lecture.has_annotations_by(current_user)
     @annotation = Annotation.new unless @annotation
 
     #relacionados
-    related_name = @course.name
-    @related_courses = Lecture.find(:all,:conditions => ["name LIKE ? AND id NOT LIKE ?","%#{related_name}%", @course.id] , :limit => 3, :order => 'rating_average DESC')
+    related_name = @lecture.name
+    @related_lectures = Lecture.find(:all,:conditions => ["name LIKE ? AND id NOT LIKE ?","%#{related_name}%", @lecture.id] , :limit => 3, :order => 'rating_average DESC')
 
     @status = Status.new
 
     respond_to do |format|
-      if @course.courseable_type == 'Page'
-      elsif @course.courseable_type == 'InteractiveClass'
-        @lessons = Lesson.all(:conditions => ['interactive_class_id = ?',@course.courseable_id ], :order => 'position ASC') # TODO 2 consultas?
-      elsif @course.courseable_type == 'Seminar'
-        #@seminar = @course.courseable
+      if @lecture.lectureable_type == 'Page'
+      elsif @lecture.lectureable_type == 'InteractiveClass'
+        @lessons = Lesson.all(:conditions => ['interactive_class_id = ?',@lecture.lectureable_id ], :order => 'position ASC') # TODO 2 consultas?
+      elsif @lecture.lectureable_type == 'Seminar'
+        #@seminar = @lecture.lectureable
       end
 
       format.html
-      format.xml  { render :xml => @course }
+      format.xml  { render :xml => @lecture }
     end
 
   end
 
   def view
-    @course = Lecture.find(params[:id])
-    @comments  = @course.comments.find(:all, :limit => 10, :order => 'created_at DESC')
+    @lecture = Lecture.find(params[:id])
+    @comments  = @lecture.comments.find(:all, :limit => 10, :order => 'created_at DESC')
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @course }
+      format.xml  { render :xml => @lecture }
     end
   end
 
-  # GET /courses/new
-  # GET /courses/new.xml
+  # GET /lectures/new
+  # GET /lectures/new.xml
   def new
     if params[:space_id]
       @space = Space.find(params[:space_id])
@@ -218,73 +218,73 @@ class LecturesController < BaseController
     case params[:step]
     when "2"
 
-      @course = Lecture.find(session[:course_id])
+      @lecture = Lecture.find(session[:lecture_id])
 
-      unless @course #curso não foi encontrado ou nao está mais na sessão
-        redirect_to new_course_path :space_id => params[:space_id]
+      unless @lecture #curso não foi encontrado ou nao está mais na sessão
+        redirect_to new_lecture_path :space_id => params[:space_id]
       end
 
-      if @course.courseable_type == 'Seminar'
+      if @lecture.lectureable_type == 'Seminar'
         @seminar = Seminar.new
 
         render "step2_seminar" and return
-      elsif @course.courseable_type == 'InteractiveClass'
+      elsif @lecture.lectureable_type == 'InteractiveClass'
         @interactive_class = InteractiveClass.new
         render "step2_interactive" and return
-      elsif @course.courseable_type == 'Page'
+      elsif @lecture.lectureable_type == 'Page'
         @page = Page.new
         render "step2_page" and return
       end
     when "3"
-      @course = Lecture.find(session[:course_id])
+      @lecture = Lecture.find(session[:lecture_id])
       @spaces = current_user.spaces
 
-      @course.enable_validation_group :step3
+      @lecture.enable_validation_group :step3
       render "step3" and return
     else # 1
-      if session[:course_id]
-        @course = Lecture.find(session[:course_id])
+      if session[:lecture_id]
+        @lecture = Lecture.find(session[:lecture_id])
       else
-        @course = Lecture.new
+        @lecture = Lecture.new
       end
 
-      @course.enable_validation_group :step1
+      @lecture.enable_validation_group :step1
       render "step1" and return
     end
   end
 
-  # GET /courses/1/edit
+  # GET /lectures/1/edit
   def edit
-    @course = Lecture.find(params[:id])
+    @lecture = Lecture.find(params[:id])
 
     respond_to do |format|
-      if @course.courseable_type == 'Page'
+      if @lecture.lectureable_type == 'Page'
         format.html {render 'edit_page'}
-      elsif @course.courseable_type == 'InteractiveClass'
-        @interactive_class = @course.courseable
+      elsif @lecture.lectureable_type == 'InteractiveClass'
+        @interactive_class = @lecture.lectureable
         format.html {render 'edit_interactive'}
       else # TODO colocar type == seminar / estamos considerando que o resto é seminário
         format.html {render 'edit_seminar'}
       end
 
-      format.xml  { render :xml => @course }
+      format.xml  { render :xml => @lecture }
     end
   end
 
-  # POST /courses
-  # POST /courses.xml
+  # POST /lectures
+  # POST /lectures.xml
   def create
     #TODO diminuir a lógica desse método, está muito GRANDE
     case params[:step]
     when "1"
-      @course = Lecture.new(params[:course])
-      @course.owner = current_user
-      @course.enable_validation_group :step1
+      @lecture = Lecture.new(params[:lecture])
+      @lecture.owner = current_user
+      @lecture.enable_validation_group :step1
 
       respond_to do |format|
-        if @course.save
+        if @lecture.save
 
-          session[:course_id] = @course.id
+          session[:lecture_id] = @lecture.id
 
           format.html {
             redirect_to :action => :new, :step => "2", :space_id => params[:space_id]
@@ -296,19 +296,19 @@ class LecturesController < BaseController
       end
 
     when "2"
-      @course = Lecture.find(session[:course_id])
-      @course.enable_validation_group :step2
+      @lecture = Lecture.find(session[:lecture_id])
+      @lecture.enable_validation_group :step2
 
       @res = []
       if params[:seminar] and  params[:seminar][:attachment]
         params[:seminar][:attachment].each do |a|
-          @res = LectureResource.create(:attachment => a, :attachable => @course)
+          @res = LectureResource.create(:attachment => a, :attachable => @lecture)
         end
       end
 
-      if @course.courseable_type == 'Seminar'
+      if @lecture.lectureable_type == 'Seminar'
         @seminar = Seminar.new(params[:seminar])
-        @course.courseable = @seminar
+        @lecture.lectureable = @seminar
 
         # importar video do Redu atraves de url
         @success = @seminar.import_redu_seminar(@seminar.external_resource) if @seminar.external_resource_type.eql?('redu')
@@ -318,15 +318,15 @@ class LecturesController < BaseController
             flash[:error] = @success[1]
             format.html { render("step2_seminar")  }
           else
-            if @course.save
+            if @lecture.save
 
               format.html do
-                redirect_to :action => :new , :course_type => params[:courseable_type], :step => "3", :space_id => params[:space_id]
+                redirect_to :action => :new , :lecture_type => params[:lectureable_type], :step => "3", :space_id => params[:space_id]
               end
 
               format.js do
                 render :update do |page|
-                  page << "window.location.replace('#{ url_for :action => :new , :course_type => params[:courseable_type], :step => "3", :space_id => params[:space_id] }')"
+                  page << "window.location.replace('#{ url_for :action => :new , :lecture_type => params[:lectureable_type], :step => "3", :space_id => params[:space_id] }')"
                   page << "$('.errorMessageField').remove()"
                 end
               end
@@ -343,16 +343,16 @@ class LecturesController < BaseController
           end
         end
 
-      elsif @course.courseable_type == 'InteractiveClass'
-        #Lecture.find(session[:course_id]).courseable
-        @course.courseable = InteractiveClass.new(params[:interactive_class])
+      elsif @lecture.lectureable_type == 'InteractiveClass'
+        #Lecture.find(session[:lecture_id]).lectureable
+        @lecture.lectureable = InteractiveClass.new(params[:interactive_class])
 
         respond_to do |format|
 
-          if @course.save
+          if @lecture.save
 
             format.html do
-              redirect_to :action => :new , :course_type => params[:courseable_type], :step => "3", :space_id => params[:space_id]
+              redirect_to :action => :new , :lecture_type => params[:lectureable_type], :step => "3", :space_id => params[:space_id]
             end
             format.js do
               render :update do |page|
@@ -371,16 +371,16 @@ class LecturesController < BaseController
           end
         end
 
-      elsif @course.courseable_type == 'Page'
+      elsif @lecture.lectureable_type == 'Page'
 
-        @course.courseable =  Page.new(params[:page])
+        @lecture.lectureable =  Page.new(params[:page])
 
         respond_to do |format|
 
-          if @course.save
+          if @lecture.save
 
             format.html {
-              redirect_to :action => :new , :courseable_type => params[:courseable_type], :step => "3", :space_id => params[:space_id]
+              redirect_to :action => :new , :lectureable_type => params[:lectureable_type], :step => "3", :space_id => params[:space_id]
             }
           else
             format.html { render "step2_page" }
@@ -390,76 +390,76 @@ class LecturesController < BaseController
       end
 
     when "3"
-      @course = Lecture.find(session[:course_id])
+      @lecture = Lecture.find(session[:lecture_id])
       @submited_to_space = false
       if params[:post_to]
-        SpaceAsset.create({:asset_type => "Lecture", :asset_id => @course.id, :space_id => params[:post_to].to_i})
+        SpaceAsset.create({:asset_type => "Lecture", :asset_id => @lecture.id, :space_id => params[:post_to].to_i})
         @space = Space.find(params[:post_to])
       end
 
-      @course.published = true # se o usuário completou os 3 passos então o curso está publicado
+      @lecture.published = true # se o usuário completou os 3 passos então o curso está publicado
 
       # Enfileirando video para conversão
-      if @course.courseable_type.eql?('Seminar')
-        if @course.courseable.need_transcoding?
-          @course.courseable.convert!
+      if @lecture.lectureable_type.eql?('Seminar')
+        if @lecture.lectureable.need_transcoding?
+          @lecture.lectureable.convert!
         else
-          @course.courseable.ready!
+          @lecture.lectureable.ready!
         end
       end
 
       if @space
         if @space.submission_type = 1 # todos podem postar
-          params[:course][:state] = "approved"
+          params[:lecture][:state] = "approved"
         elsif @space.submission_type = 2 # todos com moderação
-          params[:course][:state] = "waiting"
+          params[:lecture][:state] = "waiting"
         elsif @space.submission_type = 3 # apenas professores
           if current_user.can_post @space
-            params[:course][:state] = "rejected"
+            params[:lecture][:state] = "rejected"
           else
-            params[:course][:state] = "approved"
+            params[:lecture][:state] = "approved"
           end
         else
-          params[:course][:state] = "approved"
+          params[:lecture][:state] = "approved"
         end
       else #publico
-        params[:course][:state] = "waiting"
+        params[:lecture][:state] = "waiting"
       end
 
       respond_to do |format|
 
-        if @course.update_attributes(params[:course])
+        if @lecture.update_attributes(params[:lecture])
           # remover curso da sessao
-          session[:course_id] = nil
-          if @course.courseable_type == 'Seminar' or  @course.courseable_type == 'InteractiveClass'
+          session[:lecture_id] = nil
+          if @lecture.lectureable_type == 'Seminar' or  @lecture.lectureable_type == 'InteractiveClass'
 
             format.html do
               if @space
                 if @space.submission_type = 1 # todos podem postar
                   #mostra aulas da escola
                   flash[:notice] = 'Aula foi criada com sucesso e está disponível na rede.'
-                  redirect_to space_courses_path(:space_id => params[:post_to].to_i, :id => @course.id)
+                  redirect_to space_lectures_path(:space_id => params[:post_to].to_i, :id => @lecture.id)
 
                 elsif @space.submission_type = 2 # todos com moderação
                   flash[:notice] = 'Aula foi criada com sucesso e está em processo de moderação.'
-                  redirect_to waiting_user_courses_path(current_user.id)
+                  redirect_to waiting_user_lectures_path(current_user.id)
                 elsif @space.submission_type = 3 # apenas professores
                   flash[:notice] = 'Aula não pode ser publicada nessa escola pois apenas professores podem postar.'
-                  redirect_to @course
+                  redirect_to @lecture
                 else
-                  redirect_to space_course_path(:space_id => params[:post_to].to_i, :id => @course.id)
+                  redirect_to space_lecture_path(:space_id => params[:post_to].to_i, :id => @lecture.id)
                 end
 
 
               else
                 flash[:notice] = 'Aula foi criada com sucesso e está em processo de moderação.'
-                redirect_to waiting_user_courses_path(current_user.id)
+                redirect_to waiting_user_lectures_path(current_user.id)
               end
             end
           else
             flash[:notice] = 'Aula foi criada com sucesso!'
             format.html do
-              redirect_to(@course)
+              redirect_to(@lecture)
             end
           end
         else
@@ -471,62 +471,62 @@ class LecturesController < BaseController
   end
 
   def unpublished_preview
-    @course = Lecture.find(session[:course_id])
-    @lessons = Lesson.all(:conditions => ['interactive_class_id = ?',@course.courseable_id ], :order => 'position ASC')
+    @lecture = Lecture.find(session[:lecture_id])
+    @lessons = Lesson.all(:conditions => ['interactive_class_id = ?',@lecture.lectureable_id ], :order => 'position ASC')
     respond_to do |format|
       format.html {render 'unpublished_preview_interactive'}
     end
   end
 
   def cancel
-    if session[:course_id]
-      course = Lecture.find(session[:course_id])
-      course.destroy if course
-      session[:course_id] = nil
+    if session[:lecture_id]
+      lecture = Lecture.find(session[:lecture_id])
+      lecture.destroy if lecture
+      session[:lecture_id] = nil
     end
 
     flash[:notice] = "Criação de aula cancelada."
-    redirect_to courses_path
+    redirect_to lectures_path
   end
 
-  # PUT /courses/1
-  # PUT /courses/1.xml
+  # PUT /lectures/1
+  # PUT /lectures/1.xml
   def update
 
-    @course = Lecture.find(params[:id])
+    @lecture = Lecture.find(params[:id])
 
-    if @course.courseable_type == 'InteractiveClass'
-      @interactive_class = @course.interactive_class
+    if @lecture.lectureable_type == 'InteractiveClass'
+      @interactive_class = @lecture.interactive_class
       respond_to do |format|
         if @interactive_class.update_attributes(params[:interactive_class])
           flash[:notice] = 'Curso atualizado com sucesso.'
-          format.html { redirect_to(@course) }
+          format.html { redirect_to(@lecture) }
           format.xml  { head :ok }
         else
           format.html { render :action => "edit_interactive" }
-          format.xml  { render :xml => @course.errors, :status => :unprocessable_entity }
+          format.xml  { render :xml => @lecture.errors, :status => :unprocessable_entity }
         end
       end
-    elsif @course.courseable_type == 'Page'
+    elsif @lecture.lectureable_type == 'Page'
       respond_to do |format|
-        if @course.update_attributes(params[:course])
+        if @lecture.update_attributes(params[:lecture])
           flash[:notice] = 'Curso atualizado com sucesso.'
-          format.html { redirect_to(@course) }
+          format.html { redirect_to(@lecture) }
           format.xml  { head :ok }
         else
           format.html { render :action => "edit_page" }
-          format.xml  { render :xml => @course.errors, :status => :unprocessable_entity }
+          format.xml  { render :xml => @lecture.errors, :status => :unprocessable_entity }
         end
       end
     else # seminar
       respond_to do |format|
-        if @course.update_attributes(params[:course])
+        if @lecture.update_attributes(params[:lecture])
           flash[:notice] = 'Curso atualizado com sucesso.'
-          format.html { redirect_to(@course) }
+          format.html { redirect_to(@lecture) }
           format.xml  { head :ok }
         else
           format.html { render :action => "edit_seminar" }
-          format.xml  { render :xml => @course.errors, :status => :unprocessable_entity }
+          format.xml  { render :xml => @lecture.errors, :status => :unprocessable_entity }
         end
       end
 
@@ -534,51 +534,51 @@ class LecturesController < BaseController
 
   end
 
-  # DELETE /courses/1
-  # DELETE /courses/1.xml
+  # DELETE /lectures/1
+  # DELETE /lectures/1.xml
   def destroy
-    @course = Lecture.find(params[:id])
-    @course.destroy
+    @lecture = Lecture.find(params[:id])
+    @lecture.destroy
     flash[:notice] = 'A aula foi removida'
 
     respond_to do |format|
-      format.html { redirect_to(courses_url) }
+      format.html { redirect_to(lectures_url) }
       format.xml  { head :ok }
     end
   end
 
-  #Buy one course
+  #Buy one lecture
   def buy
-    @course = Lecture.find(params[:id])
+    @lecture = Lecture.find(params[:id])
 
-    if not current_user.has_access_to_course(@course)
+    if not current_user.has_access_to_lecture(@lecture)
 
-      if current_user.has_credits_for_course(@course)
+      if current_user.has_credits_for_lecture(@lecture)
         #o nome dessa variável, deixar como acquisition
         @acquisition = Acquisition.new
         @acquisition.acquired_by_type = "User"
         @acquisition.acquired_by_id = current_user.id
         @acquisition.value =  Lecture.price
-        @acquisition.course = @course
+        @acquisition.lecture = @lecture
 
         if @acquisition.save
           flash[:notice] = 'A aula foi comprada!'
-          redirect_to @course
+          redirect_to @lecture
         end
       else
         flash[:notice] = 'Você não tem créditos suficientes para comprar esta aula. Recarrege agora!'
         # TODO passar como parametro url da aula para retornar após compra
-        redirect_to credits_path(:course_id => @course.id)
+        redirect_to credits_path(:lecture_id => @lecture.id)
       end
     else
       flash[:notice] = 'Você já possui acesso a esta aula!'
-      redirect_to @course
+      redirect_to @lecture
     end
   end
 
   # lista cursos não publicados (em edição)
   def unpublished
-    @courses = Lecture.paginate(:conditions => ["owner = ? AND published = 0", current_user.id],
+    @lectures = Lecture.paginate(:conditions => ["owner = ? AND published = 0", current_user.id],
                                :include => :owner,
                                :page => params[:page],
                                :order => 'updated_at DESC',
@@ -588,7 +588,7 @@ class LecturesController < BaseController
       format.js do
         render :update do |page|
           page << "$('#tabs-2-loading').hide()"
-          page.replace_html 'tabs-2-content', :partial => "course_list"
+          page.replace_html 'tabs-2-content', :partial => "lecture_list"
         end
       end
     end
@@ -597,7 +597,7 @@ class LecturesController < BaseController
   # cursos publicados no redu esperando a moderação dos admins do redu
   def waiting
     @user = current_user
-    @courses = Lecture.paginate(:conditions => ["owner = ? AND published = 1 AND state LIKE 'waiting'", current_user.id],
+    @lectures = Lecture.paginate(:conditions => ["owner = ? AND published = 1 AND state LIKE 'waiting'", current_user.id],
                                :include => :owner,
                                :page => params[:page],
                                :order => 'updated_at DESC',
@@ -606,12 +606,12 @@ class LecturesController < BaseController
 
     respond_to do |format|
       format.html do
-        render "user_courses_private"
+        render "user_lectures_private"
       end
       format.js do
         render :update do |page|
           page << "$('#tabs-3-loading').hide()"
-          page.replace_html 'tabs-3-content', :partial => "course_list"
+          page.replace_html 'tabs-3-content', :partial => "lecture_list"
         end
       end
     end

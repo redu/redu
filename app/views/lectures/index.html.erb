@@ -124,7 +124,7 @@ function getParameters(){
 		<%= (params[:search]) ? ("Resultados para: \""+params[:search]+"\"") : "Todas as aulas mais recentes" %>
 	</span>
 	
-		<% form_tag courses_path, :method => :get do %>
+		<% form_tag lectures_path, :method => :get do %>
 		Buscar 
 		<%= text_field_tag :search, params[:search] %>
 		<%= hidden_field_tag(:space_id, @space.id) if @space%>
@@ -136,7 +136,7 @@ function getParameters(){
 <%= image_tag "loadingAnimation.gif", :id => "loader", :style => "display: none"%>
 <div id="course_list" class="grid_12">
 	
-	<%= render :partial => "course_list"%>
+	<%= render :partial => "lecture_list"%>
 </div>
 
 

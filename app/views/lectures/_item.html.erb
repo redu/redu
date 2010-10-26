@@ -1,12 +1,12 @@
 <li class="clearfix">
-	 <%= link_to course.name, (@space) ? course_path(:id => course.id, :space_id => @space.id) : course, :class => "name"  %>
-	<div class="thumb photo"><%= link_to(image_tag course.thumb_url, :width => "70px") %></div>
+	 <%= link_to lecture.name, (@space) ? lecture_path(:id => lecture.id, :space_id => @space.id) : lecture, :class => "name"  %>
+	<div class="thumb photo"><%= link_to(image_tag lecture.thumb_url, :width => "70px") %></div>
 	<div class="headlines" style="width: 490px">
 		<!--
 		<span class="call">Descrição:</span>
 		-->
 		<span class="things">
-		<%= truncate_words( course.description, 10, '...') %>
+		<%= truncate_words( lecture.description, 10, '...') %>
 		
 		
 		</span>
@@ -17,28 +17,28 @@
 		<ul class="item_info">
             <% unless @user %>
 						<li> Por 
-                <%= link_to course.owner.f_name, user_path(course.owner) %>
+                <%= link_to lecture.owner.f_name, user_path(lecture.owner) %>
             </li>
             <li>
                 |
             </li>
 						<%end%>
             <li> 
-                <%= time_ago_in_words_or_date(course.created_at) %>
+                <%= time_ago_in_words_or_date(lecture.created_at) %>
             </li>
-            <% if course.space && !@space%>
+            <% if lecture.space && !@space%>
 						<li>
                 |
             </li>
 						 <li> 
-                Rede: <%= link_to(course.space.name, course.space)  %>
+                Rede: <%= link_to(lecture.space.name, lecture.space)  %>
             </li>
 						<%end%>
             <li>
                 |
             </li>
             <li>
-                Exibições (<%= course.view_count %>)
+                Exibições (<%= lecture.view_count %>)
             </li>
 						<li>
                 |
@@ -47,7 +47,7 @@
         </ul>
 				
 		<span style="float: left; margin-top:2px;">
-			 							<%= ratings_for course, :static, :small => true, :wrap => false %>
+			 							<%= ratings_for lecture, :static, :small => true, :wrap => false %>
 		</span>
 		
 		

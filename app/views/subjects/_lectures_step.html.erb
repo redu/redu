@@ -22,14 +22,14 @@ title2 = titles.split('-')[1]
 
   <% field_set_tag 'Aulas' do %>
     <ul>
-        <% current_user.courses.each do |course| %><!--cursos tem ser filtrador pro usuuarios-->
+        <% current_user.lectures.each do |lecture| %><!--cursos tem ser filtrador pro usuuarios-->
           <li>
             <% unless session[:subject_id].nil? %>
-              <%= check_box_tag "aulas[]", course.id, current_user.subjects.find(session[:subject_id]).course_subjects.detect{|cs| cs.courseable.name == course.name}.nil? ? false : true  %>
+              <%= check_box_tag "aulas[]", lecture.id, current_user.subjects.find(session[:subject_id]).lecture_subjects.detect{|cs| cs.lectureable.name == lecture.name}.nil? ? false : true  %>
             <%else%>
-              <%= check_box_tag "aulas[]", course.id %>
+              <%= check_box_tag "aulas[]", lecture.id %>
             <%end%>
-            <span><%= h(course.name) %></span>
+            <span><%= h(lecture.name) %></span>
           </li>
         <%end%>
       </ul
@@ -41,7 +41,7 @@ title2 = titles.split('-')[1]
         <% current_user.exams.each do |exam| %><!--cursos tem ser filtrador pro usuuarios-->
           <li>
             <% unless session[:subject_id].nil? %>
-              <%= check_box_tag "exams[]", exam.id, current_user.subjects.find(session[:subject_id]).course_subjects.detect{|cs| cs.courseable_id == exam.id}.nil? ? false : true  %>
+              <%= check_box_tag "exams[]", exam.id, current_user.subjects.find(session[:subject_id]).lecture_subjects.detect{|cs| cs.lectureable_id == exam.id}.nil? ? false : true  %>
             <%else%>
               <%= check_box_tag "exams[]", exam.id %>
             <%end%>

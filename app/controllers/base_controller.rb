@@ -32,7 +32,7 @@ class BaseController < ApplicationController
 
   def teach_index
     @spaces = current_user.spaces
-    @courses = current_user.courses.find(:all,
+    @lectures = current_user.lectures.find(:all,
                                          :order => "created_at DESC",
                                          :limit => 4,
                                          :conditions => ["published = ?", true])
@@ -101,15 +101,15 @@ class BaseController < ApplicationController
     return unless current_user.auto_status
 
     case params[:controller]
-    when 'courses'
-      if @course and @course.published
+    when 'lectures'
+      if @lecture and @lecture.published
         Status.create({:log => true,
-                      :logeable_name => @course.name,
+                      :logeable_name => @lecture.name,
                       :logeable_type => 'Lecture',
-                      :logeable_id => @course.id,
+                      :logeable_id => @lecture.id,
                       :log_action => params[:action],
-                      :statusable_type => (@course.space) ? 'Space' : 'User',
-                      :statusable_id => (@course.space) ? @course.space.id : @course.owner.id,
+                      :statusable_type => (@lecture.space) ? 'Space' : 'User',
+                      :statusable_id => (@lecture.space) ? @lecture.space.id : @lecture.owner.id,
                       :user_id => current_user.id
         })
       end

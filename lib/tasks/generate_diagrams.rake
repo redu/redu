@@ -9,7 +9,7 @@ namespace :generate_diagrams do
   
   desc "Generate models class diagram"
   task :generate_models_diagram => :environment do
-    sh "railroad -o models.dot -e app/models/course.rb -i -l -M"
+    sh "railroad -o models.dot -e app/models/lecture.rb -i -l -M"
     FileUtils.mv "models.dot", "diagrams/models.dot"
   end
   

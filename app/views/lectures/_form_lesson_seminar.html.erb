@@ -11,7 +11,7 @@
 		
 <div id="video_upload_<%=child_index%>"> 
 <% @seminar = Seminar.new %>		
-<% form_for @seminar, :url => { :controller => :courses, :action => :upload_video },
+<% form_for @seminar, :url => { :controller => :lectures, :action => :upload_video },
 					:html => { :target => "upload_frame", :onsubmit => "Element.show('spinner')",
 					:multipart => true } do |f_remote|%>
 					

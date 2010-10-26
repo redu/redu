@@ -5,10 +5,10 @@ class Lecture < ActiveRecord::Base
   validates_presence_of :description
   validates_length_of   :description, :within => 30..200
   validates_presence_of :simple_category
-  validates_presence_of :courseable_type
-  validates_associated :courseable
-  validation_group :step1, :fields=>[:name, :description, :simple_category, :courseable_type]
-  validation_group :step2, :fields=>[:courseable]
+  validates_presence_of :lectureable_type
+  validates_associated :lectureable
+  validation_group :step1, :fields=>[:name, :description, :simple_category, :lectureable_type]
+  validation_group :step2, :fields=>[:lectureable]
   validation_group :step3, :fields=>[:price]
   
   # ASSOCIATIONS
@@ -20,9 +20,9 @@ class Lecture < ActiveRecord::Base
   has_many :annotations
   has_one :space_asset, :as => :asset, :dependent => :destroy
   has_one :space, :through => :space_asset#, :as => :asset
-  has_one :course_subject, :as => :courseable
+  has_one :lecture_subject, :as => :lectureable
   belongs_to :owner , :class_name => "User" , :foreign_key => "owner"
-  belongs_to :courseable, :polymorphic => true, :dependent => :destroy
+  belongs_to :lectureable, :polymorphic => true, :dependent => :destroy
   belongs_to :asset, :polymorphic => true
   belongs_to :simple_category
   accepts_nested_attributes_for :resources,
@@ -35,13 +35,13 @@ class Lecture < ActiveRecord::Base
     :conditions => ["state LIKE 'approved' AND public = true"],
     :include => :owner, :order => 'created_at DESC'
   named_scope :seminars,
-    :conditions => ["state LIKE 'approved' AND courseable_type LIKE 'Seminar' AND public = true"],
+    :conditions => ["state LIKE 'approved' AND lectureable_type LIKE 'Seminar' AND public = true"],
     :include => :owner, :order => 'created_at DESC'
   named_scope :iclasses,
-    :conditions => ["courseable_type LIKE 'InteractiveClass' AND public = true"],
+    :conditions => ["lectureable_type LIKE 'InteractiveClass' AND public = true"],
     :include => :owner, :order => 'created_at DESC'
   named_scope :pages,
-    :conditions => ["courseable_type LIKE 'Page' AND public = true"],
+    :conditions => ["lectureable_type LIKE 'Page' AND public = true"],
     :include => :owner, :order => 'created_at DESC'
   named_scope :limited, lambda { |num| { :limit => num } }
   
@@ -70,7 +70,7 @@ class Lecture < ActiveRecord::Base
   def go_to_moderation
     #FIXME esse metodo é usado em algum lugar?
     if self.published
-      if (self.courseable_type != 'Seminar' || self.courseable_type != 'InteractiveClass')
+      if (self.lectureable_type != 'Seminar' || self.lectureable_type != 'InteractiveClass')
         self.moderate!#FIXME
       else
         self.state = 'approved'
@@ -79,7 +79,7 @@ class Lecture < ActiveRecord::Base
   end
   
   def permalink
-    APP_URL + "/courses/"+ self.id.to_s+"-"+self.name.parameterize
+    APP_URL + "/lectures/"+ self.id.to_s+"-"+self.name.parameterize
   end
 
   def currently_watching
@@ -91,15 +91,15 @@ class Lecture < ActiveRecord::Base
   end
   
   def thumb_url
-    case self.courseable_type
+    case self.lectureable_type
       
       when 'Seminar'
-      if self.courseable.external_resource_type == 'youtube'
-        'http://i1.ytimg.com/vi/' + self.courseable.external_resource + '/default.jpg'
-      elsif self.courseable.external_resource_type == 'upload'
+      if self.lectureable.external_resource_type == 'youtube'
+        'http://i1.ytimg.com/vi/' + self.lectureable.external_resource + '/default.jpg'
+      elsif self.lectureable.external_resource_type == 'upload'
         # Os thumbnails só são gerados após a conversão
-        if self.courseable.state == 'converted'
-          File.join(File.dirname(self.courseable.media.url), "thumb_0000.png")
+        if self.lectureable.state == 'converted'
+          File.join(File.dirname(self.lectureable.media.url), "thumb_0000.png")
         else
           '/images/missing_pic_school.png'
         end
@@ -127,19 +127,19 @@ class Lecture < ActiveRecord::Base
   end
   
   def has_annotations_by(user)
-    Annotation.find(:first, :conditions => ["course_id = ? AND user_id = ?", self.id, user.id])
+    Annotation.find(:first, :conditions => ["lecture_id = ? AND user_id = ?", self.id, user.id])
   end
   
   def to_param #friendly url
     "#{id}-#{name.parameterize}"
   end
 
-  def build_courseable(params)
+  def build_lectureable(params)
     puts ' oi'
-    case self.courseable_type
+    case self.lectureable_type
       when "Page"
       # se edicao pega ja existente, senao:
-      self.courseable = Page.new(:body => "teste")
+      self.lectureable = Page.new(:body => "teste")
     end
   end
 end

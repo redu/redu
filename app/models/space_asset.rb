@@ -6,13 +6,13 @@ class SpaceAsset < ActiveRecord::Base
   belongs_to :space
 
   protected
-  def increment_courses_count
-    self.space.courses_count += 1
+  def increment_lectures_count
+    self.space.lectures_count += 1
     self.space.save
   end
 
-  def decrement_courses_count
-    self.space.courses_count -= 1
+  def decrement_lectures_count
+    self.space.lectures_count -= 1
     self.space.save
   end
 

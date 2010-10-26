@@ -137,13 +137,13 @@ function remove_fields(link) {
 			complete:function(request){
 				$('#save-spinner').hide();
 				if (isPreview) {
-					window.open('<%= unpublished_preview_courses_path %>');
+					window.open('<%= unpublished_preview_lectures_path %>');
 				}
 				},
 			data:jQuery.param(jQuery("#interactive_class_form").serializeArray()), 
 			dataType:'script', 
 			type:'post', 
-			url:'<%= url_for(:action => :create, :course_id => @course.id)%>'});
+			url:'<%= url_for(:action => :create, :lecture_id => @lecture.id)%>'});
 	}
 	
 	

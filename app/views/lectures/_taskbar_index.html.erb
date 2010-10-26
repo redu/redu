@@ -1,10 +1,10 @@
 <%  if logged_in? %>
   		<div id="task_bar_exames">
-  		<%= link_to 'Nova Aula', new_course_path %> | 
-  		<%= link_to 'Minhas Aulas', published_user_courses_path(current_user.id) %> |
-		<%= link_to 'Aulas Favoritas', favorites_courses_path %> 
+  		<%= link_to 'Nova Aula', new_lecture_path %> | 
+  		<%= link_to 'Minhas Aulas', published_user_lectures_path(current_user.id) %> |
+		<%= link_to 'Aulas Favoritas', favorites_lectures_path %> 
 		<%  if current_user.admin? %>
-			| <%= link_to 'Moderar Vídeos' , admin_moderate_courses_path, :class => "link_remove" %>
+			| <%= link_to 'Moderar Vídeos' , admin_moderate_lectures_path, :class => "link_remove" %>
 		<% end %>
 		</div>
 	<% end %>

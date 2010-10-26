@@ -24,7 +24,7 @@
 						</tbody></table>
 </div>
 
-	<% form_for :course, @course, :url => {:controller => :courses, :action => :create }, :html => { :multipart => true } do |f| %>
+	<% form_for :lecture, @lecture, :url => {:controller => :lectures, :action => :create }, :html => { :multipart => true } do |f| %>
 
 		<div class="grid_16">
 		<%= f.error_messages %>
@@ -38,7 +38,7 @@
 
 			<%= f.label "Título: " %>
 			<%= f.text_field :name %>
-			 <%= error_for :course, :name %>
+			 <%= error_for :lecture, :name %>
 
 			<% random_number = get_random_number%>
 			<%= f.label "Descrição:" %>
@@ -46,7 +46,7 @@
 			<%= f.text_area :description, :size => "50x3", :class => "desc-#{random_number}" %>
 			<%= render :partial => 'shared/limit_char_field', :locals => { :class_textarea => "desc-#{random_number}" }%>
 			</div>
-			<%= error_for :course, :description %>
+			<%= error_for :lecture, :description %>
 
 			<%= f.label "Tags <span class='snippet'>(separadas por vírgula)</span>" %>
 			<%= f.text_field :tag_list %>
@@ -55,7 +55,7 @@
 			<%# f.select(:simple_category, )%>
 			<%= f.label "Categoria:" %>
 			<%= simple_categories_i18n(f) %>
-			<%= error_for :course, :category %>
+			<%= error_for :lecture, :category %>
 
 			<%end%>
 
@@ -69,20 +69,20 @@
 
 		<div style="margin-bottom: 20px;">
 
-			<h3><%= f.radio_button(:courseable_type, "Seminar")%> Vídeo-aula</h3>
+			<h3><%= f.radio_button(:lectureable_type, "Seminar")%> Vídeo-aula</h3>
 			Permite mostrar um vídeo- ou áudio-aula acompanhado de documentos para download.
 
 		</div>
 
 		<div style="margin-bottom: 20px;">
 
-			<h3><%= f.radio_button(:courseable_type, "InteractiveClass")%> Aula passo-a-passo</h3>
+			<h3><%= f.radio_button(:lectureable_type, "InteractiveClass")%> Aula passo-a-passo</h3>
 			Uma aula passo-a-passo pode possuir várias páginas com recursos interativos tais como vídeos, texto, questões e exames.
 		</div>
 
 		<div style="margin-bottom: 20px;">
 
-			<h3><%= f.radio_button(:courseable_type, "Page")%> Artigo</h3>
+			<h3><%= f.radio_button(:lectureable_type, "Page")%> Artigo</h3>
 			Um artigo permite a postagem de conteúdo de leitura rápida como um tutorial ou uma página simples.
 		</div>
 		<%end%>
