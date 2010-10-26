@@ -142,14 +142,7 @@ class EventsController < BaseController
     @event = Event.find(params[:id])
     current_user.vote(@event, params[:like])
     respond_to do |format|
-      format.js do
-        render :update do |page|
-          page << "jQuery('#like_spinner').hide()"
-          page << "jQuery('#like_link').show()"
-          page << "jQuery('#like_link').attr('onclick', 'return false;')"
-          page << "jQuery('#like_count').html('" + @event.votes_for().to_s + "')" # TODO performance + uma consulta?
-        end
-      end
+      format.js { render :template => 'shared/like', :locals => {:votes_for => @event.votes_for().to_s} }
     end
   end
 

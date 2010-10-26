@@ -1,0 +1,5 @@
+page << "$('.status_spinner').hide()"
+page << "$('.errorMessageField').remove()"
+page << "$('textarea.status:visible').wrap(\"<div class='fieldWithErrors'></div>\")" + \
+            ".after(\"<p class='errorMessageField'>#{status.errors.full_messages.to_sentence}</p>\")"
+
