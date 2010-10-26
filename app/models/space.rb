@@ -30,7 +30,6 @@ class Space < ActiveRecord::Base
   has_many :folders
   has_many :forums
   has_many :acquisitions, :as => :acquired_by
-  has_many :access_keys, :dependent => :destroy
   has_many :space_assets, :class_name => 'SpaceAsset',
     :dependent => :destroy
   has_many :lectures, :through => :space_assets,
@@ -57,7 +56,7 @@ class Space < ActiveRecord::Base
   # override activerecord's find to allow us to find by name or id transparently
   def self.find(*args)
     if args.is_a?(Array) and args.first.is_a?(String) and (args.first.index(/[a-zA-Z\-_]+/) or args.first.to_i.eql?(0) )
-      find_by_path(args)
+      Space.find_by_path(args)
     else
       super
     end
