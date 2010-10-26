@@ -153,7 +153,7 @@
 			 <% end %>
 			 
 			 <% if current_user.can_manage? @course and @space %>
-			| <%= link_to 'Remover da rede', remove_asset_space_path(:id => @space.id, :asset_id => @course.id, :asset_type => "Course"), {:confirm => "Você tem certeza que quer remover esta aula da rede?\n(Ela continuará no seu diretório de aulas)", :class => "icon-delete"} %>
+			| <%= link_to 'Remover da rede', remove_asset_space_path(:id => @space.id, :asset_id => @course.id, :asset_type => "Lecture"), {:confirm => "Você tem certeza que quer remover esta aula da rede?\n(Ela continuará no seu diretório de aulas)", :class => "icon-delete"} %>
 			<% end %>
 			
 			<% if current_user.admin? %>
