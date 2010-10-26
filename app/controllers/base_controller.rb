@@ -105,7 +105,7 @@ class BaseController < ApplicationController
       if @course and @course.published
         Status.create({:log => true,
                       :logeable_name => @course.name,
-                      :logeable_type => 'Course',
+                      :logeable_type => 'Lecture',
                       :logeable_id => @course.id,
                       :log_action => params[:action],
                       :statusable_type => (@course.space) ? 'Space' : 'User',

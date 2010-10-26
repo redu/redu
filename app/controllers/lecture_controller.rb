@@ -1,4 +1,4 @@
-class CoursesController < BaseController
+class LecturesController < BaseController
 
   include Viewable # atualiza o view_count
   uses_tiny_mce(:options => AppConfig.advanced_mce_options, :only => [:new, :edit, :update, :create])
@@ -8,7 +8,7 @@ class CoursesController < BaseController
   after_filter :create_activity, :only => [:create]
 
   def verify_access
-    @course = Course.find(params[:id])
+    @course = Lecture.find(params[:id])
     unless current_user.has_access_to @course
       flash[:notice] = "Você não tem acesso a esta aula"
       #redirect_back_or_default courses_path
@@ -84,12 +84,12 @@ class CoursesController < BaseController
   end
 
   def download_attachment
-    @attachment = CourseResource.find(params[:res_id])
+    @attachment = LectureResource.find(params[:res_id])
     send_file @attachment.attachment.path, :type=> @attachment.attachment.content_type, :x_sendfile=>true
   end
 
   def rate
-    @course = Course.find(params[:id])
+    @course = Lecture.find(params[:id])
     @course.rate(params[:stars], current_user, params[:dimension])
     id = "ajaxful-rating-#{!params[:dimension].blank? ? "#{params[:dimension]}-" : ''}course-#{@course.id}"
 
@@ -134,11 +134,11 @@ class CoursesController < BaseController
       else
         @courses = @space.courses.paginate(paginating_params)
       end
-    else # index (Course)
+    else # index (Lecture)
       if params[:search] # search
-        @courses = Course.published.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
+        @courses = Lecture.published.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
       else
-        @courses = Course.published.paginate(paginating_params)
+        @courses = Lecture.published.paginate(paginating_params)
       end
     end
 
@@ -180,7 +180,7 @@ class CoursesController < BaseController
 
     #relacionados
     related_name = @course.name
-    @related_courses = Course.find(:all,:conditions => ["name LIKE ? AND id NOT LIKE ?","%#{related_name}%", @course.id] , :limit => 3, :order => 'rating_average DESC')
+    @related_courses = Lecture.find(:all,:conditions => ["name LIKE ? AND id NOT LIKE ?","%#{related_name}%", @course.id] , :limit => 3, :order => 'rating_average DESC')
 
     @status = Status.new
 
@@ -199,7 +199,7 @@ class CoursesController < BaseController
   end
 
   def view
-    @course = Course.find(params[:id])
+    @course = Lecture.find(params[:id])
     @comments  = @course.comments.find(:all, :limit => 10, :order => 'created_at DESC')
 
     respond_to do |format|
@@ -218,7 +218,7 @@ class CoursesController < BaseController
     case params[:step]
     when "2"
 
-      @course = Course.find(session[:course_id])
+      @course = Lecture.find(session[:course_id])
 
       unless @course #curso não foi encontrado ou nao está mais na sessão
         redirect_to new_course_path :space_id => params[:space_id]
@@ -236,16 +236,16 @@ class CoursesController < BaseController
         render "step2_page" and return
       end
     when "3"
-      @course = Course.find(session[:course_id])
+      @course = Lecture.find(session[:course_id])
       @spaces = current_user.spaces
 
       @course.enable_validation_group :step3
       render "step3" and return
     else # 1
       if session[:course_id]
-        @course = Course.find(session[:course_id])
+        @course = Lecture.find(session[:course_id])
       else
-        @course = Course.new
+        @course = Lecture.new
       end
 
       @course.enable_validation_group :step1
@@ -255,7 +255,7 @@ class CoursesController < BaseController
 
   # GET /courses/1/edit
   def edit
-    @course = Course.find(params[:id])
+    @course = Lecture.find(params[:id])
 
     respond_to do |format|
       if @course.courseable_type == 'Page'
@@ -277,7 +277,7 @@ class CoursesController < BaseController
     #TODO diminuir a lógica desse método, está muito GRANDE
     case params[:step]
     when "1"
-      @course = Course.new(params[:course])
+      @course = Lecture.new(params[:course])
       @course.owner = current_user
       @course.enable_validation_group :step1
 
@@ -296,13 +296,13 @@ class CoursesController < BaseController
       end
 
     when "2"
-      @course = Course.find(session[:course_id])
+      @course = Lecture.find(session[:course_id])
       @course.enable_validation_group :step2
 
       @res = []
       if params[:seminar] and  params[:seminar][:attachment]
         params[:seminar][:attachment].each do |a|
-          @res = CourseResource.create(:attachment => a, :attachable => @course)
+          @res = LectureResource.create(:attachment => a, :attachable => @course)
         end
       end
 
@@ -344,7 +344,7 @@ class CoursesController < BaseController
         end
 
       elsif @course.courseable_type == 'InteractiveClass'
-        #Course.find(session[:course_id]).courseable
+        #Lecture.find(session[:course_id]).courseable
         @course.courseable = InteractiveClass.new(params[:interactive_class])
 
         respond_to do |format|
@@ -390,10 +390,10 @@ class CoursesController < BaseController
       end
 
     when "3"
-      @course = Course.find(session[:course_id])
+      @course = Lecture.find(session[:course_id])
       @submited_to_space = false
       if params[:post_to]
-        SpaceAsset.create({:asset_type => "Course", :asset_id => @course.id, :space_id => params[:post_to].to_i})
+        SpaceAsset.create({:asset_type => "Lecture", :asset_id => @course.id, :space_id => params[:post_to].to_i})
         @space = Space.find(params[:post_to])
       end
 
@@ -471,7 +471,7 @@ class CoursesController < BaseController
   end
 
   def unpublished_preview
-    @course = Course.find(session[:course_id])
+    @course = Lecture.find(session[:course_id])
     @lessons = Lesson.all(:conditions => ['interactive_class_id = ?',@course.courseable_id ], :order => 'position ASC')
     respond_to do |format|
       format.html {render 'unpublished_preview_interactive'}
@@ -480,7 +480,7 @@ class CoursesController < BaseController
 
   def cancel
     if session[:course_id]
-      course = Course.find(session[:course_id])
+      course = Lecture.find(session[:course_id])
       course.destroy if course
       session[:course_id] = nil
     end
@@ -493,7 +493,7 @@ class CoursesController < BaseController
   # PUT /courses/1.xml
   def update
 
-    @course = Course.find(params[:id])
+    @course = Lecture.find(params[:id])
 
     if @course.courseable_type == 'InteractiveClass'
       @interactive_class = @course.interactive_class
@@ -537,7 +537,7 @@ class CoursesController < BaseController
   # DELETE /courses/1
   # DELETE /courses/1.xml
   def destroy
-    @course = Course.find(params[:id])
+    @course = Lecture.find(params[:id])
     @course.destroy
     flash[:notice] = 'A aula foi removida'
 
@@ -549,7 +549,7 @@ class CoursesController < BaseController
 
   #Buy one course
   def buy
-    @course = Course.find(params[:id])
+    @course = Lecture.find(params[:id])
 
     if not current_user.has_access_to_course(@course)
 
@@ -558,7 +558,7 @@ class CoursesController < BaseController
         @acquisition = Acquisition.new
         @acquisition.acquired_by_type = "User"
         @acquisition.acquired_by_id = current_user.id
-        @acquisition.value =  Course.price
+        @acquisition.value =  Lecture.price
         @acquisition.course = @course
 
         if @acquisition.save
@@ -578,7 +578,7 @@ class CoursesController < BaseController
 
   # lista cursos não publicados (em edição)
   def unpublished
-    @courses = Course.paginate(:conditions => ["owner = ? AND published = 0", current_user.id],
+    @courses = Lecture.paginate(:conditions => ["owner = ? AND published = 0", current_user.id],
                                :include => :owner,
                                :page => params[:page],
                                :order => 'updated_at DESC',
@@ -597,7 +597,7 @@ class CoursesController < BaseController
   # cursos publicados no redu esperando a moderação dos admins do redu
   def waiting
     @user = current_user
-    @courses = Course.paginate(:conditions => ["owner = ? AND published = 1 AND state LIKE 'waiting'", current_user.id],
+    @courses = Lecture.paginate(:conditions => ["owner = ? AND published = 1 AND state LIKE 'waiting'", current_user.id],
                                :include => :owner,
                                :page => params[:page],
                                :order => 'updated_at DESC',

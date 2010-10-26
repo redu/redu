@@ -13,7 +13,7 @@ class SpacesController < BaseController
 
   def remove_asset
     case params[:asset_type]
-    when 'Course'
+    when 'Lecture'
       msg = "Aula removida da rede"
     when 'Exam'
       msg = "Exame removido da rede"
@@ -147,7 +147,7 @@ class SpacesController < BaseController
 
   def admin_submissions
     @space = Space.find(params[:id])
-    @courses = Course.paginate(:conditions => ["published = 1 AND state LIKE ?", "waiting"],
+    @courses = Lecture.paginate(:conditions => ["published = 1 AND state LIKE ?", "waiting"],
                                :include => :owner,
                                :page => params[:page],
                                :order => 'updated_at DESC',

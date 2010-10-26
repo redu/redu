@@ -1,5 +1,5 @@
-class CourseSweeper < ActionController::Caching::Sweeper
-  observe Course
+class LectureSweeper < ActionController::Caching::Sweeper
+  observe Lecture
 
   def after_create(course)
     expire_cache_for(course)

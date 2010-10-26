@@ -21,10 +21,10 @@ class FavoritesController < BaseController
         end
       end
       format.html do
-        #@courses = Course.favorites_user_id_eq(current_user.id).descend_by_created_at
-        @courses = Course.paginate(:all,
+        #@courses = Lecture.favorites_user_id_eq(current_user.id).descend_by_created_at
+        @courses = Lecture.paginate(:all,
                                    :joins => :favorites,
-                                   :conditions => ["favorites.favoritable_type = 'Course' AND favorites.user_id = ? AND courses.id = favorites.favoritable_id", current_user.id],
+                                   :conditions => ["favorites.favoritable_type = 'Lecture' AND favorites.user_id = ? AND courses.id = favorites.favoritable_id", current_user.id],
                                    :page => params[:page], :order => 'created_at DESC', :per_page => AppConfig.items_per_page)
 
 
@@ -38,7 +38,7 @@ class FavoritesController < BaseController
 
     msg_ok, msg_err = ''
     case params[:type]
-    when 'Course'
+    when 'Lecture'
       msg_ok = "Aula adicionada ao seus favoritos!"
       msg_err = "Aula não foi adicionada ao seus favoritos"
     when 'Exam'
@@ -72,7 +72,7 @@ class FavoritesController < BaseController
 
     msg_ok, msg_err = ''
     case params[:type]
-    when 'Course'
+    when 'Lecture'
       msg_ok = "Aula adicionada ao seus favoritos!"
       msg_err = "Aula não foi adicionada ao seus favoritos"
     when 'Exam'

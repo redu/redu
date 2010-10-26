@@ -65,9 +65,9 @@ class AdminController < BaseController
   end
 
   def moderate_courses
-    @removed_courses = Course.all(:conditions => ["id IN (?)", params[:courses]]) #unless params[:courses].empty?
+    @removed_courses = Lecture.all(:conditions => ["id IN (?)", params[:courses]]) #unless params[:courses].empty?
 
-    Course.update_all("removed = 1", ["id IN (?)", params[:courses]])
+    Lecture.update_all("removed = 1", ["id IN (?)", params[:courses]])
 
     for course in @removed_courses
       UserNotifier.deliver_remove_course(course) # TODO fazer isso em batch
@@ -81,15 +81,15 @@ class AdminController < BaseController
     approved = params[:course].reject{|k,v| v == 'reject'}
     rejected = params[:course].reject{|k,v| v == 'approve'}
 
-    Course.update_all("state = 'approved'", :id => approved.keys)
-    Course.update_all("state = 'rejected'", :id => rejected.keys)
+    Lecture.update_all("state = 'approved'", :id => approved.keys)
+    Lecture.update_all("state = 'rejected'", :id => rejected.keys)
 
     flash[:notice] = 'Aulas moderadas!'
     redirect_to admin_moderate_submissions_path
   end
 
   def approve
-    @course = Course.find(params[:id])
+    @course = Lecture.find(params[:id])
     @course.approve!
 
     flash[:notice] = 'A aula foi aprovada!'
@@ -97,7 +97,7 @@ class AdminController < BaseController
   end
 
   def disapprove
-    @course = Course.find(params[:id])
+    @course = Lecture.find(params[:id])
     @course.reject!
     flash[:notice] = 'A aula foi rejeitada!'
     redirect_to @course
@@ -106,7 +106,7 @@ class AdminController < BaseController
   # LISTAGENS
   # lista pendendes para MODERAÇÃO da administração do Redu
   def submissions
-    @courses = Course.paginate(:conditions => ["public = 1 AND published = 1 AND state LIKE 'waiting'"],
+    @courses = Lecture.paginate(:conditions => ["public = 1 AND published = 1 AND state LIKE 'waiting'"],
                                :include => :owner,
                                :page => params[:page],
                                :order => 'updated_at ASC',
@@ -118,7 +118,7 @@ class AdminController < BaseController
   end
 
   def courses
-    @courses = Course.paginate(:conditions => ["public = 1 AND published = 1 AND removed = 0"],
+    @courses = Lecture.paginate(:conditions => ["public = 1 AND published = 1 AND removed = 0"],
                                :include => :owner,
                                :page => params[:page],
                                :order => 'created_at DESC',
