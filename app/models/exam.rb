@@ -17,8 +17,8 @@ class Exam < ActiveRecord::Base
   belongs_to :owner , :class_name => "User" , :foreign_key => "owner_id"
   belongs_to :simple_category
   has_one :course_subject, :as => :courseable, :dependent => :destroy
-  has_one :school_asset, :as => :asset
-  has_one :school, :through => :school_asset#, :as => :asset
+  has_one :space_asset, :as => :asset
+  has_one :space, :through => :space_asset#, :as => :asset
   # NESTED
   accepts_nested_attributes_for :questions, 
     :reject_if => lambda { |q| q[:statement].blank? },

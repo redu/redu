@@ -1,6 +1,6 @@
-<% if @schools && @schools.length > 0 %>
+<% if @spaces && @spaces.length > 0 %>
   <ul class="badge">
-    <%= render :partial => 'schools/item', :collection => @schools, :as => :school %> 
+    <%= render :partial => 'spaces/item', :collection => @spaces, :as => :space %> 
   </ul>
 <% else %>
 
@@ -11,4 +11,4 @@
   <% end %>
 
 <% end %>
-<%= will_paginate @schools %>
+<%= will_paginate @spaces %>

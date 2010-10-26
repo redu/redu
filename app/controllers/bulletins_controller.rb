@@ -9,41 +9,41 @@ class BulletinsController < BaseController
   uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit, :create, :update])
 
   def index
-    @bulletins = Bulletin.paginate(:conditions => ["school_id = ? AND state LIKE 'approved'", Space.find(params[:school_id]).id],
+    @bulletins = Bulletin.paginate(:conditions => ["space_id = ? AND state LIKE 'approved'", Space.find(params[:space_id]).id],
                                    :page => params[:page],
                                    :order => 'created_at DESC',
                                    :per_page => 5
                                   )
-    @school = Space.find(params[:school_id])
+    @space = Space.find(params[:space_id])
   end
 
   def show
     @bulletin = Bulletin.find(params[:id])
     @owner = User.find(@bulletin.owner)
-    @school = @bulletin.school
+    @space = @bulletin.space
   end
 
   def new
     @bulletin = Bulletin.new()
-    @school = Space.find(params[:school_id])
+    @space = Space.find(params[:space_id])
   end
 
   def create
     @bulletin = Bulletin.new(params[:bulletin])
-    @bulletin.school = Space.find(params[:school_id])
+    @bulletin.space = Space.find(params[:space_id])
     @bulletin.owner = current_user
 
     respond_to do |format|
       if @bulletin.save
 
-        if @bulletin.owner.can_manage? @bulletin.school
+        if @bulletin.owner.can_manage? @bulletin.space
           @bulletin.approve!
           flash[:notice] = 'A notícia foi criada e divulgada.'
         else
           flash[:notice] = 'A notícia foi criada e será divulgada assim que for aprovada pelo moderador.'
         end
 
-        format.html { redirect_to school_bulletin_path(@bulletin.school, @bulletin) }
+        format.html { redirect_to space_bulletin_path(@bulletin.space, @bulletin) }
         format.xml  { render :xml => @bulletin, :status => :created, :location => @bulletin }
       else
         format.html { render :action => "new" }
@@ -54,7 +54,7 @@ class BulletinsController < BaseController
 
   def edit
     @bulletin = Bulletin.find(params[:id])
-    @school = Space.find(params[:school_id])
+    @space = Space.find(params[:space_id])
   end
 
   def update
@@ -63,8 +63,8 @@ class BulletinsController < BaseController
     respond_to do |format|
       if @bulletin.update_attributes(params[:bulletin])
         flash[:notice] = 'A notícia foi editada.'
-        format.html { redirect_to school_bulletin_path(@bulletin.school, @bulletin)}
-        format.xml { render :xml => @bulletin, :status => :created, :location => @bulletin, :school => params[:school_id] }
+        format.html { redirect_to space_bulletin_path(@bulletin.space, @bulletin)}
+        format.xml { render :xml => @bulletin, :status => :created, :location => @bulletin, :space => params[:space_id] }
       else
         format.html { render :action => :edit }
         format.xml { render :xml => @bulletin.errors, :status => :unprocessable_entity }
@@ -78,7 +78,7 @@ class BulletinsController < BaseController
 
     flash[:notice] = 'A notícia foi excluída.'
     respond_to do |format|
-      format.html { redirect_to(@bulletin.school) }
+      format.html { redirect_to(@bulletin.space) }
       format.xml  { head :ok }
     end
   end
@@ -128,17 +128,17 @@ class BulletinsController < BaseController
   def can_manage_required
     @bulletin = Bulletin.find(params[:id])
 
-    current_user.can_manage?(@bulletin, @bulletin.school) ? true : access_denied
+    current_user.can_manage?(@bulletin, @bulletin.space) ? true : access_denied
   end
 
   def is_member_required
-    if params[:school_id]
-      @school = Space.find(params[:school_id])
+    if params[:space_id]
+      @space = Space.find(params[:space_id])
     else
       @bulletin = Bulletin.find(params[:id])
-      @school = @bulletin.school
+      @space = @bulletin.space
     end
 
-    current_user.has_access_to(@school) ? true : access_denied
+    current_user.has_access_to(@space) ? true : access_denied
   end
 end

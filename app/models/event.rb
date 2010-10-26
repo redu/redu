@@ -10,7 +10,7 @@ class Event < ActiveRecord::Base
 
 	# ASSOCIATIONS
   belongs_to :owner, :class_name => "User", :foreign_key => 'owner'
-  belongs_to :school
+  belongs_to :space
 
 	# NAMED SCOPES
   #Procs used to make sure time is calculated at runtime

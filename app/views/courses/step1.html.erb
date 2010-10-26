@@ -1,12 +1,12 @@
 <div id="breadcrumbs" class="grid_16">
-	<% if @school %>
-	<a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <%= link_to @school.name, @school %> > nova aula
+	<% if @space %>
+	<a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <%= link_to @space.name, @space %> > nova aula
 	<% else %>
 	<a href="<%=application_url%>">início</a> > <a href="#">ensinar</a> > nova aula
 	<%end %>
 </div>
 
-<%= render(:partial => "schools/school_info", :locals=>{:show => false}) if @school%>
+<%= render(:partial => "spaces/space_info", :locals=>{:show => false}) if @space%>
 
 
 <span class="grid_3 call">Nova Aula</span>
@@ -29,7 +29,7 @@
 		<div class="grid_16">
 		<%= f.error_messages %>
 		</div>
-	<%= hidden_field_tag("school_id", @school.id) if @school %>
+	<%= hidden_field_tag("space_id", @space.id) if @space %>
 <%= hidden_field_tag("step", "1", options = {})%>
 
 		<div class="grid_8">

@@ -31,7 +31,7 @@ class BaseController < ApplicationController
   end
 
   def teach_index
-    @schools = current_user.schools
+    @spaces = current_user.spaces
     @courses = current_user.courses.find(:all,
                                          :order => "created_at DESC",
                                          :limit => 4,
@@ -42,7 +42,7 @@ class BaseController < ApplicationController
   end
 
   def learn_index
-    @schools = current_user.schools
+    @spaces = current_user.spaces
 
     respond_to do |format|
       format.html { render :layout => 'new_application'}
@@ -89,8 +89,8 @@ class BaseController < ApplicationController
     current_user && current_user.admin? ? true : access_denied
   end
 
-  def school_admin_required(school_id)
-    (current_user && current_user.school_admin?(school_id) || Space.find(school_id).owner == current_user) ? true : access_denied
+  def space_admin_required(space_id)
+    (current_user && current_user.space_admin?(space_id) || Space.find(space_id).owner == current_user) ? true : access_denied
   end
 
   def admin_or_moderator_required
@@ -108,8 +108,8 @@ class BaseController < ApplicationController
                       :logeable_type => 'Course',
                       :logeable_id => @course.id,
                       :log_action => params[:action],
-                      :statusable_type => (@course.school) ? 'Space' : 'User',
-                      :statusable_id => (@course.school) ? @course.school.id : @course.owner.id,
+                      :statusable_type => (@course.space) ? 'Space' : 'User',
+                      :statusable_id => (@course.space) ? @course.space.id : @course.owner.id,
                       :user_id => current_user.id
         })
       end
@@ -120,8 +120,8 @@ class BaseController < ApplicationController
                       :logeable_type => 'Exam',
                       :logeable_id => @exam.id,
                       :log_action => params[:action],
-                      :statusable_type => (@exam.school) ? 'Space' : 'User',
-                      :statusable_id => (@exam.school) ? @exam.school.id : @exam.owner.id,
+                      :statusable_type => (@exam.space) ? 'Space' : 'User',
+                      :statusable_id => (@exam.space) ? @exam.space.id : @exam.owner.id,
                       :user_id => current_user.id
         })
       end
@@ -137,15 +137,15 @@ class BaseController < ApplicationController
                       :user_id => @user.id
         })
       end
-    when 'schools'
-      if @school and @school.created_at
+    when 'spaces'
+      if @space and @space.created_at
         Status.create({:log => true,
-                      :logeable_name => @school.name,
+                      :logeable_name => @space.name,
                       :logeable_type => 'Space',
-                      :logeable_id => @school.id,
+                      :logeable_id => @space.id,
                       :log_action => params[:action],
                       :statusable_type => 'User',
-                      :statusable_id => @school.owner.id,
+                      :statusable_id => @space.owner.id,
                       :user_id => current_user.id
         })
       end

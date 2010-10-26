@@ -18,8 +18,8 @@ class Course < ActiveRecord::Base
   has_many :acquisitions
   has_many :favorites, :as => :favoritable, :dependent => :destroy
   has_many :annotations
-  has_one :school_asset, :as => :asset, :dependent => :destroy
-  has_one :school, :through => :school_asset#, :as => :asset
+  has_one :space_asset, :as => :asset, :dependent => :destroy
+  has_one :space, :through => :space_asset#, :as => :asset
   has_one :course_subject, :as => :courseable
   belongs_to :owner , :class_name => "User" , :foreign_key => "owner"
   belongs_to :courseable, :polymorphic => true, :dependent => :destroy

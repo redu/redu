@@ -2,7 +2,7 @@
 <div id="col_content">
 	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">redes</a> </div>
  	<div id="title">MINHAS REDES
-	<%= render :partial => "schools/taskbar" %>
+	<%= render :partial => "spaces/taskbar" %>
 	</div>
 	<div id="filter_bar">
 		
@@ -12,8 +12,8 @@
     </div>
     <div id="all_list">
     	
-		<% if @schools && @schools.length > 0 %>
- 			<%= render :partial => 'schools/item', :collection => @schools, :as => :school %> 
+		<% if @spaces && @spaces.length > 0 %>
+ 			<%= render :partial => 'spaces/item', :collection => @spaces, :as => :space %> 
  		<% else %>
  			Não há redes cadastradas ainda. <%= link_to 'Crie uma agora!', :action => 'new' %>
 		<% end %>

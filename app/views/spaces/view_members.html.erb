@@ -1,12 +1,12 @@
 <% content_for :page_id, 'group' %>
-<%- @meta = { :description => "#{@school.name}'s profile on #{AppConfig.community_name}.", :keywords => "#{@school.name}, #{@school.tags.join(", ") unless @school.tags.nil?}", :robots => AppConfig.robots_meta_show_content }%>
+<%- @meta = { :description => "#{@space.name}'s profile on #{AppConfig.community_name}.", :keywords => "#{@space.name}, #{@space.tags.join(", ") unless @space.tags.nil?}", :robots => AppConfig.robots_meta_show_content }%>
 
 <script type="text/javascript">
     function grantKeysToSchool(school_id){
         //alert(school_id);
         nKeys = document.getElementById('keys_number').value;
         
-        new Ajax.Request("<%= url_for :controller => :access_keys, :action => :grant_keys_to_school %>", {
+        new Ajax.Request("<%= url_for :controller => :access_keys, :action => :grant_keys_to_space %>", {
             method: 'get',
             parameters: "?id= " + school_id + "&number=" + nKeys,
             onComplete: function(request){
@@ -54,7 +54,7 @@
 		var adminLogin = $('admin_login').val();
 		var adminKey = $('admin_key').val();
 		
-		new Ajax.Request("<%= url_for :controller => :schools, :action => :create_school_admin %>", {
+		new Ajax.Request("<%= url_for :controller => :spaces, :action => :create_space_admin %>", {
             method: 'get',
             parameters: "?id= " + school_id + "&login=" + adminLogin + "&key=" + adminKey,
             onComplete: function(request){
@@ -68,7 +68,7 @@
 	}
 </script>
 
-<%= render :partial => "schools/school_info", :locals => {:school => @school,:show => false} %>
+<%= render :partial => "spaces/space_info", :locals => {:space => @space,:show => false} %>
 
 <div  class="grid_16">
 	<h3>Todos os <%= @member_type %></h3>
@@ -76,7 +76,7 @@
 
 <div class="main grid_16">
 
-<%= render :partial => "schools/user_vcard", :collection => @members, :as => :association %>
+<%= render :partial => "spaces/user_vcard", :collection => @members, :as => :association %>
 
 <div id="pagination" align="center" class="pagination">
 

@@ -7,6 +7,8 @@ class Myfile < ActiveRecord::Base
   before_destroy :delete_file_on_disk
   before_create :overwrite
 
+  has_attached_file :attachment, {}.merge(PAPERCLIP_MYFILES_OPTIONS)
+
   validates_attachment_presence :attachment
   validates_attachment_size :attachment,
     :less_than => 10.megabytes
@@ -14,8 +16,6 @@ class Myfile < ActiveRecord::Base
  
   belongs_to :folder
   belongs_to :user
-
-  has_attached_file :attachment, {}.merge(PAPERCLIP_MYFILES_OPTIONS)
 
   # When removing a myfile record from the database,
   # the actual file on disk has to be removed too.

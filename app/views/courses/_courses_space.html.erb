@@ -9,29 +9,29 @@
 
 <!--
 <ul id="actions_user">
-				<%  if current_user.can_post? @school %>
+				<%  if current_user.can_post? @space %>
 				   	 <li>
-				   	 	<%= link_to "Nova Aula", new_school_course_path(:school_id => @school.id) %>
+				   	 	<%= link_to "Nova Aula", new_space_course_path(:space_id => @space.id) %>
 					 </li>
 					 
 					 <li>
-				   	 	<%= link_to "Novo Exame", new_school_exam_path(:school_id => @school.id) %>
+				   	 	<%= link_to "Novo Exame", new_space_exam_path(:space_id => @space.id) %>
 					 </li>
 					 			 
 				<% end %>
 </ul> -->
 
 <ul id="actions_user">
-				<%  if current_user.can_post? @school %>
+				<%  if current_user.can_post? @space %>
 				   	 <li id="courses_sel" class="selected">
-				   	 	<%= link_to_remote "Aulas", :url => school_courses_path(:school_id => @school.id.to_s, :school_content => "true"), :method => :get, :loading => "select('courses')" %>
+				   	 	<%= link_to_remote "Aulas", :url => space_courses_path(:space_id => @space.id.to_s, :space_content => "true"), :method => :get, :loading => "select('courses')" %>
 					 </li>
 					  <li id="subjects_sel">
 				   	 	<%= link_to "Cursos", "#" %>
 			 
 					 </li>
 					  <li id="exams_sel">
-				   	 	<%= link_to_remote "Exames", :url => school_exams_path(:school_id => @school.id, :school_content => "true"), :method => :get, :loading => "select('exams')" %>
+				   	 	<%= link_to_remote "Exames", :url => space_exams_path(:space_id => @space.id, :space_content => "true"), :method => :get, :loading => "select('exams')" %>
 					 </li>
 					 <li><%= image_tag 'spinner.gif', :id => 'spinner', :style => "display: none; float:right;"%></li>
 					 			 
@@ -47,9 +47,9 @@
 	<%= render :partial => "course_list"%>
 	
 	
-	<% if @school.courses.size > 0 %>
+	<% if @space.courses.size > 0 %>
 	<span style="margin: 10px;">
-	<%= link_to "Ver todas >", courses_path(:school_id => @school.id)%>
+	<%= link_to "Ver todas >", courses_path(:space_id => @space.id)%>
 	</span>
 	<% end %>
 	

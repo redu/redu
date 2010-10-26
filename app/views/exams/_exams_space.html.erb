@@ -4,9 +4,9 @@
 			<%= render :partial => "exam_list"%>
 		</div>
 	
-	<% if @school.exams.size > 0 %>
+	<% if @space.exams.size > 0 %>
 	<span style="margin: 10px;">
-	<%= link_to "Ver todos >", exams_path(:school_id => @school.id)%>
+	<%= link_to "Ver todos >", exams_path(:space_id => @space.id)%>
 	</span>
 	<%end%>
 

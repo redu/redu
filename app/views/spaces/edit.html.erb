@@ -1,12 +1,12 @@
 <% content_for :page_id, 'group' %>
 <div class="main grid_16">
-<%= render :partial => "schools/school_info", :locals => {:school => @school,:show => false} %>
+<%= render :partial => "spaces/space_info", :locals => {:space => @space,:show => false} %>
 
 <div class="fake-tabs grid_16 alpha omega">
-	<%= render :partial => "schools/admin_taskbar" %>
+	<%= render :partial => "spaces/admin_taskbar" %>
 	<div class="panel squeeze">
 	
-	<% form_for(@school, :html => { :multipart => true }) do |f| %>
+	<% form_for(@space, :html => { :multipart => true }) do |f| %>
 		<%= f.error_messages %>
 		<%= render :partial => "general_step", :locals => { :f => f, :edit => true} %>
 		<%= render :partial => "settings_step", :locals => { :f => f, :edit => true } %>
@@ -18,11 +18,11 @@
 			<%end%>
 		</div>
 	  <p>
-		<%= f.submit 'Atualizar' %> ou <%= link_to 'Voltar', @school %><BR/><BR/>
+		<%= f.submit 'Atualizar' %> ou <%= link_to 'Voltar', @space %><BR/><BR/>
 	  </p>
 
 	<% end %>
-	<%= link_to 'Deletar rede', @school, 
+	<%= link_to 'Deletar rede', @space, 
 			:confirm => 'Você tem certeza que deseja remover esta rede?', :method => :delete %>
 	</div><!-- end panel -->
 </div><!-- end tabs -->

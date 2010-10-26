@@ -47,22 +47,22 @@ class EventsController < BaseController
 
   def show
     @event = Event.find(params[:id])
-    @school = Space.find(params[:school_id])
+    @space = Space.find(params[:space_id])
   end
 
   def index
-    @events = Event.approved.upcoming.paginate(:conditions => ["school_id = ? AND state LIKE 'approved'", Space.find(params[:school_id]).id],
+    @events = Event.approved.upcoming.paginate(:conditions => ["space_id = ? AND state LIKE 'approved'", Space.find(params[:space_id]).id],
                                       :include => :owner,
                                       :page => params[:page],
                                       :order => 'start_time',
                                       :per_page => AppConfig.items_per_page)
 
     @list_title = "Eventos Futuros"
-    @school = Space.find(params[:school_id])
+    @space = Space.find(params[:space_id])
   end
 
   def past
-    @events = Event.past.paginate(:conditions => ["school_id = ? AND state LIKE 'approved'", Space.find(params[:school_id]).id],
+    @events = Event.past.paginate(:conditions => ["space_id = ? AND state LIKE 'approved'", Space.find(params[:space_id]).id],
                                   :include => :owner,
                                   :page => params[:page],
                                   :order => 'start_time DESC',
@@ -74,7 +74,7 @@ class EventsController < BaseController
 
   def new
     @event = Event.new(params[:event])
-    @school = Space.find(params[:school_id])
+    @space = Space.find(params[:space_id])
   end
 
   def edit
@@ -88,21 +88,21 @@ class EventsController < BaseController
 
     @event = Event.new(params[:event])
     @event.owner = current_user
-    @event.school = Space.find(params[:school_id])
+    @event.space = Space.find(params[:space_id])
 
-    @school = @event.school
+    @space = @event.space
 
     respond_to do |format|
       if @event.save
 
-        if @event.owner.can_manage? @school
+        if @event.owner.can_manage? @space
           @event.approve!
           flash[:notice] = "O evento foi criado e divulgado."
         else
           flash[:notice] = "O evento foi criado e será divulgado assim que for aprovado pelo moderador."
         end
 
-        format.html { redirect_to school_event_path(@event.school, @event) }
+        format.html { redirect_to space_event_path(@event.space, @event) }
         format.xml  { render :xml => @event, :status => :created, :location => @event }
       else
         format.html { render :action => "new" }
@@ -117,7 +117,7 @@ class EventsController < BaseController
     respond_to do |format|
       if @event.update_attributes(params[:event])
         flash[:notice] = 'O evento foi editado.'
-        format.html { redirect_to school_event_path(@event.school, @event) }
+        format.html { redirect_to space_event_path(@event.space, @event) }
         format.xml { render :xml => @event, :status => :created, :location => @event }
       else
         format.html {
@@ -134,7 +134,7 @@ class EventsController < BaseController
 
     respond_to do |format|
       flash[:notice] = 'O evento foi excluído.'
-      format.html { redirect_to school_events_path(@event.school) }
+      format.html { redirect_to space_events_path(@event.space) }
     end
   end
 
@@ -156,12 +156,12 @@ class EventsController < BaseController
   def day
     day = Time.utc(Time.now.year, Time.now.month, params[:day])
 
-    @events = Event.paginate(:conditions => ["school_id = ? AND state LIKE 'approved' AND ? BETWEEN start_time AND end_time", Space.find(params[:school_id]).id, day],
+    @events = Event.paginate(:conditions => ["space_id = ? AND state LIKE 'approved' AND ? BETWEEN start_time AND end_time", Space.find(params[:space_id]).id, day],
                              :include => :owner,
                              :page => params[:page],
                              :order => 'start_time DESC',
                              :per_page => AppConfig.items_per_page)
-    @school = Space.find(params[:school_id])
+    @space = Space.find(params[:space_id])
 
     @list_title = "Eventos do dia #{day.strftime("%d/%m/%Y")}"
     render :template => 'events/index'
@@ -173,27 +173,27 @@ class EventsController < BaseController
     Delayed::Job.enqueue(EventMailingJob.new(current_user, event), nil, notification_time) #TODO Verificar se a prioridade nil (zero) pode trazer problemas
     flash[:notice] = "Sua notificação foi agendada."
 
-    redirect_to school_event_path(event.school_id, event)
+    redirect_to space_event_path(event.space_id, event)
   end
 
   protected
   def can_manage_required
     @event = Event.find(params[:id])
 
-    current_user.can_manage?(@event, @school) ? true : access_denied
+    current_user.can_manage?(@event, @space) ? true : access_denied
   end
 
   def is_member_required
-    @school = Space.find(params[:school_id])
+    @space = Space.find(params[:space_id])
 
-    current_user.has_access_to(@school) ? true : access_denied
+    current_user.has_access_to(@space) ? true : access_denied
   end
 
   def is_event_approved
     @event = Event.find(params[:id])
 
     if not @event.state == "approved"
-      redirect_to school_events_path
+      redirect_to space_events_path
     end
   end
 end

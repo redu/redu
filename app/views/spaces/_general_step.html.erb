@@ -48,9 +48,9 @@ function stripVowelAccent(str) {
 
 
 	function generatePath(nameField){
-		document.getElementById("school_path").value = (nameField.value).NormaliseUrl();
+		document.getElementById("space_path").value = (nameField.value).NormaliseUrl();
 
-		//document.getElementById("school_path").value = (nameField.value).replace(/[^a-zA-Z0-9_]+/g, '');
+		//document.getElementById("space_path").value = (nameField.value).replace(/[^a-zA-Z0-9_]+/g, '');
 	}
 
 </script>
@@ -81,13 +81,13 @@ function stripVowelAccent(str) {
 <% field_set_tag 'Informações Gerais' do %>
 	<%= f.label "Nome" %>
 	<%= f.text_field :name ,  :onkeyup => ((edit) ? nil : "generatePath(this)") %>
-	<%= error_for :school, :name %>
+	<%= error_for :space, :name %>
 
 	<%= f.label "Caminho" %>
-	<div id="school-path">
+	<div id="space-path">
 	<span class="generate-path">www.redu.com.br/</span><%= f.text_field :path %>
 	</div>
-	<%= error_for :school, :path %>
+	<%= error_for :space, :path %>
 
 	<% random_number = get_random_number%>
 	<%= f.label "Descrição:" %>
@@ -95,7 +95,7 @@ function stripVowelAccent(str) {
 	<%= f.text_area :description, :size => "50x3", :class => "desc-#{random_number}" %>
 	<%= render :partial => 'shared/limit_char_field', :locals => { :class_textarea => "desc-#{random_number}" }%>
 	</div>
-	<%= error_for :school, :description %>
+	<%= error_for :space, :description %>
 
 	<%= f.label "Imagem <span class='snippet'>(tamanho recomendado: 200 x 64)</span>" %>
 	<%= f.file_field :avatar %>
@@ -107,18 +107,18 @@ function stripVowelAccent(str) {
 
 <% field_set_tag 'Categorias' do %>
 <span class="snippet" style"width:100%; float: left;">Selecione uma ou mais categorias de acordo com a área de atuação da rede: </span>
-<%= error_for :school, :categories %>
+<%= error_for :space, :categories %>
 	<%= columnize_categories %>
 <% end %>
 
 
 <% field_set_tag 'Audiência' do %>
 <span class="snippet">Selecionar um público que não corresponde ao propósito da rede pode levar à uma má avaliação. </span>
-<%= error_for :school, :audiences %>
+<%= error_for :space, :audiences %>
 <ul>
 <% for audience in Audience.find(:all) %>
 	<li>
-	  <%= check_box_tag "school[audience_ids][]", audience.id, @school.audiences.include?(audience) %>
+	  <%= check_box_tag "space[audience_ids][]", audience.id, @space.audiences.include?(audience) %>
 	  <%= audience.name %>
 	</li>
 <% end %>

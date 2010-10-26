@@ -1,10 +1,10 @@
 <% content_for :page_id, 'group' %>
-<%- @meta = { :description => "#{@school.name}'s profile on #{AppConfig.community_name}.", :keywords => "#{@school.name}, #{@school.tags.join(", ") unless @school.tags.nil?}", :robots => AppConfig.robots_meta_show_content }%>
+<%- @meta = { :description => "#{@space.name}'s profile on #{AppConfig.community_name}.", :keywords => "#{@space.name}, #{@space.tags.join(", ") unless @space.tags.nil?}", :robots => AppConfig.robots_meta_show_content }%>
 
 
 <script type="text/javascript">
-var schoolFoldersPath = "<%= school_folders_path(:school_id => @school.id.to_s) %>";
-var schoolCoursesPath = "<%= school_courses_path(:school_id => @school.id.to_s) %>";
+var schoolFoldersPath = "<%= space_folders_path(:space_id => @space.id.to_s) %>";
+var schoolCoursesPath = "<%= space_courses_path(:space_id => @space.id.to_s) %>";
 var schoolGroupsPath = "";
 
 var $schooltabs;
@@ -62,9 +62,9 @@ $(document).ready(function() {
 });
 </script>
 
-<%= render :partial => "schools/school_info", :locals => {:show => true} %>
+<%= render :partial => "spaces/space_info", :locals => {:show => true} %>
 <div class="grid_16">
-  <%= render :partial => "schools/sidebar", :locals => {:school => @school} %>
+  <%= render :partial => "spaces/sidebar", :locals => {:space => @space} %>
 
   <div class="main grid_12 omega">
     <div class="school-tabs tabs">
@@ -82,12 +82,12 @@ $(document).ready(function() {
         <% end %>
         <div class="statistics">
           <span class="call"><span>Eventos</span></span>
-          <% if @school.events and @school.events.approved.upcoming.size > 0 %>
-            <%= render :partial => 'events/upcoming', :object => @school.events.approved.upcoming%>
-            <%= link_to 'Ver todos', school_events_path(@school), :class=>"more" %> 
+          <% if @space.events and @space.events.approved.upcoming.size > 0 %>
+            <%= render :partial => 'events/upcoming', :object => @space.events.approved.upcoming%>
+            <%= link_to 'Ver todos', space_events_path(@space), :class=>"more" %> 
           <% else %>
             <div class="box_notice">
-              Nenhum evento foi enviado ainda. <%= link_to 'Crie uma agora!', new_school_event_path(@school) %>
+              Nenhum evento foi enviado ainda. <%= link_to 'Crie uma agora!', new_space_event_path(@space) %>
           </div>
         <% end %>
       </div><!-- end news -->
@@ -95,10 +95,10 @@ $(document).ready(function() {
         <span class="call"><span>Notícias</span></span>
         <% if @bulletins && @bulletins.size > 0 %>
           <%= render :partial => 'bulletins/headlines', :object => @bulletins  %>
-          <%= link_to 'Ver todos', school_bulletins_path(@school), :class=>"more" %> 
+          <%= link_to 'Ver todos', space_bulletins_path(@space), :class=>"more" %> 
         <% else %>
           <div class="box_notice">
-            Nenhuma notícia foi enviada ainda. <%= link_to 'Envie uma agora!', new_school_bulletin_path(@school) %>
+            Nenhuma notícia foi enviada ainda. <%= link_to 'Envie uma agora!', new_space_bulletin_path(@space) %>
         </div>
       <% end %>
     </div><!-- end noticias -->
@@ -106,14 +106,14 @@ $(document).ready(function() {
 
   <div id="tabs-5">
     <%= javascript_include_tag 'flow.js' %>
-    <%= render :partial => "statuses/create_status", :locals => {:status => @status, :statusable => @school }%>
+    <%= render :partial => "statuses/create_status", :locals => {:status => @status, :statusable => @space }%>
     <ul class="activities">
-      <%= render :partial => "statuses/type_proxy", :collection => @statuses, :as => :status, :locals => {:statusable => @school } %>
+      <%= render :partial => "statuses/type_proxy", :collection => @statuses, :as => :status, :locals => {:statusable => @space } %>
     </ul><!-- end activities -->			
 
     <% unless @statuses.length < 10%>
       <div id="more">
-        <%= link_to_remote "mais", :url => {:controller => :statuses, :action => :more, :id => @school.id, :type => 'school', :offset => 10, :limit => 10}, :method =>:get, :loading => "$('#more').html('"+escape_javascript(image_tag('spinner.gif'))+"')"%>
+        <%= link_to_remote "mais", :url => {:controller => :statuses, :action => :more, :id => @space.id, :type => 'space', :offset => 10, :limit => 10}, :method =>:get, :loading => "$('#more').html('"+escape_javascript(image_tag('spinner.gif'))+"')"%>
       </div>
     <% end %>
 

@@ -59,7 +59,7 @@ font-size: 0.8em;
 </style>
 
 <% content_for :page_id, 'group' %>
-<%- @meta = { :description => "Perfil da rede #{@school.name} no #{AppConfig.community_name}.", :keywords => "#{@school.name}, #{@school.tags.join(", ") unless @school.tags.nil?}", :robots => AppConfig.robots_meta_show_content }%>
+<%- @meta = { :description => "Perfil da rede #{@space.name} no #{AppConfig.community_name}.", :keywords => "#{@space.name}, #{@space.tags.join(", ") unless @space.tags.nil?}", :robots => AppConfig.robots_meta_show_content }%>
 
 
 
@@ -68,25 +68,25 @@ font-size: 0.8em;
 
 <div id="resume" class="grid_12 push_2">
     <div class="left">
-        <%= image_tag @school.avatar_photo_url(:medium) %>
+        <%= image_tag @space.avatar_photo_url(:medium) %>
     </div>
     <div class="right">
         <div>
-            <h3><%= @school.name %></h3>
-            <span class="desc"><%= @school.description %></span>
+            <h3><%= @space.name %></h3>
+            <span class="desc"><%= @space.description %></span>
             <span>12 membros</span>
-            <span>Participação: <%= subscription_type(@school) %></span>
-            <span>Submissão: <%= submission_type(@school) %></span>
-						<% if school_association_pending? %>
+            <span>Participação: <%= subscription_type(@space) %></span>
+            <span>Submissão: <%= submission_type(@space) %></span>
+						<% if space_association_pending? %>
 							<span class="box_notice">Sua solicitação foi feita, aguarde a autorização dos moderadores da rede.</span>
-						<% elsif school_association_disaproved? %>
+						<% elsif space_association_disaproved? %>
 							<span class="box_notice">Por algum motivo, você não foi aceito pelo moderador.</span>
 						<% else %>
-							<%= link_to "ENTRAR", join_school_path(@school), :class => "join-btn"%>
+							<%= link_to "ENTRAR", join_space_path(@space), :class => "join-btn"%>
 						<% end %>
         </div>
         <ul class="clearfix">
-            <%= render :partial => 'schools/member_short', :collection => @school.users, :as => :member %>
+            <%= render :partial => 'spaces/member_short', :collection => @space.users, :as => :member %>
         </ul>
     </div>
 </div>

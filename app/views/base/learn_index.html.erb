@@ -122,13 +122,13 @@
     <span class="call"><span>Suas redes (4)</span></span>
     <div class="followship box clearfix">
         <ul class="clearfix">
-	    <% unless @schools.empty? %>
-		<% @schools.each do |school| %>
-	    	  <li><%= link_to image_tag(school.avatar_photo_url(:thumb), {:width => "50", :height=>"45", :border => 0 }), school %>
+	    <% unless @spaces.empty? %>
+		<% @spaces.each do |space| %>
+	    	  <li><%= link_to image_tag(space.avatar_photo_url(:thumb), {:width => "50", :height=>"45", :border => 0 }), space %>
 		<% end %>
 	    <% end %>
         </ul>
-        <%= link_to 'Ver mais', schools_path, :class => 'icon more' %>
+        <%= link_to 'Ver mais', spaces_path, :class => 'icon more' %>
     </div>
     </li>
     </ul>        

@@ -1,10 +1,10 @@
 <% content_for :page_id, 'group' %>
 <div class="main grid_16">
-<%= render :partial => "schools/school_info", :locals => {:school => @school,:show => false} %>
+<%= render :partial => "spaces/space_info", :locals => {:space => @space,:show => false} %>
 <div class="fake-tabs grid_16 alpha omega">
-	<%= render :partial => "schools/admin_taskbar" %>
+	<%= render :partial => "spaces/admin_taskbar" %>
 	<div class="panel">
-	<% form_for @school, :url => {:action => :set_theme, :id => @school.id} do |f| %>
+	<% form_for @space, :url => {:action => :set_theme, :id => @space.id} do |f| %>
 
 	
 	<div style ="width: 100%; float: left; padding: 30px;">

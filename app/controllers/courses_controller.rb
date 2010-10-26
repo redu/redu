@@ -127,12 +127,12 @@ class CoursesController < BaseController
       render((@user == current_user) ? "user_courses_private" :  "user_courses_public")
       return
 
-    elsif params[:school_id] # aulas da escola
-      @school = Space.find(params[:school_id])
+    elsif params[:space_id] # aulas da escola
+      @space = Space.find(params[:space_id])
       if params[:search] # search aulas da escola
-        @courses = @school.courses.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
+        @courses = @space.courses.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
       else
-        @courses = @school.courses.paginate(paginating_params)
+        @courses = @space.courses.paginate(paginating_params)
       end
     else # index (Course)
       if params[:search] # search
@@ -147,7 +147,7 @@ class CoursesController < BaseController
       format.xml  { render :xml => @courses }
 
       format.js  do
-        if params[:school_content]
+        if params[:space_content]
 
           render :update do |page|
             page.replace_html  'content_list', :partial => 'course_list'
@@ -155,7 +155,7 @@ class CoursesController < BaseController
           end
         elsif params[:tab]
           render :update do |page|
-            page.replace_html  'tabs-2-content', :partial => 'courses_school'
+            page.replace_html  'tabs-2-content', :partial => 'courses_space'
           end
         else
           render :index
@@ -167,7 +167,7 @@ class CoursesController < BaseController
   # GET /courses/1
   # GET /courses/1.xml
   def show
-    @school = Space.find(params[:school_id]) if params[:school_id]
+    @space = Space.find(params[:space_id]) if params[:space_id]
     update_view_count(@course)
 
     if @course.removed
@@ -211,8 +211,8 @@ class CoursesController < BaseController
   # GET /courses/new
   # GET /courses/new.xml
   def new
-    if params[:school_id]
-      @school = Space.find(params[:school_id])
+    if params[:space_id]
+      @space = Space.find(params[:space_id])
     end
 
     case params[:step]
@@ -221,7 +221,7 @@ class CoursesController < BaseController
       @course = Course.find(session[:course_id])
 
       unless @course #curso não foi encontrado ou nao está mais na sessão
-        redirect_to new_course_path :school_id => params[:school_id]
+        redirect_to new_course_path :space_id => params[:space_id]
       end
 
       if @course.courseable_type == 'Seminar'
@@ -237,7 +237,7 @@ class CoursesController < BaseController
       end
     when "3"
       @course = Course.find(session[:course_id])
-      @schools = current_user.schools
+      @spaces = current_user.spaces
 
       @course.enable_validation_group :step3
       render "step3" and return
@@ -287,10 +287,10 @@ class CoursesController < BaseController
           session[:course_id] = @course.id
 
           format.html {
-            redirect_to :action => :new, :step => "2", :school_id => params[:school_id]
+            redirect_to :action => :new, :step => "2", :space_id => params[:space_id]
           }
         else
-          @school = Space.find(params[:school_id]) if params[:school_id]
+          @space = Space.find(params[:space_id]) if params[:space_id]
           format.html { render "step1" }
         end
       end
@@ -321,12 +321,12 @@ class CoursesController < BaseController
             if @course.save
 
               format.html do
-                redirect_to :action => :new , :course_type => params[:courseable_type], :step => "3", :school_id => params[:school_id]
+                redirect_to :action => :new , :course_type => params[:courseable_type], :step => "3", :space_id => params[:space_id]
               end
 
               format.js do
                 render :update do |page|
-                  page << "window.location.replace('#{ url_for :action => :new , :course_type => params[:courseable_type], :step => "3", :school_id => params[:school_id] }')"
+                  page << "window.location.replace('#{ url_for :action => :new , :course_type => params[:courseable_type], :step => "3", :space_id => params[:space_id] }')"
                   page << "$('.errorMessageField').remove()"
                 end
               end
@@ -352,7 +352,7 @@ class CoursesController < BaseController
           if @course.save
 
             format.html do
-              redirect_to :action => :new , :course_type => params[:courseable_type], :step => "3", :school_id => params[:school_id]
+              redirect_to :action => :new , :course_type => params[:courseable_type], :step => "3", :space_id => params[:space_id]
             end
             format.js do
               render :update do |page|
@@ -380,7 +380,7 @@ class CoursesController < BaseController
           if @course.save
 
             format.html {
-              redirect_to :action => :new , :courseable_type => params[:courseable_type], :step => "3", :school_id => params[:school_id]
+              redirect_to :action => :new , :courseable_type => params[:courseable_type], :step => "3", :space_id => params[:space_id]
             }
           else
             format.html { render "step2_page" }
@@ -391,10 +391,10 @@ class CoursesController < BaseController
 
     when "3"
       @course = Course.find(session[:course_id])
-      @submited_to_school = false
+      @submited_to_space = false
       if params[:post_to]
-        SpaceAsset.create({:asset_type => "Course", :asset_id => @course.id, :school_id => params[:post_to].to_i})
-        @school = Space.find(params[:post_to])
+        SpaceAsset.create({:asset_type => "Course", :asset_id => @course.id, :space_id => params[:post_to].to_i})
+        @space = Space.find(params[:post_to])
       end
 
       @course.published = true # se o usuário completou os 3 passos então o curso está publicado
@@ -408,13 +408,13 @@ class CoursesController < BaseController
         end
       end
 
-      if @school
-        if @school.submission_type = 1 # todos podem postar
+      if @space
+        if @space.submission_type = 1 # todos podem postar
           params[:course][:state] = "approved"
-        elsif @school.submission_type = 2 # todos com moderação
+        elsif @space.submission_type = 2 # todos com moderação
           params[:course][:state] = "waiting"
-        elsif @school.submission_type = 3 # apenas professores
-          if current_user.can_post @school
+        elsif @space.submission_type = 3 # apenas professores
+          if current_user.can_post @space
             params[:course][:state] = "rejected"
           else
             params[:course][:state] = "approved"
@@ -434,20 +434,20 @@ class CoursesController < BaseController
           if @course.courseable_type == 'Seminar' or  @course.courseable_type == 'InteractiveClass'
 
             format.html do
-              if @school
-                if @school.submission_type = 1 # todos podem postar
+              if @space
+                if @space.submission_type = 1 # todos podem postar
                   #mostra aulas da escola
                   flash[:notice] = 'Aula foi criada com sucesso e está disponível na rede.'
-                  redirect_to school_courses_path(:school_id => params[:post_to].to_i, :id => @course.id)
+                  redirect_to space_courses_path(:space_id => params[:post_to].to_i, :id => @course.id)
 
-                elsif @school.submission_type = 2 # todos com moderação
+                elsif @space.submission_type = 2 # todos com moderação
                   flash[:notice] = 'Aula foi criada com sucesso e está em processo de moderação.'
                   redirect_to waiting_user_courses_path(current_user.id)
-                elsif @school.submission_type = 3 # apenas professores
+                elsif @space.submission_type = 3 # apenas professores
                   flash[:notice] = 'Aula não pode ser publicada nessa escola pois apenas professores podem postar.'
                   redirect_to @course
                 else
-                  redirect_to school_course_path(:school_id => params[:post_to].to_i, :id => @course.id)
+                  redirect_to space_course_path(:space_id => params[:post_to].to_i, :id => @course.id)
                 end
 
 

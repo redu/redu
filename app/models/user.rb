@@ -56,9 +56,9 @@ class User < ActiveRecord::Base
   # ASSOCIATIONS
   has_many :annotations, :dependent => :destroy, :include=> :course
   has_one :beta_key, :dependent => :destroy
-  has_many :user_school_association, :dependent => :destroy
-  has_many :schools, :through => :user_school_association
-  has_many :schools_owned, :class_name => "Space" , :foreign_key => "owner"
+  has_many :user_space_association, :dependent => :destroy
+  has_many :spaces, :through => :user_space_association
+  has_many :spaces_owned, :class_name => "Space" , :foreign_key => "owner"
   has_many :statuses, :as => :statusable, :dependent => :destroy
 
   # FOLLOWSHIP
@@ -222,19 +222,19 @@ class User < ActiveRecord::Base
 
   end
 
-  def can_manage?(entity, school=nil)
+  def can_manage?(entity, space=nil)
 
     case entity.class.to_s
     when 'Course'
-      (entity.owner == self || (entity.school == school && self.school_admin?(school) ))
+      (entity.owner == self || (entity.space == space && self.space_admin?(space) ))
     when 'Exam'
-      (entity.owner == self || (entity.school == school && self.school_admin?(school) ))
+      (entity.owner == self || (entity.space == space && self.space_admin?(space) ))
     when 'Space'
-      (entity.owner == self || self.school_admin?(entity))
+      (entity.owner == self || self.space_admin?(entity))
     when 'Event'
-      (entity.owner == self || (entity.school.id == school.id && self.school_admin?(school) ))
+      (entity.owner == self || (entity.space.id == space.id && self.space_admin?(space) ))
     when 'Bulletin'
-      (entity.owner == self || (entity.school == school && self.school_admin?(school) ))
+      (entity.owner == self || (entity.space == space && self.space_admin?(space) ))
 
     end
   end
@@ -245,13 +245,13 @@ class User < ActiveRecord::Base
     case entity.class.to_s
     when 'Course'
 
-      (entity.public || (entity.school && self.schools.include?(entity.school)))
+      (entity.public || (entity.space && self.spaces.include?(entity.space)))
       #    when 'Exam'
-      #      (entity.owner == self || (entity.school == school && self.school_admin?(school) ))
+      #      (entity.owner == self || (entity.space == space && self.space_admin?(space) ))
     when 'Space'
-      (self.school_admin?(entity) || (self.schools.include?(entity) && self.get_association_with(entity).status == "approved"))
+      (self.space_admin?(entity) || (self.spaces.include?(entity) && self.get_association_with(entity).status == "approved"))
       #    when 'Event'
-      #       (entity.owner == self || (entity.school == school && self.school_admin?(school) ))
+      #       (entity.owner == self || (entity.space == space && self.space_admin?(space) ))
     end
 
     #TODO
@@ -261,7 +261,7 @@ class User < ActiveRecord::Base
   end
 
   def can_be_owner?(entity)
-    self.admin? || self.school_admin?(entity.id) || self.teacher?(entity) || self.coordinator?(entity)
+    self.admin? || self.space_admin?(entity.id) || self.teacher?(entity) || self.coordinator?(entity)
   end
 
   def moderator_of?(forum)
@@ -502,17 +502,17 @@ class User < ActiveRecord::Base
     role && role.eql?(Role[:member])
   end
 
-  # school roles
-  def can_post?(school)
-    if not self.get_association_with(school)
+  # space roles
+  def can_post?(space)
+    if not self.get_association_with(space)
       return false
     end
 
-    if school.submission_type == 1 or school.submission_type == 2 # all
+    if space.submission_type == 1 or space.submission_type == 2 # all
       return true
-    elsif school.submission_type == 3 #teachers and admin
-      user_role = self.get_association_with(school).role
-      if user_role.eql?(Role[:teacher]) or user_role.eql?(Role[:school_admin])
+    elsif space.submission_type == 3 #teachers and admin
+      user_role = self.get_association_with(space).role
+      if user_role.eql?(Role[:teacher]) or user_role.eql?(Role[:space_admin])
         return true
       else
         return false
@@ -521,29 +521,29 @@ class User < ActiveRecord::Base
 
   end
 
-  def get_association_with(school_id)
-    return false unless school_id
-    @school = Space.find(school_id) #TODO performance -
-    association = UserSpaceAssociation.find(:first, :conditions => ['user_id = ? AND school_id = ?', self.id, @school.id])
+  def get_association_with(space_id)
+    return false unless space_id
+    @space = Space.find(space_id) #TODO performance -
+    association = UserSpaceAssociation.find(:first, :conditions => ['user_id = ? AND space_id = ?', self.id, @space.id])
   end
 
-  def teacher?(school)
-    association = get_association_with school
+  def teacher?(space)
+    association = get_association_with space
     association && association.role && association.role.eql?(Role[:teacher])
   end
 
-  def coordinator?(school)
-    association = get_association_with school
+  def coordinator?(space)
+    association = get_association_with space
     association && association.role && association.role.eql?(Role[:coordinator])
   end
 
-  def school_admin?(school_id)
-    association = get_association_with school_id
-    association && association.role && association.role.eql?(Role[:school_admin])
+  def space_admin?(space_id)
+    association = get_association_with space_id
+    association && association.role && association.role.eql?(Role[:space_admin])
   end
 
-  def student?(school)
-    association = get_association_with school
+  def student?(space)
+    association = get_association_with space
     association && association.role && association.role.eql?(Role[:student])
   end
 

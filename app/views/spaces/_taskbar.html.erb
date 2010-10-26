@@ -1,7 +1,7 @@
  	<%  if logged_in? %>
   <div id="task_bar_exames">
   <%= link_to 'Nova Rede', :action => 'new' %> | 
-  <%= link_to 'Minhas Redes', member_user_schools_path(current_user.id) %> |
-  <%= link_to 'Redes Criadas por Mim', owner_user_schools_path(current_user.id) %>
+  <%= link_to 'Minhas Redes', member_user_spaces_path(current_user.id) %> |
+  <%= link_to 'Redes Criadas por Mim', owner_user_spaces_path(current_user.id) %>
   </div>
 	<% end %>

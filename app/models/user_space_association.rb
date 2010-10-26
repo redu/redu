@@ -1,7 +1,7 @@
 class UserSpaceAssociation < ActiveRecord::Base
 
   belongs_to :user
-  belongs_to :school
+  belongs_to :space
 
   belongs_to :access_key
   has_enumerated :role 
@@ -11,13 +11,13 @@ class UserSpaceAssociation < ActiveRecord::Base
 
   protected
   def increment_members_count
-    self.school.members_count += 1
-    self.school.save
+    self.space.members_count += 1
+    self.space.save
   end
 
   def decrement_members_count
-    self.school.members_count -= 1
-    self.school.save
+    self.space.members_count -= 1
+    self.space.save
   end
 
 end

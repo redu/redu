@@ -32,7 +32,7 @@ title2 = titles.split('-')[1]
   <%end%>
 
   <% field_set_tag 'Redes' do %>
-    <%= f.select :school_id, current_user.schools.collect{|m|[m.name,m.id ]}, {:include_blank => true} %>
+    <%= f.select :space_id, current_user.spaces.collect{|m|[m.name,m.id ]}, {:include_blank => true} %>
   <%end%>
 
 </div>

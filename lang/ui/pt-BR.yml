@@ -64,7 +64,7 @@ pt-BR:
             name: ": Por favor escolha um título maior que 6 caracteres."
             questions:
               invalid: ": Escolha uma alternativa correta em cada questão!"
-        school:
+        space:
           attributes:
             path:
               invalid: ": caminho inválido."
@@ -1245,8 +1245,8 @@ pt-BR:
   #en: sb_post_was_deleted: Post '{{title}}' was deleted.
   sb_post_was_deleted: "Post '{{title}}' was deleted."
   #en: scrapbook: Scrapbook
-   #en: school: Escola
-  school: Escola
+   #en: space: Escola
+  space: Escola
   scrapbook: Scrapbook
   #en: search: Search
   search: Search

@@ -75,8 +75,8 @@ class Status < ActiveRecord::Base
 
   # Dada uma rede, retorna os status postados na mesma
   def Status.group_statuses(group)
-    sql = "SELECT s.* FROM statuses s, user_school_associations a " + \
-      "WHERE a.school_id = #{group.id} " + \
+    sql = "SELECT s.* FROM statuses s, user_space_associations a " + \
+      "WHERE a.space_id = #{group.id} " + \
     "AND s.user_id = a.user_id " + \
       "ORDER BY s.created_at DESC "
 

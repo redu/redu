@@ -2,7 +2,7 @@
 	<fieldset><legend>Notícia</legend>
 	<%= f.error_messages %>
 
-	<%= hidden_field_tag("school_id", params[:school_id]) %>
+	<%= hidden_field_tag("space_id", params[:space_id]) %>
 
 	<%= f.label "Título" %>
 	<%= f.text_field :title %>
@@ -22,5 +22,5 @@
 	</fieldset>
 <% end %>
 
-<%= link_to 'Ver todas', school_bulletins_path(@school) %>
+<%= link_to 'Ver todas', space_bulletins_path(@space) %>
 

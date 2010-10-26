@@ -58,7 +58,7 @@ class StatusesController < BaseController
     case params[:type]
     when 'user'
       @statusable = User.find(params[:id])
-    when 'school'
+    when 'space'
       @statusable = Space.find(params[:id])
     end
 

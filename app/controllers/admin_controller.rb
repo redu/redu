@@ -17,17 +17,17 @@ class AdminController < BaseController
     end
   end
 
-  def moderate_school
-    @removed_schools = Space.all(:conditions => ["id IN (?)", params[:schools].join(',')]) unless params[:schools].empty?
+  def moderate_space
+    @removed_spaces = Space.all(:conditions => ["id IN (?)", params[:spaces].join(',')]) unless params[:spaces].empty?
 
-    Space.update_all("removed = 1", "id IN (?)", params[:schools].join(', '))
+    Space.update_all("removed = 1", "id IN (?)", params[:spaces].join(', '))
 
-    for school in @removed_schools # TODO fazer um remove all?
-      UserNotifier.deliver_remove_school(school) # TODO fazer isso em batch
+    for space in @removed_spaces # TODO fazer um remove all?
+      UserNotifier.deliver_remove_space(space) # TODO fazer isso em batch
       #course.destroy #TODO fazer isso automaticamente após 30 dias
     end
     flash[:notice] = 'Redes moderadas!'
-    redirect_to admin_moderate_schools_path
+    redirect_to admin_moderate_spaces_path
   end
 
   def moderate_exams
@@ -141,8 +141,8 @@ class AdminController < BaseController
     end
   end
 
-  def schools
-    @schools = Space.paginate(:conditions => ["public = 1 AND removed = 0"],
+  def spaces
+    @spaces = Space.paginate(:conditions => ["public = 1 AND removed = 0"],
                                :include => :owner,
                                :page => params[:page],
                                :order => 'created_at DESC',

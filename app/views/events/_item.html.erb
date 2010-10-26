@@ -12,7 +12,7 @@
   </div>
   </div>
   <div class="grid_8 last">
-  <span class="name"><%= link_to item.name, school_event_path(item.school, item) %></span>
+  <span class="name"><%= link_to item.name, space_event_path(item.space, item) %></span>
   <span class="tagline"><%= item.tagline %></span>
     <%= render :partial => 'tags/tags', :object => item.tags  %>
   </div>

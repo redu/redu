@@ -8,7 +8,7 @@ class Subject < ActiveRecord::Base
   has_many :course_subjects, :dependent => :destroy
   has_many :enrollments, :dependent => :destroy
   belongs_to :user
-  belongs_to :school
+  belongs_to :space
 
   # METODOS DO WIZARD
 	# accessors 

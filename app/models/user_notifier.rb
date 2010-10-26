@@ -8,35 +8,35 @@ class UserNotifier < ActionMailer::Base
   ActionMailer::Base.default_url_options[:host] = APP_URL.sub('http://', '')
 
   ### SENT BY MEMBERS OF SCHOOL
-  def pending_membership(user,school)
+  def pending_membership(user,space)
     setup_sender_info
-    @recipients  = "#{school.owner.email}"
+    @recipients  = "#{space.owner.email}"
     @subject     = "Redes Redu: Participação pendente"
     @sent_on     = Time.now
     @body[:user] = user
-    @body[:url]  = admin_requests_school_url(school)
-    @body[:school]  = school
+    @body[:url]  = admin_requests_space_url(space)
+    @body[:space]  = space
   end
 
   ### SENT BY ADMIN SCHOOL
-  def approve_membership(user, school)
+  def approve_membership(user, space)
     setup_sender_info
     @recipients  = "#{user.email}"
-    @subject     = "Sua participacão na rede \"#{school.name}\" foi aprovada!"
+    @subject     = "Sua participacão na rede \"#{space.name}\" foi aprovada!"
     @sent_on     = Time.now
     @body[:user] = user
-    @body[:url]  = school.permalink
-    @body[:school]  = school
+    @body[:url]  = space.permalink
+    @body[:space]  = space
   end
 
-  def remove_membership(user, school)
+  def remove_membership(user, space)
     setup_sender_info
     @recipients  = "#{user.email}"
-    @subject     = "Sua participacão na rede \"#{school.name}\" foi cancelada"
+    @subject     = "Sua participacão na rede \"#{space.name}\" foi cancelada"
     @sent_on     = Time.now
     @body[:user] = user
-    @body[:url]  = school.permalink
-    @body[:school]  = school
+    @body[:url]  = space.permalink
+    @body[:space]  = space
   end
 
   ### ADMIN REDU
@@ -68,13 +68,13 @@ class UserNotifier < ActionMailer::Base
     @body[:user] = user
   end
 
-  def remove_school(school)
+  def remove_space(space)
     setup_sender_info
-    @recipients  = "#{school.owner.email}"
-    @subject     = "A rede \"#{school.name}\" foi removida do Redu"
+    @recipients  = "#{space.owner.email}"
+    @subject     = "A rede \"#{space.name}\" foi removida do Redu"
     @sent_on     = Time.now
-    @body[:user] = school.owner
-    @body[:school]  = school
+    @body[:user] = space.owner
+    @body[:space]  = space
   end
 
   def approve_course(course)
@@ -120,12 +120,12 @@ class UserNotifier < ActionMailer::Base
   def event_notification(user, event)
     setup_sender_info
     @recipients  = "#{user.email}"
-    @subject     = "Lembre-se do evento da rede #{event.school.name}"
+    @subject     = "Lembre-se do evento da rede #{event.space.name}"
     @sent_on     = Time.now
     @body[:user] = user
     @body[:event] = event
-    @body[:event_url]  = school_event_url(event.school, event)
-    @body[:school] = event.school
+    @body[:event_url]  = space_event_url(event.space, event)
+    @body[:space] = event.space
   end
 
   def contact_redu(contact)

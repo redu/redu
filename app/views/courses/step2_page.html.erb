@@ -1,14 +1,14 @@
 <div class="grid_16">
 <div id="breadcrumbs">
-		<% if @school %>
-	<a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <%= link_to @school.name, @school %> > nova aula
+		<% if @space %>
+	<a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <%= link_to @space.name, @space %> > nova aula
 	<% else %>
 	<a href="<%=application_url%>">início</a> > <a href="#">ensinar</a> > nova aula
 	<%end %>
 </div>
 </div>
 	
-<%= render(:partial => "schools/school_info", :locals=>{:show => false}) if @school%>
+<%= render(:partial => "spaces/space_info", :locals=>{:show => false}) if @space%>
 
 <h3 class="call">Novo artigo </h3>
 
@@ -30,7 +30,7 @@
 <%= f.error_messages %>
 
 <%= hidden_field_tag("step", "2", options = {})%>
-	<%= hidden_field_tag("school_id", @school.id) if @school %>
+	<%= hidden_field_tag("space_id", @space.id) if @space %>
 	
 	<div class="grid_12 push_2">
     <%= f.text_area :body, :class => "mceEditor"%>

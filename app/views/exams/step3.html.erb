@@ -1,13 +1,13 @@
 <div class="grid_16">
 <div id="breadcrumbs">
-		<% if @school %>
-	<a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <%= link_to @school.name, @school %> > novo exame
+		<% if @space %>
+	<a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <%= link_to @space.name, @space %> > novo exame
 	<% else %>
 	<a href="<%=application_url%>">início</a> > <a href="#">ensinar</a> > novo exame
 	<%end %>
 </div>
 
-<%= render(:partial => "schools/school_info", :locals=>{:show => false}) if @school%>	
+<%= render(:partial => "spaces/space_info", :locals=>{:show => false}) if @space%>	
 
 <!--
 <h3 class="call">Nova Aula - Publicação</h3>
@@ -33,20 +33,20 @@
 
 <%= f.error_messages %>
 <%= hidden_field_tag("step", "3", options = {})%>
-	<%= hidden_field_tag("post_to", @school.id) if @school %>
+	<%= hidden_field_tag("post_to", @space.id) if @space %>
 
-	<% unless @school %>
+	<% unless @space %>
 
 	<% field_set_tag 'Visibilidade' do %>
 	<%= f.label "Pública <span class='snippet'>(Visível em todo o Redu)</span>" %>
 		<%= f.check_box :public %>
 		
-		<% @schools = current_user.schools %>
-		<% if @schools and @schools.size > 0 %>
+		<% @spaces = current_user.spaces %>
+		<% if @spaces and @spaces.size > 0 %>
 		<%= f.label "Postar em:" %>
 			<div style="overflow-y:scroll; max-height: 200px;">
-			<% @schools.each do | school | %>
-				<div><%= radio_button_tag :post_to, school.id, false %> <%= school.name %></div>
+			<% @spaces.each do | space | %>
+				<div><%= radio_button_tag :post_to, space.id, false %> <%= space.name %></div>
 			<% end %>
 			</div>
 		<% end %>

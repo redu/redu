@@ -2,7 +2,7 @@
 	function selectAll(){
 	//$('select_all_link').hide();
 	//$('select_all_string').show();
-	var checkboxes = document.getElementsByName("schools[]");
+	var checkboxes = document.getElementsByName("spaces[]");
 	for (var i =0; i< checkboxes.length; i++) {
 		checkboxes[i].checked = true;
 	}
@@ -10,7 +10,7 @@
 }
 
 function selectNone(){
-	var checkboxes = document.getElementsByName("schools[]");
+	var checkboxes = document.getElementsByName("spaces[]");
 	for (var i =0; i< checkboxes.length; i++) {
 		checkboxes[i].checked = false;
 	}
@@ -36,26 +36,26 @@ function selectNone(){
 					
     <div id="all_list">
     	
-		<% if @schools && @schools.size > 0 %>
+		<% if @spaces && @spaces.size > 0 %>
 		Selecionar <%=link_to_function 'Todos', 'selectAll()'%> | <%=link_to_function 'Nenhum', 'selectNone()'%> 
 		
-		 <% form_tag :action => :moderate_schools do %>
+		 <% form_tag :action => :moderate_spaces do %>
 			<table style="width: 100%; margin: 15px 10px 20px 10px;" class="common">
 				<tr>
 					<th></th><th>#ID</th><th>Rede</th><th>Dono</th><th>Data</th>
 				</tr>
-		 	<% for school in @schools %>
+		 	<% for space in @spaces %>
 				<tr>
 					<tr>
-						<td><%= check_box_tag 'schools[]', school.id  %></td>
-						<td><%= school.id  %></td>
-						<td><%= link_to school.name, school_path(school), :target => "_blank" %> </td>
-                                                <% if school.owner %>
-                                                  <td><%= school.owner.display_name %> </td>
+						<td><%= check_box_tag 'spaces[]', space.id  %></td>
+						<td><%= space.id  %></td>
+						<td><%= link_to space.name, space_path(space), :target => "_blank" %> </td>
+                                                <% if space.owner %>
+                                                  <td><%= space.owner.display_name %> </td>
                                                 <% else %>
                                                   <td> Rede sem dono </td>
                                                 <% end %>
-						<td><%= time_ago_in_words(school.created_at) %> </td>
+						<td><%= time_ago_in_words(space.created_at) %> </td>
 					</tr>
 				</tr>
  			<% end %>
@@ -70,7 +70,7 @@ function selectNone(){
 	
 	<div id="pagination" align="center" class="pagination">
 
-		<%= will_paginate  @schools, :params => {:sort_by => @sort_by}, :class => "pagination_number"  %>
+		<%= will_paginate  @spaces, :params => {:sort_by => @sort_by}, :class => "pagination_number"  %>
 		
     </div>
 

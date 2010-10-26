@@ -365,12 +365,12 @@ class ExamsController < BaseController
       render((@user == current_user) ? "user_exams_private" :  "user_exams_public")
       return
 
-    elsif params[:school_id] # exames da escola
-      @school = Space.find(params[:school_id])
+    elsif params[:space_id] # exames da escola
+      @space = Space.find(params[:space_id])
       if params[:search] # search exams da escola
-        @exams = @school.exams.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
+        @exams = @space.exams.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
       else
-        @exams = @school.exams.paginate(paginating_params)
+        @exams = @space.exams.paginate(paginating_params)
       end
     else # index (Exam)
       if params[:search] # search
@@ -383,10 +383,10 @@ class ExamsController < BaseController
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @exams }
-      if params[:school_content]
+      if params[:space_content]
         format.js  do
           render :update do |page|
-            page.replace_html  'content_list', :partial => 'exams_school'
+            page.replace_html  'content_list', :partial => 'exams_space'
             page << "$('#spinner').hide()"
           end
         end

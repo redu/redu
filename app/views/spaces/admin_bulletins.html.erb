@@ -1,8 +1,8 @@
 <% content_for :page_id, 'group' %>
 <div class="main grid_16">
-<%= render :partial => "schools/school_info", :locals => {:school => @school, :show => false} %>
+<%= render :partial => "spaces/space_info", :locals => {:space => @space, :show => false} %>
 <div class="fake-tabs grid_16 alpha omega">
-	<%= render :partial => "schools/admin_taskbar" %>
+	<%= render :partial => "spaces/admin_taskbar" %>
 	<div class="panel">
 	<h3>Administracão de Notícias</h3>
 	<div id="all_list">
@@ -25,15 +25,15 @@
 				</tr>
  			<% end %>
 			</table>
-			<%= hidden_field_tag("id", @school.id) %>
+			<%= hidden_field_tag("id", @space.id) %>
 			<%= submit_tag "Moderar" %>
 		 <% end %>
 		<% else %>
 			 <div class="box_notice">
 				Não há notícias a serem moderadas.
-				<% if @school %>
+				<% if @space %>
 				<!--TODO Colocar ajax para o form aparecer e sumir -->
-				<%= link_to "Criar uma notícia", new_school_bulletin_path(@school) %>
+				<%= link_to "Criar uma notícia", new_space_bulletin_path(@space) %>
 				<% end %>
 				</div>
  		<% end %>

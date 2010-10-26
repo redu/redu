@@ -2,20 +2,20 @@
   <ul class="sortable clearfix">
   
   <li class="clearfix">
-    <span class="call"><span>Membros (<%= @school.users.size %>)</span></span>
+    <span class="call"><span>Membros (<%= @space.users.size %>)</span></span>
       <div class="followship box clearfix">
       <ul class="clearfix">
-        <%= render :partial => 'schools/member_short', :collection => @school.users, :as => :member %>
+        <%= render :partial => 'spaces/member_short', :collection => @space.users, :as => :member %>
       </ul>
       <a href="" class="icon more">Ver mais</a>
       </div><!-- end followship -->
   </li>
   <li class="clearfix">
-    <span class="call"><span>Professores (<%= teachers_preview(school).size %>)</span></span>
-    <% unless teachers_preview(school).empty? %>
+    <span class="call"><span>Professores (<%= teachers_preview(space).size %>)</span></span>
+    <% unless teachers_preview(space).empty? %>
     <div class="followship box clearfix">
         <ul class="clearfix">
-        <%= render :partial => 'schools/member_short', :collection => teachers_preview(school), :as => :member %>
+        <%= render :partial => 'spaces/member_short', :collection => teachers_preview(space), :as => :member %>
         </ul>
         <a href="" class="icon more">Ver mais</a>
     </div><!-- end followship -->

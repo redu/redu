@@ -4,7 +4,7 @@
     <span class="quiet day"><%= bulletin.created_at.day %></span>
     <span class="quiet year"><%= bulletin.created_at.year %></span>
   </div>
-  <span class="title grid_10 omega"><%= link_to bulletin.title, school_bulletin_path(bulletin.school, bulletin) %>
+  <span class="title grid_10 omega"><%= link_to bulletin.title, space_bulletin_path(bulletin.space, bulletin) %>
 </span>
   <span class="rating"></span>
   <span class="tagline quiet grid_10 omega"><%= bulletin.tagline %></span>

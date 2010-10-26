@@ -2,7 +2,7 @@
 
 
 	<% form_for @exam, :html => {:id => "form_exam"} do |f|%>
-	<%= hidden_field_tag("school_id", @school.id) if @school %>
+	<%= hidden_field_tag("space_id", @space.id) if @space %>
 	
 	<%= render "#{@exam.current_step}_step", :f => f, :edit => false %>
 

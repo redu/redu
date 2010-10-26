@@ -1,7 +1,7 @@
 <ul class="bulletins-headlines">
   <% headlines.each do |item| %>
 	<li>
-          <%= link_to item.title, school_bulletin_path(item.school, item), :class => 'title'  %>
+          <%= link_to item.title, space_bulletin_path(item.space, item), :class => 'title'  %>
           <span class="date quiet"><%= time_ago_in_words(item.created_at) %></span>
         </li>
   <% end %>

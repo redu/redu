@@ -1,8 +1,8 @@
 module SpacesHelper
   
   
-  def submission_type(school)
-    case school.submission_type
+  def submission_type(space)
+    case space.submission_type
       when 1
         'Todos, sem moderação'
        when 2
@@ -12,8 +12,8 @@ module SpacesHelper
         end
   end
   
-   def subscription_type(school)
-    case school.subscription_type
+   def subscription_type(space)
+    case space.subscription_type
       when 1
         'Livre'
        when 2
@@ -40,7 +40,7 @@ module SpacesHelper
      html += (idx%breakdiv == 0 and idx != 0) ? '</div>' : ''
      html +=  (idx%breakdiv == 0) ? '<div style="float: left;">' : ''
      html +=  '<div>'
-     html +=  check_box_tag "school[category_ids][]", category.id, @school.categories.include?(category) 
+     html +=  check_box_tag "space[category_ids][]", category.id, @space.categories.include?(category) 
      html += category.name#.downcase.gsub(' ','_').to_sym.l #eita carai :P
      html += '</div>'
     
@@ -77,31 +77,31 @@ module SpacesHelper
     [icon, color, post  ]
   end
   
-  def teachers_preview(school, size = nil)
-    school.teachers[0..12]
+  def teachers_preview(space, size = nil)
+    space.teachers[0..12]
 #    sql = "SELECT u.login, u.login_slug FROM users u " \
-#          "INNER JOIN user_school_associations a " \
+#          "INNER JOIN user_space_associations a " \
 #          "ON u.id = a.user_id " \
 #          "AND a.role_id = #{Role[:teacher].id} " \
-#          "WHERE a.school_id = #{school.id} LIMIT #{size or 12} "
+#          "WHERE a.space_id = #{space.id} LIMIT #{size or 12} "
 #          
 #    User.find_by_sql(sql)
   end
   
   def waiting_bulletins_count
-    Bulletin.count(:conditions => ["school_id = ? AND state LIKE ?", @school.id, "waiting"])
+    Bulletin.count(:conditions => ["space_id = ? AND state LIKE ?", @space.id, "waiting"])
   end
   
   def waiting_events_count
-    Event.count(:conditions => ["school_id = ? AND state LIKE ?", @school.id, "waiting"])
+    Event.count(:conditions => ["space_id = ? AND state LIKE ?", @space.id, "waiting"])
   end
   
-  def school_association_pending?
-    (current_user.schools.include?(@school) && current_user.get_association_with(@school).status == "pending")
+  def space_association_pending?
+    (current_user.spaces.include?(@space) && current_user.get_association_with(@space).status == "pending")
   end
   
-  def school_association_disaproved?
-    current_user.schools.include?(@school) && current_user.get_association_with(@school).status == "disaproved"
+  def space_association_disaproved?
+    current_user.spaces.include?(@space) && current_user.get_association_with(@space).status == "disaproved"
   end
   
 end

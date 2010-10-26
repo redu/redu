@@ -14,13 +14,13 @@ class Space < ActiveRecord::Base
   validates_presence_of :categories
 
   #USERS
-  has_many :user_school_associations, :dependent => :destroy
-  has_many :users, :through => :user_school_associations, :conditions => ["user_school_associations.status LIKE 'approved'"]
-  has_many :admins, :through => :user_school_associations, :source => :user, :conditions => [ "user_school_associations.role_id = ?", 4 ]
-  has_many :coordinators, :through => :user_school_associations, :source => :user, :conditions => [ "user_school_associations.role_id = ?", 5 ]
-  has_many :teachers, :through => :user_school_associations, :source => :user, :conditions => [ "user_school_associations.role_id = ?", 6 ]
-  has_many :students, :through => :user_school_associations, :source => :user, :conditions => [ "user_school_associations.role_id = ?", 7 ]
-  has_many :pending_requests, :class_name => "UserSpaceAssociation", :conditions => ["user_school_associations.status LIKE 'pending'"]
+  has_many :user_space_associations, :dependent => :destroy
+  has_many :users, :through => :user_space_associations, :conditions => ["user_space_associations.status LIKE 'approved'"]
+  has_many :admins, :through => :user_space_associations, :source => :user, :conditions => [ "user_space_associations.role_id = ?", 4 ]
+  has_many :coordinators, :through => :user_space_associations, :source => :user, :conditions => [ "user_space_associations.role_id = ?", 5 ]
+  has_many :teachers, :through => :user_space_associations, :source => :user, :conditions => [ "user_space_associations.role_id = ?", 6 ]
+  has_many :students, :through => :user_space_associations, :source => :user, :conditions => [ "user_space_associations.role_id = ?", 7 ]
+  has_many :pending_requests, :class_name => "UserSpaceAssociation", :conditions => ["user_space_associations.status LIKE 'pending'"]
 
   # CATEGORIES
   has_and_belongs_to_many :categories, :class_name => "ReduCategory"
@@ -31,18 +31,18 @@ class Space < ActiveRecord::Base
   has_many :forums
   has_many :acquisitions, :as => :acquired_by
   has_many :access_keys, :dependent => :destroy
-  has_many :school_assets, :class_name => 'SpaceAsset',
+  has_many :space_assets, :class_name => 'SpaceAsset',
     :dependent => :destroy
-  has_many :courses, :through => :school_assets,
+  has_many :courses, :through => :space_assets,
     :source => :asset, :source_type => "Course", :conditions =>  "published = 1"
-  has_many :exams, :through => :school_assets,
+  has_many :exams, :through => :space_assets,
     :source => :asset, :source_type => "Exam", :conditions =>  "published = 1"
   has_many :bulletins, :dependent => :destroy
   has_many :events, :dependent => :destroy
   has_many :statuses, :as => :statusable
   has_many :subjects
 
-  named_scope :inner_categories, lambda { {:joins => :categories} } # Faz inner join com redu_categories_school
+  named_scope :inner_categories, lambda { {:joins => :categories} } # Faz inner join com redu_categories_space
 
   # METODOS DO WIZARD
   attr_writer :current_step
@@ -77,9 +77,9 @@ class Space < ActiveRecord::Base
     else
       case size
       when :thumb
-        AppConfig.photo['missing_thumb_school']
+        AppConfig.photo['missing_thumb_space']
       else
-        AppConfig.photo['missing_medium_school']
+        AppConfig.photo['missing_medium_space']
       end
     end
   end
@@ -88,21 +88,21 @@ class Space < ActiveRecord::Base
     self.statuses.all(:order => 'created_at DESC', :offset=> offset, :limit=> limit)
   end
 
-  def recent_school_exams_activity
-    sql =  "SELECT l.id, l.logeable_type, l.action, l.user_id, l.logeable_name, l.logeable_id, l.created_at, l.updated_at, l.school_id FROM logs l, school_assets s WHERE
-    l.school_id = '#{self.id}' AND l.logeable_type = '#{Exam}' ORDER BY l.created_at DESC LIMIT 3 "
+  def recent_space_exams_activity
+    sql =  "SELECT l.id, l.logeable_type, l.action, l.user_id, l.logeable_name, l.logeable_id, l.created_at, l.updated_at, l.space_id FROM logs l, space_assets s WHERE
+    l.space_id = '#{self.id}' AND l.logeable_type = '#{Exam}' ORDER BY l.created_at DESC LIMIT 3 "
     @recent_exams_activity = Log.find_by_sql(sql)
   end
 
-  def recent_school_courses_activity
-    sql =  "SELECT l.id, l.logeable_type, l.action, l.user_id, l.logeable_name, l.logeable_id, l.created_at, l.updated_at, l.school_id FROM logs l, school_assets s WHERE
-    l.school_id = '#{self.id}' AND l.logeable_type = '#{Course}' ORDER BY l.created_at DESC LIMIT 3 "
+  def recent_space_courses_activity
+    sql =  "SELECT l.id, l.logeable_type, l.action, l.user_id, l.logeable_name, l.logeable_id, l.created_at, l.updated_at, l.space_id FROM logs l, space_assets s WHERE
+    l.space_id = '#{self.id}' AND l.logeable_type = '#{Course}' ORDER BY l.created_at DESC LIMIT 3 "
     @recent_courses_activity = Log.find_by_sql(sql)
   end
 
   def spotlight_courses
-    sql =  "SELECT c.name FROM courses c, school_assets s " + \
-      "WHERE s.school_id = '#{self.id}' " + \
+    sql =  "SELECT c.name FROM courses c, space_assets s " + \
+      "WHERE s.space_id = '#{self.id}' " + \
       "AND s.asset_type = '#{Course}' " + \
       "AND c.id = s.asset_id " + \
       "ORDER BY c.view_count DESC LIMIT 6 "
@@ -116,7 +116,7 @@ class Space < ActiveRecord::Base
   end
 
   def root_folder
-    Folder.find(:first, :conditions => ["school_id = ? AND parent_id IS NULL", self.id])
+    Folder.find(:first, :conditions => ["space_id = ? AND parent_id IS NULL", self.id])
   end
 
   def current_step

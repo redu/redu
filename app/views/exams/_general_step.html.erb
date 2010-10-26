@@ -1,14 +1,14 @@
 <div class="grid_16">
     <div id="breadcrumbs">
-        <% if @school %>
+        <% if @space %>
         <a href="<%=application_url%>">início</a>
         > <a href="#">redes</a>
-        > <%= link_to @school.name, @school %>> novo exame<% else %>
+        > <%= link_to @space.name, @space %>> novo exame<% else %>
         <a href="<%=application_url%>">início</a>
         > <a href="#">ensinar</a>
         > novo exame<%end %>
     </div>
-    <%= render(:partial => "schools/school_info", :locals=>{:show => false}) if @school %>
+    <%= render(:partial => "spaces/space_info", :locals=>{:show => false}) if @space %>
     <div id="title_video">
         Novo Exame
     </div>

@@ -32,13 +32,13 @@ function getParameters(){
 </script>
 <% end %>
 
-<%= render(:partial => "schools/school_info", :locals=>{:show => false}) if @school%>
+<%= render(:partial => "spaces/space_info", :locals=>{:show => false}) if @space%>
 
 <div class="grid_16">
 	<!--
 <div id="breadcrumbs">
-		<% if @school %>
-	<a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <%= link_to @school.name, @school %> > aulas
+		<% if @space %>
+	<a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <%= link_to @space.name, @space %> > aulas
 	<% else %>
 	<a href="<%=application_url%>">início</a> > <a href="#">aprender</a> > aulas
 	<%end %>
@@ -127,7 +127,7 @@ function getParameters(){
 		<% form_tag courses_path, :method => :get do %>
 		Buscar 
 		<%= text_field_tag :search, params[:search] %>
-		<%= hidden_field_tag(:school_id, @school.id) if @school%>
+		<%= hidden_field_tag(:space_id, @space.id) if @space%>
 		<%= submit_tag "OK", :name => nil%>
 		<% end %>
 

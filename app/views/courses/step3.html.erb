@@ -1,13 +1,13 @@
 <div class="grid_16">
 <div id="breadcrumbs">
-		<% if @school %>
-	<a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <%= link_to @school.name, @school %> > nova aula
+		<% if @space %>
+	<a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <%= link_to @space.name, @space %> > nova aula
 	<% else %>
 	<a href="<%=application_url%>">início</a> > <a href="#">ensinar</a> > nova aula
 	<%end %>
 </div>
 
-<%= render(:partial => "schools/school_info", :locals=>{:show => false}) if @school%>	
+<%= render(:partial => "spaces/space_info", :locals=>{:show => false}) if @space%>	
 
 <!--
 <h3 class="call">Nova Aula - Publicação</h3>
@@ -32,7 +32,7 @@
 <% form_for :course, @course, :url => { :action => "create" }, :html => {:id => "form_step_3",  :multipart => true } do |f| %>
 <%= f.error_messages %>
 <%= hidden_field_tag("step", "3", options = {})%>
-	<%= hidden_field_tag("post_to", @school.id) if @school %>
+	<%= hidden_field_tag("post_to", @space.id) if @space %>
 
 
 
@@ -50,12 +50,12 @@
 	<%# :onchange => "jQuery('input[name=post_to]').attr('checked', false)" %>
 		<%= f.check_box :public %>
 		
-		<% @schools = current_user.schools %>
-		<% if @schools and @schools.size > 0 %>
+		<% @spaces = current_user.spaces %>
+		<% if @spaces and @spaces.size > 0 %>
 		<%= f.label "Postar em:" %>
 			<div style="overflow-y:scroll; max-height: 200px;">
-			<% @schools.each do | school | %>
-				<div><%= radio_button_tag :post_to, school.id, false %> <%= school.name %></div>
+			<% @spaces.each do | space | %>
+				<div><%= radio_button_tag :post_to, space.id, false %> <%= space.name %></div>
 			<% end %>
 			</div>
 		<% end %>

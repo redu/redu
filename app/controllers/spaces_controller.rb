@@ -6,7 +6,7 @@ class SpacesController < BaseController
   # Usado para proteger acoes perigosas (só para admin)
   before_filter :except =>
   [:new, :create, :show, :vote, :index, :join, :unjoin, :member, :onwer, :members, :teachers, :take_ownership] do |controller|
-    controller.school_admin_required(controller.params[:id]) if controller.params and controller.params[:id]
+    controller.space_admin_required(controller.params[:id]) if controller.params and controller.params[:id]
   end
   before_filter :can_be_owner_required, :only => :take_ownership
   before_filter :is_not_member_required, :only => :join
@@ -19,7 +19,7 @@ class SpacesController < BaseController
       msg = "Exame removido da rede"
     end
 
-    @asset = SpaceAsset.first(:conditions => ["asset_type LIKE ? AND asset_id = ? and school_id = ?", params[:asset_type], params[:asset_id], params[:id]])
+    @asset = SpaceAsset.first(:conditions => ["asset_type LIKE ? AND asset_id = ? and space_id = ?", params[:asset_type], params[:asset_id], params[:id]])
 
     if @asset
       @asset.destroy
@@ -28,50 +28,50 @@ class SpacesController < BaseController
       flash[:notice] = "Não foi possível remover o conteúdo selecionado"
     end
 
-    redirect_to school_courses_path(:school_id => params[:id])
+    redirect_to space_courses_path(:space_id => params[:id])
   end
 
   def take_ownership
-    @school = Space.find(params[:id])
-    @school.update_attribute(:owner, current_user)
+    @space = Space.find(params[:id])
+    @space.update_attribute(:owner, current_user)
     flash[:notice] = "Você é o novo dono desta rede!"
-    redirect_to @school
+    redirect_to @space
   end
 
   def vote
-    @school = Space.find(params[:id])
-    current_user.vote(@school, params[:like])
+    @space = Space.find(params[:id])
+    current_user.vote(@space, params[:like])
     respond_to do |format|
       format.js do
         render :update do |page|
           page << "$('#like_spinner').hide()"
           page << "$('#like_link').show()"
           page << "$('#like_link').attr('onclick', 'return false;')"
-          page << "$('#like_count').html('" + @school.votes_for().to_s + "')" # TODO performance + uma consulta?
+          page << "$('#like_count').html('" + @space.votes_for().to_s + "')" # TODO performance + uma consulta?
         end
       end
     end
   end
 
   def look_and_feel
-    @school = Space.find(params[:id])
+    @space = Space.find(params[:id])
   end
 
   def set_theme
-    @school = Space.find(params[:id])
-    @school.update_attributes(params[:school])
+    @space = Space.find(params[:id])
+    @space.update_attributes(params[:space])
 
     flash[:notice] = "Tema modificado com sucesso!"
-    redirect_to look_and_feel_school_path
+    redirect_to look_and_feel_space_path
   end
 
   ##  Admin actions
-  def new_school_admin
-    @user_school_association = UserSpaceAssociation.new
+  def new_space_admin
+    @user_space_association = UserSpaceAssociation.new
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @school }
+      format.xml  { render :xml => @space }
     end
   end
 
@@ -81,12 +81,12 @@ class SpacesController < BaseController
   end
 
   def join
-    @school = Space.find(params[:id])
+    @space = Space.find(params[:id])
     @association = UserSpaceAssociation.new
     @association.user = current_user
-    @association.school = @school
+    @association.space = @space
 
-    case @school.subscription_type
+    case @space.subscription_type
 
     when 1 # anyone can join
       @association.status = "approved"
@@ -100,37 +100,37 @@ class SpacesController < BaseController
 
       if @association.save
         flash[:notice] = "Seu pedido de participação está sendo moderado pelos administradores da rede."
-        UserNotifier.deliver_pending_membership(current_user, @school) # TODO fazer isso em batc
+        UserNotifier.deliver_pending_membership(current_user, @space) # TODO fazer isso em batc
       end
     end
 
     respond_to do |format|
-      format.html { redirect_to(@school) }
+      format.html { redirect_to(@space) }
     end
   end
 
   def unjoin
-    @school = Space.find(params[:id])
-    @association = UserSpaceAssociation.find(:first, :conditions => ["user_id = ? AND school_id = ?",current_user.id, @school.id ])
+    @space = Space.find(params[:id])
+    @association = UserSpaceAssociation.find(:first, :conditions => ["user_id = ? AND space_id = ?",current_user.id, @space.id ])
 
     if @association.destroy
       flash[:notice] = "Você saiu da rede"
     end
 
     respond_to do |format|
-      format.html { redirect_to(@school) }
+      format.html { redirect_to(@space) }
     end
   end
 
   def manage
-    @school = Space.find(params[:id])
+    @space = Space.find(params[:id])
   end
 
   # Modercacao
   def admin_requests
-    @school = Space.find(params[:id])
-    # TODO colocar a consulta a seguir como um atributo de school (como em school.teachers)
-    @pending_members = UserSpaceAssociation.paginate(:conditions => ["user_school_associations.status like 'pending' AND school_id = ?", @school.id],
+    @space = Space.find(params[:id])
+    # TODO colocar a consulta a seguir como um atributo de space (como em space.teachers)
+    @pending_members = UserSpaceAssociation.paginate(:conditions => ["user_space_associations.status like 'pending' AND space_id = ?", @space.id],
                                                       :page => params[:page],
                                                       :order => 'updated_at DESC',
                                                       :per_page => AppConfig.items_per_page)
@@ -141,8 +141,8 @@ class SpacesController < BaseController
   end
 
   def admin_members
-    @school = Space.find(params[:id]) # TODO 2 consultas ao inves de uma?
-    @memberships = UserSpaceAssociation.paginate(:conditions => ["status like 'approved' AND school_id = ?", @school.id],
+    @space = Space.find(params[:id]) # TODO 2 consultas ao inves de uma?
+    @memberships = UserSpaceAssociation.paginate(:conditions => ["status like 'approved' AND space_id = ?", @space.id],
                                                   :include => :user,
                                                   :page => params[:page],
                                                   :order => 'updated_at DESC',
@@ -153,7 +153,7 @@ class SpacesController < BaseController
   end
 
   def admin_submissions
-    @school = Space.find(params[:id])
+    @space = Space.find(params[:id])
     @courses = Course.paginate(:conditions => ["published = 1 AND state LIKE ?", "waiting"],
                                :include => :owner,
                                :page => params[:page],
@@ -167,8 +167,8 @@ class SpacesController < BaseController
   end
 
   def admin_bulletins
-    @school = Space.find(params[:id])
-    @bulletins = Bulletin.paginate(:conditions => ["school_id = ? AND state LIKE ?", @school.id, "waiting"],
+    @space = Space.find(params[:id])
+    @bulletins = Bulletin.paginate(:conditions => ["space_id = ? AND state LIKE ?", @space.id, "waiting"],
                                    :include => :owner,
                                    :page => params[:page],
                                    :order => 'updated_at ASC',
@@ -180,8 +180,8 @@ class SpacesController < BaseController
   end
 
   def admin_events
-    @school = Space.find(params[:id])
-    @events = Event.paginate(:conditions => ["school_id = ? AND state LIKE ?", @school.id, "waiting"],
+    @space = Space.find(params[:id])
+    @events = Event.paginate(:conditions => ["space_id = ? AND state LIKE ?", @space.id, "waiting"],
                              :include => :owner,
                              :page => params[:page],
                              :order => 'updated_at ASC',
@@ -193,18 +193,18 @@ class SpacesController < BaseController
   end
 
   def moderate_requests
-    @school = Space.find(params[:id])
+    @space = Space.find(params[:id])
 
     approved = params[:member].reject{|k,v| v == 'reject'}
     rejected = params[:member].reject{|k,v| v == 'approve'}
 
     #atualiza status da associacao
     approved.keys.each do |user_id|
-      UserSpaceAssociation.update_all("status = 'approved'", :user_id => user_id,  :school_id => @school.id)
+      UserSpaceAssociation.update_all("status = 'approved'", :user_id => user_id,  :space_id => @space.id)
     end
 
     rejected.keys.each do |user_id|
-      UserSpaceAssociation.update_all("status = 'disaproved'", :user_id => user_id,  :school_id => @school.id)
+      UserSpaceAssociation.update_all("status = 'disaproved'", :user_id => user_id,  :space_id => @space.id)
     end
 
     #pega usuários para enviar emails
@@ -213,42 +213,42 @@ class SpacesController < BaseController
 
     if @approved_members
       for member in @approved_members
-        UserNotifier.deliver_approve_membership(member, @school) # TODO fazer isso em batch
+        UserNotifier.deliver_approve_membership(member, @space) # TODO fazer isso em batch
       end
     end
 
     flash[:notice] = 'Solicitacões moderadas!'
-    redirect_to admin_requests_school_path(@school)
+    redirect_to admin_requests_space_path(@space)
   end
 
   def moderate_members
-    @school = Space.find(params[:id]) # TODO realmente necessário?
+    @space = Space.find(params[:id]) # TODO realmente necessário?
 
     case params[:submission_type]
     when '0' # remove selected
       @removed_users = User.all(:conditions => ["id IN (?)", params[:users].join(',')]) unless params[:users].empty?
 
       # TODO destroy_all ou delete_all?
-      UserSpaceAssociation.delete_all(["user_id IN (?) AND school_id = ?", params[:users].join(','), @school.id])
+      UserSpaceAssociation.delete_all(["user_id IN (?) AND space_id = ?", params[:users].join(','), @space.id])
 
 
       for user in @removed_users # TODO fazer um remove all?
-        UserNotifier.deliver_remove_membership(user, @school) # TODO fazer isso em batch
+        UserNotifier.deliver_remove_membership(user, @space) # TODO fazer isso em batch
       end
     when '1' # moderate roles
       UserSpaceAssociation.update_all(["role_id = ?", params[:role_id]],
-                                       ["status like 'approved' AND school_id = ? AND user_id IN (?)", @school.id, params[:users].join(',') ])  if params[:role_id]
+                                       ["status like 'approved' AND space_id = ? AND user_id IN (?)", @space.id, params[:users].join(',') ])  if params[:role_id]
 
       # TODO enviar emails para usuários dizendo que foram promovidos?
     end
     flash[:notice] = 'Usuários moderados!'
-    redirect_to admin_members_school_path
+    redirect_to admin_members_space_path
   end
 
   def search_users_admin
-    @school = Space.find(params[:id])
+    @space = Space.find(params[:id])
     if params[:search_user].empty?
-      @memberships = UserSpaceAssociation.paginate(:conditions => ["status like 'approved' AND school_id = ?", @school.id],
+      @memberships = UserSpaceAssociation.paginate(:conditions => ["status like 'approved' AND space_id = ?", @space.id],
                                                     :include => :user,
                                                     :page => params[:page],
                                                     :order => 'updated_at DESC',
@@ -256,11 +256,11 @@ class SpacesController < BaseController
     else
       qry = params[:search_user] + '%'
       @memberships = UserSpaceAssociation.paginate(
-        :conditions => ["user_school_associations.status like 'approved' AND user_school_associations.school_id = ? AND (users.first_name LIKE ? OR users.last_name LIKE ? OR users.login LIKE ?)",
-          @school.id, qry,qry,qry ],
+        :conditions => ["user_space_associations.status like 'approved' AND user_space_associations.space_id = ? AND (users.first_name LIKE ? OR users.last_name LIKE ? OR users.login LIKE ?)",
+          @space.id, qry,qry,qry ],
           :include => :user,
           :page => params[:page],
-          :order => 'user_school_associations.updated_at DESC',
+          :order => 'user_space_associations.updated_at DESC',
           :per_page => AppConfig.items_per_page)
     end
 
@@ -279,7 +279,7 @@ class SpacesController < BaseController
     approved_ids = approved.keys.join(',')
     rejected_ids = rejected.keys.join(',')
 
-    @school = Space.find(params[:school_id])
+    @space = Space.find(params[:space_id])
 
     SpaceAsset.update_all( "status = 'approved'", ["asset_id IN (?)", @approve_ids.join(',') ]) if @approve_ids
     SpaceAsset.update_all( "status = 'disaproved'",["asset_id IN (?)", @approve_ids.join(',') ]) if @disapprove_ids
@@ -288,11 +288,11 @@ class SpacesController < BaseController
     @rejected_members = User.all(:conditions => ["id IN (?)", rejected_ids]) unless rejected_ids.empty?
 
     for member in @approved_members
-      UserNotifier.deliver_approve_membership(member, @school) # TODO fazer isso em batch
+      UserNotifier.deliver_approve_membership(member, @space) # TODO fazer isso em batch
     end
 
     flash[:notice] = 'Solicitacões moderadas!'
-    redirect_to pending_members_school_path
+    redirect_to pending_members_space_path
   end
 
   def moderate_bulletins
@@ -308,8 +308,8 @@ class SpacesController < BaseController
       flash[:error] = "Para moderar você precisa escolher entre aprovar ou rejeitar."
     end
 
-    @school = Space.find(params[:id])
-    redirect_to admin_bulletins_school_path(@school)
+    @space = Space.find(params[:id])
+    redirect_to admin_bulletins_space_path(@space)
   end
 
   def moderate_events
@@ -325,24 +325,24 @@ class SpacesController < BaseController
       flash[:error] = "Para moderar você precisa escolher entre aprovar ou rejeitar."
     end
 
-    @school = Space.find(params[:id])
-    redirect_to admin_events_school_path(@school)
+    @space = Space.find(params[:id])
+    redirect_to admin_events_space_path(@space)
   end
 
   # usuário entra na rede
   def associate
-    @school = Space.find(params[:id])
+    @space = Space.find(params[:id])
     @user = User.find(params[:user_id])  # TODO precisa mesmo recuperar o usuário no bd?
-    @user_school_association = UserSpaceAssociation.find(:first, :include => :access_key, :conditions => ["access_keys.key = ?", params[:user_key]])
+    @user_space_association = UserSpaceAssociation.find(:first, :include => :access_key, :conditions => ["access_keys.key = ?", params[:user_key]])
 
     #TODO case?
-    if @user_school_association
-      if @user_school_association.access_key.expiration_date.to_time < Time.now # verifica a data da validade da chave
-        if @school &&  @user_school_association.school == @school
-          if @user && !@user_school_association.user # cada chave só poderá ser usada uma vez, sem troca de aluno
-            @user_school_association.user = @user
+    if @user_space_association
+      if @user_space_association.access_key.expiration_date.to_time < Time.now # verifica a data da validade da chave
+        if @space &&  @user_space_association.space == @space
+          if @user && !@user_space_association.user # cada chave só poderá ser usada uma vez, sem troca de aluno
+            @user_space_association.user = @user
 
-            if @user_school_association.save
+            if @user_space_association.save
               flash[:notice] = 'Usuário associado à escola!'
             else
               flash[:notice] = 'Associação à escola falhou'
@@ -361,24 +361,24 @@ class SpacesController < BaseController
     end
 
     respond_to do |format|
-      format.html { redirect_to(@school) }
+      format.html { redirect_to(@space) }
     end
   end
 
   # lista redes das quais o usuário corrente é membro
   def member
-    @schools = current_user.schools
+    @spaces = current_user.spaces
   end
 
   # lista redes das quais usuário corrente é dono
   def owner
-    @schools = current_user.schools_owned
+    @spaces = current_user.spaces_owned
   end
 
   # lista todos os membros da escola
   def members
-    @school = Space.find(params[:id]) #TODO duas queries que poderiam ser apenas 1
-    @members = @school.user_school_associations.paginate(  #optei por .users ao inves de .students
+    @space = Space.find(params[:id]) #TODO duas queries que poderiam ser apenas 1
+    @members = @space.user_space_associations.paginate(  #optei por .users ao inves de .students
                                                          :page => params[:page],
                                                          :order => 'updated_at DESC',
                                                          :per_page => AppConfig.users_per_page)
@@ -394,9 +394,9 @@ class SpacesController < BaseController
 
   # lista todos os professores
   def teachers
-    @school = Space.find(params[:id]) #TODO duas queries que poderiam ser apenas 1
+    @space = Space.find(params[:id]) #TODO duas queries que poderiam ser apenas 1
 
-    @members = @school.teachers.paginate(
+    @members = @space.teachers.paginate(
       :page => params[:page],
       :order => 'updated_at DESC',
       :per_page => AppConfig.users_per_page)
@@ -411,8 +411,8 @@ class SpacesController < BaseController
       end
   end
 
-  # GET /schools
-  # GET /schools.xml
+  # GET /spaces
+  # GET /spaces.xml
   def index
     cond = Caboose::EZ::Condition.new
     cond.append ["redu_category_id = ?", params[:area]] if params[:area] and params[:area].downcase != 'all'
@@ -424,19 +424,19 @@ class SpacesController < BaseController
       :per_page => 12
     }
 
-    @schools =  Space.inner_categories.paginate(paginating_params) if params[:area] and params[:area].downcase != 'all'
+    @spaces =  Space.inner_categories.paginate(paginating_params) if params[:area] and params[:area].downcase != 'all'
 
     if params[:user_id] # aulas do usuario
       @user = User.find_by_login(params[:user_id])
       @user = User.find(params[:user_id]) unless @user
-      @schools = @user.schools.paginate(paginating_params)
+      @spaces = @user.spaces.paginate(paginating_params)
 
     elsif params[:search] # search
 
-      @schools = Space.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
+      @spaces = Space.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
     else
-      if not @schools
-        params[:audience].nil? ? @schools = Space.all.paginate(paginating_params) : @schools = Audience.find(params[:audience]).schools.paginate(paginating_params)
+      if not @spaces
+        params[:audience].nil? ? @spaces = Space.all.paginate(paginating_params) : @spaces = Audience.find(params[:audience]).spaces.paginate(paginating_params)
         @searched_for_all = true
       end
     end
@@ -451,137 +451,137 @@ class SpacesController < BaseController
       format.js  do
         if @user
           render :update do |page|
-            page.replace_html  'tabs-4-content', :partial => 'user_schools'
+            page.replace_html  'tabs-4-content', :partial => 'user_spaces'
           end
         end
       end
     end
   end
 
-  # GET /schools/1
-  # GET /schools/1.xml
+  # GET /spaces/1
+  # GET /spaces/1.xml
   def show
-    @school = Space.find(params[:id]) # TODO colocar como um filtro (find_school)
+    @space = Space.find(params[:id]) # TODO colocar como um filtro (find_space)
 
-    if @school and @school.removed
+    if @space and @space.removed
       redirect_to removed_page_path and return
     end
 
-    if @school
-      @statuses = @school.recent_activity(0,10)
+    if @space
+      @statuses = @space.recent_activity(0,10)
 
-      @featured = @school.featured_courses(3)
-      @brand_new = @school.courses.find(:first, :order => "created_at DESC")
-      @courses = @school.courses.paginate(:conditions =>
+      @featured = @space.featured_courses(3)
+      @brand_new = @space.courses.find(:first, :order => "created_at DESC")
+      @courses = @space.courses.paginate(:conditions =>
                                           ["published = 1"],
                                             :include => :owner,
                                             :page => params[:page],
                                             :order => 'updated_at DESC',
                                             :per_page => AppConfig.items_per_page)
-                                          @bulletins = @school.bulletins.find(:all, :conditions => "state LIKE 'approved'", :order => "created_at DESC", :limit => 5)
+                                          @bulletins = @space.bulletins.find(:all, :conditions => "state LIKE 'approved'", :order => "created_at DESC", :limit => 5)
     end
 
     respond_to do |format|
-      if @school
+      if @space
         @status = Status.new
 
         format.html {
           # se usuário não logado ou escola é privada e o cara não está inscrito nela, mostrar perfil privado
-          unless current_user.has_access_to @school
+          unless current_user.has_access_to @space
             render 'show_private' and return
           else
             render 'show' and return
           end
         # show.html.erb
         }
-        format.xml  { render :xml => @school }
+        format.xml  { render :xml => @space }
       else
         format.html {
           flash[:error] = "A escola \"" + params[:id] + "\" não existe ou não está cadastrada no Redu."
-          redirect_to schools_path
+          redirect_to spaces_path
         }
       end
     end
   end
 
   def cancel
-    session[:school_step] = session[:school_params] = nil
-    redirect_to schools_path
+    session[:space_step] = session[:space_params] = nil
+    redirect_to spaces_path
   end
 
-  # GET /schools/new
-  # GET /schools/new.xml
+  # GET /spaces/new
+  # GET /spaces/new.xml
   def new
-    session[:school_params] ||= {}
-    @school = Space.new(session[:school_params])
-    @school.current_step = session[:school_step]
+    session[:space_params] ||= {}
+    @space = Space.new(session[:space_params])
+    @space.current_step = session[:space_step]
   end
 
-  # GET /schools/1/edit
+  # GET /spaces/1/edit
   def edit
-    @school = Space.find(params[:id])
+    @space = Space.find(params[:id])
   end
 
-  # POST /schools
-  # POST /schools.xml
+  # POST /spaces
+  # POST /spaces.xml
   def create
 
-    session[:school_params].deep_merge!(params[:school]) if params[:school]
-    @school = Space.new(session[:school_params])
-    @school.owner = current_user
-    @school.current_step = session[:school_step]
-    if @school.valid?
+    session[:space_params].deep_merge!(params[:space]) if params[:space]
+    @space = Space.new(session[:space_params])
+    @space.owner = current_user
+    @space.current_step = session[:space_step]
+    if @space.valid?
       if params[:back_button]
-        @school.previous_step
-      elsif @school.last_step?
-        @school.save if @school.all_valid?
+        @space.previous_step
+      elsif @space.last_step?
+        @space.save if @space.all_valid?
       else
-        @school.next_step
+        @space.next_step
       end
-      session[:school_step] = @school.current_step
+      session[:space_step] = @space.current_step
     end
-    if @school.new_record?
+    if @space.new_record?
       render "new"
     else
-      UserSpaceAssociation.create({:user => current_user, :school => @school, :status => "approved", :role_id => 4}) #:role => Role[:school_admin]
-      session[:school_step] = session[:school_params] = nil
+      UserSpaceAssociation.create({:user => current_user, :space => @space, :status => "approved", :role_id => 4}) #:role => Role[:space_admin]
+      session[:space_step] = session[:space_params] = nil
       flash[:notice] = "Rede criada!"
-      redirect_to @school
+      redirect_to @space
     end
   end
 
-  # PUT /schools/1
-  # PUT /schools/1.xml
+  # PUT /spaces/1
+  # PUT /spaces/1.xml
   def update
     unless params[:only_image]
-      params[:school][:category_ids] ||= []
-      params[:school][:audience_ids] ||= []
+      params[:space][:category_ids] ||= []
+      params[:space][:audience_ids] ||= []
     end
-    @school = Space.find(params[:id])
+    @space = Space.find(params[:id])
 
     respond_to do |format|
-      if @school.update_attributes(params[:school])
-        if params[:school][:subscription_type].eql? "1" # Entrada de membros passou a ser livre, aprovar todos os membros pendentes
-          UserSpaceAssociation.update_all("status = 'approved'", ["school_id = ? AND status = 'pending'", @school.id])
+      if @space.update_attributes(params[:space])
+        if params[:space][:subscription_type].eql? "1" # Entrada de membros passou a ser livre, aprovar todos os membros pendentes
+          UserSpaceAssociation.update_all("status = 'approved'", ["space_id = ? AND status = 'pending'", @space.id])
         end
         flash[:notice] = 'A escola foi atualizada com sucesso!'
-        format.html { redirect_to(@school) }
+        format.html { redirect_to(@space) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @school.errors, :status => :unprocessable_entity }
+        format.xml  { render :xml => @space.errors, :status => :unprocessable_entity }
       end
     end
   end
 
-  # DELETE /schools/1
-  # DELETE /schools/1.xml
+  # DELETE /spaces/1
+  # DELETE /spaces/1.xml
   def destroy
-    @school = Space.find(params[:id])
-    @school.destroy
+    @space = Space.find(params[:id])
+    @space.destroy
 
     respond_to do |format|
-      format.html { redirect_to(schools_url) }
+      format.html { redirect_to(spaces_url) }
       format.xml  { head :ok }
     end
   end
@@ -589,15 +589,15 @@ class SpacesController < BaseController
   protected
 
   def can_be_owner_required
-    @school = Space.find(params[:id])
+    @space = Space.find(params[:id])
 
-    current_user.can_be_owner?(@school) ? true : access_denied
+    current_user.can_be_owner?(@space) ? true : access_denied
   end
 
   def is_not_member_required
-    @school = Space.find(params[:id])
-    if current_user.get_association_with(@school)
-      redirect_to school_path(@school)
+    @space = Space.find(params[:id])
+    if current_user.get_association_with(@space)
+      redirect_to space_path(@space)
     end
   end
 

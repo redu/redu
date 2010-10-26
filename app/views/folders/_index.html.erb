@@ -12,7 +12,7 @@ function showLoadingFiles(){
 
 <ul id="actions_user">
 
-				<%  if current_user.can_manage? @school %>
+				<%  if current_user.can_manage? @space %>
 				   	 <li>
                      <div class="new-folder-outter">
                          <a href="#" onclick="$('div.new-folder-inner').slideToggle(); return false;">Criar Pasta</a>
@@ -21,7 +21,7 @@ function showLoadingFiles(){
 							 <% @new_folder = Folder.new %>
 							 <% form_remote_for @new_folder, :loading => "$('#new-folder-spinner').show()" do |f| %>
 		 						<%= f.text_field :name, :size => "15" %>
-								<%= f.hidden_field :school_id, :value => @school.id %>
+								<%= f.hidden_field :space_id, :value => @space.id %>
 								<%= f.hidden_field :parent_id, :value => @folder.id %>
 								<%= f.submit 'Criar' %>
 								<%= image_tag 'spinner.gif', :id => 'new-folder-spinner', :style => 'display: none' %><BR>
@@ -41,7 +41,7 @@ function showLoadingFiles(){
 							 <% form_for @myfile, :url => { :action => "do_the_upload" }, :html => { :multipart => true, :target => 'upload_frame', :onsubmit => "$('#new-file-spinner').show()"  } do |f| %>
 							  <%= f.file_field :attachment %> (max. 10MB)
 							  <%= f.hidden_field :folder_id, :value => @folder.id %>
-							  <%= hidden_field_tag :school_id,  @school.id %>
+							  <%= hidden_field_tag :space_id,  @space.id %>
 							   <br>
 							   <%= submit_tag 'OK' %>
 							   <%= image_tag 'spinner.gif', :id => 'new-file-spinner', :style => 'display: none' %>
@@ -78,7 +78,7 @@ function showLoadingFiles(){
 
 Total de <%= @files_count %> arquivos. Usando <%= @total_size %> MB de 2 GB (<%= @use_percentage %>%)
 
-<%  if current_user.can_manage? @school %>
+<%  if current_user.can_manage? @space %>
 <div id="folder_rights" style="display:none;position:relative;"><div>
     <% form_tag :action => 'update_permissions', :id => params[:id] do %>
         <table>

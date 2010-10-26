@@ -49,8 +49,8 @@ padding: 15px 10px;
 	<div id="box-nav-networks">
 	    <ul>
 	        <li class="bt-networks">
-		        <%= link_to "Crie Redes!", new_school_path, :class => "text-tt" %>
-				<%= link_to "Crie espaços para distribuição do seu conteúdo", new_school_path, :class => "text-desc" %>
+		        <%= link_to "Crie Redes!", new_space_path, :class => "text-tt" %>
+				<%= link_to "Crie espaços para distribuição do seu conteúdo", new_space_path, :class => "text-desc" %>
 	        </li>
 	        <li class="bt-aulas">
 	            <%= link_to "Crie Aulas!", new_course_path, :class => "text-tt" %>
@@ -186,25 +186,25 @@ padding: 15px 10px;
 	
 	<li class="clearfix grid_5 groups">
 		<span class="call">
-			<span>Minhas Redes (<%= current_user.schools_owned.count%>)</span>
+			<span>Minhas Redes (<%= current_user.spaces_owned.count%>)</span>
 		</span>
 			
-			<% if current_user.schools_owned.size > 0 %>
+			<% if current_user.spaces_owned.size > 0 %>
 		<ul>
-			<% for school in current_user.schools_owned[0..4] do%>
+			<% for space in current_user.spaces_owned[0..4] do%>
 			<li class="clearfix">
-				 <%=  link_to image_tag(  school.avatar_photo_url(:thumb), 
-                    {:class=> "photo", :border => 0 }), school   %> 
-				<%= link_to school.name, school, :class => "name" %>
-					<span class="info"> <%= school.users.count %> membros</span>
+				 <%=  link_to image_tag(  space.avatar_photo_url(:thumb), 
+                    {:class=> "photo", :border => 0 }), space   %> 
+				<%= link_to space.name, space, :class => "name" %>
+					<span class="info"> <%= space.users.count %> membros</span>
 			</li>
 			<% end %>
 			<li class="clearfix">
-				<%= link_to "(ver todas)", user_schools_path(current_user), :class => "info" %>
+				<%= link_to "(ver todas)", user_spaces_path(current_user), :class => "info" %>
 			</li>
 		</ul>
 		<% else %>
-		Você não possui redes ainda. Crie uma <%= link_to "agora!", new_school_path %>
+		Você não possui redes ainda. Crie uma <%= link_to "agora!", new_space_path %>
 		<% end %>
 			
 		

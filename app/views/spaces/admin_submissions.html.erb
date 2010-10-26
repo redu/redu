@@ -20,9 +20,9 @@ function selectNone(){
 
 <% content_for :page_id, 'group' %>
 <div class="main grid_16">
-<%= render :partial => "schools/school_info", :locals => {:school => @school,:show => false} %>
+<%= render :partial => "spaces/space_info", :locals => {:space => @space,:show => false} %>
 <div class="fake-tabs grid_16 alpha omega">
-	<%= render :partial => "schools/admin_taskbar" %>
+	<%= render :partial => "spaces/admin_taskbar" %>
 	<div class="panel">
 	<!--<h3>Submissões</h3>-->
 	
@@ -52,9 +52,9 @@ function selectNone(){
 		 <% end %>
 		<% else %>
 				
-			<div class="box_notice">	<%  if @school.submission_type == 1 %>
+			<div class="box_notice">	<%  if @space.submission_type == 1 %>
 			 A configuracão atual da rede permite a <strong>postagem de conteúdo por qualquer membro, sem moderacão.</strong>
-			 Para restringir essa opcão clique em "<%= link_to "configuracões", edit_school_path(@school) %>"</div>
+			 Para restringir essa opcão clique em "<%= link_to "configuracões", edit_space_path(@space) %>"</div>
 			 <% else %> 
 			 <div class="box_notice">Não há submissões a serem moderadas.</div>
 			 <% end %>

@@ -201,7 +201,7 @@ class UsersController < BaseController
 
   def groups
     @user = User.find(params[:id])
-    @groups = @user.schools.find(:all, :select => "name, path")
+    @groups = @user.spaces.find(:all, :select => "name, path")
   end
 
   def create

@@ -18,8 +18,8 @@
             <%= link_to 'Editar', {:action => "edit"}, :class => "icon-edit" %>
 			 <% end %>
 			 
-			 <% if current_user.can_manage? @exam and @school %>
-			| <%= link_to 'Remover da rede', remove_asset_school_path(:id => @school.id, :asset_id => @exam.id, :asset_type => "Exam"), {:confirm => "Você tem certeza que quer remover este exame da rede?\n(Ela continuará no seu diretório de aulas)", :class => "icon-delete"} %>
+			 <% if current_user.can_manage? @exam and @space %>
+			| <%= link_to 'Remover da rede', remove_asset_space_path(:id => @space.id, :asset_id => @exam.id, :asset_type => "Exam"), {:confirm => "Você tem certeza que quer remover este exame da rede?\n(Ela continuará no seu diretório de aulas)", :class => "icon-delete"} %>
 			<% end %>
 			
 			<% if current_user.admin? %>

@@ -21,7 +21,7 @@
 	<%= f.label "Pública <span class='snippet'>(Visível em todo o Redu)</span>" %>
 		<%= f.check_box :public %>
 		
-		<% @schools = current_user.schools %>
+		<% @spaces = current_user.spaces %>
 		
 		<%end%>
 	
@@ -29,7 +29,7 @@
 
 
 	<% field_set_tag 'Compartilhe!' do %>
-		<%= render :partial => 'shared/share', :locals => {:resource => @school}%>
+		<%= render :partial => 'shared/share', :locals => {:resource => @space}%>
 		<%end%>
 
 </div>
