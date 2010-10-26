@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>create_space</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">create_space</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/redes</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Redes</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Crie uma agora!</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>space_name</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>space_path</td>
+	<td>minha-rede-de-teste</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>space_name</td>
+	<td>Minha rede de teste</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>space_description</td>
+	<td>Descrição completa da minha rede de testes criada pela Selenium IDE</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>space_avatar</td>
+	<td>/Users/guiocavalcanti/Dropbox/Pictures/logo_redu-50-50.jpg</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>space_tag_list</td>
+	<td>minha rede, de teste</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//input[@id='space_category_ids_' and @name='space[category_ids][]' and @value='47']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//input[@id='space_audience_ids_' and @name='space[audience_ids][]' and @value='8']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>space_submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>commit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>adm_showpay</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
