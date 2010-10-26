@@ -193,7 +193,7 @@ pt-BR:
   
   
   
-  Course:  aula
+  Lecture:  aula
   Resource:  material
   Exam:  exame
   #en: a_few_seconds_ago:  a few seconds ago
@@ -246,7 +246,7 @@ pt-BR:
   add_a_poll: Add a poll
   #en: add_comment: Add Comment
   add_comment: Adicionar Comentário
-  #en: add_course: Add Course
+  #en: add_course: Add Lecture
   add_course: Adicionada no Redu por
   #en: add_from_my_address_book: "Add from my address book"
   add_from_my_address_book: "Add from my address book"
@@ -462,7 +462,7 @@ pt-BR:
   contest_entries: Contest Entries
   #en: country: Country
   country: País
-  #en: course: Course
+  #en: course: Lecture
   course: Aula
   #en: create: Create
   create: Criar
