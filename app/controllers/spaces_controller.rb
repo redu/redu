@@ -42,7 +42,7 @@ class SpacesController < BaseController
     @space = Space.find(params[:id])
     current_user.vote(@space, params[:like])
     respond_to do |format|
-      format.js { render :template => 'shared/like.rjs', :locals => { :votes_for => @school.votes_for().to_s} } 
+      format.js { render :template => 'shared/like.rjs', :locals => { :votes_for => @space.votes_for().to_s} } 
     end
   end
 
