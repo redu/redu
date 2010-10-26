@@ -1,4 +1,4 @@
-module CoursesHelper
+module LecturesHelper
   include SpacesHelper
 	
   def link_to_add_fields(name, f, association, type = nil)
