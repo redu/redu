@@ -1,4 +1,4 @@
-class CourseSubject < ActiveRecord::Base
+class LectureSubject < ActiveRecord::Base
 	
 	# ASSOCIATIONS
   belongs_to :subject

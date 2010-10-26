@@ -34,7 +34,7 @@ class Space < ActiveRecord::Base
   has_many :space_assets, :class_name => 'SpaceAsset',
     :dependent => :destroy
   has_many :courses, :through => :space_assets,
-    :source => :asset, :source_type => "Course", :conditions =>  "published = 1"
+    :source => :asset, :source_type => "Lecture", :conditions =>  "published = 1"
   has_many :exams, :through => :space_assets,
     :source => :asset, :source_type => "Exam", :conditions =>  "published = 1"
   has_many :bulletins, :dependent => :destroy
@@ -96,18 +96,18 @@ class Space < ActiveRecord::Base
 
   def recent_space_courses_activity
     sql =  "SELECT l.id, l.logeable_type, l.action, l.user_id, l.logeable_name, l.logeable_id, l.created_at, l.updated_at, l.space_id FROM logs l, space_assets s WHERE
-    l.space_id = '#{self.id}' AND l.logeable_type = '#{Course}' ORDER BY l.created_at DESC LIMIT 3 "
+    l.space_id = '#{self.id}' AND l.logeable_type = '#{Lecture}' ORDER BY l.created_at DESC LIMIT 3 "
     @recent_courses_activity = Log.find_by_sql(sql)
   end
 
   def spotlight_courses
     sql =  "SELECT c.name FROM courses c, space_assets s " + \
       "WHERE s.space_id = '#{self.id}' " + \
-      "AND s.asset_type = '#{Course}' " + \
+      "AND s.asset_type = '#{Lecture}' " + \
       "AND c.id = s.asset_id " + \
       "ORDER BY c.view_count DESC LIMIT 6 "
 
-    Course.find_by_sql(sql)
+    Lecture.find_by_sql(sql)
   end
 
   def create_root_folder

@@ -225,7 +225,7 @@ class User < ActiveRecord::Base
   def can_manage?(entity, space=nil)
 
     case entity.class.to_s
-    when 'Course'
+    when 'Lecture'
       (entity.owner == self || (entity.space == space && self.space_admin?(space) ))
     when 'Exam'
       (entity.owner == self || (entity.space == space && self.space_admin?(space) ))
@@ -243,7 +243,7 @@ class User < ActiveRecord::Base
     return true if self.admin? || entity.owner == self
 
     case entity.class.to_s
-    when 'Course'
+    when 'Lecture'
 
       (entity.public || (entity.space && self.spaces.include?(entity.space)))
       #    when 'Exam'
@@ -589,7 +589,7 @@ class User < ActiveRecord::Base
   end
 
   def has_credits_for_course(course)
-    # @course_price = CoursePrice.find(:first, :conditions => ['course_id = ?', course.id]).price.to_f
+    # @course_price = LecturePrice.find(:first, :conditions => ['course_id = ?', course.id]).price.to_f
     @user_credit = Credit.total(self.id).to_f - Acquisition.total(self.id).to_f
     (@user_credit >= course.price)
   end

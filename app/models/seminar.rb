@@ -97,7 +97,7 @@ class Seminar < ActiveRecord::Base
     course_id = url.scan(/aulas\/([0-9]*)/)
 
     unless course_id.empty?
-      @source = Course.find(course_id[0][0])
+      @source = Lecture.find(course_id[0][0])
       # copia (se upload ou youtube)
       @source.is_clone = true #TODO evitar que sejam removido
     end

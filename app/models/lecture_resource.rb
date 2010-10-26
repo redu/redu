@@ -1,4 +1,4 @@
-class CourseResource < ActiveRecord::Base
+class LectureResource < ActiveRecord::Base
 
 	# VALIDATIONS
   validates_presence_of :attachment

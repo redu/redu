@@ -1,4 +1,4 @@
-class Course < ActiveRecord::Base
+class Lecture < ActiveRecord::Base
   
   # VALIDATIONS
   validates_presence_of :name
@@ -14,7 +14,7 @@ class Course < ActiveRecord::Base
   # ASSOCIATIONS
   has_many :statuses, :as => :statusable, :dependent => :destroy
   has_many :acess_key
-  has_many :resources, :class_name => "CourseResource", :as => :attachable, :dependent => :destroy
+  has_many :resources, :class_name => "LectureResource", :as => :attachable, :dependent => :destroy
   has_many :acquisitions
   has_many :favorites, :as => :favoritable, :dependent => :destroy
   has_many :annotations
@@ -84,7 +84,7 @@ class Course < ActiveRecord::Base
 
   def currently_watching
     sql = "SELECT u.id, u.login, u.login_slug FROM users u, statuses s WHERE"
-    sql += " s.user_id = u.id AND s.logeable_type LIKE 'Course' AND s.logeable_id = '#{self.id}'"
+    sql += " s.user_id = u.id AND s.logeable_type LIKE 'Lecture' AND s.logeable_id = '#{self.id}'"
     sql +=" AND s.created_at > '#{Time.now.utc-10.minutes}'"
     
     User.find_by_sql(sql)

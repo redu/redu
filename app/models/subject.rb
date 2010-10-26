@@ -52,10 +52,10 @@ class Subject < ActiveRecord::Base
       clone_course = course.clone #clone it
       clone_course.is_clone = true
       clone_course.save#and save it
-      cs = CourseSubject.new
+      cs = LectureSubject.new
       cs.subject_id = subject_id
       cs.courseable_id = clone_course.id
-      cs.courseable_type = "Course"
+      cs.courseable_type = "Lecture"
       cs.save
     end
 
@@ -64,7 +64,7 @@ class Subject < ActiveRecord::Base
   def create_course_subject_type_exam exams, subject_id
 
     exams.each do |exam_id|
-      cs = CourseSubject.new
+      cs = LectureSubject.new
       cs.subject_id = subject_id
       cs.courseable_id = exam_id
       cs.courseable_type = "Exam"
