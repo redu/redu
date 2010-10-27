@@ -59,9 +59,7 @@ class FoldersController < BaseController
       else
         format.js do
           responds_to_parent do
-            render :update do |page|
-              page << "alert('houve uma falha ao enviar o arquivo');"
-            end
+           render :template => 'folders/do_the_upload_error' 
           end
         end
       end
