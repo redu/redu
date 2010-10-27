@@ -9,11 +9,7 @@ class AdminController < BaseController
       @users = User.all(:conditions => ["first_name LIKE ? OR last_name LIKE ? OR login LIKE ?", qry,qry,qry ])
     end
     respond_to do |format|
-      format.js do
-        render :update do |page|
-          page.replace_html 'user_list', :partial => 'admin/user_list', :locals => {:users => @users}
-        end
-      end
+      format.js
     end
   end
 
