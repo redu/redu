@@ -63,16 +63,6 @@ class Seminar < ActiveRecord::Base
   # Video original
   has_attached_file :original, {}.merge(VIDEO_ORIGINAL)
 
-  # Validations Groups - Habilitar diferentes validacoes dependendo do tipo.
-  validation_group :external,
-    :fields => [:external_resource, :external_resource_type]
-  validation_group :uploaded, :fields => [:original]
-
-  validates_attachment_presence :original
-  validate :accepted_content_type
-  validates_attachment_size :original,
-    :less_than => 100.megabytes
-
   has_one :lecture, :as => :lectureable
   has_many :lesson, :as => :lesson
 
@@ -96,6 +86,16 @@ class Seminar < ActiveRecord::Base
   event :fail do
     transitions :from => :converting, :to => :fail
   end
+
+  # Validations Groups - Habilitar diferentes validacoes dependendo do tipo.
+  validation_group :external,
+    :fields => [:external_resource, :external_resource_type]
+  validation_group :uploaded, :fields => [:original]
+
+  validates_attachment_presence :original
+  validate :accepted_content_type
+  validates_attachment_size :original,
+    :less_than => 100.megabytes
 
   def import_redu_seminar(url)
     lecture_id = url.scan(/aulas\/([0-9]*)/)

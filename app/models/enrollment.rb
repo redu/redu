@@ -1,6 +1,6 @@
 class Enrollment < ActiveRecord::Base
 
-	# ASSOCIATIONS
+  # ASSOCIATIONS
   belongs_to :user
   belongs_to :lecture
 

@@ -4,11 +4,11 @@ class Group < ActiveRecord::Base
   before_destroy :dont_destroy_admins
   after_destroy :destroy_dependant_group_permissions
 
-  validates_uniqueness_of :name
-  validates_presence_of :name
-
   has_many :group_permissions
   has_and_belongs_to_many :users
+
+  validates_uniqueness_of :name
+  validates_presence_of :name
 
   # Returns whether or not the admins group exists
   def self.admins_group_exists?

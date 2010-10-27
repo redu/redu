@@ -1,6 +1,6 @@
 class Country < ActiveRecord::Base
 
-	# ASSOCIATIONS
+  # ASSOCIATIONS
   has_many :metro_areas
   has_many :states
 

@@ -2,20 +2,6 @@ class Lecture < ActiveRecord::Base
   # Entidade polimórfica que representa o objeto de aprendizagem. Pode possuir
   # três especializações: Seminar, InteractiveClass e Page.
 
-  # VALIDATIONS
-  validates_presence_of :name
-  validates_presence_of :description
-  validates_length_of :description, :within => 30..200
-  validates_presence_of :simple_category
-  validates_presence_of :lectureable_type
-  validates_associated :lectureable
-
-  # Dependendo do lectureable_type ativa um conjunto de validações diferente
-  validation_group :step1,
-    :fields => [:name, :description, :simple_category, :lectureable_type]
-  validation_group :step2, :fields => [:lectureable]
-  validation_group :step3, :fields => [:price]
-
   # ASSOCIATIONS
   has_many :statuses, :as => :statusable, :dependent => :destroy
   has_many :acess_key
@@ -73,16 +59,30 @@ class Lecture < ActiveRecord::Base
     transitions :from => :waiting, :to => :rejected
   end
 
+  # VALIDATIONS
+  validates_presence_of :name
+  validates_presence_of :description
+  validates_length_of :description, :within => 30..200
+  validates_presence_of :simple_category
+  validates_presence_of :lectureable_type
+  validates_associated :lectureable
+
+  # Dependendo do lectureable_type ativa um conjunto de validações diferente
+  validation_group :step1,
+    :fields => [:name, :description, :simple_category, :lectureable_type]
+  validation_group :step2, :fields => [:lectureable]
+  validation_group :step3, :fields => [:price]
+
   def permalink
     APP_URL + "/lectures/"+ self.id.to_s+"-"+self.name.parameterize
   end
 
   def currently_watching
     sql = "SELECT u.id, u.login, u.login_slug FROM users u, statuses s " + \
-          "WHERE s.user_id = u.id "+ \
-            "AND s.logeable_type LIKE 'Lecture' " + \
-            "AND s.logeable_id = '#{self.id}' " + \
-            "AND s.created_at > '#{Time.now.utc-10.minutes}'"
+      "WHERE s.user_id = u.id "+ \
+      "AND s.logeable_type LIKE 'Lecture' " + \
+      "AND s.logeable_id = '#{self.id}' " + \
+      "AND s.created_at > '#{Time.now.utc-10.minutes}'"
 
     User.find_by_sql(sql)
   end

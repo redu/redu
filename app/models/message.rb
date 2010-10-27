@@ -2,14 +2,14 @@ class Message < ActiveRecord::Base
   
   after_create :notify_recipient
  
-  validates_presence_of :body, :subject
-  validates_presence_of :recipient
-  validate :ensure_not_sending_to_self
- 
   attr_accessor :to
   attr_accessor :reply_to
 
   is_private_message
+
+  validates_presence_of :body, :subject
+  validates_presence_of :recipient
+  validate :ensure_not_sending_to_self
 
   def self.new_reply(sender, in_reply_to = nil, params = {})
     message = new(params[:message])

@@ -9,13 +9,13 @@ class Myfile < ActiveRecord::Base
 
   has_attached_file :attachment, {}.merge(PAPERCLIP_MYFILES_OPTIONS)
 
+  belongs_to :folder
+  belongs_to :user
+
   validates_attachment_presence :attachment
   validates_attachment_size :attachment,
     :less_than => 10.megabytes
   validates_uniqueness_of :attachment_file_name, :scope => 'folder_id'
- 
-  belongs_to :folder
-  belongs_to :user
 
   # When removing a myfile record from the database,
   # the actual file on disk has to be removed too.

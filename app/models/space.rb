@@ -9,17 +9,6 @@ class Space < ActiveRecord::Base
   # CALLBACKS
   before_create :create_root_folder
 
-  # VALIDATIONS
-  validates_presence_of :name, :path,
-    :message => "Não pode ser deixado em branco"
-  validates_format_of :path, :with => /^[\sA-Za-z0-9_-]+$/,
-    :message => "Endereço inválido."
-  validates_uniqueness_of   :path, :case_sensitive => false,
-    :message => "Endereço inválido."
-  validates_exclusion_of    :path, :in => AppConfig.reserved_logins,
-    :message => "Endereço inválido"
-  validates_presence_of :categories
-
   # USERS
   belongs_to :owner , :class_name => "User" , :foreign_key => "owner"
   has_many :user_space_associations, :dependent => :destroy
@@ -66,6 +55,17 @@ class Space < ActiveRecord::Base
     :styles => { :medium => "200x200>", :thumb => "100x100>", :nano => "24x24>" },
   }.merge(PAPERCLIP_STORAGE_OPTIONS)
 
+  # VALIDATIONS
+  validates_presence_of :name, :path,
+    :message => "Não pode ser deixado em branco"
+  validates_format_of :path, :with => /^[\sA-Za-z0-9_-]+$/,
+    :message => "Endereço inválido."
+  validates_uniqueness_of   :path, :case_sensitive => false,
+    :message => "Endereço inválido."
+  validates_exclusion_of    :path, :in => AppConfig.reserved_logins,
+    :message => "Endereço inválido"
+  validates_presence_of :categories
+
   # Sobreescrevendo ActiveRecord.find para adicionar capacidade de buscar por path do Space
   def self.find(*args)
     if args.is_a?(Array) and args.first.is_a?(String) and (args.first.index(/[a-zA-Z\-_]+/) or args.first.to_i.eql?(0) )
@@ -105,10 +105,10 @@ class Space < ActiveRecord::Base
   # Status relativos ao Space e a Exam
   def recent_space_exams_activity
     sql = "SELECT l.id, l.logeable_type, l.action, l.user_id, l.logeable_name, " + \
-          "l.logeable_id, l.created_at, l.updated_at, l.space_id " + \
-          "FROM logs l, space_assets s " + \
-          "WHERE l.space_id = '#{self.id}' AND l.logeable_type = '#{Exam}' " + \
-          "ORDER BY l.created_at DESC LIMIT 3 "
+      "l.logeable_id, l.created_at, l.updated_at, l.space_id " + \
+      "FROM logs l, space_assets s " + \
+      "WHERE l.space_id = '#{self.id}' AND l.logeable_type = '#{Exam}' " + \
+      "ORDER BY l.created_at DESC LIMIT 3 "
 
     @recent_exams_activity = Log.find_by_sql(sql)
   end
@@ -116,10 +116,10 @@ class Space < ActiveRecord::Base
   # Status relativos ao Space e a Lecture
   def recent_space_lectures_activity
     sql = "SELECT l.id, l.logeable_type, l.action, l.user_id, l.logeable_name, " + \
-          "l.logeable_id, l.created_at, l.updated_at, l.space_id " + \
-          "FROM logs l, space_assets s " + \
-          "WHERE l.space_id = '#{self.id}' AND l.logeable_type = '#{Lecture}' " + \
-          "ORDER BY l.created_at DESC LIMIT 3 "
+      "l.logeable_id, l.created_at, l.updated_at, l.space_id " + \
+      "FROM logs l, space_assets s " + \
+      "WHERE l.space_id = '#{self.id}' AND l.logeable_type = '#{Lecture}' " + \
+      "ORDER BY l.created_at DESC LIMIT 3 "
 
     @recent_lectures_activity = Log.find_by_sql(sql)
   end

@@ -1,14 +1,8 @@
 class Question < ActiveRecord::Base
- 
-  before_save :set_answer_id
-  
-  # validations
-  validates_presence_of :statement
-  validates_presence_of :answer_id
-  validates_associated :alternatives
-  validates_length_of :alternatives, :allow_nil => false, :within => 1..7
 
-  # associations
+  before_save :set_answer_id
+
+  # Associations
   has_many :alternatives, :dependent => :destroy
   has_many :question_exam_associations
   has_many :exams, :through => :question_exam_associations
@@ -21,6 +15,12 @@ class Question < ActiveRecord::Base
 
 
   named_scope :public, :conditions => ['public = ?', true]
+
+  # Validations
+  validates_presence_of :statement
+  validates_presence_of :answer_id
+  validates_associated :alternatives
+  validates_length_of :alternatives, :allow_nil => false, :within => 1..7
 
   def set_answer_id # answer id vem como o indice
     if self.alternatives and answer_id.to_i < self.alternatives.length and not self.alternatives[0].new_record?

@@ -1,9 +1,9 @@
 class Credit < ActiveRecord::Base
 
-	# ASSOCIATIONS
+  # ASSOCIATIONS
   belongs_to :user, :foreign_key => "customer_id"
 
-	# PLUGINS
+  # PLUGINS
   acts_as_state_machine :initial => :pending
   state :pending
   state :error

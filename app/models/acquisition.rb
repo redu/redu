@@ -1,6 +1,6 @@
 class Acquisition < ActiveRecord::Base
 
-	# ASSOCIATIONS
+  # ASSOCIATIONS
   belongs_to :acquired_by, :polymorphic => true
   belongs_to :lecture
 
@@ -9,6 +9,6 @@ class Acquisition < ActiveRecord::Base
 
   def self.total(user_id)
     self.connection.execute("select sum(value) from acquisitions where acquired_by_id = #{user_id}").fetch_row.first
-   end
+  end
 
 end

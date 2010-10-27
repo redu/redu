@@ -1,11 +1,13 @@
-class UserNotifier < ActionMailer::Base
-  self.delivery_method = :activerecord # É necessário iniciar o ar_sendmail para que os e-mails sejam enviados
-  include ActionView::Helpers::TextHelper
-  include ActionView::Helpers::SanitizeHelper
-  extend  ActionView::Helpers::SanitizeHelper::ClassMethods # Required for rails 2.2
+include ActionView::Helpers::TextHelper
+include ActionView::Helpers::SanitizeHelper
+extend  ActionView::Helpers::SanitizeHelper::ClassMethods # Required for rails 2.2
 
-  include BaseHelper
-  ActionMailer::Base.default_url_options[:host] = APP_URL.sub('http://', '')
+include BaseHelper
+ActionMailer::Base.default_url_options[:host] = APP_URL.sub('http://', '')
+
+class UserNotifier < ActionMailer::Base
+
+  self.delivery_method = :activerecord # É necessário iniciar o ar_sendmail para que os e-mails sejam enviados
 
   ### SENT BY MEMBERS OF SCHOOL
   def pending_membership(user,space)
@@ -242,7 +244,6 @@ class UserNotifier < ActionMailer::Base
   end
 
   protected
-
   def setup_email(user)
     @recipients  = "#{user.email}"
     setup_sender_info

@@ -1,6 +1,6 @@
 class Audience < ActiveRecord::Base
 
-	# ASSOCIATIONS
+  # ASSOCIATIONS
   has_and_belongs_to_many :spaces
 
 end

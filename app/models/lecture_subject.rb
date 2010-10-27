@@ -1,6 +1,6 @@
 class LectureSubject < ActiveRecord::Base
-	
-	# ASSOCIATIONS
+
+  # ASSOCIATIONS
   belongs_to :subject
   belongs_to :lectureable, :polymorphic => true
 

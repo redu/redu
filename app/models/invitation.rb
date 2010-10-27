@@ -2,6 +2,8 @@ class Invitation < ActiveRecord::Base
 
   after_save :send_invite
 
+  belongs_to :user
+
   validates_presence_of :user
   validates_presence_of :email_addresses
   validates_length_of :email_addresses, :minimum => 6
@@ -24,8 +26,6 @@ class Invitation < ActiveRecord::Base
     end
   end
 
-  belongs_to :user
-  
   def send_invite
     emails = self.email_addresses.split(",").collect{|email| email.strip }.uniq
     emails.each{|email|

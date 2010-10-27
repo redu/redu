@@ -1,36 +1,11 @@
 class User < ActiveRecord::Base
 
-  # ATTRIBUTES
+  # Constants 
   MALE    = 'M'
   FEMALE  = 'F'
 
   LEARNING_ACTIONS = ['answer', 'results', 'show']
   TEACHING_ACTIONS = ['create']
-
-  attr_protected :admin, :featured, :role_id
-
-  # PLUGINS
-  acts_as_authentic do |c|
-    c.crypto_provider = CommunityEngineSha1CryptoMethod
-
-    c.validates_length_of_password_field_options = { :within => 6..20, :if => :password_required? }
-    c.validates_length_of_password_confirmation_field_options = { :within => 6..20, :if => :password_required? }
-
-    c.validates_length_of_login_field_options = { :within => 5..20 }
-    c.validates_format_of_login_field_options = { :with => /^[\sA-Za-z0-9_-]+$/ }
-
-    c.validates_length_of_email_field_options = { :within => 3..100 }
-    c.validates_format_of_email_field_options = { :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/ }
-  end
-
-  has_attached_file :avatar, {
-    :styles => { :medium => "200x200>", :thumb => "100x100>", :nano => "24x24>" }
-  }.merge(PAPERCLIP_STORAGE_OPTIONS)
-
-  ajaxful_rater
-  acts_as_taggable
-  has_private_messages
-  acts_as_voter
 
   # CALLBACKS
   before_save   :whitelist_attributes
@@ -38,20 +13,8 @@ class User < ActiveRecord::Base
   before_create :make_activation_code
   after_create {|user| UserNotifier.deliver_signup_notification(user) }
   after_create  :update_last_login
-  #before_create :activate_before_save #not necessary
-  #after_save    :activate # <- ja começa ativo
-  #after_save   {|user| UserNotifier.deliver_activation(user) if user.recently_activated? }
   after_save    :recount_metro_area_users
   after_destroy :recount_metro_area_users
-
-  # VALIDATIONS
-  validates_presence_of     :login, :email, :first_name, :last_name
-  validates_presence_of     :metro_area,                 :if => Proc.new { |user| user.state }
-  validates_uniqueness_of   :login, :email, :case_sensitive => false
-  validates_uniqueness_of   :login_slug
-  validates_exclusion_of    :login, :in => AppConfig.reserved_logins
-  validates_date :birthday, :before => 13.years.ago.to_date
-  validates_acceptance_of :tos, :message => "Você precisa aceitar os Termos de Uso"
 
   # ASSOCIATIONS
   has_many :annotations, :dependent => :destroy, :include=> :lecture
@@ -96,13 +59,47 @@ class User < ActiveRecord::Base
   has_many :group_user
   has_many :groups, :through => :group_user
 
-  #named scopes
+  # Named scopes
   named_scope :recent, :order => 'users.created_at DESC'
   named_scope :featured, :conditions => ["users.featured_writer = ?", true]
   named_scope :active, :conditions => ["users.activated_at IS NOT NULL"]
   named_scope :tagged_with, lambda {|tag_name|
     {:conditions => ["tags.name = ?", tag_name], :include => :tags}
   }
+  # Accessors 
+  attr_protected :admin, :featured, :role_id
+
+  # PLUGINS
+  acts_as_authentic do |c|
+    c.crypto_provider = CommunityEngineSha1CryptoMethod
+
+    c.validates_length_of_password_field_options = { :within => 6..20, :if => :password_required? }
+    c.validates_length_of_password_confirmation_field_options = { :within => 6..20, :if => :password_required? }
+
+    c.validates_length_of_login_field_options = { :within => 5..20 }
+    c.validates_format_of_login_field_options = { :with => /^[\sA-Za-z0-9_-]+$/ }
+
+    c.validates_length_of_email_field_options = { :within => 3..100 }
+    c.validates_format_of_email_field_options = { :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/ }
+  end
+
+  has_attached_file :avatar, {
+    :styles => { :medium => "200x200>", :thumb => "100x100>", :nano => "24x24>" }
+  }.merge(PAPERCLIP_STORAGE_OPTIONS)
+
+  ajaxful_rater
+  acts_as_taggable
+  has_private_messages
+  acts_as_voter
+
+  # VALIDATIONS
+  validates_presence_of     :login, :email, :first_name, :last_name
+  validates_presence_of     :metro_area,                 :if => Proc.new { |user| user.state }
+  validates_uniqueness_of   :login, :email, :case_sensitive => false
+  validates_uniqueness_of   :login_slug
+  validates_exclusion_of    :login, :in => AppConfig.reserved_logins
+  validates_date :birthday, :before => 13.years.ago.to_date
+  validates_acceptance_of :tos, :message => "Você precisa aceitar os Termos de Uso"
 
   # override activerecord's find to allow us to find by name or id transparently
   def self.find(*args)

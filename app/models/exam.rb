@@ -1,12 +1,5 @@
 class Exam < ActiveRecord::Base
 
-  # VALIDATIONS
-  validates_presence_of :name
-  validates_presence_of :description
-  validation_group :step1, :fields=>[:name, :description]
-  validation_group :step2, :fields=>[:questions]
-  validation_group :step3, :fields=>[:price]
-
   # ASSOCIATIONS
   has_many :statuses, :as => :statusable
   has_many :question_exam_associations, :dependent => :destroy
@@ -34,12 +27,19 @@ class Exam < ActiveRecord::Base
     { :conditions => ["published = ? AND owner_id = ?", false, my_id] }
   }
 
-	# ACCESSORS
+  # ACCESSORS
   attr_writer :current_step
 
   # PLUGINS
   acts_as_taggable
   ajaxful_rateable :stars => 5
+
+  # VALIDATIONS
+  validates_presence_of :name
+  validates_presence_of :description
+  validation_group :step1, :fields=>[:name, :description]
+  validation_group :step2, :fields=>[:questions]
+  validation_group :step3, :fields=>[:price]
 
   def get_question(qid)
     if qid
