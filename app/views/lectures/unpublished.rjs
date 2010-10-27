@@ -1,0 +1,2 @@
+page << "$('#tabs-2-loading').hide()"
+page.replace_html 'tabs-2-content', :partial => "course_list"

@@ -1,0 +1,2 @@
+page.replace_html  @course.wrapper_dom_id(params), ratings_for(@course, params.merge(:wrap => false))
+

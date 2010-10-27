@@ -106,11 +106,12 @@ class BulletinsController < BaseController
   def rate
     @bulletin = Bulletin.find(params[:id])
     @bulletin.rate(params[:stars], current_user, params[:dimension])
+    # Este trecho abaixo é usado pra quê?
     id = "ajaxful-rating-#{!params[:dimension].blank? ? "#{params[:dimension]}-" : ''}bulletin-#{@bulletin.id}"
 
-    render :update do |page|
-      page.replace_html  @bulletin.wrapper_dom_id(params), ratings_for(@bulletin, params.merge(:wrap => false))
-    end
+    respond_to do |format|
+      format.js
+    end      
   end
 
   protected
