@@ -1,0 +1,30 @@
+<fieldset>
+	<legend>Anexos</legend>
+	<% if  @lecture.resources %>
+		<% @lecture.resources.each do |res| %>
+		<% if res.attachment_file_name %>
+		 <div> <%= res.attachment_file_name %>  <%= image_tag 'icons/delete.png'%>
+		</div>
+		<% end %>
+		<% end %>
+	<% end %>
+	
+	<div id="attachments">
+	<div>
+	<%= file_field_tag "attachments[]"%>
+	</div><div>
+	<%= file_field_tag "attachments[]"%>
+	</div><div>
+	<%= file_field_tag "attachments[]"%>
+	</div>
+	</div>
+	
+	<%= link_to_function "Novo anexo", "addAttachmentField()", :id => "new_attachment_link"%>
+	
+	<%# f.fields_for :resources do | build |%>
+		<%# render :partial => 'resource_fields', :locals => {:f => build} %>
+	<%# end %>
+	<%# link_to_add_fields "Adicionar anexo", f, :resources, 'anexo' %>
+</fieldset>	
+
+

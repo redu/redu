@@ -17,7 +17,7 @@ ActionController::Routing::Routes.draw do |map|
                         :collection => {:unpublished_preview => :get, :unpublished => :get, :new_exam => :get, :cancel => :get, 
                         :exam_history => :get, :sort => :get, :order => :get, :questions_database => :get,
                         :review_question => :get}
-  map.resources :courses, :member => {:rate => :post, :buy => :get, :download_attachment => :get},  
+  map.resources :lectures, :member => {:rate => :post, :buy => :get, :download_attachment => :get},  
   :collection => { :unpublished_preview => :get, :cancel => :get, :sort_lesson => :post, :unpublished => :get,:waiting => :get}
   map.resources :credits
   map.resources :folders
@@ -46,7 +46,7 @@ ActionController::Routing::Routes.draw do |map|
   # admin routes  
   map.admin_dashboard   '/admin/dashboard', :controller => 'admin', :action => 'dashboard'
   map.admin_moderate_submissions   '/admin/moderate/submissions', :controller => 'admin', :action => 'submissions'
-  map.admin_moderate_courses   '/admin/moderate/courses', :controller => 'admin', :action => 'courses'
+  map.admin_moderate_lectures   '/admin/moderate/lectures', :controller => 'admin', :action => 'lectures'
   map.admin_moderate_users   '/admin/moderate/users', :controller => 'admin', :action => 'users'
   map.admin_moderate_exams   '/admin/moderate/exams', :controller => 'admin', :action => 'exams'
   map.admin_moderate_spaces   '/admin/moderate/spaces', :controller => 'admin', :action => 'spaces'
@@ -107,7 +107,7 @@ ActionController::Routing::Routes.draw do |map|
    :cancel => :get
    } do |space|
     space.resources :folders, :member =>{:upload => :get, :download => :get, :rename => :get, :destroy_folder => :delete, :destroy_file => :delete}
-    space.resources :courses
+    space.resources :lectures
     space.resources :subjects
     space.resources :exams
     space.resources :bulletins
@@ -155,7 +155,7 @@ ActionController::Routing::Routes.draw do |map|
     #user.resources :clippings
     user.resources :activities, :collection => {:network => :get}
     user.resources :invitations
-    user.resources :courses, :collection => {:published => :get, :unpublished => :get, :waiting => :get} 
+    user.resources :lectures, :collection => {:published => :get, :unpublished => :get, :waiting => :get} 
     user.resources :spaces, :collection => {:member => :get, :owner => :get}
     user.resources :exams, :collection => {:published => :get, :unpublished => :get, :history => :get} 
     user.resources :questions

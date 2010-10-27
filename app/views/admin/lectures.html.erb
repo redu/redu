@@ -1,0 +1,81 @@
+<script type="text/javascript">
+	function selectAll(){
+	var checkboxes = document.getElementsByName("lectures[]");
+	for (var i =0; i< checkboxes.length; i++) {
+		checkboxes[i].checked = true;
+	}
+	
+}
+
+function selectNone(){
+	var checkboxes = document.getElementsByName("lectures[]");
+	for (var i =0; i< checkboxes.length; i++) {
+		checkboxes[i].checked = false;
+	}
+}
+
+	
+</script>
+
+
+<div class="grid_16">
+<div id="breadcrumbs">
+	<a href="#">Administração</a> > Aulas
+</div>
+
+<div id="title_video">Moderação de Aulas</div>
+</div>
+
+<div class="main grid_16">
+    <div class="fake-tabs grid_16 alpha omega">
+        <%= render :partial => "admin/taskbar" %>
+        <div class="panel">
+        	
+					<h3>Mostrando aulas mais recentes</h3>
+					
+					
+					
+    <div id="all_list">
+    	
+		<% if @lectures && @lectures.size > 0 %>
+		Selecionar <%=link_to_function 'Todos', 'selectAll()'%> | <%=link_to_function 'Nenhum', 'selectNone()'%> 
+		
+		 <% form_tag :action => :moderate_lectures do %>
+			<table style="width: 100%; margin: 15px 10px 20px 10px;" class="common">
+				<tr>
+					<th></th><th>#ID</th><th>Aula</th><th>Autor</th><th>Data</th>
+				</tr>
+		 	<% for lecture in @lectures %>
+				<tr>
+					<tr>
+						<td class="check"><%= check_box_tag 'lectures[]', lecture.id, false,:id => "lecture_"+ lecture.id.to_s  %></td>
+						<td class="id"><%= lecture.id  %></td>
+						<td class="name"><%= link_to lecture.name, lecture_path(lecture), :target => "_blank" %> </td>
+						<% if lecture.owner %>
+                                                  <td><%= lecture.owner.display_name %> </td>
+                                                <% else %>
+                                                  <td> Aula sem dono </td>
+                                                <% end %>
+						<td><%= time_ago_in_words(lecture.updated_at) %> </td>
+					</tr>
+				</tr>
+ 			<% end %>
+			</table>
+			<%= submit_tag "Remover" %>
+		 <% end %>
+		<% else %>
+ 			Não há aulas publicadas ainda. 
+		<% end %>
+    	
+    </div> <!-- fim da listagem --> 
+	
+	<div id="pagination" align="center" class="pagination">
+
+		<%= will_paginate  @lectures, :params => {:sort_by => @sort_by}, :class => "pagination_number"  %>
+		
+    </div>
+
+			</div>
+    </div> <!-- end tabs -->
+</div><!-- end main -->
+

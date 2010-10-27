@@ -13,7 +13,7 @@ class SpacesController < BaseController
 
   def remove_asset
     case params[:asset_type]
-    when 'Course'
+    when 'Lecture'
       msg = "Aula removida da rede"
     when 'Exam'
       msg = "Exame removido da rede"
@@ -28,7 +28,7 @@ class SpacesController < BaseController
       flash[:notice] = "Não foi possível remover o conteúdo selecionado"
     end
 
-    redirect_to space_courses_path(:space_id => params[:id])
+    redirect_to space_lectures_path(:space_id => params[:id])
   end
 
   def take_ownership
@@ -147,7 +147,7 @@ class SpacesController < BaseController
 
   def admin_submissions
     @space = Space.find(params[:id])
-    @courses = Course.paginate(:conditions => ["published = 1 AND state LIKE ?", "waiting"],
+    @lectures = Lecture.paginate(:conditions => ["published = 1 AND state LIKE ?", "waiting"],
                                :include => :owner,
                                :page => params[:page],
                                :order => 'updated_at DESC',
@@ -155,7 +155,7 @@ class SpacesController < BaseController
 
     respond_to do |format|
       format.html #{ render :action => "my" }
-      format.xml  { render :xml => @courses }
+      format.xml  { render :xml => @lectures }
     end
   end
 
@@ -435,7 +435,7 @@ class SpacesController < BaseController
     end
 
     respond_to do |format|
-      format.xml  { render :xml => @courses }
+      format.xml  { render :xml => @lectures }
       format.html do
         if @user
           redirect_to @user
@@ -463,9 +463,9 @@ class SpacesController < BaseController
     if @space
       @statuses = @space.recent_activity(0,10)
 
-      @featured = @space.featured_courses(3)
-      @brand_new = @space.courses.find(:first, :order => "created_at DESC")
-      @courses = @space.courses.paginate(:conditions =>
+      @featured = @space.featured_lectures(3)
+      @brand_new = @space.lectures.find(:first, :order => "created_at DESC")
+      @lectures = @space.lectures.paginate(:conditions =>
                                           ["published = 1"],
                                             :include => :owner,
                                             :page => params[:page],
@@ -574,7 +574,7 @@ class SpacesController < BaseController
     @space.destroy
 
     respond_to do |format|
-      format.html { redirect_to(spaces_url) }
+      format.html { redirect_to(home_path) }
       format.xml  { head :ok }
     end
   end

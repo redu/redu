@@ -40,14 +40,14 @@ class UserNotifier < ActionMailer::Base
   end
 
   ### ADMIN REDU
-  def remove_course(course)
+  def remove_lecture(lecture)
     setup_sender_info
-    @recipients  = "#{course.owner.email}"
-    @subject     = "A aula \"#{course.name}\" foi removida do Redu"
+    @recipients  = "#{lecture.owner.email}"
+    @subject     = "A aula \"#{lecture.name}\" foi removida do Redu"
     @sent_on     = Time.now
-    @body[:user] = course.owner
-    # @body[:url]  = course.permalink
-    @body[:course]  = course
+    @body[:user] = lecture.owner
+    # @body[:url]  = lecture.permalink
+    @body[:lecture]  = lecture
   end
 
   def remove_exam(exam)
@@ -56,7 +56,7 @@ class UserNotifier < ActionMailer::Base
     @subject     = "O exame \"#{exam.name}\" foi removido do Redu"
     @sent_on     = Time.now
     @body[:user] = exam.owner
-    # @body[:url]  = course.permalink
+    # @body[:url]  = lecture.permalink
     @body[:exam]  = exam
   end
 
@@ -77,24 +77,24 @@ class UserNotifier < ActionMailer::Base
     @body[:space]  = space
   end
 
-  def approve_course(course)
+  def approve_lecture(lecture)
     setup_sender_info
-    @recipients  = "#{course.owner.email}"
-    @subject     = "A aula \"#{course.name}\" foi aprovada!"
+    @recipients  = "#{lecture.owner.email}"
+    @subject     = "A aula \"#{lecture.name}\" foi aprovada!"
     @sent_on     = Time.now
-    @body[:user] = course.owner
-    @body[:url]  = course.permalink
-    @body[:course]  = course
+    @body[:user] = lecture.owner
+    @body[:url]  = lecture.permalink
+    @body[:lecture]  = lecture
   end
 
-  def reject_course(course, comments)
+  def reject_lecture(lecture, comments)
     setup_sender_info
-    @recipients  = "#{course.owner.email}"
-    @subject     = "A aula \"#{course.name}\" foi rejeitada para publicação no Redu"
+    @recipients  = "#{lecture.owner.email}"
+    @subject     = "A aula \"#{lecture.name}\" foi rejeitada para publicação no Redu"
     @sent_on     = Time.now
-    @body[:user] = course.owner
-    @body[:url]  = course.permalink
-    @body[:course]  = course
+    @body[:user] = lecture.owner
+    @body[:url]  = lecture.permalink
+    @body[:lecture]  = lecture
     @body[:comments]  = comments
   end
 

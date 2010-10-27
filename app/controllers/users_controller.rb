@@ -47,7 +47,7 @@ class UsersController < BaseController
 
   def teaching
     @user = User.find(params[:id]) #TODO performance routes (passar parametro direto para query)
-    @courses = @user.courses[0..5] # TODO limitar pela query (limit = 5)
+    @lectures = @user.lectures[0..5] # TODO limitar pela query (limit = 5)
     @exams = @user.exams[0..5]
 
     respond_to do |format|

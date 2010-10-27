@@ -25,8 +25,8 @@ pt-BR:
     attributes:
       photo:
         created_at: "created at: "
-      course:
-        courseable_type: "O tipo de aula"
+      lecture:
+        lectureable_type: "O tipo de aula"
         simple_category: "A categoria"
     errors:
       template:
@@ -68,11 +68,11 @@ pt-BR:
           attributes:
             path:
               invalid: ": caminho inválido."
-        course:
+        lecture:
           attributes:
             description:
               too_short: "Descrição muito curta. Use pelo menos 30 caracteres."
-            #courseable:
+            #lectureable:
               #invalid: ": link inválido."
         message:
           attributes:
@@ -96,8 +96,8 @@ pt-BR:
                     inclusion: ": Por favor, informe seu papel (professor/aluno)."
                     
   
-  courseable: vídeo-aula         
-  courses: aulas
+  lectureable: vídeo-aula         
+  lectures: aulas
   history: historico
   status:
     attributes:
@@ -193,7 +193,7 @@ pt-BR:
   
   
   
-  Course:  aula
+  Lecture:  aula
   Resource:  material
   Exam:  exame
   #en: a_few_seconds_ago:  a few seconds ago
@@ -246,8 +246,8 @@ pt-BR:
   add_a_poll: Add a poll
   #en: add_comment: Add Comment
   add_comment: Adicionar Comentário
-  #en: add_course: Add Course
-  add_course: Adicionada no Redu por
+  #en: add_lecture: Add Lecture
+  add_lecture: Adicionada no Redu por
   #en: add_from_my_address_book: "Add from my address book"
   add_from_my_address_book: "Add from my address book"
   #en: add_some_friends_to_get_started: Add some friends to get started!
@@ -462,8 +462,8 @@ pt-BR:
   contest_entries: Contest Entries
   #en: country: Country
   country: País
-  #en: course: Course
-  course: Aula
+  #en: lecture: Lecture
+  lecture: Aula
   #en: create: Create
   create: Criar
   #en: create_an_account: Create an account
@@ -1008,8 +1008,8 @@ pt-BR:
   one_minute_ago: um minuto atrás
   #en: optional: optional
   optional: opcional
-  #en: optional_keywords_describing_this_course_separated_by_commas:
-  optional_keywords_describing_this_course_separated_by_commas: "palavras chaves opcionais descrevendo esta aula, separado por vírgulas"
+  #en: optional_keywords_describing_this_lecture_separated_by_commas:
+  optional_keywords_describing_this_lecture_separated_by_commas: "palavras chaves opcionais descrevendo esta aula, separado por vírgulas"
   #en: optional_keywords_describing_this_exam_separated_by_commas:
   optional_keywords_describing_this_exam_separated_by_commas: "palavras chaves opcionais descrevendo este exame, separado por vírgulas"
   #en: optional_keywords_describing_this_clipping_separated_by_commas: optional keywords describing this clipping, separated by commas

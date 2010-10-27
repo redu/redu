@@ -1,5 +1,9 @@
 class Seminar < ActiveRecord::Base
+  # Lectureable que representa um objeto multimídia simples, podendo ser aúdio,
+  # vídeo ou mídia externa (e.g youtube).
 
+  # Utilizado na validação
+  #FIXME mover par arquivos de configuração
   SUPPORTED_VIDEOS = [ 'application/x-mp4',
     'video/x-flv',
     'application/x-flv',
@@ -46,7 +50,7 @@ class Seminar < ActiveRecord::Base
 
   # Video convertido
   has_attached_file :media, {}.merge(VIDEO_TRANSCODED)
-  # Video original
+  # Video original. Mantido para caso seja necessário refazer o transcoding
   has_attached_file :original, {}.merge(VIDEO_ORIGINAL)
 
   # Callbacks
@@ -54,14 +58,14 @@ class Seminar < ActiveRecord::Base
   before_validation :enable_correct_validation_group
   before_create :truncate_youtube_url
 
-  # Este trecho de código não vai serguir o coding pattern, pois pode dar erro.
   # Video convertido
   has_attached_file :media, {}.merge(VIDEO_TRANSCODED)
   # Video original
   has_attached_file :original, {}.merge(VIDEO_ORIGINAL)
 
-  # Validations Groups - Usados para habilitar diferentes validacoes dependendo do tipo d
-  validation_group :external, :fields => [:external_resource, :external_resource_type]
+  # Validations Groups - Habilitar diferentes validacoes dependendo do tipo.
+  validation_group :external,
+    :fields => [:external_resource, :external_resource_type]
   validation_group :uploaded, :fields => [:original]
 
   validates_attachment_presence :original
@@ -69,7 +73,7 @@ class Seminar < ActiveRecord::Base
   validates_attachment_size :original,
     :less_than => 100.megabytes
 
-  has_one :course, :as => :courseable
+  has_one :lecture, :as => :lectureable
   has_many :lesson, :as => :lesson
 
   # Maquina de estados do processo de conversão
@@ -94,26 +98,26 @@ class Seminar < ActiveRecord::Base
   end
 
   def import_redu_seminar(url)
-    course_id = url.scan(/aulas\/([0-9]*)/)
+    lecture_id = url.scan(/aulas\/([0-9]*)/)
 
-    unless course_id.empty?
-      @source = Course.find(course_id[0][0])
+    unless lecture_id.empty?
+      @source = Lecture.find(lecture_id[0][0])
       # copia (se upload ou youtube)
       @source.is_clone = true #TODO evitar que sejam removido
     end
 
     if @source and @source.public
-      if @source.courseable_type == 'Seminar'
-        if @source.courseable.external_resource_type.eql?('youtube')
+      if @source.lectureable_type == 'Seminar'
+        if @source.lectureable.external_resource_type.eql?('youtube')
           self.external_resource_type = 'youtube'
-          self.external_resource = 'http://www.youtube.com/watch?v=' + @source.courseable.external_resource
+          self.external_resource = 'http://www.youtube.com/watch?v=' + @source.lectureable.external_resource
           return [true, ""]
-        elsif @source.courseable.external_resource_type.eql?('upload')
+        elsif @source.lectureable.external_resource_type.eql?('upload')
           self.external_resource_type = 'upload' # melhor ficar 'redu'?
-          self.media_file_name = @source.courseable.media_file_name
-          self.media_content_type = @source.courseable.media_content_type
-          self.media_file_size = @source.courseable.media_file_size
-          self.media_updated_at = @source.courseable.media_updated_at
+          self.media_file_name = @source.lectureable.media_file_name
+          self.media_content_type = @source.lectureable.media_content_type
+          self.media_file_size = @source.lectureable.media_file_size
+          self.media_updated_at = @source.lectureable.media_updated_at
           return [true, ""]
         end
 
@@ -132,7 +136,7 @@ class Seminar < ActiveRecord::Base
       errors.add(:external_resource, "Link inválido") unless capture
     end
   end
-
+  # Retorna parâmetro da URL que identifica unicamente o vídeo
   def truncate_youtube_url
     if self.external_resource_type.eql?('youtube')
       capture = self.external_resource.scan(/youtube\.com\/watch\?v=([A-Za-z0-9._%-]*)[&\w;=\+_\-]*/)[0][0]
@@ -175,7 +179,7 @@ class Seminar < ActiveRecord::Base
     SUPPORTED_AUDIO.include?(self.original_content_type)
   end
 
-  # Inspects object attributes and decides which validation group to enable
+  # Decide qual validation_group será habilitado
   def enable_correct_validation_group
     if self.external_resource_type != "upload"
       self.enable_validation_group :external
@@ -198,8 +202,8 @@ class Seminar < ActiveRecord::Base
   end
 
   protected
-  # Deriva o content type olhando diretamente para o arquivo
-  # Necessário por causa do uploadfy
+  # Deriva o content type olhando diretamente para o arquivo. Workaround para
+  # problemas decorrentes da integração uploadify/rails
   # http://github.com/alainbloch/uploadify_rails
   # Deve ser chamado antes de salvar
   def define_content_type

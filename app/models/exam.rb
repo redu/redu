@@ -16,7 +16,7 @@ class Exam < ActiveRecord::Base
   has_many :favorites, :as => :favoritable, :dependent => :destroy
   belongs_to :owner , :class_name => "User" , :foreign_key => "owner_id"
   belongs_to :simple_category
-  has_one :course_subject, :as => :courseable, :dependent => :destroy
+  has_one :lecture_subject, :as => :lectureable, :dependent => :destroy
   has_one :space_asset, :as => :asset
   has_one :space, :through => :space_asset#, :as => :asset
   # NESTED

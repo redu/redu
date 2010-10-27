@@ -98,7 +98,7 @@ function onChangeAjax(){
 			<%= link_to_remote "Mais populares", :url => {:action => :index, :sort => 'members_count'}, :loading => "select('sort','members')", :method => :get%>
 		</li>
 		<li id = "sort_courses">
-			<%= link_to_remote "Mais aulas", :url => {:action => :index, :sort => 'courses_count'}, :loading => "select('sort','courses')", :method => :get%>
+			<%= link_to_remote "Mais aulas", :url => {:action => :index, :sort => 'lectures_count'}, :loading => "select('sort','courses')", :method => :get%>
 		</li>
 		<!--
 		<li id = "sort_rating">

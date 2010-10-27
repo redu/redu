@@ -39,9 +39,9 @@ max_lesson_number: 10
 moderate: ['Exam', 'InteractiveClass', 'Seminar']
 
 points:
-  created_course: 80
-  updated_course: 15
-  show_course: 10
+  created_lecture: 80
+  updated_lecture: 15
+  show_lecture: 10
   created_exam: 40
   updated_exam: 15
   show_exam: 10

@@ -5,7 +5,7 @@ class Subject < ActiveRecord::Base
   validates_presence_of :description, :if => lambda {|s| s.current_step == "subject"}
 
   # associations
-  has_many :course_subjects, :dependent => :destroy
+  has_many :lecture_subjects, :dependent => :destroy
   has_many :enrollments, :dependent => :destroy
   belongs_to :user
   belongs_to :space
@@ -19,7 +19,7 @@ class Subject < ActiveRecord::Base
   end
 
   def steps
-    %w[subject course publication]
+    %w[subject lecture publication]
   end
 
   def next_step
@@ -45,29 +45,29 @@ class Subject < ActiveRecord::Base
     end
   end
 
-  def create_course_subject_type_course aulas, subject_id, current_user
+  def create_lecture_subject_type_lecture aulas, subject_id, current_user
 
     aulas.each do |aula|
-      course = current_user.courses.find(aula) #find the course by id
-      clone_course = course.clone #clone it
-      clone_course.is_clone = true
-      clone_course.save#and save it
-      cs = CourseSubject.new
+      lecture = current_user.lectures.find(aula) #find the lecture by id
+      clone_lecture = lecture.clone #clone it
+      clone_lecture.is_clone = true
+      clone_lecture.save#and save it
+      cs = LectureSubject.new
       cs.subject_id = subject_id
-      cs.courseable_id = clone_course.id
-      cs.courseable_type = "Course"
+      cs.lectureable_id = clone_lecture.id
+      cs.lectureable_type = "Lecture"
       cs.save
     end
 
   end
 
-  def create_course_subject_type_exam exams, subject_id
+  def create_lecture_subject_type_exam exams, subject_id
 
     exams.each do |exam_id|
-      cs = CourseSubject.new
+      cs = LectureSubject.new
       cs.subject_id = subject_id
-      cs.courseable_id = exam_id
-      cs.courseable_type = "Exam"
+      cs.lectureable_id = exam_id
+      cs.lectureable_type = "Exam"
       cs.save
     end
 

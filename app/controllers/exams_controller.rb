@@ -361,7 +361,7 @@ class ExamsController < BaseController
     if params[:user_id] # exames do usuario
       @user = User.find_by_login(params[:user_id])
       @user = User.find(params[:user_id]) unless @user
-      @courses = @user.exams.paginate(paginating_params)
+      @lectures = @user.exams.paginate(paginating_params)
       render((@user == current_user) ? "user_exams_private" :  "user_exams_public")
       return
 

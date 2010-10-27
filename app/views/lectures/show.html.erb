@@ -1,0 +1,298 @@
+
+<% content_for :js do %>
+<script type="text/javascript">
+    /*
+     function toggleAnnotationBox(){
+     
+     var box = document.getElementById("annotation_box");
+     
+     if (box.style.display == 'none') {
+     //Effect.Appear(box);
+     box.style.display = 'block';
+     
+     } else {
+     //Effect.Fade(box);
+     box.style.display = 'none';
+     }
+     
+     }
+     */
+    var min = 8;
+    var max = 18;
+    function increaseFontSize(){
+        var thecontainer = document.getElementById('topic_body');
+        var p = thecontainer.getElementsByTagName('p');
+        for (i = 0; i < p.length; i++) {
+            if (p[i].style.fontSize) {
+                var s = parseInt(p[i].style.fontSize.replace("px", ""));
+            }
+            else {
+                var s = 12;
+            }
+            if (s != max) {
+                s += 2;
+            }
+            p[i].style.fontSize = s + "px";
+        }
+    }
+    
+    function decreaseFontSize(){
+        var thecontainer = document.getElementById('topic_body');
+        var p = thecontainer.getElementsByTagName('p');
+        for (i = 0; i < p.length; i++) {
+            if (p[i].style.fontSize) {
+                var s = parseInt(p[i].style.fontSize.replace("px", ""));
+            }
+            else {
+                var s = 12;
+            }
+            if (s != min) {
+                s -= 2;
+            }
+            p[i].style.fontSize = s + "px"
+        }
+    }
+    
+    function checkTopic(tIndex){
+        document.getElementById('topic_check_' + tIndex).innerHTML = '<img title="completei!" src="/images/checkbox.png" alt="Checkbox" onclick="unCheckTopic(' + tIndex + '); return false;">'
+    }
+    
+    function unCheckTopic(tIndex){
+        document.getElementById('topic_check_' + tIndex).innerHTML = '<img title="completei!" src="/images/checkbox_clear.png" alt="Checkbox" onclick="checkTopic(' + tIndex + '); return false;">'
+    }
+    
+    var topics = {};
+    
+    
+    var topicCount = 1;
+    var currentTopic = 0;
+    
+    function selectTopic(topic){
+        //alert('topic: '+topic + ' | current: '+ currentTopic);
+        
+        var curListItem = document.getElementById('topic_item_' + currentTopic);
+        var selListItem = document.getElementById('topic_item_' + topic);
+        if (typeof(curListItem) != 'undefined') {
+            curListItem.className = "topic_item";
+        }
+        if (typeof(selListItem) != 'undefined') {
+            selListItem.className += " topic_item_sel";
+        }
+        
+        document.getElementById('topic_body_' + currentTopic).style.display = "none";
+        document.getElementById('topic_body_' + topic).style.display = "block";
+        
+        currentTopic = topic;
+    }
+    
+    jQuery(document).ready(function(){
+        jQuery("a.lights_on").click(function(e){
+            jQuery("#lights-dimmed").fadeOut("slow");
+            jQuery(this).toggle();
+            jQuery("a.lights_off").toggle();
+						jQuery("#view_video").css('position', 'static')
+            
+            e.preventDefault();
+        })
+        
+        jQuery("a.lights_off").click(function(e){
+            jQuery("#lights-dimmed").fadeIn("fast");
+            jQuery(this).toggle();
+            jQuery("a.lights_on").toggle();
+						jQuery("#view_video").css('position', 'relative')
+            
+            e.preventDefault();
+        })
+        
+        
+        
+    });
+    
+    function fullScreen(full){
+        if (full) {
+            $('#f-screen-content').html('ola')
+            $('#f-screen').show();
+        }
+        else {
+        $('#f-screen').hide();
+        }
+    }
+    
+</script>
+<% end %>
+
+<div id="lights-dimmed" style="display:none;">
+    &nbsp;
+</div>
+ <div id="f-screen" style="display:none;">
+		<span style ="float: right;">    
+		 <%= link_to_function((image_tag 'icons/fullscreen.gif', :title => 'Tela cheia', :border => 0), "fullScreen(false)" )%>
+		 </span>
+		 <div id="f-screen-content" style ="float: left;">
+		 	
+		 </div>
+ </div>
+
+<div class="grid_16">
+    <div id="breadcrumbs">
+        <a href="<%=application_url%>">início</a>
+        > <a href="<%= lectures_path %>">aulas</a>
+        > <a href="#"><%= @lecture.name %></a>
+    </div>
+    <!--
+    <h3 class="call">Aula: </h3>
+    -->
+    <div id="item_video" class="clearfix">
+        <div id="title_video">
+            <%= @lecture.name %>
+        </div>
+        <div class="admin_opts yellow">
+            <% if @lecture.owner == current_user %>
+
+            <%= link_to_function 'Editar', "alert('Opção indisponível nesta versão.')",  {:action => "edit"}, :class => "icon-edit" %>
+			 <% end %>
+			 
+			 <% if current_user.can_manage? @lecture and @space %>
+			| <%= link_to 'Remover da rede', remove_asset_space_path(:id => @space.id, :asset_id => @lecture.id, :asset_type => "Lecture"), {:confirm => "Você tem certeza que quer remover esta aula da rede?\n(Ela continuará no seu diretório de aulas)", :class => "icon-delete"} %>
+			<% end %>
+			
+			<% if current_user.admin? %>
+			| <%= link_to 'Remover', @lecture, {:confirm => 'Você tem certeza que quer remover esta aula do Redu permanentemente?',
+            :method => :delete, :class => "icon-delete"} %>
+            
+				<% if @lecture.state.eql?("waiting") %>
+	            | <%= link_to 'Aprovar' , {:controller => :admin, :action => "approve", :id => @lecture.id}, :class => "icon-approve"%> |
+				  <%= link_to 'Rejeitar' , {:controller => :admin, :action => "disapprove", :id => @lecture.id}, :class => "icon-reject" %>
+	            <% end %>
+			<% end %>
+        </div>
+    </div>
+    <div style="margin-bottom: 10px; float:left;">
+        <div id="identification1">
+            <ul id="identification_resource1">
+                <li>
+                    <%= (@lecture.owner) ? link_to(@lecture.owner.display_name, user_path(@lecture.owner)) : "(usuário removido)" %>
+                </li>
+                <li>
+                    |
+                </li>
+                <li>
+                    <%= time_ago_in_words @lecture.created_at %>
+                </li>
+                <li>
+                    |
+                </li>
+                <li>
+                    Exibições(<%= @lecture.view_count %>)
+                </li>
+            </ul>
+        </div>
+        <div id="description_video">
+            <%= @lecture.description %>
+        </div>
+        <div id="identification1">
+            <ul id="identification_resource1">
+                <li>
+                    <strong>Categoria:</strong>
+                    <%=category_i18n(@lecture.simple_category.name) %>
+                </li>
+                <% unless @lecture.tag_list.empty? %>
+                <li>
+                    |
+                </li>
+                <li>
+                    <strong>Tags:</strong>
+                    <%= @lecture.tag_list %>
+                </li>
+                <% end %>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<%= render_lecture %>
+
+<div id="filter_bar_video" class="grid_16">
+    <div id="actions_video">
+        <ul id="actions_resource">
+            <li>
+                <a href="#" class="raise_hand">Pedir ajuda</a>
+            </li>
+            <li>
+                |
+            </li>
+            <li>
+                <%= render :partial => "shared/annotation" %>
+            </li>
+            <li>
+                |
+            </li>
+            <li>
+                <a href="#" class="lights_off">Apagar as luzes</a>
+                <a href="#" class="lights_on" style="display:none;">Acender as luzes</a>
+            </li>
+            <li>
+                |
+            </li>
+            <li>
+                <!-- AddThis Button BEGIN -->
+                <script type="text/javascript">
+                    var addthis_config = {
+                        "data_track_clickback": true,
+                        ui_click: true,
+                        ui_cobrand: "Redu"
+                    };
+                </script>
+                <div class="addthis_toolbox addthis_default_style">
+                    <a href="http://addthis.com/bookmark.php?v=250&amp;username=redu" class="addthis_button_compact">Share</a>
+                </div>
+                <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=redu">
+                </script>
+                <!-- AddThis Button END -->
+            </li>
+            <li>
+                |
+            </li>
+            <li>
+                <%= render :partial => "shared/favorite" , :locals => {:favoritable => @lecture} %>
+            </li>
+            <li>
+                |
+            </li>
+            <li>
+            	<%= link_to_function "Atividades", "$('#status_text').focus()", :class => "comments_video" %>
+            </li>
+        </ul>
+    </div>
+    <div id="rating_video">
+        <%= ratings_for @lecture %>
+    </div>
+</div>
+<!-- end bar -->
+
+<div class= "grid_10">
+    <!-- COLUNA DA ESQUERDA  ## --><!-- ONLINE USERS -->
+    <div>
+        <% cur_watching = @lecture.currently_watching %>
+        <% if cur_watching.length > 1 %>
+        <div id="filter_bar_comments">
+            <span class="title_filter">ASSISTINDO AGORA</span>
+        </div>
+        <% cur_watching.each do |user| %>
+        <%= link_to image_tag(user.avatar.url(:thumb), :height => '40', :width => '40', :alt => "#{user.login}"), user_path(user), :rel => 'bookmark', :class => 'move_foto', :title => "#{user.login}'s profile" %>
+        <br>
+        <%= user.login %>
+        <% end %>
+        <% end %>
+    </div>
+    <!-- FLOW -->
+    <div style ="min-height: 250px;">
+        <%= javascript_include_tag 'flow.js' %>
+        <%= render :partial => "statuses/create_status", :locals => {:status => @status, :statusable => @lecture } %>
+        <ul class="activities">
+            <% collection = @lecture.statuses.descend_by_created_at %>
+            <%= render :partial => "statuses/type_proxy", :collection => collection, :as => :status, :locals => {:statusable => @lecture } %>
+        </ul>
+        <!-- end activities -->
+    </div>
+</div>

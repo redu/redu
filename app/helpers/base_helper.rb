@@ -16,15 +16,15 @@ module BaseHelper
 
 
     def simple_categories_i18n(f)
-   # collection_select(:course, :simple_category, SimpleCategory.all, :id, :name)
+   # collection_select(:lecture, :simple_category, SimpleCategory.all, :id, :name)
 	  categories_array = SimpleCategory.all.map { |cat| [category_i18n(cat.name), cat.id] }
-		if params[:course]
-			# To put a value in categories_array I have to subtract for 1 the params[:course][:simple_category_id],
+		if params[:lecture]
+			# To put a value in categories_array I have to subtract for 1 the params[:lecture][:simple_category_id],
 			# because the include_blank add a extra field
-			if params[:course][:simple_category_id]
+			if params[:lecture][:simple_category_id]
 			
-				if params[:course][:simple_category_id].to_i > 0
-					i = params[:course][:simple_category_id].to_i - 1
+				if params[:lecture][:simple_category_id].to_i > 0
+					i = params[:lecture][:simple_category_id].to_i - 1
 					f.select(:simple_category_id, options_for_select(categories_array, categories_array[i]), :include_blank => true)		
 				else
 					f.select(:simple_category_id, options_for_select(categories_array), :include_blank => true)
@@ -50,7 +50,7 @@ module BaseHelper
 
 
     def area_select(select_opts)
-   # collection_select(:course, :simple_category, SimpleCategory.all, :id, :name)
+   # collection_select(:lecture, :simple_category, SimpleCategory.all, :id, :name)
    categories_array = ReduCategory.all.map { |cat| [(cat.name.downcase.gsub(' ','_').to_sym.l), cat.id] }
    categories_array.sort! { |a,b| a[0] <=> b[0] } # Ordenando pelo nome da categoria
    categories_array.insert(0, ["All".downcase.gsub(' ','_').to_sym.l, 'all'])
@@ -93,7 +93,7 @@ module BaseHelper
          @activity = "acabou de entrar no redu" if item.log_action == "login"
          @activity = "atualizou seu status para: <span style='font-weight: bold;'>\"" + item.logeable_name + "\"</span>" if item.log_action == "update"
 
-        when 'course'
+        when 'lecture'
           link_obj = link_to(item.logeable_name, item.logeable)
 
           @activity = "está visualizando a aula " + link_obj if item.log_action == "show"
@@ -287,9 +287,9 @@ module BaseHelper
         else
           title = :showing_categories.l+' &raquo; ' + app_base + tagline
         end
-      when 'courses'
-      if @course and @course.name
-        title = 'Aula: ' + @course.name + ' &raquo; ' + app_base + tagline
+      when 'lectures'
+      if @lecture and @lecture.name
+        title = 'Aula: ' + @lecture.name + ' &raquo; ' + app_base + tagline
       else
         title = 'Mostrando Aulas' +' &raquo; ' + app_base + tagline
       end

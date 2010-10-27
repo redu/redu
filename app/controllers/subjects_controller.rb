@@ -30,8 +30,8 @@ class SubjectsController < BaseController
 
         if @subject.all_valid?
           @subject.save
-          @subject.create_course_subject_type_course(session[:subject_aulas], @subject.id, current_user) unless session[:subject_aulas].nil?
-          # @subject.create_course_subject_type_exam(session[:subject_aulas], @subject.id) unless session[:subject_aulas].nil?
+          @subject.create_lecture_subject_type_lecture(session[:subject_aulas], @subject.id, current_user) unless session[:subject_aulas].nil?
+          # @subject.create_lecture_subject_type_exam(session[:subject_aulas], @subject.id) unless session[:subject_aulas].nil?
         end
       else
         @subject.next_step
@@ -69,9 +69,9 @@ class SubjectsController < BaseController
         if @subject.all_valid?
           @subject = current_user.subjects.find(session[:subject_id])
           @subject.update_attributes(session[:subject_params])
-          @subject.course_subjects.destroy_all
-          @subject.create_course_subject_type_course(session[:subject_aulas], @subject.id,current_user) unless session[:subject_aulas].nil?
-          # @subject.create_course_subject_type_exam(params[:exames], @subject.id) unless params[:exames].nil?
+          @subject.lecture_subjects.destroy_all
+          @subject.create_lecture_subject_type_lecture(session[:subject_aulas], @subject.id,current_user) unless session[:subject_aulas].nil?
+          # @subject.create_lecture_subject_type_exam(params[:exames], @subject.id) unless params[:exames].nil?
           updated = true
         end
       else

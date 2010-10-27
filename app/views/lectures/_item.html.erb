@@ -1,0 +1,59 @@
+<li class="clearfix">
+	 <%= link_to lecture.name, (@space) ? lecture_path(:id => lecture.id, :space_id => @space.id) : lecture, :class => "name"  %>
+	<div class="thumb photo"><%= link_to(image_tag lecture.thumb_url, :width => "70px") %></div>
+	<div class="headlines" style="width: 490px">
+		<!--
+		<span class="call">Descrição:</span>
+		-->
+		<span class="things">
+		<%= truncate_words( lecture.description, 10, '...') %>
+		
+		
+		</span>
+	</div>
+	<div class="headlines" style="width: 490px">
+		
+		
+		<ul class="item_info">
+            <% unless @user %>
+						<li> Por 
+                <%= link_to lecture.owner.f_name, user_path(lecture.owner) %>
+            </li>
+            <li>
+                |
+            </li>
+						<%end%>
+            <li> 
+                <%= time_ago_in_words_or_date(lecture.created_at) %>
+            </li>
+            <% if lecture.space && !@space%>
+						<li>
+                |
+            </li>
+						 <li> 
+                Rede: <%= link_to(lecture.space.name, lecture.space)  %>
+            </li>
+						<%end%>
+            <li>
+                |
+            </li>
+            <li>
+                Exibições (<%= lecture.view_count %>)
+            </li>
+						<li>
+                |
+            </li>
+						
+        </ul>
+				
+		<span style="float: left; margin-top:2px;">
+			 							<%= ratings_for lecture, :static, :small => true, :wrap => false %>
+		</span>
+		
+		
+	</div>
+</li> 
+
+
+
+
