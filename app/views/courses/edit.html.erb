@@ -1,0 +1,12 @@
+<%#TODO incluir cabaçalho de environment %>
+
+<% form_for @course,
+  :url => edit_environment_course_path(@environment, @course) do |f| %>
+  <%= render :partial => 'courses/form', :locals => { :f => f } %>
+<% end %>
+
+<fieldset>
+  <legend>Remover curso</legend>
+  <%= link_to 'Deletar curso', environment_course_path(@environment, @course), 
+    :confirm => 'Você tem certeza que deseja remover este curso?', :method => :delete %>
+</fieldset>

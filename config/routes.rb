@@ -1,4 +1,8 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :environments do |environment|
+    environment.resources :courses
+  end
+
   map.connect 'clipboard/:action/:folder_or_file/:id',
     :controller => 'clipboard',
     :requirements => { :action         => /(add|remove)/,

@@ -1,0 +1,10 @@
+<% form_for :environment, :url => environments_path do |f| %>
+  <%= f.error_messages %>
+  <%= f.label :name, "Ensino a distância" %>
+  <%= f.text_field :name %>
+  <% f.fields_for "courses_attributes[]", Course.new do |course|  %>
+    <%= course.label :name, "Curso" %>
+    <%= course.text_field :name %>
+  <% end %>
+  <%= submit_tag "Criar!" %>
+<% end %> 

@@ -1,0 +1,3 @@
+<%= render :partial => "environments/header",
+      :locals => { :environment => @environment, :course => @course} %>
+<%= link_to "Editar", edit_environment_course_path(@environment, @course) %>

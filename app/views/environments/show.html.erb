@@ -1,0 +1,7 @@
+<%= render :partial => "environments/header", :locals => { :environment => @environment, :course => nil } %>
+<%= link_to "Crie cursos!", new_environment_course_path(@environment) %>
+<ul>
+  <%= render :partial => "courses/item", :collection => @environment.courses %>
+</ul>
+<%= link_to 'Edit', edit_environment_path(@environment) %> |
+<%= link_to 'Back', environments_path %>
