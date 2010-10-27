@@ -1,0 +1,2 @@
+page.replace_html('external_object_' + params[:child_index], :partial => 'form_lesson_object_loaded', :locals => {:ch_index => params[:child_index]})
+page << "jQuery('#spinner').hide();"

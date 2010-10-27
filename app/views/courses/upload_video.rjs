@@ -1,0 +1,3 @@
+page.replace_html('video_upload_' + params[:child_index], :partial => 'form_lesson_seminar_uploaded', :locals => {:seminar => @seminar, :ch_index => params[:child_index]})
+page << "jQuery('#spinner').hide();"
+

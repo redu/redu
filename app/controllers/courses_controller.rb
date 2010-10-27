@@ -22,18 +22,11 @@ class CoursesController < BaseController
 
     respond_to do |format|
       if @external_object.save
-        format.js do
-          render :update do |page|
-            page.replace_html('external_object_' + params[:child_index], :partial => 'form_lesson_object_loaded', :locals => {:ch_index => params[:child_index]})
-            page << "jQuery('#spinner').hide();"
-          end
-        end
+        format.js
       else
-        format.js {
-          render :update do |page|
-          page << "alert('houve uma falha no conteúdo');"
-          end
-        }
+        format.js do
+          render :template => 'courses/alert', :locals => { :message => 'Houve uma falha no conteúdo'}
+        end
       end
     end
   end
@@ -49,9 +42,7 @@ class CoursesController < BaseController
         respond_to do |format|
           format.js do
             responds_to_parent do
-              render :update do |page|
-                page << "alert('"+ success[1] +"');"
-              end
+              render :template => 'courses/alert', :locals => { :message => success[1]}
             end
           end
         end
@@ -65,18 +56,13 @@ class CoursesController < BaseController
 
         format.js do
           responds_to_parent do
-            render :update do |page|
-              page.replace_html('video_upload_' + params[:child_index], :partial => 'form_lesson_seminar_uploaded', :locals => {:seminar => @seminar, :ch_index => params[:child_index]})
-              page << "jQuery('#spinner').hide();"
-            end
+            render :template => 'courses/upload_video'
           end
         end
       else
         format.js do
           responds_to_parent do
-            render :update do |page|
-              page << "alert('houve uma falha ao enviar o arquivo');"
-            end
+            render :template => 'courses/alert', :locals => { :message => "Houve uma falha ao enviar o arquivo." }
           end
         end
       end
@@ -91,11 +77,13 @@ class CoursesController < BaseController
   def rate
     @course = Course.find(params[:id])
     @course.rate(params[:stars], current_user, params[:dimension])
+    #TODO Esta linha abaixo é usada pra quê?
     id = "ajaxful-rating-#{!params[:dimension].blank? ? "#{params[:dimension]}-" : ''}course-#{@course.id}"
 
-    render :update do |page|
-      page.replace_html  @course.wrapper_dom_id(params), ratings_for(@course, params.merge(:wrap => false))
+    respond_to do |format|
+      format.js
     end
+    
   end
 
   def sort_lesson
@@ -148,15 +136,9 @@ class CoursesController < BaseController
 
       format.js  do
         if params[:space_content]
-
-          render :update do |page|
-            page.replace_html  'content_list', :partial => 'course_list'
-            page << "$('#spinner').hide()"
-          end
+          render :template => 'courses/course_list'
         elsif params[:tab]
-          render :update do |page|
-            page.replace_html  'tabs-2-content', :partial => 'courses_space'
-          end
+          render :template => 'courses/courses_space'
         else
           render :index
         end
@@ -325,18 +307,13 @@ class CoursesController < BaseController
               end
 
               format.js do
-                render :update do |page|
-                  page << "window.location.replace('#{ url_for :action => :new , :course_type => params[:courseable_type], :step => "3", :space_id => params[:space_id] }')"
-                  page << "$('.errorMessageField').remove()"
-                end
+                render :template => 'courses/create_seminar', :locals => { :course_type => params[:courseable_type], :step => "3", :space_id => params[:space_id] }  
               end
 
             else
               format.html { render "step2_seminar" }
               format.js do
-                render :update do |page|
-                  page << "$('#uploadify_submit').before('<span class=\"errorMessageField\">Formato inválido</span>')"
-                end
+                render :template => 'courses/create_seminar_error'  
               end
 
             end
@@ -355,18 +332,14 @@ class CoursesController < BaseController
               redirect_to :action => :new , :course_type => params[:courseable_type], :step => "3", :space_id => params[:space_id]
             end
             format.js do
-              render :update do |page|
-                page << "jQuery('#save_info').html('Salvo em #{Time.now.utc}')"
-              end
+              render :template => 'courses/create_interactive'  
             end
           else
             format.html do
               render "step2_interactive"
             end
             format.js do
-              render :update do |page|
-                page << "alert('Erro ao salvar. Tente novamente em alguns instantes.')"
-              end
+             render :template => 'courses/create_interactive_error' 
             end
           end
         end
@@ -585,12 +558,7 @@ class CoursesController < BaseController
                                :per_page => AppConfig.items_per_page)
 
     respond_to do |format|
-      format.js do
-        render :update do |page|
-          page << "$('#tabs-2-loading').hide()"
-          page.replace_html 'tabs-2-content', :partial => "course_list"
-        end
-      end
+      format.js
     end
   end
 
@@ -608,12 +576,7 @@ class CoursesController < BaseController
       format.html do
         render "user_courses_private"
       end
-      format.js do
-        render :update do |page|
-          page << "$('#tabs-3-loading').hide()"
-          page.replace_html 'tabs-3-content', :partial => "course_list"
-        end
-      end
+      format.js
     end
   end
 
