@@ -1,2 +1,0 @@
-page.replace_html  'content_list', :partial => 'course_list'
-page << "$('#spinner').hide()"

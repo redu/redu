@@ -25,7 +25,7 @@ class LecturesController < BaseController
         format.js
       else
         format.js do
-          render :template => 'courses/alert', :locals => { :message => 'Houve uma falha no conteúdo'}
+          render :template => 'lectures/alert', :locals => { :message => 'Houve uma falha no conteúdo'}
         end
       end
     end
@@ -42,7 +42,7 @@ class LecturesController < BaseController
         respond_to do |format|
           format.js do
             responds_to_parent do
-              render :template => 'courses/alert', :locals => { :message => success[1]}
+              render :template => 'lectures/alert', :locals => { :message => success[1]}
             end
           end
         end
@@ -56,13 +56,13 @@ class LecturesController < BaseController
 
         format.js do
           responds_to_parent do
-            render :template => 'courses/upload_video'
+            render :template => 'lectures/upload_video'
           end
         end
       else
         format.js do
           responds_to_parent do
-            render :template => 'courses/alert', :locals => { :message => "Houve uma falha ao enviar o arquivo." }
+            render :template => 'lectures/alert', :locals => { :message => "Houve uma falha ao enviar o arquivo." }
           end
         end
       end
@@ -78,7 +78,7 @@ class LecturesController < BaseController
     @lecture = Lecture.find(params[:id])
     @lecture.rate(params[:stars], current_user, params[:dimension])
     #TODO Esta linha abaixo é usada pra quê?
-    id = "ajaxful-rating-#{!params[:dimension].blank? ? "#{params[:dimension]}-" : ''}course-#{@lecture.id}"
+    id = "ajaxful-rating-#{!params[:dimension].blank? ? "#{params[:dimension]}-" : ''}lecture-#{@lecture.id}"
 
     respond_to do |format|
       format.js
@@ -307,13 +307,13 @@ class LecturesController < BaseController
               end
 
               format.js do
-                render :template => 'lecture/create_seminar', :locals => { :course_type => params[:courseable_type], :step => "3", :space_id => params[:space_id] }  
+                render :template => 'lecture/create_seminar', :locals => { :lecture_type => params[:lectureable_type], :step => "3", :space_id => params[:space_id] }  
               end
 
             else
               format.html { render "step2_seminar" }
               format.js do
-                render :template => 'courses/create_seminar_error'  
+                render :template => 'lectures/create_seminar_error'  
               end
 
             end
@@ -332,14 +332,14 @@ class LecturesController < BaseController
               redirect_to :action => :new , :lecture_type => params[:lectureable_type], :step => "3", :space_id => params[:space_id]
             end
             format.js do
-              render :template => 'courses/create_interactive'  
+              render :template => 'lectures/create_interactive'  
             end
           else
             format.html do
               render "step2_interactive"
             end
             format.js do
-             render :template => 'courses/create_interactive_error' 
+             render :template => 'lectures/create_interactive_error' 
             end
           end
         end

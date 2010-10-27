@@ -1,2 +1,2 @@
-page << "window.location.replace('#{ url_for :action => :new , :course_type => :course_type, :step => :step, :space_id => :space_id }')"
+page << "window.location.replace('#{ url_for :action => :new , :lecture_type => :lecture_type, :step => :step, :space_id => :space_id }')"
 page << "$('.errorMessageField').remove()"
