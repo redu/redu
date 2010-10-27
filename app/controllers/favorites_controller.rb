@@ -4,20 +4,20 @@ class FavoritesController < BaseController
   def index
     @user = current_user
     respond_to do |format|
-      format.js do
-        case params[:type]
-        when 'exams'
-          @exams = Exam.paginate(:all,
-                                 :joins => :favorites,
-                                 :conditions => ["favorites.favoritable_type = 'Exam' AND favorites.user_id = ? AND exams.id = favorites.favoritable_id", current_user.id],
-                                 :page => params[:page], :order => 'created_at DESC', :per_page => AppConfig.items_per_page)
+      case params[:type]
+      when 'exams'
+        @exams = Exam.paginate(:all,
+                               :joins => :favorites,
+                               :conditions => ["favorites.favoritable_type = 'Exam' AND favorites.user_id = ? AND exams.id = favorites.favoritable_id", current_user.id],
+                               :page => params[:page], :order => 'created_at DESC', :per_page => AppConfig.items_per_page)
 
-          render :update do |page|
-            page.replace_html  'tabs-2-content', :partial => 'exams/exam_list'
-          end
-        when 'statuses'
-          render :update do |page|
-          end
+        format.js do
+          render :template => 'favorites/exams.rjs'
+        end
+      when 'statuses'
+        format.js do
+          #TODO
+          render :template => 'favorites/statuses.rjs'
         end
       end
       format.html do
