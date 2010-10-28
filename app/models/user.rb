@@ -59,6 +59,15 @@ class User < ActiveRecord::Base
   has_many :group_user
   has_many :groups, :through => :group_user
 
+    #forums
+    has_many :moderatorships, :dependent => :destroy
+    has_many :forums, :through => :moderatorships, :order => 'forums.name'
+    has_many :sb_posts, :dependent => :destroy
+    has_many :topics, :dependent => :destroy
+    has_many :monitorships, :dependent => :destroy
+    has_many :monitored_topics, :through => :monitorships, :conditions => ['monitorships.active = ?', true], :order => 'topics.replied_at desc', :source => :topic
+
+
   # Named scopes
   named_scope :recent, :order => 'users.created_at DESC'
   named_scope :featured, :conditions => ["users.featured_writer = ?", true]
@@ -591,8 +600,12 @@ class User < ActiveRecord::Base
     (@user_credit >= lecture.price)
   end
 
+  def update_last_seen_at
+    User.update_all ['sb_last_seen_at = ?', Time.now.utc], ['id = ?', self.id]
+    self.sb_last_seen_at = Time.now.utc
+  end
+  
   protected
-
   def activate_before_save
     self.activated_at = Time.now.utc
     self.activation_code = nil

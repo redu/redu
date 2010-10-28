@@ -22,6 +22,7 @@ GEM
     desert (0.5.4)
     fastthread (1.0.7)
     gem_plugin (0.2.3)
+    haml (3.0.15)
     hpricot (0.8.2)
     htmlentities (4.2.1)
     icalendar (1.1.5)
@@ -68,6 +69,7 @@ DEPENDENCIES
   authlogic
   collectiveidea-delayed_job
   desert
+  haml
   hpricot
   htmlentities (= 4.2.1)
   icalendar

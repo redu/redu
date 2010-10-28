@@ -400,7 +400,7 @@ module BaseHelper
  # end
 
   def paginating_links(paginator, options = {}, html_options = {})
-    if paginator.page_count > 1
+    if paginator.size >= 1
       name = options[:name] || PaginatingFind::Helpers::DEFAULT_OPTIONS[:name]
 
       our_params = (options[:params] || params).clone
