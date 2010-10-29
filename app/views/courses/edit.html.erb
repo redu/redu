@@ -1,4 +1,5 @@
-<%#TODO incluir cabaçalho de environment %>
+<%= render :partial => "environments/header",
+      :locals => { :environment => @environment, :course => @course} %>
 
 <% form_for @course,
   :url => edit_environment_course_path(@environment, @course) do |f| %>

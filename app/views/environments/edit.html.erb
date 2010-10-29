@@ -1,6 +1,8 @@
+<%= render :partial => "environments/header",
+      :locals => { :environment => @environment, :course => @course} %>
 <h1>Editing environment</h1>
 
-<% form_for(@environment) do |f| %>
+<% form_for @environment, :html => { :multipart => true } do |f| %>
   <%= f.error_messages %>
   <% field_set_tag "Informações Gerais" do %>
     <%= f.label :name, "Nome" %>
@@ -11,6 +13,7 @@
   <% field_set_tag "Aparência" do %>
     <%= f.label :avatar, "Imagem" %>
     <%= f.file_field :avatar %>
+    <%= f.submit "Alterar!" %>
   <% end %>
 <% end %>
 

@@ -53,6 +53,7 @@ class Space < ActiveRecord::Base
   acts_as_voteable
   has_attached_file :avatar, {
     :styles => { :medium => "200x200>", :thumb => "100x100>", :nano => "24x24>" },
+    :path => "schools/:attachment/:id/:style/:basename.:extension",
   }.merge(PAPERCLIP_STORAGE_OPTIONS)
 
   # VALIDATIONS

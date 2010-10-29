@@ -3,6 +3,7 @@
     e course. Caso não seja necessário exibir o course basta passar :course => nil
 %>
 <% if environment %>
+  <%= image_tag environment.avatar.url(:medium)  %>
   <h3><%= link_to environment.name, environment_path(environment) %></h3>
   <%= link_to "Editar", edit_environment_path(environment) %>
 <% end %>

@@ -84,7 +84,8 @@ class User < ActiveRecord::Base
   end
 
   has_attached_file :avatar, {
-    :styles => { :medium => "200x200>", :thumb => "100x100>", :nano => "24x24>" }
+    :styles => { :medium => "200x200>", :thumb => "100x100>", :nano => "24x24>" },
+    :path => "users/:attachment/:id/:style/:basename.:extension",
   }.merge(PAPERCLIP_STORAGE_OPTIONS)
 
   ajaxful_rater

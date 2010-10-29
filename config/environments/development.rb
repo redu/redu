@@ -21,7 +21,10 @@ config.action_controller.perform_caching             = false
 config.action_mailer.raise_delivery_errors = false
 
 # Armazena no sist. de arquivos
-PAPERCLIP_STORAGE_OPTIONS = {:default_url => '/images/missing_pic.jpg'}
+PAPERCLIP_STORAGE_OPTIONS = {
+  :default_url => '/images/missing_pic.jpg',
+  :path => "public/system/:attachment/:id/:style/:basename.:extension"
+}
 VIDEO_ORIGINAL = {:default_url => '/images/missing_pic.jpg'}
 
 # Só converte os 5 primeiros segundos (grátis)
