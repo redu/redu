@@ -1,10 +1,37 @@
+<script type="text/javascript">
+$(document).ready(function(){
+//    jQuery.fn.slugify = function(obj) {
+//      jQuery(this).data('obj', jQuery(obj));
+//      jQuery(this).keyup(function() {
+//        var obj = jQuery(this).data('obj');
+//        var slug = jQuery(this).val().replace(/\s+/g,'-').replace(/[^a-zA-Z0-9\-]/g,'').toLowerCase();
+//        jQuery(this).data('obj').val(slug);
+//        console.log("teste")
+//        });
+//      jQuery(this).blur(function() {
+//        var obj = jQuery(this).data('obj');
+//        var slug = jQuery(this).val().replace(/\s+/g,'-').replace(/[^a-zA-Z0-9\-]/g,'').toLowerCase();
+//        jQuery(this).data('obj').val(slug);
+//        });
+//      }
+//
+//      $("#environment_path").slugify()
+
+
+    $("#environment_name").bind('keyup blur', function(e){
+      $("#environment_path").val($(this).slug());    
+    })
+}); 
+</script>
 <% form_for :environment, :url => environments_path do |f| %>
   <%= f.error_messages %>
   <%= f.label :name, "Ensino a distância" %>
   <%= f.text_field :name %>
+  <%= f.text_field :path %>
   <% f.fields_for "courses_attributes[]", Course.new do |course|  %>
     <%= course.label :name, "Curso" %>
     <%= course.text_field :name %>
   <% end %>
   <%= submit_tag "Criar!" %>
 <% end %> 
+
