@@ -19,10 +19,17 @@ class User < ActiveRecord::Base
   # ASSOCIATIONS
   has_many :annotations, :dependent => :destroy, :include=> :lecture
   has_one :beta_key, :dependent => :destroy
-  has_many :user_space_association, :dependent => :destroy
-  has_many :spaces, :through => :user_space_association
-  has_many :spaces_owned, :class_name => "Space" , :foreign_key => "owner"
   has_many :statuses, :as => :statusable, :dependent => :destroy
+  # Space
+  has_many :spaces, :through => :user_space_association
+  has_many :user_space_association, :dependent => :destroy
+  has_many :spaces_owned, :class_name => "Space" , :foreign_key => "owner"
+  # Environment
+  has_many :user_environment_association, :dependent => :destroy
+  has_many :environments, :through => :user_environment_association
+  has_many :user_course_association, :dependent => :destroy
+  # Course
+  has_many :courses, :through => :user_environment_association
 
   # FOLLOWSHIP
   has_and_belongs_to_many :follows, :class_name => "User", :join_table => "followship", :association_foreign_key => "follows_id", :foreign_key => "followed_by_id", :uniq => true
@@ -233,7 +240,6 @@ class User < ActiveRecord::Base
       (entity.owner == self || (entity.space.id == space.id && self.space_admin?(space) ))
     when 'Bulletin'
       (entity.owner == self || (entity.space == space && self.space_admin?(space) ))
-
     end
   end
 

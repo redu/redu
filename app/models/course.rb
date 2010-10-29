@@ -1,5 +1,7 @@
 class Course < ActiveRecord::Base
   belongs_to :environment
+  has_many :user_course_association, :dependent => :destroy
+  has_many :users, :through => :user_course_association
 
   validates_presence_of :name
 

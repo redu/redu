@@ -2530,6 +2530,27 @@ ul.sub-groups > li {
   margin-bottom: 5px;
 }
 
+/* environment */
+#environment {
+  padding-top: 0;
+}
+
+#environment-header {
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  background: #F2F6F7 url("../images/backgroud-header-environment.png") repeat-x top;
+}
+
+#environment-header .avatar {
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+#environment-header .name h3 a {
+  color: #FFA22C;
+  font-size: 1.2em;
+}
+
 /* @footer */
 #footer {
   background-color: #D1E0EF;

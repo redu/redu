@@ -8,15 +8,12 @@
     <%= stylesheet_link_tag 'reset.css'	%>
     <%= stylesheet_link_tag '960.css'	%>    
     <%= stylesheet_link_tag 'style.css'	%>  <!-- ver scripts_and_styles -->
-	 
-	 
-	 <%= javascript_include_tag :defaults  %> <!-- ja adiciona o jquery -->
-	 <%= javascript_include_tag 'common'  %>
-	 <%= render :partial => "shared/new/scripts_and_styles", :locals => {:controller_name => @controller.params[:controller], :action_name => @controller.params[:action]} %>
-	
-	 
+    <%= javascript_include_tag :defaults  %> <!-- ja adiciona o jquery -->
+    <%= javascript_include_tag 'common'  %>
+    <%= render :partial => "shared/new/scripts_and_styles", :locals => {:controller_name => @controller.params[:controller], :action_name => @controller.params[:action]} %>
+
     <% if @rss_title && @rss_url %>
-    <%= auto_discovery_link_tag(:rss, @rss_url, {:title => @rss_title}) %>
+      <%= auto_discovery_link_tag(:rss, @rss_url, {:title => @rss_title}) %>
     <% end %>
 </head>
 <body>

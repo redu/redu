@@ -2,13 +2,20 @@
     Partial que exibe o header do environment/course. Dois locals: environment
     e course. Caso não seja necessário exibir o course basta passar :course => nil
 %>
-<% if environment %>
-  <%= image_tag environment.avatar.url(:medium)  %>
-  <h3><%= link_to environment.name, environment_path(environment) %></h3>
-  <%= link_to "Editar", edit_environment_path(environment) %>
-<% end %>
 
-<% if course %>
-  <h4><%= link_to course.name, environment_course_path(environment, course) %></h4>
-  <%= link_to "Editar", edit_environment_course_path(environment, course) %>
-<% end %>
+<div id="environment-header" class="container_16 clearfix">
+  <% if environment %>
+      <div class="avatar grid_3">
+        <%= image_tag environment.avatar.url(:medium)  %>
+      </div>
+      <div class="name grid_9">
+        <h3><%= link_to environment.name, environment_path(environment) %></h3>
+        <%= link_to "Editar", edit_environment_path(environment) %>
+      </div>
+  <% end %>
+
+  <% if course %>
+    <h4><%= link_to course.name, environment_course_path(environment, course) %></h4>
+    <%= link_to "Editar", edit_environment_course_path(environment, course) %>
+  <% end %>
+</div><!-- end environment-header -->
