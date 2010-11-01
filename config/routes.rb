@@ -29,26 +29,20 @@ ActionController::Routing::Routes.draw do |map|
 
 
 
-  map.recent_forum_posts '/forums/recent', :controller => 'sb_posts', :action => 'index'
-  map.resources :forums, :sb_posts, :monitorship
-  map.resources :sb_posts, :name_prefix => 'all_', :collection => { :search => :get, :monitored => :get }
+  #map.recent_forum_posts '/forums/recent', :controller => 'sb_posts', :action => 'index'
+  #map.resources :forums
+  #map.resources :topics
+  #map.resources :sb_posts
+  #map.resources :monitorship
+  #map.resources :sb_posts, :name_prefix => 'all_', :collection => { :search => :get, :monitored => :get }
 
-  %w(forum).each do |attr|
-    map.resources :sb_posts, :name_prefix => "#{attr}_", :path_prefix => "/#{attr.pluralize}/:#{attr}_id"
-  end
-
-  map.resources :forums do |forum|
-    forum.resources :moderators
-    forum.resources :topics do |topic|
-      topic.resources :sb_posts
-      topic.resource :monitorship, :controller => :monitorships
-    end
-  end
-map.forum_home '/forums', :controller => 'forums', :action => 'index'
-map.resources :topics
+  #%w(forum).each do |attr|
+    #map.resources :sb_posts, :name_prefix => "#{attr}_", :path_prefix => "/#{attr.pluralize}/:#{attr}_id"
+  #end
 
 
-
+#map.forum_home '/forums', :controller => 'forums', :action => 'index'
+#map.resources :topics
 
   # Index
   map.learn_index '/learn', :controller => 'base', :action => 'learn_index'
@@ -109,7 +103,7 @@ map.resources :topics
   map.removed_page   '/removed_item', :controller => 'base', :action => 'removed_item'
   map.contact 'contact',  :controller => 'base', :action => 'contact'
 
-  # SCHOOL
+  # SPACE 
   map.resources :spaces, :member_path => '/:id', :nested_member_path => '/:space_id', :member => {
     :join => :get,
     :vote => :post,
@@ -135,6 +129,14 @@ map.resources :topics
     space.resources :exams
     space.resources :bulletins
     space.resources :events, :member => { :vote => [:post,:get], :notify => :post }, :collection => { :past => :get, :ical => :get , :day => :get}
+    space.resource :forum, :except => [ :new, :edit, :create, :update, :destroy ] do |forum|
+    space.recent_forum_posts '/forum/recent', :controller => 'sb_posts', :action => 'index'
+     #forum.resources :moderators
+      forum.resources :topics do |topic|
+        topic.resources :sb_posts
+        #topic.resource :monitorship, :controller => :monitorships
+      end
+    end  
   end
 
   # USERS

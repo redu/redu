@@ -4,6 +4,7 @@ class Forum < ActiveRecord::Base
 
   validates_presence_of :name
 
+  belongs_to :space
   has_many :moderatorships, :dependent => :destroy
   has_many :moderators, :through => :moderatorships, :source => :user
 
