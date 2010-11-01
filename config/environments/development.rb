@@ -22,11 +22,18 @@ config.action_mailer.raise_delivery_errors = false
 
 # Armazena no sist. de arquivos
 PAPERCLIP_STORAGE_OPTIONS = {
-  :default_url => '/images/missing_pic.jpg',
-  :path => "public/system/:attachment/:id/:style/:basename.:extension"
+  :path => "public/system/:class/:attachment/:id/:style/:basename.:extension",
+  :url => "/system/:class/:attachment/:id/:style/:basename.:extension",
+  :default_url => "missing_:style.png",
+  :styles => { :medium => "220x220>",
+               :thumb => "140x140>",
+               :small => "60x60>",
+               :nano => "24x24>" }
 }
-VIDEO_ORIGINAL = {:default_url => '/images/missing_pic.jpg'}
+
+VIDEO_ORIGINAL = PAPERCLIP_STORAGE_OPTIONS
 
 # Só converte os 5 primeiros segundos (grátis)
 ZENCODER_CONFIG[:test] = 1
-PAPERCLIP_MYFILES_OPTIONS = {}
+
+PAPERCLIP_MYFILES_OPTIONS = PAPERCLIP_STORAGE_OPTIONS

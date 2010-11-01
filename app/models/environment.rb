@@ -4,11 +4,9 @@ class Environment < ActiveRecord::Base
 
   has_many :courses, :dependent => :destroy
   has_many :user_environment_association, :dependent => :destroy
+  belongs_to :owner, :class_name => "User", :foreign_key => "owner"
   has_many :users, :through => :user_environment_association
-  has_attached_file :avatar, {
-    :styles => { :medium => "140x100#", :thumb => "100x100#", :nano => "24x24#" },
-    :path => "environments/:attachment/:id/:style/:basename.:extension",
-  }.merge(PAPERCLIP_STORAGE_OPTIONS)
+  has_attached_file :avatar, PAPERCLIP_STORAGE_OPTIONS
 
   validates_presence_of :name
 

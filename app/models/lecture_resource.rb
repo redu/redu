@@ -1,7 +1,7 @@
 class LectureResource < ActiveRecord::Base
 
   # ASSOCIATIONS
-  has_attached_file :attachment
+  has_attached_file :attachment, PAPERCLIP_MYFILES_OPTIONS
   belongs_to :attachable, :polymorphic => true
 
   # VALIDATIONS

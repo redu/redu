@@ -39,10 +39,7 @@ class Lecture < ActiveRecord::Base
   # PLUGINS
   acts_as_taggable
   ajaxful_rateable :stars => 5
-  has_attached_file :avatar, {
-    :styles => { :thumb => "100x100>", :nano => "24x24>",
-      :default_url => "/images/:class/missing_pic.jpg"}
-  }
+  has_attached_file :avatar, PAPERCLIP_STORAGE_OPTIONS
 
   # Máquina de estados para moderação do Redu.
   # O estados do processo de transcoding estao em Seminar

@@ -58,11 +58,6 @@ class Seminar < ActiveRecord::Base
   before_validation :enable_correct_validation_group
   before_create :truncate_youtube_url
 
-  # Video convertido
-  has_attached_file :media, {}.merge(VIDEO_TRANSCODED)
-  # Video original
-  has_attached_file :original, {}.merge(VIDEO_ORIGINAL)
-
   has_one :lecture, :as => :lectureable
   has_many :lesson, :as => :lesson
 

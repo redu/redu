@@ -28,6 +28,8 @@ class User < ActiveRecord::Base
   has_many :user_environment_association, :dependent => :destroy
   has_many :environments, :through => :user_environment_association
   has_many :user_course_association, :dependent => :destroy
+  has_many :environments_owned, :class_name => "Environment",
+    :foreign_key => "owner"
   # Course
   has_many :courses, :through => :user_environment_association
 
@@ -90,10 +92,7 @@ class User < ActiveRecord::Base
     c.validates_format_of_email_field_options = { :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/ }
   end
 
-  has_attached_file :avatar, {
-    :styles => { :medium => "200x200>", :thumb => "100x100>", :nano => "24x24>" },
-    :path => "users/:attachment/:id/:style/:basename.:extension",
-  }.merge(PAPERCLIP_STORAGE_OPTIONS)
+  has_attached_file :avatar, PAPERCLIP_STORAGE_OPTIONS
 
   ajaxful_rater
   acts_as_taggable
