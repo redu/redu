@@ -12,7 +12,7 @@ class SbPostsController < BaseController
     [:user_id, :forum_id].each { |attr| conditions << SbPost.send(:sanitize_sql, ["sb_posts.#{attr} = ?", params[attr].to_i]) if params[attr] }
     conditions = conditions.any? ? conditions.collect { |c| "(#{c})" }.join(' AND ') : nil
 
-    @posts = SbPost.with_query_options.find :all, :conditions => conditions, :page => {:current => params[:page]}
+    @posts = SbPost.with_query_options.paginate(:conditions => conditions, :page => params[:page])
     
     @users = User.find(:all, :select => 'distinct *', :conditions => ['id in (?)', @posts.collect(&:user_id).uniq]).index_by(&:id)
     render_posts_or_xml
@@ -51,6 +51,7 @@ class SbPostsController < BaseController
 
   def create
     @topic = Topic.find_by_id_and_forum_id(params[:topic_id].to_i, params[:forum_id].to_i, :include => :forum)
+    debugger
     if @topic.locked?
       respond_to do |format|
         format.html do
@@ -64,7 +65,7 @@ class SbPostsController < BaseController
       return
     end
     @forum = @topic.forum
-    @post  = @topic.sb_posts.build(params[:post])
+    @post  = @topic.sb_posts.build(params[:sb_post])
     @post.user = current_user
     @post.save!
     respond_to do |format|

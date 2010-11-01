@@ -1,0 +1,22 @@
+<%- form_for @topic do |f| %>
+  <fieldset><legend><%= title %> <%= :topic.l %></legend>
+  <span><%= :by.l %> <%= link_to current_user.display_name, user_path(current_user) %></span>
+  <%= f.error_messages %>
+
+  <%= f.label :title, :title.l %>
+  <%= f.text_field :title %>
+
+  <% if admin? or current_user.moderator_of?(@topic.forum) %>
+    <%= f.check_box :sticky %> <%= :sticky.l %> 
+    <%= f.check_box :locked %> <%= :locked.l %> 
+  <% end %>
+
+  <%= f.label :tags %>
+  <span>(separadas por vírgula)</span>
+  <%= f.text_field :tags %>
+
+  <%= f.label :body, :body_text.l %>
+  <%= f.text_field :body %>
+
+  <%= f.submit :post_topic.l %> <%= :or.l %> <%= link_to :cancel.l, forum_path(@forum) %>
+<% end %>

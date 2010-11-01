@@ -1,0 +1,86 @@
+<div class="alt first_alt">
+  <%= link_to :forums.l, forum_home_path %>
+  -
+  <%= link_to @forum.name, forum_path(@topic.forum) %>
+  -
+  <%= @topic.title %>
+</div>
+
+<div class="grid_16">
+  <h3 class="topic_title"><%= @topic.title %></h3>
+  <% if @topic.locked? %>
+    <span><%= :locked2.l %><span>
+  <% end %>
+  <% if logged_in? %>
+    <span>
+      <% if @topic.editable_by?(current_user) %>
+        <%= link_to(:edit.l, edit_forum_topic_path(@forum, @topic), :class => "utility") %>
+        |
+        <%= link_to(:delete.l, forum_topic_path(@forum, @topic), :class => "utility", :method => :delete, :confirm => :delete_this_topic_forever.l) %>
+      <% end %>
+    </span>
+  <% end %>
+  <div class="subtitle">
+    <%= feed_icon_tag  @topic.title, forum_topic_path(@forum, @topic, :format => :rss) %>
+    <%= pluralize @topic.sb_posts.count, :post.l %>, <%= pluralize @topic.voices, :voice.l %>, 
+    <% unless @topic.tags.empty? %>
+      Tags: <%= link_to @topic.tags.collect{|t| link_to( h(t.name), tag_url(t), :class => 'tag')} %> <%#TODO Colocar no helper %>
+    <% end %>
+  </div>
+  <span class="flat talking">
+    <%= :voices.l %>:
+    <% for user in @voices do %>
+      <%= link_to user.display_name, user_path(user) %>
+    <% end %>
+  </span>
+
+    <% for post in @posts do %>
+  <div class="grid_16">
+      <div class="grid_3 alpha">
+        <span class="date"><%= time_ago_in_words post.created_at %></span>
+        <%= link_to image_tag( post.user.avatar.url(:thumb), 
+                              {:width => "40", :height=>"40", :border => 0 }), @user %>
+        <span class="fn">
+          <%= link_to truncate(post.user.display_name, :length => 15) %>
+        </span>
+        <span class="posts"><%= pluralize post.user.sb_posts_count, :post.l %></span>
+        
+        <% if logged_in? && post.editable_by?(current_user) %>
+        <span class="edit">
+          <%= link_to 'Editar Postagem', edit_forum_topic_sb_post_path(@forum, @topic, post) %>
+          <% if admin? && !post.user.admin? %>
+            <% render :partial => 'moderators/toggle', :locals => { :user => post.user, :forum => @forum } %>
+          <% end %>
+        </span>
+        <% end %>
+      </div>
+      <div class="grid_13 omega">
+          <%= post.body_html %>
+      </div>
+    </div>
+    <% end %>
+    ENDLESS
+
+    <div class="grid_16"
+    <% if @topic.locked? %>
+      <%= image_tag "clearbits/lock.gif", :class => "icon grey", :title => :topic_locked.l %>
+      <%= :this_topic_is_locked.l %>
+    <% else %>
+      SHOW REPLY FORM 
+    <% end %>
+    </div>
+  
+    <div class="topic-action">
+      <a href="#">Responder</a>
+      <div class="answer hide">
+        <%= render :partial => "sb_posts/form", :locals => { :topic_id => @topic.id }, :class => "hide" %>
+      </div>
+    </div>
+  </div>
+
+<script type="text/javascript">
+  $(".topic-action a:first").click(function(e){
+    $(this).next("div.answer:first").slideToggle()
+    e.preventDefault()
+  })
+</script>

@@ -1,11 +1,3 @@
-.right {
-	float: right;}
-.left {
-	float:left;}
-.centered {
-	text-align:center; }
-
-
 #content form {margin-bottom:0;}
 
 #content p.subtle { 
@@ -280,7 +272,7 @@ label {
 /* random */
 
 .photo {
-	background:#aaa url(/images/clearbits/smile.gif) no-repeat 8px 8px;
+	background:#aaa url(/plugin_assets/community_engine/images/clearbits/smile.gif) no-repeat 8px 8px;
 }
 #footer_content .photo {
 	/* Prevents conflict with footer class*/
@@ -312,11 +304,11 @@ table.nopad td {
 
 table.wide {	
 	width:100%; }
-	
 table.wide tr th {
-	background: #E7EEFD;
-	color: #5683D5;
+	background:#333;
+	color:white;
 	padding:3px 10px;
+	border:1px solid #222;
 }
 table.wide tr td {
 	padding:7px;
@@ -533,7 +525,7 @@ p.online {margin-bottom:0;}
 
 img.icon {
 	background:#696;
-	background-image: url(/images/clearbits/bg_rounded.gif);
+	background-image: url(/plugin_assets/community_engine/images/clearbits/bg_rounded.gif);
 	background-repeat: no-repeat;
 	vertical-align: bottom;
 	}
@@ -550,7 +542,7 @@ img.green { background-color:#0c0;}
 /* reply */
 
 div.editbox {
-	background:url(/images/reply_background.png);
+	background:url(/plugin_assets/community_engine/images/reply_background.png);
 	border:2px solid #333;
 	border-width:2px 0;
 	position:fixed;

@@ -1,0 +1,12 @@
+<%- form_for @post do |f| %>
+  <%= f.error_messages %>
+
+  <%= f.label :body %>
+  <%= f.text_area :body, :size => "80x5" %>
+
+  <%= hidden_field_tag("topic_id", @topic.id) %>
+  <%= hidden_field_tag("forum_id", @forum.id) %>
+
+  <%= f.submit "Enviar post"%>
+  <%= link_to_function "Cancelar", "$(this).parent().parent().slideToggle()"%>
+<% end %>

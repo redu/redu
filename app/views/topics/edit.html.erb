@@ -1,0 +1,9 @@
+<div class="alt first_alt">
+  <%= link_to :forums.l, forum_home_path %>
+  -
+  <%= link_to @forum.name, forum_path(@forum) %>
+  -
+  <%= :new_topic.l %>
+</div>
+
+<%= render :partial => 'topics/form', :locals => {:topic => @topic, :title => "Editar"} %>

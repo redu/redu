@@ -7,7 +7,7 @@
 
 <%= error_messages_for :topic %>
 <% form_for :post, :html => { :method => :put }, 
-     :url  => sb_post_path(:forum_id => params[:forum_id], :id => params[:topic_id], :id => @post, :page => params[:page]) do |f| -%>
+     :url  => sb_post_path(:forum_id => params[:forum_id], :topic_id => params[:topic_id], :id => @post, :page => params[:page]) do |f| -%>
 <%= f.text_area :body %>
-<%= submit_tag :save.l %> <%= :or.l %> <%= link_to :cancel.l, forum_topic_path(:forum_id => params[:forum_id], :id => params[:topic_id], :page => params[:page]) %>
+<%= submit_tag :save.l %> <%= :or.l %> <%= link_to :cancel.l, forum_topic_path(:forum_id => params[:forum_id], :topic_id => params[:topic_id], :id => params[:id], :page => params[:page]) %>
 <% end -%>
