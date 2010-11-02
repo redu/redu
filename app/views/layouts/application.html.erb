@@ -17,7 +17,7 @@
     <% end %>
 </head>
 <body>
-
+<% if @content_for_body.nil? %>
 <%= render :partial => 'shared/new/header' %>
 
 <div id="<%= yield :page_id %>" class="container_16 content clearfix">
@@ -26,6 +26,9 @@
 
 </div><!-- end content -->
 <%= render :partial => 'shared/new/footer' %>
+<% else %>
+  <%= yield :body %>
+<% end %>
 <%= yield :js %>
 <script type="text/javascript">
 

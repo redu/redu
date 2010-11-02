@@ -1,8 +1,10 @@
-<h1>Listing environments</h1>
+<div class="grid_16">
+  <h1>Listing environments</h1>
 
-<%= render :partial => 'environment_simple_form' %>
-<ul>
-  <%= render :partial => "environments/item", :collection => @environments %>
-</ul>
+  <%= render :partial => 'environment_simple_form' %>
+  <ul>
+    <%= render :partial => "environments/item", :collection => @environments %>
+  </ul>
 
-<%= link_to 'New environment', new_environment_path %>
+  <%= link_to 'New environment', new_environment_path %>
+</div>

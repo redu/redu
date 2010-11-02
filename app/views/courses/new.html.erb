@@ -1,7 +1,8 @@
-<%#TODO incluir cabaçalho de environment %>
-<% form_for @course,
-  :url => environment_courses_path(@environment) do |f| %>
-  <%= f.error_messages %>
-  <%= render :partial => 'courses/form', :locals => { :f => f } %>
-  <%= f.submit "Criar!" %>
-<% end %>
+<div class="grid_16">
+  <% form_for @course_being_created,
+    :url => environment_courses_path(@environment) do |f| %>
+    <%= f.error_messages %>
+    <%= render :partial => 'courses/form', :locals => { :f => f } %>
+    <%= f.submit "Criar!" %>
+  <% end %>
+</div>

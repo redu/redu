@@ -1,13 +1,13 @@
-<%= render :partial => "environments/header",
-      :locals => { :environment => @environment, :course => @course} %>
+<div class="grid_16">
+  <% form_for @course,
+    :url => environment_course_path(@environment, @course) do |f| %>
+    <%= render :partial => 'courses/form', :locals => { :f => f } %>
+    <%= f.submit "Alterar" %>
+  <% end %>
 
-<% form_for @course,
-  :url => edit_environment_course_path(@environment, @course) do |f| %>
-  <%= render :partial => 'courses/form', :locals => { :f => f } %>
-<% end %>
-
-<fieldset>
-  <legend>Remover curso</legend>
-  <%= link_to 'Deletar curso', environment_course_path(@environment, @course), 
-    :confirm => 'Você tem certeza que deseja remover este curso?', :method => :delete %>
-</fieldset>
+  <fieldset>
+    <legend>Remover curso</legend>
+    <%= link_to 'Deletar curso', environment_course_path(@environment, @course), 
+      :confirm => 'Você tem certeza que deseja remover este curso?', :method => :delete %>
+  </fieldset>
+</div>

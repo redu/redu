@@ -1,11 +1,12 @@
 class EnvironmentsController < BaseController
+  layout "environment"
   # GET /environments
   # GET /environments.xml
   def index
     @environments = Environment.all
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html { render :layout => "application" }
       format.xml  { render :xml => @environments }
     end
   end
@@ -28,7 +29,7 @@ class EnvironmentsController < BaseController
     @environment = Environment.new
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html { render :layout => 'application' }
       format.xml  { render :xml => @environment }
     end
   end

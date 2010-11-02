@@ -1,6 +1,4 @@
 class SubjectsController < BaseController
-
-  layout 'new_application'
   before_filter :login_required
 
   def index

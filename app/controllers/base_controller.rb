@@ -3,7 +3,7 @@ require 'open-uri'
 require 'pp'
 
 class BaseController < ApplicationController
-  layout 'new_application'
+  layout 'application'
   include AuthenticatedSystem
   include LocalizedApplication
 
@@ -37,7 +37,7 @@ class BaseController < ApplicationController
                                          :limit => 4,
                                          :conditions => ["published = ?", true])
     respond_to do |format|
-      format.html { render :layout => 'new_application'}
+      format.html 
     end
   end
 
@@ -45,7 +45,7 @@ class BaseController < ApplicationController
     @spaces = current_user.spaces
 
     respond_to do |format|
-      format.html { render :layout => 'new_application'}
+      format.html 
     end
   end
 

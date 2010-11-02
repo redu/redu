@@ -1,6 +1,4 @@
 class BulletinsController < BaseController
-  layout 'new_application'
-
   before_filter :login_required
   before_filter :is_member_required
   before_filter :can_manage_required,

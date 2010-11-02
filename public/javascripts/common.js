@@ -203,3 +203,11 @@ jQuery.fn.slug = function() {
     var slugcontent_hyphens = slugcontent.replace(/\s+/g,'-');
     return slugcontent_hyphens.replace(/[^a-zA-Z0-9\-]/g,'').toLowerCase();
 };
+
+/* Environment */
+
+/* Hack para o IE no dropdown de environments */
+$('#environment li.env-show').hover(
+    function() { $('ul', this).css('display', 'block'); },
+    function() { $('ul', this).css('display', 'none'); });
+

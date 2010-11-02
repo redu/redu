@@ -1,5 +1,4 @@
 class SpacesController < BaseController
-  layout 'new_application'
 
   before_filter :login_required,  :except => [:join, :unjoin, :member, :index]
   after_filter :create_activity, :only => [:create]

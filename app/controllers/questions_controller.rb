@@ -1,5 +1,4 @@
 class QuestionsController < BaseController
-  layout 'new_application'
 
   before_filter :login_required, :except => [:index]
 

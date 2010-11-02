@@ -1,4 +1,6 @@
 class CoursesController < BaseController
+  layout "environment"
+
   def show
     @environment = Environment.find(params[:environment_id])
     @course = Course.find(params[:id])
@@ -25,8 +27,24 @@ class CoursesController < BaseController
     end
   end
 
+  def update
+    @course = Course.find(params[:id])
+    @environment = Environment.find(params[:environment_id])
+
+    respond_to do |format|
+      if @course.update_attributes(params[:course])
+        flash[:notice] = 'O curso foi editado.'
+        format.html { redirect_to(environment_course_path(@environment, @course)) }
+        format.xml { head :ok }
+      else
+        format.html { render :action => "edit" }
+        format.xml  { render :xml => @course.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+
   def new
-    @course = Course.new
+    @course_being_created = Course.new
     @environment = Environment.find(params[:environment_id])
   end
 

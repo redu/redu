@@ -1,7 +1,4 @@
-<% content_for :page_id, "environment" %>
-<%= render :partial => "environments/header", :locals => { :environment => @environment, :course => nil } %>
 <div class="grid_16">
-
   <%= link_to "Crie cursos!", new_environment_course_path(@environment) %>
   <ul>
     <%= render :partial => "courses/item", :collection => @environment.courses %>
