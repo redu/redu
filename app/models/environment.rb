@@ -6,7 +6,10 @@ class Environment < ActiveRecord::Base
   has_many :user_environment_association, :dependent => :destroy
   belongs_to :owner, :class_name => "User", :foreign_key => "owner"
   has_many :users, :through => :user_environment_association
-  has_attached_file :avatar, PAPERCLIP_STORAGE_OPTIONS
+  has_attached_file :avatar, PAPERCLIP_STORAGE_OPTIONS.merge({
+    :styles => { :thumb => "140x100>" }
+  })
+
 
   validates_presence_of :name
 

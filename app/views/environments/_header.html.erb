@@ -5,7 +5,7 @@
 <div id="environment-header" class="container_16 clearfix" style="background-color: <%= course ? "#" + course.color : "inherited" %>">
   <% if environment %>
     <div class="avatar grid_3">
-      <div class="frame"><%= image_tag environment.avatar.url(:small)  %></div>
+      <div class="frame"><%= image_tag environment.avatar.url(:thumb)  %></div>
     </div>
     <div class="name grid_12">
       <h3><%= link_to environment.name, environment_path(environment) %></h3>
