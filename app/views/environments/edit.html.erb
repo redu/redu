@@ -3,51 +3,58 @@
     $(document).ready(function(){
         $(".tabs").tabs();
         })
-</script>
-<div class="tabs grid_16 alpha omega">
-  <ul>
-    <li><a href="#tabs-1">Configurações</a></li>
-    <li><a href="#tabs-2">Cursos</a></li>
-  </ul>
-  <div id="tabs-1" class="clearfix grid_15">
-    <h1>Configurações do Ambiente de Ensino</h1>
+      </script>
+      <div class="tabs grid_16 alpha omega">
+        <ul>
+          <li><a href="#tabs-1">Configurações</a></li>
+          <li><a href="#tabs-2">Cursos</a></li>
+        </ul>
+        <div id="tabs-1" class="clearfix grid_15">
+          <h1>Configurações do Ambiente de Ensino</h1>
 
-    <% form_for @environment, :html => { :multipart => true } do |f| %>
-      <%= f.error_messages %>
-      <% field_set_tag "Informações Gerais" do %>
-        <%= f.label :name, "Nome" %>
-        <%= f.text_field :name  %>
-        <%= f.label :description, "Description" %>
-        <%= f.text_area :description %>
-      <% end %>
-      <% field_set_tag "Aparência" do %>
-        <%= f.label :avatar, "Imagem" %>
-        <%= f.file_field :avatar %>
-        <%= f.submit "Alterar!" %>
-      <% end %>
-    <% end %>
+          <% form_for @environment, :html => { :multipart => true } do |f| %>
+            <%= f.error_messages %>
+            <% field_set_tag "Informações Gerais" do %>
+              <%= f.label :name, "Nome" %>
+              <%= f.text_field :name  %>
+              <%= f.label :description, "Description" %>
+              <%= f.text_area :description %>
+            <% end %>
+            <% field_set_tag "Aparência" do %>
+              <%= f.label :avatar, "Imagem" %>
+              <%= f.file_field :avatar %>
+              <%= f.submit "Alterar!" %>
+            <% end %>
+          <% end %>
 
-  </div><!-- end tabs-1 -->
-  <div id="tabs-2" class="clearfix grid_15">
-    <h1>Cursos</h1>
-    <ul>
-      <% @courses.each do |item| %>
-        <li>
-          <%= link_to item.name, environment_course_path(@environment, item) %>
-          <%= link_to "Editar", edit_environment_course_path(@environment, item) %>
-          <%= link_to 'Deletar', environment_course_path(@environment, item),
-            :confirm => 'Você tem certeza que deseja remover este curso?', :method => :delete %>
-        </li>
-      <% end %>
-      <% if @environment.courses.empty? %>
-        <div class="box_notice">
-          Este ambiente de ensino não possui nenhum curso.
-          <%= link_to "Crie um agora!", new_environment_course_path(@environment) %>
+        </div><!-- end tabs-1 -->
+        <div id="tabs-2" class="clearfix grid_15">
+          <h1>Cursos</h1>
+          <% unless @courses.empty? %>
+            <table class="common">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Editar</th>
+                  <th>Excuir</th>
+                </tr>
+              </thead>
+              <% @courses.each do |item| %>
+                <tr>
+                  <td><%= link_to item.name, environment_course_path(@environment, item) %></td>
+                  <td><%= link_to "Editar", edit_environment_course_path(@environment, item) %></td>
+                  <td><%= link_to 'Deletar', environment_course_path(@environment, item),
+                    :confirm => 'Você tem certeza que deseja remover este curso?', :method => :delete %></td>
+                </tr>
+              <% end %>
+            <% else %>
+              <div class="box_notice">
+                Este ambiente de ensino não possui nenhum curso.
+                <%= link_to "Crie um agora!", new_environment_course_path(@environment) %>
+              </div>
+            <% end %>
+          </table>
+          <%= link_to "Criar Curso!", new_environment_course_path(@environment), :class => "button" %>
         </div>
-      <% end %>
-    </ul>
-    <%= link_to 'Show', @environment %> |
-    <%= link_to 'Back', environments_path %>
-  </div>
-</div>
-  </div>
+      </div>
+    </div>

@@ -65,4 +65,5 @@ class CoursesController < BaseController
     end
 
   end
+
 end
