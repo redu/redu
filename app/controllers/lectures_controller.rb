@@ -136,9 +136,9 @@ class LecturesController < BaseController
 
       format.js  do
         if params[:space_content]
-          render :template => 'lecture/lecture_list'
+          render :template => 'lectures/lecture_list'
         elsif params[:tab]
-          render :template => 'lecture/lecture_space'
+          render :template => 'lectures/lecture_space'
         else
           render :index
         end

@@ -22,13 +22,12 @@ pt-BR:
     new: "criar" 
     owner: "dono"
     results: "resultado"
-    spaces: "redes"
+    spaces: "espacos"
+    courses: "cursos"
     show_favorites: "favoritos"
     signup: "registrar"
     #submissions : "submissões"
     teach: "ensine"
     unjoin: "abandonar"
     users: "pessoas"
-    
-    
-    
+    environments: "ambientes"

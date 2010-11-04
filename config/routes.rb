@@ -2,7 +2,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'clipboard/:action/:folder_or_file/:id',
     :controller => 'clipboard',
     :requirements => { :action         => /(add|remove)/,
-      :folder_or_file => /(folder|file)/ }
+                       :folder_or_file => /(folder|file)/ }
 
   map.notify '/jobs/notify', :controller => 'jobs', :action => 'notify'
   map.resources :interactive_classes
@@ -11,10 +11,10 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :beta_keys, :collection => {:generate => :get, :remove_all => :get, :print_blank => :get, :invite => [:get, :post]}
   map.resources :profiles
   map.resources :subjects, :member => {:classes => :get}
-  map.admin_subjects "admin_subjects", :controller => "subjects", :action => "admin_subjects" 
-  map.resources :questions, :collection => { :search => [:get, :post], :add => :get } 
+  map.admin_subjects "admin_subjects", :controller => "subjects", :action => "admin_subjects"
+  map.resources :questions, :collection => { :search => [:get, :post], :add => :get }
   map.resources :exams, :member => {:add_question => :get, :add_resource => :get, :rate => :post, :answer => [:get,:post]},
-    :collection => {:unpublished_preview => :get, :unpublished => :get, :new_exam => :get, :cancel => :get, 
+      :collection => {:unpublished_preview => :get, :unpublished => :get, :new_exam => :get, :cancel => :get, 
       :exam_history => :get, :sort => :get, :order => :get, :questions_database => :get,
       :review_question => :get}
   map.resources :lectures, :member => {:rate => :post, :buy => :get, :download_attachment => :get},  
@@ -28,24 +28,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :topics
   map.resources :metro_areas  
   map.resources :invitations
-
-
-
-  #map.recent_forum_posts '/forums/recent', :controller => 'sb_posts', :action => 'index'
-  #map.resources :forums
-  #map.resources :topics
-  #map.resources :sb_posts
-  #map.resources :monitorship
-  #map.resources :sb_posts, :name_prefix => 'all_', :collection => { :search => :get, :monitored => :get }
-
-  #%w(forum).each do |attr|
-    #map.resources :sb_posts, :name_prefix => "#{attr}_", :path_prefix => "/#{attr.pluralize}/:#{attr}_id"
-  #end
-
-
-#map.forum_home '/forums', :controller => 'forums', :action => 'index'
-#map.resources :topics
-
+  
   # Index
   map.learn_index '/learn', :controller => 'base', :action => 'learn_index'
   map.teach_index '/teach', :controller => 'base', :action => 'teach_index'
@@ -62,7 +45,7 @@ ActionController::Routing::Routes.draw do |map|
   map.show_tag_type '/tags/:id/:type', :controller => 'tags', :action => 'show'
   map.search_tags '/search/tags', :controller => 'tags', :action => 'show'
 
-  # admin routes  
+  # admin routes
   map.admin_dashboard   '/admin/dashboard', :controller => 'admin', :action => 'dashboard'
   map.admin_moderate_submissions   '/admin/moderate/submissions', :controller => 'admin', :action => 'submissions'
   map.admin_moderate_lectures   '/admin/moderate/lectures', :controller => 'admin', :action => 'lectures'
@@ -84,8 +67,8 @@ ActionController::Routing::Routes.draw do |map|
   map.signup_by_id '/signup/:inviter_id/:inviter_code', :controller => 'users', :action => 'new'
 
   map.forgot_password '/forgot_password', :controller => 'users', :action => 'forgot_password'
-  map.forgot_username '/forgot_username', :controller => 'users', :action => 'forgot_username'  
-  map.resend_activation '/resend_activation', :controller => 'users', :action => 'resend_activation' 
+  map.forgot_username '/forgot_username', :controller => 'users', :action => 'forgot_username'
+  map.resend_activation '/resend_activation', :controller => 'users', :action => 'resend_activation'
   map.edit_account_from_email '/account/edit', :controller => 'users', :action => 'edit_account'
   map.resources :sessions
 
@@ -105,13 +88,12 @@ ActionController::Routing::Routes.draw do |map|
   map.removed_page   '/removed_item', :controller => 'base', :action => 'removed_item'
   map.contact 'contact',  :controller => 'base', :action => 'contact'
 
-  # SPACE 
-  map.resources :spaces, :member_path => '/:id', :nested_member_path => '/:space_id', :member => {
+  # SCHOOL
+  map.resources :spaces, :nested_member_path => '/:space_id', :member => {
     :join => :get,
     :vote => :post,
     :unjoin => :get,
     :manage => :get,
-    :admin_requests => :get,
     :admin_members => :get,
     :admin_submissions => :get,
     :admin_bulletins => :get,
@@ -125,26 +107,30 @@ ActionController::Routing::Routes.draw do |map|
     :collection =>{
     :cancel => :get
   } do |space|
-    space.resources :folders, :member =>{:upload => :get, :download => :get, :rename => :get, :destroy_folder => :delete, :destroy_file => :delete}
+    space.resources :folders,
+      :member => { :upload => :get,
+                   :download => :get,
+                   :rename => :get,
+                   :destroy_folder => :delete,
+                   :destroy_file => :delete }
     space.resources :lectures
     space.resources :subjects
     space.resources :exams
     space.resources :bulletins
-    space.resources :events, :member => { :vote => [:post,:get], :notify => :post }, :collection => { :past => :get, :ical => :get , :day => :get}
+    space.resources :events,
+      :member => { :vote => [:post,:get], :notify => :post },
+      :collection => { :past => :get, :ical => :get , :day => :get }
     space.resource :forum, :except => [ :new, :edit, :create, :update, :destroy ] do |forum|
-    space.recent_forum_posts '/forum/recent', :controller => 'sb_posts', :action => 'index'
-     #forum.resources :moderators
       forum.resources :topics do |topic|
         topic.resources :sb_posts
-        #topic.resource :monitorship, :controller => :monitorships
       end
       forum.resources :sb_posts, :except => [:new, :edit, :create, :update, :destroy]
-    end  
-  end
+    end 
+ end
 
   # USERS
-  map.resources :users, :member => {  
-    #map.resources :users, :member_path => '/:id', :nested_member_path => '/:user_id', :member => { 
+  map.resources :users, :member => {
+  #map.resources :users, :member_path => '/:id', :nested_member_path => '/:user_id', :member => {
     :annotations => :get,
     :followers => :get,
     :follows => :get,
@@ -155,17 +141,17 @@ ActionController::Routing::Routes.draw do |map|
     :assume => :get,
     :toggle_moderator => :put,
     :change_profile_photo => :put,
-    :return_admin => :get, 
+    :return_admin => :get,
     :edit_account => :get,
     :update_account => :put,
     :edit_pro_details => :get,
-    :update_pro_details => :put,      
+    :update_pro_details => :put,
     :forgot_password => [:get, :post],
     :signup_completed => :get,
     :invite => :get,
-    :welcome_photo => :get, 
-    :welcome_about => :get, 
-    :welcome_stylesheet => :get, 
+    :welcome_photo => :get,
+    :welcome_about => :get,
+    :welcome_stylesheet => :get,
     :welcome_invite => :get,
     :welcome_complete => :get,
     :statistics => :any,
@@ -183,25 +169,31 @@ ActionController::Routing::Routes.draw do |map|
     #user.resources :clippings
     user.resources :activities, :collection => {:network => :get}
     user.resources :invitations
-    user.resources :lectures, :collection => {:published => :get, :unpublished => :get, :waiting => :get} 
+    user.resources :lectures, :collection => {:published => :get, :unpublished => :get, :waiting => :get}
     user.resources :spaces, :collection => {:member => :get, :owner => :get}
-    user.resources :exams, :collection => {:published => :get, :unpublished => :get, :history => :get} 
+    user.resources :exams, :collection => {:published => :get, :unpublished => :get, :history => :get}
     user.resources :questions
     user.resources :credits
     user.resources :offerings, :collection => {:replace => :put}
     user.resources :favorites
-    user.resources :messages, :collection => { :delete_selected => :post, :auto_complete_for_username => :any }  
+    user.resources :messages, :collection => { :delete_selected => :post, :auto_complete_for_username => :any }
     user.resources :comments
     user.resources :photo_manager, :only => ['index']
-    user.resources :albums, :path_prefix => ':user_id/photo_manager', :member => {:add_photos => :get, :photos_added => :post}, :collection => {:paginate_photos => :get}  do |album| 
+    user.resources :albums, :path_prefix => ':user_id/photo_manager', :member => {:add_photos => :get, :photos_added => :post}, :collection => {:paginate_photos => :get}  do |album|
       album.resources :photos, :collection => {:swfupload => :post, :slideshow => :get}
       user.resources :statuses
     end
   end
 
+  map.resources :environments,
+    :nested_member_path => "/:environment_id",
+    :member_path => "/:id" do |environment|
+      environment.resources :courses
+  end
+
   # Install the default routes as the lowest priority.
   map.connect ':controller/:action/:id'
-  map.connect ':controller/:action/:id.:format'     
+  map.connect ':controller/:action/:id.:format'
 
 end
 #ActionController::Routing::Translator.i18n('pt-BR') # se ativar, buga (falar com cassio)

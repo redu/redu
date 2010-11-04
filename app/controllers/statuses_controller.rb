@@ -1,5 +1,4 @@
 class StatusesController < BaseController
-  layout 'new_application'
   before_filter :login_required
 
   def create

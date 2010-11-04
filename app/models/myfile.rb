@@ -7,7 +7,7 @@ class Myfile < ActiveRecord::Base
   before_destroy :delete_file_on_disk
   before_create :overwrite
 
-  has_attached_file :attachment, {}.merge(PAPERCLIP_MYFILES_OPTIONS)
+  has_attached_file :attachment, PAPERCLIP_MYFILES_OPTIONS
 
   belongs_to :folder
   belongs_to :user

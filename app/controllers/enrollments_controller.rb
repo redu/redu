@@ -1,6 +1,4 @@
 class EnrollmentsController < ApplicationController
-
-  layout 'new_application'
   before_filter :login_required
   before_filter :verify_access
 

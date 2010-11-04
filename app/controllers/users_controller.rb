@@ -1,8 +1,6 @@
 require "RMagick"
 
 class UsersController < BaseController
-  layout 'new_application'
-
   uses_tiny_mce(:options => AppConfig.default_mce_options.merge({:editor_selector => "rich_text_editor"}),
                 :only => [:create, :update, :edit, :welcome_about, :create])
 
