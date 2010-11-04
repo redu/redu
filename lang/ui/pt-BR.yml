@@ -1243,7 +1243,7 @@ pt-BR:
   #en: says: says
   says: says
   #en: sb_post_was_deleted: Post '{{title}}' was deleted.
-  sb_post_was_deleted: "Post '{{title}}' was deleted."
+  sb_post_was_deleted: "Postagem '{{title}}' foi deletada."
   #en: scrapbook: Scrapbook
    #en: space: Escola
   space: Escola
@@ -1419,7 +1419,7 @@ pt-BR:
   #en: this_story_is_awesome: "This story is awesome!"
   this_story_is_awesome: "This story is awesome!"
   #en: this_topic_is_locked: This topic is locked.
-  this_topic_is_locked: This topic is locked.
+  this_topic_is_locked: Este tópico está fechado.
   #en: this_users_profile_is_not_public_youll_need_to_create_an_account_and_log_in_to_access_it: This user's profile is not public. You'll need to create an account and log in to access it.
   this_users_profile_is_not_public_youll_need_to_create_an_account_and_log_in_to_access_it: This user's profile is not public. You'll need to create an account and log in to access it.
   #en: thumb: Thumb
@@ -1455,7 +1455,7 @@ pt-BR:
   #en: topics: Topics
   topics: Tópicos
   #en: topic_deleted: Topic '{{topic}}' was deleted.
-  topic_deleted: "Topic '{{topic}}' was deleted."
+  topic_deleted: "Tópico '{{topic}}' foi deletado."
   #en: topic_locked: Topic locked
   topic_locked: Topic locked
   #en: total_users: Total users

@@ -51,7 +51,7 @@ class SbPostsController < BaseController
 
   def create
     @topic = Topic.find_by_id_and_forum_id(params[:topic_id].to_i, params[:forum_id].to_i, :include => :forum)
-    debugger
+    @space = @topic.forum.space 
     if @topic.locked?
       respond_to do |format|
         format.html do
@@ -70,18 +70,20 @@ class SbPostsController < BaseController
     @post.save!
     respond_to do |format|
       format.html do
-        redirect_to forum_topic_path(:forum_id => params[:forum_id], :id => params[:topic_id], :anchor => @post.dom_id, :page => params[:page] || '1')
+        redirect_to space_forum_topic_path(:space_id => params[:space_id], :id => params[:topic_id], :anchor => @post.dom_id, :page => params[:page] || '1')
       end
       format.xml { head :created, :location => sb_user_post_url(:forum_id => params[:forum_id], :topic_id => params[:topic_id], :id => @post, :format => :xml) }
+      format.js
     end
   rescue ActiveRecord::RecordInvalid
-    flash[:bad_reply] = :please_post_something_at_least.l
+    flash[:form_errors] = :please_post_something_at_least.l
     respond_to do |format|
       format.html do
-        redirect_to forum_topic_path(:forum_id => params[:forum_id], :id => params[:topic_id], :anchor => 'reply-form', :page => params[:page] || '1')
+        redirect_to space_forum_topic_path(:space_id => params[:space_id], :forum_id => params[:forum_id], :id => params[:topic_id], :anchor => 'reply-form', :page => params[:page] || '1')
       end
       format.xml { render :xml => @post.errors.to_xml, :status => 400 }
-    end
+      format.js { render :template => 'sb_posts/error_create', :locals => { :post => @post } }
+  end
   end
   
   def edit
@@ -92,28 +94,29 @@ class SbPostsController < BaseController
   end
   
   def update
-    @post.attributes = params[:post]
-    @post.save!
-  rescue ActiveRecord::RecordInvalid
-    flash[:bad_reply] = :an_error_occurred.l
-  ensure
-    respond_to do |format|
-      format.html do
-        redirect_to forum_topic_path(:forum_id => params[:forum_id], :id => params[:topic_id], :anchor => @post.dom_id, :page => params[:page] || '1')
-      end
-      format.js
-      format.xml { head 200 }
-    end
+   respond_to do |format|
+     if @post.update_attributes(params[:post])
+        flash[:notice] = 'O post foi editado.'
+        format.html { redirect_to space_forum_topic_path(:space_id => params[:space_id], :id => params[:topic_id], :anchor => @post.dom_id, :page => params[:page] || '1')
+        }
+        format.xml { render :xml => @post, :status => :created, :location => @post, :space => params[:space_id] }
+        format.js 
+     else
+        format.html { render :action => :edit }
+        format.xml { render :xml => @post.errors, :status => :unprocessable_entity }
+        format.js
+     end
+   end 
   end
 
   def destroy
     @post.destroy
     flash[:notice] = :sb_post_was_deleted.l_with_args(:title => CGI::escapeHTML(@post.topic.title))
     # check for posts_count == 1 because its cached and counting the currently deleted post
-    @post.topic.destroy and redirect_to forum_path(params[:forum_id]) if @post.topic.sb_posts_count == 1
+    @post.topic.destroy and redirect_to space_forum_path(:space_id => params[:space_id], :forum_id => params[:forum_id]) if @post.topic.sb_posts_count == 1
     respond_to do |format|
       format.html do
-        redirect_to forum_topic_path(:forum_id => params[:forum_id], :id => params[:topic_id], :page => params[:page]) unless performed?
+        redirect_to space_forum_topic_path(:space_id => params[:space_id], :forum_id => params[:forum_id], :id => params[:topic_id], :page => params[:page]) unless performed?
       end
       format.xml { head 200 }
     end
@@ -126,7 +129,9 @@ class SbPostsController < BaseController
     end
     
     def find_post
-      @post = SbPost.find_by_id_and_topic_id_and_forum_id(params[:id].to_i, params[:topic_id].to_i, params[:forum_id].to_i) || raise(ActiveRecord::RecordNotFound)
+      @space = Space.find(params[:space_id])
+      forum = @space.forum
+      @post = SbPost.find_by_id_and_topic_id_and_forum_id(params[:id].to_i, params[:topic_id].to_i, forum.id) || raise(ActiveRecord::RecordNotFound)
     end
     
     def render_posts_or_xml(template_name = action_name)

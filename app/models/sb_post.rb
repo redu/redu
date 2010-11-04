@@ -1,5 +1,4 @@
 class SbPost < ActiveRecord::Base
-  #acts_as_activity :user
   
   belongs_to :forum, :counter_cache => true
   belongs_to :user,  :counter_cache => true
@@ -10,7 +9,9 @@ class SbPost < ActiveRecord::Base
   after_create  { |r| Topic.update_all(['replied_at = ?, replied_by = ?, last_post_id = ?', r.created_at, r.user_id, r.id], ['id = ?', r.topic_id]) }
   after_destroy { |r| t = Topic.find(r.topic_id) ; Topic.update_all(['replied_at = ?, replied_by = ?, last_post_id = ?', t.sb_posts.last.created_at, t.sb_posts.last.user_id, t.sb_posts.last.id], ['id = ?', t.id]) if t.sb_posts.last }
 
-  validates_presence_of :user_id, :body, :topic
+  validates_presence_of :user_id, :topic
+  validates_presence_of :body, :message => "Não pode ser deixado em branco"
+
   attr_accessible :body
   after_create :monitor_topic   
   after_create :notify_monitoring_users

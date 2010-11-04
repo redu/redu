@@ -1,10 +1,10 @@
+<%= render :partial => 'spaces/space_info', :locals => { :space => @space, :show => false } %>
+
 <div class="alt first_alt">
-  <%= link_to :forums.l, forum_home_path %>
-  -
-  <%= link_to @forum.name, forum_path(@forum) %>
+  <%= link_to @forum.name, space_forum_path(@space) %>
   -
   <%= :new_topic.l %>
 </div>
 
-<%= render :partial => 'topics/form', :locals => {:topic => @topic, :title => "Novo"} %>
+<%= render :partial => 'topics/form', :locals => {:topic => @topic, :form_new => true} %>
 

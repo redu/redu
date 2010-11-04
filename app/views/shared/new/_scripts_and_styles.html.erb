@@ -14,7 +14,7 @@
   <%=  javascript_include_tag "jquery.editinplace.js"%>
 <% end %>
 
-<% if controller_name == 'admin' or controller_name == 'beta_keys' or controller_name == 'spaces' or controller_name == 'messages' %>
+<% if controller_name == 'admin' or controller_name == 'beta_keys' or controller_name == 'spaces' or controller_name == 'messages' or controller_name == 'forums' %>
   <%= javascript_include_tag "tablecloth.js" %>
   <%= stylesheet_link_tag "tablecloth.css" %>
 <% end %>
@@ -52,11 +52,6 @@
 
 <% if controller_name == 'spaces' || controller_name == 'events' || controller_name == 'bulletins' %>
   <%= stylesheet_link_tag 'calendar/red/style' %>
-<% end %>
-
-<% if controller_name == 'forums' || controller_name == 'topics' %>
-  <%= javascript_include_tag 'forum.js' %>
-  <%= stylesheet_link_tag 'forum.css' %>
 <% end %>
 
 <script type="text/javascript">

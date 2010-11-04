@@ -1,14 +1,10 @@
 class Forum < ActiveRecord::Base
-  acts_as_taggable
-  acts_as_list
-
-  validates_presence_of :name
 
   belongs_to :space
   has_many :moderatorships, :dependent => :destroy
   has_many :moderators, :through => :moderatorships, :source => :user
 
-  has_many :topics, :order => 'sticky desc, replied_at desc', :dependent => :destroy do
+  has_many :topics, :order => 'locked desc, replied_at desc', :dependent => :destroy do
     def first
       @first_topic ||= find(:first)
     end
@@ -30,7 +26,10 @@ class Forum < ActiveRecord::Base
 
   belongs_to :owner, :polymorphic => true
 
+  acts_as_taggable
   format_attribute :description
+  
+  validates_presence_of :name
   
   def to_param
     id.to_s << "-" << (name ? name.parameterize : '' )

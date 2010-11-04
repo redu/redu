@@ -24,6 +24,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :annotations
   map.resources :bulletins, :member => {:rate => :post}
   map.resources :events#, :collection => { :past => :get, :ical => :get }
+  map.resources :sb_posts
+  map.resources :topics
   map.resources :metro_areas  
   map.resources :invitations
 
@@ -136,6 +138,7 @@ ActionController::Routing::Routes.draw do |map|
         topic.resources :sb_posts
         #topic.resource :monitorship, :controller => :monitorships
       end
+      forum.resources :sb_posts, :except => [:new, :edit, :create, :update, :destroy]
     end  
   end
 

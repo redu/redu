@@ -4,7 +4,7 @@ class Space < ActiveRecord::Base
   # para muitos entre os usuários (Status e Forum).
   #
   # Além disso, o Space fornece mecanismos para compartilhamento de arquivos
-  # (MyFile), veículação de comunicados (Bulletin) e eventos (Event).
+  # (MyFile), veículação de comunicados (Bulletin e Forum) e eventos (Event).
 
   # CALLBACKS
   before_create :create_root_folder
@@ -42,7 +42,7 @@ class Space < ActiveRecord::Base
   has_many :events, :dependent => :destroy
   has_many :statuses, :as => :statusable
   has_many :subjects
-  has_one :forum
+  has_one :forum, :dependent => :destroy
 
   named_scope :inner_categories, lambda { {:joins => :categories} } # Faz inner join com redu_categories_space
 

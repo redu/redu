@@ -6,7 +6,7 @@ class ForumsController < BaseController
   uses_tiny_mce do
     AppConfig.default_mce_options
   end
-  
+
   def index
     @forums = Forum.find(:all, :order => "position")
     respond_to do |format|
@@ -16,25 +16,29 @@ class ForumsController < BaseController
   end
 
   def show
-    respond_to do |format|
-      format.html do
-        # keep track of when we last viewed this forum for activity indicators
-        (session[:forums] ||= {})[@forum.id] = Time.now.utc if logged_in?
+    @space = Space.find(params[:space_id])
+    @forum = @space.forum
 
-        @topics = @forum.topics.paginate(:page => params[:page], 
-                                        :include => :replied_by_user, 
-          :order => 'sticky DESC, replied_at DESC',
-                                        :per_page => 20)
+    respond_to do |format|
+      # keep track of when we last viewed this forum for activity indicators
+      (session[:forums] ||= {})[@forum.id] = Time.now.utc if logged_in?
+
+      @topics = @forum.topics.paginate(:page => params[:page], 
+                                       :include => :replied_by_user, 
+                                       :order => 'locked DESC, replied_at DESC',
+                                       :per_page => 20)
+      format.html do
+        redirect_to space_path(@space)
       end
-      
       format.xml do
         render :xml => @forum.to_xml
       end
+      format.js
     end
   end
 
   # new renders new.rhtml
-  
+
   def create
     @forum.attributes = params[:forum]
     @forum.tag_list = params[:tag_list] || ''
@@ -54,7 +58,7 @@ class ForumsController < BaseController
       format.xml  { head 200 }
     end
   end
-  
+
   def destroy
     @forum.destroy
     respond_to do |format|
@@ -62,11 +66,11 @@ class ForumsController < BaseController
       format.xml  { head 200 }
     end
   end
-  
+
   protected
-    def find_or_initialize_forum
-      @forum = params[:id] ? Forum.find(params[:id]) : Forum.new
-    end
+  def find_or_initialize_forum
+    @forum = params[:id] ? Forum.find(params[:id]) : Forum.new
+  end
 
   #overide in your app
   def authorized?

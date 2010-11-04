@@ -2,14 +2,13 @@
 - @page_title = search_posts_title
 
 -box :class => "alt first_alt" do 
-  = link_to :forums.l, forum_home_path
+  = link_to :forums.l, space_forum_path
   %span.arrow
     &rarr;
   = h @page_title
 
 -box do 
 
-  .right=link_to :forums.l, forums_path
   %h3
     - if params[:q].blank?
       = @page_title
@@ -17,7 +16,7 @@
       ="#{:searching_for.l} '#{h params[:q]}'"
 
   %p.subtitle
-    = feed_icon_tag @page_title, all_sb_posts_path(:format => 'rss')
+    //= feed_icon_tag @page_title, all_sb_posts_path(:format => 'rss')
     = :post_found.l(:count => @posts.size)
 
         
@@ -40,9 +39,9 @@
             = pluralize @users[post.user_id].sb_posts_count, :post.l
         %td.body.entry-content
           %p.topic
-            = link_to(h(post.forum_name), forum_path(post.forum))
+            = link_to(h(post.forum_name), space_forum_path(post.forum))
             \/
-            = link_to h(post.topic_title), forum_topic_path(post.forum, post.topic)
+            = link_to h(post.topic_title), space_forum_topic_path(post.forum, post.topic)
           = post.body_html
         
   - if @posts and @posts.next_page

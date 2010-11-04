@@ -1,12 +1,12 @@
+<%= render :partial => 'spaces/space_info', :locals => { :space => @space, :show => false } %>
+
 <div class="alt first_alt">
-  <%= link_to :forums.l, forum_home_path %>
-  -
-  <%= link_to @forum.name, forum_path(@topic.forum) %>
+  <%= link_to @forum.name, space_forum_path(@space) %>
   -
   <%= @topic.title %>
 </div>
 
-<div class="grid_16">
+<div class="grid_12">
   <h3 class="topic_title"><%= @topic.title %></h3>
   <% if @topic.locked? %>
     <span><%= :locked2.l %><span>
@@ -14,17 +14,17 @@
   <% if logged_in? %>
     <span>
       <% if @topic.editable_by?(current_user) %>
-        <%= link_to(:edit.l, edit_forum_topic_path(@forum, @topic), :class => "utility") %>
+        <%= link_to(:edit.l, edit_space_forum_topic_path(@space, @topic), :class => "utility") %>
         |
-        <%= link_to(:delete.l, forum_topic_path(@forum, @topic), :class => "utility", :method => :delete, :confirm => :delete_this_topic_forever.l) %>
+        <%= link_to(:delete.l, space_forum_topic_path(@space, @topic), :class => "utility", :method => :delete, :confirm => :delete_this_topic_forever.l) %>
       <% end %>
     </span>
   <% end %>
   <div class="subtitle">
-    <%= feed_icon_tag  @topic.title, forum_topic_path(@forum, @topic, :format => :rss) %>
+    <%#= feed_icon_tag  @topic.title, space_forum_topic_path(@space, @topic, :format => :rss) %>
     <%= pluralize @topic.sb_posts.count, :post.l %>, <%= pluralize @topic.voices, :voice.l %>, 
     <% unless @topic.tags.empty? %>
-      Tags: <%= link_to @topic.tags.collect{|t| link_to( h(t.name), tag_url(t), :class => 'tag')} %> <%#TODO Colocar no helper %>
+      Tags: <%= link_to @topic.tags.collect{|t| link_to( h(t.name), tag_url(t), :class => 'tag') + " "} %> <%#TODO Colocar no helper %>
     <% end %>
   </div>
   <span class="flat talking">
@@ -34,49 +34,27 @@
     <% end %>
   </span>
 
-    <% for post in @posts do %>
-  <div class="grid_16">
-      <div class="grid_3 alpha">
-        <span class="date"><%= time_ago_in_words post.created_at %></span>
-        <%= link_to image_tag( post.user.avatar.url(:thumb), 
-                              {:width => "40", :height=>"40", :border => 0 }), @user %>
-        <span class="fn">
-          <%= link_to truncate(post.user.display_name, :length => 15) %>
-        </span>
-        <span class="posts"><%= pluralize post.user.sb_posts_count, :post.l %></span>
-        
-        <% if logged_in? && post.editable_by?(current_user) %>
-        <span class="edit">
-          <%= link_to 'Editar Postagem', edit_forum_topic_sb_post_path(@forum, @topic, post) %>
-          <% if admin? && !post.user.admin? %>
-            <% render :partial => 'moderators/toggle', :locals => { :user => post.user, :forum => @forum } %>
-          <% end %>
-        </span>
-        <% end %>
-      </div>
-      <div class="grid_13 omega">
-          <%= post.body_html %>
-      </div>
-    </div>
-    <% end %>
-    ENDLESS
-
-    <div class="grid_16"
-    <% if @topic.locked? %>
-      <%= image_tag "clearbits/lock.gif", :class => "icon grey", :title => :topic_locked.l %>
-      <%= :this_topic_is_locked.l %>
-    <% else %>
-      SHOW REPLY FORM 
-    <% end %>
-    </div>
-  
-    <div class="topic-action">
-      <a href="#">Responder</a>
-      <div class="answer hide">
-        <%= render :partial => "sb_posts/form", :locals => { :topic_id => @topic.id }, :class => "hide" %>
-      </div>
-    </div>
+  <div id="posts-list" class="grid_16">
+    <%= render :partial => 'sb_posts/item', :collection => @posts, :as => :post %>
   </div>
+
+    <% if @topic.locked? %>
+      <div class="grid_16"
+        <%= image_tag "clearbits/lock.gif", :class => "icon grey", :title => :topic_locked.l %>
+        <%= :this_topic_is_locked.l %>
+      </div>
+    <% else %>
+      <div class="topic-action">
+        <a href="#">Responder</a>
+        <div class="answer hide">
+          <%= render :partial => "sb_posts/form", :locals => { :space_id => @space.id, :topic_id => @topic.id }, :class => "hide" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<div id="pagination" align="center" class="pagination">
+  <%= will_paginate  @posts, :class => "pagination_number"  %>
+</div>
 
 <script type="text/javascript">
   $(".topic-action a:first").click(function(e){

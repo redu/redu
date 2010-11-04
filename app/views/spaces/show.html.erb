@@ -6,6 +6,7 @@
 var schoolFoldersPath = "<%= space_folders_path(:space_id => @space.id.to_s) %>";
 var schoolCoursesPath = "<%= space_lectures_path(:space_id => @space.id.to_s) %>";
 var schoolGroupsPath = "";
+var schoolForumPath = "<%= space_forum_path(:space_id => @space.id.to_s) %>";
 
 var $schooltabs;
 
@@ -13,7 +14,21 @@ $(document).ready(function() {
 
     $schooltabs = $(".school-tabs").tabs({
         select: function(event, ui) {
-            if (ui.index == 3) {
+            if (ui.index == 4) {
+              //Fórum
+              $("#tabs-6-content").html('');
+              jQuery.ajax({
+                    data: '',
+                    dataType: 'script',
+                    success: function(request) {
+                        $("#tabs-6-loading").hide();
+                    },
+                    type: 'get',
+                    url: schoolForumPath
+              });
+
+              $("#tabs-6-loading").show();
+            }else if (ui.index == 3) {
                 // Arquivos
                 $("#tabs-4-content").html('');
                 jQuery.ajax({
@@ -74,6 +89,7 @@ $(document).ready(function() {
         <li><a href="#tabs-2">Conteúdo</a></li>
         <!--<li><a href="#tabs-3">Grupos</a></li>-->
         <li><a href="#tabs-4">Arquivos</a></li>
+        <li><a href="#tabs-6">Fórum</a></li>
       </ul>
 
       <div id="tabs-1" class="clearfix first-page">
@@ -134,7 +150,11 @@ $(document).ready(function() {
   <div id="tabs-4">
     <%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-4-loading', :style => 'padding: 20px;'%>
     <div id="tabs-4-content"></div>
-
+  </div>
+  <!-- forum --> 
+  <div id="tabs-6">
+    <%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-6-loading', :style => 'padding: 20px;'%>
+    <div id="tabs-6-content"></div>
   </div>
 </div><!-- end tabs -->
 </div><!-- end main -->

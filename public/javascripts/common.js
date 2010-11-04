@@ -27,8 +27,8 @@ $(document).ready(function(){
 
 	 // Paginações em AJAX
 	  $(".pagination a").live("click", function() {
-	    $(".pagination").html("Carregando...");
-	    $.get(this.href, null, null, "script");
+	    $(".pagination ul").toggle();
+	    $.get(this.href, null, function(){ $(".pagination ul").toggle() }, "script");
 	    return false;
 	  });
 

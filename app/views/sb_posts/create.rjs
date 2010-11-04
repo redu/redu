@@ -1,0 +1,8 @@
+test = escape_javascript(render(:partial =>"sb_posts/item", :locals => { :space_id => @space.id, :topic_id => @topic.id, :post => @post } ))
+page << "$('#posts-list').append('"+test+"')"
+page << "$('.status_spinner').hide()"
+page << "$('.post-text').val('')"
+#TODO com jquery 1.4 pode-se usar a funcao unwrap
+page << "$('textarea.post:visible').parents('div.fieldWithErrors:first').removeClass('fieldWithErrors')"
+page << "$('.errorMessageField').remove()"
+

@@ -537,6 +537,7 @@ class SpacesController < BaseController
       render "new"
     else
       UserSpaceAssociation.create({:user => current_user, :space => @space, :status => "approved", :role_id => 4}) #:role => Role[:space_admin]
+      forum = Forum.create(:name => "Fórum do espaço #{@space.name}", :description => "Este fórum pertence ao espaço #{@space.name} e apenas os participates deste espaço podem visualizá-lo. Troque ideias, participe!", :space_id => @space.id)
       session[:space_step] = session[:space_params] = nil
       flash[:notice] = "Rede criada!"
       redirect_to @space
