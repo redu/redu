@@ -84,7 +84,11 @@ colors = [["#ffffff", "ffffff"],
   <%= f.label :path %>
   <%= f.text_field :path %>
   <%= f.label :description, "Descrição" %>
-  <%= f.text_area :description %>
+  <%= f.text_area :description, :class => "mceEditor", :size => "2x10"%>
+  <%= f.label :workload, "Carga Horária" %>
+  <%= f.text_field :workload,  :size=> 8 %>
+  <%= f.label "Palavras-chave <span class='snippet'>(separadas por vírgula)</span>" %>
+  <%= f.text_field :tag_list %>
 <% end %>
 <% field_set_tag "Personalização" do %>
   <%= f.label :color, "Cor" %>

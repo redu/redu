@@ -3,7 +3,11 @@ class Course < ActiveRecord::Base
   has_many :user_course_association, :dependent => :destroy
   has_many :users, :through => :user_course_association
 
-  validates_presence_of :name
+  validates_presence_of :name, :message => "Não pode ficar em branco."
+  validates_presence_of :workload, :message => "Não pode ficar em branco."
+ #Carga horária
+
+  acts_as_taggable
 
   # Sobreescrevendo ActiveRecord.find para adicionar capacidade de buscar por path do Space
   def self.find(*args)

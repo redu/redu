@@ -1,6 +1,8 @@
 class CoursesController < BaseController
   layout "environment"
 
+  uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit, :create, :update])
+
   def show
     @environment = Environment.find(params[:environment_id])
     @course = Course.find(params[:id])
