@@ -3,15 +3,6 @@
 
 <li>
 <%= 
-link_to_unless_current 'Solicitacões(' + @space.pending_requests.count.to_s + ')', admin_requests_space_path do
-  link_to 'Solicitações', admin_requests_space_path, 
-    :class => 'selected'
-end
-%>
-</li>
-
-<li>
-<%= 
 link_to_unless_current 'Membros (' + @space.users.count.to_s + ')', admin_members_space_path do
   link_to 'Membros', admin_members_space_path, 
     :class => 'selected'
