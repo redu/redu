@@ -477,15 +477,7 @@ class SpacesController < BaseController
       if @space
         @status = Status.new
 
-        format.html {
-          # se usuário não logado ou escola é privada e o cara não está inscrito nela, mostrar perfil privado
-          unless current_user.has_access_to @space
-            render 'show_private' and return
-          else
-            render 'show' and return
-          end
-        # show.html.erb
-        }
+        format.html
         format.xml  { render :xml => @space }
       else
         format.html {
