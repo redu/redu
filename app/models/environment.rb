@@ -9,11 +9,12 @@ class Environment < ActiveRecord::Base
   has_attached_file :avatar, PAPERCLIP_STORAGE_OPTIONS.merge({
     :styles => { :thumb => "140x100>" }
   })
-
+  has_many :invitations, :class_name => "EnvironmentInvitation",
+    :dependent => :destroy
 
   validates_presence_of :name
 
-  accepts_nested_attributes_for :courses
+  accepts_nested_attributes_for :courses, :invitations
 
   # Sobreescrevendo ActiveRecord.find para adicionar capacidade de buscar por path do Space
   def self.find(*args)

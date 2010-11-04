@@ -1,3 +1,22 @@
+<div class="container_16 actions clearfix">
+  <%= link_to "Crie Cursos!", new_environment_course_path(@environment), :class => "grid_5 action" %>
+  <a href="#" class="grid_5 action">Crie Módulos!</a>
+  <a href="#" class="grid_5 action">Crie Espaços!</a>
+</div>
 <div class="grid_16">
-  <%= link_to "Editar", edit_environment_course_path(@environment, @course) %>
+  <div class="grid_8 alpha">
+    <h3 class="call">Espaços do curso <%= @course.name %></h3>
+    <div class="box_notice">Você não criou nenhum espaço de ensino</div>
+    <%= link_to "Editar", edit_environment_course_path(@environment, @course) %>
+  </div>
+  <div class="grid_8 omega">
+    <h3 class="call">Convide colaboradores</h3>
+    <% remote_form_for :environment_invitation, :method => :post,
+      :url => environment_environment_invitations_path(@environment),
+      :html => {:id => "environment_invitation"} do |f| %>
+      <%= render :partial => 'environment_invitations/form',
+        :locals => {:f => f} %>
+      <%= f.submit "Convidar" %>
+    <% end %>
+  </div>
 </div>

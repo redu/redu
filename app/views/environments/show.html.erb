@@ -1,5 +1,9 @@
+<div class="container_16 actions clearfix">
+  <%= link_to "Crie Cursos!", new_environment_course_path(@environment), :class => "grid_5 action" %>
+  <a href="#" class="grid_5 action">Crie Módulos!</a>
+  <a href="#" class="grid_5 action">Crie Espaços!</a>
+</div>
 <div class="grid_16">
-  <%= link_to "Crie cursos!", new_environment_course_path(@environment) %>
   <ul>
     <%= render :partial => "courses/item", :collection => @environment.courses %>
   </ul>

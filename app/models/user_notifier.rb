@@ -1,11 +1,11 @@
-include ActionView::Helpers::TextHelper
-include ActionView::Helpers::SanitizeHelper
-extend  ActionView::Helpers::SanitizeHelper::ClassMethods # Required for rails 2.2
-
-include BaseHelper
-ActionMailer::Base.default_url_options[:host] = APP_URL.sub('http://', '')
-
 class UserNotifier < ActionMailer::Base
+
+  include ActionView::Helpers::TextHelper
+  include ActionView::Helpers::SanitizeHelper
+  extend  ActionView::Helpers::SanitizeHelper::ClassMethods # Required for rails 2.2
+
+  include BaseHelper
+  ActionMailer::Base.default_url_options[:host] = APP_URL.sub('http://', '')
 
   self.delivery_method = :activerecord # É necessário iniciar o ar_sendmail para que os e-mails sejam enviados
 
@@ -241,6 +241,18 @@ class UserNotifier < ActionMailer::Base
     @subject     = "Lembrete de login do #{AppConfig.community_name}"
     @sent_on     = Time.now
     @body[:user] = user
+  end
+
+  def environment_invitation(user, email, role, environment, message = nil)
+    setup_sender_info
+
+    @recipients  = "#{email}"
+    @subject = "#{user.login} quer que você participe do #{AppConfig.community_name}!"
+    @body[:user] = user
+    @body[:role] = role
+    @body[:message] = message
+    @body[:url]  = signup_by_id_url(user, user.invite_code)
+    @body[:environment] = environment.name
   end
 
   protected

@@ -2535,6 +2535,16 @@ ul.sub-groups > li {
   padding-top: 0;
 }
 
+#environment .actions {
+  background-color: #f2f6f6;
+  padding: 20px 0;
+}
+
+#environment .actions .action {
+  font-size: 1.8em;
+  font-weight: bold;
+}
+
 #environment-header {
   -moz-border-radius: 8px;
   -webkit-border-radius: 8px;
