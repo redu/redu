@@ -74,7 +74,6 @@ class TopicsController < BaseController
       end
       @post.save
     end
-    debugger
     if not @post.valid? or not @topic.valid?
       respond_to do |format|
         format.html { 
