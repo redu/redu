@@ -1,13 +1,13 @@
 Olá!
 
 <%= @user.display_name %> (<%= @user.email %>) convidou você para ser <%= @role.name %> no ambiente de ensino a distância <%= @environment %>
+<% unless @message.empty? %>
 
-<% if @message %>
 Veja abaixo o que  <%= @user.display_name %> escreveu:
 
   <%= @message %>
-<% end %>
 
+<% end %>
 Visite o link abaixo para se cadastrar e <%= AppConfig.community_name %> o que o Redu oferece:
 
 <%= @url %>
