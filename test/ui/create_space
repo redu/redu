@@ -13,11 +13,11 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/redes</td>
+	<td>/espacos</td>
 	<td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>verifyElementPresent</td>
 	<td>link=Redes</td>
 	<td></td>
 </tr>
