@@ -31,30 +31,7 @@
         </div><!-- end tabs-1 -->
         <div id="tabs-2" class="clearfix grid_15">
           <h1>Cursos</h1>
-          <% unless @courses.empty? %>
-            <table class="common">
-              <thead>
-                <tr>
-                  <th>Nome</th>
-                  <th>Editar</th>
-                  <th>Excuir</th>
-                </tr>
-              </thead>
-              <% @courses.each do |item| %>
-                <tr>
-                  <td><%= link_to item.name, environment_course_path(@environment, item) %></td>
-                  <td><%= link_to "Editar", edit_environment_course_path(@environment, item) %></td>
-                  <td><%= link_to 'Deletar', environment_course_path(@environment, item),
-                    :confirm => 'Você tem certeza que deseja remover este curso?', :method => :delete %></td>
-                </tr>
-              <% end %>
-            <% else %>
-              <div class="box_notice">
-                Este ambiente de ensino não possui nenhum curso.
-                <%= link_to "Crie um agora!", new_environment_course_path(@environment) %>
-              </div>
-            <% end %>
-          </table>
+          <%= render :partial => 'courses/index_admin' %>
           <%= link_to "Criar Curso!", new_environment_course_path(@environment), :class => "button" %>
         </div><!-- end tabs-2 (cursos) -->
 
