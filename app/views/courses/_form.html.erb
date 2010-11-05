@@ -8,6 +8,8 @@
         title: 'Customize seu Curso',
         inputBG: true}
     );
+
+    $("input[type=text][name*=color]").val("<%= @course.color if @course %>")
   })
 </script>
 
@@ -92,5 +94,6 @@ colors = [["#ffffff", "ffffff"],
 <% end %>
 <% field_set_tag "Personalização" do %>
   <%= f.label :color, "Cor" %>
-  <%= f.select :color, options_for_select(colors) %>
+  <%=  %>
+  <%= f.select :color, options_for_select(colors, :selected => @course.nil? ? nil : @course.color )%>
 <% end %>
