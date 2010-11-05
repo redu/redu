@@ -37,8 +37,6 @@ class EnvironmentsController < BaseController
   # GET /environments/1/edit
   def edit
     @environment = Environment.find(params[:id])
-    @courses = @environment.courses
-    @invitations = @environment.invitations
   end
 
   # POST /environments
@@ -90,5 +88,15 @@ class EnvironmentsController < BaseController
       format.html { redirect_to(environments_url) }
       format.xml  { head :ok }
     end
+  end
+
+  def admin_courses
+    @environment = Environment.find(params[:id])
+    @courses = @environment.courses
+  end
+
+  def admin_invitations
+    @environment = Environment.find(params[:id])
+    @invitations = @environment.invitations
   end
 end

@@ -1,0 +1,24 @@
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function(){
+    $("#convidar").hide()
+      $("a[href=#convidar]").click(function(e){
+        $("#convidar").slideToggle()
+        e.preventDefault()
+    })
+  })
+</script>
+
+<div class="grid_16">
+  <div class="fake-tabs grid_16 alpha omega">
+    <%= render :partial => 'environments/admin_taskbar' %>
+    <div class="panel clearfix grid_15">
+      <h3>Colaboradores convidados</h3>
+      <a href="#convidar">Envie mais convites</a>
+      <div id="convidar">
+        <%= render :partial => 'environment_invitations/remote_form' %>
+      </div>
+      <%= render :partial => "environment_invitations/index",
+        :object => @invitations %>
+    </div><!-- end tabs-3 (convites) -->
+  </div>
+</div>

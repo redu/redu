@@ -1,0 +1,11 @@
+<div class="grid_16">
+  <div class="fake-tabs grid_16 alpha omega clearfix">
+    <%= render :partial => 'environments/admin_taskbar' %>
+    <div class="panel">
+      <h1>Cursos</h1>
+      <%= render :partial => 'courses/index_admin' %>
+      <%= link_to "Criar Curso!", new_environment_course_path(@environment), :class => "button" %>
+
+    </div>
+  </div>
+</div>
