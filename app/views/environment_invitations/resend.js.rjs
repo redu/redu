@@ -1,0 +1,6 @@
+if @invitation
+  page << "$(\"table tr#invitation-#{ @invitation.id } .date\")" + \
+          ".html(\"#{ time_ago_in_words @invitation.updated_at }\")"
+  page << "$(\"table tr#invitation-#{ @invitation.id } .action\")" + \
+          ".append(\"Enviado!\")"
+end

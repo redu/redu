@@ -36,8 +36,6 @@ class EnvironmentInvitation < ActiveRecord::Base
     transitions :from => :added, :to => :failed
   end
 
-  protected
-
   # Envia e-mail para o colaborador convidado
   def send_invitation
     UserNotifier.deliver_environment_invitation(self.user,
@@ -45,7 +43,10 @@ class EnvironmentInvitation < ActiveRecord::Base
                                                 self.role,
                                                 self.environment,
                                                 self.message)
+    self.updated_at = Time.now and self.save
   end
+
+  protected
 
   # Adiciona colaborador ao environment
   def add_to_environment

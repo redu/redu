@@ -1,0 +1,10 @@
+<%# Formulário AJAX para convidar usuários em um environment %>
+<% remote_form_for :environment_invitation, :method => :post,
+  :url => environment_environment_invitations_path(@environment),
+  :html => {:id => "environment_invitation"},
+  :loading => "$(\"#environment_invitation\").prepend(\"#{escape_javascript(image_tag("spinner.gif")) }\")",
+  :complete => "$(\"#environment_invitation\").find(\"img\").remove()" do  |f| %>
+  <%= render :partial => 'environment_invitations/form',
+    :locals => {:f => f} %>
+  <%= f.submit "convidar" %>
+<% end %>

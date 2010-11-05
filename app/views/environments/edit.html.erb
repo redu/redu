@@ -8,6 +8,7 @@
         <ul>
           <li><a href="#tabs-1">Configurações</a></li>
           <li><a href="#tabs-2">Cursos</a></li>
+          <li><a href="#tabs-3">Convites</a></li>
         </ul>
         <div id="tabs-1" class="clearfix grid_15">
           <h1>Configurações do Ambiente de Ensino</h1>
@@ -55,6 +56,25 @@
             <% end %>
           </table>
           <%= link_to "Criar Curso!", new_environment_course_path(@environment), :class => "button" %>
-        </div>
+        </div><!-- end tabs-2 (cursos) -->
+
+        <div id="tabs-3" class="clearfix grid_15">
+          <h3>Colaboradores convidados</h3>
+          <script type="text/javascript" charset="utf-8">
+            $(document).ready(function(){
+                $("#convidar").hide()
+                $("a[href=#convidar]").click(function(e){
+                  $("#convidar").slideToggle()
+                  e.preventDefault()
+                })
+            })
+          </script>
+          <a href="#convidar">Envie mais convites</a>
+          <div id="convidar">
+            <%= render :partial => 'environment_invitations/remote_form' %>
+          </div>
+          <%= render :partial => "environment_invitations/index",
+                :object => @invitations %>
+        </div><!-- end tabs-3 (convites) -->
       </div>
     </div>

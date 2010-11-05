@@ -11,12 +11,6 @@
   </div>
   <div class="grid_8 omega">
     <h3 class="call">Convide colaboradores</h3>
-    <% remote_form_for :environment_invitation, :method => :post,
-      :url => environment_environment_invitations_path(@environment),
-      :html => {:id => "environment_invitation"} do |f| %>
-      <%= render :partial => 'environment_invitations/form',
-        :locals => {:f => f} %>
-      <%= f.submit "Convidar" %>
-    <% end %>
+    <%= render :partial => 'environment_invitations/remote_form' %>
   </div>
 </div>

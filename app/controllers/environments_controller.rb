@@ -38,6 +38,7 @@ class EnvironmentsController < BaseController
   def edit
     @environment = Environment.find(params[:id])
     @courses = @environment.courses
+    @invitations = @environment.invitations
   end
 
   # POST /environments

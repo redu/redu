@@ -13,4 +13,16 @@ class EnvironmentInvitationsController < BaseController
         format.js
     end
   end
+
+  # Enviar novamente o convite
+  def resend
+    @invitation = EnvironmentInvitation.find(params[:id])
+
+    respond_to do |format|
+      if @invitation
+        @invitation.send_invitation
+        format.js
+      end
+    end
+  end
 end
