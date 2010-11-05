@@ -10,6 +10,8 @@
     );
 
     $("input[type=text][name*=color]").val("<%= @course.color if @course %>")
+    $("input[type=text][name*=color]").css('background-color' , "#<%= @course.color %>")
+
   })
 </script>
 
