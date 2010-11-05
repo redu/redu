@@ -9,6 +9,8 @@ class Space < ActiveRecord::Base
   # CALLBACKS
   before_create :create_root_folder
 
+  belongs_to :course
+
   # USERS
   belongs_to :owner , :class_name => "User" , :foreign_key => "owner"
   has_many :user_space_associations, :dependent => :destroy

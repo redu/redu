@@ -496,6 +496,7 @@ class SpacesController < BaseController
   # GET /spaces/new
   # GET /spaces/new.xml
   def new
+    @course = Course.find(params[:course_id])
     session[:space_params] ||= {}
     @space = Space.new(session[:space_params])
     @space.current_step = session[:space_step]

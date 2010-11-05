@@ -79,7 +79,10 @@ function stripVowelAccent(str) {
 <div class="<%= (edit) ? 'grid_15 alpha omega': 'grid_16 ' %>">
 
 <% field_set_tag 'Informações Gerais' do %>
-	<%= f.label "Nome" %>
+  
+        <%= hidden_field_tag "space[course_id]", @course.id %>
+  
+        <%= f.label "Nome" %>
 	<%= f.text_field :name ,  :onkeyup => ((edit) ? nil : "generatePath(this)") %>
 	<%= error_for :space, :name %>
 
