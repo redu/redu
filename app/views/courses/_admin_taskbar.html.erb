@@ -1,0 +1,35 @@
+<%  if logged_in? %>
+<ul class="menu">
+<li>
+<%= 
+link_to_unless_current 'Configurações', edit_environment_course_path do
+  link_to 'Configurações', edit_environment_course_path, 
+    :class => 'selected'
+end
+%>
+</li>
+
+<li>
+<%= 
+link_to_unless_current 'Espaços(' + @course.spaces.count.to_s + ')',admin_spaces_environment_course_path do
+  link_to 'Espaços', admin_spaces_environment_course_path, 
+    :class => 'selected'
+end
+%>
+</li>
+<li>
+<%= 
+link_to_unless_current 'Moderação', space_path do
+  link_to 'Moderação', space_path, :class => 'selected'
+end
+%>
+</li>
+<li>
+<%= 
+link_to_unless_current 'Usuários', space_path do
+  link_to 'Usuários', space_path, :class => 'selected'
+end
+%>
+</li>
+</ul>
+<% end %>

@@ -567,7 +567,7 @@ class SpacesController < BaseController
     @space.destroy
 
     respond_to do |format|
-      format.html { redirect_to(home_path) }
+      format.html { redirect_to(environment_course_path(@space.course.environment, @space.course)) }
       format.xml  { head :ok }
     end
   end

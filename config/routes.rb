@@ -190,7 +190,9 @@ ActionController::Routing::Routes.draw do |map|
     :nested_member_path => "/:environment_id",
     :member => { :admin_courses => :get,
                  :admin_invitations => :get } do |environment|
-      environment.resources :courses
+      environment.resources :courses, :member => {
+        :admin_spaces => :get
+      }
       environment.resources :environment_invitations, :singular => 'invitation',
         :member => {:resend => :post}
   end

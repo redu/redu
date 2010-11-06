@@ -66,4 +66,18 @@ class CoursesController < BaseController
 
   end
 
+  def admin_spaces
+    @course = Course.find(params[:id])
+    @environment = @course.environment
+    @spaces = Space.paginate(:conditions => ["course_id = ?", @course.id],
+                                   :include => :owner,
+                                   :page => params[:page],
+                                   :order => 'updated_at ASC',
+                                   :per_page => 20)
+
+    respond_to do |format|
+      format.html
+    end
+  end
+
 end
