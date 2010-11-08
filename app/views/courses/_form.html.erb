@@ -95,8 +95,13 @@ colors = [["#ffffff", "ffffff"],
   <%= f.label "Palavras-chave <span class='snippet'>(separadas por vírgula)</span>" %>
   <%= f.text_field :tag_list %>
 <% end %>
+<% field_set_tag "Quem pode participar do curso?" do %>
+  <%= f.radio_button :subscription_type, "1", :checked => true %> Todos
+  <%= f.radio_button :subscription_type, "2" %> Moderação 
+<% end %>
 <% field_set_tag "Personalização" do %>
   <%= f.label :color, "Cor" %>
   <%=  %>
   <%= f.select :color, options_for_select(colors, :selected => @course.nil? ? nil : @course.color )%>
 <% end %>
+

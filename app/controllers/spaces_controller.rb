@@ -205,7 +205,7 @@ class SpacesController < BaseController
 
     if @approved_members
       for member in @approved_members
-        UserNotifier.deliver_approve_membership(member, @space) # TODO fazer isso em batch
+        #UserNotifier.deliver_approve_membership(member, @space) # TODO fazer isso em batch
       end
     end
 
@@ -280,7 +280,7 @@ class SpacesController < BaseController
     @rejected_members = User.all(:conditions => ["id IN (?)", rejected_ids]) unless rejected_ids.empty?
 
     for member in @approved_members
-      UserNotifier.deliver_approve_membership(member, @space) # TODO fazer isso em batch
+      UserNotifier.deliver_approve_membership(member, @space) # TODO fazer isso em batch #FIXME acho que não é o deliver correto.
     end
 
     flash[:notice] = 'Solicitacões moderadas!'
@@ -529,7 +529,14 @@ class SpacesController < BaseController
       render "new"
     else
       UserSpaceAssociation.create({:user => current_user, :space => @space, :status => "approved", :role_id => 4}) #:role => Role[:space_admin]
-      forum = Forum.create(:name => "Fórum do espaço #{@space.name}", :description => "Este fórum pertence ao espaço #{@space.name} e apenas os participates deste espaço podem visualizá-lo. Troque ideias, participe!", :space_id => @space.id)
+      Forum.create(:name => "Fórum do espaço #{@space.name}", :description => "Este fórum pertence ao espaço #{@space.name}. Apenas os participantes deste espaço podem visualizá-lo. Troque ideias, participe!", :space_id => @space.id)
+     
+      course_users = UserCourseAssociation.all(:conditions => ["state LIKE ? AND course_id = ?", 'approved', @space.course.id])
+     
+      course_users.each do |assoc|
+        UserSpaceAssociation.create({:user_id => assoc.user_id, :space => @space, :status => "approved", :role_id => assoc.role_id})
+      end
+
       session[:space_step] = session[:space_params] = nil
       flash[:notice] = "Rede criada!"
       redirect_to @space

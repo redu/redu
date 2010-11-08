@@ -21,16 +21,25 @@ class UserNotifier < ActionMailer::Base
   end
 
   ### SENT BY ADMIN SCHOOL
-  def approve_membership(user, space)
+  def approve_membership(user, course)
     setup_sender_info
     @recipients  = "#{user.email}"
-    @subject     = "Sua participacão na rede \"#{space.name}\" foi aprovada!"
+    @subject     = "Sua participacão no course \"#{course.name}\" foi aprovada!"
     @sent_on     = Time.now
     @body[:user] = user
-    @body[:url]  = space.permalink
-    @body[:space]  = space
+    @body[:url]  = course.permalink
+    @body[:course]  = course
   end
 
+  def reject_membership(user, course)
+    setup_sender_info
+    @recipients  = "#{user.email}"
+    @subject     = "Sua participacão no course \"#{course.name}\" foi negada!"
+    @sent_on     = Time.now
+    @body[:user] = user
+    @body[:course]  = course
+  end
+  
   def remove_membership(user, space)
     setup_sender_info
     @recipients  = "#{user.email}"

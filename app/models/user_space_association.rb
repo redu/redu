@@ -9,6 +9,8 @@ class UserSpaceAssociation < ActiveRecord::Base
   belongs_to :access_key
   has_enumerated :role 
 
+  validates_uniqueness_of :user_id, :scope => :space_id
+
   protected
   def increment_members_count
     self.space.members_count += 1

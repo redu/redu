@@ -192,6 +192,7 @@ ActionController::Routing::Routes.draw do |map|
                  :admin_members => :get } do |environment|
       environment.resources :courses, :member => {
         :admin_spaces => :get,
+        :admin_members_requests => :get,
         :join => :get,
         :unjoin => :get
       }

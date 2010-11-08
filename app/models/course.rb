@@ -5,9 +5,9 @@ class Course < ActiveRecord::Base
   has_many :users, :through => :user_course_association
   has_many :invitations, :as => :inviteable, :dependent => :destroy
 
-  validates_presence_of :name, :message => "Não pode ficar em branco."
-
   acts_as_taggable
+
+  validates_presence_of :name, :message => "Não pode ficar em branco."
 
   # Sobreescrevendo ActiveRecord.find para adicionar capacidade de buscar por path do Space
   def self.find(*args)
@@ -20,5 +20,9 @@ class Course < ActiveRecord::Base
 
   def to_param
     self.path
+  end
+
+  def permalink
+    "#{AppConfig.community_url}/#{self.environment.path}/cursos/#{self.path}"
   end
 end

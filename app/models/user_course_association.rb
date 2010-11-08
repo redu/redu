@@ -3,9 +3,7 @@ class UserCourseAssociation < ActiveRecord::Base
   belongs_to :course
   has_enumerated :role
 
-  validates_uniqueness_of :user_id, :scope => :course_id
-
-  # Máquina de estados para moderação das Notícias
+  # Máquina de estados para moderação das dos usuários nos courses.
   acts_as_state_machine :initial => :waiting
   state :waiting
   state :approved
@@ -23,4 +21,7 @@ class UserCourseAssociation < ActiveRecord::Base
   event :fail do
     transitions :from => :waiting, :to => :failed
   end
+  
+  validates_uniqueness_of :user_id, :scope => :course_id
+
 end
