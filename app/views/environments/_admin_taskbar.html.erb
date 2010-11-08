@@ -23,5 +23,12 @@
         end
     %>
 </li>
-  <li><a href="#tabs-4">Papéis</a></li>
+  <li>
+    <%= link_to_unless_current "Usuários",
+          admin_users_environment_path(@environment) do 
+            link_to "Usuários", admin_users_environment_path(@environment),
+              :class => 'selected'
+        end
+    %>
+</li>
 </ul>

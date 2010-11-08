@@ -189,12 +189,15 @@ ActionController::Routing::Routes.draw do |map|
     :member_path => ":id",
     :nested_member_path => "/:environment_id",
     :member => { :admin_courses => :get,
-                 :admin_invitations => :get } do |environment|
+                 :admin_invitations => :get,
+                 :admin_users => :get } do |environment|
       environment.resources :courses, :member => {
         :admin_spaces => :get
       }
       environment.resources :environment_invitations, :singular => 'invitation',
-        :member => {:resend => :post}
+        :member => {:resend => :post,
+                    :join => :get,
+                    :unjoin => :get }
   end
 
   # Install the default routes as the lowest priority.

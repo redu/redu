@@ -99,4 +99,9 @@ class EnvironmentsController < BaseController
     @environment = Environment.find(params[:id])
     @invitations = @environment.invitations
   end
+
+  def admin_users
+    @environment = Environment.find(params[:id])
+    
+  end
 end
