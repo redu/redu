@@ -6,7 +6,7 @@
       <h1>Configurações do Curso</h1>
       <% form_for @course,
         :url => environment_course_path(@environment, @course) do |f| %>
-        <%= render :partial => 'courses/form', :locals => { :f => f } %>
+        <%= render :partial => 'courses/form', :locals => { :f => f, :edit => true } %>
         <%= f.submit "Alterar" %>
       <% end %>
 
