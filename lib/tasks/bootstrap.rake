@@ -29,10 +29,14 @@ namespace :bootstrap do
     Role.create(:name => 'admin', :space_role => false)    
     Role.create(:name => 'moderator', :space_role => false)
     Role.create(:name => 'member', :space_role => false)   
+
+    # Environment
+    Role.create(:name => 'environment_admin', :space_role => false)
+
+    # Course
+    Role.create(:name => 'course_admin', :space_role => false)
     
     # space roles
-    Role.create(:name => 'space_admin', :space_role => true)
-    Role.create(:name => 'coordinator', :space_role => true)  
     Role.create(:name => 'teacher', :space_role => true)
     Role.create(:name => 'student', :space_role => true)
     

@@ -11,6 +11,30 @@
   </div>
   <div class="grid_8 omega">
     <h3 class="call">Convide colaboradores</h3>
-    <%= render :partial => 'environment_invitations/remote_form' %>
+    <script type="text/javascript" charset="utf-8">
+      $(document).ready(function(){
+          $(".message").hide()
+          $("#toggle").live('click', function(e){
+            $(".message").toggle()
+            e.preventDefault()
+          });
+      })
+    </script>
+    
+    <% remote_form_for :invitation, :method => :post,
+      :url => course_invitations_path(@course),
+      :html => {:id => "environment_invitation"},
+      :loading => "$(\"#environment_invitation\").prepend(\"#{escape_javascript(image_tag("spinner.gif")) }\")",
+      :complete => "$(\"#environment_invitation\").find(\"img\").remove()" do  |f| %>
+      <div id="invitation_errors"></div>
+      <%= f.label :email_addresses, "E-mails" %>
+      <%= f.text_area :email_addresses, :cols => 50, :rows => 6 %>
+      <a id="toggle" href="#">Escrever Mensagem</a>
+      <%= f.label :message, "Mensagem", :class => "message" %>
+      <%= f.text_area :message, :cols => 50, :rows => 6 , :class => "message" %>
+
+      <%= f.submit "Convidar" %>
+    <% end %>
+    
   </div>
 </div>

@@ -16,14 +16,6 @@
     %>
   </li>
   <li>
-    <%= link_to_unless_current "Convites",
-          admin_invitations_environment_path(@environment) do 
-            link_to "Convites", admin_invitations_environment_path(@environment),
-              :class => 'selected'
-        end
-    %>
-</li>
-  <li>
     <%= link_to_unless_current "Usuários",
           admin_users_environment_path(@environment) do 
             link_to "Usuários", admin_users_environment_path(@environment),

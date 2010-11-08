@@ -3,6 +3,7 @@ class Course < ActiveRecord::Base
   has_many :spaces, :dependent => :destroy
   has_many :user_course_association, :dependent => :destroy
   has_many :users, :through => :user_course_association
+  has_many :invitations, :as => :inviteable, :dependent => :destroy
 
   validates_presence_of :name, :message => "Não pode ficar em branco."
 

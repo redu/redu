@@ -1,8 +1,8 @@
 class Invitation < ActiveRecord::Base
 
-  after_save :send_invite
-
   belongs_to :user
+  belongs_to :inviteable, :polymorphic => true
+  has_enumerated :role
 
   validates_presence_of :user
   validates_presence_of :email_addresses
@@ -26,10 +26,36 @@ class Invitation < ActiveRecord::Base
     end
   end
 
+  # Estados de um invitation
+  acts_as_state_machine :initial => :pending, :column => :state
+
+  state :pending
+  state :invited, :enter => :send_invite
+  state :added
+  state :failed
+
+  event :invite do
+    transitions :from => :pending, :to => :invited
+    transitions :from => :invited, :to => :invited
+  end
+
+  event :add do
+    transitions :from => :invited, :to => :added
+  end
+
+  event :fail do
+    transitions :from => :invited, :to => :failed
+    transitions :from => :added, :to => :failed
+  end
+
   def send_invite
     emails = self.email_addresses.split(",").collect{|email| email.strip }.uniq
     emails.each{|email|
-      UserNotifier.deliver_signup_invitation(email, self.user, self.message)
+      UserNotifier.deliver_environment_invitation(self.user,
+                                                  email,
+                                                  self.role,
+                                                  self.inviteable,
+                                                  self.message)
     }
   end
 
