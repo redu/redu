@@ -80,4 +80,18 @@ class CoursesController < BaseController
     end
   end
 
+  def join
+    @environment = Environment.find(params[:environment_id])
+    @course = Course.find(params[:id])
+
+    association = UserCourseAssociation.new
+    association.user = current_user
+    association.course = @course
+    association.role = Role[:member]
+    association.save
+  end
+
+  def unjoin
+  end
+
 end

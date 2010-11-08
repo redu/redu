@@ -16,9 +16,9 @@
     %>
   </li>
   <li>
-    <%= link_to_unless_current "Usuários",
-          admin_users_environment_path(@environment) do 
-            link_to "Usuários", admin_users_environment_path(@environment),
+    <%= link_to_unless_current "Membros",
+          admin_members_environment_path(@environment) do 
+            link_to "Usuários", admin_members_environment_path(@environment),
               :class => 'selected'
         end
     %>

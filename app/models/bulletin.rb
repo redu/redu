@@ -13,7 +13,7 @@ class Bulletin < ActiveRecord::Base
   state :waiting
   state :approved
   state :rejected
-  state :error
+  state :error #FIXME estado sem transicões, é assim mesmo?
 
   event :approve do
     transitions :from => :waiting, :to => :approved

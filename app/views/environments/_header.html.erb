@@ -19,7 +19,7 @@
       <h4><%= link_to course.name, environment_course_path(environment, course) %></h4>
     </div>
     <div class="grid_2">
-      <%= link_to "Participar", edit_environment_course_path(environment, course),
+      <%= link_to "Participar", join_environment_course_path(environment, course),
         :class => "button" %>
     </div>
     <%= link_to "Editar", edit_environment_course_path(environment, course),
