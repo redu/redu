@@ -111,12 +111,6 @@ function stripVowelAccent(str) {
 
 <% end %>
 
-<% field_set_tag 'Categorias' do %>
-<span class="snippet" style"width:100%; float: left;">Selecione uma ou mais categorias de acordo com a área de atuação da rede: </span>
-<%= error_for :space, :categories %>
-	<%= columnize_categories %>
-<% end %>
-
 
 <% field_set_tag 'Audiência' do %>
 <span class="snippet">Selecionar um público que não corresponde ao propósito da rede pode levar à uma má avaliação. </span>

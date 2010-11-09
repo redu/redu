@@ -4,9 +4,9 @@ class SpacesController < BaseController
   after_filter :create_activity, :only => [:create]
   # Usado para proteger acoes perigosas (só para admin)
   before_filter :except =>
-  [:new, :create, :show, :vote, :index, :join, :unjoin, :member, :onwer, :members, :teachers, :take_ownership] do |controller|
-    controller.space_admin_required(controller.params[:id]) if controller.params and controller.params[:id]
-  end
+  			[:new, :create, :show, :vote, :index, :join, :unjoin, :member, :onwer, :members, :teachers, :take_ownership] do 				|controller|
+    		controller.space_admin_required(controller.params[:id]) if controller.params and controller.params[:id]
+  			end
   before_filter :can_be_owner_required, :only => :take_ownership
   before_filter :is_not_member_required, :only => :join
 
@@ -33,7 +33,7 @@ class SpacesController < BaseController
   def take_ownership
     @space = Space.find(params[:id])
     @space.update_attribute(:owner, current_user)
-    flash[:notice] = "Você é o novo dono desta rede!"
+    flash[:notice] = "Você é o novo dono deste espaço!"
     redirect_to @space
   end
 
@@ -84,14 +84,14 @@ class SpacesController < BaseController
       @association.status = "approved"
 
       if @association.save
-        flash[:notice] = "Você está participando da rede agora!"
+        flash[:notice] = "Você está participando do espaço agora!"
       end
 
     when 2 # moderated
       @association.status = "pending"
 
       if @association.save
-        flash[:notice] = "Seu pedido de participação está sendo moderado pelos administradores da rede."
+        flash[:notice] = "Seu pedido de participação está sendo moderado pelos administradores do espaço."
         UserNotifier.deliver_pending_membership(current_user, @space) # TODO fazer isso em batc
       end
     end
@@ -106,7 +106,7 @@ class SpacesController < BaseController
     @association = UserSpaceAssociation.find(:first, :conditions => ["user_id = ? AND space_id = ?",current_user.id, @space.id ])
 
     if @association.destroy
-      flash[:notice] = "Você saiu da rede"
+      flash[:notice] = "Você saiu do espaço"
     end
 
     respond_to do |format|
@@ -146,11 +146,11 @@ class SpacesController < BaseController
 
   def admin_submissions
     @space = Space.find(params[:id])
-    @lectures = Lecture.paginate(:conditions => ["published = 1 AND state LIKE ?", "waiting"],
-                               :include => :owner,
-                               :page => params[:page],
-                               :order => 'updated_at DESC',
-                               :per_page => AppConfig.items_per_page)
+#    @lectures = Course.paginate(:conditions => ["published = 1 AND state LIKE ?", "waiting"],
+#                               :include => :owner,
+#                               :page => params[:page],
+#                               :order => 'updated_at DESC',
+#                               :per_page => AppConfig.items_per_page)
 
     respond_to do |format|
       format.html #{ render :action => "my" }
@@ -406,17 +406,11 @@ class SpacesController < BaseController
   # GET /spaces
   # GET /spaces.xml
   def index
-    cond = Caboose::EZ::Condition.new
-    cond.append ["redu_category_id = ?", params[:area]] if params[:area] and params[:area].downcase != 'all'
-
     paginating_params = {
-      :conditions => cond.to_sql,
       :page => params[:page],
       :order => (params[:sort]) ? params[:sort] + ' DESC' : 'created_at DESC',
       :per_page => 12
     }
-
-    @spaces =  Space.inner_categories.paginate(paginating_params) if params[:area] and params[:area].downcase != 'all'
 
     if params[:user_id] # aulas do usuario
       @user = User.find_by_login(params[:user_id])
@@ -462,15 +456,16 @@ class SpacesController < BaseController
     if @space
       @statuses = @space.recent_activity(0,10)
 
-      @featured = @space.featured_lectures(3)
-      @brand_new = @space.lectures.find(:first, :order => "created_at DESC")
-      @lectures = @space.lectures.paginate(:conditions =>
-                                          ["published = 1"],
-                                            :include => :owner,
-                                            :page => params[:page],
-                                            :order => 'updated_at DESC',
-                                            :per_page => AppConfig.items_per_page)
-                                          @bulletins = @space.bulletins.find(:all, :conditions => "state LIKE 'approved'", :order => "created_at DESC", :limit => 5)
+      #@featured = @space.featured_lectures(3)
+      #@brand_new = @space.lectures.find(:first, :order => "created_at DESC")
+#      @lectures = @space.lectures.paginate(:conditions =>
+#                                          ["published = 1"],
+#                                            :include => :owner,
+#                                            :page => params[:page],
+#                                            :order => 'updated_at DESC',
+#                                            :per_page => AppConfig.items_per_page)
+
+			@bulletins = @space.bulletins.find(:all, :conditions => "state LIKE 'approved'", :order => "created_at DESC", :limit => 5)
     end
 
     respond_to do |format|
@@ -496,7 +491,7 @@ class SpacesController < BaseController
   # GET /spaces/new
   # GET /spaces/new.xml
   def new
-    @course = Course.find(params[:course_id])
+		@course = Course.find(params[:course_id])
     session[:space_params] ||= {}
     @space = Space.new(session[:space_params])
     @space.current_step = session[:space_step]

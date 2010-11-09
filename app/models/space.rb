@@ -29,24 +29,18 @@ class Space < ActiveRecord::Base
     :conditions => ["user_space_associations.status LIKE 'pending'"]
 
   # CATEGORIES
-  has_and_belongs_to_many :categories, :class_name => "ReduCategory"
   has_and_belongs_to_many :audiences
 
   has_many :folders
   has_many :acquisitions, :as => :acquired_by
   has_many :space_assets, :class_name => 'SpaceAsset',
     :dependent => :destroy
-  has_many :lectures, :through => :space_assets,
-    :source => :asset, :source_type => "Lecture", :conditions =>  "published = 1"
-  has_many :exams, :through => :space_assets,
-    :source => :asset, :source_type => "Exam", :conditions =>  "published = 1"
   has_many :bulletins, :dependent => :destroy
   has_many :events, :dependent => :destroy
   has_many :statuses, :as => :statusable
   has_many :subjects
   has_one :forum, :dependent => :destroy
 
-  named_scope :inner_categories, lambda { {:joins => :categories} } # Faz inner join com redu_categories_space
 
   # METODOS DO WIZARD
   attr_writer :current_step
@@ -65,7 +59,6 @@ class Space < ActiveRecord::Base
     :message => "Endereço inválido."
   validates_exclusion_of    :path, :in => AppConfig.reserved_logins,
     :message => "Endereço inválido"
-  validates_presence_of :categories
 
   # Sobreescrevendo ActiveRecord.find para adicionar capacidade de buscar por path do Space
   def self.find(*args)
@@ -104,37 +97,37 @@ class Space < ActiveRecord::Base
   end
 
   # Status relativos ao Space e a Exam
-  def recent_space_exams_activity
-    sql = "SELECT l.id, l.logeable_type, l.action, l.user_id, l.logeable_name, " + \
-      "l.logeable_id, l.created_at, l.updated_at, l.space_id " + \
-      "FROM logs l, space_assets s " + \
-      "WHERE l.space_id = '#{self.id}' AND l.logeable_type = '#{Exam}' " + \
-      "ORDER BY l.created_at DESC LIMIT 3 "
+#  def recent_space_exams_activity
+#    sql = "SELECT l.id, l.logeable_type, l.action, l.user_id, l.logeable_name, " + \
+#      "l.logeable_id, l.created_at, l.updated_at, l.space_id " + \
+#      "FROM logs l, space_assets s " + \
+#      "WHERE l.space_id = '#{self.id}' AND l.logeable_type = '#{Exam}' " + \
+#      "ORDER BY l.created_at DESC LIMIT 3 "
 
-    @recent_exams_activity = Log.find_by_sql(sql)
-  end
+#    @recent_exams_activity = Log.find_by_sql(sql)
+#  end
 
   # Status relativos ao Space e a Lecture
-  def recent_space_lectures_activity
-    sql = "SELECT l.id, l.logeable_type, l.action, l.user_id, l.logeable_name, " + \
-      "l.logeable_id, l.created_at, l.updated_at, l.space_id " + \
-      "FROM logs l, space_assets s " + \
-      "WHERE l.space_id = '#{self.id}' AND l.logeable_type = '#{Lecture}' " + \
-      "ORDER BY l.created_at DESC LIMIT 3 "
+#  def recent_space_lectures_activity
+#    sql = "SELECT l.id, l.logeable_type, l.action, l.user_id, l.logeable_name, " + \
+#      "l.logeable_id, l.created_at, l.updated_at, l.space_id " + \
+#      "FROM logs l, space_assets s " + \
+#      "WHERE l.space_id = '#{self.id}' AND l.logeable_type = '#{Lecture}' " + \
+#      "ORDER BY l.created_at DESC LIMIT 3 "
 
-    @recent_lectures_activity = Log.find_by_sql(sql)
-  end
+#    @recent_lectures_activity = Log.find_by_sql(sql)
+#  end
 
-  # Preview das Lectures mais importantes
-  def spotlight_lectures
-    sql =  "SELECT c.name FROM lectures c, space_assets s " + \
-      "WHERE s.space_id = '#{self.id}' " + \
-      "AND s.asset_type = '#{Lecture}' " + \
-      "AND c.id = s.asset_id " + \
-      "ORDER BY c.view_count DESC LIMIT 6 "
+#  # Preview das Lectures mais importantes
+#  def spotlight_lectures
+#    sql =  "SELECT c.name FROM lectures c, space_assets s " + \
+#      "WHERE s.space_id = '#{self.id}' " + \
+#      "AND s.asset_type = '#{Lecture}' " + \
+#      "AND c.id = s.asset_id " + \
+#      "ORDER BY c.view_count DESC LIMIT 6 "
 
-    Lecture.find_by_sql(sql)
-  end
+#    Lecture.find_by_sql(sql)
+#  end
 
   def create_root_folder
     @folder = Folder.create(:name => "root")
@@ -176,9 +169,9 @@ class Space < ActiveRecord::Base
     end
   end
 
-  def featured_lectures(qty=4)
-    #TODO melhorar esta lógica
-    self.lectures.find(:all, :order => "view_count DESC", :limit => "#{qty}")
-  end
+#  def featured_lectures(qty=4)
+#    #TODO melhorar esta lógica
+#    self.lectures.find(:all, :order => "view_count DESC", :limit => "#{qty}")
+#  end
 
 end
