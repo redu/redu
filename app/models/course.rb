@@ -2,6 +2,7 @@ class Course < ActiveRecord::Base
   belongs_to :environment
   has_many :spaces, :dependent => :destroy
   has_many :user_course_association, :dependent => :destroy
+  belongs_to :owner, :class_name => "User", :foreign_key => "owner"
   has_many :users, :through => :user_course_association
   has_many :invitations, :as => :inviteable, :dependent => :destroy
 

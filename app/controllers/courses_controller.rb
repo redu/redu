@@ -54,10 +54,14 @@ class CoursesController < BaseController
     #TODO verificar permissoes
     @environment = Environment.find(params[:environment_id])
     @course = Course.new(params[:course])
+    @course.owner = current_user
 
     respond_to do |format|
       if @course.save
         @environment.courses << @course
+        owner_assoc = UserCourseAssociation.create({:user => current_user, :course => @course, 
+                                      :role_id => Role[:course_admin].id})
+        owner_assoc.approve!
         format.html { redirect_to environment_course_path(@environment, @course) }
       else
         format.html { render :action => :new }
