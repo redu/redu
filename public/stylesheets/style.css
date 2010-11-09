@@ -2540,6 +2540,12 @@ ul.sub-groups > li {
   padding: 20px 0;
 }
 
+#environment .filters {
+  background-color: #F9FBFA;
+  padding: 10px;
+  margin: 10px 0;
+}
+
 #environment .actions .action {
   font-size: 1.8em;
   font-weight: bold;

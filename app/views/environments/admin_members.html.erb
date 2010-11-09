@@ -1,17 +1,16 @@
 <script type="text/javascript">
-	function selectAll(){
-	var checkboxes = document.getElementsByName("users[]");
-	for (var i =0; i< checkboxes.length; i++) {
-		checkboxes[i].checked = true;
-	}
-}
-
-function selectNone(){
-	var checkboxes = document.getElementsByName("users[]");
-	for (var i =0; i< checkboxes.length; i++) {
-		checkboxes[i].checked = false;
-	}
-}
+  $(document).ready(function(){
+    $("#select_all").toggle(
+      function(e){
+        $("input[type=checkbox][name=users\[\]]").attr('checked', true)
+        $(this).attr('checked', true)
+      },
+      function(e){
+        $("input[type=checkbox][name=users\[\]]").attr('checked', false)
+        $(this).attr('checked', false)
+      }
+    )    
+  })
 function showLoadingUsers(){
 	document.getElementById('loading_bar').style.display = 'block';
 	$('user_list_table').remove();
@@ -37,7 +36,20 @@ function setSubmissionType(type){
         <% form_remote_tag :url => {:action => :search_users_admin,
           :id => @environment.id},
           :loading => "showLoadingUsers()" do %>
-          <%= text_field_tag :search_user %><%= submit_tag 'Buscar' %><BR>
+          <div class="filters clearfix">
+            <% field_set_tag "Buscar", :class => "grid_3 alpha" do %>
+              <%= label_tag :search_user, "Palavra-chave", :class => "inline" %>
+              <%= text_field_tag :search_user %>
+            <% end %>
+            <% field_set_tag "Papéis" , :class => "grid_11 omega" do %>
+              <% Role.all().each do |role| %>
+                <%= check_box_tag :role_filter, role.id %>
+                <%= label_tag :role_filter, role.name, :class => "inline" %>
+              <% end %>
+            <% end %>
+            <%= submit_tag 'Filtrar',
+                  :style => "float: right;" %>
+          </div>
         <% end %>
 
         <% form_tag destroy_members_environment_path, :method => :post do %>

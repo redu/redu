@@ -2,11 +2,12 @@
 
 <table id="user_list_table" class="common">
   <thead>
-    <th></th>
+    <th>
+    <input type="checkbox" id="select_all"  >
+    </th>
     <th>Usuário</th>
     <th>Data de Inscricão</th>
     <th>Curso(s)</th>
-    <th>Ação</th>
   </thead>
   <% for environment_membership in memberships %>
     <tr>
@@ -20,7 +21,6 @@
         <% end %>
         </ul>
       </td>
-      <td>teste</td>
     </tr>
   <% end %>
 </table>

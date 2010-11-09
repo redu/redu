@@ -50,7 +50,7 @@ class EnvironmentsController < BaseController
       if @environment.save
         flash[:notice] = 'Environment was successfully created.'
         format.html do
-          redirect_to environment_course_path(@environment, 
+          redirect_to environment_course_path(@environment,
                                               @environment.courses.first)
         end
         format.xml  { render :xml => @environment, :status => :created, :location => @environment }
@@ -137,26 +137,19 @@ class EnvironmentsController < BaseController
 
   def search_users_admin
     @environment = Environment.find(params[:id])
-    if params[:search_user].empty?
-      @memberships = UserEnvironmentAssociation.paginate(
-        :conditions => ["environment_id = ?", @environment.id],
-        :include => [{ :user => {:user_course_association => :course} }],
-        :page => params[:page],
-        :order => 'updated_at DESC',
-        :per_page => AppConfig.items_per_page)
-    else
-      common_query = params[:search_user] + '%'
-      @memberships = UserEnvironmentAssociation.paginate(
-        :conditions => ["user_environment_associations.environment_id = ? " + \
-                        "AND (users.first_name LIKE ? " + \
-                          "OR users.last_name LIKE ? " + \
-                          "OR users.login LIKE ?)",
-        @environment.id, common_query, common_query, common_query],
-        :include => [{ :user => {:user_course_association => :course} }],
-        :page => params[:page],
-        :order => 'user_environment_associations.updated_at DESC',
-        :per_page => AppConfig.items_per_page)
-    end
+
+    roles = []
+    roles = params[:role_filter].collect {|r| r.to_i} if params[:role_filter]
+    keyword = []
+    keyword = params[:search_user] || nil
+
+    @memberships = UserEnvironmentAssociation.with_roles(roles)
+    @memberships = @memberships.with_keyword(keyword).paginate(
+      :conditions => ["user_environment_associations.environment_id = ?", @environment.id],
+      :include => [{ :user => {:user_course_association => :course} }],
+      :page => params[:page],
+      :order => 'user_environment_associations.updated_at DESC',
+      :per_page => AppConfig.items_per_page)
 
     respond_to do |format|
       format.js do
