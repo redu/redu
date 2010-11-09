@@ -38,6 +38,7 @@ namespace :bootstrap do
     
     # space roles
     Role.create(:name => 'teacher', :space_role => true)
+    Role.create(:name => 'tutor', :space_role => true)
     Role.create(:name => 'student', :space_role => true)
     
     
