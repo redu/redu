@@ -533,10 +533,19 @@ class User < ActiveRecord::Base
 
   end
 
-  def get_association_with(space_id)
-    return false unless space_id
-    @space = Space.find(space_id) #TODO performance -
-    association = UserSpaceAssociation.find(:first, :conditions => ['user_id = ? AND space_id = ?', self.id, @space.id])
+  def get_association_with(entity)
+    return false unless entity
+    case entity.class.to_s
+    when 'Space'
+      association = UserSpaceAssociation.find(:first, :conditions => ['user_id = ? AND space_id = ?', 
+                                              self.id, entity.id])
+    when 'Course'
+      association = UserCourseAssociation.find(:first, :conditions => ['user_id = ? AND course_id = ?', 
+                                               self.id, entity.id])
+    when 'Environment'
+      association = UserEnvironmentAssociation.find(:first, :conditions => ['user_id = ? AND environment_id = ?', 
+                                                    self.id, entity.id])
+    end
   end
 
   def teacher?(space)

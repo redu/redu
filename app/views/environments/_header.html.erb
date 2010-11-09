@@ -18,12 +18,19 @@
     <div class="grid_10">
       <h4><%= link_to course.name, environment_course_path(environment, course) %></h4>
     </div>
-    <div class="grid_2">
-      <%= link_to "Participar", join_environment_course_path(environment, course),
-        :class => "button" %>
-    </div>
+    <% if current_user.get_association_with(@course) %>
+      <div class="grid_2">
+        <%= link_to "Abandonar", unjoin_environment_course_path(environment, course),
+          :class => "button" %>
+      </div>
+    <% else %>
+      <div class="grid_2">
+        <%= link_to "Participar", join_environment_course_path(environment, course),
+          :class => "button" %>
+      </div>
+    <% end %>
     <%= link_to "Editar", edit_environment_course_path(environment, course),
-          :class => "grid_1 edit" %>
+      :class => "grid_1 edit" %>
   <% end %>
 
 </div><!-- end environment-header -->

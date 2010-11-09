@@ -173,6 +173,17 @@ class CoursesController < BaseController
 
   # Desassocia um usuário de um Course (Ação de sair do Course).
   def unjoin
+    @course = Course.find(params[:id])
+    
+    course_association = current_user.get_association_with(@course)    
+    course_association.destroy
+    @course.spaces.each do |space|
+      space_association = current_user.get_association_with(space)    
+      space_association.destroy
+    end
+
+    flash[:notice] = "Você não participa mais do curso #{@course.name}"
+    redirect_to environment_course_path(@course.environment, @course)
   end
 
 end
