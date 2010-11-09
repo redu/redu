@@ -1,3 +1,32 @@
+<script type="text/javascript">
+	function selectAll(){
+	var checkboxes = document.getElementsByName("users[]");
+	for (var i =0; i< checkboxes.length; i++) {
+		checkboxes[i].checked = true;
+	}
+}
+
+function selectNone(){
+	var checkboxes = document.getElementsByName("users[]");
+	for (var i =0; i< checkboxes.length; i++) {
+		checkboxes[i].checked = false;
+	}
+}
+function showLoadingUsers(){
+	document.getElementById('loading_bar').style.display = 'block';
+	$('user_list_table').remove();
+}
+
+function setSubmissionType(type){
+	 var theform = document.getElementById('moderate_users_form');
+	 var theattribute = document.getElementById('submission_type');
+		
+	theattribute.value = type;
+	theform.submit();
+}
+
+	
+</script>
 <div class="grid_16">
   <div class="fake-tabs grid_16 alpha omega clearfix">
     <%= render :partial => 'environments/admin_taskbar' %>
@@ -6,25 +35,26 @@
 
       <% if @memberships && @memberships.size > 0 %>
         <% form_remote_tag :url => {:action => :search_users_admin,
-          :id => @space.id},
+          :id => @environment.id},
           :loading => "showLoadingUsers()" do %>
           <%= text_field_tag :search_user %><%= submit_tag 'Buscar' %><BR>
         <% end %>
 
-        <div id="user_list">
-          <%= render :partial => 'user_list_admin',
-            :locals => {:memberships => @memberships}%>
-        </div>
-
+        <% form_tag destroy_members_environment_path, :method => :post do %>
+          <%= submit_tag "Remover selecionados" %>
+          <div id="user_list">
+            <%= render :partial => 'user_list_admin',
+              :locals => {:memberships => @memberships}%>
+          </div>
+        <% end %>
       <% else %>
         <div class="box_notice">Não há usuários na rede.</div>
       <% end %>
 
-
       <div id="pagination" align="center" class="pagination">
-
-        <%= will_paginate  @memberships, :params => {:sort_by => @sort_by}, :class => "pagination_number"  %>
-
+        <%= will_paginate  @memberships,
+              :params => {:sort_by => @sort_by},
+              :class => "pagination_number"  %>
       </div>
     </div>
   </div>

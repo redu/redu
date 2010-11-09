@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
   has_many :environments_owned, :class_name => "Environment",
     :foreign_key => "owner"
   # Course
-  has_many :courses, :through => :user_environment_association
+  has_many :courses, :through => :user_course_association
 
   # FOLLOWSHIP
   has_and_belongs_to_many :follows, :class_name => "User", :join_table => "followship", :association_foreign_key => "follows_id", :foreign_key => "followed_by_id", :uniq => true

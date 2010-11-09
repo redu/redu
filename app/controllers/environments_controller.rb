@@ -97,6 +97,73 @@ class EnvironmentsController < BaseController
 
   def admin_members
     @environment = Environment.find(params[:id])
-    
+    @memberships = UserEnvironmentAssociation.paginate(
+      :conditions => ["environment_id = ?", @environment.id],
+      :include => [{ :user => {:user_course_association => :course} }],
+      :page => params[:page],
+      :order => 'updated_at DESC',
+      :per_page => AppConfig.items_per_page)
+  end
+
+  # Remove um ou mais usuários de um Environment destruindo todos os relacionamentos
+  # entre usuário e os níveis mais baixos da hierarquia.
+  def destroy_members
+    @environment = Environment.find(params[:id], :include => {:courses => :spaces})
+
+    # Course.id do environment
+    courses = @environment.courses
+    # Spaces do environment (unidimensional)
+    spaces = courses.collect{ |c| c.spaces }.flatten
+    users_ids = params[:users].collect{|u| u.to_i} || []
+
+    unless users_ids.empty?
+      User.find(:all,
+                :conditions => {:id => users_ids},
+                :include => [:user_environment_association,
+                             :user_course_association,
+                             :user_space_association]).each do |user|
+
+        user.spaces.delete(spaces)
+        user.courses.delete(courses)
+        user.environments.delete(@environment)
+      end
+    end
+
+    respond_to do |format|
+      flash[:notice] = "Os usuários foram removidos do ambiente #{@environment.name}"
+      format.html { redirect_to :action => :admin_members }
+    end
+  end
+
+  def search_users_admin
+    @environment = Environment.find(params[:id])
+    if params[:search_user].empty?
+      @memberships = UserEnvironmentAssociation.paginate(
+        :conditions => ["environment_id = ?", @environment.id],
+        :include => [{ :user => {:user_course_association => :course} }],
+        :page => params[:page],
+        :order => 'updated_at DESC',
+        :per_page => AppConfig.items_per_page)
+    else
+      common_query = params[:search_user] + '%'
+      @memberships = UserEnvironmentAssociation.paginate(
+        :conditions => ["user_environment_associations.environment_id = ? " + \
+                        "AND (users.first_name LIKE ? " + \
+                          "OR users.last_name LIKE ? " + \
+                          "OR users.login LIKE ?)",
+        @environment.id, common_query, common_query, common_query],
+        :include => [{ :user => {:user_course_association => :course} }],
+        :page => params[:page],
+        :order => 'user_environment_associations.updated_at DESC',
+        :per_page => AppConfig.items_per_page)
+    end
+
+    respond_to do |format|
+      format.js do
+        render :update do |page|
+          page.replace_html 'user_list', :partial => 'user_list_admin', :locals => {:memberships => @memberships}
+        end
+      end
+    end
   end
 end
