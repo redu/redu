@@ -5,20 +5,20 @@ class UserCourseAssociation < ActiveRecord::Base
 
   # Filtra por papéis (lista)
   named_scope :with_roles, lambda { |roles|
-      unless roles.empty?
-        { :conditions => { :role_id => roles.flatten } }
-      end
-    }
+    unless roles.empty?
+      { :conditions => { :role_id => roles.flatten } }
+    end
+  }
   # Filtra por palavra-chave (procura em User)
   named_scope :with_keyword, lambda { |keyword|
-      unless keyword.empty?
-        { :conditions => [ "users.first_name LIKE :keyword " + \
-            "OR users.last_name LIKE :keyword " + \
-            "OR users.login LIKE :keyword", {:keyword => keyword}],
-          :include => [{ :user => {:user_space_association => :space} }]}
-      end
-    }
- 
+    if not keyword.empty? and keyword.size > 4 
+      { :conditions => [ "users.first_name LIKE :keyword " + \
+        "OR users.last_name LIKE :keyword " + \
+        "OR users.login LIKE :keyword", {:keyword => "%#{keyword}%"}],
+        :include => [{ :user => {:user_space_association => :space} }]}
+    end
+  }
+
   # Máquina de estados para moderação das dos usuários nos courses.
   acts_as_state_machine :initial => :waiting
   state :waiting
@@ -37,7 +37,7 @@ class UserCourseAssociation < ActiveRecord::Base
   event :fail do
     transitions :from => :waiting, :to => :failed
   end
-  
+
   validates_uniqueness_of :user_id, :scope => :course_id
 
 end

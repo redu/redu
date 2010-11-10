@@ -209,7 +209,8 @@ class CoursesController < BaseController
 
     # Course.id do environment
     spaces = @course.spaces
-    users_ids = params[:users].collect{|u| u.to_i} || []
+    users_ids = []
+    users_ids = params[:users].collect{|u| u.to_i} if params[:users]
 
     unless users_ids.empty?
       User.find(:all,
@@ -220,10 +221,10 @@ class CoursesController < BaseController
         user.spaces.delete(spaces)
         user.courses.delete(@course)
       end
+      flash[:notice] = "Os usuários foram removidos do curso #{@course.name}"
     end
 
     respond_to do |format|
-      flash[:notice] = "Os usuários foram removidos do curso #{@course.name}"
       format.html { redirect_to :action => :admin_members }
     end
   end
