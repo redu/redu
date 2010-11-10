@@ -560,7 +560,7 @@ class User < ActiveRecord::Base
 
   def space_admin?(space_id)
     association = get_association_with space_id
-    association && association.role && association.role.eql?(Role[:space_admin])
+    association && association.role && association.role.eql?(Role[:course_admin])
   end
 
   def student?(space)

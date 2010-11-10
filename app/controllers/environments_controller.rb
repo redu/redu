@@ -44,10 +44,22 @@ class EnvironmentsController < BaseController
   def create
     @environment = Environment.new(params[:environment])
     @environment.owner = current_user
+    @environment.courses.first.owner = current_user
     @environment.published = true
+
 
     respond_to do |format|
       if @environment.save
+        UserEnvironmentAssociation.create(:environment => @environment,
+                                          :user => current_user,
+                                          :role_id => Role[:environment_admin].id)
+        user_course = UserCourseAssociation.create(
+          :course => @environment.courses.first,
+          :user => current_user,
+          :role_id => Role[:environment_admin].id)
+
+        user_course.approve!
+
         flash[:notice] = 'Environment was successfully created.'
         format.html do
           redirect_to environment_course_path(@environment,

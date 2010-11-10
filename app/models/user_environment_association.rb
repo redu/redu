@@ -1,6 +1,7 @@
 class UserEnvironmentAssociation < ActiveRecord::Base
   belongs_to :user
   belongs_to :environment
+  has_enumerated :role
 
   # Filtra por papéis (lista)
   named_scope :with_roles, lambda { |roles|
