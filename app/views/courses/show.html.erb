@@ -6,7 +6,9 @@
 <div class="grid_16">
   <div class="grid_8 alpha">
     <h3 class="call">Espaços do curso <%= @course.name %></h3>
-    <div class="box_notice">Você não criou nenhum espaço de ensino</div>
+    <ul>
+      <%= render :partial => "spaces/item", :collection => @course.spaces.published, :as => :space %>
+    </ul>
     <%= link_to "Editar", edit_environment_course_path(@environment, @course) %>
   </div>
   <div class="grid_8 omega">

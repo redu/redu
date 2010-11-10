@@ -194,6 +194,28 @@ class CoursesController < BaseController
     redirect_to environment_course_path(@course.environment, @course)
   end
 
+  def publish
+    @course = Course.find(params[:id])   
+    @environment = @course.environment
+
+    @course.published = 1
+    @course.save
+
+    flash[:notice] = "O curso #{@course.name} foi publicado."
+    redirect_to environment_course_path(@environment, @course)
+  end
+
+  def unpublish
+    @course = Course.find(params[:id])   
+    @environment = @course.environment
+
+    @course.published = 0
+    @course.save
+
+    flash[:notice] = "O curso #{@course.name} foi despublicado."
+    redirect_to environment_course_path(@environment, @course)
+  end
+  
   # Aba Membros. 
   def admin_members
     @course= Course.find(params[:id])

@@ -21,6 +21,13 @@
     <% if course.owner.eql? current_user %>
       <%= link_to "Editar", edit_environment_course_path(environment, course),
         :class => "grid_1 edit" %>
+      <% if course.published? %>
+        <%= link_to "Despublicar", unpublish_environment_course_path(environment, course),
+          :class => "grid_1" %>
+      <% elsif course.can_be_published? %>
+        <%= link_to "Publicar", publish_environment_course_path(environment, course),
+          :class => "grid_1" %>
+      <% end %>
     <% else %>
       <% if current_user.get_association_with(course).nil? %>
         <div class="grid_2">

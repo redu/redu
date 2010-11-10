@@ -26,4 +26,7 @@ class Course < ActiveRecord::Base
   def permalink
     "#{AppConfig.community_url}/#{self.environment.path}/cursos/#{self.path}"
   end
+  def can_be_published?
+    self.spaces.published.size > 0
+  end
 end

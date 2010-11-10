@@ -41,6 +41,7 @@ class Space < ActiveRecord::Base
   has_many :subjects
   has_one :forum, :dependent => :destroy
 
+  named_scope :published, :conditions => {:published => 1}
 
   # METODOS DO WIZARD
   attr_writer :current_step
