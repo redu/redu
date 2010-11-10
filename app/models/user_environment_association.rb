@@ -10,10 +10,10 @@ class UserEnvironmentAssociation < ActiveRecord::Base
     }
   # Filta por palavra-chave (procura em User)
   named_scope :with_keyword, lambda { |keyword|
-      unless keyword.empty?
+      if not keyword.empty? and keyword.size > 4
         { :conditions => [ "users.first_name LIKE :keyword " + \
             "OR users.last_name LIKE :keyword " + \
-            "OR users.login LIKE :keyword", {:keyword => keyword}],
+            "OR users.login LIKE :keyword", {:keyword => "%#{keyword}%"}],
           :include => [{ :user => {:user_course_association => :course} }]}
       end
     }

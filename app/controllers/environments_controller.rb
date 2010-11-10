@@ -114,7 +114,8 @@ class EnvironmentsController < BaseController
     courses = @environment.courses
     # Spaces do environment (unidimensional)
     spaces = courses.collect{ |c| c.spaces }.flatten
-    users_ids = params[:users].collect{|u| u.to_i} || []
+    users_ids = []
+    users_ids = params[:users].collect{|u| u.to_i} if params[:users]
 
     unless users_ids.empty?
       User.find(:all,
@@ -127,10 +128,10 @@ class EnvironmentsController < BaseController
         user.courses.delete(courses)
         user.environments.delete(@environment)
       end
+      flash[:notice] = "Os usuários foram removidos do ambiente #{@environment.name}"
     end
 
     respond_to do |format|
-      flash[:notice] = "Os usuários foram removidos do ambiente #{@environment.name}"
       format.html { redirect_to :action => :admin_members }
     end
   end
