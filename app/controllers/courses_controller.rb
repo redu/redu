@@ -35,6 +35,10 @@ class CoursesController < BaseController
 
     respond_to do |format|
       if @course.update_attributes(params[:course])
+        if params[:course][:subscription_type].eql? "1" # Entrada de membros passou a ser livre, aprovar todos os membros pendentes
+          UserCourseAssociation.update_all("state = 'approved'", ["course_id = ? AND state = 'waiting'", @course.id])
+        end
+
         flash[:notice] = 'O curso foi editado.'
         format.html { redirect_to(environment_course_path(@environment, @course)) }
         format.xml { head :ok }
@@ -60,7 +64,7 @@ class CoursesController < BaseController
       if @course.save
         @environment.courses << @course
         owner_assoc = UserCourseAssociation.create({:user => current_user, :course => @course, 
-                                      :role_id => Role[:course_admin].id})
+                                                   :role_id => Role[:course_admin].id})
         owner_assoc.approve!
         format.html { redirect_to environment_course_path(@environment, @course) }
       else
@@ -143,7 +147,7 @@ class CoursesController < BaseController
 
       flash[:notice] = 'Membros moderados!'
     end
-  
+
     redirect_to admin_members_requests_environment_course_path(@environment, @course)
   end
 
@@ -178,7 +182,7 @@ class CoursesController < BaseController
   # Desassocia um usuário de um Course (Ação de sair do Course).
   def unjoin
     @course = Course.find(params[:id])
-    
+
     course_association = current_user.get_association_with(@course)    
     course_association.destroy
     @course.spaces.each do |space|
@@ -216,11 +220,11 @@ class CoursesController < BaseController
       User.find(:all,
                 :conditions => {:id => users_ids},
                 :include => [:user_course_association,
-                             :user_space_association]).each do |user|
+                  :user_space_association]).each do |user|
 
         user.spaces.delete(spaces)
         user.courses.delete(@course)
-      end
+                  end
       flash[:notice] = "Os usuários foram removidos do curso #{@course.name}"
     end
 
@@ -246,12 +250,12 @@ class CoursesController < BaseController
       :order => 'user_course_associations.updated_at DESC',
       :per_page => AppConfig.items_per_page)
 
-    respond_to do |format|
-      format.js do
-        render :update do |page|
-          page.replace_html 'user_list', :partial => 'user_list_admin', :locals => {:memberships => @memberships}
+      respond_to do |format|
+        format.js do
+          render :update do |page|
+            page.replace_html 'user_list', :partial => 'user_list_admin', :locals => {:memberships => @memberships}
+          end
         end
       end
-    end
   end
 end
