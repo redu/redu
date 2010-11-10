@@ -22,17 +22,17 @@
       <%= link_to "Editar", edit_environment_course_path(environment, course),
         :class => "grid_1 edit" %>
     <% else %>
-      <% if current_user.get_association_with(@course).nil? %>
+      <% if current_user.get_association_with(course).nil? %>
         <div class="grid_2">
           <%= link_to "Participar", join_environment_course_path(environment, course),
             :class => "button" %>
         </div>
-      <% elsif current_user.get_association_with(@course).state.eql? "approved"%>
+      <% elsif current_user.get_association_with(course).state.eql? "approved"%>
         <div class="grid_2">
           <%= link_to "Abandonar", unjoin_environment_course_path(environment, course),
             :class => "button" %>
         </div>
-      <% elsif current_user.get_association_with(@course).state.eql? "waiting"%>
+      <% elsif current_user.get_association_with(course).state.eql? "waiting"%>
         <span class="grid_2">Seu pedido está em processo de moderação.</span>
       <% end %>
     <% end %>

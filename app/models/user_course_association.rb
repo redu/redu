@@ -3,6 +3,22 @@ class UserCourseAssociation < ActiveRecord::Base
   belongs_to :course
   has_enumerated :role
 
+  # Filtra por papéis (lista)
+  named_scope :with_roles, lambda { |roles|
+      unless roles.empty?
+        { :conditions => { :role_id => roles.flatten } }
+      end
+    }
+  # Filtra por palavra-chave (procura em User)
+  named_scope :with_keyword, lambda { |keyword|
+      unless keyword.empty?
+        { :conditions => [ "users.first_name LIKE :keyword " + \
+            "OR users.last_name LIKE :keyword " + \
+            "OR users.login LIKE :keyword", {:keyword => keyword}],
+          :include => [{ :user => {:user_space_association => :space} }]}
+      end
+    }
+ 
   # Máquina de estados para moderação das dos usuários nos courses.
   acts_as_state_machine :initial => :waiting
   state :waiting

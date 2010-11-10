@@ -28,7 +28,7 @@ function setSubmissionType(type){
 </script>
 <div class="grid_16">
   <div class="fake-tabs grid_16 alpha omega clearfix">
-    <%= render :partial => 'environments/admin_taskbar' %>
+    <%= render :partial => 'courses/admin_taskbar' %>
     <div class="panel">
       <h1>Membros</h1>
 
@@ -52,7 +52,7 @@ function setSubmissionType(type){
           </div>
         <% end %>
 
-        <% form_tag destroy_members_environment_path, :method => :post do %>
+        <% form_tag destroy_members_environment_course_path, :method => :post do %>
           <%= submit_tag "Remover selecionados" %>
           <div id="user_list">
             <%= render :partial => 'user_list_admin',
@@ -60,7 +60,7 @@ function setSubmissionType(type){
           </div>
         <% end %>
       <% else %>
-        <div class="box_notice">Não há usuários no ambiente.</div>
+        <div class="box_notice">Não há usuários no curso.</div>
       <% end %>
 
       <div id="pagination" align="center" class="pagination">

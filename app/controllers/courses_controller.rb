@@ -70,7 +70,7 @@ class CoursesController < BaseController
 
   end
 
-  # Aba espaços.
+  # Aba Espaços.
   def admin_spaces
     @course = Course.find(params[:id])
     @environment = @course.environment
@@ -85,7 +85,7 @@ class CoursesController < BaseController
     end
   end
 
-  # Aba Moderação usuários.
+  # Aba Moderação de Membros.
   def admin_members_requests
     @course = Course.find(params[:id])
     @environment = @course.environment
@@ -190,4 +190,67 @@ class CoursesController < BaseController
     redirect_to environment_course_path(@course.environment, @course)
   end
 
+  # Aba Membros. 
+  def admin_members
+    @course= Course.find(params[:id])
+    @environment = @course.environment
+    @memberships = UserCourseAssociation.paginate(
+      :conditions => ["course_id = ? AND state LIKE ? ", @course.id, 'approved'],
+      :include => [{ :user => {:user_space_association => :space} }],
+      :page => params[:page],
+      :order => 'updated_at DESC',
+      :per_page => AppConfig.items_per_page)
+  end
+
+  # Remove um ou mais usuários de um Environment destruindo todos os relacionamentos
+  # entre usuário e os níveis mais baixos da hierarquia.
+  def destroy_members
+    @course = Course.find(params[:id])
+
+    # Course.id do environment
+    spaces = @course.spaces
+    users_ids = params[:users].collect{|u| u.to_i} || []
+
+    unless users_ids.empty?
+      User.find(:all,
+                :conditions => {:id => users_ids},
+                :include => [:user_course_association,
+                             :user_space_association]).each do |user|
+
+        user.spaces.delete(spaces)
+        user.courses.delete(@course)
+      end
+    end
+
+    respond_to do |format|
+      flash[:notice] = "Os usuários foram removidos do curso #{@course.name}"
+      format.html { redirect_to :action => :admin_members }
+    end
+  end
+
+  def search_users_admin
+    @course = Course.find(params[:id])
+    @environment = @course.environment
+
+    roles = []
+    roles = params[:role_filter].collect {|r| r.to_i} if params[:role_filter]
+    keyword = []
+    keyword = params[:search_user] || nil
+
+    @memberships = UserCourseAssociation.with_roles(roles)
+    @memberships = @memberships.with_keyword(keyword).paginate(
+      :conditions => ["user_course_associations.course_id = ?", @course.id],
+      :include => [{ :user => {:user_space_association => :space} }],
+      :page => params[:page],
+      :order => 'user_course_associations.updated_at DESC',
+      :per_page => AppConfig.items_per_page)
+
+    respond_to do |format|
+      format.js do
+        render :update do |page|
+          page.replace_html 'user_list', :partial => 'user_list_admin', :locals => {:memberships => @memberships}
+        end
+      end
+    end
+  end
 end

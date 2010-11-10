@@ -26,8 +26,8 @@ end
 </li>
 <li>
 <%= 
-link_to_unless_current 'Usuários', space_path do
-  link_to 'Usuários', space_path, :class => 'selected'
+link_to_unless_current 'Membros', admin_members_environment_course_path do
+  link_to 'Membros', admin_members_environment_course_path, :class => 'selected'
 end
 %>
 </li>

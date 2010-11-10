@@ -195,7 +195,9 @@ ActionController::Routing::Routes.draw do |map|
         :admin_spaces => :get,
         :admin_members_requests => :get,
         :join => :get,
-        :unjoin => :get
+        :unjoin => :get,
+        :admin_members => :get,
+        :destroy_members => :post
       }
   end
 
