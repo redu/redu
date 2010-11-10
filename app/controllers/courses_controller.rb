@@ -74,6 +74,14 @@ class CoursesController < BaseController
 
   end
 
+  # Visão do Course para usuários não-membros. 
+  # TODO Remover quando colocar as permissões, apenas redirecionar no show.
+  def preview
+    @course = Course.find(params[:id])
+    @environment = @course.environment
+
+  end
+
   # Aba Espaços.
   def admin_spaces
     @course = Course.find(params[:id])

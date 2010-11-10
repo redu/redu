@@ -890,6 +890,13 @@ form fieldset {
   border: 1px solid #EFF0F0;
 }
 
+fieldset.fake {
+  padding: 10px;
+  margin: 10px 0 15px 0;
+  display: block;
+  border: 1px solid #EFF0F0;
+}
+
 form fieldset .snippet {
   font-size: .9em;
 }
@@ -923,6 +930,12 @@ form fieldset legend {
   font-weight: bold;
   font-size: 1.1em;
   color: #FF8000/*#FF8000*/;
+}
+
+fieldset.fake legend {
+  font-weight: bold;
+  font-size: 1.1em;
+  color: #FF8000;
 }
 
 form fieldset label,

@@ -4,6 +4,8 @@ class Course < ActiveRecord::Base
   has_many :user_course_association, :dependent => :destroy
   belongs_to :owner, :class_name => "User", :foreign_key => "owner"
   has_many :users, :through => :user_course_association
+  has_many :approved_users, :through => :user_course_association,
+    :source => :user, :conditions => [ "user_course_associations.state = ?", 'approved' ]
   has_many :invitations, :as => :inviteable, :dependent => :destroy
 
   acts_as_taggable
