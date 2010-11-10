@@ -27,7 +27,7 @@ class School < ActiveRecord::Base
   has_many :folders
   has_many :forums
   has_many :acquisitions, :as => :acquired_by
-  has_many :access_keys, :dependent => :destroy
+  #has_many :access_keys, :dependent => :destroy
   has_many :school_assets, :class_name => 'SchoolAsset',
     :dependent => :destroy
   has_many :courses, :through => :school_assets,
