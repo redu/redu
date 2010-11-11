@@ -1,7 +1,11 @@
 <div class="container_16 actions clearfix">
   <%= link_to "Crie Cursos!", new_environment_course_path(@environment), :class => "grid_5 action" %>
   <a href="#" class="grid_5 action">Crie Módulos!</a>
-  <a href="#" class="grid_5 action">Crie Espaços!</a>
+  <% if @course %>
+    <%= link_to "Crie Espaços!", new_space_path(:course_id => @course.id), :class => "grid_5 action" %>
+  <% else %>
+    <a href="#" class="grid_5 action">Crie Espaços</a>
+  <% end %>
 </div>
 <div class="grid_16">
   <ul>

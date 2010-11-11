@@ -1,0 +1,53 @@
+<script type="text/javascript" charset="utf-8">
+  //<![CDATA[
+jQuery(document).ready(function(){
+    $(".tabs").tabs();
+    })
+//]]>
+</script>
+
+<div class="grid_16">
+  <div class="tabs">
+    <ul>
+      <li><a href="#tabs-1">Descrição</a></li>
+    </ul>
+
+    <div id="tabs-1" class="clearfix">
+      <div class="pretty-text"><%= @environment.description %></div> 
+      <ul class="sortable sidebar">
+        <li class="clearfix">
+          <span class="call"><span>Palavras-chave</span></span>  
+          <ul class="tags">
+            <% for tag in @environment.tags %>
+              <li><span><%= tag.name %></span></li>
+            <% end %>
+          </ul>
+        </li>
+        <li>
+          <span class="call"><span>Colaboradores</span></span>
+          <div class="box clearfix">
+            <ul class="clearfix">
+              <%= render :partial => 'spaces/member_short', :collection => @environment.users, :as => :member %>
+            </ul>
+          </div>
+        </li>
+        <span class="call"><span>Alguns cursos</span></span>
+        <%= render :partial => "courses/item", :collection => @environment.courses.published[0..4] %>
+      </ul>
+    </div><!-- fim tabs-1 -->
+  </div><!-- fim tabs -->
+  <div class="sidebar news">
+    <span class="call"><span>Notícias</span></span>
+    <% if @bulletins && @bulletins.size > 0 %>
+      <%= render :partial => 'bulletins/headlines', :object => @bulletins  %>
+      <%= link_to 'Ver todos', space_bulletins_path(@space), :class=>"more" %> 
+    <% else %>
+      <div class="box_notice">
+        Nenhuma notícia foi enviada ainda.
+      </div>
+    <% end %>
+  </div><!-- end noticias -->
+  <% field_set_tag 'Compartilhe!', :class => 'fake' do %>
+    <%= render :partial => 'shared/share', :locals => {:resource => @environment}%>
+  <% end %>
+</div><!-- fim grid_16 -->

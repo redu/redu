@@ -8,6 +8,8 @@ class Course < ActiveRecord::Base
     :source => :user, :conditions => [ "user_course_associations.state = ?", 'approved' ]
   has_many :invitations, :as => :inviteable, :dependent => :destroy
 
+  named_scope :published, :conditions => {:published => 1}
+
   acts_as_taggable
 
   validates_presence_of :name, :message => "Não pode ficar em branco."
@@ -28,6 +30,7 @@ class Course < ActiveRecord::Base
   def permalink
     "#{AppConfig.community_url}/#{self.environment.path}/cursos/#{self.path}"
   end
+
   def can_be_published?
     self.spaces.published.size > 0
   end

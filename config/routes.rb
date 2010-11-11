@@ -187,7 +187,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :environments,
     :member_path => ":id",
     :nested_member_path => "/:environment_id",
-    :member => { :admin_courses => :get,
+    :member => { :preview => :get,
+                 :admin_courses => :get,
                  :admin_members => :get,
                  :destroy_members => :post } do |environment|
       environment.resources :courses, :member => {

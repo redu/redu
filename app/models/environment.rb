@@ -11,6 +11,9 @@ class Environment < ActiveRecord::Base
   })
   has_many :invitations, :class_name => "EnvironmentInvitation",
     :dependent => :destroy
+  has_many :bulletins, :as => :bulletinable, :dependent => :destroy
+
+  acts_as_taggable
 
   validates_presence_of :name
 
@@ -29,4 +32,7 @@ class Environment < ActiveRecord::Base
     self.path
   end
 
+  def permalink
+    "#{AppConfig.community_url}/#{self.path}"
+  end
 end

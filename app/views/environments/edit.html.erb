@@ -10,7 +10,9 @@
           <%= f.label :name, "Nome" %>
           <%= f.text_field :name  %>
           <%= f.label :description, "Description" %>
-          <%= f.text_area :description %>
+          <%= f.text_area :description, :class => 'mceEditor' %>
+          <%= f.label "Palavras-chave <span class='snippet'>(separadas por vírgula)</span>" %>
+          <%= f.text_field :tag_list %>
         <% end %>
         <% field_set_tag "Aparência" do %>
           <%= f.label :avatar, "Imagem" %>

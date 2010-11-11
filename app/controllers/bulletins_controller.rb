@@ -18,7 +18,7 @@ class BulletinsController < BaseController
   def show
     @bulletin = Bulletin.find(params[:id])
     @owner = User.find(@bulletin.owner)
-    @space = @bulletin.space
+    @space = @bulletin.bulletinable
   end
 
   def new

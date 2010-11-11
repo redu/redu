@@ -1,7 +1,7 @@
 class Bulletin < ActiveRecord::Base
 
   # ASSOCIATIONS
-  belongs_to :space
+  belongs_to :bulletinable, :polymorphic => true
   belongs_to :owner , :class_name => "User" , :foreign_key => "owner"
 
   # PLUGINS
@@ -26,7 +26,7 @@ class Bulletin < ActiveRecord::Base
   # VALIDATIONS
   validates_presence_of :title, :description, :tagline
   validates_presence_of :owner
-  validates_presence_of :space
+  validates_presence_of :bulletinable
   validates_length_of :tagline, :maximum => AppConfig.desc_char_limit
 
 end
