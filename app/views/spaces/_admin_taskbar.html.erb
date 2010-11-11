@@ -11,14 +11,6 @@ end
 </li>
 <li>
 <%= 
-link_to_unless_current 'Submissões', admin_submissions_space_path do
-  link_to 'Submissões', admin_submissions_space_path, 
-    :class => 'selected'
-end
-%>
-</li>
-<li>
-<%= 
 link_to_unless_current 'Aparência', look_and_feel_space_path do
   link_to 'Aparência', look_and_feel_space_path, :class => 'selected'
 end
@@ -45,9 +37,6 @@ link_to_unless_current 'Eventos (' + waiting_events_count.to_s + ')', admin_even
 end
 %>
 </li>
-<!--<li><%= link_to 'Papéis', owner_user_spaces_path(current_user.id) %></li>-->
-<!--<li><%= link_to 'Gadgets', owner_user_spaces_path(current_user.id) %></li>-->
-<!--<li><%= link_to 'Conta (Premium)', owner_user_spaces_path(current_user.id) %></li>-->
 </ul>
 
 <% end %>

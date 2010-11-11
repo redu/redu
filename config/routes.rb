@@ -95,7 +95,6 @@ ActionController::Routing::Routes.draw do |map|
     :unjoin => :get,
     :manage => :get,
     :admin_members => :get,
-    :admin_submissions => :get,
     :admin_bulletins => :get,
     :admin_events => :get,
     :look_and_feel => :get,

@@ -4,8 +4,7 @@
 
 <script type="text/javascript">
 var schoolFoldersPath = "<%= space_folders_path(:space_id => @space.id.to_s) %>";
-var schoolCoursesPath = "<%= space_lectures_path(:space_id => @space.id.to_s) %>";
-var schoolGroupsPath = "";
+var schoolCoursesPath = "";
 var schoolForumPath = "<%= space_forum_path(:space_id => @space.id.to_s) %>";
 
 var $schooltabs;
@@ -42,22 +41,7 @@ $(document).ready(function() {
                 });
 
                 $("#tabs-4-loading").show();
-            } else if (ui.index == 3) {
-                // groups
-                $("#tabs-3-content").html('');
-                jQuery.ajax({
-                    data: 'tab=true',
-                    dataType: 'script',
-                    success: function(request) {
-                        $("#tabs-3-loading").hide();
-                    },
-                    type: 'get',
-                    url: schoolGroupsPath
-                });
-
-                $("#tabs-3-loading").show();
-            }
-            else if (ui.index == 2) {
+            } else if (ui.index == 2) {
                 // content
                 $("#tabs-2-content").html('');
                 jQuery.ajax({
@@ -87,7 +71,6 @@ $(document).ready(function() {
         <li><a href="#tabs-1">Início</a></li>
         <li><a href="#tabs-5">Mural</a></li>
         <li><a href="#tabs-2">Conteúdo</a></li>
-        <!--<li><a href="#tabs-3">Grupos</a></li>-->
         <li><a href="#tabs-4">Arquivos</a></li>
         <li><a href="#tabs-6">Fórum</a></li>
       </ul>
@@ -141,11 +124,6 @@ $(document).ready(function() {
     <%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-2-loading', :style => 'padding: 20px;'%>
     <div id="tabs-2-content"></div>
   </div>
-  <!-- grupos 
-  <div id="tabs-3">
-    <%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-3-loading', :style => 'padding: 20px;'%>
-    <div id="tabs-3-content"></div>
-  </div>-->
   <!-- arquivos --> 
   <div id="tabs-4">
     <%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-4-loading', :style => 'padding: 20px;'%>

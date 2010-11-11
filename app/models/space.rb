@@ -28,13 +28,11 @@ class Space < ActiveRecord::Base
   has_many :pending_requests, :class_name => "UserSpaceAssociation",
     :conditions => ["user_space_associations.status LIKE 'pending'"]
 
-  # CATEGORIES
+  # AUDIENCE
   has_and_belongs_to_many :audiences
 
   has_many :folders
   has_many :acquisitions, :as => :acquired_by
-  has_many :space_assets, :class_name => 'SpaceAsset',
-    :dependent => :destroy
   has_many :bulletins, :dependent => :destroy
   has_many :events, :dependent => :destroy
   has_many :statuses, :as => :statusable
@@ -96,6 +94,8 @@ class Space < ActiveRecord::Base
   def recent_activity(offset = 0, limit = 20)
     self.statuses.all(:order => 'created_at DESC', :offset=> offset, :limit=> limit)
   end
+	
+	# Talvez seja usada a mesma lógica para pegar os subjects.
 
   # Status relativos ao Space e a Exam
 #  def recent_space_exams_activity
@@ -169,10 +169,5 @@ class Space < ActiveRecord::Base
       valid?
     end
   end
-
-#  def featured_lectures(qty=4)
-#    #TODO melhorar esta lógica
-#    self.lectures.find(:all, :order => "view_count DESC", :limit => "#{qty}")
-#  end
 
 end

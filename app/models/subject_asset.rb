@@ -1,9 +1,9 @@
-class SpaceAsset < ActiveRecord::Base
+class SubjectAsset < ActiveRecord::Base
   
   belongs_to :asset, :polymorphic => true
-  belongs_to :space
+  belongs_to :subject
 
-  validates_uniqueness_of :asset_id, :scope => :space_id
+  validates_uniqueness_of :asset_id, :scope => :subject_id
 
   protected
   def increment_lectures_count

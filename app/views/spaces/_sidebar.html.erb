@@ -14,26 +14,15 @@
       <li><a href="" class="closed sb">Acompanhar aulas</a></li>
 			-->
 			<% if current_user.can_post?(@space)%>
-      <li>
-      	<%= link_to "Criar aula", new_lecture_path(:space_id => @space.id)%>
-				</li>
-			<li>
-				<%= link_to "Criar exame", new_exam_path(:space_id => @space.id)%>
-			</li>
 			<li>
 				<%= link_to "Criar evento", new_space_event_path(:space_id => @space)%>
 			</li>
-			<% end %>
-			<% unless @space.owner == current_user %>
 			<li>
-			
-			<span style='display:none;margin-left:15px;' class='participate_spinner'>
-    			<%= image_tag 'spinner.gif' %>
-      </span>
-			<%= subscription_link %>
-			
+				<%= link_to "Criar notícia", new_space_bulletin_path(:space_id => @space)%>
 			</li>
+
 			<% end %>
+
     </ul>
   </li>
 	<!--

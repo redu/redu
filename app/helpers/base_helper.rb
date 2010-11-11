@@ -530,32 +530,6 @@ module BaseHelper
     User.find_by_sql(sql)
   end
 
-	  def subscription_link
-    membership = current_user.get_association_with @space
-
-    if membership and (membership.status == 'approved') # já é membro
-      link_to "Abandonar", unjoin_space_path(@space),
-        :class => "participar_rede button" ,
-        :confirm => "Você tem certeza que quer deixar essa rede?"
-    else
-       case @space.subscription_type
-
-        when 1 # anyone can join
-        link_to "Participar", join_space_path(@space), :onclick => "$('.participar_rede').hide(); $('.participate_spinner').show();" , :class => "participar_rede button"
-      when 2 # moderated
-        if membership and (membership.status == 'pending')
-          "(em moderação)"
-        else
-          link_to "Participar", join_space_path(@space), :onclick => "$('.participar_rede').hide(); $('.participate_spinner').show();", :class => "participar_rede button"
-        end
-
-        when 3 #key
-        link_to "Participar", "#", {:class => "participar_rede button", :onclick => "toggleAssociateBox();false;"}
-      end
-
-    end
-
-  end
 
   def month_events(space_id, month)
     start_month = Time.utc(Time.now.year, month, 1)

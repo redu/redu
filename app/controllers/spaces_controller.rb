@@ -10,25 +10,6 @@ class SpacesController < BaseController
   before_filter :can_be_owner_required, :only => :take_ownership
   before_filter :is_not_member_required, :only => :join
 
-  def remove_asset
-    case params[:asset_type]
-    when 'Lecture'
-      msg = "Aula removida da rede"
-    when 'Exam'
-      msg = "Exame removido da rede"
-    end
-
-    @asset = SpaceAsset.first(:conditions => ["asset_type LIKE ? AND asset_id = ? and space_id = ?", params[:asset_type], params[:asset_id], params[:id]])
-
-    if @asset
-      @asset.destroy
-      flash[:notice] = msg
-    else
-      flash[:notice] = "Não foi possível remover o conteúdo selecionado"
-    end
-
-    redirect_to space_lectures_path(:space_id => params[:id])
-  end
 
   def take_ownership
     @space = Space.find(params[:id])
@@ -144,20 +125,6 @@ class SpacesController < BaseController
     end
   end
 
-  def admin_submissions
-    @space = Space.find(params[:id])
-#    @lectures = Course.paginate(:conditions => ["published = 1 AND state LIKE ?", "waiting"],
-#                               :include => :owner,
-#                               :page => params[:page],
-#                               :order => 'updated_at DESC',
-#                               :per_page => AppConfig.items_per_page)
-
-    respond_to do |format|
-      format.html #{ render :action => "my" }
-      format.xml  { render :xml => @lectures }
-    end
-  end
-
   def admin_bulletins
     @space = Space.find(params[:id])
     @bulletins = Bulletin.paginate(:conditions => ["space_id = ? AND state LIKE ?", @space.id, "waiting"],
@@ -265,27 +232,6 @@ class SpacesController < BaseController
     end
   end
 
-  def moderate_submissions
-    approved = params[:submission].reject{|k,v| v == 'reject'}
-    rejected = params[:submission].reject{|k,v| v == 'approve'}
-    approved_ids = approved.keys.join(',')
-    rejected_ids = rejected.keys.join(',')
-
-    @space = Space.find(params[:space_id])
-
-    SpaceAsset.update_all( "status = 'approved'", ["asset_id IN (?)", @approve_ids.join(',') ]) if @approve_ids
-    SpaceAsset.update_all( "status = 'disaproved'",["asset_id IN (?)", @approve_ids.join(',') ]) if @disapprove_ids
-
-    @approved_members = User.all(:conditions => ["id IN (?)", approved_ids]) unless approved_ids.empty?
-    @rejected_members = User.all(:conditions => ["id IN (?)", rejected_ids]) unless rejected_ids.empty?
-
-    for member in @approved_members
-      UserNotifier.deliver_approve_membership(member, @space) # TODO fazer isso em batch #FIXME acho que não é o deliver correto.
-    end
-
-    flash[:notice] = 'Solicitacões moderadas!'
-    redirect_to pending_members_space_path
-  end
 
   def moderate_bulletins
     if params[:bulletin]
@@ -406,7 +352,8 @@ class SpacesController < BaseController
   # GET /spaces
   # GET /spaces.xml
   def index
-    paginating_params = {
+    
+		paginating_params = {
       :page => params[:page],
       :order => (params[:sort]) ? params[:sort] + ' DESC' : 'created_at DESC',
       :per_page => 12
@@ -428,7 +375,8 @@ class SpacesController < BaseController
     end
 
     respond_to do |format|
-      format.xml  { render :xml => @lectures }
+			#TODO verificar esse @lecture, saber o por quê de ser chamado
+      # format.xml  { render :xml => @lectures }
       format.html do
         if @user
           redirect_to @user
@@ -455,16 +403,6 @@ class SpacesController < BaseController
 
     if @space
       @statuses = @space.recent_activity(0,10)
-
-      #@featured = @space.featured_lectures(3)
-      #@brand_new = @space.lectures.find(:first, :order => "created_at DESC")
-#      @lectures = @space.lectures.paginate(:conditions =>
-#                                          ["published = 1"],
-#                                            :include => :owner,
-#                                            :page => params[:page],
-#                                            :order => 'updated_at DESC',
-#                                            :per_page => AppConfig.items_per_page)
-
 			@bulletins = @space.bulletins.find(:all, :conditions => "state LIKE 'approved'", :order => "created_at DESC", :limit => 5)
     end
 
