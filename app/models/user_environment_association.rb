@@ -15,8 +15,9 @@ class UserEnvironmentAssociation < ActiveRecord::Base
         { :conditions => [ "users.first_name LIKE :keyword " + \
             "OR users.last_name LIKE :keyword " + \
             "OR users.login LIKE :keyword", {:keyword => "%#{keyword}%"}],
-          :include => [{ :user => {:user_course_association => :course} }]}
+          :include => [{ :user => {:user_course_associations => :course} }]}
       end
     }
+
   validates_uniqueness_of :user_id, :scope => :environment_id
 end

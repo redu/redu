@@ -1,0 +1,41 @@
+<div class="grid_16">
+
+  <% unless @courses.empty? %>
+    <h3>Cursos</h3>
+    <table class="common">
+      <thead>
+        <tr>
+          <th>Curso</th>
+          <th>Papel</th>
+        </tr>
+      </thead>
+      <% @courses.each do |membership| %>
+        <tr>
+          <td>
+            <%= link_to membership.course.name,
+              environment_course_path(@environment, membership.course) %>
+          </td>
+          <td>
+            <% unless @environment_membership.role.eql?(Role[:environment_admin]) %>
+              <% form_tag user_update_roles_path(@user, @environment),
+                :method => :post do %>
+                <%= label_tag "roles_#{Role[:teacher].id}", Role[:teacher].name %>
+                <%= radio_button_tag :roles, Role[:teacher].id, membership.role.eql?(Role[:teacher]) ? true : false  %>
+                <%= label_tag "roles_#{Role[:member].id}", Role[:member].name %>
+                <%= radio_button_tag :roles, Role[:member].id, membership.role.eql?(Role[:member]) ? true : false  %>
+                <%= label_tag "roles_#{Role[:tutor].id}", Role[:tutor].name %>
+                <%= radio_button_tag :roles, Role[:tutor].id, membership.role.eql?(Role[:tutor]) ? true : false  %>
+                <%= hidden_field_tag :type, 'course' %>
+                <%= hidden_field_tag :course_id, membership.course.id %>
+                <%= submit_tag "Mudar" %>
+              <% end %>
+            <% else %>
+              <div class="box_notice">Este usuário é administrador do ambiente <%= @environment.name %></div>
+            <% end %>
+          </td>
+        </tr>
+
+      <% end %>
+    </table>
+  <% end %>
+</div>

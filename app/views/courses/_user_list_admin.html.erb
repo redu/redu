@@ -16,7 +16,7 @@
       <td><%= time_ago_in_words(course_membership.created_at) %> </td>
       <td>
         <ul class="tags">
-        <% course_membership.user.user_space_association.each do |space_membership| %>
+        <% course_membership.user.user_space_associations.each do |space_membership| %>
           <li><span><%= space_membership.space.name %></span></li>
         <% end %>
         </ul>

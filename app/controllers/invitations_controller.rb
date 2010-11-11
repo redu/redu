@@ -28,7 +28,7 @@ class InvitationsController < BaseController
     @invitation = Invitation.new(params[:invitation])
     @invitation.user = @user
     @invitation.inviteable = @inviteable
-    @invitation.role = Role[:course_admin] if @invitation.inviteable_type == 'Course'
+    @invitation.role = Role[:teacher] if @invitation.inviteable_type == 'Course'
 
     respond_to do |format|
       if @invitation.save

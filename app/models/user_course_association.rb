@@ -15,7 +15,7 @@ class UserCourseAssociation < ActiveRecord::Base
       { :conditions => [ "users.first_name LIKE :keyword " + \
         "OR users.last_name LIKE :keyword " + \
         "OR users.login LIKE :keyword", {:keyword => "%#{keyword}%"}],
-        :include => [{ :user => {:user_space_association => :space} }]}
+        :include => [{ :user => {:user_space_associations => :space} }]}
     end
   }
 

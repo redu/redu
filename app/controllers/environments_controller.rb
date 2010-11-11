@@ -50,7 +50,6 @@ class EnvironmentsController < BaseController
     @environment.courses.first.owner = current_user
     @environment.published = true
 
-
     respond_to do |format|
       if @environment.save
         UserEnvironmentAssociation.create(:environment => @environment,
@@ -120,7 +119,7 @@ class EnvironmentsController < BaseController
     @environment = Environment.find(params[:id])
     @memberships = UserEnvironmentAssociation.paginate(
       :conditions => ["environment_id = ?", @environment.id],
-      :include => [{ :user => {:user_course_association => :course} }],
+      :include => [{ :user => {:user_course_associations => :course} }],
       :page => params[:page],
       :order => 'updated_at DESC',
       :per_page => AppConfig.items_per_page)
@@ -141,9 +140,9 @@ class EnvironmentsController < BaseController
     unless users_ids.empty?
       User.find(:all,
                 :conditions => {:id => users_ids},
-                :include => [:user_environment_association,
-                             :user_course_association,
-                             :user_space_association]).each do |user|
+                :include => [:user_environment_associations,
+                             :user_course_associations,
+                             :user_space_associations]).each do |user|
 
         user.spaces.delete(spaces)
         user.courses.delete(courses)
@@ -168,7 +167,7 @@ class EnvironmentsController < BaseController
     @memberships = UserEnvironmentAssociation.with_roles(roles)
     @memberships = @memberships.with_keyword(keyword).paginate(
       :conditions => ["user_environment_associations.environment_id = ?", @environment.id],
-      :include => [{ :user => {:user_course_association => :course} }],
+      :include => [{ :user => {:user_course_associations => :course} }],
       :page => params[:page],
       :order => 'user_environment_associations.updated_at DESC',
       :per_page => AppConfig.items_per_page)

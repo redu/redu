@@ -24,7 +24,7 @@ class Space < ActiveRecord::Base
   has_many :teachers, :through => :user_space_associations, :source => :user,
     :conditions => [ "user_space_associations.role_id = ?", 6 ]
   has_many :students, :through => :user_space_associations, :source => :user,
-    :conditions => [ "user_space_associations.role_id = ?", 7 ]
+    :conditions => [ "user_space_associations.role_id = ?", 3 ]
   has_many :pending_requests, :class_name => "UserSpaceAssociation",
     :conditions => ["user_space_associations.status LIKE 'pending'"]
 
@@ -94,7 +94,7 @@ class Space < ActiveRecord::Base
   def recent_activity(offset = 0, limit = 20)
     self.statuses.all(:order => 'created_at DESC', :offset=> offset, :limit=> limit)
   end
-	
+
 	# Talvez seja usada a mesma lógica para pegar os subjects.
 
   # Status relativos ao Space e a Exam
@@ -169,5 +169,17 @@ class Space < ActiveRecord::Base
       valid?
     end
   end
+
+  # Muda papeis deste ponto para baixo na hieararquia
+  def change_role(user, role)
+    membership = self.user_space_associations.find(:first,
+                    :conditions => {:user_id => user.id})
+    membership.update_attributes({:role_id => role.id})
+  end
+
+#  def featured_lectures(qty=4)
+#    #TODO melhorar esta lógica
+#    self.lectures.find(:all, :order => "view_count DESC", :limit => "#{qty}")
+#  end
 
 end

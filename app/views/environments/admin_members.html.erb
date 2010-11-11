@@ -52,13 +52,10 @@ function setSubmissionType(type){
           </div>
         <% end %>
 
-        <% form_tag destroy_members_environment_path, :method => :post do %>
-          <%= submit_tag "Remover selecionados" %>
-          <div id="user_list">
-            <%= render :partial => 'user_list_admin',
-              :locals => {:memberships => @memberships}%>
-          </div>
-        <% end %>
+      <div id="user_list">
+        <%= render :partial => 'user_list_admin',
+          :locals => {:memberships => @memberships}%>
+      </div>
       <% else %>
         <div class="box_notice">Não há usuários no ambiente.</div>
       <% end %>

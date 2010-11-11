@@ -21,17 +21,17 @@ class User < ActiveRecord::Base
   has_one :beta_key, :dependent => :destroy
   has_many :statuses, :as => :statusable, :dependent => :destroy
   # Space
-  has_many :spaces, :through => :user_space_association
-  has_many :user_space_association, :dependent => :destroy
+  has_many :spaces, :through => :user_space_associations
+  has_many :user_space_associations, :dependent => :destroy
   has_many :spaces_owned, :class_name => "Space" , :foreign_key => "owner"
   # Environment
-  has_many :user_environment_association, :dependent => :destroy
-  has_many :environments, :through => :user_environment_association
-  has_many :user_course_association, :dependent => :destroy
+  has_many :user_environment_associations, :dependent => :destroy
+  has_many :environments, :through => :user_environment_associations
+  has_many :user_course_associations, :dependent => :destroy
   has_many :environments_owned, :class_name => "Environment",
     :foreign_key => "owner"
   # Course
-  has_many :courses, :through => :user_course_association
+  has_many :courses, :through => :user_course_associations
 
   # FOLLOWSHIP
   has_and_belongs_to_many :follows, :class_name => "User", :join_table => "followship", :association_foreign_key => "follows_id", :foreign_key => "followed_by_id", :uniq => true
@@ -560,12 +560,12 @@ class User < ActiveRecord::Base
 
   def space_admin?(space_id)
     association = get_association_with space_id
-    association && association.role && association.role.eql?(Role[:course_admin])
+    association && association.role && association.role.eql?(Role[:environment_admin])
   end
 
   def student?(space)
     association = get_association_with space
-    association && association.role && association.role.eql?(Role[:student])
+    association && association.role && association.role.eql?(Role[:member])
   end
 
   def male?

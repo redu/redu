@@ -64,7 +64,7 @@ class CoursesController < BaseController
       if @course.save
         @environment.courses << @course
         owner_assoc = UserCourseAssociation.create({:user => current_user, :course => @course, 
-                                                   :role_id => Role[:course_admin].id})
+                                                   :role_id => Role[:environment_admin].id})
         owner_assoc.approve!
         format.html { redirect_to environment_course_path(@environment, @course) }
       else
@@ -165,17 +165,17 @@ class CoursesController < BaseController
     @course = Course.find(params[:id])
 
     association = UserCourseAssociation.create(:user_id => current_user.id, :course_id => @course.id, 
-                                               :role_id => Role[:student].id)
+                                               :role_id => Role[:member].id)
 
     if @course.subscription_type.eql? 1 # Todos podem participar, sem moderação
       association.approve!
 
       # Cria as associações no Environment do Course e em todos os seus Spaces.
       UserEnvironmentAssociation.create(:user_id => current_user.id, :environment_id => @course.environment.id, 
-                                        :role_id => Role[:student].id)
+                                        :role_id => Role[:member].id)
       @course.spaces.each do |space|
         UserSpaceAssociation.create(:user_id => current_user.id, :space_id => space.id, 
-                                    :role_id => Role[:student].id, :status => "approved") #FIXME tirar status quando remover moderacao de space
+                                    :role_id => Role[:member].id, :status => "approved") #FIXME tirar status quando remover moderacao de space
       end
 
       flash[:notice] = "Você agora faz parte do curso #{@course.name}"
@@ -230,7 +230,7 @@ class CoursesController < BaseController
     @environment = @course.environment
     @memberships = UserCourseAssociation.paginate(
       :conditions => ["course_id = ? AND state LIKE ? ", @course.id, 'approved'],
-      :include => [{ :user => {:user_space_association => :space} }],
+      :include => [{ :user => {:user_space_associations => :space} }],
       :page => params[:page],
       :order => 'updated_at DESC',
       :per_page => AppConfig.items_per_page)
@@ -249,8 +249,8 @@ class CoursesController < BaseController
     unless users_ids.empty?
       User.find(:all,
                 :conditions => {:id => users_ids},
-                :include => [:user_course_association,
-                  :user_space_association]).each do |user|
+                :include => [:user_course_associations,
+                  :user_space_associations]).each do |user|
 
         user.spaces.delete(spaces)
         user.courses.delete(@course)
@@ -275,7 +275,7 @@ class CoursesController < BaseController
     @memberships = UserCourseAssociation.with_roles(roles)
     @memberships = @memberships.with_keyword(keyword).paginate(
       :conditions => ["user_course_associations.course_id = ?", @course.id],
-      :include => [{ :user => {:user_space_association => :space} }],
+      :include => [{ :user => {:user_space_associations => :space} }],
       :page => params[:page],
       :order => 'user_course_associations.updated_at DESC',
       :per_page => AppConfig.items_per_page)

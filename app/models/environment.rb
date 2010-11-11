@@ -3,7 +3,7 @@ class Environment < ActiveRecord::Base
   # como um instituição o provedor de ensino dentro do sistema.
 
   has_many :courses, :dependent => :destroy
-  has_many :user_environment_association, :dependent => :destroy
+  has_many :user_environment_associations, :dependent => :destroy
   belongs_to :owner, :class_name => "User", :foreign_key => "owner"
   has_many :users, :through => :user_environment_association
   has_attached_file :avatar, PAPERCLIP_STORAGE_OPTIONS.merge({
@@ -34,5 +34,17 @@ class Environment < ActiveRecord::Base
 
   def permalink
     "#{AppConfig.community_url}/#{self.path}"
+  end
+
+  # Muda o papel do usuário levando em conta a hierarquia
+  def change_role(user, role)
+    membership = self.user_environment_associations.find(:first,
+                    :conditions => {:user_id => user.id})
+    membership.update_attributes({:role_id => role.id})
+
+      user.user_course_associations.all(
+        :conditions => {:course_id => self.courses}).each do |membership|
+        membership.course.change_role(user, role)
+      end
   end
 end

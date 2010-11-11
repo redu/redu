@@ -180,7 +180,11 @@ ActionController::Routing::Routes.draw do |map|
     user.resources :photo_manager, :only => ['index']
     user.resources :albums, :path_prefix => ':user_id/photo_manager', :member => {:add_photos => :get, :photos_added => :post}, :collection => {:paginate_photos => :get}  do |album|
       album.resources :photos, :collection => {:swfupload => :post, :slideshow => :get}
-      user.resources :statuses
+    user.resources :statuses
+    user.admin_roles '/:environment_id/roles',
+      :controller => :roles, :action => :show, :conditions => {:method => :get}
+    user.update_roles '/:environment_id/roles',
+      :controller => :roles, :action => :update, :conditions => {:method => :post}
     end
   end
 
