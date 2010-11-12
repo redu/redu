@@ -89,7 +89,7 @@ ActionController::Routing::Routes.draw do |map|
   map.contact 'contact',  :controller => 'base', :action => 'contact'
 
   # SCHOOL
-  map.resources :spaces, :nested_member_path => '/:space_id', :member => {
+  map.resources :spaces, :member => {
     :join => :get,
     :vote => :post,
     :unjoin => :get,
@@ -206,6 +206,7 @@ ActionController::Routing::Routes.draw do |map|
         :admin_members => :get,
         :destroy_members => :post
       }
+      environment.resources :bulletins
   end
 
   map.resources :courses do |course|
