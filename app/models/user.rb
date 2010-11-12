@@ -113,6 +113,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def self.find_by_login_or_email(login)
+    User.find_by_login(login) || User.find_by_email(login)
+  end
+
   def self.find_country_and_state_from_search_params(search)
     country     = Country.find(search['country_id']) if !search['country_id'].blank?
     state       = State.find(search['state_id']) if !search['state_id'].blank?

@@ -67,7 +67,7 @@
 			<% @user_session = UserSession.new %>
 			<% form_for @user_session, :url => sessions_path do |f| %>
 			<label for='username'>
-                <%=:username.l %>
+                <%=:username_or_email.l %>
             </label>
             <%= f.text_field :login, :size => 35 %>
             <label for='username'>
