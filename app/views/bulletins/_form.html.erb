@@ -2,7 +2,8 @@
 	<fieldset><legend>Notícia</legend>
 	<%= f.error_messages %>
 
-	<%= hidden_field_tag("space_id", params[:space_id]) %>
+	<%= hidden_field_tag("bulletinable_id", @bulletinable.id) %>
+	<%= hidden_field_tag("bulletinable_type", @bulletinable.class) %>
 
 	<%= f.label "Título" %>
 	<%= f.text_field :title %>
@@ -22,5 +23,5 @@
 	</fieldset>
 <% end %>
 
-<%= link_to 'Ver todas', space_bulletins_path(@space) %>
+<%= link_to 'Ver todas', polymorphic_path([@bulletinable, Bulletin.new]) %>
 

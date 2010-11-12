@@ -13,12 +13,12 @@
       <li><a href="" class="closed sb">Acompanhar alunos</a></li>
       <li><a href="" class="closed sb">Acompanhar aulas</a></li>
 			-->
-			<% if current_user.can_post?(@space)%>
+			<% if current_user.can_post?(space)%>
 			<li>
-				<%= link_to "Criar evento", new_space_event_path(:space_id => @space)%>
+				<%= link_to "Criar evento", new_space_event_path(:space_id => space)%>
 			</li>
 			<li>
-				<%= link_to "Criar notícia", new_space_bulletin_path(:space_id => @space)%>
+				<%= link_to "Criar notícia", new_space_bulletin_path(:space_id => space)%>
 			</li>
 
 			<% end %>
@@ -62,12 +62,12 @@
 	
 	
   <li class="clearfix">
-    <span class="call"><span>Membros (<%= @space.users.size %>)</span></span>
+    <span class="call"><span>Membros (<%= space.users.size %>)</span></span>
       <div class="followship box clearfix">
       <ul class="clearfix">
-        <%= render :partial => 'spaces/member_short', :collection => @space.users, :as => :member %>
+        <%= render :partial => 'spaces/member_short', :collection => space.users, :as => :member %>
       </ul>
-      <a href="<%= members_space_path(@space) %>" class="icon more">Ver mais</a>
+      <a href="<%= members_space_path(space) %>" class="icon more">Ver mais</a>
       </div><!-- end followship -->
   </li>
   <li class="clearfix">
@@ -81,25 +81,25 @@
     </div><!-- end followship -->
     <% else %>
       <div class="box_notice">Nenhum professor 
-			<%= link_to("Cadastre um professor", admin_members_space_path(@space), :class => "icon more") if current_user.can_manage?(@space) %>
+			<%= link_to("Cadastre um professor", admin_members_space_path(space), :class => "icon more") if current_user.can_manage?(space) %>
 			</div>
     <% end %>
   </li>
 	
 	
 	<li>
-		<% @month_events = month_events(@space.id, Time.now.month) %>
+		<% @month_events = month_events(space.id, Time.now.month) %>
 		
 		<span class="call"><span>Eventos</span></span>
 		<%= calendar(:year => Time.now.year, :month => Time.now.month) do |d|
 			if has_event_in?(@month_events, d.mday)
-				link_to d.mday, day_space_events_path(@space) + "/?day="+ d.mday.to_s, {:class => "hasEvent"}
+				link_to d.mday, day_space_events_path(space) + "/?day="+ d.mday.to_s, {:class => "hasEvent"}
 			else
 				d.mday
 			end
 		end	%>
-		<%= link_to "Ver mais", space_events_path(@space), :class => "icon more" %> | 
-		<%= link_to "Criar evento", new_space_event_path(@space), :class => "icon more" %>
+		<%= link_to "Ver mais", space_events_path(space), :class => "icon more" %> | 
+		<%= link_to "Criar evento", new_space_event_path(space), :class => "icon more" %>
 	</li>
 	
 	

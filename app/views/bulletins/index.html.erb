@@ -1,5 +1,6 @@
-<%= render :partial => "spaces/space_info", :locals => {:space => @space,:show => false} %>
-<%= render :partial => "spaces/sidebar", :locals => {:space => @space} %>
+<% if @bulletinable.class.to_s.eql? "Space" %>
+  <%= render :partial => "spaces/sidebar", :locals => {:space => @bulletinable} %>
+<% end %>
 <div class="main grid_12">		
 	<% if @bulletins && @bulletins.size > 0 %>
 
@@ -7,7 +8,7 @@
 				<%= render :partial => 'bulletins/list', :collection => @bulletins, :as => :bulletin, :locals => {
 				:is_index => true } %> 
 			</ul>
-			<%= link_to "Crie uma nova notícia.", new_space_bulletin_path(@space), :class => "button"%>
+			<%= link_to "Crie uma nova notícia.", new_polymorphic_path([@bulletinable, Bulletin.new]), :class => "button"%>
 
 	<% else %>
 		Nenhuma notícia foi enviada ainda. <%= link_to 'Envie uma agora!', :action => 'new' %>

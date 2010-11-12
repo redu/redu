@@ -40,7 +40,7 @@ jQuery(document).ready(function(){
     <span class="call"><span>Notícias</span></span>
     <% if @bulletins && @bulletins.size > 0 %>
       <%= render :partial => 'bulletins/headlines', :object => @bulletins  %>
-      <%= link_to 'Ver todos', space_bulletins_path(@space), :class=>"more" %> 
+      <%= link_to 'Ver todos', enviroment_bulletins_path(@environment), :class=>"more" %> 
     <% else %>
       <div class="box_notice">
         Nenhuma notícia foi enviada ainda.

@@ -1,11 +1,12 @@
-<%= render :partial => "spaces/space_info", :locals => {:space => @space,:show => false} %>
 <div class="grid_16">
-  <%= render :partial => "spaces/sidebar", :locals => {:space => @space} %>
+  <% if @bulletinable.class.to_s.eql? "Space" %>
+    <%= render :partial => "spaces/sidebar", :locals => {:space => @bulletinable} %>
+  <% end %>
 
   <div class="main grid_12 omega">
 
     <div class="grid_11 alpha omega bulletin-content">
-      <h4 class="name"><%= link_to @bulletin.title, space_bulletin_path(@bulletin.space, @bulletin) %></h4>
+      <h4 class="name"><%= link_to @bulletin.title, polymorphic_path([@bulletin.bulletinable, @bulletin]) %></h4>
       <div class="quiet tagline">
         <%= @bulletin.tagline %>
       </div>
@@ -18,7 +19,7 @@
           <%= render :partial => 'tags/tags', :object => @bulletin.tags %>
         </div>
       </div>
-      <%# link_to 'Ver notícias da rede', space_bulletins_path(@bulletin.space) %>
+      <%# link_to 'Ver notícias da rede', polymorphic_path([@bulletin.bulletinable]) %>
     </div><!-- end bulletin-content --> 
     <div class="grid_11 alpha omega bulletin-actions clearfix">
       <div class="grid_5 alpha">
@@ -27,8 +28,8 @@
       <div id="rating_video" class="grid_5 omega"><%= ratings_for @bulletin %></div>
     </div><!-- end bulletin-actions -->
     <div class="grid_11 alpha omega clearfix" style="padding: 10px 0;">
-      <% if current_user.can_manage?(@bulletin, @bulletin.space) %>
-        <%= link_to 'Editar', edit_space_bulletin_path(@bulletin.space, @bulletin), :class => "button"%>
+      <% if current_user.can_manage?(@bulletin, @bulletin.bulletinable) %>
+        <%= link_to 'Editar', edit_polymorphic_path([@bulletin.bulletinable, @bulletin]), :class => "button"%>
         <%= link_to 'Remover', @bulletin,
           {:confirm => 'Você tem certeza que deseja remover essa notícia permanentemente?',
             :method => :delete, :class => "button"} %>
