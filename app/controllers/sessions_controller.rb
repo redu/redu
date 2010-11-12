@@ -37,10 +37,10 @@ class SessionsController < BaseController
   protected
 
   def less_than_30_days_of_registration_required
-    user = User.find_by_login(params[:user_session][:login])
+    user = User.find_by_login_or_email(params[:user_session][:login])
     if user and not user.active? and not user.can_activate? # Passou do tempo de autenticar
-      flash[:notice] = "Desculpe, seu tempo para ativação da conta expirou. Cadastre-se novamente."
-      redirect_to :action => :new
+      @user_email = user.email
+      render :action => 'expired_activation'
     end
   end
 
