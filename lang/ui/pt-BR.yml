@@ -1500,6 +1500,7 @@ pt-BR:
   user_e_mail: "User e-mail:"
   #en: username: Username
   username: Login
+  username_or_email : Login ou E-mail
   #en: user: User
   user: Usuário
   #en: users: Users
