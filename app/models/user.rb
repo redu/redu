@@ -248,6 +248,8 @@ class User < ActiveRecord::Base
       (entity.owner == self || (entity.space.id == space.id && self.space_admin?(space) ))
     when 'Bulletin'
       (entity.owner == self || (entity.space == space && self.space_admin?(space) ))
+    when 'Environment'
+      entity.owner == self
     end
   end
 

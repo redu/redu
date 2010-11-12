@@ -38,9 +38,9 @@ jQuery(document).ready(function(){
   </div><!-- fim tabs -->
   <div class="sidebar news">
     <span class="call"><span>Notícias</span></span>
-    <% if @bulletins && @bulletins.size > 0 %>
-      <%= render :partial => 'bulletins/headlines', :object => @bulletins  %>
-      <%= link_to 'Ver todos', enviroment_bulletins_path(@environment), :class=>"more" %> 
+    <% if @environment.bulletins && @environment.bulletins.size > 0 %>
+      <%= render :partial => 'bulletins/headlines', :object => @environment.bulletins  %>
+      <%= link_to 'Ver todos', environment_bulletins_path(@environment), :class=>"more" %> 
     <% else %>
       <div class="box_notice">
         Nenhuma notícia foi enviada ainda.

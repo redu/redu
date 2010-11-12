@@ -1,7 +1,7 @@
 <% if @bulletinable.class.to_s.eql? "Space" %>
   <%= render :partial => "spaces/sidebar", :locals => {:space => @bulletinable} %>
 <% end %>
-<div class="main grid_12">		
+<div class="main grid_12 omega">		
 	<% if @bulletins && @bulletins.size > 0 %>
 
 			<ul class="bulletins grid_12 alpha omega">

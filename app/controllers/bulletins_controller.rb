@@ -1,4 +1,7 @@
 class BulletinsController < BaseController
+  layout "environment"
+
+  before_filter :find_environment_course_space
   before_filter :login_required
   before_filter :is_member_required
   before_filter :can_manage_required,
@@ -136,6 +139,16 @@ class BulletinsController < BaseController
       Space.find(params[:space_id])
     elsif params[:environment_id]
       Environment.find(params[:environment_id])
+    end
+  end
+
+  def find_environment_course_space
+    if params[:environment_id]
+      @environment = Environment.find(params[:environment_id])
+    elsif params[:space_id]
+      @space = Space.find(params[:space_id])
+      @course = @space.course
+      @environment = @course.environment 
     end
   end
 end
