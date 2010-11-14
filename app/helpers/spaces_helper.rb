@@ -79,17 +79,12 @@ module SpacesHelper
   
   def teachers_preview(space, size = nil)
     space.teachers[0..12]
-#    sql = "SELECT u.login, u.login_slug FROM users u " \
-#          "INNER JOIN user_space_associations a " \
-#          "ON u.id = a.user_id " \
-#          "AND a.role_id = #{Role[:teacher].id} " \
-#          "WHERE a.space_id = #{space.id} LIMIT #{size or 12} "
-#          
-#    User.find_by_sql(sql)
   end
   
   def waiting_bulletins_count
-    Bulletin.count(:conditions => ["space_id = ? AND state LIKE ?", @space.id, "waiting"])
+    Bulletin.count(:conditions => ["bulletinable_type LIKE 'Space' 
+                                   AND bulletinable_id = ? 
+                                   AND state LIKE ?", @space.id, "waiting"])
   end
   
   def waiting_events_count
