@@ -11,43 +11,38 @@
 </div>
 
 <div class="grid_16">
-<%= f.error_messages %>
+	<%= f.error_messages %>
 </div>
 
 <div class="grid_9">
 
-
 	<% field_set_tag 'Visibilidade' do %>
-	<%= f.label "Pública <span class='snippet'>(Visível em todo o Redu)</span>" %>
+		<%= f.label "Pública <span class='snippet'>(Visível em todo o Redu)</span>" %>
 		<%= f.check_box :public %>
 		
 		<% @spaces = current_user.spaces %>
 		
-		<%end%>
-	
-	
-
+	<%end%>
 
 	<% field_set_tag 'Compartilhe!' do %>
-		<%= render :partial => 'shared/share', :locals => {:resource => @space}%>
-		<%end%>
 
-</div>
-<div class="grid_6 push_1">
+		<%= render :partial => 'shared/share', :locals => {:resource => @space}%>
+
+	<%end%>
+
 	<div class="y_addinfo">
-            <div class="addinfocontent">
-                <h1>
-                    Termos e Condições do Redu</h1>
-                <p>
-                   Por favor não publique conteúdo que esteja protegido por direitos autoriais, conteúdo obceno ou que viole
-									 os <%= link_to "termos e condições", {:controller => "base", :action => "tos"}, :target => "_blank"%> do Redu.
-                		
-									Ao clicar no botão abaixo você estará concordando com esses termos.</p>
+    <div class="addinfocontent">
+        <h1>
+            Termos e Condições do Redu
+				</h1>
+        <p>Por favor não publique conteúdo que esteja protegido por direitos autoriais, conteúdo obceno ou que viole
+					 os <%= link_to "termos e condições", {:controller => "base", :action => "tos"}, :target => "_blank"%> do Redu.
+        		
+					Ao clicar no botão abaixo você estará concordando com esses termos.</p>
 									
-									
-								<p class="large_btn"><a href="#" id="adm_showpay" style="color: #fff;" onclick="jQuery('#form_school').submit();">Publicar</a></p>
-            </div>
-        </div>
+    </div>
+	</div>
+
 </div>
 
 

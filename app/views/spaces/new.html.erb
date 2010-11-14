@@ -2,12 +2,20 @@
 <h3 class="call">Nova Rede</h3>
 
 	<% form_for @space, :html => {:id => "form_school"} do |f|%>
-	<%= render "#{@space.current_step}_step", :f => f, :edit => false %>
 
-<div class="grid_16">
-	<%= f.submit "< Anterior", :name => "back_button" unless @space.first_step? %>
-		<%= f.submit "Próximo >" unless @space.last_step? %> ou <%= link_to "Cancelar e voltar", cancel_spaces_path%>
+		<%= render "#{@space.current_step}_step", :f => f, :edit => false %>
+
+		<div class="grid_16">
+			<%= f.submit "< Anterior", :name => "back_button" unless @space.first_step? %>
+			<% if @space.last_step? %>
+				<%= f.submit "Publicar" %>
+			<% else %>
+				<%= f.submit "Próximo >" %> 
+
+			<% end %>
+			ou <%= link_to "Cancelar e voltar", cancel_spaces_path%>
 		</div>
+
 	<% end %>
 
 </div>
