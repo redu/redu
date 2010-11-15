@@ -1,5 +1,7 @@
 class SpacesController < BaseController
+  layout 'environment'
 
+  before_filter :find_environmnet_course_and_space
   before_filter :login_required,  :except => [:join, :unjoin, :member, :index]
   after_filter :create_activity, :only => [:create]
   # Usado para proteger acoes perigosas (só para admin)
@@ -127,7 +129,9 @@ class SpacesController < BaseController
 
   def admin_bulletins
     @space = Space.find(params[:id])
-    @bulletins = Bulletin.paginate(:conditions => ["space_id = ? AND state LIKE ?", @space.id, "waiting"],
+    @bulletins = Bulletin.paginate(:conditions => ["bulletinable_type LIKE 'Space' 
+                                   AND bulletinable_id = ? 
+                                   AND state LIKE ?", @space.id, "waiting"],
                                    :include => :owner,
                                    :page => params[:page],
                                    :order => 'updated_at ASC',
@@ -353,7 +357,7 @@ class SpacesController < BaseController
   # GET /spaces.xml
   def index
     
-		paginating_params = {
+    paginating_params = {
       :page => params[:page],
       :order => (params[:sort]) ? params[:sort] + ' DESC' : 'created_at DESC',
       :per_page => 12
@@ -429,7 +433,7 @@ class SpacesController < BaseController
   # GET /spaces/new
   # GET /spaces/new.xml
   def new
-		@course = Course.find(params[:course_id])
+    @course = Course.find(params[:course_id])
     session[:space_params] ||= {}
     @space = Space.new(session[:space_params])
     @space.current_step = session[:space_step]
@@ -527,4 +531,9 @@ class SpacesController < BaseController
     end
   end
 
+  def find_environmnet_course_and_space
+    @space = Space.find(params[:id])
+    @course = @space.course
+    @environment = @course.environment
+  end
 end

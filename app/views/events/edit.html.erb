@@ -1,5 +1,4 @@
 <div class="main grid_16">
-	<%= render :partial => "spaces/space_info", :locals => {:space => @event.space, :show => false} %>
 	<%= render :partial => "spaces/sidebar", :locals => {:space => @event.space} %>
 
 	<%= render :partial => 'events/form', :locals => {:event => @event, :title => "Editar"} %>

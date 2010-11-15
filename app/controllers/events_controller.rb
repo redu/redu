@@ -1,5 +1,9 @@
 class EventsController < BaseController
   require 'htmlentities'
+
+  layout 'environment'
+
+  before_filter :find_environmnet_course_and_space
   caches_page :ical
   cache_sweeper :event_sweeper, :only => [:create, :update, :destroy]
 
@@ -186,5 +190,11 @@ class EventsController < BaseController
     if not @event.state == "approved"
       redirect_to space_events_path
     end
+  end
+
+  def find_environmnet_course_and_space
+    @space = Space.find(params[:space_id])
+    @course = @space.course
+    @environment = @course.environment
   end
 end

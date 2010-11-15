@@ -4,7 +4,7 @@
     <div id="environment" class="container_16 content clearfix <%= yield :page_classes %>">
       <%= render :partial => "shared/messages" %>
       <%= render :partial => "environments/header", 
-            :locals => { :environment => @environment, :course => @course } %>
+        :locals => { :environment => @environment, :course => @course, :space => @space } %>
 
       <%= @content_for_layout %>
     </div><!-- end content -->

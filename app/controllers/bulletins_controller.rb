@@ -143,12 +143,12 @@ class BulletinsController < BaseController
   end
 
   def find_environment_course_space
-    if params[:environment_id]
-      @environment = Environment.find(params[:environment_id])
-    elsif params[:space_id]
+    if params[:space_id]
       @space = Space.find(params[:space_id])
       @course = @space.course
       @environment = @course.environment 
+    elsif params[:environment_id]
+      @environment = Environment.find(params[:environment_id])
     end
   end
 end

@@ -1,5 +1,3 @@
-<%= render :partial => 'spaces/space_info', :locals => { :space => @space, :show => false } %>
-
 <h1><%= :edit_post.l %></h1>
 
 <h2><%= link_to h(@post.topic.title), space_forum_topic_path(@space,  @post.topic) %></h2>

@@ -1,4 +1,7 @@
 class TopicsController < BaseController
+  layout "environment"
+
+  before_filter :find_environmnet_course_and_space
   before_filter :find_forum_and_topic, :except => :index
   before_filter :login_required, :except => [:index, :show]
 
@@ -140,5 +143,11 @@ class TopicsController < BaseController
     #overide in your app
     def authorized?
       %w(new create).include?(action_name) || @topic.editable_by?(current_user)
+    end
+
+    def find_environmnet_course_and_space
+      @space = Space.find(params[:space_id])
+      @course = @space.course
+      @environment = @course.environment
     end
 end
