@@ -13,36 +13,8 @@ Default color table:
 
  **/
 
-#filters{
-
-}
-
-#filters li{
-  float:left;
-  margin-right:16px;
-}
-
-#filters li.current{
-}
-#filters li.current a {
-  -moz-border-radius:4px 4px 4px 4px;
-  background:none repeat scroll 0 0 #BBBBBB;
-  color:#FFFFFF;
-}
-
 .criteriaList {
   font-size: 0.8em;
-}
-
-.redu_cat_sel {
-  border: 0 none;
-  font-size: 0.7em;
-  width: 200px;
-  color: #0B85C1;
-}
-
-.redu_cat_sel option {
-  background-color: white;
 }
 
 ul.criteriaList li.selected, .redu_cat_sel {
@@ -108,10 +80,6 @@ ul.criteriaList li a:hover {
   margin-right: 5px;
 }
 
-.item_info li a {
-  /*font-weight:bold;*/
-}
-
 /** @typo **/
 html, body {
   height: 100%; /* 100% height hack */
@@ -123,7 +91,7 @@ html {
 }
 
 body {
-  background-color: #E0E9E9;/*#E5ECF3;*/
+  background-color: #E0E9E9;
 }
 
 ul, ol, li {
@@ -237,23 +205,18 @@ blockquote {/*necessário para o tinymce*/
   top: 25%;
   left: 18%;
   position: absolute;
-  /*width:440px;
-  height: 200px;*/
-display:none;
-z-index: 9999;
-padding: 20px;
-background: white; /*#ECF0F8;*/
-border: 5px solid #EFEFEF;
-border-bottom-left-radius: 5px 5px;
-border-bottom-right-radius: 5px 5px;
-border-top-left-radius: 5px 5px;
-border-top-right-radius: 5px 5px;
--moz-border-radius: 5px;
+  display:none;
+  z-index: 9999;
+  padding: 20px;
+  background: white;
+  border: 5px solid #EFEFEF;
+  border-bottom-left-radius: 5px 5px;
+  border-bottom-right-radius: 5px 5px;
+  border-top-left-radius: 5px 5px;
+  border-top-right-radius: 5px 5px;
+  -moz-border-radius: 5px;
 }
 
-/* Personalize a janela modal aqui. Você pode adicionar uma imagem de fundo. */
-#dialog {
-}
 /* posiciona o link para fechar a janela */
 .close {
   display: block;
@@ -319,7 +282,7 @@ border-top-right-radius: 5px 5px;
 }
 
 .calls span.call span {
-  background-color: /*#18C8EF;*/ #96B8E2;
+  background-color: #96B8E2;
   display: block;
   padding: 5px;
 }
@@ -335,7 +298,6 @@ a.more {
 
 
 /* Listagem de Redes */
-
 #school_list ul.badge > li {
   border: 1px solid #EFF0F0;
   float: left;
@@ -401,7 +363,6 @@ div.badge_info span {
 
 
 /* Listagem de Aulas e Exames */
-
 ul.default > li {
   display: block;
   clear: both;
@@ -449,9 +410,7 @@ ul.default > li div.headlines {
   -webkit-border-radius: 5px;
 }
 
-/*ul.default > li div.headlines a,*/
 ul.default > li div.headlines .things {
-  /*font-size: .8em;*/
   color: gray;
 }
 
@@ -462,7 +421,6 @@ ul.default > li div.headlines .things {
 ul.default > li div.headlines ul li {
   display: block;
   float: left;
-  /*margin: 5px 15px 0px 0;*/ /*se descomentado vai distorcer as estrelinhas das avaliações nas listagens */
 }
 
 ul.default > li div.headlines > .call {
@@ -723,7 +681,7 @@ ul.events-index li {
   padding: 0;
 }
 
-ul.events-index li .date, 
+ul.events-index li .date,
 ul.events-index li .hour,
 div.event-content .date,
 div.event-content .hour {
@@ -734,7 +692,7 @@ div.event-content .hour {
 ul.events-index li .date,
 div.event-content .date {
   padding: 10px 0px;
-} 
+}
 
 ul.events-index li .name,
 div.event-content .name {
@@ -770,9 +728,6 @@ div.event-content .date .day {
 ul.events-index li .hour,
 ul.events-index li .date {
   padding: 5px 0;
-}
-div#filter ul li {
-  /* margin: 10px 0;*/
 }
 
 div.event-content .green {
@@ -843,7 +798,6 @@ a.button,
 button,
 input[type=submit],
 input[type=button] {
-  /*display:block;*/
   margin:0 7px 0 0;
   background-color: #F5F5F5;
   border-top: 1px solid #EEEEEE;
@@ -857,7 +811,7 @@ input[type=button] {
   font-weight: bold;
   color: #565656;
   cursor: pointer;
-  padding: 5px 10px 6px 7px; /* Links */
+  padding: 5px 10px 6px 7px;
 }
 
 button {
@@ -929,7 +883,7 @@ form em {
 form fieldset legend {
   font-weight: bold;
   font-size: 1.1em;
-  color: #FF8000/*#FF8000*/;
+  color: #FF8000;
 }
 
 fieldset.fake legend {
@@ -987,8 +941,7 @@ form div.errorExplanation ul li {
 .notice-success,
 .notice-warning,
 .notice-error,
-form div.errorExplanation,
-.notice-validation {
+form div.errorExplanation {
   border: 1px solid;
   margin: 10px 0px;
   padding: 15px 10px 15px 10px;
@@ -1183,6 +1136,7 @@ div.recomendations-m .number {
   padding-right: 20px;
   color: gray;
 }
+
 /** @tabs **/
 .ui-tabs .ui-tabs-hide {
   display: none;
@@ -1344,7 +1298,7 @@ div.recomendations-m .number {
 #learn .logo-learn span,
 #teach .logo-learn span {
   float: left;
-  color: /*#FF8000*/#FF8000;
+  color: #FF8000;
   font-size: 1.5em;
   display: inline-block;
   border-right: 3px #FF8000 solid;
@@ -1404,7 +1358,6 @@ div.recomendations-m .number {
   background-color: white;
 }
 
-#learn .box-user-login a.name-user,
 #teach .box-user-login a.name-user {
   font-weight: bold;
   color: #18C6ED;
@@ -1491,62 +1444,6 @@ div.recomendations-m .number {
   color: #333;
   display: block;
   font-size: .7em;
-}
-
-#learn ul.groups-aulas li,
-#teach ul.groups-aulas li {
-  margin-bottom: 20px;
-}
-
-#learn ul.groups-aulas span.text-comments,
-#teach ul.groups-aulas span.text-comments {
-  color: #666;
-  font-size: .7em;
-}
-
-#learn ul.box-my-networking li,
-#teach ul.box-my-networking li {
-  margin-bottom: 15px;
-  overflow: hidden;
-}
-
-#learn ul.box-my-networking li img,
-#teach ul.box-my-networking li img {
-  float: left;
-  padding-right: 15px;
-}
-
-#learn ul.box-my-networking a.tt-aulas,
-#learn ul.groups-aulas a.tt-aulas,
-#teach ul.box-my-networking a.tt-aulas,
-#teach ul.groups-aulas a.tt-aulas {
-  color: #0B85C0;
-  display: block;
-  font-size: .9em;
-  margin-bottom: 6px;
-}
-
-#learn ul.box-my-networking span.text-comments,
-#learn ul.groups-aulas span.text-comments,
-#teach ul.box-my-networking span.text-comments,
-#teach ul.groups-aulas span.text-comments {
-  color: #666666;
-  font-size: .75em;
-}
-
-#learn ul.box-my-networking span.text-comments-dest,
-#learn ul.groups-aulas span.text-comments-dest,
-#teach ul.box-my-networking span.text-comments-dest,
-#teach ul.groups-aulas span.text-comments-dest {
-  color: #555;
-}
-
-#learn ul.box-my-networking a.name-alunos,
-#teach ul.box-my-networking a.name-alunos {
-  color: #0B85C0;
-  display: block;
-  font-size: .8em;
-  margin-bottom: 6px;
 }
 
 #teach {
@@ -1717,19 +1614,16 @@ div.filter-box ul li a {
 
 /** @header **/
 #header {
-  /*height: 50px;
-  background: url("../images/ui-elements_r16_c2.png") no-repeat;*/
-
-position: relative;
--webkit-box-shadow: #CCC 0px 4px 10px;
--moz-box-shadow: 0px 4px 10px #CCC;
-background-color: white;
--moz-border-radius-bottomleft: 8px;
--moz-border-radius-bottomright: 8px;
-border-bottom-left-radius: 8px 8px;
-border-bottom-right-radius: 8px 8px;
-height: 42px;
-margin-bottom: 5px;
+  position: relative;
+  -webkit-box-shadow: #CCC 0px 4px 10px;
+  -moz-box-shadow: 0px 4px 10px #CCC;
+  background-color: white;
+  -moz-border-radius-bottomleft: 8px;
+  -moz-border-radius-bottomright: 8px;
+  border-bottom-left-radius: 8px 8px;
+  border-bottom-right-radius: 8px 8px;
+  height: 42px;
+  margin-bottom: 5px;
 }
 
 #logo {
@@ -1843,9 +1737,6 @@ margin-bottom: 5px;
   padding: 10px;
 }
 
-
-
-
 /** main **/
 div.content {
   min-height: 100%;
@@ -1876,6 +1767,7 @@ div.content div.content {
 /** @profile **/
 #public-profile {
 }
+
 /** width: 640px **/
 #public-profile div.overview {
   padding: 10px 0;
@@ -2163,10 +2055,6 @@ div.curriculum h6 {
 .sidebar ul li {
 }
 
-.sidebar ul.sortable li {
-  /*background-color: white;*/
-}
-
 .sidebar ul.sortable li.ui-state-highlight {
   border: 3px #EFF0F0 dashed;
   height: 5em;
@@ -2178,9 +2066,7 @@ div.curriculum h6 {
   font-weight: bold;
   color: #FF8000;
   margin: 25px 0 10px 0;
-  /* padding-bottom: 5px;*/
   display: block;
-  /* background: url("../images/ui-elements_r9_c55.png") no-repeat 15px bottom;*/
   color: white;
   position: relative;
 
@@ -2289,64 +2175,10 @@ div.curriculum h6 {
 #group {
 }
 
-#group-header {
-  height: 80px;
-}
-
 .info_school {
   border: 1px solid #EEEEEE;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
-  /*-moz-box-shadow: 0px 3px 15px #CCC;*/
-}
-
-
-#group-header div.logo {
-  text-align: center;
-}
-
-#group-header h2.name {
-  font-size: 1.4em;
-  font-weight: bold;
-  display: inline;
-}
-
-#group-header a.config {
-  font-size: .8em;
-  margin-left: 10px;
-  color: #96B8E2;
-}
-
-#group-header span.areas {
-  display: block;
-  font-size: .8em;
-  margin-top: 8px;
-}
-
-#group-header div.options {
-  margin-top: 8px;
-}
-
-#group-header div.options a.participar_rede {
-  font-size: .8em;
-  float: right;
-  width: 90%;
-  text-align: center;
-}
-
-#group-header span.like {
-  /*display: block;
-  margin-top: 5px;
-  padding: 5px 30px;*/
-font-size: .8em;
-color: gray;
-}
-
-#group-header span.likeable span {
-  display: block;
-  float: left;
-  margin-right: 10px;
-  text-align: center;
 }
 
 .sidebar ul.menu {
@@ -2365,7 +2197,6 @@ color: gray;
 .sidebar ul.menu > li > a {
 
 }
-
 
 .sidebar ul.sub-groups {
 }
@@ -2548,11 +2379,6 @@ ul.sub-groups > li {
   padding-top: 0;
 }
 
-#environment .actions {
-  background-color: #f2f6f6;
-  padding: 20px 0;
-}
-
 #environment .filters {
   background-color: #F9FBFA;
   padding: 10px;
@@ -2576,31 +2402,13 @@ ul.sub-groups > li {
 #environment-header .avatar {
 }
 
-#environment-header .avatar .frame {
-  background-color: white;
-  padding: 5px;
-}
-
 #environment-header .name {
   margin-bottom: 10px;
-}
-
-
-#environment-header .name h3 a {
-  color: #FFA22C;
-  font-size: 1.1em;
 }
 
 #environment-header .name h3 {
   padding: 0;
 }
-
-#environment-header  a.edit {
-  font-size: .7em;
-  font-weight: bold;
-  color: gray;
-}
-
 
 /* @footer */
 #footer {
@@ -3051,20 +2859,7 @@ table.booking_steps td.spacer {
   padding: 0px;
   right: 0px;
 }
-#identification_resource1 li {
-  float: left;
-  margin-right: 8px;
-  list-style: none;
-  font-size: 11px;
-  text-decoration: none;
-  color: #94a2ca;
-}
-#identification_resource1 li span {
-  padding: 5px 10px;
-  font-size: 11px;
-  text-decoration: none;
-  color: #5683d5;
-}
+
 #identification_resource1 li a, #identification_resource1 li a:visited {
   padding: 0;
   font-size: 11px;
@@ -3164,8 +2959,6 @@ table.booking_steps td.spacer {
 
 #interactive_container {
   text-align: left;
-  /*border:1px solid #DDDDDD;*/
-  /*min-height:360px;*/
   padding:10px;
   width: 95%;
 }
@@ -3250,7 +3043,6 @@ table.booking_steps td.spacer {
 .answer-lg{
   display: block;
   font-size: 1.4em;
-  /* background-color: white;*/
   border: 2px solid green;
   color: green;
   padding: 10px;
@@ -3264,6 +3056,7 @@ table.booking_steps td.spacer {
   background-color: green;
   color: white;
 }
+
 .question {
   padding: 0 20px 0 20px;
 }
@@ -3392,7 +3185,6 @@ table.booking_steps td.spacer {
   margin: 5px;
   padding: 4px 8px;
   text-align: left;
-  /*border:2px solid #EEEEEE;*/
   display:block;
   line-height: 18px;
 }
@@ -3404,7 +3196,6 @@ table.booking_steps td.spacer {
 
 .topic_item img {
   border: 0;
-  /*float:right;*/
 }
 
 #annotation_box {
@@ -3456,17 +3247,17 @@ table.booking_steps td.spacer {
   width: 100%;
   height: 21px;
   background-color: #f8f8f8;
-  /*padding: 5px 0px 0px 5px;
-  margin: 0px 0px 8px 0px;*/
-margin-bottom: 8px;
-padding-top: 5px;
-padding-bottom: 5px;
-color: #bac5d4;
+  margin-bottom: 8px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  color: #bac5d4;
 }
+
 #breadcrumbs a {
   color: #bac5d4;
   text-decoration: none
 }
+
 #breadcrumbs a:hover {
   color: #bac5d4;
   text-decoration: underline
@@ -3490,8 +3281,6 @@ a.icon-reject {
   background: url("../images/icons/reject.gif") no-repeat ;
 }
 
-
-
 /*
  * INFO BOXES
  */
@@ -3501,7 +3290,6 @@ a.icon-reject {
   border: 1px solid #EFEFEF;
   float: left;
   margin-top: 20px;
-  /*width: 258px;*/
 }
 .y_addinfo .addinfocontent {
   float: left;

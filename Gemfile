@@ -25,6 +25,7 @@ gem "haml"
 
 group :development do
   gem "mongrel"
+  gem "aanand-deadweight"
 end
 
 group :production do
