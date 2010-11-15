@@ -1,7 +1,7 @@
 class SpacesController < BaseController
   layout 'environment'
 
-  before_filter :find_environmnet_course_and_space
+  before_filter :find_environmnet_course_and_space, :except => [:index]
   before_filter :login_required,  :except => [:join, :unjoin, :member, :index]
   after_filter :create_activity, :only => [:create]
   # Usado para proteger acoes perigosas (só para admin)
