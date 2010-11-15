@@ -2171,8 +2171,8 @@ div.curriculum h6 {
   font-size: 2.5em;
 }
 
-/** @group **/
-#group {
+/** @group -> environment **/
+#environment{
 }
 
 .info_school {
@@ -2213,31 +2213,31 @@ div.curriculum h6 {
   padding-left: 20px;
 }
 
-#group .sidebar ul.sub-groups > li > a.closed {
+#environment .sidebar ul.sub-groups > li > a.closed {
   background: url("../images/arrow-right.png") no-repeat 1px center;
 }
 
-#group .sidebar ul.sub-groups > li > a.opened {
+#environment .sidebar ul.sub-groups > li > a.opened {
   background: url("../images/arrow-down.png") no-repeat 1px center;
 }
 
-#group .sidebar ul.sub-groups > li > a.more {
+#environment .sidebar ul.sub-groups > li > a.more {
   text-align: right;
 }
 
-#group .sidebar ul.sub-groups li ul {
+#environment .sidebar ul.sub-groups li ul {
   margin-left: 20px;
 }
 
-#group .sidebar ul.sub-groups li ul li {
+#environment .sidebar ul.sub-groups li ul li {
   margin-bottom: 10px;
 }
 
 /* @first-page */
-#group div.first-page {
+#environment div.first-page {
 }
 
-#group div.first-page span.call {
+#environment div.first-page span.call {
   font-size: .9em;
   text-transform: uppercase;
   font-weight: bold;
@@ -2248,14 +2248,14 @@ div.curriculum h6 {
   position: relative;
 }
 
-#group div.first-page span.call span {
+#environment div.first-page span.call span {
   background-color: #F5F5F5;
   display: block;
   padding: 5px;
   color: #FF8000;
 }
 
-#group div.first-page .photo {
+#environment div.first-page .photo {
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   border: 1px solid lightgray;
@@ -2263,63 +2263,63 @@ div.curriculum h6 {
   margin-bottom: 10px;
 }
 
-#group div.first-page span.featured {
+#environment div.first-page span.featured {
   margin-left: 10px;
   margin-right: 10px;
 }
 
-#group div.first-page div.featured,
-#group div.first-page div.featured2 {
+#environment div.first-page div.featured,
+#environment div.first-page div.featured2 {
   margin: 0 10px;
   float: left ;
   height: 300px;
 }
 
-#group div.first-page div.featured a.name,
-#group div.first-page div.featured2 a.name {
+#environment div.first-page div.featured a.name,
+#environment div.first-page div.featured2 a.name {
   font-weight: bold;
   display: block;
   margin-bottom: 10px;
 }
 
-#group div.first-page div.featured {
+#environment div.first-page div.featured {
   width: 250px;
 }
 
-#group div.first-page div.featured .photo {
+#environment div.first-page div.featured .photo {
   display: block;
   padding: 5px;
   width: 229px;
   height: 141px;
 }
 
-#group div.first-page div.featured a.name {
+#environment div.first-page div.featured a.name {
   font-size: 1.2em;
 }
 
-#group div.first-page div.featured span.author {
+#environment div.first-page div.featured span.author {
   font-size: .8em;
 }
 
-#group div.first-page div.featured2 {
+#environment div.first-page div.featured2 {
   width: 380px;
 }
 
-#group div.first-page div.featured2 a.name {
+#environment div.first-page div.featured2 a.name {
   float: left;
   display: block;
   width: 230px;
 }
 
-#group div.first-page div.featured2 .photo {
+#environment div.first-page div.featured2 .photo {
   width: 128px;
   height: 72px;
   margin-right: 10px;
   float: left;
 }
 
-#group div.first-page div.featured2 .author,
-#group div.first-page div.featured2 .views {
+#environment div.first-page div.featured2 .author,
+#environment div.first-page div.featured2 .views {
   display: block;
   float: left;
   font-size: .8em;
@@ -2327,9 +2327,9 @@ div.curriculum h6 {
   margin-bottom: 5px;
   color: gray;
 }
-#group div.first-page div.statistics,
-#group div.first-page div.news ,
-#group div.first-page div.statistics {
+#environment div.first-page div.statistics,
+#environment div.first-page div.news ,
+#environment div.first-page div.statistics {
   width: 320px;
   float: left;
   margin-left: 10px;
@@ -2337,7 +2337,7 @@ div.curriculum h6 {
 }
 
 
-#group div.first-page span.call {
+#environment div.first-page span.call {
 }
 
 
