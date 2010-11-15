@@ -149,6 +149,42 @@ class BaseController < ApplicationController
                       :user_id => current_user.id
         })
       end
+    when 'topics'
+      if @topic and @topic.created_at
+        Status.create({:log => true,
+                      :logeable_name => @topic.title,
+                      :logeable_type => 'Topic',
+                      :logeable_id => @topic.id,
+                      :log_action => params[:action],
+                      :statusable_type => 'User',
+                      :statusable_id => @topic.user.id,
+                      :user_id => current_user.id
+        })
+      end
+    when 'sb_posts'
+      if @post and @post.created_at
+        Status.create({:log => true,
+                      :logeable_name => nil,
+                      :logeable_type => 'SbPost',
+                      :logeable_id => @post.id,
+                      :log_action => params[:action],
+                      :statusable_type => 'User',
+                      :statusable_id => @post.user.id,
+                      :user_id => current_user.id
+        })
+      end
+    when 'events'
+      if @event and @event.created_at
+        Status.create({:log => true,
+                      :logeable_name => @event.name,
+                      :logeable_type => 'Event',
+                      :logeable_id => @event.id,
+                      :log_action => params[:action],
+                      :statusable_type => 'User',
+                      :statusable_id => @event.owner.id,
+                      :user_id => current_user.id
+        })
+      end
     end
   end
 

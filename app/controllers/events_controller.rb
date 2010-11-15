@@ -13,6 +13,7 @@ class EventsController < BaseController
     :only => [:show, :edit, :update, :destroy]
   before_filter :can_manage_required,
     :only => [:edit, :update, :destroy]
+  after_filter :create_activity, :only => [:create]
 
   #These two methods make it easy to use helpers in the controller.
   #This could be put in application_controller.rb if we want to use

@@ -102,6 +102,21 @@ module BaseHelper
 
           @activity =  "criou a rede " + link_obj if item.log_action == "create"
           @activity =  "adicionou a rede " + link_obj + " ao seus favoritos" if item.log_action == "favorite"
+      when 'topic'
+          @topic = Topic.find(item.logeable_id)
+          link_obj = link_to(item.logeable_name, space_forum_topic_path(@topic.forum.space, @topic))
+
+          @activity = "criou o tópico " + link_obj if item.log_action == 'create'
+      when 'sb_post'
+          @post = SbPost.find(item.logeable_id)
+          link_obj = link_to(@post.topic.title, space_forum_topic_path(@post.topic.forum.space, @post.topic))
+
+          @activity = "respondeu ao tópico " + link_obj if item.log_action == 'create'
+      when 'event'
+          @event = Event.find(item.logeable_id)
+          link_obj = link_to(item.logeable_name, space_event_path(@event.space, @event))
+
+          @activity =  "criou o evento " + link_obj if item.log_action == "create"
       else
           @activity = " atividade? "
       end

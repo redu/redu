@@ -4,6 +4,7 @@ class TopicsController < BaseController
   before_filter :find_environmnet_course_and_space
   before_filter :find_forum_and_topic, :except => :index
   before_filter :login_required, :except => [:index, :show]
+  after_filter :create_activity, :only => [:create]
 
   uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit, :create, :update])
 
