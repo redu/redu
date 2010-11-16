@@ -108,8 +108,8 @@ class BaseController < ApplicationController
                       :logeable_type => 'Lecture',
                       :logeable_id => @lecture.id,
                       :log_action => params[:action],
-                      :statusable_type => (@lecture.space) ? 'Space' : 'User',
-                      :statusable_id => (@lecture.space) ? @lecture.space.id : @lecture.owner.id,
+                      :statusable_type => 'User',
+                      :statusable_id => @lecture.owner.id,
                       :user_id => current_user.id
         })
       end

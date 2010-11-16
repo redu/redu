@@ -1,13 +1,15 @@
 <div class="grid_16">
 <div id="breadcrumbs">
-		<% if @space %>
-	<a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <%= link_to @space.name, @space %> > nova aula
-	<% else %>
+	<%# if @space %>
+		<!-- <a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <%# link_to @space.name, @space %> > nova aula -->
+	<%# else %>
 	<a href="<%=application_url%>">início</a> > <a href="#">ensinar</a> > nova aula
-	<%end %>
+	<%# end %>
 </div>
 </div>
 	
+<%# render(:partial => "spaces/space_info", :locals=>{:show => false}) if @space%>
+
 <h3 class="call">Novo artigo </h3>
 
 <div class="grid_9 push_3">
@@ -27,8 +29,8 @@
 <% form_for :page, @page, :url => { :action => "create" }, :html => { :multipart => true } do |f| %>
 <%= f.error_messages %>
 
-<%= hidden_field_tag("step", "2", options = {})%>
-	<%= hidden_field_tag("space_id", @space.id) if @space %>
+	<%= hidden_field_tag("step", "2", options = {})%>
+	<%# hidden_field_tag("space_id", @space.id) if @space %>
 	
 	<div class="grid_12 push_2">
     <%= f.text_area :body, :class => "mceEditor"%>

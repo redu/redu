@@ -32,6 +32,7 @@ function getParameters(){
 </script>
 <% end %>
 
+<%# render(:partial => "spaces/space_info", :locals=>{:show => false}) if @space%>
 
 <div class="grid_16">
 	<!--
@@ -102,7 +103,7 @@ function getParameters(){
 		<% form_tag exams_path, :method => :get do %>
 		Buscar 
 		<%= text_field_tag :search, params[:search] %>
-		<%= hidden_field_tag(:space_id, @space.id) if @space%>
+		<%# hidden_field_tag(:space_id, @space.id) if @space%>
 		<%= submit_tag "OK", :name => nil%>
 		<% end %>
 

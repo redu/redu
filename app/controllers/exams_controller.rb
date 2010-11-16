@@ -364,14 +364,14 @@ class ExamsController < BaseController
       @lectures = @user.exams.paginate(paginating_params)
       render((@user == current_user) ? "user_exams_private" :  "user_exams_public")
       return
-
-    elsif params[:space_id] # exames da escola
-      @space = Space.find(params[:space_id])
-      if params[:search] # search exams da escola
-        @exams = @space.exams.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
-      else
-        @exams = @space.exams.paginate(paginating_params)
-      end
+			# acho que pode ser usado para subject
+#    elsif params[:space_id] # exames da escola
+#      @space = Space.find(params[:space_id])
+#      if params[:search] # search exams da escola
+#        @exams = @space.exams.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
+#      else
+#        @exams = @space.exams.paginate(paginating_params)
+#      end
     else # index (Exam)
       if params[:search] # search
         @exams = Exam.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
@@ -383,16 +383,7 @@ class ExamsController < BaseController
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @exams }
-      if params[:space_content]
-        format.js  do
-          render :update do |page|
-            page.replace_html  'content_list', :partial => 'exams_space'
-            page << "$('#spinner').hide()"
-          end
-        end
-      else
-        format.js
-      end
+      format.js
     end
 
   end

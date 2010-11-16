@@ -152,9 +152,9 @@
             <%= link_to_function 'Editar', "alert('Opção indisponível nesta versão.')",  {:action => "edit"}, :class => "icon-edit" %>
 			 <% end %>
 			 
-			 <% if current_user.can_manage? @lecture and @space %>
-			| <%= link_to 'Remover da rede', remove_asset_space_path(:id => @space.id, :asset_id => @lecture.id, :asset_type => "Lecture"), {:confirm => "Você tem certeza que quer remover esta aula da rede?\n(Ela continuará no seu diretório de aulas)", :class => "icon-delete"} %>
-			<% end %>
+			 <%# if current_user.can_manage? @lecture and @space %>
+			<!-- | <%# link_to 'Remover da rede', remove_asset_space_path(:id => @space.id, :asset_id => @lecture.id, :asset_type => "Lecture"), {:confirm => "Você tem certeza que quer remover esta aula da rede?\n(Ela continuará no seu diretório de aulas)", :class => "icon-delete"} %> -->
+			<%# end %>
 			
 			<% if current_user.admin? %>
 			| <%= link_to 'Remover', @lecture, {:confirm => 'Você tem certeza que quer remover esta aula do Redu permanentemente?',

@@ -115,13 +115,13 @@ class LecturesController < BaseController
       render((@user == current_user) ? "user_lectures_private" :  "user_lectures_public")
       return
 
-    elsif params[:space_id] # aulas da escola
-      @space = Space.find(params[:space_id])
-      if params[:search] # search aulas da escola
-        @lectures = @space.lectures.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
-      else
-        @lectures = @space.lectures.paginate(paginating_params)
-      end
+#    elsif params[:space_id] # aulas da escola
+#      @space = Space.find(params[:space_id])
+#      if params[:search] # search aulas da escola
+#        @lectures = @space.lectures.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
+#      else
+#        @lectures = @space.lectures.paginate(paginating_params)
+#      end
     else # index (Lecture)
       if params[:search] # search
         @lectures = Lecture.published.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
@@ -135,13 +135,14 @@ class LecturesController < BaseController
       format.xml  { render :xml => @lectures }
 
       format.js  do
-        if params[:space_content]
-          render :template => 'lectures/lecture_list'
-        elsif params[:tab]
-          render :template => 'lectures/lecture_space'
-        else
+#				 Pode ser utilizado em subject
+#        if params[:space_content]
+#          render :template => 'lectures/lecture_list'
+#        elsif params[:tab]
+#          render :template => 'lectures/lecture_space'
+#        else
           render :index
-        end
+#        end
       end
     end
   end
@@ -149,7 +150,7 @@ class LecturesController < BaseController
   # GET /lectures/1
   # GET /lectures/1.xml
   def show
-    @space = Space.find(params[:space_id]) if params[:space_id]
+#   @space = Space.find(params[:space_id]) if params[:space_id]
     update_view_count(@lecture)
 
     if @lecture.removed
@@ -193,9 +194,9 @@ class LecturesController < BaseController
   # GET /lectures/new
   # GET /lectures/new.xml
   def new
-    if params[:space_id]
-      @space = Space.find(params[:space_id])
-    end
+#    if params[:space_id]
+#      @space = Space.find(params[:space_id])
+#    end
 
     case params[:step]
     when "2"
@@ -203,7 +204,7 @@ class LecturesController < BaseController
       @lecture = Lecture.find(session[:lecture_id])
 
       unless @lecture #curso não foi encontrado ou nao está mais na sessão
-        redirect_to new_lecture_path :space_id => params[:space_id]
+        redirect_to new_lecture_path #:space_id => params[:space_id]
       end
 
       if @lecture.lectureable_type == 'Seminar'
@@ -219,7 +220,7 @@ class LecturesController < BaseController
       end
     when "3"
       @lecture = Lecture.find(session[:lecture_id])
-      @spaces = current_user.spaces
+ #     @spaces = current_user.spaces
 
       @lecture.enable_validation_group :step3
       render "step3" and return
@@ -269,10 +270,10 @@ class LecturesController < BaseController
           session[:lecture_id] = @lecture.id
 
           format.html {
-            redirect_to :action => :new, :step => "2", :space_id => params[:space_id]
+            redirect_to :action => :new, :step => "2" # , :space_id => params[:space_id]
           }
         else
-          @space = Space.find(params[:space_id]) if params[:space_id]
+#          @space = Space.find(params[:space_id]) if params[:space_id]
           format.html { render "step1" }
         end
       end
@@ -303,11 +304,12 @@ class LecturesController < BaseController
             if @lecture.save
 
               format.html do
-                redirect_to :action => :new , :lecture_type => params[:lectureable_type], :step => "3", :space_id => params[:space_id]
+                redirect_to :action => :new , :lecture_type => params[:lectureable_type], :step => "3"# , :space_id => params[:space_id]
               end
 
               format.js do
-                render :template => 'lecture/create_seminar', :locals => { :lecture_type => params[:lectureable_type], :step => "3", :space_id => params[:space_id] }  
+                render :template => 'lecture/create_seminar', :locals => { :lecture_type => params[:lectureable_type], :step => "3"#, :space_id => params[:space_id] 
+}  
               end
 
             else
@@ -329,7 +331,7 @@ class LecturesController < BaseController
           if @lecture.save
 
             format.html do
-              redirect_to :action => :new , :lecture_type => params[:lectureable_type], :step => "3", :space_id => params[:space_id]
+              redirect_to :action => :new , :lecture_type => params[:lectureable_type], :step => "3"# :space_id => params[:space_id]
             end
             format.js do
               render :template => 'lectures/create_interactive'  
@@ -353,7 +355,7 @@ class LecturesController < BaseController
           if @lecture.save
 
             format.html {
-              redirect_to :action => :new , :lectureable_type => params[:lectureable_type], :step => "3", :space_id => params[:space_id]
+              redirect_to :action => :new , :lectureable_type => params[:lectureable_type], :step => "3"#, :space_id => params[:space_id]
             }
           else
             format.html { render "step2_page" }
@@ -364,10 +366,10 @@ class LecturesController < BaseController
 
     when "3"
       @lecture = Lecture.find(session[:lecture_id])
-      @submited_to_space = false
+      # @submited_to_space = false
       if params[:post_to]
-        SpaceAsset.create({:asset_type => "Lecture", :asset_id => @lecture.id, :space_id => params[:post_to].to_i})
-        @space = Space.find(params[:post_to])
+        # SpaceAsset.create({:asset_type => "Lecture", :asset_id => @lecture.id, :space_id => params[:post_to].to_i})
+        # @space = Space.find(params[:post_to])
       end
 
       @lecture.published = true # se o usuário completou os 3 passos então o curso está publicado
@@ -381,23 +383,23 @@ class LecturesController < BaseController
         end
       end
 
-      if @space
-        if @space.submission_type = 1 # todos podem postar
-          params[:lecture][:state] = "approved"
-        elsif @space.submission_type = 2 # todos com moderação
-          params[:lecture][:state] = "waiting"
-        elsif @space.submission_type = 3 # apenas professores
-          if current_user.can_post @space
-            params[:lecture][:state] = "rejected"
-          else
-            params[:lecture][:state] = "approved"
-          end
-        else
-          params[:lecture][:state] = "approved"
-        end
-      else #publico
-        params[:lecture][:state] = "waiting"
-      end
+#      if @space
+#        if @space.submission_type = 1 # todos podem postar
+#          params[:lecture][:state] = "approved"
+#        elsif @space.submission_type = 2 # todos com moderação
+#          params[:lecture][:state] = "waiting"
+#        elsif @space.submission_type = 3 # apenas professores
+#          if current_user.can_post @space
+#            params[:lecture][:state] = "rejected"
+#          else
+#            params[:lecture][:state] = "approved"
+#          end
+#        else
+#          params[:lecture][:state] = "approved"
+#        end
+#      else #publico
+   		 params[:lecture][:state] = "waiting"
+#	     end
 
       respond_to do |format|
 
@@ -407,27 +409,27 @@ class LecturesController < BaseController
           if @lecture.lectureable_type == 'Seminar' or  @lecture.lectureable_type == 'InteractiveClass'
 
             format.html do
-              if @space
-                if @space.submission_type = 1 # todos podem postar
-                  #mostra aulas da escola
-                  flash[:notice] = 'Aula foi criada com sucesso e está disponível na rede.'
-                  redirect_to space_lectures_path(:space_id => params[:post_to].to_i, :id => @lecture.id)
+#              if @space
+#                if @space.submission_type = 1 # todos podem postar
+#                  #mostra aulas da escola
+#                  flash[:notice] = 'Aula foi criada com sucesso e está disponível na rede.'
+#                  redirect_to space_lectures_path(:space_id => params[:post_to].to_i, :id => @lecture.id)
 
-                elsif @space.submission_type = 2 # todos com moderação
-                  flash[:notice] = 'Aula foi criada com sucesso e está em processo de moderação.'
-                  redirect_to waiting_user_lectures_path(current_user.id)
-                elsif @space.submission_type = 3 # apenas professores
-                  flash[:notice] = 'Aula não pode ser publicada nessa escola pois apenas professores podem postar.'
-                  redirect_to @lecture
-                else
-                  redirect_to space_lecture_path(:space_id => params[:post_to].to_i, :id => @lecture.id)
-                end
+#                elsif @space.submission_type = 2 # todos com moderação
+#                  flash[:notice] = 'Aula foi criada com sucesso e está em processo de moderação.'
+#                  redirect_to waiting_user_lectures_path(current_user.id)
+#                elsif @space.submission_type = 3 # apenas professores
+#                  flash[:notice] = 'Aula não pode ser publicada nessa escola pois apenas professores podem postar.'
+#                  redirect_to @lecture
+#                else
+#                  redirect_to space_lecture_path(:space_id => params[:post_to].to_i, :id => @lecture.id)
+#                end
 
 
-              else
-                flash[:notice] = 'Aula foi criada com sucesso e está em processo de moderação.'
-                redirect_to waiting_user_lectures_path(current_user.id)
-              end
+#              else
+              flash[:notice] = 'Aula foi criada com sucesso e está em processo de moderação.'
+              redirect_to waiting_user_lectures_path(current_user.id)
+#              end
             end
           else
             flash[:notice] = 'Aula foi criada com sucesso!'

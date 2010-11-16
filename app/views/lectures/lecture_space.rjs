@@ -1,2 +1,2 @@
-page.replace_html  'tabs-2-content', :partial => 'lecture_space'
+# page.replace_html  'tabs-2-content', :partial => 'lecture_space'
 

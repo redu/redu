@@ -1,10 +1,10 @@
 <div class="grid_16">
 <div id="breadcrumbs">
-		<% if @space %>
-	<a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <%= link_to @space.name, @space %> > <%= link_to @lecture.name, @lecture %> > editar
-	<% else %>
+		<%# if @space %>
+	<!-- <a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <%= link_to @space.name, @space %> > <%= link_to  @lecture.name, @lecture %> > editar -->
+	<%# else %>
 	<a href="<%=application_url%>">início</a> > <a href="#">ensinar</a> > <%= link_to @lecture.name, @lecture %> > editar
-	<%end %>
+	<%# end %>
 </div>
 </div>
 	
@@ -14,7 +14,7 @@
 
 <% form_for @lecture, :html => { :multipart => true } do |f| %>
 <%= f.error_messages %>
-<%= hidden_field_tag("space_id", @space.id) if @space %>
+<%# hidden_field_tag("space_id", @space.id) if @space %>
 
 <% field_set_tag "Informacoes Gerais" do %>
 

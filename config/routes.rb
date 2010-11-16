@@ -112,9 +112,7 @@ ActionController::Routing::Routes.draw do |map|
                    :rename => :get,
                    :destroy_folder => :delete,
                    :destroy_file => :delete }
-    space.resources :lectures
     space.resources :subjects
-    space.resources :exams
     space.resources :bulletins
     space.resources :events,
       :member => { :vote => [:post,:get], :notify => :post },

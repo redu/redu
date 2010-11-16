@@ -1,11 +1,13 @@
 <div class="grid_16">
 <div id="breadcrumbs">
-		<% if @space %>
-	<a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <%= link_to @space.name, @space %> > nova aula
-	<% else %>
-	<a href="<%=application_url%>">início</a> > <a href="#">ensinar</a> > nova aula
-	<%end %>
+	<%# if @space %>
+		<!-- <a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <%# link_to @space.name, @space %> > nova aula -->
+	<%# else %>
+		<a href="<%=application_url%>">início</a> > <a href="#">ensinar</a> > nova aula
+	<%# end %>
 </div>
+
+<%# render(:partial => "spaces/space_info", :locals=>{:show => false}) if @space%>	
 
 <!--
 <h3 class="call">Nova Aula - Publicação</h3>
@@ -30,7 +32,7 @@
 <% form_for :lecture, @lecture, :url => { :action => "create" }, :html => {:id => "form_step_3",  :multipart => true } do |f| %>
 <%= f.error_messages %>
 <%= hidden_field_tag("step", "3", options = {})%>
-	<%= hidden_field_tag("post_to", @space.id) if @space %>
+	<%# hidden_field_tag("post_to", @space.id) if @space %>
 
 
 
@@ -44,20 +46,22 @@
 
 
 	<% field_set_tag 'Visibilidade' do %>
-	<%= f.label "Pública <span class='snippet'>(Visível em todo o Redu)</span>" %>
-	<%# :onchange => "jQuery('input[name=post_to]').attr('checked', false)" %>
+		<%= f.label "Pública <span class='snippet'>(Visível em todo o Redu)</span>" %>
+		<%# :onchange => "jQuery('input[name=post_to]').attr('checked', false)" %>
 		<%= f.check_box :public %>
 		
-		<% @spaces = current_user.spaces %>
-		<% if @spaces and @spaces.size > 0 %>
-		<%= f.label "Postar em:" %>
+		<%# @spaces = current_user.spaces %>
+		<%# if @spaces and @spaces.size > 0 %>
+		<!--
+		<%# f.label "Postar em:" %>
 			<div style="overflow-y:scroll; max-height: 200px;">
-			<% @spaces.each do | space | %>
-				<div><%= radio_button_tag :post_to, space.id, false %> <%= space.name %></div>
-			<% end %>
+			<%# @spaces.each do | space | %>
+				<div><%# radio_button_tag :post_to, space.id, false %> <%# space.name %></div>
+			<%# end %>
 			</div>
+		-->
+		<%# end %>
 		<% end %>
-		<%end%>
 	
 	
     <% if AppConfig.activate_payment %>
@@ -65,12 +69,12 @@
 	        <%= f.label :price %>
 	        <%= f.text_field :price %>
 	    <% end %>
-    <%end %>
+    <% end %>
 
 
 	<% field_set_tag 'Compartilhe!' do %>
 		<%= render :partial => 'shared/share', :locals => {:resource => @lecture}%>
-		<%end%>
+	<% end %>
 
 </div>
 
