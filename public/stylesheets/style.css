@@ -1546,7 +1546,7 @@ div.recomendations-m .number {
 }
 
 /* spotlight */
-.spotlight-boxes {
+.spotlight-boxes .space{
   width: 300px;
   padding: 20px 10px;
   border: 1px solid blue;

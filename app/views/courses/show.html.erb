@@ -13,7 +13,7 @@
   <div class="grid_16 alpha omega">
     <h3 class="call">Espaços do curso <%= @course.name %></h3>
     <div class="spotlight-boxes">
-      <% if @spaces %>
+      <% unless @spaces.empty? %>
         <%= render :partial => 'spaces/spotlight', :collection => @spaces %>
       <% else %>
         <div class="box_notice">Nenhuma disciplina foi criada.</div>
