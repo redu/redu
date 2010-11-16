@@ -19,6 +19,7 @@ class FoldersController < BaseController
   #  before_filter :authorize_deleting, :only => :destroy
 
   before_filter :login_required
+  after_filter :create_activity, :only => [:do_the_upload]
 
   # Sessions are not needed for feeds
   session :off, :only => 'feed'
@@ -45,22 +46,20 @@ class FoldersController < BaseController
   # Upload the file and create a record in the database.
   # The file will be stored in the 'current' folder.
   def do_the_upload
+    @space = Space.find(params[:space_id])
     @myfile = Myfile.new(params[:myfile])
     @myfile.user = current_user
+
     respond_to do |format|
       if @myfile.save
         flash[:notice] = 'Upload realizado!'
-        format.js do
-          responds_to_parent do
-            list
-            render :action => :index
-          end
+        format.html do
+          redirect_to @space
         end
       else
-        format.js do
-          responds_to_parent do
-           render :template => 'folders/do_the_upload_error' 
-          end
+        format.html do
+          flash[:error] = @myfile.errors.full_messages.join(", ")
+          redirect_to @space
         end
       end
     end

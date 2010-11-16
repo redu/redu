@@ -197,6 +197,18 @@ class BaseController < ApplicationController
                       :user_id => current_user.id
         })
       end
+    when 'folders'
+      if @myfile.valid? and @space
+        Status.create({:log => true,
+                      :logeable_name => @myfile.attachment_file_name,
+                      :logeable_type => 'Myfile',
+                      :logeable_id => @myfile.id,
+                      :log_action => params[:action],
+                      :statusable_type => 'Space',
+                      :statusable_id => @space.id,
+                      :user_id => current_user.id
+        })
+      end
     end
   end
 

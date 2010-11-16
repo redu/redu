@@ -122,6 +122,11 @@ module BaseHelper
           link_obj = link_to(item.logeable_name, polymorphic_path([@bulletin.bulletinable, @bulletin]))
 
           @activity =  "criou a notícia " + link_obj if item.log_action == "create"
+      when 'myfile'
+        @space = item.statusable
+        @myfile = item.logeable
+        link_obj = link_to @myfile.attachment_file_name, download_space_folder_url(@space, @myfile)
+        @activity =  "adicionou o arquivo #{link_obj} ao espaço #{link_to @space.name, @space}"
       else
           @activity = " atividade? "
       end
