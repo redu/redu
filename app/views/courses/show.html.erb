@@ -3,15 +3,52 @@
   <a href="#" class="grid_5 action">Crie Módulos!</a>
   <%= link_to "Crie Espaços!", new_space_path(:course_id => @course.id), :class => "grid_5 action" %>
 </div>
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function(){
+      $(".space div.vtabs").tabs({}).addClass('ui-tabs-vertical ui-helper-clearfix')
+  })
+</script>
+
 <div class="grid_16">
-  <div class="grid_8 alpha">
+  <div class="grid_16 alpha omega">
     <h3 class="call">Espaços do curso <%= @course.name %></h3>
-    <ul>
-      <%= render :partial => "spaces/item", :collection => @course.spaces.published, :as => :space %>
-    </ul>
-    <%= link_to "Editar", edit_environment_course_path(@environment, @course) %>
+    <div class="spotlight-boxes">
+      <% @spaces.each do |space| %>
+        <div class="space clearfix">
+          <span class="expand">Expandir</span>
+          <div class="name"><%= link_to space.name, space %></div>
+          <div class="vtabs">
+            <ul>
+              <% space.recent_log.each do |type, logs| %>
+                <li class="log headline <%= type %>">
+                  <% unless logs.empty? %> 
+                    <%= link_to "+#{logs.size} #{type} adicionados",
+                    "##{space.id}-#{type}" %>
+                <% else %>
+                  <%= link_to "Nenhum #{type} novo" ,
+                    "##{space.id}-#{type}" %>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+
+          <% space.recent_log.each do |type, logs| %>
+            <div id="<%= "#{space.id}-#{type}" %>">
+              <% unless logs.empty? %> 
+                <ul>
+                  <%= render :partial => "statuses/log", :collection => logs %>
+                </ul>
+              <% else %>
+                <div class="box_notice">Nenhuma atividade nova</div>
+              <% end %>
+            </div>
+          <% end %>
+        </div><!-- end tabs -->
+      </div><!-- end space -->
+    <% end %>
+  </div><!--  end spotlight-boxes --> 
   </div>
-  <div class="grid_8 omega">
+  <div class="grid_8 alpha">
     <h3 class="call">Convide colaboradores</h3>
     <script type="text/javascript" charset="utf-8">
       $(document).ready(function(){

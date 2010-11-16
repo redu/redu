@@ -6,6 +6,7 @@ class CoursesController < BaseController
   def show
     @environment = Environment.find(params[:environment_id])
     @course = Course.find(params[:id])
+    @spaces = @course.spaces.published
 
     respond_to do |format|
       format.html

@@ -95,40 +95,42 @@ class Space < ActiveRecord::Base
     self.statuses.all(:order => 'created_at DESC', :offset=> offset, :limit=> limit)
   end
 
-	# Talvez seja usada a mesma lógica para pegar os subjects.
-
-  # Status relativos ao Space e a Exam
-#  def recent_space_exams_activity
-#    sql = "SELECT l.id, l.logeable_type, l.action, l.user_id, l.logeable_name, " + \
-#      "l.logeable_id, l.created_at, l.updated_at, l.space_id " + \
-#      "FROM logs l, space_assets s " + \
-#      "WHERE l.space_id = '#{self.id}' AND l.logeable_type = '#{Exam}' " + \
-#      "ORDER BY l.created_at DESC LIMIT 3 "
-
-#    @recent_exams_activity = Log.find_by_sql(sql)
-#  end
-
-  # Status relativos ao Space e a Lecture
-#  def recent_space_lectures_activity
-#    sql = "SELECT l.id, l.logeable_type, l.action, l.user_id, l.logeable_name, " + \
-#      "l.logeable_id, l.created_at, l.updated_at, l.space_id " + \
-#      "FROM logs l, space_assets s " + \
-#      "WHERE l.space_id = '#{self.id}' AND l.logeable_type = '#{Lecture}' " + \
-#      "ORDER BY l.created_at DESC LIMIT 3 "
-
-#    @recent_lectures_activity = Log.find_by_sql(sql)
-#  end
-
-#  # Preview das Lectures mais importantes
-#  def spotlight_lectures
-#    sql =  "SELECT c.name FROM lectures c, space_assets s " + \
-#      "WHERE s.space_id = '#{self.id}' " + \
-#      "AND s.asset_type = '#{Lecture}' " + \
-#      "AND c.id = s.asset_id " + \
-#      "ORDER BY c.view_count DESC LIMIT 6 "
-
-#    Lecture.find_by_sql(sql)
-#  end
+  # Logs relativos ao Space (usado no Course#show). 
+  # Retorna hash do tipo :topoic => [status1, status2, status3], :myfile => ...
+  def recent_log(offset = 0, limit = 3)
+    logs = {}
+    logs[:myfile] = self.statuses.find(:all, 
+                                       :order => 'created_at', 
+                                       :limit => limit,
+                                       :offset => offset,
+                                       :conditions => { :log => 1, 
+                                         :logeable_type => 'Myfile' })
+    logs[:topic] = self.statuses.find(:all,
+                                      :order => 'created_at', 
+                                      :limit => limit,
+                                      :offset => offset,
+                                      :conditions => { :log => true, 
+                                        :logeable_type => %w(Topic SbPost) })
+    logs[:subject] = self.statuses.find(:all,
+                                        :order => 'created_at', 
+                                        :limit => limit,
+                                        :offset => offset,
+                                        :conditions => { :log => true, 
+                                          :logeable_type => 'Subject' })
+    logs[:event] = self.statuses.find(:all,
+                                      :order => 'created_at', 
+                                      :limit => limit,
+                                      :offset => offset,
+                                      :conditions => { :log => true, 
+                                        :logeable_type  => 'Event' })
+    logs[:bulletin] = self.statuses.find(:all,
+                                         :order => 'created_at', 
+                                         :limit => limit,
+                                         :offset => offset,
+                                         :conditions => { :log => true, 
+                                           :logeable_type => 'Bulletin' })
+    return logs
+  end
 
   def create_root_folder
     @folder = Folder.create(:name => "root")
