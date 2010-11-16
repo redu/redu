@@ -2,6 +2,9 @@ GEM
   remote: http://rubygems.org/
   remote: http://gems.github.com/
   specs:
+    aanand-deadweight (0.1.0)
+      css_parser
+      hpricot
     actionmailer (2.3.5)
       actionpack (= 2.3.5)
     actionpack (2.3.5)
@@ -15,14 +18,15 @@ GEM
     adzap-ar_mailer (2.1.8)
     authlogic (2.1.6)
       activesupport
-    calendar_date_select (1.16.1)
     cgi_multipart_eof_fix (2.5.0)
     collectiveidea-delayed_job (1.8.2)
     columnize (0.3.1)
+    css_parser (1.1.4)
     daemons (1.1.0)
     desert (0.5.4)
     fastthread (1.0.7)
     gem_plugin (0.2.3)
+    haml (3.0.15)
     hpricot (0.8.2)
     htmlentities (4.2.1)
     icalendar (1.1.5)
@@ -65,11 +69,12 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  aanand-deadweight
   adzap-ar_mailer
   authlogic
-  calendar_date_select
   collectiveidea-delayed_job
   desert
+  haml
   hpricot
   htmlentities (= 4.2.1)
   icalendar

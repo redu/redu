@@ -1,40 +1,27 @@
-<%
-if @is_school
-url_index = school_bulletins_path(@bulletinable) 
-else
-url_index = subject_bulletins_path(@bulletinable) 	
-end
-%>
-
 <%- form_for @bulletin do |f| %>
-	<fieldset><legend>Notícia</legend>
-	<%= f.error_messages %>
+  <fieldset><legend>Notícia</legend>
+    <%= f.error_messages %>
     
- 
-	<%  if @is_school %>
-	<%= hidden_field_tag("school_id", params[:school_id]) %>
-	<%else%>
-	<%= hidden_field_tag("subject_id", params[:subject_id].split("-")[0]) %>
-    <%end%>
-	
+    <%= hidden_field_tag("bulletinable_id", @bulletinable.id) %>
+    <%= hidden_field_tag("bulletinable_type", @bulletinable.class) %>
 
-	<%= f.label "Título" %>
-	<%= f.text_field :title %>
+    <%= f.label "Título" %>
+    <%= f.text_field :title %>
 
-	<% random_number = get_random_number%>
-	<%= f.label "Breve Descrição" %>
-	<%= f.text_area :tagline, :size => "70x5", :class => "tagline-#{random_number}" %>
-	<%= render :partial => 'shared/limit_char_field', :locals => { :class_textarea => "tagline-#{random_number}" }%>
+    <% random_number = get_random_number%>
+    <%= f.label "Breve Descrição" %>
+    <%= f.text_area :tagline, :size => "70x5", :class => "tagline-#{random_number}" %>
+    <%= render :partial => 'shared/limit_char_field', :locals => { :class_textarea => "tagline-#{random_number}" }%>
 
-	<%= f.label "Descrição" %>
-	<%= f.text_area :description, :size => "70x14", :class => "mceEditor"%>
+    <%= f.label "Descrição" %>
+    <%= f.text_area :description, :size => "70x14", :class => "mceEditor"%>
 
-	<%= f.label "Tags <span class='snippet'>(separadas por vírgula)</span>" %>
-	<%= f.text_field :tag_list %>
+    <%= f.label "Tags <span class='snippet'>(separadas por vírgula)</span>" %>
+    <%= f.text_field :tag_list %>
 
-	<%= f.submit "Salvar"%>
-	</fieldset>
+    <%= f.submit "Salvar"%>
+  </fieldset>
 <% end %>
 
-<%= link_to 'Ver todas', url_index %>
+<%= link_to 'Ver todas', polymorphic_path([@bulletinable, Bulletin.new]) %>
 

@@ -46,9 +46,9 @@
       <span class="call"><span>Colegas (<%= @subject.students.size %>)</span></span>
       <div class="followship box clearfix">
         <ul class="clearfix">
-          <%= render :partial => 'schools/member_short', :collection => @subject.students, :as => :member %>
+          <%= render :partial => 'spaces/member_short', :collection => @subject.students, :as => :member %>
         </ul>
-        <a href="<%# members_school_path(@school) %>" class="icon more">Ver mais</a>
+        <a href="<%# members_space_path(@space) %>" class="icon more">Ver mais</a>
       </div><!-- end followship -->
     </li>
 
@@ -61,9 +61,9 @@
       <% else %>
         <div class="followship box clearfix">
           <ul class="clearfix">
-            <%= render :partial => 'schools/member_short', :collection => @subject.teachers, :as => :member %>
+            <%= render :partial => 'spaces/member_short', :collection => @subject.teachers, :as => :member %>
           </ul>
-          <a href="<%# teachers_school_path %>" class="icon more">Ver mais</a>
+          <a href="<%# teachers_space_path %>" class="icon more">Ver mais</a>
         </div><!-- end followship -->
 
       <% end %>

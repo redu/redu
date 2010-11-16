@@ -8,7 +8,7 @@
 					<% field_set_tag "Login" do %>
 
             <label for='username'>
-                <%=:username.l %>
+                <%=:username_or_email.l %>
             </label>
             <%= f.text_field :login, :size => 35 %>
 						<%= error_for :user_session, :login %>

@@ -1,0 +1,19 @@
+<div class="main grid_16">
+  <div class="fake-tabs grid_16 alpha omega">
+    <%= render :partial => "courses/admin_taskbar" %>
+    <div class="panel">
+      <h1>Configurações do Curso</h1>
+      <% form_for @course,
+        :url => environment_course_path(@environment, @course) do |f| %>
+        <%= render :partial => 'courses/form', :locals => { :f => f, :edit => true } %>
+        <%= f.submit "Alterar" %>
+      <% end %>
+
+      <fieldset>
+        <legend>Remover curso</legend>
+        <%= link_to 'Deletar curso', environment_course_path(@environment, @course), 
+          :confirm => 'Você tem certeza que deseja remover este curso?', :method => :delete %>
+      </fieldset>
+    </div> <!-- end panel --> 
+  </div> <!-- end fake -->
+</div> <!-- end main -->

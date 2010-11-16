@@ -1,0 +1,126 @@
+<% content_for :js do %>
+<script type="text/javascript">
+function select(type, id) {
+	jQuery('#'+ type+'_' + id).parent().children().removeClass('selected')
+	jQuery('#'+ type+'_' + id).addClass('selected')
+	loadList();
+
+}
+
+function loadList(){
+	jQuery('#school_list').html(' ')
+	jQuery('#loader').show()
+}
+/* pega os filtros selecionados e passa-os como parametro */
+function getParameters(){
+	
+	return ''
+	
+	var params = ''
+	jQuery('.selected').each(function(i) {
+		var id = $(this).attr('id').split('_')
+		if (id[1] != 'all' && typeof(id[0]) != 'undefined' && typeof(id[1]) != 'undefined') {
+			if (id[0] == 'cat') id[0] = 'category';
+			
+			params += id[0] + '=' + id[1];
+		}
+		
+	})
+	alert(params)
+	return params;
+}
+
+function onChangeAjax(){
+	var path = '<%= spaces_path %>'
+	var cat_id = $('#area option:selected').val()
+	
+    jQuery.ajax({
+				beforeSend: loadList(),
+        data: getParameters(),
+        dataType: 'script',
+        type: 'get',
+        url: path + '?area='+cat_id
+    });
+    return false;
+}
+</script>
+<% end %>
+
+
+<div class="grid_16">
+<h3> Redes</h3>
+</div>
+
+
+
+
+<div class="grid_4 calls" id="filter">
+	<!--
+	<span class="call"><span>Refinar</span></span>
+	-->
+	
+	<form>
+	<% field_set_tag "Audiência" do %>
+	<ul class="criteriaList">
+		
+		<li id ="audience_all" class="selected">
+			<%= link_to_remote "Todas", :url => {:action => :index}, :loading => "select('audience','all')", :method => :get%>
+		</li>
+		
+		<% for audience in Audience.all(:limit =>5) do %>
+		<li id = "audience_<%=audience.id%>">
+			<%= link_to_remote (audience.name), :url => {:action => :index, :audience => audience.id}, :loading => "select('audience','"+audience.id.to_s+"')", :with => "getParameters()",:method => :get%>
+		</li>
+		<% end %>
+		
+	</ul>
+		<% end %>
+	</form>
+	
+	
+		<form>
+	<% field_set_tag "Ordem" do %>
+	<ul class="criteriaList">
+		
+		<li id = "sort_recent" class="selected">
+			<%= link_to_remote "Mais recentes", :url => {:action => :index, :sort => 'updated_at'}, :loading => "select('sort','recent')", :method => :get%>
+		</li>
+		<li id = "sort_members">
+			<%= link_to_remote "Mais populares", :url => {:action => :index, :sort => 'members_count'}, :loading => "select('sort','members')", :method => :get%>
+		</li>
+		<li id = "sort_courses">
+			<%= link_to_remote "Mais aulas", :url => {:action => :index, :sort => 'lectures_count'}, :loading => "select('sort','courses')", :method => :get%>
+		</li>
+		<!--
+		<li id = "sort_rating">
+			<%= link_to_remote "Melhores avaliadas", :url => {:action => :index, :sort => 'rating_average'}, :loading => "select('sort','rating')", :method => :get%>
+		</li>
+		-->
+	</ul>
+	<% end %>
+	</form>
+</div>
+
+<span class="grid_12 filter_bar">
+	<span class="filter_text">
+		<%= (params[:search]) ? ("Resultados para: \""+params[:search]+"\"") : "Todas as redes mais recentes" %>
+	</span>
+	
+		<% form_tag spaces_path, :method => :get do %>
+		Buscar 
+		<%= text_field_tag :search, params[:search] %>
+		<%= submit_tag "OK", :name => nil%>
+		<% end %>
+
+</span>
+
+<%= image_tag "loadingAnimation.gif", :id => "loader", :style => "display: none"%>
+<div id="school_list" class="grid_12">
+	
+	<%= render :partial => "space_list" %>
+</div>
+
+
+
+
+

@@ -1,0 +1,2 @@
+page.replace_html  @lecture.wrapper_dom_id(params), ratings_for(@lecture, params.merge(:wrap => false))
+

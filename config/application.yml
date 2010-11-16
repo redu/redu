@@ -39,9 +39,9 @@ max_lesson_number: 10
 moderate: ['Exam', 'InteractiveClass', 'Seminar']
 
 points:
-  created_course: 80
-  updated_course: 15
-  show_course: 10
+  created_lecture: 80
+  updated_lecture: 15
+  show_lecture: 10
   created_exam: 40
   updated_exam: 15
   show_exam: 10
@@ -65,8 +65,8 @@ image:
 photo:
   missing_thumb: '/images/missing_pic.jpg' #'/images/icon_missing_thumb.gif'
   missing_medium: '/images/missing_pic.jpg' #"/images/icon_missing_medium.gif"
-  missing_thumb_school: '/images/missing_pic_school.png' #'/images/icon_missing_thumb.gif'
-  missing_medium_school: '/images/missing_pic_school.png' #"/images/icon_missing_medium.gif"
+  missing_thumb_space: '/images/missing_pic_space.png' #'/images/icon_missing_thumb.gif'
+  missing_medium_space: '/images/missing_pic_space.png' #"/images/icon_missing_medium.gif"
   attachment_fu_options:
     resize_to: "465>"
     min_size: 1
@@ -136,7 +136,7 @@ reserved_logins: [
   'seminarios',
   'signup',
   'sb_posts',
-  'schools',
+  'spaces',
   'skills',
   'sitemap',
   'states',

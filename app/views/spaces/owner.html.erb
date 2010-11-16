@@ -1,0 +1,25 @@
+<div id="all_content3">
+<div id="col_content">
+	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">redes</a> </div>
+ 	<div id="title">REDES CRIADAS POR MIM
+	<%= render :partial => "spaces/taskbar" %>
+	</div>
+	<div id="filter_bar">
+		
+	    <span id="title_list" class="title_list"> </span>
+	    <span class="title_filter"></span>
+	      
+    </div>
+    <div id="all_list">
+    	
+		<% if @spaces && @spaces.length > 0 %>
+ 			<%= render :partial => 'spaces/item', :collection => @spaces, :as => :space %> 
+ 		<% else %>
+ 			Não há redes cadastradas ainda. <%= link_to 'Crie uma agora!', :action => 'new' %>
+		<% end %>
+    	
+    </div> <!-- fim da listagem --> 
+
+</div>
+</div>
+

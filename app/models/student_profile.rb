@@ -1,7 +1,7 @@
 class StudentProfile < ActiveRecord::Base
   belongs_to :user
   belongs_to :subject
-  belongs_to :course_subject
+  belongs_to :lecture_subject
 
 
   def self.create_profile subject_id, current_user
@@ -11,8 +11,8 @@ class StudentProfile < ActiveRecord::Base
   end
 
  ##determina em qual aula o aluno está!!
-  def to_count course 
-    self.course_subject = course.course_subject
+  def to_count lecture 
+    self.lecture_subject = lecture.lecture_subject
     self.save
   end
   
@@ -20,7 +20,7 @@ class StudentProfile < ActiveRecord::Base
   def coursed_percentage subject
     aulas = subject.aulas.map{|a| a.id} #ids todas aulas do curso
     total = aulas.length ##TODO adicionar exames
-    index =  self.course_subject_id.nil? ? 0 : aulas.index(CourseSubject.find(self.course_subject_id).courseable.id)+1  #quero obter o indice da aula q aluno cursou ate agora, atraves do course_subject_id
+    index =  self.lecture_subject_id.nil? ? 0 : aulas.index(LectureSubject.find(self.course_subject_id).courseable.id)+1  #quero obter o indice da aula q aluno cursou ate agora, atraves do course_subject_id
     return  index == 0 ? 0 : ((100*index)/total).to_i
   end
 

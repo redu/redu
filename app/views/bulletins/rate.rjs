@@ -1,0 +1,2 @@
+page.replace_html  @bulletin.wrapper_dom_id(params), ratings_for(@bulletin, params.merge(:wrap => false))
+

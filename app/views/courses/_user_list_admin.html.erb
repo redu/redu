@@ -1,0 +1,26 @@
+<%= image_tag 'loadingAnimation.gif', :id => 'loading_bar', :style => "display: none; margin-top: 40px"%>
+
+<table id="user_list_table" class="common">
+  <thead>
+    <th>
+    <input type="checkbox" id="select_all"  >
+    </th>
+    <th>Usuário</th>
+    <th>Data de Inscricão</th>
+    <th>Espaço(s)</th>
+  </thead>
+  <% for course_membership in memberships %>
+    <tr>
+      <td><%= check_box_tag 'users[]', course_membership.user.id  %></td>
+      <td><%= link_to course_membership.user.display_name, course_membership.user, :target => "_blank" %> </td>
+      <td><%= time_ago_in_words(course_membership.created_at) %> </td>
+      <td>
+        <ul class="tags">
+        <% course_membership.user.user_space_associations.each do |space_membership| %>
+          <li><span><%= space_membership.space.name %></span></li>
+        <% end %>
+        </ul>
+      </td>
+    </tr>
+  <% end %>
+</table>

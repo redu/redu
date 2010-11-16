@@ -1,0 +1,138 @@
+<% content_for :page_id, 'group' %>
+<%- @meta = { :description => "#{@space.name}'s profile on #{AppConfig.community_name}.", :keywords => "#{@space.name}, #{@space.tags.join(", ") unless @space.tags.nil?}", :robots => AppConfig.robots_meta_show_content }%>
+
+
+<script type="text/javascript">
+var schoolFoldersPath = "<%= space_folders_path(:space_id => @space.id.to_s) %>";
+var schoolCoursesPath = "";
+var schoolForumPath = "<%= space_forum_path(:space_id => @space.id.to_s) %>";
+
+var $schooltabs;
+
+$(document).ready(function() {
+
+    $schooltabs = $(".school-tabs").tabs({
+        select: function(event, ui) {
+            if (ui.index == 4) {
+              //Fórum
+              $("#tabs-6-content").html('');
+              jQuery.ajax({
+                    data: '',
+                    dataType: 'script',
+                    success: function(request) {
+                        $("#tabs-6-loading").hide();
+                    },
+                    type: 'get',
+                    url: schoolForumPath
+              });
+
+              $("#tabs-6-loading").show();
+            }else if (ui.index == 3) {
+                // Arquivos
+                $("#tabs-4-content").html('');
+                jQuery.ajax({
+                    data: '',
+                    dataType: 'script',
+                    success: function(request) {
+                        $("#tabs-4-loading").hide();
+                    },
+                    type: 'get',
+                    url: schoolFoldersPath
+                });
+
+                $("#tabs-4-loading").show();
+            } else if (ui.index == 2) {
+                // content
+                $("#tabs-2-content").html('');
+                jQuery.ajax({
+                    data: 'tab=true',
+                    dataType: 'script',
+                    success: function(request) {
+                        $("#tabs-2-loading").hide();
+                    },
+                    type: 'get',
+                    url: schoolCoursesPath
+                });
+
+                $("#tabs-2-loading").show();
+            }
+        }
+    });
+});
+</script>
+
+<div class="grid_16">
+  <%= render :partial => "spaces/sidebar", :locals => {:space => @space} %>
+
+  <div class="main grid_12 omega">
+    <div class="school-tabs tabs">
+      <ul>
+        <li><a href="#tabs-1">Início</a></li>
+        <li><a href="#tabs-5">Mural</a></li>
+        <li><a href="#tabs-2">Conteúdo</a></li>
+        <li><a href="#tabs-4">Arquivos</a></li>
+        <li><a href="#tabs-6">Fórum</a></li>
+      </ul>
+
+      <div id="tabs-1" class="clearfix first-page">
+        <% if @brand_new and @featured %>
+          <%= render :partial => 'start_page', :locals => {:featured => @featured, :brand_new => @brand_new, :bulletins => @bulletins} %>
+        <% end %>
+        <div class="statistics">
+          <span class="call"><span>Eventos</span></span>
+          <% if @space.events and @space.events.approved.upcoming.size > 0 %>
+            <%= render :partial => 'events/upcoming', :object => @space.events.approved.upcoming%>
+            <%= link_to 'Ver todos', space_events_path(@space), :class=>"more" %> 
+          <% else %>
+            <div class="box_notice">
+              Nenhum evento foi enviado ainda. <%= link_to 'Crie uma agora!', new_space_event_path(@space) %>
+          </div>
+        <% end %>
+      </div><!-- end news -->
+      <div class="news">
+        <span class="call"><span>Notícias</span></span>
+        <% if @bulletins && @bulletins.size > 0 %>
+          <%= render :partial => 'bulletins/headlines', :object => @bulletins  %>
+          <%= link_to 'Ver todos', space_bulletins_path(@space), :class=>"more" %> 
+        <% else %>
+          <div class="box_notice">
+            Nenhuma notícia foi enviada ainda. <%= link_to 'Envie uma agora!', new_space_bulletin_path(@space) %>
+        </div>
+      <% end %>
+    </div><!-- end noticias -->
+  </div>
+
+  <div id="tabs-5">
+    <%= javascript_include_tag 'flow.js' %>
+    <%= render :partial => "statuses/create_status", :locals => {:status => @status, :statusable => @space }%>
+    <ul class="activities">
+      <%= render :partial => "statuses/type_proxy", :collection => @statuses, :as => :status, :locals => {:statusable => @space } %>
+    </ul><!-- end activities -->			
+
+    <% unless @statuses.length < 10%>
+      <div id="more">
+        <%= link_to_remote "mais", :url => {:controller => :statuses, :action => :more, :id => @space.id, :type => 'space', :offset => 10, :limit => 10}, :method =>:get, :loading => "$('#more').html('"+escape_javascript(image_tag('spinner.gif'))+"')"%>
+      </div>
+    <% end %>
+
+
+  </div>
+
+  <!-- conteudo -->
+  <div id="tabs-2">
+    <%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-2-loading', :style => 'padding: 20px;'%>
+    <div id="tabs-2-content"></div>
+  </div>
+  <!-- arquivos --> 
+  <div id="tabs-4">
+    <%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-4-loading', :style => 'padding: 20px;'%>
+    <div id="tabs-4-content"></div>
+  </div>
+  <!-- forum --> 
+  <div id="tabs-6">
+    <%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-6-loading', :style => 'padding: 20px;'%>
+    <div id="tabs-6-content"></div>
+  </div>
+</div><!-- end tabs -->
+</div><!-- end main -->
+</div>

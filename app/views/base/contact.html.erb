@@ -1,3 +1,26 @@
 <%- form_for :contact, :url => {:action => :contact} do |f| %>
-	<%= render :partial => 'contact_form', :locals => {:f => f} %>
+  <fieldset>
+	<legend>Contato</legend>
+	<%= f.error_messages %>
+	
+	<% field_set_tag 'Sobre você' do %>
+		<%= f.label :name, "Nome", :class => 'inline' %>
+		<%= f.text_field :name %>
+	
+		<%= f.label :email, "E-mail", :class=> 'inline' %>
+		<%= f.text_field :email %>
+	<% end %>
+	
+	<% field_set_tag 'Sobre a mensagem' do %>
+		<%= f.label :kind, "Você quer nos enviar uma", :class => 'inline' %>
+		<%= f.select :kind, options_for_select([["Dúvida"], ["Parceria"], ["Sugestão"]]) %>	
+	<% end%>
+
+	<% field_set_tag 'O que você gostaria de dizer' do %>
+		<%= f.label :body, "Mensagem" %>
+		<%= f.text_area :body, :cols => 90, :rows => 6 %>
+	<% end %>
+	
+	<%= f.submit "Enviar"%>
+      </fieldset>
 <% end %>

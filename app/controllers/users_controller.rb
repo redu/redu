@@ -1,25 +1,22 @@
 require "RMagick"
 
 class UsersController < BaseController
-  layout 'new_application'
-
-  if AppConfig.closed_beta_mode
-    skip_before_filter :beta_login_required, :only => [:new, :create, :activate]
-  end
-
   uses_tiny_mce(:options => AppConfig.default_mce_options.merge({:editor_selector => "rich_text_editor"}),
                 :only => [:create, :update, :edit, :welcome_about, :create])
 
   # Filters
+  if AppConfig.closed_beta_mode
+    skip_before_filter :beta_login_required, :only => [:new, :create, :activate]
+  end
   after_filter :create_activity, :only => [:update]
-
-  before_filter :login_required, :except => [:new, :create, :forgot_password, :forgot_username]
+  before_filter :login_required, 
+    :except => [:new, :create, :forgot_password, :forgot_username, :activate, :resend_activation]
   before_filter :find_user, :only => [:activity, :edit, :edit_pro_details, :show, :update, :destroy, :statistics, :deactivate,
-                                      :crop_profile_photo, :upload_profile_photo ]
+    :crop_profile_photo, :upload_profile_photo ]
   before_filter :require_current_user, :only => [:edit, :update, :update_account,
-                                                 :edit_pro_details, :update_pro_details,
-                                                 :welcome_photo, :welcome_about, :welcome_invite, :deactivate,
-                                                 :crop_profile_photo, :upload_profile_photo]
+    :edit_pro_details, :update_pro_details,
+    :welcome_photo, :welcome_about, :welcome_invite, :deactivate,
+    :crop_profile_photo, :upload_profile_photo]
   before_filter :admin_required, :only => [:assume, :featured, :toggle_featured, :toggle_moderator]
   before_filter :admin_or_current_user_required, :only => [:statistics]
 
@@ -48,10 +45,8 @@ class UsersController < BaseController
   end
 
   def teaching
-
     @user = User.find(params[:id]) #TODO performance routes (passar parametro direto para query)
-
-    @courses = @user.courses[0..5] # TODO limitar pela query (limit = 5)
+    @lectures = @user.lectures[0..5] # TODO limitar pela query (limit = 5)
     @exams = @user.exams[0..5]
 
     respond_to do |format|
@@ -61,18 +56,14 @@ class UsersController < BaseController
         end
       end
     end
-
   end
-
-
-
 
   def show_log_activity
     current_user.log_activity
   end
 
   def show_favorites
-    #current_user.get_favorites
+    #TODO
   end
 
   ### Followship
@@ -101,46 +92,27 @@ class UsersController < BaseController
     end
   end
 
-
   def follow # TODO evitar duplicata
     user = User.find(params[:id])
-    respond_to do |format| 
+    respond_to do |format|
       unless user.followers.include?(current_user)
         user.followers << current_user
-        format.js do
-          render :update do |page|
-            page << "$('#follow_link').hide()"
-            page << "$('#unfollow_link').show()"
-          end
-        end
+        format.js
       end
     end
   end
 
   def unfollow
     user = User.find(params[:id])
-    #@follow_user = User.find(params[:follow_id])
 
     user.followers.delete current_user
-    if user.save #@user.update_attributes(:follows)
-      #flash[:notice] = 'Você não está mais seguindo esse usuário'
-    else
-      #flash[:erro] = 'Não foi possível parar de seguir esse usuário'
-    end
     respond_to do |format|
       format.html do
         redirect_to user_path(user)
       end
-      format.js do
-        render :update do |page|
-          page << "$('#follow_link').show()"
-          page << "$('#unfollow_link').hide()"
-        end
-      end
+      format.js
     end
-
   end
-
 
   def list_subjects
     @subjects = Subject.all
@@ -148,7 +120,7 @@ class UsersController < BaseController
   end
 
   def logs
-
+    #TODO
   end
 
   ## User
@@ -176,16 +148,15 @@ class UsersController < BaseController
 
   def index
     cond, @search, @metro_areas, @states = User.paginated_users_conditions_with_search(params)
-
     @users = User.recent.find(:all,
                               :conditions => cond.to_sql,
                               :include => [:tags],
                               :page => {:current => params[:page], :size => 20}
-                              )
+                             )
 
-    @tags = User.tag_counts :limit => 10
+                             @tags = User.tag_counts :limit => 10
 
-    setup_metro_areas_for_cloud
+                             setup_metro_areas_for_cloud
   end
 
   def dashboard
@@ -204,6 +175,7 @@ class UsersController < BaseController
 
   def tos
     nil
+    #TODO
   end
 
   def new
@@ -218,7 +190,7 @@ class UsersController < BaseController
 
   def groups
     @user = User.find(params[:id])
-    @groups = @user.schools.find(:all, :select => "name, path")
+    @groups = @user.spaces.find(:all, :select => "name, path")
   end
 
   def create
@@ -277,16 +249,13 @@ class UsersController < BaseController
   end
 
   def update
-    #access_denied if params[:user] and current_user.id.to_s != params[:user][:id]
-
     case params[:element_id]
     when 'user-description'
       params[:user] = {:description => params[:update_value]}
     end
-    
+
     @user.attributes      = params[:user]
     @metro_areas, @states = setup_locations_for(@user)
-    #@user.update_attribute(:avatar, params[:user][:avatar])
 
     unless params[:metro_area_id].blank?
       @user.metro_area  = MetroArea.find(params[:metro_area_id])
@@ -298,28 +267,27 @@ class UsersController < BaseController
 
     @user.tag_list = params[:tag_list] || ''
 
-  #alteracao de senha na conta do usuario
-     unless params[:current_password].nil?
-       
-         @flag = false
-         authenticated = UserSession.new(:login => @user.login, :password => params[:current_password]).save 
-     
-       unless authenticated
-         @current_password = params[:current_password]
-         @user.errors.add_to_base("A senha atual estå incorreta")
-         @flag = true
-         
-       end  
-    
+    #alteracao de senha na conta do usuario
+    unless params[:current_password].nil?
+
+      @flag = false
+      authenticated = UserSession.new(:login => @user.login, :password => params[:current_password]).save
+
+      unless authenticated
+        @current_password = params[:current_password]
+        @user.errors.add_to_base("A senha atual estå incorreta")
+        @flag = true
+
+      end
+
     end
- 
+
     if @user.errors.empty? && @user.save
-      #@user.track_activity(:updated_profile) Utilizaremos outro Activity
       respond_to do |format|
         format.html do
           flash[:notice] = :your_changes_were_saved.l
           unless params[:welcome]
-           
+
             redirect_to(user_path(@user))
           else
             redirect_to(:action => "welcome_#{params[:welcome]}", :id => @user)
@@ -331,8 +299,8 @@ class UsersController < BaseController
           end
         end
       end
-     else
-       render 'edit'
+    else
+      render 'edit'
     end
   rescue ActiveRecord::RecordInvalid
     render :action => 'edit'
@@ -434,7 +402,6 @@ class UsersController < BaseController
   def update_pro_details
     @user = User.find(params[:id])
     @user.add_offerings(params[:offerings]) if params[:offerings]
-
     @user.attributes = params[:user]
 
     if @user.save!
@@ -498,7 +465,6 @@ class UsersController < BaseController
 
   def forgot_password
     return unless request.post?
-
     @user = User.find_by_email(params[:email])
 
     if @user && @user.reset_password
@@ -520,7 +486,6 @@ class UsersController < BaseController
 
   def forgot_username
     return unless request.post?
-
     if @user = User.find_by_email(params[:email])
       UserNotifier.deliver_forgot_username(@user)
       redirect_to login_url
@@ -532,14 +497,12 @@ class UsersController < BaseController
 
   def resend_activation
     return unless request.post?
-
     if params[:email]
       @user = User.find_by_email(params[:email])
     else
       @user = User.find(params[:id])
     end
-
-    if @user && !@user.active?
+    if @user
       flash[:notice] = :activation_email_resent_message.l
       UserNotifier.deliver_signup_notification(@user)
       redirect_to login_path and return
@@ -566,7 +529,6 @@ class UsersController < BaseController
   end
 
   def metro_area_update
-
     country = Country.find(params[:country_id]) unless params[:country_id].blank?
     state   = State.find(params[:state_id]) unless params[:state_id].blank?
     states  = country ? country.states.sort_by{|s| s.name} : []
@@ -580,10 +542,10 @@ class UsersController < BaseController
     respond_to do |format|
       format.js {
         render :partial => 'shared/location_chooser', :locals => {
-          :states => states,
-          :metro_areas => metro_areas,
-          :selected_country => params[:country_id].to_i,
-          :selected_state => params[:state_id].to_i,
+        :states => states,
+        :metro_areas => metro_areas,
+        :selected_country => params[:country_id].to_i,
+        :selected_state => params[:state_id].to_i,
         :selected_metro_area => nil }
       }
     end
@@ -627,32 +589,28 @@ class UsersController < BaseController
     # ver: http://asterisq.com/products/constellation/roamer/integration#data_rest_tree
 
     @user = User.find((params[:node_id]) ?  params[:node_id] :  params[:id] )
-
     @activities = Status.activities(@user)
-
     respond_to do |format|
       format.xml
     end
   end
 
   protected
-    def setup_metro_areas_for_cloud
-      @metro_areas_for_cloud = MetroArea.find(:all, :conditions => "users_count > 0", :order => "users_count DESC", :limit => 100)
-      @metro_areas_for_cloud = @metro_areas_for_cloud.sort_by{|m| m.name}
-    end
+  def setup_metro_areas_for_cloud
+    @metro_areas_for_cloud = MetroArea.find(:all, :conditions => "users_count > 0", :order => "users_count DESC", :limit => 100)
+    @metro_areas_for_cloud = @metro_areas_for_cloud.sort_by{|m| m.name}
+  end
 
-    def setup_locations_for(user)
-      metro_areas = states = []
+  def setup_locations_for(user)
+    metro_areas = states = []
+    states = user.country.states if user.country
+    metro_areas = user.state.metro_areas.all(:order => "name") if user.state
 
-      states = user.country.states if user.country
+    return metro_areas, states
+  end
 
-      metro_areas = user.state.metro_areas.all(:order => "name") if user.state
-
-      return metro_areas, states
-    end
-
-    def admin_or_current_user_required
-      current_user && (current_user.admin? || @is_current_user) ? true : access_denied
-    end
+  def admin_or_current_user_required
+    current_user && (current_user.admin? || @is_current_user) ? true : access_denied
+  end
 
 end

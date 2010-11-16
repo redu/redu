@@ -1,73 +1,73 @@
 <% if action_name == 'site_index' %>
-	<%= stylesheet_link_tag 'jcarousel' %>
-	<%= javascript_include_tag 'jquery.jcarousel.min.js'%>
-	<script type="text/javascript"> 
-	 
-	jQuery(document).ready(function() {
-	    jQuery('#carousel').jcarousel();
-	});
-	 
-	</script>
+  <%= stylesheet_link_tag 'jcarousel' %>
+  <%= javascript_include_tag 'jquery.jcarousel.min.js'%>
+  <script type="text/javascript"> 
+
+    jQuery(document).ready(function() {
+        jQuery('#carousel').jcarousel();
+        });
+
+</script>
 <% end %>
 
 <% if controller_name == 'users' and action_name == 'show'%>
-<%=  javascript_include_tag "jquery.editinplace.js"%>
+  <%=  javascript_include_tag "jquery.editinplace.js"%>
 <% end %>
 
-<% if controller_name == 'admin' or controller_name == 'beta_keys' or controller_name == 'schools' or controller_name == 'messages' %>
+<% if controller_name == 'admin' or controller_name == 'beta_keys' or controller_name == 'spaces' or controller_name == 'messages' or controller_name == 'environments' or controller_name == 'courses' or controller_name == 'forums'  or controller_name == 'roles' %>
 <%= javascript_include_tag "tablecloth.js" %>
 <%= stylesheet_link_tag "tablecloth.css" %>
 <% end %>
 
 
-<% if controller_name == 'schools'  %>
-	<% if action_name == 'show'%>
-	<%= stylesheet_link_tag 'files' %>
-	<%= ajaxful_rating_style %>
-	<% end %>
-  
- <% end %>
- 
- <%  if @school and not @school.new_record? %>
-    <%= stylesheet_link_tag 'themes/' + @school.theme %>
+<% if controller_name == 'spaces'  %>
+  <% if action_name == 'show'%>
+    <%= stylesheet_link_tag 'files' %>
+    <%= ajaxful_rating_style %>
   <% end %>
- 
- <%= include_tiny_mce_if_needed %>
- 
- <% if controller_name == 'courses' || controller_name == 'exams' || controller_name == 'bulletins' || controller_name == 'favorites' %>
+
+<% end %>
+
+<%  if @space and not @space.new_record? %>
+  <%= stylesheet_link_tag 'themes/' + @space.theme %>
+<% end %>
+
+<%= include_tiny_mce_if_needed %>
+
+<% if controller_name == 'lectures' || controller_name == 'exams' || controller_name == 'bulletins' || controller_name == 'favorites' %>
   <%= ajaxful_rating_style %>
-  <% end %>
-	
-	<% if controller_name == 'courses' && action_name == 'show'%>
+<% end %>
+
+<% if controller_name == 'lectures' && action_name == 'show'%>
   <%= javascript_include_tag 'swfobject'%>
-	<% end %>
-	
-	<% if controller_name == 'events' || controller_name == 'subjects' %>
-		<%= javascript_include_tag 'jquery-1.4.2.min.js'  %>	
-		<%= javascript_include_tag 'jquery-ui-1.8.4.custom.min.js'  %>
-		<%= javascript_include_tag 'jquery-ui-timepicker-addon.min'  %>
-		<%= stylesheet_link_tag 'jquery-ui-1.8.4.custom.css' %>		
-                <%= javascript_include_tag 'jquery.ui.datepicker-pt-BR.js' %>
-	<% end %>
-	
-	<% if controller_name == 'schools' || controller_name == 'events' || controller_name == 'bulletins' %>
-		<%= stylesheet_link_tag 'calendar/red/style' %>
-	<% end %>
-	
-	<script type="text/javascript">
-var uservoiceOptions = {
-  /* required */
-  key: 'redusugestoes',
-  host: 'redusugestoes.uservoice.com', 
-  forum: '58955',
-  showTab: true,  
-  /* optional */
-  alignment: 'right',
-  background_color:'#06C', 
-  text_color: 'white',
-  hover_color: '#06C',
-  lang: 'pt_BR'
-};
+<% end %>
+
+<% if controller_name == 'events' || controller_name == 'subjects'%>
+  <%= javascript_include_tag 'jquery-1.4.2.min.js'  %>	
+  <%= javascript_include_tag 'jquery-ui-1.8.4.custom.min.js'  %>
+  <%= javascript_include_tag 'jquery-ui-timepicker-addon.min'  %>
+  <%= stylesheet_link_tag 'jquery-ui-1.8.4.custom.css' %>		
+  <%= javascript_include_tag 'jquery.ui.datepicker-pt-BR.js' %>
+<% end %>
+
+<% if controller_name == 'spaces' || controller_name == 'events' || controller_name == 'bulletins' %>
+  <%= stylesheet_link_tag 'calendar/red/style' %>
+<% end %>
+
+<script type="text/javascript">
+  var uservoiceOptions = {
+    /* required */
+key: 'redusugestoes',
+     host: 'redusugestoes.uservoice.com', 
+     forum: '58955',
+     showTab: true,  
+     /* optional */
+     alignment: 'right',
+     background_color:'#06C', 
+     text_color: 'white',
+     hover_color: '#06C',
+     lang: 'pt_BR'
+  };
 
 function _loadUserVoice() {
   var s = document.createElement('script');

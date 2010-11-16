@@ -1,0 +1,49 @@
+<div class="grid_16">
+<div id="breadcrumbs">
+	<%# if @space %>
+		<!-- <a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <%# link_to @space.name, @space %> > nova aula -->
+	<%# else %>
+	<a href="<%=application_url%>">início</a> > <a href="#">ensinar</a> > nova aula
+	<%# end %>
+</div>
+</div>
+	
+<%# render(:partial => "spaces/space_info", :locals=>{:show => false}) if @space%>
+
+<h3 class="call">Novo artigo </h3>
+
+<div class="grid_9 push_3">
+<table class="booking_steps" cellpadding="0" cellspacing="0">
+							<tbody><tr>
+								<td><span class="book_step disabled"><span><em>1</em>Informações Gerais</span></span></td>
+								<td class="spacer">&nbsp;</td>
+								<td><span class="book_step current"><span><em>2</em>Editor de Aula</span></span></td>
+								<td class="spacer">&nbsp;</td>
+								<td><span class="book_step disabled"><span><em>3</em>Publicação</span></span></td>
+							</tr>
+						</tbody></table>
+</div>
+
+
+
+<% form_for :page, @page, :url => { :action => "create" }, :html => { :multipart => true } do |f| %>
+<%= f.error_messages %>
+
+	<%= hidden_field_tag("step", "2", options = {})%>
+	<%# hidden_field_tag("space_id", @space.id) if @space %>
+	
+	<div class="grid_12 push_2">
+    <%= f.text_area :body, :class => "mceEditor"%>
+  </div>
+	
+	<div class="grid_16"> 
+<%= link_to '< Anterior', new_lecture_path(:step => '1'), :class => "button" %> 
+<%= f.submit 'Próximo >' %> ou <%= link_to 'Cancelar', cancel_lectures_path, :confirm => "Tem certeza que deseja sair do editor de aulas?" %>
+</div>
+<% end %>
+
+</div>
+
+	
+	
+</div>

@@ -1,0 +1,25 @@
+<div class="grid_16">
+  <div class="fake-tabs grid_16 alpha omega">
+    <%= render :partial => 'environments/admin_taskbar' %>
+    <div class="panel clearfix grid_15">
+      <h1>Configurações do Ambiente de Ensino</h1>
+
+      <% form_for @environment, :html => { :multipart => true } do |f| %>
+        <%= f.error_messages %>
+        <% field_set_tag "Informações Gerais" do %>
+          <%= f.label :name, "Nome" %>
+          <%= f.text_field :name  %>
+          <%= f.label :description, "Description" %>
+          <%= f.text_area :description, :class => 'mceEditor' %>
+          <%= f.label "Palavras-chave <span class='snippet'>(separadas por vírgula)</span>" %>
+          <%= f.text_field :tag_list %>
+        <% end %>
+        <% field_set_tag "Aparência" do %>
+          <%= f.label :avatar, "Imagem" %>
+          <%= f.file_field :avatar %>
+          <%= f.submit "Alterar!" %>
+        <% end %>
+      <% end %>
+    </div><!-- end config. -->
+  </div>
+</div>

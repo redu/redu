@@ -1,0 +1,42 @@
+<div class="main grid_16">
+  <div class="fake-tabs grid_16 alpha omega">
+    <%= render :partial => "courses/admin_taskbar" %>
+    <div class="panel">
+      <h1>Espaços</h1>
+
+      <% if @spaces && @spaces.size > 0 %>
+        <table class="common">
+          <thead>
+            <th>Nome</th><th>Editar</th><th>Deletar</th>
+          </thead>
+          <% for space in @spaces %>
+            <tr>
+              <tr>
+                <td><%= link_to space.name, space_path(space), :target => "_blank" %> </td>
+                <td><%= link_to 'Editar', edit_space_path(space) %> </td>
+                <td><%= link_to 'Deletar', space_path(space), :confirm => 'Você tem certeza que deseja remover este curso?', :method => :delete %> </td>
+              </tr>
+            </tr>
+          <% end %>
+        </table>
+
+        <%= link_to 'Criar Espaço', new_space_path(:course_id => @course.id), :class => 'button' %>
+      <% else %>
+        <div class="box_notice">
+          Não existe nenhum espaço.
+          <!--TODO Colocar ajax para o form aparecer e sumir -->
+          <%= link_to "Criar um espaço", new_space_path(:course_id => @course.id) %>
+        </div>
+      <% end %>
+
+      <div id="pagination" align="center" class="pagination">
+        <%= will_paginate  @spaces, :class => "pagination_number"  %>
+      </div>
+    </div> <!-- end panel -->
+  </div><!-- end tabs -->
+</div><!-- end main -->
+
+
+
+
+

@@ -26,15 +26,20 @@ namespace :bootstrap do
   desc "Insert default Roles"
   task :roles => :environment do
     Role.enumeration_model_updates_permitted = true
-    Role.create(:name => 'admin', :school_role => false)    
-    Role.create(:name => 'moderator', :school_role => false)
-    Role.create(:name => 'member', :school_role => false)   
+    Role.create(:name => 'admin', :space_role => false)    
+    Role.create(:name => 'moderator', :space_role => false)
+    Role.create(:name => 'member', :space_role => false)   
+
+    # Environment
+    Role.create(:name => 'environment_admin', :space_role => false)
+
+    # Course
+    Role.create(:name => 'course_admin', :space_role => false)
     
-    # school roles
-    Role.create(:name => 'school_admin', :school_role => true)
-    Role.create(:name => 'coordinator', :school_role => true)  
-    Role.create(:name => 'teacher', :school_role => true)
-    Role.create(:name => 'student', :school_role => true)
+    # space roles
+    Role.create(:name => 'teacher', :space_role => true)
+    Role.create(:name => 'tutor', :space_role => true)
+    Role.create(:name => 'student', :space_role => true)
     
     
     Role.enumeration_model_updates_permitted = false

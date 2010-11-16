@@ -1,6 +1,6 @@
 
  <% content_for :js do %>
- <script>
+ <script type="text/javascript">
  	function saveDraft(opt, opt_param){
         var theform = document.getElementById('exam_form');
 		var theattribute = document.getElementById('sbt_opt');
@@ -219,14 +219,14 @@ function removeAllMce(){
 
 <div class="grid_16">
 <div id="breadcrumbs">
-		<% if @school %>
-	<a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <%= link_to @school.name, @school %> > novo exame simples
-	<% else %>
-	<a href="<%=application_url%>">início</a> > <a href="#">ensinar</a> > novo exame simples
-	<%end %>
+	<%# if @space %>
+		<!-- <a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <%= link_to @space.name, @space %> > novo exame simples -->
+	<%# else %>
+		<a href="<%=application_url%>">início</a> > <a href="#">ensinar</a> > novo exame simples
+	<%# end %>
 </div>
 	
-<%= render(:partial => "schools/school_info", :locals=>{:show => false}) if @school%>
+<%# render(:partial => "spaces/space_info", :locals=>{:show => false}) if @space%>
 
 <h3 class="call">Nova aula passo-a-passo </h3>
 </div>
@@ -291,7 +291,7 @@ function removeAllMce(){
  
 
  
-  <%= hidden_field_tag("school_id", @school.id) if @school %>
+  <%# hidden_field_tag("space_id", @space.id) if @space %>
  
   <%= hidden_field_tag("step", "2", options = {})%>
   <%= hidden_field_tag("exam_type", "simple", options = {})%>

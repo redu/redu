@@ -8,7 +8,6 @@ gem "validatable"
 gem "mysql"
 gem "authlogic"
 gem "parseline"
-gem "calendar_date_select"
 gem "icalendar"
 gem "will_paginate", "~> 2.3.11"
 gem "adzap-ar_mailer"
@@ -23,10 +22,11 @@ gem "ruby-debug"
 gem "zencoder"
 gem "ruby-debug"
 gem "mime-types"
- 
+gem "haml"
 
 group :development do
   gem "mongrel"
+  gem "aanand-deadweight"
 end
 
 group :production do

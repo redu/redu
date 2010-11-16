@@ -1,0 +1,2 @@
+page.replace_html 'user_list', :partial => 'admin/user_list', :locals => {:users => @users}
+

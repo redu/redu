@@ -13,8 +13,8 @@ module UsersHelper
   # (persistimos as anotações do usuário mesmo quando a aula não existe mais)
   def link_to_or_name(annotation)
     
-    if annotation.course
-     link_to image_tag(annotation.course.thumb_url, :height => '24', :width => '24'), annotation.course, :rel => 'bookmark', :title => annotation.course.name
+    if annotation.lecture
+     link_to image_tag(annotation.lecture.thumb_url, :height => '24', :width => '24'), annotation.lecture, :rel => 'bookmark', :title => annotation.lecture.name
    else
      annotation.asset_name
      end

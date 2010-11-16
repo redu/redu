@@ -1,0 +1,13 @@
+<h1><%= :edit_post.l %></h1>
+
+<h2><%= link_to h(@post.topic.title), space_forum_topic_path(@space,  @post.topic) %></h2>
+
+<%= link_to(:delete_this_post.l, space_forum_topic_sb_post_path(@space, :topic_id => @post.topic, :id => @post, :page => params[:page]), 
+      :class => "utility", :method => :delete, :confirm => :are_you_sure_you_want_to_delete_this_post.l) %>
+
+<% form_for :post, :html => { :method => :put }, 
+     :url  => space_forum_topic_sb_post_path(:forum_id => params[:forum_id], :topic_id => params[:topic_id], :id => @post, :page => params[:page]) do |f| -%>
+  <%= f.error_messages %>
+  <%= f.text_area :body %>
+  <%= submit_tag :save.l %> <%= :or.l %> <%= link_to :cancel.l, space_forum_topic_path(@space, :id => params[:topic_id], :page => params[:page]) %>
+<% end -%>

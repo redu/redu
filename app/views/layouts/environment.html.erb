@@ -1,0 +1,16 @@
+<% content_for :body do %>
+  <% if @content_for_body.nil? %>
+    <%= render :partial => 'shared/new/header' %>
+    <div id="environment" class="container_16 content clearfix <%= yield :page_classes %>">
+      <%= render :partial => "shared/messages" %>
+      <%= render :partial => "environments/header", 
+        :locals => { :environment => @environment, :course => @course, :space => @space } %>
+
+      <%= @content_for_layout %>
+    </div><!-- end content -->
+    <%= render :partial => 'shared/new/footer' %>
+  <% else %>
+    <%= yield :body %>
+  <% end %>
+<% end %>
+<%= render :file => "layouts/application" %>

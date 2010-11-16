@@ -1,8 +1,7 @@
-<%if @is_school%>
-<%= render :partial => "schools/school_info", :locals => {:school => @school,:show => false} %>
-<%= render :partial => "schools/sidebar", :locals => {:school => @school} %>
-<%end%>
+<% if @bulletinable.class.to_s.eql? "Space" %>
+  <%= render :partial => "spaces/sidebar", :locals => {:space => @bulletinable} %>
+<% end %>
 
 <div class="main grid_12 alpha">
-	<%= render :partial => 'bulletins/form', :locals => {:bulletin => @bulletin} %>
+  <%= render :partial => 'bulletins/form', :locals => {:bulletin => @bulletin} %>
 </div>

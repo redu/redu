@@ -3,7 +3,7 @@
 
 
 <script type="text/javascript">
-  var subjectFoldersPath = "<%# school_folders_path(:school_id => @school.id.to_s) %>";
+  var subjectFoldersPath = "<%# space_folders_path(:space_id => @space.id.to_s) %>";
 
   var $subjecttabs;
 
@@ -32,7 +32,6 @@
   });
 </script>
 
-<%= render(:partial => "schools/school_info", :locals => {:show => true}) if @school %>
 <%= render :partial => "subjects/sidebar", :locals => {:subject => @subject, :percetage => @percentage} %>
 
 <div class="main grid_12">

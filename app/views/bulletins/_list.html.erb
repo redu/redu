@@ -1,34 +1,14 @@
-<%
- 
-if @is_school || params[:controller].eql?("schools") 
-  url_show =  school_bulletin_path(bulletin.bulletinable, bulletin)
-  url_edit = edit_school_bulletin_path(bulletin.bulletinable, bulletin)
-else
-  url_show =  subject_bulletin_path(bulletin.bulletinable, bulletin)
-  url_edit = edit_subject_bulletin_path(bulletin.bulletinable, bulletin)	
-end
-%>
-
 <li class="clearfix">
-
-  <%= link_to bulletin.title, url_show %>
-  <div class="quiet">		
-    <%= link_to bulletin.owner.display_name, user_path(bulletin.owner) if is_index%>
-    <span> - <%= time_ago_in_words(bulletin.created_at) %> </span>
+  <div class="date grid_1 aplha">
+    <span class="month quiet"><%= bulletin.created_at.strftime("%b") %></span>
+    <span class="quiet day"><%= bulletin.created_at.day %></span>
+    <span class="quiet year"><%= bulletin.created_at.year %></span>
   </div>
-  <div class="grid_12 omega alpha pretty-text">		
-    <% if is_index %>
-      <p>
-        <%=	bulletin.tagline %>
-      </p>
-      <div class="grid_10">
-        <% if current_user.can_manage?(bulletin, bulletin.bulletinable) %>
-          <%= link_to 'Editar', url_edit , {:class => "button icon-edit"} %>
-          <%= link_to 'Remover', url_show,
-            {:confirm => 'Você tem certeza que deseja remover essa notícia permanentemente?',
-            :method => :delete, :class => "button icon-delete"} %>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
+  <span class="title grid_10 omega"><%= link_to bulletin.title, polymorphic_path([bulletin.bulletinable, bulletin]) %>
+</span>
+  <span class="rating"></span>
+  <span class="tagline quiet grid_10 omega"><%= bulletin.tagline %></span>
+  <div class="grid_5 omega" >
+    <%= render :partial => 'tags/tags', :object => bulletin.tags  %>
+ </div>
 </li>

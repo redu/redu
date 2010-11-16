@@ -16,31 +16,16 @@ module BaseHelper
 
 
     def simple_categories_i18n(f)
-    
-   # collection_select(:course, :simple_category, SimpleCategory.all, :id, :name)
-   categories_array = SimpleCategory.all.map { |cat| [category_i18n(cat.name), cat.id] }
- 
-     indice = nil #indice retorna a posição da categoria em categories_array
-     unless f.object.nil?  
-          categories_array.each_with_index do |ca,index|
-            ca.each do |c| 
-               if  c.eql?(f.object.simple_category_id)
-                indice = index 
-               end
-            end
-         end
-     end
-     
-    
-		if params[:course]
-			# To put a value in categories_array I have to subtract for 1 the params[:course][:simple_category_id],
+   # collection_select(:lecture, :simple_category, SimpleCategory.all, :id, :name)
+	  categories_array = SimpleCategory.all.map { |cat| [category_i18n(cat.name), cat.id] }
+		if params[:lecture]
+			# To put a value in categories_array I have to subtract for 1 the params[:lecture][:simple_category_id],
 			# because the include_blank add a extra field
-			if params[:course][:simple_category_id]
+			if params[:lecture][:simple_category_id]
 			
-				if params[:course][:simple_category_id].to_i > 0
-					i = params[:course][:simple_category_id].to_i - 1
-					#f.select(:simple_category_id, options_for_select(categories_array, categories_array[i]), :include_blank => true)
-					f.select(:simple_category_id, options_for_select(categories_array,categories_array[indice]), :include_blank => true )		
+				if params[:lecture][:simple_category_id].to_i > 0
+					i = params[:lecture][:simple_category_id].to_i - 1
+					f.select(:simple_category_id, options_for_select(categories_array, categories_array[i]), :include_blank => true)		
 				else
 					f.select(:simple_category_id, options_for_select(categories_array), :include_blank => true)
 				end
@@ -63,16 +48,6 @@ module BaseHelper
 			f.select(:simple_category_id, options_for_select(categories_array), :include_blank => true)
 		end
  
-  end
-
-
-    def area_select(select_opts)
-   # collection_select(:course, :simple_category, SimpleCategory.all, :id, :name)
-   categories_array = ReduCategory.all.map { |cat| [(cat.name.downcase.gsub(' ','_').to_sym.l), cat.id] }
-   categories_array.sort! { |a,b| a[0] <=> b[0] } # Ordenando pelo nome da categoria
-   categories_array.insert(0, ["All".downcase.gsub(' ','_').to_sym.l, 'all'])
-
-    select_tag(:area, options_for_select(categories_array), select_opts )
   end
 
   def category_i18n(category)
@@ -110,7 +85,7 @@ module BaseHelper
          @activity = "acabou de entrar no redu" if item.log_action == "login"
          @activity = "atualizou seu status para: <span style='font-weight: bold;'>\"" + item.logeable_name + "\"</span>" if item.log_action == "update"
 
-        when 'course'
+        when 'lecture'
           link_obj = link_to(item.logeable_name, item.logeable)
 
           @activity = "está visualizando a aula " + link_obj if item.log_action == "show"
@@ -124,11 +99,36 @@ module BaseHelper
           @activity = "está respondendo ao exame " + link_obj if item.log_action == "answer"
           @activity =  "criou o exame " + link_obj if item.log_action == "create"
           @activity =  "adicionou o exame " + link_obj + " ao seus favoritos" if item.log_action == "favorite"
-      when 'school'
-          link_obj = link_to(item.logeable_name, school_path(item.logeable_id))
+      when 'space'
+          link_obj = link_to(item.logeable_name, space_path(item.logeable_id))
 
           @activity =  "criou a rede " + link_obj if item.log_action == "create"
           @activity =  "adicionou a rede " + link_obj + " ao seus favoritos" if item.log_action == "favorite"
+      when 'topic'
+          @topic = Topic.find(item.logeable_id)
+          link_obj = link_to(item.logeable_name, space_forum_topic_path(@topic.forum.space, @topic))
+
+          @activity = "criou o tópico " + link_obj if item.log_action == 'create'
+      when 'sb_post'
+          @post = SbPost.find(item.logeable_id)
+          link_obj = link_to(@post.topic.title, space_forum_topic_path(@post.topic.forum.space, @post.topic))
+
+          @activity = "respondeu ao tópico " + link_obj if item.log_action == 'create'
+      when 'event'
+          @event = Event.find(item.logeable_id)
+          link_obj = link_to(item.logeable_name, space_event_path(@event.space, @event))
+
+          @activity =  "criou o evento " + link_obj if item.log_action == "create"
+      when 'bulletin'
+          @bulletin = Bulletin.find(item.logeable_id)
+          link_obj = link_to(item.logeable_name, polymorphic_path([@bulletin.bulletinable, @bulletin]))
+
+          @activity =  "criou a notícia " + link_obj if item.log_action == "create"
+      when 'myfile'
+        @space = item.statusable
+        @myfile = item.logeable
+        link_obj = link_to @myfile.attachment_file_name, download_space_folder_url(@space, @myfile)
+        @activity =  "adicionou o arquivo #{link_obj} ao espaço #{link_to @space.name, @space}"
       else
           @activity = " atividade? "
       end
@@ -152,7 +152,7 @@ module BaseHelper
 
 
   def forum_page?
-    %w(forums topics sb_posts schools).include?(@controller.controller_name)
+    %w(forums topics sb_posts spaces).include?(@controller.controller_name)
   end
 
   def is_current_user_and_featured?(u)
@@ -304,9 +304,9 @@ module BaseHelper
         else
           title = :showing_categories.l+' &raquo; ' + app_base + tagline
         end
-      when 'courses'
-      if @course and @course.name
-        title = 'Aula: ' + @course.name + ' &raquo; ' + app_base + tagline
+      when 'lectures'
+      if @lecture and @lecture.name
+        title = 'Aula: ' + @lecture.name + ' &raquo; ' + app_base + tagline
       else
         title = 'Mostrando Aulas' +' &raquo; ' + app_base + tagline
       end
@@ -316,9 +316,9 @@ module BaseHelper
       else
         title = 'Mostrando Exames' +' &raquo; ' + app_base + tagline
       end
-      when 'schools'
-      if @school and @school.name
-        title = @school.name + ' &raquo; ' + app_base + tagline
+      when 'spaces'
+      if @space and @space.name
+        title = @space.name + ' &raquo; ' + app_base + tagline
       else
         title = 'Mostrando Redes' +' &raquo; ' + app_base + tagline
       end
@@ -417,7 +417,7 @@ module BaseHelper
  # end
 
   def paginating_links(paginator, options = {}, html_options = {})
-    if paginator.page_count > 1
+    if paginator.size >= 1
       name = options[:name] || PaginatingFind::Helpers::DEFAULT_OPTIONS[:name]
 
       our_params = (options[:params] || params).clone
@@ -534,11 +534,11 @@ module BaseHelper
   end
 
   def owner_link
-    if @school.owner
-      link_to @school.owner.display_name, @school.owner
+    if @space.owner
+      link_to @space.owner.display_name, @space.owner
     else
-      if current_user.can_be_owner? @school
-        'Sem dono ' + link_to("(pegar)", take_ownership_school_path)
+      if current_user.can_be_owner? @space
+        'Sem dono ' + link_to("(pegar)", take_ownership_space_path)
       else
         'Sem dono'
       end
@@ -547,48 +547,22 @@ module BaseHelper
 
   end
 
-	def teachers_preview(school, size = nil)
+	def teachers_preview(space, size = nil)
     sql = "SELECT u.login, u.login_slug FROM users u " \
-          "INNER JOIN user_school_associations a " \
+          "INNER JOIN user_space_associations a " \
           "ON u.id = a.user_id " \
           "AND a.role_id = #{Role[:teacher].id} " \
-          "WHERE a.school_id = #{school.id} LIMIT #{size or 12} "
+          "WHERE a.space_id = #{space.id} LIMIT #{size or 12} "
 
     User.find_by_sql(sql)
   end
 
-	  def subscription_link
-    membership = current_user.get_association_with @school
 
-    if membership and (membership.status == 'approved') # já é membro
-      link_to "Abandonar", unjoin_school_path(@school),
-        :class => "participar_rede button" ,
-        :confirm => "Você tem certeza que quer deixar essa rede?"
-    else
-       case @school.subscription_type
-
-        when 1 # anyone can join
-        link_to "Participar", join_school_path(@school), :class => "participar_rede button"
-      when 2 # moderated
-        if membership and (membership.status == 'pending')
-          "(em moderação)"
-        else
-          link_to "Participar", join_school_path(@school), :class => "participar_rede button"
-        end
-
-        when 3 #key
-        link_to "Participar", "#", {:class => "participar_rede button", :onclick => "toggleAssociateBox();false;"}
-      end
-
-    end
-
-  end
-
-  def month_events(school_id, month)
+  def month_events(space_id, month)
     start_month = Time.utc(Time.now.year, month, 1)
     end_month = Time.utc(Time.now.year, month, 31)
     Event.all(:select => "id, start_time, end_time",
-              :conditions => ["eventable_id = ? AND eventable_type = 'School' AND state LIKE 'approved' AND (start_time BETWEEN ? AND ? OR end_time BETWEEN ? AND ?)", school_id, start_month, end_month, start_month, end_month])
+              :conditions => ["eventable_id = ? AND eventable_type = 'Space' AND state LIKE 'approved' AND (start_time BETWEEN ? AND ? OR end_time BETWEEN ? AND ?)", space_id, start_month, end_month, start_month, end_month])
   end
 
   # Indica se há evento no dia informado

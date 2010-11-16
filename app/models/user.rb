@@ -1,12 +1,94 @@
 class User < ActiveRecord::Base
 
-  # ATTRIBUTES
+  # Constants 
   MALE    = 'M'
   FEMALE  = 'F'
 
   LEARNING_ACTIONS = ['answer', 'results', 'show']
   TEACHING_ACTIONS = ['create']
 
+  # CALLBACKS
+  before_save   :whitelist_attributes
+  before_save   :generate_login_slug
+  before_create :make_activation_code
+  after_create {|user| UserNotifier.deliver_signup_notification(user) }
+  after_create  :update_last_login
+  after_save    :recount_metro_area_users
+  after_destroy :recount_metro_area_users
+
+  # ASSOCIATIONS
+  has_many :annotations, :dependent => :destroy, :include=> :lecture
+  has_one :beta_key, :dependent => :destroy
+  has_many :statuses, :as => :statusable, :dependent => :destroy
+  # Space
+  has_many :spaces, :through => :user_space_associations
+  has_many :user_space_associations, :dependent => :destroy
+  has_many :spaces_owned, :class_name => "Space" , :foreign_key => "owner"
+  # Environment
+  has_many :user_environment_associations, :dependent => :destroy
+  has_many :environments, :through => :user_environment_associations
+  has_many :user_course_associations, :dependent => :destroy
+  has_many :environments_owned, :class_name => "Environment",
+    :foreign_key => "owner"
+  # Course
+  has_many :courses, :through => :user_course_associations
+
+  # FOLLOWSHIP
+  has_and_belongs_to_many :follows, :class_name => "User", :join_table => "followship", :association_foreign_key => "follows_id", :foreign_key => "followed_by_id", :uniq => true
+  has_and_belongs_to_many :followers, :class_name => "User", :join_table => "followship", :association_foreign_key => "followed_by_id", :foreign_key => "follows_id", :uniq => true
+
+  #COURSES
+  has_many :lectures, :foreign_key => "owner", :conditions => {:is_clone => false}
+  has_many :acquisitions, :as => :acquired_by
+
+  has_many :credits
+  has_many :exams, :foreign_key => "owner_id", :conditions => {:is_clone => false}
+  has_many :exam_users#, :dependent => :destroy
+  has_many :exam_history, :through => :exam_users, :source => :exam
+  has_many :questions, :foreign_key => :author_id
+  has_many :favorites, :order => "created_at desc", :dependent => :destroy
+  has_many :statuses
+  has_many :suggestions
+  has_enumerated :role
+  has_many :invitations, :dependent => :destroy
+  belongs_to  :metro_area
+  belongs_to  :state
+  belongs_to  :country
+  has_many    :favorites, :order => "created_at desc", :dependent => :destroy
+
+  #bulletins
+  has_many :bulletins
+  #enrollments
+  has_many :enrollments, :dependent => :destroy
+
+  #subject
+  has_many :subjects, :order => 'title ASC'
+
+  #groups
+  has_many :group_user
+  has_many :groups, :through => :group_user
+  
+  #student_profile
+  has_many :student_profiles
+  
+
+    #forums
+    has_many :moderatorships, :dependent => :destroy
+    has_many :forums, :through => :moderatorships, :order => 'forums.name'
+    has_many :sb_posts, :dependent => :destroy
+    has_many :topics, :dependent => :destroy
+    has_many :monitorships, :dependent => :destroy
+    has_many :monitored_topics, :through => :monitorships, :conditions => ['monitorships.active = ?', true], :order => 'topics.replied_at desc', :source => :topic
+
+
+  # Named scopes
+  named_scope :recent, :order => 'users.created_at DESC'
+  named_scope :featured, :conditions => ["users.featured_writer = ?", true]
+  named_scope :active, :conditions => ["users.activated_at IS NOT NULL"]
+  named_scope :tagged_with, lambda {|tag_name|
+    {:conditions => ["tags.name = ?", tag_name], :include => :tags}
+  }
+  # Accessors 
   attr_protected :admin, :featured, :role_id
 
   # PLUGINS
@@ -23,26 +105,12 @@ class User < ActiveRecord::Base
     c.validates_format_of_email_field_options = { :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/ }
   end
 
-  has_attached_file :avatar, {
-    :styles => { :medium => "200x200>", :thumb => "100x100>", :nano => "24x24>" }
-  }.merge(PAPERCLIP_STORAGE_OPTIONS)
+  has_attached_file :avatar, PAPERCLIP_STORAGE_OPTIONS
 
   ajaxful_rater
   acts_as_taggable
   has_private_messages
   acts_as_voter
-
-  # CALLBACKS
-  before_save   :whitelist_attributes
-  before_create :make_activation_code
-  #before_create :activate_before_save #not necessary
-  after_create  :update_last_login
-  #after_save    :activate # <- ja começa ativo
-  after_create {|user| UserNotifier.deliver_signup_notification(user) }
-  #after_save   {|user| UserNotifier.deliver_activation(user) if user.recently_activated? }
-  before_save   :generate_login_slug
-  after_save    :recount_metro_area_users
-  after_destroy :recount_metro_area_users
 
   # VALIDATIONS
   validates_presence_of     :login, :email, :first_name, :last_name
@@ -51,84 +119,7 @@ class User < ActiveRecord::Base
   validates_uniqueness_of   :login_slug
   validates_exclusion_of    :login, :in => AppConfig.reserved_logins
   validates_date :birthday, :before => 13.years.ago.to_date
-
   validates_acceptance_of :tos, :message => "Você precisa aceitar os Termos de Uso"
-
-  # ASSOCIATIONS
-  has_many :annotations, :dependent => :destroy, :include=> :course
-  has_one :beta_key, :dependent => :destroy
-  #has_one :profile # deprecated
-  #has_many :user_competences, :dependent => :destroy # deprecated
-  #has_many :competences, :class_name => "Skill", :source => :skill, :foreign_key => "skill_id", :through => :user_competences # deprecated
-  has_many :user_school_association, :dependent => :destroy
-  has_many :schools, :through => :user_school_association
-  has_many :schools_owned, :class_name => "School" , :foreign_key => "owner"
-  has_many :statuses, :as => :statusable, :dependent => :destroy
-
-  # FOLLOWSHIP
-  has_and_belongs_to_many :follows, :class_name => "User", :join_table => "followship", :association_foreign_key => "follows_id", :foreign_key => "followed_by_id", :uniq => true
-  has_and_belongs_to_many :followers, :class_name => "User", :join_table => "followship", :association_foreign_key => "followed_by_id", :foreign_key => "follows_id", :uniq => true
-
-  #COURSES
-  has_many :courses, :foreign_key => "owner", :conditions => {:is_clone => false}
-  has_many :acquisitions, :as => :acquired_by
-
-  has_many :credits
-  has_many :exams, :foreign_key => "owner_id", :conditions => {:is_clone => false}
-  has_many :exam_users#, :dependent => :destroy
-  has_many :exam_history, :through => :exam_users, :source => :exam
-  has_many :questions, :foreign_key => :author_id
-  has_many :favorites, :order => "created_at desc", :dependent => :destroy
-  has_many :statuses
-  has_many :suggestions
-  has_enumerated :role
-  #has_many :posts, :order => "published_at desc", :dependent => :destroy
-  has_many :invitations, :dependent => :destroy
-
-
-  #forums
-  #has_many :moderatorships, :dependent => :destroy
-  #has_many :forums, :through => :moderatorships, :order => 'forums.name'
-  #has_many :sb_posts, :dependent => :destroy
-  #has_many :topics, :dependent => :destroy
-  #has_many :monitorships, :dependent => :destroy
-  #has_many :monitored_topics, :through => :monitorships,
-    #:conditions => ['monitorships.active = ?', true], :order => 'topics.replied_at desc', :source => :topic
-
-  #belongs_to  :avatar, :class_name => "Photo", :foreign_key => "avatar_id"
-  belongs_to  :metro_area
-  belongs_to  :state
-  belongs_to  :country
-  #has_many    :comments_as_author, :class_name => "Comment", :foreign_key => "user_id", :order => "created_at desc", :dependent => :destroy
-  #has_many    :comments_as_recipient, :class_name => "Comment",:foreign_key => "recipient_id", :order => "created_at desc", :dependent => :destroy
-  has_many    :favorites, :order => "created_at desc", :dependent => :destroy
-
-	#bulletins
-	has_many :bulletins
-  #enrollments
-  has_many :enrollments, :dependent => :destroy
-
-  #subject
-  has_many :subjects, :order => 'title ASC'
-
-  #groups
-  has_many :group_user
-  has_many :groups, :through => :group_user
-  
-  #student_profile
-  has_many :student_profiles
-  
-
-  #named scopes
-  named_scope :recent, :order => 'users.created_at DESC'
-  named_scope :featured, :conditions => ["users.featured_writer = ?", true]
-  named_scope :active, :conditions => ["users.activated_at IS NOT NULL"]
-  named_scope :tagged_with, lambda {|tag_name|
-    {:conditions => ["tags.name = ?", tag_name], :include => :tags}
-  }
-
-
-  ## Class Methods
 
   # override activerecord's find to allow us to find by name or id transparently
   def self.find(*args)
@@ -137,6 +128,10 @@ class User < ActiveRecord::Base
     else
       super
     end
+  end
+
+  def self.find_by_login_or_email(login)
+    User.find_by_login(login) || User.find_by_email(login)
   end
 
   def self.find_country_and_state_from_search_params(search)
@@ -234,15 +229,10 @@ class User < ActiveRecord::Base
     query
   end
 
-
-  ## End Class Methods
-
-
   ## Instance Methods
   def profile_complete?
     (self.first_name and self.last_name and self.gender and self.description and self.tags)
   end
-
 
   def enrolled? subject_id
     if Enrollment.all(:conditions => ["user_id = ? AND subject_id = ?", self.id, subject_id]).length > 0
@@ -253,50 +243,51 @@ class User < ActiveRecord::Base
 
   end
 
-  def can_manage?(entity, school=nil)
+  def can_manage?(entity, space=nil)
 
     case entity.class.to_s
-    when 'Course'
-      (entity.owner == self || (entity.school == school && self.school_admin?(school) ))
+    when 'Lecture'
+      (entity.owner == self || (entity.space == space && self.space_admin?(space) ))
     when 'Exam'
-      (entity.owner == self || (entity.school == school && self.school_admin?(school) ))
-    when 'School'
-      (entity.owner == self || self.school_admin?(entity))
+      (entity.owner == self || (entity.space == space && self.space_admin?(space) ))
+    when 'Space'
+      (entity.owner == self || self.space_admin?(entity))
+    #FIXME Mudar para polymorphic
     when 'Event'
-      (entity.owner == self || (entity.school.id == school.id && self.school_admin?(school) ))
+      (entity.owner == self || (entity.space.id == space.id && self.space_admin?(space) )) 
+    #FIXME Mudar para polymorphic
     when 'Bulletin'
-      (entity.owner == self || (entity.school == school && self.school_admin?(school) ))
-		 when 'Subject'
-      (entity.owner == self || (entity.school == school && self.school_admin?(school) ))
- 
+      (entity.owner == self || (entity.space == space && self.space_admin?(space) ))
+    when 'Subject'
+      (entity.owner == self || (entity.space == space && self.space_admin?(space) ))
+    when 'Environment'
+      entity.owner == self
     end
   end
-
-
 
   def has_access_to(entity)
     return true if self.admin? || entity.owner == self
 
     case entity.class.to_s
-    when 'Course'
+    when 'Lecture'
 
-      (entity.public || (entity.school && self.schools.include?(entity.school)))
+      (entity.public || (entity.space && self.spaces.include?(entity.space)))
       #    when 'Exam'
-      #      (entity.owner == self || (entity.school == school && self.school_admin?(school) ))
-    when 'School'
-      (self.school_admin?(entity) || (self.schools.include?(entity) && self.get_association_with(entity).status == "approved"))
+      #      (entity.owner == self || (entity.space == space && self.space_admin?(space) ))
+    when 'Space'
+      (self.space_admin?(entity) || (self.spaces.include?(entity) && self.get_association_with(entity).status == "approved"))
       #    when 'Event'
-      #       (entity.owner == self || (entity.school == school && self.school_admin?(school) ))
+      #       (entity.owner == self || (entity.space == space && self.space_admin?(space) ))
     end
 
     #TODO
-    #    @acq = Acquisition.find(:first, :conditions => ['acquired_by_id = ? AND course_id = ?', self.id, course.id])
-    #    !@acq.nil? or course.owner == self
+    #    @acq = Acquisition.find(:first, :conditions => ['acquired_by_id = ? AND lecture_id = ?', self.id, lecture.id])
+    #    !@acq.nil? or lecture.owner == self
 
   end
 
   def can_be_owner?(entity)
-    self.admin? || self.school_admin?(entity.id) || self.teacher?(entity) || self.coordinator?(entity)
+    self.admin? || self.space_admin?(entity.id) || self.teacher?(entity) || self.coordinator?(entity)
   end
 
   def moderator_of?(forum)
@@ -334,9 +325,9 @@ class User < ActiveRecord::Base
 
   def last_months_posts
     self.posts.find(:all,
-      :conditions => ["published_at > ? and published_at < ?",
-        DateTime.now.to_time.at_beginning_of_month.months_ago(1),
-        DateTime.now.to_time.at_beginning_of_month])
+                    :conditions => ["published_at > ? and published_at < ?",
+                      DateTime.now.to_time.at_beginning_of_month.months_ago(1),
+                      DateTime.now.to_time.at_beginning_of_month])
   end
 
   def avatar_photo_url(size = nil)
@@ -363,11 +354,17 @@ class User < ActiveRecord::Base
     update_attributes(:activated_at => Time.now.utc, :activation_code => nil)
   end
 
+  def can_activate?
+    activated_at.nil? and created_at > 30.days.ago 
+  end
+
   def active?
-    # ( activated_at.nil? and (created_at < (Time.now - 30.days))) ? false : true
+    #FIXME Workaround para quando o active? é chamado e o usuário não exite
+    # (authlogic)
+    return false unless created_at
+    ( activated_at.nil? and (created_at < (Time.now - 30.days))) ? false : true
     # activation_code.nil? && !activated_at.nil?
     # self.activated_at
-    true
   end
 
   def recently_activated?
@@ -451,7 +448,6 @@ class User < ActiveRecord::Base
   end
 
   def update_last_login
-    #self.track_activity(:logged_in) if self.last_login_at.nil? || (self.last_login_at && self.last_login_at < Time.now.beginning_of_day)
     self.update_attribute(:last_login_at, Time.now)
   end
 
@@ -487,16 +483,16 @@ class User < ActiveRecord::Base
   def recommended_posts(since = 1.week.ago)
     return [] if tags.empty?
     rec_posts = Post.find_tagged_with(tags.map(&:name),
-      :conditions => ['posts.user_id != ? AND published_at > ?', self.id, since ],
-      :order => 'published_at DESC',
-      :limit => 10
-    )
+                                      :conditions => ['posts.user_id != ? AND published_at > ?', self.id, since ],
+                                      :order => 'published_at DESC',
+                                      :limit => 10
+                                     )
 
-    if rec_posts.empty?
-      []
-    else
-      rec_posts.uniq
-    end
+                                     if rec_posts.empty?
+                                       []
+                                     else
+                                       rec_posts.uniq
+                                     end
   end
 
   def display_name
@@ -532,18 +528,17 @@ class User < ActiveRecord::Base
     role && role.eql?(Role[:member])
   end
 
-  # school roles
-
-  def can_post?(school)
-    if not self.get_association_with(school)
+  # space roles
+  def can_post?(space)
+    if not self.get_association_with(space)
       return false
     end
 
-    if school.submission_type == 1 or school.submission_type == 2 # all
+    if space.submission_type == 1 or space.submission_type == 2 # all
       return true
-    elsif school.submission_type == 3 #teachers and admin
-      user_role = self.get_association_with(school).role
-      if user_role.eql?(Role[:teacher]) or user_role.eql?(Role[:school_admin])
+    elsif space.submission_type == 3 #teachers and admin
+      user_role = self.get_association_with(space).role
+      if user_role.eql?(Role[:teacher]) or user_role.eql?(Role[:space_admin])
         return true
       else
         return false
@@ -552,35 +547,40 @@ class User < ActiveRecord::Base
 
   end
 
-  def get_association_with(school_id)
-    return false unless school_id
-    @school = School.find(school_id) #TODO performance -
-    association = UserSchoolAssociation.find(:first, :conditions => ['user_id = ? AND school_id = ?', self.id, @school.id])
+  def get_association_with(entity)
+    return false unless entity
+    case entity.class.to_s
+    when 'Space'
+      association = UserSpaceAssociation.find(:first, :conditions => ['user_id = ? AND space_id = ?', 
+                                              self.id, entity.id])
+    when 'Course'
+      association = UserCourseAssociation.find(:first, :conditions => ['user_id = ? AND course_id = ?', 
+                                               self.id, entity.id])
+    when 'Environment'
+      association = UserEnvironmentAssociation.find(:first, :conditions => ['user_id = ? AND environment_id = ?', 
+                                                    self.id, entity.id])
+    end
   end
 
-
-  def teacher?(school)
-    association = get_association_with school
+  def teacher?(space)
+    association = get_association_with space
     association && association.role && association.role.eql?(Role[:teacher])
   end
 
-  def coordinator?(school)
-    association = get_association_with school
+  def coordinator?(space)
+    association = get_association_with space
     association && association.role && association.role.eql?(Role[:coordinator])
   end
 
-  def school_admin?(school_id)
-    association = get_association_with school_id
-    association && association.role && association.role.eql?(Role[:school_admin])
+  def space_admin?(space_id)
+    association = get_association_with space_id
+    association && association.role && association.role.eql?(Role[:environment_admin])
   end
 
-  def student?(school)
-    association = get_association_with school
-    association && association.role && association.role.eql?(Role[:student])
+  def student?(space)
+    association = get_association_with space
+    association && association.role && association.role.eql?(Role[:member])
   end
-
-  ## end
-
 
   def male?
     gender && gender.eql?(MALE)
@@ -590,10 +590,6 @@ class User < ActiveRecord::Base
     gender && gender.eql?(FEMALE)
   end
 
-  ## End Instance Methods
-
-  ### Métodos Adicionais
-
   def learning
     self.statuses.log_action_eq(LEARNING_ACTIONS).descend_by_created_at
   end
@@ -602,23 +598,20 @@ class User < ActiveRecord::Base
     self.statuses.log_action_eq(TEACHING_ACTIONS).descend_by_created_at
   end
 
-
-  def recent_activity(limit = 0, offset = 20)
-     Status.friends_statuses(self, limit, offset)
+  def recent_activity(offset= 0, limit = 20)
+    Status.friends_statuses(self, offset, limit)
   end
-
-
 
   def add_favorite(favoritable_type, favoritable_id)
     Favorite.create(:favoritable_type => favoritable_type,
-      :favoritable_id => favoritable_id,
-      :user_id => self.id)
+                    :favoritable_id => favoritable_id,
+                    :user_id => self.id)
   end
 
   def rm_favorite(favoritable_type, favoritable_id)
     fav = Favorite.all(:conditions => {:favoritable_type => favoritable_type,
-       :favoritable_id => favoritable_id,
-       :user_id => self.id})[0] # Sempre vai ter apenas uma linha que satisfaz
+                       :favoritable_id => favoritable_id,
+                       :user_id => self.id})[0] # Sempre vai ter apenas uma linha que satisfaz
     fav.destroy
   end
 
@@ -630,16 +623,18 @@ class User < ActiveRecord::Base
     @favorites = Favorite.find(:all, :conditions => ["user_id = ?", self.id], :order => 'created_at DESC')
   end
 
-  def has_credits_for_course(course)
-    # @course_price = CoursePrice.find(:first, :conditions => ['course_id = ?', course.id]).price.to_f
+  def has_credits_for_lecture(lecture)
+    # @lecture_price = LecturePrice.find(:first, :conditions => ['lecture_id = ?', lecture.id]).price.to_f
     @user_credit = Credit.total(self.id).to_f - Acquisition.total(self.id).to_f
-    (@user_credit >= course.price)
+    (@user_credit >= lecture.price)
   end
 
-
-
+  def update_last_seen_at
+    User.update_all ['sb_last_seen_at = ?', Time.now.utc], ['id = ?', self.id]
+    self.sb_last_seen_at = Time.now.utc
+  end
+  
   protected
-
   def activate_before_save
     self.activated_at = Time.now.utc
     self.activation_code = nil
@@ -656,16 +651,14 @@ class User < ActiveRecord::Base
     self.crypted_password = encrypt(password)
   end
 
-    def whitelist_attributes
-      self.login = self.login.strip
-      self.description = white_list(self.description )
-      #self.stylesheet = white_list(self.stylesheet )
-    end
-
+  def whitelist_attributes
+    self.login = self.login.strip
+    self.description = white_list(self.description )
+    #self.stylesheet = white_list(self.stylesheet )
+  end
 
   def password_required?
     crypted_password.blank? || !password.blank?
   end
-
 
 end

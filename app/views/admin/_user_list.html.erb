@@ -11,7 +11,11 @@
 						<td><%= user.id  %></td>
 						<td><%= link_to user.display_name, user_path(user), :target => "_blank" %> </td>
 						<td><%= time_ago_in_words(user.created_at) %> </td>
-						<td><%= time_ago_in_words(user.last_login_at) %> </td>
+                                                <% if user.last_login_at %>
+						  <td><%= time_ago_in_words(user.last_login_at) %> </td>
+                                                <% else %>
+                                                  <td>Usuário nunca logou.</td>
+                                                <% end %>
 						<td><%= user.role.name %> </td>
 						<td><%= link_to( :assume_id.l , assume_user_path(user) ) %> </td>
 						<td><%= link_to_remote(image_tag('icons/delete.png', :border => 0), :url => user_url(:id => user), 

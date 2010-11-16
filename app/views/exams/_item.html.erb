@@ -31,14 +31,16 @@
             <li> 
                 <%= time_ago_in_words_or_date(exam.created_at) %>
             </li>
-            <% if exam.school && !@school%>
+            <%# if exam.space && !@space%>
+						<!--
 						<li>
                 |
             </li>
 						 <li> 
-                Rede: <%= link_to(exam.school.name, exam.school)  %>
+                Rede: <%# link_to(exam.space.name, exam.space)  %>
             </li>
-						<%end%>
+						-->
+						<%# end%>
             <li>
                 |
             </li>

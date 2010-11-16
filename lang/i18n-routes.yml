@@ -2,9 +2,8 @@ pt-BR:
     administrator: "administracao"
     admin_members: "admin_membros"
     admin_requests: "admin_solicitacoes"
-    admin_submissions: "admin_submissoes"
     answer: "responder"
-    courses: "aulas"
+    lectures: "aulas"
     contact: "contato"
     edit: "editar"
     enroll: "inscrever"
@@ -12,6 +11,7 @@ pt-BR:
     favorites: "favoritos"
     folders: "arquivos"
     invite: "convidar"
+    environment_invitations: "convite"
     join: "entrar"
     learn: "aprenda"
     lessons: "topicos"
@@ -23,7 +23,8 @@ pt-BR:
     new: "criar" 
     owner: "dono"
     results: "resultado"
-    schools: "redes"
+    spaces: "espacos"
+    courses: "cursos"
     show_favorites: "favoritos"
     signup: "registrar"
     subjects: "cursos"
@@ -32,6 +33,4 @@ pt-BR:
     teach: "ensine"
     unjoin: "abandonar"
     users: "pessoas"
-    
-    
-    
+    environments: "ambientes"

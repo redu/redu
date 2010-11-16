@@ -12,8 +12,8 @@
         <%end%>
       <li>Descrição:<i><%= @subject.description%><i/></li><br />
       <li>Autor:<i><%= @subject.owner.login%><i/></li><br />
-      <% unless @subject.school.nil? %>
-        <li>Rede:<i><%= @subject.school.name%><i/></li><br />	
+      <% unless @subject.space.nil? %>
+        <li>Rede:<i><%= @subject.space.name%><i/></li><br />	
       <%else%>
         <li>Rede:<i>Não está associado!<i/></li><br />		
       <%end%>
@@ -54,7 +54,7 @@
     <h1>Noticias</h1>	
     <ul>
 
-      <%= render :partial => 'bulletins/list', :collection => @subject.bulletins, :as => :bulletin , :locals => { :is_index => false, :is_school_from_show => false }%>
+      <%= render :partial => 'bulletins/list', :collection => @subject.bulletins, :as => :bulletin %>
     </ul>
 
     <h1>Alunos Graduados</h1>	

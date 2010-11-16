@@ -1,6 +1,6 @@
  
 <li class="clearfix">
-	 <%= link_to subject.title, (@school) ? subject_path(:id => subject.id, :school_id => @school.id) : subject, :class => "name"  %>
+	 <%= link_to subject.title, (@space) ? subject_path(:id => subject.id, :space_id => @space.id) : subject, :class => "name"  %>
 	<div class="thumb photo"><%# link_to(image_tag subject.thumb_url, :width => "70px") %></div>
 	<div class="headlines" style="width: 490px">
 		<!--
@@ -27,12 +27,12 @@
             <li> 
                 <%= time_ago_in_words_or_date(subject.created_at) %>
             </li>
-            <% if subject.school && !@school%>
+            <% if subject.space && !@space%>
 						<li>
                 |
             </li>
 						 <li> 
-                Rede: <%= link_to(subject.school.name, subject.school)  %>
+                Rede: <%= link_to(subject.space.name, subject.space)  %>
             </li>
 						<%end%>
             <!--

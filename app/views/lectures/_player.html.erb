@@ -1,0 +1,10 @@
+<% if lecture.video? %>
+	<%= render :partial => 'lectures/video', :locals => {:resource => lecture, :is_interactive_class => is_interactive_class} %>
+<% elsif lecture.audio? %>
+	<%= render :partial => 'lectures/audio', :locals => {:resource => lecture} %>
+<% elsif lecture.external_resource_type.eql?('youtube')%>
+	<%= render :partial => "lectures/youtube", :locals => {:resource => lecture, :is_interactive_class => is_interactive_class} %>
+<% else %>
+	<%= link_to "Download", lecture.media.url %>
+<% end %>
+

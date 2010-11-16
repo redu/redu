@@ -1,0 +1,10 @@
+
+	<% if @lectures && @lectures.size > 0 %>
+	<ul class="default">
+		<%= render :partial => 'lectures/item', :collection => @lectures, :as => :lecture %> 
+	</ul>
+	<% else %>
+		<div class="box_notice">(Nenhuma aula)</div>
+	<% end %>
+	
+	<%= will_paginate @lectures %>

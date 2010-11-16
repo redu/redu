@@ -1,9 +1,4 @@
 class LessonsController < BaseController
-  
- # uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit])
-  
-
- 
 
   def show
     @lesson = Lesson.find(params[:id])

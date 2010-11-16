@@ -1,5 +1,5 @@
 class UserNotifier < ActionMailer::Base
-  self.delivery_method = :activerecord # É necessário iniciar o ar_sendmail para que os e-mail sejam enviados
+
   include ActionView::Helpers::TextHelper
   include ActionView::Helpers::SanitizeHelper
   extend  ActionView::Helpers::SanitizeHelper::ClassMethods # Required for rails 2.2
@@ -7,47 +7,58 @@ class UserNotifier < ActionMailer::Base
   include BaseHelper
   ActionMailer::Base.default_url_options[:host] = APP_URL.sub('http://', '')
 
+  self.delivery_method = :activerecord # É necessário iniciar o ar_sendmail para que os e-mails sejam enviados
+
   ### SENT BY MEMBERS OF SCHOOL
-  def pending_membership(user,school)
+  def pending_membership(user,space)
     setup_sender_info
-    @recipients  = "#{school.owner.email}"
+    @recipients  = "#{space.owner.email}"
     @subject     = "Redes Redu: Participação pendente"
     @sent_on     = Time.now
     @body[:user] = user
-    @body[:url]  = admin_requests_school_url(school)
-    @body[:school]  = school
+    @body[:url]  = admin_requests_space_url(space)
+    @body[:space]  = space
   end
 
   ### SENT BY ADMIN SCHOOL
-  def approve_membership(user, school)
+  def approve_membership(user, course)
     setup_sender_info
     @recipients  = "#{user.email}"
-    @subject     = "Sua participacão na rede \"#{school.name}\" foi aprovada!"
+    @subject     = "Sua participacão no course \"#{course.name}\" foi aprovada!"
     @sent_on     = Time.now
     @body[:user] = user
-    @body[:url]  = school.permalink
-    @body[:school]  = school
+    @body[:url]  = course.permalink
+    @body[:course]  = course
   end
 
-  def remove_membership(user, school)
+  def reject_membership(user, course)
     setup_sender_info
     @recipients  = "#{user.email}"
-    @subject     = "Sua participacão na rede \"#{school.name}\" foi cancelada"
+    @subject     = "Sua participacão no course \"#{course.name}\" foi negada!"
     @sent_on     = Time.now
     @body[:user] = user
-    @body[:url]  = school.permalink
-    @body[:school]  = school
+    @body[:course]  = course
+  end
+  
+  def remove_membership(user, space)
+    setup_sender_info
+    @recipients  = "#{user.email}"
+    @subject     = "Sua participacão na rede \"#{space.name}\" foi cancelada"
+    @sent_on     = Time.now
+    @body[:user] = user
+    @body[:url]  = space.permalink
+    @body[:space]  = space
   end
 
   ### ADMIN REDU
-  def remove_course(course)
+  def remove_lecture(lecture)
     setup_sender_info
-    @recipients  = "#{course.owner.email}"
-    @subject     = "A aula \"#{course.name}\" foi removida do Redu"
+    @recipients  = "#{lecture.owner.email}"
+    @subject     = "A aula \"#{lecture.name}\" foi removida do Redu"
     @sent_on     = Time.now
-    @body[:user] = course.owner
-    # @body[:url]  = course.permalink
-    @body[:course]  = course
+    @body[:user] = lecture.owner
+    # @body[:url]  = lecture.permalink
+    @body[:lecture]  = lecture
   end
 
   def remove_exam(exam)
@@ -56,7 +67,7 @@ class UserNotifier < ActionMailer::Base
     @subject     = "O exame \"#{exam.name}\" foi removido do Redu"
     @sent_on     = Time.now
     @body[:user] = exam.owner
-    # @body[:url]  = course.permalink
+    # @body[:url]  = lecture.permalink
     @body[:exam]  = exam
   end
 
@@ -68,33 +79,33 @@ class UserNotifier < ActionMailer::Base
     @body[:user] = user
   end
 
-  def remove_school(school)
+  def remove_space(space)
     setup_sender_info
-    @recipients  = "#{school.owner.email}"
-    @subject     = "A rede \"#{school.name}\" foi removida do Redu"
+    @recipients  = "#{space.owner.email}"
+    @subject     = "A rede \"#{space.name}\" foi removida do Redu"
     @sent_on     = Time.now
-    @body[:user] = school.owner
-    @body[:school]  = school
+    @body[:user] = space.owner
+    @body[:space]  = space
   end
 
-  def approve_course(course)
+  def approve_lecture(lecture)
     setup_sender_info
-    @recipients  = "#{course.owner.email}"
-    @subject     = "A aula \"#{course.name}\" foi aprovada!"
+    @recipients  = "#{lecture.owner.email}"
+    @subject     = "A aula \"#{lecture.name}\" foi aprovada!"
     @sent_on     = Time.now
-    @body[:user] = course.owner
-    @body[:url]  = course.permalink
-    @body[:course]  = course
+    @body[:user] = lecture.owner
+    @body[:url]  = lecture.permalink
+    @body[:lecture]  = lecture
   end
 
-  def reject_course(course, comments)
+  def reject_lecture(lecture, comments)
     setup_sender_info
-    @recipients  = "#{course.owner.email}"
-    @subject     = "A aula \"#{course.name}\" foi rejeitada para publicação no Redu"
+    @recipients  = "#{lecture.owner.email}"
+    @subject     = "A aula \"#{lecture.name}\" foi rejeitada para publicação no Redu"
     @sent_on     = Time.now
-    @body[:user] = course.owner
-    @body[:url]  = course.permalink
-    @body[:course]  = course
+    @body[:user] = lecture.owner
+    @body[:url]  = lecture.permalink
+    @body[:lecture]  = lecture
     @body[:comments]  = comments
   end
 
@@ -120,12 +131,12 @@ class UserNotifier < ActionMailer::Base
   def event_notification(user, event)
     setup_sender_info
     @recipients  = "#{user.email}"
-    @subject     = "Lembre-se do evento da rede #{event.school.name}"
+    @subject     = "Lembre-se do evento da rede #{event.space.name}"
     @sent_on     = Time.now
     @body[:user] = user
     @body[:event] = event
-    @body[:event_url]  = school_event_url(event.school, event)
-    @body[:school] = event.school
+    @body[:event_url]  = space_event_url(event.space, event)
+    @body[:space] = event.space
   end
 
   def contact_redu(contact)
@@ -241,19 +252,30 @@ class UserNotifier < ActionMailer::Base
     @body[:user] = user
   end
 
+  def environment_invitation(user, email, role, environment, message = nil)
+    setup_sender_info
+
+    @recipients  = "#{email}"
+    @subject = "#{user.login} quer que você participe do #{AppConfig.community_name}!"
+    @body[:user] = user
+    @body[:role] = role
+    @body[:message] = message
+    @body[:url]  = signup_by_id_url(user, user.invite_code)
+    @body[:environment] = environment.name
+  end
+
   protected
+  def setup_email(user)
+    @recipients  = "#{user.email}"
+    setup_sender_info
+    @subject     = "[#{AppConfig.community_name}] "
+    @sent_on     = Time.now
+    @body[:user] = user
+  end
 
-    def setup_email(user)
-      @recipients  = "#{user.email}"
-      setup_sender_info
-      @subject     = "[#{AppConfig.community_name}] "
-      @sent_on     = Time.now
-      @body[:user] = user
-    end
-
-    def setup_sender_info
-      @from       = "\"Equipe Redu\" <#{AppConfig.support_email}>"
-      headers     "Reply-to" => "#{AppConfig.support_email}"
-      @content_type = "text/plain"
-    end
+  def setup_sender_info
+    @from       = "\"Equipe Redu\" <#{AppConfig.support_email}>"
+    headers     "Reply-to" => "#{AppConfig.support_email}"
+    @content_type = "text/plain"
+  end
 end

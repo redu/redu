@@ -1,8 +1,10 @@
 class Alternative < ActiveRecord::Base
-  # associations
-  belongs_to :question#, :autosave => true
+
+  # ASSOCIATIONS
+  belongs_to :question
   has_one :question, :foreign_key => "answer_id"
 
-  #validations
+  # VALIDATIONS
   validates_presence_of :statement
+
 end

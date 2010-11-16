@@ -19,25 +19,26 @@ Rails::Initializer.run do |config|
     S3_CONFIG = YAML.load_file("#{RAILS_ROOT}/config/s3.yml")
     S3_CREDENTIALS = S3_CONFIG[Rails.env]
   end
-  
+
   if File.exists?( File.join(RAILS_ROOT, 'config', 'application.yml') )
     file = File.join(RAILS_ROOT, 'config', 'application.yml')
     users_app_config = YAML.load_file file
   end
   default_app_config = YAML.load_file(File.join(RAILS_ROOT, 'config', 'application.yml'))
-  
+
   config_hash = (users_app_config||{}).reverse_merge!(default_app_config)
-  
+
   unless defined?(AppConfig)
     ::AppConfig = OpenStruct.new config_hash
   else
     orig_hash   = AppConfig.marshal_dump
     merged_hash = config_hash.merge(orig_hash)
-    
+
     AppConfig = OpenStruct.new merged_hash
   end
+  # codigo usado para o IE aceitar header sem ser html
+  config.action_controller.use_accept_header = false
   
-
   config.action_controller.session_store = :active_record_store
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
@@ -45,12 +46,12 @@ Rails::Initializer.run do |config|
       #:enable_starttls_auto => true,
       :address => 'smtp.gmail.com',
       :port => 587,
-      :domain => 'www.gmail.com',
+      :domain => 'redu.com.br',
       :authentication => :login,
       :user_name => 'no-reply@redu.com.br',
       :password => '7987Y5'
-  }  
-  
+  }
+
   # Configurações de conversão e storage de videos (Seminar)
     # Arquivo original do video (uploaded)
     VIDEO_ORIGINAL = {
@@ -69,9 +70,9 @@ Rails::Initializer.run do |config|
       :path => "seminar/:attachment/:id/:style/:basename.:extension",
       :default_url => "http://redu_assets.s3.amazonaws.com/images/missing_pic.jpg"
     }
-  
+
     # No ambiente de desenvolvimento :test => 1 (definido em development.rb)
-    ZENCODER_CONFIG = { 
+    ZENCODER_CONFIG = {
       :api_key => 'cf950c35c3943ff7c25a84c874ddcca3',
       :input => '',
       :output => {
@@ -90,20 +91,20 @@ Rails::Initializer.run do |config|
         }
       }
     }
-      
+
     # Usado em :controller => jobs, :action => notify
     ZENCODER_CREDENTIALS = {
       :username => 'zencoder',
       :password => 'MCZC2pDQyt5bzko1'
     }
-  
+
   # Activate observers that should always be running
   # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
-  
+
   # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
   # Run "rake -D time" for a list of tasks for finding time zone names.
   config.time_zone = 'UTC'
-  
+
   # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
   # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
   # config.i18n.default_locale = 'pt-BR' # ver arquivo globalite.rb
@@ -112,7 +113,7 @@ end
 #OpenSocialContainer::Configuration.person_class = 'User'
 #OpenSocialContainer::Configuration.secret = 'secret_password'
 
-WillPaginate::ViewHelpers.pagination_options[:prev_label] = 'Anterior'  
+WillPaginate::ViewHelpers.pagination_options[:prev_label] = 'Anterior'
 WillPaginate::ViewHelpers.pagination_options[:next_label] = 'Próximo'
 WillPaginate::ViewHelpers.pagination_options[:separator] = nil
 WillPaginate::ViewHelpers.pagination_options[:renderer] = 'PaginationListLinkRenderer'

@@ -1,0 +1,3 @@
+page << "$('.messages_table').append('"+escape_javascript(render(:partial => "messages/item", :collection => @messages, :as => :message, :locals => {:mailbox => params[:mailbox]}))+"')"
+page.replace_html "#more",  link_to_remote("mais ainda!", :url => {:controller => :messages, :action => :more, :user_id => params[:user_id], :offset => 20,:limit => 100, :mailbox => params[:mailbox]}, :method =>:get, :loading => "$('#more').html('"+escape_javascript(image_tag('spinner.gif'))+"')")
+

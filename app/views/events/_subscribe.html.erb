@@ -1,13 +1,13 @@
 <div class="grid_12 pretty-text">
-	<h4>Inscreva-se e tenha os eventos da rede no seu calendário</h4>
+  <h4>Inscreva-se e tenha os eventos da rede no seu calendário</h4>
 
-		<p>Fique atento aos eventos da sua rede através do Google Calendar ou iCal.</p>
+  <p>Fique atento aos eventos da sua rede através do Google Calendar ou iCal.</p>
 
-	<% if @eventable.class.to_s.eql?("School")%>
-	 <%= link_to image_tag('/images/icons/ical.gif'), ical_school_events_url(:format=>'ics') %>
-	<%= link_to image_tag("http://www.google.com/calendar/images/ext/gc_button1.gif"), "http://www.google.com/calendar/render?cid=#{ical_school_events_url(:format=>'ics')}", :target=>'_blank' %>
-	<%else%>
-	   <%= link_to image_tag('/images/icons/ical.gif'), ical_subject_events_url(:format=>'ics') %>
-	<%= link_to image_tag("http://www.google.com/calendar/images/ext/gc_button1.gif"), "http://www.google.com/calendar/render?cid=#{ical_subject_events_url(:format=>'ics')}", :target=>'_blank' %>
-	<%end%>
+  <% if @eventable.class.to_s.eql?("Space")%>
+    <%= link_to image_tag('/images/icons/ical.gif'), ical_space_events_url(:format=>'ics') %>
+    <%= link_to image_tag("http://www.google.com/calendar/images/ext/gc_button1.gif"), "http://www.google.com/calendar/render?cid=#{ical_space_events_url(:format=>'ics')}", :target=>'_blank' %>
+  <%else%>
+    <%= link_to image_tag('/images/icons/ical.gif'), ical_subject_events_url(:format=>'ics') %>
+    <%= link_to image_tag("http://www.google.com/calendar/images/ext/gc_button1.gif"), "http://www.google.com/calendar/render?cid=#{ical_subject_events_url(:format=>'ics')}", :target=>'_blank' %>
+  <%end%>
 </div>

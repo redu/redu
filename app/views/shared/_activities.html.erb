@@ -1,6 +1,5 @@
-<script> 
+<script type="text/javascript"> 
 function showResponseBox(activityId){
-	//alert('vai' + activityId);
 	var box = document.getElementById("box_respond_to_"+activityId);
 	Effect.SlideDown(box);
 	var link = document.getElementById("link_respond_to_"+activityId);
@@ -8,9 +7,7 @@ function showResponseBox(activityId){
 }
 
 function hideResponseBox(activityId){
-	//alert('vai' + activityId);
 	var box = document.getElementById("box_respond_to_"+activityId);
-	//Effect.SlideDown(box);
 	box.style.display = 'none';
 	var link = document.getElementById("link_respond_to_"+activityId);
 	link.style.display = 'block';

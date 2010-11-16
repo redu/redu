@@ -1,115 +1,104 @@
-
-<script>
-function showLoadingFiles(){
-		document.getElementById('file_list_tbl').style.display = "none";
-		document.getElementById('loading-files').style.display = "block";
-		//jQuery('file_list_tbl').hide();
-		//Element.show('spinner');
-	}
-
-
+<script type="text/javascript">
+  function showLoadingFiles(){
+    document.getElementById('file_list_tbl').style.display = "none";
+    document.getElementById('loading-files').style.display = "block";
+    //jQuery('file_list_tbl').hide();
+    //Element.show('spinner');
+  }
 </script>
 
 <ul id="actions_user">
 
-				<%  if current_user.can_manage? @school %>
-				   	 <li>
-                     <div class="new-folder-outter">
-                         <a href="#" onclick="$('div.new-folder-inner').slideToggle(); return false;">Criar Pasta</a>
-                         <div class="new-folder-inner hoverdiv">
+  <%  if current_user.can_manage? @space %>
+    <li>
+      <div class="new-folder-outter">
+        <a href="#" onclick="$('div.new-folder-inner').slideToggle(); return false;">Criar Pasta</a>
+        <div class="new-folder-inner hoverdiv">
 
-							 <% @new_folder = Folder.new %>
-							 <% form_remote_for @new_folder, :loading => "$('#new-folder-spinner').show()" do |f| %>
-		 						<%= f.text_field :name, :size => "15" %>
-								<%= f.hidden_field :school_id, :value => @school.id %>
-								<%= f.hidden_field :parent_id, :value => @folder.id %>
-								<%= f.submit 'Criar' %>
-								<%= image_tag 'spinner.gif', :id => 'new-folder-spinner', :style => 'display: none' %><BR>
-							 <% end %>
+          <% @new_folder = Folder.new %>
+          <% form_remote_for @new_folder, :loading => "$('#new-folder-spinner').show()" do |f| %>
+            <%= f.text_field :name, :size => "15" %>
+            <%= f.hidden_field :space_id, :value => @space.id %>
+            <%= f.hidden_field :parent_id, :value => @folder.id %>
+            <%= f.submit 'Criar' %>
+            <%= image_tag 'spinner.gif', :id => 'new-folder-spinner', :style => 'display: none' %><BR>
+          <% end %>
 
-                         </div>
-                     </div>
-					 </li>
+        </div>
+      </div>
+    </li>
 
-					 <li class="sep">|</li>
+    <li class="sep">|</li>
 
-					 <li>
+    <li>
 
-					 <div class="new-file-outter">
-                         <a href="#" onclick="$('div.new-file-inner').slideToggle(); return false;">Upload de Arquivo</a>
-                         <div class="new-file-inner hoverdiv">
-							 <% form_for @myfile, :url => { :action => "do_the_upload" }, :html => { :multipart => true, :target => 'upload_frame', :onsubmit => "$('#new-file-spinner').show()"  } do |f| %>
-							  <%= f.file_field :attachment %> (max. 10MB)
-							  <%= f.hidden_field :folder_id, :value => @folder.id %>
-							  <%= hidden_field_tag :school_id,  @school.id %>
-							   <br>
-							   <%= submit_tag 'OK' %>
-							   <%= image_tag 'spinner.gif', :id => 'new-file-spinner', :style => 'display: none' %>
-							<% end %>
-							 <iframe id='upload_frame' name="upload_frame" style="width:1px;height:1px;border:0px" src="about:blank"></iframe>
-                         </div>
-                     </div>
+      <div class="new-file-outter">
+        <a href="#" onclick="$('div.new-file-inner').slideToggle(); return false;">Upload de Arquivo</a>
+        <div class="new-file-inner hoverdiv">
+          <% form_for @myfile, :url => { :action => "do_the_upload" }, :html => { :multipart => true, :onsubmit => "$('#new-file-spinner').show()"  } do |f| %>
+            <%= f.file_field :attachment %> (max. 10MB)
+            <%= f.hidden_field :folder_id, :value => @folder.id %>
+            <%= hidden_field_tag :space_id,  @space.id %>
+            <br>
+            <%= submit_tag 'OK' %>
+            <%= image_tag 'spinner.gif', :id => 'new-file-spinner', :style => 'display: none' %>
+          <% end %>
+        </div>
+      </div>
 
-					 </li>
-					  <!--
-					  <a href="#" onclick="ShowProperties();" class="share" id="rights_link">Permissions</a>
-					  -->
-				<% end %>
-				<%# link_to 'RSS', { :controller => 'folder', :action => 'feed', :id => @folder.id, :access_key => @logged_in_user.rss_access_key }, { :class => 'small' } %>
-				<%# link_to '(!)', { :controller => 'folder', :action => 'feed_warning' }, { :class => 'small', :style => 'margin-left:1px;' } %>
-
-
+    </li>
+  <% end %>
 </ul>
 
 
 <% if flash[:folder_error] %>
-    <div id="error"><%= flash[:folder_error] %></div>
+  <div id="error"><%= flash[:folder_error] %></div>
 <% end %>
 
 <div style="margin-left: 20px;">
-<span class="snippet"> Você está na pasta: </span>
-<h3 id="file_path"> <%= folder_path(@folder) %></h3>
+  <span class="snippet"> Você está na pasta: </span>
+  <h3 id="file_path"> <%= folder_path(@folder) %></h3>
 </div>
 
 <div id="file_list" >
-	<%= render :partial => "folders/list"  %>
+  <%= render :partial => "folders/list"  %>
 </div>
 
 
 Total de <%= @files_count %> arquivos. Usando <%= @total_size %> MB de 2 GB (<%= @use_percentage %>%)
 
-<%  if current_user.can_manage? @school %>
-<div id="folder_rights" style="display:none;position:relative;"><div>
-    <% form_tag :action => 'update_permissions', :id => params[:id] do %>
+<%  if current_user.can_manage? @space %>
+  <div id="folder_rights" style="display:none;position:relative;"><div>
+      <% form_tag :action => 'update_permissions', :id => params[:id] do %>
         <table>
-            <tr>
-                <th></th>
-                <th></th>
-                <th class="rights">Create</th>
-                <th class="rights">Read</th>
-                <th class="rights">Update</th>
-                <th class="rights">Delete</th>
-            </tr>
-    <% Group.find(:all, :order => 'name').each do |group| %>
+          <tr>
+            <th></th>
+            <th></th>
+            <th class="rights">Create</th>
+            <th class="rights">Read</th>
+            <th class="rights">Update</th>
+            <th class="rights">Delete</th>
+          </tr>
+          <% Group.find(:all, :order => 'name').each do |group| %>
             <tr class="<%= cycle('even', 'odd') %>">
-        <% disabled = group.is_the_administrators_group? %>
-        <% if disabled %>
+              <% disabled = group.is_the_administrators_group? %>
+              <% if disabled %>
                 <td><%= image_tag('group_grey.png') %></td>
                 <td style="color:#818181;"><%= h(group.name) %></td>
-        <% else %>
+              <% else %>
                 <td><%= image_tag('group.png') %></td>
                 <td><%= h(group.name) %></td>
-        <% end %>
-                <td class="rights"><%= CRUD_check_box('create', group.id, controller.folder_id, disabled) %></td>
-                <td class="rights"><%= CRUD_check_box('read', group.id, controller.folder_id, disabled) %></td>
-                <td class="rights"><%= CRUD_check_box('update', group.id, controller.folder_id, disabled) %></td>
-                <td class="rights"><%= CRUD_check_box('delete', group.id, controller.folder_id, disabled) %></td>
+              <% end %>
+              <td class="rights"><%= CRUD_check_box('create', group.id, controller.folder_id, disabled) %></td>
+              <td class="rights"><%= CRUD_check_box('read', group.id, controller.folder_id, disabled) %></td>
+              <td class="rights"><%= CRUD_check_box('update', group.id, controller.folder_id, disabled) %></td>
+              <td class="rights"><%= CRUD_check_box('delete', group.id, controller.folder_id, disabled) %></td>
             </tr>
-    <% end %>
+          <% end %>
         </table>
         <br>
         <%= submit_tag 'Save' %> <%= check_box('update_recursively', 'checked', {}, 'yes', 'no') %> Apply changes to subfolders
-    <% end %>
-</div></div>
+      <% end %>
+  </div></div>
 <% end %>
 

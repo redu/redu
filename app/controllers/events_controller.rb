@@ -1,18 +1,20 @@
 class EventsController < BaseController
-  layout 'new_application'
-
   require 'htmlentities'
+
+  layout 'environment'
+
+  before_filter :find_environmnet_course_and_space
   caches_page :ical
   cache_sweeper :event_sweeper, :only => [:create, :update, :destroy]
 
   before_filter :login_required
-  before_filter :is_member_required
+  before_filter :is_member_required, :except => :destroy
   before_filter :is_event_approved,
     :only => [:show, :edit, :update, :destroy]
   before_filter :can_manage_required,
     :only => [:edit, :update, :destroy]
   before_filter :find_eventable
-
+  after_filter :create_activity, :only => [:create]
 
   #These two methods make it easy to use helpers in the controller.
   #This could be put in application_controller.rb if we want to use
@@ -49,35 +51,38 @@ class EventsController < BaseController
 
   def show
     @event = Event.find(params[:id])
-    @school = School.find(params[:school_id]) unless params[:school_do].nil?
+    @space = Space.find(params[:space_id]) unless params[:space_do].nil?
   end
 
   def index
-    @events = Event.upcoming.paginate(:conditions => ["eventable_id = ?  AND state LIKE 'approved'", @eventable.id],
+    @events = Event.upcoming.paginate(:conditions => ["eventable_id = ?  
+                                      AND state LIKE 'approved'", @eventable.id],
                                       :include => :owner,
                                       :page => params[:page],
                                       :order => 'start_time DESC',
                                       :per_page => AppConfig.items_per_page)
 
-    @list_title = "Eventos Futuros"
-    @school = School.find(params[:school_id]) unless params[:school_id].nil?
-    
+                                      @list_title = "Eventos Futuros"
+                                      @space= Space.find(params[:space_id]) unless params[:space_id].nil?
+
   end
 
   def past
-    @events = Event.past.paginate(:conditions => ["eventable_id = ? AND eventable_type = 'School' AND state LIKE 'approved'", School.find(params[:school_id]).id],
+    @events = Event.past.paginate(:conditions => ["eventable_id = ? 
+                                  AND eventable_type = 'Space' 
+                                  AND state LIKE 'approved'", Space.find(params[:space_id]).id],
                                   :include => :owner,
                                   :page => params[:page],
                                   :order => 'start_time DESC',
                                   :per_page => AppConfig.items_per_page)
 
-    @list_title = "Eventos Passados"
-    render :template => 'events/index'
+                                  @list_title = "Eventos Passados"
+                                  render :template => 'events/index'
   end
 
   def new
     @event = Event.new(params[:event])
-    @school = School.find(params[:school_id]) unless params[:school_id].nil?
+    @space = Space.find(params[:space_id]) unless params[:space_id].nil?
     @subject = current_user.subjects.find(params[:subject_id].split("-")[0].to_i) unless params[:subject_id].nil?
   end
 
@@ -89,7 +94,7 @@ class EventsController < BaseController
     # Passando para o formato do banco
     params[:event][:start_time] = Time.zone.parse(params[:event][:start_time].gsub('/', '-'))
     params[:event][:end_time] = Time.zone.parse(params[:event][:end_time].gsub('/', '-'))
-    
+
     @event = Event.new(params[:event])
     @event.owner = current_user
 
@@ -100,15 +105,15 @@ class EventsController < BaseController
 
       if @event.save
 
-        if @eventable.class.to_s.eql?("School") ##evento da escola###
+        if @eventable.class.to_s.eql?("Space") ##evento da escola###
 
-          if @event.owner.can_manage? @school
+          if @event.owner.can_manage? @space
             @event.approve!
             flash[:notice] = "O evento foi criado e divulgado."
           else
             flash[:notice] = "O evento foi criado e será divulgado assim que for aprovado pelo moderador."
           end
-          format.html { redirect_to school_event_path(@event.eventable, @event) }
+          format.html { redirect_to space_event_path(@event.eventable, @event) }
           format.xml  { render :xml => @event, :status => :created, :location => @event }
         else ### evento de subject ####
           flash[:notice] = "O evento foi criado e divulgado!!"
@@ -119,8 +124,6 @@ class EventsController < BaseController
         format.html { render :action => "new" }
         format.xml  { render :xml => @event.errors, :status => :unprocessable_entity }
       end
-
-
     end
   end
 
@@ -129,16 +132,16 @@ class EventsController < BaseController
 
     respond_to do |format|
       if @event.update_attributes(params[:event])
-        
+
         flash[:notice] = 'O evento foi editado.'
 
-        if @eventable.class.to_s.eql?("School") ##evento da escola###
-          format.html { redirect_to school_event_path(@event.eventable, @event) }
+        if @eventable.class.to_s.eql?("Space") ##evento da escola###
+          format.html { redirect_to space_event_path(@event.eventable, @event) }
           format.xml { render :xml => @event, :status => :created, :location => @event }
         else
           format.html { redirect_to subject_event_path(@event.eventable, @event) }
         end
-       
+
       else
         format.html { render :edit }
         format.xml { render :xml => @event.errors, :status => :unprocessable_entity }
@@ -147,15 +150,15 @@ class EventsController < BaseController
   end
 
   def destroy
-    
+
     @event = Event.find(params[:id])
     @event.destroy
 
     respond_to do |format|
       flash[:notice] = 'O evento foi excluído.'
-      
-      if @eventable.class.to_s.eql?("School")
-        format.html { redirect_to school_events_path }
+
+      if @eventable.class.to_s.eql?("Space")
+        format.html { redirect_to space_events_path }
       else
         format.html { redirect_to subject_events_path }
       end   
@@ -166,29 +169,26 @@ class EventsController < BaseController
     @event = Event.find(params[:id])
     current_user.vote(@event, params[:like])
     respond_to do |format|
-      format.js do
-        render :update do |page|
-          page << "jQuery('#like_spinner').hide()"
-          page << "jQuery('#like_link').show()"
-          page << "jQuery('#like_link').attr('onclick', 'return false;')"
-          page << "jQuery('#like_count').html('" + @event.votes_for().to_s + "')" # TODO performance + uma consulta?
-        end
-      end
+      format.js { render :template => 'shared/like', :locals => {:votes_for => @event.votes_for().to_s} }
     end
   end
 
   def day
     day = Time.utc(Time.now.year, Time.now.month, params[:day])
+    @space = Space.find(params[:space_id])
 
-    @events = Event.paginate(:conditions => ["eventable_id = ? AND eventable_type = 'School' AND state LIKE 'approved' AND ? BETWEEN start_time AND end_time", School.find(params[:school_id]).id, day],
+    @events = Event.paginate(:conditions => ["eventable_id = ? 
+                             AND eventable_type = 'Space' 
+                             AND state LIKE 'approved' 
+                             AND ? BETWEEN start_time 
+                             AND end_time", @space.id, day],
                              :include => :owner,
                              :page => params[:page],
                              :order => 'start_time DESC',
                              :per_page => AppConfig.items_per_page)
-    @school = School.find(params[:school_id])
 
-    @list_title = "Eventos do dia #{day.strftime("%d/%m/%Y")}"
-    render :template => 'events/index'
+                             @list_title = "Eventos do dia #{day.strftime("%d/%m/%Y")}"
+                             render :template => 'events/index'
   end
 
   def notify
@@ -197,47 +197,52 @@ class EventsController < BaseController
     Delayed::Job.enqueue(EventMailingJob.new(current_user, event), nil, notification_time) #TODO Verificar se a prioridade nil (zero) pode trazer problemas
     flash[:notice] = "Sua notificação foi agendada."
     if @eventable.class.to_s.eql?("SChool")
-      redirect_to school_event_path(@eventable.id, event)
+      redirect_to space_event_path(@eventable.id, event)
     else
-     redirect_to subject_event_path(@eventable.id, event)
-   end
+      redirect_to subject_event_path(@eventable.id, event)
+    end
   end
 
   protected
 
-    ##determinar o pai dess evento####
-    def find_eventable
+  ##determinar o pai dess evento####
+  def find_eventable
 
-      unless params[:school_id].nil?
-        @eventable = School.find(params[:school_id])
+    unless params[:space_id].nil?
+      @eventable = Space.find(params[:space_id])
+    else
+      @eventable = current_user.subjects.find(params[:subject_id].split("-")[0])
+    end
+  end
+
+  def can_manage_required
+    @event = Event.find(params[:id])
+
+    current_user.can_manage?(@event, @space) ? true : access_denied
+  end
+
+  def is_member_required
+    unless params[:space_id].nil?
+      @space = Space.find(params[:space_id])
+      current_user.has_access_to(@space) ? true : access_denied
+    end
+  end
+
+  def is_event_approved
+    @event = Event.find(params[:id])
+
+    if not @event.state == "approved"
+      if @event.eventable.class.to_s.eql?("Space")
+        redirect_to space_events_path
       else
-        @eventable = current_user.subjects.find(params[:subject_id].split("-")[0])
+        redirect_to subject_events_path
       end
     end
+  end
 
-    def can_manage_required
-      @event = Event.find(params[:id])
-
-      current_user.can_manage?(@event, @school) ? true : access_denied
-    end
-
-    def is_member_required
-      unless params[:school_id].nil?
-        @school = School.find(params[:school_id])
-        current_user.has_access_to(@school) ? true : access_denied
-      end
-    end
-
-    def is_event_approved
-      @event = Event.find(params[:id])
-
-      if not @event.state == "approved"
-        if @event.eventable.class.to_s.eql?("School")
-          redirect_to school_events_path
-        else
-          redirect_to subject_events_path
-        end
-      end
-    end
-
+  def find_environmnet_course_and_space
+    @space = Space.find(params[:space_id])
+    @course = @space.course
+    @environment = @course.environment
+  end
 end

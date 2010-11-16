@@ -6,18 +6,11 @@ class MessagesController < BaseController
 
   uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :index, :create, :update, :edit])
 
-#  skip_before_filter :verify_authenticity_token, :only => [:auto_complete_for_username]
-
-#  def auto_complete_for_username
-#    @users = User.find(:all, :conditions => [ 'LOWER(login) LIKE ?', '%' + (params[:message][:to]) + '%' ])
-#    render :inline => "<%= auto_complete_result(@users, 'login') %>"
-#  end
-
   def index
     if params[:mailbox] == "sent"
       @messages = @user.sent_messages.paginate(:all, :page => params[:page],
-      :order =>  'created_at DESC',
-      :per_page => AppConfig.items_per_page)
+                                               :order =>  'created_at DESC',
+                                               :per_page => AppConfig.items_per_page)
 
       respond_to do |format|
         format.js do
@@ -28,8 +21,8 @@ class MessagesController < BaseController
       end
     else
       @messages = @user.received_messages.paginate(:all, :page => params[:page],
-      :order =>  'created_at DESC',
-      :per_page => AppConfig.items_per_page )
+                                                   :order =>  'created_at DESC',
+                                                   :per_page => AppConfig.items_per_page )
 
       respond_to do |format|
         format.js do
@@ -70,12 +63,7 @@ class MessagesController < BaseController
     @message = Message.new_reply(@user, in_reply_to, params)
 
     respond_to do |format|
-      format.js do
-        render :update do |page|
-          page.replace_html  'tabs-3-content', :partial => 'new'
-          page << "reloadMce();"
-        end
-      end
+      format.js { render :template => 'messages/new' }
     end
   end
 
@@ -91,12 +79,7 @@ class MessagesController < BaseController
         format.html do
           render :action => :new and return
         end
-        format.js do
-          render :update do |page|
-            page << "jQuery('#msg_spinner').hide()"
-            page.replace_html "errors", error_messages_for(:message)
-          end
-        end
+        format.js { render :template => 'messages/errors', :locals => {:message => :message} }
       end
     else
       # If 'to' field isn't empty then make sure each recipient is valid
@@ -109,13 +92,7 @@ class MessagesController < BaseController
             format.html do
               render :action => :new and return
             end
-            format.js do
-              render :update do |page|
-                page << "jQuery('#msg_spinner').hide()"
-                page.replace_html "errors", error_messages_for(:message)
-                #page << "alert('é necessário preencher todos os campos')"# TODO notice?
-              end
-            end
+            format.js { render :template => 'messages/errors', :locals => {:message => :message} }
           end
           return
         else
@@ -137,7 +114,6 @@ class MessagesController < BaseController
           end
         end
       end
-
     end
   end
 
@@ -160,43 +136,36 @@ class MessagesController < BaseController
 
     if params[:mailbox] == 'sent'
       @messages = @user.sent_messages.paginate(:all, :page => page,
-      :order =>  'created_at DESC',
-      :per_page => AppConfig.items_per_page)
+                                               :order =>  'created_at DESC',
+                                               :per_page => AppConfig.items_per_page)
     else
       @messages = @user.received_messages.paginate(:all, :page => page,
-      :order =>  'created_at DESC',
-      :per_page => AppConfig.items_per_page)
+                                                   :order =>  'created_at DESC',
+                                                   :per_page => AppConfig.items_per_page)
     end
 
-    new_limit = params[:limit].to_i * 10
-
     respond_to do |format|
-      format.js do
-        render :update do |page|
-          page << "$('.messages_table').append('"+escape_javascript(render(:partial => "messages/item", :collection => @messages, :as => :message))+"')"
-          if @messages.length < 10
-            page.replace_html "#more",  ''
-          else
-            page.replace_html "#more",  link_to_remote("mais ainda!", :url => {:controller => :messages, :action => :more, :user_id => params[:user_id], :limit => new_limit}, :method =>:get, :loading => "$('#more').html('"+escape_javascript(image_tag('spinner.gif'))+"')")
-          end
-         end
+      if @messages.length < 10
+        format.js { render :template => 'messages/messages_end' }
+      else
+        format.js { render :template => 'messages/messages_more' }
       end
     end
   end
 
-  private
-  def find_user
-    @user = User.find(params[:user_id])
-  end
+private
+def find_user
+  @user = User.find(params[:user_id])
+end
 
-  def require_ownership_or_moderator
-    unless admin? || moderator? || (@user && (@user.eql?(current_user)))
-      redirect_to :controller => 'sessions', :action => 'new' and return false
-    end
-    return @user
+def require_ownership_or_moderator
+  unless admin? || moderator? || (@user && (@user.eql?(current_user)))
+    redirect_to :controller => 'sessions', :action => 'new' and return false
   end
+  return @user
+end
 
-  def user_required
-    User.find(params[:user_id]) == current_user ? true : access_denied
-  end
+def user_required
+  User.find(params[:user_id]) == current_user ? true : access_denied
+end
 end

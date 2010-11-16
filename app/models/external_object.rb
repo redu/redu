@@ -1,6 +1,3 @@
 class ExternalObject < ActiveRecord::Base
- #belongs_to :course
-  
-   has_one :lesson, :as => :lesson
-
+  has_one :lesson, :as => :lesson
 end

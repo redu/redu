@@ -1,27 +1,15 @@
-<% if @is_school%>
-  <%= render :partial => "schools/school_info", :locals => {:school => @school,:show => false} %>
-  <%# render :partial => "schools/sidebar", :locals => {:school => @school} %>
-<%end%>
-<div class="sidebar grid_4">
-</div>
+<% if @bulletinable.class.to_s.eql? "Space" %>
+  <%= render :partial => "spaces/sidebar", :locals => {:space => @bulletinable} %>
+<% end %>
 
-<div class="main grid_10">		
+<div class="main grid_12 omega">		
   <% if @bulletins && @bulletins.size > 0 %>
 
-    <ul class="grid_10">
+    <ul class="bulletins grid_12 alpha omega">
       <%= render :partial => 'bulletins/list', :collection => @bulletins, :as => :bulletin, :locals => {
         :is_index => true } %> 
     </ul>
-   <% if @is_school%>
-     <%= link_to "Crie uma nova notícia.", new_school_bulletin_path(@bulletinable), :class => "button"%>
-   <%else%>
-     <%= link_to "Crie uma nova notícia.", new_subject_bulletin_path(@bulletinable), :class => "button"%>
-  <%end%>
-
-  <% else %>
-                  Nenhuma notícia foi enviada ainda. <%= link_to 'Envie uma agora!', :action => 'new' %>
-  <% end %>
-  <div id="pagination" align="center" class="pagination">
+    <%= link_to "Crie uma nova notícia.", new_polymorphic_path([@bulletinable, Bulletin.new]), :class => "button"%>
 
     <%= will_paginate  @bulletins %>
 

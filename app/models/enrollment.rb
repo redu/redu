@@ -1,6 +1,6 @@
 class Enrollment < ActiveRecord::Base
   belongs_to :user
-  belongs_to :course
+  belongs_to :lecture
   belongs_to :role
 
   def self.create_enrollment subject_id, current_user
@@ -22,5 +22,4 @@ class Enrollment < ActiveRecord::Base
 
     end
   end
-  
 end

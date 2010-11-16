@@ -1,0 +1,1 @@
+page.replace_html 'posts-list', :partial => 'sb_posts/item', :collection => @posts, :as => :post

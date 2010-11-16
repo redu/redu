@@ -1,0 +1,70 @@
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#select_all").toggle(
+      function(e){
+        $("input[type=checkbox][name=users\[\]]").attr('checked', true)
+        $(this).attr('checked', true)
+      },
+      function(e){
+        $("input[type=checkbox][name=users\[\]]").attr('checked', false)
+        $(this).attr('checked', false)
+      }
+    )    
+  })
+function showLoadingUsers(){
+	document.getElementById('loading_bar').style.display = 'block';
+	$('user_list_table').remove();
+}
+
+function setSubmissionType(type){
+	 var theform = document.getElementById('moderate_users_form');
+	 var theattribute = document.getElementById('submission_type');
+		
+	theattribute.value = type;
+	theform.submit();
+}
+
+	
+</script>
+<div class="grid_16">
+  <div class="fake-tabs grid_16 alpha omega clearfix">
+    <%= render :partial => 'environments/admin_taskbar' %>
+    <div class="panel">
+      <h1>Membros</h1>
+
+      <% if @memberships && @memberships.size > 0 %>
+        <% form_remote_tag :url => {:action => :search_users_admin,
+          :id => @environment.id},
+          :loading => "showLoadingUsers()" do %>
+          <div class="filters clearfix">
+            <% field_set_tag "Buscar", :class => "grid_3 alpha" do %>
+              <%= label_tag :search_user, "Palavra-chave", :class => "inline" %>
+              <%= text_field_tag :search_user %>
+            <% end %>
+            <% field_set_tag "Papéis" , :class => "grid_11 omega" do %>
+              <% Role.all().each do |role| %>
+                <%= check_box_tag :role_filter, role.id %>
+                <%= label_tag :role_filter, role.name, :class => "inline" %>
+              <% end %>
+            <% end %>
+            <%= submit_tag 'Filtrar',
+                  :style => "float: right;" %>
+          </div>
+        <% end %>
+
+      <div id="user_list">
+        <%= render :partial => 'user_list_admin',
+          :locals => {:memberships => @memberships}%>
+      </div>
+      <% else %>
+        <div class="box_notice">Não há usuários no ambiente.</div>
+      <% end %>
+
+      <div id="pagination" align="center" class="pagination">
+        <%= will_paginate  @memberships,
+              :params => {:sort_by => @sort_by},
+              :class => "pagination_number"  %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,9 +1,7 @@
 <div class="main grid_16">
-	
-	<% unless @school.nil?%>
-	<%= render :partial => "schools/school_info", :locals => {:school => @school, :show => false} %>
-	<%= render :partial => "schools/sidebar", :locals => {:school => @school} %>
-	<%end%>
-	
-	<%= render :partial => 'events/form', :locals => {:event => @event, :title => "Novo"} %>
+  <% unless @space.nil?%>
+    <%= render :partial => "spaces/sidebar", :locals => {:space => @space} %>
+  <%end%>
+
+  <%= render :partial => 'events/form', :locals => {:event => @event, :title => "Novo"} %>
 </div>

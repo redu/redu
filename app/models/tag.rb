@@ -1,11 +1,22 @@
 require_dependency File.dirname(__FILE__) + '/../../vendor/plugins/acts_as_taggable_on_steroids/lib/tag.rb'
 
 class Tag < ActiveRecord::Base
-  
+
+  def self.popular(limit = nil, order = ' tags.name ASC', type = nil)
+    sql = "SELECT tags.id, tags.name, count(*) AS count
+      FROM taggings, tags
+      WHERE tags.id = taggings.tag_id "
+      sql += " AND taggings.taggable_type = '#{type}'" unless type.nil?
+      sql += " GROUP BY tags.id, tags.name"
+      sql += " ORDER BY #{order}"
+      sql += " LIMIT #{limit}" if limit
+      Tag.find_by_sql(sql)
+  end
+
   def to_param
-    param = URI.escape(self.name, /[\/.?#]/)    
-    #quote if needed
-    param = "\"#{param}\"" if param.match(TagList.delimiter)
+    param = URI.escape(self.name, /[\/.?#]/)
+      #quote if needed
+      param = "\"#{param}\"" if param.match(TagList.delimiter)
     param
   end
 
@@ -22,18 +33,7 @@ class Tag < ActiveRecord::Base
       ORDER BY count DESC
       LIMIT 10"
 
-    Tag.find_by_sql(sql)
+      Tag.find_by_sql(sql)
   end
-  
-  def self.popular(limit = nil, order = ' tags.name ASC', type = nil)
-    sql = "SELECT tags.id, tags.name, count(*) AS count 
-      FROM taggings, tags 
-      WHERE tags.id = taggings.tag_id "
-    sql += " AND taggings.taggable_type = '#{type}'" unless type.nil?      
-    sql += " GROUP BY tags.id, tags.name"
-    sql += " ORDER BY #{order}"
-    sql += " LIMIT #{limit}" if limit
-    Tag.find_by_sql(sql)
-  end  
-  
+
 end

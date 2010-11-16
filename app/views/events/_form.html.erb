@@ -1,60 +1,58 @@
 <%- form_for @event do |f| %>
-	<fieldset><legend><%= title %> Evento</legend>
-	<%= f.error_messages %>
+  <fieldset><legend><%= title %> Evento</legend>
+    <%= f.error_messages %>
 
- 
-    <%  if @eventable.class.to_s.eql?("School") %>
-	<%= hidden_field_tag("school_id", params[:school_id]) %>
-	<%else%>
-	<%= hidden_field_tag("subject_id", params[:subject_id].split("-")[0]) %>
+    <%  if @eventable.class.to_s.eql?("Space") %>
+      <%= hidden_field_tag("space_id", params[:space_id]) %>
+    <%else%>
+      <%= hidden_field_tag("subject_id", params[:subject_id].split("-")[0]) %>
     <%end%>
 
-	<%= f.label :name, "Nome:" %>
-	<%= f.text_field :name %>
+    <%= f.label :name, "Nome:" %>
+    <%= f.text_field :name %>
 
-	<% random_number = get_random_number%>
-	<%= f.label "Breve Descrição" %>
-	<%= f.text_area :tagline, :size => "70x5", :class => "tagline-#{random_number}" %>
-	<%= render :partial => 'shared/limit_char_field', :locals => { :class_textarea => "tagline-#{random_number}" }%>
+    <% random_number = get_random_number%>
+    <%= f.label "Breve Descrição" %>
+    <%= f.text_area :tagline, :size => "70x5", :class => "tagline-#{random_number}" %>
+    <%= render :partial => 'shared/limit_char_field', :locals => { :class_textarea => "tagline-#{random_number}" }%>
 
-	<%= f.label :description, "Descrição:" %>
-	<%= f.text_area :description, :size => "40x12", :class => "mceEditor" %>
+    <%= f.label :description, "Descrição:" %>
+    <%= f.text_area :description, :size => "40x12", :class => "mceEditor" %>
 
-	<%= f.label :start_time, "Início:" %>
-	<%= f.text_field :start_time, :value => to_pt_BR_format(@event.start_time) %>
+    <%= f.label :start_time, "Início:" %>
+    <%= f.text_field :start_time, :value => to_pt_BR_format(@event.start_time) %>
 
-	<%= f.label :end_time, "Término:" %>
-        <%= f.text_field :end_time, :value => to_pt_BR_format(@event.end_time) %>
+    <%= f.label :end_time, "Término:" %>
+    <%= f.text_field :end_time, :value => to_pt_BR_format(@event.end_time) %>
 
-	<%= f.label :location, "Local:"%>
-	<%= f.text_field :location %>
+    <%= f.label :location, "Local:"%>
+    <%= f.text_field :location %>
 
-	<%= f.label "Tags <span class='snippet'>(separadas por vírgula)</span>" %>
-	<%= f.text_field :tag_list %>
+    <%= f.label "Tags <span class='snippet'>(separadas por vírgula)</span>" %>
+    <%= f.text_field :tag_list %>
 
-	<%= f.submit "Salvar"%>
-	<a href="javascript:history.back()">Voltar</a>
-
-
-	</fieldset>
+    <%= f.submit "Salvar"%>
+    <a href="javascript:history.back()">Voltar</a>
+  </fieldset>
 <% end %>
 
 
 <script type="text/javascript">
 
-		$(function() {
-                    $("#event_start_time").datetimepicker({
-                        timeText: 'Horário',
-                    	hourText: 'Hora(s)',
-                    	minuteText: 'Minuto(s)',
-                        currentText: 'Agora'
-                      });
-                    $('#event_end_time').datetimepicker({
-                        timeText: 'Horário',
-                    	hourText: 'Hora(s)',
-                    	minuteText: 'Minuto(s)',
-                        currentText: 'Agora'
-                    });
-                        
-		});
+  $(function() {
+      $("#event_start_time").datetimepicker({
+        timeText: 'Horário',
+        hourText: 'Hora(s)',
+        minuteText: 'Minuto(s)',
+        currentText: 'Agora'
+      });
+      
+      $('#event_end_time').datetimepicker({
+        timeText: 'Horário',
+        hourText: 'Hora(s)',
+        minuteText: 'Minuto(s)',
+        currentText: 'Agora'
+      });
+
+  });
 </script>
