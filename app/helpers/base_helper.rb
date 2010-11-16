@@ -117,6 +117,11 @@ module BaseHelper
           link_obj = link_to(item.logeable_name, space_event_path(@event.space, @event))
 
           @activity =  "criou o evento " + link_obj if item.log_action == "create"
+      when 'bulletin'
+          @bulletin = Bulletin.find(item.logeable_id)
+          link_obj = link_to(item.logeable_name, polymorphic_path([@bulletin.bulletinable, @bulletin]))
+
+          @activity =  "criou a notícia " + link_obj if item.log_action == "create"
       else
           @activity = " atividade? "
       end

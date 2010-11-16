@@ -188,12 +188,12 @@ class BaseController < ApplicationController
     when 'bulletins'
       if @bulletin and @bulletin.created_at
         Status.create({:log => true,
-                      :logeable_name => @bulletin.name,
-                      :logeable_type => 'Event',
+                      :logeable_name => @bulletin.title,
+                      :logeable_type => 'Bulletin',
                       :logeable_id => @bulletin.id,
                       :log_action => params[:action],
-                      :statusable_type => 'Space',
-                      :statusable_id => @event.space.id,
+                      :statusable_type => @bulletin.bulletinable.class.to_s,
+                      :statusable_id => @bulletin.bulletinable.id,
                       :user_id => current_user.id
         })
       end

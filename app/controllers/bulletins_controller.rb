@@ -6,6 +6,7 @@ class BulletinsController < BaseController
   before_filter :is_member_required
   before_filter :can_manage_required,
     :only => [:edit, :update, :destroy]
+  after_filter :create_activity, :only => [:create]
 
   uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit, :create, :update])
 
