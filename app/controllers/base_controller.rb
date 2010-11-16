@@ -156,8 +156,8 @@ class BaseController < ApplicationController
                       :logeable_type => 'Topic',
                       :logeable_id => @topic.id,
                       :log_action => params[:action],
-                      :statusable_type => 'User',
-                      :statusable_id => @topic.user.id,
+                      :statusable_type => 'Space',
+                      :statusable_id => @topic.forum.space.id,
                       :user_id => current_user.id
         })
       end
@@ -168,8 +168,8 @@ class BaseController < ApplicationController
                       :logeable_type => 'SbPost',
                       :logeable_id => @post.id,
                       :log_action => params[:action],
-                      :statusable_type => 'User',
-                      :statusable_id => @post.user.id,
+                      :statusable_type => 'Space',
+                      :statusable_id => @post.topic.forum.space.id,
                       :user_id => current_user.id
         })
       end
@@ -180,8 +180,20 @@ class BaseController < ApplicationController
                       :logeable_type => 'Event',
                       :logeable_id => @event.id,
                       :log_action => params[:action],
-                      :statusable_type => 'User',
-                      :statusable_id => @event.owner.id,
+                      :statusable_type => 'Space',
+                      :statusable_id => @event.space.id,
+                      :user_id => current_user.id
+        })
+      end
+    when 'bulletins'
+      if @bulletin and @bulletin.created_at
+        Status.create({:log => true,
+                      :logeable_name => @bulletin.name,
+                      :logeable_type => 'Event',
+                      :logeable_id => @bulletin.id,
+                      :log_action => params[:action],
+                      :statusable_type => 'Space',
+                      :statusable_id => @event.space.id,
                       :user_id => current_user.id
         })
       end
