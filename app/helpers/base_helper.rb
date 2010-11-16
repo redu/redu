@@ -22,27 +22,27 @@ module BaseHelper
 			# To put a value in categories_array I have to subtract for 1 the params[:lecture][:simple_category_id],
 			# because the include_blank add a extra field
 			if params[:lecture][:simple_category_id]
-			
+
 				if params[:lecture][:simple_category_id].to_i > 0
 					i = params[:lecture][:simple_category_id].to_i - 1
-					f.select(:simple_category_id, options_for_select(categories_array, categories_array[i]), :include_blank => true)		
+					f.select(:simple_category_id, options_for_select(categories_array, categories_array[i]), :include_blank => true)
 				else
 					f.select(:simple_category_id, options_for_select(categories_array), :include_blank => true)
 				end
-			else				
+			else
 				f.select(:simple_category_id, options_for_select(categories_array), :include_blank => true)
 			end
-		elsif params[:exam]			
-			if params[:exam][:simple_category_id]					
+		elsif params[:exam]
+			if params[:exam][:simple_category_id]
 				if params[:exam][:simple_category_id].to_i > 0
 					i = params[:exam][:simple_category_id].to_i - 1
 					f.select(:simple_category_id, options_for_select(categories_array, categories_array[i]), :include_blank => true)
 				else
-					f.select(:simple_category_id, options_for_select(categories_array), :include_blank => true)					
+					f.select(:simple_category_id, options_for_select(categories_array), :include_blank => true)
 				end
 			else
 				f.select(:simple_category_id, options_for_select(categories_array), :include_blank => true)
-			end			
+			end
 		else
 			f.select(:simple_category_id, options_for_select(categories_array), :include_blank => true)
 		end
@@ -573,5 +573,22 @@ module BaseHelper
 def get_random_number
   SecureRandom.hex(4)
 end
+
+  # Gera o nome do recurso (class_name) devidamente pluralizado de acordo com
+  # a quantidade (qty)
+  def resource_name(class_name, qty)
+    case class_name
+    when :myfile
+      "+#{pluralize(qty, 'arquivo')} #{qty > 1 ? "adicionados" : "adicionado"}"
+    when :bulletin
+      "+#{pluralize(qty, 'notícia')} #{qty > 1 ? "adicionados" : "adicionada"}"
+    when :event
+      "+#{pluralize(qty, 'evento')} #{qty > 1 ? "adicionados" : "adicionado"}"
+    when :topic
+      "+#{pluralize(qty, 'tópico')} #{qty > 1 ? "adicionados" : "adicionado"}"
+    when :subject
+      "+#{pluralize(qty, 'módulo')} #{qty > 1 ? "adicionados" : "adicionado"}"
+    end
+  end
 
 end

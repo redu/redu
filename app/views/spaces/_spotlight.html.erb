@@ -1,0 +1,31 @@
+<div class="space clearfix">
+  <span class="expand">Expandir</span>
+  <div class="name"><%= link_to spotlight.name, spotlight %></div>
+  <div class="vtabs">
+    <ul>
+      <% spotlight.recent_log.each do |type, logs| %>
+        <li class="log headline <%= type %>">
+          <% unless logs.empty? %> 
+            <%= link_to resource_name(type, logs.size),
+                  "##{spotlight.id}-#{type}" %>
+        <% else %>
+          <%= link_to "Nenhum #{type} novo" ,
+            "##{spotlight.id}-#{type}" %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+
+  <% spotlight.recent_log.each do |type, logs| %>
+    <div id="<%= "#{spotlight.id}-#{type}" %>">
+      <% unless logs.empty? %> 
+        <ul>
+          <%= render :partial => "statuses/log", :collection => logs %>
+        </ul>
+      <% else %>
+        <div class="box_notice">Nenhuma atividade nova</div>
+      <% end %>
+    </div>
+  <% end %>
+</div><!-- end tabs -->
+</div><!-- end space -->

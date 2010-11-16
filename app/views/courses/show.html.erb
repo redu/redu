@@ -13,40 +13,12 @@
   <div class="grid_16 alpha omega">
     <h3 class="call">Espaços do curso <%= @course.name %></h3>
     <div class="spotlight-boxes">
-      <% @spaces.each do |space| %>
-        <div class="space clearfix">
-          <span class="expand">Expandir</span>
-          <div class="name"><%= link_to space.name, space %></div>
-          <div class="vtabs">
-            <ul>
-              <% space.recent_log.each do |type, logs| %>
-                <li class="log headline <%= type %>">
-                  <% unless logs.empty? %> 
-                    <%= link_to "+#{logs.size} #{type} adicionados",
-                    "##{space.id}-#{type}" %>
-                <% else %>
-                  <%= link_to "Nenhum #{type} novo" ,
-                    "##{space.id}-#{type}" %>
-                <% end %>
-              </li>
-            <% end %>
-          </ul>
-
-          <% space.recent_log.each do |type, logs| %>
-            <div id="<%= "#{space.id}-#{type}" %>">
-              <% unless logs.empty? %> 
-                <ul>
-                  <%= render :partial => "statuses/log", :collection => logs %>
-                </ul>
-              <% else %>
-                <div class="box_notice">Nenhuma atividade nova</div>
-              <% end %>
-            </div>
-          <% end %>
-        </div><!-- end tabs -->
-      </div><!-- end space -->
-    <% end %>
-  </div><!--  end spotlight-boxes --> 
+      <% if @spaces %>
+        <%= render :partial => 'spaces/spotlight', :collection => @spaces %>
+      <% else %>
+        <div class="box_notice">Nenhuma disciplina foi criada.</div>
+      <% end %>
+    </div><!--  end spotlight-boxes -->
   </div>
   <div class="grid_8 alpha">
     <h3 class="call">Convide colaboradores</h3>
@@ -56,24 +28,24 @@
           $("#toggle").live('click', function(e){
             $(".message").toggle()
             e.preventDefault()
-          });
-      })
-    </script>
-    
-    <% remote_form_for :invitation, :method => :post,
-      :url => course_invitations_path(@course),
-      :html => {:id => "environment_invitation"},
-      :loading => "$(\"#environment_invitation\").prepend(\"#{escape_javascript(image_tag("spinner.gif")) }\")",
-      :complete => "$(\"#environment_invitation\").find(\"img\").remove()" do  |f| %>
-      <div id="invitation_errors"></div>
-      <%= f.label :email_addresses, "E-mails" %>
-      <%= f.text_area :email_addresses, :cols => 50, :rows => 6 %>
-      <a id="toggle" href="#">Escrever Mensagem</a>
-      <%= f.label :message, "Mensagem", :class => "message" %>
-      <%= f.text_area :message, :cols => 50, :rows => 6 , :class => "message" %>
+            });
+          })
+</script>
 
-      <%= f.submit "Convidar" %>
-    <% end %>
-    
+<% remote_form_for :invitation, :method => :post,
+  :url => course_invitations_path(@course),
+  :html => {:id => "environment_invitation"},
+  :loading => "$(\"#environment_invitation\").prepend(\"#{escape_javascript(image_tag("spinner.gif")) }\")",
+  :complete => "$(\"#environment_invitation\").find(\"img\").remove()" do  |f| %>
+  <div id="invitation_errors"></div>
+  <%= f.label :email_addresses, "E-mails" %>
+  <%= f.text_area :email_addresses, :cols => 50, :rows => 6 %>
+  <a id="toggle" href="#">Escrever Mensagem</a>
+  <%= f.label :message, "Mensagem", :class => "message" %>
+  <%= f.text_area :message, :cols => 50, :rows => 6 , :class => "message" %>
+
+  <%= f.submit "Convidar" %>
+<% end %>
+
   </div>
 </div>

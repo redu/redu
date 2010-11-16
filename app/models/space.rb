@@ -95,39 +95,39 @@ class Space < ActiveRecord::Base
     self.statuses.all(:order => 'created_at DESC', :offset=> offset, :limit=> limit)
   end
 
-  # Logs relativos ao Space (usado no Course#show). 
+  # Logs relativos ao Space (usado no Course#show).
   # Retorna hash do tipo :topoic => [status1, status2, status3], :myfile => ...
   def recent_log(offset = 0, limit = 3)
     logs = {}
-    logs[:myfile] = self.statuses.find(:all, 
-                                       :order => 'created_at', 
+    logs[:myfile] = self.statuses.find(:all,
+                                       :order => 'created_at DESC',
                                        :limit => limit,
                                        :offset => offset,
-                                       :conditions => { :log => 1, 
+                                       :conditions => { :log => 1,
                                          :logeable_type => 'Myfile' })
     logs[:topic] = self.statuses.find(:all,
-                                      :order => 'created_at', 
+                                      :order => 'created_at DESC',
                                       :limit => limit,
                                       :offset => offset,
-                                      :conditions => { :log => true, 
+                                      :conditions => { :log => true,
                                         :logeable_type => %w(Topic SbPost) })
     logs[:subject] = self.statuses.find(:all,
-                                        :order => 'created_at', 
+                                        :order => 'created_at DESC',
                                         :limit => limit,
                                         :offset => offset,
-                                        :conditions => { :log => true, 
+                                        :conditions => { :log => true,
                                           :logeable_type => 'Subject' })
     logs[:event] = self.statuses.find(:all,
-                                      :order => 'created_at', 
+                                      :order => 'created_at DESC',
                                       :limit => limit,
                                       :offset => offset,
-                                      :conditions => { :log => true, 
+                                      :conditions => { :log => true,
                                         :logeable_type  => 'Event' })
     logs[:bulletin] = self.statuses.find(:all,
-                                         :order => 'created_at', 
+                                         :order => 'created_at DESC',
                                          :limit => limit,
                                          :offset => offset,
-                                         :conditions => { :log => true, 
+                                         :conditions => { :log => true,
                                            :logeable_type => 'Bulletin' })
     return logs
   end
