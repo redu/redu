@@ -1,4 +1,7 @@
 class SbPostsController < BaseController
+  layout 'environment'
+
+  before_filter :find_environmnet_course_and_space, :except => [:index, :new, :create]
   before_filter :find_post,      :except => [:index, :monitored, :search, :create, :new]
   before_filter :login_required, :except => [:index, :search, :show, :monitored]
   after_filter :create_activity, :only => [:create]
@@ -14,14 +17,14 @@ class SbPostsController < BaseController
     conditions = conditions.any? ? conditions.collect { |c| "(#{c})" }.join(' AND ') : nil
 
     @posts = SbPost.with_query_options.paginate(:conditions => conditions, :page => params[:page])
-    
+
     @users = User.find(:all, :select => 'distinct *', :conditions => ['id in (?)', @posts.collect(&:user_id).uniq]).index_by(&:id)
     render_posts_or_xml
   end
 
   def search
     conditions = params[:q].blank? ? nil : SbPost.send(:sanitize_sql, ['LOWER(sb_posts.body) LIKE ?', "%#{params[:q]}%"])
-    
+
     @posts = SbPost.with_query_options.find :all, :conditions => conditions, :page => {:current => params[:page]}
 
     @users = User.find(:all, :select => 'distinct *', :conditions => ['id in (?)', @posts.collect(&:user_id).uniq]).index_by(&:id)
@@ -31,9 +34,9 @@ class SbPostsController < BaseController
   def monitored
     @user = User.find params[:user_id]    
     @posts = SbPost.with_query_options.find(:all, 
-      :joins => ' INNER JOIN monitorships ON monitorships.topic_id = topics.id', 
-      :conditions  => ['monitorships.user_id = ? AND sb_posts.user_id != ?', params[:user_id], @user.id],
-      :page => {:current => params[:page]})
+                                            :joins => ' INNER JOIN monitorships ON monitorships.topic_id = topics.id', 
+                                            :conditions  => ['monitorships.user_id = ? AND sb_posts.user_id != ?', params[:user_id], @user.id],
+                                            :page => {:current => params[:page]})
     render_posts_or_xml
   end
 
@@ -84,30 +87,30 @@ class SbPostsController < BaseController
       end
       format.xml { render :xml => @post.errors.to_xml, :status => 400 }
       format.js { render :template => 'sb_posts/error_create', :locals => { :post => @post } }
+    end
   end
-  end
-  
+
   def edit
     respond_to do |format| 
       format.html 
       format.js
     end
   end
-  
+
   def update
-   respond_to do |format|
-     if @post.update_attributes(params[:post])
+    respond_to do |format|
+      if @post.update_attributes(params[:post])
         flash[:notice] = 'O post foi editado.'
         format.html { redirect_to space_forum_topic_path(:space_id => params[:space_id], :id => params[:topic_id], :anchor => @post.dom_id, :page => params[:page] || '1')
         }
         format.xml { render :xml => @post, :status => :created, :location => @post, :space => params[:space_id] }
         format.js 
-     else
+      else
         format.html { render :action => :edit }
         format.xml { render :xml => @post.errors, :status => :unprocessable_entity }
         format.js
-     end
-   end 
+      end
+    end 
   end
 
   def destroy
@@ -124,22 +127,28 @@ class SbPostsController < BaseController
   end
 
   protected
-    #overide in your app
-    def authorized?
-      %w(create new).include?(action_name) || @post.editable_by?(current_user)
+  #overide in your app
+  def authorized?
+    %w(create new).include?(action_name) || @post.editable_by?(current_user)
+  end
+
+  def find_post
+    @space = Space.find(params[:space_id])
+    forum = @space.forum
+    @post = SbPost.find_by_id_and_topic_id_and_forum_id(params[:id].to_i, params[:topic_id].to_i, forum.id) || raise(ActiveRecord::RecordNotFound)
+  end
+
+  def render_posts_or_xml(template_name = action_name)
+    respond_to do |format|
+      format.html { render :action => "#{template_name}" }
+      format.rss  { render :action => "#{template_name}.xml.builder", :layout => false }
+      format.xml  { render :xml => @posts.to_xml }
     end
-    
-    def find_post
-      @space = Space.find(params[:space_id])
-      forum = @space.forum
-      @post = SbPost.find_by_id_and_topic_id_and_forum_id(params[:id].to_i, params[:topic_id].to_i, forum.id) || raise(ActiveRecord::RecordNotFound)
-    end
-    
-    def render_posts_or_xml(template_name = action_name)
-      respond_to do |format|
-        format.html { render :action => "#{template_name}" }
-        format.rss  { render :action => "#{template_name}.xml.builder", :layout => false }
-        format.xml  { render :xml => @posts.to_xml }
-      end
-    end
+  end
+
+  def find_environmnet_course_and_space
+    @space = Space.find(params[:space_id])
+    @course = @space.course
+    @environment = @course.environment
+  end
 end
