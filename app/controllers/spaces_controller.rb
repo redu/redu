@@ -1,7 +1,7 @@
 class SpacesController < BaseController
   layout 'environment'
 
-  before_filter :find_environmnet_course_and_space, :except => [:index, :new, :create]
+  before_filter :find_environmnet_course, :except => [:index, :create, :new, :cancel]
   before_filter :login_required,  :except => [:join, :unjoin, :member, :index]
   after_filter :create_activity, :only => [:create]
   # Usado para proteger acoes perigosas (só para admin)
@@ -14,14 +14,14 @@ class SpacesController < BaseController
 
 
   def take_ownership
-    @space = Space.find(params[:id])
+    
     @space.update_attribute(:owner, current_user)
     flash[:notice] = "Você é o novo dono deste espaço!"
     redirect_to @space
   end
 
   def vote
-    @space = Space.find(params[:id])
+    
     current_user.vote(@space, params[:like])
     respond_to do |format|
       format.js { render :template => 'shared/like.rjs', :locals => { :votes_for => @space.votes_for().to_s} } 
@@ -29,11 +29,11 @@ class SpacesController < BaseController
   end
 
   def look_and_feel
-    @space = Space.find(params[:id])
+    
   end
 
   def set_theme
-    @space = Space.find(params[:id])
+    
     @space.update_attributes(params[:space])
 
     flash[:notice] = "Tema modificado com sucesso!"
@@ -56,7 +56,7 @@ class SpacesController < BaseController
   end
 
   def join
-    @space = Space.find(params[:id])
+    
     @association = UserSpaceAssociation.new
     @association.user = current_user
     @association.space = @space
@@ -85,7 +85,7 @@ class SpacesController < BaseController
   end
 
   def unjoin
-    @space = Space.find(params[:id])
+    
     @association = UserSpaceAssociation.find(:first, :conditions => ["user_id = ? AND space_id = ?",current_user.id, @space.id ])
 
     if @association.destroy
@@ -98,12 +98,12 @@ class SpacesController < BaseController
   end
 
   def manage
-    @space = Space.find(params[:id])
+    
   end
 
   # Modercacao
   def admin_requests
-    @space = Space.find(params[:id])
+    
     # TODO colocar a consulta a seguir como um atributo de space (como em space.teachers)
     @pending_members = UserSpaceAssociation.paginate(:conditions => ["user_space_associations.status like 'pending' AND space_id = ?", @space.id],
                                                       :page => params[:page],
@@ -116,7 +116,7 @@ class SpacesController < BaseController
   end
 
   def admin_members
-    @space = Space.find(params[:id]) # TODO 2 consultas ao inves de uma?
+    
     @memberships = UserSpaceAssociation.paginate(:conditions => ["status like 'approved' AND space_id = ?", @space.id],
                                                   :include => :user,
                                                   :page => params[:page],
@@ -128,7 +128,7 @@ class SpacesController < BaseController
   end
 
   def admin_bulletins
-    @space = Space.find(params[:id])
+    
     @bulletins = Bulletin.paginate(:conditions => ["bulletinable_type LIKE 'Space' 
                                    AND bulletinable_id = ? 
                                    AND state LIKE ?", @space.id, "waiting"],
@@ -143,7 +143,7 @@ class SpacesController < BaseController
   end
 
   def admin_events
-    @space = Space.find(params[:id])
+    
     @events = Event.paginate(:conditions => ["space_id = ? AND state LIKE ?", @space.id, "waiting"],
                              :include => :owner,
                              :page => params[:page],
@@ -156,7 +156,7 @@ class SpacesController < BaseController
   end
 
   def moderate_requests
-    @space = Space.find(params[:id])
+   
 
     approved = params[:member].reject{|k,v| v == 'reject'}
     rejected = params[:member].reject{|k,v| v == 'approve'}
@@ -185,8 +185,7 @@ class SpacesController < BaseController
   end
 
   def moderate_members
-    @space = Space.find(params[:id]) # TODO realmente necessário?
-
+    
     case params[:submission_type]
     when '0' # remove selected
       @removed_users = User.all(:conditions => ["id IN (?)", params[:users].join(',')]) unless params[:users].empty?
@@ -209,7 +208,7 @@ class SpacesController < BaseController
   end
 
   def search_users_admin
-    @space = Space.find(params[:id])
+    
     if params[:search_user].empty?
       @memberships = UserSpaceAssociation.paginate(:conditions => ["status like 'approved' AND space_id = ?", @space.id],
                                                     :include => :user,
@@ -250,7 +249,7 @@ class SpacesController < BaseController
       flash[:error] = "Para moderar você precisa escolher entre aprovar ou rejeitar."
     end
 
-    @space = Space.find(params[:id])
+
     redirect_to admin_bulletins_space_path(@space)
   end
 
@@ -267,13 +266,13 @@ class SpacesController < BaseController
       flash[:error] = "Para moderar você precisa escolher entre aprovar ou rejeitar."
     end
 
-    @space = Space.find(params[:id])
+    
     redirect_to admin_events_space_path(@space)
   end
 
   # usuário entra na rede
   def associate
-    @space = Space.find(params[:id])
+    
     @user = User.find(params[:user_id])  # TODO precisa mesmo recuperar o usuário no bd?
     @user_space_association = UserSpaceAssociation.find(:first, :include => :access_key, :conditions => ["access_keys.key = ?", params[:user_key]])
 
@@ -319,7 +318,7 @@ class SpacesController < BaseController
 
   # lista todos os membros da escola
   def members
-    @space = Space.find(params[:id]) #TODO duas queries que poderiam ser apenas 1
+    
     @members = @space.user_space_associations.paginate(  #optei por .users ao inves de .students
                                                          :page => params[:page],
                                                          :order => 'updated_at DESC',
@@ -336,7 +335,7 @@ class SpacesController < BaseController
 
   # lista todos os professores
   def teachers
-    @space = Space.find(params[:id]) #TODO duas queries que poderiam ser apenas 1
+    
 
     @members = @space.teachers.paginate(
       :page => params[:page],
@@ -399,8 +398,7 @@ class SpacesController < BaseController
   # GET /spaces/1
   # GET /spaces/1.xml
   def show
-    @space = Space.find(params[:id]) # TODO colocar como um filtro (find_space)
-
+    
     if @space and @space.removed
       redirect_to removed_page_path and return
     end
@@ -426,23 +424,24 @@ class SpacesController < BaseController
   end
 
   def cancel
+		@course = Course.find(params[:course_id])
     session[:space_step] = session[:space_params] = nil
-    redirect_to spaces_path
+		redirect_to(environment_course_path(@course.environment, @course))
   end
 
   # GET /spaces/new
   # GET /spaces/new.xml
   def new
-    @course = Course.find(params[:course_id])
-		@environment = @course.environment
     session[:space_params] ||= {}
     @space = Space.new(session[:space_params])
+		@course = Course.find(params[:course_id])
+	  @environment = @course.environment
     @space.current_step = session[:space_step]
   end
 
   # GET /spaces/1/edit
   def edit
-    @space = Space.find(params[:id])
+
   end
 
   # POST /spaces
@@ -451,6 +450,9 @@ class SpacesController < BaseController
 
     session[:space_params].deep_merge!(params[:space]) if params[:space]
     @space = Space.new(session[:space_params])
+
+		@course = @space.course
+		@environment = @course.environment
     @space.owner = current_user
     @space.current_step = session[:space_step]
     if @space.valid?
@@ -487,7 +489,7 @@ class SpacesController < BaseController
     unless params[:only_image]
       params[:space][:audience_ids] ||= []
     end
-    @space = Space.find(params[:id])
+   
 
     respond_to do |format|
       if @space.update_attributes(params[:space])
@@ -507,7 +509,7 @@ class SpacesController < BaseController
   # DELETE /spaces/1
   # DELETE /spaces/1.xml
   def destroy
-    @space = Space.find(params[:id])
+   
     @space.destroy
 
     respond_to do |format|
@@ -539,21 +541,18 @@ class SpacesController < BaseController
   protected
 
   def can_be_owner_required
-    @space = Space.find(params[:id])
-
     current_user.can_be_owner?(@space) ? true : access_denied
   end
 
   def is_not_member_required
-    @space = Space.find(params[:id])
     if current_user.get_association_with(@space)
       redirect_to space_path(@space)
     end
   end
 
-  def find_environmnet_course_and_space
-    @space = Space.find(params[:id])
-    @course = @space.course
-    @environment = @course.environment
+  def find_environmnet_course
+		@space = Space.find(params[:id])
+	  @course = @space.course
+	  @environment = @course.environment
   end
 end

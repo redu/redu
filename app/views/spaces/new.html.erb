@@ -13,7 +13,7 @@
 				<%= f.submit "Próximo >" %> 
 
 			<% end %>
-			ou <%= link_to "Cancelar e voltar", cancel_spaces_path%>
+			ou <%= link_to "Cancelar e voltar", cancel_spaces_path(:course_id => @course.id)%>
 		</div>
 
 	<% end %>
