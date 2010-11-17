@@ -1,11 +1,12 @@
+<% is_space = @bulletinable.class.to_s.eql? "Space" %>
 <div class="grid_16">
   <% if @bulletinable.class.to_s.eql? "Space" %>
     <%= render :partial => "spaces/sidebar", :locals => {:space => @bulletinable} %>
   <% end %>
 
-  <div class="main grid_12 omega">
+  <div class="main grid_12 <%= is_space ? "" : "alpha" %> omega">
 
-    <div class="grid_11 alpha omega bulletin-content">
+    <div class="<%= is_space ? "grid_11" : "grid_16" %> alpha omega bulletin-content">
       <h4 class="name"><%= link_to @bulletin.title, polymorphic_path([@bulletin.bulletinable, @bulletin]) %></h4>
       <div class="quiet tagline">
         <%= @bulletin.tagline %>
@@ -13,7 +14,7 @@
       <div class="pretty-text">
         <%= @bulletin.description %>
       </div>
-      <div class="grid_11 alpha omega">
+      <div >
         <div class="tags">
           <span class="title">Palavras-chave</span>
           <%= render :partial => 'tags/tags', :object => @bulletin.tags %>
@@ -21,7 +22,7 @@
       </div>
       <%# link_to 'Ver notícias da rede', polymorphic_path([@bulletin.bulletinable]) %>
     </div><!-- end bulletin-content --> 
-    <div class="grid_11 alpha omega bulletin-actions clearfix">
+    <div class="bulletin-actions clearfix">
       <div class="grid_5 alpha">
         <%= render :partial => 'like/likeable', :object => @bulletin %>
       </div>

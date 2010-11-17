@@ -1,7 +1,10 @@
-<% if @bulletinable.class.to_s.eql? "Space" %>
-  <%= render :partial => "spaces/sidebar", :locals => {:space => @bulletinable} %>
-<% end %>
+<div class="grid_16">
+  <% is_space = @bulletinable.class.to_s.eql? "Space" %>
+  <% if is_space %>
+    <%= render :partial => "spaces/sidebar", :locals => {:space => @bulletinable} %>
+  <% end %>
 
-<div class="main grid_12 alpha">
-	<%= render :partial => 'bulletins/form', :bulletin => @bulletin %>
+  <div class="main <%= is_space ? "grid_12 alpha" : "grid_16 alpha omega" %>">
+    <%= render :partial => 'bulletins/form', :bulletin => @bulletin %>
+  </div>
 </div>
