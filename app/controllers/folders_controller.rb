@@ -29,7 +29,7 @@ class FoldersController < BaseController
     @myfile = Myfile.find(params[:file_id], :include => :folder)
 
     @folder_id = @myfile.folder.id
-    @space_id = @myfile.folder.space_id
+@environment,     @space_id = @myfile.folder.space_id
 
     @myfile.destroy
 
@@ -201,14 +201,14 @@ class FoldersController < BaseController
         if @folder.save
           # copy groups rights on parent folder to new folder
 
+          params[:space_id] = params[:folder][:space_id]
+          list
           # back to the list
           flash[:notice] = 'Diretório criado!'
           format.html {
             redirect_to space_folders_path(:space_id => params[:folder][:space_id], :id => @folder.parent.id)
           }
-          format.js {
-            redirect_to space_folders_path(:space_id => params[:folder][:space_id], :id => @folder.parent.id)
-          }
+          format.js 
         else
           flash[:error] = 'Não foi possível criar o diretório'
           format.html {
