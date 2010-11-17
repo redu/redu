@@ -180,11 +180,11 @@ class CoursesController < BaseController
       end
 
       flash[:notice] = "Você agora faz parte do curso #{@course.name}"
+      redirect_to environment_course_path(@course.environment, @course)
     else
       flash[:notice] = "Seu pedido de participação foi feito. Aguarde a moderação."
+      redirect_to preview_environment_course_path(@course.environment, @course)
     end
-
-    redirect_to environment_course_path(@course.environment, @course)
   end
 
 
@@ -224,7 +224,7 @@ class CoursesController < BaseController
     flash[:notice] = "O curso #{@course.name} foi despublicado."
     redirect_to environment_course_path(@environment, @course)
   end
-  
+
   # Aba Membros. 
   def admin_members
     @course= Course.find(params[:id])

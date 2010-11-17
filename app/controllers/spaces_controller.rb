@@ -485,7 +485,6 @@ class SpacesController < BaseController
   # PUT /spaces/1.xml
   def update
     unless params[:only_image]
-      params[:space][:category_ids] ||= []
       params[:space][:audience_ids] ||= []
     end
     @space = Space.find(params[:id])
