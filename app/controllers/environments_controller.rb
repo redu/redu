@@ -173,11 +173,7 @@ class EnvironmentsController < BaseController
       :per_page => AppConfig.items_per_page)
 
     respond_to do |format|
-      format.js do
-        render :update do |page|
-          page.replace_html 'user_list', :partial => 'user_list_admin', :locals => {:memberships => @memberships}
-        end
-      end
+      format.js
     end
   end
 end
