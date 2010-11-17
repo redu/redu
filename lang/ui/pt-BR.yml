@@ -1457,7 +1457,7 @@ pt-BR:
   #en: topic_deleted: Topic '{{topic}}' was deleted.
   topic_deleted: "Tópico '{{topic}}' foi deletado."
   #en: topic_locked: Topic locked
-  topic_locked: Topic locked
+  topic_locked: Tópico fechado
   #en: total_users: Total users
   total_users: Total users
   #en: total_votes: Total votes

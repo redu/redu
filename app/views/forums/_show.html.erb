@@ -24,6 +24,9 @@
       <% for topic in @topics %>
         <tr>
           <td>
+            <% if topic.locked? %>
+              <%= image_tag "lock.gif", :class => "icon grey", :title => :topic_locked.l %>
+            <% end %>
             <%= link_to topic.title, space_forum_topic_path(@space, topic) %>
           </td>
           <td><%= topic.sb_posts_count %></td>

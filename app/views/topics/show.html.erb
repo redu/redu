@@ -7,7 +7,7 @@
 <div class="grid_12">
   <h3 class="topic_title"><%= @topic.title %></h3>
   <% if @topic.locked? %>
-    <span><%= :locked2.l %><span>
+    <%= image_tag "lock.gif", :class => "icon grey", :title => :topic_locked.l %>
   <% end %>
   <% if logged_in? %>
     <span>
@@ -38,7 +38,7 @@
 
     <% if @topic.locked? %>
       <div class="grid_16"
-        <%= image_tag "clearbits/lock.gif", :class => "icon grey", :title => :topic_locked.l %>
+        <%= image_tag "lock.gif", :class => "icon grey", :title => :topic_locked.l %>
         <%= :this_topic_is_locked.l %>
       </div>
     <% else %>
