@@ -5,7 +5,6 @@ class RenameAttributesFromSchoolToSpace < ActiveRecord::Migration
     rename_column :space_assets, :school_id, :space_id
     rename_column :user_space_associations, :school_id, :space_id
     rename_column :bulletins, :school_id, :space_id
-    rename_column :events, :school_id, :space_id
     rename_column :group_permissions, :school_id, :space_id
     rename_column :roles, :school_role, :space_role
     rename_column :subjects, :school_id, :space_id
@@ -16,7 +15,6 @@ class RenameAttributesFromSchoolToSpace < ActiveRecord::Migration
     rename_column :audiences_spaces, :space_id, :school_id
     rename_column :space_assets, :space_id, :school_id
     rename_column :bulletins, :school_id, :space_id
-    rename_column :events, :space_id, :school_id
     rename_column :group_permissions, :space_id,  :school_id
     rename_column :roles, :space_role, :school_role
     rename_column :subjects, :space_id, :school_id
