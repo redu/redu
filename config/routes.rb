@@ -101,7 +101,9 @@ ActionController::Routing::Routes.draw do |map|
     :members => :get,
     :teachers => :get,
     :take_ownership => :get,
-    :remove_asset => :get
+    :remove_asset => :get,
+    :publish => :get,
+    :unpublish => :get
   },
     :collection =>{
     :cancel => :get

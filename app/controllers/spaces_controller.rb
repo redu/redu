@@ -517,6 +517,26 @@ class SpacesController < BaseController
     end
   end
 
+  def publish
+    @space= Space.find(params[:id])
+
+    @space.published = 1
+    @space.save
+
+    flash[:notice] = "O space #{@space.name} foi publicado."
+    redirect_to space_path(@space)
+  end
+
+  def unpublish
+    @space= Space.find(params[:id])
+
+    @space.published = 0
+    @space.save
+
+    flash[:notice] = "O space #{@space.name} foi despublicado."
+    redirect_to space_path(@space)
+  end
+
   protected
 
   def can_be_owner_required
