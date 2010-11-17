@@ -17,15 +17,15 @@
   <% end %>
 
   <% if course %>
-    <% if space %>
+    <% if space and space.id %>
       <div class="grid_10">
         <h4>
           <%= link_to course.name , environment_course_path(environment, course) %> > <%= link_to space.name , space_path(space) %>
           <% if current_user.can_manage?(@space)%>
             <%= link_to "Gerenciar", manage_space_path(space), :class => 'edit' %>
           <% end %>       
-    </h4>
-    </div>
+		    </h4>
+	    </div>
     <% else %>
       <div class="grid_10">
         <h4><%= link_to course.name, environment_course_path(environment, course) %></h4>

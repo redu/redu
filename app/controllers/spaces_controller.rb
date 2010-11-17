@@ -1,7 +1,7 @@
 class SpacesController < BaseController
   layout 'environment'
 
-  before_filter :find_environmnet_course_and_space, :except => [:index]
+  before_filter :find_environmnet_course_and_space, :except => [:index, :new, :create]
   before_filter :login_required,  :except => [:join, :unjoin, :member, :index]
   after_filter :create_activity, :only => [:create]
   # Usado para proteger acoes perigosas (só para admin)
@@ -434,6 +434,7 @@ class SpacesController < BaseController
   # GET /spaces/new.xml
   def new
     @course = Course.find(params[:course_id])
+		@environment = @course.environment
     session[:space_params] ||= {}
     @space = Space.new(session[:space_params])
     @space.current_step = session[:space_step]
