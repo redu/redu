@@ -194,6 +194,7 @@ ActionController::Routing::Routes.draw do |map|
     :member => { :preview => :get,
                  :admin_courses => :get,
                  :admin_members => :get,
+                 :admin_bulletins => :get,
                  :destroy_members => :post } do |environment|
       environment.resources :courses, :member => {
         :preview => :get,

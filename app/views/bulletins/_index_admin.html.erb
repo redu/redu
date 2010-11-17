@@ -1,0 +1,22 @@
+<% unless @bulletins.empty? %>
+  <table class="common">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Remover</th>
+      </tr>
+    </thead>
+    <% @bulletins.each do |item| %>
+      <tr>
+        <td><%= link_to item.title, polymorphic_path([@environment, item]) %></td>
+        <td><%= link_to 'Remover', polymorphic_path([@environment, item]),
+          :confirm => 'Você tem certeza que deseja remover permanentemente esta notícia?', :method => :delete %></td>
+      </tr>
+    <% end %>
+  <% else %>
+    <div class="box_notice">
+      Não existe nenhuma notícia.
+      <%= link_to "Crie uma agora!", new_polymorphic_path([@environment, Bulletin.new]) %>
+    </div>
+  <% end %>
+</table>

@@ -2,20 +2,21 @@
   <%= render :partial => "spaces/sidebar", :locals => {:space => @bulletinable} %>
 <% end %>
 <div class="main grid_12 omega">		
-	<% if @bulletins && @bulletins.size > 0 %>
+  <% if @bulletins && @bulletins.size > 0 %>
 
-			<ul class="bulletins grid_12 alpha omega">
-				<%= render :partial => 'bulletins/list', :collection => @bulletins, :as => :bulletin, :locals => {
-				:is_index => true } %> 
-			</ul>
-			<%= link_to "Crie uma nova notícia.", new_polymorphic_path([@bulletinable, Bulletin.new]), :class => "button"%>
+    <ul class="bulletins grid_12 alpha omega">
+      <%= render :partial => 'bulletins/list', :collection => @bulletins, :as => :bulletin, :locals => {
+        :is_index => true } %> 
+    </ul>
+    <%= link_to "Crie uma nova notícia.", new_polymorphic_path([@bulletinable, Bulletin.new]), :class => "button"%>
 
-	<% else %>
-		Nenhuma notícia foi enviada ainda. <%= link_to 'Envie uma agora!', :action => 'new' %>
-	<% end %>
-	<div id="pagination" align="center" class="pagination">
+  <% else %>
+    Nenhuma notícia foi enviada ainda. 
+    <%= link_to 'Envie uma agora!', new_polymorphic_path([@bulletinable, Bulletin.new]) %>
+  <% end %>
+  <div id="pagination" align="center" class="pagination">
 
-		<%= will_paginate  @bulletins %>
-		
+    <%= will_paginate  @bulletins %>
+
   </div>
 </div>

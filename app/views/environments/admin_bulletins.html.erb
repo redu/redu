@@ -1,0 +1,12 @@
+<div class="grid_16">
+  <div class="fake-tabs grid_16 alpha omega clearfix">
+    <%= render :partial => 'environments/admin_taskbar' %>
+    <div class="panel">
+      <h1>Notícias</h1>
+      <%= render :partial => 'bulletins/index_admin' %>
+      <% unless @bulletins.empty? %>
+        <%= link_to "Crie Notícias!", new_environment_bulletin_path(@environment), :class => "button" %>
+      <% end %>
+    </div>
+  </div>
+</div>

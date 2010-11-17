@@ -9,16 +9,16 @@
     <div class="avatar grid_3">
       <div class="frame"><%= image_tag environment.avatar.url(:thumb)  %></div>
     </div>
-    <div class="name grid_12">
+    <div class="name grid_11">
       <h3><%= link_to environment.name, environment_path(environment) %></h3>
     </div>
-    <%= link_to "Editar", edit_environment_path(environment),
+    <%= link_to "Gerenciar", edit_environment_path(environment),
       :class => "edit grid_1" %>
   <% end %>
 
   <% if course %>
     <% if space and space.id %>
-      <div class="grid_10">
+      <div class="grid_9">
         <h4><%= link_to course.name , environment_course_path(environment, course) %> > <%= link_to space.name , space_path(space) %></h4>
         <% if current_user.can_manage?(@space)%>
           <%= link_to "Gerenciar", manage_space_path(space), :class => 'grid_2 edit' %>
@@ -32,12 +32,12 @@
         <% end %>       
       </div>
     <% else %>
-      <div class="grid_10">
+      <div class="grid_9">
         <h4><%= link_to course.name, environment_course_path(environment, course) %></h4>
       </div>
       <% if course.owner.eql? current_user %>
-        <%= link_to "Editar", edit_environment_course_path(environment, course),
-          :class => "grid_1 edit" %>
+        <%= link_to "Gerenciar", edit_environment_course_path(environment, course),
+          :class => "grid_2 edit" %>
         <% if course.published? %>
           <%= link_to "Despublicar", unpublish_environment_course_path(environment, course),
             :class => "grid_1" %>

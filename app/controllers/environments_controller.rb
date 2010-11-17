@@ -125,6 +125,11 @@ class EnvironmentsController < BaseController
       :per_page => AppConfig.items_per_page)
   end
 
+  def admin_bulletins
+    @environment = Environment.find(params[:id])
+    @bulletins= @environment.bulletins
+  end
+
   # Remove um ou mais usuários de um Environment destruindo todos os relacionamentos
   # entre usuário e os níveis mais baixos da hierarquia.
   def destroy_members
