@@ -579,15 +579,35 @@ end
   def resource_name(class_name, qty)
     case class_name
     when :myfile
-      "+#{pluralize(qty, 'arquivo')} #{qty > 1 ? "adicionados" : "adicionado"}"
+      unless qty == 0
+        "+#{pluralize(qty, 'arquivo')} #{qty > 1 ? "adicionados" : "adicionado"}"
+      else
+        "Nenhum arquivo novo"
+      end
     when :bulletin
-      "+#{pluralize(qty, 'notícia')} #{qty > 1 ? "adicionados" : "adicionada"}"
+      unless qty == 0
+        "+#{pluralize(qty, 'notícia')} #{qty > 1 ? "adicionados" : "adicionada"}"
+      else
+        "Nenhuma notícia nova"
+      end
     when :event
-      "+#{pluralize(qty, 'evento')} #{qty > 1 ? "adicionados" : "adicionado"}"
+      unless qty == 0
+        "+#{pluralize(qty, 'evento')} #{qty > 1 ? "adicionados" : "adicionado"}"
+      else
+        "Nenhum evento novo"
+      end
     when :topic
-      "+#{pluralize(qty, 'tópico')} #{qty > 1 ? "adicionados" : "adicionado"}"
+      unless qty == 0
+        "+#{pluralize(qty, 'tópico')} #{qty > 1 ? "adicionados" : "adicionado"}"
+      else
+        "Nenhum tópico novo"
+      end
     when :subject
-      "+#{pluralize(qty, 'módulo')} #{qty > 1 ? "adicionados" : "adicionado"}"
+      unless qty == 0
+        "+#{pluralize(qty, 'módulo')} #{qty > 1 ? "adicionados" : "adicionado"}"
+      else
+        "Nenhum módulo novo"
+      end
     end
   end
 
