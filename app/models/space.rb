@@ -27,6 +27,7 @@ class Space < ActiveRecord::Base
     :conditions => [ "user_space_associations.role_id = ?", 3 ]
   has_many :pending_requests, :class_name => "UserSpaceAssociation",
     :conditions => ["user_space_associations.status LIKE 'pending'"]
+  has_many :logs, :as => :logeable, :dependent => :destroy, :class_name => 'Status'
 
   # AUDIENCE
   has_and_belongs_to_many :audiences

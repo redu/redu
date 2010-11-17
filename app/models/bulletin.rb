@@ -1,6 +1,7 @@
 class Bulletin < ActiveRecord::Base
 
   # ASSOCIATIONS
+  has_many :logs, :as => :logeable, :dependent => :destroy, :class_name => 'Status'
   belongs_to :bulletinable, :polymorphic => true
   belongs_to :owner , :class_name => "User" , :foreign_key => "owner"
 

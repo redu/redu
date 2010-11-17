@@ -7,6 +7,7 @@ class Exam < ActiveRecord::Base
   has_many :exam_users, :dependent => :destroy
   has_many :user_history, :through => :exam_users, :source => :user
   has_many :favorites, :as => :favoritable, :dependent => :destroy
+  has_many :logs, :as => :logeable, :dependent => :destroy, :class_name => 'Status'
   belongs_to :owner , :class_name => "User" , :foreign_key => "owner_id"
   belongs_to :simple_category
   has_one :lecture_subject, :as => :lectureable, :dependent => :destroy

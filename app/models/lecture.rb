@@ -10,6 +10,7 @@ class Lecture < ActiveRecord::Base
   has_many :acquisitions
   has_many :favorites, :as => :favoritable, :dependent => :destroy
   has_many :annotations
+  has_many :logs, :as => :logeable, :dependent => :destroy, :class_name => 'Status'
   has_one :subject_asset, :as => :asset, :dependent => :destroy
   has_one :subject, :through => :subject_asset
   has_one :lecture_subject, :as => :lectureable
