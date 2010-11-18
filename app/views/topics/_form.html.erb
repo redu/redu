@@ -1,38 +1,39 @@
 <%# locals => {:space_id, :topic, :form_new => Indica se o form vai ser de editar ou criar.} %>
+<div class="grid_16">
+	<%- form_for @topic do |f| %>
+		<fieldset>
+		  <legend>
+		    <% if form_new %>
+		      <%= :new_topic.l %>
+		    <% else %>
+		      <%= :edit_topic.l %> 
+		    <% end %>
+		  </legend>
+		<span><%= :by.l %> <%= link_to current_user.display_name, user_path(current_user) %></span>
+		<%= f.error_messages %>
 
-<%- form_for @topic do |f| %>
-  <fieldset>
-    <legend>
-      <% if form_new %>
-        <%= :new_topic.l %>
-      <% else %>
-        <%= :edit_topic.l %> 
-      <% end %>
-    </legend>
-  <span><%= :by.l %> <%= link_to current_user.display_name, user_path(current_user) %></span>
-  <%= f.error_messages %>
+		<%= hidden_field_tag("space_id", @space.id) %>
 
-  <%= hidden_field_tag("space_id", @space.id) %>
+		<%= f.label :title, :title.l %>
+		<%= f.text_field :title %>
 
-  <%= f.label :title, :title.l %>
-  <%= f.text_field :title %>
+		<% if admin? or current_user.moderator_of?(@topic.forum) %>
+		  <%= f.check_box :locked %> <%= :locked.l %> 
+		<% end %>
 
-  <% if admin? or current_user.moderator_of?(@topic.forum) %>
-    <%= f.check_box :locked %> <%= :locked.l %> 
-  <% end %>
+		<%= f.label :tag_list, 'Palavras-chave' %>
+		<span>(separadas por vírgula)</span>
+		<%= f.text_field :tag_list %>
 
-  <%= f.label :tag_list, 'Palavras-chave' %>
-  <span>(separadas por vírgula)</span>
-  <%= f.text_field :tag_list %>
+		<% if form_new %>
+		  <%= f.label :body, :body_text.l %>
+		  <%= f.text_area :body, :size => "40x5", :class => "mceEditor" %>
+		<% end %>
 
-  <% if form_new %>
-    <%= f.label :body, :body_text.l %>
-    <%= f.text_area :body, :size => "40x5", :class => "mceEditor" %>
-  <% end %>
-
-  <% if form_new %>
-    <%= f.submit :post_topic.l %> <%= :or.l %> <%= link_to :cancel.l, space_path(@space) %>
-  <% else %>
-   <%= f.submit :save.l %> <%= :or.l %> <%= link_to :cancel.l, space_forum_topic_path(@space, @topic) %>
-  <% end %>
-<% end %>
+		<% if form_new %>
+		  <%= f.submit :post_topic.l %> <%= :or.l %> <%= link_to :cancel.l, space_path(@space) %>
+		<% else %>
+		 <%= f.submit :save.l %> <%= :or.l %> <%= link_to :cancel.l, space_forum_topic_path(@space, @topic) %>
+		<% end %>
+	<% end %>
+</div>
