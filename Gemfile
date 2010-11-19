@@ -21,7 +21,7 @@ gem "htmlentities", "4.2.1"
 gem "ruby-debug"
 gem "zencoder"
 gem "mime-types"
-gem "haml"
+gem "haml"   
 
 group :development do
   gem "mongrel"
