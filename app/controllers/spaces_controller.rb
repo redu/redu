@@ -129,7 +129,7 @@ class SpacesController < BaseController
 
   def admin_bulletins
     
-    @bulletins = Bulletin.paginate(:conditions => ["bulletinable_type LIKE 'Space' 
+    @pending_bulletins = Bulletin.paginate(:conditions => ["bulletinable_type LIKE 'Space' 
                                    AND bulletinable_id = ? 
                                    AND state LIKE ?", @space.id, "waiting"],
                                    :include => :owner,
@@ -137,22 +137,37 @@ class SpacesController < BaseController
                                    :order => 'updated_at ASC',
                                    :per_page => 20)
 
+    @bulletins = Bulletin.paginate(:conditions => ["bulletinable_type LIKE 'Space' 
+                                   AND bulletinable_id = ? 
+                                   AND state LIKE ?", @space.id, "approved"],
+                                   :include => :owner,
+                                   :page => params[:page],
+                                   :order => 'updated_at ASC',
+                                   :per_page => 20) 
     respond_to do |format|
       format.html
     end
   end
 
   def admin_events
-    
-    @events = Event.paginate(:conditions => ["space_id = ? AND state LIKE ?", @space.id, "waiting"],
-                             :include => :owner,
-                             :page => params[:page],
-                             :order => 'updated_at ASC',
-                             :per_page => 20)
 
-    respond_to do |format|
+    @pending_events = Event.paginate(:conditions => ["space_id = ? 
+                                     AND state LIKE ?", @space.id, "waiting"],
+                                     :include => :owner,
+                                     :page => params[:page],
+                                     :order => 'updated_at ASC',
+                                     :per_page => 20)
+
+     @events = Event.paginate(:conditions => ["space_id = ? 
+                                     AND state LIKE ?", @space.id, "approved"],
+                                     :include => :owner,
+                                     :page => params[:page],
+                                     :order => 'updated_at ASC',
+                                     :per_page => 20)
+
+     respond_to do |format|
       format.html
-    end
+     end
   end
 
   def moderate_requests

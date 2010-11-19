@@ -140,6 +140,10 @@ class BulletinsController < BaseController
       Space.find(params[:space_id])
     elsif params[:environment_id]
       Environment.find(params[:environment_id])
+    else
+      if params[:bulletinable_type].eql? "Space"
+        Space.find(params[:bulletinable_id])
+      end
     end
   end
 
