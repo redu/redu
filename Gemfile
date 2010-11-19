@@ -20,8 +20,9 @@ gem "hpricot"
 gem "htmlentities", "4.2.1"
 gem "ruby-debug"
 gem "zencoder"
-gem "mime-types"    
+gem "mime-types"
 gem "haml"
+gem "cancan", "1.4.1"
 
 group :development do
   gem "mongrel"
