@@ -1,148 +1,148 @@
 <style>
-	
-.tbl_toggle {
-	border:1px solid #EEEEEE;
-margin-top:20px;
-width:100%;
-}
-	
-.tbl_toggle thead th {
-background-color:#E5EDF7;
-border-color:#FFFFFF #FFFFFF #AEBBCC;
-border-style:solid;
-border-width:1px;
-font-size:0.9em;
-padding:4px;
-text-align:left;
-}
-.tbl_toggle tbody th, .tbl_toggle tbody td {
-border-bottom:1px solid #E3E3E3;
-padding:4px;
-text-align:left;
-}
-.tbl_toggle tbody tr.odd td {
-border-color:#DFDFDF;
-border-style:solid;
-border-width:1px 0;
-}
-.tbl_toggle tbody tr.even td {
-background-color:#EFEFEF;
-border-color:#FFFFFF;
-border-style:solid;
-border-width:1px 0;
-}
-.tbl_toggle tbody tr.odd-highlight td {
-background-color:#FEFDCA;
-border-color:#DFDFDF;
-border-style:solid;
-border-width:1px 0;
-}
-.tbl_toggle tbody tr.even-highlight td {
-background-color:#FEFDCA;
-border-color:#FFFFFF;
-border-style:solid;
-border-width:1px 0;
-}
-.tbl_toggle tbody tr.odd:hover td, .tbl_toggle tbody tr.even:hover td, .tbl_select tbody tr.odd:hover td, .tbl_select tbody tr.even:hover td {
-background-color:#E1EFF4;
-cursor:pointer;
-}
-.tbl_toggle tbody tr.first td {
-border-top-width:0;
-}
-.tbl_toggle tbody tr.current_row td {
-background-color:#E1EFF4;
-border-bottom-width:0;
-}
-.tbl_toggle tbody tr.question_detail_row:hover td {
-background-color:transparent;
-}
-.tbl_toggle tfoot td {
-border-top:1px solid #AEBBCC;
-font-weight:bold;
-padding:8px 3px;
-}
-
-.line {
-display:block;
-float:left;
-position:relative;
-width:100%;
-}
-
-.line .twoCol_left_half {
-margin-left:-100%;
-width:48%;
-}
-
-line .twoCol_right_half {
-margin-left:-48%;
-width:48%;
-}
-
-.line .item {
-float:left;
-left:100%;
-position:relative;
-}
-
-.item_answer span.answer_chosen {
-background-color:#F7F198;
-font-size:9px;
-padding:1px 2px;
-}
-
-.item_answer span.answer_correct {
-background-color:#8FD182;
-font-size:9px;
-margin-left:4px;
-padding:1px 2px;
-}
-	
+  
+  .tbl_toggle {
+    border:1px solid #EEEEEE;
+    margin-top:20px;
+    width:100%;
+  }
+  
+  .tbl_toggle thead th {
+    background-color:#E5EDF7;
+    border-color:#FFFFFF #FFFFFF #AEBBCC;
+    border-style:solid;
+    border-width:1px;
+    font-size:0.9em;
+    padding:4px;
+    text-align:left;
+  }
+  .tbl_toggle tbody th, .tbl_toggle tbody td {
+    border-bottom:1px solid #E3E3E3;
+    padding:4px;
+    text-align:left;
+  }
+  .tbl_toggle tbody tr.odd td {
+    border-color:#DFDFDF;
+    border-style:solid;
+    border-width:1px 0;
+  }
+  .tbl_toggle tbody tr.even td {
+    background-color:#EFEFEF;
+    border-color:#FFFFFF;
+    border-style:solid;
+    border-width:1px 0;
+  }
+  .tbl_toggle tbody tr.odd-highlight td {
+    background-color:#FEFDCA;
+    border-color:#DFDFDF;
+    border-style:solid;
+    border-width:1px 0;
+  }
+  .tbl_toggle tbody tr.even-highlight td {
+    background-color:#FEFDCA;
+    border-color:#FFFFFF;
+    border-style:solid;
+    border-width:1px 0;
+  }
+  .tbl_toggle tbody tr.odd:hover td, .tbl_toggle tbody tr.even:hover td, .tbl_select tbody tr.odd:hover td, .tbl_select tbody tr.even:hover td {
+    background-color:#E1EFF4;
+    cursor:pointer;
+  }
+  .tbl_toggle tbody tr.first td {
+    border-top-width:0;
+  }
+  .tbl_toggle tbody tr.current_row td {
+    background-color:#E1EFF4;
+    border-bottom-width:0;
+  }
+  .tbl_toggle tbody tr.question_detail_row:hover td {
+    background-color:transparent;
+  }
+  .tbl_toggle tfoot td {
+    border-top:1px solid #AEBBCC;
+    font-weight:bold;
+    padding:8px 3px;
+  }
+  
+  .line {
+    display:block;
+    float:left;
+    position:relative;
+    width:100%;
+  }
+  
+  .line .twoCol_left_half {
+    margin-left:-100%;
+    width:48%;
+  }
+  
+  line .twoCol_right_half {
+    margin-left:-48%;
+    width:48%;
+  }
+  
+  .line .item {
+    float:left;
+    left:100%;
+    position:relative;
+  }
+  
+  .item_answer span.answer_chosen {
+    background-color:#F7F198;
+    font-size:9px;
+    padding:1px 2px;
+  }
+  
+  .item_answer span.answer_correct {
+    background-color:#8FD182;
+    font-size:9px;
+    margin-left:4px;
+    padding:1px 2px;
+  }
+  
 </style>
 <script type="text/javascript">
-	
-/*
-function publishScore(checkbx){
-	alert(checkbx.checked)
-	jQuery('#publish_score_form').submit()
-}
-*/
-	
-function reviewQuestion(questionId){
-		
-		var explanation = document.getElementById("explanation_"+questionId);
-		if (explanation != null && typeof(explanation) != 'undefined') {
-			// já expandido
-			
+  
+  /*
+     function publishScore(checkbx){
+     alert(checkbx.checked)
+     jQuery('#publish_score_form').submit()
+     }
+   */
+  
+  function reviewQuestion(questionId){
+    
+      var explanation = document.getElementById("explanation_"+questionId);
+      if (explanation != null && typeof(explanation) != 'undefined') {
+        // já expandido
+        
+          
+          jQuery("#explanation_"+questionId).slideToggle();
+      }
+      else {
+        
+          jQuery.ajax({
+              data: "question_id=" + questionId,
+              dataType: 'script',
+              beforeSend: function(request){
+              var loadingbar = "<tr><td colspan='5'><img id='thebug_"+ questionId + "' src='../../images/loadingAnimation.gif'/>"+
+              "<div id='explanation_" + questionId + "'></div></td></tr>";
+              
+              jQuery("#question_"+questionId).after(loadingbar);
+              },
+type: 'get',
+url: "<%= url_for :controller => :exams, :action => :review_question %>"
+});
 
-			jQuery("#explanation_"+questionId).slideToggle();
-		}
-		else {
-			
-			jQuery.ajax({
-                        data: "question_id=" + questionId,
-                        dataType: 'script',
-												beforeSend: function(request){
-                            var loadingbar = "<tr><td colspan='5'><img id='thebug_"+ questionId + "' src='../../images/loadingAnimation.gif'/>"+
-														"<div id='explanation_" + questionId + "'></div></td></tr>";
-				
-														jQuery("#question_"+questionId).after(loadingbar);
-                        },
-                        type: 'get',
-                        url: "<%= url_for :controller => :exams, :action => :review_question %>"
-                    });
-		
-			
-		}
+
+}
 }	
 </script>
 
 
 <div class="grid_16">
-<div id="breadcrumbs">
-	<a href="<%=application_url%>">início</a> > <a href="#">aprender</a>  > <a href="#"><%= @exam.name %></a> > resultado 
-</div>
+  <div id="breadcrumbs">
+    <a href="<%=application_url%>">início</a> > <a href="#">aprender</a>  > <a href="#"><%= @exam.name %></a> > resultado 
+  </div>
 </div>
 
 <%= render :partial => "exam_header"%>
@@ -150,122 +150,121 @@ function reviewQuestion(questionId){
 
 
 <div class= "grid_16">
-	<div id="title_video">Resultados para <%= @exam.name %></div>
-	
-<% total = @exam.questions.length %>
- Certas <%= @correct %> | Erradas <%= total - @correct %> | Total: <%= total %> | Tempo: <%= seconds_to_time(@time)%>
+  <div id="title_video">Resultados para <%= @exam.name %></div>
+  
+  <% total = @exam.questions.length %>
+  Certas <%= @correct %> | Erradas <%= total - @correct %> | Total: <%= total %> | Tempo: <%= seconds_to_time(@time)%>
 </div>
 
 <div class= "grid_11">
-
-<table cellpadding="0" cellspacing="0" border="0" class="tbl_toggle">
-      	<thead>
-      		<tr>
-				<th class="question_number">Questão</th>
-				<th class="question_correctness">Correta?</th>
-				<th class="question_user_answer">Sua Resposta</th>
-
-				<th class="question_correct_answer">Resposta Certa</th>
-				<!--
-				<th class="question_type">Tipo de Questão</th>
-				-->
-				<th class="question_concept">Conceitos Fundamentais</th>
-			</tr>
-		</thead>
-      	<tbody>
-
-<% @exam.questions.each_with_index do |question, index | %>
-
-
-		<% if index%2 == 0 %> 
-			
-				<% row_class = 'odd '%>
-		<% else %>
-			<% row_class = 'even '%>
-		<% end %>
-		
-		  <tr class="<%=row_class%>" name="2892617" title="Mostrar explicação" onclick="reviewQuestion(<%= question.id %>);" id = "question_<%= question.id %>">
-	
-		
+  
+  <table cellpadding="0" cellspacing="0" border="0" class="tbl_toggle">
+    <thead>
+      <tr>
+        <th class="question_number">Questão</th>
+        <th class="question_correctness">Correta?</th>
+        <th class="question_user_answer">Sua Resposta</th>
+        
+        <th class="question_correct_answer">Resposta Certa</th>
+        <!--
+        <th class="question_type">Tipo de Questão</th>
+        -->
+        <th class="question_concept">Conceitos Fundamentais</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      <% @exam.questions.each_with_index do |question, index | %>
+        
+        
+        <% if index%2 == 0 %> 
+          
+          <% row_class = 'odd '%>
+        <% else %>
+          <% row_class = 'even '%>
+        <% end %>
+        
+        <tr class="<%=row_class%>" name="2892617" title="Mostrar explicação" onclick="reviewQuestion(<%= question.id %>);" id = "question_<%= question.id %>">
+          
+          
           <td class="question_number show_row"> <%= index + 1 %>	  </td>
           <td class="question_correctness show_row">
+            
+            <% if session[:answers][question.id].to_i == question.answer.id %>
+              <%= image_tag 'tick.gif' %>
+            <% else %>
+              <%= image_tag 'cross.gif' %>
+            <% end %>
+          </td>
           
-		  <% if session[:answers][question.id].to_i == question.answer.id %>
-		  <%= image_tag 'tick.gif' %>
-		  <% else %>
-		  <%= image_tag 'cross.gif' %>
-		  <% end %>
-		  </td>
-		  
           <td class="question_user_answer show_row">
-         	
-						
-        <% if session[:answers][question.id] %>
-				
-			  (<%= @alternative_letters[session[:answers][question.id].to_i]%>)
-			 <% else %>
-			  Sem resposta
-			 <% end %>
-		  
-		  </td>
+            
+            
+            <% if session[:answers][question.id] %>
+              
+              (<%= @alternative_letters[session[:answers][question.id].to_i]%>)
+            <% else %>
+              Sem resposta
+            <% end %>
+            
+          </td>
           <td class="question_correct_answer show_row">	
-					(<%= @alternative_letters[question.answer.id] %>)
-					
-					</td>
+            (<%= @alternative_letters[question.answer.id] %>)
+            
+          </td>
           <td class="question_concept show_row">
-				<a href="/sat/work/view_content/926" class="content_link" name="926">Categorias</a>
-		  </td>
-		</tr>
-		
-		<tr style="display:none;">
-          <!-- if the quiz is test like AND the current user is an admin, there is a difficulty column and a time spent column so the colspan is 7. If the quiz is test like but the user is not an admin, there is no difficulty column so the colspan is 6. If the quiz is a skills assessment quiz, then there is no time elapsed column and so the colspan is 5 -->
-          <td colspan="6"></td>
-         </tr>
-
-<% end %>
+            <a href="/sat/work/view_content/926" class="content_link" name="926">Categorias</a>
+          </td>
+        </tr>
         
-        </tbody>
-		
-		</table>
-
-
+        <tr style="display:none;">
+          <td colspan="6"></td>
+        </tr>
+        
+      <% end %>
+      
+    </tbody>
+    
+  </table>
+  
+  
 </div>
 
 <div class= "grid_5">
-	<div class="y_addinfo">
-                                <div class="addinfocontent">
-                                    <h1>
-                                        Ranking</h1>
-                                    	
-																			<% if @ranking.size > 0 %>
-																			<% @ranking.each_with_index do |exam_usr, i|%>
-																			<p><%=i+1%>. <%= exam_usr.user.display_name %> | Score: <%= exam_usr.correct_count %> | Tempo: <%= exam_usr.time/60 %> </p>
-																			<% end %>
-																			<% else %>
-																			<p>
-																			Seja o primeiro a publicar os resultados deste exame!
-																			</p>
-																			<%end%>
-																			
-																			<% form_remote_tag :url => {:action=> :publish_score}, :html => {:id => "publish_score_form"} do  %>
-																				<%# check_box_tag :public, false, false, :onchange => "publishScore(this);" %>
-																				
-																				<%= hidden_field_tag :exam_user_id, @exam_user_id %>
-																				
-																				<p class="large_btn">
-																					<%= submit_tag "Publicar"	, :id => "pub_score" %>
-																					<!--
-																					<a href="#" id="pub_score" style="color: #fff;" onclick="jQuery('#publish_score_form').submit(); return false;">Publicar</a>
-																					-->
-																					</p>
-																			<%end%>
-																			
-                                </div>
-                            </div>
+  <div class="y_addinfo">
+    <div class="addinfocontent">
+      <h1>
+        Ranking</h1>
+      
+      <% if @ranking.size > 0 %>
+        <% @ranking.each_with_index do |exam_usr, i|%>
+          <p><%=i+1%>. <%= exam_usr.user.display_name %> | Score: <%= exam_usr.correct_count %> | Tempo: <%= exam_usr.time/60 %> </p>
+        <% end %>
+      <% else %>
+        <p>
+          Seja o primeiro a publicar os resultados deste exame!
+        </p>
+      <%end%>
+      
+      <% form_remote_tag :url => {:action=> :publish_score}, :html => {:id => "publish_score_form"} do  %>
+        <%# check_box_tag :public, false, false, :onchange => "publishScore(this);" %>
+        
+        <%= hidden_field_tag :exam_user_id, @exam_user_id %>
+        
+        <p class="large_btn">
+          <%= submit_tag "Publicar"	, :id => "pub_score" %>
+          <!--
+          <a href="#" id="pub_score" style="color: #fff;" onclick="jQuery('#publish_score_form').submit(); return false;">Publicar</a>
+          -->
+        </p>
+      <%end%>
+      
+    </div>
+  </div>
 </div>
 
 <!-- <a name="comments"></a>
 <%# render :partial => 'shared/comment', :locals => { :commentable => @exam } %>
 -->
 
-  
+

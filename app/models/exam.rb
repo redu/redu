@@ -14,7 +14,7 @@ class Exam < ActiveRecord::Base
   has_one :space_asset, :as => :asset
   has_one :space, :through => :space_asset#, :as => :asset
   # NESTED
-  accepts_nested_attributes_for :questions, 
+  accepts_nested_attributes_for :questions,
     :reject_if => lambda { |q| q[:statement].blank? },
     :allow_destroy => true
 
@@ -44,7 +44,7 @@ class Exam < ActiveRecord::Base
 
   def get_question(qid)
     if qid
-      self.questions.each_with_index do |question, index| 
+      self.questions.each_with_index do |question, index|
         return [question,index]  if question.id == qid
       end
     end

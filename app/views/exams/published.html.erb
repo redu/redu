@@ -1,55 +1,46 @@
 <div id="all_content3">
-<div id="col_content">
-	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">aprender</a> > <%= link_to 'exames', exams_path %> > <%= link_to 'meus exames', user_exams_path(current_user.id) %> > <%= link_to 'publicados', user_exams_path(current_user.id) %></div>
-   	<div id="title">MEUS EXAMES PUBLICADOS
-	
-	<%  if logged_in? %>
-	 	<%= render :partial => "exams/submenu" %>
-	<% end %>
-	
-	<%# render :partial => "exams/search" %></div>
-	
-<!-- LISTAGEM RECURSO ############################################################################################################################################## -->
+  <div id="col_content">
+    <div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">aprender</a> > <%= link_to 'exames', exams_path %> > <%= link_to 'meus exames', user_exams_path(current_user.id) %> > <%= link_to 'publicados', user_exams_path(current_user.id) %></div>
+    <div id="title">MEUS EXAMES PUBLICADOS
 
-	<div id="filter_bar">
-		
-	    <span id="title_list" class="title_list"> MAIS RECENTES</span>
-	    <!--
-		<span class="title_filter">Ordenar:</span>
-		<%# render :partial => "exams/sort" %>
-	      -->
+      <%  if logged_in? %>
+        <%= render :partial => "exams/submenu" %>
+      <% end %>
+
+      <%# render :partial => "exams/search" %></div>
+
+    <div id="filter_bar">
+
+      <span id="title_list" class="title_list"> MAIS RECENTES</span>
+      <!--
+      <span class="title_filter">Ordenar:</span>
+      <%# render :partial => "exams/sort" %>
+      -->
     </div>
     <div id="all_list">
-    	
-		<% if @exams && @exams.length > 0 %>
- 			<%= render :partial => 'exams/item', :collection => @exams, :as => :exam %> 
- 		<% else %>
- 			Não há exames publicados ainda. <%= link_to 'Crie um agora!', :action => 'new' %>
-		<% end %>
-    	
-    </div> <!-- fim da listagem --> 
-	
-	<div id="pagination" align="center">
 
-		<%= will_paginate  @exams, :params => {:sort_by => @sort_by}, :class => "pagination_number"  %>
+      <% if @exams && @exams.length > 0 %>
+        <%= render :partial => 'exams/item', :collection => @exams, :as => :exam %> 
+      <% else %>
+        Não há exames publicados ainda. <%= link_to 'Crie um agora!', :action => 'new' %>
+    <% end %>
 
-		
-    </div>
-    
-<!-- PAGINACAO ##################################################################################################################################################### -->
-    
-	
+  </div> <!-- fim da listagem --> 
+
+  <div id="pagination" align="center">
+    <%= will_paginate  @exams, :params => {:sort_by => @sort_by}, :class => "pagination_number"  %>
+  </div>
+
 </div>
 
-<!-- COLUNA DIREITA ################################################################################################################################################ -->
 <div id="col_box3">
-<% if current_user %>
-	<% @logs = current_user.log_activity %>
-	<%= render :partial => 'logs/log', :locals => {:logs => @logs} %>
-	<% else %>
-	<%= render :partial => 'logs/not_logged_in', :locals => {:logs => @logs} %>
-	<% end %> 
-<%# render :partial => 'exams/tagcloud' %>
+  <% if current_user %>
+    <% @logs = current_user.log_activity %>
+    <%= render :partial => 'logs/log', :locals => {:logs => @logs} %>
+  <% else %>
+    <%= render :partial => 'logs/not_logged_in', :locals => {:logs => @logs} %>
+  <% end %> 
+  <%# render :partial => 'exams/tagcloud' %>
 </div> <!-- fim da coluna da direita --> 
 </div>
 </div>

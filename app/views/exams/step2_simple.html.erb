@@ -1,4 +1,3 @@
-
  <% content_for :js do %>
  <script type="text/javascript">
  	function saveDraft(opt, opt_param){
@@ -43,8 +42,6 @@
 			type:'post', 
 			url:'<%= url_for(:action => :create, :exam_id => @exam.id)%>'});
 	}
-	/////
-	
 
 function remove_fields(link) {
   $(link).prev("input[type=hidden]").val("1");
@@ -217,152 +214,134 @@ function removeAllMce(){
 	 </script>
  <% end %>
 
-<div class="grid_16">
-<div id="breadcrumbs">
-	<%# if @space %>
-		<!-- <a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <%= link_to @space.name, @space %> > novo exame simples -->
-	<%# else %>
-		<a href="<%=application_url%>">início</a> > <a href="#">ensinar</a> > novo exame simples
-	<%# end %>
-</div>
-	
-<%# render(:partial => "spaces/space_info", :locals=>{:show => false}) if @space%>
+ <div class="grid_16">
+   <div id="breadcrumbs">
+     <%# if @space %>
+     <!-- <a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <%= link_to @space.name, @space %> > novo exame simples -->
+     <%# else %>
+     <a href="<%=application_url%>">início</a> > <a href="#">ensinar</a> > novo exame simples
+     <%# end %>
+   </div>
 
-<h3 class="call">Nova aula passo-a-passo </h3>
-</div>
+   <%# render(:partial => "spaces/space_info", :locals=>{:show => false}) if @space%>
 
-<div class="grid_9 push_3">
-<table class="booking_steps" cellpadding="0" cellspacing="0">
-							<tbody><tr>
-								<td><span class="book_step"><span><em>1</em>Informações Gerais</span></span></td>
-								<td class="spacer">&nbsp;</td>
-								<td><span class="book_step current"><span><em>2</em>Editor de Exame</span></span></td>
-								<td class="spacer">&nbsp;</td>
-								<td><span class="book_step"><span><em>3</em>Publicação</span></span></td>
-							</tr>
-						</tbody></table>
-</div>
-	
-<% form_for :exam, @exam, :url => { :action => "create" },  :html => {:id => 'exam_form'} do |f| %>
+   <h3 class="call">Nova aula passo-a-passo </h3>
+ </div>
+
+ <div class="grid_9 push_3">
+   <table class="booking_steps" cellpadding="0" cellspacing="0">
+     <tbody><tr>
+         <td><span class="book_step"><span><em>1</em>Informações Gerais</span></span></td>
+         <td class="spacer">&nbsp;</td>
+         <td><span class="book_step current"><span><em>2</em>Editor de Exame</span></span></td>
+         <td class="spacer">&nbsp;</td>
+         <td><span class="book_step"><span><em>3</em>Publicação</span></span></td>
+       </tr>
+   </tbody></table>
+ </div>
+
+ <% form_for :exam, @exam, :url => { :action => "create" },  :html => {:id => 'exam_form'} do |f| %>
+
+   <div class="grid_16">
+     <%= f.error_messages %>
+   </div>
+
+
+   <div id="menu_bar" class="grid_16">
+
+     <div class="add-topic-outter" style="float:left;">
+
+
+       <a id="add_topic_link" href="#" onclick="$('div.add-topic-inner').toggle(); $(this).toggleClass('selected'); return false;">Questão</a>
+       <div class="add-topic-inner menudiv">
+         <ul class="selectable">
+           <li>
+             <%= link_to_add_fields((image_tag 'icons/iclass.gif', :title => "Nova questão") + 'Nova questão', f, :questions, 'Question') %>
+
+           </li>
+           <li>
+             <%= link_to (image_tag 'icons/iclass.gif', :title => 'Buscar Questão') + 'Buscar Questão', "#dialog", :name=>"modal" %>
+           </li>
+         </ul>
+       </div>
+
+       |
+       <%= link_to_function "Salvar", "save(false)", :id => "save_link"%>
+       |
+       <%= link_to_function "Pré-visualizar", "save(true)", :id => "preview_link"%>
+
+     </div>	
+
+     <div style="text-align:right; margin-right: 10px;">
+       <%= image_tag 'spinner.gif', :id => 'save-spinner', :style => 'display: none' %>
+       <span class="snippet" id="save_info"></span>
+     </div>
+
+
+   </div>
+   <%# hidden_field_tag("space_id", @space.id) if @space %>
+   <%= hidden_field_tag("step", "2", options = {})%>
+   <%= hidden_field_tag("exam_type", "simple", options = {})%>
+   <%= hidden_field_tag('sbt_opt', 0) %>
+   <%= hidden_field_tag('opt_param', 0) %>
+   <%= f.hidden_field(:id, :value => @exam.id) %>
+
+   <div class="grid_9">
+     <div id="questions" style="min-height: 100px;">
+
+       <% @exam.questions.each_with_index do |question, idx|%>
+
+         <% f.fields_for :questions, question do |builder| %>
+           <%= render "question_fields", :f => builder %>
+         <% end %>
+
+       <% end %>
+
+
+       <%= link_to_add_fields 'Nova Questão', f, :questions, 'button' %>
+       <%= link_to 'Buscar Questão', "#dialog", :name=>"modal", :class => "button" %>
+
+     </div>
+
+
+     <%= sortable_element 'questions',
+       :url => { :action => "sort_question" , :id => @exam },
+       :complete => visual_effect(:highlight, 'questions'),
+       :tag => 'div', :scroll => true
+     %>
+
+ </div>
+ <div class="grid_6 push_1">
+   <div class="y_addinfo">
+     <div class="addinfocontent">
+       <h1>
+         Adicione questões do banco de dados!</h1>
+       <p>
+         Varias questes estao disponiveis.</p>
+       <p> <%= link_to 'Clique aqui!', "#dialog", :name=>"modal" %></p>
+
+     </div>
+   </div>
+ </div>
 
  <div class="grid_16">
-  <%= f.error_messages %>
-	</div>
 
+   <%= link_to '< Anterior', new_exam_path(:step => '1'), :class => "button" %> 
+   <%= f.submit 'Próximo >' %> 
 
-	<div id="menu_bar" class="grid_16">
-	
-		<div class="add-topic-outter" style="float:left;">
-          
-					
-					<a id="add_topic_link" href="#" onclick="$('div.add-topic-inner').toggle(); $(this).toggleClass('selected'); return false;">Questão</a>
-          	<div class="add-topic-inner menudiv">
-              <ul class="selectable">
-                  <li>
-											<%= link_to_add_fields((image_tag 'icons/iclass.gif', :title => "Nova questão") + 'Nova questão', f, :questions, 'Question') %>
-
-                  </li>
-                  <li>
-                  	  <%= link_to (image_tag 'icons/iclass.gif', :title => 'Buscar Questão') + 'Buscar Questão', "#dialog", :name=>"modal" %>
-                  </li>
-              </ul>
-          </div>
-					
-					|
-					<%= link_to_function "Salvar", "save(false)", :id => "save_link"%>
-          |
-					<%= link_to_function "Pré-visualizar", "save(true)", :id => "preview_link"%>
-				
-     </div>	
-			
-		<div style="text-align:right; margin-right: 10px;">
-      <%= image_tag 'spinner.gif', :id => 'save-spinner', :style => 'display: none' %>
-      <span class="snippet" id="save_info"></span>
-  	</div>
-			
-
-		</div>
-
-
-
-	
-
- 
- 
-
- 
-  <%# hidden_field_tag("space_id", @space.id) if @space %>
- 
-  <%= hidden_field_tag("step", "2", options = {})%>
-  <%= hidden_field_tag("exam_type", "simple", options = {})%>
-  <%= hidden_field_tag('sbt_opt', 0) %>
-  <%= hidden_field_tag('opt_param', 0) %>
-  <%= f.hidden_field(:id, :value => @exam.id) %>
- 
- <div class="grid_9">
- <div id="questions" style="min-height: 100px;">
- 
-  <% @exam.questions.each_with_index do |question, idx|%>
-	
-	  <% f.fields_for :questions, question do |builder| %>
-	    <%= render "question_fields", :f => builder %>
-	  <% end %>
-	
-	<% end %>
- 
-
- 	 <%= link_to_add_fields 'Nova Questão', f, :questions, 'button' %>
-  <%= link_to 'Buscar Questão', "#dialog", :name=>"modal", :class => "button" %>
- 
+   <%= link_to 'Descartar e Voltar', cancel_exams_path, :confirm => "Tem certeza que deseja sair do editor de exames?" %>
  </div>
- 
- 
- <%= sortable_element 'questions',
-:url => { :action => "sort_question" , :id => @exam },
-:complete => visual_effect(:highlight, 'questions'),
- :tag => 'div', :scroll => true
-%>
-  
+
+
+<% end %>
+
+
+<div id="lights-dimmed">
+  <div id="dialog" class="modal_window grid_12">
+    <a href="#" class="close">Fechar [X]</a>
+    <%= image_tag "loadingAnimation.gif", :id => "loading_questions"   %>
+    <div id="dialog_content">
+
+    </div>
+  </div>
 </div>
-<div class="grid_6 push_1">
-	<div class="y_addinfo">
-                                <div class="addinfocontent">
-                                    <h1>
-                                       Adicione questões do banco de dados!</h1>
-                                    <p>
-                                       Varias questes estao disponiveis.</p>
-																			 <p> <%= link_to 'Clique aqui!', "#dialog", :name=>"modal" %></p>
-																			
-                                </div>
-                            </div>
-</div>
-
-<div class="grid_16">
-
-<%= link_to '< Anterior', new_exam_path(:step => '1'), :class => "button" %> 
-<%= f.submit 'Próximo >' %> 
-
-  <%= link_to 'Descartar e Voltar', cancel_exams_path, :confirm => "Tem certeza que deseja sair do editor de exames?" %>
-</div>
-  
-  
- <% end %>
- 
-
- <div id="lights-dimmed">
-     <div id="dialog" class="modal_window grid_12">
-         <a href="#" class="close">Fechar [X]</a>
-				 <%= image_tag "loadingAnimation.gif", :id => "loading_questions"   %>
-         <div id="dialog_content">
-             
-         </div>
-     </div>
- </div>
- 
- 
- 
- 
- 
- 
- 
- 

@@ -1,32 +1,20 @@
-
 <% field_set_tag "Questão #{session[:question_index]}", :class => "heighted" do %>   
 
-<div id="texto_instrucoes">
-	
-	
-	<% if question.source%>
-	<span class="snippet"> 
-	Fonte: <%= question.source %> |
-	</span>
-	<% end %>
-	
-	
-	<%= question.statement %>
-</div>
+  <div id="texto_instrucoes">
+    <% if question.source%>
+      <span class="snippet"> 
+        Fonte: <%= question.source %> |
+      </span>
+    <% end %>
+    <%= question.statement %>
+  </div>
+  <%= hidden_field_tag(:id, session[:exam].id) %>
+  <BR>
 
-   <%= hidden_field_tag(:id, session[:exam].id) %>
-   
-   <BR>
-   
-   <div id="all_respostas">
+  <div id="all_respostas">
     <% for alternative in question.alternatives %>
-	
       <%= radio_button_tag("answer", alternative.id, checked = false) %>
-        <%= alternative.statement %><BR>
-	
-	<% end %>
-	
-	</div>
-	
-	
-	<% end %>
+      <%= alternative.statement %><BR>
+    <% end %>
+  </div>
+<% end %>

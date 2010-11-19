@@ -27,8 +27,8 @@ class QuestionsController < BaseController
 
     respond_to do |format|
       format.js do
-        render :update do |page| 
-          page.replace_html 'local_search_results', 
+        render :update do |page|
+          page.replace_html 'local_search_results',
             :partial => "questions/list", :object => @questions
         end
       end
@@ -112,8 +112,8 @@ class QuestionsController < BaseController
         end
 
         flash[:notice] = 'A questão foi criada e adicionada ao teste.'
-        format.html { #redirect_to(@question) 
-          redirect_to :controller => :exams, :action => :new, :step => '2', :exam_type => params[:exam_type] 
+        format.html { #redirect_to(@question)
+          redirect_to :controller => :exams, :action => :new, :step => '2', :exam_type => params[:exam_type]
         }
         format.xml  { render :xml => @question, :status => :created, :location => @question }
 
@@ -148,8 +148,8 @@ class QuestionsController < BaseController
         end
 
         flash[:notice] = 'A questão foi atualizada com sucesso!'
-        format.html { #redirect_to(@question) 
-          redirect_to :controller => :exams, :action => :new, :step => '2', :exam_type => params[:exam_type] 
+        format.html { #redirect_to(@question)
+          redirect_to :controller => :exams, :action => :new, :step => '2', :exam_type => params[:exam_type]
         }
         format.xml  { render :xml => @question, :status => :created, :location => @question }
       else

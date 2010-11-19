@@ -20,9 +20,9 @@ end
 
 # caso nao tenha uma proxima questão, muda "proximo" para "finalizar" submete o formulario SEM AJAX
 if @has_next
-  
+
   if @show_i
-    
+
     page << "jQuery('#submit_answer_btn').hide()"
     page << "jQuery('#first_question_btn').show()"
   else
@@ -31,13 +31,13 @@ if @has_next
     page << "jQuery('#first_question_btn').hide()"
     #page << "document.getElementById('submit_answer_btn').value = 'Próximo';"
   end
-  
+
 else
-   page << "jQuery('#submit_answer_btn').show()"
-   page << "jQuery('#first_question_btn').hide()"
+  page << "jQuery('#submit_answer_btn').show()"
+  page << "jQuery('#first_question_btn').hide()"
   page << "document.getElementById('form_answer').onsubmit = submitChrono();"
   page << "document.getElementById('submit_answer_btn').value = 'Finalizar';"
-  
+
 end
 
 # caso nao tenha questão anterior, desabilita o botao "anterior"

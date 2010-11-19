@@ -1,112 +1,112 @@
 <div class="grid_16">
-<div id="breadcrumbs">
-	<%# if @space %>
-		<!-- <a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <%# link_to @space.name, @space %> > novo exame -->
-	<%# else %>
-		<a href="<%=application_url%>">início</a> > <a href="#">ensinar</a> > novo exame
-	<%#end %>
-</div>
+  <div id="breadcrumbs">
+    <%# if @space %>
+    <!-- <a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <%# link_to @space.name, @space %> > novo exame -->
+    <%# else %>
+    <a href="<%=application_url%>">início</a> > <a href="#">ensinar</a> > novo exame
+    <%#end %>
+  </div>
 
-<%# render(:partial => "spaces/space_info", :locals=>{:show => false}) if @space%>
+  <%# render(:partial => "spaces/space_info", :locals=>{:show => false}) if @space%>
 
-<div id="title_video">Novo Exame</div>
+  <div id="title_video">Novo Exame</div>
 
-<div class="grid_9 push_3">
-<table class="booking_steps" cellpadding="0" cellspacing="0">
-							<tbody><tr>
-								<td><span class="book_step current"><span><em>1</em>Informações Gerais</span></span></td>
-								<td class="spacer">&nbsp;</td>
-								<td><span class="book_step disabled"><span><em>2</em>Editor de Exame</span></span></td>
-								<td class="spacer">&nbsp;</td>
-								<td><span class="book_step disabled"><span><em>3</em>Publicação</span></span></td>
-							</tr>
-						</tbody></table>
-</div>
-<!--
-<h3 class="call">Novo Exame</h3>
--->
-
-
-		<% form_for :exam, @exam, :url => { :action => "create" }, :html => { :multipart => true } do |f| %>
-
-		<%= f.error_messages %>
-		<%= hidden_field_tag("step", "1", options = {})%>
-		<%=# hidden_field_tag("space_id", @space.id) if @space %>
+  <div class="grid_9 push_3">
+    <table class="booking_steps" cellpadding="0" cellspacing="0">
+      <tbody><tr>
+          <td><span class="book_step current"><span><em>1</em>Informações Gerais</span></span></td>
+          <td class="spacer">&nbsp;</td>
+          <td><span class="book_step disabled"><span><em>2</em>Editor de Exame</span></span></td>
+          <td class="spacer">&nbsp;</td>
+          <td><span class="book_step disabled"><span><em>3</em>Publicação</span></span></td>
+        </tr>
+    </tbody></table>
+  </div>
+  <!--
+  <h3 class="call">Novo Exame</h3>
+  -->
 
 
-			<div class="grid_8">
+  <% form_for :exam, @exam, :url => { :action => "create" }, :html => { :multipart => true } do |f| %>
 
-		<% field_set_tag 'Informações Gerais' do %>
-
-			<%= f.label "Título: " %>
-			<%= f.text_field :name %>
-			<%= error_for :exam, :name %>
-
-			<% random_number = get_random_number%>
-			<%= f.label "Descrição:" %>
-			<div style="">
-			<%= f.text_area :description, :size => "50x3", :class => "desc-#{random_number}" %>
-			<%= render :partial => 'shared/limit_char_field', :locals => { :class_textarea => "desc-#{random_number}" }%>
-			</div>
-			<%= error_for :exam, :description %>
-
-			<%= f.label "Tags <span class='snippet'>(separadas por vírgula)</span>" %>
-			<%= f.text_field :tag_list %>
+    <%= f.error_messages %>
+    <%= hidden_field_tag("step", "1", options = {})%>
+    <%=# hidden_field_tag("space_id", @space.id) if @space %>
 
 
-			<%# f.select(:simple_category, )%>
-			<%= f.label "Categoria:" %>
-			<%= simple_categories_i18n(f) %>
-			<%= error_for :exam, :category %>
+    <div class="grid_8">
+
+      <% field_set_tag 'Informações Gerais' do %>
+
+        <%= f.label "Título: " %>
+        <%= f.text_field :name %>
+        <%= error_for :exam, :name %>
+
+        <% random_number = get_random_number%>
+        <%= f.label "Descrição:" %>
+        <div style="">
+          <%= f.text_area :description, :size => "50x3", :class => "desc-#{random_number}" %>
+          <%= render :partial => 'shared/limit_char_field', :locals => { :class_textarea => "desc-#{random_number}" }%>
+        </div>
+        <%= error_for :exam, :description %>
+
+        <%= f.label "Tags <span class='snippet'>(separadas por vírgula)</span>" %>
+        <%= f.text_field :tag_list %>
 
 
-			<%= f.label "Dificuldade" %>
-			<%= f.select :level, options_for_select([['Iniciante', 1], ['Intermediário', 2], ['Avançado', 3]], 1) %>
-
-				<%end%>
-			<% field_set_tag 'Instruções' do %>
-
-			<%# f.label "Instruções" %>
-			<%= f.text_area :instruction, :size => "30x2", :class => "mceEditor" %>
+        <%# f.select(:simple_category, )%>
+        <%= f.label "Categoria:" %>
+        <%= simple_categories_i18n(f) %>
+        <%= error_for :exam, :category %>
 
 
-			<%end%>
-			</div>
+        <%= f.label "Dificuldade" %>
+        <%= f.select :level, options_for_select([['Iniciante', 1], ['Intermediário', 2], ['Avançado', 3]], 1) %>
+
+      <%end%>
+      <% field_set_tag 'Instruções' do %>
+
+        <%# f.label "Instruções" %>
+        <%= f.text_area :instruction, :size => "30x2", :class => "mceEditor" %>
+
+
+      <%end%>
+    </div>
 
 
 
-		<div class="grid_6 push_1">
+    <div class="grid_6 push_1">
 
-			<% field_set_tag 'Tipo de Exame' do %>
+      <% field_set_tag 'Tipo de Exame' do %>
 
-		<div style="margin-bottom: 20px;">
+        <div style="margin-bottom: 20px;">
 
-			<h3><%= radio_button_tag("exam_type", "simple", checked = true, options = {})%> Exame simples</h3>
-			Contém um conjunto de questões e o resultado é exibido ao final do exame.
+          <h3><%= radio_button_tag("exam_type", "simple", checked = true, options = {})%> Exame simples</h3>
+          Contém um conjunto de questões e o resultado é exibido ao final do exame.
 
-		</div>
+        </div>
 
-		<div style="margin-bottom: 20px;">
+        <div style="margin-bottom: 20px;">
 
-			<h3><%= radio_button_tag("exam_type", "formative", checked = false, :disabled => true)%> Exame formativo</h3>
-			Nessa modalidade, a resposta e justificativa são dadas após completar cada questão.
-		</div>
+          <h3><%= radio_button_tag("exam_type", "formative", checked = false, :disabled => true)%> Exame formativo</h3>
+          Nessa modalidade, a resposta e justificativa são dadas após completar cada questão.
+        </div>
 
-		<div style="margin-bottom: 20px;">
+        <div style="margin-bottom: 20px;">
 
-			<h3><%= radio_button_tag("exam_type", "quiz", checked = false, :disabled => true)%> Quiz</h3>
-			Esse tipo de exame possibilita exibir um resultado personalizado de acordo com a definição de um número de pontos em cada alternativa.
-		</div>
-		<%end%>
+          <h3><%= radio_button_tag("exam_type", "quiz", checked = false, :disabled => true)%> Quiz</h3>
+          Esse tipo de exame possibilita exibir um resultado personalizado de acordo com a definição de um número de pontos em cada alternativa.
+        </div>
+      <%end%>
 
- 		</div>
+    </div>
 
 
-		<div class="grid_16">
-		<%= f.submit 'Próximo >' %>
- 	</div>
+    <div class="grid_16">
+      <%= f.submit 'Próximo >' %>
+    </div>
 
-	<% end %>
+  <% end %>
 
 
 </div>
