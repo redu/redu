@@ -6,6 +6,7 @@ class Topic < ActiveRecord::Base
  
   belongs_to :forum, :counter_cache => true
   belongs_to :user
+  alias :owner :user
   has_many :monitorships
   has_many :monitors, :through => :monitorships, :conditions => ['monitorships.active = ?', true], :source => :user
   has_many :logs, :as => :logeable, :dependent => :destroy, :class_name => 'Status'

@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
 
-  # Constants 
+  # Constants
   MALE    = 'M'
   FEMALE  = 'F'
 
@@ -84,7 +84,7 @@ class User < ActiveRecord::Base
   named_scope :tagged_with, lambda {|tag_name|
     {:conditions => ["tags.name = ?", tag_name], :include => :tags}
   }
-  # Accessors 
+  # Accessors
   attr_protected :admin, :featured, :role_id
 
   # PLUGINS
@@ -239,21 +239,43 @@ class User < ActiveRecord::Base
 
   end
 
-  def can_manage?(entity, space=nil)
+  def can_manage?(entity)
+    entity.nil? and return false
+    self.admin? and return true
+    self.environment_admin? entity and return true
+    (entity.owner && entity.owner == self) and return true
 
     case entity.class.to_s
-    when 'Lecture'
-      (entity.owner == self || (entity.space == space && self.space_admin?(space) ))
-    when 'Exam'
-      (entity.owner == self || (entity.space == space && self.space_admin?(space) ))
+    when 'Course'
+      (self.environment_admin? entity.environment)
     when 'Space'
-      (entity.owner == self || self.space_admin?(entity))
+      self.teacher?(entity)
+    when 'Subject'
+      self.teacher?(entity.space)
+    when 'Lecture'
+      self.teacher?(entity.subject.space)
+    when 'Exam'
+      self.teacher?(entity.subject.space)
     when 'Event'
-      (entity.owner == self || (entity.space.id == space.id && self.space_admin?(space) ))
+      self.teacher?(entity.space) || self.tutor?(entity.space)
     when 'Bulletin'
-      (entity.owner == self || (entity.space == space && self.space_admin?(space) ))
-    when 'Environment'
-      entity.owner == self
+      case entity.bulletinable.class.to_s
+      when 'Environment'
+        self.environment_admin?(entity.bulletinable)
+      when 'Space'
+        self.teacher?(entity.bulletinable) || self.tutor?(entity.bulletinable)
+      end
+    when 'Topic'
+      self.teacher?(entity.forum.space)
+    when 'SbPost'
+      self.teacher?(entity.topic.forum.space)
+    when 'Status'
+      case entity.class.to_s
+      when 'Space'
+        self.teacher?(entity.statusable)
+      when 'Subject'
+        self.teacher?(entity.statusable.space)
+      end
     end
   end
 
@@ -330,7 +352,7 @@ class User < ActiveRecord::Base
   end
 
   def can_activate?
-    activated_at.nil? and created_at > 30.days.ago 
+    activated_at.nil? and created_at > 30.days.ago
   end
 
   def active?
@@ -525,36 +547,40 @@ class User < ActiveRecord::Base
 
   def get_association_with(entity)
     return false unless entity
+
     case entity.class.to_s
     when 'Space'
-      association = UserSpaceAssociation.find(:first, :conditions => ['user_id = ? AND space_id = ?', 
+      association = UserSpaceAssociation.find(:first, :conditions => ['user_id = ? ' + \
+                                              'AND space_id = ?',
                                               self.id, entity.id])
     when 'Course'
-      association = UserCourseAssociation.find(:first, :conditions => ['user_id = ? AND course_id = ?', 
+      association = UserCourseAssociation.find(:first, :conditions => ['user_id = ? ' + \
+                                               'AND course_id = ?',
                                                self.id, entity.id])
     when 'Environment'
-      association = UserEnvironmentAssociation.find(:first, :conditions => ['user_id = ? AND environment_id = ?', 
+      association = UserEnvironmentAssociation.find(:first, :conditions => ['user_id = ? ' + \
+                                                    'AND environment_id = ?',
                                                     self.id, entity.id])
     end
   end
 
-  def teacher?(space)
-    association = get_association_with space
-    association && association.role && association.role.eql?(Role[:teacher])
-  end
-
-  def coordinator?(space)
-    association = get_association_with space
-    association && association.role && association.role.eql?(Role[:coordinator])
-  end
-
-  def space_admin?(space_id)
-    association = get_association_with space_id
+  def environment_admin?(entity)
+    association = get_association_with entity
     association && association.role && association.role.eql?(Role[:environment_admin])
   end
 
-  def student?(space)
-    association = get_association_with space
+  def teacher?(entity)
+    association = get_association_with entity
+    association && association.role && association.role.eql?(Role[:teacher])
+  end
+
+  def tutor?(entity)
+    association = get_association_with entity
+    association && association.role && association.role.eql?(Role[:tutor])
+  end
+
+  def member?(entity)
+    association = get_association_with entity
     association && association.role && association.role.eql?(Role[:member])
   end
 
@@ -609,7 +635,7 @@ class User < ActiveRecord::Base
     User.update_all ['sb_last_seen_at = ?', Time.now.utc], ['id = ?', self.id]
     self.sb_last_seen_at = Time.now.utc
   end
-  
+
   protected
   def activate_before_save
     self.activated_at = Time.now.utc

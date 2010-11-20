@@ -39,7 +39,7 @@
       <% end %>
     </div>
     <div class="grid_11 alpha omega clearfix" style="padding: 10px 0;">
-      <% if current_user.can_manage?(@event, @event.space) %>
+      <% if current_user.can_manage?(@event) %>
         <%= link_to 'Editar', edit_space_event_path(@event.space, @event), :class => "button"%>
         <%= link_to 'Remover', @event,
           {:confirm => 'Você tem certeza que deseja remover  permanentemente?',

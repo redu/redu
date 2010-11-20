@@ -176,7 +176,7 @@ class EventsController < BaseController
   def can_manage_required
     @event = Event.find(params[:id])
 
-    current_user.can_manage?(@event, @space) ? true : access_denied
+    current_user.can_manage?(@event) ? true : access_denied
   end
 
   def is_member_required
