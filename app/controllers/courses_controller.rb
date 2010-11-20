@@ -1,11 +1,16 @@
 class CoursesController < BaseController
   layout "environment"
-  load_and_authorize_resource :except => [:new]
+  load_and_authorize_resource :environment
+  load_and_authorize_resource :course, :except => [:new], :through => :environment
 
   uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit, :create, :update])
 
+  rescue_from CanCan::AccessDenied do |exception|
+    raise if exception.action == :preview
+    redirect_to :action => :preview
+  end
+
   def show
-    @environment = Environment.find(params[:environment_id])
     @spaces = @course.spaces.published
 
     respond_to do |format|
@@ -14,12 +19,10 @@ class CoursesController < BaseController
   end
 
   def edit
-    @environment = Environment.find(params[:environment_id])
   end
 
   def destroy
     @course.destroy
-    @environment = Environment.find(params[:environment_id])
 
     respond_to do |format|
       flash[:notice] = "Curso removido."
@@ -29,8 +32,6 @@ class CoursesController < BaseController
   end
 
   def update
-    @environment = Environment.find(params[:environment_id])
-
     respond_to do |format|
       if @course.update_attributes(params[:course])
         if params[:course][:subscription_type].eql? "1" # Entrada de membros passou a ser livre, aprovar todos os membros pendentes
@@ -49,11 +50,9 @@ class CoursesController < BaseController
 
   def new
     @course_being_created = Course.new
-    @environment = Environment.find(params[:environment_id])
   end
 
   def create
-    @environment = Environment.find(params[:environment_id])
     @course.owner = current_user
 
     respond_to do |format|
@@ -71,17 +70,11 @@ class CoursesController < BaseController
   end
 
   # Visão do Course para usuários não-membros. 
-  # TODO Remover quando colocar as permissões, apenas redirecionar no show.
   def preview
-    @course = Course.find(params[:id])
-    @environment = @course.environment
-
   end
 
   # Aba Espaços.
   def admin_spaces
-    @course = Course.find(params[:id])
-    @environment = @course.environment
     @spaces = Space.paginate(:conditions => ["course_id = ?", @course.id],
                              :include => :owner,
                              :page => params[:page],
@@ -95,8 +88,6 @@ class CoursesController < BaseController
 
   # Aba Moderação de Membros.
   def admin_members_requests
-    @course = Course.find(params[:id])
-    @environment = @course.environment
     @pending_members = UserCourseAssociation.paginate(:conditions => ["state LIKE 'waiting' AND course_id = ?", @course.id],
                                                       :page => params[:page],
                                                       :order => 'updated_at DESC',
@@ -109,9 +100,6 @@ class CoursesController < BaseController
 
   # Modera os usuários.
   def moderate_members_requests
-    @course = Course.find(params[:id])
-    @environment = @course.environment
-
     if params[:member].nil? 
       flash[:notice] = "Escolha, pelo menos, algum usuário."
     else
@@ -157,9 +145,6 @@ class CoursesController < BaseController
 
   # Associa um usuário a um Course (Ação de participar).
   def join
-    @environment = Environment.find(params[:environment_id])
-    @course = Course.find(params[:id])
-
     association = UserCourseAssociation.create(:user_id => current_user.id, :course_id => @course.id, 
                                                :role_id => Role[:member].id)
 
@@ -185,8 +170,6 @@ class CoursesController < BaseController
 
   # Desassocia um usuário de um Course (Ação de sair do Course).
   def unjoin
-    @course = Course.find(params[:id])
-
     course_association = current_user.get_association_with(@course)    
     course_association.destroy
     @course.spaces.each do |space|
@@ -199,9 +182,6 @@ class CoursesController < BaseController
   end
 
   def publish
-    @course = Course.find(params[:id])   
-    @environment = @course.environment
-
     @course.published = 1
     @course.save
 
@@ -210,9 +190,6 @@ class CoursesController < BaseController
   end
 
   def unpublish
-    @course = Course.find(params[:id])   
-    @environment = @course.environment
-
     @course.published = 0
     @course.save
 
@@ -222,8 +199,6 @@ class CoursesController < BaseController
 
   # Aba Membros. 
   def admin_members
-    @course= Course.find(params[:id])
-    @environment = @course.environment
     @memberships = UserCourseAssociation.paginate(
       :conditions => ["course_id = ? AND state LIKE ? ", @course.id, 'approved'],
       :include => [{ :user => {:user_space_associations => :space} }],
@@ -235,8 +210,6 @@ class CoursesController < BaseController
   # Remove um ou mais usuários de um Environment destruindo todos os relacionamentos
   # entre usuário e os níveis mais baixos da hierarquia.
   def destroy_members
-    @course = Course.find(params[:id])
-
     # Course.id do environment
     spaces = @course.spaces
     users_ids = []
@@ -260,9 +233,6 @@ class CoursesController < BaseController
   end
 
   def search_users_admin
-    @course = Course.find(params[:id])
-    @environment = @course.environment
-
     roles = []
     roles = params[:role_filter].collect {|r| r.to_i} if params[:role_filter]
     keyword = []

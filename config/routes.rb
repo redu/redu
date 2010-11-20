@@ -195,7 +195,8 @@ ActionController::Routing::Routes.draw do |map|
                  :admin_courses => :get,
                  :admin_members => :get,
                  :admin_bulletins => :get,
-                 :destroy_members => :post } do |environment|
+                 :destroy_members => :post,
+                 :search_users_admin => :post } do |environment|
       environment.resources :courses, :member => {
         :preview => :get,
         :admin_spaces => :get,
@@ -205,7 +206,8 @@ ActionController::Routing::Routes.draw do |map|
         :publish => :get,
         :unpublish => :get,
         :admin_members => :get,
-        :destroy_members => :post
+        :destroy_members => :post,
+        :search_users_admin => :post
       }
       environment.resources :bulletins
   end

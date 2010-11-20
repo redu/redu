@@ -34,7 +34,6 @@ class Ability
     # Status
     alias_action :respond, :to => :read
 
-
     # Todos podem ver o preview
     can :preview, :all do |object|
       object.published?
@@ -49,6 +48,7 @@ class Ability
       can :read, :all do |object|
         object.published && user.has_access_to?(object)
       end
+
     end
   end
 
