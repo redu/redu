@@ -1,6 +1,6 @@
 class CoursesController < BaseController
   layout "environment"
-	load_and_authorize_resource, :except => [:new]
+  load_and_authorize_resource :except => [:new]
 
   uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit, :create, :update])
 

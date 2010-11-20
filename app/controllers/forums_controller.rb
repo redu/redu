@@ -1,5 +1,5 @@
 class ForumsController < BaseController
-	load_and_authorize_resource, :except => [:index, :show]
+	load_and_authorize_resource :except => [:index, :show]
 
   #before_filter :find_or_initialize_forum
   helper :application

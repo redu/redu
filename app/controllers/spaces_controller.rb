@@ -28,6 +28,7 @@ class SpacesController < BaseController
     end
   end
 
+  #TODO mudar para admin_look_and_feel (padroes)
   def look_and_feel
     
   end
@@ -51,10 +52,11 @@ class SpacesController < BaseController
   end
 
   ### Space Admin actions
+  #TODO remover
   def invalidate_keys(access_key) # 'troca' um conjunto de chaves
-    #TODO
   end
 
+  #TODO remover
   def join
     
     @association = UserSpaceAssociation.new
@@ -84,6 +86,7 @@ class SpacesController < BaseController
     end
   end
 
+  #TODO remover
   def unjoin
     
     @association = UserSpaceAssociation.find(:first, :conditions => ["user_id = ? AND space_id = ?",current_user.id, @space.id ])
@@ -286,6 +289,7 @@ class SpacesController < BaseController
   end
 
   # usuário entra na rede
+  #TODO remove
   def associate
     
     @user = User.find(params[:user_id])  # TODO precisa mesmo recuperar o usuário no bd?
@@ -322,16 +326,19 @@ class SpacesController < BaseController
   end
 
   # lista redes das quais o usuário corrente é membro
+  #TODO mover para user
   def member
     @spaces = current_user.spaces
   end
 
   # lista redes das quais usuário corrente é dono
+  #TODO mover para user
   def owner
     @spaces = current_user.spaces_owned
   end
 
   # lista todos os membros da escola
+  #TODO mover para user
   def members
     
     @members = @space.user_space_associations.paginate(  #optei por .users ao inves de .students
@@ -349,6 +356,7 @@ class SpacesController < BaseController
   end
 
   # lista todos os professores
+  #TODO mover para user
   def teachers
     
 
@@ -391,7 +399,6 @@ class SpacesController < BaseController
         @searched_for_all = true
       end
     end
-debugger
     respond_to do |format|
 			#TODO verificar esse @lecture, saber o por quê de ser chamado
       # format.xml  { render :xml => @lectures }
