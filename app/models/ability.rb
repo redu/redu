@@ -3,11 +3,12 @@ class Ability
 
   # Regras de authorization
   def initialize(user)
-    if user.nil?
-      can :preview do |object|
-        object.published
-      end
-    else
+    # Todos podem ver o preview
+    can :preview, :all do |object|
+      object.published?
+    end
+
+    unless user.nil?
       # Gerencial
       can :manage, :all do |object|
         user.can_manage? object

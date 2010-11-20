@@ -68,13 +68,13 @@ class User < ActiveRecord::Base
   has_many :group_user
   has_many :groups, :through => :group_user
 
-    #forums
-    has_many :moderatorships, :dependent => :destroy
-    has_many :forums, :through => :moderatorships, :order => 'forums.name'
-    has_many :sb_posts, :dependent => :destroy
-    has_many :topics, :dependent => :destroy
-    has_many :monitorships, :dependent => :destroy
-    has_many :monitored_topics, :through => :monitorships, :conditions => ['monitorships.active = ?', true], :order => 'topics.replied_at desc', :source => :topic
+  #forums
+  has_many :moderatorships, :dependent => :destroy
+  has_many :forums, :through => :moderatorships, :order => 'forums.name'
+  has_many :sb_posts, :dependent => :destroy
+  has_many :topics, :dependent => :destroy
+  has_many :monitorships, :dependent => :destroy
+  has_many :monitored_topics, :through => :monitorships, :conditions => ['monitorships.active = ?', true], :order => 'topics.replied_at desc', :source => :topic
 
 
   # Named scopes
@@ -279,8 +279,28 @@ class User < ActiveRecord::Base
     end
   end
 
-  def has_access_to(entity)
-    self.admin? || entity.owner == self || self.member?(entity)
+  def has_access_to?(entity)
+    self.admin? and return true
+
+    if self.get_association_with(entity)
+      return true
+    else
+      case entity.class.to_s
+      when 'Event'
+        #TODO lembrar que vai se tornar polomorfico
+        self.get_association_with(entity.space).nil? ? false : true
+      when 'Bulletin'
+        self.get_association_with(entity.bulletinable).nil? ? false : true
+      when 'Forum'
+        self.get_association_with(entity.space).nil? ? false : true
+      when 'Topic'
+        self.get_association_with(entity.forum.space).nil? ? false : true
+      when 'SbPost'
+        self.get_association_with(entity.topic.forum.space).nil? ? false : true
+      else
+        return false
+      end
+    end
   end
 
   def can_be_owner?(entity)
@@ -513,19 +533,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  def admin?
-    role && role.eql?(Role[:admin])
-  end
-
-  def moderator?
-    role && role.eql?(Role[:moderator])
-  end
-
-  def member?(entity)
-    association = self.get_association_with(entity)
-    association && association.role.eql?(Role[:member])
-  end
-
   # space roles
   def can_post?(space)
     if not self.get_association_with(space)
@@ -567,6 +574,10 @@ class User < ActiveRecord::Base
   def environment_admin?(entity)
     association = get_association_with entity
     association && association.role && association.role.eql?(Role[:environment_admin])
+  end
+
+  def admin?
+    role && role.eql?(Role[:admin])
   end
 
   def teacher?(entity)
