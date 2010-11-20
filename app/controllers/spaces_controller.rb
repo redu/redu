@@ -14,27 +14,27 @@ class SpacesController < BaseController
 
 
   def take_ownership
-    
+
     @space.update_attribute(:owner, current_user)
     flash[:notice] = "Você é o novo dono deste espaço!"
     redirect_to @space
   end
 
   def vote
-    
+
     current_user.vote(@space, params[:like])
     respond_to do |format|
-      format.js { render :template => 'shared/like.rjs', :locals => { :votes_for => @space.votes_for().to_s} } 
+      format.js { render :template => 'shared/like.rjs', :locals => { :votes_for => @space.votes_for().to_s} }
     end
   end
 
   #TODO mudar para admin_look_and_feel (padroes)
   def look_and_feel
-    
+
   end
 
   def set_theme
-    
+
     @space.update_attributes(params[:space])
 
     flash[:notice] = "Tema modificado com sucesso!"
@@ -58,7 +58,7 @@ class SpacesController < BaseController
 
   #TODO remover
   def join
-    
+
     @association = UserSpaceAssociation.new
     @association.user = current_user
     @association.space = @space
@@ -88,7 +88,7 @@ class SpacesController < BaseController
 
   #TODO remover
   def unjoin
-    
+
     @association = UserSpaceAssociation.find(:first, :conditions => ["user_id = ? AND space_id = ?",current_user.id, @space.id ])
 
     if @association.destroy
@@ -101,12 +101,12 @@ class SpacesController < BaseController
   end
 
   def manage
-    
+
   end
 
   # Modercacao
   def admin_requests
-    
+
     # TODO colocar a consulta a seguir como um atributo de space (como em space.teachers)
     @pending_members = UserSpaceAssociation.paginate(:conditions => ["user_space_associations.status like 'pending' AND space_id = ?", @space.id],
                                                       :page => params[:page],
@@ -119,7 +119,7 @@ class SpacesController < BaseController
   end
 
   def admin_members
-    
+
     @memberships = UserSpaceAssociation.paginate(:conditions => ["status like 'approved' AND space_id = ?", @space.id],
                                                   :include => :user,
                                                   :page => params[:page],
@@ -131,22 +131,22 @@ class SpacesController < BaseController
   end
 
   def admin_bulletins
-    
-    @pending_bulletins = Bulletin.paginate(:conditions => ["bulletinable_type LIKE 'Space' 
-                                   AND bulletinable_id = ? 
+
+    @pending_bulletins = Bulletin.paginate(:conditions => ["bulletinable_type LIKE 'Space'
+                                   AND bulletinable_id = ?
                                    AND state LIKE ?", @space.id, "waiting"],
                                    :include => :owner,
                                    :page => params[:page],
                                    :order => 'updated_at ASC',
                                    :per_page => 20)
 
-    @bulletins = Bulletin.paginate(:conditions => ["bulletinable_type LIKE 'Space' 
-                                   AND bulletinable_id = ? 
+    @bulletins = Bulletin.paginate(:conditions => ["bulletinable_type LIKE 'Space'
+                                   AND bulletinable_id = ?
                                    AND state LIKE ?", @space.id, "approved"],
                                    :include => :owner,
                                    :page => params[:page],
                                    :order => 'updated_at ASC',
-                                   :per_page => 20) 
+                                   :per_page => 20)
     respond_to do |format|
       format.html
     end
@@ -154,14 +154,14 @@ class SpacesController < BaseController
 
   def admin_events
 
-    @pending_events = Event.paginate(:conditions => ["space_id = ? 
+    @pending_events = Event.paginate(:conditions => ["space_id = ?
                                      AND state LIKE ?", @space.id, "waiting"],
                                      :include => :owner,
                                      :page => params[:page],
                                      :order => 'updated_at ASC',
                                      :per_page => 20)
 
-     @events = Event.paginate(:conditions => ["space_id = ? 
+     @events = Event.paginate(:conditions => ["space_id = ?
                                      AND state LIKE ?", @space.id, "approved"],
                                      :include => :owner,
                                      :page => params[:page],
@@ -174,7 +174,7 @@ class SpacesController < BaseController
   end
 
   def moderate_requests
-   
+
 
     approved = params[:member].reject{|k,v| v == 'reject'}
     rejected = params[:member].reject{|k,v| v == 'approve'}
@@ -202,8 +202,9 @@ class SpacesController < BaseController
     redirect_to admin_requests_space_path(@space)
   end
 
+  #TODO remove
   def moderate_members
-    
+
     case params[:submission_type]
     when '0' # remove selected
       @removed_users = User.all(:conditions => ["id IN (?)", params[:users].join(',')]) unless params[:users].empty?
@@ -226,7 +227,7 @@ class SpacesController < BaseController
   end
 
   def search_users_admin
-    
+
     if params[:search_user].empty?
       @memberships = UserSpaceAssociation.paginate(:conditions => ["status like 'approved' AND space_id = ?", @space.id],
                                                     :include => :user,
@@ -284,14 +285,14 @@ class SpacesController < BaseController
       flash[:error] = "Para moderar você precisa escolher entre aprovar ou rejeitar."
     end
 
-    
+
     redirect_to admin_events_space_path(@space)
   end
 
   # usuário entra na rede
   #TODO remove
   def associate
-    
+
     @user = User.find(params[:user_id])  # TODO precisa mesmo recuperar o usuário no bd?
     @user_space_association = UserSpaceAssociation.find(:first, :include => :access_key, :conditions => ["access_keys.key = ?", params[:user_key]])
 
@@ -340,7 +341,7 @@ class SpacesController < BaseController
   # lista todos os membros da escola
   #TODO mover para user
   def members
-    
+
     @members = @space.user_space_associations.paginate(  #optei por .users ao inves de .students
                                                          :page => params[:page],
                                                          :order => 'updated_at DESC',
@@ -358,7 +359,7 @@ class SpacesController < BaseController
   # lista todos os professores
   #TODO mover para user
   def teachers
-    
+
 
     @members = @space.teachers.paginate(
       :page => params[:page],
@@ -378,7 +379,7 @@ class SpacesController < BaseController
   # GET /spaces
   # GET /spaces.xml
   def index
-    
+
     paginating_params = {
       :page => params[:page],
       :order => (params[:sort]) ? params[:sort] + ' DESC' : 'created_at DESC',
@@ -420,7 +421,7 @@ class SpacesController < BaseController
   # GET /spaces/1
   # GET /spaces/1.xml
   def show
-    
+
     if @space and @space.removed
       redirect_to removed_page_path and return
     end
@@ -492,9 +493,9 @@ class SpacesController < BaseController
     else
       UserSpaceAssociation.create({:user => current_user, :space => @space, :status => "approved", :role_id => 4}) #:role => Role[:space_admin]
       Forum.create(:name => "Fórum do espaço #{@space.name}", :description => "Este fórum pertence ao espaço #{@space.name}. Apenas os participantes deste espaço podem visualizá-lo. Troque ideias, participe!", :space_id => @space.id)
-     
+
       course_users = UserCourseAssociation.all(:conditions => ["state LIKE ? AND course_id = ?", 'approved', @space.course.id])
-     
+
       course_users.each do |assoc|
         UserSpaceAssociation.create({:user_id => assoc.user_id, :space => @space, :status => "approved", :role_id => assoc.role_id})
       end
@@ -511,7 +512,7 @@ class SpacesController < BaseController
     unless params[:only_image]
       params[:space][:audience_ids] ||= []
     end
-   
+
 
     respond_to do |format|
       if @space.update_attributes(params[:space])
@@ -531,7 +532,7 @@ class SpacesController < BaseController
   # DELETE /spaces/1
   # DELETE /spaces/1.xml
   def destroy
-   
+
     @space.destroy
 
     respond_to do |format|

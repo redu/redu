@@ -1,6 +1,7 @@
 class EnvironmentsController < BaseController
   layout "environment"
-	load_and_authorize_resource
+  load_resource
+  authorize_resource
 
   uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit, :create, :update])
 
@@ -102,7 +103,6 @@ class EnvironmentsController < BaseController
   # Visão do Environment para usuários não-membros. 
   # TODO Remover quando colocar as permissões, apenas redirecionar no show.
   def preview
-    @environment = Environment.find(params[:id])
   end
 
   def admin_courses
