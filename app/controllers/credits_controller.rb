@@ -1,7 +1,7 @@
 class CreditsController < BaseController
-  def index
+	load_and_authorize_resource
 
-    @credit = Credit.new
+  def index
 
     respond_to do |format|
       format.html # index.html.erb
@@ -10,7 +10,6 @@ class CreditsController < BaseController
   end
 
   def show
-    @credit = Credit.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -19,7 +18,6 @@ class CreditsController < BaseController
   end
 
   def create
-    @credit = Credit.new(params[:credit])
     @credit.user = current_user
 
     if @credit.payment_type == 'boleto'

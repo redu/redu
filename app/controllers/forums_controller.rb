@@ -1,6 +1,7 @@
 class ForumsController < BaseController
-  before_filter :login_required, :except => [:index, :show]
-  before_filter :find_or_initialize_forum
+	load_and_authorize_resource, :except => [:index, :show]
+
+  #before_filter :find_or_initialize_forum
   helper :application
 
   uses_tiny_mce do
@@ -68,9 +69,9 @@ class ForumsController < BaseController
   end
 
   protected
-  def find_or_initialize_forum
-    @forum = params[:id] ? Forum.find(params[:id]) : Forum.new
-  end
+#  def find_or_initialize_forum
+#    @forum = params[:id] ? Forum.find(params[:id]) : Forum.new
+#  end
 
   #overide in your app
   def authorized?

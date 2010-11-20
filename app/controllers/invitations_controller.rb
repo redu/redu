@@ -1,5 +1,5 @@
 class InvitationsController < BaseController
-  before_filter :login_required
+  authorize_resource
 
   def index
     @user = current_user

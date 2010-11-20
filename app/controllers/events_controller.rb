@@ -1,18 +1,14 @@
 class EventsController < BaseController
   require 'htmlentities'
-
+	
   layout 'environment'
+	load_and_authorize_resource
 
   before_filter :find_environmnet_course_and_space
   caches_page :ical
   cache_sweeper :event_sweeper, :only => [:create, :update, :destroy]
-
-  before_filter :login_required
-  before_filter :is_member_required, :except => :destroy
   before_filter :is_event_approved,
     :only => [:show, :edit, :update, :destroy]
-  before_filter :can_manage_required,
-    :only => [:edit, :update, :destroy]
   after_filter :create_activity, :only => [:create]
 
   #These two methods make it easy to use helpers in the controller.
@@ -49,7 +45,6 @@ class EventsController < BaseController
   end
 
   def show
-    @event = Event.find(params[:id])
     @space = Space.find(params[:space_id])
   end
 
@@ -76,12 +71,10 @@ class EventsController < BaseController
   end
 
   def new
-    @event = Event.new(params[:event])
     @space = Space.find(params[:space_id])
   end
 
   def edit
-    @event = Event.find(params[:id])
   end
 
   def create
@@ -89,7 +82,6 @@ class EventsController < BaseController
     params[:event][:start_time] = Time.zone.parse(params[:event][:start_time].gsub('/', '-'))
     params[:event][:end_time] = Time.zone.parse(params[:event][:end_time].gsub('/', '-'))
 
-    @event = Event.new(params[:event])
     @event.owner = current_user
     @event.space = Space.find(params[:space_id])
 
@@ -115,7 +107,6 @@ class EventsController < BaseController
   end
 
   def update
-    @event = Event.find(params[:id])
 
     respond_to do |format|
       if @event.update_attributes(params[:event])
@@ -173,17 +164,6 @@ class EventsController < BaseController
   end
 
   protected
-  def can_manage_required
-    @event = Event.find(params[:id])
-
-    current_user.can_manage?(@event) ? true : access_denied
-  end
-
-  def is_member_required
-    @space = Space.find(params[:space_id])
-
-    current_user.has_access_to(@space) ? true : access_denied
-  end
 
   def is_event_approved
     @event = Event.find(params[:id])
