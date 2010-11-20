@@ -1,5 +1,6 @@
 class EnvironmentsController < BaseController
   layout "environment"
+	load_and_authorize_resource
 
   uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit, :create, :update])
 
@@ -17,7 +18,6 @@ class EnvironmentsController < BaseController
   # GET /environments/1
   # GET /environments/1.xml
   def show
-    @environment = Environment.find(params[:id])
     @courses = @environment.courses
 
     respond_to do |format|
@@ -29,7 +29,6 @@ class EnvironmentsController < BaseController
   # GET /environments/new
   # GET /environments/new.xml
   def new
-    @environment = Environment.new
 
     respond_to do |format|
       format.html { render :layout => 'application' }
@@ -39,13 +38,11 @@ class EnvironmentsController < BaseController
 
   # GET /environments/1/edit
   def edit
-    @environment = Environment.find(params[:id])
   end
 
   # POST /environments
   # POST /environments.xml
   def create
-    @environment = Environment.new(params[:environment])
     @environment.owner = current_user
     @environment.courses.first.owner = current_user
     @environment.published = true
@@ -78,7 +75,6 @@ class EnvironmentsController < BaseController
   # PUT /environments/1
   # PUT /environments/1.xml
   def update
-    @environment = Environment.find(params[:id])
 
     respond_to do |format|
       if @environment.update_attributes(params[:environment])
@@ -95,7 +91,6 @@ class EnvironmentsController < BaseController
   # DELETE /environments/1
   # DELETE /environments/1.xml
   def destroy
-    @environment = Environment.find(params[:id])
     @environment.destroy
 
     respond_to do |format|

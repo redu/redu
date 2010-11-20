@@ -1,9 +1,7 @@
 class AnnotationsController < BaseController
-  before_filter :login_required
+	load_and_authorize_resource
 
   def create
-    @annotation = Annotation.new(params[:annotation])
-
     if @annotation.save
       #flash.now[:notice] = "Anotação salva!"
       respond_to do |format|
@@ -18,8 +16,7 @@ class AnnotationsController < BaseController
   end
 
   def update
-    @annotation = Annotation.find(params[:id])
-
+    
     respond_to do |format|
       if @annotation.update_attributes(params[:annotation])
 

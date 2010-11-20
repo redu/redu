@@ -1,11 +1,11 @@
 class CoursesController < BaseController
   layout "environment"
+	load_and_authorize_resource, :except => [:new]
 
   uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit, :create, :update])
 
   def show
     @environment = Environment.find(params[:environment_id])
-    @course = Course.find(params[:id])
     @spaces = @course.spaces.published
 
     respond_to do |format|
@@ -15,11 +15,9 @@ class CoursesController < BaseController
 
   def edit
     @environment = Environment.find(params[:environment_id])
-    @course = Course.find(params[:id])
   end
 
   def destroy
-    @course = Course.find(params[:id])
     @course.destroy
     @environment = Environment.find(params[:environment_id])
 
@@ -31,7 +29,6 @@ class CoursesController < BaseController
   end
 
   def update
-    @course = Course.find(params[:id])
     @environment = Environment.find(params[:environment_id])
 
     respond_to do |format|
@@ -56,9 +53,7 @@ class CoursesController < BaseController
   end
 
   def create
-    #TODO verificar permissoes
     @environment = Environment.find(params[:environment_id])
-    @course = Course.new(params[:course])
     @course.owner = current_user
 
     respond_to do |format|
