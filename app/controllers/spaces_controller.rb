@@ -391,7 +391,7 @@ class SpacesController < BaseController
         @searched_for_all = true
       end
     end
-
+debugger
     respond_to do |format|
 			#TODO verificar esse @lecture, saber o por quê de ser chamado
       # format.xml  { render :xml => @lectures }

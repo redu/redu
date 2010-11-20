@@ -126,7 +126,7 @@ class BulletinsController < BaseController
   def can_manage_required
     @bulletin = Bulletin.find(params[:id])
 
-    current_user.can_manage?(@bulletin, @bulletin.bulletinable) ? true : access_denied
+    current_user.can_manage?(@bulletin) ? true : access_denied
   end
 
   def is_member_required

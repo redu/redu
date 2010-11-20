@@ -7,7 +7,7 @@
     <%= event.tagline %>
   </div>
 
-  <% if current_user.can_manage?(event, event.space) %>
+  <% if current_user.can_manage?(event) %>
     <div class="grid_10">
       <%= link_to "Editar", edit_space_event_path(event.space, event), :class => "button icon-edit" %>
       <%= link_to 'Remover', space_event_path(event, event.space),
