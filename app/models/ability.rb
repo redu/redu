@@ -12,7 +12,6 @@ class Ability
       can :manage, :all do |object|
         user.can_manage? object
       end
-
       # Usuário normal
       can :read, :all do |object|
         object.published && user.has_access_to?(object)

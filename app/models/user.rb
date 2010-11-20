@@ -258,24 +258,7 @@ class User < ActiveRecord::Base
   end
 
   def has_access_to(entity)
-    return true if self.admin? || entity.owner == self
-
-    case entity.class.to_s
-    when 'Lecture'
-
-      (entity.public || (entity.space && self.spaces.include?(entity.space)))
-      #    when 'Exam'
-      #      (entity.owner == self || (entity.space == space && self.space_admin?(space) ))
-    when 'Space'
-      (self.space_admin?(entity) || (self.spaces.include?(entity) && self.get_association_with(entity).status == "approved"))
-      #    when 'Event'
-      #       (entity.owner == self || (entity.space == space && self.space_admin?(space) ))
-    end
-
-    #TODO
-    #    @acq = Acquisition.find(:first, :conditions => ['acquired_by_id = ? AND lecture_id = ?', self.id, lecture.id])
-    #    !@acq.nil? or lecture.owner == self
-
+    self.admin? || entity.owner == self || self.member?(entity)
   end
 
   def can_be_owner?(entity)
@@ -516,8 +499,9 @@ class User < ActiveRecord::Base
     role && role.eql?(Role[:moderator])
   end
 
-  def member?
-    role && role.eql?(Role[:member])
+  def member?(entity)
+    association = self.get_association_with(entity)
+    association && association.role.eql?(Role[:member])
   end
 
   # space roles

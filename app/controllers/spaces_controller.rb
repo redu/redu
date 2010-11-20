@@ -566,8 +566,8 @@ class SpacesController < BaseController
   end
 
   def find_environmnet_course
-		@space = Space.find(params[:id])
-	  @course = @space.course
-	  @environment = @course.environment
+    @space = Space.find(params[:id])
+    @course = @space.course
+    @environment = @course.environment
   end
 end
