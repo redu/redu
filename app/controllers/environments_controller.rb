@@ -76,7 +76,6 @@ class EnvironmentsController < BaseController
   # PUT /environments/1
   # PUT /environments/1.xml
   def update
-
     respond_to do |format|
       if @environment.update_attributes(params[:environment])
         flash[:notice] = 'Environment was successfully updated.'
@@ -99,8 +98,8 @@ class EnvironmentsController < BaseController
       format.xml  { head :ok }
     end
   end
-  
-  # Visão do Environment para usuários não-membros. 
+
+  # Visão do Environment para usuários não-membros.
   # TODO Remover quando colocar as permissões, apenas redirecionar no show.
   def preview
   end
@@ -111,7 +110,6 @@ class EnvironmentsController < BaseController
   end
 
   def admin_members
-    @environment = Environment.find(params[:id])
     @memberships = UserEnvironmentAssociation.paginate(
       :conditions => ["environment_id = ?", @environment.id],
       :include => [{ :user => {:user_course_associations => :course} }],
@@ -121,13 +119,13 @@ class EnvironmentsController < BaseController
   end
 
   def admin_bulletins
-    @environment = Environment.find(params[:id])
     @bulletins= @environment.bulletins
   end
 
   # Remove um ou mais usuários de um Environment destruindo todos os relacionamentos
   # entre usuário e os níveis mais baixos da hierarquia.
   def destroy_members
+    #TODO verificar performance
     @environment = Environment.find(params[:id], :include => {:courses => :spaces})
 
     # Course.id do environment
@@ -157,8 +155,6 @@ class EnvironmentsController < BaseController
   end
 
   def search_users_admin
-    @environment = Environment.find(params[:id])
-
     roles = []
     roles = params[:role_filter].collect {|r| r.to_i} if params[:role_filter]
     keyword = []
