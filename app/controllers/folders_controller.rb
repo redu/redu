@@ -70,7 +70,7 @@ class FoldersController < BaseController
 
     if  @myfile
       space = Space.find(params[:space_id]) if params[:space_id]
-      if space and current_user.has_access_to(space)
+      if space and current_user.has_access_to?(space)
         # Gerando uma url do s3 com o timeout de 20 segundos
         # O usuário deve COMEÇAR a baixar dentro desse tempo.
         f = @myfile.attachment
@@ -208,7 +208,7 @@ class FoldersController < BaseController
           format.html {
             redirect_to space_folders_path(:space_id => params[:folder][:space_id], :id => @folder.parent.id)
           }
-          format.js 
+          format.js
         else
           flash[:error] = 'Não foi possível criar o diretório'
           format.html {

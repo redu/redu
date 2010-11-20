@@ -9,7 +9,7 @@ class LecturesController < BaseController
 
   def verify_access
     @lecture = Lecture.find(params[:id])
-    unless current_user.has_access_to @lecture
+    unless current_user.has_access_to? @lecture
       flash[:notice] = "Você não tem acesso a esta aula"
       #redirect_back_or_default lectures_path
       redirect_to lectures_path

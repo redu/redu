@@ -122,7 +122,7 @@ class BulletinsController < BaseController
   def is_member_required
     @bulletinable = find_bulletinable
 
-    current_user.has_access_to(@bulletinable) ? true : access_denied
+    current_user.has_access_to?(@bulletinable) ? true : access_denied
   end
 
   def find_bulletinable

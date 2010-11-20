@@ -164,7 +164,6 @@ class EventsController < BaseController
   end
 
   protected
-
   def is_event_approved
     @event = Event.find(params[:id])
 
