@@ -586,16 +586,19 @@ class User < ActiveRecord::Base
 
   def teacher?(entity)
     association = get_association_with entity
+    return false if association.nil?
     association && association.role && association.role.eql?(Role[:teacher])
   end
 
   def tutor?(entity)
     association = get_association_with entity
+    return false if association.nil?
     association && association.role && association.role.eql?(Role[:tutor])
   end
 
   def member?(entity)
     association = get_association_with entity
+    return false if association.nil?
     association && association.role && association.role.eql?(Role[:member])
   end
 
