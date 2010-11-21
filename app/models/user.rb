@@ -265,6 +265,8 @@ class User < ActiveRecord::Base
       when 'Space'
         self.teacher?(entity.bulletinable) || self.tutor?(entity.bulletinable)
       end
+    when 'Folder'
+      self.teacher?(entity.space)
     when 'Topic'
       self.teacher?(entity.forum.space)
     when 'SbPost'
@@ -297,6 +299,8 @@ class User < ActiveRecord::Base
         self.get_association_with(entity.forum.space).nil? ? false : true
       when 'SbPost'
         self.get_association_with(entity.topic.forum.space).nil? ? false : true
+      when 'Folder'
+        self.get_association_with(entity.space).nil? ? false : true
       else
         return false
       end

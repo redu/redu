@@ -42,7 +42,8 @@
 		<%= link_to image_tag('edit.png', :style => "border: 0", :title => 'Renomear esta pasta'), '#', :onclick => "$('#folder_#{folder.id}').slideToggle(); return false;" %>
          <div id="folder_<%= folder.id %>" class="rename-folder-inner hoverdiv">
             
-			 <% form_remote_for :folder, folder, :url => { :action => "update", :id => folder.id }, :method => :put, :loading => "$('#rename-folder-spinner_#{folder.id}').show()" do |f| %>
+           <% form_remote_for :folder, folder, :url => space_folder_path(@space, folder), 
+             :method => :put, :loading => "$('#rename-folder-spinner_#{folder.id}').show()" do |f| %>
 					<%= f.text_field :name, :size => "15" %>
 				<%= f.submit 'OK' %>
 				<%= image_tag 'spinner.gif', :id => "rename-folder-spinner_#{folder.id}", :style => 'display: none' %><BR>

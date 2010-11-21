@@ -10,6 +10,8 @@
 # [#destroy]            delete a folder
 # [#update_permissions] save the new rights given by the user
 class FoldersController < BaseController
+  load_and_authorize_resource :space
+  load_and_authorize_resource :folder, :through => :space
   #  skip_before_filter :authorize, :only => :feed
   #
   #  before_filter :does_folder_exist, :except => [:list, :feed, :feed_warning]
@@ -18,7 +20,6 @@ class FoldersController < BaseController
   #  before_filter :authorize_updating, :only => [:rename, :update, :update_rights]
   #  before_filter :authorize_deleting, :only => :destroy
 
-  before_filter :login_required
   after_filter :create_activity, :only => [:do_the_upload]
 
   # Sessions are not needed for feeds
@@ -29,24 +30,16 @@ class FoldersController < BaseController
     @myfile = Myfile.find(params[:file_id], :include => :folder)
 
     @folder_id = @myfile.folder.id
-@environment,     @space_id = @myfile.folder.space_id
+    @space_id = @myfile.folder.space_id
 
     @myfile.destroy
 
     redirect_to space_folders_path(:id => @folder_id, :space_id => @space_id)
   end
 
-  # Shows the form where a user can select a new file to upload.
-  def upload
-    @myfile = Myfile.new
-    @folder_id = params[:id]
-    @space = Space.find(params[:space_id]) #TODO retirar isso quando nao recarregar info de escola (ajax)
-  end
-
   # Upload the file and create a record in the database.
   # The file will be stored in the 'current' folder.
   def do_the_upload
-    @space = Space.find(params[:space_id])
     @myfile = Myfile.new(params[:myfile])
     @myfile.user = current_user
 
@@ -69,8 +62,6 @@ class FoldersController < BaseController
     @myfile = Myfile.find(params[:file_id])
 
     if  @myfile
-      space = Space.find(params[:space_id]) if params[:space_id]
-      if space and current_user.has_access_to?(space)
         # Gerando uma url do s3 com o timeout de 20 segundos
         # O usuário deve COMEÇAR a baixar dentro desse tempo.
         f = @myfile.attachment
@@ -79,10 +70,6 @@ class FoldersController < BaseController
         end
 
         send_file @myfile.attachment.path, :type=> @myfile.attachment.content_type, :x_sendfile=>true
-      else
-        flash[:notice] = "Você não tem permissão para baixar o arquivo."
-        redirect_to user_path(current_user)
-      end
     end
   end
 
@@ -99,8 +86,6 @@ class FoldersController < BaseController
 
   # List the files and sub-folders in a folder.
   def list
-    @space = Space.find(params[:space_id])
-
     # Get the folder
     if params[:id]
       @folder = Folder.find(params[:id])
@@ -180,16 +165,6 @@ class FoldersController < BaseController
     render
   end
 
-  # Shows the form where a user can enter the name for the a folder.
-  # The new folder will be stored in the 'current' folder.
-  def new
-    @folder = Folder.new
-    @space_id = params[:space_id]
-    @parent_id = params[:id]
-
-    @space = Space.find(params[:space_id]) # TODO quando colocar em ajax isso nao sera necessario
-  end
-
   # Create a new folder with the posted variables from the 'new' view.
   def create
     if request.post?
@@ -222,28 +197,34 @@ class FoldersController < BaseController
     end
   end
 
-  # Show a form with the current name of the folder in a text field.
-  def rename
-    @folder = Folder.find(params[:id])
-    @space_id = params[:space_id]
-    @space = Space.find(params[:space_id]) # TODO quando colocar em ajax isso nao sera necessario
-  end
-
   # Update the folder attributes with the posted variables from the 'rename' view.
   def update
-    @folder = Folder.find(params[:id])
     if @folder.update_attributes(:name => params[:folder][:name], :date_modified => Time.now)
-      redirect_to space_folders_path(:id => @folder.parent_id, :space_id => @folder.space_id)
+      respond_to do |format|
+        # back to the list
+        format.js {
+          params[:id] = @folder.parent_id
+          list
+          render 'folders/index'
+        }
+      end
     end
   end
 
   # Delete a folder.
   def destroy_folder
-    @folder = Folder.find(params[:id])
     @parent_id = @folder.parent_id
     @space_id = @folder.space_id
     @folder.destroy
-    redirect_to space_folders_path(:id => @parent_id, :space_id => @space_id)
+    respond_to do |format|
+      # back to the list
+      format.js {
+        params[:id] = @folder.parent_id
+        list
+        render 'folders/index'
+      }
+    end
+
   end
 
   # Saved the new permissions given by the user
