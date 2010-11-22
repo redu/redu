@@ -22,8 +22,8 @@ class Ability
     #TODO action manage gerando recursividade
 
     # Folder
-    alias_action :do_the_upload, :update_permissions, :destroy_folder, :to => :manage
-    alias_action :download, :feed, :feed_warning, :list, :to => :read
+    alias_action :do_the_upload, :upload, :update_permissions, :rename, :destroy_folder, :to => :manage
+    alias_action :download, :feed, :feed_warning, :to => :read
 
     # Post
     alias_action :monitored, :search, :to => :read
@@ -39,6 +39,8 @@ class Ability
       object.published?
     end
 
+    can :create, Environment
+
     unless user.nil?
       # Gerencial
       can :manage, :all do |object|
@@ -46,12 +48,7 @@ class Ability
       end
       # Usuário normal
       can :read, :all do |object|
-        if (object.class.to_s.eql? 'Folder') || (object.class.to_s.eql? 'Forum') ||
-          (object.class.to_s.eql? 'Topic') || (object.class.to_s.eql? 'SbPost')
-          user.has_access_to?(object)
-        else
-          object.published? && user.has_access_to?(object)
-        end
+        object.published && user.has_access_to?(object)
       end
 
     end
