@@ -8,14 +8,6 @@ class ForumsController < BaseController
     AppConfig.default_mce_options
   end
 
-  def index
-    @forums = Forum.find(:all, :order => "position")
-    respond_to do |format|
-      format.html
-      format.xml { render :xml => @forums.to_xml }
-    end
-  end
-
   def show
     @forum = @space.forum
     respond_to do |format|
@@ -45,16 +37,6 @@ class ForumsController < BaseController
     respond_to do |format|
       format.html { redirect_to forums_path }
       format.xml  { head :created, :location => forum_url(:id => @forum, :format => :xml) }
-    end
-  end
-
-  def update
-    @forum.attributes = params[:forum]
-    @forum.tag_list = params[:tag_list] || ''
-    @forum.save!
-    respond_to do |format|
-      format.html { redirect_to forums_path }
-      format.xml  { head 200 }
     end
   end
 
