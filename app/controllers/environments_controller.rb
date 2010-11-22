@@ -5,6 +5,11 @@ class EnvironmentsController < BaseController
 
   uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit, :create, :update])
 
+  rescue_from CanCan::AccessDenied do |exception|
+    raise if exception.action == :preview
+    redirect_to :action => :preview
+  end
+
   # GET /environments
   # GET /environments.xml
   def index

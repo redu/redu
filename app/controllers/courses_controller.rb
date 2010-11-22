@@ -1,12 +1,12 @@
 class CoursesController < BaseController
   layout "environment"
-  load_and_authorize_resource :environment
-  load_and_authorize_resource :course, :except => [:new], :through => :environment
+  load_resource :environment
+  load_and_authorize_resource :course, :through => :environment
 
   uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit, :create, :update])
 
-  rescue_from CanCan::AccessDenied do |exception|
-    raise if exception.action == :preview
+  rescue_from CanCan::Exception do |exception|
+    raise if exception.action.eql?(:preview)
     redirect_to :action => :preview
   end
 
@@ -49,16 +49,16 @@ class CoursesController < BaseController
   end
 
   def new
-    @course_being_created = Course.new
   end
 
   def create
-    @course.owner = current_user
+    authorize! can? :manage, @environment #Talvez seja necessario pois o @environment não está sendo autorizado.
 
+    @course.owner = current_user
     respond_to do |format|
       if @course.save
         @environment.courses << @course
-        owner_assoc = UserCourseAssociation.create({:user => current_user, :course => @course, 
+        owner_assoc = UserCourseAssociation.create({:user => current_user, :course => @course,
                                                    :role_id => Role[:environment_admin].id})
         owner_assoc.approve!
         format.html { redirect_to environment_course_path(@environment, @course) }
@@ -69,7 +69,7 @@ class CoursesController < BaseController
 
   end
 
-  # Visão do Course para usuários não-membros. 
+  # Visão do Course para usuários não-membros.
   def preview
   end
 
@@ -100,7 +100,7 @@ class CoursesController < BaseController
 
   # Modera os usuários.
   def moderate_members_requests
-    if params[:member].nil? 
+    if params[:member].nil?
       flash[:notice] = "Escolha, pelo menos, algum usuário."
     else
       approved = params[:member].reject{|k,v| v == 'reject'}
@@ -120,10 +120,10 @@ class CoursesController < BaseController
       # Cria as associações no Environment do Course e em todos os seus Spaces.
       if @approved_members
         @approved_members.each do |member|
-          UserEnvironmentAssociation.create(:user_id => member.id, :environment_id => @course.environment.id, 
+          UserEnvironmentAssociation.create(:user_id => member.id, :environment_id => @course.environment.id,
                                             :role_id => Role[:student].id)
           @course.spaces.each do |space|
-            UserSpaceAssociation.create(:user_id => member.id, :space_id => space.id, 
+            UserSpaceAssociation.create(:user_id => member.id, :space_id => space.id,
                                         :role_id => Role[:student].id, :status => "approved") #FIXME tirar status quando remover moderacao de space
           end
 
@@ -145,17 +145,17 @@ class CoursesController < BaseController
 
   # Associa um usuário a um Course (Ação de participar).
   def join
-    association = UserCourseAssociation.create(:user_id => current_user.id, :course_id => @course.id, 
+    association = UserCourseAssociation.create(:user_id => current_user.id, :course_id => @course.id,
                                                :role_id => Role[:member].id)
 
     if @course.subscription_type.eql? 1 # Todos podem participar, sem moderação
       association.approve!
 
       # Cria as associações no Environment do Course e em todos os seus Spaces.
-      UserEnvironmentAssociation.create(:user_id => current_user.id, :environment_id => @course.environment.id, 
+      UserEnvironmentAssociation.create(:user_id => current_user.id, :environment_id => @course.environment.id,
                                         :role_id => Role[:member].id)
       @course.spaces.each do |space|
-        UserSpaceAssociation.create(:user_id => current_user.id, :space_id => space.id, 
+        UserSpaceAssociation.create(:user_id => current_user.id, :space_id => space.id,
                                     :role_id => Role[:member].id, :status => "approved") #FIXME tirar status quando remover moderacao de space
       end
 
@@ -170,10 +170,10 @@ class CoursesController < BaseController
 
   # Desassocia um usuário de um Course (Ação de sair do Course).
   def unjoin
-    course_association = current_user.get_association_with(@course)    
+    course_association = current_user.get_association_with(@course)
     course_association.destroy
     @course.spaces.each do |space|
-      space_association = current_user.get_association_with(space)    
+      space_association = current_user.get_association_with(space)
       space_association.destroy
     end
 
@@ -197,7 +197,7 @@ class CoursesController < BaseController
     redirect_to environment_course_path(@environment, @course)
   end
 
-  # Aba Membros. 
+  # Aba Membros.
   def admin_members
     @memberships = UserCourseAssociation.paginate(
       :conditions => ["course_id = ? AND state LIKE ? ", @course.id, 'approved'],

@@ -1,56 +1,60 @@
-<%# 
+<%#
   Partial que exibe o header do environment/course. Três locals: environment,
-    course e space. 
-    Caso não seja necessário exibir o course basta passar :course => nil.
-    Caso não seja necessário exibir o space basta passar :space => nil.
+    course e @space.
   %>
-<div id="environment-header" class="container_16 clearfix" style="background-color: <%= course ? "#" + course.color : "inherited" %>">
-  <% if environment %>
-    <div class="avatar grid_3">
-      <div class="frame"><%= image_tag environment.avatar.url(:thumb)  %></div>
-    </div>
-    <div class="name grid_11">
-      <h3><%= link_to environment.name, environment_path(environment) %></h3>
-    </div>
-    <%= link_to "Gerenciar", edit_environment_path(environment),
+<%
+  if @space && !@space.new_record?
+    @course = @space.course
+    @environment = @course.environment
+  end
+%>
+<div id="environment-header" class="container_16 clearfix" style="background-color: <%= @course && !@course.new_record? ? @course.color : "inherited" %>">
+  <div class="avatar grid_3">
+    <div class="frame"><%= image_tag @environment.avatar.url(:thumb)  %></div>
+  </div>
+  <div cass="name grid_11">
+    <h3><%= link_to @environment.name, environment_path(@environment) %></h3>
+  </div>
+  <% if can? :manage, @environment %>
+    <%= link_to "Gerenciar", edit_environment_path(@environment),
       :class => "edit grid_1" %>
   <% end %>
 
-  <% if course %>
-    <% if space and space.id %>
+  <% if @course && !@course.new_record? %>
+    <% if @space && !@space.new_record? %>
       <div class="grid_9">
-        <h4><%= link_to course.name , environment_course_path(environment, course) %> > <%= link_to space.name , space_path(space) %></h4>
-        <% if current_user.can_manage?(@space)%>
-          <%= link_to "Gerenciar", manage_space_path(space), :class => 'grid_2 edit' %>
-          <% if space.published? %>
-            <%= link_to "Despublicar", unpublish_space_path(space),
+        <h4><%= link_to @course.name , environment_course_path(@environment, @course) %> > <%= link_to @space.name , space_path(@space) %></h4>
+        <% if can? :manage, @space %>
+          <%= link_to "Gerenciar", manage_space_path(@space), :class => 'grid_2 edit' %>
+          <% if @space.published? %>
+            <%= link_to "Despublicar", unpublish_space_path(@space),
               :class => "grid_1" %>
           <% else %>
-            <%= link_to "Publicar", publish_space_path(space),
+            <%= link_to "Publicar", publish_space_path(@space),
               :class => "grid_1" %>
           <% end %>
-        <% end %>       
+        <% end %>
       </div>
     <% else %>
       <div class="grid_9">
-        <h4><%= link_to course.name, environment_course_path(environment, course) %></h4>
+        <h4><%= link_to @course.name, environment_course_path(@environment, @course) %></h4>
       </div>
-      <% if course.owner.eql? current_user %>
-        <%= link_to "Gerenciar", edit_environment_course_path(environment, course),
+      <% if can? :manage, @course %>
+        <%= link_to "Gerenciar", edit_environment_course_path(@environment, @course),
           :class => "grid_2 edit" %>
-        <% if course.published? %>
-          <%= link_to "Despublicar", unpublish_environment_course_path(environment, course),
+        <% if @course.published? %>
+          <%= link_to "Despublicar", unpublish_environment_course_path(@environment, @course),
             :class => "grid_1" %>
-        <% elsif course.can_be_published? %>
-          <%= link_to "Publicar", publish_environment_course_path(environment, course),
+        <% elsif @course.can_be_published? %>
+          <%= link_to "Publicar", publish_environment_course_path(@environment, @course),
             :class => "grid_1" %>
         <% end %>
       <% else %>
 
-        <% if (not current_user.get_association_with(course).nil?  and 
-               current_user.get_association_with(course).state.eql? "approved") %>
+        <% if (not current_user.get_association_with(@course).nil?  and
+               current_user.get_association_with(@course).state.eql? "approved") %>
              <div class="grid_2">
-               <%= link_to "Abandonar", unjoin_environment_course_path(environment, course),
+               <%= link_to "Abandonar", unjoin_environment_course_path(@environment, @course),
                  :class => "button" %>
              </div>
            <% end %>

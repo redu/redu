@@ -1,5 +1,5 @@
 <div class="grid_16">
-  <% form_for @course_being_created,
+  <% form_for @course,
     :url => environment_courses_path(@environment) do |f| %>
     <%= f.error_messages %>
     <%= render :partial => 'courses/form', :locals => { :f => f, :edit => false } %>
