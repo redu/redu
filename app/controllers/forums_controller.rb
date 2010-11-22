@@ -1,7 +1,7 @@
 class ForumsController < BaseController
-	load_and_authorize_resource :except => [:index, :show]
+  load_and_authorize_resource :space
+  load_and_authorize_resource :forum, :through => :space
 
-  #before_filter :find_or_initialize_forum
   helper :application
 
   uses_tiny_mce do
@@ -17,9 +17,7 @@ class ForumsController < BaseController
   end
 
   def show
-    @space = Space.find(params[:space_id])
     @forum = @space.forum
-
     respond_to do |format|
       # keep track of when we last viewed this forum for activity indicators
       (session[:forums] ||= {})[@forum.id] = Time.now.utc if logged_in?
@@ -66,15 +64,5 @@ class ForumsController < BaseController
       format.html { redirect_to forums_path }
       format.xml  { head 200 }
     end
-  end
-
-  protected
-#  def find_or_initialize_forum
-#    @forum = params[:id] ? Forum.find(params[:id]) : Forum.new
-#  end
-
-  #overide in your app
-  def authorized?
-    current_user.admin?
   end
 end
