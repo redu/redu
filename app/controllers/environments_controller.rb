@@ -1,14 +1,9 @@
 class EnvironmentsController < BaseController
   layout "environment"
   load_resource
-  authorize_resource
+  authorize_resource :except => :index
 
   uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit, :create, :update])
-
-  rescue_from CanCan::AccessDenied do |exception|
-    raise if exception.action == :preview
-    redirect_to :action => :preview
-  end
 
   # GET /environments
   # GET /environments.xml
