@@ -1,7 +1,7 @@
 class TopicsController < BaseController
   layout "environment"
   load_and_authorize_resource :space
-  load_and_authorize_resource :topic, :through => :space
+  load_and_authorize_resource :topic, :except => [:new, :create], :through => :space
 
   before_filter :find_environmnet_course
   after_filter :create_activity, :only => [:create]
@@ -9,6 +9,7 @@ class TopicsController < BaseController
   uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit, :create, :update])
 
   def new
+    authorize! :read, @space
     @topic = Topic.new(params[:topic])
     @topic.body = params[:topic][:body] if params[:topic] 
   end
@@ -50,6 +51,7 @@ class TopicsController < BaseController
   end
   
   def create
+    authorize! :read, @space
     # this is icky - move the topic/first post workings into the topic model?
     Topic.transaction do
       @topic = @forum.topics.build(params[:topic])
