@@ -116,7 +116,7 @@ module BaseHelper
           @activity = "respondeu ao tópico " + link_obj if item.log_action == 'create'
       when 'event'
           @event = Event.find(item.logeable_id)
-          link_obj = link_to(item.logeable_name, space_event_path(@event.space, @event))
+          link_obj = link_to(item.logeable_name, polymorphic_path([@event.eventable, @event]))
 
           @activity =  "criou o evento " + link_obj if item.log_action == "create"
       when 'bulletin'

@@ -14,8 +14,8 @@ class BulletinsController < BaseController
     @bulletinable = find_bulletinable
 
     @bulletins = Bulletin.paginate(:conditions => ["bulletinable_id = ?
-                                   AND bulletinable_type LIKE ? 
-                                   AND state LIKE 'approved'", 
+                                   AND bulletinable_type LIKE ?
+                                   AND state LIKE 'approved'",
                                    @bulletinable.id, @bulletinable.class.to_s],
                                    :page => params[:page],
                                    :order => 'created_at DESC',
@@ -24,6 +24,7 @@ class BulletinsController < BaseController
 
   def show
     @bulletin = Bulletin.find(params[:id])
+    @owner = User.find(@bulletin.owner)
     @bulletinable = find_bulletinable
   end
 
@@ -34,10 +35,8 @@ class BulletinsController < BaseController
 
   def create
     @bulletin = Bulletin.new(params[:bulletin])
-    if params[:bulletinable_type].eql? "Space" or 
-      params[:bulletinable_type].eql? "Environment" or 
-      params[:bulletinable_type].eql? "Subject"
-      @bulletinable = Kernel.const_get(params[:bulletinable_type]).find(params[:bulletinable_id]) 
+    if params[:bulletinable_type].eql? "Space" or params[:bulletinable_type].eql? "Environment"
+      @bulletinable = Kernel.const_get(params[:bulletinable_type]).find(params[:bulletinable_id])
     end
     @bulletin.bulletinable = @bulletinable
     @bulletin.owner = current_user
@@ -72,8 +71,7 @@ class BulletinsController < BaseController
       if @bulletin.update_attributes(params[:bulletin])
         flash[:notice] = 'A notícia foi editada.'
         format.html { redirect_to polymorphic_path([@bulletin.bulletinable, @bulletin])}
-        format.xml { render :xml => @bulletin, :status => :created, 
-          :location => @bulletin, :bulletinable => @bulletin.bulletinable }
+        format.xml { render :xml => @bulletin, :status => :created, :location => @bulletin, :bulletinable => @bulletin.bulletinable }
       else
         format.html { render :action => :edit }
         format.xml { render :xml => @bulletin.errors, :status => :unprocessable_entity }
@@ -120,30 +118,20 @@ class BulletinsController < BaseController
 
     respond_to do |format|
       format.js
-    end      
+    end
   end
 
   protected
 
-  def find_bulletinable
-
-    unless params[:space_id].nil?
-      @bulletinable = Space.find(params[:space_id])
-      @is_space = true
-    else
-      @bulletinable = current_user.subjects.find(params[:subject_id].split("-")[0])
-      @is_space = false
-    end  
-
-  end
-
   def can_manage_required
     @bulletin = Bulletin.find(params[:id])
+
     current_user.can_manage?(@bulletin, @bulletin.bulletinable) ? true : access_denied
   end
 
   def is_member_required
     @bulletinable = find_bulletinable
+
     current_user.has_access_to(@bulletinable) ? true : access_denied
   end
 
@@ -152,8 +140,11 @@ class BulletinsController < BaseController
       Space.find(params[:space_id])
     elsif params[:environment_id]
       Environment.find(params[:environment_id])
-    elsif params[:subject_id]
-      current_user.subjects.find(params[:subject_id].split("-")[0]) #FIXME Verificar depois do Merge
+    else
+      #TODO Tirar este workaround quando usar a rota correta no form de bulletin.
+      if params[:bulletinable_type].eql? "Space"
+        Space.find(params[:bulletinable_id])
+      end
     end
   end
 
@@ -161,9 +152,10 @@ class BulletinsController < BaseController
     if params[:space_id]
       @space = Space.find(params[:space_id])
       @course = @space.course
-      @environment = @course.environment 
+      @environment = @course.environment
     elsif params[:environment_id]
       @environment = Environment.find(params[:environment_id])
     end
   end
 end
+

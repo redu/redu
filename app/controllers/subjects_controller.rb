@@ -29,13 +29,13 @@ class SubjectsController < BaseController
 
     paginating_params = {
       :conditions => cond.to_sql,
-      :page => params[:page], 
-      :order => (params[:sort]) ? params[:sort] + ' DESC' : 'created_at DESC', 
-      :per_page => AppConfig.items_per_page 
+      :page => params[:page],
+      :order => (params[:sort]) ? params[:sort] + ' DESC' : 'created_at DESC',
+      :per_page => AppConfig.items_per_page
     }
 
     if params[:user_id] # cursos do usuario
-      @user = User.find_by_login(params[:user_id]) 
+      @user = User.find_by_login(params[:user_id])
       @user = User.find(params[:user_id]) unless @user
       @subjects = @user.subjects.paginate(paginating_params)
       render((@user == current_user) ? "user_subjects_private" :  "user_subjects_public") #TODO
@@ -46,11 +46,11 @@ class SubjectsController < BaseController
       if params[:search] # search cursos da escola
         @subjects = @space.subjects.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
       else
-        @subjects = @space.subjects.paginate(paginating_params) 
+        @subjects = @space.subjects.paginate(paginating_params)
       end
-    else # index    
-      if params[:search] # search   
-        @subjects = Subject.title_like_all(params[:search].to_s.split).is_public(true).ascend_by_title.paginate(paginating_params) 
+    else # index
+      if params[:search] # search
+        @subjects = Subject.title_like_all(params[:search].to_s.split).is_public(true).ascend_by_title.paginate(paginating_params)
       else
         @subjects = Subject.is_public(true).paginate(paginating_params) #is_public metodo fornecido pelo searchlogic
       end
@@ -83,10 +83,10 @@ class SubjectsController < BaseController
     @space= @subject.space
 
     student_profile = current_user.student_profiles.find_by_subject_id(@subject.id)
-    @percentage = student_profile.nil? ? 0 : student_profile.coursed_percentage(@subject) 
+    @percentage = student_profile.nil? ? 0 : student_profile.coursed_percentage(@subject)
 
-    respond_to do |format|  
-      if @subject.is_valid?  
+    respond_to do |format|
+      if @subject.is_valid?
         if current_user.enrollments.detect{|e| e.subject_id.eql?(params[:id].to_i)}.nil?
           format.html{  render "preview" }
         else
@@ -114,7 +114,7 @@ class SubjectsController < BaseController
     if params[:subject]
       params[:subject][:start_time] = Time.zone.parse(params[:subject][:start_time].gsub('/', '-')) unless params[:subject][:start_time].nil?
       params[:subject][:end_time] = Time.zone.parse(params[:subject][:end_time].gsub('/', '-'))  unless params[:subject][:end_time].nil?
-      session[:subject_params].deep_merge!(params[:subject])  
+      session[:subject_params].deep_merge!(params[:subject])
     end
     session[:subject_aulas]= params[:aulas] unless params[:aulas].nil?
     session[:subject_exames] = params[:exams] unless params[:exams].nil?
@@ -127,7 +127,7 @@ class SubjectsController < BaseController
       elsif @subject.last_step?
 
         if @subject.all_valid?
-          @subject.save 
+          @subject.save
           @subject.create_lecture_subject_type_lecture(session[:subject_aulas], @subject.id, current_user) unless session[:subject_aulas].nil?
           @subject.create_lecture_subject_type_exam(session[:subject_exames], @subject.id, current_user) unless session[:subject_exames].nil?
         end
@@ -141,7 +141,7 @@ class SubjectsController < BaseController
       render "new"
     else
       session[:subject_step] = session[:subject_params]= session[:subject_aulas]=session[:subject_exames] = nil
-      redirect_to admin_subjects_path 
+      redirect_to admin_subjects_path
     end
   end
 
@@ -150,16 +150,16 @@ class SubjectsController < BaseController
   end
 
   def edit
-    session[:subject_params] ||= {} 
+    session[:subject_params] ||= {}
   end
 
   def update
 
-    updated = false 
+    updated = false
     if params[:subject]
       params[:subject][:start_time] = Time.zone.parse(params[:subject][:start_time].gsub('/', '-')) unless params[:subject][:start_time].nil?
       params[:subject][:end_time] = Time.zone.parse(params[:subject][:end_time].gsub('/', '-'))  unless params[:subject][:end_time].nil?
-      session[:subject_params].deep_merge!(params[:subject])  
+      session[:subject_params].deep_merge!(params[:subject])
     end
     session[:subject_aulas]= params[:aulas] unless params[:aulas].nil?
     session[:subject_id]= params[:id].split("-")[0].to_i unless params[:id].nil?
@@ -179,7 +179,7 @@ class SubjectsController < BaseController
           @subject.update_attributes(session[:subject_params])
 
           @subject.update_lecture_subject_type_lecture(session[:subject_aulas], @subject.id,current_user) #unless session[:subject_aulas].nil?
-          @subject.update_lecture_subject_type_exam(session[:subject_exames], @subject.id, current_user) 
+          @subject.update_lecture_subject_type_exam(session[:subject_exames], @subject.id, current_user)
           updated = true
         end
 
@@ -207,7 +207,7 @@ class SubjectsController < BaseController
   def enroll
     begin
       redirect_to(subjects_path) and return unless @subject.is_public
-      Enrollment.create_enrollment(@subject.id, current_user) 
+      Enrollment.create_enrollment(@subject.id, current_user)
       StudentProfile.create_profile(@subject.id, current_user)
       flash[:notice] = "Você se inscreveu neste curso!"
       redirect_to @subject
@@ -225,11 +225,11 @@ class SubjectsController < BaseController
   def attachment
     sf = current_user.subjects.find(params[:id]).subject_files.new
     sf.attachment = params[:subject_file][:attachment]
-    sf.save 
+    sf.save
 
     respond_to do |format|
       format.js
-    end  
+    end
 
   end
 
@@ -243,6 +243,6 @@ class SubjectsController < BaseController
   end
 
   def admin_show
-    @subject = current_user.subjects.find(params[:id])       
+    @subject = current_user.subjects.find(params[:id])
   end
 end

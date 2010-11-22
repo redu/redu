@@ -1,13 +1,19 @@
 <div class="main grid_16">
-  <%if @eventable.class.to_s.eql?("Space")%>
-    <%= render :partial => "space/sidebar", :locals => {:space => @space} %>
-  <%end%>
-  <div class="sidebar grid_4">
-  </div>
+  <%= render :partial => "spaces/sidebar", :locals => {:space => @space} %>
+    <h2 class="grid_11 omega"><%= @list_title %></h2>
 
-  <% if @eventable.class.to_s.eql?("Space")%>
-    <%= render :partial => "space_event_index" %>
-  <%else%>
-    <%= render :partial => "subject_event_index" %>
-  <%end%>
+    <ul class="grid_11 omega upcoming-events events-index">
+      <% if @events && @events.size > 0 %>
+        <%= render :partial => 'events/item', :collection => @events %>
+      <% else %>
+        Esta rede ainda não tem eventos agendados para este período!
+        <%= link_to "Crie um novo evento", new_polymorphic_path([@eventable, Event.new]) %>
+      <% end %>
+    </ul>
+
+    <div id="pagination" align="center" class="pagination">
+      <%= will_paginate  @events, :params => {:sort_by => 'start_time'}, :class => "pagination_number"  %>
+    </div>
+  </div>
 </div>
+

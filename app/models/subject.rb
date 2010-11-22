@@ -35,12 +35,8 @@ class Subject < ActiveRecord::Base
   has_many :statuses, :as => :statusable
   has_many :students, :through => :enrollments, :source => :user, :conditions => [ "enrollments.role_id = ?", 7 ]
   has_many :teachers, :through => :enrollments, :source => :user, :conditions => [ "enrollments.role_id = ?", 6 ]
-  has_many :events, :as => :eventable, :dependent => :destroy
-  has_many :bulletins, :as => :bulletinable, :dependent => :destroy
   has_many :student_profiles, :dependent => :destroy
   has_many :subject_files, :dependent => :destroy
-
-  accepts_nested_attributes_for :events, :bulletins
 
   # METODOS DO WIZARD
   attr_writer :current_step
@@ -195,7 +191,7 @@ class Subject < ActiveRecord::Base
   end
 
   def exames
-    self.lecture_subjects.select{|cs| cs.lectureble_type.eql?("Exam")}.map{|e| e.lectureable}
+    self.lecture_subjects.select{|cs| cs.lectureable_type.eql?("Exam")}.map{|e| e.lectureable}
   end
 
   def enrolled_students

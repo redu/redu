@@ -1,31 +1,31 @@
 <script type="text/javascript">
 
-$(document).ready(function(){
-                    $('#subject_description').keyup(function(){
-                                                      limitChars('subject_description', <%=AppConfig.desc_char_limit %>, 'char_limit');
-                    })
-});
+  $(document).ready(function(){
+      $('#subject_description').keyup(function(){
+        limitChars('subject_description', <%=AppConfig.desc_char_limit %>, 'char_limit');
+        })
+      });
 </script>
 
 <div class="grid_9 push_3">
-<table class="booking_steps" cellpadding="0" cellspacing="0">
-<tbody><tr>
-<td><span class="book_step current"><span><em>1</em>Informações Gerais</span></span></td>
-<td class="spacer">&nbsp;</td>
-<td><span class="book_step disabled"><span><em>2</em>Conteúdo</span></span></td>
-  <td class="spacer">&nbsp;</td>
-  <td><span class="book_step disabled"><span><em>3</em>Publicação</span></span></td>
-  </tr>
+  <table class="booking_steps" cellpadding="0" cellspacing="0">
+    <tbody><tr>
+        <td><span class="book_step current"><span><em>1</em>Informações Gerais</span></span></td>
+        <td class="spacer">&nbsp;</td>
+        <td><span class="book_step disabled"><span><em>2</em>Conteúdo</span></span></td>
+        <td class="spacer">&nbsp;</td>
+        <td><span class="book_step disabled"><span><em>3</em>Publicação</span></span></td>
+      </tr>
   </tbody></table>
-  </div>
+</div>
 
-  <div class="grid_9">
+<div class="grid_9">
   <%= f.error_messages %>
-  </div>
+</div>
 
-  <%= hidden_field_tag("step", "subject")%>
+<%= hidden_field_tag("step", "subject")%>
 
-  <div class="grid_9">
+<div class="grid_9">
 
   <% field_set_tag 'Informações Gerais' do %>
     <%= f.label "Nome" %>
@@ -37,15 +37,8 @@ $(document).ready(function(){
     <div id="char_limit" style="text-align:right;">(<%=AppConfig.desc_char_limit %>)</div>
     <%= error_message_on @subject, :description %>
 
-   	<%= f.label :start_time, "Início:" %>
-	<%= f.text_field :start_time, :value => to_pt_BR_format(@subject.start_time) %>
-	
-   	<%= f.label :end_time, "Fim:" %>
-	<%= f.text_field :end_time,  :value => to_pt_BR_format(@subject.end_time) %>
-	<%= error_message_on @subject, :end_time %>
-	
-	<%= f.label :limit, "Quantidade Total de Alunos:" %>
-	<%= f.text_field :limit %>
+    <%= f.label :limit, "Quantidade Total de Alunos:" %>
+    <%= f.text_field :limit %>
 
     <%= f.label "Tags <span class='snippet'>(separadas por vírgula)</span>" %>
     <%= f.text_field :tag_list %>
@@ -54,30 +47,20 @@ $(document).ready(function(){
     <%= f.label "Categoria:" %>
     <%= simple_categories_i18n(f) %>
     <%= error_for :subject, :simple_category %>
-
   <% end %>
-
 
   <% field_set_tag 'Audiência' do %>
-    <span class="snippet">Selecionar um público que não corresponde ao propósito da rede pode levar à uma má avaliação. </span>
+    <span class="snippet">Selecionar um público que não corresponde
+      ao propósito da rede pode levar à uma má avaliação. </span>
     <%= error_for :subject, :audiences %>
     <ul>
-    <% for audience in Audience.find(:all) %>
-    <li>
-    <%= check_box_tag "subject[audience_ids][]", audience.id, @subject.audiences.include?(audience) %>
-    <%= audience.name %>
-    </li>
+      <% for audience in Audience.find(:all) %>
+        <li>
+          <%= check_box_tag "subject[audience_ids][]", audience.id,
+            @subject.audiences.include?(audience) %>
+          <%= audience.name %>
+        </li>
+      <% end %>
+    </ul>
   <% end %>
-  </ul>
-<% end %>
-
-
 </div>
-
-<script type="text/javascript">
-
-		$(function() {
-			$("#subject_start_time").datetimepicker();
-			$("#subject_end_time").datetimepicker();
-		});
-</script>

@@ -30,7 +30,7 @@
     <div class="grid_11 alpha omega clearfix" style="padding: 10px 0;">
       <% if current_user.can_manage?(@bulletin, @bulletin.bulletinable) %>
         <%= link_to 'Editar', edit_polymorphic_path([@bulletin.bulletinable, @bulletin]), :class => "button"%>
-        <%= link_to 'Remover', @bulletin,
+        <%= link_to 'Remover', polymorphic_path([@bulletin.bulletinable, @bulletin]),
           {:confirm => 'Você tem certeza que deseja remover essa notícia permanentemente?',
             :method => :delete, :class => "button"} %>
         <% end %></div>

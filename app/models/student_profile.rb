@@ -20,7 +20,7 @@ class StudentProfile < ActiveRecord::Base
   def coursed_percentage subject
     aulas = subject.aulas.map{|a| a.id} #ids todas aulas do curso
     total = aulas.length ##TODO adicionar exames
-    index =  self.lecture_subject_id.nil? ? 0 : aulas.index(LectureSubject.find(self.course_subject_id).courseable.id)+1  #quero obter o indice da aula q aluno cursou ate agora, atraves do course_subject_id
+    index =  self.lecture_subject.nil? ? 0 : aulas.index(LectureSubject.find(self.course_subject_id).courseable.id)+1  #quero obter o indice da aula q aluno cursou ate agora, atraves do course_subject_id
     return  index == 0 ? 0 : ((100*index)/total).to_i
   end
 

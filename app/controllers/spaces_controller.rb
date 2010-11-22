@@ -144,7 +144,9 @@ class SpacesController < BaseController
 
   def admin_events
     @space = Space.find(params[:id])
-    @events = Event.paginate(:conditions => ["space_id = ? AND state LIKE ?", @space.id, "waiting"],
+    @events = Event.paginate(:conditions => ["eventable_id = ?" \
+                             " AND eventable_type LIKE 'Space'" \
+                             " AND state LIKE ?", @space.id, "waiting"],
                              :include => :owner,
                              :page => params[:page],
                              :order => 'updated_at ASC',

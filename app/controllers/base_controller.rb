@@ -180,8 +180,8 @@ class BaseController < ApplicationController
                       :logeable_type => 'Event',
                       :logeable_id => @event.id,
                       :log_action => params[:action],
-                      :statusable_type => 'Space',
-                      :statusable_id => @event.space.id,
+                      :statusable_type => @event.eventable.class.to_s,
+                      :statusable_id => @event.eventable.id,
                       :user_id => current_user.id
         })
       end

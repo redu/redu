@@ -1,57 +1,52 @@
 <div class=" grid_16">
-  <% if @eventable.class.to_s.eql?("Space")%>
-    <%= render :partial => "spaces/sidebar", :locals => {:space => @event.space} %>
-    <%= render :partial=>'events/item', :locals => {:event => @event, :show_details_link => false} %> 
-
-    <div class="event-content grid_12 omega">
-      <div class="grid_2 alpha">
-        <div class="date grid_2 alpha omega">
-          <span class="quiet day"><%= @event.start_time.day %></span>
-          <span class="col">
-            <span class="month quiet"><%= @event.start_time.strftime("%b") %></span>
-            <span class="quiet year"><%= @event.start_time.year %></span>
-          </span>
-        </div>
-        <div class="hour grid_2 alpha omega">
-          <span class="from">Das</span>
-          <%= @event.start_time.strftime("%I:%M%p") %>
-        </div>
-        <div class="hour green grid_2 alpha omega">
-          <span class="to">às</span>
-          <%= @event.end_time.strftime("%I:%M%p") %>
-        </div>
-
+<% if @eventable.class.to_s.eql? "Space" %>
+  <%= render :partial => "spaces/sidebar", :locals => {:space => @event.eventable} %>
+<% end %>
+  <div class="event-content grid_12 omega">
+    <div class="grid_2 alpha">
+      <div class="date grid_2 alpha omega">
+        <span class="quiet day"><%= @event.start_time.day %></span>
+        <span class="col">
+          <span class="month quiet"><%= @event.start_time.strftime("%b") %></span>
+          <span class="quiet year"><%= @event.start_time.year %></span>
+        </span>
       </div>
-      <div class="grid_10 omega">
-        <h4 class="name"><%= link_to @event.name, space_event_path(@event.space, @event) %></h4>
-        <div class="tagline"><%= @event.tagline %></div>
-        <div class="pretty-text">
-          <%= @event.description %>
-        </div>
-        <em>Tags</em>
-        <%= render :partial => 'tags/tags', :object => @event.tags  %>
+      <div class="hour grid_2 alpha omega">
+        <span class="from">Das</span>
+        <%= @event.start_time.strftime("%I:%M%p") %>
       </div>
-      <div class="grid_11 aplha omega">
-        <% form_tag(notify_space_event_path, :method => :post) do %>
-          <fieldset><legend>Seja notificado sobre este evento!</legend>
-            Notifique-me
-            <%= select_tag :days, options_for_select([["1", 1], ["2", 2], ["3", 3], ["4", 4], ["5", 5], ["6", 6], ["7", 7]], 1)  %>
-            dias antes
-            <%= submit_tag "Ok"%>
-          </fieldset>
-        <% end %>
+      <div class="hour green grid_2 alpha omega">
+        <span class="to">às</span>
+        <%= @event.end_time.strftime("%I:%M%p") %>
       </div>
-      <div class="grid_11 alpha omega clearfix" style="padding: 10px 0;">
-        <% if current_user.can_manage?(@event, @event.space) %>
-          <%= link_to 'Editar', edit_space_event_path(@event.space, @event), :class => "button"%>
-          <%= link_to 'Remover', @event,
-            {:confirm => 'Você tem certeza que deseja remover  permanentemente?',
-              :method => :delete,  :class => "button"} %>
-          <% end %></div>
 
+    </div>
+    <div class="grid_10 omega">
+      <h4 class="name"><%= link_to @event.name, polymorphic_path([@event.eventable, @event]) %></h4>
+      <div class="tagline"><%= @event.tagline %></div>
+      <div class="pretty-text">
+        <%= @event.description %>
       </div>
-    <%else%>
-      <%= render :partial=>'events/subject_event_show', :locals => {:event => @event, :show_details_link => false} %>   
-    <%end%>
+      <em>Tags</em>
+      <%= render :partial => 'tags/tags', :object => @event.tags  %>
+    </div>
+    <div class="grid_11 aplha omega">
+      <% form_tag(notify_space_event_path, :method => :post) do %>
+        <fieldset><legend>Seja notificado sobre este evento!</legend>
+          Notifique-me
+          <%= select_tag :days, options_for_select([["1", 1], ["2", 2], ["3", 3], ["4", 4], ["5", 5], ["6", 6], ["7", 7]], 1)  %>
+          dias antes
+          <%= submit_tag "Ok"%>
+        </fieldset>
+      <% end %>
+    </div>
+    <div class="grid_11 alpha omega clearfix" style="padding: 10px 0;">
+      <% if current_user.can_manage?(@event) %>
+        <%= link_to 'Editar', edit_polymorphic_path([@event.eventable, @event]), :class => "button"%>
+        <%= link_to 'Remover', polymorphic_path([@event.eventable, @event]),
+          {:confirm => 'Você tem certeza que deseja remover  permanentemente?',
+            :method => :delete,  :class => "button"} %>
+        <% end %></div>
 
+    </div>
   </div>

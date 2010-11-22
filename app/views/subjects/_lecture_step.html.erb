@@ -174,12 +174,12 @@
          <form>
              <% field_set_tag 'Aulas' do %>
              <ul>
-                 <% current_user.lecture.each do |lecture| %><!--cursos tem ser filtrador pro usuuarios-->
+                 <% current_user.lectures.each do |lecture| %><!--cursos tem ser filtrador pro usuuarios-->
                  <li id="add_lecture_<%=lecture.id%>">
                 
                      <span><%= h(lecture.name) %></span>
  
-					 <%= link_to_function "adicionar", "addContent(this,'"+escape_javascript(render("lectures/item_subject2", :lecture=> lecture ))+"')"%> 
+					 <%= link_to_function "adicionar", "addContent(this,'"+escape_javascript(render("lectures/item_subject", :lecture=> lecture ))+"')"%> 
 					
  
 					<% if !session[:subject_id].nil? && current_user.subjects.find(session[:subject_id]).aulas.map{|a| a.name}.include?(lecture.name) %>
