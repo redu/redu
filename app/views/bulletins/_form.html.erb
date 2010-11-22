@@ -1,4 +1,4 @@
-<%- form_for @bulletin do |f| %>
+<%- form_for [ @bulletinable, @bulletin ] do |f| %>
 	<fieldset><legend>Notícia</legend>
 	<%= f.error_messages %>
 

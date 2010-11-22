@@ -46,9 +46,19 @@ class Ability
       can :manage, :all do |object|
         user.can_manage? object
       end
+
+      can :create, Bulletin do |bulletin|
+        user.can_manage?(bulletin.bulletinable) || user.tutor?(bulletin.bulletinable)
+      end
+
       # Usuário normal
       can :read, :all do |object|
-        object.published && user.has_access_to?(object)
+        if (object.class.to_s.eql? 'Folder') || (object.class.to_s.eql? 'Forum') ||
+          (object.class.to_s.eql? 'Topic') || (object.class.to_s.eql? 'SbPost')
+          user.has_access_to?(object)
+        else
+          object.published? && user.has_access_to?(object)
+        end
       end
 
     end

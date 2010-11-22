@@ -5,11 +5,6 @@ class CoursesController < BaseController
 
   uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit, :create, :update])
 
-  rescue_from CanCan::Exception do |exception|
-    raise if exception.action.eql?(:preview)
-    redirect_to :action => :preview
-  end
-
   def show
     @spaces = @course.spaces.published
 

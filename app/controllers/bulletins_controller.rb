@@ -3,8 +3,8 @@ class BulletinsController < BaseController
 
   load_and_authorize_resource :space
   load_and_authorize_resource :environment
-  load_and_authorize_resource :through => [:space, :environment]
-	
+  load_and_authorize_resource :bulletin, :through => [:space, :environment]
+
   before_filter :find_environment_course_space
   after_filter :create_activity, :only => [:create]
 
