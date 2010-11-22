@@ -5,6 +5,7 @@ class Topic < ActiveRecord::Base
   after_create  :create_monitorship_for_owner
  
   belongs_to :forum, :counter_cache => true
+  belongs_to :space
   belongs_to :user
   alias :owner :user
   has_many :monitorships

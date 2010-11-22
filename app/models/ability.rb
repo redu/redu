@@ -46,7 +46,7 @@ class Ability
       end
       # Usuário normal
       can :read, :all do |object|
-        object.class.to_s.eql? 'Folder' or object.published? && user.has_access_to?(object)
+        object.class.to_s.eql? 'Folder' || object.published? && user.has_access_to?(object)
       end
 
     end

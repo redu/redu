@@ -38,6 +38,7 @@ class Space < ActiveRecord::Base
   has_many :events, :dependent => :destroy
   has_many :statuses, :as => :statusable
   has_many :subjects
+  has_many :topics
   has_one :forum, :dependent => :destroy
 
   named_scope :published, :conditions => {:published => 1}
