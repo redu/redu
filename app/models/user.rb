@@ -268,9 +268,9 @@ class User < ActiveRecord::Base
     when 'Folder'
       self.teacher?(entity.space)
     when 'Topic'
-      self.teacher?(entity.forum.space)
+      self.teacher?(entity.space)
     when 'SbPost'
-      self.teacher?(entity.topic.forum.space)
+      self.teacher?(entity.space)
     when 'Status'
       case entity.class.to_s
       when 'Space'

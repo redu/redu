@@ -1,10 +1,11 @@
 class SbPost < ActiveRecord::Base
-  
+
   has_many :logs, :as => :logeable, :dependent => :destroy, :class_name => 'Status'
   belongs_to :forum, :counter_cache => true
   belongs_to :user,  :counter_cache => true
   alias :owner :user
   belongs_to :topic, :counter_cache => true
+  belongs_to :space
 
   format_attribute :body
   before_create { |r| r.forum_id = r.topic.forum_id }
@@ -15,28 +16,28 @@ class SbPost < ActiveRecord::Base
   validates_presence_of :body, :message => "Não pode ser deixado em branco"
 
   attr_accessible :body
-  after_create :monitor_topic   
-  after_create :notify_monitoring_users
-  
-  
+  #after_create :monitor_topic
+  #after_create :notify_monitoring_users
+
+
   named_scope :with_query_options, :select => 'sb_posts.*, topics.title as topic_title, forums.name as forum_name', :joins => 'inner join topics on sb_posts.topic_id = topics.id inner join forums on topics.forum_id = forums.id', :order => 'sb_posts.created_at desc'
   named_scope :recent, :order => 'sb_posts.created_at'
-  
+
   def monitor_topic
     monitorship = Monitorship.find_or_initialize_by_user_id_and_topic_id(user.id, topic.id)
     if monitorship.new_record?
       monitorship.update_attribute :active, true
     end
   end
-  
+
   def notify_monitoring_users
     topic.notify_of_new_post(self)
   end
-  
+
   def editable_by?(user)
     user && (user.id == user_id || user.admin? || user.moderator_of?(topic.forum_id))
   end
-  
+
   def to_xml(options = {})
     options[:except] ||= []
     options[:except] << :topic_title << :forum_name

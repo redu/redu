@@ -1,9 +1,10 @@
 class SbPostsController < BaseController
   layout 'environment'
-
-  before_filter :find_environmnet_course_and_space, :except => [:index, :new, :create]
   before_filter :find_post,      :except => [:index, :monitored, :search, :create, :new]
-  before_filter :login_required, :except => [:index, :search, :show, :monitored]
+  load_and_authorize_resource :space
+  load_and_authorize_resource :sb_post, :except => [:create], :through => :space
+
+  before_filter :find_environmnet_course, :except => [:index, :new, :create]
   after_filter :create_activity, :only => [:create]
 
   uses_tiny_mce(:only => [:edit, :update]) do
@@ -40,22 +41,9 @@ class SbPostsController < BaseController
     render_posts_or_xml
   end
 
-  def show
-    respond_to do |format|
-      format.html { redirect_to forum_topic_path(@post.forum_id, @post.topic_id) }
-      format.xml  { render :xml => @post.to_xml }
-    end
-  end
-
-  def new
-    if logged_in?
-      redirect_to forum_topic_path(:forum_id => params[:forum_id], :id => params[:topic_id], :anchor => 'reply-form', :page => params[:page] || '1') and return
-    end
-  end
-
   def create
+    authorize! :read, @space
     @topic = Topic.find_by_id_and_forum_id(params[:topic_id].to_i, params[:forum_id].to_i, :include => :forum)
-    @space = @topic.forum.space 
     if @topic.locked?
       respond_to do |format|
         format.html do
@@ -71,6 +59,7 @@ class SbPostsController < BaseController
     @forum = @topic.forum
     @post  = @topic.sb_posts.build(params[:sb_post])
     @post.user = current_user
+    @post.space = @space
     @post.save!
     respond_to do |format|
       format.html do
@@ -127,11 +116,6 @@ class SbPostsController < BaseController
   end
 
   protected
-  #overide in your app
-  def authorized?
-    %w(create new).include?(action_name) || @post.editable_by?(current_user)
-  end
-
   def find_post
     @space = Space.find(params[:space_id])
     forum = @space.forum
@@ -146,8 +130,7 @@ class SbPostsController < BaseController
     end
   end
 
-  def find_environmnet_course_and_space
-    @space = Space.find(params[:space_id])
+  def find_environmnet_course
     @course = @space.course
     @environment = @course.environment
   end
