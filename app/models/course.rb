@@ -47,4 +47,6 @@ class Course < ActiveRecord::Base
       membership.space.change_role(user, role)
     end
   end
+
+
 end

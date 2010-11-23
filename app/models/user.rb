@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
 
-  # Constants 
+  # Constants
   MALE    = 'M'
   FEMALE  = 'F'
 
@@ -42,8 +42,8 @@ class User < ActiveRecord::Base
   has_many :acquisitions, :as => :acquired_by
 
   has_many :credits
-  has_many :exams, :foreign_key => "owner_id"
-  has_many :exam_users
+  has_many :exams, :foreign_key => "owner_id", :conditions => {:is_clone => false}
+  has_many :exam_users#, :dependent => :destroy
   has_many :exam_history, :through => :exam_users, :source => :exam
   has_many :questions, :foreign_key => :author_id
   has_many :favorites, :order => "created_at desc", :dependent => :destroy
@@ -68,6 +68,10 @@ class User < ActiveRecord::Base
   has_many :group_user
   has_many :groups, :through => :group_user
 
+  #student_profile
+  has_many :student_profiles
+
+
     #forums
     has_many :moderatorships, :dependent => :destroy
     has_many :forums, :through => :moderatorships, :order => 'forums.name'
@@ -84,7 +88,7 @@ class User < ActiveRecord::Base
   named_scope :tagged_with, lambda {|tag_name|
     {:conditions => ["tags.name = ?", tag_name], :include => :tags}
   }
-  # Accessors 
+  # Accessors
   attr_protected :admin, :featured, :role_id
 
   # PLUGINS
@@ -248,9 +252,13 @@ class User < ActiveRecord::Base
       (entity.owner == self || (entity.space == space && self.space_admin?(space) ))
     when 'Space'
       (entity.owner == self || self.space_admin?(entity))
+    #FIXME Mudar para polymorphic
     when 'Event'
       (entity.owner == self || (entity.space.id == space.id && self.space_admin?(space) ))
+    #FIXME Mudar para polymorphic
     when 'Bulletin'
+      (entity.owner == self || (entity.space == space && self.space_admin?(space) ))
+    when 'Subject'
       (entity.owner == self || (entity.space == space && self.space_admin?(space) ))
     when 'Environment'
       entity.owner == self
@@ -347,7 +355,7 @@ class User < ActiveRecord::Base
   end
 
   def can_activate?
-    activated_at.nil? and created_at > 30.days.ago 
+    activated_at.nil? and created_at > 30.days.ago
   end
 
   def active?
@@ -543,13 +551,13 @@ class User < ActiveRecord::Base
     return false unless entity
     case entity.class.to_s
     when 'Space'
-      association = UserSpaceAssociation.find(:first, :conditions => ['user_id = ? AND space_id = ?', 
+      association = UserSpaceAssociation.find(:first, :conditions => ['user_id = ? AND space_id = ?',
                                               self.id, entity.id])
     when 'Course'
-      association = UserCourseAssociation.find(:first, :conditions => ['user_id = ? AND course_id = ?', 
+      association = UserCourseAssociation.find(:first, :conditions => ['user_id = ? AND course_id = ?',
                                                self.id, entity.id])
     when 'Environment'
-      association = UserEnvironmentAssociation.find(:first, :conditions => ['user_id = ? AND environment_id = ?', 
+      association = UserEnvironmentAssociation.find(:first, :conditions => ['user_id = ? AND environment_id = ?',
                                                     self.id, entity.id])
     end
   end
@@ -625,7 +633,7 @@ class User < ActiveRecord::Base
     User.update_all ['sb_last_seen_at = ?', Time.now.utc], ['id = ?', self.id]
     self.sb_last_seen_at = Time.now.utc
   end
-  
+
   protected
   def activate_before_save
     self.activated_at = Time.now.utc

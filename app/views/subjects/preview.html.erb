@@ -1,0 +1,17 @@
+<div id="breadcrumbs"><b><strong><%= link_to "Cursos", subjects_path %></strong></b> > <b><strong><%= h @subject.title%></strong></b> </div>
+<div class="grid_11">
+  <ul class="default">
+    <li class="clearfix">
+      <label class="name"><%= @subject.title %></label>
+
+      <span class="call">Descrição:</span>
+      <span class="things">
+        <%= h @subject.description %>
+      </span><br />
+
+      <br /><b><%= link_to "Inscrever-se", enroll_subject_path(@subject.id) %></b>
+
+    </li>
+  </ul>
+</div><!-- end grid_11 -->
+

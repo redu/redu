@@ -1,5 +1,7 @@
 <div class=" grid_16">
-  <%= render :partial => "spaces/sidebar", :locals => {:space => @event.space} %>
+<% if @eventable.class.to_s.eql? "Space" %>
+  <%= render :partial => "spaces/sidebar", :locals => {:space => @event.eventable} %>
+<% end %>
   <div class="event-content grid_12 omega">
     <div class="grid_2 alpha">
       <div class="date grid_2 alpha omega">
@@ -20,7 +22,7 @@
 
     </div>
     <div class="grid_10 omega">
-      <h4 class="name"><%= link_to @event.name, space_event_path(@event.space, @event) %></h4>
+      <h4 class="name"><%= link_to @event.name, polymorphic_path([@event.eventable, @event]) %></h4>
       <div class="tagline"><%= @event.tagline %></div>
       <div class="pretty-text">
         <%= @event.description %>
@@ -39,9 +41,9 @@
       <% end %>
     </div>
     <div class="grid_11 alpha omega clearfix" style="padding: 10px 0;">
-      <% if current_user.can_manage?(@event, @event.space) %>
-        <%= link_to 'Editar', edit_space_event_path(@event.space, @event), :class => "button"%>
-        <%= link_to 'Remover', @event,
+      <% if current_user.can_manage?(@event) %>
+        <%= link_to 'Editar', edit_polymorphic_path([@event.eventable, @event]), :class => "button"%>
+        <%= link_to 'Remover', polymorphic_path([@event.eventable, @event]),
           {:confirm => 'Você tem certeza que deseja remover  permanentemente?',
             :method => :delete,  :class => "button"} %>
         <% end %></div>

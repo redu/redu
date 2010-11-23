@@ -1,38 +1,56 @@
-<%
-title1 = titles.split('-')[0]
-title2 = titles.split('-')[1]
-%>
-
-
 <div class="grid_9 push_3">
   <table class="booking_steps" cellpadding="0" cellspacing="0">
     <tbody><tr>
-        <td><span class="book_step "><span><em>1</em><%= h title1 %></span></span></td>
+        <td><span class="book_step disabled"><span><em>1</em>Informações Gerais</span></span></td>
         <td class="spacer">&nbsp;</td>
-        <td><span class="book_step "><span><em>2</em><%= h title2 %></span></span></td>
+        <td><span class="book_step disabled"><span><em>2</em>Conteúdo</span></span></td>
         <td class="spacer">&nbsp;</td>
         <td><span class="book_step current"><span><em>3</em>Publicação</span></span></td>
       </tr>
-    </tbody></table>
+  </tbody></table>
+</div>
+
+<div class="grid_16">
+  <%= f.error_messages %>
+</div>
+
+<%= hidden_field_tag("step", "publication")%>
+
+<div class="grid_9">
+  <% field_set_tag 'Visibilidade' do %>
+    <%= f.label "Público <span class='snippet'>(Visível em todo o Redu)</span>" %>
+    <%= f.check_box :is_public %>
+
+    <%= f.label "Postar em:" %>
+    <%= f.select :space_id, current_user.spaces.collect{|m|[m.name,m.id ]}, {:include_blank => true} %>
+
+
+  <%end %>
+
+  <% field_set_tag 'Imagem' do %>
+
+    <%= f.label "<span class='snippet'>Escolha uma imagem representativa deste cursto (opcional)</span>" %>
+    <%= f.file_field :avatar %>
+
+  <% end %>
+
 </div>
 
 
+<div class="grid_6 push_1">
+  <div class="y_addinfo">
+    <div class="addinfocontent">
+      <h1>
+        Termos e Condições do Redu</h1>
+      <p>
+        Por favor não publique conteúdo que esteja protegido por direitos autoriais, conteúdo obceno ou que viole
+        os <%= link_to "termos e condições", {:controller => "base", :action => "tos"}, :target => "_blank"%> do Redu.
+
+        Ao clicar no botão abaixo você estará concordando com esses termos.</p>
 
 
-<div class="grid_16">
-
-  <% field_set_tag 'Visibilidade' do %>
-    <%= f.label "Pública <span class='snippet'>(Visível em todo o Redu)</span>" %>
-    <% unless session[:subject_id].nil? %>
-      <%= f.check_box :is_public, :checked => current_user.subjects.find(session[:subject_id]).is_public?   %>
-    <%else%>
-      <%= f.check_box :is_public %>
-    <%end%>
-
-  <%end%>
-
-  <% field_set_tag 'Redes' do %>
-    <%= f.select :space_id, current_user.spaces.collect{|m|[m.name,m.id ]}, {:include_blank => true} %>
-  <%end%>
-
+      <p class="large_btn"><a href="#" id="adm_showpay" style="color: #fff;" onclick="jQuery('#form_subject').submit();">Publicar</a></p>
+    </div>
+  </div>
+</div>
 </div>

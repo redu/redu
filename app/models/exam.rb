@@ -13,6 +13,7 @@ class Exam < ActiveRecord::Base
   has_one :lecture_subject, :as => :lectureable, :dependent => :destroy
   has_one :space_asset, :as => :asset
   has_one :space, :through => :space_asset#, :as => :asset
+
   # NESTED
   accepts_nested_attributes_for :questions,
     :reject_if => lambda { |q| q[:statement].blank? },

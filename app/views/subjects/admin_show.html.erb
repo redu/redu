@@ -1,0 +1,68 @@
+<div id="breadcrumbs"><b><strong><%= link_to "Cursos", admin_subjects_path %></strong></b> > <b><strong><%= h @subject.title%></strong></b> </div>
+
+<h3>Curso:<%= @subject.title%><h3/>
+
+
+    <h1>Dados Gerais:</h1>
+    <ul>
+
+      <% if @subject.is_public?%>
+        <li>Público:Sim</li>
+      <% else %>
+        <li>Público:Não<li>
+          <% end %>
+
+          <li>Descrição:<%= @subject.description%></li>
+          <li>Autor:<%= @subject.owner.login%></li>
+
+          <% unless @subject.space.nil? %>
+            <li>Rede:<%= @subject.space.name%></li>
+          <% else %>
+            <li>Rede:Não está associado!</li>
+          <% end %>
+          <li>Vagas:<%= @subject.limit.nil? ? "não definida" : @subject.limit %></li>
+        </ul>
+
+        <h1>Aulas</h1>
+        <ul>
+          <% @subject.aulas.each do |aula|%>
+            <li><%= link_to aula.name, course_path(aula) %></li>
+          <% end %>
+        </ul>
+
+        <h1>Exames</h1>
+        <ul>
+          <% @subject.exames.each do |exame|%>
+            <li><%= exame.name%></li>
+          <% end %>
+        </ul>
+
+        <h1>Alunos</h1>
+        <ul>
+          <% @subject.enrolled_students.each do |student|%>
+            <li><%= student.login%></li>
+          <% end %>
+        </ul>
+
+        <h1>Alunos Graduados</h1>
+        <ul>
+          <% @subject.graduaded_students.each do |student|%>
+            <li><%= student.login%></li>
+          <% end %>
+        </ul>
+
+        <h1>Alunos cursando</h1>
+        <ul>
+          <% @subject.under_graduaded_students.each do |student|%>
+            <li><%= student.login%></li>
+          <% end %>
+        </ul>
+
+        <h1>Uploads</h1>
+        <ul>
+          <% @subject.subject_files.each do |file|%>
+            <li><%= file.attachment_file_name%></li>
+          <% end %>
+        </ul>
+
+

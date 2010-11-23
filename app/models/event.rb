@@ -3,7 +3,7 @@ class Event < ActiveRecord::Base
   # ASSOCIATIONS
   has_many :logs, :as => :logeable, :dependent => :destroy, :class_name => 'Status'
   belongs_to :owner, :class_name => "User", :foreign_key => 'owner'
-  belongs_to :space
+  belongs_to :eventable, :polymorphic => true
 
   # NAMED SCOPES
   #Procs used to make sure time is calculated at runtime

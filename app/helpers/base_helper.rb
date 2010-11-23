@@ -46,6 +46,7 @@ module BaseHelper
 		else
 			f.select(:simple_category_id, options_for_select(categories_array), :include_blank => true)
 		end
+ 
   end
 
   def category_i18n(category)
@@ -114,7 +115,7 @@ module BaseHelper
           @activity = "respondeu ao tópico " + link_obj if item.log_action == 'create'
       when 'event'
           @event = Event.find(item.logeable_id)
-          link_obj = link_to(item.logeable_name, space_event_path(@event.space, @event))
+          link_obj = link_to(item.logeable_name, polymorphic_path([@event.eventable, @event]))
 
           @activity =  "criou o evento " + link_obj if item.log_action == "create"
       when 'bulletin'
@@ -560,7 +561,7 @@ module BaseHelper
     start_month = Time.utc(Time.now.year, month, 1)
     end_month = Time.utc(Time.now.year, month, 31)
     Event.all(:select => "id, start_time, end_time",
-              :conditions => ["space_id = ? AND state LIKE 'approved' AND (start_time BETWEEN ? AND ? OR end_time BETWEEN ? AND ?)", space_id, start_month, end_month, start_month, end_month])
+              :conditions => ["eventable_id = ? AND eventable_type = 'Space' AND state LIKE 'approved' AND (start_time BETWEEN ? AND ? OR end_time BETWEEN ? AND ?)", space_id, start_month, end_month, start_month, end_month])
   end
 
   # Indica se há evento no dia informado

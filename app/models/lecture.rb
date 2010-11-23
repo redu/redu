@@ -97,7 +97,7 @@ class Lecture < ActiveRecord::Base
           File.join(File.dirname(self.lectureable.media.url), "thumb_0000.png")
         else
           #FIXME url hard coded
-          '/images/missing_pic_school.png'
+          '/images/missing_pic_space.png'
         end
 
       else

@@ -68,6 +68,9 @@ class FoldersController < BaseController
   def download
     @myfile = Myfile.find(params[:file_id])
 
+    send_file @myfile.attachment.path, :type=> @myfile.attachment.content_type, :x_sendfile=>true
+
+
     if  @myfile
       space = Space.find(params[:space_id]) if params[:space_id]
       if space and current_user.has_access_to(space)
@@ -208,7 +211,7 @@ class FoldersController < BaseController
           format.html {
             redirect_to space_folders_path(:space_id => params[:folder][:space_id], :id => @folder.parent.id)
           }
-          format.js 
+          format.js
         else
           flash[:error] = 'Não foi possível criar o diretório'
           format.html {

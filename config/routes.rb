@@ -10,14 +10,19 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :lessons
   map.resources :beta_keys, :collection => {:generate => :get, :remove_all => :get, :print_blank => :get, :invite => [:get, :post]}
   map.resources :profiles
-  map.resources :subjects, :member => {:classes => :get}
-  map.admin_subjects "admin_subjects", :controller => "subjects", :action => "admin_subjects"
+  map.resources :subjects, :member => {:enroll => :get, :upload => :get, :download => :get}, :collection => {:cancel => :get} do |subject|
+  subject.resources :events, :member => { :vote => [:post,:get], :notify => :post }, :collection => { :past => :get, :ical => :get , :day => :get}
+  subject.resources :bulletins, :member => {:rate => :post}
+  end
+
+  map.admin_subjects "admin/subjects", :controller => "subjects", :action => "admin_subjects"
+  map.admin_show "admin/show/:id", :controller => "subjects", :action => "admin_show"
   map.resources :questions, :collection => { :search => [:get, :post], :add => :get }
   map.resources :exams, :member => {:add_question => :get, :add_resource => :get, :rate => :post, :answer => [:get,:post]},
-      :collection => {:unpublished_preview => :get, :unpublished => :get, :new_exam => :get, :cancel => :get, 
+      :collection => {:unpublished_preview => :get, :unpublished => :get, :new_exam => :get, :cancel => :get,
       :exam_history => :get, :sort => :get, :order => :get, :questions_database => :get,
       :review_question => :get}
-  map.resources :lectures, :member => {:rate => :post, :buy => :get, :download_attachment => :get},  
+  map.resources :lectures, :member => {:rate => :post, :buy => :get, :download_attachment => :get},
     :collection => { :unpublished_preview => :get, :cancel => :get, :sort_lesson => :post, :unpublished => :get,:waiting => :get}
   map.resources :credits
   map.resources :folders
@@ -26,9 +31,9 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :events#, :collection => { :past => :get, :ical => :get }
   map.resources :sb_posts
   map.resources :topics
-  map.resources :metro_areas  
+  map.resources :metro_areas
   map.resources :invitations
-  
+
   # Index
   map.learn_index '/learn', :controller => 'base', :action => 'learn_index'
   map.teach_index '/teach', :controller => 'base', :action => 'teach_index'
@@ -124,7 +129,7 @@ ActionController::Routing::Routes.draw do |map|
         topic.resources :sb_posts
       end
       forum.resources :sb_posts, :except => [:new, :edit, :create, :update, :destroy]
-    end 
+    end
  end
 
   # USERS

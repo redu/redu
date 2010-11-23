@@ -1,7 +1,8 @@
-<div id="breadcrumbs"><b><strong><%= link_to "Cursos", subjects_path %></strong></b> > <b><strong>Editar Curso</strong></b>  </div>
+<div id="breadcrumbs"><b><strong><%= link_to "Cursos", admin_subjects_path %></strong></b> > <b><strong>Editar Curso</strong></b>  </div>
 
 
-<% form_for @subject, :url => {:controller => :subjects, :action => :update, :id => @subject}  do |f| %>
+<% #form_for @subject, :url => subject_path(@subject)%>
+<% form_for current_user.subjects.find(params[:id].split("-")[0].to_i),:url => subject_path(params[:id].split("-")[0].to_i) do |f| %>
 
 <p><%= render :partial => "#{@subject.current_step}_step", :locals=>{:f => f, :titles => "Atualizar Curso-Atualizar Aulas"}%></p><br /><br />
 <div class="grid_16">

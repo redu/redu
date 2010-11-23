@@ -1,0 +1,11 @@
+
+	<% if @subjects && @subjects.size > 0 %>
+	<ul class="default">
+		<%= render :partial => 'subjects/item', :collection => @subjects, :as => :subject %>
+	</ul>
+	<% else %>
+		<div class="box_notice">(Nenhum curso)</div>
+	<% end %>
+
+	<%= will_paginate @subjects %>
+

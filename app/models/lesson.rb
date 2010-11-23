@@ -1,12 +1,16 @@
 class Lesson < ActiveRecord::Base
 
+  #acts_as_list :scope => :interactive_class #NAO USE 
+
   belongs_to :interactive_class
   belongs_to :lesson, :polymorphic => true, :dependent => :destroy
+
+  validates_presence_of :title
 
   accepts_nested_attributes_for :lesson, :allow_destroy => true
 
   validates_presence_of :title
-  
+
   def build_lesson(params)
     self.position = params[:position]
     params.delete(:position)
