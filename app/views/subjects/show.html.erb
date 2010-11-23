@@ -9,26 +9,7 @@
 
   $(document).ready(function() {
 
-    $subjecttabs = $(".subject-tabs").tabs({
-      select: function(event, ui) {
-        if (ui.index == 3) {
-          // Arquivos
-          alert('todo'); return;
-          $("#tabs-3-content").html('');
-          jQuery.ajax({
-            data: '',
-            dataType: 'script',
-            success: function(request) {
-              $("#tabs-3-loading").hide();
-            },
-            type: 'get',
-            url: subjectFoldersPath
-          });
-
-          $("#tabs-3-loading").show();
-        }
-      }
-    });
+    $subjecttabs = $(".subject-tabs").tabs({});
   });
 </script>
 
@@ -39,7 +20,6 @@
     <ul>
       <li><a href="#tabs-1">Início</a></li>
       <li><a href="#tabs-2">Atividades</a></li>
-      <li><a href="#tabs-3">Arquivos</a></li>
     </ul>
 
     <div id="tabs-1" class="clearfix first-page">
@@ -74,19 +54,5 @@
 
     </div>
 
-    <!-- arquivos -->
-    <div id="tabs-3">
-      <%#=  image_tag 'loadingAnimation.gif', :id=> 'tabs-3-loading', :style => 'padding: 20px;'%>
-      <div id="tabs-3-content">
-	     <%if @subject.subject_files.length >0%>
-	      <% @subject.subject_files.each_with_index do |file, index|%>
-		   <%=  link_to "#{index+1}- #{file.attachment_file_name}", download_subject_path(@subject, :file_id => file.id) %><br />
-		  <%end%>
-		 <%else%>
-		  não há arquivos
-	     <%end%>
-      </div>
-
-    </div>
   </div><!-- end tabs -->
 </div><!-- end main -->

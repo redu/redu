@@ -7,7 +7,6 @@ class Subject < ActiveRecord::Base
   has_many :students, :through => :enrollments, :source => :user, :conditions => [ "enrollments.role_id = ?", 7 ]
   has_many :teachers, :through => :enrollments, :source => :user, :conditions => [ "enrollments.role_id = ?", 6 ]
   has_many :student_profiles, :dependent => :destroy
-  has_many :subject_files, :dependent => :destroy
   belongs_to :owner, :class_name => "User" , :foreign_key => "user_id"
   belongs_to :space
   belongs_to :simple_category

@@ -216,25 +216,6 @@ class SubjectsController < BaseController
 
   end
 
-  def upload
-    @subject_file = @subject.subject_files.new
-  end
-
-  def attachment
-    sf = current_user.subjects.find(params[:id]).subject_files.new
-    sf.attachment = params[:subject_file][:attachment]
-    sf.save
-
-    respond_to do |format|
-      format.js
-    end
-
-  end
-
-  def download
-    send_file "public/#{@subject.subject_files.find(params[:file_id]).attachment.url.split("?")[0]}", :type=>"application/zip"
-  end
-
   def admin_subjects
     session[:subject_step] = session[:subject_params]= session[:subject_aulas]= session[:subject_id]= session[:subject_exames]  = nil
     @subjects = current_user.subjects
