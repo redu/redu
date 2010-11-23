@@ -37,30 +37,7 @@
     <div id="char_limit" style="text-align:right;">(<%=AppConfig.desc_char_limit %>)</div>
     <%= error_message_on @subject, :description %>
 
-    <%= f.label :limit, "Quantidade Total de Alunos:" %>
-    <%= f.text_field :limit %>
-
     <%= f.label "Tags <span class='snippet'>(separadas por vírgula)</span>" %>
     <%= f.text_field :tag_list %>
-
-    <%# f.select(:simple_category%>
-    <%= f.label "Categoria:" %>
-    <%= simple_categories_i18n(f) %>
-    <%= error_for :subject, :simple_category %>
-  <% end %>
-
-  <% field_set_tag 'Audiência' do %>
-    <span class="snippet">Selecionar um público que não corresponde
-      ao propósito da rede pode levar à uma má avaliação. </span>
-    <%= error_for :subject, :audiences %>
-    <ul>
-      <% for audience in Audience.find(:all) %>
-        <li>
-          <%= check_box_tag "subject[audience_ids][]", audience.id,
-            @subject.audiences.include?(audience) %>
-          <%= audience.name %>
-        </li>
-      <% end %>
-    </ul>
   <% end %>
 </div>

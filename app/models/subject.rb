@@ -9,8 +9,6 @@ class Subject < ActiveRecord::Base
   has_many :student_profiles, :dependent => :destroy
   belongs_to :owner, :class_name => "User" , :foreign_key => "user_id"
   belongs_to :space
-  belongs_to :simple_category
-  has_and_belongs_to_many :audiences
 
   # METODOS DO WIZARD
   attr_writer :current_step
@@ -26,18 +24,6 @@ class Subject < ActiveRecord::Base
   #validations
   validates_presence_of :title, :if => lambda {|s| s.current_step == "subject"}
   validates_presence_of :description, :if => lambda {|s| s.current_step == "subject"}
-  validates_numericality_of :limit, :allow_nil => true
-  validates_presence_of :simple_category
-
-
-  def validate
-    if self.start_time.nil? && self.end_time != nil
-      errors.add :start_time, "Data inicial não pode ficar vazia!"
-    elsif self.start_time != nil && self.end_time != nil
-      errors.add :end_time, "Data final tem que ser maior ou igual do que data inical" if self.start_time > self.end_time
-    end
-
-  end
 
   def to_param #friendly url
     "#{id}-#{title.parameterize}"
@@ -80,14 +66,6 @@ class Subject < ActiveRecord::Base
     steps.all? do |step|
       self.current_step = step
       valid?
-    end
-  end
-
-  def is_valid?
-    if  self.end_time!= nil && self.end_time.strftime("%d/%m/%Y") < Time.now.strftime("%d/%m/%Y")
-      false
-    else
-      true
     end
   end
 

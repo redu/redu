@@ -25,7 +25,6 @@ class SubjectsController < BaseController
   def index
     session[:subject_step] = session[:subject_params]= session[:subject_aulas]= session[:subject_id]= session[:subject_exames]  = nil
     cond = Caboose::EZ::Condition.new
-    cond.append ["simple_category_id = ?", params[:category]] if params[:category]
 
     paginating_params = {
       :conditions => cond.to_sql,
@@ -155,8 +154,6 @@ class SubjectsController < BaseController
 
     updated = false
     if params[:subject]
-      params[:subject][:start_time] = Time.zone.parse(params[:subject][:start_time].gsub('/', '-')) unless params[:subject][:start_time].nil?
-      params[:subject][:end_time] = Time.zone.parse(params[:subject][:end_time].gsub('/', '-'))  unless params[:subject][:end_time].nil?
       session[:subject_params].deep_merge!(params[:subject])
     end
     session[:subject_aulas]= params[:aulas] unless params[:aulas].nil?
