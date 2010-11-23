@@ -112,8 +112,6 @@ class SubjectsController < BaseController
   def create
 
     if params[:subject]
-      params[:subject][:start_time] = Time.zone.parse(params[:subject][:start_time].gsub('/', '-')) unless params[:subject][:start_time].nil?
-      params[:subject][:end_time] = Time.zone.parse(params[:subject][:end_time].gsub('/', '-'))  unless params[:subject][:end_time].nil?
       session[:subject_params].deep_merge!(params[:subject])
     end
     session[:subject_aulas]= params[:aulas] unless params[:aulas].nil?
@@ -141,7 +139,7 @@ class SubjectsController < BaseController
       render "new"
     else
       session[:subject_step] = session[:subject_params]= session[:subject_aulas]=session[:subject_exames] = nil
-      redirect_to admin_subjects_path
+      redirect_to admin_subjects_path #TODO Melhor redirecionar para o show?
     end
   end
 

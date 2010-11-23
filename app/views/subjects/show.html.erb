@@ -48,9 +48,9 @@
         <% field_set_tag 'Conteúdo selecionado', :style => "margin-top:40px;" do %>
           <ul id="subject_content" class="default sortable" style="min-height:300px;">
 
-            <% @subject.lecture_subjects.each do |content|%>
+            <% @subject.assets.each do |asset|%>
 
-              <%= render :partial => "lectures/item_subject", :locals => {:lecture => content.lectureable}%>
+              <%= render :partial => "lectures/item_subject", :locals => {:lecture=> asset.assetable}%>
             <% end %>
 
           </ul>

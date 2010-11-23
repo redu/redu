@@ -1,5 +1,21 @@
 class Subject < ActiveRecord::Base
 
+  #associations
+  has_many :assets
+  has_many :enrollments, :dependent => :destroy
+  has_many :statuses, :as => :statusable
+  has_many :students, :through => :enrollments, :source => :user, :conditions => [ "enrollments.role_id = ?", 7 ]
+  has_many :teachers, :through => :enrollments, :source => :user, :conditions => [ "enrollments.role_id = ?", 6 ]
+  has_many :student_profiles, :dependent => :destroy
+  has_many :subject_files, :dependent => :destroy
+  belongs_to :owner, :class_name => "User" , :foreign_key => "user_id"
+  belongs_to :space
+  belongs_to :simple_category
+  has_and_belongs_to_many :audiences
+
+  # METODOS DO WIZARD
+  attr_writer :current_step
+
   # PLUGINS
   acts_as_taggable
   ajaxful_rateable :stars => 5
@@ -7,7 +23,6 @@ class Subject < ActiveRecord::Base
     :styles => { :thumb => "100x100>", :nano => "24x24>",
       :default_url => "/images/:class/missing_pic.jpg"}
   }
-
 
   #validations
   validates_presence_of :title, :if => lambda {|s| s.current_step == "subject"}
@@ -24,22 +39,6 @@ class Subject < ActiveRecord::Base
     end
 
   end
-
-  #associations
-  has_and_belongs_to_many :audiences
-  has_many :lecture_subjects,:order =>"position", :dependent => :destroy
-  has_many :enrollments, :dependent => :destroy
-  belongs_to :owner, :class_name => "User" , :foreign_key => "user_id"
-  belongs_to :space
-  belongs_to :simple_category
-  has_many :statuses, :as => :statusable
-  has_many :students, :through => :enrollments, :source => :user, :conditions => [ "enrollments.role_id = ?", 7 ]
-  has_many :teachers, :through => :enrollments, :source => :user, :conditions => [ "enrollments.role_id = ?", 6 ]
-  has_many :student_profiles, :dependent => :destroy
-  has_many :subject_files, :dependent => :destroy
-
-  # METODOS DO WIZARD
-  attr_writer :current_step
 
   def to_param #friendly url
     "#{id}-#{title.parameterize}"
@@ -113,7 +112,7 @@ class Subject < ActiveRecord::Base
     deleted_ids =  aulas_ids - aulas_futuras # aulas q serao deletadas
     inserted_ids = aulas_futuras - aulas_ids #aulas q serao inseridas
 
-    LectureSubject.destroy_all(:lectureable_id => deleted_ids) unless deleted_ids.empty?#segurança ok, pois o array deleted_ids eh criado a partir do current_user
+    Asset.destroy_all(:assetable_id => deleted_ids) unless deleted_ids.empty?#segurança ok, pois o array deleted_ids eh criado a partir do current_user
 
     #positions setadas de acordo com a ordem do usuário.
     positions = inserted_ids.map{|a| aulas.index(a.to_s)}
@@ -138,7 +137,7 @@ class Subject < ActiveRecord::Base
     deleted_ids =  exames_ids  - exams_futuras # aulas q serao deletadas
     inserted_ids = exams_futuras-  exames_ids #aulas q serao inseridas
 
-    LectureSubject.destroy_all(:lectureable_id => deleted_ids) unless deleted_ids.empty?#segurança ok, pois o array deleted_ids eh criado a partir do current_user
+    Asset.destroy_all(:assetable_id => deleted_ids) unless deleted_ids.empty?#segurança ok, pois o array deleted_ids eh criado a partir do current_user
 
 
     unless inserted_ids.empty?
@@ -148,11 +147,11 @@ class Subject < ActiveRecord::Base
         clone_exame = exame.clone #clone it
         clone_exame.is_clone = true
         clone_exame.save#and save it
-        cs = LectureSubject.new
-        cs.subject_id = subject_id
-        cs.lectureable_id = clone_exame.id
-        cs.lectureable_type = "Exam"
-        cs.save
+        asset = Asset.new
+        asset.subject_id = subject_id
+        asset.assetable_id = clone_exame.id
+        asset.assetable_type = "Exam"
+        asset.save
       end
 
     end
@@ -165,11 +164,11 @@ class Subject < ActiveRecord::Base
       clone_lecture = lecture.clone #clone it
       clone_lecture.is_clone = true
       clone_lecture.save#and save it
-      cs = LectureSubject.new
-      cs.subject_id = subject_id
-      cs.lectureable_id = clone_lecture.id
-      cs.lectureable_type = "Lecture"
-      cs.save
+      asset = Asset.new
+      asset.subject_id = subject_id
+      asset.assetable_id = clone_lecture.id
+      asset.assetable_type = "Lecture"
+      asset.save
     end
 
   end
@@ -177,21 +176,21 @@ class Subject < ActiveRecord::Base
   def create_lecture_subject_type_exam exams, subject_id
 
     exams.each do |exam_id|
-      cs = LectureSubject.new
-      cs.subject_id = subject_id
-      cs.lectureable_id = exam_id
-      cs.lectureable_type = "Exam"
-      cs.save
+      asset = Asset.new
+      asset.subject_id = subject_id
+      asset.assetable_id = exam_id
+      asset.assetable_type = "Exam"
+      asset.save
     end
 
   end
 
   def aulas
-    self.lecture_subjects.select{|cs| cs.lectureable_type.eql?("Lecture")}.map{|a| a.lectureable}
+    self.assets.select{|asset| asset.assetable_type.eql?("Lecture")}.map{|a| a.assetable}
   end
 
   def exames
-    self.lecture_subjects.select{|cs| cs.lectureable_type.eql?("Exam")}.map{|e| e.lectureable}
+    self.assets.select{|asset| asset.asseteable_type.eql?("Exam")}.map{|e| e.assetable}
   end
 
   def enrolled_students
@@ -260,12 +259,12 @@ class Subject < ActiveRecord::Base
       clone_lecture.is_clone = true
       clone_lecture.save#and save it
 
-      cs = LectureSubject.new
-      cs.subject_id = subject_id
-      cs.lectureable_id = clone_lecture.id
-      cs.position = positions[index] #variavel index eh contador
-      cs.lectureable_type = "Lecture"
-      cs.save
+      asset = Asset.new
+      asset.subject_id = subject_id
+      asset.assetable_id = clone_lecture.id
+      asset.position = positions[index] #variavel index eh contador
+      asset.assetable_type = "Lecture"
+      asset.save
     end
 
   end

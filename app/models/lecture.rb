@@ -11,12 +11,9 @@ class Lecture < ActiveRecord::Base
   has_many :favorites, :as => :favoritable, :dependent => :destroy
   has_many :annotations
   has_many :logs, :as => :logeable, :dependent => :destroy, :class_name => 'Status'
-  has_one :subject_asset, :as => :asset, :dependent => :destroy
-  has_one :subject, :through => :subject_asset
-  has_one :lecture_subject, :as => :lectureable
+  has_many :assets, :as => :assetable
   belongs_to :owner , :class_name => "User" , :foreign_key => "owner"
   belongs_to :lectureable, :polymorphic => true, :dependent => :destroy
-  belongs_to :asset, :polymorphic => true
   belongs_to :simple_category
   accepts_nested_attributes_for :resources,
     :reject_if => lambda { |a| a[:media].blank? },
@@ -131,12 +128,4 @@ class Lecture < ActiveRecord::Base
     "#{id}-#{name.parameterize}"
   end
 
-  def build_lectureable(params)
-    puts ' oi'
-    case self.lectureable_type
-    when "Page"
-      # se edicao pega ja existente, senao:
-      self.lectureable = Page.new(:body => "teste")
-    end
-  end
 end
