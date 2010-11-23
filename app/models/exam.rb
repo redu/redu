@@ -3,7 +3,7 @@ class Exam < ActiveRecord::Base
   # ASSOCIATIONS
   has_many :statuses, :as => :statusable
   has_many :question_exam_associations, :dependent => :destroy
-  has_many :questions, :through => :question_exam_associations, :include => :alternatives, :order => :position
+  has_many :questions, :through => :question_exam_associations
   has_many :exam_users, :dependent => :destroy
   has_many :user_history, :through => :exam_users, :source => :user
   has_many :favorites, :as => :favoritable, :dependent => :destroy
@@ -16,7 +16,6 @@ class Exam < ActiveRecord::Base
   accepts_nested_attributes_for :questions,
     :reject_if => lambda { |q| q[:statement].blank? },
     :allow_destroy => true
-
 
   # NAMED SCOPES
   named_scope :published, :conditions => ['published = ?', true], :include => :owner
@@ -37,9 +36,12 @@ class Exam < ActiveRecord::Base
   # VALIDATIONS
   validates_presence_of :name
   validates_presence_of :description
-  validation_group :step1, :fields=>[:name, :description]
-  validation_group :step2, :fields=>[:questions]
-  validation_group :step3, :fields=>[:price]
+  validates_length_of :questions, :allow_nil => false, :minimum => 1
+  validates_associated :questions
+
+  validation_group :general, :fields=>[:name, :description]
+  validation_group :editor, :fields=>[:questions]
+  validation_group :publication, :fields=>[:price]
 
   def get_question(qid)
     if qid
@@ -86,5 +88,9 @@ class Exam < ActiveRecord::Base
       self.current_step = step
       valid?
     end
+  end
+
+  def enable_correct_validation_group!
+    self.enable_validation_group(self.current_step.to_sym)
   end
 end

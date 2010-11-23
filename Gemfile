@@ -1,7 +1,7 @@
 source "http://rubygems.org"
 source "http://gems.github.com"
 
-gem "rails", "2.3.5"
+gem "rails", "2.3.6"
 gem "desert"
 gem "rake", "0.8.7"
 gem "validatable"

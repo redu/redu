@@ -1,41 +1,12 @@
-<% @child_index = f.options[:child_index]%>
-
-<% field_set_tag 'Questão <span class="q_index"></span>', :style => "background-color: #F1F1F1", :class => "fields" do %>
-
-  <div id= "q_<%=@child_index%>_expanded" name= "q_<%=@child_index%>" class="question expanded">
-    <%= link_to_remove_fields "remover", f %>
-    <%= link_to_function "minimizar", "toggleMinimize(this, true)"%>
-
-    <%= f.label :statement, "Conteúdo" %>
-    <%= f.text_area :statement, :size => "60x12", :class => "mceEditor", :id => "q_"+((@child_index) ? @child_index : '') +"_statement" %>
-    <%= f.label :alternatives, "Alternativas" %>
-
-    <div id="alternatives" class="alternatives"> 
-      <% 5.times { f.object.alternatives.build } unless f.object.alternatives.size > 0%>
-
-      <% f.fields_for :alternatives do |builder| %>
-        <% @oi = f%>
-        <%= render :partial => 'alternative_fields', :locals => {:f => builder, :f_question => f} %>
-      <% end %>
-
-      <%= link_to_add_fields "Nova Alternativa", f, :alternatives, 'Alternative' %>
-    </div>
-
-    <%= f.hidden_field :author_id, :value => current_user.id %>
-    <%= f.hidden_field :_destroy %>
-
-    <%= f.label :justification, "Justificativa" %>
-    <%= f.text_area :justification, :rows =>2, :cols => 50, :class => "mceEditor" %>
-
-    <%= f.label :source, "Fonte <span class=\"snippet\">(local de onde a questão foi retirada)</span>"%>
-    <%= f.text_field :source %>
-    <div>
-      <%= f.check_box :public, :checked =>  true %>
-      <%= f.label :public, "Pública", :class => "inline" %>
-    </div>
-  </div>	
-  <div id = "q_<%=@child_index%>_collapsed"  name= "q_<%=@child_index%>" class="question collapsed" style ="display:none; min-height: 40px; border: 1px dotted #eee; padding:15px;">
-    <%= link_to_function "maximizar", "toggleMinimize(this, false)"%>
-    <span id="q_<%=@child_index%>_stat"></span>
-  </div>
+<% field_set_tag "Questão 1" do %>
+  <%= f.text_area :statement %>
+  <%= f.hidden_field :answer_id %>
+  <% field_set_tag "Alternativas", :class => "alternatives" do  %>
+    <% f.fields_for :alternatives do |builder| %>
+      <div>
+      <%= builder.check_box :correct, :style => "float: left; margin-right: 10px;" %>
+      <%= builder.text_field :statement %>
+      </div>
+    <% end %>
+  <% end %>
 <% end %>

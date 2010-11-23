@@ -175,33 +175,39 @@ class ExamsController < BaseController
   def new
     session[:exam_params] ||= {}
     @exam = Exam.new(session[:exam_params])
-    @exam.current_step =  params[:step]#session[:exam_step]
+    @exam.current_step =  params[:step]
   end
 
+  # Wizard de Exame. Nos primeiros passos as informações são guardadas na session.
+  # O registo só é salvo no último passo.
   def create
     session[:exam_params].deep_merge!(params[:exam]) if params[:exam]
     @exam = Exam.new(session[:exam_params])
-    @exam.current_step =  params[:step]#session[:exam_step]
+    @exam.current_step =  params[:step]
     @exam.owner = current_user
 
+    # Redirecionando para o passo especificado
+    @exam.enable_correct_validation_group!
     if @exam.valid?
       if params[:back_button]
         @exam.previous_step
-      elsif @exam.last_step?
-        @exam.save if @exam.all_valid? and @exam.new_record?
+      # No último passo salvar
+      elsif @exam.last_step? and @exam.save
+        session[:exam_params] = nil
+        flash[:notice] = "Exame criado!"
+        redirect_to @exam
       else
         @exam.next_step
       end
     end
+
+    # Criando questões e alternativas em branco
     if @exam.new_record?
-      if params[:step] == 'general' and  @exam.questions.empty?
-        @exam.questions.build
+      if params[:step] == 'general' || @exam.invalid? || @exam.questions.empty?
+        @exam.questions.build if @exam.questions.empty?
+        @exam.questions.each { |q| q.alternatives.build }
       end
       render "new"
-    else
-      session[:exam_params] = nil
-      flash[:notice] = "Exame criado!"
-      redirect_to @exam
     end
   end
 
