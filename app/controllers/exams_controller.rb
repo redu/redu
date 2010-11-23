@@ -93,7 +93,6 @@ class ExamsController < BaseController
     @correct = 0
     @corrects = Array.new
     @exam.questions.each_with_index do |question, k|
-
       if session[:answers][question.id].to_i == question.answer.id
         @corrects << question
         @correct += 1
@@ -102,7 +101,7 @@ class ExamsController < BaseController
 
     # Atualiza contadores do exame
     @exam.update_attributes({:done_count => @exam.done_count + 1,
-                            :total_correct => @exam.total_correct + @correct })
+                              :total_correct => @exam.total_correct + @correct })
 
     # Adiciona no histórico do usuário/exame
     @exam_user = ExamUser.new

@@ -1,4 +1,3 @@
-<%# render(:partial => "spaces/space_info", :locals=>{:show => false}) if @space%>
 
 <div class="grid_16">
 
@@ -25,15 +24,9 @@
           <%= (@exam.owner) ? link_to(@exam.owner.display_name, user_path(@exam.owner)) : "(usuário removido)" %>
         </li>
         <li>
-          |
-        </li>
-        <li>
           <%= time_ago_in_words @exam.created_at %>
         </li>
 
-        <li>
-          |
-        </li>
         <li>
           Realizado(<%= @exam.done_count %>)
         </li>
@@ -44,14 +37,7 @@
     </div>
     <div id="identification1">
       <ul id="identification_resource1">
-        <li>
-          <strong>Categoria:</strong>
-          <%#category_i18n(@exam.simple_category.name) %>
-        </li>
         <% unless @exam.tag_list.empty? %>
-          <li>
-            |
-          </li>
           <li>
             <strong>Tags:</strong>
             <%= @exam.tag_list %>
