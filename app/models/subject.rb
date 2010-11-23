@@ -43,7 +43,7 @@ class Subject < ActiveRecord::Base
   end
 
   def steps
-    %w[subject lecture publication]
+    %w[subject lecture]
   end
 
   def next_step
@@ -167,7 +167,7 @@ class Subject < ActiveRecord::Base
   end
 
   def exames
-    self.assets.select{|asset| asset.asseteable_type.eql?("Exam")}.map{|e| e.assetable}
+    self.assets.select{|asset| asset.assetable_type.eql?("Exam")}.map{|e| e.assetable}
   end
 
   def enrolled_students

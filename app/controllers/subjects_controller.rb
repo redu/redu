@@ -1,26 +1,11 @@
 class SubjectsController < BaseController
+  layout 'environment'
 
   before_filter :login_required
-  before_filter :find_subject, :only => [:show, :enroll]
-  before_filter :find_user_subject, :only => [:edit,:destroy,:admin_show, :upload, :download]
+  before_filter :find_subject, :except => [:new, :create, :index, :cancel]
+  before_filter :find_space_course_environment, :except => [:cancel]
 
-  def find_subject
-    @subject = Subject.find(params[:id])
-
-    unless @subject
-      flash[:notice] = "Curso não encontrado. Você digitou o endereço correto?"
-      redirect_to subjects_path and return
-    end
-  end
-
-  def find_user_subject
-    @subject = current_user.subjects.find(params[:id])
-
-    unless @subject
-      flash[:notice] = "Curso não encontrado. Você tem mesmo permissão para acessá-lo?"
-      redirect_to subjects_path and return
-    end
-  end
+  uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit, :create, :update])
 
   def index
     session[:subject_step] = session[:subject_params]= session[:subject_aulas]= session[:subject_id]= session[:subject_exames]  = nil
@@ -77,15 +62,12 @@ class SubjectsController < BaseController
 
 
   def show
-
-    @subject = Subject.find(:first, :conditions => "is_public like true AND id =#{params[:id].to_i}")
-    @space= @subject.space
+    @space = @subject.space
 
     student_profile = current_user.student_profiles.find_by_subject_id(@subject.id)
     @percentage = student_profile.nil? ? 0 : student_profile.coursed_percentage(@subject)
 
     respond_to do |format|
-      if @subject.is_valid?
         if current_user.enrollments.detect{|e| e.subject_id.eql?(params[:id].to_i)}.nil?
           format.html{  render "preview" }
         else
@@ -93,19 +75,14 @@ class SubjectsController < BaseController
           @statuses = @subject.recent_activity(0,10)
           format.html
         end
-      else
-        flash[:notice] = "Data do curso expirada"
-        format.html{ redirect_to subjects_path}
-      end
-
     end#format
 
   end
 
   def new
     session[:subject_params] ||= {}
-    # cancel
     @subject = Subject.new
+    @existent_spaces = @course.spaces.collect { |s| [s.name, s.id] }
   end
 
   def create
@@ -148,6 +125,7 @@ class SubjectsController < BaseController
 
   def edit
     session[:subject_params] ||= {}
+    @existent_spaces = @course.spaces.collect { |s| [s.name, s.id] }
   end
 
   def update
@@ -220,5 +198,22 @@ class SubjectsController < BaseController
 
   def admin_show
     @subject = current_user.subjects.find(params[:id])
+  end
+
+  protected
+  def find_subject
+   @subject = Subject.find(params[:id])
+  end
+
+  def find_space_course_environment
+    if @subject
+      @space = @subject.space
+    elsif params[:space_id]
+      @space = Space.find(params[:space_id])
+    end
+    if @space
+      @course = @space.course
+      @environment = @course.environment
+    end
   end
 end

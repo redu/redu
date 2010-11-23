@@ -13,8 +13,6 @@
         <td><span class="book_step current"><span><em>1</em>Informações Gerais</span></span></td>
         <td class="spacer">&nbsp;</td>
         <td><span class="book_step disabled"><span><em>2</em>Conteúdo</span></span></td>
-        <td class="spacer">&nbsp;</td>
-        <td><span class="book_step disabled"><span><em>3</em>Publicação</span></span></td>
       </tr>
   </tbody></table>
 </div>
@@ -25,16 +23,18 @@
 
 <%= hidden_field_tag("step", "subject")%>
 
-<div class="grid_9">
+<div class="grid_16">
 
   <% field_set_tag 'Informações Gerais' do %>
+    <%= f.label 'Divulgar no espaço' %>
+    <%= f.select(:space_id, options_for_select(@existent_spaces, @space.id)) %>
+
     <%= f.label "Nome" %>
-    <%= f.text_field :title  %>
+    <%= f.text_field :title, :size => 50 %>
     <%= error_message_on @subject, :title %>
 
     <%= f.label "Descrição" %>
-    <%= f.text_area :description, :size => "50x3", :maxlength=> AppConfig.desc_char_limit %>
-    <div id="char_limit" style="text-align:right;">(<%=AppConfig.desc_char_limit %>)</div>
+    <%= f.text_area :description, :size => "100x10", :class => "mceEditor" %>
     <%= error_message_on @subject, :description %>
 
     <%= f.label "Tags <span class='snippet'>(separadas por vírgula)</span>" %>

@@ -9,11 +9,6 @@
         <p><h3><%= @subject.title%></h3>
         <%= @subject.description%></p>
 
-        <p><h3<strong>Começo:</strong></h3>
-        <%= to_pt_BR_format(@subject.start_time) unless @subject.start_time.nil?%></p>
-        <p><h3<strong>Fim:</strong></h3>
-        <%= to_pt_BR_format(@subject.end_time) unless @subject.end_time.nil? %></p>
-
         <p><h3<strong>Percentagem cursado:</strong></h3>
 		o Aluno cursou <%= percetage.to_s+"%"%> do conteudo total</p>
       </div>
