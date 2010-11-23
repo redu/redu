@@ -6,6 +6,43 @@
   </div>
 </div>
 
+<script type="text/javascript" charset="utf-8">
+//<![CDATA[
+$(document).ready(function(){
+    reload_questions_index()
+
+    // Remove alternativa
+    $("a.remove").live('click', function(e){
+      $(this).prev("input[type=hidden]").val("1")
+      $(this).parent(".fields").hide()
+      reload_questions_index()
+      e.preventDefault()
+    })
+})
+
+// Recarrega tiny_mce
+function reload_tinyMCE(){
+  <%= raw_tiny_mce_init %>
+}
+
+// Adiciona numeração das questoes
+function reload_questions_index(){
+  $("fieldset.questions:not(:hidden) > legend").each(function(i){
+    $(this).html("Question " + ($("fieldset.questions:not(:hidden) > legend").index(this) + 1))
+  })
+}
+
+// Adiciona alternativas ou questões
+function add_fields(link, association, content) {
+    var new_id = new Date().getTime();
+    var regexp = new RegExp("new_" + association, "g");
+    $(link).before(content.replace(regexp, new_id));
+    reload_tinyMCE()
+    reload_questions_index()
+}
+
+//]]>
+</script>
 <div class="grid_16">
   <%= f.error_messages %>
 
@@ -13,6 +50,7 @@
     <% f.fields_for :questions do |builder| %>
       <%= render "question_fields", :f => builder %>
     <% end %>
+    <%= link_to_add_fields "Adicionar questão", f, :questions %>
   <% end %>
 
   <%= hidden_field_tag("step", "editor")%>

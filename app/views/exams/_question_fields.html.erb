@@ -1,12 +1,19 @@
-<% field_set_tag "Questão 1" do %>
-  <%= f.text_area :statement %>
-  <%= f.hidden_field :answer_id %>
+<% field_set_tag "Questão ", :class => "fields questions" do %>
+
+  <%= f.text_area :statement, :class => "mceEditor" %>
+  <% field_set_tag "Informações" do %>
+    <%= f.label :source, "Fonte" %>
+    <span class="snippet" style="display: block;">
+      De onde a questão foi retirada (ex: COVEST/2009)
+    </span>
+    <%= f.text_field :source %>
+  <% end %>
   <% field_set_tag "Alternativas", :class => "alternatives" do  %>
     <% f.fields_for :alternatives do |builder| %>
-      <div>
-      <%= builder.check_box :correct, :style => "float: left; margin-right: 10px;" %>
-      <%= builder.text_field :statement %>
-      </div>
+      <%= render 'alternative_fields', :f => builder %>
     <% end %>
+    <%= link_to_add_fields "Adicionar alternativa", f, :alternatives %>
   <% end %>
+  <%= f.hidden_field :_destroy %>
+  <a href="#" class="remove">remover</a>
 <% end %>

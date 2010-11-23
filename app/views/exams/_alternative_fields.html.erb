@@ -1,2 +1,6 @@
-<%= builder.check_box :correct, :style => "float: left; margin-right: 10px;" %>
-<%= builder.text_field :statement %>
+<div class="fields">
+  <%= f.check_box :correct, :style => "float: left; margin-right: 10px;" %>
+  <%= f.text_field :statement %>
+  <%= f.hidden_field :_destroy %>
+  <a href="#" class="remove">remover</a>
+</div>

@@ -181,7 +181,16 @@ class ExamsController < BaseController
   # Wizard de Exame. Nos primeiros passos as informações são guardadas na session.
   # O registo só é salvo no último passo.
   def create
-    session[:exam_params].deep_merge!(params[:exam]) if params[:exam]
+    if params[:exam]
+      # Evita duplicação dos campos gerados dinamicamente no passo 2
+      if params[:exam].has_key?(:questions_attributes)
+        session[:exam_params].delete("questions_attributes")
+      end
+
+      # Atualizando dados da sessão
+      session[:exam_params].deep_merge!(params[:exam])
+    end
+
     @exam = Exam.new(session[:exam_params])
     @exam.current_step =  params[:step]
     @exam.owner = current_user
@@ -205,7 +214,7 @@ class ExamsController < BaseController
     if @exam.new_record?
       if params[:step] == 'general' || @exam.invalid? || @exam.questions.empty?
         @exam.questions.build if @exam.questions.empty?
-        @exam.questions.each { |q| q.alternatives.build }
+        @exam.questions.each { |q| q.alternatives.build if q.alternatives.empty? }
       end
       render "new"
     end
