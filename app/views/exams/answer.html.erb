@@ -27,9 +27,7 @@
                   <li><%= link_to_remote x + 1, :url => {:action => :answer, :id => session[:exam].id, :q_index => x}, :loading => "showLoading()", :html => {:class => 'number', :id => 'qIndex'+ q.id.to_s}%></li>
                 <% end %>
               <% end %>
-
             </ul>
-
           <% end %>
         </div>
 

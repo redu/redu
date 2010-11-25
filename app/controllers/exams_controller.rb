@@ -48,7 +48,7 @@ class ExamsController < BaseController
     session[:question_index] ||= 0
     session[:prev_index] ||= 0
     session[:correct] ||= 0
-
+    session[:answers] ||= {}
 
     # if user selected a question to show
     if params.has_key?(:q_index)
@@ -70,35 +70,34 @@ class ExamsController < BaseController
       else #proximo / pular para
         session[:question_index] = params[:q_index].to_i
       end
+    elsif !params.has_key?('first')
+      redirect_to :action => "compute_results"
     end
 
     @step =  session[:exam].questions[session[:question_index]]
     @prev_step =  session[:exam].questions[session[:prev_index]] if session[:question_index] != session[:prev_index]
     @has_next = (session[:question_index] < (session[:exam].questions.length - 1)) ? true : false
     @has_prev = (session[:question_index] > 0)
-    @theanswer = params[:answer]
 
-    if @theanswer and @prev_step #TODO aceitar questoes em branco
-      session[:answers][@prev_step.id] = @theanswer
-    end
-
-    if @step.nil?
-      compute_results
-    else
-      respond_to do |format|
-        format.js
-        format.html
+    # Salvando respostas dadas
+    if params.has_key?(:answer) && params.has_key?(:question)
+      unless params[:answer].empty?
+        session[:answers][params[:question].to_i] = params[:answer].to_i
+      else
+        session[:answers][params[:question].to_i] = nil
       end
     end
   end
 
   def compute_results
-    @exam = session[:exam]
-    @answers = session[:answers]
+    @exam = session[:exam] if session[:exam]
+    @answers = session[:answers] if session[:answers]
+    @corrects = []
     @correct = 0
-    @corrects = Array.new
-    @exam.questions.each_with_index do |question, k|
-      if session[:answers][question.id].to_i == question.answer.id
+
+    @exam.questions.each do |question|
+      #TODO setar o Question.answer no momento da criação
+      if session[:answers][question.id] == question.answer.id
         @corrects << question
         @correct += 1
       end
@@ -206,6 +205,11 @@ class ExamsController < BaseController
         @exam.previous_step
       # No último passo salvar
       elsif @exam.last_step? and @exam.save
+        @exam.questions.each do |question|
+          correct = question.alternatives.find(:first, :conditions => {:correct => true})
+          question.answer = correct if correct
+          question.save!
+        end
         session[:exam_params] = nil
         flash[:notice] = "Exame criado!"
         redirect_to @exam

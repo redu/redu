@@ -1,8 +1,8 @@
-<% field_set_tag "Questão #{session[:question_index]}", :class => "heighted" do %>   
+<% field_set_tag "Questão #{session[:question_index]}", :class => "heighted" do %>
 
   <div id="texto_instrucoes">
     <% if question.source%>
-      <span class="snippet"> 
+      <span class="snippet">
         Fonte: <%= question.source %> |
       </span>
     <% end %>
@@ -13,8 +13,16 @@
 
   <div id="all_respostas">
     <% for alternative in question.alternatives %>
-      <%= radio_button_tag("answer", alternative.id, checked = false) %>
+      <%
+        # Se já foi respondido, marcando a resposta
+        check = false
+        if session[:answers].has_key?(question.id)
+          check = ( session[:answers][question.id] == alternative.id )
+        end
+      %>
+      <%= radio_button_tag("answer", alternative.id, checked = check) %>
       <%= alternative.statement %><BR>
     <% end %>
   </div>
+  <%= button_to_function "Deixar em branco", "clearAnswers()" %>
 <% end %>

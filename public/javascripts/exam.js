@@ -96,6 +96,13 @@ function showLoading(){
                           "</div>")
 }
 
-function addQuestionParams(){
+function addQuestionParams(question_id){
+  var alternative_id = $("#question_box input[type=radio]:checked").val()
+  alternative_id = alternative_id == undefined ? "" : alternative_id
 
+  return "question="+ question_id + ";answer=" + alternative_id
+}
+
+function clearAnswers(){
+  $("#all_respostas input[type=radio]").removeAttr("checked")
 }
