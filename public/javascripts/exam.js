@@ -1,3 +1,7 @@
+$(document).ready(function(){
+    $(".tabs").tabs()
+})
+
 var startTime = 0
 var start = 0
 var end = 0
@@ -86,11 +90,12 @@ function selectId(id){
 }
 
 function showLoading(){
-  $('#q_loading').show();
-  $('#navigation').hide();
-}
-function hideLoading(){
-  $('#q_loading').hide();
-  $('#navigation').show();
+  $('#question_box fieldset').html("<div id=\"q_loading\">" +
+                          "<em>Carregando questão...</em>" +
+                          "<img src=\"/images/loadingAnimation.gif\" alt=\"Loadinganimation\">" +
+                          "</div>")
 }
 
+function addQuestionParams(){
+
+}

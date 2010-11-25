@@ -49,8 +49,15 @@ class ExamsController < BaseController
     session[:prev_index] ||= 0
     session[:correct] ||= 0
 
+
     # if user selected a question to show
-    if params[:q_index]
+    if params.has_key?(:q_index)
+      # Setando o prev_index baseado no question_index anterior
+      if session[:question_index] > 0
+        session[:prev_index] -= 1
+      else
+        session[:prev_index] = 0
+      end
       if params[:q_index] == 'i' #instrucoes
         @show_i = true
         @has_next = true
@@ -74,8 +81,6 @@ class ExamsController < BaseController
     if @theanswer and @prev_step #TODO aceitar questoes em branco
       session[:answers][@prev_step.id] = @theanswer
     end
-    session[:prev_index] = session[:question_index]
-    session[:question_index] += 1
 
     if @step.nil?
       compute_results
