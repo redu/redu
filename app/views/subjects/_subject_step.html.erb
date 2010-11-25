@@ -1,12 +1,3 @@
-<script type="text/javascript">
-
-  $(document).ready(function(){
-      $('#subject_description').keyup(function(){
-        limitChars('subject_description', <%=AppConfig.desc_char_limit %>, 'char_limit');
-        })
-      });
-</script>
-
 <div class="grid_9 push_3">
   <table class="booking_steps" cellpadding="0" cellspacing="0">
     <tbody><tr>
@@ -27,7 +18,7 @@
 
   <% field_set_tag 'Informações Gerais' do %>
     <%= f.label 'Divulgar no espaço' %>
-    <%= f.select(:space_id, options_for_select(@existent_spaces, @space.id)) %>
+    <%= f.select(:space_id, options_for_select(existent_spaces, @space.id)) %>
 
     <%= f.label "Nome" %>
     <%= f.text_field :title, :size => 50 %>

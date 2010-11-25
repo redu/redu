@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  subject_id: 1
+  type: MyString
+  name: MyString
+  assetable_id: 1
+  assetable_type: MyString
+
+two:
+  subject_id: 1
+  type: MyString
+  name: MyString
+  assetable_id: 1
+  assetable_type: MyString

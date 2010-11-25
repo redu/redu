@@ -2,6 +2,7 @@ class Subject < ActiveRecord::Base
 
   #associations
   has_many :assets
+  has_many :lazy_assets
   has_many :enrollments, :dependent => :destroy
   has_many :statuses, :as => :statusable
   has_many :students, :through => :enrollments, :source => :user, :conditions => [ "enrollments.role_id = ?", 7 ]
@@ -9,6 +10,9 @@ class Subject < ActiveRecord::Base
   has_many :student_profiles, :dependent => :destroy
   belongs_to :owner, :class_name => "User" , :foreign_key => "user_id"
   belongs_to :space
+  accepts_nested_attributes_for :lazy_assets,
+    :reject_if => lambda { |lazy_asset| lazy_asset[:name].blank? or
+      lazy_asset[:lazy_type].blank? }, :allow_destroy => true
 
   # METODOS DO WIZARD
   attr_writer :current_step
@@ -24,6 +28,10 @@ class Subject < ActiveRecord::Base
   #validations
   validates_presence_of :title, :if => lambda {|s| s.current_step == "subject"}
   validates_presence_of :description, :if => lambda {|s| s.current_step == "subject"}
+  validates_presence_of :lazy_assets, :if => lambda {|s| s.current_step == "lecture"}
+
+  validation_group :subject, :fields => [:title, :description]
+  validation_group :lecture, :fields => [:lazy_assets]
 
   def to_param #friendly url
     "#{id}-#{title.parameterize}"
@@ -67,6 +75,10 @@ class Subject < ActiveRecord::Base
       self.current_step = step
       valid?
     end
+  end
+
+  def enable_correct_validation_group!
+    self.enable_validation_group(self.current_step.to_sym)
   end
 
   def create_lecture_subject_type_lecture aulas, subject_id, current_user

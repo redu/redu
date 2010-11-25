@@ -82,45 +82,57 @@ class SubjectsController < BaseController
   def new
     session[:subject_params] ||= {}
     @subject = Subject.new
-    @existent_spaces = @course.spaces.collect { |s| [s.name, s.id] }
   end
 
   def create
 
     if params[:subject]
+      # Evita duplicação dos campos gerados dinamicamente no passo 2
+      if params[:subject].has_key?(:lazy_assets_attributes)
+        session[:subject_params].delete("lazy_assets_attributes")
+      end
+      # Atualizando dados da sessão
       session[:subject_params].deep_merge!(params[:subject])
     end
-    session[:subject_aulas]= params[:aulas] unless params[:aulas].nil?
-    session[:subject_exames] = params[:exams] unless params[:exams].nil?
+
     @subject = current_user.subjects.new(session[:subject_params])
-    @subject.current_step = params[:step]#session[:subject_step] assim evita que ao dar refresh vá para o proximo passo
+    # Evita que ao dar refresh vá para o proximo passo.
+    @subject.current_step = params[:step]
 
-    if  @subject.valid?
-      if params[:back_button]
-        @subject.previous_step
-      elsif @subject.last_step?
-
+    # Redirecionando para o passo especificado
+    @subject.enable_correct_validation_group!
+    if params[:back_button]
+      @subject.previous_step
+    elsif  @subject.valid?
+      if @subject.last_step?
+        # No último passo, verifica se está tudo ok para salvar.
         if @subject.all_valid?
           @subject.save
-          @subject.create_lecture_subject_type_lecture(session[:subject_aulas], @subject.id, current_user) unless session[:subject_aulas].nil?
-          @subject.create_lecture_subject_type_exam(session[:subject_exames], @subject.id, current_user) unless session[:subject_exames].nil?
         end
       else
         @subject.next_step
+        @subject.lazy_assets.build
+        @user_assets = current_user.lectures.collect { |l| [l.name, l.id] } +
+          current_user.exams.collect { |l| [l.name, l.id] }
       end
       session[:subject_step]= @subject.current_step
     end
 
     if @subject.new_record?
+      if (params[:step] == 'lecture' || @subject.invalid? ||
+        @subject.lazy_assets.empty?) && @subject.lazy_assets.empty?
+          @subject.lazy_assets.build
+      end
       render "new"
     else
-      session[:subject_step] = session[:subject_params]= session[:subject_aulas]=session[:subject_exames] = nil
-      redirect_to admin_subjects_path #TODO Melhor redirecionar para o show?
+      session[:subject_step] = session[:subject_params] = nil
+      redirect_to subject_path(@subject)
     end
   end
 
   def cancel
-    session[:subject_step] = session[:subject_params]= session[:subject_aulas]= session[:subject_id]= session[:subject_exames]  = nil
+    session[:subject_step] = session[:subject_params]= session[:subject_id]= nil
+    redirect_to space_path(:id => params[:space_id])
   end
 
   def edit
