@@ -105,7 +105,6 @@ class SubjectsController < BaseController
       asset.enable_correct_validation_group!
     end
     
-      debugger
     if params[:back_button]
       @subject.previous_step
     elsif  @subject.valid?
