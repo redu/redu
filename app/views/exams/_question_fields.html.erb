@@ -8,6 +8,7 @@
     <%= f.text_field :source %>
   <% end %>
   <% field_set_tag "Alternativas", :class => "alternatives" do  %>
+    <span style="display:block; padding-bottom:10px" class="snippet">Você deve escolher uma alternativa correta</span>
     <% f.fields_for :alternatives do |builder| %>
       <%= render 'alternative_fields', :f => builder %>
     <% end %>

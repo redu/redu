@@ -222,7 +222,9 @@ class ExamsController < BaseController
     if @exam.new_record?
       if params[:step] == 'general' || @exam.invalid? || @exam.questions.empty?
         @exam.questions.build if @exam.questions.empty?
-        @exam.questions.each { |q| q.alternatives.build if q.alternatives.empty? }
+        @exam.questions.each do |q|
+          2.times { q.alternatives.build } if q.alternatives.empty?
+        end
       end
       render "new"
     end
