@@ -166,10 +166,6 @@ url: "<%= url_for :controller => :exams, :action => :review_question %>"
         <th class="question_user_answer">Sua Resposta</th>
         
         <th class="question_correct_answer">Resposta Certa</th>
-        <!--
-        <th class="question_type">Tipo de Questão</th>
-        -->
-        <th class="question_concept">Conceitos Fundamentais</th>
       </tr>
     </thead>
     <tbody>
@@ -211,9 +207,6 @@ url: "<%= url_for :controller => :exams, :action => :review_question %>"
           <td class="question_correct_answer show_row">	
             (<%= @alternative_letters[question.answer.id] %>)
             
-          </td>
-          <td class="question_concept show_row">
-            <a href="/sat/work/view_content/926" class="content_link" name="926">Categorias</a>
           </td>
         </tr>
         

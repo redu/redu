@@ -432,7 +432,6 @@ class ExamsController < BaseController
   # GET /exams/1/edit
   def edit
     @exam = Exam.find(params[:id])
-    render :action => :new
   end
 
   # PUT /exams/1

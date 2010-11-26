@@ -1,0 +1,6 @@
+<div class="grid_16">
+  <% form_for @exam do |f| %>
+    <%= render :partial => 'exams/general_form', :locals => { :f => f } %>
+    <%= f.submit "Editar" %>
+  <% end %>
+</div>

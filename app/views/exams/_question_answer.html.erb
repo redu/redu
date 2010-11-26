@@ -3,7 +3,7 @@
   <div id="texto_instrucoes">
     <% if question.source%>
       <span class="snippet">
-        Fonte: <%= question.source %> |
+        Fonte: <%= question.source %>
       </span>
     <% end %>
     <%= question.statement %>
@@ -24,5 +24,6 @@
       <%= alternative.statement %><BR>
     <% end %>
   </div>
-  <%= button_to_function "Deixar em branco", "clearAnswers()" %>
+  <%= button_to_function "Desmarcar", "clearAnswers()" %>
+  <span class="snippet">Você pode deixar em branco</span>
 <% end %>

@@ -1,8 +1,8 @@
 <%= javascript_include_tag "exam.js" %>
 
 <div class="grid_16 alpha omega">
-  <%= render :partial => "exam_header"%>
 
+  <%= render :partial => "exam_header" %>
   <div class="grid_4 push_12">
     <div id="clock" >00:00:00</div>
   </div>
@@ -37,7 +37,7 @@
       <% end %>
 
     </div><!-- end exam -->
-    <div id="instructions" class="clearfix">
+    <div id="instructions" class="clearfix pretty-text">
       <%= render :partial => "exams/instructions" %>
     </div><!-- end instructions -->
   </div>
