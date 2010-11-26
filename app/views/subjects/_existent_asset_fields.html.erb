@@ -1,0 +1,10 @@
+<% field_set_tag "Recurso", :class => "fields lazy-assets" do %>
+  <%= f.label :assetable_id, 'Copiar aula já existente' %>
+  <%= f.hidden_field :assetable_id, :class => "assetable_id" %>
+  <%= f.hidden_field :assetable_type, :class => "assetable_type" %>
+  <%= select_tag(:assetable_id, options_for_select(user_assets), 
+               :class => "existent-asset") %>
+
+  <%= f.hidden_field :_destroy %>
+  <a href="#" class="remove">remover</a>
+<% end %>

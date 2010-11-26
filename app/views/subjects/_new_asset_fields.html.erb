@@ -1,15 +1,8 @@
 <% field_set_tag "Recurso", :class => "fields lazy-assets" do %>
-  <div class="existent">
-    <%= f.radio_button :existent, false, :class => "new" %>
-    <%= f.label :existent, "Novo", :class => "inline" %>
-    <%= f.radio_button :existent, true, :class => "exist"%>
-    <%= f.label :existent, "Existente", :class => "inline" %>
-  </div>
-  <div class="hide new-form">
     <%= f.label :name, "Nome" %>
     <%= f.text_field :name, :size => 40 %>
-
-    <% field_set_tag  "Tipo" do%>
+  
+    <% field_set_tag  "Tipo" do %>
       <%= f.radio_button :lazy_type, "Page" %>
       <%= f.label :lazy_type, "Página Simples", :class => "inline" %>
       <%= f.radio_button :lazy_type, "InteractiveClass" %>
@@ -19,15 +12,6 @@
       <%= f.radio_button :lazy_type, "Exam" %>
       <%= f.label :lazy_type, "Exame Simples", :class => "inline" %>
     <% end %>
-  </div>
-
-  <div class="hide exist-form">
-    <%= f.label :assetable_id, 'Copiar aula já existente' %>
-    <%= f.hidden_field :assetable_id, :class => "assetable_id" %>
-    <%= f.hidden_field :assetable_type, :class => "assetable_type" %>
-    <%= select_tag(:assetable_id, options_for_select(user_assets), 
-                   :class => "existent-asset") %>
-  </div>
 
   <%= f.hidden_field :_destroy %>
   <a href="#" class="remove">remover</a>

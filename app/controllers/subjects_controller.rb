@@ -101,6 +101,11 @@ class SubjectsController < BaseController
 
     # Redirecionando para o passo especificado
     @subject.enable_correct_validation_group!
+    @subject.lazy_assets.each do |asset|
+      asset.enable_correct_validation_group!
+    end
+    
+      debugger
     if params[:back_button]
       @subject.previous_step
     elsif  @subject.valid?
@@ -112,13 +117,12 @@ class SubjectsController < BaseController
       else
         @subject.next_step
         @subject.lazy_assets.build
-        @user_assets = current_user.lectures.collect { |l| [l.name, l.id] } +
-          current_user.exams.collect { |l| [l.name, l.id] }
       end
       session[:subject_step]= @subject.current_step
     end
-
+    
     if @subject.new_record?
+      
       if (params[:step] == 'lecture' || @subject.invalid? ||
         @subject.lazy_assets.empty?) && @subject.lazy_assets.empty?
           @subject.lazy_assets.build
