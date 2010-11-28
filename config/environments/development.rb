@@ -22,16 +22,22 @@ config.action_mailer.raise_delivery_errors = false
 
 # Armazena no sist. de arquivos
 PAPERCLIP_STORAGE_OPTIONS = {
-  :path => "public/system/:class/:attachment/:id/:style/:basename.:extension",
-  :url => "/system/:class/:attachment/:id/:style/:basename.:extension",
-  :default_url => "missing_:style.png",
+  :storage => :s3,
+  :s3_credentials => S3_CREDENTIALS,
+  :bucket => S3_CREDENTIALS['bucket'],
+  :path => ":class/:attachment/:id/:style/:basename.:extension",
+  :default_url => "http://redu_assets.s3.amazonaws.com/images/missing_:style.png",
   :styles => { :medium => "220x220>",
                :thumb => "140x140>",
                :small => "60x60>",
                :nano => "24x24>" }
 }
 
-VIDEO_ORIGINAL = PAPERCLIP_STORAGE_OPTIONS
+PAPERCLIP_MYFILES_OPTIONS = PAPERCLIP_STORAGE_OPTIONS.merge({
+  :bucket => S3_CREDENTIALS['files_bucket'],
+  :path => ":class/:attachment/:id/:style/:basename.:extension",
+  :default_url => ":class/:attachment/:style/missing.png",
+})
 
 # Só converte os 5 primeiros segundos (grátis)
 ZENCODER_CONFIG[:test] = 1

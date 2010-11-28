@@ -59,6 +59,12 @@ class Exam < ActiveRecord::Base
     APP_URL + "/exams/"+ self.id.to_s+"-"+self.name.parameterize
   end
 
+  # Seta respostas corretas para cada questão e salva
+  def set_answers!
+    self.questions.find(:all, :include => :alternatives).each {|q| q.set_answer! }
+    self.save!
+  end
+
   def current_step
     @current_step || steps.first
   end

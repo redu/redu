@@ -12,15 +12,15 @@ class Subject < ActiveRecord::Base
   belongs_to :space
 
   accepts_nested_attributes_for :lazy_assets,
-    :reject_if => lambda { |lazy_asset| 
+    :reject_if => lambda { |lazy_asset|
         if lazy_asset[:existent].eql? "new"
-          lazy_asset[:assetable_id].blank? && 
-          lazy_asset[:assetable_type].blank? 
+          lazy_asset[:assetable_id].blank? &&
+          lazy_asset[:assetable_type].blank?
         elsif lazy_asset[:existent].eql? "exist"
-          lazy_asset[:name].blank? && 
+          lazy_asset[:name].blank? &&
           lazy_asset[:lazy_type].blank?
         end
-      }, 
+      },
       :allow_destroy => true
 
   # METODOS DO WIZARD
@@ -39,6 +39,8 @@ class Subject < ActiveRecord::Base
   validates_presence_of :title, :description
   validates_length_of :lazy_assets, :allow_nil => false, :minimum => 1
   validates_associated :lazy_assets
+
+  named_scope :existent, :conditions => { :existent => true }
 
   def to_param #friendly url
     "#{id}-#{title.parameterize}"
@@ -88,6 +90,17 @@ class Subject < ActiveRecord::Base
     self.enable_validation_group(self.current_step.to_sym)
   end
 
+  # Faz deep clone (i.e. inclusive as associações) de cada lazy_asset
+  # com exitent = true
+  def clone_existent_assets!
+    cloned_assets = lazy_assets.existent.collect do |lazy|
+        lazy.create_asset
+      end
+    self.assets << cloned_assets
+    self.save!
+  end
+
+  #TODO Verificar necessidade
   def create_lecture_subject_type_lecture aulas, subject_id, current_user
 
     #positions tem funcionalidade efetiva na hora de atualizar as aulas, pois existe há possibilidade inserir uma aula numa ordem qualquer
@@ -98,6 +111,7 @@ class Subject < ActiveRecord::Base
   end
 
 
+  #TODO Verificar necessidade
   def update_lecture_subject_type_lecture aulas, subject_id, current_user
 
     aulas_futuras =   aulas.nil? ? Array.new : aulas.map{|a| a.to_i}  #aulas selecionadas na tela, há um operador ternário
@@ -122,6 +136,7 @@ class Subject < ActiveRecord::Base
 
   end
 
+  #TODO Verificar necessidade
   def update_lecture_subject_type_exam exams, subject_id, current_user
 
     exams_futuras =   exams.nil? ? Array.new : exams.map{|a| a.to_i}  #aulas selecionadas na tela, há um operador ternário
@@ -153,6 +168,7 @@ class Subject < ActiveRecord::Base
     end
   end
 
+  #TODO Verificar necessidade
   def create_lecture_subject_type_lecture aulas, subject_id, current_user
 
     aulas.each do |aula|
@@ -169,6 +185,7 @@ class Subject < ActiveRecord::Base
 
   end
 
+  #TODO Verificar necessidade
   def create_lecture_subject_type_exam exams, subject_id
 
     exams.each do |exam_id|
@@ -181,26 +198,32 @@ class Subject < ActiveRecord::Base
 
   end
 
+  #TODO Verificar necessidade
   def aulas
     self.assets.select{|asset| asset.assetable_type.eql?("Lecture")}.map{|a| a.assetable}
   end
 
+  #TODO Verificar necessidade
   def exames
     self.assets.select{|asset| asset.assetable_type.eql?("Exam")}.map{|e| e.assetable}
   end
 
+  #TODO Verificar necessidade
   def enrolled_students
     self.enrollments.map{|e| e.user}
   end
 
+  #TODO Verificar necessidade
   def under_graduaded_students
     self.student_profiles.select{|sp| sp.graduaded == 0 }.map{|e| e.user}
   end
 
+  #TODO Verificar necessidade
   def graduaded_students
     self.student_profiles.select{|sp| sp.graduaded == 1 }.map{|e| e.user}
   end
 
+  #TODO Verificar necessidade
   def not_graduaded_students
     self.student_profiles.select{|sp| sp.graduaded == -1 }.map{|e| e.user}
   end

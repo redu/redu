@@ -18,6 +18,13 @@ class Question < ActiveRecord::Base
   validates_length_of :alternatives, :allow_nil => false, :within => 1..7
   validate :one_alternative_correct
 
+  # Seta a resposta correta (não salva)
+  def set_answer!
+    correct = self.alternatives.find(:first, :conditions => {:correct => true})
+    self.answer = correct
+    self.save!
+  end
+
   private
 
   # Verifica que pelo menos uma Alternativa está correta no contexto de Question
