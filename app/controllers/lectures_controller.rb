@@ -308,7 +308,7 @@ class LecturesController < BaseController
               end
 
               format.js do
-                render :template => 'lecture/create_seminar', :locals => { :lecture_type => params[:lectureable_type], :step => "3"#, :space_id => params[:space_id] 
+                render :template => 'lectures/create_seminar', :locals => { :lecture_type => params[:lectureable_type], :step => "3"#, :space_id => params[:space_id] 
 }  
               end
 
