@@ -17,8 +17,11 @@ module SubjectsHelper
   end
 
   def user_assets
-  current_user.lectures.collect { |l| [l.name, 
-    "#{l.id.to_s}-#{l.lectureable_type}"] } +
-    current_user.exams.collect { |l| [l.name, l.id] }
+    assets = current_user.lectures.collect do |l|
+      [l.name, "#{l.id.to_s}-#{l.lectureable_type}"]
+    end
+    assets += current_user.exams.collect do |l|
+      [l.name, "#{l.id.to_s}-#{l.class.to_s}"]
+    end
   end
 end
