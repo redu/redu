@@ -1,0 +1,8 @@
+<% if lazy_item.existent? %>
+  <%= render :partial => "#{lazy_item.assetable.class.to_s.tableize.singularize}_item", :object => lazy_item.assetable %>
+<% else %>
+  <li class="clearfix">
+    <%= link_to lazy_item.name, new_subject_lecture_path(@subject, :name => "teste", :type => lazy_item.lazy_type), :class => "name" %>
+    <%= lazy_item.lazy_type %>
+  </li>
+<% end %>

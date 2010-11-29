@@ -8,7 +8,7 @@ class LazyAsset < ActiveRecord::Base
     :unless => lambda { self.existent == true },
     :messages => "Recurso inválido ou inexistente"
   validates_inclusion_of :assetable_type,
-    :in => %w(Exam Seminar Page), :if => lambda { self.existent == true },
+    :in => %w(Exam Lecture), :if => lambda { self.existent == true },
     :message => "Tipo de recurso inválido"
 
   # Faz deep clone do assetable e retorna a nova instância
@@ -18,6 +18,7 @@ class LazyAsset < ActiveRecord::Base
 
     case self.assetable_type
     when Seminar.to_s
+      #TODO Nos tipos Seminar, InteractiveClass e Page, passar Lecture
       clone = self.assetable.lecture.clone :include => :lectureable
 
       ActiveRecord::Base.transaction do
@@ -38,6 +39,7 @@ class LazyAsset < ActiveRecord::Base
     end
 
     self.assetable = clone
+    self.save
     self.assetable.save
     return clone
   end

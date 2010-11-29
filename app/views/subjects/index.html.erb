@@ -33,16 +33,6 @@ function getParameters(){
 <% end %>
 
 <div class="grid_16">
-  <!--
-  <div id="breadcrumbs">
-    <% if @space%>
-      <a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <%= link_to @space.name, @space%> > aulas
-    <% else %>
-      <a href="<%=application_url%>">início</a> > <a href="#">aprender</a> > aulas
-    <%end %>
-  </div>
-  -->
-
   <h3> Cursos</h3>
 </div>
 
@@ -50,9 +40,6 @@ function getParameters(){
 
 
 <div class="grid_4 calls" id="filter">
-  <!--
-  <span class="call"><span>Refinar</span></span>
-  -->
   <form>
     <% field_set_tag "Categoria" do %>
       <ul class="criteriaList">
@@ -117,10 +104,9 @@ function getParameters(){
     <%= (params[:search]) ? ("Resultados para: \""+params[:search]+"\"") : "Todas os cursos mais recentes" %>
   </span>
 
-  <% form_tag subjects_path, :method => :get do %>
+  <% form_tag space_subjects_path(@space), :method => :get do %>
     Buscar
     <%= text_field_tag :search, params[:search] %>
-    <%= hidden_field_tag(:space_id, @space.id) if @space%>
     <%= submit_tag "OK", :name => nil%>
   <% end %>
 

@@ -10,9 +10,22 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :lessons
   map.resources :beta_keys, :collection => {:generate => :get, :remove_all => :get, :print_blank => :get, :invite => [:get, :post]}
   map.resources :profiles
-  map.resources :subjects, :member => {:enroll => :get, :upload => :get, :download => :get}, :collection => {:cancel => :get} do |subject|
-  subject.resources :events, :member => { :vote => [:post,:get], :notify => :post }, :collection => { :past => :get, :ical => :get , :day => :get}
-  subject.resources :bulletins, :member => {:rate => :post}
+  map.resources :subjects,
+    :member => {:enroll => :get,
+                :upload => :get,
+                :download => :get,
+                :lazy => :get},
+    :collection => {:cancel => :get} do |subject|
+    subject.resources :events,
+      :member => { :vote => [:post,:get], :notify => :post },
+      :collection => { :past => :get,
+                       :ical => :get ,
+                       :day => :get }
+    subject.resources :bulletins, :member => {:rate => :post}
+    subject.resources :seminars
+    subject.resources :lectures
+    subject.resources :exams
+    subject.resources :pages
   end
 
   map.admin_subjects "admin/subjects", :controller => "subjects", :action => "admin_subjects"
@@ -119,7 +132,8 @@ ActionController::Routing::Routes.draw do |map|
                    :rename => :get,
                    :destroy_folder => :delete,
                    :destroy_file => :delete }
-    space.resources :subjects
+    space.resources :subjects,
+      :member => { :lazy => :get }
     space.resources :bulletins
     space.resources :events,
       :member => { :vote => [:post,:get], :notify => :post },

@@ -398,7 +398,7 @@ ul.default > li.even {
   background-color: white;
 }
 
-ul.default > li div.headlines {
+ul.default > li .headlines {
   background: white;
   border: 1px solid #EFF0F0;
   float: right;
@@ -469,7 +469,6 @@ ul.default > li a.answer:hover {
   border: 1px solid green;
   color: white;
 }
-
 
 ul.pagination {
   margin-top: 30px;

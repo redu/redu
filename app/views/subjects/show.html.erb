@@ -1,7 +1,9 @@
 <% content_for :page_id, 'group' %>
 <%- @meta = { :description => "Curso \"#{@subject.title}\" no  #{AppConfig.community_name}.", :keywords => "#{@subject.title}, #{@subject.tags.join(", ") unless @subject.tags.nil?}", :robots => AppConfig.robots_meta_show_content }%>
 
-
+<% unless @subject.published? %>
+  <div class="box_notice">Este módulo ainda não foi publicado pois sua criação precisa ser finalizada. <%= link_to "Clique aqui", lazy_subject_path(@subject) %> para finaliza-la.</div>
+<% end %>
 <script type="text/javascript">
   var subjectFoldersPath = "<%# space_folders_path(:space_id => @space.id.to_s) %>";
 

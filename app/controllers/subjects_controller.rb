@@ -8,7 +8,7 @@ class SubjectsController < BaseController
   uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit, :create, :update])
 
   def index
-    session[:subject_step] = session[:subject_params]= session[:subject_aulas]= session[:subject_id]= session[:subject_exames]  = nil
+    @space = Space.find(params[:space_id])
     cond = Caboose::EZ::Condition.new
 
     paginating_params = {
@@ -18,29 +18,11 @@ class SubjectsController < BaseController
       :per_page => AppConfig.items_per_page
     }
 
-    if params[:user_id] # cursos do usuario
-      @user = User.find_by_login(params[:user_id])
-      @user = User.find(params[:user_id]) unless @user
-      @subjects = @user.subjects.paginate(paginating_params)
-      render((@user == current_user) ? "user_subjects_private" :  "user_subjects_public") #TODO
-      return
-
-    elsif params[:space_id] # cursos da escola
-      @space= Space.find(params[:space_id])
-      if params[:search] # search cursos da escola
-        @subjects = @space.subjects.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
-      else
-        @subjects = @space.subjects.paginate(paginating_params)
-      end
-    else # index
-      if params[:search] # search
-        @subjects = Subject.title_like_all(params[:search].to_s.split).is_public(true).ascend_by_title.paginate(paginating_params)
-      else
-        @subjects = Subject.is_public(true).paginate(paginating_params) #is_public metodo fornecido pelo searchlogic
-      end
+    if params[:search] # search cursos da escola
+      @subjects = @space.subjects.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
+    else
+      @subjects = @space.subjects.paginate(paginating_params)
     end
-
-    # @popular_tags = Lecture.tag_counts
 
     respond_to do |format|
       format.html # index.html.erb
@@ -55,7 +37,6 @@ class SubjectsController < BaseController
         else
           render :index
         end
-
       end
     end
   end
@@ -77,6 +58,15 @@ class SubjectsController < BaseController
       end
     end
 
+  end
+
+  def lazy
+    @space = @subject.space
+    @lazy_assets = @subject.lazy_assets
+
+    respond_to do |format|
+      format.html
+    end
   end
 
   def new

@@ -1,0 +1,11 @@
+<div class="grid_16">
+  <% unless @lazy_assets.empty? %>
+    <div class="lazy_list grid_12 alpha">
+      <ul class="default">
+        <%= render :partial => "lazy_item", :collection => @lazy_assets %>
+      </ul>
+    </div>
+  <% else %>
+    <div class="box_notice">Nenhum recurso com criação pendente</div>
+  <% end %>
+</div>

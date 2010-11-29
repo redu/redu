@@ -37,7 +37,6 @@ class Subject < ActiveRecord::Base
   validates_presence_of :title, :description
   validates_length_of :lazy_assets, :allow_nil => false, :minimum => 1,
     :message => "O módulo precisar ter pelo menos um recurso"
-  validates_associated :lazy_assets
 
   validation_group :subject, :fields => [:title, :description]
   validation_group :lecture, :fields => [:lazy_assets]
