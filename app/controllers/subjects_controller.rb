@@ -62,7 +62,6 @@ class SubjectsController < BaseController
 
   def lazy
     @space = @subject.space
-    @lazy_assets = @subject.lazy_assets
 
     respond_to do |format|
       format.html
@@ -88,6 +87,7 @@ class SubjectsController < BaseController
     @subject = current_user.subjects.new(session[:subject_params])
     # Evita que ao dar refresh vá para o proximo passo.
     @subject.current_step = params[:step]
+    debugger
 
     # Redirecionando para o passo especificado
     @subject.enable_correct_validation_group!
@@ -173,6 +173,31 @@ class SubjectsController < BaseController
       redirect_to :action =>"admin_subjects"
     end
 
+  end
+
+  def unpublish
+    #TODO depende de enrollments
+  end
+
+  def publish
+    unless @subject.assets.empty?
+      @subject.published = true
+      @subject.save
+
+      respond_to do |format|
+        format.html do
+          @space = @subject.space
+          flash[:notice] = "Módulo publicado"
+          redirect_to :action => "show"
+        end
+      end
+    else
+      flash[:notice] = "Para se publicado o módulo deve possuir pelo menos " + \
+        "uma aula finalizada"
+      respond_to do |format|
+        format.html { render "lazy" }
+      end
+    end
   end
 
   def destroy

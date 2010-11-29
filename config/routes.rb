@@ -14,7 +14,9 @@ ActionController::Routing::Routes.draw do |map|
     :member => {:enroll => :get,
                 :upload => :get,
                 :download => :get,
-                :lazy => :get},
+                :lazy => :get,
+                :publish => :get,
+                :unpublish => :get},
     :collection => {:cancel => :get} do |subject|
     subject.resources :events,
       :member => { :vote => [:post,:get], :notify => :post },
@@ -133,7 +135,12 @@ ActionController::Routing::Routes.draw do |map|
                    :destroy_folder => :delete,
                    :destroy_file => :delete }
     space.resources :subjects,
-      :member => { :lazy => :get }
+      :member => { :enroll => :get,
+                   :upload => :get,
+                   :download => :get,
+                   :lazy => :get,
+                   :publish => :get,
+                   :unpublish => :get }
     space.resources :bulletins
     space.resources :events,
       :member => { :vote => [:post,:get], :notify => :post },

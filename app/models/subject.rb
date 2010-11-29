@@ -107,6 +107,12 @@ class Subject < ActiveRecord::Base
     self.save
   end
 
+  #TODO usar maquina de estados
+  # Verifica se todos os lazy_assets foram criados
+  def ready_to_be_published?
+    self.published? || self.lazy_assets.size == self.assets.size
+  end
+
   #TODO Verificar necessidade
   def create_lecture_subject_type_lecture aulas, subject_id, current_user
 
