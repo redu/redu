@@ -2,9 +2,10 @@ class EventsController < BaseController
   require 'htmlentities'
 	
   layout 'environment'
-	load_and_authorize_resource
+  load_and_authorize_resource :space
+	load_and_authorize_resource :event, :through => :space
 
-  before_filter :find_environmnet_course_and_space
+  #before_filter :find_environmnet_course_and_space
   caches_page :ical
   cache_sweeper :event_sweeper, :only => [:create, :update, :destroy]
   before_filter :is_event_approved,
@@ -76,11 +77,15 @@ class EventsController < BaseController
 
   def edit
   end
-
+  
   def create
     # Passando para o formato do banco
+
     params[:event][:start_time] = Time.zone.parse(params[:event][:start_time].gsub('/', '-'))
     params[:event][:end_time] = Time.zone.parse(params[:event][:end_time].gsub('/', '-'))
+
+    #FIXME o Event.new está sendo chamado duas vezes, uma vez pelo cancan e o outro aqui
+    @event = Event.new(params[:event])
 
     @event.owner = current_user
     @event.space = Space.find(params[:space_id])

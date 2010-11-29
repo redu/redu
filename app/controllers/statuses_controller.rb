@@ -1,8 +1,11 @@
 class StatusesController < BaseController
-  before_filter :login_required
+  #before_filter :login_required
+  load_resource :except => [:more, :index]
+  #TODO colocar subject, quando estiver pronto e verificar se exam tem algum status
+  authorize_resource :status, :through => [:space, :user, :environment, :lecture]
 
   def create
-    @status = Status.new(params[:status])
+    #@status = Status.new(params[:status])
     @status.user = current_user
 
     respond_to do |format|
@@ -22,7 +25,7 @@ class StatusesController < BaseController
   end
 
   def respond
-    responds_to = Status.find(params[:id])
+    #responds_to = Status.find(params[:id])
     @status = Status.new(params[:status])
     @status.in_response_to = responds_to
     @status.user = current_user
@@ -54,7 +57,7 @@ class StatusesController < BaseController
   end
 
   def new
-    @status = Status.new
+    #@status = Status.new
   end
 
   def index
@@ -66,6 +69,6 @@ class StatusesController < BaseController
   end
 
   def show
-    @status = Status.find(params[:id])
+    #@status = Status.find(params[:id])
   end
 end
