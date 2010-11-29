@@ -68,14 +68,14 @@ class SubjectsController < BaseController
     @percentage = student_profile.nil? ? 0 : student_profile.coursed_percentage(@subject)
 
     respond_to do |format|
-        if current_user.enrollments.detect{|e| e.subject_id.eql?(params[:id].to_i)}.nil?
-          format.html{  render "preview" }
-        else
-          @status = Status.new
-          @statuses = @subject.recent_activity(0,10)
-          format.html
-        end
-    end#format
+      if current_user.enrollments.detect{|e| e.subject_id.eql?(params[:id].to_i)}.nil?
+        format.html{  render "preview" }
+      else
+        @status = Status.new
+        @statuses = @subject.recent_activity(0,10)
+        format.html
+      end
+    end
 
   end
 
@@ -101,7 +101,7 @@ class SubjectsController < BaseController
 
     # Redirecionando para o passo especificado
     @subject.enable_correct_validation_group!
-    
+
     if params[:back_button]
       @subject.previous_step
     elsif  @subject.valid?
@@ -109,6 +109,7 @@ class SubjectsController < BaseController
         # No último passo, verifica se está tudo ok para salvar.
         if @subject.all_valid?
           @subject.save
+          @subject.clone_existent_assets!
         end
       else
         @subject.next_step
@@ -116,9 +117,9 @@ class SubjectsController < BaseController
       end
       session[:subject_step]= @subject.current_step
     end
-    
+
     if @subject.new_record?
-      
+
       if (params[:step] == 'lecture' || @subject.invalid? ||
         @subject.lazy_assets.empty?) && @subject.lazy_assets.empty?
           @subject.lazy_assets.build

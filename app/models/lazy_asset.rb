@@ -37,6 +37,8 @@ class LazyAsset < ActiveRecord::Base
       clone.save
     end
 
+    self.assetable = clone
+    self.assetable.save
     return clone
   end
 end
