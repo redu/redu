@@ -1,5 +1,5 @@
-<div id="breadcrumbs"><b><strong><%= link_to "Cursos", subjects_path %></strong></b> > <b><strong><%= h @subject.title%></strong></b> </div>
 <div class="grid_16">
+  <%= render :partial => 'subjects/publish_unpublish' %>
   <% unless @subject.published? %>
     <div class="box_notice">Este módulo ainda não foi publicado pois sua criação precisa ser finalizada. <%= link_to "Clique aqui", lazy_subject_path(@subject) %> para finaliza-la.</div>
   <% end %>

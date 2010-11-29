@@ -4,6 +4,7 @@
 <% unless @subject.published? %>
   <div class="box_notice">Este módulo ainda não foi publicado pois sua criação precisa ser finalizada. <%= link_to "Clique aqui", lazy_subject_path(@subject) %> para finaliza-la.</div>
 <% end %>
+<%= render :partial => 'subjects/publish_unpublish' %>
 <script type="text/javascript">
   var subjectFoldersPath = "<%# space_folders_path(:space_id => @space.id.to_s) %>";
 
