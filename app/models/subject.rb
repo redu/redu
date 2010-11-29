@@ -13,12 +13,12 @@ class Subject < ActiveRecord::Base
 
   accepts_nested_attributes_for :lazy_assets,
     :reject_if => lambda { |lazy_asset|
-        if lazy_asset[:existent].eql? "new"
-          lazy_asset[:assetable_id].blank? &&
-          lazy_asset[:assetable_type].blank?
-        elsif lazy_asset[:existent].eql? "exist"
-          lazy_asset[:name].blank? &&
-          lazy_asset[:lazy_type].blank?
+        if lazy_asset['existent'] == true
+          lazy_asset['assetable_id'].blank? &&
+          lazy_asset['assetable_type'].blank?
+        else
+          lazy_asset['name'].blank? &&
+          lazy_asset['lazy_type'].blank?
         end
       },
       :allow_destroy => true
@@ -37,6 +37,7 @@ class Subject < ActiveRecord::Base
   validates_presence_of :title, :description
   validates_length_of :lazy_assets, :allow_nil => false, :minimum => 1,
     :message => "O módulo precisar ter pelo menos um recurso"
+  validates_associated :lazy_assets
 
   validation_group :subject, :fields => [:title, :description]
   validation_group :lecture, :fields => [:lazy_assets]
