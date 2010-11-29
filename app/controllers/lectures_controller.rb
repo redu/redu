@@ -181,16 +181,6 @@ class LecturesController < BaseController
 
   end
 
-  def view
-    @lecture = Lecture.find(params[:id])
-    @comments  = @lecture.comments.find(:all, :limit => 10, :order => 'created_at DESC')
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @lecture }
-    end
-  end
-
   # GET /lectures/new
   # GET /lectures/new.xml
   def new

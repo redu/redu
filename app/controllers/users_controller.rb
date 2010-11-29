@@ -62,16 +62,7 @@ class UsersController < BaseController
     current_user.log_activity
   end
 
-  def show_favorites
-    #TODO
-  end
-
   ### Followship
-  def can_follow
-    user_id = params[:id]
-    follow_id = params[:follow_id]
-  end
-
   def follows
     @user = User.find(params[:id])
     @follows= @user.follows
@@ -173,11 +164,6 @@ class UsersController < BaseController
     @status = Status.new
   end
 
-  def tos
-    nil
-    #TODO
-  end
-
   def new
     @user         = User.new( {:birthday => Date.parse((Time.now - 25.years).to_s) }.merge(params[:user] || {}) )
     @inviter_id   = params[:id]
@@ -216,7 +202,6 @@ class UsersController < BaseController
 
     @user.save do |result| # LINE A
       if result
-        create_friendship_with_inviter(@user, params)
         if @key
           @key.user = @user
           @key.save
@@ -420,38 +405,10 @@ class UsersController < BaseController
     render :action => 'edit_pro_details'
   end
 
-  def create_friendship_with_inviter(user, options = {})
-    unless options[:inviter_code].blank? or options[:inviter_id].blank?
-      friend = User.find(options[:inviter_id])
-
-      if friend && friend.valid_invite_code?(options[:inviter_code])
-        # add as follower and following
-        friend.followers << user
-        friend.save!
-
-        user.followers << friend
-        user.save!
-      end
-    end
-  end
-
   def signup_completed
     @user = User.find(params[:id])
     redirect_to home_path and return unless @user
     render :action => 'signup_completed'
-  end
-
-  def welcome_photo
-    redirect_to user_path(current_user)
-  end
-
-  def welcome_about
-    @user = User.find(params[:id])
-    @metro_areas, @states = setup_locations_for(@user)
-  end
-
-  def welcome_invite
-    @user = User.find(params[:id])
   end
 
   def invite
@@ -516,18 +473,6 @@ class UsersController < BaseController
     redirect_to user_path(current_user)
   end
 
-  def return_admin
-    unless session[:admin_id].nil? or current_user.admin?
-      admin = User.find(session[:admin_id])
-      if admin.admin?
-        self.current_user = admin
-        redirect_to user_path(admin)
-      end
-    else
-      redirect_to login_path
-    end
-  end
-
   def metro_area_update
     country = Country.find(params[:country_id]) unless params[:country_id].blank?
     state   = State.find(params[:state_id]) unless params[:state_id].blank?
@@ -549,19 +494,6 @@ class UsersController < BaseController
         :selected_metro_area => nil }
       }
     end
-  end
-
-  def toggle_featured
-    @user = User.find(params[:id])
-    @user.toggle!(:featured_writer)
-    redirect_to user_path(@user)
-  end
-
-  def toggle_moderator
-    @user = User.find(params[:id])
-    @user.role = @user.moderator? ? Role[:member] : Role[:moderator]
-    @user.save!
-    redirect_to user_path(@user)
   end
 
   def statistics
