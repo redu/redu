@@ -101,9 +101,6 @@ class SubjectsController < BaseController
 
     # Redirecionando para o passo especificado
     @subject.enable_correct_validation_group!
-    @subject.lazy_assets.each do |asset|
-      asset.enable_correct_validation_group!
-    end
     
     if params[:back_button]
       @subject.previous_step

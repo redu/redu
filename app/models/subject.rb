@@ -34,11 +34,13 @@ class Subject < ActiveRecord::Base
       :default_url => "/images/:class/missing_pic.jpg"}
   }
 
+  validates_presence_of :title, :description
+  validates_length_of :lazy_assets, :allow_nil => false, :minimum => 1,
+    :message => "O módulo precisar ter pelo menos um recurso"
+  validates_associated :lazy_assets
+
   validation_group :subject, :fields => [:title, :description]
   validation_group :lecture, :fields => [:lazy_assets]
-  validates_presence_of :title, :description
-  validates_length_of :lazy_assets, :allow_nil => false, :minimum => 1
-  validates_associated :lazy_assets
 
   named_scope :existent, :conditions => { :existent => true }
 
@@ -94,10 +96,15 @@ class Subject < ActiveRecord::Base
   # com exitent = true
   def clone_existent_assets!
     cloned_assets = lazy_assets.existent.collect do |lazy|
-        lazy.create_asset
+      cloned = lazy.create_asset
+      if cloned
+        asset = Asset.new(:subject => self, :assetable => cloned)
+        self.assets << asset
       end
-    self.assets << cloned_assets
-    self.save!
+    end
+
+    self.enable_validation_group(:lecture)
+    self.save
   end
 
   #TODO Verificar necessidade

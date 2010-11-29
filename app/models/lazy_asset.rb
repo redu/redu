@@ -2,21 +2,14 @@ class LazyAsset < ActiveRecord::Base
   belongs_to :subject
   belongs_to :assetable, :polymorphic => true
 
-  validates_presence_of :name, :lazy_type, :assetable_id, :assetable_type
+  validates_presence_of :name, :lazy_type, :if => lambda { self.existent == true },
+    :message => "Nome e/ou tipo não informados"
+  validates_presence_of :assetable_id, :assetable_type,
+    :unless => lambda { self.existent == true },
+    :messages => "Recurso inválido ou inexistente"
   validates_inclusion_of :assetable_type,
-    :in => %w(Exam Seminar InteractiveClass Page)
-
-  validation_group :lazy, :fields => [:name, :lazy_type]
-  validation_group :existent, :fields => [:assetable_id, :assetable_type]
-
-  def enable_correct_validation_group!
-
-    if self.existent?
-      self.enable_validation_group(:existent)
-    else
-      self.enable_validation_group(:lazy)
-    end
-  end
+    :in => %w(Exam Seminar Page), :if => lambda { self.existent == true },
+    :message => "Tipo de recurso inválido"
 
   # Faz deep clone do assetable e retorna a nova instância
   # O assetable deve possuir o atributo booleano is_clone
