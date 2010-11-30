@@ -87,7 +87,6 @@ class SubjectsController < BaseController
     @subject = current_user.subjects.new(session[:subject_params])
     # Evita que ao dar refresh vá para o proximo passo.
     @subject.current_step = params[:step]
-    debugger
 
     # Redirecionando para o passo especificado
     @subject.enable_correct_validation_group!
