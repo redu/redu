@@ -4,59 +4,80 @@
     Caso não seja necessário exibir o course basta passar :course => nil.
     Caso não seja necessário exibir o space basta passar :space => nil.
   %>
-<div id="environment-header" class="container_16 clearfix" style="background-color: <%= course ? "#" + course.color : "inherited" %>">
-  <% if environment %>
+<%= stylesheet_link_tag 'environment-header.css' %>
+
+<script type="text/javascript">
+  (function($) {
+    $(document).ready(function(){
+      $("#create-header .dropdown .current").hover(
+        function(){
+          $(this).parents('.dropdown:first').addClass('hover')
+        },
+        function(){
+          $(this).parents('.dropdown:first').removeClass('hover')
+        })
+    });
+  })(jQuery);
+</script>
+<div id="environment-header" class="container_16 clearfix">
+  <div class="container_16" id="create-header" style="background-color: <%= course ? "#" + course.color : "inherited" %>">
     <div class="avatar grid_3">
-      <div class="frame"><%= image_tag environment.avatar.url(:thumb)  %></div>
+      <div class="frame" id="university-logo">
+        <div class="inner-frame">
+          <%= image_tag environment.avatar.url(:thumb)  %>
+        </div>
+      </div> <!-- /frame -->
     </div>
-    <div class="name grid_11">
-      <h3><%= link_to environment.name, environment_path(environment) %></h3>
-    </div>
-    <%= link_to "Gerenciar", edit_environment_path(environment),
-      :class => "edit grid_1" %>
-  <% end %>
 
-  <% if course %>
-    <% if space and space.id %>
-      <div class="grid_9">
-        <h4><%= link_to course.name , environment_course_path(environment, course) %> > <%= link_to space.name , space_path(space) %></h4>
-        <% if current_user.can_manage?(@space)%>
-          <%= link_to "Gerenciar", manage_space_path(space), :class => 'grid_2 edit' %>
-          <% if space.published? %>
-            <%= link_to "Despublicar", unpublish_space_path(space),
-              :class => "grid_1" %>
-          <% else %>
-            <%= link_to "Publicar", publish_space_path(space),
-              :class => "grid_1" %>
-          <% end %>
-        <% end %>       
+    <div class="dropdown name grid_11 alpha">
+      <h3><%= link_to environment.name, environment_path(environment) %><%= image_tag "btn-tit-environment.png", :class => "current" %></h3>
+      <div class="dropdown-university">
+        <ul>
+          <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
+          <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
+          <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
+          <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
+          <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
+          <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
+        </ul>
       </div>
-    <% else %>
-      <div class="grid_9">
-        <h4><%= link_to course.name, environment_course_path(environment, course) %></h4>
-      </div>
-      <% if course.owner.eql? current_user %>
-        <%= link_to "Gerenciar", edit_environment_course_path(environment, course),
-          :class => "grid_2 edit" %>
-        <% if course.published? %>
-          <%= link_to "Despublicar", unpublish_environment_course_path(environment, course),
-            :class => "grid_1" %>
-        <% elsif course.can_be_published? %>
-          <%= link_to "Publicar", publish_environment_course_path(environment, course),
-            :class => "grid_1" %>
-        <% end %>
+    </div>
+    <% if course %>
+      <% if space && space.id %>
+        <div class="dropdown course grid_11 alpha">
+          <h4>
+            <%= link_to course.name + " > " , environment_course_path(environment, course) %> <%= link_to space.name , space_path(space) %>
+            <%= image_tag "btn-subtit-environment.png", :class => 'current' %>
+          </h4>
+          <div class="dropdown-university">
+            <ul>
+              <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
+              <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
+              <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
+              <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
+              <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
+              <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
+            </ul>
+          </div>
+        </div>
       <% else %>
-
-        <% if (not current_user.get_association_with(course).nil?  and 
-               current_user.get_association_with(course).state.eql? "approved") %>
-             <div class="grid_2">
-               <%= link_to "Abandonar", unjoin_environment_course_path(environment, course),
-                 :class => "button" %>
-             </div>
-           <% end %>
-
-         <% end %>
-       <% end %>
-     <% end %>
-
-   </div><!-- end environment-header -->
+        <div class="dropdown course grid_11 alpha">
+          <h4>
+            <%= link_to course.name , environment_course_path(environment, course) %>
+            <%= image_tag "btn-subtit-environment.png", :class => 'current' %>
+          </h4>
+          <div class="dropdown-university">
+            <ul>
+              <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
+              <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
+              <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
+              <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
+              <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
+              <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
+            </ul>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div> <!-- /container_16 -->
+</div><!-- end environment-header -->

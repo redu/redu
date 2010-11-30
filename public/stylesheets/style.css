@@ -1182,13 +1182,13 @@ div.recomendations-m .number {
 }
 
 /* Vertical Tabs */
-.ui-tabs-vertical { 
+.ui-tabs-vertical {
   width: 55em;
 }
 
 .ui-tabs-vertical .ui-tabs-nav {
-  padding: .2em .1em .2em .2em; 
-  float: left; 
+  padding: .2em .1em .2em .2em;
+  float: left;
   width: 12em;
 }
 
@@ -1681,7 +1681,6 @@ div.filter-box ul li a {
 div.content {
   min-height: 100%;
   height: auto;
-  padding-top: 10px;
   padding-bottom: 30px;
   position: relative;
   background: white;
@@ -1702,6 +1701,7 @@ div.content div.content {
 * html .content {
   height: 100%;
 }
+
 /* ie6 and under*/
 
 /** @profile **/
@@ -2333,10 +2333,27 @@ ul.sub-groups > li {
 #environment-header {
   -moz-border-radius: 8px;
   -webkit-border-radius: 8px;
-  background: #F2F6F7 url("../images/backgroud-header-environment.png") repeat-x top;
   margin-bottom: 10px;
   padding: 10px 0;
-  height: 70px;
+}
+
+#common-header {
+  -moz-border-radius: 8px 8px 0 0;
+  -webkit-border-radius: 8px;
+  background: #F2F6F7 url("../images/backgroud-header-environment.png") repeat-x top;
+  margin-bottom: 10px;
+  padding: 10px 0 0 0;
+}
+
+
+#common-header .session-title{
+  color:#ffa000;
+  font-family:Arial, Helvetica, sans-serif;
+  font-size:1.5em;
+  font-weight:bold;
+  height:37px;
+  margin-left:10px;
+  padding-top:5px;
 }
 
 #environment-header .avatar {
@@ -2344,10 +2361,6 @@ ul.sub-groups > li {
 
 #environment-header .name {
   margin-bottom: 10px;
-}
-
-#environment-header .name h3 {
-  padding: 0;
 }
 
 /* @footer */
