@@ -1,6 +1,7 @@
 class LazyAsset < ActiveRecord::Base
   belongs_to :subject
   belongs_to :assetable, :polymorphic => true
+  has_one :asset
 
   validates_presence_of :name, :lazy_type, :if => "self.existent == false",
     :message => "Nome e/ou tipo não informados"
