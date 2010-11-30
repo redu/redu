@@ -11,6 +11,8 @@ $(document).ready(function(){
         title: 'Customize seu Curso',
         inputBG: true}
     );
+
+    $("input[name=environment\[courses_attributes\]\[\]\[color\]]").hide()
 }); 
 </script>
 <%= javascript_include_tag "jquery.colourPicker.js" %>
@@ -83,14 +85,16 @@ colors = [["#ffffff", "ffffff"],
 
 <% form_for :environment, :url => environments_path do |f| %>
   <%= f.error_messages %>
-  <%= f.label :name, "Ensino a distância" %>
-  <%= f.text_field :name %>
-  <%= f.text_field :path %>
+  <%= f.label :name, "Seu ambiente de ensino" %>
+  <%= f.text_field :name, :class => "text" %>
+  <div class="link">redu.com.br/</div>
+  <%= f.text_field :path, :class => "leitura" %>
   <% f.fields_for "courses_attributes[]", Course.new do |course|  %>
-    <%= course.label :name, "Curso" %>
-    <%= course.text_field :name %>
+    <%= course.label :name, "Seu curso" %>
+    <%= course.text_field :name, :class => "text" %>
     <%= course.hidden_field :path %>
-    <%= course.select :color, options_for_select(colors, "340096") %>
+    <%= course.select :color, options_for_select(colors, "340096"),
+          :class => "color" %>
   <% end %>
   <%= submit_tag "Criar!" %>
 <% end %> 

@@ -31,11 +31,6 @@ class BaseController < ApplicationController
   end
 
   def teach_index
-    @spaces = current_user.spaces
-    @lectures = current_user.lectures.find(:all,
-                                         :order => "created_at DESC",
-                                         :limit => 4,
-                                         :conditions => ["published = ?", true])
     respond_to do |format|
       format.html 
     end

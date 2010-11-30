@@ -1266,73 +1266,62 @@ div.recomendations-m .number {
 }
 
 /* @learn-index */
-#learn,
-#teach {
+#learn {
   padding-top: 0;
 }
 
-#learn ul.box-explore,
-#teach ul.box-explore {
+#learn ul.box-explore {
 }
 
-#learn ul.box-explore li,
-#teach ul.box-explore li {
+#learn ul.box-explore li {
   float: left;
   width: 190px;
   margin-right: 5px;
   margin-bottom: 10px;
 }
 
-#learn ul.box-explore li a.area,
-#teach ul.box-explore li a.area {
+#learn ul.box-explore li a.area {
   display: block;
   font-size: 1.1em;
   font-weight: bold;
 }
 
-#learn ul.box-explore li a.categories,
-#teach ul.box-explore li a.categories {
+#learn ul.box-explore li a.categories {
   font-size: .8em;
   font-weight: normal;
   color: gray;
 }
 
-#learn ul.box-popular-resources li,
-#teach ul.box-popular-resources li {
+#learn ul.box-popular-resources li {
   overflow: hidden;
   margin-bottom: 15px;
 }
 
-#learn ul.box-popular-resources a.tt-popular,
-#teach ul.box-popular-resources a.tt-popular {
+#learn ul.box-popular-resources a.tt-popular {
   color: #0B85C0;
   display: block;
   font-size: .8em;
   margin-bottom: 6px;
 }
 
-#learn ul.box-popular-resources a.views,
-#teach ul.box-popular-resources a.views {
+#learn ul.box-popular-resources a.views {
   color: #666666;
   font-size: .7em;
 }
 
-#learn ul.box-popular-resources a.source,
-#teach ul.box-popular-resources a.source {
+#learn ul.box-popular-resources a.source {
   color: #96B8E2;
   display: block;
   font-size: .7em;
   padding-top: 6px;
 }
 
-#learn ul.box-popular-resources img,
-#teach ul.box-popular-resources img {
+#learn ul.box-popular-resources img {
   float: left;
   padding-right: 15px;
 }
 
-#learn .logo-learn span,
-#teach .logo-learn span {
+#learn .logo-learn span {
   float: left;
   color: #FF8000;
   font-size: 1.5em;
@@ -1341,8 +1330,7 @@ div.recomendations-m .number {
   padding: 5px 23px;
 }
 
-#learn #group-header-learn,
-#teach #group-header-learn {
+#learn #group-header-learn {
   overflow: hidden;
   background: #F8FAFC;
   margin: 0;
@@ -1352,28 +1340,24 @@ div.recomendations-m .number {
   -webkit-border-radius: 8px 8px 0 0;
 }
 
-#learn #group-header-learn .info,
-#teach #group-header-learn .info {
+#learn #group-header-learn .info {
   font-size: .9em;
   padding: 5px;
 }
 
-#learn h2.text-header,
-#teach h2.text-header {
+#learn h2.text-header {
   float: left;
   display: inline-block;
   padding: 5px 14px;
 }
 
-#learn h2.text-header a,
-#teach h2.text-header a {
+#learn h2.text-header a {
   color: #F63A0B;
   font-weight: 100;
   font-size: .9em;
 }
 
-#learn .box-user-login,
-#teach .box-user-login {
+#learn .box-user-login {
   margin: 0 0 15px -3px;
   overflow: hidden;
   background: url(../images/bg-user-login.png) repeat top center;
@@ -1381,12 +1365,8 @@ div.recomendations-m .number {
   width: 194px;
 }
 
-#teach .box-user-login {
-  margin: 0 0 60px -3px;
-}
 
-#learn .sidebar,
-#teach .sidebar {
+#learn .sidebar {
   top: 16px;
   position: absolute;
   z-index: 20;
@@ -1394,57 +1374,42 @@ div.recomendations-m .number {
   background-color: white;
 }
 
-#teach .box-user-login a.name-user {
-  font-weight: bold;
-  color: #18C6ED;
-  display: block;
-  font-size: .8em;
-  margin-bottom: 10px;
-}
-
-#learn .box-user-login img,
-#teach .box-user-login img {
+#learn .box-user-login img {
   float: left;
   padding-right: 6px;
 }
 
-#learn .box-user-login a.text-profile,
-#teach .box-user-login a.text-profile {
+#learn .box-user-login a.text-profile {
   margin-bottom: 6px;
   color: #18C6ED;
   display: block;
   font-size: .6em;
 }
 
-#learn .box-user-login span.text-plans,
-#teach .box-user-login span.text-plans {
+#learn .box-user-login span.text-plans {
   color: #333;
   display: block;
   font-size: .7em;
 }
 
-#learn .box-user-login span.text-type-plans,
-#teach .box-user-login span.text-type-plans {
+#learn .box-user-login span.text-type-plans {
   color: #0B85BF;
   font-weight: bold;
   font-size: .9em;
 }
 
-#learn .box-user-teach,
-#teach .box-user-teach {
+#learn .box-user-teach {
   min-height: 109px;
 }
 
-#learn #box-nav-networks,
-#teach #box-nav-networks {
+#learn #box-nav-networks {
   display: block;
   clear: both;
   overflow: hidden;
   padding: 15px 20px;
 }
 
-#learn #box-nav-networks li,
-#teach #box-nav-networks li {
+#learn #box-nav-networks li {
   margin-right: 10px;
   float: left;
   width: 160px;
@@ -1452,96 +1417,29 @@ div.recomendations-m .number {
   background: url(../images/bg-nav-networks.png) no-repeat top left;
 }
 
-#learn #box-nav-networks li.bt-networks,
-#teach #box-nav-networks li.bt-networks {
+#learn #box-nav-networks li.bt-networks {
   background-position: 0 0;
 }
 
-#learn #box-nav-networks li.bt-aulas,
-#teach #box-nav-networks li.bt-aulas {
+#learn #box-nav-networks li.bt-aulas {
   background-position: 0 -78px;
 }
 
-#learn #box-nav-networks li.bt-exames,
-#teach #box-nav-networks li.bt-exames {
+#learn #box-nav-networks li.bt-exames {
   background-position: 0 -160px;
 }
 
-#learn #box-nav-networks li a.text-tt,
-#teach #box-nav-networks li a.text-tt {
+#learn #box-nav-networks li a.text-tt {
   margin-bottom: 5px;
   display: block;
   font-weight: 700;
   font-size: 1.1em;
 }
 
-#learn #box-nav-networks li a.text-desc,
-#teach #box-nav-networks li a.text-desc {
+#learn #box-nav-networks li a.text-desc {
   color: #333;
   display: block;
   font-size: .7em;
-}
-
-#teach {
-}
-
-#teach ul.headlines {
-}
-
-#teach ul.headlines > li {
-  background-color: white;
-}
-
-#teach ul.headlines li img.photo {
-  float: left;
-  margin-right: 10px;
-}
-
-#teach ul.headlines li a.name {
-  font-size: .9em;
-}
-
-#teach ul.headlines li .info {
-  color: gray;
-  font-size: .7em;
-  display: block;
-  margin: 5px;
-}
-
-#teach ul.headlines li ul li {
-  clear: left;
-  margin: 5px 0;
-  padding: 1px;
-}
-
-#teach ul.headlines .photo {
-  width: 24px;
-  height: 24px;
-}
-
-#teach li.personal-overview a.name {
-  font-size: 1.2em;
-  font-weight: bold;
-}
-
-#teach li.personal-overview a.edit {
-  font-size: .8em;
-}
-
-#teach li.personal-overview .photo {
-  width: 40px;
-  height: 40px;
-  float: left;
-  margin-right: 10px;
-}
-
-#teach li.personal-overview .plan {
-  text-transform: uppercase;
-  display: block;
-  font-size: .9em;
-  font-weight: bold;
-  margin: 5px;
-  color: #FFDB4F;
 }
 
 /* spotlight */
