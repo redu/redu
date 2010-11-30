@@ -14,11 +14,9 @@ class Subject < ActiveRecord::Base
   accepts_nested_attributes_for :lazy_assets,
     :reject_if => lambda { |lazy_asset|
         if lazy_asset['existent'] == 'true'
-          puts "======true========", lazy_asset['existent']
           lazy_asset['assetable_id'].blank? &&
           lazy_asset['assetable_type'].blank?
         else
-          puts "=======false======", lazy_asset['existent']
           lazy_asset['name'].blank? &&
           lazy_asset['lazy_type'].blank?
         end
