@@ -99,6 +99,7 @@ class Subject < ActiveRecord::Base
       cloned = lazy.create_asset
       if cloned
         asset = Asset.new(:subject => self, :assetable => cloned)
+        asset.lazy_asset = lazy
         self.assets << asset
       end
     end
