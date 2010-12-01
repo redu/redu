@@ -1,7 +1,7 @@
 class Subject < ActiveRecord::Base
 
   #associations
-  has_many :assets, :dependent => :destroy
+  has_many :assets, :order => :position, :dependent => :destroy
   has_many :lazy_assets, :dependent => :destroy
   has_many :enrollments, :dependent => :destroy
   has_many :statuses, :as => :statusable
@@ -41,8 +41,6 @@ class Subject < ActiveRecord::Base
 
   validation_group :subject, :fields => [:title, :description]
   validation_group :lecture, :fields => [:lazy_assets]
-
-  named_scope :existent, :conditions => { :existent => true }
 
   def to_param #friendly url
     "#{id}-#{title.parameterize}"
@@ -96,12 +94,14 @@ class Subject < ActiveRecord::Base
   # com exitent = true
   def clone_existent_assets!
     cloned_assets = lazy_assets.existent.collect do |lazy|
-      cloned = lazy.create_asset
-      if cloned
-        asset = Asset.new(:subject => self, :assetable => cloned)
-        lazy.asset = asset
-        lazy.save
-        self.assets << asset
+      unless lazy.asset # Se já tiver sido clonado, não clona novamente.
+        cloned = lazy.create_asset
+        if cloned
+          asset = Asset.new(:subject => self, :assetable => cloned)
+          lazy.asset = asset
+          lazy.save
+          self.assets << asset
+        end
       end
     end
 
@@ -113,6 +113,10 @@ class Subject < ActiveRecord::Base
   # Verifica se todos os lazy_assets foram criados
   def ready_to_be_published?
     self.published? || self.lazy_assets.size == self.assets.size
+  end
+  # Altera a ordem dos recursos já finalizados.
+  def change_assets_order
+   redirect_to space_subject_path(@subject)
   end
 
   #TODO Verificar necessidade
@@ -242,6 +246,7 @@ class Subject < ActiveRecord::Base
   def not_graduaded_students
     self.student_profiles.select{|sp| sp.graduaded == -1 }.map{|e| e.user}
   end
+
 
   protected
 

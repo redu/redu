@@ -30,8 +30,6 @@ ActionController::Routing::Routes.draw do |map|
     subject.resources :pages
   end
 
-  map.admin_subjects "admin/subjects", :controller => "subjects", :action => "admin_subjects"
-  map.admin_show "admin/show/:id", :controller => "subjects", :action => "admin_show"
   map.resources :questions, :collection => { :search => [:get, :post], :add => :get }
   map.resources :exams, :member => {:add_question => :get, :add_resource => :get, :rate => :post, :answer => [:get,:post]},
       :collection => {:unpublished_preview => :get, :unpublished => :get, :new_exam => :get, :cancel => :get,
@@ -131,11 +129,12 @@ ActionController::Routing::Routes.draw do |map|
                    :destroy_file => :delete }
     space.resources :subjects,
       :member => { :enroll => :get,
-                   :upload => :get,
-                   :download => :get,
                    :lazy => :get,
                    :publish => :get,
-                   :unpublish => :get }
+                   :unpublish => :get,
+                   :lazy => :get,
+                   :admin_assets_order => :get,
+                   :change_assets_order => :post}
     space.resources :bulletins
     space.resources :events,
       :member => { :vote => [:post,:get], :notify => :post },

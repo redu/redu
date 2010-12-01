@@ -1,0 +1,10 @@
+<li id="<%= item.id %>-asset" class="asset-item clearfix">
+  <span class="name">
+    <%= item.assetable.name %>
+  </span>
+  <span class="headlines">
+    <span class="things">
+      <%= truncate(item.assetable.description, :length => 150) %>
+    </span>
+  </span>
+</li>

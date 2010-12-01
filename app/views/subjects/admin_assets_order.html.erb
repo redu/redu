@@ -1,0 +1,35 @@
+<script type="text/javascript" charset="utf-8">
+  // Altera a ordem dos recursos.
+  $(document).ready(function(){
+      $( ".sortable" ).sortable({
+        stop: function(event, ui) {
+        var assets_ordered = $('.sortable').sortable('toArray');
+        $('#assets_order').val(assets_ordered);
+        }
+      });
+  })
+</script>
+
+<div class="main grid_16">
+  <div class="fake-tabs grid_16 alpha omega">
+    <%= render :partial => "subjects/admin_taskbar" %>
+    <div class="panel">
+
+      <% unless @subject.assets.empty? %>
+        <div class="box_notice">Arraste os recursos para alterar a ordem destes no módulo!</div>
+        <div class="lazy_list grid_12 alpha">
+          <ul class="default sortable">
+            <%= render :partial => "asset_item", :collection => @subject.assets, :as => :item %>
+          </ul>
+        </div>
+      <% else %>
+        <div class="box_notice">Este módulo não possui recursos.</div>
+      <% end %>
+
+      <% form_tag change_assets_order_space_subject_path do %>
+        <%= hidden_field_tag 'assets_order', :class => "assets" %>
+        <%= submit_tag 'Atualizar' %>
+      <% end %>
+    </div> <!-- div panel -->
+  </div> <!-- div fake -->
+</div> <!-- div grid_16 -->

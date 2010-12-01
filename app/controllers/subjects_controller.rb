@@ -126,52 +126,47 @@ class SubjectsController < BaseController
   end
 
   def edit
+    @subject = Subject.find(params[:id])
     session[:subject_params] ||= {}
     @existent_spaces = @course.spaces.collect { |s| [s.name, s.id] }
   end
 
   def update
 
-    updated = false
+    @subject = Subject.find(params[:id])
     if params[:subject]
+      # Evita duplicação dos campos gerados dinamicamente no passo 2
+      if params[:subject].has_key?(:lazy_assets_attributes)
+        session[:subject_params].delete("lazy_assets_attributes")
+      end
+      # Atualizando dados da sessão
       session[:subject_params].deep_merge!(params[:subject])
     end
-    session[:subject_aulas]= params[:aulas] unless params[:aulas].nil?
-    session[:subject_id]= params[:id].split("-")[0].to_i unless params[:id].nil?
-    session[:subject_exames] = params[:exams] unless params[:exams].nil?
 
-    @subject = current_user.subjects.new(session[:subject_params])
+    # Evita que ao dar refresh vá para o proximo passo.
     @subject.current_step = params[:step]
 
-    if  @subject.valid?
-      if params[:back_button]
-        @subject.previous_step
-      elsif @subject.last_step?
+    # Redirecionando para o passo especificado
+    @subject.enable_correct_validation_group!
 
-        if @subject.all_valid?
-
-          @subject = current_user.subjects.find(session[:subject_id])
-          @subject.update_attributes(session[:subject_params])
-
-          @subject.update_lecture_subject_type_lecture(session[:subject_aulas], @subject.id,current_user) #unless session[:subject_aulas].nil?
-          @subject.update_lecture_subject_type_exam(session[:subject_exames], @subject.id, current_user)
-          updated = true
-        end
-
+    if params[:back_button]
+      @subject.previous_step
+      render "edit"
+      # TODO Remover quando atualizar a versão do Rails, workaround para bug.
+      # O _destroy não causava a remoção do ActiveRecord.
+    elsif @subject.lazy_assets(true) and @subject.update_attributes(session[:subject_params])
+      if @subject.last_step?
+        @subject.clone_existent_assets!
+        session[:subject_step] = session[:subject_params] = nil
+        redirect_to subject_path(@subject)
       else
         @subject.next_step
+        session[:subject_step]= @subject.current_step
+        render "edit"
       end
-      session[:subject_step]= @subject.current_step
-    end
-
-    unless updated
-      render "edit"
     else
-      flash[:notice] = "Atualizado com sucesso!"
-      session[:subject_step] = session[:subject_params]= session[:subject_aulas]= session[:subject_exames]= session[:subject_id] = nil
-      redirect_to :action =>"admin_subjects"
+    render "edit"
     end
-
   end
 
   def unpublish
@@ -218,13 +213,22 @@ class SubjectsController < BaseController
 
   end
 
-  def admin_subjects
-    session[:subject_step] = session[:subject_params]= session[:subject_aulas]= session[:subject_id]= session[:subject_exames]  = nil
-    @subjects = current_user.subjects
-  end
+  # Altera a ordem dos recursos já finalizados.
+  def change_assets_order
+   assets_order = params[:assets_order].split(",")
+   ids_ordered = []
+   assets_order.each do |asset|
+     ids_ordered << asset.split("-")[0].to_i
+   end
 
-  def admin_show
-    @subject = current_user.subjects.find(params[:id])
+   ids_ordered.each_with_index do |id, i|
+     asset = Asset.find(id)
+     asset.position = i + 1 # Para não ficar índice zero.
+     asset.save
+   end
+
+   flash[:notice] = "A ordem dos recursos foi atualizada."
+   redirect_to admin_assets_order_space_subject_path(@subject.space, @subject)
   end
 
   protected

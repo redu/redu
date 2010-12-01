@@ -1,0 +1,16 @@
+<ul class="menu">
+  <li>
+    <%= link_to_unless_current 'Recursos',
+      admin_assets_order_space_subject_path do
+      link_to 'Recursos', admin_assets_order_space_subject_path,
+        :class => 'selected'
+      end %>
+  </li>
+  <li>
+    <%= link_to_unless_current 'Informações', edit_space_subject_path do
+      link_to 'Informações', edit_space_subject_path,
+        :class => 'selected'
+    end %>
+</li>
+
+</ul>

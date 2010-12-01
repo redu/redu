@@ -1,7 +1,7 @@
 class LazyAsset < ActiveRecord::Base
   belongs_to :subject
   belongs_to :assetable, :polymorphic => true
-  has_one :asset
+  has_one :asset, :dependent => :destroy
 
   validates_presence_of :name, :lazy_type, :if => "self.existent == false",
     :message => "Nome e/ou tipo não informados"
@@ -38,10 +38,6 @@ class LazyAsset < ActiveRecord::Base
       clone.is_clone = true
       clone.save
     end
-
-    self.assetable = clone
-    self.save
-    self.assetable.save
     return clone
   end
 end
