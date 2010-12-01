@@ -140,7 +140,9 @@ ActionController::Routing::Routes.draw do |map|
                    :unpublish => :get,
                    :lazy => :get,
                    :admin_assets_order => :get,
-                   :change_assets_order => :post}
+                   :change_assets_order => :post,
+                   :infos => :get,
+                   :statuses => :get}
     space.resources :bulletins
     space.resources :events,
       :member => { :vote => [:post,:get], :notify => :post },

@@ -14,10 +14,9 @@
   <div class="fake-tabs grid_11 alpha omega">
     <%= render :partial => 'subjects/tabs_menu' %>
     <div class="panel">
-      <ul class="default">
-        <%= render :partial => 'subjects/asset_item',
-          :collection => @subject.assets, :as => :item %>
-      </ul>
+      <div class="pretty-text">
+        <%= @subject.description %>
+      </div>
     </div>
   </div>
 

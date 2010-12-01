@@ -1,71 +1,26 @@
-<div class="sidebar grid_4">
-  <ul class="sortable clearfix">
-
-
-    <li class="clearfix" >
-      <span class="call"><span style ="background:none repeat scroll 0 0 #FFFFDF; color:orange;">info</span></span>
-      <div style="background-color: #eef; border: 1px solid #eee; height: 200px; padding: 15px;">
-
-        <p><h3><%= @subject.title%></h3>
-        <%= @subject.description%></p>
-
-        <p><h3<strong>Percentagem cursado:</strong></h3>
-		o Aluno cursou <%= percetage.to_s+"%"%> do conteudo total</p>
-      </div>
-    </li>
-
-
-    <li class="clearfix" style="background-color: #FFFFDF; -moz-box-shadow:0 4px 12px #DDDDDD; ">
-      <span class="call"><span style ="background:none repeat scroll 0 0 #FFFFDF; color:orange;">Ações</span></span>
-      <ul class="menu">
-
-        <li>
-          <%= link_to_function "Criar atividade", "$schooltabs.tabs('select', 1); $('#status_text').focus()"%>
-        </li>
-        <!--
-<li><a href="" class="closed sb">Acompanhar alunos</a></li>
-<li><a href="" class="closed sb">Acompanhar aulas</a></li>
-			-->
-        <% if current_user.can_manage?(@subject)%>
-          <li>
-            <%= link_to "Gerenciar", edit_subject_path%>
-          </li>
+<div class="grid_5 omega sidebar">
+  <ul class="sortable">
+    <li class="clearfix">
+      <span class="call"><span>Palavras-chave</span></span>
+      <ul class="tags">
+        <% for tag in @subject.tags %>
+          <li><span><%= tag.name %></span></li>
         <% end %>
-
       </ul>
     </li>
-
-
-
+    <% if @subject.duration  %>
+      <li>
+        <span class="call"><span>Duração</span></span>
+        <span><%= @subject.duration %> dias</span>
+      </li>
+    <% end %>
     <li class="clearfix">
-      <span class="call"><span>Colegas (<%= @subject.students.size %>)</span></span>
+      <span class="call"><span>Quem já cursou (<%= @subject.graduaded_students.size %>)</span></span>
       <div class="followship box clearfix">
         <ul class="clearfix">
-          <%= render :partial => 'spaces/member_short', :collection => @subject.students, :as => :member %>
+          <%= render :partial => 'spaces/member_short', :collection => @subject.graduaded_students, :as => :member %>
         </ul>
-        <a href="<%# members_space_path(@space) %>" class="icon more">Ver mais</a>
       </div><!-- end followship -->
     </li>
-
-    <li class="clearfix">
-      <span class="call"><span>Professores </span></span>
-      <% if @subject.teachers.empty? %>
-        <div class="box_notice">Nenhum professor
-          <%= link_to("Cadastre um professor", "#", :class => "icon more") if current_user.can_manage?(@subject) %>
-        </div>
-      <% else %>
-        <div class="followship box clearfix">
-          <ul class="clearfix">
-            <%= render :partial => 'spaces/member_short', :collection => @subject.teachers, :as => :member %>
-          </ul>
-          <a href="<%# teachers_space_path %>" class="icon more">Ver mais</a>
-        </div><!-- end followship -->
-
-      <% end %>
-    </li>
-
-
-
-  </ul><!-- end sortable -->
-
-</div><!-- end sidebar -->
+  </ul>
+</div>

@@ -45,17 +45,13 @@ class SubjectsController < BaseController
   def show
     @space = @subject.space
 
-    student_profile = current_user.student_profiles.find_by_subject_id(@subject.id)
-    @percentage = student_profile.nil? ? 0 : student_profile.coursed_percentage(@subject)
+    #student_profile = current_user.student_profiles.find_by_subject_id(@subject.id)
+    #@percentage = student_profile.nil? ? 0 : student_profile.coursed_percentage(@subject)
+    @status = Status.new
+    @statuses = @subject.recent_activity(0,10)
 
     respond_to do |format|
-      if current_user.enrollments.detect{|e| e.subject_id.eql?(params[:id].to_i)}.nil?
-        format.html{  render "preview" }
-      else
-        @status = Status.new
-        @statuses = @subject.recent_activity(0,10)
-        format.html
-      end
+      format.html
     end
 
   end
@@ -229,6 +225,16 @@ class SubjectsController < BaseController
 
    flash[:notice] = "A ordem dos recursos foi atualizada."
    redirect_to admin_assets_order_space_subject_path(@subject.space, @subject)
+  end
+
+  # Página com as informações do Subject.
+  def infos
+   @subject = Subject.find(params[:id])
+  end
+
+  def statuses
+    @status = Status.new
+    @statuses = @subject.recent_activity(0,10)
   end
 
   protected

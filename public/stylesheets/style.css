@@ -1152,6 +1152,14 @@ div.recomendations-m .number {
   min-height: 400px;
 }
 
+#subject .tabs {
+  width: 638px;
+  border-left: 1px solid #EFF0F0;
+  border-bottom: 1px solid #EFF0F0;
+  border-right: 1px solid #EFF0F0;
+  min-height: 400px;
+}
+
 .tabs ul.ui-tabs-nav {
   height: 60px;
   background: url("../images/ui-elements_r45_c2.png") repeat-x 0 5px;

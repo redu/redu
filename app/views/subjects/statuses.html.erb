@@ -14,10 +14,22 @@
   <div class="fake-tabs grid_11 alpha omega">
     <%= render :partial => 'subjects/tabs_menu' %>
     <div class="panel">
-      <ul class="default">
-        <%= render :partial => 'subjects/asset_item',
-          :collection => @subject.assets, :as => :item %>
-      </ul>
+        <%= javascript_include_tag 'flow.js' %>
+        <%= render :partial => "statuses/create_status",
+          :locals => {:status => @status, :statusable => @subject }%>
+        <ul class="activities">
+          <%= render :partial => "statuses/type_proxy",
+            :collection => @statuses, :as => :status,
+            :locals => {:statusable => @subject } %>
+        </ul><!-- end activities -->
+
+        <% unless @statuses.length < 10%>
+          <div id="more">
+            <%= link_to_remote "mais", :url => {:controller => :statuses,
+              :action => :more, :id => @subject.id, :type => 'subject', :offset => 10,
+              :limit => 10}, :method =>:get, :loading => "$('#more').html('"+escape_javascript(image_tag('spinner.gif'))+"')"%>
+          </div>
+        <% end %>
     </div>
   </div>
 

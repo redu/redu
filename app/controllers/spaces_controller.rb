@@ -422,7 +422,7 @@ class SpacesController < BaseController
 
     if @space
       @statuses = @space.recent_activity(0,10)
-			@bulletins = @space.bulletins.find(:all, :conditions => "state LIKE 'approved'", :order => "created_at DESC", :limit => 5)
+      @bulletins = @space.bulletins.find(:all, :conditions => "state LIKE 'approved'", :order => "created_at DESC", :limit => 5)
     end
 
     respond_to do |format|
@@ -433,7 +433,7 @@ class SpacesController < BaseController
         format.xml  { render :xml => @space }
       else
         format.html {
-          flash[:error] = "A escola \"" + params[:id] + "\" não existe ou não está cadastrada no Redu."
+          flash[:error] = "O espaço \"" + params[:id] + "\" não existe ou não está cadastrada no Redu."
           redirect_to spaces_path
         }
       end
