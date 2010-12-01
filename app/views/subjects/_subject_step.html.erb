@@ -1,4 +1,4 @@
-<div class="<%= params[:action] == 'edit' ? "grid_15" : "grid_11 omega" %>">================
+<div class="<%= params[:action] == 'edit' ? "grid_15" : "grid_11 omega" %>">
   <div class="grid_9 push_2">
     <table class="booking_steps" cellpadding="0" cellspacing="0">
       <tbody><tr>
@@ -26,6 +26,9 @@
     <%= f.label "Descrição" %>
     <%= f.text_area :description, :size => "100x10", :class => "mceEditor" %>
     <%= error_message_on @subject, :description %>
+
+    <%= f.label "Duração <space class='snippet'>(tempo para conclusão do módulo, em dias)</span>" %>
+    <%= f.text_field :duration %>
 
     <%= f.label "Tags <span class='snippet'>(separadas por vírgula)</span>" %>
     <%= f.text_field :tag_list %>
