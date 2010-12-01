@@ -1,20 +1,20 @@
-<div class="grid_9 push_3">
-  <table class="booking_steps" cellpadding="0" cellspacing="0">
-    <tbody><tr>
-        <td><span class="book_step current"><span><em>1</em>Informações Gerais</span></span></td>
-        <td class="spacer">&nbsp;</td>
-        <td><span class="book_step disabled"><span><em>2</em>Conteúdo</span></span></td>
-      </tr>
-  </tbody></table>
-</div>
+<div class="grid_11 omega">
 
-<div class="grid_9">
-  <%= f.error_messages %>
-</div>
+  <div class="grid_9 push_2">
+    <table class="booking_steps" cellpadding="0" cellspacing="0">
+      <tbody><tr>
+          <td><span class="book_step current"><span><em>1</em>Informações Gerais</span></span></td>
+          <td class="spacer">&nbsp;</td>
+          <td><span class="book_step disabled"><span><em>2</em>Conteúdo</span></span></td>
+        </tr>
+    </tbody></table>
+  </div>
 
-<%= hidden_field_tag("step", "lecture")%>
+  <div class="grid_9">
+    <%= f.error_messages %>
+  </div>
 
-<div class="grid_16">
+  <%= hidden_field_tag("step", "lecture")%>
   <% f.fields_for :lazy_assets do |builder| %>
     <%= render 'subjects/lazy_asset_fields', :f => builder %>
   <% end %>

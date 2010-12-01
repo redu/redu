@@ -1,7 +1,3 @@
-<div id="breadcrumbs">
-  <%= link_to "Cursos", subjects_path %> > Novo Curso
-</div>
-
 <script type="text/javascript" charset="utf-8">
 //<![CDATA[
 $(document).ready(function(){
@@ -79,15 +75,24 @@ function show_choosen_assets(){
 //]]>
 </script>
 
-<%  form_for [@space, @subject] do |f| %>
-
-  <%= render :partial => "#{@subject.current_step}_step",
-    :locals => {:f => f, :titles => "Criar Curso-Adicionar Aulas"}%>
-
-  <div class="grid_16">
-    <%= f.submit "< Anterior", :name => "back_button" unless @subject.first_step? %>
-    <%= f.submit "Próximo >" unless @subject.last_step? %>
-    <%= f.submit "Finalizar", :onclick => "reload_existent_assets();jQuery('#form_subject').submit();" if @subject.last_step? %>
-    ou <%= link_to "Cancelar", cancel_subjects_path(:space_id => @space.id) %>
+<div class="grid_16">
+  <div id="breadcrumbs">
+    <%= link_to "Cursos", subjects_path %> > Novo Curso
   </div>
-<% end %>
+
+  <%= render :partial => "spaces/sidebar", :locals => {:space => @space} %>
+
+  <div class="grid_11 omega">
+    <%  form_for [@space, @subject] do |f| %>
+      <%= render :partial => "#{@subject.current_step}_step",
+        :locals => {:f => f, :titles => "Criar Curso-Adicionar Aulas"}%>
+
+      <div class="grid_11 omega">
+        <%= f.submit "< Anterior", :name => "back_button" unless @subject.first_step? %>
+        <%= f.submit "Próximo >" unless @subject.last_step? %>
+        <%= f.submit "Finalizar", :onclick => "reload_existent_assets();jQuery('#form_subject').submit();" if @subject.last_step? %>
+        ou <%= link_to "Cancelar", cancel_subjects_path(:space_id => @space.id) %>
+      </div>
+  <% end %>
+</div>
+</div>
