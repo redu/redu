@@ -41,6 +41,8 @@ class StatusesController < BaseController
       @statusable = User.find(params[:id])
     when 'space'
       @statusable = Space.find(params[:id])
+    when 'subject'
+      @statusable = Subject.find(params[:id])
     end
 
     @statuses = @statusable.recent_activity(params[:offset], params[:limit])
