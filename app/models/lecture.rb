@@ -15,6 +15,9 @@ class Lecture < ActiveRecord::Base
   belongs_to :owner , :class_name => "User" , :foreign_key => "owner"
   belongs_to :lectureable, :polymorphic => true, :dependent => :destroy
   belongs_to :simple_category
+  belongs_to :subject, :dependent => :destroy
+  belongs_to :lazy_asset
+
   accepts_nested_attributes_for :resources,
     :reject_if => lambda { |a| a[:media].blank? },
     :allow_destroy => true
@@ -55,7 +58,7 @@ class Lecture < ActiveRecord::Base
   end
 
   # VALIDATIONS
-  validates_presence_of :name
+  validates_presence_of :name, :lazy_asset
   validates_presence_of :description
   validates_length_of :description, :within => 30..200
   validates_presence_of :simple_category
@@ -119,13 +122,18 @@ class Lecture < ActiveRecord::Base
   end
 
   def has_annotations_by(user)
-    Annotation.find(:first, 
+    Annotation.find(:first,
                     :conditions => ["lecture_id = ? AND user_id = ?", self.id, user.id])
   end
 
   # Friendly url
   def to_param
     "#{id}-#{name.parameterize}"
+  end
+  
+  #FIXME chamar isso num validate_on_create
+  def only_one_asset_per_lazy_asset?
+    Asset.count(:conditions => {:lazy_asset_id => self.lazy_asset}) <= 0
   end
 
 end

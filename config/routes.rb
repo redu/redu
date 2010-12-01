@@ -25,7 +25,15 @@ ActionController::Routing::Routes.draw do |map|
                        :day => :get }
     subject.resources :bulletins, :member => {:rate => :post}
     subject.resources :seminars
-    subject.resources :lectures
+    subject.resources :lectures,
+      :member => {:rate => :post,
+                  :buy => :get,
+                  :download_attachment => :get},
+      :collection => { :unpublished_preview => :get,
+                       :cancel => :get,
+                       :sort_lesson => :post,
+                       :unpublished => :get,
+                       :waiting => :get}
     subject.resources :exams
     subject.resources :pages
   end
@@ -35,8 +43,6 @@ ActionController::Routing::Routes.draw do |map|
       :collection => {:unpublished_preview => :get, :unpublished => :get, :new_exam => :get, :cancel => :get,
       :exam_history => :get, :sort => :get, :order => :get, :questions_database => :get,
       :review_question => :get}
-  map.resources :lectures, :member => {:rate => :post, :buy => :get, :download_attachment => :get},
-    :collection => { :unpublished_preview => :get, :cancel => :get, :sort_lesson => :post, :unpublished => :get,:waiting => :get}
   map.resources :credits
   map.resources :folders
   map.resources :annotations

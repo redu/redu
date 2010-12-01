@@ -145,10 +145,10 @@
 	<%# render :partial => 'attachment_form', :locals => {:f => f, :lecture => @seminar}%>
 
 
-	<%= link_to '< Anterior', new_lecture_path(:step => '1'), :class => "button" %> 
+	<%= link_to '< Anterior', new_subject_lecture_path(@subject, :step => '1'), :class => "button" %> 
 	<%= f.submit 'Próximo >', :class => "button" %> 
 
-	<br><%= link_to 'Cancelar', cancel_lectures_path, :confirm => "Tem certeza que deseja sair do editor de aulas?" %>
+	<br><%= link_to 'Cancelar', cancel_subject_lectures_path(@subject), :confirm => "Tem certeza que deseja sair do editor de aulas?" %>
 </div>
 
 <% end %>

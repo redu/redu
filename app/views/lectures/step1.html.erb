@@ -18,13 +18,13 @@
     <%= f.error_messages %>
   </div>
   <%= hidden_field_tag("step", "1", options = {})%>
-
+  <%= f.hidden_field :lazy_asset_id %>
   <div class="grid_8">
 
     <% field_set_tag 'Informações Gerais' do %>
 
       <%= f.label "Título: " %>
-      <%= f.text_field :name, :value => h(sanitize(params[:name])) %>
+      <%= f.text_field :name %>
       <%= error_for :lecture, :name %>
 
       <% random_number = get_random_number%>
@@ -56,20 +56,20 @@
 
       <div style="margin-bottom: 20px;">
 
-        <h3><%= f.radio_button(:lectureable_type, "Seminar", :checked => params[:type].eql?('Seminar'))%> Vídeo-aula</h3>
+        <h3><%= f.radio_button(:lectureable_type, "Seminar")%> Vídeo-aula</h3>
         Permite mostrar um vídeo- ou áudio-aula acompanhado de documentos para download.
 
       </div>
 
       <div style="margin-bottom: 20px;">
 
-        <h3><%= f.radio_button(:lectureable_type, "InteractiveClass", :checked => params[:type].eql?('InteractiveClass'))%> Aula passo-a-passo</h3>
+        <h3><%= f.radio_button(:lectureable_type, "InteractiveClass")%> Aula passo-a-passo</h3>
         Uma aula passo-a-passo pode possuir várias páginas com recursos interativos tais como vídeos, texto, questões e exames.
       </div>
 
       <div style="margin-bottom: 20px;">
 
-        <h3><%= f.radio_button(:lectureable_type, "Page", :checked => params[:type].eql?('Page'))%> Artigo</h3>
+        <h3><%= f.radio_button(:lectureable_type, "Page")%> Artigo</h3>
         Um artigo permite a postagem de conteúdo de leitura rápida como um tutorial ou uma página simples.
       </div>
     <%end%>

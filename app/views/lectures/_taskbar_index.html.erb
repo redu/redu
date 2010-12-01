@@ -1,6 +1,6 @@
 <%  if logged_in? %>
   		<div id="task_bar_exames">
-  		<%= link_to 'Nova Aula', new_lecture_path %> | 
+  		<%= link_to 'Nova Aula', new_subject_lecture_path(@subject) %> | 
   		<%= link_to 'Minhas Aulas', published_user_lectures_path(current_user.id) %> |
 		<%= link_to 'Aulas Favoritas', favorites_lectures_path %> 
 		<%  if current_user.admin? %>

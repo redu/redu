@@ -11,7 +11,7 @@
 <ul id="actions_user">
   <%  if current_user.can_post? @space %>
     <li>
-      <%= link_to "Nova Aula", new_space_lecture_path(:space_id => @space.id) %>
+      <%= link_to "Nova Aula", new_subject_lecture_path(@subject) %>
     </li>
     <li>
       <%= link_to "Novo Exame", new_space_exam_path(:space_id => @space.id) %>
