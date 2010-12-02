@@ -94,7 +94,7 @@ function show_choosen_assets(){
           <%= f.submit "Finalizar",
             :onclick => "reload_existent_assets();jQuery('#form_subject').submit();" if @subject.last_step? %>
           ou
-          <%= link_to "Cancelar", cancel_subjects_path(:space_id => @space.id) %>
+          <%= link_to "Cancelar", cancel_space_subjects_path(@space) %>
         </div>
       <% end %>
 

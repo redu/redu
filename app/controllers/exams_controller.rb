@@ -1,5 +1,8 @@
 class ExamsController < BaseController
+  layout "environment"
 
+  before_filter :find_exam, :except => [:new, :create, :index, :cancel]
+  before_filter :find_environment_course_space_subject_exam
   before_filter :login_required, :except => [:index]
   uses_tiny_mce(:options => AppConfig.question_mce_options, :only => [:new, :edit, :create, :update])
   after_filter :create_activity, :only => [:create, :results]
@@ -40,7 +43,6 @@ class ExamsController < BaseController
 
     if params[:first]
       rst_session
-      @exam = Exam.find(params[:id])
     end
 
     # initialize session variables
@@ -71,7 +73,7 @@ class ExamsController < BaseController
         session[:question_index] = params[:q_index].to_i
       end
     elsif !params.has_key?('first')
-      redirect_to :action => "compute_results"
+      redirect_to compute_results_space_subject_exam_path(@space, @subject, @exam)
     end
 
     @step =  session[:exam].questions[session[:question_index]]
@@ -118,7 +120,10 @@ class ExamsController < BaseController
 
     #TODO performance?
     session[:corrects] = @corrects
-    redirect_to :action => :results, :correct => @correct, :time => params[:chrono], :exam_user_id => @exam_user.id
+    redirect_to results_space_subject_exam_path(@space, @subject, @exam,
+                                               :correct => @correct,
+                                               :time => params[:chrome],
+                                               :exam_user_id => @exam_user.id)
   end
 
   def results
@@ -172,12 +177,14 @@ class ExamsController < BaseController
     session[:exam_params] = nil
 
     flash[:notice] = "Criação de exame cancelada."
-    redirect_to exams_path
+    redirect_to lazy_space_subject_path(@subject.space, @subject)
   end
 
   def new
     session[:exam_params] ||= {}
     @exam = Exam.new(session[:exam_params])
+    @exam.lazy_asset_id = params[:lazy] if params.has_key?(:lazy)
+    @exam.name = params[:name] if params.has_key?(:name)
     @exam.current_step =  params[:step]
   end
 
@@ -203,16 +210,21 @@ class ExamsController < BaseController
     if @exam.valid?
       if params[:back_button]
         @exam.previous_step
-      # No último passo salvar
-      elsif @exam.last_step? and @exam.save
+        # No último passo salvar
+      elsif @exam.last_step? && @exam.save
         @exam.questions.each do |question|
           correct = question.alternatives.find(:first, :conditions => {:correct => true})
           question.answer = correct if correct
           question.save!
         end
+
+        Asset.create({:assetable => @exam,
+                     :subject => @subject,
+                     :lazy_asset => @exam.lazy_asset})
+
         session[:exam_params] = nil
         flash[:notice] = "Exame criado!"
-        redirect_to @exam
+        redirect_to lazy_space_subject_path(@space, @subject)
       else
         @exam.next_step
       end
@@ -236,11 +248,6 @@ class ExamsController < BaseController
     respond_to do |format|
       format.html {render 'unpublished_preview_interactive'}
     end
-  end
-
-  def new_question
-    @edit = false
-    redirect_to :controller => :questions, :action => :new #, :exam_id => params[:id]
   end
 
   def questions_database
@@ -416,7 +423,6 @@ class ExamsController < BaseController
   # GET /exams/1
   # GET /exams/1.xml
   def show
-    @exam = Exam.find(params[:id])
 
     @related_exams = []
     @status = Status.new
@@ -433,17 +439,15 @@ class ExamsController < BaseController
 
   # GET /exams/1/edit
   def edit
-    @exam = Exam.find(params[:id])
   end
 
   # PUT /exams/1
   # PUT /exams/1.xml
   def update
-    @exam = Exam.find(params[:id])
     respond_to do |format|
       if @exam.update_attributes(params[:exam])
         flash[:notice] = 'Exam was successfully updated.'
-        format.html { redirect_to(@exam) }
+        format.html { redirect_to space_subject_exam_path(@space, @subject, @exam) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -455,15 +459,33 @@ class ExamsController < BaseController
   # DELETE /exams/1
   # DELETE /exams/1.xml
   def destroy
-    @exam = Exam.find(params[:id])
 
     if current_user == @exam.owner
       @exam.destroy
     end
 
     respond_to do |format|
-      format.html { redirect_to(exams_url) }
+      format.html { redirect_to space_subject_path(@space, @subject) }
       format.xml  { head :ok }
     end
+  end
+
+  protected
+
+  def find_exam
+    @exam = Exam.find(params[:id])
+  end
+
+  def find_environment_course_space_subject_exam
+    if @exam
+      @subject = @exam.subject
+      @space = @subject.space
+    else
+      @subject = Subject.find(params[:subject_id])
+    end
+
+    @space = @subject.space
+    @course = @space.course
+    @environment = @course.environment
   end
 end

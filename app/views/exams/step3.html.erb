@@ -7,7 +7,7 @@
     <%# end %>
   </div>
 
-  <%# render(:partial => "spaces/space_info", :locals=>{:show => false}) if @space%>	
+  <%# render(:partial => "spaces/space_info", :locals=>{:show => false}) if @space%>
 
   <div id="title_video">Novo Exame - Publicação</div>
 </div>
@@ -46,10 +46,10 @@
         <%# @spaces.each do | space | %>
           <div><%# radio_button_tag :post_to, space.id, false %> <%= space.name %></div>
           <%# end %>
-        </div> 
+        </div>
         -->
         <%# end %>
-        <%# end %>	
+        <%# end %>
         <%# else%>
         <%= f.hidden_field(:public, :value => 0)%>
         <%# end %>
@@ -87,9 +87,9 @@
       </div>
 
       <div class="grid_16">
-        <%= link_to '< Anterior', new_exam_path(:step => '2', :exam_type => @exam_type), :class => "button", :disabled => true %> 
+        <%= link_to '< Anterior', new_space_subject_exam_path(@space, @subject, :step => '2', :exam_type => @exam_type), :class => "button", :disabled => true %>
         <%# f.submit 'Salvar' %> ou
-        <%= link_to 'Cancelar', cancel_exams_path, :confirm => "Tem certeza que deseja sair do editor de aulas? Todas as informações serão perdidas." %>
+        <%= link_to 'Cancelar', cancel_space_subject_exams_path(@space, @subject), :confirm => "Tem certeza que deseja sair do editor de aulas? Todas as informações serão perdidas." %>
       </div>
 
     <% end %>

@@ -112,13 +112,13 @@ class SubjectsController < BaseController
       render "new"
     else
       session[:subject_step] = session[:subject_params] = nil
-      redirect_to subject_path(@subject)
+      redirect_to space_subject_path(@space, @subject)
     end
   end
 
   def cancel
     session[:subject_step] = session[:subject_params]= session[:subject_id]= nil
-    redirect_to space_path(:id => params[:space_id])
+    redirect_to space_path(@space)
   end
 
   def edit
@@ -154,7 +154,7 @@ class SubjectsController < BaseController
       if @subject.last_step?
         @subject.clone_existent_assets!
         session[:subject_step] = session[:subject_params] = nil
-        redirect_to subject_path(@subject)
+        redirect_to space_subject_path(@space, @subject)
       else
         @subject.next_step
         session[:subject_step]= @subject.current_step
@@ -197,14 +197,14 @@ class SubjectsController < BaseController
 
   def enroll
     begin
-      redirect_to(subjects_path) and return unless @subject.is_public
+      redirect_to(space_subjects_path(@space)) and return unless @subject.is_public
       Enrollment.create_enrollment(@subject.id, current_user)
       StudentProfile.create_profile(@subject.id, current_user)
       flash[:notice] = "Você se inscreveu neste curso!"
-      redirect_to @subject
+      redirect_to space_subject_path(@space, @subject)
     rescue Exception => e #exceçao criada no model de Enrollment
       flash[:notice] =  e.message
-      redirect_to subjects_path
+      redirect_to space_subjects_path(@space)
     end
 
   end
@@ -224,7 +224,7 @@ class SubjectsController < BaseController
    end
 
    flash[:notice] = "A ordem dos recursos foi atualizada."
-   redirect_to admin_assets_order_space_subject_path(@subject.space, @subject)
+   redirect_to admin_assets_order_space_subject_path(@space, @subject)
   end
 
   # Página com as informações do Subject.

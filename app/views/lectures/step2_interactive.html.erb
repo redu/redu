@@ -37,9 +37,9 @@
   <%= render :partial => 'form_interactive', :locals => {:f => f, :interactive_class => @interactive_class} %>
 
  <div style="float: left;">
- <%= link_to '< Anterior', new_subject_lecture_path(@subject, :step => '1', :prev => '2'), :class=> "button" %><%= f.submit 'Próximo >' %> 
+ <%= link_to '< Anterior', new_space_subject_lecture_path(@space, @subject, :step => '1', :prev => '2'), :class=> "button" %><%= f.submit 'Próximo >' %> 
 
-ou <%= link_to 'Cancelar', cancel_subject_lectures_path(@subject), :confirm => "Tem certeza que deseja sair do editor de aulas?" %>
+ou <%= link_to 'Cancelar', cancel_space_subject_lectures_path(@space, @subject), :confirm => "Tem certeza que deseja sair do editor de aulas?" %>
 
 </div>
 <% end %>

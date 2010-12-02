@@ -2,7 +2,48 @@
   <%= render :partial => "#{lazy_item.assetable.class.to_s.tableize.singularize}_item", :object => lazy_item.assetable %>
 <% else %>
   <li class="clearfix">
-    <%= link_to lazy_item.name, new_subject_lecture_path(@subject, :name => lazy_item.name, :type => lazy_item.lazy_type, :lazy => lazy_item.id), :class => "name" %>
+    <% assetable = lazy_item.new_assetable %>
+    <% if assetable.nil? %>
+      <% unless lazy_item.lazy_type.eql?('Exam') %>
+        <%= link_to lazy_item.name,
+              new_space_subject_lecture_path(@space,
+                                             @subject,
+                                             :name => lazy_item.name,
+                                             :type => lazy_item.lazy_type,
+                                             :lazy => lazy_item.id),
+                :class => "name" %>
+        <%= link_to "Finalize",
+              new_space_subject_lecture_path(@space,
+                                             @subject,
+                                             :name => lazy_item.name,
+                                             :type => lazy_item.lazy_type,
+                                             :lazy => lazy_item.id),
+                :class => "button" %>
+      <% else %>
+        <%= link_to lazy_item.name,
+              new_space_subject_exam_path(@space,
+                                          @subject,
+                                          :type => lazy_item.lazy_type,
+                                          :lazy => lazy_item.id,
+                                          :name => lazy_item.name),
+                :class => "name" %>
+        <%= link_to "Finalize",
+              new_space_subject_exam_path(@space,
+                                          @subject,
+                                          :type => lazy_item.lazy_type,
+                                          :lazy => lazy_item.id,
+                                          :name => lazy_item.name),
+                :class => "button" %>
+      <% end %>
+    <% else %>
+      <%# space_subject_assetable é um helper  %>
+      <%= link_to assetable.name,
+            space_subject_assetable_path(@space,
+                                         @subject,
+                                         assetable),
+            :class => "name" %>
+          <strong class="loud">Finalizado</strong>
+    <% end %>
     <%= lazy_item.lazy_type %>
   </li>
 <% end %>

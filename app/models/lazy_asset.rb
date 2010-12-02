@@ -2,7 +2,8 @@ class LazyAsset < ActiveRecord::Base
   belongs_to :subject
   belongs_to :assetable, :polymorphic => true
   has_one :asset, :dependent => :destroy
-  has_one :lecture
+  has_one :lecture, :conditions => {:published => true}
+  has_one :exam
 
   validates_presence_of :name, :lazy_type, :if => "self.existent == false",
     :message => "Nome e/ou tipo não informados"
@@ -40,5 +41,9 @@ class LazyAsset < ActiveRecord::Base
       clone.save
     end
     return clone
+  end
+
+  def new_assetable
+    self.try(:lecture) || self.try(:exam)
   end
 end

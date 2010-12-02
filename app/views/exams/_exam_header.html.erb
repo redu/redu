@@ -4,8 +4,8 @@
   </h3>
   <div class="admin_opts yellow">
     <% if current_user.can_manage?(@exam) %>
-      <%= link_to 'Editar', edit_exam_path(@exam), :class => "icon-edit" %> |
-      <%= link_to 'Remover', @exam, {:confirm => 'Você tem certeza que quer remover esta aula permanentemente?',
+      <%= link_to 'Editar', edit_space_subject_exam_path(@space, @subject, @exam), :class => "icon-edit" %> |
+      <%= link_to 'Remover', space_subject_exam_path(@space, @subject, @exam), {:confirm => 'Você tem certeza que quer remover esta aula permanentemente?',
         :method => :delete, :class => "icon-delete"} %>
     <% end %>
     <% if current_user.admin? and @exam.state.eql?("waiting") %>

@@ -11,11 +11,11 @@ class Lecture < ActiveRecord::Base
   has_many :favorites, :as => :favoritable, :dependent => :destroy
   has_many :annotations
   has_many :logs, :as => :logeable, :dependent => :destroy, :class_name => 'Status'
-  has_many :assets, :as => :assetable
+  has_one :subject, :through => :asset, :dependent => :destroy
+  has_one :asset, :as => :assetable, :dependent => :destroy
   belongs_to :owner , :class_name => "User" , :foreign_key => "owner"
   belongs_to :lectureable, :polymorphic => true, :dependent => :destroy
   belongs_to :simple_category
-  belongs_to :subject, :dependent => :destroy
   belongs_to :lazy_asset
 
   accepts_nested_attributes_for :resources,

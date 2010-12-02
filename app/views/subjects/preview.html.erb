@@ -1,7 +1,7 @@
 <div class="grid_16">
   <%= render :partial => 'subjects/publish_unpublish' %>
   <% unless @subject.published? %>
-    <div class="box_notice">Este módulo ainda não foi publicado pois sua criação precisa ser finalizada. <%= link_to "Clique aqui", lazy_subject_path(@subject) %> para finaliza-la.</div>
+    <div class="box_notice">Este módulo ainda não foi publicado pois sua criação precisa ser finalizada. <%= link_to "Clique aqui", lazy_space_subject_path(@space, @subject) %> para finaliza-la.</div>
   <% end %>
   <div class="grid_11">
     <ul class="default">
@@ -13,7 +13,7 @@
           <%= h @subject.description %>
         </span><br />
 
-        <br /><b><%= link_to "Inscrever-se", enroll_subject_path(@subject.id) %></b>
+        <br /><b><%= link_to "Inscrever-se", enroll_space_subject_path(@space, @subject.id) %></b>
 
       </li>
     </ul>

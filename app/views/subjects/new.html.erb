@@ -77,7 +77,7 @@ function show_choosen_assets(){
 
 <div class="grid_16">
   <div id="breadcrumbs">
-    <%= link_to "Cursos", subjects_path %> > Novo Curso
+    <%= link_to "Cursos", space_subjects_path(@space) %> > Novo Curso
   </div>
 
   <%= render :partial => "spaces/sidebar", :locals => {:space => @space} %>
@@ -91,7 +91,7 @@ function show_choosen_assets(){
         <%= f.submit "< Anterior", :name => "back_button" unless @subject.first_step? %>
         <%= f.submit "Próximo >" unless @subject.last_step? %>
         <%= f.submit "Finalizar", :onclick => "reload_existent_assets();jQuery('#form_subject').submit();" if @subject.last_step? %>
-        ou <%= link_to "Cancelar", cancel_subjects_path(:space_id => @space.id) %>
+        ou <%= link_to "Cancelar", cancel_space_subjects_path(@space) %>
       </div>
   <% end %>
 </div>

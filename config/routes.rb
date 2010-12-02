@@ -10,39 +10,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :lessons
   map.resources :beta_keys, :collection => {:generate => :get, :remove_all => :get, :print_blank => :get, :invite => [:get, :post]}
   map.resources :profiles
-  map.resources :subjects,
-    :member => {:enroll => :get,
-                :upload => :get,
-                :download => :get,
-                :lazy => :get,
-                :publish => :get,
-                :unpublish => :get},
-    :collection => {:cancel => :get} do |subject|
-    subject.resources :events,
-      :member => { :vote => [:post,:get], :notify => :post },
-      :collection => { :past => :get,
-                       :ical => :get ,
-                       :day => :get }
-    subject.resources :bulletins, :member => {:rate => :post}
-    subject.resources :seminars
-    subject.resources :lectures,
-      :member => {:rate => :post,
-                  :buy => :get,
-                  :download_attachment => :get},
-      :collection => { :unpublished_preview => :get,
-                       :cancel => :get,
-                       :sort_lesson => :post,
-                       :unpublished => :get,
-                       :waiting => :get}
-    subject.resources :exams
-    subject.resources :pages
-  end
 
   map.resources :questions, :collection => { :search => [:get, :post], :add => :get }
-  map.resources :exams, :member => {:add_question => :get, :add_resource => :get, :rate => :post, :answer => [:get,:post]},
-      :collection => {:unpublished_preview => :get, :unpublished => :get, :new_exam => :get, :cancel => :get,
-      :exam_history => :get, :sort => :get, :order => :get, :questions_database => :get,
-      :review_question => :get}
   map.resources :credits
   map.resources :folders
   map.resources :annotations
@@ -139,10 +108,39 @@ ActionController::Routing::Routes.draw do |map|
                    :publish => :get,
                    :unpublish => :get,
                    :lazy => :get,
-                   :admin_assets_order => :get,
-                   :change_assets_order => :post,
+                   :admin_assets_order => [ :get, :post ],
                    :infos => :get,
-                   :statuses => :get}
+                   :statuses => :get },
+        :collection => {:cancel => :get} do |subject|
+      subject.resources :lectures,
+        :member => { :rate => :post },
+        :collection => { :unpublished_preview => :get,
+                         :cancel => :get,
+                         :sort_lesson => :post,
+                         :unpublished => :get,
+                         :waiting => :get,
+                         :published => :get,
+                         :waiting => :get }
+      subject.resources :exams,
+        :member => { :add_question => :get,
+                     :add_resource => :get,
+                     :rate => :post,
+                     :answer => [:get,:post],
+                     :compute_results => :get,
+                     :results => :get,
+                     :review_question => :get },
+          :collection => { :unpublished_preview => :get,
+                           :unpublished => :get,
+                           :published => :get,
+                           :history => :get,
+                           :new_exam => :get,
+                           :cancel => :get,
+                           :exam_history => :get,
+                           :sort => :get,
+                           :order => :get,
+                           :questions_database => :get,
+                           :review_question => :get }
+    end
     space.resources :bulletins
     space.resources :events,
       :member => { :vote => [:post,:get], :notify => :post },
@@ -196,9 +194,7 @@ ActionController::Routing::Routes.draw do |map|
     #user.resources :clippings
     user.resources :activities, :collection => {:network => :get}
     user.resources :invitations
-    user.resources :lectures, :collection => {:published => :get, :unpublished => :get, :waiting => :get}
     user.resources :spaces, :collection => {:member => :get, :owner => :get}
-    user.resources :exams, :collection => {:published => :get, :unpublished => :get, :history => :get}, :member => { :answer => [:get, :post] }
     user.resources :questions
     user.resources :credits
     user.resources :offerings, :collection => {:replace => :put}

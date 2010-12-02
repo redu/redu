@@ -130,7 +130,7 @@
               jQuery("#question_"+questionId).after(loadingbar);
               },
 type: 'get',
-url: "<%= url_for :controller => :exams, :action => :review_question %>"
+url: "<%= review_question_space_subject_exam_path(@space, @subject, @exam) %>"
 });
 
 

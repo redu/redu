@@ -24,4 +24,14 @@ module SubjectsHelper
       [l.name, "#{l.id.to_s}-#{l.class.to_s}"]
     end
   end
+
+  # Gera o path dependendo de quem aponta para LazyAsset
+  def space_subject_assetable_path(space, subject, assetable)
+    case assetable.class.to_s
+    when "Exam"
+      space_subject_exam_path(space, subject, assetable)
+    when "Lecture"
+      space_subject_lecture_path(space, subject, assetable)
+    end
+  end
 end

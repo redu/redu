@@ -3,5 +3,6 @@ class Asset < ActiveRecord::Base
   belongs_to :assetable, :polymorphic => true
   belongs_to :lazy_asset
 
-  validates_uniqueness_of :assetable_id, :scope => :subject_id
+  named_scope :lectures, :conditions => { :assetable_type => "Lecture" }
+  named_scope :exams, :conditions => { :assetable_type => "Exam" }
 end

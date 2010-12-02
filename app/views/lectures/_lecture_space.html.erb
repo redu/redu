@@ -11,10 +11,10 @@
 <ul id="actions_user">
   <%  if current_user.can_post? @space %>
     <li>
-      <%= link_to "Nova Aula", new_subject_lecture_path(@subject) %>
+      <%= link_to "Nova Aula", new_space_subject_lecture_path(@space, @subject) %>
     </li>
     <li>
-      <%= link_to "Novo Exame", new_space_exam_path(:space_id => @space.id) %>
+      <%= link_to "Novo Exame", new_space_subject_exam_path(@space, @subject) %>
     </li>
   <% end %>
 </ul> -->
@@ -37,7 +37,7 @@
     <%# if @space.lectures.size > 0 %>
     <span style="margin: 10px;">
       <%# link_to "Ver todas >", lectures_path(:space_id => @space.id)%>
-      <% link_to "Ver todas >", lectures_path%>
+      <% link_to "Ver todas >", space_subject_lectures_path(@space, @subject) %>
     </span>
     <%# end %>
 

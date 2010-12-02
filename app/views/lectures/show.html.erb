@@ -136,7 +136,7 @@
 <div class="grid_16">
     <div id="breadcrumbs">
         <a href="<%=application_url%>">início</a>
-        > <a href="<%= lectures_path %>">aulas</a>
+        > <a href="<%= space_subject_lectures_path(@space, @subject) %>">aulas</a>
         > <a href="#"><%= @lecture.name %></a>
     </div>
     <!--
@@ -152,13 +152,9 @@
             <%= link_to_function 'Editar', "alert('Opção indisponível nesta versão.')",  {:action => "edit"}, :class => "icon-edit" %>
 			 <% end %>
 			 
-			 <%# if current_user.can_manage? @lecture and @space %>
-			<!-- | <%# link_to 'Remover da rede', remove_asset_space_path(:id => @space.id, :asset_id => @lecture.id, :asset_type => "Lecture"), {:confirm => "Você tem certeza que quer remover esta aula da rede?\n(Ela continuará no seu diretório de aulas)", :class => "icon-delete"} %> -->
-			<%# end %>
-			
 			<% if current_user.admin? %>
-			| <%= link_to 'Remover', @lecture, {:confirm => 'Você tem certeza que quer remover esta aula do Redu permanentemente?',
-            :method => :delete, :class => "icon-delete"} %>
+                          <%= link_to "Remove", space_subject_lecture_path(@space.id, @subject.id, @lecture.id), {:confirm => 'Você tem certeza que quer remover esta aula do Redu permanentemente?',
+            :method => :delete, :class => "icon-delete"}%>
             
 				<% if @lecture.state.eql?("waiting") %>
 	            | <%= link_to 'Aprovar' , {:controller => :admin, :action => "approve", :id => @lecture.id}, :class => "icon-approve"%> |
@@ -265,7 +261,7 @@
         </ul>
     </div>
     <div id="rating_video">
-        <%= ratings_for @lecture %>
+      <%= ratings_for @lecture, :remote_options => {:url => rate_space_subject_lecture_path(@space, @subject, @lecture)} %>
     </div>
 </div>
 <!-- end bar -->

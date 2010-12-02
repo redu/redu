@@ -2,7 +2,7 @@
 <div class="grid_16">
 
   <div class="grid_5 push_6">
-    <%= link_to("Responder este exame!", answer_exam_path(:id=> @exam.id, :first=> true), :class => "answer-lg")%>
+    <%= link_to("Responder este exame!", answer_space_subject_exam_path(@space, @subject, @exam, :first=> true), :class => "answer-lg")%>
   </div>
 
   <div id="filter_bar_video" class="grid_16 alpha omega">
@@ -39,7 +39,12 @@
       </ul>
     </div>
     <div id="rating_video">
-      <%= ratings_for @exam %>
+      <%=
+        ratings_for @exam,
+            :remote_options => {
+                :url => rate_space_subject_exam_path(@space, @subject, @exam)
+        }
+      %>
     </div>
   </div>
   <!-- end bar -->
@@ -66,7 +71,7 @@
       <div class="sidebar">
         <span class="call"><span>Exames Relacionados</span></span>
         <ul class="default">
-          <%= render :partial => 'exams/item', :collection => @related_exams, :as => :exam %> 
+          <%= render :partial => 'exams/item', :collection => @related_exams, :as => :exam %>
         </ul>
       </div>
     <% end %>

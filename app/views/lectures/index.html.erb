@@ -124,10 +124,9 @@ function getParameters(){
 		<%= (params[:search]) ? ("Resultados para: \""+params[:search]+"\"") : "Todas as aulas mais recentes" %>
 	</span>
 	
-		<% form_tag lectures_path, :method => :get do %>
+		<% form_tag space_subject_lectures_path(@space, @subject), :method => :get do %>
 		Buscar 
 		<%= text_field_tag :search, params[:search] %>
-		<%# hidden_field_tag(:space_id, @space.id) if @space%>
 		<%= submit_tag "OK", :name => nil%>
 		<% end %>
 
