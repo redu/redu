@@ -166,7 +166,17 @@ class SubjectsController < BaseController
   end
 
   def unpublish
-    #TODO depende de enrollments
+    ActiveRecord::Base.transaction do
+      @subject.published = false
+      @subject.enrollments.clear
+      @subject.student_profiles.clear
+      @subject.save!
+    end
+
+    flash[:notice] = "Módulo despublicado, todos os alunos foram perdidos"
+    respond_to do |format|
+      format.html { render "edit" }
+    end
   end
 
   def publish
@@ -196,17 +206,23 @@ class SubjectsController < BaseController
   end
 
   def enroll
-    begin
-      redirect_to(space_subjects_path(@space)) and return unless @subject.is_public
-      Enrollment.create_enrollment(@subject.id, current_user)
-      StudentProfile.create_profile(@subject.id, current_user)
-      flash[:notice] = "Você se inscreveu neste curso!"
-      redirect_to space_subject_path(@space, @subject)
-    rescue Exception => e #exceçao criada no model de Enrollment
-      flash[:notice] =  e.message
-      redirect_to space_subjects_path(@space)
+    unless @subject.published?
+      flash[:notice] = "Este módulo precisa ser publicado antes de receber "  + \
+        "inscrições."
+      redirect_to space_subject_path(@space, @subject) and return
     end
 
+    #FIXME isso é realmente necessário?
+    ActiveRecord::Base.transaction do
+      enrollment = Enrollment.create({:user => current_user,
+                                      :subject => @subject,
+                                      :role => Role[:student]})
+      profile = StudentProfile.create({:user => current_user,
+                                      :subject => @subject})
+    end
+
+    flash[:notice] = "Você se inscreveu neste curso!"
+    redirect_to space_subject_path(@space, @subject)
   end
 
   # Altera a ordem dos recursos já finalizados.

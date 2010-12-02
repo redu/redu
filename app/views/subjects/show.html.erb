@@ -7,6 +7,7 @@
       <div class="box_notice">Este módulo ainda não foi publicado pois sua criação precisa ser finalizada. <%= link_to "Clique aqui", lazy_space_subject_path(@space, @subject) %> para finaliza-la.</div>
     <% end %>
     <%= render :partial => 'subjects/publish_unpublish' %>
+    <%= render :partial => 'subjects/enroll' %>
   </div>
 
   <h3><%= @subject.title %></h3>

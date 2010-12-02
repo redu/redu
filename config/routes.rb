@@ -106,7 +106,7 @@ ActionController::Routing::Routes.draw do |map|
       :member => { :enroll => :get,
                    :lazy => :get,
                    :publish => :get,
-                   :unpublish => :get,
+                   :unpublish => :post,
                    :lazy => :get,
                    :admin_assets_order => [ :get, :post ],
                    :infos => :get,

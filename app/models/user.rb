@@ -235,13 +235,8 @@ class User < ActiveRecord::Base
     (self.first_name and self.last_name and self.gender and self.description and self.tags)
   end
 
-  def enrolled? subject_id
-    if Enrollment.all(:conditions => ["user_id = ? AND subject_id = ?", self.id, subject_id]).length > 0
-      true
-    else
-      false
-    end
-
+  def enrolled? subject
+    Enrollment.count(:conditions => {:user_id => self, :subject_id => subject}) > 0
   end
 
   def can_manage?(entity, space=nil)

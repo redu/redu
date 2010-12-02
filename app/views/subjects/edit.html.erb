@@ -78,7 +78,8 @@ function show_choosen_assets(){
   });
 }
 //]]>
-</script><div class="grid_16">
+</script>
+<div class="grid_16">
   <div class="fake-tabs grid_16 alpha omega">
     <%= render :partial => "subjects/admin_taskbar" %>
     <div class="panel">
@@ -88,17 +89,18 @@ function show_choosen_assets(){
         <%= render :partial => "#{@subject.current_step}_step",
           :locals => {:f => f, :titles => "Criar Curso-Adicionar Aulas"}%>
 
-        <div class="grid_16">
-          <%= f.submit "< Anterior", :name => "back_button" unless @subject.first_step? %>
-          <%= f.submit "Próximo >" unless @subject.last_step? %>
-          <%= f.submit "Finalizar",
-            :onclick => "reload_existent_assets();jQuery('#form_subject').submit();" if @subject.last_step? %>
-          ou
-          <%= link_to "Cancelar", cancel_space_subjects_path(@space) %>
-        </div>
+        <%= f.submit "< Anterior", :name => "back_button" unless @subject.first_step? %>
+        <%= f.submit "Próximo >" unless @subject.last_step? %>
+        <%= f.submit "Finalizar",
+          :onclick => "reload_existent_assets();jQuery('#form_subject').submit();" if @subject.last_step? %>
+        ou
+        <%= link_to "Cancelar", cancel_space_subjects_path(@space) %>
       <% end %>
 
-
+      <fieldset class="fake">
+        <legend>Publicar e Despublicar módulo</legend>
+        <%= render :partial => 'subjects/publish_unpublish' %>
+      </fieldset>
     </div> <!-- end panel -->
   </div> <!-- end fake -->
 </div> <!-- end grid_16 -->
