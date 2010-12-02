@@ -7,6 +7,11 @@ class User < ActiveRecord::Base
   LEARNING_ACTIONS = ['answer', 'results', 'show']
   TEACHING_ACTIONS = ['create']
 
+  SUPPORTED_CURRICULUM_TYPES = [ 'application/pdf', 'application/msword',
+                                 'text/plain',
+                                 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' # docx
+                               ]
+
   # CALLBACKS
   before_save   :whitelist_attributes
   before_save   :generate_login_slug
@@ -73,13 +78,13 @@ class User < ActiveRecord::Base
   has_many :student_profiles
 
 
-    #forums
-    has_many :moderatorships, :dependent => :destroy
-    has_many :forums, :through => :moderatorships, :order => 'forums.name'
-    has_many :sb_posts, :dependent => :destroy
-    has_many :topics, :dependent => :destroy
-    has_many :monitorships, :dependent => :destroy
-    has_many :monitored_topics, :through => :monitorships, :conditions => ['monitorships.active = ?', true], :order => 'topics.replied_at desc', :source => :topic
+  #forums
+  has_many :moderatorships, :dependent => :destroy
+  has_many :forums, :through => :moderatorships, :order => 'forums.name'
+  has_many :sb_posts, :dependent => :destroy
+  has_many :topics, :dependent => :destroy
+  has_many :monitorships, :dependent => :destroy
+  has_many :monitored_topics, :through => :monitorships, :conditions => ['monitorships.active = ?', true], :order => 'topics.replied_at desc', :source => :topic
 
 
   # Named scopes
@@ -107,6 +112,7 @@ class User < ActiveRecord::Base
   end
 
   has_attached_file :avatar, PAPERCLIP_STORAGE_OPTIONS
+  has_attached_file :curriculum, PAPERCLIP_STORAGE_OPTIONS
 
   ajaxful_rater
   acts_as_taggable
@@ -121,6 +127,8 @@ class User < ActiveRecord::Base
   validates_exclusion_of    :login, :in => AppConfig.reserved_logins
   validates_date :birthday, :before => 13.years.ago.to_date
   validates_acceptance_of :tos, :message => "Você precisa aceitar os Termos de Uso"
+  validates_attachment_size :curriculum, :less_than => 10.megabytes
+  validate :accepted_curriculum_type
 
   # override activerecord's find to allow us to find by name or id transparently
   def self.find(*args)
@@ -657,4 +665,9 @@ class User < ActiveRecord::Base
     crypted_password.blank? || !password.blank?
   end
 
+  def accepted_curriculum_type
+    unless SUPPORTED_CURRICULUM_TYPES.include?(self.curriculum_content_type)
+      self.errors.add(:curriculum, "Formato inválido")
+    end
+  end
 end

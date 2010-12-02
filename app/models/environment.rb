@@ -6,14 +6,14 @@ class Environment < ActiveRecord::Base
   has_many :user_environment_associations, :dependent => :destroy
   belongs_to :owner, :class_name => "User", :foreign_key => "owner"
   has_many :users, :through => :user_environment_associations
-  has_attached_file :avatar, PAPERCLIP_STORAGE_OPTIONS.deep_merge({
-    :styles => { :thumb => "140x100>" }
-  })
   has_many :invitations, :class_name => "EnvironmentInvitation",
     :dependent => :destroy
   has_many :bulletins, :as => :bulletinable, :dependent => :destroy
 
   acts_as_taggable
+  has_attached_file :avatar, PAPERCLIP_STORAGE_OPTIONS.deep_merge({
+    :styles => { :thumb => "140x100>" }
+  })
 
   validates_presence_of :name
 
