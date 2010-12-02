@@ -2,26 +2,28 @@ class StudentProfile < ActiveRecord::Base
   belongs_to :user
   belongs_to :subject
   belongs_to :asset
+  has_many :assets, :through => :asset_report
+  has_many :asset_reports, :dependent => :destroy
 
   validates_uniqueness_of :user_id, :scope => :subject_id
 
   # Atualiza a porcentagem de cumprimento do módulo. Quando não houver mais recursos
   # a serem cursados, retorna false.
   def update_grade!
-    current_index = self.asset.position
-    total = self.subject.assets.count
+    total = self.subject.asset_reports.count(:conditions => {
+      :subject_id => self.subject})
+    done = self.subject.asset_reports.count(:conditions => {
+      :subject_id => self.subject,
+      :done => true})
 
-    self.grade = ( current_index.to_f * 100 ) / total
-    unless total == current_index
-      next_asset = self.subject.assets.find(:first,
-                      :conditions => {:position => current_index + 1})
-      self.asset = next_asset
-    else
+    self.grade = ( done.to_f * 100 ) / total
+
+    if total == done
       self.grade = 100
       self.graduaded = true
     end
     self.save
 
-    return !next_asset.nil?
+    return self.grade
   end
 end

@@ -91,12 +91,20 @@
               :class => "button" %>
           <% end %>
         </div>
+        <div class="grid_16 alpha omgea">
+          <div class="grid_3 push_13 alpha progress">
+            <%= render :partial => 'subjects/progress' %>
+          </div>
+        </div>
         <div class="grid_16 alpha omega">
-          <div class="grid_2 push_14 omega">
-            <% if @lecture && !@lecture.new_record? || @exam && !@exam.new_record? %>
-              <%= link_to "Próximo >", next_space_subject_path(@space, @subject),
-                :method => :post,
-                :class => "button" %>
+          <div class="grid_2 push_14 alpha omega">
+            <% assetable = @lecture || @exam %>
+            <% if assetable && !assetable.new_record? %>
+              <%= link_to "Próximo >", next_space_subject_path(@space, @subject,
+                    :assetable_type => assetable.class.to_s,
+                    :assetable_id =>  assetable.id),
+              :method => :post,
+              :class => "button" %>
             <% end %>
           </div>
         </div>

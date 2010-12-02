@@ -79,7 +79,7 @@ class Seminar < ActiveRecord::Base
   end
 
   event :fail do
-    transitions :from => :converting, :to => :fail
+    transitions :from => :converting, :to => :failed
   end
 
   # Validations Groups - Habilitar diferentes validacoes dependendo do tipo.

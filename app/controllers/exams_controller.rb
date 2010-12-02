@@ -218,9 +218,14 @@ class ExamsController < BaseController
           question.save!
         end
 
+        # Calculando o próximo indice
+        max_index = @subject.assets.maximum("position")
+        max_index ||= 0
+
         Asset.create({:assetable => @exam,
                      :subject => @subject,
-                     :lazy_asset => @exam.lazy_asset})
+                     :lazy_asset => @exam.lazy_asset,
+                     :postion => max_position + 1})
 
         session[:exam_params] = nil
         flash[:notice] = "Exame criado!"

@@ -321,9 +321,14 @@ class LecturesController < BaseController
       # se o usuário completou os 3 passos então o curso está publicado
       @lecture.published = true
 
+      # Calculando o próximo indice
+      max_index = @subject.assets.maximum("position")
+      max_index ||= 0
+
       Asset.create({:assetable => @lecture,
                     :subject => @subject,
-                    :lazy_asset => @lecture.lazy_asset})
+                    :lazy_asset => @lecture.lazy_asset,
+                    :position => max_index + 1})
 
       # Enfileirando video para conversão
       if @lecture.lectureable_type.eql?('Seminar')

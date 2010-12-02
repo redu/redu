@@ -2289,25 +2289,25 @@ div.curriculum h6 {
 }
 
 
-ul.progress-bar span.bar-chart {
+div.progress-bar {
   display: block;
   padding: 2px;
   border: 1px solid #E9E9E9;
-  height: 15px;
+  height: 30px;
 }
 
-ul.progress-bar span.bar-chart > span {
+div.progress-bar span.complete {
   background-color: #FFFA7F;
   display: block;
-  height: 15px;
+  height: 30px;
   position: relative;
 }
 
-ul.progress-bar span.bar-chart span span {
+div.progress-bar span.complete span {
   position: absolute;
-  font-size: .8em;
+  font-size: .7em;
   right: 5px;
-  top: 2px;
+  top: 40%;
   color: gray;
 }
 

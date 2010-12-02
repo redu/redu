@@ -213,16 +213,18 @@ class SubjectsController < BaseController
 
     #FIXME isso é realmente necessário?
     ActiveRecord::Base.transaction do
+      profile = StudentProfile.create({:user => current_user,
+                                       :subject => @subject })
       enrollment = Enrollment.create({:user => current_user,
                                       :subject => @subject,
+                                      :student_profile => profile,
                                       :role => Role[:student]})
 
-      first_asset = @subject.assets.find(:first,
-                                         :conditions => {:position => 1})
-
-      profile = StudentProfile.create({:user => current_user,
-                                      :subject => @subject,
-                                      :asset => first_asset})
+      @subject.assets.each do |asset|
+        AssetReport.create({:asset => asset,
+                            :student_profile => profile,
+                            :subject => @subject})
+      end
     end
 
     flash[:notice] = "Você se inscreveu neste curso!"
@@ -262,13 +264,25 @@ class SubjectsController < BaseController
     profile = current_user.student_profiles.find(:first,
                                        :conditions => {:subject_id => @subject})
 
-    if profile.update_grade!
-      if profile.asset.assetable_type.to_s.eql?('Exam')
+    # Tornando o asset done (para que a contagem seja atualizada)
+    current_asset = Asset.find(:first,
+      :conditions => {:assetable_type => params[:assetable_type],
+                      :assetable_id => params[:assetable_id]})
+
+    report = current_asset.asset_reports.find(:first,
+                :conditions => {:student_profile_id => profile})
+    report.done = true
+    report.save!
+    profile.update_grade!
+    next_asset = current_asset.next
+
+    if next_asset
+      if next_asset.assetable.class.to_s.eql?('Exam')
         redirect_to space_subject_exam_path(@space, @subject,
-                                            profile.asset.assetable)
+                                            next_asset.assetable)
       else
         redirect_to space_subject_lecture_path(@space, @subject,
-                                               profile.asset.assetable)
+                                               next_asset.assetable)
       end
     else
       flash[:notice] = "Parabéns, você terminou o módulo #{@subject.title}"

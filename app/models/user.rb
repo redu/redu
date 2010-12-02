@@ -128,7 +128,7 @@ class User < ActiveRecord::Base
   validates_date :birthday, :before => 13.years.ago.to_date
   validates_acceptance_of :tos, :message => "Você precisa aceitar os Termos de Uso"
   validates_attachment_size :curriculum, :less_than => 10.megabytes
-  validate :accepted_curriculum_type
+  validate_on_update :accepted_curriculum_type
 
   # override activerecord's find to allow us to find by name or id transparently
   def self.find(*args)
@@ -636,6 +636,11 @@ class User < ActiveRecord::Base
   def update_last_seen_at
     User.update_all ['sb_last_seen_at = ?', Time.now.utc], ['id = ?', self.id]
     self.sb_last_seen_at = Time.now.utc
+  end
+
+  def profile_for(subject)
+    self.student_profiles.find(:first,
+      :conditions => {:subject_id => subject})
   end
 
   protected

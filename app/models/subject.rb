@@ -8,6 +8,7 @@ class Subject < ActiveRecord::Base
   has_many :students, :through => :enrollments, :source => :user, :conditions => [ "enrollments.role_id = ?", 3 ]
   has_many :teachers, :through => :enrollments, :source => :user, :conditions => [ "enrollments.role_id = ?", 6 ]
   has_many :student_profiles, :dependent => :destroy
+  has_many :asset_reports, :dependent => :destroy
   belongs_to :owner, :class_name => "User" , :foreign_key => "user_id"
   belongs_to :space
 
@@ -105,6 +106,7 @@ class Subject < ActiveRecord::Base
     end
 
     self.enable_validation_group(:lecture)
+    self.random_order
     self.save
   end
 
@@ -249,62 +251,12 @@ class Subject < ActiveRecord::Base
 
   protected
 
-  def clone_content(aulas, subject_id, current_user, positions)
-
-    aulas.each_with_index do |aula,index|
-
-      lecture = current_user.lectures.find(aula)
-      clone_lecture = lecture.clone :except => [:view_count, :created_at, :updated_at]#clone it, methodo 'except' relacionado com o plugin vendor/deep_cloning, sem os atributos[view_count, :created_at, :updated_at]
-
-      #### clone o conteúdo da aula #######
-      type = lecture.lectureable #a aula, pode ser seminar, page or interactive_class
-
-      if type.class.to_s.eql?("InteractiveClass") #INTERACTIVE CLASS
-
-        clone_type = InteractiveClass.find(type.id).clone :include => :lessons
-        clone_type.save
-
-        clone_type.lessons.each do |l| # um lesson pode ser 'Page' or 'Seminar',
-          clone_lesson = Lesson.find(l.id)
-
-          #salva as aulas interativas...
-          if   l.lesson.class.to_s.eql?("Page")
-            clone_lessonable = Page.find(l.lesson).clone
-            clone_lessonable.save
-          else
-            clone_lessonable = Seminar.find(l.lesson).clone
-            clone_lessonable.send(:create_without_callbacks) ##metodo do proprio active record para pular callback
-          end
-
-          clone_lesson.lesson_id = clone_lessonable.id
-          clone_lesson.save
-        end
-
-      elsif type.class.to_s.eql?("Seminar") #SEMINAR
-
-        clone_type = Seminar.find(type.id).clone
-        clone_type.send(:create_without_callbacks) ##metodo do proprio active record para pular callback
-
-      else #Page
-        clone_type = type.clone
-        clone_type.save
-      end
-
-      clone_lecture.lectureable_type = clone_type.class.to_s
-      clone_lecture.lectureable_id = clone_type.id
-      ##### fim do clone do conteúdo da aula######
-
-      clone_lecture.is_clone = true
-      clone_lecture.save#and save it
-
-      asset = Asset.new
-      asset.subject_id = subject_id
-      asset.assetable_id = clone_lecture.id
-      asset.position = positions[index] #variavel index eh contador
-      asset.assetable_type = "Lecture"
+  # Adiciona positions aos assets sem nenhum critério
+  def random_order
+    self.assets.each_with_index do |asset, index|
+      asset.position = index + 1
       asset.save
     end
-
   end
 
   def rearrange_lecture(subject, aulas_ids, aulas_futuras)
