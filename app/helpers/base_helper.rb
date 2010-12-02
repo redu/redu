@@ -85,14 +85,16 @@ module BaseHelper
          @activity = "atualizou seu status para: <span style='font-weight: bold;'>\"" + item.logeable_name + "\"</span>" if item.log_action == "update"
 
         when 'lecture'
-          link_obj = link_to(item.logeable_name, item.logeable)
+          lecture = item.logeable
+          link_obj = link_to(item.logeable_name, space_subject_lecture_path(lecture.subject.space, lecture.subject, lecture))
 
           @activity = "está visualizando a aula " + link_obj if item.log_action == "show"
           @activity = "criou a aula " + link_obj if item.log_action == "create"
           @activity =  "adicionou a aula " + link_obj + " ao seus favoritos" if item.log_action == "favorite"
 
       when 'exam'
-          link_obj = link_to(item.logeable_name, exam_path(item.logeable_id))
+          exam = item.logeable
+          link_obj = link_to(item.logeable_name, space_subject_exam_path(exam.subject.space, exam.subject, exam))
 
           @activity = "acabou de responder o exame " + link_obj if item.log_action == "results"
           @activity = "está respondendo ao exame " + link_obj if item.log_action == "answer"
