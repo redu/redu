@@ -12,7 +12,7 @@ class UsersController < BaseController
   before_filter :login_required, 
     :except => [:new, :create, :forgot_password, :forgot_username, :activate, :resend_activation]
   before_filter :find_user, :only => [:activity, :edit, :edit_pro_details, :show, :update, :destroy, :statistics, :deactivate,
-    :crop_profile_photo, :upload_profile_photo ]
+    :crop_profile_photo, :upload_profile_photo, :download_curriculum ]
   before_filter :require_current_user, :only => [:edit, :update, :update_account,
     :edit_pro_details, :update_pro_details,
     :welcome_photo, :welcome_about, :welcome_invite, :deactivate,
@@ -593,6 +593,18 @@ class UsersController < BaseController
     respond_to do |format|
       format.xml
     end
+  end
+
+  # Faz download do currículo previamente guardado pelo usuário.
+  def download_curriculum
+    send_file @user.curriculum.path, :type => @user.curriculum.content_type, :x_sendfile => true
+
+    f = @user.curriculum
+    if Rails.env == "production"
+      redirect_to f.s3.interface.get_link(f.s3_bucket.to_s, f.path, 20.seconds) and return false
+    end
+
+    send_file @user.curriculum.path, :type => @user.curriculum.content_type, :x_sendfile => true
   end
 
   protected

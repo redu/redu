@@ -108,6 +108,7 @@ ActionController::Routing::Routes.draw do |map|
                    :publish => :get,
                    :unpublish => :post,
                    :admin_assets_order => [ :get, :post ],
+                   :change_assets_order => :post,
                    :infos => :get,
                    :statuses => :get,
                    :next => :post },
@@ -185,7 +186,8 @@ ActionController::Routing::Routes.draw do |map|
     :teaching => :get,
     :deactivate => :put,
     :crop_profile_photo => [:get, :put],
-    :upload_profile_photo => [:get, :put]
+    :upload_profile_photo => [:get, :put],
+    :download_curriculum => :get
   } do |user|
     user.resources :friendships, :member => { :accept => :put, :deny => :put }, :collection => { :accepted => :get, :pending => :get, :denied => :get }
     user.resources :photos, :collection => {:swfupload => :post, :slideshow => :get}
