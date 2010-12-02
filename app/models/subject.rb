@@ -21,7 +21,7 @@ class Subject < ActiveRecord::Base
           lazy_asset['lazy_type'].blank?
         end
       },
-      :allow_destroy => true
+    :allow_destroy => true
 
   # METODOS DO WIZARD
   attr_writer :current_step

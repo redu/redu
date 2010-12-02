@@ -10,11 +10,11 @@
   </span>
   <span class="headlines">
     <ul class="item_info">
-      <li>Tipo: <%= item.friendly_type %> | </li>
-      <li>Professor: <%= link_to item.assetable.owner.display_name,
+      <li><strong>Tipo:</strong> <%= item.friendly_type %> | </li>
+      <li><strong>Professor:</strong> <%= link_to item.assetable.owner.display_name,
             user_path(item.assetable.owner) %></li>
       <% unless item.assetable.simple_category.nil? %>
-        <li> | Categoria: <%= item.assetable.simple_category.name %></li>
+        <li> | <strong>Categoria:</strong> <%= item.assetable.simple_category.name %></li>
       <% end %>
     </ul>
   </span>

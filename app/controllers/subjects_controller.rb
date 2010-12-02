@@ -128,7 +128,6 @@ class SubjectsController < BaseController
   end
 
   def update
-
     @subject = Subject.find(params[:id])
     if params[:subject]
       # Evita duplicação dos campos gerados dinamicamente no passo 2
@@ -217,8 +216,13 @@ class SubjectsController < BaseController
       enrollment = Enrollment.create({:user => current_user,
                                       :subject => @subject,
                                       :role => Role[:student]})
+
+      first_asset = @subject.assets.find(:first,
+                                         :conditions => {:position => 1})
+
       profile = StudentProfile.create({:user => current_user,
-                                      :subject => @subject})
+                                      :subject => @subject,
+                                      :asset => first_asset})
     end
 
     flash[:notice] = "Você se inscreveu neste curso!"
@@ -248,9 +252,29 @@ class SubjectsController < BaseController
    @subject = Subject.find(params[:id])
   end
 
+  # Mural do Subject
   def statuses
     @status = Status.new
     @statuses = @subject.recent_activity(0,10)
+  end
+
+  def next
+    profile = current_user.student_profiles.find(:first,
+                                       :conditions => {:subject_id => @subject})
+
+    if profile.update_grade!
+      if profile.asset.assetable_type.to_s.eql?('Exam')
+        redirect_to space_subject_exam_path(@space, @subject,
+                                            profile.asset.assetable)
+      else
+        redirect_to space_subject_lecture_path(@space, @subject,
+                                               profile.asset.assetable)
+      end
+    else
+      flash[:notice] = "Parabéns, você terminou o módulo #{@subject.title}"
+      #TODO página com relatório de desempenho
+      redirect_to space_subject_path(@space, @subject)
+    end
   end
 
   protected

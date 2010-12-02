@@ -5,19 +5,23 @@ class StudentProfile < ActiveRecord::Base
 
   validates_uniqueness_of :user_id, :scope => :subject_id
 
-  def to_count lecture
-    self.asset = lecture.asset
+  # Atualiza a porcentagem de cumprimento do módulo. Quando não houver mais recursos
+  # a serem cursados, retorna false.
+  def update_grade!
+    current_index = self.asset.position
+    total = self.subject.assets.count
+
+    self.grade = ( current_index.to_f * 100 ) / total
+    unless total == current_index
+      next_asset = self.subject.assets.find(:first,
+                      :conditions => {:position => current_index + 1})
+      self.asset = next_asset
+    else
+      self.grade = 100
+      self.graduaded = true
+    end
     self.save
+
+    return !next_asset.nil?
   end
-
-  # Metodo q calcula a percentagem de aula assistida
-  def coursed_percentage subject
-    aulas = subject.aulas.map{|a| a.id} #ids todas aulas do curso
-    total = aulas.length ##TODO adicionar exames
-    #TODO Ajeitar linha abaixo
-    index =  self.asset.nil? ? 0 : aulas.index(Asset.find(self.course_subject_id).courseable.id)+1  #quero obter o indice da aula q aluno cursou ate agora, atraves do course_subject_id
-    return  index == 0 ? 0 : ((100*index)/total).to_i
-  end
-
-
 end

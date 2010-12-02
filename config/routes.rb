@@ -107,10 +107,10 @@ ActionController::Routing::Routes.draw do |map|
                    :lazy => :get,
                    :publish => :get,
                    :unpublish => :post,
-                   :lazy => :get,
                    :admin_assets_order => [ :get, :post ],
                    :infos => :get,
-                   :statuses => :get },
+                   :statuses => :get,
+                   :next => :post },
         :collection => {:cancel => :get} do |subject|
       subject.resources :lectures,
         :member => { :rate => :post },

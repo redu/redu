@@ -1,6 +1,6 @@
-<%# 
+<%#
   Partial que exibe o header do environment/course. Três locals: environment,
-    course e space. 
+    course e space.
     Caso não seja necessário exibir o course basta passar :course => nil.
     Caso não seja necessário exibir o space basta passar :space => nil.
   %>
@@ -91,7 +91,16 @@
               :class => "button" %>
           <% end %>
         </div>
-      </div>
+        <div class="grid_16 alpha omega">
+          <div class="grid_2 push_14 omega">
+            <% if @lecture && !@lecture.new_record? || @exam && !@exam.new_record? %>
+              <%= link_to "Próximo >", next_space_subject_path(@space, @subject),
+                :method => :post,
+                :class => "button" %>
+            <% end %>
+          </div>
+        </div>
+      </div><!-- /end grid_16 acoes gerais -->
     <% end %>
   </div> <!-- /container_16 -->
 </div><!-- end environment-header -->
