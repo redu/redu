@@ -109,6 +109,7 @@ ActionController::Routing::Routes.draw do |map|
                    :unpublish => :post,
                    :lazy => :get,
                    :admin_assets_order => [ :get, :post ],
+                   :change_assets_order => :post,
                    :infos => :get,
                    :statuses => :get },
         :collection => {:cancel => :get} do |subject|

@@ -8,6 +8,13 @@
       <div class="pretty-text">
         <%= @subject.description %>
       </div>
+      <div class="grid_10 alpha">
+        <% field_set_tag "Professores", :class => "clearfix fake" do %>
+          <ul>
+            <%= render :partial => 'subjects/teacher_item', :collection => @subject.teachers, :as => :item %>
+          </ul>
+        <% end %>
+      </div>
     </div>
   </div>
 
