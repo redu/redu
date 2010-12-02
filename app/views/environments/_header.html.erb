@@ -79,5 +79,19 @@
         </div>
       <% end %>
     <% end %>
+    <% if @subject && !@subject.new_record? %>
+      <div class="grid_16">
+        <h3 class="call grid_10 alpha"><%= @subject.title %></h3>
+        <div class="grid_6 omega">
+          <%= link_to "Gerenciar", edit_space_subject_path(space, @subject),
+            :class => "button" %>
+          <%= render :partial => "subjects/publish_unpublish" %>
+          <% if @subject.published? %>
+            <%= link_to "Matricule-se", enroll_space_subject_path(@space, @subject),
+              :class => "button" %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
   </div> <!-- /container_16 -->
 </div><!-- end environment-header -->

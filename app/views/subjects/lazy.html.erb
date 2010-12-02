@@ -1,9 +1,4 @@
 <div class="grid_16">
-  <%= render :partial => "subjects/publish_unpublish" %>
-  <% if @subject.published? %>
-    <%= link_to "Matricule-se", enroll_space_subject_path(@space, @subject),
-        :class => "button" %>
-  <% end %>
   <% unless @subject.lazy_assets.empty? %>
     <div class="lazy_list grid_12 alpha">
       <ul class="default">
