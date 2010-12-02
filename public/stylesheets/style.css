@@ -410,20 +410,20 @@ ul.default > li .headlines {
   -webkit-border-radius: 5px;
 }
 
-ul.default > li div.headlines .things {
+ul.default > li .headlines .things {
   color: gray;
 }
 
-ul.default > li div.headlines .things {
+ul.default > li .headlines .things {
   margin-right: 10px;
 }
 
-ul.default > li div.headlines ul li {
+ul.default > li .headlines ul li {
   display: block;
   float: left;
 }
 
-ul.default > li div.headlines > .call {
+ul.default > li .headlines > .call {
   font-weight: bold;
   font-size: .9em;
   color: #ff8000;
