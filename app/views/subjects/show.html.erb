@@ -6,10 +6,14 @@
   <div class="fake-tabs grid_11 alpha omega">
     <%= render :partial => 'subjects/tabs_menu' %>
     <div class="panel">
+      <% unless @subject.assets.empty? %>
       <ul class="default subject-assets">
         <%= render :partial => 'subjects/asset_item',
           :collection => @subject.assets, :as => :item %>
       </ul>
+    <% else %>
+      <div class="box_notice">Você precisa finalizar a criação dos recursos. <%= link_to "Clique aqui", lazy_space_subject_path(@space, @subject) %></div>
+    <% end %>
     </div>
   </div>
 
