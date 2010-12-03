@@ -26,4 +26,10 @@ class StudentProfile < ActiveRecord::Base
 
     return self.grade
   end
+
+  def days_to_complete
+    final = self.created_at + self.subject.duration.days
+    final_date = Date.new(final.year, final.month, final.day)
+    final_date - Date.today
+  end
 end
