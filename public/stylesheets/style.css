@@ -478,6 +478,7 @@ ul.lazy-assets > li a.finalize {
 
 ul.lazy-assets > li .headlines {
   display: block;
+  width: 470px;
   float: left;
   margin: 10px;
 }
@@ -2383,6 +2384,37 @@ ul.sub-groups > li {
   margin-bottom: 10px;
 }
 
+#subject-header {
+  margin: 10px 0;
+  background-color: #F7F9F9;
+  padding: 10px;
+
+}
+
+#subject-header strong{
+  font-size: .8em;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #E5E3E3;
+}
+
+
+#subject-header h3.call {
+  margin: 5px 0 0 0;
+}
+
+#subject-header h3.call a {
+  font-size: 1.2em;
+}
+
+#subject-header  a.button {
+  display: block;
+  float: right;
+}
+#subject-header h3.call a.edit {
+  font-size: .7em;
+  color: #FF8000
+}
 /* @footer */
 #footer {
   background-color: #D1E0EF;

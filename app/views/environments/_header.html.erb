@@ -80,11 +80,17 @@
       <% end %>
     <% end %>
     <% if @subject && !@subject.new_record? %>
-      <div class="grid_16">
-        <h3 class="call grid_10 alpha"><%= @subject.title %></h3>
-        <div class="grid_6 omega">
-          <%= link_to "Gerenciar", edit_space_subject_path(space, @subject),
-            :class => "button" %>
+      <div class="grid_16 alpha omega " id="subject-header">
+        <div class="grid_12 alpha">
+          <strong>Módulo</strong>
+          <h3 class="call">
+            <%= link_to @subject.title, space_subject_path(@space, @subject) %>
+            <%= link_to "Gerenciar", edit_space_subject_path(space, @subject),
+                  :class => "edit" %>
+          </h3>
+        </div>
+        <div class="grid_4 omega">
+
           <%= render :partial => "subjects/publish_unpublish" %>
           <% if @subject.published? %>
             <%= link_to "Matricule-se", enroll_space_subject_path(@space, @subject),
@@ -108,7 +114,13 @@
             <% end %>
           </div>
         </div>
-      </div><!-- /end grid_16 acoes gerais -->
+    </div><!-- /end grid_16 acoes gerais -->
+
+  <div class="publish grid_16">
+    <% unless @subject.published? %>
+      <div class="box_notice">Este módulo ainda não foi publicado pois sua criação precisa ser finalizada. <%= link_to "Clique aqui", lazy_space_subject_path(@space, @subject) %> para finaliza-la.</div>
     <% end %>
+  </div>
+      <% end %>
   </div> <!-- /container_16 -->
 </div><!-- end environment-header -->

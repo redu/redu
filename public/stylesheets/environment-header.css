@@ -30,7 +30,6 @@
   _background-image: none;
   _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="../images/bg-create-header.png", sizingMethod="scale");
   height:140px;
-  margin-top:8px;
 }
 
 #create-header h3 a{

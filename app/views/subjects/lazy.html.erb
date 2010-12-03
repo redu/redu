@@ -1,11 +1,18 @@
-<div class="grid_16">
-  <% unless @subject.lazy_assets.empty? %>
-    <div class="lazy_list grid_12 alpha">
-      <ul class="default lazy-assets">
-        <%= render :partial => "lazy_item", :collection => @subject.lazy_assets %>
-      </ul>
+<div class="grid_16" id="subject">
+  <div class="fake-tabs grid_11 alpha omega">
+    <%= render :partial => 'subjects/tabs_menu' %>
+    <div class="panel">
+      <% unless @subject.lazy_assets.empty? %>
+        <div class="lazy_list">
+          <ul class="default lazy-assets">
+            <%= render :partial => "lazy_item",
+              :collection => @subject.lazy_assets %>
+          </ul>
+        </div>
+      <% else %>
+        <div class="box_notice">Nenhum recurso com criação pendente</div>
+      <% end %>
     </div>
-  <% else %>
-    <div class="box_notice">Nenhum recurso com criação pendente</div>
-  <% end %>
+  </div>
+  <%= render :partial => 'subjects/sidebar' %>
 </div>
