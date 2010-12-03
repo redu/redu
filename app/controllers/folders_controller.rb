@@ -68,9 +68,6 @@ class FoldersController < BaseController
   def download
     @myfile = Myfile.find(params[:file_id])
 
-    send_file @myfile.attachment.path, :type=> @myfile.attachment.content_type, :x_sendfile=>true
-
-
     if  @myfile
       space = Space.find(params[:space_id]) if params[:space_id]
       if space and current_user.has_access_to(space)
@@ -81,7 +78,7 @@ class FoldersController < BaseController
           redirect_to f.s3.interface.get_link(f.s3_bucket.to_s, f.path, 20.seconds) and return false
         end
 
-        send_file @myfile.attachment.path, :type=> @myfile.attachment.content_type, :x_sendfile=>true
+        send_file @myfile.attachment.path, :type=> @myfile.attachment.content_type
       else
         flash[:notice] = "Você não tem permissão para baixar o arquivo."
         redirect_to user_path(current_user)

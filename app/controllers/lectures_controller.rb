@@ -74,7 +74,7 @@ class LecturesController < BaseController
 
   def download_attachment
     @attachment = LectureResource.find(params[:res_id])
-    send_file @attachment.attachment.path, :type=> @attachment.attachment.content_type, :x_sendfile=>true
+    send_file @attachment.attachment.path, :type=> @attachment.attachment.content_type
   end
 
   def rate
