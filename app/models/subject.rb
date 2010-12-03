@@ -14,14 +14,14 @@ class Subject < ActiveRecord::Base
 
   accepts_nested_attributes_for :lazy_assets,
     :reject_if => lambda { |lazy_asset|
-        if lazy_asset['existent'] == 'true'
-          lazy_asset['assetable_id'].blank? &&
-          lazy_asset['assetable_type'].blank?
-        else
-          lazy_asset['name'].blank? &&
-          lazy_asset['lazy_type'].blank?
-        end
-      },
+    if lazy_asset['existent'] == 'true'
+      lazy_asset['assetable_id'].blank? &&
+        lazy_asset['assetable_type'].blank?
+    else
+      lazy_asset['name'].blank? &&
+        lazy_asset['lazy_type'].blank?
+    end
+  },
     :allow_destroy => true
 
   # METODOS DO WIZARD
@@ -115,117 +115,10 @@ class Subject < ActiveRecord::Base
   def ready_to_be_published?
     self.published? || self.lazy_assets.size == self.assets.size
   end
+
   # Altera a ordem dos recursos já finalizados.
   def change_assets_order
-   redirect_to space_subject_path(@subject)
-  end
-
-  #TODO Verificar necessidade
-  def create_lecture_subject_type_lecture aulas, subject_id, current_user
-
-    #positions tem funcionalidade efetiva na hora de atualizar as aulas, pois existe há possibilidade inserir uma aula numa ordem qualquer
-    positions = aulas.map{|a| aulas.index(a.to_s)}
-
-    clone_content(aulas, subject_id, current_user,positions)
-
-  end
-
-
-  #TODO Verificar necessidade
-  def update_lecture_subject_type_lecture aulas, subject_id, current_user
-
-    aulas_futuras =   aulas.nil? ? Array.new : aulas.map{|a| a.to_i}  #aulas selecionadas na tela, há um operador ternário
-    #caso o usuario deschecar todas aulas ou nao houver aula associoda ao curso
-
-    subject = current_user.subjects.find(subject_id) # meu current curso
-    aulas_ids = subject.aulas.map{|a| a.id} # aulas relaciondas com o curso
-    deleted_ids =  aulas_ids - aulas_futuras # aulas q serao deletadas
-    inserted_ids = aulas_futuras - aulas_ids #aulas q serao inseridas
-
-    Asset.destroy_all(:assetable_id => deleted_ids) unless deleted_ids.empty?#segurança ok, pois o array deleted_ids eh criado a partir do current_user
-
-    #positions setadas de acordo com a ordem do usuário.
-    positions = inserted_ids.map{|a| aulas.index(a.to_s)}
-
-    clone_content(inserted_ids,subject_id,current_user,positions)
-
-    #######rearrange courses###########
-    subject = current_user.subjects.find(subject_id) #atualizado
-    aulas_ids = subject.aulas.map{|a| a.id} # aulas relaciondas com o curso, atualizado.
-    rearrange_lecture(subject, aulas_ids, aulas_futuras)
-
-  end
-
-  #TODO Verificar necessidade
-  def update_lecture_subject_type_exam exams, subject_id, current_user
-
-    exams_futuras =   exams.nil? ? Array.new : exams.map{|a| a.to_i}  #aulas selecionadas na tela, há um operador ternário
-    #caso o usuario deschecar todas aulas ou nao houver aula associoda ao curso
-
-    subject = current_user.subjects.find(subject_id) # meu current curso
-
-    exames_ids = subject.exames.map{|a| a.id} # aulas relaciondas com o curso
-    deleted_ids =  exames_ids  - exams_futuras # aulas q serao deletadas
-    inserted_ids = exams_futuras-  exames_ids #aulas q serao inseridas
-
-    Asset.destroy_all(:assetable_id => deleted_ids) unless deleted_ids.empty?#segurança ok, pois o array deleted_ids eh criado a partir do current_user
-
-
-    unless inserted_ids.empty?
-      inserted_ids.each do |exame_id|
-
-        exame = current_user.exams.find(exame_id) #find the course by id
-        clone_exame = exame.clone #clone it
-        clone_exame.is_clone = true
-        clone_exame.save#and save it
-        asset = Asset.new
-        asset.subject_id = subject_id
-        asset.assetable_id = clone_exame.id
-        asset.assetable_type = "Exam"
-        asset.save
-      end
-
-    end
-  end
-
-  #TODO Verificar necessidade
-  def create_lecture_subject_type_lecture aulas, subject_id, current_user
-
-    aulas.each do |aula|
-      lecture = current_user.lectures.find(aula) #find the lecture by id
-      clone_lecture = lecture.clone #clone it
-      clone_lecture.is_clone = true
-      clone_lecture.save#and save it
-      asset = Asset.new
-      asset.subject_id = subject_id
-      asset.assetable_id = clone_lecture.id
-      asset.assetable_type = "Lecture"
-      asset.save
-    end
-
-  end
-
-  #TODO Verificar necessidade
-  def create_lecture_subject_type_exam exams, subject_id
-
-    exams.each do |exam_id|
-      asset = Asset.new
-      asset.subject_id = subject_id
-      asset.assetable_id = exam_id
-      asset.assetable_type = "Exam"
-      asset.save
-    end
-
-  end
-
-  #TODO Verificar necessidade
-  def aulas
-    self.assets.select{|asset| asset.assetable_type.eql?("Lecture")}.map{|a| a.assetable}
-  end
-
-  #TODO Verificar necessidade
-  def exames
-    self.assets.select{|asset| asset.assetable_type.eql?("Exam")}.map{|e| e.assetable}
+    redirect_to space_subject_path(@subject)
   end
 
   #TODO Verificar necessidade
@@ -248,7 +141,6 @@ class Subject < ActiveRecord::Base
     self.student_profiles.select{|sp| sp.graduaded == -1 }.map{|e| e.user}
   end
 
-
   protected
 
   # Adiciona positions aos assets sem nenhum critério
@@ -257,23 +149,6 @@ class Subject < ActiveRecord::Base
       asset.position = index + 1
       asset.save
     end
-  end
-
-  def rearrange_lecture(subject, aulas_ids, aulas_futuras)
-    compare = aulas_futuras <=> aulas_ids
-
-    if compare != 0
-      aulas_futuras.each_with_index do |item, index|
-
-        obj = subject.aulas.detect{|a| a.id == item}
-        unless obj.nil?
-          aux = Course.find(obj.id).lecture_subjet
-          aux.position = index
-          aux.save
-        end
-      end
-    end #if
-
   end
 
 end
