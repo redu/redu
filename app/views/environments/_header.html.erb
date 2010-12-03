@@ -117,7 +117,7 @@
     </div><!-- /end grid_16 acoes gerais -->
 
   <div class="publish grid_16">
-    <% unless @subject.published? %>
+    <% unless @subject.ready_to_be_published? %>
       <div class="box_notice">Este módulo ainda não foi publicado pois sua criação precisa ser finalizada. <%= link_to "Clique aqui", lazy_space_subject_path(@space, @subject) %> para finaliza-la.</div>
     <% end %>
   </div>

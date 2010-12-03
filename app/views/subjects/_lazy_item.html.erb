@@ -1,6 +1,4 @@
-<% if lazy_item.existent? %>
-  <%= render :partial => "#{lazy_item.assetable.class.to_s.tableize.singularize}_item", :object => lazy_item.assetable %>
-<% else %>
+<% unless lazy_item.existent? %>
   <li class="clearfix">
     <% assetable = lazy_item.new_assetable %>
     <% if assetable.nil? %>
@@ -12,7 +10,7 @@
                                              :type => lazy_item.lazy_type,
                                              :lazy => lazy_item.id),
                 :class => "name" %>
-        <%= link_to "Finalize",
+        <%= link_to "Concluir criação",
               new_space_subject_lecture_path(@space,
                                              @subject,
                                              :name => lazy_item.name,
@@ -35,6 +33,11 @@
                                           :name => lazy_item.name),
                 :class => "button" %>
       <% end %>
+      <span class="headlines">
+        <ul class="item_info">
+          <li><strong>Tipo:</strong> <%= lazy_item.friendly_type %></li>
+        </ul>
+      </span>
     <% else %>
       <%# space_subject_assetable é um helper  %>
       <%= link_to assetable.name,
@@ -42,12 +45,16 @@
                                          @subject,
                                          assetable),
             :class => "name" %>
-          <strong class="loud">Finalizado</strong>
+      <%= link_to "Finalizado",
+            space_subject_assetable_path(@space,
+                                         @subject,
+                                         assetable),
+            :class => "button finalized" %>
+      <span class="headlines">
+        <ul class="item_info">
+          <li><strong>Tipo:</strong> <%= assetable.asset.friendly_type %></li>
+        </ul>
+      </span>
     <% end %>
-    <span class="headlines">
-      <ul class="item_info">
-        <li><strong>Tipo:</strong> <%= lazy_item.friendly_type %></li>
-      </ul>
-    </span>
   </li>
 <% end %>

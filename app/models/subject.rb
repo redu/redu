@@ -113,7 +113,7 @@ class Subject < ActiveRecord::Base
   #TODO usar maquina de estados
   # Verifica se todos os lazy_assets foram criados
   def ready_to_be_published?
-    self.published? || self.lazy_assets.size == self.assets.size
+    self.lazy_assets.count == self.assets.count
   end
 
   # Altera a ordem dos recursos já finalizados.

@@ -469,16 +469,27 @@ ul.default > li a.answer:hover {
   color: white;
 }
 
-ul.lazy-assets > li a.finalize {
+ul.lazy-assets > li a.finalize,
+ul.lazy-assets > li a.finalized {
   position: absolute;
   display: block;
   top: 45%;
   right: 10px;
 }
 
+ul.lazy-assets > li a.finalize {
+  background-color: #F45E30;
+  color: white;
+}
+
+ul.lazy-assets > li a.finalized {
+  background-color: #9DDBC6;
+  color: white;
+}
+
 ul.lazy-assets > li .headlines {
   display: block;
-  width: 470px;
+  width: 420px;
   float: left;
   margin: 10px;
 }

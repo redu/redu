@@ -43,6 +43,7 @@ class LazyAsset < ActiveRecord::Base
     return clone
   end
 
+  # Retorna Exam ou Lecure se self.exam XOR self.lecture
   def new_assetable
     self.try(:lecture) || self.try(:exam)
   end
