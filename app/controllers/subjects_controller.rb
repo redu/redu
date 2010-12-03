@@ -3,7 +3,7 @@ class SubjectsController < BaseController
 
   before_filter :login_required
   before_filter :find_subject, :except => [:new, :create, :index, :cancel]
-  before_filter :find_space_course_environment, :except => [:cancel]
+  before_filter :find_space_course_environment
 
   uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit, :create, :update])
 
@@ -81,6 +81,7 @@ class SubjectsController < BaseController
     end
 
     @subject = current_user.subjects.new(session[:subject_params])
+    @subject.space = @space
     # Evita que ao dar refresh vá para o proximo passo.
     @subject.current_step = params[:step]
 

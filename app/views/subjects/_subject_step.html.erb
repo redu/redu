@@ -16,9 +16,6 @@
   <%= hidden_field_tag("step", "subject")%>
 
   <% field_set_tag 'Informações Gerais' do %>
-    <%= f.label 'Divulgar no espaço' %>
-    <%= f.select(:space_id, options_for_select(existent_spaces, @space.id)) %>
-
     <%= f.label "Nome" %>
     <%= f.text_field :title, :size => 50 %>
     <%= error_message_on @subject, :title %>
