@@ -24,16 +24,16 @@ class Lecture < ActiveRecord::Base
 
   # NAMED SCOPES
   named_scope :published,
-    :conditions => ["state LIKE 'approved' AND public = true"],
+    :conditions => ["state LIKE 'approved' AND published = true"],
     :include => :owner, :order => 'created_at DESC'
   named_scope :seminars,
-    :conditions => ["state LIKE 'approved' AND lectureable_type LIKE 'Seminar' AND public = true"],
+    :conditions => ["state LIKE 'approved' AND lectureable_type LIKE 'Seminar' AND published = true"],
     :include => :owner, :order => 'created_at DESC'
   named_scope :iclasses,
-    :conditions => ["lectureable_type LIKE 'InteractiveClass' AND public = true"],
+    :conditions => ["lectureable_type LIKE 'InteractiveClass' AND published = true"],
     :include => :owner, :order => 'created_at DESC'
   named_scope :pages,
-    :conditions => ["lectureable_type LIKE 'Page' AND public = true"],
+    :conditions => ["lectureable_type LIKE 'Page' AND published = true"],
     :include => :owner, :order => 'created_at DESC'
   named_scope :limited, lambda { |num| { :limit => num } }
 

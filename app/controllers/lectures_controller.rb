@@ -339,11 +339,11 @@ class LecturesController < BaseController
         end
       end
 
-      params[:lecture][:state] = "waiting"
       respond_to do |format|
         if @lecture.update_attributes(params[:lecture])
           # remover curso da sessao
           session[:lecture_id] = nil
+
           format.html do
             flash[:notice] = 'Aula foi criada e adicionada ao módulo'
             redirect_to lazy_space_subject_path(@space,@subject)

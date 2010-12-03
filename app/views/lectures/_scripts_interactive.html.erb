@@ -137,7 +137,7 @@ function remove_fields(link) {
 			complete:function(request){
 				$('#save-spinner').hide();
 				if (isPreview) {
-					window.open('<%= unpublished_preview_lectures_path %>');
+					window.open('<%= unpublished_preview_space_subject_lectures_path %>');
 				}
 				},
 			data:jQuery.param(jQuery("#interactive_class_form").serializeArray()), 

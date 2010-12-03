@@ -101,7 +101,7 @@ class Seminar < ActiveRecord::Base
       @source.is_clone = true #TODO evitar que sejam removido
     end
 
-    if @source and @source.public
+    if @source
       if @source.lectureable_type == 'Seminar'
         if @source.lectureable.external_resource_type.eql?('youtube')
           self.external_resource_type = 'youtube'

@@ -102,7 +102,7 @@ class AdminController < BaseController
   # LISTAGENS
   # lista pendendes para MODERAÇÃO da administração do Redu
   def submissions
-    @lectures = Lecture.paginate(:conditions => ["public = 1 AND published = 1 AND state LIKE 'waiting'"],
+    @lectures = Lecture.paginate(:conditions => ["published = 1 AND state LIKE 'waiting'"],
                                :include => :owner,
                                :page => params[:page],
                                :order => 'updated_at ASC',
@@ -114,7 +114,7 @@ class AdminController < BaseController
   end
 
   def lectures
-    @lectures = Lecture.paginate(:conditions => ["public = 1 AND published = 1 AND removed = 0"],
+    @lectures = Lecture.paginate(:conditions => ["published = 1 AND removed = 0"],
                                :include => :owner,
                                :page => params[:page],
                                :order => 'created_at DESC',

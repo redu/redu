@@ -275,7 +275,7 @@ class User < ActiveRecord::Base
     case entity.class.to_s
     when 'Lecture'
 
-      (entity.public || (entity.space && self.spaces.include?(entity.space)))
+      (entity.space && self.spaces.include?(entity.space))
       #    when 'Exam'
       #      (entity.owner == self || (entity.space == space && self.space_admin?(space) ))
     when 'Space'
