@@ -46,4 +46,15 @@ class LazyAsset < ActiveRecord::Base
   def new_assetable
     self.try(:lecture) || self.try(:exam)
   end
+
+  # Nome amigável para o tipo de asset
+  def friendly_type
+    case self.lazy_type
+    when "Exam" then "Exame"
+    when "Lecture"
+    when "Seminar" then "Vídeo-aula"
+    when "InteractiveClass" then "Aula interativa"
+    when "Page" then "Tutorial"
+    end
+  end
 end

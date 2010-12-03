@@ -18,7 +18,7 @@
                                              :name => lazy_item.name,
                                              :type => lazy_item.lazy_type,
                                              :lazy => lazy_item.id),
-                :class => "button" %>
+                :class => "button finalize" %>
       <% else %>
         <%= link_to lazy_item.name,
               new_space_subject_exam_path(@space,
@@ -44,6 +44,10 @@
             :class => "name" %>
           <strong class="loud">Finalizado</strong>
     <% end %>
-    <%= lazy_item.lazy_type %>
+    <span class="headlines">
+      <ul class="item_info">
+        <li><strong>Tipo:</strong> <%= lazy_item.friendly_type %></li>
+      </ul>
+    </span>
   </li>
 <% end %>

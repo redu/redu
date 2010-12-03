@@ -1,7 +1,7 @@
 <div class="grid_16">
   <% unless @subject.lazy_assets.empty? %>
     <div class="lazy_list grid_12 alpha">
-      <ul class="default">
+      <ul class="default lazy-assets">
         <%= render :partial => "lazy_item", :collection => @subject.lazy_assets %>
       </ul>
     </div>

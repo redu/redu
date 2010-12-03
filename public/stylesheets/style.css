@@ -373,7 +373,6 @@ ul.default > li {
   position: relative;
 }
 
-
 ul.default > li .thumb {
   margin: 0 10px;
   float: left;
@@ -468,6 +467,19 @@ ul.default > li a.answer:hover {
   background-color: green;
   border: 1px solid green;
   color: white;
+}
+
+ul.lazy-assets > li a.finalize {
+  position: absolute;
+  display: block;
+  top: 45%;
+  right: 10px;
+}
+
+ul.lazy-assets > li .headlines {
+  display: block;
+  float: left;
+  margin: 10px;
 }
 
 ul.pagination {
