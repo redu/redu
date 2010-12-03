@@ -2,18 +2,18 @@
 <ul class="menu">
 
 <li>
-<%= 
+<%=
 link_to_unless_current 'Beta', beta_keys_path do
-  link_to 'Beta', beta_keys_path, 
+  link_to 'Beta', beta_keys_path,
     :class => 'selected'
 end
 %>
 </li>
 
 <li>
-<%= 
+<%=
 link_to_unless_current 'Newsletter', "#" do
-  link_to 'Newsletter', "#", 
+  link_to 'Newsletter', "#",
     :class => 'selected'
 end
 %>
@@ -22,47 +22,36 @@ end
 
 
 <li>
-<%= 
+<%=
 link_to_unless_current 'Estatísticas', "#" do
-  link_to 'Estatísticas', statistics_path, 
+  link_to 'Estatísticas', statistics_path,
     :class => 'selected'
 end
 %>
 </li>
 
-
 <li>
-<%= 
-link_to_unless_current 'Submissões', admin_moderate_submissions_path do
-  link_to 'Submissões', admin_moderate_submissions_path, 
-    :class => 'selected'
-end
-%>
-</li>
-
-
-<li>
-<%= 
+<%=
 link_to_unless_current 'Aulas',admin_moderate_lectures_path do
-  link_to 'Aulas' , admin_moderate_lectures_path, 
+  link_to 'Aulas' , admin_moderate_lectures_path,
     :class => 'selected'
 end
 %>
 </li>
 
 <li>
-<%= 
+<%=
 link_to_unless_current 'Exames',admin_moderate_exams_path do
-  link_to 'Exames', admin_moderate_exams_path, 
+  link_to 'Exames', admin_moderate_exams_path,
     :class => 'selected'
 end
 %>
 </li>
 
 <li>
-<%= 
-link_to_unless_current 'Redes',admin_moderate_spaces_path do
-  link_to 'Redes', admin_moderate_spaces_path, 
+<%=
+link_to_unless_current 'Espaços',admin_moderate_spaces_path do
+  link_to 'Espaços', admin_moderate_spaces_path,
     :class => 'selected'
 end
 %>
@@ -70,9 +59,9 @@ end
 
 
 <li>
-<%= 
+<%=
 link_to_unless_current 'Usuários',admin_moderate_users_path do
-  link_to 'Usuários', admin_moderate_users_path, 
+  link_to 'Usuários', admin_moderate_users_path,
     :class => 'selected'
 end
 %>

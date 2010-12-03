@@ -73,46 +73,7 @@ class AdminController < BaseController
     redirect_to admin_moderate_lectures_path
   end
 
-  def moderate_submissions
-    approved = params[:lecture].reject{|k,v| v == 'reject'}
-    rejected = params[:lecture].reject{|k,v| v == 'approve'}
-
-    Lecture.update_all("state = 'approved'", :id => approved.keys)
-    Lecture.update_all("state = 'rejected'", :id => rejected.keys)
-
-    flash[:notice] = 'Aulas moderadas!'
-    redirect_to admin_moderate_submissions_path
-  end
-
-  def approve
-    @lecture = Lecture.find(params[:id])
-    @lecture.approve!
-
-    flash[:notice] = 'A aula foi aprovada!'
-    redirect_to @lecture
-  end
-
-  def disapprove
-    @lecture = Lecture.find(params[:id])
-    @lecture.reject!
-    flash[:notice] = 'A aula foi rejeitada!'
-    redirect_to @lecture
-  end
-
   # LISTAGENS
-  # lista pendendes para MODERAÇÃO da administração do Redu
-  def submissions
-    @lectures = Lecture.paginate(:conditions => ["published = 1 AND state LIKE 'waiting'"],
-                               :include => :owner,
-                               :page => params[:page],
-                               :order => 'updated_at ASC',
-                               :per_page => 20)
-
-    respond_to do |format|
-      format.html
-    end
-  end
-
   def lectures
     @lectures = Lecture.paginate(:conditions => ["published = 1 AND removed = 0"],
                                :include => :owner,
@@ -176,10 +137,6 @@ class AdminController < BaseController
   def messages
     @user = current_user
     @messages = Message.find(:all, :page => {:current => params[:page], :size => 50}, :order => 'created_at DESC')
-  end
-
-  def comments
-    @comments = Comment.find(:all, :page => {:current => params[:page], :size => 100}, :order => 'created_at DESC')
   end
 
   def activate_user

@@ -35,7 +35,6 @@ ActionController::Routing::Routes.draw do |map|
 
   # admin routes
   map.admin_dashboard   '/admin/dashboard', :controller => 'admin', :action => 'dashboard'
-  map.admin_moderate_submissions   '/admin/moderate/submissions', :controller => 'admin', :action => 'submissions'
   map.admin_moderate_lectures   '/admin/moderate/lectures', :controller => 'admin', :action => 'lectures'
   map.admin_moderate_users   '/admin/moderate/users', :controller => 'admin', :action => 'users'
   map.admin_moderate_exams   '/admin/moderate/exams', :controller => 'admin', :action => 'exams'
@@ -119,7 +118,6 @@ ActionController::Routing::Routes.draw do |map|
                          :cancel => :get,
                          :sort_lesson => :post,
                          :unpublished => :get,
-                         :waiting => :get,
                          :published => :get,
                          :waiting => :get }
       subject.resources :exams,

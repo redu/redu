@@ -24,10 +24,10 @@ class Lecture < ActiveRecord::Base
 
   # NAMED SCOPES
   named_scope :published,
-    :conditions => ["state LIKE 'approved' AND published = true"],
+    :conditions => ["published = true"],
     :include => :owner, :order => 'created_at DESC'
   named_scope :seminars,
-    :conditions => ["state LIKE 'approved' AND lectureable_type LIKE 'Seminar' AND published = true"],
+    :conditions => ["lectureable_type LIKE 'Seminar' AND published = true"],
     :include => :owner, :order => 'created_at DESC'
   named_scope :iclasses,
     :conditions => ["lectureable_type LIKE 'InteractiveClass' AND published = true"],
@@ -41,21 +41,6 @@ class Lecture < ActiveRecord::Base
   acts_as_taggable
   ajaxful_rateable :stars => 5
   has_attached_file :avatar, PAPERCLIP_STORAGE_OPTIONS
-
-  # Máquina de estados para moderação do Redu.
-  # O estados do processo de transcoding estao em Seminar
-  acts_as_state_machine :initial => :waiting
-  state :waiting
-  state :approved
-  state :rejected
-
-  event :approve do
-    transitions :from => :waiting, :to => :approved
-  end
-
-  event :reject do
-    transitions :from => :waiting, :to => :rejected
-  end
 
   # VALIDATIONS
   validates_presence_of :name, :lazy_asset
