@@ -202,7 +202,7 @@ class SubjectsController < BaseController
 
   def destroy
     @subject.destroy
-    redirect_to :action =>"admin_subjects"
+    redirect_to space_path(@space)
   end
 
   def enroll

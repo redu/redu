@@ -101,6 +101,14 @@ function show_choosen_assets(){
         <legend>Publicar e Despublicar módulo</legend>
         <%= render :partial => 'subjects/publish_unpublish' %>
       </fieldset>
+      <fieldset class="fake">
+        <legend>Deletar módulo</legend>
+	<%= link_to 'Deletar módulo', space_subject_path(@space, @subject),
+          :confirm => 'Você tem certeza que deseja remover este módulo?' + \
+                      ' Todos os recursos e matrículas serão perdidas.',
+          :method => :delete,
+          :class => "button" %>
+      </fieldset>
     </div> <!-- end panel -->
   </div> <!-- end fake -->
 </div> <!-- end grid_16 -->
