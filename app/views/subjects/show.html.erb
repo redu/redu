@@ -6,7 +6,7 @@
   <div class="fake-tabs grid_11 alpha omega">
     <%= render :partial => 'subjects/tabs_menu' %>
     <div class="panel">
-      <ul class="default">
+      <ul class="default subject-assets">
         <%= render :partial => 'subjects/asset_item',
           :collection => @subject.assets, :as => :item %>
       </ul>

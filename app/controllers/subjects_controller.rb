@@ -269,11 +269,14 @@ class SubjectsController < BaseController
       :conditions => {:assetable_type => params[:assetable_type],
                       :assetable_id => params[:assetable_id]})
 
+
     report = current_asset.asset_reports.find(:first,
                 :conditions => {:student_profile_id => profile})
-    report.done = true
-    report.save!
-    profile.update_grade!
+    if params.has_key?(:done)
+      report.done = true
+      report.save!
+      profile.update_grade!
+    end
     next_asset = current_asset.next
 
     if next_asset

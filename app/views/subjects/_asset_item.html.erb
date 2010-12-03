@@ -1,4 +1,7 @@
 <li id="<%= item.id %>-asset" class="asset-item clearfix">
+  <div class="index">
+    <%= item.position %>
+  </div>
   <span class="name">
     <%= link_to item.assetable.name,
           space_subject_assetable_path(@space, @subject, item.assetable)  %>

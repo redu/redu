@@ -494,6 +494,17 @@ ul.lazy-assets > li .headlines {
   margin: 10px;
 }
 
+ul.subject-assets > li .headlines {
+  float: left;
+  width: 500px;
+}
+ul.subject-assets > li .index {
+  float: left;
+  padding: 50px 20px;
+  font-size: 2.5em;
+  font-weight: bold;
+  color: #D6D4D4;
+}
 ul.pagination {
   margin-top: 30px;
   height: 50px;
@@ -2422,10 +2433,12 @@ ul.sub-groups > li {
   display: block;
   float: right;
 }
+
 #subject-header h3.call a.edit {
   font-size: .7em;
   color: #FF8000
 }
+
 /* @footer */
 #footer {
   background-color: #D1E0EF;

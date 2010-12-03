@@ -102,18 +102,6 @@
             <%= render :partial => 'subjects/progress' %>
           </div>
         </div>
-        <div class="grid_16 alpha omega">
-          <div class="grid_2 push_14 alpha omega">
-            <% assetable = @lecture || @exam %>
-            <% if assetable && !assetable.new_record? %>
-              <%= link_to "Próximo >", next_space_subject_path(@space, @subject,
-                    :assetable_type => assetable.class.to_s,
-                    :assetable_id =>  assetable.id),
-              :method => :post,
-              :class => "button" %>
-            <% end %>
-          </div>
-        </div>
     </div><!-- /end grid_16 acoes gerais -->
 
   <div class="publish grid_16">
@@ -121,6 +109,21 @@
       <div class="box_notice">Este módulo ainda não foi publicado pois sua criação precisa ser finalizada. <%= link_to "Clique aqui", lazy_space_subject_path(@space, @subject) %> para finaliza-la.</div>
     <% end %>
   </div>
+
+</div> <!-- /container_16 -->
+<div class="grid_16">
+  <div class="grid_5 push_11 alpha omega">
+    <% assetable = @lecture || @exam %>
+    <% if assetable && !assetable.new_record? %>
+      <% form_tag next_space_subject_path(@space, @subject), :class => "lecture-control" do %>
+        <%= hidden_field_tag :assetable_type, assetable.class.to_s %>
+        <%= hidden_field_tag :assetable_id, assetable.id %>
+        <%= check_box_tag :done, "1", :checked => true %>
+        <%= label_tag :done, "Aula finalizada?", :class => "inline"  %>
+        <%= submit_tag "Próximo >" %>
       <% end %>
-  </div> <!-- /container_16 -->
+    <% end %>
+  </div>
+</div>
+<% end %>
 </div><!-- end environment-header -->
