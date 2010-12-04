@@ -4,7 +4,7 @@ class Subject < ActiveRecord::Base
   has_many :assets, :order => :position, :dependent => :destroy
   has_many :lazy_assets, :dependent => :destroy
   has_many :enrollments, :dependent => :destroy
-  has_many :statuses, :as => :statusable
+  has_many :statuses, :as => :statusable, :dependent => :destroy
   has_many :students, :through => :enrollments, :source => :user, :conditions => [ "enrollments.role_id = ?", 3 ]
   has_many :teachers, :through => :enrollments, :source => :user, :conditions => [ "enrollments.role_id = ?", 6 ]
   has_many :student_profiles, :dependent => :destroy
