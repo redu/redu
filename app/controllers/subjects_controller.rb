@@ -113,7 +113,11 @@ class SubjectsController < BaseController
       render "new"
     else
       session[:subject_step] = session[:subject_params] = nil
-      redirect_to space_subject_path(@space, @subject)
+      if @subject.ready_to_be_published?
+        redirect_to space_subject_path(@space, @subject)
+      else
+        redirect_to lazy_space_subject_path(@space, @subject)
+      end
     end
   end
 
