@@ -24,9 +24,6 @@
     <%= f.text_area :description, :size => "100x10", :class => "mceEditor" %>
     <%= error_message_on @subject, :description %>
 
-    <%= f.label "Duração <space class='snippet'>(tempo para conclusão do módulo)</span>" %>
-    <%= f.text_field :duration, :size => "2" %> dias
-
     <%= f.label "Tags <span class='snippet'>(separadas por vírgula)</span>" %>
     <%= f.text_field :tag_list %>
   <% end %>
