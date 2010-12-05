@@ -212,6 +212,8 @@ class ExamsController < BaseController
         @exam.previous_step
         # No último passo salvar
       elsif @exam.last_step? && @exam.save
+        @exam.published = true
+        @exam.save
         @exam.questions.each do |question|
           correct = question.alternatives.find(:first, :conditions => {:correct => true})
           question.answer = correct if correct
