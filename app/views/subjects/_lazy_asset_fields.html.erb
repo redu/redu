@@ -25,8 +25,12 @@
     <%= f.label :assetable_id, 'Copiar aula já existente' %>
     <%= f.hidden_field :assetable_id, :class => "assetable_id" %>
     <%= f.hidden_field :assetable_type, :class => "assetable_type" %>
-    <%= select_tag(:assetable_id, options_for_select(user_assets), 
-                   :class => "existent-asset") %>
+    <% if user_assets.empty? %>
+      <div class="box_notice">Você não possui nenhuma aula. Crie uma nova!</div>
+    <% else %>
+       <%= select_tag(:assetable_id, options_for_select(user_assets),
+                     :class => "existent-asset") %>
+    <% end %>
   </div>
 
   <%= f.hidden_field :_destroy %>
