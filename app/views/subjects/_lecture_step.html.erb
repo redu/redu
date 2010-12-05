@@ -9,13 +9,6 @@
 </div>
 
 <div class="<%= params[:action] == 'update' ? "grid_15" : "grid_11 omega" %>">
-  <div class="grid_9">
-    <%= f.error_messages %>
-  </div>
-
   <%= hidden_field_tag("step", "lecture")%>
-  <% f.fields_for :lazy_assets do |builder| %>
-    <%= render 'subjects/lazy_asset_fields', :f => builder %>
-  <% end %>
-  <%= link_to_add_fields "Adicionar recurso", f, :lazy_assets %>
+  <%= render :partial => 'subjects/resources_form', :locals => {:f => f} %>
 </div>

@@ -16,9 +16,9 @@
     <div class="panel">
 
       <% unless @subject.assets.empty? %>
-        <div class="box_notice">Arraste os recursos para alterar a ordem destes no módulo!</div>
-        <div class="lazy_list grid_12 alpha">
-          <ul class="default sortable">
+        <div class="pretty-text"><strong>Arraste os recursos para alterar a ordem destes no módulo!</strong></div>
+        <div class="lazy_list clearfix">
+          <ul class="default sortable subject-assets">
             <%= render :partial => "asset_item", :collection => @subject.assets, :as => :item %>
           </ul>
         </div>

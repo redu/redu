@@ -82,33 +82,34 @@ function show_choosen_assets(){
 <div class="grid_16">
   <div class="fake-tabs grid_16 alpha omega">
     <%= render :partial => "subjects/admin_taskbar" %>
-    <div class="panel">
-      <h1>Editar Módulo</h1>
+    <div class="panel clearfix">
+      <div class="grid_10 alpha">
+        <h1>Editar Módulo</h1>
 
-      <% form_for [@space, @subject] do |f| %>
-        <%= render :partial => "#{@subject.current_step}_step",
-          :locals => {:f => f, :titles => "Criar Curso-Adicionar Aulas"}%>
+        <% form_for [@space, @subject] do |f| %>
+          <div>
+            <%= f.error_messages %>
+          </div>
+          <%= render :partial => "subject_form", :locals => {:f => f} %>
 
-        <%= f.submit "< Anterior", :name => "back_button" unless @subject.first_step? %>
-        <%= f.submit "Próximo >" unless @subject.last_step? %>
-        <%= f.submit "Finalizar",
-          :onclick => "reload_existent_assets();jQuery('#form_subject').submit();" if @subject.last_step? %>
-        ou
-        <%= link_to "Cancelar", cancel_space_subjects_path(@space) %>
-      <% end %>
-
-      <fieldset class="fake">
-        <legend>Publicar e Despublicar módulo</legend>
-        <%= render :partial => 'subjects/publish_unpublish' %>
-      </fieldset>
-      <fieldset class="fake">
-        <legend>Deletar módulo</legend>
-	<%= link_to 'Deletar módulo', space_subject_path(@space, @subject),
-          :confirm => 'Você tem certeza que deseja remover este módulo?' + \
-                      ' Todos os recursos e matrículas serão perdidas.',
-          :method => :delete,
-          :class => "button" %>
-      </fieldset>
+          <%= f.submit "Editar" %>
+        <% end %>
+      </div>
+      <div class="grid_5 omega">
+        <h1>Visibilidade e publicação</h1>
+        <fieldset class="fake cleafix">
+          <legend>Publicação</legend>
+          <%= render :partial => 'subjects/publish_unpublish' %>
+        </fieldset>
+        <fieldset class="fake clearfix">
+          <legend>Deletar módulo</legend>
+          <%= link_to 'Deletar módulo', space_subject_path(@space, @subject),
+            :confirm => 'Você tem certeza que deseja remover este módulo?' + \
+            ' Todos os recursos e matrículas serão perdidas.',
+            :method => :delete,
+            :class => "button" %>
+        </fieldset>
+      </div>
     </div> <!-- end panel -->
   </div> <!-- end fake -->
 </div> <!-- end grid_16 -->

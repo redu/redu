@@ -9,22 +9,5 @@
     </tbody></table>
   </div>
 
-  <div class="grid_9">
-    <%= f.error_messages %>
-  </div>
-
-  <%= hidden_field_tag("step", "subject")%>
-
-  <% field_set_tag 'Informações Gerais' do %>
-    <%= f.label "Nome" %>
-    <%= f.text_field :title, :size => 50 %>
-    <%= error_message_on @subject, :title %>
-
-    <%= f.label "Descrição" %>
-    <%= f.text_area :description, :size => "100x10", :class => "mceEditor" %>
-    <%= error_message_on @subject, :description %>
-
-    <%= f.label "Tags <span class='snippet'>(separadas por vírgula)</span>" %>
-    <%= f.text_field :tag_list %>
-  <% end %>
+  <%= render :partial => 'subjects/subject_form', :locals => { :f => f } %>
 </div>

@@ -129,22 +129,35 @@ class SubjectsController < BaseController
   def edit
     @subject = Subject.find(params[:id])
     session[:subject_params] ||= {}
-    @existent_spaces = @course.spaces.collect { |s| [s.name, s.id] }
+  end
+
+  def edit_resources
+    @subject = Subject.find(params[:id])
+    session[:subject_params] ||= {}
   end
 
   def update
     @subject = Subject.find(params[:id])
-    if params[:subject]
-      # Evita duplicação dos campos gerados dinamicamente no passo 2
-      if params[:subject].has_key?(:lazy_assets_attributes)
-        session[:subject_params].delete("lazy_assets_attributes")
-      end
-      # Atualizando dados da sessão
-      session[:subject_params].deep_merge!(params[:subject])
-    end
 
     # Evita que ao dar refresh vá para o proximo passo.
-    @subject.current_step = params[:step]
+    @subject.current_step = "subject"
+
+    # Redirecionando para o passo especificado
+    @subject.enable_correct_validation_group!
+
+    if @subject.update_attributes(params[:subject])
+      flash[:notice] = "Informações atualizadas"
+      redirect_to edit_space_subject_path(@space, @subject)
+    else
+      render "edit"
+    end
+  end
+
+  def update_resources
+    @subject = Subject.find(params[:id])
+
+    # Evita que ao dar refresh vá para o proximo passo.
+    @subject.current_step = "subject"
 
     # Redirecionando para o passo especificado
     @subject.enable_correct_validation_group!
@@ -168,7 +181,6 @@ class SubjectsController < BaseController
     render "edit"
     end
   end
-
   def unpublish
     ActiveRecord::Base.transaction do
       @subject.published = false
