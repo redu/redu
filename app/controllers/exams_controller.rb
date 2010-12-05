@@ -225,7 +225,7 @@ class ExamsController < BaseController
         Asset.create({:assetable => @exam,
                      :subject => @subject,
                      :lazy_asset => @exam.lazy_asset,
-                     :postion => max_position + 1})
+                     :position => max_index + 1})
 
         session[:exam_params] = nil
         flash[:notice] = "Exame criado!"

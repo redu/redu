@@ -25,13 +25,13 @@
                                           :lazy => lazy_item.id,
                                           :name => lazy_item.name),
                 :class => "name" %>
-        <%= link_to "Finalize",
+        <%= link_to "Concluir criação",
               new_space_subject_exam_path(@space,
                                           @subject,
                                           :type => lazy_item.lazy_type,
                                           :lazy => lazy_item.id,
                                           :name => lazy_item.name),
-                :class => "button" %>
+                :class => "button finalize" %>
       <% end %>
       <span class="headlines">
         <ul class="item_info">
