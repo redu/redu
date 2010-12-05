@@ -115,8 +115,8 @@ class BaseController < ApplicationController
                       :logeable_type => 'Exam',
                       :logeable_id => @exam.id,
                       :log_action => params[:action],
-                      :statusable_type => (@exam.space) ? 'Space' : 'User',
-                      :statusable_id => (@exam.space) ? @exam.space.id : @exam.owner.id,
+                      :statusable_type => (@exam.subject.space) ? 'Space' : 'User',
+                      :statusable_id => (@exam.subject.space) ? @exam.subject.space.id : @exam.owner.id,
                       :user_id => current_user.id
         })
       end
