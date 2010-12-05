@@ -18,11 +18,15 @@ module SubjectsHelper
 
   def user_assets
     assets = current_user.lectures.collect do |l|
-      [l.name, "#{l.id.to_s}-Lecture"]
+      # Não mostra os Seminars não convertidos.
+      [l.name, "#{l.id.to_s}-Lecture"] unless (l.lectureable.class.to_s.eql? "Seminar") and
+        (not l.lectureable.state.eql? "converted")
     end
     assets += current_user.exams.collect do |l|
       [l.name, "#{l.id.to_s}-#{l.class.to_s}"]
     end
+
+    assets.compact!
   end
 
   # Gera o path dependendo de quem aponta para LazyAsset
