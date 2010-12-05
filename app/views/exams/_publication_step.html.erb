@@ -1,11 +1,4 @@
 <%= hidden_field_tag("step", "publication")%>
-<div class="grid_9">
-  <% field_set_tag 'Visibilidade' do %>
-    <%= f.label "Pública <span class='snippet'>(Visível em todo o Redu)</span>" %>
-    <%= f.check_box :public %>
-    <%# @spaces = current_user.spaces %>
-  <%end%>
-</div>
 <div class="grid_6 push_1">
   <div class="y_addinfo">
     <div class="addinfocontent">

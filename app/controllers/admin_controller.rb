@@ -29,7 +29,7 @@ class AdminController < BaseController
   def moderate_exams
     @removed_exams = Exam.all(:conditions => ["id IN (?)", params[:exams].join(',')]) unless params[:exams].empty?
 
-    Exam.update_all("removed = 1", "id IN (?)", params[:exams].join(', '))
+    Exam.update_all("removed = 1", ["id IN (?)", params[:exams].join(',')])
 
     for exam in @removed_exams # TODO fazer um remove all?
       UserNotifier.deliver_remove_exam(exam) # TODO fazer isso em batch
@@ -87,7 +87,7 @@ class AdminController < BaseController
   end
 
   def exams
-    @exams = Exam.paginate(:conditions => ["public = 1 AND published = 1 AND removed = 0"],
+    @exams = Exam.paginate(:conditions => ["published = 1 AND removed = 0"],
                            :include => :owner,
                            :page => params[:page],
                            :order => 'created_at DESC',

@@ -30,29 +30,6 @@
 
     <%= f.error_messages %>
     <%= hidden_field_tag("step", "3", options = {})%>
-    <%# hidden_field_tag("post_to", @space.id) if @space %>
-
-    <%# unless @space %>
-
-    <%# field_set_tag 'Visibilidade' do %>
-      <%# f.label "Pública <span class='snippet'>(Visível em todo o Redu)</span>" %>
-      <%# f.check_box :public %>
-
-      <%# @spaces = current_user.spaces %>
-      <%# if @spaces and @spaces.size > 0 %>
-      <%# f.label "Postar em:" %>
-      <!-- Não é mais possível associar a um space. Pode ser utilizado para subject.
-      <div style="overflow-y:scroll; max-height: 200px;">
-        <%# @spaces.each do | space | %>
-          <div><%# radio_button_tag :post_to, space.id, false %> <%= space.name %></div>
-          <%# end %>
-        </div>
-        -->
-        <%# end %>
-        <%# end %>
-        <%# else%>
-        <%= f.hidden_field(:public, :value => 0)%>
-        <%# end %>
 
         <% if AppConfig.activate_payment %>
           <% field_set_tag 'Preço' do %>
