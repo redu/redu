@@ -9,7 +9,7 @@
             <p>Antes de publicar este módulo você precisa concluir a criação dos ítens abaixo. Caso decida publicar agora, somente os recursos da aba <em>Recursos</em> estarão presentes no módulo.</p>
           </div>
         <% else %>
-          <div class="box_notice">O módulo já está pronto para ser publicado. <%= link_to "clique aqui", publish_space_subject_path(@space, @subject) %> para publica-lo.</div>
+          <div class="box_notice">O módulo já está pronto para ser publicado. <%= link_to "clique aqui", publish_space_subject_path(@space, @subject) %> para publicá-lo.</div>
         <% end %>
           <ul class="default lazy-assets">
             <%= render :partial => "lazy_item",
