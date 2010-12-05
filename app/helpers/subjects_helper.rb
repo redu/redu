@@ -25,8 +25,8 @@ module SubjectsHelper
     assets += current_user.exams.collect do |l|
       [l.name, "#{l.id.to_s}-#{l.class.to_s}"]
     end
-
     assets.compact!
+    assets
   end
 
   # Gera o path dependendo de quem aponta para LazyAsset
