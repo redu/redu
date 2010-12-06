@@ -13,10 +13,12 @@ class UsersController < BaseController
   before_filter :find_user, :only => [:activity, :edit, :show, :update, :destroy, :statistics, :deactivate,
     :crop_profile_photo, :upload_profile_photo ]
 
-  load_resources :except => [:annotations, :show_log_activity, :list_subjects, :logs, :activate, :dashboard, :show,
-                            :update, :statistics, :edit, :destroy, :crop_profile_photo, :upload_profile_photo,
-                            :edit_account, :update:account, :welcome_complete, :forgot_password, :forgot_username,
-                            :resend_activation, :assume, :metro_area_update, :activity_xml]
+  load_resource :except => [:annotations, :show_log_activity,
+    :list_subjects, :logs, :activate, :dashboard, :show,
+    :update, :statistics, :edit, :destroy, :crop_profile_photo,
+    :upload_profile_photo, :edit_account, :update_account,
+    :welcome_complete, :forgot_password, :forgot_username,
+    :resend_activation, :assume, :metro_area_update, :activity_xml]
                             
   authorize_resource
 
