@@ -10,15 +10,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :lessons
   map.resources :beta_keys, :collection => {:generate => :get, :remove_all => :get, :print_blank => :get, :invite => [:get, :post]}
   map.resources :profiles
-  map.resources :subjects, :member => {:classes => :get}
-  map.admin_subjects "admin_subjects", :controller => "subjects", :action => "admin_subjects"
+
   map.resources :questions, :collection => { :search => [:get, :post], :add => :get }
-  map.resources :exams, :member => {:add_question => :get, :add_resource => :get, :rate => :post, :answer => [:get,:post]},
-      :collection => {:unpublished_preview => :get, :unpublished => :get, :new_exam => :get, :cancel => :get, 
-      :exam_history => :get, :sort => :get, :order => :get, :questions_database => :get,
-      :review_question => :get}
-  map.resources :lectures, :member => {:rate => :post, :buy => :get, :download_attachment => :get},  
-    :collection => { :unpublished_preview => :get, :cancel => :get, :sort_lesson => :post, :unpublished => :get,:waiting => :get}
   map.resources :credits
   map.resources :folders
   map.resources :annotations
@@ -26,12 +19,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :events#, :collection => { :past => :get, :ical => :get }
   map.resources :sb_posts
   map.resources :topics
-  map.resources :metro_areas  
+  map.resources :metro_areas
   map.resources :invitations
-  
-  # Index
-  map.learn_index '/learn', :controller => 'base', :action => 'learn_index'
-  map.teach_index '/teach', :controller => 'base', :action => 'teach_index'
 
   if AppConfig.closed_beta_mode
     map.connect '', :controller => "base", :action => "beta_index"
@@ -39,7 +28,6 @@ ActionController::Routing::Routes.draw do |map|
   else
     map.home '', :controller => "base", :action => "site_index"
   end
-  map.application '', :controller => "base", :action => "site_index"
 
   map.resources :tags, :member_path => '/tags/:id'
   map.show_tag_type '/tags/:id/:type', :controller => 'tags', :action => 'show'
@@ -47,7 +35,6 @@ ActionController::Routing::Routes.draw do |map|
 
   # admin routes
   map.admin_dashboard   '/admin/dashboard', :controller => 'admin', :action => 'dashboard'
-  map.admin_moderate_submissions   '/admin/moderate/submissions', :controller => 'admin', :action => 'submissions'
   map.admin_moderate_lectures   '/admin/moderate/lectures', :controller => 'admin', :action => 'lectures'
   map.admin_moderate_users   '/admin/moderate/users', :controller => 'admin', :action => 'users'
   map.admin_moderate_exams   '/admin/moderate/exams', :controller => 'admin', :action => 'exams'
@@ -114,7 +101,45 @@ ActionController::Routing::Routes.draw do |map|
                    :rename => :get,
                    :destroy_folder => :delete,
                    :destroy_file => :delete }
-    space.resources :subjects
+    space.resources :subjects,
+      :member => { :enroll => :get,
+                   :lazy => :get,
+                   :publish => :get,
+                   :unpublish => :post,
+                   :admin_assets_order => [ :get, :post ],
+                   :change_assets_order => :post,
+                   :infos => :get,
+                   :statuses => :get,
+                   :next => :post },
+        :collection => {:cancel => :get} do |subject|
+      subject.resources :lectures,
+        :member => { :rate => :post },
+        :collection => { :unpublished_preview => :get,
+                         :cancel => :get,
+                         :sort_lesson => :post,
+                         :unpublished => :get,
+                         :published => :get,
+                         :waiting => :get }
+      subject.resources :exams,
+        :member => { :add_question => :get,
+                     :add_resource => :get,
+                     :rate => :post,
+                     :answer => [:get,:post],
+                     :compute_results => :get,
+                     :results => :get,
+                     :review_question => :get },
+          :collection => { :unpublished_preview => :get,
+                           :unpublished => :get,
+                           :published => :get,
+                           :history => :get,
+                           :new_exam => :get,
+                           :cancel => :get,
+                           :exam_history => :get,
+                           :sort => :get,
+                           :order => :get,
+                           :questions_database => :get,
+                           :review_question => :get }
+    end
     space.resources :bulletins
     space.resources :events,
       :member => { :vote => [:post,:get], :notify => :post },
@@ -124,7 +149,7 @@ ActionController::Routing::Routes.draw do |map|
         topic.resources :sb_posts
       end
       forum.resources :sb_posts, :except => [:new, :edit, :create, :update, :destroy]
-    end 
+    end
  end
 
   # USERS
@@ -153,7 +178,8 @@ ActionController::Routing::Routes.draw do |map|
     :teaching => :get,
     :deactivate => :put,
     :crop_profile_photo => [:get, :put],
-    :upload_profile_photo => [:get, :put]
+    :upload_profile_photo => [:get, :put],
+    :download_curriculum => :get
   } do |user|
     user.resources :friendships, :member => { :accept => :put, :deny => :put }, :collection => { :accepted => :get, :pending => :get, :denied => :get }
     user.resources :photos, :collection => {:swfupload => :post, :slideshow => :get}
@@ -162,9 +188,7 @@ ActionController::Routing::Routes.draw do |map|
     #user.resources :clippings
     user.resources :activities, :collection => {:network => :get}
     user.resources :invitations
-    user.resources :lectures, :collection => {:published => :get, :unpublished => :get, :waiting => :get}
     user.resources :spaces, :collection => {:member => :get, :owner => :get}
-    user.resources :exams, :collection => {:published => :get, :unpublished => :get, :history => :get}
     user.resources :questions
     user.resources :credits
     user.resources :offerings, :collection => {:replace => :put}
@@ -182,8 +206,13 @@ ActionController::Routing::Routes.draw do |map|
     end
   end
 
+  # Indexes
+  map.application '', :controller => "base", :action => "site_index"
+  map.learn_index '/learn', :controller => 'base', :action => 'learn_index'
+  map.teach_index '/teach', :controller => 'base', :action => 'teach_index'
+
   map.resources :environments,
-    :member_path => ":id",
+    :member_path => "/:id",
     :nested_member_path => "/:environment_id",
     :member => { :preview => :get,
                  :admin_courses => :get,
@@ -205,6 +234,7 @@ ActionController::Routing::Routes.draw do |map|
       }
       environment.resources :bulletins
   end
+
 
   map.resources :courses do |course|
     course.resources :invitations

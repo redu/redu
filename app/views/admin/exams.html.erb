@@ -49,7 +49,7 @@ function selectNone(){
 					<tr>
 						<td><%= check_box_tag 'exams[]', exam.id  %></td>
 						<td><%= exam.id  %></td>
-						<td><%= link_to exam.name, exam_path(exam), :target => "_blank" %> </td>
+						<td><%= link_to exam.name, space_subject_exam_path(exam.subject.space, exam.subject, exam), :target => "_blank" %> </td>
 						<td><%= exam.owner.display_name %> </td>
 						<td><%= time_ago_in_words(exam.created_at) %> </td>
 					</tr>

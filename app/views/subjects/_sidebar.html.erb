@@ -1,0 +1,26 @@
+<div class="grid_5 omega sidebar">
+  <ul class="sortable">
+    <li class="clearfix">
+      <span class="call"><span>Palavras-chave</span></span>
+      <ul class="tags">
+        <% for tag in @subject.tags %>
+          <li><span><%= tag.name %></span></li>
+        <% end %>
+      </ul>
+    </li>
+    <% if @subject.duration  %>
+      <li>
+        <span class="call"><span>Duração</span></span>
+        <span><%= @subject.duration %> dias</span>
+      </li>
+    <% end %>
+    <li class="clearfix">
+      <span class="call"><span>Quem já cursou (<%= @subject.graduaded_students.size %>)</span></span>
+      <div class="followship box clearfix">
+        <ul class="clearfix">
+          <%= render :partial => 'spaces/member_short', :collection => @subject.graduaded_students, :as => :member %>
+        </ul>
+      </div><!-- end followship -->
+    </li>
+  </ul>
+</div>

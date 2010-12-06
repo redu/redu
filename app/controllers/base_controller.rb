@@ -31,11 +31,6 @@ class BaseController < ApplicationController
   end
 
   def teach_index
-    @spaces = current_user.spaces
-    @lectures = current_user.lectures.find(:all,
-                                         :order => "created_at DESC",
-                                         :limit => 4,
-                                         :conditions => ["published = ?", true])
     respond_to do |format|
       format.html 
     end
@@ -120,8 +115,8 @@ class BaseController < ApplicationController
                       :logeable_type => 'Exam',
                       :logeable_id => @exam.id,
                       :log_action => params[:action],
-                      :statusable_type => (@exam.space) ? 'Space' : 'User',
-                      :statusable_id => (@exam.space) ? @exam.space.id : @exam.owner.id,
+                      :statusable_type => (@exam.subject.space) ? 'Space' : 'User',
+                      :statusable_id => (@exam.subject.space) ? @exam.subject.space.id : @exam.owner.id,
                       :user_id => current_user.id
         })
       end
@@ -180,8 +175,8 @@ class BaseController < ApplicationController
                       :logeable_type => 'Event',
                       :logeable_id => @event.id,
                       :log_action => params[:action],
-                      :statusable_type => 'Space',
-                      :statusable_id => @event.space.id,
+                      :statusable_type => @event.eventable.class.to_s,
+                      :statusable_id => @event.eventable.id,
                       :user_id => current_user.id
         })
       end

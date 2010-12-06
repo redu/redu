@@ -1,65 +1,49 @@
-<%# render(:partial => "spaces/space_info", :locals=>{:show => false}) if @space%>
-
 <div class="grid_16">
-
-  <div id="item_video" class="clearfix">
-    <div id="title_video">
-      <%= @exam.name %>
-    </div>
-    <div class="admin_opts yellow">
-      <% if current_user.can_manage?(@exam) %>
-        <%= link_to 'Editar', {:action => "edit"}, :class => "icon-edit" %> |
-        <%= link_to 'Remover', @exam, {:confirm => 'Você tem certeza que quer remover esta aula permanentemente?',
-          :method => :delete, :class => "icon-delete"} %>
-      <% end %>
-      <% if current_user.admin? and @exam.state.eql?("waiting") %>
-        | <%= link_to 'Aprovar' , {:controller => :admin, :action => "approve", :id => @exam.id}, :class => "icon-approve"%> |
-        <%= link_to 'Rejeitar' , {:controller => :admin, :action => "disapprove", :id => @exam.id}, :class => "icon-reject" %>
-      <% end %>
-    </div>
-  </div>
-  <div style="margin-bottom: 10px; float:left;">
-    <div id="identification1">
-      <ul id="identification_resource1">
-        <li>
-          <%= (@exam.owner) ? link_to(@exam.owner.display_name, user_path(@exam.owner)) : "(usuário removido)" %>
-        </li>
-        <li>
-          |
-        </li>
-        <li>
+  <h3 class="call">
+    <%= @exam.name %>
+  </h3>
+  <div class="admin_opts yellow">
+    <% if current_user.can_manage?(@exam) %>
+      <%= link_to 'Editar', edit_space_subject_exam_path(@space, @subject, @exam), :class => "icon-edit" %> |
+      <%= link_to 'Remover', space_subject_exam_path(@space, @subject, @exam), {:confirm => 'Você tem certeza que quer remover esta aula permanentemente?',
+        :method => :delete, :class => "icon-delete"} %>
+    <% end %>
+    <% if current_user.admin? and @exam.state.eql?("waiting") %>
+      | <%= link_to 'Aprovar' , {:controller => :admin, :action => "approve", :id => @exam.id}, :class => "icon-approve"%> |
+      <%= link_to 'Rejeitar' , {:controller => :admin, :action => "disapprove", :id => @exam.id}, :class => "icon-reject" %>
+    <% end %>
+  </div><!-- end admin_opts -->
+  <div>
+    <ul >
+      <li class="small">
+        <%= (@exam.owner) ? link_to(@exam.owner.display_name, user_path(@exam.owner)) : "(usuário removido)" %>
+      </li>
+      <li>
+        <span class="quiet small">
           <%= time_ago_in_words @exam.created_at %>
-        </li>
+        </span>
+      </li>
 
-        <li>
-          |
-        </li>
-        <li>
+      <li>
+        <span class="quiet small">
           Realizado(<%= @exam.done_count %>)
-        </li>
-      </ul>
-    </div>
-    <div id="description_video">
-      <%= @exam.description %>
-    </div>
-    <div id="identification1">
-      <ul id="identification_resource1">
-        <li>
-          <strong>Categoria:</strong>
-          <%#category_i18n(@exam.simple_category.name) %>
-        </li>
-        <% unless @exam.tag_list.empty? %>
-          <li>
-            |
-          </li>
-          <li>
-            <strong>Tags:</strong>
-            <%= @exam.tag_list %>
-          </li>
-        <% end %>
-      </ul>
-    </div>
+        </span>
+      </li>
+    </ul>
   </div>
+  <% unless @exam.tag_list.empty? %>
+    <div class="grid_16 alpha omega">
+      <strong>Tags:</strong>
+      <div>
+        <ul class="tags">
 
-
+          <% @exam.tag_list.each do |t| %>
+            <li>
+              <span><%= t %></span>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
 </div>

@@ -4,7 +4,7 @@
 
 <script type="text/javascript">
 var schoolFoldersPath = "<%= space_folders_path(:space_id => @space.id.to_s) %>";
-var schoolCoursesPath = "";
+var schoolCoursesPath = "<%= space_subjects_path(@space) %>";
 var schoolForumPath = "<%= space_forum_path(:space_id => @space.id.to_s) %>";
 
 var $schooltabs;

@@ -1,0 +1,136 @@
+.container_16 #university-logo{
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -moz-box-shadow: 0 1px 2px rgba(51, 51, 51, 0.3);
+  -webkit-box-shadow: 0 1px 2px rgba(51, 51, 51, 0.3);
+  background:#FFFFFF;
+  border:1px solid #ececec;
+  float:left;
+  height: 150px;
+  padding: 5px;
+  display: table;
+  #position: relative;
+  overflow: hidden;
+}
+
+#university-logo .inner-frame {
+  #position: absolute;
+  #top: 50%;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+#university-logo img{
+  #position: relative;
+  #top: -50%
+}
+
+#create-header{
+  background:url(../images/bg-create-header.png) center repeat-x #dc3a23;
+  _background-image: none;
+  _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="../images/bg-create-header.png", sizingMethod="scale");
+  height:140px;
+}
+
+#create-header h3 a{
+  color:#30a6d3;
+  font-family:Arial, Helvetica, sans-serif;
+  font-size:1.6em;
+  margin: 10px 10px 0 0;
+}
+
+#create-header .current img {
+}
+
+#create-header .dropdown {
+  padding: 0 10px 10px 10px;
+  position: absolute;
+}
+#create-header .course {
+  margin-top: 60px;
+}
+
+#create-header .dropdown ul {
+  display: block;
+}
+
+#create-header .dropdown-university { padding: 10px 15px; }
+
+#create-header .dropdown .dropdown-university {
+  display: none;
+  position: relative;
+  z-index: 9999;
+}
+
+#create-header .dropdown.hover .dropdown-university {
+  display: block;
+  background: white;
+  -webkit-border-radius: 6px;
+  -webkit-box-shadow: 1px 1px 4px rgba(51, 51, 51, 0.3);
+  -moz-border-radius: 6px;
+  -moz-box-shadow: 1px 1px 4px rgba(51, 51, 51, 0.3);
+}
+
+#create-header .dropdown-university ul li {
+  padding: 5px 0;
+  background: url(../images/hr.png) repeat-x scroll 0 bottom ;
+}
+
+#create-header .dropdown-university ul li .nano {
+  background: white;
+  width: 24px;
+  height: 24px;
+  float: left;
+  margin-right: 10px;
+}
+
+#create-header .dropdown-university ul li a {
+  display: block;
+  margin: 5px 0;
+}
+#create-header h4{
+  padding-top:20px;
+  margin-bottom: 10px;
+}
+
+#create-header h4 a{
+  color:#ffffff;
+  font-family:Arial, Helvetica, sans-serif;
+  font-size:1.2em;
+}
+
+#create-header h4 img{
+  margin-left:10px;
+  margin-top:2px;
+}
+
+/* BOTÕES */
+.config-button{
+  -moz-border-radius:4px 4px 4px 4px;
+  -webkit-border-radius:4px 4px 4px 4px;
+  background:url(../images/bg-btn-configuracoes.jpg) repeat-x;
+  border:1px solid #50B6DA;
+  color:#0098cc;
+  float:left;
+  font-family:Arial, Helvetica, sans-serif;
+  font-size:1em;
+  font-weight:bold;
+  margin-top:12px;
+  padding:5px 10px 5px 10px;
+}
+
+.invite-button{
+  -moz-border-radius:4px 4px 4px 4px;
+  -webkit-border-radius:4px 4px 4px 4px;
+  background:url(../images/bg-btn-convidar.jpg) repeat-x;
+  border:1px solid #aaaaaa;
+  color:#000000;
+  float:right;
+  font-family:Arial, Helvetica, sans-serif;
+  font-size:1.2em;
+  font-weight:bold;
+  margin-left:10px;
+  margin-right:10px;
+  margin-top:23px;
+  padding:6px 13px 6px 13px;
+}

@@ -3,21 +3,21 @@ class Exam < ActiveRecord::Base
   # ASSOCIATIONS
   has_many :statuses, :as => :statusable
   has_many :question_exam_associations, :dependent => :destroy
-  has_many :questions, :through => :question_exam_associations, :include => :alternatives, :order => :position
+  has_many :questions, :through => :question_exam_associations
   has_many :exam_users, :dependent => :destroy
   has_many :user_history, :through => :exam_users, :source => :user
   has_many :favorites, :as => :favoritable, :dependent => :destroy
   has_many :logs, :as => :logeable, :dependent => :destroy, :class_name => 'Status'
+  has_one :asset, :as => :assetable, :dependent => :destroy
+  has_one :subject, :through => :asset, :dependent => :destroy
   belongs_to :owner , :class_name => "User" , :foreign_key => "owner_id"
   belongs_to :simple_category
-  has_one :lecture_subject, :as => :lectureable, :dependent => :destroy
-  has_one :space_asset, :as => :asset
-  has_one :space, :through => :space_asset#, :as => :asset
+  belongs_to :lazy_asset
+
   # NESTED
   accepts_nested_attributes_for :questions,
     :reject_if => lambda { |q| q[:statement].blank? },
     :allow_destroy => true
-
 
   # NAMED SCOPES
   named_scope :published, :conditions => ['published = ?', true], :include => :owner
@@ -38,9 +38,12 @@ class Exam < ActiveRecord::Base
   # VALIDATIONS
   validates_presence_of :name
   validates_presence_of :description
-  validation_group :step1, :fields=>[:name, :description]
-  validation_group :step2, :fields=>[:questions]
-  validation_group :step3, :fields=>[:price]
+  validates_length_of :questions, :allow_nil => false, :minimum => 1
+  validates_associated :questions
+
+  validation_group :general, :fields => [:name, :description]
+  validation_group :editor, :fields => [:questions]
+  validation_group :publication, :fields => [:price]
 
   def get_question(qid)
     if qid
@@ -56,6 +59,12 @@ class Exam < ActiveRecord::Base
 
   def permalink
     APP_URL + "/exams/"+ self.id.to_s+"-"+self.name.parameterize
+  end
+
+  # Seta respostas corretas para cada questão e salva
+  def set_answers!
+    self.questions.find(:all, :include => :alternatives).each {|q| q.set_answer! }
+    self.save!
   end
 
   def current_step
@@ -87,5 +96,9 @@ class Exam < ActiveRecord::Base
       self.current_step = step
       valid?
     end
+  end
+
+  def enable_correct_validation_group!
+    self.enable_validation_group(self.current_step.to_sym)
   end
 end

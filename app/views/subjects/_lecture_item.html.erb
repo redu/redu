@@ -1,0 +1,10 @@
+<li class="clearfix">
+  <span class="name">
+    <%= link_to lecture_item.name, space_subject_lecture_path(@space, @subject, lecture_item) %>
+  </span>
+  <span class="headlines">
+    <span class="things">
+      <%= truncate(lecture_item.description, :length => 150) %>
+    </span>
+  </span>
+</li>

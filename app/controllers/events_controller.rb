@@ -3,9 +3,8 @@ class EventsController < BaseController
 	
   layout 'environment'
   load_and_authorize_resource :space
-	load_and_authorize_resource :event, :through => :space
+  load_and_authorize_resource :event, :through => :space
 
-  #before_filter :find_environmnet_course_and_space
   caches_page :ical
   cache_sweeper :event_sweeper, :only => [:create, :update, :destroy]
   before_filter :is_event_approved,
@@ -46,22 +45,29 @@ class EventsController < BaseController
   end
 
   def show
-    @space = Space.find(params[:space_id])
+    @eventable = find_eventable
   end
 
   def index
-    @events = Event.approved.upcoming.paginate(:conditions => ["space_id = ? AND state LIKE 'approved'", Space.find(params[:space_id]).id],
-                                      :include => :owner,
-                                      :page => params[:page],
-                                      :order => 'start_time',
-                                      :per_page => AppConfig.items_per_page)
+    @eventable = find_eventable
+    @events = Event.approved.upcoming.paginate(:conditions => ["eventable_id = ?" \
+                                               " AND eventable_type LIKE ?",
+                                               @eventable.id,
+                                               @eventable.class.to_s],
+                                               :include => :owner,
+                                               :page => params[:page],
+                                               :order => 'start_time',
+                                               :per_page => AppConfig.items_per_page)
 
     @list_title = "Eventos Futuros"
-    @space = Space.find(params[:space_id])
   end
 
   def past
-    @events = Event.past.paginate(:conditions => ["space_id = ? AND state LIKE 'approved'", Space.find(params[:space_id]).id],
+    @eventable = find_eventable
+    @events = Event.approved.past.paginate(:conditions => ["eventable_id = ?" \
+                                  " AND eventable_type LIKE ?",
+                                  @eventable.id,
+                                  @eventable.class.to_s],
                                   :include => :owner,
                                   :page => params[:page],
                                   :order => 'start_time DESC',
@@ -72,12 +78,14 @@ class EventsController < BaseController
   end
 
   def new
-    @space = Space.find(params[:space_id])
+
+    @eventable = find_eventable
   end
 
   def edit
-  end
-  
+    @eventable = find_eventable
+ end
+
   def create
     # Passando para o formato do banco
 
@@ -88,21 +96,19 @@ class EventsController < BaseController
     @event = Event.new(params[:event])
 
     @event.owner = current_user
-    @event.space = Space.find(params[:space_id])
-
-    @space = @event.space
+    @event.eventable = find_eventable
 
     respond_to do |format|
       if @event.save
 
-        if @event.owner.can_manage? @space
+        if @event.owner.can_manage? @event
           @event.approve!
           flash[:notice] = "O evento foi criado e divulgado."
         else
           flash[:notice] = "O evento foi criado e será divulgado assim que for aprovado pelo moderador."
         end
 
-        format.html { redirect_to space_event_path(@event.space, @event) }
+        format.html { redirect_to polymorphic_path([@event.eventable, @event]) }
         format.xml  { render :xml => @event, :status => :created, :location => @event }
       else
         format.html { render :action => "new" }
@@ -112,17 +118,19 @@ class EventsController < BaseController
   end
 
   def update
+    # Passando para o formato do banco
+    params[:event][:start_time] = Time.zone.parse(params[:event][:start_time].gsub('/', '-'))
+    params[:event][:end_time] = Time.zone.parse(params[:event][:end_time].gsub('/', '-'))
 
+    @event = Event.find(params[:id])
     respond_to do |format|
       if @event.update_attributes(params[:event])
         flash[:notice] = 'O evento foi editado.'
-        format.html { redirect_to space_event_path(@event.space, @event) }
+        format.html { redirect_to polymorphic_path([@event.eventable, @event]) }
         format.xml { render :xml => @event, :status => :created, :location => @event }
       else
-        format.html {
-          format.html { render :action => :edit }
-          format.xml { render :xml => @event.errors, :status => :unprocessable_entity }
-        }
+        format.html { render :action => :edit }
+        format.xml { render :xml => @event.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -133,7 +141,7 @@ class EventsController < BaseController
 
     respond_to do |format|
       flash[:notice] = 'O evento foi excluído.'
-      format.html { redirect_to space_events_path(@event.space) }
+      format.html { redirect_to polymorphic_path(@event.eventable) }
     end
   end
 
@@ -148,12 +156,16 @@ class EventsController < BaseController
   def day
     day = Time.utc(Time.now.year, Time.now.month, params[:day])
 
-    @events = Event.paginate(:conditions => ["space_id = ? AND state LIKE 'approved' AND ? BETWEEN start_time AND end_time", Space.find(params[:space_id]).id, day],
+    @eventable = find_eventable
+    @events = Event.approved.paginate(:conditions => ["eventable_id = ?" \
+                             " AND eventable_type LIKE ?" \
+                             " AND ? BETWEEN start_time AND end_time",
+                             @eventable.id,
+                             @eventable.class.to_s, day],
                              :include => :owner,
                              :page => params[:page],
                              :order => 'start_time DESC',
                              :per_page => AppConfig.items_per_page)
-    @space = Space.find(params[:space_id])
 
     @list_title = "Eventos do dia #{day.strftime("%d/%m/%Y")}"
     render :template => 'events/index'
@@ -162,10 +174,11 @@ class EventsController < BaseController
   def notify
     event = Event.find(params[:id])
     notification_time = event.start_time - params[:days].to_i.days
-    Delayed::Job.enqueue(EventMailingJob.new(current_user, event), nil, notification_time) #TODO Verificar se a prioridade nil (zero) pode trazer problemas
+    Delayed::Job.enqueue(EventMailingJob.new(current_user, event), nil, notification_time)
+    #TODO Verificar se a prioridade nil (zero) pode trazer problemas
     flash[:notice] = "Sua notificação foi agendada."
 
-    redirect_to space_event_path(event.space_id, event)
+    redirect_to polymorphic_path([event.eventable, event])
   end
 
   protected
@@ -173,13 +186,20 @@ class EventsController < BaseController
     @event = Event.find(params[:id])
 
     if not @event.state == "approved"
-      redirect_to space_events_path
+      redirect_to polymorphic_path([@event.eventable])
     end
   end
 
-  def find_environmnet_course_and_space
-    @space = Space.find(params[:space_id])
-    @course = @space.course
-    @environment = @course.environment
+  def find_eventable
+    Space.find(params[:space_id]) if params[:space_id]
+  end
+
+  def find_environment_course_and_space
+    if params[:space_id]
+      @space = Space.find(params[:space_id])
+      @course = @space.course
+      @environment = @course.environment
+    end
   end
 end
+

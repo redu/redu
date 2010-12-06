@@ -529,6 +529,17 @@ class UsersController < BaseController
     end
   end
 
+  # Faz download do currículo previamente guardado pelo usuário.
+  def download_curriculum
+
+    f = @user.curriculum
+    if Rails.env == "production"
+      redirect_to f.s3.interface.get_link(f.s3_bucket.to_s, f.path, 20.seconds) and return false
+    end
+
+    send_file @user.curriculum.path, :type => @user.curriculum.content_type
+  end
+
   protected
   def setup_metro_areas_for_cloud
     @metro_areas_for_cloud = MetroArea.find(:all, :conditions => "users_count > 0", :order => "users_count DESC", :limit => 100)
@@ -542,9 +553,4 @@ class UsersController < BaseController
 
     return metro_areas, states
   end
-
-  def admin_or_current_user_required
-    current_user && (current_user.admin? || @is_current_user) ? true : access_denied
-  end
-  
 end

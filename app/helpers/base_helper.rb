@@ -46,6 +46,7 @@ module BaseHelper
 		else
 			f.select(:simple_category_id, options_for_select(categories_array), :include_blank => true)
 		end
+ 
   end
 
   def category_i18n(category)
@@ -84,14 +85,16 @@ module BaseHelper
          @activity = "atualizou seu status para: <span style='font-weight: bold;'>\"" + item.logeable_name + "\"</span>" if item.log_action == "update"
 
         when 'lecture'
-          link_obj = link_to(item.logeable_name, item.logeable)
+          lecture = item.logeable
+          link_obj = link_to(item.logeable_name, space_subject_lecture_path(lecture.subject.space, lecture.subject, lecture))
 
           @activity = "está visualizando a aula " + link_obj if item.log_action == "show"
           @activity = "criou a aula " + link_obj if item.log_action == "create"
           @activity =  "adicionou a aula " + link_obj + " ao seus favoritos" if item.log_action == "favorite"
 
       when 'exam'
-          link_obj = link_to(item.logeable_name, exam_path(item.logeable_id))
+          exam = item.logeable
+          link_obj = link_to(item.logeable_name, space_subject_exam_path(exam.subject.space, exam.subject, exam))
 
           @activity = "acabou de responder o exame " + link_obj if item.log_action == "results"
           @activity = "está respondendo ao exame " + link_obj if item.log_action == "answer"
@@ -114,7 +117,7 @@ module BaseHelper
           @activity = "respondeu ao tópico " + link_obj if item.log_action == 'create'
       when 'event'
           @event = Event.find(item.logeable_id)
-          link_obj = link_to(item.logeable_name, space_event_path(@event.space, @event))
+          link_obj = link_to(item.logeable_name, polymorphic_path([@event.eventable, @event]))
 
           @activity =  "criou o evento " + link_obj if item.log_action == "create"
       when 'bulletin'
@@ -560,7 +563,7 @@ module BaseHelper
     start_month = Time.utc(Time.now.year, month, 1)
     end_month = Time.utc(Time.now.year, month, 31)
     Event.all(:select => "id, start_time, end_time",
-              :conditions => ["space_id = ? AND state LIKE 'approved' AND (start_time BETWEEN ? AND ? OR end_time BETWEEN ? AND ?)", space_id, start_month, end_month, start_month, end_month])
+              :conditions => ["eventable_id = ? AND eventable_type = 'Space' AND state LIKE 'approved' AND (start_time BETWEEN ? AND ? OR end_time BETWEEN ? AND ?)", space_id, start_month, end_month, start_month, end_month])
   end
 
   # Indica se há evento no dia informado

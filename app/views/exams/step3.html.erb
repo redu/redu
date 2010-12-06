@@ -7,7 +7,7 @@
     <%# end %>
   </div>
 
-  <%# render(:partial => "spaces/space_info", :locals=>{:show => false}) if @space%>	
+  <%# render(:partial => "spaces/space_info", :locals=>{:show => false}) if @space%>
 
   <div id="title_video">Novo Exame - Publicação</div>
 </div>
@@ -30,29 +30,6 @@
 
     <%= f.error_messages %>
     <%= hidden_field_tag("step", "3", options = {})%>
-    <%# hidden_field_tag("post_to", @space.id) if @space %>
-
-    <%# unless @space %>
-
-    <%# field_set_tag 'Visibilidade' do %>
-      <%# f.label "Pública <span class='snippet'>(Visível em todo o Redu)</span>" %>
-      <%# f.check_box :public %>
-
-      <%# @spaces = current_user.spaces %>
-      <%# if @spaces and @spaces.size > 0 %>
-      <%# f.label "Postar em:" %>
-      <!-- Não é mais possível associar a um space. Pode ser utilizado para subject.
-      <div style="overflow-y:scroll; max-height: 200px;">
-        <%# @spaces.each do | space | %>
-          <div><%# radio_button_tag :post_to, space.id, false %> <%= space.name %></div>
-          <%# end %>
-        </div> 
-        -->
-        <%# end %>
-        <%# end %>	
-        <%# else%>
-        <%= f.hidden_field(:public, :value => 0)%>
-        <%# end %>
 
         <% if AppConfig.activate_payment %>
           <% field_set_tag 'Preço' do %>
@@ -87,9 +64,9 @@
       </div>
 
       <div class="grid_16">
-        <%= link_to '< Anterior', new_exam_path(:step => '2', :exam_type => @exam_type), :class => "button", :disabled => true %> 
+        <%= link_to '< Anterior', new_space_subject_exam_path(@space, @subject, :step => '2', :exam_type => @exam_type), :class => "button", :disabled => true %>
         <%# f.submit 'Salvar' %> ou
-        <%= link_to 'Cancelar', cancel_exams_path, :confirm => "Tem certeza que deseja sair do editor de aulas? Todas as informações serão perdidas." %>
+        <%= link_to 'Cancelar', cancel_space_subject_exams_path(@space, @subject), :confirm => "Tem certeza que deseja sair do editor de aulas? Todas as informações serão perdidas." %>
       </div>
 
     <% end %>

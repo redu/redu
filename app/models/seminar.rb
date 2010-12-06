@@ -79,7 +79,7 @@ class Seminar < ActiveRecord::Base
   end
 
   event :fail do
-    transitions :from => :converting, :to => :fail
+    transitions :from => :converting, :to => :failed
   end
 
   # Validations Groups - Habilitar diferentes validacoes dependendo do tipo.
@@ -101,7 +101,7 @@ class Seminar < ActiveRecord::Base
       @source.is_clone = true #TODO evitar que sejam removido
     end
 
-    if @source and @source.public
+    if @source
       if @source.lectureable_type == 'Seminar'
         if @source.lectureable.external_resource_type.eql?('youtube')
           self.external_resource_type = 'youtube'
@@ -133,11 +133,11 @@ class Seminar < ActiveRecord::Base
   end
   # Retorna parâmetro da URL que identifica unicamente o vídeo
   def truncate_youtube_url
-    if self.external_resource_type.eql?('youtube')
-      capture = self.external_resource.scan(/youtube\.com\/watch\?v=([A-Za-z0-9._%-]*)[&\w;=\+_\-]*/)[0][0]
-      # TODO criar validacao pra essa url
-      self.external_resource = capture
-    end
+      if self.external_resource_type.eql?('youtube')
+        capture = self.external_resource.scan(/youtube\.com\/watch\?v=([A-Za-z0-9._%-]*)[&\w;=\+_\-]*/)[0][0]
+        # TODO criar validacao pra essa url
+        self.external_resource = capture
+      end
   end
 
   # Converte o video para FLV (Zencoder)

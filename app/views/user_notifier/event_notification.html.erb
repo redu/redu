@@ -1,6 +1,6 @@
 Olá <%= @user.display_name %>,
 
-Estamos aqui para lembrá-lo do evento "<%= @event.name %>" da rede "<%= @space.name %>", pois este <%= @event.time_and_date%>. Não deixe de participar!
+Estamos aqui para lembrá-lo do evento "<%= @event.name %>" da "<%= @eventable.name %>", pois este <%= @event.time_and_date%>. Não deixe de participar!
 
 Para visualizar dados do evento, acesse:
 <%= @event_url %>

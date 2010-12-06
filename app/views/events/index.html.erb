@@ -7,7 +7,7 @@
         <%= render :partial => 'events/item', :collection => @events %>
       <% else %>
         Esta rede ainda não tem eventos agendados para este período!
-        <%= link_to "Crie um novo evento", new_space_event_path %>
+        <%= link_to "Crie um novo evento", new_polymorphic_path([@eventable, Event.new]) %>
       <% end %>
     </ul>
 
@@ -16,3 +16,4 @@
     </div>
   </div>
 </div>
+

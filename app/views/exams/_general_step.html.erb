@@ -1,45 +1,10 @@
 <div class="grid_16">
-  <div id="breadcrumbs">
-    <%# if @space %>
-    <a href="<%=application_url%>">início</a>
-    > <a href="#">redes</a>
-    > <%# link_to @space.name, @space %>> novo exame<% else %>
-    <a href="<%=application_url%>">início</a>
-    > <a href="#">ensinar</a>
-    > novo exame
-    <%# end %>
-  </div>
-
-  <%# render(:partial => "spaces/space_info", :locals=>{:show => false}) if @space %>
-
   <div id="title_video">
     Novo Exame
   </div>
 </div>
 
-<div class="grid_9 push_3">
-  <table class="booking_steps" cellpadding="0" cellspacing="0">
-    <tbody>
-      <tr>
-        <td>
-          <span class="book_step current"><span><em>1</em>Informações Gerais</span></span>
-        </td>
-        <td class="spacer">
-          &nbsp;
-        </td>
-        <td>
-          <span class="book_step disabled"><span><em>2</em>Editor de Exame</span></span>
-        </td>
-        <td class="spacer">
-          &nbsp;
-        </td>
-        <td>
-          <span class="book_step disabled"><span><em>3</em>Publicação</span></span>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<%= render :partial => 'exams/breadcrumbs' %>
 
 <div class="<%= (edit) ? 'grid_15 alpha omega': 'grid_9' %>">
   <%= f.error_messages %>
@@ -47,24 +12,8 @@
 
 <%= hidden_field_tag("step", "general")%>
 
-
 <div class="grid_8">
-  <% field_set_tag 'Informações Gerais' do %>
-    <%= f.label "Nome" %>
-    <%= f.text_field :name ,  :onkeyup => ((edit) ? nil : "generatePath(this)") %>
-    <%= error_for :exam, :name %>
-
-    <% random_number = get_random_number%>
-    <%= f.label "Descrição:" %>
-    <div style="">
-      <%= f.text_area :description, :size => "50x3", :class => "desc-#{random_number}" %>
-      <%= render :partial => 'shared/limit_char_field', :locals => { :class_textarea => "desc-#{random_number}" }%>
-    </div>
-    <%= error_for :exam, :description %>
-
-    <%= f.label "Tags <span class='snippet'>(separadas por vírgula)</span>" %>
-    <%= f.text_field :tag_list %>
-  <% end %>
+  <%= render :partial => 'exams/general_form', :locals => {:f => f} %>
 </div>
 
 <div class="grid_6 push_1">
@@ -73,13 +22,5 @@
       <h3><%= radio_button_tag("exam_type", "simple", checked = true, options = {}) %> Exame simples</h3>
       Contém um conjunto de questões e o resultado é exibido ao final do exame.
     </div>
-    <div style="margin-bottom: 20px;">
-      <h3><%= radio_button_tag("exam_type", "formative", checked = false, :disabled => true) %> Exame formativo</h3>
-      Nessa modalidade, a resposta e justificativa são dadas após completar cada questão.
-    </div>
-    <div style="margin-bottom: 20px;">
-      <h3><%= radio_button_tag("exam_type", "quiz", checked = false, :disabled => true) %> Quiz</h3>
-      Esse tipo de exame possibilita exibir um resultado personalizado de acordo com a definição de um número de pontos em cada alternativa.
-    </div>
-  <%end %>
+  <% end %>
 </div>

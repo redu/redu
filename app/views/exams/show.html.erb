@@ -1,142 +1,80 @@
+<%= render :partial => "exam_header" %>
 <div class="grid_16">
-  <div id="breadcrumbs">
-    <a href="<%=application_url%>">início</a>
-    > <a href="#">exames</a>
-    > <a href="#"><%= @exam.name %></a>
+
+  <div class="grid_5 push_6">
+    <%= link_to("Responder este exame!", answer_space_subject_exam_path(@space, @subject, @exam, :first=> true), :class => "answer-lg")%>
   </div>
-  <div id="item_video" class="clearfix">
-    <div id="title_video">
-      <%= @exam.name %>
-    </div>
-    <div class="admin_opts yellow">
 
-      <% if @exam.owner == current_user %>
-        <%= link_to 'Editar', {:action => "edit"}, :class => "icon-edit" %>
-      <% end %>
-
-      <%# if current_user.can_manage? @exam and @space %>
-      | <%# link_to 'Remover da rede', remove_asset_space_path(:id => @space.id, :asset_id => @exam.id, :asset_type => "Exam"), {:confirm => "Você tem certeza que quer remover este exame da rede?\n(Ela continuará no seu diretório de aulas)", :class => "icon-delete"} %>
-    <%# end %>
-
-    <% if current_user.admin? %>
-      | <%= link_to 'Remover', @exam, {:confirm => 'Você tem certeza que quer remover este exame do Redu permanentemente?',
-        :method => :delete, :class => "icon-delete"} %>
-
-    <% end %>
-
-  </div>
-</div>
-<div style="margin-bottom: 10px; float:left;">
-  <div id="identification1">
-    <ul id="identification_resource1">
-      <li>
-        <%= (@exam.owner) ? link_to(@exam.owner.display_name, user_path(@exam.owner)) : "(usuário removido)" %>
-      </li>
-      <li>
-        |
-      </li>
-      <li>
-        <%= time_ago_in_words @exam.created_at %>
-      </li>
-      <li>
-        |
-      </li>
-      <li>
-        Realizações(<%= @exam.done_count %>)
-      </li>
-    </ul>
-  </div>
-  <div id="description_video">
-    <%= @exam.description %>
-  </div>
-  <div id="identification1">
-    <ul id="identification_resource1">
-      <li>
-        <strong>Categoria:</strong>
-        <%#category_i18n(@exam.simple_category.name) %>
-      </li>
-      <% unless @exam.tag_list.empty? %>
+  <div id="filter_bar_video" class="grid_16 alpha omega">
+    <div id="actions_video">
+      <ul id="actions_resource">
+        <li>
+          <!-- AddThis Button BEGIN -->
+          <script type="text/javascript">
+            var addthis_config = {
+              "data_track_clickback": true,
+              ui_click: true,
+              ui_cobrand: "Redu"
+            };
+          </script>
+          <div class="addthis_toolbox addthis_default_style">
+            <a href="http://addthis.com/bookmark.php?v=250&amp;username=redu" class="addthis_button_compact">Share</a>
+          </div>
+          <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=redu">
+          </script>
+          <!-- AddThis Button END -->
+        </li>
         <li>
           |
         </li>
         <li>
-          <strong>Tags:</strong>
-          <%= @exam.tag_list %>
+          <%= render :partial => "shared/favorite" , :locals => {:favoritable => @exam} %>
         </li>
-      <% end %>
-    </ul>
-  </div>
-</div>
-</div>
-
-<div class="grid_5 push_6">
-  <%= link_to("Responder este exame!", answer_exam_path(:id=> @exam.id, :first=> true), :class => "answer-lg")%>
-</div>
-
-<div id="filter_bar_video" class="grid_16">
-  <div id="actions_video">
-    <ul id="actions_resource">
-      <li>
-        <!-- AddThis Button BEGIN -->
-        <script type="text/javascript">
-          var addthis_config = {
-            "data_track_clickback": true,
-            ui_click: true,
-            ui_cobrand: "Redu"
-          };
-        </script>
-        <div class="addthis_toolbox addthis_default_style">
-          <a href="http://addthis.com/bookmark.php?v=250&amp;username=redu" class="addthis_button_compact">Share</a>
-        </div>
-        <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=redu">
-        </script>
-        <!-- AddThis Button END -->
-      </li>
-      <li>
-        |
-      </li>
-      <li>
-        <%= render :partial => "shared/favorite" , :locals => {:favoritable => @exam} %>
-      </li>
-      <li>
-        |
-      </li>
-      <li>
-        <%= link_to_function "Atividades", "$('#status_text').focus()", :class => "comments_video" %>
-      </li>
-    </ul>
-  </div>
-  <div id="rating_video">
-    <%= ratings_for @exam %>
-  </div>
-</div>
-<!-- end bar -->
-
-<div class= "grid_10">
-  <!-- COLUNA DA ESQUERDA  ## --><!-- ONLINE USERS -->
-  <!-- FLOW -->
-  <div style ="min-height: 250px;">
-    <%= javascript_include_tag 'flow.js' %>
-    <%= render :partial => "statuses/create_status", :locals => {:status => @status, :statusable => @exam } %>
-    <ul class="activities">
-      <% collection = @exam.statuses.descend_by_created_at %>
-      <%= render :partial => "statuses/type_proxy", :collection => collection, :as => :status, :locals => {:statusable => @exam } %>
-    </ul>
-    <!-- end activities -->
-  </div>
-</div>
-
-<!-- COLUNA DA DIREITA  ## -->
-<div class="grid_6">
-
-
-  <% if @related_exams.size > 0 %>
-    <div class="sidebar">
-      <span class="call"><span>Exames Relacionados</span></span>
-      <ul class="default">
-        <%= render :partial => 'exams/item', :collection => @related_exams, :as => :exam %> 
+        <li>
+          |
+        </li>
+        <li>
+          <%= link_to_function "Atividades", "$('#status_text').focus()", :class => "comments_video" %>
+        </li>
       </ul>
     </div>
-  <% end %>
+    <div id="rating_video">
+      <%=
+        ratings_for @exam,
+            :remote_options => {
+                :url => rate_space_subject_exam_path(@space, @subject, @exam)
+        }
+      %>
+    </div>
+  </div>
+  <!-- end bar -->
 
+  <div class= "grid_10 alpha">
+    <!-- COLUNA DA ESQUERDA  ## --><!-- ONLINE USERS -->
+    <!-- FLOW -->
+    <div style ="min-height: 250px;">
+      <%= javascript_include_tag 'flow.js' %>
+      <%= render :partial => "statuses/create_status", :locals => {:status => @status, :statusable => @exam } %>
+      <ul class="activities">
+        <% collection = @exam.statuses.descend_by_created_at %>
+        <%= render :partial => "statuses/type_proxy", :collection => collection, :as => :status, :locals => {:statusable => @exam } %>
+      </ul>
+      <!-- end activities -->
+    </div>
+  </div>
+
+  <!-- COLUNA DA DIREITA  ## -->
+  <div class="grid_6">
+
+
+    <% if @related_exams.size > 0 %>
+      <div class="sidebar">
+        <span class="call"><span>Exames Relacionados</span></span>
+        <ul class="default">
+          <%= render :partial => 'exams/item', :collection => @related_exams, :as => :exam %>
+        </ul>
+      </div>
+    <% end %>
+
+  </div>
 </div>

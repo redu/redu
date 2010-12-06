@@ -34,7 +34,7 @@
 			complete:function(request){
 				$('#save-spinner').hide();
 				if (isPreview) {
-					window.open('<%= answer_exam_path(:id => @exam.id, :first => true) %>');
+					window.open('<%= answer_space_subject_exam_path(@space, @subject, @exam, :first => true) %>');
 				}
 				},
 			data:jQuery.param(jQuery("#exam_form").serializeArray()), 
@@ -326,10 +326,10 @@ function removeAllMce(){
 
  <div class="grid_16">
 
-   <%= link_to '< Anterior', new_exam_path(:step => '1'), :class => "button" %> 
+   <%= link_to '< Anterior', new_space_subjec_exam_path(@space, @subject, :step => '1'), :class => "button" %> 
    <%= f.submit 'Próximo >' %> 
 
-   <%= link_to 'Descartar e Voltar', cancel_exams_path, :confirm => "Tem certeza que deseja sair do editor de exames?" %>
+   <%= link_to 'Descartar e Voltar', cancel_space_subject_exams_path(@space, @subject), :confirm => "Tem certeza que deseja sair do editor de exames?" %>
  </div>
 
 

@@ -373,7 +373,6 @@ ul.default > li {
   position: relative;
 }
 
-
 ul.default > li .thumb {
   margin: 0 10px;
   float: left;
@@ -398,7 +397,7 @@ ul.default > li.even {
   background-color: white;
 }
 
-ul.default > li div.headlines {
+ul.default > li .headlines {
   background: white;
   border: 1px solid #EFF0F0;
   float: right;
@@ -410,20 +409,20 @@ ul.default > li div.headlines {
   -webkit-border-radius: 5px;
 }
 
-ul.default > li div.headlines .things {
+ul.default > li .headlines .things {
   color: gray;
 }
 
-ul.default > li div.headlines .things {
+ul.default > li .headlines .things {
   margin-right: 10px;
 }
 
-ul.default > li div.headlines ul li {
+ul.default > li .headlines ul li {
   display: block;
   float: left;
 }
 
-ul.default > li div.headlines > .call {
+ul.default > li .headlines > .call {
   font-weight: bold;
   font-size: .9em;
   color: #ff8000;
@@ -470,6 +469,65 @@ ul.default > li a.answer:hover {
   color: white;
 }
 
+ul.lazy-assets > li a.finalize,
+ul.lazy-assets > li a.finalized {
+  position: absolute;
+  display: block;
+  top: 45%;
+  right: 10px;
+}
+
+ul.lazy-assets > li a.finalize {
+  background-color: #F45E30;
+  color: white;
+}
+
+ul.lazy-assets > li a.finalized {
+  background-color: #9DDBC6;
+  color: white;
+}
+
+ul.lazy-assets > li .headlines {
+  display: block;
+  width: 420px;
+  float: left;
+  margin: 10px;
+}
+
+ul.subject-assets > li .headlines {
+  float: left;
+  width: 500px;
+}
+
+ul.subject-assets > li .index {
+  float: left;
+  padding: 50px 20px;
+  font-size: 2.5em;
+  font-weight: bold;
+  color: #D6D4D4;
+}
+
+ul.subjects > li .headlines {
+  float: left;
+  margin: 5px 10px;
+  width: 60%;
+}
+
+
+ul.subjects > li .progress {
+  float: right;
+  position: absolute;
+  width: 180px;
+  top: 20px;
+  right: 10px;
+}
+
+ul.subjects > li .progress strong {
+  display: block;
+  font-size: .8em;
+  color: gray;
+  margin-bottom: 10px;
+}
 
 ul.pagination {
   margin-top: 30px;
@@ -1153,6 +1211,14 @@ div.recomendations-m .number {
   min-height: 400px;
 }
 
+#subject .tabs {
+  width: 638px;
+  border-left: 1px solid #EFF0F0;
+  border-bottom: 1px solid #EFF0F0;
+  border-right: 1px solid #EFF0F0;
+  min-height: 400px;
+}
+
 .tabs ul.ui-tabs-nav {
   height: 60px;
   background: url("../images/ui-elements_r45_c2.png") repeat-x 0 5px;
@@ -1183,13 +1249,13 @@ div.recomendations-m .number {
 }
 
 /* Vertical Tabs */
-.ui-tabs-vertical { 
+.ui-tabs-vertical {
   width: 55em;
 }
 
 .ui-tabs-vertical .ui-tabs-nav {
-  padding: .2em .1em .2em .2em; 
-  float: left; 
+  padding: .2em .1em .2em .2em;
+  float: left;
   width: 12em;
 }
 
@@ -1267,73 +1333,62 @@ div.recomendations-m .number {
 }
 
 /* @learn-index */
-#learn,
-#teach {
+#learn {
   padding-top: 0;
 }
 
-#learn ul.box-explore,
-#teach ul.box-explore {
+#learn ul.box-explore {
 }
 
-#learn ul.box-explore li,
-#teach ul.box-explore li {
+#learn ul.box-explore li {
   float: left;
   width: 190px;
   margin-right: 5px;
   margin-bottom: 10px;
 }
 
-#learn ul.box-explore li a.area,
-#teach ul.box-explore li a.area {
+#learn ul.box-explore li a.area {
   display: block;
   font-size: 1.1em;
   font-weight: bold;
 }
 
-#learn ul.box-explore li a.categories,
-#teach ul.box-explore li a.categories {
+#learn ul.box-explore li a.categories {
   font-size: .8em;
   font-weight: normal;
   color: gray;
 }
 
-#learn ul.box-popular-resources li,
-#teach ul.box-popular-resources li {
+#learn ul.box-popular-resources li {
   overflow: hidden;
   margin-bottom: 15px;
 }
 
-#learn ul.box-popular-resources a.tt-popular,
-#teach ul.box-popular-resources a.tt-popular {
+#learn ul.box-popular-resources a.tt-popular {
   color: #0B85C0;
   display: block;
   font-size: .8em;
   margin-bottom: 6px;
 }
 
-#learn ul.box-popular-resources a.views,
-#teach ul.box-popular-resources a.views {
+#learn ul.box-popular-resources a.views {
   color: #666666;
   font-size: .7em;
 }
 
-#learn ul.box-popular-resources a.source,
-#teach ul.box-popular-resources a.source {
+#learn ul.box-popular-resources a.source {
   color: #96B8E2;
   display: block;
   font-size: .7em;
   padding-top: 6px;
 }
 
-#learn ul.box-popular-resources img,
-#teach ul.box-popular-resources img {
+#learn ul.box-popular-resources img {
   float: left;
   padding-right: 15px;
 }
 
-#learn .logo-learn span,
-#teach .logo-learn span {
+#learn .logo-learn span {
   float: left;
   color: #FF8000;
   font-size: 1.5em;
@@ -1342,8 +1397,7 @@ div.recomendations-m .number {
   padding: 5px 23px;
 }
 
-#learn #group-header-learn,
-#teach #group-header-learn {
+#learn #group-header-learn {
   overflow: hidden;
   background: #F8FAFC;
   margin: 0;
@@ -1353,28 +1407,24 @@ div.recomendations-m .number {
   -webkit-border-radius: 8px 8px 0 0;
 }
 
-#learn #group-header-learn .info,
-#teach #group-header-learn .info {
+#learn #group-header-learn .info {
   font-size: .9em;
   padding: 5px;
 }
 
-#learn h2.text-header,
-#teach h2.text-header {
+#learn h2.text-header {
   float: left;
   display: inline-block;
   padding: 5px 14px;
 }
 
-#learn h2.text-header a,
-#teach h2.text-header a {
+#learn h2.text-header a {
   color: #F63A0B;
   font-weight: 100;
   font-size: .9em;
 }
 
-#learn .box-user-login,
-#teach .box-user-login {
+#learn .box-user-login {
   margin: 0 0 15px -3px;
   overflow: hidden;
   background: url(../images/bg-user-login.png) repeat top center;
@@ -1382,12 +1432,8 @@ div.recomendations-m .number {
   width: 194px;
 }
 
-#teach .box-user-login {
-  margin: 0 0 60px -3px;
-}
 
-#learn .sidebar,
-#teach .sidebar {
+#learn .sidebar {
   top: 16px;
   position: absolute;
   z-index: 20;
@@ -1395,57 +1441,42 @@ div.recomendations-m .number {
   background-color: white;
 }
 
-#teach .box-user-login a.name-user {
-  font-weight: bold;
-  color: #18C6ED;
-  display: block;
-  font-size: .8em;
-  margin-bottom: 10px;
-}
-
-#learn .box-user-login img,
-#teach .box-user-login img {
+#learn .box-user-login img {
   float: left;
   padding-right: 6px;
 }
 
-#learn .box-user-login a.text-profile,
-#teach .box-user-login a.text-profile {
+#learn .box-user-login a.text-profile {
   margin-bottom: 6px;
   color: #18C6ED;
   display: block;
   font-size: .6em;
 }
 
-#learn .box-user-login span.text-plans,
-#teach .box-user-login span.text-plans {
+#learn .box-user-login span.text-plans {
   color: #333;
   display: block;
   font-size: .7em;
 }
 
-#learn .box-user-login span.text-type-plans,
-#teach .box-user-login span.text-type-plans {
+#learn .box-user-login span.text-type-plans {
   color: #0B85BF;
   font-weight: bold;
   font-size: .9em;
 }
 
-#learn .box-user-teach,
-#teach .box-user-teach {
+#learn .box-user-teach {
   min-height: 109px;
 }
 
-#learn #box-nav-networks,
-#teach #box-nav-networks {
+#learn #box-nav-networks {
   display: block;
   clear: both;
   overflow: hidden;
   padding: 15px 20px;
 }
 
-#learn #box-nav-networks li,
-#teach #box-nav-networks li {
+#learn #box-nav-networks li {
   margin-right: 10px;
   float: left;
   width: 160px;
@@ -1453,96 +1484,29 @@ div.recomendations-m .number {
   background: url(../images/bg-nav-networks.png) no-repeat top left;
 }
 
-#learn #box-nav-networks li.bt-networks,
-#teach #box-nav-networks li.bt-networks {
+#learn #box-nav-networks li.bt-networks {
   background-position: 0 0;
 }
 
-#learn #box-nav-networks li.bt-aulas,
-#teach #box-nav-networks li.bt-aulas {
+#learn #box-nav-networks li.bt-aulas {
   background-position: 0 -78px;
 }
 
-#learn #box-nav-networks li.bt-exames,
-#teach #box-nav-networks li.bt-exames {
+#learn #box-nav-networks li.bt-exames {
   background-position: 0 -160px;
 }
 
-#learn #box-nav-networks li a.text-tt,
-#teach #box-nav-networks li a.text-tt {
+#learn #box-nav-networks li a.text-tt {
   margin-bottom: 5px;
   display: block;
   font-weight: 700;
   font-size: 1.1em;
 }
 
-#learn #box-nav-networks li a.text-desc,
-#teach #box-nav-networks li a.text-desc {
+#learn #box-nav-networks li a.text-desc {
   color: #333;
   display: block;
   font-size: .7em;
-}
-
-#teach {
-}
-
-#teach ul.headlines {
-}
-
-#teach ul.headlines > li {
-  background-color: white;
-}
-
-#teach ul.headlines li img.photo {
-  float: left;
-  margin-right: 10px;
-}
-
-#teach ul.headlines li a.name {
-  font-size: .9em;
-}
-
-#teach ul.headlines li .info {
-  color: gray;
-  font-size: .7em;
-  display: block;
-  margin: 5px;
-}
-
-#teach ul.headlines li ul li {
-  clear: left;
-  margin: 5px 0;
-  padding: 1px;
-}
-
-#teach ul.headlines .photo {
-  width: 24px;
-  height: 24px;
-}
-
-#teach li.personal-overview a.name {
-  font-size: 1.2em;
-  font-weight: bold;
-}
-
-#teach li.personal-overview a.edit {
-  font-size: .8em;
-}
-
-#teach li.personal-overview .photo {
-  width: 40px;
-  height: 40px;
-  float: left;
-  margin-right: 10px;
-}
-
-#teach li.personal-overview .plan {
-  text-transform: uppercase;
-  display: block;
-  font-size: .9em;
-  font-weight: bold;
-  margin: 5px;
-  color: #FFDB4F;
 }
 
 /* spotlight */
@@ -1784,7 +1748,6 @@ div.filter-box ul li a {
 div.content {
   min-height: 100%;
   height: auto;
-  padding-top: 10px;
   padding-bottom: 30px;
   position: relative;
   background: white;
@@ -1805,6 +1768,7 @@ div.content div.content {
 * html .content {
   height: 100%;
 }
+
 /* ie6 and under*/
 
 /** @profile **/
@@ -2384,25 +2348,25 @@ div.curriculum h6 {
 }
 
 
-ul.progress-bar span.bar-chart {
+div.progress-bar {
   display: block;
   padding: 2px;
   border: 1px solid #E9E9E9;
-  height: 15px;
+  height: 30px;
 }
 
-ul.progress-bar span.bar-chart > span {
+div.progress-bar span.complete {
   background-color: #FFFA7F;
   display: block;
-  height: 15px;
+  height: 30px;
   position: relative;
 }
 
-ul.progress-bar span.bar-chart span span {
+div.progress-bar span.complete span {
   position: absolute;
-  font-size: .8em;
+  font-size: .7em;
   right: 5px;
-  top: 2px;
+  top: 40%;
   color: gray;
 }
 
@@ -2436,10 +2400,27 @@ ul.sub-groups > li {
 #environment-header {
   -moz-border-radius: 8px;
   -webkit-border-radius: 8px;
-  background: #F2F6F7 url("../images/backgroud-header-environment.png") repeat-x top;
   margin-bottom: 10px;
   padding: 10px 0;
-  height: 70px;
+}
+
+#common-header {
+  -moz-border-radius: 8px 8px 0 0;
+  -webkit-border-radius: 8px;
+  background: #F2F6F7 url("../images/backgroud-header-environment.png") repeat-x top;
+  margin-bottom: 10px;
+  padding: 10px 0 0 0;
+}
+
+
+#common-header .session-title{
+  color:#ffa000;
+  font-family:Arial, Helvetica, sans-serif;
+  font-size:1.5em;
+  font-weight:bold;
+  height:37px;
+  margin-left:10px;
+  padding-top:5px;
 }
 
 #environment-header .avatar {
@@ -2449,8 +2430,37 @@ ul.sub-groups > li {
   margin-bottom: 10px;
 }
 
-#environment-header .name h3 {
-  padding: 0;
+#subject-header {
+  margin: 10px 0;
+  background-color: #F7F9F9;
+  padding: 10px;
+
+}
+
+#subject-header strong{
+  font-size: .8em;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #E5E3E3;
+}
+
+
+#subject-header h3.call {
+  margin: 5px 0 0 0;
+}
+
+#subject-header h3.call a {
+  font-size: 1.2em;
+}
+
+#subject-header  a.button {
+  display: block;
+  float: right;
+}
+
+#subject-header h3.call a.edit {
+  font-size: .7em;
+  color: #FF8000
 }
 
 /* @footer */
@@ -2695,7 +2705,6 @@ a:hover.book_step span {
   position: absolute;
   top: 8px;
   margin: 0;
-
 }
 
 /*** Current Step ***/

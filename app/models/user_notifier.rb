@@ -131,12 +131,12 @@ class UserNotifier < ActionMailer::Base
   def event_notification(user, event)
     setup_sender_info
     @recipients  = "#{user.email}"
-    @subject     = "Lembre-se do evento da rede #{event.space.name}"
+    @subject     = "Lembre-se do evento da #{event.eventable.name}"
     @sent_on     = Time.now
     @body[:user] = user
     @body[:event] = event
-    @body[:event_url]  = space_event_url(event.space, event)
-    @body[:space] = event.space
+    @body[:event_url]  = polymorphic_url([event.eventable, event])
+    @body[:eventable] = event.eventable
   end
 
   def contact_redu(contact)
@@ -206,7 +206,7 @@ class UserNotifier < ActionMailer::Base
   def signup_notification(user)
     setup_email(user)
     @subject    += "Por favor ative a sua nova conta #{AppConfig.community_name}"
-    @body[:url]  = "#{application_url}users/activate/#{user.activation_code}"
+    @body[:url]  = "#{AppConfig.application_url}users/activate/#{user.activation_code}"
   end
 
   def message_notification(message)

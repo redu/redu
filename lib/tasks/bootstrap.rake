@@ -9,6 +9,7 @@ namespace :bootstrap do
       :first_name => 'Admin',
       :last_name => 'Redu',
       :role => Role[:admin])
+    puts "Administrador inserido: ", !theadmin.nil?
   end
 
   desc "Insert test user"
@@ -21,6 +22,7 @@ namespace :bootstrap do
       :first_name => 'Test',
       :last_name => 'User',
       :role => Role[:member])
+    puts "Usuário comum inserido: ", !theuser.nil?
   end
   
   desc "Insert default Roles"

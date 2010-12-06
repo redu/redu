@@ -1,0 +1,24 @@
+<li id="<%= item.id %>-asset" class="asset-item clearfix">
+  <div class="index">
+    <%= item.position %>
+  </div>
+  <span class="name">
+    <%= link_to item.assetable.name,
+          space_subject_assetable_path(@space, @subject, item.assetable)  %>
+  </span>
+  <span class="headlines">
+    <span class="things">
+      <%= truncate(item.assetable.description, :length => 150) %>
+    </span>
+  </span>
+  <span class="headlines">
+    <ul class="item_info">
+      <li><strong>Tipo:</strong> <%= item.friendly_type %> | </li>
+      <li><strong>Professor:</strong> <%= link_to item.assetable.owner.display_name,
+            user_path(item.assetable.owner) %></li>
+      <% unless item.assetable.simple_category.nil? %>
+        <li> | <strong>Categoria:</strong> <%= item.assetable.simple_category.name %></li>
+      <% end %>
+    </ul>
+  </span>
+</li>

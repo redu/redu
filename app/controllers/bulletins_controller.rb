@@ -14,8 +14,8 @@ class BulletinsController < BaseController
     @bulletinable = find_bulletinable
 
     @bulletins = Bulletin.paginate(:conditions => ["bulletinable_id = ?
-                                   AND bulletinable_type LIKE ? 
-                                   AND state LIKE 'approved'", 
+                                   AND bulletinable_type LIKE ?
+                                   AND state LIKE 'approved'",
                                    @bulletinable.id, @bulletinable.class.to_s],
                                    :page => params[:page],
                                    :order => 'created_at DESC',
@@ -32,8 +32,9 @@ class BulletinsController < BaseController
   end
 
   def create
-    if params[:bulletinable_type].eql? "Space" or params[:bulletinable_type].eql? "Environment" 
-      @bulletinable = Kernel.const_get(params[:bulletinable_type]).find(params[:bulletinable_id]) 
+    @bulletin = Bulletin.new(params[:bulletin])
+    if params[:bulletinable_type].eql? "Space" or params[:bulletinable_type].eql? "Environment"
+      @bulletinable = Kernel.const_get(params[:bulletinable_type]).find(params[:bulletinable_id])
     end
     @bulletin.bulletinable = @bulletinable
     @bulletin.owner = current_user
@@ -111,7 +112,7 @@ class BulletinsController < BaseController
 
     respond_to do |format|
       format.js
-    end      
+    end
   end
 
   protected
@@ -134,6 +135,7 @@ class BulletinsController < BaseController
     elsif params[:environment_id]
       Environment.find(params[:environment_id])
     else
+      #TODO Tirar este workaround quando usar a rota correta no form de bulletin.
       if params[:bulletinable_type].eql? "Space"
         Space.find(params[:bulletinable_id])
       end
@@ -144,9 +146,10 @@ class BulletinsController < BaseController
     if params[:space_id]
       @space = Space.find(params[:space_id])
       @course = @space.course
-      @environment = @course.environment 
+      @environment = @course.environment
     elsif params[:environment_id]
       @environment = Environment.find(params[:environment_id])
     end
   end
 end
+

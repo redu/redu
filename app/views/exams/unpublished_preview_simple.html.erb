@@ -132,15 +132,7 @@ function decreaseFontSize(){
         <% end %>
 
 
-        <% if current_user.admin? and @lecture.state.eql?("waiting") %>
-          <%= link_to 'Aprovar' , {:action => "approve", :id => @lecture.id} %> |
-          <%= link_to 'Rejeitar' , {:action => "disapprove", :id => @lecture.id} %>
-        <% end %>
       </div>
-      <!--	<div id="title_video"><a href="#">História - Revolução Francesa</a></div>    -->
-      <!--<div id="edit_admin">
-
-      </div>-->
       <div>
         <div id="identification1">
           <ul id="identification_resource1">

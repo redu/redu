@@ -35,7 +35,7 @@ class Space < ActiveRecord::Base
   has_many :folders
   has_many :acquisitions, :as => :acquired_by
   has_many :bulletins, :as => :bulletinable, :dependent => :destroy
-  has_many :events, :dependent => :destroy
+  has_many :events, :as => :eventable, :dependent => :destroy
   has_many :statuses, :as => :statusable
   has_many :subjects
   has_many :topics # Apenas para facilitar a busca.

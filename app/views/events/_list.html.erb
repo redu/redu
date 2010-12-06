@@ -1,6 +1,6 @@
 <li class="clearfix">
 
-  <%= link_to event.name, space_event_path(event.space, event), :class => "grid_12" %>
+  <%= link_to event.name, polymorphic_path([event.eventable, event]), :class => "grid_12" %>
   <span class="grid_6"><%= event.time_and_date %></span>
 
   <div class="grid_10 pretty-text">
@@ -9,11 +9,12 @@
 
   <% if current_user.can_manage?(event) %>
     <div class="grid_10">
-      <%= link_to "Editar", edit_space_event_path(event.space, event), :class => "button icon-edit" %>
-      <%= link_to 'Remover', space_event_path(event, event.space),
-        :confirm => 'Você tem certeza que deseja remover essa notícia permanentemente?',
+      <%= link_to "Editar", edit_polymorphic_path([event.eventable, event]), :class => "button icon-edit" %>
+      <%= link_to 'Remover', polymorphic_path([event.eventable, event]),
+        :confirm => 'Você tem certeza que deseja remover este evento permanentemente?',
         :method => :delete, :class => "button icon-delete" %>
     </div>
   <% end %>
 
 </li>
+

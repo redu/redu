@@ -7,6 +7,11 @@ class User < ActiveRecord::Base
   LEARNING_ACTIONS = ['answer', 'results', 'show']
   TEACHING_ACTIONS = ['create']
 
+  SUPPORTED_CURRICULUM_TYPES = [ 'application/pdf', 'application/msword',
+                                 'text/plain',
+                                 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' # docx
+                               ]
+
   # CALLBACKS
   before_save   :whitelist_attributes
   before_save   :generate_login_slug
@@ -38,12 +43,13 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :followers, :class_name => "User", :join_table => "followship", :association_foreign_key => "followed_by_id", :foreign_key => "follows_id", :uniq => true
 
   #COURSES
-  has_many :lectures, :foreign_key => "owner", :conditions => {:is_clone => false}
+  has_many :lectures, :foreign_key => "owner",
+    :conditions => {:is_clone => false, :published => true}
   has_many :acquisitions, :as => :acquired_by
 
   has_many :credits
-  has_many :exams, :foreign_key => "owner_id"
-  has_many :exam_users
+  has_many :exams, :foreign_key => "owner_id", :conditions => {:is_clone => false}
+  has_many :exam_users#, :dependent => :destroy
   has_many :exam_history, :through => :exam_users, :source => :exam
   has_many :questions, :foreign_key => :author_id
   has_many :favorites, :order => "created_at desc", :dependent => :destroy
@@ -67,6 +73,9 @@ class User < ActiveRecord::Base
   #groups
   has_many :group_user
   has_many :groups, :through => :group_user
+
+  #student_profile
+  has_many :student_profiles
 
   #forums
   has_many :moderatorships, :dependent => :destroy
@@ -102,6 +111,7 @@ class User < ActiveRecord::Base
   end
 
   has_attached_file :avatar, PAPERCLIP_STORAGE_OPTIONS
+  has_attached_file :curriculum, PAPERCLIP_STORAGE_OPTIONS
 
   ajaxful_rater
   acts_as_taggable
@@ -116,6 +126,8 @@ class User < ActiveRecord::Base
   validates_exclusion_of    :login, :in => AppConfig.reserved_logins
   validates_date :birthday, :before => 13.years.ago.to_date
   validates_acceptance_of :tos, :message => "Você precisa aceitar os Termos de Uso"
+  validates_attachment_size :curriculum, :less_than => 10.megabytes
+  validate_on_update :accepted_curriculum_type
 
   # override activerecord's find to allow us to find by name or id transparently
   def self.find(*args)
@@ -230,13 +242,8 @@ class User < ActiveRecord::Base
     (self.first_name and self.last_name and self.gender and self.description and self.tags)
   end
 
-  def enrolled? subject_id
-    if Enrollment.all(:conditions => ["user_id = ? AND subject_id = ?", self.id, subject_id]).length > 0
-      true
-    else
-      false
-    end
-
+  def enrolled? subject
+    Enrollment.count(:conditions => {:user_id => self, :subject_id => subject}) > 0
   end
 
   def can_manage?(entity)
@@ -308,7 +315,7 @@ class User < ActiveRecord::Base
       end
     end
   end
-  
+
   def can_read?(object)
     if (object.class.to_s.eql? 'Folder') || (object.class.to_s.eql? 'Forum') ||
        (object.class.to_s.eql? 'Topic') || (object.class.to_s.eql? 'SbPost') ||
@@ -319,7 +326,7 @@ class User < ActiveRecord::Base
       object.published? && self.has_access_to?(object)
     end
   end
-  
+
   def can_be_owner?(entity)
     self.admin? || self.space_admin?(entity.id) || self.teacher?(entity) || self.coordinator?(entity)
   end
@@ -667,6 +674,11 @@ class User < ActiveRecord::Base
     self.sb_last_seen_at = Time.now.utc
   end
 
+  def profile_for(subject)
+    self.student_profiles.find(:first,
+      :conditions => {:subject_id => subject})
+  end
+
   protected
   def activate_before_save
     self.activated_at = Time.now.utc
@@ -694,4 +706,9 @@ class User < ActiveRecord::Base
     crypted_password.blank? || !password.blank?
   end
 
+  def accepted_curriculum_type
+    unless SUPPORTED_CURRICULUM_TYPES.include?(self.curriculum_content_type)
+      self.errors.add(:curriculum, "Formato inválido")
+    end
+  end
 end

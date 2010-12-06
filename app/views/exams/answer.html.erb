@@ -1,152 +1,44 @@
-<script language="text/javascript">
-var startTime = 0
-var start = 0
-var end = 0
-var diff = 0
-var timerID = 0
-var sec = 0
-var min = 0
-var hr = 0
+<%= javascript_include_tag "exam.js" %>
 
-var chronoStarted = false;
-function chrono(){
-	end = new Date()
-	diff = end - start
-	diff = new Date(diff)
-	//var msec = diff.getMilliseconds()
-	sec = diff.getSeconds()
-	min = diff.getMinutes()
-    hr = diff.getHours()-1
-	hr = "00";
-	if (min < 10){
-		min = "0" + min
-	}
-	if (sec < 10){
-		sec = "0" + sec
-	}
-	
-	/*if(msec < 10){
-		msec = "00" +msec
-	}
-	else if(msec < 100){
-		msec = "0" +msec
-	}*/
-	
-	//alert('oi');
-	//alert(document.getElementById("chronotime"));
-	document.getElementById("clock").innerHTML = hr + ":" + min + ":" + sec; //+ ":" + msec
-	timerID = setTimeout("chrono()", 10)
-}
-function chronoStart(){
-	//document.chronoForm.startstop.value = "stop!"
-	//document.chronoForm.startstop.onclick = chronoStop
-	//document.chronoForm.reset.onclick = chronoReset
-	if (!chronoStarted) {
-  	start = new Date();
-  	chrono();
-		chronoStarted = true;
-  }
-}
-function chronoContinue(){
-	document.chronoForm.startstop.value = "stop!"
-	document.chronoForm.startstop.onclick = chronoStop
-	document.chronoForm.reset.onclick = chronoReset
-	start = new Date()-diff
-	start = new Date(start)
-	chrono()
-}
-function chronoReset(){
-	document.getElementById("chronotime").innerHTML = "00:00:000"
-	start = new Date()
-}
-function chronoStopReset(){
-	document.getElementById("chronotime").innerHTML = "00:00:000"
-	document.chronoForm.startstop.onclick = chronoStart
-}
-function chronoStop(){
-	document.chronoForm.startstop.value = "start!"
-	document.chronoForm.startstop.onclick = chronoContinue
-	document.chronoForm.reset.onclick = chronoStopReset
-	clearTimeout(timerID)
-}
+<div class="grid_16 alpha omega">
 
-function submitChrono(){
-	//var theTime = document.getElementById("clock").innerHTML;
-	// submit time in secondes
-	
-	var theTime = sec + min * 60 + hr * 3600;
-	//alert(theTime);
-	document.getElementById("chrono").value = theTime;
-}
-
-
-function selectId(id){
-	jQuery('.number').removeClass('indexSel')
-	jQuery('#qIndex'+id).addClass('indexSel')
-	//document.getElementById('qIndex'+id).className += ' indexSel';
-}
-
-function showLoading(){
-	$('#q_loading').show();
-	$('#navigation').hide();
-}
-function hideLoading(){
-	$('#q_loading').hide();
-	$('#navigation').show();
-}
-
-</script>
-
-<div class="grid_16">
-  <div id="breadcrumbs">
-    <a href="<%=application_url%>">início</a> > <a href="#">aulas</a> > <a href="#"><%= @exam.name %></a> 
-  </div>
-
-  <%= render :partial => "exam_header"%>
-
-  <div class="grid_16 pull_2">
+  <%= render :partial => "exam_header" %>
+  <div class="grid_4 push_12">
     <div id="clock" >00:00:00</div>
   </div>
-  <% form_remote_tag(:url => {:action => :answer}, :loading => "showLoading()", :html => {:id => 'form_answer'}) do %>
-    <input id="chrono" name="chrono" type="hidden" value="" />
-    <div id= "question_box" class ="grid_10 ">  
-      <%# render :partial => "exams/question_answer", :locals => {:question => @step}%>
-      <%= render :partial => 'exams/instructions' %>
-    </div>	
-    <div id="questions" class ="grid_5">
-      <% field_set_tag 'Questões', :class => "heighted" do %> 
-        <ul id="questions_number">
-          <li>
-            <%= link_to_remote image_tag("icon_info.png", :border => "0", :title => "Instruções"), :url => {:action => :answer, :id => session[:exam].id, :q_index => 'i'}, :html => {:class => 'number indexSel', :id => 'qIndexi'}%></li> 
-          <li>
-
-            <% session[:exam].questions.each_with_index do |q, x| %>
-              <% if(0 == x) %>
-                <li><%= link_to_remote x + 1, :url => {:action => :answer, :id => session[:exam].id, :q_index => x}, :loading => "showLoading()", :html => {:class => 'number', :id => 'qIndex'+ q.id.to_s}%></li> 
-              <% else %>
-                <li><%= link_to_remote x + 1, :url => {:action => :answer, :id => session[:exam].id, :q_index => x}, :loading => "showLoading()", :html => {:class => 'number', :id => 'qIndex'+ q.id.to_s}%></li> 
+  <div class="tabs grid_16">
+    <ul>
+      <li><a href="#exam">Exame</a></li>
+      <li><a href="#instructions">Instruções</a></li>
+    </ul>
+    <div id="exam" class="clearfix">
+      <% form_for :exam, answer_space_subject_exam_path(@space, @subject, @exam), :html => {:id => 'form_answer', :class => "grid_16" }  do %>
+        <input id="chrono" name="chrono" type="hidden" value="" />
+        <div id= "question_box" class ="grid_11 alpha pretty-text">
+          <%= render :partial => 'exams/question_answer', :locals => {:question => @step} %>
+        </div>
+        <div id="questions" class ="grid_4 omega">
+          <% field_set_tag 'Questões', :class => "heighted" do %>
+            <ul id="questions_number">
+              <% session[:exam].questions.each_with_index do |q, x| %>
+                <% if(0 == x) %>
+                  <li><%= link_to_remote x + 1, :url => {:action => :answer, :id => session[:exam].id, :q_index => x}, :loading => "showLoading()", :html => {:class => 'number', :id => 'qIndex'+ q.id.to_s}%></li>
+                <% else %>
+                  <li><%= link_to_remote x + 1, :url => {:action => :answer, :id => session[:exam].id, :q_index => x}, :loading => "showLoading()", :html => {:class => 'number', :id => 'qIndex'+ q.id.to_s}%></li>
+                <% end %>
               <% end %>
-            <% end %>
+            </ul>
+          <% end %>
+        </div>
 
-          </ul>
+        <div id="navigation" class="grid_15 alpha omega">
+          <%= render :partial => 'exams/navigation' %>
+        </div>
+      <% end %>
 
-        <% end %>
-      </div>
-   <div id="navegador">
-
-        <div id="navigation" class="grid_16">
-          <%= button_to_remote('Anterior', {:url => {:action => :answer, :id => session[:exam].id, :q_index => (session[:question_index]-2)}, :loading => "showLoading();"}, :id => 'prev_answer_btn', :disabled => true) %>
-          |  <%= submit_tag @has_next ? "Próximo" : "Finalizar", :id => 'submit_answer_btn',:style => "display:none"  %>
-
-        <%= button_to_remote('Próximo', {:url => {:action => :answer, :id => session[:exam].id, :q_index => 0}, :loading => "showLoading();"}, :id => 'first_question_btn') %>
-
-      </div>
-
-      <div id="q_loading" style="display: none;" class="grid_16"><em>Carregando questão... </em>
-        <%= image_tag 'loadingAnimation.gif' %>
-      </div>
-
-    <% end %> 
-
-  </div> 
+    </div><!-- end exam -->
+    <div id="instructions" class="clearfix pretty-text">
+      <%= render :partial => "exams/instructions" %>
+    </div><!-- end instructions -->
+  </div>
 </div>

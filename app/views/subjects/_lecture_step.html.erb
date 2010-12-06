@@ -1,0 +1,14 @@
+<div class="grid_9 push_2">
+  <table class="booking_steps" cellpadding="0" cellspacing="0">
+    <tbody><tr>
+        <td><span class="book_step current"><span><em>1</em>Informações Gerais</span></span></td>
+        <td class="spacer">&nbsp;</td>
+        <td><span class="book_step disabled"><span><em>2</em>Conteúdo</span></span></td>
+      </tr>
+  </tbody></table>
+</div>
+
+<div class="<%= params[:action] == 'update' ? "grid_15" : "grid_11 omega" %>">
+  <%= hidden_field_tag("step", "lecture")%>
+  <%= render :partial => 'subjects/resources_form', :locals => {:f => f} %>
+</div>

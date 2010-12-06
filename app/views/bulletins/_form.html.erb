@@ -1,26 +1,26 @@
 <%- form_for [ @bulletinable, @bulletin ] do |f| %>
 	<fieldset><legend>Notícia</legend>
 	<%= f.error_messages %>
+    
+    <%= hidden_field_tag("bulletinable_id", @bulletinable.id) %>
+    <%= hidden_field_tag("bulletinable_type", @bulletinable.class) %>
 
-	<%= hidden_field_tag("bulletinable_id", @bulletinable.id) %>
-	<%= hidden_field_tag("bulletinable_type", @bulletinable.class) %>
+    <%= f.label "Título" %>
+    <%= f.text_field :title %>
 
-	<%= f.label "Título" %>
-	<%= f.text_field :title %>
+    <% random_number = get_random_number%>
+    <%= f.label "Breve Descrição" %>
+    <%= f.text_area :tagline, :size => "70x5", :class => "tagline-#{random_number}" %>
+    <%= render :partial => 'shared/limit_char_field', :locals => { :class_textarea => "tagline-#{random_number}" }%>
 
-	<% random_number = get_random_number%>
-	<%= f.label "Breve Descrição" %>
-	<%= f.text_area :tagline, :size => "70x5", :class => "tagline-#{random_number}" %>
-	<%= render :partial => 'shared/limit_char_field', :locals => { :class_textarea => "tagline-#{random_number}" }%>
+    <%= f.label "Descrição" %>
+    <%= f.text_area :description, :size => "70x14", :class => "mceEditor"%>
 
-	<%= f.label "Descrição" %>
-	<%= f.text_area :description, :size => "70x14", :class => "mceEditor"%>
+    <%= f.label "Tags <span class='snippet'>(separadas por vírgula)</span>" %>
+    <%= f.text_field :tag_list %>
 
-	<%= f.label "Tags <span class='snippet'>(separadas por vírgula)</span>" %>
-	<%= f.text_field :tag_list %>
-
-	<%= f.submit "Salvar"%>
-	</fieldset>
+    <%= f.submit "Salvar"%>
+  </fieldset>
 <% end %>
 
 <%= link_to 'Ver todas', polymorphic_path([@bulletinable, Bulletin.new]) %>

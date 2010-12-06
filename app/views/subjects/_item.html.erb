@@ -1,0 +1,35 @@
+<li class="clearfix">
+  <%= link_to subject.title, space_subject_path(@space, item), :class => "name"  %>
+  <div class="headlines">
+    <span class="things">
+      <%= truncate_words( subject.description, 10, '...') %>
+    </span>
+  </div>
+  <div class="headlines">
+    <ul class="item_info">
+      <% unless @user %>
+        <li> <strong>Por:</strong>
+          <%= link_to subject.owner.f_name, user_path(subject.owner) %>
+        </li>
+      <% end %>
+      <li>
+        <%= time_ago_in_words_or_date(subject.created_at) %>
+      </li>
+      <% if subject.space && !@space %>
+        <li>
+          <strong>Espaço:</strong> <%= link_to(subject.space.name, subject.space)  %>
+      </li>
+      <% end %>
+    </ul>
+  </div>
+  <% if current_user.enrolled?(item) %>
+  <div class="progress">
+    <strong>Seu progresso</strong>
+    <%= render :partial => "progress", :locals => {:subject => item} %>
+  </div>
+  <% end %>
+</li>
+
+
+
+

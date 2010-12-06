@@ -12,10 +12,8 @@
   </div>
   </div>
   <div class="grid_8 last">
-  <span class="name"><%= link_to item.name, space_event_path(item.space, item) %></span>
+  <span class="name"><%= link_to item.name, polymorphic_path([item.eventable, item]) %></span>
   <span class="tagline"><%= item.tagline %></span>
     <%= render :partial => 'tags/tags', :object => item.tags  %>
   </div>
-
 </li>
-

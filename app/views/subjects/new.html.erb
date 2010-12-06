@@ -1,11 +1,101 @@
-<div id="breadcrumbs"><b><strong><%= link_to "Cursos", subjects_path %></strong></b> > <b><strong>Novo Curso</strong></b>  </div>
+<script type="text/javascript" charset="utf-8">
+//<![CDATA[
+$(document).ready(function(){
+    reload_assets_index()
+    show_choosen_assets()
 
- 
-<%  form_for(:subject, :url => subjects_path) do |f| %>
+    // Remove recurso.
+    $("a.remove").live('click', function(e){
+      $(this).prev("input[type=hidden]").val("1")
+      $(this).parent(".fields").hide()
+      reload_assets_index()
+      e.preventDefault()
+    })
 
-<p><%= render :partial => "#{@subject.current_step}_step", :locals=>{:f => f, :titles => "Criar Curso-Adicionar Aulas"}%></p><br /><br />
+    // Mostra form para novos recursos.
+    $("input.new").live('click', function(e){
+      $(this).parent().nextAll("div.new-form").show()
+      $(this).parent().nextAll("div.exist-form").hide()
+    })
+
+    // Mostra form para recursos já existentes.
+    $("input.exist").live('click', function(e){
+      $(this).parent().nextAll("div.new-form").hide()
+      $(this).parent().nextAll("div.exist-form").show()
+    })
+
+})
+
+// Adiciona numeração dos recursos.
+function reload_assets_index(){
+  $("fieldset.lazy-assets:not(:hidden) > legend").each(function(i){
+    $(this).html("Recurso " + ($("fieldset.lazy-assets:not(:hidden) > legend").index(this) + 1))
+  })
+}
+
+// Adiciona recurso.
+function add_fields(link, association, content) {
+    var new_id = new Date().getTime();
+    var regexp = new RegExp("new_" + association, "g");
+    $(link).before(content.replace(regexp, new_id));
+    reload_assets_index()
+}
+
+// Seta os campos hidden com o id e o type do asset já existente
+// que foi escolhido.
+function reload_existent_assets(){
+  $("select.existent-asset:not(:hidden)").each(function(){
+      var asset = $(this).val();
+      var cutpoint = asset.lastIndexOf('-'); 
+      var assetable_id = asset.substring(0, cutpoint);
+      var assetable_type = asset.substring(cutpoint+1);
+
+      $(this).prev("input[type=hidden]").val(assetable_type);
+      $(this).prev("div.fieldWithErrors").children("input[type=hidden]").val(assetable_type);
+
+      $(this).prev("input[type=hidden]").prev("input[type=hidden]").val(assetable_id);
+      $(this).prev("div.fieldWithErrors").prev("div.fieldWithErrors").children("input[type=hidden]").val(assetable_id);
+      });
+}
+
+// Mostra o form escolhido pelo usuário (após voltar do servidor por 
+// algum erro de validação).
+function show_choosen_assets(){
+  $("div.existent").children("input:checked").each(function(){
+      if($(this).val() == "false") // Recurso não existente
+      {
+      $(this).parent().nextAll("div.new-form").show()
+      }
+      else
+      {
+      $(this).parent().nextAll("div.exist-form").show()
+      }      
+  });
+}
+//]]>
+</script>
 
 <div class="grid_16">
-<br /><%= f.submit "Voltar", :name => "back_button" unless @subject.first_step? %><%= f.submit "Continuar" %>
+  <div id="breadcrumbs">
+    <%= link_to "Cursos", space_subjects_path(@space) %> > Novo Curso
+  </div>
+
+  <%= render :partial => "spaces/sidebar", :locals => {:space => @space} %>
+
+  <div class="grid_11 omega">
+    <%  form_for [@space, @subject] do |f| %>
+      <div>
+        <%= f.error_messages %>
+      </div>
+      <%= render :partial => "#{@subject.current_step}_step",
+        :locals => {:f => f, :titles => "Criar Curso-Adicionar Aulas"}%>
+
+      <div class="grid_11 omega">
+        <%= f.submit "< Anterior", :name => "back_button" unless @subject.first_step? %>
+        <%= f.submit "Próximo >" unless @subject.last_step? %>
+        <%= f.submit "Finalizar", :onclick => "reload_existent_assets();jQuery('#form_subject').submit();" if @subject.last_step? %>
+        ou <%= link_to "Cancelar", cancel_space_subjects_path(@space) %>
+      </div>
+  <% end %>
 </div>
-<%end%>
+</div>

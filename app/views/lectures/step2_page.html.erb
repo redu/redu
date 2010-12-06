@@ -37,8 +37,8 @@
   </div>
 	
 	<div class="grid_16"> 
-<%= link_to '< Anterior', new_lecture_path(:step => '1'), :class => "button" %> 
-<%= f.submit 'Próximo >' %> ou <%= link_to 'Cancelar', cancel_lectures_path, :confirm => "Tem certeza que deseja sair do editor de aulas?" %>
+<%= link_to '< Anterior', new_space_subject_lecture_path(@space, @subject, :step => '1'), :class => "button" %> 
+<%= f.submit 'Próximo >' %> ou <%= link_to 'Cancelar', cancel_space_subject_lectures_path(@space, @subject), :confirm => "Tem certeza que deseja sair do editor de aulas?" %>
 </div>
 <% end %>
 

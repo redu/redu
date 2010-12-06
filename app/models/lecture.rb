@@ -11,29 +11,29 @@ class Lecture < ActiveRecord::Base
   has_many :favorites, :as => :favoritable, :dependent => :destroy
   has_many :annotations
   has_many :logs, :as => :logeable, :dependent => :destroy, :class_name => 'Status'
-  has_one :subject_asset, :as => :asset, :dependent => :destroy
-  has_one :subject, :through => :subject_asset
-  has_one :lecture_subject, :as => :lectureable
+  has_one :subject, :through => :asset, :dependent => :destroy
+  has_one :asset, :as => :assetable, :dependent => :destroy
   belongs_to :owner , :class_name => "User" , :foreign_key => "owner"
   belongs_to :lectureable, :polymorphic => true, :dependent => :destroy
-  belongs_to :asset, :polymorphic => true
   belongs_to :simple_category
+  belongs_to :lazy_asset
+
   accepts_nested_attributes_for :resources,
     :reject_if => lambda { |a| a[:media].blank? },
     :allow_destroy => true
 
   # NAMED SCOPES
   named_scope :published,
-    :conditions => ["state LIKE 'approved' AND public = true"],
+    :conditions => ["published = true"],
     :include => :owner, :order => 'created_at DESC'
   named_scope :seminars,
-    :conditions => ["state LIKE 'approved' AND lectureable_type LIKE 'Seminar' AND public = true"],
+    :conditions => ["lectureable_type LIKE 'Seminar' AND published = true"],
     :include => :owner, :order => 'created_at DESC'
   named_scope :iclasses,
-    :conditions => ["lectureable_type LIKE 'InteractiveClass' AND public = true"],
+    :conditions => ["lectureable_type LIKE 'InteractiveClass' AND published = true"],
     :include => :owner, :order => 'created_at DESC'
   named_scope :pages,
-    :conditions => ["lectureable_type LIKE 'Page' AND public = true"],
+    :conditions => ["lectureable_type LIKE 'Page' AND published = true"],
     :include => :owner, :order => 'created_at DESC'
   named_scope :limited, lambda { |num| { :limit => num } }
 
@@ -42,23 +42,8 @@ class Lecture < ActiveRecord::Base
   ajaxful_rateable :stars => 5
   has_attached_file :avatar, PAPERCLIP_STORAGE_OPTIONS
 
-  # Máquina de estados para moderação do Redu.
-  # O estados do processo de transcoding estao em Seminar
-  acts_as_state_machine :initial => :waiting
-  state :waiting
-  state :approved
-  state :rejected
-
-  event :approve do
-    transitions :from => :waiting, :to => :approved
-  end
-
-  event :reject do
-    transitions :from => :waiting, :to => :rejected
-  end
-
   # VALIDATIONS
-  validates_presence_of :name
+  validates_presence_of :name, :lazy_asset
   validates_presence_of :description
   validates_length_of :description, :within => 30..200
   validates_presence_of :simple_category
@@ -97,7 +82,7 @@ class Lecture < ActiveRecord::Base
           File.join(File.dirname(self.lectureable.media.url), "thumb_0000.png")
         else
           #FIXME url hard coded
-          '/images/missing_pic_school.png'
+          '/images/missing_pic_space.png'
         end
 
       else
@@ -122,7 +107,7 @@ class Lecture < ActiveRecord::Base
   end
 
   def has_annotations_by(user)
-    Annotation.find(:first, 
+    Annotation.find(:first,
                     :conditions => ["lecture_id = ? AND user_id = ?", self.id, user.id])
   end
 
@@ -130,13 +115,10 @@ class Lecture < ActiveRecord::Base
   def to_param
     "#{id}-#{name.parameterize}"
   end
-
-  def build_lectureable(params)
-    puts ' oi'
-    case self.lectureable_type
-    when "Page"
-      # se edicao pega ja existente, senao:
-      self.lectureable = Page.new(:body => "teste")
-    end
+  
+  #FIXME chamar isso num validate_on_create
+  def only_one_asset_per_lazy_asset?
+    Asset.count(:conditions => {:lazy_asset_id => self.lazy_asset}) <= 0
   end
+
 end
