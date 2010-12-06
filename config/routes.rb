@@ -146,7 +146,6 @@ ActionController::Routing::Routes.draw do |map|
     :forgot_password => [:get, :post],
     :signup_completed => :get,
     :invite => :get,
-    :welcome_stylesheet => :get,
     :welcome_complete => :get,
     :statistics => :any,
     :activity_xml => :get,

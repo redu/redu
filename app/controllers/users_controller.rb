@@ -2,23 +2,23 @@ require "RMagick"
 
 class UsersController < BaseController
   uses_tiny_mce(:options => AppConfig.default_mce_options.merge({:editor_selector => "rich_text_editor"}),
-                :only => [:create, :update, :edit, :welcome_about, :create])
+                :only => [:create, :update, :edit, :create])
 
   # Filters
   if AppConfig.closed_beta_mode
     skip_before_filter :beta_login_required, :only => [:new, :create, :activate]
   end
   after_filter :create_activity, :only => [:update]
-  before_filter :login_required, 
-    :except => [:new, :create, :forgot_password, :forgot_username, :activate, :resend_activation]
-  before_filter :find_user, :only => [:activity, :edit, :edit_pro_details, :show, :update, :destroy, :statistics, :deactivate,
+  
+  before_filter :find_user, :only => [:activity, :edit, :show, :update, :destroy, :statistics, :deactivate,
     :crop_profile_photo, :upload_profile_photo ]
-  before_filter :require_current_user, :only => [:edit, :update, :update_account,
-    :edit_pro_details, :update_pro_details,
-    :welcome_photo, :welcome_about, :welcome_invite, :deactivate,
-    :crop_profile_photo, :upload_profile_photo]
-  before_filter :admin_required, :only => [:assume, :featured, :toggle_featured, :toggle_moderator]
-  before_filter :admin_or_current_user_required, :only => [:statistics]
+
+  load_resources :except => [:annotations, :show_log_activity, :list_subjects, :logs, :activate, :dashboard, :show,
+                            :update, :statistics, :edit, :destroy, :crop_profile_photo, :upload_profile_photo,
+                            :edit_account, :update:account, :welcome_complete, :forgot_password, :forgot_username,
+                            :resend_activation, :assume, :metro_area_update, :activity_xml]
+                            
+  authorize_resource
 
   def annotations
     @annotations = User.find(params[:id]).annotations
@@ -33,7 +33,7 @@ class UsersController < BaseController
   end
 
   def learning
-    @user = User.find(params[:id]) #TODO performance routes (passar parametro direto para query)
+    #@user = User.find(params[:id]) #TODO performance routes (passar parametro direto para query)
 
     respond_to do |format|
       format.js do
@@ -45,7 +45,7 @@ class UsersController < BaseController
   end
 
   def teaching
-    @user = User.find(params[:id]) #TODO performance routes (passar parametro direto para query)
+    #@user = User.find(params[:id]) #TODO performance routes (passar parametro direto para query)
     @lectures = @user.lectures[0..5] # TODO limitar pela query (limit = 5)
     @exams = @user.exams[0..5]
 
@@ -64,7 +64,7 @@ class UsersController < BaseController
 
   ### Followship
   def follows
-    @user = User.find(params[:id])
+    #@user = User.find(params[:id])
     @follows= @user.follows
 
     respond_to do |format|
@@ -74,7 +74,7 @@ class UsersController < BaseController
   end
 
   def followers
-    @user = User.find(params[:id])
+    #@user = User.find(params[:id])
     @followers= @user.followers
 
     respond_to do |format|
@@ -84,7 +84,7 @@ class UsersController < BaseController
   end
 
   def follow # TODO evitar duplicata
-    user = User.find(params[:id])
+    #user = User.find(params[:id])
     respond_to do |format|
       unless user.followers.include?(current_user)
         user.followers << current_user
@@ -94,7 +94,7 @@ class UsersController < BaseController
   end
 
   def unfollow
-    user = User.find(params[:id])
+    #user = User.find(params[:id])
 
     user.followers.delete current_user
     respond_to do |format|
@@ -175,7 +175,7 @@ class UsersController < BaseController
   end
 
   def groups
-    @user = User.find(params[:id])
+    #@user = User.find(params[:id])
     @groups = @user.spaces.find(:all, :select => "name, path")
   end
 
@@ -312,7 +312,7 @@ class UsersController < BaseController
   end
 
   def change_profile_photo
-    @user   = User.find(params[:id])
+    #@user   = User.find(params[:id])
     @photo  = Photo.find(params[:photo_id])
     @user.avatar = @photo
 
@@ -381,11 +381,11 @@ class UsersController < BaseController
   end
 
   def edit_pro_details
-    @user = User.find(params[:id])
+    #@user = User.find(params[:id])
   end
 
   def update_pro_details
-    @user = User.find(params[:id])
+    #@user = User.find(params[:id])
     @user.add_offerings(params[:offerings]) if params[:offerings]
     @user.attributes = params[:user]
 
@@ -406,13 +406,13 @@ class UsersController < BaseController
   end
 
   def signup_completed
-    @user = User.find(params[:id])
+    #@user = User.find(params[:id])
     redirect_to home_path and return unless @user
     render :action => 'signup_completed'
   end
 
   def invite
-    @user = User.find(params[:id])
+    #@user = User.find(params[:id])
   end
 
   def welcome_complete
@@ -544,5 +544,5 @@ class UsersController < BaseController
   def admin_or_current_user_required
     current_user && (current_user.admin? || @is_current_user) ? true : access_denied
   end
-
+  
 end

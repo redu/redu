@@ -33,9 +33,16 @@ class Ability
 
     # Status
     alias_action :respond, :to => :read
+    
+    # User
+    alias_action :follows, :followers, :log, :welcome_complete, :list_subjects,:show_log_activity, :to => :read
+    alias_action :assume, :metro_area_update, :edit_account, :update_account, :edit_pro_details, :update_pro_details,
+                 :invite, :activate, :deactivate, :dashboard, :groups, :change_profile_photo, :crop_profile_photo,
+                 :upload_profile_photo, :activity_xml,:annotation ,:to => :manage
+                 
 
     # Todos podem ver o preview
-    can :preview, :all do |object|
+    can :view, :all do |object|
       object.published?
     end
 
@@ -49,17 +56,9 @@ class Ability
       
       # Usuário normal
       can :read, :all do |object|
-        
-        if (object.class.to_s.eql? 'Folder') || (object.class.to_s.eql? 'Forum') ||
-          (object.class.to_s.eql? 'Topic') || (object.class.to_s.eql? 'SbPost') ||
-          (object.class.to_s.eql? 'Event') || (object.class.to_s.eql? 'Bulletin') ||
-          (object.class.to_s.eql? 'Status')        
-          user.has_access_to?(object)
-        else
-          object.published? && user.has_access_to?(object)
-        end
+        user.can_read? object        
       end
-
+      
     end
   end
 

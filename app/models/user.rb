@@ -306,7 +306,19 @@ class User < ActiveRecord::Base
       end
     end
   end
-
+  
+  def can_read?(object)
+    if (object.class.to_s.eql? 'Folder') || (object.class.to_s.eql? 'Forum') ||
+       (object.class.to_s.eql? 'Topic') || (object.class.to_s.eql? 'SbPost') ||
+       (object.class.to_s.eql? 'Event') || (object.class.to_s.eql? 'Bulletin') ||
+       (object.class.to_s.eql? 'Status')        
+       
+      self.has_access_to?(object)
+    else
+      object.published? && self.has_access_to?(object)
+    end
+  end
+  
   def can_be_owner?(entity)
     self.admin? || self.space_admin?(entity.id) || self.teacher?(entity) || self.coordinator?(entity)
   end
