@@ -10,6 +10,9 @@ class Ability
     # Overall Read
     alias_action :vote, :rate, :more, :to => :read
 
+    # Overall View
+    alias_action :preview, :to => :view
+
     # Environment
     alias_action :admin_courses, :destroy_members, :to => :manage
 
@@ -35,11 +38,21 @@ class Ability
     alias_action :respond, :to => :read
     
     # User
-    alias_action :follows, :followers, :log, :welcome_complete, :list_subjects,:show_log_activity, :to => :read
-    alias_action :assume, :metro_area_update, :edit_account, :update_account, :edit_pro_details, :update_pro_details,
-                 :invite, :activate, :deactivate, :dashboard, :groups, :change_profile_photo, :crop_profile_photo,
-                 :upload_profile_photo, :activity_xml,:annotation ,:to => :manage
-                 
+    alias_action :follows, :followers, :log, :welcome_complete,
+      :list_subjects,:show_log_activity, :to => :read
+    alias_action :assume, :metro_area_update, :edit_account,
+      :update_account, :edit_pro_details, :update_pro_details,
+      :invite, :activate, :deactivate, :dashboard, :groups,
+      :change_profile_photo, :crop_profile_photo,
+      :upload_profile_photo, :activity_xml, :annotation ,
+      :to => :manage
+
+    # Lecture
+    alias_action :embed_content, :upload_video, :cancel, :unpublished,
+      :waiting, :to => :manage
+    alias_action :download_attachment, :rate, :sort_lesson,
+      :to => :read
+    alias_action :unpublished_preview, :to => :view
 
     # Todos podem ver o preview
     can :view, :all do |object|

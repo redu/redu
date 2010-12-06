@@ -5,8 +5,6 @@ class SpacesController < BaseController
   load_and_authorize_resource :space, :through => :environment, :shallow => true
 
   after_filter :create_activity, :only => [:create]
-  # Usado para proteger acoes perigosas (só para admin)
-
 
   def take_ownership
     @space.update_attribute(:owner, current_user)
@@ -402,7 +400,7 @@ class SpacesController < BaseController
 
     if @space
       @statuses = @space.recent_activity(0,10)
-			@bulletins = @space.bulletins.find(:all, :conditions => "state LIKE 'approved'", :order => "created_at DESC", :limit => 5)
+      @bulletins = @space.bulletins.find(:all, :conditions => "state LIKE 'approved'", :order => "created_at DESC", :limit => 5)
     end
 
     respond_to do |format|

@@ -1,6 +1,6 @@
 class FavoritesController < BaseController
-  before_filter :login_required
 
+  # Não precisa de permissão, pois ele vai ver os favoritos do current_user.
   def index
     @user = current_user
     respond_to do |format|
@@ -33,6 +33,13 @@ class FavoritesController < BaseController
   end
 
   def favorite
+     if (params[:id].to_i != 0) &&
+      ((params[:type].eql? 'Lecture') || (params[:type].eql? 'Exam') ||
+      (params[:type].eql? 'Status'))
+         favoritable = Kernel.const_get(params[:type]).find(params[:id])
+     end
+    authorize! :read, favoritable
+
     @favorite = current_user.add_favorite(params[:type], params[:id] )
     @favoritable_id = params[:id] if params[:id].to_i != 0 # Verificando para que não injetem código malicioso
 
@@ -67,6 +74,13 @@ class FavoritesController < BaseController
   end
 
   def not_favorite
+     if (params[:id].to_i != 0) &&
+      ((params[:type].eql? 'Lecture') || (params[:type].eql? 'Exam') ||
+      (params[:type].eql? 'Status'))
+         favoritable = Kernel.const_get(params[:type]).find(params[:id])
+     end
+    authorize! :read, favoritable
+
     @favorite = current_user.rm_favorite(params[:type], params[:id] )
     @favoritable_id = params[:id] if params[:id].to_i != 0 # Verificando para que não injetem código malicioso
 

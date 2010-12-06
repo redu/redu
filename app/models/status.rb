@@ -11,6 +11,7 @@ class Status < ActiveRecord::Base
   belongs_to :logeable, :polymorphic => true
   belongs_to :in_response_to, :polymorphic => true
   belongs_to :user
+  alias :owner :user
   has_many :statuses, :as => :in_response_to
 
   acts_as_taggable

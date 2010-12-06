@@ -1,20 +1,13 @@
 class LecturesController < BaseController
 
   include Viewable # atualiza o view_count
-  uses_tiny_mce(:options => AppConfig.advanced_mce_options, :only => [:new, :edit, :update, :create])
+  load_and_authorize_resource :lecture, :except => :index
 
   before_filter :login_required, :except => [:index]
-  before_filter :verify_access, :only => [:show]
   after_filter :create_activity, :only => [:create]
 
-  def verify_access
-    @lecture = Lecture.find(params[:id])
-    unless current_user.has_access_to? @lecture
-      flash[:notice] = "Você não tem acesso a esta aula"
-      #redirect_back_or_default lectures_path
-      redirect_to lectures_path
-    end
-  end
+  uses_tiny_mce(:options => AppConfig.advanced_mce_options,
+                :only => [:new, :edit, :update, :create])
 
   # adiciona um objeto embarcado (ex: scribd)
   def embed_content
@@ -96,6 +89,8 @@ class LecturesController < BaseController
   # GET /lectures
   # GET /lectures.xml
   def index
+    authorize! :read, @lecture.space
+
     cond = Caboose::EZ::Condition.new
     cond.append ["simple_category_id = ?", params[:category]] if params[:category]
     cond.append ["lectureable_type = ?", params[:type]] if params[:type]
@@ -570,10 +565,6 @@ class LecturesController < BaseController
       end
       format.js
     end
-  end
-
-  def notify
-    #TODO
   end
 
   protected

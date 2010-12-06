@@ -301,6 +301,8 @@ class User < ActiveRecord::Base
         self.get_association_with(entity.topic.forum.space).nil? ? false : true
       when 'Folder'
         self.get_association_with(entity.space).nil? ? false : true
+      when 'Status'
+        self.has_access_to? entity.statusable
       else
         return false
       end
