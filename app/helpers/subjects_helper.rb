@@ -1,15 +1,23 @@
 module SubjectsHelper
 
   # Adiciona novos campos dinamicamente
-  def link_to_add_fields(name, f, association)
+  def link_to_add_fields(name, f, association, tip=nil)
     new_object = f.object.class.reflect_on_association(association).klass.new
     fields = f.fields_for(association, new_object,
                           :child_index => "new_#{association}") do |builder|
         render(association.to_s.singularize + "_fields", :f => builder)
     end
+    if tip.nil?
     link_to_function(name,
                      h("add_fields(this, \"#{association}\"," + \
-                       "\"#{escape_javascript(fields)}\")"))
+                       "\"#{escape_javascript(fields)}\")") )
+    else
+    link_to_function(name,
+                     h("add_fields(this, \"#{association}\"," + \
+                       "\"#{escape_javascript(fields)}\")"),
+                    :class => "tooltipable",
+                    :title => tip)
+    end
   end
 
   def existent_spaces

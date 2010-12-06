@@ -1,9 +1,11 @@
 <% field_set_tag "Recurso", :class => "fields lazy-assets" do %>
   <div class="existent">
     <%= f.radio_button :existent, false, :class => "new" %>
-    <%= f.label :existent, "Novo", :class => "inline" %>
+    <%= f.label :existent, "Novo", :class => "inline tooltipable",
+          :title => "Será criada posteriormente" %>
     <%= f.radio_button :existent, true, :class => "exist"%>
-    <%= f.label :existent, "Existente", :class => "inline" %>
+    <%= f.label :existent, "Existente", :class => "inline tooltipable",
+          :title => "Copiar aula de outro módulo" %>
   </div>
   <div class="hide new-form">
     <%= f.label :name, "Nome" %>
@@ -11,13 +13,16 @@
 
     <% field_set_tag  "Tipo" do%>
       <%= f.radio_button :lazy_type, "Page" %>
-      <%= f.label :lazy_type, "Página Simples", :class => "inline" %>
-      <%= f.radio_button :lazy_type, "InteractiveClass" %>
-      <%= f.label :lazy_type, "Aula passo-a-passo", :class => "inline" %>
+      <%= f.label :lazy_type, "Página Simples", :class => "inline tooltipable",
+            :title => "Conteúdo de leitura rápida como um tutorial ou uma página simples" %>
+      <%# f.radio_button :lazy_type, "InteractiveClass" %>
+      <%# f.label :lazy_type, "Aula passo-a-passo", :class => "inline" %>
       <%= f.radio_button :lazy_type, "Seminar" %>
-      <%= f.label :lazy_type, "Vídeo-aula", :class => "inline" %>
+      <%= f.label :lazy_type, "Vídeo-aula", :class => "inline tooltipable",
+            :title => "Aula multimídia, podendo ser vídeo, aúdio ou slides."%>
       <%= f.radio_button :lazy_type, "Exam" %>
-      <%= f.label :lazy_type, "Exame Simples", :class => "inline" %>
+      <%= f.label :lazy_type, "Exame Simples", :class => "inline tooltipable", 
+            :title => "Simulado com questões de multipla escolha"%>
     <% end %>
   </div>
 
