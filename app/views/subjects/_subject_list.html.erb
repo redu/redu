@@ -1,5 +1,5 @@
 <% if @subjects && @subjects.size > 0 %>
-  <ul class="default">
+  <ul class="default subjects">
     <%= render :partial => 'subjects/item', :collection => @subjects, :as => :subject %>
   </ul>
 <% else %>

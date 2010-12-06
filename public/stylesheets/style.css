@@ -498,6 +498,7 @@ ul.subject-assets > li .headlines {
   float: left;
   width: 500px;
 }
+
 ul.subject-assets > li .index {
   float: left;
   padding: 50px 20px;
@@ -505,6 +506,29 @@ ul.subject-assets > li .index {
   font-weight: bold;
   color: #D6D4D4;
 }
+
+ul.subjects > li .headlines {
+  float: left;
+  margin: 5px 10px;
+  width: 60%;
+}
+
+
+ul.subjects > li .progress {
+  float: right;
+  position: absolute;
+  width: 180px;
+  top: 20px;
+  right: 10px;
+}
+
+ul.subjects > li .progress strong {
+  display: block;
+  font-size: .8em;
+  color: gray;
+  margin-bottom: 10px;
+}
+
 ul.pagination {
   margin-top: 30px;
   height: 50px;

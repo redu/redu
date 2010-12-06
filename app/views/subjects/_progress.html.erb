@@ -1,4 +1,4 @@
-<% profile = current_user.profile_for(@subject) %>
+<% profile = current_user.profile_for(subject) %>
 <% unless profile.nil? %>
 <div class="progress-bar">
   <span class="complete" style="width: <%= profile.grade %>%">

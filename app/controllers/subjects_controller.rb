@@ -8,7 +8,6 @@ class SubjectsController < BaseController
   uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit, :create, :update])
 
   def index
-    @space = Space.find(params[:space_id])
     cond = Caboose::EZ::Condition.new
 
     paginating_params = {
@@ -21,7 +20,7 @@ class SubjectsController < BaseController
     if params[:search] # search cursos da escola
       @subjects = @space.subjects.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
     else
-      @subjects = @space.subjects.paginate(paginating_params)
+      @subjects = @space.subjects.published.paginate(paginating_params)
     end
 
     respond_to do |format|
@@ -29,13 +28,9 @@ class SubjectsController < BaseController
       format.xml  { render :xml => @subjects }
 
       format.js  do
-        if params[:space_content]
-          render :update do |page|
-            page.replace_html  'content_list', :partial => 'subject_list'
-            page << "$('#spinner').hide()"
-          end
-        else
-          render :index
+        render :update do |page|
+          page.replace_html 'tabs-2-content', :partial => 'subject_list'
+          page << "$('#spinner').hide()"
         end
       end
     end

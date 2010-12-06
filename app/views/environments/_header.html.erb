@@ -99,7 +99,8 @@
          </div>
          <div class="grid_16 alpha omgea">
            <div class="grid_3 push_13 alpha progress">
-             <%= render :partial => 'subjects/progress' %>
+             <%= render :partial => 'subjects/progress',
+               :locals => {:subject => @subject} %>
            </div>
          </div>
        </div><!-- /end grid_16 acoes gerais -->
