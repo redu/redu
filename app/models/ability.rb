@@ -38,13 +38,13 @@ class Ability
     alias_action :respond, :to => :read
 
     # User
-    alias_action :follows, :followers, :log, :welcome_complete,
-      :list_subjects,:show_log_activity, :to => :read
+    alias_action :follows, :learning, :followers, :teaching, :show_log_activity, :log, :welcome_complete, :list_subjects, :show_log_activity, :activity_xml, :download_curriculum, :to => :read
+
     alias_action :assume, :metro_area_update, :edit_account,
       :update_account, :edit_pro_details, :update_pro_details,
-      :invite, :activate, :deactivate, :dashboard, :groups,
+      :invite, :activate, :deactivate, :groups, :statistics,
       :change_profile_photo, :crop_profile_photo,
-      :upload_profile_photo, :activity_xml, :annotation ,
+      :upload_profile_photo, :activity_xml, :annotations, :activate, :deactivate,
       :to => :manage
 
     # Lecture
@@ -59,11 +59,8 @@ class Ability
 
     # Subject
     alias_action :lazy, :cancel, :edit_resources, :update_resources, :change_assets_order, :to => :manage
-
-    alias_action :statuses, :to => :read
+    alias_action :statuses, :next, :previous, :attend, :to => :read
     alias_action :infos, :enroll, :to => :preview
-
-    alias_action :next, :previous, :attend, :to => :read
 
     # Todos podem ver o preview
     can :view, :all do |object|
@@ -87,6 +84,10 @@ class Ability
 
       can :create, Environment
       can :join, Course
+
+      # User
+      can :follow, User
+      can :read, User
 
       # Subject
       can :preview, Subject do |subject|

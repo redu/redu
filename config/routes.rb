@@ -170,7 +170,6 @@ ActionController::Routing::Routes.draw do |map|
     :invite => :get,
     :welcome_complete => :get,
     :statistics => :any,
-    :activity_xml => :get,
     :learning => :get,
     :teaching => :get,
     :deactivate => :put,

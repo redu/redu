@@ -4,23 +4,10 @@ class UsersController < BaseController
   uses_tiny_mce(:options => AppConfig.default_mce_options.merge({:editor_selector => "rich_text_editor"}),
                 :only => [:create, :update, :edit, :create])
 
-  # Filters
-  if AppConfig.closed_beta_mode
-    skip_before_filter :beta_login_required, :only => [:new, :create, :activate]
-  end
   after_filter :create_activity, :only => [:update]
-  
-  before_filter :find_user, :only => [:activity, :edit, :show, :update, :destroy, :statistics, :deactivate,
-    :crop_profile_photo, :upload_profile_photo ]
 
-  load_resource :except => [:annotations, :show_log_activity,
-    :list_subjects, :logs, :activate, :dashboard, :show,
-    :update, :statistics, :edit, :destroy, :crop_profile_photo,
-    :upload_profile_photo, :edit_account, :update_account,
-    :welcome_complete, :forgot_password, :forgot_username,
-    :resend_activation, :assume, :metro_area_update, :activity_xml]
-                            
-  authorize_resource
+  load_and_authorize_resource :except => [:forgot_password,
+    :forgot_username, :resend_activation]
 
   def annotations
     @annotations = User.find(params[:id]).annotations
@@ -35,8 +22,6 @@ class UsersController < BaseController
   end
 
   def learning
-    #@user = User.find(params[:id]) #TODO performance routes (passar parametro direto para query)
-
     respond_to do |format|
       format.js do
         render :update do |page|
@@ -47,7 +32,6 @@ class UsersController < BaseController
   end
 
   def teaching
-    #@user = User.find(params[:id]) #TODO performance routes (passar parametro direto para query)
     @lectures = @user.lectures[0..5] # TODO limitar pela query (limit = 5)
     @exams = @user.exams[0..5]
 
@@ -66,7 +50,6 @@ class UsersController < BaseController
 
   ### Followship
   def follows
-    #@user = User.find(params[:id])
     @follows= @user.follows
 
     respond_to do |format|
@@ -86,10 +69,9 @@ class UsersController < BaseController
   end
 
   def follow # TODO evitar duplicata
-    #user = User.find(params[:id])
     respond_to do |format|
-      unless user.followers.include?(current_user)
-        user.followers << current_user
+      unless @user.followers.include?(current_user)
+        @user.followers << current_user
         format.js
       end
     end
@@ -98,10 +80,10 @@ class UsersController < BaseController
   def unfollow
     #user = User.find(params[:id])
 
-    user.followers.delete current_user
+    @user.followers.delete current_user
     respond_to do |format|
       format.html do
-        redirect_to user_path(user)
+        redirect_to user_path(@user)
       end
       format.js
     end
@@ -152,11 +134,6 @@ class UsersController < BaseController
                              setup_metro_areas_for_cloud
   end
 
-  def dashboard
-    @user = current_user
-    @recommended_posts = @user.recommended_posts
-  end
-
   def show
     if @user.removed
       redirect_to removed_page_path and return
@@ -177,7 +154,6 @@ class UsersController < BaseController
   end
 
   def groups
-    #@user = User.find(params[:id])
     @groups = @user.spaces.find(:all, :select => "name, path")
   end
 
@@ -383,11 +359,9 @@ class UsersController < BaseController
   end
 
   def edit_pro_details
-    #@user = User.find(params[:id])
   end
 
   def update_pro_details
-    #@user = User.find(params[:id])
     @user.add_offerings(params[:offerings]) if params[:offerings]
     @user.attributes = params[:user]
 
@@ -408,13 +382,11 @@ class UsersController < BaseController
   end
 
   def signup_completed
-    #@user = User.find(params[:id])
     redirect_to home_path and return unless @user
     render :action => 'signup_completed'
   end
 
   def invite
-    #@user = User.find(params[:id])
   end
 
   def welcome_complete
@@ -518,7 +490,6 @@ class UsersController < BaseController
   end
 
   def activity_xml
-
     # talvez seja necessario setar o atributo depth nos nós para que funcione corretamente.
     # ver: http://asterisq.com/products/constellation/roamer/integration#data_rest_tree
 
@@ -531,7 +502,6 @@ class UsersController < BaseController
 
   # Faz download do currículo previamente guardado pelo usuário.
   def download_curriculum
-
     f = @user.curriculum
     if Rails.env == "production"
       redirect_to f.s3.interface.get_link(f.s3_bucket.to_s, f.path, 20.seconds) and return false
