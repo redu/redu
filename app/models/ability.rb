@@ -36,7 +36,7 @@ class Ability
 
     # Status
     alias_action :respond, :to => :read
-    
+
     # User
     alias_action :follows, :followers, :log, :welcome_complete,
       :list_subjects,:show_log_activity, :to => :read
@@ -69,12 +69,11 @@ class Ability
       can :manage, :all do |object|
         user.can_manage? object
       end
-      
+
       # Usuário normal
       can :read, :all do |object|
-        user.can_read? object        
+        user.can_read? object
       end
-      
     end
   end
 
