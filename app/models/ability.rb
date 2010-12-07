@@ -54,6 +54,9 @@ class Ability
       :to => :read
     alias_action :unpublished_preview, :to => :view
 
+    # Message
+    alias_action :delete_selected, :more, :to => :manage
+
     # Todos podem ver o preview
     can :view, :all do |object|
       object.published?
