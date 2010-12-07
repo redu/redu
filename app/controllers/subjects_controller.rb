@@ -47,6 +47,7 @@ class SubjectsController < BaseController
     end
   end
 
+  # Finalização da criação (LazyAssets com existent == false)
   def lazy
     respond_to do |format|
       format.html
@@ -109,6 +110,7 @@ class SubjectsController < BaseController
     end
   end
 
+  # Cancela wizard (limpando sessão)
   def cancel
     session[:subject_step] = session[:subject_params]= session[:subject_id]= nil
     redirect_to space_path(@space)
@@ -118,6 +120,7 @@ class SubjectsController < BaseController
     session[:subject_params] ||= {}
   end
 
+  #TODO edita os LazyAssets
   def edit_resources
     session[:subject_params] ||= {}
   end
@@ -137,6 +140,7 @@ class SubjectsController < BaseController
     end
   end
 
+  #TODO Edição dos resources
   def update_resources
     # Evita que ao dar refresh vá para o proximo passo.
     @subject.current_step = "subject"
@@ -255,7 +259,6 @@ class SubjectsController < BaseController
 
   # Página com as informações do Subject.
   def infos
-   @subject = Subject.find(params[:id])
   end
 
   # Mural do Subject
