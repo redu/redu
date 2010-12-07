@@ -1,9 +1,9 @@
 class AnnotationsController < BaseController
-	load_and_authorize_resource
+  load_and_authorize_resource :annotation
 
   def create
+    authorize! :read, @annotation.lecture
     if @annotation.save
-      #flash.now[:notice] = "Anotação salva!"
       respond_to do |format|
         format.js
       end
@@ -16,7 +16,6 @@ class AnnotationsController < BaseController
   end
 
   def update
-    
     respond_to do |format|
       if @annotation.update_attributes(params[:annotation])
 
