@@ -77,9 +77,7 @@ ActionController::Routing::Routes.draw do |map|
 
   # SCHOOL
   map.resources :spaces, :member => {
-    :join => :get,
     :vote => :post,
-    :unjoin => :get,
     :manage => :get,
     :admin_members => :get,
     :admin_bulletins => :get,
@@ -88,7 +86,6 @@ ActionController::Routing::Routes.draw do |map|
     :members => :get,
     :teachers => :get,
     :take_ownership => :get,
-    :remove_asset => :get,
     :publish => :get,
     :unpublish => :get
   },

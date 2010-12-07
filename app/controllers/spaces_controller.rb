@@ -1,8 +1,16 @@
 class SpacesController < BaseController
   layout 'environment'
 
-  load_and_authorize_resource :environment
-  load_and_authorize_resource :space, :through => :environment, :shallow => true
+  # Necessário pois Space não é nested route de course
+  before_filter :find_space_course_environment,
+    :except => [:create, :cancel]
+
+  load_and_authorize_resource :environment,
+    :except => [:create, :cancel]
+  load_and_authorize_resource :course, :through => :environment,
+    :except => [:create, :cancel]
+  load_and_authorize_resource :space, :through => :course,
+    :except => [:create, :cancel]
 
   after_filter :create_activity, :only => [:create]
 
@@ -30,77 +38,7 @@ class SpacesController < BaseController
     redirect_to look_and_feel_space_path
   end
 
-  ##  Admin actions
-  def new_space_admin
-    @user_space_association = UserSpaceAssociation.new
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @space }
-    end
-  end
-
-  ### Space Admin actions
-  #TODO remover
-  def invalidate_keys(access_key) # 'troca' um conjunto de chaves
-  end
-
-  #TODO remover
-  def join
-    @association = UserSpaceAssociation.new
-    @association.user = current_user
-    @association.space = @space
-
-    case @space.subscription_type
-
-    when 1 # anyone can join
-      @association.status = "approved"
-
-      if @association.save
-        flash[:notice] = "Você está participando do espaço agora!"
-      end
-
-    when 2 # moderated
-      @association.status = "pending"
-
-      if @association.save
-        flash[:notice] = "Seu pedido de participação está sendo moderado pelos administradores do espaço."
-        UserNotifier.deliver_pending_membership(current_user, @space) # TODO fazer isso em batc
-      end
-    end
-
-    respond_to do |format|
-      format.html { redirect_to(@space) }
-    end
-  end
-
-  #TODO remover
-  def unjoin
-    @association = UserSpaceAssociation.find(:first, :conditions => ["user_id = ? AND space_id = ?",current_user.id, @space.id ])
-
-    if @association.destroy
-      flash[:notice] = "Você saiu do espaço"
-    end
-
-    respond_to do |format|
-      format.html { redirect_to(@space) }
-    end
-  end
-
   def manage
-  end
-
-  # Modercacao
-  def admin_requests
-    # TODO colocar a consulta a seguir como um atributo de space (como em space.teachers)
-    @pending_members = UserSpaceAssociation.paginate(:conditions => ["user_space_associations.status like 'pending' AND space_id = ?", @space.id],
-                                                      :page => params[:page],
-                                                      :order => 'updated_at DESC',
-                                                      :per_page => AppConfig.items_per_page)
-
-    respond_to do |format|
-      format.html #{ render :action => "my" }
-    end
   end
 
   def admin_members
@@ -156,56 +94,6 @@ class SpacesController < BaseController
      respond_to do |format|
       format.html
      end
-  end
-
-  def moderate_requests
-    approved = params[:member].reject{|k,v| v == 'reject'}
-    rejected = params[:member].reject{|k,v| v == 'approve'}
-
-    #atualiza status da associacao
-    approved.keys.each do |user_id|
-      UserSpaceAssociation.update_all("status = 'approved'", :user_id => user_id,  :space_id => @space.id)
-    end
-
-    rejected.keys.each do |user_id|
-      UserSpaceAssociation.update_all("status = 'disaproved'", :user_id => user_id,  :space_id => @space.id)
-    end
-
-    #pega usuários para enviar emails
-    @approved_members = User.all(:conditions => ["id IN (?)", approved.keys]) unless approved.empty?
-    @rejected_members = User.all(:conditions => ["id IN (?)", rejected.keys]) unless rejected.empty?
-
-    if @approved_members
-      for member in @approved_members
-        #UserNotifier.deliver_approve_membership(member, @space) # TODO fazer isso em batch
-      end
-    end
-
-    flash[:notice] = 'Solicitacões moderadas!'
-    redirect_to admin_requests_space_path(@space)
-  end
-
-  #TODO remove
-  def moderate_members
-    case params[:submission_type]
-    when '0' # remove selected
-      @removed_users = User.all(:conditions => ["id IN (?)", params[:users].join(',')]) unless params[:users].empty?
-
-      # TODO destroy_all ou delete_all?
-      UserSpaceAssociation.delete_all(["user_id IN (?) AND space_id = ?", params[:users].join(','), @space.id])
-
-
-      for user in @removed_users # TODO fazer um remove all?
-        UserNotifier.deliver_remove_membership(user, @space) # TODO fazer isso em batch
-      end
-    when '1' # moderate roles
-      UserSpaceAssociation.update_all(["role_id = ?", params[:role_id]],
-                                       ["status like 'approved' AND space_id = ? AND user_id IN (?)", @space.id, params[:users].join(',') ])  if params[:role_id]
-
-      # TODO enviar emails para usuários dizendo que foram promovidos?
-    end
-    flash[:notice] = 'Usuários moderados!'
-    redirect_to admin_members_space_path
   end
 
   def search_users_admin
@@ -267,42 +155,6 @@ class SpacesController < BaseController
     end
 
     redirect_to admin_events_space_path(@space)
-  end
-
-  # usuário entra na rede
-  #TODO remove
-  def associate
-    @user = User.find(params[:user_id])  # TODO precisa mesmo recuperar o usuário no bd?
-    @user_space_association = UserSpaceAssociation.find(:first, :include => :access_key, :conditions => ["access_keys.key = ?", params[:user_key]])
-
-    #TODO case?
-    if @user_space_association
-      if @user_space_association.access_key.expiration_date.to_time < Time.now # verifica a data da validade da chave
-        if @space &&  @user_space_association.space == @space
-          if @user && !@user_space_association.user # cada chave só poderá ser usada uma vez, sem troca de aluno
-            @user_space_association.user = @user
-
-            if @user_space_association.save
-              flash[:notice] = 'Usuário associado à escola!'
-            else
-              flash[:notice] = 'Associação à escola falhou'
-            end
-          else
-            flash[:notice] = 'Essa chave já está em uso'
-          end
-        else
-          flash[:notice] = 'Essa chave pertence à outra escola'
-        end
-      else
-        flash[:notice] = 'O prazo de validade desta chave expirou. Contate o administrador da sua escola.'
-      end
-    else
-      flash[:notice] = 'Chave inválida'
-    end
-
-    respond_to do |format|
-      format.html { redirect_to(@space) }
-    end
   end
 
   # lista redes das quais o usuário corrente é membro
@@ -531,6 +383,16 @@ class SpacesController < BaseController
   end
 
   protected
+
+  def find_space_course_environment
+    if params.has_key?(:id)
+      @space = Space.find(params[:id])
+    end
+
+    # No SpaceController#new o course_id é passado como param
+    @course = @space.nil? ? Course.find(params[:course_id]) : @space.course
+    @environment = @course.environment
+  end
 
   def can_be_owner_required
     current_user.can_be_owner?(@space) ? true : access_denied

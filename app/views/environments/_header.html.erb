@@ -31,6 +31,11 @@
 
      <div class="dropdown name grid_11 alpha">
        <h3><%= link_to environment.name, environment_path(environment) %><%= image_tag "btn-tit-environment.png", :class => "current" %></h3>
+       <% if can? :manage, environment %>
+       <span class="edit">
+         <%= link_to "Gerenciar", edit_environment_path(environment) %>
+       </span>
+       <% end %>
        <div class="dropdown-university">
          <ul>
            <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
@@ -49,6 +54,17 @@
              <%= link_to course.name + " > " , environment_course_path(environment, course) %> <%= link_to space.name , space_path(space) %>
              <%= image_tag "btn-subtit-environment.png", :class => 'current' %>
            </h4>
+           <% if can? :manage, course %>
+             <span class="edit">
+               <%= link_to "Gerenciar curso",
+                 edit_environment_course_path(environment, course) %>
+             </span>
+           <% end %>
+           <% if can? :manage, space %>
+             <span class="edit">
+               <%= link_to "Gerenciar espaço", edit_space_path(space) %>
+             </span>
+           <% end %>
            <div class="dropdown-university">
              <ul>
                <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
@@ -66,6 +82,12 @@
              <%= link_to course.name , environment_course_path(environment, course) %>
              <%= image_tag "btn-subtit-environment.png", :class => 'current' %>
            </h4>
+           <% if can? :manage, course %>
+             <span class="edit">
+               <%= link_to "Gerenciar curso",
+                 edit_environment_course_path(environment, course) %>
+             </span>
+           <% end %>
            <div class="dropdown-university">
              <ul>
                <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
@@ -78,6 +100,11 @@
            </div>
          </div>
        <% end %>
+     <% end %>
+     <% if course && !course.new_record? && !course.published? %>
+       <div class="grid_16">
+         <div class="box_notice">O curso <strong><%= course.name %></strong> ainda não foi publicado. <%= link_to "Clique aqui", publish_environment_course_path(@environment, @course) %> para publicá-lo</div>
+       </div>
      <% end %>
      <% if @subject && !@subject.new_record? %>
        <div class="grid_16 alpha omega " id="subject-header">

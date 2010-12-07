@@ -21,7 +21,7 @@ class Ability
     alias_action :unjoin, :to => :read
 
     # Space
-    alias_action :admin_requests, :admin_events, :moderate_bulletins, :moderate_events, :moderate_requests, :look_and_feel, :set_theme, :new_space_admin, :to => :manage
+    alias_action :admin_events, :moderate_bulletins, :moderate_events, :look_and_feel, :set_theme, :new_space_admin, :to => :manage
     #TODO action manage gerando recursividade
 
     # Folder
@@ -62,8 +62,10 @@ class Ability
       object.published?
     end
 
-    can :create, Environment
+    # Todos podem criar usuários
+    can :create, User
 
+    # Usuários logados podem
     unless user.nil?
       # Gerencial
       can :manage, :all do |object|
@@ -73,6 +75,15 @@ class Ability
       # Usuário normal
       can :read, :all do |object|
         user.can_read? object
+      end
+
+      can :create, Environment
+      can :join, Course
+
+      # Admin do environment ou teacher, caso o space não tenha owner
+      can :take_ownership, Space do |space|
+        user.can_manage?(space.course.environment) || \
+          (space.owner.nil? && user.teacher?(space))
       end
     end
   end
