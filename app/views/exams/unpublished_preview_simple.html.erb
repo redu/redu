@@ -123,7 +123,7 @@ function decreaseFontSize(){
     <div id="item_video" class="clearfix">
       <div id="title_video">
         <%= @lecture.name %>
-        <% if @lecture.can_be_deleted_by(current_user) %>
+        <% if can? :manage, @lecture %>
           <%= link_to 'Editar', {:action => "edit"}, :class => "button icon-edit" %>
           <%= link_to 'Remover', @lecture, {:confirm => 'Você tem certeza que quer remover esta aula permanentemente?', :method => :delete, :class => "button icon-delete"} %>
         <% end %>

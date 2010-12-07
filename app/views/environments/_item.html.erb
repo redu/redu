@@ -1,4 +1,6 @@
 <li>
   <%= link_to item.name, environment_path(item) %>
-  <%= link_to "Editar", edit_environment_path(item) %>
+  <% if can? :manage, item %>
+    <%= link_to "Editar", edit_environment_path(item) %>
+  <% end %>
 </li>
