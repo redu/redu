@@ -1,5 +1,9 @@
 <li class="clearfix">
-  <%= link_to subject.title, space_subject_path(@space, item), :class => "name"  %>
+  <% if current_user.has_access_to?(item) %>
+    <%= link_to subject.title, space_subject_path(@space, item), :class => "name"  %>
+  <% else %>
+    <%= link_to subject.title, infos_space_subject_path(@space, item), :class => "name"  %>
+  <% end %>
   <div class="headlines">
     <span class="things">
       <%= truncate_words( subject.description, 10, '...') %>
@@ -22,7 +26,7 @@
       <% end %>
     </ul>
   </div>
-  <% if current_user.enrolled?(item) %>
+  <% if current_user.has_access_to?(item) %>
   <div class="progress">
     <strong>Seu progresso</strong>
     <%= render :partial => "progress", :locals => {:subject => item} %>

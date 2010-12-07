@@ -1,4 +1,8 @@
 <div class="grid_5 omega sidebar">
+   <% if @subject.published? && !current_user.member?(@subject) %>
+     <%= link_to "Matricule-se", enroll_space_subject_path(@space, @subject),
+       :class => "button" %>
+   <% end %>
   <ul class="sortable">
     <li class="clearfix">
       <span class="call"><span>Palavras-chave</span></span>

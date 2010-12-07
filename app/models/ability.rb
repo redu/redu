@@ -57,6 +57,14 @@ class Ability
     # Message
     alias_action :delete_selected, :more, :to => :manage
 
+    # Subject
+    alias_action :lazy, :cancel, :edit_resources, :update_resources, :change_assets_order, :to => :manage
+
+    alias_action :statuses, :to => :read
+    alias_action :infos, :enroll, :to => :preview
+
+    alias_action :next, :previous, :attend, :to => :read
+
     # Todos podem ver o preview
     can :view, :all do |object|
       object.published?
@@ -79,6 +87,14 @@ class Ability
 
       can :create, Environment
       can :join, Course
+
+      # Subject
+      can :preview, Subject do |subject|
+        subject.published? && user.has_access_to?(subject.space)
+      end
+      can :unenroll, Subject do |subject|
+        subject.published? && user.has_access_to?(subject)
+      end
 
       # Admin do environment ou teacher, caso o space não tenha owner
       can :take_ownership, Space do |space|

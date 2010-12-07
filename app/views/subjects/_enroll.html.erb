@@ -1,4 +1,4 @@
-<% if @subject.published? && !current_user.enrolled?(@subject)  %>
+<% if @subject.published? && !current_user.has_access_to?(@subject)  %>
   <%= link_to "Matricule-se", enroll_space_subject_path(@space, @subject),
       :class => "button" %>
 <% end %>
