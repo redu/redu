@@ -329,6 +329,14 @@ class User < ActiveRecord::Base
     end
   end
 
+  def follow?(user)
+    self.follows.include?(user)
+  end
+
+  def followed_by?(user)
+    self.followers.include?(user)
+  end
+
   def can_be_owner?(entity)
     self.admin? || self.space_admin?(entity.id) || self.teacher?(entity) || self.coordinator?(entity)
   end
