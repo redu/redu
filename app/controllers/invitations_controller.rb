@@ -25,6 +25,8 @@ class InvitationsController < BaseController
     @user = current_user
     @inviteable = find_inviteable
 
+    authorize! :manage, @inviteable
+
     @invitation = Invitation.new(params[:invitation])
     @invitation.user = @user
     @invitation.inviteable = @inviteable
