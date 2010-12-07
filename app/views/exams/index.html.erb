@@ -13,18 +13,18 @@ function loadList(){
 }
 /* pega os filtros selecionados e passa-os como parametro */
 function getParameters(){
-	
+
 	return ''
-	
+
 	var params = ''
 	jQuery('.selected').each(function(i) {
 		var id = $(this).attr('id').split('_')
 		if (id[1] != 'all' && typeof(id[0]) != 'undefined' && typeof(id[1]) != 'undefined') {
 			if (id[0] == 'cat') id[0] = 'category';
-			
+
 			params += id[0] + '=' + id[1];
 		}
-		
+
 	})
 	alert(params)
 	return params;
@@ -61,32 +61,32 @@ function getParameters(){
 		<li id ="cat_all" class="selected">
 			<%= link_to_remote "Todas", :url => {:action => :index}, :loading => "select('cat','all')", :method => :get%>
 		</li>
-		
+
 		<% for category in SimpleCategory.all do %>
 		<li id = "cat_<%=category.id%>">
 			<%= link_to_remote category_i18n(category.name), :url => {:action => :index, :category => category.id}, :loading => "select('cat','"+category.id.to_s+"')", :with => "getParameters()",:method => :get%>
 		</li>
 		<% end %>
-		
+
 	</ul>
 	<% end %>
 	</form>
-	
-	
-	
-	
+
+
+
+
 		<form>
 	<% field_set_tag "Ordem" do %>
 	<ul class="criteriaList">
-		
+
 		<li id = "sort_recent" class="selected">
 			<%= link_to_remote "Mais recentes", :url => {:action => :index, :sort => 'updated_at'}, :loading => "select('sort','recent')", :method => :get%>
 		</li>
-		
+
 		<li id = "sort_done">
 			<%= link_to_remote "Mais realizados", :url => {:action => :index, :sort => 'done_count'}, :loading => "select('sort','done')", :method => :get%>
 		</li>
-		
+
 		<li id = "sort_average">
 			<%= link_to_remote "Mais difíceis", :url => {:action => :index, :sort => 'total_correct'}, :loading => "select('sort','average')", :method => :get%>
 		</li>
@@ -96,22 +96,23 @@ function getParameters(){
 </div>
 
 <span class="grid_12 filter_bar">
-	<span class="filter_text">
-		<%= (params[:search]) ? ("Resultados para: \""+params[:search]+"\"") : "Todas os exames mais recentes" %>
-	</span>
-	
-		<% form_tag exams_path, :method => :get do %>
-		Buscar 
-		<%= text_field_tag :search, params[:search] %>
-		<%# hidden_field_tag(:space_id, @space.id) if @space%>
-		<%= submit_tag "OK", :name => nil%>
-		<% end %>
+  <span class="filter_text">
+    <%= (params[:search]) ? ("Resultados para: \""+params[:search]+"\"") : "Todas os exames mais recentes" %>
+  </span>
+
+  <% form_tag space_subject_exams_path(@space, @subject),
+    :method => :get do %>
+    Buscar
+    <%= text_field_tag :search, params[:search] %>
+    <%# hidden_field_tag(:space_id, @space.id) if @space%>
+    <%= submit_tag "OK", :name => nil%>
+  <% end %>
 
 </span>
 
 <%= image_tag "loadingAnimation.gif", :id => "loader", :style => "display: none"%>
 <div id="exam_list" class="grid_12">
-	
+
 	<%= render :partial => "exam_list"%>
 </div>
 

@@ -54,6 +54,13 @@ class Ability
       :to => :read
     alias_action :unpublished_preview, :to => :view
 
+    # Exam
+    alias_action :cancel, :add_question, :remove_question, :sort_question,
+      :questions_database, :unpublished, :unpublished_preview,
+      :to => :manage
+    alias_action :results, :answer, :compute_results, :search, :published,
+      :get_query, :review_question, :to => :read
+
     # Message
     alias_action :delete_selected, :more, :to => :manage
 
