@@ -1,18 +1,18 @@
 class StatusesController < BaseController
-  #before_filter :login_required
-  load_resource :except => [:more, :index]
-  #TODO colocar subject, quando estiver pronto e verificar se exam tem algum status
-  authorize_resource :status, :through => [:space, :user, :environment, :lecture]
+
+  load_and_authorize_resource :status, :except => [:create, :more]
 
   def create
-    #@status = Status.new(params[:status])
+    @status = Status.new(params[:status])
+    authorize! :read, @status.statusable
+
     @status.user = current_user
 
     respond_to do |format|
       if @status.save
         format.html { redirect_to :back }
         format.xml { render :xml => @status.to_xml }
-        format.js 
+        format.js
       else
         format.html {
           flash[:statuses_errors] = @status.errors.full_messages.to_sentence
@@ -25,7 +25,7 @@ class StatusesController < BaseController
   end
 
   def respond
-    #responds_to = Status.find(params[:id])
+    responds_to = Status.find(params[:id])
     @status = Status.new(params[:status])
     @status.in_response_to = responds_to
     @status.user = current_user
@@ -48,6 +48,8 @@ class StatusesController < BaseController
       @statusable = Subject.find(params[:id])
     end
 
+    authorize! :read, @statusable
+
     @statuses = @statusable.recent_activity(params[:offset], params[:limit])
     respond_to do |format|
       if @statuses.length < params[:limit].to_i
@@ -58,19 +60,8 @@ class StatusesController < BaseController
     end
   end
 
-  def new
-    #@status = Status.new
-  end
-
-  def index
-    @statuses = Status.group_statuses(Space.find(1))
-  end
-
   def destroy
     #TODO
   end
 
-  def show
-    #@status = Status.find(params[:id])
-  end
 end
