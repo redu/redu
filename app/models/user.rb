@@ -242,10 +242,6 @@ class User < ActiveRecord::Base
     (self.first_name and self.last_name and self.gender and self.description and self.tags)
   end
 
-  def enrolled? subject
-    Enrollment.count(:conditions => {:user_id => self, :subject_id => subject}) > 0
-  end
-
   def can_manage?(entity)
     entity.nil? and return false
     self.admin? and return true
@@ -316,6 +312,8 @@ class User < ActiveRecord::Base
     end
   end
 
+  # Método de alto nível, verifica se o object está publicado (caso se aplique)
+  # e se o usuário possui acesso (i.e. relacionamento) com o mesmo
   def can_read?(object)
     if (object.class.to_s.eql? 'Folder') || (object.class.to_s.eql? 'Forum') ||
        (object.class.to_s.eql? 'Topic') || (object.class.to_s.eql? 'SbPost') ||
@@ -576,22 +574,23 @@ class User < ActiveRecord::Base
 
   end
 
+  # Pega associação com Entity (aplica-se a Environment, Course, Space e Subject)
   def get_association_with(entity)
     return false unless entity
 
     case entity.class.to_s
     when 'Space'
-      association = UserSpaceAssociation.find(:first, :conditions => ['user_id = ? ' + \
-                                              'AND space_id = ?',
-                                              self.id, entity.id])
+      association = UserSpaceAssociation.find(:first,
+        :conditions => ['user_id = ? AND space_id = ?', self.id, entity.id])
     when 'Course'
-      association = UserCourseAssociation.find(:first, :conditions => ['user_id = ? ' + \
-                                               'AND course_id = ?',
-                                               self.id, entity.id])
+      association = UserCourseAssociation.find(:first,
+        :conditions => ['user_id = ? AND course_id = ?', self.id, entity.id])
     when 'Environment'
-      association = UserEnvironmentAssociation.find(:first, :conditions => ['user_id = ? ' + \
-                                                    'AND environment_id = ?',
-                                                    self.id, entity.id])
+      association = UserEnvironmentAssociation.find(:first,
+        :conditions => ['user_id = ? AND environment_id = ?', self.id, entity.id])
+    when 'Subject'
+      association = Enrollment.find(:first,
+        :conditions => ['user_id = ? AND subject_id = ?', self.id, entity.id])
     end
   end
 
