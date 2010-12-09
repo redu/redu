@@ -11,6 +11,11 @@ class SubjectsController < BaseController
 
   uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit, :create, :update])
 
+  rescue_from CanCan::AccessDenied do |exception|
+    flash[:notice] = "Você não tem acesso a essa página"
+    redirect_to preview_environment_course_path(@environment, @course)
+  end
+
   def index
     cond = Caboose::EZ::Condition.new
 

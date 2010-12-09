@@ -14,6 +14,11 @@ class SpacesController < BaseController
 
   after_filter :create_activity, :only => [:create]
 
+  rescue_from CanCan::AccessDenied do |exception|
+    flash[:notice] = "Você não tem acesso a essa página"
+    redirect_to preview_environment_course_path(@environment, @course)
+  end
+
   def take_ownership
     @space.update_attribute(:owner, current_user)
     flash[:notice] = "Você é o novo dono deste espaço!"
