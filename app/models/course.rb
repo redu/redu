@@ -48,5 +48,19 @@ class Course < ActiveRecord::Base
     end
   end
 
+  # Verifica se o path escolhido para o Course já é utilizado por outro
+  # no mesmo Environment. Caso seja, um novo path é gerado.
+  def verify_path!(environment_id)
+    path  = self.path
+    if Course.all(:conditions => ["environment_id = ? AND path = ?",
+                  environment_id, self.path])
+      self.path += '-' + SecureRandom.hex(1)
 
+      # Mais uma tentativa para utilizar um path não existente.
+      return if Course.all(:conditions => ["environment_id = ? AND path = ?",
+                               environment_id, self.path]).empty?
+      self.path = path + '-' + SecureRandom.hex(1)
+    end
+
+  end
 end

@@ -52,6 +52,7 @@ class EnvironmentsController < BaseController
     @environment.owner = current_user
     @environment.courses.first.owner = current_user
     @environment.published = true
+    @environment.verify_path!
 
     respond_to do |format|
       if @environment.save

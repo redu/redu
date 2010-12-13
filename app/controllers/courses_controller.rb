@@ -52,9 +52,11 @@ class CoursesController < BaseController
   end
 
   def create
-    authorize! can? :manage, @environment #Talvez seja necessario pois o @environment não está sendo autorizado.
+    authorize! :manage, @environment #Talvez seja necessario pois o @environment não está sendo autorizado.
 
     @course.owner = current_user
+    @course.verify_path! @environment.id
+
     respond_to do |format|
       if @course.save
         @environment.courses << @course

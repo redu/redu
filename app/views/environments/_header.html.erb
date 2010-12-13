@@ -20,7 +20,7 @@
    })(jQuery);
  </script>
  <div id="environment-header" class="container_16 clearfix">
-   <div class="container_16" id="create-header" style="background-color: <%= course ? "#" + course.color : "inherited" %>">
+   <div class="container_16" id="create-header" style="background-color: <%= course && !course.new_record? ? "#" + course.color : "inherited" %>">
      <div class="avatar grid_3">
        <div class="frame" id="university-logo">
          <div class="inner-frame">
@@ -47,7 +47,7 @@
          </ul>
        </div>
      </div>
-     <% if course %>
+     <% if course && !course.new_record? %>
        <% if space && space.id %>
          <div class="dropdown course grid_11 alpha">
            <h4>

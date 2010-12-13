@@ -47,4 +47,17 @@ class Environment < ActiveRecord::Base
         membership.course.change_role(user, role)
       end
   end
+
+  # Verifica se o path escolhido para o Environment já é utilizado por
+  # outro, caso seja, um novo path é gerado.
+  def verify_path!
+    path  = self.path
+    if Environment.find_by_path(self.path)
+      self.path += '-' + SecureRandom.hex(1)
+
+      # Mais uma tentativa para utilizar um path não existente.
+      return unless Environment.find_by_path(self.path)
+      self.path = path + '-' + SecureRandom.hex(1)
+    end
+  end
 end
