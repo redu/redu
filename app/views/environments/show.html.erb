@@ -1,19 +1,23 @@
-<div class="container_16 actions clearfix">
-  <%= link_to "Crie Cursos!", new_environment_course_path(@environment), :class => "grid_5 action" %>
-  <a href="#" class="grid_5 action">Crie Módulos!</a>
-  <% if @course %>
-    <%= link_to "Crie Espaços!", new_space_path(:course_id => @course.id), :class => "grid_5 action" %>
-  <% else %>
-    <a href="#" class="grid_5 action">Crie Espaços</a>
-    <%= link_to "Crie Notícias!", new_environment_bulletin_path(@environment), :class => "grid_5 action" %>
-  <% end %>
-</div>
+<% if can? :manage, @environment %>
+  <div class="container_16 actions clearfix">
+    <%= link_to "Crie Cursos!", new_environment_course_path(@environment), :class => "grid_5 action" %>
+    <a href="#" class="grid_5 action">Crie Módulos!</a>
+    <% if @course %>
+      <%= link_to "Crie Espaços!", new_space_path(:course_id => @course.id), :class => "grid_5 action" %>
+    <% else %>
+      <a href="#" class="grid_5 action">Crie Espaços</a>
+      <%= link_to "Crie Notícias!", new_environment_bulletin_path(@environment), :class => "grid_5 action" %>
+    <% end %>
+  </div>
+<% end %>
 <div class="grid_11 alpha">
   <ul>
     <%= render :partial => "courses/item", :collection => @environment.courses %>
   </ul>
-  <%= link_to 'Edit', edit_environment_path(@environment) %> |
-  <%= link_to 'Back', environments_path %>
+  <% if can? :manage, @environment %>
+    <%= link_to 'Edit', edit_environment_path(@environment) %> |
+    <%= link_to 'Back', environments_path %>
+  <% end %>
 </div>
 <div class="grid_5 omega sidebar news">
   <span class="call"><span>Notícias</span></span>
