@@ -1,17 +1,14 @@
 class EventsController < BaseController
   require 'htmlentities'
-
+	
   layout 'environment'
+  load_and_authorize_resource :space
+  load_and_authorize_resource :event, :through => :space
 
-  before_filter :find_environment_course_and_space
   caches_page :ical
   cache_sweeper :event_sweeper, :only => [:create, :update, :destroy]
-
-  before_filter :login_required
   before_filter :is_event_approved,
     :only => [:show, :edit, :update, :destroy]
-  before_filter :can_manage_required,
-    :only => [:edit, :update, :destroy]
   after_filter :create_activity, :only => [:create]
 
   #These two methods make it easy to use helpers in the controller.
@@ -48,7 +45,6 @@ class EventsController < BaseController
   end
 
   def show
-    @event = Event.find(params[:id])
     @eventable = find_eventable
   end
 
@@ -82,21 +78,23 @@ class EventsController < BaseController
   end
 
   def new
-    @event = Event.new(params[:event])
+
     @eventable = find_eventable
   end
 
   def edit
-    @event = Event.find(params[:id])
     @eventable = find_eventable
  end
 
   def create
     # Passando para o formato do banco
+
     params[:event][:start_time] = Time.zone.parse(params[:event][:start_time].gsub('/', '-'))
     params[:event][:end_time] = Time.zone.parse(params[:event][:end_time].gsub('/', '-'))
 
+    #FIXME o Event.new está sendo chamado duas vezes, uma vez pelo cancan e o outro aqui
     @event = Event.new(params[:event])
+
     @event.owner = current_user
     @event.eventable = find_eventable
 
@@ -184,12 +182,6 @@ class EventsController < BaseController
   end
 
   protected
-  def can_manage_required
-    @event = Event.find(params[:id])
-
-    current_user.can_manage?(@event) ? true : access_denied
-  end
-
   def is_event_approved
     @event = Event.find(params[:id])
 

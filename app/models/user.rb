@@ -77,7 +77,6 @@ class User < ActiveRecord::Base
   #student_profile
   has_many :student_profiles
 
-
   #forums
   has_many :moderatorships, :dependent => :destroy
   has_many :forums, :through => :moderatorships, :order => 'forums.name'
@@ -243,51 +242,99 @@ class User < ActiveRecord::Base
     (self.first_name and self.last_name and self.gender and self.description and self.tags)
   end
 
-  def enrolled? subject
-    Enrollment.count(:conditions => {:user_id => self, :subject_id => subject}) > 0
-  end
-
-  def can_manage?(entity, space=nil)
+  def can_manage?(entity)
+    entity.nil? and return false
+    self.admin? and return true
+    self.environment_admin? entity and return true
+    (entity.owner && entity.owner == self) and return true
 
     case entity.class.to_s
-    when 'Lecture'
-      (entity.owner == self || (entity.space == space && self.space_admin?(space) ))
-    when 'Exam'
-      (entity.owner == self || (entity.space == space && self.space_admin?(space) ))
+    when 'Course'
+      (self.environment_admin? entity.environment)
     when 'Space'
-      (entity.owner == self || self.space_admin?(entity))
-    #FIXME Mudar para polymorphic
-    when 'Event'
-      (entity.owner == self || (entity.space.id == space.id && self.space_admin?(space) ))
-    #FIXME Mudar para polymorphic
-    when 'Bulletin'
-      (entity.owner == self || (entity.space == space && self.space_admin?(space) ))
+      self.teacher?(entity)
     when 'Subject'
-      (entity.owner == self || (entity.space == space && self.space_admin?(space) ))
-    when 'Environment'
-      entity.owner == self
+      self.teacher?(entity.space)
+    when 'Lecture'
+      self.teacher?(entity.subject.space)
+    when 'Exam'
+      self.teacher?(entity.subject.space)
+    when 'Event'
+      self.teacher?(entity.space) || self.tutor?(entity.space)
+    when 'Bulletin'
+      case entity.bulletinable.class.to_s
+      when 'Environment'
+        self.environment_admin?(entity.bulletinable)
+      when 'Space'
+        self.teacher?(entity.bulletinable) || self.tutor?(entity.bulletinable)
+      end
+    when 'Folder'
+      self.teacher?(entity.space)
+    when 'Topic'
+      self.teacher?(entity.space)
+    when 'SbPost'
+      self.teacher?(entity.space)
+    when 'Status'
+      case entity.statusable.class.to_s
+      when 'Space'
+        self.teacher?(entity.statusable)
+      when 'Subject'
+        self.teacher?(entity.statusable.space)
+      end
     end
   end
 
-  def has_access_to(entity)
-    return true if self.admin? || entity.owner == self
+  def has_access_to?(entity)
+    self.admin? and return true
 
-    case entity.class.to_s
-    when 'Lecture'
-
-      (entity.space && self.spaces.include?(entity.space))
-      #    when 'Exam'
-      #      (entity.owner == self || (entity.space == space && self.space_admin?(space) ))
-    when 'Space'
-      (self.space_admin?(entity) || (self.spaces.include?(entity) && self.get_association_with(entity).status == "approved"))
-      #    when 'Event'
-      #       (entity.owner == self || (entity.space == space && self.space_admin?(space) ))
+    if self.get_association_with(entity)
+      return true
+    else
+      case entity.class.to_s
+      when 'Event'
+        #TODO lembrar que vai se tornar polomorfico
+        self.get_association_with(entity.space).nil? ? false : true
+      when 'Bulletin'
+        self.get_association_with(entity.bulletinable).nil? ? false : true
+      when 'Forum'
+        self.get_association_with(entity.space).nil? ? false : true
+      when 'Topic'
+        self.get_association_with(entity.forum.space).nil? ? false : true
+      when 'SbPost'
+        self.get_association_with(entity.topic.forum.space).nil? ? false : true
+      when 'Folder'
+        self.get_association_with(entity.space).nil? ? false : true
+      when 'Status'
+        self.has_access_to? entity.statusable
+      when 'Lecture'
+        self.has_access_to? entity.subject
+      when 'Exam'
+        self.has_access_to? entity.subject
+      else
+        return false
+      end
     end
+  end
 
-    #TODO
-    #    @acq = Acquisition.find(:first, :conditions => ['acquired_by_id = ? AND lecture_id = ?', self.id, lecture.id])
-    #    !@acq.nil? or lecture.owner == self
+  # Método de alto nível, verifica se o object está publicado (caso se aplique)
+  # e se o usuário possui acesso (i.e. relacionamento) com o mesmo
+  def can_read?(object)
+    if (object.class.to_s.eql? 'Folder') || (object.class.to_s.eql? 'Forum') ||
+       (object.class.to_s.eql? 'Topic') || (object.class.to_s.eql? 'SbPost') ||
+       (object.class.to_s.eql? 'Event') || (object.class.to_s.eql? 'Bulletin') ||
+       (object.class.to_s.eql? 'Status') || (object.class.to_s.eql? 'User')
+      self.has_access_to?(object)
+    else
+      object.published? && self.has_access_to?(object)
+    end
+  end
 
+  def follow?(user)
+    self.follows.include?(user)
+  end
+
+  def followed_by?(user)
+    self.followers.include?(user)
   end
 
   def can_be_owner?(entity)
@@ -520,18 +567,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  def admin?
-    role && role.eql?(Role[:admin])
-  end
-
-  def moderator?
-    role && role.eql?(Role[:moderator])
-  end
-
-  def member?
-    role && role.eql?(Role[:member])
-  end
-
   # space roles
   def can_post?(space)
     if not self.get_association_with(space)
@@ -551,38 +586,50 @@ class User < ActiveRecord::Base
 
   end
 
+  # Pega associação com Entity (aplica-se a Environment, Course, Space e Subject)
   def get_association_with(entity)
     return false unless entity
+
     case entity.class.to_s
     when 'Space'
-      association = UserSpaceAssociation.find(:first, :conditions => ['user_id = ? AND space_id = ?',
-                                              self.id, entity.id])
+      association = UserSpaceAssociation.find(:first,
+        :conditions => ['user_id = ? AND space_id = ?', self.id, entity.id])
     when 'Course'
-      association = UserCourseAssociation.find(:first, :conditions => ['user_id = ? AND course_id = ?',
-                                               self.id, entity.id])
+      association = UserCourseAssociation.find(:first,
+        :conditions => ['user_id = ? AND course_id = ?', self.id, entity.id])
     when 'Environment'
-      association = UserEnvironmentAssociation.find(:first, :conditions => ['user_id = ? AND environment_id = ?',
-                                                    self.id, entity.id])
+      association = UserEnvironmentAssociation.find(:first,
+        :conditions => ['user_id = ? AND environment_id = ?', self.id, entity.id])
+    when 'Subject'
+      association = Enrollment.find(:first,
+        :conditions => ['user_id = ? AND subject_id = ?', self.id, entity.id])
     end
   end
 
-  def teacher?(space)
-    association = get_association_with space
-    association && association.role && association.role.eql?(Role[:teacher])
-  end
-
-  def coordinator?(space)
-    association = get_association_with space
-    association && association.role && association.role.eql?(Role[:coordinator])
-  end
-
-  def space_admin?(space_id)
-    association = get_association_with space_id
+  def environment_admin?(entity)
+    association = get_association_with entity
     association && association.role && association.role.eql?(Role[:environment_admin])
   end
 
-  def student?(space)
-    association = get_association_with space
+  def admin?
+    role && role.eql?(Role[:admin])
+  end
+
+  def teacher?(entity)
+    association = get_association_with entity
+    return false if association.nil?
+    association && association.role && association.role.eql?(Role[:teacher])
+  end
+
+  def tutor?(entity)
+    association = get_association_with entity
+    return false if association.nil?
+    association && association.role && association.role.eql?(Role[:tutor])
+  end
+
+  def member?(entity)
+    association = get_association_with entity
+    return false if association.nil?
     association && association.role && association.role.eql?(Role[:member])
   end
 

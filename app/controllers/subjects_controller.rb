@@ -2,10 +2,19 @@ class SubjectsController < BaseController
   layout 'environment'
 
   before_filter :login_required
-  before_filter :find_subject, :except => [:new, :create, :index, :cancel]
   before_filter :find_space_course_environment
 
+  load_and_authorize_resource :environment
+  load_and_authorize_resource :course, :through => :environment
+  load_and_authorize_resource :space, :through => :course
+  load_and_authorize_resource :subject, :through => :space
+
   uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit, :create, :update])
+
+  rescue_from CanCan::AccessDenied do |exception|
+    flash[:notice] = "Você não tem acesso a essa página"
+    redirect_to preview_environment_course_path(@environment, @course)
+  end
 
   def index
     cond = Caboose::EZ::Condition.new
@@ -38,22 +47,13 @@ class SubjectsController < BaseController
 
 
   def show
-    @space = @subject.space
-
-    #student_profile = current_user.student_profiles.find_by_subject_id(@subject.id)
-    #@percentage = student_profile.nil? ? 0 : student_profile.coursed_percentage(@subject)
-    @status = Status.new
-    @statuses = @subject.recent_activity(0,10)
-
     respond_to do |format|
       format.html
     end
-
   end
 
+  # Finalização da criação (LazyAssets com existent == false)
   def lazy
-    @space = @subject.space
-
     respond_to do |format|
       format.html
     end
@@ -65,7 +65,6 @@ class SubjectsController < BaseController
   end
 
   def create
-
     if params[:subject]
       # Evita duplicação dos campos gerados dinamicamente no passo 2
       if params[:subject].has_key?(:lazy_assets_attributes)
@@ -116,24 +115,22 @@ class SubjectsController < BaseController
     end
   end
 
+  # Cancela wizard (limpando sessão)
   def cancel
     session[:subject_step] = session[:subject_params]= session[:subject_id]= nil
     redirect_to space_path(@space)
   end
 
   def edit
-    @subject = Subject.find(params[:id])
     session[:subject_params] ||= {}
   end
 
+  #TODO edita os LazyAssets
   def edit_resources
-    @subject = Subject.find(params[:id])
     session[:subject_params] ||= {}
   end
 
   def update
-    @subject = Subject.find(params[:id])
-
     # Evita que ao dar refresh vá para o proximo passo.
     @subject.current_step = "subject"
 
@@ -148,9 +145,8 @@ class SubjectsController < BaseController
     end
   end
 
+  #TODO Edição dos resources
   def update_resources
-    @subject = Subject.find(params[:id])
-
     # Evita que ao dar refresh vá para o proximo passo.
     @subject.current_step = "subject"
 
@@ -176,6 +172,7 @@ class SubjectsController < BaseController
     render "edit"
     end
   end
+
   def unpublish
     ActiveRecord::Base.transaction do
       @subject.published = false
@@ -216,6 +213,7 @@ class SubjectsController < BaseController
     redirect_to space_path(@space)
   end
 
+  # Matricula usuário no Subject utilizando o mesmo papel que ele possui no Space
   def enroll
     unless @subject.published?
       flash[:notice] = "Este módulo precisa ser publicado antes de receber "  + \
@@ -225,12 +223,15 @@ class SubjectsController < BaseController
 
     #FIXME isso é realmente necessário?
     ActiveRecord::Base.transaction do
+      space_association = @space.user_space_associations.find(:first,
+        :conditions => {:user_id => current_user})
+
       profile = StudentProfile.create({:user => current_user,
                                        :subject => @subject })
       enrollment = Enrollment.create({:user => current_user,
                                       :subject => @subject,
                                       :student_profile => profile,
-                                      :role => Role[:student]})
+                                      :role => space_association.role})
 
       @subject.assets.each do |asset|
         AssetReport.create({:asset => asset,
@@ -263,7 +264,6 @@ class SubjectsController < BaseController
 
   # Página com as informações do Subject.
   def infos
-   @subject = Subject.find(params[:id])
   end
 
   # Mural do Subject
@@ -307,19 +307,10 @@ class SubjectsController < BaseController
   end
 
   protected
-  def find_subject
-   @subject = Subject.find(params[:id])
-  end
 
   def find_space_course_environment
-    if @subject
-      @space = @subject.space
-    elsif params[:space_id]
-      @space = Space.find(params[:space_id])
-    end
-    if @space
-      @course = @space.course
-      @environment = @course.environment
-    end
+    @space = Space.find(params[:space_id])
+    @course = @space.course
+    @environment = @course.environment
   end
 end

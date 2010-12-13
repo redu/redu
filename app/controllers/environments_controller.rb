@@ -1,7 +1,14 @@
 class EnvironmentsController < BaseController
   layout "environment"
 
+  load_and_authorize_resource :except => :index
+
   uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit, :create, :update])
+
+  rescue_from CanCan::AccessDenied do |exception|
+    flash[:notice] = "Você não tem acesso a essa página"
+    redirect_to preview_environment_path(@environment)
+  end
 
   # GET /environments
   # GET /environments.xml
@@ -17,7 +24,6 @@ class EnvironmentsController < BaseController
   # GET /environments/1
   # GET /environments/1.xml
   def show
-    @environment = Environment.find(params[:id])
     @courses = @environment.courses
 
     respond_to do |format|
@@ -29,7 +35,6 @@ class EnvironmentsController < BaseController
   # GET /environments/new
   # GET /environments/new.xml
   def new
-    @environment = Environment.new
 
     respond_to do |format|
       format.html { render :layout => 'application' }
@@ -39,13 +44,11 @@ class EnvironmentsController < BaseController
 
   # GET /environments/1/edit
   def edit
-    @environment = Environment.find(params[:id])
   end
 
   # POST /environments
   # POST /environments.xml
   def create
-    @environment = Environment.new(params[:environment])
     @environment.owner = current_user
     @environment.courses.first.owner = current_user
     @environment.published = true
@@ -78,8 +81,6 @@ class EnvironmentsController < BaseController
   # PUT /environments/1
   # PUT /environments/1.xml
   def update
-    @environment = Environment.find(params[:id])
-
     respond_to do |format|
       if @environment.update_attributes(params[:environment])
         flash[:notice] = 'Environment was successfully updated.'
@@ -95,7 +96,6 @@ class EnvironmentsController < BaseController
   # DELETE /environments/1
   # DELETE /environments/1.xml
   def destroy
-    @environment = Environment.find(params[:id])
     @environment.destroy
 
     respond_to do |format|
@@ -103,11 +103,10 @@ class EnvironmentsController < BaseController
       format.xml  { head :ok }
     end
   end
-  
-  # Visão do Environment para usuários não-membros. 
+
+  # Visão do Environment para usuários não-membros.
   # TODO Remover quando colocar as permissões, apenas redirecionar no show.
   def preview
-    @environment = Environment.find(params[:id])
   end
 
   def admin_courses
@@ -116,7 +115,6 @@ class EnvironmentsController < BaseController
   end
 
   def admin_members
-    @environment = Environment.find(params[:id])
     @memberships = UserEnvironmentAssociation.paginate(
       :conditions => ["environment_id = ?", @environment.id],
       :include => [{ :user => {:user_course_associations => :course} }],
@@ -126,13 +124,13 @@ class EnvironmentsController < BaseController
   end
 
   def admin_bulletins
-    @environment = Environment.find(params[:id])
     @bulletins= @environment.bulletins
   end
 
   # Remove um ou mais usuários de um Environment destruindo todos os relacionamentos
   # entre usuário e os níveis mais baixos da hierarquia.
   def destroy_members
+    #TODO verificar performance
     @environment = Environment.find(params[:id], :include => {:courses => :spaces})
 
     # Course.id do environment
@@ -162,8 +160,6 @@ class EnvironmentsController < BaseController
   end
 
   def search_users_admin
-    @environment = Environment.find(params[:id])
-
     roles = []
     roles = params[:role_filter].collect {|r| r.to_i} if params[:role_filter]
     keyword = []

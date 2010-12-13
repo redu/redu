@@ -7,7 +7,7 @@
     <%= event.tagline %>
   </div>
 
-  <% if current_user.can_manage?(event) %>
+  <% if can? :manage, event %>
     <div class="grid_10">
       <%= link_to "Editar", edit_polymorphic_path([event.eventable, event]), :class => "button icon-edit" %>
       <%= link_to 'Remover', polymorphic_path([event.eventable, event]),

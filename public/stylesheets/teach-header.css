@@ -2,7 +2,7 @@
 	background:url(../images/bg-content-teach-header.jpg) no-repeat;
 	height:499px;
 	height:auto !important;
-	min-height:499px;	
+	min-height:499px;
 }
 
 /* COLUNA ESQUERDA */
@@ -32,7 +32,7 @@
 	float:left;
 	height:408px;
 	margin-top:30px;
-	width:470px;	
+	width:470px;
 }
 
 /* COLUNA DIREITA */
@@ -118,11 +118,11 @@
 
 #bg-content .right-sidebar form .link{
 	color:#FFFFFF;
-	float:left; 
+	float:left;
 	font-family:Arial, Helvetica, sans-serif;
 	font-size:13px;
 	font-weight:bold;
-	margin-top:1px; 
+	margin-top:1px;
 	margin-left:35px;
 }
 
@@ -134,9 +134,9 @@
 }
 
 #bg-content .right-sidebar form .color{
-	float:left; 
+	float:left;
 	font-size:12px;
-	margin-top:3px; 
+	margin-top:3px;
 	margin-left:10px;
 	width:100px;
 }
@@ -147,6 +147,6 @@
 	float:left;
 	font-size:0px;
 	height:71px;
-	margin-top:55px; 
+	margin-top:55px;
 	width:259px;
 }

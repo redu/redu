@@ -1,122 +1,52 @@
 class SpacesController < BaseController
   layout 'environment'
 
-  before_filter :find_environmnet_course, :except => [:index, :create, :new, :cancel]
-  before_filter :login_required,  :except => [:join, :unjoin, :member, :index]
-  after_filter :create_activity, :only => [:create]
-  # Usado para proteger acoes perigosas (só para admin)
-  before_filter :except =>
-  			[:new, :create, :show, :vote, :index, :join, :unjoin, :member, :onwer, :members, :teachers, :take_ownership] do 				|controller|
-    		controller.space_admin_required(controller.params[:id]) if controller.params and controller.params[:id]
-  			end
-  before_filter :can_be_owner_required, :only => :take_ownership
-  before_filter :is_not_member_required, :only => :join
+  # Necessário pois Space não é nested route de course
+  before_filter :find_space_course_environment,
+    :except => [:create, :cancel]
 
+  load_and_authorize_resource :environment,
+    :except => [:create, :cancel]
+  load_and_authorize_resource :course, :through => :environment,
+    :except => [:create, :cancel]
+  load_and_authorize_resource :space, :through => :course,
+    :except => [:create, :cancel]
+
+  after_filter :create_activity, :only => [:create]
+
+  rescue_from CanCan::AccessDenied do |exception|
+    flash[:notice] = "Você não tem acesso a essa página"
+    redirect_to preview_environment_course_path(@environment, @course)
+  end
 
   def take_ownership
-    
     @space.update_attribute(:owner, current_user)
     flash[:notice] = "Você é o novo dono deste espaço!"
     redirect_to @space
   end
 
   def vote
-    
     current_user.vote(@space, params[:like])
     respond_to do |format|
-      format.js { render :template => 'shared/like.rjs', :locals => { :votes_for => @space.votes_for().to_s} } 
+      format.js { render :template => 'shared/like.rjs', :locals => { :votes_for => @space.votes_for().to_s} }
     end
   end
 
+  #TODO mudar para admin_look_and_feel (padroes)
   def look_and_feel
-    
   end
 
   def set_theme
-    
     @space.update_attributes(params[:space])
 
     flash[:notice] = "Tema modificado com sucesso!"
     redirect_to look_and_feel_space_path
   end
 
-  ##  Admin actions
-  def new_space_admin
-    @user_space_association = UserSpaceAssociation.new
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @space }
-    end
-  end
-
-  ### Space Admin actions
-  def invalidate_keys(access_key) # 'troca' um conjunto de chaves
-    #TODO
-  end
-
-  def join
-    
-    @association = UserSpaceAssociation.new
-    @association.user = current_user
-    @association.space = @space
-
-    case @space.subscription_type
-
-    when 1 # anyone can join
-      @association.status = "approved"
-
-      if @association.save
-        flash[:notice] = "Você está participando do espaço agora!"
-      end
-
-    when 2 # moderated
-      @association.status = "pending"
-
-      if @association.save
-        flash[:notice] = "Seu pedido de participação está sendo moderado pelos administradores do espaço."
-        UserNotifier.deliver_pending_membership(current_user, @space) # TODO fazer isso em batc
-      end
-    end
-
-    respond_to do |format|
-      format.html { redirect_to(@space) }
-    end
-  end
-
-  def unjoin
-    
-    @association = UserSpaceAssociation.find(:first, :conditions => ["user_id = ? AND space_id = ?",current_user.id, @space.id ])
-
-    if @association.destroy
-      flash[:notice] = "Você saiu do espaço"
-    end
-
-    respond_to do |format|
-      format.html { redirect_to(@space) }
-    end
-  end
-
   def manage
-    
-  end
-
-  # Modercacao
-  def admin_requests
-    
-    # TODO colocar a consulta a seguir como um atributo de space (como em space.teachers)
-    @pending_members = UserSpaceAssociation.paginate(:conditions => ["user_space_associations.status like 'pending' AND space_id = ?", @space.id],
-                                                      :page => params[:page],
-                                                      :order => 'updated_at DESC',
-                                                      :per_page => AppConfig.items_per_page)
-
-    respond_to do |format|
-      format.html #{ render :action => "my" }
-    end
   end
 
   def admin_members
-    
     @memberships = UserSpaceAssociation.paginate(:conditions => ["status like 'approved' AND space_id = ?", @space.id],
                                                   :include => :user,
                                                   :page => params[:page],
@@ -128,22 +58,21 @@ class SpacesController < BaseController
   end
 
   def admin_bulletins
-    
-    @pending_bulletins = Bulletin.paginate(:conditions => ["bulletinable_type LIKE 'Space' 
-                                   AND bulletinable_id = ? 
+    @pending_bulletins = Bulletin.paginate(:conditions => ["bulletinable_type LIKE 'Space'
+                                   AND bulletinable_id = ?
                                    AND state LIKE ?", @space.id, "waiting"],
                                    :include => :owner,
                                    :page => params[:page],
                                    :order => 'updated_at ASC',
                                    :per_page => 20)
 
-    @bulletins = Bulletin.paginate(:conditions => ["bulletinable_type LIKE 'Space' 
-                                   AND bulletinable_id = ? 
+    @bulletins = Bulletin.paginate(:conditions => ["bulletinable_type LIKE 'Space'
+                                   AND bulletinable_id = ?
                                    AND state LIKE ?", @space.id, "approved"],
                                    :include => :owner,
                                    :page => params[:page],
                                    :order => 'updated_at ASC',
-                                   :per_page => 20) 
+                                   :per_page => 20)
     respond_to do |format|
       format.html
     end
@@ -162,70 +91,18 @@ class SpacesController < BaseController
      @events = Event.paginate(:conditions => ["eventable_id = ?" \
                              " AND eventable_type LIKE 'Space'" \
                              " AND state LIKE ?", @space.id, "approved"],
-                                     :include => :owner,
-                                     :page => params[:page],
-                                     :order => 'updated_at ASC',
-                                     :per_page => 20)
+                             :include => :owner,
+                             :page => params[:page],
+                             :order => 'updated_at ASC',
+                             :per_page => 20)
 
      respond_to do |format|
       format.html
      end
   end
 
-  def moderate_requests
-   
-
-    approved = params[:member].reject{|k,v| v == 'reject'}
-    rejected = params[:member].reject{|k,v| v == 'approve'}
-
-    #atualiza status da associacao
-    approved.keys.each do |user_id|
-      UserSpaceAssociation.update_all("status = 'approved'", :user_id => user_id,  :space_id => @space.id)
-    end
-
-    rejected.keys.each do |user_id|
-      UserSpaceAssociation.update_all("status = 'disaproved'", :user_id => user_id,  :space_id => @space.id)
-    end
-
-    #pega usuários para enviar emails
-    @approved_members = User.all(:conditions => ["id IN (?)", approved.keys]) unless approved.empty?
-    @rejected_members = User.all(:conditions => ["id IN (?)", rejected.keys]) unless rejected.empty?
-
-    if @approved_members
-      for member in @approved_members
-        #UserNotifier.deliver_approve_membership(member, @space) # TODO fazer isso em batch
-      end
-    end
-
-    flash[:notice] = 'Solicitacões moderadas!'
-    redirect_to admin_requests_space_path(@space)
-  end
-
-  def moderate_members
-    
-    case params[:submission_type]
-    when '0' # remove selected
-      @removed_users = User.all(:conditions => ["id IN (?)", params[:users].join(',')]) unless params[:users].empty?
-
-      # TODO destroy_all ou delete_all?
-      UserSpaceAssociation.delete_all(["user_id IN (?) AND space_id = ?", params[:users].join(','), @space.id])
-
-
-      for user in @removed_users # TODO fazer um remove all?
-        UserNotifier.deliver_remove_membership(user, @space) # TODO fazer isso em batch
-      end
-    when '1' # moderate roles
-      UserSpaceAssociation.update_all(["role_id = ?", params[:role_id]],
-                                       ["status like 'approved' AND space_id = ? AND user_id IN (?)", @space.id, params[:users].join(',') ])  if params[:role_id]
-
-      # TODO enviar emails para usuários dizendo que foram promovidos?
-    end
-    flash[:notice] = 'Usuários moderados!'
-    redirect_to admin_members_space_path
-  end
-
   def search_users_admin
-    
+
     if params[:search_user].empty?
       @memberships = UserSpaceAssociation.paginate(:conditions => ["status like 'approved' AND space_id = ?", @space.id],
                                                     :include => :user,
@@ -251,7 +128,6 @@ class SpacesController < BaseController
       end
     end
   end
-
 
   def moderate_bulletins
     if params[:bulletin]
@@ -283,59 +159,25 @@ class SpacesController < BaseController
       flash[:error] = "Para moderar você precisa escolher entre aprovar ou rejeitar."
     end
 
-    
     redirect_to admin_events_space_path(@space)
   end
 
-  # usuário entra na rede
-  def associate
-    
-    @user = User.find(params[:user_id])  # TODO precisa mesmo recuperar o usuário no bd?
-    @user_space_association = UserSpaceAssociation.find(:first, :include => :access_key, :conditions => ["access_keys.key = ?", params[:user_key]])
-
-    #TODO case?
-    if @user_space_association
-      if @user_space_association.access_key.expiration_date.to_time < Time.now # verifica a data da validade da chave
-        if @space &&  @user_space_association.space == @space
-          if @user && !@user_space_association.user # cada chave só poderá ser usada uma vez, sem troca de aluno
-            @user_space_association.user = @user
-
-            if @user_space_association.save
-              flash[:notice] = 'Usuário associado à escola!'
-            else
-              flash[:notice] = 'Associação à escola falhou'
-            end
-          else
-            flash[:notice] = 'Essa chave já está em uso'
-          end
-        else
-          flash[:notice] = 'Essa chave pertence à outra escola'
-        end
-      else
-        flash[:notice] = 'O prazo de validade desta chave expirou. Contate o administrador da sua escola.'
-      end
-    else
-      flash[:notice] = 'Chave inválida'
-    end
-
-    respond_to do |format|
-      format.html { redirect_to(@space) }
-    end
-  end
-
   # lista redes das quais o usuário corrente é membro
+  #TODO mover para user
   def member
     @spaces = current_user.spaces
   end
 
   # lista redes das quais usuário corrente é dono
+  #TODO mover para user
   def owner
     @spaces = current_user.spaces_owned
   end
 
   # lista todos os membros da escola
+  #TODO mover para user
   def members
-    
+
     @members = @space.user_space_associations.paginate(  #optei por .users ao inves de .students
                                                          :page => params[:page],
                                                          :order => 'updated_at DESC',
@@ -351,28 +193,26 @@ class SpacesController < BaseController
   end
 
   # lista todos os professores
+  #TODO mover para user
   def teachers
-    
-
     @members = @space.teachers.paginate(
       :page => params[:page],
       :order => 'updated_at DESC',
       :per_page => AppConfig.users_per_page)
 
-      @member_type = "professores"
+    @member_type = "professores"
 
-      respond_to do |format|
-        format.html {
-          render "view_members"
-        }
-        format.xml  { render :xml => @members }
-      end
+    respond_to do |format|
+      format.html {
+        render "view_members"
+      }
+      format.xml  { render :xml => @members }
+    end
   end
 
   # GET /spaces
   # GET /spaces.xml
   def index
-    
     paginating_params = {
       :page => params[:page],
       :order => (params[:sort]) ? params[:sort] + ' DESC' : 'created_at DESC',
@@ -393,7 +233,6 @@ class SpacesController < BaseController
         @searched_for_all = true
       end
     end
-
     respond_to do |format|
 			#TODO verificar esse @lecture, saber o por quê de ser chamado
       # format.xml  { render :xml => @lectures }
@@ -415,7 +254,6 @@ class SpacesController < BaseController
   # GET /spaces/1
   # GET /spaces/1.xml
   def show
-    
     if @space and @space.removed
       redirect_to removed_page_path and return
     end
@@ -441,9 +279,9 @@ class SpacesController < BaseController
   end
 
   def cancel
-		@course = Course.find(params[:course_id])
+    @course = Course.find(params[:course_id])
     session[:space_step] = session[:space_params] = nil
-		redirect_to(environment_course_path(@course.environment, @course))
+    redirect_to(environment_course_path(@course.environment, @course))
   end
 
   # GET /spaces/new
@@ -451,25 +289,25 @@ class SpacesController < BaseController
   def new
     session[:space_params] ||= {}
     @space = Space.new(session[:space_params])
-		@course = Course.find(params[:course_id])
-	  @environment = @course.environment
+    @course = Course.find(params[:course_id])
+    authorize! :manage, @course
+    @environment = @course.environment
     @space.current_step = session[:space_step]
   end
 
   # GET /spaces/1/edit
   def edit
-
   end
 
   # POST /spaces
   # POST /spaces.xml
   def create
-
     session[:space_params].deep_merge!(params[:space]) if params[:space]
     @space = Space.new(session[:space_params])
 
-		@course = @space.course
-		@environment = @course.environment
+    @course = @space.course
+    authorize! :manage, @course
+    @environment = @course.environment
     @space.owner = current_user
     @space.current_step = session[:space_step]
     if @space.valid?
@@ -487,9 +325,9 @@ class SpacesController < BaseController
     else
       UserSpaceAssociation.create({:user => current_user, :space => @space, :status => "approved", :role_id => 4}) #:role => Role[:space_admin]
       Forum.create(:name => "Fórum do espaço #{@space.name}", :description => "Este fórum pertence ao espaço #{@space.name}. Apenas os participantes deste espaço podem visualizá-lo. Troque ideias, participe!", :space_id => @space.id)
-     
+
       course_users = UserCourseAssociation.all(:conditions => ["state LIKE ? AND course_id = ?", 'approved', @space.course.id])
-     
+
       course_users.each do |assoc|
         UserSpaceAssociation.create({:user_id => assoc.user_id, :space => @space, :status => "approved", :role_id => assoc.role_id})
       end
@@ -506,7 +344,6 @@ class SpacesController < BaseController
     unless params[:only_image]
       params[:space][:audience_ids] ||= []
     end
-   
 
     respond_to do |format|
       if @space.update_attributes(params[:space])
@@ -526,7 +363,6 @@ class SpacesController < BaseController
   # DELETE /spaces/1
   # DELETE /spaces/1.xml
   def destroy
-   
     @space.destroy
 
     respond_to do |format|
@@ -536,8 +372,6 @@ class SpacesController < BaseController
   end
 
   def publish
-    @space= Space.find(params[:id])
-
     @space.published = 1
     @space.save
 
@@ -546,8 +380,6 @@ class SpacesController < BaseController
   end
 
   def unpublish
-    @space= Space.find(params[:id])
-
     @space.published = 0
     @space.save
 
@@ -557,6 +389,16 @@ class SpacesController < BaseController
 
   protected
 
+  def find_space_course_environment
+    if params.has_key?(:id)
+      @space = Space.find(params[:id])
+    end
+
+    # No SpaceController#new o course_id é passado como param
+    @course = @space.nil? ? Course.find(params[:course_id]) : @space.course
+    @environment = @course.environment
+  end
+
   def can_be_owner_required
     current_user.can_be_owner?(@space) ? true : access_denied
   end
@@ -565,11 +407,5 @@ class SpacesController < BaseController
     if current_user.get_association_with(@space)
       redirect_to space_path(@space)
     end
-  end
-
-  def find_environmnet_course
-		@space = Space.find(params[:id])
-	  @course = @space.course
-	  @environment = @course.environment
   end
 end

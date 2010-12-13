@@ -1,6 +1,8 @@
-<div class="container_16 actions clearfix">
-  <%= link_to "Crie Espaços!", new_space_path(:course_id => @course.id), :class => "grid_5 action" %>
-</div>
+<% if can? :manage, @course %>
+  <div class="container_16 actions clearfix">
+    <%= link_to "Crie Espaços!", new_space_path(:course_id => @course.id), :class => "grid_5 action" %>
+  </div>
+<% end %>
 <script type="text/javascript" charset="utf-8">
   $(document).ready(function(){
       $(".space div.vtabs").tabs({}).addClass('ui-tabs-vertical ui-helper-clearfix')

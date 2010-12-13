@@ -1,11 +1,11 @@
 class BulletinsController < BaseController
   layout "environment"
 
+  load_and_authorize_resource :space
+  load_and_authorize_resource :environment
+  load_and_authorize_resource :bulletin, :through => [:space, :environment]
+
   before_filter :find_environment_course_space
-  before_filter :login_required
-  before_filter :is_member_required
-  before_filter :can_manage_required,
-    :only => [:edit, :update, :destroy]
   after_filter :create_activity, :only => [:create]
 
   uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit, :create, :update])
@@ -23,13 +23,11 @@ class BulletinsController < BaseController
   end
 
   def show
-    @bulletin = Bulletin.find(params[:id])
     @owner = User.find(@bulletin.owner)
     @bulletinable = find_bulletinable
   end
 
   def new
-    @bulletin = Bulletin.new
     @bulletinable = find_bulletinable
   end
 
@@ -60,13 +58,10 @@ class BulletinsController < BaseController
   end
 
   def edit
-    @bulletin = Bulletin.find(params[:id])
     @bulletinable = find_bulletinable
   end
 
   def update
-    @bulletin = Bulletin.find(params[:id])
-
     respond_to do |format|
       if @bulletin.update_attributes(params[:bulletin])
         flash[:notice] = 'A notícia foi editada.'
@@ -79,8 +74,7 @@ class BulletinsController < BaseController
     end
   end
 
-  def destroy
-    @bulletin = Bulletin.find(params[:id])
+  def destroy    
     @bulletin.destroy
 
     flash[:notice] = 'A notícia foi excluída.'
@@ -126,13 +120,13 @@ class BulletinsController < BaseController
   def can_manage_required
     @bulletin = Bulletin.find(params[:id])
 
-    current_user.can_manage?(@bulletin, @bulletin.bulletinable) ? true : access_denied
+    current_user.can_manage?(@bulletin) ? true : access_denied
   end
 
   def is_member_required
     @bulletinable = find_bulletinable
 
-    current_user.has_access_to(@bulletinable) ? true : access_denied
+    current_user.has_access_to?(@bulletinable) ? true : access_denied
   end
 
   def find_bulletinable

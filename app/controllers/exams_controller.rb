@@ -1,11 +1,11 @@
 class ExamsController < BaseController
   layout "environment"
 
-  before_filter :find_exam, :except => [:new, :create, :index, :cancel]
-  before_filter :find_environment_course_space_subject_exam
-  before_filter :login_required, :except => [:index]
-  uses_tiny_mce(:options => AppConfig.question_mce_options, :only => [:new, :edit, :create, :update])
+  load_and_authorize_resource :exam, :except => [:new, :create]
+  before_filter :find_subject_space_course_environment
   after_filter :create_activity, :only => [:create, :results]
+
+  uses_tiny_mce(:options => AppConfig.question_mce_options, :only => [:new, :edit, :create, :update])
 
   def publish_score
     ExamUser.update(params[:exam_user_id], :public => true)
@@ -20,6 +20,7 @@ class ExamsController < BaseController
   end
 
   # listagem de exames favoritos
+  # Não precisa de permissão, pois ele utiliza current_user.
   def favorites
     if params[:from] == 'favorites'
       @taskbar = "favorites/taskbar"
@@ -128,6 +129,11 @@ class ExamsController < BaseController
 
   def results
     # TODO isso nao é muito necessario e compromete a peformace
+    @exam_user  = ExamUser.find(params[:exam_user_id])
+    if (not current_user.admin?) && @exam_user.user != current_user
+      raise CanCan::AccessDenied
+    end
+
     @alternative_letters = {}
     letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
     @exam = session[:exam]
@@ -163,15 +169,6 @@ class ExamsController < BaseController
     end
   end
 
-  def rst_session
-    session[:prev_index] = 0
-    session[:question_index] = 0
-    session[:correct] = nil
-    session[:exam] = nil
-    session[:answers] = Hash.new
-    session[:corrects] = nil
-  end
-
   def cancel
     Exam.find(session[:exam_params][:id]).destroy if session[:exam_params] and session[:exam_params][:id]
     session[:exam_params] = nil
@@ -181,6 +178,8 @@ class ExamsController < BaseController
   end
 
   def new
+    authorize! :manage, @subject
+
     session[:exam_params] ||= {}
     @exam = Exam.new(session[:exam_params])
     @exam.lazy_asset_id = params[:lazy] if params.has_key?(:lazy)
@@ -191,6 +190,8 @@ class ExamsController < BaseController
   # Wizard de Exame. Nos primeiros passos as informações são guardadas na session.
   # O registo só é salvo no último passo.
   def create
+    authorize! :manage, @subject
+
     if params[:exam]
       # Evita duplicação dos campos gerados dinamicamente no passo 2
       if params[:exam].has_key?(:questions_attributes)
@@ -358,6 +359,7 @@ class ExamsController < BaseController
     end
   end
 
+  # Não precisa de permissão, pois utiliza current_user.
   def history
     @exams = current_user.exam_history.paginate :page => params[:page], :order => 'updated_at DESC', :per_page => AppConfig.items_per_page
 
@@ -387,6 +389,8 @@ class ExamsController < BaseController
   # GET /exams
   # GET /exams.xml
   def index
+    authorize! :read, @subject
+
     cond = Caboose::EZ::Condition.new
     cond.append ["simple_category_id = ?", params[:category]] if params[:category]
 
@@ -479,14 +483,9 @@ class ExamsController < BaseController
 
   protected
 
-  def find_exam
-    @exam = Exam.find(params[:id])
-  end
-
-  def find_environment_course_space_subject_exam
-    if @exam
+  def find_subject_space_course_environment
+    if @exame && (not @exam.new_record?)
       @subject = @exam.subject
-      @space = @subject.space
     else
       @subject = Subject.find(params[:subject_id])
     end
@@ -495,4 +494,14 @@ class ExamsController < BaseController
     @course = @space.course
     @environment = @course.environment
   end
+
+  def rst_session
+    session[:prev_index] = 0
+    session[:question_index] = 0
+    session[:correct] = nil
+    session[:exam] = nil
+    session[:answers] = Hash.new
+    session[:corrects] = nil
+  end
+
 end

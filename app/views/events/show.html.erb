@@ -41,7 +41,7 @@
       <% end %>
     </div>
     <div class="grid_11 alpha omega clearfix" style="padding: 10px 0;">
-      <% if current_user.can_manage?(@event) %>
+      <% if can? :manage, @event %>
         <%= link_to 'Editar', edit_polymorphic_path([@event.eventable, @event]), :class => "button"%>
         <%= link_to 'Remover', polymorphic_path([@event.eventable, @event]),
           {:confirm => 'Você tem certeza que deseja remover  permanentemente?',

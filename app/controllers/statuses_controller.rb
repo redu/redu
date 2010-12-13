@@ -1,15 +1,17 @@
 class StatusesController < BaseController
-  before_filter :login_required
+
+  load_and_authorize_resource :status, :except => [:more]
 
   def create
     @status = Status.new(params[:status])
+
     @status.user = current_user
 
     respond_to do |format|
       if @status.save
         format.html { redirect_to :back }
         format.xml { render :xml => @status.to_xml }
-        format.js 
+        format.js
       else
         format.html {
           flash[:statuses_errors] = @status.errors.full_messages.to_sentence
@@ -45,6 +47,8 @@ class StatusesController < BaseController
       @statusable = Subject.find(params[:id])
     end
 
+    authorize! :read, @statusable
+
     @statuses = @statusable.recent_activity(params[:offset], params[:limit])
     respond_to do |format|
       if @statuses.length < params[:limit].to_i
@@ -55,19 +59,8 @@ class StatusesController < BaseController
     end
   end
 
-  def new
-    @status = Status.new
-  end
-
-  def index
-    @statuses = Status.group_statuses(Space.find(1))
-  end
-
   def destroy
     #TODO
   end
 
-  def show
-    @status = Status.find(params[:id])
-  end
 end

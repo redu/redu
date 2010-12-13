@@ -7,13 +7,14 @@
   </li>
   <% end %>
   <li>
-    <%= link_to_unless_current 'Recursos', space_subject_path do
-      link_to 'Recursos', space_subject_path,
-      :class => 'selected' end %>
-  </li>
-  <li>
     <%= link_to_unless_current 'Informações', infos_space_subject_path do
       link_to 'Informações', infos_space_subject_path,
+      :class => 'selected' end %>
+  </li>
+  <% if can? :attend, @subject %>
+  <li>
+    <%= link_to_unless_current 'Recursos', space_subject_path do
+      link_to 'Recursos', space_subject_path,
       :class => 'selected' end %>
   </li>
   <li>
@@ -21,4 +22,5 @@
       link_to 'Mural', statuses_space_subject_path,
       :class => 'selected' end %>
   </li>
+  <% end %>
 </ul>

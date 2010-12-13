@@ -18,6 +18,7 @@ GEM
     adzap-ar_mailer (2.1.8)
     authlogic (2.1.6)
       activesupport
+    cancan (1.4.1)
     cgi_multipart_eof_fix (2.5.0)
     collectiveidea-delayed_job (1.8.2)
     columnize (0.3.2)
@@ -74,6 +75,7 @@ DEPENDENCIES
   aanand-deadweight
   adzap-ar_mailer
   authlogic
+  cancan (= 1.4.1)
   collectiveidea-delayed_job
   desert
   haml

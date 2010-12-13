@@ -81,7 +81,7 @@ class BaseController < ApplicationController
   end
 
   def admin_required
-    current_user && current_user.admin? ? true : access_denied
+    current_user && current_user.admin? ? true : (raise CanCan::AccessDenied)
   end
 
   def space_admin_required(space_id)

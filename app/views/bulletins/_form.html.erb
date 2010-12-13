@@ -1,6 +1,6 @@
-<%- form_for @bulletin do |f| %>
-  <fieldset><legend>Notícia</legend>
-    <%= f.error_messages %>
+<%- form_for [ @bulletinable, @bulletin ] do |f| %>
+	<fieldset><legend>Notícia</legend>
+	<%= f.error_messages %>
     
     <%= hidden_field_tag("bulletinable_id", @bulletinable.id) %>
     <%= hidden_field_tag("bulletinable_type", @bulletinable.class) %>

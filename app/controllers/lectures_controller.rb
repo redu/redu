@@ -1,23 +1,15 @@
 class LecturesController < BaseController
   layout 'environment'
 
-  before_filter :find_lecture, :except => [:new, :create, :index, :cancel]
   before_filter :find_subject_space_course_environment
-
-  include Viewable # atualiza o view_count
-  uses_tiny_mce(:options => AppConfig.advanced_mce_options, :only => [:new, :edit, :update, :create])
-
-  before_filter :login_required, :except => [:index]
-  before_filter :verify_access, :only => [:show]
   after_filter :create_activity, :only => [:create]
 
-  def verify_access
-    @lecture = Lecture.find(params[:id])
-    unless current_user.has_access_to @lecture
-      flash[:notice] = "Você não tem acesso a esta aula"
-      redirect_to space_subject_lectures_path(@space, @subject)
-    end
-  end
+  include Viewable # atualiza o view_count
+  load_and_authorize_resource :lecture,
+    :except => [:new, :create, :cancel, :unpublished_preview]
+
+  uses_tiny_mce(:options => AppConfig.advanced_mce_options,
+                :only => [:new, :edit, :update, :create])
 
   # adiciona um objeto embarcado (ex: scribd)
   def embed_content
@@ -78,7 +70,6 @@ class LecturesController < BaseController
   end
 
   def rate
-    @lecture = Lecture.find(params[:id])
     @lecture.rate(params[:stars], current_user, params[:dimension])
     #TODO Esta linha abaixo é usada pra quê?
     id = "ajaxful-rating-#{!params[:dimension].blank? ? "#{params[:dimension]}-" : ''}lecture-#{@lecture.id}"
@@ -97,6 +88,7 @@ class LecturesController < BaseController
   end
 
   def index
+    authorize! :read, @subject
     redirect_to space_subject_path(@space, @subject)
   end
   # GET /lectures/1
@@ -132,19 +124,11 @@ class LecturesController < BaseController
 
   end
 
-  def view
-    @lecture = Lecture.find(params[:id])
-    @comments  = @lecture.comments.find(:all, :limit => 10, :order => 'created_at DESC')
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @lecture }
-    end
-  end
-
   # GET /lectures/new
   # GET /lectures/new.xml
   def new
+    authorize! :manage, @subject
+
     case params[:step]
     when "2"
 
@@ -190,8 +174,6 @@ class LecturesController < BaseController
 
   # GET /lectures/1/edit
   def edit
-    @lecture = Lecture.find(params[:id])
-
     respond_to do |format|
       if @lecture.lectureable_type == 'Page'
         format.html {render 'edit_page'}
@@ -209,6 +191,8 @@ class LecturesController < BaseController
   # POST /lectures
   # POST /lectures.xml
   def create
+    authorize! :manage, @subject
+
     #TODO diminuir a lógica desse método, está muito GRANDE
     case params[:step]
     when "1"
@@ -366,7 +350,12 @@ class LecturesController < BaseController
   def cancel
     if session[:lecture_id]
       lecture = Lecture.find(session[:lecture_id])
-      lecture.destroy if lecture
+      if lecture
+        authorize! :manage, lecture
+        # Se não tiver nada na sessão vai parecer que
+        # o usuário teve acesso, mas na realidade nada foi destruído.
+        lecture.destroy
+      end
       session[:lecture_id] = nil
     end
 
@@ -378,9 +367,6 @@ class LecturesController < BaseController
   # PUT /lectures/1
   # PUT /lectures/1.xml
   def update
-
-    @lecture = Lecture.find(params[:id])
-
     if @lecture.lectureable_type == 'InteractiveClass'
       @interactive_class = @lecture.interactive_class
       respond_to do |format|
@@ -423,7 +409,6 @@ class LecturesController < BaseController
   # DELETE /lectures/1
   # DELETE /lectures/1.xml
   def destroy
-    @lecture = Lecture.find(params[:id])
     @lecture.destroy
     flash[:notice] = 'A aula foi removida'
 
@@ -433,7 +418,8 @@ class LecturesController < BaseController
     end
   end
 
-  # lista cursos não publicados (em edição)
+  # lista aulas não publicados (em edição)
+  # Não precisa de permissão, pois utiliza o current_user.
   def unpublished
     @lectures = Lecture.paginate(:conditions => ["owner = ? AND published = 0", current_user.id],
                                :include => :owner,
@@ -447,6 +433,7 @@ class LecturesController < BaseController
   end
 
   # cursos publicados no redu esperando a moderação dos admins do redu
+  # Não precisa de permissão, pois utiliza o current_user.
   def waiting
     @user = current_user
     @lectures = Lecture.paginate(:conditions => ["owner = ? AND published = 1 AND state LIKE 'waiting'", current_user.id],
@@ -464,20 +451,12 @@ class LecturesController < BaseController
     end
   end
 
-  def notify
-    #TODO
-  end
-
   protected
 
   def authenticate
     authenticate_or_request_with_http_basic do |id, password|
       id == 'zencoder' && password == 'sociallearning'
     end
-  end
-
-  def find_lecture
-   @lecture = Lecture.find(params[:id])
   end
 
   def find_subject_space_course_environment

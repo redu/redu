@@ -1,10 +1,7 @@
 class EnrollmentsController < ApplicationController
-  before_filter :login_required
-  before_filter :verify_access
-
+	load_and_authorize_resource
 
   def create
-    @enrollment = Enrollment.new(params[:enrollment])
   end
 
 

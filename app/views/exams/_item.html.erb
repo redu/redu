@@ -1,5 +1,6 @@
 <li class="clearfix">
-  <%= link_to exam.name, exam, :class => "name"  %>
+  <%= link_to exam.name, space_subject_exam_path(exam.subject.space, exam.subject,
+                                                 exam), :class => "name"  %>
   <div class="headlines exam" style="width: 490px">
     <!--
     <span class="call">Descrição:</span>
@@ -31,49 +32,31 @@
       <li> 
         <%= time_ago_in_words_or_date(exam.created_at) %>
       </li>
-      <%# if exam.space && !@space%>
-      <!--
       <li>
         |
       </li>
-      <li> 
-        Rede: <%# link_to(exam.space.name, exam.space)  %>
+      <li>
+        Realizações (<%= exam.done_count %>)
+      </li>
+      <li>
+        |
+      </li>
+      <li>
+        Questões (<%= exam.questions.size %>)
+      </li>
+      <li>
+        |
+      </li>
+      <li>
+        Nível <%= exam_level(exam) %>
     </li>
-    -->
-    <%# end%>
-    <li>
-      |
-    </li>
-    <li>
-      Realizações (<%= exam.done_count %>)
-    </li>
-    <li>
-      |
-    </li>
-    <li>
-      Questões (<%= exam.questions.size %>)
-    </li>
-    <li>
-      |
-    </li>
-    <li>
-      Nível <%= exam_level(exam) %>
-  </li>
 
-</ul>
-
-
-
-        </div>
-        <div class="headlines average bottom">
-          Média
-        </div>
+  </ul>
+</div>
+<div class="headlines average bottom">
+  Média
+</div>
 
 
       </li> 
-
-
-
-
-
 

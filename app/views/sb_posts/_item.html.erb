@@ -1,21 +1,21 @@
 <div class="post grid_13">
-      <div class="grid_3 alpha">      
-				<div class="grid_3 alpha">
-					<%= link_to image_tag( post.user.avatar.url(:thumb), 
-                              {:width => "40", :height=>"40", :border => 0 }), @user %>
-				</div>
-				<span class=""><%= time_ago_in_words post.created_at %></span>
-        
-				<ul>
-					<li><%= link_to truncate(post.user.display_name, :length => 15) %></li>
-					<li><%= pluralize post.user.sb_posts_count, :post.l %></li>
-		      <% if logged_in? && post.editable_by?(current_user) %>
-					<li><%= link_to 'Editar Postagem', edit_space_forum_topic_sb_post_path(@space, @topic, post) %></li>
-		      <% end %>
-					<li><%= link_to 'Deletar Postagem', space_forum_topic_sb_post_path(@space, @topic, post), :method => :delete, :confirm => 'Você realmente deseja deletar esta postagem?' %></li>				
-				</ul>	              
- 			</div>
-      <div class="grid_10 omega">
-          <%= post.body_html %>
-      </div>
+  <div class="grid_3 alpha">
+    <div class="grid_3 alpha">
+      <%= link_to image_tag( post.user.avatar.url(:thumb),
+        {:width => "40", :height=>"40", :border => 0 }), @user %>
+    </div>
+      <span class=""><%= time_ago_in_words post.created_at %></span>
+      <ul>
+        <li><%= link_to truncate(post.user.display_name, :length => 15) %></li>
+        <li><%= pluralize post.user.sb_posts_count, :post.l %></li>
+        <% if can? :manage, post %>
+          <li><%= link_to 'Editar Postagem', edit_space_forum_topic_sb_post_path(@space, @topic, post) %></li>
+          <li><%= link_to 'Deletar Postagem', space_forum_topic_sb_post_path(@space, @topic, post),
+              :method => :delete, :confirm => 'Você realmente deseja deletar esta postagem?' %></li>
+        <% end %>
+      </ul>
+    </div>
+    <div class="grid_10 omega">
+      <%= post.body_html %>
+    </div>
 </div>

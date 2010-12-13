@@ -77,9 +77,7 @@ ActionController::Routing::Routes.draw do |map|
 
   # SCHOOL
   map.resources :spaces, :member => {
-    :join => :get,
     :vote => :post,
-    :unjoin => :get,
     :manage => :get,
     :admin_members => :get,
     :admin_bulletins => :get,
@@ -88,7 +86,6 @@ ActionController::Routing::Routes.draw do |map|
     :members => :get,
     :teachers => :get,
     :take_ownership => :get,
-    :remove_asset => :get,
     :publish => :get,
     :unpublish => :get
   },
@@ -163,9 +160,7 @@ ActionController::Routing::Routes.draw do |map|
     :logs => :get,
     :unfollow => :post,
     :assume => :get,
-    :toggle_moderator => :put,
     :change_profile_photo => :put,
-    :return_admin => :get,
     :edit_account => :get,
     :update_account => :put,
     :edit_pro_details => :get,
@@ -173,13 +168,8 @@ ActionController::Routing::Routes.draw do |map|
     :forgot_password => [:get, :post],
     :signup_completed => :get,
     :invite => :get,
-    :welcome_photo => :get,
-    :welcome_about => :get,
-    :welcome_stylesheet => :get,
-    :welcome_invite => :get,
     :welcome_complete => :get,
     :statistics => :any,
-    :activity_xml => :get,
     :learning => :get,
     :teaching => :get,
     :deactivate => :put,
@@ -224,7 +214,8 @@ ActionController::Routing::Routes.draw do |map|
                  :admin_courses => :get,
                  :admin_members => :get,
                  :admin_bulletins => :get,
-                 :destroy_members => :post } do |environment|
+                 :destroy_members => :post,
+                 :search_users_admin => :post } do |environment|
       environment.resources :courses, :member => {
         :preview => :get,
         :admin_spaces => :get,
@@ -234,7 +225,8 @@ ActionController::Routing::Routes.draw do |map|
         :publish => :get,
         :unpublish => :get,
         :admin_members => :get,
-        :destroy_members => :post
+        :destroy_members => :post,
+        :search_users_admin => :post
       }
       environment.resources :bulletins
   end

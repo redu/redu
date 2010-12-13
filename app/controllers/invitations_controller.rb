@@ -1,5 +1,5 @@
 class InvitationsController < BaseController
-  before_filter :login_required
+  authorize_resource
 
   def index
     @user = current_user
@@ -24,6 +24,8 @@ class InvitationsController < BaseController
   def create
     @user = current_user
     @inviteable = find_inviteable
+
+    authorize! :manage, @inviteable
 
     @invitation = Invitation.new(params[:invitation])
     @invitation.user = @user

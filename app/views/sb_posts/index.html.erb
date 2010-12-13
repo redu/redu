@@ -7,7 +7,7 @@
   </span>
   <span class=""><%= pluralize post.user.sb_posts_count, :post.l %></span>
   
-  <% if logged_in? && post.editable_by?(current_user) %>
+  <% if can? :manage, post %>
   <span class="">
     <%= link_to 'Editar Postagem', edit_space_forum_topic_sb_post_path(@space, @topic, post) %>
     <% if admin? && !post.user.admin? %>

@@ -5,8 +5,9 @@
 <script type="text/javascript">
 var userlearningPath = "<%= learning_user_path %>";
 var userteachingPath = "<%= teaching_user_path %>";
-var userSchoolsPath = "<%= spaces_path(:user_id => @user.id, :tab => true) %>";
-var userAnnotationPath = "<%= annotations_user_path %>";
+<% if can? :manage, @user %>
+  var userAnnotationPath = "<%= annotations_user_path %>";
+<% end %>
 
 var $usertabs;
 
@@ -14,35 +15,7 @@ $(document).ready(function() {
 
     $usertabs = $(".user-tabs").tabs({
         select: function(event, ui) {
-						if (ui.index == 4){
-								// Anotações
-								$("#tabs-5-content").html('');
-                jQuery.ajax({
-                    data: '',
-                    dataType: 'script',
-                    success: function(request) {
-                        $("#tabs-5-loading").hide();
-                    },
-                    type: 'get',
-                    url: userAnnotationPath
-                });
-
-                $("#tabs-5-loading").show();
-						} else if (ui.index == 3) {
-                // Redes
-                $("#tabs-4-content").html('');
-                jQuery.ajax({
-                    data: '',
-                    dataType: 'script',
-                    success: function(request) {
-                        $("#tabs-4-loading").hide();
-                    },
-                    type: 'get',
-                    url: userSchoolsPath
-                });
-
-                $("#tabs-4-loading").show();
-            } else if (ui.index == 2) {
+            if (ui.panel.id == "tabs-3") {
                 // Ensinando
                 $("#tabs-3-content").html('');
                 jQuery.ajax({
@@ -56,8 +29,7 @@ $(document).ready(function() {
                 });
 
                 $("#tabs-3-loading").show();
-            }
-            else if (ui.index == 1) {
+            } else if (ui.panel.id == "tabs-2") {
                 // Aprendendo
                 $("#tabs-2-content").html('');
                 jQuery.ajax({
@@ -72,7 +44,24 @@ $(document).ready(function() {
 
                 $("#tabs-2-loading").show();
             }
-        }
+        <% if can? :manage, @user %>
+            else if (ui.panel.id == "tabs-5"){
+                // Anotações
+                $("#tabs-5-content").html('');
+                jQuery.ajax({
+                    data: '',
+                    dataType: 'script',
+                    success: function(request) {
+                        $("#tabs-5-loading").hide();
+                    },
+                    type: 'get',
+                    url: userAnnotationPath
+                });
+
+                $("#tabs-5-loading").show();
+          }
+        <% end %>
+      }
     });
 });
 </script>
@@ -86,8 +75,9 @@ $(document).ready(function() {
       <li><a href="#tabs-1">Atividades</a></li>
       <li><a href="#tabs-2">Aprendendo</a></li>
       <li><a href="#tabs-3">Ensinando</a></li>
-      <li><a href="#tabs-4">Redes</a></li>
-      <li><a href="#tabs-5">Anotações</a></li>
+      <% if can? :manage, @user %>
+        <li><a href="#tabs-5">Anotações</a></li>
+      <% end %>
     </ul>
 
     <div id="tabs-1" class="clearfix first-page">
@@ -118,18 +108,14 @@ $(document).ready(function() {
       <%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-3-loading', :style => 'padding: 20px;'%>
       <div id="tabs-3-content"></div>
     </div>
-    <!-- redes --> 
-    <div id="tabs-4">
-      <%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-4-loading', :style => 'padding: 20px;'%>
-      <div id="tabs-4-content"></div>
 
-    </div>
-
+    <% if can? :manage, @user %>
     <!-- anotações -->
     <div id="tabs-5">
       <%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-5-loading', :style => 'padding: 20px;'%>
       <div id="tabs-5-content"></div>
     </div>
+    <% end %>
 
   </div><!-- end tabs -->
 
