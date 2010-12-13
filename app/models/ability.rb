@@ -109,6 +109,12 @@ class Ability
         user.can_manage?(space.course.environment) || \
           (space.owner.nil? && user.teacher?(space))
       end
+
+      # Caso seja o Status de usuário, apenas ele mesmo pode criá-lo.
+      can :create, Status do |status|
+        (status.statusable.class.to_s.eql? 'User' && user == status.statusable) ||
+          (user.has_access_to? status.statusable) # Caso geral (Spaces, Subjects, etc.)
+      end
     end
   end
 

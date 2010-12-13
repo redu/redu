@@ -1,10 +1,9 @@
 class StatusesController < BaseController
 
-  load_and_authorize_resource :status, :except => [:create, :more]
+  load_and_authorize_resource :status, :except => [:more]
 
   def create
     @status = Status.new(params[:status])
-    authorize! :read, @status.statusable
 
     @status.user = current_user
 

@@ -275,7 +275,7 @@ class User < ActiveRecord::Base
     when 'SbPost'
       self.teacher?(entity.space)
     when 'Status'
-      case entity.class.to_s
+      case entity.statusable.class.to_s
       when 'Space'
         self.teacher?(entity.statusable)
       when 'Subject'
