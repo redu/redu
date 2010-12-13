@@ -53,31 +53,16 @@ class Space < ActiveRecord::Base
   has_attached_file :avatar, PAPERCLIP_STORAGE_OPTIONS
 
   # VALIDATIONS
-  validates_presence_of :name, :path,
+  validates_presence_of :name,
     :message => "Não pode ser deixado em branco"
-  validates_format_of :path, :with => /^[\sA-Za-z0-9_-]+$/,
-    :message => "Endereço inválido."
-  validates_uniqueness_of   :path, :case_sensitive => false,
-    :message => "Endereço inválido."
-  validates_exclusion_of    :path, :in => AppConfig.reserved_logins,
-    :message => "Endereço inválido"
-
-  # Sobreescrevendo ActiveRecord.find para adicionar capacidade de buscar por path do Space
-  def self.find(*args)
-    if args.is_a?(Array) and args.first.is_a?(String) and (args.first.index(/[a-zA-Z\-_]+/) or args.first.to_i.eql?(0) )
-      Space.find_by_path(args)
-    else
-      super
-    end
-  end
 
   # Utilizado nas rotas search friendly
   def to_param
-    self.path
+    "#{ self.id }-#{ name.parameterize }"
   end
 
   def permalink
-    AppConfig.community_url + '/' + self.path
+    APP_URL + '/espacos/' + self.id.to_s + '-' + self.name.parameterize
   end
 
   def avatar_photo_url(size = nil)
