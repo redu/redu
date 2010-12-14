@@ -7,8 +7,8 @@ staging:
 production:
   access_key_id: AKIAIRKVQDTWT2NN4J4Q
   secret_access_key: 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
-  bucket: redu_uploads2
-  files_bucket: redu_files2
+  bucket: redu_uploads
+  files_bucket: redu_files
 
 development:
   access_key_id: AKIAIRKVQDTWT2NN4J4Q
