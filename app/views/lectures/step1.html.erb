@@ -68,11 +68,16 @@
       </div>
 
       <div style="margin-bottom: 20px;">
-
         <h3><%= f.radio_button(:lectureable_type, "Page")%> Artigo</h3>
         Um artigo permite a postagem de conteúdo de leitura rápida como um tutorial ou uma página simples.
       </div>
-    <%end%>
+
+
+      <div style="margin-bottom: 20px;">
+        <h3><%= f.radio_button(:lectureable_type, "Document")%> Apresentação</h3>
+        Apresentação do PowerPoint
+      </div>
+    <% end %>
 
   </div>
 

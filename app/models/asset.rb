@@ -17,6 +17,7 @@ class Asset < ActiveRecord::Base
       when "Seminar" then "Vídeo-aula"
       when "InteractiveClass" then "Aula interativa"
       when "Page" then "Tutorial"
+      when "Document" then "Apresentação"
       end
     end
   end

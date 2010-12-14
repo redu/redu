@@ -1,3 +1,9 @@
+PATH
+  remote: /Users/guiocavalcanti/workspace/scribd_fu
+  specs:
+    scribd_fu (2.0.9)
+      rscribd
+
 GEM
   remote: http://rubygems.org/
   remote: http://gems.github.com/
@@ -30,7 +36,7 @@ GEM
     haml (3.0.24)
     hpricot (0.8.3)
     htmlentities (4.2.1)
-    i18n (0.4.2)
+    i18n (0.5.0)
     icalendar (1.1.5)
     linecache (0.43)
     mime-types (1.16)
@@ -57,6 +63,8 @@ GEM
       right_http_connection (>= 1.2.1)
     right_http_connection (1.2.4)
     rmagick (2.12.2)
+    rscribd (1.2.0)
+      mime-types
     ruby-debug (0.10.4)
       columnize (>= 0.1)
       ruby-debug-base (~> 0.10.4.0)
@@ -93,7 +101,9 @@ DEPENDENCIES
   rake (= 0.8.7)
   right_aws (~> 2.0.0)
   rmagick (= 2.12.2)
+  rscribd
   ruby-debug
+  scribd_fu!
   validatable
   will_paginate (~> 2.3.11)
   zencoder

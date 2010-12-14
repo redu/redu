@@ -51,6 +51,8 @@ module LecturesHelper
         render :partial => "interactive"
       when 'Page'
         render :partial => "page"
+      when 'Document'
+        render :partial => "document"
       end
   end
   

@@ -23,6 +23,8 @@ gem "zencoder"
 gem "mime-types"
 gem "haml"
 gem "cancan", "1.4.1"
+gem "rscribd"
+gem "scribd_fu", :git => "git@github.com:guiocavalcanti/scribd_fu.git"
 
 group :development do
   gem "mongrel"

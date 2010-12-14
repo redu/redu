@@ -148,6 +148,9 @@ class LecturesController < BaseController
       elsif @lecture.lectureable_type == 'Page'
         @page = Page.new
         render "step2_page" and return
+      elsif @lecture.lectureable_type == 'Document'
+        @document = Document.new
+        render "step2_document" and return
       end
     when "3"
       @lecture = Lecture.find(session[:lecture_id])
@@ -246,7 +249,7 @@ class LecturesController < BaseController
               end
 
               format.js do
-                render :template => 'lectures/create_seminar', :locals => { :lecture_type => params[:lectureable_type], :step => "3"#, :space_id => params[:space_id]
+                render :template => 'lectures/go_to_step3', :locals => { :lecture_type => params[:lectureable_type], :step => "3"
 }
               end
 
@@ -297,6 +300,26 @@ class LecturesController < BaseController
             format.html { render "step2_page" }
           end
         end
+      elsif @lecture.lectureable_type == 'Document'
+        @lecture.lectureable = Document.new(params[:document])
+
+        respond_to do |format|
+          @lecture.lectureable.define_content_type
+          if @lecture.save
+            format.html {
+              redirect_to new_space_subject_lecture_path(@space, @subject,
+               :lecture_type => params[:lectureable_type],
+               :step => 3)
+            }
+            format.js do
+              render :template => 'lectures/go_to_step3', :locals => { :lecture_type => params[:lectureable_type], :step => "3"
+}
+            end
+          else
+            format.html { render "step2_document" }
+            format.js { render "create_document_error" }
+          end
+        end
       end
 
     when "3"
@@ -321,10 +344,12 @@ class LecturesController < BaseController
         else
           @lecture.lectureable.ready!
         end
+      elsif @lecture.lectureable_type.eql?('Document')
+        @lecture.lectureable.delay.upload_to_scribd
       end
 
       respond_to do |format|
-        if @lecture.update_attributes(params[:lecture])
+        if @lecture.save
           # remover curso da sessao
           session[:lecture_id] = nil
 
