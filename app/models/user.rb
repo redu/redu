@@ -718,6 +718,7 @@ class User < ActiveRecord::Base
   end
 
   def accepted_curriculum_type
+    return unless self.teacher_profile?
     unless SUPPORTED_CURRICULUM_TYPES.include?(self.curriculum_content_type)
       self.errors.add(:curriculum, "Formato inválido")
     end
