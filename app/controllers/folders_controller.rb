@@ -32,9 +32,31 @@ class FoldersController < BaseController
     @folder_id = @myfile.folder.id
     @space_id = @myfile.folder.space_id
 
-    @myfile.destroy
 
-    redirect_to space_folders_path(:id => @folder_id, :space_id => @space_id)
+    respond_to do |format|
+      if @myfile.destroy
+        flash[:notice] = 'Arquivo removido!'
+        format.html {redirect_to space_folders_path(:id => @folder_id, :space_id => @space_id)  }
+        format.js do
+            # TODO mostrar flash em ajax
+            list
+            render :update do |page|
+            page.replace_html  'tabs-4-content', :partial => 'folders/index'
+            end
+        end
+      else
+        format.html { 
+          flash[:error] = @myfile.errors.full_messages.join(", ")
+          redirect_to space_folders_path(:id => @folder_id, :space_id => @space_id) 
+        }
+        format.js do
+            render :update do |page|
+              # update the page with an error message
+          end          
+        end
+      end
+    end
+    
   end
 
   # Upload the file and create a record in the database.
@@ -42,17 +64,30 @@ class FoldersController < BaseController
   def do_the_upload
     @myfile = Myfile.new(params[:myfile])
     @myfile.user = current_user
-
+    
     respond_to do |format|
       if @myfile.save
         flash[:notice] = 'Upload realizado!'
-        format.html do
-          redirect_to @space
+        format.html {redirect_to @space }
+        format.js do
+          list
+          responds_to_parent do
+            render :update do |page|
+            page.replace_html  'tabs-4-content', :partial => 'folders/index'
+            end
+          end          
         end
       else
-        format.html do
+        format.html { 
           flash[:error] = @myfile.errors.full_messages.join(", ")
-          redirect_to @space
+          redirect_to @space 
+        }
+        format.js do
+          responds_to_parent do
+            render :update do |page|
+              # update the page with an error message
+            end
+          end          
         end
       end
     end
@@ -79,7 +114,7 @@ class FoldersController < BaseController
   # FOLDER
   # The default action, redirects to list.
   def index
-    list
+    list(params[:id])
     # render :action => :list
     respond_to do |format|
       #format.html
@@ -88,10 +123,10 @@ class FoldersController < BaseController
   end
 
   # List the files and sub-folders in a folder.
-  def list
+  def list(id=nil)
     # Get the folder
-    if params[:id]
-      @folder = Folder.find(params[:id])
+    if id
+      @folder = Folder.find(id)
     else
       @folder = @space.root_folder
     end
@@ -180,13 +215,18 @@ class FoldersController < BaseController
           # copy groups rights on parent folder to new folder
 
           params[:space_id] = params[:folder][:space_id]
-          list
+          list(@folder.id)
           # back to the list
           flash[:notice] = 'Diretório criado!'
           format.html {
             redirect_to space_folders_path(:space_id => params[:folder][:space_id], :id => @folder.parent.id)
           }
-          format.js
+          format.js do
+              render :update do |page|
+                page.replace_html  'tabs-4-content', :partial => 'folders/index'
+            end   
+            
+          end
         else
           flash[:error] = 'Não foi possível criar o diretório'
           format.html {

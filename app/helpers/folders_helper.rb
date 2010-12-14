@@ -58,7 +58,7 @@ module FoldersHelper
 
     until folder.parent == nil
       folder = folder.parent
-      path = link_to_remote(h(folder.name), :url => { :action => :index, :id => folder.id, :space_id => folder.space_id}, :before => "showLoadingFiles()") + ' &#187; ' + path
+      path = link_to_remote(h(folder.name), :url => { :action => :index, :id => folder.id, :space_id => folder.space_id}, :before => "showLoadingFiles()") + ' > ' + path
     end
 
     return path.sub("root", "raiz")

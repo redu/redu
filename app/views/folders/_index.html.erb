@@ -35,14 +35,21 @@
       <div class="new-file-outter">
         <a href="#" onclick="$('div.new-file-inner').slideToggle(); return false;">Upload de Arquivo</a>
         <div class="new-file-inner hoverdiv">
-          <% form_for @myfile, :url => { :action => "do_the_upload" }, :html => { :multipart => true, :onsubmit => "$('#new-file-spinner').show()"  } do |f| %>
-            <%= f.file_field :attachment %> (max. 10MB)
+         
+		  
+		<% form_for(@myfile, :url => { :action => "do_the_upload", :format => 'js' }, :html => { :multipart => true, :target => 'upload_frame',:onsubmit => "$('#new-file-spinner').show()"}) do |f| %>
+		 <%= f.file_field :attachment %> (max. 10MB)
             <%= f.hidden_field :folder_id, :value => @folder.id %>
             <%= hidden_field_tag :space_id,  @space.id %>
             <br>
             <%= submit_tag 'OK' %>
             <%= image_tag 'spinner.gif', :id => 'new-file-spinner', :style => 'display: none' %>
-          <% end %>
+		<% end %>
+		<iframe id='upload_frame' name="upload_frame" style="width:1px;height:1px;border:0px" src="about:blank"></iframe>
+
+		  
+		  
+		  
         </div>
       </div>
 

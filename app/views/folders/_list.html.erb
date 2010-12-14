@@ -16,7 +16,7 @@
 <% if @folder.parent %>
         <tr>
             <td class="directory collapsed">&nbsp;</td>
-            <td><%= link_to_remote "..", :url => {:action => :index, :id => @folder.parent, :space_id => @space.id}, :before => "showLoadingFiles()" %>
+            <td><%= link_to_remote "...", :url => {:action => :index, :id => @folder.parent, :space_id => @space.id}, :before => "showLoadingFiles()" %>
 	        </td>
             <td>--</td>
             <td>--</td>
