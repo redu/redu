@@ -44,3 +44,5 @@ PAPERCLIP_MYFILES_OPTIONS = PAPERCLIP_STORAGE_OPTIONS.merge({
   :path => ":class/:attachment/:id/:style/:basename.:extension",
   :default_url => ":class/:attachment/:style/missing.png",
 })
+
+DOCUMENT_STORAGE_OPTIONS = PAPERCLIP_STORAGE_OPTIONS
