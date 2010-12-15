@@ -201,6 +201,25 @@ blockquote {/*necessário para o tinymce*/
 /**
 @overall
  **/
+
+.general-call {
+  background: url("../images/bg-content-teach-header.jpg") no-repeat 0 -180px;
+  padding: 20px 15px;
+  margin: 20px 0 40px 0;
+  color: white;
+}
+
+.general-call h3 {
+  margin: 0 0 10px 0;
+  font-size: 1.5em;
+  font-weight: bold;
+  text-shadow: 1px 1px 1px #000;
+}
+
+.general-call p {
+  font-size: 1.2em;
+}
+
 .modal_window {
   top: 25%;
   left: 18%;
@@ -2179,6 +2198,13 @@ div.curriculum h6 {
 }
 
 /** @group -> environment **/
+/* Criação de environment */
+#url_preview {
+  font-size: 1.6em;
+  font-weight: bold;
+  color: #30A6D3;
+}
+
 #environment{
 }
 

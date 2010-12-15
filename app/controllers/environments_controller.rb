@@ -49,33 +49,44 @@ class EnvironmentsController < BaseController
   # POST /environments
   # POST /environments.xml
   def create
-    @environment.owner = current_user
-    @environment.courses.first.owner = current_user
-    @environment.published = true
-    @environment.verify_path!
+    case params[:step]
+    when "1"
+      @environment.valid?
 
-    respond_to do |format|
-      if @environment.save
-        UserEnvironmentAssociation.create(:environment => @environment,
-                                          :user => current_user,
-                                          :role_id => Role[:environment_admin].id)
-        user_course = UserCourseAssociation.create(
-          :course => @environment.courses.first,
-          :user => current_user,
-          :role_id => Role[:environment_admin].id)
-
-        user_course.approve!
-
-        flash[:notice] = 'Environment was successfully created.'
-        format.html do
-          redirect_to environment_course_path(@environment,
-                                              @environment.courses.first)
-        end
-        format.xml  { render :xml => @environment, :status => :created, :location => @environment }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @environment.errors, :status => :unprocessable_entity }
+      respond_to do |format|
+        format.html { render :action => "new", :locals => { :step => 2 }, :layout => "wizard_environment" }
       end
+    when "2"
+      respond_to do |format|
+        @environment.owner = current_user
+        @environment.courses.first.owner = current_user
+
+        if @environment.save
+          UserEnvironmentAssociation.create(:environment => @environment,
+             :user => current_user,
+             :role_id => Role[:environment_admin].id)
+          user_course = UserCourseAssociation.create(
+            :course => @environment.courses.first,
+            :user => current_user,
+            :role_id => Role[:environment_admin].id)
+
+          user_course.approve!
+
+          flash[:notice] = 'Parabéns, o seu ambiente de ensino foi criado'
+          format.html do
+            redirect_to environment_course_path(@environment,
+                                                @environment.courses.first)
+          end
+          format.xml  { render :xml => @environment,
+            :status => :created, :location => @environment }
+        else
+          format.html { render :action => "new", :layout => "wizard_environment" }
+          format.xml  { render :xml => @environment.errors,
+            :status => :unprocessable_entity }
+        end
+      end
+    else
+      redirect_to teach_path
     end
   end
 

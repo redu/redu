@@ -1,101 +1,28 @@
 <script type="text/javascript">
 $(document).ready(function(){
     $("#environment_name").bind('keyup blur', function(e){
-      $("#environment_path").val($(this).slug());    
+      $("#environment_path").val($(this).slug());
     })
-    $("#environment_courses_attributes__name").bind('keyup blur', function(e){
-      $("#environment_courses_attributes__path").val($(this).slug());    
+    $("#environment_courses_attributes_0_name").bind('keyup blur', function(e){
+      $("#environment_courses_attributes_0_path").val($(this).slug());
     })
-    $('#environment_courses_attributes__color').colourPicker(
-      { ico: '/images/jquery.colourPicker.gif',
-        title: 'Customize seu Curso',
-        inputBG: true}
-    );
 
     $("input[name=environment\[courses_attributes\]\[\]\[color\]]").hide()
-}); 
+});
 </script>
-<%= javascript_include_tag "jquery.colourPicker.js" %>
-<%= stylesheet_link_tag "jquery.colourPicker.css" %>
-<%
-colors = [["#ffffff", "ffffff"],
-          ["#ffccc9", "ffccc9"],
-          ["#ffce93", "ffce93"],
-          ["#fffc9e", "fffc9e"],
-          ["#ffffc7", "ffffc7"],
-          ["#9aff99", "9aff99"],
-          ["#96fffb", "96fffb"],
-          ["#cdffff", "cdffff"],
-          ["#cbcefb", "cbcefb"],
-          ["#cfcfcf", "cfcfcf"],
-          ["#fd6864", "fd6864"],
-          ["#fe996b", "fe996b"],
-          ["#fffe65", "fffe65"],
-          ["#fcff2f", "fcff2f"],
-          ["#67fd9a", "67fd9a"],
-          ["#38fff8", "38fff8"],
-          ["#68fdff", "68fdff"],
-          ["#9698ed", "9698ed"],
-          ["#c0c0c0", "c0c0c0"],
-          ["#fe0000", "fe0000"],
-          ["#f8a102", "f8a102"],
-          ["#ffcc67", "ffcc67"],
-          ["#f8ff00", "f8ff00"],
-          ["#34ff34", "34ff34"],
-          ["#68cbd0", "68cbd0"],
-          ["#34cdf9", "34cdf9"],
-          ["#6665cd", "6665cd"],
-          ["#9b9b9b", "9b9b9b"],
-          ["#cb0000", "cb0000"],
-          ["#f56b00", "f56b00"],
-          ["#ffcb2f", "ffcb2f"],
-          ["#ffc702", "ffc702"],
-          ["#32cb00", "32cb00"],
-          ["#00d2cb", "00d2cb"],
-          ["#3166ff", "3166ff"],
-          ["#6434fc", "6434fc"],
-          ["#656565", "656565"],
-          ["#9a0000", "9a0000"],
-          ["#ce6301", "ce6301"],
-          ["#cd9934", "cd9934"],
-          ["#999903", "999903"],
-          ["#009901", "009901"],
-          ["#329a9d", "329a9d"],
-          ["#3531ff", "3531ff"],
-          ["#6200c9", "6200c9"],
-          ["#343434", "343434"],
-          ["#680100", "680100"],
-          ["#963400", "963400"],
-          ["#986536", "electe"],
-          ["#646809", "646809"],
-          ["#036400", "036400"],
-          ["#34696d", "34696d"],
-          ["#00009b", "00009b"],
-          ["#303498", "303498"],
-          ["#000000", "000000"],
-          ["#330001", "330001"],
-          ["#643403", "643403"],
-          ["#663234", "663234"],
-          ["#343300", "343300"],
-          ["#013300", "013300"],
-          ["#003532", "003532"],
-          ["#010066", "010066"],
-          ["#340096", "340096"]]
-%>
 
-<% form_for :environment, :url => environments_path do |f| %>
+<% environment = Environment.new
+   environment.courses.build %>
+<% form_for environment, :url => environments_path(:step => 1) do |f| %>
   <%= f.error_messages %>
   <%= f.label :name, "Seu ambiente de ensino" %>
   <%= f.text_field :name, :class => "text" %>
-  <div class="link">redu.com.br/</div>
-  <%= f.text_field :path, :class => "leitura" %>
-  <% f.fields_for "courses_attributes[]", Course.new do |course|  %>
+  <%= f.hidden_field :path, :class => "leitura" %>
+  <% f.fields_for :courses do |course|  %>
     <%= course.label :name, "Seu curso" %>
     <%= course.text_field :name, :class => "text" %>
     <%= course.hidden_field :path %>
-    <%= course.select :color, options_for_select(colors, "340096"),
-          :class => "color" %>
   <% end %>
   <%= submit_tag "Criar!" %>
-<% end %> 
+<% end %>
 

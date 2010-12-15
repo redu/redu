@@ -12,7 +12,8 @@ class Course < ActiveRecord::Base
 
   acts_as_taggable
 
-  validates_presence_of :name, :message => "Não pode ficar em branco."
+  validates_presence_of :name, :path, :message => "Não pode ficar em branco."
+  validates_uniqueness_of :name, :path, :scope => :environment_id
 
   # Sobreescrevendo ActiveRecord.find para adicionar capacidade de buscar por path do Space
   def self.find(*args)

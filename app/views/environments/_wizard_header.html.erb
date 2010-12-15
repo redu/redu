@@ -1,0 +1,22 @@
+<%= stylesheet_link_tag 'environment-header.css' %>
+<div id="environment-header" class="container_16 clearfix">
+  <div class="container_16" id="create-header" style="background-color: #<%= course.color %>">
+    <div class="avatar grid_3">
+      <div class="frame" id="university-logo">
+        <div class="inner-frame">
+          <%= image_tag environment.avatar.url(:thumb)  %>
+        </div>
+      </div> <!-- /frame -->
+    </div>
+
+    <div class="dropdown name grid_11 alpha">
+      <h3><%= link_to environment.name, "#" %></h3>
+    </div>
+    <div class="dropdown course grid_11 alpha">
+      <h4>
+        <%= link_to course.name, "#" %>
+      </h4>
+    </div>
+  </div>
+</div><!-- end environment-header -->
+

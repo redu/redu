@@ -15,7 +15,9 @@ class Environment < ActiveRecord::Base
     :styles => { :thumb => "140x100>" }
   })
 
-  validates_presence_of :name
+  validates_presence_of :name, :path
+  validates_uniqueness_of :name, :path,
+    :message => "Precisa ser único"
 
   accepts_nested_attributes_for :courses, :invitations
 
