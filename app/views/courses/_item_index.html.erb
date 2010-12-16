@@ -1,0 +1,10 @@
+<li class="grid_3"  >
+  <%= link_to (image_tag course.environment.avatar(:thumb)),
+    environment_course_path(course.environment, course), :class => "logo" %>
+  <%= link_to course.name, environment_course_path(course.environment, course), :class => "name" %>
+  <div class="badge_info">
+  </div>
+  <% if can? :manage, course %>
+    <span><%= link_to "gerenciar", edit_environment_course_path(course.environment, course), :class => "icon more"%></span>
+  <% end %>
+</li>

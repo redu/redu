@@ -206,6 +206,7 @@ ActionController::Routing::Routes.draw do |map|
   map.application '', :controller => "base", :action => "site_index"
   map.learn_index '/learn', :controller => 'base', :action => 'learn_index'
   map.teach_index '/teach', :controller => 'base', :action => 'teach_index'
+  map.courses_index '/courses', :controller => 'courses', :action => 'index'
 
   map.resources :environments,
     :member_path => "/:id",

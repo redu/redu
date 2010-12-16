@@ -1,7 +1,7 @@
 class CoursesController < BaseController
   layout "environment"
   load_resource :environment
-  load_and_authorize_resource :course, :through => :environment
+  load_and_authorize_resource :course, :through => :environment, :except => [:index]
 
   uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit, :create, :update])
 
@@ -69,6 +69,26 @@ class CoursesController < BaseController
       end
     end
 
+  end
+
+  def index
+    paginating_params = {
+      :page => params[:page],
+      :per_page => 12
+    }
+
+    if params[:search] # search
+      @courses = Course.published.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
+    else
+      @courses = Course.published.paginate(paginating_params)
+    end
+    respond_to do |format|
+      format.html do
+        render :layout => 'application'
+      end
+      format.js  do
+      end
+    end
   end
 
   # Visão do Course para usuários não-membros.

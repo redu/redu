@@ -1,0 +1,30 @@
+<div class="container_16" id="common-header">
+  <div class="session-title">
+    Cursos
+  </div> <!-- title -->
+</div>
+
+<div class="grid_16">
+  <span class="filter_bar">
+    <span class="filter_text">
+      <%= (params[:search]) ? ("Resultados para: \""+params[:search]+"\"") : "Todos os cursos mais recentes" %>
+    </span>
+
+    <% form_tag courses_path, :method => :get do %>
+      Buscar
+      <%= text_field_tag :search, params[:search] %>
+      <%= submit_tag "OK", :name => nil%>
+    <% end %>
+
+  </span>
+
+  <%= image_tag "loadingAnimation.gif", :id => "loader", :style => "display: none"%>
+  <div id="school_list" class="grid_16 alpha omega">
+    <%= render :partial => "course_list" %>
+  </div>
+</div>
+
+
+
+
+

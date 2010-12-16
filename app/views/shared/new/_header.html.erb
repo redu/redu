@@ -1,18 +1,20 @@
 <div id="header" class="container_16">
     <h1 id="logo" class="grid_3"><a href="<%=application_url%>" class="replacement">Redu - Rede Social Educacional</a></h1>
     <div id="global-nav" class="grid_6">
-        <ul class="clearfix">
-	    <li class="item-1">
-	        <a href="<%=application_url%>">Início</a>
-	    </li>
-	    <li class="item-2 selected">
-			<%= link_to "Aprenda", learn_index_path %>
-	    </li>
-	    <li class="item-3">
-		<%= link_to "Ensine", teach_index_path %>	
-		</li>
-		<li class="item-4"><a href="<%= spaces_path %>">Redes</a></li>
-	    </ul>
+      <ul class="clearfix">
+        <li class="item-1">
+          <a href="<%=application_url%>">Início</a>
+        </li>
+        <li class="item-2 selected">
+          <%= link_to "Aprenda", learn_index_path %>
+        </li>
+        <li class="item-3">
+          <%= link_to "Ensine", teach_index_path %>
+        </li>
+        <li class="item-4">
+          <%= link_to "Cursos", courses_index_path %>
+        </li>
+      </ul>
     </div>
     <div id="global-search" class="grid_5">
         <form action="" id="search">
@@ -22,12 +24,12 @@
             </div>
         </form>
     </div>
-    
+
     <div class="user-actions grid_2">
 	<% if current_user %>
 		<a href="#user-settings" class="pandora closed"><%= current_user.first_name[0..14] %>
 		<%= image_tag "icons/bullet_arrow_down.png", :style => "float: right; position: relative; margin-top: 3px;" %></a>
-		
+
 			<div id="user-settings" class="option hide">
 			<ul>
 			<li>
@@ -35,7 +37,7 @@
 			<%= link_to "editar", edit_user_path(current_user), :class => "icon more", :style=>"margin-left: 7px;"%>
 			</li>
 			<li style="border-bottom:1px solid #DDDDDD;">
-				
+
 			</li>
 			<!--
 			<hr/>
@@ -85,12 +87,12 @@
 						 <% end %>
  						<% end %>
             <% end %>
-			
-			
-			
+
+
+
 		</div>
 	<% end %>
 
-</div><!-- end header -->       
+</div><!-- end header -->
     </div>
 
