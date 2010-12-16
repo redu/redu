@@ -10,34 +10,36 @@ CKEDITOR.editorConfig = function( config )
   config.language = 'en';
   // config.uiColor = '#AADC6E';
 
-  //config.ContextMenu = ['Generic','Anchor','Flash','Select','Textarea','Checkbox','Radio','TextField','HiddenField','ImageButton','Button','BulletedList','NumberedList','Table','Form'] ; 
-  
+  //config.ContextMenu = ['Generic','Anchor','Flash','Select','Textarea','Checkbox','Radio','TextField','HiddenField','ImageButton','Button','BulletedList','NumberedList','Table','Form'] ;
+
   config.height = '400px';
   config.width = '600px';
-  
+
   //config.resize_enabled = false;
   //config.resize_maxHeight = 2000;
   //config.resize_maxWidth = 750;
-  
+
   //config.startupFocus = true;
-  
+
   // works only with en, ru, uk languages
   config.extraPlugins = "embed,attachment";
-  
+
   config.toolbar = 'Easy';
-  
+
   config.toolbar_Easy =
     [
-        ['Source','-','Preview','Templates'],
-        ['Cut','Copy','Paste','PasteText','PasteFromWord',],
-        ['Maximize','-','About'],
-        ['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],
-        ['Styles','Format'],
-        ['Bold','Italic','Underline','Strike','-','Subscript','Superscript', 'TextColor'],
+        ['Preview','-','Templates'],
+        ['Cut','Copy','Paste','PasteText','PasteFromWord'],
+        ['Undo','Redo','-','Find','-','SelectAll','RemoveFormat'],
+        ['Bold','Italic','Underline','Strike','-','Subscript','Superscript'],
         ['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
         ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
         ['Link','Unlink','Anchor'],
-        ['Image','Embed','Flash','Attachment','Table','HorizontalRule','Smiley','SpecialChar','PageBreak']
+        ['Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak'],
+        '/',
+        ['Styles','Format','Font','FontSize'],
+        ['TextColor','BGColor'],
+        ['Maximize','-','About']
     ];
 };
 
