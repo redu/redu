@@ -128,7 +128,7 @@
                :locals => {:subject => @subject} %>
            </div>
          </div>
-       </div><!-- /end grid_16 acoes gerais -->
+       </div><!--  grid_16 acoes gerais -->
 
        <div class="publish grid_16">
          <% unless @subject.ready_to_be_published? %>
@@ -137,9 +137,11 @@
        </div>
 
      </div> <!-- /container_16 -->
+     <% if current_user.enrolled?(@subject) %>
+     <% assetable = @lecture || @exam %>
+     <% if @subject.published? && assetable && !assetable.new_record? && assetable.published? %>
      <div class="grid_16">
        <div class="grid_5 push_11 alpha omega">
-         <% assetable = @lecture || @exam %>
          <% if assetable && !assetable.new_record? %>
            <% form_tag next_space_subject_path(@space, @subject), :class => "lecture-control" do %>
              <%= hidden_field_tag :assetable_type, assetable.class.to_s %>
@@ -150,6 +152,8 @@
            <% end %>
          <% end %>
        </div>
-   <% end %>
    </div>
- </div><!-- end environment-header -->
+   <% end %>
+   <% end %>
+   <% end %>
+ </div><!-- environment-header -->

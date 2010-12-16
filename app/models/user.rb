@@ -316,6 +316,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def enrolled?(subject)
+    self.get_association_with(subject).nil? ? false : true
+  end
+
   # Método de alto nível, verifica se o object está publicado (caso se aplique)
   # e se o usuário possui acesso (i.e. relacionamento) com o mesmo
   def can_read?(object)
