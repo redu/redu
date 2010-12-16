@@ -3,7 +3,10 @@ class EventsController < BaseController
 	
   layout 'environment'
   load_and_authorize_resource :space
-  load_and_authorize_resource :event, :through => :space
+  load_and_authorize_resource :environment
+  load_and_authorize_resource :event, :through => [:space, :environment]
+
+  before_filter :find_environment_course_and_space
 
   caches_page :ical
   cache_sweeper :event_sweeper, :only => [:create, :update, :destroy]
