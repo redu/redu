@@ -1,3 +1,4 @@
+<%= javascript_include_tag "jquery.scrollTo-1.4.2-min.js" %>
 <% if can? :manage, @course %>
   <div class="container_16 actions clearfix">
     <%= link_to "Crie Espaços!", new_space_path(:course_id => @course.id), :class => "grid_5 action" %>
@@ -9,43 +10,66 @@
   })
 </script>
 
+<script type="text/javascript"  charset="utf-8">
+  $(document).ready(function(){
+    $("ul.repo_list li a").click(function(e){
+      $(this).parents(".space:first").css("clear", "left").addClass("expanded").animate(
+        { "width": "100%" }, "normal", "linear", function(){
+          $.scrollTo($(this), 800, {offset: {top:-100, left:0}})
+          $(this).find(".specific-logs").fadeIn()
+          $(this).find("span.shrink").fadeIn()
+          $(this).css("clear", "none")
+        }
+      )
+    })
+
+    $(".space .shrink").click(function(e){
+      $(this).hide()
+      $(this).parents(".space:first").find(".specific-logs").fadeOut("fast")
+      $(this).parents(".space:first").removeClass("expanded").animate(
+        { "width": "293px" }, "normal", "linear", function(){
+          $.scrollTo($(this), 800, {offset: {top:-100, left:0}})
+        }
+      )
+    })
+  })
+</script>
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function(){
+      $(".message").hide()
+      $("#toggle").live('click', function(e){
+        $(".message").toggle()
+        e.preventDefault()
+        });
+      })
+</script>
+<div class="grid_16 alpha omega">
+  <h3 class="call">Espaços do curso <%= @course.name %></h3>
+  <div class="spotlight-boxes clearfix">
+    <% unless @spaces.empty? %>
+      <%= render :partial => 'spaces/spotlight', :collection => @spaces %>
+    <% else %>
+      <div class="box_notice">Nenhuma disciplina foi criada.</div>
+    <% end %>
+  </div><!--  end spotlight-boxes -->
+</div>
 <div class="grid_16">
-  <div class="grid_16 alpha omega">
-    <h3 class="call">Espaços do curso <%= @course.name %></h3>
-    <div class="spotlight-boxes">
-      <% unless @spaces.empty? %>
-        <%= render :partial => 'spaces/spotlight', :collection => @spaces %>
-      <% else %>
-        <div class="box_notice">Nenhuma disciplina foi criada.</div>
-      <% end %>
-    </div><!--  end spotlight-boxes -->
-  </div>
   <div class="grid_8 alpha">
     <h3 class="call">Convide colaboradores</h3>
-    <script type="text/javascript" charset="utf-8">
-      $(document).ready(function(){
-          $(".message").hide()
-          $("#toggle").live('click', function(e){
-            $(".message").toggle()
-            e.preventDefault()
-            });
-          })
-</script>
 
-<% remote_form_for :invitation, :method => :post,
-  :url => course_invitations_path(@course),
-  :html => {:id => "environment_invitation"},
-  :loading => "$(\"#environment_invitation\").prepend(\"#{escape_javascript(image_tag("spinner.gif")) }\")",
-  :complete => "$(\"#environment_invitation\").find(\"img\").remove()" do  |f| %>
-  <div id="invitation_errors"></div>
-  <%= f.label :email_addresses, "E-mails" %>
-  <%= f.text_area :email_addresses, :cols => 50, :rows => 6 %>
-  <a id="toggle" href="#">Escrever Mensagem</a>
-  <%= f.label :message, "Mensagem", :class => "message" %>
-  <%= f.text_area :message, :cols => 50, :rows => 6 , :class => "message" %>
+    <% remote_form_for :invitation, :method => :post,
+      :url => course_invitations_path(@course),
+      :html => {:id => "environment_invitation"},
+      :loading => "$(\"#environment_invitation\").prepend(\"#{escape_javascript(image_tag("spinner.gif")) }\")",
+      :complete => "$(\"#environment_invitation\").find(\"img\").remove()" do  |f| %>
+      <div id="invitation_errors"></div>
+      <%= f.label :email_addresses, "E-mails" %>
+      <%= f.text_area :email_addresses, :cols => 50, :rows => 6 %>
+      <a id="toggle" href="#">Escrever Mensagem</a>
+      <%= f.label :message, "Mensagem", :class => "message" %>
+      <%= f.text_area :message, :cols => 50, :rows => 6 , :class => "message" %>
 
-  <%= f.submit "Convidar" %>
-<% end %>
-
+      <%= f.submit "Convidar" %>
+    <% end %>
   </div>
 </div>
