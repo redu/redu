@@ -14,7 +14,7 @@
     <%= render :partial => 'shared/limit_char_field', :locals => { :class_textarea => "tagline-#{random_number}" }%>
 
     <%= f.label "Descrição" %>
-    <%= f.text_area :description, :size => "70x14", :class => "mceEditor"%>
+    <%= f.cktext_area :description %> 
 
     <%= f.label "Tags <span class='snippet'>(separadas por vírgula)</span>" %>
     <%= f.text_field :tag_list %>

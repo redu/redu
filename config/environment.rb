@@ -98,6 +98,9 @@ Rails::Initializer.run do |config|
       :password => 'MCZC2pDQyt5bzko1'
     }
 
+  # Usado pelo WYSIWYG CKEditor
+  config.load_paths += %W( #{RAILS_ROOT}/app/models/ckeditor )
+
   # Activate observers that should always be running
   # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
 
