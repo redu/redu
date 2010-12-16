@@ -184,10 +184,14 @@ class CoursesController < BaseController
   end
 
   def publish
-    @course.published = 1
-    @course.save
+    if @course.can_be_published?
+      @course.published = 1
+      @course.save
+      flash[:notice] = "O curso #{@course.name} foi publicado."
+    else
+      flash[:notice] = "O curso não pode ser publicado, crie e publique espaços!"
+    end
 
-    flash[:notice] = "O curso #{@course.name} foi publicado."
     redirect_to environment_course_path(@environment, @course)
   end
 
