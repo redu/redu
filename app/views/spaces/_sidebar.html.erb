@@ -13,17 +13,18 @@
         <li><a href="" class="closed sb">Acompanhar alunos</a></li>
         <li><a href="" class="closed sb">Acompanhar aulas</a></li>
         -->
-        <% if current_user.can_post?(space)%>
+        <% if can? :manage, space or current_user.tutor? space %>
           <li>
             <%= link_to "Criar evento", new_space_event_path(space)%>
           </li>
           <li>
             <%= link_to "Criar notícia", new_space_bulletin_path(space)%>
           </li>
+        <% end %>
+        <% if can? :manage, space %>
           <li>
             <%= link_to "Criar módulo", new_space_subject_path(space)%>
           </li>
-
         <% end %>
 
       </ul>

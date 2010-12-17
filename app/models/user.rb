@@ -247,7 +247,7 @@ class User < ActiveRecord::Base
     self.admin? and return true
     self.environment_admin? entity and return true
     (entity.owner && entity.owner == self) and return true
-
+    
     case entity.class.to_s
     when 'Course'
       (self.environment_admin? entity.environment)
@@ -260,7 +260,7 @@ class User < ActiveRecord::Base
     when 'Exam'
       self.teacher?(entity.subject.space)
     when 'Event'
-      self.teacher?(entity.space) || self.tutor?(entity.space)
+      self.teacher?(entity.eventable) || self.tutor?(entity.eventable)
     when 'Bulletin'
       case entity.bulletinable.class.to_s
       when 'Environment'
@@ -292,8 +292,7 @@ class User < ActiveRecord::Base
     else
       case entity.class.to_s
       when 'Event'
-        #TODO lembrar que vai se tornar polomorfico
-        self.get_association_with(entity.space).nil? ? false : true
+        self.get_association_with(entity.eventable).nil? ? false : true
       when 'Bulletin'
         self.get_association_with(entity.bulletinable).nil? ? false : true
       when 'Forum'

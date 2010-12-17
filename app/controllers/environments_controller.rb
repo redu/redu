@@ -60,6 +60,7 @@ class EnvironmentsController < BaseController
       respond_to do |format|
         @environment.owner = current_user
         @environment.courses.first.owner = current_user
+        @environment.published = true
 
         if @environment.save
           UserEnvironmentAssociation.create(:environment => @environment,
