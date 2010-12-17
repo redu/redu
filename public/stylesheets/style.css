@@ -1918,6 +1918,7 @@ div.content div.content {
 
 /** @profile **/
 #public-profile {
+  padding-top: 10px;
 }
 
 /** width: 640px **/

@@ -15,22 +15,8 @@ $(document).ready(function() {
 
     $usertabs = $(".user-tabs").tabs({
         select: function(event, ui) {
-            if (ui.panel.id == "tabs-3") {
-                // Ensinando
-                $("#tabs-3-content").html('');
-                jQuery.ajax({
-                    data: '',
-                    dataType: 'script',
-                    success: function(request) {
-                        $("#tabs-3-loading").hide();
-                    },
-                    type: 'get',
-                    url: userteachingPath
-                });
-
-                $("#tabs-3-loading").show();
-            } else if (ui.panel.id == "tabs-2") {
-                // Aprendendo
+            if (ui.panel.id == "tabs-2") {
+                // Meus cursos
                 $("#tabs-2-content").html('');
                 jQuery.ajax({
                     data: '',
@@ -73,8 +59,7 @@ $(document).ready(function() {
   <div class="user-tabs tabs clearfix">
     <ul>
       <li><a href="#tabs-1">Atividades</a></li>
-      <li><a href="#tabs-2">Aprendendo</a></li>
-      <li><a href="#tabs-3">Ensinando</a></li>
+      <li><a href="#tabs-2">Meus cursos</a></li>
       <% if can? :manage, @user %>
         <li><a href="#tabs-5">Anotações</a></li>
       <% end %>
@@ -97,16 +82,10 @@ $(document).ready(function() {
 
     </div>
 
-    <!-- aprendendo -->
-    <div id="tabs-2">
-
+    <!-- meus cursos -->
+    <div id="tabs-2" class="clearfix">
       <%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-2-loading', :style => 'padding: 20px;'%>
       <div id="tabs-2-content"></div>
-    </div>
-    <!-- ensinando -->
-    <div id="tabs-3">
-      <%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-3-loading', :style => 'padding: 20px;'%>
-      <div id="tabs-3-content"></div>
     </div>
 
     <% if can? :manage, @user %>
