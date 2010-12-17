@@ -9,6 +9,9 @@ class Course < ActiveRecord::Base
   has_many :invitations, :as => :inviteable, :dependent => :destroy
 
   named_scope :published, :conditions => {:published => 1}
+  named_scope :of_environment, lambda { |environmnent_id|
+   { :conditions => {:environment_id => environmnent_id} }
+  }
 
   acts_as_taggable
 

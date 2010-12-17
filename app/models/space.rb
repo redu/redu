@@ -43,7 +43,9 @@ class Space < ActiveRecord::Base
   has_one :forum, :dependent => :destroy
 
   named_scope :published, :conditions => {:published => 1}
-
+  named_scope :of_course, lambda { |course_id|
+     { :conditions => {:course_id => course_id} }
+  }
   # METODOS DO WIZARD
   attr_writer :current_step
 

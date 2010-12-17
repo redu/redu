@@ -20,8 +20,8 @@
       <td><%= time_ago_in_words(environment_membership.created_at) %> </td>
       <td>
         <ul class="tags">
-        <% environment_membership.user.user_course_associations.each do |course_membership| %>
-          <li><span><%= course_membership.course.name %></span></li>
+        <% environment_membership.user.courses.of_environment(@environment).each do |course| %>
+          <li><span><%= course.name %></span></li>
         <% end %>
         </ul>
       </td>
