@@ -5,7 +5,7 @@
       <h1>Moderação de Membros</h1>
 
       <% if @pending_members && @pending_members.size > 0 %>
-        <% form_tag :action => :moderate_members_requests, :id => @course.id do %>
+        <% form_tag  moderate_members_requests_environment_course_path(@environment, @course), :method => :post do %>
           <table class="common">
             <thead>
               <th style="max-width:25px;">Aprovar</th><th style="max-width:27px;">Rejeitar</th><th>Nome</th><th>Data</th>

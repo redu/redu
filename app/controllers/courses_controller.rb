@@ -7,7 +7,7 @@ class CoursesController < BaseController
 
   rescue_from CanCan::AccessDenied do |exception|
     flash[:notice] = "Você não tem acesso a essa página"
-    redirect_to preview_environment_course_path(@environment)
+    redirect_to preview_environment_course_path(@environment, @course)
   end
 
   def show
