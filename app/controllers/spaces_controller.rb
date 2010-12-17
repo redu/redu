@@ -350,7 +350,7 @@ class SpacesController < BaseController
         if params[:space][:subscription_type].eql? "1" # Entrada de membros passou a ser livre, aprovar todos os membros pendentes
           UserSpaceAssociation.update_all("status = 'approved'", ["space_id = ? AND status = 'pending'", @space.id])
         end
-        flash[:notice] = 'A escola foi atualizada com sucesso!'
+        flash[:notice] = 'O espaço foi atualizado com sucesso!'
         format.html { redirect_to(@space) }
         format.xml  { head :ok }
       else
