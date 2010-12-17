@@ -94,7 +94,10 @@ pt-BR:
                 role:
                     blank: ": Por favor, informe seu papel (professor/aluno)."
                     inclusion: ": Por favor, informe seu papel (professor/aluno)."
-                    
+        lazy_asset:
+          attributes:
+           name:
+            blank: ": Escolha um nome para o recurso."
   
   lectureable: vídeo-aula         
   lectures: aulas
