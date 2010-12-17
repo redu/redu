@@ -4,13 +4,15 @@
   -moz-box-shadow: 0 1px 2px rgba(51, 51, 51, 0.3);
   -webkit-box-shadow: 0 1px 2px rgba(51, 51, 51, 0.3);
   background:#FFFFFF;
-  border:1px solid #ececec;
   float:left;
   height: 150px;
   padding: 5px;
   display: table;
-  #position: relative;
   overflow: hidden;
+  margin: 0 10px;
+  float: left;
+  width: 150px;
+  height: 130px;
 }
 
 #university-logo .inner-frame {
@@ -18,6 +20,7 @@
   #top: 50%;
   display: table-cell;
   vertical-align: middle;
+  text-align: center;
 }
 
 #university-logo img{
@@ -26,7 +29,7 @@
 }
 
 #create-header{
-  background:url(../images/bg-create-header.png) center repeat-x #dc3a23;
+  background:url(../images/background_header_novo.png) repeat-x #dc3a23;
   _background-image: none;
   _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="../images/bg-create-header.png", sizingMethod="scale");
   height:140px;
@@ -39,15 +42,37 @@
   margin: 10px 10px 0 0;
 }
 
+#create-header .edit {
+  font-size: .8em;
+  font-weight: bold;
+  float: right;
+  margin: 5px 0;
+}
+
 #create-header .current img {
 }
 
-#create-header .dropdown {
-  padding: 0 10px 10px 10px;
+#create-header .dropdown-wrapper {
   position: absolute;
+  width: 600px;
 }
+
+#create-header .dropdown {
+  padding: 5px 0;
+}
+
+#create-header .name,
 #create-header .course {
-  margin-top: 60px;
+  float: left;
+  width: 770px;
+}
+
+#create-header .name h3 {
+  float: left;
+  margin: 10px 0;
+}
+
+#create-header .course {
 }
 
 #create-header .dropdown ul {
@@ -89,8 +114,7 @@
   margin: 5px 0;
 }
 #create-header h4{
-  padding-top:20px;
-  margin-bottom: 10px;
+  float: left;
 }
 
 #create-header h4 a{

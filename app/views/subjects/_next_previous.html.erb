@@ -1,0 +1,16 @@
+<% assetable = @lecture || @exam %>
+<% if @subject.published? && assetable && !assetable.new_record? && assetable.published? %>
+  <div class="grid_16">
+    <div class="grid_5 push_11 alpha omega">
+      <% if assetable && !assetable.new_record? %>
+        <% form_tag next_space_subject_path(@space, @subject), :class => "lecture-control" do %>
+          <%= hidden_field_tag :assetable_type, assetable.class.to_s %>
+          <%= hidden_field_tag :assetable_id, assetable.id %>
+          <%= check_box_tag :done, "1", :checked => true %>
+          <%= label_tag :done, "Aula finalizada?", :class => "inline"  %>
+          <%= submit_tag "Próximo >" %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

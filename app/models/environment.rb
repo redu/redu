@@ -12,7 +12,7 @@ class Environment < ActiveRecord::Base
 
   acts_as_taggable
   has_attached_file :avatar, PAPERCLIP_STORAGE_OPTIONS.deep_merge({
-    :styles => { :thumb => "140x100>" }
+    :styles => { :environment => "145x125>" }
   })
 
   validates_presence_of :name, :path

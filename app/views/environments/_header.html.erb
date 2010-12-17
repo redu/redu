@@ -21,21 +21,20 @@
  </script>
  <div id="environment-header" class="container_16 clearfix">
    <div class="container_16" id="create-header" style="background-color: <%= course && !course.new_record? ? "#" + course.color : "inherited" %>">
-     <div class="avatar grid_3">
-       <div class="frame" id="university-logo">
-         <div class="inner-frame">
-           <%= image_tag environment.avatar.url(:thumb)  %>
-         </div>
-       </div> <!-- /frame -->
-     </div>
+     <div class="frame" id="university-logo">
+       <div class="inner-frame">
+         <%= image_tag environment.avatar.url(:thumb)  %>
+       </div>
+     </div> <!-- /frame -->
 
-     <div class="dropdown name grid_11 alpha">
+     <div class="dropdown name">
        <h3><%= link_to environment.name, environment_path(environment) %><%= image_tag "btn-tit-environment.png", :class => "current" %></h3>
-       <% if can? :manage, environment %>
-       <span class="edit">
+        <% if can? :manage, environment %>
+        <span class="edit">
          <%= link_to "Gerenciar", edit_environment_path(environment) %>
-       </span>
-       <% end %>
+        </span>
+        <% end %>
+       <div class="dropdown-wrapper">
        <div class="dropdown-university">
          <ul>
            <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
@@ -46,10 +45,11 @@
            <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
          </ul>
        </div>
+       </div>
      </div>
      <% if course && !course.new_record? %>
        <% if space && space.id %>
-         <div class="dropdown course grid_11 alpha">
+         <div class="dropdown course">
            <h4>
              <%= link_to course.name + " > " , environment_course_path(environment, course) %> <%= link_to space.name , space_path(space) %>
              <%= image_tag "btn-subtit-environment.png", :class => 'current' %>
@@ -65,39 +65,43 @@
                <%= link_to "Gerenciar espaço", edit_space_path(space) %>
              </span>
            <% end %>
-           <div class="dropdown-university">
-             <ul>
-               <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
-               <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
-               <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
-               <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
-               <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
-               <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
-             </ul>
+           <div class="dropdown-wrapper">
+             <div class="dropdown-university">
+               <ul>
+                 <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
+                 <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
+                 <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
+                 <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
+                 <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
+                 <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
+               </ul>
+             </div>
            </div>
          </div>
        <% else %>
-         <div class="dropdown course grid_11 alpha">
+         <div class="dropdown course">
            <h4>
              <%= link_to course.name , environment_course_path(environment, course) %>
              <%= image_tag "btn-subtit-environment.png", :class => 'current' %>
            </h4>
+           <div class="dropdown-wrapper">
+             <div class="dropdown-university">
+               <ul>
+                 <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
+                 <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
+                 <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
+                 <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
+                 <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
+                 <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
+               </ul>
+             </div>
+           </div>
            <% if can? :manage, course %>
              <span class="edit">
                <%= link_to "Gerenciar curso",
                  edit_environment_course_path(environment, course) %>
              </span>
            <% end %>
-           <div class="dropdown-university">
-             <ul>
-               <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
-               <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
-               <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
-               <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
-               <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
-               <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
-             </ul>
-           </div>
          </div>
        <% end %>
      <% end %>
@@ -113,8 +117,8 @@
            <h3 class="call">
              <%= link_to @subject.title, space_subject_path(@space, @subject) %>
              <% if can? :manage, @subject %>
-             <%= link_to "Gerenciar", edit_space_subject_path(space, @subject),
-               :class => "edit" %>
+               <%= link_to "Gerenciar", edit_space_subject_path(space, @subject),
+                 :class => "edit" %>
              <% end %>
            </h3>
          </div>
@@ -136,24 +140,9 @@
          <% end %>
        </div>
 
-     </div> <!-- /container_16 -->
-     <% if current_user.enrolled?(@subject) %>
-     <% assetable = @lecture || @exam %>
-     <% if @subject.published? && assetable && !assetable.new_record? && assetable.published? %>
-     <div class="grid_16">
-       <div class="grid_5 push_11 alpha omega">
-         <% if assetable && !assetable.new_record? %>
-           <% form_tag next_space_subject_path(@space, @subject), :class => "lecture-control" do %>
-             <%= hidden_field_tag :assetable_type, assetable.class.to_s %>
-             <%= hidden_field_tag :assetable_id, assetable.id %>
-             <%= check_box_tag :done, "1", :checked => true %>
-             <%= label_tag :done, "Aula finalizada?", :class => "inline"  %>
-             <%= submit_tag "Próximo >" %>
-           <% end %>
-         <% end %>
-       </div>
-   </div>
-   <% end %>
-   <% end %>
-   <% end %>
+       <% if current_user.enrolled?(@subject) %>
+         <%= render :partial => 'subjects/next_previous' %>
+       <% end %>
+     <% end %>
+   </div> <!-- /container_16 -->
  </div><!-- environment-header -->
