@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/guiocavalcanti/scribd_fu.git
-  revision: 7d4b2a940135c361085818b88a1bde1b86cb4c95
+  revision: c235f07b47080661df5de109c1a7a35b90e9f88a
   specs:
     scribd_fu (2.0.9)
       rscribd
@@ -37,7 +37,7 @@ GEM
     haml (3.0.24)
     hpricot (0.8.3)
     htmlentities (4.2.1)
-    i18n (0.5.0)
+    i18n (0.4.2)
     icalendar (1.1.5)
     linecache (0.43)
     mime-types (1.16)
@@ -90,6 +90,7 @@ DEPENDENCIES
   haml
   hpricot
   htmlentities (= 4.2.1)
+  i18n (~> 0.4.0)
   icalendar
   mime-types
   mongrel
