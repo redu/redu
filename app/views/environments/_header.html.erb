@@ -69,7 +69,7 @@
              <div class="dropdown-university">
                <ul>
                  <% course.spaces.each do |s| %>
-                   <li class="sub-university clearfix"><%= link_to course.name, environment_course_path(course) %> <em>></em> <%= link_to s.name, space_path(s) %></li>
+                   <li class="sub-university clearfix"><%= link_to course.name, environment_course_path(environment, course) %> <em>></em> <%= link_to s.name, space_path(s) %></li>
                  <% end %>
                </ul>
              </div>
