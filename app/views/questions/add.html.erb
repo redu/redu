@@ -59,9 +59,6 @@ function showRequestKeysForm(){
 
 <div id="all_content3">
 <div id="col_content">
-	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">ensinar</a> > <a href="#">exame</a> > <a href="#">adicionar questão</a></div>
-
-
  <div id="title">ADICIONAR QUESTÃO
 
     <div id="task_bar_exames">
@@ -74,12 +71,7 @@ function showRequestKeysForm(){
  </div>
 
  <div id="local_search_form">
-     <!-- form_remote_tag :update => "questions",
-     :url => { :controller => :questions, :action => :create },
-     :position => "bottom", #before e after nao funcionam com o :update
-     :loading => 'itemLoading()',
-     :complete => "closePopup()" do -->
-	 <% form_remote_tag :url => { :controller => :questions, :action => :search },
+ 	 <% form_remote_tag :url => { :controller => :questions, :action => :search },
      :before => "jQuery('#spinner').show()",
      :success => "jQuery('#spinner').hide()" do -%>
      Buscar<%= text_field_tag :query %>

@@ -1,11 +1,11 @@
 <style>
-  
+
   .tbl_toggle {
     border:1px solid #EEEEEE;
     margin-top:20px;
     width:100%;
   }
-  
+
   .tbl_toggle thead th {
     background-color:#E5EDF7;
     border-color:#FFFFFF #FFFFFF #AEBBCC;
@@ -62,71 +62,71 @@
     font-weight:bold;
     padding:8px 3px;
   }
-  
+
   .line {
     display:block;
     float:left;
     position:relative;
     width:100%;
   }
-  
+
   .line .twoCol_left_half {
     margin-left:-100%;
     width:48%;
   }
-  
+
   line .twoCol_right_half {
     margin-left:-48%;
     width:48%;
   }
-  
+
   .line .item {
     float:left;
     left:100%;
     position:relative;
   }
-  
+
   .item_answer span.answer_chosen {
     background-color:#F7F198;
     font-size:9px;
     padding:1px 2px;
   }
-  
+
   .item_answer span.answer_correct {
     background-color:#8FD182;
     font-size:9px;
     margin-left:4px;
     padding:1px 2px;
   }
-  
+
 </style>
 <script type="text/javascript">
-  
+
   /*
      function publishScore(checkbx){
      alert(checkbx.checked)
      jQuery('#publish_score_form').submit()
      }
    */
-  
+
   function reviewQuestion(questionId){
-    
+
       var explanation = document.getElementById("explanation_"+questionId);
       if (explanation != null && typeof(explanation) != 'undefined') {
         // já expandido
-        
-          
+
+
           jQuery("#explanation_"+questionId).slideToggle();
       }
       else {
-        
+
           jQuery.ajax({
               data: "question_id=" + questionId,
               dataType: 'script',
               beforeSend: function(request){
               var loadingbar = "<tr><td colspan='5'><img id='thebug_"+ questionId + "' src='../../images/loadingAnimation.gif'/>"+
               "<div id='explanation_" + questionId + "'></div></td></tr>";
-              
+
               jQuery("#question_"+questionId).after(loadingbar);
               },
 type: 'get',
@@ -135,91 +135,82 @@ url: "<%= review_question_space_subject_exam_path(@space, @subject, @exam) %>"
 
 
 }
-}	
+}
 </script>
-
-
-<div class="grid_16">
-  <div id="breadcrumbs">
-    <a href="<%=application_url%>">início</a> > <a href="#">aprender</a>  > <a href="#"><%= @exam.name %></a> > resultado 
-  </div>
-</div>
 
 <%= render :partial => "exam_header"%>
 
-
-
 <div class= "grid_16">
   <div id="title_video">Resultados para <%= @exam.name %></div>
-  
+
   <% total = @exam.questions.length %>
   Certas <%= @correct %> | Erradas <%= total - @correct %> | Total: <%= total %> | Tempo: <%= seconds_to_time(@time)%>
 </div>
 
 <div class= "grid_11">
-  
+
   <table cellpadding="0" cellspacing="0" border="0" class="tbl_toggle">
     <thead>
       <tr>
         <th class="question_number">Questão</th>
         <th class="question_correctness">Correta?</th>
         <th class="question_user_answer">Sua Resposta</th>
-        
+
         <th class="question_correct_answer">Resposta Certa</th>
       </tr>
     </thead>
     <tbody>
-      
+
       <% @exam.questions.each_with_index do |question, index | %>
-        
-        
-        <% if index%2 == 0 %> 
-          
+
+
+        <% if index%2 == 0 %>
+
           <% row_class = 'odd '%>
         <% else %>
           <% row_class = 'even '%>
         <% end %>
-        
+
         <tr class="<%=row_class%>" name="2892617" title="Mostrar explicação" onclick="reviewQuestion(<%= question.id %>);" id = "question_<%= question.id %>">
-          
-          
+
+
           <td class="question_number show_row"> <%= index + 1 %>	  </td>
           <td class="question_correctness show_row">
-            
+
             <% if session[:answers][question.id].to_i == question.answer.id %>
               <%= image_tag 'tick.gif' %>
             <% else %>
               <%= image_tag 'cross.gif' %>
             <% end %>
           </td>
-          
+
           <td class="question_user_answer show_row">
-            
-            
+
+
             <% if session[:answers][question.id] %>
-              
+
               (<%= @alternative_letters[session[:answers][question.id].to_i]%>)
             <% else %>
               Sem resposta
             <% end %>
-            
+
           </td>
-          <td class="question_correct_answer show_row">	
+          <td class="question_correct_answer show_row">
             (<%= @alternative_letters[question.answer.id] %>)
-            
+
           </td>
         </tr>
-        
+
         <tr style="display:none;">
           <td colspan="6"></td>
         </tr>
-        
+
       <% end %>
-      
+
     </tbody>
-    
+
   </table>
-  
-  
+
+
 </div>
 

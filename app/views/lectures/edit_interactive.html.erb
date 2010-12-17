@@ -3,19 +3,15 @@
 
 <div id="all_content3">
 <div id="col_content_video">
-	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">aprender</a> > <a href="#"><%= @lecture.name %></a> </div>
- 	<div id="title">EDITANDO AULA INTERATIVA
-	</div>
+  <div id="title">EDITANDO AULA INTERATIVA
+</div>
 
 
 <% form_for @interactive_class, :url => { :action => "update", :id => @lecture }, :html => { :multipart => true } do |f| %>
   <BR><%= f.error_messages %>
-  
-  <%# hidden_field_tag("step", "2", options = {})%>
-  <%# hidden_field_tag("lecture_type", "interactive", options = {})%>
 
   <%= render :partial => 'form_interactive', :locals => {:f => f, :interactive_class => @interactive_class} %>
-  
+
    <div style="float: left;">
   <%= f.submit 'Atualizar' %> ou <%= link_to 'Cancelar', lecture_path(@interactive_class.lecture) %>
   </div>

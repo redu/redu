@@ -9,14 +9,13 @@
 		var regexp = new RegExp("new_" + association, "g")
 		jQuery(link).before("<fieldset>" + content.replace(regexp, new_id) + "</fieldset>");
 	}
-	
+
 </script>
 
 <div id="all_content3">
-<div id="col_content">
-	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">aprender</a> > <a href="#"><%= @lecture.name %></a> </div>
- 	<div id="title">EDITANDO VÍDEO-AULA
-	</div>
+  <div id="col_content">
+    <div id="title">EDITANDO VÍDEO-AULA
+  </div>
 
 <% form_for @lecture, :html => { :multipart => true } do |f| %>
 <%= f.error_messages %>
@@ -28,10 +27,10 @@
 
 	<%= f.label "Descrição:" %><br/>
 	<%= f.text_area :description, :size => "50x3" %><br/><br/>
-	
+
 	<%= f.label "Tags:" %><br/>
 	<%= f.text_field :tag_list %><br/><br/>
-	
+
 
 <%= render :partial => 'attachment_form', :locals => {:f => f, :lecture => @lecture}%>
 

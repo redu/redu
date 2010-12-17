@@ -4,7 +4,7 @@
 	for (var i =0; i< checkboxes.length; i++) {
 		checkboxes[i].checked = true;
 	}
-	
+
 }
 
 function selectNone(){
@@ -22,68 +22,64 @@ function showLoadingUsers(){
 function setSubmissionType(type){
 	// type = 0 ; // remover
 	// type = 1 ; // mudar papel
-	
+
 	 var theform = document.getElementById('moderate_users_form');
 	 var theattribute = document.getElementById('submission_type');
-		
+
 	theattribute.value = type;
 	theform.submit();
 }
 
-	
+
 </script>
 
 <div class="grid_16">
-<div id="breadcrumbs">
-	<a href="#">Administração</a> > Usuários
-</div>
-
-<div id="title_video">Moderação de Usuários</div>
+  <div id="title_video">Moderação de Usuários</div>
 </div>
 
 <div class="main grid_16">
     <div class="fake-tabs grid_16 alpha omega">
         <%= render :partial => "admin/taskbar" %>
         <div class="panel">
-        	
+
 					<h3>Mostrando usuários mais recentes</h3>
-					
+
     <div id="all_list">
-    	
+
 		<% if @users && @users.size > 0 %>
-		
+
 		<% form_remote_tag :url => {:action => :search_users}, :loading => "showLoadingUsers()" do %>
 		 <%= text_field_tag :search_user %><%= submit_tag 'Buscar' %><BR>
 		<% end %>
-		
+
 		<% form_tag url_for(:action => :moderate_users), :id => "moderate_users_form" do %>
 		 <%= hidden_field_tag :submission_type, '0'%>
-		
-		Selecionar: <%=link_to_function 'Todos', 'selectAll()'%> | <%=link_to_function 'Nenhum', 'selectNone()'%> | 
-		
+
+		Selecionar: <%=link_to_function 'Todos', 'selectAll()'%> | <%=link_to_function 'Nenhum', 'selectNone()'%> |
+
 		 Selecionados:  <%= select_tag(:role_id, options_for_select([['User', 3],['Admin', 1]], 3)) %> <%= button_to_function 'Mudar Papel', 'setSubmissionType(1)'%> | <%= submit_tag "Remover" %>
-			
-		
-			
+
+
+
 			<div id="user_list">
 			<%= render :partial => 'admin/user_list', :locals => {:users => @users}%>
-			
+
 			</div>
-			
+
 		 <% end %>
 		<% else %>
  			Não há usuários no sistema.
 		<% end %>
-    	
-    </div> <!-- fim da listagem --> 
-	
+
+    </div> <!-- fim da listagem -->
+
 	<div id="pagination" align="center" class="pagination">
 
 		<%= will_paginate  @users, :params => {:sort_by => @sort_by}, :class => "pagination_number"  %>
-		
+
     </div>
 
 </div>
-	
+
 	</div>
 </div>

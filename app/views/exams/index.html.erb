@@ -35,26 +35,9 @@ function getParameters(){
 <%# render(:partial => "spaces/space_info", :locals=>{:show => false}) if @space%>
 
 <div class="grid_16">
-	<!--
-<div id="breadcrumbs">
-		<% if @space %>
-	<a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <%= link_to @space.name, @space %> > aulas
-	<% else %>
-	<a href="<%=application_url%>">início</a> > <a href="#">aprender</a> > aulas
-	<%end %>
+  <h3> Exames</h3>
 </div>
--->
-
-<h3> Exames</h3>
-</div>
-
-
-
-
 <div class="grid_4 calls" id="filter">
-	<!--
-	<span class="call"><span>Refinar</span></span>
-	-->
 	<form>
 	<% field_set_tag "Categoria" do %>
 	<ul class="criteriaList">

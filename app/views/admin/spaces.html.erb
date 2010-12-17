@@ -6,7 +6,7 @@
 	for (var i =0; i< checkboxes.length; i++) {
 		checkboxes[i].checked = true;
 	}
-	
+
 }
 
 function selectNone(){
@@ -16,29 +16,25 @@ function selectNone(){
 	}
 }
 
-	
+
 </script>
 
 <div class="grid_16">
-<div id="breadcrumbs">
-	<a href="#">Administração</a> > Redes
-</div>
-
-<div id="title_video">Moderação de Redes</div>
+  <div id="title_video">Moderação de Redes</div>
 </div>
 
 <div class="main grid_16">
     <div class="fake-tabs grid_16 alpha omega">
         <%= render :partial => "admin/taskbar" %>
         <div class="panel">
-        	
+
 					<h3>Mostrando redes mais recentes</h3>
-					
+
     <div id="all_list">
-    	
+
 		<% if @spaces && @spaces.size > 0 %>
-		Selecionar <%=link_to_function 'Todos', 'selectAll()'%> | <%=link_to_function 'Nenhum', 'selectNone()'%> 
-		
+		Selecionar <%=link_to_function 'Todos', 'selectAll()'%> | <%=link_to_function 'Nenhum', 'selectNone()'%>
+
 		 <% form_tag :action => :moderate_spaces do %>
 			<table style="width: 100%; margin: 15px 10px 20px 10px;" class="common">
 				<tr>
@@ -63,15 +59,15 @@ function selectNone(){
 			<%= submit_tag "Remover" %>
 		 <% end %>
 		<% else %>
- 			Não há redes públicas ainda. 
+ 			Não há redes públicas ainda.
 		<% end %>
-    	
-    </div> <!-- fim da listagem --> 
-	
+
+    </div> <!-- fim da listagem -->
+
 	<div id="pagination" align="center" class="pagination">
 
 		<%= will_paginate  @spaces, :params => {:sort_by => @sort_by}, :class => "pagination_number"  %>
-		
+
     </div>
 
 </div>

@@ -3,7 +3,7 @@
  	function saveDraft(opt, opt_param){
         var theform = document.getElementById('exam_form');
 		var theattribute = document.getElementById('sbt_opt');
-		
+
 		// Atributo opcional (usado para passar o id da questão para editar)
 		if (opt_param) {
 			var theoptattribute = document.getElementById('opt_param');
@@ -12,34 +12,34 @@
 		theattribute.value = opt;
 		theform.submit();
     }
-	
+
 	function publishExam() {
 		var confirm_msg = "Uma vez publicado, o exame não poderá ser editado nem removido. Deseja continuar?";
 		if (confirm(confirm_msg)) {
 			saveDraft(5);
-		} 
-		
+		}
+
 	}
-	
-	
-	var isPreview = false;	
+
+
+	var isPreview = false;
 	function save(preview){
 		jQuery('#sbt_opt').val('0');
-		
+
 		isPreview = preview;
 		jQuery.ajax({
 			beforeSend:function(request){
 				$('#save-spinner').show();
-				}, 
+				},
 			complete:function(request){
 				$('#save-spinner').hide();
 				if (isPreview) {
 					window.open('<%= answer_space_subject_exam_path(@space, @subject, @exam, :first => true) %>');
 				}
 				},
-			data:jQuery.param(jQuery("#exam_form").serializeArray()), 
-			dataType:'script', 
-			type:'post', 
+			data:jQuery.param(jQuery("#exam_form").serializeArray()),
+			dataType:'script',
+			type:'post',
 			url:'<%= url_for(:action => :create, :exam_id => @exam.id)%>'});
 	}
 
@@ -50,30 +50,30 @@ function remove_fields(link) {
 
 function add_fields(link, association, content, type) {
   var new_id = new Date().getTime();
-	
+
   var regexp = new RegExp("new_" + association, "g")
- 
+
  	if (jQuery('#question').length > 6) {
   	return;
   }
- 
+
 	if (type == 'Alternative') {
 		 $(link).before(content.replace(regexp, new_id));
 		 $(link).parent().find('input[type=radio]').each(function(idx) {
 		 	 $(this).attr('value', idx)
 		 })
-		 
+
   } else if (type == 'Question') {
 		$('div.add-topic-inner').hide();
 		// $(link).before(content.replace(regexp, new_id));
 		 $('#questions > fieldset:last').after(content.replace(regexp, new_id));
-		 
+
 		 $('[value=new_alternatives]').each(function(idx){
 			$(this).attr('value',idx)
 		  });
-		 
+
 		 makeIndexes();
-		 
+
   	reloadMce();
   }
 }
@@ -81,26 +81,26 @@ function add_fields(link, association, content, type) {
 function makeIndexes(){
 	$('.q_index').each(function(idx){
 				$(this).html(idx+1)
-				
+
 				//var children = $(this).parent().parent().children();
 				//children[1].name = 'q_'+idx+1;
 				//children[2].name = 'q_'+idx+1;
 			//	children[1].attr('name', 'q_'+idx+1)
 			//	children[2].attr('name', 'q_'+idx+1)
 	});
-	
+
 	$('.alternatives').each(function(idx){
-	
+
 		$(this).find('input[type=radio]').each(function(idx2){
 			$(this).attr('value', idx2)
 		});
 	});
-	
+
 	/*$('.expanded').each(function(idx){
 		var i = 'q_' + (idx+1);
 		$(this).attr('name', i);
 		$(this).next().attr('name', i);
-		
+
 	});*/
 }
 
@@ -111,80 +111,80 @@ function removeAllMce(){
 					t[i].remove();
             }
         }
-        
+
     }
-		
+
 			function reloadMce(){
 		<%= raw_tiny_mce_init %>
 	}
-	
+
     function makeIt(){
-    
+
         //$('.expanded').hide()
         //$('.collapsed').show()
-        
+
         $('.expanded').each(function(index){
             var name = $(this).attr('name')
             var content = tinyMCE.get(name + '_statement').getContent()
-            
+
             $('#' + name + '_stat').html(content)
         });
     }
-		
+
     function toggleMinimize(link, minimize){
-        
+
 				if (minimize) {
 					makeIt();
 				}
-				
+
 				var name = $(link).parent().attr('name')
 				//alert(name);
         $(name).slideToggle();
         return false;
     }
-		
-		
+
+
     jQuery(document).ready(function(){
-			
+
 				// caso refresh na pagina:
 				// reinicializar
 				removeAllMce();
   			reloadMce();
 				makeIndexes();
-			
-			
+
+
          $('[value=new_alternatives]').each(function(idx){
 						$(this).attr('value',idx)
 		 			 });
-					 
+
 				/*$('body').click(function(event){
             if (!$(event.target).closest('.question').length) {
 								alert('body ')
 							makeIt();
-								
+
             };
             });*/
 
 	/*	$('.question').live('click', function(e){
-					
+
 		  			makeIt();
 		  			$('.question').slideToggle();
 				});
-*/				
-				
-        
+*/
+
+
         //seleciona os elementos a com atributo name="modal"
         $('a[name=modal]').click(function(e){
             //cancela o comportamento padrão do link
             e.preventDefault();
-            
+
             //armazena o atributo href do link
             var id = $(this).attr('href');
-           
+
 						$('#lights-dimmed').fadeIn(2000);
             $(id).show();
-						
-						
+
+
 						jQuery.ajax({
                     data: '',
                     dataType: 'script',
@@ -192,17 +192,17 @@ function removeAllMce(){
                        $('#loading_questions').show();
                     },
                     type: 'get',
-                    url: '<%= questions_database_exams_path %>' 
+                    url: '<%= questions_database_exams_path %>'
                 });
         });
-        
+
         //se o botãoo fechar for clicado
         $('.close').click(function(e){
             //cancela o comportamento padrão do link
             e.preventDefault();
             $('#lights-dimmed, .modal_window').hide();
         });
-        
+
         //se div#lights-dimmed for clicado
         $('#lights-dimmed').click(function(){
             $(this).hide();
@@ -210,21 +210,11 @@ function removeAllMce(){
         });
     });
 
-		
+
 	 </script>
  <% end %>
 
  <div class="grid_16">
-   <div id="breadcrumbs">
-     <%# if @space %>
-     <!-- <a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <%= link_to @space.name, @space %> > novo exame simples -->
-     <%# else %>
-     <a href="<%=application_url%>">início</a> > <a href="#">ensinar</a> > novo exame simples
-     <%# end %>
-   </div>
-
-   <%# render(:partial => "spaces/space_info", :locals=>{:show => false}) if @space%>
-
    <h3 class="call">Nova aula passo-a-passo </h3>
  </div>
 
@@ -270,7 +260,7 @@ function removeAllMce(){
        |
        <%= link_to_function "Pré-visualizar", "save(true)", :id => "preview_link"%>
 
-     </div>	
+     </div>
 
      <div style="text-align:right; margin-right: 10px;">
        <%= image_tag 'spinner.gif', :id => 'save-spinner', :style => 'display: none' %>
@@ -326,8 +316,8 @@ function removeAllMce(){
 
  <div class="grid_16">
 
-   <%= link_to '< Anterior', new_space_subjec_exam_path(@space, @subject, :step => '1'), :class => "button" %> 
-   <%= f.submit 'Próximo >' %> 
+   <%= link_to '< Anterior', new_space_subjec_exam_path(@space, @subject, :step => '1'), :class => "button" %>
+   <%= f.submit 'Próximo >' %>
 
    <%= link_to 'Descartar e Voltar', cancel_space_subject_exams_path(@space, @subject), :confirm => "Tem certeza que deseja sair do editor de exames?" %>
  </div>
