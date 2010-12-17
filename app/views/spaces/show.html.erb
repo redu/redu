@@ -85,7 +85,10 @@ $(document).ready(function() {
             <%= link_to 'Ver todos', space_events_path(@space), :class=>"more" %> 
           <% else %>
             <div class="box_notice">
-              Nenhum evento foi enviado ainda. <%= link_to 'Crie uma agora!', new_space_event_path(@space) %>
+              Nenhum evento foi criado ainda. 
+              <% if can? :manage, @space or current_user.tutor? @space %>
+                <%= link_to 'Crie uma agora!', new_space_event_path(@space) %>
+              <% end %>
           </div>
         <% end %>
       </div><!-- end news -->
@@ -96,7 +99,10 @@ $(document).ready(function() {
           <%= link_to 'Ver todos', space_bulletins_path(@space), :class=>"more" %> 
         <% else %>
           <div class="box_notice">
-            Nenhuma notícia foi enviada ainda. <%= link_to 'Envie uma agora!', new_space_bulletin_path(@space) %>
+            Nenhuma notícia foi criada ainda. 
+            <% if can? :manage, @space or current_user.tutor? @space %>
+              <%= link_to 'Envie uma agora!', new_space_bulletin_path(@space) %>
+            <% end %>
         </div>
       <% end %>
     </div><!-- end noticias -->
