@@ -63,8 +63,10 @@
           d.mday
         end
       end	%>
-    <%= link_to "Ver mais", space_events_path(space), :class => "icon more" %> |
-    <%= link_to "Criar evento", new_space_event_path(space), :class => "icon more" %>
+    <%= link_to "Ver mais", space_events_path(space), :class => "icon more" %>
+    <% if can? :manage, space or current_user.tutor? space %>
+      | <%= link_to "Criar evento", new_space_event_path(space), :class => "icon more" %>
+    <% end %>
   </li>
 
 
