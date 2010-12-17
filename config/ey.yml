@@ -2,7 +2,7 @@ environments:
   production:
     copy_exclude:
       - .git
-    branch: production
+    branch: refactor
     migrate: false
     migration_command: rake db:migrate --trace
   staging:
