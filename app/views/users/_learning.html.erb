@@ -1,17 +1,8 @@
-<%if current_user == @user %>
-
-	
-	<ul id="actions_user">
-				   	 <li>
-				   	 	<%= link_to "Acessar espaço aprender", learn_index_path %>
-					 </li>
-	</ul>	
-
-
+<% if current_user == @user %>
+  <ul id="actions_user">
+    <li>
+      <%= link_to "Acessar espaço aprender", learn_index_path %>
+    </li>
+  </ul>
 <% end %>
-
-		<ul class="activities">
-			
-	 <%= render :partial => "statuses/status", :collection => @user.learning, :as => :status, :locals => {:statusable => @user } %>
-	 
-	 </ul>
+<%= render :partial => "courses/course_list" %>
