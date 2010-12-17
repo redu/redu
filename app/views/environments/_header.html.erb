@@ -7,17 +7,20 @@
 <%= stylesheet_link_tag 'environment-header.css' %>
 
 <script type="text/javascript">
-  (function($) {
    $(document).ready(function(){
-     $("#create-header .dropdown .current").hover(
-       function(){
-       $(this).parents('.dropdown:first').addClass('hover')
-       },
-       function(){
-       $(this).parents('.dropdown:first').removeClass('hover')
-       })
-     });
-   })(jQuery);
+      $("#create-header .dropdown .current").click(
+        function(e){
+          $(".dropdown-wrapper").hide();
+          $(this).parents(".dropdown:first").find(".dropdown-wrapper").show()
+        }
+      );
+      jQuery(document.body).click(function(event) {
+        if (!(jQuery(event.target).is(".dropdown-wrapper") || jQuery(event.target).parents(".dropdown-wrapper").length || $(event.target).hasClass("current"))) {
+                $(".dropdown-wrapper:visible").hide();
+            }
+        });
+
+    })
  </script>
  <div id="environment-header" class="container_16 clearfix">
    <div class="container_16" id="create-header" style="background-color: <%= course && !course.new_record? ? "#" + course.color : "inherited" %>">
@@ -34,15 +37,12 @@
          <%= link_to "Gerenciar", edit_environment_path(environment) %>
         </span>
         <% end %>
-       <div class="dropdown-wrapper">
-       <div class="dropdown-university">
+       <div class="dropdown-wrapper clearfix" style="display: none;">
+       <div class="dropdown-university clearfix">
          <ul>
-           <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
-           <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
-           <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
-           <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
-           <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
-           <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
+         <% current_user.environments.each do |e| %>
+           <li class="sub-university clearfix"><div class="nano"><%= image_tag e.avatar.url(:nano) %></div><%= link_to e.name, environment_path(e) %></li>
+         <% end %>
          </ul>
        </div>
        </div>
@@ -65,15 +65,12 @@
                <%= link_to "Gerenciar espaço", edit_space_path(space) %>
              </span>
            <% end %>
-           <div class="dropdown-wrapper">
+           <div class="dropdown-wrapper" style="display:none">
              <div class="dropdown-university">
                <ul>
-                 <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
-                 <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
-                 <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
-                 <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
-                 <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
-                 <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
+                 <% course.spaces.each do |s| %>
+                   <li class="sub-university clearfix"><%= link_to course.name, environment_course_path(course) %> <em>></em> <%= link_to s.name, space_path(s) %></li>
+                 <% end %>
                </ul>
              </div>
            </div>
@@ -84,15 +81,12 @@
              <%= link_to course.name , environment_course_path(environment, course) %>
              <%= image_tag "btn-subtit-environment.png", :class => 'current' %>
            </h4>
-           <div class="dropdown-wrapper">
+           <div class="dropdown-wrapper" style="display:none">
              <div class="dropdown-university">
                <ul>
-                 <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
-                 <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
-                 <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
-                 <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
-                 <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
-                 <li class="sub-university clearfix"><div class="nano"><%= image_tag environment.avatar.url(:nano) %></div><a href="#">Nome do link aqui</a></li>
+                 <% environment.courses.each do |c| %>
+                   <li class="sub-university clearfix"><%= link_to c.name, environment_course_path(environment, c) %></li>
+                 <% end %>
                </ul>
              </div>
            </div>
