@@ -3,12 +3,6 @@
     <%= render :partial => 'courses/item_index', :collection => @courses, :as => :course %>
   </ul>
 <% else %>
-
-  <% if @searched_for_all %>
     <div class="box_notice">Não há cursos cadastrados ainda.</div>
-  <% else %>
-    <div class="box_notice">Não há cursos cadastrados com estas especificações ainda.</div>
-  <% end %>
-
 <% end %>
 <%= will_paginate @courses %>

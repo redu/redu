@@ -9,10 +9,6 @@
         <li>
           <%= link_to_function "Criar atividade", "$schooltabs.tabs('select', 1); $('#status_text').focus()"%>
         </li>
-        <!--
-        <li><a href="" class="closed sb">Acompanhar alunos</a></li>
-        <li><a href="" class="closed sb">Acompanhar aulas</a></li>
-        -->
         <% if can? :manage, space or current_user.tutor? space %>
           <li>
             <%= link_to "Criar evento", new_space_event_path(space)%>

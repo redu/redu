@@ -43,10 +43,12 @@
             <% end %>
         </div>
         <div class="personal-overview clearfix">
-            <div class="points-m">
-            <span class="number"><%= @user.score %></span>
+          <!-- Escondendo REDU POINTS por enquanto
+          <div class="points-m">
+            <span class="number"><%#= @user.score %></span>
             <span class="legend">redu points</span>
-            </div>
+          </div>
+          -->
 						<div class= "name">
 							<%= link_to @user.display_name, @user%>
 

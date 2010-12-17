@@ -31,7 +31,7 @@
     <%= f.hidden_field :assetable_id, :class => "assetable_id" %>
     <%= f.hidden_field :assetable_type, :class => "assetable_type" %>
     <% if user_assets.empty? %>
-      <div class="box_notice">Você não possui nenhuma aula. Crie uma nova!</div>
+      <div class="box_notice">Você não possui nenhum recurso. Crie um novo!</div>
     <% else %>
        <%= select_tag(:assetable_id, options_for_select(user_assets),
                      :class => "existent-asset") %>
