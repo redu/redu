@@ -1,7 +1,7 @@
- 	<%  if logged_in? %>
+<%  if logged_in? %>
   <div id="task_bar_exames">
-		<%= link_to 'Novo Espaço', :action => 'new' %> | 
-		<%= link_to 'Meus Espaços', member_user_spaces_path(current_user.id) %> |
-		<%= link_to 'Espaços Criados por Mim', owner_user_spaces_path(current_user.id) %>
+    <%= link_to 'Novo Espaço', :action => 'new' %> | 
+    <%= link_to 'Meus Espaços', member_user_spaces_path(current_user.id) %> |
+    <%= link_to 'Espaços Criados por Mim', owner_user_spaces_path(current_user.id) %>
   </div>
-	<% end %>
+<% end %>
