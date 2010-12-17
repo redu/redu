@@ -95,7 +95,7 @@ class EnvironmentsController < BaseController
   def update
     respond_to do |format|
       if @environment.update_attributes(params[:environment])
-        flash[:notice] = 'Environment was successfully updated.'
+        flash[:notice] = 'Ambiente atualizado com sucesso.'
         format.html { redirect_to(@environment) }
         format.xml  { head :ok }
       else
