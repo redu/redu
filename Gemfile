@@ -1,6 +1,9 @@
 source "http://rubygems.org"
 source "http://gems.github.com"
 
+# Colocado, pois todas as validações de modelo estavam com a mensagem: {{attribute}} {{message}}
+gem 'i18n', "~> 0.4.0"
+
 gem "rails", "2.3.6"
 gem "desert"
 gem "rake", "0.8.7"

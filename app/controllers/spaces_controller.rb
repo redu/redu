@@ -333,7 +333,7 @@ class SpacesController < BaseController
       end
 
       session[:space_step] = session[:space_params] = nil
-      flash[:notice] = "Rede criada!"
+      flash[:notice] = "Espaço criado!"
       redirect_to @space
     end
   end
