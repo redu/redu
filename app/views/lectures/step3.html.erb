@@ -1,18 +1,4 @@
 <div class="grid_16">
-  <div id="breadcrumbs">
-    <%# if @space %>
-    <!-- <a href="<%=application_url%>">início</a> > <a href="#">redes</a> > <%# link_to @space.name, @space %> > nova aula -->
-    <%# else %>
-    <a href="<%=application_url%>">início</a> > <a href="#">ensinar</a> > nova aula
-    <%# end %>
-  </div>
-
-  <%# render(:partial => "spaces/space_info", :locals=>{:show => false}) if @space%>
-
-  <!--
-  <h3 class="call">Nova Aula - Publicação</h3>
-  -->
-  <div id="title_video">Nova Aula - Publicação</div>
 </div>
 <div class="grid_9 push_3">
   <table class="booking_steps" cellpadding="0" cellspacing="0">
@@ -26,7 +12,9 @@
   </tbody></table>
 </div>
 
-
+<div class="grid_15">
+  <h3 class="call">Nova Aula - Publicação</h3>
+</div>
 <div class="grid_8">
 
   <% form_for :lecture, @lecture, :url => { :action => "create" }, :html => {:id => "form_step_3",  :multipart => true } do |f| %>
