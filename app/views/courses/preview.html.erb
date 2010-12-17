@@ -16,23 +16,25 @@ jQuery(document).ready(function(){
     <% elsif current_user.get_association_with(@course).state.eql? "waiting"%>
       <span class="grid_2">Seu pedido está em processo de moderação.</span>
     <% end %>
-  <% end %>  
+  <% end %>
   <div class="tabs">
     <ul>
       <li><a href="#tabs-1">Descrição</a></li>
     </ul>
 
     <div id="tabs-1" class="clearfix">
-      <div class="pretty-text"><%= @course.description %></div> 
+      <div class="pretty-text"><%= @course.description %></div>
       <ul class="sortable sidebar">
-        <li class="clearfix">
-          <span class="call"><span>Palavras-chave</span></span>  
-          <ul class="tags">
-            <% for tag in @course.tags %>
-              <li><span><%= tag.name %></span></li>
-            <% end %>
-          </ul>
-        </li>
+        <% unless @course.tags.empty? %>
+          <li class="clearfix">
+            <span class="call"><span>Palavras-chave</span></span>
+            <ul class="tags">
+              <% for tag in @course.tags %>
+                <li><span><%= tag.name %></span></li>
+              <% end %>
+            </ul>
+          </li>
+        <% end %>
         <li>
           <span class="call"><span>Colaboradores</span></span>
           <div class="box clearfix">
@@ -41,20 +43,20 @@ jQuery(document).ready(function(){
             </ul>
           </div>
         </li>
+        <% if @course.workload %>
+          <li>
+            <span class="call"><span>Carga Horária</span></span>
+            <span><%= @course.workload %> horas</span>
+          </li>
+        <% end %>
         <li>
-          <span class="call"><span>Carga Horária</span></span>
-          <span><%= @course.workload %> horas</span>
+          <span class="call"><span>Algumas disciplinas</span></span>
+          <%= render :partial => "spaces/item", :collection => @course.spaces.published[0..4], :as => :space %>
         </li>
-      </ul>
+    </ul>
     </div><!-- fim tabs-1 -->
   </div><!-- fim tabs -->
-  <div class="grid_16">
-    <ul>
-      <li>Algumas disciplinas</li>
-      <%= render :partial => "spaces/item", :collection => @course.spaces.published[0..4], :as => :space %>
-    </ul>
-  </div>
-  <% field_set_tag 'Compartilhe!', :class => 'fake' do %>
+    <% field_set_tag 'Compartilhe!', :class => 'fake' do %>
     <%= render :partial => 'shared/share', :locals => {:resource => @course}%>
   <%end%>
 </div><!-- fim grid_16 -->

@@ -9,7 +9,7 @@
         <%= f.submit "Alterar" %>
       <% end %>
 
-      <fieldset>
+      <fieldset class="fake">
         <legend>Remover curso</legend>
         <%= link_to 'Deletar curso', environment_course_path(@environment, @course), 
           :confirm => 'Você tem certeza que deseja remover este curso?', :method => :delete %>

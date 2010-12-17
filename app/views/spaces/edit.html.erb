@@ -4,13 +4,13 @@
 <div class="fake-tabs grid_16 alpha omega">
 	<%= render :partial => "spaces/admin_taskbar" %>
 	<div class="panel squeeze">
-	
+
 	<% form_for(@space, :html => { :multipart => true }) do |f| %>
 		<%= f.error_messages %>
 		<%= render :partial => "general_step", :locals => { :f => f, :edit => true} %>
 		<%= render :partial => "settings_step", :locals => { :f => f, :edit => true } %>
-		
-		<div class="grid_15 alpha omega"> 
+
+		<div class="grid_15 alpha omega">
 		<% field_set_tag 'Visibilidade' do %>
 			<%= f.label "Pública <span class='snippet'>(Visível em todo o Redu)</span>" %>
 			<%= f.check_box :public %>
@@ -21,8 +21,11 @@
 	  </p>
 
 	<% end %>
-	<%= link_to 'Deletar rede', @space, 
-			:confirm => 'Você tem certeza que deseja remover esta rede?', :method => :delete %>
+        <fieldset class="fake">
+          <legend>Remover Espaço</legend>
+          <%= link_to 'Deletar rede', @space,
+            :confirm => 'Você tem certeza que deseja remover esta rede?', :method => :delete %>
+        </fieldset>
 	</div><!-- end panel -->
 </div><!-- end tabs -->
 </div><!-- end main -->
