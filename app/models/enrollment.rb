@@ -1,4 +1,7 @@
 class Enrollment < ActiveRecord::Base
+  # Entidade intermediária entre User e Subject. É criada quando o usuário se
+  # matricula num determinado Subject.
+
   belongs_to :user
   belongs_to :subject
   belongs_to :role

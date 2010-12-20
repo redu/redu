@@ -1,6 +1,9 @@
 class Subject < ActiveRecord::Base
+  # Módulos são conjuntos de Lectures e Exams que devem ou não ser feitos em
+  # sequência. Todos os alunos do Space poderão ter acesso ao mesmo. Para
+  # cursar um módulo o usuário deve se matricular no mesmo (Enrollment).
 
-  #associations
+  # associations
   has_many :assets, :order => :position, :dependent => :destroy
   has_many :lazy_assets, :dependent => :destroy
   has_many :enrollments, :dependent => :destroy

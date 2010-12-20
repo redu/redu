@@ -1,4 +1,8 @@
 class StudentProfile < ActiveRecord::Base
+  # Perfil de um User num determinado Subject. Contém informações sobre aulas
+  # realizadas, porcentagem do Subject cursado e informações sobre desempenho
+  # no Subject.
+
   belongs_to :user
   belongs_to :subject
   belongs_to :asset
