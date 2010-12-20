@@ -27,14 +27,13 @@ GEM
       activesupport
     cancan (1.4.1)
     cgi_multipart_eof_fix (2.5.0)
-    collectiveidea-delayed_job (1.8.2)
     columnize (0.3.2)
     css_parser (1.1.4)
     daemons (1.1.0)
     desert (0.5.4)
     fastthread (1.0.7)
     gem_plugin (0.2.3)
-    haml (3.0.24)
+    haml (3.0.25)
     hpricot (0.8.3)
     htmlentities (4.2.1)
     i18n (0.4.2)
@@ -85,7 +84,6 @@ DEPENDENCIES
   adzap-ar_mailer
   authlogic
   cancan (= 1.4.1)
-  collectiveidea-delayed_job
   desert
   haml
   hpricot
