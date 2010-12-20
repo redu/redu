@@ -74,6 +74,8 @@ ActionController::Routing::Routes.draw do |map|
   map.removed_page   '/removed_item', :controller => 'base', :action => 'removed_item'
   map.contact 'contact',  :controller => 'base', :action => 'contact'
 
+  map.resources :events
+
   # SCHOOL
   map.resources :spaces, :member => {
     :vote => :post,
