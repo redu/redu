@@ -28,9 +28,13 @@ class UsersController < BaseController
     }
 
     if params[:search] # search
-      @courses = @user.courses.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
+      @courses = @user.courses.name_like_all(params[:search].to_s.split).ascend_by_name
+      @courses = @courses.published if can? :manage, @user
+      @courses = @courses.paginate(paginating_params)
     else
-      @courses = @user.courses.paginate(paginating_params)
+      @courses = @user.courses
+      @courses = @courses.published if can? :manage, @user
+      @courses = @courses.paginate(paginating_params)
     end
     respond_to do |format|
       format.js do
