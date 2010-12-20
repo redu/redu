@@ -118,7 +118,7 @@ module BaseHelper
 		else
 			f.select(:simple_category_id, options_for_select(categories_array), :include_blank => true)
 		end
- 
+
   end
 
   def category_i18n(category)
@@ -620,14 +620,9 @@ module BaseHelper
 
   end
 
-	def teachers_preview(space, size = nil)
-    sql = "SELECT u.login, u.login_slug FROM users u " \
-          "INNER JOIN user_space_associations a " \
-          "ON u.id = a.user_id " \
-          "AND a.role_id = #{Role[:teacher].id} " \
-          "WHERE a.space_id = #{space.id} LIMIT #{size or 12} "
-
-    User.find_by_sql(sql)
+  def teachers_preview(space, size = nil)
+    size ||= 12
+    space.teachers.find(:all, :limit => size)
   end
 
 

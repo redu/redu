@@ -22,6 +22,10 @@ function limitChars(textclass, limit, infodiv){
 }
 
 $(document).ready(function(){
+    $(".tooltipable").tipTip({
+      defaultPosition: "top",
+    });
+
     // Paginações em AJAX
     $(".pagination a").live("click",
       function() {
@@ -160,9 +164,6 @@ $("ul.default > li:odd").addClass("odd")
 $("ul.default > li:even").addClass("even")
 $("ul.activities > li:first").addClass("first_item")
 
-$(".tooltipable").tipTip({
-  defaultPosition: "top",
-});
 
 })
 

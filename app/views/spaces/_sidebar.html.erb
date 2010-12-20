@@ -42,7 +42,7 @@
           <ul class="clearfix">
             <%= render :partial => 'spaces/member_short', :collection => teachers_preview(space), :as => :member %>
           </ul>
-          <a href="<%= teachers_space_path %>" class="icon more">Ver mais</a>
+          <a href="<%= teachers_space_path(space) %>" class="icon more">Ver mais</a>
         </div><!-- end followship -->
       <% else %>
         <div class="box_notice">Nenhum professor

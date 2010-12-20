@@ -77,10 +77,6 @@ module SpacesHelper
     [icon, color, post  ]
   end
   
-  def teachers_preview(space, size = nil)
-    space.teachers[0..12]
-  end
-  
   def waiting_bulletins_count
     Bulletin.count(:conditions => ["bulletinable_type LIKE 'Space'" \
                                    " AND bulletinable_id = ?" \
