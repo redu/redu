@@ -10,11 +10,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from CanCan::AccessDenied do |exceptipn|
     flash[:notice] = "Você não tem acesso a essa página"
-    if current_user
-      redirect_to user_path(current_user)
-    else
-      redirect_to home_path
-    end
+    redirect_to home_path
   end
 
   private

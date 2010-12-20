@@ -10,7 +10,7 @@ class SpacesController < BaseController
   load_and_authorize_resource :course, :through => :environment,
     :except => [:create, :cancel]
   load_and_authorize_resource :space, :through => :course,
-    :except => [:create, :cancel]
+    :except => [:new, :create, :cancel]
 
   after_filter :create_activity, :only => [:create]
 

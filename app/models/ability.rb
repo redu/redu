@@ -11,9 +11,6 @@ class Ability
     # Overall Read
     alias_action :vote, :rate, :more, :to => :read
 
-    # Overall View
-    alias_action :preview, :to => :view
-
     # Environment
     alias_action :admin_courses, :destroy_members, :to => :manage
 
@@ -95,6 +92,7 @@ class Ability
       can :read, :all do |object|
         user.can_read? object
       end
+      can :preview, [Course, Environment], :published => true
 
       can :create, Environment
       can :join, Course
