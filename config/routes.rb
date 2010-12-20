@@ -201,6 +201,7 @@ ActionController::Routing::Routes.draw do |map|
       :controller => :roles, :action => :update, :conditions => {:method => :post}
     end
   end
+  map.activate 'users/activate/:id', :controller => 'users', :action => 'activate'
 
   # Indexes
   map.application '', :controller => "base", :action => "site_index"
