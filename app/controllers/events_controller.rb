@@ -2,8 +2,8 @@ class EventsController < BaseController
   require 'htmlentities'
 	
   layout 'environment'
-  load_and_authorize_resource :space
   load_and_authorize_resource :environment
+  load_and_authorize_resource :space
   load_and_authorize_resource :event, :through => [:space, :environment]
 
   before_filter :find_environment_course_and_space
@@ -81,7 +81,6 @@ class EventsController < BaseController
   end
 
   def new
-
     @eventable = find_eventable
   end
 

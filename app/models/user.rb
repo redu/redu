@@ -252,7 +252,7 @@ class User < ActiveRecord::Base
     when 'Course'
       (self.environment_admin? entity.environment)
     when 'Space'
-      self.teacher?(entity)
+      self.teacher?(entity) || self.can_manage?(entity.course)
     when 'Subject'
       self.teacher?(entity.space)
     when 'Lecture'
@@ -550,7 +550,7 @@ class User < ActiveRecord::Base
   end
 
   def display_name
-    if self.removed
+    if self.removed?
       return '(usuário removido)'
     end
 

@@ -16,7 +16,6 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :folders
   map.resources :annotations
   map.resources :bulletins, :member => {:rate => :post}
-  map.resources :events#, :collection => { :past => :get, :ical => :get }
   map.resources :sb_posts
   map.resources :topics
   map.resources :metro_areas
