@@ -1,20 +1,35 @@
 <ul class="sortable clearfix"> 
-<li class="clearfix">
+  <li class="clearfix">
     <span class="call"><span>Quem segue <%= @user.first_name %></span></span>
-   <div class="followship box clearfix">
-	
-<% if @user.followers.size > 0 %>
-<ul class="clearfix">
+    <div class="followship box clearfix">
 
-<% for user in @user.followers[0..9]%>
-<li>
-	<%= link_to image_tag(user.avatar.url(:thumb), :height => '24', :width => '24', :alt => "#{user.login}"), user_path(user), :rel => 'bookmark', :title => "#{user.display_name}" %>
+      <% if @user.followers.size > 0 %>
+        <ul class="clearfix">
+          <% for user in @user.followers[0..9]%>
+            <li>
+              <%= link_to image_tag(user.avatar.url(:thumb), :height => '24', :width => '24', :alt => "#{user.login}"), user_path(user), :rel => 'bookmark', :title => "#{user.display_name}", :class => "tooltipable" %>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <div class="box_notice">Ninguém segue <%= @user.first_name %> no momento.</div>
+      <% end %>
+    </div>
 </li>
-<%end%>
+<li class="clearfix">
+    <span class="call"><span><%= @user.first_name %> segue</span></span>
+    <div class="followship box clearfix">
 
-</ul>
-<% else %>
-<div class="box_notice">Ninguém segue <%= @user.first_name %> no momento.</div>
-<% end %>
-</div>
+      <% if @user.follows.size > 0 %>
+        <ul class="clearfix">
+          <% for user in @user.follows[0..9]%>
+            <li>
+              <%= link_to image_tag(user.avatar.url(:thumb), :height => '24', :width => '24', :alt => "#{user.login}"), user_path(user), :rel => 'bookmark', :title => "#{user.display_name}", :class => "tooltipable" %>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <div class="box_notice">Ninguém segue <%= @user.first_name %> no momento.</div>
+      <% end %>
+    </div>
 </li>

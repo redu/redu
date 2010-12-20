@@ -163,6 +163,7 @@ $("ul.activities > li:first").addClass("first_item")
 $(".tooltipable").tipTip({
   defaultPosition: "top",
 });
+
 })
 
 /*

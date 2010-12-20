@@ -12,7 +12,7 @@
 
   <% unless current_user.avatar_file_name and current_user.activated_at and (current_user.has_invited or AppConfig.closed_beta_mode) and current_user.profile_complete? %>
     <li class="clearfix">
-      <span class="call"><span>TODO</span></span>
+      <span class="call"><span>O que você precisa fazer</span></span>
       <ul class="menu">
         <% unless current_user.profile_complete? %>
           <li><%= link_to "Completar dados do perfil", edit_user_path(current_user)%></li>
@@ -44,7 +44,7 @@
 
 <% for user in @user.follows[0..9]%>
 <li>
-	<%= link_to image_tag(user.avatar.url(:thumb), :height => '24', :width => '24', :alt => "#{user.login}"), user_path(user), :rel => 'bookmark', :title => "#{user.display_name}" %>
+  <%= link_to image_tag(user.avatar.url(:thumb), :height => '24', :width => '24', :alt => "#{user.login}"), user_path(user), :rel => 'bookmark', :title => "#{user.display_name}", :class => "tooltipable" %>
 </li>
 <%end%>
 
@@ -55,6 +55,23 @@
 </div>
 </li>
 
+<li class="clearfix">
+    <span class="call"><span>Quem segue você</span></span>
+    <div class="followship box clearfix">
+
+      <% if @user.followers.size > 0 %>
+        <ul class="clearfix">
+          <% for user in @user.followers[0..9]%>
+            <li>
+              <%= link_to image_tag(user.avatar.url(:thumb), :height => '24', :width => '24', :alt => "#{user.login}"), user_path(user), :rel => 'bookmark', :title => "#{user.display_name}", :class => "tooltipable" %>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <div class="box_notice">Ninguém segue <%= @user.first_name %> no momento.</div>
+      <% end %>
+    </div>
+</li>
 
 <li class="clearfix">
 <span class="call"><span>Minhas anotações</span></span>
