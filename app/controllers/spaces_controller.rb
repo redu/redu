@@ -10,7 +10,7 @@ class SpacesController < BaseController
   load_and_authorize_resource :course, :through => :environment,
     :except => [:create, :cancel]
   load_and_authorize_resource :space, :through => :course,
-    :except => [:new, :create, :cancel]
+    :except => [:create, :cancel]
 
   after_filter :create_activity, :only => [:create]
 
@@ -323,8 +323,15 @@ class SpacesController < BaseController
     if @space.new_record?
       render "new"
     else
-      UserSpaceAssociation.create({:user => current_user, :space => @space, :status => "approved", :role_id => 4}) #:role => Role[:space_admin]
-      Forum.create(:name => "Fórum do espaço #{@space.name}", :description => "Este fórum pertence ao espaço #{@space.name}. Apenas os participantes deste espaço podem visualizá-lo. Troque ideias, participe!", :space_id => @space.id)
+      UserSpaceAssociation.create({:user => current_user,
+                                  :space => @space,
+                                  :status => "approved",
+                                  :role_id => Role[:teacher].id})
+      Forum.create(:name => "Fórum do espaço #{@space.name}",
+                   :description => "Este fórum pertence ao espaço #{@space.name}. " + \
+                                   "Apenas os participantes deste espaço podem " + \
+                                   "visualizá-lo. Troque ideias, participe!",
+                    :space_id => @space.id)
 
       course_users = UserCourseAssociation.all(:conditions => ["state LIKE ? AND course_id = ?", 'approved', @space.course.id])
 
