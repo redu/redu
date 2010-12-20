@@ -1,4 +1,4 @@
-<% if @courses && @courses.length > 0 %>
+<% unless @courses.empty? %>
   <ul class="badge">
     <%= render :partial => 'courses/item_index', :collection => @courses, :as => :course %>
   </ul>

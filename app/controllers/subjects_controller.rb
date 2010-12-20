@@ -17,20 +17,21 @@ class SubjectsController < BaseController
   end
 
   def index
-    cond = Caboose::EZ::Condition.new
+    cond = {}
+    if can?(:manage, @course)
+      cond[:published] = params.fetch(:published, true)
+    else
+      cond[:published] = true
+    end
 
     paginating_params = {
-      :conditions => cond.to_sql,
+      :conditions => cond,
       :page => params[:page],
       :order => (params[:sort]) ? params[:sort] + ' DESC' : 'created_at DESC',
       :per_page => AppConfig.items_per_page
     }
 
-    if params[:search] # search cursos da escola
-      @subjects = @space.subjects.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
-    else
-      @subjects = @space.subjects.published.paginate(paginating_params)
-    end
+    @subjects = @space.subjects.paginate(paginating_params)
 
     respond_to do |format|
       format.html # index.html.erb
