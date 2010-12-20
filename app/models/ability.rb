@@ -5,7 +5,8 @@ class Ability
   def initialize(user)
     # Aliases para acoes não padrão
     # Overall Manage
-    alias_action :publish, :unpublish, :admin_members, :admin_bulletins, :search_users_admin, :to => :manage
+    alias_action :publish, :unpublish, :admin_members, :admin_bulletins,
+      :search_users_admin, :to => :manage
 
     # Overall Read
     alias_action :vote, :rate, :more, :to => :read
@@ -17,15 +18,18 @@ class Ability
     alias_action :admin_courses, :destroy_members, :to => :manage
 
     # Course
-    alias_action :admin_spaces, :admin_members_request, :moderate_members_requests, :to => :manage
+    alias_action :admin_spaces, :admin_members_request,
+      :moderate_members_requests, :to => :manage
     alias_action :unjoin, :to => :read
 
     # Space
-    alias_action :admin_events, :moderate_bulletins, :moderate_events, :look_and_feel, :set_theme, :new_space_admin, :to => :manage
+    alias_action :admin_events, :moderate_bulletins, :moderate_events,
+      :look_and_feel, :set_theme, :new_space_admin, :to => :manage
     #TODO action manage gerando recursividade
 
     # Folder
-    alias_action :do_the_upload, :upload, :update_permissions, :rename, :destroy_folder, :to => :manage
+    alias_action :do_the_upload, :upload, :update_permissions, :rename,
+      :destroy_folder, :to => :manage
     alias_action :download, :feed, :feed_warning, :to => :read
 
     # Post
@@ -38,7 +42,9 @@ class Ability
     alias_action :respond, :to => :read
 
     # User
-    alias_action :follows, :learning, :followers, :teaching, :show_log_activity, :log, :welcome_complete, :list_subjects, :show_log_activity, :activity_xml, :download_curriculum, :to => :read
+    alias_action :follows, :learning, :followers, :teaching,
+      :show_log_activity, :log, :welcome_complete, :list_subjects,
+      :show_log_activity, :activity_xml, :download_curriculum, :to => :read
 
     alias_action :assume, :metro_area_update, :edit_account,
       :update_account, :edit_pro_details, :update_pro_details,
@@ -65,7 +71,8 @@ class Ability
     alias_action :delete_selected, :more, :to => :manage
 
     # Subject
-    alias_action :lazy, :cancel, :edit_resources, :update_resources, :change_assets_order, :to => :manage
+    alias_action :lazy, :cancel, :edit_resources, :update_resources,
+      :change_assets_order, :to => :manage
     alias_action :statuses, :next, :previous, :attend, :to => :read
     alias_action :infos, :enroll, :to => :preview
 
@@ -112,8 +119,10 @@ class Ability
 
       # Caso seja o Status de usuário, apenas ele mesmo pode criá-lo.
       can :create, Status do |status|
-        ((status.statusable.class.to_s.eql? 'User') && (user == status.statusable)) ||
-          (user.has_access_to? status.statusable) # Caso geral (Spaces, Subjects, etc.)
+        ((status.statusable.class.to_s.eql? 'User') && \
+         (user == status.statusable)) ||
+          # Caso geral (Spaces, Subjects, etc.)
+          (user.has_access_to? status.statusable)
       end
     end
   end
