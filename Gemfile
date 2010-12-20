@@ -34,7 +34,12 @@ group :development do
 end
 
 group :production do
+  gem "daemons"
   gem "newrelic_rpm", "2.13.1"
+end
+
+group :production do
+  gem "daemons"
 end
 
 group :test do
