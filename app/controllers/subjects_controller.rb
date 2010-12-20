@@ -7,7 +7,7 @@ class SubjectsController < BaseController
   load_and_authorize_resource :environment
   load_and_authorize_resource :course, :through => :environment
   load_and_authorize_resource :space, :through => :course
-  load_and_authorize_resource :subject, :through => :space
+  load_and_authorize_resource :subject, :through => :space, :except => [:new, :create]
 
   uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit, :create, :update])
 
