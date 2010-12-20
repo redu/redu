@@ -2,6 +2,7 @@
   <%= link_to (image_tag course.environment.avatar(:thumb)),
     environment_course_path(course.environment, course), :class => "logo" %>
   <%= link_to course.name, environment_course_path(course.environment, course), :class => "name" %>
+  <small class="quiet">por <%= link_to course.environment.name, environment_path(course.environment) %></small>
   <div class="badge_info">
   </div>
   <% if can? :manage, course %>
