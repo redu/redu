@@ -84,6 +84,7 @@ DEPENDENCIES
   adzap-ar_mailer
   authlogic
   cancan (= 1.4.1)
+  daemons
   desert
   haml
   hpricot
