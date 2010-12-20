@@ -29,9 +29,6 @@ class Space < ActiveRecord::Base
     :conditions => ["user_space_associations.status LIKE 'pending'"]
   has_many :logs, :as => :logeable, :dependent => :destroy, :class_name => 'Status'
 
-  # AUDIENCE
-  has_and_belongs_to_many :audiences
-
   has_many :folders
   has_many :acquisitions, :as => :acquired_by
   has_many :bulletins, :as => :bulletinable, :dependent => :destroy
@@ -136,7 +133,7 @@ class Space < ActiveRecord::Base
   end
 
   def steps
-    %w[general settings publication]
+    %w[general settings]
   end
 
   def next_step

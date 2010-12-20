@@ -6,8 +6,6 @@
             <td><span class="book_step disabled"><span><em>1</em>Informações Gerais</span></span></td>
             <td class="spacer">&nbsp;</td>
             <td><span class="book_step current"><span><em>2</em>Configurações</span></span></td>
-            <td class="spacer">&nbsp;</td>
-            <td><span class="book_step disabled"><span><em>3</em>Publicação</span></span></td>
           </tr>
       </tbody></table>
     </div>
@@ -60,21 +58,34 @@
 	<% end %>
 	-->
 </fieldset>
-
 </div>
-
 <% unless edit %>
-<div class="grid_6">
+  <div class="grid_6">
+    <div class="y_addinfo">
+      <div class="addinfocontent">
+        <h1>
+          Dica
+        </h1>
+        <p>
+          As opções de configuração poderão ser modificadas a qualquer momento nas opções de gerenciamento da rede.</p>
+      </div>
+    </div>
+  </div>
+  <div class="grid_6">
+    <div class="y_addinfo">
+      <div class="addinfocontent">
+        <h1>
+          Termos e Condições do Redu
+        </h1>
+        <p>Por favor não publique conteúdo que esteja protegido por direitos autoriais, conteúdo obceno ou que viole
+          os <%= link_to "termos e condições", {:controller => "base", :action => "tos"}, :target => "_blank"%> do Redu.
 
-	<div class="y_addinfo">
-                                <div class="addinfocontent">
-                                    <h1>
-                                      Dica</h1>
-                                    <p>
-                                       As opções de configuração poderão ser modificadas a qualquer momento nas opções de gerenciamento da rede.</p>
-																			 
-																			
-                                </div>
-                            </div>
-</div>
+          Ao clicar no botão abaixo você estará concordando com esses termos.</p>
+
+      </div>
+    </div>
+  </div>
 <% end %>
+
+
+

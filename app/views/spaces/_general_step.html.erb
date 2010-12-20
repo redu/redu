@@ -1,71 +1,53 @@
 <% unless edit %>
 
-
-<div class="<%= (edit) ? 'grid_15 alpha omega': 'grid_15' %>">
-  <div class="grid_9 push_3">
-    <table class="booking_steps" cellpadding="0" cellspacing="0">
-      <tbody><tr>
-          <td><span class="book_step current"><span><em>1</em>Informações Gerais</span></span></td>
-          <td class="spacer">&nbsp;</td>
-          <td><span class="book_step disabled"><span><em>2</em>Configurações</span></span></td>
-          <td class="spacer">&nbsp;</td>
-          <td><span class="book_step disabled"><span><em>3</em>Publicação</span></span></td>
-        </tr>
-    </tbody></table>
+  <div class="<%= (edit) ? 'grid_15 alpha omega': 'grid_15' %>">
+    <div class="grid_9 push_3">
+      <table class="booking_steps" cellpadding="0" cellspacing="0">
+        <tbody><tr>
+            <td><span class="book_step current"><span><em>1</em>Informações Gerais</span></span></td>
+            <td class="spacer">&nbsp;</td>
+            <td><span class="book_step disabled"><span><em>2</em>Configurações</span></span></td>
+          </tr>
+      </tbody></table>
+    </div>
+    <div class="grid_14">
+      <h3 class="call" >Novo espaço</h3>
+    </div>
+    <div class="grid_16">
+      <%= f.error_messages %>
+    </div>
   </div>
-  <div class="grid_14">
-    <h3 class="call" >Novo espaço</h3>
-  </div>
-  <div class="grid_16">
-    <%= f.error_messages %>
-  </div>
-</div>
 
 <% end %>
-
 
 <div class="<%= (edit) ? 'grid_15 alpha omega': 'grid_16 ' %>">
 
-<% field_set_tag 'Informações Gerais' do %>
-  
-  <% if @space.course.nil? %>
-        <%= hidden_field_tag "space[course_id]", @course.id %>
-  <% else %>
-        <%= hidden_field_tag "space[course_id]", @space.course.id %>
-      <% end %>
-        <%= f.label "Nome" %>
-	<%= f.text_field :name ,  :onkeyup => ((edit) ? nil : "generatePath(this)") %>
-	<%= error_for :space, :name %>
+  <% field_set_tag 'Informações Gerais' do %>
 
-	<% random_number = get_random_number%>
-	<%= f.label "Descrição:" %>
-	<div style="">
-	<%= f.text_area :description, :size => "50x3", :class => "desc-#{random_number}" %>
-	<%= render :partial => 'shared/limit_char_field', :locals => { :class_textarea => "desc-#{random_number}" }%>
-	</div>
-	<%= error_for :space, :description %>
+    <% if @space.course.nil? %>
+      <%= hidden_field_tag "space[course_id]", @course.id %>
+    <% else %>
+      <%= hidden_field_tag "space[course_id]", @space.course.id %>
+    <% end %>
+    <%= f.label "Nome" %>
+    <%= f.text_field :name ,  :onkeyup => ((edit) ? nil : "generatePath(this)") %>
+    <%= error_for :space, :name %>
 
-	<%= f.label "Imagem <span class='snippet'>(tamanho recomendado: 200 x 64)</span>" %>
-	<%= f.file_field :avatar %>
+    <% random_number = get_random_number%>
+    <%= f.label "Descrição:" %>
+    <div style="">
+      <%= f.text_area :description, :size => "50x3", :class => "desc-#{random_number}" %>
+      <%= render :partial => 'shared/limit_char_field', :locals => { :class_textarea => "desc-#{random_number}" }%>
+    </div>
+    <%= error_for :space, :description %>
 
-	<%= f.label "Palavras-chaves <span class='snippet'>(separadas por vírgula)</span>" %>
-	<%= f.text_field :tag_list %>
+    <%= f.label "Imagem <span class='snippet'>(tamanho recomendado: 200 x 64)</span>" %>
+    <%= f.file_field :avatar %>
 
-<% end %>
+    <%= f.label "Palavras-chaves <span class='snippet'>(separadas por vírgula)</span>" %>
+    <%= f.text_field :tag_list %>
 
+  <% end %>
 
-<% field_set_tag 'Audiência' do %>
-<span class="snippet">Selecionar um público que não corresponde ao propósito da rede pode levar à uma má avaliação. </span>
-<%= error_for :space, :audiences %>
-<ul>
-<% for audience in Audience.find(:all) %>
-	<li>
-	  <%= check_box_tag "space[audience_ids][]", audience.id, @space.audiences.include?(audience) %>
-	  <%= audience.name %>
-	</li>
-<% end %>
-</ul>
-<% end %>
-
-
+ 
 </div>

@@ -348,9 +348,6 @@ class SpacesController < BaseController
   # PUT /spaces/1
   # PUT /spaces/1.xml
   def update
-    unless params[:only_image]
-      params[:space][:audience_ids] ||= []
-    end
 
     respond_to do |format|
       if @space.update_attributes(params[:space])
