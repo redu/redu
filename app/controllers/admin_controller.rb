@@ -99,7 +99,7 @@ class AdminController < BaseController
   end
 
   def spaces
-    @spaces = Space.paginate(:conditions => ["public = 1 AND removed = 0"],
+    @spaces = Space.paginate(:conditions => ["removed = 0"],
                                :include => :owner,
                                :page => params[:page],
                                :order => 'created_at DESC',

@@ -310,6 +310,9 @@ class SpacesController < BaseController
     @environment = @course.environment
     @space.owner = current_user
     @space.current_step = session[:space_step]
+
+    @space.enable_correct_validation_group!
+
     if @space.valid?
       if params[:back_button]
         @space.previous_step

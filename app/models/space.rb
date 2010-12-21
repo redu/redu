@@ -52,8 +52,11 @@ class Space < ActiveRecord::Base
   has_attached_file :avatar, PAPERCLIP_STORAGE_OPTIONS
 
   # VALIDATIONS
-  validates_presence_of :name,
+  validates_presence_of :name, :description, :submission_type,
     :message => "Não pode ser deixado em branco"
+
+  validation_group :general, :fields => [:name, :description]
+  validation_group :settings, :fields => [:submission_type]
 
   # Utilizado nas rotas search friendly
   def to_param
@@ -166,9 +169,8 @@ class Space < ActiveRecord::Base
     membership.update_attributes({:role_id => role.id})
   end
 
-#  def featured_lectures(qty=4)
-#    #TODO melhorar esta lógica
-#    self.lectures.find(:all, :order => "view_count DESC", :limit => "#{qty}")
-#  end
+  def enable_correct_validation_group!
+    self.enable_validation_group(self.current_step.to_sym)
+  end
 
 end
