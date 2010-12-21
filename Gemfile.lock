@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: git://github.com/guiocavalcanti/scribd_fu.git
-  revision: c235f07b47080661df5de109c1a7a35b90e9f88a
+  revision: 99d74753a12f0f50a632a5b6dc7916e58c0f6e47
   specs:
     scribd_fu (2.0.9)
       rscribd
