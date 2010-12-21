@@ -345,7 +345,7 @@ class LecturesController < BaseController
           @lecture.lectureable.ready!
         end
       elsif @lecture.lectureable_type.eql?('Document')
-        @lecture.lectureable.delay.upload_to_scribd
+        @lecture.lectureable.upload_to_scribd
       end
 
       respond_to do |format|
