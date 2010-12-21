@@ -1,0 +1,28 @@
+<script type="text/javascript">
+$(document).ready(function(){
+    $("#environment_name").bind('keyup blur', function(e){
+      $("#environment_path").val($(this).slug());
+    })
+    $("#environment_courses_attributes_0_name").bind('keyup blur', function(e){
+      $("#environment_courses_attributes_0_path").val($(this).slug());
+    })
+
+    $("input[name=environment\[courses_attributes\]\[\]\[color\]]").hide()
+});
+</script>
+
+<% environment = Environment.new
+   environment.courses.build %>
+<% form_for environment, :url => environments_path(:step => 1) do |f| %>
+  <%= f.error_messages %>
+  <%= f.label :name, "Seu ambiente de ensino" %>
+  <%= f.text_field :name, :class => "text" %>
+  <%= f.hidden_field :path, :class => "leitura" %>
+  <% f.fields_for :courses do |course|  %>
+    <%= course.label :name, "Seu curso" %>
+    <%= course.text_field :name, :class => "text" %>
+    <%= course.hidden_field :path %>
+  <% end %>
+  <%= submit_tag "Criar!" %>
+<% end %>
+

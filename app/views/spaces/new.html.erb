@@ -1,0 +1,18 @@
+
+  <% form_for @space, :html => {:id => "form_school"} do |f|%>
+
+    <%= render "#{@space.current_step}_step", :f => f, :edit => false %>
+
+    <div class="grid_16">
+      <%= f.submit "< Anterior", :name => "back_button" unless @space.first_step? %>
+      <% if @space.last_step? %>
+        <%= f.submit "Concluir" %>
+      <% else %>
+        <%= f.submit "Próximo >" %>
+      <% end %>
+      ou <%= link_to "Cancelar e voltar", cancel_spaces_path(:course_id => @course.id)%>
+    </div>
+
+<% end %>
+
+</div>

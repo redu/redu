@@ -1,4 +1,4 @@
-<script>
+<script type="text/javascript">
 	function selectAll(){
 	//$('select_all_link').hide();
 	//$('select_all_string').show();
@@ -6,7 +6,7 @@
 	for (var i =0; i< checkboxes.length; i++) {
 		checkboxes[i].checked = true;
 	}
-	
+
 }
 
 function selectNone(){
@@ -16,29 +16,25 @@ function selectNone(){
 	}
 }
 
-	
+
 </script>
 
 <div class="grid_16">
-<div id="breadcrumbs">
-	<a href="#">Administração</a> > Exames
-</div>
-
-<div id="title_video">Moderação de Exames</div>
+  <div id="title_video">Moderação de Exames</div>
 </div>
 
 <div class="main grid_16">
     <div class="fake-tabs grid_16 alpha omega">
         <%= render :partial => "admin/taskbar" %>
         <div class="panel">
-        	
+
 					<h3>Mostrando exames mais recentes</h3>
-					
+
     <div id="all_list">
-    	
+
 		<% if @exams && @exams.size > 0 %>
-		Selecionar <%=link_to_function 'Todos', 'selectAll()'%> | <%=link_to_function 'Nenhum', 'selectNone()'%> 
-		
+		Selecionar <%=link_to_function 'Todos', 'selectAll()'%> | <%=link_to_function 'Nenhum', 'selectNone()'%>
+
 		 <% form_tag :action => :moderate_exams do %>
 			<table style="width: 100%; margin: 15px 10px 20px 10px;" class="common">
 				<tr>
@@ -49,7 +45,7 @@ function selectNone(){
 					<tr>
 						<td><%= check_box_tag 'exams[]', exam.id  %></td>
 						<td><%= exam.id  %></td>
-						<td><%= link_to exam.name, exam_path(exam), :target => "_blank" %> </td>
+						<td><%= link_to exam.name, space_subject_exam_path(exam.subject.space, exam.subject, exam), :target => "_blank" %> </td>
 						<td><%= exam.owner.display_name %> </td>
 						<td><%= time_ago_in_words(exam.created_at) %> </td>
 					</tr>
@@ -61,13 +57,13 @@ function selectNone(){
 		<% else %>
  			<div class="box_notice">Não há exames publicados ainda.</div>
 		<% end %>
-    	
-    </div> <!-- fim da listagem --> 
-	
+
+    </div> <!-- fim da listagem -->
+
 	<div id="pagination" align="center" class="pagination">
 
 		<%= will_paginate  @exams, :params => {:sort_by => @sort_by}, :class => "pagination_number"  %>
-		
+
     </div>
 
 </div>

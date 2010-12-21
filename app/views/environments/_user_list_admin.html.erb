@@ -1,0 +1,52 @@
+<%= image_tag 'loadingAnimation.gif', :id => 'loading_bar', :style => "display: none; margin-top: 40px"%>
+<% form_tag destroy_members_environment_path,
+     :method => :post, :id => "remove" do %>
+      <%= submit_tag "Remover selecionados" %>
+<table id="user_list_table" class="common">
+  <thead>
+    <th>
+    <input type="checkbox" id="select_all"  >
+    </th>
+    <th>Usuário</th>
+    <th>Data de Inscricão</th>
+    <th>Curso(s)</th>
+    <th>Permissões</th>
+    <th>Administrador?</th>
+  </thead>
+  <% for environment_membership in memberships %>
+    <tr id="user-<%= environment_membership.user_id %>">
+      <td><%= check_box_tag 'users[]', environment_membership.user.id, false, {:id => "remove-#{environment_membership.user.id}"}  %></td>
+      <td><%= link_to environment_membership.user.display_name, environment_membership.user, :target => "_blank" %> </td>
+      <td><%= time_ago_in_words(environment_membership.created_at) %> </td>
+      <td>
+        <ul class="tags">
+        <% environment_membership.user.courses.of_environment(@environment).each do |course| %>
+          <li><span><%= course.name %></span></li>
+        <% end %>
+        </ul>
+      </td>
+      <td><%= link_to "Editar", user_admin_roles_path(environment_membership.user, @environment) %></td>
+      <td class="administrator" id="administrator-<%= environment_membership.user_id %>">
+      <%#FIXME O Rails não permitiu forms aninhados, foi necessario usar o link_to_remote para conseguir o
+          efeito desejado %>
+      <%= link_to_remote "Tornar usuário comum",
+          :method => :post,
+          :url => user_update_roles_path(environment_membership.user, @environment),
+          :loading => "$(\"table tr#user-#{environment_membership.user_id} .administrator\").prepend(\"#{escape_javascript(image_tag("spinner.gif")) }\")",
+          :complete => "$(\"table tr#user-#{environment_membership.user_id} .administrator img\").remove()",
+          :success => "$(\"td#administrator-#{environment_membership.user_id} a\").toggle()",
+          :html => {:class => 'button', :style => "display: #{environment_membership.role.eql?(Role[:environment_admin]) ? "inline" : "none"};"},
+          :with => "'type=environment;roles=#{Role[:member].id}'" %>
+      <%= link_to_remote "Tornar administrador",
+          :method => :post,
+          :url => user_update_roles_path(environment_membership.user, @environment),
+          :loading => "$(\"table tr#user-#{environment_membership.user_id} .administrator\").prepend(\"#{escape_javascript(image_tag("spinner.gif")) }\")",
+          :complete => "$(\"table tr#user-#{environment_membership.user_id} .administrator img\").remove()",
+          :success => "$(\"td#administrator-#{environment_membership.user_id} a\").toggle()",
+          :html => {:class => 'button', :style => "display: #{environment_membership.role.eql?(Role[:environment_admin]) ? "none" : "inline"};"},
+          :with => "'type=environment;roles=#{Role[:environment_admin].id}'" %>
+    </td>
+    </tr>
+  <% end %>
+</table>
+<% end %>

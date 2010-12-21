@@ -1,5 +1,5 @@
 <li class="clearfix <%= (status_counter == 0) ? 'first_item' : ''%> " id="status-<%= status.id %>">
-    <div class="photo <%= (@school) ? ((status.user.teacher? @school) ? 'teacher' : '') : '' %>">
+    <div class="photo <%= (@space) ? ((status.user.teacher? @space) ? 'teacher' : '') : '' %>">
     <%= image_tag( status.user.avatar.url(:thumb), {:width => "50", :height=>"50" })%>
     </div>
     <div class="activity clearfix question">

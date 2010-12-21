@@ -1,0 +1,4 @@
+# Tive problemas para passar @statuses por parâmetro. 
+# Como o endless será refatorado em breve, abri uma exceção neste rjs. 
+page << "$('.activities').append('"+escape_javascript(render(:partial => "statuses/type_proxy", :collection => @statuses, :as => :status, :locals => {:statusable => :statusable }))+"')"
+page.replace_html "#more",  ''

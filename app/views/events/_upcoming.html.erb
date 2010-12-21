@@ -8,7 +8,7 @@
         <span class="quiet year"><%= event.start_time.year %></span>
       </span>    
     </div>
-    <span class="name"><%= link_to event.name, school_event_path(event.school, event) %></span>
+    <span class="name"><%= link_to event.name, polymorphic_path([event.eventable, event]) %></span>
   </li>
   <% end %>
 </ul>

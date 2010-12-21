@@ -1,59 +1,54 @@
 <div id="all_content3">
-<div id="col_content">
-	<div id="breadcrumbs"><a href="<%=application_url%>">home</a> > <a href="#">aprender</a> > <%= link_to 'exames', exams_path %> > <%= link_to 'meus exames', user_exams_path(current_user.id) %> > <%= link_to 'Não publicados', unpublished_user_exams_path(current_user.id) %></div>
-   	<div id="title">MEUS EXAMES NÃO PUBLICADOS
-	
-	<%  if logged_in? %>
-	 	<%= render :partial => "exams/submenu" %>
-	<% end %>
-	
-	<%# render :partial => "exams/search" %></div>
-	
-<!-- LISTAGEM RECURSO ############################################################################################################################################## -->
+  <div id="col_content">
+    <div id="title">MEUS EXAMES NÃO PUBLICADOS
 
-	<div id="filter_bar">
-		
-	    <span id="title_list" class="title_list"> MAIS RECENTES</span>
-		
-		 <!--
-		<span class="title_filter">Ordenar:</span>
-		<%# render :partial => "exams/sort" %>
-	      -->
-	      
+      <%  if logged_in? %>
+        <%= render :partial => "exams/submenu" %>
+      <% end %>
+
+      <%# render :partial => "exams/search" %></div>
+
+
+    <div id="filter_bar">
+
+      <span id="title_list" class="title_list"> MAIS RECENTES</span>
+
+      <!--
+      <span class="title_filter">Ordenar:</span>
+      <%# render :partial => "exams/sort" %>
+      -->
+
     </div>
     <div id="all_list">
-    	
-		<% if @exams && @exams.length > 0 %>
- 			<%= render :partial => 'exams/item_unpublished', :collection => @exams, :as => :exam %> 
- 		<% else %>
- 			Não há exames ainda. <%= link_to 'Crie um agora!', :action => 'new' %>
-		<% end %>
-    	
-    </div> <!-- fim da listagem --> 
-	
-	<%= will_paginate  @exams, :prev_label => "< Anterior" ,:next_label => "Próximo >", :separator=>"|" %> 
-    
-<!-- PAGINACAO ##################################################################################################################################################### -->
-    <div id="pagination" align="center">
 
+      <% if @exams && @exams.length > 0 %>
+        <%= render :partial => 'exams/item_unpublished', :collection => @exams, :as => :exam %> 
+      <% else %>
+        Não há exames ainda. <%= link_to 'Crie um agora!', :action => 'new' %>
+    <% end %>
 
-    	<ul id="pagination_number">
-    		<li><a href="" class="nav">< Anterior</a><li>
-            <li><a href="" class="number">1</a><li>
-            <li><a href="" class="number">2</a><li>
-            <li><a href="" class="number">3</a><li>
-            <li><a href="" class="number">4</a><li>
-            <li><a href="" class="number">5</a><li>
-            <li><a href="" class="nav">PrÃ³ximo ></a><li>
-    	</ul>
-    </div>
-	
-</div>
+  </div> <!-- fim da listagem --> 
 
-<!-- COLUNA DIREITA ################################################################################################################################################ -->
-<div id="col_box3">
-<%= render :partial => 'shared/activities' %> 
-<%# render :partial => 'exams/tagcloud' %>
-</div> <!-- fim da coluna da direita --> 
-</div>
-</div>
+  <%= will_paginate  @exams, :prev_label => "< Anterior" ,:next_label => "Próximo >", :separator=>"|" %> 
+
+  <div id="pagination" align="center">
+
+    <ul id="pagination_number">
+      <li><a href="" class="nav">< Anterior</a><li>
+          <li><a href="" class="number">1</a><li>
+              <li><a href="" class="number">2</a><li>
+                  <li><a href="" class="number">3</a><li>
+                      <li><a href="" class="number">4</a><li>
+                          <li><a href="" class="number">5</a><li>
+                              <li><a href="" class="nav">PrÃ³ximo ></a><li>
+                                </ul>
+                              </div>
+
+                            </div>
+
+                            <div id="col_box3">
+                              <%= render :partial => 'shared/activities' %> 
+                              <%# render :partial => 'exams/tagcloud' %>
+                            </div> <!-- fim da coluna da direita --> 
+                          </div>
+                        </div>

@@ -1,0 +1,55 @@
+<% child_index = form_lesson.options[:child_index]%>
+<%= form_lesson.hidden_field(:position, :value => "0") %>
+<%= form_lesson.hidden_field(:_destroy, :value => false, :id => "destroy_" + form_lesson.object.id) unless form_lesson.object.new_record? %> 
+				
+		<h3 style="color: #bbb;">Vídeo</h3>
+		
+		<%= form_lesson.label "Título:" %>
+		<%= form_lesson.text_field :title, :onkeyup => "topicTitle(this);" %>
+		<br>
+		<br>
+		
+<div id="video_upload_<%=child_index%>"> 
+	<% @seminar = Seminar.new %>		
+	<% form_for @seminar, :url => { :controller => :lectures, :action => :upload_video },
+						:html => { :target => "upload_frame", :onsubmit => "Element.show('spinner')",
+						:multipart => true } do |f_remote|%>
+					
+		
+		<%= hidden_field_tag(:child_index, child_index) %>
+							
+		Conteúdo:
+		<br>
+			
+		<%= f_remote.radio_button :external_resource_type, :redu, {:onchange => "switchCourseFields(2);"} %>
+		<%= f_remote.label :external_resource_type_redu, "Redu", :class => "inline" %>
+
+		<%= f_remote.radio_button :external_resource_type, :youtube, {:onchange => "switchCourseFields(2);"} %>
+		<%= f_remote.label :external_resource_type_youtube, "Youtube", :class => "inline" %>
+		<%= f_remote.radio_button :external_resource_type, :upload, {:onchange => "switchCourseFields(1);"} %>
+		<%= f_remote.label :external_resource_type_upload, "Upload", :class => "inline" %><br/><br/>
+
+		<div id="upload_resource_field" style="display:none;">
+			<%= f_remote.label :original, "Upload de vídeo" %><br/>
+			<%= f_remote.file_field :original  %><br/><br/>
+			(tamanho máximo: 50MB)
+		</div>
+
+		<div id="external_resource_field" style="display:block;">
+			<%= f_remote.label :external_resource, "Link para Vídeo" %><br/>
+			<%= f_remote.text_field :external_resource  %><br/><br/>
+		</div>
+
+		
+		<%= submit_tag 'Criar', :id => "submit"%>
+		<%= image_tag("spinner.gif",
+			    :align => "absmiddle",
+			    :border => 0,
+			    :id => "spinner",
+			    :style =>"display: none;" ) %>
+
+	 <% end -%>
+	 
+ </div>
+  
+		

@@ -1,8 +1,11 @@
 class ExamsController < BaseController
+  layout "environment"
 
-  before_filter :login_required, :except => [:index]
-  uses_tiny_mce(:options => AppConfig.question_mce_options, :only => [:new, :edit, :create, :update])
+  load_and_authorize_resource :exam, :except => [:new, :create]
+  before_filter :find_subject_space_course_environment
   after_filter :create_activity, :only => [:create, :results]
+
+  uses_tiny_mce(:options => AppConfig.question_mce_options, :only => [:new, :edit, :create, :update])
 
   def publish_score
     ExamUser.update(params[:exam_user_id], :public => true)
@@ -17,6 +20,7 @@ class ExamsController < BaseController
   end
 
   # listagem de exames favoritos
+  # Não precisa de permissão, pois ele utiliza current_user.
   def favorites
     if params[:from] == 'favorites'
       @taskbar = "favorites/taskbar"
@@ -40,7 +44,6 @@ class ExamsController < BaseController
 
     if params[:first]
       rst_session
-      @exam = Exam.find(params[:id])
     end
 
     # initialize session variables
@@ -48,9 +51,16 @@ class ExamsController < BaseController
     session[:question_index] ||= 0
     session[:prev_index] ||= 0
     session[:correct] ||= 0
+    session[:answers] ||= {}
 
     # if user selected a question to show
-    if params[:q_index]
+    if params.has_key?(:q_index)
+      # Setando o prev_index baseado no question_index anterior
+      if session[:question_index] > 0
+        session[:prev_index] -= 1
+      else
+        session[:prev_index] = 0
+      end
       if params[:q_index] == 'i' #instrucoes
         @show_i = true
         @has_next = true
@@ -63,38 +73,34 @@ class ExamsController < BaseController
       else #proximo / pular para
         session[:question_index] = params[:q_index].to_i
       end
+    elsif !params.has_key?('first')
+      redirect_to compute_results_space_subject_exam_path(@space, @subject, @exam)
     end
 
     @step =  session[:exam].questions[session[:question_index]]
     @prev_step =  session[:exam].questions[session[:prev_index]] if session[:question_index] != session[:prev_index]
     @has_next = (session[:question_index] < (session[:exam].questions.length - 1)) ? true : false
     @has_prev = (session[:question_index] > 0)
-    @theanswer = params[:answer]
 
-    if @theanswer and @prev_step #TODO aceitar questoes em branco
-      session[:answers][@prev_step.id] = @theanswer
-    end
-    session[:prev_index] = session[:question_index]
-    session[:question_index] += 1
-
-    if @step.nil?
-      compute_results
-    else
-      respond_to do |format|
-        format.js
-        format.html
+    # Salvando respostas dadas
+    if params.has_key?(:answer) && params.has_key?(:question)
+      unless params[:answer].empty?
+        session[:answers][params[:question].to_i] = params[:answer].to_i
+      else
+        session[:answers][params[:question].to_i] = nil
       end
     end
   end
 
   def compute_results
-    @exam = session[:exam]
-    @answers = session[:answers]
+    @exam = session[:exam] if session[:exam]
+    @answers = session[:answers] if session[:answers]
+    @corrects = []
     @correct = 0
-    @corrects = Array.new
-    @exam.questions.each_with_index do |question, k|
 
-      if session[:answers][question.id].to_i == question.answer.id
+    @exam.questions.each do |question|
+      #TODO setar o Question.answer no momento da criação
+      if session[:answers][question.id] == question.answer.id
         @corrects << question
         @correct += 1
       end
@@ -102,7 +108,7 @@ class ExamsController < BaseController
 
     # Atualiza contadores do exame
     @exam.update_attributes({:done_count => @exam.done_count + 1,
-                            :total_correct => @exam.total_correct + @correct })
+                              :total_correct => @exam.total_correct + @correct })
 
     # Adiciona no histórico do usuário/exame
     @exam_user = ExamUser.new
@@ -115,11 +121,19 @@ class ExamsController < BaseController
 
     #TODO performance?
     session[:corrects] = @corrects
-    redirect_to :action => :results, :correct => @correct, :time => params[:chrono], :exam_user_id => @exam_user.id
+    redirect_to results_space_subject_exam_path(@space, @subject, @exam,
+                                               :correct => @correct,
+                                               :time => params[:chrome],
+                                               :exam_user_id => @exam_user.id)
   end
 
   def results
     # TODO isso nao é muito necessario e compromete a peformace
+    @exam_user  = ExamUser.find(params[:exam_user_id])
+    if (not current_user.admin?) && @exam_user.user != current_user
+      raise CanCan::AccessDenied
+    end
+
     @alternative_letters = {}
     letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
     @exam = session[:exam]
@@ -155,53 +169,84 @@ class ExamsController < BaseController
     end
   end
 
-  def rst_session
-    session[:prev_index] = 0
-    session[:question_index] = 0
-    session[:correct] = nil
-    session[:exam] = nil
-    session[:answers] = Hash.new
-    session[:corrects] = nil
-  end
-
   def cancel
     Exam.find(session[:exam_params][:id]).destroy if session[:exam_params] and session[:exam_params][:id]
     session[:exam_params] = nil
 
     flash[:notice] = "Criação de exame cancelada."
-    redirect_to exams_path
+    redirect_to lazy_space_subject_path(@subject.space, @subject)
   end
 
   def new
+    authorize! :manage, @subject
+
     session[:exam_params] ||= {}
     @exam = Exam.new(session[:exam_params])
-    @exam.current_step =  params[:step]#session[:exam_step]
+    @exam.lazy_asset_id = params[:lazy] if params.has_key?(:lazy)
+    @exam.name = params[:name] if params.has_key?(:name)
+    @exam.current_step =  params[:step]
   end
 
+  # Wizard de Exame. Nos primeiros passos as informações são guardadas na session.
+  # O registo só é salvo no último passo.
   def create
-    session[:exam_params].deep_merge!(params[:exam]) if params[:exam]
+    authorize! :manage, @subject
+
+    if params[:exam]
+      # Evita duplicação dos campos gerados dinamicamente no passo 2
+      if params[:exam].has_key?(:questions_attributes)
+        session[:exam_params].delete("questions_attributes")
+      end
+
+      # Atualizando dados da sessão
+      session[:exam_params].deep_merge!(params[:exam])
+    end
+
     @exam = Exam.new(session[:exam_params])
-    @exam.current_step =  params[:step]#session[:exam_step]
+    @exam.current_step =  params[:step]
     @exam.owner = current_user
 
+    # Redirecionando para o passo especificado
+    @exam.enable_correct_validation_group!
     if @exam.valid?
       if params[:back_button]
         @exam.previous_step
-      elsif @exam.last_step?
-        @exam.save if @exam.all_valid? and @exam.new_record?
+        # No último passo salvar
+      elsif @exam.last_step? && @exam.save
+        @exam.published = true
+        @exam.save
+        @exam.questions.each do |question|
+          correct = question.alternatives.find(:first, :conditions => {:correct => true})
+          question.answer = correct if correct
+          question.save!
+        end
+
+        # Calculando o próximo indice
+        max_index = @subject.assets.maximum("position")
+        max_index ||= 0
+
+        Asset.create({:assetable => @exam,
+                     :subject => @subject,
+                     :lazy_asset => @exam.lazy_asset,
+                     :position => max_index + 1})
+
+        session[:exam_params] = nil
+        flash[:notice] = "Exame criado!"
+        redirect_to lazy_space_subject_path(@space, @subject)
       else
         @exam.next_step
       end
     end
+
+    # Criando questões e alternativas em branco
     if @exam.new_record?
-      if params[:step] == 'general' and  @exam.questions.empty?
-        @exam.questions.build
+      if params[:step] == 'general' || @exam.invalid? || @exam.questions.empty?
+        @exam.questions.build if @exam.questions.empty?
+        @exam.questions.each do |q|
+          2.times { q.alternatives.build } if q.alternatives.empty?
+        end
       end
       render "new"
-    else
-      session[:exam_params] = nil
-      flash[:notice] = "Exame criado!"
-      redirect_to @exam
     end
   end
 
@@ -211,11 +256,6 @@ class ExamsController < BaseController
     respond_to do |format|
       format.html {render 'unpublished_preview_interactive'}
     end
-  end
-
-  def new_question
-    @edit = false
-    redirect_to :controller => :questions, :action => :new #, :exam_id => params[:id]
   end
 
   def questions_database
@@ -319,6 +359,7 @@ class ExamsController < BaseController
     end
   end
 
+  # Não precisa de permissão, pois utiliza current_user.
   def history
     @exams = current_user.exam_history.paginate :page => params[:page], :order => 'updated_at DESC', :per_page => AppConfig.items_per_page
 
@@ -348,6 +389,8 @@ class ExamsController < BaseController
   # GET /exams
   # GET /exams.xml
   def index
+    authorize! :read, @subject
+
     cond = Caboose::EZ::Condition.new
     cond.append ["simple_category_id = ?", params[:category]] if params[:category]
 
@@ -361,17 +404,17 @@ class ExamsController < BaseController
     if params[:user_id] # exames do usuario
       @user = User.find_by_login(params[:user_id])
       @user = User.find(params[:user_id]) unless @user
-      @courses = @user.exams.paginate(paginating_params)
+      @lectures = @user.exams.paginate(paginating_params)
       render((@user == current_user) ? "user_exams_private" :  "user_exams_public")
       return
-
-    elsif params[:school_id] # exames da escola
-      @school = School.find(params[:school_id])
-      if params[:search] # search exams da escola
-        @exams = @school.exams.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
-      else
-        @exams = @school.exams.paginate(paginating_params)
-      end
+      # acho que pode ser usado para subject
+      #    elsif params[:space_id] # exames da escola
+      #      @space = Space.find(params[:space_id])
+      #      if params[:search] # search exams da escola
+      #        @exams = @space.exams.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
+      #      else
+      #        @exams = @space.exams.paginate(paginating_params)
+      #      end
     else # index (Exam)
       if params[:search] # search
         @exams = Exam.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
@@ -383,16 +426,7 @@ class ExamsController < BaseController
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @exams }
-      if params[:school_content]
-        format.js  do
-          render :update do |page|
-            page.replace_html  'content_list', :partial => 'exams_school'
-            page << "$('#spinner').hide()"
-          end
-        end
-      else
-        format.js
-      end
+      format.js
     end
 
   end
@@ -400,7 +434,6 @@ class ExamsController < BaseController
   # GET /exams/1
   # GET /exams/1.xml
   def show
-    @exam = Exam.find(params[:id])
 
     @related_exams = []
     @status = Status.new
@@ -417,18 +450,15 @@ class ExamsController < BaseController
 
   # GET /exams/1/edit
   def edit
-    @exam = Exam.find(params[:id])
-    render :action => :new
   end
 
   # PUT /exams/1
   # PUT /exams/1.xml
   def update
-    @exam = Exam.find(params[:id])
     respond_to do |format|
       if @exam.update_attributes(params[:exam])
         flash[:notice] = 'Exam was successfully updated.'
-        format.html { redirect_to(@exam) }
+        format.html { redirect_to space_subject_exam_path(@space, @subject, @exam) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -440,15 +470,38 @@ class ExamsController < BaseController
   # DELETE /exams/1
   # DELETE /exams/1.xml
   def destroy
-    @exam = Exam.find(params[:id])
 
     if current_user == @exam.owner
       @exam.destroy
     end
 
     respond_to do |format|
-      format.html { redirect_to(exams_url) }
+      format.html { redirect_to space_subject_path(@space, @subject) }
       format.xml  { head :ok }
     end
   end
+
+  protected
+
+  def find_subject_space_course_environment
+    if @exame && (not @exam.new_record?)
+      @subject = @exam.subject
+    else
+      @subject = Subject.find(params[:subject_id])
+    end
+
+    @space = @subject.space
+    @course = @space.course
+    @environment = @course.environment
+  end
+
+  def rst_session
+    session[:prev_index] = 0
+    session[:question_index] = 0
+    session[:correct] = nil
+    session[:exam] = nil
+    session[:answers] = Hash.new
+    session[:corrects] = nil
+  end
+
 end

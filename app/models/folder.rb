@@ -2,17 +2,23 @@
 # Folders can also have sub-folders.
 # Via groups it is determined which actions the logged-in User can perform.
 class Folder < ActiveRecord::Base
-  acts_as_tree :order => 'name'
 
+  # Associations
   belongs_to :user
+  alias :owner :user
   has_many :myfiles, :dependent => :destroy
   has_many :group_permissions, :dependent => :destroy
-  belongs_to :school
+  belongs_to :space
 
+  # Accessors
+  attr_accessible :name, :space_id, :parent_id
+
+  # Plugins
+  acts_as_tree :order => 'name'
+
+  # Validations
   validates_uniqueness_of :name, :scope => 'parent_id', :if => Proc.new { |folder| folder.parent_id }
   validates_presence_of :name
-
-  attr_accessible :name, :school_id, :parent_id
 
   # List subfolders
   # for the given user in the given order.
@@ -43,8 +49,8 @@ class Folder < ActiveRecord::Base
   end
 
   # Use this method to determine if a user is permitted to create in the given folder
-  def can_be_created_by(user, school)
-    user.can_manage? school
+  def can_be_created_by(user, space)
+    user.can_manage? space
 
     #    self.groups.each do |group|
     #      group_permission = group.group_permissions.find_by_folder_id(folder_id)
@@ -64,8 +70,8 @@ class Folder < ActiveRecord::Base
   end
 
   # Use this method to determine if a user is permitted to update in the given folder
-  def can_be_updated_by(user, school)
-    user.can_manage? school
+  def can_be_updated_by(user, space)
+    user.can_manage? space
     #    self.groups.each do |group|
     #      group_permission = group.group_permissions.find_by_folder_id(folder_id)
     #      return true unless group_permission.blank? or not group_permission.can_update
@@ -74,8 +80,8 @@ class Folder < ActiveRecord::Base
   end
 
   # Use this method to determine if a user is permitted to delete in the given folder
-  def can_be_deleted_by(user, school)
-    user.can_manage? school
+  def can_be_deleted_by(user, space)
+    user.can_manage? space
     #    self.groups.each do |group|
     #      group_permission = group.group_permissions.find_by_folder_id(folder_id)
     #      return true unless group_permission.blank? or not group_permission.can_delete

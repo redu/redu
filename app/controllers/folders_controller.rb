@@ -10,6 +10,8 @@
 # [#destroy]            delete a folder
 # [#update_permissions] save the new rights given by the user
 class FoldersController < BaseController
+  load_and_authorize_resource :space
+  load_and_authorize_resource :folder, :through => :space
   #  skip_before_filter :authorize, :only => :feed
   #
   #  before_filter :does_folder_exist, :except => [:list, :feed, :feed_warning]
@@ -18,7 +20,7 @@ class FoldersController < BaseController
   #  before_filter :authorize_updating, :only => [:rename, :update, :update_rights]
   #  before_filter :authorize_deleting, :only => :destroy
 
-  before_filter :login_required
+  after_filter :create_activity, :only => [:do_the_upload]
 
   # Sessions are not needed for feeds
   session :off, :only => 'feed'
@@ -28,18 +30,33 @@ class FoldersController < BaseController
     @myfile = Myfile.find(params[:file_id], :include => :folder)
 
     @folder_id = @myfile.folder.id
-    @school_id = @myfile.folder.school_id
+    @space_id = @myfile.folder.space_id
 
-    @myfile.destroy
 
-    redirect_to school_folders_path(:id => @folder_id, :school_id => @school_id)
-  end
-
-  # Shows the form where a user can select a new file to upload.
-  def upload
-    @myfile = Myfile.new
-    @folder_id = params[:id]
-    @school = School.find(params[:school_id]) #TODO retirar isso quando nao recarregar info de escola (ajax)
+    respond_to do |format|
+      if @myfile.destroy
+        flash[:notice] = 'Arquivo removido!'
+        format.html {redirect_to space_folders_path(:id => @folder_id, :space_id => @space_id)  }
+        format.js do
+            # TODO mostrar flash em ajax
+            list
+            render :update do |page|
+            page.replace_html  'tabs-4-content', :partial => 'folders/index'
+            end
+        end
+      else
+        format.html { 
+          flash[:error] = @myfile.errors.full_messages.join(", ")
+          redirect_to space_folders_path(:id => @folder_id, :space_id => @space_id) 
+        }
+        format.js do
+            render :update do |page|
+              # update the page with an error message
+          end          
+        end
+      end
+    end
+    
   end
 
   # Upload the file and create a record in the database.
@@ -47,22 +64,30 @@ class FoldersController < BaseController
   def do_the_upload
     @myfile = Myfile.new(params[:myfile])
     @myfile.user = current_user
+    
     respond_to do |format|
       if @myfile.save
         flash[:notice] = 'Upload realizado!'
+        format.html {redirect_to @space }
         format.js do
+          list
           responds_to_parent do
-            list
-            render :action => :index
-          end
+            render :update do |page|
+            page.replace_html  'tabs-4-content', :partial => 'folders/index'
+            end
+          end          
         end
       else
+        format.html { 
+          flash[:error] = @myfile.errors.full_messages.join(", ")
+          redirect_to @space 
+        }
         format.js do
           responds_to_parent do
             render :update do |page|
-              page << "alert('houve uma falha ao enviar o arquivo');"
+              # update the page with an error message
             end
-          end
+          end          
         end
       end
     end
@@ -72,27 +97,24 @@ class FoldersController < BaseController
     @myfile = Myfile.find(params[:file_id])
 
     if  @myfile
-      school = School.find(params[:school_id]) if params[:school_id]
-      if school and current_user.has_access_to(school)
         # Gerando uma url do s3 com o timeout de 20 segundos
         # O usuário deve COMEÇAR a baixar dentro desse tempo.
         f = @myfile.attachment
-        if Rails.env == "production"
+        if Rails.env == "production" || Rails.env == "staging"
           redirect_to f.s3.interface.get_link(f.s3_bucket.to_s, f.path, 20.seconds) and return false
         end
 
-        send_file @myfile.attachment.path, :type=> @myfile.attachment.content_type, :x_sendfile=>true
-      else
+        send_file @myfile.attachment.path, :type=> @myfile.attachment.content_type
+    else
         flash[:notice] = "Você não tem permissão para baixar o arquivo."
         redirect_to user_path(current_user)
-      end
     end
   end
 
   # FOLDER
   # The default action, redirects to list.
   def index
-    list
+    list(params[:id])
     # render :action => :list
     respond_to do |format|
       #format.html
@@ -101,22 +123,20 @@ class FoldersController < BaseController
   end
 
   # List the files and sub-folders in a folder.
-  def list
-    @school = School.find(params[:school_id])
-
+  def list(id=nil)
     # Get the folder
-    if params[:id]
-      @folder = Folder.find(params[:id])
+    if id
+      @folder = Folder.find(id)
     else
-      @folder = @school.root_folder
+      @folder = @space.root_folder
     end
 
     @myfile = Myfile.new
 
     # Set if the user is allowed to update or delete in this folder;
     # these instance variables are used in the view.
-    @can_update = @folder.can_be_updated_by(current_user, @school)
-    @can_delete = @folder.can_be_deleted_by(current_user, @school)
+    @can_update = @folder.can_be_updated_by(current_user, @space)
+    @can_delete = @folder.can_be_deleted_by(current_user, @space)
 
     # determine the order in which files are shown
     file_order = 'attachment_file_name '
@@ -135,8 +155,8 @@ class FoldersController < BaseController
       folder_order += params[:order] if params[:order]
     end
 
-    @files_count = Myfile.count(:include => :folder, :conditions => ["folders.school_id = ?", @school.id])
-    bytes = Myfile.sum(:attachment_file_size, :include => :folder, :conditions => ["folders.school_id = ?",  @school.id])
+    @files_count = Myfile.count(:include => :folder, :conditions => ["folders.space_id = ?", @space.id])
+    bytes = Myfile.sum(:attachment_file_size, :include => :folder, :conditions => ["folders.space_id = ?",  @space.id])
     @total_size = "%0.2f" % (bytes / (1024.0 * 1024));
     gigabytes = 2
     @use_percentage = "%0.2f" % (bytes / ( gigabytes * 1024.0 * 1024.0 * 1024.0))
@@ -183,16 +203,6 @@ class FoldersController < BaseController
     render
   end
 
-  # Shows the form where a user can enter the name for the a folder.
-  # The new folder will be stored in the 'current' folder.
-  def new
-    @folder = Folder.new
-    @school_id = params[:school_id]
-    @parent_id = params[:id]
-
-    @school = School.find(params[:school_id]) # TODO quando colocar em ajax isso nao sera necessario
-  end
-
   # Create a new folder with the posted variables from the 'new' view.
   def create
     if request.post?
@@ -204,14 +214,19 @@ class FoldersController < BaseController
         if @folder.save
           # copy groups rights on parent folder to new folder
 
+          params[:space_id] = params[:folder][:space_id]
+          list(@folder.id)
           # back to the list
           flash[:notice] = 'Diretório criado!'
           format.html {
-            redirect_to school_folders_path(:school_id => params[:folder][:school_id], :id => @folder.parent.id)
+            redirect_to space_folders_path(:space_id => params[:folder][:space_id], :id => @folder.parent.id)
           }
-          format.js {
-            redirect_to school_folders_path(:school_id => params[:folder][:school_id], :id => @folder.parent.id)
-          }
+          format.js do
+              render :update do |page|
+                page.replace_html  'tabs-4-content', :partial => 'folders/index'
+            end   
+            
+          end
         else
           flash[:error] = 'Não foi possível criar o diretório'
           format.html {
@@ -225,28 +240,34 @@ class FoldersController < BaseController
     end
   end
 
-  # Show a form with the current name of the folder in a text field.
-  def rename
-    @folder = Folder.find(params[:id])
-    @school_id = params[:school_id]
-    @school = School.find(params[:school_id]) # TODO quando colocar em ajax isso nao sera necessario
-  end
-
   # Update the folder attributes with the posted variables from the 'rename' view.
   def update
-    @folder = Folder.find(params[:id])
     if @folder.update_attributes(:name => params[:folder][:name], :date_modified => Time.now)
-      redirect_to school_folders_path(:id => @folder.parent_id, :school_id => @folder.school_id)
+      respond_to do |format|
+        # back to the list
+        format.js {
+          params[:id] = @folder.parent_id
+          list
+          render 'folders/index'
+        }
+      end
     end
   end
 
   # Delete a folder.
   def destroy_folder
-    @folder = Folder.find(params[:id])
     @parent_id = @folder.parent_id
-    @school_id = @folder.school_id
+    @space_id = @folder.space_id
     @folder.destroy
-    redirect_to school_folders_path(:id => @parent_id, :school_id => @school_id)
+    respond_to do |format|
+      # back to the list
+      format.js {
+        params[:id] = @folder.parent_id
+        list
+        render 'folders/index'
+      }
+    end
+
   end
 
   # Saved the new permissions given by the user

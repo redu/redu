@@ -1,12 +1,11 @@
 class MessagesController < BaseController
 
-  before_filter :find_user#, :except => [:auto_complete_for_username]
-  before_filter :login_required
-  before_filter :user_required # Para ter acesso, tem que ser o usuário dono das mensagens privadas
+  load_and_authorize_resource :user
 
   uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :index, :create, :update, :edit])
 
   def index
+    authorize! :manage, @user
     if params[:mailbox] == "sent"
       @messages = @user.sent_messages.paginate(:all, :page => params[:page],
                                                :order =>  'created_at DESC',
@@ -63,12 +62,7 @@ class MessagesController < BaseController
     @message = Message.new_reply(@user, in_reply_to, params)
 
     respond_to do |format|
-      format.js do
-        render :update do |page|
-          page.replace_html  'tabs-3-content', :partial => 'new'
-          page << "reloadMce();"
-        end
-      end
+      format.js { render :template => 'messages/new' }
     end
   end
 
@@ -84,12 +78,7 @@ class MessagesController < BaseController
         format.html do
           render :action => :new and return
         end
-        format.js do
-          render :update do |page|
-            page << "jQuery('#msg_spinner').hide()"
-            page.replace_html "errors", error_messages_for(:message)
-          end
-        end
+        format.js { render :template => 'messages/errors', :locals => {:message => :message} }
       end
     else
       # If 'to' field isn't empty then make sure each recipient is valid
@@ -102,13 +91,7 @@ class MessagesController < BaseController
             format.html do
               render :action => :new and return
             end
-            format.js do
-              render :update do |page|
-                page << "jQuery('#msg_spinner').hide()"
-                page.replace_html "errors", error_messages_for(:message)
-                #page << "alert('é necessário preencher todos os campos')"# TODO notice?
-              end
-            end
+            format.js { render :template => 'messages/errors', :locals => {:message => :message} }
           end
           return
         else
@@ -134,7 +117,7 @@ class MessagesController < BaseController
   end
 
   def delete_selected
-    if request.post?
+    if request.post? && current_user.id == params[:user_id] # Caso tentem burlar
       if params[:delete]
         params[:delete].each { |id|
           @message = Message.find(:first, :conditions => ["messages.id = ? AND (sender_id = ? OR recipient_id = ?)", id, @user, @user])
@@ -161,32 +144,11 @@ class MessagesController < BaseController
     end
 
     respond_to do |format|
-      format.js do
-        render :update do |page|
-          page << "$('.messages_table').append('"+escape_javascript(render(:partial => "messages/item", :collection => @messages, :as => :message, :locals => {:mailbox => params[:mailbox]}))+"')"
-          if @messages.length < 10
-            page.replace_html "#more",  ''
-          else
-            page.replace_html "#more",  link_to_remote("mais ainda!", :url => {:controller => :messages, :action => :more, :user_id => params[:user_id], :offset => 20,:limit => 100}, :method =>:get, :loading => "$('#more').html('"+escape_javascript(image_tag('spinner.gif'))+"')")
-          end
-        end
+      if @messages.length < 10
+        format.js { render :template => 'messages/messages_end' }
+      else
+        format.js { render :template => 'messages/messages_more' }
       end
     end
-  end
-
-  private
-  def find_user
-    @user = User.find(params[:user_id])
-  end
-
-  def require_ownership_or_moderator
-    unless admin? || moderator? || (@user && (@user.eql?(current_user)))
-      redirect_to :controller => 'sessions', :action => 'new' and return false
-    end
-    return @user
-  end
-
-  def user_required
-    User.find(params[:user_id]) == current_user ? true : access_denied
   end
 end

@@ -9,35 +9,31 @@ class AdminController < BaseController
       @users = User.all(:conditions => ["first_name LIKE ? OR last_name LIKE ? OR login LIKE ?", qry,qry,qry ])
     end
     respond_to do |format|
-      format.js do
-        render :update do |page|
-          page.replace_html 'user_list', :partial => 'admin/user_list', :locals => {:users => @users}
-        end
-      end
+      format.js
     end
   end
 
-  def moderate_school
-    @removed_schools = School.all(:conditions => ["id IN (?)", params[:schools].join(',')]) unless params[:schools].empty?
+  def moderate_space
+    @removed_spaces = Space.all(:conditions => ["id IN (?)", params[:spaces].join(',')]) unless params[:spaces].empty?
 
-    School.update_all("removed = 1", "id IN (?)", params[:schools].join(', '))
+    Space.update_all("removed = 1", "id IN (?)", params[:spaces].join(', '))
 
-    for school in @removed_schools # TODO fazer um remove all?
-      UserNotifier.deliver_remove_school(school) # TODO fazer isso em batch
-      #course.destroy #TODO fazer isso automaticamente após 30 dias
+    for space in @removed_spaces # TODO fazer um remove all?
+      UserNotifier.deliver_remove_space(space) # TODO fazer isso em batch
+      #lecture.destroy #TODO fazer isso automaticamente após 30 dias
     end
     flash[:notice] = 'Redes moderadas!'
-    redirect_to admin_moderate_schools_path
+    redirect_to admin_moderate_spaces_path
   end
 
   def moderate_exams
     @removed_exams = Exam.all(:conditions => ["id IN (?)", params[:exams].join(',')]) unless params[:exams].empty?
 
-    Exam.update_all("removed = 1", "id IN (?)", params[:exams].join(', '))
+    Exam.update_all("removed = 1", ["id IN (?)", params[:exams].join(',')])
 
     for exam in @removed_exams # TODO fazer um remove all?
       UserNotifier.deliver_remove_exam(exam) # TODO fazer isso em batch
-      #course.destroy #TODO fazer isso automaticamente após 30 dias
+      #lecture.destroy #TODO fazer isso automaticamente após 30 dias
     end
     flash[:notice] = 'Exames moderados!'
     redirect_to admin_moderate_exams_path
@@ -54,7 +50,7 @@ class AdminController < BaseController
       for user in @removed_users # TODO fazer um remove all?
         user.destroy
         UserNotifier.deliver_remove_user(user) # TODO fazer isso em batch
-        #course.destroy #TODO fazer isso automaticamente após 30 dias
+        #lecture.destroy #TODO fazer isso automaticamente após 30 dias
       end
     when '1' # moderate roles
       User.update_all(["role_id = ?", params[:role_id]], [:id => params[:users].join(', ')]) if params[:role_id]
@@ -64,61 +60,22 @@ class AdminController < BaseController
     redirect_to admin_moderate_users_path
   end
 
-  def moderate_courses
-    @removed_courses = Course.all(:conditions => ["id IN (?)", params[:courses]]) #unless params[:courses].empty?
+  def moderate_lectures
+    @removed_lectures = Lecture.all(:conditions => ["id IN (?)", params[:lectures]]) #unless params[:lectures].empty?
 
-    Course.update_all("removed = 1", ["id IN (?)", params[:courses]])
+    Lecture.update_all("removed = 1", ["id IN (?)", params[:lectures]])
 
-    for course in @removed_courses
-      UserNotifier.deliver_remove_course(course) # TODO fazer isso em batch
-      #course.destroy #TODO fazer isso automaticamente após 30 dias
+    for lecture in @removed_lectures
+      UserNotifier.deliver_remove_lecture(lecture) # TODO fazer isso em batch
+      #lecture.destroy #TODO fazer isso automaticamente após 30 dias
     end
     flash[:notice] = 'Aulas removidas!'
-    redirect_to admin_moderate_courses_path
-  end
-
-  def moderate_submissions
-    approved = params[:course].reject{|k,v| v == 'reject'}
-    rejected = params[:course].reject{|k,v| v == 'approve'}
-
-    Course.update_all("state = 'approved'", :id => approved.keys)
-    Course.update_all("state = 'rejected'", :id => rejected.keys)
-
-    flash[:notice] = 'Aulas moderadas!'
-    redirect_to admin_moderate_submissions_path
-  end
-
-  def approve
-    @course = Course.find(params[:id])
-    @course.approve!
-
-    flash[:notice] = 'A aula foi aprovada!'
-    redirect_to @course
-  end
-
-  def disapprove
-    @course = Course.find(params[:id])
-    @course.reject!
-    flash[:notice] = 'A aula foi rejeitada!'
-    redirect_to @course
+    redirect_to admin_moderate_lectures_path
   end
 
   # LISTAGENS
-  # lista pendendes para MODERAÇÃO da administração do Redu
-  def submissions
-    @courses = Course.paginate(:conditions => ["public = 1 AND published = 1 AND state LIKE 'waiting'"],
-                               :include => :owner,
-                               :page => params[:page],
-                               :order => 'updated_at ASC',
-                               :per_page => 20)
-
-    respond_to do |format|
-      format.html
-    end
-  end
-
-  def courses
-    @courses = Course.paginate(:conditions => ["public = 1 AND published = 1 AND removed = 0"],
+  def lectures
+    @lectures = Lecture.paginate(:conditions => ["published = 1 AND removed = 0"],
                                :include => :owner,
                                :page => params[:page],
                                :order => 'created_at DESC',
@@ -130,7 +87,7 @@ class AdminController < BaseController
   end
 
   def exams
-    @exams = Exam.paginate(:conditions => ["public = 1 AND published = 1 AND removed = 0"],
+    @exams = Exam.paginate(:conditions => ["published = 1 AND removed = 0"],
                            :include => :owner,
                            :page => params[:page],
                            :order => 'created_at DESC',
@@ -141,8 +98,8 @@ class AdminController < BaseController
     end
   end
 
-  def schools
-    @schools = School.paginate(:conditions => ["public = 1 AND removed = 0"],
+  def spaces
+    @spaces = Space.paginate(:conditions => ["removed = 0"],
                                :include => :owner,
                                :page => params[:page],
                                :order => 'created_at DESC',
@@ -180,10 +137,6 @@ class AdminController < BaseController
   def messages
     @user = current_user
     @messages = Message.find(:all, :page => {:current => params[:page], :size => 50}, :order => 'created_at DESC')
-  end
-
-  def comments
-    @comments = Comment.find(:all, :page => {:current => params[:page], :size => 100}, :order => 'created_at DESC')
   end
 
   def activate_user

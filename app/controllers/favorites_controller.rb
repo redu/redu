@@ -1,30 +1,30 @@
 class FavoritesController < BaseController
-  before_filter :login_required
 
+  # Não precisa de permissão, pois ele vai ver os favoritos do current_user.
   def index
     @user = current_user
     respond_to do |format|
-      format.js do
-        case params[:type]
-        when 'exams'
-          @exams = Exam.paginate(:all,
-                                 :joins => :favorites,
-                                 :conditions => ["favorites.favoritable_type = 'Exam' AND favorites.user_id = ? AND exams.id = favorites.favoritable_id", current_user.id],
-                                 :page => params[:page], :order => 'created_at DESC', :per_page => AppConfig.items_per_page)
+      case params[:type]
+      when 'exams'
+        @exams = Exam.paginate(:all,
+                               :joins => :favorites,
+                               :conditions => ["favorites.favoritable_type = 'Exam' AND favorites.user_id = ? AND exams.id = favorites.favoritable_id", current_user.id],
+                               :page => params[:page], :order => 'created_at DESC', :per_page => AppConfig.items_per_page)
 
-          render :update do |page|
-            page.replace_html  'tabs-2-content', :partial => 'exams/exam_list'
-          end
-        when 'statuses'
-          render :update do |page|
-          end
+        format.js do
+          render :template => 'favorites/exams.rjs'
+        end
+      when 'statuses'
+        format.js do
+          #TODO
+          render :template => 'favorites/statuses.rjs'
         end
       end
       format.html do
-        #@courses = Course.favorites_user_id_eq(current_user.id).descend_by_created_at
-        @courses = Course.paginate(:all,
+        #@lectures = Lecture.favorites_user_id_eq(current_user.id).descend_by_created_at
+        @lectures = Lecture.paginate(:all,
                                    :joins => :favorites,
-                                   :conditions => ["favorites.favoritable_type = 'Course' AND favorites.user_id = ? AND courses.id = favorites.favoritable_id", current_user.id],
+                                   :conditions => ["favorites.favoritable_type = 'Lecture' AND favorites.user_id = ? AND lectures.id = favorites.favoritable_id", current_user.id],
                                    :page => params[:page], :order => 'created_at DESC', :per_page => AppConfig.items_per_page)
 
 
@@ -33,12 +33,19 @@ class FavoritesController < BaseController
   end
 
   def favorite
+     if (params[:id].to_i != 0) &&
+      ((params[:type].eql? 'Lecture') || (params[:type].eql? 'Exam') ||
+      (params[:type].eql? 'Status'))
+         favoritable = Kernel.const_get(params[:type]).find(params[:id])
+     end
+    authorize! :read, favoritable
+
     @favorite = current_user.add_favorite(params[:type], params[:id] )
     @favoritable_id = params[:id] if params[:id].to_i != 0 # Verificando para que não injetem código malicioso
 
     msg_ok, msg_err = ''
     case params[:type]
-    when 'Course'
+    when 'Lecture'
       msg_ok = "Aula adicionada ao seus favoritos!"
       msg_err = "Aula não foi adicionada ao seus favoritos"
     when 'Exam'
@@ -67,12 +74,19 @@ class FavoritesController < BaseController
   end
 
   def not_favorite
+     if (params[:id].to_i != 0) &&
+      ((params[:type].eql? 'Lecture') || (params[:type].eql? 'Exam') ||
+      (params[:type].eql? 'Status'))
+         favoritable = Kernel.const_get(params[:type]).find(params[:id])
+     end
+    authorize! :read, favoritable
+
     @favorite = current_user.rm_favorite(params[:type], params[:id] )
     @favoritable_id = params[:id] if params[:id].to_i != 0 # Verificando para que não injetem código malicioso
 
     msg_ok, msg_err = ''
     case params[:type]
-    when 'Course'
+    when 'Lecture'
       msg_ok = "Aula adicionada ao seus favoritos!"
       msg_err = "Aula não foi adicionada ao seus favoritos"
     when 'Exam'

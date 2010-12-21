@@ -9,11 +9,18 @@ module FoldersHelper
 
   def link_order(name, order_by)
     if params[:order] == nil and params[:order_by] == order_by
-      link_to_remote(name, { :url => { :controller => :folders, :action => :index, :id => params[:id], :school_id => params[:school_id], :order_by => order_by, :order => 'DESC' } }) + image_tag('asc.png')
+      link_to_remote(name, { :url => { :controller => :folders, :action => :index,
+                     :id => params[:id], :space_id => params[:space_id],
+                     :order_by => order_by, :order => 'DESC' },
+                     :method => :get }) + image_tag('asc.png')
     elsif params[:order] and params[:order_by] == order_by
-      link_to_remote(name, { :url => { :controller => :folders, :action => :index, :id => params[:id], :school_id => params[:school_id], :order_by => order_by } }) + image_tag('desc.png')
+      link_to_remote(name, { :url => { :controller => :folders, :action => :index,
+                     :id => params[:id], :space_id => params[:space_id],
+                     :order_by => order_by }, :method => :get }) + image_tag('desc.png')
     else
-      link_to_remote name, {:url => { :controller => :folders, :action => :index, :id => params[:id], :school_id => params[:school_id], :order_by => order_by } }
+      link_to_remote(name, {:url => { :controller => :folders, :action => :index,
+                     :id => params[:id], :space_id => params[:space_id],
+                     :order_by => order_by }, :method => :get })
 
     end
   end
@@ -46,12 +53,12 @@ module FoldersHelper
 
   def folder_path(folder)
 
-    #path = link_to(h(folder.name), school_folders_path(:id => folder.id, :school_id => folder.school_id))
+    #path = link_to(h(folder.name), space_folders_path(:id => folder.id, :space_id => folder.space_id))
    path = h(folder.name)
 
     until folder.parent == nil
       folder = folder.parent
-      path = link_to_remote(h(folder.name), :url => { :action => :index, :id => folder.id, :school_id => folder.school_id}, :before => "showLoadingFiles()") + ' &#187; ' + path
+      path = link_to_remote(h(folder.name), :url => { :action => :index, :id => folder.id, :space_id => folder.space_id}, :before => "showLoadingFiles()") + ' > ' + path
     end
 
     return path.sub("root", "raiz")

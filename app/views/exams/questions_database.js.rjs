@@ -1,4 +1,4 @@
 page << "$('#loading_questions').hide()"
 
- page.replace_html 'dialog_content', :partial => 'exams/question_search' 
-  
+page.replace_html 'dialog_content', :partial => 'exams/question_search' 
+

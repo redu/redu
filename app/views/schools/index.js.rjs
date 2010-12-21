@@ -1,4 +1,0 @@
-page.replace_html 'school_list', :partial => "school_list"
-page << "jQuery('#loader').hide()"
-
-

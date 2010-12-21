@@ -1,27 +1,14 @@
 # Groups are used to determine which groups of users have which rights
 # on which folders.
 class Group < ActiveRecord::Base
+  before_destroy :dont_destroy_admins
+  after_destroy :destroy_dependant_group_permissions
+
   has_many :group_permissions
   has_and_belongs_to_many :users
 
   validates_uniqueness_of :name
   validates_presence_of :name
-
-  before_destroy :dont_destroy_admins
-  after_destroy :destroy_dependant_group_permissions
-
-  # Don't delete 'admins' from the database
-  def dont_destroy_admins
-    raise "Can't delete admins group" if self.is_the_administrators_group?
-  end
-
-  # Delete dependant group_permissions.
-  # This code should be executed after_destroy.
-  def destroy_dependant_group_permissions
-    self.group_permissions.each do |group_permission|
-      group_permission.destroy
-    end
-  end
 
   # Returns whether or not the admins group exists
   def self.admins_group_exists?
@@ -44,4 +31,19 @@ class Group < ActiveRecord::Base
       group.save # save, so true is returned
     end
   end
+
+  # Don't delete 'admins' from the database
+  def dont_destroy_admins
+    raise "Can't delete admins group" if self.is_the_administrators_group?
+  end
+
+  # Delete dependant group_permissions.
+  # This code should be executed after_destroy.
+  def destroy_dependant_group_permissions
+    self.group_permissions.each do |group_permission|
+      group_permission.destroy
+    end
+  end
+
 end
+

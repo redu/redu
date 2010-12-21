@@ -1,15 +1,14 @@
+<%# Atua como proxy inserindo os partials relativo ao passo especificado na
+    variavel @exam.current_step. Os partials seguem o modelo xxx_step e podem ser
+    general, editor e publication.
+%>
 
-
-
-	<% form_for @exam, :html => {:id => "form_exam"} do |f|%>
-	<%= hidden_field_tag("school_id", @school.id) if @school %>
-	
-	<%= render "#{@exam.current_step}_step", :f => f, :edit => false %>
-
-<div class="grid_16">
-	<%= f.submit "< Anterior", :name => "back_button" unless @exam.first_step? %>
-		<%= f.submit "Próximo >" unless @exam.last_step? %> ou <%= link_to "Cancelar e voltar", cancel_exams_path%>
-		</div>
-	<% end %>
-
-</div>
+<% form_for @exam, :url => space_subject_exams_path(@space, @subject), :html => {:id => "form_exam"} do |f|%>
+  <%= render "#{@exam.current_step}_step", :f => f, :edit => false %>
+  <div class="grid_16">
+    <%= f.submit "< Anterior", :name => "back_button" unless @exam.first_step? %>
+    <%= f.submit "Próximo >" unless @exam.last_step? %>
+    <%= f.submit "Publicar" if @exam.last_step? %>
+    ou <%= link_to "Cancelar e voltar", cancel_space_subject_exams_path(@space, @subject) %>
+  </div>
+<% end %>

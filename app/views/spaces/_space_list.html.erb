@@ -1,0 +1,14 @@
+<% if @spaces && @spaces.length > 0 %>
+  <ul class="badge">
+    <%= render :partial => 'spaces/item', :collection => @spaces, :as => :space %> 
+  </ul>
+<% else %>
+
+  <% if @searched_for_all %>
+    <div class="box_notice">Não há espaços cadastrados ainda. <%= link_to 'Crie um agora!', :action => 'new' %></div>
+  <% else %>
+    <div class="box_notice">Não há espaços cadastrados com estas especificações ainda. <%= link_to 'Crie um agora!', :action => 'new' %></div>
+  <% end %>
+
+<% end %>
+<%= will_paginate @spaces %>

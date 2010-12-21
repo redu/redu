@@ -1,0 +1,50 @@
+<script type="text/javascript">
+  function select(content) {
+    $('#content_list').html(' ');
+    $('.selected').removeClass('selected')
+      $('#'+content+'_sel').addClass('selected');
+    $('#spinner').show();
+  }
+</script>
+
+<!--
+<ul id="actions_user">
+  <%  if current_user.can_post? @space %>
+    <li>
+      <%= link_to "Nova Aula", new_space_subject_lecture_path(@space, @subject) %>
+    </li>
+    <li>
+      <%= link_to "Novo Exame", new_space_subject_exam_path(@space, @subject) %>
+    </li>
+  <% end %>
+</ul> -->
+
+<ul id="actions_user">
+  <li id="subjects_sel">
+    <%= link_to "Cursos", "#" %>
+  </li>
+  <li><%= image_tag 'spinner.gif', :id => 'spinner', :style => "display: none; float:right;"%></li>
+</ul>
+
+
+
+<!--
+<div id="course_list" >
+  -->
+  <div id="content_list" >
+    <%= render :partial => "lecture_list"%>
+
+    <%# if @space.lectures.size > 0 %>
+    <span style="margin: 10px;">
+      <%# link_to "Ver todas >", lectures_path(:space_id => @space.id)%>
+      <% link_to "Ver todas >", space_subject_lectures_path(@space, @subject) %>
+    </span>
+    <%# end %>
+
+  </div>
+
+
+
+
+
+

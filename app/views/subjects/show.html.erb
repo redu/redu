@@ -1,25 +1,21 @@
-<% unless @subject.nil? %>
-<div id="breadcrumbs"><b><strong><%= link_to "Cursos", subjects_path %></strong></b> > <b><strong><%= h @subject.title %></strong></b> </div>
-<div class="grid_11">
-  <ul class="default">
-    <li class="clearfix">
-      <label class="name"><%= @subject.title %></label>
+<%- @meta = { :description => "Curso \"#{@subject.title}\" no  #{AppConfig.community_name}.", :keywords => "#{@subject.title}, #{@subject.tags.join(", ") unless @subject.tags.nil?}", :robots => AppConfig.robots_meta_show_content }%>
 
 
-      <span class="call">Descrição:</span>
-      <span class="things">
-        <%= h @subject.description %>
-      </span><br />
+<div class="grid_16" id="subject">
 
+  <div class="fake-tabs grid_11 alpha omega">
+    <%= render :partial => 'subjects/tabs_menu' %>
+    <div class="panel">
+      <% unless @subject.assets.empty? %>
+      <ul class="default subject-assets">
+        <%= render :partial => 'subjects/asset_item',
+          :collection => @subject.assets, :as => :item %>
+      </ul>
+    <% else %>
+      <div class="box_notice">Você precisa finalizar a criação dos recursos. <%= link_to "Clique aqui", lazy_space_subject_path(@space, @subject) %></div>
+    <% end %>
+    </div>
+  </div>
 
-      <br /><b><%= link_to "Matricula-se", classes_subject_path(@subject.id) %></b>
-      
-      
-    </li>
-  </ul>
-</div><!-- end grid_11 -->
-
-<% else%>
-curso nao publico atualizado.
-<%end%>
-
+  <%= render :partial => 'subjects/sidebar' %>
+</div><!-- end grid_16 -->

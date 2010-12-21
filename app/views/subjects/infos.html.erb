@@ -1,0 +1,24 @@
+<%- @meta = { :description => "Curso \"#{@subject.title}\" no  #{AppConfig.community_name}.", :keywords => "#{@subject.title}, #{@subject.tags.join(", ") unless @subject.tags.nil?}", :robots => AppConfig.robots_meta_show_content }%>
+
+
+<div class="grid_16" id="subject">
+  <div class="fake-tabs grid_11 alpha omega">
+    <%= render :partial => 'subjects/tabs_menu' %>
+    <div class="panel">
+      <div class="pretty-text">
+        <%= @subject.description %>
+      </div>
+      <% unless @subject.teachers.empty? %>
+        <div class="grid_10 alpha">
+          <% field_set_tag "Professores", :class => "clearfix fake" do %>
+            <ul>
+              <%= render :partial => 'subjects/teacher_item', :collection => @subject.teachers, :as => :item %>
+            </ul>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <%= render :partial => 'subjects/sidebar' %>
+</div><!-- end grid_16 -->

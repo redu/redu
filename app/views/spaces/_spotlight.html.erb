@@ -1,0 +1,39 @@
+<div class="space">
+  <div class="top-bar">
+    <h2>
+      <%= link_to spotlight.name, spotlight %>
+    </h2>
+    <span style="display: none;" class="shrink replacement">Encolher</span>
+  </div>
+  <div class="filter-bar"></div>
+
+  <div class="vtabs clearfix">
+    <ul class="repo_list">
+      <% spotlight.recent_log.each do |type, logs| %>
+        <li class="log headline <%= type %>">
+          <% unless logs.empty? %>
+            <%= link_to resource_name(type, logs.size),
+              "##{spotlight.id}-#{type}", :class => "new" %>
+          <% else %>
+            <%= link_to resource_name(type, logs.size),
+              "##{spotlight.id}-#{type}", :class => "old" %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+    <div class="specific-logs" style="display: none;">
+      <% spotlight.recent_log.each do |type, logs| %>
+        <div id="<%= "#{spotlight.id}-#{type}" %>">
+          <% unless logs.empty? %>
+            <ul>
+              <%= render :partial => "statuses/log", :collection => logs %>
+            </ul>
+          <% else %>
+            <div class="box_notice"><%= resource_name(type, logs.size) %></div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="bottom-bar"></div>
+</div>

@@ -1,0 +1,70 @@
+- @meta = { :description => "#{AppConfig.community_name} forums.",:keywords => "#{AppConfig.meta_keywords}", :robots => AppConfig.robots_meta_list_content}
+-@section = 'forums'
+
+-if admin?
+  -box :class => "alt first_alt" do 
+    %h3= :admin.l
+    %p= link_to :create_new_forum.l, new_forum_path, :class => "utility"
+
+-box do 
+
+  .right=link_to :recent_posts.l, recent_forum_posts_path
+  %h3= :forums.l
+  %p.subtitle
+    = feed_icon_tag :recent_posts.l, all_sb_posts_path(:format => 'rss')
+    = number_with_delimiter(Topic.count) 
+    = "#{:topics.l},"
+    = number_with_delimiter(SbPost.count)
+    = "#{:posts.l},"
+    = number_with_delimiter(User.count(:conditions => "sb_posts_count>0"))
+    = :voices.l
+
+  %table{:border=>"0", :cellspacing=>"0", :cellpadding=>"0", :class=>"wide forums"}
+    %tr
+      %th{:width=>"70%", :colspan=>"3"}= :forum.l
+      %th{:width=>"30%", :colspan=>"1"}= :last_post.l
+
+    -for forum in @forums do
+      %tr
+        %td.vat.c1  
+          - if recent_forum_activity(forum)
+            = image_tag "clearbits/comment.gif", :class => "icon green", :title => :recent_activity.l, :plugin => "community_engine"
+          - else
+            = image_tag "clearbits/comment.gif", :class => "icon grey", :title => :no_recent_activity.l, :plugin => "community_engine"
+        %td.c2.vat
+          = link_to h(forum.name), forum_path(forum), :class => "title"
+          .posts
+            - unless forum.topics_count.zero?
+              = number_with_delimiter(forum.topics_count)
+              = :topics.l
+              ,
+              = number_with_delimiter(forum.sb_posts_count)
+              = :posts.l
+
+          %p.desc= forum.description_html
+
+        %td.c3
+          = link_to :edit.l, edit_forum_path(forum), :class => "tiny", :rel => "directory", :style => "float:right" if admin?
+
+        %td.inv.lp
+          - if forum.sb_posts.last
+            = time_ago_in_words(forum.sb_posts.last.created_at)
+            %br
+            = :by.l
+            %strong= h(forum.sb_posts.last.user.display_name)
+            %span
+              (
+              = link_to :view.l, forum_topic_path(:forum_id => forum, :id => forum.sb_posts.last.topic_id, :page => forum.sb_posts.last.topic.last_page, :anchor => forum.sb_posts.last.dom_id) 
+              )
+
+  %p= link_to :recent_posts.l, recent_forum_posts_path
+
+
+  - online_users = User.currently_online 
+  - unless online_users.empty? 
+    .stats
+      .users
+        - unless online_users.empty? 
+          = :users_online.l + ':'
+          = online_users.map { |u| link_to "<strong>#{h u.display_name}</strong>", user_path(u) } * ", " 
+          %br

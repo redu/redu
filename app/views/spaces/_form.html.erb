@@ -1,0 +1,35 @@
+<fieldset>
+  <legend>Informações Gerais</legend>
+  <%= f.label "Nome" %>:
+  <%= f.text_field :name , :onkeyup => "generatePath(this)" %>
+
+  <%= f.label "Descrição" %>:
+  <%= f.text_area :description, :size => "50x3" %>
+
+  <%= f.label "Logo" %> (recomendado: 200 x 64)
+  <%= f.file_field :avatar %>
+
+  <%= f.label "Palavras-chaves (separadas por vírgula)" %>:
+  <%= f.text_field :tag_list %>
+
+  <% if AppConfig.activate_payment %>
+    <%= f.label "Preço da assinatura" %>:
+    <%= f.text_field :key_price %>
+  <% end %>
+</fieldset>
+
+<fieldset><legend>Configurações</legend>
+
+  <%= f.label "Quem pode entrar no espaço?" %>
+  <%= f.radio_button :subscription_type, "1", :checked => true %> Todos
+  <%= f.radio_button :subscription_type, "2" %> Moderação
+
+  <%= f.label "Quem pode postar no espaço?" %>
+  <%= f.radio_button :submission_type, "1", :checked => true %> Todos - sem moderação
+  <%= f.radio_button :submission_type, "2" %> Todos - com moderação
+  <%= f.radio_button :submission_type, "3" %> Apenas professores e administradores
+
+  <%= f.label "Perfil do espaço" %>
+  <%= f.radio_button :public_profile, true, :checked => true %> Público
+  <%= f.radio_button :public_profile, false %> Privado (apenas nome e descrição serão mostrados)
+</fieldset>

@@ -8,6 +8,11 @@ class ApplicationController < ActionController::Base
     rescue_from ActionController::UnknownAction,      :with => :render_not_found
   end
 
+  rescue_from CanCan::AccessDenied do |exceptipn|
+    flash[:notice] = "Você não tem acesso a essa página"
+    redirect_to home_path
+  end
+
   private
 
   # Handlers para exceções (paginas de error customizadas)

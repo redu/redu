@@ -1,8 +1,0 @@
- 	<%  if logged_in? %>
-  <div id="task_bar_exames"><%= link_to 'Nova Aula', :action => 'new' %> | 
-  <%= link_to 'Todas', courses_path %> |
-  <%= link_to 'Publicadas', published_user_courses_path(current_user.id) %> |
-  <%= link_to 'Não Publicadas', unpublished_user_courses_path(current_user.id) %> |
-  <%= link_to 'Em Moderação', waiting_user_courses_path(current_user.id) %> 
-  </div>
-	<% end %>

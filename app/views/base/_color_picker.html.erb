@@ -1,0 +1,11 @@
+<script type="text/javascript" charset="utf-8">
+$(document).ready(function(){
+  $('<%= target %>').colourPicker(
+    { ico: '/images/jquery.colourPicker.gif',
+      title: 'Customize seu Curso',
+      inputBG: true}
+  );
+});
+</script>
+<%= javascript_include_tag "jquery.colourPicker.js" %>
+<%= stylesheet_link_tag "jquery.colourPicker.css" %>

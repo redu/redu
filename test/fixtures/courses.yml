@@ -1,9 +1,11 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  name: MyString
-  resources: 
+  string: 
+  text: 
+  string: 
 
 two:
-  name: MyString
-  resources: 
+  string: 
+  text: 
+  string: 

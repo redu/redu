@@ -1,0 +1,62 @@
+<script type="text/javascript" charset="utf-8">
+  //<![CDATA[
+jQuery(document).ready(function(){
+    $(".tabs").tabs();
+    })
+//]]>
+</script>
+
+<div class="grid_16">
+  <% unless @course.owner.eql? current_user %>
+    <% if current_user.get_association_with(@course).nil? %>
+      <div class="grid_2">
+        <%= link_to "Participar", join_environment_course_path(@environment, @course),
+          :class => "button" %>
+      </div>
+    <% elsif current_user.get_association_with(@course).state.eql? "waiting"%>
+      <span class="grid_2">Seu pedido está em processo de moderação.</span>
+    <% end %>
+  <% end %>
+  <div class="tabs">
+    <ul>
+      <li><a href="#tabs-1">Descrição</a></li>
+    </ul>
+
+    <div id="tabs-1" class="clearfix">
+      <div class="pretty-text"><%= @course.description %></div>
+      <ul class="sortable sidebar">
+        <% unless @course.tags.empty? %>
+          <li class="clearfix">
+            <span class="call"><span>Palavras-chave</span></span>
+            <ul class="tags">
+              <% for tag in @course.tags %>
+                <li><span><%= tag.name %></span></li>
+              <% end %>
+            </ul>
+          </li>
+        <% end %>
+        <li>
+          <span class="call"><span>Colaboradores</span></span>
+          <div class="box clearfix">
+            <ul class="clearfix">
+              <%= render :partial => 'spaces/member_short', :collection => @course.approved_users, :as => :member %>
+            </ul>
+          </div>
+        </li>
+        <% if @course.workload %>
+          <li>
+            <span class="call"><span>Carga Horária</span></span>
+            <span><%= @course.workload %> horas</span>
+          </li>
+        <% end %>
+        <li>
+          <span class="call"><span>Algumas disciplinas</span></span>
+          <%= render :partial => "spaces/item", :collection => @course.spaces.published[0..4], :as => :space %>
+        </li>
+    </ul>
+    </div><!-- fim tabs-1 -->
+  </div><!-- fim tabs -->
+    <% field_set_tag 'Compartilhe!', :class => 'fake' do %>
+    <%= render :partial => 'shared/share', :locals => {:resource => @course}%>
+  <%end%>
+</div><!-- fim grid_16 -->

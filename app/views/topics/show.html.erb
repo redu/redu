@@ -1,0 +1,65 @@
+<div class="alt first_alt">
+  <%= link_to @forum.name, space_forum_path(@space) %>
+  -
+  <%= @topic.title %>
+</div>
+
+<div class="grid_16">
+  <h3 class="topic_title"><%= @topic.title %></h3>
+	<div class"grid_16">	
+		<% if @topic.locked? %>
+    <%= image_tag "lock.gif", :class => "icon grey", :title => :topic_locked.l %>
+		<% end %>
+		<% if logged_in? %>
+		  <span>
+		    <% if @topic.editable_by?(current_user) %>
+		      <%= link_to(:edit.l, edit_space_forum_topic_path(@space, @topic), :class => "utility") %>
+		      |
+		      <%= link_to(:delete.l, space_forum_topic_path(@space, @topic), :class => "utility", :method => :delete, :confirm => :delete_this_topic_forever.l) %>
+		    <% end %>
+		  </span>
+		<% end %>
+	</div>
+  <div class="subtitle">
+    <%#= feed_icon_tag  @topic.title, space_forum_topic_path(@space, @topic, :format => :rss) %>
+    <%= pluralize @topic.sb_posts.count, :post.l %>, <%= pluralize @topic.voices, :voice.l %>, 
+    <% unless @topic.tags.empty? %>
+      Tags: <%= link_to @topic.tags.collect{|t| link_to( h(t.name), tag_url(t), :class => 'tag') + " "} %> <%#TODO Colocar no helper %>
+    <% end %>
+  </div>
+  <span class="flat talking">
+    <%= :voices.l %>:
+    <% for user in @voices do %>
+      <%= link_to user.display_name, user_path(user) %>
+    <% end %>
+  </span>
+
+  <div id="posts-list" class="grid_16">
+    <%= render :partial => 'sb_posts/item', :collection => @posts, :as => :post %>
+  </div>
+
+    <% if @topic.locked? %>
+
+      <div class="grid_16"
+        <%= image_tag "lock.gif", :class => "icon grey", :title => :topic_locked.l %>
+        <%= :this_topic_is_locked.l %>
+      </div>
+    <% else %>
+      <div class="topic-action">
+        <a href="#">Responder</a>
+        <div class="answer hide">
+          <%= render :partial => "sb_posts/form", :locals => { :space_id => @space.id, :topic_id => @topic.id }, :class => "hide" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<div id="pagination" align="center" class="pagination">
+  <%= will_paginate  @posts, :class => "pagination_number"  %>
+</div>
+
+<script type="text/javascript">
+  $(".topic-action a:first").click(function(e){
+    $(this).next("div.answer:first").slideToggle()
+    e.preventDefault()
+  })
+</script>

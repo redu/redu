@@ -1,6 +1,7 @@
 <div class="main grid_16">
-	<%= render :partial => "schools/school_info", :locals => {:school => @event.school, :show => false} %>
-	<%= render :partial => "schools/sidebar", :locals => {:school => @event.school} %>
+  <% if @eventable.class.to_s.eql? "Space" %>
+    <%= render :partial => "spaces/sidebar", :locals => {:space => @event.eventable} %>
+  <% end %>
 
-	<%= render :partial => 'events/form', :locals => {:event => @event, :title => "Editar"} %>
+  <%= render :partial => 'events/form', :locals => {:event => @event, :title => "Editar"} %>
 </div>

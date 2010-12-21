@@ -1,5 +1,4 @@
 class SessionsController < BaseController
-  layout 'new_application'
   before_filter :less_than_30_days_of_registration_required, :only => :create
 
   def index

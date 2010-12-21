@@ -1,0 +1,6 @@
+unless @memberships.empty?
+  page.replace_html 'user_list', 
+    :partial => 'user_list_admin', :locals => {:memberships => @memberships}
+else
+  page.replace_html 'user_list', "<div class=\"box_notice\">Nenhum usuário</div>"
+end

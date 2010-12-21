@@ -16,7 +16,7 @@
 <% if @folder.parent %>
         <tr>
             <td class="directory collapsed">&nbsp;</td>
-            <td><%= link_to_remote "..", :url => {:action => :index, :id => @folder.parent, :school_id => @school.id}, :before => "showLoadingFiles()" %>
+            <td><%= link_to_remote "...", :url => {:action => :index, :id => @folder.parent, :space_id => @space.id}, :before => "showLoadingFiles()" %>
 	        </td>
             <td>--</td>
             <td>--</td>
@@ -28,8 +28,8 @@
         <tr>
             <td class="directory collapsed"></td>
             <td>
-            	<%# link_to h(folder.name), school_folders_path(:id => folder, :school_id => @school.id) %>
-			<%= link_to_remote h(folder.name), :url => {:action => :index, :id => folder, :school_id => @school.id}, :before => "showLoadingFiles()" %>
+            	<%# link_to h(folder.name), space_folders_path(:id => folder, :space_id => @space.id) %>
+			<%= link_to_remote h(folder.name), :url => {:action => :index, :id => folder, :space_id => @space.id}, :before => "showLoadingFiles()" %>
 	
 			</td>
             <td>--</td>
@@ -42,7 +42,8 @@
 		<%= link_to image_tag('edit.png', :style => "border: 0", :title => 'Renomear esta pasta'), '#', :onclick => "$('#folder_#{folder.id}').slideToggle(); return false;" %>
          <div id="folder_<%= folder.id %>" class="rename-folder-inner hoverdiv">
             
-			 <% form_remote_for :folder, folder, :url => { :action => "update", :id => folder.id }, :method => :put, :loading => "$('#rename-folder-spinner_#{folder.id}').show()" do |f| %>
+           <% form_remote_for :folder, folder, :url => space_folder_path(@space, folder), 
+             :method => :put, :loading => "$('#rename-folder-spinner_#{folder.id}').show()" do |f| %>
 					<%= f.text_field :name, :size => "15" %>
 				<%= f.submit 'OK' %>
 				<%= image_tag 'spinner.gif', :id => "rename-folder-spinner_#{folder.id}", :style => 'display: none' %><BR>
@@ -58,7 +59,7 @@
             
     <% if @can_delete %>
 	<td>
-                <%= link_to_remote image_tag('delete.png', :style => "border: 0", :title => 'Remover esta pasta'), :url => { :action => :destroy_folder, :id => folder.id, :school_id => @school.id} ,  :confirm => "Todos os arquivos e subpastas serão removidos.\nDeseja continuar?" , :method => :delete %>
+                <%= link_to_remote image_tag('delete.png', :style => "border: 0", :title => 'Remover esta pasta'), :url => { :action => :destroy_folder, :id => folder.id, :space_id => @space.id} ,  :confirm => "Todos os arquivos e subpastas serão removidos.\nDeseja continuar?" , :method => :delete %>
    </td>
     <% end %>
             
@@ -67,20 +68,20 @@
 <% @myfiles.each do |myfile| %>
         <tr >
             <td class="file <%= type_class(myfile)%>"></td>
-            <td><%= link_to h(myfile.attachment_file_name), download_school_folder_path(:id => @folder.id, :file_id => myfile.id, :school_id => @school.id)%></td>
+            <td><%= link_to h(myfile.attachment_file_name), download_space_folder_path(:id => @folder.id, :file_id => myfile.id, :space_id => @space.id)%></td>
             <td><%= bytes_to_kb(myfile.attachment_file_size) %> KB</td>
             <td><%= time_ago_in_words(myfile.attachment_updated_at) %></td>
             
     <% if @can_update %>
 	<td>
-                <%# link_to image_tag('edit.png', :style => "border: 0"), rename_school_folder_path(:id => @folder.id, :school_id => @school.id), { :title => 'Rename this file' } %>
+                <%# link_to image_tag('edit.png', :style => "border: 0"), rename_space_folder_path(:id => @folder.id, :space_id => @space.id), { :title => 'Rename this file' } %>
      </td>
 	<% end %>
            
             
     <% if @can_delete %>
 	<td>
-                <%= link_to_remote image_tag('delete.png', :style => "border: 0", :title => 'Remover este arquivo'), :url => {:action => :destroy_file, :id => @folder.id, :file_id => myfile.id, :school_id => @school.id}, :confirm => 'Tem certeza?', :method => :delete  %>
+                <%= link_to_remote image_tag('delete.png', :style => "border: 0", :title => 'Remover este arquivo'), :url => {:action => :destroy_file, :id => @folder.id, :file_id => myfile.id, :space_id => @space.id}, :confirm => 'Tem certeza?', :method => :delete  %>
      </td>
 	<% end %>
            

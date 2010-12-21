@@ -3,7 +3,7 @@ require 'open-uri'
 require 'pp'
 
 class BaseController < ApplicationController
-  layout 'new_application'
+  layout 'application'
   include AuthenticatedSystem
   include LocalizedApplication
 
@@ -31,21 +31,16 @@ class BaseController < ApplicationController
   end
 
   def teach_index
-    @schools = current_user.schools
-    @courses = current_user.courses.find(:all,
-                                         :order => "created_at DESC",
-                                         :limit => 4,
-                                         :conditions => ["published = ?", true])
     respond_to do |format|
-      format.html { render :layout => 'new_application'}
+      format.html 
     end
   end
 
   def learn_index
-    @schools = current_user.schools
+    @spaces = current_user.spaces
 
     respond_to do |format|
-      format.html { render :layout => 'new_application'}
+      format.html 
     end
   end
 
@@ -86,11 +81,11 @@ class BaseController < ApplicationController
   end
 
   def admin_required
-    current_user && current_user.admin? ? true : access_denied
+    current_user && current_user.admin? ? true : (raise CanCan::AccessDenied)
   end
 
-  def school_admin_required(school_id)
-    (current_user && current_user.school_admin?(school_id) || School.find(school_id).owner == current_user) ? true : access_denied
+  def space_admin_required(space_id)
+    (current_user && current_user.space_admin?(space_id) || Space.find(space_id).owner == current_user) ? true : access_denied
   end
 
   def admin_or_moderator_required
@@ -101,15 +96,15 @@ class BaseController < ApplicationController
     return unless current_user.auto_status
 
     case params[:controller]
-    when 'courses'
-      if @course and @course.published
+    when 'lectures'
+      if @lecture and @lecture.published
         Status.create({:log => true,
-                      :logeable_name => @course.name,
-                      :logeable_type => 'Course',
-                      :logeable_id => @course.id,
+                      :logeable_name => @lecture.name,
+                      :logeable_type => 'Lecture',
+                      :logeable_id => @lecture.id,
                       :log_action => params[:action],
-                      :statusable_type => (@course.school) ? 'School' : 'User',
-                      :statusable_id => (@course.school) ? @course.school.id : @course.owner.id,
+                      :statusable_type => 'User',
+                      :statusable_id => @lecture.owner.id,
                       :user_id => current_user.id
         })
       end
@@ -120,8 +115,8 @@ class BaseController < ApplicationController
                       :logeable_type => 'Exam',
                       :logeable_id => @exam.id,
                       :log_action => params[:action],
-                      :statusable_type => (@exam.school) ? 'School' : 'User',
-                      :statusable_id => (@exam.school) ? @exam.school.id : @exam.owner.id,
+                      :statusable_type => (@exam.subject.space) ? 'Space' : 'User',
+                      :statusable_id => (@exam.subject.space) ? @exam.subject.space.id : @exam.owner.id,
                       :user_id => current_user.id
         })
       end
@@ -137,15 +132,75 @@ class BaseController < ApplicationController
                       :user_id => @user.id
         })
       end
-    when 'schools'
-      if @school and @school.created_at
+    when 'spaces'
+      if @space and @space.created_at
         Status.create({:log => true,
-                      :logeable_name => @school.name,
-                      :logeable_type => 'School',
-                      :logeable_id => @school.id,
+                      :logeable_name => @space.name,
+                      :logeable_type => 'Space',
+                      :logeable_id => @space.id,
                       :log_action => params[:action],
                       :statusable_type => 'User',
-                      :statusable_id => @school.owner.id,
+                      :statusable_id => @space.owner.id,
+                      :user_id => current_user.id
+        })
+      end
+    when 'topics'
+      if @topic and @topic.created_at
+        Status.create({:log => true,
+                      :logeable_name => @topic.title,
+                      :logeable_type => 'Topic',
+                      :logeable_id => @topic.id,
+                      :log_action => params[:action],
+                      :statusable_type => 'Space',
+                      :statusable_id => @topic.forum.space.id,
+                      :user_id => current_user.id
+        })
+      end
+    when 'sb_posts'
+      if @post and @post.created_at
+        Status.create({:log => true,
+                      :logeable_name => nil,
+                      :logeable_type => 'SbPost',
+                      :logeable_id => @post.id,
+                      :log_action => params[:action],
+                      :statusable_type => 'Space',
+                      :statusable_id => @post.topic.forum.space.id,
+                      :user_id => current_user.id
+        })
+      end
+    when 'events'
+      if @event and @event.created_at
+        Status.create({:log => true,
+                      :logeable_name => @event.name,
+                      :logeable_type => 'Event',
+                      :logeable_id => @event.id,
+                      :log_action => params[:action],
+                      :statusable_type => @event.eventable.class.to_s,
+                      :statusable_id => @event.eventable.id,
+                      :user_id => current_user.id
+        })
+      end
+    when 'bulletins'
+      if @bulletin and @bulletin.created_at
+        Status.create({:log => true,
+                      :logeable_name => @bulletin.title,
+                      :logeable_type => 'Bulletin',
+                      :logeable_id => @bulletin.id,
+                      :log_action => params[:action],
+                      :statusable_type => @bulletin.bulletinable.class.to_s,
+                      :statusable_id => @bulletin.bulletinable.id,
+                      :user_id => current_user.id
+        })
+      end
+    when 'folders'
+      if @myfile.valid? and @space
+        Status.create({:log => true,
+                      :logeable_name => @myfile.attachment_file_name,
+                      :logeable_type => 'Myfile',
+                      :logeable_id => @myfile.id,
+                      :log_action => params[:action],
+                      :statusable_type => 'Space',
+                      :statusable_id => @space.id,
                       :user_id => current_user.id
         })
       end

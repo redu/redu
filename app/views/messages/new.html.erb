@@ -1,21 +1,17 @@
 <div id="all_content3">
-    <div id="col_content">
-        <div id="breadcrumbs">
-            <a href="<%=application_url%>">home</a>
-            > mensagens
-        </div>
-			<%= render :partial => 'messages/sidebar_nav' %>
-			
-		<div id='yui-main'>
-			<div class='yui-b'>
-			
-        	<h3>
-            	NOVA MENSAGEM
-        	</h3>
-				<%= error_messages_for :message %>
-				<%= render :partial => 'form', :locals => {:message => @message, :user => @user} %>
-			</div>
-        </div>
-		
+  <div id="col_content">
+    <%= render :partial => 'messages/sidebar_nav' %>
+
+    <div id='yui-main'>
+      <div class='yui-b'>
+
+        <h3>
+          NOVA MENSAGEM
+        </h3>
+        <%= error_messages_for :message %>
+        <%= render :partial => 'form', :locals => {:message => @message, :user => @user} %>
+      </div>
     </div>
+
+  </div>
 </div>

@@ -1,14 +1,9 @@
-<div id="alternative" class="fields">
-	
-<%#puts f.options[:child_index]%>
-<%#puts f.object.id%>
-<%# (f.object.id) ? f.object.id : "new_alternatives"%>
-
-<%= @oi.radio_button :answer_id,   "new_alternatives"  ,  :checked => false  %>
-	 
- <%= f.text_field :statement %>
-
+<div class="fields">
+  <%= f.radio_button :correct,
+        f.object.correct ? 1 : 0,
+        :class => "correct",
+        :checked => f.object.correct %>
+  <%= f.text_field :statement %>
   <%= f.hidden_field :_destroy %>
-	
-	<%= link_to_remove_fields "remover", f %>
+  <a href="#" class="remove">remover</a>
 </div>

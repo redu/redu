@@ -1,0 +1,100 @@
+<script type="text/javascript" charset="utf-8">
+//<![CDATA[
+$(document).ready(function(){
+    reload_assets_index()
+    show_choosen_assets()
+
+    // Remove recurso.
+    $("a.remove").live('click', function(e){
+      $(this).prev("input[type=hidden]").val("1")
+      $(this).parent(".fields").hide()
+      reload_assets_index()
+      e.preventDefault()
+    })
+
+    // Mostra form para novos recursos.
+    $("input.new").live('click', function(e){
+      $(this).parent().nextAll("div.new-form").show()
+      $(this).parent().nextAll("div.exist-form").hide()
+    })
+
+    // Mostra form para recursos já existentes.
+    $("input.exist").live('click', function(e){
+      $(this).parent().nextAll("div.new-form").hide()
+      $(this).parent().nextAll("div.exist-form").show()
+    })
+
+})
+
+// Adiciona numeração dos recursos.
+function reload_assets_index(){
+  $("fieldset.lazy-assets:not(:hidden) > legend").each(function(i){
+    $(this).html("Recurso " + ($("fieldset.lazy-assets:not(:hidden) > legend").index(this) + 1))
+  })
+}
+
+// Adiciona recurso.
+function add_fields(link, association, content) {
+    var new_id = new Date().getTime();
+    var regexp = new RegExp("new_" + association, "g");
+    $(link).before(content.replace(regexp, new_id));
+    reload_assets_index()
+}
+
+// Seta os campos hidden com o id e o type do asset já existente
+// que foi escolhido.
+function reload_existent_assets(){
+  $("select.existent-asset:not(:hidden)").each(function(){
+      var asset = $(this).val();
+      var cutpoint = asset.lastIndexOf('-');
+      var assetable_id = asset.substring(0, cutpoint);
+      var assetable_type = asset.substring(cutpoint+1);
+
+      $(this).prev("input[type=hidden]").val(assetable_type);
+      $(this).prev("div.fieldWithErrors").children("input[type=hidden]").val(assetable_type);
+
+      $(this).prev("input[type=hidden]").prev("input[type=hidden]").val(assetable_id);
+      $(this).prev("div.fieldWithErrors").prev("div.fieldWithErrors").children("input[type=hidden]").val(assetable_id);
+      });
+}
+
+// Mostra o form escolhido pelo usuário (após voltar do servidor por
+// algum erro de validação).
+function show_choosen_assets(){
+  $("div.existent").children("input:checked").each(function(){
+      if($(this).val() == "false") // Recurso não existente
+      {
+      $(this).parent().nextAll("div.new-form").show()
+      }
+      else
+      {
+      $(this).parent().nextAll("div.exist-form").show()
+      id = $(this).parent().nextAll("div.exist-form").children('.assetable_id').val()
+      type = $(this).parent().nextAll("div.exist-form").children('.assetable_type').val()
+      console.log(id+"-"+type)
+      $(this).parent().nextAll("div.exist-form").children('.existent-asset').val(id+"-"+type)
+      }
+  });
+}
+//]]>
+</script>
+<div class="grid_16">
+  <div class="fake-tabs grid_16 alpha omega">
+    <%= render :partial => "subjects/admin_taskbar" %>
+    <div class="panel clearfix">
+      <div class="grid_10 alpha">
+        <h1>Editar Módulo</h1>
+
+        <% form_for [@space, @subject],
+            :url => update_resources_space_subject_path(@space, @subject) do |f| %>
+          <div>
+            <%= f.error_messages %>
+          </div>
+          <%= render 'subjects/resources_form', :f => f %>
+
+          <%= f.submit "Editar" %>
+        <% end %>
+      </div>
+    </div> <!-- end panel -->
+  </div> <!-- end fake -->
+</div> <!-- end grid_16 -->

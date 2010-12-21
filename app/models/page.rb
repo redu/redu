@@ -1,8 +1,8 @@
 class Page < ActiveRecord::Base
-
-  # belongs_to :course
-  has_one :course, :as => :courseable
+  
+  has_one :lecture, :as => :lectureable
   has_one :lesson, :as => :lesson
+  has_many :assets, :as => :assetable
 
   validates_presence_of :body
 

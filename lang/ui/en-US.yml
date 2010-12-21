@@ -1045,8 +1045,8 @@ en:
   says: says
   #en: sb_post_was_deleted: Post '{{title}}' was deleted.
   sb_post_was_deleted: "Post '{{title}}' was deleted."
-  #en: school: Escola
-  school: Escola
+  #en: space: Escola
+  space: Escola
   #en: scrapbook: Scrapbook
   scrapbook: Scrapbook
   #en: search: Search

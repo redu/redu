@@ -1,146 +1,70 @@
 class Course < ActiveRecord::Base
-  
-  # PLUGINS
-  acts_as_taggable
-  ajaxful_rateable :stars => 5
-  has_attached_file :avatar, {
-    :styles => { :thumb => "100x100>", :nano => "24x24>",
-    :default_url => "/images/:class/missing_pic.jpg"}
+  belongs_to :environment
+  has_many :spaces, :dependent => :destroy
+  has_many :user_course_associations, :dependent => :destroy
+  belongs_to :owner, :class_name => "User", :foreign_key => "owner"
+  has_many :users, :through => :user_course_association
+  has_many :approved_users, :through => :user_course_associations,
+    :source => :user, :conditions => [ "user_course_associations.state = ?", 'approved' ]
+  has_many :invitations, :as => :inviteable, :dependent => :destroy
+  has_and_belongs_to_many :audiences
+  named_scope :published, :conditions => {:published => 1}
+  named_scope :of_environment, lambda { |environmnent_id|
+   { :conditions => {:environment_id => environmnent_id} }
   }
-  
-  # ASSOCIATIONS
-  has_many :statuses, :as => :statusable, :dependent => :destroy
-  has_many :acess_key
-  has_many :resources, :class_name => "CourseResource", :as => :attachable, :dependent => :destroy
-  has_many :acquisitions
-  has_many :favorites, :as => :favoritable, :dependent => :destroy
-  has_many :annotations
-  has_one :school_asset, :as => :asset, :dependent => :destroy
-  has_one :school, :through => :school_asset#, :as => :asset
-  has_one :course_subject, :as => :courseable
-  belongs_to :owner , :class_name => "User" , :foreign_key => "owner"
-  belongs_to :courseable, :polymorphic => true, :dependent => :destroy
-  belongs_to :asset, :polymorphic => true
-  belongs_to :simple_category
 
-  # NESTED
-  accepts_nested_attributes_for :resources,
-    :reject_if => lambda { |a| a[:media].blank? },
-    :allow_destroy => true
-  
-  # VALIDATIONS
-  validates_presence_of :name
-  validates_presence_of :description
-  validates_length_of   :description, :within => 30..200
-  validates_presence_of :simple_category
-  validates_presence_of :courseable_type
-  validates_associated :courseable
-  validation_group :step1, :fields=>[:name, :description, :simple_category, :courseable_type]
-  validation_group :step2, :fields=>[:courseable]
-  validation_group :step3, :fields=>[:price]
-  
-  named_scope :published,
-    :conditions => ["state LIKE 'approved' AND public = true"],
-    :include => :owner, :order => 'created_at DESC'
-  named_scope :seminars,
-    :conditions => ["state LIKE 'approved' AND courseable_type LIKE 'Seminar' AND public = true"],
-    :include => :owner, :order => 'created_at DESC'
-  named_scope :iclasses,
-    :conditions => ["courseable_type LIKE 'InteractiveClass' AND public = true"],
-    :include => :owner, :order => 'created_at DESC'
-  named_scope :pages,
-    :conditions => ["courseable_type LIKE 'Page' AND public = true"],
-    :include => :owner, :order => 'created_at DESC'
-  named_scope :limited, lambda { |num| { :limit => num } }
-  
-  # Máquina de estados para moderação do Redu.
-  # O estados do processo de transcoding estao em Seminar
-  acts_as_state_machine :initial => :waiting
-  state :waiting
-  state :approved
-  state :rejected
-  
-  event :approve do
-    transitions :from => :waiting, :to => :approved
-  end
-  
-  event :reject do
-    transitions :from => :waiting, :to => :rejected
-  end
-  
-  def go_to_moderation
-    #FIXME esse metodo é usado em algum lugar?
-    if self.published
-      if (self.courseable_type != 'Seminar' || self.courseable_type != 'InteractiveClass')
-        self.moderate!#FIXME
-      else
-        self.state = 'approved'
-      end
+  acts_as_taggable
+
+  validates_presence_of :name, :path, :message => "Não pode ficar em branco."
+  validates_uniqueness_of :name, :path, :scope => :environment_id
+
+  # Sobreescrevendo ActiveRecord.find para adicionar capacidade de buscar por path do Space
+  def self.find(*args)
+    if args.is_a?(Array) and args.first.is_a?(String) and (args.first.index(/[a-zA-Z\-_]+/) or args.first.to_i.eql?(0) )
+      find_by_path(*args)
+    else
+      super
     end
   end
-  
+
+  def to_param
+    self.path
+  end
+
   def permalink
-    APP_URL + "/courses/"+ self.id.to_s+"-"+self.name.parameterize
+    "#{AppConfig.community_url}/#{self.environment.path}/cursos/#{self.path}"
   end
 
-  def currently_watching
-    sql = "SELECT u.id, u.login, u.login_slug FROM users u, statuses s WHERE"
-    sql += " s.user_id = u.id AND s.logeable_type LIKE 'Course' AND s.logeable_id = '#{self.id}'"
-    sql +=" AND s.created_at > '#{Time.now.utc-10.minutes}'"
-    
-    User.find_by_sql(sql)
+  def can_be_published?
+    self.spaces.published.size > 0
   end
-  
-  def thumb_url
-    case self.courseable_type
-      
-      when 'Seminar'
-      if self.courseable.external_resource_type == 'youtube'
-        'http://i1.ytimg.com/vi/' + self.courseable.external_resource + '/default.jpg'
-      elsif self.courseable.external_resource_type == 'upload'
-        # Os thumbnails só são gerados após a conversão
-        if self.courseable.state == 'converted'
-          File.join(File.dirname(self.courseable.media.url), "thumb_0000.png")
-        else
-          '/images/missing_pic_school.png'
-        end
 
-      else
-        'http://i1.ytimg.com/vi/0QQcj_tLIYo/default.jpg'
-      end
-    when 'InteractiveClass'
-      if self.avatar_file_name
-        self.avatar.url(:thumb)
-      else
-        # image_path("courses/missing_thumb.png")  # icone aula interativa
-        '/images/courses/missing_interactive.png'
-      end
+  # Muda papeis deste ponto para baixo na hieararquia
+  def change_role(user, role)
+    membership = user.user_course_associations.find(:first,
+                    :conditions => {:course_id => self.id})
+    membership.update_attributes({:role_id => role.id})
 
-    when 'Page'
-      if self.avatar_file_name
-        self.avatar.url(:thumb)
-      else
-        
-        'http://i1.ytimg.com/vi/0QQcj_tLIYo/default.jpg'
-      end
-      #APP_URL + '/images/icon_doc_48.png' #FIXME
+    user.user_space_associations.find(:all,
+                     :conditions => {:space_id => self.spaces},
+                     :include => [:space]).each do |membership|
+      membership.space.change_role(user, role)
     end
   end
-  
-  def has_annotations_by(user)
-    Annotation.find(:first, :conditions => ["course_id = ? AND user_id = ?", self.id, user.id])
-  end
-  
-  def to_param #friendly url
-    "#{id}-#{name.parameterize}"
-  end
 
-  def build_courseable(params)
-    puts ' oi'
-    case self.courseable_type
-      when "Page"
-      # se edicao pega ja existente, senao:
-      self.courseable = Page.new(:body => "teste")
+  # Verifica se o path escolhido para o Course já é utilizado por outro
+  # no mesmo Environment. Caso seja, um novo path é gerado.
+  def verify_path!(environment_id)
+    path  = self.path
+    if Course.all(:conditions => ["environment_id = ? AND path = ?",
+                  environment_id, self.path])
+      self.path += '-' + SecureRandom.hex(1)
+
+      # Mais uma tentativa para utilizar um path não existente.
+      return if Course.all(:conditions => ["environment_id = ? AND path = ?",
+                               environment_id, self.path]).empty?
+      self.path = path + '-' + SecureRandom.hex(1)
     end
+
   end
 end

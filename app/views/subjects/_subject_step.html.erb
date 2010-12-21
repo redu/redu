@@ -1,37 +1,18 @@
-<%
-title1 = titles.split('-')[0]
-title2 = titles.split('-')[1]
-%>
-
-<div class="grid_9 push_3">
-  <table class="booking_steps" cellpadding="0" cellspacing="0">
-    <tbody><tr>
-        <td><span class="book_step current"><span><em>1</em><%= h title1 %></span></span></td>
-        <td class="spacer">&nbsp;</td>
-        <td><span class="book_step disabled"><span><em>2</em><%= h title2 %></span></span></td>
-        <td class="spacer">&nbsp;</td>
-        <td><span class="book_step disabled"><span><em>3</em>Publicação</span></span></td>
-      </tr>
+<div class="<%= params[:action] == 'edit' ? "grid_15" : "grid_11 omega" %>">
+  <div class="grid_9 push_2">
+    <table class="booking_steps" cellpadding="0" cellspacing="0">
+      <tbody><tr>
+          <td><span class="book_step current"><span><em>1</em>Informações Gerais</span></span></td>
+          <td class="spacer">&nbsp;</td>
+          <td><span class="book_step disabled"><span><em>2</em>Conteúdo</span></span></td>
+        </tr>
     </tbody></table>
-</div>
+  </div>
 
-
-
-
-<div class="grid_16">
-
-  <% field_set_tag 'Informações Curso' do %>
-    <%= f.label "Título" %>
-    <%= f.text_field :title%>
-    <%= error_message_on @subject, :title %>
-  
-    <%= f.label "Descrição" %>
-    <%= f.text_area :description%>
-    <%= error_message_on @subject, :description %>
-
-  <%end%>
-
-
-
-
+    <div class="grid_11 alpha omega box-info">
+      <div class="pretty-text">
+        Módulos são conjuntos de aulas e exames que podem ou não ser feitos em sequência. Todos os alunos desta disciplina terão acesso aos módulos e poderão se matricular no mesmo.
+      </div>
+    </div>
+  <%= render :partial => 'subjects/subject_form', :locals => { :f => f } %>
 </div>

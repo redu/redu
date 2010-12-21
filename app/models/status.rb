@@ -5,18 +5,20 @@ class Status < ActiveRecord::Base
   POLL = 2
   ANSWER = 3
 
-  acts_as_taggable
+  before_validation :enable_correct_validation_group
 
   belongs_to :statusable, :polymorphic => true
   belongs_to :logeable, :polymorphic => true
   belongs_to :in_response_to, :polymorphic => true
   belongs_to :user
+  alias :owner :user
   has_many :statuses, :as => :in_response_to
+
+  acts_as_taggable
 
   validation_group :log, :fields => [] # Grupo para tipo log
   validation_group :status, :fields => [:text, :kind] # Grupo para tipo status (inclui question)
 
-  before_validation :enable_correct_validation_group
   validates_presence_of :text
   validates_inclusion_of :kind,
     :in => [0, 1, 2, 3, 4],
@@ -74,8 +76,8 @@ class Status < ActiveRecord::Base
 
   # Dada uma rede, retorna os status postados na mesma
   def Status.group_statuses(group)
-    sql = "SELECT s.* FROM statuses s, user_school_associations a " + \
-      "WHERE a.school_id = #{group.id} " + \
+    sql = "SELECT s.* FROM statuses s, user_space_associations a " + \
+      "WHERE a.space_id = #{group.id} " + \
     "AND s.user_id = a.user_id " + \
       "ORDER BY s.created_at DESC "
 

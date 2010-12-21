@@ -1,39 +1,16 @@
-
 <%= hidden_field_tag("step", "publication")%>
+<div class="grid_16">
+  <div class="y_addinfo" style="margin: 10px 0">
+    <div class="addinfocontent">
+      <h1>
+        Termos e Condições do Redu</h1>
+      <p>
+        Por favor não publique conteúdo que esteja protegido por direitos autoriais, conteúdo obceno ou que viole
+        os <%= link_to "termos e condições", {:controller => "base", :action => "tos"}, :target => "_blank"%> do Redu.
 
-<div class="grid_9">
+        Ao clicar no botão abaixo você estará concordando com esses termos.</p>
 
-
-	<% field_set_tag 'Visibilidade' do %>
-	<%= f.label "Pública <span class='snippet'>(Visível em todo o Redu)</span>" %>
-		<%= f.check_box :public %>
-		
-		<% @schools = current_user.schools %>
-		
-		<%end%>
-	
-	
-
-
-	<% field_set_tag 'Compartilhe!' do %>
-		<%# render :partial => 'shared/share', :locals => {:resource => @school}%>
-		<%end%>
-
-</div>
-<div class="grid_6 push_1">
-	<div class="y_addinfo">
-            <div class="addinfocontent">
-                <h1>
-                    Termos e Condições do Redu</h1>
-                <p>
-                   Por favor não publique conteúdo que esteja protegido por direitos autoriais, conteúdo obceno ou que viole
-									 os <%= link_to "termos e condições", {:controller => "base", :action => "tos"}, :target => "_blank"%> do Redu.
-                		
-									Ao clicar no botão abaixo você estará concordando com esses termos.</p>
-									
-									
-								<p class="large_btn"><a href="#" id="adm_showpay" style="color: #fff;" onclick="jQuery('#form_exam').submit();">Publicar</a></p>
-            </div>
-        </div>
+    </div>
+  </div>
 </div>
 

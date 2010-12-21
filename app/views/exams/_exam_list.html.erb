@@ -1,10 +1,9 @@
+<% if @exams && @exams.size > 0 %>
+  <ul class="default">
+    <%= render :partial => 'exams/item', :collection => @exams, :as => :exam %>
+  </ul>
+<% else %>
+  (Nenhum exame)
+<% end %>
 
-	<% if @exams && @exams.size > 0 %>
-	<ul class="default">
-		<%= render :partial => 'exams/item', :collection => @exams, :as => :exam %> 
-	</ul>
-	<% else %>
-		(Nenhum exame)
-	<% end %>
-	
-	<%= will_paginate @exams %>
+<%= will_paginate @exams %>

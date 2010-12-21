@@ -4,17 +4,19 @@ require 'zip/zipfilesystem'
 # It's called Myfile, because File is a reserved word.
 # Files are in (belong to) a folder and are uploaded by (belong to) a User.
 class Myfile < ActiveRecord::Base
-  has_attached_file :attachment, {}.merge(PAPERCLIP_MYFILES_OPTIONS)
+  before_destroy :delete_file_on_disk
+  before_create :overwrite
+
+  has_attached_file :attachment, PAPERCLIP_MYFILES_OPTIONS
+
   belongs_to :folder
   belongs_to :user
+  has_many :logs, :as => :logeable, :dependent => :destroy, :class_name => 'Status'
 
   validates_attachment_presence :attachment
   validates_attachment_size :attachment,
     :less_than => 10.megabytes
   validates_uniqueness_of :attachment_file_name, :scope => 'folder_id'
-
-  before_destroy :delete_file_on_disk
-  before_create :overwrite
 
   # When removing a myfile record from the database,
   # the actual file on disk has to be removed too.

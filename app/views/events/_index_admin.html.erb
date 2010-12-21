@@ -1,0 +1,25 @@
+<% unless @events.empty? %>
+  <table class="common">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Remover</th>
+      </tr>
+    </thead>
+    <% @events.each do |item| %>
+      <tr>
+        <td><%= link_to item.name, polymorphic_path([@space || @environment, item]) %></td>
+        <td><%= link_to 'Remover', polymorphic_path([@space || @environment, item]),
+          :confirm => 'Você tem certeza que deseja remover permanentemente este evento?', :method => :delete %></td>
+      </tr>
+
+    <% end %>
+  </table>
+  <%= link_to "Crie um agora!", new_polymorphic_path([@space || @environment, Event.new]),
+    :class => 'button'%>
+<% else %>
+  <div class="box_notice">
+    Não existe nenhum evento.
+    <%= link_to "Crie um agora!", new_polymorphic_path([@space || @environment, Event.new]) %>
+  </div>
+<% end %>

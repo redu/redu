@@ -1,39 +1,37 @@
 <ul class="sortable clearfix"> 
 
+  <% mct = current_user.unread_message_count %>
+  <% unless mct == 0%>
+    <li class="clearfix" style="background-color: #FFFFDF; -moz-box-shadow:0 4px 12px #DDDDDD; ">
+      <span class="call"><span style ="background:none repeat scroll 0 0 #FFFFDF; color:orange;">Ações</span></span>
+      <ul class="menu">
+        <li><%= link_to "Caixa de mensagens ("+mct.to_s+")", user_messages_path(:user_id => current_user.id)%></li>
+      </ul>
+    </li>
+  <% end %>
 
-
-<li class="clearfix" style="background-color: #FFFFDF; -moz-box-shadow:0 4px 12px #DDDDDD; ">
-    <span class="call"><span style ="background:none repeat scroll 0 0 #FFFFDF; color:orange;">Ações</span></span>
-    <ul class="menu">
-    	<% mct = current_user.unread_message_count %>
-    	<% unless mct == 0%>
-			<li><%= link_to "Caixa de mensagens ("+mct.to_s+")", user_messages_path(:user_id => current_user.id)%></li>
-			<% end %>
-      <li><a href="" class="closed sb">Acompanhar alunos</a></li>
-      <li><a href="" class="closed sb">Acompanhar aulas</a></li>
-    </ul>
-  </li>
-
-
-<% unless current_user.avatar_file_name and current_user.activated_at and (current_user.has_invited or AppConfig.closed_beta_mode) and current_user.profile_complete? %>
-<li class="clearfix">
-<span class="call"><span>TODO</span></span>
-    <ul class="menu">
-    	<% unless current_user.profile_complete? %>
-			<li><%= link_to "Completar dados do perfil", edit_user_path(current_user)%></li>
-			<% end %>
-    	<% unless current_user.avatar_file_name %>
-			<li><%= link_to "Fazer upload de foto", edit_user_path(current_user)%></li>
-			<% end %>
-      <% if current_user.can_activate? %>
-			<li>Ativar conta <%= link_to "reenviar e-mail de ativação", resend_activation_path(:email => current_user.email, :id => current_user.id), :class => "icon more"%></li>
-			<% end %>
-			 <% unless current_user.has_invited or AppConfig.closed_beta_mode %>
-			<li><%= link_to "Convidar amigos e contatos", invite_user_path%></li>
-			<% end %>
-    </ul>
-  </li>
-<% end %>
+  <% unless current_user.avatar_file_name and current_user.activated_at and (current_user.has_invited or AppConfig.closed_beta_mode) and current_user.profile_complete? %>
+    <li class="clearfix">
+      <span class="call"><span>O que você precisa fazer</span></span>
+      <ul class="menu">
+        <% unless current_user.profile_complete? %>
+          <li><%= link_to "Completar dados do perfil", edit_user_path(current_user)%></li>
+        <% end %>
+        <% unless current_user.avatar_file_name %>
+          <li><%= link_to "Fazer upload de foto", edit_user_path(current_user)%></li>
+        <% end %>
+        <% unless current_user.curriculum_file_name %>
+          <li><%= link_to "Fazer upload de currículo", edit_user_path(current_user)%></li>
+        <% end %>
+        <% if current_user.can_activate? %>
+          <li>Ativar conta <%= link_to "reenviar e-mail de ativação", resend_activation_path(:email => current_user.email, :id => current_user.id), :class => "icon more"%></li>
+        <% end %>
+        <% unless current_user.has_invited or AppConfig.closed_beta_mode %>
+          <li><%= link_to "Convidar amigos e contatos", invite_user_path%></li>
+        <% end %>
+      </ul>
+    </li>
+  <% end %>
 
 
 <li class="clearfix">
@@ -46,7 +44,7 @@
 
 <% for user in @user.follows[0..9]%>
 <li>
-	<%= link_to image_tag(user.avatar.url(:thumb), :height => '24', :width => '24', :alt => "#{user.login}"), user_path(user), :rel => 'bookmark', :title => "#{user.display_name}" %>
+  <%= link_to image_tag(user.avatar.url(:thumb), :height => '24', :width => '24', :alt => "#{user.login}"), user_path(user), :rel => 'bookmark', :title => "#{user.display_name}", :class => "tooltipable" %>
 </li>
 <%end%>
 
@@ -57,6 +55,23 @@
 </div>
 </li>
 
+<li class="clearfix">
+    <span class="call"><span>Quem segue você</span></span>
+    <div class="followship box clearfix">
+
+      <% if @user.followers.size > 0 %>
+        <ul class="clearfix">
+          <% for user in @user.followers[0..9]%>
+            <li>
+              <%= link_to image_tag(user.avatar.url(:thumb), :height => '24', :width => '24', :alt => "#{user.login}"), user_path(user), :rel => 'bookmark', :title => "#{user.display_name}", :class => "tooltipable" %>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <div class="box_notice">Ninguém segue <%= @user.first_name %> no momento.</div>
+      <% end %>
+    </div>
+</li>
 
 <li class="clearfix">
 <span class="call"><span>Minhas anotações</span></span>

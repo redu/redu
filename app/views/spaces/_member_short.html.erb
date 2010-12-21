@@ -1,0 +1,9 @@
+<li>
+  <% link_to member, :title => member.display_name, :class => "tooltipable" do %>
+    <%= image_tag(member.avatar.url(:nano),
+                          :height => '24',
+                          :width => '24',
+                          :alt => "#{member.login}")
+    %>
+  <% end %>
+</li>

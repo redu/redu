@@ -1,7 +1,3 @@
-<!--
-<div id="breadcrumbs">
-<a href="#">mensagens</a> > caixa de entrada
-</div>-->
 <div>
     <div class="grid_11" style="background-color: #EFEFEF; height: 120px;">
         O redu é uma plataforma de rede social que oferece espaços customizados para distribuição de conteúdo educacional multimídia
@@ -12,57 +8,52 @@
 </div>
 
 <div class="grid_11 home">
-    <!--
-    <div id="breadcrumbs">
-    <a href="#">mensagens</a> > caixa de entrada
-    </div>-->
-		
 		<span class="call featured"><span>Explore</span></span>
 		<div style="width: 640px; height: 300px; background-color: #EAEAEA;">
-			
+
 		</div>
-    
-	
+
+
 		<span class="call featured" style="float:left; width: 100%"><span>Últimas Aulas</span>
             <ul id="carousel" class="jcarousel-skin-tango">
-            	
-							
-							
-                <% for course in @courses %>
+
+
+
+                <% for lecture in @lectures %>
                 <li>
-                	
+
 									<div  style="width: 297px; ">
-					<a href="/scitable/topic/evolutionary-genetics-13" class="inline" style="float:left;">	
-					<img height="120" width="120" alt="Evolutionary Genetics" title="Evolutionary Genetics" src="/scitable/profileimage/topic/13/13_1_M.jpg" class="imageWrap topicImg">						
+					<a href="/scitable/topic/evolutionary-genetics-13" class="inline" style="float:left;">
+					<img height="120" width="120" alt="Evolutionary Genetics" title="Evolutionary Genetics" src="/scitable/profileimage/topic/13/13_1_M.jpg" class="imageWrap topicImg">
 					</a>
-					
-					
+
+
 					<div class="topic longWordWrapped" style="float: left; width: 154px;">
-					
+
 					<h2>
 					<a href="/scitable/topic/evolutionary-genetics-13" class="inline">Evolutionary Genetics</a>
 					</h2>
-					
-					<span class="topicChiefEd">	
+
+					<span class="topicChiefEd">
 						Editor:&nbsp;<a onclick="return postCookieData('13');" class="inlineLinks" href="/scitable/topicpage/bob-sheehy-45169" title="Bob Sheehy">Bob Sheehy</a>,&nbsp;<a onclick="return postCookieData('13');" class="inlineLinks" href="/scitable/topicpage/norman-johnson-7733556" title="Norman Johnson">Norman Johnson</a>
 					</span>
 					<div class="aboutTopic">
-						Evolutionary genetics examines the genetic relationships among groups of organisms and ...							
+						Evolutionary genetics examines the genetic relationships among groups of organisms and ...
 					</div>
 				</div>
 				</div>
-									
-                	<%# image_tag course.thumb_url, :width=>"75",  :height=>"75" %>
+
+                	<%# image_tag lecture.thumb_url, :width=>"75",  :height=>"75" %>
                 </li>
 								<% end %>
             </ul>
 		</span>
-		
-		
+
+
 </div>
 
 <div class="grid_5 home">
-    
+
         <span class="call"><span>Notícias</span></span>
 				<div>
         <ul>
@@ -73,9 +64,9 @@
         </ul>
         <%= link_to 'Ver todas', "#" %>
     </div>
-		
-		
-    
+
+
+
         <span class="call"><span>Top Users</span></span>
 				<div>
         <ul>
@@ -86,5 +77,5 @@
         </ul>
         <%= link_to 'Ver todas', "#" %>
     </div>
-		
+
 </div>

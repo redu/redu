@@ -1,5 +1,5 @@
-#esconde a imagem do loading e mostra o navegador novamente
-page << "hideLoading();"
+# Atualização dos botões baseado na questão atual
+page.replace_html 'navigation', :partial => 'exams/navigation'
 
 #mostra nova questão / instruction
 if @show_i
@@ -12,38 +12,13 @@ end
 
 page << "chronoStart();"
 
-
 # se respondeu a questão marca como respondida
 if @theanswer and @prev_step
   page << "jQuery(\"#qIndex#{@prev_step.id}\").addClass(\"indexStrike\")"
 end
 
 # caso nao tenha uma proxima questão, muda "proximo" para "finalizar" submete o formulario SEM AJAX
-if @has_next
-  
-  if @show_i
-    
-    page << "jQuery('#submit_answer_btn').hide()"
-    page << "jQuery('#first_question_btn').show()"
-  else
-    page << "jQuery('#submit_answer_btn').show()"
-    page << "jQuery('#submit_answer_btn').val('Próximo')"
-    page << "jQuery('#first_question_btn').hide()"
-    #page << "document.getElementById('submit_answer_btn').value = 'Próximo';"
-  end
-  
-else
-   page << "jQuery('#submit_answer_btn').show()"
-   page << "jQuery('#first_question_btn').hide()"
+unless @has_next
   page << "document.getElementById('form_answer').onsubmit = submitChrono();"
   page << "document.getElementById('submit_answer_btn').value = 'Finalizar';"
-  
 end
-
-# caso nao tenha questão anterior, desabilita o botao "anterior"
-if @has_prev
-  page << "document.getElementById('prev_answer_btn').disabled = false;"
-else
-  page << "document.getElementById('prev_answer_btn').disabled = true;"
-end
-

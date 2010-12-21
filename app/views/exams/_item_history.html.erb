@@ -1,27 +1,25 @@
-<!-- ITEM ////////////////////////////////////////////////////////////////// -->
-        <div id="item">
-    		<div id="title"><%= link_to exam.name, exam %></div>
-            
-            <div id="identification">
-              <ul id="identification_resource">
-				<li><%= link_to exam.owner.login, exam.owner %></li>
-        		<li>|</li>
-				<li><%= time_ago_in_words(exam.created_at) %></li>
-                <li>|</li>
-				<li><%=h exam.questions.length %> Questões</li>
-			  </ul>
-            </div>
-            
-            <div id="description"><%= exam.description %>
-            </div>
-			
-			<div id="identification">
-              <ul id="identification_resource">
-              	<li><strong>Realizado </strong> ?</li>
-				<li><strong>Total acertos:</strong> ?</li>
-			  </ul>
-            </div>
-            
-                  
-    	</div>
+<div id="item">
+  <div id="title"><%= link_to exam.name, exam %></div>
+
+  <div id="identification">
+    <ul id="identification_resource">
+      <li><%= link_to exam.owner.login, exam.owner %></li>
+      <li>|</li>
+      <li><%= time_ago_in_words(exam.created_at) %></li>
+      <li>|</li>
+      <li><%=h exam.questions.length %> Questões</li>
+    </ul>
+  </div>
+
+  <div id="description"><%= exam.description %></div>
+
+<div id="identification">
+  <ul id="identification_resource">
+    <li><strong>Realizado </strong> ?</li>
+    <li><strong>Total acertos:</strong> ?</li>
+  </ul>
+</div>
+
+
+        </div>
 

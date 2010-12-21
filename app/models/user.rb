@@ -1,36 +1,16 @@
 class User < ActiveRecord::Base
 
-  # ATTRIBUTES
+  # Constants
   MALE    = 'M'
   FEMALE  = 'F'
 
   LEARNING_ACTIONS = ['answer', 'results', 'show']
   TEACHING_ACTIONS = ['create']
 
-  attr_protected :admin, :featured, :role_id
-
-  # PLUGINS
-  acts_as_authentic do |c|
-    c.crypto_provider = CommunityEngineSha1CryptoMethod
-
-    c.validates_length_of_password_field_options = { :within => 6..20, :if => :password_required? }
-    c.validates_length_of_password_confirmation_field_options = { :within => 6..20, :if => :password_required? }
-
-    c.validates_length_of_login_field_options = { :within => 5..20 }
-    c.validates_format_of_login_field_options = { :with => /^[\sA-Za-z0-9_-]+$/ }
-
-    c.validates_length_of_email_field_options = { :within => 3..100 }
-    c.validates_format_of_email_field_options = { :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/ }
-  end
-
-  has_attached_file :avatar, {
-    :styles => { :medium => "200x200>", :thumb => "100x100>", :nano => "24x24>" }
-  }.merge(PAPERCLIP_STORAGE_OPTIONS)
-
-  ajaxful_rater
-  acts_as_taggable
-  has_private_messages
-  acts_as_voter
+  SUPPORTED_CURRICULUM_TYPES = [ 'application/pdf', 'application/msword',
+                                 'text/plain',
+                                 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' # docx
+                               ]
 
   # CALLBACKS
   before_save   :whitelist_attributes
@@ -38,40 +18,38 @@ class User < ActiveRecord::Base
   before_create :make_activation_code
   after_create {|user| UserNotifier.deliver_signup_notification(user) }
   after_create  :update_last_login
-  #before_create :activate_before_save #not necessary
-  #after_save    :activate # <- ja começa ativo
-  #after_save   {|user| UserNotifier.deliver_activation(user) if user.recently_activated? }
   after_save    :recount_metro_area_users
   after_destroy :recount_metro_area_users
 
-  # VALIDATIONS
-  validates_presence_of     :login, :email, :first_name, :last_name
-  validates_presence_of     :metro_area,                 :if => Proc.new { |user| user.state }
-  validates_uniqueness_of   :login, :email, :case_sensitive => false
-  validates_uniqueness_of   :login_slug
-  validates_exclusion_of    :login, :in => AppConfig.reserved_logins
-  validates_date :birthday, :before => 13.years.ago.to_date
-  validates_acceptance_of :tos, :message => "Você precisa aceitar os Termos de Uso"
-
   # ASSOCIATIONS
-  has_many :annotations, :dependent => :destroy, :include=> :course
+  has_many :annotations, :dependent => :destroy, :include=> :lecture
   has_one :beta_key, :dependent => :destroy
-  has_many :user_school_association, :dependent => :destroy
-  has_many :schools, :through => :user_school_association
-  has_many :schools_owned, :class_name => "School" , :foreign_key => "owner"
   has_many :statuses, :as => :statusable, :dependent => :destroy
+  # Space
+  has_many :spaces, :through => :user_space_associations
+  has_many :user_space_associations, :dependent => :destroy
+  has_many :spaces_owned, :class_name => "Space" , :foreign_key => "owner"
+  # Environment
+  has_many :user_environment_associations, :dependent => :destroy
+  has_many :environments, :through => :user_environment_associations
+  has_many :user_course_associations, :dependent => :destroy
+  has_many :environments_owned, :class_name => "Environment",
+    :foreign_key => "owner"
+  # Course
+  has_many :courses, :through => :user_course_associations
 
   # FOLLOWSHIP
   has_and_belongs_to_many :follows, :class_name => "User", :join_table => "followship", :association_foreign_key => "follows_id", :foreign_key => "followed_by_id", :uniq => true
   has_and_belongs_to_many :followers, :class_name => "User", :join_table => "followship", :association_foreign_key => "followed_by_id", :foreign_key => "follows_id", :uniq => true
 
   #COURSES
-  has_many :courses, :foreign_key => "owner", :conditions => {:is_clone => false}
+  has_many :lectures, :foreign_key => "owner",
+    :conditions => {:is_clone => false, :published => true}
   has_many :acquisitions, :as => :acquired_by
 
   has_many :credits
-  has_many :exams, :foreign_key => "owner_id"
-  has_many :exam_users
+  has_many :exams, :foreign_key => "owner_id", :conditions => {:is_clone => false}
+  has_many :exam_users#, :dependent => :destroy
   has_many :exam_history, :through => :exam_users, :source => :exam
   has_many :questions, :foreign_key => :author_id
   has_many :favorites, :order => "created_at desc", :dependent => :destroy
@@ -96,13 +74,60 @@ class User < ActiveRecord::Base
   has_many :group_user
   has_many :groups, :through => :group_user
 
-  #named scopes
+  #student_profile
+  has_many :student_profiles
+
+  #forums
+  has_many :moderatorships, :dependent => :destroy
+  has_many :forums, :through => :moderatorships, :order => 'forums.name'
+  has_many :sb_posts, :dependent => :destroy
+  has_many :topics, :dependent => :destroy
+  has_many :monitorships, :dependent => :destroy
+  has_many :monitored_topics, :through => :monitorships, :conditions => ['monitorships.active = ?', true], :order => 'topics.replied_at desc', :source => :topic
+
+
+  # Named scopes
   named_scope :recent, :order => 'users.created_at DESC'
   named_scope :featured, :conditions => ["users.featured_writer = ?", true]
   named_scope :active, :conditions => ["users.activated_at IS NOT NULL"]
   named_scope :tagged_with, lambda {|tag_name|
     {:conditions => ["tags.name = ?", tag_name], :include => :tags}
   }
+  # Accessors
+  attr_protected :admin, :featured, :role_id
+
+  # PLUGINS
+  acts_as_authentic do |c|
+    c.crypto_provider = CommunityEngineSha1CryptoMethod
+
+    c.validates_length_of_password_field_options = { :within => 6..20, :if => :password_required? }
+    c.validates_length_of_password_confirmation_field_options = { :within => 6..20, :if => :password_required? }
+
+    c.validates_length_of_login_field_options = { :within => 5..20 }
+    c.validates_format_of_login_field_options = { :with => /^[\sA-Za-z0-9_-]+$/ }
+
+    c.validates_length_of_email_field_options = { :within => 3..100 }
+    c.validates_format_of_email_field_options = { :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/ }
+  end
+
+  has_attached_file :avatar, PAPERCLIP_STORAGE_OPTIONS
+  has_attached_file :curriculum, PAPERCLIP_STORAGE_OPTIONS
+
+  ajaxful_rater
+  acts_as_taggable
+  has_private_messages
+  acts_as_voter
+
+  # VALIDATIONS
+  validates_presence_of     :login, :email, :first_name, :last_name
+  validates_presence_of     :metro_area,                 :if => Proc.new { |user| user.state }
+  validates_uniqueness_of   :login, :email, :case_sensitive => false
+  validates_uniqueness_of   :login_slug
+  validates_exclusion_of    :login, :in => AppConfig.reserved_logins
+  validates_date :birthday, :before => 13.years.ago.to_date
+  validates_acceptance_of :tos, :message => "Você precisa aceitar os Termos de Uso"
+  validates_attachment_size :curriculum, :less_than => 10.megabytes
+  validate_on_update :accepted_curriculum_type
 
   # override activerecord's find to allow us to find by name or id transparently
   def self.find(*args)
@@ -217,55 +242,106 @@ class User < ActiveRecord::Base
     (self.first_name and self.last_name and self.gender and self.description and self.tags)
   end
 
-  def enrolled? subject_id
-    if Enrollment.all(:conditions => ["user_id = ? AND subject_id = ?", self.id, subject_id]).length > 0
-      true
-    else
-      false
-    end
-
-  end
-
-  def can_manage?(entity, school=nil)
-
+  def can_manage?(entity)
+    entity.nil? and return false
+    self.admin? and return true
+    self.environment_admin? entity and return true
+    (entity.owner && entity.owner == self) and return true
+    
     case entity.class.to_s
     when 'Course'
-      (entity.owner == self || (entity.school == school && self.school_admin?(school) ))
+      (self.environment_admin? entity.environment)
+    when 'Space'
+      self.teacher?(entity) || self.can_manage?(entity.course)
+    when 'Subject'
+      self.teacher?(entity.space)
+    when 'Lecture'
+      self.teacher?(entity.subject.space)
     when 'Exam'
-      (entity.owner == self || (entity.school == school && self.school_admin?(school) ))
-    when 'School'
-      (entity.owner == self || self.school_admin?(entity))
+      self.teacher?(entity.subject.space)
     when 'Event'
-      (entity.owner == self || (entity.school.id == school.id && self.school_admin?(school) ))
+      self.teacher?(entity.eventable) || self.tutor?(entity.eventable)
     when 'Bulletin'
-      (entity.owner == self || (entity.school == school && self.school_admin?(school) ))
-
+      case entity.bulletinable.class.to_s
+      when 'Environment'
+        self.environment_admin?(entity.bulletinable)
+      when 'Space'
+        self.teacher?(entity.bulletinable) || self.tutor?(entity.bulletinable)
+      end
+    when 'Folder'
+      self.teacher?(entity.space)
+    when 'Topic'
+      self.teacher?(entity.space)
+    when 'SbPost'
+      self.teacher?(entity.space)
+    when 'Status'
+      case entity.statusable.class.to_s
+      when 'Space'
+        self.teacher?(entity.statusable)
+      when 'Subject'
+        self.teacher?(entity.statusable.space)
+      end
     end
   end
 
-  def has_access_to(entity)
-    return true if self.admin? || entity.owner == self
+  def has_access_to?(entity)
+    self.admin? and return true
 
-    case entity.class.to_s
-    when 'Course'
-
-      (entity.public || (entity.school && self.schools.include?(entity.school)))
-      #    when 'Exam'
-      #      (entity.owner == self || (entity.school == school && self.school_admin?(school) ))
-    when 'School'
-      (self.school_admin?(entity) || (self.schools.include?(entity) && self.get_association_with(entity).status == "approved"))
-      #    when 'Event'
-      #       (entity.owner == self || (entity.school == school && self.school_admin?(school) ))
+    if self.get_association_with(entity)
+      return true
+    else
+      case entity.class.to_s
+      when 'Event'
+        self.get_association_with(entity.eventable).nil? ? false : true
+      when 'Bulletin'
+        self.get_association_with(entity.bulletinable).nil? ? false : true
+      when 'Forum'
+        self.get_association_with(entity.space).nil? ? false : true
+      when 'Topic'
+        self.get_association_with(entity.forum.space).nil? ? false : true
+      when 'SbPost'
+        self.get_association_with(entity.topic.forum.space).nil? ? false : true
+      when 'Folder'
+        self.get_association_with(entity.space).nil? ? false : true
+      when 'Status'
+        self.has_access_to? entity.statusable
+      when 'Lecture'
+        self.has_access_to? entity.subject
+      when 'Exam'
+        self.has_access_to? entity.subject
+      else
+        return false
+      end
     end
+  end
 
-    #TODO
-    #    @acq = Acquisition.find(:first, :conditions => ['acquired_by_id = ? AND course_id = ?', self.id, course.id])
-    #    !@acq.nil? or course.owner == self
+  def enrolled?(subject)
+    self.get_association_with(subject).nil? ? false : true
+  end
 
+  # Método de alto nível, verifica se o object está publicado (caso se aplique)
+  # e se o usuário possui acesso (i.e. relacionamento) com o mesmo
+  def can_read?(object)
+    if (object.class.to_s.eql? 'Folder') || (object.class.to_s.eql? 'Forum') ||
+       (object.class.to_s.eql? 'Topic') || (object.class.to_s.eql? 'SbPost') ||
+       (object.class.to_s.eql? 'Event') || (object.class.to_s.eql? 'Bulletin') ||
+       (object.class.to_s.eql? 'Status') || (object.class.to_s.eql? 'User')
+      self.has_access_to?(object)
+    else
+      object.published? && self.has_access_to?(object)
+    end
+  end
+
+  def follow?(user)
+    self.follows.include?(user)
+  end
+
+  def followed_by?(user)
+    self.followers.include?(user)
   end
 
   def can_be_owner?(entity)
-    self.admin? || self.school_admin?(entity.id) || self.teacher?(entity) || self.coordinator?(entity)
+    self.admin? || self.space_admin?(entity.id) || self.teacher?(entity) || self.coordinator?(entity)
   end
 
   def moderator_of?(forum)
@@ -333,7 +409,7 @@ class User < ActiveRecord::Base
   end
 
   def can_activate?
-    activated_at.nil? and created_at > 30.days.ago 
+    activated_at.nil? and created_at > 30.days.ago
   end
 
   def active?
@@ -474,7 +550,7 @@ class User < ActiveRecord::Base
   end
 
   def display_name
-    if self.removed
+    if self.removed?
       return '(usuário removido)'
     end
 
@@ -494,29 +570,17 @@ class User < ActiveRecord::Base
     end
   end
 
-  def admin?
-    role && role.eql?(Role[:admin])
-  end
-
-  def moderator?
-    role && role.eql?(Role[:moderator])
-  end
-
-  def member?
-    role && role.eql?(Role[:member])
-  end
-
-  # school roles
-  def can_post?(school)
-    if not self.get_association_with(school)
+  # space roles
+  def can_post?(space)
+    if not self.get_association_with(space)
       return false
     end
 
-    if school.submission_type == 1 or school.submission_type == 2 # all
+    if space.submission_type == 1 or space.submission_type == 2 # all
       return true
-    elsif school.submission_type == 3 #teachers and admin
-      user_role = self.get_association_with(school).role
-      if user_role.eql?(Role[:teacher]) or user_role.eql?(Role[:school_admin])
+    elsif space.submission_type == 3 #teachers and admin
+      user_role = self.get_association_with(space).role
+      if user_role.eql?(Role[:teacher]) or user_role.eql?(Role[:space_admin])
         return true
       else
         return false
@@ -525,30 +589,51 @@ class User < ActiveRecord::Base
 
   end
 
-  def get_association_with(school_id)
-    return false unless school_id
-    @school = School.find(school_id) #TODO performance -
-    association = UserSchoolAssociation.find(:first, :conditions => ['user_id = ? AND school_id = ?', self.id, @school.id])
+  # Pega associação com Entity (aplica-se a Environment, Course, Space e Subject)
+  def get_association_with(entity)
+    return false unless entity
+
+    case entity.class.to_s
+    when 'Space'
+      association = UserSpaceAssociation.find(:first,
+        :conditions => ['user_id = ? AND space_id = ?', self.id, entity.id])
+    when 'Course'
+      association = UserCourseAssociation.find(:first,
+        :conditions => ['user_id = ? AND course_id = ?', self.id, entity.id])
+    when 'Environment'
+      association = UserEnvironmentAssociation.find(:first,
+        :conditions => ['user_id = ? AND environment_id = ?', self.id, entity.id])
+    when 'Subject'
+      association = Enrollment.find(:first,
+        :conditions => ['user_id = ? AND subject_id = ?', self.id, entity.id])
+    end
   end
 
-  def teacher?(school)
-    association = get_association_with school
+  def environment_admin?(entity)
+    association = get_association_with entity
+    association && association.role && association.role.eql?(Role[:environment_admin])
+  end
+
+  def admin?
+    role && role.eql?(Role[:admin])
+  end
+
+  def teacher?(entity)
+    association = get_association_with entity
+    return false if association.nil?
     association && association.role && association.role.eql?(Role[:teacher])
   end
 
-  def coordinator?(school)
-    association = get_association_with school
-    association && association.role && association.role.eql?(Role[:coordinator])
+  def tutor?(entity)
+    association = get_association_with entity
+    return false if association.nil?
+    association && association.role && association.role.eql?(Role[:tutor])
   end
 
-  def school_admin?(school_id)
-    association = get_association_with school_id
-    association && association.role && association.role.eql?(Role[:school_admin])
-  end
-
-  def student?(school)
-    association = get_association_with school
-    association && association.role && association.role.eql?(Role[:student])
+  def member?(entity)
+    association = get_association_with entity
+    return false if association.nil?
+    association && association.role && association.role.eql?(Role[:member])
   end
 
   def male?
@@ -592,14 +677,23 @@ class User < ActiveRecord::Base
     @favorites = Favorite.find(:all, :conditions => ["user_id = ?", self.id], :order => 'created_at DESC')
   end
 
-  def has_credits_for_course(course)
-    # @course_price = CoursePrice.find(:first, :conditions => ['course_id = ?', course.id]).price.to_f
+  def has_credits_for_lecture(lecture)
+    # @lecture_price = LecturePrice.find(:first, :conditions => ['lecture_id = ?', lecture.id]).price.to_f
     @user_credit = Credit.total(self.id).to_f - Acquisition.total(self.id).to_f
-    (@user_credit >= course.price)
+    (@user_credit >= lecture.price)
+  end
+
+  def update_last_seen_at
+    User.update_all ['sb_last_seen_at = ?', Time.now.utc], ['id = ?', self.id]
+    self.sb_last_seen_at = Time.now.utc
+  end
+
+  def profile_for(subject)
+    self.student_profiles.find(:first,
+      :conditions => {:subject_id => subject})
   end
 
   protected
-
   def activate_before_save
     self.activated_at = Time.now.utc
     self.activation_code = nil
@@ -626,4 +720,10 @@ class User < ActiveRecord::Base
     crypted_password.blank? || !password.blank?
   end
 
+  def accepted_curriculum_type
+    return unless self.teacher_profile?
+    unless SUPPORTED_CURRICULUM_TYPES.include?(self.curriculum_content_type)
+      self.errors.add(:curriculum, "Formato inválido")
+    end
+  end
 end

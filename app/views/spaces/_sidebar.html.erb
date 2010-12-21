@@ -1,0 +1,75 @@
+<div class="sidebar grid_4 alpha">
+  <ul class="sortable clearfix">
+
+
+    <li class="clearfix" style="background-color: #FFFFDF; -moz-box-shadow:0 4px 12px #DDDDDD; ">
+      <span class="call"><span style ="background:none repeat scroll 0 0 #FFFFDF; color:orange;">Ações</span></span>
+      <ul class="menu">
+
+        <li>
+          <%= link_to_function "Criar atividade", "$schooltabs.tabs('select', 1); $('#status_text').focus()"%>
+        </li>
+        <% if can? :manage, space or current_user.tutor? space %>
+          <li>
+            <%= link_to "Criar evento", new_space_event_path(space)%>
+          </li>
+          <li>
+            <%= link_to "Criar notícia", new_space_bulletin_path(space)%>
+          </li>
+        <% end %>
+        <% if can? :manage, space %>
+          <li>
+            <%= link_to "Criar módulo", new_space_subject_path(space)%>
+          </li>
+        <% end %>
+
+      </ul>
+    </li>
+
+    <li class="clearfix">
+      <span class="call"><span>Membros (<%= space.users.size %>)</span></span>
+      <div class="followship box clearfix">
+        <ul class="clearfix">
+          <%= render :partial => 'spaces/member_short', :collection => space.users, :as => :member %>
+        </ul>
+        <a href="<%= members_space_path(space) %>" class="icon more">Ver mais</a>
+      </div><!-- end followship -->
+    </li>
+    <li class="clearfix">
+      <span class="call"><span>Professores (<%= teachers_preview(space).size %>)</span></span>
+      <% unless teachers_preview(space).empty? %>
+        <div class="followship box clearfix">
+          <ul class="clearfix">
+            <%= render :partial => 'spaces/member_short', :collection => teachers_preview(space), :as => :member %>
+          </ul>
+          <a href="<%= teachers_space_path(space) %>" class="icon more">Ver mais</a>
+        </div><!-- end followship -->
+      <% else %>
+        <div class="box_notice">Nenhum professor
+          <%= link_to("Cadastre um professor", admin_members_space_path(space), :class => "icon more") if current_user.can_manage?(space) %>
+        </div>
+      <% end %>
+    </li>
+
+
+    <li>
+      <% @month_events = month_events(space.id, Time.now.month) %>
+
+      <span class="call"><span>Eventos</span></span>
+      <%= calendar(:year => Time.now.year, :month => Time.now.month) do |d|
+        if has_event_in?(@month_events, d.mday)
+          link_to d.mday, day_space_events_path(space) + "/?day="+ d.mday.to_s, {:class => "hasEvent"}
+        else
+          d.mday
+        end
+      end	%>
+    <%= link_to "Ver mais", space_events_path(space), :class => "icon more" %>
+    <% if can? :manage, space or current_user.tutor? space %>
+      | <%= link_to "Criar evento", new_space_event_path(space), :class => "icon more" %>
+    <% end %>
+  </li>
+
+
+</ul><!-- end sortable -->
+
+</div><!-- end sidebar -->
