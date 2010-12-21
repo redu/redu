@@ -14,8 +14,9 @@ class Document < ActiveRecord::Base
 
   def accepted_content_type
     self.define_content_type
-    unless scribdable?
-      self.errors.add(:original, "Formato inválido")
+    # self.scribdable? retorna falso se o doc. já foi enviado p/ conversão
+    if self.ipaper_id.blank? || self.scribdable?
+      self.errors.add(:attachment, "Formato inválido")
       return false
     else
       return true
