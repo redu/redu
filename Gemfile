@@ -27,6 +27,9 @@ gem "haml"
 gem "cancan", "1.4.1"
 gem "rscribd"
 gem "scribd_fu", :git => "git://github.com/guiocavalcanti/scribd_fu.git"
+gem "ghazel-daemons"
+gem "delayed_job", :git => "git://github.com/collectiveidea/delayed_job.git",
+  :branch => "v2.0"
 
 group :development do
   gem "mongrel"
@@ -34,12 +37,10 @@ group :development do
 end
 
 group :production do
-  gem "daemons"
   gem "newrelic_rpm", "2.13.1"
 end
 
-group :production do
-  gem "daemons"
+group :staging do
 end
 
 group :test do

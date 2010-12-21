@@ -1,4 +1,12 @@
 GIT
+  remote: git://github.com/collectiveidea/delayed_job.git
+  revision: 2d6170e539cf6523d810f396c6baddc9da0dc120
+  branch: v2.0
+  specs:
+    delayed_job (2.0.4)
+      daemons
+
+GIT
   remote: git://github.com/guiocavalcanti/scribd_fu.git
   revision: c235f07b47080661df5de109c1a7a35b90e9f88a
   specs:
@@ -33,6 +41,7 @@ GEM
     desert (0.5.4)
     fastthread (1.0.7)
     gem_plugin (0.2.3)
+    ghazel-daemons (1.0.13)
     haml (3.0.25)
     hpricot (0.8.3)
     htmlentities (4.2.1)
@@ -84,8 +93,9 @@ DEPENDENCIES
   adzap-ar_mailer
   authlogic
   cancan (= 1.4.1)
-  daemons
+  delayed_job!
   desert
+  ghazel-daemons
   haml
   hpricot
   htmlentities (= 4.2.1)
