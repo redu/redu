@@ -298,6 +298,11 @@ blockquote {/*necessário para o tinymce*/
   color: gray;
 }
 
+.upper {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
 .calls span.call {
   font-size: .9em;
   text-transform: uppercase;
@@ -2227,12 +2232,27 @@ div.curriculum h6 {
   font-size: .9em;
   text-transform: uppercase;
   font-weight: bold;
-  color: #FF8000;
   margin: 25px 0 10px 0;
   display: block;
   color: white;
   position: relative;
+  padding-bottom: 10px;
 
+}
+
+.sidebar span.call span {
+  padding: 5px;
+  display: block;
+  background: #96B8E2;
+}
+
+.sidebar span.call div.nipple {
+  position: absolute;
+  top: 23px;
+  left: 20px;
+  background: #96B8E2 url(../images/nipple.png) no-repeat;
+  width: 11px;
+  height: 5px;
 }
 
 /* dropdown's trigger */
@@ -2278,15 +2298,6 @@ div.curriculum h6 {
   color: gray;
 }
 
-.sidebar span.call span {
-  padding: 5px;
-  display: block;
-  background: #96B8E2;
-  -moz-border-radius-topleft: 5px;
-  -moz-border-radius-topright: 5px;
-  border-top-left-radius: 5px 5px;
-  border-top-right-radius: 5px 5px;
-}
 
 .sidebar span.call:hover {
   cursor: move;
@@ -2510,6 +2521,81 @@ div.curriculum h6 {
 #environment div.first-page span.call {
 }
 
+#environment .start-page h3 {
+  font-size: 1.1em;
+}
+
+#environment .start-page hr {
+  clear: both;
+  border: none;
+  border-bottom: 1px solid #EFF0F0;
+  margin-bottom: 20px;
+}
+
+#environment .start-page .courses-index {
+  margin-bottom: 20px;
+}
+
+#environment .start-page .courses-index ul {
+  margin-bottom: 20px;
+
+}
+
+#environment .start-page .courses-index ul li {
+  background: #E8F5FB url(../images/fat-arrow.gif) no-repeat 280px center;
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  color: #778899;
+  display: block;
+  float: left;
+  height: 53px;
+  margin: 0 10px 10px 0;
+  width: 270px;
+  padding: 10px 30px 10px 10px;
+  position: relative;
+
+}
+
+#environment .start-page .courses-index ul li:hover {
+  background-color: #BEE5FC;
+}
+
+#environment .start-page .courses-index ul li a.name {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 1em;
+  font-weight: bold;
+}
+
+#environment .start-page .courses-index ul li .audience {
+  display: block;
+  font-size: .8em;
+}
+
+#environment .start-page .courses-index ul li .edit {
+  font-size: .8em;
+  position: absolute;
+  right: 30px;
+  bottom: 10px;
+}
+
+#environment .start-page .sidebar .info .quiet {
+  font-size: .9em;
+  font-style: italic;
+}
+
+#environment .start-page h3.news-title {
+  margin-top: 0;
+}
+#environment .start-page h3.news-title a {
+  font-size: 1.2em;
+}
+
+#environment .start-page .headline {
+  line-height: 120%;
+  font-size: .9em;
+  font-style: italic;
+}
 
 div.progress-bar {
   display: block;

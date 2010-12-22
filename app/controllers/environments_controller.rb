@@ -26,7 +26,14 @@ class EnvironmentsController < BaseController
   # GET /environments/1
   # GET /environments/1.xml
   def show
-    @courses = @environment.courses
+    paginating_params = {
+      :page => params[:page],
+      :include => :audiences,
+      :per_page => AppConfig.items_per_page
+    }
+
+    @courses = @environment.courses.published.paginate(paginating_params)
+    @featured = @environment.bulletins.find(:all, :limit => 3, :order => "created_at DESC")
 
     respond_to do |format|
       format.html # show.html.erb

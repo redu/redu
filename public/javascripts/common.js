@@ -28,6 +28,8 @@ $(document).ready(function(){
       defaultPosition: "top",
     });
 
+      $(".sidebar span.call").append("<div class=\"nipple\"></div>")
+
     // Paginações em AJAX
     $(".pagination a").live("click",
       function() {

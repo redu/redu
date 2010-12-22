@@ -27,7 +27,9 @@
     </li>
 
     <li class="clearfix">
-      <span class="call"><span>Membros (<%= space.users.size %>)</span></span>
+      <span class="call">
+        <span>Membros (<%= space.users.size %>)</span>
+      </span>
       <div class="followship box clearfix">
         <ul class="clearfix">
           <%= render :partial => 'spaces/member_short', :collection => space.users, :as => :member %>
