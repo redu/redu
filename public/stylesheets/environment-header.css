@@ -43,7 +43,7 @@
 }
 
 #create-header .edit {
-  font-size: .8em;
+  font-size: .7em;
   font-weight: bold;
   float: right;
   margin: 5px 0;
@@ -58,7 +58,6 @@
 }
 
 #create-header .dropdown {
-  padding: 5px 0;
 }
 
 #create-header .name,
@@ -67,13 +66,19 @@
   width: 770px;
 }
 
+#create-header .course {
+  padding: 5px 0;
+}
+
+#create-header .name {
+  padding: 5px 0 0 0;
+}
+
 #create-header .name h3 {
   float: left;
   margin: 10px 0;
 }
 
-#create-header .course {
-}
 
 #create-header .dropdown ul {
   display: block;

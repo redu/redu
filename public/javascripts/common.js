@@ -22,6 +22,8 @@ function limitChars(textclass, limit, infodiv){
 }
 
 $(document).ready(function(){
+    $("a, input[type=submit], button", ".cupertino").button();
+    $(".buttonset").buttonset();
     $(".tooltipable").tipTip({
       defaultPosition: "top",
     });

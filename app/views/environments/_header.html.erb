@@ -33,8 +33,8 @@
      <div class="dropdown name">
        <h3><%= link_to environment.name, environment_path(environment) %><%= image_tag "btn-tit-environment.png", :class => "current" %></h3>
         <% if can? :manage, environment %>
-        <span class="edit">
-         <%= link_to "Gerenciar", edit_environment_path(environment) %>
+        <span class="edit cupertino">
+          <%= link_to "Gerenciar", edit_environment_path(environment) %>
         </span>
         <% end %>
        <div class="dropdown-wrapper clearfix" style="display: none;">
@@ -55,13 +55,13 @@
              <%= image_tag "btn-subtit-environment.png", :class => 'current' %>
            </h4>
            <% if can? :manage, course %>
-             <span class="edit">
+             <span class="edit cupertino">
                <%= link_to "Gerenciar curso",
                  edit_environment_course_path(environment, course) %>
              </span>
            <% end %>
            <% if can? :manage, space %>
-             <span class="edit">
+             <span class="edit cupertino">
                <%= link_to "Gerenciar espaço", edit_space_path(space) %>
              </span>
            <% end %>
@@ -91,7 +91,7 @@
              </div>
            </div>
            <% if can? :manage, course %>
-             <span class="edit">
+             <span class="edit cupertino">
                <%= link_to "Gerenciar curso",
                  edit_environment_course_path(environment, course) %>
              </span>
