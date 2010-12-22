@@ -1,0 +1,23 @@
+<ul class="menu">
+  <li>
+    <%= link_to_unless_current "Inicial", environment_path(@environment) do 
+      link_to "Inicial", environment_path(@environment),
+        :class => 'selected'
+    end
+  %>
+</li>
+<li>
+<%= link_to_unless_current "Cursos", environment_courses_path(@environment) do 
+  link_to "Cursos", environment_courses_path(@environment),
+    :class => 'selected'
+end
+%>
+  </li>
+  <li>
+    <%= link_to_unless_current "Notícias", environment_bulletins_path(@environment) do 
+      link_to "Notícias", environment_bulletins_path(@environment),
+        :class => 'selected'
+    end
+  %>
+</li>
+</ul>
