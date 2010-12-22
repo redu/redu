@@ -154,7 +154,6 @@ class LecturesController < BaseController
       end
     when "3"
       @lecture = Lecture.find(session[:lecture_id])
-      @lecture.enable_validation_group :step3
       render "step3" and return
     else # 1
       if session[:lecture_id]

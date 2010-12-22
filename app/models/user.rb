@@ -677,12 +677,6 @@ class User < ActiveRecord::Base
     @favorites = Favorite.find(:all, :conditions => ["user_id = ?", self.id], :order => 'created_at DESC')
   end
 
-  def has_credits_for_lecture(lecture)
-    # @lecture_price = LecturePrice.find(:first, :conditions => ['lecture_id = ?', lecture.id]).price.to_f
-    @user_credit = Credit.total(self.id).to_f - Acquisition.total(self.id).to_f
-    (@user_credit >= lecture.price)
-  end
-
   def update_last_seen_at
     User.update_all ['sb_last_seen_at = ?', Time.now.utc], ['id = ?', self.id]
     self.sb_last_seen_at = Time.now.utc

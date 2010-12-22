@@ -54,7 +54,6 @@ class Lecture < ActiveRecord::Base
   validation_group :step1,
     :fields => [:name, :description, :simple_category, :lectureable_type]
   validation_group :step2, :fields => [:lectureable]
-  validation_group :step3, :fields => [:price]
 
   def permalink
     APP_URL + "/lectures/"+ self.id.to_s+"-"+self.name.parameterize

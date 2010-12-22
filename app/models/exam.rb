@@ -43,7 +43,6 @@ class Exam < ActiveRecord::Base
 
   validation_group :general, :fields => [:name, :description]
   validation_group :editor, :fields => [:questions]
-  validation_group :publication, :fields => [:price]
 
   def get_question(qid)
     if qid
