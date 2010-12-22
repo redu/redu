@@ -1,6 +1,5 @@
+<%= javascript_include_tag "jquery-ui-1.8.7.custom.min.js" %>
 <%= javascript_include_tag "jquery.tipTip.minified.js" %>
-<%= stylesheet_link_tag "tipTip.css" %>
-<%= javascript_include_tag :ckeditor %>
 
 <% if action_name == 'site_index' %>
   <%= stylesheet_link_tag 'jcarousel' %>
@@ -47,10 +46,7 @@
 <% end %>
 
 <% if controller_name == 'events' %>
-  <%= javascript_include_tag 'jquery-1.4.2.min.js'  %>	
-  <%= javascript_include_tag 'jquery-ui-1.8.4.custom.min.js'  %>
   <%= javascript_include_tag 'jquery-ui-timepicker-addon.min'  %>
-  <%= stylesheet_link_tag 'jquery-ui-1.8.4.custom.css' %>		
   <%= javascript_include_tag 'jquery.ui.datepicker-pt-BR.js' %>
 <% end %>
 

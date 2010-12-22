@@ -2617,11 +2617,6 @@ ul.sub-groups > li {
   float: right;
 }
 
-#subject-header h3.call a.edit {
-  font-size: .7em;
-  color: #FF8000
-}
-
 /* @footer */
 #footer {
   background-color: #D1E0EF;
