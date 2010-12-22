@@ -1,0 +1,13 @@
+<ul>
+  <% upcoming_sidebar.each do |event| %>
+    <li>
+      <%= event.start_time.day %>
+      <%= event.start_time.strftime("%b") %> -
+      <% if event.end_time %>
+        <%= event.end_time.day %>
+        <%= event.start_time.strftime("%b") %>
+      <% end %>
+      <%= link_to event.name, polymorphic_path([event.eventable, event]) %>
+    </li>
+  <% end %>
+</ul>
