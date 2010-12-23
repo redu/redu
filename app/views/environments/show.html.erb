@@ -23,15 +23,20 @@
           </ul>
           <%= link_to "Ver mais", environment_courses_path(@environment), :class => "small more grid_2 push_9 alpha omega", :style => "text-align: right;" %>
         <% else %>
-          <div class="box_notice">
-            Esta instituição ainda não possui cursos publicados.
+          <div class="box-info">
+            <div class="pretty-text">
+              Esta instituição ainda não possui cursos publicados. <br/>
+              <% if can? :manage, @environment %>
+                Para ver os cursos não publicados, <%= link_to "clique aqui", environment_courses_path(@environment, :published => :false) %>
+              <% end %>
+            </div>
           </div>
         <% end %>
       </div>
       <hr/>
+      <h3>Notícias</h3>
       <% unless @featured.empty? %>
         <% @featured.each do |bulletin| %>
-          <h3>Notícias</h3>
           <h3 class="news-title"><%= link_to bulletin.title, environment_bulletin_path(@environment, bulletin) %></h3>
           <div class="headline quiet">
             <%= bulletin.tagline %>
@@ -43,10 +48,17 @@
             </div>
           <% end %>
         <% end %>
+        <%= link_to "Ver mais", environment_bulletins_path(@environment), :class => "small more grid_2 push_9 alpha omega", :style => "text-align: right;" %>
       <% else %>
-        <div class="box_notice">Nenhuma notícia criada até agora.</div>
+        <div class="box-info">
+          <div class="pretty-text">
+            Nenhuma notícia criada até agora.
+            <% if can? :manage, @environment %>
+              <%= link_to "Crie uma.", new_environment_bulletin_path(@environment) %>
+            <% end %>
+          </div>
+        </div>
       <% end %>
-      <%= link_to "Ver mais", environment_bulletins_path(@environment), :class => "small more grid_2 push_9 alpha omega", :style => "text-align: right;" %>
       <hr/>
     </div>
     <div class="grid_4 omega sidebar">

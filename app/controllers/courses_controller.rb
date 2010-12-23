@@ -72,15 +72,24 @@ class CoursesController < BaseController
   end
 
   def index
+    cond = {}
+    if !@environment.nil? && can?(:manage, @environment)
+      cond[:published] = params.fetch(:published, true)
+    else
+      cond[:published] = true
+    end
+
     paginating_params = {
+      :conditions => cond,
       :page => params[:page],
-      :per_page => 12
+      :order => (params[:sort]) ? params[:sort] + ' DESC' : 'created_at DESC',
+      :per_page => AppConfig.items_per_page
     }
 
     if params[:search] # search
-      @courses = Course.published.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
+      @courses = Course.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
     else
-      @courses = Course.published.paginate(paginating_params)
+      @courses = Course.paginate(paginating_params)
     end
 
     respond_to do |format|
