@@ -2,12 +2,12 @@ environments:
   production:
     copy_exclude:
       - .git
-    branch: refactor
+    branch: production
     migrate: false
     migration_command: rake db:migrate --trace
   staging:
     copy_exclude:
       - .git
-    branch: refactor
+    branch: master
     migrate: false
     migration_command: rake db:migrate --trace
