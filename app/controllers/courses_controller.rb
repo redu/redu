@@ -84,12 +84,14 @@ class CoursesController < BaseController
     else
       @courses = Course.published.paginate(paginating_params)
     end
+
     respond_to do |format|
       format.html do
-        render :layout => 'application'
+        unless params[:environment_id]
+          render :layout => 'application'
+        end
       end
-      format.js  do
-      end
+      format.js
     end
   end
 

@@ -28,6 +28,7 @@ class EnvironmentsController < BaseController
   def show
     paginating_params = {
       :page => params[:page],
+      :limit => 4,
       :include => :audiences,
       :per_page => AppConfig.items_per_page
     }

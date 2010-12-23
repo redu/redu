@@ -2,6 +2,7 @@
   <%= render :partial => "spaces/sidebar", :locals => {:space => @bulletinable} %>
 <% end %>
 
+<% if @bulletinable.class.to_s.eql?('Space') %>
 <div class="main grid_12 omega">
   <% if @bulletins && @bulletins.size > 0 %>
 
@@ -20,3 +21,30 @@
     <%= will_paginate  @bulletins %>
   </div>
 </div>
+<% else %>
+  <div class="grid_16 fake-tabs start-page">
+    <%= render :partial => "environments/taskbar" %>
+    <div class="panel clearfix">
+      <% if @bulletins && @bulletins.size > 0 %>
+
+        <%= link_to "Crie uma nova notícia.", new_polymorphic_path([@bulletinable, Bulletin.new]), :class => "button"%>
+        <hr/>
+        <ul class="bulletins">
+          <%= render :partial => 'bulletins/list', :collection => @bulletins, :as => :bulletin, :locals => {
+            :is_index => true } %>
+        </ul>
+        <hr/>
+        <%= link_to "Crie uma nova notícia.", new_polymorphic_path([@bulletinable, Bulletin.new]), :class => "button"%>
+
+      <% else %>
+        Nenhuma notícia foi enviada ainda.
+        <%= link_to 'Envie uma agora!', new_polymorphic_path([@bulletinable, Bulletin.new]) %>
+      <% end %>
+
+      <div id="pagination" align="center" class="pagination">
+        <%= will_paginate  @bulletins %>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>
