@@ -46,11 +46,6 @@
   <%= javascript_include_tag 'swfobject'%>
 <% end %>
 
-<% if controller_name == 'events' %>
-  <%= javascript_include_tag 'jquery-ui-timepicker-addon.min'  %>
-  <%= javascript_include_tag 'jquery.ui.datepicker-pt-BR.js' %>
-<% end %>
-
 <% if controller_name == 'spaces' || controller_name == 'subjects'|| controller_name == 'events' || controller_name == 'bulletins' %>
   <%= stylesheet_link_tag 'calendar/red/style' %>
 <% end %>

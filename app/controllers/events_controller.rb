@@ -89,12 +89,6 @@ class EventsController < BaseController
  end
 
   def create
-    # Passando para o formato do banco
-
-    params[:event][:start_time] = Time.zone.parse(params[:event][:start_time].gsub('/', '-'))
-    params[:event][:end_time] = Time.zone.parse(params[:event][:end_time].gsub('/', '-'))
-
-    #FIXME o Event.new está sendo chamado duas vezes, uma vez pelo cancan e o outro aqui
     @event = Event.new(params[:event])
 
     @event.owner = current_user
@@ -120,10 +114,6 @@ class EventsController < BaseController
   end
 
   def update
-    # Passando para o formato do banco
-    params[:event][:start_time] = Time.zone.parse(params[:event][:start_time].gsub('/', '-'))
-    params[:event][:end_time] = Time.zone.parse(params[:event][:end_time].gsub('/', '-'))
-
     @event = Event.find(params[:id])
     respond_to do |format|
       if @event.update_attributes(params[:event])
