@@ -330,9 +330,9 @@ class SpacesController < BaseController
                                   :space => @space,
                                   :status => "approved",
                                   :role_id => Role[:teacher].id})
-      Forum.create(:name => "Fórum do disciplina #{@space.name}",
-                   :description => "Este fórum pertence ao disciplina #{@space.name}. " + \
-                                   "Apenas os participantes deste disciplina podem " + \
+      Forum.create(:name => "Fórum da disciplina #{@space.name}",
+                   :description => "Este fórum pertence a disciplina #{@space.name}. " + \
+                                   "Apenas os participantes desta disciplina podem " + \
                                    "visualizá-lo. Troque ideias, participe!",
                     :space_id => @space.id)
 
@@ -357,7 +357,7 @@ class SpacesController < BaseController
         if params[:space][:subscription_type].eql? "1" # Entrada de membros passou a ser livre, aprovar todos os membros pendentes
           UserSpaceAssociation.update_all("status = 'approved'", ["space_id = ? AND status = 'pending'", @space.id])
         end
-        flash[:notice] = 'A disciplina foi atualizado com sucesso!'
+        flash[:notice] = 'A disciplina foi atualizada com sucesso!'
         format.html { redirect_to(@space) }
         format.xml  { head :ok }
       else
