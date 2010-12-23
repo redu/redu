@@ -7,7 +7,7 @@
 
   <% random_number = get_random_number%>
   <%= f.label "Descrição:" %>
-  <%= f.text_area :description, :size => "50x3", :class => "desc-#{random_number} mceEditor" %>
+  <%= f.text_area :description, :size => "50x3", :class => "desc-#{random_number}" %>
   <%= render :partial => 'shared/limit_char_field', :locals => { :class_textarea => "desc-#{random_number}" }%>
   <%= error_for :exam, :description %>
 

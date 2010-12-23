@@ -27,8 +27,6 @@ class EventsController < BaseController
     extend ActionView::Helpers::SanitizeHelper::ClassMethods
   end
 
-  uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit, :create, :update])
-
   def ical
     @calendar = Icalendar::Calendar.new
     @calendar.custom_property('x-wr-caldesc',"#{AppConfig.community_name} #{:events.l}")

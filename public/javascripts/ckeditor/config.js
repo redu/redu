@@ -12,7 +12,7 @@ CKEDITOR.editorConfig = function( config )
 
   //config.ContextMenu = ['Generic','Anchor','Flash','Select','Textarea','Checkbox','Radio','TextField','HiddenField','ImageButton','Button','BulletedList','NumberedList','Table','Form'] ;
 
-  config.height = '400px';
+  config.height = '200px';
   config.width = '600px';
 
   //config.resize_enabled = false;

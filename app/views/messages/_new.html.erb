@@ -1,67 +1,61 @@
-<script type="text/javascript">
-	function reloadMce(){
-		<%=   raw_tiny_mce_init %>
-	}
-</script>
-        	<h3>
-            	NOVA MENSAGEM
-        	</h3>
-				<%# error_messages_for :message %>
-				
-				<%#render :partial => 'form', :locals => {:message => @message, :user => @user} %>
-		
-		<% form_remote_for @message, :url => user_messages_path(@user), :html => {:class => "MainForm"}, :loading => "jQuery('#msg_spinner').show()" do |f| %>
-	<div id="errors"></div>
-	<%= f.error_messages %>
-	
-	<% if @message.reply_to %>
-		<%= f.hidden_field :to %>
-	<% else %>
-		<p>
-			<label for='message_to'>
-				<%= :to.l %>
-				<em>
-					<%= "(" + :type_a_username.l + ")" %>
-				</em>
-			</label>
-		</p>
-		<%= text_field_tag 'message[to]', @message.to, {:autocomplete => "off", :size => 35, :id => "message_to"} %>
-		<div class='auto_complete' id='message_to_auto_complete'>
-			<%# auto_complete_field 'message_to', {:url => auto_complete_for_username_user_messages_path(@user), :tokens=>','} %>	
-		</div>
-		
-		<!--
-		 <div class="add-recipient-outter">
-                         <a href="#" onclick="$('div.add-recipient-inner').slideToggle(); return false;">grupos</a>
-                         <div class="add-recipient-inner hoverdiv">
-                         	<ul>
-                         		<li> <%= link_to_function "Alunos - Maurício de nassau", "false"%></li>
-														<li> <%= link_to_function "Professores - Maurício de nassau", "false"%></li>
-														<li> <%= link_to_function "Alunos - Empty", "false"%></li>
-														<li> <%= link_to_function "Professores - Empty", "false"%></li>
-                         	</ul>
-							 
-                  </div>
-      </div>	 
-			-->
-		
-		
-	<% end %>
-	
-		<p>
-			<label for='message_subject'>
-				<%= :subject_of_message.l + ":" %>
-			</label>
-		</p>
-		<%= f.text_field :subject %>
-		<p>
-			<label for='message_body'>
-				<%= :message.l + ":" %>
-			</label>
-		</p>
-		<%= f.text_area :body, :size => "70x6", :class => "mceEditor" %>	
-		<p>
-			<%= submit_tag :send.l %><%= image_tag "spinner.gif", :id => "msg_spinner", :style => "display: none"%>
-		</p>
-	
+<h3>
+  NOVA MENSAGEM
+</h3>
+
+<%#render :partial => 'form', :locals => {:message => @message, :user => @user} %>
+
+<% form_remote_for @message, :url => user_messages_path(@user), :html => {:class => "MainForm"}, :loading => "jQuery('#msg_spinner').show()" do |f| %>
+  <div id="errors"></div>
+  <%= f.error_messages %>
+
+  <% if @message.reply_to %>
+    <%= f.hidden_field :to %>
+  <% else %>
+    <p>
+      <label for='message_to'>
+        <%= :to.l %>
+        <em>
+          <%= "(" + :type_a_username.l + ")" %>
+        </em>
+      </label>
+    </p>
+    <%= text_field_tag 'message[to]', @message.to, {:autocomplete => "off", :size => 35, :id => "message_to"} %>
+    <div class='auto_complete' id='message_to_auto_complete'>
+      <%# auto_complete_field 'message_to', {:url => auto_complete_for_username_user_messages_path(@user), :tokens=>','} %>	
+    </div>
+
+    <!--
+    <div class="add-recipient-outter">
+      <a href="#" onclick="$('div.add-recipient-inner').slideToggle(); return false;">grupos</a>
+      <div class="add-recipient-inner hoverdiv">
+        <ul>
+          <li> <%= link_to_function "Alunos - Maurício de nassau", "false"%></li>
+          <li> <%= link_to_function "Professores - Maurício de nassau", "false"%></li>
+          <li> <%= link_to_function "Alunos - Empty", "false"%></li>
+          <li> <%= link_to_function "Professores - Empty", "false"%></li>
+        </ul>
+
+      </div>
+    </div>	 
+    -->
+
+
+  <% end %>
+
+  <p>
+    <label for='message_subject'>
+      <%= :subject_of_message.l + ":" %>
+    </label>
+  </p>
+  <%= f.text_field :subject %>
+  <p>
+    <label for='message_body'>
+      <%= :message.l + ":" %>
+    </label>
+  </p>
+  <%= f.text_area :body, :size => "73x10" %>	
+  <p>
+    <%= submit_tag :send.l %><%= image_tag "spinner.gif", :id => "msg_spinner", :style => "display: none"%>
+  </p>
+
 <% end %>

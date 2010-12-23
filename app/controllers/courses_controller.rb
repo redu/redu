@@ -3,8 +3,6 @@ class CoursesController < BaseController
   load_resource :environment
   load_and_authorize_resource :course, :through => :environment, :except => [:index]
 
-  uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit, :create, :update])
-
   rescue_from CanCan::AccessDenied do |exception|
     raise if cannot? :preview, @course
 

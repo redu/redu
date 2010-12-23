@@ -8,9 +8,6 @@ class LecturesController < BaseController
   load_and_authorize_resource :lecture,
     :except => [:new, :create, :cancel, :unpublished_preview]
 
-  uses_tiny_mce(:options => AppConfig.advanced_mce_options,
-                :only => [:new, :edit, :update, :create])
-
   # adiciona um objeto embarcado (ex: scribd)
   def embed_content
     @external_object = ExternalObject.new( params[:external_object] )

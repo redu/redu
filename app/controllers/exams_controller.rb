@@ -5,8 +5,6 @@ class ExamsController < BaseController
   before_filter :find_subject_space_course_environment
   after_filter :create_activity, :only => [:create, :results]
 
-  uses_tiny_mce(:options => AppConfig.question_mce_options, :only => [:new, :edit, :create, :update])
-
   def publish_score
     ExamUser.update(params[:exam_user_id], :public => true)
     respond_to do |format|

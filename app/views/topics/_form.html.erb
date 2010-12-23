@@ -27,7 +27,7 @@
 
 		<% if form_new %>
 		  <%= f.label :body, :body_text.l %>
-		  <%= f.text_area :body, :size => "40x5", :class => "mceEditor" %>
+		  <%= f.cktext_area :body %>
 		<% end %>
 
 		<% if form_new %>

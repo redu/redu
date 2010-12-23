@@ -2,9 +2,6 @@ class QuestionsController < BaseController
 
   before_filter :login_required, :except => [:index]
 
-  uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit, :create, :update])
-
-  #question_mce_options
   def add
     @exam_type = params[:exam_type]
     @questions = Question.paginate(:all,      :conditions => ['public = ?', true],

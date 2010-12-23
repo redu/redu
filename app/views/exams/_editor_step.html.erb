@@ -24,11 +24,6 @@ $(document).ready(function(){
     })
 })
 
-// Recarrega tiny_mce
-function reload_tinyMCE(){
-  <%= raw_tiny_mce_init %>
-}
-
 // Adiciona numeração das questoes
 function reload_questions_index(){
   $("fieldset.questions:not(:hidden) > legend").each(function(i){

@@ -1,8 +1,6 @@
 require "RMagick"
 
 class UsersController < BaseController
-  uses_tiny_mce(:options => AppConfig.default_mce_options.merge({:editor_selector => "rich_text_editor"}),
-                :only => [:create, :update, :edit, :create])
 
   after_filter :create_activity, :only => [:update]
   load_and_authorize_resource :except => [:forgot_password,

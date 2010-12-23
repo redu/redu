@@ -9,8 +9,6 @@ class SubjectsController < BaseController
   load_and_authorize_resource :space, :through => :course
   load_and_authorize_resource :subject, :through => :space, :except => [:new, :create]
 
-  uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit, :create, :update])
-
   rescue_from CanCan::AccessDenied do |exception|
     flash[:notice] = "Você não tem acesso a essa página"
     redirect_to preview_environment_course_path(@environment, @course)

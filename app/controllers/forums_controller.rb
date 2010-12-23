@@ -4,10 +4,6 @@ class ForumsController < BaseController
 
   helper :application
 
-  uses_tiny_mce do
-    AppConfig.default_mce_options
-  end
-
   def show
     @forum = @space.forum
     respond_to do |format|
