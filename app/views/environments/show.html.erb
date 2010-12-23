@@ -5,7 +5,7 @@
       <h3>Cursos</h3>
       <div class="courses-index clearfix">
         <% unless @courses.empty? %>
-          <ul>
+          <ul class="clearfix">
             <% @courses.each do |course| %>
               <li>
                 <%= link_to course.name, environment_course_path(@environment, course), :class => "name" %>
@@ -63,7 +63,7 @@
     </div>
     <div class="grid_4 omega sidebar">
       <span class="call"><span>Membros</span></span>
-      <div class="">
+      <div class="followshio clearfix">
         <ul>
           <%= render :partial => 'spaces/member_short', :collection => @environment.users, :as => :member %>
         </ul>
