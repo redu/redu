@@ -6,10 +6,6 @@
        $("#course_path").val($(this).slug());    
      })
 
-    <% if edit %>
-    $("input[type=text][name*=color]").val("<%= @course.color if @course %>")
-    $("input[type=text][name*=color]").css('background-color' , "#<%= @course.color %>")
-    <% end %>
   })
 </script>
 
@@ -42,10 +38,5 @@
 <% field_set_tag "Quem pode participar do curso?" do %>
   <%= f.radio_button :subscription_type, "1", :checked => true %> Todos
   <%= f.radio_button :subscription_type, "2" %> Moderação 
-<% end %>
-<% field_set_tag "Personalização" do %>
-  <%= f.label :color, "Cor" %>
-  <%=  %>
-  <%= f.select :color, options_for_select(color_picker_colors, :selected => @course.nil? ? nil : @course.color )%>
 <% end %>
 

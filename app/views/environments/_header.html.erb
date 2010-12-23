@@ -23,7 +23,7 @@
     })
  </script>
  <div id="environment-header" class="container_16 clearfix">
-   <div class="container_16" id="create-header" style="background-color: <%= course && !course.new_record? ? "#" + course.color : "inherited" %>">
+   <div class="container_16" id="create-header" style="background-color: <%= environment && !environment.new_record? ? "#" + environment.color : "inherited" %>">
      <div class="frame" id="university-logo">
        <div class="inner-frame">
          <%= image_tag environment.avatar.url(:thumb)  %>

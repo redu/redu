@@ -1,3 +1,10 @@
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("input[type=text][name*=color]").val("<%= @environment.color if @environment %>")
+    $("input[type=text][name*=color]").css('background-color' , "#<%= @environment.color %>")
+  })
+</script>
+<%= apply_color_picker_to "#environment_color" %>
 <div class="grid_16">
   <div class="fake-tabs grid_16 alpha omega">
     <%= render :partial => 'environments/admin_taskbar' %>
@@ -17,6 +24,8 @@
         <% field_set_tag "Aparência" do %>
           <%= f.label :avatar, "Imagem" %>
           <%= f.file_field :avatar %>
+          <%= f.label :color, "Cor" %>
+          <%= f.select :color, options_for_select(color_picker_colors, :selected => @environment.nil? ? nil : @environment.color )%>
           <%= f.submit "Alterar!" %>
         <% end %>
       <% end %>
