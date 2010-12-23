@@ -55,14 +55,9 @@
 
 
     <li>
-
       <span class="call"><span>Eventos</span></span>
-      <%= render :partial => "events/upcoming_sidebar", :object => @space.events.approved.upcoming.all(:limit => 5, :order => "start_time ASC") %>
-      <%= link_to "Ver mais", space_events_path(space), :class => "icon more" %>
-    <% if can? :manage, space or current_user.tutor? space %>
-      | <%= link_to "Criar evento", new_space_event_path(space), :class => "icon more" %>
-    <% end %>
-  </li>
+        <%= render :partial => "events/upcoming_sidebar", :object => @space.events.approved.upcoming.all(:limit => 5, :order => "start_time ASC") %>
+    </li>
 
 
 </ul><!-- end sortable -->

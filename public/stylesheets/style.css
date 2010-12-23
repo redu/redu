@@ -2236,7 +2236,7 @@ div.curriculum h6 {
   display: block;
   color: white;
   position: relative;
-  padding-bottom: 10px;
+  padding-bottom: 5px;
 
 }
 
@@ -2396,6 +2396,22 @@ div.curriculum h6 {
 
 #environment .sidebar ul.sub-groups > li > a.closed {
   background: url("../images/arrow-right.png") no-repeat 1px center;
+}
+
+#environment .sidebar  .upcoming-events-preview li {
+  padding: 5px  0 5px 0;
+  border-bottom: 1px solid #EFF0F0;
+}
+
+#environment .sidebar  .upcoming-events-preview .date {
+  display: block;
+  margin-bottom: 5px;
+  color: #B2B2B2;
+}
+
+#environment .sidebar  .upcoming-events-preview li a {
+  font-size: .9em;
+  margin-left: 5px;
 }
 
 #environment .sidebar ul.sub-groups > li > a.opened {
