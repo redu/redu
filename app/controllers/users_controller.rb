@@ -26,13 +26,14 @@ class UsersController < BaseController
 
     if params[:search] # search
       @courses = @user.courses.name_like_all(params[:search].to_s.split).ascend_by_name
-      @courses = @courses.published if can? :manage, @user
+      @courses = @courses.published if cannot? :manage, @user
       @courses = @courses.paginate(paginating_params)
     else
       @courses = @user.courses
-      @courses = @courses.published if can? :manage, @user
+      @courses = @courses.published if cannot? :manage, @user
       @courses = @courses.paginate(paginating_params)
     end
+
     respond_to do |format|
       format.js do
         render :update do |page|
