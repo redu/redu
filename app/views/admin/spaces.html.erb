@@ -28,7 +28,7 @@ function selectNone(){
         <%= render :partial => "admin/taskbar" %>
         <div class="panel">
 
-					<h3>Mostrando espaços mais recentes</h3>
+					<h3>Mostrando disciplinas mais recentes</h3>
 
     <div id="all_list">
 
@@ -38,7 +38,7 @@ function selectNone(){
 		 <% form_tag :action => :moderate_spaces do %>
 			<table style="width: 100%; margin: 15px 10px 20px 10px;" class="common">
 				<tr>
-					<th></th><th>#ID</th><th>Rede</th><th>Dono</th><th>Data</th>
+					<th></th><th>#ID</th><th>Disciplina</th><th>Dono</th><th>Data</th>
 				</tr>
 		 	<% for space in @spaces %>
 				<tr>
@@ -49,7 +49,7 @@ function selectNone(){
                                                 <% if space.owner %>
                                                   <td><%= space.owner.display_name %> </td>
                                                 <% else %>
-                                                  <td> Rede sem dono </td>
+                                                  <td> Disciplina sem dono </td>
                                                 <% end %>
 						<td><%= time_ago_in_words(space.created_at) %> </td>
 					</tr>
@@ -59,7 +59,7 @@ function selectNone(){
 			<%= submit_tag "Remover" %>
 		 <% end %>
 		<% else %>
- 			Não há espaços públicos ainda.
+ 			Não há disciplinas públicas ainda.
 		<% end %>
 
     </div> <!-- fim da listagem -->

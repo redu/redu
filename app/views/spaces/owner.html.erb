@@ -11,11 +11,11 @@
     </div>
     <div id="all_list">
 
-		<% if @spaces && @spaces.length > 0 %>
- 			<%= render :partial => 'spaces/item', :collection => @spaces, :as => :space %>
- 		<% else %>
- 			Não há espaços cadastrados ainda. <%= link_to 'Crie um agora!', :action => 'new' %>
-		<% end %>
+      <% if @spaces && @spaces.length > 0 %>
+        <%= render :partial => 'spaces/item', :collection => @spaces, :as => :space %>
+      <% else %>
+        Não há disciplinas cadastradas ainda. <%= link_to 'Crie um agora!', :action => 'new' %>
+      <% end %>
 
     </div> <!-- fim da listagem -->
 

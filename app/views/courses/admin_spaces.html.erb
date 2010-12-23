@@ -2,7 +2,7 @@
   <div class="fake-tabs grid_16 alpha omega">
     <%= render :partial => "courses/admin_taskbar" %>
     <div class="panel">
-      <h1>Espaços</h1>
+      <h1>Disciplinas</h1>
 
       <% if @spaces && @spaces.size > 0 %>
         <table class="common">
@@ -20,12 +20,12 @@
           <% end %>
         </table>
 
-        <%= link_to 'Criar Espaço', new_space_path(:course_id => @course.id), :class => 'button' %>
+        <%= link_to 'Criar Disciplina', new_space_path(:course_id => @course.id), :class => 'button' %>
       <% else %>
         <div class="box_notice">
-          Não existe nenhum espaço.
+          Não existe nenhuma disciplina.
           <!--TODO Colocar ajax para o form aparecer e sumir -->
-          <%= link_to "Criar um espaço", new_space_path(:course_id => @course.id) %>
+          <%= link_to "Criar uma disciplina", new_space_path(:course_id => @course.id) %>
         </div>
       <% end %>
 

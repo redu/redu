@@ -1,7 +1,7 @@
 <%= javascript_include_tag "jquery.scrollTo-1.4.2-min.js" %>
 <% if can? :manage, @course %>
   <div class="container_16 actions clearfix">
-    <%= link_to "Crie Espaços!", new_space_path(:course_id => @course.id), :class => "grid_5 action" %>
+    <%= link_to "Crie Disciplinas!", new_space_path(:course_id => @course.id), :class => "grid_5 action" %>
   </div>
 <% end %>
 <script type="text/javascript" charset="utf-8">
@@ -44,7 +44,7 @@
       })
 </script>
 <div class="grid_16 alpha omega">
-  <h3 class="call">Espaços do curso <%= @course.name %></h3>
+  <h3 class="call">Disciplinas do curso <%= @course.name %></h3>
   <div class="spotlight-boxes clearfix">
     <% unless @spaces.empty? %>
       <%= render :partial => 'spaces/spotlight', :collection => @spaces %>

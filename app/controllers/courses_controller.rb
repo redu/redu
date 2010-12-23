@@ -97,7 +97,7 @@ class CoursesController < BaseController
   def preview
   end
 
-  # Aba Espaços.
+  # Aba Disciplinas.
   def admin_spaces
     @spaces = Space.paginate(:conditions => ["course_id = ?", @course.id],
                              :include => :owner,
@@ -211,7 +211,7 @@ class CoursesController < BaseController
       @course.save
       flash[:notice] = "O curso #{@course.name} foi publicado."
     else
-      flash[:notice] = "O curso não pode ser publicado, crie e publique espaços!"
+      flash[:notice] = "O curso não pode ser publicado, crie e publique disciplinas!"
     end
 
     redirect_to environment_course_path(@environment, @course)

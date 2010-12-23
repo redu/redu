@@ -1,5 +1,5 @@
 class Space < ActiveRecord::Base
-  # Representa um espaço de ensino. O objetivo principal do Space é agrupar
+  # Representa uma disciplina de ensino. O objetivo principal do Space é agrupar
   # objetos de ensino (Lecture e Subject) e promover a interação de muitos
   # para muitos entre os usuários (Status e Forum).
   #

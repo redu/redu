@@ -43,7 +43,7 @@ class UserNotifier < ActionMailer::Base
   def remove_membership(user, space)
     setup_sender_info
     @recipients  = "#{user.email}"
-    @subject     = "Sua participacão na rede \"#{space.name}\" foi cancelada"
+    @subject     = "Sua participacão na discipĺina \"#{space.name}\" foi cancelada"
     @sent_on     = Time.now
     @body[:user] = user
     @body[:url]  = space.permalink

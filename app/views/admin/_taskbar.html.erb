@@ -49,12 +49,12 @@ end
 </li>
 
 <li>
-<%=
-link_to_unless_current 'Espaços',admin_moderate_spaces_path do
-  link_to 'Espaços', admin_moderate_spaces_path,
-    :class => 'selected'
-end
-%>
+  <%=
+    link_to_unless_current 'Disciplinas',admin_moderate_spaces_path do
+      link_to 'Disciplinas', admin_moderate_spaces_path,
+        :class => 'selected'
+    end
+  %>
 </li>
 
 

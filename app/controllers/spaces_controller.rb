@@ -21,7 +21,7 @@ class SpacesController < BaseController
 
   def take_ownership
     @space.update_attribute(:owner, current_user)
-    flash[:notice] = "Você é o novo dono deste espaço!"
+    flash[:notice] = "Você é o novo dono desta disciplina."
     redirect_to @space
   end
 
@@ -271,7 +271,7 @@ class SpacesController < BaseController
         format.xml  { render :xml => @space }
       else
         format.html {
-          flash[:error] = "O espaço \"" + params[:id] + "\" não existe ou não está cadastrada no Redu."
+          flash[:error] = "A disciplina \"" + params[:id] + "\" não existe ou não está cadastrada no Redu."
           redirect_to spaces_path
         }
       end
@@ -330,9 +330,9 @@ class SpacesController < BaseController
                                   :space => @space,
                                   :status => "approved",
                                   :role_id => Role[:teacher].id})
-      Forum.create(:name => "Fórum do espaço #{@space.name}",
-                   :description => "Este fórum pertence ao espaço #{@space.name}. " + \
-                                   "Apenas os participantes deste espaço podem " + \
+      Forum.create(:name => "Fórum do disciplina #{@space.name}",
+                   :description => "Este fórum pertence ao disciplina #{@space.name}. " + \
+                                   "Apenas os participantes deste disciplina podem " + \
                                    "visualizá-lo. Troque ideias, participe!",
                     :space_id => @space.id)
 
@@ -343,7 +343,7 @@ class SpacesController < BaseController
       end
 
       session[:space_step] = session[:space_params] = nil
-      flash[:notice] = "Espaço criado!"
+      flash[:notice] = "Disciplina criada!"
       redirect_to @space
     end
   end
@@ -357,7 +357,7 @@ class SpacesController < BaseController
         if params[:space][:subscription_type].eql? "1" # Entrada de membros passou a ser livre, aprovar todos os membros pendentes
           UserSpaceAssociation.update_all("status = 'approved'", ["space_id = ? AND status = 'pending'", @space.id])
         end
-        flash[:notice] = 'O espaço foi atualizado com sucesso!'
+        flash[:notice] = 'A disciplina foi atualizado com sucesso!'
         format.html { redirect_to(@space) }
         format.xml  { head :ok }
       else
