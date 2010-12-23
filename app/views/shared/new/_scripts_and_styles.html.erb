@@ -1,6 +1,13 @@
 <%= javascript_include_tag "jquery-ui-1.8.7.custom.min.js" %>
 <%= javascript_include_tag "jquery.tipTip.minified.js" %>
-<%= javascript_include_tag :ckeditor %>
+<% if ((controller_name == 'bulletins' or controller_name == 'courses' or
+        controller_name == 'environments' or controller_name == 'events' or
+        controller_name == 'exams' or controller_name == 'forums' or
+        controller_name == 'lectures' or controller_name == 'messages' or
+        controller_name == 'subjects') and
+        (action_name == 'new' or action_name == 'edit' or action_name == 'create')) %>
+  <%= javascript_include_tag :ckeditor %>
+<% end %>
 
 <% if action_name == 'site_index' %>
   <%= stylesheet_link_tag 'jcarousel' %>
@@ -35,8 +42,6 @@
 <%  if @space and not @space.new_record? %>
   <%= stylesheet_link_tag 'themes/' + @space.theme %>
 <% end %>
-
-<%= include_tiny_mce_if_needed %>
 
 <% if controller_name == 'lectures' || controller_name == 'exams' || controller_name == 'bulletins' || controller_name == 'favorites' %>
   <%= ajaxful_rating_style %>

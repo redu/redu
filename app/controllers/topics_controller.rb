@@ -6,8 +6,6 @@ class TopicsController < BaseController
   before_filter :find_environmnet_course
   after_filter :create_activity, :only => [:create]
 
-  uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit, :create, :update])
-
   def new
     authorize! :read, @space
     @topic = Topic.new(params[:topic])

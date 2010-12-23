@@ -8,8 +8,6 @@ class BulletinsController < BaseController
   before_filter :find_environment_course_space
   after_filter :create_activity, :only => [:create]
 
-  uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit, :create, :update])
-
   def index
     @bulletinable = find_bulletinable
 

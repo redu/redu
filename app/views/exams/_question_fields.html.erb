@@ -1,5 +1,5 @@
 <% field_set_tag "Questão ", :class => "fields questions" do %>
-  <%= f.text_area :statement, :class => "mceEditor" %>
+  <%= f.cktext_area :statement, :width=>'910px' %> 
   <% field_set_tag "Informações" do %>
     <%= f.label :source, "Fonte" %>
     <span class="snippet" style="display: block;">

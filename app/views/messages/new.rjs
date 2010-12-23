@@ -1,3 +1,1 @@
 page.replace_html  'tabs-3-content', :partial => 'new'
-page << "reloadMce();"
-

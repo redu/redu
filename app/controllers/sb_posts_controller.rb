@@ -7,11 +7,6 @@ class SbPostsController < BaseController
   before_filter :find_environmnet_course, :except => [:index, :new, :create]
   after_filter :create_activity, :only => [:create]
 
-  uses_tiny_mce(:only => [:edit, :update]) do
-    AppConfig.default_mce_options
-  end
-
-
   def index
     conditions = []
     [:user_id, :forum_id].each { |attr| conditions << SbPost.send(:sanitize_sql, ["sb_posts.#{attr} = ?", params[attr].to_i]) if params[attr] }

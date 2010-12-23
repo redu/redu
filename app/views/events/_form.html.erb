@@ -7,11 +7,11 @@
 
     <% random_number = get_random_number%>
     <%= f.label "Breve Descrição" %>
-    <%= f.text_area :tagline, :size => "70x5", :class => "tagline-#{random_number}" %>
+    <%= f.text_area :tagline, :size => "70x4", :class => "tagline-#{random_number}" %>
     <%= render :partial => 'shared/limit_char_field', :locals => { :class_textarea => "tagline-#{random_number}" }%>
 
     <%= f.label :description, "Descrição:" %>
-    <%= f.text_area :description, :size => "40x12", :class => "mceEditor" %>
+    <%= f.cktext_area :description, :width=>'678px' %> 
 
     <%= f.label :start_time, "Início:" %>
     <%= f.datetime_select :start_time %>

@@ -17,7 +17,7 @@
   <%= f.label :path, :path.l %>
   <%= f.text_field :path %>
   <%= f.label :description, "Descrição" %>
-  <%= f.text_area :description, :class => "mceEditor", :size => "2x10"%>
+  <%= f.cktext_area :description, :width=>'880px', :height => '400px' %> 
   <%= f.label :workload, "Carga Horária" %>
   <%= f.text_field :workload,  :size=> 8 %>
   <%= f.label "Palavras-chave <span class='snippet'>(separadas por vírgula)</span>" %>

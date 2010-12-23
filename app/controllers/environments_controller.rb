@@ -3,8 +3,6 @@ class EnvironmentsController < BaseController
 
   load_and_authorize_resource :except => :index
 
-  uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :edit, :create, :update])
-
   rescue_from CanCan::AccessDenied do |exception|
     raise if cannot? :preview, @environment
 

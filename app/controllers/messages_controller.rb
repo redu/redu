@@ -2,8 +2,6 @@ class MessagesController < BaseController
 
   load_and_authorize_resource :user
 
-  uses_tiny_mce(:options => AppConfig.simple_mce_options, :only => [:new, :index, :create, :update, :edit])
-
   def index
     authorize! :manage, @user
     if params[:mailbox] == "sent"
