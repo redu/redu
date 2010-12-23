@@ -130,7 +130,21 @@ pt-BR:
   society_history_politics: Sociedade / História / Política
   sports: Esportes
   other: Outros
-  
+ 
+
+  authlogic:
+    error_messages:
+      login_blank: login ou e-mail não pode ficar em branco 
+      login_not_found: login ou e-mail não encontrado 
+      login_invalid: login ou e-mail inválido.
+      consecutive_failed_logins_limit_exceeded: limite de falhas de login consecutivas excedida, sua conta foi desabilitada.
+      email_invalid: should look like an email address.
+      password_blank: senha não pode ficar em branco
+      password_invalid: senha inválida 
+      not_active: Your account is not active
+      not_confirmed: Your account is not confirmed
+      not_approved: Your account is not approved
+      no_authentication_details: You did not provide any details for authentication.
   
   #redu categories
   all: Todas
@@ -187,15 +201,8 @@ pt-BR:
   trades: Comércio
   unit_studies: Unidade de Estudos
   urban_studies_and_planning: Estudos e Planejamento Urbano
-  women's_and_gender_studies: Mulheres e Estudos de Gênero
+  womens_and_gender_studies: Mulheres e Estudos de Gênero
   writing: Escrita
-    
-
-  
-  
-  
-  
-  
   Lecture:  aula
   Resource:  material
   Exam:  exame
@@ -1181,7 +1188,7 @@ pt-BR:
   #en: related_tags: Related Tags
   related_tags: Related Tags
   #en: remember_me: Remember me
-  remember_me: Remember me
+  remember_me: Lembre-se de mim 
   #en: remember_you_can_always_change_this_later: Remember, you can always change this later.
   remember_you_can_always_change_this_later: "Remember, you can always change this later."
   #en: remove_moderator: Remove moderator
