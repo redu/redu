@@ -14,7 +14,7 @@
         <%= render :partial => "messages/list", :collection => @user.received_messages.find(:all, :conditions => { :read_at => nil }), :as => :message, :limit => 5, :locals => {:mailbox => :inbox}  %>
       </ul>
       
-      <%= link_to "ver mais", user_messages_path(:user_id => current_user.id)%>
+      <%= link_to "ver todas", user_messages_path(current_user), :class=> "more small" %>
     <% else %>
       <div class="box_notice">Você não tem nenhuma mensagem nova no momento.</div>
     <% end %>

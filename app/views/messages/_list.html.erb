@@ -1,5 +1,11 @@
 <li>
-  <%= link_to h(message.subject), user_messages_path(@user) %>
-  <%= link_to h(message.sender.display_name), user_path(message.sender) %>
-  <%= h time_ago_in_words(message.created_at) %>
+  <%= link_to h(message.subject), user_messages_path(@user), :class => "message" %>
+  <div class="small quiet">
+    de
+    <strong>
+      <%= link_to h(message.sender.display_name), user_path(message.sender) %>
+    </strong>
+    há
+    <%= h time_ago_in_words(message.created_at) %>
+  </div>
 </li>

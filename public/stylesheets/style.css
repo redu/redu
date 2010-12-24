@@ -2091,6 +2091,19 @@ div.content div.content {
   float: right;
 }
 
+#public-profile .sidemar .new-messages {
+}
+
+
+#public-profile .sidebar ul.new-messages li a.message {
+  display: block;
+  margin-bottom: 3px;
+}
+
+
+#public-profile .sidebar ul.new-messages li .quiet * {
+  color: gray;
+}
 /** Social overview **/
 
 #user-description input {
