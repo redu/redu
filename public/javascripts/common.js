@@ -127,14 +127,22 @@ $("form.post-poll span.add").click(function(){
 
 $("ul.groups > li:odd").addClass("odd")
 
-  $("#header div.user-actions a.pandora").click(function(e){
-      e.preventDefault()
-      var id = $(this).attr('href')
-      $(id).slideToggle()
-      $(this).toggleClass("opened")
-      $(this).toggleClass("closed")
+$(".signin").click(function(e) {
+    e.preventDefault();
+    $("fieldset#signin_menu").toggle();
+    $(".signin").toggleClass("menu-open");
+});
 
-      })
+$("fieldset#signin_menu").mouseup(function() {
+    return false
+});
+$(document).mouseup(function(e) {
+    if($(e.target).parent("a.signin").length==0) {
+        $(".signin").removeClass("menu-open");
+        $("fieldset#signin_menu").hide();
+    }
+});
+
 
 // header "click off"
 $('body').click(function(event){

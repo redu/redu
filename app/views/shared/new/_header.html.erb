@@ -1,5 +1,5 @@
 <div id="header" class="container_16">
-    <h1 id="logo" class="grid_3"><a href="<%=application_url%>" class="replacement">Redu - Rede Social Educacional</a></h1>
+    <h1 id="logo" class="grid_2"><a href="<%=application_url%>" class="replacement">Redu - Rede Social Educacional</a></h1>
     <div id="global-nav" class="grid_6">
       <ul class="clearfix">
         <li class="item-1">
@@ -29,74 +29,67 @@
         </form>
     </div>
 
-    <div class="user-actions grid_2">
+    <div class="user-actions grid_3">
 	<% if current_user %>
-		<a href="#user-settings" class="pandora closed"><%= current_user.first_name[0..14] %>
-		<%= image_tag "icons/bullet_arrow_down.png", :style => "float: right; position: relative; margin-top: 3px;" %></a>
-
-			<div id="user-settings" class="option hide">
-			<ul>
-			<li>
-			<a href="<%=user_path(current_user)%>">Meu Perfil</a>
-			<%= link_to "editar", edit_user_path(current_user), :class => "icon more", :style=>"margin-left: 7px;"%>
-			</li>
-			<li style="border-bottom:1px solid #DDDDDD;">
-
-			</li>
-			<!--
-			<hr/>
-			-->
-			<% if current_user.admin? %>
-			<li>
-				<a href="<%= admin_dashboard_path %>" style="color: red;">Admin</a>
-			</li>
-			<% end %>
-			<li>
-			<%= link_to "Mensagens ("+current_user.unread_message_count.to_s+")", user_messages_path(:user_id => current_user.id) %>
-			</li>
-                        <!--
-                        <li>
-                          <%#= link_to 'Favoritos', user_favorites_path(:user_id => current_user.id) %>
-                        </li>
-                        -->
-			 <% unless AppConfig.closed_beta_mode %>
-			<li>
-			<%= link_to "Convidar", invite_user_path(current_user) %>
-			</li>
-			<% end %>
-			<li>
-			<a href="<%=logout_path%>">Sair</a>
-			</li>
-		</ul>
-		</div>
+          <div id="user-container">
+            <div id="topnav" class="topnav"><a href="login" class="signin"><span><%= current_user.display_name %></span></a> </div>
+            <fieldset id="signin_menu" class="signedin">
+              <ul>
+                <li>
+                  <%= link_to "Meu perfil", user_path(current_user) %>
+                  <% if can? :manage, current_user %>
+                    <%= link_to "Editar", edit_user_path(current_user), :class => "small quiet" %>
+                  <% end %>
+                </li>
+                <% if current_user.admin? %>
+                  <li>
+                    <%= link_to "Painel administrativo", admin_dashboard_path %>
+                  </li>
+                <% end %>
+                <li>
+                  <%= link_to "Mensagens (#{current_user.unread_message_count})", user_messages_path(current_user) %>
+                </li>
+                <% unless AppConfig.closed_beta_mode %>
+                  <li>
+                    <%= link_to "Convidar", invite_user_path(current_user) %>
+                  </li>
+                <% end %>
+                <li>
+                  <strong>
+                    <%= link_to "Sair", logout_path %>
+                  </strong>
+                </li>
+              </ul>
+            </fieldset>
+          </div>
 	<% else %>
-		<a href="#user-login" class="pandora closed">Login</a>
-		<div id="user-login" class="option hide">
-			<% @user_session = UserSession.new %>
-			<% form_for @user_session, :url => sessions_path do |f| %>
-			<label for='username'>
-                <%=:username_or_email.l %>
-            </label>
-            <%= f.text_field :login, :size => 35 %>
-            <label for='username'>
-                <%=:password.l %>
-            </label>
-            <%= f.password_field :password, :size => 35 %>
-            <label for='remember_me'>
-                <%=:remember_me.l %>
-                <%= f.check_box :remember_me %>
-            </label>
-            <%= f.submit "Entrar" %>
-						<% unless Rails.env == 'production' || Rails.env == 'staging' %>
-						<% form_tag({:controller => :users, :action => :create}, {:method => :post}) do %>
-							<%= oauth_login_button :value => "Login with Twitter", :class => "twitter" %>
-						 <% end %>
- 						<% end %>
-            <% end %>
+          <div id="user-container">
+            <div id="topnav" class="topnav"><a href="login" class="signin"><span>Entrar</span></a> </div>
+            <fieldset id="signin_menu">
+              <% @user_session = UserSession.new %>
+              <% form_for @user_session, :url => sessions_path do |f| %>
+                <%= f.label :login, :username_or_email.l %>
+                <%= f.text_field :login, :size => 35, :id => "username" %>
+                <p>
+                  <%= f.label :password, :password.l %>
+                  <%= f.password_field :password, :size => 35 %>
+                </p>
+                <p class="remember">
+                  <%= f.submit "Entrar", :id => "signin_submit" %>
+                  <%= f.check_box :remember_me, :id => "remember" %>
+                  <%= f.label :remember_me, :remember_me.l, :class => "inline" %>
+                </p>
+                <% unless Rails.env == 'production' || Rails.env == 'staging' %>
+                  <% form_tag({:controller => :users, :action => :create}, {:method => :post}) do %>
+                    <%= oauth_login_button :value => "Login with Twitter", :class => "twitter" %>
+                  <% end %>
+                <% end %>
+                <p class="forgot"><%= link_to "Esqueceu a senha?", forgot_password_path %> </p>
+                <p class="forgot-username"><%= link_to "Esqueceu o usuário?", forgot_username_path %> </p>
+              <% end %>
+            </fieldset>
+          </div>
 
-
-
-		</div>
 	<% end %>
 
 </div><!-- end header -->
