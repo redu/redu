@@ -4,10 +4,6 @@
     <%= image_tag( question.user.avatar.url(:thumb), {:width => "50", :height=>"50" })%>    
     </div>
     <div class="activity clearfix question">
-        <div class="actions">
-            <a href="" class="icon ico-bookmark">favoritos</a>
-            <a href="" class="icon ico-comment">comentar</a>
-        </div>
         <span class="msg">
             <%= link_to question.user.login_slug, user_path(question.user), :class => "author" %>
             <%= question.text %>

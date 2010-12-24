@@ -4,10 +4,9 @@
     </div>
     <div class="activity clearfix question">
         <div class="actions">
-					<% if current_user %>
-          <%= render :partial => "statuses/favorite" , :locals => {:status => status} %>
-					<% end %>
-            <a href="" class="icon ico-comment">comentar</a>
+        <% if current_user %>
+        <%= render :partial => "statuses/favorite" , :locals => {:status => status} %>
+        <% end %>
         </div>
         <span class="msg">
             <%= link_to status.user.login_slug, user_path(status.user), :class => "author" %>
