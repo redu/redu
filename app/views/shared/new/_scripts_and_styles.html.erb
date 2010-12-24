@@ -8,6 +8,7 @@
         (action_name == 'new' or action_name == 'edit' or action_name == 'create')) %>
   <%= javascript_include_tag :ckeditor %>
 <% end %>
+<%= javascript_include_tag "jquery.elastic" %>
 
 <% if action_name == 'site_index' %>
   <%= stylesheet_link_tag 'jcarousel' %>

@@ -22,6 +22,7 @@ function limitChars(textclass, limit, infodiv){
 }
 
 $(document).ready(function(){
+    $("textarea.growup").elastic()
     $("a, input[type=submit], button", ".cupertino").button();
     $(".buttonset").buttonset();
     $(".tooltipable").tipTip({

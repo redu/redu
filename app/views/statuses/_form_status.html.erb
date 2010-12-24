@@ -2,7 +2,7 @@
 <% field_set_tag do %>
 
 <% random_number = get_random_number%>
-<%= f.text_area :text, :class => "inner-label status status-#{random_number}", :style => "width: 90%" %>
+<%= f.text_area :text, :rows => 1, :class => "growup inner-label status status-#{random_number}", :style => "width: 95%" %>
 <%= render :partial => 'shared/limit_char_field', :locals => { :class_textarea => "status-#{random_number}" }%>
 
 <%= hidden_field_tag "status[kind]", Status::STATUS %>
