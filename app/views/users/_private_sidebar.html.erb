@@ -10,8 +10,8 @@
   <li class="clearfix">
     <span class="call"><span>Últimas Mensagens</span></span>
     <% if mct > 0 %>
-      <ul class="menu">
-        <%= render :partial => "messages/list", :collection => @user.received_messages, :as => :message, :limit => 5, :locals => {:mailbox => :inbox}  %>
+      <ul class="menu new-messages">
+        <%= render :partial => "messages/list", :collection => @user.received_messages.find(:all, :conditions => { :read_at => nil }), :as => :message, :limit => 5, :locals => {:mailbox => :inbox}  %>
       </ul>
       
       <%= link_to "ver mais", user_messages_path(:user_id => current_user.id)%>
