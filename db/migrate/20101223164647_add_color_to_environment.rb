@@ -1,6 +1,6 @@
 class AddColorToEnvironment < ActiveRecord::Migration
   def self.up
-    add_column :environments, :color, :string
+    add_column :environments, :color, :string, :default => "34cdf9"
   end
 
   def self.down

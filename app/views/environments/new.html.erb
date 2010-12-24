@@ -73,7 +73,7 @@ $(document).ready(function(){
     <% f.fields_for :courses do |builder|  %>
       <%= builder.label :name, "Seu curso" %>
       <%= builder.text_field :name, :class => "text" %>
-      <%= f.select :color, options_for_select(color_picker_colors, "340096"),
+      <%= f.select :color, options_for_select(color_picker_colors, @environment.try(:color)),
             :class => "color inline" %>
       <%= builder.label :path, "Personalize a URL" %>
       <%= builder.text_field :path %>
