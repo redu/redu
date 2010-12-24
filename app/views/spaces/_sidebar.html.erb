@@ -7,7 +7,11 @@
       <ul class="menu">
 
         <li>
-          <%= link_to_function "Criar atividade", "$schooltabs.tabs('select', 1); $('#status_text').focus()"%>
+          <% if params[:controller] != 'spaces' %>
+            <%= link_to "Criar atividade",space_path(space, :anchor => "tabs-5") %>
+          <% else %>
+            <%= link_to_function "Criar atividade", "$schooltabs.tabs('select', 1); $('#status_text').focus()" %>
+          <% end %>
         </li>
         <% if can? :manage, space or current_user.tutor? space %>
           <li>

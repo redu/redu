@@ -393,7 +393,7 @@ module BaseHelper
       if @space and @space.name
         title = @space.name + ' &raquo; ' + app_base + tagline
       else
-        title = 'Mostrando Redes' +' &raquo; ' + app_base + tagline
+        title = 'Mostrando Disciplinas' +' &raquo; ' + app_base + tagline
       end
       when 'skills'
         if @skill and @skill.name

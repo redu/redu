@@ -13,7 +13,7 @@ class UserNotifier < ActionMailer::Base
   def pending_membership(user,space)
     setup_sender_info
     @recipients  = "#{space.owner.email}"
-    @subject     = "Redes Redu: Participação pendente"
+    @subject     = "Disciplinas Redu: Participação pendente"
     @sent_on     = Time.now
     @body[:user] = user
     @body[:url]  = admin_requests_space_url(space)

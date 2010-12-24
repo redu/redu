@@ -22,7 +22,7 @@ class AdminController < BaseController
       UserNotifier.deliver_remove_space(space) # TODO fazer isso em batch
       #lecture.destroy #TODO fazer isso automaticamente após 30 dias
     end
-    flash[:notice] = 'Redes moderadas!'
+    flash[:notice] = 'Disciplinas moderadas!'
     redirect_to admin_moderate_spaces_path
   end
 
