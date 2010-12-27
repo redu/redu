@@ -283,7 +283,7 @@ class LecturesController < BaseController
         end
 
       elsif @lecture.lectureable_type == 'Page'
-        @lecture.lectureable =  Page.new(params[:page])
+        @lecture.lectureable = Page.new(params[:page])
 
         respond_to do |format|
           if @lecture.save
