@@ -1,4 +1,5 @@
 class BetaKeysController < BaseController
+  before_filter :admin_required
 
   # GET /access_keys
   # GET /access_keys.xml

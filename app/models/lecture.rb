@@ -15,7 +15,6 @@ class Lecture < ActiveRecord::Base
   has_one :asset, :as => :assetable, :dependent => :destroy
   belongs_to :owner , :class_name => "User" , :foreign_key => "owner"
   belongs_to :lectureable, :polymorphic => true, :dependent => :destroy
-  belongs_to :simple_category
   belongs_to :lazy_asset
 
   accepts_nested_attributes_for :resources,
@@ -46,13 +45,12 @@ class Lecture < ActiveRecord::Base
   validates_presence_of :name, :lazy_asset
   validates_presence_of :description
   validates_length_of :description, :within => 30..200
-  validates_presence_of :simple_category
   validates_presence_of :lectureable_type
   validates_associated :lectureable
 
   # Dependendo do lectureable_type ativa um conjunto de validações diferente
   validation_group :step1,
-    :fields => [:name, :description, :simple_category, :lectureable_type]
+    :fields => [:name, :description, :lectureable_type]
   validation_group :step2, :fields => [:lectureable]
 
   def permalink

@@ -16,9 +16,6 @@
       <li><strong>Tipo:</strong> <%= item.friendly_type %> | </li>
       <li><strong>Professor:</strong> <%= link_to item.assetable.owner.display_name,
             user_path(item.assetable.owner) %></li>
-      <% unless item.assetable.simple_category.nil? %>
-        <li> | <strong>Categoria:</strong> <%= item.assetable.simple_category.name %></li>
-      <% end %>
     </ul>
   </span>
 </li>
