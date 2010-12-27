@@ -42,12 +42,6 @@
       <%= f.label "Tags <span class='snippet'>(separadas por vírgula)</span>" %>
       <%= f.text_field :tag_list %>
 
-
-      <%# f.select(:simple_category, )%>
-      <%= f.label "Categoria:" %>
-      <%= simple_categories_i18n(f) %>
-      <%= error_for :lecture, :category %>
-
     <%end%>
 
   </div>

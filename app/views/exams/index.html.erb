@@ -32,32 +32,10 @@ function getParameters(){
 </script>
 <% end %>
 
-<%# render(:partial => "spaces/space_info", :locals=>{:show => false}) if @space%>
-
 <div class="grid_16">
   <h3> Exames</h3>
 </div>
 <div class="grid_4 calls" id="filter">
-	<form>
-	<% field_set_tag "Categoria" do %>
-	<ul class="criteriaList">
-		<li id ="cat_all" class="selected">
-			<%= link_to_remote "Todas", :url => {:action => :index}, :loading => "select('cat','all')", :method => :get%>
-		</li>
-
-		<% for category in SimpleCategory.all do %>
-		<li id = "cat_<%=category.id%>">
-			<%= link_to_remote category_i18n(category.name), :url => {:action => :index, :category => category.id}, :loading => "select('cat','"+category.id.to_s+"')", :with => "getParameters()",:method => :get%>
-		</li>
-		<% end %>
-
-	</ul>
-	<% end %>
-	</form>
-
-
-
-
 		<form>
 	<% field_set_tag "Ordem" do %>
 	<ul class="criteriaList">

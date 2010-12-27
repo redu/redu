@@ -389,11 +389,7 @@ class ExamsController < BaseController
   def index
     authorize! :read, @subject
 
-    cond = Caboose::EZ::Condition.new
-    cond.append ["simple_category_id = ?", params[:category]] if params[:category]
-
     paginating_params = {
-      :conditions => cond.to_sql,
       :page => params[:page],
       :order => (params[:sort]) ? params[:sort] + ' DESC' : 'created_at DESC',
       :per_page => AppConfig.items_per_page
@@ -422,9 +418,9 @@ class ExamsController < BaseController
     end
 
     respond_to do |format|
+      format.js
       format.html # index.html.erb
       format.xml  { render :xml => @exams }
-      format.js
     end
 
   end
