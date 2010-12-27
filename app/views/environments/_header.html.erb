@@ -64,36 +64,12 @@
                </ul>
              </div>
            </div>
-           <div class="dropdown-wrapper" style="display:none">
-             <div class="dropdown-university">
-               <ul>
-                 <% course.spaces.each do |s| %>
-                   <li class="sub-university clearfix"><%= link_to course.name, environment_course_path(environment, course) %> <em>></em> <%= link_to s.name, space_path(s) %></li>
-                 <% end %>
-               </ul>
-             </div>
-           </div>
          </div>
        <% else %>
          <div class="dropdown course">
-           <h4>
-             <%= link_to course.name , environment_course_path(environment, course) %>
-           </h4>
-           <div class="dropdown-wrapper" style="display:none">
-             <div class="dropdown-university">
-               <ul>
-                 <% environment.courses.each do |c| %>
-                   <li class="sub-university clearfix"><%= link_to c.name, environment_course_path(environment, c) %></li>
-                 <% end %>
-               </ul>
-             </div>
+           <div class="breadcrumb clearfix">
+             <%= link_to course.name, environment_course_path(environment, course) %>
            </div>
-           <% if can? :manage, course %>
-             <span class="edit cupertino">
-               <%= link_to "Gerenciar curso",
-                 edit_environment_course_path(environment, course) %>
-             </span>
-           <% end %>
          </div>
        <% end %>
      <% end %>
