@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
 
   # CALLBACKS
   before_save   :whitelist_attributes
-  before_save   :generate_login_slug
+  before_validation   :generate_login_slug
   before_create :make_activation_code
   after_create {|user| UserNotifier.deliver_signup_notification(user) }
   after_create  :update_last_login

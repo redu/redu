@@ -9,6 +9,7 @@ namespace :bootstrap do
       :first_name => 'Admin',
       :last_name => 'Redu',
       :role => Role[:admin])
+    theadmin.generate_login_slug
     theadmin.send(:create_without_callbacks)
     puts "Administrador inserido: ", !theadmin.nil?
   end
@@ -23,6 +24,7 @@ namespace :bootstrap do
       :first_name => 'Test',
       :last_name => 'User',
       :role => Role[:member])
+    theuser.generate_login_slug
     theuser.send(:create_without_callbacks)
     puts "Usuário comum inserido: ", !theuser.nil?
   end
