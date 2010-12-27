@@ -104,7 +104,7 @@ class User < ActiveRecord::Base
     c.validates_length_of_password_confirmation_field_options = { :within => 6..20, :if => :password_required? }
 
     c.validates_length_of_login_field_options = { :within => 5..20 }
-    c.validates_format_of_login_field_options = { :with => /^[\sA-Za-z0-9_-]+$/ }
+    c.validates_format_of_login_field_options = { :with => /^[A-Za-z0-9_-]+$/ }
 
     c.validates_length_of_email_field_options = { :within => 3..100 }
     c.validates_format_of_email_field_options = { :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/ }
