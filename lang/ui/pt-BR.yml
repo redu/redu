@@ -892,7 +892,7 @@ pt-BR:
   #en: message: Message
   message: Mensagem
   #en: messages_deleted: Messages deleted
-  messages_deleted: Messages deleted
+  messages_deleted: As mensagens foram deletadas.
   #en: messages_sent: Messages sent!
   messages_sent: Messages sent!
   #en: message_sent: Message sent!
@@ -1281,7 +1281,7 @@ pt-BR:
   #en: select_images_to_upload: Select Images to Upload
   select_images_to_upload: Select Images to Upload
   #en: send: "Send"
-  send: "Send"
+  send: "Enviar"
   #en: send_me_a_message: "Send me a message"
   send_me_a_message: "Enviar uma mensagem"
   #en: send_invitations: Send Invitations!

@@ -1,5 +1,5 @@
-		<% form_remote_tag :url => {:action => :delete_selected, :user_id => @user.id}, :loading => "jQuery('#del-spinner').show()" do %>
-		<%= hidden_field_tag :mailbox, :sent %>
+    <% form_tag delete_selected_user_messages_path(:user_id => @user.id) do %>
+      <%= hidden_field_tag :mailbox, "sent" %>
 	<h3>
 		<%= :sent_messages.l %>
 	</h3>
