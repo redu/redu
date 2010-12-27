@@ -47,7 +47,8 @@
 		 	<%= text_field_tag :beta_key, @beta_key, {:size => 6} %>
 		<% end %>
 	
-		<%= f.label :passowrd, :type_your_password.l %>
+		<%= f.label :password, :type_your_password.l %>
+	    <em><%= :required_your_password_must_have_six_characters.l %></em>
 	    <%= f.password_field :password %>
 			<%= error_for :user, :password %>
 	    <%= f.label :password_confirmation, :re_type_your_password_to_confirm.l %>
