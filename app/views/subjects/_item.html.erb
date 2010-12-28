@@ -28,7 +28,6 @@
   </div>
   <% if current_user.has_access_to?(item) %>
   <div class="progress">
-    <strong>Seu progresso</strong>
     <%= render :partial => "progress", :locals => {:subject => item} %>
   </div>
   <% end %>

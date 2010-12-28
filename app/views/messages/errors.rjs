@@ -1,3 +1,0 @@
-page << "jQuery('#msg_spinner').hide()"
-page.replace_html "errors", error_messages_for(:message)
-

@@ -4,34 +4,21 @@ class MessagesController < BaseController
 
   def index
     authorize! :manage, @user
-    if params[:mailbox] == "sent"
-      @messages = @user.sent_messages.paginate(:all, :page => params[:page],
-                                               :order =>  'created_at DESC',
-                                               :per_page => AppConfig.items_per_page)
-
-      respond_to do |format|
-        format.js do
-          render :update do |page|
-            page.replace_html  'tabs-2-content', :partial => 'sent'
-          end
-        end
-      end
-    else
       @messages = @user.received_messages.paginate(:all, :page => params[:page],
                                                    :order =>  'created_at DESC',
                                                    :per_page => AppConfig.items_per_page )
-
       respond_to do |format|
-        format.js do
-          render :update do |page|
-            page.replace_html 'tabs-1-content', :partial => 'inbox'
-          end
-        end
-
-        format.html do
-          # necessario para a primeira requisicao que é html
-        end
+        format.html
       end
+  end
+
+  def index_sent
+    authorize! :manage, @user
+    @messages = @user.sent_messages.paginate(:all, :page => params[:page],
+                                             :order =>  'created_at DESC',
+                                             :per_page => AppConfig.items_per_page)
+    respond_to do |format|
+      format.html
     end
   end
 
@@ -40,16 +27,7 @@ class MessagesController < BaseController
     @reply = Message.new_reply(@user, @message, params)
 
     respond_to do |format|
-      format.js do
-        render :update do |page|
-          if params[:mailbox] == "sent"
-            page.replace_html  'tabs-2-content', :partial => 'show', :locals => {:mailbox => params[:mailbox]}
-          else
-            page.replace_html  'tabs-1-content', :partial => 'show', :locals => {:mailbox => params[:mailbox]}
-            page.replace_html 'tabs-1-header', :partial => 'unread_messages_count'
-          end
-        end
-      end
+      format.html
     end
   end
 
@@ -60,7 +38,7 @@ class MessagesController < BaseController
     @message = Message.new_reply(@user, in_reply_to, params)
 
     respond_to do |format|
-      format.js { render :template => 'messages/new' }
+      format.html
     end
   end
 
@@ -76,7 +54,6 @@ class MessagesController < BaseController
         format.html do
           render :action => :new and return
         end
-        format.js { render :template => 'messages/errors', :locals => {:message => :message} }
       end
     else
       # If 'to' field isn't empty then make sure each recipient is valid
@@ -89,7 +66,6 @@ class MessagesController < BaseController
             format.html do
               render :action => :new and return
             end
-            format.js { render :template => 'messages/errors', :locals => {:message => :message} }
           end
           return
         else
@@ -101,21 +77,14 @@ class MessagesController < BaseController
       flash[:notice] = :message_sent.l
       respond_to do |format|
         format.html do
-          redirect_to user_messages_path(@user) and return
-        end
-        format.js do
-          render :update do |page|
-            #page.replace_html :notice, flash[:notice]
-            flash.discard
-            page.replace_html  'tabs-3-content', 'mensagem enviada!'
-          end
+          redirect_to index_sent_user_messages_path(@user) and return
         end
       end
     end
   end
 
   def delete_selected
-    if request.post? && current_user.id == params[:user_id] # Caso tentem burlar
+    if request.post? && current_user.id == params[:user_id].to_i # Caso tentem burlar
       if params[:delete]
         params[:delete].each { |id|
           @message = Message.find(:first, :conditions => ["messages.id = ? AND (sender_id = ? OR recipient_id = ?)", id, @user, @user])
@@ -123,8 +92,12 @@ class MessagesController < BaseController
         }
         flash[:notice] = :messages_deleted.l
       end
+    end
 
-      redirect_to user_messages_path(@user, :mailbox => params[:mailbox])
+    if params[:mailbox] == 'inbox'
+      redirect_to user_messages_path(@user)
+    elsif params[:mailbox] == 'sent'
+      redirect_to index_sent_user_messages_path(@user)
     end
   end
 

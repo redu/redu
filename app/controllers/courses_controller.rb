@@ -86,10 +86,15 @@ class CoursesController < BaseController
       :per_page => AppConfig.items_per_page
     }
 
-    if params[:search] # search
-      @courses = Course.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
+    if @environment
+      @courses = @environment.courses
     else
-      @courses = Course.paginate(paginating_params)
+      @courses = Course.all
+    end
+    if params[:search] # search
+      @courses = @courses.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
+    else
+      @courses = @courses.paginate(paginating_params)
     end
 
     respond_to do |format|

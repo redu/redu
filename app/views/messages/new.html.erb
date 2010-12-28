@@ -1,17 +1,13 @@
-<div id="all_content3">
-  <div id="col_content">
-    <%= render :partial => 'messages/sidebar_nav' %>
-
-    <div id='yui-main'>
-      <div class='yui-b'>
-
-        <h3>
-          NOVA MENSAGEM
-        </h3>
-        <%= error_messages_for :message %>
-        <%= render :partial => 'form', :locals => {:message => @message, :user => @user} %>
-      </div>
-    </div>
-
-  </div>
+<div class="grid_16">
+  <div id="title_video">Mensagens</div>
 </div>
+
+<div class="grid_10">
+  <%= render :partial => "sidebar_nav", :locals => {:reading => false}%>
+  <div id="tabs-1" class="clearfix first-page">
+    <div id="tabs-1-content">
+      <%= render :partial => "new" %>
+    </div>
+  </div><!-- end tabs -->
+</div>
+<%= render :partial => 'settings_call' %>

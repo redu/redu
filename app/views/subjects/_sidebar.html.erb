@@ -1,5 +1,5 @@
 <div class="grid_5 omega sidebar">
-   <% if @subject.published? && !current_user.member?(@subject) %>
+   <% if @subject.published? && !current_user.enrolled?(@subject) %>
      <%= link_to "Matricule-se", enroll_space_subject_path(@space, @subject),
        :class => "button" %>
    <% end %>

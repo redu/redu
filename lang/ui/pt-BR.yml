@@ -48,6 +48,9 @@ pt-BR:
               blank: ": Por favor, digite um login." 
               too_short: ": Login muito curto (mínimo de 5 caracteres)."
               invalid:  ": Login inválido."
+              taken: "Por favor, escolha outro login. Este já existe no Redu."
+            login_slug:
+              taken: "Por favor, escolha outro login. Este já existe no Redu."
             email:
               blank: ": Por favor, digite um e-mail."
               too_short: ": E-mail muito curto (mínimo de 3 caracteres)."
@@ -889,7 +892,7 @@ pt-BR:
   #en: message: Message
   message: Mensagem
   #en: messages_deleted: Messages deleted
-  messages_deleted: Messages deleted
+  messages_deleted: As mensagens foram deletadas.
   #en: messages_sent: Messages sent!
   messages_sent: Messages sent!
   #en: message_sent: Message sent!
@@ -1214,7 +1217,8 @@ pt-BR:
   #en: required_you_must_be_at_least_years_old_to_sign_up: "(Required: you must be at least 13 years old to sign up.)"
   required_you_must_be_at_least_years_old_to_sign_up: "(Required: you must be at least 13 years old to sign up.)"
   #en: required_your_username_must_not_contain_numerals_spaces_or_special_characters: "(Required: Your username must not contain numerals, spaces or special characters.)"
-  required_your_username_must_not_contain_numerals_spaces_or_special_characters: "(Obrigatório: Seu login não pode conter números, espaços ou caracteres especiais.)"
+  required_your_username_must_not_contain_numerals_spaces_or_special_characters: "(Obrigatório: Seu login não pode conter espaços ou caracteres especiais.)"
+  required_your_password_must_have_six_characters: "(Obrigatório: Sua senha deve conter no mínimo seis caracteres.)"
   #en: resend_my_activation_e_mail: Resend my activation e-mail
   resend_my_activation_e_mail: Reenvie minha ativação de e-mail
   #en: resend_your_activation_e_mail: Resend your activation e-mail
@@ -1278,7 +1282,7 @@ pt-BR:
   #en: select_images_to_upload: Select Images to Upload
   select_images_to_upload: Select Images to Upload
   #en: send: "Send"
-  send: "Send"
+  send: "Enviar"
   #en: send_me_a_message: "Send me a message"
   send_me_a_message: "Enviar uma mensagem"
   #en: send_invitations: Send Invitations!

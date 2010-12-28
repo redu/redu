@@ -182,7 +182,7 @@ class SubjectsController < BaseController
 
     flash[:notice] = "Módulo despublicado, todos os alunos foram perdidos"
     respond_to do |format|
-      format.html { render "edit" }
+      format.html { render "show" }
     end
   end
 
@@ -190,6 +190,9 @@ class SubjectsController < BaseController
     unless @subject.assets.empty?
       @subject.published = true
       @subject.save
+
+      # Matricula o dono do subject no mesmo.
+      create_enroll_associations
 
       respond_to do |format|
         format.html do
@@ -220,24 +223,7 @@ class SubjectsController < BaseController
       redirect_to space_subject_path(@space, @subject) and return
     end
 
-    #FIXME isso é realmente necessário?
-    ActiveRecord::Base.transaction do
-      space_association = @space.user_space_associations.find(:first,
-        :conditions => {:user_id => current_user})
-
-      profile = StudentProfile.create({:user => current_user,
-                                       :subject => @subject })
-      enrollment = Enrollment.create({:user => current_user,
-                                      :subject => @subject,
-                                      :student_profile => profile,
-                                      :role => space_association.role})
-
-      @subject.assets.each do |asset|
-        AssetReport.create({:asset => asset,
-                            :student_profile => profile,
-                            :subject => @subject})
-      end
-    end
+   create_enroll_associations
 
     flash[:notice] = "Você se inscreveu neste curso!"
     redirect_to space_subject_path(@space, @subject)
@@ -311,5 +297,28 @@ class SubjectsController < BaseController
     @space = Space.find(params[:space_id])
     @course = @space.course
     @environment = @course.environment
+  end
+
+  def create_enroll_associations
+    unless current_user.enrolled?(@subject)
+      #FIXME isso é realmente necessário?
+      ActiveRecord::Base.transaction do
+        space_association = @space.user_space_associations.find(:first,
+                                                                :conditions => {:user_id => current_user})
+
+        profile = StudentProfile.create({:user => current_user,
+                                        :subject => @subject })
+        enrollment = Enrollment.create({:user => current_user,
+                                       :subject => @subject,
+                                       :student_profile => profile,
+                                       :role => space_association.role})
+
+        @subject.assets.each do |asset|
+          AssetReport.create({:asset => asset,
+                             :student_profile => profile,
+                             :subject => @subject})
+        end
+      end
+    end
   end
 end

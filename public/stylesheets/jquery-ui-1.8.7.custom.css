@@ -56,8 +56,8 @@
 
 /* Component containers
 ----------------------------------*/
-.cupertino .ui-widget { font-family: Lucida Grande, Lucida Sans, Arial, sans-serif; font-size: 1.1em; }
-.cupertino .ui-widget .ui-widget { font-size: 1em; }
+.cupertino .ui-widget { font-family: Lucida Grande, Lucida Sans, Arial, sans-serif; font-size: 1em; }
+.cupertino .ui-widget .ui-widget { font-size: .9em; }
 .cupertino .ui-widget input, .cupertino .ui-widget select, .cupertino .ui-widget textarea, .cupertino .ui-widget button { font-family: Lucida Grande, Lucida Sans, Arial, sans-serif; font-size: 1em; }
 .cupertino .ui-widget-content { border: 1px solid #dddddd; background: #f2f5f7 url(../images/cupertino/ui-bg_highlight-hard_100_f2f5f7_1x100.png) 50% top repeat-x; color: #362b36; }
 .cupertino .ui-widget-content a { color: #362b36; }
@@ -384,6 +384,27 @@ input.ui-button { padding: .4em 1em; }
 /* workarounds */
 button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra padding in Firefox */
 /*
+ * jQuery UI Dialog 1.8.7
+ *
+ * Copyright 2010, AUTHORS.txt (http://jqueryui.com/about)
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ * http://jquery.org/license
+ *
+ * http://docs.jquery.com/UI/Dialog#theming
+ */
+.cupertino .ui-dialog { position: absolute; padding: .2em; width: 300px; overflow: hidden; }
+.cupertino .ui-dialog .ui-dialog-titlebar { padding: .5em 1em .3em; position: relative;  }
+.cupertino .ui-dialog .ui-dialog-title { float: left; margin: .1em 16px .2em 0; } 
+.cupertino .ui-dialog .ui-dialog-titlebar-close { position: absolute; right: .3em; top: 50%; width: 19px; margin: -10px 0 0 0; padding: 1px; height: 18px; }
+.cupertino .ui-dialog .ui-dialog-titlebar-close span { display: block; margin: 1px; }
+.cupertino .ui-dialog .ui-dialog-titlebar-close:hover, .cupertino .ui-dialog .ui-dialog-titlebar-close:focus { padding: 0; }
+.cupertino .ui-dialog .ui-dialog-content { position: relative; border: 0; padding: .5em 1em; background: none; overflow: auto; zoom: 1; }
+.cupertino .ui-dialog .ui-dialog-buttonpane { text-align: left; border-width: 1px 0 0 0; background-image: none; margin: .5em 0 0 0; padding: .3em 1em .5em .4em; }
+.cupertino .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset { float: right; }
+.cupertino .ui-dialog .ui-dialog-buttonpane button { margin: .5em .4em .5em 0; cursor: pointer; }
+.cupertino .ui-dialog .ui-resizable-se { width: 14px; height: 14px; right: 3px; bottom: 3px; }
+.cupertino .ui-draggable .ui-dialog-titlebar { cursor: move; }
+/*
  * jQuery UI Tabs 1.8.7
  *
  * Copyright 2010, AUTHORS.txt (http://jqueryui.com/about)
@@ -402,73 +423,6 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 .cupertino .ui-tabs .ui-tabs-panel { display: block; border-width: 0; padding: 1em 1.4em; background: none; }
 .cupertino .ui-tabs .ui-tabs-hide { display: none !important; }
 /*
- * jQuery UI Datepicker 1.8.7
- *
- * Copyright 2010, AUTHORS.txt (http://jqueryui.com/about)
- * Dual licensed under the MIT or GPL Version 2 licenses.
- * http://jquery.org/license
- *
- * http://docs.jquery.com/UI/Datepicker#theming
- */
-.cupertino .ui-datepicker { width: 17em; padding: .2em .2em 0; display: none; }
-.cupertino .ui-datepicker .ui-datepicker-header { position:relative; padding:.2em 0; }
-.cupertino .ui-datepicker .ui-datepicker-prev, .cupertino .ui-datepicker .ui-datepicker-next { position:absolute; top: 2px; width: 1.8em; height: 1.8em; }
-.cupertino .ui-datepicker .ui-datepicker-prev-hover, .cupertino .ui-datepicker .ui-datepicker-next-hover { top: 1px; }
-.cupertino .ui-datepicker .ui-datepicker-prev { left:2px; }
-.cupertino .ui-datepicker .ui-datepicker-next { right:2px; }
-.cupertino .ui-datepicker .ui-datepicker-prev-hover { left:1px; }
-.cupertino .ui-datepicker .ui-datepicker-next-hover { right:1px; }
-.cupertino .ui-datepicker .ui-datepicker-prev span, .cupertino .ui-datepicker .ui-datepicker-next span { display: block; position: absolute; left: 50%; margin-left: -8px; top: 50%; margin-top: -8px;  }
-.cupertino .ui-datepicker .ui-datepicker-title { margin: 0 2.3em; line-height: 1.8em; text-align: center; }
-.cupertino .ui-datepicker .ui-datepicker-title select { font-size:1em; margin:1px 0; }
-.cupertino .ui-datepicker select.ui-datepicker-month-year {width: 100%;}
-.cupertino .ui-datepicker select.ui-datepicker-month, 
-.cupertino .ui-datepicker select.ui-datepicker-year { width: 49%;}
-.cupertino .ui-datepicker table {width: 100%; font-size: .9em; border-collapse: collapse; margin:0 0 .4em; }
-.cupertino .ui-datepicker th { padding: .7em .3em; text-align: center; font-weight: bold; border: 0;  }
-.cupertino .ui-datepicker td { border: 0; padding: 1px; }
-.cupertino .ui-datepicker td span, .cupertino .ui-datepicker td a { display: block; padding: .2em; text-align: right; text-decoration: none; }
-.cupertino .ui-datepicker .ui-datepicker-buttonpane { background-image: none; margin: .7em 0 0 0; padding:0 .2em; border-left: 0; border-right: 0; border-bottom: 0; }
-.cupertino .ui-datepicker .ui-datepicker-buttonpane button { float: right; margin: .5em .2em .4em; cursor: pointer; padding: .2em .6em .3em .6em; width:auto; overflow:visible; }
-.cupertino .ui-datepicker .ui-datepicker-buttonpane button.ui-datepicker-current { float:left; }
-
-/* with multiple calendars */
-.cupertino .ui-datepicker.ui-datepicker-multi { width:auto; }
-.cupertino .ui-datepicker-multi .ui-datepicker-group { float:left; }
-.cupertino .ui-datepicker-multi .ui-datepicker-group table { width:95%; margin:0 auto .4em; }
-.cupertino .ui-datepicker-multi-2 .ui-datepicker-group { width:50%; }
-.cupertino .ui-datepicker-multi-3 .ui-datepicker-group { width:33.3%; }
-.cupertino .ui-datepicker-multi-4 .ui-datepicker-group { width:25%; }
-.cupertino .ui-datepicker-multi .ui-datepicker-group-last .ui-datepicker-header { border-left-width:0; }
-.cupertino .ui-datepicker-multi .ui-datepicker-group-middle .ui-datepicker-header { border-left-width:0; }
-.cupertino .ui-datepicker-multi .ui-datepicker-buttonpane { clear:left; }
-.cupertino .ui-datepicker-row-break { clear:both; width:100%; }
-
-/* RTL support */
-.cupertino .ui-datepicker-rtl { direction: rtl; }
-.cupertino .ui-datepicker-rtl .ui-datepicker-prev { right: 2px; left: auto; }
-.cupertino .ui-datepicker-rtl .ui-datepicker-next { left: 2px; right: auto; }
-.cupertino .ui-datepicker-rtl .ui-datepicker-prev:hover { right: 1px; left: auto; }
-.cupertino .ui-datepicker-rtl .ui-datepicker-next:hover { left: 1px; right: auto; }
-.cupertino .ui-datepicker-rtl .ui-datepicker-buttonpane { clear:right; }
-.cupertino .ui-datepicker-rtl .ui-datepicker-buttonpane button { float: left; }
-.cupertino .ui-datepicker-rtl .ui-datepicker-buttonpane button.ui-datepicker-current { float:right; }
-.cupertino .ui-datepicker-rtl .ui-datepicker-group { float:right; }
-.cupertino .ui-datepicker-rtl .ui-datepicker-group-last .ui-datepicker-header { border-right-width:0; border-left-width:1px; }
-.cupertino .ui-datepicker-rtl .ui-datepicker-group-middle .ui-datepicker-header { border-right-width:0; border-left-width:1px; }
-
-/* IE6 IFRAME FIX (taken from datepicker 1.5.3 */
-.cupertino .ui-datepicker-cover {
-    display: none; /*sorry for IE5*/
-    display/**/: block; /*sorry for IE5*/
-    position: absolute; /*must have*/
-    z-index: -1; /*must have*/
-    filter: mask(); /*must have*/
-    top: -4px; /*must have*/
-    left: -4px; /*must have*/
-    width: 200px; /*must have*/
-    height: 200px; /*must have*/
-}/*
  * jQuery UI Progressbar 1.8.7
  *
  * Copyright 2010, AUTHORS.txt (http://jqueryui.com/about)

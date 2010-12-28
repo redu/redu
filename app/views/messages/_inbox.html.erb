@@ -1,6 +1,6 @@
-	<% form_remote_tag :url => {:action => :delete_selected, :user_id => @user.id}, :loading => "jQuery('#del-spinner').show()" do %>
+	<% form_tag delete_selected_user_messages_path(:user_id => @user.id)  do %>
 
-	<%= hidden_field_tag :mailbox, :inbox %>
+	<%= hidden_field_tag :mailbox, "inbox" %>
 
 	<h3>
 		<%= :inbox.l %>
@@ -24,7 +24,7 @@
 				</td>
 			</tr>
 			<% else %>
-					<%= render :partial => 'messages/item', :collection => @messages, :as => :message, :locals => {:mailbox => :inbox} %>
+					<%= render :partial => 'messages/item', :collection => @messages, :as => :message, :locals => {:mailbox => "inbox"} %>
 			<% end %>
 		</tbody>
 		<tfoot>

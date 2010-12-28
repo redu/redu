@@ -11,7 +11,7 @@
     <span class="call"><span>Últimas Mensagens</span></span>
     <% if mct > 0 %>
       <ul class="menu new-messages">
-        <%= render :partial => "messages/list", :collection => @user.received_messages.find(:all, :conditions => { :read_at => nil }), :as => :message, :limit => 5, :locals => {:mailbox => :inbox}  %>
+        <%= render :partial => "messages/list", :collection => @user.received_messages.find(:all, :conditions => { :read_at => nil }), :as => :message, :limit => 5, :locals => {:mailbox => "inbox"}  %>
       </ul>
       
       <%= link_to "ver todas", user_messages_path(current_user), :class=> "more small" %>
