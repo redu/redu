@@ -13,16 +13,16 @@
       <div class="box-info">
       	<div class="pretty-text">Dentro deste ambiente você tem permissão para gerenciar:</div>
       </div>
-      <% if can? :manage, environment %>
-        <%= link_to "Ambiente", edit_environment_path(environment) %>
-      <% end %>
-      <% if can? :manage, course %>
-        <%= link_to "Curso",
-          edit_environment_course_path(environment, course) %>
-      <% end %>
-      <% if can? :manage, space %>
-        <%= link_to "Disciplina", edit_space_path(space) %>
-      <% end %>
+        <% if can?(:manage, environment) && !environment.new_record? %>
+          <%= link_to "Ambiente", edit_environment_path(environment) %>
+        <% end %>
+        <% if can?(:manage, course) && !course.new_record? %>
+          <%= link_to "Curso",
+            edit_environment_course_path(environment, course) %>
+        <% end %>
+        <% if can?(:manage, space) && !space.new_record? %>
+          <%= link_to "Disciplina", edit_space_path(space) %>
+        <% end %>
     </div>
      <div class="frame" id="university-logo">
        <div class="inner-frame">
