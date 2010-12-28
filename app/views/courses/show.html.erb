@@ -1,7 +1,18 @@
 <%= javascript_include_tag "jquery.scrollTo-1.4.2-min.js" %>
 <% if can? :manage, @course %>
-  <div class="container_16 actions clearfix">
-    <%= link_to "Crie Disciplinas!", new_space_path(:course_id => @course.id), :class => "grid_5 action" %>
+  <div class="actions clearfix">
+    <div class="action-wrapper">
+      <%= link_to "Crie Disciplinas", new_space_path(:course_id => @course.id), :class => "action" %>
+      <small>Disciplinas são conjuntos de módulos onde os alunos aprendem</small>
+    </div>
+    <div class="action-wrapper">
+      <%= link_to "Convide Colaboradores", "#invitation", :class => "action" %>
+      <small>Chame pessoas para auxiliar na criação do conteúdo</small>
+    </div>
+    <div class="action-wrapper">
+      <%= link_to "Gerencie este Curso", edit_environment_course_path(@environment, @course), :class => "action" %>
+      <small>Acompanhe, avalie e interaja com alunos matriculados</small>
+    </div>
   </div>
 <% end %>
 <script type="text/javascript" charset="utf-8">
@@ -38,37 +49,45 @@
   $(document).ready(function(){
       $(".message").hide()
       $("#toggle").live('click', function(e){
-        $(".message").toggle()
+        $(".message").slideToggle()
         e.preventDefault()
         });
       })
 </script>
-<div class="grid_16 alpha omega">
+<div class="grid_16">
   <h3 class="call">Disciplinas do curso <%= @course.name %></h3>
-  <div class="spotlight-boxes clearfix">
-    <% unless @spaces.empty? %>
-      <%= render :partial => 'spaces/spotlight', :collection => @spaces %>
-    <% else %>
-      <div class="box_notice">Nenhuma disciplina foi criada.</div>
-    <% end %>
-  </div><!--  end spotlight-boxes -->
 </div>
+<div class="spotlight-boxes clearfix">
+  <% unless @spaces.empty? %>
+    <%= render :partial => 'spaces/spotlight', :collection => @spaces %>
+  <% else %>
+    <div class="grid_16">
+      <div class="box-info">
+        <div class="pretty-text">
+          Nenhuma disciplina foi criada. <% if can? :manage, @course  %>Você pode criá-las <%= link_to "aqui", new_space_path(:course_id => @course) %> <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div><!--  end spotlight-boxes -->
 <% if can? :manage, @course %>
   <div class="grid_16">
-    <div class="grid_8 alpha">
+    <div class="grid_8 alpha" id="invitation">
       <h3 class="call">Convide colaboradores</h3>
+      <p class="pretty-text quiet">Você pode convidar professoores, tutores e produtores de conteúdo para auxiliar na criação das aulas.</p>
 
       <% remote_form_for :invitation, :method => :post,
         :url => course_invitations_path(@course),
-        :html => {:id => "environment_invitation"},
+        :html => {:id => "environment_invitation", :class => "cupertino"},
         :loading => "$(\"#environment_invitation\").prepend(\"#{escape_javascript(image_tag("spinner.gif")) }\")",
         :complete => "$(\"#environment_invitation\").find(\"img\").remove()" do  |f| %>
         <div id="invitation_errors"></div>
         <%= f.label :email_addresses, "E-mails" %>
-        <%= f.text_area :email_addresses, :cols => 50, :rows => 6 %>
+        <%= f.text_area :email_addresses, :rows => 1, :class => "growup", :style => "width: 98%; " %>
+        <hr/>
         <a id="toggle" href="#">Escrever Mensagem</a>
-        <%= f.label :message, "Mensagem", :class => "message" %>
-        <%= f.text_area :message, :cols => 50, :rows => 6 , :class => "message" %>
+        <%= f.label :message, "Mensagem", :class => "message small" %>
+        <%= f.text_area :message, :rows => 1 , :class => "message growup", :style => "width: 98%;" %>
 
         <%= f.submit "Convidar" %>
       <% end %>

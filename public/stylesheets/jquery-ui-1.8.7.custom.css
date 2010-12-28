@@ -56,8 +56,8 @@
 
 /* Component containers
 ----------------------------------*/
-.cupertino .ui-widget { font-family: Lucida Grande, Lucida Sans, Arial, sans-serif; font-size: 1em; }
-.cupertino .ui-widget .ui-widget { font-size: .9em; }
+.cupertino .ui-widget { font-family: Lucida Grande, Lucida Sans, Arial, sans-serif; font-size: .8em; }
+.cupertino .ui-widget .ui-widget { font-size: .8em; }
 .cupertino .ui-widget input, .cupertino .ui-widget select, .cupertino .ui-widget textarea, .cupertino .ui-widget button { font-family: Lucida Grande, Lucida Sans, Arial, sans-serif; font-size: 1em; }
 .cupertino .ui-widget-content { border: 1px solid #dddddd; background: #f2f5f7 url(../images/cupertino/ui-bg_highlight-hard_100_f2f5f7_1x100.png) 50% top repeat-x; color: #362b36; }
 .cupertino .ui-widget-content a { color: #362b36; }

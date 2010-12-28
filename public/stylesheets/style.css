@@ -202,6 +202,36 @@ blockquote {/*necessário para o tinymce*/
 @overall
  **/
 
+#invitation {
+  background-color: #DDF0F8;
+  padding: 10px 0;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+
+}
+
+#invitation h3.call,
+#invitation p,
+#invitation form {
+  margin: 10px;
+  display: block;
+}
+
+
+#invitation .pretty-text {
+  font-size: .9em;
+}
+
+#invitation h3.call {
+  color: #069;
+}
+
+#invitation hr {
+  border: none;
+  border-bottom: 1px solid #AED0EA;
+  margin: 15px 0;
+}
+
 .box-info {
   background: #EEF7FD url(../images/info-chat.png) 10px center no-repeat;
   padding: 10px 0;
@@ -1551,6 +1581,7 @@ div.recomendations-m .number {
 /* spotlight */
 .spotlight-boxes {
   width: 100%;
+  margin-bottom: 20px;
 }
 
 .spotlight-boxes .space{
@@ -2777,9 +2808,30 @@ ul.sub-groups > li {
   margin: 10px 0;
 }
 
+#environment .actions {
+ background: url("../images/bg-content-teach-header.jpg") scroll 0 -190px transparent;
+  padding: 15px 30px;
+}
+
 #environment .actions .action {
-  font-size: 1.8em;
+  font-size: 1.5em;
+  color: white;
+  display: block;
   font-weight: bold;
+  margin-bottom: 10px;
+}
+
+#environment .action-wrapper {
+  display: block;
+  width: 280px;
+  float: left;
+  padding: 0 10px;
+}
+
+#environment small {
+  font-size: .9em;
+  font-style: italic;
+  color: #EAF2FF;
 }
 
 #environment-header {
