@@ -174,13 +174,19 @@ class LecturesController < BaseController
   # GET /lectures/1/edit
   def edit
     respond_to do |format|
-      if @lecture.lectureable_type == 'Page'
-        format.html {render 'edit_page'}
-      elsif @lecture.lectureable_type == 'InteractiveClass'
-        @interactive_class = @lecture.lectureable
-        format.html {render 'edit_interactive'}
-      else # TODO colocar type == seminar / estamos considerando que o resto é seminário
-        format.html {render 'edit_seminar'}
+      if @subject.published?
+        flash[:notice] = 'O módulo deve ser despublicado para que seja possível a editação das aulas.'
+        format.html { redirect_to space_subject_lecture_path(@space, @subject, @lecture) }
+      else
+        if @lecture.lectureable_type == 'Page'
+          @page = @lecture.lectureable
+          format.html {render 'edit_page'}
+        elsif @lecture.lectureable_type == 'InteractiveClass'
+          @interactive_class = @lecture.lectureable
+          format.html {render 'edit_interactive'}
+        else # TODO colocar type == seminar / estamos considerando que o resto é seminário
+          format.html {render 'edit_seminar'}
+        end
       end
 
       format.xml  { render :xml => @lecture }
@@ -402,19 +408,39 @@ class LecturesController < BaseController
       end
     elsif @lecture.lectureable_type == 'Page'
       respond_to do |format|
-        if @lecture.update_attributes(params[:lecture])
-          flash[:notice] = 'Curso atualizado com sucesso.'
-          format.html { redirect_to(@lecture) }
+        @page = @lecture.lectureable
+        if params[:lecture]
+          if @lecture.update_attribute 'tag_list', params[:lecture][:tag_list] 
+            sucesso = true
+          else
+            sucesso = false
+          end
+
+        elsif params[:page]
+          if @page.update_attribute 'body', params[:page][:body] 
+            sucesso = true
+          else
+            sucesso = false
+          end
+
+        else
+          sucesso = false
+        end
+
+        if sucesso
+          flash[:notice] = 'Artigo atualizado com sucesso.'
+          format.html { redirect_to lazy_space_subject_path(@space,@subject) }
           format.xml  { head :ok }
         else
           format.html { render :action => "edit_page" }
           format.xml  { render :xml => @lecture.errors, :status => :unprocessable_entity }
         end
+
       end
     else # seminar
       respond_to do |format|
         if @lecture.update_attributes(params[:lecture])
-          flash[:notice] = 'Curso atualizado com sucesso.'
+          flash[:notice] = 'Vídeo-aula atualizada com sucesso.'
           format.html { redirect_to(@lecture) }
           format.xml  { head :ok }
         else

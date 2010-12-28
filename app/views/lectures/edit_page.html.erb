@@ -1,33 +1,29 @@
 <div class="grid_16">
   <h3 class="call">Editando artigo </h3>
 
-<% form_for @lecture, :html => { :multipart => true } do |f| %>
-<%= f.error_messages %>
+  <% form_for :lecture, @lecture, :url => space_subject_lecture_path(@space, @subject, @lecture), :html => { :method => :put } do |f| %>
+    <%= f.error_messages %>
 
-<% field_set_tag "Informacoes Gerais" do %>
+    <% field_set_tag "Informacoes Gerais" do %>
 
-	<%= f.label "Nome:" %>
-	<%= f.text_field :name %>
+      <%= f.label "Nome:" %>
+      <%= f.text_field :name, :disabled => true %>
 
-	<%= f.label "Descrição:" %>
-	<%= f.text_area :description, :size => "50x3" %>
+      <%= f.label "Descrição:" %>
+      <%= f.text_area :description, :size => "50x3", :disabled => true %>
 
-	<%= f.label "Tags:" %>
-	<%= f.text_field :tag_list %>
-<% end %>
+      <%= f.label "Tags:" %>
+      <%= f.text_field :tag_list %>
+      <%= f.submit 'Atualizar' %> 
+    <% end %>
+  <% end %>
+
+  <% form_for :page, @page, :url => space_subject_lecture_path(@space, @subject, @lecture), :html => {:method => :put } do |builder| %>
+    <% field_set_tag "Artigo" do %>
+      <%= builder.cktext_area :body, :width => "900px", :height => "400px" %>
+      <%= builder.submit 'Atualizar' %> 
+    <% end %>
+  <% end %>
 </div>
-
-	<div class="grid_12 push_2">
-	<% fields_for "lecture[lectureable_attributes][]", @lecture.lectureable  do |thepage| %>
-	<%= f.hidden_field(:lectureable_type, :value => "Page" )%>
-	 <%= thepage.label 'Texto' %>
-	 <%= thepage.text_area :body, :class => "mceEditor" %>
-	<% end %>
-	</div>
-
-<div class="grid_16" style="margin-top: 20px;">
-<%= f.submit 'Atualizar' %> ou <%= link_to 'Cancelar', lecture_path(@lecture) %>
-</div>
-<% end %>
 
 
