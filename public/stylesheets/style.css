@@ -203,7 +203,7 @@ blockquote {/*necessário para o tinymce*/
  **/
 
 #invitation {
-  background-color: #DDF0F8;
+  background-color: #F5F5F5;
   padding: 10px 0;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -228,7 +228,7 @@ blockquote {/*necessário para o tinymce*/
 
 #invitation hr {
   border: none;
-  border-bottom: 1px solid #AED0EA;
+  border-bottom: 1px solid #D3CFCF;
   margin: 15px 0;
 }
 
