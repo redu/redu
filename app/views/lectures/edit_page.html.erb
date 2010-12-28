@@ -1,22 +1,7 @@
 <div class="grid_16">
   <h3 class="call">Editando artigo </h3>
 
-  <% form_for :lecture, @lecture, :url => space_subject_lecture_path(@space, @subject, @lecture), :html => { :method => :put } do |f| %>
-    <%= f.error_messages %>
-
-    <% field_set_tag "Informacoes Gerais" do %>
-
-      <%= f.label "Nome:" %>
-      <%= f.text_field :name, :disabled => true %>
-
-      <%= f.label "Descrição:" %>
-      <%= f.text_area :description, :size => "50x3", :disabled => true %>
-
-      <%= f.label "Tags:" %>
-      <%= f.text_field :tag_list %>
-      <%= f.submit 'Atualizar' %> 
-    <% end %>
-  <% end %>
+  <%= render :partial => "form_edit", :object => @lecture %>
 
   <% form_for :page, @page, :url => space_subject_lecture_path(@space, @subject, @lecture), :html => {:method => :put } do |builder| %>
     <% field_set_tag "Artigo" do %>

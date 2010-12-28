@@ -1,0 +1,19 @@
+<% form_for :lecture, @lecture, :url => space_subject_lecture_path(@space, @subject, @lecture), :html => { :method => :put } do |f| %>
+  <%= f.error_messages %>
+  
+  <% field_set_tag "Informacoes Gerais" do %>
+    
+    <%= f.label "Nome:" %>
+    <%= f.text_field :name %>
+
+    <%= f.label "Descrição:" %>
+    <%= f.text_area :description, :size => "50x3" %>
+
+    <%= f.label "Tags:" %>
+    <%= f.text_field :tag_list %>
+    <div class="grid_14 alpha">
+      <%= f.submit 'Atualizar' %> 
+    </div>
+  <% end %>
+<% end %>
+

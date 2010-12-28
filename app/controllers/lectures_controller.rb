@@ -410,19 +410,17 @@ class LecturesController < BaseController
       respond_to do |format|
         @page = @lecture.lectureable
         if params[:lecture]
-          if @lecture.update_attribute 'tag_list', params[:lecture][:tag_list] 
+          if @lecture.update_attributes(params[:lecture])
             sucesso = true
           else
             sucesso = false
           end
-
         elsif params[:page]
           if @page.update_attribute 'body', params[:page][:body] 
             sucesso = true
           else
             sucesso = false
           end
-
         else
           sucesso = false
         end
@@ -441,7 +439,7 @@ class LecturesController < BaseController
       respond_to do |format|
         if @lecture.update_attributes(params[:lecture])
           flash[:notice] = 'Vídeo-aula atualizada com sucesso.'
-          format.html { redirect_to(@lecture) }
+          format.html { redirect_to lazy_space_subject_path(@space,@subject) }
           format.xml  { head :ok }
         else
           format.html { render :action => "edit_seminar" }

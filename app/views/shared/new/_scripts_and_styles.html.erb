@@ -48,7 +48,7 @@
   <%= ajaxful_rating_style %>
 <% end %>
 
-<% if controller_name == 'lectures' && action_name == 'show'%>
+<% if controller_name == 'lectures' && (action_name == 'show' || action_name == 'edit' )%>
   <%= javascript_include_tag 'swfobject'%>
 <% end %>
 
