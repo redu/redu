@@ -3,6 +3,17 @@
      <%= image_tag( response.user.avatar.url(:thumb), {:width => "24", :height=>"24" })%>
     </div>
     <div class="activity clearfix">
+      <% if can? :manage, response %>
+        <div class="actions">
+          <%= link_to_remote 'Remover',
+            :url => status_path(response),
+            :loading => "$('#response-#{response.id} #delete_spinner').show();",
+            :confirm => 'Deseja remover a postagem?',
+            :method => :delete,
+            :html => { :class => "icon ico-delete-status" } %>
+        <%= image_tag 'loading_bar.gif', :style => 'display:none;', :id => 'delete_spinner' %>
+        </div>
+       <% end %>
     <span class="msg">
     <%= link_to response.user.login_slug, user_path(response.user), :class => 'author' %>
     <%= auto_link(response.text) %>

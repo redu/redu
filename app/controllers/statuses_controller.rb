@@ -52,15 +52,20 @@ class StatusesController < BaseController
     @statuses = @statusable.recent_activity(params[:offset], params[:limit])
     respond_to do |format|
       if @statuses.length < params[:limit].to_i
-        format.js { render :template => 'statuses/statuses_end', :locals => { :statusable => @statusable } }
+        format.js { render :template => 'statuses/statuses_end',
+          :locals => { :statusable => @statusable } }
       else
-        format.js { render :template => 'statuses/statuses_more', :locals => { :statusable_id => @statusable.id } }
+        format.js { render :template => 'statuses/statuses_more',
+          :locals => { :statusable_id => @statusable.id } }
       end
     end
   end
 
   def destroy
-    #TODO
+   @status.destroy
+   # Deleta as respostas do Status
+   Status.destroy_all(:in_response_to_id => @status.id,
+                      :in_response_to_type => 'Status')
   end
 
 end

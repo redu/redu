@@ -3,11 +3,18 @@
     <%= image_tag( status.user.avatar.url(:thumb), {:width => "50", :height=>"50" })%>
     </div>
     <div class="activity clearfix question">
+      <% if can? :manage, status %>
         <div class="actions">
-        <% if current_user %>
-        <%= render :partial => "statuses/favorite" , :locals => {:status => status} %>
+          <%= link_to_remote 'Remover',
+            :url => status_path(status),
+            :loading => "$('#status-#{status.id} #favorite_spinner').show();",
+            :confirm => 'Deseja remover a postagem?',
+            :method => :delete,
+            :html => { :class => "icon ico-delete-status" } %>
+
+            <%= render :partial => "statuses/favorite" , :locals => {:status => status} %>
+      </div>
         <% end %>
-        </div>
         <span class="msg">
             <%= link_to status.user.login_slug, user_path(status.user), :class => "author" %>
             <% if status.log %>

@@ -1112,6 +1112,10 @@ form div.errorExplanation {
   background-image: url("../images/icon_star_on.png");
 }
 
+.ico-delete-status {
+  background-image: url("../images/delete-status.png");
+}
+
 .ico-activity {
   background-image: url("../images/")
 }

@@ -1,6 +1,6 @@
 status_id = @status.in_response_to.id.to_s
 if @status.valid? 
-  page << "$('#status-"+ status_id+ " ul.response').append(\"#{escape_javascript(render :partial => 'response', :object => @status)}\")"
+  page << "$('#status-"+ status_id+ " ul.response').prepend(\"#{escape_javascript(render :partial => 'response', :object => @status)}\")"
   page << "$('#status-#{status_id} .answer:first').slideToggle('')"
   page << "$('#status-#{status_id} form textarea').val('')"
 else
