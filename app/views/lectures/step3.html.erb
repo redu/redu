@@ -20,9 +20,6 @@
   <% form_for :lecture, @lecture, :url => { :action => "create" }, :html => {:id => "form_step_3",  :multipart => true } do |f| %>
     <%= f.error_messages %>
     <%= hidden_field_tag("step", "3", options = {})%>
-    <%# hidden_field_tag("post_to", @space.id) if @space %>
-
-
 
     <% if @lecture.lectureable_type == 'InteractiveClass' %>
       <% field_set_tag 'Imagem' do %>
@@ -34,7 +31,7 @@
     <% field_set_tag 'Compartilhe!' do %>
       <%= render :partial => 'shared/share', :locals => {:resource => @lecture}%>
     <% end %>
-
+    <%= f.submit "< Anterior", :name => "back_button" %>
   </div>
 
   <div class="grid_6 push_1">
@@ -59,6 +56,3 @@
 
 </div>
 </div>
-
-
-

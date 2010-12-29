@@ -136,17 +136,28 @@ class LecturesController < BaseController
       end
 
       if @lecture.lectureable_type == 'Seminar'
-        @seminar = Seminar.new
-
+        if @lecture.lectureable
+          @seminar = @lecture.lectureable
+        else
+          @seminar = Seminar.new
+        end
         render "step2_seminar" and return
       elsif @lecture.lectureable_type == 'InteractiveClass'
         @interactive_class = InteractiveClass.new
         render "step2_interactive" and return
       elsif @lecture.lectureable_type == 'Page'
-        @page = Page.new
+        if @lecture.lectureable
+          @page = @lecture.lectureable
+        else
+          @page = Page.new
+        end
         render "step2_page" and return
       elsif @lecture.lectureable_type == 'Document'
-        @document = Document.new
+        if @lecture.lectureable
+          @document = @lecture.lectureable
+        else
+          @document = Document.new
+        end
         render "step2_document" and return
       end
     when "3"
@@ -201,8 +212,13 @@ class LecturesController < BaseController
     #TODO diminuir a lógica desse método, está muito GRANDE
     case params[:step]
     when "1"
-      @lecture = Lecture.new(params[:lecture])
-      @lecture.owner = current_user
+      if session[:lecture_id]
+        @lecture = Lecture.find(session[:lecture_id])
+        @lecture.attributes = params[:lecture]
+      else
+        @lecture = Lecture.new(params[:lecture])
+        @lecture.owner = current_user
+      end
       @lecture.enable_validation_group :step1
 
       respond_to do |format|
@@ -223,6 +239,7 @@ class LecturesController < BaseController
 
     when "2"
       @lecture = Lecture.find(session[:lecture_id])
+      @lecture.attributes = params[:lecture]
       @lecture.enable_validation_group :step2
 
       @res = []
@@ -247,7 +264,13 @@ class LecturesController < BaseController
             if @lecture.save
 
               format.html do
-                redirect_to new_space_subject_lecture_path(@space, @subject, :step => 3)
+                if params[:back_button]
+                  redirect_to new_space_subject_lecture_path(@space, @subject,
+                                                             :lecture_type => params[:lectureable_type],
+                                                             :step => 1)
+                else
+                  redirect_to new_space_subject_lecture_path(@space, @subject, :step => 3)
+                end
               end
 
               format.js do
@@ -292,11 +315,18 @@ class LecturesController < BaseController
         @lecture.lectureable = Page.new(params[:page])
 
         respond_to do |format|
+
           if @lecture.save
             format.html {
-              redirect_to new_space_subject_lecture_path(@space, @subject,
-                            :lecture_type => params[:lectureable_type],
-                            :step => 3)
+              if params[:back_button]
+                redirect_to new_space_subject_lecture_path(@space, @subject,
+                                                           :lecture_type => params[:lectureable_type],
+                                                           :step => 1)
+              else
+                redirect_to new_space_subject_lecture_path(@space, @subject,
+                                                           :lecture_type => params[:lectureable_type],
+                                                           :step => 3)
+              end
             }
           else
             format.html { render "step2_page" }
@@ -309,9 +339,15 @@ class LecturesController < BaseController
           @lecture.lectureable.define_content_type
           if @lecture.save
             format.html {
-              redirect_to new_space_subject_lecture_path(@space, @subject,
-               :lecture_type => params[:lectureable_type],
-               :step => 3)
+              if params[:back_button]
+                redirect_to new_space_subject_lecture_path(@space, @subject,
+                                                           :lecture_type => params[:lectureable_type],
+                                                           :step => 1)
+              else
+                redirect_to new_space_subject_lecture_path(@space, @subject,
+                                                           :lecture_type => params[:lectureable_type],
+                                                           :step => 3)
+              end
             }
             format.js do
               render :template => 'lectures/go_to_step3', :locals => { :lecture_type => params[:lectureable_type], :step => "3"
@@ -327,6 +363,15 @@ class LecturesController < BaseController
     when "3"
       @lecture = Lecture.find(session[:lecture_id])
 
+      if params[:back_button]
+        respond_to do |format|
+          format.html {
+            redirect_to new_space_subject_lecture_path(@space, @subject,
+                                                       :lecture_type => params[:lectureable_type],
+                                                       :step => 2)
+          }
+        end
+      else
       # se o usuário completou os 3 passos então o curso está publicado
       @lecture.published = true
 
@@ -362,6 +407,7 @@ class LecturesController < BaseController
         else
           format.html { render "step3" }
         end
+      end
       end
     end
   end
