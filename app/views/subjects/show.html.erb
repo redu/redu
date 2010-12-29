@@ -7,6 +7,12 @@
     <%= render :partial => 'subjects/tabs_menu' %>
     <div class="panel">
       <% unless @subject.assets.empty? %>
+        <% if can? :manage, @subject %>
+          <div class="box_notice">
+            Para mudar a ordem dos recursos, clique
+            <%= link_to " aqui", admin_assets_order_space_subject_path(@space, @subject) %>.
+          </div>
+        <% end %>
       <ul class="default subject-assets">
         <%= render :partial => 'subjects/asset_item',
           :collection => @subject.assets, :as => :item %>
