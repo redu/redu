@@ -1,66 +1,55 @@
+<div id="interactive_container" align="center" >
+
+  <div id="topic_bar">
+    <div id="topic_list">
+      <% @lecture.lectureable.lessons.each_with_index do |lesson, x| %>
+
+        <a href="#" onclick="selectTopic(<%=x%>); return false;" id="topic_item_<%=x%>" class="topic_item<%= (x == 0) ? ' topic_item_sel' : ''%>" title="<%=lesson.title%>">
+
+          <%= lesson_icon(lesson)%>
+
+          <span id="topic_name_<%=x%>"> <%= truncate_chars(lesson.title, 25, '..') %></span> 
+          <!--
+          <span id="topic_check_<%=x%>"> <%= image_tag 'checkbox_clear.png', :title => "completei!", :onclick => "checkTopic(" + x.to_s + "); return false;"%> </span>
+          -->
+        </a>
+
+      <% end %>
+    </div>
+
+  </div>
+
+  <div id="topic_body"><!-- TODO: carregar via ajax? -->
+    <b></b><div id="accessbility_bar">
+      <%= link_to_function((image_tag 'icons/audio.jpg', :title => 'Leitura', :border => 0), "alert('em breve!')" )%>
+      <%= link_to_function((image_tag 'icons/icon_fontSizeUp.gif', :title => 'Aumentar fonte', :border => 0), "increaseFontSize()")%>
+      <%= link_to_function((image_tag 'icons/icon_fontSizeDown.gif', :title => 'Diminuir fonte', :border => 0), "decreaseFontSize()")%>
+      <%= link_to_function((image_tag 'icons/fullscreen.gif', :title => 'Tela cheia', :border => 0), "fullScreen(true)" )%>
+    </div>
+    <%# @lecture.interactive_class.lessons.sort(|a,b| a<b).each_with_index do |l, x| %>
+        <% @lessons.each_with_index do |l, x| %>
+          <div id="topic_body_<%=x%>" style="display: <%= (x == 0) ? 'block' : 'none'%>; background: white;">
+            <div id="topic_body_text" style="padding: 0 15px 15px 15px; min-height:360px;">
+              <h3 style="color: #bbb; margin-top: 0; margin-bottom:15px;"><%= l.title %></h3>
+
+              <% if l.lesson_type == 'Page'%>
+                <%= l.lesson.body %>
+              <% elsif l.lesson_type == 'Seminar' %>
+                <%= render :partial => "lectures/player", :locals => {:lecture => l.lesson, :is_interactive_class => true} %>
+              <% elsif l.lesson_type == 'ExternalObject'%>
+                <%= l.lesson.html_embed %>
+              <% end %>
+
+            </div>
+            <div id="navigation_bar">
+              <%= button_to_function "< Anterior","selectTopic(" + (x - 1).to_s + ");", :disabled => (x==0) ? true : false %>
+              <%= button_to_function "Próximo >","selectTopic(" + (x + 1).to_s + ");", :disabled => (x>=(@lessons.length-1)) ? true : false %>
+            </div>
+          </div>
 
 
+        <% end %>
+      </div>
 
 
-		<div id="interactive_container" align="center" >
-			
-			<div id="topic_bar">
-				<div id="topic_list">
-					<% @lecture.lectureable.lessons.each_with_index do |lesson, x| %>
-					
-						<a href="#" onclick="selectTopic(<%=x%>); return false;" id="topic_item_<%=x%>" class="topic_item<%= (x == 0) ? ' topic_item_sel' : ''%>" title="<%=lesson.title%>">
-		  			
-						
-						
-						<%= lesson_icon(lesson)%>
-						
-						<span id="topic_name_<%=x%>"> <%= truncate_chars(lesson.title, 25, '..') %></span> 
-					  <!--
-						<span id="topic_check_<%=x%>"> <%= image_tag 'checkbox_clear.png', :title => "completei!", :onclick => "checkTopic(" + x.to_s + "); return false;"%> </span>
-						-->
-			 			</a>
-						
-					<% end %>
-				</div>
-			
-			</div>
-			
-			 <div id="topic_body"><!-- TODO: carregar via ajax? -->
-			 	<b></b><div id="accessbility_bar">
-				<%= link_to_function((image_tag 'icons/audio.jpg', :title => 'Leitura', :border => 0), "alert('em breve!')" )%>
-				<%= link_to_function((image_tag 'icons/icon_fontSizeUp.gif', :title => 'Aumentar fonte', :border => 0), "increaseFontSize()")%>
-				<%= link_to_function((image_tag 'icons/icon_fontSizeDown.gif', :title => 'Diminuir fonte', :border => 0), "decreaseFontSize()")%>
-				<%= link_to_function((image_tag 'icons/fullscreen.gif', :title => 'Tela cheia', :border => 0), "fullScreen(true)" )%>
-			 	</div>
-			 	<%# @lecture.interactive_class.lessons.sort(|a,b| a<b).each_with_index do |l, x| %>
-				<% @lessons.each_with_index do |l, x| %>
-				<div id="topic_body_<%=x%>" style="display: <%= (x == 0) ? 'block' : 'none'%>; background: white;">
-					<div id="topic_body_text" style="padding: 0 15px 15px 15px; min-height:360px;">
-					<h3 style="color: #bbb; margin-top: 0; margin-bottom:15px;"><%= l.title %></h3>
-					
-					<% if l.lesson_type == 'Page'%>
-					<%= l.lesson.body %>
-					<% elsif l.lesson_type == 'Seminar' %>
-						<%= render :partial => "lectures/player", :locals => {:lecture => l.lesson, :is_interactive_class => true} %>
-					<% elsif l.lesson_type == 'ExternalObject'%>
-					<%= l.lesson.html_embed %>
-					<% end %>
-					
-					</div>
-					<div id="navigation_bar">
-						<%= button_to_function "< Anterior","selectTopic(" + (x - 1).to_s + ");", :disabled => (x==0) ? true : false %>
-						<%= button_to_function "Próximo >","selectTopic(" + (x + 1).to_s + ");", :disabled => (x>=(@lessons.length-1)) ? true : false %>
-					</div>
-				</div>
-				
-				
-				<% end %>
-			 </div>
-			
-			
-    	</div>	
-			
-			
-			
-			
-
+    </div>

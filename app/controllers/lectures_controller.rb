@@ -195,8 +195,10 @@ class LecturesController < BaseController
         elsif @lecture.lectureable_type == 'InteractiveClass'
           @interactive_class = @lecture.lectureable
           format.html {render 'edit_interactive'}
-        else # TODO colocar type == seminar / estamos considerando que o resto é seminário
+        elsif @lecture.lectureable_type == 'Seminar'
           format.html {render 'edit_seminar'}
+        else
+          format.html {render 'edit_document'}
         end
       end
 
@@ -481,7 +483,7 @@ class LecturesController < BaseController
         end
 
       end
-    else # seminar
+     elsif @lecture.lectureable_type == 'Seminar'
       respond_to do |format|
         if @lecture.update_attributes(params[:lecture])
           flash[:notice] = 'Vídeo-aula atualizada com sucesso.'
@@ -492,7 +494,17 @@ class LecturesController < BaseController
           format.xml  { render :xml => @lecture.errors, :status => :unprocessable_entity }
         end
       end
-
+    else
+      respond_to do |format|
+        if @lecture.update_attributes(params[:lecture])
+          flash[:notice] = 'Apresentação atualizada com sucesso.'
+          format.html { redirect_to lazy_space_subject_path(@space,@subject) }
+          format.xml  { head :ok }
+        else
+          format.html { render :action => "edit_document" }
+          format.xml  { render :xml => @lecture.errors, :status => :unprocessable_entity }
+        end
+      end
     end
 
   end
