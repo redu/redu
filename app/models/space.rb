@@ -29,12 +29,12 @@ class Space < ActiveRecord::Base
     :conditions => ["user_space_associations.status LIKE 'pending'"]
   has_many :logs, :as => :logeable, :dependent => :destroy, :class_name => 'Status'
 
-  has_many :folders
+  has_many :folders, :dependent => :destroy
   has_many :acquisitions, :as => :acquired_by
   has_many :bulletins, :as => :bulletinable, :dependent => :destroy
   has_many :events, :as => :eventable, :dependent => :destroy
-  has_many :statuses, :as => :statusable
-  has_many :subjects
+  has_many :statuses, :as => :statusable, :dependent => :destroy
+  has_many :subjects, :dependent => :destroy
   has_many :topics # Apenas para facilitar a busca.
   has_many :sb_posts # Apenas para facilitar a busca.
   has_one :forum, :dependent => :destroy
