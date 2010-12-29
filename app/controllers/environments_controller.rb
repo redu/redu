@@ -120,7 +120,7 @@ class EnvironmentsController < BaseController
     @environment.destroy
 
     respond_to do |format|
-      format.html { redirect_to(environments_url) }
+      format.html { redirect_to(teach_index_url) }
       format.xml  { head :ok }
     end
   end

@@ -29,6 +29,11 @@
           <%= f.submit "Alterar!" %>
         <% end %>
       <% end %>
+      <% field_set_tag "Remover ambiente", :class => "fake" do %>
+        <%= link_to "Deletar ambiente", environment_path(@environment),
+          :confirm => "Você tem certeza que deseja remover este ambiente?",
+          :method => :delete %>
+      <% end %>
     </div><!-- end config. -->
   </div>
 </div>
