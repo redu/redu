@@ -273,6 +273,8 @@ class SubjectsController < BaseController
       report.done = true
       report.save!
       profile.update_grade!
+
+      flash[:notice] = "Parabéns, você terminou o módulo #{@subject.title}" if profile.graduaded
     end
     next_asset = current_asset.next
 
@@ -285,7 +287,6 @@ class SubjectsController < BaseController
                                                next_asset.assetable)
       end
     else
-      flash[:notice] = "Parabéns, você terminou o módulo #{@subject.title}"
       #TODO página com relatório de desempenho
       redirect_to space_subject_path(@space, @subject)
     end
