@@ -67,8 +67,8 @@ $(document).ready(function() {
   <div class="main grid_12 omega">
     <div class="school-tabs tabs">
       <ul>
-        <li><a href="#tabs-1">Início</a></li>
         <li><a href="#tabs-5">Mural</a></li>
+        <li><a href="#tabs-1">Notícias</a></li>
         <li><a href="#tabs-2">Módulos</a></li>
         <li><a href="#tabs-4">Arquivos</a></li>
         <!-- <li><a href="#tabs-6">Fórum</a></li>-->
@@ -78,22 +78,7 @@ $(document).ready(function() {
         <% if @brand_new and @featured %>
           <%= render :partial => 'start_page', :locals => {:featured => @featured, :brand_new => @brand_new, :bulletins => @bulletins} %>
         <% end %>
-        <div class="statistics">
-          <span class="call"><span>Eventos</span></span>
-          <% if @space.events and @space.events.approved.upcoming.size > 0 %>
-            <%= render :partial => 'events/upcoming', :object => @space.events.approved.upcoming%>
-            <%= link_to 'Ver todos', space_events_path(@space), :class=>"more" %> 
-          <% else %>
-            <div class="box_notice">
-              Nenhum evento foi criado ainda. 
-              <% if can? :manage, @space or current_user.tutor? @space %>
-                <%= link_to 'Crie uma agora!', new_space_event_path(@space) %>
-              <% end %>
-          </div>
-        <% end %>
-      </div><!-- end news -->
-      <div class="news">
-        <span class="call"><span>Notícias</span></span>
+        <div class="news">
         <% if @bulletins && @bulletins.size > 0 %>
           <%= render :partial => 'bulletins/headlines', :object => @bulletins  %>
           <%= link_to 'Ver todos', space_bulletins_path(@space), :class=>"more" %> 
