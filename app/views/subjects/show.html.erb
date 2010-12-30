@@ -8,9 +8,11 @@
     <div class="panel">
       <% unless @subject.assets.empty? %>
         <% if can? :manage, @subject %>
-          <div class="box_notice">
+          <div class="box-info">
+            <div class="pretty-text">
             Para mudar a ordem dos recursos, clique
             <%= link_to " aqui", admin_assets_order_space_subject_path(@space, @subject) %>.
+            </div>
           </div>
         <% end %>
       <ul class="default subject-assets">
