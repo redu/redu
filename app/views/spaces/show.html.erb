@@ -67,10 +67,10 @@ $(document).ready(function() {
   <div class="main grid_12 omega">
     <div class="school-tabs tabs">
       <ul>
-        <li><a href="#tabs-5">Mural</a></li>
+        <li><a href="#tabs-5" <% if can? :manage, @space %> title="Discuta e tire dúvidas" class="tooltipable" <% end %> >Mural</a></li>
         <li><a href="#tabs-1">Notícias</a></li>
-        <li><a href="#tabs-2">Módulos</a></li>
-        <li><a href="#tabs-4">Arquivos</a></li>
+        <li><a href="#tabs-2" <% if can? :manage, @space %> title="Compartilhe módulos e aulas" class="tooltipable" <% end %> >Módulos</a></li>
+        <li><a href="#tabs-4" <% if can? :manage, @space %> title="Compartilhe documentos" class="tooltipable" <% end %> >Arquivos</a></li>
         <!-- <li><a href="#tabs-6">Fórum</a></li>-->
       </ul>
 
