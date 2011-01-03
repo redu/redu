@@ -9,6 +9,7 @@ class MessagesController < BaseController
                                                    :per_page => AppConfig.items_per_page )
       respond_to do |format|
         format.html
+        format.js
       end
   end
 
@@ -19,6 +20,7 @@ class MessagesController < BaseController
                                              :per_page => AppConfig.items_per_page)
     respond_to do |format|
       format.html
+      format.js
     end
   end
 
@@ -98,28 +100,6 @@ class MessagesController < BaseController
       redirect_to user_messages_path(@user)
     elsif params[:mailbox] == 'sent'
       redirect_to index_sent_user_messages_path(@user)
-    end
-  end
-
-  def more
-    page = params[:limit].to_i/10 + 1
-
-    if params[:mailbox] == 'sent'
-      @messages = @user.sent_messages.paginate(:all, :page => page,
-                                               :order =>  'created_at DESC',
-                                               :per_page => AppConfig.items_per_page)
-    else
-      @messages = @user.received_messages.paginate(:all, :page => page,
-                                                   :order =>  'created_at DESC',
-                                                   :per_page => AppConfig.items_per_page)
-    end
-
-    respond_to do |format|
-      if @messages.length < 10
-        format.js { render :template => 'messages/messages_end' }
-      else
-        format.js { render :template => 'messages/messages_more' }
-      end
     end
   end
 end

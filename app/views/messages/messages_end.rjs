@@ -1,2 +1,0 @@
-page << "$('.messages_table').append('"+escape_javascript(render(:partial => "messages/item", :collection => @messages, :as => :message, :locals => {:mailbox => params[:mailbox]}))+"')"
-page.replace_html "#more",  ''

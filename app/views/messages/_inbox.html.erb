@@ -41,9 +41,6 @@
 	</table>
 	<% end %>
 
-	<% unless @messages.length < 10%>
-	<div id="more">
-          <%= link_to_remote "mais...", :url => {:controller => :messages, :action => :more, :mailbox => 'inbox', :user_id => current_user.id, :offset => 10, :limit => 10}, :method =>:get, :loading => "$('#more').html('"+escape_javascript(image_tag('spinner.gif'))+"')"%>
-	</div>
-	<% end %>
-
+        <% unless @messages.length < 10 %>
+          <%= endless_for(:messages, {:mailbox => 'inbox', :user_id => current_user.id}) %>
+        <% end %>

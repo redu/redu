@@ -681,4 +681,12 @@ end
     end
   end
 
+  def endless_for(controller_name, extra_params = {}, page = 2, action = :index)
+    html = "<div id='endless'>"
+    html += link_to_remote "mais...", :url => {:controller => controller_name,
+      :action => action, :page => page}.merge(extra_params), :method =>:get,
+      :loading => "$('#endless').html('"+escape_javascript(image_tag('spinner.gif'))+"')"
+    html << "</div>"
+  end
+
 end
