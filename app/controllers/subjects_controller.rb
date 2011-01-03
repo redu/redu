@@ -254,7 +254,7 @@ class SubjectsController < BaseController
   # Mural do Subject
   def statuses
     @status = Status.new
-    @statuses = @subject.recent_activity(0,10)
+    @statuses = @subject.recent_activity
   end
 
   def next

@@ -81,8 +81,9 @@ class Space < ActiveRecord::Base
   end
 
   # Status relativos ao Space
-  def recent_activity(offset = 0, limit = 20)
-    self.statuses.all(:order => 'created_at DESC', :offset=> offset, :limit=> limit)
+  def recent_activity(page = 1)
+    self.statuses.paginate(:all, :page => page, :order => 'created_at DESC',
+                           :per_page => AppConfig.items_per_page)
   end
 
   # Logs relativos ao Space (usado no Course#show).

@@ -1,6 +1,6 @@
 class StatusesController < BaseController
 
-  load_and_authorize_resource :status, :except => [:more]
+  load_and_authorize_resource :status, :except => [:index]
 
   def create
     @status = Status.new(params[:status])
@@ -37,27 +37,21 @@ class StatusesController < BaseController
     end
   end
 
-  def more
+  def index
     case params[:type]
-    when 'user'
+    when 'User'
       @statusable = User.find(params[:id])
-    when 'space'
+    when 'Space'
       @statusable = Space.find(params[:id])
-    when 'subject'
+    when 'Subject'
       @statusable = Subject.find(params[:id])
     end
 
     authorize! :read, @statusable
 
-    @statuses = @statusable.recent_activity(params[:offset], params[:limit])
+    @statuses = @statusable.recent_activity(params[:page])
     respond_to do |format|
-      if @statuses.length < params[:limit].to_i
-        format.js { render :template => 'statuses/statuses_end',
-          :locals => { :statusable => @statusable } }
-      else
-        format.js { render :template => 'statuses/statuses_more',
-          :locals => { :statusable_id => @statusable.id } }
-      end
+      format.js
     end
   end
 

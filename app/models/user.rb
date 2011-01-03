@@ -652,8 +652,8 @@ class User < ActiveRecord::Base
     self.statuses.log_action_eq(TEACHING_ACTIONS).descend_by_created_at
   end
 
-  def recent_activity(offset= 0, limit = 20)
-    Status.friends_statuses(self, offset, limit)
+  def recent_activity(page = 1)
+    Status.friends_statuses(self, page)
   end
 
   def add_favorite(favoritable_type, favoritable_id)

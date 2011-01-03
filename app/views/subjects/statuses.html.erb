@@ -14,12 +14,10 @@
             :locals => {:statusable => @subject } %>
         </ul><!-- end activities -->
 
-        <% unless @statuses.length < 10%>
-          <div id="more">
-            <%= link_to_remote "mais", :url => {:controller => :statuses,
-              :action => :more, :id => @subject.id, :type => 'subject', :offset => 10,
-              :limit => 10}, :method =>:get, :loading => "$('#more').html('"+escape_javascript(image_tag('spinner.gif'))+"')"%>
-          </div>
+        <% unless @statuses.length < 10 %>
+          <%= endless_for(:statuses,
+                          {:id => @subject.id,
+                           :type => 'Subject'}) %>
         <% end %>
     </div>
   </div>

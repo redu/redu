@@ -1,6 +1,0 @@
-# Tive problemas para passar @statuses por parâmetro, bem como statusable.id. 
-# Como o endless será refatorado em breve, abri uma exceção neste rjs e ele utiliza
-# vários parâmetros que não foram passados.
-page << "$('.activities').append('"+escape_javascript(render(:partial => "statuses/type_proxy", :collection => @statuses, :as => :status, :locals => {:statusable => :statusable }))+"')"
-page.replace_html "#more",  link_to_remote("mais ainda!", :url => {:controller => :statuses, :action => :more, :id => @statusable.id, :type => params[:type], :offset => (params[:offset].to_i + params[:limit].to_i), :limit => 100}, :method =>:get, :loading => "$('#more').html('"+escape_javascript(image_tag('spinner.gif'))+"')")
-

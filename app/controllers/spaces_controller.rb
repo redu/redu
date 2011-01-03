@@ -259,7 +259,7 @@ class SpacesController < BaseController
     end
 
     if @space
-      @statuses = @space.recent_activity(0,10)
+      @statuses = @space.recent_activity
       @bulletins = @space.bulletins.find(:all, :conditions => "state LIKE 'approved'", :order => "created_at DESC", :limit => 5)
     end
 

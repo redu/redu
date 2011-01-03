@@ -55,8 +55,9 @@ class Subject < ActiveRecord::Base
     APP_URL + "/subjects/"+ self.id.to_s+"-"+self.title.parameterize
   end
 
-  def recent_activity(offset = 0, limit = 20) #TODO colocar esse metodo em status passando apenas o objeto
-    self.statuses.all(:order => 'created_at DESC', :offset=> offset, :limit=> limit)
+  def recent_activity(page = 1) #TODO colocar esse metodo em status passando apenas o objeto
+    self.statuses.paginate(:all, :page => page, :order => 'created_at DESC',
+                           :per_page => AppConfig.items_per_page)
   end
 
   def current_step

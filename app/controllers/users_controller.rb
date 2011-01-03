@@ -151,7 +151,7 @@ class UsersController < BaseController
       redirect_to removed_page_path and return
     end
 
-    @statuses = @user.recent_activity(0,10)
+    @statuses = @user.recent_activity
     @status = Status.new
   end
 

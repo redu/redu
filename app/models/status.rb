@@ -64,14 +64,14 @@ class Status < ActiveRecord::Base
   end
 
   # Dado um usuário, retorna os status deles e de quem ele segue
-  def Status.friends_statuses(user, offset = 0, limit = 20)
+  def Status.friends_statuses(user, page)
     sql = "SELECT DISTINCT s.* FROM statuses s " + \
       "LEFT OUTER JOIN followship f " + \
       "ON (f.follows_id = s.user_id) " + \
       "WHERE f.followed_by_id = #{user.id} OR s.user_id = #{user.id} " + \
-    "ORDER BY s.created_at DESC LIMIT #{offset},#{limit}"
+    "ORDER BY s.created_at DESC"
 
-    Status.find_by_sql(sql)
+    Status.paginate_by_sql(sql, :page => page, :order => 'created_at DESC', :per_page => AppConfig.items_per_page)
   end
 
   # Dada uma rede, retorna os status postados na mesma
