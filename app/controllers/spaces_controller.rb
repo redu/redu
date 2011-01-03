@@ -292,7 +292,6 @@ class SpacesController < BaseController
     @course = Course.find(params[:course_id])
     authorize! :manage, @course
     @environment = @course.environment
-    @space.current_step = session[:space_step]
   end
 
   # GET /spaces/1/edit
@@ -309,19 +308,9 @@ class SpacesController < BaseController
     authorize! :manage, @course
     @environment = @course.environment
     @space.owner = current_user
-    @space.current_step = session[:space_step]
-
-    @space.enable_correct_validation_group!
 
     if @space.valid?
-      if params[:back_button]
-        @space.previous_step
-      elsif @space.last_step?
-        @space.save if @space.all_valid?
-      else
-        @space.next_step
-      end
-      session[:space_step] = @space.current_step
+        @space.save 
     end
     if @space.new_record?
       render "new"

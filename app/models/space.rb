@@ -43,8 +43,6 @@ class Space < ActiveRecord::Base
   named_scope :of_course, lambda { |course_id|
      { :conditions => {:course_id => course_id} }
   }
-  # METODOS DO WIZARD
-  attr_writer :current_step
 
   # PLUGINS
   acts_as_taggable
@@ -54,9 +52,6 @@ class Space < ActiveRecord::Base
   # VALIDATIONS
   validates_presence_of :name, :description, :submission_type,
     :message => "Não pode ser deixado em branco"
-
-  validation_group :general, :fields => [:name, :description]
-  validation_group :settings, :fields => [:submission_type]
 
   # Utilizado nas rotas search friendly
   def to_param
@@ -130,37 +125,6 @@ class Space < ActiveRecord::Base
 
   def root_folder
     Folder.find(:first, :conditions => ["space_id = ? AND parent_id IS NULL", self.id])
-  end
-
-  def current_step
-    @current_step || steps.first
-  end
-
-  def steps
-    %w[general settings]
-  end
-
-  def next_step
-    self.current_step = steps[steps.index(current_step)+1]
-  end
-
-  def previous_step
-    self.current_step = steps[steps.index(current_step)-1]
-  end
-
-  def first_step?
-    current_step == steps.first
-  end
-
-  def last_step?
-    current_step == steps.last
-  end
-
-  def all_valid?
-    steps.all? do |step|
-      self.current_step = step
-      valid?
-    end
   end
 
   # Muda papeis deste ponto para baixo na hieararquia
