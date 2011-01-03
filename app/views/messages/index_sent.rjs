@@ -1,12 +1,12 @@
 page.insert_html :bottom, ".messages_table", :partial => "messages/item",
   :collection => @messages, :as => :message, :locals => {:mailbox => params[:mailbox]}
 if @messages.size >= 10
-  page.replace_html "#endless",
+  page.replace_html "#endless_messages",
     endless_for(:messages,
                 {:mailbox => params[:mailbox],
                  :user_id => params[:user_id]},
                 params[:page].to_i + 1,
                 :index_sent)
 else
-  page.replace_html "#endless",  ''
+  page.replace_html "#endless_messages",  ''
 end

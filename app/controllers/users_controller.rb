@@ -21,7 +21,8 @@ class UsersController < BaseController
   def learning
     paginating_params = {
       :page => params[:page],
-      :per_page => 12
+      :order => (params[:sort]) ? params[:sort] + ' DESC' : 'created_at DESC',
+      :per_page => 6
     }
 
     if params[:search] # search

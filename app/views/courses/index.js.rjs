@@ -1,4 +1,13 @@
-page.replace_html 'school_list', :partial => "course_list"
-page << "jQuery('#loader').hide()"
+unless @courses.empty?
+  page.insert_html :bottom, 'school_list', :partial => "course_list"
+end
 
+if @courses.size >= 6
+  page.replace_html "#endless_courses",
+    endless_for(:courses, {:environment_id => params[:environment_id],
+                           :user_id => params[:user_id]},
+                params[:page].to_i + 1)
+else
+  page.replace_html "#endless_courses", ''
+end
 

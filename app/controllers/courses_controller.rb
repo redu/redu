@@ -72,10 +72,10 @@ class CoursesController < BaseController
   end
 
   def index
+
     cond = {}
-    if !@environment.nil? && can?(:manage, @environment)
-      cond[:published] = params.fetch(:published, true)
-    else
+    @user = User.find(params[:user_id].to_i) if params.has_key?(:user_id)
+    unless ( !@environment.nil? && can?(:manage, @environment) ) or ( !@user.nil? && can?(:manage, @user) )
       cond[:published] = true
     end
 
@@ -83,18 +83,20 @@ class CoursesController < BaseController
       :conditions => cond,
       :page => params[:page],
       :order => (params[:sort]) ? params[:sort] + ' DESC' : 'created_at DESC',
-      :per_page => AppConfig.items_per_page
+      :per_page => 8
     }
 
     if @environment
-      @courses = @environment.courses
+      @courses = @environment.courses.paginate(paginating_params)
+    elsif params.has_key?(:user_id)
+
+      paginating_params[:per_page] = 6
+      @courses = @user.courses.paginate(paginating_params)
     else
-      @courses = Course.all
+      @courses = Course.paginate(paginating_params)
     end
     if params[:search] # search
       @courses = @courses.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
-    else
-      @courses = @courses.paginate(paginating_params)
     end
 
     respond_to do |format|

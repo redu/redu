@@ -12,11 +12,8 @@
       <%= render :partial => "course_list" %>
     </div>
   </div>
+  <%= endless_for(:courses) %>
 <% else %>
   <%= render :partial => 'environments/courses_index' %>
+  <%= endless_for(:courses, {:environment_id => @environment.id}) %>
 <% end %>
-
-
-
-
-

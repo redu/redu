@@ -5,4 +5,7 @@
     </li>
   </ul>
 <% end %>
-<%= render :partial => "courses/course_list" %>
+<div id="school_list" class="clearfix">
+  <%= render :partial => "courses/course_list" %>
+</div>
+<%= endless_for(:courses, {:user_id => @user.id}) %>
