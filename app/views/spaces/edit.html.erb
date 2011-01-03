@@ -6,8 +6,9 @@
   <div class="panel squeeze">
 
     <% form_for(@space, :html => { :multipart => true }) do |f| %>
-      <%= f.error_messages %>
+
       <%= render :partial => "form", :locals => { :f => f, :edit => true} %>
+
       <p>
         <%= f.submit 'Atualizar' %> ou <%= link_to 'Voltar', @space %><BR/><BR/>
       </p>

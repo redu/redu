@@ -1,6 +1,15 @@
 
   <% form_for @space, :html => {:id => "form_school"} do |f|%>
 
+    <div class="box-info">
+      <div class="pretty-text">
+        Após criar a disciplina você terá um espaço para alunos, tutores e professores compartilharem informações e conhecimento. Dentro deste espaço, será possível criar notícias, eventos, módulos (conjunto de aulas) e informações dinâmicas no mural.
+      </div>
+    </div>
+    <div class="grid_14">
+      <h3 class="call" >Nova Disciplina</h3>
+    </div>
+
     <%= render "form", :f => f, :edit => false %>
 
     <div class="grid_16">
