@@ -1,12 +1,6 @@
 <ul class="sortable clearfix"> 
 
   <% mct = current_user.unread_message_count %>
-  <li class="clearfix" style="background-color: #FFFFDF; -moz-box-shadow:0 4px 12px #DDDDDD; ">
-    <span class="call"><span style ="background:none repeat scroll 0 0 #FFFFDF; color:orange;">Ações</span></span>
-    <ul class="menu">
-    </ul>
-  </li>
-
   <li class="clearfix">
     <span class="call"><span>Últimas Mensagens</span></span>
     <% if mct > 0 %>
