@@ -28,6 +28,10 @@ pt-BR:
       lecture:
         lectureable_type: "O tipo de aula"
         simple_category: "A categoria"
+      space:
+        name: "Nome"
+        description: "Descrição"
+        submission_type: "Tipo de Moderação"
     errors:
       template:
         header:
@@ -75,8 +79,6 @@ pt-BR:
           attributes:
             description:
               too_short: "Descrição muito curta. Use pelo menos 30 caracteres."
-            #lectureable:
-              #invalid: ": link inválido."
         message:
           attributes:
             body:

@@ -50,8 +50,7 @@ class Space < ActiveRecord::Base
   has_attached_file :avatar, PAPERCLIP_STORAGE_OPTIONS
 
   # VALIDATIONS
-  validates_presence_of :name, :description, :submission_type,
-    :message => "Não pode ser deixado em branco"
+  validates_presence_of :name, :description, :submission_type
 
   # Utilizado nas rotas search friendly
   def to_param
