@@ -88,10 +88,6 @@ class BaseController < ApplicationController
     (current_user && current_user.space_admin?(space_id) || Space.find(space_id).owner == current_user) ? true : access_denied
   end
 
-  def admin_or_moderator_required
-    current_user && (current_user.admin? || current_user.moderator?) ? true : access_denied
-  end
-
   def create_activity
     return unless current_user.auto_status
 

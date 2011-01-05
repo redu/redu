@@ -33,7 +33,6 @@ namespace :bootstrap do
   task :roles => :environment do
     Role.enumeration_model_updates_permitted = true
     Role.create(:name => 'admin', :space_role => false)
-    Role.create(:name => 'moderator', :space_role => false)
     Role.create(:name => 'member', :space_role => false)
 
     # Environment
