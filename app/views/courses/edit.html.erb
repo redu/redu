@@ -1,3 +1,26 @@
+<script type="text/javascript" charset="utf-8">
+//<![CDATA[
+$(document).ready(function(){
+  $("#course_path").bind('keyup blur', function(e){
+    var slug = $(this).slug()
+    $(this).val(slug);
+  })
+
+  $("#course_path").bind('keyup blur', function(){
+    var slug = $(this).slug()
+    $("#url_preview .course").html(slug);
+  })
+
+  $("#course_name").bind('keyup blur', function(e){
+    var slug = $(this).slug()
+    $("#course_path").val(slug);
+    $("#url_preview .course").html(slug);
+  })
+
+})
+//]]>
+</script>
+
 <div class="main grid_16">
   <div class="fake-tabs grid_16 alpha omega">
     <%= render :partial => "courses/admin_taskbar" %>

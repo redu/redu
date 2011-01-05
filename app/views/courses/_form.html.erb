@@ -10,14 +10,22 @@
 </script>
 
 <%= apply_color_picker_to "#course_color" %>
-
+<fieldset class="fake">
+    <legend>O seu endereço completo será:</legend>
+    <div id="url_preview" >
+      <span class="base">redu.com.br/</span>
+      <span class="environment"><%= @environment.path %></span>/
+      <span class="base">cursos/</span>
+      <span class="course"><%= @course.path %></span>
+    </div>
+</fieldset>
 <% field_set_tag "Informações Gerais" do %>
   <%= f.label :name, "Nome" %>
   <%= f.text_field :name %>
   <%= f.label :path, :path.l %>
   <%= f.text_field :path %>
   <%= f.label :description, "Descrição" %>
-  <%= f.cktext_area :description, :width=>'880px', :height => '400px' %> 
+  <%= f.cktext_area :description, :width=>'860px', :height => '400px' %> 
   <%= f.label :workload, "Carga Horária" %>
   <%= f.text_field :workload,  :size=> 8 %>
   <%= f.label "Palavras-chave <span class='snippet'>(separadas por vírgula)</span>" %>
