@@ -254,7 +254,13 @@ class SubjectsController < BaseController
   # Mural do Subject
   def statuses
     @status = Status.new
-    @statuses = @subject.recent_activity
+    @statusable = @subject
+    @statuses = @subject.recent_activity(params[:page])
+
+    respond_to do |format|
+      format.html
+      format.js { render :template => "statuses/index"}
+    end
   end
 
   def next

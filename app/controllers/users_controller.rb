@@ -152,8 +152,14 @@ class UsersController < BaseController
       redirect_to removed_page_path and return
     end
 
-    @statuses = @user.recent_activity
+    @statuses = @user.recent_activity(params[:page])
+    @statusable = @user
     @status = Status.new
+
+    respond_to do |format|
+      format.html
+      format.js {render :template => "statuses/index"}
+    end
   end
 
   def new

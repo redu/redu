@@ -100,13 +100,9 @@ $(document).ready(function() {
       <%= render :partial => "statuses/type_proxy", :collection => @statuses, :as => :status, :locals => {:statusable => @space } %>
     </ul><!-- end activities -->			
 
-    <% unless @statuses.length < 10 %>
-      <%= endless_for(:statuses,
-                      {:id => @space.id,
-                       :type => 'Space'}) %>
-    <% end %>
-
-
+    <%= will_paginate @statuses, :renderer => EndlessRenderer,
+      :class => "endless_statuses",
+      :params => {:id => @space.id, :type => 'Space'} %>
   </div>
 
   <!-- conteudo -->

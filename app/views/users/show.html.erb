@@ -74,12 +74,9 @@ $(document).ready(function() {
         <%= render :partial => "statuses/type_proxy", :collection => @statuses, :as => :status, :locals => {:statusable => @user } %>
       </ul><!-- end activities -->
 
-    <% unless @statuses.length < 10 %>
-      <%= endless_for(:statuses,
-                      {:id => @user.id,
-                       :type => 'User'}) %>
-    <% end %>
-
+      <%= will_paginate @statuses, :renderer => EndlessRenderer,
+        :class => "endless_statuses",
+        :params => {:id => @user.id, :type => 'User'} %>
     </div>
 
     <!-- meus cursos -->

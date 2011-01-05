@@ -259,7 +259,8 @@ class SpacesController < BaseController
     end
 
     if @space
-      @statuses = @space.recent_activity
+      @statuses = @space.recent_activity(params[:page])
+      @statusable = @space
       @bulletins = @space.bulletins.find(:all, :conditions => "state LIKE 'approved'", :order => "created_at DESC", :limit => 5)
     end
 
@@ -268,6 +269,7 @@ class SpacesController < BaseController
         @status = Status.new
 
         format.html
+        format.js { render :template => "statuses/index"}
         format.xml  { render :xml => @space }
       else
         format.html {
