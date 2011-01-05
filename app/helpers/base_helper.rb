@@ -690,3 +690,24 @@ end
   end
 
 end
+
+# Renderer do WillPaginate responsável por renderizar
+# a paginação no formato de Endless.
+class EndlessRenderer < WillPaginate::LinkRenderer
+  def to_html
+    if @options[:class].eql? "pagination"
+      @options[:class] = "endless"
+    end
+
+    unless @collection.next_page.nil?
+      html = @template.link_to_remote "mais",
+        :url => url_for(@collection.next_page), :method =>:get,
+        :loading => "$('.#{@options[:class]}').html('" \
+        + @template.escape_javascript(@template.image_tag('spinner.gif')) + "')"
+
+      html = html.html_safe if html.respond_to? :html_safe
+      @options[:container] ? @template.content_tag(:div, html, html_attributes) : html
+    end
+  end
+end
+
