@@ -175,8 +175,8 @@ module BaseHelper
       when 'space'
           link_obj = link_to(item.logeable_name, space_path(item.logeable_id))
 
-          @activity =  "criou a rede " + link_obj if item.log_action == "create"
-          @activity =  "adicionou a rede " + link_obj + " ao seus favoritos" if item.log_action == "favorite"
+          @activity =  "criou a disciplina " + link_obj if item.log_action == "create"
+          @activity =  "adicionou a disciplina " + link_obj + " ao seus favoritos" if item.log_action == "favorite"
       when 'topic'
           @topic = Topic.find(item.logeable_id)
           link_obj = link_to(item.logeable_name, space_forum_topic_path(@topic.forum.space, @topic))

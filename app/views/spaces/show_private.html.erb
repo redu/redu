@@ -59,7 +59,7 @@ font-size: 0.8em;
 </style>
 
 <% content_for :page_id, 'group' %>
-<%- @meta = { :description => "Perfil da rede #{@space.name} no #{AppConfig.community_name}.", :keywords => "#{@space.name}, #{@space.tags.join(", ") unless @space.tags.nil?}", :robots => AppConfig.robots_meta_show_content }%>
+<%- @meta = { :description => "Perfil da disciplina #{@space.name} no #{AppConfig.community_name}.", :keywords => "#{@space.name}, #{@space.tags.join(", ") unless @space.tags.nil?}", :robots => AppConfig.robots_meta_show_content }%>
 
 
 
@@ -78,7 +78,7 @@ font-size: 0.8em;
             <span>Participação: <%= subscription_type(@space) %></span>
             <span>Submissão: <%= submission_type(@space) %></span>
 						<% if space_association_pending? %>
-							<span class="box_notice">Sua solicitação foi feita, aguarde a autorização dos moderadores da rede.</span>
+							<span class="box_notice">Sua solicitação foi feita, aguarde a autorização dos moderadores da disciplina.</span>
 						<% elsif space_association_disaproved? %>
 							<span class="box_notice">Por algum motivo, você não foi aceito pelo moderador.</span>
 						<% else %>

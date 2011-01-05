@@ -1,7 +1,7 @@
 <div class="grid_12 pretty-text">
-  <h4>Inscreva-se e tenha os eventos da rede no seu calendário</h4>
+  <h4>Inscreva-se e tenha os eventos da disciplina no seu calendário</h4>
 
-  <p>Fique atento aos eventos da sua rede através do Google Calendar ou iCal.</p>
+  <p>Fique atento aos eventos da sua disciplina através do Google Calendar ou iCal.</p>
 
   <% if @eventable.class.to_s.eql?("Space")%>
     <%= link_to image_tag('/images/icons/ical.gif'), ical_space_events_url(:format=>'ics') %>
