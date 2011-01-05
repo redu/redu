@@ -17,7 +17,7 @@ $(document).ready(function(){
   <%= f.text_field :name, :class => "text" %>
   <%= f.hidden_field :path, :class => "leitura" %>
   <% f.fields_for :courses do |course|  %>
-    <%= course.label :name, "Seu curso" %>
+    <%= course.label :name, "Seu primeiro curso" %>
     <%= course.text_field :name, :class => "text" %>
     <%= course.hidden_field :path %>
   <% end %>

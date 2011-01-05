@@ -73,7 +73,7 @@ $(document).ready(function(){
     <% end %>
     <% field_set_tag "Informações do primeiro curso" do %>
     <% f.fields_for :courses do |builder|  %>
-      <%= builder.label :name, "Seu curso" %>
+      <%= builder.label :name, "Seu primeiro curso" %>
       <%= builder.text_field :name, :class => "text" %>
       <%= builder.label :path, "Personalize o endereço" %>
       <%= builder.text_field :path %>
