@@ -1,0 +1,7 @@
+<div class="box-info">
+  <div class="pretty-text">
+    Módulos parcialmente finalizados ou com finalização pendente não aparecem nesta listagem. <%= link_to "Clique aqui", space_subjects_path(:published => "false") %> para visualizá-los.
+  </div>
+</div>
+<%= render :partial => 'subjects/subject_list' %>
+<%= will_paginate @subjects, :renderer => EndlessRenderer %>

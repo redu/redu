@@ -47,9 +47,6 @@ function getParameters(){
 
   </span>
 
-  <%= image_tag "loadingAnimation.gif", :id => "loader", :style => "display: none"%>
-  <div id="subject_list">
-
-    <%= render :partial => "subject_list"%>
-  </div>
+  <%= render :partial => "subject_list"%>
+  <%= will_paginate @subjects, :renderer => EndlessRenderer %>
 </div>

@@ -1,15 +1,7 @@
-<div class="box-info">
-  <div class="pretty-text">
-    Módulos parcialmente finalizados ou com finalização pendente não aparecem nesta listagem. <%= link_to "Clique aqui", space_subjects_path(:published => "false") %> para visualizá-los. 
-  </div>
-</div>
 <% if @subjects && @subjects.size > 0 %>
-  <ul class="default subjects">
+  <ul id="subject_list" class="default subjects">
     <%= render :partial => 'subjects/item', :collection => @subjects, :as => :subject %>
   </ul>
 <% else %>
   <div class="box_notice">(Nenhum módulo)</div>
 <% end %>
-
-<%= will_paginate @subjects %>
-

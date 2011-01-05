@@ -16,9 +16,7 @@ class SubjectsController < BaseController
 
   def index
     cond = {}
-    if can?(:manage, @course)
-      cond[:published] = params.fetch(:published, true)
-    else
+    unless can?(:manage, @course)
       cond[:published] = true
     end
 
@@ -26,7 +24,7 @@ class SubjectsController < BaseController
       :conditions => cond,
       :page => params[:page],
       :order => (params[:sort]) ? params[:sort] + ' DESC' : 'created_at DESC',
-      :per_page => AppConfig.items_per_page
+      :per_page => 5
     }
 
     @subjects = @space.subjects.paginate(paginating_params)
@@ -34,13 +32,7 @@ class SubjectsController < BaseController
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @subjects }
-
-      format.js  do
-        render :update do |page|
-          page.replace_html 'tabs-2-content', :partial => 'subject_list'
-          page << "$('#spinner').hide()"
-        end
-      end
+      format.js
     end
   end
 

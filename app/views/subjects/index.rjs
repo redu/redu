@@ -1,0 +1,9 @@
+if params[:page]
+  page.insert_html :bottom, 'subject_list', :partial => "subject_list"
+  page.replace_html '.endless',
+    (will_paginate @subjects, :renderer => EndlessRenderer)
+else
+  page.replace_html 'tabs-2-content', :partial => 'index'
+  page << "$('#spinner').hide()"
+end
+
