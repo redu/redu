@@ -48,7 +48,7 @@ $(document).ready(function(){
 </script>
 <div class="grid_16">
   <div class="general-call">
-    <h3>Personalize seu ambiente de ensino</h3>
+    <h3>Aqui você personaliza seu ambiente e curso</h3>
     <p>
       Antes de finalizar a criação do ambiente personalize nome, cores e até o endereço.
     </p>
@@ -63,19 +63,19 @@ $(document).ready(function(){
   </fieldset>
   <% form_for @environment, :url => environments_path(:step => 2) do |f| %>
     <%= f.error_messages %>
-    <% field_set_tag "Informações Gerais", :class => "inline grid_7 alpha" do %>
+    <% field_set_tag "Informações do ambiente" do %>
     <%= f.label :name, "Seu ambiente de ensino" %>
     <%= f.text_field :name %>
     <%= f.select :color, options_for_select(color_picker_colors, @environment.try(:color)),
       :class => "color inline" %>
-    <%= f.label :path, "Personalize a URL" %>
+    <%= f.label :path, "Personalize o endereço" %>
     <%= f.text_field :path %>
     <% end %>
-    <% field_set_tag "Seu primeiro curso", :class => "inline grid_8 omega" do %>
+    <% field_set_tag "Informações do primeiro curso" do %>
     <% f.fields_for :courses do |builder|  %>
       <%= builder.label :name, "Seu curso" %>
       <%= builder.text_field :name, :class => "text" %>
-      <%= builder.label :path, "Personalize a URL" %>
+      <%= builder.label :path, "Personalize o endereço" %>
       <%= builder.text_field :path %>
         <% end %>
     <% end %>
