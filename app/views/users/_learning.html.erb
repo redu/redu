@@ -8,4 +8,6 @@
 <div id="school_list" class="clearfix">
   <%= render :partial => "courses/course_list" %>
 </div>
-<%= endless_for(:courses, {:user_id => @user.id}) %>
+<%= will_paginate @courses, :renderer => EndlessRenderer,
+  :class => "endless_course",
+  :params => {:user_id => @user.id} %>

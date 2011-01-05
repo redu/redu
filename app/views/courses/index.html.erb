@@ -12,8 +12,11 @@
       <%= render :partial => "course_list" %>
     </div>
   </div>
-  <%= endless_for(:courses) %>
+  <%= will_paginate @courses, :renderer => EndlessRenderer,
+    :class => "endless_course" %>
 <% else %>
   <%= render :partial => 'environments/courses_index' %>
-  <%= endless_for(:courses, {:environment_id => @environment.id}) %>
+  <%= will_paginate @courses, :renderer => EndlessRenderer,
+    :class => "endless_course",
+    params => {:environment_id => @environment.id} %>
 <% end %>

@@ -87,16 +87,18 @@ class CoursesController < BaseController
     }
 
     if @environment
-      @courses = @environment.courses.paginate(paginating_params)
+      @courses = @environment.courses
     elsif params.has_key?(:user_id)
-
       paginating_params[:per_page] = 6
-      @courses = @user.courses.paginate(paginating_params)
+      @courses = @user.courses
     else
-      @courses = Course.paginate(paginating_params)
+      @courses = Course.all
     end
+
     if params[:search] # search
       @courses = @courses.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
+    else
+      @courses = @courses.paginate(paginating_params)
     end
 
     respond_to do |format|

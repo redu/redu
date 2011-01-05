@@ -36,10 +36,10 @@ class UsersController < BaseController
     end
 
     respond_to do |format|
-      format.js do
-        render :update do |page|
-          page.replace_html  'tabs-2-content', :partial => 'learning'
-        end
+      if params[:page]
+        format.js { render :template => "courses/index" }
+      else
+      format.js
       end
     end
   end

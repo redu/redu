@@ -1,13 +1,8 @@
-unless @courses.empty?
-  page.insert_html :bottom, 'school_list', :partial => "course_list"
-end
+page.insert_html :bottom, 'school_list', :partial => "courses/course_list"
 
-if @courses.size >= 6
-  page.replace_html "#endless_courses",
-    endless_for(:courses, {:environment_id => params[:environment_id],
-                           :user_id => params[:user_id]},
-                params[:page].to_i + 1)
-else
-  page.replace_html "#endless_courses", ''
-end
+page.replace_html ".endless_course",
+  (will_paginate @courses, :renderer => EndlessRenderer,
+   :class => "endless_course",
+   params => {:environment_id => params[:environment_id],
+              :user_id => params[:user_id]})
 
