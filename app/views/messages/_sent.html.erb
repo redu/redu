@@ -38,6 +38,5 @@
 	</table>
 	<% end %>
 
-	<% unless @messages.length < 10 %>
-          <%= endless_for(:messages, {:mailbox => 'sent', :user_id => current_user.id}, 2, :index_sent) %>
-	<% end %>
+        <%= will_paginate @messages, :renderer => EndlessRenderer,
+          :params => {:mailbox => 'sent', :user_id => current_user.id} %>
