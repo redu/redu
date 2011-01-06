@@ -69,18 +69,13 @@
 </script>
 
 <div  class="grid_16">
-	<h3>Todos os <%= @member_type %></h3>
+  <h3>Todos os <%= @member_type %></h3>
 </div>
 
 <div class="main grid_16">
-
-<%= render :partial => "spaces/user_vcard", :collection => @members, :as => :association %>
-
-<div id="pagination" align="center" class="pagination">
-
-	<%= will_paginate  @members, :params => {:sort_by => @sort_by}, :class => "pagination_number"  %>
-	
-</div>
-
+  <div id="members">
+    <%= render :partial => "spaces/user_vcard", :collection => @members, :as => :association %>
+  </div>
+  <%= will_paginate  @members, :renderer => EndlessRenderer %>
 </div><!-- end main -->
 

@@ -181,13 +181,14 @@ class SpacesController < BaseController
     @members = @space.user_space_associations.paginate(  #optei por .users ao inves de .students
                                                          :page => params[:page],
                                                          :order => 'updated_at DESC',
-                                                         :per_page => AppConfig.users_per_page)
+                                                         :per_page => 12)
                                                          @member_type = "membros"
 
                                                          respond_to do |format|
                                                            format.html {
                                                              render "view_members"
                                                            }
+                                                           format.js
                                                            format.xml  { render :xml => @members }
                                                          end
   end
