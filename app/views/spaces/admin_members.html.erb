@@ -1,75 +1,63 @@
 <script type="text/javascript">
-	function selectAll(){
-	//$('select_all_link').hide();
-	//$('select_all_string').show();
-	var checkboxes = document.getElementsByName("users[]");
-	for (var i =0; i< checkboxes.length; i++) {
-		checkboxes[i].checked = true;
-	}
-	
-}
+  function selectAll(){
+    //$('select_all_link').hide();
+    //$('select_all_string').show();
+    var checkboxes = document.getElementsByName("users[]");
+    for (var i =0; i< checkboxes.length; i++) {
+      checkboxes[i].checked = true;
+    }
+
+  }
 
 function selectNone(){
-	var checkboxes = document.getElementsByName("users[]");
-	for (var i =0; i< checkboxes.length; i++) {
-		checkboxes[i].checked = false;
-	}
+  var checkboxes = document.getElementsByName("users[]");
+  for (var i =0; i< checkboxes.length; i++) {
+    checkboxes[i].checked = false;
+  }
 }
 function showLoadingUsers(){
-	document.getElementById('loading_bar').style.display = 'block';
-	//document.removeChild();
-	$('user_list_table').remove();
+  document.getElementById('loading_bar').style.display = 'block';
+  //document.removeChild();
+  $('user_list_table').remove();
 }
 
 function setSubmissionType(type){
-	// type = 0 ; // remover
-	// type = 1 ; // mudar papel
-	
-	 var theform = document.getElementById('moderate_users_form');
-	 var theattribute = document.getElementById('submission_type');
-		
-	theattribute.value = type;
-	theform.submit();
+  // type = 0 ; // remover
+  // type = 1 ; // mudar papel
+
+  var theform = document.getElementById('moderate_users_form');
+  var theattribute = document.getElementById('submission_type');
+
+  theattribute.value = type;
+  theform.submit();
 }
 
-	
+
 </script>
 
 <% content_for :page_id, 'group' %>
 <div class="main grid_16">
-<div class="fake-tabs grid_16 alpha omega">
-	<%= render :partial => "spaces/admin_taskbar" %>
-	<div class="panel">
-	<h3>Administracão de Membros</h3>
-	
+  <div class="fake-tabs grid_16 alpha omega">
+    <%= render :partial => "spaces/admin_taskbar" %>
+    <div class="panel">
+      <h3>Administracão de Membros</h3>
 
-        <% if @memberships && @memberships.size > 0 %>
+      <% if @memberships && @memberships.size > 0 %>
 
-          <% form_remote_tag :url => {:action => :search_users_admin, :id => @space.id}, :loading => "showLoadingUsers()" do %>
-            <%= text_field_tag :search_user %><%= submit_tag 'Buscar' %><BR>
-          <% end %>
+        <% form_remote_tag :url => {:action => :search_users_admin, :id => @space.id}, :loading => "showLoadingUsers()" do %>
+          <%= text_field_tag :search_user %><%= submit_tag 'Buscar' %><BR>
+        <% end %>
 
-
-          <div id="user_list">
-            <%= render :partial => 'user_list_admin', :locals => {:memberships => @memberships}%>
-
-          </div>
+        <div id="user_list">
+          <%= render :partial => 'user_list_admin', :locals => {:memberships => @memberships}%>
+        </div>
 
       <% else %>
         <div class="box_notice">Não há usuários na disciplina.</div>
       <% end %>
-    	
-	
-	<div id="pagination" align="center" class="pagination">
-
-		<%= will_paginate  @memberships, :params => {:sort_by => @sort_by}, :class => "pagination_number"  %>
-		
+      <%= will_paginate  @memberships, :renderer => EndlessRenderer %>
     </div>
-	
-	
-	
-	</div>
-</div><!-- end tabs -->
+  </div><!-- end tabs -->
 </div><!-- end main -->
 
 

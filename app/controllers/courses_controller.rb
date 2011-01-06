@@ -251,6 +251,11 @@ class CoursesController < BaseController
       :page => params[:page],
       :order => 'updated_at DESC',
       :per_page => AppConfig.items_per_page)
+
+    respond_to do |format|
+      format.html
+      format.js { render :template => 'shared/admin_members' }
+    end
   end
 
   # Remove um ou mais usuários de um Environment destruindo todos os relacionamentos

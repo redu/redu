@@ -54,6 +54,7 @@ class SpacesController < BaseController
                                                   :per_page => AppConfig.items_per_page)
     respond_to do |format|
       format.html
+      format.js { render :template => 'shared/admin_members' }
     end
   end
 

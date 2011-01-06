@@ -1,0 +1,8 @@
+<tr>
+  <tr>
+    <td><%= check_box_tag 'users[]', user_item_admin.user.id  %></td>
+    <td><%= link_to user_item_admin.user.display_name, user_item_admin.user, :target => "_blank" %> </td>
+    <td><%= time_ago_in_words(user_item_admin.created_at) %> </td>
+    <td><%= user_item_admin.role.name %> </td>
+  </tr>
+</tr>

@@ -146,6 +146,11 @@ class EnvironmentsController < BaseController
       :page => params[:page],
       :order => 'updated_at DESC',
       :per_page => AppConfig.items_per_page)
+
+    respond_to do |format|
+      format.html
+      format.js { render :template => "shared/admin_members" }
+    end
   end
 
   def admin_bulletins

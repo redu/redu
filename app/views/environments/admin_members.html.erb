@@ -62,11 +62,8 @@ function setSubmissionType(type){
         <div class="box_notice">Não há usuários no ambiente.</div>
       <% end %>
 
-      <div id="pagination" align="center" class="pagination">
-        <%= will_paginate  @memberships,
-              :params => {:sort_by => @sort_by},
-              :class => "pagination_number"  %>
-      </div>
+
+    <%= will_paginate @memberships, :renderer => EndlessRenderer %>
     </div>
   </div>
 </div>
