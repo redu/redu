@@ -45,15 +45,6 @@
     })
   })
 </script>
-<script type="text/javascript" charset="utf-8">
-  $(document).ready(function(){
-      $(".message").hide()
-      $("#toggle").live('click', function(e){
-        $(".message").slideToggle()
-        e.preventDefault()
-        });
-      })
-</script>
 <div class="grid_16">
   <h3 class="call">Disciplinas do curso <%= @course.name %></h3>
 </div>
@@ -70,4 +61,8 @@
     </div>
   <% end %>
 </div><!--  end spotlight-boxes -->
-
+<div class="grid_16">
+  <% field_set_tag 'Compartilhe!', :class => 'fake' do %>
+    <%= render :partial => 'shared/share', :locals => {:resource => @course}%>
+  <%end%>
+</div>
