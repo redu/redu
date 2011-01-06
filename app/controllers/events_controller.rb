@@ -58,9 +58,14 @@ class EventsController < BaseController
                                                :include => :owner,
                                                :page => params[:page],
                                                :order => 'start_time',
-                                               :per_page => AppConfig.items_per_page)
+                                               :per_page => 5)
 
     @list_title = "Eventos Futuros"
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def past
