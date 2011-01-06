@@ -43,8 +43,10 @@ function setSubmissionType(type){
             <% end %>
             <% field_set_tag "Papéis" , :class => "grid_11 omega" do %>
               <% Role.all().each do |role| %>
-                <%= check_box_tag :role_filter, role.id %>
-                <%= label_tag :role_filter, Role.human_attribute_name(role.name), :class => "inline" %>
+                <% unless role.name == 'admin' %>
+                  <%= check_box_tag :role_filter, role.id %>
+                  <%= label_tag :role_filter, Role.human_attribute_name(role.name), :class => "inline" %>
+                <% end %>
               <% end %>
             <% end %>
             <%= submit_tag 'Filtrar',
