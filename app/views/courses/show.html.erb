@@ -70,27 +70,4 @@
     </div>
   <% end %>
 </div><!--  end spotlight-boxes -->
-<% if can? :manage, @course %>
-  <div class="grid_16">
-    <div class="grid_8 alpha" id="invitation">
-      <h3 class="call">Convide colaboradores</h3>
-      <p class="pretty-text quiet">Você pode convidar professoores, tutores e produtores de conteúdo para auxiliar na criação das aulas.</p>
 
-      <% remote_form_for :invitation, :method => :post,
-        :url => course_invitations_path(@course),
-        :html => {:id => "environment_invitation", :class => "cupertino"},
-        :loading => "$(\"#environment_invitation\").prepend(\"#{escape_javascript(image_tag("spinner.gif")) }\")",
-        :complete => "$(\"#environment_invitation\").find(\"img\").remove()" do  |f| %>
-        <div id="invitation_errors"></div>
-        <%= f.label :email_addresses, "E-mails" %>
-        <%= f.text_area :email_addresses, :rows => 1, :class => "growup", :style => "width: 98%; " %>
-        <hr/>
-        <a id="toggle" href="#">Escrever Mensagem</a>
-        <%= f.label :message, "Mensagem", :class => "message small" %>
-        <%= f.text_area :message, :rows => 1 , :class => "message growup", :style => "width: 98%;" %>
-
-        <%= f.submit "Convidar" %>
-      <% end %>
-    </div>
-  </div>
-<% end %>
