@@ -6,20 +6,22 @@
 <div class="main grid_12 omega">
   <% if @bulletins && @bulletins.size > 0 %>
 
-    <ul class="bulletins grid_12 alpha omega">
+    <% if can? :manage, @bulletinable || current_user.tutor?(@bulletinable) %>
+      <%= link_to "Crie uma nova notícia.", new_polymorphic_path([@bulletinable, Bulletin.new]), :class => "button"%>
+    <% end %>
+    <ul id="bulletins" class="bulletins grid_12 alpha omega">
       <%= render :partial => 'bulletins/list', :collection => @bulletins, :as => :bulletin, :locals => {
         :is_index => true } %>
     </ul>
-    <%= link_to "Crie uma nova notícia.", new_polymorphic_path([@bulletinable, Bulletin.new]), :class => "button"%>
 
+    <%= will_paginate @bulletins, :renderer => EndlessRenderer %>
   <% else %>
     Nenhuma notícia foi enviada ainda.
-    <%= link_to 'Envie uma agora!', new_polymorphic_path([@bulletinable, Bulletin.new]) %>
+    <% if can? :manage, @space || current_user.tutor?(@space) %>
+      <%= link_to 'Envie uma agora!', new_polymorphic_path([@bulletinable, Bulletin.new]) %>
+    <% end %>
   <% end %>
 
-  <div id="pagination" align="center" class="pagination">
-    <%= will_paginate  @bulletins %>
-  </div>
 </div>
 <% else %>
   <div class="grid_16 fake-tabs start-page">
@@ -27,23 +29,28 @@
     <div class="panel clearfix">
       <% if @bulletins && @bulletins.size > 0 %>
 
+      <% if can? :manage, @bulletinable %>
         <%= link_to "Crie uma nova notícia.", new_polymorphic_path([@bulletinable, Bulletin.new]), :class => "button"%>
+      <% end %>
         <hr/>
-        <ul class="bulletins">
+        <ul id="bulletins" class="bulletins">
           <%= render :partial => 'bulletins/list', :collection => @bulletins, :as => :bulletin, :locals => {
             :is_index => true } %>
         </ul>
+        <%= will_paginate @bulletins, :renderer => EndlessRenderer %>
         <hr/>
-        <%= link_to "Crie uma nova notícia.", new_polymorphic_path([@bulletinable, Bulletin.new]), :class => "button"%>
+
+        <% if can? :manage, @bulletinable %>
+          <%= link_to "Crie uma nova notícia.", new_polymorphic_path([@bulletinable, Bulletin.new]), :class => "button"%>
+        <% end %>
 
       <% else %>
         Nenhuma notícia foi enviada ainda.
-        <%= link_to 'Envie uma agora!', new_polymorphic_path([@bulletinable, Bulletin.new]) %>
+        <% if can? :manage, @bulletinable %>
+          <%= link_to 'Envie uma agora!', new_polymorphic_path([@bulletinable, Bulletin.new]) %>
+        <% end %>
       <% end %>
 
-      <div id="pagination" align="center" class="pagination">
-        <%= will_paginate  @bulletins %>
-      </div>
     </div>
   </div>
 </div>

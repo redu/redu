@@ -18,6 +18,11 @@ class BulletinsController < BaseController
                                    :page => params[:page],
                                    :order => 'created_at DESC',
                                    :per_page => 5)
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def show
