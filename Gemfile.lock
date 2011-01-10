@@ -1,14 +1,14 @@
 GIT
-  remote: git://github.com/collectiveidea/delayed_job.git
-  revision: 2d6170e539cf6523d810f396c6baddc9da0dc120
+  remote: https://github.com/collectiveidea/delayed_job.git
+  revision: 2d6170e
   branch: v2.0
   specs:
     delayed_job (2.0.4)
       daemons
 
 GIT
-  remote: git://github.com/guiocavalcanti/scribd_fu.git
-  revision: 99d74753a12f0f50a632a5b6dc7916e58c0f6e47
+  remote: https://github.com/guiocavalcanti/scribd_fu.git
+  revision: 99d7475
   specs:
     scribd_fu (2.0.9)
       rscribd
@@ -74,6 +74,10 @@ GEM
     rmagick (2.12.2)
     rscribd (1.2.0)
       mime-types
+    rspec (1.3.1)
+    rspec-rails (1.3.3)
+      rack (>= 1.0.0)
+      rspec (= 1.3.1)
     ruby-debug (0.10.4)
       columnize (>= 0.1)
       ruby-debug-base (~> 0.10.4.0)
@@ -113,6 +117,8 @@ DEPENDENCIES
   right_aws (~> 2.0.0)
   rmagick (= 2.12.2)
   rscribd
+  rspec (~> 1.3)
+  rspec-rails (~> 1.3)
   ruby-debug
   scribd_fu!
   validatable
