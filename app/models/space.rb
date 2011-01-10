@@ -50,20 +50,6 @@ class Space < ActiveRecord::Base
     APP_URL + '/espacos/' + self.id.to_s + '-' + self.name.parameterize
   end
 
-  #FIXME Resolver através do Paperclip
-  def avatar_photo_url(size = nil)
-    if self.avatar_file_name
-      self.avatar.url(size)
-    else
-      case size
-      when :thumb
-        AppConfig.photo['missing_thumb_space']
-      else
-        AppConfig.photo['missing_medium_space']
-      end
-    end
-  end
-
   # Status relativos ao Space
   #FIXME Refactor: Mover para Status
   def recent_activity(page = 1)
