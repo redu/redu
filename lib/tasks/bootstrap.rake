@@ -33,7 +33,7 @@ namespace :bootstrap do
   task :roles => :environment do
     Role.enumeration_model_updates_permitted = true
     Role.create(:name => 'admin', :space_role => false)
-    Role.create(:name => 'member', :space_role => false)
+    Role.create(:name => 'member', :space_role => true)
 
     # Environment
     Role.create(:name => 'environment_admin', :space_role => false)
@@ -44,8 +44,6 @@ namespace :bootstrap do
     # space roles
     Role.create(:name => 'teacher', :space_role => true)
     Role.create(:name => 'tutor', :space_role => true)
-    Role.create(:name => 'student', :space_role => true)
-
 
     Role.enumeration_model_updates_permitted = false
     #set all existing users to 'member'
