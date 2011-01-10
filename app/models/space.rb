@@ -99,7 +99,7 @@ class Space < ActiveRecord::Base
     self.folders << @folder
   end
 
-  # Muda papeis deste ponto para baixo na hieararquia
+  # Muda papeis neste ponto da hieararquia
   def change_role(user, role)
     membership = self.user_space_associations.find(:first,
                     :conditions => {:user_id => user.id})

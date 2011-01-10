@@ -47,6 +47,10 @@ class SpacesController < BaseController
   end
 
   def admin_members
+    # @memberships = @space.user_space_associations.approved(:include => :user,
+    #                                               :page => params[:page],
+    #                                               :order => 'updated_at DESC',
+    #                                               :per_page => AppConfig.items_per_page)
     @memberships = UserSpaceAssociation.paginate(:conditions => ["status like 'approved' AND space_id = ?", @space.id],
                                                   :include => :user,
                                                   :page => params[:page],
@@ -59,13 +63,23 @@ class SpacesController < BaseController
   end
 
   def admin_bulletins
+    paginating_params = {
+      :include => :owner,
+      :page => params[:page],
+      :order => 'updated_at ASC',
+      :per_page => 20
+    }
+
+    # @pending_bulletins = @space.bulletins.waiting.paginate(paginating_params)
+    # @bulletins = @space.bulletins.approved.paginate(paginating_params)
+
     @pending_bulletins = Bulletin.paginate(:conditions => ["bulletinable_type LIKE 'Space'
                                    AND bulletinable_id = ?
                                    AND state LIKE ?", @space.id, "waiting"],
-                                   :include => :owner,
-                                   :page => params[:page],
-                                   :order => 'updated_at ASC',
-                                   :per_page => 20)
+                                            :include => :owner,
+                                            :page => params[:page],
+                                            :order => 'updated_at ASC',
+                                            :per_page => 20)
 
     @bulletins = Bulletin.paginate(:conditions => ["bulletinable_type LIKE 'Space'
                                    AND bulletinable_id = ?
@@ -74,6 +88,8 @@ class SpacesController < BaseController
                                    :page => params[:page],
                                    :order => 'updated_at ASC',
                                    :per_page => 20)
+
+
     respond_to do |format|
       format.html
     end
@@ -314,7 +330,7 @@ class SpacesController < BaseController
     @space.owner = current_user
 
     if @space.valid?
-        @space.save 
+        @space.save
     end
     if @space.new_record?
       render "new"
