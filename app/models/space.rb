@@ -17,20 +17,13 @@ class Space < ActiveRecord::Base
   has_many :users, :through => :user_space_associations,
     :conditions => ["user_space_associations.status LIKE 'approved'"]
   # Os membros podem possuir permissões especiais
-  has_many :admins, :through => :user_space_associations, :source => :user,
-    :conditions => [ "user_space_associations.role_id = ?", 4 ]
-  has_many :coordinators, :through => :user_space_associations, :source => :user,
-    :conditions => [ "user_space_associations.role_id = ?", 5 ]
   has_many :teachers, :through => :user_space_associations, :source => :user,
     :conditions => [ "user_space_associations.role_id = ?", 6 ]
   has_many :students, :through => :user_space_associations, :source => :user,
     :conditions => [ "user_space_associations.role_id = ?", 3 ]
-  has_many :pending_requests, :class_name => "UserSpaceAssociation",
-    :conditions => ["user_space_associations.status LIKE 'pending'"]
   has_many :logs, :as => :logeable, :dependent => :destroy, :class_name => 'Status'
 
   has_many :folders, :dependent => :destroy
-  has_many :acquisitions, :as => :acquired_by
   has_many :bulletins, :as => :bulletinable, :dependent => :destroy
   has_many :events, :as => :eventable, :dependent => :destroy
   has_many :statuses, :as => :statusable, :dependent => :destroy
@@ -53,15 +46,11 @@ class Space < ActiveRecord::Base
   # VALIDATIONS
   validates_presence_of :name, :description, :submission_type
 
-  # Utilizado nas rotas search friendly
-  def to_param
-    "#{ self.id }-#{ name.parameterize }"
-  end
-
   def permalink
     APP_URL + '/espacos/' + self.id.to_s + '-' + self.name.parameterize
   end
 
+  #FIXME Resolver através do Paperclip
   def avatar_photo_url(size = nil)
     if self.avatar_file_name
       self.avatar.url(size)
@@ -76,6 +65,7 @@ class Space < ActiveRecord::Base
   end
 
   # Status relativos ao Space
+  #FIXME Refactor: Mover para Status
   def recent_activity(page = 1)
     self.statuses.paginate(:all, :page => page, :order => 'created_at DESC',
                            :per_page => AppConfig.items_per_page)
@@ -83,6 +73,7 @@ class Space < ActiveRecord::Base
 
   # Logs relativos ao Space (usado no Course#show).
   # Retorna hash do tipo :topoic => [status1, status2, status3], :myfile => ...
+  #FIXME Refactor: Mover para Status
   def recent_log(offset = 0, limit = 3)
     logs = {}
     logs[:myfile] = self.statuses.find(:all,
@@ -130,6 +121,7 @@ class Space < ActiveRecord::Base
     membership.update_attributes({:role_id => role.id})
   end
 
+  #FIXME Remover quando a criação deixar de ser Wizard
   def enable_correct_validation_group!
     self.enable_validation_group(self.current_step.to_sym)
   end
