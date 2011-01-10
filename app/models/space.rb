@@ -33,7 +33,6 @@ class Space < ActiveRecord::Base
   has_one :forum, :dependent => :destroy
   has_one :root_folder, :class_name => 'Folder', :foreign_key => 'space_id'
 
-  named_scope :published, :conditions => {:published => 1}
   named_scope :of_course, lambda { |course_id|
      { :conditions => {:course_id => course_id} }
   }
