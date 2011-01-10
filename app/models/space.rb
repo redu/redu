@@ -38,6 +38,7 @@ class Space < ActiveRecord::Base
   has_many :topics # Apenas para facilitar a busca.
   has_many :sb_posts # Apenas para facilitar a busca.
   has_one :forum, :dependent => :destroy
+  has_one :root_folder, :class_name => 'Folder', :foreign_key => 'space_id'
 
   named_scope :published, :conditions => {:published => 1}
   named_scope :of_course, lambda { |course_id|
@@ -120,10 +121,6 @@ class Space < ActiveRecord::Base
   def create_root_folder
     @folder = Folder.create(:name => "root")
     self.folders << @folder
-  end
-
-  def root_folder
-    Folder.find(:first, :conditions => ["space_id = ? AND parent_id IS NULL", self.id])
   end
 
   # Muda papeis deste ponto para baixo na hieararquia
