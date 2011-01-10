@@ -30,6 +30,7 @@ gem "scribd_fu", :git => "https://github.com/guiocavalcanti/scribd_fu.git"
 gem "ghazel-daemons"
 gem "delayed_job", :git => "https://github.com/collectiveidea/delayed_job.git",
   :branch => "v2.0"
+gem "factory_girl"
 
 group :development do
   gem "mongrel"
