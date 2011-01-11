@@ -47,4 +47,5 @@ end
 group :test do
   gem "rspec", "~> 1.3"
   gem "rspec-rails", "~> 1.3"
+  gem "shoulda"
 end
