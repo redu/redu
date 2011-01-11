@@ -58,10 +58,9 @@ describe Space do
 
     expect {
       #FIXME bootstrap para environment de test
-      subject.change_role(user, 6)
+      subject.change_role(user, Role[:member])
     }.should change {
-      subject.user_space_associations.last.role_id }.to(6)
-
+      subject.user_space_associations.last.role_id }.to(Role[:member].id)
   end
 
 end
