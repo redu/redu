@@ -11,11 +11,8 @@ class Lecture < ActiveRecord::Base
   has_many :favorites, :as => :favoritable, :dependent => :destroy
   has_many :annotations
   has_many :logs, :as => :logeable, :dependent => :destroy, :class_name => 'Status'
-  has_one :subject, :through => :asset, :dependent => :destroy
-  has_one :asset, :as => :assetable, :dependent => :destroy
   belongs_to :owner , :class_name => "User" , :foreign_key => "owner"
   belongs_to :lectureable, :polymorphic => true, :dependent => :destroy
-  belongs_to :lazy_asset
 
   accepts_nested_attributes_for :resources,
     :reject_if => lambda { |a| a[:media].blank? },
@@ -42,7 +39,7 @@ class Lecture < ActiveRecord::Base
   has_attached_file :avatar, PAPERCLIP_STORAGE_OPTIONS
 
   # VALIDATIONS
-  validates_presence_of :name, :lazy_asset
+  validates_presence_of :name
   validates_presence_of :description
   validates_length_of :description, :within => 30..200
   validates_presence_of :lectureable_type
@@ -112,10 +109,4 @@ class Lecture < ActiveRecord::Base
   def to_param
     "#{id}-#{name.parameterize}"
   end
-  
-  #FIXME chamar isso num validate_on_create
-  def only_one_asset_per_lazy_asset?
-    Asset.count(:conditions => {:lazy_asset_id => self.lazy_asset}) <= 0
-  end
-
 end
