@@ -4,7 +4,6 @@ class Subject < ActiveRecord::Base
   # cursar um módulo o usuário deve se matricular no mesmo (Enrollment).
 
   # associations
-  has_many :assets, :order => :position, :dependent => :destroy
   has_many :lazy_assets, :dependent => :destroy
   has_many :enrollments, :dependent => :destroy
   has_many :statuses, :as => :statusable, :dependent => :destroy
@@ -33,10 +32,6 @@ class Subject < ActiveRecord::Base
   # PLUGINS
   acts_as_taggable
   ajaxful_rateable :stars => 5
-  has_attached_file :avatar, {
-    :styles => { :thumb => "100x100>", :nano => "24x24>",
-      :default_url => "/images/:class/missing_pic.jpg"}
-  }
 
   validates_presence_of :title, :description
   validates_length_of :lazy_assets, :allow_nil => false, :minimum => 1,
