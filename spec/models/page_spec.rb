@@ -5,19 +5,8 @@ describe Page do
     @page = Factory(:page)
   end
 
-  context "associations" do
-   it "has one lecture" do
-     @page.should respond_to(:lecture)
-   end
-  end
-
-  context "validations" do
-    it "must have a body" do
-      @page = Factory.build(:page, :body => '')
-      @page.should_not be_valid
-      @page.errors.on(:body).should_not be_nil
-    end
-  end
+  it { should have_one(:lecture)}
+  it { should validate_presence_of(:body)}
 
   context "finders" do
     it "retrieves one lecture" do
