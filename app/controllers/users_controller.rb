@@ -1,5 +1,3 @@
-require "RMagick"
-
 class UsersController < BaseController
 
   after_filter :create_activity, :only => [:update]
