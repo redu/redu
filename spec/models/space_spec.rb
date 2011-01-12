@@ -4,44 +4,41 @@ describe Space do
 
   subject { Factory(:space) }
 
-  context "associations" do
-    [:course, :owner].each do |attr|
-      it "belongs to a #{attr}" do
-        should respond_to(attr)
-      end
-    end
 
-    [:user_space_associations, :users, :teachers, :students,
-      :logs, :folders, :bulletins, :events, :statuses, :subjects,
-      :topics, :sb_posts].each do |attr|
-        it "has many #{attr}" do
-          should respond_to(attr)
-        end
-    end
-
-    [:forum, :root_folder].each do |attr|
-      it "has one #{attr}" do
-        should respond_to(attr)
-      end
-    end
-
+  [:course, :owner].each do |attr|
+    it { should belong_to(attr) }
   end
 
-  context "validations" do
-    [:name, :description, :submission_type].each do |attr|
-      it "must have a #{attr}" do
-        @space = Factory.build(:space, attr => '')
-        @space.should_not be_valid
-        @space.errors.on(attr).should_not be_nil
-      end
-    end
+  [:user_space_associations, :users, :teachers, :students,
+    :logs, :folders, :bulletins, :events, :statuses, :subjects,
+    :topics, :sb_posts].each do |attr|
+      it { should have_many(attr) }
+  end
+
+  [:forum, :root_folder].each do |attr|
+    it { should have_one(attr) }
+  end
+
+  [:name, :description, :submission_type].each do |attr|
+    it { should validate_presence_of(attr)}
   end
 
   context "callbacks" do
     it "creates a root folder" do
       expect {
-        @space = Factory(:space)
+        space = Factory(:space)
       }.should change(Folder, :count).by(1)
+    end
+
+    it "creates a forum" do
+      expect{
+        s = Factory(:space)
+      }.should change(Forum, :count).by(1)
+    end
+
+    it "creates a space association with all users of course's spaces" do
+      #FIXME colocar a criação do course via factory
+      pending
     end
   end
 
@@ -57,11 +54,26 @@ describe Space do
     subject.save
 
     expect {
-      #FIXME bootstrap para environment de test
-      subject.change_role(user, 6)
+      # have to play the bootstrap:roles for the test environment
+      subject.change_role(user, Role[:teacher])
     }.should change {
-      subject.user_space_associations.last.role_id }.to(6)
+      subject.user_space_associations.last.role }.to(Role[:teacher])
 
   end
+
+  it "change to published" do
+    space = Factory(:space, :published => false)
+    expect {
+      space.publish!
+    }.should change { space.published }.to(true)
+  end
+
+  it "change to unpublished" do
+    space = Factory(:space, :published => true)
+    expect{
+      space.unpublish!
+    }.should change { space.published }.to(false)
+  end
+
 
 end

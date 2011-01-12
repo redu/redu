@@ -10,7 +10,7 @@ class Event < ActiveRecord::Base
   named_scope :upcoming, lambda { { :order => 'start_time', :conditions => ['end_time > ?' , Time.now ] } }
   named_scope :past, lambda { { :order => 'start_time DESC', :conditions => ['end_time <= ?' , Time.now ] } }
   named_scope :approved, :conditions => { :state => 'approved' }
-
+  named_scope :waiting, :conditions => { :state => 'waiting' }
 
   # PLUGINS
   acts_as_taggable

@@ -47,16 +47,10 @@ class SpacesController < BaseController
   end
 
   def admin_members
-    #FIXME sugestão de refactoring
-    # @memberships = @space.user_space_associations.approved(:include => :user,
-    #                                               :page => params[:page],
-    #                                               :order => 'updated_at DESC',
-    #                                               :per_page => AppConfig.items_per_page)
-    @memberships = UserSpaceAssociation.paginate(:conditions => ["status like 'approved' AND space_id = ?", @space.id],
-                                                  :include => :user,
-                                                  :page => params[:page],
-                                                  :order => 'updated_at DESC',
-                                                  :per_page => AppConfig.items_per_page)
+    @memberships = @space.user_space_associations.approved.paginate(:page => params[:page],
+                                                   :order => 'updated_at DESC',
+                                                   :per_page => AppConfig.items_per_page)
+
     respond_to do |format|
       format.html
       format.js { render :template => 'shared/admin_members' }
@@ -71,26 +65,8 @@ class SpacesController < BaseController
       :per_page => 20
     }
 
-    #FIXME sugestão de refactoring:
-    # @pending_bulletins = @space.bulletins.waiting.paginate(paginating_params)
-    # @bulletins = @space.bulletins.approved.paginate(paginating_params)
-
-    @pending_bulletins = Bulletin.paginate(:conditions => ["bulletinable_type LIKE 'Space'
-                                   AND bulletinable_id = ?
-                                   AND state LIKE ?", @space.id, "waiting"],
-                                            :include => :owner,
-                                            :page => params[:page],
-                                            :order => 'updated_at ASC',
-                                            :per_page => 20)
-
-    @bulletins = Bulletin.paginate(:conditions => ["bulletinable_type LIKE 'Space'
-                                   AND bulletinable_id = ?
-                                   AND state LIKE ?", @space.id, "approved"],
-                                   :include => :owner,
-                                   :page => params[:page],
-                                   :order => 'updated_at ASC',
-                                   :per_page => 20)
-
+    @pending_bulletins = @space.bulletins.waiting.paginate(paginating_params)
+    @bulletins = @space.bulletins.approved.paginate(paginating_params)
 
     respond_to do |format|
       format.html
@@ -100,31 +76,15 @@ class SpacesController < BaseController
   def admin_events
     @space = Space.find(params[:id])
 
-    #FIXME sugestão de refactoring
-    # paginating_params = {
-    #   :include => :owner,
-    #   :page => params[:page],
-    #   :order => 'updated_at ASC',
-    #   :per_page => 20
-    # }
-    # @pending_events = @space.events.waiting.paginate(paginating_params)
-    # @events = @space.events.approved.paginate(paginating_params)
+    paginating_params = {
+      :include => :owner,
+      :page => params[:page],
+      :order => 'updated_at ASC',
+      :per_page => 20
+    }
 
-    @pending_events = Event.paginate(:conditions => ["eventable_id = ?" \
-                                     " AND eventable_type LIKE 'Space'" \
-                                     " AND state LIKE ?", @space.id, "waiting"],
-                                     :include => :owner,
-                                     :page => params[:page],
-                                     :order => 'updated_at ASC',
-                                     :per_page => 20)
-
-    @events = Event.paginate(:conditions => ["eventable_id = ?" \
-                             " AND eventable_type LIKE 'Space'" \
-                             " AND state LIKE ?", @space.id, "approved"],
-                             :include => :owner,
-                             :page => params[:page],
-                             :order => 'updated_at ASC',
-                             :per_page => 20)
+    @pending_events = @space.events.waiting.paginate(paginating_params)
+    @events = @space.events.approved.paginate(paginating_params)
 
     respond_to do |format|
       format.html
@@ -134,20 +94,17 @@ class SpacesController < BaseController
   def search_users_admin
 
     if params[:search_user].empty?
-      @memberships = UserSpaceAssociation.paginate(:conditions => ["status like 'approved' AND space_id = ?", @space.id],
-                                                    :include => :user,
+      @memberships = @space.user_space_associations.approved.paginate(:include => :user,
                                                     :page => params[:page],
                                                     :order => 'updated_at DESC',
                                                     :per_page => AppConfig.items_per_page)
     else
       qry = params[:search_user] + '%'
-      @memberships = UserSpaceAssociation.paginate(
-        :conditions => ["user_space_associations.status like 'approved' AND user_space_associations.space_id = ? AND (users.first_name LIKE ? OR users.last_name LIKE ? OR users.login LIKE ?)",
-          @space.id, qry,qry,qry ],
-          :include => :user,
-          :page => params[:page],
-          :order => 'user_space_associations.updated_at DESC',
-          :per_page => AppConfig.items_per_page)
+      @memberships =
+        @space.user_space_associations.approved.users_by_name(qry).paginate(
+                                :page => params[:page],
+                                :order => 'user_space_associations.updated_at DESC',
+                                :per_page => AppConfig.items_per_page)
     end
 
     respond_to do |format|
@@ -192,35 +149,24 @@ class SpacesController < BaseController
     redirect_to admin_events_space_path(@space)
   end
 
-  # lista redes das quais o usuário corrente é membro
-  #TODO mover para user
-  def member
-    @spaces = current_user.spaces
-  end
-
-  # lista redes das quais usuário corrente é dono
-  #TODO mover para user
-  def owner
-    @spaces = current_user.spaces_owned
-  end
-
   # lista todos os membros da escola
   #TODO mover para user
   def members
+    #optei por .users ao inves de .students
+    @members =
+      @space.user_space_associations.paginate( :page => params[:page],
+                                               :order => 'updated_at DESC',
+                                               :per_page => 12 )
 
-    @members = @space.user_space_associations.paginate(  #optei por .users ao inves de .students
-                                                         :page => params[:page],
-                                                         :order => 'updated_at DESC',
-                                                         :per_page => 12)
-                                                         @member_type = "membros"
+    @member_type = "membros"
 
-                                                         respond_to do |format|
-                                                           format.html {
-                                                             render "view_members"
-                                                           }
-                                                           format.js
-                                                           format.xml  { render :xml => @members }
-                                                         end
+    respond_to do |format|
+      format.html {
+        render "view_members"
+      }
+      format.js
+      format.xml  { render :xml => @members }
+    end
   end
 
   # lista todos os professores
@@ -343,35 +289,12 @@ class SpacesController < BaseController
     @space.owner = current_user
 
     if @space.valid?
-        @space.save
+      @space.associate(current_user, Role[:teacher].id)
+      @space.save
     end
     if @space.new_record?
       render "new"
     else
-      #FIXME Sugestão de refactoring:
-      # @space.associate(user)
-      # ou @space.associate(user, role)
-      UserSpaceAssociation.create({:user => current_user,
-                                  :space => @space,
-                                  :status => "approved",
-                                  :role_id => Role[:teacher].id})
-      #FIXME Sugestão de refactoring:
-      # after_create de Space
-      Forum.create(:name => "Fórum da disciplina #{@space.name}",
-                   :description => "Este fórum pertence a disciplina #{@space.name}. " + \
-                                   "Apenas os participantes desta disciplina podem " + \
-                                   "visualizá-lo. Troque ideias, participe!",
-                    :space_id => @space.id)
-
-      #FIXME Sugestão de refactoring
-      # mover para @space.associate(user)
-      # ou criar um Observer para UserCourseAssociation
-      course_users = UserCourseAssociation.all(:conditions => ["state LIKE ? AND course_id = ?", 'approved', @space.course.id])
-
-      course_users.each do |assoc|
-        UserSpaceAssociation.create({:user_id => assoc.user_id, :space => @space, :status => "approved", :role_id => assoc.role_id})
-      end
-
       session[:space_step] = session[:space_params] = nil
       flash[:notice] = "Disciplina criada!"
       redirect_to @space
@@ -409,21 +332,15 @@ class SpacesController < BaseController
   end
 
   def publish
-    #FIXME sugestão refactoring:
-    # @space.publish!
-    @space.published = 1
-    @space.save
+
+    @space.publish!
 
     flash[:notice] = "O space #{@space.name} foi publicado."
     redirect_to space_path(@space)
   end
 
   def unpublish
-    #FIXME sugestão refactoring:
-    # @space.unpublish!
-    @space.published = 0
-    @space.save
-
+    @space.unpublish!
     flash[:notice] = "O space #{@space.name} foi despublicado."
     redirect_to space_path(@space)
   end

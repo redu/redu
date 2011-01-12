@@ -8,7 +8,10 @@ class Space < ActiveRecord::Base
 
   # CALLBACKS
   before_create :create_root_folder
+  after_create :create_forum
+  after_create :create_space_association_for_users_course
 
+  # ASSOCIATIONS
   belongs_to :course
 
   # USERS
@@ -88,7 +91,7 @@ class Space < ActiveRecord::Base
     logs[:bulletin] = self.statuses.find(:all,
                                          :order => 'created_at DESC',
                                          :limit => limit,
-                                         :offset => offset,
+                                        :offset => offset,
                                          :conditions => { :log => true,
                                            :logeable_type => 'Bulletin' })
     return logs
@@ -104,6 +107,49 @@ class Space < ActiveRecord::Base
     membership = self.user_space_associations.find(:first,
                     :conditions => {:user_id => user.id})
     membership.update_attributes({:role_id => role.id})
+  end
+
+  def publish!
+    self.published = 1
+    self.save
+  end
+
+  def unpublish!
+    self.published = 0
+    self.save
+  end
+
+  def create_forum
+    Forum.create(:name => "Fórum da disciplina #{self.name}",
+                 :description => "Este fórum pertence a disciplina " + \
+                 "#{self.name}. " + \
+                 "Apenas os participantes desta disciplina podem " + \
+                 "visualizá-lo. Troque ideias, participe!",
+                 :space_id => self.id)
+  end
+
+  def create_space_association_for_users_course
+
+    course_users = UserCourseAssociation.all(
+      :conditions => ["state LIKE ? AND course_id = ?",
+      'approved', self.course.id])
+
+    course_users.each do |assoc|
+      UserSpaceAssociation.create({:user_id => assoc.user_id,
+                                  :space => self,
+                                  :status => "approved",
+                                  :role_id => assoc.role_id})
+    end
+
+  end
+
+  def associate(user, role)
+
+    UserSpaceAssociation.create({:user => user,
+                                  :space => self,
+                                  :status => "approved",
+                                  :role_id => role})
+
   end
 
   #FIXME Remover quando a criação deixar de ser Wizard

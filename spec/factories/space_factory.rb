@@ -4,4 +4,5 @@ Factory.define :space do |s|
   s.submission_type 0
 
   s.association :owner, :factory => :user
+  s.association :course, :factory => :course
 end

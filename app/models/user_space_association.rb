@@ -9,6 +9,13 @@ class UserSpaceAssociation < ActiveRecord::Base
   belongs_to :access_key
   has_enumerated :role 
 
+  named_scope :approved, :conditions => { :status => 'approved' }
+  named_scope :users_by_name,
+    lambda { |name| {:include => :user,
+      :conditions => ["users.first_name LIKE ? OR
+                       users.last_name LIKE ? OR
+                       users.login LIKE ?", name, name, name]} }
+
   validates_uniqueness_of :user_id, :scope => :space_id
 
   protected
