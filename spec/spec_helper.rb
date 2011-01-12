@@ -4,6 +4,7 @@ ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path(File.join(File.dirname(__FILE__),'..','config','environment'))
 require 'spec/autorun'
 require 'spec/rails'
+require 'db/create_roles'
 
 # Uncomment the next line to use webrat's matchers
 #require 'webrat/integrations/rspec-rails'
@@ -13,28 +14,15 @@ require 'spec/rails'
 Dir[File.expand_path(File.join(File.dirname(__FILE__),'support','**','*.rb'))].each {|f| require f}
 
 Spec::Runner.configure do |config|
-  puts "Inserindo roles"
-  Role.enumeration_model_updates_permitted = true
-  Role.create(:name => 'admin', :space_role => false)
-  Role.create(:name => 'member', :space_role => true)
-
-  # Environment
-  Role.create(:name => 'environment_admin', :space_role => false)
-
-  # Course
-  Role.create(:name => 'course_admin', :space_role => false)
-
-  # space roles
-  Role.create(:name => 'teacher', :space_role => true)
-  Role.create(:name => 'tutor', :space_role => true)
-  Role.enumeration_model_updates_permitted = false
-
   # If you're not using ActiveRecord you should remove these
   # lines, delete config/database.yml and disable :active_record
   # in your config/boot.rb
   config.use_transactional_fixtures = true
   config.use_instantiated_fixtures  = false
   config.fixture_path = RAILS_ROOT + '/spec/fixtures/'
+
+  # Adiciona os papéis ao BD, pois estes são necessários nos testes.
+  create_roles
 
   # == Fixtures
   #
