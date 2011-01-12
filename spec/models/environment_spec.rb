@@ -13,6 +13,9 @@ describe Environment do
   it { should validate_presence_of(:name) }
   it { should validate_presence_of(:path) }
 
+  it { should_not allow_mass_assignment_of(:owner)}
+  it { should_not allow_mass_assignment_of(:published)}
+
   context "finders" do
     it "retrieves a Environment by its path" do
       Environment.find(subject.path).should == subject

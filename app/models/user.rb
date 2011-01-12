@@ -93,6 +93,9 @@ class User < ActiveRecord::Base
   named_scope :tagged_with, lambda {|tag_name|
     {:conditions => ["tags.name = ?", tag_name], :include => :tags}
   }
+  named_scope :with_ids, lambda { |ids|
+    {:conditions => {:id => ids}}
+  }
   # Accessors
   attr_protected :admin, :featured, :role_id
 

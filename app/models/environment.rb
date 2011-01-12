@@ -8,6 +8,8 @@ class Environment < ActiveRecord::Base
   has_many :users, :through => :user_environment_associations
   has_many :bulletins, :as => :bulletinable, :dependent => :destroy
 
+  attr_protected :owner, :published
+
   acts_as_taggable
   has_attached_file :avatar, PAPERCLIP_STORAGE_OPTIONS.deep_merge({
     :styles => { :environment => "145x125>" }
