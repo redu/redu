@@ -3,7 +3,7 @@ class Course < ActiveRecord::Base
   has_many :spaces, :dependent => :destroy
   has_many :user_course_associations, :dependent => :destroy
   belongs_to :owner, :class_name => "User", :foreign_key => "owner"
-  has_many :users, :through => :user_course_association
+  has_many :users, :through => :user_course_associations
   has_many :approved_users, :through => :user_course_associations,
     :source => :user, :conditions => [ "user_course_associations.state = ?", 'approved' ]
   has_many :invitations, :as => :inviteable, :dependent => :destroy
@@ -14,7 +14,7 @@ class Course < ActiveRecord::Base
 
   acts_as_taggable
 
-  validates_presence_of :name, :path, :message => "Não pode ficar em branco."
+  validates_presence_of :name, :path
   validates_uniqueness_of :name, :path, :scope => :environment_id
 
   # Sobreescrevendo ActiveRecord.find para adicionar capacidade de buscar por path do Space
