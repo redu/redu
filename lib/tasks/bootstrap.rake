@@ -1,3 +1,5 @@
+require 'db/create_roles'
+
 namespace :bootstrap do
   desc "Insert test administrator"
   task :default_admin => :environment do
@@ -31,21 +33,7 @@ namespace :bootstrap do
 
   desc "Insert default Roles"
   task :roles => :environment do
-    Role.enumeration_model_updates_permitted = true
-    Role.create(:name => 'admin', :space_role => false)
-    Role.create(:name => 'member', :space_role => true)
-
-    # Environment
-    Role.create(:name => 'environment_admin', :space_role => false)
-
-    # Course
-    Role.create(:name => 'course_admin', :space_role => false)
-
-    # space roles
-    Role.create(:name => 'teacher', :space_role => true)
-    Role.create(:name => 'tutor', :space_role => true)
-
-    Role.enumeration_model_updates_permitted = false
+    create_roles
     #set all existing users to 'member'
     User.update_all("role_id = #{Role[:member].id}")
   end
