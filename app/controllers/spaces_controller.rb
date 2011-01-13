@@ -285,7 +285,6 @@ class SpacesController < BaseController
     @space.owner = current_user
 
     if @space.valid?
-      @space.associate(current_user, Role[:teacher])
       @space.save
     end
     if @space.new_record?

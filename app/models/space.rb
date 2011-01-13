@@ -140,25 +140,14 @@ class Space < ActiveRecord::Base
   def create_space_association_for_users_course
 
     course_users = UserCourseAssociation.all(
-      :conditions => ["state LIKE ? AND course_id = ?",
-      'approved', self.course.id])
+      :conditions => {:state => 'approved', :course_id => self.course })
 
     course_users.each do |assoc|
-      UserSpaceAssociation.create({:user_id => assoc.user_id,
+      UserSpaceAssociation.create({:user => assoc.user,
                                   :space => self,
                                   :status => "approved",
                                   :role_id => assoc.role_id})
     end
-
-  end
-
-  # cria uma associação com um space passando o papel do usuário
-  def associate(user, role)
-
-    UserSpaceAssociation.create({:user => user,
-                                  :space => self,
-                                  :status => "approved",
-                                  :role_id => role})
 
   end
 
