@@ -29,6 +29,16 @@ describe Lecture do
   it { should_not allow_mass_assignment_of :is_clone }
 
   context "finders" do
+    it "retrieves unpublished lectures" do
+      lectures = (1..3).collect { Factory(:lecture) }
+      subject.published = 1
+      lectures[2].published = 1
+      subject.save
+      lectures[2].save
+
+      Lecture.unpublished.should == [lectures[0], lectures[1]]
+    end
+
     it "retrieves published lectures" do
       lectures = (1..3).collect { Factory(:lecture) }
       subject.published = 1
@@ -78,6 +88,13 @@ describe Lecture do
     it "retrieves a specified limited number of lectures" do
       lectures = (1..10).collect { Factory(:lecture) }
       Lecture.limited(5).should have(5).items
+    end
+
+    it "retrieves lectures related to a specified lecture" do
+      lecture = Factory(:lecture, :name => "Item com nome")
+      lecture2 = Factory(:lecture, :name => "Item")
+
+      Lecture.related_to(lecture2).should == [lecture]
     end
   end
 

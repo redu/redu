@@ -116,8 +116,7 @@ ActionController::Routing::Routes.draw do |map|
                          :cancel => :get,
                          :sort_lesson => :post,
                          :unpublished => :get,
-                         :published => :get,
-                         :waiting => :get }
+                         :published => :get }
       subject.resources :exams,
         :member => { :add_question => :get,
                      :add_resource => :get,

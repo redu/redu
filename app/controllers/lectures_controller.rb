@@ -102,15 +102,16 @@ class LecturesController < BaseController
     @annotation = Annotation.new unless @annotation
 
     #relacionados
-    related_name = @lecture.name
-    @related_lectures = Lecture.find(:all,:conditions => ["name LIKE ? AND id NOT LIKE ?","%#{related_name}%", @lecture.id] , :limit => 3, :order => 'rating_average DESC')
+    @related_lectures = Lecture.related_to(@lecture).all(:limit => 3,
+                                        :order => 'rating_average DESC')
 
     @status = Status.new
 
     respond_to do |format|
       if @lecture.lectureable_type == 'Page'
       elsif @lecture.lectureable_type == 'InteractiveClass'
-        @lessons = Lesson.all(:conditions => ['interactive_class_id = ?',@lecture.lectureable_id ], :order => 'position ASC') # TODO 2 consultas?
+        @lessons = Lesson.find_by_interactive_class_id(@lecture.lectureable_id).
+                            all(:order => 'position ASC') # TODO 2 consultas?
       elsif @lecture.lectureable_type == 'Seminar'
         #@seminar = @lecture.lectureable
       end
@@ -416,7 +417,8 @@ class LecturesController < BaseController
 
   def unpublished_preview
     @lecture = Lecture.find(session[:lecture_id])
-    @lessons = Lesson.all(:conditions => ['interactive_class_id = ?',@lecture.lectureable_id ], :order => 'position ASC')
+    @lessons = Lesson.find_by_interactive_class_id(@lecture.lectureable_id).
+                        all(:order => 'position ASC')
     respond_to do |format|
       format.html {render 'unpublished_preview_interactive'}
     end
@@ -464,7 +466,7 @@ class LecturesController < BaseController
             sucesso = false
           end
         elsif params[:page]
-          if @page.update_attribute 'body', params[:page][:body] 
+          if @page.update_attribute 'body', params[:page][:body]
             sucesso = true
           else
             sucesso = false
@@ -524,32 +526,13 @@ class LecturesController < BaseController
   # lista aulas não publicados (em edição)
   # Não precisa de permissão, pois utiliza o current_user.
   def unpublished
-    @lectures = Lecture.paginate(:conditions => ["owner = ? AND published = 0", current_user.id],
-                               :include => :owner,
-                               :page => params[:page],
-                               :order => 'updated_at DESC',
-                               :per_page => AppConfig.items_per_page)
+    @lectures = current_user.lectures.unpublished.
+                  paginate(:include => :owner,
+                           :page => params[:page],
+                           :order => 'updated_at DESC',
+                           :per_page => AppConfig.items_per_page)
 
     respond_to do |format|
-      format.js
-    end
-  end
-
-  # cursos publicados no redu esperando a moderação dos admins do redu
-  # Não precisa de permissão, pois utiliza o current_user.
-  def waiting
-    @user = current_user
-    @lectures = Lecture.paginate(:conditions => ["owner = ? AND published = 1 AND state LIKE 'waiting'", current_user.id],
-                               :include => :owner,
-                               :page => params[:page],
-                               :order => 'updated_at DESC',
-                               :per_page => AppConfig.items_per_page)
-    @tab_selected = 'waiting'
-
-    respond_to do |format|
-      format.html do
-        render "user_lectures_private"
-      end
       format.js
     end
   end

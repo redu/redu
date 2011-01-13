@@ -23,22 +23,23 @@ class Lecture < ActiveRecord::Base
     :allow_destroy => true
 
   # NAMED SCOPES
+  named_scope :unpublished,
+    :conditions => { :published => false }
   named_scope :published,
-    :conditions => ["published = true"],
-    :include => :owner, :order => 'created_at DESC'
+    :conditions => { :published => true }
   named_scope :seminars,
-    :conditions => ["lectureable_type LIKE 'Seminar' AND published = true"],
-    :include => :owner, :order => 'created_at DESC'
+    :conditions => ["lectureable_type LIKE 'Seminar'"]
   named_scope :iclasses,
-    :conditions => ["lectureable_type LIKE 'InteractiveClass' AND published = true"],
-    :include => :owner, :order => 'created_at DESC'
+    :conditions => ["lectureable_type LIKE 'InteractiveClass'"]
   named_scope :pages,
-    :conditions => ["lectureable_type LIKE 'Page' AND published = true"],
-    :include => :owner, :order => 'created_at DESC'
+    :conditions => ["lectureable_type LIKE 'Page'"]
   named_scope :documents,
-    :conditions => ["lectureable_type LIKE 'Document' AND published = true"],
-    :include => :owner, :order => 'created_at DESC'
+    :conditions => ["lectureable_type LIKE 'Document'"]
   named_scope :limited, lambda { |num| { :limit => num } }
+  named_scope :related_to, lambda { |lecture|
+    { :conditions => ["name LIKE ? AND id != ?", "%#{lecture.name}%", lecture.id]}
+  }
+
 
   attr_protected :owner, :published, :view_count, :removed, :is_clone
 
