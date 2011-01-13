@@ -3,7 +3,7 @@ class SpacesController < BaseController
 
   # Necessário pois Space não é nested route de course
   before_filter :find_space_course_environment,
-    :except => [:create, :cancel]
+    :except => [:cancel]
 
   load_and_authorize_resource :environment,
     :except => [:create, :cancel]
@@ -259,15 +259,13 @@ class SpacesController < BaseController
 
   def cancel
     @course = Course.find(params[:course_id])
-    session[:space_step] = session[:space_params] = nil
     redirect_to(environment_course_path(@course.environment, @course))
   end
 
   # GET /spaces/new
   # GET /spaces/new.xml
   def new
-    session[:space_params] ||= {}
-    @space = Space.new(session[:space_params])
+    @space = Space.new(params[:space])
     @course = Course.find(params[:course_id])
     authorize! :manage, @course
     @environment = @course.environment
@@ -280,22 +278,19 @@ class SpacesController < BaseController
   # POST /spaces
   # POST /spaces.xml
   def create
-    session[:space_params].deep_merge!(params[:space]) if params[:space]
-    @space = Space.new(session[:space_params])
-
-    @course = @space.course
+    @space = Space.new(params[:space])
+    @space.course = @course
     authorize! :manage, @course
     @environment = @course.environment
     @space.owner = current_user
 
     if @space.valid?
-      @space.associate(current_user, Role[:teacher].id)
+      @space.associate(current_user, Role[:teacher])
       @space.save
     end
     if @space.new_record?
       render "new"
     else
-      session[:space_step] = session[:space_params] = nil
       flash[:notice] = "Disciplina criada!"
       redirect_to @space
     end
@@ -351,7 +346,6 @@ class SpacesController < BaseController
     if params.has_key?(:id)
       @space = Space.find(params[:id])
     end
-
     # No SpaceController#new o course_id é passado como param
     @course = @space.nil? ? Course.find(params[:course_id]) : @space.course
     @environment = @course.environment
