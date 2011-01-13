@@ -20,6 +20,10 @@ describe Course do
   xit { should validate_uniqueness_of(:name).scoped_to :environment_id}
   xit { should validate_uniqueness_of(:path).scoped_to :environment_id}
 
+  it { should_not allow_mass_assignment_of :owner }
+  it { should_not allow_mass_assignment_of :published }
+  it { should_not allow_mass_assignment_of :environment }
+
   context "finders" do
     it "retrieves approved users" do
       users = 4.times.inject([]) { |res, i| res << Factory(:user) }

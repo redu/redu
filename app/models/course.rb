@@ -12,6 +12,8 @@ class Course < ActiveRecord::Base
    { :conditions => {:environment_id => environmnent_id} }
   }
 
+  attr_protected :owner, :published, :environment
+
   acts_as_taggable
 
   validates_presence_of :name, :path
