@@ -6,7 +6,10 @@ describe Plan do
   it { should belong_to :billable }
   it { should belong_to :user }
   it { should have_one :changed_to }
+  it { should have_many :invoices }
   it { should belong_to :changed_from }
+
+  it { should_not allow_mass_assignment_of :state }
 
   [:members_limit, :price ].each do |attr|
     it { should validate_presence_of attr }
@@ -37,7 +40,9 @@ describe Plan do
   end
 
   context "when creating new invoices" do
-    it "accesses global billing date"
+    it "accesses global billing date" do
+
+    end
     it "responds to create_invoice" do
       should respond_to :create_invoice
     end
