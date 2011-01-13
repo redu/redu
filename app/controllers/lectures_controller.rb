@@ -98,7 +98,7 @@ class LecturesController < BaseController
     end
 
     # anotações
-    @annotation = @lecture.has_annotations_by(current_user)
+    @annotation = @lecture.annotations.by_user(current_user)
     @annotation = Annotation.new unless @annotation
 
     #relacionados

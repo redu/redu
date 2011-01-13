@@ -5,6 +5,7 @@ class Lecture < ActiveRecord::Base
   # ASSOCIATIONS
   has_many :statuses, :as => :statusable, :dependent => :destroy
   has_many :acess_key
+  #FIXME Verificar se é realmente utilizado (não foi testado)
   has_many :resources,
     :class_name => "LectureResource", :as => :attachable, :dependent => :destroy
   has_many :acquisitions
@@ -34,7 +35,12 @@ class Lecture < ActiveRecord::Base
   named_scope :pages,
     :conditions => ["lectureable_type LIKE 'Page' AND published = true"],
     :include => :owner, :order => 'created_at DESC'
+  named_scope :documents,
+    :conditions => ["lectureable_type LIKE 'Document' AND published = true"],
+    :include => :owner, :order => 'created_at DESC'
   named_scope :limited, lambda { |num| { :limit => num } }
+
+  attr_protected :owner, :published, :view_count, :removed, :is_clone
 
   # PLUGINS
   acts_as_taggable
@@ -42,11 +48,11 @@ class Lecture < ActiveRecord::Base
   has_attached_file :avatar, PAPERCLIP_STORAGE_OPTIONS
 
   # VALIDATIONS
-  validates_presence_of :name, :lazy_asset
+  validates_presence_of :name
   validates_presence_of :description
   validates_length_of :description, :within => 30..200
-  validates_presence_of :lectureable_type
-  validates_associated :lectureable
+  validates_presence_of :lectureable
+  validates_associated :lectureable #FIXME Não foi testado, pois vai ter accepts_nested
 
   # Dependendo do lectureable_type ativa um conjunto de validações diferente
   validation_group :step1,
@@ -57,62 +63,11 @@ class Lecture < ActiveRecord::Base
     APP_URL + "/lectures/"+ self.id.to_s+"-"+self.name.parameterize
   end
 
-  def currently_watching
-    sql = "SELECT u.id, u.login, u.login_slug FROM users u, statuses s " + \
-      "WHERE s.user_id = u.id "+ \
-      "AND s.logeable_type LIKE 'Lecture' " + \
-      "AND s.logeable_id = '#{self.id}' " + \
-      "AND s.created_at > '#{Time.now.utc-10.minutes}'"
-
-    User.find_by_sql(sql)
-  end
-
-  def thumb_url
-    case self.lectureable_type
-
-    when 'Seminar'
-      if self.lectureable.external_resource_type == 'youtube'
-        'http://i1.ytimg.com/vi/' + self.lectureable.external_resource + '/default.jpg'
-      elsif self.lectureable.external_resource_type == 'upload'
-        # Os thumbnails só são gerados após a conversão
-        if self.lectureable.state == 'converted'
-          File.join(File.dirname(self.lectureable.media.url), "thumb_0000.png")
-        else
-          #FIXME url hard coded
-          '/images/missing_pic_space.png'
-        end
-
-      else
-        'http://i1.ytimg.com/vi/0QQcj_tLIYo/default.jpg'
-      end
-    when 'InteractiveClass'
-      if self.avatar_file_name
-        self.avatar.url(:thumb)
-      else
-        # image_path("courses/missing_thumb.png")  # icone aula interativa
-        #FIXME url hard coded
-        '/images/courses/missing_interactive.png'
-      end
-
-    when 'Page'
-      if self.avatar_file_name
-        self.avatar.url(:thumb)
-      else
-        'http://i1.ytimg.com/vi/0QQcj_tLIYo/default.jpg'
-      end
-    end
-  end
-
-  def has_annotations_by(user)
-    Annotation.find(:first,
-                    :conditions => ["lecture_id = ? AND user_id = ?", self.id, user.id])
-  end
-
   # Friendly url
   def to_param
     "#{id}-#{name.parameterize}"
   end
-  
+
   #FIXME chamar isso num validate_on_create
   def only_one_asset_per_lazy_asset?
     Asset.count(:conditions => {:lazy_asset_id => self.lazy_asset}) <= 0
