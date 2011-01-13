@@ -1,12 +1,14 @@
 class Plan < ActiveRecord::Base
   belongs_to :billable, :polymorphic => true
   belongs_to :user
-
   # Para quando houver upgrade/downgrade
   has_one :changed_to, :class_name => "Plan", :foreign_key =>  :plan_id
   belongs_to :changed_from, :class_name => "Plan", :foreign_key => :plan_id
+  has_many :invoices
 
   validates_presence_of :members_limit, :price
+
+  attr_protected :state
 
   acts_as_state_machine :initial => :active, :column => 'status'
   state :active
