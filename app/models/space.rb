@@ -17,6 +17,8 @@ class Space < ActiveRecord::Base
   # USERS
   belongs_to :owner , :class_name => "User" , :foreign_key => "owner"
   has_many :user_space_associations, :dependent => :destroy
+  #FIXME retirar o conditions, o status de user_space_associations será
+  # retirado
   has_many :users, :through => :user_space_associations,
     :conditions => ["user_space_associations.status LIKE 'approved'"]
   # Os membros podem possuir permissões especiais
@@ -39,6 +41,10 @@ class Space < ActiveRecord::Base
   named_scope :of_course, lambda { |course_id|
      { :conditions => {:course_id => course_id} }
   }
+
+  # ACCESSORS
+  attr_protected :owner, :removed, :lectures_count, :members_count,
+                 :course_id, :published
 
   # PLUGINS
   acts_as_taggable
@@ -119,6 +125,7 @@ class Space < ActiveRecord::Base
     self.save
   end
 
+  # Cria um forum logo após a criação do space através do callback after_create
   def create_forum
     Forum.create(:name => "Fórum da disciplina #{self.name}",
                  :description => "Este fórum pertence a disciplina " + \
@@ -128,6 +135,8 @@ class Space < ActiveRecord::Base
                  :space_id => self.id)
   end
 
+  # Após a criação do space, todos os usuários do course ao qual
+  # o space pertence tem que ser associados ao space
   def create_space_association_for_users_course
 
     course_users = UserCourseAssociation.all(
@@ -143,6 +152,7 @@ class Space < ActiveRecord::Base
 
   end
 
+  # cria uma associação com um space passando o papel do usuário
   def associate(user, role)
 
     UserSpaceAssociation.create({:user => user,

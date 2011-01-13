@@ -4,23 +4,25 @@ describe Space do
 
   subject { Factory(:space) }
 
-
-  [:course, :owner].each do |attr|
-    it { should belong_to(attr) }
-  end
-
   [:user_space_associations, :users, :teachers, :students,
     :logs, :folders, :bulletins, :events, :statuses, :subjects,
     :topics, :sb_posts].each do |attr|
       it { should have_many(attr) }
   end
 
-  [:forum, :root_folder].each do |attr|
-    it { should have_one(attr) }
-  end
+  it { should belong_to :course }
+  it { should belong_to :owner }
 
-  [:name, :description, :submission_type].each do |attr|
-    it { should validate_presence_of(attr)}
+  it { should have_one :forum }
+  it { should have_one :root_folder}
+
+  it { should validate_presence_of :name}
+  it { should validate_presence_of :description }
+  it { should validate_presence_of :submission_type }
+
+  [:owner, :removed, :lectures_count,
+   :members_count, :course_id, :published].each do |attr|
+    it { should_not allow_mass_assignment_of attr }
   end
 
   context "callbacks" do
@@ -37,8 +39,13 @@ describe Space do
     end
 
     it "creates a space association with all users of course's spaces" do
-      #FIXME colocar a criação do course via factory
-      pending
+      c = Factory(:course)
+      users = (1..3).collect { Factory(:user) }
+      c.users << [users[0], users[1]]
+      users[0].user_course_associations.last.approve!
+      users[1].user_course_associations.last.approve!
+      s = Factory(:space, :course => c)
+      s.users.should == c.users
     end
   end
 
