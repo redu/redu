@@ -6,6 +6,7 @@ class StudentProfile < ActiveRecord::Base
   belongs_to :user
   belongs_to :subject
   has_many :asset_reports, :dependent => :destroy
+  has_many :lectures, :through => :asset_report
 
   validates_uniqueness_of :user_id, :scope => :subject_id
 
