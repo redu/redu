@@ -57,9 +57,7 @@ describe Course do
 
   it "verifies if it can be published" do
     subject.can_be_published?.should == false
-
-    space = Factory(:space)
-    subject.spaces << space
+    space = Factory(:space, :course => subject)
     subject.can_be_published?.should == true
   end
 
