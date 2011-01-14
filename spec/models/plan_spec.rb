@@ -11,7 +11,7 @@ describe Plan do
 
   it { should_not allow_mass_assignment_of :state }
 
-  [:members_limit, :price ].each do |attr|
+  [:members_limit, :price].each do |attr|
     it { should validate_presence_of attr }
   end
 
@@ -40,13 +40,69 @@ describe Plan do
   end
 
   context "when creating new invoices" do
-    it "accesses global billing date" do
-
-    end
     it "responds to create_invoice" do
       should respond_to :create_invoice
     end
-    it "sets the association"
+
+    it "should be successfully" do
+      subject.update_attribute(:price, 31)
+      expect {
+        subject.create_invoice()
+      }.should change(subject.invoices, :count).to(1)
+
+      subject.invoices.first.amount.should be_close(BigDecimal.new("16"), 0.01)
+      subject.invoices.first.period_end.should == Date.today.at_end_of_month
+      subject.invoices.first.period_start.should == Date.today.tomorrow
+    end
+
+    it "the period_start defaults to tomorrow" do
+      subject.create_invoice
+      subject.invoices.first.period_start.should == Date.tomorrow
+    end
+
+    it "accepts custom attributes" do
+      attrs = {
+        :description => "Lorem ipsum dolor sit amet, consectetur magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
+        :period_start => Date.today + 3,
+        :period_end => Date.today + 5,
+        :amount => "21.5"
+      }
+
+      invoice = subject.create_invoice(attrs)
+      invoice.should be_valid
+
+      # Criando instância para o caso de existir algum callback que modifique o
+      # modelo
+      memo = Factory.build(:invoice, attrs)
+
+      invoice.description.should == memo.description
+      invoice.period_start.should == memo.period_start
+      invoice.period_end.should == memo.period_end
+      invoice.amount.should be_close(memo.amount, 0.005)
+
+    end
+
+    context "when generating the amout" do
+      it "calculates days in a period" do
+        subject.days_in_current_month.should == 31
+
+        subject.complete_days_in(Date.new(2011,01,14),
+                                 Date.new(2011,01,31)).should == 17
+      end
+
+      it "responds to amount_until_next_month" do
+        should respond_to :amount_until_next_month
+      end
+
+      it "should be proportionally to period until billing date" do
+        subject.update_attribute(:price, 31)
+
+        amount = subject.amount_until_next_month
+        amount.should_not be_nil
+        amount.should be_close(BigDecimal.new("16"), 0.01)
+
+      end
+    end
   end
 
   context "when migrating to a new plan" do
