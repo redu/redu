@@ -45,9 +45,7 @@ class User < ActiveRecord::Base
   #COURSES
   has_many :lectures, :foreign_key => "owner",
     :conditions => {:is_clone => false, :published => true}
-  has_many :acquisitions, :as => :acquired_by
 
-  has_many :credits
   has_many :exams, :foreign_key => "owner_id", :conditions => {:is_clone => false}
   has_many :exam_users#, :dependent => :destroy
   has_many :exam_history, :through => :exam_users, :source => :exam
