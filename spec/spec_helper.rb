@@ -5,7 +5,8 @@ require File.expand_path(File.join(File.dirname(__FILE__),'..','config','environ
 require 'spec/autorun'
 require 'spec/rails'
 require 'db/create_roles'
-
+# necessário para inclusão dos matchers
+require 'paperclip/matchers'
 # Uncomment the next line to use webrat's matchers
 #require 'webrat/integrations/rspec-rails'
 
@@ -20,6 +21,9 @@ Spec::Runner.configure do |config|
   config.use_transactional_fixtures = true
   config.use_instantiated_fixtures  = false
   config.fixture_path = RAILS_ROOT + '/spec/fixtures/'
+  
+  # Inclui os matchers do paperclip
+  config.include Paperclip::Shoulda::Matchers
 
   # Adiciona os papéis ao BD, pois estes são necessários nos testes.
   create_roles

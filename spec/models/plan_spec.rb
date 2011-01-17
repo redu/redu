@@ -46,11 +46,13 @@ describe Plan do
 
     it "should be successfully" do
       subject.update_attribute(:price, 31)
+      expected_amount = (Date.today.at_end_of_month - Date.tomorrow).to_i
+
       expect {
         subject.create_invoice()
       }.should change(subject.invoices, :count).to(1)
 
-      subject.invoices.first.amount.should be_close(BigDecimal.new("16"), 0.01)
+      subject.invoices.first.amount.should be_close(expected_amount, 0.01)
       subject.invoices.first.period_end.should == Date.today.at_end_of_month
       subject.invoices.first.period_start.should == Date.today.tomorrow
     end
@@ -98,9 +100,10 @@ describe Plan do
         subject.update_attribute(:price, 31)
 
         amount = subject.amount_until_next_month
-        amount.should_not be_nil
-        amount.should be_close(BigDecimal.new("16"), 0.01)
+        expected_amount = (Date.today.at_end_of_month - Date.tomorrow).to_i
 
+        amount.should_not be_nil
+        amount.should be_close(BigDecimal.new(expected_amount.to_s), 0.01)
       end
     end
   end
