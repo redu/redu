@@ -38,7 +38,7 @@ Rails::Initializer.run do |config|
   end
   # codigo usado para o IE aceitar header sem ser html
   config.action_controller.use_accept_header = false
-  
+
   config.action_controller.session_store = :active_record_store
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp

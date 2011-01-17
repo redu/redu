@@ -1,0 +1,13 @@
+Olá <%= @user.display_name %>,
+
+o pagamento mensal do plano <%= @plan.name %> foi confirmado em <%= @invoice.due_at %>.
+detectamos que o pagamento mensal do plano <%= @plan.name %> está pendente. Você tem até <%= @invoice.threshold_date  %> para efetuar o pagamento.
+
+O pagamento pode ser realizando clicando no link abaixo:
+
+  <%#TODO quando houver controller de pagamento @payment_link %>
+
+Caso o pagamento não seja realizado dentro do período estipulado, os serviços serão suspensos.
+
+Obrigado,
+Equipe <%= AppConfig.community_name %>
