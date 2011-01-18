@@ -1,5 +1,1 @@
-if @status.in_response_to
-  page << "$('#response-#{@status.id}').fadeOut();"
-else
-  page << "$('#status-#{@status.id}').fadeOut();"
-end
+page << "$('#status-#{@status.id}').fadeOut();"

@@ -1,15 +1,24 @@
-<span id ="favorito">
+
+<%= image_tag 'loading_bar.gif', :style => 'display:none;', :id => 'favorite_spinner' %>
+<span id ="favorite">
 	<% if current_user.has_favorite(status) %>
 		<span id = "rm_favorites_link" >
-		<%= link_to_remote('Tirar dos favoritos', {:url => { :controller => :favorites, :action => :not_favorite, :id => status.id, :type => status.class.to_s }, :loading => "$('#status-#{status.id} #rm_favorites_link').hide(); $('#status-#{status.id} #favorite_spinner').show();" }, :class => 'icon ico-bookmarked') %>
+                  <%= link_to_remote('Tirar dos favoritos',
+                    {:url => { :controller => :favorites, :action => :not_favorite,
+                    :id => status.id, :type => status.class.to_s },
+                    :loading => "$('#status-#{status.id} > .activity > .actions span#rm_favorites_link').hide(); $('#status-#{status.id} > .activity > .actions #favorite_spinner').show();" },
+                    :class => 'icon ico-bookmarked') %>
 		</span>
-	<%else%>
+	<% else %>
 		<span id = "favorites_link" >
-		<%= link_to_remote('Favorito', {:url => { :controller => :favorites, :action => :favorite, :id => status.id, :type => status.class.to_s }, :loading => "$('#status-#{status.id} #favorites_link').hide(); $('#status-#{status.id} #favorite_spinner').show();" }, :class => 'icon ico-bookmark') %>
+                  <%= link_to_remote('Favorito',
+                    {:url => { :controller => :favorites, :action => :favorite,
+                    :id => status.id, :type => status.class.to_s },
+                    :loading => "$('#status-#{status.id} > .activity > .actions span#favorites_link').hide(); $('#status-#{status.id} > .activity > .actions #favorite_spinner').show();" },
+                    :class => 'icon ico-bookmark') %>
 		</span>
-	<%end%>
+	<% end %>
 </span>
-<%= image_tag 'loading_bar.gif', :style => 'display:none;', :id => 'favorite_spinner' %>
 
 
 

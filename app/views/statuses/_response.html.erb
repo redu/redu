@@ -1,4 +1,4 @@
-<li class="clearfix" id="response-<%= response.id %>">
+<li class="clearfix" id="status-<%= response.id %>">
     <div class="photo">
      <%= image_tag( response.user.avatar.url(:thumb), {:width => "24", :height=>"24" })%>
     </div>
@@ -7,11 +7,12 @@
         <div class="actions">
           <%= link_to_remote 'Remover',
             :url => status_path(response),
-            :loading => "$('#response-#{response.id} #delete_spinner').show();",
+            :loading => "$('#status-#{response.id} > .activity > .actions .ico-delete-status').hide(); $('#status-#{response.id} > .activity > .actions  #favorite_spinner').show();",
             :confirm => 'Deseja remover a postagem?',
             :method => :delete,
             :html => { :class => "icon ico-delete-status" } %>
-        <%= image_tag 'loading_bar.gif', :style => 'display:none;', :id => 'delete_spinner' %>
+
+            <%= render :partial => "statuses/favorite" , :locals => {:status => response} %>
         </div>
        <% end %>
     <span class="msg">

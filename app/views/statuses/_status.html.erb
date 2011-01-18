@@ -7,7 +7,7 @@
         <div class="actions">
           <%= link_to_remote 'Remover',
             :url => status_path(status),
-            :loading => "$('#status-#{status.id} #favorite_spinner').show();",
+            :loading => "$('#status-#{status.id} > .activity > .actions .ico-delete-status').hide(); $('#status-#{status.id} > .activity > .actions #favorite_spinner').show();",
             :confirm => 'Deseja remover a postagem?',
             :method => :delete,
             :html => { :class => "icon ico-delete-status" } %>
