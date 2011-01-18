@@ -41,5 +41,12 @@ CKEDITOR.editorConfig = function( config )
         ['TextColor','BGColor'],
         ['Maximize','-','About']
     ];
+
+  config.toolbar_Simple =
+    [
+        ['Preview'],
+        ['Bold', 'Italic'],
+        ['NumberedList', 'BulletedList']
+    ];
 };
 

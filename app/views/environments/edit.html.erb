@@ -8,7 +8,7 @@
 <div class="grid_16">
   <div class="fake-tabs grid_16 alpha omega">
     <%= render :partial => 'environments/admin_taskbar' %>
-    <div class="panel clearfix grid_15">
+    <div class="panel">
       <h1>Configurações do Ambiente de Ensino</h1>
 
       <% form_for @environment, :html => { :multipart => true } do |f| %>
@@ -17,7 +17,7 @@
           <%= f.label :name, "Nome" %>
           <%= f.text_field :name  %>
           <%= f.label :description, "Description" %>
-          <%= f.cktext_area :description, :width=>'880px', :height => '400px' %> 
+          <%= f.cktext_area :description, :toolbar => 'Simple',:width=>'865px', :height => '200px' %> 
           <%= f.label "Palavras-chave <span class='snippet'>(separadas por vírgula)</span>" %>
           <%= f.text_field :tag_list %>
         <% end %>
