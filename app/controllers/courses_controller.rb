@@ -92,7 +92,15 @@ class CoursesController < BaseController
       paginating_params[:per_page] = 6
       @courses = @user.courses
     else
-      @courses = Course.all
+      # FIXME Ao utilizar o Course.all, o conditions do paginate não é levado em conta.
+      # Pois o all retorna um Array (aparentemente).
+      # Por enquanto, um workaround foi feito.
+      debugger
+      if cond[:published]
+        @courses = Course.published.all
+      else
+        @courses = Course.all
+      end
     end
 
     if params[:search] # search
