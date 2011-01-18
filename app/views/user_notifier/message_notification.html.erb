@@ -1,8 +1,8 @@
-Hey <%= @message.recipient.login %>!
+Olá <%= @message.recipient.login %>!
 
-<%= @message.sender.login %> has sent you a private message on <%= AppConfig.community_name %>. Use this link to read it:
+<%= @message.sender.login %> enviou uma mensagem privada para você no <%= AppConfig.community_name %>. Use este link para ler:
 
 <%= user_message_url(@message.recipient, @message) %> 
 
-Thanks,
-The <%= AppConfig.community_name %> team
+Obrigado,
+Equipe <%= AppConfig.community_name %>
