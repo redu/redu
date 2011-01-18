@@ -12,7 +12,9 @@
         <td><%= link_to item.name, environment_course_path(@environment, item) %></td>
         <td><%= link_to "Editar", edit_environment_course_path(@environment, item) %></td>
         <td><%= link_to 'Remover', environment_course_path(@environment, item),
-          :confirm => 'Você tem certeza que deseja remover este curso?', :method => :delete %></td>
+              :confirm => 'Todas as informações dos usuários, disciplinas e dados referente ao curso serão perdidas. Você tem certeza disso?',
+              :method => :delete %>
+        </td>
       </tr>
     <% end %>
   <% else %>
