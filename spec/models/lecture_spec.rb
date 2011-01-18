@@ -68,21 +68,17 @@ describe Lecture do
     end
 
     it "retrieves lectures that are pages" do
-      pending "Need seminar Factory as a support" do
         page = Factory(:lecture)
-        seminars = (1..2).collect { Factory(:lecture, :lectureable => :seminar ) }
+        documents = (1..2).collect { Factory(:lecture, :lectureable => Factory(:document)) }
 
-        Lecture.pages.should == [page, subject]
-      end
+        Lecture.pages.should == [page]
     end
 
     it "retrieves lectures that are documents" do
-      pending "Need document Factory" do
         page = Factory(:lecture)
-        documents = (1..2).collect { Factory(:lecture, :lectureable => :document ) }
+        documents = (1..2).collect { Factory(:lecture, :lectureable => Factory(:document)) }
 
-        Lecture.document.should == documents
-      end
+        Lecture.documents.should == documents
     end
 
     it "retrieves a specified limited number of lectures" do
