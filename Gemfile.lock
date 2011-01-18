@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/collectiveidea/delayed_job.git
-  revision: 2d6170e539cf6523d810f396c6baddc9da0dc120
+  revision: 2d6170e
   branch: v2.0
   specs:
     delayed_job (2.0.4)
@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/guiocavalcanti/scribd_fu.git
-  revision: 99d74753a12f0f50a632a5b6dc7916e58c0f6e47
+  revision: 99d7475
   specs:
     scribd_fu (2.0.9)
       rscribd
