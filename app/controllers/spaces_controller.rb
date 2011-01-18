@@ -337,7 +337,7 @@ class SpacesController < BaseController
 
       session[:space_step] = session[:space_params] = nil
       flash[:notice] = "Disciplina criada!"
-      redirect_to @space
+      redirect_to environment_course_path(@environment, @course)
     end
   end
 
