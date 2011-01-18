@@ -67,11 +67,11 @@ $(document).ready(function(){
     <% field_set_tag "Informações do ambiente" do %>
     <%= f.label :name, "Seu ambiente de ensino" %>
     <%= f.text_field :name %>
-    <%= f.select :color, options_for_select(color_picker_colors, @environment.try(:color)),
-      :class => "color inline" %>
     <%= f.label :path, "Personalize o endereço" %>
     <%= f.text_field :path %>
-    <% end %>
+    <%= f.label :color, "Cor" %>
+    <%= f.select :color, options_for_select(color_picker_colors, :selected => @environment.nil? ? nil : @environment.color )%>
+  <% end %>
     <% field_set_tag "Informações do primeiro curso" do %>
     <% f.fields_for :courses do |builder|  %>
       <%= builder.label :name, "Seu primeiro curso" %>
