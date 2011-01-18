@@ -1,0 +1,250 @@
+require 'spec_helper'
+
+describe User do
+  subject { Factory(:user) }
+
+  it { should have_many(:annotations).dependent(:destroy) }
+  it { should have_many(:statuses).dependent(:destroy) }
+  [:lectures, :exams, :exam_users, :questions, :favorites, :statuses,
+    :subjects, :student_profiles, :subjects].each do |attr|
+    it { should have_many attr }
+    end
+
+  it { should have_many :bulletins }
+
+  it { should have_many(:exam_history).through :exam_users}
+  it { should have_many(:invitations).dependent :destroy}
+  it { should have_many(:enrollments).dependent :destroy}
+
+  it { should have_one(:beta_key).dependent(:destroy)}
+
+  it { should belong_to :metro_area }
+  it { should belong_to :state }
+  it { should belong_to :country }
+
+  # Space
+  it { should have_many(:spaces).through(:user_space_associations) }
+  it { should have_many(:user_space_associations).dependent(:destroy) }
+  it { should have_many(:spaces_owned) }
+
+  # Course
+  it { should have_many(:courses).through(:user_course_associations) }
+  it { should have_many(:user_course_associations).dependent(:destroy) }
+  it { should have_many(:courses_owned) }
+
+  # Environment
+  it { should have_many(:environments).through(:user_environment_associations) }
+  it { should have_many(:user_environment_associations).dependent(:destroy) }
+  it { should have_many(:environments_owned) }
+
+  # Followship
+  it { should have_and_belong_to_many :follows }
+  it { should have_and_belong_to_many :followers }
+
+  # Forum
+  it { should have_many(:forums).through(:moderatorships) }
+  it { should have_many(:monitored_topics).through(:monitorships) }
+  [:moderatorships, :monitorships, :sb_posts, :topics].each do |attr|
+    it { should have_many(attr).dependent(:destroy)}
+  end
+
+  it { should_not allow_mass_assignment_of :admin }
+  it { should_not allow_mass_assignment_of :role_id }
+  it { should_not allow_mass_assignment_of :activation_code }
+  it { should_not allow_mass_assignment_of :login_slug }
+  it { should_not allow_mass_assignment_of :followers_count }
+  it { should_not allow_mass_assignment_of :follows_count }
+  it { should_not allow_mass_assignment_of :score }
+  it { should_not allow_mass_assignment_of :removed }
+  it { should_not allow_mass_assignment_of :sb_posts_count }
+  it { should_not allow_mass_assignment_of :sb_last_seen_at }
+
+  [:first_name, :last_name].each do |attr|
+    it { should validate_presence_of attr}
+  end
+
+  [:login, :email].each do |attr|
+    it do
+      pending "Need fix on shoulda's translation problem" do
+        should validate_presence_of attr
+      end
+    end
+  end
+
+  [:login, :email, :login_slug].each do |attr|
+    it do
+      pending "Need fix on shoulda's translation problem" do
+        should validate_uniqueness_of attr
+      end
+    end
+  end
+  it { should validate_acceptance_of :tos }
+
+  context "validations" do
+    it "validates login exclusion of reserved_logins" do
+      subject.login = 'admin'
+      subject.should_not be_valid
+      subject.errors.on(:login).should_not be_nil
+    end
+
+    it "validates birthday to be before of 13 years ago" do
+      subject.birthday = 10.years.ago
+      subject.should_not be_valid
+      subject.errors.on(:birthday).should_not be_nil
+    end
+
+    it "validates a curriculum type on update" do
+      pending "This test is a false positive" do
+        c = File.new('invalid_curriculum.pdf', 'w+')
+        subject.curriculum = c
+        subject.save
+        subject.errors.on(:curriculum).should_not be_nil
+      end
+    end
+  end
+
+  context "associations" do
+    it "retrieves exams that are not clones" do
+      pending "Need exam factory" do
+        exam = Factory(:exame, :is_clone => false, :owner => subject)
+        exam2 = Factory(:exame, :is_clone => true, :owner => subject)
+
+        subject.exams.should == exam
+      end
+    end
+
+    it "retrieves lectures that are not clones" do
+      lecture = Factory(:lecture, :is_clone => false, :owner => subject)
+      lecture2 = Factory(:lecture, :is_clone => true, :owner => subject)
+      lecture.published = 1
+      lecture2.published = 1
+      lecture.save
+      lecture2.save
+      subject.lectures.should == [lecture]
+    end
+  end
+
+  context "finders" do
+    it "retrieves recent users" do
+      users = (1..3).collect { |n| Factory(:user, :created_at => n.hour.ago) }
+      User.recent.should == users
+    end
+
+    it "retrieves active users" do
+     active_users = (1..3).collect { |n| Factory(:user,
+                                                 :activated_at => 1.day.ago) }
+     users = (1..3).collect { |n| Factory(:user) }
+     User.active.should == active_users
+    end
+
+    it "retrieves users tagged with specified tag" do
+      users = (1..2).collect { Factory(:user) }
+      tag = Factory(:tag)
+      subject.tags << tag
+      users[0].tags << tag
+      users[1].tags << Factory(:tag, :name => "Another tag")
+      User.tagged_with(subject.tags.last.name).should == [subject, users[0]]
+    end
+
+    it "retrieves users with specified ids" do
+      users = (1..4).collect { Factory(:user) }
+      User.with_ids([users[0].id, users[1].id]).should == [users[0], users[1]]
+    end
+
+    it "retrieves a user by his login slug" do
+      user = Factory(:user)
+      User.find(subject.login_slug).should == subject
+    end
+
+    it "retrieves a user by his login or email" do
+      user = Factory(:user)
+      User.find_by_login_or_email(subject.login).should == subject
+      User.find_by_login_or_email(subject.email).should == subject
+    end
+  end
+
+  context "callbacks" do
+    it "it will sanitize all attributes before save" do
+      subject.login = "      User Sanitized       "
+      subject.description = "some<<b>script>alert('hello')<</b>/script>"
+      subject.save
+      subject.login.should == "User Sanitized"
+      subject.description.should =="some&lt;<b>script>alert('hello')&lt;</b>/script>"
+    end
+
+    it "make an activation code before create" do
+      subject.activation_code.should_not be_nil
+    end
+
+    it "delivers a signup notification to the user after create"
+
+    it "updates last login after create" do
+      subject.last_login_at.should_not be_nil
+    end
+  end
+
+  it "authenticates a user by their login and password" do
+    User.authenticate(subject.login, subject.password).should == subject
+  end
+
+  it "does not authenticate a user by wrong login or password" do
+    User.authenticate("another-login", subject.password).should_not == subject
+    User.authenticate(subject.login, "another-pass").should_not == subject
+  end
+
+  it "encrypts a password" do
+    User.encrypt("some-password", "some-salt").
+      should == "6f1a2796c36f64731bd5f992dc71618c2fc38e9e"
+  end
+
+  it "verifies if a profile is complete" do
+    subject = Factory(:user, :gender => 'M', :description => "Desc",
+                            :tags => [Factory(:tag)])
+    subject.should be_profile_complete
+  end
+
+  it "verifies if he can manage a thing"
+  it "verifies if he has access to a thing"
+  it "verifies if he is enrolled in a subject" do
+   pending "Need subject model and factory"
+  end
+  it "verifies if he can read a thing"
+
+  it "verifies if he follows a specified user"
+  it "verifies if he is followed by a specified user"
+  it "verifies if he can be owner of a thing"
+  it "verifies if he can be moderator of a thing"
+  it "retrieves his representation in a param"
+  it "retrieves his posts made in current month"
+  it "retrieves his posts made between last and current month"
+  it "deactivates his account"
+  it "activates his account"
+  it "verifies if he can activate his account"
+  it "encrypts his password"
+  it "verifies if he is authenticated"
+  it "verifies if he is remembered by the system"
+  it "says to the system to remember himself"
+  it "says to the system to forget himself"
+  it "resets his password"
+  it "retrieves his owner"
+  it "verifies if he can request friendship with another user"
+  it 'verifies if he has a frienship with another user'
+  it "verifies if he has reached the daily friendship request limit"
+  it "retrieves recommended posts for him"
+  it "displays his name"
+  it "retrieves his first name or login"
+  it "verifies if he can post on a space"
+  it "retrieves his association with a thing"
+  it "verifies if he is redu admin admin"
+  it "verifies if he is environment admin of a thing"
+  it "verifies if he is teacher of a thing"
+  it "verifies if he is tutor of a thing"
+  it "verifies if he is member of a thing"
+  it "verifies if is a man"
+  it "verifies if is a woman"
+  it "adds a thing as his favorite"
+  it "removes a thing as his favorite"
+  it "verifies if a thing is one of his favorite things"
+  it "retrieves his favorites things"
+  it "retrieves his profile for a subject"
+end

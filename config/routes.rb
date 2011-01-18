@@ -12,7 +12,6 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :profiles
 
   map.resources :questions, :collection => { :search => [:get, :post], :add => :get }
-  map.resources :credits
   map.resources :folders
   map.resources :annotations
   map.resources :bulletins, :member => {:rate => :post}
@@ -186,7 +185,6 @@ ActionController::Routing::Routes.draw do |map|
     user.resources :invitations
     user.resources :spaces, :collection => {:member => :get, :owner => :get}
     user.resources :questions
-    user.resources :credits
     user.resources :offerings, :collection => {:replace => :put}
     user.resources :favorites
     user.resources :messages, :collection => { :index_sent => :get, :delete_selected => :post, :auto_complete_for_username => :any }

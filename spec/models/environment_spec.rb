@@ -43,4 +43,15 @@ describe Environment do
     @environment.verify_path!
     @environment.path.should_not == subject.path
   end
+  context "callbacks" do
+    it "creates an environment association" do
+      subject.users.last.should == subject.owner
+    end
+    it "creates an course association with the first course" do
+    user = Factory(:user)
+      subject = Factory(:environment, :owner => user,
+                        :courses => [Factory(:course, :owner => user)])
+      subject.courses.first.owner == subject.owner
+    end
+  end
 end

@@ -50,6 +50,7 @@ pt-BR:
       messages: 
         blank: "não pode ser deixado em branco."
         too_long: "Texto muito longo"
+        accepted: "Você precisa aceitar os Termos de Uso"
       models:
         question:
           attributes:

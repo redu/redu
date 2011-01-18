@@ -8,4 +8,5 @@ Factory.define :user do |u|
   u.sequence(:last_name) {|n| "da Silva #{n}"}
   u.tos "1"
   u.sequence(:birthday) {|n| 13.years.ago - n}
+  u.role :member
 end

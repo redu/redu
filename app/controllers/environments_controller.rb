@@ -75,16 +75,6 @@ class EnvironmentsController < BaseController
         @environment.published = true
 
         if @environment.save
-          UserEnvironmentAssociation.create(:environment => @environment,
-             :user => current_user,
-             :role_id => Role[:environment_admin].id)
-          user_course = UserCourseAssociation.create(
-            :course => @environment.courses.first,
-            :user => current_user,
-            :role_id => Role[:environment_admin].id)
-
-          user_course.approve!
-
           flash[:notice] = 'Parabéns, o seu ambiente de ensino foi criado'
           format.html do
             redirect_to environment_course_path(@environment,

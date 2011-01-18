@@ -10,10 +10,14 @@ describe Document do
 
   context "validates" do
     it "a content_type" do
-     doc =
-       Factory.build(:document,
-                     :attachment =>
-      File.new( File.join(RAILS_ROOT, "spec", "support/documents", "document_test_fail.fai")))
+      path = File.join(RAILS_ROOT, 
+                       "spec", 
+                       "support", 
+                       "documents", 
+                       "document_test_fail.fai")
+
+      doc = Factory.build(:document,
+                          :attachment => File.new(path))
       doc.should_not be_valid
       doc.errors.on(:attachment).should_not be_nil
     end

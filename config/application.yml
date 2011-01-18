@@ -129,6 +129,7 @@ reserved_logins: [
   'popular_rss',
   'posts',
   'recent',
+  'redu',
   'resources',
   'roles',
   'search',
