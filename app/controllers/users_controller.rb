@@ -170,10 +170,6 @@ class UsersController < BaseController
     render :action => 'new' and return if AppConfig.closed_beta_mode
   end
 
-  def groups
-    @groups = @user.spaces.find(:all, :select => "name, path")
-  end
-
   def create
     @user = User.new(params[:user])
 

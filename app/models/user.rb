@@ -18,7 +18,9 @@ class User < ActiveRecord::Base
   before_create :make_activation_code
   after_create {|user| UserNotifier.deliver_signup_notification(user) }
   after_create  :update_last_login
+  # FIXME Verificar necessidade (não foi testado)
   after_save    :recount_metro_area_users
+  # FIXME Verificar necessidade (não foi testado)
   after_destroy :recount_metro_area_users
 
   # ASSOCIATIONS
@@ -45,23 +47,23 @@ class User < ActiveRecord::Base
   #COURSES
   has_many :lectures, :foreign_key => "owner",
     :conditions => {:is_clone => false, :published => true}
-
+  has_many :courses_owned, :class_name => "Course",
+    :foreign_key => "owner"
   has_many :exams, :foreign_key => "owner_id", :conditions => {:is_clone => false}
   has_many :exam_users#, :dependent => :destroy
   has_many :exam_history, :through => :exam_users, :source => :exam
   has_many :questions, :foreign_key => :author_id
   has_many :favorites, :order => "created_at desc", :dependent => :destroy
-  has_many :statuses
+  # FIXME Verificar necessidade (Suggestion.rb não existe). Não foi testado.
   has_many :suggestions
   has_enumerated :role
   has_many :invitations, :dependent => :destroy
   belongs_to  :metro_area
   belongs_to  :state
   belongs_to  :country
-  has_many    :favorites, :order => "created_at desc", :dependent => :destroy
 
   #bulletins
-  has_many :bulletins
+  has_many :bulletins, :foreign_key => "owner"
   #enrollments
   has_many :enrollments, :dependent => :destroy
 
@@ -69,6 +71,7 @@ class User < ActiveRecord::Base
   has_many :subjects, :order => 'title ASC'
 
   #groups
+  # FIXME Verificar necessidade (GroupUser.rb não existe). Não foi testado.
   has_many :group_user
   has_many :groups, :through => :group_user
 
@@ -81,11 +84,14 @@ class User < ActiveRecord::Base
   has_many :sb_posts, :dependent => :destroy
   has_many :topics, :dependent => :destroy
   has_many :monitorships, :dependent => :destroy
+  # FIXME Verificar necessidade (não foi testado)
   has_many :monitored_topics, :through => :monitorships, :conditions => ['monitorships.active = ?', true], :order => 'topics.replied_at desc', :source => :topic
 
 
   # Named scopes
   named_scope :recent, :order => 'users.created_at DESC'
+  # FIXME Remover tudo relacionado a este named_scope,
+  # featured_writer não existe no BD.
   named_scope :featured, :conditions => ["users.featured_writer = ?", true]
   named_scope :active, :conditions => ["users.activated_at IS NOT NULL"]
   named_scope :tagged_with, lambda {|tag_name|
@@ -95,7 +101,9 @@ class User < ActiveRecord::Base
     {:conditions => {:id => ids}}
   }
   # Accessors
-  attr_protected :admin, :featured, :role_id
+  attr_protected :admin, :featured, :role_id, :activation_code,
+    :login_slug, :followers_count, :follows_count, :score, :removed,
+    :sb_posts_count, :sb_last_seen_at
 
   # PLUGINS
   acts_as_authentic do |c|
@@ -121,12 +129,13 @@ class User < ActiveRecord::Base
 
   # VALIDATIONS
   validates_presence_of     :login, :email, :first_name, :last_name
+  # FIXME Verificar necessidade (não foi testado)
   validates_presence_of     :metro_area,                 :if => Proc.new { |user| user.state }
   validates_uniqueness_of   :login, :email, :case_sensitive => false
   validates_uniqueness_of   :login_slug
   validates_exclusion_of    :login, :in => AppConfig.reserved_logins
   validates_date :birthday, :before => 13.years.ago.to_date
-  validates_acceptance_of :tos, :message => "Você precisa aceitar os Termos de Uso"
+  validates_acceptance_of :tos
   validates_attachment_size :curriculum, :less_than => 10.megabytes
   validate_on_update :accepted_curriculum_type
 
@@ -199,6 +208,7 @@ class User < ActiveRecord::Base
     cond
   end
 
+  # FIXME Relacionado com featured, verificar necessidade.
   def self.find_featured
     self.featured
   end
@@ -215,6 +225,7 @@ class User < ActiveRecord::Base
     Digest::SHA1.hexdigest("--#{salt}--#{password}--")
   end
 
+  # FIXME Verificar necessidade (não foi testado)
   def self.paginated_users_conditions_with_search(params)
     search = prepare_params_for_search(params)
 
@@ -224,23 +235,27 @@ class User < ActiveRecord::Base
     return cond, search, metro_areas, states
   end
 
+  # FIXME Verificar necessidade (não foi testado)
   def self.currently_online
     User.find(:all, :conditions => ["sb_last_seen_at > ?", Time.now.utc-5.minutes])
   end
 
+  # FIXME Verificar necessidade (não foi testado)
   def self.search(query, options = {})
     with_scope :find => { :conditions => build_search_conditions(query) } do
       find :all, options
     end
   end
 
+  # FIXME Verificar necessidade (não foi testado)
   def self.build_search_conditions(query)
     query
   end
 
   ## Instance Methods
   def profile_complete?
-    (self.first_name and self.last_name and self.gender and self.description and self.tags)
+    (self.first_name and self.last_name and self.gender and
+        self.description and self.tags) ? true : false
   end
 
   def can_manage?(entity)
@@ -248,7 +263,7 @@ class User < ActiveRecord::Base
     self.admin? and return true
     self.environment_admin? entity and return true
     (entity.owner && entity.owner == self) and return true
-    
+
     case entity.class.to_s
     when 'Course'
       (self.environment_admin? entity.environment)
@@ -345,24 +360,29 @@ class User < ActiveRecord::Base
     self.admin? || self.space_admin?(entity.id) || self.teacher?(entity) || self.coordinator?(entity)
   end
 
+  # FIXME Verificar necessidade (não foi testado)
   def moderator_of?(forum)
     moderatorships.count(:all, :conditions => ['forum_id = ?', (forum.is_a?(Forum) ? forum.id : forum)]) == 1
   end
 
+  # FIXME Verificar necessidade (não foi testado)
   def monitoring_topic?(topic)
     monitored_topics.find_by_id(topic.id)
   end
 
+  # FIXME Criar teste ao definir lógica dos Redu points.
   def earn_points(activity)
     thepoints = AppConfig.points[activity]
     self.update_attribute(:score, self.score + thepoints)
   end
 
+  # FIXME Verificar necessidade (não foi testado)
   def to_xml(options = {})
     options[:except] ||= []
     super
   end
 
+  # FIXME Verificar necessidade (não foi testado)
   def recount_metro_area_users
     return unless self.metro_area
     ma = self.metro_area
@@ -385,6 +405,7 @@ class User < ActiveRecord::Base
                       DateTime.now.to_time.at_beginning_of_month])
   end
 
+  # FIXME Falar com Guila
   def avatar_photo_url(size = nil)
     if avatar
       avatar.public_filename(size)
@@ -427,7 +448,7 @@ class User < ActiveRecord::Base
   end
 
   def encrypt(password)
-    self.class.encrypt(password, salt)
+    self.class.encrypt(password, self.password_salt)
   end
 
   def authenticated?(password)
@@ -451,6 +472,7 @@ class User < ActiveRecord::Base
     save(false)
   end
 
+  # FIXME Verificar necessidade (não foi testado)
   def valid_invite_code?(code)
     code == invite_code
   end
@@ -459,10 +481,12 @@ class User < ActiveRecord::Base
     Digest::SHA1.hexdigest("#{self.id}--#{self.email}--#{self.password_salt}")
   end
 
+  # FIXME Verificar necessidade (não foi testado)
   def location
     metro_area && metro_area.name || ""
   end
 
+  # FIXME Verificar necessidade (não foi testado)
   def full_location
     "#{metro_area.name if self.metro_area}#{" , #{self.country.name}" if self.country}"
   end
@@ -474,12 +498,6 @@ class User < ActiveRecord::Base
     return self.valid?
   end
 
-  def newpass( len )
-    chars = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a
-    new_password = ""
-    1.upto(len) { |i| new_password << chars[rand(chars.size-1)] }
-    return new_password
-  end
 
   def owner
     self
@@ -498,14 +516,20 @@ class User < ActiveRecord::Base
   end
 
   # before filter
+  # FIXME Verificar necessidade.
+  # O login só é aceito seguindo o formato permitido, provavelmente,
+  # não é mais necessário utilizar gsub.
   def generate_login_slug
-    self.login_slug = self.login.gsub(/[^a-z1-9]+/i, '-')
+    if self.login
+      self.login_slug = self.login.gsub(/[^a-z1-9]+/i, '-')
+    end
   end
 
   def update_last_login
     self.update_attribute(:last_login_at, Time.now)
   end
 
+  # FIXME Verificar necessidade (não foi testado)
   def add_offerings(skills)
     skills.each do |skill_id|
       offering = Offering.new(:skill_id => skill_id)
@@ -518,10 +542,12 @@ class User < ActiveRecord::Base
     end
   end
 
+  # FIXME Verificar necessidade (não foi testado)
   def under_offering_limit?
     self.offerings.size < 3
   end
 
+  # FIXME Verificar necessidade (não foi testado)
   def has_skill?(skill)
     self.offerings.collect{|o| o.skill }.include?(skill)
   end
@@ -530,6 +556,7 @@ class User < ActiveRecord::Base
     friendships_initiated_by_me.count(:conditions => ['created_at > ?', Time.now.beginning_of_day]) >= Friendship.daily_request_limit
   end
 
+  # FIXME Verificar necessidade (não foi testado)
   def friends_ids
     return [] if accepted_friendships.empty?
     accepted_friendships.map{|fr| fr.friend_id }
@@ -645,14 +672,17 @@ class User < ActiveRecord::Base
     gender && gender.eql?(FEMALE)
   end
 
+  # FIXME Não foi testado devido a futura reformulação de Status
   def learning
     self.statuses.log_action_eq(LEARNING_ACTIONS).descend_by_created_at
   end
 
+  # FIXME Não foi testado devido a futura reformulação de Status
   def teaching
     self.statuses.log_action_eq(TEACHING_ACTIONS).descend_by_created_at
   end
 
+  # FIXME Não foi testado devido a futura reformulação de Status
   def recent_activity(page = 1)
     Status.friends_statuses(self, page)
   end
@@ -664,13 +694,13 @@ class User < ActiveRecord::Base
   end
 
   def rm_favorite(favoritable_type, favoritable_id)
-    fav = Favorite.all(:conditions => {:favoritable_type => favoritable_type,
+    fav = Favorite.find(:first, :conditions => {:favoritable_type => favoritable_type,
                        :favoritable_id => favoritable_id,
-                       :user_id => self.id})[0] # Sempre vai ter apenas uma linha que satisfaz
+                       :user_id => self.id})
     fav.destroy
   end
 
-  def has_favorite(favoritable)
+    def has_favorite(favoritable)
     Favorite.find(:first, :conditions => ["favoritable_id = ? AND favoritable_type = ? AND user_id = ?", favoritable.id, favoritable.class.to_s,self.id  ])
   end
 
@@ -720,5 +750,12 @@ class User < ActiveRecord::Base
     unless SUPPORTED_CURRICULUM_TYPES.include?(self.curriculum_content_type)
       self.errors.add(:curriculum, "Formato inválido")
     end
+  end
+
+  def newpass( len )
+    chars = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a
+    new_password = ""
+    1.upto(len) { |i| new_password << chars[rand(chars.size-1)] }
+    return new_password
   end
 end
