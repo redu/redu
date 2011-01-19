@@ -1,0 +1,4 @@
+page.insert_html :bottom, 'bulletin_list',
+  :partial => 'bulletins/item_admin', :collection => @bulletins
+page.replace_html '.endless',
+  (will_paginate @bulletins, :renderer => EndlessRenderer)

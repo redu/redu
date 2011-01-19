@@ -136,10 +136,17 @@ class EnvironmentsController < BaseController
 
   def admin_courses
     @environment = Environment.find(params[:id])
-    @courses = @environment.courses
+    @courses = @environment.courses.paginate(:page => params[:page],
+                                             :per_page => AppConfig.items_per_page)
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def admin_members
+    # FIXME Refatorar para o modelo (conditions)
     @memberships = UserEnvironmentAssociation.paginate(
       :conditions => ["environment_id = ?", @environment.id],
       :include => [{ :user => {:user_course_associations => :course} }],
@@ -154,7 +161,13 @@ class EnvironmentsController < BaseController
   end
 
   def admin_bulletins
-    @bulletins= @environment.bulletins
+    @bulletins = @environment.bulletins.paginate(:page => params[:page],
+                                                :order => 'updated_at DESC',
+                                                :per_page => AppConfig.items_per_page)
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   # Remove um ou mais usuários de um Environment destruindo todos os relacionamentos
