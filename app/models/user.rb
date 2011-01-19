@@ -260,13 +260,15 @@ class User < ActiveRecord::Base
     when 'Exam'
       self.teacher?(entity.subject.space)
     when 'Event'
-      self.teacher?(entity.eventable) || self.tutor?(entity.eventable)
+      self.teacher?(entity.eventable) || self.tutor?(entity.eventable) ||
+        self.can_manage?(entity.eventable)
     when 'Bulletin'
       case entity.bulletinable.class.to_s
       when 'Environment'
         self.environment_admin?(entity.bulletinable)
       when 'Space'
-        self.teacher?(entity.bulletinable) || self.tutor?(entity.bulletinable)
+        self.teacher?(entity.bulletinable) || self.tutor?(entity.bulletinable) ||
+          self.can_manage?(entity.bulletinable)
       end
     when 'Folder'
       self.teacher?(entity.space)
