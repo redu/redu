@@ -39,6 +39,16 @@ class Invoice < ActiveRecord::Base
     send_overdue_notice
   end
 
+  # Converte o invoice para um hash que pode ser utilizado para adicionar produtos
+  # a ordem do gateway de pagamento (e.g PagSeguro)
+  def to_order_item(item_options = {})
+    args = {
+      :id => self.id,
+      :price => self.amount,
+      :description => self.description
+    }.merge(item_options)
+  end
+
   protected
 
   def register_time

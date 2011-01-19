@@ -37,6 +37,7 @@ gem "shuber-sortable"
 group :development do
   gem "mongrel"
   gem "aanand-deadweight"
+  gem "faker"
 end
 
 group :production do

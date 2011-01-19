@@ -102,4 +102,42 @@ describe Invoice do
       end
     end
   end
+
+  it { should respond_to :to_order_item }
+
+  context "when creating an order item" do
+    it "returns a hash of options" do
+      subject.to_order_item.should be_kind_of(Hash)
+    end
+
+    it "should have the same ID than the invoice by default" do
+      subject.to_order_item.fetch(:id, -1).should == subject.id
+    end
+
+    it "should have the same price by default" do
+      subject.to_order_item.fetch(:price, -1).should == subject.amount
+    end
+
+    context "when specifying extra options" do
+      before do
+        @options = {
+          :order_id => 1919,
+          :id => 123,
+          :price => 10.0,
+          :description => "Lorem ipsum dolor sit amet"
+        }
+
+        @product = subject.to_order_item(@options)
+      end
+
+      it "should have the same options" do
+        @product.fetch(:id, nil).should == @options[:id]
+        @product.fetch(:price, nil).should == @options[:price]
+        @product.fetch(:description, nil).should == @options[:description]
+        @product.fetch(:order_id, nil).should == @options[:order_id]
+      end
+    end
+
+  end
+
 end
