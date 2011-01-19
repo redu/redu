@@ -36,6 +36,7 @@ gem "paperclip", "~> 2.3"
 group :development do
   gem "mongrel"
   gem "aanand-deadweight"
+  gem "faker"
 end
 
 group :production do
