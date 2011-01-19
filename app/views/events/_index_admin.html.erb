@@ -1,20 +1,14 @@
 <% unless @events.empty? %>
-  <table class="common">
+  <table id="event_list" class="common">
     <thead>
       <tr>
         <th>Nome</th>
         <th>Remover</th>
       </tr>
     </thead>
-    <% @events.each do |item| %>
-      <tr>
-        <td><%= link_to item.name, polymorphic_path([@space || @environment, item]) %></td>
-        <td><%= link_to 'Remover', polymorphic_path([@space || @environment, item]),
-          :confirm => 'Você tem certeza que deseja remover permanentemente este evento?', :method => :delete %></td>
-      </tr>
-
-    <% end %>
+    <%= render :partial => 'events/item_admin', :collection => @events %>
   </table>
+  <%= will_paginate @events, :renderer => EndlessRenderer %>
   <%= link_to "Crie um agora!", new_polymorphic_path([@space || @environment, Event.new]),
     :class => 'button'%>
 <% else %>

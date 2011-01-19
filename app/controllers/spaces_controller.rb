@@ -86,20 +86,21 @@ class SpacesController < BaseController
                                      " AND eventable_type LIKE 'Space'" \
                                      " AND state LIKE ?", @space.id, "waiting"],
                                      :include => :owner,
-                                     :page => params[:page],
-                                     :order => 'updated_at ASC',
-                                     :per_page => 20)
+                                     :page => params[:page_pending],
+                                     :order => 'updated_at DESC',
+                                     :per_page => AppConfig.items_per_page)
 
      @events = Event.paginate(:conditions => ["eventable_id = ?" \
                              " AND eventable_type LIKE 'Space'" \
                              " AND state LIKE ?", @space.id, "approved"],
                              :include => :owner,
                              :page => params[:page],
-                             :order => 'updated_at ASC',
-                             :per_page => 20)
+                             :order => 'updated_at DESC',
+                             :per_page => AppConfig.items_per_page)
 
      respond_to do |format|
       format.html
+      format.js
      end
   end
 
