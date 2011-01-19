@@ -125,25 +125,29 @@ class CoursesController < BaseController
 
   # Aba Disciplinas.
   def admin_spaces
+    # FIXME Refatorar para o modelo (conditions)
     @spaces = Space.paginate(:conditions => ["course_id = ?", @course.id],
                              :include => :owner,
                              :page => params[:page],
-                             :order => 'updated_at ASC',
-                             :per_page => 20)
+                             :order => 'updated_at DESC',
+                             :per_page => AppConfig.items_per_page)
 
     respond_to do |format|
       format.html
+      format.js
     end
   end
 
   # Aba Moderação de Membros.
   def admin_members_requests
+    # FIXME Refatorar para o modelo (conditions)
     @pending_members = UserCourseAssociation.paginate(:conditions => ["state LIKE 'waiting' AND course_id = ?", @course.id],
                                                       :page => params[:page],
                                                       :order => 'updated_at DESC',
                                                       :per_page => AppConfig.items_per_page)
     respond_to do |format|
       format.html
+      format.js
     end
 
   end
