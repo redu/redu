@@ -63,9 +63,9 @@ class SpacesController < BaseController
                                    AND bulletinable_id = ?
                                    AND state LIKE ?", @space.id, "waiting"],
                                    :include => :owner,
-                                   :page => params[:page],
+                                   :page => params[:page_pending],
                                    :order => 'updated_at ASC',
-                                   :per_page => 20)
+                                   :per_page => AppConfig.items_per_page)
 
     @bulletins = Bulletin.paginate(:conditions => ["bulletinable_type LIKE 'Space'
                                    AND bulletinable_id = ?
@@ -73,9 +73,10 @@ class SpacesController < BaseController
                                    :include => :owner,
                                    :page => params[:page],
                                    :order => 'updated_at ASC',
-                                   :per_page => 20)
+                                   :per_page => AppConfig.items_per_page)
     respond_to do |format|
       format.html
+      format.js
     end
   end
 
