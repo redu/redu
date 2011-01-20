@@ -37,7 +37,8 @@ describe UserEnvironmentAssociation do
       assoc2 = Factory(:user_environment_association, :environment => subject.environment)
       assoc3 = Factory(:user_environment_association)
 
-      UserEnvironmentAssociation.of_environment(subject.environment).should == [subject, assoc, assoc2]
+      UserEnvironmentAssociation.of_environment(subject.environment).
+        should == subject.environment.user_environment_associations
     end
   end
 end

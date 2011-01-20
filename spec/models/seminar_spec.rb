@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Seminar do
   subject { Factory(:seminar) }
 
-  it do
+  it "should have one lecture" do
     pending "Need seminar factory" do
       should have_one :lecture
     end
