@@ -95,7 +95,6 @@ class CoursesController < BaseController
       # FIXME Ao utilizar o Course.all, o conditions do paginate não é levado em conta.
       # Pois o all retorna um Array (aparentemente).
       # Por enquanto, um workaround foi feito.
-      debugger
       if cond[:published]
         @courses = Course.published.all
       else
