@@ -3,6 +3,8 @@ class Invoice < ActiveRecord::Base
 
   validates_presence_of :period_start, :period_end, :amount
 
+  named_scope :pending, :conditions => { :state => "pending" }
+
   attr_protected :state
 
   acts_as_state_machine :initial => :pending, :column => "state"

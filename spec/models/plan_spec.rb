@@ -84,7 +84,7 @@ describe Plan do
 
     end
 
-    context "when generating the amout" do
+    context "when generating the amount" do
       it "calculates days in a period" do
         subject.days_in_current_month.should == 31
 
@@ -137,6 +137,28 @@ describe Plan do
     end
 
     it "sets the invoice correctly"
+  end
+
+  it { should respond_to :create_order }
+
+  context "when creating a new order" do
+    it "should return a valid order object" do
+      subject.create_order.should be_instance_of(PagSeguro::Order)
+    end
+
+    context "the order" do
+      before do
+        @products = subject.create_order.products
+      end
+    
+    it "should have at least one product" do
+      @products.should_not be_nil
+      @products.should have_at_least(1)
+    end
+    
+    end
+
+    
   end
 
 end

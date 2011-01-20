@@ -137,7 +137,20 @@ describe Invoice do
         @product.fetch(:order_id, nil).should == @options[:order_id]
       end
     end
+  end
 
+  context "finder" do
+    it "retrieves pending invoices" do
+      plan = Factory :plan
+      pending_invoices = (1..5).collect { Factory(:invoice, 
+                                                  :plan_id => plan,
+                                                  :state => "pending") }
+      overdue_invoices = (1..5).collect { Factory(:invoice, 
+                                                  :plan_id => plan,
+                                                  :state => "overdue") }
+
+      plan.invoices.pending.should == pending_invoices
+    end
   end
 
 end
