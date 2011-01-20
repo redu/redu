@@ -87,6 +87,14 @@ class Plan < ActiveRecord::Base
     days_in_period(day_start, day_end)
   end
 
+  def create_order
+    order_options = {
+      :order_id => self.id,
+      :items => self.invoices.pending.collect { |i| i.to_order_item }
+    }
+    PagSeguro::Order.new
+  end
+
   protected
 
   def days_in_period(from, to)
