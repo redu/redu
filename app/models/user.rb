@@ -356,6 +356,7 @@ class User < ActiveRecord::Base
     self.followers.include?(user)
   end
 
+  # FIXME Verificar necessidade (não foi testado)
   def can_be_owner?(entity)
     self.admin? || self.space_admin?(entity.id) || self.teacher?(entity) || self.coordinator?(entity)
   end
@@ -430,6 +431,7 @@ class User < ActiveRecord::Base
     update_attributes(:activated_at => Time.now.utc, :activation_code => nil)
   end
 
+  # Indica se o usuário ainda pode utilizar o Redu sem ter ativado a conta
   def can_activate?
     activated_at.nil? and created_at > 30.days.ago
   end
@@ -455,10 +457,14 @@ class User < ActiveRecord::Base
     crypted_password == encrypt(password)
   end
 
+  # FIXME Verificar necessidade (não foi testado)
+  # remember_token_expires_at não existe no BD.
   def remember_token?
     remember_token_expires_at && Time.now.utc < remember_token_expires_at
   end
 
+  # FIXME Verificar necessidade (não foi testado)
+  # remember_token_expires_at e remember_token não existem no BD.
   # These create and unset the fields required for remembering users between browser closes
   def remember_me
     self.remember_token_expires_at = 2.weeks.from_now.utc
@@ -466,6 +472,8 @@ class User < ActiveRecord::Base
     save(false)
   end
 
+  # FIXME Verificar necessidade (não foi testado)
+  # remember_token_expires_at e remember_token não existem no BD.
   def forget_me
     self.remember_token_expires_at = nil
     self.remember_token            = nil
@@ -507,10 +515,14 @@ class User < ActiveRecord::Base
     featured_writer?
   end
 
+  # FIXME Verificar necessidade (não foi testado)
+  # A tabela Frienship não existe
   def can_request_friendship_with(user)
     !self.eql?(user) && !self.friendship_exists_with?(user)
   end
 
+  # FIXME Verificar necessidade (não foi testado)
+  # A tabela Frienship não existe
   def friendship_exists_with?(friend)
     Friendship.find(:first, :conditions => ["user_id = ? AND friend_id = ?", self.id, friend.id])
   end
@@ -552,6 +564,8 @@ class User < ActiveRecord::Base
     self.offerings.collect{|o| o.skill }.include?(skill)
   end
 
+  # FIXME Verificar necessidade (não foi testado)
+  # A tabela Frienship não existe
   def has_reached_daily_friend_request_limit?
     friendships_initiated_by_me.count(:conditions => ['created_at > ?', Time.now.beginning_of_day]) >= Friendship.daily_request_limit
   end
@@ -598,6 +612,7 @@ class User < ActiveRecord::Base
     end
   end
 
+  # FIXME Não foi testado
   # space roles
   def can_post?(space)
     if not self.get_association_with(space)
@@ -668,7 +683,7 @@ class User < ActiveRecord::Base
     gender && gender.eql?(MALE)
   end
 
-  def female
+  def female?
     gender && gender.eql?(FEMALE)
   end
 
@@ -702,10 +717,6 @@ class User < ActiveRecord::Base
 
     def has_favorite(favoritable)
     Favorite.find(:first, :conditions => ["favoritable_id = ? AND favoritable_type = ? AND user_id = ?", favoritable.id, favoritable.class.to_s,self.id  ])
-  end
-
-  def get_favorites
-    @favorites = Favorite.find(:all, :conditions => ["user_id = ?", self.id], :order => 'created_at DESC')
   end
 
   def update_last_seen_at
