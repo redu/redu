@@ -87,12 +87,18 @@ class Plan < ActiveRecord::Base
     days_in_period(day_start, day_end)
   end
 
-  def create_order
+  # Cria ordem do gateway padrão (i.e PagSeguro) com as informações dos invoices
+  # cujo estado é pending. É possível passar informações adicionais para a ordem.
+  def create_order(options={})
     order_options = {
       :order_id => self.id,
       :items => self.invoices.pending.collect { |i| i.to_order_item }
-    }
-    PagSeguro::Order.new
+    }.merge(options)
+
+    order = PagSeguro::Order.new(order_options[:order_id])
+    order_options[:items].each { |item| order.add(item) }
+
+    return order
   end
 
   protected
