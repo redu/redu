@@ -237,6 +237,10 @@ ActionController::Routing::Routes.draw do |map|
     course.resources :invitations
   end
 
+  map.resources :plans, :only => [], :member => {
+    :confirm => :get
+  }
+
   # Install the default routes as the lowest priority.
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'

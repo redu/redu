@@ -262,9 +262,11 @@ class User < ActiveRecord::Base
     entity.nil? and return false
     self.admin? and return true
     self.environment_admin? entity and return true
-    (entity.owner && entity.owner == self) and return true
+    # (entity.owner && entity.owner == self) and return true
 
     case entity.class.to_s
+    when 'Environment'
+      (self.environment_admin? entity)
     when 'Course'
       (self.environment_admin? entity.environment)
     when 'Space'
@@ -297,6 +299,8 @@ class User < ActiveRecord::Base
       when 'Subject'
         self.teacher?(entity.statusable.space)
       end
+    when 'Plan'
+      entity.user == self
     end
   end
 
@@ -341,8 +345,9 @@ class User < ActiveRecord::Base
     if (object.class.to_s.eql? 'Folder') || (object.class.to_s.eql? 'Forum') ||
        (object.class.to_s.eql? 'Topic') || (object.class.to_s.eql? 'SbPost') ||
        (object.class.to_s.eql? 'Event') || (object.class.to_s.eql? 'Bulletin') ||
-       (object.class.to_s.eql? 'Status') || (object.class.to_s.eql? 'User')
-      self.has_access_to?(object)
+       (object.class.to_s.eql? 'Status') || (object.class.to_s.eql? 'User') ||
+       (object.class.to_s.eql? 'Plan') 
+       self.has_access_to?(object)
     else
       object.published? && self.has_access_to?(object)
     end
@@ -639,7 +644,7 @@ class User < ActiveRecord::Base
 
   def environment_admin?(entity)
     association = get_association_with entity
-    association && association.role && association.role.eql?(Role[:environment_admin])
+    association && association.role && association.role.eql?(Role[:environment_admin].id)
   end
 
   def admin?
