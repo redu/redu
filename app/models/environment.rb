@@ -10,6 +10,9 @@ class Environment < ActiveRecord::Base
 
   attr_protected :owner, :published
 
+  after_create :create_environment_association
+  after_create :create_course_association
+
   acts_as_taggable
   has_attached_file :avatar, PAPERCLIP_STORAGE_OPTIONS.deep_merge({
     :styles => { :environment => "145x125>" }
@@ -61,5 +64,19 @@ class Environment < ActiveRecord::Base
       return unless Environment.find_by_path(self.path)
       self.path = path + '-' + SecureRandom.hex(1)
     end
+  end
+protected
+
+  def create_environment_association
+    UserEnvironmentAssociation.create(:environment => self,
+                                      :user => self.owner,
+                                      :role_id => Role[:environment_admin].id)
+  end
+
+  def create_course_association
+    UserCourseAssociation.create(
+      :course => self.courses.first,
+      :user => self.owner,
+      :role_id => Role[:environment_admin].id, :state => 'approved')
   end
 end

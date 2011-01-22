@@ -8,12 +8,17 @@ class Space < ActiveRecord::Base
 
   # CALLBACKS
   before_create :create_root_folder
+  after_create :create_forum
+  after_create :create_space_association_for_users_course
 
+  # ASSOCIATIONS
   belongs_to :course
 
   # USERS
   belongs_to :owner , :class_name => "User" , :foreign_key => "owner"
   has_many :user_space_associations, :dependent => :destroy
+  #FIXME retirar o conditions, o status de user_space_associations será
+  # retirado
   has_many :users, :through => :user_space_associations,
     :conditions => ["user_space_associations.status LIKE 'approved'"]
   # Os membros podem possuir permissões especiais
@@ -36,6 +41,10 @@ class Space < ActiveRecord::Base
   named_scope :of_course, lambda { |course_id|
      { :conditions => {:course_id => course_id} }
   }
+
+  # ACCESSORS
+  attr_protected :owner, :removed, :lectures_count, :members_count,
+                 :course_id, :published
 
   # PLUGINS
   acts_as_taggable
@@ -88,7 +97,7 @@ class Space < ActiveRecord::Base
     logs[:bulletin] = self.statuses.find(:all,
                                          :order => 'created_at DESC',
                                          :limit => limit,
-                                         :offset => offset,
+                                        :offset => offset,
                                          :conditions => { :log => true,
                                            :logeable_type => 'Bulletin' })
     return logs
@@ -104,6 +113,42 @@ class Space < ActiveRecord::Base
     membership = self.user_space_associations.find(:first,
                     :conditions => {:user_id => user.id})
     membership.update_attributes({:role_id => role.id})
+  end
+
+  def publish!
+    self.published = 1
+    self.save
+  end
+
+  def unpublish!
+    self.published = 0
+    self.save
+  end
+
+  # Cria um forum logo após a criação do space através do callback after_create
+  def create_forum
+    Forum.create(:name => "Fórum da disciplina #{self.name}",
+                 :description => "Este fórum pertence a disciplina " + \
+                 "#{self.name}. " + \
+                 "Apenas os participantes desta disciplina podem " + \
+                 "visualizá-lo. Troque ideias, participe!",
+                 :space_id => self.id)
+  end
+
+  # Após a criação do space, todos os usuários do course ao qual
+  # o space pertence tem que ser associados ao space
+  def create_space_association_for_users_course
+
+    course_users = UserCourseAssociation.all(
+      :conditions => {:state => 'approved', :course_id => self.course })
+
+    course_users.each do |assoc|
+      UserSpaceAssociation.create({:user => assoc.user,
+                                  :space => self,
+                                  :status => "approved",
+                                  :role_id => assoc.role_id})
+    end
+
   end
 
   #FIXME Remover quando a criação deixar de ser Wizard

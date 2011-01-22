@@ -6,11 +6,8 @@
 
   <% field_set_tag 'Informações Gerais' do %>
 
-    <% if @space.course.nil? %>
-      <%= hidden_field_tag "space[course_id]", @course.id %>
-    <% else %>
-      <%= hidden_field_tag "space[course_id]", @space.course.id %>
-    <% end %>
+    <%= hidden_field_tag "course_id", @course.id %>
+
     <%= f.label "Nome" %>
     <%= f.text_field :name ,  :onkeyup => ((edit) ? nil : "generatePath(this)") %>
     <%= error_for :space, :name %>

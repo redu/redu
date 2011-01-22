@@ -22,9 +22,6 @@ class FoldersController < BaseController
 
   after_filter :create_activity, :only => [:do_the_upload]
 
-  # Sessions are not needed for feeds
-  session :off, :only => 'feed'
-
   # FILE
   def destroy_file
     @myfile = Myfile.find(params[:file_id], :include => :folder)
