@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'set'
 
 describe Invoice do
   subject { Factory(:invoice) }
@@ -149,7 +150,7 @@ describe Invoice do
                                                   :plan_id => plan,
                                                   :state => "overdue") }
 
-      plan.invoices.pending.should == pending_invoices
+      Set.new(plan.invoices.pending) == Set.new(pending_invoices)
     end
   end
 

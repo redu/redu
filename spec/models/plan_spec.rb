@@ -143,19 +143,43 @@ describe Plan do
       subject.create_order.should be_instance_of(PagSeguro::Order)
     end
 
-    context "the order" do
-      before do
-        @products = subject.create_order.products
-      end
-    
-    it "should have at least one product" do
-      @products.should_not be_nil
-      @products.should have_at_least(1)
-    end
-    
+    it "should have the plan ID" do
+      subject.create_order.id == subject.id
     end
 
-    
+    context "with custom attributes" do
+      before do
+        @opts = {
+          :order_id => 12,
+          :items => [{:id => 13, :price => 12.0}]
+        }
+      end
+
+      it "accepts custom ID" do
+        order = subject.create_order(@opts)
+        order.id.should == @opts[:order_id]
+      end
+
+      it "accepts custom items" do
+        order = subject.create_order(@opts)
+        order.products.first == @opts[:items].first
+      end
+    end
+
+    context "the order" do
+      before do
+        invoices = 3.times.inject([]) { |res,i|
+          res << Factory(:invoice, :plan => subject)
+        }
+
+        @products = subject.create_order.products
+      end
+
+      it "should have 3 products" do
+        @products.should_not be_nil
+        @products.size.should == 3
+      end
+    end
   end
 
 end
