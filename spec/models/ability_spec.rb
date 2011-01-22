@@ -27,6 +27,7 @@ describe Ability do
         env = Factory.build(:environment, :owner => @member)
         @ability.should be_able_to(:create, env)
       end
+
       it "destroys his own environment" do
         @ability.should be_able_to(:destroy, Factory(:environment, :owner => @member))
       end
@@ -410,5 +411,37 @@ describe Ability do
       it "destroys any file"
       it "crates a post"
     end
+  end
+
+  context "on plan" do
+    context "the member" do
+      it "creates a plan" do
+        anyone = Factory(:user)
+        plan = Factory.build(:plan, :user => anyone)
+        ability = Ability.new(anyone)
+
+        ability.should be_able_to(:create, plan)
+      end
+    end
+
+    context "the owner" do
+      it "manages its own plan" do
+        plan = Factory(:plan)
+        ability = Ability.new(plan.user)
+
+        ability.should be_able_to(:manage, plan)
+      end
+    end
+
+    context "the strange" do
+      it "cant read others plans" do
+        strange = Factory(:user)
+        plan = Factory(:plan)
+        ability = Ability.new(strange)
+
+        ability.should_not be_able_to(:read, plan)
+      end
+    end
+
   end
 end
