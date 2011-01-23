@@ -66,7 +66,8 @@ class EnvironmentsController < BaseController
       @environment.valid?
 
       respond_to do |format|
-        format.html { render :action => "new", :locals => { :step => 2 }, :layout => "wizard_environment" }
+        format.html { render :action => "new",
+          :locals => { :step => 2 }, :layout => "wizard_environment" }
       end
     when "2"
       respond_to do |format|
@@ -88,6 +89,7 @@ class EnvironmentsController < BaseController
             :status => :unprocessable_entity }
         end
       end
+    when "3"
     else
       redirect_to teach_path
     end

@@ -64,6 +64,12 @@ $(document).ready(function(){
   </fieldset>
   <% form_for @environment, :url => environments_path(:step => 2) do |f| %>
     <%= f.error_messages %>
+    <fieldset>
+      <legend>Escolha seu plano</legend>
+        <div id="plans">
+        
+        </div>
+    </fieldset>
     <% field_set_tag "Informações do ambiente" do %>
     <%= f.label :name, "Seu ambiente de ensino" %>
     <%= f.text_field :name %>
