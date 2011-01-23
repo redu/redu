@@ -262,7 +262,6 @@ class User < ActiveRecord::Base
     entity.nil? and return false
     self.admin? and return true
     self.environment_admin? entity and return true
-    (entity.owner && entity.owner == self) and return true
 
     case entity.class.to_s
     when 'Course'
