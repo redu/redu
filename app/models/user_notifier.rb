@@ -39,7 +39,7 @@ class UserNotifier < ActionMailer::Base
     @body[:user] = user
     @body[:course]  = course
   end
-  
+
   def remove_membership(user, space)
     setup_sender_info
     @recipients  = "#{user.email}"
@@ -262,6 +262,28 @@ class UserNotifier < ActionMailer::Base
     @body[:message] = message
     @body[:url]  = signup_by_id_url(user, user.invite_code)
     @body[:environment] = environment.name
+  end
+
+  def payment_confirmation(user, invoice)
+    setup_sender_info
+
+    @recipients  = "#{user.email}"
+    @subject = "Pagamento N. #{invoice.id} confirmado"
+    @body[:user] = user
+    @body[:invoice] = invoice
+    @body[:plan] = invoice.plan
+
+  end
+
+  def overdue_notice(user, invoice)
+    setup_sender_info
+
+    @recipients  = "#{user.email}"
+    @subject = "Pagamento N. #{invoice.id} pendente"
+    @body[:user] = user
+    @body[:invoice] = invoice
+    @body[:plan] = invoice.plan
+
   end
 
   protected

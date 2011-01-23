@@ -73,6 +73,9 @@ class Ability
     alias_action :statuses, :next, :previous, :attend, :to => :read
     alias_action :infos, :enroll, :to => :preview
 
+    # Plan
+    alias_action :confirm, :address, :pay, :to => :manage
+
     # Todos podem ver o preview
     can :view, :all do |object|
       object.published?
