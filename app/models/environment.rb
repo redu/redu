@@ -7,6 +7,7 @@ class Environment < ActiveRecord::Base
   belongs_to :owner, :class_name => "User", :foreign_key => "owner"
   has_many :users, :through => :user_environment_associations
   has_many :bulletins, :as => :bulletinable, :dependent => :destroy
+  has_one :quota, :dependent => :destroy, :as => :billable
 
   attr_protected :owner, :published
 
