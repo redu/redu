@@ -1,4 +1,4 @@
 Factory.define :quota do |q|
-  c.multimedia 5.megabytes
-  c.files 10.megabytes
+  q.multimedia 5.megabytes
+  q.files 10.megabytes
 end

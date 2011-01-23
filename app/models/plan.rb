@@ -101,6 +101,34 @@ class Plan < ActiveRecord::Base
     return order
   end
 
+  def self.from_preset(key)
+    plans = {
+      :professor_standard => {
+        :name => "Professor Standard",
+        :price => 49.99,
+        :video_storage_limit => 1.gigabyte,
+        :file_storage_limit => 30.gigabytes,
+        :members_limit => 50
+      },
+      :professor_lite => {
+        :name => "Professor Lite",
+        :price => 24.99,
+        :video_storage_limit => 1.gigabyte,
+        :file_storage_limit => 20.gigabytes,
+        :members_limit => 20
+      },
+      :free => {
+        :name => "Free",
+        :price => 0,
+        :video_storage_limit => 1.gigabyte,
+        :file_storage_limit => 1.gigabytes,
+        :members_limit => 20
+      },
+    }
+
+    self.new(plans.fetch(key, plans[:free]))
+  end
+
   protected
 
   def days_in_period(from, to)

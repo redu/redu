@@ -7,7 +7,6 @@ describe Environment do
   it { should have_many(:user_environment_associations).dependent(:destroy) }
   it { should have_many(:bulletins).dependent(:destroy) }
   it { should have_many(:users).through(:user_environment_associations)}
-  it { should have_one(:quota).dependent(:destroy) }
   it { should belong_to(:owner)}
   it { should accept_nested_attributes_for :courses }
 
