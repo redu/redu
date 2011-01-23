@@ -11,8 +11,7 @@ describe Lecture do
   it { should have_many(:favorites).dependent(:destroy) }
   it { should have_many(:logs).dependent(:destroy) }
 
-  it { should have_one(:subject).through(:asset).dependent(:destroy)}
-  it { should have_one(:asset).dependent(:destroy)}
+  it { should belong_to :subject }
 
   it { should accept_nested_attributes_for :resources }
 

@@ -2,13 +2,17 @@ class Enrollment < ActiveRecord::Base
   # Entidade intermediária entre User e Subject. É criada quando o usuário se
   # matricula num determinado Subject.
 
+  after_create :creates_student_profile
+
   belongs_to :user
   belongs_to :subject
-  belongs_to :role
   has_one :student_profile, :dependent => :destroy
+
+  has_enumerated :role
 
   validates_uniqueness_of :user_id, :scope => :subject_id
 
+  # FIXME Testar
   # Filtra por papéis (lista)
   named_scope :with_roles, lambda { |roles|
     unless roles.empty?
@@ -16,6 +20,7 @@ class Enrollment < ActiveRecord::Base
     end
   }
 
+  # FIXME Testar
   # Filtra por palavra-chave (procura em User)
   named_scope :with_keyword, lambda { |keyword|
     if not keyword.empty? and keyword.size > 4
@@ -24,4 +29,9 @@ class Enrollment < ActiveRecord::Base
         "OR users.login LIKE :keyword", {:keyword => "%#{keyword}%"}]}
     end
   }
+
+  protected
+  def creates_student_profile
+    self.create_student_profile(:user_id => self.user, :subject => self.subject)
+  end
 end

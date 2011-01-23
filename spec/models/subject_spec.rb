@@ -9,9 +9,10 @@ describe Subject do
 
   it { should belong_to :space }
   it { should belong_to :owner }
-  it { should have_many :lectures }
+  it { should have_many(:lectures).dependent(:destroy) }
+  it { should have_many(:enrollments).dependent(:destroy) }
   it { should have_many(:graduated_members).through :enrollments }
-  it { should have_many(:members).through :enrollments }
+  it { should have_many(:members).through(:enrollments).dependent(:destroy) }
 
   it "defaults to not published" do
     subject { Factory(:subject, :published => nil) }
@@ -25,6 +26,7 @@ describe Subject do
   it "responds to unenroll" do
     should respond_to :unenroll
   end
+
   context "enrollments" do
     before :each do
       @user = Factory(:user)
