@@ -24,6 +24,5 @@ describe PlansController do
         assigns[:order].products.size == @plan.invoices.pending.count
       end
     end
-  
   end
 end
