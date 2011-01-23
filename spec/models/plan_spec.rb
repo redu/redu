@@ -185,4 +185,15 @@ describe Plan do
     end
   end
 
+  context "when creating a preset" do
+    it "should respond to from_preset" do
+      Plan.should respond_to(:from_preset)
+    end
+
+    it "creates a plan from preset" do
+      plan = Plan.from_preset(:professor_standard)
+      plan.should be_valid
+    end
+  end
+
 end
