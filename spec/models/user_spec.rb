@@ -98,6 +98,7 @@ describe User do
         c = File.new('invalid_curriculum.pdf', 'w+')
         subject.curriculum = c
         subject.save
+        File.delete('invalid_curriculum.pdf')
         subject.errors.on(:curriculum).should_not be_nil
       end
     end
@@ -131,10 +132,10 @@ describe User do
     end
 
     it "retrieves active users" do
-     active_users = (1..3).collect { |n| Factory(:user,
-                                                 :activated_at => 1.day.ago) }
-     users = (1..3).collect { |n| Factory(:user) }
-     User.active.should == active_users
+      active_users = (1..3).collect { |n| Factory(:user,
+                                                  :activated_at => 1.day.ago) }
+      users = (1..3).collect { |n| Factory(:user) }
+      User.active.should == active_users
     end
 
     it "retrieves users tagged with specified tag" do
@@ -176,7 +177,15 @@ describe User do
       subject.activation_code.should_not be_nil
     end
 
-    it "delivers a signup notification to the user after create"
+    it "delivers a signup notification to the user after create" do
+      UserNotifier.delivery_method = :test
+      UserNotifier.perform_deliveries = true
+      UserNotifier.deliveries = []
+
+      subject = Factory(:user)
+      UserNotifier.deliveries.size.should == 1
+      UserNotifier.deliveries.last.subject.should =~ /ative a sua nova conta/
+    end
 
     it "updates last login after create" do
       subject.last_login_at.should_not be_nil
@@ -199,52 +208,210 @@ describe User do
 
   it "verifies if a profile is complete" do
     subject = Factory(:user, :gender => 'M', :description => "Desc",
-                            :tags => [Factory(:tag)])
+                      :tags => [Factory(:tag)])
     subject.should be_profile_complete
   end
 
-  it "verifies if he can manage a thing"
-  it "verifies if he has access to a thing"
   it "verifies if he is enrolled in a subject" do
-   pending "Need subject model and factory"
+    pending "Need subject model and factory"
   end
-  it "verifies if he can read a thing"
 
-  it "verifies if he follows a specified user"
-  it "verifies if he is followed by a specified user"
-  it "verifies if he can be owner of a thing"
-  it "verifies if he can be moderator of a thing"
-  it "retrieves his representation in a param"
+  it "verifies if he follows a specified user" do
+    user = Factory(:user)
+    subject.follows << user
+    subject.follow?(user).should == true
+  end
+
+  it "verifies if he is followed by a specified user" do
+    user = Factory(:user)
+    user.follows << subject
+    subject.should be_followed_by user
+  end
+
+  it "retrieves his representation in a param" do
+    subject.to_param.should == subject.login_slug
+  end
+
   it "retrieves his posts made in current month"
   it "retrieves his posts made between last and current month"
-  it "deactivates his account"
-  it "activates his account"
-  it "verifies if he can activate his account"
-  it "encrypts his password"
-  it "verifies if he is authenticated"
-  it "verifies if he is remembered by the system"
-  it "says to the system to remember himself"
-  it "says to the system to forget himself"
-  it "resets his password"
-  it "retrieves his owner"
-  it "verifies if he can request friendship with another user"
-  it 'verifies if he has a frienship with another user'
-  it "verifies if he has reached the daily friendship request limit"
+  it "deactivates his account" do
+    subject = Factory(:user, :created_at => 40.days.ago,
+                      :activated_at => 1.day.ago)
+    subject.deactivate
+    subject.should_not be_active
+  end
+
+  it "activates his account" do
+    subject = Factory(:user, :created_at => 40.days.ago,
+                      :activated_at => 1.day.ago)
+    subject.activate
+    subject.should be_active
+  end
+
+  it "verifies if he can activate his account" do
+    subject = Factory(:user)
+    subject.can_activate?.should == true
+
+    subject = Factory(:user, :activated_at => 1.day.ago)
+    subject.can_activate?.should == false
+
+    subject = Factory(:user, :created_at => 31.days.ago,
+                      :activated_at => nil)
+    subject.can_activate?.should == false
+  end
+
+  it "encrypts his password" do
+    subject.password_salt = "some-salt"
+    subject.encrypt("some-password").
+      should == "6f1a2796c36f64731bd5f992dc71618c2fc38e9e"
+  end
+
+  it "verifies if he is authenticated" do
+    subject.should be_authenticated(subject.password)
+    subject.should_not be_authenticated("another-password")
+  end
+
+  it "resets his password" do
+    old_password = subject.password
+    subject.reset_password
+    subject.password.should_not be == old_password
+    subject.should_not be_authenticated(old_password)
+    subject.should be_authenticated(subject.password)
+  end
+
+  it "retrieves his owner" do
+    subject.owner.should == subject
+  end
+
+  it "updates last login" do
+    last_login = subject.last_login_at
+    subject.update_last_login
+    subject.last_login_at.should_not == last_login
+  end
+
   it "retrieves recommended posts for him"
-  it "displays his name"
-  it "retrieves his first name or login"
+  it "displays his name" do
+    subject.first_name = "First"
+    subject.last_name = "Last"
+    subject.display_name.should == "First Last"
+
+    subject.first_name = nil
+    subject.last_name = nil
+    subject.display_name.should == subject.login
+
+    subject.removed = 1
+    subject.display_name.should == "(usuário removido)"
+  end
+
+  it "retrieves his first name or login" do
+    subject.f_name.should == subject.first_name
+    subject.first_name = nil
+    subject.f_name.should == subject.login
+  end
+
   it "verifies if he can post on a space"
-  it "retrieves his association with a thing"
-  it "verifies if he is redu admin admin"
-  it "verifies if he is environment admin of a thing"
-  it "verifies if he is teacher of a thing"
-  it "verifies if he is tutor of a thing"
-  it "verifies if he is member of a thing"
-  it "verifies if is a man"
-  it "verifies if is a woman"
-  it "adds a thing as his favorite"
-  it "removes a thing as his favorite"
-  it "verifies if a thing is one of his favorite things"
-  it "retrieves his favorites things"
-  it "retrieves his profile for a subject"
+  it "retrieves his association with a thing" do
+    environment = Factory(:environment)
+    environment.users << subject
+    subject.get_association_with(environment).
+      should == subject.user_environment_associations.last
+
+    course = Factory(:course)
+    course.users << subject
+    subject.get_association_with(course).
+      should == subject.user_course_associations.last
+
+    space = Factory(:space)
+    space.users << subject
+    subject.get_association_with(space).
+      should == subject.user_space_associations.last
+
+    pending "Need subject factory" do
+      subject_entity = Factory(:subject)
+      subject_entity.students << subject
+      subject.get_association_with(subject_entity).
+        should == subject.enrollments.last
+    end
+  end
+
+  it "verifies if he is redu admin" do
+    subject.should_not be_admin
+    subject.role = Role[:admin]
+    subject.should be_admin
+  end
+
+  it "verifies if he is environment admin of a thing" do
+    environment = Factory(:environment, :owner => subject)
+    environment2 = Factory(:environment)
+    subject.should be_environment_admin(environment)
+    subject.should_not be_environment_admin(environment2)
+  end
+
+  it "verifies if he is teacher of a thing" do
+    space = Factory(:space)
+    space.users << subject
+    assoc = subject.user_space_associations.last
+    assoc.role =  Role[:teacher]
+    assoc.save
+    subject.should be_teacher(space)
+  end
+  it "verifies if he is tutor of a thing" do
+    space = Factory(:space)
+    space.users << subject
+    assoc = subject.user_space_associations.last
+    assoc.role =  Role[:tutor]
+    assoc.save
+    subject.should be_tutor(space)
+  end
+  it "verifies if he is member of a thing" do
+    environment = Factory(:environment)
+    environment.users << subject
+    assoc = subject.user_environment_associations.last
+    assoc.role =  Role[:tutor]
+    assoc.save
+    subject.should be_tutor(environment)
+  end
+
+  it "verifies if is a man" do
+    subject.gender = 'M'
+    subject.should be_male
+
+    subject.gender = 'F'
+    subject.should_not be_male
+  end
+
+  it "verifies if is a woman" do
+    subject.gender = 'F'
+    subject.should be_female
+
+    subject.gender = 'M'
+    subject.should_not be_female
+  end
+
+  it "adds a thing as his favorite" do
+    space = Factory(:space)
+    subject.add_favorite(space.class.to_s, space.id)
+    subject.favorites.last.favoritable.should == space
+  end
+
+  it "removes a thing as his favorite" do
+    space = Factory(:space)
+    subject.add_favorite(space.class.to_s, space.id)
+    subject.rm_favorite(space.class.to_s, space.id)
+    subject.favorites.should be_empty
+  end
+
+  it "verifies if a thing is one of his favorite things" do
+    space = Factory(:space)
+    subject.add_favorite(space.class.to_s, space.id)
+    subject.has_favorite(space)
+  end
+
+  it "retrieves his profile for a subject" do
+    pending "Need student profile factory" do
+      student_profile = Factory(:student_profile)
+      subject.student_profiles = student_profile
+      subject.profile_for(student_profile.subject).should == student_profile
+    end
+  end
 end
