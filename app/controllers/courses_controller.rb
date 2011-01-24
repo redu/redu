@@ -60,9 +60,6 @@ class CoursesController < BaseController
     respond_to do |format|
       if @course.save
         @environment.courses << @course
-        owner_assoc = UserCourseAssociation.create({:user => current_user, :course => @course,
-                                                   :role_id => Role[:environment_admin].id})
-        owner_assoc.approve!
         format.html { redirect_to environment_course_path(@environment, @course) }
       else
         format.html { render :action => :new }

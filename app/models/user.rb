@@ -269,7 +269,7 @@ class User < ActiveRecord::Base
     when 'Course'
       (self.environment_admin? entity.environment)
     when 'Space'
-      self.teacher?(entity) || self.can_manage?(entity.course)
+      self.teacher?(entity) || self.can_manage?(entity.course) || self.teacher?(entity.course)
     when 'Subject'
       self.teacher?(entity.space)
     when 'Lecture'

@@ -1,4 +1,7 @@
 class Course < ActiveRecord::Base
+
+  after_create :create_user_course_association
+
   belongs_to :environment
   has_many :spaces, :dependent => :destroy
   has_many :user_course_associations, :dependent => :destroy
@@ -69,5 +72,12 @@ class Course < ActiveRecord::Base
       self.path = path + '-' + SecureRandom.hex(1)
     end
 
+  end
+  def create_user_course_association
+    user_course =
+      UserCourseAssociation.create(:user => self.owner,
+                                   :course => self,
+                                   :role => Role[:environment_admin])
+      user_course.approve!
   end
 end
