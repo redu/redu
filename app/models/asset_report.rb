@@ -10,4 +10,8 @@ class AssetReport < ActiveRecord::Base
   named_scope :of_subject, lambda { |subject_id|
     { :conditions => { :subject_id => subject_id } }
   }
+  named_scope :of_user, lambda { |user_id|
+    {:joins => :student_profile,
+     :conditions => [ "student_profiles.user_id = ?", user_id ] }
+  }
 end

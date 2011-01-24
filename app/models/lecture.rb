@@ -1,3 +1,5 @@
+require 'sortable'
+
 class Lecture < ActiveRecord::Base
   # Entidade polimórfica que representa o objeto de aprendizagem. Pode possuir
   # três especializações: Seminar, InteractiveClass e Page.
@@ -12,7 +14,8 @@ class Lecture < ActiveRecord::Base
   has_many :favorites, :as => :favoritable, :dependent => :destroy
   has_many :annotations
   has_many :logs, :as => :logeable, :dependent => :destroy, :class_name => 'Status'
-  has_many :student_profiles, :through => :asset_report, :dependent => :destroy
+  has_many :asset_reports, :dependent => :destroy
+  has_many :student_profiles, :through => :asset_reports, :dependent => :destroy
   belongs_to :owner , :class_name => "User" , :foreign_key => "owner"
   belongs_to :lectureable, :polymorphic => true, :dependent => :destroy
   belongs_to :subject
@@ -46,6 +49,7 @@ class Lecture < ActiveRecord::Base
   acts_as_taggable
   ajaxful_rateable :stars => 5
   has_attached_file :avatar, PAPERCLIP_STORAGE_OPTIONS
+  sortable :scope => :subject_id
 
   # VALIDATIONS
   validates_presence_of :name
@@ -66,5 +70,28 @@ class Lecture < ActiveRecord::Base
   # Friendly url
   def to_param
     "#{id}-#{name.parameterize}"
+  end
+
+  # Retorna a próxima Lecture do Subject e marca a Lecture atual como done,
+  # caso ela tenha sido completada (done = true).
+  def next_for(user, done = false)
+    mark_as_done(user, done)
+    self.next_item
+  end
+
+  # Retorna a Lecture anterior do Subject e marca a Lecture atual como done,
+  # caso ela tenha sido completada (done = true).
+  def previous_for(user, done = false)
+    mark_as_done(user, done)
+    self.previous_item
+  end
+
+  # Marca a lecture atual como done, caso ela tenha sido completada (done = true)
+  def mark_as_done(user, done)
+    if done
+      asset_report = self.asset_reports.of_user(user).last
+      asset_report.done = true
+      asset_report.save
+    end
   end
 end

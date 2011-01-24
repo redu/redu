@@ -20,7 +20,7 @@ class StudentProfile < ActiveRecord::Base
     done = self.asset_reports.of_subject(self.subject).count(
       :conditions => { :done => true })
 
-    self.grade = ( done.to_f * 100 ) / total
+    self.grade = (( done.to_f * 100 ) / total)
 
     if total == done
       self.grade = 100
@@ -34,8 +34,8 @@ class StudentProfile < ActiveRecord::Base
   protected
   def creates_assets_reports
     subject.lectures.each do |lecture|
-      self.asset_reports << AssetReport.create(:subject_id => self.subject,
-                                                :lecture_id => lecture)
+      self.asset_reports << AssetReport.create(:subject => self.subject,
+                                                :lecture => lecture)
     end
   end
 end

@@ -27,6 +27,14 @@ describe Lecture do
   it { should_not allow_mass_assignment_of :removed }
   it { should_not allow_mass_assignment_of :is_clone }
 
+  it "responds to next_for" do
+    should respond_to :next_for
+  end
+
+  it "responds to previous_for" do
+    should respond_to :previous_for
+  end
+
   context "finders" do
     it "retrieves unpublished lectures" do
       lectures = (1..3).collect { Factory(:lecture) }
@@ -91,6 +99,58 @@ describe Lecture do
 
       Lecture.related_to(lecture2).should == [lecture]
     end
+  end
+
+  context "being attended" do
+    context "when done" do
+      it "retrieves the next lecture and mark the current as done" do
+        lectures = (1..3).collect { Factory(:lecture) }
+        subject1 = Factory(:subject, :lectures => lectures)
+
+        user = Factory(:user)
+        subject1.enroll user
+
+        lectures[0].next_for(user, true).should == lectures[1]
+        lectures[0].asset_reports.of_user(user).last.
+          should be_done
+      end
+      it "retrieves the previous lecture and mark the current as done" do
+        lectures = (1..3).collect { Factory(:lecture) }
+        subject1 = Factory(:subject, :lectures => lectures)
+
+        user = Factory(:user)
+        subject1.enroll user
+
+        lectures[1].previous_for(user, true).should == lectures[0]
+        lectures[1].asset_reports.of_user(user).last.
+          should be_done
+      end
+    end
+    context "when not done" do
+      it "retrieves the next lecture" do
+        lectures = (1..3).collect { Factory(:lecture) }
+        subject1 = Factory(:subject, :lectures => lectures)
+
+        user = Factory(:user)
+        subject1.enroll user
+
+        lectures[0].next_for(user).should == lectures[1]
+        lectures[0].asset_reports.of_user(user).last.
+          should_not be_done
+      end
+      it "retrieves the previous lecture" do
+        lectures = (1..3).collect { Factory(:lecture) }
+        subject1 = Factory(:subject, :lectures => lectures)
+
+        user = Factory(:user)
+        subject1.enroll user
+
+        lectures[1].previous_for(user).should == lectures[0]
+        lectures[1].asset_reports.of_user(user).last.
+          should_not be_done
+      end
+    end
+
   end
 
   it "generates a permalink" do

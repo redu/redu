@@ -29,15 +29,15 @@ describe AssetReport do
       another_assets = (1..3).collect { Factory(:asset_report) }
       AssetReport.of_subject(subject1).should == subject_assets
     end
-  end
 
-  context "done by" do
-    subject { Factory(:asset_report) }
-    it "is successfuly" do
-
-      expect {
-        lecture.done_by(user)
-      }
+    it "retrieves asset reports of a user" do
+      users = (1..2).collect { Factory(:user) }
+      subject1 = Factory(:subject)
+      subject1.enroll(users[0])
+      subject1.enroll(users[1])
+      AssetReport.of_user(users[0]).
+        should == users[0].student_profiles.last.asset_reports
     end
   end
+
 end

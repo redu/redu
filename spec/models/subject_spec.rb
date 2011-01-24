@@ -14,6 +14,14 @@ describe Subject do
   it { should have_many(:graduated_members).through :enrollments }
   it { should have_many(:members).through(:enrollments).dependent(:destroy) }
 
+  context "validations" do
+    it "validates that it has at least one lecture" do
+      subject = Factory.build(:subject, :lectures => [])
+      subject.should_not be_valid
+      subject.errors.on(:lectures).should_not be_nil
+    end
+  end
+
   it "defaults to not published" do
     subject { Factory(:subject, :published => nil) }
     subject.published.should be_false
@@ -44,11 +52,18 @@ describe Subject do
     end
 
     it "unenrolls an user" do
-      enrollment = Factory(:enrollment, :user_id => @user, :subject_id => subject)
+      enrollment = Factory(:enrollment, :user_id => @user, :subject => subject)
 
       expect {
         subject.unenroll(@user)
       }.should_not change(subject.enrollments, :count)
     end
+  end
+
+  it "retrieves graduated members" do
+    members = Factory(:student_profile, :subject => subject)
+    graduated = Factory(:student_profile, :subject => subject,
+                      :graduaded => 1)
+    subject.graduated_members.should == graduated
   end
 end

@@ -32,6 +32,6 @@ class Enrollment < ActiveRecord::Base
 
   protected
   def creates_student_profile
-    self.create_student_profile(:user_id => self.user, :subject => self.subject)
+    self.create_student_profile(:user => self.user, :subject => self.subject)
   end
 end
