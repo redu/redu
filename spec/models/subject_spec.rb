@@ -14,9 +14,18 @@ describe Subject do
   it { should have_many(:graduated_members).through :enrollments }
   it { should have_many(:members).through(:enrollments).dependent(:destroy) }
 
+  it { should_not allow_mass_assignment_of(:owner) }
+  it { should_not allow_mass_assignment_of(:published) }
+
+  it "responds to tags" do
+    should respond_to :tag_list
+  end
+
   context "validations" do
-    it "validates that it has at least one lecture" do
-      subject = Factory.build(:subject, :lectures => [])
+    it "validates that it has at least one lecture on update" do
+      subject = Factory(:subject)
+      subject.lectures = []
+      subject.save
       subject.should_not be_valid
       subject.errors.on(:lectures).should_not be_nil
     end
@@ -61,9 +70,14 @@ describe Subject do
   end
 
   it "retrieves graduated members" do
-    members = Factory(:student_profile, :subject => subject)
-    graduated = Factory(:student_profile, :subject => subject,
-                      :graduaded => 1)
-    subject.graduated_members.should == graduated
+    users = (1..4).collect { Factory(:user) }
+    users.each { |u| subject.enroll(u) }
+    users[0..1].each do |u|
+      student_profile = u.student_profiles.last
+      student_profile.graduaded = 1
+      student_profile.save
+    end
+
+    subject.graduated_members.should == users[0..1]
   end
 end
