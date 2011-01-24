@@ -262,13 +262,12 @@ class User < ActiveRecord::Base
     entity.nil? and return false
     self.admin? and return true
     self.environment_admin? entity and return true
-    (entity.owner && entity.owner == self) and return true
 
     case entity.class.to_s
     when 'Course'
       (self.environment_admin? entity.environment)
     when 'Space'
-      self.teacher?(entity) || self.can_manage?(entity.course)
+      self.teacher?(entity) || self.can_manage?(entity.course) || self.teacher?(entity.course)
     when 'Subject'
       self.teacher?(entity.space)
     when 'Lecture'

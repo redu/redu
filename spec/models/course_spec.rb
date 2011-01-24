@@ -24,6 +24,12 @@ describe Course do
   it { should_not allow_mass_assignment_of :published }
   it { should_not allow_mass_assignment_of :environment }
 
+  context "callbacks" do
+    it "creates a association with a course" do
+      subject.owner.should == subject.users.last
+    end
+  end
+
   context "finders" do
     it "retrieves approved users" do
       users = 4.times.inject([]) { |res, i| res << Factory(:user) }
@@ -31,7 +37,7 @@ describe Course do
       users[1].user_course_associations.last.approve!
       users[3].user_course_associations.last.approve!
 
-      subject.approved_users.should == [users[1], users[3]]
+      subject.approved_users.should == [users[1], users[3], subject.owner]
     end
 
     it "retrieves all courses of an specified environment" do

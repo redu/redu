@@ -40,11 +40,12 @@ describe Space do
 
     it "creates a space association with all users of course's spaces" do
       c = Factory(:course)
-      users = (1..3).collect { Factory(:user) }
-      c.users << [users[0], users[1]]
+      users = (1..4).collect { Factory(:user) }
+      c.users << [users[0], users[1], users[2]]
       users[0].user_course_associations.last.approve!
       users[1].user_course_associations.last.approve!
-      s = Factory(:space, :course => c)
+      users[2].user_course_associations.last.approve!
+      s = Factory(:space, :owner => users[2], :course => c)
       s.users.should == c.users
     end
   end
@@ -81,6 +82,5 @@ describe Space do
       space.unpublish!
     }.should change { space.published }.to(false)
   end
-
 
 end
