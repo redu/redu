@@ -1,9 +1,11 @@
-class SubjectController < BaseController
+class SubjectsController < BaseController
   load_resource :space
   load_and_authorize_resource :subject
 
   def index
-    @subjects = @space.subjects
+    @subjects = @space.subjects.paginate(:page => params[:page],
+                                        :order => 'updated_at DESC',
+                                        :per_page => AppConfig.items_per_page)
   end
 
   def show

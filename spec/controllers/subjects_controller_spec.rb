@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'authlogic/test_case'
 
-describe SubjectController do
+describe SubjectsController do
   before do
     @user = Factory(:user)
     course = Factory(:course, :owner => @user)
