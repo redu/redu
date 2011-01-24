@@ -1,0 +1,2 @@
+module SubjectHelper
+end
