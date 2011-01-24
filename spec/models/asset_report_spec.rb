@@ -10,10 +10,6 @@ describe AssetReport do
     should respond_to :done
   end
 
-  it "responds to done_for" do
-    should respond_to :done_by
-  end
-
   context "finders" do
     it "retrieves done asset reports" do
      assets_done = (1..2).collect { Factory(:asset_report, :done => true) }
