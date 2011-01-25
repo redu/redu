@@ -1,0 +1,19 @@
+<div class="grid_11 omega">
+  <%  form_remote_for [@space, @subject] do |f| %>
+    <div class="grid_11 omega">
+      <% field_set_tag :subject.l do %>
+      <%= hidden_field_tag 'space_id', @space.id %>
+      <%= f.label :title, :title.l %>
+      <%= f.text_field :title %>
+      <%= error_for :subject, :title %>
+      <%= f.label :description, :description.l %>
+      <%= f.text_area :description %>
+      <%= error_for :subject, :description %>
+      <%= f.label :tag_list, :tag_list.l %>
+      <%= f.text_field :tag_list %>
+      <%= f.submit "Adicionar", :id => "add_button" %>
+      <%= link_to "Cancelar", cancel_space_subjects_path(@space) %>
+    <% end %>
+    </div>
+  <% end %>
+</div>

@@ -53,8 +53,9 @@ class Lecture < ActiveRecord::Base
 
   # VALIDATIONS
   validates_presence_of :name
-  validates_presence_of :description
-  validates_length_of :description, :within => 30..200
+  # FIXME Vai ter description?
+  #validates_presence_of :description
+  #validates_length_of :description, :within => 30..200
   validates_presence_of :lectureable
   validates_associated :lectureable #FIXME Não foi testado, pois vai ter accepts_nested
 

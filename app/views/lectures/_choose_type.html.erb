@@ -1,0 +1,29 @@
+<% field_set_tag "Escolha o tipo de aula",
+  :id => "lectures_types", :class => "fake" do %>
+  <ul>
+    <li style="display:inline;">
+      <%= link_to_remote "Página",
+        :url => new_space_subject_lecture_path(@space, @subject,
+                                               :type => "Page"),
+        :method => :get %>
+    </li>
+    <li style="display:inline;">
+      <%= link_to_remote "Vídeo",
+        :url => new_space_subject_lecture_path(@space, @subject,
+                                               :type => "Seminar"),
+        :method => :get %>
+    </li>
+    <li style="display:inline;">
+      <%= link_to_remote "PPT",
+        :url => new_space_subject_lecture_path(@space, @subject,
+                                               :type => "Document"),
+        :method => :get %>
+    </li>
+    <li style="display:inline;">
+      <%= link_to_remote "Existente",
+        :url => new_space_subject_lecture_path(@space, @subject,
+                                               :type => "Existent"),
+        :method => :get %>
+    </li>
+  </ul>
+<% end %>

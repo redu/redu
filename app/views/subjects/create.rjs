@@ -1,0 +1,6 @@
+page.insert_html :before, 'add_button', :partial => 'lectures/choose_type'
+page.replace 'add_button',
+  (link_to_function "Adicionar",
+    "jQuery('#lectures_types').show(); jQuery(this).hide()",
+    :id => 'add_link')
+page.hide 'add_link'

@@ -125,6 +125,21 @@ class LecturesController < BaseController
   # GET /lectures/new
   # GET /lectures/new.xml
   def new
+    @lecture = Lecture.new
+    case params[:type].to_s
+    when 'Page'
+      @page = Page.new
+    when 'Seminar'
+      @seminar = Seminar.new
+    when 'Document'
+      @document = Document.new
+    when 'Existent'
+    else
+    end
+
+    respond_to do |format|
+      format.js
+    end
   end
 
   # GET /lectures/1/edit
@@ -154,6 +169,32 @@ class LecturesController < BaseController
   # POST /lectures
   # POST /lectures.xml
   def create
+    @lecture = Lecture.new
+    @lecture.name = params[:name]
+    @lecture.owner = current_user
+    @lecture.subject = Subject.find(params[:subject_id])
+    if params[:page]
+      @page = Page.create(params[:page])
+      @lecture.lectureable = @page
+    elsif params[:seminar]
+    elsif params[:document]
+    elsif params[:existent]
+    end
+
+    respond_to do |format|
+      if @lecture.save
+        format.js
+      else
+        format.js do
+          render :update do |page|
+            page.replace_html 'name-error', @lecture.errors.on(:name)
+            page.show 'name-error'
+            page.replace_html 'page_body-error', @page.errors.on(:body)
+            page.show 'page_body-error'
+          end
+        end
+      end
+    end
   end
 
   def unpublished_preview

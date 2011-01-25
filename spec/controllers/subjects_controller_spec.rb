@@ -19,8 +19,14 @@ describe SubjectsController do
 
     it "loads all space subjects" do
       get :index, :locale => "pt-BR", :space_id => @space.id
-      assigns[:subjects].should == @space.subjects
+      assigns[:subjects].to_set.should == @space.subjects.to_set
     end
+
+    it "renders with layout 'environment'" do
+      get :index, :locale => "pt-BR", :space_id => @space.id
+      response.layout.should == 'layouts/environment'
+    end
+
   end
 
   context "GET 'show'" do
@@ -35,7 +41,7 @@ describe SubjectsController do
 
   context "GET 'new'" do
     before do
-      get :new, :locale => "pt-BR"
+      get :new, :locale => "pt-BR", :id => @space.id
     end
 
     it "assigns a new Subject object" do
@@ -43,6 +49,22 @@ describe SubjectsController do
       assigns[:subject].should be_kind_of(Subject)
       assigns[:subject].should be_new_record
     end
+
+    it "assigns the space" do
+      assigns[:space].should_not be_nil
+      assigns[:space].should be_kind_of(Space)
+    end
+
+    it "assigns the course" do
+      assigns[:course].should_not be_nil
+      assigns[:course].should be_kind_of(Course)
+    end
+
+    it "assigns the environment" do
+      assigns[:environment].should_not be_nil
+      assigns[:environment].should be_kind_of(Environment)
+    end
+
   end
 
   context "POST 'create'" do

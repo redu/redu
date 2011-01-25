@@ -1,0 +1,16 @@
+<% form_remote_for :page, @page,
+  :url => space_subject_lectures_path(@space, @subject),
+  :html => { :id => "page_form", "data-remote" => "ckeditor_fail" },
+  :before => "for (instance in CKEDITOR.instances){
+            CKEDITOR.instances[instance].updateElement();}" do |f| %>
+  <% field_set_tag "Artigo" do %>
+    <%= label_tag :name, :title.l %>
+    <%= text_field_tag :name %>
+    <%= error_for :name %>
+    <%= hidden_field_tag "subject_id", @subject.id %>
+    <%= f.label :body, :body.l %>
+    <%= f.cktext_area :body, :width => "600px", :height => "200px" %>
+    <%= error_for :page, :body %>
+    <%= f.submit 'Criar' %>
+  <% end %>
+<% end %>

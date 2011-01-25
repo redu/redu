@@ -1,0 +1,3 @@
+page.insert_html :after, "page_form", :partial => 'item_created'
+page.remove "page_form"
+page.show "add_link"

@@ -15,7 +15,7 @@ pt-BR:
       short_published_date: "%d/%m/%y"
       literal_date: "%d %B %Y"
       short_literal_date: "%d %b %Y"
-      time_ago: "%e %b %Y às %H:%M" 
+      time_ago: "%e %b %Y às %H:%M"
     pm: pm
     am: am
   support:
@@ -44,10 +44,10 @@ pt-BR:
     errors:
       template:
         header:
-          one: "Oops!" #"Um erro ocorreu, verifique abaixo como proceder." 
-          other: "Oops!" #"{{count}} erros ocorreram, veja como proceder abaixo." 
-        body: "Há problemas para os seguintes campos:" 
-      messages: 
+          one: "Oops!" #"Um erro ocorreu, verifique abaixo como proceder."
+          other: "Oops!" #"{{count}} erros ocorreram, veja como proceder abaixo."
+        body: "Há problemas para os seguintes campos:"
+      messages:
         blank: "não pode ser deixado em branco."
         too_long: "Texto muito longo"
         accepted: "Você precisa aceitar os Termos de Uso"
@@ -59,7 +59,7 @@ pt-BR:
         user:
           attributes:
             login:
-              blank: ": Por favor, digite um login." 
+              blank: ": Por favor, digite um login."
               too_short: ": Login muito curto (mínimo de 5 caracteres)."
               invalid:  ": Login inválido."
               taken: "Por favor, escolha outro login. Este já existe no Redu."
@@ -69,13 +69,13 @@ pt-BR:
               blank: ": Por favor, digite um e-mail."
               too_short: ": E-mail muito curto (mínimo de 3 caracteres)."
               invalid: ": E-mail inválido."
-              taken: ": Este e-mail já está cadastrado."  
+              taken: ": Este e-mail já está cadastrado."
             password:
               blank: ": Por favor, digite a senha."
-              too_short: ": Senha muito curta (mínimo de 6 caracteres)." 
+              too_short: ": Senha muito curta (mínimo de 6 caracteres)."
             password_confirmation:
-              blank: ": Por favor, digite a senha de confirmação." 
-              too_short: ": Senha muito curta (mínimo de 6 caracteres)." 
+              blank: ": Por favor, digite a senha de confirmação."
+              too_short: ": Senha muito curta (mínimo de 6 caracteres)."
         exam:
           attributes:
             name: ": Por favor escolha um título maior que 6 caracteres."
@@ -85,6 +85,10 @@ pt-BR:
           attributes:
             path:
               invalid: ": caminho inválido."
+        subject:
+          attributes:
+            description:
+              too_short: "Descrição muito curta. Deve ter pelo menos 30 caracteres."
         lecture:
           attributes:
             description:
@@ -93,7 +97,7 @@ pt-BR:
           attributes:
             body:
               blank: ": Por favor, digite uma mensagem."
-            subject: 
+            subject:
               blank: ": Por favor, digite um assunto."
             recipient:
               blank: ": Destinatário inexistente"
@@ -113,8 +117,8 @@ pt-BR:
           attributes:
            name:
             blank: ": Escolha um nome para o recurso."
-  
-  lectureable: vídeo-aula         
+
+  lectureable: vídeo-aula
   lectures: aulas
   history: historico
   status:
@@ -126,7 +130,7 @@ pt-BR:
     global_average: "Avaliação: {{value}} de {{max}}"
     user_rating: "Sua avaliação: {{value}} de {{max}}"
     hover: "{{value}} de {{max}}"
-  
+
   #simple categories
   arts_design_animation: Artes / Design / Animação
   architecture_urban_studies: Arquitetura / Estudos Urbanos
@@ -145,22 +149,22 @@ pt-BR:
   society_history_politics: Sociedade / História / Política
   sports: Esportes
   other: Outros
- 
+
 
   authlogic:
     error_messages:
-      login_blank: login ou e-mail não pode ficar em branco 
-      login_not_found: login ou e-mail não encontrado 
+      login_blank: login ou e-mail não pode ficar em branco
+      login_not_found: login ou e-mail não encontrado
       login_invalid: login ou e-mail inválido.
       consecutive_failed_logins_limit_exceeded: limite de falhas de login consecutivas excedida, sua conta foi desabilitada.
       email_invalid: should look like an email address.
       password_blank: senha não pode ficar em branco
-      password_invalid: senha inválida 
+      password_invalid: senha inválida
       not_active: Your account is not active
       not_confirmed: Your account is not confirmed
       not_approved: Your account is not approved
       no_authentication_details: You did not provide any details for authentication.
-  
+
   #redu categories
   all: Todas
   aeronautics_and_astronautics: Aeronáutica e Astronáutica
@@ -254,7 +258,7 @@ pt-BR:
   #en: activation_email_not_sent_message: Activation e-mail could not be sent. Perhaps that user is already active?
   activation_email_not_sent_message: O e-mail de ativação não foi enviado. O usuário realmente não está ativo?
   #en: activation_email_resent_message: An activation e-mail was resent to the e-mail address you used to sign up.
-  activation_email_resent_message: O e-mail de ativação foi reenviado.  
+  activation_email_resent_message: O e-mail de ativação foi reenviado.
   #en: active: active
   active: active
   #en: active_users: Active Users
@@ -288,7 +292,7 @@ pt-BR:
   #en: admin_controls: Admin Controls
   admin_controls: Admin Controls
   #en: admin_dashboard: Admin dashboard # AQUI
-  admin_dashboard: Painel de Admin    
+  admin_dashboard: Painel de Admin
   #en: administer_events: Administer events
   administer_events: Administer events
   #en: ads: Ads
@@ -371,6 +375,7 @@ pt-BR:
   blog: Blog
   #en: blog_posts: Blog posts
   blog_posts: Items de Blog
+  body: Corpo
   #en: body_text: Body Text
   body_text: Corpo do texto
   #en: body_text_reqiured: Body Text (required)
@@ -471,7 +476,7 @@ pt-BR:
   comments_rss: Comments RSS
   #en: community_tagline: CommunityEngine Rocks!
   community_tagline: CommunityEngine Rocks!
-  #en: comment_unsubscribe_succeeded: Thanks, you have been unsubscribed from notifications on this comment.  
+  #en: comment_unsubscribe_succeeded: Thanks, you have been unsubscribed from notifications on this comment.
   comment_unsubscribe_succeeded: "Thanks, you have been unsubscribed from notifications on this comment."
   #en: compose: Compose
   compose: Escrever
@@ -523,8 +528,8 @@ pt-BR:
   days_ago: dias atrás
   #en: deactivate_link: Click here to deactivate your account
   deactivate_link: Clique aqui para desativar sua conta
-  #en: deactivate_tip: Deactivating your account will remove your profile from the site. 
-  deactivate_tip: Desativando sua conta, você vai remover ser perfil do site. 
+  #en: deactivate_tip: Deactivating your account will remove your profile from the site.
+  deactivate_tip: Desativando sua conta, você vai remover ser perfil do site.
   #en: deactivate_confirmation: Are you sure you want to deactivate your account?
   deactivate_confirmation: Are you sure you want to deactivate your account?
   #en: deactivate_completed: Thanks. Your account has been deactivated and you have been logged out.
@@ -542,7 +547,7 @@ pt-BR:
   #en: delete_this_page: Delete this page
   delete_this_page: Delete this page
   #en: delete_this_post: Delete this post?
-  delete_this_post: Deletar este post 
+  delete_this_post: Deletar este post
   #en: delete_this_topic_forever: Delete this topic forever?
   delete_this_topic_forever: Apagar este tópico para sempre?
   #en: delete_this_user: Delete this user
@@ -849,10 +854,10 @@ pt-BR:
   log_in_to_your: Log in to your
   #en: log_out: Log Out
   log_out: Log Out
-  #en: log_out_of_your: Log out of your 
+  #en: log_out_of_your: Log out of your
   log_out_of_your: Log out of your
   #en: log_privacy: Log Privacy
-  log_privacy: Visibilidade da Movimentação Recente 
+  log_privacy: Visibilidade da Movimentação Recente
   #en: logged_in: "Logged in:"
   logged_in: "Logged in:"
   #en: logged_into_the_site: logged into the site
@@ -1011,8 +1016,8 @@ pt-BR:
   no_tags: Sem tags
   #en: notify_email_updates: Notify of community news
   notify_email_updates: Notificação de novidades nas disciplinas
-  #en: notify_me_of_follow_ups_via_email: Notify me of follow ups via e-mail  
-  notify_me_of_follow_ups_via_email: Notify me of follow ups via e-mail  
+  #en: notify_me_of_follow_ups_via_email: Notify me of follow ups via e-mail
+  notify_me_of_follow_ups_via_email: Notify me of follow ups via e-mail
   #en: notify_of_comments: Notify of comments
   notify_of_comments: Notificação de comentários
   #en: notify_of_friend_requests: Notify of friend requests
@@ -1203,7 +1208,7 @@ pt-BR:
   #en: related_tags: Related Tags
   related_tags: Related Tags
   #en: remember_me: Remember me
-  remember_me: Lembre-se de mim 
+  remember_me: Lembre-se de mim
   #en: remember_you_can_always_change_this_later: Remember, you can always change this later.
   remember_you_can_always_change_this_later: "Remember, you can always change this later."
   #en: remove_moderator: Remove moderator
@@ -1247,7 +1252,7 @@ pt-BR:
   rsvp_for: RSVP for
   #en: rsvped_for_an_event: "RSVPed for an event:"
   rsvped_for_an_event: "RSVPed for an event:"
-  #en: rsvp: RSVP  
+  #en: rsvp: RSVP
   rsvp: RSVP
   #en: rsvps: RSVPs
   rsvps: RSVPs
@@ -1378,7 +1383,7 @@ pt-BR:
   #en: sticky: Sticky
   sticky: Aberto
   #en: subject: Subject
-  subject: Disciplina
+  subject: Módulo
   #en: suject_of_message: Subject of Message
   subject_of_message: Assunto
   #en: subscribe_to: Subscribe to
@@ -1395,6 +1400,7 @@ pt-BR:
   tags: Tags
   #en: taggings: Taggings
   taggings: Taggings
+  tag_list: Palavras-chave
   #en: tag_was_successfully_updated: Tag was successfully updated
   tag_was_successfully_updated: Tag was successfully updated
   #en: tag_was_successfully_deleted: Tag was successfully deleted
@@ -1465,7 +1471,7 @@ pt-BR:
   to_accept: to accept
   #en: to_get_recommended_content_on_your_dashboard: to start getting recommended content on your dashboard.
   to_get_recommended_content_on_your_dashboard: to start getting recommended content on your dashboard.
-  #en: to_get_started_with_clippings_first: To get started with clippings, first 
+  #en: to_get_started_with_clippings_first: To get started with clippings, first
   to_get_started_with_clippings_first: "To get started with clippings, first "
   #en: to_start_adding_friends: To start adding friends, you can
   to_start_adding_friends: "To start adding friends, you can"
@@ -1715,17 +1721,17 @@ pt-BR:
   #en: album_comments: "Comentarios de álbum"
   album_comments: "Album comments"
   #en: album_tip: "Albums let you organize yout photos. Share whole experiencies with other {{community_name}} users"
-  album_tip: "Albums let you organize yout photos. Share whole experiencies with other {{community_name}} users"  
+  album_tip: "Albums let you organize yout photos. Share whole experiencies with other {{community_name}} users"
   #en: delete_album_and_photos: Delete album and its associated photos?
   delete_album_and_photos: "Delete album and its associated photos?"
   #en: album_was_successfully_created: "Album was successfully created"
-  album_was_successfully_created: "Album was successfully created"    
+  album_was_successfully_created: "Album was successfully created"
   #en: album: "Album"
   album: "Album"
   #en: view_more: "View more"
   view_more: "View more"
   #en: assign_album: "Assign album"
-  assign_album: "Assign album" 
+  assign_album: "Assign album"
   #en: new_album: "New album"
   new_album: "New album"
   #en: created_an_album: "Created an album"
