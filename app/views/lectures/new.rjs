@@ -2,7 +2,9 @@ case params[:type].to_s
 when 'Page'
   page.insert_html :before, 'lectures_types', :partial => 'form_page'
 when 'Seminar'
+  page.insert_html :before, 'lectures_types', :partial => 'form_seminar'
 when 'Document'
+  page.insert_html :before, 'lectures_types', :partial => 'form_document'
 when 'Existent'
 else
 end

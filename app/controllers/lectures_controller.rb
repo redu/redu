@@ -174,10 +174,15 @@ class LecturesController < BaseController
     @lecture.owner = current_user
     @lecture.subject = Subject.find(params[:subject_id])
     if params[:page]
-      @page = Page.create(params[:page])
+      @page = Page.create(params[:page]) if @lecture.name
       @lecture.lectureable = @page
     elsif params[:seminar]
+      # Verificação para que o Seminar não seja criado em vão.
+      @seminar = Seminar.create(params[:seminar]) if @lecture.name
+      @lecture.lectureable = @seminar
     elsif params[:document]
+      @document = Document.create(params[:document]) if @lecture.name
+      @lecture.lectureable = @document
     elsif params[:existent]
     end
 
@@ -185,14 +190,7 @@ class LecturesController < BaseController
       if @lecture.save
         format.js
       else
-        format.js do
-          render :update do |page|
-            page.replace_html 'name-error', @lecture.errors.on(:name)
-            page.show 'name-error'
-            page.replace_html 'page_body-error', @page.errors.on(:body)
-            page.show 'page_body-error'
-          end
-        end
+        format.js { render :template => 'lectures/create_error'}
       end
     end
   end
