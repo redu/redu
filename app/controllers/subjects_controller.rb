@@ -7,9 +7,7 @@ class SubjectsController < BaseController
   before_filter :load_course_and_environment
 
   def index
-    if params[:building_subject]
-      flash[:notice] = "O Módulo foi criado."
-    end
+    #FIXME Colocar finalized
     @subjects = @space.subjects.paginate(:page => params[:page],
                                         :order => 'updated_at DESC',
                                         :per_page => AppConfig.items_per_page)
@@ -21,7 +19,16 @@ class SubjectsController < BaseController
 
   def new
     @subject = Subject.new
-  end
+    respond_to do |format|
+      format.html
+      format.js do
+        render :update do |page|
+          page.insert_html :after, 'link-new-subject', :partial => 'subjects/form'
+          page.hide 'link-new-subject'
+        end
+      end
+    end
+end
 
   def create
     @subject = Subject.new(params[:subject])
@@ -44,16 +51,28 @@ class SubjectsController < BaseController
     end
   end
 
+  def edit
+    render :update do |page|
+      page.hide 'tabs-2-content'
+      page.insert_html :before, 'tabs-2-content', :partial => 'subjects/form'
+    end
+  end
+
   def update
-   if @subject.update_attributes(params[:subject])
-     render :update do |page|
-      page.redirect_to(:controller => 'subjects', :action => 'index',
-                       :space_id => @subject.space.id,
-                       :building_subject => true)
-     end
-   else
-     render :template => 'subjects/update_error'
-   end
+    if @subject.update_attributes(params[:subject])
+      @subject.published = 1
+      @subject.save
+      flash[:notice] = "O Módulo foi criado."
+      render :update do |page|
+        #FIXME Redirecionar para a listagem após trocar as tabs para fake tabs.
+        #page.redirect_to(:controller => 'subjects', :action => 'index',
+                         #:space_id => @subject.space.id)
+        page.redirect_to(:controller => 'subjects', :action => 'show',
+                         :subject_id => @subject.id)
+      end
+    else
+      render :template => 'subjects/update_error'
+    end
   end
 
   def destroy

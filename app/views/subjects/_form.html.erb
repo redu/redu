@@ -1,7 +1,6 @@
-<div class="grid_11 omega">
-  <%  form_remote_for [@space, @subject] do |f| %>
-    <div class="grid_11 omega">
-      <% field_set_tag :subject.l do %>
+<%  form_remote_for [@space, @subject] do |f| %>
+  <div class="">
+    <% field_set_tag :subject.l do %>
       <%= hidden_field_tag 'space_id', @space.id %>
       <%= f.label :title, :title.l %>
       <%= f.text_field :title %>
@@ -11,11 +10,27 @@
       <%= error_for :subject, :description %>
       <%= f.label :tag_list, :tag_list.l %>
       <%= f.text_field :tag_list %>
+
+      <%= render :partial => 'lectures/choose_type' %>
       <%= error_for :subject, :lectures %>
-      <%= f.submit "Adicionar", :id => "add_button" %>
-      <%= f.submit "Criar", :id => "create_button", :style => "display: none;" %>
-      <%= link_to_function "Cancelar", "$('#new_subject').remove();", :id => "cancel_link" %>
+
+      <%= render :partial => 'lectures/item_created', :collection => @subject.lectures %>
+
+      <% if action_name == 'new' %>
+        <%= f.submit "Adicionar", :id => "add_button" %>
+        <%= f.submit "Criar", :id => "create_button", :style => "display: none;" %>
+        <%= link_to_function "Cancelar",
+          "$('#new_subject').remove(); $('#link-new-subject').show();",
+          :id => "cancel_link" %>
+      <% else %>
+        <%= link_to_function "Adicionar",
+          "jQuery('#lectures_types').show(); jQuery(this).hide()",
+          :id => 'add_link' %>
+        <%= f.submit "Salvar" %>
+        <%= link_to_function "Voltar",
+          "$('#edit_subject_#{@subject.id}').remove(); $('#tabs-2-content').show();",
+          :id => "cancel_link" %>
+      <% end %>
     <% end %>
-    </div>
-  <% end %>
-</div>
+  </div>
+<% end %>

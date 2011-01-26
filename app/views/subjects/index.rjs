@@ -6,4 +6,3 @@ else
   page.replace_html 'tabs-2-content', :partial => 'index'
   page << "$('#spinner').hide()"
 end
-

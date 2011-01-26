@@ -1,3 +1,12 @@
-<div>
-  <%= @lecture.lectureable.class.to_s %> <%= @lecture.name %>
+<div  id=<%= "#{item_created.id}-item" %>>
+  <%= item_created.lectureable.class.to_s %> <%= item_created.name %>
+  <% if item_created.lectureable.class.to_s == 'Page' %>
+    <%= link_to_remote "Editar",
+      :url => edit_space_subject_lecture_path(@space, @subject, item_created),
+      :method => :get %>
+  <% end %>
+  <%= link_to_remote "Remover",
+    :url => space_subject_lecture_path(@space, @subject, item_created),
+    :method => :delete,
+    :confirm => "Você tem certeza que deseja excluir essa aula? Não será mais possível recuperá-la." %>
 </div>

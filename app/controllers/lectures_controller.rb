@@ -147,16 +147,12 @@ class LecturesController < BaseController
         flash[:notice] = 'O módulo deve ser despublicado para que seja possível a editação das aulas.'
         format.html { redirect_to space_subject_lecture_path(@space, @subject, @lecture) }
       else
-        if @lecture.lectureable_type == 'Page'
-          @page = @lecture.lectureable
-          format.html {render 'edit_page'}
-        elsif @lecture.lectureable_type == 'InteractiveClass'
-          @interactive_class = @lecture.lectureable
-          format.html {render 'edit_interactive'}
-        elsif @lecture.lectureable_type == 'Seminar'
-          format.html {render 'edit_seminar'}
-        else
-          format.html {render 'edit_document'}
+        format.js do
+          render :update do |page|
+            @page = @lecture.lectureable
+            page.insert_html :after, "#{@lecture.id}-item", :partial => 'form_edit_page'
+            page.remove "#{@lecture.id}-item"
+          end
         end
       end
 
@@ -227,68 +223,23 @@ class LecturesController < BaseController
   # PUT /lectures/1
   # PUT /lectures/1.xml
   def update
-    if @lecture.lectureable_type == 'InteractiveClass'
-      @interactive_class = @lecture.interactive_class
-      respond_to do |format|
-        if @interactive_class.update_attributes(params[:interactive_class])
-          flash[:notice] = 'Curso atualizado com sucesso.'
-          format.html { redirect_to(@lecture) }
-          format.xml  { head :ok }
-        else
-          format.html { render :action => "edit_interactive" }
-          format.xml  { render :xml => @lecture.errors, :status => :unprocessable_entity }
-        end
-      end
-    elsif @lecture.lectureable_type == 'Page'
-      respond_to do |format|
-        @page = @lecture.lectureable
-        if params[:lecture]
-          if @lecture.update_attributes(params[:lecture])
-            sucesso = true
-          else
-            sucesso = false
-          end
-        elsif params[:page]
-          if @page.update_attribute 'body', params[:page][:body]
-            sucesso = true
-          else
-            sucesso = false
-          end
-        else
-          sucesso = false
-        end
+    @lecture = Lecture.find(params[:lecture_id])
+    @lecture.name = params[:name]
 
-        if sucesso
-          flash[:notice] = 'Artigo atualizado com sucesso.'
-          format.html { redirect_to lazy_space_subject_path(@space,@subject) }
-          format.xml  { head :ok }
-        else
-          format.html { render :action => "edit_page" }
-          format.xml  { render :xml => @lecture.errors, :status => :unprocessable_entity }
-        end
+   if params[:page]
+     @page = @lecture.lectureable
+      valid = @page.update_attributes(params[:page]) && @lecture.save
+    elsif params[:seminar]
+      @seminar.update_attributes(params[:seminar]) && @lecture.save
+    elsif params[:document]
+      @document.update_attributes(params[:document]) && @lecture.save
+    end
 
-      end
-     elsif @lecture.lectureable_type == 'Seminar'
-      respond_to do |format|
-        if @lecture.update_attributes(params[:lecture])
-          flash[:notice] = 'Vídeo-aula atualizada com sucesso.'
-          format.html { redirect_to lazy_space_subject_path(@space,@subject) }
-          format.xml  { head :ok }
-        else
-          format.html { render :action => "edit_seminar" }
-          format.xml  { render :xml => @lecture.errors, :status => :unprocessable_entity }
-        end
-      end
-    else
-      respond_to do |format|
-        if @lecture.update_attributes(params[:lecture])
-          flash[:notice] = 'Apresentação atualizada com sucesso.'
-          format.html { redirect_to lazy_space_subject_path(@space,@subject) }
-          format.xml  { head :ok }
-        else
-          format.html { render :action => "edit_document" }
-          format.xml  { render :xml => @lecture.errors, :status => :unprocessable_entity }
-        end
+    respond_to do |format|
+      if valid
+        format.js
+      else
+        format.js { render :template => 'lectures/create_error'}
       end
     end
 
@@ -298,10 +249,14 @@ class LecturesController < BaseController
   # DELETE /lectures/1.xml
   def destroy
     @lecture.destroy
-    flash[:notice] = 'A aula foi removida'
 
     respond_to do |format|
       format.html { redirect_to(lectures_url) }
+      format.js do
+        render :update do |page|
+          page.remove "#{@lecture.id}-item"
+        end
+      end
       format.xml  { head :ok }
     end
   end
