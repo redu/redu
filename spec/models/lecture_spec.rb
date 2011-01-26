@@ -16,7 +16,8 @@ describe Lecture do
   it { should accept_nested_attributes_for :resources }
 
   it { should validate_presence_of :name }
-  it { should validate_presence_of :description }
+  # Descrição não está sendo utilizada
+  xit { should validate_presence_of :description }
   #FIXME Problema de tradução
   xit { should ensure_length_of(:description).is_at_least(30).is_at_most(200)}
   it { should validate_presence_of :lectureable }

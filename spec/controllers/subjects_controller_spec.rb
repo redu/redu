@@ -4,7 +4,8 @@ require 'authlogic/test_case'
 describe SubjectsController do
   before do
     @user = Factory(:user)
-    course = Factory(:course, :owner => @user)
+    environment = Factory(:environment, :owner => @user)
+    course = Factory(:course, :environment => environment)
     @space = Factory(:space, :owner => @user, :course => course)
     activate_authlogic
     UserSession.create @user
@@ -41,7 +42,7 @@ describe SubjectsController do
 
   context "GET 'new'" do
     before do
-      get :new, :locale => "pt-BR", :id => @space.id
+      get :new, :locale => "pt-BR", :subject => { :space_id => @space.id }
     end
 
     it "assigns a new Subject object" do
@@ -78,20 +79,17 @@ describe SubjectsController do
 
       it "creates a record with the current user as owner" do
         lambda {
-          post :create, :locale => "pt-BR", :subject => @post_params
+          post :create, :locale => "pt-BR", :subject => @post_params,
+          :space_id => @space.id
         }.should change(Subject, :count).by(1)
         Subject.all.last.owner.should == @user
       end
 
       it "assigns the subject" do
-        post :create, :locale => "pt-BR", :subject => @post_params
+        post :create, :locale => "pt-BR", :subject => @post_params,
+          :space_id => @space.id
         assigns[:subject].should_not be_nil
         assigns[:subject].should be_kind_of(Subject)
-      end
-      it "redirects to edit" do
-        post :create, :locale => "pt-BR", :subject => @post_params
-        response.should redirect_to(edit_space_subject_path(assigns[:subject].space,
-                                                            assigns[:subject]))
       end
     end
 
@@ -104,19 +102,16 @@ describe SubjectsController do
 
       it "does NOT create a record" do
         lambda {
-          post :create, :locale => "pt-BR", :subject => @post_params
+          post :create, :locale => "pt-BR", :subject => @post_params,
+          :space_id => @space.id
         }.should_not change(Subject, :count)
       end
 
       it "assigns the subject" do
-        post :create, :locale => "pt-BR", :subject => @post_params
+        post :create, :locale => "pt-BR", :subject => @post_params,
+          :space_id => @space.id
         assigns[:subject].should_not be_nil
         assigns[:subject].should be_kind_of(Subject)
-      end
-
-      it "re-renders 'new'" do
-        post :create, :locale => "pt-BR", :subject => @post_params
-        response.should render_template(:new)
       end
     end
   end
