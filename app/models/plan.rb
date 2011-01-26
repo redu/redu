@@ -6,7 +6,7 @@ class Plan < ActiveRecord::Base
   belongs_to :changed_from, :class_name => "Plan", :foreign_key => :plan_id
   has_many :invoices
 
-  validates_presence_of :members_limit, :price
+  validates_presence_of :members_limit, :price, :yearly_price
 
   attr_protected :state
 
@@ -33,20 +33,24 @@ class Plan < ActiveRecord::Base
     new_plan_attrs[:user] = self.user
     new_plan_attrs[:billable] = self.billable
 
-    new_plan = Plan.new(new_plan_attrs)
+    new_plan = Plan.create(new_plan_attrs)
+    # Migrando invoices antigas (self) para o novo plano
 
-    Plan.transaction do
-      new_plan.save!
-      self.migrate!
-    end
+    new_plan.invoices << self.invoices
+    new_plan.create_invoice
+
+    # Seta relacionamento entre self e new_plan através de um trigger
+    self.migrate!
 
     return new_plan
   end
 
   # Cria um Invoice com o amount correto para este plano. O amount do invoice é
   # calculado dividindo-se o price do plano pela quantidade de dias restantes até
-  # o primeiro dia do próximo mês. Os valores passdos através do invoice_options
-  # têm precedência sobre os calculados. Como no exemplo abaixo:
+  # o último dia do mês atual. Caso nenhuma opção seja informada, a data inicial
+  # será Date.tomorrow e a final o último dia do mês, além disso o amount é
+  # calculado para esse período
+  # Como no exemplo abaixo:
   #
   # plan.price
   # => 20.00
@@ -55,24 +59,29 @@ class Plan < ActiveRecord::Base
   # invoice = plan.create_invoice
   # invoice.amount
   # => 11.61 # (31 dias - 13 dias) * (20 / 31 dias)
-  def create_invoice(invoice_options = {})
-    options = {
+  def create_invoice(opts = {})
+    invoice_options = {
       :period_start => Date.today.tomorrow,
       :period_end => Date.today.at_end_of_month,
       :amount => amount_until_next_month
-    }.deep_merge!(invoice_options)
+    }.merge(opts)
 
-    self.invoices.create(options)
+    self.invoices.create(invoice_options)
   end
 
   # Calcula o montante do perído informado porporcional ao preço do plano. O default
   # do from é Date.today e do to é o primeiro dia do próximo mês.
   def amount_until_next_month
-    from = Date.tomorrow
+    from = Date.today
     to = Date.today.at_end_of_month
     # Montante por dia
     per_day = self.price / days_in_current_month
 
+    return per_day * days_in_period(from, to)
+  end
+
+  def amount_between(from, to)
+    per_day = self.price / days_in_current_month
     return per_day * days_in_period(from, to)
   end
 
@@ -106,6 +115,7 @@ class Plan < ActiveRecord::Base
       :professor_standard => {
         :name => "Professor Standard",
         :price => 49.99,
+        :yearly_price => 499.99,
         :video_storage_limit => 1.gigabyte,
         :file_storage_limit => 30.gigabytes,
         :members_limit => 50
@@ -113,6 +123,7 @@ class Plan < ActiveRecord::Base
       :professor_lite => {
         :name => "Professor Lite",
         :price => 24.99,
+        :yearly_price => 249.99,
         :video_storage_limit => 1.gigabyte,
         :file_storage_limit => 20.gigabytes,
         :members_limit => 20
@@ -120,6 +131,7 @@ class Plan < ActiveRecord::Base
       :free => {
         :name => "Free",
         :price => 0,
+        :yearly_price => 0,
         :video_storage_limit => 1.gigabyte,
         :file_storage_limit => 1.gigabytes,
         :members_limit => 20
