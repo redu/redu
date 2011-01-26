@@ -147,11 +147,6 @@ describe SubjectsController do
         assigns[:subject].should == @subject
       end
 
-      it "redirects to index" do
-        put :update, :locale => "pt-BR", :id => @subject.id,
-          :subject => { :title => "Módulo"}
-        response.should redirect_to(space_subjects_path(@subject.space))
-      end
     end
 
     context "when failing" do
@@ -171,7 +166,7 @@ describe SubjectsController do
       it "re-renders 'edit'" do
         put :update, :locale => "pt-BR", :id => @subject.id,
           :subject => { :description => "short description" }
-        response.should render_template(:edit)
+        response.should render_template('subjects/update_error')
       end
     end
   end

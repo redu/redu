@@ -11,8 +11,10 @@
       <%= error_for :subject, :description %>
       <%= f.label :tag_list, :tag_list.l %>
       <%= f.text_field :tag_list %>
+      <%= error_for :subject, :lectures %>
       <%= f.submit "Adicionar", :id => "add_button" %>
-      <%= link_to "Cancelar", cancel_space_subjects_path(@space) %>
+      <%= f.submit "Criar", :id => "create_button", :style => "display: none;" %>
+      <%= link_to_function "Cancelar", "$('#new_subject').remove();", :id => "cancel_link" %>
     <% end %>
     </div>
   <% end %>

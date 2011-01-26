@@ -12,5 +12,7 @@
     <%= f.cktext_area :body, :width => "600px", :height => "200px" %>
     <%= error_for :page, :body %>
     <%= f.submit 'Criar' %>
+    <%= link_to_function "Cancelar",
+      "$('#page_form').remove(); $('#add_link').show(); return false;" %>
   <% end %>
 <% end %>

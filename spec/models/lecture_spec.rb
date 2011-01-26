@@ -159,4 +159,12 @@ describe Lecture do
     subject.permalink.should include(subject.id.to_s)
     subject.permalink.should include(subject.name.parameterize)
   end
+
+  it "generates a clone of itself" do
+    subject1 = Factory(:subject)
+    new_lecture = subject.clone_for_subject!(subject1.id)
+    new_lecture.should_not == subject
+    new_lecture.should be_is_clone
+    new_lecture.subject.should == subject1
+  end
 end

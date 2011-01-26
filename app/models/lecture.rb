@@ -95,4 +95,12 @@ class Lecture < ActiveRecord::Base
       asset_report.save
     end
   end
+
+  def clone_for_subject!(subject_id)
+    clone = self.clone
+    clone.is_clone = true
+    clone.subject = Subject.find(subject_id)
+    clone.save
+    clone
+  end
 end

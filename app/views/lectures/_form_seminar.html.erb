@@ -110,6 +110,8 @@ function add_fields(link, association, content) {
                              <% end %>
                            </div>
                            <%= f.submit "Criar" %>
+                           <%= link_to_function "Cancelar",
+                             "$('#seminar-form').remove(); $('#add_link').show(); return false;" %>
                          </div>
                          <div id="youtube_preview" class="grid_5 omega">
                            <% field_set_tag 'Prévia' do %>

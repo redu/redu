@@ -1,6 +1,16 @@
-page.insert_html :before, 'add_button', :partial => 'lectures/choose_type'
-page.replace 'add_button',
-  (link_to_function "Adicionar",
+page << "$('#new_subject').get(0).setAttribute('onsubmit', \"jQuery.ajax({data:jQuery.param(jQuery(this).serializeArray()), dataType:'script', type:'put', url:'#{space_subject_path(@space, @subject)}'}); return false;\");"
+page << "$('#new_subject').get(0).setAttribute('action', '#{space_subject_path(@space, @subject)}');"
+page << "$('#new_subject').get(0).setAttribute('method', 'put');"
+
+page.insert_html :before, 'subject_lectures-error', :partial => 'lectures/choose_type'
+page.insert_html :before, 'add_button', (link_to_function "Adicionar",
     "jQuery('#lectures_types').show(); jQuery(this).hide()",
     :id => 'add_link')
+
+page.remove 'add_button'
+page.show 'create_button'
 page.hide 'add_link'
+page.replace 'cancel_link',
+  (link_to "Cancelar", space_subject_path(@space, @subject, :building_subject => true),
+    :method => :delete,
+    :confirm => "Você tem certeza que deseja cancelar a construção deste módulo? Todas as informações serão perdidas.")

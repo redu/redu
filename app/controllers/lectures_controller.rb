@@ -133,8 +133,6 @@ class LecturesController < BaseController
       @seminar = Seminar.new
     when 'Document'
       @document = Document.new
-    when 'Existent'
-    else
     end
 
     respond_to do |format|
@@ -169,10 +167,16 @@ class LecturesController < BaseController
   # POST /lectures
   # POST /lectures.xml
   def create
-    @lecture = Lecture.new
-    @lecture.name = params[:name]
-    @lecture.owner = current_user
-    @lecture.subject = Subject.find(params[:subject_id])
+    if params[:lecture_id] # Existent
+     @lecture = Lecture.find(params[:lecture_id])
+     @lecture = @lecture.clone_for_subject!(params[:subject_id])
+    else
+      @lecture = Lecture.new
+      @lecture.name = params[:name]
+      @lecture.owner = current_user
+      @lecture.subject = Subject.find(params[:subject_id])
+    end
+
     if params[:page]
       @page = Page.create(params[:page]) if @lecture.name
       @lecture.lectureable = @page
@@ -183,7 +187,6 @@ class LecturesController < BaseController
     elsif params[:document]
       @document = Document.create(params[:document]) if @lecture.name
       @lecture.lectureable = @document
-    elsif params[:existent]
     end
 
     respond_to do |format|

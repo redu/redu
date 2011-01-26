@@ -6,7 +6,7 @@ when 'Seminar'
 when 'Document'
   page.insert_html :before, 'lectures_types', :partial => 'form_document'
 when 'Existent'
-else
+  page.insert_html :before, 'lectures_types', :partial => 'form_existent'
 end
 
 page.hide 'lectures_types'

@@ -89,6 +89,8 @@ pt-BR:
           attributes:
             description:
               too_short: "Descrição muito curta. Deve ter pelo menos 30 caracteres."
+            lectures:
+              too_short: "Um módulo deve ter ao menos uma aula."
         lecture:
           attributes:
             description:
