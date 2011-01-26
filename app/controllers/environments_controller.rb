@@ -64,12 +64,19 @@ class EnvironmentsController < BaseController
     case params[:step]
     when "1"
       @environment.valid?
+      @step = 2
 
       respond_to do |format|
-        format.html { render :action => "new",
-          :locals => { :step => 2 }, :layout => "wizard_environment" }
+        format.html { render :action => "new", :locals => { :step => 2},
+          :layout => "wizard_environment" }
       end
     when "2"
+      @environment.valid?
+      @plan = Plan.from_preset(params[:plan].to_sym)
+      @plan.valid?
+
+      @step = 3
+    when "3"
       respond_to do |format|
         @environment.owner = current_user
         @environment.courses.first.owner = current_user
@@ -89,7 +96,6 @@ class EnvironmentsController < BaseController
             :status => :unprocessable_entity }
         end
       end
-    when "3"
     else
       redirect_to teach_path
     end
