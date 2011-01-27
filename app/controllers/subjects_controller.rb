@@ -52,9 +52,14 @@ end
   end
 
   def edit
-    render :update do |page|
-      page.hide 'tabs-2-content'
-      page.insert_html :before, 'tabs-2-content', :partial => 'subjects/form'
+    respond_to do |format|
+      format.html
+      format.js do
+        render :update do |page|
+          page.hide 'tabs-2-content'
+          page.insert_html :before, 'tabs-2-content', :partial => 'subjects/form'
+        end
+      end
     end
   end
 
@@ -84,6 +89,71 @@ end
     end
     redirect_to space_subjects_path(@subject.space)
   end
+
+  def publish
+    @subject.publish!
+    flash[:notice] = "O módulo foi publicado."
+    redirect_to space_subject_path(@space, @subject)
+  end
+
+  def unpublish
+    @subject.unpublish!
+    flash[:notice] = "O módulo foi despublicado e todas as matrículas foram perdidas."
+    redirect_to space_subject_path(@space, @subject)
+  end
+
+  def enroll
+    role = current_user.get_association_with(@space).role
+    @subject.enroll(current_user, role)
+    flash[:notice] = "Você foi matriculado e já pode começar a assistir as aulas."
+    redirect_to space_subject_path(@space, @subject)
+  end
+
+  def unenroll
+    @subject.unenroll(current_user)
+    flash[:notice] = "Você desmatriculado do módulo."
+    redirect_to space_subject_path(@space, @subject)
+  end
+
+  def admin_lectures_order
+    return unless request.post?
+    lectures_ordered = params[:lectures_ordered].split(",")
+    @subject.change_lectures_order!(lectures_ordered)
+
+    flash[:notice] = "A ordem das aulas foi atualizada."
+    redirect_to admin_lectures_order_space_subject_path(@space, @subject)
+  end
+
+  def next_lecture
+    if params[:done] == "0"
+      done = false
+    else
+      done = true
+    end
+    lecture = Lecture.find(params[:lecture_id])
+    @lecture = lecture.next_for(current_user, done)
+    enrollment = current_user.get_association_with(@subject)
+    enrollment.student_profile.update_grade!
+
+    if @lecture
+      redirect_to space_subject_lecture_path(@space, @subject, @lecture)
+    else
+      redirect_to space_subject_lecture_path(@space, @subject)
+    end
+  end
+
+  # Mural do Subject
+  def statuses
+    @status = Status.new
+    @statusable = @subject
+    @statuses = @subject.recent_activity(params[:page])
+
+    respond_to do |format|
+      format.html
+      format.js { render :template => "statuses/index"}
+    end
+  end
+
 
   protected
 

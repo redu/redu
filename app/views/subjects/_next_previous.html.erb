@@ -1,14 +1,38 @@
 <% assetable = @lecture || @exam %>
+<%#FIXME Resumir a linha abaixo. %>
 <% if @subject.published? && assetable && !assetable.new_record? && assetable.published? %>
   <div class="grid_16">
-    <div class="grid_5 push_11 alpha omega">
-      <% if assetable && !assetable.new_record? %>
-        <% form_tag next_space_subject_path(@space, @subject), :class => "lecture-control" do %>
-          <%= hidden_field_tag :assetable_type, assetable.class.to_s %>
-          <%= hidden_field_tag :assetable_id, assetable.id %>
+    <% unless assetable.first_item? %>
+      <div class="grid_2">
+        <%= link_to "< Anterior",
+          space_subject_lecture_path(@space, @subject, @lecture.previous_item),
+          :class => "button"%>
+      </div>
+    <% end %>
+
+    <div class="grid_6 push_7 alpha omega">
+      <% if assetable.asset_reports.of_user(current_user).last.done %>
+        Você já finalizou esta aula.
+        <% if assetable.last_item? %>
+          <%= link_to "Ir para o módulo",
+            space_subject_path(@space, @subject),
+            :class => "button"%>
+        <% else %>
+          <%= link_to "Próximo >",
+            space_subject_lecture_path(@space, @subject, @lecture.next_item),
+            :class => "button"%>
+        <% end %>
+      <% else %>
+        <% form_tag next_lecture_space_subject_path(@space, @subject),
+          :class => "lecture-control" do %>
+          <%= hidden_field_tag :lecture_id, assetable.id %>
           <%= check_box_tag :done, "1", :checked => true %>
           <%= label_tag :done, "Aula finalizada?", :class => "inline"  %>
-          <%= submit_tag "Próximo >" %>
+          <% if assetable.last_item? %>
+            <%= submit_tag "Concluir" %>
+          <% else %>
+            <%= submit_tag "Próximo >" %>
+          <% end %>
         <% end %>
       <% end %>
     </div>

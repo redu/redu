@@ -188,4 +188,160 @@ describe SubjectsController do
     end
   end
 
+  context "GET 'admin_lectures_order'" do
+    before do
+      @subject = Factory(:subject, :space => @space)
+    end
+    it "assigns the subject" do
+      get :admin_lectures_order, :locale => "pt-BR", :id => @subject.id
+      assigns[:subject].should == @subject
+    end
+  end
+
+  context "POST 'admin_lectures_order'" do
+    before do
+      lecture = Factory(:lecture, :owner => @user)
+      @subject = Factory(:subject, :space => @space, :lectures => [lecture])
+      post :admin_lectures_order, :locale => "pt-BR", :id => @subject.id,
+        :lectures_ordered => "#{lecture.id}-lecture"
+    end
+
+    it "assigns the subject" do
+      assigns[:subject].should == @subject
+    end
+
+    it "redirects to GET admin_lectures_order" do
+      response.should redirect_to(admin_lectures_order_space_subject_path(@space,
+                                                                          @subject))
+    end
+  end
+
+  context "GET 'publish'" do
+    before do
+      lecture = Factory(:lecture, :owner => @user)
+      @subject = Factory(:subject, :space => @space, :lectures => [lecture])
+      get :publish, :locale => "pt-BR", :id => @subject.id
+    end
+
+    it "assigns the subject" do
+      assigns[:subject].should == @subject
+    end
+
+    it "redirects to 'show'" do
+      response.should redirect_to(space_subject_path(@space, @subject))
+    end
+  end
+
+  context "GET 'unpublish'" do
+    before do
+      lecture = Factory(:lecture, :owner => @user)
+      @subject = Factory(:subject, :space => @space, :lectures => [lecture])
+      get :unpublish, :locale => "pt-BR", :id => @subject.id
+    end
+
+    it "assigns the subject" do
+      assigns[:subject].should == @subject
+    end
+
+    it "redirects to 'show'" do
+      response.should redirect_to(space_subject_path(@space, @subject))
+    end
+  end
+
+  context "GET 'enroll'" do
+    before do
+      lecture = Factory(:lecture, :owner => @user)
+      @subject = Factory(:subject, :space => @space, :lectures => [lecture],
+                        :published => 1)
+      @enrolled_user = Factory(:user)
+      Factory(:user_space_association, :space => @space,
+              :user => @enrolled_user)
+      get :enroll, :locale => "pt-BR", :id => @subject.id
+    end
+
+    it "assigns the subject" do
+      assigns[:subject].should == @subject
+    end
+
+    it "redirects to 'show'" do
+      response.should redirect_to(space_subject_path(@space, @subject))
+    end
+  end
+
+  context "GET 'unenroll'" do
+    before do
+      lecture = Factory(:lecture, :owner => @user)
+      @subject = Factory(:subject, :space => @space, :lectures => [lecture],
+                        :published => 1)
+      @enrolled_user = Factory(:user)
+      @subject.enroll(@enrolled_user)
+      get :unenroll, :locale => "pt-BR", :id => @subject.id
+    end
+
+    it "assigns the subject" do
+      assigns[:subject].should == @subject
+    end
+
+    it "redirects to 'show'" do
+      response.should redirect_to(space_subject_path(@space, @subject))
+    end
+  end
+
+
+  context "POST 'next_lecture'" do
+    before do
+      @lectures = (1..3).collect { Factory(:lecture, :owner => @user) }
+      @subject = Factory(:subject, :space => @space, :lectures => @lectures,
+                        :published => 1)
+      @enrolled_user = Factory(:user)
+      @subject.enroll(@enrolled_user)
+    end
+
+    context "when done" do
+      before do
+        post :next_lecture, :locale => "pt-BR", :id => @subject.id,
+          :lecture_id => @lectures[0].id, :done => 1
+      end
+
+      it "marks the actual lecture as done" do
+        @lectures[0].asset_reports.of_user(@enrolled_user).last.
+          should be_done
+      end
+
+      it "assigns the next lecture" do
+        assigns[:lecture].should == @lectures[1]
+      end
+
+      it "redirects to lecture 'show'" do
+        response.should redirect_to(space_subject_lecture_path(@space,
+                                                               @subject,
+                                                               @lectures[1]))
+      end
+
+    end
+
+    context "when not done" do
+      before do
+        post :next_lecture, :locale => "pt-BR", :id => @subject.id,
+          :lecture_id => @lectures[0].id, :done => 0
+      end
+
+      it "does NOT mark the actual lecture as done" do
+        @lectures[0].asset_reports.of_user(@enrolled_user).last.
+          should_not be_done
+      end
+
+      it "assigns the next lecture" do
+        assigns[:lecture].should == @lectures[1]
+      end
+
+      it "redirects to lecture 'show'" do
+        response.should redirect_to(space_subject_lecture_path(@space,
+                                                               @subject,
+                                                               @lectures[1]))
+      end
+    end
+
+  end
+
 end

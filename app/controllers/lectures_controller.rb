@@ -99,7 +99,7 @@ class LecturesController < BaseController
 
     # anotações
     @annotation = @lecture.annotations.by_user(current_user)
-    @annotation = Annotation.new unless @annotation
+    @annotation = Annotation.new if @annotation.empty?
 
     #relacionados
     @related_lectures = Lecture.related_to(@lecture).all(:limit => 3,

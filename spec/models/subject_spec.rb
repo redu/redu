@@ -13,6 +13,7 @@ describe Subject do
   it { should have_many(:enrollments).dependent(:destroy) }
   it { should have_many(:graduated_members).through :enrollments }
   it { should have_many(:members).through(:enrollments).dependent(:destroy) }
+  it { should have_many(:statuses).dependent(:destroy) }
 
   it { should_not allow_mass_assignment_of(:owner) }
   it { should_not allow_mass_assignment_of(:published) }
@@ -38,11 +39,56 @@ describe Subject do
                                                     :published => true) }
       Subject.published.should == published_subjects
     end
+
+    it "retrieves graduated members" do
+      users = (1..4).collect { Factory(:user) }
+      users.each { |u| subject.enroll(u) }
+      users[0..1].each do |u|
+        student_profile = u.student_profiles.last
+        student_profile.graduaded = 1
+        student_profile.save
+      end
+
+      subject.graduated_members.should == users[0..1]
+    end
+
+    it "retrieves teachers" do
+      users = (1..4).collect { Factory(:user) }
+      teachers = (1..4).collect { Factory(:user) }
+      users.each { |u| subject.enroll(u) }
+      teachers.each { |u| subject.enroll(u, Role[:teacher]) }
+
+      subject.teachers.should == teachers
+    end
   end
 
   it "defaults to not published" do
     subject { Factory(:subject, :published => nil) }
     subject.published.should be_false
+  end
+
+  it "responds to publish!" do
+    should respond_to :publish!
+  end
+
+  it "responds to unpublish!" do
+    should respond_to :unpublish!
+  end
+
+  it "publishes itself" do
+    subject = Factory(:subject, :published => 0)
+    subject.publish!
+    subject.should be_published
+  end
+
+  it "unpublishes itself and removes all enrollments" do
+    users = (1..4).collect { Factory(:user) }
+    subject = Factory(:subject, :published => 1)
+    users.each { |u| subject.enroll(u) }
+
+    subject.unpublish!
+    subject.should_not be_published
+    subject.enrollments.should be_empty
   end
 
   it "responds to enroll" do
@@ -78,15 +124,16 @@ describe Subject do
     end
   end
 
-  it "retrieves graduated members" do
-    users = (1..4).collect { Factory(:user) }
-    users.each { |u| subject.enroll(u) }
-    users[0..1].each do |u|
-      student_profile = u.student_profiles.last
-      student_profile.graduaded = 1
-      student_profile.save
+  context "lectures" do
+    it "changes lectures order" do
+      lectures = (1..4).collect { Factory(:lecture)}
+      subject = Factory(:subject, :lectures => lectures)
+      lectures_ordered = ["#{lectures[1].id}-lecture", "#{lectures[0].id}-lecture",
+        "#{lectures[3].id}-lecture", "#{lectures[2].id}-lecture"]
+      subject.change_lectures_order!(lectures_ordered)
+      subject.reload.lectures.should == [lectures[1], lectures[0],
+                                    lectures[3], lectures[2]]
     end
-
-    subject.graduated_members.should == users[0..1]
   end
+
 end

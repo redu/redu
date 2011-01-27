@@ -6,6 +6,9 @@ class Lecture < ActiveRecord::Base
 
   # ASSOCIATIONS
   has_many :statuses, :as => :statusable, :dependent => :destroy
+  #FIXME Falta testar
+  has_many :currently_watching_users, :through => :logs, :source => :user,
+     :conditions => ['statuses.created_at > ?', 10.minutes.ago]
   has_many :acess_key
   #FIXME Verificar se é realmente utilizado (não foi testado)
   has_many :resources,
