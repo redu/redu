@@ -1,0 +1,13 @@
+<div class="grid_16">
+  <%= render :partial => "spaces/sidebar", :locals => {:space => @space} %>
+
+  <div class="main grid_12 omega">
+    <div class="fake-tabs">
+      <%= render :partial => 'spaces/taskbar' %>
+
+      <div id="tabs-4-content">
+        <%= render :partial => 'folders/index' %>
+     </div>
+    </div>
+  </div>
+</div>

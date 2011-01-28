@@ -30,7 +30,7 @@
           :id => 'add_link' %>
         <%= f.submit "Salvar" %>
         <%= link_to_function "Voltar",
-          "$('#edit_subject_#{@subject.id}').remove(); $('#tabs-2-content').show();",
+          "$('#edit_subject_#{@subject.id}').remove(); $('#content').show();",
           :id => "cancel_link" %>
       <% end %>
     <% end %>

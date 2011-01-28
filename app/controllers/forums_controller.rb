@@ -1,6 +1,10 @@
 class ForumsController < BaseController
+  layout 'environment'
+
   load_and_authorize_resource :space
   load_and_authorize_resource :forum, :through => :space
+
+  before_filter :load_course_and_environment
 
   helper :application
 
@@ -14,9 +18,7 @@ class ForumsController < BaseController
                                        :include => :replied_by_user, 
                                        :order => 'locked DESC, replied_at DESC',
                                        :per_page => 20)
-      format.html do
-        redirect_to space_path(@space)
-      end
+      format.html
       format.xml do
         render :xml => @forum.to_xml
       end
@@ -42,5 +44,11 @@ class ForumsController < BaseController
       format.html { redirect_to forums_path }
       format.xml  { head 200 }
     end
+  end
+
+  protected
+  def load_course_and_environment
+    @course = @space.course
+    @environment = @course.environment
   end
 end

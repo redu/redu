@@ -56,8 +56,8 @@ end
       format.html
       format.js do
         render :update do |page|
-          page.hide 'tabs-2-content'
-          page.insert_html :before, 'tabs-2-content', :partial => 'subjects/form'
+          page.hide 'content'
+          page.insert_html :before, 'content', :partial => 'subjects/form'
         end
       end
     end
