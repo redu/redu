@@ -1,0 +1,6 @@
+# Adiciona a listagem requisitada pelo usuário ao elemento HTML com id "school_list".
+page.insert_html :bottom, 'friends_list', :partial => "friendships/item",
+  :collection => @friends, :as => :friend
+# Troca o endless para que o novo link indique para a próxima página.
+page.replace_html ".endless",
+  (will_paginate @friends, :renderer => EndlessRenderer)

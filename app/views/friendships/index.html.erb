@@ -1,0 +1,5 @@
+<h1>Seus amigos</h1>
+<div id="friends_list">
+  <%= render :partial => "friendships/item", :collection => @friends, :as => :friend %>
+</div>
+<%= will_paginate @friends, :renderer => EndlessRenderer %>

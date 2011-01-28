@@ -1,0 +1,5 @@
+<div id="pending_list">
+  <%= render :partial => "friendships/item_pending", 
+    :collection => @friends_pending, :as => :friend %>
+  <%= will_paginate @friends_pending, :renderer => EndlessRenderer %>
+</div>
