@@ -72,8 +72,7 @@ end
         #FIXME Redirecionar para a listagem após trocar as tabs para fake tabs.
         #page.redirect_to(:controller => 'subjects', :action => 'index',
                          #:space_id => @subject.space.id)
-        page.redirect_to(:controller => 'subjects', :action => 'show',
-                         :subject_id => @subject.id)
+        page.redirect_to(:controller => 'subjects', :action => 'index')
       end
     else
       render :template => 'subjects/update_error'

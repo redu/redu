@@ -1,4 +1,6 @@
-<%  form_remote_for [@space, @subject] do |f| %>
+<%  form_remote_for [@space, @subject],
+  :loading => "$('#spinner-form').show()",
+  :success => "$('#spinner-form').hide()" do |f| %>
   <div class="">
     <% field_set_tag :subject.l do %>
       <%= hidden_field_tag 'space_id', @space.id %>
@@ -27,12 +29,14 @@
       <% else %>
         <%= link_to_function "Adicionar",
           "jQuery('#lectures_types').show(); jQuery(this).hide()",
-          :id => 'add_link' %>
+          :id => 'add_link'
+        %>
         <%= f.submit "Salvar" %>
         <%= link_to_function "Voltar",
           "$('#edit_subject_#{@subject.id}').remove(); $('#content').show();",
           :id => "cancel_link" %>
       <% end %>
+        <%= image_tag 'spinner.gif', :id => 'spinner-form', :style => 'display: none;'  %>
     <% end %>
   </div>
 <% end %>

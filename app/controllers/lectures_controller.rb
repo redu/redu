@@ -151,7 +151,7 @@ class LecturesController < BaseController
           render :update do |page|
             @page = @lecture.lectureable
             page.insert_html :after, "#{@lecture.id}-item", :partial => 'form_edit_page'
-            page.remove "#{@lecture.id}-item"
+            page.hide "#{@lecture.id}-item"
           end
         end
       end

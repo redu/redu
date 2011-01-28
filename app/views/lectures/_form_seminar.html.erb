@@ -70,6 +70,8 @@ function add_fields(link, association, content) {
                      :allowed_extensions => [:mov, :mpeg, :mpg, :avi, '3gp', :mp4, :mpeg4, :vob, :mkv, '264', '3gp2', :dvr, :dvx, :flv, :h264, :m2v, :m4v, :movie, :mpeg1, :mpeg2, :swf, :vid, :wmv]) %>
                    <% form_remote_for :seminar, @seminar,
                      :url => { :action => "create" },
+                     :loading => "$('#spinner-form-seminar').show();",
+                     :success => "$('#spinner-form-seminar').hide();",
                      :html => { :multipart => true, :id => "seminar-form" } do |f| %>
                      <div class="grid_11 ">
                        <% field_set_tag 'Vídeo' do %>
@@ -112,7 +114,9 @@ function add_fields(link, association, content) {
                            <%= f.submit "Criar" %>
                            <%= link_to_function "Cancelar",
                              "$('#seminar-form').remove(); $('#add_link').show(); return false;" %>
-                         </div>
+                           <%= image_tag 'spinner.gif', :id => 'spinner-form-seminar',
+                             :style => 'display: none;' %>
+                     </div>
                          <div id="youtube_preview" class="grid_5 omega">
                            <% field_set_tag 'Prévia' do %>
                              <object width="440" height="300">

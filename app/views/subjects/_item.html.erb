@@ -1,8 +1,12 @@
 <li class="clearfix">
   <% if current_user.has_access_to?(item) %>
     <%= link_to subject.title, space_subject_path(@space, item), :class => "name"  %>
-    <%= link_to_remote "Editar", :url => edit_space_subject_path(@space, item),
-      :method => :get %>
+    <% if item.published? %>
+      Módulo publicado
+    <% else %>
+      <%= link_to_remote "Editar", :url => edit_space_subject_path(@space, item),
+        :method => :get %>
+    <% end %>
   <% else %>
     <%= link_to subject.title, infos_space_subject_path(@space, item), :class => "name"  %>
   <% end %>

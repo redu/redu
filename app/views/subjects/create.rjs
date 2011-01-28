@@ -1,4 +1,4 @@
-page << "$('#new_subject').get(0).setAttribute('onsubmit', \"jQuery.ajax({data:jQuery.param(jQuery(this).serializeArray()), dataType:'script', type:'put', url:'#{space_subject_path(@space, @subject)}'}); return false;\");"
+page << "$('#new_subject').get(0).setAttribute('onsubmit', \"jQuery.ajax({beforeSend:function(request){$('#spinner-form').show();}, data:jQuery.param(jQuery(this).serializeArray()), dataType:'script', success:function(request){$('#spinner-form').hide()}, type:'put', url:'#{space_subject_path(@space, @subject)}'}); return false;\");"
 page << "$('#new_subject').get(0).setAttribute('action', '#{space_subject_path(@space, @subject)}');"
 page << "$('#new_subject').get(0).setAttribute('method', 'put');"
 
