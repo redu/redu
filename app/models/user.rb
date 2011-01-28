@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  require 'paperclip'
 
   # Constants
   MALE    = 'M'
@@ -122,6 +123,7 @@ class User < ActiveRecord::Base
   has_attached_file :avatar, PAPERCLIP_STORAGE_OPTIONS
   has_attached_file :curriculum, PAPERCLIP_STORAGE_OPTIONS
 
+  has_friends
   ajaxful_rater
   acts_as_taggable
   has_private_messages
@@ -296,6 +298,8 @@ class User < ActiveRecord::Base
       when 'Subject'
         self.teacher?(entity.statusable.space)
       end
+    when 'User'
+      entity == self
     end
   end
 
@@ -340,7 +344,8 @@ class User < ActiveRecord::Base
     if (object.class.to_s.eql? 'Folder') || (object.class.to_s.eql? 'Forum') ||
        (object.class.to_s.eql? 'Topic') || (object.class.to_s.eql? 'SbPost') ||
        (object.class.to_s.eql? 'Event') || (object.class.to_s.eql? 'Bulletin') ||
-       (object.class.to_s.eql? 'Status') || (object.class.to_s.eql? 'User')
+       (object.class.to_s.eql? 'Status') || (object.class.to_s.eql? 'User') ||
+       (object.class.to_s.eql? 'Friendship')
       self.has_access_to?(object)
     else
       object.published? && self.has_access_to?(object)

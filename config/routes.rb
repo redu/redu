@@ -176,7 +176,9 @@ ActionController::Routing::Routes.draw do |map|
     :upload_profile_photo => [:get, :put],
     :download_curriculum => :get
   } do |user|
-    user.resources :friendships, :member => { :accept => :put, :deny => :put }, :collection => { :accepted => :get, :pending => :get, :denied => :get }
+    user.resources :friendships,:only => [:index, :create, :destroy],
+      :member => { :accept => :post, :decline => :post },
+      :collection => { :pending => :get }
     user.resources :photos, :collection => {:swfupload => :post, :slideshow => :get}
     user.resources :posts, :collection => {:manage => :get}, :member => {:contest => :get, :send_to_friend => :any, :update_views => :any}
     user.resources :events # Needed this to make comments work
