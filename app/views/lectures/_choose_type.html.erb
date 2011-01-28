@@ -1,6 +1,7 @@
+<% display = 'none' if action_name == 'edit' %>
 <% field_set_tag "Escolha o tipo de aula",
   :id => "lectures_types", :class => "fake",
-  :style => "display: none;"do %>
+  :style => "display:#{display};"do %>
   <ul>
     <li style="display:inline;">
       <%= link_to_remote "Página",

@@ -11,7 +11,9 @@
       <%= f.label :tag_list, :tag_list.l %>
       <%= f.text_field :tag_list %>
 
-      <%= render :partial => 'lectures/choose_type' %>
+      <% if action_name == 'edit' %>
+        <%= render :partial => 'lectures/choose_type' %>
+      <% end %>
       <%= error_for :subject, :lectures %>
 
       <%= render :partial => 'lectures/item_created', :collection => @subject.lectures %>

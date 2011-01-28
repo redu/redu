@@ -2,6 +2,8 @@ page << "$('#new_subject').get(0).setAttribute('onsubmit', \"jQuery.ajax({data:j
 page << "$('#new_subject').get(0).setAttribute('action', '#{space_subject_path(@space, @subject)}');"
 page << "$('#new_subject').get(0).setAttribute('method', 'put');"
 
+page.insert_html :before, 'subject_lectures-error',
+  :partial => 'lectures/choose_type'
 page.insert_html :before, 'add_button', (link_to_function "Adicionar",
     "jQuery('#lectures_types').show(); jQuery(this).hide()",
     :id => 'add_link')
