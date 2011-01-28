@@ -140,6 +140,18 @@ class BaseController < ApplicationController
                       :user_id => current_user.id
         })
       end
+    when 'subjects'
+      if (@subject and @subject.finalized? and @subject.logs.empty?)
+        Status.create({:log => true,
+                      :logeable_name => @subject.title,
+                      :logeable_type => 'Subject',
+                      :logeable_id => @subject.id,
+                      :log_action => "create",
+                      :statusable_type => 'Space',
+                      :statusable_id => @subject.space.id,
+                      :user_id => current_user.id
+        })
+      end
     when 'topics'
       if @topic and @topic.created_at
         Status.create({:log => true,

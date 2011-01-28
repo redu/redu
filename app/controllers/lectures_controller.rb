@@ -187,6 +187,8 @@ class LecturesController < BaseController
 
     respond_to do |format|
       if @lecture.save
+        @lecture.published = 1
+        @lecture.save
         format.js
       else
         format.js { render :template => 'lectures/create_error'}

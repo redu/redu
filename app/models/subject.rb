@@ -11,8 +11,9 @@ class Subject < ActiveRecord::Base
   has_many :teachers, :through => :enrollments, :source => :user,
     :conditions => ["enrollments.role_id = ?", Role[:teacher].id]
   has_many :statuses, :as => :statusable, :dependent => :destroy
+  has_many :logs, :as => :logeable, :dependent => :destroy, :class_name => 'Status'
 
-  attr_protected :owner, :published
+  attr_protected :owner, :published, :finalized
 
   acts_as_taggable
 

@@ -14,9 +14,11 @@ describe Subject do
   it { should have_many(:graduated_members).through :enrollments }
   it { should have_many(:members).through(:enrollments).dependent(:destroy) }
   it { should have_many(:statuses).dependent(:destroy) }
+  it { should have_many(:logs).dependent(:destroy) }
 
   it { should_not allow_mass_assignment_of(:owner) }
   it { should_not allow_mass_assignment_of(:published) }
+  it { should_not allow_mass_assignment_of(:finalized) }
 
   it "responds to tags" do
     should respond_to :tag_list

@@ -5,12 +5,13 @@ class SubjectsController < BaseController
   load_and_authorize_resource :subject
 
   before_filter :load_course_and_environment
+  after_filter :create_activity, :only => [:update]
 
   def index
-    #FIXME Colocar finalized
-    @subjects = @space.subjects.paginate(:page => params[:page],
-                                        :order => 'updated_at DESC',
-                                        :per_page => AppConfig.items_per_page)
+    @subjects = @space.subjects.finalized.
+      paginate(:page => params[:page],
+               :order => 'updated_at DESC',
+               :per_page => AppConfig.items_per_page)
   end
 
   def show
@@ -65,7 +66,9 @@ end
 
   def update
     if @subject.update_attributes(params[:subject])
-      @subject.published = 1
+      unless @subject.finalized?
+        @subject.finalized = true
+      end
       @subject.save
       flash[:notice] = "O Módulo foi criado."
       render :update do |page|
