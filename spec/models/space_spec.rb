@@ -50,6 +50,15 @@ describe Space do
     end
   end
 
+  context "retrievers" do
+    it "retrieves finalized subjects" do
+      subjects = (1..3).collect { Factory(:subject, :space => subject) }
+      finalized_subjects = (1..3).collect { Factory(:subject, :space => subject,
+                                                    :finalized => true) }
+      subject.subjects.should == finalized_subjects
+    end
+  end
+
   it "generates a permalink" do
     @space = Factory(:space, :id => 123, :name => "teste")
     APP_URL.should_not be_nil

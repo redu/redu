@@ -32,7 +32,8 @@ class Space < ActiveRecord::Base
   has_many :bulletins, :as => :bulletinable, :dependent => :destroy
   has_many :events, :as => :eventable, :dependent => :destroy
   has_many :statuses, :as => :statusable, :dependent => :destroy
-  has_many :subjects, :dependent => :destroy
+  has_many :subjects, :dependent => :destroy,
+    :conditions => { :finalized => true }
   has_many :topics # Apenas para facilitar a busca.
   has_many :sb_posts # Apenas para facilitar a busca.
   has_one :forum, :dependent => :destroy

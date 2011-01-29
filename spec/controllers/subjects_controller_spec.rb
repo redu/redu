@@ -15,7 +15,8 @@ describe SubjectsController do
   context "GET 'index'" do
     before do
       subjects = (1..3).collect { Factory(:subject, :space => @space,
-                                          :published => 1) }
+                                          :published => true,
+                                          :finalized => true) }
     end
 
     it "loads all space subjects" do

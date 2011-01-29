@@ -12,7 +12,7 @@ describe Subject do
   it { should have_many(:lectures).dependent(:destroy) }
   it { should have_many(:enrollments).dependent(:destroy) }
   it { should have_many(:graduated_members).through :enrollments }
-  it { should have_many(:members).through(:enrollments).dependent(:destroy) }
+  it { should have_many(:members).through(:enrollments) }
   it { should have_many(:statuses).dependent(:destroy) }
   it { should have_many(:logs).dependent(:destroy) }
 
@@ -118,11 +118,11 @@ describe Subject do
     end
 
     it "unenrolls an user" do
-      enrollment = Factory(:enrollment, :user_id => @user, :subject => subject)
+      enrollment = Factory(:enrollment, :user => @user, :subject => subject)
 
       expect {
         subject.unenroll(@user)
-      }.should_not change(subject.enrollments, :count)
+      }.should change(subject.enrollments, :count).by(-1)
     end
   end
 

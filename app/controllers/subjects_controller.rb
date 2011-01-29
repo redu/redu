@@ -8,10 +8,16 @@ class SubjectsController < BaseController
   after_filter :create_activity, :only => [:update]
 
   def index
-    @subjects = @space.subjects.finalized.
-      paginate(:page => params[:page],
-               :order => 'updated_at DESC',
-               :per_page => AppConfig.items_per_page)
+    if can? :manage, @space
+      @subjects = @space.subjects.paginate(:page => params[:page],
+                                           :order => 'updated_at DESC',
+                                           :per_page => AppConfig.items_per_page)
+    else
+      @subjects = @space.subjects.published.
+        paginate(:page => params[:page],
+                 :order => 'updated_at DESC',
+                 :per_page => AppConfig.items_per_page)
+    end
   end
 
   def show

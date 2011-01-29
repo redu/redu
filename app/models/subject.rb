@@ -8,7 +8,7 @@ class Subject < ActiveRecord::Base
     :include => :student_profiles,
     :conditions => ["student_profiles.graduaded = 1"]
   has_many :teachers, :through => :enrollments, :source => :user,
-    :conditions => ["enrollments.role_id = ?", Role[:teacher].id]
+    :conditions => ["enrollments.role_id = ?", 5] # Teacher
   has_many :statuses, :as => :statusable, :dependent => :destroy
   has_many :logs, :as => :logeable, :dependent => :destroy, :class_name => 'Status'
 
