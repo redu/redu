@@ -3,8 +3,7 @@ class Subject < ActiveRecord::Base
   belongs_to :owner, :class_name => "User", :foreign_key => :user_id
   has_many :lectures, :order => "position", :dependent => :destroy
   has_many :enrollments, :dependent => :destroy
-  has_many :members, :through => :enrollments, :source => :user,
-    :dependent => :destroy
+  has_many :members, :through => :enrollments, :source => :user
   has_many :graduated_members, :through => :enrollments, :source => :user,
     :include => :student_profiles,
     :conditions => ["student_profiles.graduaded = 1"]
@@ -28,9 +27,10 @@ class Subject < ActiveRecord::Base
     enrollment.valid?
   end
 
-  # Desmatricula o usuário e retorna o mesmo
+  # Desmatricula o usuário
   def unenroll(user)
-    self.members.delete(user)
+    enrollment = user.get_association_with(self)
+    enrollment.destroy
   end
 
   def publish!
