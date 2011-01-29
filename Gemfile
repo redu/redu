@@ -32,6 +32,7 @@ gem "delayed_job", :git => "https://github.com/collectiveidea/delayed_job.git",
   :branch => "v2.0"
 gem "factory_girl"
 gem "paperclip", "~> 2.3"
+gem "shuber-sortable"
 
 group :development do
   gem "mongrel"

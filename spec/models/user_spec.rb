@@ -123,6 +123,14 @@ describe User do
       lecture2.save
       subject.lectures.should == [lecture]
     end
+
+    it "retrieves subjects that are finalized" do
+      subjects_finalized = (1..3).collect { Factory(:subject, :owner => subject,
+                                                    :finalized => 1) }
+      subjects = (1..3).collect { Factory(:subject, :owner => subject) }
+
+      subject.subjects.should == subjects_finalized
+    end
   end
 
   context "finders" do

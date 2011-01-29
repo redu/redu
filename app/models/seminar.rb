@@ -49,7 +49,7 @@ class Seminar < ActiveRecord::Base
   SUPPORTED_AUDIO = ['audio/mpeg', 'audio/mp3']
 
   # Video convertido
-  has_attached_file :media, {}.merge(VIDEO_TRANSCODED)
+  has_attached_file :media
   # Video original. Mantido para caso seja necessário refazer o transcoding
   has_attached_file :original, {}.merge(VIDEO_ORIGINAL)
 
@@ -87,6 +87,7 @@ class Seminar < ActiveRecord::Base
     :fields => [:external_resource, :external_resource_type]
   validation_group :uploaded, :fields => [:original]
 
+  validates_presence_of :external_resource, :external_resource_type
   validates_attachment_presence :original
   validate :accepted_content_type
   validates_attachment_size :original,
@@ -126,7 +127,7 @@ class Seminar < ActiveRecord::Base
   end
 
   def validate_youtube_url
-    if external_resource_type.eql?('youtube')
+    if self.valid? and external_resource_type.eql?('youtube')
       capture = external_resource.scan(/youtube\.com\/watch\?v=([A-Za-z0-9._%-]*)[&\w;=\+_\-]*/)[0]
       errors.add(:external_resource, "Link inválido") unless capture
     end

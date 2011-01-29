@@ -90,6 +90,7 @@ GEM
     ruby-debug-base (0.10.4)
       linecache (>= 0.3)
     shoulda (2.11.3)
+    shuber-sortable (1.0.6)
     validatable (1.6.7)
     will_paginate (2.3.15)
     zencoder (2.3.1)
@@ -132,6 +133,7 @@ DEPENDENCIES
   ruby-debug
   scribd_fu!
   shoulda
+  shuber-sortable
   validatable
   will_paginate (~> 2.3.11)
   zencoder

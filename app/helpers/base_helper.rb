@@ -177,6 +177,10 @@ module BaseHelper
 
           @activity =  "criou a disciplina " + link_obj if item.log_action == "create"
           @activity =  "adicionou a disciplina " + link_obj + " ao seus favoritos" if item.log_action == "favorite"
+      when 'subject'
+          link_obj = link_to(item.logeable_name, space_path(item.logeable_id))
+
+          @activity =  "criou o módulo " + link_obj if item.log_action == "create"
       when 'topic'
           @topic = Topic.find(item.logeable_id)
           link_obj = link_to(item.logeable_name, space_forum_topic_path(@topic.forum.space, @topic))

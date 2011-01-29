@@ -1,9 +1,14 @@
+require 'sortable'
+
 class Lecture < ActiveRecord::Base
   # Entidade polimórfica que representa o objeto de aprendizagem. Pode possuir
   # três especializações: Seminar, InteractiveClass e Page.
 
   # ASSOCIATIONS
   has_many :statuses, :as => :statusable, :dependent => :destroy
+  #FIXME Falta testar
+  has_many :currently_watching_users, :through => :logs, :source => :user,
+     :conditions => ['statuses.created_at > ?', 10.minutes.ago]
   has_many :acess_key
   #FIXME Verificar se é realmente utilizado (não foi testado)
   has_many :resources,
@@ -12,11 +17,11 @@ class Lecture < ActiveRecord::Base
   has_many :favorites, :as => :favoritable, :dependent => :destroy
   has_many :annotations
   has_many :logs, :as => :logeable, :dependent => :destroy, :class_name => 'Status'
-  has_one :subject, :through => :asset, :dependent => :destroy
-  has_one :asset, :as => :assetable, :dependent => :destroy
+  has_many :asset_reports, :dependent => :destroy
+  has_many :student_profiles, :through => :asset_reports, :dependent => :destroy
   belongs_to :owner , :class_name => "User" , :foreign_key => "owner"
   belongs_to :lectureable, :polymorphic => true, :dependent => :destroy
-  belongs_to :lazy_asset
+  belongs_to :subject
 
   accepts_nested_attributes_for :resources,
     :reject_if => lambda { |a| a[:media].blank? },
@@ -47,11 +52,13 @@ class Lecture < ActiveRecord::Base
   acts_as_taggable
   ajaxful_rateable :stars => 5
   has_attached_file :avatar, PAPERCLIP_STORAGE_OPTIONS
+  sortable :scope => :subject_id
 
   # VALIDATIONS
   validates_presence_of :name
-  validates_presence_of :description
-  validates_length_of :description, :within => 30..200
+  # FIXME Vai ter description?
+  #validates_presence_of :description
+  #validates_length_of :description, :within => 30..200
   validates_presence_of :lectureable
   validates_associated :lectureable #FIXME Não foi testado, pois vai ter accepts_nested
 
@@ -69,9 +76,35 @@ class Lecture < ActiveRecord::Base
     "#{id}-#{name.parameterize}"
   end
 
-  #FIXME chamar isso num validate_on_create
-  def only_one_asset_per_lazy_asset?
-    Asset.count(:conditions => {:lazy_asset_id => self.lazy_asset}) <= 0
+  # Retorna a próxima Lecture do Subject e marca a Lecture atual como done,
+  # caso ela tenha sido completada (done = true).
+  def next_for(user, done = false)
+    mark_as_done(user, done)
+    self.next_item
   end
 
+  # Retorna a Lecture anterior do Subject e marca a Lecture atual como done,
+  # caso ela tenha sido completada (done = true).
+  def previous_for(user, done = false)
+    mark_as_done(user, done)
+    self.previous_item
+  end
+
+  # Marca a lecture atual como done, caso ela tenha sido completada (done = true)
+  def mark_as_done(user, done)
+    if done
+      asset_report = self.asset_reports.of_user(user).last
+      asset_report.done = true
+      asset_report.save
+    end
+  end
+
+  def clone_for_subject!(subject_id)
+    clone = self.clone :include => :lectureable,
+      :except => [:rating_average, :view_count, :position, :subject_id]
+    clone.is_clone = true
+    clone.subject = Subject.find(subject_id)
+    clone.save
+    clone
+  end
 end

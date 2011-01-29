@@ -1,0 +1,18 @@
+<% form_remote_for [@space, @subject, @lecture],
+  :loading  => "$('#spinner-form-existent').show();",
+  :success  => "$('#spinner-form-existent').hide();",
+  :html => { :id => "existent-form" } do |f| %>
+  <% field_set_tag "Copiar aula existente" do %>
+    <% if user_existent_lectures.empty? %>
+      <div class="box_notice">Você não possui nenhuma aula. Crie uma novo!</div>
+    <% else %>
+      <%= select_tag(:lecture_id, options_for_select(user_existent_lectures)) %>
+      <%= f.submit 'Criar' %>
+    <% end %>
+    <%= hidden_field_tag "subject_id", @subject.id %>
+    <%= link_to_function "Cancelar",
+      "$('#existent-form').remove(); $('#add_link').show(); return false;" %>
+    <%= image_tag 'spinner.gif', :id => 'spinner-form-existent',
+      :style => 'display: none;' %>
+  <% end %>
+<% end %>

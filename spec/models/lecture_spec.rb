@@ -11,13 +11,13 @@ describe Lecture do
   it { should have_many(:favorites).dependent(:destroy) }
   it { should have_many(:logs).dependent(:destroy) }
 
-  it { should have_one(:subject).through(:asset).dependent(:destroy)}
-  it { should have_one(:asset).dependent(:destroy)}
+  it { should belong_to :subject }
 
   it { should accept_nested_attributes_for :resources }
 
   it { should validate_presence_of :name }
-  it { should validate_presence_of :description }
+  # Descrição não está sendo utilizada
+  xit { should validate_presence_of :description }
   #FIXME Problema de tradução
   xit { should ensure_length_of(:description).is_at_least(30).is_at_most(200)}
   it { should validate_presence_of :lectureable }
@@ -27,6 +27,14 @@ describe Lecture do
   it { should_not allow_mass_assignment_of :view_count }
   it { should_not allow_mass_assignment_of :removed }
   it { should_not allow_mass_assignment_of :is_clone }
+
+  it "responds to next_for" do
+    should respond_to :next_for
+  end
+
+  it "responds to previous_for" do
+    should respond_to :previous_for
+  end
 
   context "finders" do
     it "retrieves unpublished lectures" do
@@ -94,9 +102,69 @@ describe Lecture do
     end
   end
 
+  context "being attended" do
+    context "when done" do
+      it "retrieves the next lecture and mark the current as done" do
+        lectures = (1..3).collect { Factory(:lecture) }
+        subject1 = Factory(:subject, :lectures => lectures)
+
+        user = Factory(:user)
+        subject1.enroll user
+
+        lectures[0].next_for(user, true).should == lectures[1]
+        lectures[0].asset_reports.of_user(user).last.
+          should be_done
+      end
+      it "retrieves the previous lecture and mark the current as done" do
+        lectures = (1..3).collect { Factory(:lecture) }
+        subject1 = Factory(:subject, :lectures => lectures)
+
+        user = Factory(:user)
+        subject1.enroll user
+
+        lectures[1].previous_for(user, true).should == lectures[0]
+        lectures[1].asset_reports.of_user(user).last.
+          should be_done
+      end
+    end
+    context "when not done" do
+      it "retrieves the next lecture" do
+        lectures = (1..3).collect { Factory(:lecture) }
+        subject1 = Factory(:subject, :lectures => lectures)
+
+        user = Factory(:user)
+        subject1.enroll user
+
+        lectures[0].next_for(user).should == lectures[1]
+        lectures[0].asset_reports.of_user(user).last.
+          should_not be_done
+      end
+      it "retrieves the previous lecture" do
+        lectures = (1..3).collect { Factory(:lecture) }
+        subject1 = Factory(:subject, :lectures => lectures)
+
+        user = Factory(:user)
+        subject1.enroll user
+
+        lectures[1].previous_for(user).should == lectures[0]
+        lectures[1].asset_reports.of_user(user).last.
+          should_not be_done
+      end
+    end
+
+  end
+
   it "generates a permalink" do
     APP_URL.should_not be_nil
     subject.permalink.should include(subject.id.to_s)
     subject.permalink.should include(subject.name.parameterize)
+  end
+
+  it "generates a clone of itself" do
+    subject1 = Factory(:subject)
+    new_lecture = subject.clone_for_subject!(subject1.id)
+    new_lecture.should_not == subject
+    new_lecture.should be_is_clone
+    new_lecture.subject.should == subject1
   end
 end

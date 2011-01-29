@@ -100,14 +100,13 @@ ActionController::Routing::Routes.draw do |map|
                    :destroy_file => :delete }
     space.resources :subjects,
       :member => { :enroll => :get,
-                   :lazy => :get,
+                   :unenroll => :get,
                    :publish => :get,
                    :unpublish => :post,
-                   :admin_assets_order => [ :get, :post ],
-                   :change_assets_order => :post,
+                   :admin_lectures_order => [ :get, :post ],
                    :infos => :get,
                    :statuses => :get,
-                   :next => :post },
+                   :next_lecture => :post },
         :collection => {:cancel => :get} do |subject|
       subject.resources :lectures,
         :member => { :rate => :post },

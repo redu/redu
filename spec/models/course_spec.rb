@@ -40,7 +40,7 @@ describe Course do
       users[1].user_course_associations.last.approve!
       users[3].user_course_associations.last.approve!
 
-      subject.approved_users.should == [users[1], users[3], subject.owner]
+      subject.approved_users.to_set.should == [users[1], users[3], subject.owner].to_set
     end
 
     it "retrieves all courses of an specified environment" do
@@ -90,5 +90,4 @@ describe Course do
     @course.verify_path!(subject.environment)
     @course.path.should_not == subject.path
   end
-
 end

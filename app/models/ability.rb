@@ -69,8 +69,8 @@ class Ability
 
     # Subject
     alias_action :lazy, :cancel, :edit_resources, :update_resources,
-      :change_assets_order, :to => :manage
-    alias_action :statuses, :next, :previous, :attend, :to => :read
+      :admin_lectures_order, :to => :manage
+    alias_action :statuses, :next_lecture, :previous_lecture, :attend, :to => :read
     alias_action :infos, :enroll, :to => :preview
 
     # Plan
