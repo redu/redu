@@ -39,7 +39,7 @@ class Ability
     alias_action :respond, :to => :read
 
     # User
-    alias_action :follows, :learning, :followers, :teaching,
+    alias_action :learning, :teaching,
       :show_log_activity, :log, :welcome_complete, :list_subjects,
       :show_log_activity, :activity_xml, :download_curriculum, :to => :read
 
@@ -106,7 +106,6 @@ class Ability
       can :destroy, Friendship
 
       # User
-      can :follow, User
       can :read, User
 
       # Subject

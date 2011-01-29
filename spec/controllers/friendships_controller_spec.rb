@@ -56,16 +56,18 @@ describe FriendshipsController do
   describe "POST 'destroy'" do
     before do
       @new_user = Factory(:user)
+      @user.be_friends_with(@new_user)
+      @new_user.be_friends_with(@user)
     end
 
     it "destroy a friendship" do
       lambda {
-        post :destroy, :locale => "pt-BR", :user_id => @user.id
+        post :destroy, :locale => "pt-BR", :user_id => @user.id, :id => @new_user.id
       }.should change(Friendship, :count).by(-2)
     end
 
     it "redirects to user profile" do
-      post :destroy, :locale => "pt-BR", :user_id => @user.id
+      post :destroy, :locale => "pt-BR", :user_id => @user.id, :id => @new_user.id
       response.should redirect_to(user_path(@user))
     end
   end

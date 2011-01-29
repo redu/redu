@@ -152,12 +152,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :users, :member => {
   #map.resources :users, :member_path => '/:id', :nested_member_path => '/:user_id', :member => {
     :annotations => :get,
-    :followers => :get,
-    :follows => :get,
-    :follow => :post,
     :activity_xml => :get,
     :logs => :get,
-    :unfollow => :post,
     :assume => :get,
     :change_profile_photo => :put,
     :edit_account => :get,
