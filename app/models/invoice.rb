@@ -47,8 +47,14 @@ class Invoice < ActiveRecord::Base
     args = {
       :id => self.id,
       :price => self.amount,
-      :description => self.description
+      :description => self.description || self.generate_description
     }.merge(item_options)
+  end
+
+  # Gera descrição amigável para o invoice
+  def generate_description
+    "Fatura N. #{self.id} referente ao período de #{self.period_start} a " +
+    "#{self.period_end} no plano #{self.plan.name}"
   end
 
   protected

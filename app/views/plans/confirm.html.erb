@@ -1,2 +1,13 @@
-<h1>Plans#confirm</h1>
-<p>Find me in app/views/plans/confirm.html.erb</p>
+<h1>Confirmação do plano</h1>
+<ul>
+  <li><strong>Plano</strong> <%= @plan.name %></li>
+  <% @plan.invoices.each do |invoice| %>
+    <li>
+      <ul>
+        <li>Data de início: <%= invoice.period_start %></li>
+        <li>Data de final: <%= invoice.period_end %></li>
+      </ul>
+    </li>
+  <% end %>
+  </ul>
+<%= pagseguro_form @order, :submit => "Efetuar pagamento!" %>

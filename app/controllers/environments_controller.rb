@@ -73,31 +73,44 @@ class EnvironmentsController < BaseController
     when "2"
       @environment.valid?
       @plan = Plan.from_preset(params[:plan].to_sym)
-      @plan.valid?
+      @plan = params[:plan] if @plan.valid?
 
       @step = 3
+
+      respond_to do |format|
+        format.html { render :action => "new", :locals => { :step => 3 },
+          :layout => "wizard_environment" }
+      end
     when "3"
       respond_to do |format|
+        @plan = Plan.from_preset(params[:plan].to_sym)
+        @plan.user = current_user
+        @environment.courses.first.plan = @plan
         @environment.owner = current_user
         @environment.courses.first.owner = current_user
         @environment.published = true
 
-        if @environment.save
-          flash[:notice] = 'Parabéns, o seu ambiente de ensino foi criado'
-          format.html do
-            redirect_to environment_course_path(@environment,
-                                                @environment.courses.first)
+        if @environment.save && @plan.save
+          if @plan.price > 0
+            @plan.create_invoice
+
+            format.html do
+              redirect_to confirm_plan_path(@plan)
+            end
+          else
+
+            flash[:notice] = 'Parabéns, o seu ambiente de ensino foi criado'
+            format.html do
+              redirect_to environment_course_path(@environment,
+                                                  @environment.courses.first)
+            end
           end
-          format.xml  { render :xml => @environment,
-            :status => :created, :location => @environment }
         else
           format.html { render :action => "new", :layout => "wizard_environment" }
           format.xml  { render :xml => @environment.errors,
             :status => :unprocessable_entity }
         end
       end
-    else
-      redirect_to teach_path
     end
   end
 

@@ -12,6 +12,7 @@ describe Invoice do
   it { should_not allow_mass_assignment_of :state }
 
   it { should respond_to :threshold_date }
+  it { should respond_to :description }
 
   context "threshold date" do
     it "should be 10 days from period end" do
@@ -143,14 +144,23 @@ describe Invoice do
   context "finder" do
     it "retrieves pending invoices" do
       plan = Factory :plan
-      pending_invoices = (1..5).collect { Factory(:invoice, 
+      pending_invoices = (1..5).collect { Factory(:invoice,
                                                   :plan_id => plan,
                                                   :state => "pending") }
-      overdue_invoices = (1..5).collect { Factory(:invoice, 
+      overdue_invoices = (1..5).collect { Factory(:invoice,
                                                   :plan_id => plan,
                                                   :state => "overdue") }
 
       Set.new(plan.invoices.pending) == Set.new(pending_invoices)
+    end
+  end
+
+  it { should respond_to :generate_description }
+
+  context "description" do
+    it "should generate something" do
+      subject.generate_description.should_not be_empty
+      subject.generate_description.should_not be_nil
     end
   end
 

@@ -1,11 +1,13 @@
 class PlansController < BaseController
-  load_and_authorize_resource
+  before_filter :find_course_environment
+
+  authorize_resource
 
   def confirm
     @order = @plan.create_order
 
     respond_to do |format|
-      format.html
+      format.html { render :layout => "environment" }
     end
   end
 
@@ -13,5 +15,26 @@ class PlansController < BaseController
   end
 
   def pay
+  end
+
+  def callback
+    pagseguro_notification do |notification|
+      notification.products.each do |product|
+        Invoice.find(product[:id])
+      end
+    end
+
+    render :nothing => true
+  end
+
+  protected
+
+  def find_course_environment
+    @plan = Plan.find(params[:id])
+
+    if @plan.billable_type == 'Course'
+      @course = @plan.billable
+      @environment = @course.environment
+    end
   end
 end

@@ -235,11 +235,10 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :courses do |course|
     course.resources :invitations
+    course.resources :plans, :only => [], :member => {
+      :confirm => [:get, :post]
+    }
   end
-
-  map.resources :plans, :only => [], :member => {
-    :confirm => :get
-  }
 
   # Install the default routes as the lowest priority.
   map.connect ':controller/:action/:id'

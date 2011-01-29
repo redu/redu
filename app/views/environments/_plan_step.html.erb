@@ -1,9 +1,7 @@
 <% form_for @environment, :url => environments_path(:step => 2) do |f| %>
-  <%= label_tag "plan_professor_standard", "Professor Standard" %>
-  <%= radio_button_tag :plan, "professor_standard" %>
-  <%= label_tag "plan_professor_standard", "Professor Lite" %>
-  <%= radio_button_tag :plan, "professor_lite" %>
+  <%= render :partial => 'environments/plan_form' %>
   <%= f.submit "Próximo" %>
+  <%= link_to "Voltar", teach_index_path, :class => "button" %>
 
   <div style="display:none;">
     <%= render :partial => 'form', :locals => { :f => f } %>
