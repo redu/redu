@@ -110,6 +110,7 @@ class EventsController < BaseController
         format.html { redirect_to polymorphic_path([@event.eventable, @event]) }
         format.xml  { render :xml => @event, :status => :created, :location => @event }
       else
+        @eventable = @event.eventable
         format.html { render :action => "new" }
         format.xml  { render :xml => @event.errors, :status => :unprocessable_entity }
       end
