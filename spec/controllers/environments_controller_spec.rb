@@ -2,16 +2,16 @@ require 'spec_helper'
 require 'authlogic/test_case'
 
 describe EnvironmentsController do
-  context "when creating an Environment" do
+  context "when creating a paid Environment" do
     before do
       @user = Factory(:user)
       activate_authlogic
       UserSession.create @user
 
-      @params = {:step => 1, :locale => "pt-BR", 
-        :environment => {:name => "Faculdade mauricio de nassau", 
-          :courses_attributes => [{:name => "Gestão de TI", 
-                                   :path => "gestao-de-ti"}], 
+      @params = {:step => 1, :locale => "pt-BR",
+        :environment => {:name => "Faculdade mauricio de nassau",
+          :courses_attributes => [{:name => "Gestão de TI",
+                                   :path => "gestao-de-ti"}],
         :path => "faculdade-mauricio-de-nassau"}}
     end
 
@@ -42,7 +42,6 @@ describe EnvironmentsController do
 
       it "assigns the plan" do
         assigns[:plan].should_not be_nil
-        assigns[:plan].should be_valid
       end
     end
 
@@ -55,23 +54,49 @@ describe EnvironmentsController do
         post :create, @params
       end
 
-      xit "assigns the environment" do
+      it "assigns and creates the environment" do
         assigns[:environment].should_not be_nil
+        assigns[:environment].should_not be_new_record
       end
 
-      xit "assigns the plan" do
+      it "assigns and creates the plan" do
         assigns[:plan].should_not be_nil
         assigns[:plan].should be_valid
+        assigns[:plan].should_not be_new_record
       end
 
-      xit "associates the plan to the course" do
-        assigns[:environment].should_not be_new_record
-        assigns[:plan].should_not be_new_record
+      it "associates the plan to the course" do
+        assigns[:environment].courses.first.plan.should == assigns[:plan]
+      end
 
-        assigns[:environment].course.plan.should == assigns[:plan]
+      it "associates the plan with the user" do
+      assigns[:plan].user.should == @user
+
+      end
+
+      it "creates the first order" do
+        assigns[:plan].invoices.size.should == 1
+      end
+
+      it "redirects to confirmation page" do
+        should redirect_to(confirm_plan_path(assigns[:plan]))
       end
     end
-  
+
+    context "at step 3 for free" do
+      before do
+        @params[:step] = 3
+        @params[:plan] = "free"
+        @params[:color] = "f56b00"
+
+        post :create, @params
+      end
+
+      it "redirects to course page" do
+        should redirect_to(environment_course_path(
+          assigns[:environment], assigns[:environment].courses.first))
+      end
+    end
   end
 
 end

@@ -62,15 +62,11 @@ $(document).ready(function(){
       <span class="course"><%= @environment.courses.first.path %></span>
     </div>
   </fieldset>
-  <% form_for @environment, :url => environments_path(:step => 2) do |f| %>
+  <% form_for @environment, :url => environments_path(:step => 3) do |f| %>
     <%= f.error_messages %>
-    <fieldset>
-      <legend>Escolha seu plano</legend>
-        <div id="plans">
-        
-        </div>
-    </fieldset>
-    <%= render :partial => 'environments/form' %>
+    <%= render :partial => 'environments/form', :locals => { :f => f } %>
+    <%= hidden_field_tag :plan, @plan %>
     <%= f.submit "Criar", :style => "float: right;" %>
+    <%= link_to_function "Voltar", "history.back()" %>
   <% end %>
 </div>
