@@ -99,7 +99,7 @@ class LecturesController < BaseController
 
     # anotações
     @annotation = @lecture.annotations.by_user(current_user)
-    @annotation = Annotation.new unless @annotation
+    @annotation = Annotation.new if @annotation.empty?
 
     #relacionados
     @related_lectures = Lecture.related_to(@lecture).all(:limit => 3,
@@ -125,61 +125,18 @@ class LecturesController < BaseController
   # GET /lectures/new
   # GET /lectures/new.xml
   def new
-    authorize! :manage, @subject
+    @lecture = Lecture.new
+    case params[:type].to_s
+    when 'Page'
+      @page = Page.new
+    when 'Seminar'
+      @seminar = Seminar.new
+    when 'Document'
+      @document = Document.new
+    end
 
-    case params[:step]
-    when "2"
-
-      @lecture = Lecture.find(session[:lecture_id])
-
-      unless @lecture #curso não foi encontrado ou nao está mais na sessão
-        redirect_to new_space_subject_lecture_path(@space, @subject)
-      end
-
-      if @lecture.lectureable_type == 'Seminar'
-        if @lecture.lectureable
-          @seminar = @lecture.lectureable
-        else
-          @seminar = Seminar.new
-        end
-        render "step2_seminar" and return
-      elsif @lecture.lectureable_type == 'InteractiveClass'
-        @interactive_class = InteractiveClass.new
-        render "step2_interactive" and return
-      elsif @lecture.lectureable_type == 'Page'
-        if @lecture.lectureable
-          @page = @lecture.lectureable
-        else
-          @page = Page.new
-        end
-        render "step2_page" and return
-      elsif @lecture.lectureable_type == 'Document'
-        if @lecture.lectureable
-          @document = @lecture.lectureable
-        else
-          @document = Document.new
-        end
-        render "step2_document" and return
-      end
-    when "3"
-      @lecture = Lecture.find(session[:lecture_id])
-      render "step3" and return
-    else # 1
-      if session[:lecture_id]
-        @lecture = Lecture.find(session[:lecture_id])
-      else
-        @lecture = Lecture.new
-        @lecture.lectureable_type = params[:type] if params.has_key?(:type)
-        @lecture.name = params[:name] if params.has_key?(:name)
-
-        #FIXME falha de segurança, verificar permissões aqui
-        if params.has_key?(:lazy)
-          @lecture.lazy_asset = LazyAsset.find(params[:lazy])
-        end
-      end
-
-      @lecture.enable_validation_group :step1
-      render "step1" and return
+    respond_to do |format|
+      format.js
     end
   end
 
@@ -190,16 +147,12 @@ class LecturesController < BaseController
         flash[:notice] = 'O módulo deve ser despublicado para que seja possível a editação das aulas.'
         format.html { redirect_to space_subject_lecture_path(@space, @subject, @lecture) }
       else
-        if @lecture.lectureable_type == 'Page'
-          @page = @lecture.lectureable
-          format.html {render 'edit_page'}
-        elsif @lecture.lectureable_type == 'InteractiveClass'
-          @interactive_class = @lecture.lectureable
-          format.html {render 'edit_interactive'}
-        elsif @lecture.lectureable_type == 'Seminar'
-          format.html {render 'edit_seminar'}
-        else
-          format.html {render 'edit_document'}
+        format.js do
+          render :update do |page|
+            @page = @lecture.lectureable
+            page.insert_html :after, "#{@lecture.id}-item", :partial => 'form_edit_page'
+            page.hide "#{@lecture.id}-item"
+          end
         end
       end
 
@@ -210,207 +163,35 @@ class LecturesController < BaseController
   # POST /lectures
   # POST /lectures.xml
   def create
-    authorize! :manage, @subject
+    if params[:lecture_id] # Existent
+     @lecture = Lecture.find(params[:lecture_id])
+     @lecture = @lecture.clone_for_subject!(params[:subject_id])
+    else
+      @lecture = Lecture.new
+      @lecture.name = params[:name]
+      @lecture.owner = current_user
+      @lecture.subject = Subject.find(params[:subject_id])
+    end
 
-    #TODO diminuir a lógica desse método, está muito GRANDE
-    case params[:step]
-    when "1"
-      if session[:lecture_id]
-        @lecture = Lecture.find(session[:lecture_id])
-        @lecture.attributes = params[:lecture]
+    if params[:page]
+      @page = Page.create(params[:page]) if @lecture.name
+      @lecture.lectureable = @page
+    elsif params[:seminar]
+      # Verificação para que o Seminar não seja criado em vão.
+      @seminar = Seminar.create(params[:seminar]) if @lecture.name
+      @lecture.lectureable = @seminar
+    elsif params[:document]
+      @document = Document.create(params[:document]) if @lecture.name
+      @lecture.lectureable = @document
+    end
+
+    respond_to do |format|
+      if @lecture.save
+        @lecture.published = 1
+        @lecture.save
+        format.js
       else
-        @lecture = Lecture.new(params[:lecture])
-        @lecture.owner = current_user
-      end
-      @lecture.enable_validation_group :step1
-
-      respond_to do |format|
-        if @lecture.valid? && @lecture.only_one_asset_per_lazy_asset?
-          @lecture.save
-          session[:lecture_id] = @lecture.id
-          format.html {
-            redirect_to new_space_subject_lecture_path(@space, @subject, :step => 2)
-          }
-        elsif !@lecture.only_one_asset_per_lazy_asset?
-          flash[:notice] = "Esta aula já foi criada"
-          session[:lecture_id] = nil
-          format.html { render "step1" }
-        else
-          format.html { render "step1" }
-        end
-      end
-
-    when "2"
-      @lecture = Lecture.find(session[:lecture_id])
-      @lecture.attributes = params[:lecture]
-      @lecture.enable_validation_group :step2
-
-      @res = []
-      if params[:seminar] and  params[:seminar][:attachment]
-        params[:seminar][:attachment].each do |a|
-          @res = LectureResource.create(:attachment => a, :attachable => @lecture)
-        end
-      end
-
-      if @lecture.lectureable_type == 'Seminar'
-        @seminar = Seminar.new(params[:seminar])
-        @lecture.lectureable = @seminar
-
-        # importar video do Redu atraves de url
-        @success = @seminar.import_redu_seminar(@seminar.external_resource) if @seminar.external_resource_type.eql?('redu')
-        respond_to do |format|
-
-          if @success && !@success[0]  # importação falhou
-            flash[:error] = @success[1]
-            format.html { render("step2_seminar")  }
-          else
-            if @lecture.save
-
-              format.html do
-                if params[:back_button]
-                  redirect_to new_space_subject_lecture_path(@space, @subject,
-                                                             :lecture_type => params[:lectureable_type],
-                                                             :step => 1)
-                else
-                  redirect_to new_space_subject_lecture_path(@space, @subject, :step => 3)
-                end
-              end
-
-              format.js do
-                render :template => 'lectures/go_to_step3', :locals => { :lecture_type => params[:lectureable_type], :step => "3"
-}
-              end
-
-            else
-              format.html { render "step2_seminar" }
-              format.js do
-                render :template => 'lectures/create_seminar_error'
-              end
-
-            end
-          end
-        end
-
-      elsif @lecture.lectureable_type == 'InteractiveClass'
-        @lecture.lectureable = InteractiveClass.new(params[:interactive_class])
-
-        respond_to do |format|
-          if @lecture.save
-            format.html do
-              redirect_to new_space_subject_lecture_path(@space, @subject,
-                            :lecture_type => params[:lectureable_type],
-                            :step => 3)
-            end
-            format.js do
-              render :template => 'lectures/create_interactive'
-            end
-          else
-            format.html do
-              render "step2_interactive"
-            end
-            format.js do
-             render :template => 'lectures/create_interactive_error'
-            end
-          end
-        end
-
-      elsif @lecture.lectureable_type == 'Page'
-        @lecture.lectureable = Page.new(params[:page])
-
-        respond_to do |format|
-
-          if @lecture.save
-            format.html {
-              if params[:back_button]
-                redirect_to new_space_subject_lecture_path(@space, @subject,
-                                                           :lecture_type => params[:lectureable_type],
-                                                           :step => 1)
-              else
-                redirect_to new_space_subject_lecture_path(@space, @subject,
-                                                           :lecture_type => params[:lectureable_type],
-                                                           :step => 3)
-              end
-            }
-          else
-            format.html { render "step2_page" }
-          end
-        end
-      elsif @lecture.lectureable_type == 'Document'
-        @lecture.lectureable = Document.new(params[:document])
-
-        respond_to do |format|
-          @lecture.lectureable.define_content_type
-          if @lecture.save
-            format.html {
-              if params[:back_button]
-                redirect_to new_space_subject_lecture_path(@space, @subject,
-                                                           :lecture_type => params[:lectureable_type],
-                                                           :step => 1)
-              else
-                redirect_to new_space_subject_lecture_path(@space, @subject,
-                                                           :lecture_type => params[:lectureable_type],
-                                                           :step => 3)
-              end
-            }
-            format.js do
-              render :template => 'lectures/go_to_step3', :locals => { :lecture_type => params[:lectureable_type], :step => "3"
-}
-            end
-          else
-            format.html { render "step2_document" }
-            format.js { render "create_document_error" }
-          end
-        end
-      end
-
-    when "3"
-      @lecture = Lecture.find(session[:lecture_id])
-
-      if params[:back_button]
-        respond_to do |format|
-          format.html {
-            redirect_to new_space_subject_lecture_path(@space, @subject,
-                                                       :lecture_type => params[:lectureable_type],
-                                                       :step => 2)
-          }
-        end
-      else
-      # se o usuário completou os 3 passos então o curso está publicado
-      @lecture.published = true
-
-      # Calculando o próximo indice
-      max_index = @subject.assets.maximum("position")
-      max_index ||= 0
-
-      Asset.create({:assetable => @lecture,
-                    :subject => @subject,
-                    :lazy_asset => @lecture.lazy_asset,
-                    :position => max_index + 1})
-
-      # Enfileirando video para conversão
-      if @lecture.lectureable_type.eql?('Seminar')
-        if @lecture.lectureable.need_transcoding?
-          @lecture.lectureable.convert!
-        else
-          @lecture.lectureable.ready!
-        end
-      elsif @lecture.lectureable_type.eql?('Document')
-        @lecture.lectureable.upload_to_scribd
-      end
-
-      respond_to do |format|
-        if @lecture.save
-          # remover curso da sessao
-          session[:lecture_id] = nil
-
-          format.html do
-            flash[:notice] = 'Aula foi criada e adicionada ao módulo'
-            redirect_to lazy_space_subject_path(@space,@subject)
-          end
-        else
-          format.html { render "step3" }
-        end
-      end
+        format.js { render :template => 'lectures/create_error'}
       end
     end
   end
@@ -444,68 +225,23 @@ class LecturesController < BaseController
   # PUT /lectures/1
   # PUT /lectures/1.xml
   def update
-    if @lecture.lectureable_type == 'InteractiveClass'
-      @interactive_class = @lecture.interactive_class
-      respond_to do |format|
-        if @interactive_class.update_attributes(params[:interactive_class])
-          flash[:notice] = 'Curso atualizado com sucesso.'
-          format.html { redirect_to(@lecture) }
-          format.xml  { head :ok }
-        else
-          format.html { render :action => "edit_interactive" }
-          format.xml  { render :xml => @lecture.errors, :status => :unprocessable_entity }
-        end
-      end
-    elsif @lecture.lectureable_type == 'Page'
-      respond_to do |format|
-        @page = @lecture.lectureable
-        if params[:lecture]
-          if @lecture.update_attributes(params[:lecture])
-            sucesso = true
-          else
-            sucesso = false
-          end
-        elsif params[:page]
-          if @page.update_attribute 'body', params[:page][:body]
-            sucesso = true
-          else
-            sucesso = false
-          end
-        else
-          sucesso = false
-        end
+    @lecture = Lecture.find(params[:lecture_id])
+    @lecture.name = params[:name]
 
-        if sucesso
-          flash[:notice] = 'Artigo atualizado com sucesso.'
-          format.html { redirect_to lazy_space_subject_path(@space,@subject) }
-          format.xml  { head :ok }
-        else
-          format.html { render :action => "edit_page" }
-          format.xml  { render :xml => @lecture.errors, :status => :unprocessable_entity }
-        end
+   if params[:page]
+     @page = @lecture.lectureable
+      valid = @page.update_attributes(params[:page]) && @lecture.save
+    elsif params[:seminar]
+      @seminar.update_attributes(params[:seminar]) && @lecture.save
+    elsif params[:document]
+      @document.update_attributes(params[:document]) && @lecture.save
+    end
 
-      end
-     elsif @lecture.lectureable_type == 'Seminar'
-      respond_to do |format|
-        if @lecture.update_attributes(params[:lecture])
-          flash[:notice] = 'Vídeo-aula atualizada com sucesso.'
-          format.html { redirect_to lazy_space_subject_path(@space,@subject) }
-          format.xml  { head :ok }
-        else
-          format.html { render :action => "edit_seminar" }
-          format.xml  { render :xml => @lecture.errors, :status => :unprocessable_entity }
-        end
-      end
-    else
-      respond_to do |format|
-        if @lecture.update_attributes(params[:lecture])
-          flash[:notice] = 'Apresentação atualizada com sucesso.'
-          format.html { redirect_to lazy_space_subject_path(@space,@subject) }
-          format.xml  { head :ok }
-        else
-          format.html { render :action => "edit_document" }
-          format.xml  { render :xml => @lecture.errors, :status => :unprocessable_entity }
-        end
+    respond_to do |format|
+      if valid
+        format.js
+      else
+        format.js { render :template => 'lectures/create_error'}
       end
     end
 
@@ -515,10 +251,14 @@ class LecturesController < BaseController
   # DELETE /lectures/1.xml
   def destroy
     @lecture.destroy
-    flash[:notice] = 'A aula foi removida'
 
     respond_to do |format|
       format.html { redirect_to(lectures_url) }
+      format.js do
+        render :update do |page|
+          page.remove "#{@lecture.id}-item"
+        end
+      end
       format.xml  { head :ok }
     end
   end

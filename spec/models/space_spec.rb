@@ -83,5 +83,4 @@ describe Space do
     }.should change { space.published }.to(false)
   end
 
-
 end

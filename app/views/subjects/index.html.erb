@@ -1,52 +1,21 @@
-<% content_for :js do %>
-  <script type="text/javascript">
-    function select(type, id) {
-      jQuery('#'+ type+'_' + id).parent().children().removeClass('selected')
-        jQuery('#'+ type+'_' + id).addClass('selected')
-        loadList();
-
-    }
-
-function loadList(){
-  jQuery('#subject_list').html(' ')
-    jQuery('#loader').show()
-}
-/* pega os filtros selecionados e passa-os como parametro */
-function getParameters(){
-
-  return ''
-
-    var params = ''
-    jQuery('.selected').each(function(i) {
-        var id = $(this).attr('id').split('_')
-        if (id[1] != 'all' && typeof(id[0]) != 'undefined' && typeof(id[1]) != 'undefined') {
-        if (id[0] == 'cat') id[0] = 'category';
-
-        params += id[0] + '=' + id[1];
-        }
-
-        })
-  alert(params)
-    return params;
-}
-</script>
-<% end %>
-
 <div class="grid_16">
-  <h3> Cursos</h3>
-  <span class="filter_bar">
-    <span class="filter_text">
-      <%= (params[:search]) ? ("Resultados para: \""+params[:search]+"\"") : "Todos os módulos mais recentes" %>
-    </span>
+  <%= render :partial => "spaces/sidebar", :locals => {:space => @space} %>
 
-    <% form_tag space_subjects_path(@space), :method => :get do %>
-      Buscar
-      <%= text_field_tag :search, params[:search] %>
-      <%= submit_tag "OK", :name => nil%>
-    <% end %>
+  <div class="main grid_12 omega">
+    <div class="fake-tabs">
+      <%= render :partial => 'spaces/taskbar' %>
 
-  </span>
-
-  <%= render :partial => "subject_list"%>
-  <%= will_paginate @subjects, :renderer => EndlessRenderer %>
+      <div id="content">
+        <%= link_to_remote "Novo Módulo", :url => new_space_subject_path(@space),
+          :method => :get,
+          :loading => "$('#spinner-new-subject').show();",
+          :success => "$('#spinner-new-subject').hide();",
+          :html => { :id => 'link-new-subject' } %>
+        <%= image_tag 'spinner.gif', :id => 'spinner-new-subject',
+          :style => 'display: none;' %>
+        <%= render :partial => "subject_list"%>
+        <%= will_paginate @subjects, :renderer => EndlessRenderer %>
+      </div>
+    </div>
+  </div>
 </div>

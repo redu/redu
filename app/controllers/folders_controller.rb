@@ -10,8 +10,12 @@
 # [#destroy]            delete a folder
 # [#update_permissions] save the new rights given by the user
 class FoldersController < BaseController
+  layout 'environment'
+
   load_and_authorize_resource :space
   load_and_authorize_resource :folder, :through => :space
+
+  before_filter :load_course_and_environment
   #  skip_before_filter :authorize, :only => :feed
   #
   #  before_filter :does_folder_exist, :except => [:list, :feed, :feed_warning]
@@ -42,18 +46,18 @@ class FoldersController < BaseController
             end
         end
       else
-        format.html { 
+        format.html {
           flash[:error] = @myfile.errors.full_messages.join(", ")
-          redirect_to space_folders_path(:id => @folder_id, :space_id => @space_id) 
+          redirect_to space_folders_path(:id => @folder_id, :space_id => @space_id)
         }
         format.js do
             render :update do |page|
               # update the page with an error message
-          end          
+          end
         end
       end
     end
-    
+
   end
 
   # Upload the file and create a record in the database.
@@ -61,7 +65,7 @@ class FoldersController < BaseController
   def do_the_upload
     @myfile = Myfile.new(params[:myfile])
     @myfile.user = current_user
-    
+
     respond_to do |format|
       if @myfile.save
         flash[:notice] = 'Upload realizado!'
@@ -72,19 +76,19 @@ class FoldersController < BaseController
             render :update do |page|
             page.replace_html  'tabs-4-content', :partial => 'folders/index'
             end
-          end          
+          end
         end
       else
-        format.html { 
+        format.html {
           flash[:error] = @myfile.errors.full_messages.join(", ")
-          redirect_to @space 
+          redirect_to @space
         }
         format.js do
           responds_to_parent do
             render :update do |page|
               # update the page with an error message
             end
-          end          
+          end
         end
       end
     end
@@ -114,7 +118,7 @@ class FoldersController < BaseController
     list(params[:id])
     # render :action => :list
     respond_to do |format|
-      #format.html
+      format.html
       format.js
     end
   end
@@ -221,8 +225,8 @@ class FoldersController < BaseController
           format.js do
               render :update do |page|
                 page.replace_html  'tabs-4-content', :partial => 'folders/index'
-            end   
-            
+            end
+
           end
         else
           flash[:error] = 'Não foi possível criar o diretório'
@@ -382,5 +386,10 @@ class FoldersController < BaseController
         authorize_deleting_for_children(child_folder) # Checks the permissions of a child's children
       end
     end
+  end
+
+  def load_course_and_environment
+    @course = @space.course
+    @environment = @course.environment
   end
 end

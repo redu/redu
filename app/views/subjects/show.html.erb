@@ -6,18 +6,18 @@
   <div class="fake-tabs grid_11 alpha omega">
     <%= render :partial => 'subjects/tabs_menu' %>
     <div class="panel">
-      <% unless @subject.assets.empty? %>
-        <% if can? :manage, @subject %>
+      <% unless @subject.lectures.empty? %>
+        <% if (can? :manage, @subject) and !@subject.published? %>
           <div class="box-info">
             <div class="pretty-text">
             Para mudar a ordem dos recursos, clique
-            <%= link_to " aqui", admin_assets_order_space_subject_path(@space, @subject) %>.
+            <%= link_to " aqui", admin_lectures_order_space_subject_path(@space, @subject) %>.
             </div>
           </div>
         <% end %>
       <ul class="default subject-assets">
         <%= render :partial => 'subjects/asset_item',
-          :collection => @subject.assets, :as => :item %>
+          :collection => @subject.lectures, :as => :item %>
       </ul>
     <% else %>
       <div class="box_notice">Você precisa finalizar a criação dos recursos. <%= link_to "Clique aqui", lazy_space_subject_path(@space, @subject) %></div>

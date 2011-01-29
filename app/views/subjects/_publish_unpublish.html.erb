@@ -6,15 +6,8 @@
       :method => "post",
       :class => "button" %>
   <% else %>
-    <% if @subject.ready_to_be_published? %>
       <%= link_to "Publicar", publish_space_subject_path(@space, @subject),
         :confirm => "Tem certeza?",
         :class => "button" %>
-    <% else %>
-      <%= link_to "Publicar", publish_space_subject_path(@space, @subject),
-        :confirm => "A criação deste módulo não foi finalizada. " + \
-        "Publicar somente aulas finalizadas?",
-        :class => "button" %>
-    <% end %>
   <% end %>
 <% end %>

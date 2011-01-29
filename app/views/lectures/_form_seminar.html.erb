@@ -1,0 +1,133 @@
+<script type="text/javascript">
+  function youtubePreview(textfield){
+    regex = /youtube\.com\/watch\?v=([A-Za-z0-9._%-]*)[&\w;=\+_\-]*/;
+
+    id = textfield.val().match(regex)
+    if (id != null) {
+      youtube_id = id[1];
+      //alert(youtube_id)
+      url = "http://www.youtube.com/v/" + youtube_id + "&hl=en&fs=1";
+
+        jQuery('#yt_preview_param').attr("value",url);
+        jQuery('embed').attr("src",url);
+        jQuery('#youtube_preview').show();
+
+      }  else {
+        $('#youtube_preview').hide();
+      }
+
+  }
+
+function switchCourseFields(fieldType){
+  if (fieldType == 1) {
+    $('#upload_resource_field').show();
+    $('#external_resource_field').hide();
+    $('#youtube_preview').hide();
+    $('#seminar_submit').hide();
+  } else {
+    $('#upload_resource_field').hide();
+    $('#external_resource_field').show();
+    $('#youtube_preview').show();
+    $('#seminar_submit').show();
+  }
+
+}
+
+function removeField(link){
+  jQuery(link).parent("fieldset:first").hide()
+    jQuery(link).siblings("input[type=hidden]:first").val("1")
+}
+
+function add_fields(link, association, content) {
+  var new_id = new Date().getTime();
+  var regexp = new RegExp("new_" + association, "g")
+    jQuery(link).before("<fieldset>" + content.replace(regexp, new_id) + "</fieldset>");
+}
+
+</script>
+
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function() {
+      if ($('#seminar_external_resource').val() != '')
+        {
+          url = "http://www.youtube.com/watch?v=" + $('#seminar_external_resource').val();
+          $('#seminar_external_resource').val(url);
+          youtubePreview($('#seminar_external_resource'));
+        }
+
+    $('#seminar_external_resource').change(function(obj){
+      youtubePreview($('#seminar_external_resource'));
+    })
+  });
+</script>
+
+<%= stylesheet_link_tag 'uploadify' %>
+<%= render_uploadify(:id  => "seminar_original",
+                     :url => space_subject_lectures_url(@space, @subject),
+                     :allow_multiple_files => false,
+                     :fields => ['seminar_external_resource_type_upload', 'name', 'subject_id'],
+                     :max_size => 100.megabytes,
+                     :allowed_extensions => [:mov, :mpeg, :mpg, :avi, '3gp', :mp4, :mpeg4, :vob, :mkv, '264', '3gp2', :dvr, :dvx, :flv, :h264, :m2v, :m4v, :movie, :mpeg1, :mpeg2, :swf, :vid, :wmv]) %>
+                   <% form_remote_for :seminar, @seminar,
+                     :url => { :action => "create" },
+                     :loading => "$('#spinner-form-seminar').show();",
+                     :success => "$('#spinner-form-seminar').hide();",
+                     :html => { :multipart => true, :id => "seminar-form" } do |f| %>
+                     <div class="grid_11 ">
+                       <% field_set_tag 'Vídeo' do %>
+                         <div class="grid_5 alpha">
+                           <%= label_tag :name, :title.l %>
+                           <%= text_field_tag :name %>
+                           <%= hidden_field_tag "subject_id", @subject.id %>
+                           <%= error_for :name %>
+                           <% field_set_tag 'Tipo de material' do %>
+                             <%= f.radio_button :external_resource_type, :youtube,
+                               {:onchange => "switchCourseFields(2);", :checked => true} %>
+                             <%= f.label :external_resource_type_youtube, "Youtube", :class => "inline"  %>
+                             <%= f.radio_button :external_resource_type, :upload, {:onchange => "switchCourseFields(1);"} %>
+                             <%= f.label :external_resource_type_upload, "Upload", :class => "inline"  %>
+                             <br/><br/>
+                              <%= error_for :seminar, :external_resource_type %>
+                              <%= error_for :seminar, :external_resource_type_upload %>
+                           <% end %>
+
+
+                           <div id="upload_resource_field" style="display:none;">
+                             <% field_set_tag 'Arquivo' do %>
+
+                               <%= f.label :original, "Arquivo do seu computador (máximo: 100MB)" %>
+                               <%= f.file_field :original  %>
+                               <%= error_for :seminar, :original %>
+
+                               <%= uploadify_cancel("Parar") %>
+                               <%= uploadify_submit "Enviar material", :style => "margin: 10px 0; float: left; width: 120px; text-align: center; display: none;"  %>
+                             <% end %>
+                           </div>
+
+                           <div id="external_resource_field" style="display:block;">
+                             <% field_set_tag 'Link' do %>
+                               <%= f.label :external_resource, "Endereço do vídeo" %>
+                               <%= f.text_field :external_resource %>
+                               <%= error_for :seminar, :external_resource %>
+                             <% end %>
+                           </div>
+                           <%= f.submit "Criar" %>
+                           <%= link_to_function "Cancelar",
+                             "$('#seminar-form').remove(); $('#add_link').show(); return false;" %>
+                           <%= image_tag 'spinner.gif', :id => 'spinner-form-seminar',
+                             :style => 'display: none;' %>
+                     </div>
+                         <div id="youtube_preview" class="grid_5 omega">
+                           <% field_set_tag 'Prévia' do %>
+                             <object width="440" height="300">
+                               <param name="movie" value="none" id="yt_preview_param"/>
+                               <param name="allowFullScreen" value="true"/>
+                               <param name="allowscriptaccess" value="always"/>
+                               <embed src="none" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="300" height="250"/>
+                             </object>
+                           <% end %>
+                         </div>
+
+                       <% end %>
+                     </div>
+<% end %>

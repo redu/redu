@@ -56,6 +56,15 @@ module LecturesHelper
     end
   end
   
+  def user_existent_lectures
+    existent_lectures = current_user.lectures.collect do |l|
+      # Não mostra os Seminars não convertidos.
+      [l.name, "#{l.id.to_s}"] unless (l.lectureable.class.to_s.eql? "Seminar") and
+      (not l.lectureable.state.eql? "converted")
+    end
+    existent_lectures.compact!
+    existent_lectures
+  end
 
 	
 end

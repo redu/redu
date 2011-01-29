@@ -1,159 +1,67 @@
 class Subject < ActiveRecord::Base
-  # Módulos são conjuntos de Lectures e Exams que devem ou não ser feitos em
-  # sequência. Todos os alunos do Space poderão ter acesso ao mesmo. Para
-  # cursar um módulo o usuário deve se matricular no mesmo (Enrollment).
-
-  # associations
-  has_many :assets, :order => :position, :dependent => :destroy
-  has_many :lazy_assets, :dependent => :destroy
-  has_many :enrollments, :dependent => :destroy
-  has_many :statuses, :as => :statusable, :dependent => :destroy
-  has_many :students, :through => :enrollments, :source => :user, :conditions => [ "enrollments.role_id = ?", 3 ]
-  has_many :teachers, :through => :enrollments, :source => :user, :conditions => [ "enrollments.role_id = ?", 6 ]
-  has_many :student_profiles, :dependent => :destroy
-  has_many :asset_reports, :dependent => :destroy
-  belongs_to :owner, :class_name => "User" , :foreign_key => "user_id"
   belongs_to :space
+  belongs_to :owner, :class_name => "User", :foreign_key => :user_id
+  has_many :lectures, :order => "position", :dependent => :destroy
+  has_many :enrollments, :dependent => :destroy
+  has_many :members, :through => :enrollments, :source => :user,
+    :dependent => :destroy
+  has_many :graduated_members, :through => :enrollments, :source => :user,
+    :include => :student_profiles,
+    :conditions => ["student_profiles.graduaded = 1"]
+  has_many :teachers, :through => :enrollments, :source => :user,
+    :conditions => ["enrollments.role_id = ?", Role[:teacher].id]
+  has_many :statuses, :as => :statusable, :dependent => :destroy
+  has_many :logs, :as => :logeable, :dependent => :destroy, :class_name => 'Status'
 
-  accepts_nested_attributes_for :lazy_assets,
-    :reject_if => lambda { |lazy_asset|
-    if lazy_asset['existent'] == 'true'
-      lazy_asset['assetable_id'].blank? &&
-        lazy_asset['assetable_type'].blank?
-    else
-      lazy_asset['name'].blank? &&
-        lazy_asset['lazy_type'].blank?
-    end
-  },
-    :allow_destroy => true
+  attr_protected :owner, :published, :finalized
 
-  # METODOS DO WIZARD
-  attr_writer :current_step
-
-  # PLUGINS
   acts_as_taggable
-  ajaxful_rateable :stars => 5
-  has_attached_file :avatar, {
-    :styles => { :thumb => "100x100>", :nano => "24x24>",
-      :default_url => "/images/:class/missing_pic.jpg"}
-  }
 
-  validates_presence_of :title, :description
-  validates_length_of :lazy_assets, :allow_nil => false, :minimum => 1,
-    :message => "O módulo precisa ter pelo menos um recurso"
-  validates_associated :lazy_assets,
-    :message => "Um ou mais campos nos recursos precisam ser preenchidos"
+  validates_presence_of :title
+  validates_size_of :description, :within => 30..200
+  validates_length_of :lectures, :minimum => 1, :on => :update
 
-  validation_group :subject, :fields => [:title, :description]
-  validation_group :lecture, :fields => [:lazy_assets]
-
-  def to_param #friendly url
-    "#{id}-#{title.parameterize}"
+  # Matricula o usuário com o role especificado. Retorna true ou false
+  # dependendo do resultado
+  def enroll(user, role = Role[:member])
+    enrollment = self.enrollments.create(:user => user, :role_id => role.id)
+    enrollment.valid?
   end
 
-  def permalink
-    APP_URL + "/subjects/"+ self.id.to_s+"-"+self.title.parameterize
+  # Desmatricula o usuário e retorna o mesmo
+  def unenroll(user)
+    self.members.delete(user)
   end
 
-  def recent_activity(page = 1) #TODO colocar esse metodo em status passando apenas o objeto
-    self.statuses.paginate(:all, :page => page, :order => 'created_at DESC',
-                           :per_page => AppConfig.items_per_page)
+  def publish!
+   self.published = true
+   self.save
   end
 
-  def current_step
-    @current_step || steps.first
-  end
-
-  def steps
-    %w[subject lecture]
-  end
-
-  def next_step
-    self.current_step = steps[steps.index(current_step)+1]
-  end
-
-  def previous_step
-    self.current_step = steps[steps.index(current_step)-1]
-  end
-
-  def first_step?
-    current_step == steps.first
-  end
-
-  def last_step?
-    current_step == steps.last
-  end
-
-  def all_valid?
-    steps.all? do |step|
-      self.current_step = step
-      valid?
-    end
-  end
-
-  def enable_correct_validation_group!
-    self.enable_validation_group(self.current_step.to_sym)
-  end
-
-  # Faz deep clone (i.e. inclusive as associações) de cada lazy_asset
-  # com exitent = true
-  def clone_existent_assets!
-    cloned_assets = lazy_assets.existent.collect do |lazy|
-      unless lazy.asset # Se já tiver sido clonado, não clona novamente.
-        cloned = lazy.create_asset
-        if cloned
-          asset = Asset.new(:subject => self, :assetable => cloned)
-          lazy.asset = asset
-          lazy.save
-          self.assets << asset
-        end
-      end
-    end
-
-    self.enable_validation_group(:lecture)
-    self.random_order
+  def unpublish!
+    self.enrollments.destroy_all
+    self.published = false
     self.save
   end
 
-  #TODO usar maquina de estados
-  # Verifica se todos os lazy_assets foram criados
-  def ready_to_be_published?
-    self.lazy_assets.count == self.assets.count
-  end
-
-  # Altera a ordem dos recursos já finalizados.
-  def change_assets_order
-    redirect_to space_subject_path(@subject)
-  end
-
-  #TODO Verificar necessidade
-  def enrolled_students
-    self.enrollments.map{|e| e.user}
-  end
-
-  #TODO Verificar necessidade
-  def under_graduaded_students
-    self.student_profiles.select{|sp| sp.graduaded == 0 }.map{|e| e.user}
-  end
-
-  #TODO Verificar necessidade
-  def graduaded_students
-    self.student_profiles.select{|sp| sp.graduaded == 1 }.map{|e| e.user}
-  end
-
-  #TODO Verificar necessidade
-  def not_graduaded_students
-    self.student_profiles.select{|sp| sp.graduaded == -1 }.map{|e| e.user}
-  end
-
-  protected
-
-  # Adiciona positions aos assets sem nenhum critério
-  def random_order
-    self.assets.each_with_index do |asset, index|
-      asset.position = index + 1
-      asset.save
+  def change_lectures_order!(lectures_ordered)
+    ids_ordered = []
+    lectures_ordered.each do |lecture|
+      ids_ordered << lecture.split("-")[0].to_i
     end
+
+    ids_ordered.each_with_index do |id, i|
+      lecture = Lecture.find(id)
+      lecture.position = i + 1 # Para não ficar índice zero.
+      lecture.save
+    end
+  end
+
+  #TODO colocar esse metodo em status passando apenas o objeto
+  # Não foi testado, pois haverá reformulação de subject
+  def recent_activity(page = 1)
+    self.statuses.paginate(:all, :page => page, :order => 'created_at DESC',
+                           :per_page => AppConfig.items_per_page)
   end
 
 end

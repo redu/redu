@@ -68,7 +68,8 @@ class User < ActiveRecord::Base
   has_many :enrollments, :dependent => :destroy
 
   #subject
-  has_many :subjects, :order => 'title ASC'
+  has_many :subjects, :order => 'title ASC',
+    :conditions => { :finalized => true }
 
   #groups
   # FIXME Verificar necessidade (GroupUser.rb não existe). Não foi testado.

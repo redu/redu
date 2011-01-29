@@ -2,5 +2,7 @@
   <%= link_to image_tag( item.avatar.url(:thumb),
     {:width => "80", :height=>"80", :border => 0 }), item %>
   <%= link_to item.login_slug, item %>
-  <%= link_to "Ver currículo", download_curriculum_user_path(item), :class => "icon more" %>
+  <% if item.curriculum_file_name %>
+    <%= link_to "Ver currículo", download_curriculum_user_path(item), :class => "icon more" %>
+  <% end %>
 </li>
