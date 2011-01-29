@@ -151,12 +151,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :users, :member => {
   #map.resources :users, :member_path => '/:id', :nested_member_path => '/:user_id', :member => {
     :annotations => :get,
-    :followers => :get,
-    :follows => :get,
-    :follow => :post,
     :activity_xml => :get,
     :logs => :get,
-    :unfollow => :post,
     :assume => :get,
     :change_profile_photo => :put,
     :edit_account => :get,
@@ -175,7 +171,9 @@ ActionController::Routing::Routes.draw do |map|
     :upload_profile_photo => [:get, :put],
     :download_curriculum => :get
   } do |user|
-    user.resources :friendships, :member => { :accept => :put, :deny => :put }, :collection => { :accepted => :get, :pending => :get, :denied => :get }
+    user.resources :friendships,:only => [:index, :create, :destroy],
+      :member => { :accept => :post, :decline => :post },
+      :collection => { :pending => :get }
     user.resources :photos, :collection => {:swfupload => :post, :slideshow => :get}
     user.resources :posts, :collection => {:manage => :get}, :member => {:contest => :get, :send_to_friend => :any, :update_views => :any}
     user.resources :events # Needed this to make comments work

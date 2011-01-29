@@ -39,7 +39,7 @@ class Ability
     alias_action :respond, :to => :read
 
     # User
-    alias_action :follows, :learning, :followers, :teaching,
+    alias_action :learning, :teaching,
       :show_log_activity, :log, :welcome_complete, :list_subjects,
       :show_log_activity, :activity_xml, :download_curriculum, :to => :read
 
@@ -47,7 +47,8 @@ class Ability
       :update_account, :edit_pro_details, :update_pro_details,
       :invite, :activate, :deactivate, :groups, :statistics,
       :change_profile_photo, :crop_profile_photo,
-      :upload_profile_photo, :activity_xml, :annotations, :activate, :deactivate,
+      :upload_profile_photo, :activity_xml, :annotations,
+      :activate, :deactivate,
       :to => :manage
 
     # Lecture
@@ -73,6 +74,9 @@ class Ability
     alias_action :statuses, :next_lecture, :previous_lecture, :attend, :to => :read
     alias_action :infos, :enroll, :to => :preview
 
+    # Friendship
+    alias_action :pending, :accept, :decline, :to => :manage
+
     # Todos podem ver o preview
     can :view, :all do |object|
       object.published?
@@ -97,8 +101,11 @@ class Ability
       can :create, Environment
       can :join, Course
 
+      #Friendship
+      can :create, Friendship
+      can :destroy, Friendship
+
       # User
-      can :follow, User
       can :read, User
 
       # Subject

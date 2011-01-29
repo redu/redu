@@ -1,2 +1,0 @@
-page << "$('#follow_link').hide()"
-page << "$('#unfollow_link').show()"

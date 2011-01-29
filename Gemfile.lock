@@ -1,14 +1,14 @@
 GIT
   remote: https://github.com/collectiveidea/delayed_job.git
-  revision: 2d6170e
+  revision: 3b75e2a81035cce26089e7187570d8ed730e945a
   branch: v2.0
   specs:
-    delayed_job (2.0.4)
+    delayed_job (2.0.6)
       daemons
 
 GIT
   remote: https://github.com/guiocavalcanti/scribd_fu.git
-  revision: 99d7475
+  revision: 99d74753a12f0f50a632a5b6dc7916e58c0f6e47
   specs:
     scribd_fu (2.0.9)
       rscribd
@@ -36,7 +36,7 @@ GEM
     cancan (1.4.1)
     cgi_multipart_eof_fix (2.5.0)
     columnize (0.3.2)
-    css_parser (1.1.4)
+    css_parser (1.1.5)
     daemons (1.1.0)
     desert (0.5.4)
     factory_girl (1.3.3)

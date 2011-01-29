@@ -37,10 +37,6 @@ describe User do
   it { should have_many(:user_environment_associations).dependent(:destroy) }
   it { should have_many(:environments_owned) }
 
-  # Followship
-  it { should have_and_belong_to_many :follows }
-  it { should have_and_belong_to_many :followers }
-
   # Forum
   it { should have_many(:forums).through(:moderatorships) }
   it { should have_many(:monitored_topics).through(:monitorships) }
@@ -52,8 +48,7 @@ describe User do
   it { should_not allow_mass_assignment_of :role_id }
   it { should_not allow_mass_assignment_of :activation_code }
   it { should_not allow_mass_assignment_of :login_slug }
-  it { should_not allow_mass_assignment_of :followers_count }
-  it { should_not allow_mass_assignment_of :follows_count }
+  it { should_not allow_mass_assignment_of :friends_count }
   it { should_not allow_mass_assignment_of :score }
   it { should_not allow_mass_assignment_of :removed }
   it { should_not allow_mass_assignment_of :sb_posts_count }
@@ -222,18 +217,6 @@ describe User do
 
   it "verifies if he is enrolled in a subject" do
     pending "Need subject model and factory"
-  end
-
-  it "verifies if he follows a specified user" do
-    user = Factory(:user)
-    subject.follows << user
-    subject.follow?(user).should == true
-  end
-
-  it "verifies if he is followed by a specified user" do
-    user = Factory(:user)
-    user.follows << subject
-    subject.should be_followed_by user
   end
 
   it "retrieves his representation in a param" do

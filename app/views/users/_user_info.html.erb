@@ -20,10 +20,16 @@
 		<%= link_to "Mensagens", user_messages_path(current_user), :class => "icon ico-contact" %>
 		</li>
 	<% else %>
-		<li>
-		<% deja = @user.followers.include?(current_user) %>
-		<%= link_to_remote 'Seguir', :url => {:controller => :users, :action => :follow, :id => @user.id} , :html =>{:class => "icon ico-follow", :style => "display:" + ((deja) ? 'none' : 'block'), :id => "follow_link"} %>
-		<%= link_to_remote 'Não seguir', :url => {:controller => :users, :action => :unfollow, :id => @user.id}, :html =>{:style => "display:"+ ((deja) ? 'block' : 'none'), :id => "unfollow_link" } %>
+          <li>
+		<% deja = @user.friendships.include?(current_user) %>
+                <%= link_to_remote 'Adicionar aos amigos',
+                  :url => user_friendships_path(@user.id),
+                  :html =>{:class => "icon ico-follow",
+                    :style => "display:" + ((deja) ? 'none' : 'block'),
+                    :id => "follow_link"} %>
+                <%= link_to_remote 'Remover amigo', :url => user_friendship_path(@user.id, nil), :method => :delete,
+                  :html =>{ :style => "display:"+ ((deja) ? 'block' : 'none'),
+                  :id => "unfollow_link" } %>
 		</li>
 	<% end %>
 	</ul>
