@@ -39,40 +39,41 @@
 
 
 <li class="clearfix">
-<span class="call"><span>Quem você segue</span></span>
+<span class="call"><span>Amigos Pendentes(<%= @user.friends_pending.size %>)</span></span>
 
-<div class="followship box clearfix">
 	
-<% if @user.follows.size > 0 %>
-<ul class="clearfix">
+<% if @user.friends_pending.size > 0 %>
+  <div class="followship box clearfix">
+    <ul class="clearfix">
 
-<% for user in @user.follows[0..9]%>
-<li>
-  <%= link_to image_tag(user.avatar.url(:thumb), :height => '24', :width => '24', :alt => "#{user.login}"), user_path(user), :rel => 'bookmark', :title => "#{user.display_name}", :class => "tooltipable" %>
-</li>
-<%end%>
+      <% for user in @user.friends_pending[0..9]%>
+        <li>
+          <%= link_to image_tag(user.avatar.url(:thumb), :height => '24', :width => '24', :alt => "#{user.login}"), user_path(user), :rel => 'bookmark', :title => "#{user.display_name}", :class => "tooltipable" %>
+        </li>
+      <%end%>
 
-</ul>
+    </ul>
+    <%= link_to "Ver solicitações pendentes", pending_user_friendships_path(@user) %>
+  </div>
 <% else %>
-<div class="box_notice">Você não está seguindo ninguém no momento.</div>
+  <div class="box_notice">Você não tem nenhuma solicitação de amigo pendente.</div>
 <% end %>
-</div>
 </li>
 
 <li class="clearfix">
-    <span class="call"><span>Quem segue você</span></span>
+    <span class="call"><span>Amigos</span></span>
     <div class="followship box clearfix">
 
-      <% if @user.followers.size > 0 %>
+      <% if @user.friends.size > 0 %>
         <ul class="clearfix">
-          <% for user in @user.followers[0..9]%>
+          <% for user in @user.friends[0..9]%>
             <li>
               <%= link_to image_tag(user.avatar.url(:thumb), :height => '24', :width => '24', :alt => "#{user.login}"), user_path(user), :rel => 'bookmark', :title => "#{user.display_name}", :class => "tooltipable" %>
             </li>
           <% end %>
         </ul>
       <% else %>
-        <div class="box_notice">Ninguém segue <%= @user.first_name %> no momento.</div>
+        <div class="box_notice">Você ainda não possui amigos adicionados.</div>
       <% end %>
     </div>
 </li>

@@ -1,5 +1,8 @@
 <div id="pending_list">
+  <div class="grid_16">
   <%= render :partial => "friendships/item_pending", 
     :collection => @friends_pending, :as => :friend %>
+  </div>
+  <%= link_to "Voltar para o perfil", user_path(@user) %>
   <%= will_paginate @friends_pending, :renderer => EndlessRenderer %>
 </div>
