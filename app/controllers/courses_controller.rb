@@ -69,7 +69,6 @@ class CoursesController < BaseController
   end
 
   def index
-
     cond = {}
     @user = User.find(params[:user_id].to_i) if params.has_key?(:user_id)
     unless ( !@environment.nil? && can?(:manage, @environment) ) or ( !@user.nil? && can?(:manage, @user) )
@@ -89,7 +88,7 @@ class CoursesController < BaseController
       paginating_params[:per_page] = 6
       @courses = @user.courses
     else
-      @courses = Course.all
+      @courses = Course.published.all
     end
 
     if params[:search] # search
