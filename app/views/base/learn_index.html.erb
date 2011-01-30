@@ -124,7 +124,7 @@
         <ul class="clearfix">
 	    <% unless @spaces.empty? %>
 		<% @spaces.each do |space| %>
-	    	  <li><%= link_to image_tag(space.avatar_photo_url(:thumb), {:width => "50", :height=>"45", :border => 0 }), space %>
+	    	  <li><%= link_to image_tag(space.avatar(:thumb), {:width => "50", :height=>"45", :border => 0 }), space %>
 		<% end %>
 	    <% end %>
         </ul>

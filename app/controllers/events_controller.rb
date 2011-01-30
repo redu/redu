@@ -14,6 +14,11 @@ class EventsController < BaseController
     :only => [:show, :edit, :update, :destroy]
   after_filter :create_activity, :only => [:create]
 
+  rescue_from CanCan::AccessDenied do |exception|
+    flash[:notice] = "Você não tem acesso a essa página"
+    redirect_to space_path(@space)
+  end
+
   #These two methods make it easy to use helpers in the controller.
   #This could be put in application_controller.rb if we want to use
   #helpers in many controllers
@@ -110,6 +115,7 @@ class EventsController < BaseController
         format.html { redirect_to polymorphic_path([@event.eventable, @event]) }
         format.xml  { render :xml => @event, :status => :created, :location => @event }
       else
+        @eventable = @event.eventable
         format.html { render :action => "new" }
         format.xml  { render :xml => @event.errors, :status => :unprocessable_entity }
       end

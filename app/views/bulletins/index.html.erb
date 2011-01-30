@@ -1,8 +1,12 @@
 <% if @bulletinable.class.to_s.eql? "Space" %>
   <%= render :partial => "spaces/sidebar", :locals => {:space => @bulletinable} %>
+  <div class="fake-tabs">
+    <%= render :partial => 'spaces/taskbar' %>
+  </div>
 <% end %>
 
 <% if @bulletinable.class.to_s.eql?('Space') %>
+
 <div class="main grid_12 omega">
   <% if @bulletins && @bulletins.size > 0 %>
 

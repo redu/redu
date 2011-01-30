@@ -1,11 +1,4 @@
 <ul class="menu">
-  <% unless @subject.published? %>
-  <li>
-    <%= link_to_unless_current 'Finalizar módulo', lazy_space_subject_path do
-      link_to 'Finalizar módulo', lazy_space_subject_path,
-      :class => 'selected' end %>
-  </li>
-  <% end %>
   <li>
     <%= link_to_unless_current 'Informações', infos_space_subject_path do
       link_to 'Informações', infos_space_subject_path,

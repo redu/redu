@@ -1,4 +1,4 @@
-<% if status.status? or status.log %>
+<% if status.status? or status.log?  %>
     <%= render :partial => "statuses/status", :locals => {:status_counter => type_proxy_counter, :status => status, :statusable => statusable } %>
 <% elsif status.question? %>
     <%= render :partial => "statuses/question", :locals => {:question => status, :statusable => statusable } %>

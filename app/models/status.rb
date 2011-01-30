@@ -63,12 +63,12 @@ class Status < ActiveRecord::Base
     Status.all(:conditions => ["log = 1 AND user_id = ?", user.id])
   end
 
-  # Dado um usuário, retorna os status deles e de quem ele segue
+  # Dado um usuário, retorna os status dos amigos
   def Status.friends_statuses(user, page)
     sql = "SELECT DISTINCT s.* FROM statuses s " + \
-      "LEFT OUTER JOIN followship f " + \
-      "ON (f.follows_id = s.user_id) " + \
-      "WHERE f.followed_by_id = #{user.id} OR s.user_id = #{user.id} " + \
+      "LEFT OUTER JOIN friendships f " + \
+      "ON (f.user_id = s.user_id) " + \
+      "WHERE f.friend_id = #{user.id} OR s.user_id = #{user.id} " + \
     "ORDER BY s.created_at DESC"
 
     Status.paginate_by_sql(sql, :page => page, :order => 'created_at DESC', :per_page => AppConfig.items_per_page)

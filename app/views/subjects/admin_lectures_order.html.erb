@@ -1,0 +1,39 @@
+<script type="text/javascript" charset="utf-8">
+  // Altera a ordem dos recursos.
+  $(document).ready(function(){
+      $( ".sortable" ).sortable({
+        stop: function(event, ui) {
+        var lectures_ordered = $('.sortable').sortable('toArray');
+        $('#lectures_ordered').val(lectures_ordered);
+        }
+      });
+  })
+</script>
+
+<div class="main grid_16">
+  <div class="fake-tabs grid_16 alpha omega">
+    <%= render :partial => "subjects/admin_taskbar" %>
+    <div class="panel">
+
+      <% if @subject.published? %>
+        <div class="box_notice">Você não pode alterar a ordem das aulas, pois o módulo está publicado.</div>
+      <% else %>
+      <% unless @subject.lectures.empty? %>
+        <div class="pretty-text"><strong>Arraste as aulas para alterar a ordem destas no módulo!</strong></div>
+        <div class="lazy_list clearfix">
+          <ul class="default sortable subject-assets">
+            <%= render :partial => "asset_item", :collection => @subject.lectures, :as => :item %>
+          </ul>
+        </div>
+      <% else %>
+        <div class="box_notice">Este módulo não possui recursos.</div>
+      <% end %>
+
+      <% form_tag admin_lectures_order_space_subject_path do %>
+        <%= hidden_field_tag 'lectures_ordered', :class => "assets" %>
+        <%= submit_tag 'Atualizar' %>
+      <% end %>
+    <% end %>
+    </div> <!-- div panel -->
+  </div> <!-- div fake -->
+</div> <!-- div grid_16 -->

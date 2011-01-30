@@ -12,7 +12,6 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :profiles
 
   map.resources :questions, :collection => { :search => [:get, :post], :add => :get }
-  map.resources :credits
   map.resources :folders
   map.resources :annotations
   map.resources :bulletins, :member => {:rate => :post}
@@ -101,14 +100,13 @@ ActionController::Routing::Routes.draw do |map|
                    :destroy_file => :delete }
     space.resources :subjects,
       :member => { :enroll => :get,
-                   :lazy => :get,
+                   :unenroll => :get,
                    :publish => :get,
                    :unpublish => :post,
-                   :admin_assets_order => [ :get, :post ],
-                   :change_assets_order => :post,
+                   :admin_lectures_order => [ :get, :post ],
                    :infos => :get,
                    :statuses => :get,
-                   :next => :post },
+                   :next_lecture => :post },
         :collection => {:cancel => :get} do |subject|
       subject.resources :lectures,
         :member => { :rate => :post },
@@ -116,8 +114,7 @@ ActionController::Routing::Routes.draw do |map|
                          :cancel => :get,
                          :sort_lesson => :post,
                          :unpublished => :get,
-                         :published => :get,
-                         :waiting => :get }
+                         :published => :get }
       subject.resources :exams,
         :member => { :add_question => :get,
                      :add_resource => :get,
@@ -154,12 +151,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :users, :member => {
   #map.resources :users, :member_path => '/:id', :nested_member_path => '/:user_id', :member => {
     :annotations => :get,
-    :followers => :get,
-    :follows => :get,
-    :follow => :post,
     :activity_xml => :get,
     :logs => :get,
-    :unfollow => :post,
     :assume => :get,
     :change_profile_photo => :put,
     :edit_account => :get,
@@ -178,7 +171,9 @@ ActionController::Routing::Routes.draw do |map|
     :upload_profile_photo => [:get, :put],
     :download_curriculum => :get
   } do |user|
-    user.resources :friendships, :member => { :accept => :put, :deny => :put }, :collection => { :accepted => :get, :pending => :get, :denied => :get }
+    user.resources :friendships,:only => [:index, :create, :destroy],
+      :member => { :accept => :post, :decline => :post },
+      :collection => { :pending => :get }
     user.resources :photos, :collection => {:swfupload => :post, :slideshow => :get}
     user.resources :posts, :collection => {:manage => :get}, :member => {:contest => :get, :send_to_friend => :any, :update_views => :any}
     user.resources :events # Needed this to make comments work
@@ -187,7 +182,6 @@ ActionController::Routing::Routes.draw do |map|
     user.resources :invitations
     user.resources :spaces, :collection => {:member => :get, :owner => :get}
     user.resources :questions
-    user.resources :credits
     user.resources :offerings, :collection => {:replace => :put}
     user.resources :favorites
     user.resources :messages, :collection => { :index_sent => :get, :delete_selected => :post, :auto_complete_for_username => :any }

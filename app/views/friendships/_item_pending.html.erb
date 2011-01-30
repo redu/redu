@@ -1,0 +1,13 @@
+<div class="grid_8">
+  <span class="fn">
+    <%= image_tag friend.avatar.url(:thumb) %>
+  </span>
+  <span class="fn">
+    <%= link_to truncate(h(friend.display_name), :length => 20), user_path(friend) %>
+    <%= link_to 'Aceitar', accept_user_friendship_path(current_user.id, friend.id),
+      :method => :post %>
+    <%= link_to 'Rejeitar', decline_user_friendship_path(current_user.id, friend.id),
+      :method => :post %>
+  </span>
+</div>
+

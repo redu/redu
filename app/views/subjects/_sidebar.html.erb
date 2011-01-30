@@ -2,8 +2,15 @@
    <% if @subject.published? && !current_user.enrolled?(@subject) %>
      <%= link_to "Matricule-se", enroll_space_subject_path(@space, @subject),
        :class => "button" %>
+   <% else %>
+     <% if current_user.enrolled?(@subject) and
+      current_user.get_association_with(@subject).student_profile.graduaded? %>
+       <%= link_to "Desmatricular", unenroll_space_subject_path(@space, @subject),
+         :confirm => "Tem certeza? Todas as suas informações vinculadas a este módulo serão perdidas.",
+         :class => "button" %>
+     <% end %>
    <% end %>
-  <ul class="sortable">
+   <ul class="sortable">
     <li class="clearfix">
       <span class="call"><span>Palavras-chave</span></span>
       <ul class="tags">
@@ -12,17 +19,11 @@
         <% end %>
       </ul>
     </li>
-    <% if @subject.duration  %>
-      <li>
-        <span class="call"><span>Duração</span></span>
-        <span><%= @subject.duration %> dias</span>
-      </li>
-    <% end %>
     <li class="clearfix">
-      <span class="call"><span>Quem já cursou (<%= @subject.graduaded_students.size %>)</span></span>
+      <span class="call"><span>Quem já cursou (<%= @subject.graduated_members.size %>)</span></span>
       <div class="followship box clearfix">
         <ul class="clearfix">
-          <%= render :partial => 'spaces/member_short', :collection => @subject.graduaded_students, :as => :member %>
+          <%= render :partial => 'spaces/member_short', :collection => @subject.graduated_members, :as => :member %>
         </ul>
       </div><!-- end followship -->
     </li>

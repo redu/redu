@@ -1,21 +1,25 @@
 class Course < ActiveRecord::Base
+
+  after_create :create_user_course_association
+
   belongs_to :environment
   has_many :spaces, :dependent => :destroy
   has_many :user_course_associations, :dependent => :destroy
   belongs_to :owner, :class_name => "User", :foreign_key => "owner"
-  has_many :users, :through => :user_course_association
+  has_many :users, :through => :user_course_associations
   has_many :approved_users, :through => :user_course_associations,
     :source => :user, :conditions => [ "user_course_associations.state = ?", 'approved' ]
   has_many :invitations, :as => :inviteable, :dependent => :destroy
   has_and_belongs_to_many :audiences
-  named_scope :published, :conditions => {:published => 1}
   named_scope :of_environment, lambda { |environmnent_id|
    { :conditions => {:environment_id => environmnent_id} }
   }
 
+  attr_protected :owner, :published, :environment
+
   acts_as_taggable
 
-  validates_presence_of :name, :path, :message => "Não pode ficar em branco."
+  validates_presence_of :name, :path
   validates_uniqueness_of :name, :path, :scope => :environment_id
 
   # Sobreescrevendo ActiveRecord.find para adicionar capacidade de buscar por path do Space
@@ -66,5 +70,12 @@ class Course < ActiveRecord::Base
       self.path = path + '-' + SecureRandom.hex(1)
     end
 
+  end
+  def create_user_course_association
+    user_course =
+      UserCourseAssociation.create(:user => self.owner,
+                                   :course => self,
+                                   :role => Role[:environment_admin])
+      user_course.approve!
   end
 end

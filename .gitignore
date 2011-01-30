@@ -1,5 +1,6 @@
 mongrel/
 tmp/
+bin/
 db/schema.rb
 log/*.log
 log/**/*

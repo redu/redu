@@ -1,0 +1,21 @@
+<% field_set_tag "Artigo" do %>
+  <%= label_tag :name, :title.l %>
+  <%= text_field_tag :name, @lecture.name %>
+  <%= error_for :name %>
+  <%= hidden_field_tag "subject_id", @subject.id %>
+  <% if @lecture.id %>
+    <%= hidden_field_tag "lecture_id", @lecture.id %>
+  <% end %>
+  <%= f.label :body, :body.l %>
+  <%= f.cktext_area :body, :width => "600px", :height => "200px" %>
+  <%= error_for :page, :body %>
+  <% if action_name == 'new' %>
+    <%= f.submit 'Criar' %>
+  <% else %>
+    <%= f.submit 'Salvar' %>
+  <% end %>
+  <%= link_to_function "Cancelar",
+    "$('#page_form').remove(); $('#add_link').show(); $('##{@lecture.id}-item').show(); return false;" %>
+  <%= image_tag 'spinner.gif', :id => 'spinner-form-page',
+    :style => 'display: none;' %>
+<% end %>

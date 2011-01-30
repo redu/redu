@@ -26,10 +26,13 @@ gem "mime-types"
 gem "haml"
 gem "cancan", "1.4.1"
 gem "rscribd"
-gem "scribd_fu", :git => "git://github.com/guiocavalcanti/scribd_fu.git"
+gem "scribd_fu", :git => "https://github.com/guiocavalcanti/scribd_fu.git"
 gem "ghazel-daemons"
-gem "delayed_job", :git => "git://github.com/collectiveidea/delayed_job.git",
+gem "delayed_job", :git => "https://github.com/collectiveidea/delayed_job.git",
   :branch => "v2.0"
+gem "factory_girl"
+gem "paperclip", "~> 2.3"
+gem "shuber-sortable"
 
 group :development do
   gem "mongrel"
@@ -44,5 +47,7 @@ group :staging do
 end
 
 group :test do
-  # bundler requires these gems while running tests
+  gem "rspec", "~> 1.3"
+  gem "rspec-rails", "~> 1.3"
+  gem "shoulda"
 end

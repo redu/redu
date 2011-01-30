@@ -60,9 +60,6 @@ class CoursesController < BaseController
     respond_to do |format|
       if @course.save
         @environment.courses << @course
-        owner_assoc = UserCourseAssociation.create({:user => current_user, :course => @course,
-                                                   :role_id => Role[:environment_admin].id})
-        owner_assoc.approve!
         format.html { redirect_to environment_course_path(@environment, @course) }
       else
         format.html { render :action => :new }
@@ -72,7 +69,6 @@ class CoursesController < BaseController
   end
 
   def index
-
     cond = {}
     @user = User.find(params[:user_id].to_i) if params.has_key?(:user_id)
     unless ( !@environment.nil? && can?(:manage, @environment) ) or ( !@user.nil? && can?(:manage, @user) )
@@ -92,14 +88,7 @@ class CoursesController < BaseController
       paginating_params[:per_page] = 6
       @courses = @user.courses
     else
-      # FIXME Ao utilizar o Course.all, o conditions do paginate não é levado em conta.
-      # Pois o all retorna um Array (aparentemente).
-      # Por enquanto, um workaround foi feito.
-      if cond[:published]
-        @courses = Course.published.all
-      else
-        @courses = Course.all
-      end
+      @courses = Course.published.all
     end
 
     if params[:search] # search

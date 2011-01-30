@@ -24,19 +24,19 @@ class EnvironmentsController < BaseController
   # GET /environments/1
   # GET /environments/1.xml
   def show
-    cond = {}
-    cond[:published] = true unless can? :manage, @environment
-
     paginating_params = {
-      :conditions => cond,
       :page => params[:page],
       :limit => 4,
       :include => :audiences,
       :per_page => AppConfig.items_per_page
     }
 
-    @courses = @environment.courses.paginate(paginating_params)
-    @featured = @environment.bulletins.find(:all, :limit => 3, :order => "created_at DESC")
+    if can? :manage, @environment
+      @courses = @environment.courses.paginate(paginating_params)
+    else
+      @courses = @environment.courses.published.paginate(paginating_params)
+    end
+    @featured = @environment.bulletins.all(:limit => 3, :order => "created_at DESC")
 
     respond_to do |format|
       format.html # show.html.erb
@@ -75,16 +75,6 @@ class EnvironmentsController < BaseController
         @environment.published = true
 
         if @environment.save
-          UserEnvironmentAssociation.create(:environment => @environment,
-             :user => current_user,
-             :role_id => Role[:environment_admin].id)
-          user_course = UserCourseAssociation.create(
-            :course => @environment.courses.first,
-            :user => current_user,
-            :role_id => Role[:environment_admin].id)
-
-          user_course.approve!
-
           flash[:notice] = 'Parabéns, o seu ambiente de ensino foi criado'
           format.html do
             redirect_to environment_course_path(@environment,
@@ -146,13 +136,12 @@ class EnvironmentsController < BaseController
   end
 
   def admin_members
-    # FIXME Refatorar para o modelo (conditions)
-    @memberships = UserEnvironmentAssociation.paginate(
-      :conditions => ["environment_id = ?", @environment.id],
-      :include => [{ :user => {:user_course_associations => :course} }],
-      :page => params[:page],
-      :order => 'updated_at DESC',
-      :per_page => AppConfig.items_per_page)
+    @memberships = UserEnvironmentAssociation.of_environment(@environment).
+      paginate(
+        :include => [{ :user => {:user_course_associations => :course} }],
+        :page => params[:page],
+        :order => 'updated_at DESC',
+        :per_page => AppConfig.items_per_page)
 
     respond_to do |format|
       format.html
@@ -184,8 +173,7 @@ class EnvironmentsController < BaseController
     users_ids = params[:users].collect{|u| u.to_i} if params[:users]
 
     unless users_ids.empty?
-      User.find(:all,
-                :conditions => {:id => users_ids},
+      User.with_ids(users_ids).all(
                 :include => [:user_environment_associations,
                              :user_course_associations,
                              :user_space_associations]).each do |user|
@@ -208,13 +196,13 @@ class EnvironmentsController < BaseController
     keyword = []
     keyword = params[:search_user] || nil
 
-    @memberships = UserEnvironmentAssociation.with_roles(roles)
-    @memberships = @memberships.with_keyword(keyword).paginate(
-      :conditions => ["user_environment_associations.environment_id = ?", @environment.id],
-      :include => [{ :user => {:user_course_associations => :course} }],
-      :page => params[:page],
-      :order => 'user_environment_associations.updated_at DESC',
-      :per_page => AppConfig.items_per_page)
+    @memberships = UserEnvironmentAssociation.with_roles(roles).
+                   of_environment(@environment).with_keyword(keyword).
+                   paginate(
+                    :include => [{ :user => {:user_course_associations => :course} }],
+                    :page => params[:page],
+                    :order => 'user_environment_associations.updated_at DESC',
+                    :per_page => AppConfig.items_per_page)
 
     respond_to do |format|
       format.js

@@ -1,52 +1,66 @@
+require 'sortable'
+
 class Lecture < ActiveRecord::Base
   # Entidade polimórfica que representa o objeto de aprendizagem. Pode possuir
   # três especializações: Seminar, InteractiveClass e Page.
 
   # ASSOCIATIONS
   has_many :statuses, :as => :statusable, :dependent => :destroy
+  #FIXME Falta testar
+  has_many :currently_watching_users, :through => :logs, :source => :user,
+     :conditions => ['statuses.created_at > ?', 10.minutes.ago]
   has_many :acess_key
+  #FIXME Verificar se é realmente utilizado (não foi testado)
   has_many :resources,
     :class_name => "LectureResource", :as => :attachable, :dependent => :destroy
   has_many :acquisitions
   has_many :favorites, :as => :favoritable, :dependent => :destroy
   has_many :annotations
   has_many :logs, :as => :logeable, :dependent => :destroy, :class_name => 'Status'
-  has_one :subject, :through => :asset, :dependent => :destroy
-  has_one :asset, :as => :assetable, :dependent => :destroy
+  has_many :asset_reports, :dependent => :destroy
+  has_many :student_profiles, :through => :asset_reports, :dependent => :destroy
   belongs_to :owner , :class_name => "User" , :foreign_key => "owner"
   belongs_to :lectureable, :polymorphic => true, :dependent => :destroy
-  belongs_to :lazy_asset
+  belongs_to :subject
 
   accepts_nested_attributes_for :resources,
     :reject_if => lambda { |a| a[:media].blank? },
     :allow_destroy => true
 
   # NAMED SCOPES
+  named_scope :unpublished,
+    :conditions => { :published => false }
   named_scope :published,
-    :conditions => ["published = true"],
-    :include => :owner, :order => 'created_at DESC'
+    :conditions => { :published => true }
   named_scope :seminars,
-    :conditions => ["lectureable_type LIKE 'Seminar' AND published = true"],
-    :include => :owner, :order => 'created_at DESC'
+    :conditions => ["lectureable_type LIKE 'Seminar'"]
   named_scope :iclasses,
-    :conditions => ["lectureable_type LIKE 'InteractiveClass' AND published = true"],
-    :include => :owner, :order => 'created_at DESC'
+    :conditions => ["lectureable_type LIKE 'InteractiveClass'"]
   named_scope :pages,
-    :conditions => ["lectureable_type LIKE 'Page' AND published = true"],
-    :include => :owner, :order => 'created_at DESC'
+    :conditions => ["lectureable_type LIKE 'Page'"]
+  named_scope :documents,
+    :conditions => ["lectureable_type LIKE 'Document'"]
   named_scope :limited, lambda { |num| { :limit => num } }
+  named_scope :related_to, lambda { |lecture|
+    { :conditions => ["name LIKE ? AND id != ?", "%#{lecture.name}%", lecture.id]}
+  }
+
+
+  attr_protected :owner, :published, :view_count, :removed, :is_clone
 
   # PLUGINS
   acts_as_taggable
   ajaxful_rateable :stars => 5
   has_attached_file :avatar, PAPERCLIP_STORAGE_OPTIONS
+  sortable :scope => :subject_id
 
   # VALIDATIONS
-  validates_presence_of :name, :lazy_asset
-  validates_presence_of :description
-  validates_length_of :description, :within => 30..200
-  validates_presence_of :lectureable_type
-  validates_associated :lectureable
+  validates_presence_of :name
+  # FIXME Vai ter description?
+  #validates_presence_of :description
+  #validates_length_of :description, :within => 30..200
+  validates_presence_of :lectureable
+  validates_associated :lectureable #FIXME Não foi testado, pois vai ter accepts_nested
 
   # Dependendo do lectureable_type ativa um conjunto de validações diferente
   validation_group :step1,
@@ -57,65 +71,40 @@ class Lecture < ActiveRecord::Base
     APP_URL + "/lectures/"+ self.id.to_s+"-"+self.name.parameterize
   end
 
-  def currently_watching
-    sql = "SELECT u.id, u.login, u.login_slug FROM users u, statuses s " + \
-      "WHERE s.user_id = u.id "+ \
-      "AND s.logeable_type LIKE 'Lecture' " + \
-      "AND s.logeable_id = '#{self.id}' " + \
-      "AND s.created_at > '#{Time.now.utc-10.minutes}'"
-
-    User.find_by_sql(sql)
-  end
-
-  def thumb_url
-    case self.lectureable_type
-
-    when 'Seminar'
-      if self.lectureable.external_resource_type == 'youtube'
-        'http://i1.ytimg.com/vi/' + self.lectureable.external_resource + '/default.jpg'
-      elsif self.lectureable.external_resource_type == 'upload'
-        # Os thumbnails só são gerados após a conversão
-        if self.lectureable.state == 'converted'
-          File.join(File.dirname(self.lectureable.media.url), "thumb_0000.png")
-        else
-          #FIXME url hard coded
-          '/images/missing_pic_space.png'
-        end
-
-      else
-        'http://i1.ytimg.com/vi/0QQcj_tLIYo/default.jpg'
-      end
-    when 'InteractiveClass'
-      if self.avatar_file_name
-        self.avatar.url(:thumb)
-      else
-        # image_path("courses/missing_thumb.png")  # icone aula interativa
-        #FIXME url hard coded
-        '/images/courses/missing_interactive.png'
-      end
-
-    when 'Page'
-      if self.avatar_file_name
-        self.avatar.url(:thumb)
-      else
-        'http://i1.ytimg.com/vi/0QQcj_tLIYo/default.jpg'
-      end
-    end
-  end
-
-  def has_annotations_by(user)
-    Annotation.find(:first,
-                    :conditions => ["lecture_id = ? AND user_id = ?", self.id, user.id])
-  end
-
   # Friendly url
   def to_param
     "#{id}-#{name.parameterize}"
   end
-  
-  #FIXME chamar isso num validate_on_create
-  def only_one_asset_per_lazy_asset?
-    Asset.count(:conditions => {:lazy_asset_id => self.lazy_asset}) <= 0
+
+  # Retorna a próxima Lecture do Subject e marca a Lecture atual como done,
+  # caso ela tenha sido completada (done = true).
+  def next_for(user, done = false)
+    mark_as_done(user, done)
+    self.next_item
   end
 
+  # Retorna a Lecture anterior do Subject e marca a Lecture atual como done,
+  # caso ela tenha sido completada (done = true).
+  def previous_for(user, done = false)
+    mark_as_done(user, done)
+    self.previous_item
+  end
+
+  # Marca a lecture atual como done, caso ela tenha sido completada (done = true)
+  def mark_as_done(user, done)
+    if done
+      asset_report = self.asset_reports.of_user(user).last
+      asset_report.done = true
+      asset_report.save
+    end
+  end
+
+  def clone_for_subject!(subject_id)
+    clone = self.clone :include => :lectureable,
+      :except => [:rating_average, :view_count, :position, :subject_id]
+    clone.is_clone = true
+    clone.subject = Subject.find(subject_id)
+    clone.save
+    clone
+  end
 end

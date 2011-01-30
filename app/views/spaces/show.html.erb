@@ -1,99 +1,13 @@
 <% content_for :page_id, 'group' %>
 <%- @meta = { :description => "#{@space.name}'s profile on #{AppConfig.community_name}.", :keywords => "#{@space.name}, #{@space.tags.join(", ") unless @space.tags.nil?}", :robots => AppConfig.robots_meta_show_content }%>
 
-
-<script type="text/javascript">
-var schoolFoldersPath = "<%= space_folders_path(:space_id => @space.id.to_s) %>";
-var schoolCoursesPath = "<%= space_subjects_path(@space) %>";
-var schoolForumPath = "<%= space_forum_path(:space_id => @space.id.to_s) %>";
-
-var $schooltabs;
-
-$(document).ready(function() {
-
-    $schooltabs = $(".school-tabs").tabs({
-        select: function(event, ui) {
-            /*if (ui.index == 4) {
-              //Fórum
-              $("#tabs-6-content").html('');
-              jQuery.ajax({
-                    data: '',
-                    dataType: 'script',
-                    success: function(request) {
-                        $("#tabs-6-loading").hide();
-                    },
-                    type: 'get',
-                    url: schoolForumPath
-              });
-
-              $("#tabs-6-loading").show();
-            }else */if (ui.index == 3) {
-                // Arquivos
-                $("#tabs-4-content").html('');
-                jQuery.ajax({
-                    data: '',
-                    dataType: 'script',
-                    success: function(request) {
-                        $("#tabs-4-loading").hide();
-                    },
-                    type: 'get',
-                    url: schoolFoldersPath
-                });
-
-                $("#tabs-4-loading").show();
-            } else if (ui.index == 2) {
-                // content
-                $("#tabs-2-content").html('');
-                jQuery.ajax({
-                    data: 'tab=true',
-                    dataType: 'script',
-                    success: function(request) {
-                        $("#tabs-2-loading").hide();
-                    },
-                    type: 'get',
-                    url: schoolCoursesPath
-                });
-
-                $("#tabs-2-loading").show();
-            }
-        }
-    });
-});
-</script>
-
 <div class="grid_16">
   <%= render :partial => "spaces/sidebar", :locals => {:space => @space} %>
 
   <div class="main grid_12 omega">
-    <div class="school-tabs tabs">
-      <ul>
-        <li><a href="#tabs-5" <% if can? :manage, @space %> title="Discuta e tire dúvidas" class="tooltipable" <% end %> >Mural</a></li>
-        <li><a href="#tabs-1">Notícias</a></li>
-        <li><a href="#tabs-2" <% if can? :manage, @space %> title="Compartilhe módulos e aulas" class="tooltipable" <% end %> >Módulos</a></li>
-        <li><a href="#tabs-4" <% if can? :manage, @space %> title="Compartilhe documentos" class="tooltipable" <% end %> >Arquivos</a></li>
-        <!-- <li><a href="#tabs-6">Fórum</a></li>-->
-      </ul>
-
-      <div id="tabs-1" class="clearfix first-page">
-        <% if @brand_new and @featured %>
-          <%= render :partial => 'start_page', :locals => {:featured => @featured, :brand_new => @brand_new, :bulletins => @bulletins} %>
-        <% end %>
-        <div class="news">
-        <% if @bulletins && @bulletins.size > 0 %>
-          <%= render :partial => 'bulletins/headlines', :object => @bulletins  %>
-          <%= link_to 'Ver todos', space_bulletins_path(@space), :class=>"more" %> 
-        <% else %>
-          <div class="box_notice">
-            Nenhuma notícia foi criada ainda. 
-            <% if can? :manage, @space or current_user.tutor? @space %>
-              <%= link_to 'Envie uma agora!', new_space_bulletin_path(@space) %>
-            <% end %>
-        </div>
-      <% end %>
-    </div><!-- end noticias -->
-  </div>
-
-  <div id="tabs-5">
+    <div class="fake-tabs">
+      <%= render :partial => 'taskbar' %>
+  <div>
     <%= javascript_include_tag 'flow.js' %>
     <%= render :partial => "statuses/create_status", :locals => {:status => @status, :statusable => @space }%>
     <ul class="activities">
@@ -104,23 +18,6 @@ $(document).ready(function() {
       :class => "endless_statuses",
       :params => {:id => @space.id, :type => 'Space'} %>
   </div>
-
-  <!-- conteudo -->
-  <div id="tabs-2">
-    <%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-2-loading', :style => 'padding: 20px;'%>
-    <div id="tabs-2-content"></div>
-  </div>
-  <!-- arquivos --> 
-  <div id="tabs-4">
-    <%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-4-loading', :style => 'padding: 20px;'%>
-    <div id="tabs-4-content"></div>
-  </div>
-  <!-- forum --> 
-  <!-- 
-  <div id="tabs-6">
-    <%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-6-loading', :style => 'padding: 20px;'%>
-    <div id="tabs-6-content"></div>
-  </div> -->
 </div><!-- end tabs -->
 </div><!-- end main -->
 </div>

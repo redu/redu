@@ -16,12 +16,13 @@
       </div>
         <% end %>
         <span class="msg">
-            <%= link_to status.user.login_slug, user_path(status.user), :class => "author" %>
-            <% if status.log %>
-						<%= activity_name(status) %>
-						<% else %>
-						<%= auto_link(status.text) %>
-						<% end %>
+          <%= link_to status.user.login_slug, user_path(status.user),
+            :class => "author" %>
+          <% if status.log %>
+            <%= activity_name(status) %>
+          <% else %>
+            <%= auto_link(status.text) %>
+          <% end %>
             <span class="when quiet"><%= time_ago_in_words status.created_at %></span>
         </span>
         <div class="question-action">

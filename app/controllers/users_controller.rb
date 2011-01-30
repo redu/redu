@@ -1,5 +1,3 @@
-require "RMagick"
-
 class UsersController < BaseController
 
   after_filter :create_activity, :only => [:update]
@@ -59,47 +57,6 @@ class UsersController < BaseController
 
   def show_log_activity
     current_user.log_activity
-  end
-
-  ### Followship
-  def follows
-    @follows= @user.follows
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @follows }
-    end
-  end
-
-  def followers
-    #@user = User.find(params[:id])
-    @followers= @user.followers
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @followers }
-    end
-  end
-
-  def follow # TODO evitar duplicata
-    respond_to do |format|
-      unless @user.followers.include?(current_user)
-        @user.followers << current_user
-        format.js
-      end
-    end
-  end
-
-  def unfollow
-    #user = User.find(params[:id])
-
-    @user.followers.delete current_user
-    respond_to do |format|
-      format.html do
-        redirect_to user_path(@user)
-      end
-      format.js
-    end
   end
 
   def list_subjects
@@ -170,10 +127,6 @@ class UsersController < BaseController
     @beta_key = params[:beta_key]
 
     render :action => 'new' and return if AppConfig.closed_beta_mode
-  end
-
-  def groups
-    @groups = @user.spaces.find(:all, :select => "name, path")
   end
 
   def create

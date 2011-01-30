@@ -176,76 +176,11 @@ class ExamsController < BaseController
   end
 
   def new
-    authorize! :manage, @subject
-
-    session[:exam_params] ||= {}
-    @exam = Exam.new(session[:exam_params])
-    @exam.lazy_asset_id = params[:lazy] if params.has_key?(:lazy)
-    @exam.name = params[:name] if params.has_key?(:name)
-    @exam.current_step =  params[:step]
   end
 
   # Wizard de Exame. Nos primeiros passos as informações são guardadas na session.
   # O registo só é salvo no último passo.
   def create
-    authorize! :manage, @subject
-
-    if params[:exam]
-      # Evita duplicação dos campos gerados dinamicamente no passo 2
-      if params[:exam].has_key?(:questions_attributes)
-        session[:exam_params].delete("questions_attributes")
-      end
-
-      # Atualizando dados da sessão
-      session[:exam_params].deep_merge!(params[:exam])
-    end
-
-    @exam = Exam.new(session[:exam_params])
-    @exam.current_step =  params[:step]
-    @exam.owner = current_user
-
-    # Redirecionando para o passo especificado
-    @exam.enable_correct_validation_group!
-    if @exam.valid?
-      if params[:back_button]
-        @exam.previous_step
-        # No último passo salvar
-      elsif @exam.last_step? && @exam.save
-        @exam.published = true
-        @exam.save
-        @exam.questions.each do |question|
-          correct = question.alternatives.find(:first, :conditions => {:correct => true})
-          question.answer = correct if correct
-          question.save!
-        end
-
-        # Calculando o próximo indice
-        max_index = @subject.assets.maximum("position")
-        max_index ||= 0
-
-        Asset.create({:assetable => @exam,
-                     :subject => @subject,
-                     :lazy_asset => @exam.lazy_asset,
-                     :position => max_index + 1})
-
-        session[:exam_params] = nil
-        flash[:notice] = "Exame criado!"
-        redirect_to lazy_space_subject_path(@space, @subject)
-      else
-        @exam.next_step
-      end
-    end
-
-    # Criando questões e alternativas em branco
-    if @exam.new_record?
-      if params[:step] == 'general' || @exam.invalid? || @exam.questions.empty?
-        @exam.questions.build if @exam.questions.empty?
-        @exam.questions.each do |q|
-          2.times { q.alternatives.build } if q.alternatives.empty?
-        end
-      end
-      render "new"
-    end
   end
 
   def unpublished_preview

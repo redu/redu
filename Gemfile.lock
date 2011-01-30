@@ -1,13 +1,13 @@
 GIT
-  remote: git://github.com/collectiveidea/delayed_job.git
-  revision: 2d6170e539cf6523d810f396c6baddc9da0dc120
+  remote: https://github.com/collectiveidea/delayed_job.git
+  revision: 3b75e2a81035cce26089e7187570d8ed730e945a
   branch: v2.0
   specs:
-    delayed_job (2.0.4)
+    delayed_job (2.0.6)
       daemons
 
 GIT
-  remote: git://github.com/guiocavalcanti/scribd_fu.git
+  remote: https://github.com/guiocavalcanti/scribd_fu.git
   revision: 99d74753a12f0f50a632a5b6dc7916e58c0f6e47
   specs:
     scribd_fu (2.0.9)
@@ -36,9 +36,10 @@ GEM
     cancan (1.4.1)
     cgi_multipart_eof_fix (2.5.0)
     columnize (0.3.2)
-    css_parser (1.1.4)
+    css_parser (1.1.5)
     daemons (1.1.0)
     desert (0.5.4)
+    factory_girl (1.3.3)
     fastthread (1.0.7)
     gem_plugin (0.2.3)
     ghazel-daemons (1.0.13)
@@ -58,6 +59,9 @@ GEM
     newrelic_rpm (2.13.1)
     oauth (0.4.4)
     packet (0.1.15)
+    paperclip (2.3.8)
+      activerecord
+      activesupport
     parseline (1.0.3)
     rack (1.1.0)
     rails (2.3.6)
@@ -74,11 +78,17 @@ GEM
     rmagick (2.12.2)
     rscribd (1.2.0)
       mime-types
+    rspec (1.3.1)
+    rspec-rails (1.3.3)
+      rack (>= 1.0.0)
+      rspec (= 1.3.1)
     ruby-debug (0.10.4)
       columnize (>= 0.1)
       ruby-debug-base (~> 0.10.4.0)
     ruby-debug-base (0.10.4)
       linecache (>= 0.3)
+    shoulda (2.11.3)
+    shuber-sortable (1.0.6)
     validatable (1.6.7)
     will_paginate (2.3.15)
     zencoder (2.3.1)
@@ -95,6 +105,7 @@ DEPENDENCIES
   cancan (= 1.4.1)
   delayed_job!
   desert
+  factory_girl
   ghazel-daemons
   haml
   hpricot
@@ -107,14 +118,19 @@ DEPENDENCIES
   newrelic_rpm (= 2.13.1)
   oauth
   packet
+  paperclip (~> 2.3)
   parseline
   rails (= 2.3.6)
   rake (= 0.8.7)
   right_aws (~> 2.0.0)
   rmagick (= 2.12.2)
   rscribd
+  rspec (~> 1.3)
+  rspec-rails (~> 1.3)
   ruby-debug
   scribd_fu!
+  shoulda
+  shuber-sortable
   validatable
   will_paginate (~> 2.3.11)
   zencoder

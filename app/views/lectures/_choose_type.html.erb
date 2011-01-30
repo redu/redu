@@ -1,0 +1,41 @@
+<% display = 'none' if action_name == 'edit' %>
+<% field_set_tag "Escolha o tipo de aula",
+  :id => "lectures_types", :class => "fake",
+  :style => "display:#{display};"do %>
+  <ul>
+    <li style="display:inline;">
+      <%= link_to_remote "Página",
+        :url => new_space_subject_lecture_path(@space, @subject,
+                                               :type => "Page"),
+        :method => :get,
+        :loading => "$('#spinner-choose-type').show();",
+        :success => "$('#spinner-choose-type').hide();"%>
+    </li>
+    <li style="display:inline;">
+      <%= link_to_remote "Vídeo",
+        :url => new_space_subject_lecture_path(@space, @subject,
+                                               :type => "Seminar"),
+        :method => :get,
+        :loading => "$('#spinner-choose-type').show();",
+        :success => "$('#spinner-choose-type').hide();"%>
+    </li>
+    <li style="display:inline;">
+      <%= link_to_remote "Documento",
+        :url => new_space_subject_lecture_path(@space, @subject,
+                                               :type => "Document"),
+        :method => :get,
+        :loading => "$('#spinner-choose-type').show();",
+        :success => "$('#spinner-choose-type').hide();"%>
+    </li>
+    <li style="display:inline;">
+      <%= link_to_remote "Existente",
+        :url => new_space_subject_lecture_path(@space, @subject,
+                                               :type => "Existent"),
+        :method => :get,
+        :loading => "$('#spinner-choose-type').show();",
+        :success => "$('#spinner-choose-type').hide();"%>
+    </li>
+    <%= image_tag 'spinner.gif', :id => 'spinner-choose-type',
+      :style => 'display: none;'%>
+  </ul>
+<% end %>
