@@ -30,25 +30,6 @@
  
 </div>
 
-<div class="<%= (edit) ? 'grid_15 alpha omega' : 'grid_9'%>">
-<fieldset>
-	<legend>Moderação</legend>
-
-	<% field_set_tag 'Quem pode postar na disciplina?' do %>
-	  <div>
-	  <%= f.radio_button :submission_type, "1" %>
-		<%= f.label :sumbission_type, "Todos - sem moderação", :class => "inline" %>
-		</div><div>
-		<%= f.radio_button :submission_type, "2" %>
-		<%= f.label :submission_type, "Todos - com moderação", :class => "inline" %>
-		</div><div>
-		<%= f.radio_button :submission_type, "3" %>
-		<%= f.label :submission_type, "Apenas professores e administradores", :class => "inline" %>
-		</div>
-	<% end %>
-	
-</fieldset>
-</div>
 <% unless edit %>
   <div class="grid_6">
     <div class="y_addinfo">

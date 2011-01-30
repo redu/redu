@@ -282,6 +282,9 @@ class SpacesController < BaseController
     authorize! :manage, @course
     @environment = @course.environment
     @space.owner = current_user
+    # FIXME o submission_type deve ser escolhido pela interface, por 
+    # enquanto todos tem a permissão de postar
+    @space.submission_type = '3' 
 
     if @space.valid?
       @space.save
