@@ -237,6 +237,9 @@ ActionController::Routing::Routes.draw do |map|
     }
   end
 
+  map.payment_success '/payment/success', 
+    :controller => 'payment_gateway', :action => 'callback'
+
   # Install the default routes as the lowest priority.
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'

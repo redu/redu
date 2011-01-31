@@ -6,6 +6,8 @@ module PagSeguro
       require "digest/md5"
       require "faker"
 
+      Faker::Config.locale = "en"
+
       # Not running in developer mode? Exit!
       unless PagSeguro.developer?
         puts "=> [PagSeguro] Can only notify development URLs"

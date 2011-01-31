@@ -17,16 +17,6 @@ class PlansController < BaseController
   def pay
   end
 
-  def callback
-    pagseguro_notification do |notification|
-      notification.products.each do |product|
-        Invoice.find(product[:id])
-      end
-    end
-
-    render :nothing => true
-  end
-
   protected
 
   def find_course_environment
