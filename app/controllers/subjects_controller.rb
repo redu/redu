@@ -7,6 +7,11 @@ class SubjectsController < BaseController
   before_filter :load_course_and_environment
   after_filter :create_activity, :only => [:update]
 
+  rescue_from CanCan::AccessDenied do |exception|
+    flash[:notice] = "Você não tem acesso a essa página"
+    redirect_to infos_space_subject_path(@space, @subject)
+  end
+
   def index
     if can? :manage, @space
       @subjects = @space.subjects.paginate(:page => params[:page],
@@ -59,6 +64,7 @@ end
   end
 
   def edit
+    debugger
     respond_to do |format|
       format.html
       format.js do
