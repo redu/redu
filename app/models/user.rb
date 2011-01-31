@@ -261,10 +261,7 @@ class User < ActiveRecord::Base
     entity.nil? and return false
     self.admin? and return true
     self.environment_admin? entity and return true
-
     case entity.class.to_s
-    when 'Environment'
-      (self.environment_admin? entity)
     when 'Course'
       (self.environment_admin? entity.environment)
     when 'Space'
@@ -653,7 +650,7 @@ class User < ActiveRecord::Base
 
   def environment_admin?(entity)
     association = get_association_with entity
-    association && association.role && association.role.eql?(Role[:environment_admin].id)
+    association && association.role && association.role.eql?(Role[:environment_admin])
   end
 
   def admin?
