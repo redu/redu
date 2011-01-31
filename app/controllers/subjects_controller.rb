@@ -2,7 +2,7 @@ class SubjectsController < BaseController
   layout 'environment'
 
   load_resource :space
-  load_and_authorize_resource :subject, :through => :space
+  load_and_authorize_resource :subject
 
   before_filter :load_course_and_environment
   after_filter :create_activity, :only => [:update]
