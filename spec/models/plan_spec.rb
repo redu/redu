@@ -56,7 +56,7 @@ describe Plan do
 
     it "should be successfully" do
       per_day = subject.price / subject.days_in_current_month
-      expected_amount = (period == 0) ? 0.to_d :  period * per_day
+      expected_amount = (period == 0) ? BigDecimal.new("0.0") :  period * per_day
 
       expect {
         @invoice = subject.create_invoice()
@@ -96,7 +96,7 @@ describe Plan do
 
     it "infers the amount if period_start isnt specified" do
       per_day = subject.price / subject.days_in_current_month
-      expected_amount = (period == 0) ? 0.to_d : (per_day * period)
+      expected_amount = (period == 0) ? BigDecimal.new("0.0") : (per_day * period)
 
       attrs = {
         :description => "Lorem ipsum dolor sit amet, consectetur magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
@@ -121,7 +121,7 @@ describe Plan do
 
       it "should be proportionally to period until billing date" do
         per_day = subject.price / subject.days_in_current_month
-        expected_amount = (period == 0) ? 0.to_d : (per_day * period)
+        expected_amount = (period == 0) ? BigDecimal.new("0.0") : (per_day * period)
 
         expected_amount.should_not be_nil
         expected_amount.should == expected_amount
@@ -148,7 +148,7 @@ describe Plan do
                              :amount =>  28 * @amount_per_day)
 
       @new_plan = subject.migrate_to(:name => "Novo plano",
-                                     :members_limit => 30, 
+                                     :members_limit => 30,
                                      :price => 10,
                                      :yearly_price => 100)
     end
@@ -198,7 +198,7 @@ describe Plan do
       subject.invoices.reload
 
       @new_plan = subject.migrate_to(:name => "Novo plano",
-                                     :members_limit => 30, 
+                                     :members_limit => 30,
                                      :price => 10,
                                      :yearly_price => 100)
 
@@ -209,7 +209,7 @@ describe Plan do
       invoice = @new_plan.invoices.pending.first(:conditions => {
         :period_start => Date.tomorrow,
         :period_end => Date.today.at_end_of_month})
-      
+
       invoice.should_not be_nil
       invoice.amount.round(2).should == (period * per_day).round(2)
     end
