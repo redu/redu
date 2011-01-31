@@ -25,7 +25,11 @@
     <%= f.label "Tags <span class='snippet'>(separadas por vírgula)</span>" %>
     <%= f.text_field :tag_list %>
 
-    <%= f.submit "Salvar"%>
+    <% if action_name == 'new' %>
+      <%= f.submit "Criar"%>
+    <% else %>
+      <%= f.submit "Salvar"%>
+    <% end %>
     <a href="javascript:history.back()">Voltar</a>
   </fieldset>
 <% end %>

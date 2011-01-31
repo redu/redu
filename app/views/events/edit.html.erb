@@ -1,7 +1,7 @@
-<div class="main grid_16">
-  <% if @eventable.class.to_s.eql? "Space" %>
-    <%= render :partial => "spaces/sidebar", :locals => {:space => @event.eventable} %>
-  <% end %>
+<% if @eventable.class.to_s.eql? "Space" %>
+  <%= render :partial => "spaces/sidebar", :locals => {:space => @event.eventable} %>
+<% end %>
 
+<div class="main grid_12 alpha">
   <%= render :partial => 'events/form', :locals => {:event => @event, :title => "Editar"} %>
 </div>
