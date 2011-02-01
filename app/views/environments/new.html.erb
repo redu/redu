@@ -69,8 +69,8 @@ $(document).ready(function(){
     <%= f.text_field :name %>
     <%= f.label :path, "Personalize o endereço" %>
     <%= f.text_field :path %>
-    <%= f.label :color, "Cor" %>
-    <%= f.select :color, options_for_select(color_picker_colors, :selected => @environment.nil? ? nil : @environment.color )%>
+    <%= f.label :initials, "Sigla do seu ambiente de ensino" %>
+    <%= f.text_field :initials %>
   <% end %>
     <% field_set_tag "Informações do primeiro curso" do %>
     <% f.fields_for :courses do |builder|  %>
