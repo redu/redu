@@ -22,6 +22,8 @@ class Course < ActiveRecord::Base
   validates_presence_of :name, :path
   validates_uniqueness_of :name, :path, :scope => :environment_id
   validates_length_of :name, :maximum => 40
+  validates_length_of :description, :maximum => 250, :allow_blank => true
+  validate :length_of_tags
 
   # Sobreescrevendo ActiveRecord.find para adicionar capacidade de buscar por path do Space
   def self.find(*args)
@@ -78,5 +80,11 @@ class Course < ActiveRecord::Base
                                    :course => self,
                                    :role => Role[:environment_admin])
       user_course.approve!
+  end
+
+  def length_of_tags
+    tags_str = ""
+    self.tags.each {|t|  tags_str += " " + t.name }
+    self.errors.add(:tags, :too_long.l) if tags_str.length > 111
   end
 end

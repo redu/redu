@@ -20,10 +20,20 @@ describe Course do
   xit { should validate_uniqueness_of(:name).scoped_to :environment_id}
   xit { should validate_uniqueness_of(:path).scoped_to :environment_id}
   it { should ensure_length_of(:name).is_at_most 40 }
+  it { should ensure_length_of(:description).is_at_most 250 }
 
   it { should_not allow_mass_assignment_of :owner }
   it { should_not allow_mass_assignment_of :published }
   it { should_not allow_mass_assignment_of :environment }
+
+  context "validations" do
+    it "ensure tags has a length of at most 110"  do
+      tags = (1..100).collect { Factory(:tag) }
+      subject = Factory.build(:course, :tags => tags)
+      subject.should_not be_valid
+      subject.errors.on(:tags).should_not be_empty
+    end
+  end
 
   context "callbacks" do
     it "creates a association with a course" do

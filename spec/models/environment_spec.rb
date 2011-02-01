@@ -22,13 +22,14 @@ describe Environment do
   it { should_not allow_mass_assignment_of(:published)}
 
   context "validations" do
-    it "ensure tags has a length of at most 100"  do
+    it "ensure tags has a length of at most 110"  do
       tags = (1..100).collect { Factory(:tag) }
       subject = Factory.build(:environment, :tags => tags)
       subject.should_not be_valid
       subject.errors.on(:tags).should_not be_empty
     end
   end
+
   context "finders" do
     it "retrieves a Environment by its path" do
       Environment.find(subject.path).should == subject
