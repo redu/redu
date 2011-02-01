@@ -23,7 +23,6 @@
     </div>
     <div class="grid_10 omega">
       <h4 class="name"><%= link_to @event.name, polymorphic_path([@event.eventable, @event]) %></h4>
-      <div class="tagline"><%= @event.tagline %></div>
       <div class="pretty-text">
         <%= @event.description %>
       </div>

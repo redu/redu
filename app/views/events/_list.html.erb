@@ -3,10 +3,6 @@
   <%= link_to event.name, polymorphic_path([event.eventable, event]), :class => "grid_12" %>
   <span class="grid_6"><%= event.time_and_date %></span>
 
-  <div class="grid_10 pretty-text">
-    <%= event.tagline %>
-  </div>
-
   <% if can? :manage, event %>
     <div class="grid_10">
       <%= link_to "Editar", edit_polymorphic_path([event.eventable, event]), :class => "button icon-edit" %>
