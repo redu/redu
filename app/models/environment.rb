@@ -22,6 +22,8 @@ class Environment < ActiveRecord::Base
   validates_uniqueness_of :name, :path,
     :message => "Precisa ser único"
   validates_length_of :name, :maximum => 40
+  validates_length_of :description, :maximum => 400, :allow_blank => true
+  validate :length_of_tags
   validates_length_of :initials, :maximum => 10, :allow_blank => true
 
   accepts_nested_attributes_for :courses
@@ -80,5 +82,11 @@ protected
       :course => self.courses.first,
       :user => self.owner,
       :role_id => Role[:environment_admin].id, :state => 'approved')
+  end
+
+  def length_of_tags
+    tags_str = ""
+    self.tags.each {|t|  tags_str += " " + t.name }
+    self.errors.add(:tags, :too_long.l) if tags_str.length > 111
   end
 end
