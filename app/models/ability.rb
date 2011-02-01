@@ -119,6 +119,9 @@ class Ability
         subject.published? && user.has_access_to?(subject)
       end
 
+      # Plan (payment gatewat)
+      can :read, :success
+
       # Admin do environment ou teacher, caso o space não tenha owner
       can :take_ownership, Space do |space|
         user.can_manage?(space.course.environment) || \

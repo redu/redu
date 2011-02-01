@@ -232,12 +232,13 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :courses do |course|
     course.resources :invitations
-    course.resources :plans, :only => [], :member => {
-      :confirm => [:get, :post]
-    }
   end
 
-  map.payment_success '/payment/success', 
+  map.resources :plans, :only => [], :member => {
+    :confirm => [:get, :post]
+  }
+
+  map.payment_success '/payment/success',
     :controller => 'payment_gateway', :action => 'callback'
 
   # Install the default routes as the lowest priority.

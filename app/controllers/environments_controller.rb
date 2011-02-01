@@ -95,8 +95,7 @@ class EnvironmentsController < BaseController
             @plan.create_invoice
 
             format.html do
-              redirect_to confirm_course_plan_path(@environment.courses.first,
-                                                   @plan)
+              redirect_to confirm_plan_path(@plan)
             end
           else
 

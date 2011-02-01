@@ -19,7 +19,7 @@ class PaymentGatewayController < BaseController
   end
 
   def success
-    
+    authorize! :read, :success
   end
 
 end

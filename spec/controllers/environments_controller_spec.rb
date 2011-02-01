@@ -79,8 +79,7 @@ describe EnvironmentsController do
       end
 
       it "redirects to confirmation page" do
-        should redirect_to(confirm_course_plan_path(assigns[:plan].billable,
-                                                    assigns[:plan]))
+        should redirect_to(confirm_plan_path(assigns[:plan]))
       end
     end
 
