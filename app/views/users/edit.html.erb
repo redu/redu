@@ -1,3 +1,5 @@
+<%#FIXME transformar isto em aba fake  %>
+
 <% content_for :js do %>
 <script type="text/javascript">
   var $usertabs;
@@ -32,7 +34,34 @@
     </div>
 
     <div id="tabs-3">
-      plano
+      <table class="common">
+        <thead>
+          <tr>
+            <th>Plano</th>
+            <th>Estado</th>
+            <th>Ação</th>
+          </tr>
+        </thead>
+        <% current_user.plans.each do |p| %>
+          <tr>
+            <td><%= link_to p.name, plan_invoices_path(p) %></td>
+            <td>
+              <% if p.invoices.pending.empty? %>
+                <strong>Sem pendências</strong>
+              <% else %>
+                 <strong><%= p.invoices.pending.count %> pagamento(s) pendente(s)</strong>
+               <% end %>
+            </td>
+            <td>
+              <% if p.invoices.pending.empty? %>
+                <%= link_to "Upgrade", upgrade_plan_path(p) %>
+              <% else %>
+                <%= pagseguro_form p.create_order, :submit => "Pagar" %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
     </div>
   </div>
   <!-- end tabs -->

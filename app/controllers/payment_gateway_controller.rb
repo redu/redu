@@ -7,7 +7,7 @@ class PaymentGatewayController < BaseController
     pagseguro_notification do |notification|
       notification.products.each do |product|
         invoice = Invoice.find(product[:id])
-        invoice.try(:pay!) if notification.status.eql("completed")
+        invoice.try(:pay!) if notification.status.eql?(:completed)
         invoice.description << " #{notification.status}"
         invoice.save
       end

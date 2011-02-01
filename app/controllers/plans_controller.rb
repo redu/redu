@@ -11,7 +11,16 @@ class PlansController < BaseController
     end
   end
 
-  def address
+  def upgrade
+    if request.post?
+      UserNotifier.deliver_upgrade_request(current_user, @plan, params[:plan])
+
+      respond_to do |format|
+        format.html {
+          render :template => "plans/upgrade_pending"
+        }
+      end
+    end
   end
 
   def pay

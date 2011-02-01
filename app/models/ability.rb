@@ -78,10 +78,12 @@ class Ability
     alias_action :pending, :accept, :decline, :to => :manage
 
     # Plan
-    alias_action :confirm, :address, :pay, :to => :manage
+    alias_action :confirm, :address, :pay, :upgrade, :to => :manage
 
     # Todos podem ver o preview
-    can :view, :all do |object|
+    publishable = [Environment, Course, Space, Subject] # Coisas que tem published
+
+    can :view, publishable do |object|
       object.published?
     end
 

@@ -1,4 +1,80 @@
 class Plan < ActiveRecord::Base
+
+  PLANS = {
+    :professor_standard => {
+      :name => "Professor Standard",
+      :price => 49.99,
+      :yearly_price => 499.99,
+      :video_storage_limit => 1.gigabyte,
+      :file_storage_limit => 30.gigabytes,
+      :members_limit => 50
+    },
+    :professor_lite => {
+      :name => "Professor Lite",
+      :price => 24.99,
+      :yearly_price => 249.99,
+      :video_storage_limit => 1.gigabyte,
+      :file_storage_limit => 20.gigabytes,
+      :members_limit => 20
+    },
+    :free => {
+      :name => "Free",
+      :price => 0,
+      :yearly_price => 0,
+      :video_storage_limit => 1.gigabyte,
+      :file_storage_limit => 1.gigabytes,
+      :members_limit => 20
+    },
+    :instituicao_lite => {
+      :name => "Instituição Lite",
+      :price => 149.99,
+      :yearly_price => 1499.99,
+      :video_storage_limit => 1.gigabyte,
+      :file_storage_limit => 10.gigabytes,
+      :members_limit => 100
+    },
+    :instituicao_standard => {
+      :name => "Instituição Standard",
+      :price => 279.99,
+      :yearly_price => 2799.99,
+      :video_storage_limit => 1.gigabyte,
+      :file_storage_limit => 20.gigabytes,
+      :members_limit => 200
+    },
+    :instituicao_plus => {
+      :name => "Instituição Plus",
+      :price => 399.99,
+      :yearly_price => 3999.99,
+      :video_storage_limit => 1.gigabyte,
+      :file_storage_limit => 30.gigabytes,
+      :members_limit => 100
+    },
+    :empresas_lite => {
+      :name => "Empresa Lite",
+      :price => 59.99,
+      :yearly_price => 599.99,
+      :video_storage_limit => 1.gigabyte,
+      :file_storage_limit => 20.gigabytes,
+      :members_limit => 30
+    },
+    :empresas_standard => {
+      :name => "Empresa Standard",
+      :price => 89.99,
+      :yearly_price => 899.99,
+      :video_storage_limit => 1.gigabyte,
+      :file_storage_limit => 20.gigabytes,
+      :members_limit => 50
+    },
+    :empresas_plus => {
+      :name => "Empresa Plus",
+      :price => 149.99,
+      :yearly_price => 1499.99,
+      :video_storage_limit => 1.gigabyte,
+      :file_storage_limit => 30.gigabytes,
+      :members_limit => 100
+    },
+  }
+
   belongs_to :billable, :polymorphic => true
   belongs_to :user
   # Para quando houver upgrade/downgrade
@@ -111,34 +187,7 @@ class Plan < ActiveRecord::Base
   end
 
   def self.from_preset(key)
-    plans = {
-      :professor_standard => {
-        :name => "Professor Standard",
-        :price => 49.99,
-        :yearly_price => 499.99,
-        :video_storage_limit => 1.gigabyte,
-        :file_storage_limit => 30.gigabytes,
-        :members_limit => 50
-      },
-      :professor_lite => {
-        :name => "Professor Lite",
-        :price => 24.99,
-        :yearly_price => 249.99,
-        :video_storage_limit => 1.gigabyte,
-        :file_storage_limit => 20.gigabytes,
-        :members_limit => 20
-      },
-      :free => {
-        :name => "Free",
-        :price => 0,
-        :yearly_price => 0,
-        :video_storage_limit => 1.gigabyte,
-        :file_storage_limit => 1.gigabytes,
-        :members_limit => 20
-      },
-    }
-
-    self.new(plans.fetch(key, plans[:free]))
+    self.new(PLANS.fetch(key, PLANS[:free]))
   end
 
   protected

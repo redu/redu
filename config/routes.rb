@@ -235,9 +235,10 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   map.resources :plans, :only => [], :member => {
-    :confirm => [:get, :post]
+    :confirm => [:get, :post],
+    :upgrade => [:get, :post]
   } do |plan|
-    plan.resources :invoices
+    plan.resources :invoices, :only => [:index, :show]
   end
 
   map.payment_success '/payment/success',

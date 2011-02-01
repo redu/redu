@@ -85,6 +85,8 @@ class User < ActiveRecord::Base
   # FIXME Verificar necessidade (não foi testado)
   has_many :monitored_topics, :through => :monitorships, :conditions => ['monitorships.active = ?', true], :order => 'topics.replied_at desc', :source => :topic
 
+  has_many :plans
+
 
   # Named scopes
   named_scope :recent, :order => 'users.created_at DESC'
@@ -261,6 +263,7 @@ class User < ActiveRecord::Base
     entity.nil? and return false
     self.admin? and return true
     self.environment_admin? entity and return true
+
     case entity.class.to_s
     when 'Course'
       (self.environment_admin? entity.environment)
@@ -299,6 +302,8 @@ class User < ActiveRecord::Base
       entity == self
     when 'Plan'
       entity.user == self
+    when 'Invoice'
+      self.can_manage?(entity.plan)
     end
   end
 
@@ -344,7 +349,8 @@ class User < ActiveRecord::Base
        (object.class.to_s.eql? 'Topic') || (object.class.to_s.eql? 'SbPost') ||
        (object.class.to_s.eql? 'Event') || (object.class.to_s.eql? 'Bulletin') ||
        (object.class.to_s.eql? 'Status') || (object.class.to_s.eql? 'User') ||
-       (object.class.to_s.eql? 'Friendship') || (object.class.to_s.eql? 'Plan')
+       (object.class.to_s.eql? 'Friendship') || (object.class.to_s.eql? 'Plan') ||
+       (object.class.to_s.eql? 'Invoice')
         
        self.has_access_to?(object)
     else

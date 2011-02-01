@@ -1,2 +1,31 @@
-<h1>Invoices#index</h1>
-<p>Find me in app/views/invoices/index.html.erb</p>
+<div id="plan-info">
+  <strong>Plano:</strong>
+  <h3><%= @plan.name %></h3>
+  <% if @plan.invoices.pending.count > 0 %>
+    <%= pagseguro_form @plan.create_order, :submit => "Pagar" %>   
+  <% end %>
+  <strong>Quotas:</strong>
+</div>
+
+<table class="common">
+  <thead>
+    <tr>
+      <th>Fatura</th>
+      <th>Data de início</th>
+      <th>Data final</th>
+      <th>Valor (R$)</th>
+      <th>Estado</th>
+    </tr>
+  </thead>
+  <tr>
+    <% @invoices.each do |invoice| %>
+    <td><%= invoice.id %></td>
+    <td><%= invoice.period_start %></td>
+    <td><%= invoice.period_end %></td>
+    <td><%= invoice.amount.round(2) %></td>
+    <td>
+      <strong><%= invoice.state %></strong>
+    </td>
+    <% end %>
+  </tr>
+</table>

@@ -286,6 +286,16 @@ class UserNotifier < ActionMailer::Base
 
   end
 
+  def upgrade_request(user, old_plan, new_plan)
+    setup_sender_info
+
+    @recipients = "#{AppConfig.contact_emails}"
+    @subject    = "[upgrade] user.id"
+    @body[:user] = user
+    @body[:old_plan] = old_plan
+    @body[:new_plan] = new_plan
+  end
+
   protected
   def setup_email(user)
     @recipients  = "#{user.email}"
