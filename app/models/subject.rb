@@ -17,7 +17,7 @@ class Subject < ActiveRecord::Base
   acts_as_taggable
 
   validates_presence_of :title
-  validates_size_of :description, :within => 30..200
+  validates_length_of :description, :within => 30..250
   validates_length_of :lectures, :minimum => 1, :on => :update
 
   # Matricula o usuário com o role especificado. Retorna true ou false
