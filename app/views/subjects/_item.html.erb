@@ -1,7 +1,7 @@
 <li class="clearfix">
-  <% if current_user.has_access_to?(item) %>
+  <% if can? :read, item %>
     <%= link_to subject.title, space_subject_path(@space, item), :class => "name"  %>
-    <% if item.published? %>
+    <% if (can? :manage, item) && item.published? %>
       Módulo publicado
     <% else %>
       <%= link_to_remote "Editar", :url => edit_space_subject_path(@space, item),
