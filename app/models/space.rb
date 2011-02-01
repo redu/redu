@@ -7,7 +7,7 @@ class Space < ActiveRecord::Base
   # (MyFile), veículação de comunicados (Bulletin e Forum) e eventos (Event).
 
   # CALLBACKS
-  before_create :create_root_folder
+  after_create :create_root_folder
   after_create :create_forum
   after_create :create_space_association_for_users_course
 
@@ -107,8 +107,7 @@ class Space < ActiveRecord::Base
   end
 
   def create_root_folder
-    @folder = Folder.create(:name => "root")
-    self.folders << @folder
+    @folder = self.folders.create(:name => "root")
   end
 
   # Muda papeis neste ponto da hieararquia
