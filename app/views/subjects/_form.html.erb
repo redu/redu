@@ -16,7 +16,19 @@
       <%= f.label :tag_list, :tag_list.l %>
       <%= f.text_field :tag_list %>
 
-      <%= render :partial => 'lectures/item_created', :collection => @subject.lectures %>
+      <% if @subject.published? %>
+        <div class="box_notice">
+          Você não pode editar o conteúdo do módulo, pois ele está publicado. Para despublicá-lo,
+          clique <%= link_to 'aqui', unpublish_space_subject_path(@space, @subject),
+                    :confirm => "Ao despublicar um módulo, todas as matrículas serão perdidas." + \
+                    " Tem certeza?" %>.
+        </div>
+        <%= render :partial => 'lectures/item_created', :collection => @subject.lectures,
+          :locals => { :published => true } %>
+      <% else %>
+        <%= render :partial => 'lectures/item_created', :collection => @subject.lectures,
+          :locals => { :published => false } %>
+      <% end %>
       <% if action_name == 'edit' %>
         <%= render :partial => 'lectures/choose_type' %>
       <% end %>
@@ -34,13 +46,15 @@
           :id => 'add_link'
         %>
         <%= f.submit "Salvar" %>
-        <%= link_to_function "Voltar",
-          "$('#edit_subject_#{@subject.id}').remove(); $('#content').show();",
-          :id => "cancel_link" %>
-        <%= link_to "Deletar",
-          space_subject_path(@space, @subject),
-          :method => :delete,
-          :confirm => "Você tem certeza que deseja deletar deste módulo? Todas as informações serão perdidas."  %>
+        <% unless @admin_panel %>
+          <%= link_to_function "Voltar",
+            "$('#edit_subject_#{@subject.id}').remove(); $('#content').show();",
+            :id => "cancel_link" %>
+          <%= link_to "Deletar",
+            space_subject_path(@space, @subject),
+            :method => :delete,
+            :confirm => "Você tem certeza que deseja deletar deste módulo? Todas as informações serão perdidas."  %>
+        <% end %>
       <% end %>
         <%= image_tag 'spinner.gif', :id => 'spinner-form', :style => 'display: none;'  %>
     <% end %>

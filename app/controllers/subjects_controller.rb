@@ -65,6 +65,7 @@ end
   end
 
   def edit
+    @admin_panel = true if params[:admin_panel]
     respond_to do |format|
       format.html
       format.js do

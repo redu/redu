@@ -1,9 +1,10 @@
 <div  id=<%= "#{item_created.id}-item" %>>
   <%= item_created.lectureable.class.to_s %> <%= item_created.name %>
-  <% if item_created.lectureable.class.to_s == 'Page' %>
-    <%= link_to_remote "Editar",
-      :url => edit_space_subject_lecture_path(@space, @subject, item_created),
-      :loading => "$('#spinner-#{item_created.id}item').show();",
+  <% if !published && (can? :manage, @subject) %>
+    <% if item_created.lectureable.class.to_s == 'Page' %>
+      <%= link_to_remote "Editar",
+        :url => edit_space_subject_lecture_path(@space, @subject, item_created),
+        :loading => "$('#spinner-#{item_created.id}item').show();",
       :success => "$('#spinner-#{item_created.id}item').hide();",
       :method => :get %>
   <% end %>
@@ -12,5 +13,6 @@
     :method => :delete,
     :confirm => "Você tem certeza que deseja excluir essa aula? Não será mais possível recuperá-la." %>
   <%= image_tag 'spinner.gif', :id => "spinner-#{item_created.id}item",
-    :style => 'display: none;'%>
+  :style => 'display: none;'%>
+<% end %>
 </div>
