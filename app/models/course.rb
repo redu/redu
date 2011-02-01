@@ -21,6 +21,7 @@ class Course < ActiveRecord::Base
 
   validates_presence_of :name, :path
   validates_uniqueness_of :name, :path, :scope => :environment_id
+  validates_length_of :name, :maximum => 40
 
   # Sobreescrevendo ActiveRecord.find para adicionar capacidade de buscar por path do Space
   def self.find(*args)

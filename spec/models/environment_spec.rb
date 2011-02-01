@@ -12,6 +12,9 @@ describe Environment do
 
   it { should validate_presence_of(:name) }
   it { should validate_presence_of(:path) }
+  xit { should validate_uniqueness_of(:name) }
+  xit { should validate_uniqueness_of(:path) }
+  it { should ensure_length_of(:name).is_at_most 40 }
   it { should ensure_length_of(:initials).is_at_most(10)}
 
   it { should_not allow_mass_assignment_of(:owner)}

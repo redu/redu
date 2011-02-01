@@ -54,6 +54,7 @@ class Space < ActiveRecord::Base
 
   # VALIDATIONS
   validates_presence_of :name, :description, :submission_type
+  validates_length_of :name, :maximum => 40
 
   def permalink
     APP_URL + '/espacos/' + self.id.to_s + '-' + self.name.parameterize

@@ -21,6 +21,7 @@ class Environment < ActiveRecord::Base
   validates_presence_of :name, :path
   validates_uniqueness_of :name, :path,
     :message => "Precisa ser único"
+  validates_length_of :name, :maximum => 40
   validates_length_of :initials, :maximum => 10, :allow_blank => true
 
   accepts_nested_attributes_for :courses
