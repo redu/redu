@@ -38,9 +38,6 @@
       <% unless @featured.empty? %>
         <% @featured.each do |bulletin| %>
           <h3 class="news-title"><%= link_to bulletin.title, environment_bulletin_path(@environment, bulletin) %></h3>
-          <div class="headline quiet">
-            <%= bulletin.tagline %>
-          </div>
           <% unless bulletin.tags.empty? %>
             <div class="tags">
               <span class="title">Palavras-chave</span>

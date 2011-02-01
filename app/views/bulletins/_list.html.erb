@@ -7,7 +7,6 @@
   <span class="title grid_10 omega"><%= link_to bulletin.title, polymorphic_path([bulletin.bulletinable, bulletin]) %>
 </span>
   <span class="rating"></span>
-  <span class="tagline quiet grid_10 omega"><%= bulletin.tagline %></span>
   <div class="grid_5 omega" >
     <%= render :partial => 'tags/tags', :object => bulletin.tags  %>
  </div>
