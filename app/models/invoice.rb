@@ -46,15 +46,30 @@ class Invoice < ActiveRecord::Base
   def to_order_item(item_options = {})
     args = {
       :id => self.id,
-      :price => self.amount,
+      :price => self.total,
       :description => self.description || self.generate_description
     }.merge(item_options)
   end
 
+  # Calcula o total do Invoice (levando em conta o desconto e sem valores negativos)
+  def total
+    if self.amount >= self.discount
+      self.amount - self.discount
+    else
+      0
+    end
+  end
+
   # Gera descrição amigável para o invoice
   def generate_description
-    "Fatura N. #{self.id} referente ao período de #{self.period_start} a " +
+
+    msg = "Fatura N. #{self.id} referente ao período de #{self.period_start} a " +
     "#{self.period_end} no plano #{self.plan.name}"
+
+   discount_msg = ". Com desconto de R$ #{self.discount.round(2)}"
+   msg << discount_msg if self.discount > 0
+
+   return msg
   end
 
   protected

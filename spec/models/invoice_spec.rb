@@ -13,6 +13,7 @@ describe Invoice do
 
   it { should respond_to :threshold_date }
   it { should respond_to :description }
+  it { should respond_to :discount }
 
   context "threshold date" do
     it "should be 10 days from period end" do
@@ -139,6 +140,24 @@ describe Invoice do
         @product.fetch(:order_id, nil).should == @options[:order_id]
       end
     end
+
+  end
+
+  context "when giving a discount" do
+    before do
+      subject.update_attribute(:discount, 10.0)
+    end
+  
+    #FIXME o pagseguro oferece um campo para desconto que o Gem não suporta
+    it "should discount from amount" do
+      item = subject.to_order_item
+
+      item[:price].should == subject.amount - subject.discount
+    end
+
+    it "says something about it" do
+      subject.generate_description.should =~ /desconto/
+    end
   end
 
   context "finder" do
@@ -162,6 +181,8 @@ describe Invoice do
       subject.generate_description.should_not be_empty
       subject.generate_description.should_not be_nil
     end
+
+
   end
 
 end

@@ -62,8 +62,8 @@ class Plan < ActiveRecord::Base
   def create_invoice(opts = {})
     invoice_options = {
       :period_start => Date.today.tomorrow,
-      :period_end => Date.today.at_end_of_month,
-      :amount => amount_until_next_month
+      :period_end => Date.today.advance(:days => 30),
+      :amount => self.price
     }.merge(opts)
 
     self.invoices.create(invoice_options)

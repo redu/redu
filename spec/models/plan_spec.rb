@@ -55,15 +55,14 @@ describe Plan do
     end
 
     it "should be successfully" do
-      per_day = subject.price / subject.days_in_current_month
-      expected_amount = (period == 0) ? BigDecimal.new("0.0") :  period * per_day
+      expected_amount = subject.price
 
       expect {
         @invoice = subject.create_invoice()
       }.should change(subject.invoices, :count).to(1)
 
       @invoice.amount.round(8).should == expected_amount.round(8)
-      @invoice.period_end.should == Date.today.at_end_of_month
+      @invoice.period_end.should == Date.today.advance(:days => 30)
       @invoice.period_start.should == Date.tomorrow
     end
 
@@ -94,21 +93,6 @@ describe Plan do
 
     end
 
-    it "infers the amount if period_start isnt specified" do
-      per_day = subject.price / subject.days_in_current_month
-      expected_amount = (period == 0) ? BigDecimal.new("0.0") : (per_day * period)
-
-      attrs = {
-        :description => "Lorem ipsum dolor sit amet, consectetur magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
-        :period_end => Date.today + 5
-      }
-
-      invoice = subject.create_invoice(attrs)
-
-      invoice.should be_valid
-      invoice.amount.should == expected_amount
-    end
-
     context "when generating the amount" do
       it "calculates days in a period" do
         subject.complete_days_in(Date.new(2011,01,14),
@@ -119,7 +103,7 @@ describe Plan do
         should respond_to :amount_until_next_month
       end
 
-      it "should be proportionally to period until billing date" do
+      xit "should be proportionally to period until billing date" do
         per_day = subject.price / subject.days_in_current_month
         expected_amount = (period == 0) ? BigDecimal.new("0.0") : (per_day * period)
 
@@ -162,7 +146,7 @@ describe Plan do
     end
 
     it "creates a valid and new plan" do
-      subject.should be_valid
+      @new_plan.should be_valid
     end
 
     it "copies the older plan associations" do
@@ -204,14 +188,23 @@ describe Plan do
 
     end
 
-    it "creates an additional invoice on the new plan" do
-      per_day = @new_plan.price / @new_plan.days_in_current_month
+    xit "creates an additional invoice on the new plan" do
+
       invoice = @new_plan.invoices.pending.first(:conditions => {
         :period_start => Date.tomorrow,
-        :period_end => Date.today.at_end_of_month})
+        :period_end => Date.today.advance(:days => 30)})
 
       invoice.should_not be_nil
-      invoice.amount.round(2).should == (period * per_day).round(2)
+    end
+
+    xit "gives a discount on the first invoice of the new plan" do
+      per_day = subject.price / subject.days_in_current_month
+      discount = period * per_day
+      
+      invoice = @new_plan.invoices.pending.first
+
+      debugger
+      invoice.amount.round(2).should == @new_plan.price - discount
     end
 
   end
