@@ -85,7 +85,7 @@
            <h3 class="call">
              <%= link_to @subject.title, space_subject_path(@space, @subject) %>
              <% if can? :manage, @subject %>
-               <%= link_to "Gerenciar", edit_space_subject_path(space, @subject),
+               <%= link_to "Gerenciar", edit_space_subject_path(space, @subject, :admin_panel => true),
                  :class => "edit" %>
              <% end %>
            </h3>

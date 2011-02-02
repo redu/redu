@@ -270,7 +270,7 @@ class User < ActiveRecord::Base
     when 'Subject'
       self.teacher?(entity.space) || self.can_manage?(entity.space)
     when 'Lecture'
-      self.teacher?(entity.subject.space) || self.can_manage?(entity.space)
+      self.teacher?(entity.subject.space) || self.can_manage?(entity.subject)
     when 'Exam'
       self.teacher?(entity.subject.space) || self.can_manage?(entity.space)
     when 'Event'

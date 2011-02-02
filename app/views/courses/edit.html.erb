@@ -33,10 +33,20 @@ $(document).ready(function(){
       <% end %>
 
       <fieldset class="fake">
+        <legend>Publicação</legend>
+        <% if @course.published? %>
+          <%= link_to 'Despublicar curso', unpublish_environment_course_path(@environment, @course),
+            :confirm => 'Você tem certeza que deseja deixar este curso invisível?' %>
+        <% else %>
+          <%= link_to 'Publicar curso', publish_environment_course_path(@environment, @course),
+            :confirm => 'Você tem certeza que deseja deixar este curso visível?' %>
+        <% end %>
+      </fieldset>
+      <fieldset class="fake">
         <legend>Remover curso</legend>
-        <%= link_to 'Deletar curso', environment_course_path(@environment, @course), 
+        <%= link_to 'Deletar curso', environment_course_path(@environment, @course),
           :confirm => 'Você tem certeza que deseja remover este curso?', :method => :delete %>
       </fieldset>
-    </div> <!-- end panel --> 
+    </div> <!-- end panel -->
   </div> <!-- end fake -->
 </div> <!-- end main -->
