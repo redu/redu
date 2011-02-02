@@ -203,7 +203,6 @@ describe Plan do
       
       invoice = @new_plan.invoices.pending.first
 
-      debugger
       invoice.amount.round(2).should == @new_plan.price - discount
     end
 
