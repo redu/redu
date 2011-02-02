@@ -10,9 +10,11 @@
 
     <%= f.label "Descrição" %>
     <% if @bulletinable.class.to_s == 'Space' %>
-      <%= f.cktext_area :description, :width=>'678px' %> 
+      <%= f.cktext_area :description, :width=>'678px',
+        :swf_params => { :assetable_type => "Environment", :assetable_id => @environment.id }%> 
     <% else %>
-      <%= f.cktext_area :description, :width=>'910px' %> 
+      <%= f.cktext_area :description, :width=>'910px',
+        :swf_params => { :assetable_type => "Environment", :assetable_id => @environment.id }%> 
     <% end %>
     <%= f.label "Tags <span class='snippet'>(separadas por vírgula)</span>" %>
     <%= f.text_field :tag_list %>

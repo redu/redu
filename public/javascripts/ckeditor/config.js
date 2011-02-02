@@ -1,11 +1,29 @@
 /*
-Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
-For licensing, see LICENSE.html or http://ckeditor.com/license
-*/
+   Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
+   For licensing, see LICENSE.html or http://ckeditor.com/license
+   */
+
+CKEDITOR.on( 'dialogDefinition', function( ev )
+    {
+    // Take the dialog name and its definition from the event data.
+    var dialogName = ev.data.name;
+    var dialogDefinition = ev.data.definition;
+
+    // Check if the definition is from the dialog we're
+    // interested in (the 'link' dialog).
+    if ( dialogName == 'image' )
+    {
+    // Remove the 'Advanced', 'Link' and 'Upload' tabs from the 'Image' dialog.
+    dialogDefinition.removeContents( 'advanced' );
+    dialogDefinition.removeContents( 'Link' );
+    dialogDefinition.removeContents( 'Upload' );
+    }
+    });
 
 CKEDITOR.editorConfig = function( config )
 {
   config.PreserveSessionOnFileBrowser = true;
+
   // Define changes to default configuration here. For example:
   config.language = 'en';
   // config.uiColor = '#AADC6E';
@@ -28,25 +46,19 @@ CKEDITOR.editorConfig = function( config )
 
   config.toolbar_Easy =
     [
-        ['Preview','-','Templates'],
-        ['Cut','Copy','Paste','PasteText','PasteFromWord'],
-        ['Undo','Redo','-','Find','-','SelectAll','RemoveFormat'],
-        ['Bold','Italic','Underline','Strike','-','Subscript','Superscript'],
-        ['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
-        ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
-        ['Link','Unlink','Anchor'],
-        ['Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak'],
-        '/',
-        ['Styles','Format','Font','FontSize'],
-        ['TextColor','BGColor'],
-        ['Maximize','-','About']
-    ];
-
-  config.toolbar_Simple =
-    [
-        ['Preview'],
-        ['Bold', 'Italic'],
-        ['NumberedList', 'BulletedList']
-    ];
+    ['Preview','-','Templates'],
+    ['Cut','Copy','Paste','PasteText','PasteFromWord'],
+    ['Undo','Redo','-','Find','-','SelectAll','RemoveFormat'],
+    ['Bold','Italic','Underline','Strike','-','Subscript','Superscript'],
+    ['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
+    ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
+    ['Link','Unlink','Anchor'],
+    ['Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak'],
+    '/',
+    ['Styles','Format','Font','FontSize'],
+    ['TextColor','BGColor'],
+    ['Maximize','-','About']
+      ];
 };
+
 
