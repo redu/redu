@@ -18,7 +18,7 @@
   </span>
   <ul class="actions clearfix">
     <li>
-      <a href="" class="icon icon-redu_r12_c51_s1">Responder</a>
+      <a href="" class="icon icon-redu_r12_c51_s1 reply-status">Responder</a>
     </li>
     <li>
       <%= render :partial => 'statuses/new/favorite',
@@ -35,13 +35,16 @@
       </li>
     <% end %>
   </ul>
+  <%= render :partial => 'statuses/new/create_response',
+    :locals => { :statusable => item.statusable, :status_id => item.id }%>
 </div>
 <% unless item.responses.empty? %>
   <div class="responses">
     <ol>
-      <%= render :partial => 'statuses/new/response', :collection => item.statuses %>
+      <%= render :partial => 'statuses/new/response',
+        :collection => item.statuses %>
     </ol>
-    <a href="#" class="toggle-statuses">Ver todos os 22 comentários</a>
+    <a href="#" class="toggle-statuses">Ver todos os <span class="qty"></span> comentários</a>
   </div><!-- end .responses -->
 <% end %>
 </li>
