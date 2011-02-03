@@ -24,6 +24,15 @@ jQuery(function(){
         e.preventDefault();
     });
 
+    // Aumentar form de criação de Status
+    $("input[type=submit], .cancel, .char-limit", ".inform-my-status").hide();
+    $(".inform-my-status textarea").live("focus", function(e){
+        $(this).parents("form").find("input[type=submit], .cancel, .char-limit").fadeIn();
+    });
+    $(".inform-my-status textarea").live("blur", function(e){
+        $(this).parents("form").find("input[type=submit], .cancel, .char-limit").fadeOut();
+    });
+
 });
 
 function limitChars(textclass, limit, infodiv){
