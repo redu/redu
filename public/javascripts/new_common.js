@@ -10,5 +10,18 @@ jQuery(function(){
         $(this).parents("ul:first").next(".create-response").slideToggle();
         $(this).parents(".create-response:first").slideToggle();
         e.preventDefault();
-    })
+    });
+
+    // Apenas mostrar as 3 primeiras respostas e mostrar texto "Ver todos os X comentários"
+    $(".responses", ".statuses").each(function(i, obj){
+        $(this).find("> ol > li:gt(2)").hide();
+        $(this).find(".toggle-statuses .qty").html($(this).find("ol > li").length);
+    });
+
+    // Mostrar todas as respostas ao clicar em "Ver todos os X comentários"
+    $(".toggle-statuses", ".statuses").live("click", function(e){
+        $(this).prev().find("> li:hidden").slideDown();
+        e.preventDefault();
+    });
+
 });
