@@ -192,6 +192,11 @@
   font-size: .9em;
 }
 
+#content .sidebar .space-frame {
+  text-align: left;
+
+}
+
 #content .main {
   border: 1px solid #b3b3b3;
   -moz-border-radius: 12px;
@@ -210,11 +215,15 @@
 }
 
 #hierarchy-header .call {
-  font-family: Copse, Arial, sans-serif;
-  font-weight: normal;
   font-size: 2.2em;
   margin: 20px 0;
 }
+
+#hierarchy-header .environment-name {
+  font-family: Copse, Arial, sans-serif;
+  font-weight: normal;
+}
+
 
 #hierarchy-header .description {
   font-size: .9em;
@@ -242,6 +251,16 @@
 #hierarchy-header .statistics span {
   font-weight: bold;
 }
+
+#hierarchy-header .initials {
+  font-size: .8em;
+  text-transform: uppercase;
+}
+
+#hierarchy-header .course-name {
+  margin-top: 5px;
+}
+
 .tags li {
   float: left;
 }
@@ -262,25 +281,33 @@
   font-size: .9em;
 }
 
-#environment-courses {
+.hierarchy-listing-wrapper {
   clear: both;
 }
 
-#environment-courses .header {
+.hierarchy-listing-wrapper .header {
   padding-left: 70px;
 }
 
-#environment-courses .counter {
+.hierarchy-listing-wrapper .counter {
   font-style: oblique;
   font-size: .9em;
   color: #B2B2B2;
 }
 
-#environment-courses .header {
-  background: url("../images/new/icon-course-gray_32_32.png") no-repeat 20px center;
+.hierarchy-listing-wrapper .header {
   margin: 20px 0;
 }
-#environment-courses .header h4 {
+
+#environment-courses .header {
+  background: url("../images/new/icon-course-gray_32_32.png") no-repeat 20px center;
+}
+
+#courses-subjects .header {
+  
+}
+
+.hierarchy-listing-wrapper .header h4 {
   font-family: Copse, Arial, sans-serif;
   font-size: 1.7em;
   font-weight: normal;
@@ -307,6 +334,7 @@
 
 .hierarchy-listing > li .statistics,
 .hierarchy-listing > li .info,
+.hierarchy-listing > li .activities,
 .hierarchy-listing > li .audience {
   float: left;
 }
@@ -316,6 +344,7 @@
   background-color: #DBEFF7;
 }
 
+.hierarchy-listing > li .activities,
 .hierarchy-listing > li .audience {
   width: 125px;
   margin-right: 20px;
@@ -332,6 +361,14 @@
 
 .hierarchy-listing .audience em {
   display: block;
+}
+
+.hierarchy-listing .activities {
+  font-size: .9em;
+}
+
+.hierarchy-listing .activities .qty {
+  font-weight: bold;
 }
 
 .hierarchy-listing .audience a {

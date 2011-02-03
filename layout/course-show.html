@@ -67,17 +67,14 @@
 
     <div id="content" class="container_16 clearfix">
       <div class="sidebar alpha grid_3">
-        <div class="image-frame">
+        <div class="image-frame space-frame">
           <!-- <%# Nao setar width e height na imagem %> -->
-          <img src="../public/images/new/missing_environment_150_150.png" alt="profile" />
+          <img src="../public/images/new/missing_environment_100_100.png" alt="profile" />
         </div>
 
         <ul class="local-nav">
           <li>
-            <div class="selected session"><a href="" class="icon icon-redu_r8_c313_s1">Curso</a></div>
-          </li>
-          <li>
-            <div class="session"><a href="" class="icon icon-redu_r9_c289_s1">Notícias</a></div>
+            <div class="selected session"><a href="" class="icon icon-redu_r8_c307_s1">Disciplina</a></div>
           </li>
           <li>
             <div class="session"><a href="" class="icon icon-redu_r8_c221_s1">Gerenciamento</a></div>
@@ -133,11 +130,15 @@
             <a href="" class="replacement home icon icon-redu_r8_c227_s1">Home</a>
           </li>
           <li>
-            <a href="" class="icon icon-redu_r8_c217_s1">Universidade Federal de Pernambuco</a>
+            <a href="" class="replacement icon icon-redu_r8_c217_s1">Universidade Federal de Pernambuco</a>
+          </li>
+          <li>
+            <a href="" class="icon icon-redu_r8_c313_s1">Ciência da Computação</a>
           </li>
         </ol>
-        <div id="hierarchy-header" class="clearfix">
-          <h3 class="call environment-name">Universidade Federal de Pernambuco</h3>
+        <div id="hierarchy-header" class="clearfix course-header">
+          <span class="initials">UFPE</span>
+          <h3 class="call course-name">Ciência da Computaçãp</h3>
           <div class="grid_9 alpha">
             <span class="description">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur lorem tellus, hendrerit tempor tincidunt vitae, vehicula vitae purus. Morbi eu lacus in velit aliquam semper. Curabitur mollis leo a sapien consequat sed egestas magna sollicitudin. Pellentesque interdum leo accumsan velit facilisis ut varius massa gravida. Etiam luctus turpis id arcu venenatis feugiat. Fusce sodales, massa nullam.
@@ -163,35 +164,31 @@
               <span>12.345</span>
             </li>
             <li>
-              <em class="icon icon-redu_r8_c391_s1">Administradores:</em>
-              <span>12</span>
-            </li>
-            <li>
-              <em class="icon icon-redu_r8_c301_s1">Professores:</em>
-              <span>143</span>
-            </li>
-            <li>
               <em class="icon icon-redu_r8_c385_s1">Tutores:</em>
+              <span>2.344</span>
+            </li>
+            <li>
+              <em class="icon icon-redu_r8_c355_s1">Estudantes:</em>
               <span>2.344</span>
             </li>
           </ul>
 
         </div><!-- end #hierarchy-header -->
 
-        <div id="environment-courses" class="hierarchy-listing-wrapper">
+        <div id="course-subjects" class="hierarchy-listing-wrapper">
           <div class="header">
-            <h4>Cursos</h4>
-            <span class="counter">12 cursos</span>
+            <h4>Disciplinas</h4>
+            <span class="counter">12 disciplinas</span>
           </div>
 
           <div class="admin-actions">
-            <a href="">Criar novo curso</a>
+            <a href="">Criar nova disciplina</a>
           </div>
 
           <ul class="hierarchy-listing">
             <li class="clearfix">
               <div class="info">
-                <img src="../public/images/new/missing_course_32_32.png" alt="curso" />
+                <img src="../public/images/new/missing_space_32_32.png" alt="curso" />
                 <a class="name">Ciência da Computação</a>
                 <ul class="tags">
                   <li>
@@ -208,14 +205,19 @@
                   </li>
                 </ul>
               </div>
-              <div class="audience">
-                <em>Audiência</em>
+              <div class="activities">
                 <ul>
                   <li>
-                    <a href="">Ensino Superior</a>
+                    <span class="qty">+1</span>
+                    <a href="">notícia nova</a>
                   </li>
                   <li>
-                    <a href="">Especialização</a>
+                    <span class="qty">+2</span>
+                    <a href="">notícia nova</a>
+                  </li>
+                  <li>
+                    <span class="qty">+1</span>
+                    <a href="">notícia nova</a>
                   </li>
                 </ul>
               </div>
@@ -242,8 +244,8 @@
             </li>
             <li class="clearfix">
               <div class="info">
-                <img src="../public/images/new/missing_course_32_32.png" alt="curso" />
-                <a class="name">Ciência da Computação</a>
+                <img src="../public/images/new/missing_space_32_32.png" alt="curso" />
+                <a class="name">Algoritmos</a>
                 <ul class="tags">
                   <li>
                     <a href="">ufpe</a>
@@ -259,14 +261,19 @@
                   </li>
                 </ul>
               </div>
-              <div class="audience">
-                <em>Audiência</em>
+              <div class="activities">
                 <ul>
                   <li>
-                    <a href="">Ensino Superior</a>
+                    <span class="qty">+1</span>
+                    <a href="">notícia nova</a>
                   </li>
                   <li>
-                    <a href="">Especialização</a>
+                    <span class="qty">+2</span>
+                    <a href="">notícia nova</a>
+                  </li>
+                  <li>
+                    <span class="qty">+1</span>
+                    <a href="">notícia nova</a>
                   </li>
                 </ul>
               </div>
@@ -293,8 +300,8 @@
             </li>
             <li class="clearfix">
               <div class="info">
-                <img src="../public/images/new/missing_course_32_32.png" alt="curso" />
-                <a class="name">Ciência da Computação</a>
+                <img src="../public/images/new/missing_space_32_32.png" alt="curso" />
+                <a class="name">Introdução a programação</a>
                 <ul class="tags">
                   <li>
                     <a href="">ufpe</a>
@@ -310,14 +317,19 @@
                   </li>
                 </ul>
               </div>
-              <div class="audience">
-                <em>Audiência</em>
+              <div class="activities">
                 <ul>
                   <li>
-                    <a href="">Ensino Superior</a>
+                    <span class="qty">+1</span>
+                    <a href="">notícia nova</a>
                   </li>
                   <li>
-                    <a href="">Especialização</a>
+                    <span class="qty">+2</span>
+                    <a href="">notícia nova</a>
+                  </li>
+                  <li>
+                    <span class="qty">+1</span>
+                    <a href="">notícia nova</a>
                   </li>
                 </ul>
               </div>
