@@ -123,15 +123,15 @@
   text-align: center;
 }
 
-#content .sidebar .nav-user {
+#content .sidebar .local-nav {
   margin-top: 20px;
 }
 
-#content .sidebar .nav-user li { 
+#content .sidebar .local-nav li { 
   margin: 2px 0;
 }
 
-#content .sidebar .nav-user > li > .session {
+#content .sidebar .local-nav > li > .session {
   display: block;
   position: relative;
   width: 161px;
@@ -141,25 +141,25 @@
   border-radius: 5px 0 0 5px;
 }
 
-#content .sidebar .nav-user > li > .session a { padding: 2px 0 1px 25px; }
+#content .sidebar .local-nav > li > .session a { padding: 2px 0 1px 25px; }
 
-#content .sidebar .nav-user > li > .session:hover {
+#content .sidebar .local-nav > li > .session:hover {
   background-color: #dbeff7;
 }
 
-#content .sidebar .nav-user > li > .selected,
-#content .sidebar .nav-user > li > .selected:hover {
+#content .sidebar .local-nav > li > .selected,
+#content .sidebar .local-nav > li > .selected:hover {
   background: #4dadd6 url("../images/new/nav-user-hover.png") no-repeat center right;
   color: white;
 }
 
-#content .sidebar .nav-user > li > .selected a,
-#content .sidebar .nav-user > li > .selected:hover a {
+#content .sidebar .local-nav > li > .selected a,
+#content .sidebar .local-nav > li > .selected:hover a {
   color: white;
   padding-left: 25px;
 }
 
-#content .sidebar .nav-user ul {
+#content .sidebar .local-nav ul {
   margin-left: 40px;
 }
 
