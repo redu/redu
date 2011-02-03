@@ -1,0 +1,23 @@
+<%# Menu para navegação na conta do usuário (Dropdown) %>
+<% if current_user %>
+  <div id="nav-account" class="grid_3">
+    <div class="username"><%= link_to current_user.first_name, home_user_path(current_user) %></div>
+    <ul style="display: none;">
+      <li>
+        <%= link_to 'Meu Perfil', user_path(current_user),
+          :title => 'Perfil' %>
+        <%= link_to 'editar', edit_user_path(current_user),
+          :title => 'editar', :class => 'edit' %>
+      </li>
+      <li>
+        <a href="#">Mensagens (0)</a>
+      </li>
+      <li>
+        <a href="#">Configurações</a>
+      </li>
+      <li>
+        <%= link_to 'Sair', logout_path %>
+      </li>
+    </ul>
+  </div><!-- end #nav-account -->
+<% end %>

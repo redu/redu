@@ -1,0 +1,48 @@
+<%# Status e suas respostas  %>
+<li id="status-<%= item.id %>">
+  <div class="status">
+    <%= image_tag item.user.avatar.url(:small) %>
+    <span class="message">
+      <%= link_to item.user.display_name, user_path(item.user),
+        { :class => 'username' } %>
+      <span class="date">
+        há <%= time_ago_in_words item.created_at %>
+    </span>
+    <p>
+      <% if item.log %>
+        <%= activity_name(item) %>
+      <% else %>
+        <%= auto_link(item.text) %>
+      <% end %>
+    </p>
+  </span>
+  <ul class="actions clearfix">
+    <li>
+      <a href="" class="icon icon-redu_r12_c51_s1">Responder</a>
+    </li>
+    <li>
+      <%= render :partial => 'statuses/new/favorite',
+        :locals => { :status => item } %>
+    </li>
+    <% if can? :manage, item %>
+      <li>
+      <%= link_to_remote 'Apagar',
+        :url => status_path(item),
+        :loading => "$('#status-#{item.id} > .actions .icon-redu_r12_c43_s1').hide(); $('#status-#{item.id}  > .actions #favorite_spinner').show();",
+      :confirm => 'Deseja remover a postagem?',
+        :method => :delete,
+        :html => { :class => "icon icon icon-redu_r12_c43_s1" } %>
+      </li>
+    <% end %>
+  </ul>
+</div>
+<% unless item.responses.empty? %>
+  <div class="responses">
+    <ol>
+      <%= render :partial => 'statuses/new/response', :collection => item.statuses %>
+    </ol>
+    <a href="#" class="toggle-statuses">Ver todos os 22 comentários</a>
+  </div><!-- end .responses -->
+<% end %>
+</li>
+

@@ -1,5 +1,12 @@
-test = escape_javascript(render(:partial =>"statuses/type_proxy", :locals => {:type_proxy_counter => nil, :status => @status, :statusable => @status.statusable} ))
+if params.has_key?(:new_layout)
+  test = escape_javascript(
+    render(:partial =>"statuses/new/item",
+           :locals => {:item => @status, :statusable => @status.statusable}))
+page << "$('#statuses').prepend('"+test+"')"
+else
+  test = escape_javascript(render(:partial =>"statuses/type_proxy", :locals => {:type_proxy_counter => nil, :status => @status, :statusable => @status.statusable} ))
 page << "$('.activities').prepend('"+test+"')"
+end
 page << "$('.status_spinner').hide()"
 page << "$('#status_text').val('')"
 page << "$('.answer').val('')"

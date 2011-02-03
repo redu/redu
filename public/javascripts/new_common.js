@@ -25,3 +25,16 @@ jQuery(function(){
     });
 
 });
+
+function limitChars(textclass, limit, infodiv){
+  var text = $('.' + textclass).val();
+  var textlength = text.length;
+  if (textlength > limit) {
+    // $('#' + infodiv).html('You cannot write more then ' + limit + ' characters!');
+    $('.' + textclass).val(text.substr(0, limit));
+    return false;
+  } else {
+    $('.' + infodiv).html(limit - textlength);
+    return true;
+  }
+}
