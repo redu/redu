@@ -693,10 +693,12 @@ class EndlessRenderer < WillPaginate::LinkRenderer
   def to_html
     if @options[:class].eql? "pagination"
       @options[:class] = "endless"
+    else
+      @options[:class] += " endless"
     end
 
     unless @collection.next_page.nil?
-      html = @template.link_to_remote "mais",
+      html = @template.link_to_remote "Mais resultados",
         :url => url_for(@collection.next_page), :method =>:get,
         :loading => "$('.#{@options[:class]}').html('" \
         + @template.escape_javascript(@template.image_tag('spinner.gif')) + "')"

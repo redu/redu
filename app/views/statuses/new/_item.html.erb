@@ -38,14 +38,14 @@
   <%= render :partial => 'statuses/new/create_response',
     :locals => { :statusable => item.statusable, :status_id => item.id }%>
 </div>
-<% unless item.responses.empty? %>
   <div class="responses">
     <ol>
-      <%= render :partial => 'statuses/new/response',
-        :collection => item.statuses %>
+      <% unless item.responses.empty? %>
+        <%= render :partial => 'statuses/new/response',
+          :collection => item.statuses %>
+      <% end %>
     </ol>
     <a href="#" class="toggle-statuses">Ver todos os <span class="qty"></span> comentários</a>
   </div><!-- end .responses -->
-<% end %>
 </li>
 

@@ -1,6 +1,6 @@
 <%# Form de status  %>
 <% random_number = get_random_number%>
-<div class="create-status create-response">
+<div class="create-status inform-my-status">
   <% form_remote_for @status,
     :before => "$('.status_spinner').show()" do |f| %>
     <%= flash[:statuses_errors] %>
