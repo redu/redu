@@ -116,6 +116,7 @@
 }
 
 #content .sidebar {
+  margin-top: 40px;
   
 }
 
@@ -198,6 +199,168 @@
   border-radius: 12px;
 
   padding: 10px 20px;
+}
+
+#content .big-col {
+  width: 730px;
+}
+
+#environment-header {
+  background: url("../images/new/dots.png") repeat-x bottom;
+  padding-bottom: 10px;
+}
+
+#environment-header .call {
+  font-family: Copse, Arial, sans-serif;
+  font-weight: normal;
+  font-size: 2.2em;
+  margin: 20px 0;
+}
+
+#environment-header .description {
+  font-size: .9em;
+  font-style: oblique;
+  color: #6C6D70;
+}
+
+#environment-header .tags {
+  margin: 10px 0;
+}
+
+.tags li {
+  float: left;
+}
+
+.tags li:before {
+  content: ",";
+  margin: 0;
+  padding: 0;
+  color: #B2B2B2;
+}
+
+.tags li:first-child:before {
+  content: "";
+}
+
+.tags a {
+  color: #B2B2B2;
+  font-size: .9em;
+}
+
+#environment-header .statistics {
+  font-size: .9em;
+}
+
+#environment-header .statistics li {
+  margin: 10px 0;
+}
+
+
+#environment-header .statistics em {
+  color: #B2B2B2;
+  padding: 2px 0 2px 23px;
+}
+
+#environment-header .statistics span {
+  font-weight: bold;
+}
+
+#environment-courses {
+  clear: both;
+}
+
+#environment-courses .header {
+  padding-left: 70px;
+}
+
+#environment-courses .counter {
+  font-style: oblique;
+  font-size: .9em;
+  color: #B2B2B2;
+}
+
+#environment-courses .header {
+  background: url("../images/new/icon-course-gray_32_32.png") no-repeat 20px center;
+  margin: 20px 0;
+}
+#environment-courses .header h4 {
+  font-family: Copse, Arial, sans-serif;
+  font-size: 1.7em;
+  font-weight: normal;
+}
+
+#environment-courses .courses {
+  margin-bottom: 20px;
+}
+
+#environment-courses .courses > li {
+  display: block;
+  padding: 15px 10px;
+  margin-bottom: 10px;
+
+  border: 1px solid #B3B2B3;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+
+#environment-courses .courses > li img {
+  float: left;
+  margin: 0 10px;
+}
+
+#environment-courses .courses > li .statistics,
+#environment-courses .courses > li .info,
+#environment-courses .courses > li .audience {
+  float: left;
+}
+
+#environment-courses .courses > li:hover {
+  border: 1px solid #DBEFF7;
+  background-color: #DBEFF7;
+}
+
+#environment-courses .courses > li .audience {
+  width: 125px;
+  margin-right: 20px;
+  background: url("../images/new/vertical-dots.png") repeat-y right;
+  padding: 10px 0;
+}
+
+#environment-courses .courses > li em {
+  color: #B2B2B2;
+  font-size: .9em;
+  font-style: oblique;
+  margin-bottom: 5px;
+}
+
+#environment-courses .courses .audience em {
+  display: block;
+}
+
+#environment-courses .courses .audience a {
+  font-weight: bold;
+  color: black;
+  font-size: .9em;
+}
+
+#environment-courses .courses > li .info {
+  width: 400px;
+  margin-right: 20px;
+  background: url("../images/new/vertical-dots.png") repeat-y right;
+  padding: 10px 0;
+}
+
+#environment-courses .courses > li .name {
+  font-size: 1.3em;
+  letter-spacing: .005em;
+}
+
+#environment-courses .courses .statistics span {
+  font-weight: bold;
+}
+
+#environment-courses .courses .statistics li {
+  margin-bottom: 2px;
 }
 
 .create-status {
@@ -417,6 +580,43 @@
 
 #nav-footer li a {
   padding: 0 10px;
+}
+
+#breadcrumbs {
+  border-bottom: 1px solid #B3B2B3;
+  padding-bottom: 8px;
+  margin-bottom: 10px;
+}
+
+#breadcrumbs li {
+  float: left;
+}
+
+#breadcrumbs li {
+  background: url("../images/new/breadcrumb-arrow.gif") no-repeat right center;
+  padding-right: 15px;
+  padding-left: 10px;
+
+}
+
+#breadcrumbs li a {
+  display: block;
+  padding: 2px 0 2px 25px;
+}
+
+#breadcrumbs li:first-child {
+  padding: 0;
+}
+
+#breadcrumbs .home {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  margin-right: 15px;
+}
+
+#breadcrumbs li:last-child {
+  background: none;
 }
 
 .replacement {
