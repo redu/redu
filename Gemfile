@@ -15,7 +15,6 @@ gem "icalendar"
 gem "will_paginate", "~> 2.3.11"
 gem "adzap-ar_mailer"
 gem "oauth"
-gem "right_aws", "~> 2.0.0"
 gem "rmagick", "2.12.2"
 gem "packet"
 gem "hpricot"
@@ -31,7 +30,9 @@ gem "ghazel-daemons"
 gem "delayed_job", :git => "git://github.com/collectiveidea/delayed_job.git",
   :branch => "v2.0"
 gem "factory_girl"
+gem "aws-s3"
 gem "paperclip", "~> 2.3"
+gem "right_aws", "~> 2.0.0"
 gem "shuber-sortable"
 
 group :development do
