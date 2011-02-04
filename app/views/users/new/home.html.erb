@@ -1,5 +1,10 @@
 <%= render :partial => 'users/new/home_sidebar' %>
 <div class="main grid_10" style="width: 580px;">
+  <ol id="breadcrumbs" class="clearfix">
+    <li>
+      <a href="" class="replacement home icon icon-redu_r8_c227_s1">Home</a>
+    </li>
+  </ol>
   <%= render :partial => 'statuses/new/create_status',
     :locals => { :statusable => current_user } %>
    <div id="statuses" class="statuses">
@@ -7,7 +12,7 @@
       <%= render :partial => 'statuses/new/item', :collection => @statuses %>
    </ol>
 
-    <div class="endless"><a href="">Mais resultados</a></div>
+   <%= will_paginate @statuses, :renderer => EndlessRenderer %>
   </div><!-- end .statuses -->
 
 

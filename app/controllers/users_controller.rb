@@ -491,6 +491,9 @@ class UsersController < BaseController
       format.html do
         render :template => 'users/new/home', :layout => 'new/application'
       end
+      format.js do
+        render :template => 'users/new/home'
+      end
     end
   end
 

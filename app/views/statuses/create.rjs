@@ -1,8 +1,6 @@
 if params.has_key?(:new_layout)
-  test = escape_javascript(
-    render(:partial =>"statuses/new/item",
-           :locals => {:item => @status, :statusable => @status.statusable}))
-page << "$('#statuses').prepend('"+test+"')"
+page.insert_html :top,  '#statuses > ol', (render :partial =>"statuses/new/item",
+           :locals => {:item => @status, :statusable => @status.statusable})
 else
   test = escape_javascript(render(:partial =>"statuses/type_proxy", :locals => {:type_proxy_counter => nil, :status => @status, :statusable => @status.statusable} ))
 page << "$('.activities').prepend('"+test+"')"
