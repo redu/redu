@@ -7,7 +7,7 @@ class Space < ActiveRecord::Base
   # (MyFile), veículação de comunicados (Bulletin e Forum) e eventos (Event).
 
   # CALLBACKS
-  before_create :create_root_folder
+  after_create :create_root_folder
   after_create :create_forum
   after_create :create_space_association_for_users_course
 

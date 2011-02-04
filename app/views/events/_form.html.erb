@@ -11,7 +11,9 @@
     <%= render :partial => 'shared/limit_char_field', :locals => { :class_textarea => "tagline-#{random_number}" }%>
 
     <%= f.label :description, "Descrição:" %>
-    <%= f.cktext_area :description, :width=>'678px' %> 
+    <%= f.cktext_area :description, :width=>'678px',
+      :swf_params => { :assetable_type => @eventable.class.to_s,
+        :assetable_id => @eventable.id }%>
 
     <%= f.label :start_time, "Início:" %>
     <%= f.datetime_select :start_time %>

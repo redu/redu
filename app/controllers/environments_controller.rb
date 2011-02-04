@@ -88,6 +88,7 @@ class EnvironmentsController < BaseController
         @environment.courses.first.plan = @plan
         @environment.owner = current_user
         @environment.courses.first.owner = current_user
+        @environment.courses.first.create_quota
         @environment.published = true
 
         if @environment.save && @plan.save

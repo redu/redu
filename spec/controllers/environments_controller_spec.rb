@@ -68,10 +68,14 @@ describe EnvironmentsController do
       it "associates the plan to the course" do
         assigns[:environment].courses.first.plan.should == assigns[:plan]
       end
+      
+      it "associates the quota to the course" do
+        course = assigns[:environment].courses.first
+        course.quota.should_not be_nil
+      end
 
       it "associates the plan with the user" do
-      assigns[:plan].user.should == @user
-
+        assigns[:plan].user.should == @user
       end
 
       it "creates the first order" do
