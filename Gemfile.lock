@@ -33,6 +33,11 @@ GEM
     adzap-ar_mailer (2.1.8)
     authlogic (2.1.6)
       activesupport
+    aws-s3 (0.6.2)
+      builder
+      mime-types
+      xml-simple
+    builder (3.0.0)
     cancan (1.4.1)
     cgi_multipart_eof_fix (2.5.0)
     columnize (0.3.2)
@@ -91,6 +96,7 @@ GEM
     shuber-sortable (1.0.6)
     validatable (1.6.7)
     will_paginate (2.3.15)
+    xml-simple (1.0.14)
     zencoder (2.3.1)
       activesupport
       i18n
@@ -102,6 +108,7 @@ DEPENDENCIES
   aanand-deadweight
   adzap-ar_mailer
   authlogic
+  aws-s3
   cancan (= 1.4.1)
   delayed_job!
   desert

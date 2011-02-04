@@ -31,6 +31,7 @@ gem "ghazel-daemons"
 gem "delayed_job", :git => "git://github.com/collectiveidea/delayed_job.git",
   :branch => "v2.0"
 gem "factory_girl"
+gem "aws-s3"
 gem "paperclip", "~> 2.3"
 gem "shuber-sortable"
 
