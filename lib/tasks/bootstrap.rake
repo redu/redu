@@ -2,12 +2,13 @@ namespace :bootstrap do
   desc "Insert test administrator"
   task :default_admin => :environment do
     theadmin = User.new(:login => 'administrator',
-      :email => 'admin@example.com',
+      :email => 'redu@redu.com.br',
       :password => 'reduadmin123',
       :password_confirmation => 'reduadmin123',
       :birthday => 20.years.ago,
       :first_name => 'Admin',
       :last_name => 'Redu',
+      :activated_at => Time.now,
       :role => Role[:admin])
     theadmin.generate_login_slug
     theadmin.send(:create_without_callbacks)
@@ -22,6 +23,7 @@ namespace :bootstrap do
       :password_confirmation => 'redutest123',
       :birthday => 20.years.ago,
       :first_name => 'Test',
+      :activated_at => Time.now,
       :last_name => 'User',
       :role => Role[:member])
     theuser.generate_login_slug

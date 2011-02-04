@@ -74,10 +74,10 @@ GEM
     rmagick (2.12.2)
     rscribd (1.2.0)
       mime-types
-    ruby-debug (0.10.4)
+    ruby-debug (0.10.3)
       columnize (>= 0.1)
-      ruby-debug-base (~> 0.10.4.0)
-    ruby-debug-base (0.10.4)
+      ruby-debug-base (~> 0.10.3.0)
+    ruby-debug-base (0.10.3)
       linecache (>= 0.3)
     validatable (1.6.7)
     will_paginate (2.3.15)
@@ -113,7 +113,7 @@ DEPENDENCIES
   right_aws (~> 2.0.0)
   rmagick (= 2.12.2)
   rscribd
-  ruby-debug
+  ruby-debug (= 0.10.3)
   scribd_fu!
   validatable
   will_paginate (~> 2.3.11)

@@ -22,6 +22,15 @@
 </script>
 <% end %>
 
+<% if controller_name == 'messages' and action_name == 'new'%>
+ <%# stylesheet_link_tag 'jquery.autocomplete.css' %>
+  <%#  javascript_include_tag "jquery.autocomplete.pack.js"%>
+  <%= stylesheet_link_tag "fb_style.css" %>
+   <%=  javascript_include_tag "jquery.fcbkcomplete.min.js"%>
+  
+  
+<% end %>
+
 <% if controller_name == 'users' and action_name == 'show'%>
   <%=  javascript_include_tag "jquery.editinplace.js"%>
 <% end %>
