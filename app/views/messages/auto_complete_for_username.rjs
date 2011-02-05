@@ -1,0 +1,2 @@
+#render :text => @users.map(&:first_name)
+

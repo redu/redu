@@ -2155,6 +2155,17 @@ div.content div.content {
   margin-bottom: 5px;
 }
 
+
+/*
+ * Mensagens
+ */
+.message_body{
+	border: 1px dotted #CCCCCC;
+    margin: 20px;
+    min-height: 200px;
+    padding: 20px;
+}
+
 /** Personal overview **/
 #public-profile .overview .personal-overview .student {
   background: url("../images/ui-elements_r25_c43.png") no-repeat;

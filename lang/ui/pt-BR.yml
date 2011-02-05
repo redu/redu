@@ -797,7 +797,7 @@ pt-BR:
   #en: inactive: inactive
   inactive: inactive
   #en: inbox: Inbox
-  inbox: Caixa de Entrada
+  inbox: Recebidas
   #en: insert: Insert
   insert: Insert
   #en: invite_a_friend: Invite a friend
@@ -1309,7 +1309,7 @@ pt-BR:
   #en: send_me_my_username: Send me my username
   send_me_my_username: Envie-me meu login
   #en: sent_messages: Sent messages
-  sent_messages: Mensagens enviadas
+  sent_messages: Enviadas
   #en: send_this_story_to_friends: Send this message to friends
   send_this_story_to_friends: Send this message to friends
   #en: service_could_not_be_deleted: Service could not be deleted.

@@ -18,9 +18,9 @@ class Message < ActiveRecord::Base
     if in_reply_to
       return nil if in_reply_to.recipient != sender #can only reply to messages you received
       message.reply_to = in_reply_to
-      message.to = in_reply_to.sender.login
+      message.to = in_reply_to.sender.id
       message.subject = "Re: #{in_reply_to.subject}"
-      message.body = "\n\n*Original message*\n\n #{in_reply_to.body}"
+      message.body = "\n\n\n*Messagem Original*\n\n #{in_reply_to.body}"
       message.sender = sender
     end
 

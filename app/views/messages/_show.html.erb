@@ -4,22 +4,45 @@
 </h3>
 <p>
   <%= :from.l + ":" %>
-  <%= @message.sender.eql?(@user) ? link_to("You", user_path(@user)) : link_to(h(@message.sender.login), user_path(@message.sender)) %>
+  <%= link_to(h(@message.sender.login), user_path(@message.sender)) %>
 </p>
 <p>
   <%= :to.l + ":" %>
-  <%= @message.recipient.eql?(@user) ? link_to(:to_you.l, user_path(@user)) : link_to(h(@message.recipient.login), user_path(@message.recipient)) %>
+  <%= link_to(h(@message.recipient.login), user_path(@message.recipient)) %>
 </p>
 <p>
   <%= :date_title.l + ":" %>
   <%= @message.created_at.to_s(:long) %>
 </p>
-<p class='message_body'>
-  <%= auto_link(@message.body) %>
-</p>
 
+<div class='message_body'>
+  <%= auto_link(@message.body) %>
+</div>
+
+<div style="padding-left:20px;">
+
+	 <% if @reply %>    
+       
+		<form class="MainForm" action="#" id="dummy_reply">
+			<textarea rows="4" cols="60" onclick="$('div.new-folder-inner').slideToggle(); $('#dummy_reply').hide(); return false;"></textarea><br>
+			<a href="#" style="padding-top:8px" onclick="$('div.new-folder-inner').slideToggle(); $('#dummy_reply').hide(); $('#message_body').focus(); return false;">Responder</a>
+		</form>	  
+		
+        
+		<div class="new-folder-inner" style="display:none;">
+         
+		  <%=render :partial => 'new', :locals => {:message => @reply, :user => @user}%>
+
+        </div>
+		
+	<% end %>
+	
+<div style="padding-top: 20px;">	
 <% if @message.sender.eql? @user %>
   <%= link_to 'Voltar para mensagens enviadas', index_sent_user_messages_path(@user) %>
 <% else %>
   <%= link_to 'Voltar para caixa de entrada', user_messages_path(@user) %>
 <% end %>
+</div>
+
+ </div>
