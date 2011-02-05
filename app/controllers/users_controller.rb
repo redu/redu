@@ -172,7 +172,9 @@ class UsersController < BaseController
             render :action => :new
           end
         else
-          @beta_key  = @key.key
+          if AppConfig.closed_beta_mode
+            @beta_key  = @key.key
+          end
           render :action => 'new'
         end
       end
