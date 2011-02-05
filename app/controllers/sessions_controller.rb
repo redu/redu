@@ -6,7 +6,7 @@ class SessionsController < BaseController
   end
 
   def new
-    redirect_to user_path(current_user) and return if current_user
+    redirect_to home_user_path(current_user) and return if current_user
     @user_session = UserSession.new
   end
 
@@ -19,7 +19,7 @@ class SessionsController < BaseController
         current_user = @user_session.record
 
         flash[:notice] = :thanks_youre_now_logged_in.l
-        redirect_back_or_default user_path(current_user)
+        redirect_to home_user_path(current_user)
       else
         flash[:notice] = :uh_oh_we_couldnt_log_you_in_with_the_username_and_password_you_entered_try_again.l
         render :action => :new

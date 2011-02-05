@@ -117,7 +117,8 @@ class User < ActiveRecord::Base
     c.validates_format_of_email_field_options = { :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/ }
   end
 
-  has_attached_file :avatar, PAPERCLIP_STORAGE_OPTIONS
+  has_attached_file :avatar,
+    PAPERCLIP_STORAGE_OPTIONS.merge(:default_url => "new/missing_:style.png")
   has_attached_file :curriculum, PAPERCLIP_STORAGE_OPTIONS
 
   has_friends

@@ -1,0 +1,8 @@
+<%# Usuário representado apenas pelo avatar %>
+<li>
+  <% link_to item_short, :title => item_short.display_name, :class => "tooltipable" do %>
+    <%= image_tag(item_short.avatar.url(:nano),
+                  :alt => "#{item_short.login}")
+      %>
+  <% end %>
+</li>

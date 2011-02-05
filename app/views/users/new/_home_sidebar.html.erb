@@ -1,0 +1,38 @@
+<%# Sidebar da home do usuário  %>
+<div class="sidebar alpha grid_3">
+  <div class="image-frame">
+    <!-- <%# Nao setar width e height na imagem %> -->
+    <%= image_tag current_user.avatar.url(:new_thumb),
+      :alt => 'profile', :width => 120, :height => 120 %>
+  </div>
+
+  <ul class="local-nav">
+    <li>
+      <div class="selected session"><a href="" class="icon icon-redu_r8_c333_s1"><%= current_user.display_name %></a></div>
+    </li>
+    <li>
+      <div class="session">
+        <%= link_to "Mensagens (#{current_user.unread_message_count})",
+          user_messages_path(current_user),
+          :class => 'icon icon-redu_r10_c331_s1' %>
+      </div>
+    </li>
+    <li>
+      <div class="session"><a href="" class="icon icon-redu_r8_c379_s1">Meu Mural</a></div>
+    </li>
+    <%= render :partial => 'users/new/sidebar_environment_item',
+      :collection => current_user.environments, :as => :environment %>
+    <li>
+      <div class="session"><a href="" class="icon icon-redu_r8_c325_s1">Contatos</a></div>
+      <ul class="connections clearfix">
+        <% @friends.each do |friend| %>
+          <%= render :partial => 'users/new/item_short',
+            :locals => { :item_short => friend }  %>
+      <% end %>
+      </ul><!-- end .connections -->
+      <%= link_to 'Ver mais', user_friendships_path(current_user),
+        :class => 'more' %>
+    </li>
+  </ul><!-- end .local-nav -->
+</div>
+
