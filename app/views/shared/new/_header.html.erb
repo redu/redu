@@ -3,7 +3,6 @@
     <div id="global-nav" class="grid_6">
       <ul class="clearfix">
         <li class="item-1">
-          <a href="<%=application_url%>">Início</a>
           <% if current_user %>
             <%= link_to "Início", home_user_path(current_user) %>
           <% else %>
