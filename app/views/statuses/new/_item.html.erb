@@ -1,7 +1,7 @@
 <%# Status e suas respostas  %>
 <li id="status-<%= item.id %>">
   <div class="status">
-    <%= image_tag item.user.avatar.url(:small) %>
+    <%= image_tag item.user.avatar.url(:new_small), :class => "avatar" %>
     <span class="message">
       <%= link_to item.user.display_name, user_path(item.user),
         { :class => 'username' } %>
