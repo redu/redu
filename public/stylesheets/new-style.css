@@ -724,13 +724,17 @@
   color: #4CACD4;
 }
 
-#checkout .slogan {
-  font-size: 1.3em;
+#checkout .slogan,
+#checkout .description {
   font-style: normal;
   color: #B2B2B2;
   padding-left: 2px;
   margin-bottom: 30px;
   display: block;
+}
+
+#checkout .slogan {
+  font-size: 1.3em;
 }
 
 #checkout .flow {
@@ -816,6 +820,20 @@
   position: absolute;
   right: 25px;
   bottom: 20px;
+}
+
+#checkout h3 span {
+  display: block;
+  font-size: .6em;
+}
+
+#checkout .description {
+  margin-top: 5px;
+}
+
+#checkout.plan {
+  background: url("../images/new/plans.png") no-repeat 20px 60px;
+  height: 800px;
 }
 
 .replacement {
