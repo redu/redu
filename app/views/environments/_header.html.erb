@@ -57,7 +57,7 @@
              <div class="spaces">
                <%= link_to space.name + "", space_path(space), :class => "current-space" %>
                <span class="arrow-down">▼</span>
-               <ul style="display: none; background-color: #<%= environment.color %>">
+               <ul style="display: none; background-color: #<%= environment.color.nil? ? "#4DADD6" : environment.color %>">
                  <% course.spaces.each do |s| %>
                    <li><%= link_to s.name, space_path(s) %></li>
                  <% end %>
