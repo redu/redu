@@ -82,54 +82,38 @@
             </li>
           </ol>
 
-          <div class="grid_8 alpha">
-            <h3>Ensine</h3>
-            <em class="slogan">Educação a distância nunca foi tão simples.</em>
-
-            <ol class="flow">
-              <li>
-                <strong>Ambiente de Ensino</strong>
-                <p>Áreas privadas e seguras para dispor seus conteúdos e animar a aprendizagem de seus alunos</p>
-              </li>
-              <li>
-                <strong>Curso</strong>
-                <p>Planeje sua atividade de ensino por disciplina, turmas ou áreas temáticas.</p>
-              </li>
-              <li>
-                <strong>Disciplina</strong>
-                <p>Espaço de interação específica do curso e rico em materiais nos quais formadores e aprendizes colaboram numa dinâmica de rede social.</p>
-              </li>
-              <li>
-                <strong>Módulo</strong>
-                <p>Organize seus materiais (do tipo vídeo, texto ou documento) em unidades de aprendizagem flexíveis.  </p>
-              </li>
-            </ol>
+          <div class="grid_4 alpha">
+            <h3>Etapa 2: <span>Informações</span></h3>
+            <em class="description">Escreva as informações básicas do seu ambiente de estudo e do primeiro curso.</em>
           </div>
-
-          <div class="grid_7 omega wizard-0">
+          <div id="url_preview">
+            <span class="base">redu.com.br/</span>
+            <span class="environment"><%= @environment.path %></span>/
+            <span class="base">cursos/</span>
+            <span class="course"><%= @environment.courses.first.path %></span>
+          </div>
+          <div class="customizing">
             <form action="">
-              <p>Crie um ambiente de Ensino a Distância em 3 passos</p>
-              <ol class="clearfix">
-                <li class="clearfix">
-                  <span class="phase">1. Planos</span>
-                  <span class="details">Escolha o plano que melhor se adapta às suas necessidades.</span>
-                </li>
-                <li class="clearfix">
-                  <span class="phase">2. Informações</span>
-                  <span class="details">Descreva as informações básicas do seu ambiente e primeiro curso.</span>
-                </li>
-                <li class="clearfix">
-                  <span class="phase">3. Confirmação</span>
-                  <span class="details">Confirme os dados e realize o pagamento.</span>
-                </li>
-              </ol>
               <fieldset>
                 <label for="">Seu ambiente de ensino:</label>
+                <input type="text" class="big" />
+                <span class="tip">40 caracteres restantes</span>
+                <label for="">Sigla</label>
                 <input type="text" />
-                <label for="">Seu primeiro curso:</label>
-                <input type="text" />
-                <input type="submit" value="Avançar" class="important" />
+                <span class="tip">40 caracteres restantes</span>
+                <label for="">Endereço eletrônico</label>
+                <input type="text" class="big" />
               </fieldset>
+              <fieldset>
+                <label for="">Seu primeiro curso</label>
+                <input type="text" class="big" />
+                <span class="tip">40 caracteres restantes</span>
+                <label for="">Endereço eletrônico</label>
+                <input type="text" class="big" />
+                <span class="tip">40 caracteres restantes</span>
+
+              </fieldset>
+              <input type="submit" value="Assinar" class="important" />
             </form>
           </div>
         </div>

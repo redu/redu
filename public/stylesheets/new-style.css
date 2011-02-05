@@ -789,7 +789,7 @@
   margin-bottom: 40px;
 }
 
-#checkout .wizard-0 label {
+#checkout label {
   display: block;
   float: left;
   width: 120px;
@@ -798,15 +798,19 @@
   font-size: .9em;
   font-weight: bold;
   clear: left;
-  margin-bottom: 20px;
   padding-top: 4px;
   color: #6C6D6E;
 }
 
-#checkout .wizard-0 input[type=text] {
+#checkout label,
+#checkout input[type=text] {
+  margin-top: 20px;
+}
+
+#checkout input[type=text] {
   float: left;
   display: block;
-  width: 260px;
+  width: 245px;
   padding: 8px 0;
 
   border: 1px solid #B3B2B3;
@@ -815,11 +819,27 @@
   border-radius: 5px;
 }
 
-#checkout .wizard-0 input[type=submit] {
+#checkout input[type=text].big {
+  width: 420px;
+}
+
+#checkout input[type=submit] {
   display: block;
   position: absolute;
   right: 25px;
   bottom: 20px;
+}
+
+#checkout form .tip {
+  display: block;
+  color: #B2B2B2;
+  font-size: .9em;
+  clear: left;
+  margin-left: 130px;
+}
+
+#checkout fieldset {
+  padding: 10px;
 }
 
 #checkout h3 span {
@@ -834,6 +854,95 @@
 #checkout.plan {
   background: url("../images/new/plans.png") no-repeat 20px 60px;
   height: 800px;
+}
+
+#checkout .customizing{
+  float: left;
+}
+
+#checkout .customizing form {
+  position: relative;
+  padding-bottom: 50px;
+}
+
+#checkout .customizing input[type=submit] {
+  position: absolute;
+  bottom: 10px;
+  right: 0;
+  clear: both;
+}
+
+#checkout .customizing fieldset {
+  background: url("../images/new/dots.png") repeat-x bottom;
+  padding-bottom: 30px;
+}
+
+input[type=submit].important {
+  border: 1px solid #61BE80;
+  font-family: Copse, Arial, sans-serif;
+  color: white;
+  padding: 3px 30px;
+  font-size: 1.2em;
+
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#AED584', endColorstr='#61BE80'); /* IE */
+  background: -webkit-gradient(linear, left top, left bottom, from(#61BE80), to(#61BE80)); /* webkit browsers */
+  background: -moz-linear-gradient(top,  #AED584,  #61BE80); /* Firefox 3.6+ */
+}
+
+input[type=submit] {
+  font-weight: normal;
+  color: white;
+  padding: 7px 15px;
+  font-size: .9em;
+
+  border: none;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4EADD6', endColorstr='#72C3E6'); /* IE */
+  background: -webkit-gradient(linear, left top, left bottom, from(#72C3E6), to(#4EADD6)); /* webkit browsers */
+  background: -moz-linear-gradient(top, #72C3E6, #4EADD6); /* Firefox 3.6+ */
+
+  -moz-box-shadow: 0px 1px 2px #b1b1b1;
+  -webkit-box-shadow: 0px 1px 2px #b1b1b1;
+  box-shadow: 0px 1px 2px #b1b1b1;
+
+}
+
+input[type=submit].cancel,
+a.cancel {
+  border: 1px solid #B7B7B7;
+  padding: 7px 8px;
+  background: white;
+  font-weight: bold;
+  
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
+a.cancel:hover { text-decoration: none; }
+
+#url_preview {
+  width: 650px;
+  float: left;
+  margin-bottom: 20px;
+}
+
+#url_preview .base {
+  color: #B2B2B2;
+  font-size: 1.5em;
+}
+
+#url_preview .environment,
+#url_preview .course {
+  color: #4CACD4;
+  font-size: 1.5em;
 }
 
 .replacement {
