@@ -3,7 +3,7 @@
   <div class="image-frame">
     <!-- <%# Nao setar width e height na imagem %> -->
     <%= image_tag current_user.avatar.url(:new_thumb),
-      :alt => 'profile' %>
+      :alt => 'profile', :width => 120, :height => 120 %>
   </div>
 
   <ul class="local-nav">
