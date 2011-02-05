@@ -692,6 +692,132 @@
   background: none;
 }
 
+#breadcrumbs.wizard li a {
+  padding-left: 0;
+}
+
+#breadcrumbs.wizard li {
+  padding: 5px 15px 5px 10px;
+}
+
+#breadcrumbs.wizard li:first-child a {
+  padding: 0;
+}
+
+#checkout {
+  border: 1px solid #b3b3b3;
+  -moz-border-radius: 12px;
+  -webkit-border-radius: 12px;
+  border-radius: 12px;
+
+  padding: 10px 20px;
+}
+
+#checkout h3,
+#checkout .wizard-0 p {
+  font-family: Copse, Arial, sans-serif;
+  font-weight: normal;
+}
+
+#checkout h3 {
+  font-size: 2.5em;
+  color: #4CACD4;
+}
+
+#checkout .slogan {
+  font-size: 1.3em;
+  font-style: normal;
+  color: #B2B2B2;
+  padding-left: 2px;
+  margin-bottom: 30px;
+  display: block;
+}
+
+#checkout .flow {
+  background: url("../images/new/flow.gif") no-repeat left center;
+  padding-left: 60px;
+}
+
+#checkout .flow li {
+  margin-bottom: 38px;
+}
+
+#checkout .wizard-0 {
+  border: 1px solid #B3B2B3;
+  -moz-border-radius: 12px;
+  -webkit-border-radius: 12px;
+  border-radius: 12px;
+  background: url("../images/new/wizard-0-background.png") no-repeat;
+  padding: 18px;
+  position: relative;
+}
+
+#checkout .wizard-0 p {
+  color: #60BE7F;
+  font-size: 1.6em;
+  margin: 0 0 20px 130px;
+}
+
+
+#checkout .wizard-0 li {
+  margin-bottom: 20px;
+}
+
+#checkout .wizard-0 .phase {
+  color: #60BE7F;
+  font-weight: bold;
+  width: 120px;
+  display: block;
+  float: left;
+  text-align: right;
+  margin-right: 10px;
+}
+
+#checkout .wizard-0 .details {
+  display: block;
+  width: 270px;
+  float: left;
+  color: #6C6D6E;
+  font-size: .95em;
+}
+
+#checkout .wizard-0 form {
+  margin-bottom: 40px;
+}
+
+#checkout .wizard-0 label {
+  display: block;
+  float: left;
+  width: 120px;
+  text-align: right;
+  margin-right: 10px;
+  font-size: .9em;
+  font-weight: bold;
+  clear: left;
+  margin-bottom: 20px;
+  padding-top: 4px;
+  color: #6C6D6E;
+}
+
+#checkout .wizard-0 input[type=text] {
+  float: left;
+  display: block;
+  width: 260px;
+  padding: 8px 0;
+
+  border: 1px solid #B3B2B3;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
+#checkout .wizard-0 input[type=submit] {
+  display: block;
+  position: absolute;
+  right: 25px;
+  bottom: 20px;
+}
+
 .replacement {
   text-indent: -99999px;
   overflow: hidden;
