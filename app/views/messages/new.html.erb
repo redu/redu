@@ -6,7 +6,7 @@
   <%= render :partial => "sidebar_nav", :locals => {:reading => false}%>
   <div id="tabs-1" class="clearfix first-page">
     <div id="tabs-1-content">
-      <%= render :partial => "new" %>
+      <%= render :partial => "new" , :locals => {:message => @message}%>
     </div>
   </div><!-- end tabs -->
 </div>
