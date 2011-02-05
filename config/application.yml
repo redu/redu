@@ -26,7 +26,7 @@ require_captcha_on_signup: false
 # uncomment these keys if you turn captcha on for commenting or signup
 
 # setup
-closed_beta_mode: true
+closed_beta_mode: false
 show_constellation: false
 activate_payment: false
 show_advertising: false
