@@ -4,6 +4,11 @@
       <ul class="clearfix">
         <li class="item-1">
           <a href="<%=application_url%>">Início</a>
+          <% if current_user %>
+            <%= link_to "Início", home_user_path(current_user) %>
+          <% else %>
+            <%= link_to "Início", new_user_path %>
+          <% end %>
         </li>
         <li class="item-2 selected">
           <% if current_user %>
