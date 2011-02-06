@@ -58,7 +58,7 @@ Rails::Initializer.run do |config|
       :storage => :s3,
       :s3_credentials => S3_CREDENTIALS,
       :bucket => S3_CREDENTIALS['bucket'],
-      :path => "seminar/:attachment/:id/:style/:basename.:extension",
+      :path => ":class/:attachment/:id/:style/:basename.:extension",
       :default_url => "http://redu_assets.s3.amazonaws.com/images/missing_pic.jpg"
     }
 
@@ -67,7 +67,7 @@ Rails::Initializer.run do |config|
       :storage => :s3,
       :s3_credentials => S3_CREDENTIALS,
       :bucket => 'redu_videos',
-      :path => "seminar/:attachment/:id/:style/:basename.:extension",
+      :path => ":class/:attachment/:id/:style/:basename.:extension",
       :default_url => "http://redu_assets.s3.amazonaws.com/images/missing_pic.jpg"
     }
 
