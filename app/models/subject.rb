@@ -64,4 +64,18 @@ class Subject < ActiveRecord::Base
                            :per_page => AppConfig.items_per_page)
   end
 
+  def convert_lectureables!
+    documents = self.lectures.find(:all,
+      :include => "lectureable",
+      :conditions => {:lectureable_type => ["Document"]})
+    documents.each { |d| d.lectureable.upload_to_scribd }
+
+    seminars = self.lectures.find(:all,
+      :include => "lectureable",
+      :conditions => {:lectureable_type => ["Seminar"]})
+    seminars.each do |s|
+      s.lectureable.convert! if s.lectureable.need_transcoding?
+    end
+  end
+
 end
