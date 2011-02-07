@@ -411,4 +411,29 @@ describe Ability do
       it "crates a post"
     end
   end
+
+  context "on user -" do
+    context "when friends" do
+      before do
+        @me = Factory(:user)
+        @me_ability = Ability.new(@me)
+        @my_friend = Factory(:user)
+        @my_friend_ability = Ability.new(@my_friend)
+
+        friendship, status = @me.be_friends_with(@my_friend)
+        friendship.accept!
+      end
+
+      it "should read each other" do
+        @me_ability.should be_able_to(:read, @my_friend)
+        @my_friend_ability.should be_able_to(:read, @me)
+      end
+
+      it "should not manage each other" do
+        @me_ability.should_not be_able_to(:manage, @my_friend)
+        @my_friend_ability.should_not be_able_to(:manage, @me)
+      end
+    end
+
+  end
 end
