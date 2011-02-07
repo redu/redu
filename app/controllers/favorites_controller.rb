@@ -60,7 +60,12 @@ class FavoritesController < BaseController
       flash.now[:notice] = msg_ok
       respond_to do |format|
         if params[:type] == 'Status'
-          format.js { render :template => 'favorites/status_favorite', :locals => {:favoritable_id => @favoritable_id} }
+          #FIXME Tirar new_layout após todo o redesign ser feito
+          if params.has_key? :new_layout
+            format.js { render :template => 'favorites/new/status_favorite' }
+          else
+            format.js { render :template => 'favorites/status_favorite', :locals => {:favoritable_id => @favoritable_id} }
+          end
         else
           format.js
         end
@@ -101,7 +106,12 @@ class FavoritesController < BaseController
       flash.now[:notice] = msg_ok
       respond_to do |format|
         if params[:type] == 'Status'
+          #FIXME Tirar new_layout após todo o redesign ser feito
+          if params.has_key? :new_layout
+            format.js { render :template => 'favorites/new/status_not_favorite' }
+          else
           format.js { render :template => 'favorites/status_not_favorite', :locals => {:favoritable_id => @favoritable_id} }
+          end
         else
           format.js
         end

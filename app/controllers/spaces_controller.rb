@@ -60,34 +60,45 @@ class SpacesController < BaseController
   def admin_bulletins
     paginating_params = {
       :include => :owner,
-      :page => params[:page],
       :order => 'updated_at ASC',
-      :per_page => 20
+      :per_page => AppConfig.items_per_page
     }
+
+    if params.has_key?(:page_pending)
+      paginating_params[:page] = params[:page_pending]
+    else
+      paginating_params[:page] = params[:page]
+    end
 
     @pending_bulletins = @space.bulletins.waiting.paginate(paginating_params)
     @bulletins = @space.bulletins.approved.paginate(paginating_params)
 
     respond_to do |format|
       format.html
+      format.js
     end
   end
 
   def admin_events
     @space = Space.find(params[:id])
-
     paginating_params = {
       :include => :owner,
-      :page => params[:page],
-      :order => 'updated_at ASC',
-      :per_page => 20
+      :order => 'updated_at DESC',
+      :per_page => AppConfig.items_per_page
     }
+
+    if params.has_key?(:page_pending)
+      paginating_params[:page] = params[:page_pending]
+    else
+      paginating_params[:page] = params[:page]
+    end
 
     @pending_events = @space.events.waiting.paginate(paginating_params)
     @events = @space.events.approved.paginate(paginating_params)
 
     respond_to do |format|
       format.html
+      format.js
     end
   end
 
@@ -293,7 +304,7 @@ class SpacesController < BaseController
       render "new"
     else
       flash[:notice] = "Disciplina criada!"
-      redirect_to @space
+      redirect_to environment_course_path(@environment, @course)
     end
   end
 

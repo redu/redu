@@ -1,5 +1,5 @@
 <% unless @courses.empty? %>
-  <table class="common">
+  <table id="course_list" class="common">
     <thead>
       <tr>
         <th>Nome</th>
@@ -7,14 +7,7 @@
         <th>Remover</th>
       </tr>
     </thead>
-    <% @courses.each do |item| %>
-      <tr>
-        <td><%= link_to item.name, environment_course_path(@environment, item) %></td>
-        <td><%= link_to "Editar", edit_environment_course_path(@environment, item) %></td>
-        <td><%= link_to 'Remover', environment_course_path(@environment, item),
-          :confirm => 'Você tem certeza que deseja remover este curso?', :method => :delete %></td>
-      </tr>
-    <% end %>
+    <%= render :partial => 'courses/item_admin', :collection => @courses %>
   <% else %>
     <div class="box_notice">
       Este ambiente de ensino não possui nenhum curso.
@@ -22,3 +15,4 @@
     </div>
   <% end %>
 </table>
+<%= will_paginate @courses, :renderer => EndlessRenderer %>

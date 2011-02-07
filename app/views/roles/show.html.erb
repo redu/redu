@@ -1,4 +1,6 @@
 <div class="grid_16">
+  <%= link_to "Voltar para a administração de membros",
+    admin_members_environment_path(@environment) %>
   <h3>Editar permissões de <%= @user.display_name %></h3>
   <% unless @courses.empty? %>
     <table class="common">
@@ -37,4 +39,6 @@
       <% end %>
     </table>
   <% end %>
+  <%= link_to "Voltar para a administração de membros",
+    admin_members_environment_path(@environment) %>
 </div>

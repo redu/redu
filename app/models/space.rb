@@ -54,6 +54,8 @@ class Space < ActiveRecord::Base
 
   # VALIDATIONS
   validates_presence_of :name, :description, :submission_type
+  validates_length_of :name, :maximum => 40
+  validates_length_of :description, :within => 30..250
 
   def permalink
     APP_URL + '/espacos/' + self.id.to_s + '-' + self.name.parameterize
@@ -105,8 +107,7 @@ class Space < ActiveRecord::Base
   end
 
   def create_root_folder
-    @folder = Folder.create(:name => "root")
-    self.folders << @folder
+    @folder = self.folders.create(:name => "root")
   end
 
   # Muda papeis neste ponto da hieararquia

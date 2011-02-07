@@ -7,7 +7,8 @@
     <%= link_to h(message.subject), user_message_path(@user, message) %>
   </td>
   <td>
-    <%= link_to h(message.sender.display_name), user_path(message.sender) %>
+  	<% otheruser = ((mailbox == :sent) ? message.recipient : message.sender) %>
+    <%= link_to h(otheruser.display_name), user_path(otheruser) %>
   </td>	
   <% if mailbox == "inbox" %>
     <td>  

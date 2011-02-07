@@ -2,10 +2,16 @@ class SubjectsController < BaseController
   layout 'environment'
 
   load_resource :space
-  load_and_authorize_resource :subject, :through => :space
+  load_and_authorize_resource :subject, :through => :space, :except => [:update, :destroy]
+  load_and_authorize_resource :subject, :only => [:update, :destroy]
 
   before_filter :load_course_and_environment
   after_filter :create_activity, :only => [:update]
+
+  rescue_from CanCan::AccessDenied do |exception|
+    flash[:notice] = "Você não tem acesso a essa página"
+    redirect_to infos_space_subject_path(@space, @subject)
+  end
 
   def index
     if can? :manage, @space
@@ -59,6 +65,7 @@ end
   end
 
   def edit
+    @admin_panel = true if params[:admin_panel]
     respond_to do |format|
       format.html
       format.js do
@@ -72,16 +79,17 @@ end
 
   def update
     if @subject.update_attributes(params[:subject])
-      unless @subject.finalized?
+      if @subject.finalized?
+        flash[:notice] = "As atualizações foram salvas."
+      else
         @subject.finalized = true
+        @subject.convert_lectureables!
+        flash[:notice] = "O Módulo foi criado."
       end
       @subject.save
-      flash[:notice] = "O Módulo foi criado."
       render :update do |page|
-        #FIXME Redirecionar para a listagem após trocar as tabs para fake tabs.
-        #page.redirect_to(:controller => 'subjects', :action => 'index',
-                         #:space_id => @subject.space.id)
-        page.redirect_to(:controller => 'subjects', :action => 'index')
+        page.redirect_to(:controller => 'subjects', :action => 'index',
+                         :space_id => @subject.space.id)
       end
     else
       render :template => 'subjects/update_error'

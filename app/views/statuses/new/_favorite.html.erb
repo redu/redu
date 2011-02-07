@@ -1,0 +1,24 @@
+<%# Links de Favoritar e Desfavoritar  %>
+<%= image_tag 'loading_bar.gif', :style => 'display:none;',
+  :id => 'favorite_spinner' %>
+<% if current_user.has_favorite(status) %>
+  <%= link_to_remote('Remover dos favoritos',
+                     { :url => { :controller => :favorites,
+                                :action => :not_favorite,
+                                :id => status.id, :type => status.class.to_s,
+                                :new_layout => true},
+                                :loading => "$('#status-#{status.id} > div > .actions #rm_favorites_link').hide(); $('#status-#{status.id} > div > .actions #favorite_spinner').show();" },
+                     { :class => 'icon icon-redu_r12_c59_s1',
+                       :id => 'rm_favorites_link'})
+  %>
+<% else %>
+    <%= link_to_remote('Adicionar a favoritos',
+                       { :url => { :controller => :favorites,
+                                  :action => :favorite,
+                                  :id => status.id, :type => status.class.to_s,
+                                  :new_layout => true},
+                                  :loading => "$('#status-#{status.id} > div > .actions #favorites_link').hide(); $('#status-#{status.id} > div > .actions #favorite_spinner').show();" },
+                       { :class => 'icon icon-redu_r12_c59_s1',
+                         :id => 'favorites_link'})
+     %>
+<% end %>

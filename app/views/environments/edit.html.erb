@@ -8,7 +8,7 @@
 <div class="grid_16">
   <div class="fake-tabs grid_16 alpha omega">
     <%= render :partial => 'environments/admin_taskbar' %>
-    <div class="panel clearfix grid_15">
+    <div class="panel">
       <h1>Configurações do Ambiente de Ensino</h1>
 
       <% form_for @environment, :html => { :multipart => true } do |f| %>
@@ -16,16 +16,16 @@
         <% field_set_tag "Informações Gerais" do %>
           <%= f.label :name, "Nome" %>
           <%= f.text_field :name  %>
+          <%= f.label :initials, "Sigla" %>
+          <%= f.text_field :initials  %>
           <%= f.label :description, "Description" %>
-          <%= f.cktext_area :description, :width=>'880px', :height => '400px' %>
+          <%= f.text_area :description, :size=>'102x4' %>
           <%= f.label "Palavras-chave <span class='snippet'>(separadas por vírgula)</span>" %>
           <%= f.text_field :tag_list %>
         <% end %>
         <% field_set_tag "Aparência" do %>
           <%= f.label :avatar, "Imagem" %>
           <%= f.file_field :avatar %>
-          <%= f.label :color, "Cor" %>
-          <%= f.select :color, options_for_select(color_picker_colors, :selected => @environment.nil? ? nil : @environment.color )%>
           <%= f.submit "Alterar!" %>
         <% end %>
       <% end %>

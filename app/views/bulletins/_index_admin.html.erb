@@ -1,19 +1,14 @@
 <% unless @bulletins.empty? %>
-  <table class="common">
+  <table id="bulletin_list" class="common">
     <thead>
       <tr>
         <th>Nome</th>
         <th>Remover</th>
       </tr>
     </thead>
-    <% @bulletins.each do |item| %>
-      <tr>
-        <td><%= link_to item.title, polymorphic_path([@space || @environment, item]) %></td>
-        <td><%= link_to 'Remover', polymorphic_path([@space || @environment, item]),
-          :confirm => 'Você tem certeza que deseja remover permanentemente esta notícia?', :method => :delete %></td>
-      </tr>
-    <% end %>
+    <%= render :partial => 'bulletins/item_admin', :collection => @bulletins %>
   </table>
+  <%= will_paginate @bulletins, :renderer => EndlessRenderer %>
   <%= link_to "Crie uma agora!", new_polymorphic_path([@space || @environment, Bulletin.new]),
     :class => 'button'%>
 <% else %>

@@ -6,13 +6,15 @@
       <%= render :partial => 'spaces/taskbar' %>
 
       <div id="content">
-        <%= link_to_remote "Novo Módulo", :url => new_space_subject_path(@space),
-          :method => :get,
-          :loading => "$('#spinner-new-subject').show();",
-          :success => "$('#spinner-new-subject').hide();",
-          :html => { :id => 'link-new-subject' } %>
-        <%= image_tag 'spinner.gif', :id => 'spinner-new-subject',
-          :style => 'display: none;' %>
+        <% if can? :manage, @space %>
+          <%= link_to_remote "Novo Módulo", :url => new_space_subject_path(@space),
+            :method => :get,
+            :loading => "$('#spinner-new-subject').show();",
+            :success => "$('#spinner-new-subject').hide();",
+            :html => { :id => 'link-new-subject' } %>
+          <%= image_tag 'spinner.gif', :id => 'spinner-new-subject',
+            :style => 'display: none;' %>
+        <% end %>
         <%= render :partial => "subject_list"%>
         <%= will_paginate @subjects, :renderer => EndlessRenderer %>
       </div>

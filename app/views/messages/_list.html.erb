@@ -1,5 +1,5 @@
 <li>
-  <%= link_to h(message.subject), user_messages_path(@user), :class => "message" %>
+  <%= link_to h(message.subject), user_message_path(@user, message), :class => "message" %>
   <div class="small quiet">
     de
     <strong>

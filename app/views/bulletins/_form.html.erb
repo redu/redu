@@ -8,11 +8,6 @@
     <%= f.label "Título" %>
     <%= f.text_field :title %>
 
-    <% random_number = get_random_number%>
-    <%= f.label "Breve Descrição" %>
-    <%= f.text_area :tagline, :size => "70x4", :class => "tagline-#{random_number}" %>
-    <%= render :partial => 'shared/limit_char_field', :locals => { :class_textarea => "tagline-#{random_number}" }%>
-
     <%= f.label "Descrição" %>
     <% if @bulletinable.class.to_s == 'Space' %>
       <%= f.cktext_area :description, :width=>'678px',

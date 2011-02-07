@@ -1,5 +1,5 @@
 GIT
-  remote: https://github.com/collectiveidea/delayed_job.git
+  remote: git://github.com/collectiveidea/delayed_job.git
   revision: 3b75e2a
   branch: v2.0
   specs:
@@ -7,7 +7,7 @@ GIT
       daemons
 
 GIT
-  remote: https://github.com/guiocavalcanti/scribd_fu.git
+  remote: git://github.com/guiocavalcanti/scribd_fu.git
   revision: 99d7475
   specs:
     scribd_fu (2.0.9)
@@ -33,6 +33,11 @@ GEM
     adzap-ar_mailer (2.1.8)
     authlogic (2.1.6)
       activesupport
+    aws-s3 (0.6.2)
+      builder
+      mime-types
+      xml-simple
+    builder (3.0.0)
     cancan (1.4.1)
     cgi_multipart_eof_fix (2.5.0)
     columnize (0.3.2)
@@ -84,15 +89,16 @@ GEM
     rspec-rails (1.3.3)
       rack (>= 1.0.0)
       rspec (= 1.3.1)
-    ruby-debug (0.10.4)
+    ruby-debug (0.10.3)
       columnize (>= 0.1)
-      ruby-debug-base (~> 0.10.4.0)
-    ruby-debug-base (0.10.4)
+      ruby-debug-base (~> 0.10.3.0)
+    ruby-debug-base (0.10.3)
       linecache (>= 0.3)
     shoulda (2.11.3)
     shuber-sortable (1.0.6)
     validatable (1.6.7)
     will_paginate (2.3.15)
+    xml-simple (1.0.14)
     zencoder (2.3.1)
       activesupport
       i18n
@@ -104,6 +110,7 @@ DEPENDENCIES
   aanand-deadweight
   adzap-ar_mailer
   authlogic
+  aws-s3
   cancan (= 1.4.1)
   delayed_job!
   desert
@@ -130,7 +137,7 @@ DEPENDENCIES
   rscribd
   rspec (~> 1.3)
   rspec-rails (~> 1.3)
-  ruby-debug
+  ruby-debug (= 0.10.3)
   scribd_fu!
   shoulda
   shuber-sortable

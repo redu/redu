@@ -5,11 +5,6 @@
     <%= f.label :name, "Nome:" %>
     <%= f.text_field :name %>
 
-    <% random_number = get_random_number%>
-    <%= f.label "Breve Descrição" %>
-    <%= f.text_area :tagline, :size => "70x4", :class => "tagline-#{random_number}" %>
-    <%= render :partial => 'shared/limit_char_field', :locals => { :class_textarea => "tagline-#{random_number}" }%>
-
     <%= f.label :description, "Descrição:" %>
     <%= f.cktext_area :description, :width=>'678px',
       :swf_params => { :assetable_type => @eventable.class.to_s,
@@ -27,7 +22,11 @@
     <%= f.label "Tags <span class='snippet'>(separadas por vírgula)</span>" %>
     <%= f.text_field :tag_list %>
 
-    <%= f.submit "Salvar"%>
+    <% if action_name == 'new' %>
+      <%= f.submit "Criar"%>
+    <% else %>
+      <%= f.submit "Salvar"%>
+    <% end %>
     <a href="javascript:history.back()">Voltar</a>
   </fieldset>
 <% end %>

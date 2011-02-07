@@ -12,9 +12,23 @@ describe Environment do
 
   it { should validate_presence_of(:name) }
   it { should validate_presence_of(:path) }
+  xit { should validate_uniqueness_of(:name) }
+  xit { should validate_uniqueness_of(:path) }
+  it { should ensure_length_of(:name).is_at_most 40 }
+  it { should ensure_length_of(:initials).is_at_most(10)}
+  it { should ensure_length_of(:description).is_at_most(400)}
 
   it { should_not allow_mass_assignment_of(:owner)}
   it { should_not allow_mass_assignment_of(:published)}
+
+  context "validations" do
+    it "ensure tags has a length of at most 110"  do
+      tags = (1..100).collect { Factory(:tag) }
+      subject = Factory.build(:environment, :tags => tags)
+      subject.should_not be_valid
+      subject.errors.on(:tags).should_not be_empty
+    end
+  end
 
   context "finders" do
     it "retrieves a Environment by its path" do

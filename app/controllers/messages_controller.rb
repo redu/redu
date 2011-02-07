@@ -1,6 +1,33 @@
 class MessagesController < BaseController
 
   load_and_authorize_resource :user
+   #auto_complete_for :fruit, :name
+
+  #def auto_complete_for_username
+  #  @users = User.find(:all, :conditions => [ 'LOWER(login) LIKE ?', '%' + (params[:message][:to]) + '%' ])
+  #  render :inline => "<%= auto_complete_result(@users, 'login') %>"
+  #end
+  
+  def auto_complete_for_username
+    #TODO perfomance - rails metal , selecionar apenas nome e id
+    if params[:tag]
+      #@users = current_user.following
+       @users = User.find(:all, :select=> "id,first_name", :conditions => [ 'LOWER(first_name) LIKE ?', '%' + (params[:tag]) + '%' ], :limit=>10)
+    @ab = @users.map{|u| {:key => u.first_name, :value => u.id}}
+    else
+      #@users = User.all(:limit=>10)
+    end
+  
+    respond_to do |format|
+     # wants.html
+      format.js do
+        render :json => @ab
+      end
+    end
+
+  end
+
+
 
   def index
     authorize! :manage, @user
@@ -47,21 +74,25 @@ class MessagesController < BaseController
   def create
     messages = []
 
-    if params[:message][:to].blank?
+    if params[:message][:recipient_id]
       # If 'to' field is empty, call validations to catch other
       @message = Message.new(params[:message])
-      @message.valid?
 
-      respond_to do |format|
-        format.html do
-          render :action => :new and return
+      unless @message.valid?
+          respond_to do |format|
+            format.html do
+              render :action => :new and return
+            end
+          end
+          return
+        else
+          messages << @message
         end
-      end
     else
       # If 'to' field isn't empty then make sure each recipient is valid
-      params[:message][:to].split(',').uniq.each do |to|
+      params[:message_to].each do |to|
         @message = Message.new(params[:message])
-        @message.recipient = User.find_by_login(to.strip)
+        @message.recipient = User.find(to)
         @message.sender = @user
         unless @message.valid?
           respond_to do |format|
@@ -74,6 +105,7 @@ class MessagesController < BaseController
           messages << @message
         end
       end
+      end
       # If all messages are valid then send messages
       messages.each {|msg| msg.save!}
       flash[:notice] = :message_sent.l
@@ -82,7 +114,6 @@ class MessagesController < BaseController
           redirect_to index_sent_user_messages_path(@user) and return
         end
       end
-    end
   end
 
   def delete_selected

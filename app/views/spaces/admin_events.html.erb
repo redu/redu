@@ -5,43 +5,10 @@
     <div class="panel">
       <h3>Administracão de Eventos</h3>
       <div id="all_list">
-
-        <% if @pending_events && @pending_events.size > 0 %>
-          <% form_tag :action => :moderate_events do %>
-            <table class="common">
-              <tr>
-                <th style="max-width:25px;">Aprovar</th><th style="max-width:27px;">Rejeitar</th><th>Evento</th><th>Autor</th><th>Data</th>
-              </tr>
-              <% for event in @pending_events %>
-                <tr>
-                  <tr>
-                    <td><%= radio_button_tag '[event]['+ event.id.to_s+']', 'approve'  %></td>
-                    <td><%= radio_button_tag '[event]['+ event.id.to_s+']', 'reject' %></td>
-                    <td><%= link_to event.name, space_event_path(event), :target => "_blank" %> </td>
-                    <td><%= event.owner.display_name %> </td>
-                    <td><%= time_ago_in_words(event.updated_at) %> </td>
-                  </tr>
-                </tr>
-              <% end %>
-            </table>
-            <%= hidden_field_tag("id", @space.id) %>
-            <%= submit_tag "Moderar" %>
-          <% end %>
-        <% else %>
-          <div class="box_notice">
-            Não há eventos a serem moderados.
-          </div>
-        <% end %>
-
-
+        <%= render :partial => 'events/moderate_index_admin' %>
       </div> <!-- fim da listagem --> 
-
       <h3>Eventos Aprovados</h3>
       <%= render :partial => 'events/index_admin' %>
-
-      <div id="pagination" align="center" class="pagination">
-        <%= will_paginate  @events, :params => {:sort_by => @sort_by}, :class => "pagination_number"  %>
-      </div>
     </div> <!-- end panel -->
   </div><!-- end tabs -->
 </div><!-- end main -->

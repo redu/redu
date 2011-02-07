@@ -1,5 +1,5 @@
 # Settings specified here will take precedence over those in config/environment.rb
-APP_URL = "http://beta.redu.com.br" 
+APP_URL = "http://www.redu.com.br" 
 # The production environment is meant for finished, "live" apps.
 # Code is not reloaded between requests
 config.cache_classes = true
@@ -36,7 +36,9 @@ PAPERCLIP_STORAGE_OPTIONS = {
   :styles => { :medium => "220x220>",
                :thumb => "140x140>",
                :small => "60x60>",
-               :nano => "24x24>" }
+               :nano => "24x24>",
+               :new_thumb => "120x120>",
+               :new_small => "32x32>" }
 }
 
 PAPERCLIP_MYFILES_OPTIONS = PAPERCLIP_STORAGE_OPTIONS.merge({

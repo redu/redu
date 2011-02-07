@@ -1,5 +1,6 @@
 page.remove "#{@lecture.id}-item"
-page.insert_html :before, "lectures_types", :partial => 'item_created'
+page.insert_html :before, "lectures_types", :partial => 'item_created',
+  :locals => { :item_created => @lecture }
 case @lecture.lectureable.class.to_s
 when "Page"
   page.remove "page_form"

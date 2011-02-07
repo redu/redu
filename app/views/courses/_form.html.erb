@@ -25,7 +25,7 @@
   <%= f.label :path, :path.l %>
   <%= f.text_field :path %>
   <%= f.label :description, "Descrição" %>
-  <%= f.cktext_area :description, :width=>'860px', :height => '400px' %> 
+  <%= f.cktext_area :description, :toolbar => 'Simple',:width=>'865px', :height => '200px' %> 
   <%= f.label :workload, "Carga Horária" %>
   <%= f.text_field :workload,  :size=> 8 %>
   <%= f.label "Palavras-chave <span class='snippet'>(separadas por vírgula)</span>" %>
@@ -45,6 +45,6 @@
 <% end %>
 <% field_set_tag "Quem pode participar do curso?" do %>
   <%= f.radio_button :subscription_type, "1", :checked => true %> Todos
-  <%= f.radio_button :subscription_type, "2" %> Moderação 
+  <%= f.radio_button :subscription_type, "2" %> Moderação
 <% end %>
 

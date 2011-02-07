@@ -17,7 +17,7 @@ class Subject < ActiveRecord::Base
   acts_as_taggable
 
   validates_presence_of :title
-  validates_size_of :description, :within => 30..200
+  validates_length_of :description, :within => 30..250
   validates_length_of :lectures, :minimum => 1, :on => :update
 
   # Matricula o usuário com o role especificado. Retorna true ou false
@@ -62,6 +62,20 @@ class Subject < ActiveRecord::Base
   def recent_activity(page = 1)
     self.statuses.paginate(:all, :page => page, :order => 'created_at DESC',
                            :per_page => AppConfig.items_per_page)
+  end
+
+  def convert_lectureables!
+    documents = self.lectures.find(:all,
+      :include => "lectureable",
+      :conditions => {:lectureable_type => ["Document"]})
+    documents.each { |d| d.lectureable.upload_to_scribd }
+
+    seminars = self.lectures.find(:all,
+      :include => "lectureable",
+      :conditions => {:lectureable_type => ["Seminar"]})
+    seminars.each do |s|
+      s.lectureable.convert! if s.lectureable.need_transcoding?
+    end
   end
 
 end

@@ -1,0 +1,5 @@
+<tr>
+  <td><%= link_to item_admin.name, polymorphic_path([@space || @environment, item_admin]) %></td>
+  <td><%= link_to 'Remover', polymorphic_path([@space || @environment, item_admin]),
+    :confirm => 'Você tem certeza que deseja remover permanentemente este evento?', :method => :delete %></td>
+</tr>

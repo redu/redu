@@ -29,9 +29,8 @@ class Bulletin < ActiveRecord::Base
   end
 
   # VALIDATIONS
-  validates_presence_of :title, :description, :tagline
-  validates_presence_of :owner
-  validates_presence_of :bulletinable
-  validates_length_of :tagline, :maximum => AppConfig.desc_char_limit
+  validates_presence_of :title, :description, :owner, :bulletinable
+  validates_length_of :title, :maximum => 60
+  validates_length_of :description, :maximum => 200
 
 end

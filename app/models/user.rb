@@ -119,7 +119,8 @@ class User < ActiveRecord::Base
     c.validates_format_of_email_field_options = { :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/ }
   end
 
-  has_attached_file :avatar, PAPERCLIP_STORAGE_OPTIONS
+  has_attached_file :avatar,
+    PAPERCLIP_STORAGE_OPTIONS.merge(:default_url => "new/missing_:style.png")
   has_attached_file :curriculum, PAPERCLIP_STORAGE_OPTIONS
 
   has_friends
@@ -272,7 +273,7 @@ class User < ActiveRecord::Base
     when 'Subject'
       self.teacher?(entity.space) || self.can_manage?(entity.space)
     when 'Lecture'
-      self.teacher?(entity.subject.space) || self.can_manage?(entity.space)
+      self.teacher?(entity.subject.space) || self.can_manage?(entity.subject)
     when 'Exam'
       self.teacher?(entity.subject.space) || self.can_manage?(entity.space)
     when 'Event'
@@ -297,6 +298,8 @@ class User < ActiveRecord::Base
         self.teacher?(entity.statusable)
       when 'Subject'
         self.teacher?(entity.statusable.space)
+      else
+        self == entity.user
       end
     when 'User'
       entity == self
@@ -327,7 +330,11 @@ class User < ActiveRecord::Base
       when 'Folder'
         self.get_association_with(entity.space).nil? ? false : true
       when 'Status'
-        self.has_access_to? entity.statusable
+        unless entity.statusable.class.to_s.eql?("User")
+          self.has_access_to? entity.statusuble
+        else
+          self.friends?(entity.statusable) || self == entity.statusable
+        end
       when 'Lecture'
         self.has_access_to? entity.subject
       when 'Exam'

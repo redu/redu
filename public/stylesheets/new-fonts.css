@@ -1,0 +1,34 @@
+/*
+ * Color schema
+ * links: 158ac4
+ * link:visited:
+ * background box cinza: #f0f0f0
+ * background box azul: #dbeff7
+ * datas e detalhes (cinza): #b3b3b3
+ */
+
+body {
+  font-family: "Arial", "Helvetica", sans-serif;
+  font-size: .8em;
+}
+
+a {
+  color: #158ac4;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+strong {
+  font-weight: bold;
+}
+
+em {
+  font-style: italic;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: bold;
+}

@@ -46,19 +46,19 @@ CKEDITOR.editorConfig = function( config )
 
   config.toolbar_Easy =
     [
-        ['Preview','-','Templates'],
-        ['Cut','Copy','Paste','PasteText','PasteFromWord'],
-        ['Undo','Redo','-','Find','-','SelectAll','RemoveFormat'],
-        ['Bold','Italic','Underline','Strike','-','Subscript','Superscript'],
-        ['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
-        ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
-        ['Link','Unlink','Anchor'],
-        ['Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak'],
-        '/',
-        ['Styles','Format','Font','FontSize'],
-        ['TextColor','BGColor'],
-        ['Maximize','-','About']
-    ];
+    ['Preview','-','Templates'],
+    ['Cut','Copy','Paste','PasteText','PasteFromWord'],
+    ['Undo','Redo','-','Find','-','SelectAll','RemoveFormat'],
+    ['Bold','Italic','Underline','Strike','-','Subscript','Superscript'],
+    ['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
+    ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
+    ['Link','Unlink','Anchor'],
+    ['Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak'],
+    '/',
+    ['Styles','Format','Font','FontSize'],
+    ['TextColor','BGColor'],
+    ['Maximize','-','About']
+      ];
 };
 
 

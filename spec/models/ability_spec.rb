@@ -440,27 +440,62 @@ describe Ability do
         @ability.should be_able_to(:manage, @invoice)
       end
     end
+  end
+  context "the strange" do
+    before do
+      strange = Factory(:user)
+      @ability = Ability.new(strange)
+    end
 
-    context "the strange" do
+    it "can NOT read others plans" do
+      @ability.should_not be_able_to(:read, @plan)
+    end
+
+    it "can NOT manage others plans" do
+      @ability.should_not be_able_to(:manage, @plan)
+    end
+
+    it "can NOT read others plan's invoice" do
+      @ability.should_not be_able_to(:read, @invoice)
+    end
+    it "can NOT manage others plan's invoice" do
+      @ability.should_not be_able_to(:manage, @invoice)
+    end
+  end
+  context "on user -" do
+    before do
+      @user = Factory(:user)
+      @user_ability = Ability.new(@user)
+    end
+
+    context "when friends" do
       before do
-        strange = Factory(:user)
-        @ability = Ability.new(strange)
+        @my_friend = Factory(:user)
+        @my_friend_ability = Ability.new(@my_friend)
+
+        friendship, status = @user.be_friends_with(@my_friend)
+        friendship.accept!
       end
 
-      it "can NOT read others plans" do
-        @ability.should_not be_able_to(:read, @plan)
+      it "should read each other" do
+        @user_ability.should be_able_to(:read, @my_friend)
+        @my_friend_ability.should be_able_to(:read, @user)
       end
 
-      it "can NOT manage others plans" do
-        @ability.should_not be_able_to(:manage, @plan)
-      end
-
-      it "can NOT read others plan's invoice" do
-        @ability.should_not be_able_to(:read, @invoice)
-      end
-      it "can NOT manage others plan's invoice" do
-        @ability.should_not be_able_to(:manage, @invoice)
+      it "should not manage each other" do
+        @user_ability.should_not be_able_to(:manage, @my_friend)
+        @my_friend_ability.should_not be_able_to(:manage, @user)
       end
     end
+
+    it "manages itself" do
+      @user_ability.should be_able_to(:manage, @user)
+    end
+
+    it "manages its own statuses" do
+      status = Factory(:status, :user => @user)
+      @user_ability.should be_able_to(:manage, status)
+    end
+
   end
 end

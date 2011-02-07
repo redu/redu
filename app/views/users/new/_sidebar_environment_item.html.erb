@@ -1,0 +1,21 @@
+<%# Lista o Environment e todos os seus Courses e Spaces  %>
+<li>
+  <div class="session">
+    <%= link_to environment.name, environment_path(environment),
+      :class =>"icon icon-redu_r8_c217_s1" %>
+  </div>
+  <ul class="courses">
+    <% environment.courses.each do |course| %>
+      <li>
+        <%= link_to course.name, environment_course_path(environment, course) %>
+        <ul class="spaces">
+          <% course.spaces.each do |space| %>
+            <li>
+              <%= link_to space.name, space_path(space) %>
+            </li>
+          <% end %>
+        </ul>
+      </li>
+    <% end %>
+  </ul>
+</li>

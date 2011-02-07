@@ -172,7 +172,9 @@ class UsersController < BaseController
             render :action => :new
           end
         else
-          @beta_key  = @key.key
+          if AppConfig.closed_beta_mode
+            @beta_key  = @key.key
+          end
           render :action => 'new'
         end
       end
@@ -480,6 +482,21 @@ class UsersController < BaseController
     end
 
     send_file @user.curriculum.path, :type => @user.curriculum.content_type
+  end
+
+  def home
+    @friends = current_user.friends.paginate(:page => 1, :per_page => 9)
+    @statuses = current_user.recent_activity(params[:page])
+    @status = Status.new
+
+    respond_to do |format|
+      format.html do
+        render :template => 'users/new/home', :layout => 'new/application'
+      end
+      format.js do
+        render :template => 'users/new/home'
+      end
+    end
   end
 
   protected

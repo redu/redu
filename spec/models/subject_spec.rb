@@ -3,10 +3,6 @@ require 'spec_helper'
 describe Subject do
   subject { Factory(:subject) }
 
-  it { should validate_presence_of :title }
-  #FIXME falhando por problema de tradução
-  xit { should ensure_length_of(:description).is_at_least(30).is_at_most(200) }
-
   it { should belong_to :space }
   it { should belong_to :owner }
   it { should have_many(:lectures).dependent(:destroy) }
@@ -15,6 +11,10 @@ describe Subject do
   it { should have_many(:members).through(:enrollments) }
   it { should have_many(:statuses).dependent(:destroy) }
   it { should have_many(:logs).dependent(:destroy) }
+
+  it { should validate_presence_of :title }
+  #FIXME falhando por problema de tradução
+  xit { should ensure_length_of(:description).is_at_least(30).is_at_most(250) }
 
   it { should_not allow_mass_assignment_of(:owner) }
   it { should_not allow_mass_assignment_of(:published) }

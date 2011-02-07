@@ -16,5 +16,5 @@
 </ul>
 <%= link_to "Ver mais", space_events_path(@space), :class => "icon more" %>
 <% else %>
-  <div class="box_notice">Não há eventos criados. <%= link_to "Crie aqui", new_space_event_path(@space) %></div>
+  <div class="box_notice">Não há eventos criados. <%= link_to "Crie aqui", new_space_event_path(@space) if can? :manage, @space %></div>
 <% end %>
