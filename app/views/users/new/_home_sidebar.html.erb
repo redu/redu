@@ -8,17 +8,26 @@
 
   <ul class="local-nav">
     <li>
-      <div class="selected session"><a href="" class="icon icon-redu_r8_c333_s1"><%= current_user.display_name %></a></div>
+      <div class="<%= (current_page? :controller => :users, :action => :home) ?
+        "session selected".to_s : "session".to_s %>">
+      <%= link_to current_user.display_name, home_user_path(current_user),
+        :class => 'icon icon-redu_r8_c333_s1' %>
+      </div>
     </li>
     <li>
-      <div class="session">
+      <div class="<%= (current_page? :controller => :messages, :action => :index) ?
+        "session selected".to_s : "session".to_s %>">
         <%= link_to "Mensagens (#{current_user.unread_message_count})",
           user_messages_path(current_user),
           :class => 'icon icon-redu_r10_c331_s1' %>
       </div>
     </li>
     <li>
-      <div class="session"><a href="" class="icon icon-redu_r8_c379_s1">Meu Mural</a></div>
+      <div class="<%= (current_page? :controller => :users, :action => :mural) ?
+        "session selected".to_s : "session".to_s %>">
+        <%= link_to 'Meu Mural', mural_user_path(current_user),
+        :class => "icon icon-redu_r8_c379_s1" %>
+      </div>
     </li>
     <%= render :partial => 'users/new/sidebar_environment_item',
       :collection => current_user.environments, :as => :environment %>
