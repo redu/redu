@@ -296,9 +296,11 @@ class User < ActiveRecord::Base
         self.teacher?(entity.statusable)
       when 'Subject'
         self.teacher?(entity.statusable.space)
+      else
+        self == entity.user
       end
     when 'User'
-      entity == self
+      self == entity
     end
   end
 
