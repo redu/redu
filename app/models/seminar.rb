@@ -145,6 +145,7 @@ class Seminar < ActiveRecord::Base
   def transcode
     seminar_info = {
       :id => self.id,
+      :class => self.class.to_s.tableize,
       :attachment => 'medias',
       :style => 'original',
       :basename => self.original_file_name.split('.')[0],
