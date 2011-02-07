@@ -259,7 +259,6 @@ class User < ActiveRecord::Base
   end
 
   def can_manage?(entity)
-    debugger
     entity.nil? and return false
     self.admin? and return true
     self.environment_admin? entity and return true
