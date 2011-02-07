@@ -66,10 +66,11 @@ class Status < ActiveRecord::Base
   # Dado um usuário, retorna os status dos amigos
   def Status.friends_statuses(user, page)
     sql = "SELECT DISTINCT s.* FROM statuses s " + \
-      "LEFT OUTER JOIN friendships f " + \
-      "ON (f.user_id = s.user_id) " + \
-      "WHERE f.friend_id = #{user.id} OR s.user_id = #{user.id} " + \
-    "ORDER BY s.created_at DESC"
+          "LEFT OUTER JOIN friendships f " + \
+          "ON (f.user_id = s.user_id) " + \
+          "WHERE f.friend_id = #{user.id} OR " + \
+            "(s.user_id = #{user.id} AND s.kind != #{Status::ANSWER}) " + \
+          "ORDER BY s.created_at DESC"
 
     Status.paginate_by_sql(sql, :page => page, :order => 'created_at DESC', :per_page => AppConfig.items_per_page)
   end
