@@ -145,9 +145,9 @@ function fullScreen(full){
         <% if can? :manage, @lecture %>
 
           <%= link_to 'Editar', edit_space_subject_lecture_path(@space, @subject, @lecture) ,:class => "icon-edit" %>
-          <%= link_to 'Remove', space_subject_lecture_path(@space.id, @subject.id, @lecture.id), {:confirm => 'Você tem certeza que quer remover esta aula do Redu permanentemente?',
-            :method => :delete, :class => "icon-delete"}%>
-
+             <%= link_to 'Remover', space_subject_lecture_path(@space.id, @subject.id, @lecture.id),
+               {:confirm => 'Você tem certeza que quer remover esta aula do Redu permanentemente?',
+               :method => :delete, :class => "icon-delete"}%>
         <% end %>
       </div>
     </div>
