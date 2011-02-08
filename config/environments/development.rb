@@ -24,13 +24,15 @@ config.action_mailer.raise_delivery_errors = false
 PAPERCLIP_STORAGE_OPTIONS = {
   :path => "public/system/:class/:attachment/:id/:style/:basename.:extension",
   :url => "/system/:class/:attachment/:id/:style/:basename.:extension",
-  :default_url => "missing_:style.png",
+  :default_url => "new/missing_:class_:style.png",
   :styles => { :medium => "220x220>",
                :thumb => "140x140>",
                :small => "60x60>",
                :nano => "24x24>",
-               :new_thumb => "120x120>",
-               :new_nano => "32x32>" }
+               :thumb_150 => "150x150>",
+               :thumb_120 => "120x120>",
+               :thumb_100 => "100x100>",
+               :thumb_32 => "32x32>" }
 }
 
 VIDEO_ORIGINAL = PAPERCLIP_STORAGE_OPTIONS.delete(:styles)

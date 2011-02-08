@@ -34,7 +34,7 @@ class Event < ActiveRecord::Base
   # VALIDATIONS
   validates_presence_of :name, :identifier => 'validates_presence_of_name'
   validates_presence_of :description, :start_time, :end_time, :owner
-  validates_length_of :title, :maximum => 60
+  validates_length_of :name, :maximum => 60
   validates_length_of :description, :maximum => 200
 
   def time_and_date

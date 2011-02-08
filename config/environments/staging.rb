@@ -32,13 +32,15 @@ PAPERCLIP_STORAGE_OPTIONS = {
   :s3_credentials => S3_CREDENTIALS,
   :bucket => S3_CREDENTIALS['bucket'],
   :path => ":class/:attachment/:id/:style/:basename.:extension",
-  :default_url => "http://redu_assets.s3.amazonaws.com/images/missing_:style.png",
+  :default_url => "http://redu_assets.s3.amazonaws.com/images/new/missing_:style.png",
   :styles => { :medium => "220x220>",
                :thumb => "140x140>",
                :small => "60x60>",
                :nano => "24x24>",
-               :new_thumb => "120x120>",
-               :new_small => "32x32>" }
+               :thumb_150 => "150x150>",
+               :thumb_120 => "120x120>",
+               :thumb_100 => "100x100>",
+               :thumb_32 => "32x32>" }
 }
 
 PAPERCLIP_MYFILES_OPTIONS = PAPERCLIP_STORAGE_OPTIONS.merge({

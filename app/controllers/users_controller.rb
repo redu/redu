@@ -499,6 +499,21 @@ class UsersController < BaseController
     end
   end
 
+  def mural
+    @friends = current_user.friends.paginate(:page => 1, :per_page => 9)
+    @statuses = current_user.statuses.paginate(:page => params[:page], :per_page => 10)
+    @status = Status.new
+
+    respond_to do |format|
+      format.html do
+        render :template => 'users/new/mural', :layout => 'new/application'
+      end
+      format.js do
+        render :template => 'users/new/mural'
+      end
+    end
+  end
+
   protected
   def setup_metro_areas_for_cloud
     @metro_areas_for_cloud = MetroArea.find(:all, :conditions => "users_count > 0", :order => "users_count DESC", :limit => 100)

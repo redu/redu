@@ -119,8 +119,7 @@ class User < ActiveRecord::Base
     c.validates_format_of_email_field_options = { :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/ }
   end
 
-  has_attached_file :avatar,
-    PAPERCLIP_STORAGE_OPTIONS.merge(:default_url => "new/missing_:style.png")
+  has_attached_file :avatar, PAPERCLIP_STORAGE_OPTIONS
   has_attached_file :curriculum, PAPERCLIP_STORAGE_OPTIONS
 
   has_friends
@@ -287,11 +286,11 @@ class User < ActiveRecord::Base
           self.can_manage?(entity.bulletinable)
       end
     when 'Folder'
-      self.teacher?(entity.space) || self.can_manage?(entity.space)
+      self.teacher?(entity.space) || self.tutor?(entity.space) || self.can_manage?(entity.space)
     when 'Topic'
-      self.teacher?(entity.space) || self.can_manage?(entity.space)
+      self.member?(entity.space)
     when 'SbPost'
-      self.teacher?(entity.space) || self.can_manage?(entity.space)
+      self.member?(entity.space)
     when 'Status'
       case entity.statusable.class.to_s
       when 'Space'

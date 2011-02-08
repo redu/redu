@@ -91,15 +91,9 @@ class FoldersController < BaseController
       else
         format.html {
           flash[:error] = @myfile.errors.full_messages.join(", ")
-          redirect_to @space
+          redirect_to space_folders_path(@space)
         }
-        format.js do
-          responds_to_parent do
-            render :update do |page|
-              # update the page with an error message
-            end
-          end
-        end
+        format.js
       end
     end
   end
