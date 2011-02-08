@@ -287,11 +287,11 @@ class User < ActiveRecord::Base
           self.can_manage?(entity.bulletinable)
       end
     when 'Folder'
-      self.teacher?(entity.space)
+      self.teacher?(entity.space) || self.can_manage?(entity.space)
     when 'Topic'
-      self.teacher?(entity.space)
+      self.teacher?(entity.space) || self.can_manage?(entity.space)
     when 'SbPost'
-      self.teacher?(entity.space)
+      self.teacher?(entity.space) || self.can_manage?(entity.space)
     when 'Status'
       case entity.statusable.class.to_s
       when 'Space'
@@ -307,6 +307,8 @@ class User < ActiveRecord::Base
       entity.user == self
     when 'Invoice'
       self.can_manage?(entity.plan)
+    when 'Myfile'
+      self.can_manage?(entity.folder)
     end
   end
 
@@ -358,7 +360,7 @@ class User < ActiveRecord::Base
        (object.class.to_s.eql? 'Status') || (object.class.to_s.eql? 'User') ||
        (object.class.to_s.eql? 'Friendship') || (object.class.to_s.eql? 'Plan') ||
        (object.class.to_s.eql? 'Invoice')
-        
+
        self.has_access_to?(object)
     else
       object.published? && self.has_access_to?(object)
