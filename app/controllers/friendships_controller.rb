@@ -15,8 +15,9 @@ class FriendshipsController < BaseController
       end
       format.js do
         render :update do |page|
-          page.show 'unfollow_link'
-          page.hide 'follow_link'
+          page.insert_html :after, 'follow_link',
+           'Aguardando aceitação'
+          page.remove 'follow_link'
         end
       end
     end
