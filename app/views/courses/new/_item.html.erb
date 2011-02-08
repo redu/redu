@@ -1,0 +1,44 @@
+<li class="clearfix">
+  <div class="info">
+    <%= image_tag 'new/missing_courses_thumb_32.png', :alt => 'curso' %>
+    <%= link_to item.name, environment_course_path(item.environment, item),
+      :class => 'name' %>
+    <ul class="tags">
+      <% item.tags.each do |tag| %>
+        <li>
+          <%= link_to tag, environment_path(item.environment) %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+  <div class="audience">
+    <em>Audiência</em>
+    <ul>
+      <% item.audiences.each do |audience| %>
+        <li>
+          <%= link_to audience.name, environment_path(item.environment) %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+  <div class="statistics">
+    <ul class="statistics">
+      <li>
+        <em>Membros:</em>
+        <span><%= item.approved_users.length %></span>
+      </li>
+      <li>
+        <em>Administradores:</em>
+        <span><%= item.administrators.length %></span>
+      </li>
+      <li>
+        <em>Professores:</em>
+        <span><%= item.teachers.length %></span>
+      </li>
+      <li>
+        <em>Tutores:</em>
+        <span><%= item.tutors.length %></span>
+      </li>
+    </ul>
+  </div>
+</li>

@@ -36,10 +36,13 @@ class EnvironmentsController < BaseController
     else
       @courses = @environment.courses.published.paginate(paginating_params)
     end
-    @featured = @environment.bulletins.all(:limit => 3, :order => "created_at DESC")
+
+    @environment_users = @environment.users.all(:limit => 9)
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html do
+        render :template => 'environments/new/show', :layout => 'new/application'
+      end # new/show.html.erb
       format.xml  { render :xml => @environment }
     end
   end
