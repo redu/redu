@@ -43,6 +43,9 @@ class EnvironmentsController < BaseController
       format.html do
         render :template => 'environments/new/show', :layout => 'new/application'
       end # new/show.html.erb
+      format.js do
+        render :template => 'environments/new/show'
+      end
       format.xml  { render :xml => @environment }
     end
   end

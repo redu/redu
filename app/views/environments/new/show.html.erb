@@ -54,7 +54,7 @@
       <%= link_to 'Criar novo curso', new_environment_course_path(@environment) %>
     </div>
 
-    <ul class="hierarchy-listing">
+    <ul id="courses_list" class="hierarchy-listing">
       <%= render :partial => 'courses/new/item',
         :collection => @courses %>
     </ul>
