@@ -696,6 +696,10 @@
   padding-left: 0;
 }
 
+#breadcrumbs.wizard li .disabled { 
+  color: #B2B2B2;
+}
+
 #breadcrumbs.wizard li {
   padding: 5px 15px 5px 10px;
 }
@@ -870,9 +874,16 @@
   margin-top: 5px;
 }
 
-#checkout.plan {
+#checkout .plan {
   background: url("../images/new/plans.png") no-repeat 20px 60px;
-  height: 800px;
+  height: 700px;
+  position: relative;
+}
+
+#checkout .plan .important {
+  position: absolute;
+  left: 60px;
+  bottom: 75px;
 }
 
 #checkout .customizing{
