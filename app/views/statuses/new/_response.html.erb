@@ -1,7 +1,7 @@
 <%# Status resposta %>
 <li id="status-<%= response.id %>">
   <div class="re-status">
-    <%= image_tag response.user.avatar.url(:new_small), :width => 32, :height => 32,
+    <%= image_tag response.user.avatar.url(:thumb_32), :width => 32, :height => 32,
       :class => 'avatar'%>
    <span class="message">
       <%= link_to response.user.display_name, user_path(response.user),

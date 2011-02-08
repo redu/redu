@@ -1,8 +1,7 @@
 <%# Sidebar da home do usuário  %>
 <div class="sidebar alpha grid_3">
   <div class="image-frame">
-    <!-- <%# Nao setar width e height na imagem %> -->
-    <%= image_tag current_user.avatar.url(:new_thumb),
+    <%= image_tag current_user.avatar.url(:thumb_120),
       :alt => 'profile', :width => 120, :height => 120 %>
   </div>
 
