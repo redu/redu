@@ -21,15 +21,25 @@
 		</li>
 	<% else %>
           <li>
-		<% deja = @user.friendships.include?(current_user) %>
+            <% if @user.friends? current_user %>
+              <%= link_to_remote 'Remover amigo',
+                :url => user_friendship_path(@user.id, nil), :method => :delete,
+                :html => {:id => "unfollow_link" } %>
+            <% else %>
+              <% friendship = @user.friendship_for current_user %>
+              <% if friendship %>
+                <% if friendship.status == 'pending' %>
+                  Aguardando aceitação
+                <% elsif friendship.status == 'requested' %>
+                  Aguardando a sua aceitação
+                <% end %>
+              <% else %>
                 <%= link_to_remote 'Adicionar aos amigos',
                   :url => user_friendships_path(@user.id),
-                  :html =>{:class => "icon ico-follow",
-                    :style => "display:" + ((deja) ? 'none' : 'block'),
-                    :id => "follow_link"} %>
-                <%= link_to_remote 'Remover amigo', :url => user_friendship_path(@user.id, nil), :method => :delete,
-                  :html =>{ :style => "display:"+ ((deja) ? 'block' : 'none'),
-                  :id => "unfollow_link" } %>
+                  :html =>{ :class => "icon ico-follow",
+                            :id => "follow_link"} %>
+              <% end %>
+            <% end %>
 		</li>
 	<% end %>
 	</ul>

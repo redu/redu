@@ -285,7 +285,7 @@ class User < ActiveRecord::Base
           self.can_manage?(entity.bulletinable)
       end
     when 'Folder'
-      self.teacher?(entity.space)
+      self.teacher?(entity.space) || self.tutor?(entity.space) || self.can_manage?(entity.space)
     when 'Topic'
       self.teacher?(entity.space)
     when 'SbPost'
