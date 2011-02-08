@@ -795,7 +795,7 @@
   float: left;
   width: 120px;
   text-align: right;
-  margin-right: 10px;
+  margin-right: 20px;
   font-size: .9em;
   font-weight: bold;
   clear: left;
@@ -815,7 +815,7 @@
 #checkout input[type=text] {
   float: left;
   display: block;
-  width: 229px;
+  width: 219px;
   padding: 8px;
 
   border: 1px solid #B3B2B3;
@@ -844,7 +844,7 @@
   color: #B2B2B2;
   font-size: .9em;
   clear: left;
-  margin-left: 130px;
+  margin-left: 140px;
 }
 
 #checkout .environment-box {
@@ -897,11 +897,66 @@
   padding-bottom: 30px;
 }
 
+#checkout .confirmation {
+  float: left;
+  width: 670px;
+  padding-bottom: 50px;
+}
+
+#checkout .confirmation table {
+  width: 100%;
+  margin-top: 20px;
+  display: block;
+}
+
+#checkout .confirmation tbody {
+  background: url("../images/new/dots.png") repeat-x top;
+  width: 560px;
+  display: block;
+  padding-top: 10px;
+}
+
+#checkout .confirmation thead {
+  display: none;
+}
+
+#checkout .confirmation tbody td {
+  padding: 10px 0;
+  vertical-align: middle;
+}
+
+#checkout .confirmation tbody .value {
+  font-size: 1.1em;
+}
+
+#checkout .confirmation .environment {
+  background: url("../images/new/icon-environment-blue_48_48.png") no-repeat center right;
+}
+
+#checkout .confirmation .course {
+  background: url("../images/new/icon-course-blue_48_48.png") no-repeat center right;
+}
+
+#checkout .confirmation .plan {
+  background: url("../images/new/icon-teacher-blue_48_48.png") no-repeat center right;
+}
+
+#checkout .confirmation .domain {
+  color: #B2B2B2;
+}
+
+#checkout .confirmation .important {
+  float: right;
+  margin-top: 20px;
+  display: block;
+}
+
+a.important,
 input[type=submit].important {
   border: 1px solid #61BE80;
   font-family: Copse, Arial, sans-serif;
   color: white;
-  padding: 3px 30px;
+  padding: 5px 30px;
   font-size: 1.2em;
 
   -moz-border-radius: 5px;
