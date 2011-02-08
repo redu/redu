@@ -64,7 +64,7 @@
 
       <div id="content" class="container_16 clearfix">
         <div class="clearfix" id="checkout">
-          <ol id="breadcrumbs" class="wizard clearfix">
+          <ol id="breadcrumbs" class="wizard wizard-2 clearfix">
             <li>
               <a href="" class="replacement home icon icon-redu_r8_c227_s1">Home</a>
             </li>
@@ -87,26 +87,32 @@
             <em class="description">Escreva as informações básicas do seu ambiente de estudo e do primeiro curso.</em>
           </div>
           <div id="url_preview">
+            <span class="label">O seu endereço completo será:</span>
             <span class="base">redu.com.br/</span>
             <span class="environment"><%= @environment.path %></span>/
             <span class="base">cursos/</span>
             <span class="course"><%= @environment.courses.first.path %></span>
           </div>
           <div class="customizing">
-            <form action="">
+            <form action="" class="highlightable">
+              <!-- <%# Perceber que o for tem que ser igual ao ID do input correspondente (efeito highlight) %> -->
               <fieldset>
-                <label for="">Seu ambiente de ensino:</label>
-                <input type="text" class="big" />
+                <div class="environment-box clearfix">
+                  <label for="teste">Seu ambiente de ensino:</label>
+                  <input type="text" id="teste" class="big" />
+                </div>
                 <span class="tip">40 caracteres restantes</span>
-                <label for="">Sigla</label>
-                <input type="text" />
+                <label for="sigla">Sigla</label>
+                <input type="text" id="sigla" />
                 <span class="tip">40 caracteres restantes</span>
                 <label for="">Endereço eletrônico</label>
                 <input type="text" class="big" />
               </fieldset>
               <fieldset>
-                <label for="">Seu primeiro curso</label>
-                <input type="text" class="big" />
+                <div class="course-box clearfix">
+                  <label for="">Seu primeiro curso</label>
+                  <input type="text" class="big" />
+                </div>
                 <span class="tip">40 caracteres restantes</span>
                 <label for="">Endereço eletrônico</label>
                 <input type="text" class="big" />

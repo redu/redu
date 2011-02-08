@@ -789,6 +789,7 @@
   margin-bottom: 40px;
 }
 
+#checkout .label,
 #checkout label {
   display: block;
   float: left;
@@ -802,6 +803,10 @@
   color: #6C6D6E;
 }
 
+#checkout label.focus {
+  color: #4CACD5;
+}
+
 #checkout label,
 #checkout input[type=text] {
   margin-top: 20px;
@@ -810,13 +815,17 @@
 #checkout input[type=text] {
   float: left;
   display: block;
-  width: 245px;
-  padding: 8px 0;
+  width: 229px;
+  padding: 8px;
 
   border: 1px solid #B3B2B3;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
+}
+
+#checkout input[type=text]:focus {
+  border-color: #4CACD5;
 }
 
 #checkout input[type=text].big {
@@ -836,6 +845,16 @@
   font-size: .9em;
   clear: left;
   margin-left: 130px;
+}
+
+#checkout .environment-box {
+  background: url("../images/new/icon-environment-blue_48_48.png") no-repeat center right;
+  padding-bottom: 10px;
+}
+
+#checkout .course-box {
+  background: url("../images/new/icon-course-blue_48_48.png") no-repeat center right;
+  padding-bottom: 10px;
 }
 
 #checkout fieldset {
@@ -858,6 +877,7 @@
 
 #checkout .customizing{
   float: left;
+  width: 670px;
 }
 
 #checkout .customizing form {
@@ -932,17 +952,18 @@ a.cancel:hover { text-decoration: none; }
   width: 650px;
   float: left;
   margin-bottom: 20px;
+  padding: 10px;
 }
 
 #url_preview .base {
   color: #B2B2B2;
-  font-size: 1.5em;
+  font-size: 1.3em;
 }
 
 #url_preview .environment,
 #url_preview .course {
   color: #4CACD4;
-  font-size: 1.5em;
+  font-size: 1.3em;
 }
 
 .replacement {

@@ -33,6 +33,20 @@ jQuery(function(){
         $(this).parents("form").find("input[type=submit], .cancel, .char-limit").fadeOut();
     });
 
+    // Adicionar classe focus a um determinado label quando o seu campo 
+    // correspondente detectar o evento focus
+    $("input[type=text], input[type=password], input[type=radio], input[type=checkbox]","form.highlightable").focus(function(){
+      var label_for = $(this).attr("id") || null;
+
+      if(label_for)
+        $("label[for=" + label_for + "]").addClass("focus");
+  }).blur(function(){
+      var label_for = $(this).attr("id") || null;
+
+      if(label_for)
+        $("label[for=" + label_for + "]").removeClass("focus");
+  });
+
 });
 
 function limitChars(textclass, limit, infodiv){
