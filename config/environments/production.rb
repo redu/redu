@@ -1,5 +1,5 @@
 # Settings specified here will take precedence over those in config/environment.rb
-APP_URL = "http://beta.redu.com.br" 
+APP_URL = "http://www.redu.com.br" 
 # The production environment is meant for finished, "live" apps.
 # Code is not reloaded between requests
 config.cache_classes = true

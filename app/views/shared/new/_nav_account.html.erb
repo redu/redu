@@ -10,10 +10,11 @@
           :title => 'editar', :class => 'edit' %>
       </li>
       <li>
-        <a href="#">Mensagens (0)</a>
+        <%= link_to "Mensagens (#{current_user.unread_message_count})",
+          user_messages_path(current_user) %>
       </li>
       <li>
-        <a href="#">Configurações</a>
+        <%= link_to "Configurações", edit_user_path(current_user) %>
       </li>
       <li>
         <%= link_to 'Sair', logout_path %>

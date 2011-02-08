@@ -20,7 +20,7 @@
           :collection => @subject.lectures, :as => :item %>
       </ul>
     <% else %>
-      <div class="box_notice">Você precisa finalizar a criação dos recursos. <%= link_to "Clique aqui", lazy_space_subject_path(@space, @subject) %></div>
+      <div class="box_notice">Este módulo está sem aulas.</div>
     <% end %>
     </div>
   </div>

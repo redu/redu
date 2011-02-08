@@ -411,4 +411,41 @@ describe Ability do
       it "crates a post"
     end
   end
+
+  context "on user -" do
+    before do
+        @user = Factory(:user)
+        @user_ability = Ability.new(@user)
+    end
+
+    context "when friends" do
+      before do
+        @my_friend = Factory(:user)
+        @my_friend_ability = Ability.new(@my_friend)
+
+        friendship, status = @user.be_friends_with(@my_friend)
+        friendship.accept!
+      end
+
+      it "should read each other" do
+        @user_ability.should be_able_to(:read, @my_friend)
+        @my_friend_ability.should be_able_to(:read, @user)
+      end
+
+      it "should not manage each other" do
+        @user_ability.should_not be_able_to(:manage, @my_friend)
+        @my_friend_ability.should_not be_able_to(:manage, @user)
+      end
+    end
+
+    it "manages itself" do
+      @user_ability.should be_able_to(:manage, @user)
+    end
+
+    it "manages its own statuses" do
+      status = Factory(:status, :user => @user)
+      @user_ability.should be_able_to(:manage, status)
+    end
+
+  end
 end

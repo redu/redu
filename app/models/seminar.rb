@@ -49,7 +49,7 @@ class Seminar < ActiveRecord::Base
   SUPPORTED_AUDIO = ['audio/mpeg', 'audio/mp3']
 
   # Video convertido
-  has_attached_file :media
+  has_attached_file :media, VIDEO_TRANSCODED
   # Video original. Mantido para caso seja necessário refazer o transcoding
   has_attached_file :original, {}.merge(VIDEO_ORIGINAL)
 
@@ -145,6 +145,7 @@ class Seminar < ActiveRecord::Base
   def transcode
     seminar_info = {
       :id => self.id,
+      :class => self.class.to_s.tableize,
       :attachment => 'medias',
       :style => 'original',
       :basename => self.original_file_name.split('.')[0],

@@ -296,9 +296,11 @@ class User < ActiveRecord::Base
         self.teacher?(entity.statusable)
       when 'Subject'
         self.teacher?(entity.statusable.space)
+      else
+        self == entity.user
       end
     when 'User'
-      entity == self
+      self == entity
     end
   end
 
@@ -322,7 +324,11 @@ class User < ActiveRecord::Base
       when 'Folder'
         self.get_association_with(entity.space).nil? ? false : true
       when 'Status'
-        self.has_access_to? entity.statusable
+        unless entity.statusable.class.to_s.eql?("User")
+          self.has_access_to? entity.statusuble
+        else
+          self.friends?(entity.statusable) || self == entity.statusable
+        end
       when 'Lecture'
         self.has_access_to? entity.subject
       when 'Exam'

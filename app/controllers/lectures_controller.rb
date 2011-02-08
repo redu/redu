@@ -253,7 +253,10 @@ class LecturesController < BaseController
     @lecture.destroy
 
     respond_to do |format|
-      format.html { redirect_to(lectures_url) }
+      format.html {
+        flash[:notice] = "A aula foi removida."
+        redirect_to space_subject_path(@space, @subject)
+      }
       format.js do
         render :update do |page|
           page.remove "#{@lecture.id}-item"

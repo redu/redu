@@ -32,11 +32,12 @@
     %>
   </li>
   <li>
-    <%= link_to_unless_current 'Fórum', space_forum_path(@space) do
+    <%#= link_to_unless_current 'Fórum', space_forum_path(@space) do
           link_to 'Fórum', space_forum_path(@space), :class => "selected"
         end
     %>
-  </li>  <li>
+  </li>
+  <li>
     <%= link_to_unless_current 'Notícias', space_bulletins_path(@space) do
           link_to 'Notícias', space_bulletins_path(@space), :class => "selected"
         end

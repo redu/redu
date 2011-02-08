@@ -73,6 +73,7 @@ class EnvironmentsController < BaseController
         @environment.owner = current_user
         @environment.courses.first.owner = current_user
         @environment.published = true
+        @environment.color = "4DADD6"
 
         if @environment.save
           flash[:notice] = 'Parabéns, o seu ambiente de ensino foi criado'
