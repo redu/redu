@@ -8,6 +8,24 @@ class Course < ActiveRecord::Base
   belongs_to :owner, :class_name => "User", :foreign_key => "owner"
   has_many :users, :through => :user_course_associations
   has_many :approved_users, :through => :user_course_associations,
+    :source => :user, :conditions => [ "user_course_associations.state = ?",
+                                       'approved' ]
+  # environment_admins
+  has_many :administrators, :through => :user_course_associations,
+    :source => :user,
+    :conditions => [ "user_course_associations.role_id = ? AND user_course_associations.state = ?",
+                      3, 'approved' ]
+  # teachers
+  has_many :teachers, :through => :user_course_associations,
+    :source => :user,
+    :conditions => [ "user_course_associations.role_id = ? AND user_course_associations.state = ?",
+                      5, 'approved' ]
+  # tutors
+  has_many :tutors, :through => :user_course_associations,
+    :source => :user,
+    :conditions => [ "user_course_associations.role_id = ? AND user_course_associations.state = ?",
+                      6, 'approved' ]
+  has_many :approved_users, :through => :user_course_associations,
     :source => :user, :conditions => [ "user_course_associations.state = ?", 'approved' ]
   has_many :invitations, :as => :inviteable, :dependent => :destroy
   has_and_belongs_to_many :audiences

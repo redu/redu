@@ -6,6 +6,18 @@ class Environment < ActiveRecord::Base
   has_many :user_environment_associations, :dependent => :destroy
   belongs_to :owner, :class_name => "User", :foreign_key => "owner"
   has_many :users, :through => :user_environment_associations
+  # environment_admins
+  has_many :administrators, :through => :user_environment_associations,
+    :source => :user,
+    :conditions => [ "user_environment_associations.role_id = ?", 3 ]
+  # teachers
+  has_many :teachers, :through => :user_environment_associations,
+    :source => :user,
+    :conditions => [ "user_environment_associations.role_id = ?", 5 ]
+  # tutors
+  has_many :tutors, :through => :user_environment_associations,
+    :source => :user,
+    :conditions => [ "user_environment_associations.role_id = ?", 6 ]
   has_many :bulletins, :as => :bulletinable, :dependent => :destroy
 
   attr_protected :owner, :published
@@ -14,9 +26,7 @@ class Environment < ActiveRecord::Base
   after_create :create_course_association
 
   acts_as_taggable
-  has_attached_file :avatar, PAPERCLIP_STORAGE_OPTIONS.deep_merge({
-    :styles => { :environment => "145x125>" }
-  })
+  has_attached_file :avatar, PAPERCLIP_STORAGE_OPTIONS
 
   validates_presence_of :name, :path
   validates_uniqueness_of :name, :path,

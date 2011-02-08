@@ -33,10 +33,8 @@
     <li>
       <div class="session"><a href="" class="icon icon-redu_r8_c325_s1">Contatos</a></div>
       <ul class="connections clearfix">
-        <% @friends.each do |friend| %>
-          <%= render :partial => 'users/new/item_short',
-            :locals => { :item_short => friend }  %>
-      <% end %>
+        <%= render :partial => 'users/new/item_short',
+          :collection => @friends %>
       </ul><!-- end .connections -->
       <%= link_to 'Ver mais', user_friendships_path(current_user),
         :class => 'more' %>

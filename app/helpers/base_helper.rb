@@ -705,7 +705,7 @@ class EndlessRenderer < WillPaginate::LinkRenderer
     end
 
     unless @collection.next_page.nil?
-      html = @template.link_to_remote "Mais resultados",
+      html = @template.link_to_remote "Mostrar mais resultados",
         :url => url_for(@collection.next_page), :method =>:get,
         :loading => "$('.#{@options[:class]}').html('" \
         + @template.escape_javascript(@template.image_tag('spinner.gif')) + "')"

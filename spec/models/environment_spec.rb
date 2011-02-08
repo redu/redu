@@ -7,6 +7,9 @@ describe Environment do
   it { should have_many(:user_environment_associations).dependent(:destroy) }
   it { should have_many(:bulletins).dependent(:destroy) }
   it { should have_many(:users).through(:user_environment_associations)}
+  it { should have_many(:administrators).through(:user_environment_associations)}
+  it { should have_many(:users).through(:user_environment_associations)}
+  it { should have_many(:users).through(:user_environment_associations)}
   it { should belong_to(:owner)}
   it { should accept_nested_attributes_for :courses }
 
@@ -33,6 +36,70 @@ describe Environment do
   context "finders" do
     it "retrieves a Environment by its path" do
       Environment.find(subject.path).should == subject
+    end
+
+    it "retrieves all members" do
+      users = 5.times.inject([]) { |res, i| res << Factory(:user) }
+      Factory(:user_environment_association, :user => users[0],
+              :environment => subject, :role => :environment_admin)
+      Factory(:user_environment_association, :user => users[1],
+              :environment => subject, :role => :environment_admin)
+      Factory(:user_environment_association, :user => users[2],
+              :environment => subject, :role => :teacher)
+      Factory(:user_environment_association, :user => users[3],
+              :environment => subject, :role => :tutor)
+      Factory(:user_environment_association, :user => users[4],
+              :environment => subject, :role => :member)
+      subject.users.to_set.
+        should == (users << subject.owner).to_set
+    end
+
+    it "retrieves all administrators" do
+      users = 5.times.inject([]) { |res, i| res << Factory(:user) }
+      Factory(:user_environment_association, :user => users[0],
+              :environment => subject, :role => :environment_admin)
+      Factory(:user_environment_association, :user => users[1],
+              :environment => subject, :role => :environment_admin)
+      Factory(:user_environment_association, :user => users[2],
+              :environment => subject, :role => :teacher)
+      Factory(:user_environment_association, :user => users[3],
+              :environment => subject, :role => :tutor)
+      Factory(:user_environment_association, :user => users[4],
+              :environment => subject, :role => :member)
+      subject.administrators.to_set.
+        should == [users[0], users[1], subject.owner].to_set
+    end
+
+    it "retrieves all teachers" do
+      users = 5.times.inject([]) { |res, i| res << Factory(:user) }
+      Factory(:user_environment_association, :user => users[0],
+              :environment => subject, :role => :teacher)
+      Factory(:user_environment_association, :user => users[1],
+              :environment => subject, :role => :teacher)
+      Factory(:user_environment_association, :user => users[2],
+              :environment => subject, :role => :teacher)
+      Factory(:user_environment_association, :user => users[3],
+              :environment => subject, :role => :tutor)
+      Factory(:user_environment_association, :user => users[4],
+              :environment => subject, :role => :member)
+      subject.teachers.to_set.
+        should == [users[0], users[1], users[2]].to_set
+    end
+
+    it "retrieves all tutors" do
+      users = 5.times.inject([]) { |res, i| res << Factory(:user) }
+      Factory(:user_environment_association, :user => users[0],
+              :environment => subject, :role => :tutor)
+      Factory(:user_environment_association, :user => users[1],
+              :environment => subject, :role => :tutor)
+      Factory(:user_environment_association, :user => users[2],
+              :environment => subject, :role => :teacher)
+      Factory(:user_environment_association, :user => users[3],
+              :environment => subject, :role => :member)
+      Factory(:user_environment_association, :user => users[4],
+              :environment => subject, :role => :member)
+      subject.tutors.to_set.
+        should == [users[0], users[1]].to_set
     end
   end
 

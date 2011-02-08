@@ -64,7 +64,7 @@
 
       <div id="content" class="container_16 clearfix">
         <div class="clearfix" id="checkout">
-          <ol id="breadcrumbs" class="wizard clearfix">
+          <ol id="breadcrumbs" class="wizard wizard-3 clearfix">
             <li>
               <a href="" class="replacement home icon icon-redu_r8_c227_s1">Home</a>
             </li>
@@ -72,65 +72,88 @@
               <a href="" class="">Ensine</a>
             </li>
             <li>
-              <a href="" class="disabled">Etapa 1: Planos</a>
+              <a href="" class="">Etapa 1: Planos</a>
             </li>
             <li>
-              <a href="" class="disabled">Etapa 2: Informações</a>
+              <a href="" class="">Etapa 2: Informações</a>
             </li>
             <li>
-              <a href="" class="disabled">Etapa 3: Confirmar Dados</a>
+              <a href="" class="">Etapa 3: Confirmar Dados</a>
             </li>
           </ol>
 
-          <div class="grid_8 alpha">
-            <h3>Ensine</h3>
-            <em class="slogan">Educação a distância nunca foi tão simples.</em>
-
-            <ol class="flow">
-              <li>
-                <strong>Ambiente de Ensino</strong>
-                <p>Áreas privadas e seguras para dispor seus conteúdos e animar a aprendizagem de seus alunos</p>
-              </li>
-              <li>
-                <strong>Curso</strong>
-                <p>Planeje sua atividade de ensino por disciplina, turmas ou áreas temáticas.</p>
-              </li>
-              <li>
-                <strong>Disciplina</strong>
-                <p>Espaço de interação específica do curso e rico em materiais nos quais formadores e aprendizes colaboram numa dinâmica de rede social.</p>
-              </li>
-              <li>
-                <strong>Módulo</strong>
-                <p>Organize seus materiais (do tipo vídeo, texto ou documento) em unidades de aprendizagem flexíveis.  </p>
-              </li>
-            </ol>
+          <div class="grid_4 alpha">
+            <h3>Etapa 3: <span>Confirmar dados</span></h3>
+            <em class="description">Confirme os dados e realize o pagamento.</em>
+          </div>
+          <div id="url_preview">
+            <span class="label">O seu endereço completo será:</span>
+            <span class="base">redu.com.br/</span>
+            <span class="environment"><%= @environment.path %></span>/
+            <span class="base">cursos/</span>
+            <span class="course"><%= @environment.courses.first.path %></span>
           </div>
 
-          <div class="grid_7 omega wizard-0">
-            <form action="">
-              <p>Crie um ambiente de Ensino a Distância em 3 passos</p>
-              <ol class="clearfix">
-                <li class="clearfix">
-                  <span class="phase">1. Planos</span>
-                  <span class="details">Escolha o plano que melhor se adapta às suas necessidades.</span>
-                </li>
-                <li class="clearfix">
-                  <span class="phase">2. Informações</span>
-                  <span class="details">Descreva as informações básicas do seu ambiente e primeiro curso.</span>
-                </li>
-                <li class="clearfix">
-                  <span class="phase">3. Confirmação</span>
-                  <span class="details">Confirme os dados e realize o pagamento.</span>
-                </li>
-              </ol>
-              <fieldset>
-                <label for="">Seu ambiente de ensino:</label>
-                <input type="text" />
-                <label for="">Seu primeiro curso:</label>
-                <input type="text" />
-                <input type="submit" value="Avançar" class="important" />
-              </fieldset>
-            </form>
+          <div class="confirmation">
+            <table class="environment">
+              <thead>
+                <tr>
+                  <th>Informação</th>
+                  <th>Valor</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="label">Seu ambiente de ensino:</td>
+                  <td class="value">Universidade Federal de Pernambuco</td>
+                </tr>
+                <tr>
+                  <td class="label">Sigla (abreviação):</td>
+                  <td class="value">UFPE</td>
+                </tr>
+                <tr>
+                  <td class="label">Endereço eltrônico:</td>
+                  <td class="value"><span class="domain">redu.com.br/</span><span class="path">ufpe</span></td>
+                </tr>
+              </tbody>
+            </table>
+            <table class="course">
+              <thead>
+                <tr>
+                  <th>Informação</th>
+                  <th>Valor</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="label">Seu primeiro curso:</td>
+                  <td class="value">Ciência da computação</td>
+                </tr>
+                <tr>
+                  <td class="label">Endereço eletrônico:</td>
+                  <td class="value"><span class="domain">redu.com.br/</span><span class="path">ufpe/cin</span></td>
+                </tr>
+              </tbody>
+            </table>
+            <table class="plan">
+              <thead>
+                <tr>
+                  <th>Informação</th>
+                  <th>Valor</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="label">Sua categoria:</td>
+                  <td class="value">Professor</td>
+                </tr>
+                <tr>
+                  <td class="label">Seu plano:</td>
+                  <td class="value">Grátis (3 meses)</td>
+                </tr>
+              </tbody>
+            </table>
+            <a href="#" class="important">Finalizar</a>
           </div>
         </div>
       </div><!-- end #content -->
