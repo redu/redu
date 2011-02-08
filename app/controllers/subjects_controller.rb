@@ -83,10 +83,11 @@ end
         flash[:notice] = "As atualizações foram salvas."
       else
         @subject.finalized = true
+        @subject.save
         @subject.convert_lectureables!
         flash[:notice] = "O Módulo foi criado."
       end
-      @subject.save
+
       render :update do |page|
         page.redirect_to(:controller => 'subjects', :action => 'index',
                          :space_id => @subject.space.id)
