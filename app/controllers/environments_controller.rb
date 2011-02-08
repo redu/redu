@@ -26,6 +26,7 @@ class EnvironmentsController < BaseController
   def show
     paginating_params = {
       :page => params[:page],
+      :order => 'name ASC',
       :limit => 4,
       :include => :audiences,
       :per_page => AppConfig.items_per_page
@@ -37,7 +38,7 @@ class EnvironmentsController < BaseController
       @courses = @environment.courses.published.paginate(paginating_params)
     end
 
-    @environment_users = @environment.users.all(:limit => 9)
+    @environment_users = @environment.users.all(:limit => 9) # sidebar
 
     respond_to do |format|
       format.html do
@@ -213,6 +214,20 @@ class EnvironmentsController < BaseController
 
     respond_to do |format|
       format.js
+    end
+  end
+
+  # Listagem de usuários do Environment
+  def users
+    @environment_users = @environment.users.all(:limit => 9) # sidebar
+    @users = @environment.users.
+      paginate(:page => params[:page], :order => 'first_name ASC', :per_page => 18)
+
+    respond_to do |format|
+      format.html do
+        render :template => 'environments/new/users', :layout => 'new/application'
+      end
+      format.js { render :template => 'environments/new/users' }
     end
   end
 end
