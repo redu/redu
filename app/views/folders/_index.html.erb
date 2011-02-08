@@ -37,7 +37,9 @@
         <div class="new-file-inner hoverdiv">
          
 		  
-		<% form_for(@myfile, :url => { :action => "do_the_upload", :format => 'js' }, :html => { :multipart => true, :target => 'upload_frame',:onsubmit => "$('#new-file-spinner').show()"}) do |f| %>
+          <% form_for(@myfile, :url => do_the_upload_space_folder_path(@space.id, @folder.id, :format => 'js'), 
+                      :html => { :multipart => true, :target => 'upload_frame',
+                        :onsubmit => "$('#new-file-spinner').show()"}) do |f| %>
 		 <%= f.file_field :attachment %> (max. 10MB)
             <%= f.hidden_field :folder_id, :value => @folder.id %>
             <%= hidden_field_tag :space_id,  @space.id %>

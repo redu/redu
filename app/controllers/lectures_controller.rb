@@ -4,9 +4,16 @@ class LecturesController < BaseController
   before_filter :find_subject_space_course_environment
   after_filter :create_activity, :only => [:create]
 
+
   include Viewable # atualiza o view_count
   load_and_authorize_resource :lecture,
     :except => [:new, :create, :cancel, :unpublished_preview]
+
+  rescue_from CanCan::AccessDenied do |exception|
+    respond_to do |format|
+            format.js { render :js => "alert('Você não possui espaço suficiente.')" }
+    end
+  end
 
   # adiciona um objeto embarcado (ex: scribd)
   def embed_content
@@ -181,22 +188,15 @@ class LecturesController < BaseController
       @page = Page.create(params[:page]) if @lecture.name
       @lecture.lectureable = @page
     elsif params[:seminar]
-      # Verificação para que o Seminar não seja criado em vão.
-      if quota_multimedia < plan_multimedia_limit 
-        @seminar = Seminar.create(params[:seminar]) if @lecture.name
-        @lecture.lectureable = @seminar
-      else
-        #FIXME PLEASE 
-        render :nothing => true and return false
-      end
+      @seminar = Seminar.new(params[:seminar]) if @lecture.name
+      @seminar.lecture = @lecture
+      authorize! :upload_multimedia, @seminar
+      @seminar.save
     elsif params[:document]
-      if quota_files < plan_files_limit
-        @document = Document.create(params[:document]) if @lecture.name
-        @lecture.lectureable = @document
-      else
-        #FIXME DONT FAIL SILENTLY!
-        render :nothing => true and return false
-      end
+      @document = Document.new(params[:document]) if @lecture.name
+      @document.lecture = @lecture
+      authorize! :upload_document, @document
+      @document.save
     end
 
     respond_to do |format|
@@ -252,7 +252,7 @@ class LecturesController < BaseController
     elsif params[:document]
       @document.update_attributes(params[:document]) && @lecture.save
     end
-
+    @lecture.subject.space.course.refresh
     respond_to do |format|
       if valid
         format.js
@@ -267,7 +267,7 @@ class LecturesController < BaseController
   # DELETE /lectures/1.xml
   def destroy
     @lecture.destroy
-
+    @lecture.subject.space.course.refresh
     respond_to do |format|
       format.html { redirect_to(lectures_url) }
       format.js do

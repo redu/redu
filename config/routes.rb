@@ -97,7 +97,8 @@ ActionController::Routing::Routes.draw do |map|
                    :download => :get,
                    :rename => :get,
                    :destroy_folder => :delete,
-                   :destroy_file => :delete }
+                   :destroy_file => :delete,
+                   :do_the_upload => [:post, :put]}
     space.resources :subjects,
       :member => { :enroll => :get,
                    :unenroll => :get,

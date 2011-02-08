@@ -198,6 +198,17 @@ class Seminar < ActiveRecord::Base
     self.video? or self.audio?
   end
 
+  # Verificar se o curso tem espaço suficiente para o arquivo
+  def can_upload_multimedia?(lecture)
+    plan = lecture.subject.space.course.plan
+    quota = lecture.subject.space.course.quota
+    if quota.multimedia > plan.video_storage_limit
+      return false
+    else
+      return true
+    end
+  end
+
   protected
   # Deriva o content type olhando diretamente para o arquivo. Workaround para
   # problemas decorrentes da integração uploadify/rails

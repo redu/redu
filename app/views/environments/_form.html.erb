@@ -5,6 +5,8 @@
   :class => "color inline" %>
 <%= f.label :path, "Personalize o endereço" %>
 <%= f.text_field :path %>
+<%= f.label :initials, "Sigla do seu ambiente de ensino" %>
+<%= f.text_field :initials %>
 <% end %>
 <% field_set_tag "Informações do primeiro curso" do %>
 <% f.fields_for :courses do |builder|  %>

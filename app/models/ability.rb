@@ -121,6 +121,21 @@ class Ability
         subject.published? && user.has_access_to?(subject)
       end
 
+      # Seminar
+      can :upload_multimedia, Seminar do |seminar|
+        seminar.can_upload_multimedia?(seminar.lecture)
+      end
+
+      # Document
+      can :upload_document, Document do |document|
+        document.can_upload_document?(document.lecture)
+      end
+
+      # My file
+      can :upload_file, Myfile do |myfile|
+        myfile.can_upload_file?(myfile.folder.space)
+      end
+
       # Plan (payment gatewat)
       can :read, :success
 

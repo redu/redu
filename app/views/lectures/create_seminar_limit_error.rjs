@@ -1,1 +1,1 @@
-page << "$('name').before('<div class=''call'>Vamos ver se funciona!</div>')" 
+page << "$('.name').before('<span class='call'>Vamos ver se funciona!</span>')"
