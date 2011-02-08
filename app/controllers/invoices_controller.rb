@@ -5,7 +5,7 @@ class InvoicesController < BaseController
   def index
     @invoices = @plan.invoices
     @invoices = @invoices.pending if params.fetch(:pending, false)
-
+    @quota = @plan.billable.quota
     respond_to do |format|
       format.html
     end

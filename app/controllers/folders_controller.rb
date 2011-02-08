@@ -40,10 +40,9 @@ class FoldersController < BaseController
     @folder_id = @myfile.folder.id
     @space_id = @myfile.folder.space_id
 
-
     respond_to do |format|
       if @myfile.destroy
-        @space.course.refresh
+        @space.course.quota.refresh
         flash[:notice] = 'Arquivo removido!'
         format.html {redirect_to space_folders_path(:id => @folder_id, :space_id => @space_id)  }
         format.js do
@@ -84,7 +83,7 @@ class FoldersController < BaseController
           list
           responds_to_parent do
             render :update do |page|
-            page.replace_html  'tabs-4-content', :partial => 'folders/index'
+              page.replace_html  'tabs-4-content', :partial => 'folders/index'
             end
           end
         end
@@ -264,7 +263,7 @@ class FoldersController < BaseController
     @parent_id = @folder.parent_id
     @space_id = @folder.space_id
     @folder.destroy
-    @space.course.refresh
+    @space.course.quota.refresh
     respond_to do |format|
       # back to the list
       format.js {

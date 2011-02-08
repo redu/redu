@@ -39,6 +39,7 @@
           <tr>
             <th>Plano</th>
             <th>Estado</th>
+            <th>Curso</th>
             <th>Ação</th>
           </tr>
         </thead>
@@ -51,7 +52,8 @@
               <% else %>
                  <strong><%= p.invoices.pending.count %> pagamento(s) pendente(s)</strong>
                <% end %>
-            </td>
+             </td>
+             <td> <%= p.billable.name %> </td>
             <td>
               <% if p.invoices.pending.empty? %>
                 <%= link_to "Upgrade", upgrade_plan_path(p) %>

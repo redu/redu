@@ -1,10 +1,13 @@
 <div id="plan-info">
+  <strong>Curso:</strong>
+  <h3> <%= @plan.billable.name %> </h3>
   <strong>Plano:</strong>
   <h3><%= @plan.name %></h3>
   <% if @plan.invoices.pending.count > 0 %>
     <%= pagseguro_form @plan.create_order, :submit => "Pagar" %>   
   <% end %>
-  <strong>Quotas:</strong>
+  <strong> Cota atual de vídeo: <%= number_to_human_size(@quota.multimedia, :locale => 'en') %> </strong>
+  <strong> Cota atual para documentos: <%= number_to_human_size(@quota.files, :locale => 'en') %> </strong>
 </div>
 
 <table class="common">

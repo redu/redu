@@ -252,7 +252,7 @@ class LecturesController < BaseController
     elsif params[:document]
       @document.update_attributes(params[:document]) && @lecture.save
     end
-    @lecture.subject.space.course.refresh
+    @lecture.subject.space.course.quota.refresh
     respond_to do |format|
       if valid
         format.js
@@ -267,7 +267,7 @@ class LecturesController < BaseController
   # DELETE /lectures/1.xml
   def destroy
     @lecture.destroy
-    @lecture.subject.space.course.refresh
+    @lecture.subject.space.course.quota.refresh
     respond_to do |format|
       format.html {
         flash[:notice] = "A aula foi removida."
