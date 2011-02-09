@@ -87,7 +87,8 @@ ActionController::Routing::Routes.draw do |map|
     :teachers => :get,
     :take_ownership => :get,
     :publish => :get,
-    :unpublish => :get
+    :unpublish => :get,
+    :users => :get
   },
     :collection =>{
     :cancel => :get
@@ -228,7 +229,8 @@ ActionController::Routing::Routes.draw do |map|
         :admin_members => :get,
         :destroy_members => :post,
         :search_users_admin => :post,
-        :moderate_members_requests => :post
+        :moderate_members_requests => :post,
+        :users => :get
       }
       environment.resources :bulletins
   end

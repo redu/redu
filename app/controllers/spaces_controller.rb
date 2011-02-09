@@ -247,6 +247,7 @@ class SpacesController < BaseController
     end
 
     if @space
+      @space_users = @space.users.all(:limit => 9)
       @statuses = @space.recent_activity(params[:page])
       @statusable = @space
     end
@@ -255,8 +256,10 @@ class SpacesController < BaseController
       if @space
         @status = Status.new
 
-        format.html
-        format.js { render :template => "statuses/index"}
+        format.html do
+          render :template => 'spaces/new/show', :layout => 'new/application'
+        end
+        format.js { render :template => "spaces/new/show"}
         format.xml  { render :xml => @space }
       else
         format.html {

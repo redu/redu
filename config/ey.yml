@@ -8,6 +8,6 @@ environments:
   staging:
     copy_exclude:
       - .git
-    branch: redesign
+    branch: staging
     migrate: false
     migration_command: rake db:migrate --trace

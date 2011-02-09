@@ -11,10 +11,16 @@ class CoursesController < BaseController
   end
 
   def show
-    @spaces = @course.spaces.published
+    @spaces = @course.spaces.published.
+      paginate(:page => params[:page], :order => 'name ASC',
+               :per_page => AppConfig.items_per_page)
+    @course_users = @course.approved_users.all(:limit => 9)
 
     respond_to do |format|
-      format.html
+      format.html do
+        render :template => 'courses/new/show', :layout => 'new/application'
+      end
+      format.js { render :template => 'courses/new/show' }
     end
   end
 

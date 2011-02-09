@@ -1,0 +1,79 @@
+<div class="sidebar alpha grid_3">
+  <div class="image-frame space-frame">
+    <!-- <%# Nao setar width e height na imagem %> -->
+    <%= image_tag @course.environment.avatar.url(:thumb_100),
+      :alt => 'profile' %>
+  </div>
+
+  <ul class="local-nav">
+    <li>
+      <div class="<%= (current_page? :controller => :spaces,
+                       :action => :show) ?
+                    "session selected".to_s : "session".to_s %>">
+        <%= link_to 'Mural', space_path(@space),
+          :class => 'icon icon-redu_r8_c379_s1' %>
+      </div>
+    </li>
+    <li>
+      <div class="<%= (current_page? :controller => :subjects,
+                       :action => :index) ?
+                    "session selected".to_s : "session".to_s %>">
+        <%= link_to 'Módulos', space_subjects_path(@space),
+          :class => 'icon icon-redu_r11_c211_s1' %>
+      </div>
+    </li>
+    <li>
+      <div class="<%= (current_page? :controller => :folders,
+                       :action => :index) ?
+                    "session selected".to_s : "session".to_s %>">
+        <%= link_to 'Arquivos', space_folders_path(@space),
+          :class => 'icon icon-redu_r8_c349_s1' %>
+      </div>
+    </li>
+    <!--li>
+      <div class="<%#= (current_page? :controller => :forum,
+                       :action => :show) ?
+                    "session selected".to_s : "session".to_s %>">
+        <%#= link_to 'Fórum', space_forum_path(@space),
+          :class => 'icon icon-redu_r10_c281_s1' %>
+      </div>
+    </li --!>
+    <li>
+      <div class="<%= (current_page? :controller => :bulletins,
+                       :action => :index) ?
+                    "session selected".to_s : "session".to_s %>">
+        <%= link_to 'Notícias', space_bulletins_path(@space),
+          :class => 'icon icon-redu_r9_c289_s1' %>
+      </div>
+    </li>
+    <li>
+      <div class="<%= (current_page? :controller => :events,
+                       :action => :index) ?
+                    "session selected".to_s : "session".to_s %>">
+        <%= link_to 'Eventos', space_events_path(@space),
+          :class => 'icon icon-redu_r8_c295_s1' %>
+      </div>
+    </li>
+    <li>
+      <div class="<%= (current_page? :controller => :spaces,
+                       :action => :edit) ?
+                    "session selected".to_s : "session".to_s %>">
+        <%= link_to 'Gerenciamento', edit_space_path(@space),
+          :class => 'icon icon-redu_r11_c211_s1' %>
+      </div>
+    </li>
+    <li>
+      <div class="<%= (current_page? :controller => :spaces,
+                       :action => :users) ?
+                    "session selected".to_s : "session".to_s %>">
+        <%= link_to 'Membros', users_space_path(@space),
+          :class => 'icon icon-redu_r8_c319_s1' %>
+      </div>
+      <ul class="connections clearfix">
+        <%= render :partial => 'users/new/item_short',
+          :collection => @space_users %>
+      </ul><!-- end .connections -->
+      <a href="" class="more">Ver mais</a>
+    </li>
+  </ul><!-- end .local-nav -->
+</div>

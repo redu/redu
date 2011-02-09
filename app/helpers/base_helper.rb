@@ -653,35 +653,15 @@ end
   def resource_name(class_name, qty)
     case class_name
     when :myfile
-      unless qty == 0
-        "+#{pluralize(qty, 'arquivo')} #{qty > 1 ? "adicionados" : "adicionado"}"
-      else
-        "Nenhum arquivo novo"
-      end
+        "#{qty > 1 ? "novos" : "novo"} #{pluralize(qty, 'arquivo').split(' ')[1]}"
     when :bulletin
-      unless qty == 0
-        "+#{pluralize(qty, 'notícia')} #{qty > 1 ? "adicionados" : "adicionada"}"
-      else
-        "Nenhuma notícia nova"
-      end
+        "#{qty > 1 ? "novas" : "nova"} #{pluralize(qty, 'notícia').split(' ')[1]}"
     when :event
-      unless qty == 0
-        "+#{pluralize(qty, 'evento')} #{qty > 1 ? "adicionados" : "adicionado"}"
-      else
-        "Nenhum evento novo"
-      end
+        "#{qty > 1 ? "novos" : "novo"} #{pluralize(qty, 'evento').split(' ')[1]}"
     when :topic
-      unless qty == 0
-        "+#{pluralize(qty, 'tópico')} #{qty > 1 ? "adicionados" : "adicionado"}"
-      else
-        "Nenhum tópico novo"
-      end
+        "#{qty > 1 ? "novos" : "novo"} #{pluralize(qty, 'tópico').split(' ')[1]} "
     when :subject
-      unless qty == 0
-        "+#{pluralize(qty, 'módulo')} #{qty > 1 ? "adicionados" : "adicionado"}"
-      else
-        "Nenhum módulo novo"
-      end
+        "#{qty > 1 ? "novos" : "novo"} #{pluralize(qty, 'módulo').split(' ')[1]} "
     end
   end
 

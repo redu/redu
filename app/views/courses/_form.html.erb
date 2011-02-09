@@ -3,7 +3,7 @@
 <script type="text/javascript">
   $(document).ready(function(){
      $("#course_name").bind('keyup blur', function(e){
-       $("#course_path").val($(this).slug());    
+       $("#course_path").val($(this).slug());
      })
 
   })
@@ -25,7 +25,7 @@
   <%= f.label :path, :path.l %>
   <%= f.text_field :path %>
   <%= f.label :description, "Descrição" %>
-  <%= f.cktext_area :description, :toolbar => 'Simple',:width=>'865px', :height => '200px' %> 
+  <%= f.text_area :description, :size => '100x5' %>
   <%= f.label :workload, "Carga Horária" %>
   <%= f.text_field :workload,  :size=> 8 %>
   <%= f.label "Palavras-chave <span class='snippet'>(separadas por vírgula)</span>" %>

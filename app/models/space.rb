@@ -21,11 +21,26 @@ class Space < ActiveRecord::Base
   # retirado
   has_many :users, :through => :user_space_associations,
     :conditions => ["user_space_associations.status LIKE 'approved'"]
-  # Os membros podem possuir permissões especiais
-  has_many :teachers, :through => :user_space_associations, :source => :user,
-    :conditions => [ "user_space_associations.role_id = ?", 6 ]
-  has_many :students, :through => :user_space_associations, :source => :user,
-    :conditions => [ "user_space_associations.role_id = ?", 3 ]
+  # environment_admins
+  has_many :administrators, :through => :user_space_associations,
+    :source => :user,
+    :conditions => [ "user_space_associations.role_id = ? AND user_space_associations.status = ?",
+                      3, 'approved' ]
+  # teachers
+  has_many :teachers, :through => :user_space_associations,
+    :source => :user,
+    :conditions => [ "user_space_associations.role_id = ? AND user_space_associations.status = ?",
+                      5, 'approved' ]
+  # tutors
+  has_many :tutors, :through => :user_space_associations,
+    :source => :user,
+    :conditions => [ "user_space_associations.role_id = ? AND user_space_associations.status = ?",
+                      6, 'approved' ]
+  # students (member)
+  has_many :students, :through => :user_space_associations,
+    :source => :user,
+    :conditions => [ "user_space_associations.role_id = ? AND user_space_associations.status = ?",
+                      2, 'approved' ]
   has_many :logs, :as => :logeable, :dependent => :destroy, :class_name => 'Status'
 
   has_many :folders, :dependent => :destroy

@@ -11,6 +11,10 @@ describe Course do
   it { should have_many(:user_course_associations).dependent :destroy }
   it { should have_many(:users).through :user_course_associations }
   it { should have_many(:approved_users).through :user_course_associations }
+  it { should have_many(:administrators).through :user_course_associations }
+  it { should have_many(:teachers).through :user_course_associations }
+  it { should have_many(:tutors).through :user_course_associations }
+  it { should have_many(:students).through :user_course_associations }
 
   it { should have_and_belong_to_many :audiences }
   it { should have_one(:quota).dependent(:destroy) }
@@ -148,6 +152,26 @@ describe Course do
 
       subject.tutors.to_set.
         should == [users[2], users[3]].to_set
+    end
+
+    it "retrieves all students" do
+      users = 5.times.inject([]) { |res, i| res << Factory(:user) }
+      Factory(:user_course_association, :user => users[0],
+              :course => subject, :role => :environment_admin)
+      Factory(:user_course_association, :user => users[1],
+              :course => subject, :role => :teacher)
+      Factory(:user_course_association, :user => users[2],
+              :course => subject, :role => :tutor)
+      Factory(:user_course_association, :user => users[3],
+              :course => subject, :role => :member)
+      Factory(:user_course_association, :user => users[4],
+              :course => subject, :role => :member)
+      subject.user_course_associations.each do |assoc|
+        assoc.approve!
+      end
+
+      subject.students.to_set.
+        should == [users[3], users[4]].to_set
     end
   end
 
