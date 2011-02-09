@@ -332,7 +332,7 @@ class User < ActiveRecord::Base
         self.get_association_with(entity.space).nil? ? false : true
       when 'Status'
         unless entity.statusable.class.to_s.eql?("User")
-          self.has_access_to? entity.statusuble
+          self.has_access_to? entity.statusable
         else
           self.friends?(entity.statusable) || self == entity.statusable
         end
