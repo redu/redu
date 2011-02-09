@@ -54,7 +54,7 @@
 
   </div><!-- end #hierarchy-header -->
 
-  <div id="course-subjects" class="hierarchy-listing-wrapper">
+  <div id="course-spaces" class="hierarchy-listing-wrapper">
     <div class="header">
       <h4>Disciplinas</h4>
       <span class="counter">
@@ -62,9 +62,11 @@
       </span>
     </div>
 
+    <% if can?(:manage, @course) %>
     <div class="admin-actions">
-      <%= link_to 'Criar nova disciplina', new_space_path(:course_id => @course.id) %>
+      <%= link_to 'Criar nova disciplina', new_space_path(:course_id => @course.id), :class => "button" %>
     </div>
+    <% end %>
 
     <ul id="spaces_list" class="hierarchy-listing">
       <%= render :partial => 'spaces/new/item', :collection => @spaces %>

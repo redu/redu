@@ -50,9 +50,11 @@
       <span class="counter"><%= pluralize(@environment.courses.length, 'curso') %></span>
     </div>
 
-    <div class="admin-actions">
-      <%= link_to 'Criar novo curso', new_environment_course_path(@environment) %>
-    </div>
+    <% if can?(:manage, @environment) %>
+      <div class="admin-actions">
+        <%= link_to 'Criar novo curso', new_environment_course_path(@environment), :class => "button" %>
+      </div>
+    <% end %>
 
     <ul id="courses_list" class="hierarchy-listing">
       <%= render :partial => 'courses/new/item',

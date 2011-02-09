@@ -194,7 +194,14 @@
 
 #content .sidebar .space-frame {
   text-align: left;
+  padding: 0 48px 48px 0;
+  background: url("../images/new/icon-space-gray_48_48.png") no-repeat right bottom;
+}
 
+#content .sidebar .course-frame {
+  text-align: left;
+  padding: 0 48px 48px 0;
+  background: url("../images/new/icon-course-gray_48_48.png") no-repeat right bottom;
 }
 
 #content .main {
@@ -288,10 +295,14 @@
 
 .hierarchy-listing-wrapper {
   clear: both;
+  margin: 20px 0;
 }
 
 .hierarchy-listing-wrapper .header {
   padding-left: 70px;
+  margin-bottom: 20px;
+  float: left;
+  width: 525px;
 }
 
 .hierarchy-listing-wrapper .counter {
@@ -300,17 +311,23 @@
   color: #B2B2B2;
 }
 
-.hierarchy-listing-wrapper .header {
-  margin: 20px 0;
+.hierarchy-listing-wrapper .admin-actions {
+  float: left;
+  width: 140px;
 }
 
 #environment-courses .header {
   background: url("../images/new/icon-course-gray_32_32.png") no-repeat 20px center;
 }
 
-#courses-subjects .header {
-
+#space-subjects .header {
+  background: url("../images/new/icon-subject-black_32_32.png") no-repeat 20px center;
 }
+
+#course-spaces .header {
+  background: url("../images/new/icon-space-black_32_32.png") no-repeat 20px center;
+}
+
 
 #space-statuses .header {
   background: url("../images/new/icon-status-black_32_32.png") no-repeat 20px center;
@@ -361,6 +378,7 @@
 }
 
 .hierarchy-listing {
+  clear: both;
   margin-bottom: 20px;
 }
 
@@ -988,6 +1006,7 @@ input[type=submit].important {
   background: -moz-linear-gradient(top,  #AED584,  #61BE80); /* Firefox 3.6+ */
 }
 
+a.button,
 input[type=submit] {
   font-weight: normal;
   color: white;
