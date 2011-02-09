@@ -314,8 +314,8 @@ class CoursesController < BaseController
 
   # Listagem de usuários do Course
   def users
-    @course_users = @course.users.all(:limit => 9) # sidebar
-    @users = @course.users.
+    @course_users = @course.approved_users.all(:limit => 9) # sidebar
+    @users = @course.approved_users.
       paginate(:page => params[:page], :order => 'first_name ASC', :per_page => 18)
 
     respond_to do |format|
