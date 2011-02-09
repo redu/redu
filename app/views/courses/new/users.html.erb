@@ -1,0 +1,74 @@
+<%= render :partial => 'courses/new/sidebar' %>
+
+<div class="main grid_12 omega big-col">
+  <ol id="breadcrumbs" class="clearfix">
+    <li>
+      <%= link_to 'Home', home_user_path(current_user),
+        :class => 'replacement home icon icon-redu_r8_c227_s1' %>
+    </li>
+    <li>
+      <%= link_to @environment.name, environment_path(@environment),
+        :class => 'replacement icon icon-redu_r8_c217_s1' %>
+    <li>
+      <%= link_to @course.name,
+        environment_course_path(@course.environment, @course),
+        :class => 'icon icon-redu_r8_c313_s1' %>
+    </li>
+  </ol>
+  <div id="hierarchy-header" class="clearfix course-header">
+    <span class="initials">
+      <% if @course.environment.initials %>
+        <%= @course.environment.initials %>
+      <% else %>
+        <%= @course.environment.name %>
+      <% end %>
+    </span>
+    <h3 class="call course-name"><%= @course.name %></h3>
+    <div class="grid_9 alpha">
+      <span class="description">
+        <%= @course.description %>
+      </span>
+      <ul class="tags clearfix">
+        <% @course.tags.each do |tag| %>
+          <li>
+            <%= link_to tag,
+              environment_course_path(@course.environment, @course) %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+    <ul class="statistics grid_3 omega">
+      <li>
+        <em class="icon icon-redu_r8_c319_s1">Membros:</em>
+        <span><%= @course.approved_users.length %></span>
+      </li>
+      <li>
+        <em class="icon icon-redu_r8_c385_s1">Tutores:</em>
+        <span><%= @course.tutors.length %></span>
+      </li>
+      <li>
+        <em class="icon icon-redu_r8_c355_s1">Alunos:</em>
+        <span><%= @course.students.length %></span>
+      </li>
+    </ul>
+
+  </div><!-- end #hierarchy-header -->
+
+  <div id="course-users" class="hierarchy-listing-wrapper">
+    <div class="header">
+      <h4>Membros</h4>
+      <span class="counter">
+        <%= @course.approved_users.length %> pessoas fazem parte de
+        <%= @course.name %>
+      </span>
+    </div>
+
+    <ul id="users_list" class="members clearfix">
+      <%= render :partial => 'users/new/item',
+        :collection => @users %>
+    </ul>
+
+    <%= will_paginate @users, :renderer => EndlessRenderer %>
+  </div><!-- end #environment-courses -->
+
+</div><!-- end .main -->

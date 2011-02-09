@@ -142,7 +142,7 @@
   border-radius: 5px 0 0 5px;
 }
 
-#content .sidebar .local-nav > li > .session a { padding: 2px 0 1px 25px; }
+#content .sidebar .local-nav > li > .session > a { padding: 2px 0 1px 25px; }
 
 #content .sidebar .local-nav > li > .session:hover {
   background-color: #dbeff7;

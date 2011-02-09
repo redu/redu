@@ -355,6 +355,20 @@ class SpacesController < BaseController
     redirect_to space_path(@space)
   end
 
+  # Listagem de usuários do Space
+  def users
+    @space_users = @space.users.all(:limit => 9) # sidebar
+    @users = @space.users.
+      paginate(:page => params[:page], :order => 'first_name ASC', :per_page => 18)
+
+    respond_to do |format|
+      format.html do
+        render :template => 'spaces/new/users', :layout => 'new/application'
+      end
+      format.js { render :template => 'spaces/new/users' }
+    end
+  end
+
   protected
 
   def find_space_course_environment

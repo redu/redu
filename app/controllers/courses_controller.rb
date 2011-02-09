@@ -311,4 +311,18 @@ class CoursesController < BaseController
         end
       end
   end
+
+  # Listagem de usuários do Course
+  def users
+    @course_users = @course.users.all(:limit => 9) # sidebar
+    @users = @course.users.
+      paginate(:page => params[:page], :order => 'first_name ASC', :per_page => 18)
+
+    respond_to do |format|
+      format.html do
+        render :template => 'courses/new/users', :layout => 'new/application'
+      end
+      format.js { render :template => 'courses/new/users' }
+    end
+  end
 end
