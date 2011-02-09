@@ -25,8 +25,11 @@ class Course < ActiveRecord::Base
     :source => :user,
     :conditions => [ "user_course_associations.role_id = ? AND user_course_associations.state = ?",
                       6, 'approved' ]
-  has_many :approved_users, :through => :user_course_associations,
-    :source => :user, :conditions => [ "user_course_associations.state = ?", 'approved' ]
+  # students (member)
+  has_many :students, :through => :user_course_associations,
+    :source => :user,
+    :conditions => [ "user_course_associations.role_id = ? AND user_course_associations.state = ?",
+                      2, 'approved' ]
   has_many :invitations, :as => :inviteable, :dependent => :destroy
   has_and_belongs_to_many :audiences
   named_scope :of_environment, lambda { |environmnent_id|

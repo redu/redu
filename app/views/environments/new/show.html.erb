@@ -47,7 +47,7 @@
   <div id="environment-courses" class="hierarchy-listing-wrapper">
     <div class="header">
       <h4>Cursos</h4>
-      <span class="counter"><%= @environment.courses.length %> cursos</span>
+      <span class="counter"><%= pluralize(@environment.courses.length, 'curso') %></span>
     </div>
 
     <div class="admin-actions">

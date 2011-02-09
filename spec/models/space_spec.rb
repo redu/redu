@@ -54,12 +54,81 @@ describe Space do
     end
   end
 
-  context "retrievers" do
+  context "finders" do
     it "retrieves finalized subjects" do
       subjects = (1..3).collect { Factory(:subject, :space => subject) }
       finalized_subjects = (1..3).collect { Factory(:subject, :space => subject,
                                                     :finalized => true) }
       subject.subjects.should == finalized_subjects
+    end
+
+
+    it "retrieves all administrators" do
+      users = 5.times.inject([]) { |res, i| res << Factory(:user) }
+      Factory(:user_space_association, :user => users[0],
+              :space => subject, :role => :environment_admin)
+      Factory(:user_space_association, :user => users[1],
+              :space => subject, :role => :environment_admin)
+      Factory(:user_space_association, :user => users[2],
+              :space => subject, :role => :teacher)
+      Factory(:user_space_association, :user => users[3],
+              :space => subject, :role => :tutor)
+      Factory(:user_space_association, :user => users[4],
+              :space => subject, :role => :member)
+
+      subject.administrators.to_set.
+        should == [users[0], users[1], subject.course.owner].to_set
+    end
+
+    it "retrieves all teachers" do
+      users = 5.times.inject([]) { |res, i| res << Factory(:user) }
+      Factory(:user_space_association, :user => users[0],
+              :space => subject, :role => :environment_admin)
+      Factory(:user_space_association, :user => users[1],
+              :space => subject, :role => :teacher)
+      Factory(:user_space_association, :user => users[2],
+              :space => subject, :role => :teacher)
+      Factory(:user_space_association, :user => users[3],
+              :space => subject, :role => :tutor)
+      Factory(:user_space_association, :user => users[4],
+              :space => subject, :role => :member)
+
+      subject.teachers.to_set.
+        should == [users[1], users[2]].to_set
+    end
+
+    it "retrieves all tutors" do
+      users = 5.times.inject([]) { |res, i| res << Factory(:user) }
+      Factory(:user_space_association, :user => users[0],
+              :space => subject, :role => :environment_admin)
+      Factory(:user_space_association, :user => users[1],
+              :space => subject, :role => :teacher)
+      Factory(:user_space_association, :user => users[2],
+              :space => subject, :role => :tutor)
+      Factory(:user_space_association, :user => users[3],
+              :space => subject, :role => :tutor)
+      Factory(:user_space_association, :user => users[4],
+              :space => subject, :role => :member)
+
+      subject.tutors.to_set.
+        should == [users[2], users[3]].to_set
+    end
+
+    it "retrieves all students" do
+      users = 5.times.inject([]) { |res, i| res << Factory(:user) }
+      Factory(:user_space_association, :user => users[0],
+              :space => subject, :role => :environment_admin)
+      Factory(:user_space_association, :user => users[1],
+              :space => subject, :role => :teacher)
+      Factory(:user_space_association, :user => users[2],
+              :space => subject, :role => :tutor)
+      Factory(:user_space_association, :user => users[3],
+              :space => subject, :role => :member)
+      Factory(:user_space_association, :user => users[4],
+              :space => subject, :role => :member)
+
+      subject.students.to_set.
+        should == [users[3], users[4]].to_set
     end
   end
 

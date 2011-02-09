@@ -1,0 +1,36 @@
+<div class="sidebar alpha grid_3">
+  <div class="image-frame space-frame">
+    <!-- <%# Nao setar width e height na imagem %> -->
+    <%= image_tag @course.environment.avatar.url(:thumb_100),
+      :alt => 'profile' %>
+  </div>
+
+  <ul class="local-nav">
+    <li>
+      <div class="<%= (current_page? :controller => :courses,
+                       :action => :show) ?
+                    "session selected".to_s : "session".to_s %>">
+        <%= link_to 'Disciplinas', course_path(@course),
+          :class => "icon icon-redu_r8_c307_s1" %>
+    </li>
+    <li>
+      <div class="<%= (current_page? :controller => :courses,
+                       :action => :edit) ?
+                    "session selected".to_s : "session".to_s %>">
+        <%= link_to 'Gerenciamento', edit_course_path(@course),
+          :class => 'icon icon-redu_r8_c221_s1'%>
+      </div>
+    </li>
+    <li>
+      <div class="session">
+        <%= link_to "Membros (#{@course.approved_users.length})",
+          users_environment_course_path(@course.environment, @course),
+          :class => 'icon icon-redu_r8_c319_s1' %>
+      <ul class="connections clearfix">
+          <%= render :partial => 'users/new/item_short',
+            :collection => @course_users %>
+      </ul><!-- end .connections -->
+      <a href="" class="more">Ver mais</a>
+    </li>
+  </ul><!-- end .local-nav -->
+</div>
