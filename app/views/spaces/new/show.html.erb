@@ -65,7 +65,7 @@
       <span class="counter">Atividades recentes</span>
     </div>
 
-
+    <div style="clear: both;">
     <%= render :partial => 'statuses/new/create_status',
       :locals => { :statusable => @space } %>
     <div id="statuses" class="statuses">
@@ -74,6 +74,7 @@
       </ol>
 
       <%= will_paginate @statuses, :renderer => EndlessRenderer %>
+    </div>
     </div><!-- end .statuses -->
   </div><!-- end #environment-courses -->
 
