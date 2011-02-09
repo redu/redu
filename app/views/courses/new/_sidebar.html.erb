@@ -10,7 +10,7 @@
       <div class="<%= (current_page? :controller => :courses,
                        :action => :show) ?
                     "session selected".to_s : "session".to_s %>">
-        <%= link_to 'Disciplinas', course_path(@course),
+        <%= link_to 'Disciplinas', environment_course_path(@course.environment, @course),
           :class => "icon icon-redu_r8_c307_s1" %>
     </li>
     <li>
