@@ -32,7 +32,9 @@ class BaseController < ApplicationController
 
   def teach_index
     respond_to do |format|
-      format.html 
+      format.html  do
+        render :template => 'base/new/teach_index', :layout => 'new/application'
+      end
     end
   end
 

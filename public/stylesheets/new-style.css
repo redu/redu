@@ -875,7 +875,7 @@
 }
 
 #checkout .plan {
-  background: url("../images/new/plans.png") no-repeat 20px 60px;
+  background: url("../images/new/plans.png") no-repeat 10px 60px;
   height: 700px;
   position: relative;
 }

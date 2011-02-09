@@ -1,0 +1,24 @@
+<fieldset>
+  <div class="environment-box clearfix">
+    <%= f.label :name, "Seu ambiente de ensino", :id => "teste" %>
+    <%= f.text_field :name, :id => "teste", :class => "big" %>
+  </div>
+  <span class="tip">40 caracteres restantes</span>
+  <%= f.label :initials, "Sigla" %>
+  <%= f.text_field :initials, :id => "sigla" %>
+  <span class="tip">40 caracteres restantes</span>
+  <%= f.label :path, "Endereço letrônico", :class => "big"%>
+  <%= f.text_field :path %>
+</fieldset>
+<fieldset>
+  <% f.fields_for :courses do |builder|  %>
+    <div class="course-box clearfix">
+      <%= builder.label :name, "Seu primeiro curso" %>
+      <%= builder.text_field :name, :class => "big" %>
+    </div>
+    <span class="tip">40 caracteres restantes</span>
+    <%= builder.label :path, "Endereço eletrônico" %>
+    <%= builder.text_field :path, :class => "big" %>
+    <span class="tip">40 caracteres restantes</span>
+  <% end %>
+</fieldset>
