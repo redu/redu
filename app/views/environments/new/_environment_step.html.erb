@@ -49,10 +49,10 @@ $(document).ready(function(){
 <div class="clearfix" id="checkout">
   <ol id="breadcrumbs" class="wizard wizard-2 clearfix">
     <li>
-      <a href="" class="replacement home icon icon-redu_r8_c227_s1">Home</a>
+      <%= link_to "Home", home_path, :class => "replacement home icon icon-redu_r8_c227_s1"  %>
     </li>
     <li>
-      <a href="" class="">Ensine</a>
+      <%= link_to "Ensine", teach_index_path %>
     </li>
     <li>
       <a href="" class="">Etapa 1: Planos</a>
