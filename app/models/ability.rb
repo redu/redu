@@ -77,8 +77,13 @@ class Ability
     # Friendship
     alias_action :pending, :accept, :decline, :to => :manage
 
+    # Plan
+    alias_action :confirm, :address, :pay, :upgrade, :to => :manage
+
     # Todos podem ver o preview
-    can :view, :all do |object|
+    publishable = [Environment, Course, Space, Subject] # Coisas que tem published
+
+    can :view, publishable do |object|
       object.published?
     end
 
@@ -115,6 +120,24 @@ class Ability
       can :unenroll, Subject do |subject|
         subject.published? && user.has_access_to?(subject)
       end
+
+      # Seminar
+      can :upload_multimedia, Seminar do |seminar|
+        seminar.can_upload_multimedia?(seminar.lecture)
+      end
+
+      # Document
+      can :upload_document, Document do |document|
+        document.can_upload_document?(document.lecture)
+      end
+
+      # My file
+      can :upload_file, Myfile do |myfile|
+        myfile.can_upload_file?(myfile.folder.space)
+      end
+
+      # Plan (payment gatewat)
+      can :read, :success
 
       # Admin do environment ou teacher, caso o space não tenha owner
       can :take_ownership, Space do |space|

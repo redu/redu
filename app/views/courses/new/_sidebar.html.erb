@@ -17,7 +17,7 @@
       <div class="<%= (current_page? :controller => :courses,
                        :action => :edit) ?
                     "session selected".to_s : "session".to_s %>">
-        <%= link_to 'Gerenciamento', edit_course_path(@course),
+        <%= link_to 'Gerenciamento', edit_environment_course_path(@environment, @course),
           :class => 'icon icon-redu_r8_c221_s1'%>
       </div>
     </li>

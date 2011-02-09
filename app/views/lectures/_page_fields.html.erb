@@ -7,7 +7,9 @@
     <%= hidden_field_tag "lecture_id", @lecture.id %>
   <% end %>
   <%= f.label :body, :body.l %>
-  <%= f.cktext_area :body, :width => "600px", :height => "200px" %>
+  <%= f.cktext_area :body, :width => "600px", :height => "200px",
+      :swf_params => { :assetable_type => 'Space',
+        :assetable_id => @space.id } %>
   <%= error_for :page, :body %>
   <% if action_name == 'new' %>
     <%= f.submit 'Criar' %>

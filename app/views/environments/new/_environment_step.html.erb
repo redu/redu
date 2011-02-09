@@ -1,0 +1,87 @@
+<%= apply_color_picker_to "#environment_color" %>
+<script type="text/javascript" charset="utf-8">
+//<![CDATA[
+$(document).ready(function(){
+  $("#environment_name").bind('keyup blur', function(e){
+    var slug = $(this).slug()
+    $("#environment_path").val(slug);
+    $("#url_preview .environment").html(slug);
+  })
+
+  $("#environment_path, #environment_courses_attributes_0_path").bind('keyup blur', function(e){
+    var slug = $(this).slug()
+    $(this).val(slug);
+  })
+
+  $("#environment_path").bind('keyup blur', function(){
+    var slug = $(this).slug()
+    $("#url_preview .environment").html(slug);
+  })
+
+  $("#environment_courses_attributes_0_path").bind('keyup blur', function(){
+    var slug = $(this).slug()
+    $("#url_preview .course").html(slug);
+  })
+
+  $("#environment_courses_attributes_0_name").bind('keyup blur', function(e){
+    var slug = $(this).slug()
+    $("#environment_courses_attributes_0_path").val(slug);
+    $("#url_preview .course").html(slug);
+  })
+
+  $("input[name='environment[color]']").hide()
+  $("input[name='environment[color]']").change(function(){
+    color = $(this).css("background-color")
+    $("#create-header").css("background-color", color)
+  })
+
+  $("#environment_name").bind('keyup blur', function(){
+    $("div.name h3 > a").html($(this).val())
+  })
+
+  $("#environment_courses_attributes_0_name").bind('keyup blur', function(){
+    $("div.course h4 > a").html($(this).val())
+  })
+
+})
+//]]>
+</script>
+<div class="clearfix" id="checkout">
+  <ol id="breadcrumbs" class="wizard wizard-2 clearfix">
+    <li>
+      <%= link_to "Home", home_path, :class => "replacement home icon icon-redu_r8_c227_s1"  %>
+    </li>
+    <li>
+      <%= link_to "Ensine", teach_index_path %>
+    </li>
+    <li>
+      <a href="" class="">Etapa 1: Planos</a>
+    </li>
+    <li>
+      <a href="" class="">Etapa 2: Informações</a>
+    </li>
+    <li>
+      <a href="" class="disabled">Etapa 3: Confirmar Dados</a>
+    </li>
+  </ol>
+
+  <div class="grid_4 alpha">
+    <h3>Etapa 2: <span>Informações</span></h3>
+    <em class="description">Escreva as informações básicas do seu ambiente de estudo e do primeiro curso.</em>
+  </div>
+  <div id="url_preview">
+    <span class="label">O seu endereço completo será:</span>
+    <span class="base">redu.com.br/</span>
+    <span class="environment"><%= @environment.path %></span>/
+    <span class="base">cursos/</span>
+    <span class="course"><%= @environment.courses.first.path %></span>
+  </div>
+  <div class="customizing">
+    <% form_for @environment, :url => environments_path(:step => 3), :html => { :class => "highlightable" } do |f| %>
+        <%= f.error_messages %>
+        <%= render :partial => 'environments/new/form', :locals => { :f => f } %>
+        <%= hidden_field_tag :plan, @plan %>
+        <%= f.submit "Assinar", :class => "important"%>
+      <% end %>
+  </div>
+</div>

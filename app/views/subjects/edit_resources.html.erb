@@ -71,7 +71,6 @@ function show_choosen_assets(){
       $(this).parent().nextAll("div.exist-form").show()
       id = $(this).parent().nextAll("div.exist-form").children('.assetable_id').val()
       type = $(this).parent().nextAll("div.exist-form").children('.assetable_type').val()
-      console.log(id+"-"+type)
       $(this).parent().nextAll("div.exist-form").children('.existent-asset').val(id+"-"+type)
       }
   });

@@ -26,6 +26,13 @@ class FoldersController < BaseController
 
   after_filter :create_activity, :only => [:do_the_upload]
 
+  rescue_from CanCan::AccessDenied do |exception|
+    flash[:notice] = "Você não possui espaço disponível suficiente."
+    respond_to_parent do
+      redirect_to space_folders_path(@space)
+    end
+  end
+
   # FILE
   def destroy_file
     @myfile = Myfile.find(params[:file_id], :include => :folder)
@@ -33,9 +40,9 @@ class FoldersController < BaseController
     @folder_id = @myfile.folder.id
     @space_id = @myfile.folder.space_id
 
-
     respond_to do |format|
       if @myfile.destroy
+        @space.course.quota.refresh
         flash[:notice] = 'Arquivo removido!'
         format.html {redirect_to space_folders_path(:id => @folder_id, :space_id => @space_id)  }
         format.js do
@@ -65,16 +72,18 @@ class FoldersController < BaseController
   def do_the_upload
     @myfile = Myfile.new(params[:myfile])
     @myfile.user = current_user
+    authorize! :upload_file, @myfile
 
     respond_to do |format|
       if @myfile.save
+        @space.course.quota.refresh
         flash[:notice] = 'Upload realizado!'
         format.html {redirect_to @space }
         format.js do
           list
           responds_to_parent do
             render :update do |page|
-            page.replace_html  'tabs-4-content', :partial => 'folders/index'
+              page.replace_html  'tabs-4-content', :partial => 'folders/index'
             end
           end
         end
@@ -254,6 +263,7 @@ class FoldersController < BaseController
     @parent_id = @folder.parent_id
     @space_id = @folder.space_id
     @folder.destroy
+    @space.course.quota.refresh
     respond_to do |format|
       # back to the list
       format.js {

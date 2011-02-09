@@ -27,6 +27,7 @@ describe Ability do
         env = Factory.build(:environment, :owner => @member)
         @ability.should be_able_to(:create, env)
       end
+
       it "destroys his own environment" do
         @ability.should be_able_to(:destroy, Factory(:environment, :owner => @member))
       end
@@ -293,7 +294,7 @@ describe Ability do
         Factory(:user_course_association, :course => @course,
                 :user => @teacher, :role => :teacher)
         @space = Factory(:space, :owner => @teacher,
-                        :course => @course)
+                         :course => @course)
         @ability = Ability.new(@teacher)
       end
       it "creates a space" do
@@ -307,7 +308,7 @@ describe Ability do
         course1 = Factory.build(:course, :owner => environment1.owner,
                                 :environment => environment1)
         space1 = Factory.build(:space, :owner => @teacher,
-                        :course => course1)
+                               :course => course1)
         @ability.should_not be_able_to(:destroy, space1)
       end
 
@@ -325,7 +326,7 @@ describe Ability do
     end
 
     context "tutor" do
-       before do
+      before do
         Factory(:user_environment_association, :environment => @environment,
                 :user => @tutor, :role => :member)
         Factory(:user_course_association, :course => @course,
@@ -395,7 +396,7 @@ describe Ability do
       end
       it "destroys a space" do
         space = Factory(:space, :owner => @env_admin,
-                       :course => @course)
+                        :course => @course)
         @ability.should be_able_to(:destroy, space)
       end
       it "creates a subject"
@@ -412,10 +413,59 @@ describe Ability do
     end
   end
 
+  context "on plan" do
+    before do
+      @plan = Factory(:plan)
+      @invoice = Factory(:invoice, :plan => @plan)
+    end
+
+    context "the owner" do
+      before do
+        @ability = Ability.new(@plan.user)
+      end
+
+      it "read its own plan" do
+        @ability.should be_able_to(:read, @plan)
+      end
+
+      it "manages its own plan" do
+        @ability.should be_able_to(:manage, @plan)
+      end
+
+      it "reads plan's invoice" do
+        @ability.should be_able_to(:read, @invoice)
+      end
+
+      it "manages plan's invoice" do
+        @ability.should be_able_to(:manage, @invoice)
+      end
+    end
+  end
+  context "the strange" do
+    before do
+      strange = Factory(:user)
+      @ability = Ability.new(strange)
+    end
+
+    it "can NOT read others plans" do
+      @ability.should_not be_able_to(:read, @plan)
+    end
+
+    it "can NOT manage others plans" do
+      @ability.should_not be_able_to(:manage, @plan)
+    end
+
+    it "can NOT read others plan's invoice" do
+      @ability.should_not be_able_to(:read, @invoice)
+    end
+    it "can NOT manage others plan's invoice" do
+      @ability.should_not be_able_to(:manage, @invoice)
+    end
+  end
   context "on user -" do
     before do
-        @user = Factory(:user)
-        @user_ability = Ability.new(@user)
+      @user = Factory(:user)
+      @user_ability = Ability.new(@user)
     end
 
     context "when friends" do

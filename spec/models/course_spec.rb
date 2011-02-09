@@ -17,6 +17,9 @@ describe Course do
   it { should have_many(:students).through :user_course_associations }
 
   it { should have_and_belong_to_many :audiences }
+  it { should have_one(:quota).dependent(:destroy) }
+  it { should have_one(:plan) }
+
 
   it { should validate_presence_of :name }
   it { should validate_presence_of :path }

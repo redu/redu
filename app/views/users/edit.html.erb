@@ -1,70 +1,84 @@
+<%#FIXME transformar isto em aba fake  %>
+
 <% content_for :js do %>
-
 <script type="text/javascript">
-
-var $usertabs;
-
-$(document).ready(function() {
-
+  var $usertabs;
+  $(document).ready(function() {
     $usertabs = $(".user-tabs").tabs();
-  
-});
+  });
 </script>
 <% end %>
 
 <div class="grid_10">
-	<h3>Editando perfil de <%= link_to @user.display_name, @user%> </h3>
-	
-    <div class="user-tabs tabs">
-        <ul>
-            <li>
-                <a href="#tabs-1">Perfil</a>
-            </li>
-            <li>
-                <a href="#tabs-2">Conta</a>
-            </li>
-            
-			<!--
-			<li>
-                <a href="#tabs-3">Plano</a>
-            </li>
-			
-			-->
-		
-        </ul>
-        <div id="tabs-1" class="clearfix first-page">
-        	
-					
-					<%= render :partial => "form" %>
-					
-					
-        </div>
-        <div id="tabs-2">
-        	<%= render :partial => "account" %>
-        </div>
-        
-		<!--
-		<div id="tabs-3">
-        	plano
-        </div>
-		-->
-	
+  <h3>Editando perfil de <%= link_to @user.display_name, @user%> </h3>
+
+  <div class="user-tabs tabs">
+    <ul>
+      <li>
+        <a href="#tabs-1">Perfil</a>
+      </li>
+      <li>
+        <a href="#tabs-2">Conta</a>
+      </li>
+
+      <li>
+        <a href="#tabs-3">Plano</a>
+      </li>
+
+    </ul>
+    <div id="tabs-1" class="clearfix first-page">
+      <%= render :partial => "form" %>
     </div>
-    <!-- end tabs -->
+    <div id="tabs-2">
+      <%= render :partial => "account" %>
+    </div>
+
+    <div id="tabs-3">
+      <table class="common">
+        <thead>
+          <tr>
+            <th>Plano</th>
+            <th>Estado</th>
+            <th>Curso</th>
+            <th>Ação</th>
+          </tr>
+        </thead>
+        <% current_user.plans.each do |p| %>
+          <tr>
+            <td><%= link_to p.name, plan_invoices_path(p) %></td>
+            <td>
+              <% if p.invoices.pending.empty? %>
+                <strong>Sem pendências</strong>
+              <% else %>
+                 <strong><%= p.invoices.pending.count %> pagamento(s) pendente(s)</strong>
+               <% end %>
+             </td>
+             <td> <%= p.billable.name %> </td>
+            <td>
+              <% if p.invoices.pending.empty? %>
+                <%= link_to "Upgrade", upgrade_plan_path(p) %>
+              <% else %>
+                <%= pagseguro_form p.create_order, :submit => "Pagar" %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
+  <!-- end tabs -->
 </div>
 
 <div class="grid_6">
-	<div class="y_addinfo" style="margin-top: 100px;">
-      <div class="addinfocontent">
-          <h1>
-              Informações do Perfil</h1>
-          <p>
-           É importante completar todas as informações do seu perfil! Desta forma, outros estudantes e professores poderão
-					 encontrar você na rede, e o Redu poderá sugerir materiais de estudo de acordo com o seu perfil.
-					  </p>
-						
-						<p>Comece agora e mantenha seu perfil sempre atualizado com as suas necessidades!</p>
-						
-      </div>
+  <div class="y_addinfo" style="margin-top: 100px;">
+    <div class="addinfocontent">
+      <h1>
+        Informações do Perfil</h1>
+      <p>
+        É importante completar todas as informações do seu perfil! Desta forma, outros estudantes e professores poderão
+        encontrar você na rede, e o Redu poderá sugerir materiais de estudo de acordo com o seu perfil.
+      </p>
+      <p>Comece agora e mantenha seu perfil sempre atualizado com as suas necessidades!</p>
+    </div>
   </div>
 </div>

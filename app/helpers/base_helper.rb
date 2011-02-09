@@ -665,6 +665,13 @@ end
     end
   end
 
+  # Mostra tabela de preço de planos
+  def pricing_table(plans=nil)
+    plans ||= Plan::PLANS
+
+    render :partial => "plans/plans", :locals => { :plans => plans }
+  end
+
 end
 
 # Renderer do WillPaginate responsável por renderizar

@@ -32,6 +32,9 @@ class Course < ActiveRecord::Base
                       2, 'approved' ]
   has_many :invitations, :as => :inviteable, :dependent => :destroy
   has_and_belongs_to_many :audiences
+  has_one :quota, :dependent => :destroy, :as => :billable
+  has_one :plan, :as => :billable
+
   named_scope :of_environment, lambda { |environmnent_id|
    { :conditions => {:environment_id => environmnent_id} }
   }

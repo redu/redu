@@ -4,9 +4,16 @@ class LecturesController < BaseController
   before_filter :find_subject_space_course_environment
   after_filter :create_activity, :only => [:create]
 
+
   include Viewable # atualiza o view_count
   load_and_authorize_resource :lecture,
     :except => [:new, :create, :cancel, :unpublished_preview]
+
+  rescue_from CanCan::AccessDenied do |exception|
+    respond_to do |format|
+            format.js { render :js => "alert('Você não possui espaço suficiente.')" }
+    end
+  end
 
   # adiciona um objeto embarcado (ex: scribd)
   def embed_content
@@ -164,33 +171,42 @@ class LecturesController < BaseController
   # POST /lectures.xml
   def create
     if params[:lecture_id] # Existent
-     @lecture = Lecture.find(params[:lecture_id])
-     @lecture = @lecture.clone_for_subject!(params[:subject_id])
+      @lecture = Lecture.find(params[:lecture_id])
+      @lecture = @lecture.clone_for_subject!(params[:subject_id])
     else
       @lecture = Lecture.new
       @lecture.name = params[:name]
       @lecture.owner = current_user
       @lecture.subject = Subject.find(params[:subject_id])
     end
-
+    quota_files = @space.course.quota.files
+    quota_multimedia = @space.course.quota.multimedia
+    plan_files_limit = @space.course.plan.file_storage_limit
+    plan_multimedia_limit = @space.course.plan.video_storage_limit
+    error = false
     if params[:page]
       @page = Page.create(params[:page]) if @lecture.name
       @lecture.lectureable = @page
     elsif params[:seminar]
-      # Verificação para que o Seminar não seja criado em vão.
-      @seminar = Seminar.create(params[:seminar]) if @lecture.name
-      @lecture.lectureable = @seminar
+      @seminar = Seminar.new(params[:seminar]) if @lecture.name
+      @seminar.lecture = @lecture
+      authorize! :upload_multimedia, @seminar
+      @seminar.save
     elsif params[:document]
-      @document = Document.create(params[:document]) if @lecture.name
-      @lecture.lectureable = @document
+      @document = Document.new(params[:document]) if @lecture.name
+      @document.lecture = @lecture
+      authorize! :upload_document, @document
+      @document.save
     end
 
     respond_to do |format|
       if @lecture.save
+        @space.course.quota.refresh
         @lecture.published = 1
         @lecture.save
         format.js
       else
+
         format.js { render :template => 'lectures/create_error'}
       end
     end
@@ -236,7 +252,7 @@ class LecturesController < BaseController
     elsif params[:document]
       @document.update_attributes(params[:document]) && @lecture.save
     end
-
+    @lecture.subject.space.course.quota.refresh
     respond_to do |format|
       if valid
         format.js
@@ -251,7 +267,7 @@ class LecturesController < BaseController
   # DELETE /lectures/1.xml
   def destroy
     @lecture.destroy
-
+    @lecture.subject.space.course.quota.refresh
     respond_to do |format|
       format.html {
         flash[:notice] = "A aula foi removida."

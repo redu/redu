@@ -1,0 +1,38 @@
+<div class="clearfix plan" id="checkout">
+  <ol id="breadcrumbs" class="wizard clearfix">
+    <li>
+      <%= link_to "Home", home_path, :class => "replacement home icon icon-redu_r8_c227_s1" %>
+    </li>
+    <li>
+      <%= link_to "Ensine", teach_index_path %>
+    </li>
+    <li>
+      <a href="" >Etapa 1: Planos</a>
+    </li>
+    <li>
+      <a href="" class="disabled">Etapa 2: Informações</a>
+    </li>
+    <li>
+      <a href="" class="disabled">Etapa 3: Confirmar Dados</a>
+    </li>
+  </ol>
+
+  <div class="grid_4 alpha">
+    <h3>Etapa 1: <span>Planos</span></h3>
+    <em class="description">Escolha o plano que melhor se adequa as suas necessidades.</em>
+  </div>
+  <div class="plan">
+    <% form_for @environment, :url => environments_path(:step => 2),
+        :class => "clearfix" do |f| %>
+      <%= hidden_field_tag :plan, 'free' %>
+      <%# render :partial => 'environments/plan_form' %>
+      <%= f.submit "Assinar", :class => "important" %>
+
+      <div style="display:none;">
+        <%= render :partial => 'form', :locals => { :f => f } %>
+      </div>
+    <% end %>
+  </div>
+
+</div>
+

@@ -98,7 +98,8 @@ ActionController::Routing::Routes.draw do |map|
                    :download => :get,
                    :rename => :get,
                    :destroy_folder => :delete,
-                   :destroy_file => :delete }
+                   :destroy_file => :delete,
+                   :do_the_upload => [:post, :put]}
     space.resources :subjects,
       :member => { :enroll => :get,
                    :unenroll => :get,
@@ -238,6 +239,16 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :courses do |course|
     course.resources :invitations
   end
+
+  map.resources :plans, :only => [], :member => {
+    :confirm => [:get, :post],
+    :upgrade => [:get, :post]
+  } do |plan|
+    plan.resources :invoices, :only => [:index, :show]
+  end
+
+  map.payment_success '/payment/success',
+    :controller => 'payment_gateway', :action => 'callback'
 
   # Install the default routes as the lowest priority.
   map.connect ':controller/:action/:id'

@@ -85,6 +85,8 @@ class User < ActiveRecord::Base
   # FIXME Verificar necessidade (não foi testado)
   has_many :monitored_topics, :through => :monitorships, :conditions => ['monitorships.active = ?', true], :order => 'topics.replied_at desc', :source => :topic
 
+  has_many :plans
+
 
   # Named scopes
   named_scope :recent, :order => 'users.created_at DESC'
@@ -286,9 +288,9 @@ class User < ActiveRecord::Base
     when 'Folder'
       self.teacher?(entity.space) || self.tutor?(entity.space) || self.can_manage?(entity.space)
     when 'Topic'
-      self.teacher?(entity.space)
+      self.member?(entity.space)
     when 'SbPost'
-      self.teacher?(entity.space)
+      self.member?(entity.space)
     when 'Status'
       case entity.statusable.class.to_s
       when 'Space'
@@ -299,7 +301,13 @@ class User < ActiveRecord::Base
         self == entity.user
       end
     when 'User'
-      self == entity
+      entity == self
+    when 'Plan'
+      entity.user == self
+    when 'Invoice'
+      self.can_manage?(entity.plan)
+    when 'Myfile'
+      self.can_manage?(entity.folder)
     end
   end
 
@@ -349,8 +357,10 @@ class User < ActiveRecord::Base
        (object.class.to_s.eql? 'Topic') || (object.class.to_s.eql? 'SbPost') ||
        (object.class.to_s.eql? 'Event') || (object.class.to_s.eql? 'Bulletin') ||
        (object.class.to_s.eql? 'Status') || (object.class.to_s.eql? 'User') ||
-       (object.class.to_s.eql? 'Friendship')
-      self.has_access_to?(object)
+       (object.class.to_s.eql? 'Friendship') || (object.class.to_s.eql? 'Plan') ||
+       (object.class.to_s.eql? 'Invoice')
+
+       self.has_access_to?(object)
     else
       object.published? && self.has_access_to?(object)
     end

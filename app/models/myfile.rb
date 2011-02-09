@@ -62,4 +62,15 @@ class Myfile < ActiveRecord::Base
       existing.destroy
     end
   end
+
+  def can_upload_file?(space)
+    plan = space.course.plan
+    quota = space.course.quota
+
+    if quota.files > plan.file_storage_limit
+      return false
+    else
+      return true
+    end
+  end
 end
