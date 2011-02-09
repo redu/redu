@@ -880,10 +880,10 @@
   position: relative;
 }
 
-#checkout .plan .important {
+#checkout .plan form {
   position: absolute;
-  left: 60px;
-  bottom: 75px;
+  left: 200px;
+  bottom: 60px;
 }
 
 #checkout .customizing{

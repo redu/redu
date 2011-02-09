@@ -77,7 +77,7 @@ $(document).ready(function(){
     <span class="course"><%= @environment.courses.first.path %></span>
   </div>
   <div class="customizing">
-      <% form_for @environment, :url => environments_path(:step => 3), :class => "highlightable" do |f| %>
+    <% form_for @environment, :url => environments_path(:step => 3), :html => { :class => "highlightable" } do |f| %>
         <%= f.error_messages %>
         <%= render :partial => 'environments/new/form', :locals => { :f => f } %>
         <%= hidden_field_tag :plan, @plan %>

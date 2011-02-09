@@ -22,7 +22,8 @@
     <em class="description">Escolha o plano que melhor se adequa as suas necessidades.</em>
   </div>
   <div class="plan">
-    <% form_for @environment, :url => environments_path(:step => 2) do |f| %>
+    <% form_for @environment, :url => environments_path(:step => 2),
+        :class => "clearfix" do |f| %>
       <%= hidden_field_tag :plan, 'free' %>
       <%# render :partial => 'environments/plan_form' %>
       <%= f.submit "Assinar", :class => "important" %>
