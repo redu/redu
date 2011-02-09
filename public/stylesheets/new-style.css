@@ -939,6 +939,7 @@
   float: left;
   width: 670px;
   padding-bottom: 50px;
+  position: relative;
 }
 
 #checkout .confirmation table {
@@ -975,7 +976,7 @@
   background: url("../images/new/icon-course-blue_48_48.png") no-repeat center right;
 }
 
-#checkout .confirmation .plan {
+#checkout .confirmation .plan-box {
   background: url("../images/new/icon-teacher-blue_48_48.png") no-repeat center right;
 }
 
@@ -983,8 +984,9 @@
   color: #B2B2B2;
 }
 
-#checkout .confirmation .important {
-  float: right;
+#checkout .confirmation form {
+  bottom: 10px;
+  right: 0px;
   margin-top: 20px;
   display: block;
 }
