@@ -21,9 +21,9 @@ class Plan < ActiveRecord::Base
       :name => "Free",
       :price => 0,
       :yearly_price => 0,
-      :video_storage_limit => 1.gigabyte,
-      :file_storage_limit => 1.gigabytes,
-      :members_limit => 20
+      :video_storage_limit => 10.megabytes,
+      :file_storage_limit => 2.megabytes,
+      :members_limit => 10
     },
     :instituicao_lite => {
       :name => "Instituição Lite",
