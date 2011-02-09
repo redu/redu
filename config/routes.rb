@@ -87,7 +87,8 @@ ActionController::Routing::Routes.draw do |map|
     :teachers => :get,
     :take_ownership => :get,
     :publish => :get,
-    :unpublish => :get
+    :unpublish => :get,
+    :users => :get
   },
     :collection =>{
     :cancel => :get
