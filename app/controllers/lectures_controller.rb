@@ -6,12 +6,15 @@ class LecturesController < BaseController
 
 
   include Viewable # atualiza o view_count
+  load_and_authorize_resource :subject
   load_and_authorize_resource :lecture,
-    :except => [:new, :create, :cancel, :unpublished_preview]
+    :except => [:new, :create, :cancel, :unpublished_preview],
+    :through => :subject
 
   rescue_from CanCan::AccessDenied do |exception|
     respond_to do |format|
-            format.js { render :js => "alert('Você não possui espaço suficiente.')" }
+      format.html { redirect_to space_path(Space.find(params[:space_id]))}
+      format.js { render :js => "alert('Você não possui espaço suficiente.')" }
     end
   end
 
@@ -91,10 +94,6 @@ class LecturesController < BaseController
     render :nothing => true
   end
 
-  def index
-    authorize! :read, @subject
-    redirect_to space_subject_path(@space, @subject)
-  end
   # GET /lectures/1
   # GET /lectures/1.xml
   def show

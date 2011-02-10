@@ -1,7 +1,7 @@
 class SubjectsController < BaseController
   layout 'environment'
 
-  load_resource :space
+  load_and_authorize_resource :space
   load_and_authorize_resource :subject, :through => :space, :except => [:update, :destroy]
   load_and_authorize_resource :subject, :only => [:update, :destroy]
 
@@ -10,7 +10,7 @@ class SubjectsController < BaseController
 
   rescue_from CanCan::AccessDenied do |exception|
     flash[:notice] = "Você não tem acesso a essa página"
-    redirect_to infos_space_subject_path(@space, @subject)
+    redirect_to space_path(@space)
   end
 
   def index

@@ -34,6 +34,15 @@ describe Subject do
     end
   end
 
+  context "callbacks" do
+    it "creates a Enrollment between the subject and the owner after create" do
+      subject.enrollments.first.should_not be_nil
+      subject.enrollments.first.user.should == subject.owner
+      subject.enrollments.first.role.
+        should == subject.owner.get_association_with(subject.space).role
+    end
+  end
+
   context "finders" do
     it "retrieves published subjects" do
       subjects = (1..3).collect { Factory(:subject) }
@@ -114,7 +123,7 @@ describe Subject do
 
     it "enrolls an user with a given role" do
       subject.enroll(@user, Role[:teacher]).should be_true
-      subject.enrollments.first.role_id.should == Role[:teacher].id
+      subject.enrollments.last.role_id.should == Role[:teacher].id
     end
 
     it "unenrolls an user" do
