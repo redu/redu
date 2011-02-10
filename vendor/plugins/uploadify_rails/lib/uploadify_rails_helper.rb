@@ -57,8 +57,6 @@ module UploadifyRailsHelper
   
   def render_uploadify(options = {})
     javascript_tag("window._token = '#{get_authenticity_token}'") <<
-    javascript_include_tag("uploadify/swfobject") << 
-    javascript_include_tag("uploadify/jquery.uploadify.v2.1.0.min") <<
     javascript_uploadify_tag(options)  
   end
   
