@@ -33,7 +33,7 @@ jQuery(function(){
         $(this).parents("form").find("input[type=submit], .cancel, .char-limit").fadeOut();
     });
 
-    // Adicionar classe focus a um determinado label quando o seu campo 
+    // Adicionar classe focus a um determinado label quando o seu campo
     // correspondente detectar o evento focus
     $("input[type=text], input[type=password], input[type=radio], input[type=checkbox]","form.highlightable").focus(function(){
         var label_for = $(this).attr("id") || null;
@@ -47,7 +47,7 @@ jQuery(function(){
           $("label[for=" + label_for + "]").removeClass("focus");
     });
 
-    // gerador do path do environmet e course 
+    // gerador do path do environmet e course
     jQuery.fn.slug = function() {
       var $this = $(this);
       var slugcontent = stripAccent($this.val());
@@ -61,6 +61,14 @@ jQuery(function(){
         explanation += $(this).find("a").attr("title");
 
         $("#new_subject .new-resource .explanation").html(explanation);
+    });
+
+    // Expand de recursos na listagem de módulos
+    $(".expand, .unexpand", "#space-subjects .subjects").click(function(){
+        $(this).toggleClass("expand");
+        $(this).toggleClass("unexpand");
+        $(this).parents("li:first").toggleClass("open");
+        $(this).next().slideToggle("fast");
     });
 
 

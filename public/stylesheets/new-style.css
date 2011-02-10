@@ -328,7 +328,6 @@
   background: url("../images/new/icon-space-black_32_32.png") no-repeat 20px center;
 }
 
-
 #space-statuses .header {
   background: url("../images/new/icon-status-black_32_32.png") no-repeat 20px center;
 }
@@ -383,6 +382,7 @@
 }
 
 .hierarchy-listing > li {
+  position: relative;
   display: block;
   padding: 15px 10px;
   margin-bottom: 10px;
@@ -402,6 +402,34 @@
 .hierarchy-listing > li .activities,
 .hierarchy-listing > li .audience {
   float: left;
+}
+
+.hierarchy-listing .description {
+  display: block;
+  margin: 5px 0;
+  width: 555px;
+  font-size: .9em;
+}
+
+.hierarchy-listing .resources li {
+  padding: 3px 0 3px 20px;
+  margin: 5px 0;
+}
+
+.hierarchy-listing .details {
+  background: url("../images/new/dots.png") repeat-x top;
+  clear: both;
+  display: block;
+  padding: 10px 10px 0 20px;
+  margin-top: 10px;
+}
+
+.hierarchy-listing .edit {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  font-size: .9em;
+  padding-left: 12px;
 }
 
 .hierarchy-listing > li:hover {
@@ -989,6 +1017,35 @@
   right: 0px;
   margin-top: 20px;
   display: block;
+}
+
+#space-subjects  .expand {
+  background: url("../images/new/arrow-down.png") no-repeat;
+}
+
+#space-subjects  .unexpand {
+  background: url("../images/new/arrow-up.png") no-repeat;
+}
+
+#space-subjects .unexpand,
+#space-subjects .expand {
+  cursor: pointer;
+  position: absolute;
+  display: block;
+  width: 20px;
+  height: 20px;
+  top: 80px;
+  right: 20px;
+}
+
+#space-subjects .subjects > li {
+  background-image: url("../images/new/icon-subject-closed-gray_32_32.png");
+  background-repeat: no-repeat;
+  background-position: 685px 40px;
+}
+
+#space-subjects .subjects > li.open {
+  background-image: url("../images/new/icon-subject-open-gray_32_32.png");
 }
 
 #new_subject .resources-wrapper {
