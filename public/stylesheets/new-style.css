@@ -829,9 +829,9 @@
   margin-right: 20px;
   font-size: .9em;
   font-weight: bold;
+  color: #6C6D6E;
   clear: left;
   padding-top: 4px;
-  color: #6C6D6E;
 }
 
 #checkout label.focus {
@@ -991,12 +991,79 @@
   display: block;
 }
 
+#new_subject .resources-wrapper {
+  border-top: 1px dashed #A8A8A8;
+  border-bottom: 1px dashed #A8A8A8;
+  padding: 10px 0;
+}
+
+#new_subject .resources {
+  float: left;
+}
+
+#new_subject .resources li {
+  padding: 3px 0 3px 20px;
+  margin: 5px 0;
+}
+
+#new_subject .resources li a.edit,
+#new_subject .resources li a.remove {
+  font-size: .9em;
+}
+
+#new_subject .new-resource {
+  float: left;
+  width: 550px;
+  padding: 15px 0;
+}
+
+#new_subject .new-resource li {
+  background: url("../images/new/new-resource.png") no-repeat -143px 0;
+  float: left;
+  margin-right: 10px;
+  text-align: center;
+  width: 97px;
+  height: 90px;
+}
+
+#new_subject .new-resource li span {
+  display: block;
+  width: 32px;
+  height: 32px;
+  margin-left: 35px;
+  margin-top: 10px;
+}
+
+#new_subject .new-resource li a {
+  margin: 5px 5px 0 5px;
+  display: block;
+  color: white;
+  font-size: .9em;
+  font-weight: bold;
+}
+
+#new_subject .new-resource li:hover,
+#new_subject .new-resource li.selected {
+  background-position: 0 0;
+}
+
+#new_subject .new-resource .explanation {
+  font-size: .9em;
+  height: 50px;
+  display: block;
+}
+
+#new_subject .new-resource .explanation strong {
+  display: block;
+  margin-bottom: 5px;
+}
+
 a.important,
 input[type=submit].important {
   border: 1px solid #61BE80;
   font-family: Copse, Arial, sans-serif;
   color: white;
-  padding: 5px 30px;
+  padding: 3px 30px;
   font-size: 1.2em;
 
   -moz-border-radius: 5px;
@@ -1061,6 +1128,100 @@ a.cancel:hover { text-decoration: none; }
   color: #4CACD4;
   font-size: 1.3em;
 }
+
+/* Form common styles */
+form.common {
+  clear: both;
+
+}
+
+form.common label,
+form.common .label,
+form.common input[type=text],
+form.common input[type=password],
+form.common input[type=file],
+form.common textarea {
+  float: left;
+  display: block;
+  margin-top: 20px;
+}
+
+form.common .label,
+form.common label {
+  clear: left;
+  display: block;
+  width: 150px;
+  text-align: right;
+  margin: 25px 10px 0 0;
+  font-size: .9em;
+  font-weight: bold;
+  color: #6C6D6E;
+}
+
+form.common input[type=submit],
+form.common a.cancel {
+  clear: left;
+  float: right;
+  display: block;
+  margin: 10px 0 10px 10px;
+}
+
+form.common textarea,
+form.common input[type=text] {
+  width: 410px;
+  padding: 8px;
+
+  border: 1px solid #B3B2B3;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
+form.common input[type=text].small {
+}
+
+form.common .tip {
+  display: block;
+  float: left;
+  clear: both;
+  margin: 5px 0 0 160px;
+  color: #B2B2B2;
+  font-size: .9em;
+}
+
+form.common fieldset fieldset {
+  float: left;
+  width: 100%;
+  margin: 10px 0;
+}
+
+form.common .inline {
+  float: left;
+  margin: 20px 10px 0 0;
+}
+
+form.common .inline label,
+form.common .inline input[type=text],
+form.common .inline input[type=password],
+form.common .inline input[type=file],
+form.common .inline textarea {
+  clear: none;
+  float: none;
+  display: inline;
+  width: auto;
+  margin: 0;
+}
+
+form.common:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+* html form.common             { zoom: 1; } /* IE6 */
+*:first-child+html form.common { zoom: 1; } /* IE7 */
 
 .replacement {
   text-indent: -99999px;
