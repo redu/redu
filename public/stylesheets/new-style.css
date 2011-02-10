@@ -204,6 +204,12 @@
   background: url("../images/new/icon-course-gray_48_48.png") no-repeat right bottom;
 }
 
+#content .sidebar .subject-frame {
+  text-align: left;
+  padding: 0 48px 48px 0;
+  background: url("../images/new/icon-subject-gray_48_48.png") no-repeat right bottom;
+}
+
 #content .main {
   border: 1px solid #b3b3b3;
   -moz-border-radius: 12px;
@@ -498,6 +504,7 @@
   -webkit-border-radius: 5px;
   border-radius: 5px;
   margin: 20px 0;
+  clear: both;
 }
 
 .create-status .textarea {
