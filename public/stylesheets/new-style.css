@@ -279,6 +279,21 @@
   margin-top: 5px;
 }
 
+#hierarchy-header .subject-name {
+  width: 60px;
+  float: left;
+}
+
+#hierarchy-header.subject-header .prefix {
+  display: block;
+}
+#hierarchy-header.subject-header .important {
+  display: block;
+  float: right;
+  padding: 5px 30px;
+  margin: 15px 0;
+}
+
 .tags li {
   float: left;
 }
