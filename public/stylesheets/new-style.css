@@ -280,13 +280,14 @@
 }
 
 #hierarchy-header .subject-name {
-  width: 60px;
+  width: 600px;
   float: left;
 }
 
-#hierarchy-header.subject-header .prefix {
+#hierarchy-header.subject-header .prefix { 
   display: block;
 }
+
 #hierarchy-header.subject-header .important {
   display: block;
   float: right;
