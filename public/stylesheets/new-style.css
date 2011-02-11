@@ -354,6 +354,10 @@
   background: url("../images/new/icon-status-black_32_32.png") no-repeat 20px center;
 }
 
+#subject-resources .header {
+  background: url("../images/new/icon-resource-black_32_32.png") no-repeat 20px center;
+}
+
 .hierarchy-listing-wrapper .users {
 
 }
@@ -511,6 +515,58 @@
 
 .hierarchy-listing .statistics li {
   margin-bottom: 2px;
+}
+
+.hierarchy-listing-wrapper > .resources .info{
+  background-image: none;
+}
+
+.hierarchy-listing-wrapper > .resources .ratings,
+.hierarchy-listing-wrapper > .resources .type {
+  float: left;
+  padding: 10px 0;
+}
+
+.hierarchy-listing-wrapper > .resources .ordering {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.hierarchy-listing-wrapper > .resources .ratings {
+  width: 150px;
+}
+
+.hierarchy-listing-wrapper > .resources .type {
+  width: 90px;
+  text-align: right;
+  font-size: .9em;
+  color: #B2B2B2;
+  font-weight: bold;
+}
+
+.hierarchy-listing-wrapper > .resources .video,
+.hierarchy-listing-wrapper > .resources .exam,
+.hierarchy-listing-wrapper > .resources .document,
+.hierarchy-listing-wrapper > .resources .page {
+  background-repeat: no-repeat;
+  background-position: 682px center;
+}
+
+.hierarchy-listing-wrapper > .resources .video {
+  background-image: url("../images/new/icon-video-gray_32_32.png")
+}
+
+.hierarchy-listing-wrapper > .resources .exam {
+  background-image: url("../images/new/icon-exam-gray_32_32.png");
+}
+
+.hierarchy-listing-wrapper > .resources .document {
+  background-image: url("../images/new/icon-document-gray_32_32.png");
+}
+
+.hierarchy-listing-wrapper > .resources .page {
+  background-image: url("../images/new/icon-page-gray_32_32.png");
 }
 
 .create-status {
