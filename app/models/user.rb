@@ -295,7 +295,7 @@ class User < ActiveRecord::Base
       case entity.statusable.class.to_s
       when 'Space'
         self.teacher?(entity.statusable) ||
-          self.can_manage?(entity.statusable.space)
+          self.can_manage?(entity.statusable)
       when 'Subject'
         self.teacher?(entity.statusable.space) ||
          self.can_manage?(entity.statusable.space)
