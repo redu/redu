@@ -56,8 +56,12 @@ describe Space do
 
   context "finders" do
     it "retrieves finalized subjects" do
-      subjects = (1..3).collect { Factory(:subject, :space => subject) }
-      finalized_subjects = (1..3).collect { Factory(:subject, :space => subject,
+      user = Factory(:user)
+      subject.course.join user
+      subjects = (1..3).collect { Factory(:subject, :owner => user,
+                                          :space => subject) }
+      finalized_subjects = (1..3).collect { Factory(:subject, :owner => user,
+                                                    :space => subject,
                                                     :finalized => true) }
       subject.subjects.should == finalized_subjects
     end
@@ -77,7 +81,7 @@ describe Space do
               :space => subject, :role => :member)
 
       subject.administrators.to_set.
-        should == [users[0], users[1], subject.course.owner].to_set
+        should == [users[0], users[1], subject.course.environment.owner].to_set
     end
 
     it "retrieves all teachers" do

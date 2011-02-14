@@ -120,9 +120,13 @@ describe User do
     end
 
     it "retrieves subjects that are finalized" do
+      space = Factory(:space)
+      space.course.join subject
       subjects_finalized = (1..3).collect { Factory(:subject, :owner => subject,
-                                                    :finalized => 1) }
-      subjects = (1..3).collect { Factory(:subject, :owner => subject) }
+                                                    :space => space,
+                                                    :finalized => true) }
+      subjects = (1..3).collect { Factory(:subject, :owner => subject,
+                                          :space => space) }
 
       subject.subjects.should == subjects_finalized
     end

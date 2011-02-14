@@ -105,8 +105,12 @@ describe Lecture do
   context "being attended" do
     context "when done" do
       it "retrieves the next lecture and mark the current as done" do
+        subject_owner = Factory(:user)
+        space = Factory(:space)
+        space.course.join subject_owner
         lectures = (1..3).collect { Factory(:lecture) }
-        subject1 = Factory(:subject, :lectures => lectures)
+        subject1 = Factory(:subject, :owner => subject_owner,
+                           :space => space, :lectures => lectures)
 
         user = Factory(:user)
         subject1.enroll user
@@ -115,9 +119,14 @@ describe Lecture do
         lectures[0].asset_reports.of_user(user).last.
           should be_done
       end
+
       it "retrieves the previous lecture and mark the current as done" do
+        subject_owner = Factory(:user)
+        space = Factory(:space)
+        space.course.join subject_owner
         lectures = (1..3).collect { Factory(:lecture) }
-        subject1 = Factory(:subject, :lectures => lectures)
+        subject1 = Factory(:subject, :owner => subject_owner,
+                           :space => space, :lectures => lectures)
 
         user = Factory(:user)
         subject1.enroll user
@@ -129,8 +138,12 @@ describe Lecture do
     end
     context "when not done" do
       it "retrieves the next lecture" do
+        subject_owner = Factory(:user)
+        space = Factory(:space)
+        space.course.join subject_owner
         lectures = (1..3).collect { Factory(:lecture) }
-        subject1 = Factory(:subject, :lectures => lectures)
+        subject1 = Factory(:subject, :owner => subject_owner,
+                           :space => space, :lectures => lectures)
 
         user = Factory(:user)
         subject1.enroll user
@@ -140,8 +153,12 @@ describe Lecture do
           should_not be_done
       end
       it "retrieves the previous lecture" do
+        subject_owner = Factory(:user)
+        space = Factory(:space)
+        space.course.join subject_owner
         lectures = (1..3).collect { Factory(:lecture) }
-        subject1 = Factory(:subject, :lectures => lectures)
+        subject1 = Factory(:subject, :owner => subject_owner,
+                           :space => space, :lectures => lectures)
 
         user = Factory(:user)
         subject1.enroll user
@@ -161,7 +178,12 @@ describe Lecture do
   end
 
   it "generates a clone of itself" do
-    subject1 = Factory(:subject)
+    subject_owner = Factory(:user)
+    space = Factory(:space)
+    space.course.join subject_owner
+    subject1 = Factory(:subject, :owner => subject_owner,
+                       :space => space)
+
     new_lecture = subject.clone_for_subject!(subject1.id)
     new_lecture.should_not == subject
     new_lecture.should be_is_clone

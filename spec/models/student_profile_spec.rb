@@ -1,7 +1,18 @@
 require 'spec_helper'
 
 describe StudentProfile do
-  subject { Factory(:student_profile) }
+
+  before do
+    @space = Factory(:space)
+    @subject_owner = Factory(:user)
+    @space.course.join(@subject_owner)
+    # Se usar @subject conflita com subject
+    @sub = Factory(:subject, :owner => @subject_owner, :space => @space)
+    @enrollment = Factory(:enrollment, :subject => @sub)
+  end
+
+  subject { Factory(:student_profile, :subject => @sub,
+                    :enrollment => @enrollment) }
 
   it { should belong_to :user }
   it { should belong_to :subject }
@@ -23,7 +34,8 @@ describe StudentProfile do
   context "callbacks" do
     it "creates all assets reports after create" do
       lectures = (1..3).collect { Factory(:lecture) }
-      subject_entity = Factory(:subject, :lectures => lectures)
+      subject_entity = Factory(:subject, :owner => @subject_owner,
+                               :space => @space, :lectures => lectures)
       enrollment = Factory(:enrollment, :subject => subject_entity)
       expect {
         Factory(:student_profile, :subject => subject_entity,
@@ -41,8 +53,10 @@ describe StudentProfile do
 
     it "updates grade successfully" do
       lectures = (1..3).collect { Factory(:lecture) }
-      subject_entity = Factory(:subject, :lectures => lectures)
-      subject = Factory(:student_profile, :subject => subject_entity)
+      subject_entity = Factory(:subject, :owner => @subject_owner,
+                               :space => @space, :lectures => lectures)
+      subject = Factory(:student_profile, :subject => subject_entity,
+                        :enrollment => @enrollment)
       subject.asset_reports[0..1].each { |a| a.done = true; a.save }
       expect {
         subject.update_grade!
@@ -53,8 +67,10 @@ describe StudentProfile do
 
     it "mark student profile as graduated when all grade is completed" do
       lectures = (1..3).collect { Factory(:lecture) }
-      subject_entity = Factory(:subject, :lectures => lectures)
-      subject = Factory(:student_profile, :subject => subject_entity)
+      subject_entity = Factory(:subject, :owner => @subject_owner,
+                               :space => @space, :lectures => lectures)
+      subject = Factory(:student_profile, :subject => subject_entity,
+                        :enrollment => @enrollment)
       subject.asset_reports.each { |a| a.done = true; a.save }
       subject.update_grade!
       subject.graduaded.should be_true
