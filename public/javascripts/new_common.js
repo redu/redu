@@ -71,6 +71,13 @@ jQuery(function(){
         $(this).next().slideToggle("fast");
     });
 
+    // Mostra status no show de lecture
+    $("#resource .student-actions .action-help").click(function(e){
+        $(this).parents("li:first").toggleClass("selected");
+        $(".statuses-wrapper", "#resource").slideToggle();
+        e.preventDefault();
+    });
+
 
 });
 
