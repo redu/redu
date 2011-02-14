@@ -93,7 +93,16 @@ class LecturesController < BaseController
 
   def index
     authorize! :read, @subject
-    redirect_to space_subject_path(@space, @subject)
+    @subject_users = @subject.members.all(:limit => 9) # sidebar
+    @lectures = @subject.lectures.paginate(:page => params[:page],
+                                          :order => 'position ASC',
+                                          :per_page => AppConfig.items_per_page)
+    respond_to do |format|
+      format.html { render :template => 'lectures/new/index',
+        :layout => 'new/application'}
+      format.js { render :template => 'lectures/new/index' }
+    end
+    #redirect_to space_subject_path(@space, @subject)
   end
   # GET /lectures/1
   # GET /lectures/1.xml

@@ -9,6 +9,7 @@ class SubjectsController < BaseController
   after_filter :create_activity, :only => [:update]
 
   rescue_from CanCan::AccessDenied do |exception|
+    debugger
     flash[:notice] = "Você não tem acesso a essa página"
     redirect_to infos_space_subject_path(@space, @subject)
   end
@@ -27,7 +28,17 @@ class SubjectsController < BaseController
   end
 
   def show
+    @subject_users = @subject.members.all(:limit => 9)
+    @statuses = @subject.recent_activity(params[:page])
+    @statusable = @subject
 
+    respond_to do |format|
+      @status = Status.new
+
+      format.html { render :template => "subjects/new/show", :layout => "new/application" }
+      format.js { render :template => 'subjects/new/show' }
+      format.xml { render :xml => @subject }
+    end
   end
 
   def new
@@ -41,7 +52,7 @@ class SubjectsController < BaseController
         end
       end
     end
-end
+  end
 
   def create
     @subject = Subject.new(params[:subject])
@@ -107,6 +118,13 @@ end
     redirect_to space_subjects_path(@subject.space)
   end
 
+  def infos
+    respond_to do |format|
+      format.html { render :template => 'subjects/new/infos',
+                      :layout => 'new/application' }
+    end
+  end
+
   def publish
     @subject.publish!
     flash[:notice] = "O módulo foi publicado."
@@ -168,6 +186,20 @@ end
     respond_to do |format|
       format.html
       format.js { render :template => "statuses/index"}
+    end
+  end
+
+  # Listagem de usuários do Space
+  def users
+    @subject_users = @subject.members.all(:limit => 9) # sidebar
+    @users = @subject.members.
+      paginate(:page => params[:page], :order => 'first_name ASC', :per_page => 18)
+
+    respond_to do |format|
+      format.html do
+        render :template => 'subjects/new/users', :layout => 'new/application'
+      end
+      format.js { render :template => 'subjects/new/users' }
     end
   end
 
