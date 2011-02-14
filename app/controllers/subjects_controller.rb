@@ -9,7 +9,6 @@ class SubjectsController < BaseController
   after_filter :create_activity, :only => [:update]
 
   rescue_from CanCan::AccessDenied do |exception|
-    debugger
     flash[:notice] = "Você não tem acesso a essa página"
     redirect_to infos_space_subject_path(@space, @subject)
   end
