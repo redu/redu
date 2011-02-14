@@ -452,7 +452,6 @@ describe Ability do
     end
 
     it "can NOT read others plans" do
-      debugger
       @ability.should_not be_able_to(:read, @plan)
     end
 
