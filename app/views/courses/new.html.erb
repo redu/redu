@@ -2,6 +2,7 @@
   <% form_for @course,
     :url => environment_courses_path(@environment) do |f| %>
     <%= f.error_messages %>
+    <%= hidden_field_tag :plan, 'free' %>
     <%= render :partial => 'courses/form', :locals => { :f => f, :edit => false } %>
     <%= f.submit "Criar!" %>
   <% end %>

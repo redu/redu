@@ -2,6 +2,7 @@ class Course < ActiveRecord::Base
 
   # Apenas deve ser chamado na criação do segundo curso em diante
   after_create :create_user_course_association, :unless => "self.environment.nil?"
+  after_create :setup_quota
 
   belongs_to :environment
   has_many :spaces, :dependent => :destroy
@@ -148,5 +149,10 @@ class Course < ActiveRecord::Base
                                     :role_id => role.id,
                                     :status => "approved")
       end
+  end
+
+  # Cria Quota para o Course
+  def setup_quota
+    self.create_quota
   end
 end
