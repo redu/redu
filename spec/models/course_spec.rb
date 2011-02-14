@@ -1,7 +1,16 @@
 require 'spec_helper'
 
 describe Course do
-  subject { Factory(:course) }
+
+  before(:each) do
+    @environment = Factory(:environment)
+    @user = Factory(:user)
+    UserEnvironmentAssociation.create(:user => @user,
+                                      :environment => @environment,
+                                      :role => Role[:environment_admin])
+  end
+
+  subject { Factory(:course, :owner => @user, :environment => @environment) }
 
   it { should belong_to :environment }
   it { should belong_to :owner }
@@ -43,31 +52,37 @@ describe Course do
   end
 
   context "callbacks" do
-    it "creates a association with a course" do
+    it "creates an approved association with its owner" do
       subject.owner.should == subject.users.last
+      subject.owner.user_course_associations.last.state.should == 'approved'
+    end
+
+    it "creates a course association with all environment admins if it already has an environment" do
+      e = Factory(:environment)
+      users = (1..4).collect { Factory(:user) }
+      e.users << [users[0], users[1], users[2]]
+
+      users[0].user_environment_associations.last.update_attribute(:role, Role[:environment_admin])
+      users[1].user_environment_associations.last.update_attribute(:role, Role[:environment_admin])
+
+      c = Factory(:course, :owner => users[1], :environment => e)
+      c.users.to_set.should == e.administrators.to_set
+    end
+
+    it "does NOT create a course association with all environment admins if it does NOT have an environment" do
+      expect {
+        subject = Factory(:course, :environment => nil)
+      }.should_not change(UserCourseAssociation, :count)
     end
   end
 
   context "finders" do
-    it "retrieves approved users" do
-      users = 4.times.inject([]) { |res, i| res << Factory(:user) }
-      subject.users << users
-      users[1].user_course_associations.last.approve!
-      users[3].user_course_associations.last.approve!
-
-      subject.approved_users.to_set.should == [users[1], users[3], subject.owner].to_set
-    end
-
     it "retrieves all courses of an specified environment" do
-      environment = Factory(:environment)
-      course2 = Factory(:course)
+      course2 = Factory(:course, :environment => subject.environment)
       course3 = Factory(:course)
-      subject.environment = environment
-      course2.environment = environment
-      subject.save
-      course2.save
 
-      Course.of_environment(environment).should == [course2, subject]
+      Course.of_environment(subject.environment).to_set.
+        should == [course2, subject].to_set
     end
 
     it "retrieves a course by its path" do
@@ -76,42 +91,25 @@ describe Course do
 
     it "retrieves all approved users" do
       users = 5.times.inject([]) { |res, i| res << Factory(:user) }
-      Factory(:user_course_association, :user => users[0],
-              :course => subject, :role => :environment_admin)
-      Factory(:user_course_association, :user => users[1],
-              :course => subject, :role => :environment_admin)
-      Factory(:user_course_association, :user => users[2],
-              :course => subject, :role => :teacher)
-      Factory(:user_course_association, :user => users[3],
-              :course => subject, :role => :tutor)
-      Factory(:user_course_association, :user => users[4],
-              :course => subject, :role => :member)
-      subject.user_course_associations.each do |assoc|
-        assoc.approve!
-      end
+      subject.join(users[0], Role[:environment_admin])
+      subject.join(users[1], Role[:environment_admin])
+      subject.join(users[2], Role[:teacher])
+      subject.join(users[3], Role[:tutor])
+      subject.join(users[4], Role[:member])
 
       subject.users.to_set.
-        should == (users << subject.owner).to_set
+        should == (users << subject.owner << subject.environment.owner).to_set
     end
 
     it "retrieves all administrators" do
       users = 5.times.inject([]) { |res, i| res << Factory(:user) }
-      Factory(:user_course_association, :user => users[0],
-              :course => subject, :role => :environment_admin)
-      Factory(:user_course_association, :user => users[1],
-              :course => subject, :role => :environment_admin)
-      Factory(:user_course_association, :user => users[2],
-              :course => subject, :role => :teacher)
-      Factory(:user_course_association, :user => users[3],
-              :course => subject, :role => :tutor)
-      Factory(:user_course_association, :user => users[4],
-              :course => subject, :role => :member)
-      subject.user_course_associations.each do |assoc|
-        assoc.approve!
-      end
-
+      subject.join(users[0], Role[:environment_admin])
+      subject.join(users[1], Role[:environment_admin])
+      subject.join(users[2], Role[:teacher])
+      subject.join(users[3], Role[:tutor])
+      subject.join(users[4], Role[:member])
       subject.administrators.to_set.
-        should == [users[0], users[1], subject.owner].to_set
+        should == [users[0], users[1], subject.owner, subject.environment.owner].to_set
     end
 
     it "retrieves all teachers" do
@@ -204,5 +202,46 @@ describe Course do
     @course = Factory.build(:course, :path => subject.path)
     @course.verify_path!(subject.environment)
     @course.path.should_not == subject.path
+  end
+
+  it "accepts a user (join)" do
+    space = Factory(:space, :course => subject)
+    user = Factory(:user)
+    subject.join(user)
+    subject.users.should include(user)
+    space.users.should include(user)
+  end
+
+  it "removes a user (unjoin)" do
+    space = Factory(:space, :course => subject)
+    user = Factory(:user)
+    subject.join(user)
+    subject.unjoin(user)
+    subject.users.should_not include(user)
+    space.users.should_not include(user)
+  end
+
+  it "creates hierarchy associations for a specified user" do
+    space = Factory(:space, :course => subject)
+    subject.spaces << space
+    user = Factory(:user)
+
+    subject.create_hierarchy_associations(user)
+    user.user_environment_associations.last.environment.
+      should == subject.environment
+    user.user_space_associations.last.space.should == space
+  end
+
+  it "creates hierarchy associations for a specified user with a given role" do
+    space = Factory(:space, :course => subject)
+    subject.spaces << space
+    user = Factory(:user)
+
+    subject.create_hierarchy_associations(user, Role[:tutor])
+    user.user_environment_associations.last.environment.
+      should == subject.environment
+    user.user_space_associations.last.space.should == space
+    user.user_environment_associations.last.role.should == Role[:tutor]
+    user.user_space_associations.last.role.should == Role[:tutor]
   end
 end

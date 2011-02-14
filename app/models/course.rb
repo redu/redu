@@ -1,6 +1,7 @@
 class Course < ActiveRecord::Base
 
-  after_create :create_user_course_association
+  # Apenas deve ser chamado na criação do segundo curso em diante
+  after_create :create_user_course_association, :unless => "self.environment.nil?"
 
   belongs_to :environment
   has_many :spaces, :dependent => :destroy
@@ -98,17 +99,54 @@ class Course < ActiveRecord::Base
     end
 
   end
+
   def create_user_course_association
-    user_course =
-      UserCourseAssociation.create(:user => self.owner,
-                                   :course => self,
-                                   :role => Role[:environment_admin])
+    self.environment.administrators.each do |env_admin|
+      user_course =
+        UserCourseAssociation.create(:user => env_admin,
+                                     :course => self,
+                                     :role => Role[:environment_admin])
       user_course.approve!
+    end
   end
 
   def length_of_tags
     tags_str = ""
     self.tags.each {|t|  tags_str += " " + t.name }
     self.errors.add(:tags, :too_long.l) if tags_str.length > 111
+  end
+
+  def join(user, role = Role[:member])
+    association = UserCourseAssociation.create(:user_id => user.id,
+                                               :course_id => self.id,
+                                               :role_id => role.id)
+
+    if self.subscription_type.eql? 1 # Todos podem participar, sem moderação
+      association.approve!
+      self.create_hierarchy_associations(user, role)
+    end
+  end
+
+  def unjoin(user)
+    course_association = user.get_association_with(self)
+    course_association.destroy
+    self.spaces.each do |space|
+      space_association = user.get_association_with(space)
+      space_association.destroy
+    end
+  end
+
+  def create_hierarchy_associations(user, role = Role[:member])
+      # Cria as associações no Environment do Course e em todos os seus Spaces.
+      UserEnvironmentAssociation.create(:user_id => user.id,
+                                        :environment_id => self.environment.id,
+                                        :role_id => role.id)
+      self.spaces.each do |space|
+        #FIXME tirar status quando remover moderacao de space
+        UserSpaceAssociation.create(:user_id => user.id,
+                                    :space_id => space.id,
+                                    :role_id => role.id,
+                                    :status => "approved")
+      end
   end
 end
