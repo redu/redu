@@ -441,13 +441,18 @@ describe Ability do
       end
     end
   end
+
   context "the strange" do
     before do
       strange = Factory(:user)
+
+      @plan = Factory(:plan)
+      @invoice = Factory(:invoice, :plan => @plan)
       @ability = Ability.new(strange)
     end
 
     it "can NOT read others plans" do
+      debugger
       @ability.should_not be_able_to(:read, @plan)
     end
 
