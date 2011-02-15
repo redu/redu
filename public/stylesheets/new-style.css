@@ -1414,6 +1414,56 @@
   margin-bottom: 5px;
 }
 
+#home {
+  margin-top: 40px;
+  padding-bottom: 200px;
+}
+
+#home .logotipo {
+  background: url("../images/new/logotipo-big.png") no-repeat;
+  width: 469px;
+  height: 138px;
+}
+
+#home .call {
+  padding-left: 200px;
+}
+
+#home .call strong {
+  font-family: Copse, Arial, sans-serif;
+  font-size: 1.3em;
+  font-weight: normal;
+  margin-bottom: 30px;
+  display: block;
+}
+
+#home .call p {
+  margin-bottom: 15px;
+  color: #6C6D6E;
+}
+
+#home .hall {
+  border: 1px solid #B3B2B3;
+  padding: 20px;
+  background: #F0F0F0 url("../images/new/login-gradient.png") repeat-x;
+
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
+#home .hall .signup {
+  display: block;
+  text-align: center;
+  padding: 15px 30px;
+}
+
+#home .hall hr {
+  border: none;
+  border-bottom: 2px dotted #B3B2B3;
+  margin-top: 25px;
+}
+
 a.important,
 input[type=submit].important {
   border: 1px solid #61BE80;
@@ -1514,6 +1564,12 @@ form.common label {
   color: #6C6D6E;
 }
 
+form.common .label.small,
+form.common label.small {
+  width: 50px;
+  text-align: left;
+}
+
 form.common input[type=submit],
 form.common a.cancel {
   clear: left;
@@ -1534,6 +1590,7 @@ form.common input[type=text] {
 }
 
 form.common input[type=text].small {
+  width: 220px;
 }
 
 form.common .tip {
