@@ -1425,6 +1425,12 @@ label.focus {
   height: 138px;
 }
 
+#home .logotipo a {
+  display: block;
+  width: 469px;
+  height: 138px;
+}
+
 #home .call {
   padding-left: 200px;
 }
