@@ -284,7 +284,7 @@
   float: left;
 }
 
-#hierarchy-header.subject-header .prefix { 
+#hierarchy-header.subject-header .prefix {
   display: block;
 }
 
@@ -338,7 +338,8 @@
   float: left;
 }
 
-#environment-courses .header {
+#environment-courses .header,
+#course-new .header {
   background: url("../images/new/icon-course-gray_32_32.png") no-repeat 20px center;
 }
 
@@ -1610,6 +1611,10 @@ form.common input[type=text] {
   border-radius: 5px;
 }
 
+form.common input[type=text].nano {
+  width: 50px;
+}
+
 form.common input[type=text].small {
   width: 220px;
 }
@@ -1623,6 +1628,11 @@ form.common .tip {
   margin: 5px 0 0 160px;
   color: #B2B2B2;
   font-size: .9em;
+}
+
+form.common .path {
+  color: #61be80;
+  font-weight: bold;
 }
 
 form.common .errorMessageField {
@@ -1681,6 +1691,18 @@ form.common .inline textarea {
 
 form.common .hidden legend {
   display: none;
+}
+
+form.common .columns {
+  float: left;
+  margin-top: 25px;
+  width: 480px;
+}
+
+form.common .columns li {
+  width: 150px;
+  margin-right: 10px;
+  float: left;
 }
 
 form.common:after {
