@@ -1161,7 +1161,7 @@
   padding-top: 4px;
 }
 
-#checkout label.focus {
+label.focus {
   color: #4CACD5;
 }
 
