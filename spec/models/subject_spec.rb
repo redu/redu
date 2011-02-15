@@ -1,7 +1,18 @@
 require 'spec_helper'
 
 describe Subject do
-  subject { Factory(:subject) }
+  before do
+    environment = Factory(:environment)
+    course = Factory(:course, :owner => environment.owner,
+                     :environment => environment)
+    @space = Factory(:space, :owner => environment.owner,
+                    :course => course)
+    @user = Factory(:user)
+    course.join(@user)
+  end
+
+
+  subject { Factory(:subject, :owner => @user, :space => @space) }
 
   it { should belong_to :space }
   it { should belong_to :owner }
@@ -26,7 +37,7 @@ describe Subject do
 
   context "validations" do
     it "validates that it has at least one lecture on update" do
-      subject = Factory(:subject)
+      subject = Factory(:subject, :owner => @user, :space => @space)
       subject.lectures = []
       subject.save
       subject.should_not be_valid
@@ -34,10 +45,28 @@ describe Subject do
     end
   end
 
+  context "callbacks" do
+    it "creates a Enrollment between the subject and the owner after create" do
+      subject.enrollments.first.should_not be_nil
+      subject.enrollments.first.user.should == subject.owner
+      subject.enrollments.first.role.
+        should == subject.owner.get_association_with(subject.space).role
+    end
+
+    it "does NOT create a Enrollment between the subject and the owner after create, if the owner is a Redu admin" do
+      redu_admin = Factory(:user, :role => Role[:admin])
+      expect {
+        Factory(:subject, :owner => redu_admin)
+      }.should_not change(Enrollment, :count)
+    end
+  end
+
   context "finders" do
     it "retrieves published subjects" do
-      subjects = (1..3).collect { Factory(:subject) }
-      published_subjects = (1..3).collect { Factory(:subject,
+      subjects = (1..3).collect { Factory(:subject, :owner => @user,
+                                          :space => @space) }
+      published_subjects = (1..3).collect { Factory(:subject, :owner => @user,
+                                                    :space => @space,
                                                     :published => true) }
       Subject.published.should == published_subjects
     end
@@ -78,14 +107,16 @@ describe Subject do
   end
 
   it "publishes itself" do
-    subject = Factory(:subject, :published => 0)
+    subject = Factory(:subject, :owner => @user,
+                      :space => @space, :published => false)
     subject.publish!
     subject.should be_published
   end
 
   it "unpublishes itself and removes all enrollments" do
     users = (1..4).collect { Factory(:user) }
-    subject = Factory(:subject, :published => 1)
+    subject = Factory(:subject, :owner => @user,
+                      :space => @space, :published => true)
     users.each { |u| subject.enroll(u) }
 
     subject.unpublish!
@@ -103,25 +134,26 @@ describe Subject do
 
   context "enrollments" do
     before :each do
-      @user = Factory(:user)
+      @enrolled_user = Factory(:user)
     end
 
     it "enrolls an user" do
       expect {
-        subject.enroll(@user)
+        subject.enroll(@enrolled_user)
       }.should change(subject.enrollments, :count).by(1)
     end
 
     it "enrolls an user with a given role" do
-      subject.enroll(@user, Role[:teacher]).should be_true
-      subject.enrollments.first.role_id.should == Role[:teacher].id
+      subject.enroll(@enrolled_user, Role[:teacher]).should be_true
+      subject.enrollments.last.role_id.should == Role[:teacher].id
     end
 
     it "unenrolls an user" do
-      enrollment = Factory(:enrollment, :user => @user, :subject => subject)
+      enrollment = Factory(:enrollment, :user => @enrolled_user,
+                           :subject => subject)
 
       expect {
-        subject.unenroll(@user)
+        subject.unenroll(@enrolled_user)
       }.should change(subject.enrollments, :count).by(-1)
     end
   end
@@ -129,7 +161,8 @@ describe Subject do
   context "lectures" do
     it "changes lectures order" do
       lectures = (1..4).collect { Factory(:lecture)}
-      subject = Factory(:subject, :lectures => lectures)
+      subject = Factory(:subject, :owner => @user,
+                        :space => @space, :lectures => lectures)
       lectures_ordered = ["#{lectures[1].id}-lecture", "#{lectures[0].id}-lecture",
         "#{lectures[3].id}-lecture", "#{lectures[2].id}-lecture"]
       subject.change_lectures_order!(lectures_ordered)

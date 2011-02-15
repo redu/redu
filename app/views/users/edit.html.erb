@@ -53,7 +53,7 @@
                  <strong><%= p.invoices.pending.count %> pagamento(s) pendente(s)</strong>
                <% end %>
              </td>
-             <td> <%= p.billable.name %> </td>
+             <td> <%= p.billable.try(:name) || "(curso removido)" %> </td>
             <td>
               <% if p.invoices.pending.empty? %>
                 <%= link_to "Upgrade", upgrade_plan_path(p) %>

@@ -294,9 +294,13 @@ class User < ActiveRecord::Base
     when 'Status'
       case entity.statusable.class.to_s
       when 'Space'
-        self.teacher?(entity.statusable)
+        self.teacher?(entity.statusable) ||
+          self.can_manage?(entity.statusable)
       when 'Subject'
-        self.teacher?(entity.statusable.space)
+        self.teacher?(entity.statusable.space) ||
+         self.can_manage?(entity.statusable.space)
+      when 'Lecture'
+        self.can_manage?(entity.statusable.subject)
       else
         self == entity.user
       end
@@ -332,7 +336,7 @@ class User < ActiveRecord::Base
         self.get_association_with(entity.space).nil? ? false : true
       when 'Status'
         unless entity.statusable.class.to_s.eql?("User")
-          self.has_access_to? entity.statusuble
+          self.has_access_to? entity.statusable
         else
           self.friends?(entity.statusable) || self == entity.statusable
         end

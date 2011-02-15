@@ -334,8 +334,8 @@
 }
 
 .hierarchy-listing-wrapper .admin-actions {
-  float: left;
   width: 145px;
+  float: left;
 }
 
 #environment-courses .header {
@@ -807,6 +807,7 @@
   border-radius: 5px;
   height: 30px;
   padding: 5px;
+  scroll: none;
 }
 
 .create-status textarea {
@@ -1491,6 +1492,7 @@ a.button,
 input[type=submit] {
   font-weight: normal;
   color: white;
+  background-color: #4EADD6;
   padding: 7px 15px;
   font-size: .9em;
 

@@ -1,4 +1,8 @@
 class Subject < ActiveRecord::Base
+
+  # Para Redu admin o enrollment não é criado
+  after_create :create_enrollment_association, :unless => "self.owner.admin?"
+
   belongs_to :space
   belongs_to :owner, :class_name => "User", :foreign_key => :user_id
   has_many :lectures, :order => "position", :dependent => :destroy
@@ -78,4 +82,10 @@ class Subject < ActiveRecord::Base
     end
   end
 
+  protected
+  def create_enrollment_association
+    space_assoc = self.owner.get_association_with(self.space)
+    self.enrollments.create(:user => self.owner, :subject => self,
+                            :role => space_assoc.role)
+  end
 end

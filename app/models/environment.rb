@@ -2,6 +2,9 @@ class Environment < ActiveRecord::Base
   # Representa o ambiente onde o ensino a distância acontece. Pode ser visto
   # como um instituição o provedor de ensino dentro do sistema.
 
+  after_create :create_environment_association
+  after_create :create_course_association
+
   has_many :courses, :dependent => :destroy
   has_many :user_environment_associations, :dependent => :destroy
   belongs_to :owner, :class_name => "User", :foreign_key => "owner"
@@ -21,9 +24,6 @@ class Environment < ActiveRecord::Base
   has_many :bulletins, :as => :bulletinable, :dependent => :destroy
 
   attr_protected :owner, :published
-
-  after_create :create_environment_association
-  after_create :create_course_association
 
   acts_as_taggable
   has_attached_file :avatar, PAPERCLIP_STORAGE_OPTIONS
@@ -88,10 +88,11 @@ protected
   end
 
   def create_course_association
-    UserCourseAssociation.create(
+    course_assoc = UserCourseAssociation.create(
       :course => self.courses.first,
       :user => self.owner,
-      :role_id => Role[:environment_admin].id, :state => 'approved')
+      :role_id => Role[:environment_admin].id)
+      course_assoc.approve!
   end
 
   def length_of_tags

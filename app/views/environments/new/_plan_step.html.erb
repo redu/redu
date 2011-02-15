@@ -25,7 +25,7 @@
     <% form_for @environment, :url => environments_path(:step => 2),
         :class => "clearfix" do |f| %>
       <%= hidden_field_tag :plan, 'free' %>
-      <%# render :partial => 'environments/plan_form' %>
+      <%# render :partial => 'environments/new/plan_form' %>
       <%= f.submit "Assinar", :class => "important" %>
 
       <div style="display:none;">

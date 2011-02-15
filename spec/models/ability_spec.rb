@@ -441,9 +441,13 @@ describe Ability do
       end
     end
   end
+
   context "the strange" do
     before do
       strange = Factory(:user)
+
+      @plan = Factory(:plan)
+      @invoice = Factory(:invoice, :plan => @plan)
       @ability = Ability.new(strange)
     end
 

@@ -1,7 +1,15 @@
 require 'spec_helper'
 
 describe Enrollment do
-  subject { Factory(:enrollment) }
+
+  before do
+    subject_owner = Factory(:user)
+    space = Factory(:space)
+    space.course.join subject_owner
+    @sub = Factory(:subject, :owner => subject_owner,
+                       :space => space)
+  end
+  subject { Factory(:enrollment, :subject => @sub) }
 
   it { should belong_to :user }
   it { should belong_to :subject }
@@ -17,7 +25,7 @@ describe Enrollment do
   context "callbacks" do
     it "creates a student profile after create" do
       expect {
-        subject = Factory(:enrollment)
+        subject = Factory(:enrollment, :subject => @sub)
       }.should change(StudentProfile, :count).by(1)
     end
   end
