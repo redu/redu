@@ -24,6 +24,15 @@ class SubjectsController < BaseController
                  :order => 'updated_at DESC',
                  :per_page => AppConfig.items_per_page)
     end
+
+    respond_to do |format|
+      format.html do
+        render :template => 'subjects/new/index', :layout => 'new/application'
+      end
+      format.js do
+        render :template => 'subjects/new/index'
+      end
+    end
   end
 
   def show
@@ -43,7 +52,9 @@ class SubjectsController < BaseController
   def new
     @subject = Subject.new
     respond_to do |format|
-      format.html
+      format.html do
+        render :template => 'subjects/new/new', :layout => 'new/application'
+      end
       format.js do
         render :update do |page|
           page.insert_html :after, 'link-new-subject', :partial => 'subjects/form'

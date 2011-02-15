@@ -1,0 +1,29 @@
+<% if item_short.lectureable.class.to_s == 'Page'
+    css_class = 'icon icon-redu_r8_c373_s1'
+   elsif item_short.lectureable.class.to_s == 'Document'
+    css_class = 'icon icon-redu_r9_c271_s1'
+   elsif item_short.lectureable.class.to_s == 'Seminar'
+    css_class = 'icon icon-redu_r11_c265_s1'
+   end
+
+%>
+<li class="<%= css_class %>" id=<%= "#{item_short.id}-item" %>>
+  <%= item_short.name %>
+  <% if !item_short.subject.published? && (can? :manage, item_short.subject) %>
+    <% if item_short.lectureable.class.to_s == 'Page' %>
+      <%= link_to_remote "Editar",
+        :url => edit_space_subject_lecture_path(item_short.subject.space,
+                                                item_short.subject, item_short),
+        :loading => "$('#spinner-#{item_short.id}item').show();",
+      :success => "$('#spinner-#{item_short.id}item').hide();",
+      :method => :get %>
+  <% end %>
+  <%= link_to_remote "Remover",
+    :url => space_subject_lecture_path(item_short.subject.space,
+                                       item_short.subject, item_short),
+    :method => :delete,
+    :confirm => "Você tem certeza que deseja excluir essa aula? Não será mais possível recuperá-la." %>
+  <%= image_tag 'spinner.gif', :id => "spinner-#{item_short.id}item",
+  :style => 'display: none;'%>
+<% end %>
+</li>

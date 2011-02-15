@@ -166,7 +166,8 @@ class LecturesController < BaseController
         format.js do
           render :update do |page|
             @page = @lecture.lectureable
-            page.insert_html :after, "#{@lecture.id}-item", :partial => 'form_edit_page'
+            page.insert_html :after, "#{@lecture.id}-item",
+              :partial => 'lectures/new/form_edit_page'
             page.hide "#{@lecture.id}-item"
           end
         end
