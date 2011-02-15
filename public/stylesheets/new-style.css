@@ -1601,6 +1601,7 @@ form.common input[type=text].small {
   width: 220px;
 }
 
+form.common .char-limit,
 form.common .tip {
   display: block;
   float: left;
