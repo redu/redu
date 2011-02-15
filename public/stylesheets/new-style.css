@@ -346,6 +346,7 @@
   background: url("../images/new/icon-subject-black_32_32.png") no-repeat 20px center;
 }
 
+#space-new .header,
 #course-spaces .header {
   background: url("../images/new/icon-space-black_32_32.png") no-repeat 20px center;
 }
@@ -1471,6 +1472,18 @@ label.focus {
   margin-top: 25px;
 }
 
+
+#space-new .common .tos {
+  padding: 30px 160px;
+}
+
+#space-new .common .tos strong {
+  display: block;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
 a.important,
 input[type=submit].important {
   border: 1px solid #61BE80;
@@ -1602,6 +1615,7 @@ form.common input[type=text].small {
 }
 
 form.common .char-limit,
+form.common .errorMessageField,
 form.common .tip {
   display: block;
   float: left;
@@ -1609,6 +1623,37 @@ form.common .tip {
   margin: 5px 0 0 160px;
   color: #B2B2B2;
   font-size: .9em;
+}
+
+form.common .errorMessageField {
+  color: #f37b38;
+}
+
+form.common .fieldWithErrors input[type=text],
+form.common .fieldWithErrors input[type=password],
+form.common .fieldWithErrors textarea {
+  border: 1px solid #f9a737;
+}
+
+form.common .errorExplanation {
+  padding: 10px 20px;
+  border: 1px solid #f9a737;
+  background-color: #ffeed7;
+  margin: 10px 50px;
+
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+
+}
+
+form.common .errorExplanation  p {
+  padding: 5px 0;
+  font-style: italic;
+}
+
+form.common .errorExplanation li {
+  padding: 3px 10px;
 }
 
 form.common fieldset fieldset {
@@ -1632,6 +1677,10 @@ form.common .inline textarea {
   display: inline;
   width: auto;
   margin: 0;
+}
+
+form.common .hidden legend {
+  display: none;
 }
 
 form.common:after {

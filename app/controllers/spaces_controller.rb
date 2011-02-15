@@ -282,6 +282,12 @@ class SpacesController < BaseController
     @course = Course.find(params[:course_id])
     authorize! :manage, @course
     @environment = @course.environment
+
+    respond_to do |format|
+      format.html do
+        render :template => 'spaces/new/new', :layout => 'new/application'
+      end
+    end
   end
 
   # GET /spaces/1/edit
@@ -303,11 +309,18 @@ class SpacesController < BaseController
     if @space.valid?
       @space.save
     end
-    if @space.new_record?
-      render "new"
-    else
-      flash[:notice] = "Disciplina criada!"
-      redirect_to environment_course_path(@environment, @course)
+
+    respond_to do |format|
+      if @space.new_record?
+        format.html do
+          render :template => 'spaces/new/new', :layout => 'new/application'
+        end
+      else
+        format.html do
+          flash[:notice] = "Disciplina criada!"
+          redirect_to environment_course_path(@environment, @course)
+        end
+      end
     end
   end
 
