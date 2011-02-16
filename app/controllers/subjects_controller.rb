@@ -24,16 +24,37 @@ class SubjectsController < BaseController
                  :order => 'updated_at DESC',
                  :per_page => AppConfig.items_per_page)
     end
+
+    respond_to do |format|
+      format.html do
+        render :template => 'subjects/new/index', :layout => 'new/application'
+      end
+      format.js do
+        render :template => 'subjects/new/index'
+      end
+    end
   end
 
   def show
+    @subject_users = @subject.members.all(:limit => 9)
+    @statuses = @subject.recent_activity(params[:page])
+    @statusable = @subject
 
+    respond_to do |format|
+      @status = Status.new
+
+      format.html { render :template => "subjects/new/show", :layout => "new/application" }
+      format.js { render :template => 'subjects/new/show' }
+      format.xml { render :xml => @subject }
+    end
   end
 
   def new
     @subject = Subject.new
     respond_to do |format|
-      format.html
+      format.html do
+        render :template => 'subjects/new/new', :layout => 'new/application'
+      end
       format.js do
         render :update do |page|
           page.insert_html :after, 'link-new-subject', :partial => 'subjects/form'
@@ -41,7 +62,7 @@ class SubjectsController < BaseController
         end
       end
     end
-end
+  end
 
   def create
     @subject = Subject.new(params[:subject])
@@ -107,6 +128,13 @@ end
     redirect_to space_subjects_path(@subject.space)
   end
 
+  def infos
+    respond_to do |format|
+      format.html { render :template => 'subjects/new/infos',
+                      :layout => 'new/application' }
+    end
+  end
+
   def publish
     @subject.publish!
     flash[:notice] = "O módulo foi publicado."
@@ -168,6 +196,20 @@ end
     respond_to do |format|
       format.html
       format.js { render :template => "statuses/index"}
+    end
+  end
+
+  # Listagem de usuários do Space
+  def users
+    @subject_users = @subject.members.all(:limit => 9) # sidebar
+    @users = @subject.members.
+      paginate(:page => params[:page], :order => 'first_name ASC', :per_page => 18)
+
+    respond_to do |format|
+      format.html do
+        render :template => 'subjects/new/users', :layout => 'new/application'
+      end
+      format.js { render :template => 'subjects/new/users' }
     end
   end
 

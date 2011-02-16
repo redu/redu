@@ -44,10 +44,27 @@ describe EnvironmentsController do
         assigns[:plan].should_not be_nil
       end
     end
-
+    
     context "at step 3" do
       before do
         @params[:step] = 3
+        @params[:plan] = "professor_standard"
+        post :create, @params
+      end
+
+      it "assigns the environment" do
+        assigns[:environment].should_not be_nil
+        assigns[:environment].should be_valid
+        assigns[:step].should == 4 
+      end
+
+      it "assigns the plan" do
+        assigns[:plan].should_not be_nil
+      end
+    end
+    context "at step 4" do
+      before do
+        @params[:step] = 4
         @params[:plan] = "professor_standard"
         @params[:color] = "f56b00"
 
@@ -87,9 +104,9 @@ describe EnvironmentsController do
       end
     end
 
-    context "at step 3 for free" do
+    context "at step 4 for free" do
       before do
-        @params[:step] = 3
+        @params[:step] = 4
         @params[:plan] = "free"
         @params[:color] = "f56b00"
 

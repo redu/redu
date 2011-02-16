@@ -9,7 +9,7 @@ class Ability
       :search_users_admin, :to => :manage
 
     # Overall Read
-    alias_action :vote, :rate, :more, :to => :read
+    alias_action :vote, :rate, :more,:users ,:to => :read
 
     # Environment
     alias_action :admin_courses, :destroy_members, :to => :manage
