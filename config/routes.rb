@@ -108,7 +108,8 @@ ActionController::Routing::Routes.draw do |map|
                    :admin_lectures_order => [ :get, :post ],
                    :infos => :get,
                    :statuses => :get,
-                   :next_lecture => :post },
+                   :next_lecture => :post,
+                   :users => :get },
         :collection => {:cancel => :get} do |subject|
       subject.resources :lectures,
         :member => { :rate => :post },

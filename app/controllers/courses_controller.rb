@@ -55,6 +55,12 @@ class CoursesController < BaseController
   end
 
   def new
+
+    respond_to do |format|
+      format.html do
+        render :template => 'courses/new/new', :layout => 'new/application'
+      end
+    end
   end
 
   def create
@@ -71,7 +77,8 @@ class CoursesController < BaseController
         @environment.courses << @course
         format.html { redirect_to environment_course_path(@environment, @course) }
       else
-        format.html { render :action => :new }
+        format.html { render :template => "courses/new/new",
+          :layout => "new/application" }
       end
     end
 

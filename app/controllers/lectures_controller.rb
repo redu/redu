@@ -94,6 +94,20 @@ class LecturesController < BaseController
     render :nothing => true
   end
 
+  def index
+    authorize! :read, @subject
+    @subject_users = @subject.members.all(:limit => 9) # sidebar
+    @lectures = @subject.lectures.paginate(:page => params[:page],
+                                          :order => 'position ASC',
+                                          :per_page => AppConfig.items_per_page)
+    respond_to do |format|
+      format.html { render :template => 'lectures/new/index',
+        :layout => 'new/application'}
+      format.js { render :template => 'lectures/new/index' }
+    end
+    #redirect_to space_subject_path(@space, @subject)
+  end
+
   # GET /lectures/1
   # GET /lectures/1.xml
   def show
@@ -156,7 +170,8 @@ class LecturesController < BaseController
         format.js do
           render :update do |page|
             @page = @lecture.lectureable
-            page.insert_html :after, "#{@lecture.id}-item", :partial => 'form_edit_page'
+            page.insert_html :after, "#{@lecture.id}-item",
+              :partial => 'lectures/new/form_edit_page'
             page.hide "#{@lecture.id}-item"
           end
         end
