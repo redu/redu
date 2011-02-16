@@ -2,7 +2,8 @@
 <% random_number = get_random_number%>
 <div class="create-status inform-my-status">
   <% form_remote_for @status,
-    :before => "$('.status_spinner').show()" do |f| %>
+    :before => "$('.status_spinner', this).show();",
+    :success => "$('.create-status textarea').val('');"do |f| %>
     <%= flash[:statuses_errors] %>
     <%= hidden_field_tag "return", request.url %>
     <%= hidden_field :status, :statusable_id, :value => statusable.id %>

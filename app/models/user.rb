@@ -294,9 +294,13 @@ class User < ActiveRecord::Base
     when 'Status'
       case entity.statusable.class.to_s
       when 'Space'
-        self.teacher?(entity.statusable)
+        self.teacher?(entity.statusable) ||
+          self.can_manage?(entity.statusable)
       when 'Subject'
-        self.teacher?(entity.statusable.space)
+        self.teacher?(entity.statusable.space) ||
+         self.can_manage?(entity.statusable.space)
+      when 'Lecture'
+        self.can_manage?(entity.statusable.subject)
       else
         self == entity.user
       end

@@ -3,18 +3,21 @@ require 'authlogic/test_case'
 
 describe SubjectsController do
   before do
+    User.maintain_sessions = false
     @user = Factory(:user)
     environment = Factory(:environment, :owner => @user)
-    course = Factory(:course, :environment => environment)
-    @space = Factory(:space, :owner => @user, :course => course)
+    @course = Factory(:course, :environment => environment)
+    @space = Factory(:space, :owner => @user, :course => @course)
+    @subject_owner = Factory(:user)
+    @course.join(@subject_owner)
     activate_authlogic
     UserSession.create @user
   end
 
-
   context "GET 'index'" do
     before do
-      subjects = (1..3).collect { Factory(:subject, :space => @space,
+      subjects = (1..3).collect { Factory(:subject, :owner => @subject_owner,
+                                          :space => @space,
                                           :published => true,
                                           :finalized => true) }
     end
@@ -31,9 +34,11 @@ describe SubjectsController do
 
   end
 
+
   context "GET 'show'" do
     before do
-      @subject = Factory(:subject, :published => true, :space => @space,
+      @subject = Factory(:subject, :owner => @subject_owner,
+                         :published => true, :space => @space,
                          :finalized => true)
     end
     it "loads that subject" do
@@ -121,7 +126,8 @@ describe SubjectsController do
 
   context "GET 'edit'" do
     before do
-      @subject = Factory(:subject, :finalized => true, :space => @space)
+      @subject = Factory(:subject, :owner => @subject_owner,
+                         :finalized => true, :space => @space)
     end
 
     it "loads that subject" do
@@ -133,14 +139,15 @@ describe SubjectsController do
   context "PUT 'update'" do
     before do
       lecture = Factory(:lecture, :owner => @user)
-      @subject = Factory(:subject, :finalized => true, :space => @space,
+      @subject = Factory(:subject, :owner => @subject_owner,
+                         :finalized => true, :space => @space,
                          :lectures => [lecture])
     end
 
     context "when successful" do
       it "updates the record" do
         lambda {
-          put :update, :locale => "pt-BR", :id => @subject.id, 
+          put :update, :locale => "pt-BR", :id => @subject.id,
           :space_id => @space.id,
           :subject => { :title => "Módulo"}
         }.should change{ @subject.reload.title }.to("Módulo")
@@ -183,18 +190,19 @@ describe SubjectsController do
   context "DELETE 'destroy'" do
     before do
       lecture = Factory(:lecture, :owner => @user)
-      @subject = Factory(:subject,:finalized => true ,:space => @space,
+      @subject = Factory(:subject, :owner => @subject_owner,
+                         :finalized => true ,:space => @space,
                          :lectures => [lecture])
     end
 
     it "destroys the subject" do
-      delete :destroy, :locale => "pt-BR", :id => @subject.id, 
+      delete :destroy, :locale => "pt-BR", :id => @subject.id,
              :space_id => @space.id
       Subject.all.should_not include(@subject)
     end
 
     it "redirects to index" do
-      delete :destroy, :locale => "pt-BR", :id => @subject.id, 
+      delete :destroy, :locale => "pt-BR", :id => @subject.id,
              :space_id => @space.id
       response.should redirect_to(space_subjects_path(@subject.space))
     end
@@ -202,10 +210,11 @@ describe SubjectsController do
 
   context "GET 'admin_lectures_order'" do
     before do
-      @subject = Factory(:subject, :space => @space, :finalized => true)
+      @subject = Factory(:subject, :owner => @subject_owner,
+                         :space => @space, :finalized => true)
     end
     it "assigns the subject" do
-      get :admin_lectures_order, :locale => "pt-BR", :id => @subject.id, 
+      get :admin_lectures_order, :locale => "pt-BR", :id => @subject.id,
              :space_id => @space.id
       assigns[:subject].should == @subject
     end
@@ -214,7 +223,8 @@ describe SubjectsController do
   context "POST 'admin_lectures_order'" do
     before do
       lecture = Factory(:lecture, :owner => @user)
-      @subject = Factory(:subject, :space => @space, :lectures => [lecture],
+      @subject = Factory(:subject, :owner => @subject_owner,
+                         :space => @space, :lectures => [lecture],
                          :finalized => true)
       post :admin_lectures_order, :locale => "pt-BR", :id => @subject.id,
         :space_id => @space.id,
@@ -233,7 +243,8 @@ describe SubjectsController do
   context "GET 'publish'" do
     before do
       lecture = Factory(:lecture, :owner => @user)
-      @subject = Factory(:subject,:finalized => true ,:space => @space, :lectures => [lecture])
+      @subject = Factory(:subject, :owner => @subject_owner,
+                         :finalized => true ,:space => @space, :lectures => [lecture])
       get :publish, :locale => "pt-BR", :id => @subject.id,
         :space_id => @space.id
     end
@@ -250,7 +261,8 @@ describe SubjectsController do
   context "GET 'unpublish'" do
     before do
       lecture = Factory(:lecture, :owner => @user)
-      @subject = Factory(:subject, :space => @space, :finalized => true,
+      @subject = Factory(:subject, :owner => @subject_owner,
+                         :space => @space, :finalized => true,
                          :lectures => [lecture])
       get :unpublish, :locale => "pt-BR", :id => @subject.id, :space_id => @space.id
     end
@@ -267,9 +279,9 @@ describe SubjectsController do
   context "GET 'enroll'" do
     before do
       lecture = Factory(:lecture, :owner => @user)
-      @subject = Factory(:subject, :space => @space, :finalized => true,
-                         :lectures => [lecture],
-                         :published => 1)
+      @subject = Factory(:subject, :owner => @subject_owner,
+                         :space => @space, :finalized => true,
+                         :lectures => [lecture], :published => true)
       @enrolled_user = Factory(:user)
       Factory(:user_space_association, :space => @space,
               :user => @enrolled_user)
@@ -289,11 +301,14 @@ describe SubjectsController do
   context "GET 'unenroll'" do
     before do
       lecture = Factory(:lecture, :owner => @user)
-      @subject = Factory(:subject, :space => @space, :finalized => true,
+      @subject = Factory(:subject, :owner => @subject_owner,
+                         :space => @space, :finalized => true,
                          :lectures => [lecture],
                          :published => 1)
       @enrolled_user = Factory(:user)
+      @course.join(@enrolled_user)
       @subject.enroll(@enrolled_user)
+      UserSession.create @enrolled_user
       get :unenroll, :locale => "pt-BR", :id => @subject.id,
         :space_id => @space.id
     end
@@ -311,11 +326,13 @@ describe SubjectsController do
   context "POST 'next_lecture'" do
     before do
       @lectures = (1..3).collect { Factory(:lecture, :owner => @user) }
-      @subject = Factory(:subject, :space => @space, :finalized => true,
-                         :lectures => @lectures,
-                         :published => 1)
+      @subject = Factory(:subject, :owner => @subject_owner,
+                         :space => @space, :finalized => true,
+                         :lectures => @lectures, :published => true)
       @enrolled_user = Factory(:user)
+      @course.join(@enrolled_user)
       @subject.enroll(@enrolled_user)
+      UserSession.create @enrolled_user
     end
 
     context "when done" do

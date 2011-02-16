@@ -61,10 +61,13 @@ class CoursesController < BaseController
     authorize! :manage, @environment #Talvez seja necessario pois o @environment não está sendo autorizado.
 
     @course.owner = current_user
+    @plan = Plan.from_preset(params[:plan])
+    @plan.user = current_user
     @course.verify_path! @environment.id
 
     respond_to do |format|
       if @course.save
+        @course.plan = @plan
         @environment.courses << @course
         format.html { redirect_to environment_course_path(@environment, @course) }
       else

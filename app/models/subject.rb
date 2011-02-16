@@ -1,6 +1,7 @@
 class Subject < ActiveRecord::Base
 
-  after_create :create_enrollment_association
+  # Para Redu admin o enrollment não é criado
+  after_create :create_enrollment_association, :unless => "self.owner.admin?"
 
   belongs_to :space
   belongs_to :owner, :class_name => "User", :foreign_key => :user_id

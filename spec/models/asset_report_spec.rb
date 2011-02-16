@@ -1,7 +1,16 @@
 require 'spec_helper'
 
 describe AssetReport do
-  subject { Factory(:asset_report) }
+  before do
+    @space = Factory(:space)
+    @subject_owner = Factory(:user)
+    @space.course.join(@subject_owner)
+    sub = Factory(:subject, :owner => @subject_owner, :space => @space)
+    enrollment = Factory(:enrollment, :subject => sub)
+    @student_profile = Factory(:student_profile, :subject => sub,
+                                :enrollment => enrollment)
+  end
+  subject { Factory(:asset_report, :student_profile => @student_profile) }
   it { should belong_to :student_profile }
   it { should belong_to :lecture }
   it { should belong_to :subject }
@@ -12,23 +21,32 @@ describe AssetReport do
 
   context "finders" do
     it "retrieves done asset reports" do
-     assets_done = (1..2).collect { Factory(:asset_report, :done => true) }
-     assets = (1..2).collect { Factory(:asset_report) }
+     assets_done = (1..2).collect { Factory(:asset_report,
+                                            :student_profile => @student_profile,
+                                            :done => true) }
+     assets = (1..2).collect { Factory(:asset_report,
+                                       :student_profile => @student_profile) }
 
      AssetReport.done.should == assets_done
     end
 
     it "retrieves asset reports of a subject"  do
-      subject1 = Factory(:subject)
-      subject_assets = (1..3).collect { Factory(:asset_report,
-                                                :subject => subject1)}
-      another_assets = (1..3).collect { Factory(:asset_report) }
-      AssetReport.of_subject(subject1).should == subject_assets
+      # Utiliza Assets do owner
+      subject1 = Factory(:subject, :owner => @subject_owner,
+                         :space => @space)
+      subject2 = Factory(:subject, :owner => @subject_owner,
+                         :space => @space)
+      expected_assets = subject1.reload.enrollments.collect do
+        |e| e.student_profile.asset_reports
+      end
+
+      AssetReport.of_subject(subject1).should == expected_assets.flatten
     end
 
     it "retrieves asset reports of a user" do
       users = (1..2).collect { Factory(:user) }
-      subject1 = Factory(:subject)
+      subject1 = Factory(:subject, :owner => @subject_owner,
+                         :space => @space)
       subject1.enroll(users[0])
       subject1.enroll(users[1])
       AssetReport.of_user(users[0]).

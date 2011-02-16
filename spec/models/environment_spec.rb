@@ -128,11 +128,14 @@ describe Environment do
     it "creates an environment association" do
       subject.users.last.should == subject.owner
     end
-    it "creates an course association with the first course" do
-    user = Factory(:user)
+
+    it "creates an approved course association with the first course" do
+      user = Factory(:user)
       subject = Factory(:environment, :owner => user,
                         :courses => [Factory(:course, :owner => user)])
-      subject.courses.first.owner == subject.owner
+      subject.courses.first.owner.should == subject.owner
+      subject.courses.first.users.should include(subject.owner)
+      user.user_course_associations.last.state.should == 'approved'
     end
   end
 end
