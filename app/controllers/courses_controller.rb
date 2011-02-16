@@ -172,10 +172,10 @@ class CoursesController < BaseController
       if @approved_members
         @approved_members.each do |member|
           UserEnvironmentAssociation.create(:user_id => member.id, :environment_id => @course.environment.id,
-                                            :role_id => Role[:student].id)
+                                            :role_id => Role[:member].id)
           @course.spaces.each do |space|
             UserSpaceAssociation.create(:user_id => member.id, :space_id => space.id,
-                                        :role_id => Role[:student].id, :status => "approved") #FIXME tirar status quando remover moderacao de space
+                                        :role_id => Role[:member].id, :status => "approved") #FIXME tirar status quando remover moderacao de space
           end
 
           UserNotifier.deliver_approve_membership(member, @course) # TODO fazer isso em batch
