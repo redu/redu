@@ -121,7 +121,9 @@ describe Subject do
 
     subject.unpublish!
     subject.should_not be_published
-    subject.enrollments.should be_empty
+    subject.enrollments.reload
+    subject.enrollments.size.should == 1
+    subject.enrollments.first.user.should == @user
   end
 
   it "responds to enroll" do

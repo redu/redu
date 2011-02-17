@@ -43,7 +43,8 @@ class Subject < ActiveRecord::Base
   end
 
   def unpublish!
-    self.enrollments.destroy_all
+    Enrollment.destroy_all(["subject_id = ? and user_id <> ?", 
+                           self.id, self.user_id])
     self.published = false
     self.save
   end
