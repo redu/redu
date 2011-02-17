@@ -29,7 +29,7 @@ describe SubjectsController do
 
     it "renders with layout 'environment'" do
       get :index, :locale => "pt-BR", :space_id => @space.id
-      response.layout.should == 'layouts/environment'
+      response.layout.should == 'layouts/new/application'
     end
 
   end
