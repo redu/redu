@@ -1,11 +1,12 @@
 <div id="lecture_form">
 <%= stylesheet_link_tag 'uploadify' %>
 <%= render_uploadify(:id  => "document_attachment",
-                     :url => space_subject_lectures_url(@space, @subject),
-                     :allow_multiple_files => false,
-                     :fields => ['document_attachment', 'name'],
-                     :allowed_extensions => [:ppt, :pptx, :pdf, :odp, :pps]) %>
- <% form_for :document, @document, :url => { :action => "create" },
+       :url => space_subject_lectures_url(@space, @subject),
+       :allow_multiple_files => false,
+       :fields => ['document_attachment', 'name'],
+       :allowed_extensions => [:ppt, :pptx, :pdf, :odp, :pps]) %>
+
+<% form_for :document, @document, :url => { :action => "create" },
    :html => { :multipart => true, :method => :put,
               :id => "document-form"} do |f| %>
 
@@ -14,8 +15,8 @@
      <%= label_tag :name, :title.l %>
      <%= text_field_tag :name %>
      <%= error_for :name %>
-     <div id="upload_resource_field" >
-       <%= f.label :attachment, "Arquivo" %>
+     <%= f.label :attachment, "Arquivo" %>
+     <div id="upload_resource_field" class="uploadify" >
        <%= f.file_field :attachment  %>
        <span class="tip">Tamanho máximo: 100 mb</span>
        <%= error_for :document, :attachment %>

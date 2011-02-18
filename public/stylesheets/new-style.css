@@ -1616,6 +1616,19 @@ form.common .cke_editor_page_body_editor {
   margin: 25px 0;
 }
 
+form.common .uploadify {
+  float: left;
+  margin: 25px 0;
+  width: 550px;
+}
+
+form.common .uploadify .cancel,
+form.common .uploadify .button {
+  float: right;
+  clear: left;
+  margin: 10px 0 10px 10px;
+}
+
 form.common input[type=text].nano {
   width: 50px;
 }
