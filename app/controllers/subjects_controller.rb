@@ -52,7 +52,9 @@ class SubjectsController < BaseController
   def new
     @subject = Subject.new
     respond_to do |format|
-      format.html 
+      format.html do
+        render :template => 'subjects/new/new', :layout => 'new/application'
+      end
       format.js do
         render :update do |page|
           page.insert_html :before, 'subjects_list',
