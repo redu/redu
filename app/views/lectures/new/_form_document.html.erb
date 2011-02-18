@@ -21,7 +21,7 @@
        <span class="tip">Tamanho máximo: 100 mb</span>
        <%= error_for :document, :attachment %>
 
-       <%= uploadify_cancel("Parar") %>
+       <%= uploadify_cancel "Parar", :class => "cancel vanilla" %>
        <%= uploadify_submit "Enviar material", :style => "display: none;" %>
        <%= link_to_function "Cancelar",
          "$('#document-form').remove(); return false;",
