@@ -11,7 +11,7 @@ class SubjectsController < BaseController
   rescue_from CanCan::AccessDenied do |exception|
     flash[:notice] = "Você não tem acesso a essa página"
 
-    if params[:action] == 'infos' || params[:action] == 'index'
+    if params[:action] == 'infos'
       redirect_to environment_course_path(@space.course.environment, @space.course)
     else
       subject = Subject.find(params[:id])
