@@ -61,7 +61,7 @@
     
     <ul id="users_list" class="members clearfix">
       <%= render :partial => 'users/new/item',
-        :collection => @users %>
+        :collection => @users, :locals => { :entity => @subject } %>
     </ul>
 
     <%= will_paginate @users, :renderer => EndlessRenderer %>
