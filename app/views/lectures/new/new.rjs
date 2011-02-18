@@ -1,0 +1,14 @@
+case params[:type].to_s
+when 'Page'
+  page.insert_html :after, 'lectures_types',
+    :partial => 'lectures/new/form_page'
+when 'Seminar'
+  page.insert_html :after, 'lectures_types',
+    :partial => 'lectures/new/form_seminar'
+when 'Document'
+  page.insert_html :after, 'lectures_types',
+    :partial => 'lectures/new/form_document'
+when 'Existent'
+  page.insert_html :after, 'lectures_types',
+    :partial => 'lectures/new/form_existent'
+end

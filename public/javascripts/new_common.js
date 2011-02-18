@@ -63,6 +63,12 @@ jQuery(function(){
         $("#new_subject .new-resource .explanation").html(explanation);
     });
 
+    // Adiciona classe selected ao li do recurso clicado
+    $("#new_subject .new-resource li a").live("click", function(){
+        $("#new_subject .new-resource li").removeClass("selected");
+        $(this).parents("li:first").addClass("selected");
+    })
+
     // Expand de recursos na listagem de módulos
     $(".expand, .unexpand", "#space-subjects .subjects").click(function(){
         $(this).toggleClass("expand");
@@ -78,6 +84,11 @@ jQuery(function(){
         e.preventDefault();
     });
 
+    // Carrega preview do Youtube (new Seminar)
+    $('#seminar_external_resource').live("change", function(){
+        youtubePreview($('#seminar_external_resource'));
+        console.log('alou')
+    })
 
 });
 
@@ -117,3 +128,37 @@ function stripAccent(str) {
   return str;
 }
 
+/* Carrega o preview do Youtube */
+function youtubePreview(textfield){
+  regex = /youtube\.com\/watch\?v=([A-Za-z0-9._%-]*)[&\w;=\+_\-]*/;
+
+  id = textfield.val().match(regex)
+    if (id != null) {
+      youtube_id = id[1];
+      url = "http://www.youtube.com/v/" + youtube_id + "&hl=en&fs=1";
+
+      jQuery('#yt_preview_param').attr("value",url);
+      jQuery('embed').attr("src",url);
+      jQuery('#youtube_preview').show();
+
+    }  else {
+      $('#youtube_preview').hide();
+    }
+
+}
+
+/* Alterna entre o formulário de Youtube e Upload (new Seminar) */
+function switchCourseFields(fieldType){
+  if (fieldType == 1) {
+    $('#upload_resource_field').show();
+    $('#external_resource_field').hide();
+    $('#youtube_preview').hide();
+    $('#seminar_submit').hide();
+  } else {
+    $('#upload_resource_field').hide();
+    $('#external_resource_field').show();
+    youtubePreview($('#seminar_external_resource'));
+    $('#seminar_submit').show();
+  }
+
+}

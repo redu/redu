@@ -1,0 +1,71 @@
+<div id="lecture_form">
+    <%= stylesheet_link_tag 'uploadify' %>
+    <%= render_uploadify(:id  => "seminar_original",
+                         :url => space_subject_lectures_url(@space, @subject),
+                         :allow_multiple_files => false,
+                         :fields => ['seminar_external_resource_type_upload', 'name', 'subject_id'],
+                         :max_size => 100.megabytes,
+                         :allowed_extensions => [:mov, :mpeg, :mpg, :avi, '3gp', :mp4, :mpeg4, :vob, :mkv, '264', '3gp2', :dvr, :dvx, :flv, :h264, :m2v, :m4v, :movie, :mpeg1, :mpeg2, :swf, :vid, :wmv]) %>
+                       <% form_remote_for :seminar, @seminar,
+                         :url => { :action => "create" },
+                         :loading => "$('#spinner-form-seminar').show();",
+                         :success => "$('#spinner-form-seminar').hide();",
+                         :html => { :multipart => true, :id => "seminar-form" } do |f| %>
+                           <% field_set_tag do %>
+                               <%= label_tag :name, :title.l %>
+                               <%= text_field_tag :name %>
+                               <%= hidden_field_tag "subject_id", @subject.id %>
+                               <%= error_for :name %>
+
+                               <% field_set_tag do %>
+                                 <legend class="label">Tipo de material:</legend>
+                                 <div class="inline">
+                                   <%= f.radio_button :external_resource_type, :youtube,
+                                     {:onchange => "switchCourseFields(2);", :checked => true} %>
+                                   <%= f.label :external_resource_type_youtube, "Youtube", :class => "inline"  %>
+                                   <%= f.radio_button :external_resource_type, :upload, {:onchange => "switchCourseFields(1);"} %>
+                                   <%= f.label :external_resource_type_upload, "Upload", :class => "inline"  %>
+                                   <%= error_for :seminar, :external_resource_type %>
+                                   <%= error_for :seminar, :external_resource_type_upload %>
+                                 </div>
+                               <% end %>
+
+                               <% field_set_tag nil, :id => 'upload_resource_field',
+                                 :style => 'display: none;' do %>
+                                   <legend class="label">Upload</legend>
+                                   <%= f.file_field :original  %>
+                                   <span class="tip">Tamanho máximo: 100 mb</span>
+                                   <%= error_for :seminar, :original %>
+
+                                   <%= uploadify_cancel("Parar") %>
+                                   <%= uploadify_submit "Enviar material", :style => "display: none;"  %>
+                                 <% end %>
+
+                                 <% field_set_tag nil, :id => 'external_resource_field' do %>
+                                   <legend class="label">Youtube</legend>
+                                   <%= f.text_field :external_resource %>
+                                   <span class="tip">
+                                     Exemplo: http://www.youtube.com/watch?v=_1GjgFjX5gE
+                                   </span>
+                                   <%= error_for :seminar, :external_resource %>
+                                 <% end %>
+
+                                 <% field_set_tag nil, :id => 'youtube_preview',
+                                   :style => 'display: none;' do %>
+                                   <legend class="label">Prévia</legend>
+                                   <object width="420" height="300">
+                                     <param name="movie" value="none" id="yt_preview_param"/>
+                                     <param name="allowFullScreen" value="true"/>
+                                     <param name="allowscriptaccess" value="always"/>
+                                     <embed src="none" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="420" height="300"/>
+                                   </object>
+                                 <% end %>
+                               <%= f.submit "Criar", :class => 'vanilla' %>
+                               <%= link_to_function "Cancelar",
+                                 "$('#seminar-form').remove(); return false;",
+                                 :class => 'cancel vanilla' %>
+                               <%= image_tag 'spinner.gif', :id => 'spinner-form-seminar',
+                                 :style => 'display: none;' %>
+                           <% end %>
+                       <% end %>
+</div>
