@@ -1,0 +1,18 @@
+page << "$('#new_subject').get(0).setAttribute('onsubmit', \"jQuery.ajax({beforeSend:function(request){$('#spinner-form').show();}, data:jQuery.param(jQuery(this).serializeArray()), dataType:'script', success:function(request){$('#spinner-form').hide()}, type:'put', url:'#{space_subject_path(@space, @subject)}'}); return false;\");"
+page << "$('#new_subject').get(0).setAttribute('action', '#{space_subject_path(@space, @subject)}');"
+page << "$('#new_subject').get(0).setAttribute('method', 'put');"
+
+page.hide 'errorExplanation'
+page.hide 'subject_title-error'
+page.hide 'subject_description-error'
+
+page.insert_html :after, 'lectures_index',
+  :partial => 'lectures/new/choose_type'
+
+page.remove 'add_button'
+page.show 'create_button'
+page.replace 'cancel_link',
+  (link_to "Cancelar", space_subject_path(@space, @subject, :building_subject => true),
+    :method => :delete,
+    :confirm => "Você tem certeza que deseja cancelar a construção deste módulo? Todas as informações serão perdidas.",
+    :class => 'cancel vanilla')

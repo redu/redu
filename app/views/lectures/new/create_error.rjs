@@ -1,0 +1,14 @@
+if @page
+  page.replace_html 'page_body-error', @page.errors.on(:body)
+  page.show 'page_body-error'
+elsif @seminar
+  page.replace_html 'seminar_external_resource-error', @seminar.errors.on(:external_resource)
+  page.show 'seminar_external_resource-error'
+  page.replace_html 'seminar_original-error', @seminar.errors.on(:original)
+  page.show 'seminar_original-error'
+elsif @document
+  page.replace_html 'document_attachment-error', @document.errors.on(:attachment)
+  page.show 'document_attachment-error'
+end
+page.replace_html 'name-error', @lecture.errors.on(:name)
+page.show 'name-error'

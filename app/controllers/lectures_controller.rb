@@ -156,7 +156,9 @@ class LecturesController < BaseController
     end
 
     respond_to do |format|
-      format.js
+      format.js do
+        render :template => 'lectures/new/new'
+      end
     end
   end
 
@@ -170,9 +172,12 @@ class LecturesController < BaseController
         format.js do
           render :update do |page|
             @page = @lecture.lectureable
-            page.insert_html :after, "#{@lecture.id}-item",
+            page.insert_html :before, 'lectures_types',
+              "<fieldset id=\"edit-#{@lecture.id}-item\">
+                <legend class=\"label\">Editar recurso</legend>
+              </fieldset>"
+            page.insert_html :bottom, "edit-#{@lecture.id}-item",
               :partial => 'lectures/new/form_edit_page'
-            page.hide "#{@lecture.id}-item"
           end
         end
       end
@@ -198,19 +203,21 @@ class LecturesController < BaseController
     plan_files_limit = @space.course.plan.file_storage_limit
     plan_multimedia_limit = @space.course.plan.video_storage_limit
     error = false
-    if params[:page]
-      @page = Page.create(params[:page]) if @lecture.name
-      @lecture.lectureable = @page
-    elsif params[:seminar]
-      @seminar = Seminar.new(params[:seminar]) if @lecture.name
-      @seminar.lecture = @lecture
-      authorize! :upload_multimedia, @seminar
-      @seminar.save
-    elsif params[:document]
-      @document = Document.new(params[:document]) if @lecture.name
-      @document.lecture = @lecture
-      authorize! :upload_document, @document
-      @document.save
+    if @lecture.name
+      if params[:page]
+        @page = Page.create(params[:page])
+        @lecture.lectureable = @page
+      elsif params[:seminar]
+        @seminar = Seminar.new(params[:seminar])
+        @seminar.lecture = @lecture
+        authorize! :upload_multimedia, @seminar
+        @seminar.save
+      elsif params[:document]
+        @document = Document.new(params[:document])
+        @document.lecture = @lecture
+        authorize! :upload_document, @document
+        @document.save
+      end
     end
 
     respond_to do |format|
@@ -218,10 +225,12 @@ class LecturesController < BaseController
         @space.course.quota.refresh
         @lecture.published = 1
         @lecture.save
-        format.js
+        format.js do
+          render :template => 'lectures/new/create'
+        end
       else
 
-        format.js { render :template => 'lectures/create_error'}
+        format.js { render :template => 'lectures/new/create_error'}
       end
     end
   end
@@ -269,9 +278,11 @@ class LecturesController < BaseController
     @lecture.subject.space.course.quota.refresh
     respond_to do |format|
       if valid
-        format.js
+        format.js do
+          render :template => 'lectures/new/update'
+        end
       else
-        format.js { render :template => 'lectures/create_error'}
+        format.js { render :template => 'lectures/new/create_error'}
       end
     end
 

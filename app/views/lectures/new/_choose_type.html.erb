@@ -1,0 +1,53 @@
+<% display = 'none' if action_name == 'edit' %>
+<% field_set_tag nil, :id => "lectures_types",
+  :style => "display:#{display};" do %>
+  <legend class="label">Adicionar recurso</legend>
+  <div class="new-resource">
+    <span class="explanation">
+      <strong>Página simples</strong>
+      Permite a postagem de conteúdo de leitura rápida como um tutorial ou um texto introdutório.
+    </span>
+    <ul>
+      <li style="selected">
+      <span class="icon icon-redu_r1_c187_s1"></span>
+        <%= link_to_remote "Página simples",
+        :url => new_space_subject_lecture_path(@space, @subject,
+                                               :type => "Page"),
+        :method => :get,
+        :loading => "$('#spinner-choose-type').show(); $('#lecture_form').remove();",
+        :success => "$('#spinner-choose-type').hide();",
+        :html => { :title => 'Permite a postagem de conteúdo de leitura rápida como um tutorial ou um texto introdutório.' } %>
+    </li>
+    <li>
+      <span class="icon icon-redu_r2_c85_s1"></span>
+      <%= link_to_remote "Documento e apresentação",
+        :url => new_space_subject_lecture_path(@space, @subject,
+                                               :type => "Document"),
+        :method => :get,
+        :loading => "$('#spinner-choose-type').show(); $('#lecture_form').remove();",
+        :success => "$('#spinner-choose-type').hide();",
+        :html => { :title => 'Permite anexar e visualizar documentos complementares ao conteúdo.' } %>
+    </li>
+    <li>
+      <span class="icon icon-redu_r6_c79_s1"></span>
+      <%= link_to_remote "Vídeo-aula",
+        :url => new_space_subject_lecture_path(@space, @subject,
+                                               :type => "Seminar"),
+        :method => :get,
+        :loading => "$('#spinner-choose-type').show(); $('#lecture_form').remove();",
+        :success => "$('#spinner-choose-type').hide();",
+        :html => { :title => 'Permite a postagem de conteúdo através do upload de vídeo ou link do Youtube.' } %>
+    </li>
+    <li>
+      <%= link_to_remote "Existente",
+        :url => new_space_subject_lecture_path(@space, @subject,
+                                               :type => "Existent"),
+        :method => :get,
+        :loading => "$('#spinner-choose-type').show(); $('#lecture_form').remove();",
+        :success => "$('#spinner-choose-type').hide();",
+        :html => { :title => 'Permite a postagem de um recurso já adicionado ao Redu, porém em outro módulo.' } %>
+    </li>
+    <%= image_tag 'spinner.gif', :id => 'spinner-choose-type',
+      :style => 'display: none;'%>
+  </ul>
+<% end %>

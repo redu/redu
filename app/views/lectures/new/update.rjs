@@ -1,0 +1,5 @@
+page.insert_html :after, "#{@lecture.id}-item",
+  :partial => 'lectures/new/item_short',
+  :locals => { :item_short => @lecture }
+page.remove "#{@lecture.id}-item"
+page.remove "edit-#{@lecture.id}-item"

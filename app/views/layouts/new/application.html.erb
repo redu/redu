@@ -14,6 +14,9 @@
     <%= ajaxful_rating_style %>
     <% if controller_name == 'subjects' %>
       <%= javascript_include_tag("uploadify/swfobject") %>
+      <% if action_name == 'index' or action_name == 'new' %>
+        <%= javascript_include_tag :ckeditor %>
+      <% end %>
     <% end %>
     <% if controller_name == 'lectures' %>
       <% if (action_name == 'new' || action_name == 'edit') %>

@@ -15,14 +15,17 @@
         :url => edit_space_subject_lecture_path(item_short.subject.space,
                                                 item_short.subject, item_short),
         :loading => "$('#spinner-#{item_short.id}item').show();",
-      :success => "$('#spinner-#{item_short.id}item').hide();",
-      :method => :get %>
+        :success => "$('#spinner-#{item_short.id}item').hide();",
+        :method => :get, :html => { :class => 'edit'} %>
   <% end %>
   <%= link_to_remote "Remover",
     :url => space_subject_lecture_path(item_short.subject.space,
                                        item_short.subject, item_short),
+    :loading => "$('#spinner-#{item_short.id}item').show();",
+    :success => "$('#spinner-#{item_short.id}item').hide();",
     :method => :delete,
-    :confirm => "Você tem certeza que deseja excluir essa aula? Não será mais possível recuperá-la." %>
+    :confirm => "Você tem certeza que deseja excluir essa aula? Não será mais possível recuperá-la.",
+    :html => { :class => 'remove'}%>
   <%= image_tag 'spinner.gif', :id => "spinner-#{item_short.id}item",
   :style => 'display: none;'%>
 <% end %>
