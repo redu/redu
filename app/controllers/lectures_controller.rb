@@ -13,7 +13,10 @@ class LecturesController < BaseController
 
   rescue_from CanCan::AccessDenied do |exception|
     respond_to do |format|
-      format.html { redirect_to space_path(Space.find(params[:space_id]))}
+      format.html do
+       subject = Subject.find(params[:subject_id])
+       redirect_to infos_space_subject_path(subject.space, subject)
+      end
       format.js { render :js => "alert('Você não possui espaço suficiente.')" }
     end
   end
