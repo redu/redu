@@ -36,8 +36,8 @@
         :class => "important" %>
     <% else %>
       <% if current_user.enrolled?(@subject) and
-      current_user.get_association_with(@subject).student_profile.graduaded? %>
-        <%= link_to "Sair",
+      !current_user.get_association_with(@subject).student_profile.graduaded? %>
+        <%= link_to "Abandonar",
             unenroll_space_subject_path(@space, @subject),
             :confirm => "Tem certeza? Todas as suas informações vinculadas a este módulo serão perdidas.",
             :class => "important" %>
