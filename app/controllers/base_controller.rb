@@ -3,15 +3,19 @@ require 'open-uri'
 require 'pp'
 
 class BaseController < ApplicationController
-  layout 'application'
+  layout 'application', :except => [:site_index]
   include AuthenticatedSystem
   include LocalizedApplication
 
   around_filter :set_locale
-
   skip_before_filter :verify_authenticity_token, :only => :footer_content
   # Work around (ver método self.login_required_base)
-  before_filter :login_required_base, :only => [:teach_index, :learn_index, :site_index]
+  before_filter :login_required_base, :only => [:learn_index]
+
+
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to home_path
+  end
 
   caches_action :site_index, :footer_content, :if => Proc.new{|c| c.cache_action? }
   def cache_action?
@@ -23,7 +27,7 @@ class BaseController < ApplicationController
   end
 
   def tos
-    #TODO 
+    #TODO
   end
 
   def privacy
@@ -31,6 +35,8 @@ class BaseController < ApplicationController
   end
 
   def teach_index
+    authorize! :teach_index, :base
+
     respond_to do |format|
       format.html  do
         render :template => 'base/new/teach_index', :layout => 'new/application'
@@ -42,7 +48,7 @@ class BaseController < ApplicationController
     @spaces = current_user.spaces
 
     respond_to do |format|
-      format.html 
+      format.html
     end
   end
 
@@ -60,7 +66,12 @@ class BaseController < ApplicationController
   end
 
   def site_index
-    redirect_to user_path(current_user) 
+    @user_session = UserSession.new
+    respond_to do |format|
+      format.html do
+        render :template => 'base/new/site_index'
+      end
+    end
   end
 
   def footer_content

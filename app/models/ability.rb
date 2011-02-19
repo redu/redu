@@ -9,7 +9,7 @@ class Ability
       :search_users_admin, :to => :manage
 
     # Overall Read
-    alias_action :vote, :rate, :more,:users ,:to => :read
+    alias_action :vote, :rate, :more, :users, :to => :read
 
     # Environment
     alias_action :admin_courses, :destroy_members, :to => :manage
@@ -90,8 +90,15 @@ class Ability
     # Todos podem criar usuários
     can :create, User
 
+    
+    
+
     # Usuários logados podem
     unless user.nil?
+      
+      # Ter acesso ao 'Ensine', só usuários logados
+      can :teach_index, :base
+
       # Gerencial
       can :manage, :all do |object|
         user.can_manage? object
@@ -101,6 +108,7 @@ class Ability
       can :read, :all do |object|
         user.can_read? object
       end
+      
       can :preview, [Course, Environment], :published => true
 
       can :create, Environment
