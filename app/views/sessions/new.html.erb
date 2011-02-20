@@ -1,52 +1,44 @@
 <% content_for :page_id, 'group' %>
 <div class="grid_10">
-	
-	
-						
-						<% form_for @user_session, :url => sessions_path do |f| %>
-						
-					<% field_set_tag "Login" do %>
+  <% form_for @user_session, :url => sessions_path do |f| %>
 
-            <label for='username'>
-                <%=:username_or_email.l %>
-            </label>
-            <%= f.text_field :login, :size => 35 %>
-						<%= error_for :user_session, :login %>
-						
-            <label for='username'>
-                <%=:password.l %>
-            </label>
-            <%= f.password_field :password, :size => 35 %>
-							<%= error_for :user_session, :password %>
-            <label for='remember_me'>
-                <%=:remember_me.l %>
-                <%= f.check_box :remember_me %>
-            </label>
-            <%= f.submit "Entrar" %>
-						
-						<% unless Rails.env == "production" || Rails.env == "staging"  %>
-						<% form_tag({:controller => :users, :action => :create}, {:method => :post}) do %>
-							<%= oauth_login_button :value => "Login with Twitter", :class => "twitter" %>
-						 <% end %>
- 						<% end %>
-						
-            <% end %>
-						<% end %>
-						
+    <% field_set_tag "Login" do %>
+
+      <label for='username'>
+        <%=:username_or_email.l %>
+      </label>
+      <%= f.text_field :login, :size => 35 %>
+      <%= error_for :user_session, :login %>
+
+      <label for='username'>
+        <%=:password.l %>
+      </label>
+      <%= f.password_field :password, :size => 35 %>
+      <%= error_for :user_session, :password %>
+      <label for='remember_me'>
+        <%=:remember_me.l %>
+        <%= f.check_box :remember_me %>
+      </label>
+      <%= f.submit "Entrar" %>
+
+      <% unless Rails.env == "production" || Rails.env == "staging"  %>
+        <% form_tag({:controller => :users, :action => :create}, {:method => :post}) do %>
+          <%= oauth_login_button :value => "Login with Twitter", :class => "twitter" %>
+        <% end %>
+      <% end %>
+
+    <% end %>
+  <% end %>
+
 </div>
 
 <div class="grid_6 user_instructions">
-    <h3><%=:dont_have_an_account.l %></h3>
+  <h3><%=:dont_have_an_account.l %></h3>
 
-    <%= link_to "&raquo; " + :click_here_to_sign_up.l, signup_url %>
-
-
-    <h3><%=:forgot_your_password.l %></h3>
-
-    <%= link_to "&raquo; " + :click_here_to_retrieve_it.l, forgot_password_url %>
-
-    <h3><%=:forgot_your_username.l %></h3>
-
-    <%= link_to "&raquo; " + :click_here_to_retrieve_it.l, forgot_username_url %>
+  <%= link_to "&raquo; " + :click_here_to_sign_up.l, signup_url %>
+  <h3><%=:forgot_your_password.l %></h3>
+  <%= link_to "&raquo; " + :click_here_to_retrieve_it.l, forgot_password_url %>
+  <h3><%=:forgot_your_username.l %></h3>
+  <%= link_to "&raquo; " + :click_here_to_retrieve_it.l, forgot_username_url %>
 </div>
  

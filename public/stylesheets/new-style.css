@@ -1435,6 +1435,7 @@ label.focus {
 }
 
 #home .call {
+  padding-right: 20px;
   padding-left: 200px;
 }
 
@@ -1601,6 +1602,7 @@ form.common a.cancel {
 }
 
 form.common textarea,
+form.common input[type=password],
 form.common input[type=text] {
   width: 410px;
   padding: 8px;
@@ -1629,10 +1631,12 @@ form.common .uploadify .button {
   margin: 10px 0 10px 10px;
 }
 
+form.common input[type=password].nano,
 form.common input[type=text].nano {
   width: 50px;
 }
 
+form.common input[type=password].small,
 form.common input[type=text].small {
   width: 220px;
 }

@@ -6,14 +6,14 @@
           <% if current_user %>
             <%= link_to "Início", home_user_path(current_user) %>
           <% else %>
-            <%= link_to "Início", new_user_path %>
+            <%= link_to "Início", home_path %>
           <% end %>
         </li>
         <li class="item-2 selected">
           <% if current_user %>
             <%= link_to "Aprenda", user_path(current_user) %>
           <% else %>
-            <%= link_to "Aprenda", new_user_path  %>
+            <%= link_to "Aprenda", home_path  %>
           <% end %>
         </li>
         <li class="item-3">
