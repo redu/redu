@@ -34,7 +34,7 @@ class Environment < ActiveRecord::Base
   validates_length_of :name, :maximum => 40
   validates_length_of :description, :maximum => 400, :allow_blank => true
   validate :length_of_tags
-  validates_length_of :initials, :maximum => 10, :allow_blank => true
+  validates_length_of :initials, :maximum => 10
 
   accepts_nested_attributes_for :courses
 
@@ -79,7 +79,13 @@ class Environment < ActiveRecord::Base
       self.path = path + '-' + SecureRandom.hex(1)
     end
   end
-protected
+
+  # Retorna as iniciais ou, se não houver, o nome
+  def initials_or_name
+    self.initials.empty? ? self.name : self.initials
+  end
+
+  protected
 
   def create_environment_association
     UserEnvironmentAssociation.create(:environment => self,

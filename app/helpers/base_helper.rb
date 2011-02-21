@@ -3,6 +3,36 @@ require 'md5'
 # Methods added to this helper will be available to all templates in the application.
 module BaseHelper
 
+  # Adiciona a classe ui-state-active se o path for o atual
+  def selected_if_current_is(path)
+    current_page?(path) ? "ui-state-active" : ""
+  end
+
+  # Cria lista não ordenada no formato da navegação do widget de abas (jquery UI)
+  def tabs_navigation(*paths)
+    lis = paths.collect do |item|
+      name, path, options = item
+      class_name = "ui-state-active" if current_page?(path)
+
+      content_tag :li, :class => class_name do
+        link_to name, path, options
+      end
+    end
+
+    lis.join("\n")
+  end
+
+  # Cria markup das abas fake a partir de uma ou mais listas do tipo
+  # [nome, path, options] (mesmo parâmetros passados para o link_to)
+  def fake_tabs(*paths, &block)
+    locals = {
+      :navigation => tabs_navigation(*paths),
+      :body => capture(&block)
+    }
+
+    concat(render(:partial => 'shared/new/fake_tabs', :locals => locals), block.binding)
+  end
+
   def error_for(object, method = nil, options={})
     if method
       err = instance_variable_get("@#{object}").errors.on(method).to_sentence rescue instance_variable_get("@#{object}").errors.on(method)

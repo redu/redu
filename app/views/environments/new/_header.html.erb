@@ -1,0 +1,34 @@
+<%# Cabeçalho do environment (contém título, estatísticas, descrição e tags)  %>
+
+<div id="hierarchy-header" class="clearfix">
+  <h3 class="call environment-name"><%= h(environment.name) %></h3>
+  <div class="grid_9 alpha">
+    <span class="description">
+      <%= environment.description %>
+    </span>
+    <ul class="tags clearfix">
+      <% environment.tags.each do |tag| %>
+      <li>
+        <%= link_to tag, environment_path(environment) %>
+      </li>
+      <% end %>
+    </ul>
+  </div>
+  <ul class="statistics grid_3 omega">
+    <li>
+      <em class="icon icon-redu_r8_c319_s1">Membros:</em>
+      <span><%= environment.users.length %></span>
+    </li>
+    <li>
+      <em class="icon icon-redu_r8_c391_s1">Administradores:</em>
+      <span><%= environment.administrators.length %></span>
+    <li>
+      <em class="icon icon-redu_r8_c301_s1">Professores:</em>
+      <span><%= environment.teachers.length %></span>
+    </li>
+    <li>
+      <em class="icon icon-redu_r8_c385_s1">Tutores:</em>
+      <span><%= environment.tutors.length %></span>
+    </li>
+  </ul>
+</div><!-- end #hierarchy-header -->
