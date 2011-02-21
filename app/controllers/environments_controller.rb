@@ -64,6 +64,13 @@ class EnvironmentsController < BaseController
 
   # GET /environments/1/edit
   def edit
+    @header_environment = @environment.clone
+
+    respond_to do |format|
+      format.html do
+        render :template => "environments/new/edit", :layout => "new/application"
+      end
+    end
   end
 
   # POST /environments
@@ -139,13 +146,16 @@ class EnvironmentsController < BaseController
   # PUT /environments/1
   # PUT /environments/1.xml
   def update
+    @header_environment = @environment.clone
+
     respond_to do |format|
       if @environment.update_attributes(params[:environment])
         flash[:notice] = 'Ambiente atualizado com sucesso.'
         format.html { redirect_to(@environment) }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
+        format.html { render :template => "environments/new/edit",
+          :layout => "new/application" }
         format.xml  { render :xml => @environment.errors, :status => :unprocessable_entity }
       end
     end
@@ -173,7 +183,10 @@ class EnvironmentsController < BaseController
                                              :per_page => AppConfig.items_per_page)
 
     respond_to do |format|
-      format.html
+      format.html do
+        render :template => "environments/new/admin_courses",
+          :layout => "new/application"
+      end
       format.js
     end
   end
@@ -187,7 +200,10 @@ class EnvironmentsController < BaseController
         :per_page => AppConfig.items_per_page)
 
     respond_to do |format|
-      format.html
+      format.html do
+        render :template => "environments/new/admin_members",
+          :layout => "new/application"
+      end
       format.js { render :template => "shared/admin_members" }
     end
   end
@@ -197,7 +213,10 @@ class EnvironmentsController < BaseController
                                                 :order => 'updated_at DESC',
                                                 :per_page => AppConfig.items_per_page)
     respond_to do |format|
-      format.html
+      format.html do
+        render :template => "environments/new/admin_bulletins",
+          :layout => "new/application"
+      end
       format.js
     end
   end

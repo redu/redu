@@ -1,0 +1,22 @@
+<div class="actions">
+<%= link_to "Criar nova notícia", new_polymorphic_path([@space || @environment, Bulletin.new]),
+      :class => 'button'%>
+</div>
+<% unless @bulletins.empty? %>
+  <table width="100%" id="bulletin_list" class="common spaced">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Editar</th>
+        <th>Remover</th>
+      </tr>
+    </thead>
+    <%= render :partial => 'bulletins/new/item_admin', :collection => @bulletins %>
+  </table>
+  <%= will_paginate @bulletins, :renderer => EndlessRenderer %>
+<% else %>
+  <div class="box_notice">
+    Não existe nenhuma notícia.
+    <%= link_to "Crie uma agora!", new_polymorphic_path([@space || @environment, Bulletin.new]) %>
+  </div>
+<% end %>

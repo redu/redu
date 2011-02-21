@@ -90,6 +90,25 @@ jQuery(function(){
         console.log('alou')
     })
 
+    // Abas normais
+    $(".tabs").tabs();
+
+    // Padrão de tabelas
+    $("table.common tr:odd").addClass("odd");
+
+    // Form com tabelas
+    $("#select_all").change(
+      function(e){
+        var pivot = $(this);
+
+        if(pivot.is(":checked"))
+          $("input[type=checkbox].autoCheck").attr('checked', true)
+        else
+          $("input[type=checkbox].autoCheck").attr('checked', false)
+
+        return true;
+      }
+    )
 });
 
 function limitChars(textclass, limit, infodiv){

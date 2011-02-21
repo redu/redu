@@ -1,0 +1,57 @@
+<%= render :partial => 'environments/new/sidebar' %>
+<div class="main grid_12 omega big-col">
+  <ol id="breadcrumbs" class="clearfix">
+    <li>
+      <%= link_to 'Home', home_user_path(current_user),
+        :class => 'replacement home icon icon-redu_r8_c227_s1' %>
+    </li>
+    <li>
+      <%= link_to @header_environment.name, environment_path(@header_environment),
+        :class => 'icon icon-redu_r8_c217_s1' %>
+    </li>
+  </ol>
+
+  <%= render :partial => 'environments/new/header',
+    :locals => { :environment => @header_environment } %>
+
+  <div id="environment-manage" class="body">
+    <div class="header">
+      <h4>Gerenciamento</h4>
+      <span class="counter">Informações gerais do ambiente <%= @environment.initials_or_name %></span>
+    </div>
+
+    <%#FIXME adicionar icones  %>
+    <%
+      fake_tabs ["Informações", edit_environment_path(@environment), {:class => 'icon'}],
+        ["Membros", admin_members_environment_path(@environment), {:class => 'icon'}],
+        ["Notícias", admin_bulletins_environment_path(@environment), {:class => 'icon'}],
+        ["Cursos", admin_courses_environment_path(@environment), {:class => 'icon'}] do
+      %>
+
+    <% form_for @environment, :html => { :class => 'common highlightable',
+      :multipart => true } do |f| %>
+      <%= f.error_messages %>
+      <% field_set_tag "Informações Gerais", :class => "hidden" do %>
+        <%= f.label :name, "Nome" %>
+        <%= f.text_field :name  %>
+        <%= f.label :initials, "Sigla" %>
+        <%= f.text_field :initials  %>
+        <%= f.label :description, "Description" %>
+        <%= f.text_area :description, :size=>'102x4' %>
+        <%= f.label "Palavras-chave <span class='snippet'>(separadas por vírgula)</span>" %>
+        <%= f.text_field :tag_list %>
+      <% end %>
+
+      <% field_set_tag "Aparência", :class => 'hidden' do %>
+        <%= f.label :avatar, "Imagem" %>
+        <%= f.file_field :avatar %>
+        <%= f.submit "Salvar alterações" %>
+        <%= link_to "Remover ambiente", environment_path(@environment),
+          :confirm => "Você tem certeza que deseja remover este ambiente?",
+          :method => :delete,
+          :class => "remove vanilla" %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
+</div><!-- end #environment-edit -->
