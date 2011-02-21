@@ -1,7 +1,8 @@
 class Subject < ActiveRecord::Base
 
+  # Só é criado após o primeiro update (finalized = 0)
   # Para Redu admin o enrollment não é criado
-  after_create :create_enrollment_association, :unless => "self.owner.admin?"
+  after_update :create_enrollment_association, :if => "!self.finalized? and !self.owner.admin?"
 
   belongs_to :space
   belongs_to :owner, :class_name => "User", :foreign_key => :user_id
