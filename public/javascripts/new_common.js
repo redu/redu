@@ -90,9 +90,6 @@ jQuery(function(){
         console.log('alou')
     })
 
-    // Abas normais
-    $(".tabs").tabs();
-
     // Padrão de tabelas
     $("table.common tr:odd").addClass("odd");
 
@@ -108,8 +105,7 @@ jQuery(function(){
 
         return true;
       }
-    )
-});
+    ) });
 
 function limitChars(textclass, limit, infodiv){
   var text = $('.' + textclass).val();
