@@ -713,7 +713,9 @@ class User < ActiveRecord::Base
 
   # FIXME Não foi testado devido a futura reformulação de Status
   def recent_activity(page = 1)
-    Status.friends_statuses(self, page)
+    Status.home_activity(self).paginate(:page => page,
+                                        :order => 'created_at DESC',
+                                        :per_page => AppConfig.items_per_page)
   end
 
   def add_favorite(favoritable_type, favoritable_id)

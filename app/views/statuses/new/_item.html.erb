@@ -17,13 +17,15 @@
     </p>
   </span>
   <ul class="actions clearfix">
-    <li>
-      <a href="" class="icon icon-redu_r12_c51_s1 reply-status">Responder</a>
-    </li>
-    <li>
-      <%= render :partial => 'statuses/new/favorite',
-        :locals => { :status => item } %>
-    </li>
+    <% if can? :read, item.statusable %>
+      <li>
+        <a href="" class="icon icon-redu_r12_c51_s1 reply-status">Responder</a>
+      </li>
+      <li>
+        <%= render :partial => 'statuses/new/favorite',
+          :locals => { :status => item } %>
+      </li>
+    <% end %>
     <% if can? :manage, item %>
       <li>
       <%= link_to_remote 'Apagar',
