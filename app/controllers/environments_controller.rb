@@ -187,7 +187,9 @@ class EnvironmentsController < BaseController
         render :template => "environments/new/admin_courses",
           :layout => "new/application"
       end
-      format.js
+      format.js do
+        render :template => "environments/new/admin_courses"
+      end
     end
   end
 
@@ -217,7 +219,10 @@ class EnvironmentsController < BaseController
         render :template => "environments/new/admin_bulletins",
           :layout => "new/application"
       end
-      format.js
+
+      format.js do
+        render :template => "environments/new/admin_bulletins"
+      end
     end
   end
 
