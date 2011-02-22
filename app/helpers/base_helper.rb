@@ -21,6 +21,7 @@ module BaseHelper
 
     lis.join("\n")
   end
+  safe_helper :tabs_navigation
 
   # Cria markup das abas fake a partir de uma ou mais listas do tipo
   # [nome, path, options] (mesmo parâmetros passados para o link_to)
@@ -30,8 +31,9 @@ module BaseHelper
       :body => capture(&block)
     }
 
-    concat(render(:partial => 'shared/new/fake_tabs', :locals => locals), block.binding)
+    concat(render(:partial => 'shared/new/fake_tabs', :locals => locals))
   end
+  safe_helper :fake_tabs
 
   def error_for(object, method = nil, options={})
     if method
