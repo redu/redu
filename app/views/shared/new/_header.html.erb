@@ -85,7 +85,7 @@
                 </p>
                 <% unless Rails.env == 'production' || Rails.env == 'staging' %>
                   <% form_tag({:controller => :users, :action => :create}, {:method => :post}) do %>
-                    <%= oauth_login_button :value => "Login with Twitter", :class => "twitter" %>
+                    <%= raw oauth_login_button :value => "Login with Twitter", :class => "twitter" %>
                   <% end %>
                 <% end %>
                 <p class="forgot"><%= link_to "Esqueceu a senha?", forgot_password_path %> </p>

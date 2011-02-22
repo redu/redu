@@ -128,7 +128,7 @@ class EnvironmentsController < BaseController
             end
           else
 
-            flash[:notice] = 'Parabéns, o seu ambiente de ensino foi criado'
+            flash[:notice] = "Parabens, o seu ambiente de ensino foi criado"
             format.html do
               redirect_to environment_course_path(@environment,
                                                   @environment.courses.first)

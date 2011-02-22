@@ -34,7 +34,7 @@ class Environment < ActiveRecord::Base
   validates_length_of :name, :maximum => 40
   validates_length_of :description, :maximum => 400, :allow_blank => true
   validate :length_of_tags
-  validates_length_of :initials, :maximum => 10
+  validates_length_of :initials, :maximum => 10, :allow_blank => true
 
   accepts_nested_attributes_for :courses
 

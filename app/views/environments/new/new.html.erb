@@ -1,9 +1,9 @@
 <% case @step 
-  when 2 # Escolha de plano %>
+  when 2  %>
     <%= render :partial => 'environments/new/plan_step' %>
-  <% when 3 # Customização de curso/environment %>
+  <% when 3 %>
     <%= render :partial => 'environments/new/environment_step' %>
-  <% when 4 # Confirmação do curso/environment %>
+  <% when 4 %>
     <%= render :partial => 'environments/new/environment_confirm' %>
   <% else %>
     <%= render :partial => 'environments/new/environment_step' %>
