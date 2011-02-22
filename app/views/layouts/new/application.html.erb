@@ -26,6 +26,7 @@
         <%= javascript_include_tag 'swfobject'%>
       <% end %>
     <% end %>
+    <%= yield :header_scripts_and_styles %>
     <!--[if lt IE 9]>
     <script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script>
     <![endif]-->
@@ -107,5 +108,6 @@
       })();
 
     </script>
+    <%= yield :footer_scripts_and_styles %>
   </body>
 </html>
