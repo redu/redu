@@ -16,8 +16,8 @@
         </div>
        <% end %>
     <span class="msg">
-    <%= link_to response.user.login_slug, user_path(response.user), :class => 'author' %>
-    <%= auto_link(response.text) %>
+    <%= link_to raw(response.user.login_slug), user_path(response.user), :class => 'author' %>
+    <%= raw auto_link(response.text) %>
     <span class="when quiet"><%= time_ago_in_words(response.created_at) %></span>
     </span>
 

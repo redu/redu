@@ -30,7 +30,7 @@
   <span class="tip">horas</span>
   <%= f.label :description, "Descrição" %>
   <%= f.text_area :description, :size => '100x5' %>
-  <%= f.label "Palavras-chave <span class='snippet'>(separadas por vírgula)</span>" %>
+  <%= f.label raw("Palavras-chave <span class='snippet'>(separadas por vírgula)</span>") %>
   <%= f.text_field :tag_list %>
 <% end %>
 <% field_set_tag 'Audiência', :class => 'hidden' do %>

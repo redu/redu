@@ -24,9 +24,9 @@
     <div class="grid_10 omega">
       <h4 class="name"><%= link_to @event.name, polymorphic_path([@event.eventable, @event]) %></h4>
       <div class="pretty-text">
-        <%= @event.description %>
+        <%= raw @event.description %>
       </div>
-      <em>Tags</em>
+      <em>Palavras-chave</em>
       <%= render :partial => 'tags/tags', :object => @event.tags  %>
     </div>
     <div class="grid_11 aplha omega">

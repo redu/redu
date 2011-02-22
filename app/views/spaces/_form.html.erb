@@ -20,7 +20,7 @@
     </div>
     <%= error_for :space, :description %>
 
-    <%= f.label "Palavras-chaves <span class='snippet'>(separadas por vírgula)</span>" %>
+    <%= f.label raw("Palavras-chaves <span class='snippet'>(separadas por vírgula)</span>") %>
     <%= f.text_field :tag_list %>
 
   <% end %>

@@ -69,14 +69,14 @@
 <div class="grid_6 user_instructions">
     <h3><%=:dont_have_an_account.l %></h3>
 
-    <%= link_to "&raquo; " + :click_here_to_sign_up.l, "/signup" %>
+    <%= link_to raw("&raquo; " + :click_here_to_sign_up.l), "/signup" %>
 
 
     <h3><%=:forgot_your_password.l %></h3>
 
-    <%= link_to "&raquo; " + :click_here_to_retrieve_it.l, forgot_password_url %>
+    <%= link_to raw("&raquo; " + :click_here_to_retrieve_it.l), forgot_password_url %>
 
     <h3><%=:forgot_your_username.l %></h3>
 
-    <%= link_to "&raquo; " + :click_here_to_retrieve_it.l, forgot_username_url %>
+    <%= link_to raw("&raquo; " + :click_here_to_retrieve_it.l), forgot_username_url %>
 </div>
