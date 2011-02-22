@@ -1,0 +1,4 @@
+page.insert_html :bottom, 'user_list_table',
+  :partial => 'courses/new/user_item_admin', :collection => @memberships
+page.replace_html ".endless",
+  (will_paginate @memberships, :renderer => EndlessRenderer)

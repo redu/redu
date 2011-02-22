@@ -347,6 +347,7 @@
   background: url("../images/new/icon-course-gray_32_32.png") no-repeat 20px center;
 }
 
+#course-manage .header,
 #environment-manage .header {
   background: url("../images/new/icon-configurations-gray_32_32.png") no-repeat 20px center;
 }
@@ -1893,8 +1894,26 @@ table.spaced td {
   padding: 10px 20px;
 }
 
-table.common .date {
+table.common td .date,
+table.common td .email {
   color: #B2B2B2;
+}
+
+table.common td .user .email {
+  display: block;
+  font-size: .9em;
+}
+
+table.common td .avatar {
+  display: block;
+  float: left;
+  margin-right: 10px;
+}
+
+table.common td .user {
+  padding: 3px 0;
+  display: block;
+  float: left;
 }
 
 table.common .courses {
@@ -1910,8 +1929,8 @@ table.common .icon {
   padding-left: 13px;
 }
 
-/* Listagem de notícias */
-#bulletin_list {
+table.spaced tr td {
+  padding: 15px 20px;
 }
 
 #environment-manage table .edit,
@@ -1919,8 +1938,47 @@ table.common .icon {
   font-size: .9em;
 }
 
-#environment-manage .actions {
+#environment-manage .actions,
+#course-manage .actions {
   text-align: right;
+}
+
+#course-manage {
+
+}
+
+#course-manage .tabs .ui-tabs-hide {
+  display: none;
+}
+
+#course-manage .tabs .ui-tabs-nav {
+  margin-left: 100px;
+}
+
+#course-manage .tabs .ui-tabs-nav li {
+  padding: 9px 10px 18px 10px;
+  width: 90px;
+  float: left;
+  text-align: center;
+  margin-right: 10px;
+}
+
+#course-manage .tabs .ui-state-active,
+#course-manage .tabs .ui-state-hover {
+  background: url("../images/new/blue-ballon.png") no-repeat;
+}
+
+#course-manage .tabs .ui-state-active a,
+#course-manage .tabs .ui-state-hover a {
+  color: white;
+}
+
+#course-manage .tabs .ui-tabs-nav li a {
+  padding: 2px 0 2px 20px;
+}
+
+#course-manage .tabs .ui-tabs-panel {
+  padding: 20px 0;
 }
 
 .replacement {
