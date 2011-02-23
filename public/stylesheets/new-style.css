@@ -348,6 +348,7 @@
 }
 
 #course-manage .header,
+#space-manage .header,
 #environment-manage .header {
   background: url("../images/new/icon-configurations-gray_32_32.png") no-repeat 20px center;
 }
@@ -1585,6 +1586,11 @@ a.cancel:hover { text-decoration: none; }
   clear: both;
 }
 
+.fake-tabs .actions {
+  text-align: right;
+  margin-bottom: 10px;
+}
+
 .fake-tabs > ul {
   border-bottom: 1px solid #B3B2B3;
   padding-left: 50px;
@@ -1860,6 +1866,7 @@ form.common:after {
 *:first-child+html form.common { zoom: 1; } /* IE7 */
 
 table.common {
+  width: 100%;
   margin: 20px 0;
 }
 
@@ -1899,6 +1906,12 @@ table.common td .email {
   color: #B2B2B2;
 }
 
+table.common td .role {
+  font-style: oblique;
+  color:#B2B2B2;
+  padding: 2px 0 2px 20px;
+}
+
 table.common td .user .email {
   display: block;
   font-size: .9em;
@@ -1936,11 +1949,6 @@ table.spaced tr td {
 #environment-manage table .edit,
 #environment-manage table .delete {
   font-size: .9em;
-}
-
-#environment-manage .actions,
-#course-manage .actions {
-  text-align: right;
 }
 
 #course-manage {

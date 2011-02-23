@@ -52,8 +52,11 @@ class SpacesController < BaseController
                                                    :per_page => AppConfig.items_per_page)
 
     respond_to do |format|
-      format.html
-      format.js { render :template => 'shared/admin_members' }
+      format.html do
+        render :template => "spaces/new/admin_members",
+          :layout => "new/application"
+      end
+      format.js { render :template => 'shared/new/admin_members' }
     end
   end
 
@@ -74,8 +77,13 @@ class SpacesController < BaseController
     @bulletins = @space.bulletins.approved.paginate(paginating_params)
 
     respond_to do |format|
-      format.html
-      format.js
+      format.html do
+        render :template => "spaces/new/admin_bulletins",
+          :layout => "new/application"
+      end
+      format.js do
+        render :template => "spaces/new/admin_bulletins"
+      end
     end
   end
 
@@ -97,8 +105,13 @@ class SpacesController < BaseController
     @events = @space.events.approved.paginate(paginating_params)
 
     respond_to do |format|
-      format.html
-      format.js
+      format.html do
+        render :template => "spaces/new/admin_events",
+          :layout => "new/application"
+      end
+      format.js do
+        render :template => "spaces/new/admin_events"
+      end
     end
   end
 
@@ -292,6 +305,12 @@ class SpacesController < BaseController
 
   # GET /spaces/1/edit
   def edit
+
+    respond_to do |format|
+      format.html do
+        render :template => "spaces/new/edit", :layout => "new/application"
+      end
+    end
   end
 
   # POST /spaces
