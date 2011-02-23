@@ -75,27 +75,11 @@ class Lecture < ActiveRecord::Base
     "#{id}-#{name.parameterize}"
   end
 
-  # Retorna a próxima Lecture do Subject e marca a Lecture atual como done,
-  # caso ela tenha sido completada (done = true).
-  def next_for(user, done = false)
-    mark_as_done(user, done)
-    self.next_item
-  end
-
-  # Retorna a Lecture anterior do Subject e marca a Lecture atual como done,
-  # caso ela tenha sido completada (done = true).
-  def previous_for(user, done = false)
-    mark_as_done(user, done)
-    self.previous_item
-  end
-
-  # Marca a lecture atual como done, caso ela tenha sido completada (done = true)
-  def mark_as_done(user, done)
-    if done
-      asset_report = self.asset_reports.of_user(user).last
-      asset_report.done = true
-      asset_report.save
-    end
+  # Marca a lecture atual como done ou undone
+  def mark_as_done_for!(user, done)
+    asset_report = self.asset_reports.of_user(user).last
+    asset_report.done = done
+    asset_report.save
   end
 
   def clone_for_subject!(subject_id)

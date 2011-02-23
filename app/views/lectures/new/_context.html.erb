@@ -1,0 +1,32 @@
+<div class="context">
+  <%= render :partial => 'subjects/new/progress_bar',
+    :locals => { :student_grade => student_grade } %>
+    <% form_remote_tag :url => done_space_subject_lecture_path(@lecture.subject.space,
+                                                               @lecture.subject,
+                                                               @lecture),
+                       :html => { :id => 'do_lecture', :class => 'done' } do %>
+      <% field_set_tag do %>
+        <%= hidden_field_tag 'lecture_id', @lecture.id %>
+        <% if done %>
+          <%= hidden_field_tag 'done', '0' %>
+        <% else %>
+          <%= hidden_field_tag 'done', '1' %>
+        <% end %>
+        <%= check_box_tag '', nil, done,
+          { :onclick => "$('#do_lecture').submit()" } %>
+        <%= label_tag 'Aula finalizada' %>
+      <% end %>
+  <% end %>
+  <% unless @lecture.first_item? %>
+    <%= link_to @lecture.previous_item.position,
+      space_subject_lecture_path(@lecture.subject.space, @lecture.subject,
+                                 @lecture.previous_item),
+      :class => 'previous'%>
+  <% end %>
+  <% unless @lecture.last_item? %>
+    <%= link_to @lecture.next_item.position,
+      space_subject_lecture_path(@lecture.subject.space, @lecture.subject,
+                                 @lecture.next_item),
+      :class => 'next'%>
+  <% end %>
+</div><!-- end #context -->

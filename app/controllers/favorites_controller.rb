@@ -59,16 +59,16 @@ class FavoritesController < BaseController
     if @favorite
       flash.now[:notice] = msg_ok
       respond_to do |format|
-        if params[:type] == 'Status'
           #FIXME Tirar new_layout após todo o redesign ser feito
           if params.has_key? :new_layout
-            format.js { render :template => 'favorites/new/status_favorite' }
+            if @favorite.favoritable.class.to_s == 'Status'
+              format.js { render :template => 'favorites/new/status_favorite' }
+            elsif @favorite.favoritable.class.to_s == 'Lecture'
+              format.js { render :template => 'favorites/new/lecture_favorite' }
+            end
           else
             format.js { render :template => 'favorites/status_favorite', :locals => {:favoritable_id => @favoritable_id} }
           end
-        else
-          format.js
-        end
       end
     else
       flash.now[:error] = msg_err
@@ -105,16 +105,16 @@ class FavoritesController < BaseController
     if @favorite
       flash.now[:notice] = msg_ok
       respond_to do |format|
-        if params[:type] == 'Status'
           #FIXME Tirar new_layout após todo o redesign ser feito
           if params.has_key? :new_layout
-            format.js { render :template => 'favorites/new/status_not_favorite' }
+            if @favorite.favoritable.class.to_s == 'Status'
+              format.js { render :template => 'favorites/new/status_not_favorite' }
+            elsif @favorite.favoritable.class.to_s == 'Lecture'
+              format.js { render :template => 'favorites/new/lecture_not_favorite' }
+            end
           else
-          format.js { render :template => 'favorites/status_not_favorite', :locals => {:favoritable_id => @favoritable_id} }
+            format.js { render :template => 'favorites/status_not_favorite', :locals => {:favoritable_id => @favoritable_id} }
           end
-        else
-          format.js
-        end
       end
     else
       flash.now[:error] = msg_err

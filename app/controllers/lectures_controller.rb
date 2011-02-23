@@ -120,6 +120,7 @@ class LecturesController < BaseController
       redirect_to removed_page_path and return
     end
 
+    @subject_users = @subject.members
     # anotações
     @annotation = @lecture.annotations.by_user(current_user)
     @annotation = Annotation.new if @annotation.empty?
@@ -129,9 +130,19 @@ class LecturesController < BaseController
                                         :order => 'rating_average DESC')
 
     @status = Status.new
+    @statuses = @lecture.statuses.paginate(:page => params[:page],
+                                  :order => 'created_at DESC',
+                                  :per_page => AppConfig.items_per_page)
+
+    asset_report = @lecture.asset_reports.of_user(current_user).first
+    @student_grade = asset_report.student_profile.grade.to_i
+    @done = asset_report.done
 
     respond_to do |format|
       if @lecture.lectureable_type == 'Page'
+        format.html do
+          render :template => 'lectures/new/show_page', :layout => 'new/application'
+        end
       elsif @lecture.lectureable_type == 'InteractiveClass'
         @lessons = Lesson.find_by_interactive_class_id(@lecture.lectureable_id).
                             all(:order => 'position ASC') # TODO 2 consultas?
@@ -322,6 +333,26 @@ class LecturesController < BaseController
     respond_to do |format|
       format.js
     end
+  end
+
+  # Marca a aula como done para um dado usuário
+  def done
+    if params[:done] == '0'
+      @done = 0
+    elsif params[:done] == '1'
+      @done = 1
+    end
+    @lecture.mark_as_done_for!(current_user, @done)
+
+    student_profile = current_user.student_profiles.of_subject(@subject).last
+    @student_grade = student_profile.update_grade!.to_i
+
+   respond_to do |format|
+     format.js { render :template => 'lectures/new/done' }
+     format.html { redirect_to space_subject_lecture_path(@subject.space,
+                                                          @subject,
+                                                          @lecture) }
+   end
   end
 
   protected
