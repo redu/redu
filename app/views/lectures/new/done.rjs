@@ -1,0 +1,7 @@
+if @done == 0
+  page << "$('#done').val('1');"
+else
+  page << "$('#done').val('0');"
+end
+page << "$('#progress_bar > div').attr('style', 'width: #{@student_grade}%;')"
+page.replace_html '#progress_bar > div > span', "#{@student_grade}%"

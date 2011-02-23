@@ -46,6 +46,21 @@ describe StudentProfile do
     end
   end
 
+  context "retrievers" do
+    it "retrieves student profile of a specified Subject" do
+      @subjects = (1..3).collect { Factory(:subject, :owner => @subject_owner,
+                                           :space => @space) }
+      user = Factory(:user)
+      @space.course.join user
+      @subjects.each do |sub|
+        sub.enroll user
+      end
+
+      user.student_profiles.of_subject(@subjects[1]).
+        should == [user.student_profiles[1]]
+    end
+  end
+
   context "grade" do
     it "responds to update_grade!" do
       should respond_to :update_grade!

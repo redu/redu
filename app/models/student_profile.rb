@@ -11,6 +11,11 @@ class StudentProfile < ActiveRecord::Base
   has_many :asset_reports, :dependent => :destroy
   has_many :lectures, :through => :asset_reports
 
+  named_scope :of_subject, lambda { |subject_id|
+    { :conditions => { :subject_id => subject_id } }
+  }
+
+
   validates_uniqueness_of :user_id, :scope => :subject_id
 
   # Atualiza a porcentagem de cumprimento do módulo. Quando não houver mais recursos

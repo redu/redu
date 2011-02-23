@@ -1,2 +1,6 @@
-page.replace_html  @lecture.wrapper_dom_id(params), ratings_for(@lecture, params.merge(:wrap => false))
-
+page.replace_html  @lecture.wrapper_dom_id(params),
+  ratings_for(@lecture, params.merge(:wrap => false), :static,
+              :remote_options => {
+                :url => rate_space_subject_lecture_path(@lecture.subject.space,
+                                                        @lecture.subject,
+                                                        @lecture)})
