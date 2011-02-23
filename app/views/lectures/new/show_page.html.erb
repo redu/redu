@@ -42,7 +42,7 @@
       :locals => { :lecture => @lecture} %>
     <div class="pretty-text page-content content">
       <h2><%= @lecture.name %></h2>
-      <%= @lecture.lectureable.body %>
+      <%= raw @lecture.lectureable.body %>
     </div>
 
     <div class="student-actions">
