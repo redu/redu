@@ -1,7 +1,7 @@
 <li class="clearfix">
   <div class="info">
     <%= image_tag item.avatar.url(:thumb_32),
-      :alt => 'curso' %>
+      :alt => 'disciplina' %>
     <%= link_to item.name, space_path(item) %>
     <ul class="tags">
         <% item.tags.each do |tag| %>

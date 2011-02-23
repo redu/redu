@@ -32,9 +32,9 @@
         </div>
       <% end %>
 
-      <%= f.label :original, "Upload" %>
       <% field_set_tag nil, :id => 'upload_resource_field', :class => 'uploadify',
         :style => 'display: none;' do %>
+        <%= f.label :original, "Upload" %>
         <%= f.file_field :original  %>
         <span class="tip">Tamanho máximo: 100 mb</span>
         <%= error_for :seminar, :original %>
