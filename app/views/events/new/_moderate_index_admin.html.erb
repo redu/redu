@@ -1,0 +1,24 @@
+<% if @pending_events && @pending_events.size > 0 %>
+  <% form_tag :action => :moderate_events do %>
+    <table id="event_moderate_list" class="common ">
+      <thead>
+        <th width="8%">Aprovar</th>
+        <th width="8%">Rejeitar</th>
+        <th width="45%">Evento</th>
+        <th width="25%">Autor</th>
+        <th>Data</th>
+      </thead>
+      <%= render :partial => 'events/new/moderate_item_admin', :collection => @pending_events %>
+    </table>
+    <%= will_paginate @pending_events, :renderer => EndlessRenderer,
+      :param_name => :page_pending, :class => "endless_pending" %>
+    <%= hidden_field_tag("id", @space.id) %>
+    <div class="actions">
+      <%= submit_tag "Moderar" %>
+    </div>
+  <% end %>
+<% else %>
+  <div class="box_notice">
+    Não há eventos a serem moderados.
+  </div>
+<% end %>

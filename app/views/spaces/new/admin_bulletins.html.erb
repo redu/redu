@@ -20,25 +20,24 @@
       </li>
     </ol>
     <%= render :partial => 'spaces/new/header',
-          :locals => { :space => @space }%>
+      :locals => { :space => @space }%>
 
-  <div id="space-statuses" class="hierarchy-listing-wrapper">
-    <div class="header">
-      <h4>Mural</h4>
-      <span class="counter">Atividades recentes</span>
-    </div>
+    <div id="space-manage" class="body">
+      <div class="header">
+        <h4>Gerenciamento</h4>
+        <span class="counter">Lista de Notícias pendentes e publicados na Disciplina <%= @space.name %></span>
+      </div>
 
-    <div style="clear: both;">
-    <%= render :partial => 'statuses/new/create_status',
-      :locals => { :statusable => @space } %>
-    <div id="statuses" class="statuses">
-      <ol>
-        <%= render :partial => 'statuses/new/item', :collection => @statuses %>
-      </ol>
+      <% fake_tabs ["Informações", edit_space_path(@space), { :class => "icon" }],
+        ["Eventos", admin_events_space_path(@space), { :class => "icon" }],
+        ["Membros", admin_members_space_path(@space), { :class => "icon" }],
+        ["Notícias", admin_bulletins_space_path(@space), { :class => "icon" }] do %>
 
-      <%= will_paginate @statuses, :renderer => EndlessRenderer %>
-    </div>
-    </div><!-- end .statuses -->
-  </div><!-- end #environment-courses -->
+        <%= render :partial => 'bulletins/new/moderate_index_admin' %>
+        <%= render :partial => 'bulletins/new/index_admin' %>
+      <% end %>
+    </div><!-- end #space-manage -->
 
-</div><!-- end .main -->
+  </div><!-- end .main -->
+
+
