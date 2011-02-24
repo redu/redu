@@ -100,6 +100,10 @@ class User < ActiveRecord::Base
   named_scope :with_ids, lambda { |ids|
     {:conditions => {:id => ids}}
   }
+  named_scope :n_recent, lambda { |limit|
+    {:order => 'users.last_request_at DESC', :limit => limit }
+  }
+
   # Accessors
   attr_protected :admin, :featured, :role_id, :activation_code,
     :login_slug, :friends_count, :score, :removed,

@@ -44,6 +44,9 @@ describe User do
     it { should have_many(attr).dependent(:destroy)}
   end
 
+  # Plan
+  it { should have_many(:plans) }
+
   it { should_not allow_mass_assignment_of :admin }
   it { should_not allow_mass_assignment_of :role_id }
   it { should_not allow_mass_assignment_of :activation_code }
@@ -157,6 +160,12 @@ describe User do
     it "retrieves users with specified ids" do
       users = (1..4).collect { Factory(:user) }
       User.with_ids([users[0].id, users[1].id]).should == [users[0], users[1]]
+    end
+
+    it "retrives recent users order by last_request_at" do
+      users = (1..12).collect { |n| Factory(:user, :created_at => n.hour.ago, 
+                                            :last_request_at => (13-n).minute.ago) }
+      User.n_recent(3).should == [users[11], users[10], users[9]]
     end
 
     it "retrieves a user by his login slug" do
