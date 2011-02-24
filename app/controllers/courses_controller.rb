@@ -14,7 +14,6 @@ class CoursesController < BaseController
     @spaces = @course.spaces.published.
       paginate(:page => params[:page], :order => 'name ASC',
                :per_page => AppConfig.items_per_page)
-    @course_users = @course.approved_users.all(:limit => 9)
 
     respond_to do |format|
       format.html do
@@ -342,7 +341,6 @@ class CoursesController < BaseController
 
   # Listagem de usuários do Course
   def users
-    @course_users = @course.approved_users.all(:limit => 9) # sidebar
     @users = @course.approved_users.
       paginate(:page => params[:page], :order => 'first_name ASC', :per_page => 18)
 

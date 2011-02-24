@@ -42,7 +42,7 @@
       </div>
       <ul class="connections clearfix">
           <%= render :partial => 'users/new/item_short',
-            :collection => @environment_users %>
+            :collection => @environment.users.n_recent(9) %>
       </ul><!-- end .connections -->
       <a href="" class="more">Ver mais</a>
     </li>

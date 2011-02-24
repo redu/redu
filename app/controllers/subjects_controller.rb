@@ -42,7 +42,6 @@ class SubjectsController < BaseController
   end
 
   def show
-    @subject_users = @subject.members.all(:limit => 9)
     @statuses = @subject.recent_activity(params[:page])
     @statusable = @subject
 
@@ -221,7 +220,6 @@ end
 
 # Listagem de usuários do Space
 def users
-  @subject_users = @subject.members.all(:limit => 9) # sidebar
   @users = @subject.members.
     paginate(:page => params[:page], :order => 'first_name ASC', :per_page => 18)
 
