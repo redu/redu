@@ -1,3 +1,4 @@
+<%= render :partial => 'lectures/new/lights' %>
 <%= render :partial => 'subjects/new/sidebar' %>
 <div class="main grid_12 omega big-col">
   <ol id="breadcrumbs" class="clearfix">
@@ -59,7 +60,7 @@
         -->
         <li>
           <span class="lights"></span>
-          <a href="" title="">Apagar luzes</a>
+          <a href="" id="lights" title="">Apagar luzes</a>
         </li>
         <li>
           <span id ="favorite" class="favorite"></span>
@@ -100,7 +101,7 @@
       </ul>
     </div>
 
-    <div class="statuses-wrapper">
+    <div class="statuses-wrapper clearfix">
       <%= render :partial => 'statuses/new/create_status',
         :locals => { :statusable => @lecture } %>
       <div id="statuses" class="statuses">

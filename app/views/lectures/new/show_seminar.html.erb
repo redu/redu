@@ -1,3 +1,4 @@
+<%= render :partial => 'lectures/new/lights' %>
 <%= render :partial => 'subjects/new/sidebar' %>
 <div class="main grid_12 omega big-col">
   <ol id="breadcrumbs" class="clearfix">
@@ -40,7 +41,7 @@
       :locals => { :lecture => @lecture } %>
     <%= render :partial => 'lectures/new/details',
       :locals => { :lecture => @lecture} %>
-      <div id="view_video" align="center" >
+      <div id="view_video" class="stage" align="center" >
         <%= render :partial => "lectures/new/player",
           :locals => { :seminar => @lecture.lectureable } %>
       </div>
@@ -61,7 +62,7 @@
         -->
         <li>
           <span class="lights"></span>
-          <a href="" title="">Apagar luzes</a>
+          <a href="" title="" id="lights">Apagar luzes</a>
         </li>
         <li>
           <span id ="favorite" class="favorite"></span>

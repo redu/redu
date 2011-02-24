@@ -528,6 +528,7 @@
 }
 
 #resource .page-content {
+  background-color: white;
   padding: 0 70px;
 }
 
@@ -593,8 +594,10 @@
 }
 
 #resource .statuses-wrapper {
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
   clear: both;
-  padding: 0 70px;
+  padding: 5px 70px;
 }
 
 .hierarchy-listing-wrapper .users {
@@ -2189,6 +2192,15 @@ table.spaced tr td {
 }
 
 
+#lights_dimmed {
+  top: 0;
+  left: 0;
+  background: url("../images/new/overlay-85.png");
+  position: absolute;
+  width: 100%;
+  display: none;
+
+}
 
 .replacement {
   text-indent: -99999px;
