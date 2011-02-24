@@ -1377,7 +1377,7 @@ label.focus {
 }
 
 #new_subject .resources li a.edit,
-#new_subject .resources li a.remove {
+#new_subject .resources li a.delete {
   font-size: .9em;
 }
 

@@ -25,7 +25,7 @@
     :success => "$('#spinner-#{item_short.id}item').hide();",
     :method => :delete,
     :confirm => "Você tem certeza que deseja excluir essa aula? Não será mais possível recuperá-la.",
-    :html => { :class => 'remove'}%>
+    :html => { :class => 'delete'}%>
   <%= image_tag 'spinner.gif', :id => "spinner-#{item_short.id}item",
   :style => 'display: none;'%>
 <% end %>
