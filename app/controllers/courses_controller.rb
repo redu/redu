@@ -53,7 +53,8 @@ class CoursesController < BaseController
         format.html { redirect_to(environment_course_path(@environment, @course)) }
         format.xml { head :ok }
       else
-        format.html { render :action => "edit" }
+        format.html { render :template => "courses/new/edit",
+          :layout => "new/application" }
         format.xml  { render :xml => @course.errors, :status => :unprocessable_entity }
       end
     end
