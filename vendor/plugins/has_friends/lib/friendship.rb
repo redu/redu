@@ -18,7 +18,9 @@ class Friendship < ActiveRecord::Base
 
   # callback
   after_destroy do |f|
-    User.decrement_counter(:friends_count, f.user_id)
+    unless f.user.friends_count.size == 0
+      User.decrement_counter(:friends_count, f.user_id)
+    end
   end
 
   def pending?
