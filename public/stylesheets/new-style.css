@@ -1989,6 +1989,200 @@ table.spaced tr td {
   padding: 20px 0;
 }
 
+#global-courses {
+  border: 1px solid #B3B3B3;
+  padding: 10px 20px;
+
+  -moz-border-radius: 12px;
+  -webkit-border-radius: 12px;
+  border-radius: 12px;
+}
+
+#global-courses .main {
+  padding: 0;
+  border: none;
+}
+
+#global-courses .filters {
+  border: 1px solid #B3B3B3;
+  padding: 10px;
+
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
+#global-courses h4 {
+  font-family: Copse, Arial, sans-serif;
+  font-size: 3.2em;
+  font-weight: normal;
+  margin-left: 5px;
+  margin-bottom: 10px;
+  color: #4CACD4;
+}
+
+#global-courses .call {
+  font-weight: normal;
+  color: #B2B2B2;
+  margin-bottom: 10px;
+  font-size: .9em;
+}
+
+#global-courses .filters .filter {
+  display: block;
+  padding: 10px;
+  margin: 5px 0;
+  font-size: .9em;
+  color: #6C6D6E;
+  cursor: pointer;
+
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
+#global-courses .filters label {
+  cursor: pointer;
+}
+
+#global-courses .filter input {
+  display: none;
+}
+
+#global-courses .filters .checked {
+  background-color: #B2B1B2;
+  color: white;
+}
+
+#global-courses .filters .call {
+  padding-bottom: 10px;
+  margin-bottom: 5px;
+  border-bottom: 1px dotted #B2B1B2;
+  color: #6C6D6E;
+  display: block;
+}
+
+#global-courses .fake-tabs {
+  margin-top: 10px;
+}
+
+#global-courses .courses > li {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #B2B1B2;
+
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
+#global-courses .courses > li:hover {
+  background-color: #DAEEF6;
+  border-color: #DAEEF6;
+}
+
+#global-courses .courses .preview {
+  padding-bottom: 10px;
+  position: relative;
+}
+
+#global-courses .courses .preview .expand,
+#global-courses .courses .preview .unexpand {
+  position: absolute;
+  right: 0;
+  bottom: 10px;
+  width: 16px;
+  cursor: pointer;
+  height: 12px;
+}
+
+#global-courses .courses .preview .expand {
+  background: url("../images/new/arrow-down.png") no-repeat scroll 0 0 transparent;
+}
+
+#global-courses .courses .preview .unexpand {
+  background: url("../images/new/arrow-up.png") no-repeat scroll 0 0 transparent;
+}
+
+#global-courses .courses .avatar {
+  float: left;
+  width: 32px;
+  margin-right: 10px;
+}
+
+#global-courses .general {
+  float: left;
+  width: 465px;
+  border-right: 1px dotted #B2B1B2;
+  padding-right: 10px;
+  margin-right: 10px;
+}
+
+#global-courses .courses .environment {
+  font-size: .9em;
+}
+
+#global-courses .courses .course {
+  display: block;
+  font-size: 1.2em;
+  margin: 5px 0;
+  color: black;
+}
+
+#global-courses .courses .audience {
+  float: left;
+}
+
+#global-courses .courses .details {
+  clear: both;
+  padding-top: 10px;
+  border-top: 1px dotted #B2B1B2;
+}
+
+#global-courses .courses .description {
+  float: left;
+  width: 465px;
+  padding-left: 42px;
+  font-size: .9em;
+  color: #6C6D6E;
+  line-height: 1.1em;
+  margin-right: 10px;
+}
+
+#global-courses .courses .statistics {
+  float: left;
+  padding-left: 10px;
+  border-left: 1px dotted #B2B1B2;
+}
+
+#global-courses .courses .statistics li,
+#global-courses .courses .audience li {
+  margin-bottom: 3px;
+}
+
+#global-courses .courses .statistics em,
+#global-courses .courses .audience em {
+  font-size: .9em;
+  font-style: oblique;
+  display: block;
+  float: left;
+  width: 70px;
+  color: #B2B2B2;
+}
+
+#global-courses .courses .audience em {
+  margin-bottom: 5px;
+}
+
+#global-courses .courses .statistics span,
+#global-courses .courses .audience a {
+  font-size: .9em;
+  font-weight: bold;
+  color: #6C6D6E;
+}
+
+
+
 .replacement {
   text-indent: -99999px;
   overflow: hidden;

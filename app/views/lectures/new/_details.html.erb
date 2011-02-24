@@ -1,4 +1,4 @@
-<div class="details page-details clearfix">
+<div class="details <%= lecture.lectureable.class.to_s.downcase %>-details clearfix">
   <h3 class="name"><%= lecture.position %>.<%= lecture.name %></h3>
   <ul class="statistics">
     <li><%= time_ago_in_words lecture.created_at %></li>

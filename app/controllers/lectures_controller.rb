@@ -143,11 +143,19 @@ class LecturesController < BaseController
         format.html do
           render :template => 'lectures/new/show_page', :layout => 'new/application'
         end
+      elsif @lecture.lectureable_type == 'Seminar'
+        format.html do
+          render :template => 'lectures/new/show_seminar',
+            :layout => 'new/application'
+        end
+      elsif @lecture.lectureable_type == 'Document'
+        format.html do
+          render :template => 'lectures/new/show_document',
+            :layout => 'new/application'
+        end
       elsif @lecture.lectureable_type == 'InteractiveClass'
         @lessons = Lesson.find_by_interactive_class_id(@lecture.lectureable_id).
                             all(:order => 'position ASC') # TODO 2 consultas?
-      elsif @lecture.lectureable_type == 'Seminar'
-        #@seminar = @lecture.lectureable
       end
 
       format.html

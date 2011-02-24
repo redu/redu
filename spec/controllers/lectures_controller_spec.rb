@@ -8,20 +8,55 @@ describe LecturesController do
     @subject_owner = Factory(:user)
     @space.course.join @subject_owner
     activate_authlogic
+
+    @lectures = (1..3).collect { Factory(:lecture, :owner => @subject_owner) }
+    @subject = Factory(:subject, :owner => @subject_owner,
+                       :space => @space, :finalized => true,
+                       :lectures => @lectures, :published => true)
+    @enrolled_user = Factory(:user)
+    @space.course.join @enrolled_user
+    @subject.enroll @enrolled_user
+    UserSession.create @enrolled_user
+  end
+
+  context "GET 'show'" do
+    context "when Page" do
+      before do
+        post :show, :locale => "pt-BR", :id => @lectures[0].id,
+          :subject_id => @subject.id, :space_id => @space.id
+      end
+      it "renders show_page" do
+        response.should render_template('lectures/new/show_page')
+      end
+    end
+    context "when Seminar" do
+      before do
+        lectureable = @lectures[0].lectureable
+        #lectureable = Factory(:seminar)
+        lectureable.save
+        post :show, :locale => "pt-BR", :id => @lectures[0].id,
+          :subject_id => @subject.id, :space_id => @space.id
+      end
+      it "renders show_page" do
+        pending do
+          response.should render_template('lectures/new/show_seminar')
+        end
+      end
+    end
+    context "when Document" do
+      before do
+        @lectures[0].lectureable = Factory(:document)
+        @lectures[0].save
+        post :show, :locale => "pt-BR", :id => @lectures[0].id,
+          :subject_id => @subject.id, :space_id => @space.id
+      end
+      it "renders show_page" do
+        response.should render_template('lectures/new/show_document')
+      end
+    end
   end
 
   context "POST 'done'" do
-    before do
-      @lectures = (1..3).collect { Factory(:lecture, :owner => @subject_owner) }
-      @subject = Factory(:subject, :owner => @subject_owner,
-                         :space => @space, :finalized => true,
-                         :lectures => @lectures, :published => true)
-      @enrolled_user = Factory(:user)
-      @space.course.join @enrolled_user
-      @subject.enroll @enrolled_user
-      UserSession.create @enrolled_user
-    end
-
     context "when done = 1" do
       it "marks the actual lecture as done" do
         post :done, :locale => "pt-BR", :id => @lectures[0].id,
