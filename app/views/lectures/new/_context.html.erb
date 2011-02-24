@@ -20,15 +20,15 @@
     <% end %>
   <% end %>
   <% unless @lecture.first_item? %>
-    <%= link_to @lecture.previous_item.position,
+    <%= link_to raw("&#8592; " + @lecture.previous_item.position.to_s ),
       space_subject_lecture_path(@lecture.subject.space, @lecture.subject,
                                  @lecture.previous_item),
-      :class => 'previous'%>
+      :class => 'previous button' %>
   <% end %>
   <% unless @lecture.last_item? %>
-    <%= link_to @lecture.next_item.position,
+    <%= link_to raw(@lecture.next_item.position.to_s + " &rarr;"),
       space_subject_lecture_path(@lecture.subject.space, @lecture.subject,
                                  @lecture.next_item),
-      :class => 'next'%>
+      :class => 'next button' %>
   <% end %>
 </div><!-- end #context -->

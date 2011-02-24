@@ -446,7 +446,14 @@
 #resource .context .next,
 #resource .context .previous {
   float: left;
-  width: 45px;
+  text-align: center;
+  padding: 8px 10px;
+  font-weight: bold;
+}
+
+#resource .context .next:hover,
+#resource .context .previous:hover {
+  text-decoration: none;
 }
 
 #resource .context .previous {
