@@ -64,17 +64,19 @@
       <h4>Módulos</h4>
       <span class="counter"><%= pluralize(@space.subjects.length, 'módulo') %></span>
     </div>
-
-    <div class="admin-actions">
-      <%= link_to_remote "Novo módulo", :url => new_space_subject_path(@space),
-        :method => :get,
-        :loading => "$('#spinner-new-subject').show();",
-        :success => "$('#spinner-new-subject').hide();",
-        :html => { :id => 'link-new-subject', :class => 'button',
-                   :href => new_space_subject_path(@space) } %>
-      <%= image_tag 'spinner.gif', :id => 'spinner-new-subject',
-        :style => 'display: none;' %>
-    </div>
+    <% if can? :manage, @space %>
+      <div class="admin-actions">
+        <%= link_to_remote "Novo módulo",
+          :url => new_space_subject_path(@space),
+          :method => :get,
+          :loading => "$('#spinner-new-subject').show();",
+          :success => "$('#spinner-new-subject').hide();",
+          :html => { :id => 'link-new-subject', :class => 'button',
+                     :href => new_space_subject_path(@space) } %>
+        <%= image_tag 'spinner.gif', :id => 'spinner-new-subject',
+          :style => 'display: none;' %>
+      </div>
+    <% end %>
 
     <ul id="subjects_list" class="hierarchy-listing subjects">
       <%= render :partial => 'subjects/new/item', :collection => @subjects %>

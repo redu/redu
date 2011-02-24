@@ -16,7 +16,7 @@
       <%= f.cktext_area :description, :width=>'910px',
         :swf_params => { :assetable_type => @bulletinable.class.to_s, :assetable_id => @bulletinable.id }%>
     <% end %>
-    <%= f.label "Tags <span class='snippet'>(separadas por vírgula)</span>" %>
+    <%= f.label raw("Palavras-chave <span class='snippet'>(separadas por vírgula)</span>") %>
     <%= f.text_field :tag_list %>
 
     <%= f.submit "Salvar"%>

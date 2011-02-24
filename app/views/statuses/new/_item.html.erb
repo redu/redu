@@ -10,9 +10,9 @@
     </span>
     <p>
       <% if item.log %>
-        <%= activity_name(item) %>
+        <%= raw activity_name(item) %>
       <% else %>
-        <%= auto_link(item.text) %>
+        <%= raw auto_link(item.text) %>
       <% end %>
     </p>
   </span>

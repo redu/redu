@@ -22,14 +22,16 @@
           :class => "icon icon-redu_r9_c289_s1" %>
       </div>
     </li>
-    <li>
-      <div class="<%= (current_page? :controller => :environments,
-                       :action => :edit) ?
-                    "session selected".to_s : "session".to_s %>">
-        <%= link_to 'Gerenciamento', edit_environment_path(@environment),
-          :class => "icon icon-redu_r8_c221_s1" %>
-      </div>
-    </li>
+    <% if can? :manage, @environment %>
+      <li>
+        <div class="<%= (current_page? :controller => :environments,
+                         :action => :edit) ?
+                      "session selected".to_s : "session".to_s %>">
+          <%= link_to 'Gerenciamento', edit_environment_path(@environment),
+            :class => "icon icon-redu_r8_c221_s1" %>
+        </div>
+      </li>
+    <% end %>
     <li>
       <div class="<%= (current_page? :controller => :environments,
                        :action => :users) ?

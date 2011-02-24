@@ -1,0 +1,13 @@
+<tr>
+  <td><%= radio_button_tag '[bulletin]['+ moderate_item_admin.id.to_s+']', 'approve'  %></td>
+  <td><%= radio_button_tag '[bulletin]['+ moderate_item_admin.id.to_s+']', 'reject' %></td>
+  <td><%= link_to moderate_item_admin.title, space_event_path(moderate_item_admin), :target => "_blank" %> </td>
+  <td>
+    <%= image_tag moderate_item_admin.owner.avatar(:thumb_32), :class => "avatar" %>
+    <%= link_to moderate_item_admin.owner.display_name, user_path(moderate_item_admin.owner),
+          :class => "user" %>
+  </td>
+  <td>
+    <span class="date"><%= time_ago_in_words(moderate_item_admin.updated_at) %></span> 
+  </td>
+</tr>

@@ -20,7 +20,7 @@ class UserEnvironmentAssociation < ActiveRecord::Base
     }
   # Filtra por Environment
   named_scope :of_environment, lambda { |env_id|
-    { :conditions => ["environment_id = ?", env_id] }
+    { :conditions => ["user_environment_associations.environment_id = ?", env_id] }
   }
 
   validates_uniqueness_of :user_id, :scope => :environment_id

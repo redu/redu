@@ -4,7 +4,7 @@ source "http://gems.github.com"
 # Colocado, pois todas as validações de modelo estavam com a mensagem: {{attribute}} {{message}}
 gem 'i18n', "~> 0.4.0"
 
-gem "rails", "2.3.6"
+gem "rails", "2.3.8"
 gem "desert"
 gem "rake", "0.8.7"
 gem "validatable"
@@ -34,6 +34,8 @@ gem "aws-s3", :require => "aws/s3"
 gem "paperclip", "~> 2.3"
 gem "right_aws", "~> 2.0.0"
 gem "shuber-sortable"
+gem "abstract", "1.0.0"
+gem "erubis", "2.6.6"
 
 group :development do
   gem "mongrel"

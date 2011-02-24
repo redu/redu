@@ -105,7 +105,34 @@ jQuery(function(){
 
         return true;
       }
-    ) });
+    );
+
+    // Listagem de cursos
+    $("#global-courses .filters .filter").each(function(){
+        var checkbox = $(this).find("input");
+
+        if(checkbox.is(":checked"))
+          $(this).addClass("checked");
+
+    });
+
+    $("#global-courses .filters .filter").click(function(){
+        var checkbox = $(this).find("input[type=checkbox]");
+
+        if(checkbox.is(":checked")) {
+          $(this).removeClass("checked");
+          checkbox.attr("checked", "");
+        } else {
+          $(this).addClass("checked");
+          checkbox.attr("checked", "checked");
+        }
+    });
+
+    $("#global-courses .courses .expand").live("click", function(){
+        $(this).toggleClass("unexpand");
+        $(this).parents(":first").next().slideToggle();
+    });
+});
 
 function limitChars(textclass, limit, infodiv){
   var text = $('.' + textclass).val();
@@ -148,17 +175,17 @@ function youtubePreview(textfield){
   regex = /youtube\.com\/watch\?v=([A-Za-z0-9._%-]*)[&\w;=\+_\-]*/;
 
   id = textfield.val().match(regex)
-    if (id != null) {
-      youtube_id = id[1];
-      url = "http://www.youtube.com/v/" + youtube_id + "&hl=en&fs=1";
+  if (id != null) {
+    youtube_id = id[1];
+    url = "http://www.youtube.com/v/" + youtube_id + "&hl=en&fs=1";
 
-      jQuery('#yt_preview_param').attr("value",url);
-      jQuery('embed').attr("src",url);
-      jQuery('#youtube_preview').show();
+    jQuery('#yt_preview_param').attr("value",url);
+    jQuery('embed').attr("src",url);
+    jQuery('#youtube_preview').show();
 
-    }  else {
-      $('#youtube_preview').hide();
-    }
+  }  else {
+    $('#youtube_preview').hide();
+  }
 
 }
 

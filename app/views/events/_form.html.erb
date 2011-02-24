@@ -19,7 +19,7 @@
     <%= f.label :location, "Local:"%>
     <%= f.text_field :location %>
 
-    <%= f.label "Tags <span class='snippet'>(separadas por vírgula)</span>" %>
+    <%= f.label raw("Palavras-chave <span class='snippet'>(separadas por vírgula)</span>") %>
     <%= f.text_field :tag_list %>
 
     <% if action_name == 'new' %>

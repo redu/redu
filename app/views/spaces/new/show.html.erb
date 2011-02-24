@@ -19,45 +19,8 @@
           :class => 'icon icon-redu_r8_c307_s1' %>
       </li>
     </ol>
-    <div id="hierarchy-header" class="clearfix space-header">
-      <span class="prefix">
-        <% if @space.course.environment.initials %>
-          <%= @space.course.environment.initials %>
-        <% else %>
-          <%= @space.course.environment.name %>
-        <% end %>
-        > <%= @space.course.name  %>
-    </span>
-    <h3 class="call space-name"><%= @space.name %></h3>
-    <div class="grid_9 alpha">
-      <span class="description">
-        <%= @space.description %>
-      </span>
-      <ul class="tags clearfix">
-        <% @space.tags.each do |tag| %>
-          <li>
-            <%= link_to tag,
-              space_path(@space) %>
-          </li>
-        <% end %>
-      </ul>
-    </div>
-    <ul class="statistics grid_3 omega">
-      <li>
-        <em class="icon icon-redu_r8_c207_s1">Professores:</em>
-        <span><%= @space.teachers.length %></span>
-      </li>
-      <li>
-        <em class="icon icon-redu_r8_c385_s1">Tutores:</em>
-        <span><%= @space.tutors.length %></span>
-      </li>
-      <li>
-        <em class="icon icon-redu_r8_c355_s1">Alunos:</em>
-        <span><%= @space.students.length %></span>
-      </li>
-    </ul>
-
-  </div><!-- end #hierarchy-header -->
+    <%= render :partial => 'spaces/new/header',
+          :locals => { :space => @space }%>
 
   <div id="space-statuses" class="hierarchy-listing-wrapper">
     <div class="header">

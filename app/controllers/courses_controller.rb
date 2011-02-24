@@ -25,6 +25,12 @@ class CoursesController < BaseController
   end
 
   def edit
+
+    respond_to do |format|
+      format.html do
+        render :template => "courses/new/edit", :layout => "new/application"
+      end
+    end
   end
 
   def destroy
@@ -137,8 +143,13 @@ class CoursesController < BaseController
                              :per_page => AppConfig.items_per_page)
 
     respond_to do |format|
-      format.html
-      format.js
+      format.html do
+        render :template => "courses/new/admin_spaces",
+          :layout => "new/application"
+      end
+      format.js do
+        render :template => "courses/new/admin_spaces"
+      end
     end
   end
 
@@ -150,7 +161,10 @@ class CoursesController < BaseController
                                                       :order => 'updated_at DESC',
                                                       :per_page => AppConfig.items_per_page)
     respond_to do |format|
-      format.html
+      format.html do
+        render :template => "courses/new/admin_member_requests",
+          :layout => "new/application"
+      end
       format.js
     end
 
@@ -269,8 +283,11 @@ class CoursesController < BaseController
       :per_page => AppConfig.items_per_page)
 
     respond_to do |format|
-      format.html
-      format.js { render :template => 'shared/admin_members' }
+      format.html do
+        render :template => "courses/new/admin_members",
+          :layout => "new/application"
+      end
+      format.js { render :template => 'courses/new/admin_members' }
     end
   end
 
@@ -316,7 +333,8 @@ class CoursesController < BaseController
       respond_to do |format|
         format.js do
           render :update do |page|
-            page.replace_html 'user_list', :partial => 'user_list_admin', :locals => {:memberships => @memberships}
+            page.replace_html 'user_list', :partial => 'courses/new/user_list_admin',
+              :locals => {:memberships => @memberships}
           end
         end
       end

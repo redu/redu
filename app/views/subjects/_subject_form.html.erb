@@ -10,6 +10,6 @@
   <%= f.cktext_area :description, :width=>'560px' %>
   <%= error_message_on @subject, :description %>
 
-  <%= f.label "Tags <span class='snippet'>(separadas por vírgula)</span>" %>
+  <%= f.label raw("Palavras-chave <span class='snippet'>(separadas por vírgula)</span>") %>
   <%= f.text_field :tag_list %>
 <% end %>

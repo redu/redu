@@ -28,17 +28,13 @@ describe Lecture do
   it { should_not allow_mass_assignment_of :removed }
   it { should_not allow_mass_assignment_of :is_clone }
 
-  it "responds to next_for" do
-    should respond_to :next_for
-  end
-
-  it "responds to previous_for" do
-    should respond_to :previous_for
+  it "responds to mark_as_done_for!" do
+    should respond_to :mark_as_done_for!
   end
 
   context "finders" do
     it "retrieves unpublished lectures" do
-      lectures = (1..3).collect { Factory(:lecture) }
+      lectures = (1..3).collect { Factory(:lecture, :published => false) }
       subject.published = 1
       lectures[2].published = 1
       subject.save
@@ -48,7 +44,7 @@ describe Lecture do
     end
 
     it "retrieves published lectures" do
-      lectures = (1..3).collect { Factory(:lecture) }
+      lectures = (1..3).collect { Factory(:lecture, :published => false) }
       subject.published = 1
       lectures[2].published = 1
       subject.save
@@ -104,7 +100,7 @@ describe Lecture do
 
   context "being attended" do
     context "when done" do
-      it "retrieves the next lecture and mark the current as done" do
+      it "mark the current lecture as done" do
         subject_owner = Factory(:user)
         space = Factory(:space)
         space.course.join subject_owner
@@ -115,29 +111,14 @@ describe Lecture do
         user = Factory(:user)
         subject1.enroll user
 
-        lectures[0].next_for(user, true).should == lectures[1]
+        lectures[0].mark_as_done_for!(user, true)
         lectures[0].asset_reports.of_user(user).last.
           should be_done
       end
-
-      it "retrieves the previous lecture and mark the current as done" do
-        subject_owner = Factory(:user)
-        space = Factory(:space)
-        space.course.join subject_owner
-        lectures = (1..3).collect { Factory(:lecture) }
-        subject1 = Factory(:subject, :owner => subject_owner,
-                           :space => space, :lectures => lectures)
-
-        user = Factory(:user)
-        subject1.enroll user
-
-        lectures[1].previous_for(user, true).should == lectures[0]
-        lectures[1].asset_reports.of_user(user).last.
-          should be_done
-      end
     end
-    context "when not done" do
-      it "retrieves the next lecture" do
+
+    context "when undone" do
+      it "mark the current lecture as undone" do
         subject_owner = Factory(:user)
         space = Factory(:space)
         space.course.join subject_owner
@@ -148,27 +129,12 @@ describe Lecture do
         user = Factory(:user)
         subject1.enroll user
 
-        lectures[0].next_for(user).should == lectures[1]
+        lectures[0].asset_reports.of_user(user).last.done = true
+        lectures[0].mark_as_done_for!(user, false)
         lectures[0].asset_reports.of_user(user).last.
           should_not be_done
       end
-      it "retrieves the previous lecture" do
-        subject_owner = Factory(:user)
-        space = Factory(:space)
-        space.course.join subject_owner
-        lectures = (1..3).collect { Factory(:lecture) }
-        subject1 = Factory(:subject, :owner => subject_owner,
-                           :space => space, :lectures => lectures)
-
-        user = Factory(:user)
-        subject1.enroll user
-
-        lectures[1].previous_for(user).should == lectures[0]
-        lectures[1].asset_reports.of_user(user).last.
-          should_not be_done
-      end
     end
-
   end
 
   it "generates a permalink" do

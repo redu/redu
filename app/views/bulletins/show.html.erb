@@ -9,7 +9,7 @@
     <div class="<%= is_space ? "grid_11" : "grid_16" %> alpha omega bulletin-content">
       <h4 class="name"><%= link_to @bulletin.title, polymorphic_path([@bulletin.bulletinable, @bulletin]) %></h4>
       <div class="pretty-text">
-        <%= @bulletin.description %>
+        <%= raw @bulletin.description %>
       </div>
       <div >
         <div class="tags">

@@ -128,7 +128,7 @@ class EnvironmentsController < BaseController
             end
           else
 
-            flash[:notice] = 'Parabéns, o seu ambiente de ensino foi criado'
+            flash[:notice] = "Parabens, o seu ambiente de ensino foi criado"
             format.html do
               redirect_to environment_course_path(@environment,
                                                   @environment.courses.first)
@@ -187,7 +187,9 @@ class EnvironmentsController < BaseController
         render :template => "environments/new/admin_courses",
           :layout => "new/application"
       end
-      format.js
+      format.js do
+        render :template => "environments/new/admin_courses"
+      end
     end
   end
 
@@ -217,7 +219,10 @@ class EnvironmentsController < BaseController
         render :template => "environments/new/admin_bulletins",
           :layout => "new/application"
       end
-      format.js
+
+      format.js do
+        render :template => "environments/new/admin_bulletins"
+      end
     end
   end
 

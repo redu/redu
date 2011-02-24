@@ -21,6 +21,7 @@ module BaseHelper
 
     lis.join("\n")
   end
+  safe_helper :tabs_navigation
 
   # Cria markup das abas fake a partir de uma ou mais listas do tipo
   # [nome, path, options] (mesmo parâmetros passados para o link_to)
@@ -30,8 +31,9 @@ module BaseHelper
       :body => capture(&block)
     }
 
-    concat(render(:partial => 'shared/new/fake_tabs', :locals => locals), block.binding)
+    concat(render(:partial => 'shared/new/fake_tabs', :locals => locals))
   end
+  safe_helper :fake_tabs
 
   def error_for(object, method = nil, options={})
     if method
@@ -370,25 +372,25 @@ module BaseHelper
           title += tagline
                         when 'pages'
                           if @page and @page.title
-                            title = @page.title + ' &raquo; ' + app_base + tagline
+                            title = @page.title + ' - ' + app_base + tagline
                           end
       when 'posts'
         if @post and @post.title
-          title = @post.title + ' &raquo; ' + app_base + tagline
-          title += (@post.tags.empty? ? '' : " &laquo; "+:keywords.l+": " + @post.tags[0...4].join(', ') )
+          title = @post.title + ' - ' + app_base + tagline
+          title += (@post.tags.empty? ? '' : " - "+:keywords.l+": " + @post.tags[0...4].join(', ') )
           @canonical_url = user_post_url(@post.user, @post)
         end
       when 'users'
         if @user && !@user.new_record? && @user.login
           title = @user.login
-          title += ' &raquo; ' + app_base + tagline
+          title += ' - ' + app_base + tagline
           @canonical_url = user_url(@user)
         else
-          title = :showing_users.l+' &raquo; ' + app_base + tagline
+          title = :showing_users.l+' - ' + app_base + tagline
         end
       when 'photos'
         if @user and @user.login
-          title = @user.login + '\'s '+:photos.l+' &raquo; ' + app_base + tagline
+          title = @user.login + '\'s '+:photos.l+' - ' + app_base + tagline
         end
      # when 'clippings'
      #   if @user and @user.login
@@ -403,48 +405,48 @@ module BaseHelper
             title += ' | ' + app_base
             @canonical_url = tag_url(URI.escape(@tags_raw, /[\/.?#]/)) if @tags_raw
           else
-          title = 'Showing tags &raquo; ' + app_base + tagline
+          title = 'Showing tags - ' + app_base + tagline
         end
       when 'categories'
         if @category and @category.name
-          title = @category.name + ' '+:posts_photos_and_bookmarks.l+' &raquo; ' + app_base + tagline
+          title = @category.name + ' '+:posts_photos_and_bookmarks.l+' - ' + app_base + tagline
         else
-          title = :showing_categories.l+' &raquo; ' + app_base + tagline
+          title = :showing_categories.l+' - ' + app_base + tagline
         end
       when 'lectures'
       if @lecture and @lecture.name
-        title = 'Aula: ' + @lecture.name + ' &raquo; ' + app_base + tagline
+        title = 'Aula: ' + @lecture.name + ' - ' + app_base + tagline
       else
-        title = 'Mostrando Aulas' +' &raquo; ' + app_base + tagline
+        title = 'Mostrando Aulas' +' - ' + app_base + tagline
       end
       when 'exams'
       if @exam and @exam.name
-        title = 'Exame: ' + @exam.name + ' &raquo; ' + app_base + tagline
+        title = 'Exame: ' + @exam.name + ' - ' + app_base + tagline
       else
-        title = 'Mostrando Exames' +' &raquo; ' + app_base + tagline
+        title = 'Mostrando Exames' +' - ' + app_base + tagline
       end
       when 'spaces'
       if @space and @space.name
-        title = @space.name + ' &raquo; ' + app_base + tagline
+        title = @space.name + ' - ' + app_base + tagline
       else
-        title = 'Mostrando Disciplinas' +' &raquo; ' + app_base + tagline
+        title = 'Mostrando Disciplinas' +' - ' + app_base + tagline
       end
       when 'skills'
         if @skill and @skill.name
-          title = :find_an_expert_in.l+' ' + @skill.name + ' &raquo; ' + app_base + tagline
+          title = :find_an_expert_in.l+' ' + @skill.name + ' - ' + app_base + tagline
         else
-          title = :find_experts.l+' &raquo; ' + app_base + tagline
+          title = :find_experts.l+' - ' + app_base + tagline
         end
       when 'sessions'
-        title = :login.l+' &raquo; ' + app_base + tagline
+        title = :login.l+' - ' + app_base + tagline
     end
 
     if @page_title
-      title = @page_title + ' &raquo; ' + app_base + tagline
+      title = @page_title + ' - ' + app_base + tagline
     elsif title == app_base
-      title = :showing.l+' ' + @controller.controller_name.capitalize + ' &raquo; ' + app_base + tagline
+      title = :showing.l+' ' + @controller.controller_name.capitalize + ' - ' + app_base + tagline
     end
-    title
+    title.html_safe
   end
 
   def add_friend_link(user = nil)
