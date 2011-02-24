@@ -1,7 +1,9 @@
 <script type="text/javascript" language="javascript" charset="utf-8">
-function showLoadingUsers(){
+  function showLoadingUsers(){
+    if (document.getElementById('loading_bar')){
 	document.getElementById('loading_bar').style.display = 'block';
-	$('user_list_table').remove();
+        $('user_list_table').remove();
+    }
 }
 </script>
 <%= render :partial => 'environments/new/sidebar' %>
