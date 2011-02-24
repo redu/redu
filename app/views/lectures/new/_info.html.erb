@@ -1,5 +1,5 @@
 <div class="info">
-  <%= image_tag lecture.owner.avatar(:thumb_32) %>
+  <%= image_tag lecture.owner.avatar(:thumb_32), :class => "avatar" %>
   <span class="label">Autor:</span>
   <%= link_to lecture.owner.display_name, user_path(lecture.owner) %>
 </div>
@@ -15,6 +15,6 @@
                                  lecture),
       :method => :delete,
       :confirm => "Você tem certeza que deseja remover esta aula? Não será possível recuperá-la.",
-      :class => "remove icon icon-redu_r12_c43_s1" %>
+      :class => "delete icon icon-redu_r12_c43_s1" %>
   </div>
 <% end %>
