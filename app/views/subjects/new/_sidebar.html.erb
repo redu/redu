@@ -21,14 +21,14 @@
       </div>
     </li>
     <% if can? :manage, @subject %>
-    <li>
-      <div class="<%= (current_page? :controller => :subjects,
-                        :action => :edit ) ? "session selected" : "session" %>">
-        <%= link_to 'Gerenciamento', edit_space_subject_path(@space, @subject),
-            :class => 'icon icon-redu_r8_c221_s1' %>
-      </div>
-   </li>
- <% end %>
+      <li>
+        <div class="<%= (current_page? :controller => :subjects,
+                         :action => :edit ) ? "session selected" : "session" %>">
+                         <%= link_to 'Gerenciamento', edit_space_subject_path(@space, @subject),
+                           :class => 'icon icon-redu_r8_c221_s1' %>
+        </div>
+      </li>
+    <% end %>
     <li>
       <div class="<%= (current_page? :controller => :subjects,
                         :action => :users ) ? "session selected" : "session" %>">
