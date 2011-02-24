@@ -446,7 +446,14 @@
 #resource .context .next,
 #resource .context .previous {
   float: left;
-  width: 45px;
+  text-align: center;
+  padding: 8px 10px;
+  font-weight: bold;
+}
+
+#resource .context .next:hover,
+#resource .context .previous:hover {
+  text-decoration: none;
 }
 
 #resource .context .previous {
@@ -521,6 +528,7 @@
 }
 
 #resource .page-content {
+  background-color: white;
   padding: 0 70px;
 }
 
@@ -586,8 +594,10 @@
 }
 
 #resource .statuses-wrapper {
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
   clear: both;
-  padding: 0 70px;
+  padding: 5px 70px;
 }
 
 .hierarchy-listing-wrapper .users {
@@ -1377,7 +1387,7 @@ label.focus {
 }
 
 #new_subject .resources li a.edit,
-#new_subject .resources li a.remove {
+#new_subject .resources li a.delete {
   font-size: .9em;
 }
 
@@ -2182,6 +2192,15 @@ table.spaced tr td {
 }
 
 
+#lights_dimmed {
+  top: 0;
+  left: 0;
+  background: url("../images/new/overlay-85.png");
+  position: absolute;
+  width: 100%;
+  display: none;
+
+}
 
 .replacement {
   text-indent: -99999px;

@@ -14,7 +14,6 @@ class CoursesController < BaseController
     @spaces = @course.spaces.published.
       paginate(:page => params[:page], :order => 'name ASC',
                :per_page => AppConfig.items_per_page)
-    @course_users = @course.approved_users.all(:limit => 9)
 
     respond_to do |format|
       format.html do
@@ -54,7 +53,8 @@ class CoursesController < BaseController
         format.html { redirect_to(environment_course_path(@environment, @course)) }
         format.xml { head :ok }
       else
-        format.html { render :action => "edit" }
+        format.html { render :template => "courses/new/edit",
+          :layout => "new/application" }
         format.xml  { render :xml => @course.errors, :status => :unprocessable_entity }
       end
     end
@@ -342,7 +342,6 @@ class CoursesController < BaseController
 
   # Listagem de usuários do Course
   def users
-    @course_users = @course.approved_users.all(:limit => 9) # sidebar
     @users = @course.approved_users.
       paginate(:page => params[:page], :order => 'first_name ASC', :per_page => 18)
 

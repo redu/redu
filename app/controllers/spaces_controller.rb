@@ -260,7 +260,6 @@ class SpacesController < BaseController
     end
 
     if @space
-      @space_users = @space.users.all(:limit => 9)
       @statuses = @space.recent_activity(params[:page])
       @statusable = @space
     end
@@ -389,7 +388,6 @@ class SpacesController < BaseController
 
   # Listagem de usuários do Space
   def users
-    @space_users = @space.users.all(:limit => 9) # sidebar
     @users = @space.users.
       paginate(:page => params[:page], :order => 'first_name ASC', :per_page => 18)
 

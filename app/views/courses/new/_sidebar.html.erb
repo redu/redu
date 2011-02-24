@@ -32,7 +32,7 @@
           :class => 'icon icon-redu_r8_c319_s1' %>
       <ul class="connections clearfix">
           <%= render :partial => 'users/new/item_short',
-            :collection => @course_users %>
+            :collection => @course.approved_users.n_recent(9) %>
       </ul><!-- end .connections -->
       <a href="" class="more">Ver mais</a>
     </li>
