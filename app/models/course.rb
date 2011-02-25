@@ -40,6 +40,10 @@ class Course < ActiveRecord::Base
   named_scope :of_environment, lambda { |environmnent_id|
    { :conditions => {:environment_id => environmnent_id} }
   }
+  named_scope :with_audiences, lambda { |audiences_ids|
+    {:joins => :audiences,
+      :conditions => ['audiences_courses.audience_id IN (?)', audiences_ids], :group => :id }
+  }
 
   attr_protected :owner, :published, :environment
 
