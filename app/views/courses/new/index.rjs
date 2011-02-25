@@ -1,0 +1,7 @@
+if @courses.empty?
+  page.replace_html 'courses_list',
+    "<div class=\"box_notice\">Nenhum curso foi encontrado.</div>"
+else
+  page.replace_html 'courses_list',
+    (render :partial => 'courses/new/item_detailed', :collection => @courses)
+end

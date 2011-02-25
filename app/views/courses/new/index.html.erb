@@ -1,0 +1,65 @@
+<div id="global-courses" class="clearfix">
+  <div class="alpha grid_3">
+    <div class="call">
+      <h4>Cursos</h4>
+      <strong>Localize os cursos inscritos através de seus papéis, ou procure por algo novo.</strong>
+    </div>
+    <div class="filters">
+      <strong class="call">Filtros:</strong>
+      <% form_remote_tag :url => courses_path,
+        :loading => "$('#spinner').show();",
+        :success => "$('#spinner').hide();",
+        :html => { :id => 'filter_form' } do %>
+        <fieldset>
+          <%= hidden_field_tag 'search', "", { :id => 'hidden_search'} %>
+          <% for audience in Audience.find(:all) %>
+            <span class="filter">
+              <%= check_box_tag "audiences_ids[]", audience.id, false %>
+              <label for=""><%= audience.name %></label>
+            </span>
+          <% end %>
+          <%= submit_tag "Filtrar" %>
+        </fieldset>
+      <% end %>
+    </div><!-- end #filters -->
+
+  </div>
+  <div class="main grid_12 omega big-col">
+    <div class="fake-tabs">
+      <ul class="clearfix">
+        <li class="ui-state-active">
+          <a href="">Todos</a>
+        </li>
+        <li style="display: none;">
+          <a href="">Aluno</a>
+        </li>
+        <li style="display: none;">
+          <a href="">Tutor</a>
+        </li>
+        <li style="display: none;">
+          <a href="">Professor</a>
+        </li>
+        <li style="display: none;">
+          <a href="">Administrador</a>
+        </li>
+      </ul>
+      <div class="panel">
+        <% form_remote_tag :url => "#", :html => { :id => 'search_form'} do %>
+          <%= text_field_tag :name, nil,
+            :onkeyup => "$('#hidden_search').val($('#name').val());"  %>
+          <%= submit_tag "Buscar" %>
+          <%= image_tag 'spinner.gif', :id => 'spinner',
+            :style => 'display: none;' %>
+        <% end %>
+        <ul id="courses_list" class="courses">
+          <% if @courses.empty? %>
+            <div class="box_notice">Nenhum curso foi encontrado.</div>
+          <% else %>
+          <%= render :partial => 'courses/new/item_detailed',
+            :collection => @courses %>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  </div><!-- end .main -->
+</div>

@@ -93,7 +93,7 @@ class CoursesController < BaseController
   def index
     cond = {}
     @user = User.find(params[:user_id].to_i) if params.has_key?(:user_id)
-    unless ( !@environment.nil? && can?(:manage, @environment) ) or ( !@user.nil? && can?(:manage, @user) )
+    unless ( !@user.nil? && can?(:manage, @user) )
       cond[:published] = true
     end
 
@@ -104,28 +104,36 @@ class CoursesController < BaseController
       :per_page => 8
     }
 
-    if @environment
-      @courses = @environment.courses
-    elsif params.has_key?(:user_id)
-      paginating_params[:per_page] = 6
-      @courses = @user.courses
-    else
-      @courses = Course.published.all
+    if params[:search] != ''
+      @courses = Course.name_like_all(params[:search].to_s.split).ascend_by_name
     end
 
-    if params[:search] # search
-      @courses = @courses.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
-    else
+    if params.has_key?(:user_id)
+      paginating_params[:per_page] = 6
+      @courses = @user.courses
+    elsif params.has_key?(:audiences_ids)
+      if @courses
+        @courses = @courses.with_audiences(params[:audiences_ids])
+      else
+        @courses = Course.with_audiences(params[:audiences_ids])
+      end
+    end
+
+    if @courses
       @courses = @courses.paginate(paginating_params)
+    else
+      @courses = Course.published.all.paginate(paginating_params)
     end
 
     respond_to do |format|
       format.html do
-        unless params[:environment_id]
-          render :layout => 'application'
+        unless params[:user_id]
+          render :template => 'courses/new/index', :layout => 'new/application'
         end
       end
-      format.js
+      format.js do
+        render :template => 'courses/new/index'
+      end
     end
   end
 

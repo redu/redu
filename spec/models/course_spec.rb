@@ -171,6 +171,19 @@ describe Course do
       subject.students.to_set.
         should == [users[3], users[4]].to_set
     end
+
+    it "retrieves all courses in one of specified categories" do
+      audiences = (1..4).collect { Factory(:audience) }
+      courses = (1..4).collect { Factory(:course) }
+
+      courses[0].audiences << audiences[0] << audiences[1] << audiences[2]
+      courses[1].audiences << audiences[0]
+      courses[2].audiences << audiences[2]
+      courses[3].audiences << audiences[3]
+
+      Course.with_audiences([audiences[0].id, audiences[2].id]).
+        should == [courses[0], courses[1], courses[2]]
+    end
   end
 
   it "generates a permalink" do
