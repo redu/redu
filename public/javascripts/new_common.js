@@ -87,7 +87,6 @@ jQuery(function(){
     // Carrega preview do Youtube (new Seminar)
     $('#seminar_external_resource').live("change", function(){
         youtubePreview($('#seminar_external_resource'));
-        console.log('alou')
     })
 
     // Padrão de tabelas
@@ -107,7 +106,7 @@ jQuery(function(){
       }
     );
 
-    // Listagem de cursos
+    // Filtros da listagem de cursos
     $("#global-courses .filters .filter").each(function(){
         var checkbox = $(this).find("input");
 
@@ -128,17 +127,25 @@ jQuery(function(){
         }
     });
 
+    // Itens da listagem de cursos
     $("#global-courses .courses .expand").live("click", function(){
         $(this).toggleClass("unexpand");
         $(this).parents(":first").next().slideToggle();
     });
+
+    // Alimenta campo escondido da listagem de cursos
+    $("#search_form").submit(function(e){
+        $("#filter_form").submit();
+        return false;
+    });
+
 });
 
+/* Limita a quantidade de caracteres de um campo */
 function limitChars(textclass, limit, infodiv){
   var text = $('.' + textclass).val();
   var textlength = text.length;
   if (textlength > limit) {
-    // $('#' + infodiv).html('You cannot write more then ' + limit + ' characters!');
     $('.' + textclass).val(text.substr(0, limit));
     return false;
   } else {
