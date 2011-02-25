@@ -58,6 +58,7 @@
           <%= render :partial => 'courses/new/item_detailed',
             :collection => @courses %>
         <% end %>
+        <%= will_paginate @courses, :renderer => EndlessRenderer %>
         </ul>
       </div>
     </div>
