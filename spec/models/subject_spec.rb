@@ -72,10 +72,10 @@ describe Subject do
   context "finders" do
     it "retrieves published subjects" do
       subjects = (1..3).collect { Factory(:subject, :owner => @user,
-                                          :space => @space) }
+                                          :space => @space,
+                                          :published => false) }
       published_subjects = (1..3).collect { Factory(:subject, :owner => @user,
-                                                    :space => @space,
-                                                    :published => true) }
+                                                    :space => @space) }
       Subject.published.should == published_subjects
     end
 
@@ -101,9 +101,9 @@ describe Subject do
     end
   end
 
-  it "defaults to not published" do
+  it "defaults to published" do
     subject { Factory(:subject, :published => nil) }
-    subject.published.should be_false
+    subject.published.should be_true
   end
 
   it "responds to publish!" do
