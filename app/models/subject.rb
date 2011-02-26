@@ -66,8 +66,9 @@ class Subject < ActiveRecord::Base
   #TODO colocar esse metodo em status passando apenas o objeto
   # Não foi testado, pois haverá reformulação de subject
   def recent_activity(page = 1)
-    self.statuses.paginate(:all, :page => page, :order => 'created_at DESC',
-                           :per_page => AppConfig.items_per_page)
+    self.statuses.not_response.
+      paginate(:page => page, :order => 'created_at DESC',
+               :per_page => AppConfig.items_per_page)
   end
 
   def convert_lectureables!

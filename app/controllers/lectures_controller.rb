@@ -130,9 +130,9 @@ class LecturesController < BaseController
                                         :order => 'rating_average DESC')
 
     @status = Status.new
-    @statuses = @lecture.statuses.paginate(:page => params[:page],
-                                  :order => 'created_at DESC',
-                                  :per_page => AppConfig.items_per_page)
+    @statuses = @lecture.statuses.not_response.
+      paginate(:page => params[:page],:order => 'created_at DESC',
+               :per_page => AppConfig.items_per_page)
     
     if current_user.get_association_with(@lecture.subject)
       asset_report = @lecture.asset_reports.of_user(current_user).first
