@@ -79,8 +79,9 @@ class Space < ActiveRecord::Base
   # Status relativos ao Space
   #FIXME Refactor: Mover para Status
   def recent_activity(page = 1)
-    self.statuses.paginate(:all, :page => page, :order => 'created_at DESC',
-                           :per_page => AppConfig.items_per_page)
+    self.statuses.not_response.
+      paginate(:page => page, :order => 'created_at DESC',
+               :per_page => AppConfig.items_per_page)
   end
 
   # Logs relativos ao Space (usado no Course#show).
