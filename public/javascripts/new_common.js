@@ -133,12 +133,6 @@ jQuery(function(){
         $(this).parents(":first").next().slideToggle();
     });
 
-    // Alimenta campo escondido da listagem de cursos
-    $("#search_form").submit(function(e){
-        $("#filter_form").submit();
-        return false;
-    });
-
 });
 
 /* Limita a quantidade de caracteres de um campo */
