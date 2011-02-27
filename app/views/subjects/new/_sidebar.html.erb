@@ -21,23 +21,24 @@
       </div>
     </li>
     <% if can? :manage, @subject %>
-    <li>
-      <div class="<%= (current_page? :controller => :subjects,
-                        :action => :edit ) ? "session selected" : "session" %>">
-        <%= link_to 'Gerenciamento', edit_space_subject_path(@space, @subject),
-            :class => 'icon icon-redu_r8_c221_s1' %>
-      </div>
-   </li>
- <% end %>
+      <li>
+        <div class="<%= (current_page? :controller => :subjects,
+                         :action => :edit ) ? "session selected" : "session" %>">
+                         <%= link_to 'Gerenciamento', edit_space_subject_path(@space, @subject),
+                           :class => 'icon icon-redu_r8_c221_s1' %>
+        </div>
+      </li>
+    <% end %>
     <li>
       <div class="<%= (current_page? :controller => :subjects,
                         :action => :users ) ? "session selected" : "session" %>">
-                        <%= link_to "Membros (#{@subject_users.length})",
+                        <%= link_to "Membros (#{@subject.members.length})",
                           users_space_subject_path(@space, @subject),
                           :class => 'icon icon-redu_r8_c319_s1' %>
       </div>
       <ul class="connections clearfix">
-        <%= render :partial => 'users/new/item_short', :collection => @subject_users %>
+        <%= render :partial => 'users/new/item_short',
+            :collection => @subject.members.n_recent(9) %>
       </ul> <!-- end .coonections -->
       <a href="" class="more">Ver mais</a>
     </li>

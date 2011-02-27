@@ -38,7 +38,7 @@
         <%= f.text_field :initials  %>
         <%= f.label :description, "Description" %>
         <%= f.text_area :description, :size=>'102x4' %>
-        <%= f.label "Palavras-chave <span class='snippet'>(separadas por vírgula)</span>" %>
+        <%= f.label raw("Palavras-chave <span class='snippet'>(separadas por vírgula)</span>") %>
         <%= f.text_field :tag_list %>
       <% end %>
 

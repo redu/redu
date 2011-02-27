@@ -44,13 +44,12 @@
         </li>
       </ul>
       <div class="panel">
-        <% form_remote_tag :url => "#", :html => { :id => 'search_form'} do %>
           <%= text_field_tag :name, nil,
             :onkeyup => "$('#hidden_search').val($('#name').val());"  %>
-          <%= submit_tag "Buscar" %>
+          <%= link_to "Buscar", "#", :onclick => "$('#filter_form').submit();",
+            :class => "button" %>
           <%= image_tag 'spinner.gif', :id => 'spinner',
             :style => 'display: none;' %>
-        <% end %>
         <ul id="courses_list" class="courses">
           <% if @courses.empty? %>
             <div class="box_notice">Nenhum curso foi encontrado.</div>

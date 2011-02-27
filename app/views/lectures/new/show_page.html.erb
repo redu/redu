@@ -1,3 +1,4 @@
+<%= render :partial => 'lectures/new/lights' %>
 <%= render :partial => 'subjects/new/sidebar' %>
 <div class="main grid_12 omega big-col">
   <ol id="breadcrumbs" class="clearfix">
@@ -40,7 +41,7 @@
       :locals => { :lecture => @lecture } %>
     <%= render :partial => 'lectures/new/details',
       :locals => { :lecture => @lecture} %>
-    <div class="pretty-text page-content content">
+    <div class="pretty-text stage page-content content">
       <h2><%= @lecture.name %></h2>
       <%= raw @lecture.lectureable.body %>
     </div>
@@ -61,7 +62,7 @@
         -->
         <li>
           <span class="lights"></span>
-          <a href="" title="">Apagar luzes</a>
+          <a href="" title="" id="lights">Apagar luzes</a>
         </li>
         <li>
           <span id ="favorite" class="favorite"></span>
@@ -84,6 +85,8 @@
         </li>
         <li>
           <!-- AddThis Button BEGIN -->
+          <% content_for :footer_scripts_and_styles do %>
+          <!-- AddThis Button BEGIN -->
           <script type="text/javascript">
             var addthis_config = {
               "data_track_clickback": true,
@@ -91,11 +94,12 @@
               ui_cobrand: "Redu"
             };
           </script>
-          <span class="share"></span>
-          <a class="addthis_button" href="http://addthis.com/bookmark.php?v=250&amp;username=redu" title="">Compartilhar</a>
           <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=redu">
           </script>
           <!-- AddThis Button END -->
+          <% end %>
+          <span class="share"></span>
+          <a class="addthis_button" href="http://addthis.com/bookmark.php?v=250&amp;username=redu" title="">Compartilhar</a>
         </li>
       </ul>
     </div>

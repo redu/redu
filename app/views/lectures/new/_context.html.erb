@@ -1,4 +1,5 @@
 <div class="context">
+  <% if current_user.get_association_with(@lecture.subject) %>
   <%= render :partial => 'subjects/new/progress_bar',
     :locals => { :student_grade => student_grade } %>
     <% form_remote_tag :url => done_space_subject_lecture_path(@lecture.subject.space,
@@ -16,17 +17,18 @@
           { :onclick => "$('#do_lecture').submit()" } %>
         <%= label_tag 'Aula finalizada' %>
       <% end %>
+    <% end %>
   <% end %>
   <% unless @lecture.first_item? %>
-    <%= link_to @lecture.previous_item.position,
+    <%= link_to raw("&#8592; " + @lecture.previous_item.position.to_s ),
       space_subject_lecture_path(@lecture.subject.space, @lecture.subject,
                                  @lecture.previous_item),
-      :class => 'previous'%>
+      :class => 'previous button' %>
   <% end %>
   <% unless @lecture.last_item? %>
-    <%= link_to @lecture.next_item.position,
+    <%= link_to raw(@lecture.next_item.position.to_s + " &rarr;"),
       space_subject_lecture_path(@lecture.subject.space, @lecture.subject,
                                  @lecture.next_item),
-      :class => 'next'%>
+      :class => 'next button' %>
   <% end %>
 </div><!-- end #context -->

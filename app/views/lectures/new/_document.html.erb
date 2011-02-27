@@ -1,4 +1,4 @@
-<div id="view_video" align="center" >
+<div id="view_video" class="stage" align="center" >
   <% unless lecture.lectureable.conversion_processing? %>
   <%= raw(lecture.lectureable.display_ipaper(:disable_related_docs => true,
                                              :mode => :slide,
