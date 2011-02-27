@@ -366,6 +366,10 @@
   background: url("../images/new/icon-status-black_32_32.png") no-repeat 20px center;
 }
 
+#bulletin .header {
+  background: url("../images/new/icon-bulletin-gray_32_32.png") no-repeat 20px center;
+}
+
 #subject-resources .header {
   background: url("../images/new/icon-resource-black_32_32.png") no-repeat 20px center;
 }
@@ -2242,6 +2246,79 @@ table.spaced tr td {
   padding: 10px 10px 10px 20px;
   color: #6C6D6E;
   font-size: .9em;
+}
+
+#bulletin .header {
+  width: 450px;
+}
+
+#bulletin .info {
+  float: left;
+  width: 210px;
+  text-align: right;
+}
+
+#bulletin .info .avatar {
+  float: right;
+  margin-left: 10px;
+}
+
+#bulletin .info .label {
+  font-size: .9em;
+  color: #b3b2b3;
+  text-transform: lowercase;
+  display: block;
+}
+
+#bulletin .info a {
+  margin: 5px 0;
+  display: block;
+}
+
+#bulletin .admin-actions {
+  width: 210px;
+  margin: 10px 0;
+  text-align: right;
+}
+
+#bulletin .admin-actions a {
+  padding-left: 15px;
+  font-size: .9em;
+}
+
+#bulletin .details {
+  padding: 0 70px;
+  margin-bottom: 20px;
+}
+
+#bulletin .details .date {
+  color: #6C6D6E;
+  float: left;
+  margin-right:10px;
+  text-align: right;
+}
+
+#bulletin .details .date .month,
+#bulletin .details .date .day,
+#bulletin .details .date .year {
+  display: block;
+}
+
+#bulletin .details .date .day {
+  font-weight: bold;
+  font-size: 1.4em;
+  margin: 2px 0;
+}
+
+#bulletin .details .title {
+  font-weight: normal;
+  font-size: 1.3em;
+}
+
+
+
+#bulletin .bulletin-content {
+  padding: 0 70px;
 }
 
 #lights_dimmed {
