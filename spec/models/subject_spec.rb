@@ -46,7 +46,7 @@ describe Subject do
   end
 
   context "callbacks" do
-    it "creates a Enrollment between the Subject and the owner after finalize it" do
+    it "creates an Enrollment between the Subject and the owner after finalize it" do
       subject.save # First update (finalize the subject)
       subject.enrollments.first.should_not be_nil
       subject.enrollments.first.user.should == subject.owner
@@ -54,19 +54,29 @@ describe Subject do
         should == subject.owner.get_association_with(subject.space).role
     end
 
-    it "does NOT create a Enrollment between the Subject and the owner when update it" do
+    it "does NOT create an Enrollment between the Subject and the owner when update it" do
       subject.save # First update
       expect {
         subject.save # Other updates
       }.should_not change(Enrollment, :count)
     end
 
-    it "does NOT create a Enrollment between the subject and the owner after create, if the owner is a Redu admin" do
+    it "does NOT create an Enrollment between the subject and the owner after create, if the owner is a Redu admin" do
       redu_admin = Factory(:user, :role => Role[:admin])
       expect {
         Factory(:subject, :owner => redu_admin)
       }.should_not change(Enrollment, :count)
     end
+
+    it "creates an asset_report when a new lecture is added a subject on update" do
+      subject.save
+      expect {
+        subject.lectures << Factory(:lecture, :owner => subject.owner, 
+                                   :subject => subject)
+        subject.finalized = true
+        subject.save
+      }.should change(AssetReport, :count).by(1)
+    end  
   end
 
   context "finders" do

@@ -4,6 +4,8 @@ class Subject < ActiveRecord::Base
   # Para Redu admin o enrollment não é criado
   after_update :create_enrollment_association, :if => "!self.finalized? and !self.owner.admin?"
 
+  after_update :create_asset_report, :if => "self.finalized?"
+
   belongs_to :space
   belongs_to :owner, :class_name => "User", :foreign_key => :user_id
   has_many :lectures, :order => "position", :dependent => :destroy
@@ -44,7 +46,7 @@ class Subject < ActiveRecord::Base
   end
 
   def unpublish!
-    Enrollment.destroy_all(["subject_id = ? and user_id <> ?", 
+    Enrollment.destroy_all(["subject_id = ? and user_id <> ?",
                            self.id, self.user_id])
     self.published = false
     self.save
@@ -91,4 +93,17 @@ class Subject < ActiveRecord::Base
     self.enrollments.create(:user => self.owner, :subject => self,
                             :role => space_assoc.role)
   end
+
+  def create_asset_report
+    enroll = self.owner.get_association_with(self)
+    student_profile = enroll.student_profile
+    self.lectures.each do |lecture|
+      if lecture.asset_reports.of_user(self.owner).empty?
+        student_profile.asset_reports << AssetReport.create(
+          :subject => self, :lecture => lecture)
+      end
+    end
+
+  end
+
 end

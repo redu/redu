@@ -123,6 +123,7 @@ def update
       flash[:notice] = "As atualizações foram salvas."
     else
       @subject.finalized = true
+      @subject.published = true
       @subject.save
       @subject.convert_lectureables!
       flash[:notice] = "O Módulo foi criado."
