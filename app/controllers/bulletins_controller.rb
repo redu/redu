@@ -70,6 +70,12 @@ class BulletinsController < BaseController
 
   def edit
     @bulletinable = find_bulletinable
+
+    respond_to do |format|
+      format.html do
+        render :template => "bulletins/new/edit", :layout => "new/application"
+      end
+    end
   end
 
   def update
@@ -79,7 +85,9 @@ class BulletinsController < BaseController
         format.html { redirect_to polymorphic_path([@bulletin.bulletinable, @bulletin])}
         format.xml { render :xml => @bulletin, :status => :created, :location => @bulletin, :bulletinable => @bulletin.bulletinable }
       else
-        format.html { render :action => :edit }
+        format.html do
+          render :template => "bulletins/new/edit", :layout => "new/application"
+        end
         format.xml { render :xml => @bulletin.errors, :status => :unprocessable_entity }
       end
     end
