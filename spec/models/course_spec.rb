@@ -184,6 +184,36 @@ describe Course do
       Course.with_audiences([audiences[0].id, audiences[2].id]).
         should == [courses[0], courses[1], courses[2]]
     end
+
+    context "retrieves all courses where the specified user" do
+      before do
+        @user = Factory(:user)
+        @courses = (0..5).collect { Factory(:course) }
+        @courses[0].join @user
+        @courses[1].join @user
+        @courses[2].join @user, Role[:tutor]
+        @courses[3].join @user, Role[:teacher]
+        @courses[4].join @user, Role[:environment_admin]
+
+        @courses[5].join Factory(:user)
+        @courses[5].join Factory(:user), Role[:tutor]
+        @courses[5].join Factory(:user), Role[:teacher]
+        @courses[5].join Factory(:user), Role[:environment_admin]
+      end
+
+      it "is a administrator" do
+        Course.user_behave_as_administrator(@user).should == [@courses[4]]
+      end
+      it "is a teacher" do
+        Course.user_behave_as_teacher(@user).should == [@courses[3]]
+      end
+      it "is a tutor" do
+        Course.user_behave_as_tutor(@user).should == [@courses[2]]
+      end
+      it "is a student" do
+        Course.user_behave_as_student(@user).should == @courses[0..1]
+      end
+    end
   end
 
   it "generates a permalink" do
