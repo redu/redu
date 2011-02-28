@@ -379,7 +379,8 @@
   background: url("../images/new/icon-resource-black_32_32.png") no-repeat 20px center;
 }
 
-#event .header {
+#event .header,
+#space-events .header {
   background: url("../images/new/icon-event-gray_32_32.png") no-repeat 20px center;
 }
 
@@ -2375,19 +2376,23 @@ table.spaced tr td {
   padding: 0 70px;
 }
 
-#space-bulletins .bulletin-listing-wrapper {
+#space-bulletins .bulletin-listing-wrapper,
+#space-events .event-listing-wrapper {
   clear: both;
 }
 
-#space-bulletins .bulletin-listing-wrapper ul {
+#space-bulletins .bulletin-listing-wrapper ul,
+#space-events .event-listing-wrapper ul {
   margin-bottom: 20px;
 }
 
-#space-bulletins .bulletin-listing-wrapper li {
+#space-bulletins .bulletin-listing-wrapper li,
+#space-events .event-listing-wrapper li {
   margin-bottom: 10px;
 }
 
-#space-bulletins .bulletin-listing-wrapper .meta {
+#space-bulletins .bulletin-listing-wrapper .meta,
+#space-events .event-listing-wrapper .meta {
   border: 1px solid #B3B2B3;
   width: 570px;
   float: left;
@@ -2398,7 +2403,8 @@ table.spaced tr td {
   border-radius: 5px;
 }
 
-#space-bulletins .bulletin-listing-wrapper .date {
+#space-bulletins .bulletin-listing-wrapper .date,
+#space-events .event-listing-wrapper .date {
   color: #6C6D6E;
   float: left;
   margin-right:10px;
@@ -2406,57 +2412,95 @@ table.spaced tr td {
   height: 70px;
 }
 
+#space-events .event-listing-wrapper .date {
+  height: 80px;
+}
+
 #space-bulletins .date .month,
 #space-bulletins .date .day,
-#space-bulletins .date .year {
+#space-bulletins .date .year,
+#space-events .date .month,
+#space-events .date .hour,
+#space-events .date .label,
+#space-events .date .day,
+#space-events .date .year {
   display: block;
 }
 
-#space-bulletins .date .day {
+#space-bulletins .date .day,
+#space-events .date .day {
   font-weight: bold;
   font-size: 1.4em;
   margin: 2px 0;
 }
 
-#space-bulletins .bulletin-listing-wrapper .title {
+#space-events .date .calendar {
+  display: block;
+  float: left;
+  clear: left;
+  margin-right: 15px;
+}
+
+#space-events .date .hour {
+  float: right;
+  font-size: .9em;
+}
+
+#space-events .date .hour .label {
+  font-weight: bold;
+}
+
+#space-bulletins .bulletin-listing-wrapper .title,
+#space-events .event-listing-wrapper .title {
   display: block;
   color: black;
   font-size: 1.2em;
 }
 
-#space-bulletins .bulletin-listing-wrapper .description {
+#space-bulletins .bulletin-listing-wrapper .description,
+#space-events .event-listing-wrapper .description {
   font-size: .9em;
   color: #6C6D6E;
 }
 
-#space-bulletins .bulletin-listing-wrapper .authorship {
+#space-bulletins .bulletin-listing-wrapper .authorship,
+#space-events .event-listing-wrapper .authorship {
   float: left;
   width: 120px;
   margin-top: 25px;
   padding: 2px 0 2px 20px;
 }
 
-#space-bulletins .bulletin-listing-wrapper li:hover .authorship {
+#space-events .event-listing-wrapper .authorship {
+  margin-top: 40px;
+}
+
+#space-bulletins .bulletin-listing-wrapper li:hover .authorship,
+#space-events .event-listing-wrapper li:hover .authorship {
   background: url("../images/new/blue-nipple-right.png") no-repeat;
 }
 
-#space-bulletins .bulletin-listing-wrapper li:hover .meta {
+#space-bulletins .bulletin-listing-wrapper li:hover .meta,
+#space-events .event-listing-wrapper li:hover .meta {
   background-color: #DBEFF7;
   border-color: #DBEFF7;
 }
 
-#space-bulletins .bulletin-listing-wrapper .authorship .label {
+#space-bulletins .bulletin-listing-wrapper .authorship .label,
+#space-events .event-listing-wrapper .authorship .label {
   display: block;
   font-size: .9em;
   color: #B2B2B2;
 }
 
-#space-bulletins .bulletin-listing-wrapper .authorship .owner {
+#space-bulletins .bulletin-listing-wrapper .authorship .owner,
+#space-events .event-listing-wrapper .authorship .owner {
   font-size: .9em;
   font-weight: bold;
 }
 
-#space-bulletins .bulletin-listing-wrapper .tags {
+#space-bulletins .bulletin-listing-wrapper .tags,
+#space-events .event-listing-wrapper .tags {
   margin-top: 10px;
 }
 
