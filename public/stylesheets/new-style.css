@@ -367,6 +367,8 @@
 }
 
 #bulletin .header,
+#bulletin-edit .header,
+#bulletin-new .header,
 #space-bulletins .header {
   background: url("../images/new/icon-bulletin-gray_32_32.png") no-repeat 20px center;
 }
