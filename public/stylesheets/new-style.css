@@ -366,7 +366,8 @@
   background: url("../images/new/icon-status-black_32_32.png") no-repeat 20px center;
 }
 
-#bulletin .header {
+#bulletin .header,
+#space-bulletins .header {
   background: url("../images/new/icon-bulletin-gray_32_32.png") no-repeat 20px center;
 }
 
@@ -2315,10 +2316,93 @@ table.spaced tr td {
   font-size: 1.3em;
 }
 
-
-
 #bulletin .bulletin-content {
   padding: 0 70px;
+}
+
+#space-bulletins .bulletin-listing-wrapper {
+  clear: both;
+}
+
+#space-bulletins .bulletin-listing-wrapper ul {
+  margin-bottom: 20px;
+}
+
+#space-bulletins .bulletin-listing-wrapper li {
+  margin-bottom: 10px;
+}
+
+#space-bulletins .bulletin-listing-wrapper .meta {
+  border: 1px solid #B3B2B3;
+  width: 570px;
+  float: left;
+  padding: 10px;
+
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
+#space-bulletins .bulletin-listing-wrapper .date {
+  color: #6C6D6E;
+  float: left;
+  margin-right:10px;
+  text-align: right;
+  height: 70px;
+}
+
+#space-bulletins .date .month,
+#space-bulletins .date .day,
+#space-bulletins .date .year {
+  display: block;
+}
+
+#space-bulletins .date .day {
+  font-weight: bold;
+  font-size: 1.4em;
+  margin: 2px 0;
+}
+
+#space-bulletins .bulletin-listing-wrapper .title {
+  display: block;
+  color: black;
+  font-size: 1.2em;
+}
+
+#space-bulletins .bulletin-listing-wrapper .description {
+  font-size: .9em;
+  color: #6C6D6E;
+}
+
+#space-bulletins .bulletin-listing-wrapper .authorship {
+  float: left;
+  width: 120px;
+  margin-top: 25px;
+  padding: 2px 0 2px 20px;
+}
+
+#space-bulletins .bulletin-listing-wrapper li:hover .authorship {
+  background: url("../images/new/blue-nipple-right.png") no-repeat;
+}
+
+#space-bulletins .bulletin-listing-wrapper li:hover .meta {
+  background-color: #DBEFF7;
+  border-color: #DBEFF7;
+}
+
+#space-bulletins .bulletin-listing-wrapper .authorship .label {
+  display: block;
+  font-size: .9em;
+  color: #B2B2B2;
+}
+
+#space-bulletins .bulletin-listing-wrapper .authorship .owner {
+  font-size: .9em;
+  font-weight: bold;
+}
+
+#space-bulletins .bulletin-listing-wrapper .tags {
+  margin-top: 10px;
 }
 
 #lights_dimmed {
