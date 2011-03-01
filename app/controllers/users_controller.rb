@@ -126,7 +126,11 @@ class UsersController < BaseController
 
     @beta_key = params[:beta_key]
 
-    render :action => 'new' and return if AppConfig.closed_beta_mode
+    respond_to do |format|
+      format.html do
+        render :template => 'users/new/new', :layout => 'new/clean'
+      end
+    end
   end
 
   def create
@@ -175,7 +179,7 @@ class UsersController < BaseController
           if AppConfig.closed_beta_mode
             @beta_key  = @key.key
           end
-          render :action => 'new'
+          render :template => 'users/new/new', :layout => 'new/clean'
         end
       end
     end
