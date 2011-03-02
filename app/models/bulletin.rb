@@ -31,6 +31,6 @@ class Bulletin < ActiveRecord::Base
   # VALIDATIONS
   validates_presence_of :title, :description, :owner, :bulletinable
   validates_length_of :title, :maximum => 60
-  validates_length_of :description, :maximum => 200
+  validates_length_of :description, :maximum => 5000
 
 end
