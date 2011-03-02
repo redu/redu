@@ -56,20 +56,25 @@ class EventsController < BaseController
 
   def index
     @eventable = find_eventable
-    @events = Event.approved.upcoming.paginate(:conditions => ["eventable_id = ?" \
-                                               " AND eventable_type LIKE ?",
-                                               @eventable.id,
-                                               @eventable.class.to_s],
-                                               :include => :owner,
-                                               :page => params[:page],
-                                               :order => 'start_time',
-                                               :per_page => 5)
+    @events = Event.approved.upcoming.
+      paginate(:conditions => ["eventable_id = ?" \
+                               " AND eventable_type LIKE ?",
+                               @eventable.id,
+                               @eventable.class.to_s],
+               :include => :owner,
+               :page => params[:page],
+               :order => 'start_time',
+               :per_page => AppConfig.items_per_page)
 
     @list_title = "Eventos Futuros"
 
     respond_to do |format|
-      format.html
-      format.js
+      format.html do
+        render :template => 'events/new/index', :layout => 'new/application'
+      end
+      format.js do
+        render :template => 'events/new/index'
+      end
     end
   end
 
