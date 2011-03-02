@@ -1,7 +1,19 @@
 require 'spec_helper'
 
 describe Lecture do
-  subject { Factory(:lecture) }
+  before do
+    environment = Factory(:environment)
+    course = Factory(:course, :owner => environment.owner,
+                     :environment => environment)
+    @space = Factory(:space, :owner => environment.owner,
+                     :course => course)
+    @user = Factory(:user)
+    course.join(@user)
+    @sub = Factory(:subject, :owner => @user, :space => @space)
+  end
+   
+  subject { Factory(:lecture, :subject => @sub, 
+                    :owner => @sub.owner) }
 
   it { should belong_to :owner }
   it { should belong_to(:lectureable).dependent(:destroy) }
@@ -32,9 +44,18 @@ describe Lecture do
     should respond_to :mark_as_done_for!
   end
 
+  context "callbacks" do
+    it "creates a AssertReport between the StudentProfile and the Lecture after create" do
+      subject.asset_reports.first.should_not be_nil
+      subject.asset_reports.first.
+        student_profile.user.should == subject.owner
+    end
+  end
+
   context "finders" do
     it "retrieves unpublished lectures" do
-      lectures = (1..3).collect { Factory(:lecture, :published => false) }
+      lectures = (1..3).collect { Factory(:lecture, :subject => @sub,
+                                          :published => false) }
       subject.published = 1
       lectures[2].published = 1
       subject.save
@@ -44,7 +65,9 @@ describe Lecture do
     end
 
     it "retrieves published lectures" do
-      lectures = (1..3).collect { Factory(:lecture, :published => false) }
+      lectures = (1..3).collect { Factory(:lecture,
+                                          :subject => @sub,
+                                          :published => false) }
       subject.published = 1
       lectures[2].published = 1
       subject.save
@@ -55,8 +78,9 @@ describe Lecture do
 
     it "retrieves lectures that are seminars" do
       pending "Need seminar Factory" do
-        seminars = (1..2).collect { Factory(:lecture, :lectureable => Factory(:seminar)) }
-        Factory(:lecture)
+        seminars = (1..2).collect { Factory(:lecture,:subject => @sub,
+                                            :lectureable => Factory(:seminar)) }
+        Factory(:lecture, :subject => @sub)
 
         Lecture.seminars.should == seminars
       end
@@ -64,35 +88,40 @@ describe Lecture do
 
     it "retrieves lectures that are interactive classes" do
       pending "Need interactive class Factory" do
-        interactive_classes = (1..2).collect { Factory(:lecture, :lectureable => Factory(:interactive_class)) }
-        Factory(:lecture)
+        interactive_classes = (1..2).collect { 
+          Factory(:lecture, :subject => @sub,
+                  :lectureable => Factory(:interactive_class)) }
+        Factory(:lecture, :subject => @sub)
 
         Lecture.iclasses.should == interactive_classes
       end
     end
 
     it "retrieves lectures that are pages" do
-        page = Factory(:lecture)
-        documents = (1..2).collect { Factory(:lecture, :lectureable => Factory(:document)) }
-
+        page = Factory(:lecture, :subject => @sub)
+        documents = (1..2).collect { 
+          Factory(:lecture, :subject => @sub, 
+                  :lectureable => Factory(:document)) }
         Lecture.pages.should == [page]
     end
 
     it "retrieves lectures that are documents" do
-        page = Factory(:lecture)
-        documents = (1..2).collect { Factory(:lecture, :lectureable => Factory(:document)) }
+        page = Factory(:lecture, :subject => @sub)
+        documents = (1..2).collect { 
+          Factory(:lecture, :subject => @sub,
+                  :lectureable => Factory(:document)) }
 
         Lecture.documents.should == documents
     end
 
     it "retrieves a specified limited number of lectures" do
-      lectures = (1..10).collect { Factory(:lecture) }
+      lectures = (1..10).collect { Factory(:lecture, :subject => @sub) }
       Lecture.limited(5).should have(5).items
     end
 
     it "retrieves lectures related to a specified lecture" do
-      lecture = Factory(:lecture, :name => "Item com nome")
-      lecture2 = Factory(:lecture, :name => "Item")
+      lecture = Factory(:lecture, :subject => @sub, :name => "Item com nome")
+      lecture2 = Factory(:lecture, :subject => @sub, :name => "Item")
 
       Lecture.related_to(lecture2).should == [lecture]
     end
@@ -104,10 +133,10 @@ describe Lecture do
         subject_owner = Factory(:user)
         space = Factory(:space)
         space.course.join subject_owner
-        lectures = (1..3).collect { Factory(:lecture) }
         subject1 = Factory(:subject, :owner => subject_owner,
-                           :space => space, :lectures => lectures)
-
+                           :space => space)
+        lectures = (1..3).collect { Factory(:lecture, :subject => subject1) }
+        
         user = Factory(:user)
         subject1.enroll user
 
@@ -122,9 +151,9 @@ describe Lecture do
         subject_owner = Factory(:user)
         space = Factory(:space)
         space.course.join subject_owner
-        lectures = (1..3).collect { Factory(:lecture) }
         subject1 = Factory(:subject, :owner => subject_owner,
-                           :space => space, :lectures => lectures)
+                           :space => space)
+        lectures = (1..3).collect { Factory(:lecture, :subject => subject1) }
 
         user = Factory(:user)
         subject1.enroll user

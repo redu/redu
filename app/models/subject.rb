@@ -2,9 +2,7 @@ class Subject < ActiveRecord::Base
 
   # Só é criado após o primeiro update (finalized = 0)
   # Para Redu admin o enrollment não é criado
-  after_update :create_enrollment_association, :if => "!self.finalized? and !self.owner.admin?"
-
-  after_update :create_asset_report, :if => "self.finalized?"
+  after_create :create_enrollment_association, :unless => "self.owner.admin?"
 
   belongs_to :space
   belongs_to :owner, :class_name => "User", :foreign_key => :user_id
@@ -91,19 +89,7 @@ class Subject < ActiveRecord::Base
   def create_enrollment_association
     space_assoc = self.owner.get_association_with(self.space)
     self.enrollments.create(:user => self.owner, :subject => self,
-                            :role => space_assoc.role)
-  end
-
-  def create_asset_report
-    enroll = self.owner.get_association_with(self)
-    student_profile = enroll.student_profile
-    self.lectures.each do |lecture|
-      if lecture.asset_reports.of_user(self.owner).empty?
-        student_profile.asset_reports << AssetReport.create(
-          :subject => self, :lecture => lecture)
-      end
-    end
-
+                              :role => space_assoc.role)
   end
 
 end

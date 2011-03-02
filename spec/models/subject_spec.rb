@@ -46,8 +46,8 @@ describe Subject do
   end
 
   context "callbacks" do
-    it "creates an Enrollment between the Subject and the owner after finalize it" do
-      subject.save # First update (finalize the subject)
+
+    it "creates an Enrollment between the Subject and the owner after create" do
       subject.enrollments.first.should_not be_nil
       subject.enrollments.first.user.should == subject.owner
       subject.enrollments.first.role.
@@ -55,28 +55,18 @@ describe Subject do
     end
 
     it "does NOT create an Enrollment between the Subject and the owner when update it" do
-      subject.save # First update
-      expect {
+      expect { 
         subject.save # Other updates
-      }.should_not change(Enrollment, :count)
+      }.should_not change(subject.enrollments.reload, :count)
     end
 
     it "does NOT create an Enrollment between the subject and the owner after create, if the owner is a Redu admin" do
       redu_admin = Factory(:user, :role => Role[:admin])
       expect {
-        Factory(:subject, :owner => redu_admin)
+        Factory(:subject, :owner => redu_admin, :space => @space)
       }.should_not change(Enrollment, :count)
     end
-
-    it "creates an asset_report when a new lecture is added a subject on update" do
-      subject.save
-      expect {
-        subject.lectures << Factory(:lecture, :owner => subject.owner, 
-                                   :subject => subject)
-        subject.finalized = true
-        subject.save
-      }.should change(AssetReport, :count).by(1)
-    end  
+      
   end
 
   context "finders" do
@@ -180,9 +170,7 @@ describe Subject do
 
   context "lectures" do
     it "changes lectures order" do
-      lectures = (1..4).collect { Factory(:lecture)}
-      subject = Factory(:subject, :owner => @user,
-                        :space => @space, :lectures => lectures)
+      lectures = (1..4).collect { Factory(:lecture, :subject => subject)}
       lectures_ordered = ["#{lectures[1].id}-lecture", "#{lectures[0].id}-lecture",
         "#{lectures[3].id}-lecture", "#{lectures[2].id}-lecture"]
       subject.change_lectures_order!(lectures_ordered)

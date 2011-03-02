@@ -113,8 +113,16 @@ describe User do
     end
 
     it "retrieves lectures that are not clones" do
-      lecture = Factory(:lecture, :is_clone => false, :owner => subject)
-      lecture2 = Factory(:lecture, :is_clone => true, :owner => subject)
+      environment = Factory(:environment, :owner => subject)
+      course = Factory(:course, :owner => environment.owner,
+                       :environment => environment)
+      @space = Factory(:space, :owner => environment.owner,
+                       :course => course)
+      @sub = Factory(:subject, :owner => subject, :space => @space)
+      lecture = Factory(:lecture, :subject => @sub,
+                        :is_clone => false, :owner => subject)
+      lecture2 = Factory(:lecture, :subject => @sub,
+                         :is_clone => true, :owner => subject)
       lecture.published = 1
       lecture2.published = 1
       lecture.save

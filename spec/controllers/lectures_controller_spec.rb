@@ -9,10 +9,10 @@ describe LecturesController do
     @space.course.join @subject_owner
     activate_authlogic
 
-    @lectures = (1..3).collect { Factory(:lecture, :owner => @subject_owner) }
     @subject = Factory(:subject, :owner => @subject_owner,
                        :space => @space, :finalized => true,
-                       :lectures => @lectures, :published => true)
+                       :published => true)
+    @lectures = (1..3).collect { Factory(:lecture,:subject => @subject ,:owner => @subject_owner) }
     @enrolled_user = Factory(:user)
     @space.course.join @enrolled_user
     @subject.enroll @enrolled_user

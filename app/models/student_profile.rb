@@ -26,7 +26,6 @@ class StudentProfile < ActiveRecord::Base
       :conditions => { :done => true })
 
     self.grade = (( done.to_f * 100 ) / total)
-
     if total == done
       self.grade = 100
       self.graduaded = true
