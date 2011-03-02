@@ -7,7 +7,12 @@
     </div>
     <%= link_to item.title, polymorphic_path([item.bulletinable, item]),
       :class => 'title' %>
-    <span class="description"><%= raw item.description %></span>
+    <span class="description">
+      <%= raw item.description[0..400] %>
+      <% if item.description.length > 400 %>
+        ...
+      <% end %>
+    </span>
     <ul class="tags">
       <% item.tags.each do |tag| %>
         <li><%= link_to tag, polymorphic_path([item.bulletinable]) %></li>

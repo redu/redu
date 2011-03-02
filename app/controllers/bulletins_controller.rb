@@ -32,6 +32,12 @@ class BulletinsController < BaseController
   def show
     @owner = User.find(@bulletin.owner)
     @bulletinable = find_bulletinable
+
+    respond_to do |format|
+      format.html do
+        render :template => 'bulletins/new/show', :layout => 'new/application'
+      end
+    end
   end
 
   def new
