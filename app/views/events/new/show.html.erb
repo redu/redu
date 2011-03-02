@@ -1,0 +1,74 @@
+<%= render :partial => 'spaces/new/sidebar' %>
+<div class="main grid_12 omega big-col">
+  <ol id="breadcrumbs" class="clearfix">
+    <li>
+      <%= link_to 'Home', home_user_path(current_user),
+        :class => 'replacement home icon icon-redu_r8_c227_s1' %>
+    </li>
+    <li>
+      <%= link_to @space.course.environment.name,
+        environment_path(@space.course.environment),
+        :class => 'replacement icon icon-redu_r8_c217_s1' %>
+      <li>
+        <%= link_to @space.course.name,
+          environment_course_path(@space.course.environment, @space.course),
+          :class => 'replacement icon icon-redu_r8_c313_s1' %>
+      </li>
+      <li>
+        <%= link_to @space.name, space_path(@space),
+          :class => 'icon icon-redu_r8_c307_s1' %>
+      </li>
+    </ol>
+    <%= render :partial => 'spaces/new/header',
+          :locals => { :space => @space }%>
+
+  <div id="event" class="body">
+    <div class="header">
+      <h4>Eventos</h4>
+      <span class="counter">Eventos da disciplina <%= @space.name %></span>
+    </div>
+      <div class="info">
+        <%= image_tag @event.owner.avatar(:thumb_32), :class => "avatar" %>
+        <span class="label">Autor:</span>
+        <%= link_to @event.owner.display_name, user_path(@event.owner) %>
+      </div>
+      <% if can? :manage, @event %>
+        <div class="admin-actions">
+          <%= link_to 'Editar',
+            edit_polymorphic_path([@event.eventable, @event]),
+            :class => "edit icon icon-redu_r12_c5_s1" %>
+          <%= link_to 'Remover',
+            polymorphic_path([@event.eventable, @event]),
+            :method => :delete,
+            :confirm => "Você tem certeza que deseja remover esta aula? Não será possível recuperá-la.",
+            :class => "delete icon icon-redu_r12_c43_s1" %>
+        </div>
+      <% end %>
+    <div class="details clearfix">
+      <div class="date">
+        <span class="month"><%= @event.created_at.strftime('%b') %></span>
+        <span class="day"><%= @event.created_at.day %></span>
+        <span class="year"><%= @event.created_at.year %></span>
+
+        <div class="hour">
+        <span class="label">das</span>
+        <span class="hour-from"><%= @event.start_time.strftime('%Hh%M') %></span>
+        <span class="label">às</span>
+        <span class="hour-to"><%= @event.end_time.strftime('%Hh%M') %></span>
+        </div>
+      </div>
+      <h3 class="title">Título do evento</h3>
+      <span class="localization">Centro de Informática, CIn - UFPE</span>
+      <ul class="tags clearfix">
+        <% @event.tags.each do |tag| %>
+          <li><%= link_to tag, polymorphic_path([@event.eventable, @event]) %></li>
+        <% end %>
+      </ul>
+    </div><!-- end .details -->
+
+    <div class="event-content pretty-text">
+      <%= raw @event.description %>
+    </div>
+  </div><!-- end #event -->
+
+</div><!-- end .main -->

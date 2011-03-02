@@ -52,6 +52,11 @@ class EventsController < BaseController
 
   def show
     @eventable = find_eventable
+    respond_to do |format|
+      format.html do
+        render :template => 'events/new/show', :layout => 'new/application'
+      end
+    end
   end
 
   def index
