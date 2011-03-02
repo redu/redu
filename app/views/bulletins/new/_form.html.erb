@@ -18,6 +18,10 @@
     <%= f.label raw("Palavras-chave <span class='snippet'>(separadas por vírgula)</span>") %>
     <%= f.text_field :tag_list %>
 
-    <%= f.submit "Criar notícia" %>
+    <% if bulletin.new_record? %>
+      <%= f.submit "Criar notícia" %>
+    <% else %>
+      <%= f.submit "Salvar notícia" %>
+    <% end %>
   </fieldset>
 <% end %>

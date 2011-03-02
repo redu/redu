@@ -1,3 +1,7 @@
+<% content_for :header_scripts_and_styles do %>
+  <%= javascript_include_tag :ckeditor %>
+<% end %>
+
 <%= render :partial => "#{@eventable.class.to_s.downcase + 's'}/new/sidebar" %>
 <div class="main grid_12 omega big-col">
   <ol id="breadcrumbs" class="clearfix">
@@ -20,30 +24,14 @@
       </li>
     </ol>
     <%= render :partial => 'spaces/new/header',
-          :locals => { :space => @space }%>
-
-  <div id="space-events" class="body">
-    <div class="header">
-      <h4>Eventos</h4>
-      <span class="counter">
-        <%= pluralize(@eventable.events.length, 'evento') %>
-      </span>
-    </div>
-    <% if can? :manage, @eventable %>
-      <div class="admin-actions">
-        <%= link_to 'Criar novo evento',
-          new_polymorphic_path([@eventable, Event.new]),
-          :class => 'button vanilla' %>
+      :locals => { :space => @space }%>
+    <div id="bulletin-new" class="hierarchy-listing-wrapper">
+      <div class="header">
+        <h4>Eventos</h4>
+        <span class="counter">Editar evento</span>
       </div>
-    <% end %>
 
-    <div id="events_list" class="event-listing-wrapper clearfix">
-      <ul>
-        <%= render :partial => 'events/new/item', :collection => @events %>
-      </ul>
-      <%= will_paginate @events, :renderer => EndlessRenderer %>
-    </div>
-
-  </div><!-- end #event -->
-
-</div><!-- end .main -->
+      <%= render :partial => "events/new/form",
+        :locals => {:eventable => @eventable,  :event => @event }%>
+    </div><!-- #event-edit -->
+  </div><!-- end main -->

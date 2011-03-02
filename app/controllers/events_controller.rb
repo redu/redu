@@ -100,10 +100,22 @@ class EventsController < BaseController
 
   def new
     @eventable = find_eventable
+
+    respond_to do |format|
+      format.html do
+        render :template => 'events/new/new', :layout => 'new/application'
+      end
+    end
   end
 
   def edit
     @eventable = find_eventable
+
+    respond_to do |format|
+      format.html do
+        render :template => 'events/new/edit', :layout => 'new/application'
+      end
+    end
  end
 
   def create
@@ -126,7 +138,9 @@ class EventsController < BaseController
         format.xml  { render :xml => @event, :status => :created, :location => @event }
       else
         @eventable = @event.eventable
-        format.html { render :action => "new" }
+        format.html do
+          render :template => 'events/new/new', :layout => 'new/application'
+        end
         format.xml  { render :xml => @event.errors, :status => :unprocessable_entity }
       end
     end
@@ -140,7 +154,11 @@ class EventsController < BaseController
         format.html { redirect_to polymorphic_path([@event.eventable, @event]) }
         format.xml { render :xml => @event, :status => :created, :location => @event }
       else
-        format.html { render :action => :edit }
+        @eventable = find_eventable
+        format.html do
+          render :template => 'events/new/edit',
+          :layout => 'new/application'
+        end
         format.xml { render :xml => @event.errors, :status => :unprocessable_entity }
       end
     end

@@ -57,8 +57,8 @@
         <span class="hour-to"><%= @event.end_time.strftime('%Hh%M') %></span>
         </div>
       </div>
-      <h3 class="title">Título do evento</h3>
-      <span class="localization">Centro de Informática, CIn - UFPE</span>
+      <h3 class="title"><%= @event.name %></h3>
+      <span class="localization"><%= @event.location %></span>
       <ul class="tags clearfix">
         <% @event.tags.each do |tag| %>
           <li><%= link_to tag, polymorphic_path([@event.eventable, @event]) %></li>
