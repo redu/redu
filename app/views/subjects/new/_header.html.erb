@@ -1,12 +1,13 @@
+<%# Locals: space e subject %>
 <div id="hierarchy-header" class="clearfix subject-header">
   <span class="prefix"><%= subject.space.course.environment.name %> > <%= subject.space.course.name %>
     > <%= subject.space.name %>
   </span>
   <h3 class="call subject-name"><%= subject.title %></h3>
 
-  <% if current_user.enrolled?(@subject) and
-    !current_user.get_association_with(@subject).student_profile.graduaded? %>
-      <%= link_to "Abandonar", unenroll_space_subject_path(@space, @subject),
+  <% if current_user.enrolled?(subject) and
+    !current_user.get_association_with(subject).student_profile.graduaded? %>
+      <%= link_to "Abandonar", unenroll_space_subject_path(space, subject),
       :confirm => "Tem certeza? Todas as suas informações vinculadas a este módulo serão perdidas." %>
   <% end %>
 
