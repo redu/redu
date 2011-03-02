@@ -33,12 +33,14 @@
     <% if @subject.published? && !current_user.enrolled?(@subject) %>
       <%= link_to "Participar",
         enroll_space_subject_path(@space, @subject),
+        :method => :post,
         :class => "important" %>
     <% else %>
       <% if current_user.enrolled?(@subject) and
       !current_user.get_association_with(@subject).student_profile.graduaded? %>
         <%= link_to "Abandonar",
             unenroll_space_subject_path(@space, @subject),
+            :method => :post,
             :confirm => "Tem certeza? Todas as suas informações vinculadas a este módulo serão perdidas.",
             :class => "important" %>
       <% end %>

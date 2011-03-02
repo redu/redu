@@ -43,7 +43,7 @@ describe SubjectsController do
     end
     it "loads that subject" do
       get :show, :locale => "pt-BR", :space_id => @space.id,
-                                     :id => @subject.id
+        :id => @subject.id
       assigns[:subject].should == @subject
     end
   end
@@ -195,13 +195,13 @@ describe SubjectsController do
 
     it "destroys the subject" do
       delete :destroy, :locale => "pt-BR", :id => @subject.id,
-             :space_id => @space.id
+        :space_id => @space.id
       Subject.all.should_not include(@subject)
     end
 
     it "redirects to index" do
       delete :destroy, :locale => "pt-BR", :id => @subject.id,
-             :space_id => @space.id
+        :space_id => @space.id
       response.should redirect_to(space_subjects_path(@subject.space))
     end
   end
@@ -213,7 +213,7 @@ describe SubjectsController do
     end
     it "assigns the subject" do
       get :admin_lectures_order, :locale => "pt-BR", :id => @subject.id,
-             :space_id => @space.id
+        :space_id => @space.id
       assigns[:subject].should == @subject
     end
   end
@@ -273,7 +273,7 @@ describe SubjectsController do
     end
   end
 
-  context "GET 'enroll'" do
+  context "when enrolling" do
     before do
       @subject = Factory(:subject, :owner => @subject_owner,
                          :space => @space, :finalized => true,
@@ -282,20 +282,25 @@ describe SubjectsController do
       @enrolled_user = Factory(:user)
       Factory(:user_space_association, :space => @space,
               :user => @enrolled_user)
-      get :enroll, :locale => "pt-BR", :id => @subject.id,
-        :space_id => @space.id
     end
 
-    it "assigns the subject" do
-      assigns[:subject].should == @subject
-    end
+    context "POST 'enroll'" do
+      before do
+        post :enroll, :locale => "pt-BR", :id => @subject.id,
+          :space_id => @space.id
+      end
 
-    it "redirects to 'show'" do
-      response.should redirect_to(space_subject_path(@space, @subject))
+      it "assigns the subject" do
+        assigns[:subject].should == @subject
+      end
+
+      it "redirects to 'show'" do
+        response.should redirect_to(space_subject_path(@space, @subject))
+      end
     end
   end
 
-  context "GET 'unenroll'" do
+  context "when unenrolling" do
     before do
       @subject = Factory(:subject, :owner => @subject_owner,
                          :space => @space, :finalized => true,
@@ -305,16 +310,21 @@ describe SubjectsController do
       @course.join(@enrolled_user)
       @subject.enroll(@enrolled_user)
       UserSession.create @enrolled_user
-      get :unenroll, :locale => "pt-BR", :id => @subject.id,
-        :space_id => @space.id
     end
 
-    it "assigns the subject" do
-      assigns[:subject].should == @subject
-    end
+    context "POST 'unenroll'" do
+      before do
+        post :unenroll, :locale => "pt-BR", :id => @subject.id,
+          :space_id => @space.id
+      end
 
-    it "redirects to 'show'" do
-      response.should redirect_to(space_subject_path(@space, @subject))
+      it "assigns the subject" do
+        assigns[:subject].should == @subject
+      end
+
+      it "redirects to 'show'" do
+        response.should redirect_to(space_subject_path(@space, @subject))
+      end
     end
   end
 end

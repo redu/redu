@@ -101,8 +101,8 @@ ActionController::Routing::Routes.draw do |map|
                    :destroy_file => :delete,
                    :do_the_upload => [:post, :put]}
     space.resources :subjects,
-      :member => { :enroll => :get,
-                   :unenroll => :get,
+      :member => { :enroll => :post,
+                   :unenroll => :post,
                    :publish => :get,
                    :unpublish => :post,
                    :admin_lectures_order => [ :get, :post ],
