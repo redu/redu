@@ -73,6 +73,7 @@ pt-BR:
             password:
               blank: ": Por favor, digite a senha."
               too_short: ": Senha muito curta (mínimo de 6 caracteres)."
+              confirmation: ": A confirmação não confere."
             password_confirmation:
               blank: ": Por favor, digite a senha de confirmação."
               too_short: ": Senha muito curta (mínimo de 6 caracteres)."
@@ -1333,7 +1334,7 @@ pt-BR:
   #en: showing_users: Showing users
   showing_users: Showing users
   #en: sign_up: Sign Up!
-  sign_up: Cadastre-se!
+  sign_up: Cadastrar Nova Conta
   #en: sign_up_for_an_account: Sign up for an account.
   sign_up_for_an_account: Sign up for an account.
   #en: sign_up_for_a_: Sign up for a
