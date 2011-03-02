@@ -17,11 +17,15 @@ class BulletinsController < BaseController
                                    @bulletinable.id, @bulletinable.class.to_s],
                                    :page => params[:page],
                                    :order => 'created_at DESC',
-                                   :per_page => 5)
+                                   :per_page => AppConfig.items_per_page)
 
     respond_to do |format|
-      format.html
-      format.js
+      format.html do
+        render :template => 'bulletins/new/index', :layout => 'new/application'
+      end
+      format.js do
+        render :template => 'bulletins/new/index'
+      end
     end
   end
 
