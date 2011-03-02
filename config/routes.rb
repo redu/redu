@@ -103,7 +103,7 @@ ActionController::Routing::Routes.draw do |map|
     space.resources :subjects,
       :member => { :enroll => :get,
                    :unenroll => :get,
-                   :publish => :get,
+                   :publish => :post,
                    :unpublish => :post,
                    :admin_lectures_order => [ :get, :post ],
                    :infos => :get,

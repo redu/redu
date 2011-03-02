@@ -238,12 +238,12 @@ describe SubjectsController do
     end
   end
 
-  context "GET 'publish'" do
+  context "POST 'publish'" do
     before do
       @subject = Factory(:subject, :owner => @subject_owner,
                          :finalized => true ,:space => @space)
       lecture = Factory(:lecture, :owner => @user, :subject => @subject)
-      get :publish, :locale => "pt-BR", :id => @subject.id,
+      post :publish, :locale => "pt-BR", :id => @subject.id,
         :space_id => @space.id
     end
 
@@ -256,12 +256,12 @@ describe SubjectsController do
     end
   end
 
-  context "GET 'unpublish'" do
+  context "POST 'unpublish'" do
     before do
       @subject = Factory(:subject, :owner => @subject_owner,
                          :space => @space, :finalized => true)
       lecture = Factory(:lecture, :owner => @user, :subject => @subject)
-      get :unpublish, :locale => "pt-BR", :id => @subject.id, :space_id => @space.id
+      post :unpublish, :locale => "pt-BR", :id => @subject.id, :space_id => @space.id
     end
 
     it "assigns the subject" do

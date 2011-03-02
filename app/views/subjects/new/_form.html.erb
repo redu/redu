@@ -25,9 +25,12 @@
       <% if @subject.published? %>
         <div class="box_notice">
           Você não pode editar o conteúdo do módulo, pois ele está publicado. Para despublicá-lo,
-          clique <%= link_to 'aqui', unpublish_space_subject_path(@space, @subject),
-          :confirm => "Ao despublicar um módulo, todas as matrículas serão perdidas." + \
-          " Tem certeza?" %>.
+          clique <%= link_to "aqui", unpublish_space_subject_path(@space, @subject),
+      :confirm => "Ao despublicar um módulo, todas as matrículas serão perdidas." + \
+      " Tem certeza?",
+      :method => "post",
+      :class => "button" %>
+
         </div>
         <%= render :partial => 'lectures/item_created', :collection => @subject.lectures,
           :locals => { :published => true } %>
