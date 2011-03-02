@@ -35,7 +35,7 @@ describe Course do
   #FIXME Não funciona por problemas de tradução (ver bug #17)
   xit { should validate_uniqueness_of(:name).scoped_to :environment_id}
   xit { should validate_uniqueness_of(:path).scoped_to :environment_id}
-  it { should ensure_length_of(:name).is_at_most 40 }
+  it { should ensure_length_of(:name).is_at_most 60 }
   it { should ensure_length_of(:description).is_at_most 250 }
 
   it { should_not allow_mass_assignment_of :owner }
