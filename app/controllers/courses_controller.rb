@@ -24,6 +24,7 @@ class CoursesController < BaseController
   end
 
   def edit
+    @header_course = @course.clone
 
     respond_to do |format|
       format.html do
@@ -43,6 +44,8 @@ class CoursesController < BaseController
   end
 
   def update
+    @header_course = @course.clone
+
     respond_to do |format|
       if @course.update_attributes(params[:course])
         if params[:course][:subscription_type].eql? "1" # Entrada de membros passou a ser livre, aprovar todos os membros pendentes

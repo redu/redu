@@ -1,25 +1,27 @@
-<script type="text/javascript" charset="utf-8">
-//<![CDATA[
-$(document).ready(function(){
-  $("#course_path").bind('keyup blur', function(e){
-    var slug = $(this).slug()
-    $(this).val(slug);
-  })
+<% content_for :header_scripts_and_styles do %>
+  <script type="text/javascript" charset="utf-8">
+    //<![CDATA[
+  $(document).ready(function(){
+      $("#course_path").bind('keyup blur', function(e){
+        var slug = $(this).slug()
+        $(this).val(slug);
+        })
 
-  $("#course_path").bind('keyup blur', function(){
-    var slug = $(this).slug()
-    $("#url_preview .course").html(slug);
-  })
+      $("#course_path").bind('keyup blur', function(){
+        var slug = $(this).slug()
+        $("#url_preview .course").html(slug);
+        })
 
-  $("#course_name").bind('keyup blur', function(e){
-    var slug = $(this).slug()
-    $("#course_path").val(slug);
-    $("#url_preview .course").html(slug);
-  })
+      $("#course_name").bind('keyup blur', function(e){
+        var slug = $(this).slug()
+        $("#course_path").val(slug);
+        $("#url_preview .course").html(slug);
+        })
 
-})
+      })
 //]]>
 </script>
+<% end %>
 
 <%= render :partial => 'courses/new/sidebar' %>
 <div class="main grid_12 omega big-col">
@@ -37,7 +39,8 @@ $(document).ready(function(){
         :class => 'icon icon-redu_r8_c313_s1' %>
     </li>
   </ol>
-  <%= render :partial => 'courses/new/header' %>
+  <%= render :partial => 'courses/new/header',
+    :locals => { :course => @header_course } %>
   <div id="course-manage" class="body">
     <div class="header">
       <h4>Gerenciamento</h4>

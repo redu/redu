@@ -85,6 +85,8 @@ pt-BR:
           attributes:
             path:
               invalid: ": caminho inválido."
+            description:
+              too_short: " muito curta."
         subject:
           attributes:
             description:

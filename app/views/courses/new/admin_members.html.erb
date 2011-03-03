@@ -22,7 +22,8 @@
         :class => 'icon icon-redu_r8_c313_s1' %>
     </li>
   </ol>
-  <%= render :partial => 'courses/new/header' %>
+  <%= render :partial => 'courses/new/header',
+    :locals => { :course => @course } %>
   <div id="course-manage" class="body">
     <div class="header">
       <h4>Gerenciamento</h4>

@@ -86,6 +86,7 @@ class Course < ActiveRecord::Base
   end
 
   def to_param
+    return self.id.to_s if self.path.empty?
     self.path
   end
 
