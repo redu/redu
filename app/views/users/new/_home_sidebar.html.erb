@@ -14,7 +14,7 @@
       </div>
     </li>
     <li>
-      <div class="<%= (current_page? :controller => :messages, :action => :index) ?
+      <div class="<%= (current_page? user_messages_path(current_user)) ?
         "session selected".to_s : "session".to_s %>">
         <%= link_to "Mensagens (#{current_user.unread_message_count})",
           user_messages_path(current_user),

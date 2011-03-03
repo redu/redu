@@ -1,8 +1,11 @@
 <% content_for :header_scripts_and_styles do %>
   <%= javascript_include_tag :ckeditor %>
 <% end %>
-
-<%= render :partial => 'spaces/new/sidebar' %>
+<% if @course %>
+  <%= render :partial => 'spaces/new/sidebar' %>
+<% else %>
+  <%= render :partial => 'environments/new/sidebar' %>
+<% end %>
 <div class="main grid_12 omega big-col">
   <ol id="breadcrumbs" class="clearfix">
     <li>

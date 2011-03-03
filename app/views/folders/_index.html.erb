@@ -78,7 +78,7 @@ Total de <%= @files_count %> arquivos. Usando <%= @total_size %> MB de 2 GB (<%=
 
 <%  if current_user.can_manage? @space %>
   <div id="folder_rights" style="display:none;position:relative;"><div>
-      <% form_tag :action => 'update_permissions', :id => params[:id] do %>
+      <% form_tag update_permissions_space_folder_path(@space, @folder) do %>
         <table>
           <tr>
             <th></th>
