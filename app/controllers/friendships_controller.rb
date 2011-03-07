@@ -15,8 +15,13 @@ class FriendshipsController < BaseController
       end
       format.js do
         render :update do |page|
+          if current_user.friends? @user
           page.insert_html :after, 'follow_link',
-           'Aguardando aceitação'
+           'É seu amigo'
+          else
+          page.insert_html :after, 'follow_link',
+            (link_to 'Aguardando aceitação', nil, :class => 'waiting')
+          end
           page.remove 'follow_link'
         end
       end

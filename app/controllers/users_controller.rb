@@ -109,13 +109,17 @@ class UsersController < BaseController
       redirect_to removed_page_path and return
     end
 
-    @statuses = @user.recent_activity(params[:page])
+    @statuses = @user.profile_activity(params[:page])
     @statusable = @user
     @status = Status.new
 
     respond_to do |format|
-      format.html
-      format.js {render :template => "statuses/index"}
+      format.html do
+        render :template => 'users/new/show', :layout => 'new/application'
+      end
+      format.js do
+        render :template => 'users/new/show'
+      end
     end
   end
 
@@ -490,7 +494,7 @@ class UsersController < BaseController
 
   def home
     @friends = current_user.friends.paginate(:page => 1, :per_page => 9)
-    @statuses = current_user.recent_activity(params[:page])
+    @statuses = current_user.home_activity(params[:page])
     @status = Status.new
 
     respond_to do |format|

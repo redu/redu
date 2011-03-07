@@ -35,7 +35,7 @@ pt-BR:
       role:
         admin: "Administrador"
         moderator: "Moderador"
-        member: "Membro"
+        member: "Estudante"
         environment_admin: "Administrador do ambiente"
         course_admin: "Administrador dos cursos"
         teacher: "Professor"

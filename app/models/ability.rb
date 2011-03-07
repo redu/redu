@@ -156,7 +156,7 @@ class Ability
       # Caso seja o Status de usuário, apenas ele mesmo pode criá-lo.
       can :create, Status do |status|
         ((status.statusable.class.to_s.eql? 'User') && \
-         (user == status.statusable)) ||
+         (user == status.statusable || user.friends?(status.statusable))) ||
           # Caso geral (Spaces, Subjects, etc.)
           (user.has_access_to? status.statusable)
       end

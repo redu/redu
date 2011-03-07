@@ -1,0 +1,138 @@
+<%= render :partial => 'users/new/profile_sidebar' %>
+
+<div class="main grid_10 omega" style="width: 580px;">
+  <div id="profile">
+    <div class="vcard clearfix">
+      <h5 class="name"><%= @user.display_name %></h5>
+      <div class="actions">
+        <% unless current_user == @user %>
+          <%= link_to 'Enviar mensagem', new_user_message_path(@user),
+            :class => 'send-message' %>
+        <% end %>
+
+        <%= image_tag 'spinner.gif', :style => 'display: none;',
+          :id => 'spinner' %>
+        <% if current_user.friends?(@user) %>
+          É seu amigo
+        <% elsif current_user != @user %>
+              <% friendship = @user.friendship_for current_user %>
+              <% if friendship %>
+                <% if friendship.status == 'pending' %>
+                  <a class="waiting">Aguardando aceitação</a>
+                <% elsif friendship.status == 'requested' %>
+                <%= link_to_remote 'Aceitar pedido de amizade',
+                  :url => user_friendships_path(@user),
+                  :loading => "$('#spinner').show();",
+                  :success => "$('#spinner').hide();",
+                  :html =>{ :class => "waiting",
+                            :id => "follow_link"} %>
+                <% end %>
+              <% else %>
+                <%= link_to_remote 'Adicionar aos amigos',
+                  :url => user_friendships_path(@user),
+                  :loading => "$('#spinner').show();",
+                  :success => "$('#spinner').hide();",
+                  :html =>{ :class => "add-as-friend",
+                            :id => "follow_link"} %>
+              <% end %>
+        <% end %>
+      </div>
+      <span class="occupation">Profissão</span>
+      <div class="bio-wrapper clearfix">
+        <span class="label">O que faço de melhor:</span>
+        <span class="bio"><%= @user.description %></span>
+        <span class="label">Interesses:</span>
+        <ul class="tags clearfix">
+          <% @user.tags.each do |tag| %>
+            <li>
+              <%= link_to tag, user_path(@user) %>
+            </li>
+          <% end %>
+        </ul>
+      </div><!-- end .bio-wrapper -->
+    </div><!-- end .vcard -->
+
+    <% if (current_user == @user) || (current_user.friends? @user) %>
+      <%= render :partial => 'statuses/new/create_status',
+        :locals => { :statusable => @user } %>
+      <div id="statuses" class="statuses">
+        <ol>
+          <%= render :partial => 'statuses/new/item', :collection => @statuses %>
+        </ol>
+
+        <%= will_paginate @statuses, :renderer => EndlessRenderer %>
+      </div><!-- end .statuses -->
+    <% end %>
+  </div><!-- end #profile -->
+
+</div><!-- end .main -->
+<div class="secondary-sidebar profile-sidebar">
+  <% if can? :manage, @user %>
+    <% unless @user.completeness == 100 %>
+      <div class="incomplete-profile">
+        <em>Seu perfil ainda não está completo</em>
+        <div class="progress">
+          <div class="completed" style="width: <%= @user.completeness %>%;">
+            <span> <%= @user.completeness %>%</span>
+          </div>
+        </div>
+        <%= link_to 'Preencher perfil', edit_user_path(@user),
+          :class => 'edit icon icon-redu_r12_c5_s1' %>
+      </div>
+    <% end %>
+  <% end %>
+  <% if @user.curriculum_file_name %>
+    <div class="curriculum">
+      <div class="call">
+        <span class="">Curriculum vitae</span>
+      </div>
+      <%= link_to 'Download', download_curriculum_user_path(@user),
+        :class => 'button clean download' %>
+    </div>
+  <% end %>
+  <div class="environments">
+    <div class="call">
+      <span class="">Ambientes</span>
+    </div>
+    <ul>
+      <% @user.environments.each do |environment| %>
+      <li>
+        <%= image_tag environment.avatar.url(:thumb_32), :class => 'avatar' %>
+        <%= link_to environment.initials, environment_path(environment),
+          :class => 'initials' %>
+        <%= link_to environment.name, environment_path(environment),
+          :class => 'environment' %>
+
+        <ul class="courses">
+          <% @user.courses.of_environment(environment).each do |course| %>
+          <li>
+            <%= link_to course.name,
+              environment_course_path(environment, course),
+              :class => 'course' %>
+            <span class="role">
+              <%= Role.human_attribute_name(@user.get_association_with(course).
+                                            role.name) %>
+            </span>
+          </li>
+          <% end %>
+        </ul>
+      </li>
+      <% end %>
+    </ul>
+  </div>
+  <% unless current_user == @user %>
+    <div class="common-connections">
+      <div class="call">
+        <span class="">Contatos em Comum</span>
+      </div>
+      <ul>
+        <% current_user.friends_in_common_with(@user).each do |friend| %>
+          <li class="clearfix">
+            <%= image_tag friend.avatar.url(:thumb_32), :class => 'avatar' %>
+            <%= link_to friend.display_name, user_path(friend), :class => 'name' %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+</div><!-- end .offering -->

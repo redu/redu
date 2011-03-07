@@ -59,11 +59,11 @@
   -->
 
   <% field_set_tag "Sobre" do %>
-    <%= label_tag :description, "Fale sobre você", :size => "50x3" %>
+    <%= label_tag :description, "O que faço de melhor", :size => "50x3" %>
     <em><%= "Escreva sobre o que você gosta de estudar, as áreas de interesse e conhecimento" %></em>
     <%= f.text_area :description, :rows => "3", :cols => "50"  %>
 
-    <%= label_tag :tag_list, :tags.l %>
+    <%= label_tag :tag_list, "Interesses" %>
     <%= text_field_tag 'tag_list', @user.tag_list%>
 
 
