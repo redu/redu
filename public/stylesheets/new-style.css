@@ -324,7 +324,7 @@
 .hierarchy-listing-wrapper .header,
 .body .header {
   padding-left: 70px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   float: left;
   width: 520px;
 }
@@ -340,6 +340,80 @@
 .body .admin-actions {
   width: 145px;
   float: left;
+}
+
+.hierarchy-preview {
+
+}
+
+.hierarchy-preview .call {
+  display: block;
+  clear: both;
+  font-size: 1.3em;
+  font-weight: normal;
+  padding-left: 25px;
+  float: left;
+  margin-bottom: 10px;
+}
+
+.hierarchy-preview .count {
+  margin-left: 10px;
+  margin-top: 3px;
+  color: #B2B1B2;
+  font-size: .9em;
+  display: block;
+  float: left;
+}
+
+.hierarchy-preview .preview-listing {
+  padding-bottom: 20px;
+  border-bottom: 1px dotted #B2B1B2;
+  margin-bottom: 20px;
+  clear: both;
+}
+
+.hierarchy-preview .preview-listing li {
+  border: 1px solid #B2B1B2;
+  margin: 5px 0;
+  padding: 10px 15px;
+
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+
+.hierarchy-preview .preview-listing li:hover {
+  background-color: #DAEEF6;
+  border-color: #DAEEF6;
+}
+
+.hierarchy-preview .preview-listing .name {
+  display: block;
+  float: left;
+  width: 590px;
+}
+
+.hierarchy-preview .preview-listing a {
+  font-size: 1.1em;
+  color: black;
+}
+
+.hierarchy-preview .preview-listing .info {
+  float: left;
+  padding: 0 10px;
+  border-left: 1px dotted #B2B1B2;
+  font-size: .9em;
+  text-align: right;
+}
+
+.hierarchy-preview .preview-listing .label {
+  font-weight: normal;
+  color: #B2B2B2;
+  font-style: oblique;
+}
+
+.hierarchy-preview .preview-listing .value {
+  color: #6C6D6E;
+  font-weight: bold;
 }
 
 #environment-courses .header,
@@ -384,6 +458,10 @@
 #event .header,
 #space-events .header {
   background: url("../images/new/icon-event-gray_32_32.png") no-repeat 20px center;
+}
+
+#course-preview .header {
+  background: url("../images/new/icon-preview-gray_32_32.png") no-repeat 20px center;
 }
 
 #resource .header,
