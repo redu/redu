@@ -1,8 +1,4 @@
-<% if @sidebar_preview %>
-  <%= render :partial => 'courses/new/preview_sidebar' %>
-<% else %>
-  <%= render :partial => 'courses/new/sidebar' %>
-<% end %>
+<%= render :partial => 'courses/new/preview_sidebar' %>
 
 <div class="main grid_12 omega big-col">
   <ol id="breadcrumbs" class="clearfix">
@@ -20,22 +16,22 @@
     </li>
   </ol>
   <%= render :partial => 'courses/new/header',
-    :locals => { :course => @course }%>
-  <div id="course-users" class="hierarchy-listing-wrapper">
+    :locals => { :course => @course }  %>
+  <div id="course-preview" class="hierarchy-preview body">
     <div class="header">
-      <h4>Membros</h4>
-      <span class="counter">
-        <%= @course.approved_users.length %> pessoas fazem parte de
-        <%= @course.name %>
-      </span>
+      <h4>Pré-visualização</h4>
     </div>
 
-    <ul id="users_list" class="members clearfix">
-      <%= render :partial => 'users/new/item',
-        :collection => @users, :locals => {:entity => @course} %>
+    <h3 class="call icon icon-redu_r8_c309_s1">Disciplinas</h3>
+    <span class="count">
+      (<%= pluralize(@course.spaces.length, 'disciplina') + " " +
+       (pluralize @course.spaces.length,'disponível').split(' ')[1] %>)
+    </span>
+    <ul class="preview-listing">
+      <%= render :partial => 'spaces/new/item_short',
+        :collection => @spaces %>
     </ul>
-
-    <%= will_paginate @users, :renderer => EndlessRenderer %>
+    <%= will_paginate @spaces, :renderer => EndlessRenderer %>
   </div><!-- end #environment-courses -->
 
 </div><!-- end .main -->

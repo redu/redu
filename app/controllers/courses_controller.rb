@@ -146,6 +146,17 @@ class CoursesController < BaseController
 
   # Visão do Course para usuários não-membros.
   def preview
+    @spaces = @course.spaces.paginate(:page => params[:page],
+                                      :order => 'name ASC',
+                                      :per_page => AppConfig.items_per_page)
+    respond_to do |format|
+      format.html do
+        render :template => 'courses/new/preview', :layout => 'new/application'
+      end
+      format.js do
+        render :template => 'courses/new/preview'
+      end
+    end
   end
 
   # Aba Disciplinas.
@@ -357,6 +368,8 @@ class CoursesController < BaseController
 
   # Listagem de usuários do Course
   def users
+    @sidebar_preview = true if params.has_key?(:preview) &&
+                              params[:preview] == 'true'
     @users = @course.approved_users.
       paginate(:page => params[:page], :order => 'first_name ASC', :per_page => 18)
 
