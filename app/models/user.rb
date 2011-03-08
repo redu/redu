@@ -142,7 +142,8 @@ class User < ActiveRecord::Base
   validates_date :birthday, :before => 13.years.ago.to_date
   validates_acceptance_of :tos
   validates_attachment_size :curriculum, :less_than => 10.megabytes
-  validate_on_update :accepted_curriculum_type
+  validate_on_update :accepted_curriculum_type,
+    :unless => "self.curriculum_file_name.nil?"
 
   # override activerecord's find to allow us to find by name or id transparently
   def self.find(*args)
@@ -777,7 +778,6 @@ class User < ActiveRecord::Base
   end
 
   def accepted_curriculum_type
-    return unless self.teacher_profile?
     unless SUPPORTED_CURRICULUM_TYPES.include?(self.curriculum_content_type)
       self.errors.add(:curriculum, "Formato inválido")
     end
