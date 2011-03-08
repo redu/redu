@@ -271,12 +271,16 @@
 
 #hierarchy-header .prefix,
 #hierarchy-header .initials {
+  display: block;
   font-size: .8em;
   text-transform: uppercase;
 }
 
 #hierarchy-header .course-name {
   margin-top: 5px;
+  width: 570px;
+  margin-right: 10px;
+  float: left;
 }
 
 #hierarchy-header .subject-name {
