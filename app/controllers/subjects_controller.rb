@@ -188,9 +188,17 @@ class SubjectsController < BaseController
   end
 
   def unenroll
-    @subject.unenroll(current_user)
+    if params.has_key?(:users)
+      params[:users].each do |user_id|
+        user = User.find(user_id)
+        @subject.unenroll(user)
+      end
+    else
+      user = User.find(params[:user_id])
+      @subject.unenroll(user)
+    end
     flash[:notice] = "Você desmatriculado do módulo."
-    redirect_to space_subject_path(@space, @subject)
+    redirect_to admin_members_space_subject_path(@space, @subject)
   end
 
   def admin_lectures_order
@@ -200,6 +208,19 @@ class SubjectsController < BaseController
 
     flash[:notice] = "A ordem das aulas foi atualizada."
     redirect_to admin_lectures_order_space_subject_path(@space, @subject)
+  end
+
+  def admin_members
+    @memberships = @subject.members.paginate(:page => params[:page],
+                                :order => 'first_name ASC',
+                                :per_page => AppConfig.items_per_page)
+    respond_to do |format|
+      format.html do
+        render :template => "subjects/new/admin_members",
+               :layout=> "new/application"
+      end
+      format.js { render :template => "subjects/new/admin_members" }
+    end
   end
 
   def next_lecture

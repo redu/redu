@@ -102,13 +102,14 @@ ActionController::Routing::Routes.draw do |map|
                    :do_the_upload => [:post, :put]}
     space.resources :subjects,
       :member => { :enroll => :get,
-                   :unenroll => :get,
+                   :unenroll => :post,
                    :publish => :post,
                    :unpublish => :post,
                    :admin_lectures_order => [ :get, :post ],
                    :infos => :get,
                    :statuses => :get,
-                   :users => :get },
+                   :users => :get,
+                   :admin_members => :get },
         :collection => {:cancel => :get} do |subject|
       subject.resources :lectures,
         :member => { :rate => :post,

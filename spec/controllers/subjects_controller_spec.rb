@@ -178,7 +178,8 @@ describe SubjectsController do
       end
 
       it "re-renders 'edit'" do
-        put :update, :locale => "pt-BR", :id => @subject.id,
+        put :update, :locale => "pt-BR", :format => 'js',
+          :id => @subject.id,
           :space_id => @space.id,
           :subject => { :description => "short description" }
         response.should render_template('subjects/new/update_error')
@@ -238,6 +239,24 @@ describe SubjectsController do
     end
   end
 
+  context "GET 'admin_members'" do
+    before do
+      @subject = Factory(:subject, :owner => @subject_owner,
+                         :space => @space, :finalized => true)
+    end
+    it "assigns the subject" do
+      get :admin_members, :locale => "pt-BR", :id => @subject.id,
+        :space_id => @space.id
+      assigns[:subject].should == @subject
+    end   
+
+    it "assigns the memberships" do
+      get :admin_members, :locale => "pt-BR", :id => @subject.id,
+        :space_id => @space.id
+      assigns[:memberships].should == @subject.members
+    end   
+  end
+
   context "POST 'publish'" do
     before do
       @subject = Factory(:subject, :owner => @subject_owner,
@@ -295,7 +314,7 @@ describe SubjectsController do
     end
   end
 
-  context "GET 'unenroll'" do
+  context "POST 'unenroll' when a show/info subject" do
     before do
       @subject = Factory(:subject, :owner => @subject_owner,
                          :space => @space, :finalized => true,
@@ -305,8 +324,8 @@ describe SubjectsController do
       @course.join(@enrolled_user)
       @subject.enroll(@enrolled_user)
       UserSession.create @enrolled_user
-      get :unenroll, :locale => "pt-BR", :id => @subject.id,
-        :space_id => @space.id
+      post :unenroll, :locale => "pt-BR", :id => @subject.id,
+        :space_id => @space.id, :user_id => @enrolled_user.id
     end
 
     it "assigns the subject" do
@@ -314,7 +333,30 @@ describe SubjectsController do
     end
 
     it "redirects to 'show'" do
-      response.should redirect_to(space_subject_path(@space, @subject))
+      response.should redirect_to(admin_members_space_subject_path(@space, @subject))
+    end
+  end
+
+  context "POST 'unenroll' when a administrative panel" do
+    before do
+      @subject = Factory(:subject, :owner => @subject_owner,
+                         :space => @space, :finalized => true,
+                         :published => 1)
+      lecture = Factory(:lecture, :owner => @user, :subject => @subject)
+      @enrolled_user = Factory(:user)
+      @course.join(@enrolled_user)
+      @subject.enroll(@enrolled_user)
+      UserSession.create @enrolled_user
+      post :unenroll, :locale => "pt-BR", :id => @subject.id,
+        :space_id => @space.id, :users => [@enrolled_user.id]
+    end
+
+    it "assigns the subject" do
+      assigns[:subject].should == @subject
+    end
+
+    it "redirects to 'show'" do
+      response.should redirect_to(admin_members_space_subject_path(@space, @subject))
     end
   end
 end
