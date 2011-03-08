@@ -78,12 +78,18 @@
 
       </ul>
       <div class="panel">
-        <%= text_field_tag :name, nil,
-          :onkeyup => "$('#hidden_search').val($('#name').val());"  %>
-        <%= link_to "Buscar", "#", :onclick => "$('#filter_form').submit();",
-          :class => "button" %>
-        <%= image_tag 'spinner.gif', :id => 'spinner',
-          :style => 'display: none;' %>
+        <div class="text-filter">
+          <%# Form usado somente para manter os estilos  %>
+          <form class="common" action="#">
+            <%= label_tag "Filtrar por:" %>
+            <%= text_field_tag :name, nil,
+              :onkeyup => "$('#hidden_search').val($('#name').val());"  %>
+            <%= link_to "Buscar", "#", :onclick => "$('#filter_form').submit(); return false;",
+              :class => "button" %>
+            <%= image_tag 'spinner.gif', :id => 'spinner',
+              :style => 'display: none;' %>
+          </form>
+        </div>
         <ul id="courses_list" class="courses">
           <% if @courses.empty? %>
             <div class="box_notice">Nenhum curso foi encontrado.</div>

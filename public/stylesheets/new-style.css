@@ -1697,7 +1697,7 @@ a.remove {
 
 a.cancel:hover { text-decoration: none; }
 
-input[type=submit],
+input[type=submit].clean,
 a.clean {
   border: 1px solid #CCCBCB;
   color: #4CACD5;
@@ -2214,6 +2214,23 @@ table.spaced tr td {
   margin-top: 10px;
 }
 
+#global-courses .text-filter {
+  margin-bottom: 20px;
+}
+
+#global-courses .text-filter input[type=text]{
+  border-color: #60BD7F;
+  float: left;
+  margin: 10px;
+  
+}
+
+#global-courses .text-filter .button{
+  float: left;
+  margin-top: 10px;
+  padding: 9px 15px;
+}
+
 #global-courses .courses > li {
   padding: 10px;
   margin-bottom: 10px;
@@ -2295,6 +2312,7 @@ table.spaced tr td {
   color: #6C6D6E;
   line-height: 1.1em;
   margin-right: 10px;
+  min-height: 30px;
 }
 
 #global-courses .courses .statistics {
@@ -2718,6 +2736,7 @@ table.spaced tr td {
   float: left;
   width: 465px;
   margin-top: 10px;
+  min-height: 30px;
 }
 
 #profile .vcard .label {
@@ -2810,6 +2829,8 @@ table.spaced tr td {
 
 .profile-sidebar .environments .role {
   color: #B2B2B2;
+  display: block;
+  font-size: .9em;
 }
 
 .profile-sidebar .environments .environment {
@@ -2842,7 +2863,7 @@ table.spaced tr td {
 }
 
 .profile-sidebar .environments .courses li {
-  margin: 5px 0;
+  margin: 5px 0 5px 5px;
 }
 
 .profile-sidebar .common-connections ul {
