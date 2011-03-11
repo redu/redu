@@ -2094,6 +2094,26 @@ table.spaced tr td {
   padding: 15px 20px;
 }
 
+.sortable .index {
+  font-weight: bold;
+}
+
+.sortable .name a {
+  font-size: 1.2em;
+  color: black;
+}
+
+.sortable .edit,
+.sortable .delete {
+  padding-left: 13px;
+  margin: 25px 0;
+  font-size: .9em;
+}
+
+.sortable .index {
+  text-align: center;
+}
+
 #environment-manage table .edit,
 #environment-manage table .delete {
   font-size: .9em;
