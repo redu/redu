@@ -190,7 +190,7 @@ ActionController::Routing::Routes.draw do |map|
     user.resources :spaces, :collection => {:member => :get, :owner => :get}
     user.resources :questions
     user.resources :offerings, :collection => {:replace => :put}
-    user.resources :favorites,
+    user.resources :favorites, :only => [:index],
       :member => { :favorite => :post, :not_favorite => :post }
     user.resources :messages, :collection => { :index_sent => :get, :delete_selected => :post, :auto_complete_for_username => :any }
     user.resources :comments
