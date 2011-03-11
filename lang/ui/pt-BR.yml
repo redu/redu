@@ -135,6 +135,11 @@ pt-BR:
     user_rating: "Sua avaliação: {{value}} de {{max}}"
     hover: "{{value}} de {{max}}"
 
+  #lectureable_type
+  Seminar: "Vídeo-aula"
+  Document: "Documento e apresentação"
+  Page: "Página simples"
+
   #simple categories
   arts_design_animation: Artes / Design / Animação
   architecture_urban_studies: Arquitetura / Estudos Urbanos
