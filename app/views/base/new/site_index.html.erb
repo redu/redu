@@ -25,7 +25,7 @@
           <strong>Potencializado o talento das pessoas</strong>
           <p>O Redu é uma plataforma de ensino a distância que foi construída tendo como base as interações sociais. </p>
           <p>
-            Aqui, o aluno tem acesso fácil ao conteúdo disponibilizado pelo professor, que por sua vez consegue organizar suas aulas com mais rapidez e eficácia. 
+            Aqui, o aluno tem acesso fácil ao conteúdo disponibilizado pelo professor, que por sua vez consegue organizar suas aulas com mais rapidez e eficácia.
           </p>
           <p>Esse ambiente de aprendizagem atende as necessidades de instituições e produtores independentes que querem construir sua própria EaD.</p>
         </div>
@@ -39,7 +39,7 @@
 
             <% field_set_tag do %>
 
-              <%= f.label :login, "Login:", :class => "small" %>
+              <%= f.label :login, "Login ou e-mail:", :class => "small" %>
               <%= f.text_field :login, :class => "small" %>
               <%= error_for :user_session, :login %>
 
@@ -47,14 +47,10 @@
               <%= f.password_field :password, :class => "small" %>
               <%= error_for :user_session, :password %>
 
-              
-
               <% field_set_tag "", :class => "inline" do %>
                 <%= f.check_box :remember_me %>
                 <%= f.label :remeber_me, "Manter-me logado" %>
               <% end %>
-
-              <%= link_to :forgot_your_password.l, forgot_password_url %>
 
               <%= f.submit "Avançar" %>
             <% end %>
@@ -62,6 +58,12 @@
           <% end %>
 
         </div>
+        <%= "Esqueceu seu login?" %>
+        <%= link_to "Clique aqui para recuperar o login",
+          forgot_username_url %>
+        <%= "Esqueceu sua senha?" %>
+        <%= link_to "Clique aqui para recuperar a senha",
+          forgot_password_url %>
       </div>
     </div>
     <div id="footer" class="container_16 clearfix">
