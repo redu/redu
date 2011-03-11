@@ -3,7 +3,7 @@
     <%= image_tag 'new/missing_courses_thumb_32.png' %>
   </div>
   <div class="preview clearfix">
-    <div class="general">
+    <div class="general parent-height">
       <%= link_to item_detailed.environment.name,
         environment_path(item_detailed.environment), :class => 'environment' %>
       <%= link_to item_detailed.name,
@@ -31,7 +31,11 @@
   </div>
   <div  style="display: none;" class="details clearfix">
     <p class="description">
-      <%= item_detailed.description %>
+      <% if item_detailed.description.nil? or item_detailed.description.empty? %>
+        Sem descrição.
+      <% else %>
+        <%= item_detailed.description %>
+      <% end %>
     </p>
 
     <ul class="statistics">

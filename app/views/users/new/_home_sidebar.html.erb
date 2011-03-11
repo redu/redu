@@ -14,7 +14,7 @@
       </div>
     </li>
     <li>
-      <div class="<%= (current_page? :controller => :messages, :action => :index) ?
+      <div class="<%= (current_page? user_messages_path(current_user)) ?
         "session selected".to_s : "session".to_s %>">
         <%= link_to "Mensagens (#{current_user.unread_message_count})",
           user_messages_path(current_user),
@@ -31,7 +31,17 @@
     <%= render :partial => 'users/new/sidebar_environment_item',
       :collection => current_user.environments, :as => :environment %>
     <li>
-      <div class="session"><a href="" class="icon icon-redu_r8_c325_s1">Contatos</a></div>
+      <div class="<%= (current_page? :controller => :users, :action => :edit) ?
+        "session selected".to_s : "session".to_s %>">
+        <%= link_to 'Configurações', edit_user_path(current_user),
+        :class => "icon icon-redu_r8_c221_s1" %>
+      </div>
+    </li>
+    <li>
+      <div class="session">
+        <%= link_to 'Contatos', user_friendships_path(current_user),
+          :class => 'icon icon-redu_r8_c325_s1'%>
+      </div>
       <ul class="connections clearfix">
         <%= render :partial => 'users/new/item_short',
           :collection => @friends %>

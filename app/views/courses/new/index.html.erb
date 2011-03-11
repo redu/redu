@@ -6,7 +6,7 @@
     </div>
     <div class="filters">
       <strong class="call">Filtros:</strong>
-      <% form_remote_tag :url => courses_path,
+      <% form_remote_tag :url => courses_path(:role => params[:role]),
         :loading => "$('#spinner').show();",
         :success => "$('#spinner').hide();",
         :html => { :id => 'filter_form' } do %>
@@ -27,37 +27,77 @@
   <div class="main grid_12 omega big-col">
     <div class="fake-tabs">
       <ul class="clearfix">
-        <li class="ui-state-active">
-          <a href="">Todos</a>
+
+        <% if params.has_key? :role %>
+          <li>
+        <% else %>
+          <li class="ui-state-active">
+        <% end %>
+          <%= link_to "Todos", courses_path %>
         </li>
-        <li style="display: none;">
-          <a href="">Aluno</a>
-        </li>
-        <li style="display: none;">
-          <a href="">Tutor</a>
-        </li>
-        <li style="display: none;">
-          <a href="">Professor</a>
-        </li>
-        <li style="display: none;">
-          <a href="">Administrador</a>
-        </li>
+
+        <% unless Course.user_behave_as_student(current_user).empty? %>
+          <% if params[:role] == 'student' %>
+            <li class="ui-state-active">
+          <% else %>
+            <li>
+          <% end %>
+            <%= link_to "Aluno", courses_path(:role => 'student') %>
+          </li>
+        <% end %>
+
+        <% unless Course.user_behave_as_tutor(current_user).empty? %>
+          <% if params[:role] == 'tutor' %>
+            <li class="ui-state-active">
+          <% else %>
+            <li>
+          <% end %>
+            <%= link_to "Tutor", courses_path(:role => 'tutor') %>
+          </li>
+        <% end %>
+
+        <% unless Course.user_behave_as_teacher(current_user).empty? %>
+          <% if params[:role] == 'teacher' %>
+            <li class="ui-state-active">
+          <% else %>
+            <li>
+          <% end %>
+            <%= link_to "Professor", courses_path(:role => 'teacher') %>
+          </li>
+        <% end %>
+
+        <% unless Course.user_behave_as_administrator(current_user).empty? %>
+          <% if params[:role] == 'administrator' %>
+            <li class="ui-state-active">
+          <% else %>
+            <li>
+          <% end %>
+            <%= link_to "Administrador", courses_path(:role => 'administrator') %>
+          </li>
+        <% end %>
+
       </ul>
       <div class="panel">
-          <%= text_field_tag :name, nil,
-            :onkeyup => "$('#hidden_search').val($('#name').val());"  %>
-          <%= link_to "Buscar", "#", :onclick => "$('#filter_form').submit();",
-            :class => "button" %>
-          <%= image_tag 'spinner.gif', :id => 'spinner',
-            :style => 'display: none;' %>
+        <div class="text-filter">
+          <%# Form usado somente para manter os estilos  %>
+          <form class="common" action="#">
+            <%= label_tag "Filtrar por:" %>
+            <%= text_field_tag :name, nil,
+              :onkeyup => "$('#hidden_search').val($('#name').val());"  %>
+            <%= link_to "Buscar", "#", :onclick => "$('#filter_form').submit(); return false;",
+              :class => "button" %>
+            <%= image_tag 'spinner.gif', :id => 'spinner',
+              :style => 'display: none;' %>
+          </form>
+        </div>
         <ul id="courses_list" class="courses">
           <% if @courses.empty? %>
             <div class="box_notice">Nenhum curso foi encontrado.</div>
           <% else %>
-          <%= render :partial => 'courses/new/item_detailed',
-            :collection => @courses %>
-        <% end %>
-        <%= will_paginate @courses, :renderer => EndlessRenderer %>
+            <%= render :partial => 'courses/new/item_detailed',
+              :collection => @courses %>
+          <% end %>
+          <%= will_paginate @courses, :renderer => EndlessRenderer %>
         </ul>
       </div>
     </div>

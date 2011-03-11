@@ -24,6 +24,7 @@ class CoursesController < BaseController
   end
 
   def edit
+    @header_course = @course.clone
 
     respond_to do |format|
       format.html do
@@ -43,6 +44,8 @@ class CoursesController < BaseController
   end
 
   def update
+    @header_course = @course.clone
+
     respond_to do |format|
       if @course.update_attributes(params[:course])
         if params[:course][:subscription_type].eql? "1" # Entrada de membros passou a ser livre, aprovar todos os membros pendentes
@@ -90,40 +93,47 @@ class CoursesController < BaseController
 
   end
 
+  # FIXME Remover lógica de user_id quando a listagem de cursos
+  # não for mais mostrada no perfil do usuário.
   def index
-    cond = {}
-    @user = User.find(params[:user_id].to_i) if params.has_key?(:user_id)
-    unless ( !@user.nil? && can?(:manage, @user) )
-      cond[:published] = true
-    end
 
     paginating_params = {
-      :conditions => cond,
       :page => params[:page],
-      :order => (params[:sort]) ? params[:sort] + ' DESC' : 'created_at DESC',
-      :per_page => 8
+      :order => 'name ASC',
+      :per_page => AppConfig.items_per_page
     }
 
-    if params[:search] != ''
-      @courses = Course.name_like_all(params[:search].to_s.split).ascend_by_name
-    end
-
     if params.has_key?(:user_id)
+      @user = User.find(params[:user_id].to_i)
       paginating_params[:per_page] = 6
       @courses = @user.courses
-    elsif params.has_key?(:audiences_ids)
-      if @courses
-        @courses = @courses.with_audiences(params[:audiences_ids])
+    else
+      if params.has_key? :role
+        if params[:role] == 'student'
+          @courses = Course.user_behave_as_student(current_user)
+        elsif params[:role] == 'tutor'
+          @courses = Course.user_behave_as_tutor(current_user)
+        elsif params[:role] == 'teacher'
+          @courses = Course.user_behave_as_teacher(current_user)
+        elsif params[:role] == 'administrator'
+          @courses = Course.user_behave_as_administrator(current_user)
+        end
       else
-        @courses = Course.with_audiences(params[:audiences_ids])
+        @courses = Course.published
       end
+
+      if params.has_key?(:search) && params[:search] != ''
+        search = params[:search].to_s.split
+        @courses = @courses.name_like_all(search)
+      end
+
+      if params.has_key?(:audiences_ids)
+        @courses = @courses.with_audiences(params[:audiences_ids])
+      end
+
     end
 
-    if @courses
-      @courses = @courses.paginate(paginating_params)
-    else
-      @courses = Course.published.all.paginate(paginating_params)
-    end
+    @courses = @courses.paginate(paginating_params)
 
     respond_to do |format|
       format.html do
@@ -139,6 +149,17 @@ class CoursesController < BaseController
 
   # Visão do Course para usuários não-membros.
   def preview
+    @spaces = @course.spaces.paginate(:page => params[:page],
+                                      :order => 'name ASC',
+                                      :per_page => AppConfig.items_per_page)
+    respond_to do |format|
+      format.html do
+        render :template => 'courses/new/preview', :layout => 'new/application'
+      end
+      format.js do
+        render :template => 'courses/new/preview'
+      end
+    end
   end
 
   # Aba Disciplinas.
@@ -290,13 +311,13 @@ class CoursesController < BaseController
       :order => 'updated_at DESC',
       :per_page => AppConfig.items_per_page)
 
-    respond_to do |format|
-      format.html do
-        render :template => "courses/new/admin_members",
-          :layout => "new/application"
+      respond_to do |format|
+        format.html do
+          render :template => "courses/new/admin_members",
+            :layout => "new/application"
+        end
+        format.js { render :template => 'courses/new/admin_members' }
       end
-      format.js { render :template => 'courses/new/admin_members' }
-    end
   end
 
   # Remove um ou mais usuários de um Environment destruindo todos os relacionamentos
@@ -350,6 +371,8 @@ class CoursesController < BaseController
 
   # Listagem de usuários do Course
   def users
+    @sidebar_preview = true if params.has_key?(:preview) &&
+                              params[:preview] == 'true'
     @users = @course.approved_users.
       paginate(:page => params[:page], :order => 'first_name ASC', :per_page => 18)
 

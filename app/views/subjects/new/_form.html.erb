@@ -9,25 +9,17 @@
     </div>
 
     <%= hidden_field_tag 'space_id', @space.id %>
-    <%= f.label :title, :title.l %>
-    <%= f.text_field :title, { :class => 'big' } %>
-    <%= error_for :subject, :title %>
-
-    <%= f.label :description, :description.l, :size => '10x30' %>
-    <%= f.text_area :description, :class => 'subject-description' %>
-    <%= render :partial => 'shared/new/limit_char_field',
-      :locals => { :class_textarea => "subject-description",
-                   :limit => 250 }%>
-      <%= error_for :subject, :description %>
-      <%= f.label :tag_list, :tag_list.l, { :class => 'big' } %>
-      <%= f.text_field :tag_list %>
+    <%= render :partial => 'subjects/new/raw_form', :locals => { :f => f } %>
 
       <% if @subject.published? %>
         <div class="box_notice">
           Você não pode editar o conteúdo do módulo, pois ele está publicado. Para despublicá-lo,
-          clique <%= link_to 'aqui', unpublish_space_subject_path(@space, @subject),
-          :confirm => "Ao despublicar um módulo, todas as matrículas serão perdidas." + \
-          " Tem certeza?" %>.
+          clique <%= link_to "aqui", unpublish_space_subject_path(@space, @subject),
+      :confirm => "Ao despublicar um módulo, todas as matrículas serão perdidas." + \
+      " Tem certeza?",
+      :method => "post",
+      :class => "button" %>
+
         </div>
         <%= render :partial => 'lectures/item_created', :collection => @subject.lectures,
           :locals => { :published => true } %>

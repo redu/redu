@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   TEACHING_ACTIONS = ['create']
 
   SUPPORTED_CURRICULUM_TYPES = [ 'application/pdf', 'application/msword',
-                                 'text/plain',
+                                 'text/plain', 'application/rtf', 'text/rtf',
                                  'application/vnd.openxmlformats-officedocument.wordprocessingml.document' # docx
                                ]
 
@@ -142,7 +142,8 @@ class User < ActiveRecord::Base
   validates_date :birthday, :before => 13.years.ago.to_date
   validates_acceptance_of :tos
   validates_attachment_size :curriculum, :less_than => 10.megabytes
-  validate_on_update :accepted_curriculum_type
+  validate_on_update :accepted_curriculum_type,
+    :unless => "self.curriculum_file_name.nil?"
 
   # override activerecord's find to allow us to find by name or id transparently
   def self.find(*args)
@@ -715,8 +716,14 @@ class User < ActiveRecord::Base
     self.statuses.log_action_eq(TEACHING_ACTIONS).descend_by_created_at
   end
 
+  def profile_activity(page = 1)
+    Status.profile_activity(self).
+      paginate(:page => page, :order => 'created_at DESC',
+               :per_page => AppConfig.items_per_page)
+  end
+
   # FIXME Não foi testado devido a futura reformulação de Status
-  def recent_activity(page = 1)
+  def home_activity(page = 1)
     Status.home_activity(self).paginate(:page => page,
                                         :order => 'created_at DESC',
                                         :per_page => AppConfig.items_per_page)
@@ -749,6 +756,18 @@ class User < ActiveRecord::Base
       :conditions => {:subject_id => subject})
   end
 
+  def completeness
+    total = 9.0
+    undone = 0.0
+    undone += 1 if self.description.nil?
+    undone += 1 if self.avatar_file_name.nil?
+    undone += 1 if self.gender.nil?
+    undone += 1 if self.curriculum_file_name.nil?
+
+    done = total - undone
+    (done/total*100).round
+  end
+
   protected
   def activate_before_save
     self.activated_at = Time.now.utc
@@ -777,7 +796,6 @@ class User < ActiveRecord::Base
   end
 
   def accepted_curriculum_type
-    return unless self.teacher_profile?
     unless SUPPORTED_CURRICULUM_TYPES.include?(self.curriculum_content_type)
       self.errors.add(:curriculum, "Formato inválido")
     end
@@ -789,4 +807,5 @@ class User < ActiveRecord::Base
     1.upto(len) { |i| new_password << chars[rand(chars.size-1)] }
     return new_password
   end
+
 end

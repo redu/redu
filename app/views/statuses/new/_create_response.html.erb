@@ -1,10 +1,8 @@
 <%# Form de Status resposta %>
 <div class="create-status create-response" style = "display: none;">
   <% form_remote_for :status,
-    :url => { :controller => 'statuses',
-              :action => "respond", :id => status_id,
-              #FIXME Retirar new_layout após o redesign ser aplicado
-              :new_layout => true},
+    :url => respond_user_status_path(current_user,
+                                     status_id, :new_layout => true),
     :before => "$('.response_spinner').show();"do |f| %>
     <%= f.error_messages %>
     <% field_set_tag do %>

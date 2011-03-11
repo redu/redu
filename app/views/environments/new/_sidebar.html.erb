@@ -7,8 +7,7 @@
 
   <ul class="local-nav">
     <li>
-      <div class="<%= (current_page? :controller => :environments,
-                       :action => :show) ?
+      <div class="<%= (current_page? environment_path(@environment)) ?
                     "session selected".to_s : "session".to_s %>">
         <%= link_to 'Cursos', environment_path(@environment),
           :class => 'icon icon-redu_r8_c313_s1' %>
@@ -24,8 +23,7 @@
     </li>
     <% if can? :manage, @environment %>
       <li>
-        <div class="<%= (current_page? :controller => :environments,
-                         :action => :edit) ?
+        <div class="<%= (current_page? edit_environment_path(@environment)) ?
                       "session selected".to_s : "session".to_s %>">
           <%= link_to 'Gerenciamento', edit_environment_path(@environment),
             :class => "icon icon-redu_r8_c221_s1" %>
@@ -33,8 +31,7 @@
       </li>
     <% end %>
     <li>
-      <div class="<%= (current_page? :controller => :environments,
-                       :action => :users) ?
+      <div class="<%= (current_page? users_environment_path(@environment)) ?
                     "session selected".to_s : "session".to_s %>">
         <%= link_to "Membros (#{ @environment.users.length })",
           users_environment_path(@environment),

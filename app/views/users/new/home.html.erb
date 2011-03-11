@@ -7,12 +7,12 @@
   </ol>
   <%= render :partial => 'statuses/new/create_status',
     :locals => { :statusable => current_user } %>
-   <div id="statuses" class="statuses">
+  <div id="statuses" class="statuses">
     <ol>
       <%= render :partial => 'statuses/new/item', :collection => @statuses %>
-   </ol>
+    </ol>
 
-   <%= will_paginate @statuses, :renderer => EndlessRenderer %>
+    <%= will_paginate @statuses, :renderer => EndlessRenderer %>
   </div><!-- end .statuses -->
 
 

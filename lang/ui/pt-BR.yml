@@ -35,7 +35,7 @@ pt-BR:
       role:
         admin: "Administrador"
         moderator: "Moderador"
-        member: "Membro"
+        member: "Estudante"
         environment_admin: "Administrador do ambiente"
         course_admin: "Administrador dos cursos"
         teacher: "Professor"
@@ -73,6 +73,7 @@ pt-BR:
             password:
               blank: ": Por favor, digite a senha."
               too_short: ": Senha muito curta (mínimo de 6 caracteres)."
+              confirmation: ": A confirmação não confere."
             password_confirmation:
               blank: ": Por favor, digite a senha de confirmação."
               too_short: ": Senha muito curta (mínimo de 6 caracteres)."
@@ -85,6 +86,8 @@ pt-BR:
           attributes:
             path:
               invalid: ": caminho inválido."
+            description:
+              too_short: " muito curta."
         subject:
           attributes:
             description:
@@ -132,6 +135,11 @@ pt-BR:
     global_average: "Avaliação: {{value}} de {{max}}"
     user_rating: "Sua avaliação: {{value}} de {{max}}"
     hover: "{{value}} de {{max}}"
+
+  #lectureable_type
+  Seminar: "Vídeo-aula"
+  Document: "Documento e apresentação"
+  Page: "Página simples"
 
   #simple categories
   arts_design_animation: Artes / Design / Animação
@@ -1333,7 +1341,7 @@ pt-BR:
   #en: showing_users: Showing users
   showing_users: Showing users
   #en: sign_up: Sign Up!
-  sign_up: Cadastre-se!
+  sign_up: Cadastrar Nova Conta
   #en: sign_up_for_an_account: Sign up for an account.
   sign_up_for_an_account: Sign up for an account.
   #en: sign_up_for_a_: Sign up for a

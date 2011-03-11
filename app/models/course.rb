@@ -42,16 +42,37 @@ class Course < ActiveRecord::Base
   }
   named_scope :with_audiences, lambda { |audiences_ids|
     {:joins => :audiences,
-      :conditions => ['audiences_courses.audience_id IN (?)', audiences_ids], :group => :id }
+      :conditions => ['audiences_courses.audience_id IN (?)',
+                        audiences_ids],
+      :group => :id }
   }
-
+  named_scope :user_behave_as_administrator, lambda { |user_id|
+    { :joins => :user_course_associations,
+      :conditions => ["user_course_associations.user_id = ? AND user_course_associations.role_id = ?",
+                        user_id, 3] }
+  }
+  named_scope :user_behave_as_teacher, lambda { |user_id|
+    { :joins => :user_course_associations,
+      :conditions => ["user_course_associations.user_id = ? AND user_course_associations.role_id = ?",
+                        user_id, 5] }
+  }
+  named_scope :user_behave_as_tutor, lambda { |user_id|
+    { :joins => :user_course_associations,
+      :conditions => ["user_course_associations.user_id = ? AND user_course_associations.role_id = ?",
+                        user_id, 6] }
+  }
+  named_scope :user_behave_as_student, lambda { |user_id|
+    { :joins => :user_course_associations,
+      :conditions => ["user_course_associations.user_id = ? AND user_course_associations.role_id = ?",
+                        user_id, 2] }
+  }
   attr_protected :owner, :published, :environment
 
   acts_as_taggable
 
   validates_presence_of :name, :path
   validates_uniqueness_of :name, :path, :scope => :environment_id
-  validates_length_of :name, :maximum => 40
+  validates_length_of :name, :maximum => 60
   validates_length_of :description, :maximum => 250, :allow_blank => true
   validate :length_of_tags
 
@@ -65,6 +86,7 @@ class Course < ActiveRecord::Base
   end
 
   def to_param
+    return self.id.to_s if self.path.empty?
     self.path
   end
 

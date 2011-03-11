@@ -12,6 +12,7 @@ module SimplesIdeias
         has_many :friends, :through => :friendships, :source => :friend, :conditions => "friendships.status = 'accepted'"
         has_many :friends_pending, :through => :friendships, :source => :friend, :conditions => "friendships.status = 'pending'"
 
+
         after_destroy :destroy_all_friendships
       end
     end
@@ -64,6 +65,10 @@ module SimplesIdeias
 
       def is?(friend)
         self.id == friend.id
+      end
+
+      def friends_in_common_with(user)
+        self.friends.select { |friend| user.friends.include?(friend) }
       end
 
       private

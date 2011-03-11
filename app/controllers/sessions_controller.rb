@@ -21,16 +21,14 @@ class SessionsController < BaseController
         flash[:notice] = :thanks_youre_now_logged_in.l
         redirect_to home_user_path(current_user)
       else
-        flash[:notice] = :uh_oh_we_couldnt_log_you_in_with_the_username_and_password_you_entered_try_again.l
-        render :action => :new
+        render :layout => false, :template => 'base/new/site_index'
       end
     end
   end
 
   def destroy
     current_user_session.destroy
-    flash[:notice] = :youve_been_logged_out_hope_you_come_back_soon.l
-    redirect_to new_session_path
+    redirect_to home_path
   end
 
   protected

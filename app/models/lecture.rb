@@ -3,6 +3,9 @@ class Lecture < ActiveRecord::Base
   # Entidade polimórfica que representa o objeto de aprendizagem. Pode possuir
   # três especializações: Seminar, InteractiveClass e Page.
 
+  #
+  after_create :create_asset_report
+
   # ASSOCIATIONS
   has_many :statuses, :as => :statusable, :dependent => :destroy
   #FIXME Falta testar
@@ -89,5 +92,12 @@ class Lecture < ActiveRecord::Base
     clone.subject = Subject.find(subject_id)
     clone.save
     clone
+  end
+  protected
+  def create_asset_report
+    student_profile = StudentProfile.all(:conditions => { 
+      :subject_id => self.subject.id, :user_id => self.subject.owner.id }).first
+    self.asset_reports << AssetReport.create(:subject => self.subject,
+                                            :student_profile => student_profile)
   end
 end

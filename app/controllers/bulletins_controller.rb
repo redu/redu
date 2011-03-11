@@ -17,21 +17,37 @@ class BulletinsController < BaseController
                                    @bulletinable.id, @bulletinable.class.to_s],
                                    :page => params[:page],
                                    :order => 'created_at DESC',
-                                   :per_page => 5)
+                                   :per_page => AppConfig.items_per_page)
 
     respond_to do |format|
-      format.html
-      format.js
+      format.html do
+        render :template => 'bulletins/new/index', :layout => 'new/application'
+      end
+      format.js do
+        render :template => 'bulletins/new/index'
+      end
     end
   end
 
   def show
     @owner = User.find(@bulletin.owner)
     @bulletinable = find_bulletinable
+
+    respond_to do |format|
+      format.html do
+        render :template => 'bulletins/new/show', :layout => 'new/application'
+      end
+    end
   end
 
   def new
     @bulletinable = find_bulletinable
+
+    respond_to do |format|
+      format.html do
+        render :template => "bulletins/new/new", :layout => "new/application"
+      end
+    end
   end
 
   def create
@@ -54,7 +70,9 @@ class BulletinsController < BaseController
         format.html { redirect_to polymorphic_path([@bulletin.bulletinable, @bulletin]) }
         format.xml  { render :xml => @bulletin, :status => :created, :location => @bulletin }
       else
-        format.html { render :action => "new" }
+        format.html do
+          render :template => "bulletins/new/new", :layout => "new/application"
+        end
         format.xml  { render :xml => @bulletin.errors, :status => :unprocessable_entity }
       end
     end
@@ -62,6 +80,12 @@ class BulletinsController < BaseController
 
   def edit
     @bulletinable = find_bulletinable
+
+    respond_to do |format|
+      format.html do
+        render :template => "bulletins/new/edit", :layout => "new/application"
+      end
+    end
   end
 
   def update
@@ -71,7 +95,9 @@ class BulletinsController < BaseController
         format.html { redirect_to polymorphic_path([@bulletin.bulletinable, @bulletin])}
         format.xml { render :xml => @bulletin, :status => :created, :location => @bulletin, :bulletinable => @bulletin.bulletinable }
       else
-        format.html { render :action => :edit }
+        format.html do
+          render :template => "bulletins/new/edit", :layout => "new/application"
+        end
         format.xml { render :xml => @bulletin.errors, :status => :unprocessable_entity }
       end
     end

@@ -8,6 +8,7 @@
   <% else %>
       <%= link_to "Publicar", publish_space_subject_path(@space, @subject),
         :confirm => "Tem certeza?",
+        :method => "post",
         :class => "button" %>
   <% end %>
 <% end %>

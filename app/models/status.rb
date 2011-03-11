@@ -21,7 +21,10 @@ class Status < ActiveRecord::Base
       {:spaces => user.spaces, :subjects => user.subjects, :user => user,
        :friends => user.friends, :answer => Status::ANSWER } ] }
   }
-
+  named_scope :profile_activity, lambda {|user|
+    { :conditions => ["(kind <> :answer OR kind is NULL) AND (user_id = :user OR (statusable_id = :user AND statusable_type = 'User'))",
+      {:user => user, :answer => Status::ANSWER } ] }
+  }
   acts_as_taggable
 
   validation_group :log, :fields => [] # Grupo para tipo log

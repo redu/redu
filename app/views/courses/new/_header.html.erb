@@ -1,21 +1,27 @@
 <div id="hierarchy-header" class="clearfix course-header">
   <span class="initials">
-    <% if @course.environment.initials %>
-      <%= @course.environment.initials %>
-    <% else %>
-      <%= @course.environment.name %>
-    <% end %>
+      <%= @course.environment.initials_or_name %>
   </span>
   <h3 class="call course-name"><%= @course.name %></h3>
+
+  <% unless @course.users.include?(current_user) %>
+    <% if (current_page? preview_environment_course_path(@course.environment,
+      @course)) || @sidebar_preview %>
+      <%= link_to 'Participar',
+        join_environment_course_path(@course.environment, @course),
+        :method => :post, :class => 'join important'%>
+    <% end %>
+  <% end %>
+
   <div class="grid_9 alpha">
     <span class="description">
-      <%= @course.description %>
+      <%= course.description %>
     </span>
     <ul class="tags clearfix">
-      <% @course.tags.each do |tag| %>
+      <% course.tags.each do |tag| %>
         <li>
           <%= link_to tag,
-            environment_course_path(@course.environment, @course) %>
+            environment_course_path(course.environment, course) %>
         </li>
       <% end %>
     </ul>
@@ -23,15 +29,15 @@
   <ul class="statistics grid_3 omega">
     <li>
       <em class="icon icon-redu_r8_c207_s1">Professores:</em>
-      <span><%= @course.teachers.length %></span>
+      <span><%= course.teachers.length %></span>
     </li>
     <li>
       <em class="icon icon-redu_r8_c385_s1">Tutores:</em>
-      <span><%= @course.tutors.length %></span>
+      <span><%= course.tutors.length %></span>
     </li>
     <li>
       <em class="icon icon-redu_r8_c355_s1">Alunos:</em>
-      <span><%= @course.students.length %></span>
+      <span><%= course.students.length %></span>
     </li>
   </ul>
 

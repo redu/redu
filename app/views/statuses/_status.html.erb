@@ -29,7 +29,8 @@
             <a href="">Responder</a>
             <div class="answer hide">
             <div class="error form"></div>
-            <% form_for :status, :url => {:controller => 'statuses', :action => "respond", :id => status.id } do |f| %>
+            <% form_for :status, :url =>
+              respond_user_status_path(current_user, status) do |f| %>
             <%= render :partial => "statuses/form_answer", :locals => { :f => f, :question => status, :statusable => statusable } %>
             <% end %>
             </div>

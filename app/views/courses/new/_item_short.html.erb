@@ -1,0 +1,19 @@
+<li class="course clearfix">
+  <%= link_to item_short.name,
+    environment_course_path(item_short.environment, item_short),
+    :class => 'name' %>
+  <div class="info parent-height">
+    <ul>
+      <strong class="label">Audiência:</strong>
+      <% item_short.audiences.each do |audience| %>
+        <li>
+          <span class="value audience"><%= audience.name %></span>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+  <div class="info parent-height">
+    <strong class="label">Membros:</strong>
+    <span class="value members"><%= item_short.approved_users.length %></span>
+  </div>
+</li>

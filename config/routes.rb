@@ -99,16 +99,18 @@ ActionController::Routing::Routes.draw do |map|
                    :rename => :get,
                    :destroy_folder => :delete,
                    :destroy_file => :delete,
-                   :do_the_upload => [:post, :put]}
+                   :do_the_upload => [:post, :put],
+                   :update_permissions => :post}
     space.resources :subjects,
-      :member => { :enroll => :get,
-                   :unenroll => :get,
-                   :publish => :get,
+      :member => { :enroll => :post,
+                   :unenroll => :post,
+                   :publish => :post,
                    :unpublish => :post,
                    :admin_lectures_order => [ :get, :post ],
                    :infos => :get,
                    :statuses => :get,
-                   :users => :get },
+                   :users => :get,
+                   :admin_members => :get },
         :collection => {:cancel => :get} do |subject|
       subject.resources :lectures,
         :member => { :rate => :post,
@@ -138,7 +140,8 @@ ActionController::Routing::Routes.draw do |map|
                            :questions_database => :get,
                            :review_question => :get }
     end
-    space.resources :bulletins
+    space.resources :bulletins,
+      :member => { :vote => [:post, :get]}
     space.resources :events,
       :member => { :vote => [:post,:get], :notify => :post },
       :collection => { :past => :get, :ical => :get , :day => :get }
@@ -188,13 +191,15 @@ ActionController::Routing::Routes.draw do |map|
     user.resources :spaces, :collection => {:member => :get, :owner => :get}
     user.resources :questions
     user.resources :offerings, :collection => {:replace => :put}
-    user.resources :favorites
+    user.resources :favorites, :only => [:index],
+      :member => { :favorite => :post, :not_favorite => :post }
     user.resources :messages, :collection => { :index_sent => :get, :delete_selected => :post, :auto_complete_for_username => :any }
     user.resources :comments
     user.resources :photo_manager, :only => ['index']
     user.resources :albums, :path_prefix => ':user_id/photo_manager', :member => {:add_photos => :get, :photos_added => :post}, :collection => {:paginate_photos => :get}  do |album|
       album.resources :photos, :collection => {:swfupload => :post, :slideshow => :get}
-    user.resources :statuses
+    user.resources :statuses,
+      :member => { :respond => :post }
     user.admin_roles '/:environment_id/roles',
       :controller => :roles, :action => :show, :conditions => {:method => :get}
     user.update_roles '/:environment_id/roles',
@@ -205,6 +210,9 @@ ActionController::Routing::Routes.draw do |map|
 
   # Indexes
   map.application '', :controller => "base", :action => "site_index"
+  map.privacy 'privacy', :controller => "base", :action => "privacy"
+  map.tos 'tos', :controller => "base", :action => "tos"
+  map.contact 'contact', :controller => "base", :action => "contact"
   map.learn_index '/learn', :controller => 'base', :action => 'learn_index'
   map.teach_index '/teach', :controller => 'base', :action => 'teach_index'
   map.courses_index '/courses', :controller => 'courses', :action => 'index'
@@ -233,7 +241,8 @@ ActionController::Routing::Routes.draw do |map|
         :moderate_members_requests => :post,
         :users => :get
       }
-      environment.resources :bulletins
+      environment.resources :bulletins,
+        :member => { :vote => [:post, :get] }
   end
 
 
@@ -250,10 +259,6 @@ ActionController::Routing::Routes.draw do |map|
 
   map.payment_success '/payment/success',
     :controller => 'payment_gateway', :action => 'callback'
-
-  # Install the default routes as the lowest priority.
-  map.connect ':controller/:action/:id'
-  map.connect ':controller/:action/:id.:format'
 
 end
 #ActionController::Routing::Translator.i18n('pt-BR') # se ativar, buga (falar com cassio)

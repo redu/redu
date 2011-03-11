@@ -91,13 +91,41 @@ describe User do
       subject.errors.on(:birthday).should_not be_nil
     end
 
-    it "validates a curriculum type on update" do
-      pending "This test is a false positive" do
-        c = File.new('invalid_curriculum.pdf', 'w+')
+    context "validates a curriculum type on update if has a curriculum" do
+      before do
+        path = File.join(RAILS_ROOT,
+                         "spec",
+                         "support",
+                         "documents",
+                         "xkcd.png")
+
+        c = File.new(path)
         subject.curriculum = c
+      end
+
+      it "when a teacher" do
+        subject.teacher_profile = true
         subject.save
-        File.delete('invalid_curriculum.pdf')
         subject.errors.on(:curriculum).should_not be_nil
+      end
+      it "when a teacher" do
+        subject.teacher_profile = false
+        subject.save
+        subject.errors.on(:curriculum).should_not be_nil
+      end
+    end
+
+    context "should NOT validate a curriculum type on update if it does NOT have a curriculum" do
+      it "when a teacher" do
+        subject.teacher_profile = true
+        subject.save
+        subject.errors.on(:curriculum).should be_nil
+      end
+
+      it "when a student" do
+        subject.teacher_profile = false
+        subject.save
+        subject.errors.on(:curriculum).should be_nil
       end
     end
   end
@@ -113,8 +141,16 @@ describe User do
     end
 
     it "retrieves lectures that are not clones" do
-      lecture = Factory(:lecture, :is_clone => false, :owner => subject)
-      lecture2 = Factory(:lecture, :is_clone => true, :owner => subject)
+      environment = Factory(:environment, :owner => subject)
+      course = Factory(:course, :owner => environment.owner,
+                       :environment => environment)
+      @space = Factory(:space, :owner => environment.owner,
+                       :course => course)
+      @sub = Factory(:subject, :owner => subject, :space => @space)
+      lecture = Factory(:lecture, :subject => @sub,
+                        :is_clone => false, :owner => subject)
+      lecture2 = Factory(:lecture, :subject => @sub,
+                         :is_clone => true, :owner => subject)
       lecture.published = 1
       lecture2.published = 1
       lecture.save
@@ -163,7 +199,7 @@ describe User do
     end
 
     it "retrives recent users order by last_request_at" do
-      users = (1..12).collect { |n| Factory(:user, :created_at => n.hour.ago, 
+      users = (1..12).collect { |n| Factory(:user, :created_at => n.hour.ago,
                                             :last_request_at => (13-n).minute.ago) }
       User.n_recent(3).should == [users[11], users[10], users[9]]
     end
@@ -417,5 +453,9 @@ describe User do
       subject.student_profiles = student_profile
       subject.profile_for(student_profile.subject).should == student_profile
     end
+  end
+
+  it "retrieves completeness percentage of profile" do
+    subject.completeness.should == 56
   end
 end

@@ -7,31 +7,29 @@
 
   <ul class="local-nav">
     <li>
-      <div class=" <%= (current_page? :controller => :subjects,
-        :action => :show ) ? "session selected" : "session" %> ">
+      <div class=" <%= (current_page? space_subject_path(@subject.space,
+        @subject) ) ?
+        "session selected" : "session" %> ">
         <%= link_to 'Mural', space_subject_path(@subject.space, @subject),
           :class => 'icon icon-redu_r8_c379_s1' %>
       </div>
     </li>
     <li>
-      <div class=" <%= (current_page? :controller => :lectures,
-                        :action => :index ) ? "session selected" : "session" %> ">
+      <div class=" <%= (current_page? space_subject_lectures_path(@space, @subject) ) ? "session selected" : "session" %> ">
         <%= link_to 'Recursos', space_subject_lectures_path(@space, @subject),
                           :class => 'icon icon-redu_r9_c277_s1' %>
       </div>
     </li>
     <% if can? :manage, @subject %>
       <li>
-        <div class="<%= (current_page? :controller => :subjects,
-                         :action => :edit ) ? "session selected" : "session" %>">
+        <div class="<%= (current_page? edit_space_subject_path(@space, @subject) ) ? "session selected" : "session" %>">
                          <%= link_to 'Gerenciamento', edit_space_subject_path(@space, @subject),
                            :class => 'icon icon-redu_r8_c221_s1' %>
         </div>
       </li>
     <% end %>
     <li>
-      <div class="<%= (current_page? :controller => :subjects,
-                        :action => :users ) ? "session selected" : "session" %>">
+      <div class="<%= (current_page? users_space_subject_path(@space, @subject) ) ? "session selected" : "session" %>">
                         <%= link_to "Membros (#{@subject.members.length})",
                           users_space_subject_path(@space, @subject),
                           :class => 'icon icon-redu_r8_c319_s1' %>

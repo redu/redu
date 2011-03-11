@@ -1,0 +1,20 @@
+<%# 
+    Mostra botões de publicação e despublicação de Subject dependento
+    das permissões do usuario. 
+    Locals: space e subject 
+%>
+<% if can? :manage, subject %>
+  <% if subject.published? %>
+    <%= link_to "Despublicar", unpublish_space_subject_path(space, subject),
+      :confirm => "Ao despublicar um módulo, todas as matrículas serão perdidas." + \
+      " Tem certeza?",
+      :method => "post",
+      :class => "cancel " %>
+  <% else %>
+      <%= link_to "Publicar", publish_space_subject_path(space, subject),
+        :confirm => "Tem certeza?",
+        :method => "post",
+        :class => "cancel " %>
+  <% end %>
+<% end %>
+

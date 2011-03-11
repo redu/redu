@@ -1,0 +1,14 @@
+<%# Form de Subject (e somente ele) %>
+<%= f.label :title, :title.l %>
+<%= f.text_field :title, { :class => 'big' } %>
+<%= error_for :subject, :title %>
+
+<%= f.label :description, :description.l, :size => '10x30' %>
+<%= f.text_area :description, :class => 'subject-description' %>
+<%= render :partial => 'shared/new/limit_char_field',
+  :locals => { :class_textarea => "subject-description",
+               :limit => 250 }%>
+  <%= error_for :subject, :description %>
+  <%= f.label :tag_list, :tag_list.l, { :class => 'big' } %>
+  <%= f.text_field :tag_list %>
+

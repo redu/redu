@@ -10,7 +10,8 @@
         :class => 'icon icon-redu_r8_c217_s1' %>
     </li>
   </ol>
-  <%= render :partial => 'courses/new/header' %>
+  <%= render :partial => 'environments/new/header',
+    :locals => { :environment => @environment } %>
   <div id="course-new" class="hierarchy-listing-wrapper">
     <div class="header">
       <h4>Curso</h4>
@@ -24,6 +25,6 @@
     <%= f.error_messages %>
     <%= hidden_field_tag :plan, 'free' %>
     <%= render :partial => 'courses/new/form', :locals => { :f => f, :edit => false } %>
-    <%= f.submit "Criar!" %>
+    <%= f.submit "Criar curso" %>
   <% end %>
 </div>

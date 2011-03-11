@@ -304,6 +304,7 @@ class SpacesController < BaseController
 
   # GET /spaces/1/edit
   def edit
+    @header_space = @space.clone
 
     respond_to do |format|
       format.html do
@@ -345,6 +346,7 @@ class SpacesController < BaseController
   # PUT /spaces/1
   # PUT /spaces/1.xml
   def update
+    @header_space = @space.clone
 
     respond_to do |format|
       if @space.update_attributes(params[:space])
@@ -355,7 +357,9 @@ class SpacesController < BaseController
         format.html { redirect_to(@space) }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
+        format.html do
+          render :template => 'spaces/new/edit', :layout => 'new/application'
+        end
         format.xml  { render :xml => @space.errors, :status => :unprocessable_entity }
       end
     end

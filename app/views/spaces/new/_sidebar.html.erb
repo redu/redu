@@ -7,24 +7,21 @@
 
   <ul class="local-nav">
     <li>
-      <div class="<%= (current_page? :controller => :spaces,
-                       :action => :show) ?
+      <div class="<%= (current_page? space_path(@space)) ?
                     "session selected".to_s : "session".to_s %>">
         <%= link_to 'Mural', space_path(@space),
           :class => 'icon icon-redu_r8_c379_s1' %>
       </div>
     </li>
     <li>
-      <div class="<%= (current_page? :controller => :subjects,
-                       :action => :index) ?
+      <div class="<%= (current_page? space_subjects_path(@space)) ?
                     "session selected".to_s : "session".to_s %>">
         <%= link_to 'Módulos', space_subjects_path(@space),
           :class => 'icon icon-redu_r11_c211_s1' %>
       </div>
     </li>
     <li>
-      <div class="<%= (current_page? :controller => :folders,
-                       :action => :index) ?
+      <div class="<%= (current_page? space_folders_path(@space)) ?
                     "session selected".to_s : "session".to_s %>">
         <%= link_to 'Arquivos', space_folders_path(@space),
           :class => 'icon icon-redu_r8_c349_s1' %>
@@ -39,16 +36,14 @@
       </div>
     </li --!>
     <li>
-      <div class="<%= (current_page? :controller => :bulletins,
-                       :action => :index) ?
+      <div class="<%= (current_page? space_bulletins_path(@space)) ?
                     "session selected".to_s : "session".to_s %>">
         <%= link_to 'Notícias', space_bulletins_path(@space),
           :class => 'icon icon-redu_r9_c289_s1' %>
       </div>
     </li>
     <li>
-      <div class="<%= (current_page? :controller => :events,
-                       :action => :index) ?
+      <div class="<%= (current_page? space_events_path(@space)) ?
                     "session selected".to_s : "session".to_s %>">
         <%= link_to 'Eventos', space_events_path(@space),
           :class => 'icon icon-redu_r8_c295_s1' %>
@@ -56,8 +51,7 @@
     </li>
     <% if can? :manage, @space %>
       <li>
-        <div class="<%= (current_page? :controller => :spaces,
-                         :action => :edit) ?
+        <div class="<%= (current_page? edit_space_path(@space)) ?
                       "session selected".to_s : "session".to_s %>">
           <%= link_to 'Gerenciamento', edit_space_path(@space),
             :class => 'icon icon-redu_r8_c221_s1' %>
@@ -65,8 +59,7 @@
       </li>
     <% end %>
     <li>
-      <div class="<%= (current_page? :controller => :spaces,
-                       :action => :users) ?
+      <div class="<%= (current_page? users_space_path(@space)) ?
                     "session selected".to_s : "session".to_s %>">
         <%= link_to 'Membros', users_space_path(@space),
           :class => 'icon icon-redu_r8_c319_s1' %>
