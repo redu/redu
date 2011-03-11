@@ -47,10 +47,14 @@
               <%= f.password_field :password, :class => "small" %>
               <%= error_for :user_session, :password %>
 
+              
+
               <% field_set_tag "", :class => "inline" do %>
                 <%= f.check_box :remember_me %>
                 <%= f.label :remeber_me, "Manter-me logado" %>
               <% end %>
+
+              <%= link_to :forgot_your_password.l, forgot_password_url %>
 
               <%= f.submit "Avançar" %>
             <% end %>
