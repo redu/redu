@@ -454,4 +454,8 @@ describe User do
       subject.profile_for(student_profile.subject).should == student_profile
     end
   end
+
+  it "retrieves completeness percentage of profile" do
+    subject.completeness.should == 56
+  end
 end

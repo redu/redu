@@ -716,8 +716,14 @@ class User < ActiveRecord::Base
     self.statuses.log_action_eq(TEACHING_ACTIONS).descend_by_created_at
   end
 
+  def profile_activity(page = 1)
+    Status.profile_activity(self).
+      paginate(:page => page, :order => 'created_at DESC',
+               :per_page => AppConfig.items_per_page)
+  end
+
   # FIXME Não foi testado devido a futura reformulação de Status
-  def recent_activity(page = 1)
+  def home_activity(page = 1)
     Status.home_activity(self).paginate(:page => page,
                                         :order => 'created_at DESC',
                                         :per_page => AppConfig.items_per_page)
@@ -748,6 +754,18 @@ class User < ActiveRecord::Base
   def profile_for(subject)
     self.student_profiles.find(:first,
       :conditions => {:subject_id => subject})
+  end
+
+  def completeness
+    total = 9.0
+    undone = 0.0
+    undone += 1 if self.description.nil?
+    undone += 1 if self.avatar_file_name.nil?
+    undone += 1 if self.gender.nil?
+    undone += 1 if self.curriculum_file_name.nil?
+
+    done = total - undone
+    (done/total*100).round
   end
 
   protected
@@ -789,4 +807,5 @@ class User < ActiveRecord::Base
     1.upto(len) { |i| new_password << chars[rand(chars.size-1)] }
     return new_password
   end
+
 end

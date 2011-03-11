@@ -1,0 +1,13 @@
+<tr id="user-<%= user_item_admin.id %>">
+  <td><%= check_box_tag 'users[]', user_item_admin.id, false, 
+    {:class => "autoCheck", :id => "remove-#{user_item_admin.id}"}  %></td>
+  <td>
+    <%= image_tag user_item_admin.avatar(:thumb_32),
+          :class => "avatar" %>
+    <%= link_to user_item_admin.display_name, user_item_admin,
+      :rarget => "_blank", :class => "user" %>
+  </td>
+  <td>
+    <span class="date"><%= time_ago_in_words(user_item_admin.created_at) %></span>
+  </td>
+</tr>

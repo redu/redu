@@ -133,6 +133,11 @@ jQuery(function(){
         $(this).parents(":first").next().slideToggle();
     });
 
+    // O elemento assume a altura do seu pai
+    $(".parent-height").height(function(i, height){
+        $(this).height($(this).parent().height());
+    });
+
 });
 
 /* Limita a quantidade de caracteres de um campo */

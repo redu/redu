@@ -1,12 +1,18 @@
 <div id="hierarchy-header" class="clearfix course-header">
   <span class="initials">
-    <% if course.environment.initials %>
-      <%= course.environment.initials %>
-    <% else %>
-      <%= course.environment.name %>
-    <% end %>
+      <%= @course.environment.initials_or_name %>
   </span>
-  <h3 class="call course-name"><%= course.name %></h3>
+  <h3 class="call course-name"><%= @course.name %></h3>
+
+  <% unless @course.users.include?(current_user) %>
+    <% if (current_page? preview_environment_course_path(@course.environment,
+      @course)) || @sidebar_preview %>
+      <%= link_to 'Participar',
+        join_environment_course_path(@course.environment, @course),
+        :method => :post, :class => 'join important'%>
+    <% end %>
+  <% end %>
+
   <div class="grid_9 alpha">
     <span class="description">
       <%= course.description %>

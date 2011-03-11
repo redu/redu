@@ -1,4 +1,8 @@
-<%= render :partial => 'environments/new/sidebar' %>
+<% if @sidebar_preview %>
+  <%= render :partial => 'environments/new/preview_sidebar' %>
+<% else %>
+  <%= render :partial => 'environments/new/sidebar' %>
+<% end %>
 
 <div class="main grid_12 omega big-col">
   <ol id="breadcrumbs" class="clearfix">
@@ -50,11 +54,7 @@
       <h4>Membros</h4>
       <span class="counter">
         <%= @environment.users.length %> pessoas fazem parte da
-        <% if @environment.initials %>
-          <%= @environment.initials %>
-        <% else %>
-          <%= @environment.name %>
-        <% end %>
+        <%= @environment.initials_or_name %>
       </span>
     </div>
 

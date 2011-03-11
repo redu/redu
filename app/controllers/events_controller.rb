@@ -52,24 +52,34 @@ class EventsController < BaseController
 
   def show
     @eventable = find_eventable
+    respond_to do |format|
+      format.html do
+        render :template => 'events/new/show', :layout => 'new/application'
+      end
+    end
   end
 
   def index
     @eventable = find_eventable
-    @events = Event.approved.upcoming.paginate(:conditions => ["eventable_id = ?" \
-                                               " AND eventable_type LIKE ?",
-                                               @eventable.id,
-                                               @eventable.class.to_s],
-                                               :include => :owner,
-                                               :page => params[:page],
-                                               :order => 'start_time',
-                                               :per_page => 5)
+    @events = Event.approved.upcoming.
+      paginate(:conditions => ["eventable_id = ?" \
+                               " AND eventable_type LIKE ?",
+                               @eventable.id,
+                               @eventable.class.to_s],
+               :include => :owner,
+               :page => params[:page],
+               :order => 'start_time',
+               :per_page => AppConfig.items_per_page)
 
     @list_title = "Eventos Futuros"
 
     respond_to do |format|
-      format.html
-      format.js
+      format.html do
+        render :template => 'events/new/index', :layout => 'new/application'
+      end
+      format.js do
+        render :template => 'events/new/index'
+      end
     end
   end
 
@@ -90,10 +100,22 @@ class EventsController < BaseController
 
   def new
     @eventable = find_eventable
+
+    respond_to do |format|
+      format.html do
+        render :template => 'events/new/new', :layout => 'new/application'
+      end
+    end
   end
 
   def edit
     @eventable = find_eventable
+
+    respond_to do |format|
+      format.html do
+        render :template => 'events/new/edit', :layout => 'new/application'
+      end
+    end
  end
 
   def create
@@ -116,7 +138,9 @@ class EventsController < BaseController
         format.xml  { render :xml => @event, :status => :created, :location => @event }
       else
         @eventable = @event.eventable
-        format.html { render :action => "new" }
+        format.html do
+          render :template => 'events/new/new', :layout => 'new/application'
+        end
         format.xml  { render :xml => @event.errors, :status => :unprocessable_entity }
       end
     end
@@ -130,7 +154,11 @@ class EventsController < BaseController
         format.html { redirect_to polymorphic_path([@event.eventable, @event]) }
         format.xml { render :xml => @event, :status => :created, :location => @event }
       else
-        format.html { render :action => :edit }
+        @eventable = find_eventable
+        format.html do
+          render :template => 'events/new/edit',
+          :layout => 'new/application'
+        end
         format.xml { render :xml => @event.errors, :status => :unprocessable_entity }
       end
     end
