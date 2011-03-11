@@ -108,10 +108,25 @@ describe User do
         subject.save
         subject.errors.on(:curriculum).should_not be_nil
       end
-      it "when a teacher" do
+
+      it "when NOT a teacher" do
         subject.teacher_profile = false
         subject.save
         subject.errors.on(:curriculum).should_not be_nil
+      end
+    end
+
+    context "should NOT validate a curriculum type on update if it does NOT have a curriculum" do
+      it "when a teacher" do
+        subject.teacher_profile = true
+        subject.save
+        subject.errors.on(:curriculum).should be_nil
+      end
+
+      it "when a student" do
+        subject.teacher_profile = false
+        subject.save
+        subject.errors.on(:curriculum).should be_nil
       end
     end
 
