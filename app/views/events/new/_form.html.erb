@@ -5,7 +5,7 @@
   <%= f.text_field :name %>
 
   <%= f.label :description, "Descrição:" %>
-  <%= f.cktext_area :description, :width=>'678px',
+  <%= f.cktext_area :description, :width=>'530px', :height => "400px",
     :swf_params => { :assetable_type => eventable.class.to_s,
       :assetable_id => eventable.id }%>
 

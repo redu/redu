@@ -1882,6 +1882,7 @@ form.common input[type=text] {
 }
 
 form.common .cke_editor_bulletin_description_editor,
+form.common .cke_editor_event_description_editor,
 form.common .cke_editor_page_body_editor {
   float: left;
   margin: 25px 0;
