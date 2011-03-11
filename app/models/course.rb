@@ -181,4 +181,12 @@ class Course < ActiveRecord::Base
   def setup_quota
     self.create_quota
   end
+
+  # Verifica se o usuário em questão está esperando aprovação num determinado
+  # Course
+  def waiting_approval?(user)
+    assoc = user.get_association_with self
+    return false if assoc.nil?
+    assoc.waiting?
+  end
 end

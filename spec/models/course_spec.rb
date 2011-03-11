@@ -264,6 +264,14 @@ describe Course do
     space.users.should_not include(user)
   end
 
+  it "verifies if the user is waiting for approval" do
+    user = Factory(:user)
+    subject.update_attribute(:subscription_type, 2)
+    subject.join(user)
+
+    subject.waiting_approval?(user).should be_true
+  end
+
   it "creates hierarchy associations for a specified user" do
     space = Factory(:space, :course => subject)
     subject.spaces << space
