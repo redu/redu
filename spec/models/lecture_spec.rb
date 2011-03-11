@@ -45,10 +45,27 @@ describe Lecture do
   end
 
   context "callbacks" do
-    it "creates a AssertReport between the StudentProfile and the Lecture after create" do
-      subject.asset_reports.first.should_not be_nil
-      subject.asset_reports.first.
-        student_profile.user.should == subject.owner
+    context "creates a AssertReport between the StudentProfile and the Lecture after create" do
+      it "when the owner is the subject owner" do
+        subject.asset_reports.first.should_not be_nil
+        subject.asset_reports.first.
+          student_profile.user.should == subject.owner
+      end
+
+      it "when the owner is an environment_admin" do
+        # First lecture is created
+        subject.should_not be_new_record
+
+        another_admin = Factory(:user)
+        @space.course.join another_admin
+        @space.course.environment.change_role(another_admin,
+                                              Role[:environment_admin])
+        lecture = Factory(:lecture, :subject => @sub, :owner => another_admin)
+        lecture.asset_reports.first.should_not be_nil
+        lecture.asset_reports.first.student_profile.should_not be_nil
+        lecture.asset_reports.first.
+          student_profile.user.should == lecture.subject.owner
+      end
     end
   end
 
