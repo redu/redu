@@ -284,7 +284,7 @@
 }
 
 #hierarchy-header .subject-name {
-  width: 600px;
+  width: 590px;
   float: left;
 }
 
@@ -507,6 +507,7 @@
 #resource .context {
   width: 200px;
   margin-right: 10px;
+  min-height: 70px;
 }
 
 #resource .context .progress {
@@ -1488,6 +1489,7 @@ label.focus {
   background-image: url("../images/new/icon-subject-closed-gray_32_32.png");
   background-repeat: no-repeat;
   background-position: 685px 40px;
+  min-height: 75px;
 }
 
 #space-subjects .subjects > li.open {
@@ -2747,6 +2749,15 @@ table.spaced tr td {
   padding: 0 10px;
   padding-top: 15px;
   padding-right: 40px;
+}
+
+#profile .vcard .edit {
+  font-size: .9em;
+  clear: both;
+  padding-left: 13px;
+  float: right;
+  display: block;
+  width: 30px;
 }
 
 #profile .vcard .bio {

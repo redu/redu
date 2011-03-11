@@ -39,9 +39,11 @@
       </div>
       <%# FIXME Mostrar ocupação  %>
       <%# <span class="occupation">Profissão</span> %>
-      <%= link_to 'Editar', edit_user_path(@user),
-        :class => 'edit icon icon-redu_r12_c5_s1' %>
       <div class="bio-wrapper clearfix">
+        <% if can? :manage, @user %>
+        <%= link_to 'Editar', edit_user_path(@user),
+          :class => 'edit icon icon-redu_r12_c5_s1' %>
+        <% end %>
         <span class="label">O que faço de melhor:</span>
         <span class="bio"><%= @user.description %></span>
         <span class="label">Interesses:</span>
