@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   TEACHING_ACTIONS = ['create']
 
   SUPPORTED_CURRICULUM_TYPES = [ 'application/pdf', 'application/msword',
-                                 'text/plain',
+                                 'text/plain', 'application/rtf', 'text/rtf',
                                  'application/vnd.openxmlformats-officedocument.wordprocessingml.document' # docx
                                ]
 
