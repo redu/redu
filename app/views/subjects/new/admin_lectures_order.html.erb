@@ -48,7 +48,8 @@
     </div>
 
     <% fake_tabs ["Informações", edit_space_subject_path(@space, @subject)],
-        ["Recursos", admin_lectures_order_space_subject_path(@space, @subject)] do %>
+      ["Recursos", admin_lectures_order_space_subject_path(@space, @subject)],
+      ["Membros", admin_members_space_subject_path(@space, @subject)] do %>
 
         <% if @subject.published? %>
           <div class="box_notice">Você não pode alterar a ordem das aulas, pois o módulo está publicado.</div>
@@ -91,7 +92,7 @@
             <%= javascript_include_tag :ckeditor %>
           <% end %>
         <% end %>
-        
+
     <% end %>
   </div><!-- end #subjec-edit -->
 </div><!-- end .main -->

@@ -7,7 +7,8 @@
       space_subject_lecture_path(space, subject, item)  %>
   </td>
   <td>
-    <%= link_to "Editar", edit_space_subject_lecture_path(space, subject, item),
+    <%= link_to "Editar",
+      edit_space_subject_lecture_path(space, subject, item),
       :class => "edit icon icon-redu_r12_c5_s1" %>
   </td>
   <td>
@@ -15,6 +16,6 @@
       space_subject_lecture_path(space, subject, item),
       :method => :delete,
       :class => "icon icon-redu_r12_c43_s1 delete",
-      :confirm => "Você tem certeza que deseja deletar deste módulo? Todas as informações serão perdidas."  %>
+      :confirm => "Você tem certeza que deseja deletar esta aula deste módulo? Todas as informações serão perdidas."  %>
   </td>
 </tr>
