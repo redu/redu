@@ -52,6 +52,7 @@ class MessagesController < BaseController
   end
 
   def show
+    authorize! :manage, @user
     @message = Message.read(params[:id], current_user)
     @reply = Message.new_reply(@user, @message, params)
 
@@ -61,6 +62,7 @@ class MessagesController < BaseController
   end
 
   def new
+    authorize! :manage, @user
     if params[:reply_to]
       in_reply_to = Message.find_by_id(params[:reply_to])
     end
@@ -72,6 +74,7 @@ class MessagesController < BaseController
   end
 
   def create
+    authorize! :manage, @user
     messages = []
 
     if params[:message][:recipient_id]
