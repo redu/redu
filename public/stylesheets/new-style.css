@@ -475,7 +475,8 @@
   background: url("../images/new/icon-bulletin-gray_32_32.png") no-repeat 20px center;
 }
 
-#subject-resources .header {
+#subject-resources .header,
+#resource-new .header {
   background: url("../images/new/icon-resource-black_32_32.png") no-repeat 20px center;
 }
 
@@ -1496,32 +1497,43 @@ label.focus {
   background-image: url("../images/new/icon-subject-open-gray_32_32.png");
 }
 
+#add-resources {
+  clear: both;
+}
+
+#add-resources .resources-wrapper,
 #new_subject .resources-wrapper {
   border-top: 1px dashed #A8A8A8;
   border-bottom: 1px dashed #A8A8A8;
   padding: 10px 0;
 }
 
+#add-resources .resources,
 #new_subject .resources {
   float: left;
 }
 
+#add-resources .resources li,
 #new_subject .resources li {
   padding: 3px 0 3px 20px;
   margin: 5px 0;
 }
 
+#add-resources .resources li a.edit,
+#add-resources .resources li a.delete,
 #new_subject .resources li a.edit,
 #new_subject .resources li a.delete {
   font-size: .9em;
 }
 
+#add-resources .new-resource,
 #new_subject .new-resource {
   float: left;
   width: 550px;
   padding: 15px 0;
 }
 
+#add-resources .new-resource li,
 #new_subject .new-resource li {
   background: url("../images/new/new-resource.png") no-repeat -143px 0;
   float: left;
@@ -1772,7 +1784,7 @@ a.clean {
 .fake-tabs > ul li.ui-state-active a {
   color: #1788C3;
   background-color: white;
-  padding: 8px 15px 9px 15px;
+  padding: 9px 15px 9px 15px;
 
   -webkit-border-top-left-radius: 3px;
   -webkit-border-top-right-radius: 3px;

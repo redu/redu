@@ -28,7 +28,8 @@
           :locals => { :published => false } %>
       <% end %>
       <% if action_name == 'edit' %>
-        <%= render :partial => 'lectures/choose_type' %>
+        <%= render :partial => 'lectures/choose_type',
+              :locals => { :subject => @subject, :space => @space } %>
       <% end %>
       <%= render :partial => 'lectures/new/index_short' %>
       <%= error_for :subject, :lectures %>

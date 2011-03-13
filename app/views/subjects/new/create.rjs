@@ -7,7 +7,8 @@ page.hide 'subject_title-error'
 page.hide 'subject_description-error'
 
 page.insert_html :after, 'lectures_index',
-  :partial => 'lectures/new/choose_type'
+  :partial => 'lectures/new/choose_type',
+  :locals => { :subject => @subject, :space => @space }
 
 page.remove 'add_button'
 page.show 'create_button'

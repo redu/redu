@@ -56,11 +56,11 @@ jQuery(function(){
     };
 
     // Explicação de tipos de recursos (utilizado na criação de módulo)
-    $("#new_subject .new-resource li").live('hover', function(){
+    $(".new-resource li").live('hover', function(){
         var explanation = "<strong>" + $(this).html() + "</strong>";
         explanation += $(this).find("a").attr("title");
 
-        $("#new_subject .new-resource .explanation").html(explanation);
+        $(".new-resource .explanation").html(explanation);
     });
 
     // Adiciona classe selected ao li do recurso clicado

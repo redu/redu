@@ -11,7 +11,8 @@
     :url => { :action => "create" },
     :loading => "$('#spinner-form-seminar').show();",
     :success => "$('#spinner-form-seminar').hide();",
-    :html => { :multipart => true, :id => "seminar-form" } do |f| %>
+    :html => { :multipart => true,
+     :id => "seminar-form", :class => "common" } do |f| %>
 
     <% field_set_tag do %>
       <%= label_tag :name, :title.l %>

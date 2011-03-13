@@ -56,10 +56,8 @@
           <% unless @subject.lectures.empty? %>
             <div class="pretty-text"><strong>Arraste as aulas para alterar a ordem destas no módulo!</strong></div>
             <div class="actions">
-              <% form_tag admin_lectures_order_space_subject_path do %>
-                <%= hidden_field_tag 'lectures_ordered', nil, :class => "assets" %>
-                <%= submit_tag 'Atualizar' %>
-              <% end %>
+              <%= link_to "Novo recurso", new_space_subject_lecture_path(@space, @subject),
+                    :class => "button" %>
             </div>
             <div class="lazy_list clearfix">
               <table class="common spaced default sortable subject-assets">
@@ -84,12 +82,9 @@
           <div class="actions">
             <% form_tag admin_lectures_order_space_subject_path do %>
               <%= hidden_field_tag 'lectures_ordered', nil, :class => "assets" %>
-              <%= submit_tag 'Atualizar' %>
+              <%= submit_tag 'Salvar alterações' %>
             <% end %>
           </div>
-          <% content_for :header_scripts_and_styles do %>
-            <%= javascript_include_tag :ckeditor %>
-          <% end %>
         <% end %>
         
     <% end %>

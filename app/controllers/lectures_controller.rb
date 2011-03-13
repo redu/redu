@@ -170,7 +170,9 @@ class LecturesController < BaseController
   # GET /lectures/new.xml
   def new
     @lecture = Lecture.new
-    case params[:type].to_s
+    @type = params.fetch(:type, 'Page')
+
+    case @type
     when 'Page'
       @page = Page.new
     when 'Seminar'
@@ -180,6 +182,9 @@ class LecturesController < BaseController
     end
 
     respond_to do |format|
+      format.html do
+        render :template => 'lectures/new/new', :layout => "new/application"
+      end
       format.js do
         render :template => 'lectures/new/new'
       end
