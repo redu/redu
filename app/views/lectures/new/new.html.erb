@@ -1,0 +1,82 @@
+<%= render :partial => 'subjects/new/sidebar' %>
+<div class="main grid_12 omega big-col">
+  <ol id="breadcrumbs" class="clearfix">
+    <li>
+      <%= link_to 'Home', home_user_path(current_user),
+        :class => 'replacement home icon icon-redu_r8_c227_s1' %>
+    </li>
+    <li>
+      <%= link_to @subject.space.course.environment.name,
+        environment_path(@subject.space.course.environment),
+        :class => 'replacement icon icon-redu_r8_c217_s1' %>
+    </li>
+    <li>
+      <%= link_to @subject.space.course.name,
+        environment_course_path(@subject.space.course.environment, @subject.space.course),
+        :class => 'replacement icon icon-redu_r8_c313_s1' %>
+    </li>
+    <li>
+      <%= link_to @subject.space.name, space_path(@subject.space),
+        :class => 'replacement icon icon-redu_r8_c307_s1' %>
+    </li>
+    <li>
+      <%= link_to @subject.title, space_subject_path(@space, @subject),
+        :class => 'icon icon-redu_r11_c211_s1'%>
+    </li>
+  </ol>
+    <div id="hierarchy-header" class="clearfix space-header">
+      <span class="prefix">
+        <% if @space.course.environment.initials == '' %>
+          <%= @space.course.environment.name %>
+        <% else %>
+          <%= @space.course.environment.initials %>
+        <% end %>
+        > <%= @space.course.name  %>
+    </span>
+    <h3 class="call space-name"><%= @space.name %></h3>
+    <div class="grid_9 alpha">
+      <span class="description">
+        <%= @space.description %>
+      </span>
+      <ul class="tags clearfix">
+        <% @space.tags.each do |tag| %>
+          <li>
+            <%= link_to tag,
+              space_path(@space) %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+    <ul class="statistics grid_3 omega">
+      <li>
+        <em class="icon icon-redu_r8_c207_s1">Professores:</em>
+        <span><%= @space.teachers.length %></span>
+      </li>
+      <li>
+        <em class="icon icon-redu_r8_c385_s1">Tutores:</em>
+        <span><%= @space.tutors.length %></span>
+      </li>
+      <li>
+        <em class="icon icon-redu_r8_c355_s1">Alunos:</em>
+        <span><%= @space.students.length %></span>
+      </li>
+    </ul>
+
+  </div><!-- end #hierarchy-header -->
+  <div id="resource-new" class="hierarchy-listing-wrapper">
+    <div class="header">
+      <h4>Recursos</h4>
+      <span class="counter">Adicionar recurso</span>
+    </div>
+    <% content_for :header_scripts_and_styles do %>
+      <%= javascript_include_tag :ckeditor %>
+    <% end %>
+    <form action="" id="new_subject" class="common">
+      <%= render :partial => 'lectures/new/index_short' %>
+      <%= 
+        render :partial => "lectures/new/choose_type",
+          :locals => { :subject => @subject, :space => @space }
+        %>
+    </form>
+</div>
+</div>
