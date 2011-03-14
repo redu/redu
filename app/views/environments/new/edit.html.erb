@@ -1,3 +1,18 @@
+<% content_tag :header_scripts_and_styles do %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+       $("#environment_name").bind('keyup blur', function(e){
+         $("#environment_path").val($(this).slug());
+         $(".common .path .environment").html($(this).slug());
+       })
+
+       $("#environment_path").bind('keyup blur', function(e){
+         $(".common .path .environment").html($(this).slug());
+       })
+
+    })
+  </script>
+<% end %>
 <%= render :partial => 'environments/new/sidebar' %>
 <div class="main grid_12 omega big-col">
   <ol id="breadcrumbs" class="clearfix">
@@ -36,7 +51,13 @@
         <%= f.text_field :name  %>
         <%= f.label :initials, "Sigla" %>
         <%= f.text_field :initials  %>
-        <%= f.label :description, "Description" %>
+        <%= f.label :path, :path.l %>
+        <%= f.text_field :path %>
+        <span class="tip path">
+          <span class="base">redu.com.br/</span>
+          <span class="environment"><%= @environment.path %></span>
+        </span>
+        <%= f.label :description, "Descrição" %>
         <%= f.text_area :description, :size=>'102x4' %>
         <%= f.label raw("Palavras-chave <span class='snippet'>(separadas por vírgula)</span>") %>
         <%= f.text_field :tag_list %>
