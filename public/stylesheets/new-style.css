@@ -454,6 +454,10 @@
   font-weight: bold;
 }
 
+.ui-tabs-hide {
+  display: none;
+}
+
 #environment-courses .header,
 #course-new .header {
   background: url("../images/new/icon-course-gray_32_32.png") no-repeat 20px center;
@@ -1349,7 +1353,7 @@ label.focus {
   width: 420px;
 }
 
-#checkout input[type=submit] {
+#checkout input[type=submit].next {
   display: block;
   position: absolute;
   right: 25px;
@@ -1388,15 +1392,204 @@ label.focus {
 }
 
 #checkout .plan {
-  background: url("../images/new/plans.png") no-repeat 10px 60px;
   height: 700px;
   position: relative;
 }
 
-#checkout .plan form {
-  position: absolute;
-  left: 200px;
-  bottom: 60px;
+#checkout .plan .table .ui-tabs-nav {
+  margin-bottom: 20px;
+}
+
+#checkout .plan .table .ui-state-default {
+  display: block;
+  text-align: center;
+  float: left;
+  border: 1px solid #b3b3b3;
+  margin-right: 22px;
+
+  background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#F0F0F0)); /* webkit browsers */
+  background: -moz-linear-gradient(top,  #ffffff,  #F0F0F0); /* Firefox 3.6+ */
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+}
+
+#checkout .plan .table .ui-state-hover {
+  border: 1px solid #b3b3b3;
+  background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#DCEFF7)); /* webkit browsers */
+  background: -moz-linear-gradient(top,  #ffffff,  #DCEFF7); /* Firefox 3.6+ */
+}
+
+#checkout .plan .table .ui-tabs-selected {
+  border: 1px solid white;
+  background: #4CACD5;
+}
+
+#checkout .plan .table .ui-state-default:last-child {
+  margin-right: 0;
+}
+
+#checkout .plan .table .ui-tabs-selected a {
+  color: white;
+}
+
+#checkout .plan .table .ui-state-default a {
+  display: block;
+  width: 112px;
+  height: 40px;
+  font-family: Copse, Arial, sans-serif;
+  font-size: 1.6em;
+  padding: 25px 50px 150px 50px;
+
+}
+
+#checkout .plan .table .ui-state-hover a {
+  text-decoration: none;
+}
+
+#checkout .plan .table .ui-state-default .teacher {
+  background-position: 35px 60px;
+}
+
+#checkout .plan .table .ui-tabs-selected .teacher {
+  background-position: 35px -140px;
+}
+
+#checkout .plan .table .ui-state-default .instituition {
+  background-position: -185px 60px;
+}
+
+#checkout .plan .table .ui-tabs-selected .instituition {
+  background-position: -190px -140px;
+}
+
+#checkout .plan .table .ui-state-default .company {
+  background-position: -385px 60px;
+}
+
+#checkout .plan .table .ui-tabs-selected .company {
+  background-position: -380px -140px;
+}
+
+#checkout .plan .table .teacher,
+#checkout .plan .table .instituition,
+#checkout .plan .table .company {
+  background: url("../images/new/plan-types.png") no-repeat ;
+}
+
+#checkout .plan .table .ui-tabs-panel {
+  border: 1px solid #b3b3b3;
+  clear: both;
+  padding: 20px 10px;
+  width: 670px;
+  float: right;
+
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+}
+
+#checkout .plan .table .wide {
+  width: auto;
+}
+
+#checkout .plan .table .ui-tabs-panel .name {
+  font-family: Copse, Arial, sans-serif;
+  font-size: 1.5em;
+  font-weight: normal;
+  color: #61be80;
+  margin-bottom: 20px;
+  display: block;
+}
+
+#checkout .plan .table .ui-tabs-panel .plans > li {
+  float: left;
+  border-right: 1px dotted #CCCBCC;
+  width: 215px;
+  margin-right: 10px;
+  height: 325px;
+}
+
+#checkout .plan .table .ui-tabs-panel .plans > .free form {
+  padding-top: 110px;
+
+}
+
+#checkout .plan .table .ui-tabs-panel .plans > li.last {
+  border: none;
+  margin: 0;
+}
+
+#checkout .plan .table .ui-tabs-panel .plans > .best-choice {
+  background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#ffeed7)); /* webkit browsers */
+  background: -moz-linear-gradient(top,  #ffffff,  #ffeed7); /* Firefox 3.6+ */
+
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+}
+
+#checkout .plan .table .ui-tabs-panel .features > li {
+  margin-bottom: 10px;
+  background: url("../images/new/icon-check-green_8_8.png") no-repeat 0 center;
+  padding-left: 15px;
+}
+
+#checkout .plan .table .ui-tabs-panel .features > li:last-child {
+  margin-bottom: 20px;
+}
+
+
+#checkout .plan .table .ui-tabs-panel .setup,
+#checkout .plan .table .ui-tabs-panel .monthly,
+#checkout .plan .table .ui-tabs-panel .yearly {
+  display: block;
+  padding: 5px 0;
+}
+
+#checkout .plan .table .ui-tabs-panel .value {
+  font-family: Copse, Arial, sans-serif;
+  font-size: 1.4em;
+  color: #61be80;
+}
+
+#checkout .plan .table .ui-tabs-panel .setup .value {
+  color: #f37b38;
+}
+
+#checkout .plan .table .ui-tabs-panel .pricing {
+  border-top: 1px dotted #CCCBCC;
+  margin: 0 10px;
+  margin-top: 10px;
+  padding: 10px 25px;
+}
+
+#checkout .plan .table .ui-tabs-panel .currency {
+  color: #b3b2b3;
+  font-size: .8em;
+  padding-bottom: 3px;
+  margin-right: 5px;
+  display: block;
+  float: left;
+}
+
+#checkout .plan .table .ui-tabs-panel .plus {
+  text-align: center;
+  display: block;
+  color: #f37b38;
+  padding-right: 30px;
+}
+
+#checkout .plan .table .ui-tabs-panel .tip {
+  display: block;
+  padding-left: 20px;
+  color: #B2B2B2;
+}
+
+#checkout .plan .table form {
+  display: block;
+}
+#checkout .plan .table form input {
+  clear: both;
+  position: none;
+  margin: 10px 50px;
 }
 
 #checkout .customizing{
@@ -2267,7 +2460,7 @@ table.spaced tr td {
   border-color: #60BD7F;
   float: left;
   margin: 10px;
-  
+
 }
 
 #global-courses .text-filter .button{
@@ -3421,6 +3614,7 @@ table.spaced tr td {
 .icon-redu_r9_c291_s1{ background-position: 0 -14396px;  }
 
 
+.ui-helper-clearfix:after,
 .clearfix:after {
 	visibility: hidden;
 	display: block;
@@ -3429,6 +3623,13 @@ table.spaced tr td {
 	clear: both;
 	height: 0;
 	}
-* html .clearfix             { zoom: 1; } /* IE6 */
-*:first-child+html .clearfix { zoom: 1; } /* IE7 */
+* html .clearfix,
+* html .ui-helper-clearfix {
+  zoom: 1;
+} /* IE6 */
+
+*:first-child+html .clearfix,
+*:first-child+html .ui-helper-clearfix {
+  zoom: 1;
+} /* IE7 */
 

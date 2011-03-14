@@ -81,7 +81,7 @@ $(document).ready(function(){
         <%= f.error_messages %>
         <%= render :partial => 'environments/new/form', :locals => { :f => f } %>
         <%= hidden_field_tag :plan, @plan %>
-        <%= f.submit "Assinar", :class => "important"%>
+        <%= f.submit "Assinar", :class => "important next"%>
       <% end %>
   </div>
 </div>
