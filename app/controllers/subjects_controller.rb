@@ -60,13 +60,13 @@ class SubjectsController < BaseController
       format.html do
         render :template => 'subjects/new/new', :layout => 'new/application'
       end
-      format.js do
-        render :update do |page|
-          page.insert_html :before, 'subjects_list',
-            :partial => 'subjects/new/form'
-          page.hide 'link-new-subject'
-        end
-      end
+     # format.js do
+     #   render :update do |page|
+     #     page.insert_html :before, 'subjects_list',
+     #       :partial => 'subjects/new/form'
+     #     page.hide 'link-new-subject'
+     #   end
+     # end
     end
   end
 
