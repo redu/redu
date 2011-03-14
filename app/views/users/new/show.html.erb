@@ -12,15 +12,17 @@
 
         <%= image_tag 'spinner.gif', :style => 'display: none;',
           :id => 'spinner' %>
+        <% friendship = @user.friendship_for current_user %>
         <% if current_user.friends?(@user) %>
-          É seu amigo
+          <%= link_to 'Remover conexão',
+            decline_user_friendship_path(@user, friendship),
+            :method => :post %>
         <% elsif current_user != @user %>
-              <% friendship = @user.friendship_for current_user %>
               <% if friendship %>
                 <% if friendship.status == 'pending' %>
                   <a class="waiting">Aguardando aceitação</a>
                 <% elsif friendship.status == 'requested' %>
-                <%= link_to_remote 'Aceitar pedido de amizade',
+                <%= link_to_remote 'Aceitar pedido de conexão',
                   :url => user_friendships_path(@user),
                   :loading => "$('#spinner').show();",
                   :success => "$('#spinner').hide();",
@@ -28,7 +30,7 @@
                             :id => "follow_link"} %>
                 <% end %>
               <% else %>
-                <%= link_to_remote 'Adicionar aos amigos',
+                <%= link_to_remote 'Adicionar aos contatos',
                   :url => user_friendships_path(@user),
                   :loading => "$('#spinner').show();",
                   :success => "$('#spinner').hide();",

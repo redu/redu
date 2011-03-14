@@ -9,6 +9,7 @@ class FriendshipsController < BaseController
 
   def create
     current_user.be_friends_with(@user)
+    friendship = @user.friendship_for current_user
     respond_to do |format|
       format.html do
         redirect_to user_path(@user)
@@ -16,11 +17,13 @@ class FriendshipsController < BaseController
       format.js do
         render :update do |page|
           if current_user.friends? @user
-          page.insert_html :after, 'follow_link',
-           'É seu amigo'
+            page.insert_html :after, 'follow_link',
+              (link_to 'Remover conexão',
+               decline_user_friendship_path(@user, friendship),
+               :method => :post)
           else
-          page.insert_html :after, 'follow_link',
-            (link_to 'Aguardando aceitação', nil, :class => 'waiting')
+            page.insert_html :after, 'follow_link',
+              (link_to 'Aguardando aceitação', nil, :class => 'waiting')
           end
           page.remove 'follow_link'
         end
@@ -55,14 +58,13 @@ class FriendshipsController < BaseController
   end
 
   def decline
-    authorize! :manage, @user
-    choosen_friend = User.find_by_id(params[:id])
+    authorize! :manage, current_user
+    choosen_friend = User.find(params[:user_id])
     destroy_friendship(choosen_friend)
     respond_to do |format|
       format.html do
-        redirect_to pending_user_friendships_path(current_user)
+        redirect_to user_path(choosen_friend)
       end
-      format.js
     end
   end
 
@@ -70,6 +72,7 @@ class FriendshipsController < BaseController
   def destroy_friendship(choosen_user)
     friendship_in = current_user.friendship_for(choosen_user)
     friendship_out = choosen_user.friendship_for(current_user)
+    # FIXME só deletar se existir conexão
     friendship_in.destroy
     friendship_out.destroy
   end

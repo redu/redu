@@ -18,7 +18,8 @@ class Friendship < ActiveRecord::Base
 
   # callback
   after_destroy do |f|
-    unless f.user.friends_count.size == 0
+    user = User.find(f.user_id)
+    unless user.friends_count == 0
       User.decrement_counter(:friends_count, f.user_id)
     end
   end
