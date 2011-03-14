@@ -10,6 +10,7 @@ describe EnvironmentsController do
 
       @params = {:step => 1, :locale => "pt-BR",
         :environment => {:name => "Faculdade mauricio de nassau",
+          :initials => "FMN",
           :courses_attributes => [{:name => "Gestão de TI",
                                    :path => "gestao-de-ti"}],
         :path => "faculdade-mauricio-de-nassau"}}
