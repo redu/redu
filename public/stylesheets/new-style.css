@@ -3399,6 +3399,32 @@ table.spaced tr td {
   margin-top: 10px;
 }
 
+#messages {
+
+}
+
+#messages table.common .date {
+  font-style: italic;
+  font-size: .9em;
+  display: block;
+  float: left;
+}
+
+#messages table.common .title {
+  font-size: 1.1em;
+  color: black;
+}
+
+#messages table.common .unread {
+  padding-left: 20px;
+  background: url("../images/new/icon-unread-green_8_8.png") no-repeat 0px center;
+}
+
+#messages table.common .user {
+  font-size: .9em;
+  font-weight: bold;
+}
+
 .replacement {
   text-indent: -99999px;
   overflow: hidden;
