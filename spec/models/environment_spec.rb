@@ -15,6 +15,7 @@ describe Environment do
 
   it { should validate_presence_of(:name) }
   it { should validate_presence_of(:path) }
+  it { should validate_presence_of(:initials) }
   xit { should validate_uniqueness_of(:name) }
   xit { should validate_uniqueness_of(:path) }
   it { should ensure_length_of(:name).is_at_most 40 }

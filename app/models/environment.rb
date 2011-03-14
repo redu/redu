@@ -28,7 +28,7 @@ class Environment < ActiveRecord::Base
   acts_as_taggable
   has_attached_file :avatar, PAPERCLIP_STORAGE_OPTIONS
 
-  validates_presence_of :name, :path
+  validates_presence_of :name, :path, :initials
   validates_uniqueness_of :name, :path,
     :message => "Precisa ser único"
   validates_length_of :name, :maximum => 40
