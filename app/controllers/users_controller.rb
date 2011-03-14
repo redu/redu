@@ -191,6 +191,11 @@ class UsersController < BaseController
 
   def edit
     @metro_areas, @states = setup_locations_for(@user)
+    respond_to do |format|
+      format.html do
+        render :template => 'users/new/edit', :layout => 'new/application'
+      end
+    end
   end
 
   def update
@@ -213,16 +218,15 @@ class UsersController < BaseController
     @user.tag_list = params[:tag_list] || ''
 
     #alteracao de senha na conta do usuario
-    unless params[:current_password].nil?
+    if params.has_key? "current_password"
 
       @flag = false
       authenticated = UserSession.new(:login => @user.login, :password => params[:current_password]).save
 
       unless authenticated
         @current_password = params[:current_password]
-        @user.errors.add_to_base("A senha atual estå incorreta")
+        @user.errors.add_to_base("A senha atual está incorreta")
         @flag = true
-
       end
 
     end
@@ -245,10 +249,14 @@ class UsersController < BaseController
         end
       end
     else
-      render 'edit'
+      if params.has_key? "current_password"
+        render 'users/new/account', :layout => 'new/application'
+      else
+        render 'users/new/edit', :layout => 'new/application'
+      end
     end
   rescue ActiveRecord::RecordInvalid
-    render :action => 'edit'
+      render 'users/new/edit', :layout => 'new/application'
   end
 
   def destroy
@@ -522,6 +530,16 @@ class UsersController < BaseController
       end
     end
   end
+
+  def account
+    respond_to do |format|
+      format.html do
+        render :template => 'users/new/account', :layout => 'new/application'
+      end
+    end
+
+  end
+
 
   protected
   def setup_metro_areas_for_cloud
