@@ -51,7 +51,7 @@ class Ability
       :invite, :activate, :deactivate, :groups, :statistics,
       :change_profile_photo, :crop_profile_photo,
       :upload_profile_photo, :activity_xml, :annotations,
-      :activate, :deactivate,
+      :activate, :deactivate, :account,
       :to => :manage
 
     # Lecture

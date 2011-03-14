@@ -1,0 +1,17 @@
+<%= render :partial => 'users/new/home_sidebar' %>
+<div class="main grid_12 big-col omega">
+  <ol id="breadcrumbs" class="clearfix">
+    <li>
+      <%= link_to 'Home', home_user_path(@user), :class => 'replacement home icon icon-redu_r8_c227_s1' %>
+    </li>
+    <li>
+      <%= link_to 'Configurações', edit_user_path(@user) %>
+  </ol>
+  <%
+    fake_tabs ['Perfil', edit_user_path(@user), {:class => 'icon'}],
+      ['Conta', account_user_path(@user), {:class => 'icon'}] do
+      #['Planos', user_path(@user), {:class => 'icon'}]
+    %>
+      <%= render :partial => "users/new/form_account" %>
+    <% end %>
+</div>

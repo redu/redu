@@ -175,7 +175,8 @@ ActionController::Routing::Routes.draw do |map|
     :upload_profile_photo => [:get, :put],
     :download_curriculum => :get,
     :home => :get,
-    :mural => :get
+    :mural => :get,
+    :account => :get
   } do |user|
     user.resources :friendships,:only => [:index, :create, :destroy],
       :member => { :accept => :post, :decline => :post },
