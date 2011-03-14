@@ -275,7 +275,9 @@ class EnvironmentsController < BaseController
                     :per_page => AppConfig.items_per_page)
 
     respond_to do |format|
-      format.js
+      format.js do
+        render :template => 'environments/new/search_users_admin'
+      end
     end
   end
 

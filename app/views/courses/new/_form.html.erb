@@ -15,6 +15,7 @@
 </script>
 
 <%= apply_color_picker_to "#course_color" %>
+<%= f.error_messages %>
 <% field_set_tag "Informações Gerais" do %>
   <%= f.label :name, "Nome" %>
   <%= f.text_field :name %>
