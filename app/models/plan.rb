@@ -18,7 +18,7 @@ class Plan < ActiveRecord::Base
       :members_limit => 20
     },
     :free => {
-      :name => "Free",
+      :name => "Professor Grátis (3 meses)",
       :price => 0,
       :yearly_price => 0,
       :video_storage_limit => 10.megabytes,

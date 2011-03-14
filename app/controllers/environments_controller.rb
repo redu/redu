@@ -97,6 +97,7 @@ class EnvironmentsController < BaseController
     when "3"
       @environment.valid?
       @plan = Plan.from_preset(params[:plan].to_sym)
+      @plan_humanize = @plan.clone
       @plan = params[:plan] if @plan.valid?
 
       @step = 4

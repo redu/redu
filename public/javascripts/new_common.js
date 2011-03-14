@@ -138,9 +138,6 @@ jQuery(function(){
         $(this).height($(this).parent().height());
     });
 
-    // Abas
-    $(".tabs").tabs();
-
 });
 
 /* Limita a quantidade de caracteres de um campo */
