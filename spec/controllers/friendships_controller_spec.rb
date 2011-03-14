@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'authlogic/test_case'
 
 describe FriendshipsController do
-  
+
   before do
     users = (1..4).collect { Factory(:user) }
     users[0].be_friends_with(users[1])
@@ -24,7 +24,7 @@ describe FriendshipsController do
       assigns[:friends].should == @friends
     end
   end
-  
+
   describe "GET 'pending'" do
     before do
       @new_user = Factory(:user)
@@ -35,7 +35,7 @@ describe FriendshipsController do
       assigns[:friends_pending].should == [@user]
     end
   end
- 
+
   describe "POST 'create'" do
     before do
       @new_user = Factory(:user)
@@ -52,22 +52,25 @@ describe FriendshipsController do
       response.should redirect_to(user_path(@user))
     end
   end
-  
+
   describe "POST 'destroy'" do
     before do
       @new_user = Factory(:user)
       @user.be_friends_with(@new_user)
+      @friendship = @new_user.friendship_for @user
       @new_user.be_friends_with(@user)
     end
 
     it "destroy a friendship" do
       lambda {
-        post :destroy, :locale => "pt-BR", :user_id => @user.id, :id => @new_user.id
+        post :destroy, :locale => "pt-BR", :user_id => @user.id,
+          :id => @friendship.id
       }.should change(Friendship, :count).by(-2)
     end
 
     it "redirects to user profile" do
-      post :destroy, :locale => "pt-BR", :user_id => @user.id, :id => @new_user.id
+      post :destroy, :locale => "pt-BR", :user_id => @user.id,
+        :id => @friendship.id
       response.should redirect_to(user_path(@user))
     end
   end
@@ -81,7 +84,7 @@ describe FriendshipsController do
 
     it "accepts a friendship" do
       expect {
-        post :accept, :locale => "pt-BR", :user_id => @new_user.id, :id => @user.id 
+        post :accept, :locale => "pt-BR", :user_id => @new_user.id, :id => @user.id
       }.should change(@user.friends, :count).by(1)
     end
 
@@ -99,14 +102,16 @@ describe FriendshipsController do
     end
     it "decline and destroy a friendship" do
       expect {
-        post :decline, :locale => "pt-BR", :user_id => @new_user.id, :id => @user.id
+        post :decline, :locale => "pt-BR", :user_id => @user.id,
+        :id => @friendship.id
       }.should change(Friendship, :count).by(-2)
     end
     it "redirects to user notifications" do
-       post :decline, :locale => "pt-BR", :user_id => @new_user.id, :id => @user.id
-       response.should redirect_to(pending_user_friendships_path(@new_user))
+       post :decline, :locale => "pt-BR", :user_id => @user.id,
+         :id => @friendship.id
+       response.should redirect_to(user_path(@user))
     end
   end
 
-  
+
 end

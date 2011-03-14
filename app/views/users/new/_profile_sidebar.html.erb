@@ -25,4 +25,15 @@
           :class => "more"%>
     </li>
   </ul><!-- end .local-nav -->
+  <ul class="actions clearfix">
+    <li>
+      <% friendship = @user.friendship_for current_user %>
+      <% if current_user.friends?(@user) %>
+        <%= link_to 'Remover conexão',
+          decline_user_friendship_path(@user, friendship),
+          :method => :post,
+          :class => "icon icon icon-redu_r12_c43_s1"%>
+      <% end %>
+    </li>
+  </ul>
 </div>

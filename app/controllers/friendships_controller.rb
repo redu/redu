@@ -16,12 +16,7 @@ class FriendshipsController < BaseController
       end
       format.js do
         render :update do |page|
-          if current_user.friends? @user
-            page.insert_html :after, 'follow_link',
-              (link_to 'Remover conexão',
-               decline_user_friendship_path(@user, friendship),
-               :method => :post)
-          else
+          if !current_user.friends? @user
             page.insert_html :after, 'follow_link',
               (link_to 'Aguardando aceitação', nil, :class => 'waiting')
           end
