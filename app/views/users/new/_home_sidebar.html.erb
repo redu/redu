@@ -7,7 +7,7 @@
 
   <ul class="local-nav">
     <li>
-      <div class="<%= (current_page? :controller => :users, :action => :home) ?
+      <div class="<%= (current_page? home_user_path(current_user)) ?
         "session selected".to_s : "session".to_s %>">
       <%= link_to current_user.display_name, home_user_path(current_user),
         :class => 'icon icon-redu_r8_c333_s1' %>
@@ -22,7 +22,7 @@
       </div>
     </li>
     <li>
-      <div class="<%= (current_page? :controller => :users, :action => :mural) ?
+      <div class="<%= (current_page? mural_user_path(current_user)) ?
         "session selected".to_s : "session".to_s %>">
         <%= link_to 'Meu Mural', mural_user_path(current_user),
         :class => "icon icon-redu_r8_c379_s1" %>
@@ -31,7 +31,7 @@
     <%= render :partial => 'users/new/sidebar_environment_item',
       :collection => current_user.environments, :as => :environment %>
     <li>
-      <div class="<%= (current_page? :controller => :users, :action => :edit) ?
+      <div class="<%= (current_page? edit_user_path(current_user)) ?
         "session selected".to_s : "session".to_s %>">
         <%= link_to 'Configurações', edit_user_path(current_user),
         :class => "icon icon-redu_r8_c221_s1" %>
