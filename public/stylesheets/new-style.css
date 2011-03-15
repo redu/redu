@@ -2077,7 +2077,7 @@ form.filter a.cancel {
 form.common textarea,
 form.common input[type=password],
 form.common input[type=text] {
-  width: 410px;
+  width: 400px;
   padding: 8px;
 
   border: 1px solid #B3B2B3;
@@ -3397,6 +3397,87 @@ table.spaced tr td {
 #space-bulletins .bulletin-listing-wrapper .tags,
 #space-events .event-listing-wrapper .tags {
   margin-top: 10px;
+}
+
+#messages {
+
+}
+
+#messages table.common .date {
+  font-style: italic;
+  font-size: .9em;
+  display: block;
+  float: left;
+}
+
+#messages table.common .title {
+  font-size: 1.1em;
+  color: black;
+}
+
+#messages table.common .unread {
+  padding-left: 20px;
+  background: url("../images/new/icon-unread-green_8_8.png") no-repeat 0px center;
+}
+
+#messages table.common .user {
+  font-size: .9em;
+  font-weight: bold;
+}
+
+#messages ul.messages {
+  margin-bottom: 20px;
+}
+
+#messages ul.messages li .content {
+  border: 1px solid #B3B2B3;
+  padding: 10px;
+  float: left;
+  width: 420px;
+  margin-right: 20px;
+
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
+#messages ul.messages li .title {
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+#messages ul.messages li .recipient .avatar {
+  display: block;
+  margin-bottom: 10px;
+}
+
+#messages ul.messages li .recipient .user {
+  font-size: .9em;
+  font-weight: bold;
+  display: block;
+}
+
+#messages ul.messages li .recipient .date {
+  font-style: italic;
+  font-size: .8em;
+  color: #B2B2B2;
+}
+
+#messages .respond {
+  margin-left: 40px;
+  background: #F0F0F0 url("../images/new/gray-nipple.png") no-repeat left top;
+  padding: 10px 10px 10px 0;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
+#messages .respond label {
+  width: 105px;
+}
+
+#messages .respond textarea {
+  width: 395px;
 }
 
 .replacement {
