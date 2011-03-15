@@ -44,6 +44,9 @@ describe User do
     it { should have_many(attr).dependent(:destroy)}
   end
 
+  # Users
+  it { should have_many(:recently_active_friends).through(:friendships) }
+
   # Plan
   it { should have_many(:plans) }
 
