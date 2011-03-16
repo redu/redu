@@ -164,6 +164,13 @@
   margin-left: 40px;
 }
 
+#content .sidebar .disconnect {
+  margin-left: 56px;
+  padding-left: 12px;
+  display: block;
+  font-size: .9em;
+}
+
 #content .sidebar .courses {
   font-size: .85em;
 }
@@ -188,7 +195,8 @@
 #content .sidebar .more {
   display: block;
   text-align: right;
-  margin: 10px 0;
+  margin-top: 10px;
+  margin-bottom: 20px;
   font-size: .9em;
 }
 
@@ -296,6 +304,11 @@
 #hierarchy-header .subject-name {
   width: 590px;
   float: left;
+}
+
+#hierarchy-header .leave {
+  padding-left: 12px;
+  font-size: .9em;
 }
 
 #hierarchy-header.subject-header .prefix {

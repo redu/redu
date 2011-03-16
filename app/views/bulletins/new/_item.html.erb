@@ -8,8 +8,8 @@
     <%= link_to item.title, polymorphic_path([item.bulletinable, item]),
       :class => 'title' %>
     <span class="description">
-      <%= raw item.description[0..400] %>
-      <% if item.description.length > 400 %>
+      <%= raw item.description[0..200] %>
+      <% if item.description.length > 200 %>
         ...
       <% end %>
     </span>

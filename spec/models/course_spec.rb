@@ -188,12 +188,16 @@ describe Course do
     context "retrieves all courses where the specified user" do
       before do
         @user = Factory(:user)
-        @courses = (0..5).collect { Factory(:course) }
+        @courses = (0..6).collect { Factory(:course) }
         @courses[0].join @user
         @courses[1].join @user
         @courses[2].join @user, Role[:tutor]
         @courses[3].join @user, Role[:teacher]
         @courses[4].join @user, Role[:environment_admin]
+        UserCourseAssociation.create(
+          :course_id => @courses[6].id, :user_id => @user.id,
+          :role => Role[:member])
+
 
         @courses[5].join Factory(:user)
         @courses[5].join Factory(:user), Role[:tutor]

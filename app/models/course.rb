@@ -63,8 +63,8 @@ class Course < ActiveRecord::Base
   }
   named_scope :user_behave_as_student, lambda { |user_id|
     { :joins => :user_course_associations,
-      :conditions => ["user_course_associations.user_id = ? AND user_course_associations.role_id = ?",
-                        user_id, 2] }
+      :conditions => ["user_course_associations.user_id = ? AND user_course_associations.role_id = ? AND user_course_associations.state = ?",
+                        user_id, 2, 'approved'] }
   }
   attr_protected :owner, :published, :environment
 

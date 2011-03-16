@@ -35,7 +35,7 @@ class Event < ActiveRecord::Base
   validates_presence_of :name, :identifier => 'validates_presence_of_name'
   validates_presence_of :description, :start_time, :end_time, :owner
   validates_length_of :name, :maximum => 60
-  validates_length_of :description, :maximum => 200
+  validates_length_of :description, :maximum => 5000
 
   def time_and_date
     if end_time < Time.now

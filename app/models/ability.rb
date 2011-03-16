@@ -114,10 +114,6 @@ class Ability
       can :create, Environment
       can :join, Course
 
-      #Friendship
-      can :create, Friendship
-      can :destroy, Friendship
-
       # User
       can :read, User
 
