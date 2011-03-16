@@ -65,7 +65,9 @@ class MessagesController < BaseController
     @reply = Message.new_reply(@user, @message, params)
 
     respond_to do |format|
-      format.html
+      format.html do
+        render :template => 'messages/new/show', :layout => 'new/application'
+      end
     end
   end
 
@@ -76,7 +78,9 @@ class MessagesController < BaseController
     @message = Message.new_reply(@user, in_reply_to, params)
 
     respond_to do |format|
-      format.html
+      format.html do
+        render :template => 'messages/new/new', :layout => 'new/application'
+      end
     end
   end
 
@@ -90,7 +94,8 @@ class MessagesController < BaseController
       unless @message.valid?
           respond_to do |format|
             format.html do
-              render :action => :new and return
+              render :template => 'messages/new/new',
+                :layout => 'new/application' and return
             end
           end
           return
@@ -106,7 +111,8 @@ class MessagesController < BaseController
         unless @message.valid?
           respond_to do |format|
             format.html do
-              render :action => :new and return
+              render :template => 'messages/new/new',
+                :layout => 'new/application' and return
             end
           end
           return

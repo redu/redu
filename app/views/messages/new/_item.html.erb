@@ -10,7 +10,7 @@
   <td>
     <% other_user = (mailbox == :inbox ? item.sender : item.recipient) %>
     <%= image_tag other_user.avatar.url(:thumb_32), :class => 'avatar' %>
-    <%= link_to other_user.display_name, user_path(item.sender),
+    <%= link_to other_user.display_name, user_path(other_user),
       :class => 'user' %>
     <span class="date"><%= item.created_at.strftime('%b %e, %Y, %l:%M %p') %></span>
   </td>
