@@ -4,6 +4,7 @@ require 'authlogic/test_case'
 describe EnvironmentsController do
   context "when creating a paid Environment" do
     before do
+      User.maintain_sessions = false
       @user = Factory(:user)
       activate_authlogic
       UserSession.create @user
@@ -84,44 +85,86 @@ describe EnvironmentsController do
       end
     end
     context "at step 4" do
-      before do
-        @params[:step] = 4
-        @params[:plan] = "professor_standard"
-        @params[:color] = "f56b00"
+      context "when is html" do
+        before do
+          @params[:step] = 4
+          @params[:plan] = "professor_standard"
+          @params[:color] = "f56b00"
 
-        post :create, @params
+          post :create, @params
+        end
+
+        it "assigns and creates the environment" do
+          assigns[:environment].should_not be_nil
+          assigns[:environment].should_not be_new_record
+        end
+
+        it "assigns and creates the plan" do
+          assigns[:plan].should_not be_nil
+          assigns[:plan].should be_valid
+          assigns[:plan].should_not be_new_record
+        end
+
+        it "associates the plan to the course" do
+          assigns[:environment].courses.first.plan.should == assigns[:plan]
+        end
+
+        it "associates the quota to the course" do
+          course = assigns[:environment].courses.first
+          course.quota.should_not be_nil
+        end
+
+        it "associates the plan with the user" do
+          assigns[:plan].user.should == @user
+        end
+
+        it "creates the first order" do
+          assigns[:plan].invoices.size.should == 1
+        end
+
+        it "redirects to confirmation page" do
+          should redirect_to(confirm_plan_path(assigns[:plan]))
+        end
       end
 
-      it "assigns and creates the environment" do
-        assigns[:environment].should_not be_nil
-        assigns[:environment].should_not be_new_record
-      end
+      context "when is js" do
+        before do
+          @params[:step] = 4
+          @params[:plan] = "professor_standard"
+          @params[:color] = "f56b00"
+          @params[:body] = "js"
 
-      it "assigns and creates the plan" do
-        assigns[:plan].should_not be_nil
-        assigns[:plan].should be_valid
-        assigns[:plan].should_not be_new_record
-      end
+          post :create, @params
+        end
 
-      it "associates the plan to the course" do
-        assigns[:environment].courses.first.plan.should == assigns[:plan]
-      end
+        it "assigns and creates the environment" do
+          assigns[:environment].should_not be_nil
+          assigns[:environment].should_not be_new_record
+        end
 
-      it "associates the quota to the course" do
-        course = assigns[:environment].courses.first
-        course.quota.should_not be_nil
-      end
+        it "assigns and creates the plan" do
+          assigns[:plan].should_not be_nil
+          assigns[:plan].should be_valid
+          assigns[:plan].should_not be_new_record
+        end
 
-      it "associates the plan with the user" do
-        assigns[:plan].user.should == @user
-      end
+        it "associates the plan to the course" do
+          assigns[:environment].courses.first.plan.should == assigns[:plan]
+        end
 
-      it "creates the first order" do
-        assigns[:plan].invoices.size.should == 1
-      end
+        it "associates the quota to the course" do
+          course = assigns[:environment].courses.first
+          course.quota.should_not be_nil
+        end
 
-      it "redirects to confirmation page" do
-        should redirect_to(confirm_plan_path(assigns[:plan]))
+        it "associates the plan with the user" do
+          assigns[:plan].user.should == @user
+        end
+
+        it "creates the first order" do
+          assigns[:plan].invoices.size.should == 1
+        end
+
       end
     end
 
@@ -130,13 +173,14 @@ describe EnvironmentsController do
         @params[:step] = 4
         @params[:plan] = "free"
         @params[:color] = "f56b00"
+        @params[:locale] = "pt-BR"
+        @params[:format] = "js"
 
         post :create, @params
       end
 
       it "redirects to course page" do
-        should redirect_to(environment_course_path(
-          assigns[:environment], assigns[:environment].courses.first))
+        response.body.should =~ /window\.location\.href = "\/faculdade-mauricio-de-nassau\/cursos\/gestao-de-ti";/
       end
     end
   end

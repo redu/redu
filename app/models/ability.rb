@@ -93,9 +93,6 @@ class Ability
     # Todos podem criar usuários
     can :create, User
 
-    
-    
-
     # Usuários logados podem
     unless user.nil?
       

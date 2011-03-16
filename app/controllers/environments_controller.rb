@@ -123,23 +123,32 @@ class EnvironmentsController < BaseController
         @environment.courses.first.create_quota
         @environment.published = true
         @environment.color = "4DADD6"
-
         if @environment.save && @plan.save
           if @plan.price > 0
             @plan.create_invoice
 
+            format.js do
+              render :update do |page|
+                page.remove 'final-button'
+                page.insert_html :bottom, 'pagseguro-button',
+                  (pagseguro_form @plan.create_order,
+                   :submit => "Efetuar pagamento")
+              end
+            end
             format.html do
               redirect_to confirm_plan_path(@plan)
             end
           else
-
             flash[:notice] = "Parabens, o seu ambiente de ensino foi criado"
-            format.html do
-              redirect_to environment_course_path(@environment,
-                                                  @environment.courses.first)
+            format.js do
+              render :update do |page|
+                page.redirect_to environment_course_path(@environment,
+                                            @environment.courses.first)
+              end
             end
           end
         else
+          format.js { render :action => "new/new", :layout => "new/application"}
           format.html { render :action => "new/new", :layout => "new/application" }
           format.xml  { render :xml => @environment.errors,
             :status => :unprocessable_entity }
