@@ -44,22 +44,43 @@ describe EnvironmentsController do
         assigns[:plan].should_not be_nil
       end
     end
-    
+
     context "at step 3" do
-      before do
-        @params[:step] = 3
-        @params[:plan] = "professor_standard"
-        post :create, @params
+
+      context "when is valid" do
+        before do
+          @params[:step] = 3
+          @params[:plan] = "professor_standard"
+          post :create, @params
+        end
+        it "assigns the environment" do
+          assigns[:environment].should_not be_nil
+          assigns[:environment].should be_valid
+          assigns[:step].should == 4
+        end
+
+        it "assigns the plan" do
+          assigns[:plan].should_not be_nil
+        end
       end
 
-      it "assigns the environment" do
-        assigns[:environment].should_not be_nil
-        assigns[:environment].should be_valid
-        assigns[:step].should == 4 
-      end
+      context "when isn't valid" do
+        before do
+          @params[:step] = 3
+          @params[:plan] = "professor_standard"
+          @params[:environment][:name] = ""
+          post :create, @params
+        end
 
-      it "assigns the plan" do
-        assigns[:plan].should_not be_nil
+        it "assigns the environment" do
+         assigns[:environment].should_not be_nil
+         assigns[:environment].should_not be_valid
+         assigns[:step].should == 3
+        end
+
+        it "assigns the plan" do
+          assigns[:plan].should_not be_nil
+        end
       end
     end
     context "at step 4" do
@@ -85,7 +106,7 @@ describe EnvironmentsController do
       it "associates the plan to the course" do
         assigns[:environment].courses.first.plan.should == assigns[:plan]
       end
-      
+
       it "associates the quota to the course" do
         course = assigns[:environment].courses.first
         course.quota.should_not be_nil
