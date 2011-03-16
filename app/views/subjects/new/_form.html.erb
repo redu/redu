@@ -9,7 +9,9 @@
     </div>
 
     <%= hidden_field_tag 'space_id', @space.id %>
+    <% field_set_tag do %>
     <%= render :partial => 'subjects/new/raw_form', :locals => { :f => f } %>
+    <% end %>
 
       <% if @subject.published? %>
         <div class="box_notice">

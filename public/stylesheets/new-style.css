@@ -2163,10 +2163,26 @@ form.common .errorExplanation li {
   padding: 3px 10px;
 }
 
-form.common fieldset fieldset {
-  float: left;
-  width: 100%;
-  margin: 10px 0;
+/* 
+ * Deprecated:
+  form.common fieldset fieldset {
+    float: left;
+    width: 100%;
+    margin: 10px 0;
+  }
+*/
+
+form.common fieldset {
+  margin-bottom: 20px;
+}
+
+form.common .wide {
+  clear: left;
+}
+
+form.common fieldset.legend legend {
+  color: #F27A38;
+  font-size: 1.1em;
 }
 
 form.common .inline {
@@ -2248,6 +2264,7 @@ table.common thead th {
 table.common tbody tr {
   border: 1px solid #B3B2B3;
 }
+
 
 table.common tbody tr.odd {
   background-color: #F0F0F0;
@@ -3478,6 +3495,21 @@ table.spaced tr td {
 
 #messages .respond textarea {
   width: 395px;
+}
+
+#plan-index .common .billable {
+  font-size: 1.1em;
+  color: black;
+}
+
+#plan-index .common .name {
+  font-size: .9em;
+  display: block;
+}
+
+#plan-index .common .info {
+  font-size: .9em;
+  color: #B2B2B2;
 }
 
 .replacement {

@@ -25,4 +25,30 @@ describe PlansController do
       end
     end
   end
+
+  context "for User" do
+    before do
+      @user = Factory(:user)
+      @course = Factory(:course, :owner => @user)
+      @plan = Factory(:plan, :user => @user, :billable => @course)
+
+      activate_authlogic
+      UserSession.create @user
+    end
+
+    context "when GET index" do
+      before do
+        get :index, :user_id => @user.id, :locale => "pt-BR"
+      end
+
+      it "should assign plans" do
+        assigns[:plans].should_not be_nil
+        assigns[:plans].should include(@plan)
+      end
+
+      it "renders the correct template" do
+        response.should render_template('plans/new/index')
+      end
+    end
+  end
 end

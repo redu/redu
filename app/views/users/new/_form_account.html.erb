@@ -1,32 +1,30 @@
 <% form_for @user, :html => {:multipart =>true, :class => "common"}  do |f|  %>
   <%= f.error_messages %>
 
-  <%= f.label "Configurações:" %>
-  <% field_set_tag nil, :class => 'inline' do %>
-    <%= f.check_box :auto_status %>
-    <%= f.label :auto_status, "Logar atividades automaticamente" %>
+  <% field_set_tag do %>
+    <%= f.label "Configurações:" %>
+    <% field_set_tag nil, :class => 'inline' do %>
+      <%= f.check_box :auto_status %>
+      <%= f.label :auto_status, "Logar atividades automaticamente" %>
+    <% end %>
+
+    <%= f.label "Notificações por e-mail:" %>
+    <% field_set_tag nil, :class => "inline" do %>
+      <%= f.check_box :notify_community_news %>
+      <%= f.label :notify_community_news, "Novidades do Redu" %>
+      <%= f.check_box :notify_messages %>
+      <%= f.label :notify_messages, "Mensagens recebidas" %>
+      <%= f.check_box :notify_followships %>
+      <%= f.label :notify_followships, "Novos seguidores" %>
+    <% end %>
   <% end %>
 
-  <%= f.label "Notificações por e-mail:" %>
-  <% field_set_tag nil, :class => "inline" do %>
-    <%= f.check_box :notify_community_news %>
-    <%= f.label :notify_community_news, "Novidades do Redu" %>
-  <% end %>
-  <% field_set_tag nil, :class => "inline" do %>
-    <%= f.check_box :notify_messages %>
-    <%= f.label :notify_messages, "Mensagens recebidas" %>
-  <% end %>
-  <% field_set_tag nil, :class => "inline" do %>
-    <%= f.check_box :notify_followships %>
-    <%= f.label :notify_followships, "Novos seguidores" %>
-  <% end %>
-
-  <% field_set_tag "Redefinir Senha" do %>
+  <% field_set_tag "Redefinir Senha", :class => "wide legend" do %>
     <%= label_tag :current_password, "Senha atual:" %>
-    <% if @flag%>
-      <%=  password_field_tag :current_password, nil, :style => "background-color: #FEEFB3"  %>
+    <% if @flag %>
+      <%=  password_field_tag :current_password, nil %>
     <% else %>
-      <%= @current_password%>
+      <%= @current_password %>
       <%=  password_field_tag :current_password %>
     <% end %>
 

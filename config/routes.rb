@@ -201,6 +201,7 @@ ActionController::Routing::Routes.draw do |map|
       album.resources :photos, :collection => {:swfupload => :post, :slideshow => :get}
     user.resources :statuses,
       :member => { :respond => :post }
+    user.resources :plans, :only => [:index]
     user.admin_roles '/:environment_id/roles',
       :controller => :roles, :action => :show, :conditions => {:method => :get}
     user.update_roles '/:environment_id/roles',

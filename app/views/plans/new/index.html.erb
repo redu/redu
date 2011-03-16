@@ -1,0 +1,61 @@
+<%= render :partial => 'users/new/home_sidebar' %>
+<div class="main grid_10" style="width: 580px;">
+  <ol id="breadcrumbs" class="clearfix">
+    <li>
+      <%= link_to 'Home', home_user_path(@user), :class => 'replacement home icon icon-redu_r8_c227_s1' %>
+    </li>
+    <li>
+      <%= link_to 'Configurações', edit_user_path(@user) %>
+  </ol>
+  <div id="plan-index">
+    <%
+      fake_tabs ['Perfil', edit_user_path(@user), {:class => 'icon'}],
+        ['Conta', account_user_path(@user), {:class => 'icon'}],
+        ['Planos', user_plans_path(@user), {:class => 'icon'}] do
+      %>
+    <table class="common spaced">
+      <thead>
+        <tr>
+          <th style="width: 50%">Curso:</th>
+          <th>Plano/situação:</th>
+          <th>Upgrade:</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @plans.each do |plan| %>
+          <tr>
+            <td>
+              <% if plan.billable %>
+                <%= 
+                  link_to plan.billable.name, environment_course_path(plan.billable.environment, plan.billable),
+                    :class => "billable"
+                %>
+              <% else %>
+                "(curso removido)"
+              <% end %>
+            </td>
+            <td>
+              <%= 
+                link_to plan.name, plan_invoices_path(plan),
+                  :class => "name"
+                %>
+              <span class="info">Sem pendências</span>
+            </td>
+            <td>
+              <% if plan.invoices.pending.empty? %>
+                <%= 
+                  link_to "Upgrade", upgrade_plan_path(plan),
+                    :class => "important"
+                %>
+              <% else %>
+                <%= pagseguro_form plan.create_order, :submit => "Pagar" %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</div>
+</div>
+
