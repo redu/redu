@@ -75,7 +75,7 @@ class EnvironmentsController < BaseController
   # POST /environments.xml
   def create
     case params[:step]
-    when "1"
+    when "1" # tela de planos
       @environment.valid?
       @step = 2
 
@@ -83,7 +83,7 @@ class EnvironmentsController < BaseController
         format.html { render :action => "new/new", :locals => { :step => 2 },
           :layout => "new/application" }
       end
-    when "2"
+    when "2"  # tela dos forms
       @environment.valid?
       @plan = Plan.from_preset(params[:plan].to_sym)
       @plan = params[:plan] if @plan.valid?
@@ -94,17 +94,23 @@ class EnvironmentsController < BaseController
         format.html { render :action => "new/new", :locals => { :step => 3 },
           :layout => "new/application" }
       end
-    when "3"
-      @environment.valid?
-      @plan = Plan.from_preset(params[:plan].to_sym)
-      @plan_humanize = @plan.clone
-      @plan = params[:plan] if @plan.valid?
-
-      @step = 4
-
+    when "3" # tela de informações
       respond_to do |format|
-        format.html { render :action => "new/new", :locals => { :step => 4 },
-          :layout => "new/application" }
+        @plan = Plan.from_preset(params[:plan].to_sym)
+        @plan_humanize = @plan.clone
+        @plan = params[:plan] if @plan.valid?
+
+        if @environment.valid?
+          @step = 4
+
+          format.html { render :action => "new/new", :locals => { :step => 4 },
+            :layout => "new/application" }
+        else
+          @step = 3
+
+          format.html { render :action => "new/new", :locals => { :step => 3 },
+            :layout => "new/application"}
+        end
       end
     when "4"
 
