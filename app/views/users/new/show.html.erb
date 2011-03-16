@@ -19,7 +19,7 @@
               <a class="waiting">Aguardando aceitação</a>
             <% elsif current_user != @user %>
               <%= link_to_remote 'Aceitar pedido de conexão',
-                :url => user_friendships_path(@user),
+                :url => user_friendships_path(current_user, :friend_id => @user.id),
                 :loading => "$('#spinner').show();",
                 :success => "$('#spinner').hide();",
                 :html =>{ :class => "waiting",
@@ -27,7 +27,7 @@
             <% end %>
           <% else %>
               <%= link_to_remote 'Adicionar aos contatos',
-                :url => user_friendships_path(@user),
+                :url => user_friendships_path(current_user, :friend_id => @user.id),
                 :loading => "$('#spinner').show();",
                 :success => "$('#spinner').hide();",
                 :html =>{ :class => "add-as-friend",

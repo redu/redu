@@ -317,6 +317,9 @@ class User < ActiveRecord::Base
       self.can_manage?(entity.plan)
     when 'Myfile'
       self.can_manage?(entity.folder)
+    when 'Friendship'
+      # user_id necessário devido ao bug do create_time_zone
+      self.id == entity.user_id
     end
   end
 
