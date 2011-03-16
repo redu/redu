@@ -1567,7 +1567,7 @@ a.clean {
 }
 
 .fake-tabs > .panel {
-  padding: 20px 0;
+  padding: 40px 0;
 }
 
 /* Form common styles */
@@ -3510,6 +3510,90 @@ label.focus {
 
 #plan-index .common .info {
   font-size: .9em;
+  color: #B2B2B2;
+}
+
+#invoice-index {
+}
+
+#invoice-index .progress {
+  float: right;
+  border: 1px solid #cccbcb;
+  margin-bottom: 10px;
+  padding: 2px;
+  width: 130px;
+
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+
+#invoice-index .progress .completed {
+  background-color: #aed584;
+  padding: 5px 0;
+  font-size: .8em;
+  color: #6d6e6f;
+  font-weight: bold;
+  text-align: right;
+  overflow: hidden;
+
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+
+#invoice-index .progress .completed span {
+  margin: 0 7px;
+}
+
+#invoice-index .quotas {
+  float: right;
+  width: 300px;
+}
+
+#invoice-index .quotas .label {
+  color: #B2B2B2;
+}
+
+#invoice-index .quotas .numeric {
+  color: #6C6D6E;
+  font-weight: bold;
+}
+
+#invoice-index .call {
+  width: 250px;
+  float: left;
+  margin-left: 20px;
+}
+
+#invoice-index .call .name {
+  font-size: .9em;
+  color: #B2B2B2;
+  display: block;
+}
+
+#invoice-index .call .billable {
+  font-size: 1.2em;
+  display: block;
+  margin-bottom: 10px;
+  color: black;
+}
+
+#invoice-index .quotas .meta {
+  width: 155px;
+  display: block;
+  text-align: right;
+  float: left;
+  font-size: .9em;
+  margin: 8px 5px 0 0;
+}
+
+#invoice-index .common .date {
+  font-size: .9em;
+}
+
+#invoice-index .common .value,
+#invoice-index .common .state {
+  font-size: .9em;
+  font-style: italic;
   color: #B2B2B2;
 }
 

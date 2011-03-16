@@ -16,7 +16,7 @@
     <table class="common spaced">
       <thead>
         <tr>
-          <th style="width: 50%">Curso:</th>
+          <th style="width: 45%">Curso:</th>
           <th>Plano/situação:</th>
           <th>Upgrade:</th>
         </tr>
@@ -39,16 +39,20 @@
                 link_to plan.name, plan_invoices_path(plan),
                   :class => "name"
                 %>
-              <span class="info">Sem pendências</span>
+              <% if plan.pending_payment? %>
+                <span class="info">Pagamento pendente</span>
+              <% else %>
+                <span class="info">Sem pendências</span>
+              <% end %>
             </td>
             <td>
-              <% if plan.invoices.pending.empty? %>
+              <% if plan.pending_payment? %>
+                <%= pagseguro_form plan.create_order, :submit => "Pagar" %>
+              <% else %>
                 <%= 
                   link_to "Upgrade", upgrade_plan_path(plan),
                     :class => "important"
                 %>
-              <% else %>
-                <%= pagseguro_form plan.create_order, :submit => "Pagar" %>
               <% end %>
             </td>
           </tr>

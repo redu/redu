@@ -190,6 +190,11 @@ class Plan < ActiveRecord::Base
     self.new(PLANS.fetch(key, PLANS[:free]))
   end
 
+  # Há invoices com pagamento pendente?
+  def pending_payment?
+    self.invoices.pending.count > 0
+  end
+
   protected
 
   def days_in_period(from, to)
