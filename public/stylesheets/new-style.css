@@ -1403,12 +1403,12 @@
   margin-top: 25px;
 }
 
-.box_notice {
+.flash-message {
   background: url("../images/new/dots.png") repeat-x bottom;
   padding: 15px 0 20px 0;
 }
 
-.box_notice > span {
+.flash-message > span {
   background-color: #FFEED7;
   border: solid 1px #FBC172;
   padding: 15px;
@@ -1417,6 +1417,67 @@
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
+}
+
+.friends-requisitions {
+  background: url("../images/new/dots.png") repeat-x bottom;
+  padding: 20px 0 20px 0;
+}
+
+.friends-requisitions li {
+  border: solid 1px #A0D7B3;
+  padding: 10px;
+
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
+.friends-requisitions li:hover {
+  background-color: #EFF7E6;
+}
+.friends-requisitions li > span {
+  color: #6D6E6F;
+  display: block;
+  font-size:0.9em;
+}
+.friends-requisitions li .friend {
+  margin-top: 10px;
+}
+.friends-requisitions li .friend .friend-details {
+  float: right;
+}
+.friends-requisitions li .friend .friend-details .name {
+  display: block;
+  font-weight: bold;
+}
+.friends-requisitions li .friend .friend-details .counter {
+  color: #B2B2B2;
+  font-style: oblique;
+  font-size: 0.9em;
+}
+
+
+/* TODO Remover quando colocar o ícone de accept */
+.friends-requisitions li .actions .accept-friend {
+  border: 1px solid #61BE80;
+  font-family: Copse, Arial, sans-serif;
+  color: white;
+  padding: 6px 10px;
+  font-size: 1.2em;
+
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#AED584', endColorstr='#61BE80'); /* IE */
+  background: -webkit-gradient(linear, left top, left bottom, from(#61BE80), to(#61BE80)); /* webkit browsers */
+  background: -moz-linear-gradient(top,  #AED584,  #61BE80); /* Firefox 3.6+ */
+}
+
+.friends-requisitions li .actions {
+  float: right;
+  margin-top: 10px;
 }
 
 #space-new .common .tos {
