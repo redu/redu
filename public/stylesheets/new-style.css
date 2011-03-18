@@ -1403,6 +1403,21 @@
   margin-top: 25px;
 }
 
+.box_notice {
+  background: url("../images/new/dots.png") repeat-x bottom;
+  padding: 15px 0 20px 0;
+}
+
+.box_notice > span {
+  background-color: #FFEED7;
+  border: solid 1px #FBC172;
+  padding: 15px;
+  display: block;
+
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
 
 #space-new .common .tos {
   padding: 30px 160px;
