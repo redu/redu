@@ -1427,6 +1427,7 @@
 .friends-requisitions li {
   border: solid 1px #A0D7B3;
   padding: 10px;
+  margin-bottom: 10px;
 
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -1436,21 +1437,26 @@
 .friends-requisitions li:hover {
   background-color: #EFF7E6;
 }
+
 .friends-requisitions li > span {
   color: #6D6E6F;
   display: block;
   font-size:0.9em;
 }
+
 .friends-requisitions li .friend {
   margin-top: 10px;
 }
+
 .friends-requisitions li .friend .friend-details {
   float: right;
 }
+
 .friends-requisitions li .friend .friend-details .name {
   display: block;
   font-weight: bold;
 }
+
 .friends-requisitions li .friend .friend-details .counter {
   color: #B2B2B2;
   font-style: oblique;

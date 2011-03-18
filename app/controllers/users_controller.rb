@@ -504,6 +504,7 @@ class UsersController < BaseController
 
   def home
     @friends = current_user.friends.paginate(:page => 1, :per_page => 9)
+    @friends_requisitions = current_user.friends_pending
     @statuses = current_user.home_activity(params[:page])
     @status = Status.new
 
