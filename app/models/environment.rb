@@ -82,7 +82,7 @@ class Environment < ActiveRecord::Base
 
   # Retorna as iniciais ou, se não houver, o nome
   def initials_or_name
-    self.initials.empty? ? self.name : self.initials
+    (self.initials.nil? or self.initials.empty?) ? self.name : self.initials
   end
 
   protected

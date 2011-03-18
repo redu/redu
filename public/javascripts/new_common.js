@@ -1,4 +1,11 @@
 jQuery(function(){
+    // Flash message
+    $(".flash-message").parent().next().css("marginTop", "10px");
+    $(".flash-message .close-flash").click(function(){
+      $(this).parent().slideToggle();
+      $("#content").css("marginTop","20px");
+    });
+
     // Dropdown de usuário
     $("#nav-account").hover(function(){
         $(this).find(".username").toggleClass("hover");

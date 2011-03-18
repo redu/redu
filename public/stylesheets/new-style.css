@@ -1404,19 +1404,25 @@
 }
 
 .flash-message {
-  background: url("../images/new/dots.png") repeat-x bottom;
-  padding: 15px 0 20px 0;
-}
-
-.flash-message > span {
   background-color: #FFEED7;
   border: solid 1px #FBC172;
   padding: 15px;
-  display: block;
+  margin-top: 10px;
+  margin-left: 180px;
+  width: 590px;
+  position: relative;
 
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
+}
+
+.flash-message .close-flash {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  width: 10px;
+  height: 10px;
 }
 
 .friends-requisitions {
