@@ -3698,6 +3698,39 @@ label.focus {
   color: #B2B2B2;
 }
 
+#contacts {
+
+}
+
+#contacts ul {
+  border-bottom: 1px dotted #B3B2B3;
+  padding-bottom: 30px;
+  margin-bottom: 20px;
+}
+
+#contacts li {
+  float: left;
+  width: 120px;
+  margin-right: 5px;
+  margin-bottom: 10px;
+  text-align: center;
+  padding: 10px;
+
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
+#contacts li:hover {
+  background-color: #DBEFF7;
+}
+
+#contacts li .avatar {
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 10px;
+}
+
 .replacement {
   text-indent: -99999px;
   overflow: hidden;
