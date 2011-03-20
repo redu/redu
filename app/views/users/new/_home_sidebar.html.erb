@@ -38,7 +38,8 @@
       </div>
     </li>
     <li>
-      <div class="session">
+      <div class="<%= (current_page? user_friendships_path(current_user)) ?
+        "session selected".to_s : "session".to_s %>">
         <%= link_to 'Contatos', user_friendships_path(current_user),
           :class => 'icon icon-redu_r8_c325_s1'%>
       </div>

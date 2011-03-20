@@ -3715,6 +3715,7 @@ label.focus {
   margin-bottom: 10px;
   text-align: center;
   padding: 10px;
+  min-height: 100px;
 
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;

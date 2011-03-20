@@ -60,7 +60,7 @@
       <% field_set_tag "Termos", :class => 'tos' do %>
         <div class="inline">
           <%= check_box "user", "tos" %>
-          <%= f.label "tos", "Li e aceito os termos de uso do Redu" %>
+          <%= f.label "tos", (link_to "Li e aceito os termos de uso do Redu", tos_path) %>
         </div>
       <% end %>
       <%= submit_tag :sign_up.l, :class => 'important' %>
