@@ -177,7 +177,8 @@ ActionController::Routing::Routes.draw do |map|
     :upload_profile_photo => [:get, :put],
     :download_curriculum => :get,
     :home => :get,
-    :mural => :get
+    :mural => :get,
+    :account => :get
   } do |user|
     user.resources :friendships,:only => [:index, :create, :destroy],
       :member => { :accept => :post, :decline => :post },
@@ -200,6 +201,7 @@ ActionController::Routing::Routes.draw do |map|
       album.resources :photos, :collection => {:swfupload => :post, :slideshow => :get}
     user.resources :statuses,
       :member => { :respond => :post }
+    user.resources :plans, :only => [:index]
     user.admin_roles '/:environment_id/roles',
       :controller => :roles, :action => :show, :conditions => {:method => :get}
     user.update_roles '/:environment_id/roles',

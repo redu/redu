@@ -265,4 +265,21 @@ describe Plan do
     end
   end
 
+  context "when pending payment" do
+    before do
+      invoices = 3.times.inject([]) do |res,i|
+        res << Factory(:invoice, :plan => subject)
+      end
+    end
+
+    it "responds to pending_payment?" do
+      subject.should respond_to(:pending_payment?)
+    end
+
+    it "returns true" do
+      subject.pending_payment?.should be_true
+    end
+
+  end
+
 end

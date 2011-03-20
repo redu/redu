@@ -18,7 +18,7 @@ class Plan < ActiveRecord::Base
       :members_limit => 20
     },
     :free => {
-      :name => "Free",
+      :name => "Professor Grátis (3 meses)",
       :price => 0,
       :yearly_price => 0,
       :video_storage_limit => 10.megabytes,
@@ -188,6 +188,11 @@ class Plan < ActiveRecord::Base
 
   def self.from_preset(key)
     self.new(PLANS.fetch(key, PLANS[:free]))
+  end
+
+  # Há invoices com pagamento pendente?
+  def pending_payment?
+    self.invoices.pending.count > 0
   end
 
   protected

@@ -35,8 +35,12 @@ class MessagesController < BaseController
                                                    :order =>  'created_at DESC',
                                                    :per_page => AppConfig.items_per_page )
       respond_to do |format|
-        format.html
-        format.js
+        format.html do
+          render :template => 'messages/new/index', :layout => 'new/application'
+        end
+        format.js do
+          render :template => 'messages/new/index'
+        end
       end
   end
 
@@ -46,8 +50,13 @@ class MessagesController < BaseController
                                              :order =>  'created_at DESC',
                                              :per_page => AppConfig.items_per_page)
     respond_to do |format|
-      format.html
-      format.js
+        format.html do
+          render :template => 'messages/new/index_sent',
+            :layout => 'new/application'
+        end
+        format.js do
+          render :template => 'messages/new/index_sent'
+        end
     end
   end
 
@@ -57,7 +66,9 @@ class MessagesController < BaseController
     @reply = Message.new_reply(@user, @message, params)
 
     respond_to do |format|
-      format.html
+      format.html do
+        render :template => 'messages/new/show', :layout => 'new/application'
+      end
     end
   end
 
@@ -69,7 +80,9 @@ class MessagesController < BaseController
     @message = Message.new_reply(@user, in_reply_to, params)
 
     respond_to do |format|
-      format.html
+      format.html do
+        render :template => 'messages/new/new', :layout => 'new/application'
+      end
     end
   end
 
@@ -84,7 +97,8 @@ class MessagesController < BaseController
       unless @message.valid?
           respond_to do |format|
             format.html do
-              render :action => :new and return
+              render :template => 'messages/new/new',
+                :layout => 'new/application' and return
             end
           end
           return
@@ -100,7 +114,8 @@ class MessagesController < BaseController
         unless @message.valid?
           respond_to do |format|
             format.html do
-              render :action => :new and return
+              render :template => 'messages/new/new',
+                :layout => 'new/application' and return
             end
           end
           return
@@ -132,7 +147,7 @@ class MessagesController < BaseController
 
     if params[:mailbox] == 'inbox'
       redirect_to user_messages_path(@user)
-    elsif params[:mailbox] == 'sent'
+    elsif params[:mailbox] == 'outbox'
       redirect_to index_sent_user_messages_path(@user)
     end
   end

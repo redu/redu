@@ -1,0 +1,470 @@
+<% content_for :header_scripts_and_styles do %>
+  <%= javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js' %>
+  <script type="text/javascript" charset="utf-8">
+    jQuery(function(){
+      // Abas
+      $(".tabs").tabs();
+    });
+  </script>
+<% end %>
+
+<div class="table tabs">
+  <ul>
+    <li>
+      <a href="#teacher" class="teacher">Professor</a>
+    </li>
+    <li>
+      <a href="#instituition" class="instituition">Instituição de ensino</a>
+    </li>
+    <li>
+      <a href="#company" class="company">Empresa</a>
+    </li>
+  </ul>
+  <div id="teacher" class="clearfix wide">
+    <ul class="plans clearfix">
+      <li class="free">
+        <strong class="name">Grátis</strong>
+        <ul class="features">
+          <li>
+            <strong>10</strong>
+            alunos
+          </li>
+          <li>
+            <strong>20 MB</strong>
+            de armazenamento de documentos
+          </li>
+          <li>
+            <strong>10 MB</strong>
+            de aramazenamento de vídeo
+          </li>
+          <li>
+            <strong>3</strong>
+            meses grátis
+          </li>
+        </ul>
+
+        <% form_for @environment,
+          :url => environments_path(:step => 2) do |f| %>
+          <%= hidden_field_tag :plan, 'free' %>
+          <%= f.submit "Assinar", :class => "important" %>
+          <div style="display:none;">
+            <%= render :partial => 'form', :locals => { :f => f } %>
+          </div>
+        <% end %>
+      </li>
+      <li>
+        <strong class="name">Lite</strong>
+        <ul class="features">
+          <li>
+            <strong>20</strong>
+            alunos
+          </li>
+          <li>
+            <strong>50 MB</strong>
+            de armazenamento de documentos
+          </li>
+          <li>
+            <strong>30 MB</strong>
+            de aramazenamento de vídeo
+          </li>
+        </ul>
+        <div class="pricing">
+          <div class="setup">
+            <span class="currency">R$</span>
+            <span class="value">13,99</span>
+            (adesão)
+          </div>
+          <span class="plus">+</span>
+          <span class="monthly">
+            <span class="currency">R$</span>
+            <span class="value">13,99</span>
+            /mês
+          </span>
+          <span class="yearly">
+            <span class="currency">R$</span>
+            <span class="value">139,90</span>
+            /ano
+            <span class="tip">(2 meses grátis)</span>
+          </span>
+        </div>
+
+        <% form_for @environment,
+          :url => environments_path(:step => 2) do |f| %>
+          <%= hidden_field_tag :plan, 'professor_lite' %>
+          <%= f.submit "Assinar", :class => "important" %>
+          <div style="display:none;">
+            <%= render :partial => 'form', :locals => { :f => f } %>
+          </div>
+        <% end %>
+      </li>
+      <li>
+        <strong class="name">Standard</strong>
+        <ul class="features">
+          <li>
+            <strong>100</strong>
+            alunos
+          </li>
+          <li>
+            <strong>50 MB</strong>
+            de armazenamento de documentos
+          </li>
+          <li>
+            <strong>90 MB</strong>
+            de aramazenamento de vídeo
+          </li>
+        </ul>
+        <div class="pricing">
+          <div class="setup">
+            <span class="currency">R$</span>
+            <span class="value">56,99</span>
+            (adesão)
+          </div>
+          <span class="plus">+</span>
+          <span class="monthly">
+            <span class="currency">R$</span>
+            <span class="value">56,99</span>
+            /mês
+          </span>
+          <span class="yearly">
+            <span class="currency">R$</span>
+            <span class="value">569,90</span>
+            /ano
+            <span class="tip">(2 meses grátis)</span>
+          </span>
+        </div>
+
+        <% form_for @environment,
+          :url => environments_path(:step => 2) do |f| %>
+          <%= hidden_field_tag :plan, 'professor_standard' %>
+          <%= f.submit "Assinar", :class => "important" %>
+          <div style="display:none;">
+            <%= render :partial => 'form', :locals => { :f => f } %>
+          </div>
+        <% end %>
+      </li>
+      <li class="last best-choice">
+        <strong class="name">Plus</strong>
+        <ul class="features">
+          <li>
+            <strong>500</strong>
+            alunos
+          </li>
+          <li>
+            <strong>50 MB</strong>
+            de armazenamento de documentos
+          </li>
+          <li>
+            <strong>150 MB</strong>
+            de aramazenamento de vídeo
+          </li>
+        </ul>
+        <div class="pricing">
+          <div class="setup">
+            <span class="currency">R$</span>
+            <span class="value">243,99</span>
+            (adesão)
+          </div>
+          <span class="plus">+</span>
+          <span class="monthly">
+            <span class="currency">R$</span>
+            <span class="value">243,99</span>
+            /mês
+          </span>
+          <span class="yearly">
+            <span class="currency">R$</span>
+            <span class="value">2439,90</span>
+            /ano
+            <span class="tip">(2 meses grátis)</span>
+          </span>
+        </div>
+
+        <% form_for @environment,
+          :url => environments_path(:step => 2) do |f| %>
+          <%= hidden_field_tag :plan, 'instituicao_plus' %>
+          <%= f.submit "Assinar", :class => "important" %>
+          <div style="display:none;">
+            <%= render :partial => 'form', :locals => { :f => f } %>
+          </div>
+        <% end %>
+      </li>
+    </ul>
+  </div><!-- end #teacher -->
+  <div id="instituition">
+    <ul class="plans clearfix">
+      <li>
+        <strong class="name">Lite</strong>
+        <ul class="features">
+          <li>
+            <strong>100</strong>
+            alunos
+          </li>
+          <li>
+            <strong>25 MB</strong>
+            de armazenamento de documentos
+          </li>
+          <li>
+            <strong>500 MB</strong>
+            de aramazenamento de vídeo
+          </li>
+        </ul>
+        <div class="pricing">
+          <div class="setup">
+            <span class="currency">R$</span>
+            <span class="value">251,99</span>
+            (adesão)
+          </div>
+          <span class="plus">+</span>
+          <span class="monthly">
+            <span class="currency">R$</span>
+            <span class="value">251,99</span>
+            /mês
+          </span>
+          <span class="yearly">
+            <span class="currency">R$</span>
+            <span class="value">2519,90</span>
+            /ano
+            <span class="tip">(2 meses grátis)</span>
+          </span>
+        </div>
+
+        <% form_for @environment,
+          :url => environments_path(:step => 2) do |f| %>
+          <%= hidden_field_tag :plan, 'instituicao_lite' %>
+          <%= f.submit "Assinar", :class => "important" %>
+          <div style="display:none;">
+            <%= render :partial => 'form', :locals => { :f => f } %>
+          </div>
+        <% end %>
+      </li>
+      <li>
+        <strong class="name">Standard</strong>
+        <ul class="features">
+          <li>
+            <strong>300</strong>
+            alunos
+          </li>
+          <li>
+            <strong>50 MB</strong>
+            de armazenamento de documentos
+          </li>
+          <li>
+            <strong>800 MB</strong>
+            de aramazenamento de vídeo
+          </li>
+        </ul>
+        <div class="pricing">
+          <div class="setup">
+            <span class="currency">R$</span>
+            <span class="value">730,99</span>
+            (adesão)
+          </div>
+          <span class="plus">+</span>
+          <span class="monthly">
+            <span class="currency">R$</span>
+            <span class="value">730,99</span>
+            /mês
+          </span>
+          <span class="yearly">
+            <span class="currency">R$</span>
+            <span class="value">7309,90</span>
+            /ano
+            <span class="tip">(2 meses grátis)</span>
+          </span>
+        </div>
+
+        <% form_for @environment,
+          :url => environments_path(:step => 2) do |f| %>
+          <%= hidden_field_tag :plan, 'instituicao_standard' %>
+          <%= f.submit "Assinar", :class => "important" %>
+          <div style="display:none;">
+            <%= render :partial => 'form', :locals => { :f => f } %>
+          </div>
+        <% end %>
+      </li>
+      <li class="last best-choice">
+        <strong class="name">Plus</strong>
+        <ul class="features">
+          <li>
+            <strong>600</strong>
+            alunos
+          </li>
+          <li>
+            <strong>75 MB</strong>
+            de armazenamento de documentos
+          </li>
+          <li>
+            <strong>800 MB</strong>
+            de aramazenamento de vídeo
+          </li>
+        </ul>
+        <div class="pricing">
+          <div class="setup">
+            <span class="currency">R$</span>
+            <span class="value">1280,99</span>
+            (adesão)
+          </div>
+          <span class="plus">+</span>
+          <span class="monthly">
+            <span class="currency">R$</span>
+            <span class="value">1280,99</span>
+            /mês
+          </span>
+          <span class="yearly">
+            <span class="currency">R$</span>
+            <span class="value">12809,90</span>
+            /ano
+            <span class="tip">(2 meses grátis)</span>
+          </span>
+        </div>
+
+        <% form_for @environment,
+          :url => environments_path(:step => 2) do |f| %>
+          <%= hidden_field_tag :plan, 'instituicao_plus' %>
+          <%= f.submit "Assinar", :class => "important" %>
+          <div style="display:none;">
+            <%= render :partial => 'form', :locals => { :f => f } %>
+          </div>
+        <% end %>
+      </li>
+    </ul>
+  </div><!-- end #instituition -->
+  <div id="company">
+    <ul class="plans clearfix">
+      <li>
+        <strong class="name">Lite</strong>
+        <ul class="features">
+          <li>
+            <strong>30</strong>
+            alunos
+          </li>
+          <li>
+            <strong>250 MB</strong>
+            de armazenamento de documentos
+          </li>
+          <li>
+            <strong>500 MB</strong>
+            de aramazenamento de vídeo
+          </li>
+        </ul>
+        <div class="pricing">
+          <div class="setup">
+            <span class="currency">R$</span>
+            <span class="value">210,99</span>
+            (adesão)
+          </div>
+          <span class="plus">+</span>
+          <span class="monthly">
+            <span class="currency">R$</span>
+            <span class="value">210,99</span>
+            /mê9
+          </span>
+          <span class="yearly">
+            <span class="currency">R$</span>
+            <span class="value">2109,90</span>
+            /ano
+            <span class="tip">(2 meses grátis)</span>
+          </span>
+        </div>
+
+        <% form_for @environment,
+          :url => environments_path(:step => 2) do |f| %>
+          <%= hidden_field_tag :plan, 'empresas_lite' %>
+          <%= f.submit "Assinar", :class => "important" %>
+          <div style="display:none;">
+            <%= render :partial => 'form', :locals => { :f => f } %>
+          </div>
+        <% end %>
+      </li>
+      <li>
+        <strong class="name">Standard</strong>
+        <ul class="features">
+          <li>
+            <strong>50</strong>
+            alunos
+          </li>
+          <li>
+            <strong>250 MB</strong>
+            de armazenamento de documentos
+          </li>
+          <li>
+            <strong>500 MB</strong>
+            de aramazenamento de vídeo
+          </li>
+        </ul>
+        <div class="pricing">
+          <div class="setup">
+            <span class="currency">R$</span>
+            <span class="value">248,99</span>
+            (adesão)
+          </div>
+          <span class="plus">+</span>
+          <span class="monthly">
+            <span class="currency">R$</span>
+            <span class="value">248,99</span>
+            /mês
+          </span>
+          <span class="yearly">
+            <span class="currency">R$</span>
+            <span class="value">2489,90</span>
+            /ano
+            <span class="tip">(2 meses grátis)</span>
+          </span>
+        </div>
+
+        <% form_for @environment,
+          :url => environments_path(:step => 2) do |f| %>
+          <%= hidden_field_tag :plan, 'empresas_standard' %>
+          <%= f.submit "Assinar", :class => "important" %>
+          <div style="display:none;">
+            <%= render :partial => 'form', :locals => { :f => f } %>
+          </div>
+        <% end %>
+      </li>
+      <li class="last best-choice">
+        <strong class="name">Plus</strong>
+        <ul class="features">
+          <li>
+            <strong>200</strong>
+            alunos
+          </li>
+          <li>
+            <strong>500 MB</strong>
+            de armazenamento de documentos
+          </li>
+          <li>
+            <strong>500 MB</strong>
+            de aramazenamento de vídeo
+          </li>
+        </ul>
+        <div class="pricing">
+          <div class="setup">
+            <span class="currency">R$</span>
+            <span class="value">858,99</span>
+            (adesão)
+          </div>
+          <span class="plus">+</span>
+          <span class="monthly">
+            <span class="currency">R$</span>
+            <span class="value">858,99</span>
+            /mês
+          </span>
+          <span class="yearly">
+            <span class="currency">R$</span>
+            <span class="value">8589,90</span>
+            /ano
+            <span class="tip">(2 meses grátis)</span>
+          </span>
+        </div>
+
+        <% form_for @environment,
+          :url => environments_path(:step => 2) do |f| %>
+          <%= hidden_field_tag :plan, 'empresas_plus' %>
+          <%= f.submit "Assinar", :class => "important" %>
+          <div style="display:none;">
+            <%= render :partial => 'form', :locals => { :f => f } %>
+          </div>
+        <% end %>
+      </li>
+    </ul>
+  </div><!-- end #company -->
+</div>

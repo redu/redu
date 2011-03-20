@@ -1,7 +1,9 @@
 class PlansController < BaseController
-  before_filter :find_course_environment
+  before_filter :find_course_environment, :except => :index
 
   authorize_resource
+  load_and_authorize_resource :user, :only => :index
+  load_and_authorize_resource :plan, :only => :index, :through => :user
 
   def confirm
     @order = @plan.create_order
@@ -19,6 +21,16 @@ class PlansController < BaseController
         format.html {
           render :template => "plans/upgrade_pending"
         }
+      end
+    end
+  end
+
+  def index
+    @plans = @user.plans.find(:all, :include => :billable)
+
+    respond_to do |format|
+      format.html do
+        render :template => "plans/new/index", :layout => "new/application"
       end
     end
   end

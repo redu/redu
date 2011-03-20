@@ -4,8 +4,16 @@ class FriendshipsController < BaseController
   load_and_authorize_resource :friendship, :through => :user
 
   def index
-    @friends =
-      @user.friends.paginate( {:page => params[:page], :per_page => 10 } )
+    @profile = params[:profile] if params.has_key? :profile
+    @friends = @user.friends.
+      paginate(:page => params[:page], :per_page => 16)
+
+    respond_to do |format|
+      format.html do
+        render :layout => 'new/application'
+      end
+      format.js
+    end
   end
 
   def create
