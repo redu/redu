@@ -6,7 +6,7 @@
       <h5 class="name"><%= @user.display_name %></h5>
       <div class="actions">
         <% unless current_user == @user %>
-          <%= link_to 'Enviar mensagem', new_user_message_path(@user),
+          <%= link_to 'Enviar mensagem', new_user_message_path(current_user),
             :class => 'send-message' %>
         <% end %>
 
