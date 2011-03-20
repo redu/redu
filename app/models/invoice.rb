@@ -86,4 +86,9 @@ class Invoice < ActiveRecord::Base
     UserNotifier.deliver_overdue_notice(self.plan.user, self)
   end
 
+  def send_pending_notice
+    deadline = self.period_start.advance(:days => 5)
+    UserNotifier.deliver_pending_notice(self.plan.user, self, deadline)
+  end
+
 end

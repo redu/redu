@@ -124,7 +124,7 @@ class Plan < ActiveRecord::Base
   # Cria um Invoice com o amount correto para este plano. O amount do invoice é
   # calculado dividindo-se o price do plano pela quantidade de dias restantes até
   # o último dia do mês atual. Caso nenhuma opção seja informada, a data inicial
-  # será Date.tomorrow e a final o último dia do mês, além disso o amount é
+  # será Date.tomorrow e a final de hoje a 30 dias, além disso o amount é
   # calculado para esse período
   # Como no exemplo abaixo:
   #
@@ -143,6 +143,13 @@ class Plan < ActiveRecord::Base
     }.merge(opts)
 
     self.invoices.create(invoice_options)
+  end
+
+  # Cria o primeiro invoice para os primeiros 30 dias mas dobra seu valor
+  # (correspondente a taxa de setup)
+  def create_invoice_and_setup
+    create_invoice(:amount => self.price * 2,
+                   :description => "Fatura refrente aos primeiros 30 dias e a taxa de adesão do plano #{self.name}")
   end
 
   # Calcula o montante do perído informado porporcional ao preço do plano. O default

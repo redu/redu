@@ -93,6 +93,32 @@ describe Plan do
 
     end
 
+    context "when setting up the plan" do
+      before do
+        subject {
+          Plan.from_preset(:empresas_plus).save
+        }
+      end
+
+       it "should creante one invoice" do
+         expect {
+           subject.create_invoice_and_setup
+         }.should change(Invoice, :count).by(1)
+       end
+
+       context "the only invoice" do
+         it "should have the setup description" do
+           subject.create_invoice_and_setup
+           subject.invoices.first.description =~ /adesão/
+         end
+
+         it "should have the correct amount" do
+           subject.create_invoice_and_setup
+           subject.invoices.first.amount == subject.price * 2
+         end
+       end
+    end
+
     context "when generating the amount" do
       it "calculates days in a period" do
         subject.complete_days_in(Date.new(2011,01,14),
@@ -200,7 +226,7 @@ describe Plan do
     xit "gives a discount on the first invoice of the new plan" do
       per_day = subject.price / subject.days_in_current_month
       discount = period * per_day
-      
+
       invoice = @new_plan.invoices.pending.first
 
       invoice.amount.round(2).should == @new_plan.price - discount
