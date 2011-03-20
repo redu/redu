@@ -218,7 +218,7 @@ class UsersController < BaseController
     @user.tag_list = params[:tag_list] || ''
 
     #alteracao de senha na conta do usuario
-    if params.has_key? "current_password"
+    if params.has_key? "current_password" and !params[:current_password].empty?
 
       @flag = false
       authenticated = UserSession.new(:login => @user.login, :password => params[:current_password]).save
@@ -249,7 +249,7 @@ class UsersController < BaseController
         end
       end
     else
-      if params.has_key? "current_password"
+    if params.has_key? "current_password" and !params[:current_password].empty?
         render 'users/new/account', :layout => 'new/application'
       else
         render 'users/new/edit', :layout => 'new/application'
