@@ -12,7 +12,7 @@ production:
   return_to: "/payment/success"
   email: guilhermec@redu.com.br
 
-production:
+staging:
   authenticity_token: 4F79E50AF51F4F1FB06964D1A1A4679C
   return_to: "/payment/success"
   email: guilhermec@redu.com.br
