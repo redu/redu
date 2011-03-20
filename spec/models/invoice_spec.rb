@@ -23,7 +23,7 @@ describe Invoice do
 
   context "states" do
 
-    [:close!, :overdue!, :pay!].each do  |attr|
+    [:close!, :pend!, :overdue!, :pay!].each do  |attr|
       it "responds to #{attr}" do
         should respond_to attr
       end
@@ -60,6 +60,22 @@ describe Invoice do
         mail = UserNotifier.deliveries.last
         mail.should_not be_nil
         mail.subject.should =~ /Pagamento N\. #{subject.id} confirmado/
+      end
+    end
+
+    context "when it pends" do
+      before do
+        UserNotifier.delivery_method = :test
+        UserNotifier.perform_deliveries = true
+        UserNotifier.deliveries = []
+      end
+
+      it "sends pending payment e-mail" do
+        subject.pend!
+
+        mail = UserNotifier.deliveries.last
+        mail.should_not be_nil
+        mail.subject.should =~ /Pagamento N\. #{subject.id} pendente/
       end
     end
 
@@ -147,7 +163,7 @@ describe Invoice do
     before do
       subject.update_attribute(:discount, 10.0)
     end
-  
+
     #FIXME o pagseguro oferece um campo para desconto que o Gem não suporta
     it "should discount from amount" do
       item = subject.to_order_item
@@ -164,10 +180,10 @@ describe Invoice do
     it "retrieves pending invoices" do
       plan = Factory :plan
       pending_invoices = (1..5).collect { Factory(:invoice,
-                                                  :plan_id => plan,
+                                                  :plan => plan,
                                                   :state => "pending") }
       overdue_invoices = (1..5).collect { Factory(:invoice,
-                                                  :plan_id => plan,
+                                                  :plan => plan,
                                                   :state => "overdue") }
 
       Set.new(plan.invoices.pending) == Set.new(pending_invoices)
@@ -181,8 +197,41 @@ describe Invoice do
       subject.generate_description.should_not be_empty
       subject.generate_description.should_not be_nil
     end
+  end
 
+  it "should respond to refresh states" do
+    Invoice.should respond_to(:refresh_states!)
+  end
 
+  context "when refreshing states" do
+    before do
+      @period_start = Date.today.advance(:days => - Invoice::OVERDUE_DAYS - 1)
+      @period_end = Date.today.advance(:days => 30 - Invoice::OVERDUE_DAYS)
+
+      # 2 invoices que deveriam ficar overdue e uma que deveria continuar
+      # pending
+      @invoices = 3.times.inject([]) do |acc,i|
+        if i % 2 == 0
+          acc << Factory(:invoice,
+                         :period_start => @period_start,
+                         :period_end => @period_end)
+        else
+          acc << Factory(:invoice)
+        end
+      end
+    end
+
+    it "should refresh correctly" do
+      expect {
+        Invoice.refresh_states!
+      }.should change { Invoice.overdue.count }.to(2)
+    end
+
+    it "should block the plan when overdue" do
+      expect {
+        Invoice.refresh_states!
+      }.should change { Plan.blocked.count }.from(0).to(2)
+    end
   end
 
 end

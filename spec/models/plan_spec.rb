@@ -21,7 +21,7 @@ describe Plan do
   end
 
   context "states" do
-    [:close!, :migrate!, :current_state].each do |attr|
+    [:block!, :migrate!, :current_state].each do |attr|
       it "responds to" do
         should respond_to attr
       end
@@ -31,10 +31,10 @@ describe Plan do
       subject.current_state.should == :active
     end
 
-    it "closes" do
+    it "blocks" do
       expect {
-        subject.close!
-      }.should change { subject.current_state }.to :closed
+        subject.block!
+      }.should change { subject.current_state }.to :blocked
     end
 
     it "migrates" do

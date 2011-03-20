@@ -82,17 +82,19 @@ class Plan < ActiveRecord::Base
   belongs_to :changed_from, :class_name => "Plan", :foreign_key => :plan_id
   has_many :invoices
 
+  named_scope :blocked, :conditions => { :state => "blocked" }
+
   validates_presence_of :members_limit, :price, :yearly_price
 
   attr_protected :state
 
-  acts_as_state_machine :initial => :active, :column => 'status'
+  acts_as_state_machine :initial => :active, :column => 'state'
   state :active
-  state :closed
+  state :blocked
   state :migrated
 
-  event :close do
-    transitions :from => :active, :to => :closed
+  event :block do
+    transitions :from => :active, :to => :blocked
   end
 
   event :migrate do
