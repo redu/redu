@@ -8,8 +8,10 @@ class PaymentGatewayController < BaseController
       notification.products.each do |product|
         invoice = Invoice.find(product[:id])
         invoice.try(:pay!) if notification.status.eql?(:completed)
-        invoice.description ||= ""
-        invoice.description << " #{notification.status}"
+        invoice.audit ||= ""
+        invoice.audit += "#{Time.zone.now}: #{notification.status} \n"
+        invoice.audit += "#{notification.products.to_json} \n"
+        invoice.audit += "#{notification.buyer.to_json} \n"
         invoice.save
       end
     end
