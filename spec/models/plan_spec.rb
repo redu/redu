@@ -21,7 +21,7 @@ describe Plan do
   end
 
   context "states" do
-    [:block!, :migrate!, :current_state].each do |attr|
+    [:block!, :migrate!, :activate!, :current_state].each do |attr|
       it "responds to" do
         should respond_to attr
       end
@@ -41,6 +41,15 @@ describe Plan do
       expect {
         subject.migrate!
       }.should change { subject.current_state }.to :migrated
+    end
+
+    it "activates" do
+      subject.block!
+
+      expect {
+        subject.activate!
+      }.should change(subject, :current_state).from(:blocked).to(:active)
+      
     end
   end
 

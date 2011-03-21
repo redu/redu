@@ -19,7 +19,7 @@ class Invoice < ActiveRecord::Base
   # (overdue -> overdue). Quando for necessário enviar a notificações novamente
   # chamar o método deliver_overdue_notice
   state :overdue, :enter => :send_overdue_notice
-  state :paid, :enter => :register_time, :after => :send_payment_confirmation
+  state :paid, :enter => :register_time, :after => :send_confirmation_and_unlock_plan
 
   event :pend do
     transitions :from => :pending, :to => :pending
@@ -112,6 +112,11 @@ class Invoice < ActiveRecord::Base
 
   def register_time
     self.due_at = Time.now
+  end
+
+  def send_confirmation_and_unlock_plan
+    self.plan.activate! unless self.plan.pending_payment?
+    self.send_payment_confirmation
   end
 
   def send_payment_confirmation

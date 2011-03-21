@@ -44,6 +44,9 @@ describe Invoice do
         UserNotifier.delivery_method = :test
         UserNotifier.perform_deliveries = true
         UserNotifier.deliveries = []
+
+        subject.plan.block!
+        subject.overdue!
       end
 
       it "changes current state" do
@@ -52,6 +55,12 @@ describe Invoice do
         }.should change(subject, :current_state).to(:paid)
 
         subject.due_at.should  be_close(Time.now, 5.seconds)
+      end
+
+      it "unblocks the plan" do
+        expect {
+          subject.pay!
+        }.should change { subject.plan.current_state }.from(:blocked).to(:active)
       end
 
       it "sends confirmation e-mail" do

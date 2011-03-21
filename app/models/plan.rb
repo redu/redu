@@ -97,6 +97,10 @@ class Plan < ActiveRecord::Base
     transitions :from => :active, :to => :blocked
   end
 
+  event :activate do
+    transitions :from => :blocked, :to => :active
+  end
+
   event :migrate do
     transitions :from => :active, :to => :migrated
   end
