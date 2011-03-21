@@ -1,77 +1,85 @@
 class Plan < ActiveRecord::Base
 
   PLANS = {
-    :professor_standard => {
-      :name => "Professor Standard",
-      :price => 49.99,
-      :yearly_price => 499.99,
-      :video_storage_limit => 1.gigabyte,
-      :file_storage_limit => 30.gigabytes,
-      :members_limit => 50
-    },
-    :professor_lite => {
-      :name => "Professor Lite",
-      :price => 24.99,
-      :yearly_price => 249.99,
-      :video_storage_limit => 1.gigabyte,
-      :file_storage_limit => 20.gigabytes,
-      :members_limit => 20
-    },
     :free => {
       :name => "Professor Grátis (3 meses)",
       :price => 0,
       :yearly_price => 0,
       :video_storage_limit => 10.megabytes,
-      :file_storage_limit => 2.megabytes,
+      :file_storage_limit => 5.megabytes,
       :members_limit => 10
     },
-    :instituicao_lite => {
-      :name => "Instituição Lite",
-      :price => 149.99,
-      :yearly_price => 1499.99,
-      :video_storage_limit => 1.gigabyte,
-      :file_storage_limit => 10.gigabytes,
+    :professor_lite => {
+      :name => "Professor Lite",
+      :price => 13.99,
+      :yearly_price => 139.90,
+      :video_storage_limit => 30.megabytes,
+      :file_storage_limit => 25.megabytes,
+      :members_limit => 20
+    },
+    :professor_standard => {
+      :name => "Professor Standard",
+      :price => 56.99,
+      :yearly_price => 569.90,
+      :video_storage_limit => 90.megabytes,
+      :file_storage_limit => 25.megabytes,
       :members_limit => 100
     },
-    :instituicao_standard => {
-      :name => "Instituição Standard",
-      :price => 279.99,
-      :yearly_price => 2799.99,
-      :video_storage_limit => 1.gigabyte,
-      :file_storage_limit => 20.gigabytes,
-      :members_limit => 200
-    },
-    :instituicao_plus => {
-      :name => "Instituição Plus",
-      :price => 399.99,
-      :yearly_price => 3999.99,
-      :video_storage_limit => 1.gigabyte,
-      :file_storage_limit => 30.gigabytes,
-      :members_limit => 100
+    :professor_standard => {
+      :name => "Professor Plus",
+      :price => 243.99,
+      :yearly_price => 2439.90,
+      :video_storage_limit => 150.megabytes,
+      :file_storage_limit => 25.megabytes,
+      :members_limit => 500
     },
     :empresas_lite => {
       :name => "Empresa Lite",
-      :price => 59.99,
-      :yearly_price => 599.99,
-      :video_storage_limit => 1.gigabyte,
-      :file_storage_limit => 20.gigabytes,
+      :price => 210.99,
+      :yearly_price => 2109.90,
+      :video_storage_limit => 250.megabytes,
+      :file_storage_limit => 25.megabytes,
       :members_limit => 30
     },
     :empresas_standard => {
       :name => "Empresa Standard",
-      :price => 89.99,
-      :yearly_price => 899.99,
-      :video_storage_limit => 1.gigabyte,
-      :file_storage_limit => 20.gigabytes,
+      :price => 248.99,
+      :yearly_price => 2489.90,
+      :video_storage_limit => 500.megabytes,
+      :file_storage_limit => 250.megabytes,
       :members_limit => 50
     },
     :empresas_plus => {
       :name => "Empresa Plus",
-      :price => 149.99,
-      :yearly_price => 1499.99,
-      :video_storage_limit => 1.gigabyte,
-      :file_storage_limit => 30.gigabytes,
+      :price => 858.99,
+      :yearly_price => 8589.90,
+      :video_storage_limit => 1000.megabytes,
+      :file_storage_limit => 250.megabytes,
+      :members_limit => 200
+    },
+    :instituicao_plus => {
+      :name => "Instituição Plus",
+      :price => 1280.99,
+      :yearly_price => 12809.90,
+      :video_storage_limit => 800.megabytes,
+      :file_storage_limit => 75.megabytes,
+      :members_limit => 600
+    },
+    :instituicao_lite => {
+      :name => "Instituição Lite",
+      :price => 251.99,
+      :yearly_price => 2519.90,
+      :video_storage_limit => 500.megabytes,
+      :file_storage_limit => 25.megabytes,
       :members_limit => 100
+    },
+    :instituicao_standard => {
+      :name => "Instituição Standard",
+      :price => 730.99,
+      :yearly_price => 7309.90,
+      :video_storage_limit => 800.megabytes,
+      :file_storage_limit => 50.megabytes,
+      :members_limit => 300
     },
   }
 
