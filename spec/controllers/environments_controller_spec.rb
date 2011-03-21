@@ -121,7 +121,7 @@ describe EnvironmentsController do
         end
 
         it "creates the first order" do
-          assigns[:plan].invoices.size.should == 1
+          assigns[:plan].invoices.size.should == 2
         end
 
         it "redirects to confirmation page" do
@@ -164,7 +164,7 @@ describe EnvironmentsController do
         end
 
         it "creates the first order" do
-          assigns[:plan].invoices.size.should == 1
+          assigns[:plan].invoices.size.should == 2
         end
 
       end
