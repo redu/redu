@@ -22,6 +22,12 @@
 log_dir = Dir.pwd + "/log/"
 set :output, log_dir + "whenever.log"
 
-every 1.days do
-  runner "Invoice.refresh_states!"
+unless @environment.eql?('production')
+  every 1.minute do
+    runner "Invoice.refresh_states!"
+  end
+else
+  every 1.days do
+    runner "Invoice.refresh_states!"
+  end
 end
