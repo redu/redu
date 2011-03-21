@@ -186,7 +186,7 @@ class Plan < ActiveRecord::Base
   def create_order(options={})
     order_options = {
       :order_id => self.id,
-      :items => self.invoices.pending.collect { |i| i.to_order_item }
+      :items => self.invoices.pending_payment.collect { |i| i.to_order_item }
     }.merge(options)
 
     order = PagSeguro::Order.new(order_options[:order_id])
@@ -199,9 +199,9 @@ class Plan < ActiveRecord::Base
     self.new(PLANS.fetch(key, PLANS[:free]))
   end
 
-  # Há invoices com pagamento pendente?
+  # Retorna true se há pelo menos um Invoice com estado 'overdue' ou 'pending'
   def pending_payment?
-    self.invoices.pending.count > 0
+    self.invoices.pending.count > 0 || self.invoices.overdue.count > 0
   end
 
   protected

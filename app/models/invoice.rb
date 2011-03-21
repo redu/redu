@@ -7,6 +7,8 @@ class Invoice < ActiveRecord::Base
 
   named_scope :pending, :conditions => { :state => "pending" }
   named_scope :overdue, :conditions => { :state => "overdue" }
+  named_scope :pending_payment,
+    :conditions => ["state LIKE ? OR state LIKE ?", 'pending', 'overdue']
 
   attr_protected :state
 

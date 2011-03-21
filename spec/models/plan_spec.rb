@@ -302,10 +302,24 @@ describe Plan do
       subject.should respond_to(:pending_payment?)
     end
 
-    it "returns true" do
+    it "returns true if there are pending invoices" do
       subject.pending_payment?.should be_true
     end
 
+  end
+
+  context "when overdue payment" do
+    before  do
+      invoices = 3.times.inject([]) do |acc,i|
+        invoice = Factory(:invoice, :plan => subject)
+        invoice.overdue!
+        acc << invoice
+      end
+    end
+
+    it "returns true if there are overdue invoices" do
+      subject.pending_payment?.should be_true
+    end
   end
 
 end
