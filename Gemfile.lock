@@ -21,6 +21,7 @@ GEM
     aanand-deadweight (0.1.0)
       css_parser
       hpricot
+    aaronh-chronic (0.3.9)
     abstract (1.0.0)
     actionmailer (2.3.8)
       actionpack (= 2.3.8)
@@ -55,10 +56,10 @@ GEM
     gem_plugin (0.2.3)
     ghazel-daemons (1.0.13)
     haml (3.0.25)
-    hpricot (0.8.3)
+    hpricot (0.8.4)
     htmlentities (4.2.1)
     i18n (0.4.2)
-    icalendar (1.1.5)
+    icalendar (1.1.6)
     linecache (0.43)
     mime-types (1.16)
     mongrel (1.1.5)
@@ -74,7 +75,7 @@ GEM
       activerecord
       activesupport
     parseline (1.0.3)
-    rack (1.1.0)
+    rack (1.1.2)
     rails (2.3.8)
       actionmailer (= 2.3.8)
       actionpack (= 2.3.8)
@@ -101,6 +102,9 @@ GEM
     shoulda (2.11.3)
     shuber-sortable (1.0.6)
     validatable (1.6.7)
+    whenever (0.6.6)
+      aaronh-chronic (>= 0.3.9)
+      activesupport (>= 2.3.4)
     will_paginate (2.3.15)
     xml-simple (1.0.14)
     zencoder (2.3.1)
@@ -148,5 +152,6 @@ DEPENDENCIES
   shoulda
   shuber-sortable
   validatable
+  whenever
   will_paginate (~> 2.3.11)
   zencoder

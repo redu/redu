@@ -286,6 +286,18 @@ class UserNotifier < ActionMailer::Base
 
   end
 
+  def pending_notice(user, invoice, deadline)
+    setup_sender_info
+
+    @recipients  = "#{user.email}"
+    @subject = "Pagamento N. #{invoice.id} pendente"
+    @body[:user] = user
+    @body[:invoice] = invoice
+    @body[:plan] = invoice.plan
+    @body[:deadline] = deadline
+
+  end
+
   def upgrade_request(user, old_plan, new_plan)
     setup_sender_info
 

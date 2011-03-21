@@ -125,7 +125,7 @@ class EnvironmentsController < BaseController
         @environment.color = "4DADD6"
         if @environment.save && @plan.save
           if @plan.price > 0
-            @plan.create_invoice
+            @plan.create_invoice_and_setup
 
             format.js do
               render :update do |page|

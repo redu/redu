@@ -259,8 +259,10 @@ ActionController::Routing::Routes.draw do |map|
     plan.resources :invoices, :only => [:index, :show]
   end
 
-  map.payment_success '/payment/success',
+  map.payment_success '/payment/callback',
     :controller => 'payment_gateway', :action => 'callback'
+  map.payment_success '/payment/success',
+    :controller => 'payment_gateway', :action => 'success'
 
 end
 #ActionController::Routing::Translator.i18n('pt-BR') # se ativar, buga (falar com cassio)

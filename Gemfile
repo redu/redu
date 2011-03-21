@@ -36,6 +36,7 @@ gem "right_aws", "~> 2.0.0"
 gem "shuber-sortable"
 gem "abstract", "1.0.0"
 gem "erubis", "2.6.6"
+gem "whenever", :require => false
 
 group :development do
   gem "mongrel"

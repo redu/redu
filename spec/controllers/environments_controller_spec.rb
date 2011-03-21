@@ -55,6 +55,7 @@ describe EnvironmentsController do
           @params[:plan] = "professor_standard"
           post :create, @params
         end
+
         it "assigns the environment" do
           assigns[:environment].should_not be_nil
           assigns[:environment].should be_valid
@@ -86,7 +87,7 @@ describe EnvironmentsController do
       end
     end
     context "at step 4" do
-      context "when is html" do
+      context "when plain request" do
         before do
           @params[:step] = 4
           @params[:plan] = "professor_standard"
@@ -120,7 +121,7 @@ describe EnvironmentsController do
         end
 
         it "creates the first order" do
-          assigns[:plan].invoices.size.should == 1
+          assigns[:plan].invoices.size.should == 2
         end
 
         it "redirects to confirmation page" do
@@ -128,7 +129,7 @@ describe EnvironmentsController do
         end
       end
 
-      context "when is js" do
+      context "when AJAX request" do
         before do
           @params[:step] = 4
           @params[:plan] = "professor_standard"
@@ -163,7 +164,7 @@ describe EnvironmentsController do
         end
 
         it "creates the first order" do
-          assigns[:plan].invoices.size.should == 1
+          assigns[:plan].invoices.size.should == 2
         end
 
       end

@@ -21,7 +21,7 @@ describe Plan do
   end
 
   context "states" do
-    [:close!, :migrate!, :current_state].each do |attr|
+    [:block!, :migrate!, :activate!, :current_state].each do |attr|
       it "responds to" do
         should respond_to attr
       end
@@ -31,16 +31,25 @@ describe Plan do
       subject.current_state.should == :active
     end
 
-    it "closes" do
+    it "blocks" do
       expect {
-        subject.close!
-      }.should change { subject.current_state }.to :closed
+        subject.block!
+      }.should change { subject.current_state }.to :blocked
     end
 
     it "migrates" do
       expect {
         subject.migrate!
       }.should change { subject.current_state }.to :migrated
+    end
+
+    it "activates" do
+      subject.block!
+
+      expect {
+        subject.activate!
+      }.should change(subject, :current_state).from(:blocked).to(:active)
+      
     end
   end
 
@@ -91,6 +100,32 @@ describe Plan do
       invoice.period_end.should == memo.period_end
       invoice.amount.should == memo.amount
 
+    end
+
+    context "when setting up the plan" do
+      before do
+        subject {
+          Plan.from_preset(:empresas_plus).save
+        }
+      end
+
+       it "should creante one invoice" do
+         expect {
+           subject.create_invoice_and_setup
+         }.should change(Invoice, :count).by(1)
+       end
+
+       context "the only invoice" do
+         it "should have the setup description" do
+           subject.create_invoice_and_setup
+           subject.invoices.first.description =~ /adesão/
+         end
+
+         it "should have the correct amount" do
+           subject.create_invoice_and_setup
+           subject.invoices.first.amount == subject.price * 2
+         end
+       end
     end
 
     context "when generating the amount" do
@@ -200,7 +235,7 @@ describe Plan do
     xit "gives a discount on the first invoice of the new plan" do
       per_day = subject.price / subject.days_in_current_month
       discount = period * per_day
-      
+
       invoice = @new_plan.invoices.pending.first
 
       invoice.amount.round(2).should == @new_plan.price - discount
@@ -276,10 +311,24 @@ describe Plan do
       subject.should respond_to(:pending_payment?)
     end
 
-    it "returns true" do
+    it "returns true if there are pending invoices" do
       subject.pending_payment?.should be_true
     end
 
+  end
+
+  context "when overdue payment" do
+    before  do
+      invoices = 3.times.inject([]) do |acc,i|
+        invoice = Factory(:invoice, :plan => subject)
+        invoice.overdue!
+        acc << invoice
+      end
+    end
+
+    it "returns true if there are overdue invoices" do
+      subject.pending_payment?.should be_true
+    end
   end
 
 end
