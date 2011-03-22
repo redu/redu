@@ -9,11 +9,13 @@ class MessagesController < BaseController
   #end
   
   def auto_complete_for_username
-    #TODO perfomance - rails metal , selecionar apenas nome e id
+    #TODO perfomance - rails metal 
+    #TODO restringir a amigos
     if params[:tag]
       #@users = current_user.following
-       @users = User.find(:all, :select=> "id,first_name", :conditions => [ 'LOWER(first_name) LIKE ?', '%' + (params[:tag]) + '%' ], :limit=>10)
-    @ab = @users.map{|u| {:key => u.first_name, :value => u.id}}
+      #image_tag( @user.avatar.url(:thumb)
+     @users = User.find(:all, :select=> "id,first_name, avatar_file_name, avatar_content_type, avatar_file_size, avatar_updated_at", :conditions => [ 'LOWER(first_name) LIKE ?', '%' + (params[:tag]) + '%' ], :limit=>10)
+     @ab = @users.map{|u| {:key => "<img src=\""+u.avatar.url(:thumb)+"\"/> "+u.first_name, :value => u.id}}
     else
       #@users = User.all(:limit=>10)
     end
