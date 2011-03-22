@@ -74,6 +74,7 @@ class Course < ActiveRecord::Base
   validates_uniqueness_of :name, :path, :scope => :environment_id
   validates_length_of :name, :maximum => 60
   validates_length_of :description, :maximum => 250, :allow_blank => true
+  validates_format_of :path, :with => /^[-_.A-Za-z0-9]*$/
   validate :length_of_tags
 
   # Sobreescrevendo ActiveRecord.find para adicionar capacidade de buscar por path do Space

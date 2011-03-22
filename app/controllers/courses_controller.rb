@@ -149,6 +149,11 @@ class CoursesController < BaseController
 
   # Visão do Course para usuários não-membros.
   def preview
+    #FIXME please. Used for redirect to a valid url
+    if params[:id] == 'Primeiro Ano do Ensino Médio 2011'
+      redirect_to preview_environment_course_path(@environment, Course.find(88)) and return
+    end
+
     @spaces = @course.spaces.paginate(:page => params[:page],
                                       :order => 'name ASC',
                                       :per_page => AppConfig.items_per_page)

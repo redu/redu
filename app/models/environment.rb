@@ -35,6 +35,7 @@ class Environment < ActiveRecord::Base
   validates_length_of :description, :maximum => 400, :allow_blank => true
   validate :length_of_tags
   validates_length_of :initials, :maximum => 10, :allow_blank => true
+  validates_format_of :path, :with => /^[-_.A-Za-z0-9]*$/
 
   accepts_nested_attributes_for :courses
 
