@@ -748,6 +748,14 @@
   padding: 5px 70px;
 }
 
+#lights_dimmed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: url("../images/new/overlay-85.png");
+  width: 100%;
+}
+
 .hierarchy-listing-wrapper .users {
 
 }

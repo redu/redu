@@ -1,5 +1,6 @@
 <div id="lights_dimmed" class="clearfix">
 </div>
+<% content_for :header_scripts_and_styles do %>
 <script type="text/javascript">
   $(function(){
     $("#lights").toggle(function(e){
@@ -23,3 +24,4 @@
     });
   });
 </script>
+<% end %>
