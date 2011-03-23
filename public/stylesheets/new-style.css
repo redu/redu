@@ -1222,6 +1222,10 @@
   background: none;
 }
 
+#breadcrumbs.course li.moderation_count {
+  float: right;
+}
+
 #breadcrumbs.wizard li a {
   padding-left: 0;
 }
