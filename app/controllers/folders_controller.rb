@@ -103,9 +103,8 @@ class FoldersController < BaseController
     if  @myfile
         # Gerando uma url do s3 com o timeout de 20 segundos
         # O usuário deve COMEÇAR a baixar dentro desse tempo.
-        f = @myfile.attachment
         if Rails.env == "production" || Rails.env == "staging"
-          redirect_to f.s3.interface.get_link(f.s3_bucket.to_s, f.path, 20.seconds) and return false
+          redirect_to @myfile.attachment.expiring_url(20)
         end
 
         send_file @myfile.attachment.path, :type=> @myfile.attachment.content_type
