@@ -14,9 +14,14 @@
       </div>
     </li>
     <li>
+        <%
+          if @space.subjects.published.recent.count > 0
+            subjects_count = "(+#{@space.subjects.published.recent.count})"
+          end
+        %>
       <div class="<%= (current_page? space_subjects_path(@space)) ?
                     "session selected".to_s : "session".to_s %>">
-        <%= link_to 'Módulos', space_subjects_path(@space),
+        <%= link_to "Módulos #{subjects_count}", space_subjects_path(@space),
           :class => 'icon icon-redu_r11_c211_s1' %>
       </div>
     </li>

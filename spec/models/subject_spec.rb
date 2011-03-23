@@ -55,7 +55,7 @@ describe Subject do
     end
 
     it "does NOT create an Enrollment between the Subject and the owner when update it" do
-      expect { 
+      expect {
         subject.save # Other updates
       }.should_not change(subject.enrollments.reload, :count)
     end
@@ -66,7 +66,7 @@ describe Subject do
         Factory(:subject, :owner => redu_admin, :space => @space)
       }.should_not change(Enrollment, :count)
     end
-      
+
   end
 
   context "finders" do
@@ -77,6 +77,13 @@ describe Subject do
                                                     :space => @space,
                                                     :published => true) }
       Subject.published.should == published_subjects
+    end
+
+    it "retrieves recent subjects (created until 1 week ago)" do
+      subjects = (1..3).collect { |i| Factory(:subject, :owner => @user,
+                                              :space => @space,
+                                              :created_at => (i*3).day.ago) }
+      Subject.recent.should == subjects[0..1]
     end
 
     it "retrieves graduated members" do

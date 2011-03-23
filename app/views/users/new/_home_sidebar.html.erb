@@ -16,7 +16,12 @@
     <li>
       <div class="<%= (current_page? user_messages_path(current_user)) ?
         "session selected".to_s : "session".to_s %>">
-        <%= link_to "Mensagens (#{current_user.unread_message_count})",
+        <%
+          if current_user.unread_message_count > 0
+            unread_message_count = "(+#{current_user.unread_message_count})"
+          end
+        %>
+        <%= link_to "Mensagens #{unread_message_count}",
           user_messages_path(current_user),
           :class => 'icon icon-redu_r10_c331_s1' %>
       </div>

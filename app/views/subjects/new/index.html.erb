@@ -62,7 +62,13 @@
   <div id="space-subjects" class="hierarchy-listing-wrapper">
     <div class="header">
       <h4>Módulos</h4>
-      <span class="counter"><%= pluralize(@space.subjects.length, 'módulo') %></span>
+      <span class="counter">
+        <% if can? :manage, @space %>
+          <%= pluralize(@space.subjects.count, 'módulo') %>
+        <% else %>
+          <%= pluralize(@space.subjects.published.count, 'módulo') %>
+        <% end %>
+      </span>
     </div>
     <% if can? :manage, @space %>
       <div class="admin-actions">

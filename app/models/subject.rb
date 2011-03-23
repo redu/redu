@@ -17,6 +17,10 @@ class Subject < ActiveRecord::Base
   has_many :statuses, :as => :statusable, :dependent => :destroy
   has_many :logs, :as => :logeable, :dependent => :destroy, :class_name => 'Status'
 
+  named_scope :recent, lambda {
+    { :conditions => ['created_at > ?', 1.week.ago] }
+  }
+
   attr_protected :owner, :published, :finalized
 
   acts_as_taggable
