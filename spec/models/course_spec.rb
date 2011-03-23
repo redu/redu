@@ -20,6 +20,7 @@ describe Course do
   it { should have_many(:user_course_associations).dependent :destroy }
   it { should have_many(:users).through :user_course_associations }
   it { should have_many(:approved_users).through :user_course_associations }
+  it { should have_many(:pending_users).through :user_course_associations }
   it { should have_many(:administrators).through :user_course_associations }
   it { should have_many(:teachers).through :user_course_associations }
   it { should have_many(:tutors).through :user_course_associations }
@@ -111,14 +112,36 @@ describe Course do
 
     it "retrieves all approved users" do
       users = 5.times.inject([]) { |res, i| res << Factory(:user) }
+      subject.subscription_type = 2 # Com moderação
+      subject.save
+
       subject.join(users[0], Role[:environment_admin])
       subject.join(users[1], Role[:environment_admin])
       subject.join(users[2], Role[:teacher])
       subject.join(users[3], Role[:tutor])
       subject.join(users[4], Role[:member])
 
-      subject.users.to_set.
-        should == (users << subject.owner << subject.environment.owner).to_set
+      users[0..2].collect { |u| u.user_course_associations.last.approve! }
+
+      subject.approved_users.to_set.
+        should == (users[0..2] << subject.owner <<
+          subject.environment.owner).to_set
+    end
+
+    it "retrieves all pending users" do
+      users = 5.times.inject([]) { |res, i| res << Factory(:user) }
+      subject.subscription_type = 2 # Com moderação
+      subject.save
+
+      subject.join(users[0], Role[:environment_admin])
+      subject.join(users[1], Role[:environment_admin])
+      subject.join(users[2], Role[:teacher])
+      subject.join(users[3], Role[:tutor])
+      subject.join(users[4], Role[:member])
+
+      users[0..2].collect { |u| u.user_course_associations.last.approve! }
+
+      subject.pending_users.should == users[3..4]
     end
 
     it "retrieves all administrators" do

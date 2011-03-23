@@ -12,6 +12,9 @@ class Course < ActiveRecord::Base
   has_many :approved_users, :through => :user_course_associations,
     :source => :user, :conditions => [ "user_course_associations.state = ?",
                                        'approved' ]
+  has_many :pending_users, :through => :user_course_associations,
+    :source => :user, :conditions => [ "user_course_associations.state = ?",
+                                       'waiting' ]
   # environment_admins
   has_many :administrators, :through => :user_course_associations,
     :source => :user,
