@@ -24,9 +24,9 @@
     %>
   </li>
   <li>
-    <%= link_to_unless_current 'Arquivos', space_folders_path(@space),
+    <%= link_to_unless_current 'Material de apoio', space_folders_path(@space),
       :class => "#{filesClass}", :title => "#{filesTitle}" do
-          link_to 'Arquivos', space_folders_path(@space), :class => "selected #{filesClass}",
+          link_to 'Material de apoio', space_folders_path(@space), :class => "selected #{filesClass}",
             :title => "#{filesTitle}"
         end
     %>
