@@ -1,0 +1,21 @@
+<ol id="breadcrumbs" class="course clearfix">
+  <li>
+    <%= link_to 'Home', home_user_path(current_user),
+      :class => 'replacement home icon icon-redu_r8_c227_s1' %>
+  </li>
+  <li>
+    <%= link_to @environment.name, environment_path(@environment),
+      :class => 'replacement icon icon-redu_r8_c217_s1' %>
+  <li>
+    <%= link_to @course.name,
+      environment_course_path(@course.environment, @course),
+      :class => 'icon icon-redu_r8_c313_s1' %>
+  </li>
+  <% if @course.subscription_type.eql? 2 # Possui moderação %>
+    <li class="moderation_count">
+      <span></span>
+      <%= link_to "Moderações pendentes: #{@course.users.count - @course.approved_users.count}",
+        admin_members_requests_environment_course_path(@environment, @course) %>
+    </li>
+  <% end %>
+</ol>

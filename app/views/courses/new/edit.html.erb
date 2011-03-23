@@ -25,20 +25,7 @@
 
 <%= render :partial => 'courses/new/sidebar' %>
 <div class="main grid_12 omega big-col">
-  <ol id="breadcrumbs" class="clearfix">
-    <li>
-      <%= link_to 'Home', home_user_path(current_user),
-        :class => 'replacement home icon icon-redu_r8_c227_s1' %>
-    </li>
-    <li>
-      <%= link_to @environment.name, environment_path(@environment),
-        :class => 'replacement icon icon-redu_r8_c217_s1' %>
-    </li>
-    <li>
-      <%= link_to @course.name, environment_course_path(@environment, @course),
-        :class => 'icon icon-redu_r8_c313_s1' %>
-    </li>
-  </ol>
+  <%= render :partial => 'courses/new/breadcrumbs' %>
   <%= render :partial => 'courses/new/header',
     :locals => { :course => @header_course } %>
   <div id="course-manage" class="body">
