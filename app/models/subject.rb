@@ -18,7 +18,7 @@ class Subject < ActiveRecord::Base
   has_many :logs, :as => :logeable, :dependent => :destroy, :class_name => 'Status'
 
   named_scope :recent, lambda {
-    { :conditions => ['created_at > ?', 1.week.ago] }
+    { :conditions => ['updated_at > ?', 1.week.ago] }
   }
 
   attr_protected :owner, :published, :finalized
@@ -28,6 +28,10 @@ class Subject < ActiveRecord::Base
   validates_presence_of :title
   validates_length_of :description, :within => 30..250
   validates_length_of :lectures, :minimum => 1, :on => :update
+
+  def recent?
+    self.updated_at > 1.week.ago
+  end
 
   # Matricula o usuário com o role especificado. Retorna true ou false
   # dependendo do resultado

@@ -8,7 +8,7 @@
   <% end %>
   <%= link_to item.title, space_subject_path(item.space, item),
     :class => 'name' %>
-  <% if item.created_at > 1.week.ago %>
+  <% if item.recent? %>
     <%#FIXME Trocar por ícone %>
     <span style="color: #F9A737; font-weight: bold; font-size: 0.7em;">NOVO</span>
   <% end %>

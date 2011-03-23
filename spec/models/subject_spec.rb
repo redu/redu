@@ -79,10 +79,10 @@ describe Subject do
       Subject.published.should == published_subjects
     end
 
-    it "retrieves recent subjects (created until 1 week ago)" do
+    it "retrieves recent subjects (updated until 1 week ago)" do
       subjects = (1..3).collect { |i| Factory(:subject, :owner => @user,
                                               :space => @space,
-                                              :created_at => (i*3).day.ago) }
+                                              :updated_at => (i*3).day.ago) }
       Subject.recent.should == subjects[0..1]
     end
 
@@ -108,6 +108,10 @@ describe Subject do
     end
   end
 
+  it "responds to recent?" do
+    should respond_to :recent?
+  end
+
   it "defaults to not published" do
     subject { Factory(:subject, :published => nil) }
     subject.published.should be_false
@@ -119,6 +123,14 @@ describe Subject do
 
   it "responds to unpublish!" do
     should respond_to :unpublish!
+  end
+
+  it "indicates if it is recent (updated until 1 week ago)" do
+    subject.should be_recent
+
+    subject.updated_at = 10.day.ago
+    subject.save
+    subject.should_not be_recent
   end
 
   it "publishes itself" do
