@@ -24,7 +24,7 @@
     <li>
       <div class="<%= (current_page? users_environment_course_path(@course.environment, @course)) ?
                     "session selected".to_s : "session".to_s %>">
-        <%= link_to "Membros (#{@course.approved_users.length})",
+        <%= link_to "Membros: #{@course.approved_users.length}",
           users_environment_course_path(@course.environment, @course),
           :class => 'icon icon-redu_r8_c319_s1' %>
       <ul class="connections clearfix">

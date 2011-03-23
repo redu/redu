@@ -33,7 +33,7 @@
     <li>
       <div class="<%= (current_page? users_environment_path(@environment)) ?
                     "session selected".to_s : "session".to_s %>">
-        <%= link_to "Membros (#{ @environment.users.length })",
+        <%= link_to "Membros: #{ @environment.users.length }",
           users_environment_path(@environment),
           :class => "icon icon-redu_r8_c319_s1" %>
       </div>

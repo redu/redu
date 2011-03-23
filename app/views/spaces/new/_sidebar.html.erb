@@ -61,7 +61,7 @@
     <li>
       <div class="<%= (current_page? users_space_path(@space)) ?
                     "session selected".to_s : "session".to_s %>">
-        <%= link_to 'Membros', users_space_path(@space),
+        <%= link_to "Membros: #{@space.users.size}", users_space_path(@space),
           :class => 'icon icon-redu_r8_c319_s1' %>
       </div>
       <ul class="connections clearfix">

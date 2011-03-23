@@ -15,9 +15,13 @@
       </div>
     </li>
     <li>
+
       <div class=" <%= (current_page? space_subject_lectures_path(@space, @subject) ) ? "session selected" : "session" %> ">
-        <%= link_to 'Recursos', space_subject_lectures_path(@space, @subject),
-                          :class => 'icon icon-redu_r9_c277_s1' %>
+        <% resource_name = "Recursos: #{@subject.lectures.size}" %>
+        <% resource_name = "Recurso: #{@subject.lectures.size}" if @subject.lectures.size ==  1 %>
+          
+        <%= link_to resource_name, space_subject_lectures_path(@space, @subject),
+          :class => 'icon icon-redu_r9_c277_s1' %>
       </div>
     </li>
     <% if can? :manage, @subject %>
@@ -30,7 +34,7 @@
     <% end %>
     <li>
       <div class="<%= (current_page? users_space_subject_path(@space, @subject) ) ? "session selected" : "session" %>">
-                        <%= link_to "Membros (#{@subject.members.length})",
+                        <%= link_to "Membros: #{@subject.members.length}",
                           users_space_subject_path(@space, @subject),
                           :class => 'icon icon-redu_r8_c319_s1' %>
       </div>
