@@ -492,10 +492,8 @@ class UsersController < BaseController
 
   # Faz download do currículo previamente guardado pelo usuário.
   def download_curriculum
-    f = @user.curriculum
     if Rails.env == "production" || Rails.env == "staging"
-      redirect_to f.s3.interface.get_link(f.s3_bucket.to_s,
-                              f.path, 20.seconds) and return false
+      redirect_to @user.curriculum.expiring_url(20) and return false
     end
 
     send_file @user.curriculum.path,
