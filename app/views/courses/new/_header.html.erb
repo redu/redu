@@ -12,7 +12,8 @@
         :method => :post, :class => 'join important'%>
     <% end %>
   <% else %>
-    <% if @course.waiting_approval?(current_user) %>
+    <% if @course.waiting_approval?(current_user) or
+      @course.rejected_participation?(current_user) %>
       <span class="join waiting">Aguardando moderação</span>
     <% else %>
       <%= link_to 'Abandonar curso',

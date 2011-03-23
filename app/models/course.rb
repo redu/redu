@@ -193,4 +193,12 @@ class Course < ActiveRecord::Base
     return false if assoc.nil?
     assoc.waiting?
   end
+
+  # Verifica se o usuário em questão teve a sua participação rejeitada em um
+  # determinado Course
+  def rejected_participation?(user)
+    assoc = user.get_association_with self
+    return false if assoc.nil?
+    assoc.rejected?
+  end
 end

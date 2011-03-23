@@ -319,6 +319,15 @@ describe Course do
     subject.waiting_approval?(user).should be_true
   end
 
+  it "verifies if the user has been rejected" do
+    user = Factory(:user)
+    subject.update_attribute(:subscription_type, 2)
+    subject.join(user)
+    user.user_course_associations.last.reject!
+
+    subject.rejected_participation?(user).should be_true
+  end
+
   it "creates hierarchy associations for a specified user" do
     space = Factory(:space, :course => subject)
     subject.spaces << space
