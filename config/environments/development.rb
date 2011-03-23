@@ -32,6 +32,7 @@ PAPERCLIP_STORAGE_OPTIONS = {
                :thumb_150 => "150x150>",
                :thumb_120 => "120x120>",
                :thumb_100 => "100x100>",
+               :thumb_60 => "60x60>",
                :thumb_32 => "32x32>" }
 }
 
