@@ -14,6 +14,12 @@
   <% else %>
     <% if @course.waiting_approval?(current_user) %>
       <span class="join waiting">Aguardando moderação</span>
+    <% else %>
+      <%= link_to 'Abandonar curso',
+        unjoin_environment_course_path(@course.environment, @course),
+        :method => :post,
+        :confirm => 'Você perderá o vínculo e o acesso a este curso e isso não poderá ser desfeito. Tem certeza?',
+        :class => 'leave icon icon-redu_r12_c43_s1' %>
     <% end %>
   <% end %>
 
