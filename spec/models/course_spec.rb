@@ -3,11 +3,8 @@ require 'spec_helper'
 describe Course do
 
   before(:each) do
-    @environment = Factory(:environment)
     @user = Factory(:user)
-    UserEnvironmentAssociation.create(:user => @user,
-                                      :environment => @environment,
-                                      :role => Role[:environment_admin])
+    @environment = Factory(:environment, :owner => @user)
   end
 
   subject { Factory(:course, :owner => @user, :environment => @environment) }
@@ -57,7 +54,7 @@ describe Course do
       subject.should_not be_valid
       subject.errors.on(:path).should_not be_empty
     end
-    
+
     it "ensure format for path: doesn't accept space" do
       subject.path = "teste medio"
       subject.should_not be_valid
@@ -213,6 +210,31 @@ describe Course do
 
       subject.students.to_set.
         should == [users[3], users[4]].to_set
+    end
+
+    it "retrieves new users from 1 week ago" do
+      users = 5.times.inject([]) { |res, i| res << Factory(:user) }
+      Factory(:user_course_association, :user => users[0],
+              :course => subject, :role => :environment_admin,
+              :created_at => 2.weeks.ago,
+              :updated_at => 2.weeks.ago)
+      Factory(:user_course_association, :user => users[1],
+              :course => subject, :role => :teacher,
+              :updated_at => 2.weeks.ago)
+      Factory(:user_course_association, :user => users[2],
+              :course => subject, :role => :tutor,
+              :updated_at => 2.weeks.ago)
+      Factory(:user_course_association, :user => users[3],
+              :course => subject, :role => :member,
+              :updated_at => 2.weeks.ago)
+      Factory(:user_course_association, :user => users[4],
+              :course => subject, :role => :member,
+              :updated_at => 2.weeks.ago)
+
+      subject.user_course_associations.update_all("state = 'approved'")
+
+      subject.new_members.to_set.
+        should == [@user].to_set
     end
 
     it "retrieves all courses in one of specified categories" do

@@ -11,12 +11,16 @@ class UserCourseAssociation < ActiveRecord::Base
   }
   # Filtra por palavra-chave (procura em User)
   named_scope :with_keyword, lambda { |keyword|
-    if not keyword.empty? and keyword.size > 4 
+    if not keyword.empty? and keyword.size > 4
       { :conditions => [ "users.first_name LIKE :keyword " + \
         "OR users.last_name LIKE :keyword " + \
         "OR users.login LIKE :keyword", {:keyword => "%#{keyword}%"}],
         :include => [{ :user => {:user_space_associations => :space} }]}
     end
+  }
+
+  named_scope :recent, lambda {
+      {:conditions => [ "created_at >= ?", 1.week.ago]}
   }
 
   # Máquina de estados para moderação das dos usuários nos courses.

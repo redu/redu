@@ -39,6 +39,11 @@
   </div>
   <ul class="statistics grid_3 omega">
     <li>
+      <em class="icon icon-redu_r8_c319_s1">Membros:</em>
+        <span><%= course.approved_users.length %></span>
+        <span><%= "(+#{course.new_members.length})" if course.new_members.count > 0 %></span>
+    </li>
+    <li>
       <em class="icon icon-redu_r8_c207_s1">Professores:</em>
       <span><%= course.teachers.length %></span>
     </li>

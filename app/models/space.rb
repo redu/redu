@@ -41,6 +41,12 @@ class Space < ActiveRecord::Base
     :source => :user,
     :conditions => [ "user_space_associations.role_id = ? AND user_space_associations.status = ?",
                       2, 'approved' ]
+
+ # new members (form 1 week ago)
+  has_many :new_members, :through => :user_space_associations,
+    :source => :user,
+    :conditions => [ "user_space_associations.status = ? AND user_space_associations.updated_at >= ?", 'approved', 1.week.ago]
+
   has_many :logs, :as => :logeable, :dependent => :destroy, :class_name => 'Status'
 
   has_many :folders, :dependent => :destroy

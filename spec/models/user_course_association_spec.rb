@@ -1,7 +1,10 @@
 require 'spec_helper'
 
 describe UserCourseAssociation do
-  subject { Factory(:user_course_association) }
+  before do
+    @course = Factory(:course)
+  end
+  subject { @course.user_course_associations.first }
 
   it { should belong_to :user }
   it { should belong_to :course }
@@ -33,5 +36,20 @@ describe UserCourseAssociation do
           user2.user_course_associations.last]
     end
 
+    it "retrieves new user_course_associations from 1 week ago" do
+      user = Factory(:user, :first_name => "Andrew")
+      assoc = Factory(:user_course_association, :user => user,
+                      :course => subject.course,
+                      :created_at => 2.weeks.ago)
+      user2 = Factory(:user, :first_name => "Joe Andrew")
+      assoc2 = Factory(:user_course_association, :user => user2,
+                      :course => subject.course)
+      user3 = Factory(:user, :first_name => "Alice")
+      assoc3 = Factory(:user_course_association, :user => user3,
+                      :course => subject.course)
+
+      subject.course.user_course_associations.
+        recent.should == [subject, assoc2, assoc3]
+    end
   end
 end

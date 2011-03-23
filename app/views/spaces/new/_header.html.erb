@@ -19,6 +19,11 @@
 </div>
 <ul class="statistics grid_3 omega">
   <li>
+    <em class="icon icon-redu_r8_c319_s1">Membros:</em>
+    <span><%= space.users.length %></span>
+    <span><%= "(+#{space.new_members.length})" if space.new_members.count > 0 %></span>
+  </li>
+  <li>
     <em class="icon icon-redu_r8_c207_s1">Professores:</em>
     <span><%= space.teachers.length %></span>
   </li>
