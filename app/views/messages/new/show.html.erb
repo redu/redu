@@ -26,7 +26,7 @@
           <div class="title"> <%= @message.subject %> </div>
           <div class="content">
             <div class="pretty-text">
-              <p><%= auto_link(@message.body) %></p>
+              <p><%= auto_link simple_format(@message.body) %></p>
             </div>
           </div>
           <% showed_user = @message.sender == @user ?

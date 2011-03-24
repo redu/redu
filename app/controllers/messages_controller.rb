@@ -1,36 +1,7 @@
 class MessagesController < BaseController
 
   load_and_authorize_resource :user
-   #auto_complete_for :fruit, :name
-
-  #def auto_complete_for_username
-  #  @users = User.find(:all, :conditions => [ 'LOWER(login) LIKE ?', '%' + (params[:message][:to]) + '%' ])
-  #  render :inline => "<%= auto_complete_result(@users, 'login') %>"
-  #end
-  
-  def auto_complete_for_username
-    #TODO perfomance - rails metal 
-    #TODO restringir a amigos
-    if params[:tag]
-      #@users = current_user.following
-      #image_tag( @user.avatar.url(:thumb)
-     @users = User.find(:all, :select=> "id,first_name, avatar_file_name, avatar_content_type, avatar_file_size, avatar_updated_at", :conditions => [ 'LOWER(first_name) LIKE ?', '%' + (params[:tag]) + '%' ], :limit=>10)
-     @ab = @users.map{|u| {:key => "<img src=\""+u.avatar.url(:thumb)+"\"/> "+u.first_name, :value => u.id}}
-    else
-      #@users = User.all(:limit=>10)
-    end
-  
-    respond_to do |format|
-     # wants.html
-      format.js do
-        render :json => @ab
-      end
-    end
-
-  end
-
-
-
+ 
   def index
     authorize! :manage, @user
       @messages = @user.received_messages.paginate(:all, :page => params[:page],
@@ -88,30 +59,36 @@ class MessagesController < BaseController
     end
   end
 
-  def create
+  def create  #TODO verificar se está enviando uma mensagem para um amigo mesmo ou se ta tentando colocar o id de outra pessoa?
     authorize! :manage, @user
     messages = []
-
-    if params[:message][:recipient_id]
-      # If 'to' field is empty, call validations to catch other
+    
+    if params[:message][:reply_to] # resposta
       @message = Message.new(params[:message])
-
-      unless @message.valid?
-          respond_to do |format|
+      @message.save!
+      flash[:notice] = "Mensagem enviada!"
+      respond_to do |format|
+        format.html do
+          redirect_to index_sent_user_messages_path(@user) and return
+        end
+      end
+    end
+    
+     if not params[:message_to] or  params[:message_to].empty?
+        flash[:error] = "Destinatários inexistentes!"
+        respond_to do |format|
             format.html do
               render :template => 'messages/new/new',
                 :layout => 'new/application' and return
             end
           end
-          return
-        else
-          messages << @message
-        end
-    else
+      end
+     
+
       # If 'to' field isn't empty then make sure each recipient is valid
       params[:message_to].each do |to|
         @message = Message.new(params[:message])
-        @message.recipient = User.find(to)
+        @message.recipient_id = to# User.find(to)
         @message.sender = @user
         unless @message.valid?
           respond_to do |format|
@@ -125,7 +102,7 @@ class MessagesController < BaseController
           messages << @message
         end
       end
-      end
+      
       # If all messages are valid then send messages
       messages.each {|msg| msg.save!}
       flash[:notice] = :message_sent.l

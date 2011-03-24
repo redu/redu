@@ -34,7 +34,11 @@
 		   <%= options_for_select(@aab) %>
 		   <% end %>
         </select>
-
+		<div>
+			<div id = "placeholder">
+				
+			</div>
+		</div>
     
  
   <% end %>
@@ -63,8 +67,11 @@
                 $("#message_to").fcbkcomplete({
                     json_url: "<%= auto_complete_for_username_user_messages_path %>?format=js",
                     addontab: true,
-					complete_text: "Digite o nome do amigo...",                   
-                    height: 2
+					complete_text: "Digite o nome de seu contato...",                   
+                    height: 2,
+					cache: true,
+					newel:true,
+					attachto: "placeholder"
                 });
             });
 
