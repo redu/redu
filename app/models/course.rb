@@ -167,9 +167,15 @@ class Course < ActiveRecord::Base
   def unjoin(user)
     course_association = user.get_association_with(self)
     course_association.destroy
+
     self.spaces.each do |space|
       space_association = user.get_association_with(space)
       space_association.destroy
+
+      space.subjects.each do |subject|
+        enrollment = user.get_association_with subject
+        enrollment.destroy if enrollment
+      end
     end
   end
 

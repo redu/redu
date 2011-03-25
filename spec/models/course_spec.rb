@@ -3,11 +3,12 @@ require 'spec_helper'
 describe Course do
 
   before(:each) do
-    @user = Factory(:user)
-    @environment = Factory(:environment, :owner => @user)
+    @environment_owner = Factory(:user)
+    @environment = Factory(:environment, :owner => @environment_owner)
   end
 
-  subject { Factory(:course, :owner => @user, :environment => @environment) }
+  subject { Factory(:course, :owner => @environment_owner,
+                    :environment => @environment) }
 
   it { should belong_to :environment }
   it { should belong_to :owner }
@@ -234,7 +235,7 @@ describe Course do
       subject.user_course_associations.update_all("state = 'approved'")
 
       subject.new_members.to_set.
-        should == [@user].to_set
+        should == [@environment_owner].to_set
     end
 
     it "retrieves all courses in one of specified categories" do
@@ -325,13 +326,34 @@ describe Course do
     subject.environment.users.should include(user)
   end
 
-  it "removes a user (unjoin)" do
-    space = Factory(:space, :course => subject)
-    user = Factory(:user)
-    subject.join(user)
-    subject.unjoin(user)
-    subject.users.should_not include(user)
-    space.users.should_not include(user)
+  context "removes a user (unjoin)" do
+    before do
+      @space = Factory(:space, :course => subject)
+      @space_2 = Factory(:space, :course => subject)
+      @sub = Factory(:subject, :space => @space, :owner => subject.owner,
+                     :finalized => true)
+      @sub_2 = Factory(:subject, :space => @space_2, :owner => subject.owner,
+                     :finalized => true)
+      @user = Factory(:user)
+      subject.join @user
+      @sub.enroll @user
+      @sub_2.enroll @user
+      subject.unjoin @user
+    end
+
+    it "removes a user from itself" do
+      subject.users.should_not include(@user)
+    end
+
+    it "removes a user from all spaces" do
+      @space.users.should_not include(@user)
+      @space_2.users.should_not include(@user)
+    end
+
+    it "removes a user from all enrolled subjects" do
+      @sub.members.should_not include(@user)
+      @sub_2.members.should_not include(@user)
+    end
   end
 
   it "verifies if the user is waiting for approval" do

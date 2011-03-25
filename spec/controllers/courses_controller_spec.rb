@@ -326,4 +326,45 @@ describe CoursesController do
       end
     end
   end
+
+  context "when unjoin from a course (POST unjoin)" do
+    before do
+      @owner = Factory(:user)
+
+      @environment = Factory(:environment, :owner => @owner)
+
+      @course = Factory(:course,:environment => @environment, :owner => @owner)
+      @spaces = (1..2).collect { Factory(:space, :course => @course,
+                                         :owner => @owner)}
+      @subjects = []
+      @spaces.each do |s|
+        @subjects << Factory(:subject, :space => s, :owner => @owner,
+                :finalized => true)
+      end
+
+      @user = Factory(:user)
+      @course.join @user
+      @subjects.each { |sub| sub.enroll @user }
+      activate_authlogic
+      UserSession.create @user
+
+      @params = { :locale => 'pt-BR', :environment_id => @environment.id,
+        :id => @course.id }
+      post :unjoin, @params
+    end
+
+    it "assigns course" do
+    end
+
+    it "removes the user from itself" do
+      @course.users.should_not include(@user)
+    end
+    it "removes the user from all spaces" do
+      @spaces.collect { |s| s.users.should_not include(@user) }
+    end
+    it "removes the user from all enrolled subjects" do
+      @subjects.collect { |s| s.members.should_not include(@user) }
+    end
+
+  end
 end
