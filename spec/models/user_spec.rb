@@ -60,6 +60,9 @@ describe User do
   it { should_not allow_mass_assignment_of :sb_posts_count }
   it { should_not allow_mass_assignment_of :sb_last_seen_at }
 
+  # UserCourseAsssociation with invited state (Course invitations)
+  it { should have_many :course_invitations }
+
   [:first_name, :last_name].each do |attr|
     it { should validate_presence_of attr}
   end

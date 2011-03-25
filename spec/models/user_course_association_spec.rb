@@ -121,4 +121,14 @@ describe UserCourseAssociation do
         recent.should == [@uca, assoc2, assoc3]
     end
   end
+
+  context "when there are invitations (state is invted)" do
+    before do
+      subject.invite!
+    end
+  
+    it "should return true" do
+      UserCourseAssociation.has_invitation_for?(subject.user).should be_true
+    end
+  end
 end

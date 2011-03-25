@@ -93,6 +93,8 @@ class User < ActiveRecord::Base
 
   has_many :plans
 
+  has_many :course_invitations, :class_name => "UserCourseAssociation",
+    :conditions => ["user_id = ? AND state LIKE 'invited'", self]
 
   # Named scopes
   named_scope :recent, :order => 'users.created_at DESC'
@@ -815,6 +817,11 @@ class User < ActiveRecord::Base
     new_password = ""
     1.upto(len) { |i| new_password << chars[rand(chars.size-1)] }
     return new_password
+  end
+
+  # True se o usuário possui convite
+  def has_course_invitation?(course = nil)
+    UserCourseAssociation.has_invitation_for?(self, course)
   end
 
 end
