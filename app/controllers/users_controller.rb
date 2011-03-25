@@ -398,7 +398,7 @@ class UsersController < BaseController
         UserSession.find.destroy
       end
 
-      redirect_to login_url
+      redirect_to home_path
       flash[:info] = :your_password_has_been_reset_and_emailed_to_you.l
     else
       flash[:error] = :sorry_we_dont_recognize_that_email_address.l
@@ -409,7 +409,7 @@ class UsersController < BaseController
     return unless request.post?
     if @user = User.find_by_email(params[:email])
       UserNotifier.deliver_forgot_username(@user)
-      redirect_to login_url
+      redirect_to home_path
       flash[:info] = :your_username_was_emailed_to_you.l
     else
       flash[:error] = :sorry_we_dont_recognize_that_email_address.l
