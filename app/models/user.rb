@@ -59,7 +59,8 @@ class User < ActiveRecord::Base
   belongs_to  :state
   belongs_to  :country
   has_many :recently_active_friends, :through => :friendships, :source => :friend,
-    :order => "users.last_request_at ASC", :limit => 6,
+    :order => "users.last_request_at ASC", :limit => 9,
+    :conditions => "friendships.status = 'accepted'",
     :select => ["users.id, users.first_name, users.last_name, users.login, " + \
                 "users.avatar_file_name, users.avatar_file_size, " + \
                 "users.avatar_content_type, users.login_slug"]
