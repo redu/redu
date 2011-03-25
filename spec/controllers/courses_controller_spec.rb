@@ -45,7 +45,42 @@ describe CoursesController do
     end
 
   end
+  context "when updating a couse" do
+    context "updating a subscription_type to 1" do
+      before do
+        @user = Factory(:user)
+        activate_authlogic
+        UserSession.create @user
 
+        @environment = Factory(:environment, :owner => @user)
+
+        @course = Factory(:course,:environment => @environment, :owner => @user,
+                          :subscription_type => 2)
+        @users = 5.times.inject([]) { |res, i| res << Factory(:user) }
+        @course.join(@users[0])
+        @course.join(@users[1])
+        @course.join(@users[2])
+        @course.join(@users[3])
+        @course.join(@users[4])
+
+        UserSession.create @user
+        @params = {:course => { :subscription_type => "1" },
+          :id => @course.id,:environment_id => @course.environment.id,
+          :locale => "pt-BR"}
+        post :update, @params
+      end
+
+      it "should update a course" do
+        assigns[:course].should_not be_nil
+        assigns[:course].should be_valid
+      end
+
+      it "should create associations with all members that are waiting" do
+        @course.approved_users.to_set.should == (@users << @user).to_set
+        @course.pending_users.should == []
+      end
+    end
+  end
   context "when viewing existent courses list" do
     before do
       @courses = (1..10).collect { Factory(:course) }

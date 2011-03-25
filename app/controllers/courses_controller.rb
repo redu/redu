@@ -49,7 +49,11 @@ class CoursesController < BaseController
     respond_to do |format|
       if @course.update_attributes(params[:course])
         if params[:course][:subscription_type].eql? "1" # Entrada de membros passou a ser livre, aprovar todos os membros pendentes
-          UserCourseAssociation.update_all("state = 'approved'", ["course_id = ? AND state = 'waiting'", @course.id])
+          @course.user_course_associations.all(:conditions => { :state => 'waiting'}).each do |ass|
+            ass.approve!
+            @course.create_hierarchy_associations(ass.user, ass.role)
+          end
+
         end
 
         flash[:notice] = 'O curso foi editado.'
@@ -213,33 +217,21 @@ class CoursesController < BaseController
       rejected = params[:member].reject{|k,v| v == 'approve'}
 
       approved.keys.each do |user_id|
-        UserCourseAssociation.update_all("state = 'approved'", :user_id => user_id,  :course_id => @course.id)
-      end
-
-      rejected.keys.each do |user_id|
-        UserCourseAssociation.update_all("state = 'rejected'", :user_id => user_id,  :course_id => @course.id)
-      end
-
-      @approved_members = User.all(:conditions => ["id IN (?)", approved.keys]) unless approved.empty?
-      @rejected_members = User.all(:conditions => ["id IN (?)", rejected.keys]) unless rejected.empty?
-
-      # Cria as associações no Environment do Course e em todos os seus Spaces.
-      if @approved_members
-        @approved_members.each do |member|
-          UserEnvironmentAssociation.create(:user_id => member.id, :environment_id => @course.environment.id,
-                                            :role_id => Role[:member].id)
-          @course.spaces.each do |space|
-            UserSpaceAssociation.create(:user_id => member.id, :space_id => space.id,
-                                        :role_id => Role[:member].id, :status => "approved") #FIXME tirar status quando remover moderacao de space
-          end
-
-          UserNotifier.deliver_approve_membership(member, @course) # TODO fazer isso em batch
+        @course.user_course_associations.all(:conditions => {
+          :user_id => user_id}).each do |ass|
+          ass.approve!
+          @course.create_hierarchy_associations(ass.user, ass.role)
+          # TODO fazer isso em batch
+          UserNotifier.deliver_approve_membership(member, @course)
         end
       end
 
-      if @rejected_members
-        @rejected_members.each do |member|
-          UserNotifier.deliver_reject_membership(member, @course) #TODO fazer isso em batch
+      rejected.keys.each do |user_id|
+        @course.user_course_association.all(:conditions => {
+        :user_id => user_id}).each do |ass|
+          ass.reject!
+          #TODO fazer isso em batch
+          UserNotifier.deliver_reject_membership(member, @course)
         end
       end
 
@@ -251,7 +243,8 @@ class CoursesController < BaseController
 
   # Associa um usuário a um Course (Ação de participar).
   def join
-    association = UserCourseAssociation.create(:user_id => current_user.id, :course_id => @course.id,
+    association = UserCourseAssociation.create(:user_id => current_user.id,
+                                               :course_id => @course.id,
                                                :role_id => Role[:member].id)
 
     if @course.subscription_type.eql? 1 # Todos podem participar, sem moderação

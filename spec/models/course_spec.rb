@@ -322,6 +322,7 @@ describe Course do
     subject.join(user)
     subject.users.should include(user)
     space.users.should include(user)
+    subject.environment.users.should include(user)
   end
 
   it "removes a user (unjoin)" do

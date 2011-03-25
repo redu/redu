@@ -12,8 +12,7 @@
         :method => :post, :class => 'join important'%>
     <% end %>
   <% else %>
-    <% if @course.waiting_approval?(current_user) or
-      @course.rejected_participation?(current_user) %>
+    <% if @course.waiting_approval?(current_user) %>
       <span class="join waiting">Aguardando moderação</span>
     <% else %>
       <%= link_to 'Abandonar curso',
@@ -40,8 +39,8 @@
   <ul class="statistics grid_3 omega">
     <li>
       <em class="icon icon-redu_r8_c319_s1">Membros:</em>
-        <span><%= course.approved_users.length %></span>
-        <span><%= "(+#{course.new_members.length})" if course.new_members.count > 0 %></span>
+      <span><%= course.approved_users.length %></span>
+      <span><%= "(+#{course.new_members.length})" if course.new_members.count > 0 %></span>
     </li>
     <li>
       <em class="icon icon-redu_r8_c207_s1">Professores:</em>
