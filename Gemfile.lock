@@ -102,11 +102,11 @@ GEM
     shoulda (2.11.3)
     shuber-sortable (1.0.6)
     validatable (1.6.7)
-    whenever (0.6.6)
+    whenever (0.6.7)
       aaronh-chronic (>= 0.3.9)
       activesupport (>= 2.3.4)
     will_paginate (2.3.15)
-    xml-simple (1.0.14)
+    xml-simple (1.0.15)
     zencoder (2.3.1)
       activesupport
       i18n

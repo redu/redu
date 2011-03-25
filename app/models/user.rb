@@ -779,6 +779,11 @@ class User < ActiveRecord::Base
     (done/total*100).round
   end
 
+  # True se o usuário possui convite
+  def has_course_invitation?(course = nil)
+    UserCourseAssociation.has_invitation_for?(self, course)
+  end
+
   protected
   def activate_before_save
     self.activated_at = Time.now.utc
@@ -817,11 +822,6 @@ class User < ActiveRecord::Base
     new_password = ""
     1.upto(len) { |i| new_password << chars[rand(chars.size-1)] }
     return new_password
-  end
-
-  # True se o usuário possui convite
-  def has_course_invitation?(course = nil)
-    UserCourseAssociation.has_invitation_for?(self, course)
   end
 
 end

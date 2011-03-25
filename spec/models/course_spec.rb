@@ -338,6 +338,7 @@ describe Course do
       subject.join @user
       @sub.enroll @user
       @sub_2.enroll @user
+      subject.reload
       subject.unjoin @user
     end
 
@@ -395,5 +396,77 @@ describe Course do
     user.user_space_associations.last.space.should == space
     user.user_environment_associations.last.role.should == Role[:tutor]
     user.user_space_associations.last.role.should == Role[:tutor]
+  end
+
+  context "when inviting an user" do
+
+    context "when the user is not associated at all" do
+      before do
+        @incoming_user = Factory(:user)
+        subject.invite(@incoming_user)
+      end
+
+      it "creates an association" do
+        assoc = subject.user_course_associations.last
+        assoc.user.should == @incoming_user
+      end
+
+      it "invites the user" do
+        assoc = subject.user_course_associations.last
+        assoc.should be_invited
+      end
+    end
+
+    context "when the user is in moderation" do
+      before do
+        subject.update_attribute(:subscription_type, 0)
+
+        @incoming_user = Factory(:user)
+        subject.join(@incoming_user)
+      end
+
+      it "does not create a new association" do
+        expect {
+          subject.invite(@incoming_user)
+        }.should_not change(UserCourseAssociation, :count)
+      end
+
+      it "changes his state to invited" do
+        expect {
+          subject.invite(@incoming_user)
+        }.should change {
+          @incoming_user.has_course_invitation?(subject)
+        }.to(true)
+      end
+    end
+
+    context "when the user is already invited" do
+      before do
+        @incoming_user = Factory(:user)
+        subject.invite(@incoming_user)
+      end
+
+      it "does not create a new association" do
+        expect {
+          subject.invite(@incoming_user)
+        }.should_not change(UserCourseAssociation, :count)
+      end
+    end
+
+    context "when the user is already approved" do
+      before do
+        @already_member = Factory(:user)
+        subject.update_attribute(:subscription_type, 1)
+        subject.join(@already_member)
+      end
+
+      it "does not change his state" do
+        expect {
+          subject.invite(@already_member)
+        }.should_not change {
+          @already_member.get_association_with(subject).current_state
+        }
+      end
+    end
   end
 end

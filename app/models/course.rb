@@ -214,4 +214,19 @@ class Course < ActiveRecord::Base
     return false if assoc.nil?
     assoc.rejected?
   end
+
+  # Método de alto nível que convida um determinado usuário para o curso.
+  # - Caso o usuário não faça parte do curso uma UCA será criada com o estado
+  #   invited.
+  # - Caso o usuário já faça parte do curso, nada irá acontece
+  # - Caso o usuário esteja na lista de moderação, seu estado será mudado para
+  #   invited
+  # - Caso o usuário já tenha sido convidado e não tenha aceito o convite, um
+  #   novo e-mail será enviado.
+  def invite(user)
+    assoc = self.user_course_associations.create(:user => user)
+    assoc = user.get_association_with(self) if assoc.new_record?
+
+    assoc.invite!
+  end
 end
