@@ -46,7 +46,7 @@ describe CoursesController do
 
   end
   context "when updating a couse" do
-    context "updating a subscription_type to 1" do
+    context "POST update - updating a subscription_type to 1" do
       before do
         @user = Factory(:user)
         activate_authlogic
@@ -81,6 +81,80 @@ describe CoursesController do
       end
     end
   end
+
+  context "when moderating a course" do
+    before do
+      @user = Factory(:user)
+      activate_authlogic
+      UserSession.create @user
+
+      @environment = Factory(:environment, :owner => @user)
+
+      @course = Factory(:course,:environment => @environment, :owner => @user,
+                        :subscription_type => 2)
+      @space = Factory(:space, :course => @course, :owner => @user)
+      @users = 5.times.inject([]) { |res, i| res << Factory(:user) }
+      @course.join(@users[0])
+      @course.join(@users[1])
+      @course.join(@users[2])
+      @course.join(@users[3])
+      @course.join(@users[4])
+
+      UserSession.create @user
+    end
+
+    context "POST - rejecting members" do
+      before do
+        @params = { :member => { @users[1].id.to_s => "reject",
+                                 @users[2].id.to_s => "reject",
+                                 @users[3].id.to_s => "approve"},
+                    :id => @course.id, :environment_id => @environment.id,
+                    :locale => "pt-BR"}
+        post :moderate_members_requests, @params
+      end
+
+      it "should assign course" do
+        assigns[:course].should_not be_nil
+        assigns[:course].should be_valid
+      end
+
+      it "should destroy association" do
+        @users[1].get_association_with(@course).should be_nil
+        @users[2].get_association_with(@course).should be_nil
+        @users[1].get_association_with(@course.environment).should be_nil
+        @users[2].get_association_with(@course.environment).should be_nil
+        @users[1].get_association_with(@space).should be_nil
+        @users[2].get_association_with(@space).should be_nil
+        @course.approved_users.to_set.should == [@user, @users[3]].to_set
+      end
+    end
+
+    context "POST - accepting member" do
+      before do
+        @params = { :member => { @users[1].id.to_s => "approve",
+                                 @users[2].id.to_s => "approve"},
+                    :id => @course.id, :environment_id => @environment.id,
+                    :locale => "pt-BR"}
+        post :moderate_members_requests, @params
+      end
+
+      it "should assign course" do
+        assigns[:course].should_not be_nil
+        assigns[:course].should be_valid
+      end
+
+      it "should approve association" do
+        @course.approved_users.to_set.should == [@users[1], @users[2], @user].to_set
+      end
+
+      it "should create environment and space associations" do
+        @course.environment.users.to_set.should == [@users[1], @users[2], @user].to_set
+        @space.users.to_set.should == [@users[1], @users[2], @user].to_set
+      end
+    end
+
+  end
+
   context "when viewing existent courses list" do
     before do
       @courses = (1..10).collect { Factory(:course) }

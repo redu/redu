@@ -229,9 +229,9 @@ class CoursesController < BaseController
       rejected.keys.each do |user_id|
         @course.user_course_associations.all(:conditions => {
         :user_id => user_id}).each do |ass|
-          ass.reject!
           #TODO fazer isso em batch
           UserNotifier.deliver_reject_membership(ass.user, @course)
+          ass.destroy
         end
       end
 
