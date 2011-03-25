@@ -180,17 +180,18 @@ class Course < ActiveRecord::Base
   end
 
   def create_hierarchy_associations(user, role = Role[:member])
-      # Cria as associações no Environment do Course e em todos os seus Spaces.
-      UserEnvironmentAssociation.create(:user_id => user.id,
-                                        :environment_id => self.environment.id,
-                                        :role_id => role.id)
-      self.spaces.each do |space|
-        #FIXME tirar status quando remover moderacao de space
-        UserSpaceAssociation.create(:user_id => user.id,
-                                    :space_id => space.id,
-                                    :role_id => role.id,
-                                    :status => "approved")
-      end
+    # FIXME mudar estado do user_course_association para approved
+    # Cria as associações no Environment do Course e em todos os seus Spaces.
+    UserEnvironmentAssociation.create(:user_id => user.id,
+                                      :environment_id => self.environment.id,
+                                      :role_id => role.id)
+    self.spaces.each do |space|
+      #FIXME tirar status quando remover moderacao de space
+      UserSpaceAssociation.create(:user_id => user.id,
+                                  :space_id => space.id,
+                                  :role_id => role.id,
+                                  :status => "approved")
+    end
   end
 
   # Cria Quota para o Course

@@ -1,0 +1,8 @@
+Olá, <%= @user.display_name %>,
+
+você foi convidado para participar do curso <%= @course.name %>. Para aceitar o convite, visite sua página inícial clicando no link abaixo:
+
+  <%= home_user_url(@user) %>
+
+Obrigado,
+Equipe <%= AppConfig.community_name %>

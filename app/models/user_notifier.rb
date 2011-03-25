@@ -308,6 +308,15 @@ class UserNotifier < ActionMailer::Base
     @body[:new_plan] = new_plan
   end
 
+  def course_invitation_notification(user, course)
+    setup_sender_info
+    
+    @recipients = "#{AppConfig.contact_emails}"
+    @subject    = "Você foi convidado para um curso no Redu"
+    @body[:user] = user
+    @body[:course] = course
+  end
+
   protected
   def setup_email(user)
     @recipients  = "#{user.email}"

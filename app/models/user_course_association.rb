@@ -26,16 +26,29 @@ class UserCourseAssociation < ActiveRecord::Base
   # Máquina de estados para moderação das dos usuários nos courses.
   acts_as_state_machine :initial => :waiting
   state :waiting
-  state :approved
+  state :invited, :enter => :send_course_invitation_notification
+  state :approved, :enter => :create_hierarchy_associations
   state :rejected
   state :failed
+
+  event :invite do
+    transitions :from => :waiting, :to => :invited
+  end
 
   event :approve do
     transitions :from => :waiting, :to => :approved
   end
 
+  event :accept do
+    transitions :from => :invited, :to => :approved
+  end
+
   event :reject do
     transitions :from => :waiting, :to => :rejected
+  end
+
+  event :deny do
+    transitions :from => :invited, :to => :rejected
   end
 
   event :fail do
@@ -44,4 +57,13 @@ class UserCourseAssociation < ActiveRecord::Base
 
   validates_uniqueness_of :user_id, :scope => :course_id
 
+  protected
+
+  def send_course_invitation_notification
+    UserNotifier.deliver_course_invitation_notification(self.user, self.course)
+  end
+
+  def create_hierarchy_associations
+    self.course.create_hierarchy_associations(self.user)
+  end
 end
