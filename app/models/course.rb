@@ -228,5 +228,6 @@ class Course < ActiveRecord::Base
     assoc = user.get_association_with(self) if assoc.new_record?
 
     assoc.invite!
+    assoc
   end
 end

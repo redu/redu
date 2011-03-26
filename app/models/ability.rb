@@ -95,7 +95,7 @@ class Ability
 
     # Usuários logados podem
     unless user.nil?
-      
+
       # Ter acesso ao 'Ensine', só usuários logados
       can :teach_index, :base
 
@@ -108,11 +108,16 @@ class Ability
       can :read, :all do |object|
         user.can_read? object
       end
-      
+
       can :preview, [Course, Environment], :published => true
 
       can :create, Environment
       can :join, Course
+
+      can [:accept, :deny], Course do |course|
+        assoc = user.get_association_with(course)
+        !assoc.nil? and assoc.current_state == :invited
+      end
 
       # User
       can :read, User

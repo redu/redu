@@ -45,6 +45,7 @@ describe CoursesController do
     end
 
   end
+
   context "when updating a couse" do
     context "POST update - updating a subscription_type to 1" do
       before do
@@ -366,5 +367,52 @@ describe CoursesController do
       @subjects.collect { |s| s.members.should_not include(@user) }
     end
 
+  end
+
+  context "when responding a course invitation" do
+    before do
+      @owner = Factory(:user)
+      @environment = Factory(:environment, :owner => @owner)
+      @course = Factory(:course,:environment => @environment, :owner => @owner)
+      @invited_user = Factory(:user)
+      activate_authlogic
+      UserSession.create @invited_user
+
+      @course.invite @invited_user
+      @params = { :locale => 'pt-BR', :environment_id => @environment.id,
+        :id => @course.id }
+    end
+
+    context "and accepting" do
+      before do
+        post :accept, @params
+      end
+
+      it "assigns course" do
+        assigns[:course].should_not be_nil
+      end
+
+      it "accepts the invitation" do
+        @invited_user.get_association_with(@course).current_state.
+          should == :approved
+        @course.approved_users.should include(@invited_user)
+      end
+    end
+
+    context "and denying" do
+      before do
+        post :deny, @params
+      end
+
+      it "assigns course" do
+        assigns[:course].should_not be_nil
+      end
+
+      it "denies the invitation" do
+        @invited_user.get_association_with(@course).current_state.
+          should == :rejected
+        @course.approved_users.should_not include(@invited_user)
+      end
+    end
   end
 end

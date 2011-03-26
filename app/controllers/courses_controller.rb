@@ -376,4 +376,16 @@ class CoursesController < BaseController
       format.js { render :template => 'courses/new/users' }
     end
   end
+
+  # Aceitar convite para o Course
+  def accept
+    assoc = current_user.get_association_with @course
+    assoc.accept!
+  end
+
+  # Negar convite para o Course
+  def deny
+    assoc = current_user.get_association_with @course
+    assoc.deny!
+  end
 end

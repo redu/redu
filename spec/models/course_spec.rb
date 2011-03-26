@@ -400,6 +400,12 @@ describe Course do
 
   context "when inviting an user" do
 
+    it "returns the association" do
+      @incoming_user = Factory(:user)
+      assoc = subject.invite(@incoming_user)
+      assoc.should == @incoming_user.get_association_with(subject)
+    end
+
     context "when the user is not associated at all" do
       before do
         @incoming_user = Factory(:user)

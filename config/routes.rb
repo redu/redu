@@ -241,7 +241,9 @@ ActionController::Routing::Routes.draw do |map|
         :destroy_members => :post,
         :search_users_admin => :post,
         :moderate_members_requests => :post,
-        :users => :get
+        :users => :get,
+        :accept => :post,
+        :deny => :post
       }
       environment.resources :bulletins,
         :member => { :vote => [:post, :get] }
