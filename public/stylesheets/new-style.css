@@ -502,6 +502,25 @@
   background: url("../images/new/icon-bulletin-gray_32_32.png") no-repeat 20px center;
 }
 
+#subject-blocked {
+  height: 200px;
+}
+
+#subject-blocked .icon-blocked {
+  background: url("../images/new/icon-blocked-gray_48_48.png") no-repeat;
+  width: 48px;
+  height: 75px;
+  margin: 50px 343px 0 343px;
+  display: block;
+}
+
+#subject-blocked .message {
+  margin: 0 170px;
+  display: block;
+  font-height: 0.9em;
+  color: #b3b2b3;
+}
+
 #subject-resources .header,
 #resource-new .header {
   background: url("../images/new/icon-resource-black_32_32.png") no-repeat 20px center;

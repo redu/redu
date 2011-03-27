@@ -1,10 +1,10 @@
 <% content_for :footer_scripts_and_styles do %>
   <script type="text/javascript">
     function showLoadingUsers(){
-            document.getElementById('loading_bar').style.display = 'block';
-            $('user_list_table').remove();
+      document.getElementById('loading_bar').style.display = 'block';
+      $('user_list_table').remove();
     }
-  </script>
+</script>
 <% end %>
 <%= render :partial => 'courses/new/sidebar' %>
 <div class="main grid_12 omega big-col">
@@ -67,4 +67,5 @@
     <% end %>
     <%= will_paginate  @memberships, :renderer => EndlessRenderer %>
   <% end %>
+</div>
 </div>

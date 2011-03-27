@@ -39,7 +39,6 @@ class Ability
     alias_action :ical, :past, :notify, :day, :to => :read
 
     # Status
-    alias_action :respond, :to => :read
 
     # User
     alias_action :learning, :teaching,
@@ -140,7 +139,7 @@ class Ability
         myfile.can_upload_file?(myfile.folder.space)
       end
 
-      # Plan (payment gatewat)
+      # Plan (payment gateway)
       can :read, :success
 
       # Admin do environment ou teacher, caso o space não tenha owner
@@ -149,8 +148,9 @@ class Ability
           (space.owner.nil? && user.teacher?(space))
       end
 
-      # Caso seja o Status de usuário, apenas ele mesmo pode criá-lo.
-      can :create, Status do |status|
+      # Caso seja o Status de usuário, apenas ele mesmo ou seus amigos
+      # podem criá-lo/respondê-lo.
+      can [:create, :respond], Status do |status|
         ((status.statusable.class.to_s.eql? 'User') && \
          (user == status.statusable || user.friends?(status.statusable))) ||
           # Caso geral (Spaces, Subjects, etc.)
@@ -158,5 +158,4 @@ class Ability
       end
     end
   end
-
 end
