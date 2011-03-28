@@ -415,4 +415,33 @@ describe CoursesController do
       end
     end
   end
+
+  context "when inviting users (POST invite_members)" do
+    before do
+      @users = 3.times.inject([]) do |acc,e|
+        acc << Factory(:user)
+      end
+
+      @environment = Factory(:environment)
+      @course = Factory(:course, :environment => @environment,
+                        :owner => @environment.owner)
+
+      activate_authlogic
+      UserSession.create @course.owner
+
+      @params = { :locale => 'pt-BR', :environment_id => @course.environment.id,
+        :id => @course.id, :users => @users.collect { |u| u.id }.join(",") }
+
+    end
+
+    it "creates invitations" do
+      post :invite_members, @params
+
+      @users.each do |u|
+        @course.user_course_associations.reload
+        u.reload
+        u.has_course_invitation?(@course).should be_true
+      end
+    end
+  end
 end

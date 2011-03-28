@@ -542,6 +542,22 @@ class UsersController < BaseController
 
   end
 
+  # Dada uma palavra-chave retorna json com usuários que possuem aquela palavra.
+  def auto_complete
+    if params[:term]
+      @users = User.with_keyword(params[:term])
+      @users = @users.map do |u|
+        { :id => u.id, :label => u.display_name, :value => u.display_name, :avatar_32 => u.avatar.url(:thumb_32) }
+      end
+    end
+
+    respond_to do |format|
+      format.js do
+        render :json => @users
+      end
+    end
+  end
+
 
   protected
   def setup_metro_areas_for_cloud

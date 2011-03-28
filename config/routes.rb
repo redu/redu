@@ -155,7 +155,6 @@ ActionController::Routing::Routes.draw do |map|
 
   # USERS
   map.resources :users, :member => {
-  #map.resources :users, :member_path => '/:id', :nested_member_path => '/:user_id', :member => {
     :annotations => :get,
     :activity_xml => :get,
     :logs => :get,
@@ -179,7 +178,7 @@ ActionController::Routing::Routes.draw do |map|
     :home => :get,
     :mural => :get,
     :account => :get
-  } do |user|
+  }, :collection => { :auto_complete => :get } do |user|
     user.resources :friendships,:only => [:index, :create, :destroy],
       :member => { :accept => :post, :decline => :post },
       :collection => { :pending => :get }
@@ -233,6 +232,9 @@ ActionController::Routing::Routes.draw do |map|
         :preview => :get,
         :admin_spaces => :get,
         :admin_members_requests => :get,
+        :admin_invitations => :get,
+        :invite_members => :post,
+        :accept => :post,
         :join => :post,
         :unjoin => :post,
         :publish => :get,

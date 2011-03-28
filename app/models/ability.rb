@@ -19,7 +19,7 @@ class Ability
 
     # Course
     alias_action :admin_spaces, :admin_members_request,
-      :moderate_members_requests, :to => :manage
+      :moderate_members_requests, :invite_members, :to => :manage
     alias_action :unjoin, :to => :read
 
     # Space

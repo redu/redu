@@ -247,6 +247,15 @@ describe User do
 
       subject.course_invitations.should == [assoc, assoc2]
     end
+
+    it "retrieves a user by name, login or email" do
+      users = []
+      users << Factory(:user, :first_name => "Guilherme")
+      users << Factory(:user, :login => "guilherme")
+      users << Factory(:user, :email => "guiocavalcanti@redu.com.br")
+
+      User.with_keyword("guilherme").to_set.should == [users[0], users[1]].to_set
+    end
   end
 
   context "callbacks" do

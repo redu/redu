@@ -406,4 +406,30 @@ class CoursesController < BaseController
       end
     end
   end
+
+  def invite_members
+    @users = params[:users] || ""
+    @users = @users.split(",").uniq.compact
+    @users = User.find(@users)
+
+    @users.each do |user|
+      @course.invite(user)
+    end
+
+    respond_to do |format|
+      format.html do
+        flash[:notice] = "Os usuários foram convidados via e-mail."
+        redirect_to admin_invitations_environment_course_path(@environment, @course)
+      end
+    end
+  end
+
+  def admin_invitations
+    respond_to do |format|
+      format.html do
+        render :template => 'courses/new/admin_invitations', :layout => 'new/application'
+      end
+    end
+  end
+
 end

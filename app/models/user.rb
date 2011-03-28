@@ -111,6 +111,14 @@ class User < ActiveRecord::Base
   named_scope :n_recent, lambda { |limit|
     {:order => 'users.last_request_at DESC', :limit => limit }
   }
+  named_scope :with_keyword, lambda { |keyword|
+    {:conditions => ["LOWER(login) LIKE :keyword OR " + \
+      "LOWER(first_name) LIKE :keyword OR " + \
+      "LOWER(last_name) LIKE :keyword OR " +\
+      "LOWER(email) LIKE :keyword", { :keyword => "%#{keyword.downcase}%" }],
+     :limit => 10,
+     :select => "id, first_name, last_name, login, email, avatar_file_name"}
+  }
 
   # Accessors
   attr_protected :admin, :featured, :role_id, :activation_code,

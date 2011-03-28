@@ -40,3 +40,5 @@ pt-BR:
     pending: "pendentes"
     invoices: "faturas"
     plans: "planos"
+    admin_invitations: "administrar_convites"
+    invite_members: "convidar_membros"
