@@ -224,7 +224,8 @@ class Course < ActiveRecord::Base
   # - Caso o usuário já tenha sido convidado e não tenha aceito o convite, um
   #   novo e-mail será enviado.
   def invite(user)
-    assoc = self.user_course_associations.create(:user => user)
+    assoc = self.user_course_associations.create(:user => user,
+                                                 :role => Role[:member])
     assoc = user.get_association_with(self) if assoc.new_record?
 
     assoc.invite!

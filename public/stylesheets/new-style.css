@@ -1471,6 +1471,7 @@
 .friends-requisitions li:hover,
 .courses-requisitions li:hover {
   background-color: #EFF7E6;
+  border-color: #EFF7E6;
 }
 
 .friends-requisitions li > span,
