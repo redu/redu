@@ -94,7 +94,7 @@ class User < ActiveRecord::Base
   has_many :plans
 
   has_many :course_invitations, :class_name => "UserCourseAssociation",
-    :conditions => ["user_id = ? AND state LIKE 'invited'", self]
+    :conditions => ["state LIKE 'invited'"]
 
   # Named scopes
   named_scope :recent, :order => 'users.created_at DESC'

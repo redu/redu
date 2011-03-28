@@ -235,6 +235,18 @@ describe User do
       User.find_by_login_or_email(subject.login).should == subject
       User.find_by_login_or_email(subject.email).should == subject
     end
+
+    it "retrieves course invitations" do
+      courses = (0..3).collect { Factory(:course) }
+      courses[0].subscription_type = 2
+      courses[0].join subject
+      courses[1].subscription_type = 2
+      courses[1].join subject
+      assoc = courses[2].invite subject
+      assoc2 = courses[3].invite subject
+
+      subject.course_invitations.should == [assoc, assoc2]
+    end
   end
 
   context "callbacks" do

@@ -12,6 +12,12 @@
         :collection => @friends_requisitions, :as => :friend %>
     </ul>
   <% end %>
+  <% if current_user.has_course_invitation? %>
+    <ul class="courses-requisitions">
+      <%= render :partial => 'courses/new/item_invitation',
+        :collection => @course_invitations %>
+    </ul>
+  <% end %>
   <%= render :partial => 'statuses/new/create_status',
     :locals => { :statusable => current_user } %>
   <div id="statuses" class="statuses">

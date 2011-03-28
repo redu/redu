@@ -1442,7 +1442,8 @@
   height: 10px;
 }
 
-.friends-requisitions {
+.friends-requisitions,
+.courses-requisitions {
   background: url("../images/new/dots.png") repeat-x bottom;
   padding: 20px 0 20px 0;
 }
@@ -1457,30 +1458,49 @@
   border-radius: 5px;
 }
 
+.courses-requisitions li {
+  border: solid 1px #61A080;
+  padding: 10px;
+  margin-bottom: 10px;
+
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
 .friends-requisitions li:hover {
   background-color: #EFF7E6;
 }
 
-.friends-requisitions li > span {
+.courses-requisitions li:hover {
+  background-color: #AED584;
+}
+
+.friends-requisitions li > span,
+.courses-requisitions li > span {
   color: #6D6E6F;
   display: block;
   font-size:0.9em;
 }
 
-.friends-requisitions li .friend {
+.friends-requisitions li .friend,
+.courses-requisitions li .course {
   margin-top: 10px;
 }
 
-.friends-requisitions li .friend .friend-details {
+.friends-requisitions li .friend .friend-details,
+.courses-requisitions li .course .course-details {
   float: right;
 }
 
-.friends-requisitions li .friend .friend-details .name {
+.friends-requisitions li .friend .friend-details .name,
+.courses-requisitions li .course .course-details .name {
   display: block;
   font-weight: bold;
 }
 
-.friends-requisitions li .friend .friend-details .counter {
+.friends-requisitions li .friend .friend-details .counter,
+.courses-requisitions li .course .course-details .counter {
   color: #B2B2B2;
   font-style: oblique;
   font-size: 0.9em;
@@ -1488,7 +1508,8 @@
 
 
 /* TODO Remover quando colocar o ícone de accept */
-.friends-requisitions li .actions .accept-friend {
+.friends-requisitions li .actions .accept-friend,
+.courses-requisitions li .actions .accept-invitation {
   border: 1px solid #61BE80;
   font-family: Copse, Arial, sans-serif;
   color: white;
@@ -1504,7 +1525,8 @@
   background: -moz-linear-gradient(top,  #AED584,  #61BE80); /* Firefox 3.6+ */
 }
 
-.friends-requisitions li .actions {
+.friends-requisitions li .actions,
+.courses-requisitions li .actions {
   float: right;
   margin-top: 10px;
 }
