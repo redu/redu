@@ -198,8 +198,9 @@ class Seminar < ActiveRecord::Base
     self.video? or self.audio?
   end
 
-  # Verificar se o curso tem espaço suficiente para o arquivo
+  # Verifica se o curso tem espaço suficiente para o arquivo
   def can_upload_multimedia?(lecture)
+    return false if lecture.subject.space.course.plan.state != "active"
     plan = lecture.subject.space.course.plan
     quota = lecture.subject.space.course.quota
     if quota.multimedia > plan.video_storage_limit

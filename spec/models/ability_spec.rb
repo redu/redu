@@ -176,6 +176,30 @@ describe Ability do
         @ability.should_not be_able_to(:destroy, course)
       end
 
+      context "if plan is blocked" do
+        before do
+          @course = Factory(:course,:owner => @env_admin,
+                            :environment => @environment)
+          @plan = Factory(:plan, :billable => @course)
+          @plan.block!
+          @space = Factory(:space, :owner => @env_admin, :course => @course)
+        end
+
+        it "can NOT upload document" do
+          sub = Factory(:subject, :owner => @env_admin, :space => @space)
+          document = Factory(:document)
+          lecture = Factory(:lecture, :owner => @env_admin,
+                            :subject => sub,
+                            :lectureable => document)
+          @ability.should_not be_able_to(:upload_document, document)
+        end
+
+        # Need Seminar factory
+        it "can NOT upload multimedia"
+        # Need Myfile factory
+        it "can NOT upload file"
+      end
+
       it "creates a bulletin"
       it "destroy a bulletin when he is a environment admin"
 
