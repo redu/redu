@@ -1459,7 +1459,7 @@
 }
 
 .courses-requisitions li {
-  border: solid 1px #61A080;
+  border: solid 1px #61BE80;
   padding: 10px;
   margin-bottom: 10px;
 
@@ -1468,12 +1468,9 @@
   border-radius: 5px;
 }
 
-.friends-requisitions li:hover {
-  background-color: #EFF7E6;
-}
-
+.friends-requisitions li:hover,
 .courses-requisitions li:hover {
-  background-color: #AED584;
+  background-color: #EFF7E6;
 }
 
 .friends-requisitions li > span,
@@ -1531,6 +1528,10 @@
   margin-top: 10px;
 }
 
+.friends-requisitions li .actions form,
+.courses-requisitions li .actions form {
+  display: inline;
+}
 #space-new .common .tos {
   padding: 30px 160px;
 }

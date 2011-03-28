@@ -16,17 +16,19 @@
   <div class="actions">
     <%= image_tag 'spinner.gif', :style => 'display: none;',
       :id => "spinner-#{item_invitation.id}" %>
-    <%= link_to_remote 'Recusar',
-      :url => deny_environment_course_path(item_invitation.course.environment,
-                                          item_invitation.course),
+    <% form_remote_tag :url => deny_environment_course_path(
+                                 item_invitation.course.environment,
+                                 item_invitation.course),
       :loading => "$('#spinner-#{item_invitation.id}').show();",
-      :success => "$('#requisition-#{item_invitation.id}').slideToggle();",
-      :html => { :class => 'remove' }%>
-    <%= link_to_remote 'Aceitar',
-      :url => accept_environment_course_path(item_invitation.course.environment,
-                                          item_invitation.course),
+      :success => "$('#requisition-#{item_invitation.id}').slideToggle();" do %>
+      <%= submit_tag "Recusar", :class => 'remove' %>
+    <% end %>
+    <% form_remote_tag :url => accept_environment_course_path(
+                                 item_invitation.course.environment,
+                                 item_invitation.course),
       :loading => "$('#spinner-#{item_invitation.id}').show();",
-      :success => "$('#requisition-#{item_invitation.id}').slideToggle();",
-      :html => { :class => 'accept-invitation' }%>
+      :success => "$('#requisition-#{item_invitation.id}').slideToggle();" do %>
+      <%= submit_tag "Aceitar", :class => 'accept-invitation' %>
+    <% end %>
   </div>
 </li>

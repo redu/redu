@@ -381,11 +381,29 @@ class CoursesController < BaseController
   def accept
     assoc = current_user.get_association_with @course
     assoc.accept!
+
+    respond_to do |format|
+      format.html do
+        redirect_to home_user_path(current_user)
+      end
+      format.js do
+        render :nothing => true
+      end
+    end
   end
 
   # Negar convite para o Course
   def deny
     assoc = current_user.get_association_with @course
     assoc.deny!
+
+    respond_to do |format|
+      format.html do
+        redirect_to home_user_path(current_user)
+      end
+      format.js do
+        render :nothing => true
+      end
+    end
   end
 end
