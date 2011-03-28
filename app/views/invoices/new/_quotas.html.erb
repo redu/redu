@@ -1,0 +1,44 @@
+<ul class="quotas clearfix">
+      <li class="clearfix">
+        <div class="meta">
+          <span class="label">membros:</span>
+          <span class="numeric">
+            <%= plan.billable.users.count %>/
+            <%= plan.members_limit %>
+          </span>
+        </div>
+        <div class="progress">
+          <div class="completed" style="width: <%= quota_members %>%;">
+            <span><%= quota_members %>%</span>
+          </div>
+        </div>
+      </li>
+      <li class="clearfix">
+        <div class="meta">
+          <span class="label">documentos:</span>
+          <span class="numeric">
+            <%= number_to_human_size(quota.files, :precision => 2) %>/
+            <%= number_to_human_size(plan.file_storage_limit, :precision => 2) %>
+          </span>
+        </div>
+        <div class="progress">
+          <div class="completed" style="width: <%= quota_file %>%;">
+            <span><%= quota_file %>%</span>
+          </div>
+        </div>
+      </li>
+      <li class="clearfix">
+        <div class="meta">
+          <span class="label">vídeos:</span>
+          <span class="numeric">
+            <%= number_to_human_size(quota.multimedia, :precision => 2) %>/
+            <%= number_to_human_size(plan.video_storage_limit, :precision => 2) %>
+          </span>
+        </div>
+        <div class="progress">
+          <div class="completed" style="width: <%= quota_multimedia %>%;">
+            <span><%= quota_multimedia %>%</span>
+          </div>
+        </div>
+      </li>
+    </ul>

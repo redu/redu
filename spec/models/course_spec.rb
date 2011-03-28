@@ -396,4 +396,32 @@ describe Course do
     user.user_environment_associations.last.role.should == Role[:tutor]
     user.user_space_associations.last.role.should == Role[:tutor]
   end
+  context "Quotas" do
+    before do
+      users = 4.times.inject([]) { |res, i| res << Factory(:user) }
+
+      Factory(:plan, :billable => subject, :user => subject.owner,
+              :members_limit => 10)
+      subject.join(users[0], Role[:environment_admin])
+      subject.join(users[1], Role[:environment_admin])
+      subject.join(users[2], Role[:teacher])
+      subject.join(users[3], Role[:tutor])
+    end
+    
+    it "retrieve a percentage of quota file" do
+      subject.quota.files = 512
+      subject.quota.save
+      subject.percentage_quota_file.should == 50
+    end
+
+    it "retrieve a percentage of quota multimedia" do
+      subject.quota.multimedia = 512
+      subject.quota.save
+      subject.percentage_quota_multimedia.should == 50
+    end  
+
+    it "retrieve a percentage of a members" do
+      subject.percentage_quota_members == 50
+    end
+  end
 end

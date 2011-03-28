@@ -213,4 +213,27 @@ class Course < ActiveRecord::Base
     return false if assoc.nil?
     assoc.rejected?
   end
+ 
+  # Retorna o percentual de espaço ocupado por files
+  def percentage_quota_file
+    if self.quota.files >= self.plan.file_storage_limit
+      100
+    else
+      (self.quota.files * 100.0) / self.plan.file_storage_limit
+    end
+  end
+
+  # Retorna o percentual de espaço ocupado por arquivos multimedia
+  def percentage_quota_multimedia
+    if self.quota.multimedia >= self.plan.video_storage_limit
+      100
+    else
+      ( self.quota.multimedia * 100.0 ) / self.plan.video_storage_limit
+    end
+  end
+  
+  # Retorna o percentual de membros do curso
+  def percentage_quota_members
+    ( self.users.count * 100.0 )/ self.plan.members_limit
+  end
 end
