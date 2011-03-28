@@ -27,6 +27,7 @@ class UserCourseAssociation < ActiveRecord::Base
   acts_as_state_machine :initial => :waiting
   state :waiting
   state :invited, :enter => :send_course_invitation_notification
+  # create_hierarchy_associations só é achamado no caso de convites
   state :approved, :enter => :create_hierarchy_associations
   state :rejected
   state :failed
@@ -73,6 +74,6 @@ class UserCourseAssociation < ActiveRecord::Base
   end
 
   def create_hierarchy_associations
-    self.course.create_hierarchy_associations(self.user)
+    self.course.create_hierarchy_associations(self.user) if self.invited?
   end
 end

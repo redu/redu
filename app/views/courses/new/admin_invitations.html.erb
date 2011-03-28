@@ -1,0 +1,110 @@
+<% content_for :header_scripts_and_styles do %>
+  <%=  javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.11/jquery-ui.min.js" %>
+  <script type="text/javascript">
+    var Invitations = {
+      resetInput: function(){
+        $("#name").val("").attr("user-id", "");
+        $("#name").change();
+      },
+      exists: function(id){
+        return $(".holder li[rel=" + id + "]").length > 0;
+      },
+      ids: function(){
+        return $.map($(".holder li"), function(el, i){
+          return $(el).attr("rel");
+        });
+      }
+    };
+
+    jQuery(function(){
+    var cache = {}, lastXhr;
+
+
+      $("#name").autocomplete({
+        source: function( request, response ) {
+          var term = request.term;
+          $("#name").toggleClass("loading");
+          if ( term in cache ) {
+            $("#name").toggleClass("loading");
+            response( cache[ term ] );
+            return;
+          }
+
+          lastXhr = $.getJSON( "<%= auto_complete_users_path %>", request, function( data, status, xhr ) {
+            $("#name").toggleClass("loading");
+
+            cache[term] = data;
+            if (xhr === lastXhr) {
+              response(data);
+            }
+          });
+        },
+
+        select: function(event, ui){
+          $(event.target).attr("user-id", ui.item.id);
+          $("#name").change();
+        }
+      });
+
+      $("#name").change(function(){
+        if($(this).attr("user-id") != ""){
+          $(this).css("backgroundColor", "#dbeff7");
+        }else{
+          $(this).css("backgroundColor", "#ffffff");
+        }
+      });
+
+      $(".add").click(function(){
+        var item = {
+          name: $("#name").val(),
+          id: $("#name").attr("user-id")
+        }
+
+        $(".holder-wrapper").show();
+
+        if(item.name == "" || item.id == "" || Invitations.exists(item.id)) return false; 
+
+        // Adicionando elemento a lista
+        var html = $("<li rel=\"" + item.id + "\">")
+        html = html.append($("<span class=\"name\">" + item.name + "</span>"));
+        // html.append("<a class=\"close replacement icon icon-redu_r12_c43_s1\" href=\"#\">Fechar</a>")
+        $(".holder").append(html);
+
+        Invitations.resetInput();
+
+        $("#name").removeClass("loading");
+
+        return false;
+      });
+
+      $("#invite-members").submit(function(e){
+        $(this).find("#users").val(Invitations.ids());
+      });
+    });
+  </script>
+<% end %>
+<%= render :partial => 'courses/new/sidebar' %>
+<div class="main grid_12 omega big-col">
+  <%= render :partial => 'courses/new/breadcrumbs' %>
+  <%= render :partial => 'courses/new/header',
+    :locals => { :course => @course } %>
+  <div id="admin-invitations" class="body">
+    <div class="header">
+      <h4>Membros</h4>
+      <span class="counter">Convide pessoas para fazer parte do curso.</span>
+    </div>
+
+    <% form_tag invite_members_environment_course_path(@environment, @course), :class => 'common', :id => "invite-members" do %>
+      <%= hidden_field_tag "users" %>
+      <%= label_tag "name", "Nome ou e-mail:" %>
+      <%= text_field_tag "name" %>
+      <a href="" class="button add" >Adicionar</a>
+      <div class="holder-wrapper" style="display: none;">
+        <%= label_tag "Convites:" %>
+        <ul class="holder">
+        </ul>
+        <input type="submit" value="Convidar todos " />
+      </div>
+    <% end %>
+  </div><!-- end admin-invitations -->
+</div>

@@ -376,4 +376,60 @@ class CoursesController < BaseController
       format.js { render :template => 'courses/new/users' }
     end
   end
+
+  # Aceitar convite para o Course
+  def accept
+    assoc = current_user.get_association_with @course
+    assoc.accept!
+
+    respond_to do |format|
+      format.html do
+        redirect_to home_user_path(current_user)
+      end
+      format.js do
+        render :nothing => true
+      end
+    end
+  end
+
+  # Negar convite para o Course
+  def deny
+    assoc = current_user.get_association_with @course
+    assoc.deny!
+
+    respond_to do |format|
+      format.html do
+        redirect_to home_user_path(current_user)
+      end
+      format.js do
+        render :nothing => true
+      end
+    end
+  end
+
+  def invite_members
+    @users = params[:users] || ""
+    @users = @users.split(",").uniq.compact
+    @users = User.find(@users)
+
+    @users.each do |user|
+      @course.invite(user)
+    end
+
+    respond_to do |format|
+      format.html do
+        flash[:notice] = "Os usuários foram convidados via e-mail."
+        redirect_to admin_invitations_environment_course_path(@environment, @course)
+      end
+    end
+  end
+
+  def admin_invitations
+    respond_to do |format|
+      format.html do
+        render :template => 'courses/new/admin_invitations', :layout => 'new/application'
+      end
+    end
+  end
+
 end

@@ -503,6 +503,7 @@ class UsersController < BaseController
   def home
     @friends = current_user.friends.paginate(:page => 1, :per_page => 9)
     @friends_requisitions = current_user.friends_pending
+    @course_invitations = current_user.course_invitations
     @statuses = current_user.home_activity(params[:page])
     @status = Status.new
 
@@ -539,6 +540,22 @@ class UsersController < BaseController
       end
     end
 
+  end
+
+  # Dada uma palavra-chave retorna json com usuários que possuem aquela palavra.
+  def auto_complete
+    if params[:term]
+      @users = User.with_keyword(params[:term])
+      @users = @users.map do |u|
+        { :id => u.id, :label => u.display_name, :value => u.display_name, :avatar_32 => u.avatar.url(:thumb_32) }
+      end
+    end
+
+    respond_to do |format|
+      format.js do
+        render :json => @users
+      end
+    end
   end
 
 

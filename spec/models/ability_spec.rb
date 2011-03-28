@@ -120,12 +120,14 @@ describe Ability do
     end
 
   end
+
   context "on course -" do
     before do
       @environment = Factory(:environment, :owner => @env_admin)
       Factory(:user_environment_association, :environment => @environment,
               :user => @member, :role => :member)
     end
+
     context "member" do
       before do
         @ability = Ability.new(@member)
@@ -136,13 +138,34 @@ describe Ability do
                                :environment => @environment)
         @ability.should_not be_able_to(:create, course)
       end
+
       it "cannot destroy a course" do
         course = Factory.build(:course, :owner => @env_admin,
                                :environment => @environment)
         @ability.should_not be_able_to(:destroy, course)
       end
+
+      it "accepts a course invitation" do
+        course = Factory(:course, :owner => @env_admin,
+                         :environment => @environment)
+        course.invite(@member)
+        @ability.should be_able_to(:accept, course)
+      end
+
+      it "denies a course invitation" do
+        course = Factory(:course, :owner => @env_admin,
+                         :environment => @environment)
+        course.invite(@member)
+        @ability.should be_able_to(:deny, course)
+      end
+
       it "cannot create a bulletin"
       it "cannot destroy a bulletin"
+
+      it "cannot invite users" do
+        course = Factory(:course)
+        @ability.should_not be_able_to(:invite_members, course)
+      end
     end
 
     context "environment admin" do
@@ -203,6 +226,12 @@ describe Ability do
       it "creates a bulletin"
       it "destroy a bulletin when he is a environment admin"
 
+      it "invites members" do
+        course = Factory(:course, :owner => @env_admin,
+                         :environment => @environment)
+        @ability.should be_able_to(:invite_members, course)
+      end
+
     end
 
     context "teacher" do
@@ -223,6 +252,12 @@ describe Ability do
       end
       it "cannot create a bulletin"
       it "cannot destroy a bulletin"
+
+      it "cannot invite members" do
+        course = Factory.build(:course,:owner => @teacher,
+                               :environment => @environment)
+        @ability.should_not be_able_to(:invite_members, course)
+      end
     end
 
     context "tutor" do
@@ -244,6 +279,12 @@ describe Ability do
 
       it "cannot create a bulletin"
       it "cannot destroy a bulletin"
+
+      it "cannot invite members" do
+        course = Factory.build(:course,:owner => @tutor,
+                               :environment => @environment)
+        @ability.should_not be_able_to(:invite_members, course)
+      end
     end
 
     context "redu admin" do

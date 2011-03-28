@@ -540,6 +540,10 @@
   background: url("../images/new/icon-preview-gray_32_32.png") no-repeat 20px center;
 }
 
+#admin-invitations .header {
+  background: url("../images/new/icon-members-gray_32_32.png") no-repeat 20px center;
+}
+
 #resource .header,
 #resource .context,
 #resource .info,
@@ -1461,7 +1465,8 @@
   height: 10px;
 }
 
-.friends-requisitions {
+.friends-requisitions,
+.courses-requisitions {
   background: url("../images/new/dots.png") repeat-x bottom;
   padding: 20px 0 20px 0;
 }
@@ -1479,30 +1484,47 @@
   border-radius: 5px;
 }
 
-.friends-requisitions li:hover {
-  background-color: #EFF7E6;
+.courses-requisitions li {
+  border: solid 1px #61BE80;
+  padding: 10px;
+  margin-bottom: 10px;
+
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
 }
 
-.friends-requisitions li > span {
+.friends-requisitions li:hover,
+.courses-requisitions li:hover {
+  background-color: #EFF7E6;
+  border-color: #EFF7E6;
+}
+
+.friends-requisitions li > span,
+.courses-requisitions li > span {
   color: #6D6E6F;
   display: block;
   font-size:0.9em;
 }
 
-.friends-requisitions li .friend {
+.friends-requisitions li .friend,
+.courses-requisitions li .course {
   margin-top: 10px;
 }
 
-.friends-requisitions li .friend .friend-details {
+.friends-requisitions li .friend .friend-details,
+.courses-requisitions li .course .course-details {
   float: right;
 }
 
-.friends-requisitions li .friend .friend-details .name {
+.friends-requisitions li .friend .friend-details .name,
+.courses-requisitions li .course .course-details .name {
   display: block;
   font-weight: bold;
 }
 
-.friends-requisitions li .friend .friend-details .counter {
+.friends-requisitions li .friend .friend-details .counter,
+.courses-requisitions li .course .course-details .counter {
   color: #B2B2B2;
   font-style: oblique;
   font-size: 0.9em;
@@ -1510,7 +1532,8 @@
 
 
 /* TODO Remover quando colocar o ícone de accept */
-.friends-requisitions li .actions .accept-friend {
+.friends-requisitions li .actions .accept-friend,
+.courses-requisitions li .actions .accept-invitation {
   border: 1px solid #61BE80;
   font-family: Copse, Arial, sans-serif;
   color: white;
@@ -1526,11 +1549,16 @@
   background: -moz-linear-gradient(top,  #AED584,  #61BE80); /* Firefox 3.6+ */
 }
 
-.friends-requisitions li .actions {
+.friends-requisitions li .actions,
+.courses-requisitions li .actions {
   float: right;
   margin-top: 10px;
 }
 
+.friends-requisitions li .actions form,
+.courses-requisitions li .actions form {
+  display: inline;
+}
 #space-new .common .tos {
   padding: 30px 160px;
 }
@@ -2529,6 +2557,89 @@ label.focus {
 
 #course-manage .tabs .ui-tabs-panel {
   padding: 20px 0;
+}
+
+#admin-invitations .holder {
+  float: left;
+  margin-top: 20px;
+  width: 420px;
+}
+
+#admin-invitations .common input[type=text] {
+  width: 318px;
+}
+
+#admin-invitations .common input[type=submit] {
+  clear: both;
+  margin-right: 150px;
+}
+
+#admin-invitations .holder li {
+  width: 410px;
+  height: 13px;
+  position: relative;
+  background-color: #eff6e6;
+  padding: 8px;
+  margin-bottom: 5px;
+  font-size: .9em;
+
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
+#admin-invitations .add {
+  display: block;
+  margin: 20px 0 0 10px;
+  float: left;
+}
+
+#admin-invitations .loading {
+  background-image: url("../images/new/spinner.gif");
+  background-repeat: no-repeat;
+  background-position: 310px 5px ;
+}
+
+#admin-invitations .holder .close {
+  display: block;
+  position: absolute;
+  top: 7px;
+  right: 10px;
+  width: 10px;
+  height: 10px;
+}
+
+.ui-autocomplete {
+  border: 1px solid #b3b2b3;
+  background-color: #e6ece5;
+  padding: 10px;
+  width: 316px;
+  max-height: 100px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin-top: 5px;
+
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
+.ui-autocomplete .ui-menu-item {
+  margin: 2px 0;
+  padding: 5px;
+}
+
+.ui-autocomplete .ui-menu-item:hover {
+  background-color: #dbeff7;
+
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
+.ui-autocomplete .ui-menu-item a {
+  font-size: .9em;
+  cursor: pointer;
 }
 
 #global-courses {

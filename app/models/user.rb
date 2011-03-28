@@ -94,7 +94,7 @@ class User < ActiveRecord::Base
   has_many :plans
 
   has_many :course_invitations, :class_name => "UserCourseAssociation",
-    :conditions => ["user_id = ? AND state LIKE 'invited'", self]
+    :conditions => ["state LIKE 'invited'"]
 
   # Named scopes
   named_scope :recent, :order => 'users.created_at DESC'
@@ -110,6 +110,14 @@ class User < ActiveRecord::Base
   }
   named_scope :n_recent, lambda { |limit|
     {:order => 'users.last_request_at DESC', :limit => limit }
+  }
+  named_scope :with_keyword, lambda { |keyword|
+    {:conditions => ["LOWER(login) LIKE :keyword OR " + \
+      "LOWER(first_name) LIKE :keyword OR " + \
+      "LOWER(last_name) LIKE :keyword OR " +\
+      "LOWER(email) LIKE :keyword", { :keyword => "%#{keyword.downcase}%" }],
+     :limit => 10,
+     :select => "id, first_name, last_name, login, email, avatar_file_name"}
   }
 
   # Accessors
