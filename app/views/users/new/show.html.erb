@@ -21,18 +21,18 @@
               <%= link_to_remote 'Aceitar pedido de conexão',
                 :url => user_friendships_path(current_user, :friend_id => @user.id),
                 :loading => "$('#spinner').show();",
-                :success => "$('#spinner').hide();",
+                :success => "$('#spinner').hide(); $('#follow_link).hide();",
                 :html =>{ :class => "waiting",
-                :id => "follow_link"} %>
-            <% end %>
-          <% else %>
-              <%= link_to_remote 'Adicionar aos contatos',
-                :url => user_friendships_path(current_user, :friend_id => @user.id),
+                  :id => "follow_link"} %>
+              <% end %>
+            <% else %>
+              <% form_remote_for [current_user, Friendship.new],
                 :loading => "$('#spinner').show();",
-                :success => "$('#spinner').hide();",
-                :html =>{ :class => "add-as-friend",
-                :id => "follow_link"} %>
-          <% end %>
+                :success => "$('#spinner').hide();" do %>
+                <%= hidden_field_tag "friend_id", @user.id %>
+                <%= submit_tag "Adicionar aos contatos", :class => 'add-as-friend' %>
+              <% end %>
+            <% end %>
         <% end %>
       </div>
       <%# FIXME Mostrar ocupação  %>
