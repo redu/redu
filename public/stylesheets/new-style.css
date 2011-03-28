@@ -1466,6 +1466,9 @@
   padding: 20px 0 20px 0;
 }
 
+.friends-requisitions form {
+  display: inline;
+}
 .friends-requisitions li {
   border: solid 1px #A0D7B3;
   padding: 10px;

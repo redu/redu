@@ -13,17 +13,20 @@
   <div class="actions">
     <%= image_tag 'spinner.gif', :style => 'display: none;',
       :id => "spinner-#{friend.id}" %>
-    <%= link_to_remote 'Recusar',
-      :url => user_friendship_path(current_user,
-                                   current_user.friendship_for(friend)),
+    <% form_remote_for [current_user, current_user.friendship_for(friend)],
       :method => :delete,
       :loading => "$('#spinner-#{friend.id}').show();",
       :success => "$('#requisition-#{friend.id}').slideToggle();",
-      :html => { :class => 'remove' }%>
-    <%= link_to_remote 'Aceitar',
-      :url => user_friendships_path(current_user, :friend_id => friend.id),
+      :html => { :method => :delete } do %>
+      <%= hidden_field_tag "goto_home", true %>
+      <%= submit_tag "Recusar", :class => 'remove' %>
+    <% end %>
+    <% form_remote_for [current_user, Friendship.new],
       :loading => "$('#spinner-#{friend.id}').show();",
-      :success => "$('#requisition-#{friend.id}').slideToggle();",
-      :html => { :class => 'accept-friend' }%>
+      :success => "$('#requisition-#{friend.id}').slideToggle();" do %>
+      <%= hidden_field_tag "goto_home", true %>
+      <%= hidden_field_tag "friend_id", friend.id %>
+      <%= submit_tag "Aceitar", :class => 'accept-friend' %>
+    <% end %>
   </div>
 </li>

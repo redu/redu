@@ -16,54 +16,17 @@
       %>
     <div class="call">
       <span class="billable">
-        <%= link_to @plan.billable.name, environment_course_path(@plan.billable.environment, @plan.billable) %>
+        <%= link_to @plan.billable.name,
+          environment_course_path(@plan.billable.environment, @plan.billable) %>
       </span>
       <span class="name"><%= @plan.name %></span>
     </div>
-    <ul class="quotas clearfix">
-      <li class="clearfix">
-        <div class="meta">
-          <span class="label">membros:</span>
-          <span class="numeric">
-            <%= @plan.billable.users.count %>/
-            <%= @plan.members_limit %>
-          </span>
-        </div>
-        <div class="progress">
-          <div class="completed" style="width: <%= @quota_members %>%;">
-            <span><%= @quota_members %>%</span>
-          </div>
-        </div>
-      </li>
-      <li class="clearfix">
-        <div class="meta">
-          <span class="label">documentos:</span>
-          <span class="numeric">
-            <%= number_to_human_size(@quota_file, :precision => 2) %>/
-            <%= number_to_human_size(@plan.file_storage_limit, :precision => 2) %>
-          </span>
-        </div>
-        <div class="progress">
-          <div class="completed" style="width: <%= @quota_file %>%;">
-            <span><%= @quota_file %>%</span>
-          </div>
-        </div>
-      </li>
-      <li class="clearfix">
-        <div class="meta">
-          <span class="label">vídeos:</span>
-          <span class="numeric">
-            <%= number_to_human_size(@quota_multimedia, :precision => 2) %>/
-            <%= number_to_human_size(@plan.video_storage_limit, :precision => 2) %>
-          </span>
-        </div>
-        <div class="progress">
-          <div class="completed" style="width: <%= @quota_multimedia %>%;">
-            <span><%= @quota_multimedia %>%</span>
-          </div>
-        </div>
-      </li>
-    </ul>
+    <%= render :partial => "invoices/new/quotas",
+      :locals => { :quota_file => @plan.billable.percentage_quota_file,
+        :plan => @plan,
+        :quota_multimedia => @plan.billable.percentage_quota_multimedia,
+        :quota_members => @plan.billable.percentage_quota_members,
+        :quota => @quota } %>
     <table class="common spaced">
       <thead>
         <tr>

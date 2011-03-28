@@ -35,14 +35,19 @@
               <% end %>
             </td>
             <td>
-              <%= 
+              <% if plan.billable %>
+                <%=
                 link_to plan.name, plan_invoices_path(plan),
                   :class => "name"
                 %>
-              <% if plan.pending_payment? %>
-                <span class="info">Pagamento pendente</span>
+                <% if plan.pending_payment? %>
+                 <span class="info">Pagamento pendente</span>
+                <% else %>
+                  <span class="info">Sem pendências</span>
+                <% end %>
+
               <% else %>
-                <span class="info">Sem pendências</span>
+                <span class="name">Não possui</span>
               <% end %>
             </td>
             <td>

@@ -4,7 +4,7 @@
        :url => space_subject_lectures_url(@space, @subject),
        :allow_multiple_files => false,
        :fields => ['document_attachment', 'name'],
-       :allowed_extensions => [:ppt, :pptx, :pdf, :odp, :pps]) %>
+       :allowed_extensions => [:ppt, :pptx, :pdf, :odp, :pps, :doc, :docx]) %>
 
 <% form_for :document, @document, :url => { :action => "create" },
    :html => { :multipart => true, :method => :put,

@@ -6,12 +6,7 @@ class InvoicesController < BaseController
     @user = @plan.user
     @invoices = @plan.invoices
     @invoices = @invoices.pending if params.fetch(:pending, false)
-    @quota = @plan.billable.quota
-
-    # Quoatas
-    @quota_multimedia =  ( @quota.multimedia * 100.0 ) / @plan.video_storage_limit
-    @quota_file =  (@quota.files * 100.0) / @plan.file_storage_limit
-    @quota_members =  (@plan.billable.users.count * 100.0) / @plan.members_limit
+    @quota = @plan.billable.quota if @plan.billable.quota
 
     respond_to do |format|
       format.html do
