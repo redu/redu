@@ -289,6 +289,7 @@ class UserNotifier < ActionMailer::Base
   def pending_notice(user, invoice, deadline)
     setup_sender_info
 
+    @recipients  = "#{user.email}"
     @subject = "Pagamento N. #{invoice.id} pendente"
     @body[:user] = user
     @body[:invoice] = invoice
@@ -310,6 +311,7 @@ class UserNotifier < ActionMailer::Base
   def course_invitation_notification(user, course)
     setup_sender_info
     
+    @recipients  = "#{user.email}"
     @subject    = "Você foi convidado para um curso no Redu"
     @body[:user] = user
     @body[:course] = course
