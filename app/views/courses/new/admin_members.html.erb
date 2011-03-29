@@ -23,6 +23,12 @@
         ["Disciplinas", admin_spaces_environment_course_path(@environment, @course), {:class => 'icon'}] do
       %>
     <% if @memberships && @memberships.size > 0 %>
+      <div class="actions invite clearfix">
+        <%=
+          link_to "Convidar membros", admin_invitations_environment_course_path(@environment, @course),
+            :class => "button"
+        %>
+      </div>
       <% form_remote_tag :url => {:action => :search_users_admin,
         :id => @environment.id},
         :loading => "showLoadingUsers()",

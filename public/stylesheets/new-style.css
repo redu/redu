@@ -540,6 +540,7 @@
   background: url("../images/new/icon-preview-gray_32_32.png") no-repeat 20px center;
 }
 
+#course-users .header,
 #admin-invitations .header {
   background: url("../images/new/icon-members-gray_32_32.png") no-repeat 20px center;
 }
@@ -2557,6 +2558,10 @@ label.focus {
 
 #course-manage .tabs .ui-tabs-panel {
   padding: 20px 0;
+}
+
+#course-manage .fake-tabs .actions {
+  padding-bottom: 20px;
 }
 
 #admin-invitations .holder {

@@ -16,6 +16,14 @@
         <%= @course.name %>
       </span>
     </div>
+    <% if can? :manage, @course %>
+      <div class="admin-actions clearfix">
+        <%= 
+          link_to "Convidar membros", admin_invitations_environment_course_path(@environment, @course),
+            :class => "button"
+        %>
+      </div>
+    <% end %>
 
     <ul id="users_list" class="members clearfix">
       <%= render :partial => 'users/new/item',
