@@ -1887,7 +1887,7 @@ form.common .errorExplanation li {
   padding: 3px 10px;
 }
 
-/* 
+/*
  * Deprecated:
   form.common fieldset fieldset {
     float: left;
@@ -1944,6 +1944,33 @@ form.common .inline .columns {
   margin-top: 0;
 }
 
+form.common .course-plan {
+  margin-top: 12px;
+}
+
+form.common .columns .plan-type {
+  display: block;
+  margin: 13px 55px 0 7px;
+  width: 115px;
+  height: 20px;
+  color: #61be80;
+  font-weight: bold;
+}
+
+form.common .course-plan .tip {
+  float: right;
+  margin-left: 0;
+}
+
+form.common .columns .plan-diff {
+  margin-top: 0;
+}
+
+form.common .columns .plan-choices {
+
+}
+
+form.commom .columns-plan li,
 form.common .columns li {
   width: 150px;
   margin-right: 10px;

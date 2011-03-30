@@ -23,7 +23,6 @@
     :url => environment_courses_path(@environment),
     :html => { :class => 'common' } do |f| %>
     <%= f.error_messages %>
-    <%= hidden_field_tag :plan, 'free' %>
     <%= render :partial => 'courses/new/form', :locals => { :f => f, :edit => false } %>
     <%= f.submit "Criar curso" %>
   <% end %>

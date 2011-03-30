@@ -25,7 +25,7 @@ class Plan < ActiveRecord::Base
       :file_storage_limit => 25.megabytes,
       :members_limit => 100
     },
-    :professor_standard => {
+    :professor_plus => {
       :name => "Professor Plus",
       :price => 243.99,
       :yearly_price => 2439.90,

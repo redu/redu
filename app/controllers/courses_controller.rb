@@ -80,7 +80,7 @@ class CoursesController < BaseController
     authorize! :manage, @environment #Talvez seja necessario pois o @environment não está sendo autorizado.
 
     @course.owner = current_user
-    @plan = Plan.from_preset(params[:plan])
+    @plan = Plan.from_preset(params[:plan].to_sym)
     @plan.user = current_user
     @course.verify_path! @environment.id
 

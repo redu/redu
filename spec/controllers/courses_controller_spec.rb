@@ -44,6 +44,63 @@ describe CoursesController do
       end
     end
 
+    context "POST create - testing plans" do
+      it "should be a professor_lite plan" do
+        @params[:plan] = "professor_lite"
+        post :create, @params
+        assigns[:plan].name.should == "Professor Lite"
+      end
+
+      it "should be a professor standard plan" do
+        @params[:plan] = "professor_standard"
+        post :create, @params
+        assigns[:plan].name.should == "Professor Standard"
+      end
+
+      it "should be a professor plus plan" do
+        @params[:plan] = "professor_plus"
+        post :create, @params
+        assigns[:plan].name.should == "Professor Plus"
+      end
+
+      it "should be a empresas lite plan" do
+        @params[:plan] = "empresas_lite"
+        post :create, @params
+        assigns[:plan].name.should == "Empresa Lite"
+      end
+
+      it "should be a empresas standard plan" do
+        @params[:plan] = "empresas_standard"
+        post :create, @params
+        assigns[:plan].name.should == "Empresa Standard"
+      end
+
+      it "should be a empresa plus plan" do
+        @params[:plan] = "empresas_plus"
+        post :create, @params
+        assigns[:plan].name.should == "Empresa Plus"
+      end
+
+      it "should be a intituicao plus plan " do
+        @params[:plan] = "instituicao_plus"
+        post :create, @params
+        assigns[:plan].name.should == "Instituição Plus"
+      end
+
+      it "should be a instituicao lite plan" do
+        @params[:plan] = "instituicao_lite"
+        post :create, @params
+        assigns[:plan].name.should == "Instituição Lite"
+      end
+
+      it "should be a instituicao standard plan" do
+        @params[:plan] = "instituicao_standard"
+        post :create, @params
+        assigns[:plan].name.should == "Instituição Standard"
+      end
+
+    end
+
   end
 
   context "when updating a couse" do

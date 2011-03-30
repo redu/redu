@@ -47,6 +47,52 @@
   </ul>
   <span class="tip">Selecionar um público que não corresponde ao propósito do curso pode levar à uma má avaliação. </span>
 <% end %>
+<% if edit == false %>
+  <% field_set_tag "Plano", :class => "hidden" do %>
+    <%= label :plan, "Plano" %>
+    <ul class="columns course-plan">
+      <li>
+        <span class="plan-type">Professor</span>
+      </li>
+      <li>
+        <span class="plan-type plan-diff">Instituição de Ensino</span>
+      </li>
+      <li>
+        <span class="plan-type">Empresa</span>
+      </li>
+      <li>
+        <%= radio_button_tag :plan, 'free', :checked => true %> Grátis
+      </li>
+      <li>
+        <%= radio_button_tag :plan, 'instituicao_lite' %> Lite <span class="tip">R$251,99</span>
+      </li>
+      <li>
+        <%= radio_button_tag :plan, 'empresas_lite' %> Lite<span class="tip">R$210,99</span>
+      </li>
+      <li>
+        <%= radio_button_tag :plan, 'professor_lite' %> Lite<span class="tip">R$13,99</span>
+      </li>
+      <li>
+        <%= radio_button_tag :plan, 'instituicao_standard' %> Standard<span class="tip">R$730,99</span>
+      </li>
+      <li>
+        <%= radio_button_tag :plan, 'empresas_standard' %> Standard<span class="tip">R$248,99</span>
+      </li>
+      <li>
+        <%= radio_button_tag :plan, 'professor_standard' %> Standard<span class="tip">R$56,99</span>
+      </li>
+      <li>
+        <%= radio_button_tag :plan, 'instituicao_plus' %> Plus<span class="tip">R$1280,99</span>
+      </li>
+      <li>
+        <%= radio_button_tag :plan, 'empresas_plus' %> Plus<span class="tip">R$858,99</span>
+      </li>
+      <li>
+        <%= radio_button_tag :plan, 'professor_plus' %> Plus<span class="tip">R$243,99</span>
+      </li>
+    </ul>
+  <% end %>
+<% end %>
 <% field_set_tag "Inscrição", :class => 'hidden inline' do %>
   <%= f.label :subscription_type, "Quem pode participar do curso?" %>
   <%= f.radio_button :subscription_type, "1", :checked => true %> Todos
