@@ -24,6 +24,7 @@ class PaymentGatewayController < BaseController
   end
 
   def success
+    render :layout => 'new/application'
   end
 
 end

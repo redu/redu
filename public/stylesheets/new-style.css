@@ -2517,6 +2517,48 @@ label.focus {
   display: block;
 }
 
+#checkout.payment-confirmation {
+  margin-left: 170px;
+  height: 550px;
+}
+
+#checkout.payment-confirmation .thanks h3 {
+  font-family: Copse, Arial, sans-serif;
+  font-size: 3.2em;
+  font-weight: normal;
+  color: #61BE80;
+  margin: 10px 0 25px 0;
+}
+
+#checkout.payment-confirmation .thanks p span {
+  font-style: italic;
+  color: #B3B2B3;
+}
+
+#checkout.payment-confirmation .next-action {
+  margin-left: 130px;
+  margin-top: 150px;
+}
+
+#checkout.payment-confirmation .next-action .home-icon {
+  display: block;
+  height: 48px;
+  width: 48px;
+  margin: 10px 136px;
+  background: url("../images/new/icon-home-blue3_48_48.png") no-repeat center;
+}
+
+#checkout.payment-confirmation .next-action .home-icon:hover {
+  background: url("../images/new/icon-home-blue4_48_48.png") no-repeat center;
+}
+#checkout.payment-confirmation .next-action .home-button {
+  display: block;
+  margin-right: 20px;
+  padding: 16px 97px;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
 #environment-manage table .edit,
 #environment-manage table .delete {
   font-size: .9em;
