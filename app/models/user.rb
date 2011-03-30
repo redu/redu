@@ -115,6 +115,7 @@ class User < ActiveRecord::Base
     {:conditions => ["LOWER(login) LIKE :keyword OR " + \
       "LOWER(first_name) LIKE :keyword OR " + \
       "LOWER(last_name) LIKE :keyword OR " +\
+      "CONCAT(LOWER(first_name), ' ', LOWER(last_name)) LIKE :keyword OR " +\
       "LOWER(email) LIKE :keyword", { :keyword => "%#{keyword.downcase}%" }],
      :limit => 10,
      :select => "id, first_name, last_name, login, email, avatar_file_name"}
