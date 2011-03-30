@@ -149,6 +149,14 @@ describe User do
         subject.errors.on(:curriculum).should be_nil
       end
     end
+
+    it "should validate password and password_confirmation equality" do
+      u = Factory.build(:user, :email => "email@email.com",
+                  :email_confirmation => "different@email.com")
+      u.should_not be_valid
+      u.errors.on(:email).should_not be_nil
+    end
+
   end
 
   context "associations" do

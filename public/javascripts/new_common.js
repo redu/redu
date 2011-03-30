@@ -145,6 +145,26 @@ jQuery(function(){
         $(this).height($(this).parent().height());
     });
 
+    // Mostra campo de confirmação de e-mail
+    $("#user_email").click(function(){
+       $("#user_email_confirmation").slideDown();
+       $("#user_email_confirmation").prev().slideDown();
+    });
+
+    // Verifica se os dois e-mails são iguais
+    $("#user_email_confirmation").blur(function(){
+        email_val = $("#user_email").val();
+        confirmation_val = $(this).val();
+
+        if (email_val != confirmation_val) {
+          $("#user_email_confirmation-error").remove();
+          $(this).after("<p id=\"user_email_confirmation-error\" class=\"errorMessageField\">Os e-mails digitados não são iguais.</p>");
+
+        } else {
+          $("#user_email_confirmation-error").remove();
+        }
+    });
+
 });
 
 /* Limita a quantidade de caracteres de um campo */

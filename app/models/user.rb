@@ -121,6 +121,8 @@ class User < ActiveRecord::Base
      :select => "id, first_name, last_name, login, email, avatar_file_name"}
   }
 
+  attr_accessor :email_confirmation
+
   # Accessors
   attr_protected :admin, :featured, :role_id, :activation_code,
     :login_slug, :friends_count, :score, :removed,
@@ -150,7 +152,8 @@ class User < ActiveRecord::Base
   acts_as_voter
 
   # VALIDATIONS
-  validates_presence_of     :login, :email, :first_name, :last_name
+  validates_presence_of     :login, :email, :first_name, :last_name,
+    :email_confirmation
   # FIXME Verificar necessidade (não foi testado)
   validates_presence_of     :metro_area,                 :if => Proc.new { |user| user.state }
   validates_uniqueness_of   :login, :email, :case_sensitive => false
@@ -161,6 +164,7 @@ class User < ActiveRecord::Base
   validates_attachment_size :curriculum, :less_than => 10.megabytes
   validate_on_update :accepted_curriculum_type,
     :unless => "self.curriculum_file_name.nil?"
+  validates_confirmation_of :email
 
   # override activerecord's find to allow us to find by name or id transparently
   def self.find(*args)
@@ -791,6 +795,10 @@ class User < ActiveRecord::Base
   # True se o usuário possui convite
   def has_course_invitation?(course = nil)
     UserCourseAssociation.has_invitation_for?(self, course)
+  end
+
+  def email_confirmation
+    @email_confirmation || self.email
   end
 
   protected

@@ -110,6 +110,7 @@ pt-BR:
               too_short: ": E-mail muito curto (mínimo de 3 caracteres)."
               invalid: ": E-mail inválido."
               taken: ": Este e-mail já está cadastrado."
+              confirmation: "é diferente da confirmação."
             password:
               blank: ": Por favor, digite a senha."
               too_short: ": Senha muito curta (mínimo de 6 caracteres)."

@@ -19,6 +19,15 @@
     <% end %>
   <% end %>
 
+  <% field_set_tag "Redefinir E-mail", :class => "wide legend" do %>
+    <%= f.label :email, "E-mail:" %>
+    <%=  f.text_field :email %>
+
+    <%= f.label :email_confirmation, "Confirmação:",
+      :style => "display: none;" %>
+    <%=  f.text_field :email_confirmation, :style => "display: none;" %>
+  <% end %>
+
   <% field_set_tag "Redefinir Senha", :class => "wide legend" do %>
     <%= label_tag :current_password, "Senha atual:" %>
     <% if @flag %>

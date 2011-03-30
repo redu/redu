@@ -249,7 +249,8 @@ class UsersController < BaseController
         end
       end
     else
-    if params.has_key? "current_password" and !params[:current_password].empty?
+    if (@user.errors.on(:password) or @user.errors.on(:email) or
+       !params[:current_password].nil?)
         render 'users/new/account', :layout => 'new/application'
       else
         render 'users/new/edit', :layout => 'new/application'

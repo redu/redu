@@ -47,6 +47,8 @@
         <%= f.label :email, :email.l %>
         <%= f.text_field :email, :class => 'small' %>
         <%= error_for :user, :email %>
+        <%= f.label :email_confirmation, "Confirmação:" %>
+        <%= f.text_field :email_confirmation, :class => 'small' %>
       <% end %>
       <% field_set_tag "Senha", :class => 'separator' do %>
         <%= f.label :password, :password.l %>
