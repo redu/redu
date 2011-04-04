@@ -1800,7 +1800,7 @@ form.filter a.cancel {
 
 form.common textarea,
 form.common input[type=password],
-form.common input[type=text] {
+form.common input[type=text], ul.holder {
   width: 400px;
   padding: 8px;
 
