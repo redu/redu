@@ -396,6 +396,7 @@ class CoursesController < BaseController
   def deny
     assoc = current_user.get_association_with @course
     assoc.deny!
+    assoc.destroy
 
     respond_to do |format|
       format.html do

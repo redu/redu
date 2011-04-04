@@ -458,17 +458,22 @@ describe CoursesController do
 
     context "and denying" do
       before do
-        post :deny, @params
       end
 
       it "assigns course" do
+        post :deny, @params
         assigns[:course].should_not be_nil
       end
 
       it "denies the invitation" do
-        @invited_user.get_association_with(@course).current_state.
-          should == :rejected
+        post :deny, @params
         @course.approved_users.should_not include(@invited_user)
+      end
+
+      it "detroys the UCA" do
+        expect {
+          post :deny, @params
+        }.should change(UserCourseAssociation, :count).by(-1)
       end
     end
   end
