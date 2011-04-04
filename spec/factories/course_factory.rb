@@ -3,5 +3,5 @@ Factory.define :course do |c|
   c.sequence(:path){ |n| "curso-#{n}" }
   c.association :owner, :factory => :user
   c.association :environment
-  c.association :quota
+  c.association :quota, :factory => :quota
 end
