@@ -157,6 +157,11 @@ describe User do
       u.errors.on(:email).should_not be_nil
     end
 
+    it "validates e-mail format" do
+      u = Factory.build(:user, :email => "invalid@inv")
+      u.should_not be_valid
+      u.errors.on(:email).should_not be_nil
+    end
   end
 
   context "associations" do

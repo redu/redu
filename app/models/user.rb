@@ -138,6 +138,8 @@ class User < ActiveRecord::Base
     c.validates_length_of_login_field_options = { :within => 5..20 }
     c.validates_format_of_login_field_options = { :with => /^[A-Za-z0-9_-]+$/ }
 
+    #FIXME Não está validando, verificar motivo. Foi adicionado um
+    # validates_format_of.
     c.validates_length_of_email_field_options = { :within => 3..100 }
     c.validates_format_of_email_field_options = { :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/ }
   end
@@ -165,6 +167,8 @@ class User < ActiveRecord::Base
   validate_on_update :accepted_curriculum_type,
     :unless => "self.curriculum_file_name.nil?"
   validates_confirmation_of :email
+  validates_format_of :email,
+    :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/
 
   # override activerecord's find to allow us to find by name or id transparently
   def self.find(*args)
