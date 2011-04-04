@@ -21,7 +21,7 @@ describe InvoicesController do
     UserSession.create @plan.user
   end
 
-  context "whe GET index" do
+  context "when GET index" do
     it "shold load the invoices correctly" do
       get :index, :plan_id => @plan.id, :locale => "pt-BR"
 

@@ -86,7 +86,9 @@ class CoursesController < BaseController
 
     respond_to do |format|
       if @course.save
+        @course.create_quota
         @course.plan = @plan
+        @plan.create_invoice_and_setup
         @environment.courses << @course
         format.html { redirect_to environment_course_path(@environment, @course) }
       else

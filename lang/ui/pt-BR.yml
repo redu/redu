@@ -12,6 +12,7 @@ pt-BR:
 
   time:
     formats:
+      default: "%d/%m/%Y"
       published_date: "%d/%m/%Y"
       short_published_date: "%d/%m/%y"
       literal_date: "%d %B %Y"
