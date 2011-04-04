@@ -165,6 +165,16 @@ jQuery(function(){
         }
     });
 
+    // Tooltips
+    $(".tiptip").tipTip();
+    $("form.common").ajaxComplete(function(){
+      $(".tiptip").tipTip();
+    });
+    $("form.common .tiptip").each(function(){
+        var label = $(this).next("label");
+        label.prepend($(this));
+    });
+
 });
 
 /* Limita a quantidade de caracteres de um campo */
