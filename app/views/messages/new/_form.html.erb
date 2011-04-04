@@ -1,16 +1,17 @@
 <% content_for :header_scripts_and_styles do %>
+  <%= stylesheet_link_tag "fb_style.css" %>
   <%=  javascript_include_tag "jquery.fcbkcomplete.min.js"%>
   <script type="text/javascript">
     $(document).ready(function(){
       $("#message_to").fcbkcomplete({
         json_url: "/autocomplete",
         addontab: true,
-        complete_text: "Digite o nome de um contato...",                   
+        complete_text: "Digite o nome de um contato...",
         height: 6,
 		cache: true
       });
     });
-	
+
   </script>
 <% end %>
 
@@ -30,9 +31,9 @@
       <%= options_for_select(@aab) %>
     <% end %>
   </select>
-  
-  	
-			
+
+
+
 </div>
 
   <%= label_tag :message_subject, :subject_of_message.l + ":" %>
