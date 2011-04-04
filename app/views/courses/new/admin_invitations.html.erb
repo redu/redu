@@ -60,10 +60,13 @@
           id: $("#name").attr("user-id")
         }
 
+        $(".errorExplanation").remove();
+
+        if (item.name == "" || item.id == "" || item.id == undefined || Invitations.exists(item.id)) {
+          $("form").prepend("<div class=\"errorExplanation\"><h2>Oops!</h2><p>Usuário não existente.</p></div>");
+          return false;
+        }
         $(".holder-wrapper").show();
-
-        if(item.name == "" || item.id == "" || Invitations.exists(item.id)) return false; 
-
         // Adicionando elemento a lista
         var html = $("<li rel=\"" + item.id + "\">")
         html = html.append($("<span class=\"name\">" + item.name + "</span>"));
@@ -94,7 +97,8 @@
       <span class="counter">Convide pessoas para fazer parte do curso.</span>
     </div>
 
-    <% form_tag invite_members_environment_course_path(@environment, @course), :class => 'common', :id => "invite-members" do %>
+    <% form_tag invite_members_environment_course_path(@environment, @course), :onsubmit => "return false;",
+      :class => 'common', :id => "invite-members" do %>
       <%= hidden_field_tag "users" %>
       <%= label_tag "name", "Nome ou e-mail:" %>
       <%= text_field_tag "name" %>
@@ -103,7 +107,7 @@
         <%= label_tag "Convites:" %>
         <ul class="holder">
         </ul>
-        <input type="submit" value="Convidar todos " />
+        <%= submit_tag "Convidar todos", :onclick => "this.form.submit();" %>
       </div>
     <% end %>
   </div><!-- end admin-invitations -->
