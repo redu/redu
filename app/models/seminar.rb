@@ -201,7 +201,7 @@ class Seminar < ActiveRecord::Base
   # Verifica se o curso tem espaço suficiente para o arquivo
   def can_upload_multimedia?(lecture)
     return true if self.external_resource_type == "youtube"
-    return false if lecture.subject.space.course.plan.state != "active"
+    return false unless lecture.subject.space.course.plan.active?
     plan = lecture.subject.space.course.plan
     quota = lecture.subject.space.course.quota
     if quota.multimedia > plan.video_storage_limit
