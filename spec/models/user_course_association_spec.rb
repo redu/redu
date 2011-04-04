@@ -120,6 +120,26 @@ describe UserCourseAssociation do
       @uca.course.user_course_associations.
         recent.should == [@uca, assoc2, assoc3]
     end
+
+    it "retrieves approved user course associations"do
+      course = Factory(:course)
+      uca = course.user_course_associations.first
+
+      user = Factory(:user, :first_name => "Andrew")
+      assoc = Factory(:user_course_association, :user => user,
+                      :course => uca.course,
+                      :created_at => 2.weeks.ago)
+      assoc.approve!
+      user2 = Factory(:user, :first_name => "Joe Andrew")
+      assoc2 = Factory(:user_course_association, :user => user2,
+                      :course => uca.course)
+      assoc2.approve!
+      user3 = Factory(:user, :first_name => "Alice")
+      assoc3 = Factory(:user_course_association, :user => user3,
+                      :course => uca.course)
+
+      UserCourseAssociation.approved.should == [uca, assoc, assoc2]
+    end
   end
 
   context "when there are invitations (state is invted)" do

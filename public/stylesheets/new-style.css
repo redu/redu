@@ -2633,6 +2633,11 @@ label.focus {
   padding-bottom: 20px;
 }
 
+#course-manage form.common.filter .tip {
+  margin-left: 0;
+  margin-left: 40px;
+}
+
 #admin-invitations .users-holder {
   float: left;
   margin-top: 20px;

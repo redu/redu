@@ -346,9 +346,8 @@ class CoursesController < BaseController
     keyword = []
     keyword = params[:search_user] || nil
 
-    @memberships = UserCourseAssociation.with_roles(roles)
+    @memberships = @course.user_course_associations.approved.with_roles(roles)
     @memberships = @memberships.with_keyword(keyword).paginate(
-      :conditions => ["user_course_associations.course_id = ?", @course.id],
       :include => [{ :user => {:user_space_associations => :space} }],
       :page => params[:page],
       :order => 'user_course_associations.updated_at DESC',
@@ -357,8 +356,14 @@ class CoursesController < BaseController
       respond_to do |format|
         format.js do
           render :update do |page|
-            page.replace_html 'user_list', :partial => 'courses/new/user_list_admin',
-              :locals => {:memberships => @memberships}
+            if @memberships.empty?
+              page.replace_html 'user_list',
+                "<div class=\"box_notice\">Nenhum usuário encontrado.</div>"
+            else
+              page.replace_html 'user_list',
+                :partial => 'courses/new/user_list_admin',
+                :locals => {:memberships => @memberships}
+            end
           end
         end
       end
