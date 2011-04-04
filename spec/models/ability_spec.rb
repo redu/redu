@@ -206,19 +206,28 @@ describe Ability do
           @plan = Factory(:plan, :billable => @course)
           @plan.block!
           @space = Factory(:space, :owner => @env_admin, :course => @course)
+          @sub = Factory(:subject, :owner => @env_admin, :space => @space)
         end
 
         it "can NOT upload document" do
-          sub = Factory(:subject, :owner => @env_admin, :space => @space)
           document = Factory(:document)
           lecture = Factory(:lecture, :owner => @env_admin,
-                            :subject => sub,
+                            :subject => @sub,
                             :lectureable => document)
           @ability.should_not be_able_to(:upload_document, document)
         end
 
         # Need Seminar factory
         it "can NOT upload multimedia"
+
+        it "can create a Youtube seminar" do
+          youtube = Factory(:seminar_youtube)
+          lecture = Factory(:lecture, :owner => @env_admin,
+                            :subject => @sub,
+                            :lectureable => youtube)
+          @ability.should be_able_to(:upload_multimedia, youtube)
+        end
+
         # Need Myfile factory
         it "can NOT upload file"
       end
