@@ -551,10 +551,10 @@ class UsersController < BaseController
 
   # Dada uma palavra-chave retorna json com usuários que possuem aquela palavra.
   def auto_complete
-    if params[:term]
-      @users = User.with_keyword(params[:term])
+    if params[:q]
+      @users = User.with_keyword(params[:q])
       @users = @users.map do |u|
-        { :id => u.id, :label => u.display_name, :value => u.display_name, :avatar_32 => u.avatar.url(:thumb_32) }
+        { :id => u.id, :name => u.display_name, :avatar_32 => u.avatar.url(:thumb_32) }
       end
     end
 

@@ -2638,10 +2638,36 @@ label.focus {
   margin-left: 40px;
 }
 
-#admin-invitations .users-holder {
+#admin-invitations .token-input-list {
+  clear: none;
   float: left;
   margin-top: 20px;
+  width: 410px;
+  height: 25px;
+
+  border: 1px solid #B3B2B3;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
+#admin-invitations .token-input-list .token-input-token {
+  background-color: #eff6e6;
+  padding: 8px;
+}
+
+#admin-invitations .token-input-dropdown,
+#admin-invitations .token-input-list .token-input-token p {
+  font-family: Arial, sans-serif;
+  font-weight: normal;
+}
+
+div.token-input-dropdown {
   width: 420px;
+}
+
+#admin-invitations .token-input-list input {
+  margin: 0;
 }
 
 #admin-invitations .common input[type=text] {
