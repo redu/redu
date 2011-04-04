@@ -420,8 +420,13 @@ class CoursesController < BaseController
     end
 
     respond_to do |format|
-      format.html do
+      if @users.empty?
+        flash[:error] = "Nenhum usuário foi informado."
+      else
         flash[:notice] = "Os usuários foram convidados via e-mail."
+      end
+
+      format.html do
         redirect_to admin_invitations_environment_course_path(@environment, @course)
       end
     end

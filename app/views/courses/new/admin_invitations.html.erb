@@ -7,10 +7,10 @@
         $("#name").change();
       },
       exists: function(id){
-        return $(".holder li[rel=" + id + "]").length > 0;
+        return $(".users-holder li[rel=" + id + "]").length > 0;
       },
       ids: function(){
-        return $.map($(".holder li"), function(el, i){
+        return $.map($(".users-holder li"), function(el, i){
           return $(el).attr("rel");
         });
       }
@@ -71,7 +71,7 @@
         var html = $("<li rel=\"" + item.id + "\">")
         html = html.append($("<span class=\"name\">" + item.name + "</span>"));
         // html.append("<a class=\"close replacement icon icon-redu_r12_c43_s1\" href=\"#\">Fechar</a>")
-        $(".holder").append(html);
+        $(".users-holder").append(html);
 
         Invitations.resetInput();
 
@@ -81,7 +81,8 @@
       });
 
       $("#invite-members").submit(function(e){
-        $(this).find("#users").val(Invitations.ids());
+        var field = $("#users");
+        field.val(Invitations.ids());
       });
     });
   </script>
@@ -97,7 +98,7 @@
       <span class="counter">Convide pessoas para fazer parte do curso.</span>
     </div>
 
-    <% form_tag invite_members_environment_course_path(@environment, @course), :onsubmit => "return false;",
+    <% form_tag invite_members_environment_course_path(@environment, @course), 
       :class => 'common', :id => "invite-members" do %>
       <%= hidden_field_tag "users" %>
       <%= label_tag "name", "Nome ou e-mail:" %>
@@ -105,9 +106,9 @@
       <a href="" class="button add" >Adicionar</a>
       <div class="holder-wrapper" style="display: none;">
         <%= label_tag "Convites:" %>
-        <ul class="holder">
+        <ul class="users-holder">
         </ul>
-        <%= submit_tag "Convidar todos", :onclick => "this.form.submit();" %>
+        <%= submit_tag "Convidar todos" %>
       </div>
     <% end %>
   </div><!-- end admin-invitations -->

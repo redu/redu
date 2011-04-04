@@ -2633,7 +2633,7 @@ label.focus {
   padding-bottom: 20px;
 }
 
-#admin-invitations .holder {
+#admin-invitations .users-holder {
   float: left;
   margin-top: 20px;
   width: 420px;
@@ -2648,7 +2648,7 @@ label.focus {
   margin-right: 150px;
 }
 
-#admin-invitations .holder li {
+#admin-invitations .users-holder li {
   width: 410px;
   height: 13px;
   position: relative;
