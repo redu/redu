@@ -352,7 +352,13 @@ class User < ActiveRecord::Base
     self.admin? and return true
 
     if self.get_association_with(entity)
-      return true
+      # Apenas Course tem state
+      if entity.class.to_s == 'Course' &&
+        !self.get_association_with(entity).approved?
+        return false
+      else
+        return true
+      end
     else
       case entity.class.to_s
       when 'Event'

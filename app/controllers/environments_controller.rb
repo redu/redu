@@ -189,6 +189,10 @@ class EnvironmentsController < BaseController
   # Visão do Environment para usuários não-membros.
   # TODO Remover quando colocar as permissões, apenas redirecionar no show.
   def preview
+    if (can? :read, @environment) && (!can? :manage, @environment)
+      redirect_to environment_path(@environment) and return
+    end
+
     respond_to do |format|
       format.html do
         render :template => 'environments/new/preview', :layout => 'new/application'
