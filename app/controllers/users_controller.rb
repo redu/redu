@@ -165,6 +165,12 @@ class UsersController < BaseController
           @key.save
         end
 
+        if params.has_key?(:invitation)
+          invite = UserCourseInvitation.find_by_token(params[:invitation])
+          invite.user = @user
+          invite.accept!
+        end
+
         flash[:notice] = :email_signup_thanks.l_with_args(:email => @user.email)
         redirect_to signup_completed_user_path(@user)
       else

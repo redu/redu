@@ -17,6 +17,11 @@ class SessionsController < BaseController
 
       if result
         current_user = @user_session.record
+        if params.has_key?(:invitation)
+          invite = UserCourseInvitation.find_by_token(params[:invitation])
+          invite.user = current_user
+          invite.accept!
+        end
 
         flash[:notice] = :thanks_youre_now_logged_in.l
         redirect_to home_user_path(current_user)

@@ -16,6 +16,7 @@ describe Course do
   it { should have_many(:spaces).dependent :destroy }
   it { should have_many(:invitations).dependent :destroy }
   it { should have_many(:user_course_associations).dependent :destroy }
+  it { should have_many(:user_course_invitations).dependent :destroy }
   it { should have_many(:users).through :user_course_associations }
   it { should have_many(:approved_users).through :user_course_associations }
   it { should have_many(:pending_users).through :user_course_associations }

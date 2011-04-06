@@ -1,0 +1,13 @@
+Olá,
+
+você foi convidado para um curso no Redu <%= AppConfig.community_url %> que é uma plataforma de ensino a distância que foi construída tendo como base as interações sociais.
+
+O curso para o qual você foi convidado é o <%= @course.name %>. Para aceitar o convite, visite o link abaixo:
+
+  <%# FIXME Colocar url %>
+  <%= home_user_url(@course) %>
+
+Caso você tenha problemas, copie e cole o endereço no seu navegador.
+
+Obrigado,
+Equipe <%= AppConfig.community_name %>

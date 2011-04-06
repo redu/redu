@@ -310,10 +310,19 @@ class UserNotifier < ActionMailer::Base
 
   def course_invitation_notification(user, course)
     setup_sender_info
-    
+
     @recipients  = "#{user.email}"
     @subject    = "Você foi convidado para um curso no Redu"
     @body[:user] = user
+    @body[:course] = course
+  end
+
+  def external_user_course_invitation(token, email, course)
+    setup_sender_info
+
+    @recipients  = "#{email}"
+    @subject    = "Você foi convidado para um curso no Redu"
+    @body[:token] = token
     @body[:course] = course
   end
 
