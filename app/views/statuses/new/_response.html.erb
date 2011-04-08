@@ -22,10 +22,10 @@
       <li>
       <%= link_to_remote 'Apagar',
         :url => status_path(response),
-        :loading => "$('#status-#{response.id} > .actions .icon-redu_r12_c43_s1').hide(); $('#status-#{response.id}  > .actions #favorite_spinner').show();",
+        :loading => "$('#status-#{response.id} > .actions .icon-x-gray_8_8').hide(); $('#status-#{response.id}  > .actions #favorite_spinner').show();",
         :confirm => 'Deseja remover a postagem?',
         :method => :delete,
-        :html => { :class => "icon icon icon-redu_r12_c43_s1" } %>
+        :html => { :class => "icon icon icon-x-gray_8_8" } %>
       </li>
     <% end %>
   </ul>

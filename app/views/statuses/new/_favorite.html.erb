@@ -9,7 +9,7 @@
                                   :type => status.class.to_s,
                                   :new_layout => true),
                                   :loading => "$('#status-#{status.id} > div > .actions #rm_favorites_link').hide(); $('#status-#{status.id} > div > .actions #favorite_spinner').show();" ,
-  :html => {:class => 'icon icon-redu_r12_c59_s1',
+  :html => {:class => 'icon icon-unfavorite-gray_8_8',
     :id => 'rm_favorites_link'})
   %>
 <% else %>
@@ -20,7 +20,7 @@
                               :type => status.class.to_s,
                               :new_layout => true),
                               :loading => "$('#status-#{status.id} > div > .actions #favorites_link').hide(); $('#status-#{status.id} > div > .actions #favorite_spinner').show();" ,
-  :html => {:class => 'icon icon-redu_r12_c59_s1',
+  :html => {:class => 'icon icon-favorite-gray_8_8',
     :id => 'favorites_link'})
   %>
 <% end %>

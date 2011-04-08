@@ -12,9 +12,9 @@
   </ol>
   <div id="messages">
     <%
-      fake_tabs ['Recebidas', user_messages_path(@user), {:class => 'icon'}],
-        ['Enviadas', index_sent_user_messages_path(@user)],
-        ['Nova', new_user_message_path(@user)] do
+      fake_tabs ['Recebidas', user_messages_path(@user), {:class => 'icon icon-message-gray_16_16'}],
+        ['Enviadas', index_sent_user_messages_path(@user),  {:class => 'icon icon-messagereply-gray_16_16'}],
+        ['Nova', new_user_message_path(@user), {:class => 'icon icon-messagecreate-lightblue_16_16'}] do
     %>
       <%= render :partial => 'messages/new/form',
         :locals => { :message => @message } %>

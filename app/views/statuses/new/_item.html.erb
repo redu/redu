@@ -19,7 +19,7 @@
   <ul class="actions clearfix">
     <% if can? :respond, item %>
       <li>
-        <a href="" class="icon icon-redu_r12_c51_s1 reply-status">Responder</a>
+        <a href="" class="icon icon-spinner-gray_8_8 reply-status">Responder</a>
       </li>
       <li>
         <%= render :partial => 'statuses/new/favorite',
@@ -30,10 +30,10 @@
       <li>
       <%= link_to_remote 'Apagar',
         :url => status_path(item),
-        :loading => "$('#status-#{item.id} > .actions .icon-redu_r12_c43_s1').hide(); $('#status-#{item.id}  > .actions #favorite_spinner').show();",
+        :loading => "$('#status-#{item.id} > .actions .icon-x-gray_8_8').hide(); $('#status-#{item.id}  > .actions #favorite_spinner').show();",
       :confirm => 'Deseja remover a postagem?',
         :method => :delete,
-        :html => { :class => "icon icon icon-redu_r12_c43_s1" } %>
+        :html => { :class => "icon icon-x-gray_8_8" } %>
       </li>
     <% end %>
   </ul>
