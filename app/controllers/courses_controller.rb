@@ -1,7 +1,8 @@
 class CoursesController < BaseController
   layout "environment"
   load_resource :environment
-  load_and_authorize_resource :course, :through => :environment, :except => [:index]
+  load_and_authorize_resource :course, :through => :environment,
+    :except => [:index]
 
   rescue_from CanCan::AccessDenied do |exception|
     raise if cannot? :preview, @course
@@ -222,26 +223,47 @@ class CoursesController < BaseController
       approved = params[:member].reject{|k,v| v == 'reject'}
       rejected = params[:member].reject{|k,v| v == 'approve'}
 
-      approved.keys.each do |user_id|
-        @course.user_course_associations.all(:conditions => {
-          :user_id => user_id}).each do |ass|
-          ass.approve!
-          @course.create_hierarchy_associations(ass.user, ass.role)
-          # TODO fazer isso em batch
-          UserNotifier.deliver_approve_membership(ass.user, @course)
-        end
-      end
-
       rejected.keys.each do |user_id|
         @course.user_course_associations.all(:conditions => {
-        :user_id => user_id}).each do |ass|
+          :user_id => user_id}).each do |ass|
           #TODO fazer isso em batch
           UserNotifier.deliver_reject_membership(ass.user, @course)
           ass.destroy
+          end
+      end
+
+      # verifica se o limite de usuário foi atingido
+      if @course.can_add_entry? and !approved.to_hash.empty?
+
+        # calcula o total de usuarios que estão para ser aprovados
+        # e só aprova aqueles que estiverem dentro do limite
+        total_members = @course.approved_users.count + approved.count
+        if total_members > @course.plan.members_limit
+          # remove o usuários que passaram do limite
+          approved.pop(@course.plan.members_limit - total_members)
+          flash[:notice] = "O limite máximo de usuários foi atigindo, apenas alguns membros foram moderados."
+        else
+          flash[:notice] = 'Membros moderados!'
+        end
+
+        approved.keys.each do |user_id|
+          @course.user_course_associations.all(:conditions => {
+            :user_id => user_id}).each do |ass|
+            ass.approve!
+            @course.create_hierarchy_associations(ass.user, ass.role)
+            # TODO fazer isso em batch
+            UserNotifier.deliver_approve_membership(ass.user, @course)
+            end
+        end
+      else
+        if rejected.to_hash.empty?
+          flash[:notice] = "O limite máximo de usuários foi atingido. Não é possível adicionar mais usuários."
+        else
+          flash[:notice] = "O limite máximo de usuários foi atingido. Só os usuários rejeitados foram moderados."
         end
       end
 
-      flash[:notice] = 'Membros moderados!'
+
     end
 
     redirect_to admin_members_requests_environment_course_path(@environment, @course)
@@ -249,6 +271,8 @@ class CoursesController < BaseController
 
   # Associa um usuário a um Course (Ação de participar).
   def join
+
+    authorize! :add_entry, @course
     association = UserCourseAssociation.create(:user_id => current_user.id,
                                                :course_id => @course.id,
                                                :role_id => Role[:member].id)
@@ -390,6 +414,8 @@ class CoursesController < BaseController
 
   # Aceitar convite para o Course
   def accept
+    authorize! :add_entry, @course
+
     assoc = current_user.get_association_with @course
     assoc.accept!
 

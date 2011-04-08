@@ -1566,6 +1566,16 @@
   background: -moz-linear-gradient(top,  #AED584,  #61BE80); /* Firefox 3.6+ */
 }
 
+.courses-requisitions li .actions .waiting {
+  border: 1px solid #61BE80;
+  padding: 5px 10px;
+  font-size: .9em;
+  color: #61BE80;
+
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+
 .friends-requisitions li .actions,
 .courses-requisitions li .actions {
   float: right;

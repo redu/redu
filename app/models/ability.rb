@@ -144,6 +144,11 @@ class Ability
         myfile.can_upload_file?(myfile.folder.space)
       end
 
+      # Join in a Course
+      can :add_entry, Course do |course|
+        course.can_add_entry?
+      end
+
       # Plan (payment gateway)
       can :read, :success
 

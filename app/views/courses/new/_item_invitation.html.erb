@@ -23,12 +23,16 @@
       :success => "$('#requisition-#{item_invitation.id}').slideToggle();" do %>
       <%= submit_tag "Recusar", :class => 'remove' %>
     <% end %>
-    <% form_remote_tag :url => accept_environment_course_path(
-                                 item_invitation.course.environment,
-                                 item_invitation.course),
-      :loading => "$('#spinner-#{item_invitation.id}').show();",
-      :success => "$('#requisition-#{item_invitation.id}').slideToggle();" do %>
-      <%= submit_tag "Aceitar", :class => 'accept-invitation' %>
+    <% if item_invitation.course.can_add_entry? %>
+      <% form_remote_tag :url => accept_environment_course_path(
+        item_invitation.course.environment,
+        item_invitation.course),
+        :loading => "$('#spinner-#{item_invitation.id}').show();",
+        :success => "$('#requisition-#{item_invitation.id}').slideToggle();" do %>
+        <%= submit_tag "Aceitar", :class => 'accept-invitation' %>
+      <% end %>
+    <% else %>
+      <span class="waiting">Limite de vagas atingido</span>
     <% end %>
   </div>
 </li>
