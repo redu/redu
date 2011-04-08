@@ -2673,6 +2673,16 @@ label.focus {
   margin-left: 40px;
 }
 
+#admin-invitations .header {
+  float: none;
+}
+
+#admin-invitations .flash-message {
+  margin-left: 62px;
+  width: 478px;
+}
+
+
 #admin-invitations .token-input-list {
   clear: none;
   float: left;
