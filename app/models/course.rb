@@ -226,6 +226,22 @@ class Course < ActiveRecord::Base
     assoc.invite!
     assoc
   end
+
+  # Método de alto nível que convida um determinado usuário para o curso
+  # através do e-mail.
+  def invite_by_email(email)
+    u =  User.find_by_email(email)
+    if u
+      self.invite(u)
+    else
+      self.user_course_invitations.create(:email => email)
+    end
+  end
+
+  # Indica se o curso possui convites para usuários não registrados
+  def invited?(email)
+    self.user_course_invitations.find_by_email(email)
+  end
  
   # Retorna o percentual de espaço ocupado por files
   def percentage_quota_file

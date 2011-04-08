@@ -483,6 +483,8 @@ describe CoursesController do
       @users = 3.times.inject([]) do |acc,e|
         acc << Factory(:user)
       end
+      @emails = ["email@example.com", "email2@example.com",
+                 "email3@example.com"]
 
       @environment = Factory(:environment)
       @course = Factory(:course, :environment => @environment,
@@ -492,7 +494,8 @@ describe CoursesController do
       UserSession.create @course.owner
 
       @params = { :locale => 'pt-BR', :environment_id => @course.environment.id,
-        :id => @course.id, :users => @users.collect { |u| u.id }.join(",") }
+        :id => @course.id, :users => @users.collect { |u| u.id }.join(","),
+        :emails => @emails.collect { |e| e }.join(",") }
 
     end
 
@@ -503,6 +506,12 @@ describe CoursesController do
         @course.user_course_associations.reload
         u.reload
         u.has_course_invitation?(@course).should be_true
+      end
+
+      @emails.each do |e|
+        u = User.find_by_email(e)
+        u.should be_nil
+        @course.invited?(e).should be_true
       end
     end
   end

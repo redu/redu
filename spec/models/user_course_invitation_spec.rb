@@ -61,7 +61,6 @@ describe UserCourseInvitation do
 
       it "creates a user course association with state 'invited'" do
         subject.user = Factory(:user)
-        debugger
         expect {
           subject.accept!
         }.should change(UserCourseAssociation, :count).by(1)

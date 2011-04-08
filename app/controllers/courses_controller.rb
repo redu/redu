@@ -428,6 +428,13 @@ class CoursesController < BaseController
       @course.invite(user)
     end
 
+    @emails = params[:emails] || ""
+    @emails = @emails.split(",").uniq.compact
+    @emails.delete("")
+    @emails.each do |e|
+      @course.invite_by_email(e)
+    end
+
     respond_to do |format|
       if @users.empty?
         flash[:error] = "Nenhum usuário foi informado."

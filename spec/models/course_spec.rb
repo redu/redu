@@ -481,6 +481,67 @@ describe Course do
         }
       end
     end
+
+    context "by email" do
+      before do
+        @not_registered_email = "email@example.com"
+      end
+
+      it "returns the invitation"  do
+        assoc = subject.invite_by_email(@not_registered_email)
+        assoc.should == subject.user_course_invitations.reload.last
+
+        u = Factory(:user)
+        assoc = subject.invite_by_email(u.email)
+        assoc.should == subject.user_course_associations.reload.last
+      end
+
+      context "when the email is not registered on Redu at all" do
+        it "creates an email invitation" do
+          expect {
+            subject.invite_by_email(@not_registered_email)
+          }.should change(UserCourseInvitation, :count).by(1)
+        end
+      end
+
+      context "when the email is already invited" do
+        before do
+            subject.invite_by_email(@not_registered_email)
+        end
+
+        it "does NOT create a new invitation" do
+          expect {
+            subject.invite_by_email(@not_registered_email)
+          }.should_not change(UserCourseInvitation, :count)
+        end
+      end
+
+      context "when the email is already registered on Redu" do
+        before do
+          @registered_user = Factory(:user)
+        end
+
+        it "does NOT create an e-mail invitation" do
+          expect {
+            subject.invite_by_email(@registered_user.email)
+          }.should_not change(UserCourseInvitation, :count)
+        end
+
+        it "creates an association" do
+          subject.reload
+          expect {
+            subject.invite_by_email(@registered_user.email)
+          }.should change(UserCourseAssociation, :count).by(1)
+        end
+      end
+    end
+  end
+
+  it "indicates if it invited users by email" do
+    subject.invited?("email@example.com").should be_false
+
+    subject.invite_by_email("email@example.com")
+    subject.invited?("email@example.com").should be_true
   end
 
   context "Quotas" do
@@ -494,7 +555,7 @@ describe Course do
       subject.join(users[2], Role[:teacher])
       subject.join(users[3], Role[:tutor])
     end
-    
+
     it "retrieve a percentage of quota file" do
       subject.quota.files = 512
       subject.quota.save
@@ -505,10 +566,11 @@ describe Course do
       subject.quota.multimedia = 512
       subject.quota.save
       subject.percentage_quota_multimedia.should == 50
-    end  
+    end
 
     it "retrieve a percentage of a members" do
       subject.percentage_quota_members == 50
     end
   end
+
 end
