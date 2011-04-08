@@ -4021,7 +4021,10 @@ div.token-input-dropdown {
 
 .icon-account-lightblue_16_16:hover,
 .icon-account-blue_16_16{ background-position: 0 0;  }
+.fake-tabs > ul > li .icon-account-gray_16_16{ background-position: 8px -216px;  }
+.fake-tabs > ul > li .icon-account-gray_16_16:hover{ background-position: 8px 0px;  }
 .icon-account-gray_16_16{ background-position: 0 -216px;  }
+.fake-tabs > ul > li .icon-account-lightblue_16_16{ background-position: 8px -432px;  }
 .icon-account-lightblue_16_16{ background-position: 0 -432px;  }
 
 .icon-add-lightblue_16_16{ background-position: 0 -648px;  }
@@ -4053,8 +4056,11 @@ div.token-input-dropdown {
 .icon-bulletin-lightblue_32_32{ background-position: -664px -448px;  }
 .icon-bulletin-white_16_16{ background-position: -664px -680px;  }
 .icon-cash-blue_16_16{ background-position: -664px -896px;  }
+.fake-tabs > ul > li .icon-cash-gray_16_16{ background-position: -656px -1112px;  }
+.fake-tabs > ul > li .icon-cash-gray_16_16:hover{ background-position: -656px -896px;  }
 .icon-cash-gray_16_16{ background-position: -664px -1112px;  }
 .icon-cash-lightblue_16_16{ background-position: -664px -1328px;  }
+.fake-tabs > ul > li .icon-cash-lightblue_16_16{ background-position: -656px -1328px;  }
 .icon-check-white_16_16{ background-position: -664px -1544px;  }
 .icon-contactadd-blue_16_16{ background-position: -664px -1760px;  }
 .icon-contactadd-lightblue_16_16{ background-position: -896px 0;  }
@@ -4222,10 +4228,15 @@ div.token-input-dropdown {
 .icon-preview-lightblue_16_16{ background-position: -4352px -680px;  }
 .icon-preview-lightblue_32_32{ background-position: -4352px -896px;  }
 .icon-preview-white_16_16{ background-position: -4352px -1128px;  }
+.icon-profile-lightblue_16_16:hover,
 .icon-profile-blue_16_16{ background-position: -4352px -1344px;  }
 .icon-profile-blue_32_32{ background-position: -4352px -1560px;  }
+.fake-tabs > ul > li .icon-profile-gray_16_16{ background-position: -4344px -1792px;  }
+.fake-tabs > ul > li .icon-profile-gray_16_16:hover { background-position: -4344px -1344px;  }
 .icon-profile-gray_16_16{ background-position: -4352px -1792px;  }
 .icon-profile-gray_32_32{ background-position: -4600px 0;  }
+.fake-tabs > ul > li .icon-profile-lightblue_16_16{ background-position: -4592px -232px;  }
+.fake-tabs > ul > li .icon-profile-lightblue_16_16:hover{ background-position: -4344px -1344px;;  }
 .icon-profile-lightblue_16_16{ background-position: -4600px -232px;  }
 .icon-profile-lightblue_32_32{ background-position: -4600px -448px;  }
 .icon-profile-white_16_16{ background-position: -4600px -680px;  }
