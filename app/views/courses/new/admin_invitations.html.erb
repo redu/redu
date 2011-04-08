@@ -22,8 +22,12 @@
       <h4>Membros</h4>
       <span class="counter">Convide pessoas para fazer parte do curso.</span>
     </div>
-
-    <% form_tag invite_members_environment_course_path(@environment, @course), 
+    <% unless @course.can_add_entry? %>
+      <div class="flash-message">
+        <span>O limite de vagas foi atingido, seus convites não poderão ser aceitos. Faça o upgrade do seu curso, e aumente a capacidade de usuários.</span>
+      </div>
+    <% end %>
+    <% form_tag invite_members_environment_course_path(@environment, @course),
       :class => 'common', :id => "invite-members" do %>
       <%= label_tag "name", "Nome ou e-mail:" %>
       <%= text_field_tag "users" %>
