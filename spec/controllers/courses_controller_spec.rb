@@ -98,9 +98,7 @@ describe CoursesController do
         post :create, @params
         assigns[:plan].name.should == "Instituição Standard"
       end
-
     end
-
   end
 
   context "when updating a couse" do
@@ -148,8 +146,14 @@ describe CoursesController do
 
       @environment = Factory(:environment, :owner => @user)
 
-      @course = Factory(:course,:environment => @environment, :owner => @user,
+      @course = Factory(:course,:environment => @environment,
+                        :owner => @user,
                         :subscription_type => 2)
+
+      plan = Factory(:plan, :billable => @course,
+                     :user => @course.owner)
+      @course.create_quota
+
       @space = Factory(:space, :course => @course, :owner => @user)
       @users = 5.times.inject([]) { |res, i| res << Factory(:user) }
       @course.join(@users[0])
@@ -431,6 +435,11 @@ describe CoursesController do
       @owner = Factory(:user)
       @environment = Factory(:environment, :owner => @owner)
       @course = Factory(:course,:environment => @environment, :owner => @owner)
+      plan = Factory( :plan, :billable => @course,
+                     :user => @course.owner,
+                     :members_limit => 5)
+      @course.create_quota
+
       @invited_user = Factory(:user)
       activate_authlogic
       UserSession.create @invited_user
@@ -504,6 +513,85 @@ describe CoursesController do
         u.reload
         u.has_course_invitation?(@course).should be_true
       end
+    end
+  end
+
+  context "when the limit of members is full" do
+    before do
+      @user = Factory(:user)
+      activate_authlogic
+      UserSession.create @user
+
+      @environment = Factory(:environment, :owner => @user)
+
+      @course = Factory(:course,:environment => @environment,
+                        :owner => @user)
+
+      plan = Factory( :plan, :billable => @course,
+                     :user => @course.owner,
+                     :members_limit => 5)
+      @course.create_quota
+
+      @users = 4.times.inject([]) { |res, i| res << Factory(:user) }
+      @course.join(@users[0])
+      @course.join(@users[1])
+      @course.join(@users[2])
+      @course.join(@users[3])
+    end
+
+    context "and course isn't moderated" do
+      before do
+        @params = { :locale => 'pt-BR',
+                    :environment_id => @environment.id,
+                    :id => @course.id }
+      end
+
+      it "should not authorize more 1 user" do
+        @new_user = Factory(:user)
+        UserSession.create @new_user
+        expect {
+          post :join, @params
+        }.should_not change(UserCourseAssociation, :count).by(1)
+      end
+
+    end
+
+    context "and course is moderated" do
+      before do
+        @course.subscription_type = 2
+        @course.save
+
+        @new_user = Factory(:user)
+        @params = { :locale => 'pt-BR',
+          :environment_id => @environment.id,
+          :id => @course.id }
+      end
+
+      context "POST accept" do
+        it "should not authorize more 1 user" do
+          UserSession.create @user
+          @course.invite(@new_user)
+
+          UserSession.create @new_user
+          expect {
+            post :accept, @params
+          }.should_not change(@course.approved_users, :count).by(1)
+        end
+      end
+
+      context "POST moderate_members" do
+        it "should not authorize more 1 user" do
+          UserSession.create @user
+          @course.join(@new_user)
+          @params = { :member => { @new_user.id.to_s => "approve"},
+            :id => @course.id, :environment_id => @environment.id,
+            :locale => "pt-BR"}
+          expect {
+            post :moderate_members_requests, @params
+          }.should_not change(@course.approved_users, :count).by(1)
+        end
+      end
+
     end
   end
 end
