@@ -75,7 +75,6 @@ class Ability
     alias_action :lazy, :cancel, :edit_resources, :update_resources,
       :admin_lectures_order, :to => :manage
     alias_action :statuses, :attend, :to => :read
-    alias_action :infos, :enroll, :to => :preview
 
     # Friendship
     alias_action :pending, :accept, :decline, :to => :manage
@@ -121,14 +120,6 @@ class Ability
 
       # User
       can :read, User
-
-      # Subject
-      can :preview, Subject do |subject|
-        subject.published? && user.has_access_to?(subject.space)
-      end
-      can :unenroll, Subject do |subject|
-        subject.published? && user.has_access_to?(subject)
-      end
 
       # Seminar
       can :upload_multimedia, Seminar do |seminar|
