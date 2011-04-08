@@ -1,16 +1,9 @@
 <%= image_tag 'loadingAnimation.gif', :id => 'loading_bar', :style => "display: none; margin-top: 40px"%>
-<% form_tag unenroll_space_subject_path(@space, @subject),
-    :method => :post, :id => "remove" do %>
-    <div class="actions">
-      <%= submit_tag "Remover selecionados", :class => "remove vanilla" %>
-    </div>
 <table id="user_list_table" class="common users" width="100%">
   <thead>
     <tr>
-      <th width="5%">
-        <input type="checkbox" id="select_all"  >
-      </th>
       <th width="50%">Usuário</th>
+      <th width="15%">Papel</th>
       <th width="15%">Inscricão em:</th>
     </tr>
   </thead>
@@ -18,7 +11,3 @@
     <%= render :partial => 'subjects/new/user_item_admin', :collection => @memberships %>
   </tbody>
 </table>
-<div class="actions">
-  <%= submit_tag "Remover selecionados", :class => "remove vanilla" %>
-</div>
-<% end %>
