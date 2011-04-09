@@ -11,7 +11,7 @@ class SubjectsController < BaseController
   rescue_from CanCan::AccessDenied do |exception|
     flash[:notice] = "Você não tem acesso a essa página"
 
-    if params[:action] == 'infos' || !params[:id]
+    if !params[:id]
       redirect_to environment_course_path(@space.course.environment, @space.course)
     else
       subject = Subject.find(params[:id])
@@ -161,13 +161,6 @@ class SubjectsController < BaseController
     redirect_to space_subjects_path(@subject.space)
   end
 
-  def infos
-    respond_to do |format|
-      format.html { render :template => 'subjects/new/infos',
-        :layout => 'new/application' }
-    end
-  end
-
   def publish
     @subject.publish!
     flash[:notice] = "O módulo foi publicado."
@@ -178,27 +171,6 @@ class SubjectsController < BaseController
     @subject.unpublish!
     flash[:notice] = "O módulo foi despublicado e todas as matrículas foram perdidas."
     redirect_to space_subject_path(@space, @subject)
-  end
-
-  def enroll
-    role = current_user.get_association_with(@space).role
-    @subject.enroll(current_user, role)
-    flash[:notice] = "Você foi matriculado e já pode começar a assistir as aulas."
-    redirect_to space_subject_path(@space, @subject)
-  end
-
-  def unenroll
-    if params.has_key?(:users)
-      params[:users].each do |user_id|
-        user = User.find(user_id)
-        @subject.unenroll(user)
-      end
-    else
-      user = User.find(params[:user_id])
-      @subject.unenroll(user)
-    end
-    flash[:notice] = "Você desmatriculado do módulo."
-    redirect_to admin_members_space_subject_path(@space, @subject)
   end
 
   #FIXME evitar usar GET e POST no mesmo action

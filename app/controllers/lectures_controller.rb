@@ -14,8 +14,9 @@ class LecturesController < BaseController
   rescue_from CanCan::AccessDenied do |exception|
     respond_to do |format|
       format.html do
-       subject = Subject.find(params[:subject_id])
-       redirect_to infos_space_subject_path(subject.space, subject)
+       space = Space.find(params[:space_id])
+       redirect_to preview_environment_course_path(space.course.environment,
+                                                   space.course)
       end
       format.js { render :js => "alert('Você não possui espaço suficiente.')" }
     end
@@ -133,7 +134,7 @@ class LecturesController < BaseController
     @statuses = @lecture.statuses.not_response.
       paginate(:page => params[:page],:order => 'created_at DESC',
                :per_page => AppConfig.items_per_page)
-    
+
     if current_user.get_association_with(@lecture.subject)
       asset_report = @lecture.asset_reports.of_user(current_user).first
       @student_grade = asset_report.student_profile.grade.to_i
