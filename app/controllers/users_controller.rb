@@ -165,8 +165,8 @@ class UsersController < BaseController
           @key.save
         end
 
-        if params.has_key?(:invitation)
-          invite = UserCourseInvitation.find_by_token(params[:invitation])
+        if params.has_key?(:invitation_token)
+          invite = UserCourseInvitation.find_by_token(params[:invitation_token])
           invite.user = @user
           invite.accept!
         end

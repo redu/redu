@@ -17,8 +17,8 @@ class SessionsController < BaseController
 
       if result
         current_user = @user_session.record
-        if params.has_key?(:invitation)
-          invite = UserCourseInvitation.find_by_token(params[:invitation])
+        if params.has_key?(:invitation_token)
+          invite = UserCourseInvitation.find_by_token(params[:invitation_token])
           invite.user = current_user
           invite.accept!
         end

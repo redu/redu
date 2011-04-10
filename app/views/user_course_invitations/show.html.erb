@@ -1,0 +1,105 @@
+<div class="container_16 clearfix" id="course-invitation">
+  <div class="grid_4 alpha">
+    <h1 class="logotipo replacement">
+      <a href="#">Redu: rede social educacional</a>
+    </h1>
+  </div>
+  <span class="salutation">Olá, você foi convidado para participar do curso:</span>
+  <div  class="grid_6 alpha clearfix course">
+    <%= image_tag 'new/missing_environments_thumb_32.png',
+      :class => 'avatar' %>
+    <div class="informations">
+      <div class="header">
+        <%= link_to @course.environment.name,
+          environment_path(@course.environment), :class => 'environment' %>
+        <%= link_to @course.name,
+          environment_course_path(@course.environment, @course),
+          :class => 'name' %>
+        <ul class="tags">
+          <% @course.tags.each do |tag| %>
+            <li>
+              <%= link_to tag,
+                course_user_course_invitation_path(@course, @invitation) %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+      <span class="description">
+        <% if @course.description %>
+          <%= @course.description%>
+        <% else %>
+          Sem descrição.
+        <% end %>
+      </span>
+      <ul class="statistics">
+        <li>
+          <em>Membros:</em>
+          <span><%= @course.approved_users.length %></span>
+        </li>
+        <li>
+          <em>Professores:</em>
+          <span><%= @course.teachers.length %></span>
+        </li>
+        <li>
+          <em>Tutores:</em>
+          <span><%= @course.tutors.length %></span>
+        </li>
+        <li>
+          <em>Alunos:</em>
+          <span><%= @course.students.length %></span>
+        </li>
+      </ul>
+      <div class="audience">
+        <em>Audiência:</em>
+        <ul>
+          <% if @course.audiences.empty? %>
+            <li><%= link_to 'Não informado', nil %></li>
+          <% else %>
+            <% @course.audiences.each do |audience| %>
+              <%= link_to audience.name, environment_course_path(@course, @course.environment) %>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="grid_6 omega">
+  <div class="hall">
+    <%= link_to "Criar nova conta",
+      signup_url(:invitation_token => @user_course_invitation.token),
+      :class => "important signup" %>
+    <hr/>
+
+    <% form_for @user_session, :html => { :class => "common highlightable"} ,:url => sessions_path do |f| %>
+
+      <% field_set_tag do %>
+
+        <%= hidden_field_tag :invitation_token, @user_course_invitation.token %>
+        <%= f.label :login, "Login ou e-mail:", :class => "small" %>
+        <%= f.text_field :login, :class => "small" %>
+        <%= error_for :user_session, :login %>
+
+        <%= f.label :password, "Senha:" ,:class => "small" %>
+        <%= f.password_field :password, :class => "small" %>
+        <%= error_for :user_session, :password %>
+
+        <% field_set_tag "", :class => "inline" do %>
+          <%= f.check_box :remember_me %>
+          <%= f.label :remeber_me, "Manter-me logado" %>
+        <% end %>
+
+        <%= f.submit "Avançar" %>
+      <% end %>
+
+    <% end %>
+
+  </div>
+  <%= "Esqueceu seu login?" %>
+  <%= link_to "Clique aqui para recuperar o login",
+    forgot_username_url %>
+  <%= "Esqueceu sua senha?" %>
+  <%= link_to "Clique aqui para recuperar a senha",
+    forgot_password_url %>
+</div>
+    </div>

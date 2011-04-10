@@ -34,7 +34,7 @@ describe UsersController do
             @invite = Factory(:user_course_invitation,
                               :email => @post_params[:user][:email],
                               :course => course)
-            @post_params.store(:invitation, @invite.token)
+            @post_params.store(:invitation_token, @invite.token)
           end
 
           it "invites the new user to the course identified by the token invitation" do
@@ -55,7 +55,7 @@ describe UsersController do
             @invite = Factory(:user_course_invitation,
                               :email => @another_email,
                               :course => course)
-            @post_params.store(:invitation, @invite.token)
+            @post_params.store(:invitation_token, @invite.token)
             @post_params[:user][:email] = @another_email
             @post_params[:user][:email_confirmation] = @another_email
           end

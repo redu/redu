@@ -15,7 +15,7 @@ describe SessionsController do
 
       context "when logging" do
         before do
-          @post_params = {:locale => 'pt-BR', :invitation => @invite.token,
+          @post_params = {:locale => 'pt-BR', :invitation_token => @invite.token,
             :user_session => { :remember_me => "0", :password => @user.password,
                                :login => @user.login}}
         end

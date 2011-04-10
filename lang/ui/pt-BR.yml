@@ -683,7 +683,7 @@ pt-BR:
   #en: email: E-mail
   email: E-mail
   #en: email_signup_thanks: Thanks for signing up! You should receive an e-mail confirmation shortly at {{email}}
-  email_signup_thanks: "Obrigado pelo cadastro! Você deve receber um e-mail de confirmação em {{email}}."
+  email_signup_thanks: "Obrigado pelo cadastro! Você deve receber um e-mail de confirmação em %{email}."
   #en: email_this_story_to_friends: "E-mail this story to friends"
   email_this_story_to_friends: "E-mail this story to friends"
   #en: email_to_friends: E-mail to friends

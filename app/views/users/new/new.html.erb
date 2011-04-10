@@ -23,6 +23,9 @@
     <% form_for :user, :url => users_path,
       :html => {:class => 'common', :onsubmit => 'return verifyTOS();'} do |f| %>
       <%= error_messages_for :user %>
+      <% if params[:invitation_token] %>
+        <%= hidden_field_tag :invitation_token, params[:invitation_token] %>
+      <% end %>
       <% field_set_tag "Informações pessoais", :class => 'separator' do %>
         <%= f.label :first_name, "Nome:" %>
         <%= f.text_field :first_name, :class => 'small' %>

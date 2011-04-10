@@ -40,8 +40,7 @@ class UserCourseInvitation < ActiveRecord::Base
   end
 
   def send_external_user_course_invitation
-    UserNotifier.deliver_external_user_course_invitation(self.token, self.email,
-                                                         self.course)
+    UserNotifier.deliver_external_user_course_invitation(self, self.course)
   end
 
   def create_user_course_association
