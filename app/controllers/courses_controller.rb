@@ -282,13 +282,7 @@ class CoursesController < BaseController
     if @course.subscription_type.eql? 1 # Todos podem participar, sem moderação
       association.approve!
 
-      # Cria as associações no Environment do Course e em todos os seus Spaces.
-      UserEnvironmentAssociation.create(:user_id => current_user.id, :environment_id => @course.environment.id,
-                                        :role_id => Role[:member].id)
-      @course.spaces.each do |space|
-        UserSpaceAssociation.create(:user_id => current_user.id, :space_id => space.id,
-                                    :role_id => Role[:member].id, :status => "approved") #FIXME tirar status quando remover moderacao de space
-      end
+      @course.create_hierarchy_associations(current_user, Role[:member])
 
       flash[:notice] = "Você agora faz parte do curso #{@course.name}"
       redirect_to environment_course_path(@course.environment, @course)

@@ -48,10 +48,12 @@ describe Subject do
   context "callbacks" do
 
     it "creates an Enrollment between the Subject and the owner after create" do
+      subject.create_enrollment_associations
       subject.enrollments.first.should_not be_nil
-      subject.enrollments.first.user.should == subject.owner
-      subject.enrollments.first.role.
+      subject.enrollments.last.user.should == subject.owner
+      subject.enrollments.last.role.
         should == subject.owner.get_association_with(subject.space).role
+      subject.enrollments.count.should == 2
     end
 
     it "does NOT create an Enrollment between the Subject and the owner when update it" do
@@ -149,8 +151,7 @@ describe Subject do
     subject.unpublish!
     subject.should_not be_published
     subject.enrollments.reload
-    subject.enrollments.size.should == 1
-    subject.enrollments.first.user.should == @user
+    subject.enrollments.size.should == 0
   end
 
   it "responds to enroll" do

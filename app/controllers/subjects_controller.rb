@@ -11,12 +11,7 @@ class SubjectsController < BaseController
   rescue_from CanCan::AccessDenied do |exception|
     flash[:notice] = "Você não tem acesso a essa página"
 
-    if !params[:id]
-      redirect_to environment_course_path(@space.course.environment, @space.course)
-    else
-      subject = Subject.find(params[:id])
-      redirect_to infos_space_subject_path(@space, subject)
-    end
+    redirect_to preview_environment_course_path(@space.course.environment, @space.course)
   end
 
   def index
@@ -132,6 +127,8 @@ class SubjectsController < BaseController
           @subject.published = true
           @subject.save
           @subject.convert_lectureables!
+          # cria as associações com o subject, replicando a do space
+          @subject.create_enrollment_associations
           flash[:notice] = "O Módulo foi criado."
         end
 

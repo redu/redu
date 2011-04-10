@@ -10,6 +10,7 @@ describe Lecture do
     @user = Factory(:user)
     course.join(@user)
     @sub = Factory(:subject, :owner => @user, :space => @space)
+    @sub.create_enrollment_associations
   end
    
   subject { Factory(:lecture, :subject => @sub, 

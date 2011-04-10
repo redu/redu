@@ -232,7 +232,7 @@ class LecturesController < BaseController
     quota_multimedia = @space.course.quota.multimedia
     plan_files_limit = @space.course.plan.file_storage_limit
     plan_multimedia_limit = @space.course.plan.video_storage_limit
-    error = false
+
     if @lecture.name
       if params[:page]
         @page = Page.create(params[:page])

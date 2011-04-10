@@ -196,6 +196,11 @@ class Course < ActiveRecord::Base
                                   :space_id => space.id,
                                   :role_id => role.id,
                                   :status => "approved")
+
+      # Cria as associações com os subjects
+      space.subjects.each do |subject|
+        subject.enroll(user, role)
+      end
     end
   end
 

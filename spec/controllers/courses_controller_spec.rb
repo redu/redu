@@ -600,7 +600,6 @@ describe CoursesController do
           }.should_not change(@course.approved_users, :count).by(1)
         end
       end
-
     end
   end
 

@@ -8,6 +8,7 @@ describe StudentProfile do
     @space.course.join(@subject_owner)
     # Se usar @subject conflita com subject
     @sub = Factory(:subject, :owner => @subject_owner, :space => @space)
+    @sub.create_enrollment_associations
   end
 
   subject { @sub.enrollments.last.student_profile }
