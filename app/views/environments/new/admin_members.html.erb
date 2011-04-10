@@ -8,16 +8,8 @@
 </script>
 <%= render :partial => 'environments/new/sidebar' %>
 <div class="main grid_12 omega big-col">
-  <ol id="breadcrumbs" class="clearfix">
-    <li>
-      <%= link_to 'Home', home_user_path(current_user),
-        :class => 'replacement home icon icon-redu_r8_c227_s1' %>
-    </li>
-    <li>
-      <%= link_to @environment.name, environment_path(@environment),
-        :class => 'icon icon-redu_r8_c217_s1' %>
-    </li>
-  </ol>
+  <%= render :partial => 'environments/new/breadcrumbs',
+    :locals => { :environment => @environment } %>
 
   <%= render :partial => 'environments/new/header',
     :locals => { :environment => @environment } %>
@@ -28,12 +20,11 @@
       <span class="counter">Informações gerais do ambiente <%= @environment.initials_or_name %></span>
     </div>
 
-    <%#FIXME adicionar icones  %>
     <%
-      fake_tabs ["Informações", edit_environment_path(@environment), {:class => 'icon'}],
-        ["Membros", admin_members_environment_path(@environment), {:class => 'icon'}],
-        ["Notícias", admin_bulletins_environment_path(@environment), {:class => 'icon'}],
-        ["Cursos", admin_courses_environment_path(@environment), {:class => 'icon'}] do
+      fake_tabs ["Informações", edit_environment_path(@environment), {:class => 'icon icon-management-gray_16_16'}],
+        ["Membros", admin_members_environment_path(@environment), {:class => 'icon icon-members-lightblue_16_16'}],
+        ["Notícias", admin_bulletins_environment_path(@environment), {:class => 'icon icon-bulletin-gray_16_16'}],
+        ["Cursos", admin_courses_environment_path(@environment), {:class => ''}] do
       %>
 
     <% if @memberships && @memberships.size > 0 %>

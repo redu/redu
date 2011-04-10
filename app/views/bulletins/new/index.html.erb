@@ -1,37 +1,29 @@
 <%= render :partial => "#{@bulletinable.class.to_s.downcase + 's'}/new/sidebar" %>
 <div class="main grid_12 omega big-col">
-  <ol id="breadcrumbs" class="clearfix">
     <% if @bulletinable.class.to_s.eql? "Environment" %>
-      <li>
-        <%= link_to 'Home', home_user_path(current_user),
-          :class => 'replacement home icon icon-redu_r8_c227_s1' %>
-      </li>
-      <li>
-        <%= link_to @environment.name,
-          environment_path(@environment),
-          :class => 'replacement icon icon-redu_r8_c217_s1' %>
-      </li>
-      </ol>
+      <%= render :partial => "environments/new/breadcrumbs",
+            :locals => { :environment => @environment } %>
       <%= render :partial => 'environments/new/header',
         :locals => { :environment => @environment }%>
     <% elsif @bulletinable.class.to_s.eql? "Space" %>
+      <ol id="breadcrumbs" class="clearfix">
        <li>
         <%= link_to 'Home', home_user_path(current_user),
-          :class => 'replacement home icon icon-redu_r8_c227_s1' %>
+          :class => 'replacement home icon icon-home-lightblue_32_32' %>
        </li>
        <li>
         <%= link_to @space.course.environment.name,
           environment_path(@space.course.environment),
-          :class => 'replacement icon icon-redu_r8_c217_s1' %>
+          :class => 'replacement icon icon-environment-lightblue_32_32' %>
        </li>
        <li>
         <%= link_to @space.course.name,
           environment_course_path(@space.course.environment, @space.course),
-          :class => 'replacement icon icon-redu_r8_c313_s1' %>
+          :class => 'replacement icon icon-course-lightblue_32_32' %>
        </li>
        <li>
         <%= link_to @space.name, space_path(@space),
-          :class => 'icon icon-redu_r8_c307_s1' %>
+          :class => 'icon icon-space-lightblue_32_32' %>
        </li>
        </ol>
        <%= render :partial => 'spaces/new/header',

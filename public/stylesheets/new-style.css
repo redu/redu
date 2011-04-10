@@ -543,6 +543,7 @@
   background: url("../images/new/icon-preview-gray_32_32.png") no-repeat 20px center;
 }
 
+#environment-users .header,
 #course-users .header,
 #admin-invitations .header {
   background: url("../images/new/icon-members-gray_32_32.png") no-repeat 20px center;
@@ -817,7 +818,7 @@
   font-style: oblique;
   color:#B2B2B2;
   margin-top: 5px;
-  padding: 2px 0 2px 20px;
+  padding: 3px 0 3px 20px;
 }
 
 
@@ -4030,7 +4031,7 @@ div.token-input-dropdown {
 .icon-add-lightblue_16_16{ background-position: 0 -648px;  }
 .icon-add-white_16_16{ background-position: 0 -864px;  }
 .icon-administrator-blue_16_16{ background-position: 0 -1080px;  }
-.icon-administrator-gray_16_16{ background-position: 0 -1296px;  }
+.icon-administrator-gray_16_16{ background-position: 1px -1296px;  }
 .icon-administrator-lightblue_16_16{ background-position: 0 -1512px;  }
 .icon-administrator-white_16_16{ background-position: 0 -1728px;  }
 .icon-annotation-blue_16_16{ background-position: -216px 0;  }
@@ -4048,11 +4049,15 @@ div.token-input-dropdown {
 .icon-askforhelp-lightblue_16_16{ background-position: -432px -640px;  }
 .icon-askforhelp-white_16_16{ background-position: -432px -856px;  }
 .icon-bang-orange_16_16{ background-position: -432px -1072px;  }
+.icon-bulletin-lightblue_16_16:hover,
 .icon-bulletin-blue_16_16{ background-position: -432px -1288px;  }
+.fake-tabs > ul > li .icon-bulletin-gray_16_16:hover { background-position: -424px -1288px;  }
 .icon-bulletin-blue_32_32{ background-position: -432px -1504px;  }
 .icon-bulletin-gray_16_16{ background-position: -432px -1736px;  }
+.fake-tabs > ul > li .icon-bulletin-gray_16_16{ background-position: -424px -1736px;  }
 .icon-bulletin-gray_32_32{ background-position: -664px 0;  }
 .icon-bulletin-lightblue_16_16{ background-position: -664px -232px;  }
+.fake-tabs > ul > li .icon-bulletin-lightblue_16_16{ background-position: -656px -232px;  }
 .icon-bulletin-lightblue_32_32{ background-position: -664px -448px;  }
 .icon-bulletin-white_16_16{ background-position: -664px -680px;  }
 .icon-cash-blue_16_16{ background-position: -664px -896px;  }
@@ -4072,6 +4077,7 @@ div.token-input-dropdown {
 .icon-contacts-lightblue_16_16{ background-position: -896px -1080px;  }
 .icon-contacts-white_16_16{ background-position: -896px -1296px;  }
 .icon-course-black_16_16{ background-position: -896px -1512px;  }
+.icon-course-lightblue_16_16:hover,
 .icon-course-blue_16_16{ background-position: -896px -1728px;  }
 .icon-course-blue_32_32{ background-position: -1128px 0;  }
 .icon-course-gray_32_32{ background-position: -1128px -232px;  }
@@ -4149,22 +4155,29 @@ div.token-input-dropdown {
 .icon-lock-orange_16_16{ background-position: -2864px -1776px;  }
 .icon-management-lightblue_16_16:hover,
 .icon-management-blue_16_16{ background-position: -3112px 0;  }
+.fake-tabs > ul > li .icon-management-gray_16_16:hover { background-position: -3104px 0;  }
 .icon-management-blue_32_32{ background-position: -3112px -216px;  }
 .icon-management-blue_8_8{ background-position: -3112px -448px;  }
 .icon-management-gray_16_16{ background-position: -3112px -656px;  }
+.fake-tabs > ul > li .icon-management-gray_16_16{ background-position: -3104px -656px;  }
 .icon-management-gray_32_32{ background-position: -3112px -872px;  }
 .icon-management-gray_8_8{ background-position: -3112px -1104px;  }
 .icon-management-lightblue_16_16{ background-position: -3112px -1312px;  }
+.fake-tabs > ul > li .icon-management-lightblue_16_16 { background-position: -3104px -1312px;  }
 .icon-management-lightblue_32_32{ background-position: -3112px -1528px;  }
 .icon-management-white_16_16{ background-position: -3112px -1760px;  }
 .icon-material-blue_32_32{ background-position: -3360px 0;  }
 .icon-material-gray_32_32{ background-position: -3360px -232px;  }
 .icon-material-lightblue_32_32{ background-position: -3360px -464px;  }
+.icon-members-lightblue_16_16:hover,
 .icon-members-blue_16_16{ background-position: -3360px -696px;  }
 .icon-members-blue_32_32{ background-position: -3360px -912px;  }
 .icon-members-gray_16_16{ background-position: -3360px -1144px;  }
+.fake-tabs > ul > li .icon-members-gray_16_16:hover { background-position: -3352px -696px;  }
+.fake-tabs > ul > li .icon-members-gray_16_16{ background-position: -3352px -1144px;  }
 .icon-members-gray_32_32{ background-position: -3360px -1360px;  }
 .icon-members-lightblue_16_16{ background-position: -3360px -1592px;  }
+.fake-tabs > ul > li .icon-members-lightblue_16_16{ background-position: -3352px -1592px;  }
 .icon-members-lightblue_32_32{ background-position: -3608px 0;  }
 .icon-members-white_16_16{ background-position: -3608px -232px;  }
 
