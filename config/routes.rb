@@ -105,7 +105,6 @@ ActionController::Routing::Routes.draw do |map|
       :member => { :publish => :post,
                    :unpublish => :post,
                    :admin_lectures_order => [ :get, :post ],
-                   :infos => :get,
                    :statuses => :get,
                    :users => :get,
                    :admin_members => :get },
