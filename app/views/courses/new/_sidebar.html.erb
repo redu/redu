@@ -7,26 +7,28 @@
 
   <ul class="local-nav">
     <li>
-      <div class="<%= (current_page? environment_course_path(@course.environment, @course)) ?
-                    "session selected".to_s : "session".to_s %>">
+      <div class="<%= (current_page? environment_course_path(@course.environment, @course)) ? "session selected".to_s : "session".to_s %>">
+        <% selected = (current_page? environment_course_path(@course.environment, @course)) ? "icon-space-white_16_16" : "icon-space-lightblue_16_16" %>
         <%= link_to 'Disciplinas', environment_course_path(@course.environment, @course),
-          :class => "icon icon-redu_r8_c307_s1" %>
+          :class => "icon #{selected}" %>
     </li>
     <% if can? :manage, @course %>
       <li>
         <div class="<%= (current_page? edit_environment_course_path(@environment, @course)) ?
                       "session selected".to_s : "session".to_s %>">
+          <% selected = (current_page? edit_environment_course_path(@course.environment, @course)) ? "icon-management-white_16_16" : "icon-management-lightblue_16_16" %>
           <%= link_to 'Gerenciamento', edit_environment_course_path(@environment, @course),
-            :class => 'icon icon-redu_r8_c221_s1'%>
+            :class => "icon #{selected}" %>
         </div>
       </li>
     <% end %>
     <li>
       <div class="<%= (current_page? users_environment_course_path(@course.environment, @course)) ?
                     "session selected".to_s : "session".to_s %>">
+        <% selected = (current_page? users_environment_course_path(@course.environment, @course)) ? "icon-members-white_16_16" : "icon-members-lightblue_16_16" %>
         <%= link_to "Membros: #{@course.approved_users.length}",
           users_environment_course_path(@course.environment, @course),
-          :class => 'icon icon-redu_r8_c319_s1' %>
+            :class => "icon #{selected}" %>
       <ul class="connections clearfix">
           <%= render :partial => 'users/new/item_short',
             :collection => @course.approved_users.n_recent(9) %>

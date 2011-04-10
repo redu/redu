@@ -491,7 +491,7 @@
 
 #space-new .header,
 #course-spaces .header {
-  background: url("../images/new/icon-space-black_32_32.png") no-repeat 20px center;
+  background: url("../images/new/icon-space-gray_32_32.png") no-repeat 20px center;
 }
 
 #space-statuses .header {
@@ -4222,8 +4222,11 @@ div.token-input-dropdown {
 .icon-messagereply-white_16_16{ background-position: -3856px -648px;  }
 .icon-messagereply-lightblue_16_16{ background-position: -6823px -223px;  }
 .icon-moderation-blue_16_16{ background-position: -3856px -864px;  }
+.fake-tabs > ul > li .icon-moderation-gray_16_16:hover { background-position: -3848px -864px;  }
 .icon-moderation-gray_16_16{ background-position: -3856px -1080px;  }
+.fake-tabs > ul > li .icon-moderation-gray_16_16{ background-position: -3848px -1080px;  }
 .icon-moderation-lightblue_16_16{ background-position: -3856px -1296px;  }
+.fake-tabs > ul > li .icon-moderation-lightblue_16_16{ background-position: -3848px -1296px;  }
 .icon-moderation-white_16_16{ background-position: -3856px -1512px;  }
 .icon-newmessage-green_8_8{ background-position: -3856px -1728px;  }
 .icon-newmessage-lightgreen_8_8{ background-position: -4104px 0;  }
@@ -4280,6 +4283,7 @@ div.token-input-dropdown {
 .icon-slides-lightblue_24_24{ background-position: -5344px -216px;  }
 .icon-slides-lightblue_32_32{ background-position: -5344px -440px;  }
 .icon-slides-white_24_24{ background-position: -5344px -672px;  }
+.icon-space-lightblue_16_16:hover,
 .icon-space-blue_16_16{ background-position: -5344px -896px;  }
 .icon-space-blue_32_32{ background-position: -5344px -1112px;  }
 .icon-space-gray_32_32{ background-position: -5344px -1344px;  }
