@@ -436,7 +436,7 @@ class CoursesController < BaseController
     end
 
     respond_to do |format|
-      if @users.empty?
+      if @users.empty? && @emails.empty?
         flash[:error] = "Nenhum usuário foi informado."
       else
         flash[:notice] = "Os usuários foram convidados via e-mail."
