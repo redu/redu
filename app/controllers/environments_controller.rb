@@ -126,7 +126,6 @@ class EnvironmentsController < BaseController
           @environment.courses.first.create_quota
           if @plan.price > 0
             @plan.create_invoice_and_setup
-
             format.js do
               render :update do |page|
                 page.remove 'final-button'

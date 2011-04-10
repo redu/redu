@@ -5,14 +5,6 @@
   </span>
   <h3 class="call subject-name"><%= subject.title %></h3>
 
-  <% if current_user.enrolled?(subject) and
-    !current_user.get_association_with(subject).student_profile.graduaded? %>
-  <%= link_to "Abandonar", unenroll_space_subject_path(space, subject, :user_id => current_user.id),
-        :method => :post,
-        :confirm => "Tem certeza? Todas as suas informações vinculadas a este módulo serão perdidas.",
-        :class => "leave icon icon-x-gray_8_8" %>
-  <% end %>
-
   <div class="grid_9 alpha">
     <span class="description">
       <%= subject.description %>
