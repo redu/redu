@@ -4,12 +4,12 @@
       <ol id="breadcrumbs" class="clearfix">
         <li>
           <%= link_to 'Home', home_user_path(current_user),
-            :class => 'replacement home icon icon-redu_r8_c227_s1' %>
+            :class => 'replacement home icon icon-home-lightblue_16_16' %>
         </li>
         <li>
           <%= link_to @environment.name,
             environment_path(@environment),
-            :class => 'replacement icon icon-redu_r8_c217_s1' %>
+            :class => ' icon icon-environment-lightblue_16_16' %>
         </li>
       </ol>
       <%= render :partial => 'environments/new/header',

@@ -486,6 +486,7 @@
 }
 
 #course-manage .header,
+#subject-edit .header,
 #space-manage .header,
 #environment-manage .header {
   background: url("../images/new/icon-configurations-gray_32_32.png") no-repeat 20px center;
@@ -4361,8 +4362,8 @@ div.token-input-dropdown {
 .icon-tutor-white_16_16{ background-position: -6336px -432px;  }
 .icon-unfavorite-blue_16_16{ background-position: -6336px -648px;  }
 .icon-unfavorite-gray_8_8:hover,
-.icon-unfavorite-blue_8_8{ background-position: -6336px -864px;  }
-.icon-unfavorite-gray_8_8{ background-position: -6336px -1072px;  }
+.icon-unfavorite-blue_8_8{ background-position: -6336px -862px;  }
+.icon-unfavorite-gray_8_8{ background-position: -6336px -1070px;  }
 .icon-unfavorite-lightblue_16_16{ background-position: -6336px -1280px;  }
 .icon-unvaforite-white_16_16{ background-position: -6336px -1496px;  }
 .icon-video-blue_16_16{ background-position: -6336px -1712px;  }

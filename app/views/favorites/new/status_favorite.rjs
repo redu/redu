@@ -9,7 +9,7 @@ page.insert_html :after, spinner, (link_to_remote('Remover dos favoritos',
                        :type => @favorite.favoritable.class.to_s,
                        :new_layout => true },
                        :loading => "$('#status-#{@favorite.favoritable.id} > div > .actions #rm_favorites_link').hide(); $('#status-#{@favorite.favoritable.id} > div > .actions #favorite_spinner').show();" },
-                     { :class => 'icon icon-redu_r12_c59_s1',
+                     { :class => 'icon icon-unfavorite-gray_8_8',
                        :id => 'rm_favorites_link'}))
 page.remove "#status-#{@favorite.favoritable.id} > div > .actions #favorites_link"
 page << "$('#{spinner}').hide();"
