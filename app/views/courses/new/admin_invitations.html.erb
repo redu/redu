@@ -8,7 +8,7 @@
         $("#emails").val($("#emails").val() + "," + email);
         $("input[autocomplete=off]").val("")
 
-        item = "<li class=\"token-input-token\"><p title=\"" + email + "\">" + email + "</p><span class=\"token-input-delete-token-email\">x</span></li>"
+        item = "<li class=\"token-input-token email\"><p title=\"" + email + "\">" + email + "</p><span class=\"invite-to-redu\">(Convidar para o Redu)</span><span class=\"token-input-delete-token-email\">x</span></li>"
         $(".token-input-input-token").before(item);
         $(this).hide();
         return false;

@@ -2654,6 +2654,17 @@ label.focus {
   border-radius: 5px;
 }
 
+#admin-invitations .token-input-list .token-input-token.email {
+  background-color: #F1F0F0;
+  padding: 8px;
+}
+
+#admin-invitations .token-input-list .token-input-token.email span.invite-to-redu {
+  float: left;
+  font-style: oblique;
+  font-weight: normal;
+  font-size: 0.9em;
+}
 #admin-invitations .token-input-list .token-input-token {
   background-color: #eff6e6;
   padding: 8px;
@@ -2663,6 +2674,7 @@ label.focus {
 #admin-invitations .token-input-list .token-input-token p {
   font-family: Arial, sans-serif;
   font-weight: normal;
+  margin-right: 5px;
 }
 
 div.token-input-dropdown {
