@@ -544,6 +544,7 @@
 }
 
 #environment-users .header,
+#space-users .header,
 #course-users .header,
 #admin-invitations .header {
   background: url("../images/new/icon-members-gray_32_32.png") no-repeat 20px center;
@@ -4100,11 +4101,15 @@ div.token-input-dropdown {
 .icon-environment-gray_48_48{ background-position: -1624px 0;  }
 .icon-environment-lightblue_16_16{ background-position: -1624px -248px;  }
 .icon-environment-white_16_16{ background-position: -1624px -464px;  }
+.icon-event-lightblue_16_16:hover,
 .icon-event-blue_16_16{ background-position: -1624px -680px;  }
 .icon-event-blue_32_32{ background-position: -1624px -896px;  }
 .icon-event-gray_16_16{ background-position: -1624px -1128px;  }
+.fake-tabs > ul > li .icon-event-gray_16_16{ background-position: -1616px -1128px;  }
+.fake-tabs > ul > li .icon-event-gray_16_16:hover { background-position: -1616px -680px;  }
 .icon-event-gray_32_32{ background-position: -1624px -1344px;  }
 .icon-event-lightblue_16_16{ background-position: -1624px -1576px;  }
+.fake-tabs > ul > li .icon-event-lightblue_16_16{ background-position: -1616px -1576px;  }
 .icon-event-lightblue_32_32{ background-position: -1624px -1792px;  }
 .icon-event-white_16_16{ background-position: -1872px 0;  }
 .icon-exam-blue_16_16{ background-position: -1872px -216px;  }
@@ -4304,6 +4309,7 @@ div.token-input-dropdown {
 .icon-student-white_16_16{ background-position: -5840px -648px;  }
 .icon-subitem-blue_8_8{ background-position: -5840px -864px;  }
 .icon-subitem-gray_8_8{ background-position: -5840px -1072px;  }
+.icon-subject-lightblue_16_16:hover,
 .icon-subject-blue_16_16{ background-position: -5840px -1280px;  }
 .icon-subject-blue_32_32{ background-position: -5840px -1496px;  }
 .icon-subject-gray_32_32{ background-position: -5840px -1728px;  }
