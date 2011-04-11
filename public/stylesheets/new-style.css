@@ -3026,6 +3026,9 @@ div.token-input-dropdown {
   padding-bottom: 200px;
 }
 
+#course-invitation .invite {
+  float: left;
+}
 #course-invitation .salutation {
   display: block;
   margin: 35px 0 25px 0;
@@ -3037,6 +3040,9 @@ div.token-input-dropdown {
   border: solid 1px #B3B2B3;
   padding: 10px;
   margin-bottom: 10px;
+  margin-right: 20px;
+  width: 320px;
+  float: left;
 
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -3044,16 +3050,18 @@ div.token-input-dropdown {
 }
 
 #course-invitation .course .informations{
-  width: 300px;
-  float: right;
+  float: left;
+  width: 278px;
 }
+
 #course-invitation .course img {
   float: left;
+  margin-right: 10px;
 }
 
 #course-invitation .course .header {
   background: url("../images/new/dots.png") repeat-x bottom;
-  padding-bottom: 30px;
+  padding-bottom: 20px;
 }
 
 #course-invitation .course a.environment {
