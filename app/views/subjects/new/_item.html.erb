@@ -1,7 +1,7 @@
 <li class="clearfix">
   <% if !item.published? && (can? :manage, item) %>
     <%= link_to 'Editar', edit_space_subject_path(item.space, item),
-      :class => "edit icon icon-redu_r12_c45_s1" %>
+      :class => "edit icon icon-management-gray_8_8" %>
   <% elsif item.published && (can? :manage, item) %>
     <%#FIXME Trocar por ícone %>
     <span class="edit" style="color: #B3B2B3;">Publicado</span>

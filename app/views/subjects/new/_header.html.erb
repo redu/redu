@@ -10,7 +10,7 @@
   <%= link_to "Abandonar", unenroll_space_subject_path(space, subject, :user_id => current_user.id),
         :method => :post,
         :confirm => "Tem certeza? Todas as suas informações vinculadas a este módulo serão perdidas.",
-        :class => "leave icon icon-redu_r12_c43_s1" %>
+        :class => "leave icon icon-x-gray_8_8" %>
   <% end %>
 
   <div class="grid_9 alpha">
@@ -20,15 +20,15 @@
   </div>
   <ul class="statistics grid_3 omega">
     <li>
-      <em class="icon icon-redu_r8_c207_s1">Professores:</em>
+      <em class="icon icon-teacher-gray_16_16">Professores:</em>
       <span><%= subject.space.teachers.length %></span>
     </li>
     <li>
-      <em class="icon icon-redu_r8_c385_s1">Tutores:</em>
+      <em class="icon icon-tutor-gray_16_16">Tutores:</em>
       <span><%= subject.space.tutors.length %></span>
     </li>
     <li>
-      <em class="icon icon-redu_r8_c355_s1">Alunos:</em>
+      <em class="icon icon-student-gray_16_16">Alunos:</em>
       <span><%= subject.members.length %></span>
     </li>
   </ul>
