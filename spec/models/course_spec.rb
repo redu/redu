@@ -319,11 +319,17 @@ describe Course do
   end
 
   it "accepts a user (join)" do
-    space = Factory(:space, :course => subject)
+    @space = Factory(:space, :course => subject)
+    subject_space = Factory(:subject, :space => @space,
+                            :owner => subject.owner,
+                            :finalized => true)
     user = Factory(:user)
+    user2 = Factory(:user)
     subject.join(user)
+    subject.join(user2)
     subject.users.should include(user)
-    space.users.should include(user)
+    @space.users.should include(user)
+    subject_space.members.to_set.should == [user, user2].to_set
     subject.environment.users.should include(user)
   end
 
@@ -337,8 +343,6 @@ describe Course do
                      :finalized => true)
       @user = Factory(:user)
       subject.join @user
-      @sub.enroll @user
-      @sub_2.enroll @user
       subject.reload
       subject.unjoin @user
     end

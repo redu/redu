@@ -525,6 +525,44 @@ describe CoursesController do
     end
   end
 
+  context "POST - join" do
+    before do
+      @user = Factory(:user)
+      activate_authlogic
+      UserSession.create @user
+
+      @environment = Factory(:environment, :owner => @user)
+
+      @course = Factory(:course,:environment => @environment,
+                        :owner => @user)
+
+      plan = Factory( :plan, :billable => @course,
+                     :user => @course.owner)
+      @course.create_quota
+
+      @space = Factory(:space, :course => @course)
+      @subject_space = Factory(:subject, :space => @space,
+                              :owner => @course.owner,
+                              :finalized => true)
+
+      @params = { :locale => 'pt-BR',
+        :environment_id => @environment.id,
+        :id => @course.id }
+    end
+
+    it "should create all hieararchy" do
+      @new_user = Factory(:user)
+      UserSession.create @new_user
+
+      post :join, @params
+
+      @course.users.should include(@new_user)
+      @space.users.should include(@new_user)
+      @subject_space.members.should include(@new_user)
+      @course.environment.users.should include(@new_user)
+    end
+  end  
+
   context "when the limit of members is full" do
     before do
       @user = Factory(:user)
@@ -562,7 +600,6 @@ describe CoursesController do
           post :join, @params
         }.should_not change(UserCourseAssociation, :count).by(1)
       end
-
     end
 
     context "and course is moderated" do
