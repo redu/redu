@@ -561,7 +561,7 @@ describe CoursesController do
       @subject_space.members.should include(@new_user)
       @course.environment.users.should include(@new_user)
     end
-  end  
+  end
 
   context "when the limit of members is full" do
     before do
