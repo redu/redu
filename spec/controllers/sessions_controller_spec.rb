@@ -13,7 +13,7 @@ describe SessionsController do
                          :course => course)
       end
 
-      context "when logging" do
+      context "when logging in successful" do
         before do
           @post_params = {:locale => 'pt-BR', :invitation_token => @invite.token,
             :user_session => { :remember_me => "0", :password => @user.password,
@@ -28,6 +28,29 @@ describe SessionsController do
         end
       end
 
+      context "when logging with failure" do
+        before do
+          @post_params = {:locale => 'pt-BR', :invitation_token => @invite.token,
+            :user_session => { :remember_me => "0", :password => "wrong-pass",
+                               :login => @user.login}}
+          post :create, @post_params
+        end
+
+        it "assigns environment" do
+          assigns[:environment].should == @invite.course.environment
+        end
+        it "assigns course" do
+          assigns[:course].should == @invite.course
+        end
+        it "assigns user_course_invitation" do
+          assigns[:user_course_invitation].should == @invite
+        end
+
+        it "re-renders UserCourseInvitations#show" do
+          response.should render_template('user_course_invitations/show')
+        end
+
+      end
     end
   end
 

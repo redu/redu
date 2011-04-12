@@ -11,8 +11,8 @@
         :class => 'avatar' %>
       <div class="informations">
         <div class="header">
-          <%= link_to @course.environment.name,
-            environment_path(@course.environment), :class => 'environment' %>
+          <%= link_to @environment.name,
+            environment_path(@environment), :class => 'environment' %>
           <%= link_to @course.name,
             environment_course_path(@course.environment, @course),
             :class => 'name' %>

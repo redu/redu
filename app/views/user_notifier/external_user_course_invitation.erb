@@ -4,7 +4,8 @@ você foi convidado para um curso no Redu <%= AppConfig.community_url %> que é 
 
 O curso para o qual você foi convidado é o <%= @course.name %>. Para aceitar o convite, visite o link abaixo:
 
-  <%= course_user_course_invitation_url(@course, @user_course_invitation) %>
+<%= environment_course_user_course_invitation_url(@course.environment, @course,
+                                                  @user_course_invitation) %>
 
 Caso você tenha problemas, copie e cole o endereço no seu navegador.
 

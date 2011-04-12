@@ -246,7 +246,9 @@ ActionController::Routing::Routes.draw do |map|
         :users => :get,
         :accept => :post,
         :deny => :post
-      }
+      } do |course|
+        course.resources :user_course_invitations, :only => [:show]
+      end
       environment.resources :bulletins,
         :member => { :vote => [:post, :get] }
   end
@@ -254,7 +256,6 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :courses do |course|
     course.resources :invitations
-    course.resources :user_course_invitations
   end
 
   map.resources :plans, :only => [], :member => {
