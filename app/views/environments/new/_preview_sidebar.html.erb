@@ -7,16 +7,18 @@
     <li>
       <div class="<%= (current_page? preview_environment_path(@environment)) ?
         "session selected".to_s : "session".to_s %>">
+        <% selected = (current_page? preview_environment_path(@environment)) ? "icon-preview-white_16_16" : "icon-preview-lightblue_16_16" %>
         <%= link_to 'Pré-visualização', preview_environment_path(@environment),
-          :class => 'icon icon-redu_r8_c215_s1' %>
+          :class => "icon #{selected}" %>
       </div>
     </li>
     <li>
       <div class="<%= (current_page? users_environment_path(@environment)) ?
         "session selected".to_s : "session".to_s %>">
+        <% selected = (current_page? users_environment_path(@environment)) ? "icon-members-white_16_16" : "icon-members-lightblue_16_16" %>
         <%= link_to "Membros: #{@environment.users.length}",
           users_environment_path(@environment, :preview => true),
-          :class => 'icon icon-redu_r8_c319_s1' %>
+            :class => "icon #{selected}" %>
       </div>
       <ul class="connections clearfix">
         <%= render :partial => 'users/new/item_short',

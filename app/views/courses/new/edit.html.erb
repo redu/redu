@@ -37,7 +37,7 @@
       fake_tabs ["Informações", edit_environment_course_path(@environment, @course), {:class => 'icon icon-management-lightblue_16_16'}],
         ["Membros", admin_members_environment_course_path(@environment, @course), {:class => 'icon icon-members-gray_16_16'}],
         ["Moderação", admin_members_requests_environment_course_path(@environment, @course), {:class => 'icon icon-moderation-gray_16_16'}],
-        ["Disciplinas", admin_spaces_environment_course_path(@environment, @course), {:class => ''}] do
+        ["Disciplinas", admin_spaces_environment_course_path(@environment, @course), {:class => 'icon icon-space-gray_16_16'}] do
     %>
       <% form_for @course,
         :url => environment_course_path(@environment, @course),
