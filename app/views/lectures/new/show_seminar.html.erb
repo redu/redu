@@ -1,30 +1,7 @@
 <%= render :partial => 'lectures/new/lights' %>
 <%= render :partial => 'subjects/new/sidebar' %>
 <div class="main grid_12 omega big-col">
-  <ol id="breadcrumbs" class="clearfix">
-    <li>
-      <%= link_to 'Home', home_user_path(current_user),
-        :class => 'replacement home icon icon-redu_r8_c227_s1' %>
-    </li>
-    <li>
-      <%= link_to @subject.space.course.environment.name,
-        environment_path(@subject.space.course.environment),
-        :class => 'replacement icon icon-redu_r8_c217_s1' %>
-    </li>
-    <li>
-      <%= link_to @subject.space.course.name,
-        environment_course_path(@subject.space.course.environment, @subject.space.course),
-        :class => 'replacement icon icon-redu_r8_c313_s1' %>
-    </li>
-    <li>
-      <%= link_to @subject.space.name, space_path(@subject.space),
-        :class => 'replacement icon icon-redu_r8_c307_s1' %>
-    </li>
-    <li>
-      <%= link_to @subject.title, space_subject_path(@space, @subject),
-        :class => 'icon icon-redu_r11_c211_s1'%>
-    </li>
-  </ol>
+  <%= render :partial => "subjects/new/breadcrumbs", :locals => { :subject => @subject } %>
   <%= render :partial => 'subjects/new/header',
     :locals => { :subject => @subject, :space => @space } %>
 

@@ -263,6 +263,15 @@ class Course < ActiveRecord::Base
   
   # Retorna o percentual de membros do curso
   def percentage_quota_members
-    ( self.users.count * 100.0 )/ self.plan.members_limit
+    if self.users.count >= self.plan.members_limit
+      100
+    else
+      ( self.users.count * 100.0 )/ self.plan.members_limit
+    end
   end
+
+  def can_add_entry?
+    self.approved_users.count < self.plan.members_limit
+  end
+
 end

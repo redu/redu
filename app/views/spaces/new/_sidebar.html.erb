@@ -9,8 +9,9 @@
     <li>
       <div class="<%= (current_page? space_path(@space)) ?
                     "session selected".to_s : "session".to_s %>">
+        <% selected = (current_page? space_path(@space)) ? "icon-list-white_16_16" : "icon-list-lightblue_16_16" %>
         <%= link_to 'Mural', space_path(@space),
-          :class => 'icon icon-redu_r8_c379_s1' %>
+          :class => "icon #{selected}" %>
       </div>
     </li>
     <li>
@@ -21,15 +22,17 @@
         %>
       <div class="<%= (current_page? space_subjects_path(@space)) ?
                     "session selected".to_s : "session".to_s %>">
+        <% selected = (current_page? space_subjects_path(@space)) ? "icon-subject-white_16_16" : "icon-subject-lightblue_16_16" %>
         <%= link_to "Módulos #{subjects_count}", space_subjects_path(@space),
-          :class => 'icon icon-redu_r11_c211_s1' %>
+          :class => "icon #{selected}" %>
       </div>
     </li>
     <li>
       <div class="<%= (current_page? space_folders_path(@space)) ?
                     "session selected".to_s : "session".to_s %>">
+        <% selected = (current_page? space_folders_path(@space)) ? "icon-material-white_16_16" : "icon-material-lightblue_16_16" %>
         <%= link_to 'Material de apoio', space_folders_path(@space),
-          :class => 'icon icon-redu_r8_c349_s1' %>
+          :class => "#{selected}" %>
       </div>
     </li>
     <!--li>
@@ -43,31 +46,35 @@
     <li>
       <div class="<%= (current_page? space_bulletins_path(@space)) ?
                     "session selected".to_s : "session".to_s %>">
+        <% selected = (current_page? space_bulletins_path(@space)) ? "icon-bulletin-white_16_16" : "icon-bulletin-lightblue_16_16" %>
         <%= link_to 'Notícias', space_bulletins_path(@space),
-          :class => 'icon icon-redu_r9_c289_s1' %>
+          :class => "icon #{selected}" %>
       </div>
     </li>
     <li>
       <div class="<%= (current_page? space_events_path(@space)) ?
                     "session selected".to_s : "session".to_s %>">
+        <% selected = (current_page? space_events_path(@space)) ? "icon-event-white_16_16" : "icon-event-lightblue_16_16" %>
         <%= link_to 'Eventos', space_events_path(@space),
-          :class => 'icon icon-redu_r8_c295_s1' %>
+          :class => "icon #{selected}" %>
       </div>
     </li>
     <% if can? :manage, @space %>
       <li>
         <div class="<%= (current_page? edit_space_path(@space)) ?
                       "session selected".to_s : "session".to_s %>">
+        <% selected = (current_page? edit_space_path(@space)) ? "icon-management-white_16_16" : "icon-management-lightblue_16_16" %>
           <%= link_to 'Gerenciamento', edit_space_path(@space),
-            :class => 'icon icon-redu_r8_c221_s1' %>
+            :class => "icon #{selected}" %>
         </div>
       </li>
     <% end %>
     <li>
       <div class="<%= (current_page? users_space_path(@space)) ?
                     "session selected".to_s : "session".to_s %>">
+        <% selected = (current_page? users_space_path(@space)) ? "icon-members-white_16_16" : "icon-members-lightblue_16_16" %>
         <%= link_to "Membros: #{@space.users.size}", users_space_path(@space),
-          :class => 'icon icon-redu_r8_c319_s1' %>
+          :class => "icon #{selected}" %>
       </div>
       <ul class="connections clearfix">
         <%= render :partial => 'users/new/item_short',

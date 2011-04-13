@@ -3,13 +3,13 @@
   <div class="grid_3 omega">
     <%= link_to item.display_name, user_path(item) %>
     <% if item.get_association_with(entity).role == Role[:member] %>
-      <span class="role icon icon-redu_r8_c355_s1">Aluno</span>
+      <span class="role icon icon-student-gray_16_16">Aluno</span>
     <% elsif item.get_association_with(entity).role == Role[:teacher] %>
-      <span class="role icon icon-redu_r8_c207_s1">Professor</span>
+      <span class="role icon icon-teacher-gray_16_16">Professor</span>
     <% elsif item.get_association_with(entity).role == Role[:tutor] %>
-      <span class="role icon icon-redu_r8_c385_s1">Tutor</span>
+      <span class="role icon icon-tutor-gray_16_16">Tutor</span>
     <% elsif item.get_association_with(entity).role == Role[:environment_admin] %>
-      <span class="role icon ">Administrador</span>
+      <span class="role icon icon-administrator-gray_16_16">Administrador</span>
     <% end %>
   </div>
 </li>

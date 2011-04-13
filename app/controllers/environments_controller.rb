@@ -123,8 +123,8 @@ class EnvironmentsController < BaseController
         @environment.published = true
         @environment.color = "4DADD6"
         if @environment.save && @plan.save
+          @environment.courses.first.create_quota
           if @plan.price > 0
-            @environment.courses.first.create_quota
             @plan.create_invoice_and_setup
 
             format.js do

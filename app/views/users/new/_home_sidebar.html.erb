@@ -9,8 +9,11 @@
     <li>
       <div class="<%= (current_page? home_user_path(current_user)) ?
         "session selected".to_s : "session".to_s %>">
+        <% selected = (current_page? home_user_path(current_user)) ?
+                       "icon-home-white_16_16" : "icon-home-lightblue_16_16"
+                       %>
       <%= link_to current_user.display_name, home_user_path(current_user),
-        :class => 'icon icon-redu_r8_c333_s1' %>
+        :class => "icon #{selected}" %>
       </div>
     </li>
     <li>
@@ -21,16 +24,24 @@
             unread_message_count = "(+#{current_user.unread_message_count})"
           end
         %>
+        <%
+          selected = (current_page? user_messages_path(current_user)) ?
+          "icon-message-white_16_16" : "icon-message-lightblue_16_16"
+        %>
         <%= link_to "Mensagens #{unread_message_count}",
           user_messages_path(current_user),
-          :class => 'icon icon-redu_r10_c331_s1' %>
+          :class => "icon #{selected}" %>
       </div>
     </li>
     <li>
       <div class="<%= (current_page? mural_user_path(current_user)) ?
         "session selected".to_s : "session".to_s %>">
+        <%
+          selected = (current_page? mural_user_path(current_user)) ?
+          "icon-list-white_16_16" : "icon-list-lightblue_16_16"
+        %>
         <%= link_to 'Meu Mural', mural_user_path(current_user),
-        :class => "icon icon-redu_r8_c379_s1" %>
+          :class => "icon #{selected}" %>
       </div>
     </li>
     <%= render :partial => 'users/new/sidebar_environment_item',
@@ -38,15 +49,23 @@
     <li>
       <div class="<%= (current_page? edit_user_path(current_user)) ?
         "session selected".to_s : "session".to_s %>">
+        <%
+          selected = (current_page? edit_user_path(current_user)) ?
+          "icon-management-white_16_16" : "icon-management-lightblue_16_16"
+        %>
         <%= link_to 'Configurações', edit_user_path(current_user),
-        :class => "icon icon-redu_r8_c221_s1" %>
+          :class => "icon #{selected}" %>
       </div>
     </li>
     <li>
       <div class="<%= (current_page? user_friendships_path(current_user)) ?
         "session selected".to_s : "session".to_s %>">
+        <%
+          selected = (current_page? user_friendships_path(current_user)) ?
+          "icon-contacts-white_16_16" : "icon-contacts-lightblue_16_16"
+        %>
         <%= link_to 'Contatos', user_friendships_path(current_user),
-          :class => 'icon icon-redu_r8_c325_s1'%>
+          :class => "icon #{selected}" %>
       </div>
       <ul class="connections clearfix">
         <%= render :partial => 'users/new/item_short',

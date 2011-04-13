@@ -9,33 +9,44 @@
     <li>
       <div class="<%= (current_page? environment_path(@environment)) ?
                     "session selected".to_s : "session".to_s %>">
+        <% selected = (current_page? environment_path(@environment)) ?
+                       "icon-course-white_16_16" : "icon-course-lightblue_16_16"
+                       %>
         <%= link_to 'Cursos', environment_path(@environment),
-          :class => 'icon icon-redu_r8_c313_s1' %>
+          :class => "icon #{selected}" %>
       </div>
     </li>
     <li>
-      <div class="<%= (current_page? :controller => :bulletins,
-                       :action => :index) ?
+      <div class="<%= (current_page? environment_bulletins_path(@environment)) ?
                     "session selected".to_s : "session".to_s %>">
+                    <% selected = (current_page? environment_bulletins_path(@environment)) ?
+                       "icon-bulletin-white_16_16" : "icon-bulletin-lightblue_16_16"
+                       %>
         <%= link_to 'Notícias', environment_bulletins_path(@environment),
-          :class => "icon icon-redu_r9_c289_s1" %>
+          :class => "icon #{selected}" %>
       </div>
     </li>
     <% if can? :manage, @environment %>
       <li>
         <div class="<%= (current_page? edit_environment_path(@environment)) ?
                       "session selected".to_s : "session".to_s %>">
+                    <% selected = (current_page? edit_environment_path(@environment)) ?
+                       "icon-management-white_16_16" : "icon-management-lightblue_16_16"
+                       %>
           <%= link_to 'Gerenciamento', edit_environment_path(@environment),
-            :class => "icon icon-redu_r8_c221_s1" %>
+            :class => "icon #{selected}" %>
         </div>
       </li>
     <% end %>
     <li>
       <div class="<%= (current_page? users_environment_path(@environment)) ?
                     "session selected".to_s : "session".to_s %>">
+                    <% selected = (current_page? users_environment_path(@environment)) ?
+                       "icon-members-white_16_16" : "icon-members-lightblue_16_16"
+                       %>
         <%= link_to "Membros: #{ @environment.users.length }",
           users_environment_path(@environment),
-          :class => "icon icon-redu_r8_c319_s1" %>
+            :class => "icon #{selected}" %>
       </div>
       <ul class="connections clearfix">
           <%= render :partial => 'users/new/item_short',

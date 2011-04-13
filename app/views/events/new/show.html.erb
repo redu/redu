@@ -3,20 +3,20 @@
   <ol id="breadcrumbs" class="clearfix">
     <li>
       <%= link_to 'Home', home_user_path(current_user),
-        :class => 'replacement home icon icon-redu_r8_c227_s1' %>
+        :class => 'replacement home icon icon-home-lightblue_16_16' %>
     </li>
     <li>
       <%= link_to @space.course.environment.name,
         environment_path(@space.course.environment),
-        :class => 'replacement icon icon-redu_r8_c217_s1' %>
+        :class => 'replacement icon icon-environment-lightblue_16_16' %>
       <li>
         <%= link_to @space.course.name,
           environment_course_path(@space.course.environment, @space.course),
-          :class => 'replacement icon icon-redu_r8_c313_s1' %>
+          :class => 'replacement icon icon-course-lightblue_16_16' %>
       </li>
       <li>
         <%= link_to @space.name, space_path(@space),
-          :class => 'icon icon-redu_r8_c307_s1' %>
+          :class => 'icon icon-space-lightblue_16_16' %>
       </li>
     </ol>
     <%= render :partial => 'spaces/new/header',
@@ -36,12 +36,12 @@
         <div class="admin-actions">
           <%= link_to 'Editar',
             edit_polymorphic_path([@event.eventable, @event]),
-            :class => "edit icon icon-redu_r12_c5_s1" %>
+            :class => "edit icon icon-management-gray_8_8" %>
           <%= link_to 'Remover',
             polymorphic_path([@event.eventable, @event]),
             :method => :delete,
             :confirm => "Você tem certeza que deseja remover esta aula? Não será possível recuperá-la.",
-            :class => "delete icon icon-redu_r12_c43_s1" %>
+            :class => "delete icon icon-x-gray_8_8" %>
         </div>
       <% end %>
     <div class="details clearfix">
