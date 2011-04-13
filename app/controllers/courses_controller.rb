@@ -240,7 +240,9 @@ class CoursesController < BaseController
         total_members = @course.approved_users.count + approved.count
         if total_members > @course.plan.members_limit
           # remove o usuários que passaram do limite
-          approved.pop(@course.plan.members_limit - total_members)
+          (total_members - @course.plan.members_limit).times do
+            approved.shift
+          end
           flash[:notice] = "O limite máximo de usuários foi atigindo, apenas alguns membros foram moderados."
         else
           flash[:notice] = 'Membros moderados!'
