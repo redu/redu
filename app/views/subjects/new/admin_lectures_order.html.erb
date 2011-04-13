@@ -28,42 +28,39 @@
       ["Recursos", admin_lectures_order_space_subject_path(@space, @subject), { :class => "icon icon-resource-lightblue_16_16" } ],
       ["Membros", admin_members_space_subject_path(@space, @subject), { :class => "icon icon-members-gray_16_16" } ] do %>
 
-        <% if @subject.published? %>
-          <div class="box_notice">Você não pode alterar a ordem das aulas, pois o módulo está publicado.</div>
-        <% else %>
-          <% unless @subject.lectures.empty? %>
-            <div class="pretty-text"><strong>Arraste as aulas para alterar a ordem destas no módulo!</strong></div>
-            <div class="actions">
-              <%= link_to "Novo recurso", new_space_subject_lecture_path(@space, @subject),
-                    :class => "button" %>
-            </div>
-            <div class="lazy_list clearfix">
-              <table class="common spaced default sortable subject-assets">
-                <thead>
-                  <tr>
-                    <th width="8%">Ordem</th>
-                    <th width="60%">Nome</th>
-                    <th colspan="2">Gerenciamento</th>
-                  </tr>
-                </thead>
-                <tbody id="resources_list">
-                  <%= render :partial => "subjects/new/asset_item",
-                    :collection => @subject.lectures, :as => :item ,
-                    :locals => { :space => @space, :subject => @subject } %>
-                </tbody>
-              </table>
-            </div>
-          <% else %>
-            <div class="box_notice">Este módulo não possui recursos.</div>
-          <% end %>
+      <div class="actions">
+        <%= link_to "Novo recurso", new_space_subject_lecture_path(@space, @subject),
+          :class => "button" %>
+      </div>
 
-          <div class="actions">
-            <% form_tag admin_lectures_order_space_subject_path do %>
-              <%= hidden_field_tag 'lectures_ordered', nil, :class => "assets" %>
-              <%= submit_tag 'Salvar alterações' %>
-            <% end %>
-          </div>
+      <% unless @subject.lectures.empty? %>
+        <div class="pretty-text"><strong>Arraste as aulas para alterar a ordem destas no módulo!</strong></div>
+        <div class="lazy_list clearfix">
+          <table class="common spaced default sortable subject-assets">
+            <thead>
+              <tr>
+                <th width="8%">Ordem</th>
+                <th width="60%">Nome</th>
+                <th colspan="2">Gerenciamento</th>
+              </tr>
+            </thead>
+            <tbody id="resources_list">
+              <%= render :partial => "subjects/new/asset_item",
+                :collection => @subject.lectures, :as => :item ,
+                :locals => { :space => @space, :subject => @subject } %>
+            </tbody>
+          </table>
+        </div>
+      <% else %>
+        <div class="box_notice">Este módulo não possui recursos.</div>
+      <% end %>
+
+      <div class="actions">
+        <% form_tag admin_lectures_order_space_subject_path do %>
+          <%= hidden_field_tag 'lectures_ordered', nil, :class => "assets" %>
+          <%= submit_tag 'Salvar alterações' %>
         <% end %>
+      </div>
 
     <% end %>
   </div><!-- end #subjec-edit -->

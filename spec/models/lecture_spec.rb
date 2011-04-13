@@ -9,11 +9,12 @@ describe Lecture do
                      :course => course)
     @user = Factory(:user)
     course.join(@user)
-    @sub = Factory(:subject, :owner => @user, :space => @space)
+    @sub = Factory(:subject, :owner => @user, :space => @space,
+                   :finalized => true)
     @sub.create_enrollment_associations
   end
-   
-  subject { Factory(:lecture, :subject => @sub, 
+
+  subject { Factory(:lecture, :subject => @sub,
                     :owner => @sub.owner) }
 
   it { should belong_to :owner }
@@ -48,9 +49,7 @@ describe Lecture do
   context "callbacks" do
     context "creates a AssertReport between the StudentProfile and the Lecture after create" do
       it "when the owner is the subject owner" do
-        subject.asset_reports.first.should_not be_nil
-        subject.asset_reports.first.
-          student_profile.user.should == subject.owner
+        subject.asset_reports.of_user(subject.owner).should_not be_empty
       end
 
       it "when the owner is an environment_admin" do
@@ -58,14 +57,20 @@ describe Lecture do
         subject.should_not be_new_record
 
         another_admin = Factory(:user)
+        @space.course.spaces.reload
+        @space.subjects.reload
         @space.course.join another_admin
         @space.course.environment.change_role(another_admin,
                                               Role[:environment_admin])
-        lecture = Factory(:lecture, :subject => @sub, :owner => another_admin)
-        lecture.asset_reports.first.should_not be_nil
-        lecture.asset_reports.first.student_profile.should_not be_nil
-        lecture.asset_reports.first.
-          student_profile.user.should == lecture.subject.owner
+
+        lecture = Factory(:lecture, :subject => @sub,
+                          :owner => another_admin)
+
+        lecture.asset_reports.should_not be_empty
+        lecture.asset_reports.count.should == @sub.members.count
+        @sub.members.each do |member|
+          lecture.asset_reports.of_user(member).should_not be_empty
+        end
       end
     end
   end
@@ -106,7 +111,7 @@ describe Lecture do
 
     it "retrieves lectures that are interactive classes" do
       pending "Need interactive class Factory" do
-        interactive_classes = (1..2).collect { 
+        interactive_classes = (1..2).collect {
           Factory(:lecture, :subject => @sub,
                   :lectureable => Factory(:interactive_class)) }
         Factory(:lecture, :subject => @sub)
@@ -117,15 +122,15 @@ describe Lecture do
 
     it "retrieves lectures that are pages" do
         page = Factory(:lecture, :subject => @sub)
-        documents = (1..2).collect { 
-          Factory(:lecture, :subject => @sub, 
+        documents = (1..2).collect {
+          Factory(:lecture, :subject => @sub,
                   :lectureable => Factory(:document)) }
         Lecture.pages.should == [page]
     end
 
     it "retrieves lectures that are documents" do
         page = Factory(:lecture, :subject => @sub)
-        documents = (1..2).collect { 
+        documents = (1..2).collect {
           Factory(:lecture, :subject => @sub,
                   :lectureable => Factory(:document)) }
 
@@ -154,7 +159,7 @@ describe Lecture do
         subject1 = Factory(:subject, :owner => subject_owner,
                            :space => space)
         lectures = (1..3).collect { Factory(:lecture, :subject => subject1) }
-        
+
         user = Factory(:user)
         subject1.enroll user
 

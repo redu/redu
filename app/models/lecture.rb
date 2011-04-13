@@ -93,11 +93,15 @@ class Lecture < ActiveRecord::Base
     clone.save
     clone
   end
+
   protected
   def create_asset_report
-    student_profile = StudentProfile.all(:conditions => { 
-      :subject_id => self.subject.id, :user_id => self.subject.owner.id }).first
-    self.asset_reports << AssetReport.create(:subject => self.subject,
-                                            :student_profile => student_profile)
+    student_profiles = StudentProfile.all(:conditions =>
+                                         {:subject_id => self.subject.id})
+    student_profiles.each do |student_profile|
+      self.asset_reports << AssetReport.create(:subject => self.subject,
+                                               :student_profile => student_profile)
+      student_profile.update_grade!
+    end
   end
 end
