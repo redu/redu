@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe UserCourseInvitation do
-  subject {Factory(:user_course_invitation)}
+  subject { Factory(:user_course_invitation) }
 
   it { should belong_to :course }
   it { should belong_to :user }
@@ -25,6 +25,28 @@ describe UserCourseInvitation do
       subject.email = "invalid@inv"
       subject.should_not be_valid
       subject.errors.on(:email).should_not be_nil
+    end
+  end
+
+  context "retrievers" do
+    before do
+      @invites = (1..5).collect { Factory(:user_course_invitation) }
+    end
+
+    it "retrieves invitations with state 'invited'" do
+      @invites[0..2].each do |i|
+        i.user = Factory(:user)
+        i.accept!
+      end
+      UserCourseInvitation.invited.should == @invites[3..4]
+    end
+
+    it "retrieves invitations with given email" do
+      email = "same@example.com"
+      same_email_invites = (1..3).collect { Factory(:user_course_invitation,
+                                                     :email => email) }
+
+      UserCourseInvitation.with_email(email).should == same_email_invites
     end
   end
 

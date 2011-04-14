@@ -49,6 +49,7 @@ class Course < ActiveRecord::Base
   named_scope :of_environment, lambda { |environmnent_id|
    { :conditions => {:environment_id => environmnent_id} }
   }
+
   named_scope :with_audiences, lambda { |audiences_ids|
     {:joins => :audiences,
       :conditions => ['audiences_courses.audience_id IN (?)',
@@ -60,21 +61,25 @@ class Course < ActiveRecord::Base
       :conditions => ["user_course_associations.user_id = ? AND user_course_associations.role_id = ?",
                         user_id, 3] }
   }
+
   named_scope :user_behave_as_teacher, lambda { |user_id|
     { :joins => :user_course_associations,
       :conditions => ["user_course_associations.user_id = ? AND user_course_associations.role_id = ?",
                         user_id, 5] }
   }
+
   named_scope :user_behave_as_tutor, lambda { |user_id|
     { :joins => :user_course_associations,
       :conditions => ["user_course_associations.user_id = ? AND user_course_associations.role_id = ?",
                         user_id, 6] }
   }
+
   named_scope :user_behave_as_student, lambda { |user_id|
     { :joins => :user_course_associations,
       :conditions => ["user_course_associations.user_id = ? AND user_course_associations.role_id = ? AND user_course_associations.state = ?",
                         user_id, 2, 'approved'] }
   }
+
   attr_protected :owner, :published, :environment
 
   acts_as_taggable
@@ -221,7 +226,15 @@ class Course < ActiveRecord::Base
   def invite(user)
     assoc = self.user_course_associations.create(:user => user,
                                                  :role => Role[:member])
-    assoc = user.get_association_with(self) if assoc.new_record?
+    if assoc.new_record?
+      assoc = user.get_association_with(self)
+      # Se já foi convidado, apenas reenvia o e-mail
+      if assoc.invited?
+        assoc.send_course_invitation_notification
+        assoc.updated_at = ""; assoc.save # Para atualizar o updated_at
+        return assoc
+      end
+    end
 
     assoc.invite!
     assoc
@@ -229,20 +242,29 @@ class Course < ActiveRecord::Base
 
   # Método de alto nível que convida um determinado usuário para o curso
   # através do e-mail.
+  # - Caso o e-mail já tenha sido convidado e não tenha aceito o convite, um
+  #   novo e-mail será enviado.
   def invite_by_email(email)
     u =  User.find_by_email(email)
     if u
-      self.invite(u)
+      invitation = self.invite(u)
     else
-      self.user_course_invitations.create(:email => email)
+      invitation = self.user_course_invitations.create(:email => email)
+      # Se já foi convidado, apenas reenvia o e-mail
+      if invitation.new_record? && invitation.valid?
+        invitation = self.user_course_invitations.with_email(email).first
+        invitation.send_external_user_course_invitation
+        invitation.updated_at = ""; invitation.save # Para atualizar o updated_at
+      end
     end
+    invitation
   end
 
   # Indica se o curso possui convites para usuários não registrados
   def invited?(email)
     self.user_course_invitations.find_by_email(email)
   end
- 
+
   # Retorna o percentual de espaço ocupado por files
   def percentage_quota_file
     if self.quota.files >= self.plan.file_storage_limit
@@ -260,7 +282,7 @@ class Course < ActiveRecord::Base
       ( self.quota.multimedia * 100.0 ) / self.plan.video_storage_limit
     end
   end
-  
+
   # Retorna o percentual de membros do curso
   def percentage_quota_members
     if self.users.count >= self.plan.members_limit

@@ -2069,6 +2069,31 @@ table.users td {
   font-size: .9em;
 }
 
+table.users .tip {
+  display: block;
+  color: #B3B2B3;
+  margin-top: 3px;
+}
+
+table.users tr.invite {
+  height: 45px;
+  background-color: #EFF6E6;
+}
+
+table.users a.important.reinvite {
+  padding: 4px 10px;
+}
+
+table.users .reinvited {
+  border: 1px solid #61BE80;
+  padding: 5px 8px;
+  font-size: .8em;
+  color: #61BE80;
+
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+
 table.spaced thead th,
 table.spaced td {
   padding: 10px 20px;

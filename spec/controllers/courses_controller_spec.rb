@@ -603,4 +603,98 @@ describe CoursesController do
 
     end
   end
+
+  context "when viewing sent invitations (GET admin_manage_invitations)" do
+    before do
+      environment = Factory(:environment)
+      course = Factory(:course, :environment => environment,
+                       :owner => environment.owner)
+      User.maintain_sessions = false
+      activate_authlogic
+      UserSession.create course.owner
+      user_invitations = (1..3).collect { course.invite Factory(:user) }
+      email_invitations = (1..3).collect do |i|
+        course.invite_by_email "email#{i}@example.com"
+      end
+
+      @params = { :locale => 'pt-BR', :environment_id => course.environment.id,
+        :id => course.id }
+      get :admin_manage_invitations, @params
+    end
+
+    it "assigns user_invitations" do
+      assigns[:user_invitations].should_not be_nil
+    end
+
+    it "assigns email_invitations" do
+      assigns[:email_invitations].should_not be_nil
+    end
+  end
+
+  context "when removing invitations (POST destroy_invitations)" do
+    before do
+      @environment = Factory(:environment)
+      @course = Factory(:course, :environment => @environment,
+                       :owner => @environment.owner)
+      User.maintain_sessions = false
+      activate_authlogic
+      UserSession.create @course.owner
+      @user_invitations = (1..4).collect { @course.invite Factory(:user) }
+      @email_invitations = (1..4).collect do |i|
+        @course.invite_by_email "email#{i}@example.com"
+      end
+
+        @params = { :locale => 'pt-BR', :environment_id => @environment.id,
+          :id => @course.id }
+      end
+
+    context "when email_invitations is empty" do
+      before do
+        @params[:email_invitations] = ""
+        post :destroy_invitations, @params
+      end
+
+      it "does NOT destroy email invitations" do
+        @course.user_course_invitations.invited.should == @email_invitations
+      end
+    end
+
+
+    context "when email_invitations is NOT empty" do
+      before do
+        @params[:email_invitations] = [@email_invitations[0].id,
+                                       @email_invitations[1].id]
+        post :destroy_invitations, @params
+      end
+
+      it "destroys specified email invitations" do
+        @course.user_course_invitations.invited.should == @email_invitations[2..3]
+      end
+    end
+
+
+    context "when user_invitations is empty" do
+      before do
+        @params[:user_invitations] = ""
+        post :destroy_invitations, @params
+      end
+
+      it "does NOT destroy user invitations" do
+        @course.user_course_associations.invited.should == @user_invitations
+      end
+    end
+
+
+    context "when user_invitations is NOT empty" do
+      before do
+        @params[:user_invitations] = [@user_invitations[0].id,
+                                       @user_invitations[1].id]
+        post :destroy_invitations, @params
+      end
+
+      it "destroys specified user invitations" do
+        @course.user_course_associations.invited.should == @user_invitations[2..3]
+      end
+    end
+  end
 end

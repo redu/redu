@@ -462,24 +462,75 @@ class CoursesController < BaseController
     end
 
     respond_to do |format|
-      if @users.empty? && @emails.empty?
-        flash[:error] = "Nenhum usuário foi informado."
-      else
-        flash[:notice] = "Os usuários foram convidados via e-mail."
+      format.html do
+        if @users.empty? && @emails.empty?
+          flash[:error] = "Nenhum usuário foi informado."
+        else
+          flash[:notice] = "Os usuários foram convidados via e-mail."
+        end
+
+        redirect_to admin_invitations_environment_course_path(@environment, @course)
       end
 
-      format.html do
-        redirect_to admin_invitations_environment_course_path(@environment, @course)
+      format.js do
+        render :update do |page|
+          page.replace "#invite-#{params[:invitation_id]} .reinvite",
+            "<span class=\"reinvited\">Convite reenviado</span>"
+          page.replace_html "#invite-#{params[:invitation_id]} span.date",
+            (time_ago_in_words Time.zone.now)
+        end
       end
     end
   end
 
+  # Página para convidar usuários para o curso
   def admin_invitations
     respond_to do |format|
       format.html do
-        render :template => 'courses/new/admin_invitations', :layout => 'new/application'
+        render :template => 'courses/new/admin_invitations',
+          :layout => 'new/application'
       end
     end
   end
 
+  # Página para administrar convites já enviados
+  def admin_manage_invitations
+    @email_invitations = @course.user_course_invitations.invited
+    @user_invitations = @course.user_course_associations.invited
+
+    respond_to do |format|
+      format.html do
+        render :template => 'courses/new/admin_manage_invitations',
+          :layout => 'new/application'
+      end
+    end
+  end
+
+  def destroy_invitations
+    email_invitations = params[:email_invitations] || ""
+    email_invitations = email_invitations.collect{ |i| i.to_i }
+
+    user_invitations = params[:user_invitations] || ""
+    user_invitations = user_invitations.collect{ |i| i.to_i }
+
+    email_invitations.each do |i|
+      invitation = UserCourseInvitation.find(i)
+      invitation.destroy
+    end
+
+    user_invitations.each do |i|
+      assoc = UserCourseAssociation.find(i)
+      assoc.destroy
+    end
+
+    if email_invitations.empty? && user_invitations.empty?
+      flash[:notice] = "Nenhum convite foi marcado para ser removido."
+    else
+      flash[:notice] = "Os convites foram removidos do curso #{@course.name}."
+    end
+
+    respond_to do |format|
+      format.html { redirect_to :action => :admin_manage_invitations }
+    end
+  end
 end

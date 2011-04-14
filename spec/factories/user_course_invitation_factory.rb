@@ -1,4 +1,4 @@
 Factory.define :user_course_invitation do |i|
-  i.email "email@example.com"
+  i.sequence(:email) { |n| "email#{n}@example.com" }
   i.association :course
 end

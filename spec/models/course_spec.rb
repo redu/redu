@@ -482,6 +482,39 @@ describe Course do
       end
     end
 
+    context "and it is already invited" do
+      before do
+        UserNotifier.delivery_method = :test
+        UserNotifier.perform_deliveries = true
+        UserNotifier.deliveries = []
+
+        @already_invited = Factory(:user)
+        @invitation = subject.invite @already_invited
+      end
+
+      it "does NOT change his state" do
+        expect {
+          subject.invite(@already_invited)
+        }.should_not change {
+          @already_invited.get_association_with(subject).current_state
+        }
+      end
+
+      it "returns the same invitation" do
+        invitation = subject.invite @already_invited
+        invitation.should == @invitation
+      end
+
+      it "resends the e-mail invitation" do
+        UserNotifier.deliveries = []
+
+        invitation = subject.invite(@already_invited)
+        UserNotifier.deliveries.should_not be_empty
+        UserNotifier.deliveries.last.subject.should =~ /Você foi convidado para um curso no Redu/
+        UserNotifier.deliveries.last.body.should =~ /#{invitation.user.display_name}/
+      end
+    end
+
     context "by email" do
       before do
         @not_registered_email = "email@example.com"
@@ -532,6 +565,39 @@ describe Course do
           expect {
             subject.invite_by_email(@registered_user.email)
           }.should change(UserCourseAssociation, :count).by(1)
+        end
+      end
+
+      context "and it is already invited" do
+        before do
+          UserNotifier.delivery_method = :test
+          UserNotifier.perform_deliveries = true
+          UserNotifier.deliveries = []
+
+          @email_already_invited = "email@example.com"
+          @invitation = subject.invite_by_email @email_already_invited
+        end
+
+        it "does NOT change his state" do
+          expect {
+            subject.invite_by_email @email_already_invited
+          }.should_not change {
+            @invitation.reload.current_state
+          }
+        end
+
+        it "returns the same invitation" do
+          invitation = subject.invite_by_email @email_already_invited
+          invitation.should == @invitation
+        end
+
+        it "resends the e-mail invitation" do
+          UserNotifier.deliveries = []
+
+          invitation = subject.invite_by_email @email_already_invited
+          UserNotifier.deliveries.should_not be_empty
+          UserNotifier.deliveries.last.subject.should =~ /Você foi convidado para um curso no Redu/
+            UserNotifier.deliveries.last.body.should =~ /#{invitation.course.name}/
         end
       end
     end

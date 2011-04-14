@@ -6,6 +6,11 @@ class UserCourseInvitation < ActiveRecord::Base
 
   before_validation_on_create :generate_token
 
+  named_scope :invited, :conditions => { :state => 'invited' }
+  named_scope :with_email, lambda { |email|
+    { :conditions => { :email => email } }
+  }
+
   acts_as_state_machine :initial => :invited
   # Envia e-mail avisando que ele foi convidado
   state :invited, :enter => :send_external_user_course_invitation
@@ -14,6 +19,8 @@ class UserCourseInvitation < ActiveRecord::Base
   state :rejected
   state :failed
 
+  # Necessita que um usuário seja setado ANTES de chamar este método;
+  # caso contrário, falha silenciosamente
   event :accept do
     transitions :from => :invited, :to => :approved,
       :guard => Proc.new { |i| i.user }
@@ -33,14 +40,15 @@ class UserCourseInvitation < ActiveRecord::Base
   validates_format_of :email,
     :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/
 
+  def send_external_user_course_invitation
+    UserNotifier.deliver_external_user_course_invitation(self, self.course)
+  end
+
   protected
+
   def generate_token
     self.token = ActiveSupport::SecureRandom.base64(8).gsub("/","_").
       gsub(/=+$/,"")
-  end
-
-  def send_external_user_course_invitation
-    UserNotifier.deliver_external_user_course_invitation(self, self.course)
   end
 
   def create_user_course_association

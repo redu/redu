@@ -1,0 +1,24 @@
+<% form_tag destroy_invitations_environment_course_path(),
+  :method => :post, :id => "remove" do %>
+  <table id="user_list_table" class="common users" width="100%">
+    <thead>
+      <tr>
+        <th width="5%">
+          <input type="checkbox" id="select_all"  >
+        </th>
+        <th width="60%"></th>
+        <th width="25%">Convidado em:</th>
+        <th width="25%"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render :partial => 'courses/new/invite_email_item_admin',
+        :collection => email_invitations %>
+      <%= render :partial => 'courses/new/invite_user_item_admin',
+        :collection => user_invitations %>
+    </tbody>
+  </table>
+  <div class="actions">
+    <%= submit_tag "Remover selecionados", :class => "remove vanilla" %>
+  </div>
+<% end %>

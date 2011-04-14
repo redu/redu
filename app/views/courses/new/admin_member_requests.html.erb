@@ -20,6 +20,7 @@
       fake_tabs ["Informações", edit_environment_course_path(@environment, @course), {:class => 'icon icon-management-gray_16_16'}],
         ["Membros", admin_members_environment_course_path(@environment, @course), {:class => 'icon icon-members-gray_16_16'}],
         ["Moderação", admin_members_requests_environment_course_path(@environment, @course), {:class => 'icon icon-moderation-lightblue_16_16'}],
+        ["Convites", admin_manage_invitations_environment_course_path(@environment, @course), {:class => ''}],
         ["Disciplinas", admin_spaces_environment_course_path(@environment, @course), {:class => ''}] do
     %>
       <%= render :partial => 'courses/new/pending_member_list_admin',

@@ -23,7 +23,8 @@ class UserCourseAssociation < ActiveRecord::Base
       {:conditions => [ "created_at >= ?", 1.week.ago]}
   }
 
-  named_scope :approved, :conditions => {:state => 'approved'}
+  named_scope :approved, :conditions => { :state => 'approved' }
+  named_scope :invited, :conditions => { :state => 'invited' }
 
   # Máquina de estados para moderação das dos usuários nos courses.
   acts_as_state_machine :initial => :waiting
@@ -69,11 +70,11 @@ class UserCourseAssociation < ActiveRecord::Base
     UserCourseAssociation.count(:conditions => conditions) > 0
   end
 
-  protected
-
   def send_course_invitation_notification
     UserNotifier.deliver_course_invitation_notification(self.user, self.course)
   end
+
+  protected
 
   def create_hierarchy_associations
     self.course.create_hierarchy_associations(self.user) if self.invited?

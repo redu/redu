@@ -121,7 +121,7 @@ describe UserCourseAssociation do
         recent.should == [@uca, assoc2, assoc3]
     end
 
-    it "retrieves approved user course associations"do
+    it "retrieves approved user course associations" do
       course = Factory(:course)
       uca = course.user_course_associations.first
 
@@ -139,6 +139,15 @@ describe UserCourseAssociation do
                       :course => uca.course)
 
       UserCourseAssociation.approved.should == [uca, assoc, assoc2]
+    end
+
+    it "retrieves invited user_course_associations" do
+      course = Factory(:course)
+      @associations = (1..5).collect { course.invite(Factory(:user)) }
+      @associations[0..1].each { |a| a.accept! }
+      @associations[2].deny!
+
+      UserCourseAssociation.invited.should == @associations[3..4]
     end
   end
 

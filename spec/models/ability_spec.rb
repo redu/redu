@@ -241,6 +241,17 @@ describe Ability do
         @ability.should be_able_to(:invite_members, course)
       end
 
+      it "views not accepted invitations" do
+        course = Factory(:course, :owner => @env_admin,
+                         :environment => @environment)
+        @ability.should be_able_to(:admin_manage_invitations, course)
+      end
+
+      it "destroys invitations" do
+        course = Factory(:course, :owner => @env_admin,
+                         :environment => @environment)
+        @ability.should be_able_to(:destroy_invitations, course)
+      end
     end
 
     context "teacher" do
@@ -266,6 +277,18 @@ describe Ability do
         course = Factory.build(:course,:owner => @teacher,
                                :environment => @environment)
         @ability.should_not be_able_to(:invite_members, course)
+      end
+
+      it "cannot view not accepted invitations" do
+        course = Factory(:course, :owner => @env_admin,
+                         :environment => @environment)
+        @ability.should_not be_able_to(:admin_manage_invitations, course)
+      end
+
+      it "cannot destroy invitations" do
+        course = Factory(:course, :owner => @env_admin,
+                         :environment => @environment)
+        @ability.should_not be_able_to(:destroy_invitations, course)
       end
     end
 
