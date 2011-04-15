@@ -7,9 +7,17 @@
  * datas e detalhes (cinza): #b3b3b3
  */
 
-body {
+* {
   font-family: "Arial", "Helvetica", sans-serif;
+}
+
+body {
   font-size: .8em;
+}
+
+input[type=submit] {
+  white-space: normal;
+  -moz-box-sizing: content-box;
 }
 
 a {

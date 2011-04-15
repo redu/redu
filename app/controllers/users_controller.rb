@@ -374,7 +374,7 @@ class UsersController < BaseController
 
   def signup_completed
     redirect_to home_path and return unless @user
-    render :action => 'signup_completed'
+    render :template => "users/new/signup_completed", :layout => "new/clean"
   end
 
   def invite

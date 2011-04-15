@@ -26,7 +26,7 @@
       :success => "$('#requisition-#{friend.id}').slideToggle();" do %>
       <%= hidden_field_tag "goto_home", true %>
       <%= hidden_field_tag "friend_id", friend.id %>
-      <%= submit_tag "Aceitar", :class => 'accept-friend' %>
+      <%= submit_tag "Aceitar", :class => 'important accept-friend' %>
     <% end %>
   </div>
 </li>
