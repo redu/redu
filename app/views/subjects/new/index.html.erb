@@ -11,7 +11,7 @@
         <% if can? :manage, @space %>
           <%= pluralize(@space.subjects.count, 'módulo') %>
         <% else %>
-          <%= pluralize(@space.subjects.published.count, 'módulo') %>
+          <%= pluralize(@space.subjects.visible.count, 'módulo') %>
         <% end %>
       </span>
     </div>

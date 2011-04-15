@@ -22,7 +22,7 @@
             :method => :delete,
             :class => "remove",
             :confirm => "Você tem certeza que deseja deletar deste módulo? Todas as informações serão perdidas."  %>
-          <%= render :partial => "subjects/new/publish_unpublish",
+          <%= render :partial => "subjects/new/visible_invisible",
               :locals => { :space => @space, :subject => @subject } %>
         <% end %>
         

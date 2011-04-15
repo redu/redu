@@ -405,7 +405,12 @@ class User < ActiveRecord::Base
 
        self.has_access_to?(object)
     else
-      object.published? && self.has_access_to?(object)
+      if (object.class.to_s.eql? 'Subject')
+        debugger
+        object.visible? && self.has_access_to?(object)
+      else
+        object.published? && self.has_access_to?(object)
+      end
     end
   end
 

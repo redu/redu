@@ -103,7 +103,7 @@
        </div><!--  grid_16 acoes gerais -->
 
        <div class="publish grid_16">
-         <% unless @subject.published? %>
+         <% unless @subject.visible? %>
            <div class="box_notice">Este módulo ainda não foi publicado. <%= link_to "Clique aqui", publish_space_subject_path(@space, @subject) %> para publicá-lo.</div>
          <% end %>
        </div>

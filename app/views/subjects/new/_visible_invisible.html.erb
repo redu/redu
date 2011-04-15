@@ -4,14 +4,14 @@
     Locals: space e subject 
 %>
 <% if can? :manage, subject %>
-  <% if subject.published? %>
-    <%= link_to "Despublicar", unpublish_space_subject_path(space, subject),
-      :confirm => "Ao despublicar um módulo, todas as matrículas serão perdidas." + \
+  <% if subject.visible? %>
+    <%= link_to "Tornar invisível", turn_invisible_space_subject_path(space, subject),
+      :confirm => "Ao tornar um módulo invisível, nenhum aluno terá acesso aos recursos do módulo." + \
       " Tem certeza?",
       :method => "post",
       :class => "cancel " %>
   <% else %>
-      <%= link_to "Publicar", publish_space_subject_path(space, subject),
+      <%= link_to "Tornar visível", turn_visible_space_subject_path(space, subject),
         :confirm => "Tem certeza?",
         :method => "post",
         :class => "cancel " %>

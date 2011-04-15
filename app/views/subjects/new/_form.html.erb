@@ -13,7 +13,7 @@
     <%= render :partial => 'subjects/new/raw_form', :locals => { :f => f } %>
     <% end %>
 
-      <% if @subject.published? %>
+      <% if @subject.visible? %>
         <div class="box_notice">
           Você não pode editar o conteúdo do módulo, pois ele está publicado. Para despublicá-lo,
           clique <%= link_to "aqui", unpublish_space_subject_path(@space, @subject),
@@ -24,10 +24,10 @@
 
         </div>
         <%= render :partial => 'lectures/item_created', :collection => @subject.lectures,
-          :locals => { :published => true } %>
+          :locals => { :visible => true } %>
       <% else %>
         <%= render :partial => 'lectures/item_created', :collection => @subject.lectures,
-          :locals => { :published => false } %>
+          :locals => { :visible => false } %>
       <% end %>
       <% if action_name == 'edit' %>
         <%= render :partial => 'lectures/choose_type',

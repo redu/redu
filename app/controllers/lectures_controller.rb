@@ -323,6 +323,7 @@ class LecturesController < BaseController
   def destroy
     @lecture.destroy
     @lecture.subject.space.course.quota.refresh
+    @lecture.refresh_students_profiles
     respond_to do |format|
       format.html {
         flash[:notice] = "A aula foi removida."

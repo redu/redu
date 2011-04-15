@@ -16,8 +16,8 @@
     </li>
     <li>
         <%
-          if @space.subjects.published.recent.count > 0
-            subjects_count = "(+#{@space.subjects.published.recent.count})"
+          if @space.subjects.visible.recent.count > 0
+            subjects_count = "(+#{@space.subjects.visible.recent.count})"
           end
         %>
       <div class="<%= (current_page? space_subjects_path(@space)) ?

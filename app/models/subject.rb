@@ -17,7 +17,7 @@ class Subject < ActiveRecord::Base
     { :conditions => ['updated_at > ?', 1.week.ago] }
   }
 
-  attr_protected :owner, :published, :finalized
+  attr_protected :owner, :visible, :finalized
 
   acts_as_taggable
 
@@ -42,15 +42,13 @@ class Subject < ActiveRecord::Base
     enrollment.destroy
   end
 
-  def publish!
-   self.published = true
+  def turn_visible!
+   self.visible = true
    self.save
   end
 
-  def unpublish!
-    Enrollment.destroy_all(["subject_id = ? and user_id <> ?",
-                           self.id, self.user_id])
-    self.published = false
+  def turn_invisible!
+    self.visible = false
     self.save
   end
 

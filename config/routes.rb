@@ -102,8 +102,8 @@ ActionController::Routing::Routes.draw do |map|
                    :do_the_upload => [:post, :put],
                    :update_permissions => :post}
     space.resources :subjects,
-      :member => { :publish => :post,
-                   :unpublish => :post,
+      :member => { :turn_visible => :post,
+                   :turn_invisible => :post,
                    :admin_lectures_order => [ :get, :post ],
                    :statuses => :get,
                    :users => :get,

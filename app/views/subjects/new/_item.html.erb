@@ -1,16 +1,16 @@
 <li class="clearfix">
-  <% if !item.published? && (can? :manage, item) %>
+  <% if(can? :manage, item) %>
     <%= link_to 'Editar', edit_space_subject_path(item.space, item),
       :class => "edit icon icon-management-gray_8_8" %>
-  <% elsif item.published && (can? :manage, item) %>
-    <%#FIXME Trocar por ícone %>
-    <span class="edit" style="color: #B3B2B3;">Publicado</span>
   <% end %>
   <%= link_to item.title, space_subject_path(item.space, item),
     :class => 'name' %>
   <% if item.recent? %>
     <%#FIXME Trocar por ícone %>
     <span style="color: #F9A737; font-weight: bold; font-size: 0.7em;">NOVO</span>
+  <% end %>
+  <% if !item.visible? %>
+    <span style="color: #C02200; font-weight: bold; font-size: 0.7em;">INVISÍVEL</span>
   <% end %>
   <span class="description"><%= item.description %></span>
   <ul class="tags clearfix">

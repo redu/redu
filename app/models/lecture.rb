@@ -94,6 +94,14 @@ class Lecture < ActiveRecord::Base
     clone
   end
 
+  def refresh_students_profiles
+    student_profiles = StudentProfile.all(:conditions => 
+                                         {:subject_id => self.subject.id})
+    student_profiles.each do |student_profile|
+      student_profile.update_grade!
+    end
+  end
+
   protected
   def create_asset_report
     student_profiles = StudentProfile.all(:conditions =>

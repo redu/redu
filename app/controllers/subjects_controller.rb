@@ -20,7 +20,7 @@ class SubjectsController < BaseController
                                            :order => 'updated_at DESC',
                                            :per_page => AppConfig.items_per_page)
     else
-      @subjects = @space.subjects.published.
+      @subjects = @space.subjects.visible.
         paginate(:page => params[:page],
                  :order => 'updated_at DESC',
                  :per_page => AppConfig.items_per_page)
@@ -124,7 +124,7 @@ class SubjectsController < BaseController
           flash[:notice] = "As atualizações foram salvas."
         else
           @subject.finalized = true
-          @subject.published = true
+          @subject.visible = true
           @subject.save
           @subject.convert_lectureables!
           # cria as associações com o subject, replicando a do space
@@ -158,15 +158,15 @@ class SubjectsController < BaseController
     redirect_to space_subjects_path(@subject.space)
   end
 
-  def publish
-    @subject.publish!
-    flash[:notice] = "O módulo foi publicado."
+  def turn_visible
+    @subject.turn_visible!
+    flash[:notice] = "O módulo está visível para todos."
     redirect_to space_subject_path(@space, @subject)
   end
 
-  def unpublish
-    @subject.unpublish!
-    flash[:notice] = "O módulo foi despublicado e todas as matrículas foram perdidas."
+  def turn_invisible
+    @subject.turn_invisible!
+    flash[:notice] = "O módulo está invisível, apenas administradores podem visualizá-lo."
     redirect_to space_subject_path(@space, @subject)
   end
 

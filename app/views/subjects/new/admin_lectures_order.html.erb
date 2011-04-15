@@ -51,16 +51,17 @@
             </tbody>
           </table>
         </div>
+
+        <div class="actions">
+          <% form_tag admin_lectures_order_space_subject_path do %>
+            <%= hidden_field_tag 'lectures_ordered', nil, :class => "assets" %>
+            <%= submit_tag 'Salvar alterações' %>
+          <% end %>
+        </div>
+
       <% else %>
         <div class="box_notice">Este módulo não possui recursos.</div>
       <% end %>
-
-      <div class="actions">
-        <% form_tag admin_lectures_order_space_subject_path do %>
-          <%= hidden_field_tag 'lectures_ordered', nil, :class => "assets" %>
-          <%= submit_tag 'Salvar alterações' %>
-        <% end %>
-      </div>
 
     <% end %>
   </div><!-- end #subjec-edit -->
