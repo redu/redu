@@ -7,15 +7,17 @@
     <li>
       <div class="<%= (current_page? user_path(@user)) ?
                        "session selected".to_s : "session".to_s %>">
+        <% selected = (current_page? user_path(@user)) ? "icon-profile-white_16_16" : "icon-profile-lightblue_16_16" %>
         <%= link_to "Perfil: #{@user.first_name}", user_path(@user),
-        :class => "icon icon-redu_r8_c361_s1" %>
+        :class => "icon #{selected}" %>
       </div>
      </li>
     <li>
       <div class="<%= (current_page? user_friendships_path(@user)) ?
                        "session selected".to_s : "session".to_s %>">
+        <% selected = (current_page? user_friendships_path(@user)) ? "icon-contacts-white_16_16" : "icon-contacts-lightblue_16_16" %>
         <%= link_to 'Contatos', user_friendships_path(@user, :profile => true),
-          :class => "icon icon-redu_r8_c325_s1"%>
+          :class => "icon #{selected}"%>
       </div>
       <ul class="connections clearfix">
         <%= render :partial => 'users/new/item_short',

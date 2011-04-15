@@ -1724,7 +1724,7 @@ a.clean {
 
 
 .fake-tabs > ul li {
-  width: 110px;
+  width: 115px;
   float: left;
   border: 1px solid #B3B2B3;
   margin-right: -1px;
@@ -4181,8 +4181,11 @@ div.token-input-dropdown {
 .icon-add-lightblue_16_16{ background-position: 0 -648px;  }
 .icon-add-white_16_16{ background-position: 0 -864px;  }
 .icon-administrator-blue_16_16{ background-position: 0 -1080px;  }
+.fake-tabs > ul > li .icon-administrator-gray_16_16:hover { background-position: 9px -1080px;  }
 .icon-administrator-gray_16_16{ background-position: 1px -1296px;  }
+.fake-tabs > ul > li .icon-administrator-gray_16_16{ background-position: 9px -1296px;  }
 .icon-administrator-lightblue_16_16{ background-position: 0 -1512px;  }
+.fake-tabs > ul > li .icon-administrator-lightblue_16_16{ background-position: 8px -1512px;  }
 .icon-administrator-white_16_16{ background-position: 0 -1728px;  }
 .icon-annotation-blue_16_16{ background-position: -216px 0;  }
 .icon-annotation-lightblue_16_16{ background-position: -216px -216px;  }
@@ -4229,10 +4232,14 @@ div.token-input-dropdown {
 .icon-course-black_16_16{ background-position: -896px -1512px;  }
 .icon-course-lightblue_16_16:hover,
 .icon-course-blue_16_16{ background-position: -896px -1728px;  }
+.fake-tabs > ul > li .icon-course-gray_16_16:hover { background-position: -888px -1728px;  }
+.icon-course-gray_16_16 { background-position: -6825px  -663px; }
+.fake-tabs > ul > li .icon-course-gray_16_16 { background-position: -6817px  -663px; }
 .icon-course-blue_32_32{ background-position: -1128px 0;  }
 .icon-course-gray_32_32{ background-position: -1128px -232px;  }
 .icon-course-gray_48_48{ background-position: -1128px -464px;  }
 .icon-course-lightblue_16_16{ background-position: -1128px -712px;  }
+.fake-tabs > ul > li .icon-course-lightblue_16_16{ background-position: -1120px -712px;  }
 .icon-course-lightblue_32_32{ background-position: -1128px -928px;  }
 .icon-course-white_16_16{ background-position: -1128px -1160px;  }
 .icon-cs-blue_16_16{ background-position: -1128px -1376px;  }
@@ -4393,6 +4400,7 @@ div.token-input-dropdown {
 .icon-page-lightblue_32_32{ background-position: -4104px -1552px;  }
 .icon-page-white_24_24{ background-position: -4104px -1784px;  }
 .icon-preview-blue_16_16{ background-position: -4352px 0;  }
+.icon-preview-lightblue_16_16:hover { background-position: -4352px 0;  }
 .icon-preview-blue_32_32{ background-position: -4352px -216px;  }
 .icon-preview-gray_32_32{ background-position: -4352px -448px;  }
 .icon-preview-lightblue_16_16{ background-position: -4352px -680px;  }
@@ -4443,8 +4451,10 @@ div.token-input-dropdown {
 .icon-slides-white_24_24{ background-position: -5344px -672px;  }
 .icon-space-lightblue_16_16:hover,
 .icon-space-blue_16_16{ background-position: -5344px -896px;  }
+.fake-tabs > ul > li .icon-space-gray_16_16:hover { background-position: -5336px -896px;  }
 .icon-space-blue_32_32{ background-position: -5344px -1112px;  }
 .icon-space-gray_32_32{ background-position: -5344px -1344px;  }
+.icon-space-gray_16_16 { background-position: -6815px -432px; }
 .icon-space-gray_48_48{ background-position: -5344px -1576px;  }
 .icon-space-lightblue_16_16{ background-position: -5592px 0;  }
 .icon-space-lightblue_32_32{ background-position: -5592px -216px;  }
@@ -4457,8 +4467,11 @@ div.token-input-dropdown {
 .icon-spinner-lightblue_16_16{ background-position: -5592px -1512px;  }
 .icon-spinner-lightblue_8_8{ background-position: -5592px -1728px;  }
 .icon-student-blue_16_16{ background-position: -5840px 0;  }
+.fake-tabs > ul > li .icon-student-gray_16_16:hover { background-position: -5832px 0;  }
 .icon-student-gray_16_16{ background-position: -5840px -216px;  }
+.fake-tabs > ul > li .icon-student-gray_16_16{ background-position: -5832px -216px;  }
 .icon-student-lightblue_16_16{ background-position: -5840px -432px;  }
+.fake-tabs > ul > li .icon-student-lightblue_16_16{ background-position: -5832px -432px;  }
 .icon-student-white_16_16{ background-position: -5840px -648px;  }
 .icon-subitem-blue_8_8{ background-position: -5840px -864px;  }
 .icon-subitem-gray_8_8{ background-position: -5840px -1072px;  }
@@ -4471,12 +4484,18 @@ div.token-input-dropdown {
 .icon-subject-lightblue_32_32{ background-position: -6088px -464px;  }
 .icon-subject-white_16_16{ background-position: -6088px -696px;  }
 .icon-teacher-blue_16_16{ background-position: -6088px -912px;  }
+.fake-tabs > ul > li .icon-teacher-gray_16_16:hover { background-position: -6080px -912px;  }
 .icon-teacher-gray_16_16{ background-position: -6088px -1128px;  }
+.fake-tabs > ul > li .icon-teacher-gray_16_16 { background-position: -6080px -1128px;  }
 .icon-teacher-lightblue_16_16{ background-position: -6088px -1344px;  }
+.fake-tabs > ul > li .icon-teacher-lightblue_16_16{ background-position: -6080px -1344px;  }
 .icon-teacher-white_16_16{ background-position: -6088px -1560px;  }
 .icon-tutor-blue_16_16{ background-position: -6088px -1776px;  }
+.fake-tabs > ul > li .icon-tutor-gray_16_16:hover { background-position: -6080px -1776px;  }
 .icon-tutor-gray_16_16{ background-position: -6336px 0;  }
+.fake-tabs > ul > li .icon-tutor-gray_16_16{ background-position: -6328px 0;  }
 .icon-tutor-lightblue_16_16{ background-position: -6336px -216px;  }
+.fake-tabs > ul > li .icon-tutor-lightblue_16_16{ background-position: -6328px -216px;  }
 .icon-tutor-white_16_16{ background-position: -6336px -432px;  }
 .icon-unfavorite-blue_16_16{ background-position: -6336px -648px;  }
 .icon-unfavorite-gray_8_8:hover,
