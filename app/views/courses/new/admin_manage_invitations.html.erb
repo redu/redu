@@ -22,7 +22,7 @@
           :class => "button"
         %>
     </div>
-    <% unless @email_invitations.empty? || @user_invitations.invited.empty? %>
+    <% unless @email_invitations.empty? && @user_invitations.invited.empty? %>
       <div id="user_list">
         <%= render :partial => 'courses/new/invitations_list_admin',
           :locals => {:user_invitations => @user_invitations,

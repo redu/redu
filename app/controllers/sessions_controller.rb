@@ -29,7 +29,7 @@ class SessionsController < BaseController
         redirect_to home_user_path(current_user)
       else
         # Se tem um token de convite para o curso, atribui as variáveis
-        # necessárias para mostra o convite
+        # necessárias para mostrar o convite
         if params.has_key?(:invitation_token)
           @user_course_invitation = UserCourseInvitation.find_by_token(
             params[:invitation_token])

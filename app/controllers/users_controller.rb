@@ -165,6 +165,8 @@ class UsersController < BaseController
           @key.save
         end
 
+        # Se tem um token de convite para o curso, aprova o convite para o
+        # usuário recém-cadastrado
         if params.has_key?(:invitation_token)
           invite = UserCourseInvitation.find_by_token(params[:invitation_token])
           invite.user = @user
@@ -174,6 +176,15 @@ class UsersController < BaseController
         flash[:notice] = :email_signup_thanks.l_with_args(:email => @user.email)
         redirect_to signup_completed_user_path(@user)
       else
+        # Se tem um token de convite para o curso, atribui as variáveis
+        # necessárias para mostrar o convite em Users#new
+        if params.has_key?(:invitation_token)
+          @user_course_invitation = UserCourseInvitation.find_by_token(
+            params[:invitation_token])
+          @course = @user_course_invitation.course
+          @environment = @course.environment
+        end
+
         unless @user.oauth_token.nil?
           @user = User.find_by_oauth_token(@user.oauth_token)
           unless @user.nil?

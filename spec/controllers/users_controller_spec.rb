@@ -28,6 +28,33 @@ describe UsersController do
       end
 
       context "with an invitation token" do
+        context "and failing the validation" do
+          before do
+            course = Factory(:course)
+            @invite = Factory(:user_course_invitation,
+                              :email => "email@example.com", :course => course)
+            @post_params.store(:invitation_token, @invite.token)
+            @post_params[:user][:password_confirmation] = "wrong-pass"
+            post :create, @post_params
+          end
+
+          it "assigns environment" do
+            assigns[:environment].should == @invite.course.environment
+          end
+
+          it "assigns course" do
+            assigns[:course].should == @invite.course
+          end
+
+          it "assigns user_course_invitation" do
+            assigns[:user_course_invitation].should == @invite
+          end
+
+          it "re-renders Users#new" do
+            response.should render_template('users/new/new')
+          end
+        end
+
         context "and the same email that was invited" do
           before do
             course = Factory(:course)
