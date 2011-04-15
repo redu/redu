@@ -251,10 +251,13 @@ class Course < ActiveRecord::Base
     else
       invitation = self.user_course_invitations.create(:email => email)
       # Se já foi convidado, apenas reenvia o e-mail
-      if invitation.new_record? && invitation.valid?
+      if invitation.new_record?
         invitation = self.user_course_invitations.with_email(email).first
-        invitation.send_external_user_course_invitation
-        invitation.updated_at = ""; invitation.save # Para atualizar o updated_at
+        # Caso o e-mail seja mal-formado, não vai salvar e será ignorado.
+        unless invitation.nil?
+          invitation.send_external_user_course_invitation
+          invitation.updated_at = ""; invitation.save # Para atualizar o updated_at
+        end
       end
     end
     invitation

@@ -15,26 +15,26 @@
         ["Convites", admin_manage_invitations_environment_course_path(@environment, @course), {:class => ''}],
         ["Disciplinas", admin_spaces_environment_course_path(@environment, @course), {:class => ''}] do
       %>
+    <div class="actions invite clearfix">
+      <%=
+        link_to "Convidar membros", admin_invitations_environment_course_path(
+          @environment, @course),
+          :class => "button"
+        %>
+    </div>
     <% unless @email_invitations.empty? || @user_invitations.invited.empty? %>
-      <div class="actions invite clearfix">
-        <%=
-          link_to "Convidar membros", admin_invitations_environment_course_path(
-            @environment, @course),
-            :class => "button"
-          %>
-      </div>
       <div id="user_list">
         <%= render :partial => 'courses/new/invitations_list_admin',
           :locals => {:user_invitations => @user_invitations,
-                      :email_invitations => @email_invitations}%>
-      </div>
-    <% else %>
-      <div class="box_notice">
-        Não há convites em aberto.
-      </div>
+            :email_invitations => @email_invitations}%>
+        </div>
+      <% else %>
+        <div class="box_notice">
+          Não há convites em aberto.
+        </div>
+      <% end %>
+      <%#= will_paginate  @memberships, :renderer => EndlessRenderer %>
     <% end %>
-    <%#= will_paginate  @memberships, :renderer => EndlessRenderer %>
-  <% end %>
-</div>
+  </div>
 </div>
 

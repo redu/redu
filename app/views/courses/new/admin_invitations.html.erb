@@ -10,6 +10,7 @@
 
         item = "<li class=\"token-input-token email\"><p title=\"" + email + "\">" + email + "</p><span class=\"invite-to-redu\">(Convidar para o Redu)</span><span class=\"token-input-delete-token-email\">x</span></li>"
         $(".token-input-input-token").before(item);
+        //$("#admin-invitations .token-input-list").css("marginTop", "40px");
         $(this).hide();
         return false;
       });
@@ -27,6 +28,7 @@
           emailRegex = /^([a-zA-Z0-9_.-])+@([a-zA-Z0-9_.-])+\.([a-zA-Z])+([a-zA-Z])+/;
           entered_value = $("input[autocomplete=off]").val().slice(2);
           if (emailRegex.test(entered_value)) {
+            $("#admin-invitations .token-input-list").css("marginTop", "20px");
             $("#invite_email").show();
           };
         }
@@ -39,7 +41,7 @@
       $("#users").tokenInput("<%= auto_complete_users_path(:format => :js) %>", {
         crossDomain: false,
         hintText: "Digite o nome, sobrenome ou e-mail do usuário",
-        noResultsText: "<span id=\"no-result\">Sem resultados</span> <a href=\"#\" id=\"invite_email1\" style=\"display:none;\" >Clique aqui para convidar este endereço de e-mail</a>",
+        noResultsText: "Sem resultados",
         searchingText: "Buscando...",
       });
     });
@@ -54,6 +56,12 @@
     <div class="header">
       <h4>Membros</h4>
       <span class="counter">Convide pessoas para fazer parte do curso.</span>
+    </div>
+    <div class="actions clearfix">
+      <%=
+        link_to "Ver convites em aberto",
+        admin_manage_invitations_environment_course_path(@environment, @course)
+        %>
     </div>
     <% unless @course.can_add_entry? %>
       <div class="flash-message">

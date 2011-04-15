@@ -2110,13 +2110,13 @@ table.users tr.invite {
 }
 
 table.users a.important.reinvite {
-  padding: 4px 10px;
+  padding: 4px 14px;
 }
 
 table.users .reinvited {
   border: 1px solid #61BE80;
   padding: 5px 8px;
-  font-size: .8em;
+  font-size: .9em;
   color: #61BE80;
 
   -moz-border-radius: 5px;
@@ -2735,6 +2735,10 @@ label.focus {
   float: none;
 }
 
+#admin-invitations .actions {
+  float: right;
+}
+
 #admin-invitations .flash-message {
   margin-left: 62px;
   width: 478px;
@@ -2743,7 +2747,7 @@ label.focus {
 #admin-invitations .token-input-list {
   clear: none;
   float: left;
-  margin-top: 20px;
+  margin-top: 40px;
   width: 410px;
   height: 25px;
 
@@ -2791,7 +2795,7 @@ div.token-input-dropdown {
 
 #admin-invitations .common input[type=submit] {
   clear: both;
-  margin-right: 150px;
+  margin-right: 163px;
 }
 
 #admin-invitations .users-holder li {
