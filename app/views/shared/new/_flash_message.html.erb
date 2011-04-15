@@ -1,6 +1,6 @@
 <% ["info", "notice", "error"].each do |type| %>
   <% if flash[type.to_sym] %>
-    <div class="container_16">
+    <div class="container_16 global-messages">
       <div class="flash-message <%=type.to_s%>">
         <span><%= h(flash[type.to_sym]) %></span>
         <%= link_to 'Fechar', nil,

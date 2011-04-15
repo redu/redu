@@ -29,7 +29,7 @@
         item_invitation.course),
         :loading => "$('#spinner-#{item_invitation.id}').show();",
         :success => "$('#requisition-#{item_invitation.id}').slideToggle();" do %>
-        <%= submit_tag "Aceitar", :class => 'accept-invitation' %>
+        <%= submit_tag "Aceitar", :class => 'important accept-invitation' %>
       <% end %>
     <% else %>
       <span class="waiting">Limite de vagas atingido</span>
