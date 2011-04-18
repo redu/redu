@@ -33,7 +33,7 @@
       </div>
       <div class="grid_6 omega">
         <div class="hall">
-          <%= link_to "Criar nova conta", signup_url, :class => "important signup" %>
+          <%= link_to "Crie sua conta, é grátis!", signup_url, :class => "important signup" %>
           <hr/>
 
           <% form_for @user_session, :html => { :class => "common highlightable"} ,:url => sessions_path do |f| %>
@@ -53,7 +53,7 @@
                 <%= f.label :remeber_me, "Manter-me logado" %>
               <% end %>
 
-              <%= f.submit "Avançar" %>
+              <%= f.submit "Entrar" %>
             <% end %>
 
           <% end %>
