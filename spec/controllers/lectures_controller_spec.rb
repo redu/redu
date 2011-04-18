@@ -11,7 +11,7 @@ describe LecturesController do
 
     @subject = Factory(:subject, :owner => @subject_owner,
                        :space => @space, :finalized => true,
-                       :published => true)
+                       :visible => true)
     @lectures = (1..3).collect { Factory(:lecture,:subject => @subject ,:owner => @subject_owner) }
     @enrolled_user = Factory(:user)
     @space.course.join @enrolled_user

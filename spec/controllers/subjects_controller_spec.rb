@@ -18,7 +18,7 @@ describe SubjectsController do
     before do
       subjects = (1..3).collect { Factory(:subject, :owner => @subject_owner,
                                           :space => @space,
-                                          :published => true,
+                                          :visible => true,
                                           :finalized => true) }
     end
 
@@ -38,7 +38,7 @@ describe SubjectsController do
   context "GET 'show'" do
     before do
       @subject = Factory(:subject, :owner => @subject_owner,
-                         :published => true, :space => @space,
+                         :visible => true, :space => @space,
                          :finalized => true)
     end
     it "loads that subject" do
@@ -257,12 +257,12 @@ describe SubjectsController do
     end   
   end
 
-  context "POST 'publish'" do
+  context "POST 'turn_visible'" do
     before do
       @subject = Factory(:subject, :owner => @subject_owner,
                          :finalized => true ,:space => @space)
       lecture = Factory(:lecture, :owner => @user, :subject => @subject)
-      post :publish, :locale => "pt-BR", :id => @subject.id,
+      post :turn_visible, :locale => "pt-BR", :id => @subject.id,
         :space_id => @space.id
     end
 
@@ -275,12 +275,12 @@ describe SubjectsController do
     end
   end
 
-  context "POST 'unpublish'" do
+  context "POST 'turn_invisible'" do
     before do
       @subject = Factory(:subject, :owner => @subject_owner,
                          :space => @space, :finalized => true)
       lecture = Factory(:lecture, :owner => @user, :subject => @subject)
-      post :unpublish, :locale => "pt-BR", :id => @subject.id, :space_id => @space.id
+      post :turn_invisible, :locale => "pt-BR", :id => @subject.id, :space_id => @space.id
     end
 
     it "assigns the subject" do

@@ -28,7 +28,7 @@ describe Subject do
   xit { should ensure_length_of(:description).is_at_least(30).is_at_most(250) }
 
   it { should_not allow_mass_assignment_of(:owner) }
-  it { should_not allow_mass_assignment_of(:published) }
+  it { should_not allow_mass_assignment_of(:visible) }
   it { should_not allow_mass_assignment_of(:finalized) }
 
   it "responds to tags" do
@@ -72,13 +72,13 @@ describe Subject do
   end
 
   context "finders" do
-    it "retrieves published subjects" do
+    it "retrieves visibles subjects" do
       subjects = (1..3).collect { Factory(:subject, :owner => @user,
                                           :space => @space) }
-      published_subjects = (1..3).collect { Factory(:subject, :owner => @user,
+      visible_subjects = (1..3).collect { Factory(:subject, :owner => @user,
                                                     :space => @space,
-                                                    :published => true) }
-      Subject.published.should == published_subjects
+                                                    :visible => true) }
+      Subject.visible.should == visible_subjects
     end
 
     it "retrieves recent subjects (updated until 1 week ago)" do
@@ -114,17 +114,17 @@ describe Subject do
     should respond_to :recent?
   end
 
-  it "defaults to not published" do
-    subject { Factory(:subject, :published => nil) }
-    subject.published.should be_false
+  it "defaults to not visible" do
+    subject { Factory(:subject, :visible => nil) }
+    subject.visible.should be_false
   end
 
-  it "responds to publish!" do
-    should respond_to :publish!
+  it "responds to turn_visible!" do
+    should respond_to :turn_visible!
   end
 
-  it "responds to unpublish!" do
-    should respond_to :unpublish!
+  it "responds to turn_invisible!" do
+    should respond_to :turn_invisible!
   end
 
   it "indicates if it is recent (updated until 1 week ago)" do
@@ -135,23 +135,21 @@ describe Subject do
     subject.should_not be_recent
   end
 
-  it "publishes itself" do
+  it "visibles itself" do
     subject = Factory(:subject, :owner => @user,
-                      :space => @space, :published => false)
-    subject.publish!
-    subject.should be_published
+                      :space => @space, :visible => false)
+    subject.turn_visible!
+    subject.should be_visible
   end
 
-  it "unpublishes itself and removes all enrollments" do
+  it "invisibles itself and removes all enrollments" do
     users = (1..4).collect { Factory(:user) }
     subject = Factory(:subject, :owner => @user,
-                      :space => @space, :published => true)
+                      :space => @space, :visible => true)
     users.each { |u| subject.enroll(u) }
 
-    subject.unpublish!
-    subject.should_not be_published
-    subject.enrollments.reload
-    subject.enrollments.size.should == 0
+    subject.turn_invisible!
+    subject.should_not be_visible
   end
 
   it "responds to enroll" do
