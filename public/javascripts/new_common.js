@@ -97,7 +97,7 @@ jQuery(function(){
     })
 
     // Padrão de tabelas
-    $("table.common tr:even:not(.invite)").addClass("odd");
+    $("table.common tr:even:not(.invite):not(.message)").addClass("odd");
 
     // Form com tabelas
     $("#select_all").change(

@@ -1737,6 +1737,9 @@ a.clean {
   margin-bottom: 10px;
 }
 
+.fake-tabs .actions .back{
+  font-size: .9em;
+}
 .main .fake-tabs > ul {
   padding-left: 10px;
 }
@@ -3185,7 +3188,6 @@ div.token-input-dropdown {
 }
 
 #course-invitation .course {
-  border: solid 1px #B3B2B3;
   padding: 10px;
   margin-bottom: 10px;
   margin-right: 20px;
@@ -4019,6 +4021,7 @@ div.token-input-dropdown {
 #messages table.common .unread {
   padding-left: 20px;
   background: url("../images/new/icon-unread-green_8_8.png") no-repeat 0px center;
+  font-weight: bold;
 }
 
 #messages table.common .user {
@@ -4067,6 +4070,7 @@ div.token-input-dropdown {
 
 #messages .respond {
   margin-left: 40px;
+  margin-bottom: 10px;
   background: #F0F0F0 url("../images/new/gray-nipple.png") no-repeat left top;
   padding: 10px 10px 10px 0;
   -moz-border-radius: 5px;
@@ -4080,6 +4084,11 @@ div.token-input-dropdown {
 
 #messages .respond textarea {
   width: 395px;
+}
+
+#messages table.common td.sender {
+  padding-left: 10px;
+  background-color: #F1F0F0;
 }
 
 #plan-index .common .billable {

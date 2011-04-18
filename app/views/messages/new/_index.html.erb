@@ -8,7 +8,11 @@
         <th width="5%">
         </th>
         <th width="60%">Título:</th>
-        <th width="35%">Autor e Data:</th>
+        <% if mailbox == :inbox %>
+          <th width="35%">Autor e Data:</th>
+        <% else %>
+          <th width="35%">Enviada para:</th>
+        <% end %>
       </tr>
     </thead>
     <tbody>

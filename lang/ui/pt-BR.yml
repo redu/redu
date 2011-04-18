@@ -102,14 +102,14 @@ pt-BR:
             login:
               blank: ": Por favor, digite um login."
               too_short: ": Login muito curto (mínimo de 5 caracteres)."
-              invalid:  ": Login inválido."
+              invalid:  "Utilize apenas letras (a-z), números (0-9), traço (-) e sublinhado (_)."
               taken: "Por favor, escolha outro login. Este já existe no Redu."
             login_slug:
               taken: "Por favor, escolha outro login. Este já existe no Redu."
             email:
               blank: ": Por favor, digite um e-mail."
               too_short: ": E-mail muito curto (mínimo de 3 caracteres)."
-              invalid: ": E-mail inválido."
+              invalid: "E-mail inválido."
               taken: ": Este e-mail já está cadastrado."
               confirmation: "é diferente da confirmação."
             password:
