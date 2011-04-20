@@ -159,24 +159,15 @@ module BaseHelper
 
 
   def type_class(resource)
-#      case resource.attachment_content_type
-#      when "application/vnd.ms-powerpoint" then 'ppt'
-#      when "application/msword" then 'word'
-#      when "application/vnd.openxmlformats-officedocument.wordprocessingml.document" then 'word'
-#      when "application/rtf" then 'word'
-#      when "text/plain" then 'text'
-#      when "application/pdf" then 'pdf'
-#      else ''
-#      end
-        icons = ['3gp', 'bat', 'bmp', 'doc', 'css', 'exe', 'gif', 'jpg', 'jpeg', 'jar','zip',
-        'mp3', 'mp4', 'avi', 'mpeg', 'mov', 'm4p', 'ogg', 'png', 'psd', 'ppt', 'txt', 'swf', 'wmv', 'xls', 'xml', 'zip']
+    icons = ['3gp', 'bat', 'bmp', 'doc', 'css', 'exe', 'gif', 'jpg', 'jpeg', 'jar','zip',
+             'mp3', 'mp4', 'avi', 'mpeg', 'mov', 'm4p', 'ogg', 'pdf', 'png', 'psd', 'ppt', 'txt', 'swf', 'wmv', 'xls', 'xml', 'zip']
 
-        file_ext = resource.attachment_file_name.split('.')[1] if resource.attachment_file_name.split('.').length > 0
-        if file_ext and icons.include? file_ext
-        'ext_'+ file_ext
-        else
-         'ext_txt'
-      end
+    file_ext = resource.attachment_file_name.split('.').last if resource.attachment_file_name.split('.').length > 0
+    if file_ext and icons.include? file_ext
+      'ext_'+ file_ext
+    else
+      'ext_blank'
+    end
   end
 
 

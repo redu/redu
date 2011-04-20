@@ -175,6 +175,15 @@ jQuery(function(){
         label.prepend($(this));
     });
 
+    // Arquivos
+    $("#space-materials .new-folder .button").click(function(e){
+        $(this).next(".new-folder-inner").toggle();
+        console.log($(this).next(".new-folder-inner").toggle());
+        e.preventDefault();
+    });
+
+
+
 });
 
 /* Limita a quantidade de caracteres de um campo */

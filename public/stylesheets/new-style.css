@@ -512,6 +512,11 @@
   background: url("../images/new/icon-bulletin-gray_32_32.png") no-repeat 20px center;
 }
 
+#space-materials .header {
+  width: 415px;
+  background: url("../images/new/icon-material-gray_32_32.png") no-repeat 20px center;
+}
+
 #subject-blocked {
   height: 200px;
 }
@@ -1598,6 +1603,118 @@
   text-align: center;
 }
 
+#folder-index {
+  clear: both;
+}
+
+#folder-index .context {
+  font-size: .9em;
+  color: #B2B2B2;
+  margin: 15px 0 15px 30px;
+}
+
+#folder-index .context .current {
+  display: block;
+  color: #6C6D6E;
+}
+
+#folder-admin {
+  float: left;
+  width: 250px;
+}
+
+#folder-admin .new-folder {
+  margin-right: 10px;
+}
+
+#folder-admin .new-folder,
+#folder-admin .new-file {
+  float: left;
+}
+
+#folder-admin .new-folder-inner,
+#folder-admin .new-file-inner {
+  position: absolute;
+  z-index: 9999;
+  border: 1px solid
+}
+
+#folder-admin .new-folder-inner,
+#folder-admin .new-file-inner {
+  top: 30px;
+  left: 0;
+  border: 1px solid #E6E6E5;
+  padding: 5px;
+  width: 235px;
+  background-color: white;
+
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+}
+
+#folder-admin .new-folder input[type=text] {
+  border: 1px solid #B3B2B3;
+  padding: 9px 5px;
+  float: left;
+  margin-right: 10px;
+  width: 165px;
+
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
+#folder-admin .new-file .file-wrapper {
+  position: relative;
+  width: 190px;
+  float: left;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+#folder-admin form .errorMessageField {
+  display: block;
+  clear: both;
+  color: #F37B38;
+  font-size: .9em;
+  margin-bottom: 10px;
+}
+
+#folder-admin .new-file .file-wrapper .file-holder {
+  font-size: .85em;
+  color: #b3b2b3;
+  margin-left: 5px;
+  display: block;
+  float: left;
+  width: 100px;
+  height: 30px;
+  overflow: hidden;
+}
+
+#folder-admin .new-file .file-wrapper .browse {
+  display: block;
+  float: left;
+}
+
+#folder-admin .new-file .file-wrapper input[type=file] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 30px;
+  width: 200px;
+  cursor: pointer;
+
+  filter: alpha(opacity=1);
+  -moz-opacity: 0.01;
+  opacity: 0.01;
+}
+
+#folder-admin .new-folder-inner input[type=submit],
+#folder-admin .new-file-inner input[type=submit] {
+  float: right;
+}
+
 a.button,
 input[type=submit],
 a.cancel,
@@ -2096,6 +2213,79 @@ table.common td {
   vertical-align: middle;
 }
 
+table.common .ext_folder {
+  background: url("../images/new/ext/folder.png") no-repeat center center;
+}
+
+table.common .ext_blank {
+  background: url("../images/new/ext/_blank.png") no-repeat center center;
+}
+
+table.common .ext_gif {
+  background: url("../images/new/ext/gif.png") no-repeat center center;
+}
+
+table.common .ext_png {
+  background: url("../images/new/ext/png.png") no-repeat center center;
+}
+
+table.common .ext_jpeg,
+table.common .ext_jpg {
+  background: url("../images/new/ext/jpg.png") no-repeat center center;
+}
+
+table.common .ext_txt {
+  background: url("../images/new/ext/txt.png") no-repeat center center;
+}
+
+table.common .ext_pdf {
+  background: url("../images/new/ext/pdf.png") no-repeat center center;
+}
+
+table.common .ext_doc {
+  background: url("../images/new/ext/doc.png") no-repeat center center;
+}
+
+table.common .ext_xlsx,
+table.common .ext_xls {
+  background: url("../images/new/ext/xls.png") no-repeat center center;
+}
+
+table.common .ext_ppt,
+table.common .ext_pptx {
+  background: url("../images/new/ext/ppt.png") no-repeat center center;
+}
+
+table.folders td {
+  padding: 10px;
+}
+
+table.folders .size,
+table.folders .remove,
+table.folders .delete,
+table.folders .rename,
+table.folders .date {
+  font-size: .9em;
+}
+
+table.folders thead {
+  height: 30px;
+}
+
+table.folders thead th a {
+  color: #6C6D6E;
+}
+
+table.folders .rename-folder input[type=text] {
+  width: 90px;
+  padding: 8px;
+  border: 1px solid #B3B2B3;
+
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
 table.users td {
   font-size: .9em;
 }
@@ -2131,6 +2321,7 @@ table.spaced td {
 }
 
 table.common td .date,
+table.common td .size,
 table.common td .email {
   color: #B2B2B2;
 }
@@ -4406,6 +4597,11 @@ div.token-input-dropdown {
 .icon-material-blue_32_32{ background-position: -3360px 0;  }
 .icon-material-gray_32_32{ background-position: -3360px -232px;  }
 .icon-material-lightblue_32_32{ background-position: -3360px -464px;  }
+.icon-material-blue_16_16 { background-position: -6825px -912px; }
+.icon-material-gray_16_16 { background-position: -6824px -1283px; }
+.icon-material-white_16_16 { background-position: -6824px -1543px; }
+.icon-material-lightblue_16_16 { background-position: -6825px -1127px; }
+.icon-material-lightblue_16_16:hover { background-position: -6825px -912px; }
 .icon-members-lightblue_16_16:hover,
 .icon-members-blue_16_16{ background-position: -3360px -696px;  }
 .icon-members-blue_32_32{ background-position: -3360px -912px;  }

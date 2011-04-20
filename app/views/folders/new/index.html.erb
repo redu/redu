@@ -1,0 +1,22 @@
+<% content_for :header_scripts_and_styles do %>
+  <%= javascript_include_tag "jquery.filestyle.mini.js" %>
+  <%= javascript_include_tag "folders.js" %>
+<% end %>
+
+<%= render :partial => 'spaces/new/sidebar' %>
+<div class="main grid_12 omega big-col">
+  <%= render :partial => 'spaces/new/breadcrumbs', :locals => { :space => @space } %>
+  <%= render :partial => 'spaces/new/header',
+    :locals => { :space => @space }%>
+  <div id="space-materials" class="hierarchy-listing-wrapper">
+    <div class="header">
+      <h4>Material de apoio</h4>
+      <span class="counter"><%= @files_count %> arquivos no total</span>
+    </div>
+  </div>
+  <div>
+    <div id="materials">
+      <%= render :partial => 'folders/new/index' %>
+    </div>
+  </div>
+</div><!-- end main -->

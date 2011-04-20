@@ -32,7 +32,7 @@
                     "session selected".to_s : "session".to_s %>">
         <% selected = (current_page? space_folders_path(@space)) ? "icon-material-white_16_16" : "icon-material-lightblue_16_16" %>
         <%= link_to 'Material de apoio', space_folders_path(@space),
-          :class => "#{selected}" %>
+          :class => "icon #{selected}" %>
       </div>
     </li>
     <!--li>

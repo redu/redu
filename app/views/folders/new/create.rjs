@@ -1,0 +1,13 @@
+page << "$('.errorMessageField').remove();"
+page <<  "$('.spinner').hide();"
+
+if @folder.valid?
+  page << "$(\".new-file-inner:visible, .new-folder-inner:visible\", \"#folder-admin\").hide();"
+  page <<  "$(\"input[type=file], input[type=text]\", \"#folder-admin\").val('');"
+
+  page.replace_html "file_list", :partial => "folders/new/list"
+else
+  page << "var error = $(\"<div class='errorMessageField'>\").html(\"#{@myfile.errors.full_messages.join(", ")}\");"
+  page << "$(\".new-folder-inner form\").prepend(error);"
+end
+
