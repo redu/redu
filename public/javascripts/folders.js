@@ -39,6 +39,7 @@ $(function(){
 
     utils.refresh = function(){
       $(document).ajaxComplete(function(){
+          console.log("teste")
         $("table.common tr:even").addClass("odd");
       });
     };
@@ -58,7 +59,6 @@ $(function(){
     $(".new-file .button").live("click", function(e){
         $(".new-folder-inner:visible", "#folder-admin").slideUp("fast");
         $(this).next(".holder").slideToggle("fast");
-
         e.preventDefault();
     });
 

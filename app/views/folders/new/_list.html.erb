@@ -36,6 +36,7 @@
         link_to_remote h(folder.name),
           :url => space_folders_path(@space, :id => folder.id),
           :method => :get,
+          :before => "$('#loading-files').show();",
           :html => { :class => "folder-name" }
         %>
       <div class="rename-folder" style="display:none;">
