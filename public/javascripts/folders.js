@@ -35,10 +35,6 @@ $(function(){
       $this.val("");
 
       utils.refresh();
-
-      $(".folder-name").live("click", function(){
-          utils.toggleLoader();
-      });
     };
 
     utils.refresh = function(){
