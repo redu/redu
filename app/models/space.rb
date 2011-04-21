@@ -95,7 +95,7 @@ class Space < ActiveRecord::Base
   #FIXME Refactor: Mover para Status
   def recent_log(offset = 0, limit = 3)
     logs = {}
-    logs[:myfile] = self.statuses.find(:all,
+    logs[:folder] = self.statuses.find(:all,
                                        :order => 'created_at DESC',
                                        :limit => limit,
                                        :offset => offset,
