@@ -45,6 +45,7 @@
       <% field_set_tag "Informações de contato", :class => 'separator' do %>
         <%= f.label :login, :username.l %>
         <%= f.text_field :login, :class => 'small' %>
+        <% debugger %>
         <%= error_for :user, :login %>
 
         <%= f.label :email, :email.l %>

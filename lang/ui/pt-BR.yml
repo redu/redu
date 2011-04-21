@@ -99,6 +99,10 @@ pt-BR:
               blank: "Por favor escolha um enunciado maior que 6 caracteres."
         user:
           attributes:
+            first_name:
+              blank: "Por favor, digite seu nome."
+            last_name:
+              blank: "Por favor, digite seu sobrenome."
             login:
               blank: ": Por favor, digite um login."
               too_short: ": Login muito curto (mínimo de 5 caracteres)."
@@ -216,7 +220,11 @@ pt-BR:
       not_confirmed: Your account is not confirmed
       not_approved: Your account is not approved
       no_authentication_details: You did not provide any details for authentication.
-
+    models:
+      user: login
+    attributes:
+      user:
+        login: "Login"
   #redu categories
   all: Todas
   aeronautics_and_astronautics: Aeronáutica e Astronáutica
