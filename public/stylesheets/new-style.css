@@ -305,13 +305,68 @@
 }
 
 #hierarchy-header .subject-name {
-  width: 590px;
+  width: 530px;
   float: left;
+}
+
+#hierarchy-header .start-subject {
+  float: right;
+  width: 150px;
+}
+
+#hierarchy-header .start-subject .start {
+  display: block;
+  background: url("../images/new/start-subject.png") no-repeat;
+  width: 146px;
+  height: 25px;
+}
+
+#hierarchy-header .start-subject .start:hover {
+  background-position: 0 -31px;
+}
+
+#hierarchy-header .start-subject .bt {
+  border: 1px solid #cccbcb;
+  margin-top: 5px;
+  display: block;
+  background-color: white;
+  padding: 9px 10px;
+  font-size: .9em;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: left;
+
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#f1f0f0)); /* webkit browsers */
+  background-image: -moz-linear-gradient(top, #ffffff, #f1f0f0); /* Firefox 3.6+ */
+}
+
+#hierarchy-header .start-subject .bt:hover {
+  border: 1px solid #4cacd5;
+  text-decoration: none;
+
+  background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#dbeff7)); /* webkit browsers */
+  background: -moz-linear-gradient(top, #ffffff, #dbeff7); /* Firefox 3.6+ */
+}
+
+#hierarchy-header .start-subject .bt .icon {
+  width: 32px;
+  height: 32px;
+  float: left;
+  display: block;
+  margin: 0 15px 0 10px;
 }
 
 #hierarchy-header .leave {
   padding-left: 12px;
   font-size: .9em;
+}
+
+#hierarchy-header.subject-header {
+  padding-bottom: 10px;
 }
 
 #hierarchy-header.subject-header .prefix {

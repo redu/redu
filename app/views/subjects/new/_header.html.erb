@@ -10,18 +10,8 @@
       <%= subject.description %>
      </span>
   </div>
-  <ul class="statistics grid_3 omega">
-    <li>
-      <em class="icon icon-teacher-gray_16_16">Professores:</em>
-      <span><%= subject.space.teachers.length %></span>
-    </li>
-    <li>
-      <em class="icon icon-tutor-gray_16_16">Tutores:</em>
-      <span><%= subject.space.tutors.length %></span>
-    </li>
-    <li>
-      <em class="icon icon-student-gray_16_16">Alunos:</em>
-      <span><%= subject.members.length %></span>
-    </li>
-  </ul>
+  <div class="start-subject">
+    <%= link_to "Deseja estudar?", space_subject_lectures_path(@space, @subject), :class => "start replacement" %>
+    <%= link_to raw("<span class='icon icon-resource-lightblue_32_32'></span>Conheça os recursos"), space_subject_lectures_path(@space, @subject), :class => "bt clearfix" %>
+  </div>
 </div><!-- end #hierarchy-header -->
