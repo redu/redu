@@ -1275,8 +1275,40 @@
   background: none;
 }
 
-#breadcrumbs.course li.moderation_count {
+#breadcrumbs .course {
+  float: left;
+}
+
+#breadcrumbs .moderatorship {
   float: right;
+  margin: 0;
+  padding: 0;
+
+}
+
+#breadcrumbs .moderatorship a {
+  background-color: #FFEED7;
+  color: #F8A637;
+  padding: 3px 5px;
+  display: block;
+  font-size: .9em;
+  float: left;
+  margin-right: 5px;
+
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+}
+
+#breadcrumbs .moderatorship a:hover {
+  text-decoration: none;
+}
+
+#breadcrumbs .moderatorship .moderated {
+  display: block;
+  width: 16px;
+  height: 16px;
+  float: left;
 }
 
 #breadcrumbs.wizard li a {
