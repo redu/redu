@@ -23,6 +23,11 @@
   height: inherit;
 }
 
+#logotipo a {
+  display: block;
+  height: inherit;
+}
+
 #header .nav {
   margin-top: 7px;
 }
@@ -1301,14 +1306,10 @@
 }
 
 #breadcrumbs li {
-  float: left;
-}
-
-#breadcrumbs li {
   background: url("../images/new/breadcrumb-arrow.gif") no-repeat right center;
   padding-right: 15px;
   padding-left: 10px;
-
+  float: left;
 }
 
 #breadcrumbs li a {
