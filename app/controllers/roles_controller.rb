@@ -1,5 +1,8 @@
 class RolesController < BaseController
-  layout 'environment'
+  layout "new/application"
+
+  load_and_authorize_resource :environment
+  load_and_authorize_resource :user
 
   def show
     @user = User.find(params[:user_id])
@@ -15,6 +18,12 @@ class RolesController < BaseController
     @environment_membership = @user.user_environment_associations.find(:first,
       :conditions => {:environment_id => @environment.id,
                       :user_id => @user.id})
+
+    respond_to do |format|
+      format.html do
+        render :template => "roles/new/show"
+      end
+    end
   end
 
   def update

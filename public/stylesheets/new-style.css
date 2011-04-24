@@ -2877,8 +2877,58 @@ label.focus {
   font-size: .9em;
 }
 
-#course-manage {
+#environment-manage .roles {
+  margin: 15px 50px;
+  width: 630px;
+}
 
+#environment-manage .common .edit-roles label,
+#environment-manage .common .edit-roles input[type=radio] {
+  float: left;
+  color: #B2B2B2;
+  font-size: .9em;
+  display: block;
+}
+
+#environment-manage .common .edit-roles input[type=radio] {
+  clear: left;
+  margin-right: 10px;
+}
+
+#environment-manage .common .edit-roles input[type=submit] {
+  clear: both;
+  float: left;
+  display: block;
+  margin: 10px 0 0 5px;
+}
+
+#environment-manage .common .edit-roles label {
+}
+
+#environment-manage .user-info {
+  margin: 0 50px;
+}
+
+#environment-manage .user-info .avatar {
+  float: left;
+  margin-right: 10px;
+}
+
+#environment-manage .user-info .call {
+  font-size: 1.2em;
+  color: black;
+}
+
+#environment-manage .user-info .call a { color: black; }
+
+#environment-manage .user-info .email,
+#environment-manage .user-info .info {
+  font-size: .9em;
+  color: #B2B2B2;
+}
+
+#environment-manage .user-info .info {
+  display: block;
 }
 
 #course-manage .tabs .ui-tabs-hide {
