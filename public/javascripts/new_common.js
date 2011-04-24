@@ -1,9 +1,11 @@
 jQuery(function(){
     // Flash message
     $(".flash-message").parent().next().css("marginTop", "10px");
-    $(".flash-message .close-flash").click(function(){
+    $(".flash-message .close-flash").click(function(e){
       $(this).parent().slideToggle();
       $("#content").css("marginTop","20px");
+
+      e.preventDefault();
     });
 
     // Dropdown de usuário
