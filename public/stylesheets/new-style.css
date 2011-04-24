@@ -874,6 +874,7 @@
   display: block;
   margin: 5px 0;
   width: 555px;
+  min-height: 40px;
   font-size: .9em;
 }
 
@@ -1355,6 +1356,19 @@
 
 #space-subjects .subjects > li.open {
   background-image: url("../images/new/icon-subject-open-gray_32_32.png");
+}
+
+#space-subjects .subjects > li .new {
+  color: white;
+  font-size: .7em;
+  text-transform: uppercase;
+  background-color: #61BE80;
+  padding: 3px 5px;
+  vertical-align: text-top;
+
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
 }
 
 #add-resources {

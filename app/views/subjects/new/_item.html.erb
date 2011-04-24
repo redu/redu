@@ -6,8 +6,7 @@
   <%= link_to item.title, space_subject_path(item.space, item),
     :class => 'name' %>
   <% if item.recent? %>
-    <%#FIXME Trocar por ícone %>
-    <span style="color: #F9A737; font-weight: bold; font-size: 0.7em;">NOVO</span>
+    <span class="new">Novo</span>
   <% end %>
   <% if !item.visible? %>
     <span style="color: #C02200; font-weight: bold; font-size: 0.7em;">INVISÍVEL</span>
