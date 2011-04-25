@@ -31,6 +31,14 @@
     Feminino
   <% end %>
 
+  <%= label_tag "Localização:" %>
+  <%= f.text_field :localization %>
+  <span class="tip">Ex: Recife, Pernambuco</span>
+
+  <%= label_tag "Celular:" %>
+  <%= f.text_field :mobile %>
+  <span class="tip">Ex: 55 81 4444-4444</span>
+
   <%= label_tag "Papel:" %>
   <% field_set_tag nil, :class => "inline" do %>
     <%= f.radio_button :teacher_profile, false %>

@@ -123,6 +123,10 @@ pt-BR:
             password_confirmation:
               blank: ": Por favor, digite a senha de confirmação."
               too_short: ": Senha muito curta (mínimo de 6 caracteres)."
+            mobile:
+              invalid: "Telefone inválido."
+            localization:
+              invalid: "Localização inválida."
         exam:
           attributes:
             name: ": Por favor escolha um título maior que 6 caracteres."

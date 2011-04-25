@@ -169,6 +169,9 @@ class User < ActiveRecord::Base
   validates_confirmation_of :email
   validates_format_of :email,
     :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/
+  validates_format_of :mobile,
+      :with => /^(\(?\d{2}\)?)?[\s|-]?(\(?\d{2}\)?)?[\s|-](\d{4}[\s|-]?\d{4})/,
+      :allow_blank => true
 
   # override activerecord's find to allow us to find by name or id transparently
   def self.find(*args)
@@ -795,12 +798,14 @@ class User < ActiveRecord::Base
   end
 
   def completeness
-    total = 9.0
+    total = 11.0
     undone = 0.0
     undone += 1 if self.description.nil?
     undone += 1 if self.avatar_file_name.nil?
     undone += 1 if self.gender.nil?
     undone += 1 if self.curriculum_file_name.nil?
+    undone += 1 if self.localization.to_s.empty?
+    undone += 1 if self.mobile.to_s.empty?
 
     done = total - undone
     (done/total*100).round
