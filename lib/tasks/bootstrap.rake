@@ -1,4 +1,5 @@
 require 'db/create_roles'
+require 'db/create_privacies'
 
 namespace :bootstrap do
   desc "Insert test administrator"
@@ -38,6 +39,11 @@ namespace :bootstrap do
     create_roles
     #set all existing users to 'member'
     User.update_all("role_id = #{Role[:member].id}")
+  end
+
+  desc "Insert default Privacies"
+  task :privacies => :environment do
+    create_privacies
   end
 
   desc "Insert default general categories"
@@ -87,5 +93,6 @@ namespace :bootstrap do
   end
 
   desc "Run all bootstrapping tasks"
-  task :all => [:roles, :audiences, :redu_categories, :simple_categories, :default_user, :default_admin]
+  task :all => [:roles, :privacies, :audiences, :redu_categories,
+                :simple_categories, :default_user, :default_admin]
 end

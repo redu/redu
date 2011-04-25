@@ -95,6 +95,7 @@ class User < ActiveRecord::Base
 
   has_many :course_invitations, :class_name => "UserCourseAssociation",
     :conditions => ["state LIKE 'invited'"]
+  has_one :settings, :class_name => "UserSetting", :dependent => :destroy
 
   # Named scopes
   named_scope :recent, :order => 'users.created_at DESC'
@@ -127,6 +128,8 @@ class User < ActiveRecord::Base
   attr_protected :admin, :featured, :role_id, :activation_code,
     :login_slug, :friends_count, :score, :removed,
     :sb_posts_count, :sb_last_seen_at
+
+  accepts_nested_attributes_for :settings
 
   # PLUGINS
   acts_as_authentic do |c|
@@ -325,17 +328,19 @@ class User < ActiveRecord::Base
     when 'SbPost'
       self.member?(entity.space)
     when 'Status'
-      case entity.statusable.class.to_s
-      when 'Space'
-        self.teacher?(entity.statusable) ||
-          self.can_manage?(entity.statusable)
-      when 'Subject'
-        self.teacher?(entity.statusable.space) ||
-         self.can_manage?(entity.statusable.space)
-      when 'Lecture'
-        self.can_manage?(entity.statusable.subject)
+      if self == entity.user
+        true
       else
-        self == entity.user
+        case entity.statusable.class.to_s
+        when 'Space'
+          self.teacher?(entity.statusable) ||
+            self.can_manage?(entity.statusable)
+        when 'Subject'
+          self.teacher?(entity.statusable.space) ||
+            self.can_manage?(entity.statusable.space)
+        when 'Lecture'
+          self.can_manage?(entity.statusable.subject)
+        end
       end
     when 'User'
       entity == self

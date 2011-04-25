@@ -221,6 +221,14 @@ class UsersController < BaseController
       params[:user] = {:description => params[:update_value]}
     end
 
+    # Substituindo ids por Privacies
+    params[:user][:settings_attributes].each_key do |setting|
+      if setting != 'id'
+        params[:user][:settings_attributes][setting] = Privacy.find(
+          params[:user][:settings_attributes][setting])
+      end
+    end
+
     @user.attributes      = params[:user]
     @metro_areas, @states = setup_locations_for(@user)
 
@@ -234,6 +242,7 @@ class UsersController < BaseController
 
     @user.tag_list = params[:tag_list] || ''
 
+    debugger
     #alteracao de senha na conta do usuario
     if params.has_key? "current_password" and !params[:current_password].empty?
 

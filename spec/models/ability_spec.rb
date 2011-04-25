@@ -589,6 +589,70 @@ describe Ability do
       end
     end
 
+    context "when user privacy" do
+      context "let everyone see his statuses" do
+        before do
+          @user.settings.view_mural = Privacy[:public]
+        end
+
+        context "and they are friends," do
+          before do
+            @my_friend = Factory(:user)
+            @my_friend_ability = Ability.new(@my_friend)
+
+            friendship, status = @user.be_friends_with(@my_friend)
+            friendship.accept!
+          end
+
+          it "a friend can view user's statuses" do
+            @my_friend_ability.should be_able_to(:view_mural, @user)
+          end
+        end
+
+        context "and they are NOT friends," do
+          before do
+            @someone = Factory(:user)
+            @someone_ability = Ability.new(@someone)
+          end
+
+          it "someone can view user's statuses" do
+            @someone_ability.should be_able_to(:view_mural, @user)
+          end
+        end
+      end
+
+      context "let ONLY friends see his statuses" do
+        before do
+          @user.settings.view_mural = Privacy[:friends]
+        end
+
+        context "and they are friends," do
+          before do
+            @my_friend = Factory(:user)
+            @my_friend_ability = Ability.new(@my_friend)
+
+            friendship, status = @user.be_friends_with(@my_friend)
+            friendship.accept!
+          end
+
+          it "a friend can view user's statuses" do
+            @my_friend_ability.should be_able_to(:view_mural, @user)
+          end
+        end
+
+        context "and they are NOT friends," do
+          before do
+            @someone = Factory(:user)
+            @someone_ability = Ability.new(@someone)
+          end
+
+          it "someone can NOT view user's statuses" do
+            @someone_ability.should_not be_able_to(:view_mural, @user)
+          end
+        end
+      end
+    end
+
     it "manages itself" do
       @user_ability.should be_able_to(:manage, @user)
     end

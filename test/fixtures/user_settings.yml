@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  view_mural: 1
+  post_on_my_mural: 1
+  user: 
+
+two:
+  view_mural: 1
+  post_on_my_mural: 1
+  user: 

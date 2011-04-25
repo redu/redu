@@ -120,6 +120,10 @@ class Ability
 
       # User
       can :read, User
+      can :view_mural, User do |u|
+        u.settings.view_mural == Privacy[:public] or
+          (u.settings.view_mural == Privacy[:friends] && u.friends?(user))
+      end
 
       # Seminar
       can :upload_multimedia, Seminar do |seminar|
@@ -153,8 +157,10 @@ class Ability
       # Caso seja o Status de usuário, apenas ele mesmo ou seus amigos
       # podem criá-lo/respondê-lo.
       can [:create, :respond], Status do |status|
+        # Caso seja no mural de um usuário
         ((status.statusable.class.to_s.eql? 'User') && \
-         (user == status.statusable || user.friends?(status.statusable))) ||
+         ((can? :manage, status.statusable) ||
+          (can? :view_mural, status.statusable))) ||
           # Caso geral (Spaces, Subjects, etc.)
           (user.has_access_to? status.statusable)
       end

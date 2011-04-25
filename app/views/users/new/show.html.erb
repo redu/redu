@@ -55,7 +55,7 @@
       </div><!-- end .bio-wrapper -->
     </div><!-- end .vcard -->
 
-    <% if (current_user == @user) || (current_user.friends? @user) %>
+    <% if (can? :manage, @user) or (can? :view_mural, @user) %>
       <%= render :partial => 'statuses/new/create_status',
         :locals => { :statusable => @user } %>
       <div id="statuses" class="statuses">

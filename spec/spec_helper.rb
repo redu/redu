@@ -5,6 +5,7 @@ require File.expand_path(File.join(File.dirname(__FILE__),'..','config','environ
 require 'spec/autorun'
 require 'spec/rails'
 require 'db/create_roles'
+require 'db/create_privacies'
 # necessário para inclusão dos matchers
 require 'paperclip/matchers'
 # Uncomment the next line to use webrat's matchers
@@ -27,6 +28,7 @@ Spec::Runner.configure do |config|
 
   # Adiciona os papéis ao BD, pois estes são necessários nos testes.
   create_roles
+  create_privacies
 
   # == Fixtures
   #
