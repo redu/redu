@@ -1,21 +1,5 @@
 <div class="clearfix" id="checkout">
-  <ol id="breadcrumbs" class="wizard wizard-3 clearfix">
-    <li>
-      <%= link_to "Home", home_path, :class => "replacement home icon icon-redu_r8_c227_s1"  %>
-    </li>
-    <li>
-      <%= link_to "Ensine", teach_index_path %>
-    </li>
-    <li>
-      <a href="" class="">Etapa 1: Planos</a>
-    </li>
-    <li>
-      <a href="" class="">Etapa 2: Informações</a>
-    </li>
-    <li>
-      <a href="" class="">Etapa 3: Confirmar Dados</a>
-    </li>
-  </ol>
+  <%= render :partial => 'environments/new/wizard_breadcrumbs' %>
 
   <div class="grid_4 alpha">
     <h3>Etapa 3: <span>Confirmar dados</span></h3>

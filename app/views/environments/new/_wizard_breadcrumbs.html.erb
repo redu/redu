@@ -1,0 +1,17 @@
+<ol id="breadcrumbs" class="wizard clearfix">
+  <li>
+    <%= link_to "Home", home_path, :class => "replacement home icon icon-home-lightblue_16_16" %>
+  </li>
+  <li>
+    <%= link_to "Ensine", teach_index_path, :class => (current_page? teach_index_path) ? "" : "disabled" %>
+  </li>
+  <li>
+    <a href="" class="<%= ( current_page? :step => 1 ) ? "" : "disabled" %>">Etapa 1: Planos</a>
+  </li>
+  <li>
+    <a href="" class="<%= ( current_page? :step => 2 ) ? "" : "disabled" %>">Etapa 2: Informações</a>
+  </li>
+  <li>
+    <a href="" class="<%= ( current_page? :step => 3 ) ? "" : "disabled" %>">Etapa 3: Confirmar Dados</a>
+  </li>
+</ol>
