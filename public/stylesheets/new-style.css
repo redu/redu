@@ -3350,11 +3350,20 @@ div.token-input-dropdown {
 }
 
 #global-courses .general {
+  position: relative;
   float: left;
   width: 465px;
   border-right: 1px dotted #B2B1B2;
   padding-right: 10px;
   margin-right: 10px;
+}
+
+#global-courses .general .moderated {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  right: 15px;
+  top: 15px;
 }
 
 #global-courses .courses .environment {
