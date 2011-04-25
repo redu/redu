@@ -43,7 +43,7 @@
   <%=  javascript_include_tag "jquery.editinplace.js"%>
 <% end %>
 
-<% if controller_name == 'admin' or controller_name == 'beta_keys' or controller_name == 'spaces' or controller_name == 'messages' or controller_name == 'environments' or controller_name == 'courses' or controller_name == 'forums'  or controller_name == 'roles' or ( controller_name == 'users' and action_name == 'edit') or controller_name == 'invoices' %>
+<% if controller_name == 'admin' or controller_name == 'spaces' or controller_name == 'messages' or controller_name == 'environments' or controller_name == 'courses' or controller_name == 'forums'  or controller_name == 'roles' or ( controller_name == 'users' and action_name == 'edit') or controller_name == 'invoices' %>
 <%= javascript_include_tag "tablecloth.js" %>
 <%= stylesheet_link_tag "tablecloth.css" %>
 <% end %>

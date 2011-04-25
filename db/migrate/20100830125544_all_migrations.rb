@@ -66,12 +66,6 @@ class AllMigrations < ActiveRecord::Migration
     t.datetime "updated_at"
   end
 
-  create_table "beta_keys", :force => true do |t|
-    t.string  "key"
-    t.integer "user_id"
-    t.string  "email"
-  end
-
   create_table "bulletins", :force => true do |t|
     t.string   "title"
     t.text     "description"
@@ -549,8 +543,6 @@ class AllMigrations < ActiveRecord::Migration
     drop_table :audiences_schools
     drop_table :bdrb_job_queues
     drop_table :beta_candidates
-    drop_table :beta_keys
-    drop_table :beta_keys
     drop_table :bulletins
     drop_table :countries
     drop_table :course_resources

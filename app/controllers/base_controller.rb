@@ -38,9 +38,7 @@ class BaseController < ApplicationController
     authorize! :teach_index, :base
 
     respond_to do |format|
-      format.html  do
-        render :template => 'base/new/teach_index', :layout => 'new/application'
-      end
+      format.html
     end
   end
 
@@ -72,8 +70,6 @@ class BaseController < ApplicationController
       format.html do
         if current_user
           redirect_to home_user_path(current_user)
-        else
-          render :template => 'base/new/site_index'
         end
       end
     end

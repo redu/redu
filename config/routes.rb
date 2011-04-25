@@ -8,7 +8,6 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :interactive_classes
   map.resources :statuses
   map.resources :lessons
-  map.resources :beta_keys, :collection => {:generate => :get, :remove_all => :get, :print_blank => :get, :invite => [:get, :post]}
   map.resources :profiles
 
   map.resources :questions, :collection => { :search => [:get, :post], :add => :get }
@@ -20,12 +19,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :metro_areas
   map.resources :invitations
 
-  if AppConfig.closed_beta_mode
-    map.connect '', :controller => "base", :action => "beta_index"
-    map.home 'home', :controller => "base", :action => "site_index"
-  else
-    map.home '', :controller => "base", :action => "site_index"
-  end
+  map.home '', :controller => "base", :action => "site_index"
 
   map.resources :tags, :member_path => '/tags/:id'
   map.show_tag_type '/tags/:id/:type', :controller => 'tags', :action => 'show'

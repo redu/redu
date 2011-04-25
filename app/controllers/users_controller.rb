@@ -128,8 +128,6 @@ class UsersController < BaseController
     @inviter_id   = params[:id]
     @inviter_code = params[:code]
 
-    @beta_key = params[:beta_key]
-
     respond_to do |format|
       format.html do
         render :template => 'users/new/new', :layout => 'new/clean'
@@ -139,24 +137,6 @@ class UsersController < BaseController
 
   def create
     @user = User.new(params[:user])
-
-    if AppConfig.closed_beta_mode
-      if params[:beta_key]
-        @key = BetaKey.find(:first, :conditions => ["beta_keys.key like ?", params[:beta_key]])
-        if @key
-          if @key.user
-            flash[:error] = "Esta chave de acesso já está sendo usada por outro usuário."
-            render :action => 'new' and return
-          end
-        else
-          flash[:error] = "Chave de acesso inválida!"
-          render :action => 'new' and return
-        end
-      else
-        flash[:error] = "Chave de acesso inválida!"
-        render :action => 'new' and return
-      end
-    end
 
     @user.save do |result| # LINE A
       if result
@@ -198,9 +178,6 @@ class UsersController < BaseController
             render :action => :new
           end
         else
-          if AppConfig.closed_beta_mode
-            @beta_key  = @key.key
-          end
           render :template => 'users/new/new', :layout => 'new/clean'
         end
       end

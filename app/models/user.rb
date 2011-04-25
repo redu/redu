@@ -26,7 +26,6 @@ class User < ActiveRecord::Base
 
   # ASSOCIATIONS
   has_many :annotations, :dependent => :destroy, :include=> :lecture
-  has_one :beta_key, :dependent => :destroy
   has_many :statuses, :as => :statusable, :dependent => :destroy
   # Space
   has_many :spaces, :through => :user_space_associations
