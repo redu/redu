@@ -31,18 +31,7 @@ ActionController::Routing::Routes.draw do |map|
   map.show_tag_type '/tags/:id/:type', :controller => 'tags', :action => 'show'
   map.search_tags '/search/tags', :controller => 'tags', :action => 'show'
 
-  # admin routes
-  map.admin_dashboard   '/admin/dashboard', :controller => 'admin', :action => 'dashboard'
-  map.admin_moderate_lectures   '/admin/moderate/lectures', :controller => 'admin', :action => 'lectures'
-  map.admin_moderate_users   '/admin/moderate/users', :controller => 'admin', :action => 'users'
-  map.admin_moderate_exams   '/admin/moderate/exams', :controller => 'admin', :action => 'exams'
-  map.admin_moderate_spaces   '/admin/moderate/spaces', :controller => 'admin', :action => 'spaces'
-
-  map.admin_users       '/admin/users', :controller => 'admin', :action => 'users'
-  map.admin_messages    '/admin/messages', :controller => 'admin', :action => 'messages'
-  map.admin_comments    '/admin/comments', :controller => 'admin', :action => 'comments'
   map.admin_tags        'admin/tags/:action', :controller => 'tags', :defaults => {:action=>:manage}
-  map.admin_events      'admin/events', :controller => 'admin', :action=>'events'
 
   # sessions routes
   map.teaser '', :controller=>'base', :action=>'beta_index'
