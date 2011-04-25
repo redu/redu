@@ -2,6 +2,12 @@ require 'db/create_roles'
 require 'db/create_privacies'
 
 namespace :bootstrap do
+
+  desc "Insert default Privacies"
+  task :privacies => :environment do
+    create_privacies
+  end
+
   desc "Insert test administrator"
   task :default_admin => :environment do
     theadmin = User.new(:login => 'administrator',
@@ -15,7 +21,7 @@ namespace :bootstrap do
       :role => Role[:admin])
     theadmin.generate_login_slug
     theadmin.send(:create_without_callbacks)
-    puts "Administrador inserido: ", !theadmin.nil?
+    theadmin.create_settings!
   end
 
   desc "Insert test user"
@@ -31,7 +37,7 @@ namespace :bootstrap do
       :role => Role[:member])
     theuser.generate_login_slug
     theuser.send(:create_without_callbacks)
-    puts "Usuário comum inserido: ", !theuser.nil?
+    theuser.create_settings!
   end
 
   desc "Insert default Roles"
@@ -39,11 +45,6 @@ namespace :bootstrap do
     create_roles
     #set all existing users to 'member'
     User.update_all("role_id = #{Role[:member].id}")
-  end
-
-  desc "Insert default Privacies"
-  task :privacies => :environment do
-    create_privacies
   end
 
   desc "Insert default general categories"

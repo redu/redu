@@ -825,6 +825,10 @@ class User < ActiveRecord::Base
     @email_confirmation || self.email
   end
 
+  def create_settings!
+    self.settings = UserSetting.create(:view_mural => Privacy[:public])
+  end
+
   protected
   def activate_before_save
     self.activated_at = Time.now.utc

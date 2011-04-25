@@ -64,6 +64,8 @@ describe User do
   # UserCourseAsssociation with invited state (Course invitations)
   it { should have_many :course_invitations }
 
+  it { should accept_nested_attributes_for :settings }
+
   [:first_name, :last_name].each do |attr|
     it do
       pending "Need fix on shoulda's translation problem" do
@@ -527,5 +529,11 @@ describe User do
 
   it "retrieves completeness percentage of profile" do
     subject.completeness.should == 45
+  end
+
+  it "creates user settings!" do
+    subject.create_settings!
+    subject.reload.settings.should_not be_nil
+    subject.settings.view_mural.should == Privacy[:public]
   end
 end

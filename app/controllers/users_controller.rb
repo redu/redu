@@ -160,6 +160,7 @@ class UsersController < BaseController
 
     @user.save do |result| # LINE A
       if result
+        @user.create_settings!
         if @key
           @key.user = @user
           @key.save
@@ -242,7 +243,7 @@ class UsersController < BaseController
 
     @user.tag_list = params[:tag_list] || ''
 
-    #alteracao de senha na conta do usuario
+    # alteracao de senha na conta do usuario
     if params.has_key? "current_password" and !params[:current_password].empty?
 
       @flag = false

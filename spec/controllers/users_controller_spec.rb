@@ -27,6 +27,19 @@ describe UsersController do
             :first_name => "John" } }
       end
 
+      context "when successfull" do
+        before do
+          post :create, @post_params
+        end
+
+        it "creates a user_setting" do
+          created_user = User.find_by_email(@post_params[:user][:email])
+          created_user.should_not be_nil
+          created_user.settings.should_not be_nil
+          created_user.settings.view_mural.should == Privacy[:public]
+        end
+      end
+
       context "with an invitation token" do
         context "and failing the validation" do
           before do
