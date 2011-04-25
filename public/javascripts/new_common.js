@@ -172,19 +172,32 @@ jQuery(function(){
     $("form.common").ajaxComplete(function(){
       $(".tiptip").tipTip();
     });
+
     $("form.common .tiptip").each(function(){
         var label = $(this).next("label");
         label.prepend($(this));
     });
 
+    $(".tiptip-lite").each(function(){
+        // Criando holder e adicionando conteúdo
+        var $tip = $("<span class='tiptip question-blue_12_12'/>");
+        $tip.attr("title", $(this).attr("title"));
+        $tip.tipTip();
+
+        $(this).after($tip);
+        $tip.position({
+            my: 'left center',
+            at: 'right center',
+            of: $(this),
+            offset: "10px 0",
+        });
+    });
+
     // Arquivos
     $("#space-materials .new-folder .button").click(function(e){
         $(this).next(".new-folder-inner").toggle();
-        console.log($(this).next(".new-folder-inner").toggle());
         e.preventDefault();
     });
-
-
 
 });
 
