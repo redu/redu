@@ -1,7 +1,7 @@
 <% if @sidebar_preview %>
   <%= render :partial => 'environments/new/preview_sidebar' %>
 <% else %>
-  <%= render :partial => 'environments/new/sidebar' %>
+  <%= render :partial => 'environments/new/sidebar', :locals => { :environment => @environment } %>
 <% end %>
 
 <div class="main grid_12 omega big-col">

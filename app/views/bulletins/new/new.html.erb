@@ -1,7 +1,11 @@
 <% content_for :header_scripts_and_styles do %>
   <%= javascript_include_tag :ckeditor %>
 <% end %>
-<%= render :partial => "#{@bulletinable.class.to_s.downcase + 's'}/new/sidebar" %>
+<% if @bulletinable.class.to_s.eql? "Space" %>
+  <%= render :partial => 'spaces/new/sidebar', :locals => { :space => @bulletinable } %>
+<% else %>
+  <%= render :partial => "environments/new/sidebar", :locals => { :environment => @bulletinable } %>
+<% end %>
 <div class="main grid_12 omega big-col">
     <% if @bulletinable.class.to_s.eql? "Environment" %>
       <%= render :partial => "environments/new/breadcrumbs", :locals => { :environment => @environment } %>

@@ -6,7 +6,7 @@
     }
 }
 </script>
-<%= render :partial => 'environments/new/sidebar' %>
+<%= render :partial => 'environments/new/sidebar', :locals => { :environment => @environment } %>
 <div class="main grid_12 omega big-col">
   <%= render :partial => 'environments/new/breadcrumbs',
     :locals => { :environment => @environment } %>

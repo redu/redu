@@ -1,4 +1,4 @@
-<%= render :partial => 'spaces/new/sidebar' %>
+<%= render :partial => 'spaces/new/sidebar', :locals => { :space => @space } %>
 <div class="main grid_12 omega big-col">
   <%= render :partial => "spaces/new/breadcrumbs", :locals => { :space => @space } %>
     <%= render :partial => 'spaces/new/header',

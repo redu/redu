@@ -2,29 +2,24 @@
   <%= javascript_include_tag :ckeditor %>
 <% end %>
 
-<%= render :partial => 'spaces/new/sidebar' %>
+<% if @bulletinable.class.to_s.eql? "Space" %>
+  <%= render :partial => 'spaces/new/sidebar', :locals => { :space => @bulletinable } %>
+<% else %>
+  <%= render :partial => "environments/new/sidebar", :locals => { :environment => @bulletinable } %>
+<% end %>
 <div class="main grid_12 omega big-col">
-  <ol id="breadcrumbs" class="clearfix">
-    <li>
-      <%= link_to 'Home', home_user_path(current_user),
-        :class => 'replacement home icon icon-redu_r8_c227_s1' %>
-    </li>
-    <li>
-      <%= link_to @space.course.environment.name,
-        environment_path(@space.course.environment),
-        :class => 'replacement icon icon-redu_r8_c217_s1' %>
-      <li>
-        <%= link_to @space.course.name,
-          environment_course_path(@space.course.environment, @space.course),
-          :class => 'replacement icon icon-redu_r8_c313_s1' %>
-      </li>
-      <li>
-        <%= link_to @space.name, space_path(@space),
-          :class => 'icon icon-redu_r8_c307_s1' %>
-      </li>
-    </ol>
+  <% if @bulletinable.class.to_s.eql? "Space" %>
+    <%= render :partial => "spaces/new/bradcrumbrs", :locals => { :space => @bulletinable } %>
+  <% else %>
+    <%= render :partial => "environments/new/breadcrumbs", :locals => { :environment => @bulletinable } %>
+  <% end %>
+  <% if @bulletinable.class.to_s.eql? "Space" %>
     <%= render :partial => 'spaces/new/header',
-      :locals => { :space => @space }%>
+      :locals => { :space => @bulletinable }%>
+  <% else %>
+    <%= render :partial => 'environments/new/header',
+      :locals => { :environment => @bulletinable }%>
+  <% end %>
     <div id="bulletin-edit" class="hierarchy-listing-wrapper">
       <div class="header">
         <h4>Notícia</h4>
@@ -32,7 +27,7 @@
       </div>
 
       <%= render :partial => "bulletins/new/form",
-        :locals => {:bulletinable => @space,  :bulletin => @bulletin }%>
+        :locals => {:bulletinable => @bulletinable,  :bulletin => @bulletin }%>
     </div><!-- #bulletin-new -->
   </div><!-- end main -->
 

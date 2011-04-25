@@ -2,7 +2,7 @@
   <%= javascript_include_tag :ckeditor %>
 <% end %>
 
-<%= render :partial => "#{@eventable.class.to_s.downcase + 's'}/new/sidebar" %>
+<%= render :partial => "spaces/new/sidebar", :locals => { :space => @eventable } %>
 <div class="main grid_12 omega big-col">
   <ol id="breadcrumbs" class="clearfix">
     <li>
