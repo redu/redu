@@ -9,7 +9,7 @@
 <% end %>
 <div class="main grid_12 omega big-col">
   <% if @bulletinable.class.to_s.eql? "Space" %>
-    <%= render :partial => "spaces/new/bradcrumbrs", :locals => { :space => @bulletinable } %>
+    <%= render :partial => "spaces/new/breadcrumbs", :locals => { :space => @bulletinable } %>
   <% else %>
     <%= render :partial => "environments/new/breadcrumbs", :locals => { :environment => @bulletinable } %>
   <% end %>
