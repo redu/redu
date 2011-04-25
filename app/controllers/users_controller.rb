@@ -242,7 +242,6 @@ class UsersController < BaseController
 
     @user.tag_list = params[:tag_list] || ''
 
-    debugger
     #alteracao de senha na conta do usuario
     if params.has_key? "current_password" and !params[:current_password].empty?
 
