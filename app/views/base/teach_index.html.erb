@@ -1,23 +1,31 @@
-<%= stylesheet_link_tag "teach-header.css"  %>
-<% content_for :page_id, 'teach' %>
-<div class="container_16" id="common-header">
-  <div class="session-title">
-    Ensine
-  </div> <!-- title -->
-</div>
-<div class="grid_16 clearfix" id="bg-content">
-  <div class="left-sidebar">
-    <div class="title">
-      Educação a distância nunca foi tão simples
-    </div> <!-- /title -->
-    <div class="redu-screens">
-    </div> <!-- /redu-screens -->
-  </div> <!-- /left-sidebar -->
+<div class="clearfix" id="checkout">
+  <%= render :partial => 'environments/new/wizard_breadcrumbs' %>
 
-  <div class="right-sidebar">
-    <div class="title">
-      Crie um ambiente de ensino a distância em dois passos
-    </div> <!-- /title -->
-    <%= render :partial => 'environments/environment_simple_form' %>
-  </div><!-- /right-sidebar -->
-</div><!-- /bg-content -->
+  <div class="grid_8 alpha">
+    <h3>Ensine</h3>
+    <em class="slogan">Educação a distância nunca foi tão simples.</em>
+
+    <ol class="flow">
+      <li>
+        <strong>Ambiente de Ensino</strong>
+        <p>Áreas privadas e seguras para dispor seus conteúdos e animar a aprendizagem de seus alunos</p>
+      </li>
+      <li>
+        <strong>Curso</strong>
+        <p>Planeje sua atividade de ensino por disciplina, turmas ou áreas temáticas.</p>
+      </li>
+      <li>
+        <strong>Disciplina</strong>
+        <p>Espaço de interação específica do curso e rico em materiais nos quais formadores e aprendizes colaboram numa dinâmica de rede social.</p>
+      </li>
+      <li>
+        <strong>Módulo</strong>
+        <p>Organize seus materiais (do tipo vídeo, texto ou documento) em unidades de aprendizagem flexíveis.  </p>
+      </li>
+    </ol>
+  </div>
+
+  <div class="grid_7 omega wizard-0">
+    <%= render :partial => "environments/new/environment_simple_form" %>
+  </div>
+</div>
