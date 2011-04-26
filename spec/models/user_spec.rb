@@ -534,6 +534,6 @@ describe User do
   it "creates user settings!" do
     subject.create_settings!
     subject.reload.settings.should_not be_nil
-    subject.settings.view_mural.should == Privacy[:public]
+    subject.settings.view_mural.should == Privacy[:friends]
   end
 end

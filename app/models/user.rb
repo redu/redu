@@ -826,7 +826,7 @@ class User < ActiveRecord::Base
   end
 
   def create_settings!
-    self.settings = UserSetting.create(:view_mural => Privacy[:public])
+    self.settings = UserSetting.create(:view_mural => Privacy[:friends])
   end
 
   protected

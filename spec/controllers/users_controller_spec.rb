@@ -36,7 +36,7 @@ describe UsersController do
           created_user = User.find_by_email(@post_params[:user][:email])
           created_user.should_not be_nil
           created_user.settings.should_not be_nil
-          created_user.settings.view_mural.should == Privacy[:public]
+          created_user.settings.view_mural.should == Privacy[:friends]
         end
       end
 
