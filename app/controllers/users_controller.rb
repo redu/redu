@@ -223,11 +223,14 @@ class UsersController < BaseController
     end
 
     # Substituindo ids por Privacies
+    if params[:user].has_key? "settings_attributes" and
+      !params[:user][:settings_attributes].empty?
     params[:user][:settings_attributes].each_key do |setting|
       if setting != 'id'
         params[:user][:settings_attributes][setting] = Privacy.find(
           params[:user][:settings_attributes][setting])
       end
+    end
     end
 
     @user.attributes      = params[:user]
