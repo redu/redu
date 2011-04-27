@@ -1,4 +1,6 @@
 class PaymentGatewayController < BaseController
+  layout "application"
+
   skip_before_filter :verify_authenticity_token
 
   def callback
@@ -24,7 +26,6 @@ class PaymentGatewayController < BaseController
   end
 
   def success
-    render :layout => 'new/application'
   end
 
 end
