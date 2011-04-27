@@ -49,7 +49,7 @@ class SubjectsController < BaseController
 
     respond_to do |format|
       format.html
-      
+
       # Descomentar para o primeiro passo da criação de Subject
       # usar AJAX
       # format.js do
@@ -119,9 +119,9 @@ class SubjectsController < BaseController
           @subject.finalized = true
           @subject.visible = true
           @subject.save
-          @subject.convert_lectureables!
           # cria as associações com o subject, replicando a do space
           @subject.create_enrollment_associations
+          @subject.convert_lectureables!
           flash[:notice] = "O Módulo foi criado."
         end
 
