@@ -2,6 +2,6 @@ if @memberships.empty?
   page.replace_html 'user_list', "<div class=\"box_notice\">Nenhum usuário se enquadra na busca.</div>"
 else
   page.replace_html 'user_list',
-    :partial => 'environments/new/user_list_admin',
+    :partial => 'environments/user_list_admin',
     :locals => {:memberships => @memberships}
 end

@@ -1,5 +1,5 @@
 <div class="clearfix" id="checkout">
-  <%= render :partial => 'environments/new/wizard_breadcrumbs' %>
+  <%= render :partial => 'environments/wizard_breadcrumbs' %>
 
   <div class="grid_4 alpha">
     <h3>Etapa 3: <span>Confirmar dados</span></h3>
@@ -75,7 +75,7 @@
       :html => { :class => "clearfix" } do |f| %>
       <%= f.error_messages %>
       <div style='display: none;'>
-        <%= render :partial => 'environments/new/form', :locals => { :f => f } %>
+        <%= render :partial => 'environments/form', :locals => { :f => f } %>
       </div>
       <%= hidden_field_tag :plan, @plan %>
       <div id="pagseguro-button"></div>

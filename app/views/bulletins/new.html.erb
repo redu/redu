@@ -4,12 +4,12 @@
 <% if @bulletinable.class.to_s.eql? "Space" %>
   <%= render :partial => 'spaces/new/sidebar', :locals => { :space => @bulletinable } %>
 <% else %>
-  <%= render :partial => "environments/new/sidebar", :locals => { :environment => @bulletinable } %>
+  <%= render :partial => "environments/sidebar", :locals => { :environment => @bulletinable } %>
 <% end %>
 <div class="main grid_12 omega big-col">
     <% if @bulletinable.class.to_s.eql? "Environment" %>
-      <%= render :partial => "environments/new/breadcrumbs", :locals => { :environment => @environment } %>
-      <%= render :partial => 'environments/new/header',
+      <%= render :partial => "environments/breadcrumbs", :locals => { :environment => @environment } %>
+      <%= render :partial => 'environments/header',
         :locals => { :environment => @environment }%>
     <% elsif @bulletinable.class.to_s.eql? "Space" %>
       <%= render :partial => "spaces/new/breadcrumbs", :locals => { :space => @space } %>

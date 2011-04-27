@@ -1,113 +1,35 @@
-<%#
-  Partial que exibe o header do environment/course. Três locals: environment,
-    course e space.
-    Caso não seja necessário exibir o course basta passar :course => nil.
-    Caso não seja necessário exibir o space basta passar :space => nil.
-  %>
-<%= stylesheet_link_tag 'environment-header.css' %>
-<%= javascript_include_tag 'environment-header' %>
+<%# Cabeçalho do environment (contém título, estatísticas, descrição e tags)  %>
 
- <div id="environment-header" class="container_16 clearfix">
-   <div class="container_16" id="create-header" style="background-color: <%= environment && !environment.new_record? ? "#" + environment.color : "inherited" %>">
-    <div class="management-dialog cupertino" style="display: none;">
-      <div class="box-info">
-      	<div class="pretty-text">Dentro deste ambiente você tem permissão para gerenciar:</div>
-      </div>
-        <% if can?(:manage, environment) && !environment.new_record? %>
-          <%= link_to "Ambiente", edit_environment_path(environment) %>
-        <% end %>
-        <% if can?(:manage, course) && !course.new_record? %>
-          <%= link_to "Curso",
-            edit_environment_course_path(environment, course) %>
-        <% end %>
-        <% if can?(:manage, space) && !space.new_record? %>
-          <%= link_to "Disciplina", edit_space_path(space) %>
-        <% end %>
-    </div>
-     <div class="frame" id="university-logo">
-       <div class="inner-frame">
-         <%= image_tag environment.avatar.url(:thumb)  %>
-       </div>
-     </div> <!-- /frame -->
-
-     <div class="dropdown name">
-       <h3><%= link_to environment.name, environment_path(environment) %></h3>
-
-        <% if can?(:manage, space) || can?(:manage, course) || can?(:manage, environment)  %>
-        <span class="edit cupertino">
-          <%= link_to "Gerenciamento", "#", :class => "management" %>
-        </span>
-        <% end %>
-       <div class="dropdown-wrapper clearfix" style="display: none;">
-       <div class="dropdown-university clearfix">
-         <ul>
-         <% current_user.environments.each do |e| %>
-           <li class="sub-university clearfix"><div class="nano"><%= image_tag e.avatar.url(:nano) %></div><%= link_to e.name, environment_path(e) %></li>
-         <% end %>
-         </ul>
-       </div>
-       </div>
-     </div>
-     <% if course && !course.new_record? %>
-       <% if space && space.id %>
-         <div class="dropdown course">
-           <div class="breadcrumb clearfix">
-             <%= link_to course.name, environment_course_path(environment, course) %>
-             <span class="slash">/</span>
-             <div class="spaces">
-               <%= link_to space.name + "", space_path(space), :class => "current-space" %>
-               <span class="arrow-down">▼</span>
-               <ul style="display: none; background-color: #<%= environment.color.nil? ? "#4DADD6" : environment.color %>">
-                 <% course.spaces.each do |s| %>
-                   <li><%= link_to s.name, space_path(s) %></li>
-                 <% end %>
-               </ul>
-             </div>
-           </div>
-         </div>
-       <% else %>
-         <div class="dropdown course">
-           <div class="breadcrumb clearfix">
-             <%= link_to course.name, environment_course_path(environment, course) %>
-           </div>
-         </div>
-       <% end %>
-     <% end %>
-     <% if course && !course.new_record? && !course.published? %>
-       <div class="grid_16">
-         <div class="box_notice">O curso <strong><%= course.name %></strong> ainda não foi publicado. <%= link_to "Clique aqui", publish_environment_course_path(@environment, @course) %> para publicá-lo</div>
-       </div>
-     <% end %>
-     <% if @subject && !@subject.new_record? %>
-       <div class="grid_16 alpha omega " id="subject-header">
-         <div class="grid_12 alpha">
-           <strong>Módulo</strong>
-           <h3 class="call">
-             <%= link_to @subject.title, space_subject_path(@space, @subject) %>
-             <% if can? :manage, @subject %>
-               <%= link_to "Gerenciar", edit_space_subject_path(space, @subject, :admin_panel => true),
-                 :class => "edit" %>
-             <% end %>
-           </h3>
-         </div>
-         <div class="grid_4 omega">
-
-           <%= render :partial => "subjects/publish_unpublish" %>
-         </div>
-         <div class="grid_16 alpha omgea">
-           <div class="grid_3 push_13 alpha progress">
-             <%= render :partial => 'subjects/progress',
-               :locals => {:subject => @subject} %>
-           </div>
-         </div>
-       </div><!--  grid_16 acoes gerais -->
-
-       <div class="publish grid_16">
-         <% unless @subject.visible? %>
-           <div class="box_notice">Este módulo ainda não foi publicado. <%= link_to "Clique aqui", publish_space_subject_path(@space, @subject) %> para publicá-lo.</div>
-         <% end %>
-       </div>
-
-     <% end %>
-   </div> <!-- /container_16 -->
- </div><!-- environment-header -->
+<div id="hierarchy-header" class="clearfix">
+  <h3 class="call environment-name"><%= h(environment.name) %></h3>
+  <div class="grid_9 alpha">
+    <span class="description">
+      <%= environment.description %>
+    </span>
+    <ul class="tags clearfix">
+      <% environment.tags.each do |tag| %>
+      <li>
+        <%= link_to tag, environment_path(environment) %>
+      </li>
+      <% end %>
+    </ul>
+  </div>
+  <ul class="statistics grid_3 omega">
+    <li>
+      <em class="icon icon-student-gray_16_16">Membros:</em>
+      <span><%= environment.users.length %></span>
+    </li>
+    <li>
+      <em class="icon icon-administrator-gray_16_16">Administradores:</em>
+      <span><%= environment.administrators.length %></span>
+    </li>
+    <li>
+      <em class="icon icon-teacher-gray_16_16">Professores:</em>
+      <span><%= environment.teachers.length %></span>
+    </li>
+    <li>
+      <em class="icon icon-tutor-gray_16_16">Tutores:</em>
+      <span><%= environment.tutors.length %></span>
+    </li>
+  </ul>
+</div><!-- end #hierarchy-header -->

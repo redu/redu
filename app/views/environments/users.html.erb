@@ -1,14 +1,14 @@
 <% if @sidebar_preview %>
-  <%= render :partial => 'environments/new/preview_sidebar' %>
+  <%= render :partial => 'environments/preview_sidebar' %>
 <% else %>
-  <%= render :partial => 'environments/new/sidebar', :locals => { :environment => @environment } %>
+  <%= render :partial => 'environments/sidebar', :locals => { :environment => @environment } %>
 <% end %>
 
 <div class="main grid_12 omega big-col">
-  <%= render :partial => "environments/new/breadcrumbs",
+  <%= render :partial => "environments/breadcrumbs",
       :locals => { :environment => @environment } %>
 
-  <%= render :partial => 'environments/new/header',
+  <%= render :partial => 'environments/header',
     :locals => { :environment => @environment } %>
 
   <div id="environment-users" class="hierarchy-listing-wrapper">

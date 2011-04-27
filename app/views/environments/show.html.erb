@@ -1,70 +1,27 @@
-<div class="grid_16 fake-tabs start-page">
-  <%= render :partial => "taskbar" %>
-  <div class="panel clearfix">
-    <div class="grid_11 alpha">
-      <h3>Cursos</h3>
-      <div class="courses-index clearfix">
-        <% unless @courses.empty? %>
-          <ul class="clearfix">
-            <% @courses.each do |course| %>
-              <li>
-                <%= link_to course.name, environment_course_path(@environment, course), :class => "name" %>
-                <span class="quiet audience">
-                  <strong>Audiência: </strong>
-                  <% unless course.audiences.empty? %>
-                    <%= course.audiences.map{ |a| a.name }.join(', ') %>
-                  <% else %>
-                    N/A
-                  <% end %>
-                </span>
-                <%= link_to "Gerenciar", edit_environment_course_path(@environment, course), :class => "edit" %>
-              </li>
-            <% end %>
-          </ul>
-          <%= link_to "Ver mais", environment_courses_path(@environment), :class => "small more grid_2 push_9 alpha omega", :style => "text-align: right;" %>
-        <% else %>
-          <div class="box-info">
-            <div class="pretty-text">
-              Esta instituição ainda não possui cursos publicados. <br/>
-              <% if can? :manage, @environment %>
-                Para ver os cursos não publicados, <%= link_to "clique aqui", environment_courses_path(@environment, :published => :false) %>
-              <% end %>
-            </div>
-          </div>
-        <% end %>
-      </div>
-      <hr/>
-      <h3>Notícias</h3>
-      <% unless @featured.empty? %>
-        <% @featured.each do |bulletin| %>
-          <h3 class="news-title"><%= link_to bulletin.title, environment_bulletin_path(@environment, bulletin) %></h3>
-          <% unless bulletin.tags.empty? %>
-            <div class="tags">
-              <span class="title">Palavras-chave</span>
-              <%= render :partial => 'tags/tags', :object => bulletin.tags %>
-            </div>
-          <% end %>
-        <% end %>
-        <%= link_to "Ver mais", environment_bulletins_path(@environment), :class => "small more grid_2 push_9 alpha omega", :style => "text-align: right;" %>
-      <% else %>
-        <div class="box-info">
-          <div class="pretty-text">
-            Nenhuma notícia criada até agora.
-            <% if can? :manage, @environment %>
-              <%= link_to "Crie uma.", new_environment_bulletin_path(@environment) %>
-            <% end %>
-          </div>
-        </div>
-      <% end %>
-      <hr/>
+<%= render :partial => 'environments/sidebar', :locals => { :environment => @environment } %>
+<div class="main grid_12 omega big-col">
+  <%= render :partial => 'environments/breadcrumbs',
+    :locals => { :environment => @environment } %>
+  <%= render :partial => 'environments/header',
+        :locals => { :environment => @environment } %>
+
+  <div id="environment-courses" class="body">
+    <div class="header">
+      <h4>Cursos</h4>
+      <span class="counter"><%= pluralize(@environment.courses.length, 'curso') %></span>
     </div>
-    <div class="grid_4 omega sidebar">
-      <span class="call"><span>Membros</span></span>
-      <div class="followshio clearfix">
-        <ul>
-          <%= render :partial => 'spaces/member_short', :collection => @environment.users, :as => :member %>
-        </ul>
+
+    <% if can?(:manage, @environment) %>
+      <div class="admin-actions">
+        <%= link_to 'Criar novo curso', new_environment_course_path(@environment), :class => "button" %>
       </div>
-    </div>
-  </div><!-- end panel -->
-</div><!-- end environment wrapper -->
+    <% end %>
+
+    <ul id="courses_list" class="hierarchy-listing">
+      <%= render :partial => 'courses/item',
+        :collection => @courses %>
+    </ul>
+  <%= will_paginate @courses, :renderer => EndlessRenderer %>
+  </div><!-- end #environment-courses -->
+
+</div><!-- end .main -->

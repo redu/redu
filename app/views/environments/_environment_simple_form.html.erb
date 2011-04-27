@@ -12,15 +12,32 @@ $(document).ready(function(){
 <% environment = Environment.new
    environment.courses.build %>
 <% form_for environment, :url => environments_path(:step => 1) do |f| %>
-  <%= f.error_messages %>
-  <%= f.label :name, "Seu ambiente de ensino" %>
-  <%= f.text_field :name, :class => "text" %>
-  <%= f.hidden_field :path, :class => "leitura" %>
-  <% f.fields_for :courses do |course|  %>
-    <%= course.label :name, "Seu primeiro curso" %>
-    <%= course.text_field :name, :class => "text" %>
-    <%= course.hidden_field :path %>
-  <% end %>
-  <%= submit_tag "Criar!" %>
+  <p>Crie um ambiente de Ensino a Distância em 3 passos</p>
+  <ol class="clearfix">
+    <li class="clearfix">
+      <span class="phase">1. Planos</span>
+      <span class="details">Escolha o plano que melhor se adapta às suas necessidades.</span>
+    </li>
+    <li class="clearfix">
+      <span class="phase">2. Informações</span>
+      <span class="details">Descreva as informações básicas do seu ambiente e primeiro curso.</span>
+    </li>
+    <li class="clearfix">
+      <span class="phase">3. Confirmação</span>
+      <span class="details">Confirme os dados e realize o pagamento.</span>
+    </li>
+  </ol>
+  <fieldset>
+    <%= f.error_messages %>
+    <%= f.label :name, "Seu ambiente de ensino" %>
+    <%= f.text_field :name, :class => "text" %>
+    <%= f.hidden_field :path, :class => "leitura" %>
+    <% f.fields_for :courses do |course|  %>
+      <%= course.label :name, "Seu primeiro curso" %>
+      <%= course.text_field :name, :class => "text" %>
+        <%= course.hidden_field :path %>
+    <% end %>
+    <%= submit_tag "Avançar", :class => "important next" %>
+  </fieldset>
 <% end %>
 

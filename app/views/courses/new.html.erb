@@ -1,7 +1,7 @@
-<%= render :partial => 'environments/new/sidebar', :locals => { :environment => @environment } %>
+<%= render :partial => 'environments/sidebar', :locals => { :environment => @environment } %>
 <div class="main grid_12 omega big-col">
-  <%= render :partial => "environments/new/breadcrumbs", :locals => { :environment => @environment } %>
-  <%= render :partial => 'environments/new/header',
+  <%= render :partial => "environments/breadcrumbs", :locals => { :environment => @environment } %>
+  <%= render :partial => 'environments/header',
     :locals => { :environment => @environment } %>
   <div id="course-new" class="hierarchy-listing-wrapper">
     <div class="header">

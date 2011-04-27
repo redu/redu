@@ -1,39 +1,70 @@
-<script type="text/javascript">
-  $(document).ready(function(){
-    $("input[type=text][name*=color]").val("<%= @environment.color if @environment %>")
-    $("input[type=text][name*=color]").css('background-color' , "#<%= @environment.color %>")
-  })
-</script>
-<%= apply_color_picker_to "#environment_color" %>
-<div class="grid_16">
-  <div class="fake-tabs grid_16 alpha omega">
-    <%= render :partial => 'environments/admin_taskbar' %>
-    <div class="panel">
-      <h1>Configurações do Ambiente de Ensino</h1>
+<% content_tag :header_scripts_and_styles do %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+       $("#environment_name").bind('keyup blur', function(e){
+         $("#environment_path").val($(this).slug());
+         $(".common .path .environment").html($(this).slug());
+       })
 
-      <% form_for @environment, :html => { :multipart => true } do |f| %>
-        <%= f.error_messages %>
-        <% field_set_tag "Informações Gerais" do %>
-          <%= f.label :name, "Nome" %>
-          <%= f.text_field :name  %>
-          <%= f.label :initials, "Sigla" %>
-          <%= f.text_field :initials  %>
-          <%= f.label :description, "Description" %>
-          <%= f.text_area :description, :size=>'102x4' %>
-          <%= f.label raw("Palavras-chave <span class='snippet'>(separadas por vírgula)</span>") %>
-          <%= f.text_field :tag_list %>
-        <% end %>
-        <% field_set_tag "Aparência" do %>
-          <%= f.label :avatar, "Imagem" %>
-          <%= f.file_field :avatar %>
-          <%= f.submit "Alterar!" %>
-        <% end %>
+       $("#environment_path").bind('keyup blur', function(e){
+         $("#environment_path").val($(this).slug());
+         $(".common .path .environment").html($(this).slug());
+       })
+
+    })
+  </script>
+<% end %>
+<%= render :partial => 'environments/sidebar', :locals => { :environment => @environment } %>
+<div class="main grid_12 omega big-col">
+  <%= render :partial => 'environments/breadcrumbs',
+    :locals => { :environment => @environment } %>
+
+  <%= render :partial => 'environments/header',
+    :locals => { :environment => @header_environment } %>
+
+  <div id="environment-manage" class="body">
+    <div class="header">
+      <h4>Gerenciamento</h4>
+      <span class="counter">Informações gerais do ambiente <%= @environment.initials_or_name %></span>
+    </div>
+
+    <%
+      fake_tabs ["Informações", edit_environment_path(@environment), {:class => 'icon icon-management-lightblue_16_16'}],
+        ["Membros", admin_members_environment_path(@environment), {:class => 'icon icon-members-gray_16_16'}],
+        ["Notícias", admin_bulletins_environment_path(@environment), {:class => 'icon icon-bulletin-gray_16_16'}],
+        ["Cursos", admin_courses_environment_path(@environment), {:class => ''}] do
+      %>
+
+    <% form_for @environment, :html => { :class => 'common highlightable',
+      :multipart => true } do |f| %>
+      <%= f.error_messages %>
+      <% field_set_tag "Informações Gerais", :class => "hidden" do %>
+        <%= f.label :name, "Nome" %>
+        <%= f.text_field :name  %>
+        <%= f.label :initials, "Sigla" %>
+        <%= f.text_field :initials  %>
+        <%= f.label :path, :path.l %>
+        <%= f.text_field :path %>
+        <span class="tip path">
+          <span class="base">redu.com.br/</span>
+          <span class="environment"><%= @environment.path %></span>
+        </span>
+        <%= f.label :description, "Descrição" %>
+        <%= f.text_area :description, :size=>'102x4' %>
+        <%= f.label raw("Palavras-chave <span class='snippet'>(separadas por vírgula)</span>") %>
+        <%= f.text_field :tag_list %>
       <% end %>
-      <% field_set_tag "Remover ambiente", :class => "fake" do %>
-        <%= link_to "Deletar ambiente", environment_path(@environment),
+
+      <% field_set_tag "Aparência", :class => 'hidden' do %>
+        <%= f.label :avatar, "Imagem" %>
+        <%= f.file_field :avatar %>
+        <%= f.submit "Salvar alterações" %>
+        <%= link_to "Remover ambiente", environment_path(@environment),
           :confirm => "Você tem certeza que deseja remover este ambiente?",
-          :method => :delete %>
+          :method => :delete,
+          :class => "remove vanilla" %>
       <% end %>
-    </div><!-- end config. -->
-  </div>
+    <% end %>
+  <% end %>
 </div>
+</div><!-- end #environment-edit -->
