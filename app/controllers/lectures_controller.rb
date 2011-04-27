@@ -22,21 +22,6 @@ class LecturesController < BaseController
     end
   end
 
-  # adiciona um objeto embarcado (ex: scribd)
-  def embed_content
-    @external_object = ExternalObject.new( params[:external_object] )
-
-    respond_to do |format|
-      if @external_object.save
-        format.js
-      else
-        format.js do
-          render :template => 'lectures/alert', :locals => { :message => 'Houve uma falha no conteúdo'}
-        end
-      end
-    end
-  end
-
   # faz upload de video em ajax em uma aula interativa
   def upload_video
     @seminar = Seminar.new( params[:seminar] )
@@ -156,9 +141,6 @@ class LecturesController < BaseController
           render :template => 'lectures/new/show_document',
             :layout => 'new/application'
         end
-      elsif @lecture.lectureable_type == 'InteractiveClass'
-        @lessons = Lesson.find_by_interactive_class_id(@lecture.lectureable_id).
-                            all(:order => 'position ASC') # TODO 2 consultas?
       end
 
       format.html
@@ -267,8 +249,7 @@ class LecturesController < BaseController
 
   def unpublished_preview
     @lecture = Lecture.find(session[:lecture_id])
-    @lessons = Lesson.find_by_interactive_class_id(@lecture.lectureable_id).
-                        all(:order => 'position ASC')
+
     respond_to do |format|
       format.html {render 'unpublished_preview_interactive'}
     end

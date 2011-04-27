@@ -109,17 +109,6 @@ describe Lecture do
       end
     end
 
-    it "retrieves lectures that are interactive classes" do
-      pending "Need interactive class Factory" do
-        interactive_classes = (1..2).collect {
-          Factory(:lecture, :subject => @sub,
-                  :lectureable => Factory(:interactive_class)) }
-        Factory(:lecture, :subject => @sub)
-
-        Lecture.iclasses.should == interactive_classes
-      end
-    end
-
     it "retrieves lectures that are pages" do
         page = Factory(:lecture, :subject => @sub)
         documents = (1..2).collect {

@@ -5,9 +5,7 @@ ActionController::Routing::Routes.draw do |map|
                        :folder_or_file => /(folder|file)/ }
 
   map.notify '/jobs/notify', :controller => 'jobs', :action => 'notify'
-  map.resources :interactive_classes
   map.resources :statuses
-  map.resources :lessons
   map.resources :profiles
 
   map.resources :questions, :collection => { :search => [:get, :post], :add => :get }

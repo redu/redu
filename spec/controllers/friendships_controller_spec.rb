@@ -67,7 +67,7 @@ describe FriendshipsController do
     it "destroy a friendship" do
       lambda {
         post :destroy, :locale => "pt-BR", :user_id => @user.id,
-          :id => @friendship.id
+          :id => @friendship.id, :format => :js
       }.should change(Friendship, :count).by(-2)
     end
 
@@ -88,7 +88,7 @@ describe FriendshipsController do
     it "accepts a friendship" do
       expect {
         post :accept, :locale => "pt-BR", :user_id => @user.id,
-          :id => @friendship.id, :friend_id => @new_user.id
+          :id => @friendship.id, :friend_id => @new_user.id, :format => :js
       }.should change(@user.friends, :count).by(1)
     end
 
@@ -108,7 +108,7 @@ describe FriendshipsController do
     it "decline and destroy a friendship" do
       expect {
         post :decline, :locale => "pt-BR", :user_id => @user.id,
-        :id => @friendship.id, :friend_id => @new_user.id
+        :id => @friendship.id, :friend_id => @new_user.id, :format => :js
       }.should change(Friendship, :count).by(-2)
     end
     it "redirects to user notifications" do
