@@ -23,7 +23,7 @@
           </td>
         </tr>
       <% else %>
-      <%= render :partial => 'messages/new/item',
+      <%= render :partial => 'messages/item',
         :collection => messages, :locals => { :mailbox => mailbox } %>
       <% end %>
     </tbody>

@@ -1,19 +1,15 @@
 class MessagesController < BaseController
 
   load_and_authorize_resource :user
- 
+
   def index
     authorize! :manage, @user
       @messages = @user.received_messages.paginate(:all, :page => params[:page],
                                                    :order =>  'created_at DESC',
                                                    :per_page => AppConfig.items_per_page )
       respond_to do |format|
-        format.html do
-          render :template => 'messages/new/index', :layout => 'new/application'
-        end
-        format.js do
-          render :template => 'messages/new/index'
-        end
+        format.html
+        format.js
       end
   end
 
@@ -23,13 +19,8 @@ class MessagesController < BaseController
                                              :order =>  'created_at DESC',
                                              :per_page => AppConfig.items_per_page)
     respond_to do |format|
-        format.html do
-          render :template => 'messages/new/index_sent',
-            :layout => 'new/application'
-        end
-        format.js do
-          render :template => 'messages/new/index_sent'
-        end
+        format.html
+        format.js
     end
   end
 
@@ -39,9 +30,7 @@ class MessagesController < BaseController
     @reply = Message.new_reply(@user, @message, params)
 
     respond_to do |format|
-      format.html do
-        render :template => 'messages/new/show', :layout => 'new/application'
-      end
+      format.html
     end
   end
 
@@ -53,16 +42,14 @@ class MessagesController < BaseController
     @message = Message.new_reply(@user, in_reply_to, params)
 
     respond_to do |format|
-      format.html do
-        render :template => 'messages/new/new', :layout => 'new/application'
-      end
+      format.html
     end
   end
 
   def create  #TODO verificar se está enviando uma mensagem para um amigo mesmo ou se ta tentando colocar o id de outra pessoa?
     authorize! :manage, @user
     messages = []
-    
+
     if params[:message][:reply_to] # resposta
       @message = Message.new(params[:message])
       @message.save!
@@ -73,17 +60,16 @@ class MessagesController < BaseController
         end
       end
     end
-    
+
      if not params[:message_to] or  params[:message_to].empty?
         flash[:error] = "Destinatários inexistentes!"
         respond_to do |format|
             format.html do
-              render :template => 'messages/new/new',
-                :layout => 'new/application' and return
+              render :template => 'messages/new' and return
             end
           end
       end
-     
+
 
       # If 'to' field isn't empty then make sure each recipient is valid
       params[:message_to].each do |to|
@@ -93,8 +79,7 @@ class MessagesController < BaseController
         unless @message.valid?
           respond_to do |format|
             format.html do
-              render :template => 'messages/new/new',
-                :layout => 'new/application' and return
+              render :template => 'messages/new' and return
             end
           end
           return
@@ -102,7 +87,7 @@ class MessagesController < BaseController
           messages << @message
         end
       end
-      
+
       # If all messages are valid then send messages
       messages.each {|msg| msg.save!}
       flash[:notice] = :message_sent.l

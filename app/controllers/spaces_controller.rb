@@ -1,5 +1,4 @@
 class SpacesController < BaseController
-  layout 'environment'
 
   # Necessário pois Space não é nested route de course
   before_filter :find_space_course_environment,
