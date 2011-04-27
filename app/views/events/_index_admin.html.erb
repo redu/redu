@@ -1,16 +1,15 @@
 <% unless @events.empty? %>
-  <table id="event_list" class="common">
+  <table id="event_list" class="common spaced">
     <thead>
       <tr>
         <th>Nome</th>
+        <th>Gerenciar</th>
         <th>Remover</th>
       </tr>
     </thead>
     <%= render :partial => 'events/item_admin', :collection => @events %>
   </table>
   <%= will_paginate @events, :renderer => EndlessRenderer %>
-  <%= link_to "Crie um agora!", new_polymorphic_path([@space || @environment, Event.new]),
-    :class => 'button'%>
 <% else %>
   <div class="box_notice">
     Não existe nenhum evento.

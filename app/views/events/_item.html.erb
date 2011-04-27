@@ -1,18 +1,35 @@
 <li class="clearfix">
-  <div class="grid_2" >
-  <div class="date grid_2 alpha omega">
-    <span class="quiet day"><%= item.start_time.day %></span>
-    <span class="col">
-      <span class="month quiet"><%= item.start_time.strftime("%b") %></span>
-      <span class="quiet year"><%= item.start_time.year %></span>
+  <div class="meta clearfix">
+    <div class="date">
+      <div class="calendar">
+        <span class="month"><%= item.created_at.strftime('%b') %></span>
+        <span class="day"><%= item.created_at.day %></span>
+        <span class="year"><%= item.created_at.year %></span>
+      </div>
+
+      <div class="hour">
+        <span class="label">das</span>
+        <span class="hour-from"><%= item.start_time.strftime('%Hh%M') %></span>
+        <span class="label">às</span>
+        <span class="hour-to"><%= item.end_time.strftime('%Hh%M') %></span>
+      </div>
+    </div>
+    <%= link_to item.name, polymorphic_path([item.eventable, item]),
+      :class => 'title'%>
+    <span class="description">
+      <%= raw item.description[0..200] %>
+      <% if item.description.length > 200 %>
+        ...
+      <% end %>
     </span>
+    <ul class="tags">
+      <% item.tags.each do |tag| %>
+        <li><%= link_to tag, polymorphic_path([item.eventable, item]) %></li>
+      <% end %>
+    </ul>
   </div>
-  <div class="hour grid_2 alpha omega">
-    <%= item.start_time.strftime("%I:%M%p") %>
-  </div>
-  </div>
-  <div class="grid_8 last">
-  <span class="name"><%= link_to item.name, polymorphic_path([item.eventable, item]) %></span>
-    <%= render :partial => 'tags/tags', :object => item.tags  %>
+  <div class="authorship">
+    <span class="label">Autor</span>
+    <%= link_to item.owner.display_name, user_path(item.owner), :class => 'owner' %>
   </div>
 </li>

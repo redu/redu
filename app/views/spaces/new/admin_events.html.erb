@@ -19,8 +19,8 @@
           <%= link_to "Crie um agora!", new_polymorphic_path([@space || @environment, Event.new]),
             :class => 'button'%>
         </div>
-        <%= render :partial => 'events/new/moderate_index_admin' %>
-        <%= render :partial => 'events/new/index_admin' %>
+        <%= render :partial => 'events/moderate_index_admin' %>
+        <%= render :partial => 'events/index_admin' %>
       <% end %>
     </div><!-- end #space-manage -->
 

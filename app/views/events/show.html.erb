@@ -1,51 +1,74 @@
-<div class=" grid_16">
-<% if @eventable.class.to_s.eql? "Space" %>
-  <%= render :partial => "spaces/sidebar", :locals => {:space => @event.eventable} %>
-<% end %>
-  <div class="event-content grid_12 omega">
-    <div class="grid_2 alpha">
-      <div class="date grid_2 alpha omega">
-        <span class="quiet day"><%= @event.start_time.day %></span>
-        <span class="col">
-          <span class="month quiet"><%= @event.start_time.strftime("%b") %></span>
-          <span class="quiet year"><%= @event.start_time.year %></span>
-        </span>
-      </div>
-      <div class="hour grid_2 alpha omega">
-        <span class="from">Das</span>
-        <%= @event.start_time.strftime("%I:%M%p") %>
-      </div>
-      <div class="hour green grid_2 alpha omega">
-        <span class="to">às</span>
-        <%= @event.end_time.strftime("%I:%M%p") %>
-      </div>
+<%= render :partial => 'spaces/new/sidebar', :locals => { :space => @space } %>
+<div class="main grid_12 omega big-col">
+  <ol id="breadcrumbs" class="clearfix">
+    <li>
+      <%= link_to 'Home', home_user_path(current_user),
+        :class => 'replacement home icon icon-home-lightblue_16_16' %>
+    </li>
+    <li>
+      <%= link_to @space.course.environment.name,
+        environment_path(@space.course.environment),
+        :class => 'replacement icon icon-environment-lightblue_16_16' %>
+      <li>
+        <%= link_to @space.course.name,
+          environment_course_path(@space.course.environment, @space.course),
+          :class => 'replacement icon icon-course-lightblue_16_16' %>
+      </li>
+      <li>
+        <%= link_to @space.name, space_path(@space),
+          :class => 'icon icon-space-lightblue_16_16' %>
+      </li>
+    </ol>
+    <%= render :partial => 'spaces/new/header',
+          :locals => { :space => @space }%>
 
+  <div id="event" class="body">
+    <div class="header">
+      <h4>Eventos</h4>
+      <span class="counter">Eventos da disciplina <%= @space.name %></span>
     </div>
-    <div class="grid_10 omega">
-      <h4 class="name"><%= link_to @event.name, polymorphic_path([@event.eventable, @event]) %></h4>
-      <div class="pretty-text">
-        <%= raw @event.description %>
+      <div class="info">
+        <%= image_tag @event.owner.avatar(:thumb_32), :class => "avatar" %>
+        <span class="label">Autor:</span>
+        <%= link_to @event.owner.display_name, user_path(@event.owner) %>
       </div>
-      <em>Palavras-chave</em>
-      <%= render :partial => 'tags/tags', :object => @event.tags  %>
-    </div>
-    <div class="grid_11 aplha omega">
-      <% form_tag(notify_space_event_path, :method => :post) do %>
-        <fieldset><legend>Seja notificado sobre este evento!</legend>
-          Notifique-me
-          <%= select_tag :days, options_for_select([["1", 1], ["2", 2], ["3", 3], ["4", 4], ["5", 5], ["6", 6], ["7", 7]], 1)  %>
-          dias antes
-          <%= submit_tag "Ok"%>
-        </fieldset>
-      <% end %>
-    </div>
-    <div class="grid_11 alpha omega clearfix" style="padding: 10px 0;">
       <% if can? :manage, @event %>
-        <%= link_to 'Editar', edit_polymorphic_path([@event.eventable, @event]), :class => "button"%>
-        <%= link_to 'Remover', polymorphic_path([@event.eventable, @event]),
-          {:confirm => 'Você tem certeza que deseja remover  permanentemente?',
-            :method => :delete,  :class => "button"} %>
-        <% end %></div>
+        <div class="admin-actions">
+          <%= link_to 'Editar',
+            edit_polymorphic_path([@event.eventable, @event]),
+            :class => "edit icon icon-management-gray_8_8" %>
+          <%= link_to 'Remover',
+            polymorphic_path([@event.eventable, @event]),
+            :method => :delete,
+            :confirm => "Você tem certeza que deseja remover esta aula? Não será possível recuperá-la.",
+            :class => "delete icon icon-x-gray_8_8" %>
+        </div>
+      <% end %>
+    <div class="details clearfix">
+      <div class="date">
+        <span class="month"><%= @event.created_at.strftime('%b') %></span>
+        <span class="day"><%= @event.created_at.day %></span>
+        <span class="year"><%= @event.created_at.year %></span>
 
+        <div class="hour">
+        <span class="label">das</span>
+        <span class="hour-from"><%= @event.start_time.strftime('%Hh%M') %></span>
+        <span class="label">às</span>
+        <span class="hour-to"><%= @event.end_time.strftime('%Hh%M') %></span>
+        </div>
+      </div>
+      <h3 class="title"><%= @event.name %></h3>
+      <span class="localization"><%= @event.location %></span>
+      <ul class="tags clearfix">
+        <% @event.tags.each do |tag| %>
+          <li><%= link_to tag, polymorphic_path([@event.eventable, @event]) %></li>
+        <% end %>
+      </ul>
+    </div><!-- end .details -->
+
+    <div class="event-content pretty-text">
+      <%= raw @event.description %>
     </div>
-  </div>
+  </div><!-- end #event -->
+
+</div><!-- end .main -->
