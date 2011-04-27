@@ -1,9 +1,0 @@
-
-
-page.replace_html  'tabs-4-content', :partial => 'folders/index'
-#page << '$("tabs-4-loading").hide()'
-#page << "$spacetabs.tabs('select', 3);"  
-#page << "document.getElementById('file_path').innerHTML = '"+path(@folder)+"';"
-
-#page << "document.getElementById('new_folder_link').href = '"+new_space_folder_path(:id => @folder.id, :space_id => @space.id)+"';"
-#page << "document.getElementById('upload_link').href = '"+upload_space_folder_path(:id => @folder.id, :space_id => @space.id)+"';"#

@@ -1,108 +1,97 @@
-<%= image_tag("loadingAnimation.gif",
-              :align => "absmiddle",
-              :border => 0,
-              :id => "loading-files",
-              :style =>"display: none;" ) %>
-	
-    <table id="file_list_tbl" class="grid">
-        <tr style="border-bottom: 1px solid rgb(187, 187, 187); height: 26px;">
-            <th style="width: 30px;"></th>
-            <th width="239"><%= link_order 'Nome', 'name' %></th>
-            <th width="82"><%= link_order 'Tamanho', 'filesize' %></th>
-            <th><%= link_order 'Modificado', 'date_modified' %></th>
-            <th></th>
-            <th></th>
-        </tr>
-<% if @folder.parent %>
-        <tr>
-            <td class="directory collapsed">&nbsp;</td>
-            <td><%= link_to_remote "...", :url => {:action => :index, :id => @folder.parent, :space_id => @space.id}, :before => "showLoadingFiles()" %>
-	        </td>
-            <td>--</td>
-            <td>--</td>
-            <td></td>
-            <td></td>
-        </tr>
-<% end %>
+<%= image_tag("loadingAnimation.gif", :id => "loading-files", :style =>"display: none;" ) %>
+
+<table class="common folders">
+  <thead>
+    <tr>
+      <th style="width: 30px;"></th>
+      <th style="width: 290px;"><%= link_order 'Nome', 'name' %></th>
+      <th style="width: 110px;"><%= link_order 'Tamanho', 'filesize' %></th>
+      <th style="width: 135px;"><%= link_order 'Modificado', 'date_modified' %></th>
+      <th style="width: 75px;"></th>
+      <th style="width: 75px;"></th>
+    </tr>
+    <% if @folder.parent %>
+      <tr>
+        <td class="directory collapsed">&nbsp;</td>
+        <td>
+          <%=
+            link_to_remote "...",
+              :url => space_folders_path(@space, :id => @folder.parent),
+              :before => "$('#loading-files').show();",
+              :method => :get
+          %>
+      </td>
+      <td>--</td>
+      <td>--</td>
+      <td></td>
+      <td></td>
+    </tr>
+  <% end %>
+</thead>
 <% @folders.each do |folder| %>
-        <tr>
-            <td class="directory collapsed"></td>
-            <td>
-            	<%# link_to h(folder.name), space_folders_path(:id => folder, :space_id => @space.id) %>
-			<%= link_to_remote h(folder.name), :url => {:action => :index, :id => folder, :space_id => @space.id}, :before => "showLoadingFiles()" %>
-	
-			</td>
-            <td>--</td>
-            <td><%= time_ago_in_words(folder.date_modified) %></td>
-            
+  <tr id="folder_<%= folder.id %>">
+    <td class="directory ext_folder"></td>
+    <td>
+      <%=
+        link_to_remote h(folder.name),
+          :url => space_folders_path(@space, :id => folder.id),
+          :method => :get,
+          :before => "$('#loading-files').show();",
+          :html => { :class => "folder-name" }
+        %>
+      <div class="rename-folder" style="display:none;">
+        <% form_remote_for :folder, folder, :url => space_folder_path(@space, folder),
+          :method => :put, :loading => "$('#rename-folder-spinner_#{folder.id}').show();" do |f| %>
+          <%= f.text_field :name %>
+          <%= f.submit 'Ok' %>
+          <%= link_to "Cancelar", "#", :class => "cancel" %>
+          <%= image_tag 'spinner.gif', :id => "rename-folder-spinner_#{folder.id}", :style => 'display: none' %><BR>
+        <% end %>
+      </div>
+    </td>
+    <td><span class="size">--</span></td>
+    <td><span class="date"><%= time_ago_in_words(folder.date_modified) %></span></td>
+
     <% if @can_update %>
-	<td>
-    
-	<div class="rename-folder-outter">
-		<%= link_to image_tag('edit.png', :style => "border: 0", :title => 'Renomear esta pasta'), '#', :onclick => "$('#folder_#{folder.id}').slideToggle(); return false;" %>
-         <div id="folder_<%= folder.id %>" class="rename-folder-inner hoverdiv">
-            
-           <% form_remote_for :folder, folder, :url => space_folder_path(@space, folder), 
-             :method => :put, :loading => "$('#rename-folder-spinner_#{folder.id}').show()" do |f| %>
-					<%= f.text_field :name, :size => "15" %>
-				<%= f.submit 'OK' %>
-				<%= image_tag 'spinner.gif', :id => "rename-folder-spinner_#{folder.id}", :style => 'display: none' %><BR>
-			 <% end %>
-			 
-         </div>
-    </div>	 
-	
-	
-	 </td>
-	<% end %>
-           
-            
-    <% if @can_delete %>
-	<td>
-                <%= link_to_remote image_tag('delete.png', :style => "border: 0", :title => 'Remover esta pasta'), :url => { :action => :destroy_folder, :id => folder.id, :space_id => @space.id} ,  :confirm => "Todos os arquivos e subpastas serão removidos.\nDeseja continuar?" , :method => :delete %>
-   </td>
+      <td>
+        <%= link_to "Renomear", '#', :class => "rename icon icon-management-gray_8_8", :id => "#{folder.id}" %>
+      </td>
     <% end %>
-            
-        </tr>
-<% end %>
-<% @myfiles.each do |myfile| %>
-        <tr >
-            <td class="file <%= type_class(myfile)%>"></td>
-            <td><%= link_to h(myfile.attachment_file_name), download_space_folder_path(:id => @folder.id, :file_id => myfile.id, :space_id => @space.id)%></td>
-            <td><%= bytes_to_kb(myfile.attachment_file_size) %> KB</td>
-            <td><%= time_ago_in_words(myfile.attachment_updated_at) %></td>
-            
-    <% if @can_update %>
-	<td>
-                <%# link_to image_tag('edit.png', :style => "border: 0"), rename_space_folder_path(:id => @folder.id, :space_id => @space.id), { :title => 'Rename this file' } %>
-     </td>
-	<% end %>
-           
-            
+
     <% if @can_delete %>
-	<td>
-                <%= link_to_remote image_tag('delete.png', :style => "border: 0", :title => 'Remover este arquivo'), :url => {:action => :destroy_file, :id => @folder.id, :file_id => myfile.id, :space_id => @space.id}, :confirm => 'Tem certeza?', :method => :delete  %>
-     </td>
-	<% end %>
-           
-        </tr>
+      <td>
+        <%=
+          link_to_remote "Remover",
+            :url => destroy_folder_space_folder_path(@space, folder),
+            :confirm => "Todos os arquivos e subpastas serão removidos.\nDeseja continuar?",
+            :method => :delete,
+            :html => { :class => "delete icon icon-x-gray_8_8" }
+          %>
+        <%= image_tag 'spinner.gif', :class => "spinner", :style => 'display: none' %>
+      </td>
+    <% end %>
+  </tr>
 <% end %>
-    </table>
 
+<% @myfiles.each do |myfile| %>
+  <tr>
+    <td class="file <%= type_class(myfile)%>"></td>
+    <td><%= link_to h(myfile.attachment_file_name), download_space_folder_path(:id => @folder.id, :file_id => myfile.id, :space_id => @space.id)%></td>
+    <td><span class="size"><%= bytes_to_kb(myfile.attachment_file_size) %> Kb</span></td>
+    <td><span class="date"><%= time_ago_in_words(myfile.attachment_updated_at) %></span></td>
 
-
-
-
-
-
-
-   
-
-
-
-
-
-
-
-
-
+    <% if @can_delete %>
+      <td colspan="2">
+        <%=
+          link_to_remote "Remover",
+            :url => destroy_file_space_folder_path(@space, @folder, :file_id => myfile.id),
+            :confirm => 'Tem certeza?',
+            :method => :delete,
+            :html => { :class => "delete icon icon-x-gray_8_8" }
+          %>
+        <%= image_tag 'spinner.gif', :class => "spinner", :style => 'display: none' %>
+      </td>
+    <% end %>
+  </tr>
+<% end %>
+</table>

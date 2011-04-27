@@ -10,8 +10,6 @@
 # [#destroy]            delete a folder
 # [#update_permissions] save the new rights given by the user
 class FoldersController < BaseController
-  layout 'environment'
-
   load_and_authorize_resource :space
   load_and_authorize_resource :folder, :through => :space
 
@@ -51,7 +49,7 @@ class FoldersController < BaseController
         format.js do
             list
             render :update do |page|
-              page.replace_html  'materials', :partial => 'folders/new/index'
+              page.replace_html  'materials', :partial => 'folders/index'
             end
         end
       else
@@ -83,7 +81,7 @@ class FoldersController < BaseController
         format.js do
           list
           responds_to_parent do
-            render :partial => "folders/new/do_the_upload"
+            render :partial => "folders/do_the_upload"
           end
         end
       else
@@ -91,7 +89,7 @@ class FoldersController < BaseController
         format.js do
           list
           responds_to_parent do
-            render :partial => "folders/new/do_the_upload"
+            render :partial => "folders/do_the_upload"
           end
         end
       end
@@ -121,12 +119,8 @@ class FoldersController < BaseController
     list(params[:id])
 
     respond_to do |format|
-      format.html do
-        render :template => "folders/new/index", :layout => "new/application"
-      end
-      format.js do
-        render :partial => "folders/new/index"
-      end
+      format.html
+      format.js { render :partial => "folders/index" }
     end
   end
 
@@ -227,17 +221,13 @@ class FoldersController < BaseController
             flash[:notice] = 'Diretório criado!'
             redirect_to space_folders_path(:space_id => params[:folder][:space_id], :id => @folder.parent.id)
           }
-          format.js do
-            render :partial => "folders/new/create"
-          end
+          format.js { render :partial => "folders/index" }
         else
           format.html {
             flash[:error] = 'Não foi possível criar o diretório'
             redirect_to space_folders_path(@space, @folder.parent)
           }
-          format.js {
-            render :partial => "folders/new/create"
-          }
+          format.js { render :partial => "folders/create" }
         end
       end
     end
@@ -252,7 +242,7 @@ class FoldersController < BaseController
           params[:id] = @folder.parent_id
           list
           render :update do |page|
-            page.replace_html "file_list", :partial => 'folders/new/list'
+            page.replace_html "file_list", :partial => 'folders/list'
           end
         }
       end
@@ -271,7 +261,7 @@ class FoldersController < BaseController
         params[:id] = @folder.parent_id
         list
         render :update do |page|
-          page.replace_html "file_list", :partial => 'folders/new/list'
+          page.replace_html "file_list", :partial => 'folders/list'
         end
       }
     end
