@@ -83,7 +83,7 @@ class BulletinsController < BaseController
         format.html { redirect_to polymorphic_path([@bulletin.bulletinable, @bulletin])}
         format.xml { render :xml => @bulletin, :status => :created, :location => @bulletin, :bulletinable => @bulletin.bulletinable }
       else
-        format.html
+        format.html { render "new" }
         format.xml { render :xml => @bulletin.errors, :status => :unprocessable_entity }
       end
     end
