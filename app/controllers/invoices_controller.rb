@@ -9,16 +9,7 @@ class InvoicesController < BaseController
     @quota = @plan.billable.quota if @plan.billable.quota
 
     respond_to do |format|
-      format.html do
-        render :template => "invoices/new/index", :layout => "new/application"
-      end
-    end
-  end
-
-  def show
-    respond_to do |format|
       format.html
     end
   end
-
 end

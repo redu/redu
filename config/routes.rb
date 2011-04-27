@@ -235,7 +235,7 @@ ActionController::Routing::Routes.draw do |map|
     :confirm => [:get, :post],
     :upgrade => [:get, :post]
   } do |plan|
-    plan.resources :invoices, :only => [:index, :show]
+    plan.resources :invoices, :only => [:index]
   end
 
   map.payment_success '/payment/callback',
