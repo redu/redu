@@ -20,7 +20,7 @@
           :class => "icon #{selected}"%>
       </div>
       <ul class="connections clearfix">
-        <%= render :partial => 'users/new/item_short',
+        <%= render :partial => 'users/item_short',
           :collection => @user.friends.n_recent(9) %>
       </ul><!-- end .connections -->
       <%= link_to 'Ver mais', user_friendships_path(@user, :profile => true),

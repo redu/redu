@@ -77,7 +77,7 @@
           :class => "icon #{selected}" %>
       </div>
       <ul class="connections clearfix">
-        <%= render :partial => 'users/new/item_short',
+        <%= render :partial => 'users/item_short',
           :collection => space.users.n_recent(9) %>
       </ul><!-- end .connections -->
       <a href="" class="more">Ver mais</a>

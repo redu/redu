@@ -1,106 +1,141 @@
-<% content_for :page_id, 'public-profile' %>
-<%- @meta = { :description => "#{@user.login}'s profile on #{AppConfig.community_name}.", :keywords => "#{@user.login}, #{@user.tags.join(", ") unless @user.tags.nil?}", :robots => AppConfig.robots_meta_show_content }%>
-<%- @section = @user.eql?(current_user) ? 'my_profile' : 'users' %>
+<%= render :partial => 'users/profile_sidebar' %>
 
-<script type="text/javascript">
-var userlearningPath = "<%= learning_user_path %>";
-var userteachingPath = "<%= teaching_user_path %>";
-<% if can? :manage, @user %>
-  var userAnnotationPath = "<%= annotations_user_path %>";
-<% end %>
-
-var $usertabs;
-
-$(document).ready(function() {
-
-    $usertabs = $(".user-tabs").tabs({
-        select: function(event, ui) {
-            if (ui.panel.id == "tabs-2") {
-                // Meus cursos
-                $("#tabs-2-content").html('');
-                jQuery.ajax({
-                    data: '',
-                    dataType: 'script',
-                    success: function(request) {
-                        $("#tabs-2-loading").hide();
-                    },
-                    type: 'get',
-                    url: userlearningPath
-                });
-
-                $("#tabs-2-loading").show();
-            }
-        <% if can? :manage, @user %>
-            else if (ui.panel.id == "tabs-5"){
-                // Anotações
-                $("#tabs-5-content").html('');
-                jQuery.ajax({
-                    data: '',
-                    dataType: 'script',
-                    success: function(request) {
-                        $("#tabs-5-loading").hide();
-                    },
-                    type: 'get',
-                    url: userAnnotationPath
-                });
-
-                $("#tabs-5-loading").show();
-          }
+<div class="main grid_10 omega" style="width: 580px;">
+  <div id="profile">
+    <div class="vcard clearfix">
+      <h5 class="name"><%= @user.display_name %></h5>
+      <div class="actions">
+        <% unless current_user == @user %>
+          <%= link_to 'Enviar mensagem', new_user_message_path(current_user),
+            :class => 'send-message' %>
         <% end %>
-      }
-    });
-});
-</script>
 
+        <%= image_tag 'spinner.gif', :style => 'display: none;',
+          :id => 'spinner' %>
+        <% friendship = @user.friendship_for current_user %>
+        <% if !current_user.friends?(@user) and current_user != @user %>
+          <% if friendship %>
+            <% if friendship.status == 'pending' %>
+              <a class="waiting">Aguardando aceitação</a>
+            <% elsif current_user != @user %>
+              <%= link_to_remote 'Aceitar pedido de conexão',
+                :url => user_friendships_path(current_user, :friend_id => @user.id),
+                :loading => "$('#spinner').show();",
+                :success => "$('#spinner').hide(); $('#follow_link).hide();",
+                :html =>{ :class => "waiting",
+                  :id => "follow_link"} %>
+              <% end %>
+            <% else %>
+              <% form_remote_for [current_user, Friendship.new],
+                :loading => "$('#spinner').show();",
+                :success => "$('#spinner').hide();" do %>
+                <%= hidden_field_tag "friend_id", @user.id %>
+                <%= submit_tag "Adicionar aos contatos", :class => 'add-as-friend' %>
+              <% end %>
+            <% end %>
+        <% end %>
+      </div>
+      <%# FIXME Mostrar ocupação  %>
+      <%# <span class="occupation">Profissão</span> %>
+      <div class="bio-wrapper clearfix">
+        <% if can? :manage, @user %>
+        <%= link_to 'Editar', edit_user_path(@user),
+          :class => 'edit icon icon-redu_r12_c5_s1' %>
+        <% end %>
+        <span class="label">O que faço de melhor:</span>
+        <span class="bio"><%= @user.description %></span>
+        <span class="label">Interesses:</span>
+        <ul class="tags clearfix">
+          <% @user.tags.each do |tag| %>
+            <li>
+              <%= link_to tag, user_path(@user) %>
+            </li>
+          <% end %>
+        </ul>
+      </div><!-- end .bio-wrapper -->
+    </div><!-- end .vcard -->
 
-<div class="main grid_11">
-  <%= render :partial => "users/user_info", :locals => {:user => @user}%>
+    <% if (can? :manage, @user) or (can? :view_mural, @user) %>
+      <%= render :partial => 'statuses/new/create_status',
+        :locals => { :statusable => @user } %>
+      <div id="statuses" class="statuses">
+        <ol>
+          <%= render :partial => 'statuses/new/item', :collection => @statuses %>
+        </ol>
 
-  <div class="user-tabs tabs clearfix">
+        <%= will_paginate @statuses, :renderer => EndlessRenderer %>
+      </div><!-- end .statuses -->
+    <% end %>
+  </div><!-- end #profile -->
+
+</div><!-- end .main -->
+<div class="secondary-sidebar profile-sidebar">
+  <% if can? :manage, @user %>
+    <% unless @user.completeness == 100 %>
+      <div class="incomplete-profile">
+        <em>Seu perfil ainda não está completo</em>
+        <div class="progress">
+          <div class="completed" style="width: <%= @user.completeness %>%;">
+            <span> <%= @user.completeness %>%</span>
+          </div>
+        </div>
+        <%= link_to 'Preencher perfil', edit_user_path(@user),
+          :class => 'edit icon icon-redu_r12_c5_s1' %>
+      </div>
+    <% end %>
+  <% end %>
+  <% if @user.curriculum_file_name %>
+    <div class="curriculum">
+      <div class="call">
+        <span class="">Curriculum vitae</span>
+      </div>
+      <%= link_to 'Download', download_curriculum_user_path(@user),
+        :class => 'button clean download' %>
+    </div>
+  <% end %>
+  <div class="environments">
+    <div class="call">
+      <span class="">Ambientes</span>
+    </div>
     <ul>
-      <li><a href="#tabs-1">Atividades</a></li>
-      <li><a href="#tabs-2">Meus cursos</a></li>
-      <% if can? :manage, @user %>
-        <li><a href="#tabs-5">Anotações</a></li>
+      <% @user.environments.each do |environment| %>
+      <li>
+        <%= image_tag environment.avatar.url(:thumb_32), :class => 'avatar' %>
+        <%= link_to environment.initials, environment_path(environment),
+          :class => 'initials' %>
+        <%= link_to environment.name, environment_path(environment),
+          :class => 'environment' %>
+
+        <ul class="courses">
+          <% @user.courses.of_environment(environment).each do |course| %>
+          <li>
+            <%= link_to course.name,
+              environment_course_path(environment, course),
+              :class => 'course' %>
+            <span class="role">
+              <%= Role.human_attribute_name(@user.get_association_with(course).
+                                            role.name) %>
+            </span>
+          </li>
+          <% end %>
+        </ul>
+      </li>
       <% end %>
     </ul>
-
-    <div id="tabs-1" class="clearfix first-page">
-      <%= javascript_include_tag 'flow.js' %>
-      <% if current_user == @user%>
-        <%= render :partial => "statuses/create_status", :locals => {:status => @status, :statusable => @user }%>
-      <% end %>
-      <ul class="activities">
-        <%= render :partial => "statuses/type_proxy", :collection => @statuses, :as => :status, :locals => {:statusable => @user } %>
-      </ul><!-- end activities -->
-
-      <%= will_paginate @statuses, :renderer => EndlessRenderer,
-        :class => "endless_statuses",
-        :params => {:id => @user.id, :type => 'User'} %>
+  </div>
+  <% unless current_user == @user %>
+    <div class="common-connections">
+      <div class="call">
+        <span class="">Contatos em Comum</span>
+      </div>
+      <ul>
+        <% current_user.friends_in_common_with(@user).each do |friend| %>
+          <li class="clearfix">
+            <%= image_tag friend.avatar.url(:thumb_32), :class => 'avatar' %>
+            <%= link_to friend.display_name, user_path(friend), :class => 'name' %>
+          </li>
+        <% end %>
+      </ul>
     </div>
-
-    <!-- meus cursos -->
-    <div id="tabs-2" class="clearfix">
-      <%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-2-loading', :style => 'padding: 20px;'%>
-      <div id="tabs-2-content"></div>
-    </div>
-
-    <% if can? :manage, @user %>
-    <!-- anotações -->
-    <div id="tabs-5">
-      <%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-5-loading', :style => 'padding: 20px;'%>
-      <div id="tabs-5-content"></div>
-    </div>
-    <% end %>
-
-  </div><!-- end tabs -->
-
-</div><!-- end main -->
-
-<div class="sidebar grid_5 omega">
-  <% if @user.eql?(current_user) %>
-    <%= render :partial => 'users/private_sidebar', :object => @user %>
-  <% else %>
-    <%= render :partial => 'users/public_sidebar', :object => @user %>
   <% end %>
-</div><!-- end sidebar -->
+</div><!-- end .offering -->

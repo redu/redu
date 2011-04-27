@@ -1,7 +1,7 @@
 <% if @profile %>
-  <%= render :partial => 'users/new/profile_sidebar' %>
+  <%= render :partial => 'users/profile_sidebar' %>
 <% else %>
-  <%= render :partial => 'users/new/home_sidebar' %>
+  <%= render :partial => 'users/home_sidebar' %>
 <% end %>
 <div class="main grid_10" style="width: 580px;">
 <ol id="breadcrumbs" class="clearfix">
@@ -15,7 +15,7 @@
 
   <div id="contacts">
     <ul class="clearfix">
-      <%= render :partial => "users/new/item_medium", :collection => @friends %>
+      <%= render :partial => "users/item_medium", :collection => @friends %>
     </ul>
     <%= will_paginate @friends, :renderer => EndlessRenderer %>
   </div>

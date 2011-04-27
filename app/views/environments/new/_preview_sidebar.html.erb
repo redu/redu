@@ -21,7 +21,7 @@
             :class => "icon #{selected}" %>
       </div>
       <ul class="connections clearfix">
-        <%= render :partial => 'users/new/item_short',
+        <%= render :partial => 'users/item_short',
           :collection => @environment.users.n_recent(9) %>
       </ul><!-- end .connections -->
         <%= link_to "Ver mais",

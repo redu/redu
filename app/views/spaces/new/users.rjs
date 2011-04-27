@@ -1,4 +1,4 @@
-page.insert_html :bottom, 'users_list', :partial => "users/new/item",
+page.insert_html :bottom, 'users_list', :partial => "users/item",
   :collection => @users, :locals => { :entity => @space }
 
 page.replace_html ".endless",

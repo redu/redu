@@ -1,13 +1,20 @@
-<div class="grid_10 push_3 notice-page">
-        <h3 class="call"><%= :go_check_your_e_mail.l %></h3>
-        <p>
-        	<%= :look_for_a_message_from.l :from => AppConfig.community_name %>
-        	<%= :see_you_back_here_in_a_short_while.l %>
-            <%= :no_activation_email.l %>
-			<%= link_to(:resend_my_activation_e_mail.l, "/resend_activation?id=#{@user.to_param}", :method => 'post')%>
-        </p>
-		<h3 class="call">Utilize o Redu</h3>
-		<p>
-			Você já pode utilizar o Redu mesmo sem confirmar seu e-mai, clique <%= link_to "aqui!", login_path %>
-		</p	>
-</div>
+<div id="clean" class="container_16 clearfix">
+  <div class="grid_4 alpha header">
+    <h1 class="logotipo replacement">
+      <a href="" class="">Redu: rede social educacional</a>
+    </h1>
+  </div>
+  <div class="main grid_12 omega">
+    <h3 class="call">Cadastro efetuado!</h3>
+
+    <div class="flash-message success">
+      <p>Seja bem vindo(a)!</p>
+      <p>Um e-mail de confirmação foi enviado para sua caixa de entrada (<%= @user.email %>). Para confirmar seu cadastro, basta acessar o link indicado na mensagem.</p>
+      <p>Você tem até 30 dias para confirmar o seu cadastro. Entretanto, sua conta já está disponível para ser utilizada no Redu.</p>
+    </div>
+    <div class="go-to-home icon icon-home-lightblue_48_48">
+      <%= link_to "Conheça a Home e comece já!", home_user_path(@user),
+            :class => "button" %>
+    </div>
+  </div>
+</div><!-- end #content -->

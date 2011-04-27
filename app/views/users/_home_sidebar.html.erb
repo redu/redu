@@ -44,7 +44,7 @@
           :class => "icon #{selected}" %>
       </div>
     </li>
-    <%= render :partial => 'users/new/sidebar_environment_item',
+    <%= render :partial => 'users/sidebar_environment_item',
       :collection => current_user.environments, :as => :environment %>
     <li>
       <div class="<%= (current_page? edit_user_path(current_user)) ?
@@ -68,7 +68,7 @@
           :class => "icon #{selected}" %>
       </div>
       <ul class="connections clearfix">
-        <%= render :partial => 'users/new/item_short',
+        <%= render :partial => 'users/item_short',
           :collection => current_user.recently_active_friends %>
       </ul><!-- end .connections -->
       <%= link_to 'Ver mais', user_friendships_path(current_user),

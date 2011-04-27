@@ -1,4 +1,4 @@
-<%= render :partial => 'users/new/home_sidebar' %>
+<%= render :partial => 'users/home_sidebar' %>
 <div class="main grid_10" style="width: 580px;">
   <ol id="breadcrumbs" class="clearfix">
     <li>
@@ -8,7 +8,7 @@
   </ol>
   <% unless @friends_requisitions.empty? %>
     <ul class="friends-requisitions">
-      <%= render :partial => 'users/new/friend_requisition',
+      <%= render :partial => 'users/friend_requisition',
         :collection => @friends_requisitions, :as => :friend %>
     </ul>
   <% end %>
