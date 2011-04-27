@@ -1,7 +1,15 @@
-favorite = "#status-#{favoritable_id} > .activity > .actions span#favorite"
-link = "#status-#{favoritable_id}  > .activity  > .actions span#rm_favorites_link"
-spinner = "#status-#{favoritable_id} > .activity > .actions #favorite_spinner"
+# Troca o link de Favoritar pelo de Desfavoritar
+link = "#status-#{@favorite.favoritable.id} > div  > .actions #rm_favorites_link"
+spinner = "#status-#{@favorite.favoritable.id} > div > .actions #favorite_spinner"
 
-page << "$('#{favorite}').html(\"<span id = 'rm_favorites_link'> <a class='icon ico-bookmarked'" + escape_javascript("onclick=\"jQuery.ajax(") + "{beforeSend:function(request){$(\'#{link}\').hide(); $(\'#{spinner}\').show();}, data:\'\', dataType:\'script\', type:\'post\', url:\'/favorites/not_favorite/#{favoritable_id}?type=Status\'});" +  escape_javascript("return false;\" >") + "Favorito</a></span>\");"
+page.insert_html :after, spinner, (link_to_remote('Remover dos favoritos',
+                     { :url => { :controller => :favorites,
+                                :action => :not_favorite,
+                       :id => @favorite.favoritable.id,
+                       :type => @favorite.favoritable.class.to_s },
+                       :loading => "$('#status-#{@favorite.favoritable.id} > div > .actions #rm_favorites_link').hide(); $('#status-#{@favorite.favoritable.id} > div > .actions #favorite_spinner').show();" },
+                     { :class => 'icon icon-unfavorite-gray_8_8',
+                       :id => 'rm_favorites_link'}))
+page.remove "#status-#{@favorite.favoritable.id} > div > .actions #favorites_link"
 page << "$('#{spinner}').hide();"
 page << "$('#{link}').show();"

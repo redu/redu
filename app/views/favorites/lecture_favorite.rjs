@@ -6,8 +6,7 @@ page.insert_html :after, 'favorite', (link_to_remote('Desfavoritar',
                      { :url => { :controller => :favorites,
                                 :action => :not_favorite,
                        :id => @favorite.favoritable.id,
-                       :type => @favorite.favoritable.class.to_s,
-                       :new_layout => true },
+                       :type => @favorite.favoritable.class.to_s },
                        :loading => "$('#rm_favorites_link').hide(); $('#favorite_spinner').show();" },
                      { :id => 'rm_favorites_link' }))
 page.remove "#favorites_link"

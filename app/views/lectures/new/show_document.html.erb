@@ -44,15 +44,13 @@
             <% if current_user.has_favorite(@lecture) %>
                <%= link_to_remote('Desfavoritar', :url =>
                     not_favorite_user_favorite_path(current_user, @lecture,
-                               :type => @lecture.class.to_s,
-                               :new_layout => true),
+                               :type => @lecture.class.to_s ),
                                :loading => "$('#rm_favorites_link').hide(); $('#favorite_spinner').show();" ,
                                :html => { :id => 'rm_favorites_link' }) %>
           <% else %>
             <%= link_to_remote('Favoritar', :url =>
                     favorite_user_favorite_path(current_user, @lecture,
-                               :type => @lecture.class.to_s,
-                               :new_layout => true),
+                               :type => @lecture.class.to_s ),
                                :loading => "$('#favorites_link').hide(); $('#favorite_spinner').show();" ,
                                :html => { :id => 'favorites_link' }) %>
           <% end %>
