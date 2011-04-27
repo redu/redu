@@ -1,10 +1,28 @@
-<div class="grid_16">
-  <% is_space = @bulletinable.class.to_s.eql? "Space" %>
-  <% if is_space %>
-    <%= render :partial => "spaces/sidebar", :locals => {:space => @bulletinable} %>
-  <% end %>
+<% content_for :header_scripts_and_styles do %>
+  <%= javascript_include_tag :ckeditor %>
+<% end %>
+<% if @bulletinable.class.to_s.eql? "Space" %>
+  <%= render :partial => 'spaces/new/sidebar', :locals => { :space => @bulletinable } %>
+<% else %>
+  <%= render :partial => "environments/new/sidebar", :locals => { :environment => @bulletinable } %>
+<% end %>
+<div class="main grid_12 omega big-col">
+    <% if @bulletinable.class.to_s.eql? "Environment" %>
+      <%= render :partial => "environments/new/breadcrumbs", :locals => { :environment => @environment } %>
+      <%= render :partial => 'environments/new/header',
+        :locals => { :environment => @environment }%>
+    <% elsif @bulletinable.class.to_s.eql? "Space" %>
+      <%= render :partial => "spaces/new/breadcrumbs", :locals => { :space => @space } %>
+       <%= render :partial => 'spaces/new/header',
+         :locals => { :space => @space }%>
+      <% end %>
+    <div id="bulletin-new" class="hierarchy-listing-wrapper">
+      <div class="header">
+        <h4>Notícias</h4>
+        <span class="counter">Nova notícia</span>
+      </div>
 
-  <div class="main <%= is_space ? "grid_12 alpha" : "grid_16 alpha omega" %>">
-    <%= render :partial => 'bulletins/form', :bulletin => @bulletin %>
-  </div>
-</div>
+      <%= render :partial => "bulletins/form",
+        :locals => {:bulletinable => @bulletinable,  :bulletin => @bulletin }%>
+    </div><!-- #bulletin-new -->
+  </div><!-- end main -->

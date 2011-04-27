@@ -1,4 +1,4 @@
-page.insert_html :bottom, "bulletins", :partial => 'bulletins/list',
-  :collection => @bulletins, :as => :bulletin, :locals => {:is_index => true}
+page.insert_html :bottom, "#bulletins > ul",
+  :partial => 'bulletins/item', :collection => @bulletins
 page.replace_html ".endless",
   (will_paginate @bulletins, :renderer => EndlessRenderer)

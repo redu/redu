@@ -1,19 +1,21 @@
 <% if @pending_bulletins && @pending_bulletins.size > 0 %>
   <% form_tag :action => :moderate_bulletins do %>
     <table id="bulletin_moderate_list" class="common">
-      <tr>
-        <th style="max-width:25px;">Aprovar</th>
-        <th style="max-width:27px;">Rejeitar</th>
-        <th>Notícia</th>
-        <th>Autor</th>
+      <thead>
+        <th width="8%">Aprovar</th>
+        <th width="8%">Rejeitar</th>
+        <th width="45%">Notícia</th>
+        <th width="25%">Autor</th>
         <th>Data</th>
-      </tr>
+      </thead>
       <%= render :partial => 'bulletins/moderate_item_admin', :collection => @pending_bulletins %>
     </table>
     <%= will_paginate @pending_bulletins, :renderer => EndlessRenderer,
       :param_name => :page_pending, :class => 'endless_pending' %>
     <%= hidden_field_tag("id", @space.id) %>
+    <div class="actions clearfix">
     <%= submit_tag "Moderar" %>
+    </div>
   <% end %>
 <% else %>
   <div class="box_notice">
