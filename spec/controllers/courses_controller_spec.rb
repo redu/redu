@@ -242,8 +242,8 @@ describe CoursesController do
           should == Course.published.all(:limit => 10).to_set
       end
 
-      it "should render courses/new/index" do
-        response.should render_template('courses/new/index')
+      it "should render courses/index" do
+        response.should render_template('courses/index')
       end
     end
 
@@ -272,8 +272,8 @@ describe CoursesController do
           assigns[:courses].to_set.should == [@courses[0], @courses[5]].to_set
         end
 
-        it "should render courses/new/index" do
-          response.should render_template('courses/new/index')
+        it "should render courses/index" do
+          response.should render_template('courses/index')
         end
       end
 
@@ -287,8 +287,8 @@ describe CoursesController do
           assigns[:courses].to_set.should == @courses[1..3].to_set
         end
 
-        it "should render courses/new/index" do
-          response.should render_template('courses/new/index')
+        it "should render courses/index" do
+          response.should render_template('courses/index')
         end
       end
 
@@ -302,8 +302,8 @@ describe CoursesController do
           assigns[:courses].to_set.should == [@courses[6]].to_set
         end
 
-        it "should render courses/new/index" do
-          response.should render_template('courses/new/index')
+        it "should render courses/index" do
+          response.should render_template('courses/index')
         end
       end
 
@@ -317,8 +317,8 @@ describe CoursesController do
           assigns[:courses].to_set.should == [@courses[7]].to_set
         end
 
-        it "should render courses/new/index" do
-          response.should render_template('courses/new/index')
+        it "should render courses/index" do
+          response.should render_template('courses/index')
         end
       end
     end
@@ -334,8 +334,8 @@ describe CoursesController do
           should == Course.published.all(:limit => 10).to_set
       end
 
-      it "should render courses/new/index" do
-        response.should render_template('courses/new/index')
+      it "should render courses/index" do
+        response.should render_template('courses/index')
       end
     end
 

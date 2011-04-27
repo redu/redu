@@ -1,100 +1,73 @@
-<script type="text/javascript">
-  $(document).ready(function(){
-    $("#select_all").toggle(
-      function(e){
-        $("input[type=checkbox][name=users\[\]]").attr('checked', true)
-        $(this).attr('checked', true)
-      },
-      function(e){
-        $("input[type=checkbox][name=users\[\]]").attr('checked', false)
-        $(this).attr('checked', false)
-      }
-    )    
-  })
-function showLoadingUsers(){
-	document.getElementById('loading_bar').style.display = 'block';
-	$('user_list_table').remove();
-}
-
-function setSubmissionType(type){
-	 var theform = document.getElementById('moderate_users_form');
-	 var theattribute = document.getElementById('submission_type');
-		
-	theattribute.value = type;
-	theform.submit();
-}
-</script>
-<script type="text/javascript" charset="utf-8">
-  $(document).ready(function(){
-      $(".message").hide()
-      $("#toggle").live('click', function(e){
-        $(".message").slideToggle()
-        e.preventDefault()
-        });
-      })
-</script>
-
-<div class="grid_16">
-  <div class="fake-tabs grid_16 alpha omega clearfix">
-    <%= render :partial => 'courses/admin_taskbar' %>
-    <% if can? :manage, @course %>
-      <div class="grid_15">
-        <div class="grid_8 alpha" id="invitation">
-          <h3 class="call">Convide professores e tutores</h3>
-          <p class="pretty-text quiet">Você pode convidar professores, tutores e produtores de conteúdo para auxiliar na criação das aulas.</p>
-
-          <% remote_form_for :invitation, :method => :post,
-            :url => course_invitations_path(@course),
-            :html => {:id => "environment_invitation", :class => "cupertino"},
-            :loading => "$(\"#environment_invitation\").prepend(\"#{escape_javascript(image_tag("spinner.gif")) }\")",
-            :complete => "$(\"#environment_invitation\").find(\"img\").remove()" do  |f| %>
-            <div id="invitation_errors"></div>
-            <%= f.label :email_addresses, "E-mails" %>
-            <%= f.text_area :email_addresses, :rows => 1, :class => "growup", :style => "width: 98%; " %>
-            <hr/>
-            <a id="toggle" href="#">Escrever Mensagem</a>
-            <%= f.label :message, "Mensagem", :class => "message small" %>
-            <%= f.text_area :message, :rows => 1 , :class => "message growup", :style => "width: 98%;" %>
-
-            <%= f.submit "Convidar" %>
-          <% end %>
-        </div>
-      </div>
-    <% end %>
-    <div class="grid_15">      
-      <% if @memberships && @memberships.size > 0 %>
-        <% form_remote_tag :url => {:action => :search_users_admin,
-          :id => @environment.id},
-          :loading => "showLoadingUsers()" do %>
-          <div class="filters clearfix">
-            <% field_set_tag "Buscar", :class => "grid_3 alpha" do %>
-              <%= label_tag :search_user, "Nome", :class => "inline" %>
-              <%= text_field_tag :search_user %>
-            <% end %>
-            <% field_set_tag "Papéis" , :class => "grid_10 omega" do %>
-              <% Role.all().each do |role| %>
-                <% unless role.name == 'admin' %>
-                  <%= check_box_tag :role_filter, role.id %>
-                  <%= label_tag :role_filter, Role.human_attribute_name(role.name), :class => "inline" %>
-                <% end %>
-              <% end %>
-            <% end %>
-            <%= submit_tag 'Filtrar',
-                  :style => "float: right;" %>
-          </div>
-        <% end %>
-
-        <% form_tag destroy_members_environment_course_path, :method => :post do %>
-          <%= submit_tag "Remover selecionados" %>
-          <div id="user_list">
-            <%= render :partial => 'user_list_admin',
-              :locals => {:memberships => @memberships}%>
-          </div>
-        <% end %>
-      <% else %>
-        <div class="box_notice">Não há usuários no curso.</div>
-      <% end %>
-        <%= will_paginate  @memberships, :renderer => EndlessRenderer %>
+<%= render :partial => 'courses/sidebar' %>
+<div class="main grid_12 omega big-col">
+  <%= render :partial => 'courses/breadcrumbs' %>
+  <%= render :partial => 'courses/header',
+    :locals => { :course => @course } %>
+  <div id="course-manage" class="body">
+    <div class="header">
+      <h4>Gerenciamento</h4>
+      <span class="counter">Listagem de membros do curso <%= @course.name %></span>
     </div>
-  </div>
+    <%
+      fake_tabs ["Informações", edit_environment_course_path(@environment, @course), {:class => 'icon icon-management-gray_16_16'}],
+        ["Membros", admin_members_environment_course_path(@environment, @course), {:class => 'icon icon-members-lightblue_16_16'}],
+        ["Moderação", admin_members_requests_environment_course_path(@environment, @course), {:class => 'icon icon-moderation-gray_16_16'}],
+        ["Convites", admin_manage_invitations_environment_course_path(@environment, @course), {:class => ''}],
+        ["Disciplinas", admin_spaces_environment_course_path(@environment, @course), {:class => 'icon icon-space-gray_16_16'}] do
+      %>
+    <% if @memberships && @memberships.size > 0 %>
+      <div class="actions invite clearfix">
+        <%=
+          link_to "Convidar membros", admin_invitations_environment_course_path(@environment, @course),
+            :class => "button"
+        %>
+      </div>
+      <% form_remote_tag :url => search_users_admin_environment_course_path(
+        @environment, @course),
+        :loading => "$('#loading_bar').show();",
+        :success => "$('#loading_bar').hide();",
+        :html =>  { :class => "common filter"} do %>
+        <div class="filters clearfix">
+          <% field_set_tag "Buscar", :class => "grid_4 alpha inline hidden" do %>
+            <%= label_tag :search_user, "Nome" %>
+            <%= text_field_tag :search_user, nil, :class => "nano" %>
+            <span class="tip">Mínimo de 4 letras</span>
+          <% end %>
+          <% field_set_tag nil, :class => "grid_4 omega inline" do %>
+            <ul class="columns">
+              <li>
+                <%= check_box_tag :role_filter, Role[:member].id %>
+                <%= label_tag :role_filter, "Membro", :class => "inline" %>
+              </li>
+              <li>
+                <%= check_box_tag :role_filter, Role[:tutor].id %>
+                <%= label_tag :role_filter, "Tutor", :class => "inline" %>
+              </li>
+              <li>
+                <%= check_box_tag :role_filter, Role[:teacher].id %>
+                <%= label_tag :role_filter, "Professor", :class => "inline" %>
+              </li>
+              <li>
+                <%= check_box_tag :role_filter, Role[:environment_admin].id %>
+                <%= label_tag :role_filter, "Administrador", :class => "inline" %>
+              </li>
+            </ul>
+
+          <% end %>
+          <%= submit_tag 'Filtrar',
+            :style => "float: right;" %>
+        </div>
+      <% end %>
+      <%= image_tag 'loadingAnimation.gif', :id => 'loading_bar',
+        :style => "display: none; margin-top: 40px"%>
+      <div id="user_list">
+        <%= render :partial => 'courses/user_list_admin',
+          :locals => {:memberships => @memberships}%>
+      </div>
+    <% else %>
+      <div class="box_notice">Não há usuários no curso.</div>
+    <% end %>
+    <%= will_paginate  @memberships, :renderer => EndlessRenderer %>
+  <% end %>
+</div>
 </div>

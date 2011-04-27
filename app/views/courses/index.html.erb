@@ -1,21 +1,110 @@
-<% unless @environmnet.nil? %>
-  <div class="container_16" id="common-header">
-    <div class="session-title">
-      Cursos
-    </div> <!-- title -->
-  </div>
-<% end %>
-<% if @environment.nil? %>
-  <div class="grid_16">
-    <div id="school_list" class="grid_16 alpha omega">
-      <%= render :partial => "course_list" %>
+<div id="global-courses" class="clearfix">
+  <div class="alpha grid_3">
+    <div class="call">
+      <h4>Cursos</h4>
+      <strong>Localize os cursos inscritos através de seus papéis, ou procure por algo novo.</strong>
     </div>
+    <div class="filters">
+      <strong class="call">Filtros:</strong>
+      <% form_remote_tag :url => courses_path(:role => params[:role]),
+        :loading => "$('#spinner').show();",
+        :success => "$('#spinner').hide();",
+        :html => { :id => 'filter_form' } do %>
+        <fieldset>
+          <%= hidden_field_tag 'search', "", { :id => 'hidden_search'} %>
+          <% for audience in Audience.find(:all) %>
+            <span class="filter">
+              <%= check_box_tag "audiences_ids[]", audience.id, false %>
+              <label for=""><%= audience.name %></label>
+            </span>
+          <% end %>
+          <%= submit_tag "Filtrar" %>
+        </fieldset>
+      <% end %>
+    </div><!-- end #filters -->
+
   </div>
-  <%= will_paginate @courses, :renderer => EndlessRenderer,
-    :class => "endless_course" %>
-<% else %>
-  <%= render :partial => 'environments/courses_index' %>
-  <%= will_paginate @courses, :renderer => EndlessRenderer,
-    :class => "endless_course",
-    params => {:environment_id => @environment.id} %>
-<% end %>
+  <div class="main grid_12 omega big-col">
+    <div class="fake-tabs ui-tabs ui-widget ui-widget-content ui-corner-all">
+      <ul class="clearfix">
+
+        <% if params.has_key? :role %>
+          <li>
+          <%= link_to "Todos", courses_path, :class => "icon icon-course-gray_16_16" %>
+        <% else %>
+          <li class="ui-state-active">
+          <%= link_to "Todos", courses_path, :class => "icon icon-course-lightblue_16_16" %>
+        <% end %>
+        </li>
+
+        <% unless Course.user_behave_as_student(current_user).empty? %>
+          <% if params[:role] == 'student' %>
+            <li class="ui-state-active">
+              <%= link_to "Aluno", courses_path(:role => 'student'), :class => "icon icon-student-lightblue_16_16" %>
+          <% else %>
+            <li>
+              <%= link_to "Aluno", courses_path(:role => 'student'), :class => "icon icon-student-gray_16_16" %>
+          <% end %>
+          </li>
+        <% end %>
+
+        <% unless Course.user_behave_as_tutor(current_user).empty? %>
+          <% if params[:role] == 'tutor' %>
+            <li class="ui-state-active">
+              <%= link_to "Tutor", courses_path(:role => 'tutor'), :class => "icon icon-tutor-lightblue_16_16" %>
+          <% else %>
+            <li>
+              <%= link_to "Tutor", courses_path(:role => 'tutor'), :class => "icon icon-tutor-gray_16_16" %>
+          <% end %>
+          </li>
+        <% end %>
+
+        <% unless Course.user_behave_as_teacher(current_user).empty? %>
+          <% if params[:role] == 'teacher' %>
+            <li class="ui-state-active">
+              <%= link_to "Professor", courses_path(:role => 'teacher'), :class => "icon icon-teacher-lightblue_16_16" %>
+          <% else %>
+            <li>
+              <%= link_to "Professor", courses_path(:role => 'teacher'), :class => "icon icon-teacher-gray_16_16" %>
+          <% end %>
+          </li>
+        <% end %>
+
+        <% unless Course.user_behave_as_administrator(current_user).empty? %>
+          <% if params[:role] == 'administrator' %>
+            <li class="ui-state-active">
+              <%= link_to "Administrador", courses_path(:role => 'administrator'), :class => "icon icon-administrator-lightblue_16_16" %>
+          <% else %>
+            <li>
+              <%= link_to "Administrador", courses_path(:role => 'administrator'), :class => "icon icon-administrator-gray_16_16" %>
+          <% end %>
+          </li>
+        <% end %>
+
+      </ul>
+      <div class="panel">
+        <div class="text-filter">
+          <%# Form usado somente para manter os estilos  %>
+          <form class="common" action="#">
+            <%= label_tag "Filtrar por:" %>
+            <%= text_field_tag :name, nil,
+              :onkeyup => "$('#hidden_search').val($('#name').val());"  %>
+            <%= link_to "Buscar", "#", :onclick => "$('#filter_form').submit(); return false;",
+              :class => "button" %>
+            <%= image_tag 'spinner.gif', :id => 'spinner',
+              :style => 'display: none;' %>
+          </form>
+        </div>
+        <ul id="courses_list" class="courses">
+          <% if @courses.empty? %>
+            <div class="box_notice">Nenhum curso foi encontrado.</div>
+          <% else %>
+            <%= render :partial => 'courses/item_detailed',
+              :collection => @courses %>
+          <% end %>
+          <%= will_paginate @courses, :renderer => EndlessRenderer %>
+        </ul>
+      </div>
+    </div>
+  </div><!-- end .main -->
+</div>

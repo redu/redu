@@ -1,12 +1,12 @@
 <% if @sidebar_preview %>
-  <%= render :partial => 'courses/new/preview_sidebar' %>
+  <%= render :partial => 'courses/preview_sidebar' %>
 <% else %>
-  <%= render :partial => 'courses/new/sidebar' %>
+  <%= render :partial => 'courses/sidebar' %>
 <% end %>
 
 <div class="main grid_12 omega big-col">
-  <%= render :partial => 'courses/new/breadcrumbs' %>
-  <%= render :partial => 'courses/new/header',
+  <%= render :partial => 'courses/breadcrumbs' %>
+  <%= render :partial => 'courses/header',
     :locals => { :course => @course }%>
   <div id="course-users" class="hierarchy-listing-wrapper">
     <div class="header">
@@ -26,7 +26,7 @@
     <% end %>
 
     <ul id="users_list" class="members clearfix">
-      <%= render :partial => 'users/new/item',
+      <%= render :partial => 'users/item',
         :collection => @users, :locals => {:entity => @course} %>
     </ul>
 

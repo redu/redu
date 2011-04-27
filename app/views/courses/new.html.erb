@@ -1,9 +1,20 @@
-<div class="grid_16">
+<%= render :partial => 'environments/new/sidebar', :locals => { :environment => @environment } %>
+<div class="main grid_12 omega big-col">
+  <%= render :partial => "environments/new/breadcrumbs", :locals => { :environment => @environment } %>
+  <%= render :partial => 'environments/new/header',
+    :locals => { :environment => @environment } %>
+  <div id="course-new" class="hierarchy-listing-wrapper">
+    <div class="header">
+      <h4>Curso</h4>
+      <span class="counter">Novo curso</span>
+    </div>
+  </div>
+
   <% form_for @course,
-    :url => environment_courses_path(@environment) do |f| %>
+    :url => environment_courses_path(@environment),
+    :html => { :class => 'common' } do |f| %>
     <%= f.error_messages %>
-    <%= hidden_field_tag :plan, 'free' %>
     <%= render :partial => 'courses/form', :locals => { :f => f, :edit => false } %>
-    <%= f.submit "Criar!" %>
+    <%= f.submit "Criar curso" %>
   <% end %>
 </div>

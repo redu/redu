@@ -18,7 +18,7 @@
     <% end %>
 
     <ul id="courses_list" class="hierarchy-listing">
-      <%= render :partial => 'courses/new/item',
+      <%= render :partial => 'courses/item',
         :collection => @courses %>
     </ul>
   <%= will_paginate @courses, :renderer => EndlessRenderer %>

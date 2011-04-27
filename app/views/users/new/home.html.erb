@@ -14,7 +14,7 @@
   <% end %>
   <% if current_user.has_course_invitation? %>
     <ul class="courses-requisitions">
-      <%= render :partial => 'courses/new/item_invitation',
+      <%= render :partial => 'courses/item_invitation',
         :collection => @course_invitations %>
     </ul>
   <% end %>

@@ -1,7 +1,7 @@
 # Endless
 if params[:page]
   page.insert_html :bottom, 'courses_list',
-    (render :partial => 'courses/new/item_detailed', :collection => @courses)
+    (render :partial => 'courses/item_detailed', :collection => @courses)
 # Busca
 else
   if @courses.empty?
@@ -9,7 +9,7 @@ else
       "<div class=\"box_notice\">Nenhum curso foi encontrado.</div>"
   else
     page.replace_html 'courses_list',
-      (render :partial => 'courses/new/item_detailed', :collection => @courses)
+      (render :partial => 'courses/item_detailed', :collection => @courses)
   end
 end
 

@@ -4,37 +4,40 @@
   $(document).ready(function(){
      $("#course_name").bind('keyup blur', function(e){
        $("#course_path").val($(this).slug());
+       $(".common .path .course").html($(this).slug());
+     })
+
+     $("#course_path").bind('keyup blur', function(e){
+       $(".common .path .course").html($(this).slug());
      })
 
   })
 </script>
 
 <%= apply_color_picker_to "#course_color" %>
-<fieldset class="fake">
-    <legend>O seu endereço completo será:</legend>
-    <div id="url_preview" >
-      <span class="base">redu.com.br/</span>
-      <span class="environment"><%= @environment.path %></span>/
-      <span class="base">cursos/</span>
-      <span class="course"><%= @course.path %></span>
-    </div>
-</fieldset>
+<%= f.error_messages %>
 <% field_set_tag "Informações Gerais" do %>
   <%= f.label :name, "Nome" %>
   <%= f.text_field :name %>
+  <span class="tip">40 caracteres</span>
   <%= f.label :path, :path.l %>
   <%= f.text_field :path %>
+  <span class="tip path">
+    <span class="base">redu.com.br/<%= @environment.path %>/cursos/</span>
+    <span class="course"><%= @course.path %></span>
+  </span>
+  <%= f.label :workload, "Carga Horária" %>
+  <%= f.text_field :workload, :class => 'nano' %>
+  <span class="tip">horas</span>
   <%= f.label :description, "Descrição" %>
   <%= f.text_area :description, :size => '100x5' %>
-  <%= f.label :workload, "Carga Horária" %>
-  <%= f.text_field :workload,  :size=> 8 %>
   <%= f.label raw("Palavras-chave <span class='snippet'>(separadas por vírgula)</span>") %>
   <%= f.text_field :tag_list %>
 <% end %>
-<% field_set_tag 'Audiência' do %>
-  <span class="snippet">Selecionar um público que não corresponde ao propósito do curso pode levar à uma má avaliação. </span>
+<% field_set_tag 'Audiência', :class => 'hidden' do %>
+  <%= f.label :audiences, "Audiência" %>
   <%= error_for :course, :audiences %>
-  <ul>
+  <ul class="columns">
     <% for audience in Audience.find(:all) %>
       <li>
         <%= check_box_tag "course[audience_ids][]", audience.id, @course.audiences.include?(audience) %>
@@ -42,8 +45,56 @@
       </li>
     <% end %>
   </ul>
+  <span class="tip">Selecionar um público que não corresponde ao propósito do curso pode levar à uma má avaliação. </span>
 <% end %>
-<% field_set_tag "Quem pode participar do curso?" do %>
+<% if edit == false %>
+  <% field_set_tag "Plano", :class => "hidden" do %>
+    <%= label :plan, "Plano" %>
+    <ul class="columns course-plan">
+      <li>
+        <span class="plan-type">Professor</span>
+      </li>
+      <li>
+        <span class="plan-type plan-diff">Instituição de Ensino</span>
+      </li>
+      <li>
+        <span class="plan-type">Empresa</span>
+      </li>
+      <li>
+        <%= radio_button_tag :plan, 'free', :checked => true %> Grátis
+      </li>
+      <li>
+        <%= radio_button_tag :plan, 'instituicao_lite' %> Lite <span class="tip">R$251,99</span>
+      </li>
+      <li>
+        <%= radio_button_tag :plan, 'empresas_lite' %> Lite<span class="tip">R$210,99</span>
+      </li>
+      <li>
+        <%= radio_button_tag :plan, 'professor_lite' %> Lite<span class="tip">R$13,99</span>
+      </li>
+      <li>
+        <%= radio_button_tag :plan, 'instituicao_standard' %> Standard<span class="tip">R$730,99</span>
+      </li>
+      <li>
+        <%= radio_button_tag :plan, 'empresas_standard' %> Standard<span class="tip">R$248,99</span>
+      </li>
+      <li>
+        <%= radio_button_tag :plan, 'professor_standard' %> Standard<span class="tip">R$56,99</span>
+      </li>
+      <li>
+        <%= radio_button_tag :plan, 'instituicao_plus' %> Plus<span class="tip">R$1280,99</span>
+      </li>
+      <li>
+        <%= radio_button_tag :plan, 'empresas_plus' %> Plus<span class="tip">R$858,99</span>
+      </li>
+      <li>
+        <%= radio_button_tag :plan, 'professor_plus' %> Plus<span class="tip">R$243,99</span>
+      </li>
+    </ul>
+  <% end %>
+<% end %>
+<% field_set_tag "Inscrição", :class => 'hidden inline' do %>
+  <%= f.label :subscription_type, "Quem pode participar do curso?" %>
   <%= f.radio_button :subscription_type, "1", :checked => true %> Todos
   <%= f.radio_button :subscription_type, "2" %> Moderação
 <% end %>

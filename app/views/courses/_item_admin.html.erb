@@ -1,9 +1,11 @@
 <tr>
   <td><%= link_to item_admin.name, environment_course_path(@environment, item_admin) %></td>
-  <td><%= link_to "Editar", edit_environment_course_path(@environment, item_admin) %></td>
+  <td><%= link_to "Editar", edit_environment_course_path(@environment, item_admin),
+            :class => "icon icon-management-gray_8_8 edit"%></td>
   <td>
     <%= link_to 'Remover', environment_course_path(@environment, item_admin),
       :confirm => 'Todas as informações dos usuários, disciplinas e dados referente ao curso serão perdidas. Você tem certeza disso?',
-      :method => :delete %>
+      :method => :delete,
+      :class => "icon icon-x-gray_8_8 delete" %>
   </td>
 </tr>
