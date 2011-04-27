@@ -1,18 +1,23 @@
-<%# Partial utilizado para limitar e mostrar a quantidade de caracteres de um campo. %>
-<%# locals => { class_textarea => class do campo html que deve ter a quantidade de chars limitada } %>
+<%# Partial utilizado para limitar e mostrar a quantidade de caracteres de
+  um campo. %>
+<%# locals => { class_textarea => class do campo html que deve ter a quantidade
+  de chars limitada, :limit => quantidade máx de caracteres } %>
 
-<% limit = AppConfig.desc_char_limit %>
+<% limit ||= AppConfig.desc_char_limit %>
 <script type="text/javascript">
 
-$(document).ready(function(){
- 	$('.<%= class_textarea %>').keyup(function(){
-  limitChars('<%= class_textarea %>', <%=AppConfig.desc_char_limit %>, 'char-<%= class_textarea %>');
-  })
+  $(document).ready(function(){
+      $('.<%= class_textarea %>').keyup(function(){
+        limitChars('<%= class_textarea %>', <%= limit %>, 'char-<%= class_textarea %> > .chars');
+        })
 
-	<%# Setando a quantidade inicial de texto (para os casos de erro de validaçao [redirect])%>
-	var text = $('.<%= class_textarea %>').val()
-	$('.char-<%= class_textarea %>').html('(' + (<%= limit %> - text.length) + ')')
- });
+      <%# Setando a quantidade inicial de texto
+        (para os casos de erro de validaçao [redirect])%>
+    var text = $('.<%= class_textarea %>').val()
+    $('.char-<%= class_textarea %> > .chars').html(<%= limit %> - text.length)
+    });
 </script>
 
-<div class="char-<%= class_textarea %> small quiet" style="text-align:right; display: inline;">(<%= limit %>)</div>
+<div class="char-limit char-<%= class_textarea %>">
+  <span class="chars"><%= limit %></span> caracteres restantes
+</div>

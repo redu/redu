@@ -56,7 +56,7 @@ class SpacesController < BaseController
         render :template => "spaces/new/admin_members",
           :layout => "new/application"
       end
-      format.js { render :template => 'shared/new/admin_members' }
+      format.js { render :template => 'shared/admin_members' }
     end
   end
 

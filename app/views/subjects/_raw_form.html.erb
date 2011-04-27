@@ -7,7 +7,7 @@
 <span class="question question-blue_12_12 tiptip" title="Assuntos que serão abordados no módulo"></span>
 <%= f.label :description, :description.l, :size => '10x30' %>
 <%= f.text_area :description, :class => 'subject-description' %>
-<%= render :partial => 'shared/new/limit_char_field',
+<%= render :partial => 'shared/limit_char_field',
   :locals => { :class_textarea => "subject-description",
                :limit => 250 }%>
   <%= error_for :subject, :description %>

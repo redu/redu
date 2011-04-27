@@ -59,7 +59,7 @@
   <%= label_tag :description, "Escreva sobre você:", :size => "50x3" %>
   <%= f.text_area :description, :rows => "4", :cols => "50",
     :class => "desc-#{random_number}"%>
-  <%= render :partial => 'shared/new/limit_char_field',
+  <%= render :partial => 'shared/limit_char_field',
     :locals => {:class_textarea => "desc-#{random_number}", :limit => 400} %>
 
   <%= label_tag :tag_list,

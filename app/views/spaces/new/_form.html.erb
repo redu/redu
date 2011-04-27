@@ -11,7 +11,7 @@
   <%= f.label :description, "Descrição:" %>
   <%= f.text_area :description, :size => "50x3", :class => "desc-#{random_number}" %>
   <%= error_for :space, :description %>
-  <%= render :partial => 'shared/new/limit_char_field', :locals => { :class_textarea => "desc-#{random_number}" }%>
+  <%= render :partial => 'shared/limit_char_field', :locals => { :class_textarea => "desc-#{random_number}" }%>
 
   <%= f.label :tag_list, raw("Palavras-chaves <span class='snippet'>(separadas por vírgula)</span> ") %>
   <%= f.text_field :tag_list %>

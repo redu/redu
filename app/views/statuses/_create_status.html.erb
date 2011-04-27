@@ -16,7 +16,7 @@
       <div class="textarea">
         <%= f.text_area :text, :rows => 1, :class => "status status-#{random_number}" %>
       </div>
-      <%= render :partial => 'shared/new/limit_char_field', :locals => { :class_textarea => "status-#{random_number}" }%>
+      <%= render :partial => 'shared/limit_char_field', :locals => { :class_textarea => "status-#{random_number}" }%>
       <%= f.submit 'Postar' %>
       <a href="" class="cancel">Cancelar</a>
       <%= image_tag 'spinner.gif', :class => "status_spinner",
