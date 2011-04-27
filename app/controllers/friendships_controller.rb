@@ -9,9 +9,7 @@ class FriendshipsController < BaseController
       paginate(:page => params[:page], :per_page => 16)
 
     respond_to do |format|
-      format.html do
-        render :layout => 'new/application'
-      end
+      format.html
       format.js
     end
   end
