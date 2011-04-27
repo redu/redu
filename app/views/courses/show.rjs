@@ -1,4 +1,4 @@
-page.insert_html :bottom, 'spaces_list', :partial => "spaces/new/item",
+page.insert_html :bottom, 'spaces_list', :partial => "spaces/item",
   :collection => @spaces
 
 page.replace_html ".endless",

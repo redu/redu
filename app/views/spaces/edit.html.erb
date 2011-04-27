@@ -1,24 +1,31 @@
-<% content_for :page_id, 'group' %>
-<div class="main grid_16">
+<%= render :partial => 'spaces/sidebar', :locals => { :space => @space } %>
+<div class="main grid_12 omega big-col">
+  <%= render :partial => 'spaces/breadcrumbs', :locals => { :space => @space } %>
+  <%= render :partial => 'spaces/header',
+    :locals => { :space => @header_space }%>
 
-<div class="fake-tabs grid_16 alpha omega">
-  <%= render :partial => "spaces/admin_taskbar" %>
-  <div class="panel squeeze">
+    <div id="space-manage" class="body">
+      <div class="header">
+        <h4>Gerenciamento</h4>
+        <span class="counter">Informações gerais da Disciplina <%= @space.name %></span>
+      </div>
 
-    <% form_for(@space, :html => { :multipart => true }) do |f| %>
+      <% fake_tabs ["Informações", edit_space_path(@space), { :class => "icon icon-management-lightblue_16_16" }],
+        ["Eventos", admin_events_space_path(@space), { :class => "icon icon-event-gray_16_16" }],
+        ["Membros", admin_members_space_path(@space), { :class => "icon icon-members-gray_16_16" }],
+        ["Notícias", admin_bulletins_space_path(@space), { :class => "icon icon-bulletin-gray_16_16" }] do %>
 
-      <%= render :partial => "form", :locals => { :f => f, :edit => true} %>
+        <% form_for(@space, :html => { :class => "common", :multipart => true }) do |f| %>
+          <%= render :partial => "spaces/form",
+            :locals => { :f => f, :edit => true} %>
 
-      <p>
-        <%= f.submit 'Atualizar' %> ou <%= link_to 'Voltar', @space %><BR/><BR/>
-      </p>
+          <%= f.submit 'Salvar alterações' %>
+          <%= link_to 'Deletar disciplina', @space,
+            :confirm => 'Você tem certeza que deseja remover esta disciplina?', :method => :delete,
+            :class => "vanilla remove" %>
+        <% end %>
 
-    <% end %>
-    <fieldset class="fake">
-      <legend>Remover Diciplina</legend>
-      <%= link_to 'Deletar disciplina', @space,
-        :confirm => 'Você tem certeza que deseja remover esta disciplina?', :method => :delete %>
-    </fieldset>
-  </div><!-- end panel -->
-</div><!-- end tabs -->
-</div><!-- end main -->
+      <% end %>
+    </div><!-- end #space-manage -->
+
+  </div><!-- end .main -->

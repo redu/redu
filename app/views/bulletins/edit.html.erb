@@ -3,7 +3,7 @@
 <% end %>
 
 <% if @bulletinable.class.to_s.eql? "Space" %>
-  <%= render :partial => 'spaces/new/sidebar', :locals => { :space => @bulletinable } %>
+  <%= render :partial => 'spaces/sidebar', :locals => { :space => @bulletinable } %>
 <% else %>
   <%= render :partial => "environments/sidebar", :locals => { :environment => @bulletinable } %>
 <% end %>

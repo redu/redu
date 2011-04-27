@@ -2,7 +2,7 @@
   <%= javascript_include_tag :ckeditor %>
 <% end %>
 
-<%= render :partial => "spaces/new/sidebar", :locals => { :space => @eventable } %>
+<%= render :partial => "spaces/sidebar", :locals => { :space => @eventable } %>
 <div class="main grid_12 omega big-col">
   <ol id="breadcrumbs" class="clearfix">
     <li>
@@ -23,7 +23,7 @@
           :class => 'icon icon-space-lightblue_16_16' %>
       </li>
     </ol>
-    <%= render :partial => 'spaces/new/header',
+    <%= render :partial => 'spaces/header',
       :locals => { :space => @space }%>
     <div id="bulletin-new" class="hierarchy-listing-wrapper">
       <div class="header">

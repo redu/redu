@@ -20,7 +20,7 @@
     <% end %>
 
     <ul id="spaces_list" class="hierarchy-listing">
-      <%= render :partial => 'spaces/new/item', :collection => @spaces %>
+      <%= render :partial => 'spaces/item', :collection => @spaces %>
     </ul>
 
     <%= will_paginate @spaces, :renderer => EndlessRenderer %>

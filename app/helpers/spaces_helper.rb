@@ -3,24 +3,24 @@ module SpacesHelper
   
   def submission_type(space)
     case space.submission_type
-      when 1
-        'Todos, sem moderação'
-       when 2
-        'Todos, com moderação'
-        when 3
-        'Apenas professores'
-        end
+    when 1
+      'Todos, sem moderação'
+    when 2
+      'Todos, com moderação'
+    when 3
+      'Apenas professores'
+    end
   end
   
    def subscription_type(space)
-    case space.subscription_type
-      when 1
-        'Livre'
-       when 2
-        'Moderado'
-        when 3
-        'Restrito'
-        end
+     case space.subscription_type
+     when 1
+       'Livre'
+     when 2
+       'Moderado'
+     when 3
+       'Restrito'
+     end
   end  
   
   def columnize_categories(number_of_columns = 3)

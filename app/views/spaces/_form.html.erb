@@ -1,57 +1,28 @@
-<div class="grid_16">
-  <%= f.error_messages %>
-</div>
+<%= f.error_messages %>
 
-<div class="<%= (edit) ? 'grid_15 alpha omega': 'grid_16 ' %>">
+<% field_set_tag 'Informações Gerais', :class => "hidden" do %>
+  <%= hidden_field_tag "course_id", @course.id %>
 
-  <% field_set_tag 'Informações Gerais' do %>
+  <%= f.label :name, "Nome" %>
+  <%= f.text_field :name ,  :onkeyup => ((edit) ? nil : "generatePath(this)") %>
+  <%= error_for :space, :name %>
 
-    <%= hidden_field_tag "course_id", @course.id %>
+  <% random_number = get_random_number%>
+  <%= f.label :description, "Descrição:" %>
+  <%= f.text_area :description, :size => "50x3", :class => "desc-#{random_number}" %>
+  <%= error_for :space, :description %>
+  <%= render :partial => 'shared/limit_char_field', :locals => { :class_textarea => "desc-#{random_number}" }%>
 
-    <%= f.label "Nome" %>
-    <%= f.text_field :name ,  :onkeyup => ((edit) ? nil : "generatePath(this)") %>
-    <%= error_for :space, :name %>
-
-    <% random_number = get_random_number%>
-    <%= f.label "Descrição:" %>
-    <div style="">
-      <%= f.text_area :description, :size => "50x3", :class => "desc-#{random_number}" %>
-      <%= render :partial => 'shared/limit_char_field', :locals => { :class_textarea => "desc-#{random_number}" }%>
-    </div>
-    <%= error_for :space, :description %>
-
-    <%= f.label raw("Palavras-chaves <span class='snippet'>(separadas por vírgula)</span>") %>
-    <%= f.text_field :tag_list %>
-
-  <% end %>
- 
-</div>
+  <%= f.label :tag_list, raw("Palavras-chaves <span class='snippet'>(separadas por vírgula)</span> ") %>
+  <%= f.text_field :tag_list %>
+<% end %>
 
 <% unless edit %>
-  <div class="grid_6">
-    <div class="y_addinfo">
-      <div class="addinfocontent">
-        <h1>
-          Dica
-        </h1>
-        <p>
-          As opções de configuração poderão ser modificadas a qualquer momento nas opções de gerenciamento da disciplina.</p>
-      </div>
-    </div>
-  </div>
-  <div class="grid_6">
-    <div class="y_addinfo">
-      <div class="addinfocontent">
-        <h1>
-          Termos e Condições do Redu
-        </h1>
-        <p>Por favor não publique conteúdo que esteja protegido por direitos autoriais, conteúdo obceno ou que viole
-          os <%= link_to "termos e condições", {:controller => "base", :action => "tos"}, :target => "_blank"%> do Redu.
+  <div class="tos">
+    <strong>TERMOS E CONDIÇÕES DO REDU</strong>
 
-          Ao clicar no botão abaixo você estará concordando com esses termos.</p>
+    Por favor não publique conteúdo que esteja protegido por direitos autoriais, conteúdo obsceno ou que viole os termos e condições do Redu. Ao clicar no botão abaixo, você estará concordando com esses termos.
 
-      </div>
-    </div>
   </div>
 <% end %>
 

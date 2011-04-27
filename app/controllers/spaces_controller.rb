@@ -52,10 +52,7 @@ class SpacesController < BaseController
                                                    :per_page => AppConfig.items_per_page)
 
     respond_to do |format|
-      format.html do
-        render :template => "spaces/new/admin_members",
-          :layout => "new/application"
-      end
+      format.html
       format.js { render :template => 'shared/admin_members' }
     end
   end
@@ -77,13 +74,8 @@ class SpacesController < BaseController
     @bulletins = @space.bulletins.approved.paginate(paginating_params)
 
     respond_to do |format|
-      format.html do
-        render :template => "spaces/new/admin_bulletins",
-          :layout => "new/application"
-      end
-      format.js do
-        render :template => "spaces/new/admin_bulletins"
-      end
+      format.html
+      format.js
     end
   end
 
@@ -105,13 +97,8 @@ class SpacesController < BaseController
     @events = @space.events.approved.paginate(paginating_params)
 
     respond_to do |format|
-      format.html do
-        render :template => "spaces/new/admin_events",
-          :layout => "new/application"
-      end
-      format.js do
-        render :template => "spaces/new/admin_events"
-      end
+      format.html
+      format.js
     end
   end
 
@@ -152,7 +139,6 @@ class SpacesController < BaseController
     else
       flash[:error] = "Para moderar você precisa escolher entre aprovar ou rejeitar."
     end
-
 
     redirect_to admin_bulletins_space_path(@space)
   end
@@ -268,10 +254,8 @@ class SpacesController < BaseController
       if @space
         @status = Status.new
 
-        format.html do
-          render :template => 'spaces/new/show', :layout => 'new/application'
-        end
-        format.js { render :template => "spaces/new/show"}
+        format.html
+        format.js
         format.xml  { render :xml => @space }
       else
         format.html {
@@ -296,9 +280,7 @@ class SpacesController < BaseController
     @environment = @course.environment
 
     respond_to do |format|
-      format.html do
-        render :template => 'spaces/new/new', :layout => 'new/application'
-      end
+      format.html
     end
   end
 
@@ -307,9 +289,7 @@ class SpacesController < BaseController
     @header_space = @space.clone
 
     respond_to do |format|
-      format.html do
-        render :template => "spaces/new/edit", :layout => "new/application"
-      end
+      format.html
     end
   end
 
@@ -321,9 +301,9 @@ class SpacesController < BaseController
     authorize! :manage, @course
     @environment = @course.environment
     @space.owner = current_user
-    # FIXME o submission_type deve ser escolhido pela interface, por 
+    # FIXME o submission_type deve ser escolhido pela interface, por
     # enquanto todos tem a permissão de postar
-    @space.submission_type = '3' 
+    @space.submission_type = '3'
 
     if @space.valid?
       @space.save
@@ -332,7 +312,7 @@ class SpacesController < BaseController
     respond_to do |format|
       if @space.new_record?
         format.html do
-          render :template => 'spaces/new/new', :layout => 'new/application'
+          render :template => 'spaces/new'
         end
       else
         format.html do
@@ -358,7 +338,7 @@ class SpacesController < BaseController
         format.xml  { head :ok }
       else
         format.html do
-          render :template => 'spaces/new/edit', :layout => 'new/application'
+          render :template => 'spaces/edit'
         end
         format.xml  { render :xml => @space.errors, :status => :unprocessable_entity }
       end
@@ -396,10 +376,8 @@ class SpacesController < BaseController
       paginate(:page => params[:page], :order => 'first_name ASC', :per_page => 18)
 
     respond_to do |format|
-      format.html do
-        render :template => 'spaces/new/users', :layout => 'new/application'
-      end
-      format.js { render :template => 'spaces/new/users' }
+      format.html
+      format.js
     end
   end
 

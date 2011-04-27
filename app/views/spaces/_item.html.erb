@@ -1,9 +1,48 @@
-<li class="grid_3" <%= "class='first_item'" if (item_counter%3 == 0) %> >
-	<%= link_to (image_tag space.avatar(:thumb)), space, :class => "logo" %>
-	<%= link_to space.name, space, :class => "name" %>
-	<div class="badge_info">
-	</div>
-	<%  if current_user and current_user.can_manage? @space %>
-		<span><%= link_to "gerenciar", manage_space_path(space), :class => "icon more"%></span>
-	<% end %>
+<li class="clearfix">
+  <div class="info">
+    <%= image_tag item.avatar.url(:thumb_32),
+      :alt => 'disciplina' %>
+    <%= link_to item.name, space_path(item) %>
+    <ul class="tags">
+        <% item.tags.each do |tag| %>
+          <li>
+            <%= link_to tag,
+              environment_course_path(item.course.environment, item.course) %>
+          </li>
+        <% end %>
+    </ul>
+  </div>
+  <div class="activities">
+    <ul>
+      <% item.recent_log.each do |type, logs| %>
+        <% unless logs.size == 0 %>
+      <li>
+        <span class="qty">+<%= logs.size %></span>
+        <%= link_to resource_name(type, logs.size),
+          polymorphic_path([item, type.to_s.camelize.constantize.new]) %>
+      </li>
+    <% end %>
+      <% end %>
+    </ul>
+  </div>
+  <div class="statistics">
+    <ul class="statistics">
+      <li>
+        <em>Membros:</em>
+        <span><%= item.users.length %></span>
+      </li>
+      <li>
+        <em>Professores:</em>
+        <span><%= item.teachers.length %></span>
+      </li>
+      <li>
+        <em>Tutores:</em>
+        <span><%= item.tutors.length %></span>
+      </li>
+      <li>
+        <em>Alunos:</em>
+        <span><%= item.students.length %></span>
+      </li>
+    </ul>
+  </div>
 </li>

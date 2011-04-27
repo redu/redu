@@ -1,7 +1,7 @@
-<%= render :partial => "spaces/new/sidebar", :locals => { :space => @eventable } %>
+<%= render :partial => "spaces/sidebar", :locals => { :space => @eventable } %>
 <div class="main grid_12 omega big-col">
-  <%= render :partial => 'spaces/new/breadcrumbs', :locals => { :space => @space } %>
-  <%= render :partial => 'spaces/new/header',
+  <%= render :partial => 'spaces/breadcrumbs', :locals => { :space => @space } %>
+  <%= render :partial => 'spaces/header',
     :locals => { :space => @space }%>
 
   <div id="space-events" class="body">

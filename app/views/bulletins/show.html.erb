@@ -1,5 +1,5 @@
 <% if @bulletinable.class.to_s.eql? "Space" %>
-  <%= render :partial => 'spaces/new/sidebar', :locals => { :space => @bulletinable } %>
+  <%= render :partial => 'spaces/sidebar', :locals => { :space => @bulletinable } %>
 <% else %>
   <%= render :partial => "environments/sidebar", :locals => { :environment => @bulletinable } %>
 <% end %>
@@ -19,8 +19,8 @@
       <%= render :partial => 'environments/header',
         :locals => { :environment => @environment }%>
     <% elsif @bulletinable.class.to_s.eql? "Space" %>
-      <%= render :partial => "spaces/new/breadcrumbs", :locals => { :space => @space } %>
-      <%= render :partial => 'spaces/new/header',
+      <%= render :partial => "spaces/breadcrumbs", :locals => { :space => @space } %>
+      <%= render :partial => 'spaces/header',
         :locals => { :space => @space }%>
     <% end %>
 

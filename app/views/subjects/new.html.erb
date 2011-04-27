@@ -1,6 +1,6 @@
-<%= render :partial => 'spaces/new/sidebar', :locals => { :space => @space } %>
+<%= render :partial => 'spaces/sidebar', :locals => { :space => @space } %>
 <div class="main grid_12 omega big-col">
-  <%= render :partial => "spaces/new/breadcrumbs", :locals => { :space => @space } %>
+  <%= render :partial => "spaces/breadcrumbs", :locals => { :space => @space } %>
     <div id="hierarchy-header" class="clearfix space-header">
       <span class="prefix">
         <% if @space.course.environment.initials == '' %>
