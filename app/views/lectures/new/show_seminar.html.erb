@@ -1,7 +1,7 @@
 <%= render :partial => 'lectures/new/lights' %>
-<%= render :partial => 'subjects/new/sidebar' %>
+<%= render :partial => 'subjects/sidebar' %>
 <div class="main grid_12 omega big-col">
-  <%= render :partial => "subjects/new/breadcrumbs", :locals => { :subject => @subject } %>
+  <%= render :partial => "subjects/breadcrumbs", :locals => { :subject => @subject } %>
   <%= render :partial => 'subjects/new/header',
     :locals => { :subject => @subject, :space => @space } %>
 

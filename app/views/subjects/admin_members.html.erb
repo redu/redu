@@ -1,7 +1,7 @@
-<%= render :partial => "subjects/new/sidebar" %>
+<%= render :partial => "subjects/sidebar" %>
 <div class="main grid_12 omega big-col">
-  <%= render :partial => 'subjects/new/breadcrumbs', :locals => { :subject => @subject } %>
-  <%= render :partial => 'subjects/new/header',
+  <%= render :partial => 'subjects/breadcrumbs', :locals => { :subject => @subject } %>
+  <%= render :partial => 'subjects/header',
     :locals => { :subject => @subject, :space => @space } %>
   <div id="subject-edit" class="hierarchy-listing-wrapper">
     <div class="header">
@@ -14,7 +14,7 @@
       ["Membros", admin_members_space_subject_path(@space, @subject), { :class => "icon icon-members-lightblue_16_16" } ] do %>
 
       <div id="user_list">
-        <%= render :partial => 'subjects/new/user_list_admin',
+        <%= render :partial => 'subjects/user_list_admin',
           :locals => {:memberships => @memberships}%>
       </div>
 

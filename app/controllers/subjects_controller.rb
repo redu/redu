@@ -1,5 +1,4 @@
 class SubjectsController < BaseController
-  layout 'environment'
 
   load_and_authorize_resource :space
   load_and_authorize_resource :subject, :through => :space, :except => [:update, :destroy]
@@ -27,12 +26,8 @@ class SubjectsController < BaseController
     end
 
     respond_to do |format|
-      format.html do
-        render :template => 'subjects/new/index', :layout => 'new/application'
-      end
-      format.js do
-        render :template => 'subjects/new/index'
-      end
+      format.html
+      format.js
     end
   end
 
@@ -43,25 +38,27 @@ class SubjectsController < BaseController
     respond_to do |format|
       @status = Status.new
 
-      format.html { render :template => "subjects/new/show", :layout => "new/application" }
-      format.js { render :template => 'subjects/new/show' }
+      format.html
+      format.js
       format.xml { render :xml => @subject }
     end
   end
 
   def new
     @subject = Subject.new
+
     respond_to do |format|
-      format.html do
-        render :template => 'subjects/new/new', :layout => 'new/application'
-      end
-     # format.js do
-     #   render :update do |page|
-     #     page.insert_html :before, 'subjects_list',
-     #       :partial => 'subjects/new/form'
-     #     page.hide 'link-new-subject'
-     #   end
-     # end
+      format.html
+      
+      # Descomentar para o primeiro passo da criação de Subject
+      # usar AJAX
+      # format.js do
+      #   render :update do |page|
+      #     page.insert_html :before, 'subjects_list',
+      #       :partial => 'subjects/form'
+      #     page.hide 'link-new-subject'
+      #   end
+      # end
     end
   end
 
@@ -72,9 +69,7 @@ class SubjectsController < BaseController
 
     respond_to do |format|
       if @subject.save
-        format.js do
-          render :template => 'subjects/new/create'
-        end
+        format.js
       else
         format.js do
           # Workaround para mostrar o errors.full_messages
@@ -102,14 +97,12 @@ class SubjectsController < BaseController
     @subject_header = @subject.clone
     @admin_panel = true if params[:admin_panel]
     respond_to do |format|
-      format.html do
-        render :template => "subjects/new/edit", :layout=> "new/application"
-      end
+      format.html
       format.js do
         render :update do |page|
           page.hide 'content'
           page.insert_html :before, 'content',
-            :partial => 'subjects/new/form'
+            :partial => 'subjects/form'
         end
       end
     end
@@ -140,9 +133,9 @@ class SubjectsController < BaseController
         end
         format.html { redirect_to space_subject_path(@space, @subject) }
       else
-        format.js { render :template => 'subjects/new/update_error' }
+        format.js { render :template => 'subjects/update_error' }
         format.html do
-          render :template => "subjects/new/edit", :layout=> "new/application"
+          render :edit
         end
       end
     end
@@ -175,8 +168,7 @@ class SubjectsController < BaseController
     unless request.post?
       respond_to do |format|
         format.html do
-          render :template => 'subjects/new/admin_lectures_order',
-            :layout => 'new/application' and return
+          render :admin_lectures_order and return
         end
       end
     end
@@ -197,11 +189,8 @@ class SubjectsController < BaseController
                                 :order => 'first_name ASC',
                                 :per_page => AppConfig.items_per_page)
     respond_to do |format|
-      format.html do
-        render :template => "subjects/new/admin_members",
-               :layout=> "new/application"
-      end
-      format.js { render :template => "subjects/new/admin_members" }
+      format.html
+      format.js
     end
   end
 
@@ -223,28 +212,14 @@ class SubjectsController < BaseController
     end
   end
 
-  # Mural do Subject
-  def statuses
-    @status = Status.new
-    @statusable = @subject
-    @statuses = @subject.recent_activity(params[:page])
-
-    respond_to do |format|
-      format.html
-      format.js { render :template => "statuses/index"}
-    end
-  end
-
   # Listagem de usuários do Space
   def users
     @users = @subject.members.
       paginate(:page => params[:page], :order => 'first_name ASC', :per_page => 18)
 
     respond_to do |format|
-      format.html do
-        render :template => 'subjects/new/users', :layout => 'new/application'
-      end
-      format.js { render :template => 'subjects/new/users' }
+      format.html
+      format.js
     end
   end
 

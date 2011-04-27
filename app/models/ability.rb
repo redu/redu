@@ -72,9 +72,8 @@ class Ability
     alias_action :delete_selected, :more, :to => :manage
 
     # Subject
-    alias_action :lazy, :cancel, :edit_resources, :update_resources,
-      :admin_lectures_order, :to => :manage
-    alias_action :statuses, :attend, :to => :read
+    alias_action :cancel, :admin_lectures_order, :to => :manage
+    alias_action :statuses, :to => :read
 
     # Friendship
     alias_action :pending, :accept, :decline, :to => :manage
