@@ -1,5 +1,4 @@
 class BulletinsController < BaseController
-  layout "environment"
 
   load_and_authorize_resource :space
   load_and_authorize_resource :environment
@@ -21,7 +20,7 @@ class BulletinsController < BaseController
 
     respond_to do |format|
       format.html
-      format.js  
+      format.js
     end
   end
 
@@ -89,7 +88,7 @@ class BulletinsController < BaseController
     end
   end
 
-  def destroy    
+  def destroy
     @bulletin.destroy
 
     flash[:notice] = 'A notícia foi excluída.'
