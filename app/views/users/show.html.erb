@@ -56,11 +56,11 @@
     </div><!-- end .vcard -->
 
     <% if (can? :manage, @user) or (can? :view_mural, @user) %>
-      <%= render :partial => 'statuses/new/create_status',
+      <%= render :partial => 'statuses/create_status',
         :locals => { :statusable => @user } %>
       <div id="statuses" class="statuses">
         <ol>
-          <%= render :partial => 'statuses/new/item', :collection => @statuses %>
+          <%= render :partial => 'statuses/item', :collection => @statuses %>
         </ol>
 
         <%= will_paginate @statuses, :renderer => EndlessRenderer %>

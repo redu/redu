@@ -1,4 +1,4 @@
-page.insert_html :bottom, '#statuses > ol', :partial => "statuses/new/item",
+page.insert_html :bottom, '#statuses > ol', :partial => "statuses/item",
   :collection => @statuses
 
 page.replace_html ".endless",

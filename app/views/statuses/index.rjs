@@ -1,5 +1,0 @@
-page.insert_html :bottom, ".activities", :partial => "statuses/type_proxy",
-  :collection => @statuses, :as => :status, :locals => {:statusable => :statusable}
-  page.replace_html ".endless_statuses",
-          (will_paginate @statuses, :renderer => EndlessRenderer,
-          :params => {:id => @statusable.id, :type => @statusable.class.to_s})

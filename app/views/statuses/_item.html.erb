@@ -22,7 +22,7 @@
         <a href="" class="icon icon-spinner-gray_8_8 reply-status">Responder</a>
       </li>
       <li>
-        <%= render :partial => 'statuses/new/favorite',
+        <%= render :partial => 'statuses/favorite',
           :locals => { :status => item } %>
       </li>
     <% end %>
@@ -38,13 +38,13 @@
       </li>
     <% end %>
   </ul>
-  <%= render :partial => 'statuses/new/create_response',
+  <%= render :partial => 'statuses/create_response',
     :locals => { :statusable => item.statusable, :status_id => item.id }%>
 </div>
   <div class="responses">
     <ol>
       <% unless item.responses.empty? %>
-        <%= render :partial => 'statuses/new/response',
+        <%= render :partial => 'statuses/response',
           :collection => item.statuses %>
       <% end %>
     </ol>

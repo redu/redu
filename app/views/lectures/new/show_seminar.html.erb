@@ -82,11 +82,11 @@
     </div>
 
     <div class="statuses-wrapper">
-      <%= render :partial => 'statuses/new/create_status',
+      <%= render :partial => 'statuses/create_status',
         :locals => { :statusable => @lecture } %>
       <div id="statuses" class="statuses">
         <ol>
-          <%= render :partial => 'statuses/new/item',
+          <%= render :partial => 'statuses/item',
             :collection => @statuses %>
         </ol>
 
