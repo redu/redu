@@ -53,7 +53,6 @@ class User < ActiveRecord::Base
   # FIXME Verificar necessidade (Suggestion.rb não existe). Não foi testado.
   has_many :suggestions
   has_enumerated :role
-  has_many :invitations, :dependent => :destroy
   belongs_to  :metro_area
   belongs_to  :state
   belongs_to  :country

@@ -15,8 +15,6 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :sb_posts
   map.resources :topics
   map.resources :metro_areas
-  map.resources :invitations
-
   map.home '', :controller => "base", :action => "site_index"
 
   map.resources :tags, :member_path => '/tags/:id'
@@ -231,11 +229,6 @@ ActionController::Routing::Routes.draw do |map|
       end
       environment.resources :bulletins,
         :member => { :vote => [:post, :get] }
-  end
-
-
-  map.resources :courses do |course|
-    course.resources :invitations
   end
 
   map.resources :plans, :only => [], :member => {

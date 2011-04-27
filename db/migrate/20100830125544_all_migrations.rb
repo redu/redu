@@ -232,15 +232,6 @@ class AllMigrations < ActiveRecord::Migration
     t.integer "user_id"
   end
 
-
-  create_table "invitations", :force => true do |t|
-    t.string   "email_addresses"
-    t.string   "message"
-    t.integer  "user_id"
-    t.datetime "created_at"
-  end
-
-
   create_table "messages", :force => true do |t|
     t.integer  "sender_id"
     t.integer  "recipient_id"
@@ -537,7 +528,6 @@ class AllMigrations < ActiveRecord::Migration
     drop_table :group_permissions
     drop_table :groups
     drop_table :groups_users
-    drop_table :invitations
     drop_table :messages
     drop_table :metro_areas
     drop_table :myfiles
