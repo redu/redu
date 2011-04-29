@@ -1,9 +1,13 @@
-<% form_for @environment, :url => environments_path(:step => 2) do |f| %>
-  <%= render :partial => 'environments/plan_form' %>
-  <%= f.submit "Próximo" %>
-  <%= link_to "Voltar", teach_index_path, :class => "button" %>
+<div class="clearfix plan" id="checkout">
+  <%= render :partial => 'environments/wizard_breadcrumbs' %>
 
-  <div style="display:none;">
-    <%= render :partial => 'form', :locals => { :f => f } %>
+  <div class="grid_4 alpha">
+    <h3>Etapa 1: <span>Planos</span></h3>
+    <em class="description">Escolha o plano que melhor se adequa as suas necessidades.</em>
   </div>
-<% end %>
+  <div class="plan">
+      <%= render :partial => 'environments/plan_form' %>
+  </div>
+
+</div>
+

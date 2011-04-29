@@ -22,11 +22,6 @@ class BaseControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  def test_should_get_footer_content
-    get :footer_content
-    assert_response :success
-  end
-  
   def test_should_get_teaser
     get :teaser
     assert_response :success

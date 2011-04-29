@@ -1,6 +1,4 @@
 class EnvironmentsController < BaseController
-  layout "environment"
-
   load_and_authorize_resource :except => :index
 
   rescue_from CanCan::AccessDenied do |exception|
@@ -16,7 +14,7 @@ class EnvironmentsController < BaseController
     @environments = Environment.all
 
     respond_to do |format|
-      format.html { render :layout => "application" }
+      format.html
       format.xml  { render :xml => @environments }
     end
   end
@@ -39,12 +37,8 @@ class EnvironmentsController < BaseController
     end
 
     respond_to do |format|
-      format.html do
-        render :template => 'environments/new/show', :layout => 'new/application'
-      end # new/show.html.erb
-      format.js do
-        render :template => 'environments/new/show'
-      end
+      format.html
+      format.js
       format.xml  { render :xml => @environment }
     end
   end
@@ -53,10 +47,8 @@ class EnvironmentsController < BaseController
   # GET /environments/new.xml
   def new
     respond_to do |format|
-      format.html do
-        render :template => 'environments/new/new', :layout => 'new/application'
-      end
-      format.xml  { render :xml => @environment }
+      format.html
+      format.xml { render :xml => @environment }
     end
   end
 
@@ -65,9 +57,7 @@ class EnvironmentsController < BaseController
     @header_environment = @environment.clone
 
     respond_to do |format|
-      format.html do
-        render :template => "environments/new/edit", :layout => "new/application"
-      end
+      format.html
     end
   end
 
@@ -80,8 +70,7 @@ class EnvironmentsController < BaseController
       @step = 2
 
       respond_to do |format|
-        format.html { render :action => "new/new", :locals => { :step => 2 },
-          :layout => "new/application" }
+        format.html { render :new }
       end
     when "2"  # tela dos forms
       @environment.valid?
@@ -91,8 +80,7 @@ class EnvironmentsController < BaseController
       @step = 3
 
       respond_to do |format|
-        format.html { render :action => "new/new", :locals => { :step => 3 },
-          :layout => "new/application" }
+        format.html { render :new }
       end
     when "3" # tela de informações
       respond_to do |format|
@@ -103,13 +91,11 @@ class EnvironmentsController < BaseController
         if @environment.valid?
           @step = 4
 
-          format.html { render :action => "new/new", :locals => { :step => 4 },
-            :layout => "new/application" }
+          format.html { render :new }
         else
           @step = 3
 
-          format.html { render :action => "new/new", :locals => { :step => 3 },
-            :layout => "new/application"}
+          format.html { render :new }
         end
       end
     when "4"
@@ -147,8 +133,8 @@ class EnvironmentsController < BaseController
             end
           end
         else
-          format.js { render :action => "new/new", :layout => "new/application"}
-          format.html { render :action => "new/new", :layout => "new/application" }
+          format.js { render :new }
+          format.html { render :new }
           format.xml  { render :xml => @environment.errors,
             :status => :unprocessable_entity }
         end
@@ -167,8 +153,7 @@ class EnvironmentsController < BaseController
         format.html { redirect_to(@environment) }
         format.xml  { head :ok }
       else
-        format.html { render :template => "environments/new/edit",
-          :layout => "new/application" }
+        format.html { render :edit }
         format.xml  { render :xml => @environment.errors, :status => :unprocessable_entity }
       end
     end
@@ -193,9 +178,7 @@ class EnvironmentsController < BaseController
     end
 
     respond_to do |format|
-      format.html do
-        render :template => 'environments/new/preview', :layout => 'new/application'
-      end
+      format.html
     end
   end
 
@@ -205,13 +188,8 @@ class EnvironmentsController < BaseController
                                              :per_page => AppConfig.items_per_page)
 
     respond_to do |format|
-      format.html do
-        render :template => "environments/new/admin_courses",
-          :layout => "new/application"
-      end
-      format.js do
-        render :template => "environments/new/admin_courses"
-      end
+      format.html
+      format.js
     end
   end
 
@@ -224,10 +202,7 @@ class EnvironmentsController < BaseController
         :per_page => AppConfig.items_per_page)
 
     respond_to do |format|
-      format.html do
-        render :template => "environments/new/admin_members",
-          :layout => "new/application"
-      end
+      format.html
       format.js { render :template => "shared/admin_members" }
     end
   end
@@ -237,14 +212,8 @@ class EnvironmentsController < BaseController
                                                 :order => 'updated_at DESC',
                                                 :per_page => AppConfig.items_per_page)
     respond_to do |format|
-      format.html do
-        render :template => "environments/new/admin_bulletins",
-          :layout => "new/application"
-      end
-
-      format.js do
-        render :template => "environments/new/admin_bulletins"
-      end
+      format.html
+      format.js
     end
   end
 
@@ -294,9 +263,7 @@ class EnvironmentsController < BaseController
                     :per_page => AppConfig.items_per_page)
 
     respond_to do |format|
-      format.js do
-        render :template => 'environments/new/search_users_admin'
-      end
+      format.js
     end
   end
 
@@ -309,10 +276,8 @@ class EnvironmentsController < BaseController
       paginate(:page => params[:page], :order => 'first_name ASC', :per_page => 18)
 
     respond_to do |format|
-      format.html do
-        render :template => 'environments/new/users', :layout => 'new/application'
-      end
-      format.js { render :template => 'environments/new/users' }
+      format.html
+      format.js
     end
   end
 end

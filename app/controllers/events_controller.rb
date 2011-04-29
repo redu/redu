@@ -1,7 +1,6 @@
 class EventsController < BaseController
   require 'htmlentities'
-	
-  layout 'environment'
+
   load_and_authorize_resource :environment
   load_and_authorize_resource :space
   load_and_authorize_resource :event, :through => [:space, :environment]
@@ -53,9 +52,7 @@ class EventsController < BaseController
   def show
     @eventable = find_eventable
     respond_to do |format|
-      format.html do
-        render :template => 'events/new/show', :layout => 'new/application'
-      end
+      format.html
     end
   end
 
@@ -74,12 +71,8 @@ class EventsController < BaseController
     @list_title = "Eventos Futuros"
 
     respond_to do |format|
-      format.html do
-        render :template => 'events/new/index', :layout => 'new/application'
-      end
-      format.js do
-        render :template => 'events/new/index'
-      end
+      format.html
+      format.js
     end
   end
 
@@ -95,16 +88,17 @@ class EventsController < BaseController
                                   :per_page => AppConfig.items_per_page)
 
     @list_title = "Eventos Passados"
-    render :template => 'events/index'
+
+    respond_to do |format|
+      format.html { render :index }
+    end
   end
 
   def new
     @eventable = find_eventable
 
     respond_to do |format|
-      format.html do
-        render :template => 'events/new/new', :layout => 'new/application'
-      end
+      format.html
     end
   end
 
@@ -112,9 +106,7 @@ class EventsController < BaseController
     @eventable = find_eventable
 
     respond_to do |format|
-      format.html do
-        render :template => 'events/new/edit', :layout => 'new/application'
-      end
+      format.html
     end
  end
 
@@ -139,7 +131,7 @@ class EventsController < BaseController
       else
         @eventable = @event.eventable
         format.html do
-          render :template => 'events/new/new', :layout => 'new/application'
+          render :new
         end
         format.xml  { render :xml => @event.errors, :status => :unprocessable_entity }
       end
@@ -155,10 +147,7 @@ class EventsController < BaseController
         format.xml { render :xml => @event, :status => :created, :location => @event }
       else
         @eventable = find_eventable
-        format.html do
-          render :template => 'events/new/edit',
-          :layout => 'new/application'
-        end
+        format.html { render :edit }
         format.xml { render :xml => @event.errors, :status => :unprocessable_entity }
       end
     end
@@ -177,6 +166,7 @@ class EventsController < BaseController
   def vote
     @event = Event.find(params[:id])
     current_user.vote(@event, params[:like])
+
     respond_to do |format|
       format.js { render :template => 'shared/like', :locals => {:votes_for => @event.votes_for().to_s} }
     end
@@ -197,7 +187,7 @@ class EventsController < BaseController
                              :per_page => AppConfig.items_per_page)
 
     @list_title = "Eventos do dia #{day.strftime("%d/%m/%Y")}"
-    render :template => 'events/index'
+    render :index
   end
 
   def notify
@@ -211,6 +201,7 @@ class EventsController < BaseController
   end
 
   protected
+
   def is_event_approved
     @event = Event.find(params[:id])
 
@@ -231,4 +222,3 @@ class EventsController < BaseController
     end
   end
 end
-

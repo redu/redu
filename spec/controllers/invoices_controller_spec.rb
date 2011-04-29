@@ -40,16 +40,4 @@ describe InvoicesController do
       end
     end
   end
-
-  context "when GET show" do
-    it "should load the correct invoice" do
-      get :show, :plan_id => @plan.id, :id => @plan.invoices.first.id,
-        :locale => "pt-BR"
-
-      assigns[:invoice].should_not be_nil
-      assigns[:invoice].should == @plan.invoices.first
-    end
-
-  end
-
 end

@@ -41,7 +41,6 @@ class Course < ActiveRecord::Base
     :source => :user,
     :conditions => [ "user_course_associations.state = ? AND user_course_associations.updated_at >= ?", 'approved', 1.week.ago]
 
-  has_many :invitations, :as => :inviteable, :dependent => :destroy
   has_and_belongs_to_many :audiences
   has_one :quota, :dependent => :destroy, :as => :billable
   has_one :plan, :as => :billable

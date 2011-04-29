@@ -1,69 +1,86 @@
-<div class="sidebar grid_4 alpha">
-  <ul class="sortable clearfix">
+<div class="sidebar alpha grid_3">
+  <div class="image-frame space-frame">
+    <!-- <%# Nao setar width e height na imagem %> -->
+    <%= image_tag space.course.environment.avatar.url(:thumb_100),
+      :alt => 'profile' %>
+  </div>
 
-
-    <li class="clearfix" style="background-color: #FFFFDF; -moz-box-shadow:0 4px 12px #DDDDDD; ">
-      <span class="call"><span style ="background:none repeat scroll 0 0 #FFFFDF; color:orange;">Ações</span></span>
-      <ul class="menu">
-
-        <li>
-          <% if params[:controller] != 'spaces' %>
-            <%= link_to "Criar atividade",space_path(space, :anchor => "tabs-5") %>
-          <% else %>
-            <%= link_to_function "Criar atividade", "$schooltabs.tabs('select', 1); $('#status_text').focus()" %>
-          <% end %>
-        </li>
-        <% if can? :manage, space or current_user.tutor? space %>
-          <li>
-            <%= link_to "Criar evento", new_space_event_path(space)%>
-          </li>
-          <li>
-            <%= link_to "Criar notícia", new_space_bulletin_path(space)%>
-          </li>
-        <% end %>
-        <% if can? :manage, space %>
-          <li>
-            <%= link_to "Criar módulo", new_space_subject_path(space)%>
-          </li>
-        <% end %>
-
-      </ul>
-    </li>
-
-    <li class="clearfix">
-      <span class="call">
-        <span>Membros (<%= space.users.size %>)</span>
-      </span>
-      <div class="followship box clearfix">
-        <ul class="clearfix">
-          <%= render :partial => 'spaces/member_short', :collection => space.users, :as => :member %>
-        </ul>
-        <a href="<%= members_space_path(space) %>" class="icon more">Ver mais</a>
-      </div><!-- end followship -->
-    </li>
-    <li class="clearfix">
-      <span class="call"><span>Professores (<%= teachers_preview(space).size %>)</span></span>
-      <% unless teachers_preview(space).empty? %>
-        <div class="followship box clearfix">
-          <ul class="clearfix">
-            <%= render :partial => 'spaces/member_short', :collection => teachers_preview(space), :as => :member %>
-          </ul>
-          <a href="<%= teachers_space_path(space) %>" class="icon more">Ver mais</a>
-        </div><!-- end followship -->
-      <% else %>
-        <div class="box_notice">Nenhum professor
-          <%= link_to("Cadastre um professor", admin_members_space_path(space), :class => "icon more") if current_user.can_manage?(space) %>
-        </div>
-      <% end %>
-    </li>
-
-
+  <ul class="local-nav">
     <li>
-      <span class="call"><span>Eventos</span></span>
-        <%= render :partial => "events/upcoming_sidebar", :object => @space.events.approved.upcoming.all(:limit => 5, :order => "start_time ASC") %>
+      <div class="<%= (current_page? space_path(space)) ?
+                    "session selected".to_s : "session".to_s %>">
+        <% selected = (current_page? space_path(space)) ? "icon-list-white_16_16" : "icon-list-lightblue_16_16" %>
+        <%= link_to 'Mural', space_path(space),
+          :class => "icon #{selected}" %>
+      </div>
     </li>
-
-
-</ul><!-- end sortable -->
-
-</div><!-- end sidebar -->
+    <li>
+        <%
+          if space.subjects.visible.recent.count > 0
+            subjects_count = "(+#{space.subjects.visible.recent.count})"
+          end
+        %>
+      <div class="<%= (current_page? space_subjects_path(space)) ?
+                    "session selected".to_s : "session".to_s %>">
+        <% selected = (current_page? space_subjects_path(space)) ? "icon-subject-white_16_16" : "icon-subject-lightblue_16_16" %>
+        <%= link_to "Módulos #{subjects_count}", space_subjects_path(space),
+          :class => "icon #{selected}" %>
+      </div>
+    </li>
+    <li>
+      <div class="<%= (current_page? space_folders_path(space)) ?
+                    "session selected".to_s : "session".to_s %>">
+        <% selected = (current_page? space_folders_path(space)) ? "icon-material-white_16_16" : "icon-material-lightblue_16_16" %>
+        <%= link_to 'Material de apoio', space_folders_path(space),
+          :class => "icon #{selected}" %>
+      </div>
+    </li>
+    <!--li>
+      <div class="<%#= (current_page? :controller => :forum,
+                       :action => :show) ?
+                    "session selected".to_s : "session".to_s %>">
+        <%#= link_to 'Fórum', space_forum_path(space),
+          :class => 'icon icon-redu_r10_c281_s1' %>
+      </div>
+    </li --!>
+    <li>
+      <div class="<%= (current_page? space_bulletins_path(space)) ?
+                    "session selected".to_s : "session".to_s %>">
+        <% selected = (current_page? space_bulletins_path(space)) ? "icon-bulletin-white_16_16" : "icon-bulletin-lightblue_16_16" %>
+        <%= link_to 'Notícias', space_bulletins_path(space),
+          :class => "icon #{selected}" %>
+      </div>
+    </li>
+    <li>
+      <div class="<%= (current_page? space_events_path(space)) ?
+                    "session selected".to_s : "session".to_s %>">
+        <% selected = (current_page? space_events_path(space)) ? "icon-event-white_16_16" : "icon-event-lightblue_16_16" %>
+        <%= link_to 'Eventos', space_events_path(space),
+          :class => "icon #{selected}" %>
+      </div>
+    </li>
+    <% if can? :manage, space %>
+      <li>
+        <div class="<%= (current_page? edit_space_path(space)) ?
+                      "session selected".to_s : "session".to_s %>">
+        <% selected = (current_page? edit_space_path(space)) ? "icon-management-white_16_16" : "icon-management-lightblue_16_16" %>
+          <%= link_to 'Gerenciamento', edit_space_path(space),
+            :class => "icon #{selected}" %>
+        </div>
+      </li>
+    <% end %>
+    <li>
+      <div class="<%= (current_page? users_space_path(space)) ?
+                    "session selected".to_s : "session".to_s %>">
+        <% selected = (current_page? users_space_path(space)) ? "icon-members-white_16_16" : "icon-members-lightblue_16_16" %>
+        <%= link_to "Membros: #{space.users.size}", users_space_path(space),
+          :class => "icon #{selected}" %>
+      </div>
+      <ul class="connections clearfix">
+        <%= render :partial => 'users/item_short',
+          :collection => space.users.n_recent(9) %>
+      </ul><!-- end .connections -->
+      <%= link_to "Ver mais", users_space_subject_path(@space, @subject), :class => 'more' %>
+    </li>
+  </ul><!-- end .local-nav -->
+</div>

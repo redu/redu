@@ -1,5 +1,0 @@
-page.insert_html :bottom, "#messages > tbody", :partial => 'messages/new/item',
-  :collection => @messages,
-  :locals => { :mailbox => :outbox }
-page.replace_html ".endless",
-  (will_paginate @messages, :renderer => EndlessRenderer)

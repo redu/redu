@@ -1,12 +1,15 @@
-<% if @pending_members && @pending_members.size > 0 %>
+<% if pending_members && pending_members.size > 0 %>
   <% form_tag  moderate_members_requests_environment_course_path(@environment, @course), :method => :post do %>
-    <table id="pending_member_list" class="common">
+    <table id="pending_member_list" class="common" width="100%">
       <thead>
-        <th style="max-width:25px;">Aprovar</th><th style="max-width:27px;">Rejeitar</th><th>Nome</th><th>Data</th>
+        <th width="10%">Sim</th>
+        <th width="10%">Não</th>
+        <th width="60%">Nome</th>
+        <th>Inscrito em:</th>
       </thead>
-      <%= render :partial => 'pending_member_item_admin', :collection => @pending_members %>
+      <%= render :partial => 'courses/pending_member_item_admin', :collection => pending_members %>
     </table>
-    <%= will_paginate @pending_members, :renderer => EndlessRenderer %>
+    <%= will_paginate pending_members, :renderer => EndlessRenderer %>
     <%= submit_tag "Moderar" %>
   <% end %>
 <% else %>

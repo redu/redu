@@ -64,7 +64,7 @@ describe UsersController do
           end
 
           it "re-renders Users#new" do
-            response.should render_template('users/new/new')
+            response.should render_template('users/new')
           end
         end
 

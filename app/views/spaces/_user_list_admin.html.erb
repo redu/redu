@@ -1,8 +1,13 @@
 <%= image_tag 'loadingAnimation.gif', :id => 'loading_bar', :style => "display: none; margin-top: 40px"%>
-
-<table style="width: 100%; margin: 15px 10px 20px 10px;" id ="user_list_table" class="common">
-  <tr>
-    <th></th><th>Usuário</th><th>Data de Inscricão</th><th>Papel</th><th></th>
-  </tr>
-  <%= render :partial => 'user_item_admin', :collection => memberships %>
+<table id="user_list_table" class="common users" width="100%">
+  <thead>
+    <tr>
+      <th width="50%">Usuário</th>
+      <th width="15%">Papel</th>
+      <th width="15%">Inscricão em:</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render :partial => 'spaces/user_item_admin', :collection => @memberships %>
+  </tbody>
 </table>

@@ -1,0 +1,38 @@
+<div class="sidebar alpha grid_3">
+  <div class="image-frame course-frame">
+    <%= image_tag @course.environment.avatar.url(:thumb_100),
+      :alt => 'profile' %>
+  </div>
+
+  <ul class="local-nav">
+    <li>
+      <div class="<%= (current_page? preview_environment_course_path(@course.environment,
+                                                                   @course)) ?
+        "session selected".to_s : "session".to_s %>">
+        <% selected = (current_page? preview_environment_course_path(@course.environment, @course)) ? "icon-preview-white_16_16" : "icon-preview-lightblue_16_16" %>
+        <%= link_to 'Pré-visualização',
+          preview_environment_course_path(@course.environment,@course),
+          :class => "icon #{selected}" %>
+     </div>
+    </li>
+    <li>
+      <div class="<%= (current_page? users_environment_course_path(@course.environment,
+                                                                   @course)) ?
+        "session selected".to_s : "session".to_s %>">
+        <% selected = (current_page? users_environment_course_path(@course.environment, @course)) ? "icon-members-white_16_16" : "icon-members-lightblue_16_16" %>
+        <%= link_to "Membros: #{@course.approved_users.length}",
+          users_environment_course_path(@course.environment, @course,
+                                        :preview => true),
+                                        :class => "icon #{selected}" %>
+      </div>
+      <ul class="connections clearfix">
+        <%= render :partial => 'users/item_short',
+          :collection => @course.approved_users.n_recent(9)%>
+      </ul><!-- end .connections -->
+        <%= link_to "Ver mais",
+          users_environment_course_path(@course.environment, @course,
+                                        :preview => true),
+          :class => 'more'%>
+    </li>
+  </ul><!-- end .local-nav -->
+</div>

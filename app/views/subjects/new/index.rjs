@@ -1,5 +1,0 @@
-page.insert_html :bottom, 'subjects_list', :partial => "subjects/new/item",
-  :collection => @subjects
-
-page.replace_html ".endless",
-  (will_paginate @subjects, :renderer => EndlessRenderer)

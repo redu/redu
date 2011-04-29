@@ -1,44 +1,67 @@
-<div class="grid_16">
-  <%= link_to "Voltar para a administração de membros",
-    admin_members_environment_path(@environment) %>
-  <h3>Editar permissões de <%= @user.display_name %></h3>
-  <% unless @courses.empty? %>
-    <table class="common">
-      <thead>
-        <tr>
-          <th>Curso</th>
-          <th>Papel</th>
-        </tr>
-      </thead>
-      <% @courses.each do |membership| %>
-        <tr>
-          <td>
-            <%= link_to membership.course.name,
-              environment_course_path(@environment, membership.course) %>
-          </td>
-          <td>
-            <% unless @environment_membership.role.eql?(Role[:environment_admin]) %>
-              <% form_tag user_update_roles_path(@user, @environment),
-                :method => :post do %>
-                <%= label_tag "roles_#{Role[:teacher].id}", Role.human_attribute_name(Role[:teacher].name) %>
-                <%= radio_button_tag :roles, Role[:teacher].id, membership.role.eql?(Role[:teacher]) ? true : false  %>
-                <%= label_tag "roles_#{Role[:member].id}", Role.human_attribute_name(Role[:member].name)%>
-                <%= radio_button_tag :roles, Role[:member].id, membership.role.eql?(Role[:member]) ? true : false  %>
-                <%= label_tag "roles_#{Role[:tutor].id}", Role.human_attribute_name(Role[:tutor].name)%>
-                <%= radio_button_tag :roles, Role[:tutor].id, membership.role.eql?(Role[:tutor]) ? true : false  %>
-                <%= hidden_field_tag :type, 'course' %>
-                <%= hidden_field_tag :course_id, membership.course.id %>
-                <%= submit_tag "Mudar" %>
-              <% end %>
-            <% else %>
-              <div class="box_notice">Este usuário é administrador do ambiente <%= @environment.name %></div>
-            <% end %>
-          </td>
-        </tr>
+<%= render :partial => 'environments/sidebar', :locals => { :environment => @environment } %>
+<div class="main grid_12 omega big-col">
+  <%= render :partial => 'environments/breadcrumbs',
+    :locals => { :environment => @environment } %>
 
-      <% end %>
-    </table>
+  <%= render :partial => 'environments/header',
+    :locals => { :environment => @environment } %>
+
+  <div id="environment-manage" class="body">
+    <div class="header">
+      <h4>Gerenciamento</h4>
+      <span class="counter">Informações gerais do ambiente <%= @environment.initials_or_name %></span>
+    </div>
+
+    <%
+        fake_tabs ["Informações", edit_environment_path(@environment), {:class => 'icon icon-management-lightblue_16_16'}],
+        ["Membros", admin_members_environment_path(@environment), {:class => 'icon icon-members-gray_16_16'}],
+        ["Notícias", admin_bulletins_environment_path(@environment), {:class => 'icon icon-bulletin-gray_16_16'}],
+        ["Cursos", admin_courses_environment_path(@environment), {:class => ''}] do
+      %>
+    <div class="user-info">
+      <%= image_tag @user.avatar(:thumb_32), :class => "avatar" %>
+      <%= link_to "Permissões de #{ @user.display_name }", @user, :class => "call" %>
+      <span class="email">(<%= @user.email %>)</span>
+      <span class="info">Os papéis do membro em cada curso inscrito</span>
+    </div>
+    <% unless @courses.empty? %>
+      <table class="common spaced roles">
+        <thead>
+          <tr>
+            <th style="width: 400px;">Curso</th>
+            <th>Papel</th>
+          </tr>
+        </thead>
+        <% @courses.each do |membership| %>
+          <tr>
+            <td>
+              <%= link_to membership.course.name,
+                environment_course_path(@environment, membership.course) %>
+            </td>
+            <td class="edit-roles">
+              <% unless @environment_membership.role.eql?(Role[:environment_admin]) %>
+                <% form_tag user_update_roles_path(@user, @environment),
+                  :method => :post do %>
+                  <%= radio_button_tag :roles, Role[:teacher].id, membership.role.eql?(Role[:teacher]) ? true : false  %>
+                  <%= label_tag "roles_#{Role[:teacher].id}", Role.human_attribute_name(Role[:teacher].name) %>
+                  <%= radio_button_tag :roles, Role[:member].id, membership.role.eql?(Role[:member]) ? true : false  %>
+                  <%= label_tag "roles_#{Role[:member].id}", Role.human_attribute_name(Role[:member].name)%>
+                  <%= radio_button_tag :roles, Role[:tutor].id, membership.role.eql?(Role[:tutor]) ? true : false  %>
+                  <%= label_tag "roles_#{Role[:tutor].id}", Role.human_attribute_name(Role[:tutor].name)%>
+                  <%= hidden_field_tag :type, 'course' %>
+                  <%= hidden_field_tag :course_id, membership.course.id %>
+                  <%= submit_tag "Alterar" %>
+                <% end %>
+              <% else %>
+                <div class="box_notice">Este usuário é administrador do ambiente. Seu papel não pode ser mudado.</div>
+              <% end %>
+            </td>
+          </tr>
+
+        <% end %>
+      </table>
+    <% end %>
   <% end %>
-  <%= link_to "Voltar para a administração de membros",
-    admin_members_environment_path(@environment) %>
 </div>
+</div>
+

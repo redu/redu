@@ -59,7 +59,6 @@ class Seminar < ActiveRecord::Base
   before_create :truncate_youtube_url
 
   has_one :lecture, :as => :lectureable
-  has_many :lesson, :as => :lesson
 
   # Maquina de estados do processo de conversão
   acts_as_state_machine :initial => :waiting, :column => 'state'

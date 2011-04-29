@@ -37,24 +37,6 @@ class StatusesController < BaseController
     end
   end
 
-  def index
-    case params[:type]
-    when 'User'
-      @statusable = User.find(params[:id])
-    when 'Space'
-      @statusable = Space.find(params[:id])
-    when 'Subject'
-      @statusable = Subject.find(params[:id])
-    end
-
-    authorize! :read, @statusable
-
-    @statuses = @statusable.recent_activity(params[:page])
-    respond_to do |format|
-      format.js
-    end
-  end
-
   def destroy
    @status.destroy
    # Deleta as respostas do Status

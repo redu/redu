@@ -1,5 +1,9 @@
 <tr>
   <td><%= link_to item_admin.name, space_path(item_admin), :target => "_blank" %> </td>
-  <td><%= link_to 'Editar', edit_space_path(item_admin) %> </td>
-  <td><%= link_to 'Deletar', space_path(item_admin), :confirm => 'Você tem certeza que deseja remover este curso?', :method => :delete %> </td>
+  <td><%= link_to 'Gerenciar', edit_space_path(item_admin),
+        :class => "icon icon-management-gray_8_8" %> </td>
+      <td><%= link_to 'Remover', space_path(item_admin),
+        :confirm => 'Você tem certeza que deseja remover este curso?',
+        :method => :delete,
+        :class => "icon icon-x-gray_8_8" %> </td>
 </tr>

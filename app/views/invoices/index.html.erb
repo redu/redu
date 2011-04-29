@@ -1,34 +1,73 @@
-<div id="plan-info">
-  <strong>Curso:</strong>
-  <h3> <%= @plan.billable.name %> </h3>
-  <strong>Plano:</strong>
-  <h3><%= @plan.name %></h3>
-  <% if @plan.invoices.pending.count > 0 %>
-    <%= pagseguro_form @plan.create_order, :submit => "Pagar" %>   
+<%= render :partial => 'users/home_sidebar' %>
+<div class="main grid_10" style="width: 580px;">
+  <ol id="breadcrumbs" class="clearfix">
+    <li>
+      <%= link_to 'Home', home_user_path(@user), :class => 'replacement home icon icon-redu_r8_c227_s1' %>
+    </li>
+    <li>
+      <%= link_to 'Configurações', edit_user_path(@user) %>
+  </ol>
+  <div id="invoice-index">
+    <%
+      fake_tabs ['Perfil', edit_user_path(@user), {:class => 'icon'}],
+        ['Conta', account_user_path(@user), {:class => 'icon'}],
+        ['Planos', user_plans_path(@user), {:class => 'icon'}],
+        ['Faturas', plan_invoices_path(@plan), {:class => 'icon'}] do
+      %>
+    <div class="call">
+      <span class="billable">
+        <%= link_to @plan.billable.name,
+          environment_course_path(@plan.billable.environment, @plan.billable) %>
+      </span>
+      <span class="name"><%= @plan.name %></span>
+    </div>
+    <%= render :partial => "invoices/quotas",
+      :locals => { :quota_file => @plan.billable.percentage_quota_file,
+        :plan => @plan,
+        :quota_multimedia => @plan.billable.percentage_quota_multimedia,
+        :quota_members => @plan.billable.percentage_quota_members,
+        :quota => @quota } %>
+    <table class="common spaced">
+      <thead>
+        <tr>
+          <th style="width: 15%">Fatura:</th>
+          <th style="width: 40%">Data:</th>
+          <th style="width: 15%">Estado:</th>
+          <th style="width: 20%">Valor:</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @invoices.each do |invoice| %>
+          <tr>
+            <td><%= invoice.id %></td>
+            <td>
+              <span class="date">
+                <%= l invoice.period_start %> a
+                <%= l invoice.period_end %>
+              </span>
+            </td>
+            <td>
+              <span class="state">
+                <%= Invoice.human_attribute_name(invoice.state)%>
+              </span>
+            </td>
+            <td>
+              <span class="value">
+                <%= number_to_currency(invoice.amount) %>
+              </span>
+            </td>
+            <td>
+              <% if invoice.pending? %>
+                <%= pagseguro_form invoice.plan.create_order, :submit => "Pagar" %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   <% end %>
-  <strong> Cota atual de vídeo: <%= number_to_human_size(@quota.multimedia, :locale => 'en') %> </strong>
-  <strong> Cota atual para documentos: <%= number_to_human_size(@quota.files, :locale => 'en') %> </strong>
+</div>
 </div>
 
-<table class="common">
-  <thead>
-    <tr>
-      <th>Fatura</th>
-      <th>Data de início</th>
-      <th>Data final</th>
-      <th>Valor (R$)</th>
-      <th>Estado</th>
-    </tr>
-  </thead>
-  <tr>
-    <% @invoices.each do |invoice| %>
-    <td><%= invoice.id %></td>
-    <td><%= invoice.period_start %></td>
-    <td><%= invoice.period_end %></td>
-    <td><%= invoice.amount.round(2) %></td>
-    <td>
-      <strong><%= invoice.state %></strong>
-    </td>
-    <% end %>
-  </tr>
-</table>
+

@@ -1,6 +1,4 @@
 class RolesController < BaseController
-  layout "new/application"
-
   load_and_authorize_resource :environment
   load_and_authorize_resource :user
 
@@ -21,7 +19,7 @@ class RolesController < BaseController
 
     respond_to do |format|
       format.html do
-        render :template => "roles/new/show"
+        render :template => "roles/show"
       end
     end
   end

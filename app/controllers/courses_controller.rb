@@ -1,5 +1,4 @@
 class CoursesController < BaseController
-  layout "environment"
   load_resource :environment
   load_and_authorize_resource :course, :through => :environment,
     :except => [:index]
@@ -17,10 +16,8 @@ class CoursesController < BaseController
                :per_page => AppConfig.items_per_page)
 
     respond_to do |format|
-      format.html do
-        render :template => 'courses/new/show', :layout => 'new/application'
-      end
-      format.js { render :template => 'courses/new/show' }
+      format.html
+      format.js
     end
   end
 
@@ -28,9 +25,7 @@ class CoursesController < BaseController
     @header_course = @course.clone
 
     respond_to do |format|
-      format.html do
-        render :template => "courses/new/edit", :layout => "new/application"
-      end
+      format.html
     end
   end
 
@@ -61,19 +56,15 @@ class CoursesController < BaseController
         format.html { redirect_to(environment_course_path(@environment, @course)) }
         format.xml { head :ok }
       else
-        format.html { render :template => "courses/new/edit",
-          :layout => "new/application" }
+        format.html { render "edit" }
         format.xml  { render :xml => @course.errors, :status => :unprocessable_entity }
       end
     end
   end
 
   def new
-
     respond_to do |format|
-      format.html do
-        render :template => 'courses/new/new', :layout => 'new/application'
-      end
+      format.html
     end
   end
 
@@ -93,64 +84,47 @@ class CoursesController < BaseController
         @environment.courses << @course
         format.html { redirect_to environment_course_path(@environment, @course) }
       else
-        format.html { render :template => "courses/new/new",
-          :layout => "new/application" }
+        format.html { render "new" }
       end
     end
 
   end
 
-  # FIXME Remover lógica de user_id quando a listagem de cursos
-  # não for mais mostrada no perfil do usuário.
   def index
-
     paginating_params = {
       :page => params[:page],
       :order => 'name ASC',
       :per_page => AppConfig.items_per_page
     }
 
-    if params.has_key?(:user_id)
-      @user = User.find(params[:user_id].to_i)
-      paginating_params[:per_page] = 6
-      @courses = @user.courses
+    if params.has_key? :role
+      if params[:role] == 'student'
+        @courses = Course.user_behave_as_student(current_user)
+      elsif params[:role] == 'tutor'
+        @courses = Course.user_behave_as_tutor(current_user)
+      elsif params[:role] == 'teacher'
+        @courses = Course.user_behave_as_teacher(current_user)
+      elsif params[:role] == 'administrator'
+        @courses = Course.user_behave_as_administrator(current_user)
+      end
     else
-      if params.has_key? :role
-        if params[:role] == 'student'
-          @courses = Course.user_behave_as_student(current_user)
-        elsif params[:role] == 'tutor'
-          @courses = Course.user_behave_as_tutor(current_user)
-        elsif params[:role] == 'teacher'
-          @courses = Course.user_behave_as_teacher(current_user)
-        elsif params[:role] == 'administrator'
-          @courses = Course.user_behave_as_administrator(current_user)
-        end
-      else
-        @courses = Course.published
-      end
+      @courses = Course.published
+    end
 
-      if params.has_key?(:search) && params[:search] != ''
-        search = params[:search].to_s.split
-        @courses = @courses.name_like_all(search)
-      end
+    if params.has_key?(:search) && params[:search] != ''
+      search = params[:search].to_s.split
+      @courses = @courses.name_like_all(search)
+    end
 
-      if params.has_key?(:audiences_ids)
-        @courses = @courses.with_audiences(params[:audiences_ids])
-      end
-
+    if params.has_key?(:audiences_ids)
+      @courses = @courses.with_audiences(params[:audiences_ids])
     end
 
     @courses = @courses.paginate(paginating_params)
 
     respond_to do |format|
-      format.html do
-        unless params[:user_id]
-          render :template => 'courses/new/index', :layout => 'new/application'
-        end
-      end
-      format.js do
-        render :template => 'courses/new/index'
-      end
+      format.html
+      format.js
     end
   end
 
@@ -169,12 +143,8 @@ class CoursesController < BaseController
                                       :order => 'name ASC',
                                       :per_page => AppConfig.items_per_page)
     respond_to do |format|
-      format.html do
-        render :template => 'courses/new/preview', :layout => 'new/application'
-      end
-      format.js do
-        render :template => 'courses/new/preview'
-      end
+      format.html
+      format.js
     end
   end
 
@@ -188,13 +158,8 @@ class CoursesController < BaseController
                              :per_page => AppConfig.items_per_page)
 
     respond_to do |format|
-      format.html do
-        render :template => "courses/new/admin_spaces",
-          :layout => "new/application"
-      end
-      format.js do
-        render :template => "courses/new/admin_spaces"
-      end
+      format.html
+      format.js
     end
   end
 
@@ -206,13 +171,9 @@ class CoursesController < BaseController
                                                       :order => 'updated_at DESC',
                                                       :per_page => AppConfig.items_per_page)
     respond_to do |format|
-      format.html do
-        render :template => "courses/new/admin_member_requests",
-          :layout => "new/application"
-      end
+      format.html
       format.js
     end
-
   end
 
   # Modera os usuários.
@@ -273,7 +234,6 @@ class CoursesController < BaseController
 
   # Associa um usuário a um Course (Ação de participar).
   def join
-
     authorize! :add_entry, @course
     association = UserCourseAssociation.create(:user_id => current_user.id,
                                                :course_id => @course.id,
@@ -331,11 +291,8 @@ class CoursesController < BaseController
       :per_page => AppConfig.items_per_page)
 
       respond_to do |format|
-        format.html do
-          render :template => "courses/new/admin_members",
-            :layout => "new/application"
-        end
-        format.js { render :template => 'courses/new/admin_members' }
+        format.html
+        format.js
       end
   end
 
@@ -385,7 +342,7 @@ class CoursesController < BaseController
                 "<div class=\"box_notice\">Nenhum usuário encontrado.</div>"
             else
               page.replace_html 'user_list',
-                :partial => 'courses/new/user_list_admin',
+                :partial => 'courses/user_list_admin',
                 :locals => {:memberships => @memberships}
             end
           end
@@ -401,10 +358,8 @@ class CoursesController < BaseController
       paginate(:page => params[:page], :order => 'first_name ASC', :per_page => 18)
 
     respond_to do |format|
-      format.html do
-        render :template => 'courses/new/users', :layout => 'new/application'
-      end
-      format.js { render :template => 'courses/new/users' }
+      format.html
+      format.js
     end
   end
 
@@ -482,10 +437,7 @@ class CoursesController < BaseController
   # Página para convidar usuários para o curso
   def admin_invitations
     respond_to do |format|
-      format.html do
-        render :template => 'courses/new/admin_invitations',
-          :layout => 'new/application'
-      end
+      format.html
     end
   end
 
@@ -495,10 +447,7 @@ class CoursesController < BaseController
     @user_invitations = @course.user_course_associations.invited
 
     respond_to do |format|
-      format.html do
-        render :template => 'courses/new/admin_manage_invitations',
-          :layout => 'new/application'
-      end
+      format.html
     end
   end
 

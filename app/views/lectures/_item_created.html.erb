@@ -1,6 +1,6 @@
 <div  id=<%= "#{item_created.id}-item" %>>
   <%= item_created.lectureable.class.to_s %> <%= item_created.name %>
-  <% if !published && (can? :manage, @subject) %>
+  <% if can? :manage, @subject %>
     <% if item_created.lectureable.class.to_s == 'Page' %>
       <%= link_to_remote "Editar",
         :url => edit_space_subject_lecture_path(@space, @subject, item_created),

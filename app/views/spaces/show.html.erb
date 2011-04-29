@@ -1,23 +1,26 @@
-<% content_for :page_id, 'group' %>
-<%- @meta = { :description => "#{@space.name}'s profile on #{AppConfig.community_name}.", :keywords => "#{@space.name}, #{@space.tags.join(", ") unless @space.tags.nil?}", :robots => AppConfig.robots_meta_show_content }%>
+<%= render :partial => 'spaces/sidebar', :locals => { :space => @space } %>
+<div class="main grid_12 omega big-col">
+  <%= render :partial => 'spaces/breadcrumbs', :locals => { :space => @space } %>
+  <%= render :partial => 'spaces/header',
+    :locals => { :space => @space }%>
 
-<div class="grid_16">
-  <%= render :partial => "spaces/sidebar", :locals => {:space => @space} %>
+  <div id="space-statuses" class="hierarchy-listing-wrapper">
+    <div class="header">
+      <h4>Mural</h4>
+      <span class="counter">Atividades recentes</span>
+    </div>
 
-  <div class="main grid_12 omega">
-    <div class="fake-tabs">
-      <%= render :partial => 'taskbar' %>
-  <div>
-    <%= javascript_include_tag 'flow.js' %>
-    <%= render :partial => "statuses/create_status", :locals => {:status => @status, :statusable => @space }%>
-    <ul class="activities">
-      <%= render :partial => "statuses/type_proxy", :collection => @statuses, :as => :status, :locals => {:statusable => @space } %>
-    </ul><!-- end activities -->			
+    <div style="clear: both;">
+    <%= render :partial => 'statuses/create_status',
+      :locals => { :statusable => @space } %>
+    <div id="statuses" class="statuses">
+      <ol>
+        <%= render :partial => 'statuses/item', :collection => @statuses %>
+      </ol>
 
-    <%= will_paginate @statuses, :renderer => EndlessRenderer,
-      :class => "endless_statuses",
-      :params => {:id => @space.id, :type => 'Space'} %>
-  </div>
-</div><!-- end tabs -->
-</div><!-- end main -->
-</div>
+      <%= will_paginate @statuses, :renderer => EndlessRenderer %>
+    </div>
+    </div><!-- end .statuses -->
+  </div><!-- end #environment-courses -->
+
+</div><!-- end .main -->

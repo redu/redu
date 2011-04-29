@@ -1,82 +1,78 @@
-<script type="text/javascript">
+<% content_for :header_scripts_and_styles do %>
+  <script type="text/javascript">
     function verifyTOS(){
-        if (document.getElementById('user_tos').checked) {
-            return true;
-        }
-        else {
-            alert('Você não pode se cadastrar se não aceitar os Termos de Uso do Redu');
-            return false;
-        }
+      if (document.getElementById('user_tos').checked) {
+        return true;
+      }
+      else {
+        alert('Você não pode se cadastrar se não aceitar os termos de uso do Redu');
+        return false;
+      }
     }
-    
-</script>
-<% content_for :page_id, 'group' %>
-<div class="grid_10">
-<% form_for :user, :url => users_path, 
-	:html => {:class => 'MainForm', :onsubmit => 'return verifyTOS();'} do |f| %>
-	<%= error_messages_for :user %>	
-	<% field_set_tag "Informações pessoais" do %>
-		<%= f.label :first_name, "Nome" %>
-		<%= f.text_field :first_name %>
-		<%= error_for :user, :first_name %>
-		
-		<%= f.label :last_name, "Sobrenome" %>
-		<%= f.text_field :last_name %>
-		<%= error_for :user, :last_name %>
-		
-		<%= f.label :birthday, :birthday.l %>
-	    <%= date_select :user, :birthday, {:start_year => 1926, :end_year => (Time.now.year - 13)} %>
-			<%= error_for :user, :birthday %>
 
-	<% end %>
-	
-	<% field_set_tag "Informações de Contato" do %>
-		<%= f.label :login, :username.l %>
-	    <em><%= :required_your_username_must_not_contain_numerals_spaces_or_special_characters.l %></em>
-	    <%= f.text_field :login %>
-			<%= error_for :user, :login %>
-			
-		<%= f.label :email, :email.l %>
-	    <em><%=:required_we_will_send_a_confirmation_e_mail_to_the_address_you_enter.l %></em>
-	    <%= f.text_field :email %>
-			<%= error_for :user, :email %>
-	<% end %>
-	<% field_set_tag "Senhas" do %>
-		<% if AppConfig.closed_beta_mode %>
-			<%= f.label :beta_key, "Chave de acesso:" %>
-		 	<%= text_field_tag :beta_key, @beta_key, {:size => 6} %>
-		<% end %>
-	
-		<%= f.label :password, :type_your_password.l %>
-	    <em><%= :required_your_password_must_have_six_characters.l %></em>
-	    <%= f.password_field :password %>
-			<%= error_for :user, :password %>
-	    <%= f.label :password_confirmation, :re_type_your_password_to_confirm.l %>
-	    <%= f.password_field :password_confirmation %>
-			<%= error_for :user, :password_confirmation %>
-	<% end %>
-	
-	<% field_set_tag "Termos" do %>
-	    <%= f.label "tos", "Li e aceito os Termos de Uso", :class => "inline" %>
-		<%= check_box "user", "tos" %>
-	    <%= submit_tag :sign_up.l, :style => "float: right;" %>
-	    <%= hidden_field_tag :inviter_id, params[:inviter_id] %>
-	    <%= hidden_field_tag :inviter_code, params[:inviter_code] %>
-	<% end %>
-
+  </script>
 <% end %>
-</div><!-- end -->
-<div class="grid_6 user_instructions">
-    <h3><%=:dont_have_an_account.l %></h3>
+<div id="clean" class="container_16 clearfix">
+  <div class="grid_4 alpha header">
+    <h1 class="logotipo replacement">
+      <a href="" class="">Redu: rede social educacional</a>
+    </h1>
+  </div>
+  <div class="main grid_12 omega">
+    <h3 class="call">Cadastro</h3>
+    <% form_for :user, :url => users_path,
+      :html => {:class => 'common', :onsubmit => 'return verifyTOS();'} do |f| %>
+      <%= error_messages_for :user %>
+      <% if params[:invitation_token] %>
+        <%= hidden_field_tag :invitation_token, params[:invitation_token] %>
+      <% end %>
+      <% field_set_tag "Informações pessoais", :class => 'separator' do %>
+        <%= f.label :first_name, "Nome:" %>
+        <%= f.text_field :first_name, :class => 'small' %>
+        <%= error_for :user, :first_name %>
 
-    <%= link_to raw("&raquo; " + :click_here_to_sign_up.l), "/signup" %>
+        <%= f.label :last_name, "Sobrenome:" %>
+        <%= f.text_field :last_name, :class => 'small' %>
+        <%= error_for :user, :last_name %>
+
+        <%= f.label :birthday, :birthday.l + ":" %>
+        <div class="inline">
+          <%= date_select :user, :birthday,
+            {:start_year => 1926, :end_year => (Time.now.year - 13)} %>
+        </div>
+        <%= error_for :user, :birthday %>
+      <% end %>
+      <% field_set_tag "Informações de contato", :class => 'separator' do %>
+        <%= f.label :login, :username.l %>
+        <%= f.text_field :login, :class => 'small' %>
+        <%= error_for :user, :login %>
+
+        <%= f.label :email, :email.l %>
+        <%= f.text_field :email, :class => 'small' %>
+        <%= error_for :user, :email %>
+        <%= f.label :email_confirmation, "Confirmação:" %>
+        <%= f.text_field :email_confirmation, :class => 'small' %>
+      <% end %>
+      <% field_set_tag "Senha", :class => 'separator' do %>
+        <%= f.label :password, :password.l %>
+        <%= f.password_field :password, :class => 'small' %>
+        <%= error_for :user, :password %>
+
+        <%= f.label :password_confirmation, 'Confirmação:' %>
+        <%= f.password_field :password_confirmation, :class => 'small' %>
+        <%= error_for :user, :password_confirmation %>
+      <% end %>
+      <% field_set_tag "Termos", :class => 'tos' do %>
+        <div class="inline">
+          <%= check_box "user", "tos" %>
+          <%= f.label "tos", (link_to "Li e aceito os termos de uso do Redu", tos_path) %>
+        </div>
+      <% end %>
+      <%= submit_tag :sign_up.l, :class => 'important' %>
+      <%= hidden_field_tag :inviter_id, params[:inviter_id] %>
+      <%= hidden_field_tag :inviter_code, params[:inviter_code] %>
+    <% end %>
+  </div>
 
 
-    <h3><%=:forgot_your_password.l %></h3>
-
-    <%= link_to raw("&raquo; " + :click_here_to_retrieve_it.l), forgot_password_url %>
-
-    <h3><%=:forgot_your_username.l %></h3>
-
-    <%= link_to raw("&raquo; " + :click_here_to_retrieve_it.l), forgot_username_url %>
-</div>
+</div><!-- end #content -->

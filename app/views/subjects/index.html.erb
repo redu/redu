@@ -1,23 +1,32 @@
-<div class="grid_16">
-  <%= render :partial => "spaces/sidebar", :locals => {:space => @space} %>
+<%= render :partial => 'spaces/sidebar', :locals => { :space => @space } %>
+<div class="main grid_12 omega big-col">
+  <%= render :partial => 'spaces/breadcrumbs', :locals => { :space => @space } %>
+  <%= render :partial => 'spaces/header',
+    :locals => { :space => @space }%>
 
-  <div class="main grid_12 omega">
-    <div class="fake-tabs">
-      <%= render :partial => 'spaces/taskbar' %>
-
-      <div id="content">
+  <div id="space-subjects" class="hierarchy-listing-wrapper">
+    <div class="header">
+      <h4>Módulos</h4>
+      <span class="counter">
         <% if can? :manage, @space %>
-          <%= link_to_remote "Novo Módulo", :url => new_space_subject_path(@space),
-            :method => :get,
-            :loading => "$('#spinner-new-subject').show();",
-            :success => "$('#spinner-new-subject').hide();",
-            :html => { :id => 'link-new-subject' } %>
-          <%= image_tag 'spinner.gif', :id => 'spinner-new-subject',
-            :style => 'display: none;' %>
+          <%= pluralize(@space.subjects.count, 'módulo') %>
+        <% else %>
+          <%= pluralize(@space.subjects.visible.count, 'módulo') %>
         <% end %>
-        <%= render :partial => "subject_list"%>
-        <%= will_paginate @subjects, :renderer => EndlessRenderer %>
-      </div>
+      </span>
     </div>
-  </div>
-</div>
+    <% if can? :manage, @space %>
+      <div class="admin-actions">
+        <%= link_to "Novo módulo", new_space_subject_path(@space),
+           :id => 'link-new-subject', :class => 'button' %>
+        <%= image_tag 'spinner.gif', :id => 'spinner-new-subject',
+          :style => 'display: none;' %>
+      </div>
+    <% end %>
+
+    <ul id="subjects_list" class="hierarchy-listing subjects">
+      <%= render :partial => 'subjects/item', :collection => @subjects %>
+    </ul>
+    <%= will_paginate @subjects, :renderer => EndlessRenderer %>
+  </div><!-- end #environment-courses -->
+</div><!-- end .main -->

@@ -26,7 +26,6 @@ class User < ActiveRecord::Base
 
   # ASSOCIATIONS
   has_many :annotations, :dependent => :destroy, :include=> :lecture
-  has_one :beta_key, :dependent => :destroy
   has_many :statuses, :as => :statusable, :dependent => :destroy
   # Space
   has_many :spaces, :through => :user_space_associations
@@ -54,7 +53,6 @@ class User < ActiveRecord::Base
   # FIXME Verificar necessidade (Suggestion.rb não existe). Não foi testado.
   has_many :suggestions
   has_enumerated :role
-  has_many :invitations, :dependent => :destroy
   belongs_to  :metro_area
   belongs_to  :state
   belongs_to  :country

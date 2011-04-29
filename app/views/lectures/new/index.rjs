@@ -1,5 +1,0 @@
-page.insert_html :bottom, '#subject-resources > ol', :partial => "lectures/new/item",
-  :collection => @lectures
-
-page.replace_html ".endless",
-  (will_paginate @lectures, :renderer => EndlessRenderer)

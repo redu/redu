@@ -1,12 +1,21 @@
-<%= image_tag 'loadingAnimation.gif', :id => 'loading_bar', :style => "display: none; margin-top: 40px"%>
-
-<table id="user_list_table" class="common">
+<% form_tag destroy_members_environment_course_path(),
+    :method => :post, :id => "remove" do %>
+<table id="user_list_table" class="common users" width="100%">
   <thead>
-    <th>
-    <input type="checkbox" id="select_all"  >
-    </th>
-    <th>Usuário</th>
-    <th>Data de Inscricão</th>
+    <tr>
+      <th width="5%">
+        <input type="checkbox" id="select_all"  >
+      </th>
+      <th width="50%">Usuário</th>
+      <th width="15%">Inscricão em:</th>
+      <th width="25%">Disciplinas</th>
+    </tr>
   </thead>
-  <%= render :partial => 'user_item_admin', :collection => memberships %>
+  <tbody>
+    <%= render :partial => 'courses/user_item_admin', :collection => @memberships %>
+  </tbody>
 </table>
+<div class="actions">
+  <%= submit_tag "Remover selecionados", :class => "remove vanilla" %>
+</div>
+<% end %>

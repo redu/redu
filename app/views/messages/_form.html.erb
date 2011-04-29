@@ -1,37 +1,44 @@
-<% form_for message, :url => user_messages_path(user), :html => {:class => "MainForm"} do |f| %>
-  <% if message.reply_to %>
-    <%= f.hidden_field :to %>
-  <% else %>
-    <p>
-      <label for='message_to'>
-        <%= :to.l %>
-        <em>
-          <%= "(" + :type_a_username.l + ")" %>
-        </em>
-      </label>
-    </p>
-    <%= text_field_tag 'message[to]', @message.to, {:autocomplete => "on", :size => 35, :id => "message_to"} %>
-    <div class='auto_complete' id='message_to_auto_complete'>
-      <%= auto_complete_field 'message_to', {:url => auto_complete_for_username_user_messages_path(@user), :tokens=>','} %>
-    </div>
+<% content_for :header_scripts_and_styles do %>
+  <%= stylesheet_link_tag "fb_style.css" %>
+  <%=  javascript_include_tag "jquery.fcbkcomplete.min.js"%>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $("#message_to").fcbkcomplete({
+        json_url: "/autocomplete",
+        addontab: true,
+        complete_text: "Digite o nome de um contato...",
+        height: 6,
+		cache: true
+      });
+    });
+
+  </script>
+<% end %>
+
+<% form_for [@user, @message], :html => { :class => 'common' } do |f| %>
+  <div id="errors"></div>
+  <%= f.error_messages %>
+
+  <%= label_tag :message_to, :to.l + ":" %>
 
 
-  <% end %>
+<div style="width: 412px; float: left;"><!-- necessario para manter o input e o sugestion alinhados -->
 
-  <p>
-    <label for='message_subject'>
-      <%= :subject_of_message.l + ":" %>
-    </label>
-  </p>
+  <select id="message_to" name="message_to">
+    <% unless params[:message_to] and params[:message_to].length > 0 %>
+      <% @ausers = User.find(:all, :select=> "id,first_name", :conditions => [ 'id IN (?)', params[:message_to] ]) %>
+      <%  @aab = @ausers.map{|u| {u.first_name => u.id}} %>
+      <%= options_for_select(@aab) %>
+    <% end %>
+  </select>
+
+
+
+</div>
+
+  <%= label_tag :message_subject, :subject_of_message.l + ":" %>
   <%= f.text_field :subject %>
-  <p>
-    <label for='message_body'>
-      <%= :message.l + ":" %>
-    </label>
-  </p>
-  <%= f.text_area :body %>
-  <p>
-    <%= submit_tag :send.l %>
-  </p>
-
+  <%= label_tag :message_body, :message.l + ":" %>
+  <%= f.text_area :body, :size => "73x10" %>
+  <%= submit_tag :send.l %>
 <% end %>

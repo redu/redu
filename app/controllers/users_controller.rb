@@ -114,12 +114,8 @@ class UsersController < BaseController
     @status = Status.new
 
     respond_to do |format|
-      format.html do
-        render :template => 'users/new/show', :layout => 'new/application'
-      end
-      format.js do
-        render :template => 'users/new/show'
-      end
+      format.html
+      format.js
     end
   end
 
@@ -128,35 +124,15 @@ class UsersController < BaseController
     @inviter_id   = params[:id]
     @inviter_code = params[:code]
 
-    @beta_key = params[:beta_key]
-
     respond_to do |format|
       format.html do
-        render :template => 'users/new/new', :layout => 'new/clean'
+        render :template => 'users/new', :layout => 'clean'
       end
     end
   end
 
   def create
     @user = User.new(params[:user])
-
-    if AppConfig.closed_beta_mode
-      if params[:beta_key]
-        @key = BetaKey.find(:first, :conditions => ["beta_keys.key like ?", params[:beta_key]])
-        if @key
-          if @key.user
-            flash[:error] = "Esta chave de acesso já está sendo usada por outro usuário."
-            render :action => 'new' and return
-          end
-        else
-          flash[:error] = "Chave de acesso inválida!"
-          render :action => 'new' and return
-        end
-      else
-        flash[:error] = "Chave de acesso inválida!"
-        render :action => 'new' and return
-      end
-    end
 
     @user.save do |result| # LINE A
       if result
@@ -198,10 +174,7 @@ class UsersController < BaseController
             render :action => :new
           end
         else
-          if AppConfig.closed_beta_mode
-            @beta_key  = @key.key
-          end
-          render :template => 'users/new/new', :layout => 'new/clean'
+          render :template => 'users/new', :layout => 'clean'
         end
       end
     end
@@ -210,9 +183,7 @@ class UsersController < BaseController
   def edit
     @metro_areas, @states = setup_locations_for(@user)
     respond_to do |format|
-      format.html do
-        render :template => 'users/new/edit', :layout => 'new/application'
-      end
+      format.html
     end
   end
 
@@ -280,13 +251,13 @@ class UsersController < BaseController
     else
     if (@user.errors.on(:password) or @user.errors.on(:email) or
        !params[:current_password].nil?)
-        render 'users/new/account', :layout => 'new/application'
+        render 'users/account'
       else
-        render 'users/new/edit', :layout => 'new/application'
+        render 'users/edit'
       end
     end
   rescue ActiveRecord::RecordInvalid
-      render 'users/new/edit', :layout => 'new/application'
+      render 'users/edit'
   end
 
   def destroy
@@ -403,7 +374,7 @@ class UsersController < BaseController
 
   def signup_completed
     redirect_to home_path and return unless @user
-    render :template => "users/new/signup_completed", :layout => "new/clean"
+    render :template => "users/signup_completed", :layout => "clean"
   end
 
   def invite
@@ -538,12 +509,8 @@ class UsersController < BaseController
     @status = Status.new
 
     respond_to do |format|
-      format.html do
-        render :template => 'users/new/home', :layout => 'new/application'
-      end
-      format.js do
-        render :template => 'users/new/home'
-      end
+      format.html
+      format.js
     end
   end
 
@@ -554,20 +521,14 @@ class UsersController < BaseController
     @status = Status.new
 
     respond_to do |format|
-      format.html do
-        render :template => 'users/new/mural', :layout => 'new/application'
-      end
-      format.js do
-        render :template => 'users/new/mural'
-      end
+      format.html
+      format.js
     end
   end
 
   def account
     respond_to do |format|
-      format.html do
-        render :template => 'users/new/account', :layout => 'new/application'
-      end
+      format.html
     end
 
   end

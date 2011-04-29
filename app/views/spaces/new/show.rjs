@@ -1,5 +1,0 @@
-page.insert_html :bottom, '#statuses > ol', :partial => "statuses/new/item",
-  :collection => @statuses
-
-page.replace_html ".endless",
-  (will_paginate @statuses, :renderer => EndlessRenderer)

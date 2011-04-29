@@ -1,33 +1,35 @@
-<%- form_for [ @eventable, @event ] do |f| %>
-  <fieldset><legend><%= title %> Evento</legend>
-    <%= f.error_messages %>
+<%- form_for [ eventable, event ],:html => { :class => "common" } do |f| %>
+  <%= f.error_messages %>
 
-    <%= f.label :name, "Nome:" %>
-    <%= f.text_field :name %>
+  <%= f.label :name, "Nome:" %>
+  <%= f.text_field :name %>
 
-    <%= f.label :description, "Descrição:" %>
-    <%= f.cktext_area :description, :width=>'678px',
-      :swf_params => { :assetable_type => @eventable.class.to_s,
-        :assetable_id => @eventable.id }%>
+  <%= f.label :description, "Descrição:" %>
+  <%= f.cktext_area :description, :width=>'530px', :height => "400px",
+    :swf_params => { :assetable_type => eventable.class.to_s,
+      :assetable_id => eventable.id }%>
 
-    <%= f.label :start_time, "Início:" %>
-    <%= f.datetime_select :start_time %>
+      <%= f.label :start_time, "Início:" %>
+    <div class="inline">
+      <%= f.datetime_select :start_time %>
+    </div>
 
-    <%= f.label :end_time, "Término:" %>
-    <%= f.datetime_select :end_time %>
+      <%= f.label :end_time, "Término:" %>
+    <div class="inline">
+      <%= f.datetime_select :end_time %>
+    </div>
 
     <%= f.label :location, "Local:"%>
     <%= f.text_field :location %>
 
-    <%= f.label raw("Palavras-chave <span class='snippet'>(separadas por vírgula)</span>") %>
+    <%= f.label raw("Palavras-chave: <span class='snippet'>(separadas por vírgula)</span>") %>
     <%= f.text_field :tag_list %>
 
-    <% if action_name == 'new' %>
-      <%= f.submit "Criar"%>
+    <% if event.new_record? %>
+      <%= f.submit "Criar evento"%>
     <% else %>
-      <%= f.submit "Salvar"%>
+      <%= f.submit "Salvar evento"%>
     <% end %>
-    <a href="javascript:history.back()">Voltar</a>
   </fieldset>
 <% end %>
 

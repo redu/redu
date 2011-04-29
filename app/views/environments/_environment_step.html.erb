@@ -46,27 +46,27 @@ $(document).ready(function(){
 })
 //]]>
 </script>
-<div class="grid_16">
-  <div class="general-call">
-    <h3>Aqui você personaliza seu ambiente e curso</h3>
-    <p>
-      Antes de finalizar a criação do ambiente personalize nome, cores e até o endereço.
-    </p>
+<div class="clearfix" id="checkout">
+  <%= render :partial => 'environments/wizard_breadcrumbs' %>
+
+  <div class="grid_4 alpha">
+    <h3>Etapa 2: <span>Informações</span></h3>
+    <em class="description">Escreva as informações básicas do seu ambiente de estudo e do primeiro curso.</em>
   </div>
-  <fieldset class="fake">
-    <legend>O seu endereço completo será:</legend>
-    <div id="url_preview">
-      <span class="base">redu.com.br/</span>
-      <span class="environment"><%= @environment.path %></span>/
-      <span class="base">cursos/</span>
-      <span class="course"><%= @environment.courses.first.path %></span>
-    </div>
-  </fieldset>
-  <% form_for @environment, :url => environments_path(:step => 3) do |f| %>
-    <%= f.error_messages %>
-    <%= render :partial => 'environments/form', :locals => { :f => f } %>
-    <%= hidden_field_tag :plan, @plan %>
-    <%= f.submit "Criar", :style => "float: right;" %>
-    <%= link_to_function "Voltar", "history.back()" %>
-  <% end %>
+  <div id="url_preview">
+    <span class="label">O seu endereço completo será:</span>
+    <span class="base">redu.com.br/</span>
+    <span class="environment"><%= @environment.path %></span>/
+    <span class="base">cursos/</span>
+    <span class="course"><%= @environment.courses.first.path %></span>
+  </div>
+  <div class="customizing">
+    <% form_for @environment, :url => environments_path(:step => 3),
+        :html => { :class => "highlightable common" } do |f| %>
+        <%= f.error_messages %>
+        <%= render :partial => 'environments/form', :locals => { :f => f } %>
+        <%= hidden_field_tag :plan, @plan %>
+        <%= f.submit "Assinar", :class => "important next"%>
+      <% end %>
+  </div>
 </div>

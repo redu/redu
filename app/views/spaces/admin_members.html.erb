@@ -1,66 +1,27 @@
-<script type="text/javascript">
-  function selectAll(){
-    //$('select_all_link').hide();
-    //$('select_all_string').show();
-    var checkboxes = document.getElementsByName("users[]");
-    for (var i =0; i< checkboxes.length; i++) {
-      checkboxes[i].checked = true;
-    }
+<%= render :partial => 'spaces/sidebar', :locals => { :space => @space } %>
+<div class="main grid_12 omega big-col">
+  <%= render :partial => "spaces/breadcrumbs", :locals => { :space => @space } %>
+    <%= render :partial => 'spaces/header',
+      :locals => { :space => @space }%>
 
-  }
+    <div id="space-manage" class="body">
+      <div class="header">
+        <h4>Gerenciamento</h4>
+        <span class="counter">Informações gerais da Disciplina <%= @space.name %></span>
+      </div>
 
-function selectNone(){
-  var checkboxes = document.getElementsByName("users[]");
-  for (var i =0; i< checkboxes.length; i++) {
-    checkboxes[i].checked = false;
-  }
-}
-function showLoadingUsers(){
-  document.getElementById('loading_bar').style.display = 'block';
-  //document.removeChild();
-  $('user_list_table').remove();
-}
+      <% fake_tabs ["Informações", edit_space_path(@space), { :class => "icon icon-management-gray_16_16" }],
+        ["Eventos", admin_events_space_path(@space), { :class => "icon icon-event-gray_16_16" }],
+        ["Membros", admin_members_space_path(@space), { :class => "icon icon-members-lightblue_16_16" }],
+        ["Notícias", admin_bulletins_space_path(@space), { :class => "icon icon-bulletin-gray_16_16" }] do %>
 
-function setSubmissionType(type){
-  // type = 0 ; // remover
-  // type = 1 ; // mudar papel
+      <div id="user_list">
+        <%= render :partial => 'spaces/user_list_admin',
+          :locals => {:memberships => @memberships}%>
+      </div>
 
-  var theform = document.getElementById('moderate_users_form');
-  var theattribute = document.getElementById('submission_type');
-
-  theattribute.value = type;
-  theform.submit();
-}
-
-
-</script>
-
-<% content_for :page_id, 'group' %>
-<div class="main grid_16">
-  <div class="fake-tabs grid_16 alpha omega">
-    <%= render :partial => "spaces/admin_taskbar" %>
-    <div class="panel">
-      <h3>Administracão de Membros</h3>
-
-      <% if @memberships && @memberships.size > 0 %>
-
-        <% form_remote_tag :url => {:action => :search_users_admin, :id => @space.id}, :loading => "showLoadingUsers()" do %>
-          <%= text_field_tag :search_user %><%= submit_tag 'Buscar' %><BR>
-        <% end %>
-
-        <div id="user_list">
-          <%= render :partial => 'user_list_admin', :locals => {:memberships => @memberships}%>
-        </div>
-
-      <% else %>
-        <div class="box_notice">Não há usuários na disciplina.</div>
       <% end %>
-      <%= will_paginate  @memberships, :renderer => EndlessRenderer %>
-    </div>
-  </div><!-- end tabs -->
-</div><!-- end main -->
+    </div><!-- end #space-manage -->
 
-
-
-
+  </div><!-- end .main -->
 

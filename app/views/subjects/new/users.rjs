@@ -1,5 +1,0 @@
-page.insert_html :bottom, 'users_list', :partial => "users/new/item",
-  :collection => @users
-
-page.replace_html ".endless",
-  (will_paginate @users, :renderer => EndlessRenderer)

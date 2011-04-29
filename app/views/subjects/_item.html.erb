@@ -1,44 +1,30 @@
 <li class="clearfix">
-  <% if can? :read, item %>
-    <%= link_to subject.title, space_subject_path(@space, item), :class => "name"  %>
-    <% if (can? :manage, item) && item.published? %>
-      Módulo publicado
-    <% else %>
-      <%= link_to_remote "Editar", :url => edit_space_subject_path(@space, item),
-        :method => :get %>
-    <% end %>
-  <% else %>
-    <%= link_to subject.title, infos_space_subject_path(@space, item), :class => "name"  %>
+  <% if(can? :manage, item) %>
+    <%= link_to 'Editar', edit_space_subject_path(item.space, item),
+      :class => "edit icon icon-management-gray_8_8" %>
   <% end %>
-  <div class="headlines">
-    <span class="things">
-      <%= truncate_words( subject.description, 10, '...') %>
-    </span>
-  </div>
-  <div class="headlines">
-    <ul class="item_info">
-      <% unless @user %>
-        <li> <strong>Por:</strong>
-          <%= link_to subject.owner.f_name, user_path(subject.owner) %>
-        </li>
-      <% end %>
+  <%= link_to item.title, space_subject_path(item.space, item),
+    :class => 'name' %>
+  <% if item.recent? %>
+    <span class="new">Novo</span>
+  <% end %>
+  <% if !item.visible? %>
+    <span style="color: #C02200; font-weight: bold; font-size: 0.7em;">INVISÍVEL</span>
+  <% end %>
+  <span class="description"><%= item.description %></span>
+  <ul class="tags clearfix">
+    <% item.tags.each do |tag| %>
       <li>
-        <%= time_ago_in_words_or_date(subject.created_at) %>
+        <%= link_to tag.name, space_subjects_path(item.space) %>
       </li>
-      <% if subject.space && !@space %>
-        <li>
-          <strong>Disciplina:</strong> <%= link_to(subject.space.name, subject.space)  %>
-      </li>
-      <% end %>
+    <% end %>
+  </ul>
+  <span class="expand replacement">Mais detalhes</span>
+  <div class="details" style="display: none;">
+    <strong>Recursos</strong>
+    <ul class="resources">
+      <%= render :partial => 'lectures/item_preview',
+        :collection => item.lectures %>
     </ul>
   </div>
-  <% if current_user.has_access_to?(item) %>
-  <div class="progress">
-    <%= render :partial => "progress", :locals => {:subject => item} %>
-  </div>
-  <% end %>
 </li>
-
-
-
-

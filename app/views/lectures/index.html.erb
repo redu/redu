@@ -1,128 +1,37 @@
-<% content_for :js do %>
-<script type="text/javascript">
-function select(type, id) {
-	jQuery('#'+ type+'_' + id).parent().children().removeClass('selected')
-	jQuery('#'+ type+'_' + id).addClass('selected')
-	loadList();
+<%= render :partial => "subjects/sidebar" %>
+<div class="main grid_12 omega big-col">
+  <%= render :partial => "subjects/breadcrumbs", :locals => { :subject => @subject } %>
 
-}
+  <%= render :partial => "subjects/header",
+    :locals => { :subject => @subject, :space => @space } %>
 
-function loadList(){
-	jQuery('#course_list').html(' ')
-	jQuery('#loader').show()
-}
-/* pega os filtros selecionados e passa-os como parametro */
-function getParameters(){
+  <div id="subject-resources" class="hierarchy-listing-wrapper">
 
-	return ''
+    <div class="header">
+      <h4>Recursos</h4>
+      <% if @lectures.count > 1 %>
+        <span class="counter">
+          <%= @lectures.count %> recursos disponíveis
+        </span>
+      <% else %>
+        <span class="counter">
+          <%= @lectures.count %> recurso disponível
+        </span>
+      <% end %>
+    </div>
+    <% if can? :manage, @subject %>
+      <div class="admin-actions ">
+        <%= link_to "Adicionar recurso",
+          edit_space_subject_path(@subject.space, @subject),
+          :class => 'button' %>
+      </div>
+    <% end %>
+    <ol class="hierarchy-listing ordered-hierarchy-listing resources">
+      <%= render :partial => "lectures/item", :collection => @lectures %>
+    </ol>
 
-	var params = ''
-	jQuery('.selected').each(function(i) {
-		var id = $(this).attr('id').split('_')
-		if (id[1] != 'all' && typeof(id[0]) != 'undefined' && typeof(id[1]) != 'undefined') {
-			if (id[0] == 'cat') id[0] = 'category';
+    <%= will_paginate @lectures, :renderer => EndlessRenderer %>
 
-			params += id[0] + '=' + id[1];
-		}
+  </div><!-- end #environment-courses -->
 
-	})
-	alert(params)
-	return params;
-}
-</script>
-<% end %>
-
-<%# render(:partial => "spaces/space_info", :locals=>{:show => false}) if @space%>
-
-<div class="grid_16">
-  <h3> Aulas</h3>
-</div>
-
-<div class="grid_4 calls" id="filter">
-	<!--
-	<span class="call"><span>Refinar</span></span>
-	-->
-	<form>
-	<% field_set_tag "Categoria" do %>
-	<ul class="criteriaList">
-		<li id ="cat_all" class="selected">
-			<%= link_to_remote "Todas", :url => {:action => :index}, :loading => "select('cat','all')", :method => :get%>
-		</li>
-
-		<% for category in SimpleCategory.all do %>
-		<li id = "cat_<%=category.id%>">
-			<%= link_to_remote category_i18n(category.name), :url => {:action => :index, :category => category.id}, :loading => "select('cat','"+category.id.to_s+"')", :with => "getParameters()",:method => :get%>
-		</li>
-		<% end %>
-
-	</ul>
-	<% end %>
-	</form>
-
-
-	<form>
-	<% field_set_tag "Tipo de Aula" do %>
-	<ul class="criteriaList">
-
-		<li id ="type_all" class="selected">
-			<%= link_to_remote "Todas", :url => {:action => :index}, :loading => "select('type','all')", :method => :get%>
-		</li>
-
-
-		<li id = "type_seminar">
-			<%= link_to_remote "Vídeo-aula", :url => {:action => :index, :type => 'Seminar'}, :loading => "select('type','seminar')", :method => :get%>
-		</li>
-
-		<li id = "type_interactiveclass">
-			<%= link_to_remote "Aula passo-a-passo", :url => {:action => :index, :type => 'InteractiveClass'}, :loading => "select('type','interactiveclass')", :method => :get%>
-		</li>
-
-		<li id = "type_page">
-			<%= link_to_remote "Artigo", :url => {:action => :index, :type => 'Page'}, :loading => "select('type','page')", :method => :get%>
-		</li>
-
-	</ul>
-		<% end %>
-	</form>
-
-
-		<form>
-	<% field_set_tag "Ordem" do %>
-	<ul class="criteriaList">
-
-		<li id = "sort_recent" class="selected">
-			<%= link_to_remote "Mais recentes", :url => {:action => :index, :sort => 'updated_at'}, :loading => "select('sort','recent')", :method => :get%>
-		</li>
-
-		<li id = "sort_view">
-			<%= link_to_remote "Mais vistas", :url => {:action => :index, :sort => 'view_count'}, :loading => "select('sort','view')", :method => :get%>
-		</li>
-
-		<li id = "sort_rating">
-			<%= link_to_remote "Melhores avaliadas", :url => {:action => :index, :sort => 'rating_average'}, :loading => "select('sort','rating')", :method => :get%>
-		</li>
-	</ul>
-	<% end %>
-	</form>
-</div>
-
-<span class="grid_12 filter_bar">
-	<span class="filter_text">
-		<%= (params[:search]) ? ("Resultados para: \""+params[:search]+"\"") : "Todas as aulas mais recentes" %>
-	</span>
-
-		<% form_tag space_subject_lectures_path(@space, @subject), :method => :get do %>
-		Buscar
-		<%= text_field_tag :search, params[:search] %>
-		<%= submit_tag "OK", :name => nil%>
-		<% end %>
-
-</span>
-
-<%= image_tag "loadingAnimation.gif", :id => "loader", :style => "display: none"%>
-<div id="course_list" class="grid_12">
-	<%= render :partial => "lecture_list"%>
-</div>
-
-
-
+</div><!-- end .main -->

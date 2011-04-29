@@ -1,13 +1,14 @@
 case params[:type].to_s
 when 'Page'
-  page.insert_html :before, 'lectures_types', :partial => 'form_page'
+  page.insert_html :after, 'lectures_types',
+    :partial => 'lectures/form_page'
 when 'Seminar'
-  page.insert_html :before, 'lectures_types', :partial => 'form_seminar'
+  page.insert_html :after, 'lectures_types',
+    :partial => 'lectures/form_seminar'
 when 'Document'
-  page.insert_html :before, 'lectures_types', :partial => 'form_document'
+  page.insert_html :after, 'lectures_types',
+    :partial => 'lectures/form_document'
 when 'Existent'
-  page.insert_html :before, 'lectures_types', :partial => 'form_existent'
+  page.insert_html :after, 'lectures_types',
+    :partial => 'lectures/form_existent'
 end
-
-page.hide 'lectures_types'
-

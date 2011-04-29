@@ -1,7 +1,33 @@
-<% if @bulletinable.class.to_s.eql? "Space" %>
-  <%= render :partial => "spaces/sidebar", :locals => {:space => @bulletinable} %>
+<% content_for :header_scripts_and_styles do %>
+  <%= javascript_include_tag :ckeditor %>
 <% end %>
 
-<div class="main grid_12 alpha">
-  <%= render :partial => 'bulletins/form', :locals => {:bulletin => @bulletin} %>
-</div>
+<% if @bulletinable.class.to_s.eql? "Space" %>
+  <%= render :partial => 'spaces/sidebar', :locals => { :space => @bulletinable } %>
+<% else %>
+  <%= render :partial => "environments/sidebar", :locals => { :environment => @bulletinable } %>
+<% end %>
+<div class="main grid_12 omega big-col">
+  <% if @bulletinable.class.to_s.eql? "Space" %>
+    <%= render :partial => "spaces/breadcrumbs", :locals => { :space => @bulletinable } %>
+  <% else %>
+    <%= render :partial => "environments/breadcrumbs", :locals => { :environment => @bulletinable } %>
+  <% end %>
+  <% if @bulletinable.class.to_s.eql? "Space" %>
+    <%= render :partial => 'spaces/header',
+      :locals => { :space => @bulletinable }%>
+  <% else %>
+    <%= render :partial => 'environments/header',
+      :locals => { :environment => @bulletinable }%>
+  <% end %>
+    <div id="bulletin-edit" class="hierarchy-listing-wrapper">
+      <div class="header">
+        <h4>Notícia</h4>
+        <span class="counter">Edição de notícia</span>
+      </div>
+
+      <%= render :partial => "bulletins/form",
+        :locals => {:bulletinable => @bulletinable,  :bulletin => @bulletin }%>
+    </div><!-- #bulletin-new -->
+  </div><!-- end main -->
+

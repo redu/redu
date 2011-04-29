@@ -14,7 +14,6 @@ describe Course do
   it { should belong_to :owner }
 
   it { should have_many(:spaces).dependent :destroy }
-  it { should have_many(:invitations).dependent :destroy }
   it { should have_many(:user_course_associations).dependent :destroy }
   it { should have_many(:user_course_invitations).dependent :destroy }
   it { should have_many(:users).through :user_course_associations }

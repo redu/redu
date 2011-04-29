@@ -42,18 +42,32 @@ describe FriendshipsController do
       @new_user = Factory(:user)
     end
 
-    it "creates a friendship" do
+    it "creates a friendship, returning HTML" do
       lambda {
         post :create, :locale => "pt-BR", :user_id => @user.id,
         :friend_id => @new_user.id
       }.should change(Friendship, :count).by(2)
     end
 
-    it "redirects to user profile" do
+    it "creates a friendship, returning JS" do
+      lambda {
+        post :create, :locale => "pt-BR", :user_id => @user.id,
+        :friend_id => @new_user.id, :goto_home => true, :format => :js
+      }.should change(Friendship, :count).by(2)
+    end
+
+    it "redirects to user profile, unsing HTML " do
       post :create, :locale => "pt-BR", :user_id => @user.id,
         :friend_id => @new_user.id
       response.should redirect_to(user_path(@new_user))
     end
+
+    it "redirects to user profile, unsing HTML with goto_home" do
+      post :create, :locale => "pt-BR", :user_id => @user.id,
+        :friend_id => @new_user.id, :goto_home => true
+      response.should redirect_to(home_user_path(@user))
+    end
+
   end
 
   describe "POST 'destroy'" do
@@ -64,18 +78,32 @@ describe FriendshipsController do
       @friendship = @user.friendship_for @new_user
     end
 
-    it "destroy a friendship" do
+    it "destroy a friendship, returning JS" do
+      lambda {
+        post :destroy, :locale => "pt-BR", :user_id => @user.id,
+          :id => @friendship.id, :format => :js
+      }.should change(Friendship, :count).by(-2)
+    end
+
+    it "destroy a friendship, returning HTML" do
       lambda {
         post :destroy, :locale => "pt-BR", :user_id => @user.id,
           :id => @friendship.id
       }.should change(Friendship, :count).by(-2)
     end
 
-    it "redirects to user profile" do
+    it "redirects to user profile returning HTML" do
       post :destroy, :locale => "pt-BR", :user_id => @user.id,
         :id => @friendship.id
       response.should redirect_to(user_path(@new_user))
     end
+
+    it "redirects to user profile, returning HTML with goto_home" do
+      post :destroy, :locale => "pt-BR", :user_id => @user.id,
+        :id => @friendship.id, :goto_home => true
+      response.should redirect_to(home_user_path(@user))
+    end
+
   end
 
   describe "POST 'accept'"  do
@@ -105,17 +133,18 @@ describe FriendshipsController do
       @new_user.be_friends_with(@user)
       @friendship = @user.friendship_for(@new_user)
     end
+
     it "decline and destroy a friendship" do
       expect {
         post :decline, :locale => "pt-BR", :user_id => @user.id,
         :id => @friendship.id, :friend_id => @new_user.id
       }.should change(Friendship, :count).by(-2)
     end
+
     it "redirects to user notifications" do
        post :decline, :locale => "pt-BR", :user_id => @user.id,
         :id => @friendship.id, :friend_id => @new_user.id
        response.should redirect_to(user_path(@new_user))
     end
   end
-
 end

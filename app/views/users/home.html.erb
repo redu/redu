@@ -1,0 +1,30 @@
+<%= render :partial => 'users/home_sidebar' %>
+<div class="main grid_10" style="width: 580px;">
+  <ol id="breadcrumbs" class="clearfix">
+    <li>
+      <%= link_to 'Home', home_user_path(current_user),
+        :class => 'replacement home icon icon-home-lightblue_16_16' %>
+    </li>
+  </ol>
+  <% unless @friends_requisitions.empty? %>
+    <ul class="friends-requisitions">
+      <%= render :partial => 'users/friend_requisition',
+        :collection => @friends_requisitions, :as => :friend %>
+    </ul>
+  <% end %>
+  <% if current_user.has_course_invitation? %>
+    <ul class="courses-requisitions">
+      <%= render :partial => 'courses/item_invitation',
+        :collection => @course_invitations %>
+    </ul>
+  <% end %>
+  <%= render :partial => 'statuses/create_status',
+    :locals => { :statusable => current_user } %>
+  <div id="statuses" class="statuses">
+    <ol>
+      <%= render :partial => 'statuses/item', :collection => @statuses %>
+    </ol>
+
+    <%= will_paginate @statuses, :renderer => EndlessRenderer %>
+  </div><!-- end .statuses -->
+</div><!-- end .main -->

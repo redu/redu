@@ -1,8 +1,0 @@
-if @invitation.valid?
-  page.replace_html "invitation_errors",
-    "<div class='box_notice'>Convite enviado com sucesso!</div>"
-  page["environment_invitation"].reset
-else
-  page.replace_html "invitation_errors",
-    error_messages_for(:invitation)
-end

@@ -1,21 +1,16 @@
-<li id="<%= item.id %>-lecture" class="asset-item clearfix">
-  <div class="index">
+<tr id="<%= item.id %>-lecture" class="asset-item clearfix">
+  <td class="index">
     <%= item.position %>
-  </div>
-  <span class="name">
+  </td>
+  <td class="name">
     <%= link_to item.name,
-          space_subject_lecture_path(@space, @subject, item)  %>
-  </span>
-  <span class="headlines">
-    <span class="things">
-      <%= truncate(item.description, :length => 150) %>
-    </span>
-  </span>
-  <span class="headlines">
-    <ul class="item_info">
-      <li><strong>Tipo:</strong> <%#= item.friendly_type %> | </li>
-      <li><strong>Professor:</strong> <%= link_to item.owner.display_name,
-            user_path(item.owner) %></li>
-    </ul>
-  </span>
-</li>
+      space_subject_lecture_path(space, subject, item)  %>
+  </td>
+  <td>
+    <%= link_to "Remover",
+      space_subject_lecture_path(space, subject, item),
+      :method => :delete,
+      :class => "icon icon-x-gray_8_8 delete",
+      :confirm => "Você tem certeza que deseja deletar esta aula deste módulo? Todas as informações serão perdidas."  %>
+  </td>
+</tr>

@@ -29,7 +29,7 @@ describe SubjectsController do
 
     it "renders with layout 'environment'" do
       get :index, :locale => "pt-BR", :space_id => @space.id
-      response.layout.should == 'layouts/new/application'
+      response.layout.should == 'layouts/application'
     end
 
   end
@@ -182,7 +182,7 @@ describe SubjectsController do
           :id => @subject.id,
           :space_id => @space.id,
           :subject => { :description => "short description" }
-        response.should render_template('subjects/new/update_error')
+        response.should render_template('subjects/update_error')
       end
     end
   end

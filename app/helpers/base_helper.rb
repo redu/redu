@@ -31,7 +31,7 @@ module BaseHelper
       :body => capture(&block)
     }
 
-    concat(render(:partial => 'shared/new/fake_tabs', :locals => locals))
+    concat(render(:partial => 'shared/fake_tabs', :locals => locals))
   end
   safe_helper :fake_tabs
 
@@ -499,17 +499,6 @@ module BaseHelper
 
   def feature_enabled?(feature)
     AppConfig.sections_enabled.include?(feature)
-  end
-
-  def show_footer_content?
-    return true if (
-      current_page?(:controller => 'base', :action => 'site_index') ||
-      current_page?(:controller => 'posts', :action => 'show')  ||
-      current_page?(:controller => 'categories', :action => 'show')  ||
-      current_page?(:controller => 'users', :action => 'show')
-    )
-
-    return false
   end
 
  # def clippings_link

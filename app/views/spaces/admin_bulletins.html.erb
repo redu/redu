@@ -1,19 +1,25 @@
-<% content_for :page_id, 'group' %>
-<div class="main grid_16">
-  <div class="fake-tabs grid_16 alpha omega">
-    <%= render :partial => "spaces/admin_taskbar" %>
-    <div class="panel">
-      <h3>Administracão de Notícias</h3>
-      <div id="all_list">
+<%= render :partial => 'spaces/sidebar', :locals => { :space => @space } %>
+<div class="main grid_12 omega big-col">
+  <%= render :partial => "spaces/breadcrumbs", :locals => { :space => @space } %>
+  <%= render :partial => 'spaces/header',
+    :locals => { :space => @space }%>
+
+    <div id="space-manage" class="body">
+      <div class="header">
+        <h4>Gerenciamento</h4>
+        <span class="counter">Lista de Notícias pendentes e publicados na Disciplina <%= @space.name %></span>
+      </div>
+
+      <% fake_tabs ["Informações", edit_space_path(@space), { :class => "icon icon-management-gray_16_16" }],
+        ["Eventos", admin_events_space_path(@space), { :class => "icon icon-event-gray_16_16" }],
+        ["Membros", admin_members_space_path(@space), { :class => "icon icon-members-gray_16_16" }],
+        ["Notícias", admin_bulletins_space_path(@space), { :class => "icon icon-bulletin-lightblue_16_16" }] do %>
+
         <%= render :partial => 'bulletins/moderate_index_admin' %>
-      </div> <!-- fim da listagem --> 
-      <h3>Notícias Aprovadas</h3>
-      <%= render :partial => 'bulletins/index_admin' %>
-    </div> <!-- end panel -->
-  </div><!-- end tabs -->
-</div><!-- end main -->
+        <%= render :partial => 'bulletins/index_admin' %>
+      <% end %>
+    </div><!-- end #space-manage -->
 
-
-
+  </div><!-- end .main -->
 
 

@@ -10,3 +10,4 @@ else
   page.replace '.endless',
     (will_paginate @bulletins, :renderer => EndlessRenderer)
 end
+

@@ -13,10 +13,8 @@ describe User do
   it { should have_many :bulletins }
 
   it { should have_many(:exam_history).through :exam_users}
-  it { should have_many(:invitations).dependent :destroy}
   it { should have_many(:enrollments).dependent :destroy}
 
-  it { should have_one(:beta_key).dependent(:destroy)}
   it { should have_one(:settings).dependent(:destroy) }
 
   it { should belong_to :metro_area }

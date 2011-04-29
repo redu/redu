@@ -1,14 +1,30 @@
-<div class="main grid_16">
-  <div class="fake-tabs grid_16 alpha omega">
-    <%= render :partial => "courses/admin_taskbar" %>
-    <div class="panel">
-      <h1>Disciplinas</h1>
+<% content_for :footer_scripts_and_styles do %>
+  <script type="text/javascript">
+    function showLoadingUsers(){
+            document.getElementById('loading_bar').style.display = 'block';
+            $('user_list_table').remove();
+    }
+  </script>
+<% end %>
+<%= render :partial => 'courses/sidebar' %>
+<div class="main grid_12 omega big-col">
+  <%= render :partial => 'courses/breadcrumbs' %>
+  <%= render :partial => 'courses/header',
+    :locals => { :course => @course } %>
+  <div id="course-manage" class="body">
+    <div class="header">
+      <h4>Gerenciamento</h4>
+      <span class="counter">Listagem de disciplinas do curso <%= @course.name %></span>
+    </div>
+    <%
+      fake_tabs ["Informações", edit_environment_course_path(@environment, @course), {:class => 'icon icon-management-gray_16_16'}],
+        ["Membros", admin_members_environment_course_path(@environment, @course), {:class => 'icon icon-members-gray_16_16'}],
+        ["Moderação", admin_members_requests_environment_course_path(@environment, @course), {:class => 'icon icon-moderation-gray_16_16'}],
+        ["Convites", admin_manage_invitations_environment_course_path(@environment, @course), {:class => ''}],
+        ["Disciplinas", admin_spaces_environment_course_path(@environment, @course), {:class => 'icon icon-space-lightblue_16_16'}] do
+      %>
+
       <%= render :partial => 'spaces/index_admin' %>
-    </div> <!-- end panel -->
-  </div><!-- end tabs -->
-</div><!-- end main -->
-
-
-
-
-
+    <% end %>
+  </div>
+</div>

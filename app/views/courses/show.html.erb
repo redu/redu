@@ -1,68 +1,29 @@
-<%= javascript_include_tag "jquery.scrollTo-1.4.2-min.js" %>
-<% if can? :manage, @course %>
-  <div class="actions clearfix">
-    <div class="action-wrapper">
-      <%= link_to "Crie Disciplinas", new_space_path(:course_id => @course.id), :class => "action" %>
-      <small>Disciplinas são conjuntos de módulos onde os alunos aprendem</small>
-    </div>
-    <div class="action-wrapper">
-      <%= link_to "Convide Professores e Tutores", "#invitation", :class => "action" %>
-      <small>Chame pessoas para auxiliar na criação do conteúdo</small>
-    </div>
-    <div class="action-wrapper">
-      <%= link_to "Gerencie este Curso", edit_environment_course_path(@environment, @course), :class => "action" %>
-      <small>Acompanhe, avalie e interaja com alunos matriculados</small>
-    </div>
-  </div>
-<% end %>
-<script type="text/javascript" charset="utf-8">
-  $(document).ready(function(){
-      $(".space div.vtabs").tabs({}).addClass('ui-tabs-vertical ui-helper-clearfix')
-  })
-</script>
+<%= render :partial => 'courses/sidebar' %>
 
-<script type="text/javascript"  charset="utf-8">
-  $(document).ready(function(){
-    $("ul.repo_list li a").click(function(e){
-      $(this).parents(".space:first").css("clear", "left").addClass("expanded").animate(
-        { "width": "100%" }, "normal", "linear", function(){
-          $.scrollTo($(this), 800, {offset: {top:-100, left:0}})
-          $(this).find(".specific-logs").fadeIn()
-          $(this).find("span.shrink").fadeIn()
-          $(this).css("clear", "none")
-        }
-      )
-    })
+<div class="main grid_12 omega big-col">
+  <%= render :partial => 'courses/breadcrumbs' %>
+  <%= render :partial => 'courses/header',
+    :locals => { :course => @course } %>
 
-    $(".space .shrink").click(function(e){
-      $(this).hide()
-      $(this).parents(".space:first").find(".specific-logs").fadeOut("fast")
-      $(this).parents(".space:first").removeClass("expanded").animate(
-        { "width": "293px" }, "normal", "linear", function(){
-          $.scrollTo($(this), 800, {offset: {top:-100, left:0}})
-        }
-      )
-    })
-  })
-</script>
-<div class="grid_16">
-  <h3 class="call">Disciplinas do curso <%= @course.name %></h3>
-</div>
-<div class="spotlight-boxes clearfix">
-  <% unless @spaces.empty? %>
-    <%= render :partial => 'spaces/spotlight', :collection => @spaces %>
-  <% else %>
-    <div class="grid_16">
-      <div class="box-info">
-        <div class="pretty-text">
-          Nenhuma disciplina foi criada. <% if can? :manage, @course  %>Você pode criá-las <%= link_to "aqui", new_space_path(:course_id => @course) %> <% end %>
-        </div>
-      </div>
+  <div id="course-spaces" class="hierarchy-listing-wrapper">
+    <div class="header">
+      <h4>Disciplinas</h4>
+      <span class="counter">
+        <%= pluralize(@course.spaces.length, 'disciplina')%>
+      </span>
     </div>
-  <% end %>
-</div><!--  end spotlight-boxes -->
-<div class="grid_16">
-  <% field_set_tag 'Compartilhe!', :class => 'fake' do %>
-    <%= render :partial => 'shared/share', :locals => {:resource => @course}%>
-  <%end%>
-</div>
+
+    <% if can?(:manage, @course) %>
+    <div class="admin-actions clearfix">
+      <%= link_to 'Criar nova disciplina', new_space_path(:course_id => @course.id), :class => "button" %>
+    </div>
+    <% end %>
+
+    <ul id="spaces_list" class="hierarchy-listing">
+      <%= render :partial => 'spaces/item', :collection => @spaces %>
+    </ul>
+
+    <%= will_paginate @spaces, :renderer => EndlessRenderer %>
+  </div><!-- end #environment-courses -->
+
+</div><!-- end .main -->

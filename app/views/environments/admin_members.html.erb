@@ -1,69 +1,76 @@
-<script type="text/javascript">
-  $(document).ready(function(){
-    $("#select_all").toggle(
-      function(e){
-        $("input[type=checkbox][name=users\[\]]").attr('checked', true)
-        $(this).attr('checked', true)
-      },
-      function(e){
-        $("input[type=checkbox][name=users\[\]]").attr('checked', false)
-        $(this).attr('checked', false)
-      }
-    )    
-  })
-function showLoadingUsers(){
+<script type="text/javascript" language="javascript" charset="utf-8">
+  function showLoadingUsers(){
+    if (document.getElementById('loading_bar')){
 	document.getElementById('loading_bar').style.display = 'block';
-	$('user_list_table').remove();
+        $('user_list_table').remove();
+    }
 }
-
-function setSubmissionType(type){
-	 var theform = document.getElementById('moderate_users_form');
-	 var theattribute = document.getElementById('submission_type');
-		
-	theattribute.value = type;
-	theform.submit();
-}
-
-	
 </script>
-<div class="grid_16">
-  <div class="fake-tabs grid_16 alpha omega clearfix">
-    <%= render :partial => 'environments/admin_taskbar' %>
-    <div class="panel">
-      <h1>Membros</h1>
+<%= render :partial => 'environments/sidebar', :locals => { :environment => @environment } %>
+<div class="main grid_12 omega big-col">
+  <%= render :partial => 'environments/breadcrumbs',
+    :locals => { :environment => @environment } %>
 
-      <% if @memberships && @memberships.size > 0 %>
-        <% form_remote_tag :url => {:action => :search_users_admin,
-          :id => @environment.id},
-          :loading => "showLoadingUsers()" do %>
-          <div class="filters clearfix">
-            <% field_set_tag "Buscar", :class => "grid_3 alpha" do %>
-              <%= label_tag :search_user, "Nome", :class => "inline" %>
-              <%= text_field_tag :search_user %>
+  <%= render :partial => 'environments/header',
+    :locals => { :environment => @environment } %>
+
+  <div id="environment-manage" class="body">
+    <div class="header">
+      <h4>Gerenciamento</h4>
+      <span class="counter">Informações gerais do ambiente <%= @environment.initials_or_name %></span>
+    </div>
+
+    <%
+      fake_tabs ["Informações", edit_environment_path(@environment), {:class => 'icon icon-management-gray_16_16'}],
+        ["Membros", admin_members_environment_path(@environment), {:class => 'icon icon-members-lightblue_16_16'}],
+        ["Notícias", admin_bulletins_environment_path(@environment), {:class => 'icon icon-bulletin-gray_16_16'}],
+        ["Cursos", admin_courses_environment_path(@environment), {:class => ''}] do
+      %>
+
+    <% if @memberships && @memberships.size > 0 %>
+      <% form_remote_tag :url => { :action => :search_users_admin, :id => @environment.id},
+        :loading => "showLoadingUsers()", :html => { :class => "common filter" } do %>
+        <div class="filters clearfix">
+          <% field_set_tag "Buscar", :class => "grid_4 alpha inline hidden" do %>
+            <%= label_tag :search_user, "Nome" %>
+            <%= text_field_tag :search_user, nil, :class => "nano" %>
+          <% end %>
+          <% field_set_tag nil, :class => "grid_4 omega inline" do %>
+            <ul class="columns">
+              <li>
+                <%= check_box_tag :role_filter, Role[:member].id %>
+                <%= label_tag :role_filter, "Membro", :class => "inline" %>
+              </li>
+              <li>
+                <%= check_box_tag :role_filter, Role[:tutor].id %>
+                <%= label_tag :role_filter, "Tutor", :class => "inline" %>
+              </li>
+              <li>
+                <%= check_box_tag :role_filter, Role[:teacher].id %>
+                <%= label_tag :role_filter, "Professor", :class => "inline" %>
+              </li>
+              <li>
+                <%= check_box_tag :role_filter, Role[:environment_admin].id %>
+                <%= label_tag :role_filter, "Administrador", :class => "inline" %>
+              </li>
+            </ul>
+
             <% end %>
-            <% field_set_tag "Papéis" , :class => "grid_11 omega" do %>
-              <% Role.all().each do |role| %>
-                <% unless role.name == 'admin' %>
-                  <%= check_box_tag :role_filter, role.id %>
-                  <%= label_tag :role_filter, Role.human_attribute_name(role.name), :class => "inline" %>
-                <% end %>
-              <% end %>
-            <% end %>
-            <%= submit_tag 'Filtrar',
-                  :style => "float: right;" %>
-          </div>
-        <% end %>
+          <%= submit_tag 'Filtrar',
+            :style => "float: right;" %>
+        </div>
+      <% end %>
 
       <div id="user_list">
-        <%= render :partial => 'user_list_admin',
+        <%= render :partial => 'environments/user_list_admin',
           :locals => {:memberships => @memberships}%>
       </div>
-      <% else %>
-        <div class="box_notice">Não há usuários no ambiente.</div>
-      <% end %>
+    <% else %>
+      <div class="box_notice">Não há usuários no ambiente.</div>
+    <% end %>
 
 
     <%= will_paginate @memberships, :renderer => EndlessRenderer %>
-    </div>
-  </div>
+  <% end %>
 </div>
+</div><!-- end #environment-edit -->
