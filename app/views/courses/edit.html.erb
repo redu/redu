@@ -25,7 +25,8 @@
 
 <%= render :partial => 'courses/sidebar' %>
 <div class="main grid_12 omega big-col">
-  <%= render :partial => 'courses/breadcrumbs' %>
+  <%= render :partial => 'courses/breadcrumbs',
+    :locals => { :course => @header_course } %>
   <%= render :partial => 'courses/header',
     :locals => { :course => @header_course } %>
   <div id="course-manage" class="body">

@@ -5,15 +5,15 @@
         :class => 'replacement home icon icon-home-lightblue_16_16' %>
     </li>
     <li>
-      <%= link_to @environment.name, environment_path(@environment),
+      <%= link_to course.environment.name, environment_path(course.environment),
         :class => 'replacement icon icon-environment-lightblue_16_16' %>
     </li>
     <li>
-      <%= link_to @course.name,
-        environment_course_path(@course.environment, @course),
+      <%= link_to course.name,
+        environment_course_path(course.environment, course),
         :class => 'icon icon-course-lightblue_16_16' %>
     </li>
   </ol>
   <%= render :partial => 'courses/moderatorship',
-    :locals => { :course => @course } %>
+    :locals => { :course => course } %>
 </div>

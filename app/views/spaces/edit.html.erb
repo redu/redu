@@ -1,13 +1,14 @@
 <%= render :partial => 'spaces/sidebar', :locals => { :space => @space } %>
 <div class="main grid_12 omega big-col">
-  <%= render :partial => 'spaces/breadcrumbs', :locals => { :space => @space } %>
+  <%= render :partial => 'spaces/breadcrumbs',
+    :locals => { :space => @space } %>
   <%= render :partial => 'spaces/header',
     :locals => { :space => @header_space }%>
 
     <div id="space-manage" class="body">
       <div class="header">
         <h4>Gerenciamento</h4>
-        <span class="counter">Informações gerais da Disciplina <%= @space.name %></span>
+        <span class="counter">Informações gerais da Disciplina <%= @header_space.name %></span>
       </div>
 
       <% fake_tabs ["Informações", edit_space_path(@space), { :class => "icon icon-management-lightblue_16_16" }],
