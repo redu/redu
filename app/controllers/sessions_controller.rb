@@ -35,8 +35,7 @@ class SessionsController < BaseController
             params[:invitation_token])
           @course = @user_course_invitation.course
           @environment = @course.environment
-          render :layout => 'new/clean',
-            :template => 'user_course_invitations/show'
+          render :layout => 'clean', :template => 'user_course_invitations/show'
         else
           render :layout => false, :template => 'base/site_index'
         end

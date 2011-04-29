@@ -1,5 +1,5 @@
 class UserCourseInvitationsController < BaseController
-  layout "new/clean"
+  layout "clean"
 
   load_resource :environment
   load_resource :course, :through => :environment
