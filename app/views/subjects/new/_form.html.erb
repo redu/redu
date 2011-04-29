@@ -13,52 +13,38 @@
     <%= render :partial => 'subjects/new/raw_form', :locals => { :f => f } %>
     <% end %>
 
-      <% if @subject.visible? %>
-        <div class="box_notice">
-          Você não pode editar o conteúdo do módulo, pois ele está publicado. Para despublicá-lo,
-          clique <%= link_to "aqui", unpublish_space_subject_path(@space, @subject),
-      :confirm => "Ao despublicar um módulo, todas as matrículas serão perdidas." + \
-      " Tem certeza?",
-      :method => "post",
-      :class => "button" %>
+    <%= render :partial => 'lectures/item_created', :collection => @subject.lectures %>
 
-        </div>
-        <%= render :partial => 'lectures/item_created', :collection => @subject.lectures,
-          :locals => { :visible => true } %>
-      <% else %>
-        <%= render :partial => 'lectures/item_created', :collection => @subject.lectures,
-          :locals => { :visible => false } %>
-      <% end %>
-      <% if action_name == 'edit' %>
-        <%= render :partial => 'lectures/choose_type',
-              :locals => { :subject => @subject, :space => @space } %>
-      <% end %>
-      <%= render :partial => 'lectures/new/index_short' %>
-      <%= error_for :subject, :lectures %>
-
-      <% if action_name == 'new' %>
-        <%= f.submit "Adicionar recursos", :id => "add_button", :class => 'add'%>
-        <%= f.submit "Criar", :id => "create_button", :class => 'important',
-          :style => "display: none;" %>
-        <%= link_to_function "Cancelar",
-          "$('#new_subject').remove(); $('#link-new-subject').show();",
-          :id => "cancel_link", :class => 'cancel vanilla' %>
-      <% else %>
-        <%= link_to_function "Adicionar recursos",
-          "jQuery('#lectures_types').show(); jQuery(this).hide()",
-          :id => 'add_link', :class => 'add'
-        %>
-      <%= f.submit "Salvar", :class => 'important' %>
-      <% unless @admin_panel %>
-        <%= link_to_function "Voltar",
-          "$('#edit_subject_#{@subject.id}').remove(); $('#content').show();",
-          :id => "cancel_link" %>
-        <%= link_to "Deletar",
-          space_subject_path(@space, @subject),
-          :method => :delete,
-          :confirm => "Você tem certeza que deseja deletar deste módulo? Todas as informações serão perdidas."  %>
-      <% end %>
+    <% if action_name == 'edit' %>
+      <%= render :partial => 'lectures/choose_type',
+        :locals => { :subject => @subject, :space => @space } %>
     <% end %>
-    <%= image_tag 'spinner.gif', :id => 'spinner-form', :style => 'display: none; float: right;'  %>
+    <%= render :partial => 'lectures/new/index_short' %>
+    <%= error_for :subject, :lectures %>
+
+    <% if action_name == 'new' %>
+      <%= f.submit "Adicionar recursos", :id => "add_button", :class => 'add'%>
+      <%= f.submit "Criar", :id => "create_button", :class => 'important',
+        :style => "display: none;" %>
+      <%= link_to_function "Cancelar",
+        "$('#new_subject').remove(); $('#link-new-subject').show();",
+        :id => "cancel_link", :class => 'cancel vanilla' %>
+    <% else %>
+      <%= link_to_function "Adicionar recursos",
+        "jQuery('#lectures_types').show(); jQuery(this).hide()",
+        :id => 'add_link', :class => 'add'
+      %>
+    <%= f.submit "Salvar", :class => 'important' %>
+    <% unless @admin_panel %>
+      <%= link_to_function "Voltar",
+        "$('#edit_subject_#{@subject.id}').remove(); $('#content').show();",
+        :id => "cancel_link" %>
+      <%= link_to "Deletar",
+        space_subject_path(@space, @subject),
+        :method => :delete,
+        :confirm => "Você tem certeza que deseja deletar deste módulo? Todas as informações serão perdidas."  %>
+    <% end %>
   <% end %>
+  <%= image_tag 'spinner.gif', :id => 'spinner-form', :style => 'display: none; float: right;'  %>
+<% end %>
 <% end %>
