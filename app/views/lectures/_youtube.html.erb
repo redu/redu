@@ -1,30 +1,31 @@
 <script type="text/javascript">
+  var flashvars = {
+    'file':      '<%= "http://www.youtube.com/v/#{resource.external_resource}" %>',
+    'autostart': 'false',
+    'image':	 '<%= "http://img.youtube.com/vi/#{resource.external_resource}/0.jpg" %>',
+    'skin':	 '/flash/modieus.swf'
+  };
 
-   var flashvars = {
-      'file':               '<%= "http://www.youtube.com/v/#{resource.external_resource}" %>',
-      'autostart':          'false',
-      'image':							'<%= "http://img.youtube.com/vi/#{resource.external_resource}/0.jpg" %>',
-      'skin':								'/flash/modieus.swf'
-   };
+  var params = {
+    'allowfullscreen':    'true',
+    'allowscriptaccess':  'always',
+    'bgcolor':            '#ffffff'
+  };
 
-   var params = {
-      'allowfullscreen':    'true',
-      'allowscriptaccess':  'always',
-      'bgcolor':            '#ffffff'
-			//'wmode':							'transparent'
-   };
+  var attributes = {
+    'id':                 'player',
+    'name':               'player'
+  };
 
-   var attributes = {
-      'id':                 'player',
-      'name':               'player'
-   };
-
-   swfobject.embedSWF('/flash/player.swf', 'player', '<%=(is_interactive_class) ? "480" : "940" %>', '360', '9', 'false', flashvars, params, attributes);
+  swfobject.embedSWF('/flash/player.swf', 'player', '650' , '360', '9', 'false',
+    flashvars, params, attributes);
 </script>
 
-	<div id="player">
-	<span>
-	Você precisa instalar o <%= link_to 'Flash Player', 'http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash' %> para ver este vídeo.
-	</span>
-	</div>
+<div id="player" class="stage">
+  <span>
+    Você precisa instalar o <%= link_to 'Flash Player',
+      'http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash' %>
+    para ver este vídeo.
+  </span>
+</div>
 

@@ -93,7 +93,6 @@ ActionController::Routing::Routes.draw do |map|
                      :done => :post },
         :collection => { :unpublished_preview => :get,
                          :cancel => :get,
-                         :sort_lesson => :post,
                          :unpublished => :get,
                          :published => :get }
       subject.resources :exams,
@@ -104,8 +103,7 @@ ActionController::Routing::Routes.draw do |map|
                      :compute_results => :get,
                      :results => :get,
                      :review_question => :get },
-          :collection => { :unpublished_preview => :get,
-                           :unpublished => :get,
+          :collection => { :unpublished => :get,
                            :published => :get,
                            :history => :get,
                            :new_exam => :get,

@@ -13,9 +13,9 @@
       <%= javascript_include_tag :ckeditor %>
     <% end %>
     <form action="" id="new_subject" class="common">
-      <%= render :partial => 'lectures/new/index_short' %>
-      <%= 
-        render :partial => "lectures/new/choose_type",
+      <%= render :partial => 'lectures/index_short' %>
+      <%=
+        render :partial => "lectures/choose_type",
           :locals => { :subject => @subject, :space => @space }
         %>
     </form>

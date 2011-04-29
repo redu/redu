@@ -4,5 +4,5 @@
   :html => { :id => "page_form" },
   :before => "for (instance in CKEDITOR.instances){
             CKEDITOR.instances[instance].updateElement();}" do |f| %>
-  <%= render :partial => 'page_fields', :locals => { :f => f }%>
+  <%= render :partial => 'lectures/page_fields', :locals => { :f => f }%>
 <% end %>

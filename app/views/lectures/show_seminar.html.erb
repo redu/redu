@@ -1,4 +1,4 @@
-<%= render :partial => 'lectures/new/lights' %>
+<%= render :partial => 'lectures/lights' %>
 <%= render :partial => 'subjects/sidebar' %>
 <div class="main grid_12 omega big-col">
   <%= render :partial => "subjects/breadcrumbs", :locals => { :subject => @subject } %>
@@ -12,14 +12,16 @@
         <%= @subject.lectures.length %> recursos disponíveis
       </span>
     </div>
-    <%= render :partial => 'lectures/new/context',
+    <%= render :partial => 'lectures/context',
       :locals => { :student_grade => @student_grade, :done => @done } %>
-    <%= render :partial => 'lectures/new/info',
+    <%= render :partial => 'lectures/info',
       :locals => { :lecture => @lecture } %>
-    <%= render :partial => 'lectures/new/details',
+    <%= render :partial => 'lectures/details',
       :locals => { :lecture => @lecture} %>
-        <%= render :partial => "lectures/new/document",
-          :locals => { :lecture => @lecture } %>
+      <div id="view_video" class="stage" align="center" >
+        <%= render :partial => "lectures/player",
+          :locals => { :seminar => @lecture.lectureable } %>
+      </div>
 
     <div class="student-actions">
       <ul>
@@ -37,12 +39,12 @@
         -->
         <li>
           <span class="lights"></span>
-          <a href="" id="lights" title="">Apagar luzes</a>
+          <a href="" title="" id="lights">Apagar luzes</a>
         </li>
         <li>
           <span id ="favorite" class="favorite"></span>
-            <% if current_user.has_favorite(@lecture) %>
-               <%= link_to_remote('Desfavoritar', :url =>
+          <% if current_user.has_favorite(@lecture) %>
+            <%= link_to_remote('Desfavoritar', :url =>
                     not_favorite_user_favorite_path(current_user, @lecture,
                                :type => @lecture.class.to_s ),
                                :loading => "$('#rm_favorites_link').hide(); $('#favorite_spinner').show();" ,
@@ -54,7 +56,8 @@
                                :loading => "$('#favorites_link').hide(); $('#favorite_spinner').show();" ,
                                :html => { :id => 'favorites_link' }) %>
           <% end %>
-          <%= image_tag 'loading_bar.gif', :style => 'display:none;', :id => 'favorite_spinner' %>
+          <%= image_tag 'loading_bar.gif', :style => 'display:none;',
+            :id => 'favorite_spinner' %>
         </li>
         <li>
           <% content_for :footer_scripts_and_styles do %>
@@ -76,7 +79,7 @@
       </ul>
     </div>
 
-    <div class="statuses-wrapper clearfix">
+    <div class="statuses-wrapper">
       <%= render :partial => 'statuses/create_status',
         :locals => { :statusable => @lecture } %>
       <div id="statuses" class="statuses">

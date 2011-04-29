@@ -1,7 +1,7 @@
 <fieldset id="lectures_index" class="resources-wrapper">
   <legend class="label">Recursos adicionados</legend>
   <ul id="resources_list" class="resources">
-    <%= render :partial => "lectures/new/item_short", :collection => @subject.lectures %>
+    <%= render :partial => "lectures/item_short", :collection => @subject.lectures %>
   </ul>
   <%= error_for :subject, :lectures %>
 </fieldset>

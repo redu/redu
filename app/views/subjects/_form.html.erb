@@ -33,7 +33,7 @@
         <%= render :partial => 'lectures/choose_type',
               :locals => { :subject => @subject, :space => @space } %>
       <% end %>
-      <%= render :partial => 'lectures/new/index_short' %>
+      <%= render :partial => 'lectures/index_short' %>
       <%= error_for :subject, :lectures %>
 
       <% if action_name == 'new' %>

@@ -1,4 +1,4 @@
-page.insert_html :bottom, '#subject-resources > ol', :partial => "lectures/new/item",
+page.insert_html :bottom, '#subject-resources > ol', :partial => "lectures/item",
   :collection => @lectures
 
 page.replace_html ".endless",

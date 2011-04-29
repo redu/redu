@@ -1,2 +1,0 @@
-page << "jQuery('#save_info').html('Salvo em #{Time.now.utc}')"
-

@@ -57,7 +57,7 @@ class Ability
     # Lecture
     alias_action :embed_content, :upload_video, :cancel, :unpublished,
       :waiting, :to => :manage
-    alias_action :download_attachment, :rate, :sort_lesson, :done,
+    alias_action :download_attachment, :rate, :done,
       :to => :read
     alias_action :unpublished_preview, :to => :view
 
