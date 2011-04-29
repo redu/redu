@@ -80,7 +80,7 @@
         <%= render :partial => 'users/item_short',
           :collection => space.users.n_recent(9) %>
       </ul><!-- end .connections -->
-      <%= link_to "Ver mais", users_space_subject_path(@space, @subject), :class => 'more' %>
+      <%= link_to "Ver mais", users_space_path(@space), :class => 'more' %>
     </li>
   </ul><!-- end .local-nav -->
 </div>
