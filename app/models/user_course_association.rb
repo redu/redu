@@ -11,7 +11,7 @@ class UserCourseAssociation < ActiveRecord::Base
   }
   # Filtra por palavra-chave (procura em User)
   named_scope :with_keyword, lambda { |keyword|
-    if not keyword.empty? and keyword.size > 4 
+    if not keyword.empty? and keyword.size > 3
       { :conditions => [ "users.first_name LIKE :keyword " + \
         "OR users.last_name LIKE :keyword " + \
         "OR users.login LIKE :keyword", {:keyword => "%#{keyword}%"}],
@@ -19,19 +19,40 @@ class UserCourseAssociation < ActiveRecord::Base
     end
   }
 
+  named_scope :recent, lambda {
+      {:conditions => [ "created_at >= ?", 1.week.ago]}
+  }
+
+  named_scope :approved, :conditions => { :state => 'approved' }
+  named_scope :invited, :conditions => { :state => 'invited' }
+
   # Máquina de estados para moderação das dos usuários nos courses.
   acts_as_state_machine :initial => :waiting
   state :waiting
-  state :approved
+  state :invited, :enter => :send_course_invitation_notification
+  # create_hierarchy_associations só é achamado no caso de convites
+  state :approved, :enter => :create_hierarchy_associations
   state :rejected
   state :failed
+
+  event :invite do
+    transitions :from => :waiting, :to => :invited
+  end
 
   event :approve do
     transitions :from => :waiting, :to => :approved
   end
 
+  event :accept do
+    transitions :from => :invited, :to => :approved
+  end
+
   event :reject do
     transitions :from => :waiting, :to => :rejected
+  end
+
+  event :deny do
+    transitions :from => :invited, :to => :rejected
   end
 
   event :fail do
@@ -40,4 +61,22 @@ class UserCourseAssociation < ActiveRecord::Base
 
   validates_uniqueness_of :user_id, :scope => :course_id
 
+  # Verificar se há UCA com estado pending para um determinado usuário.
+  # Opcionalmente pode-se passar o curso.
+  def self.has_invitation_for?(user, course = nil)
+    conditions = { :state => 'invited', :user_id => user }
+    conditions[:course_id] = course unless course.nil?
+
+    UserCourseAssociation.count(:conditions => conditions) > 0
+  end
+
+  def send_course_invitation_notification
+    UserNotifier.deliver_course_invitation_notification(self.user, self.course)
+  end
+
+  protected
+
+  def create_hierarchy_associations
+    self.course.create_hierarchy_associations(self.user) if self.invited?
+  end
 end

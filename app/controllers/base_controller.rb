@@ -8,7 +8,6 @@ class BaseController < ApplicationController
   include LocalizedApplication
 
   around_filter :set_locale
-  skip_before_filter :verify_authenticity_token, :only => :footer_content
   # Work around (ver método self.login_required_base)
   before_filter :login_required_base, :only => [:learn_index]
 
@@ -17,7 +16,7 @@ class BaseController < ApplicationController
     redirect_to home_path
   end
 
-  caches_action :site_index, :footer_content, :if => Proc.new{|c| c.cache_action? }
+  caches_action :site_index, :if => Proc.new{|c| c.cache_action? }
   def cache_action?
     !logged_in? && controller_name.eql?('base') && params[:format].blank?
   end
@@ -38,9 +37,7 @@ class BaseController < ApplicationController
     authorize! :teach_index, :base
 
     respond_to do |format|
-      format.html  do
-        render :template => 'base/new/teach_index', :layout => 'new/application'
-      end
+      format.html
     end
   end
 
@@ -72,16 +69,9 @@ class BaseController < ApplicationController
       format.html do
         if current_user
           redirect_to home_user_path(current_user)
-        else
-          render :template => 'base/new/site_index'
         end
       end
     end
-  end
-
-  def footer_content
-    get_recent_footer_content
-    render :partial => 'shared/footer_content' and return
   end
 
   def homepage_features
@@ -266,14 +256,6 @@ class BaseController < ApplicationController
       sql += " ORDER BY #{order}"
       sql += " LIMIT #{limit}" if limit
       Tag.find_by_sql(sql).sort{ |a,b| a.name.downcase <=> b.name.downcase}
-  end
-
-  def get_recent_footer_content
-    #@recent_clippings = Clipping.find_recent(:limit => 10)
-    @recent_photos = Photo.find_recent(:limit => 10)
-    @recent_comments = Comment.find_recent(:limit => 13)
-    @popular_tags = popular_tags(30, ' count DESC')
-    @recent_activity = User.recent_activity(:size => 15, :current => 1)
   end
 
   def get_additional_homepage_data

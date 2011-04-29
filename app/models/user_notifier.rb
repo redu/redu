@@ -119,15 +119,6 @@ class UserNotifier < ActionMailer::Base
     @body[:message] = message
   end
 
-  def beta_invitation(email, beta_key)
-    setup_sender_info
-    @recipients  = "#{email}"
-    @subject     = "Você recebeu um convite para acessar a versão beta do Redu"
-    @sent_on     = Time.now
-    @body[:bkey] = beta_key
-    @body[:url]  = APP_URL
-  end
-
   def event_notification(user, event)
     setup_sender_info
     @recipients  = "#{user.email}"
@@ -306,6 +297,24 @@ class UserNotifier < ActionMailer::Base
     @body[:user] = user
     @body[:old_plan] = old_plan
     @body[:new_plan] = new_plan
+  end
+
+  def course_invitation_notification(user, course)
+    setup_sender_info
+
+    @recipients  = "#{user.email}"
+    @subject    = "Você foi convidado para um curso no Redu"
+    @body[:user] = user
+    @body[:course] = course
+  end
+
+  def external_user_course_invitation(user_course_invitation, course)
+    setup_sender_info
+
+    @recipients  = "#{user_course_invitation.email}"
+    @subject    = "Você foi convidado para um curso no Redu"
+    @body[:user_course_invitation] = user_course_invitation
+    @body[:course] = course
   end
 
   protected

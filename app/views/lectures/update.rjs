@@ -1,12 +1,5 @@
+page.insert_html :after, "#{@lecture.id}-item",
+  :partial => 'lectures/item_short',
+  :locals => { :item_short => @lecture }
 page.remove "#{@lecture.id}-item"
-page.insert_html :before, "lectures_types", :partial => 'item_created',
-  :locals => { :item_created => @lecture }
-case @lecture.lectureable.class.to_s
-when "Page"
-  page.remove "page_form"
-when "Seminar"
-  page.remove "seminar-form"
-when "Document"
-  page.remove "document-form"
-end
-page.show "add_link"
+page.remove "edit-#{@lecture.id}-item"

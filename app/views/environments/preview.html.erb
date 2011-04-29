@@ -1,53 +1,27 @@
-<script type="text/javascript" charset="utf-8">
-  //<![CDATA[
-jQuery(document).ready(function(){
-    $(".tabs").tabs();
-    })
-//]]>
-</script>
+<%= render :partial => 'environments/preview_sidebar' %>
 
-<div class="grid_16">
-  <div class="tabs">
-    <ul>
-      <li><a href="#tabs-1">Descrição</a></li>
+<div class="main grid_12 omega big-col">
+  <%= render :partial => "environments/breadcrumbs", :locals => { :environment => @environment } %>
+  <%= render :partial => 'environments/header',
+        :locals => { :environment => @environment } %>
+
+  <div id="environment-preview" class="hierarchy-preview body">
+    <div class="header">
+      <h4>Pré-visualização</h4>
+    </div>
+
+    <h3 class="call icon icon-course-lightblue_16_16">Cursos</h3>
+    <span class="count">
+      (<%= pluralize(@environment.courses.length, 'disciplina') + " " +
+       (pluralize @environment.courses.length,'disponível').split(' ')[1] %>)
+    </span>
+
+    <ul class="preview-listing courses">
+      <%= render :partial => 'courses/item_short',
+        :collection => @environment.courses %>
     </ul>
 
-    <div id="tabs-1" class="clearfix">
-      <div class="pretty-text clearfix"><%= @environment.description %></div> 
-      <ul class="sortable sidebar">
-        <li class="clearfix">
-          <span class="call"><span>Palavras-chave</span></span>  
-          <ul class="tags">
-            <% for tag in @environment.tags %>
-              <li><span><%= tag.name %></span></li>
-            <% end %>
-          </ul>
-        </li>
-        <li>
-          <span class="call"><span>Colaboradores</span></span>
-          <div class="box clearfix">
-            <ul class="clearfix">
-              <%= render :partial => 'spaces/member_short', :collection => @environment.users, :as => :member %>
-            </ul>
-          </div>
-        </li>
-        <span class="call"><span>Alguns cursos</span></span>
-        <%= render :partial => "courses/item", :collection => @environment.courses.published[0..4] %>
-      </ul>
-    </div><!-- fim tabs-1 -->
-  </div><!-- fim tabs -->
-  <div class="sidebar news">
-    <span class="call"><span>Notícias</span></span>
-    <% if @environment.bulletins && @environment.bulletins.size > 0 %>
-      <%= render :partial => 'bulletins/headlines', :object => @environment.bulletins  %>
-      <%= link_to 'Ver todos', environment_bulletins_path(@environment), :class=>"more" %> 
-    <% else %>
-      <div class="box_notice">
-        Nenhuma notícia foi enviada ainda.
-      </div>
-    <% end %>
-  </div><!-- end noticias -->
-  <% field_set_tag 'Compartilhe!', :class => 'fake' do %>
-    <%= render :partial => 'shared/share', :locals => {:resource => @environment}%>
-  <% end %>
-</div><!-- fim grid_16 -->
+    <%# FIXME Colocar listagem de notícias (ver front-end) %>
+  </div><!-- end #environment-courses -->
+
+</div><!-- end .main -->

@@ -3,6 +3,7 @@ class FavoritesController < BaseController
   # Não precisa de permissão, pois ele vai ver os favoritos do current_user.
   def index
     @user = current_user
+
     respond_to do |format|
       case params[:type]
       when 'exams'
@@ -16,12 +17,10 @@ class FavoritesController < BaseController
         end
       when 'statuses'
         format.js do
-          #TODO
           render :template => 'favorites/statuses.rjs'
         end
       end
       format.html do
-        #@lectures = Lecture.favorites_user_id_eq(current_user.id).descend_by_created_at
         @lectures = Lecture.paginate(:all,
                                    :joins => :favorites,
                                    :conditions => ["favorites.favoritable_type = 'Lecture' AND favorites.user_id = ? AND lectures.id = favorites.favoritable_id", current_user.id],
@@ -59,16 +58,11 @@ class FavoritesController < BaseController
     if @favorite
       flash.now[:notice] = msg_ok
       respond_to do |format|
-          #FIXME Tirar new_layout após todo o redesign ser feito
-          if params.has_key? :new_layout
-            if @favorite.favoritable.class.to_s == 'Status'
-              format.js { render :template => 'favorites/new/status_favorite' }
-            elsif @favorite.favoritable.class.to_s == 'Lecture'
-              format.js { render :template => 'favorites/new/lecture_favorite' }
-            end
-          else
-            format.js { render :template => 'favorites/status_favorite', :locals => {:favoritable_id => @favoritable_id} }
-          end
+        if @favorite.favoritable.class.to_s == 'Status'
+          format.js { render :status_favorite }
+        elsif @favorite.favoritable.class.to_s == 'Lecture'
+          format.js { render :lecture_favorite }
+        end
       end
     else
       flash.now[:error] = msg_err
@@ -105,16 +99,11 @@ class FavoritesController < BaseController
     if @favorite
       flash.now[:notice] = msg_ok
       respond_to do |format|
-          #FIXME Tirar new_layout após todo o redesign ser feito
-          if params.has_key? :new_layout
-            if @favorite.favoritable.class.to_s == 'Status'
-              format.js { render :template => 'favorites/new/status_not_favorite' }
-            elsif @favorite.favoritable.class.to_s == 'Lecture'
-              format.js { render :template => 'favorites/new/lecture_not_favorite' }
-            end
-          else
-            format.js { render :template => 'favorites/status_not_favorite', :locals => {:favoritable_id => @favoritable_id} }
-          end
+        if @favorite.favoritable.class.to_s == 'Status'
+          format.js { render :status_not_favorite }
+        elsif @favorite.favoritable.class.to_s == 'Lecture'
+          format.js { render :lecture_not_favorite }
+        end
       end
     else
       flash.now[:error] = msg_err

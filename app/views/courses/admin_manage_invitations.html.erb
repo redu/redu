@@ -1,0 +1,40 @@
+<%= render :partial => 'courses/sidebar' %>
+<div class="main grid_12 omega big-col">
+  <%= render :partial => 'courses/breadcrumbs' %>
+  <%= render :partial => 'courses/header',
+    :locals => { :course => @course } %>
+  <div id="course-manage" class="body">
+    <div class="header">
+      <h4>Gerenciamento</h4>
+      <span class="counter">Listagem de membros do curso <%= @course.name %></span>
+    </div>
+    <%
+      fake_tabs ["Informações", edit_environment_course_path(@environment, @course), {:class => 'icon icon-management-gray_16_16'}],
+        ["Membros", admin_members_environment_course_path(@environment, @course), {:class => 'icon icon-members-gray_16_16'}],
+        ["Moderação", admin_members_requests_environment_course_path(@environment, @course), {:class => 'icon icon-moderation-gray_16_16'}],
+        ["Convites", admin_manage_invitations_environment_course_path(@environment, @course), {:class => ''}],
+        ["Disciplinas", admin_spaces_environment_course_path(@environment, @course), {:class => 'icon icon-space-gray_16_16'}] do
+      %>
+    <div class="actions invite clearfix">
+      <%=
+        link_to "Convidar membros", admin_invitations_environment_course_path(
+          @environment, @course),
+          :class => "button"
+        %>
+    </div>
+    <% unless @email_invitations.empty? && @user_invitations.invited.empty? %>
+      <div id="user_list">
+        <%= render :partial => 'courses/invitations_list_admin',
+          :locals => {:user_invitations => @user_invitations,
+            :email_invitations => @email_invitations}%>
+        </div>
+      <% else %>
+        <div class="box_notice">
+          Não há convites em aberto.
+        </div>
+      <% end %>
+      <%#= will_paginate  @memberships, :renderer => EndlessRenderer %>
+    <% end %>
+  </div>
+</div>
+

@@ -1,0 +1,31 @@
+<% if @sidebar_preview %>
+  <%= render :partial => 'environments/preview_sidebar' %>
+<% else %>
+  <%= render :partial => 'environments/sidebar', :locals => { :environment => @environment } %>
+<% end %>
+
+<div class="main grid_12 omega big-col">
+  <%= render :partial => "environments/breadcrumbs",
+      :locals => { :environment => @environment } %>
+
+  <%= render :partial => 'environments/header',
+    :locals => { :environment => @environment } %>
+
+  <div id="environment-users" class="hierarchy-listing-wrapper">
+    <div class="header">
+      <h4>Membros</h4>
+      <span class="counter">
+        <%= @environment.users.length %> pessoas fazem parte da
+        <%= @environment.initials_or_name %>
+      </span>
+    </div>
+
+    <ul id="users_list" class="members clearfix">
+      <%= render :partial => 'users/item',
+        :collection => @users, :locals => {:entity => @environment} %>
+    </ul>
+
+    <%= will_paginate @users, :renderer => EndlessRenderer %>
+  </div><!-- end #environment-courses -->
+
+</div><!-- end .main -->

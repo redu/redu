@@ -19,7 +19,8 @@ class Ability
 
     # Course
     alias_action :admin_spaces, :admin_members_request,
-      :moderate_members_requests, :to => :manage
+      :moderate_members_requests, :invite_members, :admin_manage_invitations,
+      :destroy_invitations, :to => :manage
     alias_action :unjoin, :to => :read
 
     # Space
@@ -39,7 +40,6 @@ class Ability
     alias_action :ical, :past, :notify, :day, :to => :read
 
     # Status
-    alias_action :respond, :to => :read
 
     # User
     alias_action :learning, :teaching,
@@ -57,7 +57,7 @@ class Ability
     # Lecture
     alias_action :embed_content, :upload_video, :cancel, :unpublished,
       :waiting, :to => :manage
-    alias_action :download_attachment, :rate, :sort_lesson, :done,
+    alias_action :download_attachment, :rate, :done,
       :to => :read
     alias_action :unpublished_preview, :to => :view
 
@@ -72,10 +72,8 @@ class Ability
     alias_action :delete_selected, :more, :to => :manage
 
     # Subject
-    alias_action :lazy, :cancel, :edit_resources, :update_resources,
-      :admin_lectures_order, :to => :manage
-    alias_action :statuses, :attend, :to => :read
-    alias_action :infos, :enroll, :to => :preview
+    alias_action :cancel, :admin_lectures_order, :to => :manage
+    alias_action :statuses, :to => :read
 
     # Friendship
     alias_action :pending, :accept, :decline, :to => :manage
@@ -95,7 +93,7 @@ class Ability
 
     # Usuários logados podem
     unless user.nil?
-      
+
       # Ter acesso ao 'Ensine', só usuários logados
       can :teach_index, :base
 
@@ -108,21 +106,22 @@ class Ability
       can :read, :all do |object|
         user.can_read? object
       end
-      
+
       can :preview, [Course, Environment], :published => true
 
       can :create, Environment
       can :join, Course
 
+      can [:accept, :deny], Course do |course|
+        assoc = user.get_association_with(course)
+        !assoc.nil? and assoc.current_state == :invited
+      end
+
       # User
       can :read, User
-
-      # Subject
-      can :preview, Subject do |subject|
-        subject.published? && user.has_access_to?(subject.space)
-      end
-      can :unenroll, Subject do |subject|
-        subject.published? && user.has_access_to?(subject)
+      can :view_mural, User do |u|
+        u.settings.view_mural == Privacy[:public] or
+          (u.settings.view_mural == Privacy[:friends] && u.friends?(user))
       end
 
       # Seminar
@@ -140,7 +139,12 @@ class Ability
         myfile.can_upload_file?(myfile.folder.space)
       end
 
-      # Plan (payment gatewat)
+      # Join in a Course
+      can :add_entry, Course do |course|
+        course.can_add_entry?
+      end
+
+      # Plan (payment gateway)
       can :read, :success
 
       # Admin do environment ou teacher, caso o space não tenha owner
@@ -149,14 +153,16 @@ class Ability
           (space.owner.nil? && user.teacher?(space))
       end
 
-      # Caso seja o Status de usuário, apenas ele mesmo pode criá-lo.
-      can :create, Status do |status|
+      # Caso seja o Status de usuário, apenas ele mesmo ou seus amigos
+      # podem criá-lo/respondê-lo.
+      can [:create, :respond], Status do |status|
+        # Caso seja no mural de um usuário
         ((status.statusable.class.to_s.eql? 'User') && \
-         (user == status.statusable || user.friends?(status.statusable))) ||
+         ((can? :manage, status.statusable) ||
+          (can? :view_mural, status.statusable))) ||
           # Caso geral (Spaces, Subjects, etc.)
           (user.has_access_to? status.statusable)
       end
     end
   end
-
 end

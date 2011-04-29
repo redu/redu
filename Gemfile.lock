@@ -9,7 +9,7 @@ GIT
 
 GIT
   remote: git://github.com/guiocavalcanti/scribd_fu.git
-  revision: 99d74753a12f0f50a632a5b6dc7916e58c0f6e47
+  revision: 11dcf9d8f7fc87be85bb69b5ca62a4f50e563a83
   specs:
     scribd_fu (2.0.9)
       rscribd
@@ -44,7 +44,7 @@ GEM
     cancan (1.4.1)
     cgi_multipart_eof_fix (2.5.0)
     columnize (0.3.2)
-    css_parser (1.1.5)
+    css_parser (1.1.6)
     daemons (1.0.10)
     desert (0.5.4)
     erubis (2.6.6)
@@ -102,11 +102,11 @@ GEM
     shoulda (2.11.3)
     shuber-sortable (1.0.6)
     validatable (1.6.7)
-    whenever (0.6.6)
+    whenever (0.6.7)
       aaronh-chronic (>= 0.3.9)
       activesupport (>= 2.3.4)
     will_paginate (2.3.15)
-    xml-simple (1.0.14)
+    xml-simple (1.0.15)
     zencoder (2.3.1)
       activesupport
       i18n

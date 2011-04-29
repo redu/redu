@@ -1,7 +1,7 @@
 class CoursesController < BaseController
-  layout "environment"
   load_resource :environment
-  load_and_authorize_resource :course, :through => :environment, :except => [:index]
+  load_and_authorize_resource :course, :through => :environment,
+    :except => [:index]
 
   rescue_from CanCan::AccessDenied do |exception|
     raise if cannot? :preview, @course
@@ -16,10 +16,8 @@ class CoursesController < BaseController
                :per_page => AppConfig.items_per_page)
 
     respond_to do |format|
-      format.html do
-        render :template => 'courses/new/show', :layout => 'new/application'
-      end
-      format.js { render :template => 'courses/new/show' }
+      format.html
+      format.js
     end
   end
 
@@ -27,9 +25,7 @@ class CoursesController < BaseController
     @header_course = @course.clone
 
     respond_to do |format|
-      format.html do
-        render :template => "courses/new/edit", :layout => "new/application"
-      end
+      format.html
     end
   end
 
@@ -49,26 +45,26 @@ class CoursesController < BaseController
     respond_to do |format|
       if @course.update_attributes(params[:course])
         if params[:course][:subscription_type].eql? "1" # Entrada de membros passou a ser livre, aprovar todos os membros pendentes
-          UserCourseAssociation.update_all("state = 'approved'", ["course_id = ? AND state = 'waiting'", @course.id])
+          @course.user_course_associations.all(:conditions => { :state => 'waiting'}).each do |ass|
+            ass.approve!
+            @course.create_hierarchy_associations(ass.user, ass.role)
+          end
+
         end
 
         flash[:notice] = 'O curso foi editado.'
         format.html { redirect_to(environment_course_path(@environment, @course)) }
         format.xml { head :ok }
       else
-        format.html { render :template => "courses/new/edit",
-          :layout => "new/application" }
+        format.html { render "edit" }
         format.xml  { render :xml => @course.errors, :status => :unprocessable_entity }
       end
     end
   end
 
   def new
-
     respond_to do |format|
-      format.html do
-        render :template => 'courses/new/new', :layout => 'new/application'
-      end
+      format.html
     end
   end
 
@@ -76,74 +72,59 @@ class CoursesController < BaseController
     authorize! :manage, @environment #Talvez seja necessario pois o @environment não está sendo autorizado.
 
     @course.owner = current_user
-    @plan = Plan.from_preset(params[:plan])
+    @plan = Plan.from_preset(params[:plan].to_sym)
     @plan.user = current_user
     @course.verify_path! @environment.id
 
     respond_to do |format|
       if @course.save
+        @course.create_quota
         @course.plan = @plan
+        @plan.create_invoice_and_setup
         @environment.courses << @course
         format.html { redirect_to environment_course_path(@environment, @course) }
       else
-        format.html { render :template => "courses/new/new",
-          :layout => "new/application" }
+        format.html { render "new" }
       end
     end
 
   end
 
-  # FIXME Remover lógica de user_id quando a listagem de cursos
-  # não for mais mostrada no perfil do usuário.
   def index
-
     paginating_params = {
       :page => params[:page],
       :order => 'name ASC',
       :per_page => AppConfig.items_per_page
     }
 
-    if params.has_key?(:user_id)
-      @user = User.find(params[:user_id].to_i)
-      paginating_params[:per_page] = 6
-      @courses = @user.courses
+    if params.has_key? :role
+      if params[:role] == 'student'
+        @courses = Course.user_behave_as_student(current_user)
+      elsif params[:role] == 'tutor'
+        @courses = Course.user_behave_as_tutor(current_user)
+      elsif params[:role] == 'teacher'
+        @courses = Course.user_behave_as_teacher(current_user)
+      elsif params[:role] == 'administrator'
+        @courses = Course.user_behave_as_administrator(current_user)
+      end
     else
-      if params.has_key? :role
-        if params[:role] == 'student'
-          @courses = Course.user_behave_as_student(current_user)
-        elsif params[:role] == 'tutor'
-          @courses = Course.user_behave_as_tutor(current_user)
-        elsif params[:role] == 'teacher'
-          @courses = Course.user_behave_as_teacher(current_user)
-        elsif params[:role] == 'administrator'
-          @courses = Course.user_behave_as_administrator(current_user)
-        end
-      else
-        @courses = Course.published
-      end
+      @courses = Course.published
+    end
 
-      if params.has_key?(:search) && params[:search] != ''
-        search = params[:search].to_s.split
-        @courses = @courses.name_like_all(search)
-      end
+    if params.has_key?(:search) && params[:search] != ''
+      search = params[:search].to_s.split
+      @courses = @courses.name_like_all(search)
+    end
 
-      if params.has_key?(:audiences_ids)
-        @courses = @courses.with_audiences(params[:audiences_ids])
-      end
-
+    if params.has_key?(:audiences_ids)
+      @courses = @courses.with_audiences(params[:audiences_ids])
     end
 
     @courses = @courses.paginate(paginating_params)
 
     respond_to do |format|
-      format.html do
-        unless params[:user_id]
-          render :template => 'courses/new/index', :layout => 'new/application'
-        end
-      end
-      format.js do
-        render :template => 'courses/new/index'
-      end
+      format.html
+      format.js
     end
   end
 
@@ -154,16 +135,16 @@ class CoursesController < BaseController
       redirect_to preview_environment_course_path(@environment, Course.find(88)) and return
     end
 
+    if (can? :read, @course) && (!can? :manage, @course)
+      redirect_to environment_course_path(@environment, @course) and return
+    end
+
     @spaces = @course.spaces.paginate(:page => params[:page],
                                       :order => 'name ASC',
                                       :per_page => AppConfig.items_per_page)
     respond_to do |format|
-      format.html do
-        render :template => 'courses/new/preview', :layout => 'new/application'
-      end
-      format.js do
-        render :template => 'courses/new/preview'
-      end
+      format.html
+      format.js
     end
   end
 
@@ -177,13 +158,8 @@ class CoursesController < BaseController
                              :per_page => AppConfig.items_per_page)
 
     respond_to do |format|
-      format.html do
-        render :template => "courses/new/admin_spaces",
-          :layout => "new/application"
-      end
-      format.js do
-        render :template => "courses/new/admin_spaces"
-      end
+      format.html
+      format.js
     end
   end
 
@@ -195,13 +171,9 @@ class CoursesController < BaseController
                                                       :order => 'updated_at DESC',
                                                       :per_page => AppConfig.items_per_page)
     respond_to do |format|
-      format.html do
-        render :template => "courses/new/admin_member_requests",
-          :layout => "new/application"
-      end
+      format.html
       format.js
     end
-
   end
 
   # Modera os usuários.
@@ -212,38 +184,49 @@ class CoursesController < BaseController
       approved = params[:member].reject{|k,v| v == 'reject'}
       rejected = params[:member].reject{|k,v| v == 'approve'}
 
-      approved.keys.each do |user_id|
-        UserCourseAssociation.update_all("state = 'approved'", :user_id => user_id,  :course_id => @course.id)
-      end
-
       rejected.keys.each do |user_id|
-        UserCourseAssociation.update_all("state = 'rejected'", :user_id => user_id,  :course_id => @course.id)
-      end
-
-      @approved_members = User.all(:conditions => ["id IN (?)", approved.keys]) unless approved.empty?
-      @rejected_members = User.all(:conditions => ["id IN (?)", rejected.keys]) unless rejected.empty?
-
-      # Cria as associações no Environment do Course e em todos os seus Spaces.
-      if @approved_members
-        @approved_members.each do |member|
-          UserEnvironmentAssociation.create(:user_id => member.id, :environment_id => @course.environment.id,
-                                            :role_id => Role[:member].id)
-          @course.spaces.each do |space|
-            UserSpaceAssociation.create(:user_id => member.id, :space_id => space.id,
-                                        :role_id => Role[:member].id, :status => "approved") #FIXME tirar status quando remover moderacao de space
+        @course.user_course_associations.all(:conditions => {
+          :user_id => user_id}).each do |ass|
+          #TODO fazer isso em batch
+          UserNotifier.deliver_reject_membership(ass.user, @course)
+          ass.destroy
           end
+      end
 
-          UserNotifier.deliver_approve_membership(member, @course) # TODO fazer isso em batch
+      # verifica se o limite de usuário foi atingido
+      if @course.can_add_entry? and !approved.to_hash.empty?
+
+        # calcula o total de usuarios que estão para ser aprovados
+        # e só aprova aqueles que estiverem dentro do limite
+        total_members = @course.approved_users.count + approved.count
+        if total_members > @course.plan.members_limit
+          # remove o usuários que passaram do limite
+          (total_members - @course.plan.members_limit).times do
+            approved.shift
+          end
+          flash[:notice] = "O limite máximo de usuários foi atigindo, apenas alguns membros foram moderados."
+        else
+          flash[:notice] = 'Membros moderados!'
+        end
+
+        approved.keys.each do |user_id|
+          @course.user_course_associations.all(:conditions => {
+            :user_id => user_id}).each do |ass|
+            ass.approve!
+            @course.create_hierarchy_associations(ass.user, ass.role)
+            # TODO fazer isso em batch
+            UserNotifier.deliver_approve_membership(ass.user, @course)
+            end
+        end
+      else
+        if rejected.to_hash.empty?
+          flash[:notice] = "O limite máximo de usuários foi atingido. Não é possível adicionar mais usuários."
+        else
+          flash[:notice] = "O limite máximo de usuários foi atingido. Só os usuários rejeitados foram moderados."
         end
       end
 
-      if @rejected_members
-        @rejected_members.each do |member|
-          UserNotifier.deliver_reject_membership(member, @course) #TODO fazer isso em batch
-        end
-      end
 
-      flash[:notice] = 'Membros moderados!'
     end
 
     redirect_to admin_members_requests_environment_course_path(@environment, @course)
@@ -251,19 +234,15 @@ class CoursesController < BaseController
 
   # Associa um usuário a um Course (Ação de participar).
   def join
-    association = UserCourseAssociation.create(:user_id => current_user.id, :course_id => @course.id,
+    authorize! :add_entry, @course
+    association = UserCourseAssociation.create(:user_id => current_user.id,
+                                               :course_id => @course.id,
                                                :role_id => Role[:member].id)
 
     if @course.subscription_type.eql? 1 # Todos podem participar, sem moderação
       association.approve!
 
-      # Cria as associações no Environment do Course e em todos os seus Spaces.
-      UserEnvironmentAssociation.create(:user_id => current_user.id, :environment_id => @course.environment.id,
-                                        :role_id => Role[:member].id)
-      @course.spaces.each do |space|
-        UserSpaceAssociation.create(:user_id => current_user.id, :space_id => space.id,
-                                    :role_id => Role[:member].id, :status => "approved") #FIXME tirar status quando remover moderacao de space
-      end
+      @course.create_hierarchy_associations(current_user, Role[:member])
 
       flash[:notice] = "Você agora faz parte do curso #{@course.name}"
       redirect_to environment_course_path(@course.environment, @course)
@@ -276,12 +255,7 @@ class CoursesController < BaseController
 
   # Desassocia um usuário de um Course (Ação de sair do Course).
   def unjoin
-    course_association = current_user.get_association_with(@course)
-    course_association.destroy
-    @course.spaces.each do |space|
-      space_association = current_user.get_association_with(space)
-      space_association.destroy
-    end
+    @course.unjoin current_user
 
     flash[:notice] = "Você não participa mais do curso #{@course.name}"
     redirect_to environment_course_path(@course.environment, @course)
@@ -317,11 +291,8 @@ class CoursesController < BaseController
       :per_page => AppConfig.items_per_page)
 
       respond_to do |format|
-        format.html do
-          render :template => "courses/new/admin_members",
-            :layout => "new/application"
-        end
-        format.js { render :template => 'courses/new/admin_members' }
+        format.html
+        format.js
       end
   end
 
@@ -356,9 +327,8 @@ class CoursesController < BaseController
     keyword = []
     keyword = params[:search_user] || nil
 
-    @memberships = UserCourseAssociation.with_roles(roles)
+    @memberships = @course.user_course_associations.approved.with_roles(roles)
     @memberships = @memberships.with_keyword(keyword).paginate(
-      :conditions => ["user_course_associations.course_id = ?", @course.id],
       :include => [{ :user => {:user_space_associations => :space} }],
       :page => params[:page],
       :order => 'user_course_associations.updated_at DESC',
@@ -367,8 +337,14 @@ class CoursesController < BaseController
       respond_to do |format|
         format.js do
           render :update do |page|
-            page.replace_html 'user_list', :partial => 'courses/new/user_list_admin',
-              :locals => {:memberships => @memberships}
+            if @memberships.empty?
+              page.replace_html 'user_list',
+                "<div class=\"box_notice\">Nenhum usuário encontrado.</div>"
+            else
+              page.replace_html 'user_list',
+                :partial => 'courses/user_list_admin',
+                :locals => {:memberships => @memberships}
+            end
           end
         end
       end
@@ -382,10 +358,124 @@ class CoursesController < BaseController
       paginate(:page => params[:page], :order => 'first_name ASC', :per_page => 18)
 
     respond_to do |format|
+      format.html
+      format.js
+    end
+  end
+
+  # Aceitar convite para o Course
+  def accept
+    authorize! :add_entry, @course
+
+    assoc = current_user.get_association_with @course
+    assoc.accept!
+
+    respond_to do |format|
       format.html do
-        render :template => 'courses/new/users', :layout => 'new/application'
+        redirect_to home_user_path(current_user)
       end
-      format.js { render :template => 'courses/new/users' }
+      format.js do
+        render :nothing => true
+      end
+    end
+  end
+
+  # Negar convite para o Course
+  def deny
+    assoc = current_user.get_association_with @course
+    assoc.deny!
+    assoc.destroy
+
+    respond_to do |format|
+      format.html do
+        redirect_to home_user_path(current_user)
+      end
+      format.js do
+        render :nothing => true
+      end
+    end
+  end
+
+  def invite_members
+    @users = params[:users] || ""
+    @users = @users.split(",").uniq.compact
+    @users = User.find(@users)
+
+    @users.each do |user|
+      @course.invite(user)
+    end
+
+    @emails = params[:emails] || ""
+    @emails = @emails.split(",").uniq.compact
+    @emails.delete("")
+    @emails.each do |e|
+      @course.invite_by_email(e)
+    end
+
+    respond_to do |format|
+      format.html do
+        if @users.empty? && @emails.empty?
+          flash[:error] = "Nenhum usuário foi informado."
+        else
+          flash[:notice] = "Os usuários foram convidados via e-mail."
+        end
+
+        redirect_to admin_invitations_environment_course_path(@environment, @course)
+      end
+
+      format.js do
+        render :update do |page|
+          page.replace "#invite-#{params[:invitation_id]} .reinvite",
+            "<span class=\"reinvited\">Convite reenviado</span>"
+          page.replace_html "#invite-#{params[:invitation_id]} span.date",
+            (time_ago_in_words Time.zone.now)
+        end
+      end
+    end
+  end
+
+  # Página para convidar usuários para o curso
+  def admin_invitations
+    respond_to do |format|
+      format.html
+    end
+  end
+
+  # Página para administrar convites já enviados
+  def admin_manage_invitations
+    @email_invitations = @course.user_course_invitations.invited
+    @user_invitations = @course.user_course_associations.invited
+
+    respond_to do |format|
+      format.html
+    end
+  end
+
+  def destroy_invitations
+    email_invitations = params[:email_invitations] || ""
+    email_invitations = email_invitations.collect{ |i| i.to_i }
+
+    user_invitations = params[:user_invitations] || ""
+    user_invitations = user_invitations.collect{ |i| i.to_i }
+
+    email_invitations.each do |i|
+      invitation = UserCourseInvitation.find(i)
+      invitation.destroy
+    end
+
+    user_invitations.each do |i|
+      assoc = UserCourseAssociation.find(i)
+      assoc.destroy
+    end
+
+    if email_invitations.empty? && user_invitations.empty?
+      flash[:notice] = "Nenhum convite foi marcado para ser removido."
+    else
+      flash[:notice] = "Os convites foram removidos do curso #{@course.name}."
+    end
+
+    respond_to do |format|
+      format.html { redirect_to :action => :admin_manage_invitations }
     end
   end
 end

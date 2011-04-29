@@ -1,4 +1,6 @@
 class PaymentGatewayController < BaseController
+  layout "application"
+
   skip_before_filter :verify_authenticity_token
 
   def callback
@@ -7,7 +9,7 @@ class PaymentGatewayController < BaseController
     pagseguro_notification do |notification|
       notification.products.each do |product|
         invoice = Invoice.find(product[:id])
-        invoice.try(:pay!) if notification.status.eql?(:completed)
+        invoice.try(:pay!) if notification.status.eql?(:approved)
         invoice.audit ||= ""
         invoice.audit += "#{Time.zone.now}: #{notification.status} \n"
         invoice.audit += "#{notification.products.to_json} \n"

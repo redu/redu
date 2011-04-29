@@ -1,0 +1,22 @@
+<%= render :partial => "subjects/sidebar" %>
+<div class="main grid_12 omega big-col">
+  <%= render :partial => "subjects/breadcrumbs", :locals => { :subject => @subject } %>
+  <%= render :partial => 'subjects/header',
+    :locals => { :subject => @subject, :space => @space } %>
+  <div id="space-users" class="hierarchy-listing-wrapper">
+    <div class="header">
+      <h4>Membros</h4>
+      <span class="counter">
+        <%= @subject.members.length %> pessoas fazem parte do módulo
+      </span>
+    </div>
+    
+    <ul id="users_list" class="members clearfix">
+      <%= render :partial => 'users/item',
+        :collection => @users, :locals => { :entity => @subject } %>
+    </ul>
+
+    <%= will_paginate @users, :renderer => EndlessRenderer %>
+  </div><!-- end #environment-courses -->
+
+</div><!-- end .main -->

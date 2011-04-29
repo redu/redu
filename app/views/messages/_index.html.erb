@@ -1,0 +1,37 @@
+<%# Listagem de mensagens. Parâmetros: mailbox (:inbox ou :outbox)
+  e mensagens a serem mostradas.  %>
+<% form_tag delete_selected_user_messages_path(:user_id => @user.id)  do %>
+  <%= hidden_field_tag :mailbox, mailbox.to_s %>
+  <table id="messages" class="common">
+    <thead>
+      <tr>
+        <th width="5%">
+        </th>
+        <th width="60%">Título:</th>
+        <% if mailbox == :inbox %>
+          <th width="35%">Autor e Data:</th>
+        <% else %>
+          <th width="35%">Enviada para:</th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% if messages.empty? %>
+        <tr>
+          <td colspan='5'>
+            <div class="box_notice"><%= :no_messages.l %></div>
+          </td>
+        </tr>
+      <% else %>
+      <%= render :partial => 'messages/item',
+        :collection => messages, :locals => { :mailbox => mailbox } %>
+      <% end %>
+    </tbody>
+  </table>
+  <div class="actions">
+    <%= submit_tag :delete_selected.l, :class =>'remove' %>
+    <%= image_tag 'spinner.gif', :style => 'display: none' %>
+  </div>
+<% end %>
+
+<%= will_paginate messages, :renderer => EndlessRenderer %>

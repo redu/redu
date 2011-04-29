@@ -1,0 +1,32 @@
+<% if item_short.lectureable.class.to_s == 'Page'
+    css_class = 'icon icon-page-lightblue_16_16'
+   elsif item_short.lectureable.class.to_s == 'Document'
+    css_class = 'icon icon-slides-lightblue_16_16'
+   elsif item_short.lectureable.class.to_s == 'Seminar'
+    css_class = 'icon icon-video-lightblue_16_16'
+   end
+
+%>
+<li class="<%= css_class %>" id=<%= "#{item_short.id}-item" %>>
+  <%= item_short.name %>
+  <% if !item_short.subject.visible? && (can? :manage, item_short.subject) %>
+    <% if item_short.lectureable.class.to_s == 'Page' %>
+      <%= link_to_remote "Editar",
+        :url => edit_space_subject_lecture_path(item_short.subject.space,
+                                                item_short.subject, item_short),
+        :loading => "$('#spinner-#{item_short.id}item').show();",
+        :success => "$('#spinner-#{item_short.id}item').hide();",
+        :method => :get, :html => { :class => 'edit'} %>
+  <% end %>
+  <%= link_to_remote "Remover",
+    :url => space_subject_lecture_path(item_short.subject.space,
+                                       item_short.subject, item_short),
+    :loading => "$('#spinner-#{item_short.id}item').show();",
+    :success => "$('#spinner-#{item_short.id}item').hide();",
+    :method => :delete,
+    :confirm => "Você tem certeza que deseja excluir essa aula? Não será mais possível recuperá-la.",
+    :html => { :class => 'delete'}%>
+  <%= image_tag 'spinner.gif', :id => "spinner-#{item_short.id}item",
+  :style => 'display: none;'%>
+<% end %>
+</li>

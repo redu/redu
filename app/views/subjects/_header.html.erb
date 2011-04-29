@@ -1,0 +1,17 @@
+<%# Locals: space e subject %>
+<div id="hierarchy-header" class="clearfix subject-header">
+  <span class="prefix"><%= subject.space.course.environment.name %> > <%= subject.space.course.name %>
+    > <%= subject.space.name %>
+  </span>
+  <h3 class="call subject-name"><%= subject.title %></h3>
+
+  <div class="grid_9 alpha">
+    <span class="description">
+      <%= subject.description %>
+     </span>
+  </div>
+  <div class="start-subject">
+    <%= link_to "Deseja estudar?", space_subject_lectures_path(@space, @subject), :class => "start replacement" %>
+    <%= link_to raw("<span class='icon icon-resource-lightblue_32_32'></span>Conheça os recursos"), space_subject_lectures_path(@space, @subject), :class => "bt clearfix" %>
+  </div>
+</div><!-- end #hierarchy-header -->

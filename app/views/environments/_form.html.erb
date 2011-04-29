@@ -1,18 +1,24 @@
-<% field_set_tag "Informações do ambiente" do %>
-<%= f.label :name, "Seu ambiente de ensino" %>
-<%= f.text_field :name %>
-<%= f.select :color, options_for_select(color_picker_colors, @environment.try(:color)),
-  :class => "color inline" %>
-<%= f.label :path, "Personalize o endereço" %>
-<%= f.text_field :path %>
-<%= f.label :initials, "Sigla do seu ambiente de ensino" %>
-<%= f.text_field :initials %>
-<% end %>
-<% field_set_tag "Informações do primeiro curso" do %>
-<% f.fields_for :courses do |builder|  %>
-  <%= builder.label :name, "Seu primeiro curso" %>
-  <%= builder.text_field :name, :class => "text" %>
-  <%= builder.label :path, "Personalize o endereço" %>
-  <%= builder.text_field :path %>
-    <% end %>
-<% end %>
+<fieldset>
+  <div class="environment-box clearfix">
+    <%= f.label :name, "Seu ambiente de ensino" %>
+    <%= f.text_field :name, :class => "big" %>
+  </div>
+  <span class="tip">40 caracteres restantes</span>
+  <%= f.label :initials, "Abreviação" %>
+  <%= f.text_field :initials %>
+  <span class="tip">40 caracteres restantes</span>
+  <%= f.label :path, "Endereço eletrônico", :class => "big"%>
+  <%= f.text_field :path %>
+</fieldset>
+<fieldset>
+  <% f.fields_for :courses do |builder|  %>
+    <div class="course-box clearfix">
+      <%= builder.label :name, "Seu primeiro curso" %>
+      <%= builder.text_field :name, :class => "big" %>
+    </div>
+    <span class="tip">40 caracteres restantes</span>
+    <%= builder.label :path, "Endereço eletrônico" %>
+    <%= builder.text_field :path, :class => "big" %>
+    <span class="tip">40 caracteres restantes</span>
+  <% end %>
+</fieldset>

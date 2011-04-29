@@ -1,17 +1,11 @@
 class PlansController < BaseController
+  layout "application"
+
   before_filter :find_course_environment, :except => :index
 
   authorize_resource
   load_and_authorize_resource :user, :only => :index
   load_and_authorize_resource :plan, :only => :index, :through => :user
-
-  def confirm
-    @order = @plan.create_order
-
-    respond_to do |format|
-      format.html { render :layout => "environment" }
-    end
-  end
 
   def upgrade
     if request.post?
@@ -29,13 +23,8 @@ class PlansController < BaseController
     @plans = @user.plans.find(:all, :include => :billable)
 
     respond_to do |format|
-      format.html do
-        render :template => "plans/new/index", :layout => "new/application"
-      end
+      format.html
     end
-  end
-
-  def pay
   end
 
   protected

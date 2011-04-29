@@ -1,27 +1,31 @@
-<div class="main grid_16">
-  <%= render :partial => "spaces/sidebar", :locals => {:space => @space} %>
-  <div class="grid_11 omega">
-    <h2 class="grid_11 omega"><%= @list_title %></h2>
+<%= render :partial => "spaces/sidebar", :locals => { :space => @eventable } %>
+<div class="main grid_12 omega big-col">
+  <%= render :partial => 'spaces/breadcrumbs', :locals => { :space => @space } %>
+  <%= render :partial => 'spaces/header',
+    :locals => { :space => @space }%>
 
-    <% if @events && @events.size > 0 %>
-      <ul id="events" class="grid_11 omega upcoming-events events-index">
+  <div id="space-events" class="body">
+    <div class="header">
+      <h4>Eventos</h4>
+      <span class="counter">
+        <%= pluralize(@eventable.events.length, 'evento') %>
+      </span>
+    </div>
+    <% if can? :manage, @eventable %>
+      <div class="admin-actions">
+        <%= link_to 'Criar novo evento',
+          new_polymorphic_path([@eventable, Event.new]),
+          :class => 'button vanilla' %>
+      </div>
+    <% end %>
+
+    <div id="events_list" class="event-listing-wrapper clearfix">
+      <ul>
         <%= render :partial => 'events/item', :collection => @events %>
       </ul>
-    <% else %>
-      <% if can? :manage, @space || current_user.tutor?(@space) %>
-        <div class="box-info">
-          <div class="pretty-text">
-            Esta disciplina ainda não tem eventos agendados para este período!
-            <%= link_to "Crie um novo evento", new_polymorphic_path([@eventable, Event.new]) %>
-          </div>
-        </div>
-      <% else %>
-        <div class="box_notice">
-          Esta disciplina ainda não tem eventos agendados para este período!
-        </div>
-      <% end %>
-    <% end %>
-    <%= will_paginate @events, :renderer => EndlessRenderer  %>
-  </div>
-</div>
+      <%= will_paginate @events, :renderer => EndlessRenderer %>
+    </div>
 
+  </div><!-- end #event -->
+
+</div><!-- end .main -->

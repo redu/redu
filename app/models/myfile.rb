@@ -63,7 +63,9 @@ class Myfile < ActiveRecord::Base
     end
   end
 
+  # Verifica se o curso tem espaço suficiente para o arquivo
   def can_upload_file?(space)
+    return false if space.course.plan.state != "active"
     plan = space.course.plan
     quota = space.course.quota
 

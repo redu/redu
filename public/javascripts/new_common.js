@@ -1,9 +1,11 @@
 jQuery(function(){
     // Flash message
     $(".flash-message").parent().next().css("marginTop", "10px");
-    $(".flash-message .close-flash").click(function(){
+    $(".flash-message .close-flash").click(function(e){
       $(this).parent().slideToggle();
       $("#content").css("marginTop","20px");
+
+      e.preventDefault();
     });
 
     // Dropdown de usuário
@@ -97,7 +99,7 @@ jQuery(function(){
     })
 
     // Padrão de tabelas
-    $("table.common tr:odd").addClass("odd");
+    $("table.common tr:even:not(.invite):not(.message)").addClass("odd");
 
     // Form com tabelas
     $("#select_all").change(
@@ -143,6 +145,58 @@ jQuery(function(){
     // O elemento assume a altura do seu pai
     $(".parent-height").height(function(i, height){
         $(this).height($(this).parent().height());
+    });
+
+    // Mostra campo de confirmação de e-mail
+    $("#user_email").click(function(){
+       $("#user_email_confirmation").slideDown();
+       $("#user_email_confirmation").prev().slideDown();
+    });
+
+    // Verifica se os dois e-mails são iguais
+    $("#user_email_confirmation").blur(function(){
+        email_val = $("#user_email").val();
+        confirmation_val = $(this).val();
+
+        if (email_val != confirmation_val) {
+          $("#user_email_confirmation-error").remove();
+          $(this).after("<p id=\"user_email_confirmation-error\" class=\"errorMessageField\">Os e-mails digitados não são iguais.</p>");
+
+        } else {
+          $("#user_email_confirmation-error").remove();
+        }
+    });
+
+    // Tooltips
+    $(".tiptip").tipTip();
+    $("form.common").ajaxComplete(function(){
+      $(".tiptip").tipTip();
+    });
+
+    $("form.common .tiptip").each(function(){
+        var label = $(this).next("label");
+        label.prepend($(this));
+    });
+
+    $(".tiptip-lite").each(function(){
+        // Criando holder e adicionando conteúdo
+        var $tip = $("<span class='tiptip question-blue_12_12'/>");
+        $tip.attr("title", $(this).attr("title"));
+        $tip.tipTip();
+
+        $(this).after($tip);
+        $tip.position({
+            my: 'left center',
+            at: 'right center',
+            of: $(this),
+            offset: "10px 0",
+        });
+    });
+
+    // Arquivos
+    $("#space-materials .new-folder .button").click(function(e){
+        $(this).next(".new-folder-inner").toggle();
+        e.preventDefault();
     });
 
 });

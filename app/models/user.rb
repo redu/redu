@@ -26,7 +26,6 @@ class User < ActiveRecord::Base
 
   # ASSOCIATIONS
   has_many :annotations, :dependent => :destroy, :include=> :lecture
-  has_one :beta_key, :dependent => :destroy
   has_many :statuses, :as => :statusable, :dependent => :destroy
   # Space
   has_many :spaces, :through => :user_space_associations
@@ -54,12 +53,12 @@ class User < ActiveRecord::Base
   # FIXME Verificar necessidade (Suggestion.rb não existe). Não foi testado.
   has_many :suggestions
   has_enumerated :role
-  has_many :invitations, :dependent => :destroy
   belongs_to  :metro_area
   belongs_to  :state
   belongs_to  :country
   has_many :recently_active_friends, :through => :friendships, :source => :friend,
-    :order => "users.last_request_at ASC", :limit => 6,
+    :order => "users.last_request_at ASC", :limit => 9,
+    :conditions => "friendships.status = 'accepted'",
     :select => ["users.id, users.first_name, users.last_name, users.login, " + \
                 "users.avatar_file_name, users.avatar_file_size, " + \
                 "users.avatar_content_type, users.login_slug"]
@@ -92,6 +91,9 @@ class User < ActiveRecord::Base
 
   has_many :plans
 
+  has_many :course_invitations, :class_name => "UserCourseAssociation",
+    :conditions => ["state LIKE 'invited'"]
+  has_one :settings, :class_name => "UserSetting", :dependent => :destroy
 
   # Named scopes
   named_scope :recent, :order => 'users.created_at DESC'
@@ -108,11 +110,24 @@ class User < ActiveRecord::Base
   named_scope :n_recent, lambda { |limit|
     {:order => 'users.last_request_at DESC', :limit => limit }
   }
+  named_scope :with_keyword, lambda { |keyword|
+    {:conditions => ["LOWER(login) LIKE :keyword OR " + \
+      "LOWER(first_name) LIKE :keyword OR " + \
+      "LOWER(last_name) LIKE :keyword OR " +\
+      "CONCAT(LOWER(first_name), ' ', LOWER(last_name)) LIKE :keyword OR " +\
+      "LOWER(email) LIKE :keyword", { :keyword => "%#{keyword.downcase}%" }],
+     :limit => 10,
+     :select => "id, first_name, last_name, login, email, avatar_file_name"}
+  }
+
+  attr_accessor :email_confirmation
 
   # Accessors
   attr_protected :admin, :featured, :role_id, :activation_code,
     :login_slug, :friends_count, :score, :removed,
     :sb_posts_count, :sb_last_seen_at
+
+  accepts_nested_attributes_for :settings
 
   # PLUGINS
   acts_as_authentic do |c|
@@ -124,6 +139,8 @@ class User < ActiveRecord::Base
     c.validates_length_of_login_field_options = { :within => 5..20 }
     c.validates_format_of_login_field_options = { :with => /^[A-Za-z0-9_-]+$/ }
 
+    #FIXME Não está validando, verificar motivo. Foi adicionado um
+    # validates_format_of.
     c.validates_length_of_email_field_options = { :within => 3..100 }
     c.validates_format_of_email_field_options = { :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/ }
   end
@@ -138,7 +155,8 @@ class User < ActiveRecord::Base
   acts_as_voter
 
   # VALIDATIONS
-  validates_presence_of     :login, :email, :first_name, :last_name
+  validates_presence_of     :login, :email, :first_name, :last_name,
+    :email_confirmation
   # FIXME Verificar necessidade (não foi testado)
   validates_presence_of     :metro_area,                 :if => Proc.new { |user| user.state }
   validates_uniqueness_of   :login, :email, :case_sensitive => false
@@ -149,6 +167,12 @@ class User < ActiveRecord::Base
   validates_attachment_size :curriculum, :less_than => 10.megabytes
   validate_on_update :accepted_curriculum_type,
     :unless => "self.curriculum_file_name.nil?"
+  validates_confirmation_of :email
+  validates_format_of :email,
+    :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/
+  validates_format_of :mobile,
+      :with => /^(\(?\d{2}\)?)?[\s|-]?(\(?\d{2}\)?)?[\s|-](\d{4}[\s|-]?\d{4})/,
+      :allow_blank => true
 
   # override activerecord's find to allow us to find by name or id transparently
   def self.find(*args)
@@ -302,17 +326,19 @@ class User < ActiveRecord::Base
     when 'SbPost'
       self.member?(entity.space)
     when 'Status'
-      case entity.statusable.class.to_s
-      when 'Space'
-        self.teacher?(entity.statusable) ||
-          self.can_manage?(entity.statusable)
-      when 'Subject'
-        self.teacher?(entity.statusable.space) ||
-         self.can_manage?(entity.statusable.space)
-      when 'Lecture'
-        self.can_manage?(entity.statusable.subject)
+      if self == entity.user
+        true
       else
-        self == entity.user
+        case entity.statusable.class.to_s
+        when 'Space'
+          self.teacher?(entity.statusable) ||
+            self.can_manage?(entity.statusable)
+        when 'Subject'
+          self.teacher?(entity.statusable.space) ||
+            self.can_manage?(entity.statusable.space)
+        when 'Lecture'
+          self.can_manage?(entity.statusable.subject)
+        end
       end
     when 'User'
       entity == self
@@ -332,7 +358,13 @@ class User < ActiveRecord::Base
     self.admin? and return true
 
     if self.get_association_with(entity)
-      return true
+      # Apenas Course tem state
+      if entity.class.to_s == 'Course' &&
+        !self.get_association_with(entity).approved?
+        return false
+      else
+        return true
+      end
     else
       case entity.class.to_s
       when 'Event'
@@ -379,7 +411,11 @@ class User < ActiveRecord::Base
 
        self.has_access_to?(object)
     else
-      object.published? && self.has_access_to?(object)
+      if (object.class.to_s.eql? 'Subject')
+        object.visible? && self.has_access_to?(object)
+      else
+        object.published? && self.has_access_to?(object)
+      end
     end
   end
 
@@ -765,15 +801,30 @@ class User < ActiveRecord::Base
   end
 
   def completeness
-    total = 9.0
+    total = 11.0
     undone = 0.0
     undone += 1 if self.description.nil?
     undone += 1 if self.avatar_file_name.nil?
     undone += 1 if self.gender.nil?
     undone += 1 if self.curriculum_file_name.nil?
+    undone += 1 if self.localization.to_s.empty?
+    undone += 1 if self.mobile.to_s.empty?
 
     done = total - undone
     (done/total*100).round
+  end
+
+  # True se o usuário possui convite
+  def has_course_invitation?(course = nil)
+    UserCourseAssociation.has_invitation_for?(self, course)
+  end
+
+  def email_confirmation
+    @email_confirmation || self.email
+  end
+
+  def create_settings!
+    self.settings = UserSetting.create(:view_mural => Privacy[:friends])
   end
 
   protected

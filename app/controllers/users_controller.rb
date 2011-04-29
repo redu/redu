@@ -114,12 +114,8 @@ class UsersController < BaseController
     @status = Status.new
 
     respond_to do |format|
-      format.html do
-        render :template => 'users/new/show', :layout => 'new/application'
-      end
-      format.js do
-        render :template => 'users/new/show'
-      end
+      format.html
+      format.js
     end
   end
 
@@ -128,11 +124,9 @@ class UsersController < BaseController
     @inviter_id   = params[:id]
     @inviter_code = params[:code]
 
-    @beta_key = params[:beta_key]
-
     respond_to do |format|
       format.html do
-        render :template => 'users/new/new', :layout => 'new/clean'
+        render :template => 'users/new', :layout => 'clean'
       end
     end
   end
@@ -140,34 +134,34 @@ class UsersController < BaseController
   def create
     @user = User.new(params[:user])
 
-    if AppConfig.closed_beta_mode
-      if params[:beta_key]
-        @key = BetaKey.find(:first, :conditions => ["beta_keys.key like ?", params[:beta_key]])
-        if @key
-          if @key.user
-            flash[:error] = "Esta chave de acesso já está sendo usada por outro usuário."
-            render :action => 'new' and return
-          end
-        else
-          flash[:error] = "Chave de acesso inválida!"
-          render :action => 'new' and return
-        end
-      else
-        flash[:error] = "Chave de acesso inválida!"
-        render :action => 'new' and return
-      end
-    end
-
     @user.save do |result| # LINE A
       if result
+        @user.create_settings!
         if @key
           @key.user = @user
           @key.save
         end
 
+        # Se tem um token de convite para o curso, aprova o convite para o
+        # usuário recém-cadastrado
+        if params.has_key?(:invitation_token)
+          invite = UserCourseInvitation.find_by_token(params[:invitation_token])
+          invite.user = @user
+          invite.accept!
+        end
+
         flash[:notice] = :email_signup_thanks.l_with_args(:email => @user.email)
         redirect_to signup_completed_user_path(@user)
       else
+        # Se tem um token de convite para o curso, atribui as variáveis
+        # necessárias para mostrar o convite em Users#new
+        if params.has_key?(:invitation_token)
+          @user_course_invitation = UserCourseInvitation.find_by_token(
+            params[:invitation_token])
+          @course = @user_course_invitation.course
+          @environment = @course.environment
+        end
+
         unless @user.oauth_token.nil?
           @user = User.find_by_oauth_token(@user.oauth_token)
           unless @user.nil?
@@ -180,10 +174,7 @@ class UsersController < BaseController
             render :action => :new
           end
         else
-          if AppConfig.closed_beta_mode
-            @beta_key  = @key.key
-          end
-          render :template => 'users/new/new', :layout => 'new/clean'
+          render :template => 'users/new', :layout => 'clean'
         end
       end
     end
@@ -192,9 +183,7 @@ class UsersController < BaseController
   def edit
     @metro_areas, @states = setup_locations_for(@user)
     respond_to do |format|
-      format.html do
-        render :template => 'users/new/edit', :layout => 'new/application'
-      end
+      format.html
     end
   end
 
@@ -202,6 +191,17 @@ class UsersController < BaseController
     case params[:element_id]
     when 'user-description'
       params[:user] = {:description => params[:update_value]}
+    end
+
+    # Substituindo ids por Privacies
+    if params[:user].has_key? "settings_attributes" and
+      !params[:user][:settings_attributes].empty?
+    params[:user][:settings_attributes].each_key do |setting|
+      if setting != 'id'
+        params[:user][:settings_attributes][setting] = Privacy.find(
+          params[:user][:settings_attributes][setting])
+      end
+    end
     end
 
     @user.attributes      = params[:user]
@@ -217,7 +217,7 @@ class UsersController < BaseController
 
     @user.tag_list = params[:tag_list] || ''
 
-    #alteracao de senha na conta do usuario
+    # alteracao de senha na conta do usuario
     if params.has_key? "current_password" and !params[:current_password].empty?
 
       @flag = false
@@ -249,14 +249,15 @@ class UsersController < BaseController
         end
       end
     else
-    if params.has_key? "current_password" and !params[:current_password].empty?
-        render 'users/new/account', :layout => 'new/application'
+    if (@user.errors.on(:password) or @user.errors.on(:email) or
+       !params[:current_password].nil?)
+        render 'users/account'
       else
-        render 'users/new/edit', :layout => 'new/application'
+        render 'users/edit'
       end
     end
   rescue ActiveRecord::RecordInvalid
-      render 'users/new/edit', :layout => 'new/application'
+      render 'users/edit'
   end
 
   def destroy
@@ -373,7 +374,7 @@ class UsersController < BaseController
 
   def signup_completed
     redirect_to home_path and return unless @user
-    render :action => 'signup_completed'
+    render :template => "users/signup_completed", :layout => "clean"
   end
 
   def invite
@@ -398,7 +399,7 @@ class UsersController < BaseController
         UserSession.find.destroy
       end
 
-      redirect_to login_url
+      redirect_to home_path
       flash[:info] = :your_password_has_been_reset_and_emailed_to_you.l
     else
       flash[:error] = :sorry_we_dont_recognize_that_email_address.l
@@ -409,7 +410,7 @@ class UsersController < BaseController
     return unless request.post?
     if @user = User.find_by_email(params[:email])
       UserNotifier.deliver_forgot_username(@user)
-      redirect_to login_url
+      redirect_to home_path
       flash[:info] = :your_username_was_emailed_to_you.l
     else
       flash[:error] = :sorry_we_dont_recognize_that_email_address.l
@@ -503,16 +504,13 @@ class UsersController < BaseController
   def home
     @friends = current_user.friends.paginate(:page => 1, :per_page => 9)
     @friends_requisitions = current_user.friends_pending
+    @course_invitations = current_user.course_invitations
     @statuses = current_user.home_activity(params[:page])
     @status = Status.new
 
     respond_to do |format|
-      format.html do
-        render :template => 'users/new/home', :layout => 'new/application'
-      end
-      format.js do
-        render :template => 'users/new/home'
-      end
+      format.html
+      format.js
     end
   end
 
@@ -523,22 +521,32 @@ class UsersController < BaseController
     @status = Status.new
 
     respond_to do |format|
-      format.html do
-        render :template => 'users/new/mural', :layout => 'new/application'
-      end
-      format.js do
-        render :template => 'users/new/mural'
-      end
+      format.html
+      format.js
     end
   end
 
   def account
     respond_to do |format|
-      format.html do
-        render :template => 'users/new/account', :layout => 'new/application'
+      format.html
+    end
+
+  end
+
+  # Dada uma palavra-chave retorna json com usuários que possuem aquela palavra.
+  def auto_complete
+    if params[:q]
+      @users = User.with_keyword(params[:q])
+      @users = @users.map do |u|
+        { :id => u.id, :name => u.display_name, :avatar_32 => u.avatar.url(:thumb_32) }
       end
     end
 
+    respond_to do |format|
+      format.js do
+        render :json => @users
+      end
+    end
   end
 
 

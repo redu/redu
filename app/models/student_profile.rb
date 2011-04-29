@@ -18,7 +18,8 @@ class StudentProfile < ActiveRecord::Base
 
   validates_uniqueness_of :user_id, :scope => :subject_id
 
-  # Atualiza a porcentagem de cumprimento do módulo. Quando não houver mais recursos
+  # Atualiza a porcentagem de cumprimento do módulo.
+  # Quando não houver mais recursos
   # a serem cursados, retorna false.
   def update_grade!
     total = self.asset_reports.of_subject(self.subject).count

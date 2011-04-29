@@ -11,7 +11,7 @@ describe LecturesController do
 
     @subject = Factory(:subject, :owner => @subject_owner,
                        :space => @space, :finalized => true,
-                       :published => true)
+                       :visible => true)
     @lectures = (1..3).collect { Factory(:lecture,:subject => @subject ,:owner => @subject_owner) }
     @enrolled_user = Factory(:user)
     @space.course.join @enrolled_user
@@ -26,7 +26,7 @@ describe LecturesController do
           :subject_id => @subject.id, :space_id => @space.id
       end
       it "renders show_page" do
-        response.should render_template('lectures/new/show_page')
+        response.should render_template('lectures/show_page')
       end
     end
     context "when Seminar" do
@@ -39,7 +39,7 @@ describe LecturesController do
       end
       it "renders show_page" do
         pending do
-          response.should render_template('lectures/new/show_seminar')
+          response.should render_template('lectures/show_seminar')
         end
       end
     end
@@ -51,7 +51,7 @@ describe LecturesController do
           :subject_id => @subject.id, :space_id => @space.id
       end
       it "renders show_page" do
-        response.should render_template('lectures/new/show_document')
+        response.should render_template('lectures/show_document')
       end
     end
   end
@@ -100,7 +100,7 @@ describe LecturesController do
         post :done, :locale => "pt-BR", :id => @lectures[0].id, :format => 'js',
           :subject_id => @subject.id, :space_id => @space.id
 
-        response.should render_template('lectures/new/done')
+        response.should render_template('lectures/done')
       end
     end
   end

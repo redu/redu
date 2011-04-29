@@ -1,22 +1,19 @@
+<%= render :partial => 'courses/sidebar' %>
+<div class="main grid_12 omega big-col">
+  <%= render :partial => "courses/breadcrumbs", :locals => { :course => @course } %>
+  <%= render :partial => 'courses/header',
+      :locals => { :course => @course }%>
 
-  <% form_for @space, :html => {:id => "form_school"} do |f|%>
-
-    <div class="box-info">
-      <div class="pretty-text">
-        Após criar a disciplina você terá um espaço para alunos, tutores e professores compartilharem informações e conhecimento. Dentro deste espaço, será possível criar notícias, eventos, módulos (conjunto de aulas) e informações dinâmicas no mural.
+    <div id="space-new" class="hierarchy-listing-wrapper">
+      <div class="header">
+        <h4>Disciplina</h4>
+        <span class="counter">Nova disciplina</span>
       </div>
-    </div>
-    <div class="grid_14">
-      <h3 class="call" >Nova Disciplina</h3>
-    </div>
 
-    <%= render "form", :f => f, :edit => false %>
-
-    <div class="grid_16">
-      <%= f.submit "Concluir" %>
-      ou <%= link_to "Voltar", cancel_spaces_path(:course_id => @course.id)%>
-    </div>
-
-<% end %>
-
-</div>
+      <% form_for @space, :html => {:class => "common highlightable",
+        :id => "form_school"} do |f|%>
+        <%= render "spaces/form", :f => f, :edit => false %>
+        <%= f.submit "Criar disciplina" %>
+      <% end %>
+    </div><!-- end #space-new -->
+  </div><!-- end main -->

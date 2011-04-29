@@ -52,13 +52,14 @@ module FoldersHelper
 
 
   def folder_path(folder)
-
-    #path = link_to(h(folder.name), space_folders_path(:id => folder.id, :space_id => folder.space_id))
-   path = h(folder.name)
+    path = h(folder.name)
 
     until folder.parent == nil
       folder = folder.parent
-      path = link_to_remote(h(folder.name), :url => { :action => :index, :id => folder.id, :space_id => folder.space_id}, :before => "showLoadingFiles()") + ' > ' + path
+      path = link_to_remote(h(folder.name),
+                            :url => space_folders_path(folder.space, :id => folder.id),
+                            :before => "$('#loading-files').toggle();",
+                            :method => :get ) + ' > ' + path
     end
 
     return path.sub("root", "raiz")

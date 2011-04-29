@@ -17,11 +17,28 @@ class SessionsController < BaseController
 
       if result
         current_user = @user_session.record
+        # Se tem um token de convite para o curso, aprova o convite para o
+        # usuário recém-logado
+        if params.has_key?(:invitation_token)
+          invite = UserCourseInvitation.find_by_token(params[:invitation_token])
+          invite.user = current_user
+          invite.accept!
+        end
 
         flash[:notice] = :thanks_youre_now_logged_in.l
         redirect_to home_user_path(current_user)
       else
-        render :layout => false, :template => 'base/new/site_index'
+        # Se tem um token de convite para o curso, atribui as variáveis
+        # necessárias para mostrar o convite
+        if params.has_key?(:invitation_token)
+          @user_course_invitation = UserCourseInvitation.find_by_token(
+            params[:invitation_token])
+          @course = @user_course_invitation.course
+          @environment = @course.environment
+          render :layout => 'clean', :template => 'user_course_invitations/show'
+        else
+          render :layout => false, :template => 'base/site_index'
+        end
       end
     end
   end

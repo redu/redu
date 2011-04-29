@@ -1,0 +1,27 @@
+<li class="clearfix">
+  <div class="meta clearfix">
+    <div class="date">
+      <span class="month"><%= item.created_at.strftime('%b') %></span>
+      <span class="day"><%= item.created_at.day %></span>
+      <span class="year"><%= item.created_at.year %></span>
+    </div>
+    <%= link_to item.title, polymorphic_path([item.bulletinable, item]),
+      :class => 'title' %>
+    <span class="description">
+      <%= strip_tags(item.description[0..200]) %>
+      <% if item.description.length > 200 %>
+        ...
+      <% end %>
+    </span>
+    <ul class="tags">
+      <% item.tags.each do |tag| %>
+        <li><%= link_to tag, polymorphic_path([item.bulletinable]) %></li>
+      <% end %>
+    </ul>
+  </div>
+  <div class="authorship">
+    <span class="label">Autor</span>
+    <%= link_to item.owner.display_name, user_path(item.owner),
+      :class => 'owner'%>
+  </div>
+</li>

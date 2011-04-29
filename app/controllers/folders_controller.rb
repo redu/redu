@@ -10,8 +10,6 @@
 # [#destroy]            delete a folder
 # [#update_permissions] save the new rights given by the user
 class FoldersController < BaseController
-  layout 'environment'
-
   load_and_authorize_resource :space
   load_and_authorize_resource :folder, :through => :space
 
@@ -43,13 +41,15 @@ class FoldersController < BaseController
     respond_to do |format|
       if @myfile.destroy
         @space.course.quota.refresh
-        flash[:notice] = 'Arquivo removido!'
-        format.html {redirect_to space_folders_path(:id => @folder_id, :space_id => @space_id)  }
+
+        format.html do
+          flash[:notice] = 'Arquivo removido!'
+          redirect_to space_folders_path(:id => @folder_id, :space_id => @space_id)
+        end
         format.js do
-            # TODO mostrar flash em ajax
             list
             render :update do |page|
-            page.replace_html  'tabs-4-content', :partial => 'folders/index'
+              page.replace_html  'materials', :partial => 'folders/index'
             end
         end
       else
@@ -77,22 +77,21 @@ class FoldersController < BaseController
     respond_to do |format|
       if @myfile.save
         @space.course.quota.refresh
-        flash[:notice] = 'Upload realizado!'
-        format.html {redirect_to @space }
+        format.html { redirect_to @space }
         format.js do
           list
           responds_to_parent do
-            render :update do |page|
-              page.replace_html  'tabs-4-content', :partial => 'folders/index'
-            end
+            render :partial => "folders/do_the_upload"
           end
         end
       else
-        format.html {
-          flash[:error] = @myfile.errors.full_messages.join(", ")
-          redirect_to space_folders_path(@space)
-        }
-        format.js
+        format.html { redirect_to @space }
+        format.js do
+          list
+          responds_to_parent do
+            render :partial => "folders/do_the_upload"
+          end
+        end
       end
     end
   end
@@ -118,10 +117,10 @@ class FoldersController < BaseController
   # The default action, redirects to list.
   def index
     list(params[:id])
-    # render :action => :list
+
     respond_to do |format|
       format.html
-      format.js
+      format.js { render :partial => "folders/index" }
     end
   end
 
@@ -132,9 +131,10 @@ class FoldersController < BaseController
       @folder = Folder.find(id)
     else
       @folder = @space.root_folder
+      @folder = @myfile.folder if @myfile
     end
 
-    @myfile = Myfile.new
+    @myfile ||= Myfile.new
 
     # Set if the user is allowed to update or delete in this folder;
     # these instance variables are used in the view.
@@ -149,7 +149,6 @@ class FoldersController < BaseController
       file_order = params[:order_by].sub('date_modified', 'attachment_updated_at') + ' ' if params[:order_by] == 'date_modified'
     end
     file_order += params[:order] if params[:order]
-
 
     # determine the order in which folders are shown
     folder_order = 'name '
@@ -215,29 +214,20 @@ class FoldersController < BaseController
 
       respond_to do |format|
         if @folder.save
-          # copy groups rights on parent folder to new folder
-
           params[:space_id] = params[:folder][:space_id]
           list(@folder.id)
           # back to the list
-          flash[:notice] = 'Diretório criado!'
           format.html {
+            flash[:notice] = 'Diretório criado!'
             redirect_to space_folders_path(:space_id => params[:folder][:space_id], :id => @folder.parent.id)
           }
-          format.js do
-              render :update do |page|
-                page.replace_html  'tabs-4-content', :partial => 'folders/index'
-            end
-
-          end
+          format.js { render :partial => "folders/index" }
         else
-          flash[:error] = 'Não foi possível criar o diretório'
           format.html {
-            render 'new'
+            flash[:error] = 'Não foi possível criar o diretório'
+            redirect_to space_folders_path(@space, @folder.parent)
           }
-          format.js {
-            head :ok #TODO mensagem de erro em ajax
-          }
+          format.js { render :partial => "folders/create" }
         end
       end
     end
@@ -251,7 +241,9 @@ class FoldersController < BaseController
         format.js {
           params[:id] = @folder.parent_id
           list
-          render 'folders/index'
+          render :update do |page|
+            page.replace_html "file_list", :partial => 'folders/list'
+          end
         }
       end
     end
@@ -268,7 +260,9 @@ class FoldersController < BaseController
       format.js {
         params[:id] = @folder.parent_id
         list
-        render 'folders/index'
+        render :update do |page|
+          page.replace_html "file_list", :partial => 'folders/list'
+        end
       }
     end
 

@@ -1,11 +1,11 @@
 Olá <%= @user.display_name %>,
 
-a fatura com número #<%= @invoice.id %> referennte ao plano <%= @plan.name %> está com pagamento pendente. 
+a fatura com número #<%= @invoice.id %> referente ao plano <%= @plan.name %> está com pagamento pendente.
 
 Para realizar o pagamento, clique no link abaixo:
-  <%#TODO quando houver controller de pagamento @payment_link %>
+<%= plan_invoices_url(@plan) %>
 
-Você tem até o dia <%= @deadline %> para efetivar o pagamento, estando sujeito a suspensão dos serviços depois desta data.
+Você tem até o dia <%= l @deadline %> para efetivar o pagamento, estando sujeito a suspensão dos serviços depois desta data.
 
 Obrigado,
 Equipe <%= AppConfig.community_name %>

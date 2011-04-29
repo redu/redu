@@ -1,0 +1,59 @@
+<div class="sidebar alpha grid_3">
+  <div class="image-frame">
+    <!-- <%# Nao setar width e height na imagem %> -->
+    <%= image_tag environment.avatar.url(:thumb_150),
+      :alt => 'profile' %>
+  </div>
+
+  <ul class="local-nav">
+    <li>
+      <div class="<%= (current_page? environment_path(environment)) ?
+                    "session selected".to_s : "session".to_s %>">
+        <% selected = (current_page? environment_path(environment)) ?
+                       "icon-course-white_16_16" : "icon-course-lightblue_16_16"
+                       %>
+        <%= link_to 'Cursos', environment_path(environment),
+          :class => "icon #{selected}" %>
+      </div>
+    </li>
+    <li>
+      <div class="<%= (current_page? environment_bulletins_path(environment)) ?
+                    "session selected".to_s : "session".to_s %>">
+                    <% selected = (current_page? environment_bulletins_path(environment)) ?
+                       "icon-bulletin-white_16_16" : "icon-bulletin-lightblue_16_16"
+                       %>
+        <%= link_to 'Notícias', environment_bulletins_path(environment),
+          :class => "icon #{selected}" %>
+      </div>
+    </li>
+    <% if can? :manage, environment %>
+      <li>
+        <div class="<%= (current_page? edit_environment_path(environment)) ?
+                      "session selected".to_s : "session".to_s %>">
+                    <% selected = (current_page? edit_environment_path(environment)) ?
+                       "icon-management-white_16_16" : "icon-management-lightblue_16_16"
+                       %>
+          <%= link_to 'Gerenciamento', edit_environment_path(environment),
+            :class => "icon #{selected}" %>
+        </div>
+      </li>
+    <% end %>
+    <li>
+      <div class="<%= (current_page? users_environment_path(environment)) ?
+                    "session selected".to_s : "session".to_s %>">
+                    <% selected = (current_page? users_environment_path(environment)) ?
+                       "icon-members-white_16_16" : "icon-members-lightblue_16_16"
+                       %>
+        <%= link_to "Membros: #{ environment.users.length }",
+          users_environment_path(environment),
+            :class => "icon #{selected}" %>
+      </div>
+      <ul class="connections clearfix">
+          <%= render :partial => 'users/item_short',
+            :collection => environment.users.n_recent(9) %>
+      </ul><!-- end .connections -->
+      <a href="" class="more">Ver mais</a>
+    </li>
+  </ul><!-- end .local-nav -->
+</div>
+

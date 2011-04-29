@@ -28,7 +28,7 @@ describe Subject do
   xit { should ensure_length_of(:description).is_at_least(30).is_at_most(250) }
 
   it { should_not allow_mass_assignment_of(:owner) }
-  it { should_not allow_mass_assignment_of(:published) }
+  it { should_not allow_mass_assignment_of(:visible) }
   it { should_not allow_mass_assignment_of(:finalized) }
 
   it "responds to tags" do
@@ -48,10 +48,12 @@ describe Subject do
   context "callbacks" do
 
     it "creates an Enrollment between the Subject and the owner after create" do
+      subject.create_enrollment_associations
       subject.enrollments.first.should_not be_nil
-      subject.enrollments.first.user.should == subject.owner
-      subject.enrollments.first.role.
+      subject.enrollments.last.user.should == subject.owner
+      subject.enrollments.last.role.
         should == subject.owner.get_association_with(subject.space).role
+      subject.enrollments.count.should == 2
     end
 
     it "does NOT create an Enrollment between the Subject and the owner when update it" do
@@ -70,19 +72,19 @@ describe Subject do
   end
 
   context "finders" do
-    it "retrieves published subjects" do
+    it "retrieves visibles subjects" do
       subjects = (1..3).collect { Factory(:subject, :owner => @user,
                                           :space => @space) }
-      published_subjects = (1..3).collect { Factory(:subject, :owner => @user,
+      visible_subjects = (1..3).collect { Factory(:subject, :owner => @user,
                                                     :space => @space,
-                                                    :published => true) }
-      Subject.published.should == published_subjects
+                                                    :visible => true) }
+      Subject.visible.should == visible_subjects
     end
 
-    it "retrieves recent subjects (created until 1 week ago)" do
+    it "retrieves recent subjects (updated until 1 week ago)" do
       subjects = (1..3).collect { |i| Factory(:subject, :owner => @user,
                                               :space => @space,
-                                              :created_at => (i*3).day.ago) }
+                                              :updated_at => (i*3).day.ago) }
       Subject.recent.should == subjects[0..1]
     end
 
@@ -108,37 +110,46 @@ describe Subject do
     end
   end
 
-  it "defaults to not published" do
-    subject { Factory(:subject, :published => nil) }
-    subject.published.should be_false
+  it "responds to recent?" do
+    should respond_to :recent?
   end
 
-  it "responds to publish!" do
-    should respond_to :publish!
+  it "defaults to not visible" do
+    subject { Factory(:subject, :visible => nil) }
+    subject.visible.should be_false
   end
 
-  it "responds to unpublish!" do
-    should respond_to :unpublish!
+  it "responds to turn_visible!" do
+    should respond_to :turn_visible!
   end
 
-  it "publishes itself" do
+  it "responds to turn_invisible!" do
+    should respond_to :turn_invisible!
+  end
+
+  it "indicates if it is recent (updated until 1 week ago)" do
+    subject.should be_recent
+
+    subject.updated_at = 10.day.ago
+    subject.save
+    subject.should_not be_recent
+  end
+
+  it "visibles itself" do
     subject = Factory(:subject, :owner => @user,
-                      :space => @space, :published => false)
-    subject.publish!
-    subject.should be_published
+                      :space => @space, :visible => false)
+    subject.turn_visible!
+    subject.should be_visible
   end
 
-  it "unpublishes itself and removes all enrollments" do
+  it "invisibles itself and removes all enrollments" do
     users = (1..4).collect { Factory(:user) }
     subject = Factory(:subject, :owner => @user,
-                      :space => @space, :published => true)
+                      :space => @space, :visible => true)
     users.each { |u| subject.enroll(u) }
 
-    subject.unpublish!
-    subject.should_not be_published
-    subject.enrollments.reload
-    subject.enrollments.size.should == 1
-    subject.enrollments.first.user.should == @user
+    subject.turn_invisible!
+    subject.should_not be_visible
   end
 
   it "responds to enroll" do

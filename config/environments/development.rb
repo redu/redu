@@ -29,11 +29,11 @@ PAPERCLIP_STORAGE_OPTIONS = {
                :thumb => "140x140>",
                :small => "60x60>",
                :nano => "24x24>",
-               :thumb_150 => "150x150>",
-               :thumb_120 => "120x120>",
-               :thumb_100 => "100x100>",
-               :thumb_60 => "60x60>",
-               :thumb_32 => "32x32>" }
+               :thumb_150 => "150x150#",
+               :thumb_120 => "120x120#",
+               :thumb_100 => "100x100#",
+               :thumb_60 => "60x60#",
+               :thumb_32 => "32x32#" }
 }
 
 VIDEO_ORIGINAL = PAPERCLIP_STORAGE_OPTIONS.delete(:styles)

@@ -1,5 +1,4 @@
 class BulletinsController < BaseController
-  layout "environment"
 
   load_and_authorize_resource :space
   load_and_authorize_resource :environment
@@ -20,12 +19,8 @@ class BulletinsController < BaseController
                                    :per_page => AppConfig.items_per_page)
 
     respond_to do |format|
-      format.html do
-        render :template => 'bulletins/new/index', :layout => 'new/application'
-      end
-      format.js do
-        render :template => 'bulletins/new/index'
-      end
+      format.html
+      format.js
     end
   end
 
@@ -34,9 +29,7 @@ class BulletinsController < BaseController
     @bulletinable = find_bulletinable
 
     respond_to do |format|
-      format.html do
-        render :template => 'bulletins/new/show', :layout => 'new/application'
-      end
+      format.html
     end
   end
 
@@ -44,9 +37,7 @@ class BulletinsController < BaseController
     @bulletinable = find_bulletinable
 
     respond_to do |format|
-      format.html do
-        render :template => "bulletins/new/new", :layout => "new/application"
-      end
+      format.html
     end
   end
 
@@ -70,9 +61,7 @@ class BulletinsController < BaseController
         format.html { redirect_to polymorphic_path([@bulletin.bulletinable, @bulletin]) }
         format.xml  { render :xml => @bulletin, :status => :created, :location => @bulletin }
       else
-        format.html do
-          render :template => "bulletins/new/new", :layout => "new/application"
-        end
+        format.html { render "new" }
         format.xml  { render :xml => @bulletin.errors, :status => :unprocessable_entity }
       end
     end
@@ -82,9 +71,7 @@ class BulletinsController < BaseController
     @bulletinable = find_bulletinable
 
     respond_to do |format|
-      format.html do
-        render :template => "bulletins/new/edit", :layout => "new/application"
-      end
+      format.html
     end
   end
 
@@ -95,15 +82,13 @@ class BulletinsController < BaseController
         format.html { redirect_to polymorphic_path([@bulletin.bulletinable, @bulletin])}
         format.xml { render :xml => @bulletin, :status => :created, :location => @bulletin, :bulletinable => @bulletin.bulletinable }
       else
-        format.html do
-          render :template => "bulletins/new/edit", :layout => "new/application"
-        end
+        format.html { render "new" }
         format.xml { render :xml => @bulletin.errors, :status => :unprocessable_entity }
       end
     end
   end
 
-  def destroy    
+  def destroy
     @bulletin.destroy
 
     flash[:notice] = 'A notícia foi excluída.'

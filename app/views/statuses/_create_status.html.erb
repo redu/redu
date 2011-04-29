@@ -1,25 +1,27 @@
-<div class="post-activity">
-	<ul class="clearfix">
-		<li><a href="#actv-1" class="status" title="Status" >Status</a></li>
-		<li><a href="#actv-2" class="question" title="Pergunta">Pergunta</a></li>
-	</ul>
+<%# Form de status  %>
+<% random_number = get_random_number%>
+<div class="create-status inform-my-status">
+  <% form_remote_for @status,
+    :before => "$('.status_spinner', this).show();",
+    :success => "$('.create-status textarea').val('');"do |f| %>
+    <%= flash[:statuses_errors] %>
+    <%= hidden_field_tag "return", request.url %>
+    <%= hidden_field :status, :statusable_id, :value => statusable.id %>
+    <%= hidden_field :status, :statusable_type, :value => statusable.class.to_s %>
+    <%= hidden_field_tag "status[kind]", Status::STATUS %>
 
-	<div id="actv-1" class="clearfix">
-		<% form_remote_for @status, :html => {:class => "post-status"}, :before => "$('.status_spinner').show()" do |f| %>
-		<%= flash[:statuses_errors] %>
-		<%= hidden_field_tag "return", request.url %>
-		<%= hidden_field :status, :statusable_id, :value => statusable.id %>
-		<%= hidden_field :status, :statusable_type, :value => statusable.class.to_s %>
-		<%= render :partial => "statuses/form_status", :locals => {:f => f} %>
-		<% end %>
-	</div>
-	<div id="actv-2" class="clearfix">
-		<% form_remote_for @status, :html => {:class => "post-question"}, :before => "$('.status_spinner').show()" do |f| %>
-		<%= flash[:statuses_errors] %>
-		<%= hidden_field_tag "return", request.url %>
-	<%= hidden_field :status, :statusable_id, :value => statusable.id %>
-		<%= hidden_field :status, :statusable_type, :value => statusable.class.to_s %>
-		<%= render :partial => "statuses/form_question", :locals => {:f => f} %>
-		<% end %>
-	</div>
-</div><!-- end post-activity -->
+    <%= f.error_messages %>
+    <% field_set_tag do %>
+
+      <div class="textarea">
+        <%= f.text_area :text, :rows => 1, :class => "status status-#{random_number}" %>
+      </div>
+      <%= render :partial => 'shared/limit_char_field', :locals => { :class_textarea => "status-#{random_number}" }%>
+      <%= f.submit 'Postar' %>
+      <a href="" class="cancel">Cancelar</a>
+      <%= image_tag 'spinner.gif', :class => "status_spinner",
+        :style => 'display: none'%>
+  <% end %>
+<% end %>
+</div>
+

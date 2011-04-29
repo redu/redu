@@ -1,0 +1,11 @@
+<%= render :partial => 'users/home_sidebar' %>
+<div class="main grid_10" style="width: 580px;">
+  <%= render :partial => 'users/breadcrumbs' %>
+  <%
+    fake_tabs ['Perfil', edit_user_path(@user), {:class => 'icon icon-profile-gray_16_16'}],
+      ['Conta', account_user_path(@user), {:class => 'icon icon-account-lightblue_16_16'}],
+      ['Planos', user_plans_path(@user), {:class => 'icon icon-cash-gray_16_16'}] do
+    %>
+      <%= render :partial => "users/form_account" %>
+    <% end %>
+</div>

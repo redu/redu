@@ -120,12 +120,14 @@ describe Ability do
     end
 
   end
+
   context "on course -" do
     before do
       @environment = Factory(:environment, :owner => @env_admin)
       Factory(:user_environment_association, :environment => @environment,
               :user => @member, :role => :member)
     end
+
     context "member" do
       before do
         @ability = Ability.new(@member)
@@ -136,13 +138,34 @@ describe Ability do
                                :environment => @environment)
         @ability.should_not be_able_to(:create, course)
       end
+
       it "cannot destroy a course" do
         course = Factory.build(:course, :owner => @env_admin,
                                :environment => @environment)
         @ability.should_not be_able_to(:destroy, course)
       end
+
+      it "accepts a course invitation" do
+        course = Factory(:course, :owner => @env_admin,
+                         :environment => @environment)
+        course.invite(@member)
+        @ability.should be_able_to(:accept, course)
+      end
+
+      it "denies a course invitation" do
+        course = Factory(:course, :owner => @env_admin,
+                         :environment => @environment)
+        course.invite(@member)
+        @ability.should be_able_to(:deny, course)
+      end
+
       it "cannot create a bulletin"
       it "cannot destroy a bulletin"
+
+      it "cannot invite users" do
+        course = Factory(:course)
+        @ability.should_not be_able_to(:invite_members, course)
+      end
     end
 
     context "environment admin" do
@@ -176,9 +199,59 @@ describe Ability do
         @ability.should_not be_able_to(:destroy, course)
       end
 
+      context "if plan is blocked" do
+        before do
+          @course = Factory(:course,:owner => @env_admin,
+                            :environment => @environment)
+          @plan = Factory(:plan, :billable => @course)
+          @plan.block!
+          @space = Factory(:space, :owner => @env_admin, :course => @course)
+          @sub = Factory(:subject, :owner => @env_admin, :space => @space)
+        end
+
+        it "can NOT upload document" do
+          document = Factory(:document)
+          lecture = Factory(:lecture, :owner => @env_admin,
+                            :subject => @sub,
+                            :lectureable => document)
+          @ability.should_not be_able_to(:upload_document, document)
+        end
+
+        # Need Seminar factory
+        it "can NOT upload multimedia"
+
+        it "can create a Youtube seminar" do
+          youtube = Factory(:seminar_youtube)
+          lecture = Factory(:lecture, :owner => @env_admin,
+                            :subject => @sub,
+                            :lectureable => youtube)
+          @ability.should be_able_to(:upload_multimedia, youtube)
+        end
+
+        # Need Myfile factory
+        it "can NOT upload file"
+      end
+
       it "creates a bulletin"
       it "destroy a bulletin when he is a environment admin"
 
+      it "invites members" do
+        course = Factory(:course, :owner => @env_admin,
+                         :environment => @environment)
+        @ability.should be_able_to(:invite_members, course)
+      end
+
+      it "views not accepted invitations" do
+        course = Factory(:course, :owner => @env_admin,
+                         :environment => @environment)
+        @ability.should be_able_to(:admin_manage_invitations, course)
+      end
+
+      it "destroys invitations" do
+        course = Factory(:course, :owner => @env_admin,
+                         :environment => @environment)
+        @ability.should be_able_to(:destroy_invitations, course)
+      end
     end
 
     context "teacher" do
@@ -199,6 +272,24 @@ describe Ability do
       end
       it "cannot create a bulletin"
       it "cannot destroy a bulletin"
+
+      it "cannot invite members" do
+        course = Factory.build(:course,:owner => @teacher,
+                               :environment => @environment)
+        @ability.should_not be_able_to(:invite_members, course)
+      end
+
+      it "cannot view not accepted invitations" do
+        course = Factory(:course, :owner => @env_admin,
+                         :environment => @environment)
+        @ability.should_not be_able_to(:admin_manage_invitations, course)
+      end
+
+      it "cannot destroy invitations" do
+        course = Factory(:course, :owner => @env_admin,
+                         :environment => @environment)
+        @ability.should_not be_able_to(:destroy_invitations, course)
+      end
     end
 
     context "tutor" do
@@ -220,6 +311,12 @@ describe Ability do
 
       it "cannot create a bulletin"
       it "cannot destroy a bulletin"
+
+      it "cannot invite members" do
+        course = Factory.build(:course,:owner => @tutor,
+                               :environment => @environment)
+        @ability.should_not be_able_to(:invite_members, course)
+      end
     end
 
     context "redu admin" do
@@ -489,6 +586,70 @@ describe Ability do
       it "should not manage each other" do
         @user_ability.should_not be_able_to(:manage, @my_friend)
         @my_friend_ability.should_not be_able_to(:manage, @user)
+      end
+    end
+
+    context "when user privacy" do
+      context "let everyone see his statuses" do
+        before do
+          @user.settings.view_mural = Privacy[:public]
+        end
+
+        context "and they are friends," do
+          before do
+            @my_friend = Factory(:user)
+            @my_friend_ability = Ability.new(@my_friend)
+
+            friendship, status = @user.be_friends_with(@my_friend)
+            friendship.accept!
+          end
+
+          it "a friend can view user's statuses" do
+            @my_friend_ability.should be_able_to(:view_mural, @user)
+          end
+        end
+
+        context "and they are NOT friends," do
+          before do
+            @someone = Factory(:user)
+            @someone_ability = Ability.new(@someone)
+          end
+
+          it "someone can view user's statuses" do
+            @someone_ability.should be_able_to(:view_mural, @user)
+          end
+        end
+      end
+
+      context "let ONLY friends see his statuses" do
+        before do
+          @user.settings.view_mural = Privacy[:friends]
+        end
+
+        context "and they are friends," do
+          before do
+            @my_friend = Factory(:user)
+            @my_friend_ability = Ability.new(@my_friend)
+
+            friendship, status = @user.be_friends_with(@my_friend)
+            friendship.accept!
+          end
+
+          it "a friend can view user's statuses" do
+            @my_friend_ability.should be_able_to(:view_mural, @user)
+          end
+        end
+
+        context "and they are NOT friends," do
+          before do
+            @someone = Factory(:user)
+            @someone_ability = Ability.new(@someone)
+          end
+
+          it "someone can NOT view user's statuses" do
+            @someone_ability.should_not be_able_to(:view_mural, @user)
+          end
+        end
       end
     end
 

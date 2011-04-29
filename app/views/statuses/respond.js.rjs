@@ -1,21 +1,17 @@
 status_id = @status.in_response_to.id.to_s
-if params.has_key? :new_layout
-  if @status.valid?
-    page.insert_html :bottom, "#status-#{status_id} .responses ol",
-      (render :partial => 'statuses/new/response', :locals => { :response => @status })
-    page.toggle "#status-#{status_id} .create-response"
-    page << "$('#status-#{status_id} form textarea').val('')"
-  else
-    #TODO Caso para o qual dá erro de validação
-  end
-  page.hide "#status-#{status_id} .create-response .response_spinner"
+if @status.valid?
+  page.insert_html :bottom, "#status-#{status_id} .responses ol",
+  (render :partial => 'statuses/response', :locals => { :response => @status })
+  page.toggle "#status-#{status_id} .create-response"
+  page << "$('#status-#{status_id} form textarea').val('')"
 else
-  if @status.valid?
-    page << "$('#status-"+ status_id+ " ul.response').prepend(\"#{escape_javascript(render :partial => 'response', :object => @status)}\")"
-    page << "$('#status-#{status_id} .answer:first').slideToggle('')"
-    page << "$('#status-#{status_id} form textarea').val('')"
-  else
-    page << "$('#status-"+status_id+" div.answer div.error').html('"+escape_javascript( error_messages_for :status)+"')"
-  end
-  page << "$('#status-#{status_id} form').toggleSpinner()"
+  #TODO Caso para o qual dá erro de validação
+  #page << "$('#status-"+status_id+" div.answer div.error').html('"+escape_javascript( error_messages_for :status)+"')"
+
+#page << "$('.status_spinner').hide()"
+#page << "$('.errorMessageField').remove()"
+#page << "$('textarea.status:visible').wrap(\"<div class='fieldWithErrors'></div>\")" + \
+            #".after(\"<p class='errorMessageField'>#{status.errors.full_messages.to_sentence}</p>\")"
+
 end
+page.hide "#status-#{status_id} .create-response .response_spinner"

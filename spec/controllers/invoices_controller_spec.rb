@@ -21,7 +21,7 @@ describe InvoicesController do
     UserSession.create @plan.user
   end
 
-  context "whe GET index" do
+  context "when GET index" do
     it "shold load the invoices correctly" do
       get :index, :plan_id => @plan.id, :locale => "pt-BR"
 
@@ -40,16 +40,4 @@ describe InvoicesController do
       end
     end
   end
-
-  context "when GET show" do
-    it "should load the correct invoice" do
-      get :show, :plan_id => @plan.id, :id => @plan.invoices.first.id,
-        :locale => "pt-BR"
-
-      assigns[:invoice].should_not be_nil
-      assigns[:invoice].should == @plan.invoices.first
-    end
-
-  end
-
 end

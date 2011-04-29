@@ -1,0 +1,5 @@
+page.insert_html :bottom, '#course-preview > ul',
+  (render :partial => 'spaces/item_short', :collection => @spaces)
+
+page.replace_html '.endless',
+  (will_paginate @spaces, :renderer => EndlessRenderer)

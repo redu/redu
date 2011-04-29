@@ -1,9 +1,5 @@
 class Subject < ActiveRecord::Base
 
-  # Só é criado após o primeiro update (finalized = 0)
-  # Para Redu admin o enrollment não é criado
-  after_create :create_enrollment_association, :unless => "self.owner.admin?"
-
   belongs_to :space
   belongs_to :owner, :class_name => "User", :foreign_key => :user_id
   has_many :lectures, :order => "position", :dependent => :destroy
@@ -18,16 +14,20 @@ class Subject < ActiveRecord::Base
   has_many :logs, :as => :logeable, :dependent => :destroy, :class_name => 'Status'
 
   named_scope :recent, lambda {
-    { :conditions => ['created_at > ?', 1.week.ago] }
+    { :conditions => ['updated_at > ?', 1.week.ago] }
   }
 
-  attr_protected :owner, :published, :finalized
+  attr_protected :owner, :visible, :finalized
 
   acts_as_taggable
 
   validates_presence_of :title
   validates_length_of :description, :within => 30..250
   validates_length_of :lectures, :minimum => 1, :on => :update
+
+  def recent?
+    self.updated_at > 1.week.ago
+  end
 
   # Matricula o usuário com o role especificado. Retorna true ou false
   # dependendo do resultado
@@ -42,15 +42,13 @@ class Subject < ActiveRecord::Base
     enrollment.destroy
   end
 
-  def publish!
-   self.published = true
+  def turn_visible!
+   self.visible = true
    self.save
   end
 
-  def unpublish!
-    Enrollment.destroy_all(["subject_id = ? and user_id <> ?",
-                           self.id, self.user_id])
-    self.published = false
+  def turn_invisible!
+    self.visible = false
     self.save
   end
 
@@ -89,11 +87,11 @@ class Subject < ActiveRecord::Base
     end
   end
 
-  protected
-  def create_enrollment_association
-    space_assoc = self.owner.get_association_with(self.space)
-    self.enrollments.create(:user => self.owner, :subject => self,
-                              :role => space_assoc.role)
+  def create_enrollment_associations
+    self.space.user_space_associations.each do |users_space|
+      self.enrollments.create(:user => users_space.user, :subject => self,
+                              :role => users_space.role)
+    end
   end
 
 end

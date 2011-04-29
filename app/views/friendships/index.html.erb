@@ -1,18 +1,21 @@
 <% if @profile %>
-  <%= render :partial => 'users/new/profile_sidebar' %>
+  <%= render :partial => 'users/profile_sidebar' %>
 <% else %>
-  <%= render :partial => 'users/new/home_sidebar' %>
+  <%= render :partial => 'users/home_sidebar' %>
 <% end %>
 <div class="main grid_10" style="width: 580px;">
-  <ol id="breadcrumbs" class="clearfix">
-    <li>
-      <a href="" class="replacement home icon icon-redu_r8_c227_s1">Home</a>
-    </li>
-  </ol>
+<ol id="breadcrumbs" class="clearfix">
+  <li>
+    <%= link_to 'Home', home_user_path(current_user), :class => 'replacement home icon icon-home-lightblue_16_16' %>
+  </li>
+  <li>
+    <%= link_to 'Contatos', edit_user_path(current_user), :class => 'icon icon-contacts-lightblue_16_16' %>
+  </li>
+</ol>
 
   <div id="contacts">
     <ul class="clearfix">
-      <%= render :partial => "users/new/item_medium", :collection => @friends %>
+      <%= render :partial => "users/item_medium", :collection => @friends %>
     </ul>
     <%= will_paginate @friends, :renderer => EndlessRenderer %>
   </div>

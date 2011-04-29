@@ -18,7 +18,7 @@ describe SubjectsController do
     before do
       subjects = (1..3).collect { Factory(:subject, :owner => @subject_owner,
                                           :space => @space,
-                                          :published => true,
+                                          :visible => true,
                                           :finalized => true) }
     end
 
@@ -29,7 +29,7 @@ describe SubjectsController do
 
     it "renders with layout 'environment'" do
       get :index, :locale => "pt-BR", :space_id => @space.id
-      response.layout.should == 'layouts/new/application'
+      response.layout.should == 'layouts/application'
     end
 
   end
@@ -38,7 +38,7 @@ describe SubjectsController do
   context "GET 'show'" do
     before do
       @subject = Factory(:subject, :owner => @subject_owner,
-                         :published => true, :space => @space,
+                         :visible => true, :space => @space,
                          :finalized => true)
     end
     it "loads that subject" do
@@ -182,7 +182,7 @@ describe SubjectsController do
           :id => @subject.id,
           :space_id => @space.id,
           :subject => { :description => "short description" }
-        response.should render_template('subjects/new/update_error')
+        response.should render_template('subjects/update_error')
       end
     end
   end
@@ -257,12 +257,12 @@ describe SubjectsController do
     end   
   end
 
-  context "POST 'publish'" do
+  context "POST 'turn_visible'" do
     before do
       @subject = Factory(:subject, :owner => @subject_owner,
                          :finalized => true ,:space => @space)
       lecture = Factory(:lecture, :owner => @user, :subject => @subject)
-      post :publish, :locale => "pt-BR", :id => @subject.id,
+      post :turn_visible, :locale => "pt-BR", :id => @subject.id,
         :space_id => @space.id
     end
 
@@ -275,12 +275,12 @@ describe SubjectsController do
     end
   end
 
-  context "POST 'unpublish'" do
+  context "POST 'turn_invisible'" do
     before do
       @subject = Factory(:subject, :owner => @subject_owner,
                          :space => @space, :finalized => true)
       lecture = Factory(:lecture, :owner => @user, :subject => @subject)
-      post :unpublish, :locale => "pt-BR", :id => @subject.id, :space_id => @space.id
+      post :turn_invisible, :locale => "pt-BR", :id => @subject.id, :space_id => @space.id
     end
 
     it "assigns the subject" do
@@ -289,74 +289,6 @@ describe SubjectsController do
 
     it "redirects to 'show'" do
       response.should redirect_to(space_subject_path(@space, @subject))
-    end
-  end
-
-  context "GET 'enroll'" do
-    before do
-      @subject = Factory(:subject, :owner => @subject_owner,
-                         :space => @space, :finalized => true,
-                         :published => true)
-      lecture = Factory(:lecture, :owner => @user, :subject => @subject)
-      @enrolled_user = Factory(:user)
-      Factory(:user_space_association, :space => @space,
-              :user => @enrolled_user)
-      get :enroll, :locale => "pt-BR", :id => @subject.id,
-        :space_id => @space.id
-    end
-
-    it "assigns the subject" do
-      assigns[:subject].should == @subject
-    end
-
-    it "redirects to 'show'" do
-      response.should redirect_to(space_subject_path(@space, @subject))
-    end
-  end
-
-  context "POST 'unenroll' when a show/info subject" do
-    before do
-      @subject = Factory(:subject, :owner => @subject_owner,
-                         :space => @space, :finalized => true,
-                         :published => 1)
-      lecture = Factory(:lecture, :owner => @user, :subject => @subject)
-      @enrolled_user = Factory(:user)
-      @course.join(@enrolled_user)
-      @subject.enroll(@enrolled_user)
-      UserSession.create @enrolled_user
-      post :unenroll, :locale => "pt-BR", :id => @subject.id,
-        :space_id => @space.id, :user_id => @enrolled_user.id
-    end
-
-    it "assigns the subject" do
-      assigns[:subject].should == @subject
-    end
-
-    it "redirects to 'show'" do
-      response.should redirect_to(admin_members_space_subject_path(@space, @subject))
-    end
-  end
-
-  context "POST 'unenroll' when a administrative panel" do
-    before do
-      @subject = Factory(:subject, :owner => @subject_owner,
-                         :space => @space, :finalized => true,
-                         :published => 1)
-      lecture = Factory(:lecture, :owner => @user, :subject => @subject)
-      @enrolled_user = Factory(:user)
-      @course.join(@enrolled_user)
-      @subject.enroll(@enrolled_user)
-      UserSession.create @enrolled_user
-      post :unenroll, :locale => "pt-BR", :id => @subject.id,
-        :space_id => @space.id, :users => [@enrolled_user.id]
-    end
-
-    it "assigns the subject" do
-      assigns[:subject].should == @subject
-    end
-
-    it "redirects to 'show'" do
-      response.should redirect_to(admin_members_space_subject_path(@space, @subject))
     end
   end
 end

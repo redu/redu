@@ -1,4 +1,4 @@
-<% field_set_tag "Artigo" do %>
+<% field_set_tag do %>
   <%= label_tag :name, :title.l %>
   <%= text_field_tag :name, @lecture.name %>
   <%= error_for :name %>
@@ -7,17 +7,21 @@
     <%= hidden_field_tag "lecture_id", @lecture.id %>
   <% end %>
   <%= f.label :body, :body.l %>
-  <%= f.cktext_area :body, :width => "600px", :height => "200px",
-      :swf_params => { :assetable_type => 'Space',
-        :assetable_id => @space.id } %>
+  <%= f.cktext_area :body,
+    :width => '570', :height => '500',
+    :swf_params => { :assetable_type => 'Space', :assetable_id => @space.id } %>
   <%= error_for :page, :body %>
   <% if action_name == 'new' %>
     <%= f.submit 'Criar' %>
+  <%= link_to_function "Cancelar",
+    "$('#page_form').remove(); return false;",
+    :class => 'cancel vanilla' %>
   <% else %>
     <%= f.submit 'Salvar' %>
-  <% end %>
   <%= link_to_function "Cancelar",
-    "$('#page_form').remove(); $('#add_link').show(); $('##{@lecture.id}-item').show(); return false;" %>
+    "$('#page_form').remove(); $('#edit-#{@lecture.id}-item').remove(); return false;",
+    :class => 'cancel vanilla' %>
+  <% end %>
   <%= image_tag 'spinner.gif', :id => 'spinner-form-page',
     :style => 'display: none;' %>
 <% end %>

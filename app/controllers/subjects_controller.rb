@@ -1,5 +1,4 @@
 class SubjectsController < BaseController
-  layout 'environment'
 
   load_and_authorize_resource :space
   load_and_authorize_resource :subject, :through => :space, :except => [:update, :destroy]
@@ -11,12 +10,7 @@ class SubjectsController < BaseController
   rescue_from CanCan::AccessDenied do |exception|
     flash[:notice] = "Você não tem acesso a essa página"
 
-    if params[:action] == 'infos' || !params[:id]
-      redirect_to environment_course_path(@space.course.environment, @space.course)
-    else
-      subject = Subject.find(params[:id])
-      redirect_to infos_space_subject_path(@space, subject)
-    end
+    redirect_to preview_environment_course_path(@space.course.environment, @space.course)
   end
 
   def index
@@ -25,19 +19,15 @@ class SubjectsController < BaseController
                                            :order => 'updated_at DESC',
                                            :per_page => AppConfig.items_per_page)
     else
-      @subjects = @space.subjects.published.
+      @subjects = @space.subjects.visible.
         paginate(:page => params[:page],
                  :order => 'updated_at DESC',
                  :per_page => AppConfig.items_per_page)
     end
 
     respond_to do |format|
-      format.html do
-        render :template => 'subjects/new/index', :layout => 'new/application'
-      end
-      format.js do
-        render :template => 'subjects/new/index'
-      end
+      format.html
+      format.js
     end
   end
 
@@ -48,25 +38,27 @@ class SubjectsController < BaseController
     respond_to do |format|
       @status = Status.new
 
-      format.html { render :template => "subjects/new/show", :layout => "new/application" }
-      format.js { render :template => 'subjects/new/show' }
+      format.html
+      format.js
       format.xml { render :xml => @subject }
     end
   end
 
   def new
     @subject = Subject.new
+
     respond_to do |format|
-      format.html do
-        render :template => 'subjects/new/new', :layout => 'new/application'
-      end
-     # format.js do
-     #   render :update do |page|
-     #     page.insert_html :before, 'subjects_list',
-     #       :partial => 'subjects/new/form'
-     #     page.hide 'link-new-subject'
-     #   end
-     # end
+      format.html
+
+      # Descomentar para o primeiro passo da criação de Subject
+      # usar AJAX
+      # format.js do
+      #   render :update do |page|
+      #     page.insert_html :before, 'subjects_list',
+      #       :partial => 'subjects/form'
+      #     page.hide 'link-new-subject'
+      #   end
+      # end
     end
   end
 
@@ -77,9 +69,7 @@ class SubjectsController < BaseController
 
     respond_to do |format|
       if @subject.save
-        format.js do
-          render :template => 'subjects/new/create'
-        end
+        format.js
       else
         format.js do
           # Workaround para mostrar o errors.full_messages
@@ -107,14 +97,12 @@ class SubjectsController < BaseController
     @subject_header = @subject.clone
     @admin_panel = true if params[:admin_panel]
     respond_to do |format|
-      format.html do
-        render :template => "subjects/new/edit", :layout=> "new/application"
-      end
+      format.html
       format.js do
         render :update do |page|
           page.hide 'content'
           page.insert_html :before, 'content',
-            :partial => 'subjects/new/form'
+            :partial => 'subjects/form'
         end
       end
     end
@@ -129,8 +117,10 @@ class SubjectsController < BaseController
           flash[:notice] = "As atualizações foram salvas."
         else
           @subject.finalized = true
-          @subject.published = true
+          @subject.visible = true
           @subject.save
+          # cria as associações com o subject, replicando a do space
+          @subject.create_enrollment_associations
           @subject.convert_lectureables!
           flash[:notice] = "O Módulo foi criado."
         end
@@ -143,9 +133,9 @@ class SubjectsController < BaseController
         end
         format.html { redirect_to space_subject_path(@space, @subject) }
       else
-        format.js { render :template => 'subjects/new/update_error' }
+        format.js { render :template => 'subjects/update_error' }
         format.html do
-          render :template => "subjects/new/edit", :layout=> "new/application"
+          render :edit
         end
       end
     end
@@ -161,44 +151,16 @@ class SubjectsController < BaseController
     redirect_to space_subjects_path(@subject.space)
   end
 
-  def infos
-    respond_to do |format|
-      format.html { render :template => 'subjects/new/infos',
-        :layout => 'new/application' }
-    end
-  end
-
-  def publish
-    @subject.publish!
-    flash[:notice] = "O módulo foi publicado."
+  def turn_visible
+    @subject.turn_visible!
+    flash[:notice] = "O módulo está visível para todos."
     redirect_to space_subject_path(@space, @subject)
   end
 
-  def unpublish
-    @subject.unpublish!
-    flash[:notice] = "O módulo foi despublicado e todas as matrículas foram perdidas."
+  def turn_invisible
+    @subject.turn_invisible!
+    flash[:notice] = "O módulo está invisível, apenas administradores podem visualizá-lo."
     redirect_to space_subject_path(@space, @subject)
-  end
-
-  def enroll
-    role = current_user.get_association_with(@space).role
-    @subject.enroll(current_user, role)
-    flash[:notice] = "Você foi matriculado e já pode começar a assistir as aulas."
-    redirect_to space_subject_path(@space, @subject)
-  end
-
-  def unenroll
-    if params.has_key?(:users)
-      params[:users].each do |user_id|
-        user = User.find(user_id)
-        @subject.unenroll(user)
-      end
-    else
-      user = User.find(params[:user_id])
-      @subject.unenroll(user)
-    end
-    flash[:notice] = "Você desmatriculado do módulo."
-    redirect_to admin_members_space_subject_path(@space, @subject)
   end
 
   #FIXME evitar usar GET e POST no mesmo action
@@ -206,8 +168,7 @@ class SubjectsController < BaseController
     unless request.post?
       respond_to do |format|
         format.html do
-          render :template => 'subjects/new/admin_lectures_order',
-            :layout => 'new/application' and return
+          render :admin_lectures_order and return
         end
       end
     end
@@ -228,11 +189,8 @@ class SubjectsController < BaseController
                                 :order => 'first_name ASC',
                                 :per_page => AppConfig.items_per_page)
     respond_to do |format|
-      format.html do
-        render :template => "subjects/new/admin_members",
-               :layout=> "new/application"
-      end
-      format.js { render :template => "subjects/new/admin_members" }
+      format.html
+      format.js
     end
   end
 
@@ -254,28 +212,14 @@ class SubjectsController < BaseController
     end
   end
 
-  # Mural do Subject
-  def statuses
-    @status = Status.new
-    @statusable = @subject
-    @statuses = @subject.recent_activity(params[:page])
-
-    respond_to do |format|
-      format.html
-      format.js { render :template => "statuses/index"}
-    end
-  end
-
   # Listagem de usuários do Space
   def users
     @users = @subject.members.
       paginate(:page => params[:page], :order => 'first_name ASC', :per_page => 18)
 
     respond_to do |format|
-      format.html do
-        render :template => 'subjects/new/users', :layout => 'new/application'
-      end
-      format.js { render :template => 'subjects/new/users' }
+      format.html
+      format.js
     end
   end
 

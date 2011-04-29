@@ -9,10 +9,12 @@ describe Lecture do
                      :course => course)
     @user = Factory(:user)
     course.join(@user)
-    @sub = Factory(:subject, :owner => @user, :space => @space)
+    @sub = Factory(:subject, :owner => @user, :space => @space,
+                   :finalized => true)
+    @sub.create_enrollment_associations
   end
-   
-  subject { Factory(:lecture, :subject => @sub, 
+
+  subject { Factory(:lecture, :subject => @sub,
                     :owner => @sub.owner) }
 
   it { should belong_to :owner }
@@ -47,9 +49,7 @@ describe Lecture do
   context "callbacks" do
     context "creates a AssertReport between the StudentProfile and the Lecture after create" do
       it "when the owner is the subject owner" do
-        subject.asset_reports.first.should_not be_nil
-        subject.asset_reports.first.
-          student_profile.user.should == subject.owner
+        subject.asset_reports.of_user(subject.owner).should_not be_empty
       end
 
       it "when the owner is an environment_admin" do
@@ -57,14 +57,20 @@ describe Lecture do
         subject.should_not be_new_record
 
         another_admin = Factory(:user)
+        @space.course.spaces.reload
+        @space.subjects.reload
         @space.course.join another_admin
         @space.course.environment.change_role(another_admin,
                                               Role[:environment_admin])
-        lecture = Factory(:lecture, :subject => @sub, :owner => another_admin)
-        lecture.asset_reports.first.should_not be_nil
-        lecture.asset_reports.first.student_profile.should_not be_nil
-        lecture.asset_reports.first.
-          student_profile.user.should == lecture.subject.owner
+
+        lecture = Factory(:lecture, :subject => @sub,
+                          :owner => another_admin)
+
+        lecture.asset_reports.should_not be_empty
+        lecture.asset_reports.count.should == @sub.members.count
+        @sub.members.each do |member|
+          lecture.asset_reports.of_user(member).should_not be_empty
+        end
       end
     end
   end
@@ -103,28 +109,17 @@ describe Lecture do
       end
     end
 
-    it "retrieves lectures that are interactive classes" do
-      pending "Need interactive class Factory" do
-        interactive_classes = (1..2).collect { 
-          Factory(:lecture, :subject => @sub,
-                  :lectureable => Factory(:interactive_class)) }
-        Factory(:lecture, :subject => @sub)
-
-        Lecture.iclasses.should == interactive_classes
-      end
-    end
-
     it "retrieves lectures that are pages" do
         page = Factory(:lecture, :subject => @sub)
-        documents = (1..2).collect { 
-          Factory(:lecture, :subject => @sub, 
+        documents = (1..2).collect {
+          Factory(:lecture, :subject => @sub,
                   :lectureable => Factory(:document)) }
         Lecture.pages.should == [page]
     end
 
     it "retrieves lectures that are documents" do
         page = Factory(:lecture, :subject => @sub)
-        documents = (1..2).collect { 
+        documents = (1..2).collect {
           Factory(:lecture, :subject => @sub,
                   :lectureable => Factory(:document)) }
 
@@ -153,7 +148,7 @@ describe Lecture do
         subject1 = Factory(:subject, :owner => subject_owner,
                            :space => space)
         lectures = (1..3).collect { Factory(:lecture, :subject => subject1) }
-        
+
         user = Factory(:user)
         subject1.enroll user
 
@@ -200,5 +195,31 @@ describe Lecture do
     new_lecture.should_not == subject
     new_lecture.should be_is_clone
     new_lecture.subject.should == subject1
+  end
+  context "destroy" do
+    before do
+      @lec = Factory(:lecture, :subject => @sub,
+                     :owner => @sub.owner)
+    end
+
+    #FIXME encontrar um jeito melhor de se testar o refresh_students_profiles
+    it "should update all students profiles" do
+      assets = AssetReport.all(:conditions => {
+                                       :subject_id => subject.subject.id,
+                                       :lecture_id => @lec.id})
+      assets.each do |asset|
+        asset.done = 1
+        asset.save
+      end
+      @lec.refresh_students_profiles
+      grade = StudentProfile.sum('grade', :conditions =>
+                                           {:subject_id => subject.subject.id})
+      grade.should == 100
+      @lec.destroy
+      @lec.refresh_students_profiles
+      grade = StudentProfile.sum('grade', :conditions =>
+                                           {:subject_id => subject.subject.id})
+      grade.should == 0
+    end
   end
 end

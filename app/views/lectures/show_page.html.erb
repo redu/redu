@@ -1,0 +1,96 @@
+<%= render :partial => 'lectures/lights' %>
+<%= render :partial => 'subjects/sidebar' %>
+<div class="main grid_12 omega big-col">
+  <%= render :partial => "subjects/breadcrumbs", :locals => { :subject => @subject } %>
+  <%= render :partial => 'subjects/header',
+    :locals => { :subject => @subject, :space => @space } %>
+
+  <div id="resource" class="hierarchy-listing-wrapper">
+    <div class="header">
+      <h4>Recursos</h4>
+      <span class="counter">
+        <%= @subject.lectures.length %> recursos disponíveis
+      </span>
+    </div>
+    <%= render :partial => 'lectures/context',
+      :locals => { :student_grade => @student_grade, :done => @done } %>
+    <%= render :partial => 'lectures/info',
+      :locals => { :lecture => @lecture } %>
+    <%= render :partial => 'lectures/details',
+      :locals => { :lecture => @lecture} %>
+    <div class="pretty-text stage page-content content">
+      <h2><%= @lecture.name %></h2>
+      <%= raw @lecture.lectureable.body %>
+    </div>
+
+    <div class="student-actions">
+      <ul>
+        <li class="selected">
+          <span class="help"></span>
+          <a href="" title="" class="action-help" >
+            Solicitar ajuda
+          </a>
+        </li>
+        <!--
+        <li>
+          <span class="annotations"></span>
+          <a href="" title="">Anotações</a>
+        </li>
+        -->
+        <li>
+          <span class="lights"></span>
+          <a href="" title="" id="lights">Apagar luzes</a>
+        </li>
+        <li>
+          <span id ="favorite" class="favorite"></span>
+          <% if current_user.has_favorite(@lecture) %>
+            <%= link_to_remote('Desfavoritar', :url =>
+                    not_favorite_user_favorite_path(current_user, @lecture,
+                               :type => @lecture.class.to_s ),
+                               :loading => "$('#rm_favorites_link').hide(); $('#favorite_spinner').show();" ,
+                               :html => { :id => 'rm_favorites_link' }) %>
+          <% else %>
+            <%= link_to_remote('Favoritar', :url =>
+                    favorite_user_favorite_path(current_user, @lecture,
+                               :type => @lecture.class.to_s ),
+                               :loading => "$('#favorites_link').hide(); $('#favorite_spinner').show();" ,
+                               :html => { :id => 'favorites_link' }) %>
+          <% end %>
+          <%= image_tag 'loading_bar.gif', :style => 'display:none;', :id => 'favorite_spinner' %>
+        </li>
+        <li>
+          <!-- AddThis Button BEGIN -->
+          <% content_for :footer_scripts_and_styles do %>
+            <!-- AddThis Button BEGIN -->
+            <script type="text/javascript">
+              var addthis_config = {
+                "data_track_clickback": true,
+                ui_click: true,
+                ui_cobrand: "Redu"
+              };
+            </script>
+            <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=redu">
+            </script>
+            <!-- AddThis Button END -->
+          <% end %>
+          <span class="share"></span>
+          <a class="addthis_button" href="http://addthis.com/bookmark.php?v=250&amp;username=redu" title="">Compartilhar</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="statuses-wrapper">
+      <%= render :partial => 'statuses/create_status',
+        :locals => { :statusable => @lecture } %>
+      <div id="statuses" class="statuses">
+        <ol>
+          <%= render :partial => 'statuses/item',
+            :collection => @statuses %>
+        </ol>
+
+        <%= will_paginate @statuses, :renderer => EndlessRenderer %>
+      </div><!-- end .statuses -->
+    </div>
+  </div><!-- end #resource -->
+
+</div><!-- end .main -->

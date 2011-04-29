@@ -1,18 +1,27 @@
 <%= image_tag 'loadingAnimation.gif', :id => 'loading_bar', :style => "display: none; margin-top: 40px"%>
 <% form_tag destroy_members_environment_path,
-     :method => :post, :id => "remove" do %>
-      <%= submit_tag "Remover selecionados" %>
-<table id="user_list_table" class="common">
+    :method => :post, :id => "remove" do %>
+    <div class="actions">
+      <%= submit_tag "Remover selecionados", :class => "remove vanilla" %>
+    </div>
+<table id="user_list_table" class="common users">
   <thead>
-    <th>
-    <input type="checkbox" id="select_all"  >
-    </th>
-    <th>Usuário</th>
-    <th>Data de Inscricão</th>
-    <th>Curso(s)</th>
-    <th>Permissões</th>
-    <th>Administrador?</th>
+    <tr>
+      <th width="5%">
+        <input type="checkbox" id="select_all"  >
+      </th>
+      <th width="25%">Usuário</th>
+      <th width="15%">Inscricão em:</th>
+      <th width="25%">Curso(s)</th>
+      <th width="10%">Permissões</th>
+      <th width="20%">Administrador?</th>
+    </tr>
   </thead>
-  <%= render :partial => 'user_item_admin', :collection => memberships %>
+  <tbody>
+    <%= render :partial => 'environments/user_item_admin', :collection => memberships %>
+  </tbody>
 </table>
+<div class="actions">
+  <%= submit_tag "Remover selecionados", :class => "remove vanilla" %>
+</div>
 <% end %>

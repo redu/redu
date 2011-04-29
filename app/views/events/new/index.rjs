@@ -1,4 +1,0 @@
-page.insert_html :bottom, "#events_list > ul",
-  :partial => 'events/new/item', :collection => @events
-page.replace_html ".endless",
-  (will_paginate @events, :renderer => EndlessRenderer)

@@ -1,0 +1,14 @@
+<% if item_preview.lectureable.class.to_s == 'Page'
+    css_class = 'icon icon-page-lightblue_16_16'
+   elsif item_preview.lectureable.class.to_s == 'Document'
+    css_class = 'icon icon-slides-lightblue_16_16'
+   elsif item_preview.lectureable.class.to_s == 'Seminar'
+    css_class = 'icon icon-video-lightblue_16_16'
+   end
+
+%>
+<li>
+  <span  class="<%= css_class %>" id=<%= "#{item_preview.id}-item" %>>
+    <%= item_preview.name %>
+  </span>
+</li>

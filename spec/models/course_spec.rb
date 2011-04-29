@@ -3,23 +3,22 @@ require 'spec_helper'
 describe Course do
 
   before(:each) do
-    @environment = Factory(:environment)
-    @user = Factory(:user)
-    UserEnvironmentAssociation.create(:user => @user,
-                                      :environment => @environment,
-                                      :role => Role[:environment_admin])
+    @environment_owner = Factory(:user)
+    @environment = Factory(:environment, :owner => @environment_owner)
   end
 
-  subject { Factory(:course, :owner => @user, :environment => @environment) }
+  subject { Factory(:course, :owner => @environment_owner,
+                    :environment => @environment) }
 
   it { should belong_to :environment }
   it { should belong_to :owner }
 
   it { should have_many(:spaces).dependent :destroy }
-  it { should have_many(:invitations).dependent :destroy }
   it { should have_many(:user_course_associations).dependent :destroy }
+  it { should have_many(:user_course_invitations).dependent :destroy }
   it { should have_many(:users).through :user_course_associations }
   it { should have_many(:approved_users).through :user_course_associations }
+  it { should have_many(:pending_users).through :user_course_associations }
   it { should have_many(:administrators).through :user_course_associations }
   it { should have_many(:teachers).through :user_course_associations }
   it { should have_many(:tutors).through :user_course_associations }
@@ -56,7 +55,7 @@ describe Course do
       subject.should_not be_valid
       subject.errors.on(:path).should_not be_empty
     end
-    
+
     it "ensure format for path: doesn't accept space" do
       subject.path = "teste medio"
       subject.should_not be_valid
@@ -111,14 +110,36 @@ describe Course do
 
     it "retrieves all approved users" do
       users = 5.times.inject([]) { |res, i| res << Factory(:user) }
+      subject.subscription_type = 2 # Com moderação
+      subject.save
+
       subject.join(users[0], Role[:environment_admin])
       subject.join(users[1], Role[:environment_admin])
       subject.join(users[2], Role[:teacher])
       subject.join(users[3], Role[:tutor])
       subject.join(users[4], Role[:member])
 
-      subject.users.to_set.
-        should == (users << subject.owner << subject.environment.owner).to_set
+      users[0..2].collect { |u| u.user_course_associations.last.approve! }
+
+      subject.approved_users.to_set.
+        should == (users[0..2] << subject.owner <<
+          subject.environment.owner).to_set
+    end
+
+    it "retrieves all pending users" do
+      users = 5.times.inject([]) { |res, i| res << Factory(:user) }
+      subject.subscription_type = 2 # Com moderação
+      subject.save
+
+      subject.join(users[0], Role[:environment_admin])
+      subject.join(users[1], Role[:environment_admin])
+      subject.join(users[2], Role[:teacher])
+      subject.join(users[3], Role[:tutor])
+      subject.join(users[4], Role[:member])
+
+      users[0..2].collect { |u| u.user_course_associations.last.approve! }
+
+      subject.pending_users.should == users[3..4]
     end
 
     it "retrieves all administrators" do
@@ -190,6 +211,31 @@ describe Course do
 
       subject.students.to_set.
         should == [users[3], users[4]].to_set
+    end
+
+    it "retrieves new users from 1 week ago" do
+      users = 5.times.inject([]) { |res, i| res << Factory(:user) }
+      Factory(:user_course_association, :user => users[0],
+              :course => subject, :role => :environment_admin,
+              :created_at => 2.weeks.ago,
+              :updated_at => 2.weeks.ago)
+      Factory(:user_course_association, :user => users[1],
+              :course => subject, :role => :teacher,
+              :updated_at => 2.weeks.ago)
+      Factory(:user_course_association, :user => users[2],
+              :course => subject, :role => :tutor,
+              :updated_at => 2.weeks.ago)
+      Factory(:user_course_association, :user => users[3],
+              :course => subject, :role => :member,
+              :updated_at => 2.weeks.ago)
+      Factory(:user_course_association, :user => users[4],
+              :course => subject, :role => :member,
+              :updated_at => 2.weeks.ago)
+
+      subject.user_course_associations.update_all("state = 'approved'")
+
+      subject.new_members.to_set.
+        should == [@environment_owner].to_set
     end
 
     it "retrieves all courses in one of specified categories" do
@@ -272,20 +318,47 @@ describe Course do
   end
 
   it "accepts a user (join)" do
-    space = Factory(:space, :course => subject)
+    @space = Factory(:space, :course => subject)
+    subject_space = Factory(:subject, :space => @space,
+                            :owner => subject.owner,
+                            :finalized => true)
     user = Factory(:user)
+    user2 = Factory(:user)
     subject.join(user)
+    subject.join(user2)
     subject.users.should include(user)
-    space.users.should include(user)
+    @space.users.should include(user)
+    subject_space.members.to_set.should == [user, user2].to_set
+    subject.environment.users.should include(user)
   end
 
-  it "removes a user (unjoin)" do
-    space = Factory(:space, :course => subject)
-    user = Factory(:user)
-    subject.join(user)
-    subject.unjoin(user)
-    subject.users.should_not include(user)
-    space.users.should_not include(user)
+  context "removes a user (unjoin)" do
+    before do
+      @space = Factory(:space, :course => subject)
+      @space_2 = Factory(:space, :course => subject)
+      @sub = Factory(:subject, :space => @space, :owner => subject.owner,
+                     :finalized => true)
+      @sub_2 = Factory(:subject, :space => @space_2, :owner => subject.owner,
+                     :finalized => true)
+      @user = Factory(:user)
+      subject.join @user
+      subject.reload
+      subject.unjoin @user
+    end
+
+    it "removes a user from itself" do
+      subject.users.should_not include(@user)
+    end
+
+    it "removes a user from all spaces" do
+      @space.users.should_not include(@user)
+      @space_2.users.should_not include(@user)
+    end
+
+    it "removes a user from all enrolled subjects" do
+      @sub.members.should_not include(@user)
+      @sub_2.members.should_not include(@user)
+    end
   end
 
   it "verifies if the user is waiting for approval" do
@@ -294,6 +367,15 @@ describe Course do
     subject.join(user)
 
     subject.waiting_approval?(user).should be_true
+  end
+
+  it "verifies if the user has been rejected" do
+    user = Factory(:user)
+    subject.update_attribute(:subscription_type, 2)
+    subject.join(user)
+    user.user_course_associations.last.reject!
+
+    subject.rejected_participation?(user).should be_true
   end
 
   it "creates hierarchy associations for a specified user" do
@@ -319,4 +401,245 @@ describe Course do
     user.user_environment_associations.last.role.should == Role[:tutor]
     user.user_space_associations.last.role.should == Role[:tutor]
   end
+
+  context "when inviting an user" do
+
+    it "returns the association" do
+      @incoming_user = Factory(:user)
+      assoc = subject.invite(@incoming_user)
+      assoc.should == @incoming_user.get_association_with(subject)
+    end
+
+    it "sets up the member Role as default" do
+      @incoming_user = Factory(:user)
+      assoc = subject.invite(@incoming_user)
+      assoc.role.should == Role[:member]
+    end
+
+    context "when the user is not associated at all" do
+      before do
+        @incoming_user = Factory(:user)
+        subject.invite(@incoming_user)
+      end
+
+      it "creates an association" do
+        assoc = subject.user_course_associations.last
+        assoc.user.should == @incoming_user
+      end
+
+      it "invites the user" do
+        assoc = subject.user_course_associations.last
+        assoc.should be_invited
+      end
+    end
+
+    context "when the user is in moderation" do
+      before do
+        subject.update_attribute(:subscription_type, 0)
+
+        @incoming_user = Factory(:user)
+        subject.join(@incoming_user)
+      end
+
+      it "does not create a new association" do
+        expect {
+          subject.invite(@incoming_user)
+        }.should_not change(UserCourseAssociation, :count)
+      end
+
+      it "changes his state to invited" do
+        expect {
+          subject.invite(@incoming_user)
+        }.should change {
+          @incoming_user.has_course_invitation?(subject)
+        }.to(true)
+      end
+    end
+
+    context "when the user is already invited" do
+      before do
+        @incoming_user = Factory(:user)
+        subject.invite(@incoming_user)
+      end
+
+      it "does not create a new association" do
+        expect {
+          subject.invite(@incoming_user)
+        }.should_not change(UserCourseAssociation, :count)
+      end
+    end
+
+    context "when the user is already approved" do
+      before do
+        @already_member = Factory(:user)
+        subject.update_attribute(:subscription_type, 1)
+        subject.join(@already_member)
+      end
+
+      it "does not change his state" do
+        expect {
+          subject.invite(@already_member)
+        }.should_not change {
+          @already_member.get_association_with(subject).current_state
+        }
+      end
+    end
+
+    context "and it is already invited" do
+      before do
+        UserNotifier.delivery_method = :test
+        UserNotifier.perform_deliveries = true
+        UserNotifier.deliveries = []
+
+        @already_invited = Factory(:user)
+        @invitation = subject.invite @already_invited
+      end
+
+      it "does NOT change his state" do
+        expect {
+          subject.invite(@already_invited)
+        }.should_not change {
+          @already_invited.get_association_with(subject).current_state
+        }
+      end
+
+      it "returns the same invitation" do
+        invitation = subject.invite @already_invited
+        invitation.should == @invitation
+      end
+
+      it "resends the e-mail invitation" do
+        UserNotifier.deliveries = []
+
+        invitation = subject.invite(@already_invited)
+        UserNotifier.deliveries.should_not be_empty
+        UserNotifier.deliveries.last.subject.should =~ /Você foi convidado para um curso no Redu/
+        UserNotifier.deliveries.last.body.should =~ /#{invitation.user.display_name}/
+      end
+    end
+
+    context "by email" do
+      before do
+        @not_registered_email = "email@example.com"
+      end
+
+      it "returns the invitation"  do
+        assoc = subject.invite_by_email(@not_registered_email)
+        assoc.should == subject.user_course_invitations.reload.last
+
+        u = Factory(:user)
+        assoc = subject.invite_by_email(u.email)
+        assoc.should == subject.user_course_associations.reload.last
+      end
+
+      context "when the email is not registered on Redu at all" do
+        it "creates an email invitation" do
+          expect {
+            subject.invite_by_email(@not_registered_email)
+          }.should change(UserCourseInvitation, :count).by(1)
+        end
+      end
+
+      context "when the email is already invited" do
+        before do
+            subject.invite_by_email(@not_registered_email)
+        end
+
+        it "does NOT create a new invitation" do
+          expect {
+            subject.invite_by_email(@not_registered_email)
+          }.should_not change(UserCourseInvitation, :count)
+        end
+      end
+
+      context "when the email is already registered on Redu" do
+        before do
+          @registered_user = Factory(:user)
+        end
+
+        it "does NOT create an e-mail invitation" do
+          expect {
+            subject.invite_by_email(@registered_user.email)
+          }.should_not change(UserCourseInvitation, :count)
+        end
+
+        it "creates an association" do
+          subject.reload
+          expect {
+            subject.invite_by_email(@registered_user.email)
+          }.should change(UserCourseAssociation, :count).by(1)
+        end
+      end
+
+      context "and it is already invited" do
+        before do
+          UserNotifier.delivery_method = :test
+          UserNotifier.perform_deliveries = true
+          UserNotifier.deliveries = []
+
+          @email_already_invited = "email@example.com"
+          @invitation = subject.invite_by_email @email_already_invited
+        end
+
+        it "does NOT change his state" do
+          expect {
+            subject.invite_by_email @email_already_invited
+          }.should_not change {
+            @invitation.reload.current_state
+          }
+        end
+
+        it "returns the same invitation" do
+          invitation = subject.invite_by_email @email_already_invited
+          invitation.should == @invitation
+        end
+
+        it "resends the e-mail invitation" do
+          UserNotifier.deliveries = []
+
+          invitation = subject.invite_by_email @email_already_invited
+          UserNotifier.deliveries.should_not be_empty
+          UserNotifier.deliveries.last.subject.should =~ /Você foi convidado para um curso no Redu/
+            UserNotifier.deliveries.last.body.should =~ /#{invitation.course.name}/
+        end
+      end
+    end
+  end
+
+  it "indicates if it invited users by email" do
+    subject.invited?("email@example.com").should be_false
+
+    subject.invite_by_email("email@example.com")
+    subject.invited?("email@example.com").should be_true
+  end
+
+  context "Quotas" do
+    before do
+      users = 4.times.inject([]) { |res, i| res << Factory(:user) }
+
+      Factory(:plan, :billable => subject, :user => subject.owner,
+              :members_limit => 10)
+      subject.join(users[0], Role[:environment_admin])
+      subject.join(users[1], Role[:environment_admin])
+      subject.join(users[2], Role[:teacher])
+      subject.join(users[3], Role[:tutor])
+    end
+
+    it "retrieve a percentage of quota file" do
+      subject.quota.files = 512
+      subject.quota.save
+      subject.percentage_quota_file.should == 50
+    end
+
+    it "retrieve a percentage of quota multimedia" do
+      subject.quota.multimedia = 512
+      subject.quota.save
+      subject.percentage_quota_multimedia.should == 50
+    end
+
+    it "retrieve a percentage of a members" do
+      subject.percentage_quota_members == 50
+    end
+  end
+
 end

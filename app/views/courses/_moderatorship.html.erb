@@ -1,0 +1,13 @@
+<div class="moderatorship">
+  <% if can? :manage, course %>
+    <% if course.subscription_type.eql? 2 and # Possui moderação
+         course.pending_users.count > 0 %>
+       <%= link_to "#{course.pending_users.count}",
+         admin_members_requests_environment_course_path(course.environment, course) %>
+     <% end %>
+   <% end %>
+
+   <% if course.subscription_type.eql? 2 %>
+     <span class="icon icon-lock-gray_16_16 moderated replacement">Moderado</span>
+   <% end %>
+</div>

@@ -20,7 +20,7 @@ class Message < ActiveRecord::Base
       message.reply_to = in_reply_to
       message.to = in_reply_to.sender.id
       message.subject = "Re: #{in_reply_to.subject}"
-      message.body = "\n\n\n*Messagem Original*\n\n #{in_reply_to.body}"
+      message.body = "\n\n\n\n*Messagem de #{in_reply_to.sender.display_name} em #{in_reply_to.created_at}*\n\n #{in_reply_to.body}"
       message.sender = sender
     end
 

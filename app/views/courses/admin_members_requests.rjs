@@ -1,4 +1,4 @@
 page.insert_html :bottom, 'pending_member_list',
-  :partial => 'pending_member_item_admin', :collection => @pending_members
+  :partial => 'courses/pending_member_item_admin', :collection => @pending_members
 page.replace_html '.endless',
   (will_paginate @pending_members, :renderer => EndlessRenderer)

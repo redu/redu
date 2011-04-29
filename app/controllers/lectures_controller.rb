@@ -1,6 +1,4 @@
 class LecturesController < BaseController
-  layout 'environment'
-
   before_filter :find_subject_space_course_environment
   after_filter :create_activity, :only => [:create]
 
@@ -8,75 +6,18 @@ class LecturesController < BaseController
   include Viewable # atualiza o view_count
   load_and_authorize_resource :subject
   load_and_authorize_resource :lecture,
-    :except => [:new, :create, :cancel, :unpublished_preview],
+    :except => [:new, :create, :cancel],
     :through => :subject
 
   rescue_from CanCan::AccessDenied do |exception|
     respond_to do |format|
       format.html do
-       subject = Subject.find(params[:subject_id])
-       redirect_to infos_space_subject_path(subject.space, subject)
+       space = Space.find(params[:space_id])
+       redirect_to preview_environment_course_path(space.course.environment,
+                                                   space.course)
       end
       format.js { render :js => "alert('Você não possui espaço suficiente.')" }
     end
-  end
-
-  # adiciona um objeto embarcado (ex: scribd)
-  def embed_content
-    @external_object = ExternalObject.new( params[:external_object] )
-
-    respond_to do |format|
-      if @external_object.save
-        format.js
-      else
-        format.js do
-          render :template => 'lectures/alert', :locals => { :message => 'Houve uma falha no conteúdo'}
-        end
-      end
-    end
-  end
-
-  # faz upload de video em ajax em uma aula interativa
-  def upload_video
-    @seminar = Seminar.new( params[:seminar] )
-
-    if @seminar.external_resource_type.eql?('redu') # importar video do Redu atraves de url
-      success = @seminar.import_redu_seminar(@seminar.external_resource)
-
-      unless success and success[0] # importação falhou
-        respond_to do |format|
-          format.js do
-            responds_to_parent do
-              render :template => 'lectures/alert', :locals => { :message => success[1]}
-            end
-          end
-        end
-        return
-      end
-    end
-
-    respond_to do |format|
-      if @seminar.save
-        @seminar.convert! if @seminar.video? and not @seminar.state == 'converted'
-
-        format.js do
-          responds_to_parent do
-            render :template => 'lectures/upload_video'
-          end
-        end
-      else
-        format.js do
-          responds_to_parent do
-            render :template => 'lectures/alert', :locals => { :message => "Houve uma falha ao enviar o arquivo." }
-          end
-        end
-      end
-    end
-  end
-
-  def download_attachment
-    @attachment = LectureResource.find(params[:res_id])
-    send_file @attachment.attachment.path, :type=> @attachment.attachment.content_type
   end
 
   def rate
@@ -90,13 +31,6 @@ class LecturesController < BaseController
 
   end
 
-  def sort_lesson
-    params['topic_list'].each_with_index do |id, index|
-      Lesson.update_all(['position=?', index+1], ['id=?', id])
-    end
-    render :nothing => true
-  end
-
   def index
     authorize! :read, @subject
     @subject_users = @subject.members.all(:limit => 9) # sidebar
@@ -104,11 +38,9 @@ class LecturesController < BaseController
                                           :order => 'position ASC',
                                           :per_page => AppConfig.items_per_page)
     respond_to do |format|
-      format.html { render :template => 'lectures/new/index',
-        :layout => 'new/application'}
-      format.js { render :template => 'lectures/new/index' }
+      format.html
+      format.js
     end
-    #redirect_to space_subject_path(@space, @subject)
   end
 
   # GET /lectures/1
@@ -133,7 +65,7 @@ class LecturesController < BaseController
     @statuses = @lecture.statuses.not_response.
       paginate(:page => params[:page],:order => 'created_at DESC',
                :per_page => AppConfig.items_per_page)
-    
+
     if current_user.get_association_with(@lecture.subject)
       asset_report = @lecture.asset_reports.of_user(current_user).first
       @student_grade = asset_report.student_profile.grade.to_i
@@ -143,21 +75,16 @@ class LecturesController < BaseController
     respond_to do |format|
       if @lecture.lectureable_type == 'Page'
         format.html do
-          render :template => 'lectures/new/show_page', :layout => 'new/application'
+          render :show_page
         end
       elsif @lecture.lectureable_type == 'Seminar'
         format.html do
-          render :template => 'lectures/new/show_seminar',
-            :layout => 'new/application'
+          render :show_seminar
         end
       elsif @lecture.lectureable_type == 'Document'
         format.html do
-          render :template => 'lectures/new/show_document',
-            :layout => 'new/application'
+          render :show_document
         end
-      elsif @lecture.lectureable_type == 'InteractiveClass'
-        @lessons = Lesson.find_by_interactive_class_id(@lecture.lectureable_id).
-                            all(:order => 'position ASC') # TODO 2 consultas?
       end
 
       format.html
@@ -182,12 +109,8 @@ class LecturesController < BaseController
     end
 
     respond_to do |format|
-      format.html do
-        render :template => 'lectures/new/new', :layout => "new/application"
-      end
-      format.js do
-        render :template => 'lectures/new/new'
-      end
+      format.html
+      format.js
     end
   end
 
@@ -206,7 +129,7 @@ class LecturesController < BaseController
                 <legend class=\"label\">Editar recurso</legend>
               </fieldset>"
             page.insert_html :bottom, "edit-#{@lecture.id}-item",
-              :partial => 'lectures/new/form_edit_page'
+              :partial => 'lectures/form_edit_page'
           end
         end
       end
@@ -227,11 +150,12 @@ class LecturesController < BaseController
       @lecture.owner = current_user
       @lecture.subject = Subject.find(params[:subject_id])
     end
+
     quota_files = @space.course.quota.files
     quota_multimedia = @space.course.quota.multimedia
     plan_files_limit = @space.course.plan.file_storage_limit
     plan_multimedia_limit = @space.course.plan.video_storage_limit
-    error = false
+
     if @lecture.name
       if params[:page]
         @page = Page.create(params[:page])
@@ -254,22 +178,10 @@ class LecturesController < BaseController
         @space.course.quota.refresh
         @lecture.published = 1
         @lecture.save
-        format.js do
-          render :template => 'lectures/new/create'
-        end
+        format.js
       else
-
-        format.js { render :template => 'lectures/new/create_error'}
+        format.js { render :create_error }
       end
-    end
-  end
-
-  def unpublished_preview
-    @lecture = Lecture.find(session[:lecture_id])
-    @lessons = Lesson.find_by_interactive_class_id(@lecture.lectureable_id).
-                        all(:order => 'position ASC')
-    respond_to do |format|
-      format.html {render 'unpublished_preview_interactive'}
     end
   end
 
@@ -307,11 +219,9 @@ class LecturesController < BaseController
     @lecture.subject.space.course.quota.refresh
     respond_to do |format|
       if valid
-        format.js do
-          render :template => 'lectures/new/update'
-        end
+        format.js
       else
-        format.js { render :template => 'lectures/new/create_error'}
+        format.js { render :template => 'lectures/create_error'}
       end
     end
 
@@ -322,6 +232,8 @@ class LecturesController < BaseController
   def destroy
     @lecture.destroy
     @lecture.subject.space.course.quota.refresh
+    @lecture.refresh_students_profiles
+
     respond_to do |format|
       format.html {
         flash[:notice] = "A aula foi removida."
@@ -363,7 +275,7 @@ class LecturesController < BaseController
     @student_grade = student_profile.update_grade!.to_i
 
    respond_to do |format|
-     format.js { render :template => 'lectures/new/done' }
+     format.js
      format.html { redirect_to space_subject_lecture_path(@subject.space,
                                                           @subject,
                                                           @lecture) }

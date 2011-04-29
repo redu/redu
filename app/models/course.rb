@@ -2,16 +2,19 @@ class Course < ActiveRecord::Base
 
   # Apenas deve ser chamado na criação do segundo curso em diante
   after_create :create_user_course_association, :unless => "self.environment.nil?"
-  after_create :setup_quota
 
   belongs_to :environment
   has_many :spaces, :dependent => :destroy
   has_many :user_course_associations, :dependent => :destroy
+  has_many :user_course_invitations, :dependent => :destroy
   belongs_to :owner, :class_name => "User", :foreign_key => "owner"
   has_many :users, :through => :user_course_associations
   has_many :approved_users, :through => :user_course_associations,
     :source => :user, :conditions => [ "user_course_associations.state = ?",
                                        'approved' ]
+  has_many :pending_users, :through => :user_course_associations,
+    :source => :user, :conditions => [ "user_course_associations.state = ?",
+                                       'waiting' ]
   # environment_admins
   has_many :administrators, :through => :user_course_associations,
     :source => :user,
@@ -32,7 +35,12 @@ class Course < ActiveRecord::Base
     :source => :user,
     :conditions => [ "user_course_associations.role_id = ? AND user_course_associations.state = ?",
                       2, 'approved' ]
-  has_many :invitations, :as => :inviteable, :dependent => :destroy
+
+  # new members (form 1 week ago)
+  has_many :new_members, :through => :user_course_associations,
+    :source => :user,
+    :conditions => [ "user_course_associations.state = ? AND user_course_associations.updated_at >= ?", 'approved', 1.week.ago]
+
   has_and_belongs_to_many :audiences
   has_one :quota, :dependent => :destroy, :as => :billable
   has_one :plan, :as => :billable
@@ -40,6 +48,7 @@ class Course < ActiveRecord::Base
   named_scope :of_environment, lambda { |environmnent_id|
    { :conditions => {:environment_id => environmnent_id} }
   }
+
   named_scope :with_audiences, lambda { |audiences_ids|
     {:joins => :audiences,
       :conditions => ['audiences_courses.audience_id IN (?)',
@@ -51,21 +60,25 @@ class Course < ActiveRecord::Base
       :conditions => ["user_course_associations.user_id = ? AND user_course_associations.role_id = ?",
                         user_id, 3] }
   }
+
   named_scope :user_behave_as_teacher, lambda { |user_id|
     { :joins => :user_course_associations,
       :conditions => ["user_course_associations.user_id = ? AND user_course_associations.role_id = ?",
                         user_id, 5] }
   }
+
   named_scope :user_behave_as_tutor, lambda { |user_id|
     { :joins => :user_course_associations,
       :conditions => ["user_course_associations.user_id = ? AND user_course_associations.role_id = ?",
                         user_id, 6] }
   }
+
   named_scope :user_behave_as_student, lambda { |user_id|
     { :joins => :user_course_associations,
       :conditions => ["user_course_associations.user_id = ? AND user_course_associations.role_id = ? AND user_course_associations.state = ?",
                         user_id, 2, 'approved'] }
   }
+
   attr_protected :owner, :published, :environment
 
   acts_as_taggable
@@ -158,29 +171,36 @@ class Course < ActiveRecord::Base
   def unjoin(user)
     course_association = user.get_association_with(self)
     course_association.destroy
+
     self.spaces.each do |space|
       space_association = user.get_association_with(space)
       space_association.destroy
+
+      space.subjects.each do |subject|
+        enrollment = user.get_association_with subject
+        enrollment.destroy if enrollment
+      end
     end
   end
 
   def create_hierarchy_associations(user, role = Role[:member])
-      # Cria as associações no Environment do Course e em todos os seus Spaces.
-      UserEnvironmentAssociation.create(:user_id => user.id,
-                                        :environment_id => self.environment.id,
-                                        :role_id => role.id)
-      self.spaces.each do |space|
-        #FIXME tirar status quando remover moderacao de space
-        UserSpaceAssociation.create(:user_id => user.id,
-                                    :space_id => space.id,
-                                    :role_id => role.id,
-                                    :status => "approved")
-      end
-  end
+    # FIXME mudar estado do user_course_association para approved
+    # Cria as associações no Environment do Course e em todos os seus Spaces.
+    UserEnvironmentAssociation.create(:user_id => user.id,
+                                      :environment_id => self.environment.id,
+                                      :role_id => role.id)
+    self.spaces.each do |space|
+      #FIXME tirar status quando remover moderacao de space
+      UserSpaceAssociation.create(:user_id => user.id,
+                                  :space_id => space.id,
+                                  :role_id => role.id,
+                                  :status => "approved")
 
-  # Cria Quota para o Course
-  def setup_quota
-    self.create_quota
+      # Cria as associações com os subjects
+      space.subjects.each do |subject|
+        subject.enroll(user, role)
+      end
+    end
   end
 
   # Verifica se o usuário em questão está esperando aprovação num determinado
@@ -190,4 +210,97 @@ class Course < ActiveRecord::Base
     return false if assoc.nil?
     assoc.waiting?
   end
+
+  # Verifica se o usuário em questão teve a sua participação rejeitada em um
+  # determinado Course
+  def rejected_participation?(user)
+    assoc = user.get_association_with self
+    return false if assoc.nil?
+    assoc.rejected?
+  end
+
+  # Método de alto nível que convida um determinado usuário para o curso.
+  # - Caso o usuário não faça parte do curso uma UCA será criada com o estado
+  #   invited.
+  # - Caso o usuário já faça parte do curso, nada irá acontece
+  # - Caso o usuário esteja na lista de moderação, seu estado será mudado para
+  #   invited
+  # - Caso o usuário já tenha sido convidado e não tenha aceito o convite, um
+  #   novo e-mail será enviado.
+  def invite(user)
+    assoc = self.user_course_associations.create(:user => user,
+                                                 :role => Role[:member])
+    if assoc.new_record?
+      assoc = user.get_association_with(self)
+      # Se já foi convidado, apenas reenvia o e-mail
+      if assoc.invited?
+        assoc.send_course_invitation_notification
+        assoc.updated_at = ""; assoc.save # Para atualizar o updated_at
+        return assoc
+      end
+    end
+
+    assoc.invite!
+    assoc
+  end
+
+  # Método de alto nível que convida um determinado usuário para o curso
+  # através do e-mail.
+  # - Caso o e-mail já tenha sido convidado e não tenha aceito o convite, um
+  #   novo e-mail será enviado.
+  def invite_by_email(email)
+    u =  User.find_by_email(email)
+    if u
+      invitation = self.invite(u)
+    else
+      invitation = self.user_course_invitations.create(:email => email)
+      # Se já foi convidado, apenas reenvia o e-mail
+      if invitation.new_record?
+        invitation = self.user_course_invitations.with_email(email).first
+        # Caso o e-mail seja mal-formado, não vai salvar e será ignorado.
+        unless invitation.nil?
+          invitation.send_external_user_course_invitation
+          invitation.updated_at = ""; invitation.save # Para atualizar o updated_at
+        end
+      end
+    end
+    invitation
+  end
+
+  # Indica se o curso possui convites para usuários não registrados
+  def invited?(email)
+    self.user_course_invitations.find_by_email(email)
+  end
+
+  # Retorna o percentual de espaço ocupado por files
+  def percentage_quota_file
+    if self.quota.files >= self.plan.file_storage_limit
+      100
+    else
+      (self.quota.files * 100.0) / self.plan.file_storage_limit
+    end
+  end
+
+  # Retorna o percentual de espaço ocupado por arquivos multimedia
+  def percentage_quota_multimedia
+    if self.quota.multimedia >= self.plan.video_storage_limit
+      100
+    else
+      ( self.quota.multimedia * 100.0 ) / self.plan.video_storage_limit
+    end
+  end
+
+  # Retorna o percentual de membros do curso
+  def percentage_quota_members
+    if self.users.count >= self.plan.members_limit
+      100
+    else
+      ( self.users.count * 100.0 )/ self.plan.members_limit
+    end
+  end
+
+  def can_add_entry?
+    self.approved_users.count < self.plan.members_limit
+  end
+
 end

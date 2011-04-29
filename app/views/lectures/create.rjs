@@ -1,21 +1,16 @@
+page.insert_html :bottom, "resources_list",
+  :partial => 'lectures/item_short',
+  :locals => { :item_short => @lecture }
+
 if @lecture.is_clone
-  page.insert_html :after, "existent-form", :partial => 'item_created',
-      :locals => { :item_created => @lecture, :published => false }
   page.remove "existent-form"
 else
   case @lecture.lectureable.class.to_s
   when "Page"
-    page.insert_html :after, "page_form", :partial => 'item_created',
-      :locals => { :item_created => @lecture, :published => false}
     page.remove "page_form"
   when "Seminar"
-    page.insert_html :after, "seminar-form", :partial => 'item_created',
-      :locals => { :item_created => @lecture, :published => false}
     page.remove "seminar-form"
   when "Document"
-    page.insert_html :after, "document-form", :partial => 'item_created',
-      :locals => { :item_created => @lecture, :published => false}
     page.remove "document-form"
   end
 end
-page.show "add_link"

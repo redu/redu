@@ -5,10 +5,7 @@ ActionController::Routing::Routes.draw do |map|
                        :folder_or_file => /(folder|file)/ }
 
   map.notify '/jobs/notify', :controller => 'jobs', :action => 'notify'
-  map.resources :interactive_classes
   map.resources :statuses
-  map.resources :lessons
-  map.resources :beta_keys, :collection => {:generate => :get, :remove_all => :get, :print_blank => :get, :invite => [:get, :post]}
   map.resources :profiles
 
   map.resources :questions, :collection => { :search => [:get, :post], :add => :get }
@@ -18,31 +15,13 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :sb_posts
   map.resources :topics
   map.resources :metro_areas
-  map.resources :invitations
-
-  if AppConfig.closed_beta_mode
-    map.connect '', :controller => "base", :action => "beta_index"
-    map.home 'home', :controller => "base", :action => "site_index"
-  else
-    map.home '', :controller => "base", :action => "site_index"
-  end
+  map.home '', :controller => "base", :action => "site_index"
 
   map.resources :tags, :member_path => '/tags/:id'
   map.show_tag_type '/tags/:id/:type', :controller => 'tags', :action => 'show'
   map.search_tags '/search/tags', :controller => 'tags', :action => 'show'
 
-  # admin routes
-  map.admin_dashboard   '/admin/dashboard', :controller => 'admin', :action => 'dashboard'
-  map.admin_moderate_lectures   '/admin/moderate/lectures', :controller => 'admin', :action => 'lectures'
-  map.admin_moderate_users   '/admin/moderate/users', :controller => 'admin', :action => 'users'
-  map.admin_moderate_exams   '/admin/moderate/exams', :controller => 'admin', :action => 'exams'
-  map.admin_moderate_spaces   '/admin/moderate/spaces', :controller => 'admin', :action => 'spaces'
-
-  map.admin_users       '/admin/users', :controller => 'admin', :action => 'users'
-  map.admin_messages    '/admin/messages', :controller => 'admin', :action => 'messages'
-  map.admin_comments    '/admin/comments', :controller => 'admin', :action => 'comments'
   map.admin_tags        'admin/tags/:action', :controller => 'tags', :defaults => {:action=>:manage}
-  map.admin_events      'admin/events', :controller => 'admin', :action=>'events'
 
   # sessions routes
   map.teaser '', :controller=>'base', :action=>'beta_index'
@@ -102,12 +81,9 @@ ActionController::Routing::Routes.draw do |map|
                    :do_the_upload => [:post, :put],
                    :update_permissions => :post}
     space.resources :subjects,
-      :member => { :enroll => :post,
-                   :unenroll => :post,
-                   :publish => :post,
-                   :unpublish => :post,
+      :member => { :turn_visible => :post,
+                   :turn_invisible => :post,
                    :admin_lectures_order => [ :get, :post ],
-                   :infos => :get,
                    :statuses => :get,
                    :users => :get,
                    :admin_members => :get },
@@ -117,7 +93,6 @@ ActionController::Routing::Routes.draw do |map|
                      :done => :post },
         :collection => { :unpublished_preview => :get,
                          :cancel => :get,
-                         :sort_lesson => :post,
                          :unpublished => :get,
                          :published => :get }
       subject.resources :exams,
@@ -128,8 +103,7 @@ ActionController::Routing::Routes.draw do |map|
                      :compute_results => :get,
                      :results => :get,
                      :review_question => :get },
-          :collection => { :unpublished_preview => :get,
-                           :unpublished => :get,
+          :collection => { :unpublished => :get,
                            :published => :get,
                            :history => :get,
                            :new_exam => :get,
@@ -155,7 +129,6 @@ ActionController::Routing::Routes.draw do |map|
 
   # USERS
   map.resources :users, :member => {
-  #map.resources :users, :member_path => '/:id', :nested_member_path => '/:user_id', :member => {
     :annotations => :get,
     :activity_xml => :get,
     :logs => :get,
@@ -179,7 +152,7 @@ ActionController::Routing::Routes.draw do |map|
     :home => :get,
     :mural => :get,
     :account => :get
-  } do |user|
+  }, :collection => { :auto_complete => :get } do |user|
     user.resources :friendships,:only => [:index, :create, :destroy],
       :member => { :accept => :post, :decline => :post },
       :collection => { :pending => :get }
@@ -194,7 +167,7 @@ ActionController::Routing::Routes.draw do |map|
     user.resources :offerings, :collection => {:replace => :put}
     user.resources :favorites, :only => [:index],
       :member => { :favorite => :post, :not_favorite => :post }
-    user.resources :messages, :collection => { :index_sent => :get, :delete_selected => :post, :auto_complete_for_username => :any }
+    user.resources :messages, :collection => { :index_sent => :get, :delete_selected => :post }
     user.resources :comments
     user.resources :photo_manager, :only => ['index']
     user.resources :albums, :path_prefix => ':user_id/photo_manager', :member => {:add_photos => :get, :photos_added => :post}, :collection => {:paginate_photos => :get}  do |album|
@@ -233,30 +206,34 @@ ActionController::Routing::Routes.draw do |map|
         :preview => :get,
         :admin_spaces => :get,
         :admin_members_requests => :get,
+        :admin_invitations => :get,
+        :admin_manage_invitations => :get,
+        :invite_members => :post,
+        :accept => :post,
         :join => :post,
         :unjoin => :post,
         :publish => :get,
         :unpublish => :get,
         :admin_members => :get,
         :destroy_members => :post,
+        :destroy_invitations => :post,
         :search_users_admin => :post,
         :moderate_members_requests => :post,
-        :users => :get
-      }
+        :users => :get,
+        :accept => :post,
+        :deny => :post
+      } do |course|
+        course.resources :user_course_invitations, :only => [:show]
+      end
       environment.resources :bulletins,
         :member => { :vote => [:post, :get] }
-  end
-
-
-  map.resources :courses do |course|
-    course.resources :invitations
   end
 
   map.resources :plans, :only => [], :member => {
     :confirm => [:get, :post],
     :upgrade => [:get, :post]
   } do |plan|
-    plan.resources :invoices, :only => [:index, :show]
+    plan.resources :invoices, :only => [:index]
   end
 
   map.payment_success '/payment/callback',

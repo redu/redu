@@ -134,6 +134,28 @@ describe Space do
       subject.students.to_set.
         should == [users[3], users[4]].to_set
     end
+
+    it "retrieves new users from 1 week ago" do
+      users = 5.times.inject([]) { |res, i| res << Factory(:user) }
+      Factory(:user_space_association, :user => users[0],
+              :space => subject, :role => :environment_admin,
+             :updated_at => 2.weeks.ago)
+      Factory(:user_space_association, :user => users[1],
+              :space => subject, :role => :teacher,
+             :updated_at => 2.weeks.ago)
+      Factory(:user_space_association, :user => users[2],
+              :space => subject, :role => :tutor,
+             :updated_at => 2.weeks.ago)
+      Factory(:user_space_association, :user => users[3],
+              :space => subject, :role => :member,
+             :updated_at => 2.weeks.ago)
+      Factory(:user_space_association, :user => users[4],
+              :space => subject, :role => :member)
+
+      #FIXME modificar a criação do space, já que está destoante da aplicação
+      subject.new_members.to_set.
+        should == [subject.course.environment.owner, users[4]].to_set
+    end
   end
 
   it "generates a permalink" do

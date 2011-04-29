@@ -1,52 +1,62 @@
-<script type="text/javascript" charset="utf-8">
-//<![CDATA[
-$(document).ready(function(){
-  $("#course_path").bind('keyup blur', function(e){
-    var slug = $(this).slug()
-    $(this).val(slug);
-  })
+<% content_for :header_scripts_and_styles do %>
+  <script type="text/javascript" charset="utf-8">
+    //<![CDATA[
+  $(document).ready(function(){
+      $("#course_path").bind('keyup blur', function(e){
+        var slug = $(this).slug()
+        $(this).val(slug);
+        })
 
-  $("#course_path").bind('keyup blur', function(){
-    var slug = $(this).slug()
-    $("#url_preview .course").html(slug);
-  })
+      $("#course_path").bind('keyup blur', function(){
+        var slug = $(this).slug()
+        $("#url_preview .course").html(slug);
+        })
 
-  $("#course_name").bind('keyup blur', function(e){
-    var slug = $(this).slug()
-    $("#course_path").val(slug);
-    $("#url_preview .course").html(slug);
-  })
+      $("#course_name").bind('keyup blur', function(e){
+        var slug = $(this).slug()
+        $("#course_path").val(slug);
+        $("#url_preview .course").html(slug);
+        })
 
-})
+      })
 //]]>
 </script>
+<% end %>
 
-<div class="main grid_16">
-  <div class="fake-tabs grid_16 alpha omega">
-    <%= render :partial => "courses/admin_taskbar" %>
-    <div class="panel">
-      <h1>Configurações do Curso</h1>
+<%= render :partial => 'courses/sidebar' %>
+<div class="main grid_12 omega big-col">
+  <%= render :partial => 'courses/breadcrumbs' %>
+  <%= render :partial => 'courses/header',
+    :locals => { :course => @header_course } %>
+  <div id="course-manage" class="body">
+    <div class="header">
+      <h4>Gerenciamento</h4>
+      <span class="counter">Informações gerais do Curso</span>
+    </div>
+    <%
+      fake_tabs ["Informações", edit_environment_course_path(@environment, @course), {:class => 'icon icon-management-lightblue_16_16'}],
+        ["Membros", admin_members_environment_course_path(@environment, @course), {:class => 'icon icon-members-gray_16_16'}],
+        ["Moderação", admin_members_requests_environment_course_path(@environment, @course), {:class => 'icon icon-moderation-gray_16_16'}],
+        ["Convites", admin_manage_invitations_environment_course_path(@environment, @course), {:class => ''}],
+        ["Disciplinas", admin_spaces_environment_course_path(@environment, @course), {:class => 'icon icon-space-gray_16_16'}] do
+    %>
       <% form_for @course,
-        :url => environment_course_path(@environment, @course) do |f| %>
+        :url => environment_course_path(@environment, @course),
+        :html => { :class => "common" } do |f| %>
         <%= render :partial => 'courses/form', :locals => { :f => f, :edit => true } %>
-        <%= f.submit "Alterar" %>
-      <% end %>
-
-      <fieldset class="fake">
-        <legend>Publicação</legend>
+        <%= f.submit "Salvar alterações" %>
         <% if @course.published? %>
-          <%= link_to 'Despublicar curso', unpublish_environment_course_path(@environment, @course),
-            :confirm => 'Você tem certeza que deseja deixar este curso invisível?' %>
+          <%= link_to 'Despublicar', unpublish_environment_course_path(@environment, @course),
+            :confirm => 'Você tem certeza que deseja deixar este curso invisível?',
+            :class => "vanilla cancel" %>
         <% else %>
-          <%= link_to 'Publicar curso', publish_environment_course_path(@environment, @course),
+          <%= link_to 'Publicar', publish_environment_course_path(@environment, @course),
             :confirm => 'Você tem certeza que deseja deixar este curso visível?' %>
         <% end %>
-      </fieldset>
-      <fieldset class="fake">
-        <legend>Remover curso</legend>
-        <%= link_to 'Deletar curso', environment_course_path(@environment, @course),
-          :confirm => 'Você tem certeza que deseja remover este curso?', :method => :delete %>
-      </fieldset>
-    </div> <!-- end panel -->
-  </div> <!-- end fake -->
-</div> <!-- end main -->
+        <%= link_to 'Remover', environment_course_path(@environment, @course),
+          :confirm => 'Você tem certeza que deseja remover este curso?', :method => :delete,
+          :class => "vanilla remove" %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

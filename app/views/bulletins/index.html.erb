@@ -1,61 +1,43 @@
 <% if @bulletinable.class.to_s.eql? "Space" %>
-  <%= render :partial => "spaces/sidebar", :locals => {:space => @bulletinable} %>
-  <div class="fake-tabs">
-    <%= render :partial => 'spaces/taskbar' %>
-  </div>
-<% end %>
-
-<% if @bulletinable.class.to_s.eql?('Space') %>
-
-<div class="main grid_12 omega">
-  <% if @bulletins && @bulletins.size > 0 %>
-
-    <% if can? :manage, @bulletinable || current_user.tutor?(@bulletinable) %>
-      <%= link_to "Crie uma nova notícia.", new_polymorphic_path([@bulletinable, Bulletin.new]), :class => "button"%>
-    <% end %>
-    <ul id="bulletins" class="bulletins grid_12 alpha omega">
-      <%= render :partial => 'bulletins/list', :collection => @bulletins, :as => :bulletin, :locals => {
-        :is_index => true } %>
-    </ul>
-
-    <%= will_paginate @bulletins, :renderer => EndlessRenderer %>
-  <% else %>
-    Nenhuma notícia foi enviada ainda.
-    <% if can? :manage, @space || current_user.tutor?(@space) %>
-      <%= link_to 'Envie uma agora!', new_polymorphic_path([@bulletinable, Bulletin.new]) %>
-    <% end %>
-  <% end %>
-
-</div>
+  <%= render :partial => 'spaces/sidebar', :locals => { :space => @bulletinable } %>
 <% else %>
-  <div class="grid_16 fake-tabs start-page">
-    <%= render :partial => "environments/taskbar" %>
-    <div class="panel clearfix">
-      <% if @bulletins && @bulletins.size > 0 %>
-
-      <% if can? :manage, @bulletinable %>
-        <%= link_to "Crie uma nova notícia.", new_polymorphic_path([@bulletinable, Bulletin.new]), :class => "button"%>
-      <% end %>
-        <hr/>
-        <ul id="bulletins" class="bulletins">
-          <%= render :partial => 'bulletins/list', :collection => @bulletins, :as => :bulletin, :locals => {
-            :is_index => true } %>
-        </ul>
-        <%= will_paginate @bulletins, :renderer => EndlessRenderer %>
-        <hr/>
-
-        <% if can? :manage, @bulletinable %>
-          <%= link_to "Crie uma nova notícia.", new_polymorphic_path([@bulletinable, Bulletin.new]), :class => "button"%>
-        <% end %>
-
-      <% else %>
-        Nenhuma notícia foi enviada ainda.
-        <% if can? :manage, @bulletinable %>
-          <%= link_to 'Envie uma agora!', new_polymorphic_path([@bulletinable, Bulletin.new]) %>
-        <% end %>
-      <% end %>
-
-    </div>
-  </div>
-</div>
+  <%= render :partial => "environments/sidebar", :locals => { :environment => @bulletinable } %>
 <% end %>
+<div class="main grid_12 omega big-col">
+    <% if @bulletinable.class.to_s.eql? "Environment" %>
+      <%= render :partial => "environments/breadcrumbs",
+            :locals => { :environment => @bulletinable } %>
+      <%= render :partial => 'environments/header',
+        :locals => { :environment => @bulletinable }%>
+    <% elsif @bulletinable.class.to_s.eql? "Space" %>
+      <%= render :partial => 'spaces/breadcrumbs', :locals => { :space => @bulletinable } %>
+      <%= render :partial => 'spaces/header',
+        :locals => { :space => @bulletinable }%>
+    <% end %>
+
+  <div id="space-bulletins" class="body">
+    <div class="header">
+      <h4>Notícias</h4>
+      <span class="counter">
+        <%= pluralize(@bulletinable.bulletins.length, 'notícia') %>
+      </span>
+    </div>
+    <% if can? :manage, @bulletinable %>
+      <div class="admin-actions">
+        <%= link_to 'Criar nova notícia',
+          new_polymorphic_path([@bulletinable, Bulletin.new]),
+          :class => 'button vanilla' %>
+      </div>
+    <% end %>
+
+    <div id="bulletins" class="bulletin-listing-wrapper clearfix">
+      <ul>
+        <%= render :partial => 'bulletins/item',
+          :collection => @bulletins %>
+      </ul>
+      <%= will_paginate @bulletins, :renderer => EndlessRenderer %>
+    </div>
+
+  </div><!-- end #bulletin -->
+
+</div><!-- end .main -->

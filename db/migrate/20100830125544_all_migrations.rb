@@ -1,6 +1,6 @@
 class AllMigrations < ActiveRecord::Migration
   def self.up
-  
+
 
   create_table "acquisitions", :force => true do |t|
     t.integer  "course_id"
@@ -64,12 +64,6 @@ class AllMigrations < ActiveRecord::Migration
     t.boolean  "invited"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "beta_keys", :force => true do |t|
-    t.string  "key"
-    t.integer "user_id"
-    t.string  "email"
   end
 
   create_table "bulletins", :force => true do |t|
@@ -196,12 +190,6 @@ class AllMigrations < ActiveRecord::Migration
     t.string   "state"
   end
 
-  create_table "external_objects", :force => true do |t|
-    t.text     "html_embed"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "favorites", :force => true do |t|
     t.integer  "favoritable_id"
     t.string   "favoritable_type"
@@ -243,31 +231,6 @@ class AllMigrations < ActiveRecord::Migration
     t.integer "group_id"
     t.integer "user_id"
   end
-
-
-  create_table "interactive_classes", :force => true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "invitations", :force => true do |t|
-    t.string   "email_addresses"
-    t.string   "message"
-    t.integer  "user_id"
-    t.datetime "created_at"
-  end
-
-  create_table "lessons", :force => true do |t|
-    t.string   "title"
-    t.text     "body"
-    t.integer  "interactive_class_id"
-    t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "lesson_type"
-    t.integer  "lesson_id"
-  end
-
 
   create_table "messages", :force => true do |t|
     t.integer  "sender_id"
@@ -537,8 +500,8 @@ class AllMigrations < ActiveRecord::Migration
 
   add_index "votes", ["voteable_id", "voteable_type"], :name => "fk_voteables"
   add_index "votes", ["voter_id", "voter_type"], :name => "fk_voters"
-    
-    
+
+
   end
 
   def self.down
@@ -549,8 +512,6 @@ class AllMigrations < ActiveRecord::Migration
     drop_table :audiences_schools
     drop_table :bdrb_job_queues
     drop_table :beta_candidates
-    drop_table :beta_keys
-    drop_table :beta_keys
     drop_table :bulletins
     drop_table :countries
     drop_table :course_resources
@@ -561,16 +522,12 @@ class AllMigrations < ActiveRecord::Migration
     drop_table :events
     drop_table :exam_users
     drop_table :exams
-    drop_table :external_objects
     drop_table :favorites
     drop_table :folders
     drop_table :followship
     drop_table :group_permissions
     drop_table :groups
     drop_table :groups_users
-    drop_table :interactive_classes
-    drop_table :invitations
-    drop_table :lessons
     drop_table :messages
     drop_table :metro_areas
     drop_table :myfiles

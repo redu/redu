@@ -3,7 +3,7 @@ class Environment < ActiveRecord::Base
   # como um instituição o provedor de ensino dentro do sistema.
 
   after_create :create_environment_association
-  after_create :create_course_association
+  after_create :create_course_association, :unless => "self.courses.empty?"
 
   has_many :courses, :dependent => :destroy
   has_many :user_environment_associations, :dependent => :destroy
@@ -49,6 +49,7 @@ class Environment < ActiveRecord::Base
   end
 
   def to_param
+    return self.id.to_s if self.path.empty?
     self.path
   end
 

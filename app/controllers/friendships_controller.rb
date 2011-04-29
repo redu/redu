@@ -9,9 +9,7 @@ class FriendshipsController < BaseController
       paginate(:page => params[:page], :per_page => 16)
 
     respond_to do |format|
-      format.html do
-        render :layout => 'new/application'
-      end
+      format.html
       format.js
     end
   end
@@ -22,15 +20,19 @@ class FriendshipsController < BaseController
     friendship = @friend.friendship_for current_user
     respond_to do |format|
       format.html do
-        redirect_to user_path(@friend)
+        if params.has_key? :goto_home
+          redirect_to home_user_path(current_user)
+        else
+          redirect_to user_path(@friend)
+        end
       end
       format.js do
         render :update do |page|
           if !current_user.friends? @friend
-            page.insert_html :after, 'follow_link',
+            page.insert_html :after, 'new_friendship',
               (link_to 'Aguardando aceitação', nil, :class => 'waiting')
           end
-          page.remove 'follow_link'
+          page.remove 'new_friendship'
         end
       end
     end
@@ -41,7 +43,11 @@ class FriendshipsController < BaseController
     destroy_friendship(@friend)
     respond_to do |format|
       format.html do
-        redirect_to user_path(@friend)
+        if params.has_key? :goto_home
+          redirect_to home_user_path(current_user)
+        else
+          redirect_to user_path(@friend)
+        end
       end
       format.js do
         render :update do |page|

@@ -1,0 +1,29 @@
+<tr id="invite-<%= invite_email_item_admin.id %>-e" class="invite">
+  <td><%= check_box_tag 'email_invitations[]', invite_email_item_admin.id, false,
+    {:class => "autoCheck", :id => "remove-#{invite_email_item_admin.id}"}  %></td>
+  <td>
+    <%= image_tag "new/missing_users_thumb_32.png",
+      :class => "avatar" %>
+    <span class="user">
+      <%= invite_email_item_admin.email %>
+      <span class="tip">O membro ainda não aceitou o convite.</span>
+    </span>
+  </td>
+  <td>
+    <span class="date">
+      <%= time_ago_in_words invite_email_item_admin.updated_at %>
+    </span>
+  </td>
+  <td>
+    <%= image_tag 'spinner.gif', :style => 'display: none;',
+      :id => "spinner-#{invite_email_item_admin.id}-e" %>
+    <%= link_to_remote 'Reconvidar',
+      :url => invite_members_environment_course_path(@environment, @course,
+           :emails => "#{invite_email_item_admin.email}",
+           :invitation_id => invite_email_item_admin.id.to_s + "-e"),
+
+      :loading => "$('#spinner-#{invite_email_item_admin.id}-e').show(); $('#invite-#{invite_email_item_admin.id}-e .reinvite').hide();",
+      :success => "$('#spinner-#{invite_email_item_admin.id}-e').hide();",
+      :html => { :class => 'important reinvite' } %>
+   </td>
+</tr>

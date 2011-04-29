@@ -13,10 +13,9 @@ describe User do
   it { should have_many :bulletins }
 
   it { should have_many(:exam_history).through :exam_users}
-  it { should have_many(:invitations).dependent :destroy}
   it { should have_many(:enrollments).dependent :destroy}
 
-  it { should have_one(:beta_key).dependent(:destroy)}
+  it { should have_one(:settings).dependent(:destroy) }
 
   it { should belong_to :metro_area }
   it { should belong_to :state }
@@ -60,8 +59,17 @@ describe User do
   it { should_not allow_mass_assignment_of :sb_posts_count }
   it { should_not allow_mass_assignment_of :sb_last_seen_at }
 
+  # UserCourseAsssociation with invited state (Course invitations)
+  it { should have_many :course_invitations }
+
+  it { should accept_nested_attributes_for :settings }
+
   [:first_name, :last_name].each do |attr|
-    it { should validate_presence_of attr}
+    it do
+      pending "Need fix on shoulda's translation problem" do
+        should validate_presence_of attr
+      end
+    end
   end
 
   [:login, :email].each do |attr|
@@ -145,6 +153,29 @@ describe User do
         subject.save
         subject.errors.on(:curriculum).should be_nil
       end
+    end
+
+    it "should validate password and password_confirmation equality" do
+      u = Factory.build(:user, :email => "email@email.com",
+                  :email_confirmation => "different@email.com")
+      u.should_not be_valid
+      u.errors.on(:email).should_not be_nil
+    end
+
+    it "validates e-mail format" do
+      u = Factory.build(:user, :email => "invalid@inv")
+      u.should_not be_valid
+      u.errors.on(:email).should_not be_nil
+    end
+
+    it "validates mobile phone format" do
+      u = Factory.build(:user, :mobile => "21312312")
+      u.should_not be_valid
+      u.errors.on(:mobile).should_not be_nil
+      u.mobile = "55 81 1231-2131"
+      u.should be_valid
+      u.mobile = "81 2131-2123"
+      u.should be_valid
     end
   end
 
@@ -231,6 +262,27 @@ describe User do
       user = Factory(:user)
       User.find_by_login_or_email(subject.login).should == subject
       User.find_by_login_or_email(subject.email).should == subject
+    end
+
+    it "retrieves course invitations" do
+      courses = (0..3).collect { Factory(:course) }
+      courses[0].subscription_type = 2
+      courses[0].join subject
+      courses[1].subscription_type = 2
+      courses[1].join subject
+      assoc = courses[2].invite subject
+      assoc2 = courses[3].invite subject
+
+      subject.course_invitations.should == [assoc, assoc2]
+    end
+
+    it "retrieves a user by name, login or email" do
+      users = []
+      users << Factory(:user, :first_name => "Guilherme")
+      users << Factory(:user, :login => "guilherme")
+      users << Factory(:user, :email => "guiocavalcanti@redu.com.br")
+
+      User.with_keyword("guilherme").to_set.should == [users[0], users[1]].to_set
     end
   end
 
@@ -474,6 +526,12 @@ describe User do
   end
 
   it "retrieves completeness percentage of profile" do
-    subject.completeness.should == 56
+    subject.completeness.should == 45
+  end
+
+  it "creates user settings!" do
+    subject.create_settings!
+    subject.reload.settings.should_not be_nil
+    subject.settings.view_mural.should == Privacy[:friends]
   end
 end

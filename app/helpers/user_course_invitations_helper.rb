@@ -1,0 +1,2 @@
+module UserCourseInvitationsHelper
+end

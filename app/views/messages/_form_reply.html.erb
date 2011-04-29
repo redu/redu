@@ -1,0 +1,16 @@
+
+<% form_for [@user, @reply], :html => { :class => 'common' } do |f| %>
+  <div id="errors"></div>
+  <%= f.error_messages %>
+
+  <%= f.hidden_field :recipient_id, :value => @reply.to %>
+  <%= f.hidden_field :sender_id, :value => @user.id %>
+  <%= f.hidden_field :reply_to, :value => @reply.reply_to %>
+
+  <%= f.text_field :subject, :style => 'display: none;' %>
+  <%= label_tag :message_body, :message.l + ':' %>
+  <%= f.text_area :body, :size => "73x10" %>
+  <%= submit_tag :send.l %>
+  <%= link_to 'Cancelar', nil, { :onclick => "$('div.new-folder-inner').slideToggle(); $('#dummy_reply').show(); return false;", :class => 'cancel'} %>
+<% end %>
+

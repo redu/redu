@@ -31,7 +31,7 @@ module BaseHelper
       :body => capture(&block)
     }
 
-    concat(render(:partial => 'shared/new/fake_tabs', :locals => locals))
+    concat(render(:partial => 'shared/fake_tabs', :locals => locals))
   end
   safe_helper :fake_tabs
 
@@ -159,24 +159,15 @@ module BaseHelper
 
 
   def type_class(resource)
-#      case resource.attachment_content_type
-#      when "application/vnd.ms-powerpoint" then 'ppt'
-#      when "application/msword" then 'word'
-#      when "application/vnd.openxmlformats-officedocument.wordprocessingml.document" then 'word'
-#      when "application/rtf" then 'word'
-#      when "text/plain" then 'text'
-#      when "application/pdf" then 'pdf'
-#      else ''
-#      end
-        icons = ['3gp', 'bat', 'bmp', 'doc', 'css', 'exe', 'gif', 'jpg', 'jpeg', 'jar','zip',
-        'mp3', 'mp4', 'avi', 'mpeg', 'mov', 'm4p', 'ogg', 'png', 'psd', 'ppt', 'txt', 'swf', 'wmv', 'xls', 'xml', 'zip']
+    icons = ['3gp', 'bat', 'bmp', 'doc', 'css', 'exe', 'gif', 'jpg', 'jpeg', 'jar','zip',
+             'mp3', 'mp4', 'avi', 'mpeg', 'mov', 'm4p', 'ogg', 'pdf', 'png', 'psd', 'ppt', 'txt', 'swf', 'wmv', 'xls', 'xml', 'zip']
 
-        file_ext = resource.attachment_file_name.split('.')[1] if resource.attachment_file_name.split('.').length > 0
-        if file_ext and icons.include? file_ext
-        'ext_'+ file_ext
-        else
-         'ext_txt'
-      end
+    file_ext = resource.attachment_file_name.split('.').last if resource.attachment_file_name.split('.').length > 0
+    if file_ext and icons.include? file_ext
+      'ext_'+ file_ext
+    else
+      'ext_blank'
+    end
   end
 
 
@@ -510,17 +501,6 @@ module BaseHelper
     AppConfig.sections_enabled.include?(feature)
   end
 
-  def show_footer_content?
-    return true if (
-      current_page?(:controller => 'base', :action => 'site_index') ||
-      current_page?(:controller => 'posts', :action => 'show')  ||
-      current_page?(:controller => 'categories', :action => 'show')  ||
-      current_page?(:controller => 'users', :action => 'show')
-    )
-
-    return false
-  end
-
  # def clippings_link
  #   "javascript:(function() {d=document, w=window, e=w.getSelection, k=d.getSelection, x=d.selection, s=(e?e():(k)?k():(x?x.createRange().text:0)), e=encodeURIComponent, document.location='#{application_url}new_clipping?uri='+e(document.location)+'&title='+e(document.title)+'&selection='+e(s);} )();"
  # end
@@ -685,6 +665,8 @@ end
   def resource_name(class_name, qty)
     case class_name
     when :myfile
+        "#{qty > 1 ? "novos" : "novo"} #{pluralize(qty, 'arquivo').split(' ')[1]}"
+    when :folder
         "#{qty > 1 ? "novos" : "novo"} #{pluralize(qty, 'arquivo').split(' ')[1]}"
     when :bulletin
         "#{qty > 1 ? "novas" : "nova"} #{pluralize(qty, 'notícia').split(' ')[1]}"

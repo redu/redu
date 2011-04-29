@@ -1,9 +1,11 @@
-<% form_remote_for :page, @page,
-  :url => space_subject_lectures_path(@space, @subject),
-  :html => { :id => "page_form" },
-  :before => "for (instance in CKEDITOR.instances){
-            CKEDITOR.instances[instance].updateElement();}",
-  :loading => "$('#spinner-form-page').show();",
-  :success => "$('#spinner-form-page').hide();" do |f| %>
-  <%= render :partial => 'page_fields', :locals => { :f => f } %>
-<% end %>
+<div id="lecture_form">
+  <% form_remote_for :page, @page,
+    :url => space_subject_lectures_path(@space, @subject),
+    :html => { :id => "page_form", :class => "common" },
+    :before => "for (instance in CKEDITOR.instances){
+              CKEDITOR.instances[instance].updateElement();}",
+    :loading => "$('#spinner-form-page').show();",
+    :success => "$('#spinner-form-page').hide();" do |f| %>
+    <%= render :partial => 'lectures/page_fields', :locals => { :f => f } %>
+  <% end %>
+</div>

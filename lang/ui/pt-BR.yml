@@ -12,6 +12,7 @@ pt-BR:
 
   time:
     formats:
+      default: "%d/%m/%Y"
       published_date: "%d/%m/%Y"
       short_published_date: "%d/%m/%y"
       literal_date: "%d %B %Y"
@@ -98,18 +99,23 @@ pt-BR:
               blank: "Por favor escolha um enunciado maior que 6 caracteres."
         user:
           attributes:
+            first_name:
+              blank: "Por favor, digite seu nome."
+            last_name:
+              blank: "Por favor, digite seu sobrenome."
             login:
               blank: ": Por favor, digite um login."
               too_short: ": Login muito curto (mínimo de 5 caracteres)."
-              invalid:  ": Login inválido."
+              invalid:  "Utilize apenas letras (a-z), números (0-9), traço (-) e sublinhado (_)."
               taken: "Por favor, escolha outro login. Este já existe no Redu."
             login_slug:
               taken: "Por favor, escolha outro login. Este já existe no Redu."
             email:
               blank: ": Por favor, digite um e-mail."
               too_short: ": E-mail muito curto (mínimo de 3 caracteres)."
-              invalid: ": E-mail inválido."
+              invalid: "E-mail inválido."
               taken: ": Este e-mail já está cadastrado."
+              confirmation: "é diferente da confirmação."
             password:
               blank: ": Por favor, digite a senha."
               too_short: ": Senha muito curta (mínimo de 6 caracteres)."
@@ -117,6 +123,10 @@ pt-BR:
             password_confirmation:
               blank: ": Por favor, digite a senha de confirmação."
               too_short: ": Senha muito curta (mínimo de 6 caracteres)."
+            mobile:
+              invalid: "Telefone inválido."
+            localization:
+              invalid: "Localização inválida."
         exam:
           attributes:
             name: ": Por favor escolha um título maior que 6 caracteres."
@@ -214,7 +224,11 @@ pt-BR:
       not_confirmed: Your account is not confirmed
       not_approved: Your account is not approved
       no_authentication_details: You did not provide any details for authentication.
-
+    models:
+      user: login
+    attributes:
+      user:
+        login: "Login"
   #redu categories
   all: Todas
   aeronautics_and_astronautics: Aeronáutica e Astronáutica
@@ -681,7 +695,7 @@ pt-BR:
   #en: email: E-mail
   email: E-mail
   #en: email_signup_thanks: Thanks for signing up! You should receive an e-mail confirmation shortly at {{email}}
-  email_signup_thanks: "Obrigado pelo cadastro! Você deve receber um e-mail de confirmação em {{email}}."
+  email_signup_thanks: "Obrigado pelo cadastro! Você deve receber um e-mail de confirmação em %{email}."
   #en: email_this_story_to_friends: "E-mail this story to friends"
   email_this_story_to_friends: "E-mail this story to friends"
   #en: email_to_friends: E-mail to friends
@@ -1381,7 +1395,7 @@ pt-BR:
   #en: showing_users: Showing users
   showing_users: Showing users
   #en: sign_up: Sign Up!
-  sign_up: Cadastrar Nova Conta
+  sign_up: Cadastre
   #en: sign_up_for_an_account: Sign up for an account.
   sign_up_for_an_account: Sign up for an account.
   #en: sign_up_for_a_: Sign up for a

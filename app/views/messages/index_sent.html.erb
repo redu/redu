@@ -1,13 +1,15 @@
-<div class="grid_16">
-  <div id="title_video">Mensagens</div>
-</div>
+<%= render :partial => 'users/home_sidebar' %>
+<div class="main grid_10" style="width: 580px;">
+  <%= render :partial => 'messages/breadcrumb' %>
+  <div id="messages">
+    <%
+      fake_tabs ['Recebidas', user_messages_path(@user), {:class => 'icon icon-message-gray_16_16'}],
+        ['Enviadas', index_sent_user_messages_path(@user),  {:class => 'icon icon-messagereply-lightblue_16_16'}],
+        ['Nova', new_user_message_path(@user), {:class => 'icon icon-messagecreate-gray_16_16'}] do
+    %>
+      <%= render :partial => 'messages/index',
+        :locals => { :mailbox => :outbox, :messages => @messages } %>
+    <% end %>
+  </div><!-- end .messages -->
+</div><!-- end .main -->
 
-<div class="grid_10">
-  <%= render :partial => "sidebar_nav", :locals => {:reading => false} %>
-  <div id="tabs-1" class="clearfix first-page">
-    <div id="tabs-1-content">
-      <%= render :partial => "sent" %>
-    </div>
-  </div><!-- end tabs -->
-</div>
-<%= render :partial => 'settings_call' %>

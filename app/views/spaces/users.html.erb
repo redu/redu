@@ -1,0 +1,25 @@
+<%= render :partial => 'spaces/sidebar', :locals => { :space => @space } %>
+
+<div class="main grid_12 omega big-col">
+  <%= render :partial => 'spaces/breadcrumbs', :locals => { :space => @space } %>
+  <%= render :partial => 'spaces/header',
+    :locals => { :space => @space }%>
+
+  <div id="space-users" class="hierarchy-listing-wrapper">
+    <div class="header">
+      <h4>Membros</h4>
+      <span class="counter">
+        <%= @space.users.length %> pessoas fazem parte de
+        <%= @space.name %>
+      </span>
+    </div>
+
+    <ul id="users_list" class="members clearfix">
+      <%= render :partial => 'users/item',
+        :collection => @users, :locals => {:entity => @space} %>
+    </ul>
+
+    <%= will_paginate @users, :renderer => EndlessRenderer %>
+  </div><!-- end #environment-courses -->
+
+</div><!-- end .main -->

@@ -1,25 +1,33 @@
-<li class="clearfix" id="status-<%= response.id %>">
-    <div class="photo">
-     <%= image_tag( response.user.avatar.url(:thumb), {:width => "24", :height=>"24" })%>
-    </div>
-    <div class="activity clearfix">
-      <% if can? :manage, response %>
-        <div class="actions">
-          <%= link_to_remote 'Remover',
-            :url => status_path(response),
-            :loading => "$('#status-#{response.id} > .activity > .actions .ico-delete-status').hide(); $('#status-#{response.id} > .activity > .actions  #favorite_spinner').show();",
-            :confirm => 'Deseja remover a postagem?',
-            :method => :delete,
-            :html => { :class => "icon ico-delete-status" } %>
-
-            <%= render :partial => "statuses/favorite" , :locals => {:status => response} %>
-        </div>
-       <% end %>
-    <span class="msg">
-    <%= link_to raw(response.user.login_slug), user_path(response.user), :class => 'author' %>
-    <%= raw auto_link(response.text) %>
-    <span class="when quiet"><%= time_ago_in_words(response.created_at) %></span>
+<%# Status resposta %>
+<li id="status-<%= response.id %>">
+  <div class="re-status">
+    <%= image_tag response.user.avatar.url(:thumb_32), :width => 32, :height => 32,
+      :class => 'avatar'%>
+   <span class="message">
+      <%= link_to response.user.display_name, user_path(response.user),
+        { :class => 'username' } %>
+      <span class="date">
+        há <%= time_ago_in_words response.created_at %>
     </span>
-
-    </div>
+    <p>
+      <%= raw auto_link(response.text) %>
+    </p>
+  </span>
+  <ul class="actions clearfix">
+    <li>
+      <%= render :partial => 'statuses/favorite',
+        :locals => { :status => response } %>
+    </li>
+    <% if can? :manage, response %>
+      <li>
+      <%= link_to_remote 'Apagar',
+        :url => status_path(response),
+        :loading => "$('#status-#{response.id} > .actions .icon-x-gray_8_8').hide(); $('#status-#{response.id}  > .actions #favorite_spinner').show();",
+        :confirm => 'Deseja remover a postagem?',
+        :method => :delete,
+        :html => { :class => "icon icon icon-x-gray_8_8" } %>
+      </li>
+    <% end %>
+  </ul>
+</div>
 </li>

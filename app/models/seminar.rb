@@ -59,7 +59,6 @@ class Seminar < ActiveRecord::Base
   before_create :truncate_youtube_url
 
   has_one :lecture, :as => :lectureable
-  has_many :lesson, :as => :lesson
 
   # Maquina de estados do processo de conversão
   acts_as_state_machine :initial => :waiting, :column => 'state'
@@ -198,8 +197,10 @@ class Seminar < ActiveRecord::Base
     self.video? or self.audio?
   end
 
-  # Verificar se o curso tem espaço suficiente para o arquivo
+  # Verifica se o curso tem espaço suficiente para o arquivo
   def can_upload_multimedia?(lecture)
+    return true if self.external_resource_type == "youtube"
+    return false unless lecture.subject.space.course.plan.active?
     plan = lecture.subject.space.course.plan
     quota = lecture.subject.space.course.quota
     if quota.multimedia > plan.video_storage_limit
