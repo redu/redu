@@ -1580,6 +1580,7 @@
   position: relative;
 }
 
+.flash-message.error,
 .flash-message.notice {
   background-color: #FFEED7;
   border: solid 1px #FBC172;
