@@ -117,20 +117,15 @@ class LecturesController < BaseController
   # GET /lectures/1/edit
   def edit
     respond_to do |format|
-      if @subject.published?
-        flash[:notice] = 'O módulo deve ser despublicado para que seja possível a editação das aulas.'
-        format.html { redirect_to space_subject_lecture_path(@space, @subject, @lecture) }
-      else
-        format.js do
-          render :update do |page|
-            @page = @lecture.lectureable
-            page.insert_html :before, 'lectures_types',
-              "<fieldset id=\"edit-#{@lecture.id}-item\">
+      format.js do
+        render :update do |page|
+          @page = @lecture.lectureable
+          page.insert_html :before, 'lectures_types',
+            "<fieldset id=\"edit-#{@lecture.id}-item\">
                 <legend class=\"label\">Editar recurso</legend>
               </fieldset>"
             page.insert_html :bottom, "edit-#{@lecture.id}-item",
               :partial => 'lectures/form_edit_page'
-          end
         end
       end
 
