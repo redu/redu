@@ -25,7 +25,7 @@
           :collection => @environment.users.n_recent(9) %>
       </ul><!-- end .connections -->
         <%= link_to "Ver mais",
-          users_environment_path(@environment),
+          users_environment_path(@environment, :preview => true),
           :class => 'more' %>
     </li>
   </ul><!-- end .local-nav -->

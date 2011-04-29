@@ -30,7 +30,8 @@
           :collection => @course.approved_users.n_recent(9)%>
       </ul><!-- end .connections -->
         <%= link_to "Ver mais",
-          users_environment_course_path(@course.environment, @course),
+          users_environment_course_path(@course.environment, @course,
+                                        :preview => true),
           :class => 'more'%>
     </li>
   </ul><!-- end .local-nav -->
