@@ -170,6 +170,13 @@ class LecturesController < BaseController
 
     respond_to do |format|
       if @lecture.save
+        # verificação e conversão de tipos necessários
+        if @lecture.lectureable_type == 'Seminar'
+          @lecture.lectureable.convert! if @lecture.lectureable.need_transcoding?
+        elsif @lecture.lectureable_type == 'Document'
+          @lecture.lectureable.upload_to_scribd
+        end
+
         @space.course.quota.refresh
         @lecture.published = 1
         @lecture.save

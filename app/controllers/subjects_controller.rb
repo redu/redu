@@ -121,7 +121,6 @@ class SubjectsController < BaseController
           @subject.save
           # cria as associações com o subject, replicando a do space
           @subject.create_enrollment_associations
-          @subject.convert_lectureables!
           flash[:notice] = "O Módulo foi criado."
         end
 
