@@ -244,4 +244,4 @@ ActionController::Routing::Routes.draw do |map|
 
 end
 #ActionController::Routing::Translator.i18n('pt-BR') # se ativar, buga (falar com cassio)
-ActionController::Routing::Translator.translate_from_file('lang','i18n-routes.yml')
+#ActionController::Routing::Translator.translate_from_file('lang','i18n-routes.yml')
