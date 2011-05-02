@@ -104,7 +104,7 @@ describe User do
 
     context "validates a curriculum type on update if has a curriculum" do
       before do
-        path = File.join(RAILS_ROOT,
+        path = File.join(Rails.root,
                          "spec",
                          "support",
                          "documents",

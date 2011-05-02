@@ -10,10 +10,10 @@ describe Document do
 
   context "validates" do
     it "a content_type" do
-      path = File.join(RAILS_ROOT, 
-                       "spec", 
-                       "support", 
-                       "documents", 
+      path = File.join(Rails.root,
+                       "spec",
+                       "support",
+                       "documents",
                        "document_test_fail.fai")
 
       doc = Factory.build(:document,

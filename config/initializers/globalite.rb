@@ -1,6 +1,6 @@
 
 require 'globalite_extensions'
-I18n.load_path += Dir[ (File.join(RAILS_ROOT, "lang", "ui", '*.{rb,yml}')) ]
+I18n.load_path += Dir[ (File.join(Rails.root, "lang", "ui", '*.{rb,yml}')) ]
 I18n.default_locale = "pt-BR"
 I18n.reload!
 

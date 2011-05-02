@@ -40,13 +40,13 @@ module Redu
     config.filter_parameters += [:password]
 
     # S3 credentials
-    if File.exists?("#{RAILS_ROOT}/config/s3.yml")
-      S3_CONFIG = YAML.load_file("#{RAILS_ROOT}/config/s3.yml")
+    if File.exists?("#{Rails.root}/config/s3.yml")
+      S3_CONFIG = YAML.load_file("#{Rails.root}/config/s3.yml")
       S3_CREDENTIALS = S3_CONFIG[Rails.env]
     end
 
-    if File.exists?( File.join(RAILS_ROOT, 'config', 'application.yml') )
-      file = File.join(RAILS_ROOT, 'config', 'application.yml')
+    if File.exists?( File.join(Rails.root, 'config', 'application.yml') )
+      file = File.join(Rails.root, 'config', 'application.yml')
       users_app_config = YAML.load_file file
     end
 
@@ -112,7 +112,7 @@ module Redu
     }
 
     # Usado pelo WYSIWYG CKEditor
-    config.load_paths += %W( #{RAILS_ROOT}/app/models/ckeditor )
+    config.load_paths += %W( #{Rails.root}/app/models/ckeditor )
 
   end
 end
