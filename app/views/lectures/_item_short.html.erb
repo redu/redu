@@ -7,7 +7,8 @@
    end
 
 %>
-<li class="<%= css_class %>" id=<%= "#{item_short.id}-item" %>>
+<li id=<%= "#{item_short.id}-item" %>>
+  <span class="<%= css_class %>"></span>
   <%= item_short.name %>
   <% if !item_short.subject.visible? && (can? :manage, item_short.subject) %>
     <% if item_short.lectureable.class.to_s == 'Page' %>

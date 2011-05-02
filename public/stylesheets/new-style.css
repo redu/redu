@@ -1449,6 +1449,15 @@
   margin: 5px 0;
 }
 
+#add-resources .resources li .icon,
+#new_subject .resources li .icon {
+  width: 16px;
+  height: 16px;
+  display: block;
+  float: left;
+  margin-right: 5px;
+}
+
 #add-resources .resources li a.edit,
 #add-resources .resources li a.delete,
 #new_subject .resources li a.edit,
