@@ -688,7 +688,7 @@ end
 
 # Renderer do WillPaginate responsável por renderizar
 # a paginação no formato de Endless.
-class EndlessRenderer < WillPaginate::LinkRenderer
+class EndlessRenderer < WillPaginate::ViewHelpers::LinkRenderer
   def to_html
     if @options[:class].eql? "pagination"
       @options[:class] = "endless"
