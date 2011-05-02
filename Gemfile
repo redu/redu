@@ -4,6 +4,7 @@ gem 'rails', '3.0.7'
 gem 'mysql2'
 gem 'authlogic'
 gem 'pagseguro', '~> 0.1.10'
+gem 'paperclip'
 
 # Use unicorn as the web server
 # gem 'unicorn'
