@@ -22,5 +22,24 @@ Redu::Application.configure do
 
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
+
+  # Armazena no sist. de arquivos
+  PAPERCLIP_STORAGE_OPTIONS = {
+    :path => "public/system/:class/:attachment/:id/:style/:basename.:extension",
+    :url => "/system/:class/:attachment/:id/:style/:basename.:extension",
+    :default_url => "new/missing_:class_:style.png",
+    :styles => { :thumb_150 => "150x150#",
+                 :thumb_120 => "120x120#",
+                 :thumb_100 => "100x100#",
+                 :thumb_60 => "60x60#",
+                 :thumb_32 => "32x32#" }
+  }
+
+  VIDEO_ORIGINAL = PAPERCLIP_STORAGE_OPTIONS.delete(:styles)
+  DOCUMENT_STORAGE_OPTIONS = PAPERCLIP_STORAGE_OPTIONS
+  PAPERCLIP_MYFILES_OPTIONS = PAPERCLIP_STORAGE_OPTIONS
+
+  # Só converte os 5 primeiros segundos (grátis)
+  ZENCODER_CONFIG[:test] = 1
 end
 

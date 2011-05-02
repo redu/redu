@@ -32,7 +32,7 @@ Redu::Application.configure do
   config.serve_static_assets = false
 
   # Enable serving of images, stylesheets, and javascripts from an asset server
-  # config.action_controller.asset_host = "http://assets.example.com"
+  config.action_controller.asset_host = "http://redu_assets.s3.amazonaws.com"
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
@@ -46,4 +46,25 @@ Redu::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
+
+  PAPERCLIP_STORAGE_OPTIONS = {
+    :storage => :s3,
+    :s3_credentials => S3_CREDENTIALS,
+    :bucket => S3_CREDENTIALS['bucket'],
+    :path => ":class/:attachment/:id/:style/:basename.:extension",
+    :default_url => "http://redu_assets.s3.amazonaws.com/images/new/missing_:class_:style.png",
+    :styles => { :thumb_150 => "150x150#",
+                 :thumb_120 => "120x120#",
+                 :thumb_100 => "100x100#",
+                 :thumb_60 => "60x60#",
+                 :thumb_32 => "32x32#" }
+  }
+
+  PAPERCLIP_MYFILES_OPTIONS = PAPERCLIP_STORAGE_OPTIONS.merge({
+    :bucket => S3_CREDENTIALS['files_bucket'],
+    :path => ":class/:attachment/:id/:style/:basename.:extension",
+    :default_url => ":class/:attachment/:style/missing.png",
+  })
+
+  DOCUMENT_STORAGE_OPTIONS = PAPERCLIP_STORAGE_OPTIONS
 end
