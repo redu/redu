@@ -24,7 +24,7 @@ module Redu
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
-    # config.time_zone = 'Central Time (US & Canada)'
+    config.time_zone = 'Brasilia'
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
@@ -49,5 +49,70 @@ module Redu
       file = File.join(RAILS_ROOT, 'config', 'application.yml')
       users_app_config = YAML.load_file file
     end
+
+    # codigo usado para o IE aceitar header sem ser html
+    config.action_controller.use_accept_header = false
+
+    config.action_controller.session_store = :active_record_store
+
+    # ActionMailer
+    config.action_mailer.raise_delivery_errors = true
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      :address => 'smtp.gmail.com',
+      :port => 587,
+      :domain => 'redu.com.br',
+      :authentication => :login,
+      :user_name => 'no-reply@redu.com.br',
+      :password => '7987Y5'
+    }
+
+    # Configurações de conversão e storage de videos (Seminar)
+    VIDEO_ORIGINAL = { # Arquivo original do video (uploaded)
+      :storage => :s3,
+      :s3_credentials => S3_CREDENTIALS,
+      :bucket => S3_CREDENTIALS['bucket'],
+      :path => ":class/:attachment/:id/:style/:basename.:extension",
+      :default_url => "http://redu_assets.s3.amazonaws.com/images/missing_pic.jpg"
+    }
+
+    VIDEO_TRANSCODED = { # Arquivo convertido
+      :storage => :s3,
+      :s3_credentials => S3_CREDENTIALS,
+      :bucket => 'redu_videos',
+      :path => ":class/:attachment/:id/:style/:basename.:extension",
+      :default_url => "http://redu_assets.s3.amazonaws.com/images/missing_pic.jpg"
+    }
+
+    # No ambiente de desenvolvimento :test => 1 (definido em development.rb)
+    ZENCODER_CONFIG = {
+      :api_key => 'cf950c35c3943ff7c25a84c874ddcca3',
+      :input => '',
+      :output => {
+        :url => '',
+        :video_codec => "vp6",
+        :public => 1,
+        :thumbnails => {
+          :number => 6,
+          :size => "160x120",
+          :base_url => '',
+          :prefix => "thumb"
+        },
+        :notifications => {
+          :format => 'json',
+          :url => ''
+        }
+     }
+    }
+
+    # Usado em :controller => jobs, :action => notify
+    ZENCODER_CREDENTIALS = {
+      :username => 'zencoder',
+      :password => 'MCZC2pDQyt5bzko1'
+    }
+
+    # Usado pelo WYSIWYG CKEditor
+    config.load_paths += %W( #{RAILS_ROOT}/app/models/ckeditor )
+
   end
 end
