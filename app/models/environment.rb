@@ -59,12 +59,12 @@ class Environment < ActiveRecord::Base
 
   # Muda o papel do usuário levando em conta a hierarquia
   def change_role(user, role)
-    membership = self.user_environment_associations.find(:first,
-                    :conditions => {:user_id => user.id})
+    membership = self.user_environment_associations.where(:user_id => user.id).
+                   first
     membership.update_attributes({:role_id => role.id})
 
-      user.user_course_associations.all(
-        :conditions => {:course_id => self.courses}).each do |membership|
+    user.user_course_associations.where(:course_id => self.courses).
+      each do |membership|
         membership.course.change_role(user, role)
       end
   end

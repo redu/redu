@@ -5,12 +5,14 @@ class Event < ActiveRecord::Base
   belongs_to :owner, :class_name => "User", :foreign_key => 'owner'
   belongs_to :eventable, :polymorphic => true
 
-  # NAMED SCOPES
+  # SCOPES
   #Procs used to make sure time is calculated at runtime
-  named_scope :upcoming, lambda { { :order => 'start_time', :conditions => ['end_time > ?' , Time.now ] } }
-  named_scope :past, lambda { { :order => 'start_time DESC', :conditions => ['end_time <= ?' , Time.now ] } }
-  named_scope :approved, :conditions => { :state => 'approved' }
-  named_scope :waiting, :conditions => { :state => 'waiting' }
+  scope :upcoming, lambda { order('start_time').where('end_time > ?',
+                                                      Time.now) }
+  scope :past, lambda { order('start_time DESC').where('end_time <= ?',
+                                                       Time.now) }
+  scope :approved, where(:state => 'approved')
+  scope :waiting, where(:state => 'waiting')
 
   # PLUGINS
   acts_as_taggable

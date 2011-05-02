@@ -45,38 +45,37 @@ class Course < ActiveRecord::Base
   has_one :quota, :dependent => :destroy, :as => :billable
   has_one :plan, :as => :billable
 
-  named_scope :of_environment, lambda { |environmnent_id|
-   { :conditions => {:environment_id => environmnent_id} }
+  scope :of_environment, lambda { |environmnent_id|
+    where(:environment_id => environmnent_id)
   }
 
-  named_scope :with_audiences, lambda { |audiences_ids|
-    {:joins => :audiences,
-      :conditions => ['audiences_courses.audience_id IN (?)',
-                        audiences_ids],
-      :group => :id }
-  }
-  named_scope :user_behave_as_administrator, lambda { |user_id|
-    { :joins => :user_course_associations,
-      :conditions => ["user_course_associations.user_id = ? AND user_course_associations.role_id = ?",
-                        user_id, 3] }
+  scope :with_audiences, lambda { |audiences_ids|
+    joins(:audiences).where('audiences_courses.audience_id IN (?)',
+                             audiences_ids).group(:id)
   }
 
-  named_scope :user_behave_as_teacher, lambda { |user_id|
-    { :joins => :user_course_associations,
-      :conditions => ["user_course_associations.user_id = ? AND user_course_associations.role_id = ?",
-                        user_id, 5] }
+  scope :user_behave_as_administrator, lambda { |user_id|
+    joins(:user_course_associations).
+      where("user_course_associations.user_id = ? AND user_course_associations.role_id = ?",
+             user_id, 3)
   }
 
-  named_scope :user_behave_as_tutor, lambda { |user_id|
-    { :joins => :user_course_associations,
-      :conditions => ["user_course_associations.user_id = ? AND user_course_associations.role_id = ?",
-                        user_id, 6] }
+  scope :user_behave_as_teacher, lambda { |user_id|
+    joins(:user_course_associations).
+      where("user_course_associations.user_id = ? AND user_course_associations.role_id = ?",
+              user_id, 5)
   }
 
-  named_scope :user_behave_as_student, lambda { |user_id|
-    { :joins => :user_course_associations,
-      :conditions => ["user_course_associations.user_id = ? AND user_course_associations.role_id = ? AND user_course_associations.state = ?",
-                        user_id, 2, 'approved'] }
+  scope :user_behave_as_tutor, lambda { |user_id|
+    joins(:user_course_associations).
+      where("user_course_associations.user_id = ? AND user_course_associations.role_id = ?",
+              user_id, 6)
+  }
+
+  scope :user_behave_as_student, lambda { |user_id|
+    joins(:user_course_associations).
+      where("user_course_associations.user_id = ? AND user_course_associations.role_id = ? AND user_course_associations.state = ?",
+              user_id, 2, 'approved')
   }
 
   attr_protected :owner, :published, :environment
@@ -114,28 +113,27 @@ class Course < ActiveRecord::Base
 
   # Muda papeis deste ponto para baixo na hieararquia
   def change_role(user, role)
-    membership = user.user_course_associations.find(:first,
-                    :conditions => {:course_id => self.id})
+    membership = user.user_course_associations.
+                   where(:course_id => self.id).first
     membership.update_attributes({:role_id => role.id})
 
-    user.user_space_associations.find(:all,
-                     :conditions => {:space_id => self.spaces},
-                     :include => [:space]).each do |membership|
-      membership.space.change_role(user, role)
-    end
+    user.user_space_associations.where(:space_id => self.spaces).
+      include(:space).each do |membership|
+        membership.space.change_role(user, role)
+      end
   end
 
   # Verifica se o path escolhido para o Course já é utilizado por outro
   # no mesmo Environment. Caso seja, um novo path é gerado.
   def verify_path!(environment_id)
     path  = self.path
-    if Course.all(:conditions => ["environment_id = ? AND path = ?",
-                  environment_id, self.path])
+    if Course.where("environment_id = ? AND path = ?",
+                      environment_id, self.path).all
       self.path += '-' + SecureRandom.hex(1)
 
       # Mais uma tentativa para utilizar um path não existente.
-      return if Course.all(:conditions => ["environment_id = ? AND path = ?",
-                               environment_id, self.path]).empty?
+      return if Course.where("environment_id = ? AND path = ?",
+                               environment_id, self.path).empty?
       self.path = path + '-' + SecureRandom.hex(1)
     end
 
