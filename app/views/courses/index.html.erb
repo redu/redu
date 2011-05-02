@@ -11,6 +11,9 @@
         :method => :get, :id => 'filter_form' do %>
         <fieldset>
           <%= hidden_field_tag 'search', "", { :id => 'hidden_search'} %>
+          <% unless params[:role].nil? %>
+            <%= hidden_field_tag 'role', params[:role] %>
+          <% end %>
           <% for audience in Audience.find(:all) %>
             <%# Se a audiência está marcada devido a consulta anterior,
               manter marcada  %>
