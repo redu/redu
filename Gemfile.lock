@@ -78,6 +78,7 @@ PLATFORMS
 
 DEPENDENCIES
   authlogic
+  mime-types
   mysql2
   pagseguro (~> 0.1.10)
   paperclip
