@@ -1,7 +1,7 @@
 <% form_remote_for :page, @page,
   :url => space_subject_lecture_path(@space, @subject, @page.lecture),
   :method => :put,
-  :html => { :id => "page_form" },
+  :html => { :id => "page_form", :class => "common" },
   :before => "for (instance in CKEDITOR.instances){
             CKEDITOR.instances[instance].updateElement();}" do |f| %>
   <%= render :partial => 'lectures/page_fields', :locals => { :f => f }%>
