@@ -42,7 +42,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.16)
-    mysql2 (0.3.2)
+    mysql2 (0.2.7)
     pagseguro (0.1.10)
     paperclip (2.3.11)
       activerecord (>= 2.3.0)
@@ -79,7 +79,7 @@ PLATFORMS
 DEPENDENCIES
   authlogic
   mime-types
-  mysql2
+  mysql2 (~> 0.2.1)
   pagseguro (~> 0.1.10)
   paperclip
   rails (= 3.0.7)
