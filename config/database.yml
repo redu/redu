@@ -1,26 +1,26 @@
 development:
-  adapter: mysql
+  adapter: mysql2
   username: root
   password:
   database: redu_development
   host: localhost
 
 staging:
-  adapter: mysql
+  adapter: mysql2
   username: root
   password:
   database: redu_staging
   host: localhost
 
 production:
-  adapter: mysql
+  adapter: mysql2
   username: root
   password:
   database: redu_production
   host: localhost
 
 test:
-  adapter: mysql
+  adapter: mysql2
   username: root
   password:
   database: redu_test

@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 gem 'rails', '3.0.7'
-gem 'mysql2'
+gem 'mysql2', '~> 0.2.1'
 gem 'authlogic'
 gem 'pagseguro', '~> 0.1.10'
 gem 'paperclip'
