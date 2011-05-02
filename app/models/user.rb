@@ -96,28 +96,25 @@ class User < ActiveRecord::Base
   has_one :settings, :class_name => "UserSetting", :dependent => :destroy
 
   # Named scopes
-  named_scope :recent, :order => 'users.created_at DESC'
+  scope :recent, order('users.created_at DESC')
   # FIXME Remover tudo relacionado a este named_scope,
   # featured_writer não existe no BD.
-  named_scope :featured, :conditions => ["users.featured_writer = ?", true]
-  named_scope :active, :conditions => ["users.activated_at IS NOT NULL"]
-  named_scope :tagged_with, lambda {|tag_name|
-    {:conditions => ["tags.name = ?", tag_name], :include => :tags}
+  scope :featured, where("users.featured_writer = ?", true)
+  scope :active, where("users.activated_at IS NOT NULL")
+  scope :tagged_with, lambda {|tag_name|
+    where("tags.name = ?", tag_name).include(:tags)
   }
-  named_scope :with_ids, lambda { |ids|
-    {:conditions => {:id => ids}}
+  scope :with_ids, lambda { |ids| where(:id => ids) }
+  scope :n_recent, lambda { |limit|
+    where('users.last_request_at DESC').limit(limit)
   }
-  named_scope :n_recent, lambda { |limit|
-    {:order => 'users.last_request_at DESC', :limit => limit }
-  }
-  named_scope :with_keyword, lambda { |keyword|
-    {:conditions => ["LOWER(login) LIKE :keyword OR " + \
+  scope :with_keyword, lambda { |keyword|
+    where("LOWER(login) LIKE :keyword OR " + \
       "LOWER(first_name) LIKE :keyword OR " + \
       "LOWER(last_name) LIKE :keyword OR " +\
       "CONCAT(LOWER(first_name), ' ', LOWER(last_name)) LIKE :keyword OR " +\
-      "LOWER(email) LIKE :keyword", { :keyword => "%#{keyword.downcase}%" }],
-     :limit => 10,
-     :select => "id, first_name, last_name, login, email, avatar_file_name"}
+      "LOWER(email) LIKE :keyword", { :keyword => "%#{keyword.downcase}%" }).
+      limit(10).select("id, first_name, last_name, login, email, avatar_file_name")
   }
 
   attr_accessor :email_confirmation
@@ -201,7 +198,7 @@ class User < ActiveRecord::Base
 
     states  = country ? country.states.sort_by{|s| s.name} : []
     if states.any?
-      metro_areas = state ? state.metro_areas.all(:order => "name") : []
+      metro_areas = state ? state.metro_areas.order("name") : []
     else
       metro_areas = country ? country.metro_areas : []
     end
@@ -272,7 +269,7 @@ class User < ActiveRecord::Base
 
   # FIXME Verificar necessidade (não foi testado)
   def self.currently_online
-    User.find(:all, :conditions => ["sb_last_seen_at > ?", Time.now.utc-5.minutes])
+    User.where("sb_last_seen_at > ?", Time.now.utc-5.minutes)
   end
 
   # FIXME Verificar necessidade (não foi testado)
@@ -426,7 +423,7 @@ class User < ActiveRecord::Base
 
   # FIXME Verificar necessidade (não foi testado)
   def moderator_of?(forum)
-    moderatorships.count(:all, :conditions => ['forum_id = ?', (forum.is_a?(Forum) ? forum.id : forum)]) == 1
+    moderatorships.where('forum_id = ?', (forum.is_a?(Forum) ? forum.id : forum)).count == 1
   end
 
   # FIXME Verificar necessidade (não foi testado)
@@ -450,7 +447,7 @@ class User < ActiveRecord::Base
   def recount_metro_area_users
     return unless self.metro_area
     ma = self.metro_area
-    ma.users_count = User.count(:conditions => ["metro_area_id = ?", ma.id])
+    ma.users_count = User.where( "metro_area_id = ?", ma.id ).count
     ma.save
   end
 
@@ -459,14 +456,13 @@ class User < ActiveRecord::Base
   end
 
   def this_months_posts
-    self.posts.find(:all, :conditions => ["published_at > ?", DateTime.now.to_time.at_beginning_of_month])
+    self.posts.where("published_at > ?", DateTime.now.to_time.at_beginning_of_month).all
   end
 
   def last_months_posts
-    self.posts.find(:all,
-                    :conditions => ["published_at > ? and published_at < ?",
+    self.posts.where("published_at > ? and published_at < ?",
                       DateTime.now.to_time.at_beginning_of_month.months_ago(1),
-                      DateTime.now.to_time.at_beginning_of_month])
+                      DateTime.now.to_time.at_beginning_of_month).all
   end
 
   # FIXME Falar com Guila
@@ -587,7 +583,7 @@ class User < ActiveRecord::Base
   # FIXME Verificar necessidade (não foi testado)
   # A tabela Frienship não existe
   def friendship_exists_with?(friend)
-    Friendship.find(:first, :conditions => ["user_id = ? AND friend_id = ?", self.id, friend.id])
+    Friendship.where("user_id = ? AND friend_id = ?", self.id, friend.id).first
   end
 
   # before filter
@@ -630,7 +626,7 @@ class User < ActiveRecord::Base
   # FIXME Verificar necessidade (não foi testado)
   # A tabela Frienship não existe
   def has_reached_daily_friend_request_limit?
-    friendships_initiated_by_me.count(:conditions => ['created_at > ?', Time.now.beginning_of_day]) >= Friendship.daily_request_limit
+    friendships_initiated_by_me.where('created_at > ?', Time.now.beginning_of_day).count >= Friendship.daily_request_limit
   end
 
   # FIXME Verificar necessidade (não foi testado)
@@ -701,17 +697,18 @@ class User < ActiveRecord::Base
 
     case entity.class.to_s
     when 'Space'
-      association = UserSpaceAssociation.find(:first,
-        :conditions => ['user_id = ? AND space_id = ?', self.id, entity.id])
+      association = UserSpaceAssociation.where('user_id = ? AND space_id = ?',
+                                                 self.id, entity.id).first
     when 'Course'
-      association = UserCourseAssociation.find(:first,
-        :conditions => ['user_id = ? AND course_id = ?', self.id, entity.id])
+      association = UserCourseAssociation.where('user_id = ? AND course_id = ?',
+                                                  self.id, entity.id).first
     when 'Environment'
-      association = UserEnvironmentAssociation.find(:first,
-        :conditions => ['user_id = ? AND environment_id = ?', self.id, entity.id])
+      association = UserEnvironmentAssociation.
+                      where('user_id = ? AND environment_id = ?', self.id,
+                              entity.id).first
     when 'Subject'
-      association = Enrollment.find(:first,
-        :conditions => ['user_id = ? AND subject_id = ?', self.id, entity.id])
+      association = Enrollment.where('user_id = ? AND subject_id = ?', self.id,
+                                       entity.id).first
     end
   end
 
@@ -780,14 +777,15 @@ class User < ActiveRecord::Base
   end
 
   def rm_favorite(favoritable_type, favoritable_id)
-    fav = Favorite.find(:first, :conditions => {:favoritable_type => favoritable_type,
-                       :favoritable_id => favoritable_id,
-                       :user_id => self.id})
+    fav = Favorite.where(:favoritable_type => favoritable_type,
+                           :favoritable_id => favoritable_id,
+                           :user_id => self.id).first
     fav.destroy
   end
 
     def has_favorite(favoritable)
-    Favorite.find(:first, :conditions => ["favoritable_id = ? AND favoritable_type = ? AND user_id = ?", favoritable.id, favoritable.class.to_s,self.id  ])
+    Favorite.where("favoritable_id = ? AND favoritable_type = ? AND user_id = ?",
+                     favoritable.id, favoritable.class.to_s,self.id).first
   end
 
   def update_last_seen_at
@@ -796,8 +794,7 @@ class User < ActiveRecord::Base
   end
 
   def profile_for(subject)
-    self.student_profiles.find(:first,
-      :conditions => {:subject_id => subject})
+    self.student_profiles.where(:subject_id => subject)
   end
 
   def completeness

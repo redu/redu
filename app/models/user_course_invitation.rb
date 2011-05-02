@@ -6,10 +6,8 @@ class UserCourseInvitation < ActiveRecord::Base
 
   before_validation_on_create :generate_token
 
-  named_scope :invited, :conditions => { :state => 'invited' }
-  named_scope :with_email, lambda { |email|
-    { :conditions => { :email => email } }
-  }
+  scope :invited, where(:state => 'invited')
+  scope :with_email, lambda { |email| where( :email => email) }
 
   acts_as_state_machine :initial => :invited
   # Envia e-mail avisando que ele foi convidado

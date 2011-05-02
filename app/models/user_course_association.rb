@@ -4,27 +4,25 @@ class UserCourseAssociation < ActiveRecord::Base
   has_enumerated :role
 
   # Filtra por papéis (lista)
-  named_scope :with_roles, lambda { |roles|
+  scope :with_roles, lambda { |roles|
     unless roles.empty?
-      { :conditions => { :role_id => roles.flatten } }
+      where(:role_id => roles.flatten)
     end
   }
+
   # Filtra por palavra-chave (procura em User)
-  named_scope :with_keyword, lambda { |keyword|
+  scope :with_keyword, lambda { |keyword|
     if not keyword.empty? and keyword.size > 3
-      { :conditions => [ "users.first_name LIKE :keyword " + \
+      where("users.first_name LIKE :keyword " + \
         "OR users.last_name LIKE :keyword " + \
-        "OR users.login LIKE :keyword", {:keyword => "%#{keyword}%"}],
-        :include => [{ :user => {:user_space_associations => :space} }]}
+        "OR users.login LIKE :keyword", {:keyword => "%#{keyword}%"}).
+        include(:user).include(:user_space_associations).indluce(:space)
     end
   }
 
-  named_scope :recent, lambda {
-      {:conditions => [ "created_at >= ?", 1.week.ago]}
-  }
-
-  named_scope :approved, :conditions => { :state => 'approved' }
-  named_scope :invited, :conditions => { :state => 'invited' }
+  scope :recent, lambda { where("created_at >= ?", 1.week.ago) }
+  scope :approved, where(:state => 'approved')
+  scope :invited, where(:state => 'invited')
 
   # Máquina de estados para moderação das dos usuários nos courses.
   acts_as_state_machine :initial => :waiting
@@ -67,7 +65,7 @@ class UserCourseAssociation < ActiveRecord::Base
     conditions = { :state => 'invited', :user_id => user }
     conditions[:course_id] = course unless course.nil?
 
-    UserCourseAssociation.count(:conditions => conditions) > 0
+    UserCourseAssociation.where(conditions).count > 0
   end
 
   def send_course_invitation_notification
