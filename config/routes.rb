@@ -190,7 +190,8 @@ ActionController::Routing::Routes.draw do |map|
   map.contact 'contact', :controller => "base", :action => "contact"
   map.learn_index '/learn', :controller => 'base', :action => 'learn_index'
   map.teach_index '/teach', :controller => 'base', :action => 'teach_index'
-  map.courses_index '/courses', :controller => 'courses', :action => 'index'
+  map.courses_index '/courses', :controller => 'courses', :action => 'index',
+    :conditions => { :method => :get }
 
   map.resources :environments,
     :member_path => "/:id",
