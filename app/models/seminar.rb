@@ -49,9 +49,9 @@ class Seminar < ActiveRecord::Base
   SUPPORTED_AUDIO = ['audio/mpeg', 'audio/mp3']
 
   # Video convertido
-  has_attached_file :media, VIDEO_TRANSCODED
+  has_attached_file :media, Redu::Application.config.video_transcoded
   # Video original. Mantido para caso seja necessário refazer o transcoding
-  has_attached_file :original, {}.merge(VIDEO_ORIGINAL)
+  has_attached_file :original, {}.merge(Redu::Application.config.video_original)
 
   # Callbacks
   # Se for tipo upload, chama o metodo define_content_type
@@ -151,14 +151,17 @@ class Seminar < ActiveRecord::Base
       :extension => 'flv'
     }
 
-    output_path = "s3://" + VIDEO_TRANSCODED[:bucket] + "/" + interpolate(VIDEO_TRANSCODED[:path], seminar_info)
+    video_storage = Redu::Application.config.video_transcoded
+    output_path = "s3://" + video_storage[:bucket] + "/" + interpolate(vide_storage[:path], seminar_info)
 
-    ZENCODER_CONFIG[:input] = self.original.url
-    ZENCODER_CONFIG[:output][:url] = output_path
-    ZENCODER_CONFIG[:output][:thumbnails][:base_url] = File.dirname(output_path)
-    ZENCODER_CONFIG[:output][:notifications][:url] = "http://#{ZENCODER_CREDENTIALS[:username]}:#{ZENCODER_CREDENTIALS[:password]}@beta.redu.com.br/jobs/notify"
+    credentials = Redu::Application.config.zencoder_credentials
+    config = Redu::Application.zencoder
+    config[:input] = self.original.url
+    config[:output][:url] = output_path
+    config[:output][:thumbnails][:base_url] = File.dirname(output_path)
+    config[:output][:notifications][:url] = "http://#{credentials[:username]}:#{credentials[:password]}@beta.redu.com.br/jobs/notify"
 
-    response = Zencoder::Job.create(ZENCODER_CONFIG)
+    response = Zencoder::Job.create(config)
     puts response.inspect
     if response.success?
       self.job = response.body["id"]

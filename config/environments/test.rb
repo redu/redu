@@ -34,7 +34,7 @@ Redu::Application.configure do
   config.active_support.deprecation = :stderr
 
   # Armazena no sist. de arquivos
-  PAPERCLIP_STORAGE_OPTIONS = {
+  config.paperclip = {
     :path => "public/system/:class/:attachment/:id/:style/:basename.:extension",
     :url => "/system/:class/:attachment/:id/:style/:basename.:extension",
     :default_url => "new/missing_:class_:style.png",
@@ -45,10 +45,8 @@ Redu::Application.configure do
                  :thumb_32 => "32x32#" }
   }
 
-  VIDEO_ORIGINAL = PAPERCLIP_STORAGE_OPTIONS.delete(:styles)
-  DOCUMENT_STORAGE_OPTIONS = PAPERCLIP_STORAGE_OPTIONS
-  PAPERCLIP_MYFILES_OPTIONS = PAPERCLIP_STORAGE_OPTIONS
+  config.paperclip_myfiles = config.paperclip
 
   # Só converte os 5 primeiros segundos (grátis)
-  ZENCODER_CONFIG[:test] = 1
+  config.zencoder[:test] = 1
 end

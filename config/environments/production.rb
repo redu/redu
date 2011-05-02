@@ -47,7 +47,7 @@ Redu::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
-  PAPERCLIP_STORAGE_OPTIONS = {
+  config.paperclip = {
     :storage => :s3,
     :s3_credentials => S3_CREDENTIALS,
     :bucket => S3_CREDENTIALS['bucket'],
@@ -60,11 +60,10 @@ Redu::Application.configure do
                  :thumb_32 => "32x32#" }
   }
 
-  PAPERCLIP_MYFILES_OPTIONS = PAPERCLIP_STORAGE_OPTIONS.merge({
+  config.paperclip_myfiles = config.paperclip.merge({
     :bucket => S3_CREDENTIALS['files_bucket'],
     :path => ":class/:attachment/:id/:style/:basename.:extension",
     :default_url => ":class/:attachment/:style/missing.png",
   })
 
-  DOCUMENT_STORAGE_OPTIONS = PAPERCLIP_STORAGE_OPTIONS
 end

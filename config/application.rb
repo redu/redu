@@ -68,7 +68,7 @@ module Redu
     }
 
     # Configurações de conversão e storage de videos (Seminar)
-    VIDEO_ORIGINAL = { # Arquivo original do video (uploaded)
+    config.video_original = { # Arquivo original do video (uploaded)
       :storage => :s3,
       :s3_credentials => S3_CREDENTIALS,
       :bucket => S3_CREDENTIALS['bucket'],
@@ -76,7 +76,7 @@ module Redu
       :default_url => "http://redu_assets.s3.amazonaws.com/images/missing_pic.jpg"
     }
 
-    VIDEO_TRANSCODED = { # Arquivo convertido
+    config.video_transcoded = { # Arquivo convertido
       :storage => :s3,
       :s3_credentials => S3_CREDENTIALS,
       :bucket => 'redu_videos',
@@ -84,8 +84,14 @@ module Redu
       :default_url => "http://redu_assets.s3.amazonaws.com/images/missing_pic.jpg"
     }
 
+    # Usado em :controller => jobs, :action => notify
+    config.zencoder_credentials = {
+      :username => 'zencoder',
+      :password => 'MCZC2pDQyt5bzko1'
+    }
+
     # No ambiente de desenvolvimento :test => 1 (definido em development.rb)
-    ZENCODER_CONFIG = {
+    config.zencoder = {
       :api_key => 'cf950c35c3943ff7c25a84c874ddcca3',
       :input => '',
       :output => {
@@ -103,12 +109,6 @@ module Redu
           :url => ''
         }
      }
-    }
-
-    # Usado em :controller => jobs, :action => notify
-    ZENCODER_CREDENTIALS = {
-      :username => 'zencoder',
-      :password => 'MCZC2pDQyt5bzko1'
     }
 
     # Usado pelo WYSIWYG CKEditor
