@@ -41,7 +41,7 @@ class UserCourseInvitation < ActiveRecord::Base
     :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/
 
   def send_external_user_course_invitation
-    UserNotifier.deliver_external_user_course_invitation(self, self.course)
+    UserNotifier.external_user_course_invitation(self, self.course).deliver
   end
 
   protected

@@ -71,7 +71,7 @@ class UserCourseAssociation < ActiveRecord::Base
   end
 
   def send_course_invitation_notification
-    UserNotifier.deliver_course_invitation_notification(self.user, self.course)
+    UserNotifier.course_invitation_notification(self.user, self.course).deliver
   end
 
   protected

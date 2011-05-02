@@ -188,7 +188,7 @@ class CoursesController < BaseController
         @course.user_course_associations.all(:conditions => {
           :user_id => user_id}).each do |ass|
           #TODO fazer isso em batch
-          UserNotifier.deliver_reject_membership(ass.user, @course)
+          UserNotifier.reject_membership(ass.user, @course).deliver
           ass.destroy
           end
       end
@@ -215,7 +215,7 @@ class CoursesController < BaseController
             ass.approve!
             @course.create_hierarchy_associations(ass.user, ass.role)
             # TODO fazer isso em batch
-            UserNotifier.deliver_approve_membership(ass.user, @course)
+            UserNotifier.approve_membership(ass.user, @course).deliver
             end
         end
       else

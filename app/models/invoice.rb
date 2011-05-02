@@ -120,16 +120,16 @@ class Invoice < ActiveRecord::Base
   end
 
   def send_payment_confirmation
-    UserNotifier.deliver_payment_confirmation(self.plan.user, self)
+    UserNotifier.payment_confirmation(self.plan.user, self).deliver
   end
 
   def send_overdue_notice
-    UserNotifier.deliver_overdue_notice(self.plan.user, self)
+    UserNotifier.overdue_notice(self.plan.user, self).deliver
   end
 
   def send_pending_notice
     deadline = self.period_start.advance(:days => 5)
-    UserNotifier.deliver_pending_notice(self.plan.user, self, deadline)
+    UserNotifier.pending_notice(self.plan.user, self, deadline).deliver
   end
 
 end

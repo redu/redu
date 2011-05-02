@@ -13,7 +13,7 @@ class Contact
 
   def deliver
     if valid?
-      UserNotifier.deliver_contact_redu(self)
+      UserNotifier.contact_redu(self).deliver
     else
       false
     end
