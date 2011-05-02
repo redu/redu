@@ -29,22 +29,16 @@ class Lecture < ActiveRecord::Base
     :reject_if => lambda { |a| a[:media].blank? },
     :allow_destroy => true
 
-  # NAMED SCOPES
-  named_scope :unpublished,
-    :conditions => { :published => false }
-  named_scope :published,
-    :conditions => { :published => true }
-  named_scope :seminars,
-    :conditions => ["lectureable_type LIKE 'Seminar'"]
-  named_scope :iclasses,
-    :conditions => ["lectureable_type LIKE 'InteractiveClass'"]
-  named_scope :pages,
-    :conditions => ["lectureable_type LIKE 'Page'"]
-  named_scope :documents,
-    :conditions => ["lectureable_type LIKE 'Document'"]
-  named_scope :limited, lambda { |num| { :limit => num } }
-  named_scope :related_to, lambda { |lecture|
-    { :conditions => ["name LIKE ? AND id != ?", "%#{lecture.name}%", lecture.id]}
+  # SCOPES
+  scope :unpublished, where(:published => false)
+  scope :published, where(:published => true)
+  scope :seminars, where("lectureable_type LIKE 'Seminar'")
+  scope :iclasses, where("lectureable_type LIKE 'InteractiveClass'")
+  scope :pages, where("lectureable_type LIKE 'Page'")
+  scope :documents, where("lectureable_type LIKE 'Document'")
+  scope :limited, lambda { |num| limit(num) }
+  scope :related_to, lambda { |lecture|
+    where("name LIKE ? AND id != ?", "%#{lecture.name}%", lecture.id)
   }
 
 
@@ -95,8 +89,7 @@ class Lecture < ActiveRecord::Base
   end
 
   def refresh_students_profiles
-    student_profiles = StudentProfile.all(:conditions => 
-                                         {:subject_id => self.subject.id})
+    student_profiles = StudentProfile.where(:subject_id => self.subject.id)
     student_profiles.each do |student_profile|
       student_profile.update_grade!
     end
@@ -104,8 +97,7 @@ class Lecture < ActiveRecord::Base
 
   protected
   def create_asset_report
-    student_profiles = StudentProfile.all(:conditions =>
-                                         {:subject_id => self.subject.id})
+    student_profiles = StudentProfile.where(:subject_id => self.subject.id)
     student_profiles.each do |student_profile|
       self.asset_reports << AssetReport.create(:subject => self.subject,
                                                :student_profile => student_profile)

@@ -11,9 +11,7 @@ class StudentProfile < ActiveRecord::Base
   has_many :asset_reports, :dependent => :destroy
   has_many :lectures, :through => :asset_reports
 
-  named_scope :of_subject, lambda { |subject_id|
-    { :conditions => { :subject_id => subject_id } }
-  }
+  scope :of_subject, lambda { |subject_id| where(:subject_id => subject_id) }
 
 
   validates_uniqueness_of :user_id, :scope => :subject_id
@@ -23,8 +21,8 @@ class StudentProfile < ActiveRecord::Base
   # a serem cursados, retorna false.
   def update_grade!
     total = self.asset_reports.of_subject(self.subject).count
-    done = self.asset_reports.of_subject(self.subject).count(
-      :conditions => { :done => true })
+    done = self.asset_reports.of_subject(self.subject).where(:done => true).
+            count
 
     self.grade = (( done.to_f * 100 ) / total)
     if total == done

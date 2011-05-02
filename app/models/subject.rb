@@ -13,9 +13,7 @@ class Subject < ActiveRecord::Base
   has_many :statuses, :as => :statusable, :dependent => :destroy
   has_many :logs, :as => :logeable, :dependent => :destroy, :class_name => 'Status'
 
-  named_scope :recent, lambda {
-    { :conditions => ['updated_at > ?', 1.week.ago] }
-  }
+  scope :recent, lambda { where('updated_at > ?', 1.week.ago) }
 
   attr_protected :owner, :visible, :finalized
 
@@ -74,14 +72,12 @@ class Subject < ActiveRecord::Base
   end
 
   def convert_lectureables!
-    documents = self.lectures.find(:all,
-      :include => "lectureable",
-      :conditions => {:lectureable_type => ["Document"]})
+    documents = self.lectures.include(:lectureable).
+                  where(:lectureable_type => ["Document"])
     documents.each { |d| d.lectureable.upload_to_scribd }
 
-    seminars = self.lectures.find(:all,
-      :include => "lectureable",
-      :conditions => {:lectureable_type => ["Seminar"]})
+    seminars = self.lectures.include(:lectureable).
+                  where(:lectureable_type => ["Seminar"])
     seminars.each do |s|
       s.lectureable.convert! if s.lectureable.need_transcoding?
     end

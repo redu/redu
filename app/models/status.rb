@@ -14,16 +14,15 @@ class Status < ActiveRecord::Base
   alias :owner :user
   has_many :statuses, :as => :in_response_to
 
-  named_scope :not_response,
-    { :conditions => ["kind <> #{Status::ANSWER} OR kind IS NULL"] }
-  named_scope :home_activity, lambda {|user|
-    { :conditions => ["(kind <> :answer OR kind is NULL) AND (((statusable_id IN (:spaces) AND statusable_type = 'Space') OR (logeable_id IN (:spaces) AND logeable_type = 'Space')) OR ((statusable_id IN (:subjects) AND statusable_type = 'Subject') OR (logeable_id IN (:subjects) AND logeable_type = 'Subject')) OR user_id = :user OR (user_id IN (:friends) AND statusable_type = 'User'))",
+  scope :not_response, where("kind <> #{Status::ANSWER} OR kind IS NULL")
+  scope :home_activity, lambda {|user|
+    where("(kind <> :answer OR kind is NULL) AND (((statusable_id IN (:spaces) AND statusable_type = 'Space') OR (logeable_id IN (:spaces) AND logeable_type = 'Space')) OR ((statusable_id IN (:subjects) AND statusable_type = 'Subject') OR (logeable_id IN (:subjects) AND logeable_type = 'Subject')) OR user_id = :user OR (user_id IN (:friends) AND statusable_type = 'User'))",
       {:spaces => user.spaces, :subjects => user.subjects, :user => user,
-       :friends => user.friends, :answer => Status::ANSWER } ] }
+       :friends => user.friends, :answer => Status::ANSWER })
   }
-  named_scope :profile_activity, lambda {|user|
-    { :conditions => ["(kind <> :answer OR kind is NULL) AND (user_id = :user OR (statusable_id = :user AND statusable_type = 'User'))",
-      {:user => user, :answer => Status::ANSWER } ] }
+  scope :profile_activity, lambda {|user|
+    where("(kind <> :answer OR kind is NULL) AND (user_id = :user OR (statusable_id = :user AND statusable_type = 'User'))",
+      {:user => user, :answer => Status::ANSWER })
   }
   acts_as_taggable
 
@@ -71,7 +70,7 @@ class Status < ActiveRecord::Base
 
   #lista somente atividades (logs automaticos)
   def Status.activities(user)
-    Status.all(:conditions => ["log = 1 AND user_id = ?", user.id])
+    Status.where("log = 1 AND user_id = ?", user.id)
   end
 
   # Dada uma rede, retorna os status postados na mesma

@@ -90,7 +90,7 @@ class Plan < ActiveRecord::Base
   belongs_to :changed_from, :class_name => "Plan", :foreign_key => :plan_id
   has_many :invoices
 
-  named_scope :blocked, :conditions => { :state => "blocked" }
+  scope :blocked, where(:state => "blocked")
 
   validates_presence_of :members_limit, :price, :yearly_price
 
