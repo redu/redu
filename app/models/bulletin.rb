@@ -5,9 +5,9 @@ class Bulletin < ActiveRecord::Base
   belongs_to :bulletinable, :polymorphic => true
   belongs_to :owner , :class_name => "User" , :foreign_key => "owner"
 
-  # NAMED_SCOPE
-  named_scope :waiting, :conditions => { :state => 'waiting' }
-  named_scope :approved, :conditions => { :state => 'approved' }
+  # SCOPES
+  scope :waiting, where(:state => 'waiting')
+  scope :approved, where(:state => 'approved')
 
   # PLUGINS
   acts_as_taggable
