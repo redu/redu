@@ -13,7 +13,7 @@ class CoursesController < BaseController
   def show
     @spaces = @course.spaces.published.
       paginate(:page => params[:page], :order => 'name ASC',
-               :per_page => AppConfig.items_per_page)
+               :per_page => Redu::Application.config.items_per_page)
 
     respond_to do |format|
       format.html
@@ -94,7 +94,7 @@ class CoursesController < BaseController
     paginating_params = {
       :page => params[:page],
       :order => 'name ASC',
-      :per_page => AppConfig.items_per_page
+      :per_page => Redu::Application.config.items_per_page
     }
 
     if params.has_key? :role
@@ -141,7 +141,7 @@ class CoursesController < BaseController
 
     @spaces = @course.spaces.paginate(:page => params[:page],
                                       :order => 'name ASC',
-                                      :per_page => AppConfig.items_per_page)
+                                      :per_page => Redu::Application.config.items_per_page)
     respond_to do |format|
       format.html
       format.js
@@ -155,7 +155,7 @@ class CoursesController < BaseController
                              :include => :owner,
                              :page => params[:page],
                              :order => 'updated_at DESC',
-                             :per_page => AppConfig.items_per_page)
+                             :per_page => Redu::Application.config.items_per_page)
 
     respond_to do |format|
       format.html
@@ -169,7 +169,7 @@ class CoursesController < BaseController
     @pending_members = UserCourseAssociation.paginate(:conditions => ["state LIKE 'waiting' AND course_id = ?", @course.id],
                                                       :page => params[:page],
                                                       :order => 'updated_at DESC',
-                                                      :per_page => AppConfig.items_per_page)
+                                                      :per_page => Redu::Application.config.items_per_page)
     respond_to do |format|
       format.html
       format.js
@@ -288,7 +288,7 @@ class CoursesController < BaseController
       :include => [{ :user => {:user_space_associations => :space} }],
       :page => params[:page],
       :order => 'updated_at DESC',
-      :per_page => AppConfig.items_per_page)
+      :per_page => Redu::Application.config.items_per_page)
 
       respond_to do |format|
         format.html
@@ -332,7 +332,7 @@ class CoursesController < BaseController
       :include => [{ :user => {:user_space_associations => :space} }],
       :page => params[:page],
       :order => 'user_course_associations.updated_at DESC',
-      :per_page => AppConfig.items_per_page)
+      :per_page => Redu::Application.config.items_per_page)
 
       respond_to do |format|
         format.js do

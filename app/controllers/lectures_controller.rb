@@ -36,7 +36,7 @@ class LecturesController < BaseController
     @subject_users = @subject.members.all(:limit => 9) # sidebar
     @lectures = @subject.lectures.paginate(:page => params[:page],
                                           :order => 'position ASC',
-                                          :per_page => AppConfig.items_per_page)
+                                          :per_page => Redu::Application.config.items_per_page)
     respond_to do |format|
       format.html
       format.js
@@ -64,7 +64,7 @@ class LecturesController < BaseController
     @status = Status.new
     @statuses = @lecture.statuses.not_response.
       paginate(:page => params[:page],:order => 'created_at DESC',
-               :per_page => AppConfig.items_per_page)
+               :per_page => Redu::Application.config.items_per_page)
 
     if current_user.get_association_with(@lecture.subject)
       asset_report = @lecture.asset_reports.of_user(current_user).first
@@ -257,7 +257,7 @@ class LecturesController < BaseController
                   paginate(:include => :owner,
                            :page => params[:page],
                            :order => 'updated_at DESC',
-                           :per_page => AppConfig.items_per_page)
+                           :per_page => Redu::Application.config.items_per_page)
 
     respond_to do |format|
       format.js

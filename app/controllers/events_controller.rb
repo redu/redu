@@ -66,7 +66,7 @@ class EventsController < BaseController
                :include => :owner,
                :page => params[:page],
                :order => 'start_time',
-               :per_page => AppConfig.items_per_page)
+               :per_page => Redu::Application.config.items_per_page)
 
     @list_title = "Eventos Futuros"
 
@@ -85,7 +85,7 @@ class EventsController < BaseController
                                   :include => :owner,
                                   :page => params[:page],
                                   :order => 'start_time DESC',
-                                  :per_page => AppConfig.items_per_page)
+                                  :per_page => Redu::Application.config.items_per_page)
 
     @list_title = "Eventos Passados"
 
@@ -184,7 +184,7 @@ class EventsController < BaseController
                              :include => :owner,
                              :page => params[:page],
                              :order => 'start_time DESC',
-                             :per_page => AppConfig.items_per_page)
+                             :per_page => Redu::Application.config.items_per_page)
 
     @list_title = "Eventos do dia #{day.strftime("%d/%m/%Y")}"
     render :index

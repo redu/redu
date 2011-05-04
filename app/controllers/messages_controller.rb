@@ -6,7 +6,7 @@ class MessagesController < BaseController
     authorize! :manage, @user
       @messages = @user.received_messages.paginate(:all, :page => params[:page],
                                                    :order =>  'created_at DESC',
-                                                   :per_page => AppConfig.items_per_page )
+                                                   :per_page => Redu::Application.config.items_per_page )
       respond_to do |format|
         format.html
         format.js
@@ -17,7 +17,7 @@ class MessagesController < BaseController
     authorize! :manage, @user
     @messages = @user.sent_messages.paginate(:all, :page => params[:page],
                                              :order =>  'created_at DESC',
-                                             :per_page => AppConfig.items_per_page)
+                                             :per_page => Redu::Application.config.items_per_page)
     respond_to do |format|
         format.html
         format.js

@@ -760,14 +760,14 @@ class User < ActiveRecord::Base
   def profile_activity(page = 1)
     Status.profile_activity(self).
       paginate(:page => page, :order => 'created_at DESC',
-               :per_page => AppConfig.items_per_page)
+               :per_page => Redu::Application.config.items_per_page)
   end
 
   # FIXME Não foi testado devido a futura reformulação de Status
   def home_activity(page = 1)
     Status.home_activity(self).paginate(:page => page,
                                         :order => 'created_at DESC',
-                                        :per_page => AppConfig.items_per_page)
+                                        :per_page => Redu::Application.config.items_per_page)
   end
 
   def add_favorite(favoritable_type, favoritable_id)

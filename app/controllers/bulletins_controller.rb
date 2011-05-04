@@ -16,7 +16,7 @@ class BulletinsController < BaseController
                                    @bulletinable.id, @bulletinable.class.to_s],
                                    :page => params[:page],
                                    :order => 'created_at DESC',
-                                   :per_page => AppConfig.items_per_page)
+                                   :per_page => Redu::Application.config.items_per_page)
 
     respond_to do |format|
       format.html

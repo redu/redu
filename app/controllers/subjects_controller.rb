@@ -17,12 +17,12 @@ class SubjectsController < BaseController
     if can? :manage, @space
       @subjects = @space.subjects.paginate(:page => params[:page],
                                            :order => 'updated_at DESC',
-                                           :per_page => AppConfig.items_per_page)
+                                           :per_page => Redu::Application.config.items_per_page)
     else
       @subjects = @space.subjects.visible.
         paginate(:page => params[:page],
                  :order => 'updated_at DESC',
-                 :per_page => AppConfig.items_per_page)
+                 :per_page => Redu::Application.config.items_per_page)
     end
 
     respond_to do |format|
@@ -186,7 +186,7 @@ class SubjectsController < BaseController
   def admin_members
     @memberships = @subject.members.paginate(:page => params[:page],
                                 :order => 'first_name ASC',
-                                :per_page => AppConfig.items_per_page)
+                                :per_page => Redu::Application.config.items_per_page)
     respond_to do |format|
       format.html
       format.js

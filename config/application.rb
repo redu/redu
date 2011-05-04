@@ -50,6 +50,9 @@ module Redu
       config.extras = YAML.load_file file
     end
 
+    # Will paginate
+    config.items_per_page = 10
+
     # codigo usado para o IE aceitar header sem ser html
     config.action_controller.use_accept_header = false
 

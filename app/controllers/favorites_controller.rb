@@ -10,7 +10,7 @@ class FavoritesController < BaseController
         @exams = Exam.paginate(:all,
                                :joins => :favorites,
                                :conditions => ["favorites.favoritable_type = 'Exam' AND favorites.user_id = ? AND exams.id = favorites.favoritable_id", current_user.id],
-                               :page => params[:page], :order => 'created_at DESC', :per_page => AppConfig.items_per_page)
+                               :page => params[:page], :order => 'created_at DESC', :per_page => Redu::Application.config.items_per_page)
 
         format.js do
           render :template => 'favorites/exams.rjs'
@@ -24,7 +24,7 @@ class FavoritesController < BaseController
         @lectures = Lecture.paginate(:all,
                                    :joins => :favorites,
                                    :conditions => ["favorites.favoritable_type = 'Lecture' AND favorites.user_id = ? AND lectures.id = favorites.favoritable_id", current_user.id],
-                                   :page => params[:page], :order => 'created_at DESC', :per_page => AppConfig.items_per_page)
+                                   :page => params[:page], :order => 'created_at DESC', :per_page => Redu::Application.config.items_per_page)
 
 
       end

@@ -27,7 +27,7 @@ class EnvironmentsController < BaseController
       :order => 'name ASC',
       :limit => 4,
       :include => :audiences,
-      :per_page => AppConfig.items_per_page
+      :per_page => Redu::Application.config.items_per_page
     }
 
     if can? :manage, @environment
@@ -185,7 +185,7 @@ class EnvironmentsController < BaseController
   def admin_courses
     @environment = Environment.find(params[:id])
     @courses = @environment.courses.paginate(:page => params[:page],
-                                             :per_page => AppConfig.items_per_page)
+                                             :per_page => Redu::Application.config.items_per_page)
 
     respond_to do |format|
       format.html
@@ -199,7 +199,7 @@ class EnvironmentsController < BaseController
         :include => [{ :user => {:user_course_associations => :course} }],
         :page => params[:page],
         :order => 'updated_at DESC',
-        :per_page => AppConfig.items_per_page)
+        :per_page => Redu::Application.config.items_per_page)
 
     respond_to do |format|
       format.html
@@ -210,7 +210,7 @@ class EnvironmentsController < BaseController
   def admin_bulletins
     @bulletins = @environment.bulletins.paginate(:page => params[:page],
                                                 :order => 'updated_at DESC',
-                                                :per_page => AppConfig.items_per_page)
+                                                :per_page => Redu::Application.config.items_per_page)
     respond_to do |format|
       format.html
       format.js
@@ -260,7 +260,7 @@ class EnvironmentsController < BaseController
                     :include => [{ :user => {:user_course_associations => :course} }],
                     :page => params[:page],
                     :order => 'user_environment_associations.updated_at DESC',
-                    :per_page => AppConfig.items_per_page)
+                    :per_page => Redu::Application.config.items_per_page)
 
     respond_to do |format|
       format.js

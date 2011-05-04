@@ -48,7 +48,7 @@ class SpacesController < BaseController
   def admin_members
     @memberships = @space.user_space_associations.approved.paginate(:page => params[:page],
                                                    :order => 'updated_at DESC',
-                                                   :per_page => AppConfig.items_per_page)
+                                                   :per_page => Redu::Application.config.items_per_page)
 
     respond_to do |format|
       format.html
@@ -60,7 +60,7 @@ class SpacesController < BaseController
     paginating_params = {
       :include => :owner,
       :order => 'updated_at ASC',
-      :per_page => AppConfig.items_per_page
+      :per_page => Redu::Application.config.items_per_page
     }
 
     if params.has_key?(:page_pending)
@@ -83,7 +83,7 @@ class SpacesController < BaseController
     paginating_params = {
       :include => :owner,
       :order => 'updated_at DESC',
-      :per_page => AppConfig.items_per_page
+      :per_page => Redu::Application.config.items_per_page
     }
 
     if params.has_key?(:page_pending)
@@ -107,14 +107,14 @@ class SpacesController < BaseController
       @memberships = @space.user_space_associations.approved.paginate(:include => :user,
                                                     :page => params[:page],
                                                     :order => 'updated_at DESC',
-                                                    :per_page => AppConfig.items_per_page)
+                                                    :per_page => Redu::Application.config.items_per_page)
     else
       qry = params[:search_user] + '%'
       @memberships =
         @space.user_space_associations.approved.users_by_name(qry).paginate(
                                 :page => params[:page],
                                 :order => 'user_space_associations.updated_at DESC',
-                                :per_page => AppConfig.items_per_page)
+                                :per_page => Redu::Application.config.items_per_page)
     end
 
     respond_to do |format|

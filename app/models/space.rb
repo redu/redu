@@ -84,7 +84,7 @@ class Space < ActiveRecord::Base
   def recent_activity(page = 1)
     self.statuses.not_response.
       paginate(:page => page, :order => 'created_at DESC',
-               :per_page => AppConfig.items_per_page)
+               :per_page => Redu::Application.config.items_per_page)
   end
 
   # Logs relativos ao Space (usado no Course#show).
