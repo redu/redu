@@ -13,10 +13,12 @@ gem 'rubyist-aasm', :require => 'aasm'
 gem 'grouped_validations'
 gem 'shuber-sortable'
 gem 'scribd_fu'
+gem 'factory_girl_rails'
 
 # Gems específicos de algum ambiente
 group :development, :test do
   gem 'rspec-rails'
+  gem 'shoulda-matchers'
 end
 # Use unicorn as the web server
 # gem 'unicorn'

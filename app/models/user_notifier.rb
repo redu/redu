@@ -179,7 +179,7 @@ class UserNotifier < ActionMailer::Base
   end
 
   def signup_notification(user)
-    @url = activate_url.activation_code
+    @url = activate_url user.activation_code
     @user = user
 
     mail(:to => user.email,
