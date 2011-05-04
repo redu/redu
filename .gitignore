@@ -6,7 +6,6 @@ tmp/
 mongrel/
 bin/
 db/schema.rb
-log/*.log
 log/**/*
 *.tmproj
 config/database.yml
