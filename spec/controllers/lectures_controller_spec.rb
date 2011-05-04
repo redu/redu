@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'authlogic/test_case'
+include Authlogic::TestCase
 
 describe LecturesController do
   before do

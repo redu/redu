@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'authlogic/test_case'
+include Authlogic::TestCase
 
 describe CoursesController do
   context "when creating a course for an existing environment" do
