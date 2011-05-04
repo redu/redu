@@ -9,27 +9,29 @@ class UserCourseInvitation < ActiveRecord::Base
   scope :invited, where(:state => 'invited')
   scope :with_email, lambda { |email| where( :email => email) }
 
-  acts_as_state_machine :initial => :invited
+  aasm_column :state
+
+  aasm_initial_state :invited
   # Envia e-mail avisando que ele foi convidado
-  state :invited, :enter => :send_external_user_course_invitation
+  aasm_state :invited, :enter => :send_external_user_course_invitation
   # Convida o usuário (já dentro do Redu) para o curso
-  state :approved, :enter => :create_user_course_association
-  state :rejected
-  state :failed
+  aasm_state :approved, :enter => :create_user_course_association
+  aasm_state :rejected
+  aasm_state :failed
 
   # Necessita que um usuário seja setado ANTES de chamar este método;
   # caso contrário, falha silenciosamente
-  event :accept do
-    transitions :from => :invited, :to => :approved,
-      :guard => Proc.new { |i| i.user }
+  aasm_event :accept do
+    transitions :to => :approved, :from => [:invited],
+      :guard => Proc.new { |uci| uci.user }
   end
 
-  event :deny do
-    transitions :from => :invited, :to => :rejected
+  aasm_event :deny do
+    transitions :to => :rejected, :from => [:invited]
   end
 
-  event :fail do
-    transitions :from => :invited, :to => :failed
+  aasm_event :fail do
+    transitions :to => :failed, :from => [:invited]
   end
 
   validates_presence_of :token, :email, :course
@@ -43,7 +45,6 @@ class UserCourseInvitation < ActiveRecord::Base
   end
 
   protected
-
   def generate_token
     self.token = ActiveSupport::SecureRandom.base64(8).gsub("/","_").
       gsub(/=+$/,"")
