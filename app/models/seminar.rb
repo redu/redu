@@ -1,4 +1,5 @@
 class Seminar < ActiveRecord::Base
+  include AASM
   # Lectureable que representa um objeto multimídia simples, podendo ser aúdio,
   # vídeo ou mídia externa (e.g youtube).
 
@@ -54,8 +55,6 @@ class Seminar < ActiveRecord::Base
   has_attached_file :original, {}.merge(Redu::Application.config.video_original)
 
   # Callbacks
-  # Se for tipo upload, chama o metodo define_content_type
-  before_validation :enable_correct_validation_group
   before_create :truncate_youtube_url
 
   has_one :lecture, :as => :lectureable
@@ -71,7 +70,7 @@ class Seminar < ActiveRecord::Base
   aasm_state :failed
 
   aasm_event :convert do
-    transtitions :to => :converting, :from => [:waiting]
+    transitions :to => :converting, :from => [:waiting]
   end
 
   aasm_event :ready do
@@ -82,13 +81,16 @@ class Seminar < ActiveRecord::Base
     transitions :to => :failed, :from => [:converting]
   end
 
-  # FIXME ver novo plugin de validation_group
-  # Validations Groups - Habilitar diferentes validacoes dependendo do tipo.
-  # validation_group :external,
-  #   :fields => [:external_resource, :external_resource_type]
-  # validation_group :uploaded, :fields => [:original]
+  # Validations Groups - Habilita diferentes validações dependendo do tipo
+  validation_group :external do
+    validates_presence_of :external_resource
+    validates_presence_of :external_resource_type
+  end
+  validation_group :uploaded do
+    validates_presence_of :original
+  end
 
-  validates_presence_of :external_resource, :external_resource_type
+  #validates_presence_of :external_resource, :external_resource_type
   validates_attachment_presence :original
   validate :accepted_content_type
   validates_attachment_size :original,
@@ -180,13 +182,13 @@ class Seminar < ActiveRecord::Base
     SUPPORTED_AUDIO.include?(self.original_content_type)
   end
 
-  # Decide qual validation_group será habilitado
-  def enable_correct_validation_group
+  # Infere validation_group e salva apenas com a validações inferidas
+  def save_with_validation_group
     if self.external_resource_type != "upload"
-      self.enable_validation_group :external
+      self.save(:validation => false) if self.group_valid? :external
     else
-      self.enable_validation_group :uploaded
       self.define_content_type
+      self.save(:validation => false) if self.group_valid? :uploaded
     end
   end
 

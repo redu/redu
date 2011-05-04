@@ -159,7 +159,7 @@ class LecturesController < BaseController
         @seminar = Seminar.new(params[:seminar])
         @seminar.lecture = @lecture
         authorize! :upload_multimedia, @seminar
-        @seminar.save
+        @seminar.save_with_validation_group
       elsif params[:document]
         @document = Document.new(params[:document])
         @document.lecture = @lecture
