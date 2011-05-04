@@ -16,7 +16,7 @@ class Exam < ActiveRecord::Base
     :allow_destroy => true
 
   # SCOPES
-  scope :published, where('published = ?', true).include(:owner)
+  scope :published, where('published = ?', true).includes(:owner)
   scope :published_by, lambda { |my_id|
     where("published = ? AND owner_id = ?", true, my_id)
   }
