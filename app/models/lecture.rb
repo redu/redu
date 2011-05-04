@@ -13,6 +13,8 @@ class Lecture < ActiveRecord::Base
      :conditions => ['statuses.created_at > ?', 10.minutes.ago]
   has_many :acess_key
   #FIXME Verificar se é realmente utilizado (não foi testado)
+  has_many :resources,
+    :class_name => "LectureResource", :as => :attachable, :dependent => :destroy
   has_many :acquisitions
   has_many :favorites, :as => :favoritable, :dependent => :destroy
   has_many :annotations
@@ -22,10 +24,6 @@ class Lecture < ActiveRecord::Base
   belongs_to :owner , :class_name => "User" , :foreign_key => "owner"
   belongs_to :lectureable, :polymorphic => true, :dependent => :destroy
   belongs_to :subject
-
-  accepts_nested_attributes_for :resources,
-    :reject_if => lambda { |a| a[:media].blank? },
-    :allow_destroy => true
 
   # SCOPES
   scope :unpublished, where(:published => false)
