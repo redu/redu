@@ -96,6 +96,18 @@ ActiveRecord::Schema.define(:version => 20110425134445) do
     t.string "name"
   end
 
+  create_table "course_resources", :force => true do |t|
+    t.string   "name"
+    t.string   "attachment_file_name"
+    t.integer  "attachment_file_size"
+    t.string   "attachment_content_type"
+    t.datetime "attachment_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "attachable_id"
+    t.string   "attachable_type"
+  end
+
   create_table "courses", :force => true do |t|
     t.string   "name"
     t.text     "description"
@@ -280,18 +292,6 @@ ActiveRecord::Schema.define(:version => 20110425134445) do
     t.datetime "updated_at"
     t.decimal  "discount",     :precision => 8, :scale => 2, :default => 0.0
     t.text     "audit"
-  end
-
-  create_table "lecture_resources", :force => true do |t|
-    t.string   "name"
-    t.string   "attachment_file_name"
-    t.integer  "attachment_file_size"
-    t.string   "attachment_content_type"
-    t.datetime "attachment_updated_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "attachable_id"
-    t.string   "attachable_type"
   end
 
   create_table "lectures", :force => true do |t|

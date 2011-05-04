@@ -13,8 +13,6 @@ class Lecture < ActiveRecord::Base
      :conditions => ['statuses.created_at > ?', 10.minutes.ago]
   has_many :acess_key
   #FIXME Verificar se é realmente utilizado (não foi testado)
-  has_many :resources,
-    :class_name => "LectureResource", :as => :attachable, :dependent => :destroy
   has_many :acquisitions
   has_many :favorites, :as => :favoritable, :dependent => :destroy
   has_many :annotations
