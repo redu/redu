@@ -1,14 +1,7 @@
 
-require 'globalite_extensions'
 I18n.load_path += Dir[ (File.join(Rails.root, "lang", "ui", '*.{rb,yml}')) ]
 I18n.default_locale = "pt-BR"
 I18n.reload!
-
-
-
-
-#patch, because Rails date_select is broken
-#see: http://rails.lighthouseapp.com/projects/8994-ruby-on-rails/tickets/1389-error-with-date_select-when-a-default_locale-is-set
 
 module ActionView
   module Helpers

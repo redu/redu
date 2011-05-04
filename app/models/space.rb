@@ -68,8 +68,7 @@ class Space < ActiveRecord::Base
 
   # PLUGINS
   acts_as_taggable
-  acts_as_voteable
-  has_attached_file :avatar, PAPERCLIP_STORAGE_OPTIONS
+  has_attached_file :avatar, Redu::Application.config.paperclip
 
   # VALIDATIONS
   validates_presence_of :name, :description, :submission_type
@@ -145,7 +144,7 @@ class Space < ActiveRecord::Base
   # o space pertence tem que ser associados ao space
   def create_space_association_for_users_course
 
-    course_users = UserCourseAssociation.where(:state => 'approved', 
+    course_users = UserCourseAssociation.where(:state => 'approved',
                                                :course_id => self.course)
 
     course_users.each do |assoc|

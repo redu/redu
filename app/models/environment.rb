@@ -26,7 +26,7 @@ class Environment < ActiveRecord::Base
   attr_protected :owner, :published
 
   acts_as_taggable
-  has_attached_file :avatar, PAPERCLIP_STORAGE_OPTIONS
+  has_attached_file :avatar, Redu::Application.config.paperclip
 
   validates_presence_of :name, :path, :initials
   validates_uniqueness_of :name, :path,
