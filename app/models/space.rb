@@ -156,9 +156,4 @@ class Space < ActiveRecord::Base
 
   end
 
-  #FIXME Remover quando a criação deixar de ser Wizard
-  def enable_correct_validation_group!
-    self.enable_validation_group(self.current_step.to_sym)
-  end
-
 end
