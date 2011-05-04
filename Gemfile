@@ -14,6 +14,7 @@ gem 'grouped_validations'
 gem 'shuber-sortable'
 gem 'scribd_fu'
 gem 'factory_girl_rails'
+gem 'ar_mailer_rails3'
 
 # Gems específicos de algum ambiente
 group :development, :test do

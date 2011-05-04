@@ -29,6 +29,7 @@ GEM
       activemodel (= 3.0.7)
       activesupport (= 3.0.7)
     activesupport (3.0.7)
+    ar_mailer_rails3 (2.1.12)
     arel (2.0.9)
     authlogic (3.0.2)
       activerecord (~> 3.0.7)
@@ -105,6 +106,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  ar_mailer_rails3
   authlogic
   cancan
   factory_girl_rails

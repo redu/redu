@@ -6,8 +6,6 @@ class UserNotifier < ActionMailer::Base
 
   include BaseHelper
 
-  self.delivery_method = :activerecord # É necessário iniciar o ar_sendmail para que os e-mails sejam enviados
-
   default :from => "\"Equipe Redu\" <#{Redu::Application.config.email}>",
       :content_type => "text/plain",
       :reply_to => "#{Redu::Application.config.email}"
