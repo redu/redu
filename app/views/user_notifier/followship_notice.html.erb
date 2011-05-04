@@ -1,11 +1,11 @@
 Olá, <%= @user.login %>!
 
-<%= @follower.login %> está seguindo você no <%= AppConfig.community_name %>.
+<%= @follower.login %> está seguindo você no <%= Redu::Application.config.name %>.
 
 Para ver o perfill de <%= @follower.login %> visite <%= user_url(@follower) %>
 
 
 --
-Equipe <%= AppConfig.community_name %>
-<%= AppConfig.community_url %>
+Equipe <%= Redu::Application.config.name %>
+<%= Redu::Application.config.url %>
 

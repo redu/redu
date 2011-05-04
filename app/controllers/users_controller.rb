@@ -78,7 +78,7 @@ class UsersController < BaseController
       flash[:notice] = :thanks_for_activating_your_account.l
       return
     end
-    flash[:error] = :account_activation_error.l_with_args(:email => AppConfig.support_email)
+    flash[:error] = :account_activation_error.l_with_args(:email => Redu::Application.config.email)
     redirect_to signup_path
   end
 
@@ -381,7 +381,7 @@ class UsersController < BaseController
   end
 
   def welcome_complete
-    flash[:notice] = :walkthrough_complete.l_with_args(:site => AppConfig.community_name)
+    flash[:notice] = :walkthrough_complete.l_with_args(:site => Redu::Application.config.name)
     redirect_to user_path
   end
 

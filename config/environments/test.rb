@@ -33,6 +33,9 @@ Redu::Application.configure do
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
 
+  # Nome e URL do app
+  config.url = "localhost:3000"
+
   # Armazena no sist. de arquivos
   config.paperclip = {
     :path => "public/system/:class/:attachment/:id/:style/:basename.:extension",

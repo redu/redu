@@ -104,7 +104,7 @@ class Course < ActiveRecord::Base
   end
 
   def permalink
-    "#{AppConfig.community_url}/#{self.environment.path}/cursos/#{self.path}"
+    "#{Redu::Application.config.url}/#{self.environment.path}/cursos/#{self.path}"
   end
 
   def can_be_published?

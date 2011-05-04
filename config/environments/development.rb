@@ -23,6 +23,9 @@ Redu::Application.configure do
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
 
+  # Nome e URL do app
+  config.url = "localhost:3000"
+
   # Armazena no sist. de arquivos
   config.paperclip = {
     :path => "public/system/:class/:attachment/:id/:style/:basename.:extension",

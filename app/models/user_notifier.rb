@@ -8,9 +8,9 @@ class UserNotifier < ActionMailer::Base
 
   self.delivery_method = :activerecord # É necessário iniciar o ar_sendmail para que os e-mails sejam enviados
 
-  default :from => "\"Equipe Redu\" <#{AppConfig.support_email}>",
+  default :from => "\"Equipe Redu\" <#{Redu::Application.config.email}>",
       :content_type => "text/plain",
-      :reply_to => "#{AppConfig.support_email}"
+      :reply_to => "#{Redu::Application.config.email}"
 
   ### SENT BY MEMBERS OF SCHOOL
   def pending_membership(user,space)
@@ -116,7 +116,7 @@ class UserNotifier < ActionMailer::Base
     @message = message
 
     mail(:to => email,
-         :subject => "#{user.login} quer que você participe do #{AppConfig.community_name}!",
+         :subject => "#{user.login} quer que você participe do #{Redu::Application.config.name}!",
          :date => Time.now)
   end
 
@@ -132,7 +132,7 @@ class UserNotifier < ActionMailer::Base
   end
 
   def contact_redu(contact)
-    mail(:to => AppConfig.contact_emails,
+    mail(:to => Redu::Application.config.email,
          :subject => "[#{contact.kind}] #{contact.subject}",
          :date => Time.now)
 
@@ -145,7 +145,7 @@ class UserNotifier < ActionMailer::Base
     @requester = friendship.user
 
     mail(:to => @user.email,
-         :subject => "[#{AppConfig.community_name}] #{friendship.user.login} would like to be friends with you!",
+         :subject => "[#{Redu::Application.config.name}] #{friendship.user.login} would like to be friends with you!",
         :date => Time.now)
     end
 
@@ -155,7 +155,7 @@ class UserNotifier < ActionMailer::Base
     @url = user_url(friendship.friend)
 
     mail(:to => @user.email,
-         :subject => "[#{AppConfig.community_name}] Friendship request accepted!",
+         :subject => "[#{Redu::Application.config.name}] Friendship request accepted!",
         :date => Time.now)
   end
 
@@ -166,7 +166,7 @@ class UserNotifier < ActionMailer::Base
     @user = comment.recipient
 
     mail(:to => @user.email,
-         :subject => "[#{AppConfig.community_name}] #{comment.username} has something to say to you on #{AppConfig.community_name}!")
+         :subject => "[#{Redu::Application.config.name}] #{comment.username} has something to say to you on #{Redu::Application.config.name}!")
   end
 
   def new_forum_post_notice(user, post)
@@ -175,7 +175,7 @@ class UserNotifier < ActionMailer::Base
     @url = "#{forum_topic_url(:forum_id => post.topic.forum, :id => post.topic, :page => post.topic.last_page)}##{post.dom_id}"
 
     mail(:to => user.email,
-         :subject => "[#{AppConfig.community_name}] #{post.user.login} has posted in a thread you are monitoring.")
+         :subject => "[#{Redu::Application.config.name}] #{post.user.login} has posted in a thread you are monitoring.")
   end
 
   def signup_notification(user)
@@ -183,7 +183,7 @@ class UserNotifier < ActionMailer::Base
     @user = user
 
     mail(:to => user.email,
-         :subject => "[#{AppConfig.community_name}] Por favor ative a sua nova conta #{AppConfig.community_name}",
+         :subject => "[#{Redu::Application.config.name}] Por favor ative a sua nova conta #{Redu::Application.config.name}",
          :date => Time.now)
   end
 
@@ -192,7 +192,7 @@ class UserNotifier < ActionMailer::Base
     @message = message
 
     mail(:to => @user.email,
-         :subject => "[#{AppConfig.community_name}] #{message.sender.login} sent you a private message!",
+         :subject => "[#{Redu::Application.config.name}] #{message.sender.login} sent you a private message!",
          :date => Time.now)
   end
 
@@ -206,7 +206,7 @@ class UserNotifier < ActionMailer::Base
     @description = truncate_words(post.post, 100, @url)
 
     mail(:to => mail,
-         :subject => "Check out this story on #{AppConfig.community_name}",
+         :subject => "Check out this story on #{Redu::Application.config.name}",
          :date => Time.now)
 
   end
@@ -216,7 +216,7 @@ class UserNotifier < ActionMailer::Base
     @url = home_url
 
     mail(:to => user.email,
-         :subject => "Your #{AppConfig.community_name} account has been activated!",
+         :subject => "Your #{Redu::Application.config.name} account has been activated!",
          :date => Time.now)
   end
 
@@ -224,7 +224,7 @@ class UserNotifier < ActionMailer::Base
     @user = user
 
     mail(:to => user.email,
-         :subject => "Sua senha do #{AppConfig.community_name} foi redefinida!",
+         :subject => "Sua senha do #{Redu::Application.config.name} foi redefinida!",
          :date => Time.now)
   end
 
@@ -232,7 +232,7 @@ class UserNotifier < ActionMailer::Base
     @user = user
 
     mail(:to => user.email,
-         :subject => "Lembrete de login do #{AppConfig.community_name}",
+         :subject => "Lembrete de login do #{Redu::Application.config.name}",
          :date => Time.now)
   end
 
@@ -244,7 +244,7 @@ class UserNotifier < ActionMailer::Base
     @environment = environment.name
 
     mail(:to => email,
-         :subject => "#{user.login} quer que você participe do #{AppConfig.community_name}!",
+         :subject => "#{user.login} quer que você participe do #{Redu::Application.config.name}!",
          :date => Time.now)
   end
 
@@ -284,7 +284,7 @@ class UserNotifier < ActionMailer::Base
     @old_plan = old_plan
     @new_plan = new_plan
 
-    mail(:to => AppConfig.contact_emails,
+    mail(:to => Redu::Application.config.email,
          :subject => "[upgrade] user.id",
          :date => Time.now)
   end

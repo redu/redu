@@ -44,6 +44,9 @@ Redu::Application.configure do
   # the I18n.default_locale when a translation can not be found)
   config.i18n.fallbacks = true
 
+  # Nome e URL do app
+  config.url = "www.redu.com.br"
+
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 

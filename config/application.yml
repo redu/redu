@@ -1,17 +1,6 @@
-community_name: "Redu"
-community_tagline: "A Rede Social Educacional"
-community_description:  "A Rede Social Educacional"
-community_url : "http://www.redu.com.br"
-support_email:  "contato@redu.com.br"
-contact_emails: "contato@redu.com.br"
 meta_description: 'A description of your community for use in META tags.'
 meta_keywords: 'keywords for use in META tags'
-# for SEO reasons sometime you should control the robots on how they have to handle your content
-# listing of stuff which points to single posts or entries should normally not been indexed,
-# but the robot should follow the internal link to show the post
 robots_meta_list_content: 'noindex,follow'
-# the post itself should be indexed;
-# when links are included and they point to external sites, the robot should not follow
 robots_meta_show_content: 'index,nofollow'
 
 # Comment this out if you want to infer the locale

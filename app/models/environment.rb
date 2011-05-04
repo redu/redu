@@ -54,7 +54,7 @@ class Environment < ActiveRecord::Base
   end
 
   def permalink
-    "#{AppConfig.community_url}/#{self.path}"
+    "#{Redu::Application.config.url}/#{self.path}"
   end
 
   # Muda o papel do usuário levando em conta a hierarquia

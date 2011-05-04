@@ -8,9 +8,9 @@ Veja abaixo o que  <%= @user.display_name %> escreveu:
   <%= @message %>
 
 <% end %>
-Visite o link abaixo para se cadastrar e <%= AppConfig.community_name %> o que o Redu oferece:
+Visite o link abaixo para se cadastrar e <%= Redu::Application.config.name %> o que o Redu oferece:
 
 <%= @url %>
 
 Obrigado,
-Equipe <%= AppConfig.community_name %>
+Equipe <%= Redu::Application.config.name %>

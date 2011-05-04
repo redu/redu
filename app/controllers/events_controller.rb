@@ -33,7 +33,7 @@ class EventsController < BaseController
 
   def ical
     @calendar = Icalendar::Calendar.new
-    @calendar.custom_property('x-wr-caldesc',"#{AppConfig.community_name} #{:events.l}")
+    @calendar.custom_property('x-wr-caldesc',"#{Redu::Application.config.name} #{:events.l}")
     Event.find(:all).each do |event|
       ical_event = Icalendar::Event.new
       ical_event.start = event.start_time.strftime("%Y%m%dT%H%M%S")
