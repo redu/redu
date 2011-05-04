@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  require 'community_engine_sha1_crypto_method'
   require 'paperclip'
 
   # Constants
@@ -142,14 +143,13 @@ class User < ActiveRecord::Base
     c.validates_format_of_email_field_options = { :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/ }
   end
 
-  has_attached_file :avatar, PAPERCLIP_STORAGE_OPTIONS
-  has_attached_file :curriculum, PAPERCLIP_STORAGE_OPTIONS
+  has_attached_file :avatar, Redu::Application.config.paperclip
+  has_attached_file :curriculum, Redu::Application.config.paperclip
 
   has_friends
   ajaxful_rater
   acts_as_taggable
   has_private_messages
-  acts_as_voter
 
   # VALIDATIONS
   validates_presence_of     :login, :email, :first_name, :last_name,
