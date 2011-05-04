@@ -1,13 +1,5 @@
-require 'hpricot'
-require 'open-uri'
-require 'pp'
-
 class BaseController < ApplicationController
   layout 'application', :except => [:site_index]
-  include AuthenticatedSystem
-  include LocalizedApplication
-
-  around_filter :set_locale
   # Work around (ver método self.login_required_base)
   before_filter :login_required_base, :only => [:learn_index]
 

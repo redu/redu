@@ -7,6 +7,7 @@ gem 'pagseguro', '~> 0.1.10'
 gem 'paperclip'
 gem 'will_paginate', '~> 3.0.pre2'
 gem 'mime-types'
+gem 'cancan'
 
 # Use unicorn as the web server
 # gem 'unicorn'
