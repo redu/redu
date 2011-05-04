@@ -3,3 +3,14 @@ db/*.sqlite3
 log/*.log
 tmp/
 *.swp
+mongrel/
+bin/
+db/schema.rb
+log/*.log
+log/**/*
+*.tmproj
+config/database.yml
+public/system/
+*~
+*.swo
+.DS_Store
