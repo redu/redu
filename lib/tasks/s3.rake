@@ -16,11 +16,11 @@
 #    rake s3:backup:scm                  # Backup the scm repository to S3
 #    rake s3:manage:clean_up             # Remove all but the last 10 most recent backup archive or optionally specify KEEP=5 to keep
 #                                            the last 5
-#    rake s3:manage:delete_bucket        # delete bucket.  You need to pass in NAME=bucket_to_delete.  Set FORCE=true if you want to 
+#    rake s3:manage:delete_bucket        # delete bucket.  You need to pass in NAME=bucket_to_delete.  Set FORCE=true if you want to
 #                                        #   delete the bucket even if there are items in it.
 #    rake s3:manage:list                 # list all your backup archives
 #    rake s3:manage:list_buckets         # list all your S3 buckets
-#    rake s3:retrieve                    # retrieve the latest revision of code, database, and scm from S3. 
+#    rake s3:retrieve                    # retrieve the latest revision of code, database, and scm from S3.
 #                                        #   If  you need to specify a specific version, call the individual retrieve tasks
 #    rake s3:retrieve:code               # retrieve the latest code backup from S3, or optionally specify a VERSION=this_archive.tar.gz
 #    rake s3:retrieve:db                 # retrieve the latest db backup from S3, or optionally specify a VERSION=this_archive.tar.gz
@@ -52,14 +52,14 @@
 #
 #     task :before_migrate, :roles => [:app, :db, :web] do
 #        # this will back up your svn repository, your code directory, and your mysql db.
-#        run "cd #{current_path} && rake --trace RAILS_ENV=production s3:backup"
+#        run "cd #{current_path} && rake --trace Rails.env=production s3:backup"
 #     end
 #
 # = Future enhancements
 #
 #  * encrypt the files before they are sent to S3
-#  * when doing a retrieve, uncompress and untar the files for the user.  
-#  * any other enhancements? 
+#  * when doing a retrieve, uncompress and untar the files for the user.
+#  * any other enhancements?
 #
 # = Credits and License
 #
@@ -95,7 +95,7 @@ namespace :s3 do
       cmd = "cp -rp #{Dir.pwd} #{archive}"
       msg "extracting code directory"
       puts cmd
-      result = system(cmd)      
+      result = system(cmd)
       raise("copy of code dir failed..  msg: #{$?}") unless result
 
       send_to_s3('code', archive)
@@ -169,7 +169,7 @@ namespace :s3 do
         else
           puts "No SVN repository at #{repo_path}."
           use_svnadmin = false
-          final_path = svn_info['URL']          
+          final_path = svn_info['URL']
         end
       end
 
@@ -266,19 +266,19 @@ end
     entry_key = specific_file.nil? ? entries.last.key : entry.key
     msg "retrieving archive: #{entry_key}"
     data =  conn.get(bucket_name(name), entry_key).object.data
-    File.open(entry_key, "wb") { |f| f.write(data) }  
+    File.open(entry_key, "wb") { |f| f.write(data) }
     msg "retrieved file './#{entry_key}'"
   end
 
   # print information about an item in a particular bucket
   def print_bucket(name)
     msg "#{bucket_name(name)} Bucket"
-    conn.list_bucket(bucket_name(name)).entries.map do |entry| 
+    conn.list_bucket(bucket_name(name)).entries.map do |entry|
       puts "size: #{entry.size/1.megabyte}MB,  Name: #{entry.key},  Last Modified: #{Time.parse( entry.last_modified ).to_s(:short)} UTC"
     end
   end
 
-  # go through and keep a certain number of items within a particular bucket, 
+  # go through and keep a certain number of items within a particular bucket,
   # and remove everything else.
   def cleanup_bucket(name, keep_num, convert_name=true)
     msg "cleaning up the #{name} bucket"
@@ -292,16 +292,16 @@ end
     end unless remove < 0
   end
 
-  # open a S3 connection 
+  # open a S3 connection
   def conn
     @s3_configs ||= YAML::load(ERB.new(IO.read("#{RAILS_ROOT}/config/s3.yml")).result)
     @conn ||= S3::AWSAuthConnection.new(@s3_configs['backup']['aws_access_key'], @s3_configs['backup']['aws_secret_access_key'], @s3_configs['backup']['options']['use_ssl'])
   end
 
-  # programatically figure out what to call the backup bucket and 
+  # programatically figure out what to call the backup bucket and
   # the archive files.  Is there another way to do this?
   def project_name
-    # using Dir.pwd will return something like: 
+    # using Dir.pwd will return something like:
     #   /var/www/apps/staging.sweetspot.dm/releases/20061006155448
     # instead of
     # /var/www/apps/staging.sweetspot.dm/current
@@ -329,7 +329,7 @@ end
 
   def archive_name(name)
     @timestamp ||= Time.now.utc.strftime("%Y%m%d%H%M%S")
-    token(name).sub('_', '.') + ".#{RAILS_ENV}.#{@timestamp}"
+    token(name).sub('_', '.') + ".#{Rails.env}.#{@timestamp}"
   end
 
   # put files in a zipped tar everything that goes to s3
@@ -346,8 +346,8 @@ end
     msg "sending archived #{name} to S3"
     # put file with default 'private' ACL
     bytes = nil
-    File.open(archive, "rb") { |f| bytes = f.read }  
-    #set the acl as private       
+    File.open(archive, "rb") { |f| bytes = f.read }
+    #set the acl as private
     headers =  { 'x-amz-acl' => 'private', 'Content-Length' =>  FileTest.size(archive).to_s }
     response =  conn.put(bucket_name(name), archive.split('/').last, bytes, headers).http_response.message
     msg "finished sending #{name} S3"
@@ -355,7 +355,7 @@ end
     msg "cleaning up"
     cmd = "rm -rf #{archive} #{tmp_file}"
     puts cmd
-    system cmd  
+    system cmd
   end
 
   def msg(text)
@@ -365,14 +365,14 @@ end
   def retrieve_db_info
     # read the remote database file....
     # there must be a better way to do this...
-    result = File.read "#{RAILS_ROOT}/config/database.yml"
+    result = File.read "#{Rails.root}/config/database.yml"
     result.strip!
     config_file = YAML::load(ERB.new(result).result)
     return [
-      config_file[RAILS_ENV]['adapter'],
-      config_file[RAILS_ENV]['database'],
-      config_file[RAILS_ENV]['username'],
-      config_file[RAILS_ENV]['password']
+      config_file[Rails.env]['adapter'],
+      config_file[Rails.env]['database'],
+      config_file[Rails.env]['username'],
+      config_file[Rails.env]['password']
     ]
   end
 
