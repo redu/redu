@@ -9,7 +9,7 @@ gem 'paperclip'
 gem 'will_paginate', '~> 3.0.pre2'
 gem 'mime-types'
 gem 'cancan'
-gem 'rubyist-aasm'
+gem 'rubyist-aasm', :require => 'aasm'
 gem 'grouped_validations'
 
 # Gems específicos de algum ambiente
