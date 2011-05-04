@@ -60,7 +60,7 @@ class Exam < ActiveRecord::Base
 
   # Seta respostas corretas para cada questão e salva
   def set_answers!
-    self.questions.include(:alternatives).each {|q| q.set_answer! }
+    self.questions.includes(:alternatives).each {|q| q.set_answer! }
     self.save!
   end
 

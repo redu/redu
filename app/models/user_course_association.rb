@@ -17,7 +17,7 @@ class UserCourseAssociation < ActiveRecord::Base
       where("users.first_name LIKE :keyword " + \
         "OR users.last_name LIKE :keyword " + \
         "OR users.login LIKE :keyword", {:keyword => "%#{keyword}%"}).
-        include(:user).include(:user_space_associations).indluce(:space)
+        include(:user).includes(:user_space_associations).indluce(:space)
     end
   }
 

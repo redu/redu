@@ -103,7 +103,7 @@ class User < ActiveRecord::Base
   scope :featured, where("users.featured_writer = ?", true)
   scope :active, where("users.activated_at IS NOT NULL")
   scope :tagged_with, lambda {|tag_name|
-    where("tags.name = ?", tag_name).include(:tags)
+    where("tags.name = ?", tag_name).includes(:tags)
   }
   scope :with_ids, lambda { |ids| where(:id => ids) }
   scope :n_recent, lambda { |limit|

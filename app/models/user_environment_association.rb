@@ -15,7 +15,7 @@ class UserEnvironmentAssociation < ActiveRecord::Base
         where("users.first_name LIKE :keyword " + \
             "OR users.last_name LIKE :keyword " + \
             "OR users.login LIKE :keyword", {:keyword => "%#{keyword}%"}).
-        include(:user).include(:user_course_associations).include(:course)
+        includes(:user).includes(:user_course_associations).includes(:course)
       end
     }
   # Filtra por Environment

@@ -72,11 +72,11 @@ class Subject < ActiveRecord::Base
   end
 
   def convert_lectureables!
-    documents = self.lectures.include(:lectureable).
+    documents = self.lectures.includes(:lectureable).
                   where(:lectureable_type => ["Document"])
     documents.each { |d| d.lectureable.upload_to_scribd }
 
-    seminars = self.lectures.include(:lectureable).
+    seminars = self.lectures.includes(:lectureable).
                   where(:lectureable_type => ["Seminar"])
     seminars.each do |s|
       s.lectureable.convert! if s.lectureable.need_transcoding?
