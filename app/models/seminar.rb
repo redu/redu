@@ -82,10 +82,11 @@ class Seminar < ActiveRecord::Base
     transitions :to => :failed, :from => [:converting]
   end
 
+  # FIXME ver novo plugin de validation_group
   # Validations Groups - Habilitar diferentes validacoes dependendo do tipo.
-  validation_group :external,
-    :fields => [:external_resource, :external_resource_type]
-  validation_group :uploaded, :fields => [:original]
+  # validation_group :external,
+  #   :fields => [:external_resource, :external_resource_type]
+  # validation_group :uploaded, :fields => [:original]
 
   validates_presence_of :external_resource, :external_resource_type
   validates_attachment_presence :original
