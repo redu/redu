@@ -36,6 +36,8 @@ Redu::Application.configure do
   # Nome e URL do app
   config.url = "localhost:3000"
 
+  config.action_mailer.default_url_options = { :host => config.url }
+
   # Armazena no sist. de arquivos
   config.paperclip = {
     :path => "public/system/:class/:attachment/:id/:style/:basename.:extension",

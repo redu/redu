@@ -47,6 +47,8 @@ Redu::Application.configure do
   # Nome e URL do app
   config.url = "www.redu.com.br"
 
+  config.action_mailer.default_url_options = { :host => config.url }
+
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
