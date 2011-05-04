@@ -158,7 +158,7 @@ class User < ActiveRecord::Base
   validates_presence_of     :metro_area,                 :if => Proc.new { |user| user.state }
   validates_uniqueness_of   :login, :email, :case_sensitive => false
   validates_uniqueness_of   :login_slug
-  validates_exclusion_of    :login, :in => AppConfig.reserved_logins
+  validates_exclusion_of    :login, :in => Redu::Application.config.extras["reserved_logins"]
   validates_date :birthday, :before => 13.years.ago.to_date
   validates_acceptance_of :tos
   validates_attachment_size :curriculum, :less_than => 10.megabytes

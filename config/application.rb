@@ -47,7 +47,7 @@ module Redu
 
     if File.exists?( File.join(Rails.root, 'config', 'application.yml') )
       file = File.join(Rails.root, 'config', 'application.yml')
-      users_app_config = YAML.load_file file
+      config.extras = YAML.load_file file
     end
 
     # codigo usado para o IE aceitar header sem ser html
