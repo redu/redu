@@ -1,5 +1,6 @@
 class UserCourseInvitation < ActiveRecord::Base
   require 'active_support'
+  include AASM
 
   belongs_to :user
   belongs_to :course

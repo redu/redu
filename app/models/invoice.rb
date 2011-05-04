@@ -1,4 +1,5 @@
 class Invoice < ActiveRecord::Base
+  include AASM
   OVERDUE_DAYS = 5
 
   belongs_to :plan
@@ -12,32 +13,31 @@ class Invoice < ActiveRecord::Base
 
   attr_protected :state
 
-  acts_as_state_machine :initial => :pending, :column => "state"
-  state :pending, :enter => :send_pending_notice
-  state :closed
+  aasm_column :state
+  aasm_initial_state :pending
+
+  aasm_state :pending, :enter => :send_pending_notice
+  aasm_state :closed
   # send_overdue_notice não é chamado na transição do autorelacionamento:
   # (overdue -> overdue). Quando for necessário enviar a notificações novamente
   # chamar o método deliver_overdue_notice
-  state :overdue, :enter => :send_overdue_notice
-  state :paid, :enter => :register_time, :after => :send_confirmation_and_unlock_plan
+  aasm_state :overdue, :enter => :send_overdue_notice
+  aasm_state :paid, :enter => :register_time, :exit => :send_confirmation_and_unlock_plan
 
-  event :pend do
-    transitions :from => :pending, :to => :pending
+  aasm_event :pend do
+    transitions :to => :pending, :from => [:pending]
   end
 
-  event :close do
-    transitions :from => :pending, :to => :closed
-    transitions :from => :overdue, :to => :closed
+  aasm_event :close do
+    transitions :to => :closed, :from => [:pending, :overdue]
   end
 
-  event :pay do
-    transitions :from => :pending, :to => :paid
-    transitions :from => :overdue, :to => :paid
+  aasm_event :pay do
+    transitions :to => :paid, :from => [:pending, :overdue]
   end
 
-  event :overdue do
-    transitions :from => :pending, :to => :overdue
-    transitions :from => :overdue, :to => :overdue
+  aasm_event :overdue do
+    transitions :to => :overdue, :from => [:pending, :overdue]
   end
 
   # Data limite para o pagamento

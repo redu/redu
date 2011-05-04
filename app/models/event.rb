@@ -1,4 +1,5 @@
 class Event < ActiveRecord::Base
+  include AASM
 
   # ASSOCIATIONS
   has_many :logs, :as => :logeable, :dependent => :destroy, :class_name => 'Status'
