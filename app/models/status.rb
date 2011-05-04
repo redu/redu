@@ -26,21 +26,20 @@ class Status < ActiveRecord::Base
   }
   acts_as_taggable
 
-  validation_group :log, :fields => [] # Grupo para tipo log
-  validation_group :status, :fields => [:text, :kind] # Grupo para tipo status (inclui question)
+  validation_group :status do
+    validates_presence_of :text
+    validates_inclusion_of :kind,
+      :in => [0, 1, 2, 3, 4],
+      :message => "Tipo inválido"
+    validates_length_of :text, :maximum => 400
+  end
 
-  validates_presence_of :text
-  validates_inclusion_of :kind,
-    :in => [0, 1, 2, 3, 4],
-    :message => "Tipo inválido"
-  validates_length_of :text, :maximum => 400
-
-  # Inspects object attributes and decides which validation group to enable
-  def enable_correct_validation_group
+  # Infere validation_group e salva apenas com a validações inferidas
+  def save_with_validation_group
     if self.log
-      self.enable_validation_group :log
+      self.save(:validate => false)
     else
-      self.enable_validation_group :status
+      self.save(:validate => false) if self.group_valid? :status
     end
   end
 

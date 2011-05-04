@@ -94,7 +94,7 @@ class BaseController < ApplicationController
     case params[:controller]
     when 'lectures'
       if @lecture and @lecture.published
-        Status.create({:log => true,
+        s = Status.new({:log => true,
                       :logeable_name => @lecture.name,
                       :logeable_type => 'Lecture',
                       :logeable_id => @lecture.id,
@@ -103,10 +103,11 @@ class BaseController < ApplicationController
                       :statusable_id => @lecture.owner.id,
                       :user_id => current_user.id
         })
+        s.save_with_validation_group
       end
     when 'exams'
       if @exam and @exam.published
-        Status.create({:log => true,
+        s = Status.new({:log => true,
                       :logeable_name => @exam.name,
                       :logeable_type => 'Exam',
                       :logeable_id => @exam.id,
@@ -115,10 +116,11 @@ class BaseController < ApplicationController
                       :statusable_id => (@exam.subject.space) ? @exam.subject.space.id : @exam.owner.id,
                       :user_id => current_user.id
         })
+        s.save_with_validation_group
       end
     when 'users'
       if @user and params[:update_value]
-        Status.create({:log => true,
+        s = Status.new({:log => true,
                       :logeable_name => params[:update_value],
                       :logeable_type => 'User',
                       :logeable_id => @user.id,
@@ -127,10 +129,11 @@ class BaseController < ApplicationController
                       :statusable_id => @user.id,
                       :user_id => @user.id
         })
+        s.save_with_validation_group
       end
     when 'spaces'
       if @space and @space.created_at
-        Status.create({:log => true,
+        s = Status.new({:log => true,
                       :logeable_name => @space.name,
                       :logeable_type => 'Space',
                       :logeable_id => @space.id,
@@ -139,10 +142,11 @@ class BaseController < ApplicationController
                       :statusable_id => @space.owner.id,
                       :user_id => current_user.id
         })
+        s.save_with_validation_group
       end
     when 'subjects'
       if (@subject and @subject.finalized? and @subject.logs.empty?)
-        Status.create({:log => true,
+        s = Status.new({:log => true,
                       :logeable_name => @subject.title,
                       :logeable_type => 'Subject',
                       :logeable_id => @subject.id,
@@ -151,10 +155,11 @@ class BaseController < ApplicationController
                       :statusable_id => @subject.space.id,
                       :user_id => current_user.id
         })
+        s.save_with_validation_group
       end
     when 'topics'
       if @topic and @topic.created_at
-        Status.create({:log => true,
+        s = Status.new({:log => true,
                       :logeable_name => @topic.title,
                       :logeable_type => 'Topic',
                       :logeable_id => @topic.id,
@@ -163,10 +168,11 @@ class BaseController < ApplicationController
                       :statusable_id => @topic.forum.space.id,
                       :user_id => current_user.id
         })
+        s.save_with_validation_group
       end
     when 'sb_posts'
       if @post and @post.created_at
-        Status.create({:log => true,
+        s = Status.new({:log => true,
                       :logeable_name => nil,
                       :logeable_type => 'SbPost',
                       :logeable_id => @post.id,
@@ -175,10 +181,11 @@ class BaseController < ApplicationController
                       :statusable_id => @post.topic.forum.space.id,
                       :user_id => current_user.id
         })
+        s.save_with_validation_group
       end
     when 'events'
       if @event and @event.created_at
-        Status.create({:log => true,
+        s = Status.new({:log => true,
                       :logeable_name => @event.name,
                       :logeable_type => 'Event',
                       :logeable_id => @event.id,
@@ -187,10 +194,11 @@ class BaseController < ApplicationController
                       :statusable_id => @event.eventable.id,
                       :user_id => current_user.id
         })
+        s.save_with_validation_group
       end
     when 'bulletins'
       if @bulletin and @bulletin.created_at
-        Status.create({:log => true,
+        s = Status.new({:log => true,
                       :logeable_name => @bulletin.title,
                       :logeable_type => 'Bulletin',
                       :logeable_id => @bulletin.id,
@@ -199,10 +207,11 @@ class BaseController < ApplicationController
                       :statusable_id => @bulletin.bulletinable.id,
                       :user_id => current_user.id
         })
+        s.save_with_validation_group
       end
     when 'folders'
       if @myfile.valid? and @space
-        Status.create({:log => true,
+        s = Status.new({:log => true,
                       :logeable_name => @myfile.attachment_file_name,
                       :logeable_type => 'Myfile',
                       :logeable_id => @myfile.id,
@@ -211,6 +220,7 @@ class BaseController < ApplicationController
                       :statusable_id => @space.id,
                       :user_id => current_user.id
         })
+        s.save_with_validation_group
       end
     end
   end
