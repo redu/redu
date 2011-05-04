@@ -11,6 +11,7 @@ gem 'mime-types'
 gem 'cancan'
 gem 'rubyist-aasm', :require => 'aasm'
 gem 'grouped_validations'
+gem 'shuber-sortable'
 
 # Gems específicos de algum ambiente
 group :development, :test do
