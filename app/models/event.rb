@@ -16,7 +16,6 @@ class Event < ActiveRecord::Base
 
   # PLUGINS
   acts_as_taggable
-  acts_as_voteable
   #acts_as_activity :user
 
   # Máquina de estados para moderação de Eventos

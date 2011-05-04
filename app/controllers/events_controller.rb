@@ -1,6 +1,4 @@
 class EventsController < BaseController
-  require 'htmlentities'
-
   load_and_authorize_resource :environment
   load_and_authorize_resource :space
   load_and_authorize_resource :event, :through => [:space, :environment]
@@ -29,24 +27,6 @@ class EventsController < BaseController
     include Singleton
     include ActionView::Helpers::SanitizeHelper
     extend ActionView::Helpers::SanitizeHelper::ClassMethods
-  end
-
-  def ical
-    @calendar = Icalendar::Calendar.new
-    @calendar.custom_property('x-wr-caldesc',"#{Redu::Application.config.name} #{:events.l}")
-    Event.find(:all).each do |event|
-      ical_event = Icalendar::Event.new
-      ical_event.start = event.start_time.strftime("%Y%m%dT%H%M%S")
-      ical_event.end = event.end_time.strftime("%Y%m%dT%H%M%S")
-      #ical_event.summary = event.name + (event.metro_area.blank? ? '' : " (#{event.metro_area})")
-      coder = HTMLEntities.new
-      ical_event.description = (event.description.blank? ? '' : coder.decode(help.strip_tags(event.description).to_s) + "\n\n") + event_url(event)
-      ical_event.location = event.location unless event.location.blank?
-      @calendar.add ical_event
-    end
-    @calendar.publish
-    headers['Content-Type'] = "text/calendar; charset=UTF-8"
-    render :text => @calendar.to_ical, :layout => false
   end
 
   def show

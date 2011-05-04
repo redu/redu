@@ -9,6 +9,7 @@ gem 'will_paginate', '~> 3.0.pre2'
 gem 'mime-types'
 gem 'cancan'
 gem 'rubyist-aasm'
+gem 'grouped_validations'
 
 # Gems específicos de algum ambiente
 group :development, :test do

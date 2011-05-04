@@ -37,9 +37,10 @@ class Exam < ActiveRecord::Base
   validates_length_of :questions, :allow_nil => false, :minimum => 1
   validates_associated :questions
 
-  validation_group :general, :fields => [:name, :description]
-  validation_group :editor, :fields => [:questions]
-  validation_group :publication, :fields => [:name, :description, :questions]
+  # FIXME Verificar uso
+  #validation_group :general, :fields => [:name, :description]
+  #validation_group :editor, :fields => [:questions]
+  #validation_group :publication, :fields => [:name, :description, :questions]
 
   def get_question(qid)
     if qid

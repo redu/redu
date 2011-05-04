@@ -58,11 +58,6 @@ class Lecture < ActiveRecord::Base
   validates_presence_of :lectureable
   validates_associated :lectureable #FIXME Não foi testado, pois vai ter accepts_nested
 
-  # Dependendo do lectureable_type ativa um conjunto de validações diferente
-  validation_group :step1,
-    :fields => [:name, :description, :lectureable_type]
-  validation_group :step2, :fields => [:lectureable]
-
   def permalink
     APP_URL + "/lectures/"+ self.id.to_s+"-"+self.name.parameterize
   end

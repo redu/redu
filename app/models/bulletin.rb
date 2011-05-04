@@ -11,7 +11,6 @@ class Bulletin < ActiveRecord::Base
 
   # PLUGINS
   acts_as_taggable
-  acts_as_voteable
   ajaxful_rateable :stars => 5
 
   # Máquina de estados para moderação das Notícias
