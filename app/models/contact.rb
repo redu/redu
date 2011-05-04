@@ -1,5 +1,5 @@
 class Contact
-  # include Validatable # Gem para validar modelos não persistentes
+  include ActiveModel::Validations
 
   # ACCESSORS
   attr_accessor :name, :email, :kind, :subject, :body

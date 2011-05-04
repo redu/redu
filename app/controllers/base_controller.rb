@@ -302,6 +302,7 @@ class BaseController < ApplicationController
     if request.get?
       @contact = Contact.new
     else
+      #TODO Criar initialize para deixar essa parte menos nojenta
       @contact = Contact.new
       @contact.name = params[:contact][:name]
       @contact.email = params[:contact][:email]
