@@ -2,8 +2,8 @@
 # from the project root directory.
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path(File.join(File.dirname(__FILE__),'..','config','environment'))
-require 'spec/autorun'
-require 'spec/rails'
+require 'rspec/autorun'
+require 'rspec/rails'
 require 'db/create_roles'
 require 'db/create_privacies'
 # necessário para inclusão dos matchers
