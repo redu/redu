@@ -1,4 +1,5 @@
 class UserCourseAssociation < ActiveRecord::Base
+  include AASM
   belongs_to :user
   belongs_to :course
   has_enumerated :role
@@ -25,36 +26,38 @@ class UserCourseAssociation < ActiveRecord::Base
   scope :invited, where(:state => 'invited')
 
   # Máquina de estados para moderação das dos usuários nos courses.
-  acts_as_state_machine :initial => :waiting
-  state :waiting
-  state :invited, :enter => :send_course_invitation_notification
-  # create_hierarchy_associations só é achamado no caso de convites
-  state :approved, :enter => :create_hierarchy_associations
-  state :rejected
-  state :failed
+  aasm_column :state
 
-  event :invite do
-    transitions :from => :waiting, :to => :invited
+  aasm_initial_state :waiting
+
+  aasm_state :waiting
+  aasm_state :invited, :enter => :send_course_invitation_notification
+  aasm_state :approved, :enter => :create_hierarchy_associations
+  aasm_state :rejected
+  aasm_state :failed
+
+  aasm_event :invite do
+    transitions :to => :invited, :from => [:waiting]
   end
 
-  event :approve do
-    transitions :from => :waiting, :to => :approved
+  aasm_event :approve do
+    transitions :to => :approved, :from => [:waiting]
   end
 
-  event :accept do
-    transitions :from => :invited, :to => :approved
+  aasm_event :accept do
+    transitions :to => :approved, :from => [:invited]
   end
 
-  event :reject do
-    transitions :from => :waiting, :to => :rejected
+  aasm_event :reject do
+    transitions :to => :rejected, :from => [:waiting]
   end
 
-  event :deny do
-    transitions :from => :invited, :to => :rejected
+  aasm_event :deny do
+    transitions :to => :rejected, :from => [:invited]
   end
 
-  event :fail do
-    transitions :from => :waiting, :to => :failed
+  aasm_event :fail do
+    transitions :to => :failed, :from => [:waiting]
   end
 
   validates_uniqueness_of :user_id, :scope => :course_id

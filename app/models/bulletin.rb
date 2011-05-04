@@ -13,19 +13,23 @@ class Bulletin < ActiveRecord::Base
   acts_as_taggable
   acts_as_voteable
   ajaxful_rateable :stars => 5
-  # Máquina de estados para moderação das Notícias
-  acts_as_state_machine :initial => :waiting
-  state :waiting
-  state :approved
-  state :rejected
-  state :error #FIXME estado sem transicões, é assim mesmo?
 
-  event :approve do
-    transitions :from => :waiting, :to => :approved
+  # Máquina de estados para moderação das Notícias
+  aasm_column :state
+
+  aasm_initial_state :waiting
+
+  aasm_state :waiting
+  aasm_state :approved
+  aasm_state :rejected
+  aasm_state :error #FIXME estado sem transicões, é assim mesmo?
+
+  aasm_event :approve do
+    transitions :to => :approved, :from => [:waiting]
   end
 
-  event :reject do
-    transitions :from => :waiting, :to => :rejected
+  aasm_event :reject do
+    transitions :to => :rejected, :from => [:waiting]
   end
 
   # VALIDATIONS

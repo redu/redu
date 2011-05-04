@@ -8,12 +8,12 @@ gem 'paperclip'
 gem 'will_paginate', '~> 3.0.pre2'
 gem 'mime-types'
 gem 'cancan'
+gem 'rubyist-aasm'
 
 # Gems específicos de algum ambiente
 group :development, :test do
   gem 'rspec-rails'
 end
-
 # Use unicorn as the web server
 # gem 'unicorn'
 

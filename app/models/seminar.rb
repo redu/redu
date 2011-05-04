@@ -61,24 +61,25 @@ class Seminar < ActiveRecord::Base
   has_one :lecture, :as => :lectureable
 
   # Maquina de estados do processo de conversão
-  acts_as_state_machine :initial => :waiting, :column => 'state'
+  aasm_column :state
 
-  state :waiting
-  state :converting, :enter => :transcode
-  state :converted
-  state :failed
+  aasm_initial_state :waiting
 
-  event :convert do
-    transitions :from => :waiting, :to => :converting
+  aasm_state :waiting
+  aasm_state :converting, :enter => :transcode
+  aasm_state :converted
+  aasm_state :failed
+
+  aasm_event :convert do
+    transtitions :to => :converting, :from => [:waiting]
   end
 
-  event :ready do
-    transitions :from => :converting, :to => :converted
-    transitions :from => :waiting, :to => :converted
+  aasm_event :ready do
+    transitions :to => :converted, :from => [:waiting, :converting]
   end
 
-  event :fail do
-    transitions :from => :converting, :to => :failed
+  aasm_event :fail do
+    transitions :to => :failed, :from => [:converting]
   end
 
   # Validations Groups - Habilitar diferentes validacoes dependendo do tipo.
