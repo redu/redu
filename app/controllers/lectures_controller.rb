@@ -1,4 +1,6 @@
 class LecturesController < BaseController
+  require 'viewable'
+
   before_filter :find_subject_space_course_environment
   after_filter :create_activity, :only => [:create]
 
