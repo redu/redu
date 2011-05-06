@@ -14,6 +14,7 @@ class Subject < ActiveRecord::Base
   has_many :logs, :as => :logeable, :dependent => :destroy, :class_name => 'Status'
 
   scope :recent, lambda { where('updated_at > ?', 1.week.ago) }
+  scope :visible, lambda { where('visible = ?', true) }
 
   attr_protected :owner, :visible, :finalized
 
