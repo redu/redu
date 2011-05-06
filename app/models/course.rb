@@ -158,7 +158,11 @@ class Course < ActiveRecord::Base
   def join(user, role = Role[:member])
     association = UserCourseAssociation.create(:user_id => user.id,
                                                :course_id => self.id,
+<<<<<<< HEAD
                                                :role => role)
+=======
+                                               :role => role.id)
+>>>>>>> Trocando chamadas de Role[:member].id para Role[:member]
 
     if self.subscription_type.eql? 1 # Todos podem participar, sem moderação
       association.approve!
@@ -186,12 +190,20 @@ class Course < ActiveRecord::Base
     # Cria as associações no Environment do Course e em todos os seus Spaces.
     UserEnvironmentAssociation.create(:user_id => user.id,
                                       :environment_id => self.environment.id,
+<<<<<<< HEAD
                                       :role => role)
+=======
+                                      :role => role.id)
+>>>>>>> Trocando chamadas de Role[:member].id para Role[:member]
     self.spaces.each do |space|
       #FIXME tirar status quando remover moderacao de space
       UserSpaceAssociation.create(:user_id => user.id,
                                   :space_id => space.id,
+<<<<<<< HEAD
                                   :role => role,
+=======
+                                  :role => role.id,
+>>>>>>> Trocando chamadas de Role[:member].id para Role[:member]
                                   :status => "approved")
 
       # Cria as associações com os subjects
