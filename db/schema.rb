@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110506130722) do
+ActiveRecord::Schema.define(:version => 20110506131025) do
 
   create_table "acquisitions", :force => true do |t|
     t.integer  "lecture_id"
@@ -586,7 +586,7 @@ ActiveRecord::Schema.define(:version => 20110506130722) do
   create_table "user_course_associations", :force => true do |t|
     t.integer  "user_id"
     t.integer  "course_id"
-    t.integer  "role_id"
+    t.integer  "role"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "state"

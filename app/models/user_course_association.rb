@@ -2,7 +2,7 @@ class UserCourseAssociation < ActiveRecord::Base
   include AASM
   belongs_to :user
   belongs_to :course
-  has_enumerated :role
+  enumerate :role
 
   # Filtra por papéis (lista)
   scope :with_roles, lambda { |roles|
