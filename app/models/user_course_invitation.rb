@@ -5,7 +5,7 @@ class UserCourseInvitation < ActiveRecord::Base
   belongs_to :user
   belongs_to :course
 
-  before_validation_on_create :generate_token
+  before_validation :generate_token, :on => :create
 
   scope :invited, where(:state => 'invited')
   scope :with_email, lambda { |email| where( :email => email) }

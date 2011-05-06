@@ -1,9 +1,8 @@
 class ApplicationController < ActionController::Base
-  filter_parameter_logging :password, :password_confirmation
   helper_method :current_user_session, :current_user
 
 
-  unless ActionController::Base.consider_all_requests_local
+  unless Rails.application.config.consider_all_requests_local 
     rescue_from Exception,                            :with => :render_error
       rescue_from ActiveRecord::RecordNotFound,         :with => :render_not_found
     rescue_from ActionController::RoutingError,       :with => :render_not_found

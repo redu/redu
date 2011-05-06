@@ -162,7 +162,7 @@ class User < ActiveRecord::Base
       :date => { :before => Proc.new { 13.years.ago } }
   validates_acceptance_of :tos
   validates_attachment_size :curriculum, :less_than => 10.megabytes
-  validate_on_update :accepted_curriculum_type,
+  validate :accepted_curriculum_type, :on => :update,
     :unless => "self.curriculum_file_name.nil?"
   validates_confirmation_of :email
   validates_format_of :email,

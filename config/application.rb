@@ -37,7 +37,7 @@ module Redu
     config.encoding = "utf-8"
 
     # Configure sensitive parameters which will be filtered from the log file.
-    config.filter_parameters += [:password]
+    config.filter_parameters += [:password, :password_confirmation]
 
     # S3 credentials
     if File.exists?("#{Rails.root}/config/s3.yml")
@@ -65,10 +65,11 @@ module Redu
     # Will paginate
     config.items_per_page = 10
 
+    #TODO Confirmar se IE responde
     # codigo usado para o IE aceitar header sem ser html
-    config.action_controller.use_accept_header = false
+    #config.action_controller.use_accept_header = false
 
-    config.action_controller.session_store = :active_record_store
+    config.session_store = :active_record_store
 
     # ActionMailer
     config.action_mailer.raise_delivery_errors = true
