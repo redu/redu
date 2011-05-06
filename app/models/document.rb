@@ -3,8 +3,6 @@ class Document < ActiveRecord::Base
   has_attached_file :attachment, Redu::Application.config.paperclip
   #validates_attachment_content_type :attachment, :content_type => ScribdFu::ContentTypes
 
-  validate :content_type
-
   has_one :lecture, :as => :lectureable
 
   # Deriva o content type olhando diretamente para o arquivo. Workaround para

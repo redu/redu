@@ -9,7 +9,7 @@ db/schema.rb
 log/**/*
 *.tmproj
 config/database.yml
-public/system/
+public/system/*
 *~
 *.swo
 .DS_Store
