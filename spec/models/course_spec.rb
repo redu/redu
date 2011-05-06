@@ -47,25 +47,25 @@ describe Course do
       tags = (1..100).collect { Factory(:tag) }
       subject = Factory.build(:course, :tags => tags)
       subject.should_not be_valid
-      subject.errors.on(:tags).should_not be_empty
+      subject.errors[:tags].should_not be_empty
     end
 
     it "ensure format for path: doesn't accept no ascii" do
       subject.path = "teste-médio"
       subject.should_not be_valid
-      subject.errors.on(:path).should_not be_empty
+      subject.errors[:path].should_not be_empty
     end
 
     it "ensure format for path: doesn't accept space" do
       subject.path = "teste medio"
       subject.should_not be_valid
-      subject.errors.on(:path).should_not be_empty
+      subject.errors[:path].should_not be_empty
     end
 
     it "ensure format for path: doesn't accept '?'" do
       subject.path = "teste-medio?"
       subject.should_not be_valid
-      subject.errors.on(:path).should_not be_empty
+      subject.errors[:path].should_not be_empty
     end
 
   end

@@ -17,7 +17,7 @@ describe Document do
       doc = Factory.build(:document,
                           :attachment => File.new(path))
       doc.should_not be_valid
-      doc.errors.on(:attachment).should_not be_nil
+      doc.errors[:attachment].should_not be_empty
     end
   end
 

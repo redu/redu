@@ -93,13 +93,13 @@ describe User do
     it "validates login exclusion of reserved_logins" do
       subject.login = 'admin'
       subject.should_not be_valid
-      subject.errors.on(:login).should_not be_nil
+      subject.errors[:login].should_not be_empty
     end
 
     it "validates birthday to be before of 13 years ago" do
       subject.birthday = 10.years.ago
       subject.should_not be_valid
-      subject.errors.on(:birthday).should_not be_nil
+      subject.errors[:birthday].should_not be_empty
     end
 
     context "validates a curriculum type on update if has a curriculum" do
@@ -117,13 +117,13 @@ describe User do
       it "when a teacher" do
         subject.teacher_profile = true
         subject.save
-        subject.errors.on(:curriculum).should_not be_nil
+        subject.errors[:curriculum].should_not be_empty
       end
 
       it "when NOT a teacher" do
         subject.teacher_profile = false
         subject.save
-        subject.errors.on(:curriculum).should_not be_nil
+        subject.errors[:curriculum].should_not be_empty
       end
     end
 
@@ -131,13 +131,13 @@ describe User do
       it "when a teacher" do
         subject.teacher_profile = true
         subject.save
-        subject.errors.on(:curriculum).should be_nil
+        subject.errors[:curriculum].should be_empty
       end
 
       it "when a student" do
         subject.teacher_profile = false
         subject.save
-        subject.errors.on(:curriculum).should be_nil
+        subject.errors[:curriculum].should be_empty
       end
     end
 
@@ -145,13 +145,13 @@ describe User do
       it "when a teacher" do
         subject.teacher_profile = true
         subject.save
-        subject.errors.on(:curriculum).should be_nil
+        subject.errors[:curriculum].should be_empty
       end
 
       it "when a student" do
         subject.teacher_profile = false
         subject.save
-        subject.errors.on(:curriculum).should be_nil
+        subject.errors[:curriculum].should be_empty
       end
     end
 
@@ -159,19 +159,19 @@ describe User do
       u = Factory.build(:user, :email => "email@email.com",
                   :email_confirmation => "different@email.com")
       u.should_not be_valid
-      u.errors.on(:email).should_not be_nil
+      u.errors[:email].should_not be_empty
     end
 
     it "validates e-mail format" do
       u = Factory.build(:user, :email => "invalid@inv")
       u.should_not be_valid
-      u.errors.on(:email).should_not be_nil
+      u.errors[:email].should_not be_empty
     end
 
     it "validates mobile phone format" do
       u = Factory.build(:user, :mobile => "21312312")
       u.should_not be_valid
-      u.errors.on(:mobile).should_not be_nil
+      u.errors[:mobile].should_not be_empty
       u.mobile = "55 81 1231-2131"
       u.should be_valid
       u.mobile = "81 2131-2123"

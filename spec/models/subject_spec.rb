@@ -41,7 +41,7 @@ describe Subject do
       subject.lectures = []
       subject.save
       subject.should_not be_valid
-      subject.errors.on(:lectures).should_not be_nil
+      subject.errors[:lectures].should_not be_empty
     end
   end
 

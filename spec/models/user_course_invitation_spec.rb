@@ -24,7 +24,7 @@ describe UserCourseInvitation do
     it "validates email format" do
       subject.email = "invalid@inv"
       subject.should_not be_valid
-      subject.errors.on(:email).should_not be_nil
+      subject.errors[:email].should_not be_empty
     end
   end
 

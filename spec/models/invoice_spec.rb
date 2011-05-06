@@ -54,7 +54,7 @@ describe Invoice do
           subject.pay!
         }.should change(subject, :state).to("paid")
 
-        subject.due_at.should  be_close(Time.now, 5.seconds)
+        subject.due_at.should  be_within(5).of(Time.now)
       end
 
       it "unblocks the plan" do
