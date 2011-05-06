@@ -50,6 +50,12 @@ module Redu
       config.extras = YAML.load_file file
     end
 
+    # MimeTypes
+    if File.exists? File.join(Rails.root, 'config', 'mimetypes.yml')
+      file = File.join(Rails.root, 'config', 'mimetypes.yml')
+      config.mimetypes = YAML.load_file file
+    end
+
     # Meta dados da aplicação
     config.name = "Redu"
     config.tagline = "A Rede Social Educacional"

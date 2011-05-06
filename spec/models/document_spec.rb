@@ -1,8 +1,6 @@
 require 'spec_helper'
 
 describe Document do
-  subject { Factory(:document) }
-
   it { should have_attached_file(:attachment) }
   xit { should validate_attachment_content_type(:attachment) }
   xit { should validate_attachment.size(:attachment).
