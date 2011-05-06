@@ -30,7 +30,7 @@ class Subject < ActiveRecord::Base
   # Matricula o usuário com o role especificado. Retorna true ou false
   # dependendo do resultado
   def enroll(user, role = Role[:member])
-    enrollment = self.enrollments.create(:user => user, :role => role.id)
+    enrollment = self.enrollments.create(:user => user, :role => role)
     enrollment.valid?
   end
 

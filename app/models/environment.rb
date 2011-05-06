@@ -61,7 +61,7 @@ class Environment < ActiveRecord::Base
   def change_role(user, role)
     membership = self.user_environment_associations.where(:user_id => user.id).
                    first
-    membership.update_attributes({:role => role.id})
+    membership.update_attributes({:role => role})
 
     user.user_course_associations.where(:course_id => self.courses).
       each do |membership|

@@ -117,7 +117,7 @@ class Space < ActiveRecord::Base
   # Muda papeis neste ponto da hieararquia
   def change_role(user, role)
     membership = self.user_space_associations.where(:user_id => user.id).first
-    membership.update_attributes({:role => role.id})
+    membership.update_attributes({:role => role})
   end
 
   def publish!
