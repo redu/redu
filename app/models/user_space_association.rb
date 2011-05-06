@@ -6,7 +6,7 @@ class UserSpaceAssociation < ActiveRecord::Base
   belongs_to :user
   belongs_to :space
 
-  has_enumerated :role
+  enumerate :role
 
   # FIXME Remover ao retirar status do modelo
   scope :approved, where(:status => 'approved')
