@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110506131025) do
+ActiveRecord::Schema.define(:version => 20110506132949) do
 
   create_table "acquisitions", :force => true do |t|
     t.integer  "lecture_id"
@@ -607,7 +607,7 @@ ActiveRecord::Schema.define(:version => 20110506131025) do
     t.integer  "environment_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "role_id"
+    t.integer  "role"
   end
 
   create_table "user_settings", :force => true do |t|
