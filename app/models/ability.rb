@@ -114,7 +114,7 @@ class Ability
 
       can [:accept, :deny], Course do |course|
         assoc = user.get_association_with(course)
-        !assoc.nil? and assoc.current_state == :invited
+        !assoc.nil? and assoc.state == "invited"
       end
 
       # User
