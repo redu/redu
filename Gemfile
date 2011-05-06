@@ -9,7 +9,9 @@ gem 'paperclip'
 gem 'will_paginate', '~> 3.0.pre2'
 gem 'mime-types'
 gem 'cancan'
-gem 'rubyist-aasm', :require => 'aasm'
+gem 'aasm', :require => "aasm",
+  :git => "git://github.com/rubyist/aasm.git",
+  :tag => "v2.2.0"
 gem 'grouped_validations'
 gem 'shuber-sortable'
 gem 'scribd_fu'

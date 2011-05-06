@@ -480,7 +480,7 @@ describe Course do
         expect {
           subject.invite(@already_member)
         }.should_not change {
-          @already_member.get_association_with(subject).current_state
+          @already_member.get_association_with(subject).state
         }
       end
     end
@@ -499,7 +499,7 @@ describe Course do
         expect {
           subject.invite(@already_invited)
         }.should_not change {
-          @already_invited.get_association_with(subject).current_state
+          @already_invited.get_association_with(subject).state
         }
       end
 
@@ -585,7 +585,7 @@ describe Course do
           expect {
             subject.invite_by_email @email_already_invited
           }.should_not change {
-            @invitation.reload.current_state
+            @invitation.reload.state
           }
         end
 

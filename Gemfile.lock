@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/rubyist/aasm.git
+  revision: 5d715307571786212a516ebae20423b0ef0e2a92
+  tag: v2.2.0
+  specs:
+    aasm (2.2.0)
+
 GEM
   remote: http://rubygems.org/
   remote: http://gems.github.com/
@@ -92,7 +99,6 @@ GEM
       activesupport (~> 3.0)
       railties (~> 3.0)
       rspec (~> 2.5.0)
-    rubyist-aasm (2.1.1)
     scribd_fu (2.0.11)
       rscribd
     shoulda-matchers (1.0.0.beta2)
@@ -107,6 +113,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  aasm!
   active_enum
   ar_mailer_rails3
   authlogic
@@ -119,7 +126,6 @@ DEPENDENCIES
   paperclip
   rails (= 3.0.7)
   rspec-rails
-  rubyist-aasm
   scribd_fu
   shoulda-matchers
   shuber-sortable

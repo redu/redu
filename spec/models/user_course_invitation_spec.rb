@@ -58,7 +58,7 @@ describe UserCourseInvitation do
     end
 
     it "defaults to invited" do
-      subject.current_state.should == :invited
+      subject.state.should == "invited"
     end
 
     context "when invited" do

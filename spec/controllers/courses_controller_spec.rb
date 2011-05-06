@@ -460,8 +460,8 @@ describe CoursesController do
       end
 
       it "accepts the invitation" do
-        @invited_user.get_association_with(@course).current_state.
-          should == :approved
+        @invited_user.get_association_with(@course).state.
+          should == "approved"
         @course.approved_users.should include(@invited_user)
       end
     end
