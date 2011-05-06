@@ -60,7 +60,7 @@ describe Invoice do
       it "unblocks the plan" do
         expect {
           subject.pay!
-        }.should change { subject.plan.state }.from("blocked").to("active")
+        }.should change { subject.plan.aasm_current_state }.from(:blocked).to(:active)
       end
 
       it "sends confirmation e-mail" do
@@ -195,7 +195,7 @@ describe Invoice do
                                                   :plan => plan,
                                                   :state => "overdue") }
 
-      Set.new(plan.invoices.pending) == Set.new(pending_invoices)
+      plan.invoices.pending.to_set == pending_invoices.to_set
     end
   end
 

@@ -22,7 +22,7 @@ class Invoice < ActiveRecord::Base
   # (overdue -> overdue). Quando for necessário enviar a notificações novamente
   # chamar o método deliver_overdue_notice
   aasm_state :overdue, :enter => :send_overdue_notice
-  aasm_state :paid, :enter => :register_time, :exit => :send_confirmation_and_unlock_plan
+  aasm_state :paid, :after_enter => [ :register_time, :send_confirmation_and_unlock_plan ]
 
   aasm_event :pend do
     transitions :to => :pending, :from => [:pending]
