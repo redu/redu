@@ -33,20 +33,20 @@ class RolesController < BaseController
         object = @environment
         # ao se tornar administrador, se tornará administrador para todas
         # entidades abaixo da de environment
-        if Role.find(params[:roles]) == Role[:environment_admin]
+        if !Role[params[:roles]].nil and params[:roles] == Role[:environment_admin]
           object.courses.each do |course|
             unless @user.get_association_with(course)
 
               uca = UserCourseAssociation.create(:user_id => @user.id,
                                                  :course_id => course.id,
-                                                 :role => Role.find(params[:roles]).id)
+                                                 :role => params[:roles])
               uca.approve!
 
               course.spaces.each do |space|
                 unless @user.get_association_with(space)
                   UserSpaceAssociation.create(:user_id => @user.id,
                                               :space_id => space.id,
-                                              :role => Role.find(params[:roles]).id,
+                                              :role => params[:roles],
                                               :status => "approved")
                 end
               end
@@ -60,7 +60,7 @@ class RolesController < BaseController
 
 
 
-    object.change_role(@user, Role.find(params[:roles]))
+    object.change_role(@user, params[:roles])
 
     respond_to do |format|
       format.html {redirect_to user_admin_roles_path(@user, @environment)}
