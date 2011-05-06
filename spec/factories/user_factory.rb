@@ -9,5 +9,5 @@ Factory.define :user do |u|
   u.tos "1"
   u.sequence(:birthday) {|n| 13.years.ago - n}
   u.role :member
-  u.association :settings, :factory => :user_setting 
+  u.association :settings, :factory => :user_setting
 end

@@ -15,6 +15,7 @@ gem 'shuber-sortable'
 gem 'scribd_fu'
 gem 'factory_girl_rails'
 gem 'ar_mailer_rails3'
+gem 'active_enum'
 
 # Gems específicos de algum ambiente
 group :development, :test do

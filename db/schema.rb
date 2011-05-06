@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110425134445) do
+ActiveRecord::Schema.define(:version => 20110506124509) do
 
   create_table "acquisitions", :force => true do |t|
     t.integer  "lecture_id"
@@ -648,7 +648,7 @@ ActiveRecord::Schema.define(:version => 20110425134445) do
     t.date     "birthday"
     t.string   "gender"
     t.boolean  "profile_public",                        :default => true
-    t.integer  "role_id",                               :default => 2
+    t.integer  "role",                                  :default => 2
     t.integer  "score",                                 :default => 0
     t.string   "first_name"
     t.string   "last_name"
