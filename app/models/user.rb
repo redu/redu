@@ -53,7 +53,7 @@ class User < ActiveRecord::Base
   has_many :favorites, :order => "created_at desc", :dependent => :destroy
   # FIXME Verificar necessidade (Suggestion.rb não existe). Não foi testado.
   has_many :suggestions
-  enumerate :role, :with => Role
+  enumerate :role
   belongs_to  :metro_area
   belongs_to  :state
   belongs_to  :country

@@ -8,7 +8,7 @@ class Enrollment < ActiveRecord::Base
   belongs_to :subject
   has_one :student_profile, :dependent => :destroy
 
-  has_enumerated :role
+  enumerate :role
 
   validates_uniqueness_of :user_id, :scope => :subject_id
 
