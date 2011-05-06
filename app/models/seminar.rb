@@ -81,53 +81,15 @@ class Seminar < ActiveRecord::Base
     transitions :to => :failed, :from => [:converting]
   end
 
-  # Validations Groups - Habilita diferentes validações dependendo do tipo
-  validation_group :external do
-    validates_presence_of :external_resource
-    validates_presence_of :external_resource_type
-  end
-  validation_group :uploaded do
-    validates_presence_of :original
-  end
+  # Habilita diferentes validações dependendo do tipo
+  validates_presence_of :external_resource, :if => :external?
+  validates_presence_of :external_resource_type, :if => :external?
 
-  #validates_presence_of :external_resource, :external_resource_type
-  validates_attachment_presence :original
-  validate :accepted_content_type
-  validates_attachment_size :original,
-    :less_than => 100.megabytes
-
-  def import_redu_seminar(url)
-    lecture_id = url.scan(/aulas\/([0-9]*)/)
-
-    unless lecture_id.empty?
-      @source = Lecture.find(lecture_id[0][0])
-      # copia (se upload ou youtube)
-      @source.is_clone = true #TODO evitar que sejam removido
-    end
-
-    if @source
-      if @source.lectureable_type == 'Seminar'
-        if @source.lectureable.external_resource_type.eql?('youtube')
-          self.external_resource_type = 'youtube'
-          self.external_resource = 'http://www.youtube.com/watch?v=' + @source.lectureable.external_resource
-          return [true, ""]
-        elsif @source.lectureable.external_resource_type.eql?('upload')
-          self.external_resource_type = 'upload' # melhor ficar 'redu'?
-          self.media_file_name = @source.lectureable.media_file_name
-          self.media_content_type = @source.lectureable.media_content_type
-          self.media_file_size = @source.lectureable.media_file_size
-          self.media_updated_at = @source.lectureable.media_updated_at
-          return [true, ""]
-        end
-
-      else
-        return [false, "Aula não é um seminário"]
-      end
-    else
-      return [false, "Link não válido ou aula não pública"]
-    end
-
-  end
+  validates_presence_of :original, :unless => :external?
+  validates_attachment_presence :original, :unless => :external?
+  validate :accepted_content_type, :unless => :external?
+  validates_attachment_size :original, :less_than => 100.megabytes,
+    :unless => :external?
 
   def validate_youtube_url
     if self.valid? and external_resource_type.eql?('youtube')
@@ -182,14 +144,8 @@ class Seminar < ActiveRecord::Base
     SUPPORTED_AUDIO.include?(self.original_content_type)
   end
 
-  # Infere validation_group e salva apenas com a validações inferidas
-  def save_with_validation_group
-    if self.external_resource_type != "upload"
-      self.save(:validation => false) if self.group_valid? :external
-    else
-      self.define_content_type
-      self.save(:validation => false) if self.group_valid? :uploaded
-    end
+  def external?
+    self.external_resource_type == "youtube"
   end
 
   def type

@@ -221,7 +221,7 @@ describe Ability do
         it "can NOT upload multimedia"
 
         it "can create a Youtube seminar" do
-          youtube = Factory(:seminar_youtube)
+          youtube = Factory.build(:seminar_youtube)
           lecture = Factory(:lecture, :owner => @env_admin,
                             :subject => @sub,
                             :lectureable => youtube)

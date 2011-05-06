@@ -5,8 +5,6 @@ class Status < ActiveRecord::Base
   POLL = 2
   ANSWER = 3
 
-  before_validation :enable_correct_validation_group
-
   belongs_to :statusable, :polymorphic => true
   belongs_to :logeable, :polymorphic => true
   belongs_to :in_response_to, :polymorphic => true
@@ -26,22 +24,12 @@ class Status < ActiveRecord::Base
   }
   acts_as_taggable
 
-  validation_group :status do
-    validates_presence_of :text
-    validates_inclusion_of :kind,
-      :in => [0, 1, 2, 3, 4],
-      :message => "Tipo inválido"
-    validates_length_of :text, :maximum => 400
-  end
-
-  # Infere validation_group e salva apenas com a validações inferidas
-  def save_with_validation_group
-    if self.log
-      self.save(:validate => false)
-    else
-      self.save(:validate => false) if self.group_valid? :status
-    end
-  end
+  # Habilita diferentes validações dependendo do tipo
+  validates_presence_of :text, :if => :status?
+  validates_inclusion_of :kind,
+    :in => [0, 1, 2, 3, 4], :message => "Tipo inválido",
+    :if => :status?
+  validates_length_of :text, :maximum => 400, :if => :status?
 
   def status?
     self.kind == Status::STATUS

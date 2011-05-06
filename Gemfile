@@ -12,7 +12,6 @@ gem 'cancan'
 gem 'aasm', :require => "aasm",
   :git => "git://github.com/rubyist/aasm.git",
   :tag => "v2.2.0"
-gem 'grouped_validations'
 gem 'shuber-sortable'
 gem 'scribd_fu'
 gem 'factory_girl_rails'
@@ -20,6 +19,7 @@ gem 'ar_mailer_rails3'
 gem 'active_enum'
 gem 'date_validator'
 gem 'deep_cloneable'
+gem "aws-s3", :require => "aws/s3"
 
 # Gems específicos de algum ambiente
 group :development, :test do
