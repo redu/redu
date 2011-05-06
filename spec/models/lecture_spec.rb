@@ -106,7 +106,8 @@ describe Lecture do
       end
     end
 
-    it "retrieves lectures that are pages" do
+    #FIXME não fazer teste com chamada a APIs externas
+    xit "retrieves lectures that are pages" do
         page = Factory(:lecture, :subject => @sub)
         documents = (1..2).collect {
           Factory(:lecture, :subject => @sub,
@@ -114,7 +115,7 @@ describe Lecture do
         Lecture.pages.should == [page]
     end
 
-    it "retrieves lectures that are documents" do
+    xit "retrieves lectures that are documents" do
         page = Factory(:lecture, :subject => @sub)
         documents = (1..2).collect {
           Factory(:lecture, :subject => @sub,
