@@ -288,10 +288,8 @@ describe User do
 
   context "callbacks" do
     it "it will sanitize all attributes before save" do
-      subject.login = "      User Sanitized       "
       subject.description = "some<<b>script>alert('hello')<</b>/script>"
       subject.save
-      subject.login.should == "User Sanitized"
       subject.description.should =="some&lt;<b>script>alert('hello')&lt;</b>/script>"
     end
 

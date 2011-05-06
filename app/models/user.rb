@@ -16,7 +16,6 @@ class User < ActiveRecord::Base
 
   # CALLBACKS
   before_save   :whitelist_attributes
-  before_validation   :generate_login_slug
   before_create :make_activation_code
   after_create {|user| UserNotifier.signup_notification(user).deliver }
   after_create  :update_last_login
@@ -103,11 +102,11 @@ class User < ActiveRecord::Base
   scope :featured, where("users.featured_writer = ?", true)
   scope :active, where("users.activated_at IS NOT NULL")
   scope :tagged_with, lambda {|tag_name|
-    where("tags.name = ?", tag_name).includes(:tags)
+    joins(:tags).where("tags.name = ?", tag_name).includes(:tags)
   }
   scope :with_ids, lambda { |ids| where(:id => ids) }
   scope :n_recent, lambda { |limit|
-    where('users.last_request_at DESC').limit(limit)
+    order('users.last_request_at DESC').limit(limit)
   }
   scope :with_keyword, lambda { |keyword|
     where("LOWER(login) LIKE :keyword OR " + \
@@ -159,7 +158,8 @@ class User < ActiveRecord::Base
   validates_uniqueness_of   :login, :email, :case_sensitive => false
   validates_uniqueness_of   :login_slug
   validates_exclusion_of    :login, :in => Redu::Application.config.extras["reserved_logins"]
-  validates_date :birthday, :before => 13.years.ago.to_date
+  validates :birthday,
+      :date => { :before => Proc.new { 13.years.ago } }
   validates_acceptance_of :tos
   validates_attachment_size :curriculum, :less_than => 10.megabytes
   validate_on_update :accepted_curriculum_type,
@@ -584,16 +584,6 @@ class User < ActiveRecord::Base
   # A tabela Frienship não existe
   def friendship_exists_with?(friend)
     Friendship.where("user_id = ? AND friend_id = ?", self.id, friend.id).first
-  end
-
-  # before filter
-  # FIXME Verificar necessidade.
-  # O login só é aceito seguindo o formato permitido, provavelmente,
-  # não é mais necessário utilizar gsub.
-  def generate_login_slug
-    if self.login
-      self.login_slug = self.login.gsub(/[^a-z1-9]+/i, '-')
-    end
   end
 
   def update_last_login
