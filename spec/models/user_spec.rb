@@ -50,7 +50,7 @@ describe User do
   it { should have_many(:plans) }
 
   it { should_not allow_mass_assignment_of :admin }
-  it { should_not allow_mass_assignment_of :role_id }
+  it { should_not allow_mass_assignment_of :role }
   it { should_not allow_mass_assignment_of :activation_code }
   it { should_not allow_mass_assignment_of :login_slug }
   it { should_not allow_mass_assignment_of :friends_count }

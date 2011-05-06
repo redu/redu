@@ -121,7 +121,7 @@ class User < ActiveRecord::Base
   attr_accessor :email_confirmation
 
   # Accessors
-  attr_protected :admin, :featured, :role_id, :activation_code,
+  attr_protected :admin, :featured, :role, :activation_code,
     :login_slug, :friends_count, :score, :removed,
     :sb_posts_count, :sb_last_seen_at
 

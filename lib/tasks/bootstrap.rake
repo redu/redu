@@ -48,7 +48,7 @@ namespace :bootstrap do
   task :roles => :environment do
     create_roles
     #set all existing users to 'member'
-    User.update_all("role_id = #{Role[:member].id}")
+    User.update_all("role = #{Role[:member]}")
   end
 
   desc "Insert default general categories"

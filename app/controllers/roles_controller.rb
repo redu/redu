@@ -39,14 +39,14 @@ class RolesController < BaseController
 
               uca = UserCourseAssociation.create(:user_id => @user.id,
                                                  :course_id => course.id,
-                                                 :role_id => Role.find(params[:roles]).id)
+                                                 :role => Role.find(params[:roles]).id)
               uca.approve!
 
               course.spaces.each do |space|
                 unless @user.get_association_with(space)
                   UserSpaceAssociation.create(:user_id => @user.id,
                                               :space_id => space.id,
-                                              :role_id => Role.find(params[:roles]).id,
+                                              :role => Role.find(params[:roles]).id,
                                               :status => "approved")
                 end
               end

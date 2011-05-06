@@ -173,7 +173,7 @@ describe Subject do
 
     it "enrolls an user with a given role" do
       subject.enroll(@enrolled_user, Role[:teacher]).should be_true
-      subject.enrollments.last.role_id.should == Role[:teacher].id
+      subject.enrollments.last.role.should == Role[:teacher]
     end
 
     it "unenrolls an user" do

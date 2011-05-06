@@ -9,7 +9,7 @@ class Subject < ActiveRecord::Base
     :include => :student_profiles,
     :conditions => ["student_profiles.graduaded = 1"]
   has_many :teachers, :through => :enrollments, :source => :user,
-    :conditions => ["enrollments.role_id = ?", 5] # Teacher
+    :conditions => ["enrollments.role = ?", 5] # Teacher
   has_many :statuses, :as => :statusable, :dependent => :destroy
   has_many :logs, :as => :logeable, :dependent => :destroy, :class_name => 'Status'
 
@@ -30,7 +30,7 @@ class Subject < ActiveRecord::Base
   # Matricula o usuário com o role especificado. Retorna true ou false
   # dependendo do resultado
   def enroll(user, role = Role[:member])
-    enrollment = self.enrollments.create(:user => user, :role_id => role.id)
+    enrollment = self.enrollments.create(:user => user, :role => role.id)
     enrollment.valid?
   end
 

@@ -38,19 +38,19 @@
           <% field_set_tag nil, :class => "grid_4 omega inline" do %>
             <ul class="columns">
               <li>
-                <%= check_box_tag :role_filter, Role[:member].id %>
+                <%= check_box_tag :role_filter, Role[:member] %>
                 <%= label_tag :role_filter, "Membro", :class => "inline" %>
               </li>
               <li>
-                <%= check_box_tag :role_filter, Role[:tutor].id %>
+                <%= check_box_tag :role_filter, Role[:tutor] %>
                 <%= label_tag :role_filter, "Tutor", :class => "inline" %>
               </li>
               <li>
-                <%= check_box_tag :role_filter, Role[:teacher].id %>
+                <%= check_box_tag :role_filter, Role[:teacher] %>
                 <%= label_tag :role_filter, "Professor", :class => "inline" %>
               </li>
               <li>
-                <%= check_box_tag :role_filter, Role[:environment_admin].id %>
+                <%= check_box_tag :role_filter, Role[:environment_admin] %>
                 <%= label_tag :role_filter, "Administrador", :class => "inline" %>
               </li>
             </ul>

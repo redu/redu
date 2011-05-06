@@ -7,7 +7,7 @@ class UserCourseAssociation < ActiveRecord::Base
   # Filtra por papéis (lista)
   scope :with_roles, lambda { |roles|
     unless roles.empty?
-      where(:role_id => roles.flatten)
+      where(:role => roles.flatten)
     end
   }
 

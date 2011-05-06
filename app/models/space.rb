@@ -24,22 +24,22 @@ class Space < ActiveRecord::Base
   # environment_admins
   has_many :administrators, :through => :user_space_associations,
     :source => :user,
-    :conditions => [ "user_space_associations.role_id = ? AND user_space_associations.status = ?",
+    :conditions => [ "user_space_associations.role = ? AND user_space_associations.status = ?",
                       3, 'approved' ]
   # teachers
   has_many :teachers, :through => :user_space_associations,
     :source => :user,
-    :conditions => [ "user_space_associations.role_id = ? AND user_space_associations.status = ?",
+    :conditions => [ "user_space_associations.role = ? AND user_space_associations.status = ?",
                       5, 'approved' ]
   # tutors
   has_many :tutors, :through => :user_space_associations,
     :source => :user,
-    :conditions => [ "user_space_associations.role_id = ? AND user_space_associations.status = ?",
+    :conditions => [ "user_space_associations.role = ? AND user_space_associations.status = ?",
                       6, 'approved' ]
   # students (member)
   has_many :students, :through => :user_space_associations,
     :source => :user,
-    :conditions => [ "user_space_associations.role_id = ? AND user_space_associations.status = ?",
+    :conditions => [ "user_space_associations.role = ? AND user_space_associations.status = ?",
                       2, 'approved' ]
 
  # new members (form 1 week ago)
@@ -117,7 +117,7 @@ class Space < ActiveRecord::Base
   # Muda papeis neste ponto da hieararquia
   def change_role(user, role)
     membership = self.user_space_associations.where(:user_id => user.id).first
-    membership.update_attributes({:role_id => role.id})
+    membership.update_attributes({:role => role.id})
   end
 
   def publish!
@@ -151,7 +151,7 @@ class Space < ActiveRecord::Base
       UserSpaceAssociation.create({:user => assoc.user,
                                   :space => self,
                                   :status => "approved",
-                                  :role_id => assoc.role_id})
+                                  :role => assoc.role})
     end
 
   end

@@ -18,22 +18,22 @@ class Course < ActiveRecord::Base
   # environment_admins
   has_many :administrators, :through => :user_course_associations,
     :source => :user,
-    :conditions => [ "user_course_associations.role_id = ? AND user_course_associations.state = ?",
+    :conditions => [ "user_course_associations.role = ? AND user_course_associations.state = ?",
                       3, 'approved' ]
   # teachers
   has_many :teachers, :through => :user_course_associations,
     :source => :user,
-    :conditions => [ "user_course_associations.role_id = ? AND user_course_associations.state = ?",
+    :conditions => [ "user_course_associations.role = ? AND user_course_associations.state = ?",
                       5, 'approved' ]
   # tutors
   has_many :tutors, :through => :user_course_associations,
     :source => :user,
-    :conditions => [ "user_course_associations.role_id = ? AND user_course_associations.state = ?",
+    :conditions => [ "user_course_associations.role = ? AND user_course_associations.state = ?",
                       6, 'approved' ]
   # students (member)
   has_many :students, :through => :user_course_associations,
     :source => :user,
-    :conditions => [ "user_course_associations.role_id = ? AND user_course_associations.state = ?",
+    :conditions => [ "user_course_associations.role = ? AND user_course_associations.state = ?",
                       2, 'approved' ]
 
   # new members (form 1 week ago)
@@ -56,25 +56,25 @@ class Course < ActiveRecord::Base
 
   scope :user_behave_as_administrator, lambda { |user_id|
     joins(:user_course_associations).
-      where("user_course_associations.user_id = ? AND user_course_associations.role_id = ?",
+      where("user_course_associations.user_id = ? AND user_course_associations.role = ?",
              user_id, 3)
   }
 
   scope :user_behave_as_teacher, lambda { |user_id|
     joins(:user_course_associations).
-      where("user_course_associations.user_id = ? AND user_course_associations.role_id = ?",
+      where("user_course_associations.user_id = ? AND user_course_associations.role = ?",
               user_id, 5)
   }
 
   scope :user_behave_as_tutor, lambda { |user_id|
     joins(:user_course_associations).
-      where("user_course_associations.user_id = ? AND user_course_associations.role_id = ?",
+      where("user_course_associations.user_id = ? AND user_course_associations.role = ?",
               user_id, 6)
   }
 
   scope :user_behave_as_student, lambda { |user_id|
     joins(:user_course_associations).
-      where("user_course_associations.user_id = ? AND user_course_associations.role_id = ? AND user_course_associations.state = ?",
+      where("user_course_associations.user_id = ? AND user_course_associations.role = ? AND user_course_associations.state = ?",
               user_id, 2, 'approved')
   }
 
@@ -115,7 +115,7 @@ class Course < ActiveRecord::Base
   def change_role(user, role)
     membership = user.user_course_associations.
                    where(:course_id => self.id).first
-    membership.update_attributes({:role_id => role.id})
+    membership.update_attributes({:role => role.id})
 
     user.user_space_associations.where(:space_id => self.spaces).
       include(:space).each do |membership|
@@ -158,7 +158,7 @@ class Course < ActiveRecord::Base
   def join(user, role = Role[:member])
     association = UserCourseAssociation.create(:user_id => user.id,
                                                :course_id => self.id,
-                                               :role_id => role.id)
+                                               :role => role.id)
 
     if self.subscription_type.eql? 1 # Todos podem participar, sem moderação
       association.approve!
@@ -186,12 +186,12 @@ class Course < ActiveRecord::Base
     # Cria as associações no Environment do Course e em todos os seus Spaces.
     UserEnvironmentAssociation.create(:user_id => user.id,
                                       :environment_id => self.environment.id,
-                                      :role_id => role.id)
+                                      :role => role.id)
     self.spaces.each do |space|
       #FIXME tirar status quando remover moderacao de space
       UserSpaceAssociation.create(:user_id => user.id,
                                   :space_id => space.id,
-                                  :role_id => role.id,
+                                  :role => role.id,
                                   :status => "approved")
 
       # Cria as associações com os subjects

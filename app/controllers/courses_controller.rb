@@ -237,7 +237,7 @@ class CoursesController < BaseController
     authorize! :add_entry, @course
     association = UserCourseAssociation.create(:user_id => current_user.id,
                                                :course_id => @course.id,
-                                               :role_id => Role[:member].id)
+                                               :role => Role[:member])
 
     if @course.subscription_type.eql? 1 # Todos podem participar, sem moderação
       association.approve!

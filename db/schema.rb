@@ -612,13 +612,13 @@ ActiveRecord::Schema.define(:version => 20110506132949) do
 
   create_table "user_settings", :force => true do |t|
     t.integer "user_id"
-    t.integer "view_mural_id"
+    t.integer "view_mural"
   end
 
   create_table "user_space_associations", :force => true do |t|
     t.integer  "user_id"
     t.integer  "space_id"
-    t.integer  "role_id",    :default => 7
+    t.integer  "role",       :default => 2
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "status"

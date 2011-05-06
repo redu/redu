@@ -12,15 +12,15 @@ class Environment < ActiveRecord::Base
   # environment_admins
   has_many :administrators, :through => :user_environment_associations,
     :source => :user,
-    :conditions => [ "user_environment_associations.role_id = ?", 3 ]
+    :conditions => [ "user_environment_associations.role = ?", 3 ]
   # teachers
   has_many :teachers, :through => :user_environment_associations,
     :source => :user,
-    :conditions => [ "user_environment_associations.role_id = ?", 5 ]
+    :conditions => [ "user_environment_associations.role = ?", 5 ]
   # tutors
   has_many :tutors, :through => :user_environment_associations,
     :source => :user,
-    :conditions => [ "user_environment_associations.role_id = ?", 6 ]
+    :conditions => [ "user_environment_associations.role = ?", 6 ]
   has_many :bulletins, :as => :bulletinable, :dependent => :destroy
 
   attr_protected :owner, :published
@@ -61,7 +61,7 @@ class Environment < ActiveRecord::Base
   def change_role(user, role)
     membership = self.user_environment_associations.where(:user_id => user.id).
                    first
-    membership.update_attributes({:role_id => role.id})
+    membership.update_attributes({:role => role.id})
 
     user.user_course_associations.where(:course_id => self.courses).
       each do |membership|
@@ -92,14 +92,14 @@ class Environment < ActiveRecord::Base
   def create_environment_association
     UserEnvironmentAssociation.create(:environment => self,
                                       :user => self.owner,
-                                      :role_id => Role[:environment_admin].id)
+                                      :role => Role[:environment_admin])
   end
 
   def create_course_association
     course_assoc = UserCourseAssociation.create(
       :course => self.courses.first,
       :user => self.owner,
-      :role_id => Role[:environment_admin].id)
+      :role => Role[:environment_admin])
       course_assoc.approve!
   end
 

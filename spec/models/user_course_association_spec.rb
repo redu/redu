@@ -85,7 +85,7 @@ describe UserCourseAssociation do
       assoc2 = (1..3).collect { Factory(:user_course_association, :role => :admin) }
       t = Factory(:user_course_association, :role => :teacher)
 
-      UserCourseAssociation.with_roles([ Role[:admin].id, Role[:teacher].id ]).
+      UserCourseAssociation.with_roles([ Role[:admin], Role[:teacher] ]).
         should == (assoc2 << t)
     end
 

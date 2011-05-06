@@ -15,7 +15,7 @@ describe UserEnvironmentAssociation do
       assoc2 = (1..3).collect { Factory(:user_environment_association, :role => :admin) }
       t = Factory(:user_environment_association, :role => :teacher)
 
-      UserEnvironmentAssociation.with_roles([ Role[:admin].id, Role[:teacher].id ]).
+      UserEnvironmentAssociation.with_roles([ Role[:admin], Role[:teacher] ]).
         should == (assoc2 << t)
     end
 
