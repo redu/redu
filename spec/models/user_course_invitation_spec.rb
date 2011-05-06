@@ -31,6 +31,7 @@ describe UserCourseInvitation do
   context "retrievers" do
     before do
       @invites = (1..5).collect { Factory(:user_course_invitation) }
+      @invites.each {|i| i.invite! }
     end
 
     it "retrieves invitations with state 'invited'" do
@@ -57,8 +58,8 @@ describe UserCourseInvitation do
       end
     end
 
-    it "defaults to invited" do
-      subject.state.should == "invited"
+    it "defaults to waiting" do
+      subject.state.should == "waiting"
     end
 
     context "when invited" do
@@ -66,6 +67,7 @@ describe UserCourseInvitation do
         UserNotifier.delivery_method = :test
         UserNotifier.perform_deliveries = true
         UserNotifier.deliveries = []
+        subject.invite!
       end
 
       it "sends an email" do
@@ -76,6 +78,10 @@ describe UserCourseInvitation do
     end
 
     context "when accept" do
+      before do
+        subject.invite!
+      end
+
       it "do NOT accept if it does not have a user" do
         subject.accept!
         subject.should_not be_approved
