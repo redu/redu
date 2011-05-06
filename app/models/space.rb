@@ -76,7 +76,7 @@ class Space < ActiveRecord::Base
   validates_length_of :description, :within => 30..250
 
   def permalink
-    APP_URL + '/espacos/' + self.id.to_s + '-' + self.name.parameterize
+    "#{Redu::Application.config.url}/espacos/#{self.id.to_s}-#{self.name.parameterize}"
   end
 
   # Status relativos ao Space
