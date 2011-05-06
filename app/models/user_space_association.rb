@@ -11,7 +11,7 @@ class UserSpaceAssociation < ActiveRecord::Base
   # FIXME Remover ao retirar status do modelo
   scope :approved, where(:status => 'approved')
   scope :users_by_name,
-    lambda { |name| include(:user).
+    lambda { |name| includes(:user).
       where("users.first_name LIKE :keyword OR
              users.last_name LIKE :keyword OR
              users.login LIKE :keyword", {:keyword => "%#{name}%"})
