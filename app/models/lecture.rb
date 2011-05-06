@@ -12,9 +12,6 @@ class Lecture < ActiveRecord::Base
   has_many :currently_watching_users, :through => :logs, :source => :user,
      :conditions => ['statuses.created_at > ?', 10.minutes.ago]
   has_many :acess_key
-  #FIXME Verificar se é realmente utilizado (não foi testado)
-  has_many :resources,
-    :class_name => "LectureResource", :as => :attachable, :dependent => :destroy
   has_many :acquisitions
   has_many :favorites, :as => :favoritable, :dependent => :destroy
   has_many :annotations
@@ -55,7 +52,7 @@ class Lecture < ActiveRecord::Base
   validates_associated :lectureable #FIXME Não foi testado, pois vai ter accepts_nested
 
   def permalink
-    APP_URL + "/lectures/"+ self.id.to_s+"-"+self.name.parameterize
+    "#{Redu::Application.config.url}/lectures/#{self.id.to_s}-#{self.name.parameterize}"
   end
 
   # Friendly url

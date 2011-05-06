@@ -45,6 +45,9 @@ GEM
     builder (2.1.2)
     cancan (1.6.4)
     columnize (0.3.2)
+    date_validator (0.6.1)
+      activemodel (~> 3.0.0)
+    deep_cloneable (1.2.3)
     diff-lcs (1.1.2)
     erubis (2.6.6)
       abstract (>= 1.0.0)
@@ -125,6 +128,8 @@ DEPENDENCIES
   ar_mailer_rails3
   authlogic
   cancan
+  date_validator
+  deep_cloneable
   factory_girl_rails
   grouped_validations
   mime-types

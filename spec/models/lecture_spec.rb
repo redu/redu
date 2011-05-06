@@ -21,13 +21,10 @@ describe Lecture do
   it { should belong_to(:lectureable).dependent(:destroy) }
 
   it { should have_many(:statuses).dependent(:destroy) }
-  it { should have_many(:resources).dependent(:destroy) }
   it { should have_many(:favorites).dependent(:destroy) }
   it { should have_many(:logs).dependent(:destroy) }
 
   it { should belong_to :subject }
-
-  it { should accept_nested_attributes_for :resources }
 
   it { should validate_presence_of :name }
   # Descrição não está sendo utilizada
@@ -179,7 +176,7 @@ describe Lecture do
   end
 
   it "generates a permalink" do
-    APP_URL.should_not be_nil
+    Redu::Application.config.url.should_not be_nil
     subject.permalink.should include(subject.id.to_s)
     subject.permalink.should include(subject.name.parameterize)
   end
