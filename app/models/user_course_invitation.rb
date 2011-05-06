@@ -12,13 +12,18 @@ class UserCourseInvitation < ActiveRecord::Base
 
   aasm_column :state
 
-  aasm_initial_state :invited
+  aasm_initial_state :waiting
+  aasm_state :waiting
   # Envia e-mail avisando que ele foi convidado
   aasm_state :invited, :enter => :send_external_user_course_invitation
   # Convida o usuário (já dentro do Redu) para o curso
   aasm_state :approved, :enter => :create_user_course_association
   aasm_state :rejected
   aasm_state :failed
+
+  aasm_event :invite do
+    transitions :to => :invited, :from => [:waiting]
+  end
 
   # Necessita que um usuário seja setado ANTES de chamar este método;
   # caso contrário, falha silenciosamente

@@ -24,6 +24,7 @@ gem 'date_validator'
 group :development, :test do
   gem 'rspec-rails'
   gem 'shoulda-matchers'
+  gem 'ruby-debug'
 end
 # Use unicorn as the web server
 # gem 'unicorn'

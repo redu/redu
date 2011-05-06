@@ -165,7 +165,7 @@ describe Course do
               :course => subject, :role => :tutor)
       Factory(:user_course_association, :user => users[4],
               :course => subject, :role => :member)
-      subject.user_course_associations.each do |assoc|
+      subject.user_course_associations.waiting.each do |assoc|
         assoc.approve!
       end
 
@@ -185,7 +185,7 @@ describe Course do
               :course => subject, :role => :tutor)
       Factory(:user_course_association, :user => users[4],
               :course => subject, :role => :member)
-      subject.user_course_associations.each do |assoc|
+      subject.user_course_associations.waiting.each do |assoc|
         assoc.approve!
       end
 
@@ -205,7 +205,7 @@ describe Course do
               :course => subject, :role => :member)
       Factory(:user_course_association, :user => users[4],
               :course => subject, :role => :member)
-      subject.user_course_associations.each do |assoc|
+      subject.user_course_associations.waiting.each do |assoc|
         assoc.approve!
       end
 
@@ -287,17 +287,11 @@ describe Course do
   end
 
   it "generates a permalink" do
-    APP_URL.should_not be_nil
+    Redu::Application.config.url.should_not be_nil
     environment = Factory(:environment)
     subject.environment = environment
     subject.permalink.should include(subject.path)
     subject.permalink.should include(environment.path)
-  end
-
-  it "verifies if it can be published" do
-    subject.can_be_published?.should == false
-    space = Factory(:space, :course => subject)
-    subject.can_be_published?.should == true
   end
 
   it "changes a user role" do
@@ -447,12 +441,9 @@ describe Course do
         }.should_not change(UserCourseAssociation, :count)
       end
 
-      it "changes his state to invited" do
-        expect {
+      it "changes his state to approved" do
           subject.invite(@incoming_user)
-        }.should change {
-          @incoming_user.has_course_invitation?(subject)
-        }.to(true)
+          @incoming_user.reload.get_association_with(subject).should be_approved
       end
     end
 

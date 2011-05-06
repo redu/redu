@@ -297,6 +297,7 @@ class UserNotifier < ActionMailer::Base
   end
 
   def external_user_course_invitation(user_course_invitation, course)
+    @user_course_invitation = user_course_invitation
     @course = course
 
     mail(:to => user_course_invitation.email,

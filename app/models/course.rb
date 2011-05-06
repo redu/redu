@@ -107,10 +107,6 @@ class Course < ActiveRecord::Base
     "#{Redu::Application.config.url}/#{self.environment.path}/cursos/#{self.path}"
   end
 
-  def can_be_published?
-    self.spaces.published.size > 0
-  end
-
   # Muda papeis deste ponto para baixo na hieararquia
   def change_role(user, role)
     membership = user.user_course_associations.
@@ -118,7 +114,7 @@ class Course < ActiveRecord::Base
     membership.update_attributes({:role => role})
 
     user.user_space_associations.where(:space_id => self.spaces).
-      include(:space).each do |membership|
+      includes(:space).each do |membership|
         membership.space.change_role(user, role)
       end
   end
@@ -152,7 +148,7 @@ class Course < ActiveRecord::Base
   def length_of_tags
     tags_str = ""
     self.tags.each {|t|  tags_str += " " + t.name }
-    self.errors.add(:tags, :too_long.l) if tags_str.length > 111
+    self.errors.add(:tags, I18n.t(:too_long)) if tags_str.length > 111
   end
 
   def join(user, role = Role[:member])
@@ -220,7 +216,7 @@ class Course < ActiveRecord::Base
   # Método de alto nível que convida um determinado usuário para o curso.
   # - Caso o usuário não faça parte do curso uma UCA será criada com o estado
   #   invited.
-  # - Caso o usuário já faça parte do curso, nada irá acontece
+  # - Caso o usuário já faça parte do curso, nada irá acontecer
   # - Caso o usuário esteja na lista de moderação, seu estado será mudado para
   #   invited
   # - Caso o usuário já tenha sido convidado e não tenha aceito o convite, um
@@ -235,10 +231,13 @@ class Course < ActiveRecord::Base
         assoc.send_course_invitation_notification
         assoc.updated_at = ""; assoc.save # Para atualizar o updated_at
         return assoc
+      elsif assoc.waiting?
+        assoc.approve!
       end
+    else
+      assoc.invite!
     end
 
-    assoc.invite!
     assoc
   end
 
@@ -260,6 +259,8 @@ class Course < ActiveRecord::Base
           invitation.send_external_user_course_invitation
           invitation.updated_at = ""; invitation.save # Para atualizar o updated_at
         end
+      else
+        invitation.invite!
       end
     end
     invitation
