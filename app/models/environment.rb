@@ -106,6 +106,6 @@ class Environment < ActiveRecord::Base
   def length_of_tags
     tags_str = ""
     self.tags.each {|t|  tags_str += " " + t.name }
-    self.errors.add(:tags, :too_long.l) if tags_str.length > 111
+    self.errors.add(:tags, I18n.t(:too_long)) if tags_str.length > 111
   end
 end

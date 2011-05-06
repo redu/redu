@@ -123,7 +123,7 @@ describe Environment do
   end
 
   it "generates a permalink" do
-    APP_URL.should_not be_nil
+    Redu::Application.config.url.should_not be_nil
     subject.permalink.should include(subject.path)
   end
 
