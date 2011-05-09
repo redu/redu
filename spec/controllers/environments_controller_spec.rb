@@ -10,12 +10,13 @@ describe EnvironmentsController do
       activate_authlogic
       UserSession.create @user
 
-      @params = {:step => 1, :locale => "pt-BR",
+      @params = {:step => 1,
         :environment => {:name => "Faculdade mauricio de nassau",
           :initials => "FMN",
           :courses_attributes => [{:name => "Gestão de TI",
                                    :path => "gestao-de-ti"}],
-        :path => "faculdade-mauricio-de-nassau"}}
+        :path => "faculdade-mauricio-de-nassau"},
+        :locale => "pt-BR"}
     end
 
     context "at step 1" do
@@ -183,7 +184,7 @@ describe EnvironmentsController do
       end
 
       it "redirects to course page" do
-        response.body.should =~ /window\.location\.href = "\/faculdade-mauricio-de-nassau\/cursos\/gestao-de-ti";/
+        response.body.should == "window.location.href = \"/faculdade-mauricio-de-nassau/cursos/gestao-de-ti\";"
       end
     end
   end

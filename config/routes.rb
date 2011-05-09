@@ -44,7 +44,7 @@ Redu::Application.routes.draw do
 
   # RSS
   match '/featured' => 'posts#featured', :as => :featured
-  match '/featured.rss' => 'posts#featured', :format => 'rss', :as => :featured_rss 
+  match '/featured.rss' => 'posts#featured', :format => 'rss', :as => :featured_rss
   match '/popular' => 'posts#popular', :as => :popular
   match '/popular.rss' => 'posts#popular', :format => 'rss', :as => :popular_rss
   match '/recent' => 'posts#recent', :as => :recent
@@ -80,7 +80,7 @@ Redu::Application.routes.draw do
     collection do
       get :cancel
     end
-    
+
     resources :folders do
       member do
         get :upload
@@ -306,7 +306,7 @@ Redu::Application.routes.draw do
   match '/teach' => 'base#teach_index', :as => :teach_index
   match '/courses' => 'courses#index', :as => :courses_index, :via => :get
 
-  resources :environments do
+  resources :environments, :path => '' do
     member do
       get :preview
       get :admin_courses
@@ -317,7 +317,7 @@ Redu::Application.routes.draw do
       get :users
     end
     resources :courses do
-      member do 
+      member do
         get :preview
         get :admin_spaces
         get :admin_members_requests

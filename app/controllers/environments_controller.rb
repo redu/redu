@@ -65,14 +65,14 @@ class EnvironmentsController < BaseController
   # POST /environments.xml
   def create
     case params[:step]
-    when "1" # tela de planos
+    when 1 # tela de planos
       @environment.valid?
       @step = 2
 
       respond_to do |format|
         format.html { render :new }
       end
-    when "2"  # tela dos forms
+    when 2  # tela dos forms
       @environment.valid?
       @plan = Plan.from_preset(params[:plan].to_sym)
       @plan = params[:plan] if @plan.valid?
@@ -82,7 +82,7 @@ class EnvironmentsController < BaseController
       respond_to do |format|
         format.html { render :new }
       end
-    when "3" # tela de informações
+    when 3 # tela de informações
       respond_to do |format|
         @plan = Plan.from_preset(params[:plan].to_sym)
         @plan_humanize = @plan.clone
@@ -98,7 +98,7 @@ class EnvironmentsController < BaseController
           format.html { render :new }
         end
       end
-    when "4"
+    when 4
 
       respond_to do |format|
         @plan = Plan.from_preset(params[:plan].to_sym)
