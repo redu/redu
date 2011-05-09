@@ -17,6 +17,7 @@
 
   </head>
   <body>
+    <%= clicktale_top %>
     <%= @content_for_layout %>
     <div id="footer" class="container_16 clearfix">
       <h1 id="logotipo-footer" class="replacement">
@@ -58,5 +59,6 @@
 
      </script>
      <%= yield :footer_scripts_and_styles %>
+     <%= clicktale_bottom %>
    </body>
  </html>

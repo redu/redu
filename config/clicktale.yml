@@ -1,0 +1,16 @@
+default: &default
+  project_id: 12087
+  ratio: 0.003
+  param: "www03"
+
+production:
+  <<: *default
+  enabled: true
+
+development:
+  <<: *default
+  enabled: false
+
+test:
+  <<: *default
+  enabled: false

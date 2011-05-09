@@ -37,6 +37,7 @@ gem "shuber-sortable"
 gem "abstract", "1.0.0"
 gem "erubis", "2.6.6"
 gem "whenever", :require => false
+gem "clicktale", :git => "git://github.com/astrails/clicktale.git"
 
 group :development do
   gem "mongrel"
