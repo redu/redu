@@ -21,6 +21,7 @@ gem 'date_validator'
 gem 'deep_cloneable'
 gem "aws-s3", :require => "aws/s3"
 gem "rd_searchlogic", :require => "searchlogic"
+gem 'translate_routes'
 
 # Gems específicos de algum ambiente
 group :development, :test do

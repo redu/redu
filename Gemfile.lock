@@ -119,6 +119,7 @@ GEM
     shoulda-matchers (1.0.0.beta2)
     shuber-sortable (1.0.6)
     thor (0.14.6)
+    translate_routes (3.0.3)
     treetop (1.4.9)
       polyglot (>= 0.3.1)
     tzinfo (0.3.27)
@@ -149,4 +150,5 @@ DEPENDENCIES
   scribd_fu
   shoulda-matchers
   shuber-sortable
+  translate_routes
   will_paginate (~> 3.0.pre2)

@@ -364,3 +364,5 @@ Redu::Application.routes.draw do
     :as => :payment_callback
   match '/payment/success' => 'payment_gateway#success', :as => :payment_success
 end
+
+ActionController::Routing::Translator.translate_from_file('lang','i18n-routes.yml')
