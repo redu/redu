@@ -1,5 +1,5 @@
 require "active_record"
-require "spec"
+require "rspec"
 require File.dirname(__FILE__) + "/../init"
 
 ActiveRecord::Base.establish_connection(:adapter => "sqlite3", :database => ":memory:")

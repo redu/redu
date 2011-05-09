@@ -8,9 +8,9 @@ class Friendship < ActiveRecord::Base
   STATUS_REQUESTED           = 6
 
   # scopes
-  named_scope :pending, :conditions => {:status => 'pending'}
-  named_scope :accepted, :conditions => {:status => 'accepted'}
-  named_scope :requested, :conditions => {:status => 'requested'}
+  scope :pending, where(:status => 'pending')
+  scope :accepted, where(:status => 'accepted')
+  scope :requested, where(:status => 'requested')
 
   # associations
   belongs_to :user
@@ -23,6 +23,7 @@ class Friendship < ActiveRecord::Base
       User.decrement_counter(:friends_count, f.user_id)
     end
   end
+
 
   def pending?
     status == 'pending'
