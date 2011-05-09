@@ -17,13 +17,12 @@
   </head>
   <body>
     <div class="container_16 clearfix" id="home">
-      <%= render :partial => "shared/flash_message" %>
       <div class="grid_10 alpha">
         <h1 class="logotipo replacement">
           <a href="">Redu: rede social educacional</a>
         </h1>
         <div class="call">
-          <strong>Potencializando o talento das pessoas</strong>
+          <strong>Potencializado o talento das pessoas</strong>
           <p>O Redu é uma plataforma de ensino a distância que foi construída tendo como base as interações sociais. </p>
           <p>
             Aqui, o aluno tem acesso fácil ao conteúdo disponibilizado pelo professor, que por sua vez consegue organizar suas aulas com mais rapidez e eficácia.
@@ -33,12 +32,12 @@
       </div>
       <div class="grid_6 omega">
         <div class="hall">
-          <%= link_to "Crie sua conta, é grátis!", signup_url, :class => "important signup" %>
+          <%= link_to "Criar nova conta", signup_url, :class => "important signup" %>
           <hr/>
 
-          <% form_for @user_session, :html => { :class => "common highlightable"} ,:url => sessions_path do |f| %>
+          <%= form_for @user_session, :html => { :class => "common highlightable"} ,:url => sessions_path do |f| %>
 
-            <% field_set_tag do %>
+            <%= field_set_tag do %>
 
               <%= f.label :login, "Login ou e-mail:", :class => "small" %>
               <%= f.text_field :login, :class => "small" %>
@@ -48,12 +47,12 @@
               <%= f.password_field :password, :class => "small" %>
               <%= error_for :user_session, :password %>
 
-              <% field_set_tag "", :class => "inline" do %>
+              <%= field_set_tag "", :class => "inline" do %>
                 <%= f.check_box :remember_me %>
                 <%= f.label :remeber_me, "Manter-me logado" %>
               <% end %>
 
-              <%= f.submit "Entrar" %>
+              <%= f.submit "Avançar" %>
             <% end %>
 
           <% end %>

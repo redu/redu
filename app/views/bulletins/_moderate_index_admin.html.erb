@@ -1,5 +1,5 @@
 <% if @pending_bulletins && @pending_bulletins.size > 0 %>
-  <% form_tag :action => :moderate_bulletins do %>
+  <%= form_tag :action => :moderate_bulletins do %>
     <table id="bulletin_moderate_list" class="common">
       <thead>
         <th width="8%">Aprovar</th>
@@ -8,7 +8,7 @@
         <th width="25%">Autor</th>
         <th>Data</th>
       </thead>
-      <%= render :partial => 'bulletins/moderate_item_admin', :collection => @pending_bulletins %>
+      <%= render :partial => 'bulletins/new/moderate_item_admin', :collection => @pending_bulletins %>
     </table>
     <%= will_paginate @pending_bulletins, :renderer => EndlessRenderer,
       :param_name => :page_pending, :class => 'endless_pending' %>

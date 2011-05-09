@@ -11,7 +11,7 @@
         <th>Remover</th>
       </tr>
     </thead>
-    <%= render :partial => 'bulletins/item_admin', :collection => @bulletins %>
+    <%= render :partial => 'bulletins/new/item_admin', :collection => @bulletins %>
   </table>
   <%= will_paginate @bulletins, :renderer => EndlessRenderer %>
 <% else %>
