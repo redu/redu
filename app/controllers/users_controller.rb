@@ -134,48 +134,46 @@ class UsersController < BaseController
   def create
     @user = User.new(params[:user])
 
-    @user.save do |result| # LINE A
-      if result
-        @user.create_settings!
-        if @key
-          @key.user = @user
-          @key.save
-        end
+    if @user.save
+      @user.create_settings!
+      if @key
+        @key.user = @user
+        @key.save
+      end
 
-        # Se tem um token de convite para o curso, aprova o convite para o
-        # usuário recém-cadastrado
-        if params.has_key?(:invitation_token)
-          invite = UserCourseInvitation.find_by_token(params[:invitation_token])
-          invite.user = @user
-          invite.accept!
-        end
+      # Se tem um token de convite para o curso, aprova o convite para o
+      # usuário recém-cadastrado
+      if params.has_key?(:invitation_token)
+        invite = UserCourseInvitation.find_by_token(params[:invitation_token])
+        invite.user = @user
+        invite.accept!
+      end
 
-        flash[:notice] = :email_signup_thanks.l_with_args(:email => @user.email)
-        redirect_to signup_completed_user_path(@user)
-      else
-        # Se tem um token de convite para o curso, atribui as variáveis
-        # necessárias para mostrar o convite em Users#new
-        if params.has_key?(:invitation_token)
-          @user_course_invitation = UserCourseInvitation.find_by_token(
-            params[:invitation_token])
+      flash[:notice] = t(:email_signup_thanks, :email => @user.email)
+      redirect_to signup_completed_user_path(@user)
+    else
+      # Se tem um token de convite para o curso, atribui as variáveis
+      # necessárias para mostrar o convite em Users#new
+      if params.has_key?(:invitation_token)
+        @user_course_invitation = UserCourseInvitation.find_by_token(
+          params[:invitation_token])
           @course = @user_course_invitation.course
           @environment = @course.environment
-        end
+      end
 
-        unless @user.oauth_token.nil?
-          @user = User.find_by_oauth_token(@user.oauth_token)
-          unless @user.nil?
-            @user_session = UserSession.create(@user)
-            current_user = @user_session.record
-            flash[:notice] = :thanks_youre_now_logged_in.l
-            redirect_back_or_default user_path(current_user)
-          else
-            flash[:notice] = :uh_oh_we_couldnt_log_you_in_with_the_username_and_password_you_entered_try_again.l
-            render :action => :new
-          end
+      unless @user.oauth_token.nil?
+        @user = User.find_by_oauth_token(@user.oauth_token)
+        unless @user.nil?
+          @user_session = UserSession.create(@user)
+          current_user = @user_session.record
+          flash[:notice] = :thanks_youre_now_logged_in.l
+          redirect_back_or_default user_path(current_user)
         else
-          render :template => 'users/new', :layout => 'clean'
+          flash[:notice] = :uh_oh_we_couldnt_log_you_in_with_the_username_and_password_you_entered_try_again.l
+          render :action => :new
         end
+      else
+        render :template => 'users/new', :layout => 'clean'
       end
     end
   end

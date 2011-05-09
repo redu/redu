@@ -452,7 +452,7 @@ class User < ActiveRecord::Base
   end
 
   def to_param
-    login_slug
+    login
   end
 
   def this_months_posts
