@@ -21,7 +21,6 @@ namespace :bootstrap do
                         :last_name => 'Redu',
                         :activated_at => Time.now,
                         :role => Role[:admin])
-    theadmin.generate_login_slug
     theadmin.save
     theadmin.create_settings!
   end
@@ -39,7 +38,6 @@ namespace :bootstrap do
                        :activated_at => Time.now,
                        :last_name => 'User',
                        :role => Role[:member])
-    theuser.generate_login_slug
     theuser.save
     theuser.create_settings!
   end
