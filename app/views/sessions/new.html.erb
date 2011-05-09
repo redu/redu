@@ -5,18 +5,18 @@
     <% field_set_tag "Login" do %>
 
       <label for='username'>
-        <%=:username_or_email.l %>
+        <%= t( :username_or_email ) %>
       </label>
       <%= f.text_field :login, :size => 35 %>
       <%= error_for :user_session, :login %>
 
       <label for='username'>
-        <%=:password.l %>
+        <%= t( :password ) %>
       </label>
       <%= f.password_field :password, :size => 35 %>
       <%= error_for :user_session, :password %>
       <label for='remember_me'>
-        <%=:remember_me.l %>
+        <%= t( :remember_me ) %>
         <%= f.check_box :remember_me %>
       </label>
       <%= f.submit "Entrar" %>
@@ -33,12 +33,12 @@
 </div>
 
 <div class="grid_6 user_instructions">
-  <h3><%=:dont_have_an_account.l %></h3>
+  <h3><%= t( :dont_have_an_account ) %></h3>
 
-  <%= link_to raw("&raquo; " + :click_here_to_sign_up.l), signup_url %>
-  <h3><%=:forgot_your_password.l %></h3>
-  <%= link_to raw("&raquo; " + :click_here_to_retrieve_it.l), forgot_password_url %>
-  <h3><%=:forgot_your_username.l %></h3>
-  <%= link_to raw("&raquo; " + :click_here_to_retrieve_it.l), forgot_username_url %>
+  <%= link_to raw("&raquo; " + t(:click_here_to_sign_up)), signup_url %>
+  <h3><%= t( :forgot_your_password ) %></h3>
+  <%= link_to raw("&raquo; " + t(:click_here_to_retrieve_it)), forgot_password_url %>
+  <h3><%= t( :forgot_your_username ) %></h3>
+  <%= link_to raw("&raquo; " + t(:click_here_to_retrieve_it)), forgot_username_url %>
 </div>
- 
+

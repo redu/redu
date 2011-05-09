@@ -8,9 +8,9 @@
   <%= f.hidden_field :reply_to, :value => @reply.reply_to %>
 
   <%= f.text_field :subject, :style => 'display: none;' %>
-  <%= label_tag :message_body, :message.l + ':' %>
+  <%= label_tag :message_body, t( :message ) + ':' %>
   <%= f.text_area :body, :size => "73x10" %>
-  <%= submit_tag :send.l %>
+  <%= submit_tag t( :send ) %>
   <%= link_to 'Cancelar', nil, { :onclick => "$('div.new-folder-inner').slideToggle(); $('#dummy_reply').show(); return false;", :class => 'cancel'} %>
 <% end %>
 

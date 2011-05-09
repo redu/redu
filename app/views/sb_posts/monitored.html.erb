@@ -1,6 +1,6 @@
 <% @page_title = "Posts that #{h @user.display_name} is monitoring" -%>
 
-<h4><%= link_to @user.display_name, user_path(@user) %>'<%= 's '+:monitored_topics.l %></h4>
+<h4><%= link_to @user.display_name, user_path(@user) %>'<%= 's '+ t(:monitored_topics) %></h4>
 <ul class="flat">
 <% @user.monitored_topics.find(:all, :limit => 25).each do |topic| %>
   <li><%= link_to topic.title, forum_topic_path(topic.forum_id, topic) %></li>
@@ -41,8 +41,8 @@
     <span class="posts"><%= pluralize post.user.sb_posts_count, 'post' %></span>
   </td>
   <td class="body entry-content">
-    <p class="topic"><%= :topic.l %> <%= link_to h(post.topic_title), forum_topic_path(post.forum_id, post.topic_id) %></p>
-    
+    <p class="topic"><%= t( :topic ) %> <%= link_to h(post.topic_title), forum_topic_path(post.forum_id, post.topic_id) %></p>
+
     <%= post.body_html %>
   </td>
 </tr>
@@ -55,5 +55,5 @@
 <% end %>
 
 <% if @posts.page_count > 1 -%>
-<div class="pagination"><%= :pages.l %> <strong><%= paginating_links @posts %></strong></div>
+<div class="pagination"><%= t( :pages ) %> <strong><%= paginating_links @posts %></strong></div>
 <% end -%>

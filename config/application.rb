@@ -65,6 +65,9 @@ module Redu
     # Will paginate
     config.items_per_page = 10
 
+    # Máximo de caracteres p/ descrição
+    config.desc_char_limit = 200
+
     #TODO Confirmar se IE responde
     # codigo usado para o IE aceitar header sem ser html
     #config.action_controller.use_accept_header = false

@@ -90,7 +90,7 @@ class MessagesController < BaseController
 
       # If all messages are valid then send messages
       messages.each {|msg| msg.save!}
-      flash[:notice] = :message_sent.l
+      flash[:notice] = t :message_sent
       respond_to do |format|
         format.html do
           redirect_to index_sent_user_messages_path(@user) and return
@@ -105,7 +105,7 @@ class MessagesController < BaseController
           @message = Message.find(:first, :conditions => ["messages.id = ? AND (sender_id = ? OR recipient_id = ?)", id, @user, @user])
           @message.mark_deleted(@user) unless @message.nil?
         }
-        flash[:notice] = :messages_deleted.l
+        flash[:notice] = t :messages_deleted
       end
     end
 

@@ -12,7 +12,7 @@
 
    <%= f.error_messages %>
    <% field_set_tag do %>
-     <%= label_tag :name, :title.l %>
+     <%= label_tag :name, t(:title) %>
      <%= text_field_tag :name %>
      <%= error_for :name %>
      <%= f.label :attachment, "Arquivo" %>

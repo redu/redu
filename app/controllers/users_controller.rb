@@ -75,10 +75,10 @@ class UsersController < BaseController
     if @user and @user.activate
       self.current_user = @user
       redirect_to user_path(@user)
-      flash[:notice] = :thanks_for_activating_your_account.l
+      flash[:notice] = t :thanks_for_activating_your_account
       return
     end
-    flash[:error] = :account_activation_error.l_with_args(:email => Redu::Application.config.email)
+    flash[:error] = t(:account_activation_error, :email => Redu::Application.config.email)
     redirect_to signup_path
   end
 
@@ -87,7 +87,7 @@ class UsersController < BaseController
     self.current_user.forget_me if logged_in?
     cookies.delete :auth_token
     reset_session
-    flash[:notice] = :deactivate_completed.l
+    flash[:notice] = t :deactivate_completed
     redirect_to login_path
   end
 
@@ -166,10 +166,10 @@ class UsersController < BaseController
         unless @user.nil?
           @user_session = UserSession.create(@user)
           current_user = @user_session.record
-          flash[:notice] = :thanks_youre_now_logged_in.l
+          flash[:notice] = t :thanks_youre_now_logged_in
           redirect_back_or_default user_path(current_user)
         else
-          flash[:notice] = :uh_oh_we_couldnt_log_you_in_with_the_username_and_password_you_entered_try_again.l
+          flash[:notice] = t :uh_oh_we_couldnt_log_you_in_with_the_username_and_password_you_entered_try_again
           render :action => :new
         end
       else
@@ -232,7 +232,7 @@ class UsersController < BaseController
     if @user.errors.empty? && @user.save
       respond_to do |format|
         format.html do
-          flash[:notice] = :your_changes_were_saved.l
+          flash[:notice] = t :your_changes_were_saved
           unless params[:welcome]
 
             redirect_to(user_path(@user))
@@ -261,17 +261,17 @@ class UsersController < BaseController
   def destroy
     if current_user == @user
       @user.destroy
-      flash[:notice] = :the_user_was_deleted.l
+      flash[:notice] = :the_user_was_deleted
       redirect_to :controller => 'sessions', :action => 'new' and return
     elsif @user.admin? #|| @user.featured_writer?
       @user.destroy
-      flash[:notice] = :the_user_was_deleted.l
+      flash[:notice] = t :the_user_was_deleted
     elsif current_user.admin?
       @user.destroy
-      flash[:notice] = :the_user_was_deleted.l
+      flash[:notice] = t :the_user_was_deleted
       redirect_to :controller => 'admin', :action => 'users' and return
     else
-      flash[:error] = :you_cant_delete_that_user.l
+      flash[:error] = t :you_cant_delete_that_user
     end
     respond_to do |format|
       format.html { redirect_to admin_moderate_users_path }
@@ -284,7 +284,7 @@ class UsersController < BaseController
     @user.avatar = @photo
 
     if @user.save!
-      flash[:notice] = :your_changes_were_saved.l
+      flash[:notice] = t :your_changes_were_saved
       redirect_to user_photo_path(@user, @photo)
     end
   rescue ActiveRecord::RecordInvalid
@@ -294,7 +294,7 @@ class UsersController < BaseController
 
   def crop_profile_photo
     unless @photo = @user.avatar
-      flash[:notice] = :no_profile_photo.l
+      flash[:notice] = t :no_profile_photo
       redirect_to upload_profile_photo_user_path(@user) and return
     end
     return unless request.put?
@@ -334,7 +334,7 @@ class UsersController < BaseController
     @user.attributes  = params[:user]
 
     if @user.save
-      flash[:notice] = :your_changes_were_saved.l
+      flash[:notice] = t :your_changes_were_saved
       respond_to do |format|
         format.html {redirect_to user_path(@user)}
         format.js
@@ -357,7 +357,7 @@ class UsersController < BaseController
     if @user.save!
       respond_to do |format|
         format.html {
-          flash[:notice] = :your_changes_were_saved.l
+          flash[:notice] = t :your_changes_were_saved
           redirect_to edit_pro_details_user_path(@user)
         }
         format.js {
@@ -379,7 +379,7 @@ class UsersController < BaseController
   end
 
   def welcome_complete
-    flash[:notice] = :walkthrough_complete.l_with_args(:site => Redu::Application.config.name)
+    flash[:notice] = t(:walkthrough_complete, :site => Redu::Application.config.name)
     redirect_to user_path
   end
 
@@ -398,9 +398,9 @@ class UsersController < BaseController
       end
 
       redirect_to home_path
-      flash[:info] = :your_password_has_been_reset_and_emailed_to_you.l
+      flash[:info] = t :your_password_has_been_reset_and_emailed_to_you
     else
-      flash[:error] = :sorry_we_dont_recognize_that_email_address.l
+      flash[:error] = t :sorry_we_dont_recognize_that_email_address
     end
   end
 
@@ -409,9 +409,9 @@ class UsersController < BaseController
     if @user = User.find_by_email(params[:email])
       UserNotifier.forgot_username(@user).deliver
       redirect_to home_path
-      flash[:info] = :your_username_was_emailed_to_you.l
+      flash[:info] = t :your_username_was_emailed_to_you
     else
-      flash[:error] = :sorry_we_dont_recognize_that_email_address.l
+      flash[:error] = t :sorry_we_dont_recognize_that_email_address
     end
   end
 
@@ -423,11 +423,11 @@ class UsersController < BaseController
       @user = User.find(params[:id])
     end
     if @user
-      flash[:notice] = :activation_email_resent_message.l
+      flash[:notice] = t :activation_email_resent_message
       UserNotifier.signup_notification(@user).deliver
       redirect_to login_path and return
     else
-      flash[:notice] = :activation_email_not_sent_message.l
+      flash[:notice] = t :activation_email_not_sent_message
     end
   end
 

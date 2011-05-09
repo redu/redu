@@ -17,7 +17,6 @@ activate_payment: false
 show_advertising: false
 
 users_per_page: 10
-desc_char_limit: 200
 attachments_number: 6
 moderate: ['Exam', 'InteractiveClass', 'Seminar']
 

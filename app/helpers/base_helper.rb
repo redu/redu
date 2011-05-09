@@ -152,7 +152,7 @@ module BaseHelper
   end
 
   def category_i18n(category)
-    category.downcase.gsub(' ','').gsub('/','_').to_sym.l
+    t(category.downcase.gsub(' ','').gsub('/','_').to_sym)
   end
 
 
@@ -366,7 +366,7 @@ module BaseHelper
       when 'posts'
         if @post and @post.title
           title = @post.title + ' - ' + app_base + tagline
-          title += (@post.tags.empty? ? '' : " - "+:keywords.l+": " + @post.tags[0...4].join(', ') )
+          title += (@post.tags.empty? ? '' : " - "+ t(:keywords) +": " + @post.tags[0...4].join(', ') )
           @canonical_url = user_post_url(@post.user, @post)
         end
       when 'users'
@@ -375,21 +375,17 @@ module BaseHelper
           title += ' - ' + app_base + tagline
           @canonical_url = user_url(@user)
         else
-          title = :showing_users.l+' - ' + app_base + tagline
+          title = t(:showing_users) + ' - ' + app_base + tagline
         end
       when 'photos'
         if @user and @user.login
-          title = @user.login + '\'s '+:photos.l+' - ' + app_base + tagline
+          title = @user.login + '\'s '+ t(:photos) +' - ' + app_base + tagline
         end
-     # when 'clippings'
-     #   if @user and @user.login
-     #     title = @user.login + '\'s '+:clippings.l+' &raquo; ' + app_base + tagline
-     #   end
       when 'tags'
         case @controller.action_name
           when 'show'
             title = @tags.map(&:name).join(', ') + ' '
-            title += params[:type] ? params[:type].pluralize : :posts_photos_and_bookmarks.l
+            title += params[:type] ? params[:type].pluralize : t(:posts_photos_and_bookmarks)
             title += ' (Related: ' + @related_tags.join(', ') + ')' if @related_tags
             title += ' | ' + app_base
             @canonical_url = tag_url(URI.escape(@tags_raw, /[\/.?#]/)) if @tags_raw
@@ -398,9 +394,9 @@ module BaseHelper
         end
       when 'categories'
         if @category and @category.name
-          title = @category.name + ' '+:posts_photos_and_bookmarks.l+' - ' + app_base + tagline
+          title = @category.name + ' '+ t(:posts_photos_and_bookmarks) +' - ' + app_base + tagline
         else
-          title = :showing_categories.l+' - ' + app_base + tagline
+          title = t(:showing_categories) + ' - ' + app_base + tagline
         end
       when 'lectures'
       if @lecture and @lecture.name
@@ -422,34 +418,34 @@ module BaseHelper
       end
       when 'skills'
         if @skill and @skill.name
-          title = :find_an_expert_in.l+' ' + @skill.name + ' - ' + app_base + tagline
+          title = t(:find_an_expert_in) + ' ' + @skill.name + ' - ' + app_base + tagline
         else
-          title = :find_experts.l+' - ' + app_base + tagline
+          title = t(:find_experts) + ' - ' + app_base + tagline
         end
       when 'sessions'
-        title = :login.l+' - ' + app_base + tagline
+        title = t(:login) + ' - ' + app_base + tagline
     end
 
     if @page_title
       title = @page_title + ' - ' + app_base + tagline
     elsif title == app_base
-      title = :showing.l+' ' + @controller.controller_name.capitalize + ' - ' + app_base + tagline
+      title = t(:showing) + ' ' + @controller.controller_name.capitalize + ' - ' + app_base + tagline
     end
     title.html_safe
   end
 
   def add_friend_link(user = nil)
     html = "<span class='friend_request' id='friend_request_#{user.id}'>"
-    html += link_to_remote :request_friendship.l,
+    html += link_to_remote t(:request_friendship),
         {:update => "friend_request_#{user.id}",
           :loading => "$$('span#friend_request_#{user.id} span.spinner')[0].show(); $$('span#friend_request_#{user.id} a.add_friend_btn')[0].hide()",
           :complete => visual_effect(:highlight, "friend_request_#{user.id}", :duration => 1),
-          500 => "alert('"+:sorry_there_was_an_error_requesting_friendship.l+"')",
+          500 => "alert('"+ t(:sorry_there_was_an_error_requesting_friendship) + "')",
           :url => hash_for_user_friendships_url(:user_id => current_user.id, :friend_id => user.id),
           :method => :post }, {:class => "add_friend button"}
     html += "<span style='display:none;' class='spinner'>"
     html += image_tag 'spinner.gif'
-    html += :requesting_friendship.l+" ...</span></span>"
+    html += t(:requesting_friendship) + " ...</span></span>"
     html
   end
 
@@ -465,16 +461,16 @@ module BaseHelper
   # end
 
   def more_comments_links(commentable)
-    html = link_to "&raquo; " + :all_comments.l, comments_url(commentable.class.to_s.underscore, commentable.to_param)
+    html = link_to "&raquo; " + t(:all_comments), comments_url(commentable.class.to_s.underscore, commentable.to_param)
     html += "<br />"
-    html += link_to "&raquo; " + :comments_rss.l, comments_url(commentable.class.to_s.underscore, commentable.to_param, :format => :rss)
+    html += link_to "&raquo; " + t(:comments_rss), comments_url(commentable.class.to_s.underscore, commentable.to_param, :format => :rss)
     html
   end
 
   def more_user_comments_links(user = @user)
-    html = link_to "&raquo; " + :all_comments.l, user_comments_url(user)
+    html = link_to "&raquo; " + t(:all_comments), user_comments_url(user)
     html += "<br />"
-    html += link_to "&raquo; " + :comments_rss.l, user_comments_url(user.to_param, :format => :rss)
+    html += link_to "&raquo; " + t(:comments_rss), user_comments_url(user.to_param, :format => :rss)
     html
   end
 
@@ -526,9 +522,9 @@ module BaseHelper
   end
 
   def pagination_info_for(paginator, options = {})
-    options = {:prefix => :showing.l, :connector => '-', :suffix => ""}.merge(options)
+    options = {:prefix => t(:showing), :connector => '-', :suffix => ""}.merge(options)
     window = paginator.first_item.to_s + options[:connector] + paginator.last_item.to_s
-    options[:prefix] + " <strong>#{window}</strong> " + 'of'.l + " #{paginator.size} " + options[:suffix]
+    options[:prefix] + " <strong>#{window}</strong> " + t('of') + " #{paginator.size} " + options[:suffix]
   end
 
 
@@ -536,7 +532,7 @@ module BaseHelper
     session[:last_active] ||= Time.now.utc
   end
 
-  def submit_tag(value = :save_changes.l, options={} )
+  def submit_tag(value = t( :save_changes ), options={} )
     or_option = options.delete(:or)
     return super + "<span class='button_or'>or " + or_option + "</span>" if or_option
     super
@@ -552,11 +548,11 @@ module BaseHelper
 
   def feed_icon_tag(title, url)
     (@feed_icons ||= []) << { :url => url, :title => title }
-    link_to image_tag('feed.png', :size => '14x14', :alt => :subscribe_to.l+" #{title}"), url
+    link_to image_tag('feed.png', :size => '14x14', :alt => t( :subscribe_to ) + " #{title}"), url
   end
 
   def search_posts_title
-    returning(params[:q].blank? ? :recent_posts.l : :searching_for.l+" '#{h params[:q]}'") do |title|
+    returning(params[:q].blank? ? t(:recent_posts) : t(:searching_for) + " '#{h params[:q]}'") do |title|
       title << " by #{h User.find(params[:user_id]).display_name}" if params[:user_id]
       title << " in #{h Forum.find(params[:forum_id]).name}"       if params[:forum_id]
     end
@@ -577,12 +573,12 @@ module BaseHelper
     distance_in_minutes = (((to_time - from_time).abs)/60).round
 
     case distance_in_minutes
-      when 0..1           then (distance_in_minutes==0) ? :a_few_seconds_ago.l : :one_minute_ago.l
-      when 2..59          then "#{distance_in_minutes} "+:minutes_ago.l
-      when 60..90         then :one_hour_ago.l
-      when 90..1440       then "#{(distance_in_minutes.to_f / 60.0).round} "+:hours_ago.l
-      when 1440..2160     then :one_day_ago.l # 1 day to 1.5 days
-      when 2160..2880     then "#{(distance_in_minutes.to_f / 1440.0).round} "+:days_ago.l # 1.5 days to 2 days
+      when 0..1           then (distance_in_minutes==0) ? t(:a_few_seconds_ago) : t(:one_minute_ago)
+      when 2..59          then "#{distance_in_minutes} "+ t(:minutes_ago)
+      when 60..90         then t(:one_hour_ago)
+      when 90..1440       then "#{(distance_in_minutes.to_f / 60.0).round} " + t(:hours_ago)
+      when 1440..2160     then t(:one_day_ago) # 1 day to 1.5 days
+      when 2160..2880     then "#{(distance_in_minutes.to_f / 1440.0).round} " + t(:days_ago)# 1.5 days to 2 days
       else from_time.strftime("%b %e, %Y  %l:%M%p").gsub(/([AP]M)/) { |x| x.downcase }
     end
   end
@@ -591,7 +587,7 @@ module BaseHelper
     if date.to_date.eql?(Time.now.to_date)
       display = I18n.l(date.to_time, :format => :time_ago)
     elsif date.to_date.eql?(Time.now.to_date - 1)
-      display = :yesterday.l
+      display = t(:yesterday)
     else
       display = I18n.l(date.to_date, :format => :date_ago)
     end
@@ -617,7 +613,7 @@ module BaseHelper
 
 
   def possesive(user)
-    user.gender ? (user.male? ? :his.l : :her.l)  : :their.l
+    user.gender ? (user.male? ? t(:his) : t(:her))  : t( :their )
   end
 
   def owner_link

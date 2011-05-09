@@ -1,12 +1,12 @@
 <% field_set_tag do %>
-  <%= label_tag :name, :title.l %>
+  <%= label_tag :name, t(:title) %>
   <%= text_field_tag :name, @lecture.name %>
   <%= error_for :name %>
   <%= hidden_field_tag "subject_id", @subject.id %>
   <% if @lecture.id %>
     <%= hidden_field_tag "lecture_id", @lecture.id %>
   <% end %>
-  <%= f.label :body, :body.l %>
+  <%= f.label :body, t( :body ) %>
   <%= f.cktext_area :body,
     :width => '570', :height => '500',
     :swf_params => { :assetable_type => 'Space', :assetable_id => @space.id } %>

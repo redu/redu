@@ -48,5 +48,5 @@
     <%= link_to "Remover Usuário", @user, :confirm => "Você tem certeza que deseja sair do Redu? Todo o seu material criado será removido de forma irreversível.", :method => :delete, :style => "color: red;" %>
   <% end %>
 
-  <%= f.submit :save_changes.l, :style => "float: right;" %>
+  <%= f.submit t(:save_changes), :style => "float: right;" %>
 <% end %>

@@ -6,18 +6,18 @@
 	<% form_for :invitation, :url => user_invitations_path(:user_id => @user.id ) do |f|%>
 		<% field_set_tag 'Contatos' do %>
 		<label for='email_addresses'>
-        <%=:enter_e_mail_addresses.l %>
-        <span class="snippet"> <%=:comma_separated.l%></span>
+                  <%= t :enter_e_mail_addresses %>
+        <span class="snippet"> <%= t :comma_separated %></span>
       </label>
       <%= f.text_area :email_addresses , :rows => "5" %>
       <label for='message'>
-          <%=:write_a_message.l %>
+          <%= t :write_a_message %>
       </label>
       <%= f.text_area :message, :value => "Olá gostaria te de convidar para participar do Redu!", :rows => "5" %>
 		<div style="width: 100%">
-			<%= submit_tag :send_invitations.l %>
-          <%=:or.l %>
-          <%= link_to :cancel.l, user_path(@user) %>
+			<%= submit_tag t( :send_invitations ) %>
+          <%= t :or %>
+          <%= link_to t(:cancel), user_path(@user) %>
 		</div>
 	<%end%>
 	<%end%>
@@ -41,7 +41,7 @@
 						<p>
 								Clique aqui
 								<a href="#" onclick="showPlaxoABChooser('invitation_email_addresses', '/base/plaxo'); return false;">
-								<img src="http://www.plaxo.com/images/abc/buttons/add_button.gif" alt="<%=:add_from_my_address_book.l%>" border="0">
+								<img src="http://www.plaxo.com/images/abc/buttons/add_button.gif" alt="<%= t :add_from_my_address_book %>" border="0">
 								</a> para importar endereços da sua lista de contatos (GMail, Yahoo, AOL, etc).
 						</p>
         </div>

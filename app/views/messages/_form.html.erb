@@ -19,7 +19,7 @@
   <div id="errors"></div>
   <%= f.error_messages %>
 
-  <%= label_tag :message_to, :to.l + ":" %>
+  <%= label_tag :message_to, t( :to ) + ":" %>
 
 
 <div style="width: 412px; float: left;"><!-- necessario para manter o input e o sugestion alinhados -->
@@ -36,9 +36,9 @@
 
 </div>
 
-  <%= label_tag :message_subject, :subject_of_message.l + ":" %>
+  <%= label_tag :message_subject, t( :subject_of_message ) + ":" %>
   <%= f.text_field :subject %>
-  <%= label_tag :message_body, :message.l + ":" %>
+  <%= label_tag :message_body, t( :message ) + ":" %>
   <%= f.text_area :body, :size => "73x10" %>
-  <%= submit_tag :send.l %>
+  <%= submit_tag t( :send ) %>
 <% end %>

@@ -57,7 +57,7 @@
     <%=  f.password_field :password_confirmation %>
   <% end %>
 
-  <%= f.submit :save_changes.l %>
+  <%= f.submit t( :save_changes ) %>
   <%= link_to "Remover", @user, :confirm => "Você tem certeza que remover a sua conta do Redu? Todo o seu material criado será removido de forma irreversível.",
     :method => :delete, :class => 'vanilla remove' %>
 <% end %>

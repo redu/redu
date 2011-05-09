@@ -33,7 +33,7 @@ class TagsController < BaseController
 
     respond_to do |format|
       if @tag.update_attributes(params[:tag])
-        flash[:notice] = :tag_was_successfully_updated.l
+        flash[:notice] = t :tag_was_successfully_updated
         format.html { redirect_to admin_tags_url }
         format.xml  { render :nothing => true }
       else
@@ -49,7 +49,7 @@ class TagsController < BaseController
 
     respond_to do |format|
       format.html {
-        flash[:notice] = :tag_was_successfully_deleted.l
+        flash[:notice] = t :tag_was_successfully_deleted
         redirect_to admin_tags_url
       }
       format.xml  { render :nothing => true }
@@ -61,7 +61,7 @@ class TagsController < BaseController
 
     @tags = Tag.find(:all, :conditions => [ 'name IN (?)', TagList.from(tag_names) ] )
     if @tags.nil? || @tags.empty?
-      flash[:notice] = :tag_does_not_exists.l_with_args(:tag => tag_names)
+      flash[:notice] = t(:tag_does_not_exists, :tag => tag_names)
       redirect_to :action => :index and return
     end
     @related_tags = @tags.collect { |tag| tag.related_tags }.flatten.uniq

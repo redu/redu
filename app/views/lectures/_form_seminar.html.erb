@@ -15,7 +15,7 @@
      :id => "seminar-form", :class => "common" } do |f| %>
 
     <% field_set_tag do %>
-      <%= label_tag :name, :title.l %>
+      <%= label_tag :name, t( :title ) %>
       <%= text_field_tag :name %>
       <%= hidden_field_tag "subject_id", @subject.id %>
       <%= error_for :name %>
