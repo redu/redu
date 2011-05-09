@@ -92,6 +92,8 @@ GEM
       rake (>= 0.8.7)
       thor (~> 0.14.4)
     rake (0.8.7)
+    rd_searchlogic (3.0.1)
+      activerecord (>= 3.0.0)
     rscribd (1.2.0)
       mime-types
     rspec (2.5.0)
@@ -141,6 +143,7 @@ DEPENDENCIES
   pagseguro (~> 0.1.10)
   paperclip
   rails (= 3.0.7)
+  rd_searchlogic
   rspec-rails
   ruby-debug
   scribd_fu

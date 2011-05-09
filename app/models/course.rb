@@ -45,6 +45,7 @@ class Course < ActiveRecord::Base
   has_one :quota, :dependent => :destroy, :as => :billable
   has_one :plan, :as => :billable
 
+  scope :published, where(:published => 1)
   scope :of_environment, lambda { |environmnent_id|
     where(:environment_id => environmnent_id)
   }
