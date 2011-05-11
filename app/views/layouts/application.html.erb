@@ -71,7 +71,7 @@
     <%= render :partial => 'shared/flash_message' %>
 
     <div id="content" class="container_16 clearfix">
-      <%= @content_for_layout %>
+      <%= yield :layout %>
     </div><!-- end #content -->
 
     <div id="footer" class="container_16 clearfix">
