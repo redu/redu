@@ -52,7 +52,6 @@ describe User do
   it { should_not allow_mass_assignment_of :admin }
   it { should_not allow_mass_assignment_of :role }
   it { should_not allow_mass_assignment_of :activation_code }
-  it { should_not allow_mass_assignment_of :login_slug }
   it { should_not allow_mass_assignment_of :friends_count }
   it { should_not allow_mass_assignment_of :score }
   it { should_not allow_mass_assignment_of :removed }
@@ -80,7 +79,7 @@ describe User do
     end
   end
 
-  [:login, :email, :login_slug].each do |attr|
+  [:login, :email].each do |attr|
     it do
       pending "Need fix on shoulda's translation problem" do
         should validate_uniqueness_of attr
@@ -255,7 +254,7 @@ describe User do
 
     it "retrieves a user by his login slug" do
       user = Factory(:user)
-      User.find(subject.login_slug).should == subject
+      User.find(subject.login).should == subject
     end
 
     it "retrieves a user by his login or email" do
@@ -337,7 +336,7 @@ describe User do
   end
 
   it "retrieves his representation in a param" do
-    subject.to_param.should == subject.login_slug
+    subject.to_param.should == subject.login
   end
 
   it "retrieves his posts made in current month"

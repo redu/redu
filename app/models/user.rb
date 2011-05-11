@@ -61,7 +61,7 @@ class User < ActiveRecord::Base
     :conditions => "friendships.status = 'accepted'",
     :select => ["users.id, users.first_name, users.last_name, users.login, " + \
                 "users.avatar_file_name, users.avatar_file_size, " + \
-                "users.avatar_content_type, users.login_slug"]
+                "users.avatar_content_type"]
 
   #bulletins
   has_many :bulletins, :foreign_key => "owner"
@@ -121,7 +121,7 @@ class User < ActiveRecord::Base
 
   # Accessors
   attr_protected :admin, :featured, :role, :activation_code,
-    :login_slug, :friends_count, :score, :removed,
+    :friends_count, :score, :removed,
     :sb_posts_count, :sb_last_seen_at
 
   accepts_nested_attributes_for :settings
@@ -156,7 +156,6 @@ class User < ActiveRecord::Base
   # FIXME Verificar necessidade (não foi testado)
   validates_presence_of     :metro_area,                 :if => Proc.new { |user| user.state }
   validates_uniqueness_of   :login, :email, :case_sensitive => false
-  validates_uniqueness_of   :login_slug
   validates_exclusion_of    :login, :in => Redu::Application.config.extras["reserved_logins"]
   validates :birthday,
       :date => { :before => Proc.new { 13.years.ago } }
@@ -174,7 +173,7 @@ class User < ActiveRecord::Base
   # override activerecord's find to allow us to find by name or id transparently
   def self.find(*args)
     if args.is_a?(Array) and args.first.is_a?(String) and (args.first.index(/[a-zA-Z\-_]+/) or args.first.to_i.eql?(0) )
-      find_by_login_slug(args)
+      find_by_login(args)
     else
       super
     end
