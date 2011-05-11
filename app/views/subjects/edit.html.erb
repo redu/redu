@@ -9,7 +9,7 @@
       <span class="counter">Informações gerais do módulo <%= @subject_header.title %></span>
     </div>
 
-    <% fake_tabs ["Informações", edit_space_subject_path(@space, @subject), { :class => "icon icon-management-lightblue_16_16" } ],
+    <%= fake_tabs ["Informações", edit_space_subject_path(@space, @subject), { :class => "icon icon-management-lightblue_16_16" } ],
       ["Recursos", admin_lectures_order_space_subject_path(@space, @subject), { :class => "icon icon-resource-gray_16_16" } ],
       ["Membros", admin_members_space_subject_path(@space, @subject), { :class => "icon icon-members-gray_16_16" } ] do %>
 
@@ -25,7 +25,7 @@
           <%= render :partial => "subjects/visible_invisible",
               :locals => { :space => @space, :subject => @subject } %>
         <% end %>
-        
+
     <% end %>
   </div><!-- end #subjec-edit -->
 </div><!-- end .main -->

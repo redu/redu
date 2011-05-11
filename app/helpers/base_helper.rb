@@ -19,7 +19,7 @@ module BaseHelper
       end
     end
 
-    lis.join("\n")
+    lis.join("\n").html_safe
   end
 
   # Cria markup das abas fake a partir de uma ou mais listas do tipo
@@ -30,7 +30,7 @@ module BaseHelper
       :body => capture(&block)
     }
 
-    concat(render(:partial => 'shared/fake_tabs', :locals => locals))
+    render(:partial => 'shared/fake_tabs', :locals => locals)
   end
 
   def error_for(object, method = nil, options={})

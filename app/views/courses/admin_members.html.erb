@@ -9,7 +9,7 @@
       <h4>Gerenciamento</h4>
       <span class="counter">Listagem de membros do curso <%= @course.name %></span>
     </div>
-    <%
+    <%=
       fake_tabs ["Informações", edit_environment_course_path(@environment, @course), {:class => 'icon icon-management-gray_16_16'}],
         ["Membros", admin_members_environment_course_path(@environment, @course), {:class => 'icon icon-members-lightblue_16_16'}],
         ["Moderação", admin_members_requests_environment_course_path(@environment, @course), {:class => 'icon icon-moderation-gray_16_16'}],
