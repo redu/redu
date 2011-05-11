@@ -1,0 +1,28 @@
+var link = "#favorites_link"
+
+$('favorite').after(<%= escape_javascript(
+  link_to 'Desfavoritar',
+          :url => { :controller => :favorites,
+                    :action => :favorite,
+                    :id => @favorite.favoritable.id,
+                    :type => @favorite.favoritable.class.to_s },
+          :id => 'favorites_link'
+) %>)
+
+$('#rm_favorites_link').remove();
+$(link).show();
+
+
+//# Troca o link de Desfavoritar pelo de Favoritar
+//link = "#favorites_link"
+//spinner = "#favorite_spinner"
+
+//page.insert_html :after, 'favorite' , (link_to_remote('Favoritar',
+//                       { :url => { :controller => :favorites,
+//                                  :action => :favorite,
+//                         :id => @favorite.favoritable.id, :type => @favorite.favoritable.class.to_s },
+//                         :loading => "$('#favorites_link').hide(); $('#favorite_spinner').show();" },
+//                       { :id => 'favorites_link' }))
+//page.remove "#rm_favorites_link"
+//page << "$('#{spinner}').hide();"
+//page << "$('#{link}').show();"

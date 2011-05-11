@@ -2,14 +2,14 @@
 <%= image_tag 'loading_bar.gif', :style => 'display:none;',
   :id => 'favorite_spinner' %>
 <% if current_user.has_favorite(status) %>
-  <%= link_to('Remover dos favoritos',
+  <%= link_to('Desfavoritar',
               not_favorite_user_favorite_path(current_user, status, :type => status.class.to_s),
               :class => 'icon icon-unfavorite-gray_8_8', :id => 'rm_favorites_link',
-              :remote => true ) %>
+              :remote => true, :method => :post ) %>
 
 <% else %>
-  <%= link_to('Adicionar a favoritos',
+  <%= link_to('Favoritar',
                favorite_user_favorite_path(current_user, status, :type => status.class.to_s),
                :class => 'icon icon-favorite-gray_8_8', :id => 'favorites_link',
-               :remote => true ) %>
+               :remote => true, :method => :post ) %>
 <% end %>
