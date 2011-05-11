@@ -23,11 +23,10 @@
             :class => "button"
         %>
       </div>
-      <% form_remote_tag :url => search_users_admin_environment_course_path(
+      <% form_tag search_users_admin_environment_course_path(
         @environment, @course),
-        :loading => "$('#loading_bar').show();",
-        :success => "$('#loading_bar').hide();",
-        :html =>  { :class => "common filter"} do %>
+        :remote => true,
+        :class => "common filter" do %>
         <div class="filters clearfix">
           <% field_set_tag "Buscar", :class => "grid_4 alpha inline hidden" do %>
             <%= label_tag :search_user, "Nome" %>

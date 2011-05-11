@@ -331,18 +331,7 @@ class CoursesController < BaseController
       :per_page => Redu::Application.config.items_per_page)
 
       respond_to do |format|
-        format.js do
-          render :update do |page|
-            if @memberships.empty?
-              page.replace_html 'user_list',
-                "<div class=\"box_notice\">Nenhum usuário encontrado.</div>"
-            else
-              page.replace_html 'user_list',
-                :partial => 'courses/user_list_admin',
-                :locals => {:memberships => @memberships}
-            end
-          end
-        end
+        format.js
       end
   end
 

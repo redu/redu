@@ -1,0 +1,4 @@
+$users = $("<%= escape_javascript(render :partial => "courses/user_item_admin", :collection => @memberships) %>");
+
+$("#user_list_table").append($users)
+$(".endless").html(<%= will_paginate @memberships, :renderer => EndlessRendererl %>)
