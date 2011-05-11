@@ -20,12 +20,12 @@
     </li>
     <% if can? :manage, response %>
       <li>
-      <%= link_to_remote 'Apagar',
-        :url => status_path(response),
-        :loading => "$('#status-#{response.id} > .actions .icon-x-gray_8_8').hide(); $('#status-#{response.id}  > .actions #favorite_spinner').show();",
+      <%= link_to 'Apagar',
+        status_path(response),
         :confirm => 'Deseja remover a postagem?',
         :method => :delete,
-        :html => { :class => "icon icon icon-x-gray_8_8" } %>
+        :remote => true,
+        :class => "icon icon icon-x-gray_8_8" %>
       </li>
     <% end %>
   </ul>

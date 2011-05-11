@@ -30,8 +30,10 @@ class StatusesController < BaseController
     @status.user = current_user
 
     respond_to do |format|
-      if @status.save
-        flash[:notice] = "Atividade enviada com sucesso"
+      format.html do
+        if @status.save
+          flash[:notice] = "Atividade enviada com sucesso"
+        end
       end
       format.js
     end

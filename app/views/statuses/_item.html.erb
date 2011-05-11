@@ -29,12 +29,12 @@
 
     <% if can? :manage, item %>
       <li>
-      <%= link_to_remote 'Apagar',
-        :url => status_path(item),
-        :loading => "$('#status-#{item.id} > .actions .icon-x-gray_8_8').hide(); $('#status-#{item.id}  > .actions #favorite_spinner').show();",
-      :confirm => 'Deseja remover a postagem?',
+      <%= link_to 'Apagar',
+        status_path(item),
+        :confirm => 'Deseja remover a postagem?',
         :method => :delete,
-        :html => { :class => "icon icon-x-gray_8_8" } %>
+        :remote => true,
+        :class => "icon icon-x-gray_8_8" %>
       </li>
     <% end %>
   </ul>

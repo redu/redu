@@ -1,8 +1,8 @@
 <%# Form de Status resposta %>
 <div class="create-status create-response" style = "display: none;">
-  <% form_remote_for :status,
+  <% form_for :status,
     :url => respond_user_status_path(current_user, status_id),
-    :before => "$('.response_spinner').show();"do |f| %>
+    :remote => true do |f| %>
     <%= f.error_messages %>
     <% field_set_tag do %>
       <% random_number = get_random_number%>

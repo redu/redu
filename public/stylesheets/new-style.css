@@ -1095,6 +1095,14 @@
   scroll: none;
 }
 
+.create-status form .errorMessageField {
+  display: block;
+  clear: both;
+  margin: 5px 0 5px 0px;
+  color: #B2B2B2;
+  font-size: .8em;
+}
+
 .create-status textarea {
   width: 100%;
   height: 25px;
