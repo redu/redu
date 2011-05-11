@@ -10,7 +10,7 @@ describe EnvironmentsController do
       activate_authlogic
       UserSession.create @user
 
-      @params = {:step => 1,
+      @params = {:step => "1",
         :environment => {:name => "Faculdade mauricio de nassau",
           :initials => "FMN",
           :courses_attributes => [{:name => "Gestão de TI",
@@ -33,7 +33,7 @@ describe EnvironmentsController do
 
     context "at step 2" do
       before do
-        @params[:step] = 2
+        @params[:step] = "2"
         @params[:plan] = "professor_standard"
         post :create, @params
       end
@@ -53,7 +53,7 @@ describe EnvironmentsController do
 
       context "when is valid" do
         before do
-          @params[:step] = 3
+          @params[:step] = "3"
           @params[:plan] = "professor_standard"
           post :create, @params
         end
@@ -71,7 +71,7 @@ describe EnvironmentsController do
 
       context "when isn't valid" do
         before do
-          @params[:step] = 3
+          @params[:step] = "3"
           @params[:plan] = "professor_standard"
           @params[:environment][:name] = ""
           post :create, @params
@@ -91,7 +91,7 @@ describe EnvironmentsController do
     context "at step 4" do
       context "when plain request" do
         before do
-          @params[:step] = 4
+          @params[:step] = "4"
           @params[:plan] = "professor_standard"
           @params[:color] = "f56b00"
 
@@ -133,7 +133,7 @@ describe EnvironmentsController do
 
       context "when AJAX request" do
         before do
-          @params[:step] = 4
+          @params[:step] = "4"
           @params[:plan] = "professor_standard"
           @params[:color] = "f56b00"
           @params[:body] = "js"
@@ -174,7 +174,7 @@ describe EnvironmentsController do
 
     context "at step 4 for free" do
       before do
-        @params[:step] = 4
+        @params[:step] = "4"
         @params[:plan] = "free"
         @params[:color] = "f56b00"
         @params[:locale] = "pt-BR"
@@ -184,7 +184,7 @@ describe EnvironmentsController do
       end
 
       it "redirects to course page" do
-        response.body.should == "window.location.href = \"/faculdade-mauricio-de-nassau/cursos/gestao-de-ti\";"
+        response.should render_template "environments/redirect"
       end
     end
   end

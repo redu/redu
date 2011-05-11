@@ -1,7 +1,7 @@
 class CoursesController < BaseController
-  load_resource :environment
+  load_resource :environment, :find_by => :path
   load_and_authorize_resource :course, :through => :environment,
-    :except => [:index]
+    :except => [:index], :find_by => :path
 
   rescue_from CanCan::AccessDenied do |exception|
     raise if cannot? :preview, @course

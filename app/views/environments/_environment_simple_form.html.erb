@@ -11,7 +11,7 @@ $(document).ready(function(){
 
 <% environment = Environment.new
    environment.courses.build %>
-<% form_for environment, :url => environments_path(:step => 1) do |f| %>
+<%= form_for environment, :url => environments_path(:step => 1) do |f| %>
   <p>Crie um ambiente de Ensino a Distância em 3 passos</p>
   <ol class="clearfix">
     <li class="clearfix">

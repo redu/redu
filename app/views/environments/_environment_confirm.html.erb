@@ -68,10 +68,9 @@
         </tr>
       </tbody>
     </table>
-    <% form_remote_for @environment,
-      :loading => "$('#spinner-form').show()",
-      :success => "$('#spinner-form').hide()",
+    <% form_for @environment,
       :url => environments_path(:step => 4),
+      :remote => true,
       :html => { :class => "clearfix" } do |f| %>
       <%= f.error_messages %>
       <div style='display: none;'>

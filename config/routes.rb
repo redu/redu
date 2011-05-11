@@ -22,7 +22,6 @@ Redu::Application.routes.draw do
   resources :sb_posts
   resources :topics
   resources :metro_areas
-  root :to => 'base#site_index', :as => :home
 
   resources :tags
   match '/tags/:id/:type' => 'tags#show', :as => :show_tag_type
@@ -312,7 +311,6 @@ Redu::Application.routes.draw do
   match 'users/activate/:id' => 'users#activate', :as => :activate
 
   # Indexes
-  root :to => "base#site_index", :as => :application
   match 'privacy' => "base#privacy", :as => :privacy
   match 'tos' => "base#tos", :as => :tos
   match 'contact' => "base#contact", :as => :contact
@@ -377,6 +375,9 @@ Redu::Application.routes.draw do
   match '/payment/callback' => 'payment_gateway#callback',
     :as => :payment_callback
   match '/payment/success' => 'payment_gateway#success', :as => :payment_success
+
+  root :to => 'base#site_index', :as => :home
+  root :to => "base#site_index", :as => :application
 end
 
 ActionDispatch::Routing::Translator.translate_from_file('lang','i18n-routes.yml')
