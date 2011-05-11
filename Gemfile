@@ -23,6 +23,7 @@ gem 'rd_searchlogic', :require => 'searchlogic'
 gem 'translate_routes'
 gem 'aws-s3', :require => 'aws/s3'
 gem 'jquery-rails', '>= 0.2.6'
+gem 'dynamic_form'
 
 # Gems específicos de algum ambiente
 group :development, :test do
