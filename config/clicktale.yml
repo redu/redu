@@ -1,6 +1,6 @@
 default: &default
   project_id: 12087
-  ratio: 0.003
+  ratio: 0.1
   param: "www03"
 
 production:
