@@ -179,7 +179,6 @@ class UsersController < BaseController
   end
 
   def edit
-    @metro_areas, @states = setup_locations_for(@user)
     respond_to do |format|
       format.html
     end
@@ -552,13 +551,5 @@ class UsersController < BaseController
   def setup_metro_areas_for_cloud
     @metro_areas_for_cloud = MetroArea.find(:all, :conditions => "users_count > 0", :order => "users_count DESC", :limit => 100)
     @metro_areas_for_cloud = @metro_areas_for_cloud.sort_by{|m| m.name}
-  end
-
-  def setup_locations_for(user)
-    metro_areas = states = []
-    states = user.country.states if user.country
-    metro_areas = user.state.metro_areas.all(:order => "name") if user.state
-
-    return metro_areas, states
   end
 end

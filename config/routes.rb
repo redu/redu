@@ -205,19 +205,19 @@ Redu::Application.routes.draw do
       get :mural
       get :account
     end
-  collection do
-    get :auto_complete
-  end
-
-  resources :friendships, :only => [:index, :create, :destroy] do
-    member do
-      post :accept
-      post :decline
-    end
     collection do
-      get :pending
+      get :auto_complete
     end
-  end
+
+    resources :friendships, :only => [:index, :create, :destroy] do
+      member do
+        post :accept
+        post :decline
+      end
+      collection do
+        get :pending
+      end
+    end
 
     resources :photos do
       collection do
@@ -225,6 +225,7 @@ Redu::Application.routes.draw do
         get :slideshow
       end
     end
+
     resources :posts do
       collection do
         get :manage
@@ -235,39 +236,49 @@ Redu::Application.routes.draw do
         match :update_views
       end
     end
+
     resources :events # Needed this to make comments work
+
     resources :activities do
       collection do
         get :network
       end
     end
+
     resources :invitations
+
     resources :spaces do
       collection do
         get :member
         get :owner
       end
     end
+
     resources :questions
     resources :offerings do
       collection do
         put :replace
       end
     end
+
     resources :favorites, :only => [:index] do
       member do
         post :favorite
         post :not_favorite
       end
     end
+
     resources :messages do
       collection do
         get :index_sent
         post :delete_selected
       end
     end
+
     resources :comments
+
     resources :photo_manager, :only => ['index']
+
     scope ":user_id/photo_manager" do
       resources :albums do
         member do
@@ -286,15 +297,18 @@ Redu::Application.routes.draw do
         end
       end
     end
+
     resources :statuses do
       member do
         post :respond
       end
     end
+
     resources :plans, :only => [:index]
     get '/:environment_id/roles' => 'roles#show', :as => :admin_roles
     post '/:environment_id/roles' => 'roles#update', :as => :update_roles
-    end
+  end
+
   match 'users/activate/:id' => 'users#activate', :as => :activate
 
   # Indexes
@@ -364,4 +378,5 @@ Redu::Application.routes.draw do
     :as => :payment_callback
   match '/payment/success' => 'payment_gateway#success', :as => :payment_success
 end
+
 ActionDispatch::Routing::Translator.translate_from_file('lang','i18n-routes.yml')
