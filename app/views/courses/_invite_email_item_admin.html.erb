@@ -17,13 +17,12 @@
   <td>
     <%= image_tag 'spinner.gif', :style => 'display: none;',
       :id => "spinner-#{invite_email_item_admin.id}-e" %>
-    <%= link_to_remote 'Reconvidar',
-      :url => invite_members_environment_course_path(@environment, @course,
+    <%= link_to 'Reconvidar',
+      invite_members_environment_course_path(@environment, @course,
            :emails => "#{invite_email_item_admin.email}",
            :invitation_id => invite_email_item_admin.id.to_s + "-e"),
-
-      :loading => "$('#spinner-#{invite_email_item_admin.id}-e').show(); $('#invite-#{invite_email_item_admin.id}-e .reinvite').hide();",
-      :success => "$('#spinner-#{invite_email_item_admin.id}-e').hide();",
-      :html => { :class => 'important reinvite' } %>
+      :remote => true,
+      :method => :post,
+      :class => 'important reinvite' %>
    </td>
 </tr>
