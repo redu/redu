@@ -2,11 +2,10 @@
   <%= javascript_include_tag :ckeditor %>
 <% end %>
 
-<%= render :partial => 'environments/sidebar', :locals => { :environment => @bulletinable } %>
+<%= render :partial => 'bulletins/sidebar', :locals => { :bulletinable => @bulletinable } %>
+
 <div class="main grid_12 omega big-col">
-  <%= render :partial => "environments/breadcrumbs", :locals => { :environment => @bulletinable } %>
-    <%= render :partial => 'environments/header',
-      :locals => { :environment => @bulletinable }%>
+    <%= render :partial => 'bulletins/header', :locals => { :bulletinable => @bulletinable } %>
     <div id="bulletin-edit" class="hierarchy-listing-wrapper">
       <div class="header">
         <h4>Notícia</h4>
