@@ -126,7 +126,7 @@ class UsersController < BaseController
 
     respond_to do |format|
       format.html do
-        render :template => 'users/new', :layout => 'clean'
+        render :new, :layout => 'clean'
       end
     end
   end

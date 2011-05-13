@@ -230,7 +230,8 @@ class Course < ActiveRecord::Base
       # Se já foi convidado, apenas reenvia o e-mail
       if assoc.invited?
         assoc.send_course_invitation_notification
-        assoc.updated_at = ""; assoc.save # Para atualizar o updated_at
+        assoc.updated_at = Time.now
+        assoc.save
         return assoc
       elsif assoc.waiting?
         assoc.approve!

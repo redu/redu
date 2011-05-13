@@ -397,6 +397,7 @@ class CoursesController < BaseController
       @course.invite_by_email(e)
     end
 
+
     respond_to do |format|
       format.html do
         if @users.empty? && @emails.empty?
@@ -409,12 +410,7 @@ class CoursesController < BaseController
       end
 
       format.js do
-        render :update do |page|
-          page.replace "#invite-#{params[:invitation_id]} .reinvite",
-            "<span class=\"reinvited\">Convite reenviado</span>"
-          page.replace_html "#invite-#{params[:invitation_id]} span.date",
-            (time_ago_in_words Time.zone.now)
-        end
+        @invitation_id = params[:invitation_id]
       end
     end
   end
