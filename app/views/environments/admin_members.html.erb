@@ -28,8 +28,8 @@
       %>
 
     <% if @memberships && @memberships.size > 0 %>
-      <% form_remote_tag :url => { :action => :search_users_admin, :id => @environment.id},
-        :loading => "showLoadingUsers()", :html => { :class => "common filter" } do %>
+      <%= form_tag search_users_admin_environment_path(@environment),
+        :remote => true, :class => "common filter" do %>
         <div class="filters clearfix">
           <% field_set_tag "Buscar", :class => "grid_4 alpha inline hidden" do %>
             <%= label_tag :search_user, "Nome" %>

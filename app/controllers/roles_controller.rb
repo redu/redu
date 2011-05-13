@@ -33,7 +33,7 @@ class RolesController < BaseController
         object = @environment
         # ao se tornar administrador, se tornará administrador para todas
         # entidades abaixo da de environment
-        if !Role[params[:roles]].nil and params[:roles] == Role[:environment_admin]
+        if !Role[params[:roles]].nil? and params[:roles] == Role[:environment_admin]
           object.courses.each do |course|
             unless @user.get_association_with(course)
 
