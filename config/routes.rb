@@ -318,7 +318,22 @@ Redu::Application.routes.draw do
   match '/teach' => 'base#teach_index', :as => :teach_index
   match '/courses' => 'courses#index', :as => :courses_index, :via => :get
 
-  resources :environments, :path => '' do
+  resources :plans, :only => [] do
+    member do
+      get :confirm
+      post :confirm
+      get :upgrade
+      post :upgrade
+    end
+
+    resources :invoices, :only => [:index]
+  end
+
+  match '/payment/callback' => 'payment_gateway#callback',
+    :as => :payment_callback
+  match '/payment/success' => 'payment_gateway#success', :as => :payment_success
+
+  resources :environments, :path => '', :except => [:index] do
     member do
       get :preview
       get :admin_courses
@@ -360,21 +375,6 @@ Redu::Application.routes.draw do
       end
     end
   end
-
-  resources :plans, :only => [] do
-    member do
-      get :confirm
-      post :confirm
-      get :upgrade
-      post :upgrade
-    end
-
-    resources :invoices, :only => [:index]
-  end
-
-  match '/payment/callback' => 'payment_gateway#callback',
-    :as => :payment_callback
-  match '/payment/success' => 'payment_gateway#success', :as => :payment_success
 
   root :to => 'base#site_index', :as => :home
   root :to => "base#site_index", :as => :application
