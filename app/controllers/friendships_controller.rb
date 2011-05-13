@@ -27,13 +27,8 @@ class FriendshipsController < BaseController
         end
       end
       format.js do
-        render :update do |page|
-          if !current_user.friends? @friend
-            page.insert_html :after, 'new_friendship',
-              (link_to 'Aguardando aceitação', nil, :class => 'waiting')
-          end
-          page.remove 'new_friendship'
-        end
+        @show_user = false
+        @show_user = true if params[:show_user]
       end
     end
   end
@@ -49,11 +44,7 @@ class FriendshipsController < BaseController
           redirect_to user_path(@friend)
         end
       end
-      format.js do
-        render :update do |page|
-          page.remove 'remove_link'
-        end
-      end
+      format.js
     end
   end
 
