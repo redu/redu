@@ -1,19 +1,10 @@
-<%= render :partial => "#{@bulletinable.class.to_s.downcase + 's'}/new/sidebar" %>
+<%= render :partial => "#{@bulletinable.class.to_s.downcase + 's'}/sidebar",
+      :locals => { :environment => @bulletinable } %>
 <div class="main grid_12 omega big-col">
-  <ol id="breadcrumbs" class="clearfix">
     <% if @bulletinable.class.to_s.eql? "Environment" %>
-      <li>
-        <%= link_to 'Home', home_user_path(current_user),
-          :class => 'replacement home icon icon-redu_r8_c227_s1' %>
-      </li>
-      <li>
-        <%= link_to @environment.name,
-          environment_path(@environment),
-          :class => 'replacement icon icon-redu_r8_c217_s1' %>
-      </li>
-      </ol>
-      <%= render :partial => 'environments/new/header',
-        :locals => { :environment => @environment }%>
+      <%= render :partial => "environments/breadcrumbs", :locals => { :environment => @bulletinable } %>
+      <%= render :partial => 'environments/header',
+        :locals => { :environment => @bulletinable } %>
     <% elsif @bulletinable.class.to_s.eql? "Space" %>
        <li>
         <%= link_to 'Home', home_user_path(current_user),
@@ -60,12 +51,12 @@
         <div class="admin-actions">
           <%= link_to 'Editar',
             edit_polymorphic_path([@bulletin.bulletinable, @bulletin]),
-            :class => "edit icon icon-redu_r12_c5_s1" %>
+            :class => "edit icon icon-management-gray_8_8" %>
           <%= link_to 'Remover',
             polymorphic_path([@bulletin.bulletinable, @bulletin]),
             :method => :delete,
             :confirm => "Você tem certeza que deseja remover esta aula? Não será possível recuperá-la.",
-            :class => "delete icon icon-redu_r12_c43_s1" %>
+            :class => "delete icon icon-x-gray_8_8" %>
         </div>
       <% end %>
       <div class="details clearfix">

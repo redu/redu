@@ -1,22 +1,14 @@
 <% content_for :header_scripts_and_styles do %>
   <%= javascript_include_tag :ckeditor %>
 <% end %>
-<%= render :partial => "#{@bulletinable.class.to_s.downcase + 's'}/new/sidebar" %>
+<%= render :partial => "#{@bulletinable.class.to_s.downcase + 's'}/sidebar",
+  :locals => { :environment => @bulletinable } %>
 <div class="main grid_12 omega big-col">
-  <ol id="breadcrumbs" class="clearfix">
     <% if @bulletinable.class.to_s.eql? "Environment" %>
-      <li>
-        <%= link_to 'Home', home_user_path(current_user),
-          :class => 'replacement home icon icon-redu_r8_c227_s1' %>
-      </li>
-      <li>
-        <%= link_to @environment.name,
-          environment_path(@environment),
-          :class => 'replacement icon icon-redu_r8_c217_s1' %>
-      </li>
-      </ol>
-      <%= render :partial => 'environments/new/header',
-        :locals => { :environment => @environment }%>
+      <%= render :partial => "environments/breadcrumbs",
+            :locals => { :environment => @bulletinable } %>
+      <%= render :partial => 'environments/header',
+        :locals => { :environment => @bulletinable } %>
     <% elsif @bulletinable.class.to_s.eql? "Space" %>
        <li>
         <%= link_to 'Home', home_user_path(current_user),
@@ -46,7 +38,7 @@
         <span class="counter">Nova notícia</span>
       </div>
 
-      <%= render :partial => "bulletins/new/form",
+      <%= render :partial => "bulletins/form",
         :locals => {:bulletinable => @bulletinable,  :bulletin => @bulletin }%>
     </div><!-- #bulletin-new -->
   </div><!-- end main -->
