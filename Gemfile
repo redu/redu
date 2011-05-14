@@ -27,6 +27,7 @@ gem 'dynamic_form'
 gem 'ajaxful_rating',
   :git => 'git://github.com/edgarjs/ajaxful-rating.git',
   :branch => 'rails3'
+gem 'acts-as-taggable-on'
 
 # Gems específicos de algum ambiente
 group :development, :test do

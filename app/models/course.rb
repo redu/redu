@@ -88,7 +88,6 @@ class Course < ActiveRecord::Base
   validates_length_of :name, :maximum => 60
   validates_length_of :description, :maximum => 250, :allow_blank => true
   validates_format_of :path, :with => /^[-_.A-Za-z0-9]*$/
-  validate :length_of_tags
 
   # Sobreescrevendo ActiveRecord.find para adicionar capacidade de buscar por path do Space
   def self.find(*args)
@@ -144,12 +143,6 @@ class Course < ActiveRecord::Base
                                      :role => Role[:environment_admin])
       user_course.approve!
     end
-  end
-
-  def length_of_tags
-    tags_str = ""
-    self.tags.each {|t|  tags_str += " " + t.name }
-    self.errors.add(:tags, I18n.t(:too_long)) if tags_str.length > 111
   end
 
   def join(user, role = Role[:member])

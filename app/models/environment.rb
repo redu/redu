@@ -33,7 +33,6 @@ class Environment < ActiveRecord::Base
     :message => "Precisa ser único"
   validates_length_of :name, :maximum => 40
   validates_length_of :description, :maximum => 400, :allow_blank => true
-  validate :length_of_tags
   validates_length_of :initials, :maximum => 10, :allow_blank => true
   validates_format_of :path, :with => /^[-_.A-Za-z0-9]*$/
 
@@ -101,11 +100,5 @@ class Environment < ActiveRecord::Base
       :user => self.owner,
       :role => Role[:environment_admin])
       course_assoc.approve!
-  end
-
-  def length_of_tags
-    tags_str = ""
-    self.tags.each {|t|  tags_str += " " + t.name }
-    self.errors.add(:tags, I18n.t(:too_long)) if tags_str.length > 111
   end
 end

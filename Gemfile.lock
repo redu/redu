@@ -44,6 +44,7 @@ GEM
       activemodel (= 3.0.7)
       activesupport (= 3.0.7)
     activesupport (3.0.7)
+    acts-as-taggable-on (2.0.6)
     ar_mailer_rails3 (2.1.12)
     arel (2.0.9)
     authlogic (3.0.2)
@@ -150,6 +151,7 @@ DEPENDENCIES
   aasm!
   active_enum
   ajaxful_rating!
+  acts-as-taggable-on
   ar_mailer_rails3
   authlogic
   aws-s3
