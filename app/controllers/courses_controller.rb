@@ -360,7 +360,7 @@ class CoursesController < BaseController
         redirect_to home_user_path(current_user)
       end
       format.js do
-        render :nothing => true
+        @item_invitation = assoc
       end
     end
   end
@@ -376,7 +376,7 @@ class CoursesController < BaseController
         redirect_to home_user_path(current_user)
       end
       format.js do
-        render :nothing => true
+        @item_invitation = assoc
       end
     end
   end
