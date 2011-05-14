@@ -26,7 +26,7 @@
                 :id => "follow_link" %>
               <% end %>
             <% else %>
-              <% form_for [current_user, Friendship.new],
+              <%= form_for [current_user, Friendship.new],
                 :remote => true, :method => :post do %>
                 <%= hidden_field_tag "friend_id", @user.id %>
                 <%= hidden_field_tag "show_user", true %>
