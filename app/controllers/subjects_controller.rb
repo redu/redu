@@ -1,4 +1,5 @@
 class SubjectsController < BaseController
+  respond_to :html, :js
 
   load_and_authorize_resource :space
   load_and_authorize_resource :subject, :through => :space, :except => [:update, :destroy]
@@ -66,31 +67,9 @@ class SubjectsController < BaseController
     @subject = Subject.new(params[:subject])
     @subject.owner = current_user
     @subject.space = Space.find(params[:space_id])
+    @subject.save
 
-    respond_to do |format|
-      if @subject.save
-        format.js
-      else
-        format.js do
-          # Workaround para mostrar o errors.full_messages
-          errors_full = "<ul>"
-          @subject.errors.full_messages.each do |error|
-            errors_full += "<li>#{error}</li>"
-          end
-          errors_full += "</ul>"
-
-          render :update do |page|
-            page.remove '#errorExplanation > ul'
-            page.insert_html :bottom,  '#errorExplanation', errors_full
-            page.show 'errorExplanation'
-            page.replace_html 'subject_title-error', @subject.errors.on(:title)
-            page.show 'subject_title-error'
-            page.replace_html 'subject_description-error', @subject.errors.on(:description)
-            page.show 'subject_description-error'
-          end
-        end
-      end
-    end
+    respond_with(@subject.space, @subject, :layout => !request.xhr?)
   end
 
   def edit
@@ -124,12 +103,7 @@ class SubjectsController < BaseController
           flash[:notice] = "O Módulo foi criado."
         end
 
-        format.js do
-          render :update do |page|
-            page.redirect_to(:controller => 'subjects', :action => 'index',
-                             :space_id => @subject.space.id)
-          end
-        end
+        format.js
         format.html { redirect_to space_subject_path(@space, @subject) }
       else
         format.js { render :template => 'subjects/update_error' }

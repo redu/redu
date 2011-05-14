@@ -1,0 +1,7 @@
+$('#page_form').parent().remove();
+var $legend = $('<legend>', {'class': 'label'}).text("Editar recurso");
+var $fieldset = $('<fieldset>', {'id': 'edit-<%= @lecture.id %>-item'}).html($legend);
+$('#lectures_types').before($fieldset);
+
+var $edit_page_form = $("<%= escape_javascript(render :partial => 'lectures/form_edit_page') %>");
+$('#edit-<%= @lecture.id %>-item').append($edit_page_form);

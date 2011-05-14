@@ -1440,25 +1440,25 @@
 }
 
 #add-resources .resources-wrapper,
-#new_subject .resources-wrapper {
+.new-subject .resources-wrapper {
   border-top: 1px dashed #A8A8A8;
   border-bottom: 1px dashed #A8A8A8;
   padding: 10px 0;
 }
 
 #add-resources .resources,
-#new_subject .resources {
+.new-subject .resources {
   float: left;
 }
 
 #add-resources .resources li,
-#new_subject .resources li {
+.new-subject .resources li {
   padding: 3px 0 3px 20px;
   margin: 5px 0;
 }
 
 #add-resources .resources li .icon,
-#new_subject .resources li .icon {
+.new-subject .resources li .icon {
   width: 16px;
   height: 16px;
   display: block;
@@ -1468,20 +1468,20 @@
 
 #add-resources .resources li a.edit,
 #add-resources .resources li a.delete,
-#new_subject .resources li a.edit,
-#new_subject .resources li a.delete {
+.new-subject .resources li a.edit,
+.new-subject .resources li a.delete {
   font-size: .9em;
 }
 
 #add-resources .new-resource,
-#new_subject .new-resource {
+.new-subject .new-resource {
   float: left;
   width: 550px;
   padding: 15px 0;
 }
 
 #add-resources .new-resource li,
-#new_subject .new-resource li {
+.new-subject .new-resource li {
   background: url("../images/new/new-resource.png") no-repeat -143px 0;
   float: left;
   margin-right: 10px;
@@ -1490,7 +1490,7 @@
   height: 90px;
 }
 
-#new_subject .new-resource li span {
+.new-subject .new-resource li span {
   display: block;
   width: 32px;
   height: 32px;
@@ -1498,7 +1498,7 @@
   margin-top: 10px;
 }
 
-#new_subject .new-resource li a {
+.new-subject .new-resource li a {
   margin: 5px 5px 0 5px;
   display: block;
   color: white;
@@ -1506,18 +1506,18 @@
   font-weight: bold;
 }
 
-#new_subject .new-resource li:hover,
-#new_subject .new-resource li.selected {
+.new-subject .new-resource li:hover,
+.new-subject .new-resource li.selected {
   background-position: 0 0;
 }
 
-#new_subject .new-resource .explanation {
+.new-subject .new-resource .explanation {
   font-size: .9em;
   height: 50px;
   display: block;
 }
 
-#new_subject .new-resource .explanation strong {
+.new-subject .new-resource .explanation strong {
   display: block;
   margin-bottom: 5px;
 }
@@ -1838,6 +1838,7 @@
 a.button,
 input[type=submit],
 a.cancel,
+a.die,
 a.remove,
 a.important {
   padding: 9px 10px;
@@ -1854,6 +1855,7 @@ a.important {
 a.button:hover,
 input[type=submit]:hover,
 a.cancel:hover,
+a.die:hover,
 a.remove:hover,
 a.important:hover {
   text-decoration: none;
@@ -1908,7 +1910,8 @@ input[type=submit]:hover {
 }
 
 input[type=submit].cancel,
-a.cancel {
+a.cancel,
+a.die {
   border: 1px solid #cccbcb;
   background: white;
 
@@ -1917,6 +1920,7 @@ a.cancel {
 }
 
 input[type=submit].cancel:hover,
+a.die:hover,
 a.cancel:hover {
   border: 1px solid #4cacd5;
 
@@ -1931,7 +1935,10 @@ a.remove {
   background: white;
 }
 
-a.cancel:hover { text-decoration: none; }
+a.die:hover,
+a.cancel:hover {
+  text-decoration: none;
+}
 
 input[type=submit].clean,
 a.clean {
@@ -2092,6 +2099,7 @@ form.common label.small {
 
 form.common input[type=submit],
 form.common a.remove,
+form.common a.die,
 form.common a.cancel {
   clear: left;
   float: right;
@@ -2101,6 +2109,7 @@ form.common a.cancel {
 
 form.filter input[type=submit],
 form.filter a.remove,
+form.filter a.die,
 form.filter a.cancel {
   clear: none;
 }

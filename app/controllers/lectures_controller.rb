@@ -1,5 +1,6 @@
 class LecturesController < BaseController
   require 'viewable'
+  respond_to :html, :js
 
   before_filter :find_subject_space_course_environment
   after_filter :create_activity, :only => [:create]
@@ -110,29 +111,13 @@ class LecturesController < BaseController
       @document = Document.new
     end
 
-    respond_to do |format|
-      format.html
-      format.js
-    end
+    respond_with(@space, @subject, @lecture)
   end
 
   # GET /lectures/1/edit
   def edit
-    respond_to do |format|
-      format.js do
-        render :update do |page|
-          @page = @lecture.lectureable
-          page.insert_html :before, 'lectures_types',
-            "<fieldset id=\"edit-#{@lecture.id}-item\">
-                <legend class=\"label\">Editar recurso</legend>
-              </fieldset>"
-            page.insert_html :bottom, "edit-#{@lecture.id}-item",
-              :partial => 'lectures/form_edit_page'
-        end
-      end
-
-      format.xml  { render :xml => @lecture }
-    end
+    @page = @lecture.lectureable
+    respond_with(@space, @subject, @lecture)
   end
 
   # POST /lectures
@@ -238,17 +223,11 @@ class LecturesController < BaseController
     @lecture.subject.space.course.quota.refresh
     @lecture.refresh_students_profiles
 
-    respond_to do |format|
-      format.html {
+   respond_with(@space, @subject, @lecture) do |format|
+      format.html do
         flash[:notice] = "A aula foi removida."
         redirect_to space_subject_path(@space, @subject)
-      }
-      format.js do
-        render :update do |page|
-          page.remove "#{@lecture.id}-item"
-        end
       end
-      format.xml  { head :ok }
     end
   end
 
