@@ -1,4 +1,5 @@
 class SpacesController < BaseController
+  respond_to :html, :js
 
   # Necessário pois Space não é nested route de course
   before_filter :find_space_course_environment,
@@ -254,7 +255,9 @@ class SpacesController < BaseController
         @status = Status.new
 
         format.html
-        format.js
+        format.js do
+          render_endless 'statuses/item', @statuses, '#statuses > ol'
+        end
         format.xml  { render :xml => @space }
       else
         format.html {

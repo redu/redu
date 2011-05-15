@@ -133,5 +133,8 @@ module Redu
     # Usado pelo WYSIWYG CKEditor
     config.autoload_paths += %W( #{Rails.root}/app/models/ckeditor )
 
+    # Autoloads code in lib
+    config.autoload_paths += %W(#{config.root}/lib)
+
   end
 end

@@ -1,4 +1,6 @@
 class CoursesController < BaseController
+  respond_to :html, :js
+
   load_resource :environment, :find_by => :path
   load_and_authorize_resource :course, :through => :environment,
     :except => [:index], :find_by => :path
@@ -15,10 +17,7 @@ class CoursesController < BaseController
       paginate(:page => params[:page], :order => 'name ASC',
                :per_page => Redu::Application.config.items_per_page)
 
-    respond_to do |format|
-      format.html
-      format.js
-    end
+    respond_with(@environment, @course)
   end
 
   def edit
@@ -344,7 +343,10 @@ class CoursesController < BaseController
 
     respond_to do |format|
       format.html
-      format.js
+      format.js do
+        render_endless 'users/item', @users, '#users_list',
+                       {:entity => @course}
+      end
     end
   end
 

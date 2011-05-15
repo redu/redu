@@ -315,4 +315,15 @@ class BaseController < ApplicationController
   def login_required_base
     login_required
   end
+
+  # Renderiza a resposta do endless de acordo com os parâmetros passados
+  def render_endless(partial, collection, selector, partial_locals={})
+    locals = {
+      :partial => partial, # Partial do itens a serem renderizados
+      :collection => collection, # Coleção em questão
+      :selector => selector, # Seletor do HTML que receberá os itens
+      :partial_locals => partial_locals # Locals necessários no partial do item
+    }
+    render :template => 'shared/endless', :locals => locals
+  end
 end
