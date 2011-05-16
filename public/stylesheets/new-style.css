@@ -2121,9 +2121,22 @@ form.filter a.cancel {
   clear: none;
 }
 
+.form-common .bt-loading,
+.form-loader .bt-loading,
+.form-loader .bt-loading:hover,
+.form-common .bt-loading:hover {
+  background-color: #f1f0f0;
+  background-image: url("../images/new/spinner.gif");
+  background-position: center center;
+  background-repeat: no-repeat;
+  color: transparent;
+  border: 1px solid #cccbcb;
+}
+
 .form-common textarea,
 .form-common input[type=password],
-.form-common input[type=text], ul.holder {
+.form-common input[type=text],
+ul.holder {
   width: 400px;
   padding: 8px;
 
@@ -2210,15 +2223,6 @@ form.filter a.cancel {
   padding: 3px 10px;
 }
 
-/*
- * Deprecated:
-  .form-common fieldset fieldset {
-    float: left;
-    width: 100%;
-    margin: 10px 0;
-  }
-*/
-
 .form-common fieldset {
   margin-bottom: 20px;
 }
@@ -2293,7 +2297,7 @@ form.filter .inline {
 
 }
 
-form.commom .columns-plan li,
+.form-commom .columns-plan li,
 .form-common .columns li {
   width: 150px;
   margin-right: 10px;

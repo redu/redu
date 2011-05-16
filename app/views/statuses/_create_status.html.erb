@@ -1,7 +1,7 @@
 <%# Form de status  %>
 <% random_number = get_random_number%>
 <div class="create-status inform-my-status">
-  <%= form_for @status, :remote => true do |f| %>
+  <%= form_for @status, :remote => true, :html => { :class => "form-loader" } do |f| %>
     <%= flash[:statuses_errors] %>
     <%= hidden_field_tag "return", request.url %>
     <%= hidden_field :status, :statusable_id, :value => statusable.id %>
@@ -17,8 +17,6 @@
       <%= render :partial => 'shared/limit_char_field', :locals => { :class_textarea => "status-#{random_number}" }%>
       <%= f.submit 'Postar' %>
       <a href="" class="cancel">Cancelar</a>
-      <%= image_tag 'spinner.gif', :class => "status_spinner",
-        :style => 'display: none'%>
   <% end %>
 <% end %>
 </div>

@@ -1,16 +1,15 @@
 GIT
+  remote: git://github.com/alto/aasm.git
+  revision: a6f77b5fa4981d92695e28d5984af56f1d79388c
+  specs:
+    aasm (2.2.0)
+
+GIT
   remote: git://github.com/edgarjs/ajaxful-rating.git
   revision: 81b563ef4e4f7937b769ea64b589d990dc833b43
   branch: rails3
   specs:
     ajaxful_rating (3.0.0.beta3)
-
-GIT
-  remote: git://github.com/rubyist/aasm.git
-  revision: 5d715307571786212a516ebae20423b0ef0e2a92
-  tag: v2.2.0
-  specs:
-    aasm (2.2.0)
 
 GEM
   remote: http://rubygems.org/
