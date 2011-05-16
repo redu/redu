@@ -121,8 +121,8 @@
             <%= render :partial => 'courses/item_detailed',
               :collection => @courses %>
           <% end %>
-          <%= will_paginate @courses, :renderer => EndlessRenderer %>
         </ul>
+        <%= will_paginate @courses, :renderer => EndlessRenderer %>
       </div>
     </div>
   </div><!-- end .main -->
