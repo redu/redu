@@ -2142,7 +2142,6 @@ form.filter a.cancel {
   border: 1px solid #cccbcb;
 }
 
-
 .form-common textarea,
 .form-common input[type=password],
 .form-common input[type=text],
@@ -4999,6 +4998,14 @@ div.token-input-dropdown {
 .icon-x-orange_16_16{ background-position: -6584px -1792px;  }
 .icon-x-gray_8_8:hover,
 .icon-x-red_8_8{ background-position: -6831px 3px;  }
+
+.link-loading,
+.link-loading:hover {
+  background-image:  url("../images/new/loading-horizontal.gif");
+  background-repeat: no-repeat;
+  background-position: left center;
+  color: transparent;
+}
 
 .ui-helper-clearfix:after,
 .clearfix:after {

@@ -2,7 +2,7 @@
 <div class="create-status create-response" style = "display: none;">
   <% form_for :status,
     :url => respond_user_status_path(current_user, status_id),
-    :remote => true do |f| %>
+    :remote => true, :html => { :class => "form-loader" } do |f| %>
     <%= f.error_messages %>
     <% field_set_tag do %>
       <% random_number = get_random_number%>

@@ -11,15 +11,13 @@
     </div>
   </div>
   <div class="actions">
-    <%= image_tag 'spinner.gif', :style => 'display: none;',
-      :id => "spinner-#{friend.id}" %>
     <%= form_for [current_user, current_user.friendship_for(friend)],
-      :html => {:method => :delete}, :remote => true do %>
+      :html => {:method => :delete, :class => "form-loader"}, :remote => true do %>
       <%= hidden_field_tag "goto_home", true %>
       <%= submit_tag "Recusar", :class => 'remove' %>
     <% end %>
     <%= form_for [current_user, Friendship.new],
-       :remote => true, :method => :post do %>
+      :remote => true, :html => { :method => :post, :class => "form-loader" } do %>
       <%= hidden_field_tag "goto_home", true %>
       <%= hidden_field_tag "friend_id", friend.id %>
       <%= submit_tag "Aceitar", :class => 'important accept-friend' %>

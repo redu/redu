@@ -36,7 +36,7 @@
         %>
       <div class="rename-folder" style="display:none;">
         <%= form_for :folder, folder, :url => space_folder_path(@space, folder),
-          :remote => true, :html => { :method => :put } do |f| %>
+          :remote => true, :html => { :method => :put, :class => 'form-loader' } do |f| %>
           <%= f.text_field :name %>
           <%= f.submit 'Ok' %>
           <%= link_to "Cancelar", "#", :class => "cancel" %>

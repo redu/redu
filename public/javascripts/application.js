@@ -208,6 +208,14 @@ jQuery(function(){
         $(this).find("input[type=submit]").loadingComplete();
     });
 
+    $("a[data-remote=true]").live('ajax:before', function(){
+        $(this).addClass("link-loading");
+    });
+
+    $("a[data-remote=true]").live('ajax:complete', function(){
+        $(this).removeClass("link-loading");
+    });
+
     $.fn.loadingStart = function(){
       return this.each(function(){
           $bt = $(this);
