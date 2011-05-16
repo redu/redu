@@ -24,7 +24,6 @@ $(function(){
     });
 
     $("#do_lecture").live("ajax:before ajax:complete", function(){
-        console.log($(this).find("label[for='Aula_finalizada']"));
         $(this).find("label[for='Aula_finalizada']").loadingToggle();
     });
 });
