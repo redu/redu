@@ -20,7 +20,7 @@ class BulletinsController < BaseController
 
     respond_to do |format|
       format.html
-      format.js
+      format.js { render_endless 'bulletins/item', @bulletins, '#bulletins > ul' }
     end
   end
 

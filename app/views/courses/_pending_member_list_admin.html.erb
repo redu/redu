@@ -9,8 +9,8 @@
       </thead>
       <%= render :partial => 'courses/pending_member_item_admin', :collection => pending_members %>
     </table>
-    <%= will_paginate pending_members, :renderer => EndlessRenderer %>
     <%= submit_tag "Moderar" %>
+    <%= will_paginate pending_members, :renderer => EndlessRenderer %>
   <% end %>
 <% else %>
     <div class="box_notice">Não há solicitacões pendentes.</div>

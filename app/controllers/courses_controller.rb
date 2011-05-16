@@ -17,7 +17,9 @@ class CoursesController < BaseController
       paginate(:page => params[:page], :order => 'name ASC',
                :per_page => Redu::Application.config.items_per_page)
 
-    respond_with(@environment, @course)
+    respond_with(@environment, @course) do |format|
+      format.js { render_endless 'spaces/item', @spaces, '#spaces_list' }
+    end
   end
 
   def edit
@@ -143,7 +145,9 @@ class CoursesController < BaseController
                                       :per_page => Redu::Application.config.items_per_page)
     respond_to do |format|
       format.html
-      format.js
+      format.js do
+        render_endless 'spaces/item_short', @spaces, '#course-preview > ul'
+      end
     end
   end
 
@@ -158,7 +162,9 @@ class CoursesController < BaseController
 
     respond_to do |format|
       format.html
-      format.js
+      format.js do
+        render_endless 'spaces/item_admin', @spaces, '#spaces_list'
+      end
     end
   end
 
@@ -171,7 +177,10 @@ class CoursesController < BaseController
                                                       :per_page => Redu::Application.config.items_per_page)
     respond_to do |format|
       format.html
-      format.js
+      format.js do
+        render_endless 'courses/pending_member_item_admin', @pending_members,
+          '#pending_member_list'
+      end
     end
   end
 
@@ -278,8 +287,9 @@ class CoursesController < BaseController
 
   # Aba Membros.
   def admin_members
+    #FIXME Remover para o modelo ao migrar para Rails3
     @memberships = UserCourseAssociation.paginate(
-      :conditions => ["course_id = ? AND state LIKE ? ", @course.id, 'approved'],
+      :conditions => ["user_course_associations.course_id = ? AND state LIKE ? ", @course.id, 'approved'],
       :include => [{ :user => {:user_space_associations => :space} }],
       :page => params[:page],
       :order => 'updated_at DESC',
@@ -287,7 +297,10 @@ class CoursesController < BaseController
 
       respond_to do |format|
         format.html
-        format.js
+        format.js do
+          render_endless 'courses/user_item_admin', @memberships,
+            '#user_list_table'
+        end
       end
   end
 
