@@ -2073,6 +2073,7 @@ form.filter {
 .form-common input[type=text],
 .form-common input[type=password],
 .form-common input[type=file],
+.form-common select,
 .form-common textarea {
   float: left;
   display: block;

@@ -2,6 +2,7 @@
   <%= form_for [@space, @subject, @lecture], :remote => true,
     :html => { :id => "existent-form", :class => "form-common" } do |f| %>
     <% field_set_tag do %>
+    <%= f.label :lecture_id, "Recurso:" %>
       <% if user_existent_lectures.empty? %>
         <div class="box_notice">Você não possui nenhuma aula. Crie uma nova!</div>
       <% else %>
