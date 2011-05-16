@@ -2121,17 +2121,27 @@ form.filter a.cancel {
   clear: none;
 }
 
-.form-common .bt-loading,
-.form-loader .bt-loading,
-.form-loader .bt-loading:hover,
-.form-common .bt-loading:hover {
-  background-color: #f1f0f0;
+/* Spinner genérico */
+.bt-loading {
   background-image: url("../images/new/spinner.gif");
   background-position: center center;
   background-repeat: no-repeat;
   color: transparent;
+}
+
+/* Spinner para botoes em formulários */
+.form-common .bt-loading,
+.form-loader .bt-loading,
+.form-loader .bt-loading:hover,
+.form-common .bt-loading:hover {
+  background-image: url("../images/new/spinner.gif");
+  background-position: center center;
+  background-repeat: no-repeat;
+  color: transparent;
+  background-color: #f1f0f0;
   border: 1px solid #cccbcb;
 }
+
 
 .form-common textarea,
 .form-common input[type=password],

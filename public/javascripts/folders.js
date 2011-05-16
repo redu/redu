@@ -39,7 +39,6 @@ $(function(){
 
     utils.refresh = function(){
       $(document).ajaxComplete(function(){
-          console.log("teste")
         $("table.common tr:even").addClass("odd");
       });
     };

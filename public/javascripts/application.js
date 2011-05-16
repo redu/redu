@@ -201,15 +201,38 @@ jQuery(function(){
 
     // Padrão de spinner
     $(".form-common, .form-loader").live('ajax:before', function(){
-        console.log("teste")
-        $button = $(this).find("input[type=submit]");
-        $button.addClass("bt-loading");
+        $(this).find("input[type=submit]").loadingStart();
     });
 
     $(".form-common, .form-loader").live('ajax:complete', function(){
-        $button = $(this).find("input[type=submit]");
-        $button.removeClass("bt-loading");
+        $(this).find("input[type=submit]").loadingComplete();
     });
+
+    $.fn.loadingStart = function(){
+      return this.each(function(){
+          $bt = $(this);
+          $bt.addClass("bt-loading");
+      });
+    };
+
+    $.fn.loadingComplete = function(){
+      return this.each(function(){
+          $bt = $(this);
+          $bt.removeClass("bt-loading");
+      });
+    };
+
+    $.fn.loadingToggle = function(){
+      return this.each(function(){
+          $bt = $(this);
+
+          if( $bt.hasClass('bt-loading') ) {
+            $bt.loadingComplete();
+          } else {
+            $bt.loadingStart();
+          }
+      });
+    };
 
 });
 
