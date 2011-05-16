@@ -197,7 +197,10 @@ class EnvironmentsController < BaseController
 
     respond_to do |format|
       format.html
-      format.js { render :template => "shared/admin_members" }
+      format.js do
+        render_endless 'environments/user_item_admin', @memberships,
+          '#user_list_table'
+      end
     end
   end
 

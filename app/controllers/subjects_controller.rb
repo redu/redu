@@ -28,7 +28,7 @@ class SubjectsController < BaseController
 
     respond_to do |format|
       format.html
-      format.js
+      format.js { render_endless 'subjects/item', @subjects, '#subjects_list' }
     end
   end
 
@@ -40,7 +40,7 @@ class SubjectsController < BaseController
       @status = Status.new
 
       format.html
-      format.js
+      format.js { render_endless 'statuses/item', @statuses, '#statuses > ol' }
       format.xml { render :xml => @subject }
     end
   end
@@ -163,7 +163,9 @@ class SubjectsController < BaseController
                                 :per_page => Redu::Application.config.items_per_page)
     respond_to do |format|
       format.html
-      format.js
+      format.js do
+        render_endless 'subjects/user_item_admin', @memberships, '#user_list_table'
+      end
     end
   end
 
@@ -192,7 +194,10 @@ class SubjectsController < BaseController
 
     respond_to do |format|
       format.html
-      format.js
+      format.js do
+        render_endless 'users/item', @users, '#users_list',
+          { :entity => @subject }
+    end
     end
   end
 

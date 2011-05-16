@@ -53,7 +53,10 @@ class SpacesController < BaseController
 
     respond_to do |format|
       format.html
-      format.js { render :template => 'shared/admin_members' }
+      format.js do
+        render_endless 'spaces/user_item_admin', @memberships,
+          '#user_list_table'
+      end
     end
   end
 
@@ -379,7 +382,10 @@ class SpacesController < BaseController
 
     respond_to do |format|
       format.html
-      format.js
+      format.js do
+        render_endless 'users/item', @users, '#users_list',
+          { :entity => @space }
+    end
     end
   end
 
