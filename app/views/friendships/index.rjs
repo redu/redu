@@ -1,4 +1,0 @@
-page.insert_html :bottom, '#contacts > ul',
-  :partial => "users/item_medium", :collection => @friends
-page.replace_html ".endless",
-  (will_paginate @friends, :renderer => EndlessRenderer)

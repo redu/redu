@@ -42,7 +42,9 @@ class LecturesController < BaseController
                                           :per_page => Redu::Application.config.items_per_page)
     respond_to do |format|
       format.html
-      format.js
+      format.js do
+        render_endless 'lectures/item', @lectures, '#subject-resources > ol'
+      end
     end
   end
 

@@ -10,7 +10,7 @@ class FriendshipsController < BaseController
 
     respond_to do |format|
       format.html
-      format.js
+      format.js { render_endless 'users/item_medium', @friends, '#contacts > ul' }
     end
   end
 
@@ -48,8 +48,11 @@ class FriendshipsController < BaseController
     end
   end
 
+  # Controlador não acessível a partir das views
   def pending
     @friends_pending = @user.friends_pending.paginate({:page => params[:page], :per_page => 10})
+
+    format.js { render_endless 'friendships/item_pending', @friends_pending, '#pending_list' }
   end
 
   def accept

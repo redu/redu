@@ -9,7 +9,10 @@ class MessagesController < BaseController
                                                    :per_page => Redu::Application.config.items_per_page )
       respond_to do |format|
         format.html
-        format.js
+        format.js do
+          render_endless 'messages/item', @messages, '#messages > tbody',
+            { :mailbox => :inbox }
+        end
       end
   end
 
@@ -20,7 +23,10 @@ class MessagesController < BaseController
                                              :per_page => Redu::Application.config.items_per_page)
     respond_to do |format|
         format.html
-        format.js
+        format.js do
+          render_endless 'messages/item', @messages, '#messages > tbody',
+            { :mailbox => :outbox }
+        end
     end
   end
 
