@@ -239,55 +239,6 @@ class BaseController < ApplicationController
     return @user
   end
 
-  def popular_tags(limit = nil, order = ' tags.name ASC', type = nil)
-    sql = "SELECT tags.id, tags.name, count(*) AS count
-      FROM taggings, tags
-      WHERE tags.id = taggings.tag_id "
-      sql += " AND taggings.taggable_type = '#{type}'" unless type.nil?
-      sql += " GROUP BY tags.id, tags.name"
-      sql += " ORDER BY #{order}"
-      sql += " LIMIT #{limit}" if limit
-      Tag.find_by_sql(sql).sort{ |a,b| a.name.downcase <=> b.name.downcase}
-  end
-
-  def get_additional_homepage_data
-    @sidebar_right = true
-    @homepage_features = HomepageFeature.find_features
-    @homepage_features_data = @homepage_features.collect {|f| [f.id, f.public_filename(:large) ]  }
-
-    # @active_users = User.active.find_by_activity({:limit => 5, :require_avatar => false})
-    @featured_writers = User.find_featured
-
-    @featured_posts = Post.find_featured
-
-    @topics = Topic.find(:all, :limit => 5, :order => "replied_at DESC")
-
-    @active_contest = Contest.get_active
-    @popular_posts = Post.find_popular({:limit => 10})
-    @popular_polls = Poll.find_popular(:limit => 8)
-  end
-
-
-  def commentable_url(comment)
-    if comment.recipient && comment.commentable
-      if comment.commentable_type != "User"
-        polymorphic_url([comment.recipient, comment.commentable])+"#comment_#{comment.id}"
-      elsif comment
-        user_url(comment.recipient)+"#comment_#{comment.id}"
-      end
-    elsif comment.commentable
-      polymorphic_url(comment.commentable)+"#comment_#{comment.id}"
-    end
-  end
-
-  def commentable_comments_url(commentable)
-    if commentable.owner && commentable.owner != commentable
-      "#{polymorphic_path([commentable.owner, commentable])}#comments"
-    else
-      "#{polymorphic_path(commentable)}#comments"
-    end
-  end
-
   def contact
     if request.get?
       @contact = Contact.new

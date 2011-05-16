@@ -3,11 +3,6 @@ require 'md5'
 # Methods added to this helper will be available to all templates in the application.
 module BaseHelper
 
-  # Adiciona a classe ui-state-active se o path for o atual
-  def selected_if_current_is(path)
-    current_page?(path) ? "ui-state-active" : ""
-  end
-
   # Cria lista não ordenada no formato da navegação do widget de abas (jquery UI)
   def tabs_navigation(*paths)
     lis = paths.collect do |item|
@@ -43,118 +38,6 @@ module BaseHelper
     :style=> (err ? "#{options[:style]}":"#{options[:style]};display: none;"))
     content_tag("p", err || "", options )
   end
-
-  # Inclui JS e CSS e aplica colopicker a tag com o ID especificado
-  def apply_color_picker_to(target)
-    render :partial => "base/color_picker", :locals => { :target => target }
-  end
-
-  # Opções de cores do colorpicker
-  def color_picker_colors
-    colors = [["#ffffff", "ffffff"],
-              ["#ffccc9", "ffccc9"],
-              ["#ffce93", "ffce93"],
-              ["#fffc9e", "fffc9e"],
-              ["#ffffc7", "ffffc7"],
-              ["#9aff99", "9aff99"],
-              ["#96fffb", "96fffb"],
-              ["#cdffff", "cdffff"],
-              ["#cbcefb", "cbcefb"],
-              ["#cfcfcf", "cfcfcf"],
-              ["#fd6864", "fd6864"],
-              ["#fe996b", "fe996b"],
-              ["#fffe65", "fffe65"],
-              ["#fcff2f", "fcff2f"],
-              ["#67fd9a", "67fd9a"],
-              ["#38fff8", "38fff8"],
-              ["#68fdff", "68fdff"],
-              ["#9698ed", "9698ed"],
-              ["#c0c0c0", "c0c0c0"],
-              ["#fe0000", "fe0000"],
-              ["#f8a102", "f8a102"],
-              ["#ffcc67", "ffcc67"],
-              ["#f8ff00", "f8ff00"],
-              ["#34ff34", "34ff34"],
-              ["#68cbd0", "68cbd0"],
-              ["#34cdf9", "34cdf9"],
-              ["#6665cd", "6665cd"],
-              ["#9b9b9b", "9b9b9b"],
-              ["#cb0000", "cb0000"],
-              ["#f56b00", "f56b00"],
-              ["#ffcb2f", "ffcb2f"],
-              ["#ffc702", "ffc702"],
-              ["#32cb00", "32cb00"],
-              ["#00d2cb", "00d2cb"],
-              ["#3166ff", "3166ff"],
-              ["#6434fc", "6434fc"],
-              ["#656565", "656565"],
-              ["#9a0000", "9a0000"],
-              ["#ce6301", "ce6301"],
-              ["#cd9934", "cd9934"],
-              ["#999903", "999903"],
-              ["#009901", "009901"],
-              ["#329a9d", "329a9d"],
-              ["#3531ff", "3531ff"],
-              ["#6200c9", "6200c9"],
-              ["#343434", "343434"],
-              ["#680100", "680100"],
-              ["#963400", "963400"],
-              ["#986536", "electe"],
-              ["#646809", "646809"],
-              ["#036400", "036400"],
-              ["#34696d", "34696d"],
-              ["#00009b", "00009b"],
-              ["#303498", "303498"],
-              ["#000000", "000000"],
-              ["#330001", "330001"],
-              ["#643403", "643403"],
-              ["#663234", "663234"],
-              ["#343300", "343300"],
-              ["#013300", "013300"],
-              ["#003532", "003532"],
-              ["#010066", "010066"],
-              ["#340096", "340096"]]
-  end
-
-
-    def simple_categories_i18n(f)
-   # collection_select(:lecture, :simple_category, SimpleCategory.all, :id, :name)
-	  categories_array = SimpleCategory.all.map { |cat| [category_i18n(cat.name), cat.id] }
-		if params[:lecture]
-			# To put a value in categories_array I have to subtract for 1 the params[:lecture][:simple_category_id],
-			# because the include_blank add a extra field
-			if params[:lecture][:simple_category_id]
-
-				if params[:lecture][:simple_category_id].to_i > 0
-					i = params[:lecture][:simple_category_id].to_i - 1
-					f.select(:simple_category_id, options_for_select(categories_array, categories_array[i]), :include_blank => true)
-				else
-					f.select(:simple_category_id, options_for_select(categories_array), :include_blank => true)
-				end
-			else
-				f.select(:simple_category_id, options_for_select(categories_array), :include_blank => true)
-			end
-		elsif params[:exam]
-			if params[:exam][:simple_category_id]
-				if params[:exam][:simple_category_id].to_i > 0
-					i = params[:exam][:simple_category_id].to_i - 1
-					f.select(:simple_category_id, options_for_select(categories_array, categories_array[i]), :include_blank => true)
-				else
-					f.select(:simple_category_id, options_for_select(categories_array), :include_blank => true)
-				end
-			else
-				f.select(:simple_category_id, options_for_select(categories_array), :include_blank => true)
-			end
-		else
-			f.select(:simple_category_id, options_for_select(categories_array), :include_blank => true)
-		end
-
-  end
-
-  def category_i18n(category)
-    t(category.downcase.gsub(' ','').gsub('/','_').to_sym)
-  end
-
 
   def type_class(resource)
     icons = ['3gp', 'bat', 'bmp', 'doc', 'css', 'exe', 'gif', 'jpg', 'jpeg', 'jar','zip',
@@ -233,95 +116,12 @@ module BaseHelper
       @activity
   end
 
-  def reload_flash
-    #page.replace_html "flash_messages", :partial => "shared/messages"
-    #page.replace_html :notice, flash[:notice]
-    #flash.discard
-  end
-
-  def commentable_url(comment)
-    if comment.commentable_type != "User"
-      polymorphic_url([comment.recipient, comment.commentable])+"#comment_#{comment.id}"
-    else
-      user_url(comment.recipient)+"#comment_#{comment.id}"
-    end
-  end
-
-
-
   def forum_page?
     %w(forums topics sb_posts spaces).include?(@controller.controller_name)
   end
 
-  def is_current_user_and_featured?(u)
-     u && u.eql?(current_user) && u.featured_writer?
-  end
-
-  def resize_img(classname, width=90, height=135)
-    "<style>
-      .#{classname} {
-        max-width: #{width}px;
-      }
-    </style>
-    <script type=\"text/javascript\">
-      //<![CDATA[
-        Event.observe(window, 'load', function(){
-          $$('img.#{classname}').each(function(image){
-            CommunityEngine.resize_image(image, {max_width: #{width}, max_height:#{height}});
-          });
-        }, false);
-      //]]>
-    </script>"
-  end
-
-  def rounded(options={}, &content)
-    options = {:class=>"box"}.merge(options)
-    options[:class] = "box " << options[:class] if options[:class]!="box"
-
-    str = '<div'
-    options.collect {|key,val| str << " #{key}=\"#{val}\"" }
-    str << '><div class="box_top"></div>'
-    str << "\n"
-
-    concat(str)
-    yield(content)
-    concat('<br class="clear" /><div class="box_bottom"></div></div>')
-  end
-
   def block_to_partial(partial_name, html_options = {}, &block)
     concat(render(:partial => partial_name, :locals => {:body => capture(&block), :html_options => html_options}))
-  end
-
-  def box(html_options = {}, &block)
-    block_to_partial('shared/box', html_options, &block)
-  end
-
-  def tag_cloud(tags, classes)
-    max, min = 0, 0
-    tags.each { |t|
-      max = t.count.to_i if t.count.to_i > max
-      min = t.count.to_i if t.count.to_i < min
-    }
-
-    divisor = ((max - min) / classes.size) + 1
-
-    tags.each { |t|
-      yield t.name, classes[(t.count.to_i - min) / divisor]
-    }
-  end
-
-  def city_cloud(cities, classes)
-    max, min = 0, 0
-    cities.each { |c|
-      max = c.users.size.to_i if c.users.size.to_i > max
-      min = c.users.size.to_i if c.users.size.to_i < min
-    }
-
-    divisor = ((max - min) / classes.size) + 1
-
-    cities.each { |c|
-      yield c, classes[(c.users.size.to_i - min) / divisor]
-    }
   end
 
   def truncate_chars(text, length = 30, end_string = '...')
@@ -434,46 +234,6 @@ module BaseHelper
     title.html_safe
   end
 
-  def add_friend_link(user = nil)
-    html = "<span class='friend_request' id='friend_request_#{user.id}'>"
-    html += link_to_remote t(:request_friendship),
-        {:update => "friend_request_#{user.id}",
-          :loading => "$$('span#friend_request_#{user.id} span.spinner')[0].show(); $$('span#friend_request_#{user.id} a.add_friend_btn')[0].hide()",
-          :complete => visual_effect(:highlight, "friend_request_#{user.id}", :duration => 1),
-          500 => "alert('"+ t(:sorry_there_was_an_error_requesting_friendship) + "')",
-          :url => hash_for_user_friendships_url(:user_id => current_user.id, :friend_id => user.id),
-          :method => :post }, {:class => "add_friend button"}
-    html += "<span style='display:none;' class='spinner'>"
-    html += image_tag 'spinner.gif'
-    html += t(:requesting_friendship) + " ...</span></span>"
-    html
-  end
-
-  def topnav_tab(name, options)
-    classes = [options.delete(:class)]
-    classes << 'current' if options[:section] && (options.delete(:section).to_a.include?(@section))
-
-    "<li class='#{classes.join(' ')}'>" + link_to( "<span>"+name+"</span>", options.delete(:url), options) + "</li>"
-  end
-
-  # def format_post_totals(posts)
-  #   "#{posts.size} posts, How to: #{posts.select{ |p| p.category.eql?(Category.get(:how_to))}.size}, Non How To: #{posts.select{ |p| !p.category.eql?(Category.get(:how_to))}.size}"
-  # end
-
-  def more_comments_links(commentable)
-    html = link_to "&raquo; " + t(:all_comments), comments_url(commentable.class.to_s.underscore, commentable.to_param)
-    html += "<br />"
-    html += link_to "&raquo; " + t(:comments_rss), comments_url(commentable.class.to_s.underscore, commentable.to_param, :format => :rss)
-    html
-  end
-
-  def more_user_comments_links(user = @user)
-    html = link_to "&raquo; " + t(:all_comments), user_comments_url(user)
-    html += "<br />"
-    html += link_to "&raquo; " + t(:comments_rss), user_comments_url(user.to_param, :format => :rss)
-    html
-  end
-
   def activities_line_graph(options = {})
     line_color = "0x628F6C"
     prefix  = ''
@@ -491,43 +251,6 @@ module BaseHelper
     code
   end
 
-  def feature_enabled?(feature)
-    AppConfig.sections_enabled.include?(feature)
-  end
-
- # def clippings_link
- #   "javascript:(function() {d=document, w=window, e=w.getSelection, k=d.getSelection, x=d.selection, s=(e?e():(k)?k():(x?x.createRange().text:0)), e=encodeURIComponent, document.location='#{application_url}new_clipping?uri='+e(document.location)+'&title='+e(document.title)+'&selection='+e(s);} )();"
- # end
-
-  def paginating_links(paginator, options = {}, html_options = {})
-    if paginator.size >= 1
-      name = options[:name] || PaginatingFind::Helpers::DEFAULT_OPTIONS[:name]
-
-      our_params = (options[:params] || params).clone
-
-      our_params.delete("authenticity_token")
-      our_params.delete("commit")
-
-      links = paginating_links_each(paginator, options) do |n|
-        our_params[name] = n
-        link_to(n, our_params, html_options.merge(:class => (paginator.page.eql?(n) ? 'active' : '')))
-      end
-    end
-
-    if options[:show_info].eql?(false)
-      (links || '')
-    else
-      content_tag(:div, pagination_info_for(paginator), :class => 'pagination_info') + (links || '')
-    end
-  end
-
-  def pagination_info_for(paginator, options = {})
-    options = {:prefix => t(:showing), :connector => '-', :suffix => ""}.merge(options)
-    window = paginator.first_item.to_s + options[:connector] + paginator.last_item.to_s
-    options[:prefix] + " <strong>#{window}</strong> " + t('of') + " #{paginator.size} " + options[:suffix]
-  end
-
-
   def last_active
     session[:last_active] ||= Time.now.utc
   end
@@ -536,10 +259,6 @@ module BaseHelper
     or_option = options.delete(:or)
     return super + "<span class='button_or'>or " + or_option + "</span>" if or_option
     super
-  end
-
-  def ajax_spinner_for(id, spinner="spinner.gif")
-    "<img src='/images/#{spinner}' style='display:none; vertical-align:middle;' id='#{id.to_s}_spinner'> "
   end
 
   def avatar_for(user, size=32)
@@ -593,29 +312,6 @@ module BaseHelper
     end
   end
 
-  def profile_completeness(user)
-    segments = [
-      {:val => 2, :action => link_to('Add a profile photo', edit_user_path(user, :anchor => 'profile_details')), :test => !user.avatar.nil? },
-      {:val => 1, :action => link_to('Fill in your about me', edit_user_path(user, :anchor => 'user_description')), :test => !user.description.blank?},
-      {:val => 2, :action => link_to('Select your city', edit_user_path(user, :anchor => 'location_chooser')), :test => !user.metro_area.nil? },
-      {:val => 1, :action => link_to('Tag yourself', edit_user_path(user, :anchor => "user_tags")), :test => user.tags.any?},
-      {:val => 1, :action => link_to('Invite some friends', new_invitation_path), :test => user.invitations.any?}
-    ]
-
-    completed_score = segments.select{|s| s[:test].eql?(true)}.sum{|s| s[:val]}
-    incomplete = segments.select{|s| !s[:test] }
-
-    total = segments.sum{|s| s[:val] }
-    score = (completed_score.to_f/total.to_f)*100
-
-    {:score => score, :incomplete => incomplete, :total => total}
-  end
-
-
-  def possesive(user)
-    user.gender ? (user.male? ? t(:his) : t(:her))  : t( :their )
-  end
-
   def owner_link
     if @space.owner
       link_to @space.owner.display_name, @space.owner
@@ -630,29 +326,9 @@ module BaseHelper
 
   end
 
-  def teachers_preview(space, size = nil)
-    size ||= 12
-    space.teachers.find(:all, :limit => size)
+  def get_random_number
+    SecureRandom.hex(4)
   end
-
-
-  def month_events(space_id, month)
-    start_month = Time.utc(Time.now.year, month, 1)
-    end_month = Time.utc(Time.now.year, month, 31)
-    Event.all(:select => "id, start_time, end_time",
-              :conditions => ["eventable_id = ? AND eventable_type = 'Space' AND state LIKE 'approved' AND (start_time BETWEEN ? AND ? OR end_time BETWEEN ? AND ?)", space_id, start_month, end_month, start_month, end_month])
-  end
-
-  # Indica se há evento no dia informado
-  def has_event_in?(events, day)
-    d = Time.utc(Time.now.year, Time.now.month, day)
-    day_events = events.select {|e| e.start_time <= d and d  <= e.end_time}
-    day_events.size > 0
-  end
-
-def get_random_number
-  SecureRandom.hex(4)
-end
 
   # Gera o nome do recurso (class_name) devidamente pluralizado de acordo com
   # a quantidade (qty)
@@ -679,5 +355,4 @@ end
 
     render :partial => "plans/plans", :locals => { :plans => plans }
   end
-
 end
