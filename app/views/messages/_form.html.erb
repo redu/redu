@@ -1,6 +1,6 @@
 <% content_for :header_scripts_and_styles do %>
   <%= stylesheet_link_tag "fb_style.css" %>
-  <%=  javascript_include_tag "jquery.fcbkcomplete.min.js"%>
+  <%= javascript_include_tag "jquery.fcbkcomplete.min.js" %>
   <script type="text/javascript">
     $(document).ready(function(){
       $("#message_to").fcbkcomplete({
@@ -22,19 +22,19 @@
   <%= label_tag :message_to, t( :to ) + ":" %>
 
 
-<div style="width: 412px; float: left;"><!-- necessario para manter o input e o sugestion alinhados -->
+  <div style="width: 412px; float: left;"><!-- necessario para manter o input e o sugestion alinhados -->
 
-  <select id="message_to" name="message_to">
-    <% unless params[:message_to] and params[:message_to].length > 0 %>
-      <% @ausers = User.find(:all, :select=> "id,first_name", :conditions => [ 'id IN (?)', params[:message_to] ]) %>
-      <%  @aab = @ausers.map{|u| {u.first_name => u.id}} %>
-      <%= options_for_select(@aab) %>
-    <% end %>
-  </select>
+    <select id="message_to" name="message_to">
+      <% unless params[:message_to] and params[:message_to].length > 0 %>
+        <% @ausers = User.find(:all, :select=> "id,first_name", :conditions => [ 'id IN (?)', params[:message_to] ]) %>
+        <%  @aab = @ausers.map{|u| {u.first_name => u.id}} %>
+        <%= options_for_select(@aab) %>
+      <% end %>
+    </select>
 
 
 
-</div>
+  </div>
 
   <%= label_tag :message_subject, t( :subject_of_message ) + ":" %>
   <%= f.text_field :subject %>
