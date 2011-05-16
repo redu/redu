@@ -604,7 +604,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 										if ( nodeList.count() > 0 )
 										{
 											var caption = nodeList.getItem( 0 );
-											caption = CKEDITOR.tools.trim( caption.getText() );
+											caption = ( caption.getChild( 0 ) && caption.getChild( 0 ).getText() ) || '';
+											caption = CKEDITOR.tools.trim( caption );
 											this.setValue( caption );
 										}
 									},

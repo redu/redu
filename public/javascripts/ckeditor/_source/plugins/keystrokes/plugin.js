@@ -28,10 +28,14 @@ CKEDITOR.plugins.add( 'keystrokes',
 			blockedKeystrokes	= editor.keystrokeHandler.blockedKeystrokes;
 
 		for ( var i = 0 ; i < keystrokesConfig.length ; i++ )
+		{
 			keystrokes[ keystrokesConfig[i][0] ] = keystrokesConfig[i][1];
+		}
 
 		for ( i = 0 ; i < blockedConfig.length ; i++ )
+		{
 			blockedKeystrokes[ blockedConfig[i] ] = 1;
+		}
 	}
 });
 

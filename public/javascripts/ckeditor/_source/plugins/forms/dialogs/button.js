@@ -12,10 +12,10 @@ CKEDITOR.dialog.add( 'button', function( editor )
 		{
 			delete this.button;
 			var element = this.getParentEditor().getSelection().getSelectedElement();
-			if ( element && element.is( 'input' ) )
+			if ( element && element.getName() == "input" )
 			{
 				var type = element.getAttribute( 'type' );
-				if ( type in { button:1, reset:1, submit:1 } )
+				if ( type == "button" || type == "reset" || type == "submit" )
 				{
 					this.button = element;
 					this.setupContent( element );

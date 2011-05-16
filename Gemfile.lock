@@ -55,6 +55,8 @@ GEM
       xml-simple
     builder (2.1.2)
     cancan (1.6.4)
+    ckeditor (3.4.2.pre)
+      mime-types (>= 1.16)
     columnize (0.3.2)
     daemons (1.1.3)
     date_validator (0.6.1)
@@ -155,6 +157,7 @@ DEPENDENCIES
   authlogic
   aws-s3
   cancan
+  ckeditor (= 3.4.2.pre)
   date_validator
   deep_cloneable
   dynamic_form

@@ -261,13 +261,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 			if ( element.filebrowser.action == 'Browse' )
 			{
-				var url = element.filebrowser.url;
-				if ( url === undefined )
-				{
-					url = editor.config[ 'filebrowser' + ucFirst( dialogName ) + 'BrowseUrl' ];
-					if ( url === undefined )
-						url = editor.config.filebrowserBrowseUrl;
-				}
+				var url = element.filebrowser.url || editor.config[ 'filebrowser' + ucFirst( dialogName ) + 'BrowseUrl' ]
+							|| editor.config.filebrowserBrowseUrl;
 
 				if ( url )
 				{
@@ -278,13 +273,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			}
 			else if ( element.filebrowser.action == 'QuickUpload' && element[ 'for' ] )
 			{
-				var url = element.filebrowser.url;
-				if ( url === undefined )
-				{
-					url = editor.config[ 'filebrowser' + ucFirst( dialogName ) + 'UploadUrl' ];
-					if ( url === undefined )
-						url = editor.config.filebrowserUploadUrl;
-				}
+				url =  element.filebrowser.url || editor.config[ 'filebrowser' + ucFirst( dialogName ) + 'UploadUrl' ]
+							|| editor.config.filebrowserUploadUrl;
 
 				if ( url )
 				{
@@ -350,7 +340,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			var ids = elementId.split( ";" );
 			for ( var i = 0 ; i < ids.length ; i++ )
 			{
-				if ( isConfigured( definition, tabId, ids[i] ) )
+				if ( isConfigured( definition, tabId, ids[i]) )
 					return true;
 			}
 			return false;

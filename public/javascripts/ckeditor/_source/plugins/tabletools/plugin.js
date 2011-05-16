@@ -146,7 +146,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			return;
 
 		// Create a clone of the row.
-		var newRow = row.clone( 1 );
+		var newRow = row.clone( true );
 
 		insertBefore ?
 			newRow.insertBefore( row ) :
@@ -216,7 +216,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	{
 		// Get the cell where the selection is placed in.
 		var startElement = selection.getStartElement();
-		var cell = startElement.getAscendant( 'td', 1 ) || startElement.getAscendant( 'th', 1 );
+		var cell = startElement.getAscendant( 'td', true ) || startElement.getAscendant( 'th', true );
 
 		if ( !cell )
 			return;
@@ -234,7 +234,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			if ( $row.cells.length < ( cellIndex + 1 ) )
 				continue;
 
-			cell = ( new CKEDITOR.dom.element( $row.cells[ cellIndex ] ) ).clone( 0 );
+			cell = ( new CKEDITOR.dom.element( $row.cells[ cellIndex ] ) ).clone( false );
 
 			if ( !CKEDITOR.env.ie )
 				cell.appendBogus();
@@ -339,7 +339,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 	function insertCell( selection, insertBefore )
 	{
 		var startElement = selection.getStartElement();
-		var cell = startElement.getAscendant( 'td', 1 ) || startElement.getAscendant( 'th', 1 );
+		var cell = startElement.getAscendant( 'td', true ) || startElement.getAscendant( 'th', true );
 
 		if ( !cell )
 			return;
@@ -714,9 +714,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				{
 					exec : function( editor )
 					{
-						var selection = editor.getSelection(),
-							startElement = selection && selection.getStartElement(),
-							table = startElement && startElement.getAscendant( 'table', 1 );
+						var selection = editor.getSelection();
+						var startElement = selection && selection.getStartElement();
+						var table = startElement && startElement.getAscendant( 'table', true );
 
 						if ( !table )
 							return;
@@ -727,9 +727,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						range.collapse();
 						selection.selectRanges( [ range ] );
 
-						// If the table's parent has only one child remove it as well (unless it's the body or a table cell) (#5416, #6289)
+						// If the table's parent has only one child, remove it,except body,as well.( #5416 )
 						var parent = table.getParent();
-						if ( parent.getChildCount() == 1 && !parent.is( 'body', 'td', 'th' ) )
+						if ( parent.getChildCount() == 1 && parent.getName() != 'body' )
 							parent.remove();
 						else
 							table.remove();

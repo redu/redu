@@ -40,7 +40,7 @@ Redu::Application.configure do
 
   # Armazena no sist. de arquivos
   config.paperclip = {
-    :path => "public/system/:class/:attachment/:id/:style/:basename.:extension",
+    :path => File.join(Rails.root.to_s, "public/system/:class/:attachment/:id/:style/:basename.:extension"),
     :url => "/system/:class/:attachment/:id/:style/:basename.:extension",
     :default_url => "new/missing_:class_:style.png",
     :styles => { :thumb_150 => "150x150#",
