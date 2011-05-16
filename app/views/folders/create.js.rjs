@@ -1,2 +1,0 @@
-page.replace_html 'tabs-4-content', :partial => 'index',
-  :locals => { :folder => @folder }

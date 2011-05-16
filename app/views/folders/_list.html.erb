@@ -14,12 +14,8 @@
       <tr>
         <td class="directory collapsed">&nbsp;</td>
         <td>
-          <%=
-            link_to_remote "...",
-              :url => space_folders_path(@space, :id => @folder.parent),
-              :before => "$('#loading-files').show();",
-              :method => :get
-          %>
+          <%= link_to "...", space_folders_path(@space, :id => @folder.parent),
+            :remote => true %>
       </td>
       <td>--</td>
       <td>--</td>
@@ -33,15 +29,14 @@
     <td class="directory ext_folder"></td>
     <td>
       <%=
-        link_to_remote h(folder.name),
-          :url => space_folders_path(@space, :id => folder.id),
-          :method => :get,
-          :before => "$('#loading-files').show();",
-          :html => { :class => "folder-name" }
+        link_to h(folder.name),
+          space_folders_path(@space, :id => folder.id),
+          :remote => true,
+          :class => "folder-name"
         %>
       <div class="rename-folder" style="display:none;">
-        <% form_remote_for :folder, folder, :url => space_folder_path(@space, folder),
-          :method => :put, :loading => "$('#rename-folder-spinner_#{folder.id}').show();" do |f| %>
+        <%= form_for :folder, folder, :url => space_folder_path(@space, folder),
+          :remote => true, :html => { :method => :put } do |f| %>
           <%= f.text_field :name %>
           <%= f.submit 'Ok' %>
           <%= link_to "Cancelar", "#", :class => "cancel" %>
@@ -54,20 +49,22 @@
 
     <% if @can_update %>
       <td>
-        <%= link_to "Renomear", '#', :class => "rename icon icon-management-gray_8_8", :id => "#{folder.id}" %>
+        <%= link_to "Renomear", '#',
+          :class => "rename icon icon-management-gray_8_8",
+          :id => "#{folder.id}" %>
       </td>
     <% end %>
 
     <% if @can_delete %>
       <td>
         <%=
-          link_to_remote "Remover",
-            :url => destroy_folder_space_folder_path(@space, folder),
+          link_to "Remover",
+            destroy_folder_space_folder_path(@space, folder),
             :confirm => "Todos os arquivos e subpastas serão removidos.\nDeseja continuar?",
             :method => :delete,
-            :html => { :class => "delete icon icon-x-gray_8_8" }
+            :remote => true,
+            :class => "delete icon icon-x-gray_8_8"
           %>
-        <%= image_tag 'spinner.gif', :class => "spinner", :style => 'display: none' %>
       </td>
     <% end %>
   </tr>
@@ -76,20 +73,23 @@
 <% @myfiles.each do |myfile| %>
   <tr>
     <td class="file <%= type_class(myfile)%>"></td>
-    <td><%= link_to h(myfile.attachment_file_name), download_space_folder_path(:id => @folder.id, :file_id => myfile.id, :space_id => @space.id)%></td>
+    <td><%= link_to h(myfile.attachment_file_name),
+      download_space_folder_path(:id => @folder.id, :file_id => myfile.id,
+                                 :space_id => @space.id)%></td>
     <td><span class="size"><%= bytes_to_kb(myfile.attachment_file_size) %> Kb</span></td>
     <td><span class="date"><%= time_ago_in_words(myfile.attachment_updated_at) %></span></td>
 
     <% if @can_delete %>
       <td colspan="2">
         <%=
-          link_to_remote "Remover",
-            :url => destroy_file_space_folder_path(@space, @folder, :file_id => myfile.id),
+          link_to "Remover",
+            destroy_file_space_folder_path(@space, @folder,
+                                           :file_id => myfile.id),
             :confirm => 'Tem certeza?',
             :method => :delete,
-            :html => { :class => "delete icon icon-x-gray_8_8" }
+            :remote => true,
+            :class => "delete icon icon-x-gray_8_8"
           %>
-        <%= image_tag 'spinner.gif', :class => "spinner", :style => 'display: none' %>
       </td>
     <% end %>
   </tr>

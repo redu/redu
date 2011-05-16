@@ -58,8 +58,8 @@ class FoldersController < BaseController
           redirect_to space_folders_path(:id => @folder_id, :space_id => @space_id)
         }
         format.js do
-            render :update do |page|
-              # update the page with an error message
+          render :update do |page|
+            # update the page with an error message
           end
         end
       end
@@ -227,7 +227,7 @@ class FoldersController < BaseController
             flash[:error] = 'Não foi possível criar o diretório'
             redirect_to space_folders_path(@space, @folder.parent)
           }
-          format.js { render :partial => "folders/create" }
+          format.js
         end
       end
     end
@@ -241,9 +241,6 @@ class FoldersController < BaseController
         format.js {
           params[:id] = @folder.parent_id
           list
-          render :update do |page|
-            page.replace_html "file_list", :partial => 'folders/list'
-          end
         }
       end
     end
@@ -260,9 +257,6 @@ class FoldersController < BaseController
       format.js {
         params[:id] = @folder.parent_id
         list
-        render :update do |page|
-          page.replace_html "file_list", :partial => 'folders/list'
-        end
       }
     end
 

@@ -5,8 +5,8 @@
         <a href="#" class="button" >Criar nova pasta</a>
         <div class="new-folder-inner holder" style="display:none;">
           <% @new_folder = Folder.new %>
-          <% form_remote_for [space, @new_folder], 
-            :loading => "$('#new-folder-spinner').show();" do |f| %>
+          <%= form_for [space, @new_folder],
+            :remote => true, :html => { :method => :post } do |f| %>
             <%= f.text_field :name %>
             <%= f.hidden_field :space_id, :value => space.id %>
             <%= f.hidden_field :parent_id, :value => folder.id %>

@@ -6,22 +6,23 @@ module FoldersHelper
   # functionality is implemented in FolderController.list
 
 
-
   def link_order(name, order_by)
     if params[:order] == nil and params[:order_by] == order_by
-      link_to_remote(name, { :url => { :controller => :folders, :action => :index,
-                     :id => params[:id], :space_id => params[:space_id],
-                     :order_by => order_by, :order => 'DESC' },
-                     :method => :get }) + image_tag('asc.png')
+      link_to(name, space_folders_path(:space_id => params[:space_id],
+                                       :id => params[:id],
+                                       :order_by => order_by,
+                                       :order => 'DESC'),
+             :remote => true) + image_tag('asc.png')
     elsif params[:order] and params[:order_by] == order_by
-      link_to_remote(name, { :url => { :controller => :folders, :action => :index,
-                     :id => params[:id], :space_id => params[:space_id],
-                     :order_by => order_by }, :method => :get }) + image_tag('desc.png')
+      link_to(name, space_folders_path(:id => params[:id],
+                                      :space_id => params[:space_id],
+                                      :order_by => order_by),
+             :remote => true) + image_tag('desc.png')
     else
-      link_to_remote(name, {:url => { :controller => :folders, :action => :index,
-                     :id => params[:id], :space_id => params[:space_id],
-                     :order_by => order_by }, :method => :get })
-
+      link_to(name, space_folders_path(:id => params[:id],
+                                      :space_id => params[:space_id],
+                                      :order_by => order_by),
+             :remote => true)
     end
   end
 
@@ -56,9 +57,9 @@ module FoldersHelper
 
     until folder.parent == nil
       folder = folder.parent
-      path = link_to_remote(h(folder.name),
-                            :url => space_folders_path(folder.space, :id => folder.id),
-                            :before => "$('#loading-files').toggle();",
+      path = link_to(h(folder.name),
+                            space_folders_path(folder.space, :id => folder.id),
+                            :remote => true,
                             :method => :get ) + ' > ' + path
     end
 
