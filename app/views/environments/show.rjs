@@ -1,5 +1,0 @@
-page.insert_html :bottom, 'courses_list', :partial => "courses/item",
-  :collection => @courses
-
-page.replace_html ".endless",
-  (will_paginate @courses, :renderer => EndlessRenderer)

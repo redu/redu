@@ -52,7 +52,7 @@ class EventsController < BaseController
 
     respond_to do |format|
       format.html
-      format.js
+      format.js { render_endless 'events/item', @events, '#events_list > ul' }
     end
   end
 
