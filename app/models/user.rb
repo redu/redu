@@ -101,9 +101,6 @@ class User < ActiveRecord::Base
   # featured_writer não existe no BD.
   scope :featured, where("users.featured_writer = ?", true)
   scope :active, where("users.activated_at IS NOT NULL")
-  scope :tagged_with, lambda {|tag_name|
-    joins(:tags).where("tags.name = ?", tag_name).includes(:tags)
-  }
   scope :with_ids, lambda { |ids| where(:id => ids) }
   scope :n_recent, lambda { |limit|
     order('users.last_request_at DESC').limit(limit)

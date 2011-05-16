@@ -43,13 +43,6 @@ describe Course do
   it { should_not allow_mass_assignment_of :environment }
 
   context "validations" do
-    it "ensure tags has a length of at most 110"  do
-      tags = (1..100).collect { Factory(:tag) }
-      subject = Factory.build(:course, :tags => tags)
-      subject.should_not be_valid
-      subject.errors[:tags].should_not be_empty
-    end
-
     it "ensure format for path: doesn't accept no ascii" do
       subject.path = "teste-médio"
       subject.should_not be_valid

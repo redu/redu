@@ -234,11 +234,16 @@ describe User do
 
     it "retrieves users tagged with specified tag" do
       users = (1..2).collect { Factory(:user) }
-      tag = Factory(:tag)
-      subject.tags << tag
-      users[0].tags << tag
-      users[1].tags << Factory(:tag, :name => "Another tag")
-      User.tagged_with(subject.tags.last.name).should == [subject, users[0]]
+
+      subject.tag_list = "tag"
+      subject.save
+
+      users[0].tag_list = "tag"
+      users[0].save
+      users[1].tag_list = "tag2"
+      users[1].save
+
+      User.tagged_with("tag").to_set.should == [subject, users[0]].to_set
     end
 
     it "retrieves users with specified ids" do
@@ -326,8 +331,10 @@ describe User do
   end
 
   it "verifies if a profile is complete" do
-    subject = Factory(:user, :gender => 'M', :description => "Desc",
-                      :tags => [Factory(:tag)])
+    subject = Factory(:user, :gender => 'M', :description => "Desc")
+    subject.tag_list = "one, two, three"
+    subject.save
+
     subject.should be_profile_complete
   end
 

@@ -27,12 +27,6 @@ describe Environment do
   it { should_not allow_mass_assignment_of(:published)}
 
   context "validations" do
-    it "ensure format for path: doesn't accept no ascii" do
-      subject.path = "teste-médio"
-      subject.should_not be_valid
-      subject.errors[:path].should_not be_empty
-    end
-
     it "ensure format for path: doesn't accept space" do
       subject.path = "teste medio"
       subject.should_not be_valid

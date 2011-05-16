@@ -150,8 +150,8 @@ PLATFORMS
 DEPENDENCIES
   aasm!
   active_enum
-  ajaxful_rating!
   acts-as-taggable-on
+  ajaxful_rating!
   ar_mailer_rails3
   authlogic
   aws-s3
