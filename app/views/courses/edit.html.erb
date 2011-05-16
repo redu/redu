@@ -43,7 +43,7 @@
     %>
       <% form_for @course,
         :url => environment_course_path(@environment, @course),
-        :html => { :class => "common" } do |f| %>
+        :html => { :class => "form-common" } do |f| %>
         <%= render :partial => 'courses/form', :locals => { :f => f, :edit => true } %>
         <%= f.submit "Salvar alterações" %>
         <% if @course.published? %>

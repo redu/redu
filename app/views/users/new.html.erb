@@ -21,7 +21,7 @@
   <div class="main grid_12 omega">
     <h3 class="call">Cadastro</h3>
     <% form_for :user, :url => users_path,
-      :html => {:class => 'common', :onsubmit => 'return verifyTOS();'} do |f| %>
+      :html => {:class => 'form-common', :onsubmit => 'return verifyTOS();'} do |f| %>
       <%= error_messages_for :user %>
       <% if params[:invitation_token] %>
         <%= hidden_field_tag :invitation_token, params[:invitation_token] %>

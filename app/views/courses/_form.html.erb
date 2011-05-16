@@ -4,11 +4,11 @@
   $(document).ready(function(){
      $("#course_name").bind('keyup blur', function(e){
        $("#course_path").val($(this).slug());
-       $(".common .path .course").html($(this).slug());
+       $(".form-common .path .course").html($(this).slug());
      })
 
      $("#course_path").bind('keyup blur', function(e){
-       $(".common .path .course").html($(this).slug());
+       $(".form-common .path .course").html($(this).slug());
      })
 
   })

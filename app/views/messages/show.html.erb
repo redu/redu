@@ -44,7 +44,7 @@
       </ul>
       <% if @message.recipient == @user %>
         <div class="respond">
-          <% form_tag nil, :id => 'dummy_reply', :class => 'MainForm common'  do %>
+          <% form_tag nil, :id => 'dummy_reply', :class => 'MainForm form-common'  do %>
             <%= label_tag "Resposta:" %>
             <%= text_area_tag nil, nil, { :onclick => "$('div.new-folder-inner').slideToggle(); $('#dummy_reply').hide(); return false;" } %>
 

@@ -8,7 +8,7 @@
 
 <% form_for :document, @document, :url => { :action => "create" },
    :html => { :multipart => true, :method => :put,
-     :id => "document-form", :class => "common" } do |f| %>
+     :id => "document-form", :class => "form-common" } do |f| %>
 
    <%= f.error_messages %>
    <% field_set_tag do %>

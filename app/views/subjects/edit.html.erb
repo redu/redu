@@ -14,7 +14,7 @@
       ["Membros", admin_members_space_subject_path(@space, @subject), { :class => "icon icon-members-gray_16_16" } ] do %>
 
         <% form_for [@space, @subject],
-            :html => { :class => "common", :multipart => true } do |f| %>
+            :html => { :class => "form-common", :multipart => true } do |f| %>
           <%= render :partial => "subjects/raw_form", :locals => { :f => f } %>
           <%= f.submit "Salvar alterações" %>
           <%= link_to "Remover",

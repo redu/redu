@@ -12,7 +12,7 @@
     :loading => "$('#spinner-form-seminar').show();",
     :success => "$('#spinner-form-seminar').hide();",
     :html => { :multipart => true,
-     :id => "seminar-form", :class => "common" } do |f| %>
+     :id => "seminar-form", :class => "form-common" } do |f| %>
 
     <% field_set_tag do %>
       <%= label_tag :name, t( :title ) %>

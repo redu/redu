@@ -34,7 +34,7 @@
   $('#create_button').show();
   <%# Colocando botões para fora do form devido ao layout. %>
   var $buttons = $('#create_button, #cancel_link').remove();
-  $('<form/>', {'class': 'common', 'id': 'add-resources'}).append($buttons).insertAfter('#new_subject');
+  $('<form/>', {'class': 'form-common', 'id': 'add-resources'}).append($buttons).insertAfter('#new_subject');
   $("#create_button").click(function(){ $("#new_subject").submit(); return false; });
 
   var $lecturesIndex = $('#lectures_index, #subject_lectures-error').remove();

@@ -3,12 +3,12 @@
     $(document).ready(function(){
        $("#environment_name").bind('keyup blur', function(e){
          $("#environment_path").val($(this).slug());
-         $(".common .path .environment").html($(this).slug());
+         $(".form-common .path .environment").html($(this).slug());
        })
 
        $("#environment_path").bind('keyup blur', function(e){
          $("#environment_path").val($(this).slug());
-         $(".common .path .environment").html($(this).slug());
+         $(".form-common .path .environment").html($(this).slug());
        })
 
     })
@@ -36,7 +36,7 @@
         ["Cursos", admin_courses_environment_path(@environment), {:class => ''}] do
       %>
 
-    <% form_for @environment, :html => { :class => 'common highlightable',
+    <% form_for @environment, :html => { :class => 'form-common highlightable',
       :multipart => true } do |f| %>
       <%= f.error_messages %>
       <% field_set_tag "Informações Gerais", :class => "hidden" do %>
