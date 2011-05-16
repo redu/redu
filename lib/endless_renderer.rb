@@ -9,8 +9,10 @@ class EndlessRenderer < WillPaginate::ViewHelpers::LinkRenderer
 
   # Redefinição do HTML para paginação da próxima página
   def next_page
-    @template.link_to "Mostrar mais resultados",
-      url(@collection.next_page), :remote => true
+    if @collection.next_page
+      @template.link_to "Mostrar mais resultados",
+        url(@collection.next_page), :remote => true
+    end
   end
 
   # Container da paginação
