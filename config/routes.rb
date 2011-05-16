@@ -63,18 +63,19 @@ Redu::Application.routes.draw do
   # Space
   resources :spaces do
     member do
-      post :vote
       get :manage
       get :admin_members
       get :admin_bulletins
       get :admin_events
       get :look_and_feel
-      get :members
       get :teachers
       get :take_ownership
       get :publish
       get :unpublish
       get :users
+      post :vote
+      post :moderate_bulletins
+      post :moderate_events
     end
     collection do
       get :cancel

@@ -57,6 +57,7 @@ class UsersController < BaseController
 
   def show_log_activity
     current_user.log_activity
+    format.js { render_endless 'statuses/item', @statuses, '#statuses > ol' }
   end
 
   def list_subjects
@@ -507,7 +508,7 @@ class UsersController < BaseController
 
     respond_to do |format|
       format.html
-      format.js
+      format.js { render_endless 'statuses/item', @statuses, '#statuses > ol' }
     end
   end
 
@@ -519,7 +520,7 @@ class UsersController < BaseController
 
     respond_to do |format|
       format.html
-      format.js
+      format.js { render_endless 'statuses/item', @statuses, '#statuses > ol' }
     end
   end
 

@@ -8,7 +8,7 @@
         <th width="25%">Autor</th>
         <th>Data</th>
       </thead>
-      <%= render :partial => 'bulletins/new/moderate_item_admin', :collection => @pending_bulletins %>
+      <%= render :partial => 'bulletins/moderate_item_admin', :collection => @pending_bulletins %>
     </table>
     <%= will_paginate @pending_bulletins, :renderer => EndlessRenderer,
       :param_name => :page_pending, :class => 'endless_pending' %>

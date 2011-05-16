@@ -162,26 +162,6 @@ class SpacesController < BaseController
     redirect_to admin_events_space_path(@space)
   end
 
-  # lista todos os membros da escola
-  #TODO mover para user
-  def members
-    #optei por .users ao inves de .students
-    @members =
-      @space.user_space_associations.paginate( :page => params[:page],
-                                               :order => 'updated_at DESC',
-                                               :per_page => 12 )
-
-    @member_type = "membros"
-
-    respond_to do |format|
-      format.html {
-        render "view_members"
-      }
-      format.js
-      format.xml  { render :xml => @members }
-    end
-  end
-
   # lista todos os professores
   #TODO mover para user
   def teachers
