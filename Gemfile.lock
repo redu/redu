@@ -1,10 +1,4 @@
 GIT
-  remote: git://github.com/astrails/clicktale.git
-  revision: 67e35a99328c9fd0cc50fcf5951a439ef55aec5d
-  specs:
-    clicktale (0.0.1)
-
-GIT
   remote: git://github.com/collectiveidea/delayed_job.git
   revision: 98bb0481ca0022f634e48c4fcbb64232bd830c6a
   branch: v2.0
@@ -127,7 +121,6 @@ DEPENDENCIES
   authlogic
   aws-s3
   cancan (= 1.4.1)
-  clicktale!
   delayed_job!
   desert
   erubis (= 2.6.6)
