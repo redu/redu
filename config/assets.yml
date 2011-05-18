@@ -4,7 +4,14 @@ s3_permission: public_read
 s3_bucket: redu-assets-staging
 s3_upload_files:
   - public/images/new/**
+  - public/javascripts/**
+  - public/stylesheets/**
 
+javascripts:
+  common:
+    - public/javascripts/rails.js
+    - public/javascripts/application.js
+    - public/javascripts/jquery.tipTip.minified.js
 
 stylesheets:
   common:
