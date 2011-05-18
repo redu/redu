@@ -4,23 +4,29 @@ class MessagesController < BaseController
 
   def index
     authorize! :manage, @user
-      @messages = @user.received_messages.paginate(:all, :page => params[:page],
+      @messages = @user.received_messages.paginate(:page => params[:page],
                                                    :order =>  'created_at DESC',
-                                                   :per_page => AppConfig.items_per_page )
+                                                   :per_page => Redu::Application.config.items_per_page )
       respond_to do |format|
         format.html
-        format.js
+        format.js do
+          render_endless 'messages/item', @messages, '#messages > tbody',
+            { :mailbox => :inbox }
+        end
       end
   end
 
   def index_sent
     authorize! :manage, @user
-    @messages = @user.sent_messages.paginate(:all, :page => params[:page],
+    @messages = @user.sent_messages.paginate(:page => params[:page],
                                              :order =>  'created_at DESC',
-                                             :per_page => AppConfig.items_per_page)
+                                             :per_page => Redu::Application.config.items_per_page)
     respond_to do |format|
         format.html
-        format.js
+        format.js do
+          render_endless 'messages/item', @messages, '#messages > tbody',
+            { :mailbox => :outbox }
+        end
     end
   end
 
@@ -90,7 +96,7 @@ class MessagesController < BaseController
 
       # If all messages are valid then send messages
       messages.each {|msg| msg.save!}
-      flash[:notice] = :message_sent.l
+      flash[:notice] = t :message_sent
       respond_to do |format|
         format.html do
           redirect_to index_sent_user_messages_path(@user) and return
@@ -102,10 +108,10 @@ class MessagesController < BaseController
     if request.post? && current_user.id == params[:user_id].to_i # Caso tentem burlar
       if params[:delete]
         params[:delete].each { |id|
-          @message = Message.find(:first, :conditions => ["messages.id = ? AND (sender_id = ? OR recipient_id = ?)", id, @user, @user])
+          @message = Message.where(["messages.id = ? AND (sender_id = ? OR recipient_id = ?)", id, @user, @user]).first
           @message.mark_deleted(@user) unless @message.nil?
         }
-        flash[:notice] = :messages_deleted.l
+        flash[:notice] = t :messages_deleted
       end
     end
 

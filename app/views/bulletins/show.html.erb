@@ -1,28 +1,6 @@
-<% if @bulletinable.class.to_s.eql? "Space" %>
-  <%= render :partial => 'spaces/sidebar', :locals => { :space => @bulletinable } %>
-<% else %>
-  <%= render :partial => "environments/sidebar", :locals => { :environment => @bulletinable } %>
-<% end %>
+<%= render :partial => 'bulletins/sidebar', :locals => { :bulletinable => @bulletinable } %>
 <div class="main grid_12 omega big-col">
-    <% if @bulletinable.class.to_s.eql? "Environment" %>
-      <ol id="breadcrumbs" class="clearfix">
-        <li>
-          <%= link_to 'Home', home_user_path(current_user),
-            :class => 'replacement home icon icon-home-lightblue_16_16' %>
-        </li>
-        <li>
-          <%= link_to @environment.name,
-            environment_path(@environment),
-            :class => ' icon icon-environment-lightblue_16_16' %>
-        </li>
-      </ol>
-      <%= render :partial => 'environments/header',
-        :locals => { :environment => @environment }%>
-    <% elsif @bulletinable.class.to_s.eql? "Space" %>
-      <%= render :partial => "spaces/breadcrumbs", :locals => { :space => @space } %>
-      <%= render :partial => 'spaces/header',
-        :locals => { :space => @space }%>
-    <% end %>
+    <%= render :partial => 'bulletins/header', :locals => { :bulletinable => @bulletinable } %>
 
     <div id="bulletin" class="body">
       <div class="header">

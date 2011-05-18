@@ -1,9 +1,0 @@
-page.insert_html :top,  '#statuses > ol', (render :partial =>"statuses/item",
-           :locals => {:item => @status, :statusable => @status.statusable})
-page << "$('.status_spinner').hide()"
-page << "$('#status_text').val('')"
-page << "$('.answer').val('')"
-#TODO com jquery 1.4 pode-se usar a funcao unwrap
-page << "$('textarea.status:visible').parents('div.fieldWithErrors:first').removeClass('fieldWithErrors')"
-page << "$('.errorMessageField').remove()"
-

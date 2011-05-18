@@ -11,6 +11,7 @@ describe SessionsController do
         course = Factory(:course)
         @invite = Factory(:user_course_invitation, :email => @user.email,
                          :course => course)
+        @invite.invite!
       end
 
       context "when logging in successful" do

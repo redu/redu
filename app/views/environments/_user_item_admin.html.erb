@@ -1,5 +1,5 @@
 <tr id="user-<%= user_item_admin.user_id %>">
-  <td><%= check_box_tag 'users[]', user_item_admin.user.id, false, 
+  <td><%= check_box_tag 'users[]', user_item_admin.user.id, false,
     {:class => "autoCheck", :id => "remove-#{user_item_admin.user.id}"}  %></td>
   <td>
     <%= image_tag user_item_admin.user.avatar(:thumb_32),
@@ -22,24 +22,13 @@
       :class => "icon icon-management-gray_8_8"%>
   </td>
   <td class="administrator" id="administrator-<%= user_item_admin.user_id %>">
-  <%#FIXME O Rails não permitiu forms aninhados, foi necessario usar o link_to_remote para conseguir o
-      efeito desejado %>
-  <%= link_to_remote "Tornar usuário comum",
+  <%= link_to "Tornar usuário comum", user_update_roles_path(user_item_admin.user, @environment, :type => 'environment', :roles => Role[:member]),
+      :remote => true,
       :method => :post,
-      :url => user_update_roles_path(user_item_admin.user, @environment),
-      :loading => "$(\"table tr#user-#{user_item_admin.user_id} .administrator\").prepend(\"#{escape_javascript(image_tag("spinner.gif")) }\")",
-      :complete => "$(\"table tr#user-#{user_item_admin.user_id} .administrator img\").remove()",
-      :success => "$(\"td#administrator-#{user_item_admin.user_id} a\").toggle()",
-      :html => {:class => ' ',
-      :style => "display: #{user_item_admin.role.eql?(Role[:environment_admin]) ? "inline" : "none"};"},
-      :with => "'type=environment;roles=#{Role[:member].id}'" %>
-  <%= link_to_remote "Tornar administrador",
+      :style => "display: #{user_item_admin.role.eql?(Role[:environment_admin]) ? "inline" : "none"};" %>
+    <%= link_to "Tornar administrador", user_update_roles_path(user_item_admin.user, @environment, :type => 'environment', :roles => Role[:environment_admin]),
+      :remote => true,
       :method => :post,
-      :url => user_update_roles_path(user_item_admin.user, @environment),
-      :loading => "$(\"table tr#user-#{user_item_admin.user_id} .administrator\").prepend(\"#{escape_javascript(image_tag("spinner.gif")) }\")",
-      :complete => "$(\"table tr#user-#{user_item_admin.user_id} .administrator img\").remove()",
-      :success => "$(\"td#administrator-#{user_item_admin.user_id} a\").toggle()",
-      :html => {:class => '', :style => "display: #{user_item_admin.role.eql?(Role[:environment_admin]) ? "none" : "inline"};"},
-      :with => "'type=environment;roles=#{Role[:environment_admin].id}'" %>
+      :style => "display: #{user_item_admin.role.eql?(Role[:environment_admin]) ? "none" : "inline"};" %>
 </td>
 </tr>

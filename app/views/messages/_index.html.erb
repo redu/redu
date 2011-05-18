@@ -1,6 +1,6 @@
 <%# Listagem de mensagens. Parâmetros: mailbox (:inbox ou :outbox)
   e mensagens a serem mostradas.  %>
-<% form_tag delete_selected_user_messages_path(:user_id => @user.id)  do %>
+<%= form_tag delete_selected_user_messages_path(:user_id => @user.id)  do %>
   <%= hidden_field_tag :mailbox, mailbox.to_s %>
   <table id="messages" class="common">
     <thead>
@@ -19,7 +19,7 @@
       <% if messages.empty? %>
         <tr>
           <td colspan='5'>
-            <div class="box_notice"><%= :no_messages.l %></div>
+            <div class="box_notice"><%= t :no_messages %></div>
           </td>
         </tr>
       <% else %>
@@ -29,7 +29,7 @@
     </tbody>
   </table>
   <div class="actions">
-    <%= submit_tag :delete_selected.l, :class =>'remove' %>
+    <%= submit_tag t(:delete_selected), :class =>'remove' %>
     <%= image_tag 'spinner.gif', :style => 'display: none' %>
   </div>
 <% end %>

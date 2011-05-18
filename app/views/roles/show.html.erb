@@ -12,7 +12,7 @@
       <span class="counter">Informações gerais do ambiente <%= @environment.initials_or_name %></span>
     </div>
 
-    <%
+    <%=
         fake_tabs ["Informações", edit_environment_path(@environment), {:class => 'icon icon-management-lightblue_16_16'}],
         ["Membros", admin_members_environment_path(@environment), {:class => 'icon icon-members-gray_16_16'}],
         ["Notícias", admin_bulletins_environment_path(@environment), {:class => 'icon icon-bulletin-gray_16_16'}],
@@ -40,14 +40,14 @@
             </td>
             <td class="edit-roles">
               <% unless @environment_membership.role.eql?(Role[:environment_admin]) %>
-                <% form_tag user_update_roles_path(@user, @environment),
+                <%= form_tag user_update_roles_path(@user, @environment),
                   :method => :post do %>
-                  <%= radio_button_tag :roles, Role[:teacher].id, membership.role.eql?(Role[:teacher]) ? true : false  %>
-                  <%= label_tag "roles_#{Role[:teacher].id}", Role.human_attribute_name(Role[:teacher].name) %>
-                  <%= radio_button_tag :roles, Role[:member].id, membership.role.eql?(Role[:member]) ? true : false  %>
-                  <%= label_tag "roles_#{Role[:member].id}", Role.human_attribute_name(Role[:member].name)%>
-                  <%= radio_button_tag :roles, Role[:tutor].id, membership.role.eql?(Role[:tutor]) ? true : false  %>
-                  <%= label_tag "roles_#{Role[:tutor].id}", Role.human_attribute_name(Role[:tutor].name)%>
+                  <%= radio_button_tag :roles, Role[:teacher], membership.role.eql?(Role[:teacher]) ? true : false  %>
+                  <%= label_tag "roles_#{Role[:teacher]}", "Professor" %>
+                  <%= radio_button_tag :roles, Role[:member], membership.role.eql?(Role[:member]) ? true : false  %>
+                  <%= label_tag "roles_#{Role[:member]}", "Membro" %>
+                  <%= radio_button_tag :roles, Role[:tutor], membership.role.eql?(Role[:tutor]) ? true : false  %>
+                  <%= label_tag "roles_#{Role[:tutor]}", "Tutor" %>
                   <%= hidden_field_tag :type, 'course' %>
                   <%= hidden_field_tag :course_id, membership.course.id %>
                   <%= submit_tag "Alterar" %>

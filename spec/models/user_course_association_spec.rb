@@ -17,7 +17,7 @@ describe UserCourseAssociation do
     end
 
     it "defaults to waiting" do
-      subject.current_state.should == :waiting
+      subject.state.should == "waiting"
     end
 
     context "when invite" do
@@ -30,7 +30,7 @@ describe UserCourseAssociation do
       it "should go to invited" do
         expect {
           subject.invite!
-        }.should change(subject, :current_state).to(:invited)
+        }.should change(subject, :state).to("invited")
       end
 
       it "should send mail" do
@@ -48,7 +48,7 @@ describe UserCourseAssociation do
       it "should go to rejected" do
         expect {
           subject.deny!
-        }.should change(subject, :current_state).to(:rejected)
+        }.should change(subject, :state).to("rejected")
       end
     end
 
@@ -60,7 +60,7 @@ describe UserCourseAssociation do
       it "should go to approved" do
         expect {
           subject.accept!
-        }.should change(subject, :current_state).to(:approved)
+        }.should change(subject, :state).to("approved")
       end
 
       it "should create environment association" do
@@ -85,7 +85,7 @@ describe UserCourseAssociation do
       assoc2 = (1..3).collect { Factory(:user_course_association, :role => :admin) }
       t = Factory(:user_course_association, :role => :teacher)
 
-      UserCourseAssociation.with_roles([ Role[:admin].id, Role[:teacher].id ]).
+      UserCourseAssociation.with_roles([ Role[:admin], Role[:teacher] ]).
         should == (assoc2 << t)
     end
 
@@ -155,7 +155,7 @@ describe UserCourseAssociation do
     before do
       subject.invite!
     end
-  
+
     it "should return true" do
       UserCourseAssociation.has_invitation_for?(subject.user).should be_true
     end

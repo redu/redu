@@ -3,21 +3,22 @@
     $(document).ready(function(){
        $("#environment_name").bind('keyup blur', function(e){
          $("#environment_path").val($(this).slug());
-         $(".common .path .environment").html($(this).slug());
+         $(".form-common .path .environment").html($(this).slug());
        })
 
        $("#environment_path").bind('keyup blur', function(e){
          $("#environment_path").val($(this).slug());
-         $(".common .path .environment").html($(this).slug());
+         $(".form-common .path .environment").html($(this).slug());
        })
 
     })
   </script>
 <% end %>
-<%= render :partial => 'environments/sidebar', :locals => { :environment => @environment } %>
+<%= render :partial => 'environments/sidebar',
+  :locals => { :environment => @environment } %>
 <div class="main grid_12 omega big-col">
   <%= render :partial => 'environments/breadcrumbs',
-    :locals => { :environment => @environment } %>
+    :locals => { :environment => @header_environment } %>
 
   <%= render :partial => 'environments/header',
     :locals => { :environment => @header_environment } %>
@@ -28,22 +29,22 @@
       <span class="counter">Informações gerais do ambiente <%= @environment.initials_or_name %></span>
     </div>
 
-    <%
+    <%=
       fake_tabs ["Informações", edit_environment_path(@environment), {:class => 'icon icon-management-lightblue_16_16'}],
         ["Membros", admin_members_environment_path(@environment), {:class => 'icon icon-members-gray_16_16'}],
         ["Notícias", admin_bulletins_environment_path(@environment), {:class => 'icon icon-bulletin-gray_16_16'}],
         ["Cursos", admin_courses_environment_path(@environment), {:class => ''}] do
       %>
 
-    <% form_for @environment, :html => { :class => 'common highlightable',
+    <%= form_for @environment, :html => { :class => 'form-common highlightable',
       :multipart => true } do |f| %>
       <%= f.error_messages %>
-      <% field_set_tag "Informações Gerais", :class => "hidden" do %>
+      <%= field_set_tag "Informações Gerais", :class => "hidden" do %>
         <%= f.label :name, "Nome" %>
         <%= f.text_field :name  %>
         <%= f.label :initials, "Sigla" %>
         <%= f.text_field :initials  %>
-        <%= f.label :path, :path.l %>
+        <%= f.label :path, t(:path) %>
         <%= f.text_field :path %>
         <span class="tip path">
           <span class="base">redu.com.br/</span>
@@ -55,7 +56,7 @@
         <%= f.text_field :tag_list %>
       <% end %>
 
-      <% field_set_tag "Aparência", :class => 'hidden' do %>
+      <%= field_set_tag "Aparência", :class => 'hidden' do %>
         <%= f.label :avatar, "Imagem" %>
         <%= f.file_field :avatar %>
         <%= f.submit "Salvar alterações" %>

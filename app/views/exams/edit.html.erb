@@ -1,5 +1,5 @@
 <div class="grid_16">
-  <% form_for @exam,
+  <%= form_for @exam,
       :url => space_subject_exam_path(@space, @subject, @exam),
       :method => :post do |f| %>
     <%= render :partial => 'exams/general_form', :locals => { :f => f } %>

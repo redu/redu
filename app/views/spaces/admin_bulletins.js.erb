@@ -1,0 +1,16 @@
+<% if params[:page_pending] %>
+  items = '<%= escape_javascript render(:partial => 'bulletins/moderate_item_admin',
+                                        :collection => @pending_bulletins) %>'
+  $('#bulletin_moderate_list').append(items);
+
+  endless = '<%= will_paginate @pending_bulletins, :renderer => EndlessRenderer,
+    :param_name => :page_pending, :class => 'endless_pending'%>'
+  $('.endless_pending').replaceWith(endless);
+<% else %>
+  items = '<%= escape_javascript render(:partial => 'bulletins/item_admin',
+                                        :collection => @bulletins) %>'
+  $('#bulletin_list').append(items);
+
+  endless = '<%= will_paginate @bulletins, :renderer => EndlessRenderer %>'
+  $('.endless').replaceWith(endless);
+<% end %>

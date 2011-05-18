@@ -1,2 +1,0 @@
-page << "$('#uploadify_submit').before('<span class=\"errorMessageField\">Formato inválido</span>')"
-

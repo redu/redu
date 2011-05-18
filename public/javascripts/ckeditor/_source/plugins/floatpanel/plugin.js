@@ -16,8 +16,14 @@ CKEDITOR.plugins.add( 'floatpanel',
 	function getPanel( editor, doc, parentElement, definition, level )
 	{
 		// Generates the panel key: docId-eleId-skinName-langDir[-uiColor][-CSSs][-level]
-		var key = CKEDITOR.tools.genKey( doc.getUniqueId(), parentElement.getUniqueId(), editor.skinName, editor.lang.dir,
-			editor.uiColor || '', definition.css || '', level || '' );
+		var key =
+			doc.getUniqueId() +
+			'-' + parentElement.getUniqueId() +
+			'-' + editor.skinName +
+			'-' + editor.lang.dir +
+			( ( editor.uiColor && ( '-' + editor.uiColor ) ) || '' ) +
+			( ( definition.css && ( '-' + definition.css ) ) || '' ) +
+			( ( level && ( '-' + level ) ) || '' );
 
 		var panel = panels[ key ];
 
@@ -40,7 +46,7 @@ CKEDITOR.plugins.add( 'floatpanel',
 	{
 		$ : function( editor, parentElement, definition, level )
 		{
-			definition.forceIFrame = 1;
+			definition.forceIFrame = true;
 
 			var doc = parentElement.getDocument(),
 				panel = getPanel( editor, doc, parentElement, definition, level || 0 ),
@@ -98,7 +104,7 @@ CKEDITOR.plugins.add( 'floatpanel',
 					block = panel.showBlock( name );
 
 				this.allowBlur( false );
-				isShowing = 1;
+				isShowing = true;
 
 				var element = this.element,
 					iframe = this._.iframe,
@@ -123,8 +129,7 @@ CKEDITOR.plugins.add( 'floatpanel',
 
 				element.setStyles(
 					{
-						top : 0,
-						left: 0,
+						top : '-30000px',
 						display	: ''
 					});
 				// Don't use display or visibility style because we need to
@@ -277,14 +282,6 @@ CKEDITOR.plugins.add( 'floatpanel',
 								}
 							}
 
-							// Trigger the onHide event of the previously active panel to prevent
-							// incorrect styles from being applied (#6170)
-							var innerElement = element.getFirst(),
-								activePanel;
-							if ( ( activePanel = innerElement.getCustomData( 'activePanel' ) ) )
-								activePanel.onHide && activePanel.onHide.call( this, 1 );
-							innerElement.setCustomData( 'activePanel', this );
-
 							element.setStyles(
 								{
 									top : top + 'px',
@@ -308,7 +305,7 @@ CKEDITOR.plugins.add( 'floatpanel',
 				if ( this.onShow )
 					this.onShow.call( this );
 
-				isShowing = 0;
+				isShowing = false;
 			},
 
 			hide : function()
@@ -318,7 +315,6 @@ CKEDITOR.plugins.add( 'floatpanel',
 					this.hideChild();
 					this.element.setStyle( 'display', 'none' );
 					this.visible = 0;
-					this.element.getFirst().removeCustomData( 'activePanel' );
 				}
 			},
 

@@ -4,7 +4,7 @@
     <%= (params[:search]) ? ("Resultados para: \""+params[:search]+"\"") : "Todos os cursos mais recentes" %>
   </span>
 
-  <% form_tag courses_path, :method => :get do %>
+  <%= form_tag courses_path, :method => :get do %>
     Buscar
     <%= text_field_tag :search, params[:search] %>
     <%= submit_tag "OK", :name => nil%>

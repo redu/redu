@@ -1,31 +1,35 @@
 class Bulletin < ActiveRecord::Base
+  include AASM
 
   # ASSOCIATIONS
   has_many :logs, :as => :logeable, :dependent => :destroy, :class_name => 'Status'
   belongs_to :bulletinable, :polymorphic => true
   belongs_to :owner , :class_name => "User" , :foreign_key => "owner"
 
-  # NAMED_SCOPE
-  named_scope :waiting, :conditions => { :state => 'waiting' }
-  named_scope :approved, :conditions => { :state => 'approved' }
+  # SCOPES
+  scope :waiting, where(:state => 'waiting')
+  scope :approved, where(:state => 'approved')
 
   # PLUGINS
   acts_as_taggable
-  acts_as_voteable
   ajaxful_rateable :stars => 5
-  # Máquina de estados para moderação das Notícias
-  acts_as_state_machine :initial => :waiting
-  state :waiting
-  state :approved
-  state :rejected
-  state :error #FIXME estado sem transicões, é assim mesmo?
 
-  event :approve do
-    transitions :from => :waiting, :to => :approved
+  # Máquina de estados para moderação das Notícias
+  aasm_column :state
+
+  aasm_initial_state :waiting
+
+  aasm_state :waiting
+  aasm_state :approved
+  aasm_state :rejected
+  aasm_state :error #FIXME estado sem transicões, é assim mesmo?
+
+  aasm_event :approve do
+    transitions :to => :approved, :from => [:waiting]
   end
 
-  event :reject do
-    transitions :from => :waiting, :to => :rejected
+  aasm_event :reject do
+    transitions :to => :rejected, :from => [:waiting]
   end
 
   # VALIDATIONS

@@ -5,12 +5,12 @@
                        :allow_multiple_files => false,
                        :fields => ['document_attachment', 'step'],
                        :allowed_extensions => [:ppt, :pptx, :pdf, :odp, :pps]) %>
-   <% form_for :document, @document, :url => { :action => "create" },
+   <%= form_for :document, @document, :url => { :action => "create" },
      :html => { :multipart => true, :method => :put } do |f| %>
 
      <%= f.error_messages %>
      <%= hidden_field_tag "step", "2" %>
-     <% field_set_tag 'Documento' do %>
+     <%= field_set_tag 'Documento' do %>
        <div id="upload_resource_field" >
          <%= f.label :attachment, "Arquivo do seu computador (máximo: 100MB)" %>
          <%= f.file_field :attachment  %>

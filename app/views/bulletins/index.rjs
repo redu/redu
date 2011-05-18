@@ -1,4 +1,0 @@
-page.insert_html :bottom, "#bulletins > ul",
-  :partial => 'bulletins/item', :collection => @bulletins
-page.replace_html ".endless",
-  (will_paginate @bulletins, :renderer => EndlessRenderer)

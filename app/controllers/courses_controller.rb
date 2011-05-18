@@ -1,7 +1,9 @@
 class CoursesController < BaseController
-  load_resource :environment
+  respond_to :html, :js
+
+  load_resource :environment, :find_by => :path
   load_and_authorize_resource :course, :through => :environment,
-    :except => [:index]
+    :except => [:index], :find_by => :path
 
   rescue_from CanCan::AccessDenied do |exception|
     raise if cannot? :preview, @course
@@ -13,11 +15,10 @@ class CoursesController < BaseController
   def show
     @spaces = @course.spaces.published.
       paginate(:page => params[:page], :order => 'name ASC',
-               :per_page => AppConfig.items_per_page)
+               :per_page => Redu::Application.config.items_per_page)
 
-    respond_to do |format|
-      format.html
-      format.js
+    respond_with(@environment, @course) do |format|
+      format.js { render_endless 'spaces/item', @spaces, '#spaces_list' }
     end
   end
 
@@ -45,7 +46,7 @@ class CoursesController < BaseController
     respond_to do |format|
       if @course.update_attributes(params[:course])
         if params[:course][:subscription_type].eql? "1" # Entrada de membros passou a ser livre, aprovar todos os membros pendentes
-          @course.user_course_associations.all(:conditions => { :state => 'waiting'}).each do |ass|
+          @course.user_course_associations.waiting.each do |ass|
             ass.approve!
             @course.create_hierarchy_associations(ass.user, ass.role)
           end
@@ -94,7 +95,7 @@ class CoursesController < BaseController
     paginating_params = {
       :page => params[:page],
       :order => 'name ASC',
-      :per_page => AppConfig.items_per_page
+      :per_page => Redu::Application.config.items_per_page
     }
 
     if params.has_key? :role
@@ -141,38 +142,42 @@ class CoursesController < BaseController
 
     @spaces = @course.spaces.paginate(:page => params[:page],
                                       :order => 'name ASC',
-                                      :per_page => AppConfig.items_per_page)
+                                      :per_page => Redu::Application.config.items_per_page)
     respond_to do |format|
       format.html
-      format.js
+      format.js do
+        render_endless 'spaces/item_short', @spaces, '#course-preview > ul'
+      end
     end
   end
 
   # Aba Disciplinas.
   def admin_spaces
     # FIXME Refatorar para o modelo (conditions)
-    @spaces = Space.paginate(:conditions => ["course_id = ?", @course.id],
-                             :include => :owner,
-                             :page => params[:page],
-                             :order => 'updated_at DESC',
-                             :per_page => AppConfig.items_per_page)
+    @spaces = @course.spaces.includes(:owner).paginate(:page => params[:page],
+                                                       :order => 'updated_at DESC',
+                                                       :per_page => Redu::Application.config.items_per_page)
 
     respond_to do |format|
       format.html
-      format.js
+      format.js do
+        render_endless 'spaces/item_admin', @spaces, '#spaces_list'
+      end
     end
   end
 
   # Aba Moderação de Membros.
   def admin_members_requests
     # FIXME Refatorar para o modelo (conditions)
-    @pending_members = UserCourseAssociation.paginate(:conditions => ["state LIKE 'waiting' AND course_id = ?", @course.id],
-                                                      :page => params[:page],
-                                                      :order => 'updated_at DESC',
-                                                      :per_page => AppConfig.items_per_page)
+    @pending_members = @course.user_course_associations.waiting.
+      paginate(:page => params[:page],:order => 'updated_at DESC',
+               :per_page => Redu::Application.config.items_per_page)
     respond_to do |format|
       format.html
-      format.js
+      format.js do
+        render_endless 'courses/pending_member_item_admin', @pending_members,
+          '#pending_member_list'
+      end
     end
   end
 
@@ -185,10 +190,9 @@ class CoursesController < BaseController
       rejected = params[:member].reject{|k,v| v == 'approve'}
 
       rejected.keys.each do |user_id|
-        @course.user_course_associations.all(:conditions => {
-          :user_id => user_id}).each do |ass|
+        @course.user_course_associations.where(:user_id => user_id).each do |ass|
           #TODO fazer isso em batch
-          UserNotifier.deliver_reject_membership(ass.user, @course)
+          UserNotifier.reject_membership(ass.user, @course).deliver
           ass.destroy
           end
       end
@@ -210,12 +214,11 @@ class CoursesController < BaseController
         end
 
         approved.keys.each do |user_id|
-          @course.user_course_associations.all(:conditions => {
-            :user_id => user_id}).each do |ass|
+          @course.user_course_associations.where(:user_id => user_id).each do |ass|
             ass.approve!
             @course.create_hierarchy_associations(ass.user, ass.role)
             # TODO fazer isso em batch
-            UserNotifier.deliver_approve_membership(ass.user, @course)
+            UserNotifier.approve_membership(ass.user, @course).deliver
             end
         end
       else
@@ -237,7 +240,7 @@ class CoursesController < BaseController
     authorize! :add_entry, @course
     association = UserCourseAssociation.create(:user_id => current_user.id,
                                                :course_id => @course.id,
-                                               :role_id => Role[:member].id)
+                                               :role => Role[:member])
 
     if @course.subscription_type.eql? 1 # Todos podem participar, sem moderação
       association.approve!
@@ -262,13 +265,9 @@ class CoursesController < BaseController
   end
 
   def publish
-    if @course.can_be_published?
-      @course.published = 1
-      @course.save
-      flash[:notice] = "O curso #{@course.name} foi publicado."
-    else
-      flash[:notice] = "O curso não pode ser publicado, crie e publique disciplinas!"
-    end
+    @course.published = 1
+    @course.save
+    flash[:notice] = "O curso #{@course.name} foi publicado."
 
     redirect_to environment_course_path(@environment, @course)
   end
@@ -283,16 +282,17 @@ class CoursesController < BaseController
 
   # Aba Membros.
   def admin_members
-    @memberships = UserCourseAssociation.paginate(
-      :conditions => ["course_id = ? AND state LIKE ? ", @course.id, 'approved'],
-      :include => [{ :user => {:user_space_associations => :space} }],
-      :page => params[:page],
-      :order => 'updated_at DESC',
-      :per_page => AppConfig.items_per_page)
+    @memberships = @course.user_course_associations.approved.
+                     includes(:user => [{:user_space_associations => :space}]).
+                     paginate(:page => params[:page],:order => 'updated_at DESC',
+                              :per_page => Redu::Application.config.items_per_page)
 
       respond_to do |format|
         format.html
-        format.js
+        format.js do
+          render_endless 'courses/user_item_admin', @memberships,
+            '#user_list_table'
+        end
       end
   end
 
@@ -305,14 +305,12 @@ class CoursesController < BaseController
     users_ids = params[:users].collect{|u| u.to_i} if params[:users]
 
     unless users_ids.empty?
-      User.find(:all,
-                :conditions => {:id => users_ids},
-                :include => [:user_course_associations,
-                  :user_space_associations]).each do |user|
-
-        user.spaces.delete(spaces)
-        user.courses.delete(@course)
-                  end
+      User.where(:id => users_ids).
+        includes(:user_course_associations,:user_space_associations).
+        each do |user|
+          user.spaces.delete(spaces)
+          user.courses.delete(@course)
+        end
       flash[:notice] = "Os usuários foram removidos do curso #{@course.name}"
     end
 
@@ -332,21 +330,10 @@ class CoursesController < BaseController
       :include => [{ :user => {:user_space_associations => :space} }],
       :page => params[:page],
       :order => 'user_course_associations.updated_at DESC',
-      :per_page => AppConfig.items_per_page)
+      :per_page => Redu::Application.config.items_per_page)
 
       respond_to do |format|
-        format.js do
-          render :update do |page|
-            if @memberships.empty?
-              page.replace_html 'user_list',
-                "<div class=\"box_notice\">Nenhum usuário encontrado.</div>"
-            else
-              page.replace_html 'user_list',
-                :partial => 'courses/user_list_admin',
-                :locals => {:memberships => @memberships}
-            end
-          end
-        end
+        format.js
       end
   end
 
@@ -355,11 +342,15 @@ class CoursesController < BaseController
     @sidebar_preview = true if params.has_key?(:preview) &&
                               params[:preview] == 'true'
     @users = @course.approved_users.
-      paginate(:page => params[:page], :order => 'first_name ASC', :per_page => 18)
+      paginate(:page => params[:page], :order => 'first_name ASC',
+               :per_page => 18)
 
     respond_to do |format|
       format.html
-      format.js
+      format.js do
+        render_endless 'users/item', @users, '#users_list',
+                       {:entity => @course}
+      end
     end
   end
 
@@ -375,7 +366,7 @@ class CoursesController < BaseController
         redirect_to home_user_path(current_user)
       end
       format.js do
-        render :nothing => true
+        @item_invitation = assoc
       end
     end
   end
@@ -391,7 +382,7 @@ class CoursesController < BaseController
         redirect_to home_user_path(current_user)
       end
       format.js do
-        render :nothing => true
+        @item_invitation = assoc
       end
     end
   end
@@ -412,6 +403,7 @@ class CoursesController < BaseController
       @course.invite_by_email(e)
     end
 
+
     respond_to do |format|
       format.html do
         if @users.empty? && @emails.empty?
@@ -424,12 +416,7 @@ class CoursesController < BaseController
       end
 
       format.js do
-        render :update do |page|
-          page.replace "#invite-#{params[:invitation_id]} .reinvite",
-            "<span class=\"reinvited\">Convite reenviado</span>"
-          page.replace_html "#invite-#{params[:invitation_id]} span.date",
-            (time_ago_in_words Time.zone.now)
-        end
+        @invitation_id = params[:invitation_id]
       end
     end
   end

@@ -16,12 +16,12 @@
 
 <div class="grid_8">
 
-  <% form_for :exam, @exam, :url => { :action => "create" }, :html => {:id => "form_step_3"} do |f| %>
+  <%= form_for :exam, @exam, :url => { :action => "create" }, :html => {:id => "form_step_3"} do |f| %>
 
     <%= f.error_messages %>
     <%= hidden_field_tag("step", "3", options = {})%>
 
-        <% field_set_tag 'Compartilhe!' do %>
+        <%= field_set_tag 'Compartilhe!' do %>
           <%= render :partial => 'shared/share', :locals => {:resource => @exam}%>
         <%end%>
 

@@ -81,7 +81,7 @@ CKEDITOR.plugins.add( 'listblock',
 					add : function( value, html, title )
 					{
 						var pendingHtml = this._.pendingHtml,
-							id = CKEDITOR.tools.getNextId();
+							id = 'cke_' + CKEDITOR.tools.getNextNumber();
 
 						if ( !this._.started )
 						{
@@ -109,7 +109,7 @@ CKEDITOR.plugins.add( 'listblock',
 					{
 						this._.close();
 
-						var id = CKEDITOR.tools.getNextId();
+						var id = 'cke_' + CKEDITOR.tools.getNextNumber();
 
 						this._.groups[ title ] = id;
 

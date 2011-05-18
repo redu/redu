@@ -3,9 +3,8 @@
 <%# locals => { class_textarea => class do campo html que deve ter a quantidade
   de chars limitada, :limit => quantidade máx de caracteres } %>
 
-<% limit ||= AppConfig.desc_char_limit %>
+<% limit ||= Redu::Application.config.desc_char_limit %>
 <script type="text/javascript">
-
   $(document).ready(function(){
       $('.<%= class_textarea %>').keyup(function(){
         limitChars('<%= class_textarea %>', <%= limit %>, 'char-<%= class_textarea %> > .chars');

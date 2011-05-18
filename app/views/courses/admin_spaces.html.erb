@@ -8,7 +8,8 @@
 <% end %>
 <%= render :partial => 'courses/sidebar' %>
 <div class="main grid_12 omega big-col">
-  <%= render :partial => 'courses/breadcrumbs' %>
+  <%= render :partial => 'courses/breadcrumbs',
+    :locals => { :course => @course } %>
   <%= render :partial => 'courses/header',
     :locals => { :course => @course } %>
   <div id="course-manage" class="body">
@@ -16,7 +17,7 @@
       <h4>Gerenciamento</h4>
       <span class="counter">Listagem de disciplinas do curso <%= @course.name %></span>
     </div>
-    <%
+    <%=
       fake_tabs ["Informações", edit_environment_course_path(@environment, @course), {:class => 'icon icon-management-gray_16_16'}],
         ["Membros", admin_members_environment_course_path(@environment, @course), {:class => 'icon icon-members-gray_16_16'}],
         ["Moderação", admin_members_requests_environment_course_path(@environment, @course), {:class => 'icon icon-moderation-gray_16_16'}],

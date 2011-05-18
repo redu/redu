@@ -6,16 +6,24 @@
     </div>
     <div class="filters">
       <strong class="call">Filtros:</strong>
-      <% form_remote_tag :url => courses_index_path(:role =>
-                                                    params[:role]),
-        :loading => "$('#spinner').show();",
-        :success => "$('#spinner').hide();",
-        :html => { :id => 'filter_form' } do %>
+      <%= form_tag courses_index_path(:role => params[:role]),
+        :onsubmit => "$('#hidden_search').val($('#name').val());",
+        :method => :get, :id => 'filter_form' do %>
         <fieldset>
           <%= hidden_field_tag 'search', "", { :id => 'hidden_search'} %>
+          <% unless params[:role].nil? %>
+            <%= hidden_field_tag 'role', params[:role] %>
+          <% end %>
           <% for audience in Audience.find(:all) %>
-            <span class="filter">
-              <%= check_box_tag "audiences_ids[]", audience.id, false %>
+            <%# Se a audiência está marcada devido a consulta anterior,
+              manter marcada  %>
+            <% if !params[:audiences_ids].nil? and params[:audiences_ids].include?(audience.id.to_s) %>
+              <span class="filter checked">
+                <%= check_box_tag "audiences_ids[]", audience.id, true %>
+              <% else %>
+                <span class="filter">
+                  <%= check_box_tag "audiences_ids[]", audience.id, false %>
+                <% end %>
               <label for=""><%= audience.name %></label>
             </span>
           <% end %>
@@ -96,9 +104,9 @@
       <div class="panel">
         <div class="text-filter">
           <%# Form usado somente para manter os estilos  %>
-          <form class="common" action="#">
+          <form class="form-common" action="#">
             <%= label_tag "Filtrar por:" %>
-            <%= text_field_tag :name, nil,
+            <%= text_field_tag :name, params[:search],
               :onkeyup => "$('#hidden_search').val($('#name').val());"  %>
             <%= link_to "Buscar", "#", :onclick => "$('#filter_form').submit(); return false;",
               :class => "button" %>
@@ -113,8 +121,8 @@
             <%= render :partial => 'courses/item_detailed',
               :collection => @courses %>
           <% end %>
-          <%= will_paginate @courses, :renderer => EndlessRenderer %>
         </ul>
+        <%= will_paginate @courses, :renderer => EndlessRenderer %>
       </div>
     </div>
   </div><!-- end .main -->

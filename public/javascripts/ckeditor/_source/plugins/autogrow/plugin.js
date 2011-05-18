@@ -14,10 +14,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			newHeight;
 
 		// We can not use documentElement to calculate the height for IE (#6061).
-		// It is not good for IE Quirks, yet using offsetHeight would also not work as expected (#6408).
-		// We do the same for FF because of the html height workaround (#6341).
-		if ( CKEDITOR.env.ie || CKEDITOR.env.gecko )
-			newHeight = doc.getBody().$.scrollHeight + ( CKEDITOR.env.ie && CKEDITOR.env.quirks ? 0 : 24 );
+		if ( CKEDITOR.env.ie )
+			newHeight = doc.getBody().$.scrollHeight + 24;
 		else
 			newHeight = doc.getDocumentElement().$.offsetHeight;
 
@@ -43,14 +41,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			{
 				editor.on( eventName, function( evt )
 				{
-					var maximize = editor.getCommand( 'maximize' );
 					// Some time is required for insertHtml, and it gives other events better performance as well.
-					if ( evt.editor.mode == 'wysiwyg' &&
-						// Disable autogrow when the editor is maximized .(#6339)
-						( !maximize || maximize.state != CKEDITOR.TRISTATE_ON ) )
-					{
+					if ( evt.editor.mode == 'wysiwyg' )
 						setTimeout( function(){ resizeEditor( evt.editor ); }, 100 );
-					}
 				});
 			}
 		}

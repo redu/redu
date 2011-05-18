@@ -46,6 +46,7 @@ describe UsersController do
             course = Factory(:course)
             @invite = Factory(:user_course_invitation,
                               :email => "email@example.com", :course => course)
+            @invite.invite!
             @post_params.store(:invitation_token, @invite.token)
             @post_params[:user][:password_confirmation] = "wrong-pass"
             post :create, @post_params
@@ -74,6 +75,7 @@ describe UsersController do
             @invite = Factory(:user_course_invitation,
                               :email => @post_params[:user][:email],
                               :course => course)
+            @invite.invite!
             @post_params.store(:invitation_token, @invite.token)
           end
 
@@ -95,6 +97,7 @@ describe UsersController do
             @invite = Factory(:user_course_invitation,
                               :email => @another_email,
                               :course => course)
+            @invite.invite!
             @post_params.store(:invitation_token, @invite.token)
             @post_params[:user][:email] = @another_email
             @post_params[:user][:email_confirmation] = @another_email

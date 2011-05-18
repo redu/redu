@@ -42,13 +42,13 @@ class Ability
     # Status
 
     # User
-    alias_action :learning, :teaching,
+    alias_action :learning,
       :show_log_activity, :log, :welcome_complete, :list_subjects,
       :show_log_activity, :activity_xml, :download_curriculum, :to => :read
 
-    alias_action :assume, :metro_area_update, :edit_account,
+    alias_action :assume, :edit_account,
       :update_account, :edit_pro_details, :update_pro_details,
-      :invite, :activate, :deactivate, :groups, :statistics,
+      :invite, :activate, :deactivate, :groups,
       :change_profile_photo, :crop_profile_photo,
       :upload_profile_photo, :activity_xml, :annotations,
       :activate, :deactivate, :account,
@@ -114,7 +114,7 @@ class Ability
 
       can [:accept, :deny], Course do |course|
         assoc = user.get_association_with(course)
-        !assoc.nil? and assoc.current_state == :invited
+        !assoc.nil? and assoc.state == "invited"
       end
 
       # User

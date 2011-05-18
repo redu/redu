@@ -1,4 +1,0 @@
-page.insert_html :bottom, 'spaces_list',
-  :partial => 'spaces/item_admin', :collection => @spaces
-page.replace_html '.endless',
-  (will_paginate @spaces, :renderer => EndlessRenderer)

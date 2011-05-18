@@ -7,13 +7,22 @@
     <%= link_to space.course.environment.name,
       environment_path(space.course.environment),
       :class => 'replacement icon icon-environment-lightblue_16_16' %>
+    </li>
     <li>
       <%= link_to space.course.name,
         environment_course_path(space.course.environment, space.course),
         :class => 'replacement icon icon-course-lightblue_16_16' %>
     </li>
-    <li>
-      <%= link_to space.name, space_path(space),
-        :class => 'icon icon-space-lightblue_16_16' %>
-    </li>
+    <%# Workaround para mostrar space não editado (sem possibilidade de space.name ser string vazia)  %>
+    <% if @header_space %>
+      <li>
+        <%= link_to @header_space.name, space_path(space),
+          :class => 'icon icon-space-lightblue_16_16' %>
+      </li>
+    <% else %>
+      <li>
+        <%= link_to space.name, space_path(space),
+          :class => 'icon icon-space-lightblue_16_16' %>
+      </li>
+    <% end %>
   </ol>

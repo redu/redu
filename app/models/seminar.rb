@@ -1,4 +1,5 @@
 class Seminar < ActiveRecord::Base
+  include AASM
   # Lectureable que representa um objeto multimídia simples, podendo ser aúdio,
   # vídeo ou mídia externa (e.g youtube).
 
@@ -49,81 +50,46 @@ class Seminar < ActiveRecord::Base
   SUPPORTED_AUDIO = ['audio/mpeg', 'audio/mp3']
 
   # Video convertido
-  has_attached_file :media, VIDEO_TRANSCODED
+  has_attached_file :media, Redu::Application.config.video_transcoded
   # Video original. Mantido para caso seja necessário refazer o transcoding
-  has_attached_file :original, {}.merge(VIDEO_ORIGINAL)
+  has_attached_file :original, {}.merge(Redu::Application.config.video_original)
 
   # Callbacks
-  # Se for tipo upload, chama o metodo define_content_type
-  before_validation :enable_correct_validation_group
   before_create :truncate_youtube_url
 
   has_one :lecture, :as => :lectureable
 
   # Maquina de estados do processo de conversão
-  acts_as_state_machine :initial => :waiting, :column => 'state'
+  aasm_column :state
 
-  state :waiting
-  state :converting, :enter => :transcode
-  state :converted
-  state :failed
+  aasm_initial_state :waiting
 
-  event :convert do
-    transitions :from => :waiting, :to => :converting
+  aasm_state :waiting
+  aasm_state :converting, :enter => :transcode
+  aasm_state :converted
+  aasm_state :failed
+
+  aasm_event :convert do
+    transitions :to => :converting, :from => [:waiting]
   end
 
-  event :ready do
-    transitions :from => :converting, :to => :converted
-    transitions :from => :waiting, :to => :converted
+  aasm_event :ready do
+    transitions :to => :converted, :from => [:waiting, :converting]
   end
 
-  event :fail do
-    transitions :from => :converting, :to => :failed
+  aasm_event :fail do
+    transitions :to => :failed, :from => [:converting]
   end
 
-  # Validations Groups - Habilitar diferentes validacoes dependendo do tipo.
-  validation_group :external,
-    :fields => [:external_resource, :external_resource_type]
-  validation_group :uploaded, :fields => [:original]
+  # Habilita diferentes validações dependendo do tipo
+  validates_presence_of :external_resource, :if => :external?
+  validates_presence_of :external_resource_type, :if => :external?
 
-  validates_presence_of :external_resource, :external_resource_type
-  validates_attachment_presence :original
-  validate :accepted_content_type
-  validates_attachment_size :original,
-    :less_than => 100.megabytes
-
-  def import_redu_seminar(url)
-    lecture_id = url.scan(/aulas\/([0-9]*)/)
-
-    unless lecture_id.empty?
-      @source = Lecture.find(lecture_id[0][0])
-      # copia (se upload ou youtube)
-      @source.is_clone = true #TODO evitar que sejam removido
-    end
-
-    if @source
-      if @source.lectureable_type == 'Seminar'
-        if @source.lectureable.external_resource_type.eql?('youtube')
-          self.external_resource_type = 'youtube'
-          self.external_resource = 'http://www.youtube.com/watch?v=' + @source.lectureable.external_resource
-          return [true, ""]
-        elsif @source.lectureable.external_resource_type.eql?('upload')
-          self.external_resource_type = 'upload' # melhor ficar 'redu'?
-          self.media_file_name = @source.lectureable.media_file_name
-          self.media_content_type = @source.lectureable.media_content_type
-          self.media_file_size = @source.lectureable.media_file_size
-          self.media_updated_at = @source.lectureable.media_updated_at
-          return [true, ""]
-        end
-
-      else
-        return [false, "Aula não é um seminário"]
-      end
-    else
-      return [false, "Link não válido ou aula não pública"]
-    end
-
-  end
+  validates_presence_of :original, :unless => :external?
+  validates_attachment_presence :original, :unless => :external?
+  validate :accepted_content_type, :unless => :external?
+  validates_attachment_size :original, :less_than => 100.megabytes,
+    :unless => :external?
 
   def validate_youtube_url
     if self.valid? and external_resource_type.eql?('youtube')
@@ -151,14 +117,17 @@ class Seminar < ActiveRecord::Base
       :extension => 'flv'
     }
 
-    output_path = "s3://" + VIDEO_TRANSCODED[:bucket] + "/" + interpolate(VIDEO_TRANSCODED[:path], seminar_info)
+    video_storage = Redu::Application.config.video_transcoded
+    output_path = "s3://" + video_storage[:bucket] + "/" + interpolate(vide_storage[:path], seminar_info)
 
-    ZENCODER_CONFIG[:input] = self.original.url
-    ZENCODER_CONFIG[:output][:url] = output_path
-    ZENCODER_CONFIG[:output][:thumbnails][:base_url] = File.dirname(output_path)
-    ZENCODER_CONFIG[:output][:notifications][:url] = "http://#{ZENCODER_CREDENTIALS[:username]}:#{ZENCODER_CREDENTIALS[:password]}@beta.redu.com.br/jobs/notify"
+    credentials = Redu::Application.config.zencoder_credentials
+    config = Redu::Application.zencoder
+    config[:input] = self.original.url
+    config[:output][:url] = output_path
+    config[:output][:thumbnails][:base_url] = File.dirname(output_path)
+    config[:output][:notifications][:url] = "http://#{credentials[:username]}:#{credentials[:password]}@beta.redu.com.br/jobs/notify"
 
-    response = Zencoder::Job.create(ZENCODER_CONFIG)
+    response = Zencoder::Job.create(config)
     puts response.inspect
     if response.success?
       self.job = response.body["id"]
@@ -175,14 +144,8 @@ class Seminar < ActiveRecord::Base
     SUPPORTED_AUDIO.include?(self.original_content_type)
   end
 
-  # Decide qual validation_group será habilitado
-  def enable_correct_validation_group
-    if self.external_resource_type != "upload"
-      self.enable_validation_group :external
-    else
-      self.enable_validation_group :uploaded
-      self.define_content_type
-    end
+  def external?
+    self.external_resource_type == "youtube"
   end
 
   def type

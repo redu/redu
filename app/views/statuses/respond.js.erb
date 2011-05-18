@@ -1,0 +1,9 @@
+<% status_id = @status.in_response_to.id.to_s %>
+<% if @status.valid? %>
+  response = "<%=  escape_javascript (render :partial => 'statuses/response', :locals => { :response => @status }) %>";
+  $status = $("#status-<%= status_id %>");
+
+  $status.find(".responses ol").prepend(response);
+  $status.find(".create-response").toggle();
+  $status.find("form textarea").val('');
+<% end %>

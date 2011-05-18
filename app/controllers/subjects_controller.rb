@@ -1,4 +1,5 @@
 class SubjectsController < BaseController
+  respond_to :html, :js
 
   load_and_authorize_resource :space
   load_and_authorize_resource :subject, :through => :space, :except => [:update, :destroy]
@@ -10,24 +11,25 @@ class SubjectsController < BaseController
   rescue_from CanCan::AccessDenied do |exception|
     flash[:notice] = "Você não tem acesso a essa página"
 
-    redirect_to preview_environment_course_path(@space.course.environment, @space.course)
+    redirect_to preview_environment_course_path(@space.course.environment,
+                                                @space.course)
   end
 
   def index
     if can? :manage, @space
       @subjects = @space.subjects.paginate(:page => params[:page],
                                            :order => 'updated_at DESC',
-                                           :per_page => AppConfig.items_per_page)
+                                           :per_page => Redu::Application.config.items_per_page)
     else
       @subjects = @space.subjects.visible.
         paginate(:page => params[:page],
                  :order => 'updated_at DESC',
-                 :per_page => AppConfig.items_per_page)
+                 :per_page => Redu::Application.config.items_per_page)
     end
 
     respond_to do |format|
       format.html
-      format.js
+      format.js { render_endless 'subjects/item', @subjects, '#subjects_list' }
     end
   end
 
@@ -39,7 +41,7 @@ class SubjectsController < BaseController
       @status = Status.new
 
       format.html
-      format.js
+      format.js { render_endless 'statuses/item', @statuses, '#statuses > ol' }
       format.xml { render :xml => @subject }
     end
   end
@@ -49,16 +51,6 @@ class SubjectsController < BaseController
 
     respond_to do |format|
       format.html
-
-      # Descomentar para o primeiro passo da criação de Subject
-      # usar AJAX
-      # format.js do
-      #   render :update do |page|
-      #     page.insert_html :before, 'subjects_list',
-      #       :partial => 'subjects/form'
-      #     page.hide 'link-new-subject'
-      #   end
-      # end
     end
   end
 
@@ -66,31 +58,9 @@ class SubjectsController < BaseController
     @subject = Subject.new(params[:subject])
     @subject.owner = current_user
     @subject.space = Space.find(params[:space_id])
+    @subject.save
 
-    respond_to do |format|
-      if @subject.save
-        format.js
-      else
-        format.js do
-          # Workaround para mostrar o errors.full_messages
-          errors_full = "<ul>"
-          @subject.errors.full_messages.each do |error|
-            errors_full += "<li>#{error}</li>"
-          end
-          errors_full += "</ul>"
-
-          render :update do |page|
-            page.remove '#errorExplanation > ul'
-            page.insert_html :bottom,  '#errorExplanation', errors_full
-            page.show 'errorExplanation'
-            page.replace_html 'subject_title-error', @subject.errors.on(:title)
-            page.show 'subject_title-error'
-            page.replace_html 'subject_description-error', @subject.errors.on(:description)
-            page.show 'subject_description-error'
-          end
-        end
-      end
-    end
+    respond_with(@subject.space, @subject, :layout => !request.xhr?)
   end
 
   def edit
@@ -98,13 +68,6 @@ class SubjectsController < BaseController
     @admin_panel = true if params[:admin_panel]
     respond_to do |format|
       format.html
-      format.js do
-        render :update do |page|
-          page.hide 'content'
-          page.insert_html :before, 'content',
-            :partial => 'subjects/form'
-        end
-      end
     end
   end
 
@@ -121,16 +84,10 @@ class SubjectsController < BaseController
           @subject.save
           # cria as associações com o subject, replicando a do space
           @subject.create_enrollment_associations
-          @subject.convert_lectureables!
           flash[:notice] = "O Módulo foi criado."
         end
 
-        format.js do
-          render :update do |page|
-            page.redirect_to(:controller => 'subjects', :action => 'index',
-                             :space_id => @subject.space.id)
-          end
-        end
+        format.js
         format.html { redirect_to space_subject_path(@space, @subject) }
       else
         format.js { render :template => 'subjects/update_error' }
@@ -187,10 +144,12 @@ class SubjectsController < BaseController
   def admin_members
     @memberships = @subject.members.paginate(:page => params[:page],
                                 :order => 'first_name ASC',
-                                :per_page => AppConfig.items_per_page)
+                                :per_page => Redu::Application.config.items_per_page)
     respond_to do |format|
       format.html
-      format.js
+      format.js do
+        render_endless 'subjects/user_item_admin', @memberships, '#user_list_table'
+      end
     end
   end
 
@@ -214,12 +173,16 @@ class SubjectsController < BaseController
 
   # Listagem de usuários do Space
   def users
-    @users = @subject.members.
-      paginate(:page => params[:page], :order => 'first_name ASC', :per_page => 18)
+    @users = @subject.members.paginate(:page => params[:page],
+                                       :order => 'first_name ASC',
+                                       :per_page => 18)
 
     respond_to do |format|
       format.html
-      format.js
+      format.js do
+        render_endless 'users/item', @users, '#users_list',
+          { :entity => @subject }
+    end
     end
   end
 

@@ -1,9 +1,10 @@
 class Document < ActiveRecord::Base
   has_ipaper_and_uses 'Paperclip'
-  has_attached_file :attachment, DOCUMENT_STORAGE_OPTIONS
-  #validates_attachment_content_type :attachment, :content_type => ScribdFu::ContentTypes
+  has_attached_file :attachment, Redu::Application.config.paperclip
+  validates_attachment_content_type :attachment,
+    :content_type => Redu::Application.config.mimetypes['documents']
 
-  validate :content_type
+  before_validation :define_content_type
 
   has_one :lecture, :as => :lectureable
 

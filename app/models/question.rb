@@ -10,7 +10,7 @@ class Question < ActiveRecord::Base
     :reject_if => lambda { |q| q[:statement].blank? },
     :allow_destroy => true
 
-  named_scope :public, :conditions => ['public = ?', true]
+  scope :public, where('public = ?', true)
 
   # Validations
   validates_presence_of :statement
@@ -20,7 +20,7 @@ class Question < ActiveRecord::Base
 
   # Seta a resposta correta (não salva)
   def set_answer!
-    correct = self.alternatives.find(:first, :conditions => {:correct => true})
+    correct = self.alternatives.where(:correct => true).first
     self.answer = correct
     self.save!
   end

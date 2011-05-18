@@ -25,7 +25,8 @@
 
 <%= render :partial => 'courses/sidebar' %>
 <div class="main grid_12 omega big-col">
-  <%= render :partial => 'courses/breadcrumbs' %>
+  <%= render :partial => 'courses/breadcrumbs',
+    :locals => { :course => @header_course } %>
   <%= render :partial => 'courses/header',
     :locals => { :course => @header_course } %>
   <div id="course-manage" class="body">
@@ -33,16 +34,16 @@
       <h4>Gerenciamento</h4>
       <span class="counter">Informações gerais do Curso</span>
     </div>
-    <%
+    <%=
       fake_tabs ["Informações", edit_environment_course_path(@environment, @course), {:class => 'icon icon-management-lightblue_16_16'}],
         ["Membros", admin_members_environment_course_path(@environment, @course), {:class => 'icon icon-members-gray_16_16'}],
         ["Moderação", admin_members_requests_environment_course_path(@environment, @course), {:class => 'icon icon-moderation-gray_16_16'}],
         ["Convites", admin_manage_invitations_environment_course_path(@environment, @course), {:class => ''}],
         ["Disciplinas", admin_spaces_environment_course_path(@environment, @course), {:class => 'icon icon-space-gray_16_16'}] do
     %>
-      <% form_for @course,
+      <%= form_for @course,
         :url => environment_course_path(@environment, @course),
-        :html => { :class => "common" } do |f| %>
+        :html => { :class => "form-common" } do |f| %>
         <%= render :partial => 'courses/form', :locals => { :f => f, :edit => true } %>
         <%= f.submit "Salvar alterações" %>
         <% if @course.published? %>

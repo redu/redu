@@ -1,5 +1,0 @@
-page << "jQuery('#dislike_spinner').hide()"
-page << "jQuery('#dislike_link').show()"
-page << "jQuery('#dislike_link').attr('onclick', 'return false;')"
-page << "jQuery('#dislike_count').html('#{votes_against}')" # TODO performance + uma consulta?
-

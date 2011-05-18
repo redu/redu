@@ -20,11 +20,11 @@ CKEDITOR.plugins.add( 'domiterator' );
 			return;
 
 		this.range = range;
-		this.forceBrBreak = 0;
+		this.forceBrBreak = false;
 
 		// Whether include <br>s into the enlarged range.(#3730).
-		this.enlargeBr = 1;
-		this.enforceRealBlocks = 0;
+		this.enlargeBr = true;
+		this.enforceRealBlocks = false;
 
 		this._ || ( this._ = {} );
 	}
@@ -80,7 +80,7 @@ CKEDITOR.plugins.add( 'domiterator' );
 				// next block.(#3887)
 				if ( this._.lastNode &&
 						this._.lastNode.type == CKEDITOR.NODE_TEXT &&
-						!CKEDITOR.tools.trim( this._.lastNode.getText() ) &&
+						!CKEDITOR.tools.trim( this._.lastNode.getText( ) ) &&
 						this._.lastNode.getParent().isBlockBoundary() )
 				{
 					var testRange = new CKEDITOR.dom.range( range.document );
@@ -112,13 +112,13 @@ CKEDITOR.plugins.add( 'domiterator' );
 			{
 				// closeRange indicates that a paragraph boundary has been found,
 				// so the range can be closed.
-				var closeRange = 0,
-					parentPre = currentNode.hasAscendant( 'pre' );
+				var closeRange = false,
+						parentPre = currentNode.hasAscendant( 'pre' );
 
 				// includeNode indicates that the current node is good to be part
 				// of the range. By default, any non-element node is ok for it.
 				var includeNode = ( currentNode.type != CKEDITOR.NODE_ELEMENT ),
-					continueFromSibling = 0;
+					continueFromSibling = false;
 
 				// If it is an element node, let's check if it can be part of the
 				// range.
@@ -132,7 +132,7 @@ CKEDITOR.plugins.add( 'domiterator' );
 						// <br> boundaries must be part of the range. It will
 						// happen only if ForceBrBreak.
 						if ( nodeName == 'br' )
-							includeNode = 1;
+							includeNode = true;
 						else if ( !range && !currentNode.getChildCount() && nodeName != 'hr' )
 						{
 							// If we have found an empty block, and haven't started
@@ -154,7 +154,7 @@ CKEDITOR.plugins.add( 'domiterator' );
 								this._.nextNode = currentNode;
 						}
 
-						closeRange = 1;
+						closeRange = true;
 					}
 					else
 					{
@@ -171,7 +171,7 @@ CKEDITOR.plugins.add( 'domiterator' );
 							currentNode = currentNode.getFirst();
 							continue;
 						}
-						includeNode = 1;
+						includeNode = true;
 					}
 				}
 				else if ( currentNode.type == CKEDITOR.NODE_TEXT )
@@ -179,7 +179,7 @@ CKEDITOR.plugins.add( 'domiterator' );
 					// Ignore normal whitespaces (i.e. not including &nbsp; or
 					// other unicode whitespaces) before/after a block node.
 					if ( beginWhitespaceRegex.test( currentNode.getText() ) )
-						includeNode = 0;
+						includeNode = false;
 				}
 
 				// The current node is good to be part of the range and we are
@@ -204,15 +204,15 @@ CKEDITOR.plugins.add( 'domiterator' );
 						if ( parentNode.isBlockBoundary( this.forceBrBreak
 								&& !parentPre && { br : 1 } ) )
 						{
-							closeRange = 1;
+							closeRange = true;
 							isLast = isLast || ( parentNode.equals( lastNode) );
 							break;
 						}
 
 						currentNode = parentNode;
-						includeNode = 1;
+						includeNode = true;
 						isLast = ( currentNode.equals( lastNode ) );
-						continueFromSibling = 1;
+						continueFromSibling = true;
 					}
 				}
 
@@ -302,9 +302,6 @@ CKEDITOR.plugins.add( 'domiterator' );
 				}
 			}
 
-			// Ignore bookmark nodes.(#3783)
-			var bookmarkGuard = CKEDITOR.dom.walker.bookmark( false, true );
-
 			if ( removePreviousBr )
 			{
 				var previousSibling = block.getPrevious();
@@ -319,6 +316,9 @@ CKEDITOR.plugins.add( 'domiterator' );
 
 			if ( removeLastBr )
 			{
+				// Ignore bookmark nodes.(#3783)
+				var bookmarkGuard = CKEDITOR.dom.walker.bookmark( false, true );
+
 				var lastChild = block.getLast();
 				if ( lastChild && lastChild.type == CKEDITOR.NODE_ELEMENT && lastChild.getName() == 'br' )
 				{
@@ -337,12 +337,6 @@ CKEDITOR.plugins.add( 'domiterator' );
 			{
 				this._.nextNode = ( isLast || block.equals( lastNode ) ) ? null :
 					block.getNextSourceNode( true, null, lastNode );
-			}
-
-			if ( !bookmarkGuard( this._.nextNode ) )
-			{
-				this._.nextNode = this._.nextNode.getNextSourceNode( true, null, function( node )
-					{ return !node.equals( lastNode ) && bookmarkGuard( node ); } );
 			}
 
 			return block;

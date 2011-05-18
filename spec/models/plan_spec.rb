@@ -21,26 +21,26 @@ describe Plan do
   end
 
   context "states" do
-    [:block!, :migrate!, :activate!, :current_state].each do |attr|
+    [:block!, :migrate!, :activate!, :state].each do |attr|
       it "responds to" do
         should respond_to attr
       end
     end
 
     it "defaults to active" do
-      subject.current_state.should == :active
+      subject.state.should == "active"
     end
 
     it "blocks" do
       expect {
         subject.block!
-      }.should change { subject.current_state }.to :blocked
+      }.should change { subject.state }.to "blocked"
     end
 
     it "migrates" do
       expect {
         subject.migrate!
-      }.should change { subject.current_state }.to :migrated
+      }.should change { subject.state }.to "migrated"
     end
 
     it "activates" do
@@ -48,8 +48,8 @@ describe Plan do
 
       expect {
         subject.activate!
-      }.should change(subject, :current_state).from(:blocked).to(:active)
-      
+      }.should change(subject, :state).from("blocked").to("active")
+
     end
   end
 
@@ -177,7 +177,7 @@ describe Plan do
     end
 
     it "sets state to migrated" do
-      subject.current_state.should == :migrated
+      subject.state.should == "migrated"
     end
 
     it "creates a valid and new plan" do

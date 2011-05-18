@@ -9,7 +9,7 @@
       <%= link_to item_detailed.name,
         environment_course_path(item_detailed.environment, item_detailed),
         :class => 'course' %>
-      <% if item_detailed.subscription_type.eql? 1 %>
+      <% if item_detailed.subscription_type.eql? 2 %>
         <span class="moderated replacement icon icon-lock-gray_16_16" title="Para entrar você precisa ser aceito">Moderado</span>
       <% end %>
       <ul class="tags clearfix">

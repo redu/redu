@@ -1,8 +1,8 @@
 Olá, <%= @user.display_name %>!
-Você nos pediu para lembrá-lo do seu login no <%= AppConfig.community_name %>.
-Seu login é: <%= @user.login %>. 
+Você nos pediu para lembrá-lo do seu login no <%= Redu::Application.config.name %>.
+Seu login é: <%= @user.login %>.
 
-Se você tiver alguma dúvida ou acha que esse lembrete foi enviado por engano, por favor entre em contato conosco: <%= AppConfig.support_email %>.
+Se você tiver alguma dúvida ou acha que esse lembrete foi enviado por engano, por favor entre em contato conosco: <%= Redu::Application.config.email %>.
 
 Obrigado,
-Equipe <%= AppConfig.community_name %>
+Equipe <%= Redu::Application.config.name %>

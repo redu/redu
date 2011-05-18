@@ -6,7 +6,7 @@
 
     <span class="grid_11 alpha">
     <%#= feed_icon_tag @forum.name, space_forum_sb_posts_path(@space, :format => :rss) %>
-    <%= pluralize @forum.topics_count, :topic.l %>, <%= pluralize @forum.sb_posts_count, :post.l %>
+    <%= pluralize @forum.topics_count, t(:topic) %>, <%= pluralize @forum.sb_posts_count, t( :post ) %>
     </span>
   </div>
 
@@ -16,16 +16,16 @@
     <% end %>
    <table class="common">
       <tr>
-        <th><%= :topics.l %></th>
-        <th><%= :posts.l %></th>
-        <th><%= :views.l %></th>
-        <th><%= :last_post.l %></th>
+        <th><%= t(:topics) %></th>
+        <th><%= t(:posts) %></th>
+        <th><%= t(:views) %></th>
+        <th><%= t(:last_post) %></th>
       </tr>
       <% for topic in @topics %>
         <tr>
           <td>
             <% if topic.locked? %>
-              <%= image_tag "lock.gif", :class => "icon grey", :title => :topic_locked.l %>
+              <%= image_tag "lock.gif", :class => "icon grey", :title => t(:topic_locked) %>
             <% end %>
             <%= link_to topic.title, space_forum_topic_path(@space, topic) %>
           </td>
@@ -33,7 +33,7 @@
           <td><%= number_with_delimiter(topic.views) %></td>
           <td>
             <%= time_ago_in_words(topic.replied_at) %>
-            <%= :by.l %>
+            <%= t(:by) %>
             <%= topic.replied_by_user.display_name %>
             <%= link_to :view.l, space_forum_topic_path(:forum_id => @forum, :id => topic, :page => topic.last_page) %>
           </td>

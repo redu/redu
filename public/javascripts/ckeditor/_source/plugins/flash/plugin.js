@@ -5,9 +5,15 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 (function()
 {
-	var flashFilenameRegex = /\.swf(?:$|\?)/i;
+	var flashFilenameRegex = /\.swf(?:$|\?)/i,
+		numberRegex = /^\d+(?:\.\d+)?$/;
 
-	var cssifyLength = CKEDITOR.tools.cssLength;
+	function cssifyLength( length )
+	{
+		if ( numberRegex.test( length ) )
+			return length + 'px';
+		return length;
+	}
 
 	function isFlashEmbed( element )
 	{

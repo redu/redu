@@ -1,6 +1,6 @@
 Olá!
 
-<%= @user.login %> (<%= @user.email %>) convidou você para entrar no <%= AppConfig.community_name %>. <%= AppConfig.community_description %>
+<%= @user.login %> (<%= @user.email %>) convidou você para entrar no <%= Redu::Application.config.name %>. <%= Redu::Application.config.description %>
 
 Ele te enviou a seguinte mensagem:
 <%= @message %>
@@ -10,4 +10,4 @@ Visite o link abaixo para se cadastrar e aproveitar o que o Redu oferece:
 <%= @url %>
 
 Obrigado,
-Equipe <%= AppConfig.community_name %>
+Equipe <%= Redu::Application.config.name %>

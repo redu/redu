@@ -1,16 +1,16 @@
 Hey!
 
-<%= @comment.username %> has added a comment to a <%= @comment.commentable_type %> 
+<%= @comment.username %> has added a comment to a <%= @comment.commentable_type %>
 that you commented on. Use this link to check it out:
 
-<%= @url %> 
+<%= @url %>
 
 Thanks,
-The <%= AppConfig.community_name %> team
+The <%= Redu::Application.config.name %> team
 
 ---------------------------------------------------------------------------------
 If you believe you received this notice in error, please contact support at
-<%= AppConfig.support_email %>
+<%= Redu::Application.config.email %>
 
 <% if @unsubscribe_link %>
 To stop receiving updates about new comments on this <%= @comment.commentable_type %>, visit this URL:

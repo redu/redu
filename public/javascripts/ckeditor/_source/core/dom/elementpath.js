@@ -27,9 +27,6 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		return false;
 	};
 
-	/**
-	 * @class
-	 */
 	CKEDITOR.dom.elementPath = function( lastNode )
 	{
 		var block = null;

@@ -160,7 +160,7 @@ describe Space do
 
   it "generates a permalink" do
     @space = Factory(:space, :id => 123, :name => "teste")
-    APP_URL.should_not be_nil
+    Redu::Application.config.url.should_not be_nil
     @space.permalink.should include("#{@space.id}-#{@space.name.parameterize}")
   end
 

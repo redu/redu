@@ -133,10 +133,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 								// point.
 								if ( savedRange )
 								{
-									// Range restored here might invalidate the DOM structure thus break up
-									// the locked selection, give it up. (#6083)
-									var lockedSelection = doc.getCustomData( 'cke_locked_selection' );
-									if ( restoreEnabled && !lockedSelection )
+									if ( restoreEnabled )
 									{
 										// Well not break because of this.
 										try
@@ -154,7 +151,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						body.on( 'focus', function()
 							{
 								// Enable selections to be saved.
-								saveEnabled = 1;
+								saveEnabled = true;
 
 								saveSelection();
 							});
@@ -167,7 +164,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 									return;
 
 								// Disable selections from being saved.
-								saveEnabled = 0;
+								saveEnabled = false;
 								restoreEnabled = 1;
 							});
 
@@ -177,18 +174,13 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						{
 							editor.on( 'blur', function( evt )
 							{
-								// Try/Catch to avoid errors if the editor is hidden. (#6375)
-								try
-								{
-									editor.document && editor.document.$.selection.empty();
-								}
-								catch (e) {}
+								editor.document && editor.document.$.selection.empty();
 							});
 						}
 
 						// Listening on document element ensures that
 						// scrollbar is included. (#5280)
-						html.on( 'mousedown', function()
+						html.on( 'mousedown', function ()
 						{
 							// Lock restore selection now, as we have
 							// a followed 'click' event which introduce
@@ -196,7 +188,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 							restoreEnabled = 0;
 						});
 
-						html.on( 'mouseup', function()
+						html.on( 'mouseup', function ()
 						{
 							restoreEnabled = 1;
 						});
@@ -243,7 +235,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 								}
 								scroll = null;
 
-								saveEnabled = 1;
+								saveEnabled = true;
 								setTimeout( function()
 									{
 										saveSelection( true );
@@ -255,7 +247,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						body.on( 'keyup',
 							function()
 							{
-								saveEnabled = 1;
+								saveEnabled = true;
 								saveSelection();
 							});
 
@@ -266,7 +258,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 						function disableSave()
 						{
-							saveEnabled = 0;
+							saveEnabled = false;
 						}
 
 						function saveSelection( testIt )
@@ -408,7 +400,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			return lockedSelection;
 
 		this.document = document;
-		this.isLocked = 0;
+		this.isLocked = false;
 		this._ =
 		{
 			cache : {}
@@ -551,7 +543,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 		 * var ranges = selection.getRanges();
 		 * alert(ranges.length);
 		 */
-		getRanges : (function()
+		getRanges : (function ()
 		{
 			var func = CKEDITOR.env.ie ?
 				( function()
@@ -663,13 +655,6 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 							boundaryInfo = getBoundaryInformation( nativeRange );
 							range.setEnd( new CKEDITOR.dom.node( boundaryInfo.container ), boundaryInfo.offset );
 
-							// Correct an invalid IE range case on empty list item. (#5850)
-							if ( range.endContainer.getPosition( range.startContainer ) & CKEDITOR.POSITION_PRECEDING
-									&& range.endOffset <= range.startContainer.getIndex() )
-							{
-								range.collapse();
-							}
-
 							return [ range ];
 						}
 						else if ( type == CKEDITOR.SELECTION_ELEMENT )
@@ -755,7 +740,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 						// Drop range spans inside one ready-only node.
 						var parent = range.getCommonAncestor();
-						if ( parent.isReadOnly() )
+						if ( parent.isReadOnly())
 							ranges.splice( i, 1 );
 
 						if ( range.collapsed )
@@ -865,7 +850,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 							// Decrease the range content to exclude particial
 							// selected node on the start which doesn't have
 							// visual impact. ( #3231 )
-							while ( 1 )
+							while ( true )
 							{
 								var startContainer = range.startContainer,
 									startOffset = range.startOffset;
@@ -885,25 +870,32 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 							node = node.getChild( range.startOffset );
 
 							if ( !node || node.type != CKEDITOR.NODE_ELEMENT )
-								node = range.startContainer;
-							else
-							{
-								var child = node.getFirst();
-								while (  child && child.type == CKEDITOR.NODE_ELEMENT )
-								{
-									node = child;
-									child = child.getFirst();
-								}
-							}
-						}
-						else
-						{
-							node = range.startContainer;
-							if ( node.type != CKEDITOR.NODE_ELEMENT )
-								node = node.getParent();
-						}
+								return range.startContainer;
 
-						node = node.$;
+							var child = node.getFirst();
+							while (  child && child.type == CKEDITOR.NODE_ELEMENT )
+							{
+								node = child;
+								child = child.getFirst();
+							}
+
+							return node;
+						}
+					}
+
+					if ( CKEDITOR.env.ie )
+					{
+						range = sel.createRange();
+						range.collapse( true );
+
+						node = range.parentElement();
+					}
+					else
+					{
+						node = sel.anchorNode;
+
+						if ( node && node.nodeType != 1 )
+							node = node.parentNode;
 					}
 			}
 
@@ -967,7 +959,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 			// The native selection is not available when locked.
 			this._.cache.nativeSel = {};
 
-			this.isLocked = 1;
+			this.isLocked = true;
 
 			// Save this selection inside the DOM document.
 			this.document.setCustomData( 'cke_locked_selection', this );
@@ -987,7 +979,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 					var selectedElement = lockedSelection.getSelectedElement(),
 						ranges = !selectedElement && lockedSelection.getRanges();
 
-					this.isLocked = 0;
+					this.isLocked = false;
 					this.reset();
 
 					doc.getBody().focus();
@@ -1001,7 +993,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 			if  ( !lockedSelection || !restore )
 			{
-				this.isLocked = 0;
+				this.isLocked = false;
 				this.reset();
 			}
 		},
@@ -1042,7 +1034,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 					range.addElement( element.$ );
 					range.select();
 				}
-				catch( e )
+				catch(e)
 				{
 					// If failed, select it as a text range.
 					range = this.document.$.body.createTextRange();

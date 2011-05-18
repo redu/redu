@@ -1,0 +1,14 @@
+<% if @page %>
+  $('#page_body-error').html("<%= @page.errors[:body].join(",") %>");
+  $('#page_body-error').show();
+<% elsif @seminar %>
+  $('#seminar_external_resource-error').html("<%= @seminar.errors[:external_resource].join(",") %>");
+  $('#seminar_external_resource-error').show();
+  $('#seminar_original-error').html("<%= @seminar.errors[:original].join(",") %>");
+  $('#seminar_original-error').show();
+<% elsif @document %>
+  $('#document_attachment-error').html("<%= @document.errors[:attachment].join(",") %>");
+  $('#document_attachment-error').show();
+<% end %>
+$('#name-error').html("<%= @lecture.errors[:name].join(",") %>");
+$('#name-error').show();

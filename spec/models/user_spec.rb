@@ -50,9 +50,8 @@ describe User do
   it { should have_many(:plans) }
 
   it { should_not allow_mass_assignment_of :admin }
-  it { should_not allow_mass_assignment_of :role_id }
+  it { should_not allow_mass_assignment_of :role }
   it { should_not allow_mass_assignment_of :activation_code }
-  it { should_not allow_mass_assignment_of :login_slug }
   it { should_not allow_mass_assignment_of :friends_count }
   it { should_not allow_mass_assignment_of :score }
   it { should_not allow_mass_assignment_of :removed }
@@ -80,7 +79,7 @@ describe User do
     end
   end
 
-  [:login, :email, :login_slug].each do |attr|
+  [:login, :email].each do |attr|
     it do
       pending "Need fix on shoulda's translation problem" do
         should validate_uniqueness_of attr
@@ -93,18 +92,18 @@ describe User do
     it "validates login exclusion of reserved_logins" do
       subject.login = 'admin'
       subject.should_not be_valid
-      subject.errors.on(:login).should_not be_nil
+      subject.errors[:login].should_not be_empty
     end
 
     it "validates birthday to be before of 13 years ago" do
       subject.birthday = 10.years.ago
       subject.should_not be_valid
-      subject.errors.on(:birthday).should_not be_nil
+      subject.errors[:birthday].should_not be_empty
     end
 
     context "validates a curriculum type on update if has a curriculum" do
       before do
-        path = File.join(RAILS_ROOT,
+        path = File.join(Rails.root,
                          "spec",
                          "support",
                          "documents",
@@ -117,13 +116,13 @@ describe User do
       it "when a teacher" do
         subject.teacher_profile = true
         subject.save
-        subject.errors.on(:curriculum).should_not be_nil
+        subject.errors[:curriculum].should_not be_empty
       end
 
       it "when NOT a teacher" do
         subject.teacher_profile = false
         subject.save
-        subject.errors.on(:curriculum).should_not be_nil
+        subject.errors[:curriculum].should_not be_empty
       end
     end
 
@@ -131,13 +130,13 @@ describe User do
       it "when a teacher" do
         subject.teacher_profile = true
         subject.save
-        subject.errors.on(:curriculum).should be_nil
+        subject.errors[:curriculum].should be_empty
       end
 
       it "when a student" do
         subject.teacher_profile = false
         subject.save
-        subject.errors.on(:curriculum).should be_nil
+        subject.errors[:curriculum].should be_empty
       end
     end
 
@@ -145,13 +144,13 @@ describe User do
       it "when a teacher" do
         subject.teacher_profile = true
         subject.save
-        subject.errors.on(:curriculum).should be_nil
+        subject.errors[:curriculum].should be_empty
       end
 
       it "when a student" do
         subject.teacher_profile = false
         subject.save
-        subject.errors.on(:curriculum).should be_nil
+        subject.errors[:curriculum].should be_empty
       end
     end
 
@@ -159,19 +158,19 @@ describe User do
       u = Factory.build(:user, :email => "email@email.com",
                   :email_confirmation => "different@email.com")
       u.should_not be_valid
-      u.errors.on(:email).should_not be_nil
+      u.errors[:email].should_not be_empty
     end
 
     it "validates e-mail format" do
       u = Factory.build(:user, :email => "invalid@inv")
       u.should_not be_valid
-      u.errors.on(:email).should_not be_nil
+      u.errors[:email].should_not be_empty
     end
 
     it "validates mobile phone format" do
       u = Factory.build(:user, :mobile => "21312312")
       u.should_not be_valid
-      u.errors.on(:mobile).should_not be_nil
+      u.errors[:mobile].should_not be_empty
       u.mobile = "55 81 1231-2131"
       u.should be_valid
       u.mobile = "81 2131-2123"
@@ -235,11 +234,16 @@ describe User do
 
     it "retrieves users tagged with specified tag" do
       users = (1..2).collect { Factory(:user) }
-      tag = Factory(:tag)
-      subject.tags << tag
-      users[0].tags << tag
-      users[1].tags << Factory(:tag, :name => "Another tag")
-      User.tagged_with(subject.tags.last.name).should == [subject, users[0]]
+
+      subject.tag_list = "tag"
+      subject.save
+
+      users[0].tag_list = "tag"
+      users[0].save
+      users[1].tag_list = "tag2"
+      users[1].save
+
+      User.tagged_with("tag").to_set.should == [subject, users[0]].to_set
     end
 
     it "retrieves users with specified ids" do
@@ -255,7 +259,7 @@ describe User do
 
     it "retrieves a user by his login slug" do
       user = Factory(:user)
-      User.find(subject.login_slug).should == subject
+      User.find(subject.login).should == subject
     end
 
     it "retrieves a user by his login or email" do
@@ -288,10 +292,8 @@ describe User do
 
   context "callbacks" do
     it "it will sanitize all attributes before save" do
-      subject.login = "      User Sanitized       "
       subject.description = "some<<b>script>alert('hello')<</b>/script>"
       subject.save
-      subject.login.should == "User Sanitized"
       subject.description.should =="some&lt;<b>script>alert('hello')&lt;</b>/script>"
     end
 
@@ -329,8 +331,10 @@ describe User do
   end
 
   it "verifies if a profile is complete" do
-    subject = Factory(:user, :gender => 'M', :description => "Desc",
-                      :tags => [Factory(:tag)])
+    subject = Factory(:user, :gender => 'M', :description => "Desc")
+    subject.tag_list = "one, two, three"
+    subject.save
+
     subject.should be_profile_complete
   end
 
@@ -339,7 +343,7 @@ describe User do
   end
 
   it "retrieves his representation in a param" do
-    subject.to_param.should == subject.login_slug
+    subject.to_param.should == subject.login
   end
 
   it "retrieves his posts made in current month"

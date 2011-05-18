@@ -243,7 +243,9 @@ CKEDITOR.dialog.add( 'link', function( editor )
 		{
 			var item = elements.getItem( i );
 			if ( item.getAttribute( '_cke_realelement' ) && item.getAttribute( '_cke_real_element_type' ) == 'anchor' )
+			{
 				anchors.push( editor.restoreRealElement( item ) );
+			}
 		}
 
 		for ( i = 0 ; i < realAnchors.count() ; i++ )
@@ -361,30 +363,27 @@ CKEDITOR.dialog.add( 'link', function( editor )
 		return 'String.fromCharCode(' + encodedChars.join( ',' ) + ')';
 	}
 
-	var commonLang = editor.lang.common,
-		linkLang = editor.lang.link;
-
 	return {
-		title : linkLang.title,
+		title : editor.lang.link.title,
 		minWidth : 350,
 		minHeight : 230,
 		contents : [
 			{
 				id : 'info',
-				label : linkLang.info,
-				title : linkLang.info,
+				label : editor.lang.link.info,
+				title : editor.lang.link.info,
 				elements :
 				[
 					{
 						id : 'linkType',
 						type : 'select',
-						label : linkLang.type,
+						label : editor.lang.link.type,
 						'default' : 'url',
 						items :
 						[
-							[ linkLang.toUrl, 'url' ],
-							[ linkLang.toAnchor, 'anchor' ],
-							[ linkLang.toEmail, 'email' ]
+							[ editor.lang.link.toUrl, 'url' ],
+							[ editor.lang.link.toAnchor, 'anchor' ],
+							[ editor.lang.link.toEmail, 'email' ]
 						],
 						onChange : linkTypeChanged,
 						setup : function( data )
@@ -410,7 +409,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 									{
 										id : 'protocol',
 										type : 'select',
-										label : commonLang.protocol,
+										label : editor.lang.common.protocol,
 										'default' : 'http://',
 										items :
 										[
@@ -419,7 +418,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 											[ 'https://\u200E', 'https://' ],
 											[ 'ftp://\u200E', 'ftp://' ],
 											[ 'news://\u200E', 'news://' ],
-											[ linkLang.other , '' ]
+											[ editor.lang.link.other , '' ]
 										],
 										setup : function( data )
 										{
@@ -437,7 +436,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 									{
 										type : 'text',
 										id : 'url',
-										label : commonLang.url,
+										label : editor.lang.common.url,
 										required: true,
 										onLoad : function ()
 										{
@@ -478,7 +477,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 											if ( this.getDialog().fakeObj )	// Edit Anchor.
 												return true;
 
-											var func = CKEDITOR.dialog.validate.notEmpty( linkLang.noUrl );
+											var func = CKEDITOR.dialog.validate.notEmpty( editor.lang.link.noUrl );
 											return func.apply( this );
 										},
 										setup : function( data )
@@ -514,7 +513,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 								id : 'browse',
 								hidden : 'true',
 								filebrowser : 'info:url',
-								label : commonLang.browseServer
+								label : editor.lang.common.browseServer
 							}
 						]
 					},
@@ -529,7 +528,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 							{
 								type : 'fieldset',
 								id : 'selectAnchorText',
-								label : linkLang.selectAnchor,
+								label : editor.lang.link.selectAnchor,
 								setup : function( data )
 								{
 									if ( data.anchors.length > 0 )
@@ -548,7 +547,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 												type : 'select',
 												id : 'anchorName',
 												'default' : '',
-												label : linkLang.anchorName,
+												label : editor.lang.link.anchorName,
 												style : 'width: 100%;',
 												items :
 												[
@@ -583,7 +582,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 												type : 'select',
 												id : 'anchorId',
 												'default' : '',
-												label : linkLang.anchorId,
+												label : editor.lang.link.anchorId,
 												style : 'width: 100%;',
 												items :
 												[
@@ -625,7 +624,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 								type : 'html',
 								id : 'noAnchors',
 								style : 'text-align: center;',
-								html : '<div role="label" tabIndex="-1">' + CKEDITOR.tools.htmlEncode( linkLang.noAnchors ) + '</div>',
+								html : '<div role="label" tabIndex="-1">' + CKEDITOR.tools.htmlEncode( editor.lang.link.noAnchors ) + '</div>',
 								// Focus the first element defined in above html.
 								focus : true,
 								setup : function( data )
@@ -652,7 +651,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 							{
 								type : 'text',
 								id : 'emailAddress',
-								label : linkLang.emailAddress,
+								label : editor.lang.link.emailAddress,
 								required : true,
 								validate : function()
 								{
@@ -662,7 +661,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 											dialog.getValueOf( 'info', 'linkType' ) != 'email' )
 										return true;
 
-									var func = CKEDITOR.dialog.validate.notEmpty( linkLang.noEmail );
+									var func = CKEDITOR.dialog.validate.notEmpty( editor.lang.link.noEmail );
 									return func.apply( this );
 								},
 								setup : function( data )
@@ -685,7 +684,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 							{
 								type : 'text',
 								id : 'emailSubject',
-								label : linkLang.emailSubject,
+								label : editor.lang.link.emailSubject,
 								setup : function( data )
 								{
 									if ( data.email )
@@ -702,7 +701,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 							{
 								type : 'textarea',
 								id : 'emailBody',
-								label : linkLang.emailBody,
+								label : editor.lang.link.emailBody,
 								rows : 3,
 								'default' : '',
 								setup : function( data )
@@ -729,8 +728,8 @@ CKEDITOR.dialog.add( 'link', function( editor )
 			},
 			{
 				id : 'target',
-				label : linkLang.target,
-				title : linkLang.target,
+				label : editor.lang.link.target,
+				title : editor.lang.link.target,
 				elements :
 				[
 					{
@@ -741,18 +740,18 @@ CKEDITOR.dialog.add( 'link', function( editor )
 							{
 								type : 'select',
 								id : 'linkTargetType',
-								label : commonLang.target,
+								label : editor.lang.common.target,
 								'default' : 'notSet',
 								style : 'width : 100%;',
 								'items' :
 								[
-									[ commonLang.notSet, 'notSet' ],
-									[ linkLang.targetFrame, 'frame' ],
-									[ linkLang.targetPopup, 'popup' ],
-									[ commonLang.targetNew, '_blank' ],
-									[ commonLang.targetTop, '_top' ],
-									[ commonLang.targetSelf, '_self' ],
-									[ commonLang.targetParent, '_parent' ]
+									[ editor.lang.common.notSet, 'notSet' ],
+									[ editor.lang.link.targetFrame, 'frame' ],
+									[ editor.lang.link.targetPopup, 'popup' ],
+									[ editor.lang.common.targetNew, '_blank' ],
+									[ editor.lang.common.targetTop, '_top' ],
+									[ editor.lang.common.targetSelf, '_self' ],
+									[ editor.lang.common.targetParent, '_parent' ]
 								],
 								onChange : targetChanged,
 								setup : function( data )
@@ -772,7 +771,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 							{
 								type : 'text',
 								id : 'linkTargetName',
-								label : linkLang.targetFrameName,
+								label : editor.lang.link.targetFrameName,
 								'default' : '',
 								setup : function( data )
 								{
@@ -799,7 +798,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 						[
 							{
 								type : 'fieldset',
-								label : linkLang.popupFeatures,
+								label : editor.lang.link.popupFeatures,
 								children :
 								[
 									{
@@ -809,14 +808,14 @@ CKEDITOR.dialog.add( 'link', function( editor )
 											{
 												type : 'checkbox',
 												id : 'resizable',
-												label : linkLang.popupResizable,
+												label : editor.lang.link.popupResizable,
 												setup : setupPopupParams,
 												commit : commitPopupParams
 											},
 											{
 												type : 'checkbox',
 												id : 'status',
-												label : linkLang.popupStatusBar,
+												label : editor.lang.link.popupStatusBar,
 												setup : setupPopupParams,
 												commit : commitPopupParams
 
@@ -830,7 +829,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 											{
 												type : 'checkbox',
 												id : 'location',
-												label : linkLang.popupLocationBar,
+												label : editor.lang.link.popupLocationBar,
 												setup : setupPopupParams,
 												commit : commitPopupParams
 
@@ -838,7 +837,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 											{
 												type : 'checkbox',
 												id : 'toolbar',
-												label : linkLang.popupToolbar,
+												label : editor.lang.link.popupToolbar,
 												setup : setupPopupParams,
 												commit : commitPopupParams
 
@@ -852,7 +851,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 											{
 												type : 'checkbox',
 												id : 'menubar',
-												label : linkLang.popupMenuBar,
+												label : editor.lang.link.popupMenuBar,
 												setup : setupPopupParams,
 												commit : commitPopupParams
 
@@ -860,7 +859,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 											{
 												type : 'checkbox',
 												id : 'fullscreen',
-												label : linkLang.popupFullScreen,
+												label : editor.lang.link.popupFullScreen,
 												setup : setupPopupParams,
 												commit : commitPopupParams
 
@@ -874,7 +873,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 											{
 												type : 'checkbox',
 												id : 'scrollbars',
-												label : linkLang.popupScrollBars,
+												label : editor.lang.link.popupScrollBars,
 												setup : setupPopupParams,
 												commit : commitPopupParams
 
@@ -882,7 +881,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 											{
 												type : 'checkbox',
 												id : 'dependent',
-												label : linkLang.popupDependent,
+												label : editor.lang.link.popupDependent,
 												setup : setupPopupParams,
 												commit : commitPopupParams
 
@@ -897,7 +896,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 												type :  'text',
 												widths : [ '30%', '70%' ],
 												labelLayout : 'horizontal',
-												label : linkLang.popupWidth,
+												label : editor.lang.link.popupWidth,
 												id : 'width',
 												setup : setupPopupParams,
 												commit : commitPopupParams
@@ -907,7 +906,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 												type :  'text',
 												labelLayout : 'horizontal',
 												widths : [ '55%', '45%' ],
-												label : linkLang.popupLeft,
+												label : editor.lang.link.popupLeft,
 												id : 'left',
 												setup : setupPopupParams,
 												commit : commitPopupParams
@@ -923,7 +922,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 												type :  'text',
 												labelLayout : 'horizontal',
 												widths : [ '30%', '70%' ],
-												label : linkLang.popupHeight,
+												label : editor.lang.link.popupHeight,
 												id : 'height',
 												setup : setupPopupParams,
 												commit : commitPopupParams
@@ -932,7 +931,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 											{
 												type :  'text',
 												labelLayout : 'horizontal',
-												label : linkLang.popupTop,
+												label : editor.lang.link.popupTop,
 												widths : [ '55%', '45%' ],
 												id : 'top',
 												setup : setupPopupParams,
@@ -949,8 +948,8 @@ CKEDITOR.dialog.add( 'link', function( editor )
 			},
 			{
 				id : 'upload',
-				label : linkLang.upload,
-				title : linkLang.upload,
+				label : editor.lang.link.upload,
+				title : editor.lang.link.upload,
 				hidden : true,
 				filebrowser : 'uploadButton',
 				elements :
@@ -958,14 +957,14 @@ CKEDITOR.dialog.add( 'link', function( editor )
 					{
 						type : 'file',
 						id : 'upload',
-						label : commonLang.upload,
+						label : editor.lang.common.upload,
 						style: 'height:40px',
 						size : 29
 					},
 					{
 						type : 'fileButton',
 						id : 'uploadButton',
-						label : commonLang.uploadSubmit,
+						label : editor.lang.common.uploadSubmit,
 						filebrowser : 'info:url',
 						'for' : [ 'upload', 'upload' ]
 					}
@@ -973,8 +972,8 @@ CKEDITOR.dialog.add( 'link', function( editor )
 			},
 			{
 				id : 'advanced',
-				label : linkLang.advanced,
-				title : linkLang.advanced,
+				label : editor.lang.link.advanced,
+				title : editor.lang.link.advanced,
 				elements :
 				[
 					{
@@ -990,21 +989,21 @@ CKEDITOR.dialog.add( 'link', function( editor )
 									{
 										type : 'text',
 										id : 'advId',
-										label : linkLang.id,
+										label : editor.lang.link.id,
 										setup : setupAdvParams,
 										commit : commitAdvParams
 									},
 									{
 										type : 'select',
 										id : 'advLangDir',
-										label : linkLang.langDir,
+										label : editor.lang.link.langDir,
 										'default' : '',
 										style : 'width:110px',
 										items :
 										[
-											[ commonLang.notSet, '' ],
-											[ linkLang.langDirLTR, 'ltr' ],
-											[ linkLang.langDirRTL, 'rtl' ]
+											[ editor.lang.common.notSet, '' ],
+											[ editor.lang.link.langDirLTR, 'ltr' ],
+											[ editor.lang.link.langDirRTL, 'rtl' ]
 										],
 										setup : setupAdvParams,
 										commit : commitAdvParams
@@ -1013,7 +1012,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 										type : 'text',
 										id : 'advAccessKey',
 										width : '80px',
-										label : linkLang.acccessKey,
+										label : editor.lang.link.acccessKey,
 										maxLength : 1,
 										setup : setupAdvParams,
 										commit : commitAdvParams
@@ -1028,7 +1027,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 								[
 									{
 										type : 'text',
-										label : linkLang.name,
+										label : editor.lang.link.name,
 										id : 'advName',
 										setup : setupAdvParams,
 										commit : commitAdvParams
@@ -1036,7 +1035,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 									},
 									{
 										type : 'text',
-										label : linkLang.langCode,
+										label : editor.lang.link.langCode,
 										id : 'advLangCode',
 										width : '110px',
 										'default' : '',
@@ -1046,7 +1045,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 									},
 									{
 										type : 'text',
-										label : linkLang.tabIndex,
+										label : editor.lang.link.tabIndex,
 										id : 'advTabIndex',
 										width : '80px',
 										maxLength : 5,
@@ -1070,7 +1069,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 								[
 									{
 										type : 'text',
-										label : linkLang.advisoryTitle,
+										label : editor.lang.link.advisoryTitle,
 										'default' : '',
 										id : 'advTitle',
 										setup : setupAdvParams,
@@ -1079,7 +1078,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 									},
 									{
 										type : 'text',
-										label : linkLang.advisoryContentType,
+										label : editor.lang.link.advisoryContentType,
 										'default' : '',
 										id : 'advContentType',
 										setup : setupAdvParams,
@@ -1095,7 +1094,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 								[
 									{
 										type : 'text',
-										label : linkLang.cssClasses,
+										label : editor.lang.link.cssClasses,
 										'default' : '',
 										id : 'advCSSClasses',
 										setup : setupAdvParams,
@@ -1104,7 +1103,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 									},
 									{
 										type : 'text',
-										label : linkLang.charset,
+										label : editor.lang.link.charset,
 										'default' : '',
 										id : 'advCharset',
 										setup : setupAdvParams,
@@ -1119,7 +1118,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 								[
 									{
 										type : 'text',
-										label : linkLang.styles,
+										label : editor.lang.link.styles,
 										'default' : '',
 										id : 'advStyles',
 										setup : setupAdvParams,
@@ -1254,9 +1253,6 @@ CKEDITOR.dialog.add( 'link', function( editor )
 
 					onclickList.push( featureList.join( ',' ), '\'); return false;' );
 					attributes[ '_cke_pa_onclick' ] = onclickList.join( '' );
-
-					// Add the "target" attribute. (#5074)
-					removeAttributes.push( 'target' );
 				}
 				else
 				{
@@ -1388,7 +1384,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 		{
 			var linkType = this.getContentElement( 'info', 'linkType' ),
 					urlField;
-			if ( linkType && linkType.getValue() == 'url' )
+			if ( linkType && linkType.getValue( ) == 'url' )
 			{
 				urlField = this.getContentElement( 'info', 'url' );
 				urlField.select();

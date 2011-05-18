@@ -45,7 +45,8 @@
         <%= render :partial => 'users/item_short',
             :collection => @subject.members.n_recent(9) %>
       </ul> <!-- end .coonections -->
-      <a href="" class="more">Ver mais</a>
+        <%= link_to "Ver mais", users_space_subject_path(@space, @subject),
+          :class => 'more'%>
     </li>
   </ul><!-- end .local-nav -->
 </div>

@@ -1,6 +1,0 @@
-# Adiciona a listagem requisitada pelo usuário ao elemento HTML com id "school_list".
-page.insert_html :bottom, 'pending_list', :partial => "friendships/item_pending",
-  :collection => @friends_pending, :as => :friend
-# Troca o endless para que o novo link indique para a próxima página.
-page.replace_html ".endless",
-  (will_paginate @friends_pending, :renderer => EndlessRenderer)

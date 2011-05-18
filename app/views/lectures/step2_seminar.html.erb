@@ -87,9 +87,9 @@ function add_fields(link, association, content) {
 
 <div class="grid_16 ">
 
-	<% field_set_tag 'Vídeo' do %>
+	<%= field_set_tag 'Vídeo' do %>
 		<div class="grid_7 alpha">
-				<% field_set_tag 'Tipo de material' do %>
+				<%= field_set_tag 'Tipo de material' do %>
 				<%= f.radio_button :external_resource_type, :redu, {:onchange => "switchCourseFields(2);"} %>
 					<%= f.label :external_resource_type_redu, "Redu", :class => "inline" %>
 					<%= f.radio_button :external_resource_type, :youtube, {:onchange => "switchCourseFields(2);"} %>
@@ -100,7 +100,7 @@ function add_fields(link, association, content) {
 
 
 			<div id="upload_resource_field" style="display:none;">
-				<% field_set_tag 'Arquivo' do %>
+				<%= field_set_tag 'Arquivo' do %>
 
 					<%= f.label :original, "Arquivo do seu computador (máximo: 100MB)" %>
 					<%= f.file_field :original  %>
@@ -111,14 +111,14 @@ function add_fields(link, association, content) {
 		 	</div>
 
 			<div id="external_resource_field" style="display:block;">
-				<% field_set_tag 'Link' do %>
+				<%= field_set_tag 'Link' do %>
 					<%= f.label :external_resource, "Endereço do vídeo" %>
                                         <%= f.text_field :external_resource %>
 				<% end %>
 			</div>
 		</div>
 		<div id="youtube_preview" style="display: none;" class="grid_8 omega">
-			<% field_set_tag 'Prévia' do %>
+			<%= field_set_tag 'Prévia' do %>
 				<object width="440" height="300">
 				<param name="movie" value="none" id="yt_preview_param"/>
 				<param name="allowFullScreen" value="true"/>

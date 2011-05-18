@@ -1,34 +1,40 @@
 class Event < ActiveRecord::Base
+  include AASM
 
   # ASSOCIATIONS
   has_many :logs, :as => :logeable, :dependent => :destroy, :class_name => 'Status'
   belongs_to :owner, :class_name => "User", :foreign_key => 'owner'
   belongs_to :eventable, :polymorphic => true
 
-  # NAMED SCOPES
+  # SCOPES
   #Procs used to make sure time is calculated at runtime
-  named_scope :upcoming, lambda { { :order => 'start_time', :conditions => ['end_time > ?' , Time.now ] } }
-  named_scope :past, lambda { { :order => 'start_time DESC', :conditions => ['end_time <= ?' , Time.now ] } }
-  named_scope :approved, :conditions => { :state => 'approved' }
-  named_scope :waiting, :conditions => { :state => 'waiting' }
+  scope :upcoming, lambda { order('start_time').where('end_time > ?',
+                                                      Time.now) }
+  scope :past, lambda { order('start_time DESC').where('end_time <= ?',
+                                                       Time.now) }
+  scope :approved, where(:state => 'approved')
+  scope :waiting, where(:state => 'waiting')
 
   # PLUGINS
   acts_as_taggable
-  acts_as_voteable
   #acts_as_activity :user
-  acts_as_state_machine :initial => :waiting
 
-  state :waiting
-  state :approved
-  state :rejected
-  state :error
+  # Máquina de estados para moderação de Eventos
+  aasm_column :state
 
-  event :approve do
-    transitions :from => :waiting, :to => :approved
+  aasm_initial_state :waiting
+
+  aasm_state :waiting
+  aasm_state :approved
+  aasm_state :rejected
+  aasm_state :error #FIXME estado sem transicões, é assim mesmo?
+
+  aasm_event :approve do
+    transitions :to => :approved, :from => [:waiting]
   end
 
-  event :reject do
-    transitions :from => :waiting, :to => :rejected
+  aasm_event :reject do
+    transitions :to => :rejected, :from => [:waiting]
   end
 
   # VALIDATIONS

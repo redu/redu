@@ -16,7 +16,7 @@
   </div>
 </div>
 
-<% form_for :lecture, @lecture, :url => {:controller => :lectures, :action => :create }, :html => { :multipart => true } do |f| %>
+<%= form_for :lecture, @lecture, :url => {:controller => :lectures, :action => :create }, :html => { :multipart => true } do |f| %>
 
   <div class="grid_16">
     <%= f.error_messages %>
@@ -25,7 +25,7 @@
   <%= f.hidden_field :lazy_asset_id %>
   <div class="grid_8">
 
-    <% field_set_tag 'Informações Gerais' do %>
+    <%= field_set_tag 'Informações Gerais' do %>
 
       <%= f.label "Título: " %>
       <%= f.text_field :name %>
@@ -50,7 +50,7 @@
 
   <div class="grid_6 push_1">
 
-    <% field_set_tag 'Tipo de Aula' do %>
+    <%= field_set_tag 'Tipo de Aula' do %>
 
       <div style="margin-bottom: 20px;">
 

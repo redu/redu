@@ -35,14 +35,6 @@
           :class => "icon #{selected}" %>
       </div>
     </li>
-    <!--li>
-      <div class="<%#= (current_page? :controller => :forum,
-                       :action => :show) ?
-                    "session selected".to_s : "session".to_s %>">
-        <%#= link_to 'Fórum', space_forum_path(space),
-          :class => 'icon icon-redu_r10_c281_s1' %>
-      </div>
-    </li --!>
     <li>
       <div class="<%= (current_page? space_bulletins_path(space)) ?
                     "session selected".to_s : "session".to_s %>">
@@ -80,7 +72,7 @@
         <%= render :partial => 'users/item_short',
           :collection => space.users.n_recent(9) %>
       </ul><!-- end .connections -->
-      <a href="" class="more">Ver mais</a>
+      <%= link_to "Ver mais", users_space_path(@space), :class => 'more' %>
     </li>
   </ul><!-- end .local-nav -->
 </div>

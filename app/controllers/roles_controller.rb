@@ -10,12 +10,11 @@ class RolesController < BaseController
 
     spaces = @environment.courses.collect{|c| c.spaces.collect{|s| s}}.flatten
 
-    @courses = @user.user_course_associations.find(:all,
-      :conditions => {:course_id => @environment.courses},
-      :include => [{:course => { :spaces => :user_space_associations }}])
-    @environment_membership = @user.user_environment_associations.find(:first,
-      :conditions => {:environment_id => @environment.id,
-                      :user_id => @user.id})
+    @courses = @user.user_course_associations.
+      where(:course_id => @environment.courses).
+      includes(:course => [{ :spaces => :user_space_associations }])
+    @environment_membership = @user.user_environment_associations.
+      where(:environment_id => @environment.id,:user_id => @user.id).first
 
     respond_to do |format|
       format.html do
@@ -33,20 +32,20 @@ class RolesController < BaseController
         object = @environment
         # ao se tornar administrador, se tornará administrador para todas
         # entidades abaixo da de environment
-        if Role.find(params[:roles]) == Role[:environment_admin]
+        if !Role[params[:roles]].nil? and params[:roles] == Role[:environment_admin]
           object.courses.each do |course|
             unless @user.get_association_with(course)
 
               uca = UserCourseAssociation.create(:user_id => @user.id,
                                                  :course_id => course.id,
-                                                 :role_id => Role.find(params[:roles]).id)
+                                                 :role => params[:roles])
               uca.approve!
 
               course.spaces.each do |space|
                 unless @user.get_association_with(space)
                   UserSpaceAssociation.create(:user_id => @user.id,
                                               :space_id => space.id,
-                                              :role_id => Role.find(params[:roles]).id,
+                                              :role => params[:roles],
                                               :status => "approved")
                 end
               end
@@ -60,7 +59,7 @@ class RolesController < BaseController
 
 
 
-    object.change_role(@user, Role.find(params[:roles]))
+    object.change_role(@user, params[:roles])
 
     respond_to do |format|
       format.html {redirect_to user_admin_roles_path(@user, @environment)}

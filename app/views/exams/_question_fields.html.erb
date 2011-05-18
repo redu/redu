@@ -1,15 +1,15 @@
-<% field_set_tag "Questão ", :class => "fields questions" do %>
-  <%= f.cktext_area :statement, :width=>'910px' %> 
-  <% field_set_tag "Informações" do %>
+<%= field_set_tag "Questão ", :class => "fields questions" do %>
+  <%= f.cktext_area :statement, :width=>'910px' %>
+  <%= field_set_tag "Informações" do %>
     <%= f.label :source, "Fonte" %>
     <span class="snippet" style="display: block;">
       De onde a questão foi retirada (ex: COVEST/2009)
     </span>
     <%= f.text_field :source %>
   <% end %>
-  <% field_set_tag "Alternativas", :class => "alternatives" do  %>
+  <%= field_set_tag "Alternativas", :class => "alternatives" do  %>
     <span style="display:block; padding-bottom:10px" class="snippet">Você deve escolher uma alternativa correta</span>
-    <% f.fields_for :alternatives do |builder| %>
+    <%= f.fields_for :alternatives do |builder| %>
       <%= render 'alternative_fields', :f => builder %>
     <% end %>
     <%= link_to_add_fields "Adicionar alternativa", f, :alternatives %>

@@ -7,7 +7,7 @@
 <div class="main grid_10" style="width: 580px;">
   <%= render :partial => 'messages/breadcrumb' %>
   <div id="messages">
-    <%
+    <%=
       fake_tabs ['Recebidas', user_messages_path(@user), {:class => 'icon icon-message-gray_16_16'}],
         ['Enviadas', index_sent_user_messages_path(@user),  {:class => 'icon icon-messagereply-gray_16_16'}],
         ['Nova', new_user_message_path(@user), {:class => 'icon icon-messagecreate-gray_16_16'}] do
@@ -44,7 +44,7 @@
       </ul>
       <% if @message.recipient == @user %>
         <div class="respond">
-          <% form_tag nil, :id => 'dummy_reply', :class => 'MainForm common'  do %>
+          <%= form_tag nil, :id => 'dummy_reply', :class => 'MainForm form-common'  do %>
             <%= label_tag "Resposta:" %>
             <%= text_area_tag nil, nil, { :onclick => "$('div.new-folder-inner').slideToggle(); $('#dummy_reply').hide(); return false;" } %>
 

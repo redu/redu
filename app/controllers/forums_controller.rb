@@ -14,10 +14,10 @@ class ForumsController < BaseController
       # keep track of when we last viewed this forum for activity indicators
       (session[:forums] ||= {})[@forum.id] = Time.now.utc if logged_in?
 
-      @topics = @forum.topics.paginate(:page => params[:page], 
-                                       :include => :replied_by_user, 
-                                       :order => 'locked DESC, replied_at DESC',
-                                       :per_page => 20)
+      @topics = @forum.topics.includes(:replied_by_user).
+                  paginate(:page => params[:page],
+                           :order => 'locked DESC, replied_at DESC',
+                           :per_page => 20)
       format.html
       format.xml do
         render :xml => @forum.to_xml
