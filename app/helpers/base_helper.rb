@@ -117,7 +117,7 @@ module BaseHelper
   end
 
   def forum_page?
-    %w(forums topics sb_posts spaces).include?(@controller.controller_name)
+    %w(forums topics sb_posts spaces).include?(controller.controller_name)
   end
 
   def block_to_partial(partial_name, html_options = {}, &block)
@@ -156,7 +156,7 @@ module BaseHelper
     tagline = " | #{Redu::Application.config.tagline}"
 
     title = app_base
-    case @controller.controller_name
+    case controller.controller_name
       when 'base'
           title += tagline
                         when 'pages'
@@ -182,7 +182,7 @@ module BaseHelper
           title = @user.login + '\'s '+ t(:photos) +' - ' + app_base + tagline
         end
       when 'tags'
-        case @controller.action_name
+        case controller.action_name
           when 'show'
             title = @tags.map(&:name).join(', ') + ' '
             title += params[:type] ? params[:type].pluralize : t(:posts_photos_and_bookmarks)
@@ -229,7 +229,7 @@ module BaseHelper
     if @page_title
       title = @page_title + ' - ' + app_base + tagline
     elsif title == app_base
-      title = t(:showing) + ' ' + @controller.controller_name.capitalize + ' - ' + app_base + tagline
+      title = t(:showing) + ' ' + controller.controller_name.capitalize + ' - ' + app_base + tagline
     end
     title.html_safe
   end

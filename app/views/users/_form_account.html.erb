@@ -1,15 +1,15 @@
-<% form_for @user, :html => {:multipart =>true, :class => "form-common"}  do |f|  %>
+<%= form_for @user, :html => {:multipart =>true, :class => "form-common"}  do |f|  %>
   <%= f.error_messages %>
 
-  <% field_set_tag do %>
+  <%= field_set_tag do %>
     <%= f.label "Configurações:" %>
-    <% field_set_tag nil, :class => 'inline' do %>
+    <%= field_set_tag nil, :class => 'inline' do %>
       <%= f.check_box :auto_status %>
       <%= f.label :auto_status, "Logar atividades automaticamente" %>
     <% end %>
 
     <%= f.label "Notificações por e-mail:" %>
-    <% field_set_tag nil, :class => "inline" do %>
+    <%= field_set_tag nil, :class => "inline" do %>
       <%= f.check_box :notify_community_news %>
       <%= f.label :notify_community_news, "Novidades do Redu" %>
       <%= f.check_box :notify_messages %>
@@ -18,9 +18,9 @@
       <%= f.label :notify_followships, "Novos seguidores" %>
     <% end %>
 
-    <% f.fields_for :settings do |builder| %>
+    <%= f.fields_for :settings do |builder| %>
       <%= builder.label "Quem pode ver o meu mural:" %>
-      <% field_set_tag nil, :class => "inline" do %>
+      <%= field_set_tag nil, :class => "inline" do %>
         <%= builder.radio_button :view_mural, Privacy[:public].id,
           { :checked => @user.settings.view_mural.eql?(Privacy[:public]) ?
               true : false } %>
@@ -33,7 +33,7 @@
     <% end %>
   <% end %>
 
-  <% field_set_tag "Redefinir E-mail", :class => "wide legend" do %>
+  <%= field_set_tag "Redefinir E-mail", :class => "wide legend" do %>
     <%= f.label :email, "E-mail:" %>
     <%=  f.text_field :email %>
 
@@ -42,7 +42,7 @@
     <%=  f.text_field :email_confirmation, :style => "display: none;" %>
   <% end %>
 
-  <% field_set_tag "Redefinir Senha", :class => "wide legend" do %>
+  <%= field_set_tag "Redefinir Senha", :class => "wide legend" do %>
     <%= label_tag :current_password, "Senha atual:" %>
     <% if @flag %>
       <%=  password_field_tag :current_password, nil %>
