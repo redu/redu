@@ -41,19 +41,6 @@ class BaseController < ApplicationController
     end
   end
 
-  def beta_index
-    redirect_to home_path and return if logged_in?
-    render :layout => false
-  end
-
-  def rss_site_index
-    redirect_to :controller => 'base', :action => 'site_index', :format => 'rss'
-  end
-
-  def plaxo
-    render :layout => false
-  end
-
   def site_index
     # FIXME verificar se causa algum prejuízo na performance, ou só criar a sessão se o current_user for nil
     @user_session = UserSession.new
@@ -70,14 +57,6 @@ class BaseController < ApplicationController
     @homepage_features = HomepageFeature.find_features
     @homepage_features.shift
     render :partial => 'homepage_feature', :collection => @homepage_features and return
-  end
-
-  def advertise
-    #TODO
-  end
-
-  def css_help
-    #TODO
   end
 
   def admin_required
