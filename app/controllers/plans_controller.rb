@@ -20,7 +20,7 @@ class PlansController < BaseController
   end
 
   def index
-    @plans = @user.plans.find(:all, :include => :billable)
+    @plans = @user.plans.includes(:billable)
 
     respond_to do |format|
       format.html

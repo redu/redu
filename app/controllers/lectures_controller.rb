@@ -36,7 +36,7 @@ class LecturesController < BaseController
 
   def index
     authorize! :read, @subject
-    @subject_users = @subject.members.all(:limit => 9) # sidebar
+    @subject_users = @subject.members.limit(9) # sidebar
     @lectures = @subject.lectures.paginate(:page => params[:page],
                                           :order => 'position ASC',
                                           :per_page => Redu::Application.config.items_per_page)
@@ -63,8 +63,8 @@ class LecturesController < BaseController
     @annotation = Annotation.new if @annotation.empty?
 
     #relacionados
-    @related_lectures = Lecture.related_to(@lecture).all(:limit => 3,
-                                        :order => 'rating_average DESC')
+    @related_lectures = Lecture.related_to(@lecture).limit(3).
+                          order('rating_average DESC')
 
     @status = Status.new
     @statuses = @lecture.statuses.not_response.
@@ -236,9 +236,8 @@ class LecturesController < BaseController
   # lista aulas não publicados (em edição)
   # Não precisa de permissão, pois utiliza o current_user.
   def unpublished
-    @lectures = current_user.lectures.unpublished.
-                  paginate(:include => :owner,
-                           :page => params[:page],
+    @lectures = current_user.lectures.unpublished.include(:owner).
+                  paginate(:page => params[:page],
                            :order => 'updated_at DESC',
                            :per_page => Redu::Application.config.items_per_page)
 

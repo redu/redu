@@ -4,7 +4,7 @@ class MessagesController < BaseController
 
   def index
     authorize! :manage, @user
-      @messages = @user.received_messages.paginate(:all, :page => params[:page],
+      @messages = @user.received_messages.paginate(:page => params[:page],
                                                    :order =>  'created_at DESC',
                                                    :per_page => Redu::Application.config.items_per_page )
       respond_to do |format|
@@ -18,7 +18,7 @@ class MessagesController < BaseController
 
   def index_sent
     authorize! :manage, @user
-    @messages = @user.sent_messages.paginate(:all, :page => params[:page],
+    @messages = @user.sent_messages.paginate(:page => params[:page],
                                              :order =>  'created_at DESC',
                                              :per_page => Redu::Application.config.items_per_page)
     respond_to do |format|
@@ -108,7 +108,7 @@ class MessagesController < BaseController
     if request.post? && current_user.id == params[:user_id].to_i # Caso tentem burlar
       if params[:delete]
         params[:delete].each { |id|
-          @message = Message.find(:first, :conditions => ["messages.id = ? AND (sender_id = ? OR recipient_id = ?)", id, @user, @user])
+          @message = Message.where(["messages.id = ? AND (sender_id = ? OR recipient_id = ?)", id, @user, @user]).first
           @message.mark_deleted(@user) unless @message.nil?
         }
         flash[:notice] = t :messages_deleted
