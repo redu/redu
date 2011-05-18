@@ -1692,12 +1692,6 @@
   font-size: 0.9em;
 }
 
-
-/* TODO Remover quando colocar o ícone de accept */
-.friends-requisitions li .actions .accept-friend,
-.courses-requisitions li .actions .accept-invitation {
-}
-
 .courses-requisitions li .actions .waiting {
   border: 1px solid #61BE80;
   padding: 5px 10px;
@@ -4992,6 +4986,7 @@ div.token-input-dropdown {
 /* Spinner para botoes em formulários */
 .form-common .bt-loading,
 .form-loader .bt-loading,
+* .form-loader input.bt-loading, /* para sobrepor a precedência de input.important */
 .form-loader .bt-loading:hover,
 .form-common .bt-loading:hover {
   background: url("../images/new/spinner.gif") no-repeat center center;
