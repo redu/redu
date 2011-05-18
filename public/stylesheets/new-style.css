@@ -4987,7 +4987,7 @@ div.token-input-dropdown {
 .form-common .bt-loading,
 .form-loader .bt-loading,
 * .form-loader input.bt-loading, /* para sobrepor a precedência de input.important */
-.form-loader .bt-loading:hover,
+.form-loader input.bt-loading:hover,
 .form-common .bt-loading:hover {
   background: url("../images/new/spinner.gif") no-repeat center center;
   color: transparent;
