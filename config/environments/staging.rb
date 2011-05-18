@@ -57,7 +57,7 @@ Redu::Application.configure do
     :s3_credentials => config.s3_credentials,
     :bucket => config.s3_credentials['bucket'],
     :path => ":class/:attachment/:id/:style/:basename.:extension",
-    :default_url => "http://redu_assets.s3.amazonaws.com/images/new/missing_:style.png",
+    :default_url => "http://redu-assets-staging.s3.amazonaws.com/images/new/missing_:style.png",
     :styles => { :thumb_150 => "150x150#",
                  :thumb_120 => "120x120#",
                  :thumb_100 => "100x100#",
