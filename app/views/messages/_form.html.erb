@@ -4,7 +4,7 @@
   <script type="text/javascript">
     $(document).ready(function(){
       $("#message_to").fcbkcomplete({
-        json_url: "/autocomplete",
+        json_url: "<%= auto_complete_users_path %>",
         addontab: true,
         complete_text: "Digite o nome de um contato...",
         height: 6,

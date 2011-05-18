@@ -463,10 +463,15 @@ class UsersController < BaseController
 
   # Dada uma palavra-chave retorna json com usuários que possuem aquela palavra.
   def auto_complete
-    if params[:q]
+    if params[:q] # Usado em invitations: todos os users
       @users = User.with_keyword(params[:q])
       @users = @users.map do |u|
         { :id => u.id, :name => u.display_name, :avatar_32 => u.avatar.url(:thumb_32) }
+      end
+    elsif params[:tag] # Usado em messages: somente amigos
+      @users = current_user.friends.with_keyword(params[:tag])
+      @users = @users.map do |u|
+        {:key => "<img src=\"#{ u.avatar(:thumb_32) }\"/> #{ u.first_name }", :value => u.id}
       end
     end
 

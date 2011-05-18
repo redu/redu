@@ -111,7 +111,7 @@ class User < ActiveRecord::Base
       "LOWER(last_name) LIKE :keyword OR " +\
       "CONCAT(LOWER(first_name), ' ', LOWER(last_name)) LIKE :keyword OR " +\
       "LOWER(email) LIKE :keyword", { :keyword => "%#{keyword.downcase}%" }).
-      limit(10).select("id, first_name, last_name, login, email, avatar_file_name")
+      limit(10).select("users.id, users.first_name, users.last_name, users.login, users.email, users.avatar_file_name")
   }
 
   attr_accessor :email_confirmation
