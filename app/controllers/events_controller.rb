@@ -5,10 +5,7 @@ class EventsController < BaseController
 
   before_filter :find_environment_course_and_space
 
-  caches_page :ical
   cache_sweeper :event_sweeper, :only => [:create, :update, :destroy]
-  before_filter :is_event_approved,
-    :only => [:show, :edit, :update, :destroy]
   after_filter :create_activity, :only => [:create]
 
   rescue_from CanCan::AccessDenied do |exception|
@@ -38,14 +35,8 @@ class EventsController < BaseController
 
   def index
     @eventable = find_eventable
-    @events = Event.approved.upcoming.
-      paginate(:conditions => ["eventable_id = ?" \
-                               " AND eventable_type LIKE ?",
-                               @eventable.id,
-                               @eventable.class.to_s],
-               :include => :owner,
-               :page => params[:page],
-               :order => 'start_time',
+    @events = @eventable.events.approved.upcoming.includes(:owner).
+      paginate(:page => params[:page], :order => 'start_time',
                :per_page => Redu::Application.config.items_per_page)
 
     @list_title = "Eventos Futuros"
@@ -58,14 +49,9 @@ class EventsController < BaseController
 
   def past
     @eventable = find_eventable
-    @events = Event.approved.past.paginate(:conditions => ["eventable_id = ?" \
-                                  " AND eventable_type LIKE ?",
-                                  @eventable.id,
-                                  @eventable.class.to_s],
-                                  :include => :owner,
-                                  :page => params[:page],
-                                  :order => 'start_time DESC',
-                                  :per_page => Redu::Application.config.items_per_page)
+    @events = @eventable.approved.past.includes(:owner).
+      paginate(:page => params[:page], :order => 'start_time DESC',
+               :per_page => Redu::Application.config.items_per_page)
 
     @list_title = "Eventos Passados"
 
@@ -152,24 +138,6 @@ class EventsController < BaseController
     end
   end
 
-  def day
-    day = Time.utc(Time.now.year, Time.now.month, params[:day])
-
-    @eventable = find_eventable
-    @events = Event.approved.paginate(:conditions => ["eventable_id = ?" \
-                             " AND eventable_type LIKE ?" \
-                             " AND ? BETWEEN start_time AND end_time",
-                             @eventable.id,
-                             @eventable.class.to_s, day],
-                             :include => :owner,
-                             :page => params[:page],
-                             :order => 'start_time DESC',
-                             :per_page => Redu::Application.config.items_per_page)
-
-    @list_title = "Eventos do dia #{day.strftime("%d/%m/%Y")}"
-    render :index
-  end
-
   def notify
     event = Event.find(params[:id])
     notification_time = event.start_time - params[:days].to_i.days
@@ -181,14 +149,6 @@ class EventsController < BaseController
   end
 
   protected
-
-  def is_event_approved
-    @event = Event.find(params[:id])
-
-    if not @event.state == "approved"
-      redirect_to polymorphic_path([@event.eventable])
-    end
-  end
 
   def find_eventable
     Space.find(params[:space_id]) if params[:space_id]

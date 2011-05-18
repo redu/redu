@@ -220,7 +220,7 @@ class EnvironmentsController < BaseController
   # entre usuário e os níveis mais baixos da hierarquia.
   def destroy_members
     #TODO verificar performance
-    @environment = Environment.find(params[:id], :include => {:courses => :spaces})
+    @environment = Environment.includes(:courses => [{:spaces}]).find(params[:id])
 
     # Course.id do environment
     courses = @environment.courses
@@ -230,10 +230,9 @@ class EnvironmentsController < BaseController
     users_ids = params[:users].collect{|u| u.to_i} if params[:users]
 
     unless users_ids.empty?
-      User.with_ids(users_ids).all(
-                :include => [:user_environment_associations,
+      User.with_ids(users_ids).includes(:user_environment_associations,
                              :user_course_associations,
-                             :user_space_associations]).each do |user|
+                             :user_space_associations).each do |user|
 
         user.spaces.delete(spaces)
         user.courses.delete(courses)
@@ -255,9 +254,8 @@ class EnvironmentsController < BaseController
 
     @memberships = UserEnvironmentAssociation.with_roles(roles).
                    of_environment(@environment).with_keyword(keyword).
-                   paginate(
-                    :include => [{ :user => {:user_course_associations => :course} }],
-                    :page => params[:page],
+                   includes(:user => [{ :user_course_associations => :course }]),
+                   paginate(:page => params[:page],
                     :order => 'user_environment_associations.updated_at DESC',
                     :per_page => Redu::Application.config.items_per_page)
 
@@ -271,8 +269,8 @@ class EnvironmentsController < BaseController
     @sidebar_preview = true if params.has_key?(:preview) &&
                               params[:preview] == 'true'
 
-    @users = @environment.users.
-      paginate(:page => params[:page], :order => 'first_name ASC', :per_page => 18)
+    @users = @environment.users.paginate(:page => params[:page],
+                                         :order => 'first_name ASC', :per_page => 18)
 
     respond_to do |format|
       format.html
