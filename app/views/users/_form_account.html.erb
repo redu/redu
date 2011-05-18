@@ -21,11 +21,11 @@
     <%= f.fields_for :settings do |builder| %>
       <%= builder.label "Quem pode ver o meu mural:" %>
       <%= field_set_tag nil, :class => "inline" do %>
-        <%= builder.radio_button :view_mural, Privacy[:public].id,
+        <%= builder.radio_button :view_mural, Privacy[:public],
           { :checked => @user.settings.view_mural.eql?(Privacy[:public]) ?
               true : false } %>
         Todos no Redu
-        <%= builder.radio_button :view_mural, Privacy[:friends].id,
+        <%= builder.radio_button :view_mural, Privacy[:friends],
           { :checked => @user.settings.view_mural.eql?(Privacy[:friends]) ?
               true : false } %>
         Apenas amigos
