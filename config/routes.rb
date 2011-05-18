@@ -61,7 +61,7 @@ Redu::Application.routes.draw do
   resources :events
 
   # Space
-  resources :spaces do
+  resources :spaces, :except => [:index] do
     member do
       get :manage
       get :admin_members
@@ -73,7 +73,6 @@ Redu::Application.routes.draw do
       get :publish
       get :unpublish
       get :users
-      post :vote
       post :moderate_bulletins
       post :moderate_events
     end
@@ -246,13 +245,6 @@ Redu::Application.routes.draw do
     end
 
     resources :invitations
-
-    resources :spaces do
-      collection do
-        get :member
-        get :owner
-      end
-    end
 
     resources :questions
     resources :offerings do

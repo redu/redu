@@ -1,2 +1,0 @@
-class SpaceAdminController < ApplicationController
-end

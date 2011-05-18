@@ -10,12 +10,11 @@ class RolesController < BaseController
 
     spaces = @environment.courses.collect{|c| c.spaces.collect{|s| s}}.flatten
 
-    @courses = @user.user_course_associations.find(:all,
-      :conditions => {:course_id => @environment.courses},
-      :include => [{:course => { :spaces => :user_space_associations }}])
-    @environment_membership = @user.user_environment_associations.find(:first,
-      :conditions => {:environment_id => @environment.id,
-                      :user_id => @user.id})
+    @courses = @user.user_course_associations.
+      where(:course_id => @environment.courses).
+      includes(:course => [{ :spaces => :user_space_associations }])
+    @environment_membership = @user.user_environment_associations.
+      where(:environment_id => @environment.id,:user_id => @user.id).first
 
     respond_to do |format|
       format.html do
