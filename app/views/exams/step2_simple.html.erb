@@ -277,7 +277,7 @@ function removeAllMce(){
 
        <% @exam.questions.each_with_index do |question, idx|%>
 
-         <% f.fields_for :questions, question do |builder| %>
+         <%= f.fields_for :questions, question do |builder| %>
            <%= render "question_fields", :f => builder %>
          <% end %>
 

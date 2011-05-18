@@ -56,7 +56,7 @@ function removeAllMce(){
 <div class="grid_16">
   <%= f.error_messages %>
 
-  <% f.fields_for :questions do |builder| %>
+  <%= f.fields_for :questions do |builder| %>
     <%= render "question_fields", :f => builder %>
   <% end %>
   <%= link_to_add_fields "Adicionar questão", f, :questions %>
