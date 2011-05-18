@@ -5,7 +5,7 @@
                        :allow_multiple_files => false,
                        :fields => ['document_attachment', 'step'],
                        :allowed_extensions => [:ppt, :pptx, :pdf, :odp, :pps]) %>
-   <% form_for :document, @document, :url => { :action => "create" },
+   <%= form_for :document, @document, :url => { :action => "create" },
      :html => { :multipart => true, :method => :put } do |f| %>
 
      <%= f.error_messages %>

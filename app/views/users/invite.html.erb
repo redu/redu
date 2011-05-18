@@ -3,7 +3,7 @@
 </div>
 
 <div class="grid_9">
-	<% form_for :invitation, :url => user_invitations_path(:user_id => @user.id ) do |f|%>
+	<%= form_for :invitation, :url => user_invitations_path(:user_id => @user.id ) do |f|%>
 		<%= field_set_tag 'Contatos' do %>
 		<label for='email_addresses'>
                   <%= t :enter_e_mail_addresses %>

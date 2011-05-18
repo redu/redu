@@ -16,7 +16,7 @@
         ["Membros", admin_members_space_path(@space), { :class => "icon icon-members-gray_16_16" }],
         ["Notícias", admin_bulletins_space_path(@space), { :class => "icon icon-bulletin-gray_16_16" }] do %>
 
-        <% form_for(@space, :html => { :class => "form-common", :multipart => true }) do |f| %>
+        <%= form_for(@space, :html => { :class => "form-common", :multipart => true }) do |f| %>
           <%= render :partial => "spaces/form",
             :locals => { :f => f, :edit => true} %>
 

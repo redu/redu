@@ -45,7 +45,7 @@
           </li>
         </ul>
 
-        <% form_for @environment,
+        <%= form_for @environment,
           :url => environments_path(:step => 2) do |f| %>
           <%= hidden_field_tag :plan, 'free' %>
           <%= f.submit "Assinar", :class => "important" %>
@@ -94,7 +94,7 @@
           -->
         </div>
 
-        <% form_for @environment,
+        <%= form_for @environment,
           :url => environments_path(:step => 2) do |f| %>
           <%= hidden_field_tag :plan, 'professor_lite' %>
           <%= f.submit "Assinar", :class => "important" %>
@@ -143,7 +143,7 @@
           -->
         </div>
 
-        <% form_for @environment,
+        <%= form_for @environment,
           :url => environments_path(:step => 2) do |f| %>
           <%= hidden_field_tag :plan, 'professor_standard' %>
           <%= f.submit "Assinar", :class => "important" %>
@@ -182,7 +182,7 @@
             <span class="value">243,99</span>
             /mês
           </span>
-          <!-- 
+          <!--
           <span class="yearly">
             <span class="currency">R$</span>
             <span class="value">2439,90</span>
@@ -192,7 +192,7 @@
           -->
         </div>
 
-        <% form_for @environment,
+        <%= form_for @environment,
           :url => environments_path(:step => 2) do |f| %>
           <%= hidden_field_tag :plan, 'professor_plus' %>
           <%= f.submit "Assinar", :class => "important" %>
@@ -235,7 +235,7 @@
             <span class="value">251,99</span>
             /mês
           </span>
-          <!-- 
+          <!--
           <span class="yearly">
             <span class="currency">R$</span>
             <span class="value">2519,90</span>
@@ -245,7 +245,7 @@
           -->
         </div>
 
-        <% form_for @environment,
+        <%= form_for @environment,
           :url => environments_path(:step => 2) do |f| %>
           <%= hidden_field_tag :plan, 'instituicao_lite' %>
           <%= f.submit "Assinar", :class => "important" %>
@@ -294,7 +294,7 @@
           -->
         </div>
 
-        <% form_for @environment,
+        <%= form_for @environment,
           :url => environments_path(:step => 2) do |f| %>
           <%= hidden_field_tag :plan, 'instituicao_standard' %>
           <%= f.submit "Assinar", :class => "important" %>
@@ -333,7 +333,7 @@
             <span class="value">1280,99</span>
             /mês
           </span>
-          <!-- 
+          <!--
           <span class="yearly">
             <span class="currency">R$</span>
             <span class="value">12809,90</span>
@@ -343,7 +343,7 @@
           -->
         </div>
 
-        <% form_for @environment,
+        <%= form_for @environment,
           :url => environments_path(:step => 2) do |f| %>
           <%= hidden_field_tag :plan, 'instituicao_plus' %>
           <%= f.submit "Assinar", :class => "important" %>
@@ -396,7 +396,7 @@
           -->
         </div>
 
-        <% form_for @environment,
+        <%= form_for @environment,
           :url => environments_path(:step => 2) do |f| %>
           <%= hidden_field_tag :plan, 'empresas_lite' %>
           <%= f.submit "Assinar", :class => "important" %>
@@ -435,7 +435,7 @@
             <span class="value">248,99</span>
             /mês
           </span>
-          <!-- 
+          <!--
           <span class="yearly">
             <span class="currency">R$</span>
             <span class="value">2489,90</span>
@@ -445,7 +445,7 @@
           -->
         </div>
 
-        <% form_for @environment,
+        <%= form_for @environment,
           :url => environments_path(:step => 2) do |f| %>
           <%= hidden_field_tag :plan, 'empresas_standard' %>
           <%= f.submit "Assinar", :class => "important" %>
@@ -494,7 +494,7 @@
           -->
         </div>
 
-        <% form_for @environment,
+        <%= form_for @environment,
           :url => environments_path(:step => 2) do |f| %>
           <%= hidden_field_tag :plan, 'empresas_plus' %>
           <%= f.submit "Assinar", :class => "important" %>

@@ -19,7 +19,7 @@
       <div class="new-file">
         <a href="#" class="button">Upload de Arquivo</a>
         <div class="new-file-inner holder" style="display:none;">
-          <% form_for(myfile,
+          <%= form_for(myfile,
                       :url => do_the_upload_space_folder_path(space.id,
                                                               folder.id, :format => 'js'),
                       :html => { :multipart => true, :target => 'upload_frame',

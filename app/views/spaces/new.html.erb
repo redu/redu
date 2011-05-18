@@ -11,7 +11,7 @@
         <span class="counter">Nova disciplina</span>
       </div>
 
-      <% form_for @space, :html => {:class => "form-common highlightable",
+      <%= form_for @space, :html => {:class => "form-common highlightable",
         :id => "form_school"} do |f|%>
         <%= render "spaces/form", :f => f, :edit => false %>
         <%= f.submit "Criar disciplina" %>

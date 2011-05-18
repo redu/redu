@@ -41,7 +41,7 @@
         ["Convites", admin_manage_invitations_environment_course_path(@environment, @course), {:class => ''}],
         ["Disciplinas", admin_spaces_environment_course_path(@environment, @course), {:class => 'icon icon-space-gray_16_16'}] do
     %>
-      <% form_for @course,
+      <%= form_for @course,
         :url => environment_course_path(@environment, @course),
         :html => { :class => "form-common" } do |f| %>
         <%= render :partial => 'courses/form', :locals => { :f => f, :edit => true } %>

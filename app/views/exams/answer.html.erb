@@ -12,7 +12,7 @@
       <li><a href="#instructions">Instruções</a></li>
     </ul>
     <div id="exam" class="clearfix">
-      <% form_for :exam, answer_space_subject_exam_path(@space, @subject, @exam), :html => {:id => 'form_answer', :class => "grid_16" }  do %>
+      <%= form_for :exam, answer_space_subject_exam_path(@space, @subject, @exam), :html => {:id => 'form_answer', :class => "grid_16" }  do %>
         <input id="chrono" name="chrono" type="hidden" value="" />
         <div id= "question_box" class ="grid_11 alpha pretty-text">
           <%= render :partial => 'exams/question_answer', :locals => {:question => @step} %>

@@ -16,7 +16,7 @@
   </div>
 </div>
 
-<% form_for :lecture, @lecture, :url => {:controller => :lectures, :action => :create }, :html => { :multipart => true } do |f| %>
+<%= form_for :lecture, @lecture, :url => {:controller => :lectures, :action => :create }, :html => { :multipart => true } do |f| %>
 
   <div class="grid_16">
     <%= f.error_messages %>

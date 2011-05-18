@@ -10,7 +10,7 @@
     </div>
   </div>
 
-  <% form_for @course,
+  <%= form_for @course,
     :url => environment_courses_path(@environment),
     :html => { :class => 'form-common' } do |f| %>
     <%= f.error_messages %>

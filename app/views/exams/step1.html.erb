@@ -13,7 +13,7 @@
     </tbody></table>
   </div>
 
-  <% form_for :exam, @exam, :url => { :action => "create" }, :html => { :multipart => true } do |f| %>
+  <%= form_for :exam, @exam, :url => { :action => "create" }, :html => { :multipart => true } do |f| %>
 
     <%= f.error_messages %>
     <%= hidden_field_tag("step", "1", options = {})%>

@@ -13,7 +13,7 @@
       ["Recursos", admin_lectures_order_space_subject_path(@space, @subject), { :class => "icon icon-resource-gray_16_16" } ],
       ["Membros", admin_members_space_subject_path(@space, @subject), { :class => "icon icon-members-gray_16_16" } ] do %>
 
-        <% form_for [@space, @subject],
+        <%= form_for [@space, @subject],
             :html => { :class => "form-common", :multipart => true } do |f| %>
           <%= render :partial => "subjects/raw_form", :locals => { :f => f } %>
           <%= f.submit "Salvar alterações" %>

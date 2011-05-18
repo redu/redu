@@ -68,7 +68,7 @@
         </tr>
       </tbody>
     </table>
-    <% form_for @environment,
+    <%= form_for @environment,
       :url => environments_path(:step => 4),
       :remote => true,
       :html => { :class => "clearfix form-loader" } do |f| %>
