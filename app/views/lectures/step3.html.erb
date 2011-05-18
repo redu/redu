@@ -22,13 +22,13 @@
     <%= hidden_field_tag("step", "3", options = {})%>
 
     <% if @lecture.lectureable_type == 'InteractiveClass' %>
-      <% field_set_tag 'Imagem' do %>
+      <%= field_set_tag 'Imagem' do %>
         <%= f.label 'Defina uma imagem para esta aula' %>
         <%= f.file_field :avatar %>
       <% end %>
     <%end %>
 
-    <% field_set_tag 'Compartilhe!' do %>
+    <%= field_set_tag 'Compartilhe!' do %>
       <%= render :partial => 'shared/share', :locals => {:resource => @lecture}%>
     <% end %>
     <%= f.submit "< Anterior", :name => "back_button" %>

@@ -3,13 +3,13 @@
     :url => space_subject_lectures_path,
     :html => { :id => "seminar-form", :class => "form-common" } do |f| %>
 
-    <% field_set_tag do %>
+    <%= field_set_tag do %>
       <%= label_tag :name, t( :title ) %>
       <%= text_field_tag :name %>
       <%= hidden_field_tag "subject_id", @subject.id %>
       <%= error_for :name %>
 
-      <% field_set_tag do %>
+      <%= field_set_tag do %>
         <legend class="label">
           Tipo de material:
         </legend>
@@ -26,7 +26,7 @@
         </div>
       <% end %>
 
-      <% field_set_tag nil, :id => 'upload_resource_field', :class => 'uploadify',
+      <%= field_set_tag nil, :id => 'upload_resource_field', :class => 'uploadify',
         :style => 'display: none;' do %>
         <%= f.label :original, "Upload" %>
         <%= f.file_field :original  %>
@@ -37,7 +37,7 @@
         <%= uploadify_submit "Enviar material", :style => "display: none;"  %>
       <% end %>
 
-      <% field_set_tag nil, :id => 'external_resource_field' do %>
+      <%= field_set_tag nil, :id => 'external_resource_field' do %>
         <legend class="label">Youtube</legend>
         <%= f.text_field :external_resource %>
         <span class="tip">
@@ -46,7 +46,7 @@
         <%= error_for :seminar, :external_resource %>
       <% end %>
 
-      <% field_set_tag nil, :id => 'youtube_preview',
+      <%= field_set_tag nil, :id => 'youtube_preview',
         :style => 'display: none;' do %>
         <legend class="label">Prévia</legend>
         <object width="420" height="300">

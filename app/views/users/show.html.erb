@@ -111,8 +111,8 @@
               environment_course_path(environment, course),
               :class => 'course' %>
             <span class="role">
-              <%= Role.human_attribute_name(@user.get_association_with(course).
-                                            role.name) %>
+              <%= Role.human_attribute_name(
+                    Role[@user.get_association_with(course).role]) %>
             </span>
           </li>
           <% end %>

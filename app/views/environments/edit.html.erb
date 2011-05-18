@@ -39,7 +39,7 @@
     <% form_for @environment, :html => { :class => 'form-common highlightable',
       :multipart => true } do |f| %>
       <%= f.error_messages %>
-      <% field_set_tag "Informações Gerais", :class => "hidden" do %>
+      <%= field_set_tag "Informações Gerais", :class => "hidden" do %>
         <%= f.label :name, "Nome" %>
         <%= f.text_field :name  %>
         <%= f.label :initials, "Sigla" %>
@@ -56,7 +56,7 @@
         <%= f.text_field :tag_list %>
       <% end %>
 
-      <% field_set_tag "Aparência", :class => 'hidden' do %>
+      <%= field_set_tag "Aparência", :class => 'hidden' do %>
         <%= f.label :avatar, "Imagem" %>
         <%= f.file_field :avatar %>
         <%= f.submit "Salvar alterações" %>

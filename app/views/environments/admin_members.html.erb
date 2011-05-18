@@ -31,11 +31,11 @@
       <%= form_tag search_users_admin_environment_path(@environment),
         :remote => true, :class => "form-common filter" do %>
         <div class="filters clearfix">
-          <% field_set_tag "Buscar", :class => "grid_4 alpha inline hidden" do %>
+          <%= field_set_tag "Buscar", :class => "grid_4 alpha inline hidden" do %>
             <%= label_tag :search_user, "Nome" %>
             <%= text_field_tag :search_user, nil, :class => "nano" %>
           <% end %>
-          <% field_set_tag nil, :class => "grid_4 omega inline" do %>
+          <%= field_set_tag nil, :class => "grid_4 omega inline" do %>
             <ul class="columns">
               <li>
                 <%= check_box_tag :role_filter, Role[:member] %>

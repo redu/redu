@@ -9,7 +9,7 @@
 </script>
 <%=  form_for [@space, @subject], :remote => true,
   :html => { :class => 'form-common new-subject' } do |f| %>
-  <% field_set_tag do %>
+  <%= field_set_tag do %>
     <div id="errorExplanation" class="errorExplanation" style="display: none;">
       <h2>Oops!</h2>
       <p>Há problemas para os seguintes campos:</p>
@@ -17,7 +17,7 @@
     </div>
 
     <%= hidden_field_tag 'space_id', @space.id %>
-    <% field_set_tag do %>
+    <%= field_set_tag do %>
       <%= render :partial => 'subjects/raw_form', :locals => { :f => f } %>
     <% end %>
 

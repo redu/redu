@@ -4,7 +4,7 @@
   <%= render :partial => "form_edit", :object => @lecture %>
 
   <% form_for :page, @page, :url => space_subject_lecture_path(@space, @subject, @lecture), :html => {:method => :put } do |builder| %>
-    <% field_set_tag "Artigo" do %>
+    <%= field_set_tag "Artigo" do %>
       <%= builder.cktext_area :body, :width => "900px", :height => "400px",
         :swf_params => { :assetable_type => 'Space',
         :assetable_id => @space.id }%>

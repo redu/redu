@@ -2,7 +2,7 @@
 <div class="grid_10">
   <% form_for @user_session, :url => sessions_path do |f| %>
 
-    <% field_set_tag "Login" do %>
+    <%= field_set_tag "Login" do %>
 
       <label for='username'>
         <%= t( :username_or_email ) %>

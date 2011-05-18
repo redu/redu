@@ -2,7 +2,7 @@
     Recebe space e subject como locals %>
 
 <% display = 'none' if action_name == 'edit' %>
-<% field_set_tag nil, :id => "lectures_types",
+<%= field_set_tag nil, :id => "lectures_types",
   :style => "display:#{display};" do %>
   <legend class="label">
     <span class="question question-blue_12_12 tiptip" title="Um módulo pode conter várias aulas de tipos diferentes."></span>

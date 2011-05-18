@@ -20,13 +20,13 @@
   </div>
   <div class="main grid_12 omega">
     <h3 class="call">Cadastro</h3>
-    <% form_for :user, :url => users_path,
+    <%= form_for :user, :url => users_path,
       :html => {:class => 'form-common', :onsubmit => 'return verifyTOS();'} do |f| %>
       <%= error_messages_for :user %>
       <% if params[:invitation_token] %>
         <%= hidden_field_tag :invitation_token, params[:invitation_token] %>
       <% end %>
-      <% field_set_tag "Informações pessoais", :class => 'separator' do %>
+      <%= field_set_tag "Informações pessoais", :class => 'separator' do %>
         <%= f.label :first_name, "Nome:" %>
         <%= f.text_field :first_name, :class => 'small' %>
         <%= error_for :user, :first_name %>
@@ -42,7 +42,7 @@
         </div>
         <%= error_for :user, :birthday %>
       <% end %>
-      <% field_set_tag "Informações de contato", :class => 'separator' do %>
+      <%= field_set_tag "Informações de contato", :class => 'separator' do %>
         <%= f.label :login, t( :username ) %>
         <%= f.text_field :login, :class => 'small' %>
         <%= error_for :user, :login %>
@@ -53,7 +53,7 @@
         <%= f.label :email_confirmation, "Confirmação:" %>
         <%= f.text_field :email_confirmation, :class => 'small' %>
       <% end %>
-      <% field_set_tag "Senha", :class => 'separator' do %>
+      <%= field_set_tag "Senha", :class => 'separator' do %>
         <%= f.label :password, t( :password ) %>
         <%= f.password_field :password, :class => 'small' %>
         <%= error_for :user, :password %>
@@ -62,7 +62,7 @@
         <%= f.password_field :password_confirmation, :class => 'small' %>
         <%= error_for :user, :password_confirmation %>
       <% end %>
-      <% field_set_tag "Termos", :class => 'tos' do %>
+      <%= field_set_tag "Termos", :class => 'tos' do %>
         <div class="inline">
           <%= check_box "user", "tos" %>
           <%= f.label "tos", (link_to "Li e aceito os termos de uso do Redu", tos_path) %>

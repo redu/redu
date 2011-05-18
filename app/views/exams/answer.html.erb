@@ -18,7 +18,7 @@
           <%= render :partial => 'exams/question_answer', :locals => {:question => @step} %>
         </div>
         <div id="questions" class ="grid_4 omega">
-          <% field_set_tag 'Questões', :class => "heighted" do %>
+          <%= field_set_tag 'Questões', :class => "heighted" do %>
             <ul id="questions_number">
               <% session[:exam].questions.each_with_index do |q, x| %>
                 <% if(0 == x) %>

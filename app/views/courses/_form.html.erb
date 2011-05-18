@@ -16,7 +16,7 @@
 
 <%= apply_color_picker_to "#course_color" %>
 <%= f.error_messages %>
-<% field_set_tag "Informações Gerais" do %>
+<%= field_set_tag "Informações Gerais" do %>
   <%= f.label :name, "Nome" %>
   <%= f.text_field :name %>
   <span class="tip">40 caracteres</span>
@@ -34,7 +34,7 @@
   <%= f.label raw("Palavras-chave <span class='snippet'>(separadas por vírgula)</span>") %>
   <%= f.text_field :tag_list %>
 <% end %>
-<% field_set_tag 'Audiência', :class => 'hidden' do %>
+<%= field_set_tag 'Audiência', :class => 'hidden' do %>
   <%= f.label :audiences, "Audiência" %>
   <%= error_for :course, :audiences %>
   <ul class="columns">
@@ -48,7 +48,7 @@
   <span class="tip">Selecionar um público que não corresponde ao propósito do curso pode levar à uma má avaliação. </span>
 <% end %>
 <% if edit == false %>
-  <% field_set_tag "Plano", :class => "hidden" do %>
+  <%= field_set_tag "Plano", :class => "hidden" do %>
     <%= label :plan, "Plano" %>
     <ul class="columns course-plan">
       <li>
@@ -93,7 +93,7 @@
     </ul>
   <% end %>
 <% end %>
-<% field_set_tag "Inscrição", :class => 'hidden inline' do %>
+<%= field_set_tag "Inscrição", :class => 'hidden inline' do %>
   <%= f.label :subscription_type, "Quem pode participar do curso?" %>
   <%= f.radio_button :subscription_type, "1", :checked => true %> Todos
   <%= f.radio_button :subscription_type, "2" %> Moderação

@@ -77,7 +77,7 @@
 
       <% form_for @user_session, :html => { :class => "form-common highlightable"} ,:url => sessions_path do |f| %>
 
-        <% field_set_tag do %>
+        <%= field_set_tag do %>
 
           <%= hidden_field_tag :invitation_token, @user_course_invitation.token %>
           <%= f.label :login, "Login ou e-mail:", :class => "small" %>
@@ -88,7 +88,7 @@
           <%= f.password_field :password, :class => "small" %>
           <%= error_for :user_session, :password %>
 
-          <% field_set_tag "", :class => "inline" do %>
+          <%= field_set_tag "", :class => "inline" do %>
             <%= f.check_box :remember_me %>
             <%= f.label :remeber_me, "Manter-me logado" %>
           <% end %>

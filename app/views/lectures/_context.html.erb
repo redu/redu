@@ -7,7 +7,7 @@
                                                                @lecture),
                        :remote => true, :method => :post,
                        :id => 'do_lecture', :class => 'done' do %>
-      <% field_set_tag do %>
+      <%= field_set_tag do %>
         <%= hidden_field_tag 'lecture_id', @lecture.id %>
         <% if done %>
           <%= hidden_field_tag 'done', '0' %>

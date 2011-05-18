@@ -15,7 +15,6 @@ class User < ActiveRecord::Base
                                ]
 
   # CALLBACKS
-  before_save   :whitelist_attributes
   before_create :make_activation_code
   after_create {|user| UserNotifier.signup_notification(user).deliver }
   after_create  :update_last_login
@@ -759,12 +758,6 @@ class User < ActiveRecord::Base
     return if password.blank?
     self.salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--#{login}--") if new_record?
     self.crypted_password = encrypt(password)
-  end
-
-  def whitelist_attributes
-    self.login = self.login.strip
-    self.description = white_list(self.description )
-    #self.stylesheet = white_list(self.stylesheet )
   end
 
   def password_required?

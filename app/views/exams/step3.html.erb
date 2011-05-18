@@ -21,7 +21,7 @@
     <%= f.error_messages %>
     <%= hidden_field_tag("step", "3", options = {})%>
 
-        <% field_set_tag 'Compartilhe!' do %>
+        <%= field_set_tag 'Compartilhe!' do %>
           <%= render :partial => 'shared/share', :locals => {:resource => @exam}%>
         <%end%>
 
