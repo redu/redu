@@ -1,18 +1,7 @@
 <div id="lecture_form">
-    <%= stylesheet_link_tag 'uploadify' %>
-    <%= render_uploadify(:id  => "seminar_original",
-                         :url => space_subject_lectures_url(@space, @subject),
-                         :allow_multiple_files => false,
-                         :fields => ['seminar_external_resource_type_upload', 'name', 'subject_id'],
-                         :max_size => 100.megabytes,
-                         :allowed_extensions => [:mov, :mpeg, :mpg, :avi, '3gp', :mp4, :mpeg4, :vob, :mkv, '264', '3gp2', :dvr, :dvx, :flv, :h264, :m2v, :m4v, :movie, :mpeg1, :mpeg2, :swf, :vid, :wmv]) %>
-
-<% form_remote_for :seminar, @seminar,
-    :url => { :action => "create" },
-    :loading => "$('#spinner-form-seminar').show();",
-    :success => "$('#spinner-form-seminar').hide();",
-    :html => { :multipart => true,
-     :id => "seminar-form", :class => "form-common" } do |f| %>
+  <%= form_for @seminar, :as => :seminar,
+    :url => space_subject_lectures_path,
+    :html => { :id => "seminar-form", :class => "form-common" } do |f| %>
 
     <% field_set_tag do %>
       <%= label_tag :name, t( :title ) %>
