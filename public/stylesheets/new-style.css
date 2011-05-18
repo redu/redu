@@ -4996,11 +4996,14 @@ div.token-input-dropdown {
 }
 
 .link-loading,
+a.link-loading,  /* para sobrepor a precedência de input.important */
+a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 .link-loading:hover {
   background-image:  url("../images/new/loading-horizontal.gif");
   background-repeat: no-repeat;
   background-position: left center;
   color: transparent;
+  border: none;
 }
 
 .ui-helper-clearfix:after,

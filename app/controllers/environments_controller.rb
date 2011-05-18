@@ -219,9 +219,6 @@ class EnvironmentsController < BaseController
   # Remove um ou mais usuários de um Environment destruindo todos os relacionamentos
   # entre usuário e os níveis mais baixos da hierarquia.
   def destroy_members
-    #TODO verificar performance
-    @environment = Environment.includes(:courses => [:spaces]).find(params[:id])
-
     # Course.id do environment
     courses = @environment.courses
     # Spaces do environment (unidimensional)
