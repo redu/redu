@@ -10,7 +10,7 @@
 <li id=<%= "#{item_short.id}-item" %>>
   <span class="<%= css_class %>"></span>
   <%= item_short.name %>
-  <% if !item_short.subject.visible? && (can? :manage, item_short.subject) %>
+  <% if can? :manage, item_short.subject %>
     <% if item_short.lectureable.class.to_s == 'Page' && !item_short.is_clone %>
       <%= link_to "Editar",
         edit_space_subject_lecture_path(item_short.subject.space,

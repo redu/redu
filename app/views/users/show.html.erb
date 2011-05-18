@@ -10,8 +10,6 @@
             :class => 'send-message' %>
         <% end %>
 
-        <%= image_tag 'spinner.gif', :style => 'display: none;',
-          :id => 'spinner' %>
         <% friendship = @user.friendship_for current_user %>
         <% if !current_user.friends?(@user) and current_user != @user %>
           <% if friendship %>

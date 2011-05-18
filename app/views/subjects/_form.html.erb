@@ -21,7 +21,6 @@
       <%= render :partial => 'subjects/raw_form', :locals => { :f => f } %>
     <% end %>
 
-    <%= render :partial => 'lectures/item_created', :collection => @subject.lectures %>
     <% if action_name == 'edit' %>
       <%= render :partial => 'lectures/choose_type',
         :locals => { :subject => @subject, :space => @space } %>
