@@ -17,15 +17,15 @@
     <%= form_tag deny_environment_course_path(
                                  item_invitation.course.environment,
                                  item_invitation.course),
-                                 :remote => true, :html => { :class => 'form-loader' } do %>
+                                 :remote => true, :class => 'form-loader' do %>
       <%= submit_tag "Recusar", :class => 'remove' %>
     <% end %>
     <% if item_invitation.course.can_add_entry? %>
       <%= form_tag accept_environment_course_path(
         item_invitation.course.environment,
         item_invitation.course),
-        :remote => true, :html => { :class => "form-loader" } do %>
-        <%= submit_tag "Aceitar", :class => 'important accept-invitation' %>
+        :remote => true, :class => "form-loader" do %>
+        <%= submit_tag "Aceitar", :class => 'important' %>
       <% end %>
     <% else %>
       <span class="waiting">Limite de vagas atingido</span>

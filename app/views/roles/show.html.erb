@@ -43,11 +43,11 @@
                 <% form_tag user_update_roles_path(@user, @environment),
                   :method => :post do %>
                   <%= radio_button_tag :roles, Role[:teacher], membership.role.eql?(Role[:teacher]) ? true : false  %>
-                  <%= label_tag "roles_#{Role[:teacher]}", Role.human_attribute_name(Role[:teacher].name) %>
+                  <%= label_tag "roles_#{Role[:teacher]}", "Professor" %>
                   <%= radio_button_tag :roles, Role[:member], membership.role.eql?(Role[:member]) ? true : false  %>
-                  <%= label_tag "roles_#{Role[:member]}", Role.human_attribute_name(Role[:member].name)%>
+                  <%= label_tag "roles_#{Role[:member]}", "Membro" %>
                   <%= radio_button_tag :roles, Role[:tutor], membership.role.eql?(Role[:tutor]) ? true : false  %>
-                  <%= label_tag "roles_#{Role[:tutor]}", Role.human_attribute_name(Role[:tutor].name)%>
+                  <%= label_tag "roles_#{Role[:tutor]}", "Tutor" %>
                   <%= hidden_field_tag :type, 'course' %>
                   <%= hidden_field_tag :course_id, membership.course.id %>
                   <%= submit_tag "Alterar" %>
