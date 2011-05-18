@@ -54,8 +54,8 @@ Redu::Application.configure do
 
   config.paperclip = {
     :storage => :s3,
-    :s3_credentials => S3_CREDENTIALS,
-    :bucket => S3_CREDENTIALS['bucket'],
+    :s3_credentials => config.s3_credentials,
+    :bucket => config.s3_credentials['bucket'],
     :path => ":class/:attachment/:id/:style/:basename.:extension",
     :default_url => "http://redu_assets.s3.amazonaws.com/images/new/missing_:class_:style.png",
     :styles => { :thumb_150 => "150x150#",
@@ -66,7 +66,7 @@ Redu::Application.configure do
   }
 
   config.paperclip_myfiles = config.paperclip.merge({
-    :bucket => S3_CREDENTIALS['files_bucket'],
+    :bucket => config.s3_credentials['files_bucket'],
     :path => ":class/:attachment/:id/:style/:basename.:extension",
     :default_url => ":class/:attachment/:style/missing.png",
   })

@@ -240,6 +240,10 @@ class BaseController < ApplicationController
   end
 
   protected
+  def logged_in?
+    !current_user.nil?
+  end
+
   # Workaround para o bug #55 (before_filter não funciona no filter chain)
   # http://railsapi.com/doc/rails-v2.3.8/classes/ActionController/Filters/ClassMethods.html
   def login_required_base
