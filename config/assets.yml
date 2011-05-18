@@ -1,0 +1,18 @@
+staging:
+  s3_access_key_id: AKIAIRKVQDTWT2NN4J4Q
+  s3_secret_access_key: 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
+  s3_permission: public_read
+  s3_bucket: redu-assets-staging
+  s3_upload_files:
+    - public/images/new/**
+
+
+stylesheets:
+  common:
+    - public/stylesheets/reset.css
+    - public/stylesheets/960.css
+    - public/stylesheets/new-fonts.css
+    - public/stylesheets/tiptip.css
+    - public/stylesheets/new-style.css
+
+
