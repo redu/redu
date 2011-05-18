@@ -291,12 +291,6 @@ describe User do
   end
 
   context "callbacks" do
-    it "it will sanitize all attributes before save" do
-      subject.description = "some<<b>script>alert('hello')<</b>/script>"
-      subject.save
-      subject.description.should =="some&lt;<b>script>alert('hello')&lt;</b>/script>"
-    end
-
     it "make an activation code before create" do
       subject.activation_code.should_not be_nil
     end
