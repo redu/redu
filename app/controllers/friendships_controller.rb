@@ -53,7 +53,12 @@ class FriendshipsController < BaseController
     @friends_pending = @user.friends_pending.
       paginate({:page => params[:page], :per_page => 10})
 
-    format.js { render_endless 'friendships/item_pending', @friends_pending, '#pending_list' }
+    respond_to do |format|
+      format.html
+      format.js do
+        render_endless 'friendships/item_pending', @friends_pending, '#pending_list'
+      end
+    end
   end
 
   def accept

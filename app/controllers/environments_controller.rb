@@ -220,7 +220,7 @@ class EnvironmentsController < BaseController
   # entre usuário e os níveis mais baixos da hierarquia.
   def destroy_members
     #TODO verificar performance
-    @environment = Environment.includes(:courses => [{:spaces}]).find(params[:id])
+    @environment = Environment.includes(:courses => [:spaces]).find(params[:id])
 
     # Course.id do environment
     courses = @environment.courses

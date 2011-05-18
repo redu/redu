@@ -210,13 +210,11 @@ describe Ability do
         end
 
         it "can NOT upload document" do
-          pending do
-            document = Factory(:document)
-            lecture = Factory(:lecture, :owner => @env_admin,
-                              :subject => @sub,
-                              :lectureable => document)
-            @ability.should_not be_able_to(:upload_document, document)
-          end
+          document = Factory(:document)
+          lecture = Factory(:lecture, :owner => @env_admin,
+                            :subject => @sub,
+                            :lectureable => document)
+          @ability.should_not be_able_to(:upload_document, document)
         end
 
         # Need Seminar factory

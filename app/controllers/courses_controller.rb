@@ -286,7 +286,6 @@ class CoursesController < BaseController
                      includes(:user => [{:user_space_associations => :space}]).
                      paginate(:page => params[:page],:order => 'updated_at DESC',
                               :per_page => Redu::Application.config.items_per_page)
-    debugger
 
       respond_to do |format|
         format.html
