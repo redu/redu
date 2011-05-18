@@ -1,2 +1,0 @@
-page << "$('#tabs-3-loading').hide()"
-page.replace_html 'tabs-3-content', :partial => "lecture_list"
