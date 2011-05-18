@@ -89,30 +89,6 @@ class SpacesController < BaseController
     end
   end
 
-  def search_users_admin
-
-    if params[:search_user].empty?
-      @memberships = @space.user_space_associations.approved.includes(:user).
-        paginate(:page => params[:page],:order => 'updated_at DESC',
-                 :per_page => Redu::Application.config.items_per_page)
-    else
-      qry = params[:search_user] + '%'
-      @memberships =
-        @space.user_space_associations.approved.users_by_name(qry).
-        paginate(:page => params[:page],
-                 :order => 'user_space_associations.updated_at DESC',
-                 :per_page => Redu::Application.config.items_per_page)
-    end
-
-    respond_to do |format|
-      format.js do
-        render :update do |page|
-          page.replace_html 'user_list', :partial => 'user_list_admin', :locals => {:memberships => @memberships}
-        end
-      end
-    end
-  end
-
   def moderate_bulletins
     if params[:bulletin]
       approved = params[:bulletin].reject{|k,v| v == 'reject'}

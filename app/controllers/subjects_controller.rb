@@ -11,7 +11,8 @@ class SubjectsController < BaseController
   rescue_from CanCan::AccessDenied do |exception|
     flash[:notice] = "Você não tem acesso a essa página"
 
-    redirect_to preview_environment_course_path(@space.course.environment, @space.course)
+    redirect_to preview_environment_course_path(@space.course.environment,
+                                                @space.course)
   end
 
   def index
@@ -50,16 +51,6 @@ class SubjectsController < BaseController
 
     respond_to do |format|
       format.html
-
-      # Descomentar para o primeiro passo da criação de Subject
-      # usar AJAX
-      # format.js do
-      #   render :update do |page|
-      #     page.insert_html :before, 'subjects_list',
-      #       :partial => 'subjects/form'
-      #     page.hide 'link-new-subject'
-      #   end
-      # end
     end
   end
 
@@ -77,13 +68,6 @@ class SubjectsController < BaseController
     @admin_panel = true if params[:admin_panel]
     respond_to do |format|
       format.html
-      format.js do
-        render :update do |page|
-          page.hide 'content'
-          page.insert_html :before, 'content',
-            :partial => 'subjects/form'
-        end
-      end
     end
   end
 
@@ -189,8 +173,9 @@ class SubjectsController < BaseController
 
   # Listagem de usuários do Space
   def users
-    @users = @subject.members.
-      paginate(:page => params[:page], :order => 'first_name ASC', :per_page => 18)
+    @users = @subject.members.paginate(:page => params[:page],
+                                       :order => 'first_name ASC',
+                                       :per_page => 18)
 
     respond_to do |format|
       format.html
