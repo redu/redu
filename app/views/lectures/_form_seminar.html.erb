@@ -1,6 +1,7 @@
 <div id="lecture_form">
   <%= form_for @seminar, :as => :seminar,
     :url => space_subject_lectures_path,
+    :remote => true,
     :html => { :id => "seminar-form", :class => "form-common" } do |f| %>
 
     <%= field_set_tag do %>
