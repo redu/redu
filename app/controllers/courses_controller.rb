@@ -46,7 +46,7 @@ class CoursesController < BaseController
     respond_to do |format|
       if @course.update_attributes(params[:course])
         if params[:course][:subscription_type].eql? "1" # Entrada de membros passou a ser livre, aprovar todos os membros pendentes
-          @course.user_course_associations.all(:conditions => { :state => 'waiting'}).each do |ass|
+          @course.user_course_associations.waiting.each do |ass|
             ass.approve!
             @course.create_hierarchy_associations(ass.user, ass.role)
           end
@@ -154,11 +154,9 @@ class CoursesController < BaseController
   # Aba Disciplinas.
   def admin_spaces
     # FIXME Refatorar para o modelo (conditions)
-    @spaces = Space.paginate(:conditions => ["course_id = ?", @course.id],
-                             :include => :owner,
-                             :page => params[:page],
-                             :order => 'updated_at DESC',
-                             :per_page => Redu::Application.config.items_per_page)
+    @spaces = @course.spaces.includes(:owner).paginate(:page => params[:page],
+                                                       :order => 'updated_at DESC',
+                                                       :per_page => Redu::Application.config.items_per_page)
 
     respond_to do |format|
       format.html
@@ -171,10 +169,9 @@ class CoursesController < BaseController
   # Aba Moderação de Membros.
   def admin_members_requests
     # FIXME Refatorar para o modelo (conditions)
-    @pending_members = UserCourseAssociation.paginate(:conditions => ["state LIKE 'waiting' AND course_id = ?", @course.id],
-                                                      :page => params[:page],
-                                                      :order => 'updated_at DESC',
-                                                      :per_page => Redu::Application.config.items_per_page)
+    @pending_members = @course.user_course_associations.waiting.
+      paginate(:page => params[:page],:order => 'updated_at DESC',
+               :per_page => Redu::Application.config.items_per_page)
     respond_to do |format|
       format.html
       format.js do
@@ -193,8 +190,7 @@ class CoursesController < BaseController
       rejected = params[:member].reject{|k,v| v == 'approve'}
 
       rejected.keys.each do |user_id|
-        @course.user_course_associations.all(:conditions => {
-          :user_id => user_id}).each do |ass|
+        @course.user_course_associations.where(:user_id => user_id).each do |ass|
           #TODO fazer isso em batch
           UserNotifier.reject_membership(ass.user, @course).deliver
           ass.destroy
@@ -218,8 +214,7 @@ class CoursesController < BaseController
         end
 
         approved.keys.each do |user_id|
-          @course.user_course_associations.all(:conditions => {
-            :user_id => user_id}).each do |ass|
+          @course.user_course_associations.where(:user_id => user_id).each do |ass|
             ass.approve!
             @course.create_hierarchy_associations(ass.user, ass.role)
             # TODO fazer isso em batch
@@ -287,13 +282,11 @@ class CoursesController < BaseController
 
   # Aba Membros.
   def admin_members
-    #FIXME Remover para o modelo ao migrar para Rails3
-    @memberships = UserCourseAssociation.paginate(
-      :conditions => ["user_course_associations.course_id = ? AND state LIKE ? ", @course.id, 'approved'],
-      :include => [{ :user => {:user_space_associations => :space} }],
-      :page => params[:page],
-      :order => 'updated_at DESC',
-      :per_page => Redu::Application.config.items_per_page)
+    @memberships = @course.user_course_associations.approved.
+                     includes(:user => [{:user_space_associations => :space}]).
+                     paginate(:page => params[:page],:order => 'updated_at DESC',
+                              :per_page => Redu::Application.config.items_per_page)
+    debugger
 
       respond_to do |format|
         format.html
@@ -313,14 +306,12 @@ class CoursesController < BaseController
     users_ids = params[:users].collect{|u| u.to_i} if params[:users]
 
     unless users_ids.empty?
-      User.find(:all,
-                :conditions => {:id => users_ids},
-                :include => [:user_course_associations,
-                  :user_space_associations]).each do |user|
-
-        user.spaces.delete(spaces)
-        user.courses.delete(@course)
-                  end
+      User.where(:id => users_ids).
+        includes(:user_course_associations,:user_space_associations).
+        each do |user|
+          user.spaces.delete(spaces)
+          user.courses.delete(@course)
+        end
       flash[:notice] = "Os usuários foram removidos do curso #{@course.name}"
     end
 
@@ -352,7 +343,8 @@ class CoursesController < BaseController
     @sidebar_preview = true if params.has_key?(:preview) &&
                               params[:preview] == 'true'
     @users = @course.approved_users.
-      paginate(:page => params[:page], :order => 'first_name ASC', :per_page => 18)
+      paginate(:page => params[:page], :order => 'first_name ASC',
+               :per_page => 18)
 
     respond_to do |format|
       format.html

@@ -24,6 +24,7 @@ class UserCourseAssociation < ActiveRecord::Base
   scope :recent, lambda { where("created_at >= ?", 1.week.ago) }
   scope :approved, where(:state => 'approved')
   scope :invited, where(:state => 'invited')
+  scope :waiting, where(:state => 'waiting')
 
   # Máquina de estados para moderação das dos usuários nos courses.
   aasm_column :state
