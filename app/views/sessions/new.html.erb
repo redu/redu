@@ -1,6 +1,6 @@
 <% content_for :page_id, 'group' %>
 <div class="grid_10">
-  <% form_for @user_session, :url => sessions_path do |f| %>
+  <%= form_for @user_session, :url => sessions_path do |f| %>
 
     <%= field_set_tag "Login" do %>
 
@@ -22,7 +22,7 @@
       <%= f.submit "Entrar" %>
 
       <% unless Rails.env == "production" || Rails.env == "staging"  %>
-        <% form_tag({:controller => :users, :action => :create}, {:method => :post}) do %>
+        <%= form_tag({:controller => :users, :action => :create}, {:method => :post}) do %>
           <%= raw oauth_login_button :value => "Login with Twitter", :class => "twitter" %>
         <% end %>
       <% end %>

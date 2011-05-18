@@ -71,7 +71,7 @@ function showRequestKeysForm(){
  </div>
 
  <div id="local_search_form">
- 	 <% form_remote_tag :url => { :controller => :questions, :action => :search },
+ 	 <%= form_remote_tag :url => { :controller => :questions, :action => :search },
      :before => "jQuery('#spinner').show()",
      :success => "jQuery('#spinner').hide()" do -%>
      Buscar<%= text_field_tag :query %>

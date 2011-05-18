@@ -6,7 +6,7 @@
     </div>
     <div class="filters">
       <strong class="call">Filtros:</strong>
-      <% form_tag courses_index_path(:role => params[:role]),
+      <%= form_tag courses_index_path(:role => params[:role]),
         :onsubmit => "$('#hidden_search').val($('#name').val());",
         :method => :get, :id => 'filter_form' do %>
         <fieldset>

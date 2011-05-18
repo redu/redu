@@ -1,6 +1,6 @@
 <h3><%= t :forgot_your_username %></h3>
 
-<% form_tag :action => :forgot_username do %>
+<%= form_tag :action => :forgot_username do %>
 	<%= label_tag :email, t( :enter_your_email_address ) %>
 	<%= text_field_tag :email, nil, :size => 35 %>
 	<%= submit_tag t( :send_me_my_username ) %>

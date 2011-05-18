@@ -69,7 +69,7 @@
         <span>O limite de vagas foi atingido, seus convites não poderão ser aceitos. Faça o upgrade do seu curso, e aumente a capacidade de usuários.</span>
       </div>
     <% end %>
-    <% form_tag invite_members_environment_course_path(@environment, @course),
+    <%= form_tag invite_members_environment_course_path(@environment, @course),
       :class => 'form-common', :id => "invite-members" do %>
       <%= link_to "Clique aqui para convidar este endereço de e-mail", nil,
         :class => 'button', :id => 'invite_email', :style => 'display: none; margin-left: 265px;' %>

@@ -53,7 +53,7 @@
         </div>
 
         <div class="actions">
-          <% form_tag admin_lectures_order_space_subject_path do %>
+          <%= form_tag admin_lectures_order_space_subject_path do %>
             <%= hidden_field_tag 'lectures_ordered', nil, :class => "assets" %>
             <%= submit_tag 'Salvar alterações' %>
           <% end %>

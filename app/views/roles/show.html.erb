@@ -40,7 +40,7 @@
             </td>
             <td class="edit-roles">
               <% unless @environment_membership.role.eql?(Role[:environment_admin]) %>
-                <% form_tag user_update_roles_path(@user, @environment),
+                <%= form_tag user_update_roles_path(@user, @environment),
                   :method => :post do %>
                   <%= radio_button_tag :roles, Role[:teacher], membership.role.eql?(Role[:teacher]) ? true : false  %>
                   <%= label_tag "roles_#{Role[:teacher]}", "Professor" %>
