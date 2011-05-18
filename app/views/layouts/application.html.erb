@@ -7,7 +7,6 @@
     <%= include_stylesheets :common %>
     <%= javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js' %>
     <%= include_javascripts :common %>
-    <%= ajaxful_rating_style %>
     <% if controller_name == 'subjects' %>
       <%= javascript_include_tag("uploadify/swfobject") %>
       <% if action_name == 'index' or action_name == 'new' %>

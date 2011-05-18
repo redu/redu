@@ -18,7 +18,8 @@ stylesheets:
     - public/stylesheets/reset.css
     - public/stylesheets/960.css
     - public/stylesheets/new-fonts.css
-    - public/stylesheets/tipTip.css
     - public/stylesheets/new-style.css
+    - public/stylesheets/tipTip.css
+    - public/stylesheets/ajaxful_rating.css
 
 
