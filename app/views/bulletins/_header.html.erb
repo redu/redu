@@ -1,0 +1,11 @@
+<% if bulletinable.class.to_s.eql? 'Environment' %>
+<%= render :partial => "environments/breadcrumbs",
+  :locals => { :environment => bulletinable } %>
+<%= render :partial => 'environments/header',
+  :locals => { :environment => bulletinable } %>
+<% else %>
+<%= render :partial => "spaces/breadcrumbs",
+  :locals => { :space => bulletinable } %>
+<%= render :partial => 'spaces/header',
+  :locals => { :space => bulletinable } %>
+<% end %>

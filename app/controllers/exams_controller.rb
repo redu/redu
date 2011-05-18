@@ -29,7 +29,7 @@ class ExamsController < BaseController
     @exams = Exam.paginate(:all,
                            :joins => :favorites,
                            :conditions => ["favorites.favoritable_type = 'Exam' AND favorites.user_id = ? AND exams.id = favorites.favoritable_id", current_user.id],
-                           :page => params[:page], :order => 'created_at DESC', :per_page => AppConfig.items_per_page)
+                           :page => params[:page], :order => 'created_at DESC', :per_page => Redu::Application.config.items_per_page)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -275,7 +275,7 @@ class ExamsController < BaseController
   end
 
   def published
-    @exams = Exam.paginate(:conditions => ["owner_id = ? AND published = 1", params[:user_id]], :include => :owner, :page => params[:page], :order => 'updated_at DESC', :per_page => AppConfig.items_per_page)
+    @exams = Exam.paginate(:conditions => ["owner_id = ? AND published = 1", params[:user_id]], :include => :owner, :page => params[:page], :order => 'updated_at DESC', :per_page => Redu::Application.config.items_per_page)
 
     respond_to do |format|
       format.html #{ render :action => "my" }
@@ -284,7 +284,7 @@ class ExamsController < BaseController
   end
 
   def unpublished
-    @exams = Exam.paginate(:conditions => ["owner_id = ? AND published = 0", current_user.id], :include => :owner, :page => params[:page], :order => 'updated_at DESC', :per_page => AppConfig.items_per_page)
+    @exams = Exam.paginate(:conditions => ["owner_id = ? AND published = 0", current_user.id], :include => :owner, :page => params[:page], :order => 'updated_at DESC', :per_page => Redu::Application.config.items_per_page)
 
     respond_to do |format|
       format.html #{ render :action => "my" }
@@ -294,7 +294,7 @@ class ExamsController < BaseController
 
   # Não precisa de permissão, pois utiliza current_user.
   def history
-    @exams = current_user.exam_history.paginate :page => params[:page], :order => 'updated_at DESC', :per_page => AppConfig.items_per_page
+    @exams = current_user.exam_history.paginate :page => params[:page], :order => 'updated_at DESC', :per_page => Redu::Application.config.items_per_page
 
     respond_to do |format|
       format.html #{ render :action => "exam_history" }
@@ -305,17 +305,17 @@ class ExamsController < BaseController
   def get_query(sort, page)
     case sort
     when '1' # Data
-      @exams = Exam.paginate :conditions => ['published = ?', true], :include => :owner, :page => page, :order => 'created_at DESC', :per_page => AppConfig.items_per_page
+      @exams = Exam.paginate :conditions => ['published = ?', true], :include => :owner, :page => page, :order => 'created_at DESC', :per_page => Redu::Application.config.items_per_page
     when '2' # Dificuldade
-      @exams = Exam.paginate :conditions => ['published = ?', true], :include => :owner, :page => page, :order => 'level DESC', :per_page => AppConfig.items_per_page
+      @exams = Exam.paginate :conditions => ['published = ?', true], :include => :owner, :page => page, :order => 'level DESC', :per_page => Redu::Application.config.items_per_page
     when '3' # Realizações
-      @exams = Exam.paginate :conditions => ['published = ?', true], :include => :owner, :page => page, :order => 'done_count DESC', :per_page => AppConfig.items_per_page
+      @exams = Exam.paginate :conditions => ['published = ?', true], :include => :owner, :page => page, :order => 'done_count DESC', :per_page => Redu::Application.config.items_per_page
     when '4' # Título
-      @exams = Exam.paginate :conditions => ['published = ?', true], :include => :owner, :page => page, :order => 'name DESC', :per_page => AppConfig.items_per_page
+      @exams = Exam.paginate :conditions => ['published = ?', true], :include => :owner, :page => page, :order => 'name DESC', :per_page => Redu::Application.config.items_per_page
     when '5' # Categoria
-      @exams = Exam.paginate :conditions => ['published = ?', true], :include => :owner, :page => page, :order => 'name DESC', :per_page => AppConfig.items_per_page
+      @exams = Exam.paginate :conditions => ['published = ?', true], :include => :owner, :page => page, :order => 'name DESC', :per_page => Redu::Application.config.items_per_page
     else
-      @exams = Exam.paginate :conditions => ['published = ?', true], :include => :owner, :page => page, :order => 'created_at DESC', :per_page => AppConfig.items_per_page
+      @exams = Exam.paginate :conditions => ['published = ?', true], :include => :owner, :page => page, :order => 'created_at DESC', :per_page => Redu::Application.config.items_per_page
     end
   end
 
@@ -327,7 +327,7 @@ class ExamsController < BaseController
     paginating_params = {
       :page => params[:page],
       :order => (params[:sort]) ? params[:sort] + ' DESC' : 'created_at DESC',
-      :per_page => AppConfig.items_per_page
+      :per_page => Redu::Application.config.items_per_page
     }
 
     if params[:user_id] # exames do usuario

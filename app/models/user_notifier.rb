@@ -5,330 +5,304 @@ class UserNotifier < ActionMailer::Base
   extend  ActionView::Helpers::SanitizeHelper::ClassMethods # Required for rails 2.2
 
   include BaseHelper
-  ActionMailer::Base.default_url_options[:host] = APP_URL.sub('http://', '')
 
-  self.delivery_method = :activerecord # É necessário iniciar o ar_sendmail para que os e-mails sejam enviados
+  default :from => "\"Equipe Redu\" <#{Redu::Application.config.email}>",
+      :content_type => "text/plain",
+      :reply_to => "#{Redu::Application.config.email}"
 
   ### SENT BY MEMBERS OF SCHOOL
   def pending_membership(user,space)
-    setup_sender_info
-    @recipients  = "#{space.owner.email}"
-    @subject     = "Disciplinas Redu: Participação pendente"
-    @sent_on     = Time.now
-    @body[:user] = user
-    @body[:url]  = admin_requests_space_url(space)
-    @body[:space]  = space
+    @user = user
+    @url = admin_requests_space_url(space)
+    @space = space
+
+    mail(:to => space.owner.email,
+         :subject => "Disciplinas Redu: Participação pendente",
+         :date => Time.now)
   end
 
   ### SENT BY ADMIN SCHOOL
   def approve_membership(user, course)
-    setup_sender_info
-    @recipients  = "#{user.email}"
-    @subject     = "Sua participacão no course \"#{course.name}\" foi aprovada!"
-    @sent_on     = Time.now
-    @body[:user] = user
-    @body[:url]  = course.permalink
-    @body[:course]  = course
+    @user = user
+    @url = course.permalink
+    @course = course
+
+    mail(:to => user.email,
+         :subject => "Sua participação no curso \"#{course.name}\" foi aprovada!",
+         :date => Time.now)
   end
 
   def reject_membership(user, course)
-    setup_sender_info
-    @recipients  = "#{user.email}"
-    @subject     = "Sua participacão no course \"#{course.name}\" foi negada!"
-    @sent_on     = Time.now
-    @body[:user] = user
-    @body[:course]  = course
+    @user = user
+    @course = course
+
+    mail(:to => user.email,
+         :subject => "Sua participação no curso \"#{course.name}\" foi negada.",
+         :date => Time.now)
   end
 
   def remove_membership(user, space)
-    setup_sender_info
-    @recipients  = "#{user.email}"
-    @subject     = "Sua participacão na discipĺina \"#{space.name}\" foi cancelada"
-    @sent_on     = Time.now
-    @body[:user] = user
-    @body[:url]  = space.permalink
-    @body[:space]  = space
+    @user = user
+    @url = space.permalink
+    @space = space
+
+    mail(:to => user.email,
+         :subject => "Sua participacão na discipĺina \"#{space.name}\" foi cancelada",
+         :date => Time.now)
   end
 
   ### ADMIN REDU
   def remove_lecture(lecture)
-    setup_sender_info
-    @recipients  = "#{lecture.owner.email}"
-    @subject     = "A aula \"#{lecture.name}\" foi removida do Redu"
-    @sent_on     = Time.now
-    @body[:user] = lecture.owner
-    # @body[:url]  = lecture.permalink
-    @body[:lecture]  = lecture
+    @user = lecture.owner
+    @lecture = lecture
+
+    mail(:to => lecture.owner.email,
+         :subject => "A aula \"#{lecture.name}\" foi removida do Redu",
+         :date => Time.now)
   end
 
   def remove_exam(exam)
-    setup_sender_info
-    @recipients  = "#{exam.owner.email}"
-    @subject     = "O exame \"#{exam.name}\" foi removido do Redu"
-    @sent_on     = Time.now
-    @body[:user] = exam.owner
-    # @body[:url]  = lecture.permalink
-    @body[:exam]  = exam
+    @user = exam.owner
+    @exam = exam
+
+    mail(:to => exam.owner.email,
+         :subject => "O exame \"#{exam.name}\" foi removido do Redu",
+         :date => Time.now)
   end
 
   def remove_user(user)
-    setup_sender_info
-    @recipients  = "#{user.email}"
-    @subject     = "O usuário \"#{user.login}\" foi removido do Redu"
-    @sent_on     = Time.now
-    @body[:user] = user
+    @user = user
+
+    mail(:to => user.email,
+         :subject => "O usuário \"#{user.login}\" foi removido do Redu",
+         :date => Time.now)
   end
 
   def remove_space(space)
-    setup_sender_info
-    @recipients  = "#{space.owner.email}"
-    @subject     = "A rede \"#{space.name}\" foi removida do Redu"
-    @sent_on     = Time.now
-    @body[:user] = space.owner
-    @body[:space]  = space
+    @user = space.owner
+    @space = space
+
+    mail(:to => space.owner.email,
+         :subject => "A disciplina \"#{space.name}\" foi removida do Redu",
+         :date => Time.now)
   end
 
   def approve_lecture(lecture)
-    setup_sender_info
-    @recipients  = "#{lecture.owner.email}"
-    @subject     = "A aula \"#{lecture.name}\" foi aprovada!"
-    @sent_on     = Time.now
-    @body[:user] = lecture.owner
-    @body[:url]  = lecture.permalink
-    @body[:lecture]  = lecture
+    @user = lecture.owner
+    @url = lecture.permalink
+    @lecture = lecture
+
+    mail(:to => lecture.owner.email,
+         :subject => "A aula \"#{lecture.name}\" foi aprovada!",
+         :date => Time.now)
   end
 
   def reject_lecture(lecture, comments)
-    setup_sender_info
-    @recipients  = "#{lecture.owner.email}"
-    @subject     = "A aula \"#{lecture.name}\" foi rejeitada para publicação no Redu"
-    @sent_on     = Time.now
-    @body[:user] = lecture.owner
-    @body[:url]  = lecture.permalink
-    @body[:lecture]  = lecture
-    @body[:comments]  = comments
+    @user = lecture.owner
+    @url = lecture.permalink
+    @lecture = lecture
+    @comments = comments
+
+    mail(:to => lecture.owner.email,
+         :subject => "A aula \"#{lecture.name}\" foi rejeitada para publicação no Redu",
+         :date => Time.now)
   end
 
   def signup_invitation(email, user, message)
-    setup_sender_info
-    @recipients  = "#{email}"
-    @subject     = "#{user.login} quer que você participe do #{AppConfig.community_name}!"
-    @sent_on     = Time.now
-    @body[:user] = user
-    @body[:url]  = signup_by_id_url(user, user.invite_code)
-    @body[:message] = message
+    @user = user
+    @url = signup_by_id_url(user, user.invite_code)
+    @message = message
+
+    mail(:to => email,
+         :subject => "#{user.login} quer que você participe do #{Redu::Application.config.name}!",
+         :date => Time.now)
   end
 
   def event_notification(user, event)
-    setup_sender_info
-    @recipients  = "#{user.email}"
-    @subject     = "Lembre-se do evento da #{event.eventable.name}"
-    @sent_on     = Time.now
-    @body[:user] = user
-    @body[:event] = event
-    @body[:event_url]  = polymorphic_url([event.eventable, event])
-    @body[:eventable] = event.eventable
+    @user = user
+    @event = event
+    @event_url = polymorphic_url([event.eventable, event])
+    @eventable = event.eventable
+
+    mail(:to => user.email,
+         :subject => "Lembre-se do evento da #{event.eventable.name}",
+         :date => Time.now)
   end
 
   def contact_redu(contact)
-    setup_sender_info
-    @recipients = "#{AppConfig.contact_emails}"
-    @subject    = "[#{contact.kind}] #{contact.subject}"
+    mail(:to => Redu::Application.config.email,
+         :subject => "[#{contact.kind}] #{contact.subject}",
+         :date => Time.now)
+
+    #FIXME não sei tranferir isso para rails 3
     @body       = "#{contact.body} \n From #{contact.name} <#{contact.email}>"
   end
 
   def friendship_request(friendship)
-    setup_email(friendship.friend)
-    @subject     += "#{friendship.user.login} would like to be friends with you!"
-    @body[:url]  = pending_user_friendships_url(friendship.friend)
-    @body[:requester] = friendship.user
-  end
+    @user = friendship.friend
+    @requester = friendship.user
+
+    mail(:to => @user.email,
+         :subject => "[#{Redu::Application.config.name}] #{friendship.user.login} would like to be friends with you!",
+        :date => Time.now)
+    end
 
   def friendship_accepted(friendship)
-    setup_email(friendship.user)
-    @subject     += "Friendship request accepted!"
-    @body[:requester] = friendship.user
-    @body[:friend]    = friendship.friend
-    @body[:url]       = user_url(friendship.friend)
-  end
+    @user = friendship.friend
+    @requester = friendship.user
+    @url = user_url(friendship.friend)
 
-  def followship_notice(user, follower)
-    setup_email(user)
-    @subject     += "#{follower.login} está seguindo você no Redu"
-    @body[:follower] = follower
+    mail(:to => @user.email,
+         :subject => "[#{Redu::Application.config.name}] Friendship request accepted!",
+        :date => Time.now)
   end
 
   def comment_notice(comment)
-    setup_email(comment.recipient)
-    @subject     += "#{comment.username} has something to say to you on #{AppConfig.community_name}!"
-    @body[:url]  = commentable_url(comment)
-    @body[:comment] = comment
-    @body[:commenter] = comment.user
-  end
+    @url = commentable_url(comment)
+    @comment = comment
+    @commenter = comment.user
+    @user = comment.recipient
 
-  def follow_up_comment_notice(user, comment)
-    setup_email(user)
-    @subject     += "#{comment.username} has commented on a #{comment.commentable_type} that you also commented on."
-    @body[:url]  = commentable_url(comment)
-    @body[:comment] = comment
-    @body[:commenter] = comment.user
-  end
-
-  def follow_up_comment_notice_anonymous(email, comment)
-    @recipients  = "#{email}"
-    setup_sender_info
-    @subject     = "[#{AppConfig.community_name}] "
-    @sent_on     = Time.now
-    @subject     += "#{comment.username} has commented on a #{comment.commentable_type} that you also commented on."
-    @body[:url]  = commentable_url(comment)
-    @body[:comment] = comment
-
-    @body[:unsubscribe_link] = url_for(:controller => 'comments', :action => 'unsubscribe', :comment_id => comment.id, :token => comment.token_for(email), :email => email)
+    mail(:to => @user.email,
+         :subject => "[#{Redu::Application.config.name}] #{comment.username} has something to say to you on #{Redu::Application.config.name}!")
   end
 
   def new_forum_post_notice(user, post)
-    setup_email(user)
-    @subject     += "#{post.user.login} has posted in a thread you are monitoring."
-    @body[:url]  = "#{forum_topic_url(:forum_id => post.topic.forum, :id => post.topic, :page => post.topic.last_page)}##{post.dom_id}"
-    @body[:post] = post
-    @body[:author] = post.user
+    @post = post
+    @author = post.user
+    @url = "#{forum_topic_url(:forum_id => post.topic.forum, :id => post.topic, :page => post.topic.last_page)}##{post.dom_id}"
+
+    mail(:to => user.email,
+         :subject => "[#{Redu::Application.config.name}] #{post.user.login} has posted in a thread you are monitoring.")
   end
 
   def signup_notification(user)
-    setup_email(user)
-    @subject    += "Por favor ative a sua nova conta #{AppConfig.community_name}"
-    @body[:url]  = activate_url user.activation_code
+    @url = activate_url user.activation_code
+    @user = user
+
+    mail(:to => user.email,
+         :subject => "[#{Redu::Application.config.name}] Por favor ative a sua nova conta #{Redu::Application.config.name}",
+         :date => Time.now)
   end
 
   def message_notification(message)
-    setup_email(message.recipient)
-    @subject     += "#{message.sender.login} sent you a private message!"
-    @body[:message] = message
+    @user = message.recipient
+    @message = message
+
+    mail(:to => @user.email,
+         :subject => "[#{Redu::Application.config.name}] #{message.sender.login} sent you a private message!",
+         :date => Time.now)
   end
 
   def post_recommendation(name, email, post, message = nil, current_user = nil)
-    @recipients  = "#{email}"
-    @sent_on     = Time.now
-    setup_sender_info
-    @subject     = "Check out this story on #{AppConfig.community_name}"
-    content_type "text/plain"
-    @body[:name] = name
-    @body[:title]  = post.title
-    @body[:post] = post
-    @body[:signup_link] = (current_user ?  signup_by_id_url(current_user, current_user.invite_code) : signup_url )
-    @body[:message]  = message
-    @body[:url]  = user_post_url(post.user, post)
-    @body[:description] = truncate_words(post.post, 100, @body[:url] )
+    @name = name
+    @title = post.title
+    @post = post
+    @signup_link = (current_user ?  signup_by_id_url(current_user, current_user.invite_code) : signup_url )
+    @message = message
+    @url = user_post_url(post.user, post)
+    @description = truncate_words(post.post, 100, @url)
+
+    mail(:to => mail,
+         :subject => "Check out this story on #{Redu::Application.config.name}",
+         :date => Time.now)
+
   end
 
   def activation(user)
-    setup_email(user)
-    @subject    += "Your #{AppConfig.community_name} account has been activated!"
-    @body[:url]  = home_url
+    @user = user
+    @url = home_url
+
+    mail(:to => user.email,
+         :subject => "Your #{Redu::Application.config.name} account has been activated!",
+         :date => Time.now)
   end
 
   def reset_password(user)
-    setup_sender_info
-    @recipients  = "#{user.email}"
-    @subject     = "Sua senha do #{AppConfig.community_name} foi redefinida!"
-    @sent_on     = Time.now
-    @body[:user] = user
+    @user = user
+
+    mail(:to => user.email,
+         :subject => "Sua senha do #{Redu::Application.config.name} foi redefinida!",
+         :date => Time.now)
   end
 
   def forgot_username(user)
-    setup_sender_info
-    @recipients  = "#{user.email}"
-    @subject     = "Lembrete de login do #{AppConfig.community_name}"
-    @sent_on     = Time.now
-    @body[:user] = user
+    @user = user
+
+    mail(:to => user.email,
+         :subject => "Lembrete de login do #{Redu::Application.config.name}",
+         :date => Time.now)
   end
 
   def environment_invitation(user, email, role, environment, message = nil)
-    setup_sender_info
+    @user = user
+    @role = role
+    @message = message
+    @url = signup_by_id_url(user, user.invite_code)
+    @environment = environment.name
 
-    @recipients  = "#{email}"
-    @subject = "#{user.login} quer que você participe do #{AppConfig.community_name}!"
-    @body[:user] = user
-    @body[:role] = role
-    @body[:message] = message
-    @body[:url]  = signup_by_id_url(user, user.invite_code)
-    @body[:environment] = environment.name
+    mail(:to => email,
+         :subject => "#{user.login} quer que você participe do #{Redu::Application.config.name}!",
+         :date => Time.now)
   end
 
   def payment_confirmation(user, invoice)
-    setup_sender_info
+    @user = user
+    @invoice = invoice
+    @plan = invoice.plan
 
-    @recipients  = "#{user.email}"
-    @subject = "Pagamento N. #{invoice.id} confirmado"
-    @body[:user] = user
-    @body[:invoice] = invoice
-    @body[:plan] = invoice.plan
-
+    mail(:to => user.email,
+         :subject => "Pagamento N. #{invoice.id} confirmado",
+         :date => Time.now)
   end
 
   def overdue_notice(user, invoice)
-    setup_sender_info
+    @user = user
+    @invoice = invoice
+    @plan = invoice.plan
 
-    @recipients  = "#{user.email}"
-    @subject = "Pagamento N. #{invoice.id} pendente"
-    @body[:user] = user
-    @body[:invoice] = invoice
-    @body[:plan] = invoice.plan
-
+    mail(:to => user.email,
+         :subject => "Pagamento N. #{invoice.id} pendente",
+         :date => Time.now)
   end
 
   def pending_notice(user, invoice, deadline)
-    setup_sender_info
+    @user = user
+    @invoice = invoice
+    @plan = invoice.plan
+    @deadline = deadline
 
-    @recipients  = "#{user.email}"
-    @subject = "Pagamento N. #{invoice.id} pendente"
-    @body[:user] = user
-    @body[:invoice] = invoice
-    @body[:plan] = invoice.plan
-    @body[:deadline] = deadline
-
+    mail(:to => user.email,
+         :subject => "Pagamento N. #{invoice.id} pendente",
+         :date => Time.now)
   end
 
   def upgrade_request(user, old_plan, new_plan)
-    setup_sender_info
+    @user = user
+    @old_plan = old_plan
+    @new_plan = new_plan
 
-    @recipients = "#{AppConfig.contact_emails}"
-    @subject    = "[upgrade] user.id"
-    @body[:user] = user
-    @body[:old_plan] = old_plan
-    @body[:new_plan] = new_plan
+    mail(:to => Redu::Application.config.email,
+         :subject => "[upgrade] user.id",
+         :date => Time.now)
   end
 
   def course_invitation_notification(user, course)
-    setup_sender_info
+    @user = user
+    @course = course
 
-    @recipients  = "#{user.email}"
-    @subject    = "Você foi convidado para um curso no Redu"
-    @body[:user] = user
-    @body[:course] = course
+    mail(:to => user.email,
+        :subject => "Você foi convidado para um curso no Redu",
+        :date => Time.now)
   end
 
   def external_user_course_invitation(user_course_invitation, course)
-    setup_sender_info
+    @user_course_invitation = user_course_invitation
+    @course = course
 
-    @recipients  = "#{user_course_invitation.email}"
-    @subject    = "Você foi convidado para um curso no Redu"
-    @body[:user_course_invitation] = user_course_invitation
-    @body[:course] = course
+    mail(:to => user_course_invitation.email,
+         :subject => "Você foi convidado para um curso no Redu",
+         :date => Time.now)
   end
 
-  protected
-  def setup_email(user)
-    @recipients  = "#{user.email}"
-    setup_sender_info
-    @subject     = "[#{AppConfig.community_name}] "
-    @sent_on     = Time.now
-    @body[:user] = user
-  end
-
-  def setup_sender_info
-    @from       = "\"Equipe Redu\" <#{AppConfig.support_email}>"
-    headers     "Reply-to" => "#{AppConfig.support_email}"
-    @content_type = "text/plain"
-  end
 end

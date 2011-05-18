@@ -5,8 +5,8 @@
         <a href="#" class="button" >Criar nova pasta</a>
         <div class="new-folder-inner holder" style="display:none;">
           <% @new_folder = Folder.new %>
-          <% form_remote_for [space, @new_folder], 
-            :loading => "$('#new-folder-spinner').show();" do |f| %>
+          <%= form_for [space, @new_folder],
+            :remote => true, :method => :post, :html => { :class => 'form-loader' } do |f| %>
             <%= f.text_field :name %>
             <%= f.hidden_field :space_id, :value => space.id %>
             <%= f.hidden_field :parent_id, :value => folder.id %>
@@ -19,7 +19,11 @@
       <div class="new-file">
         <a href="#" class="button">Upload de Arquivo</a>
         <div class="new-file-inner holder" style="display:none;">
-          <% form_for(myfile, :url => do_the_upload_space_folder_path(space.id, folder.id, :format => 'js'), :html => { :multipart => true, :target => 'upload_frame', :onsubmit => "$('#new-file-spinner').show()"}) do |f| %>
+          <%= form_for(myfile,
+                      :url => do_the_upload_space_folder_path(space.id,
+                                                              folder.id, :format => 'js'),
+                      :html => { :multipart => true, :target => 'upload_frame',
+                                 :onsubmit => "$('#new-file-spinner').show()"}) do |f| %>
             <div class="file-wrapper clearfix">
               <%= f.file_field :attachment %>
               <%= link_to "Procurar", "#", :class => "browse button" %>

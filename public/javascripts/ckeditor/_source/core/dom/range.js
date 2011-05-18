@@ -3,9 +3,6 @@ Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
-/**
- * @class
- */
 CKEDITOR.dom.range = function( document )
 {
 	this.startContainer	= null;
@@ -1303,8 +1300,7 @@ CKEDITOR.dom.range = function( document )
 					}
 				}
 
-				var walker = new CKEDITOR.dom.walker( walkerRange ),
-					isBookmark = CKEDITOR.dom.walker.bookmark();
+				var walker = new CKEDITOR.dom.walker( walkerRange );
 
 				walker.evaluator = function( node )
 				{
@@ -1315,9 +1311,6 @@ CKEDITOR.dom.range = function( document )
 				var currentElement;
 				walker.guard = function( node, movingOut )
 				{
-					if ( isBookmark( node ) )
-						return true;
-
 					// Stop when we're shrink in element mode while encountering a text node.
 					if ( mode == CKEDITOR.SHRINK_ELEMENT && node.type == CKEDITOR.NODE_TEXT )
 						return false;
@@ -1436,7 +1429,7 @@ CKEDITOR.dom.range = function( document )
 			// Fixing invalid range end inside dtd empty elements.
 			if( endNode.type == CKEDITOR.NODE_ELEMENT
 				&& CKEDITOR.dtd.$empty[ endNode.getName() ] )
-				endOffset = endNode.getIndex() + 1, endNode = endNode.getParent();
+				endNode = endNode.getParent(), endOffset = endNode.getIndex() + 1;
 
 			this.endContainer	= endNode;
 			this.endOffset		= endOffset;
@@ -1871,13 +1864,17 @@ CKEDITOR.ENLARGE_ELEMENT = 1;
 CKEDITOR.ENLARGE_BLOCK_CONTENTS = 2;
 CKEDITOR.ENLARGE_LIST_ITEM_CONTENTS = 3;
 
-// Check boundary types.
-// @see CKEDITOR.dom.range.prototype.checkBoundaryOfElement
+/**
+ * Check boundary types.
+ * @see CKEDITOR.dom.range.prototype.checkBoundaryOfElement
+ */
 CKEDITOR.START = 1;
 CKEDITOR.END = 2;
 CKEDITOR.STARTEND = 3;
 
-// Shrink range types.
-// @see CKEDITOR.dom.range.prototype.shrink
+/**
+ * Shrink range types.
+ * @see CKEDITOR.dom.range.prototype.shrink
+ */
 CKEDITOR.SHRINK_ELEMENT = 1;
 CKEDITOR.SHRINK_TEXT = 2;

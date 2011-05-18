@@ -169,11 +169,11 @@ jQuery(function(){
 
     // Tooltips
     $(".tiptip").tipTip();
-    $("form.common").ajaxComplete(function(){
+    $(".form-common").ajaxComplete(function(){
       $(".tiptip").tipTip();
     });
 
-    $("form.common .tiptip").each(function(){
+    $(".form-common .tiptip").each(function(){
         var label = $(this).next("label");
         label.prepend($(this));
     });

@@ -1,6 +1,0 @@
-page.replace_html "file_list", :partial => "folders/list"
-page.replace_html "folder-context", :partial => "folders/context",
-  :locals => { :folder => @folder }
-page.replace_html "folder-admin", :partial => "folders/admin",
-  :locals => { :space => @space, :folder => @folder, :myfile => @myfile }
-

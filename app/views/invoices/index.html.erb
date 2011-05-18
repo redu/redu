@@ -8,7 +8,7 @@
       <%= link_to 'Configurações', edit_user_path(@user) %>
   </ol>
   <div id="invoice-index">
-    <%
+    <%=
       fake_tabs ['Perfil', edit_user_path(@user), {:class => 'icon'}],
         ['Conta', account_user_path(@user), {:class => 'icon'}],
         ['Planos', user_plans_path(@user), {:class => 'icon'}],

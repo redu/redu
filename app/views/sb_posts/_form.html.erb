@@ -1,7 +1,7 @@
 <%- form_remote_for @post, :before => "$('.status_spinner').show()" do |f| %>
 <%= hidden_field_tag "return", request.url %>
  <%= f.error_messages %>
-  <% field_set_tag do %>
+  <%= field_set_tag do %>
 
   <%= f.label :body, "Corpo da postagem" %>
   <%= f.text_area :body, :size => "80x5", :class => "post post-text" %>
@@ -11,7 +11,7 @@
   <%= hidden_field_tag("space_id", @space.id) %>
   <% end %>
   <button type="submit">Postar</button>
-  <%= image_tag 'spinner.gif', :class => 'status_spinner', :style => 'display: none'%>  
+  <%= image_tag 'spinner.gif', :class => 'status_spinner', :style => 'display: none'%>
   <%#= f.submit "Enviar post"%>
   <%= link_to_function "Cancelar", "$(this).parent().parent().slideToggle()"%>
 <% end %>

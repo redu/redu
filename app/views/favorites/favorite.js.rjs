@@ -1,4 +1,0 @@
-page.replace_html 'favorito', "<a class=\"icon ico-bookmarked\" >Favorito</a>"
-page << "$('#favorite_spinner').hide()"
-
-

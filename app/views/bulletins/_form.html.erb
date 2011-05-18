@@ -1,4 +1,4 @@
-<%- form_for [ bulletinable, bulletin ], :html => { :class => "common" } do |f| %>
+<%= form_for [ bulletinable, bulletin ], :html => { :class => "form-common" } do |f| %>
     <%= f.error_messages %>
 
     <%= hidden_field_tag("bulletinable_id", bulletinable.id) %>

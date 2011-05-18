@@ -27,28 +27,16 @@ describe Environment do
   it { should_not allow_mass_assignment_of(:published)}
 
   context "validations" do
-    it "ensure tags has a length of at most 110"  do
-      tags = (1..100).collect { Factory(:tag) }
-      subject = Factory.build(:environment, :tags => tags)
-      subject.should_not be_valid
-      subject.errors.on(:tags).should_not be_empty
-    end
-    it "ensure format for path: doesn't accept no ascii" do
-      subject.path = "teste-médio"
-      subject.should_not be_valid
-      subject.errors.on(:path).should_not be_empty
-    end
-
     it "ensure format for path: doesn't accept space" do
       subject.path = "teste medio"
       subject.should_not be_valid
-      subject.errors.on(:path).should_not be_empty
+      subject.errors[:path].should_not be_empty
     end
 
     it "ensure format for path: doesn't accept '?'" do
       subject.path = "teste-medio?"
       subject.should_not be_valid
-      subject.errors.on(:path).should_not be_empty
+      subject.errors[:path].should_not be_empty
     end
   end
 
@@ -123,7 +111,7 @@ describe Environment do
   end
 
   it "generates a permalink" do
-    APP_URL.should_not be_nil
+    Redu::Application.config.url.should_not be_nil
     subject.permalink.should include(subject.path)
   end
 

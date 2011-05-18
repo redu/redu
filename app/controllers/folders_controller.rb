@@ -58,8 +58,8 @@ class FoldersController < BaseController
           redirect_to space_folders_path(:id => @folder_id, :space_id => @space_id)
         }
         format.js do
-            render :update do |page|
-              # update the page with an error message
+          render :update do |page|
+            # update the page with an error message
           end
         end
       end
@@ -157,8 +157,9 @@ class FoldersController < BaseController
       folder_order += params[:order] if params[:order]
     end
 
-    @files_count = Myfile.count(:include => :folder, :conditions => ["folders.space_id = ?", @space.id])
-    bytes = Myfile.sum(:attachment_file_size, :include => :folder, :conditions => ["folders.space_id = ?",  @space.id])
+    @files_count = Myfile.includes(:folder).where(:space_id => @space.id).count
+    bytes = Myfile.includes(:folder).where('folders.space_id' => @space.id).
+              sum(:attachment_file_size)
     @total_size = "%0.2f" % (bytes / (1024.0 * 1024));
     gigabytes = 2
     @use_percentage = "%0.2f" % (bytes / ( gigabytes * 1024.0 * 1024.0 * 1024.0))
@@ -227,7 +228,7 @@ class FoldersController < BaseController
             flash[:error] = 'Não foi possível criar o diretório'
             redirect_to space_folders_path(@space, @folder.parent)
           }
-          format.js { render :partial => "folders/create" }
+          format.js
         end
       end
     end
@@ -241,9 +242,6 @@ class FoldersController < BaseController
         format.js {
           params[:id] = @folder.parent_id
           list
-          render :update do |page|
-            page.replace_html "file_list", :partial => 'folders/list'
-          end
         }
       end
     end
@@ -260,9 +258,6 @@ class FoldersController < BaseController
       format.js {
         params[:id] = @folder.parent_id
         list
-        render :update do |page|
-          page.replace_html "file_list", :partial => 'folders/list'
-        end
       }
     end
 

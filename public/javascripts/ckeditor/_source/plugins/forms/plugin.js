@@ -191,13 +191,10 @@ CKEDITOR.plugins.add( 'forms',
 
 					switch ( type )
 					{
-						case 'text' :
-						case 'password' :
+						case 'text' : case 'password':
 							evt.data.dialog = 'textfield';
 							break;
-						case 'button' :
-						case 'submit' :
-						case 'reset' :
+						case 'button' : case 'submit' : case 'reset' :
 							evt.data.dialog = 'button';
 							break;
 						case 'checkbox' :

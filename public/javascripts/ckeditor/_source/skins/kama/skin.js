@@ -147,7 +147,7 @@ CKEDITOR.skins.add( 'kama', (function()
 				{
 					var cssContent,
 						uiStyle = getStylesheet( CKEDITOR.document ),
-						cssId = '.' + editor.id;
+						cssId = '.cke_editor_' + CKEDITOR.tools.escapeCssSelector( editor.name );
 
 					var cssSelectors =
 						[
@@ -242,11 +242,11 @@ CKEDITOR.skins.add( 'kama', (function()
 
 						// ml
 						el = innerDialog.getChild( 4 );
-						el.setStyle( 'height', ( height + body.getChild(0).$.offsetHeight ) + 'px' );
+						el.setStyle( 'height', ( body.$.offsetHeight - 31 - 14 ) + 'px' );
 
 						// mr
 						el = innerDialog.getChild( 5 );
-						el.setStyle( 'height', ( height + body.getChild(0).$.offsetHeight ) + 'px' );
+						el.setStyle( 'height', ( body.$.offsetHeight - 31 - 14 ) + 'px' );
 					},
 					100 );
 			});

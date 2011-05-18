@@ -5,9 +5,11 @@ environments:
     branch: production
     migrate: false
     migration_command: rake db:migrate --trace
-  staging:
+  staging: &staging
     copy_exclude:
       - .git
     branch: staging
     migrate: false
     migration_command: rake db:migrate --trace
+  staging_rails3:
+    <<: *staging

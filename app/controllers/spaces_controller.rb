@@ -1,4 +1,5 @@
 class SpacesController < BaseController
+  respond_to :html, :js
 
   # Necessário pois Space não é nested route de course
   before_filter :find_space_course_environment,
@@ -24,43 +25,27 @@ class SpacesController < BaseController
     redirect_to @space
   end
 
-  def vote
-    current_user.vote(@space, params[:like])
-    respond_to do |format|
-      format.js { render :template => 'shared/like.rjs', :locals => { :votes_for => @space.votes_for().to_s} }
-    end
-  end
-
-  #TODO mudar para admin_look_and_feel (padroes)
-  def look_and_feel
-  end
-
-  def set_theme
-    @space.update_attributes(params[:space])
-
-    flash[:notice] = "Tema modificado com sucesso!"
-    redirect_to look_and_feel_space_path
-  end
-
   def manage
   end
 
   def admin_members
-    @memberships = @space.user_space_associations.approved.paginate(:page => params[:page],
-                                                   :order => 'updated_at DESC',
-                                                   :per_page => AppConfig.items_per_page)
+    @memberships = @space.user_space_associations.approved.
+      paginate(:page => params[:page],:order => 'updated_at DESC',
+               :per_page => Redu::Application.config.items_per_page)
 
     respond_to do |format|
       format.html
-      format.js { render :template => 'shared/admin_members' }
+      format.js do
+        render_endless 'spaces/user_item_admin', @memberships,
+          '#user_list_table'
+      end
     end
   end
 
   def admin_bulletins
     paginating_params = {
-      :include => :owner,
       :order => 'updated_at ASC',
-      :per_page => AppConfig.items_per_page
+      :per_page => Redu::Application.config.items_per_page
     }
 
     if params.has_key?(:page_pending)
@@ -69,8 +54,10 @@ class SpacesController < BaseController
       paginating_params[:page] = params[:page]
     end
 
-    @pending_bulletins = @space.bulletins.waiting.paginate(paginating_params)
-    @bulletins = @space.bulletins.approved.paginate(paginating_params)
+    @pending_bulletins = @space.bulletins.waiting.includes(:owner).
+      paginate(paginating_params)
+    @bulletins = @space.bulletins.approved.includes(:owner).
+      paginate(paginating_params)
 
     respond_to do |format|
       format.html
@@ -81,9 +68,8 @@ class SpacesController < BaseController
   def admin_events
     @space = Space.find(params[:id])
     paginating_params = {
-      :include => :owner,
       :order => 'updated_at DESC',
-      :per_page => AppConfig.items_per_page
+      :per_page => Redu::Application.config.items_per_page
     }
 
     if params.has_key?(:page_pending)
@@ -92,37 +78,14 @@ class SpacesController < BaseController
       paginating_params[:page] = params[:page]
     end
 
-    @pending_events = @space.events.waiting.paginate(paginating_params)
-    @events = @space.events.approved.paginate(paginating_params)
+    @pending_events = @space.events.waiting.includes(:owner).
+      paginate(paginating_params)
+    @events = @space.events.approved.includes(:owner).
+      paginate(paginating_params)
 
     respond_to do |format|
       format.html
       format.js
-    end
-  end
-
-  def search_users_admin
-
-    if params[:search_user].empty?
-      @memberships = @space.user_space_associations.approved.paginate(:include => :user,
-                                                    :page => params[:page],
-                                                    :order => 'updated_at DESC',
-                                                    :per_page => AppConfig.items_per_page)
-    else
-      qry = params[:search_user] + '%'
-      @memberships =
-        @space.user_space_associations.approved.users_by_name(qry).paginate(
-                                :page => params[:page],
-                                :order => 'user_space_associations.updated_at DESC',
-                                :per_page => AppConfig.items_per_page)
-    end
-
-    respond_to do |format|
-      format.js do
-        render :update do |page|
-          page.replace_html 'user_list', :partial => 'user_list_admin', :locals => {:memberships => @memberships}
-        end
-      end
     end
   end
 
@@ -158,85 +121,6 @@ class SpacesController < BaseController
     redirect_to admin_events_space_path(@space)
   end
 
-  # lista todos os membros da escola
-  #TODO mover para user
-  def members
-    #optei por .users ao inves de .students
-    @members =
-      @space.user_space_associations.paginate( :page => params[:page],
-                                               :order => 'updated_at DESC',
-                                               :per_page => 12 )
-
-    @member_type = "membros"
-
-    respond_to do |format|
-      format.html {
-        render "view_members"
-      }
-      format.js
-      format.xml  { render :xml => @members }
-    end
-  end
-
-  # lista todos os professores
-  #TODO mover para user
-  def teachers
-    @members = @space.teachers.paginate(
-      :page => params[:page],
-      :order => 'updated_at DESC',
-      :per_page => AppConfig.users_per_page)
-
-    @member_type = "professores"
-
-    respond_to do |format|
-      format.html {
-        render "view_members"
-      }
-      format.xml  { render :xml => @members }
-    end
-  end
-
-  # GET /spaces
-  # GET /spaces.xml
-  def index
-    paginating_params = {
-      :page => params[:page],
-      :order => (params[:sort]) ? params[:sort] + ' DESC' : 'created_at DESC',
-      :per_page => 12
-    }
-
-    if params[:user_id] # aulas do usuario
-      @user = User.find_by_login(params[:user_id])
-      @user = User.find(params[:user_id]) unless @user
-      @spaces = @user.spaces.paginate(paginating_params)
-
-    elsif params[:search] # search
-
-      @spaces = Space.name_like_all(params[:search].to_s.split).ascend_by_name.paginate(paginating_params)
-    else
-      if not @spaces
-        params[:audience].nil? ? @spaces = Space.all.paginate(paginating_params) : @spaces = Audience.find(params[:audience]).spaces.paginate(paginating_params)
-        @searched_for_all = true
-      end
-    end
-    respond_to do |format|
-			#TODO verificar esse @lecture, saber o por quê de ser chamado
-      # format.xml  { render :xml => @lectures }
-      format.html do
-        if @user
-          redirect_to @user
-        end
-      end
-      format.js  do
-        if @user
-          render :update do |page|
-            page.replace_html  'tabs-4-content', :partial => 'user_spaces'
-          end
-        end
-      end
-    end
-  end
-
   # GET /spaces/1
   # GET /spaces/1.xml
   def show
@@ -254,7 +138,9 @@ class SpacesController < BaseController
         @status = Status.new
 
         format.html
-        format.js
+        format.js do
+          render_endless 'statuses/item', @statuses, '#statuses > ol'
+        end
         format.xml  { render :xml => @space }
       else
         format.html {
@@ -376,7 +262,10 @@ class SpacesController < BaseController
 
     respond_to do |format|
       format.html
-      format.js
+      format.js do
+        render_endless 'users/item', @users, '#users_list',
+          { :entity => @space }
+    end
     end
   end
 
@@ -391,13 +280,4 @@ class SpacesController < BaseController
     @environment = @course.environment
   end
 
-  def can_be_owner_required
-    current_user.can_be_owner?(@space) ? true : access_denied
-  end
-
-  def is_not_member_required
-    if current_user.get_association_with(@space)
-      redirect_to space_path(@space)
-    end
-  end
 end

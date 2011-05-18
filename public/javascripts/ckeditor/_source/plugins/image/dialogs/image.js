@@ -1127,7 +1127,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 							{
 								action : 'Browse',
 								target: 'Link:txtUrl',
-								url: editor.config.filebrowserImageBrowseLinkUrl
+								url: editor.config.filebrowserImageBrowseLinkUrl || editor.config.filebrowserBrowseUrl
 							},
 							style : 'float:right',
 							hidden : true,

@@ -1,12 +1,12 @@
 <div class="grid_3 alpha">
   <span class=""><%= time_ago_in_words post.created_at %></span>
-  <%= link_to image_tag( post.user.avatar.url(:thumb), 
+  <%= link_to image_tag( post.user.avatar.url(:thumb),
                         {:width => "40", :height=>"40", :border => 0 }), @user %>
   <span class="">
     <%= link_to truncate(post.user.display_name, :length => 15) %>
   </span>
-  <span class=""><%= pluralize post.user.sb_posts_count, :post.l %></span>
-  
+  <span class=""><%= pluralize post.user.sb_posts_count, t(:post) %></span>
+
   <% if can? :manage, post %>
   <span class="">
     <%= link_to 'Editar Postagem', edit_space_forum_topic_sb_post_path(@space, @topic, post) %>

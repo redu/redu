@@ -1,4 +1,7 @@
 class LecturesController < BaseController
+  require 'viewable'
+  respond_to :html, :js
+
   before_filter :find_subject_space_course_environment
   after_filter :create_activity, :only => [:create]
 
@@ -33,13 +36,15 @@ class LecturesController < BaseController
 
   def index
     authorize! :read, @subject
-    @subject_users = @subject.members.all(:limit => 9) # sidebar
+    @subject_users = @subject.members.limit(9) # sidebar
     @lectures = @subject.lectures.paginate(:page => params[:page],
                                           :order => 'position ASC',
-                                          :per_page => AppConfig.items_per_page)
+                                          :per_page => Redu::Application.config.items_per_page)
     respond_to do |format|
       format.html
-      format.js
+      format.js do
+        render_endless 'lectures/item', @lectures, '#subject-resources > ol'
+      end
     end
   end
 
@@ -58,13 +63,13 @@ class LecturesController < BaseController
     @annotation = Annotation.new if @annotation.empty?
 
     #relacionados
-    @related_lectures = Lecture.related_to(@lecture).all(:limit => 3,
-                                        :order => 'rating_average DESC')
+    @related_lectures = Lecture.related_to(@lecture).limit(3).
+                          order('rating_average DESC')
 
     @status = Status.new
     @statuses = @lecture.statuses.not_response.
       paginate(:page => params[:page],:order => 'created_at DESC',
-               :per_page => AppConfig.items_per_page)
+               :per_page => Redu::Application.config.items_per_page)
 
     if current_user.get_association_with(@lecture.subject)
       asset_report = @lecture.asset_reports.of_user(current_user).first
@@ -108,29 +113,13 @@ class LecturesController < BaseController
       @document = Document.new
     end
 
-    respond_to do |format|
-      format.html
-      format.js
-    end
+    respond_with(@space, @subject, @lecture)
   end
 
   # GET /lectures/1/edit
   def edit
-    respond_to do |format|
-      format.js do
-        render :update do |page|
-          @page = @lecture.lectureable
-          page.insert_html :before, 'lectures_types',
-            "<fieldset id=\"edit-#{@lecture.id}-item\">
-                <legend class=\"label\">Editar recurso</legend>
-              </fieldset>"
-            page.insert_html :bottom, "edit-#{@lecture.id}-item",
-              :partial => 'lectures/form_edit_page'
-        end
-      end
-
-      format.xml  { render :xml => @lecture }
-    end
+    @page = @lecture.lectureable
+    respond_with(@space, @subject, @lecture)
   end
 
   # POST /lectures
@@ -236,28 +225,21 @@ class LecturesController < BaseController
     @lecture.subject.space.course.quota.refresh
     @lecture.refresh_students_profiles
 
-    respond_to do |format|
-      format.html {
+   respond_with(@space, @subject, @lecture) do |format|
+      format.html do
         flash[:notice] = "A aula foi removida."
         redirect_to space_subject_path(@space, @subject)
-      }
-      format.js do
-        render :update do |page|
-          page.remove "#{@lecture.id}-item"
-        end
       end
-      format.xml  { head :ok }
     end
   end
 
   # lista aulas não publicados (em edição)
   # Não precisa de permissão, pois utiliza o current_user.
   def unpublished
-    @lectures = current_user.lectures.unpublished.
-                  paginate(:include => :owner,
-                           :page => params[:page],
+    @lectures = current_user.lectures.unpublished.include(:owner).
+                  paginate(:page => params[:page],
                            :order => 'updated_at DESC',
-                           :per_page => AppConfig.items_per_page)
+                           :per_page => Redu::Application.config.items_per_page)
 
     respond_to do |format|
       format.js

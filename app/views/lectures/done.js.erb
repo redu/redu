@@ -1,0 +1,8 @@
+<% if @done == 0 %>
+  $('#done').val('1');
+<% else %>
+  $('#done').val('0');
+<% end %>
+
+$('#progress_bar > div').attr('style', "width: <%= @student_grade %>%");
+$('#progress_bar > div > span').html("<%= @student_grade  %>%");

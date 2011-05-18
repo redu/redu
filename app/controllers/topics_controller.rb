@@ -9,9 +9,9 @@ class TopicsController < BaseController
   def new
     authorize! :read, @space
     @topic = Topic.new(params[:topic])
-    @topic.body = params[:topic][:body] if params[:topic] 
+    @topic.body = params[:topic][:body] if params[:topic]
   end
-  
+
   def show
     respond_to do |format|
       format.html do
@@ -22,20 +22,20 @@ class TopicsController < BaseController
         # authors of topics don't get counted towards total hits
         @topic.hit! unless logged_in? and @topic.user == current_user
 
-        @posts = @topic.sb_posts.recent.paginate(:page => params[:page], 
+        @posts = @topic.sb_posts.recent.paginate(:page => params[:page],
                                                  :include => :user,
                                                  :order => 'created_at',
-                                                 :per_page => AppConfig.items_per_page)
+                                                 :per_page => Redu::Application.config.items_per_page)
 
         @voices = @posts.map(&:user)
         @voices.uniq!
         @post   = SbPost.new
       end
       format.js do
-        @posts = @topic.sb_posts.recent.paginate(:page => params[:page], 
+        @posts = @topic.sb_posts.recent.paginate(:page => params[:page],
                                                  :include => :user,
                                                  :order => 'created_at',
-                                                 :per_page => AppConfig.items_per_page)
+                                                 :per_page => Redu::Application.config.items_per_page)
 
       end
       format.xml do
@@ -47,7 +47,7 @@ class TopicsController < BaseController
       end
     end
   end
-  
+
   def create
     authorize! :read, @space
     # this is icky - move the topic/first post workings into the topic model?
@@ -61,7 +61,7 @@ class TopicsController < BaseController
       @topic.tag_list = params[:topic][:tag_list] || ''
       @topic.space = @space
       if @post.valid?
-        @topic.save 
+        @topic.save
       else
         flash[:notice] = "Você precisa escrever algo para ser a primeira postagem."
       end
@@ -69,31 +69,31 @@ class TopicsController < BaseController
     end
     if not @post.valid? or not @topic.valid?
       respond_to do |format|
-        format.html { 
+        format.html {
           render :action => 'new' and return
         }
       end
     else
       respond_to do |format|
-        format.html { 
-          redirect_to space_forum_topic_path(@space, @topic) 
+        format.html {
+          redirect_to space_forum_topic_path(@space, @topic)
         }
-        format.xml  { 
-          head :created, :location => forum_topic_url(:forum_id => @forum, :id => @topic, :format => :xml) 
+        format.xml  {
+          head :created, :location => forum_topic_url(:forum_id => @forum, :id => @topic, :format => :xml)
         }
       end
     end
   end
-  
+
   def update
     assign_protected
-    
+
     respond_to do |format|
      if @topic.update_attributes(params[:topic])
         flash[:notice] = 'O post foi editado.'
         format.html { redirect_to space_forum_topic_path(@space, @topic) }
         format.xml { render :xml => @topic, :status => :created, :location => @topic, :space => params[:space_id] }
-        format.js 
+        format.js
      else
         format.html { render :action => :edit }
         format.xml { render :xml => @topic.errors, :status => :unprocessable_entity }
@@ -101,27 +101,27 @@ class TopicsController < BaseController
      end
    end
   end
-  
+
   def destroy
     @topic.destroy
-    flash[:notice] = :topic_deleted.l_with_args(:topic => CGI::escapeHTML(@topic.title)) 
+    flash[:notice] = :topic_deleted.l_with_args(:topic => CGI::escapeHTML(@topic.title))
     respond_to do |format|
       format.html { redirect_to space_path(@space) }
       format.xml  { head 200 }
     end
   end
-  
+
   protected
     def assign_protected
       @topic.user     = current_user if @topic.new_record?
       # admins and moderators can sticky and lock topics
       return unless admin? or current_user.moderator_of?(@topic.forum)
-      @topic.locked = params[:topic][:locked] 
+      @topic.locked = params[:topic][:locked]
       # only admins can move
       return unless admin?
       @topic.forum_id = params[:topic][:forum_id] if params[:topic][:forum_id]
     end
-    
+
     def find_environmnet_course
       @forum = @space.forum
       @course = @space.course

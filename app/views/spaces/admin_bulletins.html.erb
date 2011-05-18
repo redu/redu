@@ -10,11 +10,15 @@
         <span class="counter">Lista de Notícias pendentes e publicados na Disciplina <%= @space.name %></span>
       </div>
 
-      <% fake_tabs ["Informações", edit_space_path(@space), { :class => "icon icon-management-gray_16_16" }],
+      <%= fake_tabs ["Informações", edit_space_path(@space), { :class => "icon icon-management-gray_16_16" }],
         ["Eventos", admin_events_space_path(@space), { :class => "icon icon-event-gray_16_16" }],
         ["Membros", admin_members_space_path(@space), { :class => "icon icon-members-gray_16_16" }],
         ["Notícias", admin_bulletins_space_path(@space), { :class => "icon icon-bulletin-lightblue_16_16" }] do %>
 
+        <div class="actions clearfix">
+          <%= link_to "Criar nova notícia", new_polymorphic_path([@space || @environment, Bulletin.new]),
+            :class => 'button'%>
+        </div>
         <%= render :partial => 'bulletins/moderate_index_admin' %>
         <%= render :partial => 'bulletins/index_admin' %>
       <% end %>

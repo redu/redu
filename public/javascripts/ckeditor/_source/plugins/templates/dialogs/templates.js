@@ -15,7 +15,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				// clear loading wait text.
 				container.setHtml( '' );
 
-				for ( var i = 0, totalDefs = templatesDefinitions.length ; i < totalDefs ; i++ )
+				for ( var i = 0 ; i < templatesDefinitions.length ; i++ )
 				{
 					var definition = CKEDITOR.getTemplates( templatesDefinitions[ i ] ),
 						imagesPath = definition.imagesPath,
@@ -44,7 +44,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				var html = '<table style="width:350px;" class="cke_tpl_preview" role="presentation"><tr>';
 
 				if ( template.image && imagesPath )
-					html += '<td class="cke_tpl_preview_img"><img src="' + CKEDITOR.getUrl( imagesPath + template.image ) + '"' + ( CKEDITOR.env.ie6Compat ? ' onload="this.width=this.width"' : '' ) + ' alt="" title=""></td>';
+					html += '<td class="cke_tpl_preview_img"><img src="' + CKEDITOR.getUrl( imagesPath + template.image ) + '"' + ( CKEDITOR.env.ie6Compat? ' onload="this.width=this.width"' : '' ) + ' alt="" title=""></td>';
 
 				html += '<td style="white-space:normal;"><span class="cke_tpl_title">' + template.title + '</span><br/>';
 
@@ -80,12 +80,12 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						// Place the cursor at the first editable place.
 						var range = new CKEDITOR.dom.range( editor.document );
 						range.moveToElementEditStart( editor.document.getBody() );
-						range.select( 1 );
-						setTimeout( function()
+						range.select( true );
+						setTimeout( function ()
 						{
 							editor.fire( 'saveSnapshot' );
 						}, 0 );
-					});
+					} );
 
 					editor.fire( 'saveSnapshot' );
 					editor.setData( html );
@@ -146,9 +146,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 			var listContainer;
 
-			var templateListLabelId = 'cke_tpl_list_label_' + CKEDITOR.tools.getNextNumber(),
-				lang = editor.lang.templates,
-				config = editor.config;
+			var templateListLabelId = 'cke_tpl_list_label_' + CKEDITOR.tools.getNextNumber();
 			return {
 				title :editor.lang.templates.title,
 
@@ -159,7 +157,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				[
 					{
 						id :'selectTpl',
-						label : lang.title,
+						label : editor.lang.templates.title,
 						elements :
 						[
 							{
@@ -171,24 +169,24 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 										type : 'html',
 										html :
 											'<span>'  +
-												lang.selectPromptMsg +
+												editor.lang.templates.selectPromptMsg +
 											'</span>'
 									},
 									{
-										id : 'templatesList',
+										id : "templatesList",
 										type : 'html',
 										focus: true,
 										html :
 											'<div class="cke_tpl_list" tabIndex="-1" role="listbox" aria-labelledby="' + templateListLabelId+ '">' +
 												'<div class="cke_tpl_loading"><span></span></div>' +
 											'</div>' +
-											'<span class="cke_voice_label" id="' + templateListLabelId + '">' + lang.options+ '</span>'
+											'<span class="cke_voice_label" id="' + templateListLabelId + '">' + editor.lang.templates.options+ '</span>'
 									},
 									{
 										id : 'chkInsertOpt',
 										type : 'checkbox',
-										label : lang.insertOption,
-										'default' : config.templates_replaceContent
+										label : editor.lang.templates.insertOption,
+										'default' : editor.config.templates_replaceContent
 									}
 								]
 							}
@@ -203,9 +201,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 					var templatesListField = this.getContentElement( 'selectTpl' , 'templatesList' );
 					listContainer = templatesListField.getElement();
 
-					CKEDITOR.loadTemplates( config.templates_files, function()
+					CKEDITOR.loadTemplates( editor.config.templates_files, function()
 						{
-							var templates = ( config.templates || 'default' ).split( ',' );
+							var templates = editor.config.templates.split( ',' );
 
 							if ( templates.length )
 							{
@@ -216,7 +214,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 							{
 								listContainer.setHtml(
 									'<div class="cke_tpl_empty">' +
-										'<span>' + lang.emptyListMsg + '</span>' +
+										'<span>' + editor.lang.templates.emptyListMsg + '</span>' +
 									'</div>' );
 							}
 						});
@@ -224,7 +222,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 					this._.element.on( 'keydown', keyNavigation );
 				},
 
-				onHide : function()
+				onHide : function ()
 				{
 					this._.element.removeListener( 'keydown', keyNavigation );
 				}

@@ -1,0 +1,61 @@
+Overwrite /Users/guiocavalcanti/workspace/work/redu/config/database.yml? (enter "h" for help) [Ynaqdh] n
+        skip  config/database.yml
+       exist  db
+      create  db/seeds.rb
+      create  doc
+      create  doc/README_FOR_APP
+       exist  lib
+       exist  lib/tasks
+      create  lib/tasks/.gitkeep
+       exist  log
+      create  log/server.log
+      create  log/production.log
+    conflict  log/development.log
+Overwrite /Users/guiocavalcanti/workspace/work/redu/log/development.log? (enter "h" for help) [Ynaqdh] y
+       force  log/development.log
+    conflict  log/test.log
+Overwrite /Users/guiocavalcanti/workspace/work/redu/log/test.log? (enter "h" for help) [Ynaqdh] y
+       force  log/test.log
+       exist  public
+      create  public/404.html
+      create  public/422.html
+      create  public/500.html
+    conflict  public/favicon.ico
+Overwrite /Users/guiocavalcanti/workspace/work/redu/public/favicon.ico? (enter "h" for help) [Ynaqdh] n
+        skip  public/favicon.ico
+      create  public/index.html
+      create  public/robots.txt
+       exist  public/images
+      create  public/images/rails.png
+       exist  public/stylesheets
+      create  public/stylesheets/.gitkeep
+       exist  public/javascripts
+      create  public/javascripts/application.js
+    conflict  public/javascripts/controls.js
+Overwrite /Users/guiocavalcanti/workspace/work/redu/public/javascripts/controls.js? (enter "h" for help) [Ynaqdh] n
+        skip  public/javascripts/controls.js
+      create  public/javascripts/dragdrop.js
+      create  public/javascripts/effects.js
+    conflict  public/javascripts/prototype.js
+Overwrite /Users/guiocavalcanti/workspace/work/redu/public/javascripts/prototype.js? (enter "h" for help) [Ynaqdh] n
+        skip  public/javascripts/prototype.js
+      create  public/javascripts/rails.js
+       exist  script
+      create  script/rails
+       exist  test
+       exist  test/fixtures
+       exist  test/functional
+      create  test/integration
+      create  test/performance/browsing_test.rb
+    conflict  test/test_helper.rb
+Overwrite /Users/guiocavalcanti/workspace/work/redu/test/test_helper.rb? (enter "h" for help) [Ynaqdh] y
+       force  test/test_helper.rb
+       exist  test/unit
+       exist  tmp
+       exist  tmp/sessions
+       exist  tmp/sockets
+       exist  tmp/cache
+       exist  tmp/pids
+       exist  vendor/plugins
+      create  vendor/plugins/.gitkeep
+

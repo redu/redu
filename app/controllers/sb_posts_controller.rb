@@ -28,9 +28,9 @@ class SbPostsController < BaseController
   end
 
   def monitored
-    @user = User.find params[:user_id]    
-    @posts = SbPost.with_query_options.find(:all, 
-                                            :joins => ' INNER JOIN monitorships ON monitorships.topic_id = topics.id', 
+    @user = User.find params[:user_id]
+    @posts = SbPost.with_query_options.find(:all,
+                                            :joins => ' INNER JOIN monitorships ON monitorships.topic_id = topics.id',
                                             :conditions  => ['monitorships.user_id = ? AND sb_posts.user_id != ?', params[:user_id], @user.id],
                                             :page => {:current => params[:page]})
     render_posts_or_xml
@@ -42,7 +42,7 @@ class SbPostsController < BaseController
     if @topic.locked?
       respond_to do |format|
         format.html do
-          flash[:notice] = :this_topic_is_locked.l
+          flash[:notice] = t :this_topic_is_locked
           redirect_to(forum_topic_path(:forum_id => params[:forum_id], :id => params[:topic_id]))
         end
         format.xml do
@@ -64,7 +64,7 @@ class SbPostsController < BaseController
       format.js
     end
   rescue ActiveRecord::RecordInvalid
-    flash[:form_errors] = :please_post_something_at_least.l
+    flash[:form_errors] = t :please_post_something_at_least
     respond_to do |format|
       format.html do
         redirect_to space_forum_topic_path(:space_id => params[:space_id], :forum_id => params[:forum_id], :id => params[:topic_id], :anchor => 'reply-form', :page => params[:page] || '1')
@@ -75,8 +75,8 @@ class SbPostsController < BaseController
   end
 
   def edit
-    respond_to do |format| 
-      format.html 
+    respond_to do |format|
+      format.html
       format.js
     end
   end
@@ -88,13 +88,13 @@ class SbPostsController < BaseController
         format.html { redirect_to space_forum_topic_path(:space_id => params[:space_id], :id => params[:topic_id], :anchor => @post.dom_id, :page => params[:page] || '1')
         }
         format.xml { render :xml => @post, :status => :created, :location => @post, :space => params[:space_id] }
-        format.js 
+        format.js
       else
         format.html { render :action => :edit }
         format.xml { render :xml => @post.errors, :status => :unprocessable_entity }
         format.js
       end
-    end 
+    end
   end
 
   def destroy

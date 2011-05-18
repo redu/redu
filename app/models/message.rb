@@ -1,7 +1,7 @@
 class Message < ActiveRecord::Base
-  
+
   after_create :notify_recipient
- 
+
   attr_accessor :to
   attr_accessor :reply_to
 
@@ -32,7 +32,7 @@ class Message < ActiveRecord::Base
   end
 
   def notify_recipient
-    UserNotifier.deliver_message_notification(self)
+    UserNotifier.message_notification(self).deliver
   end
 
 end

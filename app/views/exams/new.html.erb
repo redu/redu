@@ -3,7 +3,7 @@
     general, editor e publication.
 %>
 
-<% form_for @exam, :url => space_subject_exams_path(@space, @subject), :html => {:id => "form_exam"} do |f|%>
+<%= form_for @exam, :url => space_subject_exams_path(@space, @subject), :html => {:id => "form_exam"} do |f|%>
   <%= render "#{@exam.current_step}_step", :f => f, :edit => false %>
   <div class="grid_16">
     <%= f.submit "< Anterior", :name => "back_button" unless @exam.first_step? %>

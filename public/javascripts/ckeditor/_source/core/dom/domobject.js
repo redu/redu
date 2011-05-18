@@ -84,10 +84,10 @@ CKEDITOR.dom.domObject.prototype = (function()
 			{
 				var listener = nativeListeners[ eventName ] = getNativeListener( this, eventName );
 
-				if ( this.$.attachEvent )
-					this.$.attachEvent( 'on' + eventName, listener );
-				else if ( this.$.addEventListener )
+				if ( this.$.addEventListener )
 					this.$.addEventListener( eventName, listener, !!CKEDITOR.event.useCapture );
+				else if ( this.$.attachEvent )
+					this.$.attachEvent( 'on' + eventName, listener );
 			}
 
 			// Call the original implementation.
@@ -107,10 +107,10 @@ CKEDITOR.dom.domObject.prototype = (function()
 				var listener = nativeListeners && nativeListeners[ eventName ];
 				if ( listener )
 				{
-					if ( this.$.detachEvent )
-						this.$.detachEvent( 'on' + eventName, listener );
-					else if ( this.$.removeEventListener )
+					if ( this.$.removeEventListener )
 						this.$.removeEventListener( eventName, listener, false );
+					else if ( this.$.detachEvent )
+						this.$.detachEvent( 'on' + eventName, listener );
 
 					delete nativeListeners[ eventName ];
 				}
@@ -128,10 +128,10 @@ CKEDITOR.dom.domObject.prototype = (function()
 			for ( var eventName in nativeListeners )
 			{
 				var listener = nativeListeners[ eventName ];
-				if ( this.$.detachEvent )
-					this.$.detachEvent( 'on' + eventName, listener );
-				else if ( this.$.removeEventListener )
+				if ( this.$.removeEventListener )
 					this.$.removeEventListener( eventName, listener, false );
+				else if ( this.$.detachEvent )
+					this.$.detachEvent( 'on' + eventName, listener );
 
 				delete nativeListeners[ eventName ];
 			}
@@ -238,11 +238,7 @@ CKEDITOR.dom.domObject.prototype = (function()
 	};
 
 	/**
-	 * Gets an ID that can be used to identiquely identify this DOM object in
-	 * the running session.
-	 * @name CKEDITOR.dom.domObject.prototype.getUniqueId
-	 * @function
-	 * @returns {Number} A unique ID.
+	 * @name CKEDITOR.dom.domObject.prototype.getCustomData
 	 */
 	domObjectProto.getUniqueId = function()
 	{

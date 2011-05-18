@@ -9,7 +9,7 @@ class PlansController < BaseController
 
   def upgrade
     if request.post?
-      UserNotifier.deliver_upgrade_request(current_user, @plan, params[:plan])
+      UserNotifier.upgrade_request(current_user, @plan, params[:plan]).deliver
 
       respond_to do |format|
         format.html {
@@ -20,7 +20,7 @@ class PlansController < BaseController
   end
 
   def index
-    @plans = @user.plans.find(:all, :include => :billable)
+    @plans = @user.plans.includes(:billable)
 
     respond_to do |format|
       format.html

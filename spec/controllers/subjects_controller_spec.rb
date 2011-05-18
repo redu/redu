@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'authlogic/test_case'
+include Authlogic::TestCase
 
 describe SubjectsController do
   before do
@@ -25,11 +26,6 @@ describe SubjectsController do
     it "loads all space subjects" do
       get :index, :locale => "pt-BR", :space_id => @space.id
       assigns[:subjects].to_set.should == @space.subjects.to_set
-    end
-
-    it "renders with layout 'environment'" do
-      get :index, :locale => "pt-BR", :space_id => @space.id
-      response.layout.should == 'layouts/application'
     end
 
   end
@@ -248,13 +244,13 @@ describe SubjectsController do
       get :admin_members, :locale => "pt-BR", :id => @subject.id,
         :space_id => @space.id
       assigns[:subject].should == @subject
-    end   
+    end
 
     it "assigns the memberships" do
       get :admin_members, :locale => "pt-BR", :id => @subject.id,
         :space_id => @space.id
       assigns[:memberships].should == @subject.members
-    end   
+    end
   end
 
   context "POST 'turn_visible'" do

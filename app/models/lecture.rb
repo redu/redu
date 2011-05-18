@@ -12,9 +12,6 @@ class Lecture < ActiveRecord::Base
   has_many :currently_watching_users, :through => :logs, :source => :user,
      :conditions => ['statuses.created_at > ?', 10.minutes.ago]
   has_many :acess_key
-  #FIXME Verificar se é realmente utilizado (não foi testado)
-  has_many :resources,
-    :class_name => "LectureResource", :as => :attachable, :dependent => :destroy
   has_many :acquisitions
   has_many :favorites, :as => :favoritable, :dependent => :destroy
   has_many :annotations
@@ -25,26 +22,16 @@ class Lecture < ActiveRecord::Base
   belongs_to :lectureable, :polymorphic => true, :dependent => :destroy
   belongs_to :subject
 
-  accepts_nested_attributes_for :resources,
-    :reject_if => lambda { |a| a[:media].blank? },
-    :allow_destroy => true
-
-  # NAMED SCOPES
-  named_scope :unpublished,
-    :conditions => { :published => false }
-  named_scope :published,
-    :conditions => { :published => true }
-  named_scope :seminars,
-    :conditions => ["lectureable_type LIKE 'Seminar'"]
-  named_scope :iclasses,
-    :conditions => ["lectureable_type LIKE 'InteractiveClass'"]
-  named_scope :pages,
-    :conditions => ["lectureable_type LIKE 'Page'"]
-  named_scope :documents,
-    :conditions => ["lectureable_type LIKE 'Document'"]
-  named_scope :limited, lambda { |num| { :limit => num } }
-  named_scope :related_to, lambda { |lecture|
-    { :conditions => ["name LIKE ? AND id != ?", "%#{lecture.name}%", lecture.id]}
+  # SCOPES
+  scope :unpublished, where(:published => false)
+  scope :published, where(:published => true)
+  scope :seminars, where("lectureable_type LIKE 'Seminar'")
+  scope :iclasses, where("lectureable_type LIKE 'InteractiveClass'")
+  scope :pages, where("lectureable_type LIKE 'Page'")
+  scope :documents, where("lectureable_type LIKE 'Document'")
+  scope :limited, lambda { |num| limit(num) }
+  scope :related_to, lambda { |lecture|
+    where("name LIKE ? AND id != ?", "%#{lecture.name}%", lecture.id)
   }
 
 
@@ -53,7 +40,7 @@ class Lecture < ActiveRecord::Base
   # PLUGINS
   acts_as_taggable
   ajaxful_rateable :stars => 5
-  has_attached_file :avatar, PAPERCLIP_STORAGE_OPTIONS
+  has_attached_file :avatar, Redu::Application.config.paperclip
   sortable :scope => :subject_id
 
   # VALIDATIONS
@@ -64,13 +51,8 @@ class Lecture < ActiveRecord::Base
   validates_presence_of :lectureable
   validates_associated :lectureable #FIXME Não foi testado, pois vai ter accepts_nested
 
-  # Dependendo do lectureable_type ativa um conjunto de validações diferente
-  validation_group :step1,
-    :fields => [:name, :description, :lectureable_type]
-  validation_group :step2, :fields => [:lectureable]
-
   def permalink
-    APP_URL + "/lectures/"+ self.id.to_s+"-"+self.name.parameterize
+    "#{Redu::Application.config.url}/lectures/#{self.id.to_s}-#{self.name.parameterize}"
   end
 
   # Friendly url
@@ -95,8 +77,7 @@ class Lecture < ActiveRecord::Base
   end
 
   def refresh_students_profiles
-    student_profiles = StudentProfile.all(:conditions => 
-                                         {:subject_id => self.subject.id})
+    student_profiles = StudentProfile.where(:subject_id => self.subject.id)
     student_profiles.each do |student_profile|
       student_profile.update_grade!
     end
@@ -104,8 +85,7 @@ class Lecture < ActiveRecord::Base
 
   protected
   def create_asset_report
-    student_profiles = StudentProfile.all(:conditions =>
-                                         {:subject_id => self.subject.id})
+    student_profiles = StudentProfile.where(:subject_id => self.subject.id)
     student_profiles.each do |student_profile|
       self.asset_reports << AssetReport.create(:subject => self.subject,
                                                :student_profile => student_profile)

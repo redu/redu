@@ -2,11 +2,12 @@
   <% if current_user.get_association_with(@lecture.subject) %>
   <%= render :partial => 'subjects/progress_bar',
     :locals => { :student_grade => student_grade } %>
-    <% form_remote_tag :url => done_space_subject_lecture_path(@lecture.subject.space,
+    <%= form_tag done_space_subject_lecture_path(@lecture.subject.space,
                                                                @lecture.subject,
                                                                @lecture),
-                       :html => { :id => 'do_lecture', :class => 'done' } do %>
-      <% field_set_tag do %>
+                       :remote => true, :method => :post,
+                       :id => 'do_lecture', :class => 'done' do %>
+      <%= field_set_tag do %>
         <%= hidden_field_tag 'lecture_id', @lecture.id %>
         <% if done %>
           <%= hidden_field_tag 'done', '0' %>

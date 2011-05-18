@@ -1,4 +1,3 @@
-<%= apply_color_picker_to "#environment_color" %>
 <script type="text/javascript" charset="utf-8">
 //<![CDATA[
 $(document).ready(function(){
@@ -61,8 +60,8 @@ $(document).ready(function(){
     <span class="course"><%= @environment.courses.first.path %></span>
   </div>
   <div class="customizing">
-    <% form_for @environment, :url => environments_path(:step => 3),
-        :html => { :class => "highlightable common" } do |f| %>
+    <%= form_for @environment, :url => environments_path(:step => 3),
+        :html => { :class => "highlightable form-common" } do |f| %>
         <%= f.error_messages %>
         <%= render :partial => 'environments/form', :locals => { :f => f } %>
         <%= hidden_field_tag :plan, @plan %>

@@ -1,0 +1,7 @@
+var $text = $(".textarea:visible");
+var $errors = $("<div/>", { "class" : 'fieldWithErrors' });
+var $message = $("<p/>", { "class" : "errorMessageField" }).html("<%= status.errors.full_messages.to_sentence %>");
+
+$('.errorMessageField').remove();
+$text.wrap($errors);
+$text.after($message);

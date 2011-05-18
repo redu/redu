@@ -1,2 +1,0 @@
-page << "window.location.replace('#{ url_for :action => :new, :step => step}')"
-page << "$('.errorMessageField').remove()"

@@ -1,4 +1,5 @@
 class Plan < ActiveRecord::Base
+  include AASM
 
   PLANS = {
     :free => {
@@ -90,27 +91,29 @@ class Plan < ActiveRecord::Base
   belongs_to :changed_from, :class_name => "Plan", :foreign_key => :plan_id
   has_many :invoices
 
-  named_scope :blocked, :conditions => { :state => "blocked" }
+  scope :blocked, where(:state => "blocked")
 
   validates_presence_of :members_limit, :price, :yearly_price
 
   attr_protected :state
 
-  acts_as_state_machine :initial => :active, :column => 'state'
-  state :active
-  state :blocked
-  state :migrated
+  aasm_column :state
+  aasm_initial_state :active
 
-  event :block do
-    transitions :from => :active, :to => :blocked
+  aasm_state :active
+  aasm_state :blocked
+  aasm_state :migrated
+
+  aasm_event :block do
+    transitions :to => :blocked, :from => [:active]
   end
 
-  event :activate do
-    transitions :from => :blocked, :to => :active
+  aasm_event :activate do
+    transitions :to => :active, :from => [:blocked]
   end
 
-  event :migrate do
-    transitions :from => :active, :to => :migrated
+  aasm_event :migrate do
+    transitions :to => :migrated, :from => [:active]
   end
 
   # Migra o plano atual para o new_plan setando os estados e criando associações

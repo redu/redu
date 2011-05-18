@@ -10,26 +10,24 @@
             :class => 'send-message' %>
         <% end %>
 
-        <%= image_tag 'spinner.gif', :style => 'display: none;',
-          :id => 'spinner' %>
         <% friendship = @user.friendship_for current_user %>
         <% if !current_user.friends?(@user) and current_user != @user %>
           <% if friendship %>
             <% if friendship.status == 'pending' %>
               <a class="waiting">Aguardando aceitação</a>
             <% elsif current_user != @user %>
-              <%= link_to_remote 'Aceitar pedido de conexão',
-                :url => user_friendships_path(current_user, :friend_id => @user.id),
-                :loading => "$('#spinner').show();",
-                :success => "$('#spinner').hide(); $('#follow_link).hide();",
-                :html =>{ :class => "waiting",
-                  :id => "follow_link"} %>
+              <%= link_to 'Aceitar pedido de conexão',
+                user_friendships_path(current_user,
+                                      :friend_id => @user.id),
+                :method => :post,
+                :class => "waiting",
+                :id => "follow_link" %>
               <% end %>
             <% else %>
-              <% form_remote_for [current_user, Friendship.new],
-                :loading => "$('#spinner').show();",
-                :success => "$('#spinner').hide();" do %>
+              <%= form_for [current_user, Friendship.new],
+                :remote => true, :html => { :method => :post, :class => "form-loader new_friendship" } do %>
                 <%= hidden_field_tag "friend_id", @user.id %>
+                <%= hidden_field_tag "show_user", true %>
                 <%= submit_tag "Adicionar aos contatos", :class => 'add-as-friend' %>
               <% end %>
             <% end %>
@@ -113,8 +111,8 @@
               environment_course_path(environment, course),
               :class => 'course' %>
             <span class="role">
-              <%= Role.human_attribute_name(@user.get_association_with(course).
-                                            role.name) %>
+              <%= Role.human_attribute_name(
+                    Role[@user.get_association_with(course).role]) %>
             </span>
           </li>
           <% end %>

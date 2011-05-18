@@ -1,49 +1,54 @@
-<%  form_remote_for [@space, @subject],
-  :loading => "$('#spinner-form').show()",
-  :success => "$('#spinner-form').hide()",
-  :html => { :class => 'common' }do |f| %>
-  <% field_set_tag do %>
+<script type="text/javascript" charset="utf-8">
+  $(function(){
+   $("#page_form").live("ajax:before", function(){
+     for (instance in CKEDITOR.instances){
+     CKEDITOR.instances[instance].updateElement();
+     }
+     });
+  });
+</script>
+<%=  form_for [@space, @subject], :remote => true,
+  :html => { :class => 'form-common new-subject' } do |f| %>
+  <%= field_set_tag do %>
     <div id="errorExplanation" class="errorExplanation" style="display: none;">
       <h2>Oops!</h2>
       <p>Há problemas para os seguintes campos:</p>
+      <ul></ul>
     </div>
 
     <%= hidden_field_tag 'space_id', @space.id %>
-    <% field_set_tag do %>
-    <%= render :partial => 'subjects/raw_form', :locals => { :f => f } %>
+    <%= field_set_tag do %>
+      <%= render :partial => 'subjects/raw_form', :locals => { :f => f } %>
     <% end %>
 
-      <%= render :partial => 'lectures/item_created', :collection => @subject.lectures %>
-      <% if action_name == 'edit' %>
-        <%= render :partial => 'lectures/choose_type',
-              :locals => { :subject => @subject, :space => @space } %>
-      <% end %>
-      <%= render :partial => 'lectures/index_short' %>
-      <%= error_for :subject, :lectures %>
-
-      <% if action_name == 'new' %>
-        <%= f.submit "Adicionar recursos", :id => "add_button", :class => 'add'%>
-        <%= f.submit "Criar", :id => "create_button", :class => 'important',
-          :style => "display: none;" %>
-        <%= link_to_function "Cancelar",
-          "$('#new_subject').remove(); $('#link-new-subject').show();",
-          :id => "cancel_link", :class => 'cancel vanilla' %>
-      <% else %>
-        <%= link_to_function "Adicionar recursos",
-          "jQuery('#lectures_types').show(); jQuery(this).hide()",
-          :id => 'add_link', :class => 'add'
-        %>
-      <%= f.submit "Salvar", :class => 'important' %>
-      <% unless @admin_panel %>
-        <%= link_to_function "Voltar",
-          "$('#edit_subject_#{@subject.id}').remove(); $('#content').show();",
-          :id => "cancel_link" %>
-        <%= link_to "Deletar",
-          space_subject_path(@space, @subject),
-          :method => :delete,
-          :confirm => "Você tem certeza que deseja deletar deste módulo? Todas as informações serão perdidas."  %>
-      <% end %>
+    <% if action_name == 'edit' %>
+      <%= render :partial => 'lectures/choose_type',
+        :locals => { :subject => @subject, :space => @space } %>
     <% end %>
-    <%= image_tag 'spinner.gif', :id => 'spinner-form', :style => 'display: none; float: right;'  %>
+    <%= render :partial => 'lectures/index_short' %>
+    <%= error_for :subject, :lectures %>
+
+    <% if action_name == 'new' %>
+      <%= f.submit "Adicionar recursos", :id => "add_button", :class => 'add'%>
+      <%= f.submit "Criar", :id => "create_button", :class => 'important',
+        :style => "display: none;" %>
+      <%= link_to "Cancelar", space_subjects_path(@space),
+        :id => "cancel_link", :class => 'die vanilla' %>
+    <% else %>
+      <%= link_to_function "Adicionar recursos",
+        "jQuery('#lectures_types').show(); jQuery(this).hide()",
+        :id => 'add_link', :class => 'add'
+      %>
+    <%= f.submit "Salvar", :class => 'important' %>
+    <% unless @admin_panel %>
+      <%= link_to_function "Voltar",
+        "$('#edit_subject_#{@subject.id}').remove(); $('#content').show();",
+        :id => "cancel_link" %>
+      <%= link_to "Deletar",
+        space_subject_path(@space, @subject),
+        :method => :delete,
+        :confirm => "Você tem certeza que deseja deletar deste módulo? Todas as informações serão perdidas."  %>
+    <% end %>
   <% end %>
+<% end %>
 <% end %>

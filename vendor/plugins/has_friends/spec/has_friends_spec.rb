@@ -30,10 +30,6 @@ describe "has_friends" do
     it "should respond to friends? method" do
       @vader.should respond_to(:friends?)
     end
-
-    it "should respond to friends_in_common_with method" do
-      @vader.should respond_to(:friends_in_common_with)
-    end
   end
 
   describe "friends" do
@@ -88,7 +84,7 @@ describe "has_friends" do
     end
 
     it "should return vader and luke friends in common" do
-      @vader.friends_in_common_with(@luke) == [@leia]
+      @vader.friends_in_common_with(@luke).should == [@leia]
     end
   end
 

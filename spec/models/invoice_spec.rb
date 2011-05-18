@@ -30,13 +30,13 @@ describe Invoice do
     end
 
     it "defaults to pending" do
-      subject.current_state.should == :pending
+      subject.state.should == "pending"
     end
 
     it "closes" do
       expect {
         subject.close!
-      }.should change(subject, :current_state).to(:closed)
+      }.should change(subject, :state).to("closed")
     end
 
     context "when it pays" do
@@ -52,15 +52,15 @@ describe Invoice do
       it "changes current state" do
         expect {
           subject.pay!
-        }.should change(subject, :current_state).to(:paid)
+        }.should change(subject, :state).to("paid")
 
-        subject.due_at.should  be_close(Time.now, 5.seconds)
+        subject.due_at.should  be_within(5).of(Time.now)
       end
 
       it "unblocks the plan" do
         expect {
           subject.pay!
-        }.should change { subject.plan.current_state }.from(:blocked).to(:active)
+        }.should change { subject.plan.aasm_current_state }.from(:blocked).to(:active)
       end
 
       it "sends confirmation e-mail" do
@@ -91,7 +91,7 @@ describe Invoice do
     it "overdues" do
       expect {
         subject.overdue!
-      }.should change(subject, :current_state).to(:overdue)
+      }.should change(subject, :state).to("overdue")
     end
 
     context "when overdue" do
@@ -105,19 +105,19 @@ describe Invoice do
       it "closes" do
         expect {
           subject.close!
-        }.should change(subject, :current_state).to(:closed)
+        }.should change(subject, :state).to("closed")
       end
 
       it "pays" do
         expect {
           subject.close!
-        }.should change(subject, :current_state).to(:closed)
+        }.should change(subject, :state).to("closed")
       end
 
       it "stays on same stage if overdue again" do
         expect {
           subject.overdue!
-        }.should_not change(subject, :current_state)
+        }.should_not change(subject, :state)
       end
 
       it "sends overdue e-mail" do
@@ -195,7 +195,7 @@ describe Invoice do
                                                   :plan => plan,
                                                   :state => "overdue") }
 
-      Set.new(plan.invoices.pending) == Set.new(pending_invoices)
+      plan.invoices.pending.to_set == pending_invoices.to_set
     end
   end
 

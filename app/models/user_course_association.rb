@@ -1,62 +1,64 @@
 class UserCourseAssociation < ActiveRecord::Base
+  include AASM
   belongs_to :user
   belongs_to :course
-  has_enumerated :role
+  enumerate :role
 
   # Filtra por papéis (lista)
-  named_scope :with_roles, lambda { |roles|
+  scope :with_roles, lambda { |roles|
     unless roles.empty?
-      { :conditions => { :role_id => roles.flatten } }
+      where(:role => roles.flatten)
     end
   }
+
   # Filtra por palavra-chave (procura em User)
-  named_scope :with_keyword, lambda { |keyword|
+  scope :with_keyword, lambda { |keyword|
     if not keyword.empty? and keyword.size > 3
-      { :conditions => [ "users.first_name LIKE :keyword " + \
+      where("users.first_name LIKE :keyword " + \
         "OR users.last_name LIKE :keyword " + \
-        "OR users.login LIKE :keyword", {:keyword => "%#{keyword}%"}],
-        :include => [{ :user => {:user_space_associations => :space} }]}
+        "OR users.login LIKE :keyword", {:keyword => "%#{keyword}%"}).
+        includes(:user => [{:user_space_associations => :space}])
     end
   }
 
-  named_scope :recent, lambda {
-      {:conditions => [ "created_at >= ?", 1.week.ago]}
-  }
-
-  named_scope :approved, :conditions => { :state => 'approved' }
-  named_scope :invited, :conditions => { :state => 'invited' }
+  scope :recent, lambda { where("created_at >= ?", 1.week.ago) }
+  scope :approved, where(:state => 'approved')
+  scope :invited, where(:state => 'invited')
+  scope :waiting, where(:state => 'waiting')
 
   # Máquina de estados para moderação das dos usuários nos courses.
-  acts_as_state_machine :initial => :waiting
-  state :waiting
-  state :invited, :enter => :send_course_invitation_notification
-  # create_hierarchy_associations só é achamado no caso de convites
-  state :approved, :enter => :create_hierarchy_associations
-  state :rejected
-  state :failed
+  aasm_column :state
 
-  event :invite do
-    transitions :from => :waiting, :to => :invited
+  aasm_initial_state :waiting
+
+  aasm_state :waiting
+  aasm_state :invited, :enter => :send_course_invitation_notification
+  aasm_state :approved, :enter => :create_hierarchy_associations
+  aasm_state :rejected
+  aasm_state :failed
+
+  aasm_event :invite do
+    transitions :to => :invited, :from => [:waiting]
   end
 
-  event :approve do
-    transitions :from => :waiting, :to => :approved
+  aasm_event :approve do
+    transitions :to => :approved, :from => [:waiting]
   end
 
-  event :accept do
-    transitions :from => :invited, :to => :approved
+  aasm_event :accept do
+    transitions :to => :approved, :from => [:invited]
   end
 
-  event :reject do
-    transitions :from => :waiting, :to => :rejected
+  aasm_event :reject do
+    transitions :to => :rejected, :from => [:waiting]
   end
 
-  event :deny do
-    transitions :from => :invited, :to => :rejected
+  aasm_event :deny do
+    transitions :to => :rejected, :from => [:invited]
   end
 
-  event :fail do
-    transitions :from => :waiting, :to => :failed
+  aasm_event :fail do
+    transitions :to => :failed, :from => [:waiting]
   end
 
   validates_uniqueness_of :user_id, :scope => :course_id
@@ -67,11 +69,11 @@ class UserCourseAssociation < ActiveRecord::Base
     conditions = { :state => 'invited', :user_id => user }
     conditions[:course_id] = course unless course.nil?
 
-    UserCourseAssociation.count(:conditions => conditions) > 0
+    UserCourseAssociation.where(conditions).count > 0
   end
 
   def send_course_invitation_notification
-    UserNotifier.deliver_course_invitation_notification(self.user, self.course)
+    UserNotifier.course_invitation_notification(self.user, self.course).deliver
   end
 
   protected

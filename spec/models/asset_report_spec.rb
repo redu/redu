@@ -51,10 +51,12 @@ describe AssetReport do
       users = (1..2).collect { Factory(:user) }
       subject1 = Factory(:subject, :owner => @subject_owner,
                          :space => @space)
+      lecture = Factory(:lecture, :owner => @subject_owner, :subject => subject1)
+
       subject1.enroll(users[0])
       subject1.enroll(users[1])
-      AssetReport.of_user(users[0]).
-        should == users[0].student_profiles.last.asset_reports
+      AssetReport.of_user(users[0]).to_set.
+        should == users[0].student_profiles.last.asset_reports.to_set
     end
   end
 

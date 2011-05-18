@@ -1,0 +1,4 @@
+form = "<%= escape_javascript(pagseguro_form @plan.create_order, :submit => "Efetuar pagamento") %>";
+
+$("#final-button").remove();
+$("#new_environment").after($(form));

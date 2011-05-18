@@ -12,7 +12,7 @@
 		catch( e ) { return null; }
 
 		range.shrink( CKEDITOR.SHRINK_TEXT );
-		return range.getCommonAncestor().getAscendant( listTag, 1 );
+		return range.getCommonAncestor().getAscendant( listTag, true );
 	}
 
 	var mapListStyle = {
@@ -28,11 +28,10 @@
 
 	function listStyle( editor, startupPage )
 	{
-		var lang = editor.lang.list;
 		if ( startupPage == 'bulletedListStyle' )
 		{
 			return {
-				title : lang.bulletedTitle,
+				title : editor.lang.list.bulletedTitle,
 				minWidth : 300,
 				minHeight : 50,
 				contents :
@@ -44,15 +43,15 @@
 						[
 							{
 								type : 'select',
-								label : lang.type,
+								label : editor.lang.list.type,
 								id : 'type',
 								style : 'width: 150px; margin: auto;',
 								items :
 								[
-									[ lang.notset, '' ],
-									[ lang.circle, 'circle' ],
-									[ lang.disc,  'disc' ],
-									[ lang.square, 'square' ]
+									[ editor.lang.list.notset, '' ],
+									[ editor.lang.list.circle, 'circle' ],
+									[ editor.lang.list.disc,  'disc' ],
+									[ editor.lang.list.square, 'square' ]
 								],
 								setup : function( element )
 								{
@@ -96,26 +95,26 @@
 
 			var listStyleOptions =
 			[
-				[ lang.notset, '' ],
-				[ lang.lowerRoman, 'lower-roman' ],
-				[ lang.upperRoman, 'upper-roman' ],
-				[ lang.lowerAlpha, 'lower-alpha' ],
-				[ lang.upperAlpha, 'upper-alpha' ],
-				[ lang.decimal, 'decimal' ]
+				[ editor.lang.list.notset, '' ],
+				[ editor.lang.list.lowerRoman, 'lower-roman' ],
+				[ editor.lang.list.upperRoman, 'upper-roman' ],
+				[ editor.lang.list.lowerAlpha, 'lower-alpha' ],
+				[ editor.lang.list.upperAlpha, 'upper-alpha' ],
+				[ editor.lang.list.decimal, 'decimal' ]
 			];
 
 			if ( !CKEDITOR.env.ie || CKEDITOR.env.version > 7 )
 			{
 				listStyleOptions.concat( [
-					[ lang.armenian, 'armenian' ],
-					[ lang.decimalLeadingZero, 'decimal-leading-zero' ],
-					[ lang.georgian, 'georgian' ],
-					[ lang.lowerGreek, 'lower-greek' ]
+					[ editor.lang.list.armenian, 'armenian' ],
+					[ editor.lang.list.decimalLeadingZero, 'decimal-leading-zero' ],
+					[ editor.lang.list.georgian, 'georgian' ],
+					[ editor.lang.list.lowerGreek, 'lower-greek' ]
 				]);
 			}
 
 			return {
-				title : lang.numberedTitle,
+				title : editor.lang.list.numberedTitle,
 				minWidth : 300,
 				minHeight : 50,
 				contents :
@@ -131,10 +130,10 @@
 								children :
 								[
 									{
-										label : lang.start,
+										label : editor.lang.list.start,
 										type : 'text',
 										id : 'start',
-										validate : CKEDITOR.dialog.validate.integer( lang.validateStartNumber ),
+										validate : CKEDITOR.dialog.validate.integer( editor.lang.list.validateStartNumber ),
 										setup : function( element )
 										{
 											var value = element.getAttribute( 'start' ) || 1;
@@ -147,7 +146,7 @@
 									},
 									{
 										type : 'select',
-										label : lang.type,
+										label : editor.lang.list.type,
 										id : 'type',
 										style : 'width: 100%;',
 										items : listStyleOptions,

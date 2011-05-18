@@ -66,7 +66,9 @@ CKEDITOR.plugins.load( CKEDITOR.config.corePlugins.split( ',' ), function()
 		}
 	});
 
-// Needed for IE6 to not request image (HTTP 200 or 304) for every CSS background. (#6187)
+/*
+TODO: Enable the following and check if effective.
+
 if ( CKEDITOR.env.ie )
 {
 	// Remove IE mouse flickering on IE6 because of background images.
@@ -80,14 +82,7 @@ if ( CKEDITOR.env.ie )
 		// line. For safety, let's just ignore errors.
 	}
 }
-
-/**
- * Indicates that CKEditor is running on a High Contrast environment.
- * @name CKEDITOR.env.hc
- * @example
- * if ( CKEDITOR.env.hc )
- *     alert( 'You're running on High Contrast mode. The editor interface will get adapted to provide you a better experience.' );
- */
+*/
 
 /**
  * Fired when a CKEDITOR core object is fully loaded and ready for interaction.

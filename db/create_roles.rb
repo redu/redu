@@ -1,6 +1,4 @@
 def create_roles
-  # Necessário devido o act_as_enumeration
-  Role.enumeration_model_updates_permitted = true
   Role.create(:name => 'admin', :space_role => false)
   Role.create(:name => 'member', :space_role => true)
 
@@ -13,6 +11,4 @@ def create_roles
   # Space
   Role.create(:name => 'teacher', :space_role => true)
   Role.create(:name => 'tutor', :space_role => true)
-
-  Role.enumeration_model_updates_permitted = false
 end

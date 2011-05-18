@@ -25,7 +25,7 @@ class SessionsController < BaseController
           invite.accept!
         end
 
-        flash[:notice] = :thanks_youre_now_logged_in.l
+        flash[:notice] = t :thanks_youre_now_logged_in
         redirect_to home_user_path(current_user)
       else
         # Se tem um token de convite para o curso, atribui as variáveis

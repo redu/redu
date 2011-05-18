@@ -42,21 +42,9 @@ class UsersController < BaseController
     end
   end
 
-  def teaching
-    @lectures = @user.lectures[0..5] # TODO limitar pela query (limit = 5)
-    @exams = @user.exams[0..5]
-
-    respond_to do |format|
-      format.js do
-        render :update do |page|
-          page.replace_html  'tabs-3-content', :partial => 'teaching'
-        end
-      end
-    end
-  end
-
   def show_log_activity
     current_user.log_activity
+    format.js { render_endless 'statuses/item', @statuses, '#statuses > ol' }
   end
 
   def list_subjects
@@ -75,10 +63,10 @@ class UsersController < BaseController
     if @user and @user.activate
       self.current_user = @user
       redirect_to user_path(@user)
-      flash[:notice] = :thanks_for_activating_your_account.l
+      flash[:notice] = t :thanks_for_activating_your_account
       return
     end
-    flash[:error] = :account_activation_error.l_with_args(:email => AppConfig.support_email)
+    flash[:error] = t(:account_activation_error, :email => Redu::Application.config.email)
     redirect_to signup_path
   end
 
@@ -87,21 +75,8 @@ class UsersController < BaseController
     self.current_user.forget_me if logged_in?
     cookies.delete :auth_token
     reset_session
-    flash[:notice] = :deactivate_completed.l
+    flash[:notice] = t :deactivate_completed
     redirect_to login_path
-  end
-
-  def index
-    cond, @search, @metro_areas, @states = User.paginated_users_conditions_with_search(params)
-    @users = User.recent.find(:all,
-                              :conditions => cond.to_sql,
-                              :include => [:tags],
-                              :page => {:current => params[:page], :size => 20}
-                             )
-
-                             @tags = User.tag_counts :limit => 10
-
-                             setup_metro_areas_for_cloud
   end
 
   def show
@@ -126,7 +101,7 @@ class UsersController < BaseController
 
     respond_to do |format|
       format.html do
-        render :template => 'users/new', :layout => 'clean'
+        render :new, :layout => 'clean'
       end
     end
   end
@@ -134,54 +109,51 @@ class UsersController < BaseController
   def create
     @user = User.new(params[:user])
 
-    @user.save do |result| # LINE A
-      if result
-        @user.create_settings!
-        if @key
-          @key.user = @user
-          @key.save
-        end
+    if @user.save
+      @user.create_settings!
+      if @key
+        @key.user = @user
+        @key.save
+      end
 
-        # Se tem um token de convite para o curso, aprova o convite para o
-        # usuário recém-cadastrado
-        if params.has_key?(:invitation_token)
-          invite = UserCourseInvitation.find_by_token(params[:invitation_token])
-          invite.user = @user
-          invite.accept!
-        end
+      # Se tem um token de convite para o curso, aprova o convite para o
+      # usuário recém-cadastrado
+      if params.has_key?(:invitation_token)
+        invite = UserCourseInvitation.find_by_token(params[:invitation_token])
+        invite.user = @user
+        invite.accept!
+      end
 
-        flash[:notice] = :email_signup_thanks.l_with_args(:email => @user.email)
-        redirect_to signup_completed_user_path(@user)
-      else
-        # Se tem um token de convite para o curso, atribui as variáveis
-        # necessárias para mostrar o convite em Users#new
-        if params.has_key?(:invitation_token)
-          @user_course_invitation = UserCourseInvitation.find_by_token(
-            params[:invitation_token])
+      flash[:notice] = t(:email_signup_thanks, :email => @user.email)
+      redirect_to signup_completed_user_path(@user)
+    else
+      # Se tem um token de convite para o curso, atribui as variáveis
+      # necessárias para mostrar o convite em Users#new
+      if params.has_key?(:invitation_token)
+        @user_course_invitation = UserCourseInvitation.find_by_token(
+          params[:invitation_token])
           @course = @user_course_invitation.course
           @environment = @course.environment
-        end
+      end
 
-        unless @user.oauth_token.nil?
-          @user = User.find_by_oauth_token(@user.oauth_token)
-          unless @user.nil?
-            @user_session = UserSession.create(@user)
-            current_user = @user_session.record
-            flash[:notice] = :thanks_youre_now_logged_in.l
-            redirect_back_or_default user_path(current_user)
-          else
-            flash[:notice] = :uh_oh_we_couldnt_log_you_in_with_the_username_and_password_you_entered_try_again.l
-            render :action => :new
-          end
+      unless @user.oauth_token.nil?
+        @user = User.find_by_oauth_token(@user.oauth_token)
+        unless @user.nil?
+          @user_session = UserSession.create(@user)
+          current_user = @user_session.record
+          flash[:notice] = t :thanks_youre_now_logged_in
+          redirect_back_or_default user_path(current_user)
         else
-          render :template => 'users/new', :layout => 'clean'
+          flash[:notice] = t :uh_oh_we_couldnt_log_you_in_with_the_username_and_password_you_entered_try_again
+          render :action => :new
         end
+      else
+        render :template => 'users/new', :layout => 'clean'
       end
     end
   end
 
   def edit
-    @metro_areas, @states = setup_locations_for(@user)
     respond_to do |format|
       format.html
     end
@@ -193,19 +165,7 @@ class UsersController < BaseController
       params[:user] = {:description => params[:update_value]}
     end
 
-    # Substituindo ids por Privacies
-    if params[:user].has_key? "settings_attributes" and
-      !params[:user][:settings_attributes].empty?
-    params[:user][:settings_attributes].each_key do |setting|
-      if setting != 'id'
-        params[:user][:settings_attributes][setting] = Privacy.find(
-          params[:user][:settings_attributes][setting])
-      end
-    end
-    end
-
     @user.attributes      = params[:user]
-    @metro_areas, @states = setup_locations_for(@user)
 
     unless params[:metro_area_id].blank?
       @user.metro_area  = MetroArea.find(params[:metro_area_id])
@@ -234,7 +194,7 @@ class UsersController < BaseController
     if @user.errors.empty? && @user.save
       respond_to do |format|
         format.html do
-          flash[:notice] = :your_changes_were_saved.l
+          flash[:notice] = t :your_changes_were_saved
           unless params[:welcome]
 
             redirect_to(user_path(@user))
@@ -263,17 +223,17 @@ class UsersController < BaseController
   def destroy
     if current_user == @user
       @user.destroy
-      flash[:notice] = :the_user_was_deleted.l
+      flash[:notice] = :the_user_was_deleted
       redirect_to :controller => 'sessions', :action => 'new' and return
     elsif @user.admin? #|| @user.featured_writer?
       @user.destroy
-      flash[:notice] = :the_user_was_deleted.l
+      flash[:notice] = t :the_user_was_deleted
     elsif current_user.admin?
       @user.destroy
-      flash[:notice] = :the_user_was_deleted.l
+      flash[:notice] = t :the_user_was_deleted
       redirect_to :controller => 'admin', :action => 'users' and return
     else
-      flash[:error] = :you_cant_delete_that_user.l
+      flash[:error] = t :you_cant_delete_that_user
     end
     respond_to do |format|
       format.html { redirect_to admin_moderate_users_path }
@@ -286,17 +246,16 @@ class UsersController < BaseController
     @user.avatar = @photo
 
     if @user.save!
-      flash[:notice] = :your_changes_were_saved.l
+      flash[:notice] = t :your_changes_were_saved
       redirect_to user_photo_path(@user, @photo)
     end
   rescue ActiveRecord::RecordInvalid
-    @metro_areas, @states = setup_locations_for(@user)
     render :action => 'edit'
   end
 
   def crop_profile_photo
     unless @photo = @user.avatar
-      flash[:notice] = :no_profile_photo.l
+      flash[:notice] = t :no_profile_photo
       redirect_to upload_profile_photo_user_path(@user) and return
     end
     return unless request.put?
@@ -336,7 +295,7 @@ class UsersController < BaseController
     @user.attributes  = params[:user]
 
     if @user.save
-      flash[:notice] = :your_changes_were_saved.l
+      flash[:notice] = t :your_changes_were_saved
       respond_to do |format|
         format.html {redirect_to user_path(@user)}
         format.js
@@ -359,7 +318,7 @@ class UsersController < BaseController
     if @user.save!
       respond_to do |format|
         format.html {
-          flash[:notice] = :your_changes_were_saved.l
+          flash[:notice] = t :your_changes_were_saved
           redirect_to edit_pro_details_user_path(@user)
         }
         format.js {
@@ -381,7 +340,7 @@ class UsersController < BaseController
   end
 
   def welcome_complete
-    flash[:notice] = :walkthrough_complete.l_with_args(:site => AppConfig.community_name)
+    flash[:notice] = t(:walkthrough_complete, :site => Redu::Application.config.name)
     redirect_to user_path
   end
 
@@ -390,7 +349,7 @@ class UsersController < BaseController
     @user = User.find_by_email(params[:email])
 
     if @user && @user.reset_password
-      UserNotifier.deliver_reset_password(@user)
+      UserNotifier.reset_password(@user).deliver
       @user.save
 
       # O usuario estava ficando logado, apos o comando @user.save.
@@ -400,20 +359,20 @@ class UsersController < BaseController
       end
 
       redirect_to home_path
-      flash[:info] = :your_password_has_been_reset_and_emailed_to_you.l
+      flash[:info] = t :your_password_has_been_reset_and_emailed_to_you
     else
-      flash[:error] = :sorry_we_dont_recognize_that_email_address.l
+      flash[:error] = t :sorry_we_dont_recognize_that_email_address
     end
   end
 
   def forgot_username
     return unless request.post?
     if @user = User.find_by_email(params[:email])
-      UserNotifier.deliver_forgot_username(@user)
+      UserNotifier.forgot_username(@user).deliver
       redirect_to home_path
-      flash[:info] = :your_username_was_emailed_to_you.l
+      flash[:info] = t :your_username_was_emailed_to_you
     else
-      flash[:error] = :sorry_we_dont_recognize_that_email_address.l
+      flash[:error] = t :sorry_we_dont_recognize_that_email_address
     end
   end
 
@@ -425,59 +384,17 @@ class UsersController < BaseController
       @user = User.find(params[:id])
     end
     if @user
-      flash[:notice] = :activation_email_resent_message.l
-      UserNotifier.deliver_signup_notification(@user)
+      flash[:notice] = t :activation_email_resent_message
+      UserNotifier.signup_notification(@user).deliver
       redirect_to login_path and return
     else
-      flash[:notice] = :activation_email_not_sent_message.l
+      flash[:notice] = t :activation_email_not_sent_message
     end
   end
 
   def assume
     self.current_user = User.find(params[:id])
     redirect_to user_path(current_user)
-  end
-
-  def metro_area_update
-    country = Country.find(params[:country_id]) unless params[:country_id].blank?
-    state   = State.find(params[:state_id]) unless params[:state_id].blank?
-    states  = country ? country.states.sort_by{|s| s.name} : []
-
-    if states.any?
-      metro_areas = state ? state.metro_areas.all(:order => "name") : []
-    else
-      metro_areas = country ? country.metro_areas : []
-    end
-
-    respond_to do |format|
-      format.js {
-        render :partial => 'shared/location_chooser', :locals => {
-        :states => states,
-        :metro_areas => metro_areas,
-        :selected_country => params[:country_id].to_i,
-        :selected_state => params[:state_id].to_i,
-        :selected_metro_area => nil }
-      }
-    end
-  end
-
-  def statistics
-    if params[:date]
-      date = Date.new(params[:date][:year].to_i, params[:date][:month].to_i)
-      @month = Time.parse(date.to_s)
-    else
-      @month = Date.today
-    end
-
-    start_date  = @month.beginning_of_month
-    end_date    = @month.end_of_month + 1.day
-
-    @posts = @user.posts.find(:all,
-                              :conditions => ['? <= published_at AND published_at <= ?', start_date, end_date])
-
-    @estimated_payment = @posts.sum do |p|
-      7
-    end
   end
 
   def activity_xml
@@ -510,7 +427,7 @@ class UsersController < BaseController
 
     respond_to do |format|
       format.html
-      format.js
+      format.js { render_endless 'statuses/item', @statuses, '#statuses > ol' }
     end
   end
 
@@ -522,7 +439,7 @@ class UsersController < BaseController
 
     respond_to do |format|
       format.html
-      format.js
+      format.js { render_endless 'statuses/item', @statuses, '#statuses > ol' }
     end
   end
 
@@ -535,10 +452,15 @@ class UsersController < BaseController
 
   # Dada uma palavra-chave retorna json com usuários que possuem aquela palavra.
   def auto_complete
-    if params[:q]
+    if params[:q] # Usado em invitations: todos os users
       @users = User.with_keyword(params[:q])
       @users = @users.map do |u|
         { :id => u.id, :name => u.display_name, :avatar_32 => u.avatar.url(:thumb_32) }
+      end
+    elsif params[:tag] # Usado em messages: somente amigos
+      @users = current_user.friends.with_keyword(params[:tag])
+      @users = @users.map do |u|
+        {:key => "<img src=\"#{ u.avatar(:thumb_32) }\"/> #{ u.first_name }", :value => u.id}
       end
     end
 
@@ -547,20 +469,5 @@ class UsersController < BaseController
         render :json => @users
       end
     end
-  end
-
-
-  protected
-  def setup_metro_areas_for_cloud
-    @metro_areas_for_cloud = MetroArea.find(:all, :conditions => "users_count > 0", :order => "users_count DESC", :limit => 100)
-    @metro_areas_for_cloud = @metro_areas_for_cloud.sort_by{|m| m.name}
-  end
-
-  def setup_locations_for(user)
-    metro_areas = states = []
-    states = user.country.states if user.country
-    metro_areas = user.state.metro_areas.all(:order => "name") if user.state
-
-    return metro_areas, states
   end
 end
