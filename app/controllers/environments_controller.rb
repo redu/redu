@@ -254,7 +254,7 @@ class EnvironmentsController < BaseController
 
     @memberships = UserEnvironmentAssociation.with_roles(roles).
                    of_environment(@environment).with_keyword(keyword).
-                   includes(:user => [{ :user_course_associations => :course }]),
+                   includes(:user => [{ :user_course_associations => :course }]).
                    paginate(:page => params[:page],
                     :order => 'user_environment_associations.updated_at DESC',
                     :per_page => Redu::Application.config.items_per_page)
