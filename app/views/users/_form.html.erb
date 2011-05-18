@@ -6,8 +6,8 @@
   <%= f.file_field :avatar %>
 
 
-  <%= field_set_tag do %>
-    <%= image_tag @user.avatar.url(:thumb) %>
+  <% field_set_tag do %>
+    <%= image_tag @user.avatar.url(:thumb_100) %>
   <% end %>
 
   <%= label_tag :first_name, "Nome:" %>
