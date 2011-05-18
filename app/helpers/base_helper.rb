@@ -286,22 +286,6 @@ module BaseHelper
     options[:q] ? search_all_sb_posts_path(options) : send("all_#{prefix}sb_posts_path", options)
   end
 
-  def distance_of_time_in_words(from_time, to_time = 0, include_seconds = false)
-    from_time = from_time.to_time if from_time.respond_to?(:to_time)
-    to_time = to_time.to_time if to_time.respond_to?(:to_time)
-    distance_in_minutes = (((to_time - from_time).abs)/60).round
-
-    case distance_in_minutes
-      when 0..1           then (distance_in_minutes==0) ? t(:a_few_seconds_ago) : t(:one_minute_ago)
-      when 2..59          then "#{distance_in_minutes} "+ t(:minutes_ago)
-      when 60..90         then t(:one_hour_ago)
-      when 90..1440       then "#{(distance_in_minutes.to_f / 60.0).round} " + t(:hours_ago)
-      when 1440..2160     then t(:one_day_ago) # 1 day to 1.5 days
-      when 2160..2880     then "#{(distance_in_minutes.to_f / 1440.0).round} " + t(:days_ago)# 1.5 days to 2 days
-      else from_time.strftime("%b %e, %Y  %l:%M%p").gsub(/([AP]M)/) { |x| x.downcase }
-    end
-  end
-
   def time_ago_in_words_or_date(date)
     if date.to_date.eql?(Time.now.to_date)
       display = I18n.l(date.to_time, :format => :time_ago)
