@@ -1,7 +1,7 @@
 class UserCourseInvitationsController < BaseController
   layout "clean"
 
-  load_resource :environment
+  load_resource :environment, :find_by => :path
   load_resource :course, :through => :environment
   load_resource :user_course_invitation, :through => :course
 
