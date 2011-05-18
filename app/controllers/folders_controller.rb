@@ -157,8 +157,9 @@ class FoldersController < BaseController
       folder_order += params[:order] if params[:order]
     end
 
-    @files_count = Myfile.count(:include => :folder, :conditions => ["folders.space_id = ?", @space.id])
-    bytes = Myfile.sum(:attachment_file_size, :include => :folder, :conditions => ["folders.space_id = ?",  @space.id])
+    @files_count = Myfile.includes(:folder).where(:space_id => @space.id).count
+    bytes = Myfile.includes(:folder).where('folders.space_id' => @space.id).
+              sum(:attachment_file_size)
     @total_size = "%0.2f" % (bytes / (1024.0 * 1024));
     gigabytes = 2
     @use_percentage = "%0.2f" % (bytes / ( gigabytes * 1024.0 * 1024.0 * 1024.0))

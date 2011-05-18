@@ -4,7 +4,7 @@ class JobsController < BaseController
 
   def notify
     job_id = params[:job][:id]
-    seminar = Seminar.find(:first, :conditions => ["job = ?", job_id])
+    seminar = Seminar.where(:job => job_id).first
 
     if seminar and seminar.state != 'converted'
       if params[:job][:state] == 'finished'

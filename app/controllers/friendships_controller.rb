@@ -50,7 +50,8 @@ class FriendshipsController < BaseController
 
   # Controlador não acessível a partir das views
   def pending
-    @friends_pending = @user.friends_pending.paginate({:page => params[:page], :per_page => 10})
+    @friends_pending = @user.friends_pending.
+      paginate({:page => params[:page], :per_page => 10})
 
     format.js { render_endless 'friendships/item_pending', @friends_pending, '#pending_list' }
   end
