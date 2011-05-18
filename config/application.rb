@@ -41,8 +41,8 @@ module Redu
 
     # S3 credentials
     if File.exists?("#{Rails.root}/config/s3.yml")
-      S3_CONFIG = YAML.load_file("#{Rails.root}/config/s3.yml")
-      S3_CREDENTIALS = S3_CONFIG[Rails.env]
+      config.s3_config = YAML.load_file("#{Rails.root}/config/s3.yml")
+      config.s3_credentials = config.s3_config[Rails.env]
     end
 
     if File.exists?( File.join(Rails.root, 'config', 'application.yml') )
@@ -89,15 +89,15 @@ module Redu
     # Configurações de conversão e storage de videos (Seminar)
     config.video_original = { # Arquivo original do video (uploaded)
       :storage => :s3,
-      :s3_credentials => S3_CREDENTIALS,
-      :bucket => S3_CREDENTIALS['bucket'],
+      :s3_credentials => config.s3_credentials,
+      :bucket => config.s3_credentials['bucket'],
       :path => ":class/:attachment/:id/:style/:basename.:extension",
       :default_url => "http://redu_assets.s3.amazonaws.com/images/missing_pic.jpg"
     }
 
     config.video_transcoded = { # Arquivo convertido
       :storage => :s3,
-      :s3_credentials => S3_CREDENTIALS,
+      :s3_credentials => config.s3_credentials,
       :bucket => 'redu_videos',
       :path => ":class/:attachment/:id/:style/:basename.:extension",
       :default_url => "http://redu_assets.s3.amazonaws.com/images/missing_pic.jpg"
