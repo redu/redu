@@ -42,19 +42,6 @@ class UsersController < BaseController
     end
   end
 
-  def teaching
-    @lectures = @user.lectures[0..5] # TODO limitar pela query (limit = 5)
-    @exams = @user.exams[0..5]
-
-    respond_to do |format|
-      format.js do
-        render :update do |page|
-          page.replace_html  'tabs-3-content', :partial => 'teaching'
-        end
-      end
-    end
-  end
-
   def show_log_activity
     current_user.log_activity
     format.js { render_endless 'statuses/item', @statuses, '#statuses > ol' }
@@ -90,19 +77,6 @@ class UsersController < BaseController
     reset_session
     flash[:notice] = t :deactivate_completed
     redirect_to login_path
-  end
-
-  def index
-    cond, @search, @metro_areas, @states = User.paginated_users_conditions_with_search(params)
-    @users = User.recent.find(:all,
-                              :conditions => cond.to_sql,
-                              :include => [:tags],
-                              :page => {:current => params[:page], :size => 20}
-                             )
-
-                             @tags = User.tag_counts :limit => 10
-
-                             setup_metro_areas_for_cloud
   end
 
   def show
@@ -436,48 +410,6 @@ class UsersController < BaseController
     redirect_to user_path(current_user)
   end
 
-  def metro_area_update
-    country = Country.find(params[:country_id]) unless params[:country_id].blank?
-    state   = State.find(params[:state_id]) unless params[:state_id].blank?
-    states  = country ? country.states.sort_by{|s| s.name} : []
-
-    if states.any?
-      metro_areas = state ? state.metro_areas.all(:order => "name") : []
-    else
-      metro_areas = country ? country.metro_areas : []
-    end
-
-    respond_to do |format|
-      format.js {
-        render :partial => 'shared/location_chooser', :locals => {
-        :states => states,
-        :metro_areas => metro_areas,
-        :selected_country => params[:country_id].to_i,
-        :selected_state => params[:state_id].to_i,
-        :selected_metro_area => nil }
-      }
-    end
-  end
-
-  def statistics
-    if params[:date]
-      date = Date.new(params[:date][:year].to_i, params[:date][:month].to_i)
-      @month = Time.parse(date.to_s)
-    else
-      @month = Date.today
-    end
-
-    start_date  = @month.beginning_of_month
-    end_date    = @month.end_of_month + 1.day
-
-    @posts = @user.posts.find(:all,
-                              :conditions => ['? <= published_at AND published_at <= ?', start_date, end_date])
-
-    @estimated_payment = @posts.sum do |p|
-      7
-    end
-  end
-
   def activity_xml
     # talvez seja necessario setar o atributo depth nos nós para que funcione corretamente.
     # ver: http://asterisq.com/products/constellation/roamer/integration#data_rest_tree
@@ -545,12 +477,5 @@ class UsersController < BaseController
         render :json => @users
       end
     end
-  end
-
-
-  protected
-  def setup_metro_areas_for_cloud
-    @metro_areas_for_cloud = MetroArea.find(:all, :conditions => "users_count > 0", :order => "users_count DESC", :limit => 100)
-    @metro_areas_for_cloud = @metro_areas_for_cloud.sort_by{|m| m.name}
   end
 end

@@ -175,7 +175,7 @@ Redu::Application.routes.draw do
  end
 
   # Users
-  resources :users do
+  resources :users, :except => [:index] do
     member do
       get :annotations
       get :activity_xml
@@ -191,9 +191,7 @@ Redu::Application.routes.draw do
       get :signup_completed
       get :invite
       get :welcome_complete
-      match :statistic
       get :learning
-      get :teaching
       put :deactivate
       get :crop_profile_photo
       put :crop_profile_photo

@@ -9,7 +9,7 @@
     <%= hidden_field_tag "status[kind]", Status::STATUS %>
 
     <%= f.error_messages %>
-    <% field_set_tag do %>
+    <%= field_set_tag do %>
 
       <div class="textarea">
         <%= f.text_area :text, :rows => 1, :class => "status status-#{random_number}" %>
