@@ -27,7 +27,7 @@
               <% end %>
             <% else %>
               <%= form_for [current_user, Friendship.new],
-                :remote => true, :method => :post do %>
+                :remote => true, :html => { :method => :post, :class => "form-loader" } do %>
                 <%= hidden_field_tag "friend_id", @user.id %>
                 <%= hidden_field_tag "show_user", true %>
                 <%= submit_tag "Adicionar aos contatos", :class => 'add-as-friend' %>

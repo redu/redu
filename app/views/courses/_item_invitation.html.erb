@@ -14,19 +14,17 @@
     </div>
   </div>
   <div class="actions">
-    <%= image_tag 'spinner.gif', :style => 'display: none;',
-      :id => "spinner-#{item_invitation.id}" %>
     <%= form_tag deny_environment_course_path(
                                  item_invitation.course.environment,
                                  item_invitation.course),
-                 :remote => true do %>
+                                 :remote => true, :html => { :class => 'form-loader' } do %>
       <%= submit_tag "Recusar", :class => 'remove' %>
     <% end %>
     <% if item_invitation.course.can_add_entry? %>
       <%= form_tag accept_environment_course_path(
         item_invitation.course.environment,
         item_invitation.course),
-        :remote => true do %>
+        :remote => true, :html => { :class => "form-loader" } do %>
         <%= submit_tag "Aceitar", :class => 'important accept-invitation' %>
       <% end %>
     <% else %>

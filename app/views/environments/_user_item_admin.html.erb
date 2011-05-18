@@ -29,7 +29,6 @@
     <%= link_to "Tornar administrador", user_update_roles_path(user_item_admin.user, @environment, :type => 'environment', :roles => Role[:environment_admin]),
       :remote => true,
       :method => :post,
-      :style => "display: #{user_item_admin.role.eql?(Role[:environment_admin]) ? "none" : "inline"};",
-      :with => "'type=environment;roles=#{Role[:environment_admin]}'" %>
+      :style => "display: #{user_item_admin.role.eql?(Role[:environment_admin]) ? "none" : "inline"};" %>
 </td>
 </tr>

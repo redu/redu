@@ -1,6 +1,4 @@
 <%# Links de Favoritar e Desfavoritar  %>
-<%= image_tag 'loading_bar.gif', :style => 'display:none;',
-  :id => 'favorite_spinner' %>
 <% if current_user.has_favorite(status) %>
   <%= link_to('Desfavoritar',
               not_favorite_user_favorite_path(current_user, status, :type => status.class.to_s),

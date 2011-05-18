@@ -71,7 +71,7 @@
     <% form_for @environment,
       :url => environments_path(:step => 4),
       :remote => true,
-      :html => { :class => "clearfix" } do |f| %>
+      :html => { :class => "clearfix form-loader" } do |f| %>
       <%= f.error_messages %>
       <div style='display: none;'>
         <%= render :partial => 'environments/form', :locals => { :f => f } %>
