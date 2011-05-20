@@ -40,7 +40,9 @@ Redu::Application.configure do
                  :thumb_32 => "32x32#" }
   }
 
-  config.paperclip_myfiles = config.paperclip
+  config.paperclip_myfiles = config.paperclip.merge({:styles => {}})
+  config.video_original = config.paperclip.merge({:styles => {}})
+  config.video_transcoded = config.paperclip.merge({:styles => {}})
 
   # Só converte os 5 primeiros segundos (grátis)
   config.zencoder[:test] = 1

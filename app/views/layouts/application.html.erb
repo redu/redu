@@ -3,16 +3,10 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
     <title><%= raw(page_title) %></title>
-    <%= stylesheet_link_tag 'reset.css' %>
-    <%= stylesheet_link_tag '960.css' %>
-    <%= stylesheet_link_tag 'new-fonts.css' %>
-    <%= stylesheet_link_tag 'tipTip.css' %>
-    <%= stylesheet_link_tag 'new-style.css' %>
-    <%= javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js', 'rails.js' %>
-    <%= javascript_include_tag 'jquery.tipTip.minified.js' %>
     <%= csrf_meta_tag %>
-    <%= javascript_include_tag 'application.js' %>
-    <%= ajaxful_rating_style %>
+    <%= include_stylesheets :common %>
+    <%= javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js' %>
+    <%= include_javascripts :common %>
     <% if controller_name == 'subjects' %>
       <% if action_name == 'index' or action_name == 'new' %>
         <%= javascript_include_tag :ckeditor %>
