@@ -4,6 +4,7 @@ staging:
   bucket: redu-uploads-staging
   videos_bucket: redu-uploads-staging
   files_bucket: redu-uploads-staging
+  assets_bucket: redu-assets-staging
 
 production:
   access_key_id: AKIAIRKVQDTWT2NN4J4Q
