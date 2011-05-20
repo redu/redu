@@ -29,6 +29,7 @@ gem 'ajaxful_rating',
 gem 'acts-as-taggable-on'
 gem 'ckeditor', '3.4.2.pre'
 gem 'jammit-s3'
+gem 'whenever', :require => false
 
 # Gems específicos de algum ambiente
 group :development, :test do
