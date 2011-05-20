@@ -27,3 +27,15 @@ $(function(){
         $(this).find("label[for='Aula_finalizada']").loadingToggle();
     });
 });
+
+// Player
+var params = {
+  'allowfullscreen':    'true',
+  'allowscriptaccess':  'always',
+  'bgcolor':            '#ffffff'
+};
+
+var attributes = {
+  'id':                 'player',
+  'name':               'player'
+};

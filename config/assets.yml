@@ -16,6 +16,7 @@ javascripts:
     - public/javascripts/jquery.tipTip.minified.js
     - public/javascripts/folders.js
     - public/javascripts/lectures.js
+    - public/javascripts/swfobject.js
 
 stylesheets:
   common:
