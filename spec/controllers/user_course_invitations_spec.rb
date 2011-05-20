@@ -12,7 +12,7 @@ describe UserCourseInvitationsController do
     before do
       course = Factory(:course)
       @invite = course.invite_by_email("email@example.com")
-      @params = {:locale => 'pt-BR', :environment_id => course.environment.id,
+      @params = {:locale => 'pt-BR', :environment_id => course.environment.path,
         :course_id => course.id, :id => @invite.id }
     end
 
