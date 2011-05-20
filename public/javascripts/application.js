@@ -4,6 +4,7 @@ jQuery(function(){
     $(".flash-message .close-flash").click(function(e){
       $(this).parent().slideToggle();
       $("#content").css("marginTop","20px");
+      $("#home").css("marginTop","40px");
 
       e.preventDefault();
     });

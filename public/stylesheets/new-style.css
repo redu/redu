@@ -1604,6 +1604,7 @@
 }
 
 .flash-message.error,
+.flash-message.info,
 .flash-message.notice {
   background-color: #FFEED7;
   border: solid 1px #FBC172;
