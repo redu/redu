@@ -225,7 +225,6 @@ class Course < ActiveRecord::Base
         assoc.send_course_invitation_notification
         assoc.updated_at = Time.now
         assoc.save
-        return assoc
       elsif assoc.waiting?
         assoc.approve!
       end
@@ -252,7 +251,8 @@ class Course < ActiveRecord::Base
         # Caso o e-mail seja mal-formado, não vai salvar e será ignorado.
         unless invitation.nil?
           invitation.send_external_user_course_invitation
-          invitation.updated_at = ""; invitation.save # Para atualizar o updated_at
+          invitation.updated_at = Time.now
+          invitation.save
         end
       else
         invitation.invite!
