@@ -32,7 +32,7 @@ Redu::Application.configure do
   config.serve_static_assets = false
 
   # Enable serving of images, stylesheets, and javascripts from an asset server
-  config.action_controller.asset_host = "http://redu-assets-staging.s3.amazonaws.com"
+  config.action_controller.asset_host = "http://#{config.s3_credentials['bucket']}.s3.amazonaws.com"
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
@@ -51,24 +51,4 @@ Redu::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
-
-  config.paperclip = {
-    :storage => :s3,
-    :s3_credentials => config.s3_credentials,
-    :bucket => config.s3_credentials['bucket'],
-    :path => ":class/:attachment/:id/:style/:basename.:extension",
-    :default_url => "http://redu-assets-staging.s3.amazonaws.com/images/new/missing_:class_:style.png",
-    :styles => { :thumb_150 => "150x150#",
-                 :thumb_120 => "120x120#",
-                 :thumb_100 => "100x100#",
-                 :thumb_60 => "60x60#",
-                 :thumb_32 => "32x32#" }
-  }
-
-  config.paperclip_myfiles = config.paperclip.merge({
-    :bucket => config.s3_credentials['files_bucket'],
-    :path => ":class/:attachment/:id/:style/:basename.:extension",
-    :default_url => ":class/:attachment/:style/missing.png",
-  })
-
 end

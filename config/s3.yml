@@ -1,27 +1,14 @@
 staging:
   access_key_id: AKIAIRKVQDTWT2NN4J4Q
   secret_access_key: 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
-  bucket: redu_uploads_staging
-  files_bucket: redu_files_staging
+  bucket: redu-uploads-staging
+  videos_bucket: redu-uploads-staging
+  files_bucket: redu-uploads-staging
 
 production:
   access_key_id: AKIAIRKVQDTWT2NN4J4Q
   secret_access_key: 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
   bucket: redu_uploads
+  videos_bucket: redu_videos
   files_bucket: redu_files
-
-development:
-  access_key_id: AKIAIRKVQDTWT2NN4J4Q
-  secret_access_key: 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
-  bucket: redu_assets_development
-
-test:
-  access_key_id: AKIAIRKVQDTWT2NN4J4Q
-  secret_access_key: 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
-  bucket: redu_assets_test
-
-backup:
-  aws_access_key: 'AKIAIRKVQDTWT2NN4J4Q'
-  aws_secret_access_key: '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'
-  options:
-    use_ssl: false
+  assets_bucket: redu-assets
