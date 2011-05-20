@@ -12,20 +12,10 @@
     <%= javascript_include_tag 'jquery.tipTip.minified.js' %>
     <%= csrf_meta_tag %>
     <%= javascript_include_tag 'application.js' %>
-    <%= javascript_include_tag 'uploadify/jquery.uploadify.v2.1.0.min' %>
     <%= ajaxful_rating_style %>
     <% if controller_name == 'subjects' %>
-      <%= javascript_include_tag("uploadify/swfobject") %>
       <% if action_name == 'index' or action_name == 'new' %>
         <%= javascript_include_tag :ckeditor %>
-      <% end %>
-    <% end %>
-    <% if controller_name == 'lectures' %>
-      <% if (action_name == 'new' || action_name == 'edit') %>
-        <%= javascript_include_tag("uploadify/swfobject") %>
-      <% end %>
-      <% if (action_name == 'show' || action_name == 'edit' ) %>
-        <%= javascript_include_tag 'swfobject'%>
       <% end %>
     <% end %>
     <%= yield :header_scripts_and_styles %>
