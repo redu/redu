@@ -16,3 +16,6 @@ production:
 
 development:
   <<: *staging
+
+test:
+  <<: *staging
