@@ -28,32 +28,34 @@ class RolesController < BaseController
     @environment = Environment.find(params[:environment_id])
 
     case params[:type]
-      when 'environment' then
-        object = @environment
-        # ao se tornar administrador, se tornará administrador para todas
-        # entidades abaixo da de environment
-        if !Role[params[:roles].to_i].nil? and params[:roles] == Role[:environment_admin]
-          object.courses.each do |course|
-            unless @user.get_association_with(course)
+    when 'environment' then
+      object = @environment
+      # ao se tornar administrador, se tornará administrador para todas
+      # entidades abaixo da de environment
+      if !Role[params[:roles].to_i].nil? and
+        params[:roles].to_i == Role[:environment_admin]
 
-              uca = UserCourseAssociation.create(:user_id => @user.id,
-                                                 :course_id => course.id,
-                                                 :role => params[:roles])
-              uca.approve!
+        object.courses.each do |course|
+          unless @user.get_association_with(course)
 
-              course.spaces.each do |space|
-                unless @user.get_association_with(space)
-                  UserSpaceAssociation.create(:user_id => @user.id,
-                                              :space_id => space.id,
-                                              :role => params[:roles],
-                                              :status => "approved")
-                end
+            uca = UserCourseAssociation.create(:user_id => @user.id,
+                                               :course_id => course.id,
+                                               :role => params[:roles].to_i)
+            uca.approve!
+
+            course.spaces.each do |space|
+              unless @user.get_association_with(space)
+                UserSpaceAssociation.create(:user_id => @user.id,
+                                            :space_id => space.id,
+                                            :role => params[:roles].to_i,
+                                            :status => "approved")
               end
             end
           end
         end
-      when 'course' then object = Course.find(params[:course_id])
-      when 'space' then object = Space.find(params[:space_id])
+      end
+    when 'course' then object = Course.find(params[:course_id])
+    when 'space' then object = Space.find(params[:space_id])
     else
     end
 
