@@ -91,7 +91,7 @@ module Redu
       :s3_credentials => config.s3_credentials,
       :bucket => config.s3_credentials['bucket'], # redu-uploads
       :path => ":class/:attachment/:id/:style/:basename.:extension",
-      :default_url => "http://#{config.s3_credentials['bucket']}.s3.amazonaws.com/images/new/missing_:class_:style.png",
+      :default_url => "http://#{config.s3_credentials['assets_bucket']}.s3.amazonaws.com/images/new/missing_:class_:style.png",
       :styles => { :thumb_150 => "150x150#",
                    :thumb_120 => "120x120#",
                    :thumb_100 => "100x100#",
@@ -112,7 +112,7 @@ module Redu
       :s3_credentials => config.s3_credentials,
       :bucket => config.s3_credentials['bucket'],
       :path => ":class/:attachment/:id/:style/:basename.:extension",
-      :default_url => "http://#{config.s3_credentials['bucket']}.s3.amazonaws.com/images/missing_pic.jpg",
+      :default_url => "http://#{config.s3_credentials['assets_bucket']}.s3.amazonaws.com/images/new/missing_:class_:style.png",
       :styles => {}
     }
 
@@ -121,7 +121,7 @@ module Redu
       :s3_credentials => config.s3_credentials,
       :bucket => config.s3_credentials['videos_bucket'],
       :path => ":class/:attachment/:id/:style/:basename.:extension",
-      :default_url => "http://#{config.s3_credentials['videos_bucket']}.s3.amazonaws.com/images/missing_pic.jpg"
+      :default_url => "http://#{config.s3_credentials['assets_bucket']}.s3.amazonaws.com/images/new/missing_:class_:style.png",
     }
 
     # Usado em :controller => jobs, :action => notify
