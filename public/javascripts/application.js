@@ -70,6 +70,8 @@ jQuery(function(){
         explanation += $(this).find("a").attr("title");
 
         $(".new-resource .explanation").html(explanation);
+        // Evita que o explanation fique com o spinner
+        $(".new-resource .explanation").find("a").removeClass("link-loading");
     });
 
     // Adiciona classe selected ao li do recurso clicado
