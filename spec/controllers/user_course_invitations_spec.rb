@@ -13,7 +13,7 @@ describe UserCourseInvitationsController do
       course = Factory(:course)
       @invite = course.invite_by_email("email@example.com")
       @params = {:locale => 'pt-BR', :environment_id => course.environment.path,
-        :course_id => course.id, :id => @invite.id }
+        :course_id => course.path, :id => @invite.id }
     end
 
     context "when the user is logged in" do
