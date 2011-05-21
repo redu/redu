@@ -21,7 +21,7 @@ gem 'deep_cloneable'
 gem 'rd_searchlogic', :require => 'searchlogic'
 gem 'translate_routes'
 gem 'aws-s3', :require => 'aws/s3'
-gem 'jquery-rails', '>= 0.2.6'
+gem 'jquery-rails', '>= 1.0.3'
 gem 'dynamic_form'
 gem 'ajaxful_rating',
   :git => 'git://github.com/edgarjs/ajaxful-rating.git',
@@ -30,6 +30,7 @@ gem 'acts-as-taggable-on'
 gem 'ckeditor', '3.4.2.pre'
 gem 'jammit-s3'
 gem 'whenever', :require => false
+gem 'remotipart', '>= 0.3.4'
 
 # Gems específicos de algum ambiente
 group :development, :test do

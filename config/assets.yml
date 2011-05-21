@@ -17,6 +17,8 @@ javascripts:
     - public/javascripts/folders.js
     - public/javascripts/lectures.js
     - public/javascripts/swfobject.js
+    - public/javascripts/jquery.form.js
+    - public/javascripts/jquery.remotipart.js
 
 stylesheets:
   common:
