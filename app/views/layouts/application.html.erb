@@ -5,7 +5,6 @@
     <title><%= raw(page_title) %></title>
     <%= csrf_meta_tag %>
     <%= include_stylesheets :common %>
-    <%= javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js' %>
     <%= include_javascripts :common %>
     <% if controller_name == 'subjects' %>
       <% if action_name == 'index' or action_name == 'new' %>
@@ -13,9 +12,11 @@
       <% end %>
     <% end %>
     <%= yield :header_scripts_and_styles %>
-    <!--[if lt IE 9]>
-    <script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script>
+    <!--[if (gte IE 6)&(lte IE 8)]>
+      <%= include_javascripts :ie %>
     <![endif]-->
+
+    <link href='http://fonts.googleapis.com/css?family=Copse' rel='stylesheet' type='text/css' />
   </head>
    <body>
     <div id="header" class="container_16">
@@ -82,7 +83,6 @@
         </ul>
       </div><!-- end #nav-footer -->
     </div><!-- end #footer -->
-    <link href='http://fonts.googleapis.com/css?family=Copse' rel='stylesheet' type='text/css' />
     <script type="text/javascript">
 
       var _gaq = _gaq || [];
