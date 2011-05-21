@@ -1,26 +1,23 @@
 <div id="lecture_form">
   <%= form_for @document, :as => :document, :url => space_subject_lectures_path,
-    :html => { :id => "document-form", :class => "form-common" } do |f| %>
+    :html => { :id => "document-form", :class => "form-common",
+               :multipart => true }, :remote => true do |f| %>
    <%= f.error_messages %>
    <%= field_set_tag do %>
      <%= label_tag :name, t(:title) %>
      <%= text_field_tag :name %>
      <%= error_for :name %>
      <%= f.label :attachment, "Arquivo" %>
-     <div id="upload_resource_field" class="uploadify" >
+     <div id="upload_resource_field">
        <%= f.file_field :attachment  %>
        <span class="tip">Tamanho máximo: 100 mb</span>
        <%= error_for :document, :attachment %>
 
-       <%= uploadify_cancel "Parar", :class => "cancel vanilla" %>
-       <%= uploadify_submit "Enviar material", :style => "display: none;" %>
+       <%= f.submit "Criar" %>
        <%= link_to_function "Cancelar",
          "$('#document-form').remove(); return false;",
          :class => "cancel vanilla"%>
      </div>
-     <% unless @document.new_record? %>
-       <div class="box_notice">Você já inseriu o arquivo <%= @document.attachment_file_name %></div>
-     <% end %>
    <% end %>
  <% end %>
 </div>
