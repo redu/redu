@@ -122,7 +122,7 @@ class Seminar < ActiveRecord::Base
     output_path = "s3://" + video_storage[:bucket] + "/" + interpolate(video_storage[:path], seminar_info)
 
     credentials = Redu::Application.config.zencoder_credentials
-    config = Redu::Application.zencoder
+    config = Redu::Application.config.zencoder
     config[:input] = self.original.url
     config[:output][:url] = output_path
     config[:output][:thumbnails][:base_url] = File.dirname(output_path)
