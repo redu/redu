@@ -113,6 +113,7 @@
 
 #nav-account li .edit:hover {
   background: transparent;
+  filter: alpha(opacity = 0);
 }
 
 #content {
@@ -4986,6 +4987,8 @@ div.token-input-dropdown {
   background-position: center center;
   background-repeat: no-repeat;
   color: transparent;
+
+  filter: alpha(opacity = 0);
 }
 
 /* Spinner para botoes em formulários */
@@ -4998,6 +5001,8 @@ div.token-input-dropdown {
   color: transparent;
   background-color: #f1f0f0;
   border: 1px solid #cccbcb;
+
+  filter: alpha(opacity = 0);
 }
 
 .link-loading,
@@ -5008,8 +5013,10 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   background-image:  url("../images/new/loading-horizontal.gif");
   background-repeat: no-repeat;
   background-position: left center;
-  color: transparent;
   border: none;
+  color: transparent;
+
+  filter: alpha(opacity = 0);
 }
 
 /* Apenas para deixar o gif centralizado */
