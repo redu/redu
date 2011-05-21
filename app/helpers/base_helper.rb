@@ -3,6 +3,28 @@ require 'md5'
 # Methods added to this helper will be available to all templates in the application.
 module BaseHelper
 
+  # Inclui o javascript de forma lazy
+  def async_include_javascripts(*packages)
+    tags = packages.map do |pack|
+      should_package? ? Jammit.asset_url(pack, :js) : Jammit.packager.individual_urls(pack.to_sym, :js)
+    end
+
+    javascript_tag(:type => 'text/javascript') do
+      "LazyLoad.js(#{tags.flatten.to_json});".html_safe
+    end.html_safe
+  end
+
+  def async_include_css(*packages)
+    tags = packages.map do |pack|
+      should_package? ? Jammit.asset_url(pack, :css) : Jammit.packager.individual_urls(pack.to_sym, :css)
+    end
+
+    javascript_tag(:type => 'text/javascript') do
+      "LazyLoad.css(#{tags.flatten.to_json});".html_safe
+    end.html_safe
+
+  end
+
   # Cria lista não ordenada no formato da navegação do widget de abas (jquery UI)
   def tabs_navigation(*paths)
     lis = paths.collect do |item|
@@ -339,4 +361,11 @@ module BaseHelper
 
     render :partial => "plans/plans", :locals => { :plans => plans }
   end
+
+  private
+
+  def should_package?
+    Jammit.package_assets && !(Jammit.allow_debugging && params[:debug_assets])
+  end
+
 end

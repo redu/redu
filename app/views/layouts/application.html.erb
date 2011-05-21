@@ -7,6 +7,8 @@
     <%= include_stylesheets :common %>
     <%= javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js' %>
     <%= include_javascripts :common %>
+    <%= async_include_css :chat %>
+    <%= async_include_javascripts :chat %>
     <% if controller_name == 'subjects' %>
       <% if action_name == 'index' or action_name == 'new' %>
         <%= javascript_include_tag :ckeditor %>

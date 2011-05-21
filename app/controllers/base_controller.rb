@@ -1,5 +1,5 @@
 class BaseController < ApplicationController
-  layout 'application', :except => [:site_index]
+  layout :choose_layout, :except => [:site_index]
   # Work around (ver método self.login_required_base)
   before_filter :login_required_base, :only => [:learn_index]
 
@@ -240,6 +240,12 @@ class BaseController < ApplicationController
   end
 
   protected
+
+  # Mostra ou não o layout com base na presença do header x-pjax
+  def choose_layout
+    return request.headers['X-PJAX'].nil? ?  'application' : false
+  end
+
   def logged_in?
     !current_user.nil?
   end
