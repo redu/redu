@@ -20,10 +20,10 @@
         <a href="#" class="button">Upload de Arquivo</a>
         <div class="new-file-inner holder" style="display:none;">
           <%= form_for(myfile,
-                      :url => do_the_upload_space_folder_path(space.id,
-                                                              folder.id, :format => 'js'),
-                      :html => { :multipart => true, :target => 'upload_frame',
-                                 :onsubmit => "$('#new-file-spinner').show()"}) do |f| %>
+                       :url => do_the_upload_space_folder_path(space.id,
+                       folder.id),
+                       :remote => true, :html => { :multipart => true,
+                                          :class => 'form-common' }) do |f| %>
             <div class="file-wrapper clearfix">
               <%= f.file_field :attachment %>
               <%= link_to "Procurar", "#", :class => "browse button" %>
@@ -31,9 +31,7 @@
             <%= f.hidden_field :folder_id, :value => folder.id %>
             <%= hidden_field_tag :space_id,  space.id %>
             <%= submit_tag 'Ok' %>
-            <%= image_tag 'spinner.gif', :id => 'new-file-spinner', :class => "spinner", :style => 'display: none' %>
           <% end %>
-          <iframe id='upload_frame' name="upload_frame" style="width:1px;height:1px;border:0px" src="about:blank"></iframe>
         </div>
       </div>
     </div>

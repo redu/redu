@@ -80,17 +80,13 @@ class FoldersController < BaseController
         format.html { redirect_to @space }
         format.js do
           list
-          responds_to_parent do
-            render :partial => "folders/do_the_upload"
-          end
+          render :do_the_upload
         end
       else
         format.html { redirect_to @space }
         format.js do
           list
-          responds_to_parent do
-            render :partial => "folders/do_the_upload"
-          end
+          render :do_the_upload
         end
       end
     end

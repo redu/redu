@@ -1,0 +1,18 @@
+$('.errorMessageField').remove();
+$('.file-holder').hide();
+$('.spinner').hide();
+$("input[type=file], input[type=text]", "#folder-admin").val('');
+
+<% if @myfile.valid? %>
+  $(".new-file-inner:visible, .new-folder-inner:visible", "#folder-admin").hide();
+  <%= render :partial => 'folders/index' %>
+<% else %>
+  $(".new-file-inner .button").text("Procurar");
+  var $error = $("<div class='errorMessageField'>");
+  <% if !@myfile.errors[:attachment_file_name].empty? %>
+    $error.html("Já existe um arquivo com este nome.");
+  <% else %>
+    $error.html("Formato de arquivo inválido.");
+  <% end %>
+  $(".new-file-inner form").prepend($error);
+<% end %>
