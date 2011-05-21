@@ -12,6 +12,10 @@
       <% end %>
     <% end %>
     <%= yield :header_scripts_and_styles %>
+    <!--[if (gte IE 6)&(lte IE 8)]>
+      <%= include_javascripts :ie %>
+    <![endif]-->
+
     <link href='http://fonts.googleapis.com/css?family=Copse' rel='stylesheet' type='text/css' />
   </head>
    <body>

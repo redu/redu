@@ -20,6 +20,8 @@ javascripts:
     - public/javascripts/swfobject.js
     - public/javascripts/jquery.form.js
     - public/javascripts/jquery.remotipart.js
+  ie:
+    - public/javascripts/selectivizr.js
 
 stylesheets:
   common:
