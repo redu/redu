@@ -17,6 +17,12 @@ javascripts:
     - public/javascripts/folders.js
     - public/javascripts/lectures.js
     - public/javascripts/swfobject.js
+    - public/javascripts/lazyload.js
+
+  chat:
+    - public/javascripts/jquery.pjax.js
+    - public/javascripts/jquery-ui.js
+    - public/javascripts/chat.js
 
 stylesheets:
   common:
@@ -26,5 +32,8 @@ stylesheets:
     - public/stylesheets/new-style.css
     - public/stylesheets/tipTip.css
     - public/stylesheets/ajaxful_rating.css
+
+  chat:
+    - public/stylesheets/chat.css
 
 

@@ -1,0 +1,9 @@
+#chat-bar {
+  width: 960px;
+  height: 50px;
+  background: red;
+
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+}
