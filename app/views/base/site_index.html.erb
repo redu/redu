@@ -1,91 +1,50 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-    <title></title>
-    <link href='http://fonts.googleapis.com/css?family=Copse' rel='stylesheet' type='text/css'>
-    <%= csrf_meta_tag %>
-    <%= include_stylesheets :common %>
-    <%= javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js' %>
-    <%= include_javascripts :common %>
-    <!--[if lt IE 9]>
-    <script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script>
-    <![endif]-->
+<div class="container_16 clearfix" id="home">
+  <div class="grid_10 alpha">
+    <h1 class="logotipo replacement">
+      <a href="">Redu: rede social educacional</a>
+    </h1>
+    <div class="call">
+      <strong>Potencializado o talento das pessoas</strong>
+      <p>O Redu é uma plataforma de ensino a distância que foi construída tendo como base as interações sociais. </p>
+      <p>
+        Aqui, o aluno tem acesso fácil ao conteúdo disponibilizado pelo professor, que por sua vez consegue organizar suas aulas com mais rapidez e eficácia.
+      </p>
+      <p>Esse ambiente de aprendizagem atende as necessidades de instituições e produtores independentes que querem construir sua própria EaD.</p>
+    </div>
+  </div>
+  <div class="grid_6 omega">
+    <div class="hall">
+      <%= link_to "Criar nova conta", signup_url, :class => "important signup" %>
+      <hr/>
 
-  </head>
-  <body>
-    <div class="container_16 clearfix" id="home">
-      <div class="grid_10 alpha">
-        <h1 class="logotipo replacement">
-          <a href="">Redu: rede social educacional</a>
-        </h1>
-        <div class="call">
-          <strong>Potencializado o talento das pessoas</strong>
-          <p>O Redu é uma plataforma de ensino a distância que foi construída tendo como base as interações sociais. </p>
-          <p>
-            Aqui, o aluno tem acesso fácil ao conteúdo disponibilizado pelo professor, que por sua vez consegue organizar suas aulas com mais rapidez e eficácia.
-          </p>
-          <p>Esse ambiente de aprendizagem atende as necessidades de instituições e produtores independentes que querem construir sua própria EaD.</p>
-        </div>
-      </div>
-      <div class="grid_6 omega">
-        <div class="hall">
-          <%= link_to "Criar nova conta", signup_url, :class => "important signup" %>
-          <hr/>
+      <%= form_for @user_session, :html => { :class => "form-common highlightable"} ,:url => sessions_path do |f| %>
 
-          <%= form_for @user_session, :html => { :class => "form-common highlightable"} ,:url => sessions_path do |f| %>
+        <%= field_set_tag do %>
 
-            <%= field_set_tag do %>
+          <%= f.label :login, "Login ou e-mail:", :class => "small" %>
+          <%= f.text_field :login, :class => "small" %>
+          <%= error_for :user_session, :login %>
 
-              <%= f.label :login, "Login ou e-mail:", :class => "small" %>
-              <%= f.text_field :login, :class => "small" %>
-              <%= error_for :user_session, :login %>
+          <%= f.label :password, "Senha:" ,:class => "small" %>
+          <%= f.password_field :password, :class => "small" %>
+          <%= error_for :user_session, :password %>
 
-              <%= f.label :password, "Senha:" ,:class => "small" %>
-              <%= f.password_field :password, :class => "small" %>
-              <%= error_for :user_session, :password %>
-
-              <%= field_set_tag "", :class => "inline" do %>
-                <%= f.check_box :remember_me %>
-                <%= f.label :remeber_me, "Manter-me logado" %>
-              <% end %>
-
-              <%= f.submit "Avançar" %>
-            <% end %>
-
+          <%= field_set_tag "", :class => "inline" do %>
+            <%= f.check_box :remember_me %>
+            <%= f.label :remeber_me, "Manter-me logado" %>
           <% end %>
 
-        </div>
-        <%= "Esqueceu seu login?" %>
-        <%= link_to "Clique aqui para recuperar o login",
-          forgot_username_url %>
-        <%= "Esqueceu sua senha?" %>
-        <%= link_to "Clique aqui para recuperar a senha",
-          forgot_password_url %>
-      </div>
-    </div>
-    <div id="footer" class="container_16 clearfix">
-      <h1 id="logotipo-footer" class="replacement">
-        <a href="#" title="Página Inicial">Redu: potencializando o talento das pessoas.</a>
-      </h1>
-      <div class="copyright">Copyright 2010 - redu.com.br. Todos os direitos reservados.</div>
+          <%= f.submit "Avançar" %>
+        <% end %>
 
-      <div id="nav-footer">
-        <ul>
-          <li>
-            <a href="">Sobre o Redu</a>
-          </li>
-          <li>
-            <%= link_to "Privacidade", privacy_path %>
-          </li>
-          <li>
-            <%= link_to "Termos de uso", tos_path %>
-          </li>
-          <li>
-            <%= link_to "Contato", contact_path %>
-          </li>
-        </ul>
-      </div><!-- end #nav-footer -->
-    </div><!-- end #footer -->
-  </body>
-</html>
+      <% end %>
+
+    </div>
+    <%= "Esqueceu seu login?" %>
+    <%= link_to "Clique aqui para recuperar o login",
+      forgot_username_url %>
+    <%= "Esqueceu sua senha?" %>
+    <%= link_to "Clique aqui para recuperar a senha",
+      forgot_password_url %>
+  </div>
+</div>

@@ -4,6 +4,7 @@ jQuery(function(){
     $(".flash-message .close-flash").click(function(e){
       $(this).parent().slideToggle();
       $("#content").css("marginTop","20px");
+      $("#home").css("marginTop","40px");
 
       e.preventDefault();
     });
@@ -70,6 +71,8 @@ jQuery(function(){
         explanation += $(this).find("a").attr("title");
 
         $(".new-resource .explanation").html(explanation);
+        // Evita que o explanation fique com o spinner
+        $(".new-resource .explanation").find("a").removeClass("link-loading");
     });
 
     // Adiciona classe selected ao li do recurso clicado

@@ -1604,6 +1604,7 @@
 }
 
 .flash-message.error,
+.flash-message.info,
 .flash-message.notice {
   background-color: #FFEED7;
   border: solid 1px #FBC172;
@@ -4997,6 +4998,7 @@ div.token-input-dropdown {
 
 .link-loading,
 a.link-loading,  /* para sobrepor a precedência de input.important */
+.new-subject .new-resource li a.link-loading, /* para sobrepor a precedência */
 a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 .link-loading:hover {
   background-image:  url("../images/new/loading-horizontal.gif");
@@ -5004,6 +5006,11 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   background-position: left center;
   color: transparent;
   border: none;
+}
+
+/* Apenas para deixar o gif centralizado */
+.new-subject .new-resource li a.link-loading {
+  background-position: center center;
 }
 
 .ui-helper-clearfix:after,

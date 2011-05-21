@@ -108,6 +108,7 @@ class Seminar < ActiveRecord::Base
 
   # Converte o video para FLV (Zencoder)
   def transcode
+    return if Rails.env.development?
     seminar_info = {
       :id => self.id,
       :class => self.class.to_s.tableize,
@@ -118,10 +119,10 @@ class Seminar < ActiveRecord::Base
     }
 
     video_storage = Redu::Application.config.video_transcoded
-    output_path = "s3://" + video_storage[:bucket] + "/" + interpolate(vide_storage[:path], seminar_info)
+    output_path = "s3://" + video_storage[:bucket] + "/" + interpolate(video_storage[:path], seminar_info)
 
     credentials = Redu::Application.config.zencoder_credentials
-    config = Redu::Application.zencoder
+    config = Redu::Application.config.zencoder
     config[:input] = self.original.url
     config[:output][:url] = output_path
     config[:output][:thumbnails][:base_url] = File.dirname(output_path)

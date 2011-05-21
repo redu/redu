@@ -2,7 +2,8 @@
   <%= form_for @seminar, :as => :seminar,
     :url => space_subject_lectures_path,
     :remote => true,
-    :html => { :id => "seminar-form", :class => "form-common" } do |f| %>
+    :html => { :id => "seminar-form", :class => "form-common",
+               :multipart => true } do |f| %>
 
     <%= field_set_tag do %>
       <%= label_tag :name, t( :title ) %>
@@ -27,15 +28,14 @@
         </div>
       <% end %>
 
-      <%= field_set_tag nil, :id => 'upload_resource_field', :class => 'uploadify',
+      <%= field_set_tag nil, :id => 'upload_resource_field',
         :style => 'display: none;' do %>
         <%= f.label :original, "Upload" %>
         <%= f.file_field :original  %>
         <span class="tip">Tamanho máximo: 100 mb</span>
         <%= error_for :seminar, :original %>
 
-        <%= uploadify_cancel "Parar", :class => "vanilla cancel" %>
-        <%= uploadify_submit "Enviar material", :style => "display: none;"  %>
+        <%= f.submit "Enviar material" %>
       <% end %>
 
       <%= field_set_tag nil, :id => 'external_resource_field' do %>
@@ -61,8 +61,6 @@
       <%= link_to_function "Cancelar",
         "$('#seminar-form').remove(); return false;",
         :class => 'cancel vanilla' %>
-      <%= image_tag 'spinner.gif', :id => 'spinner-form-seminar',
-        :style => 'display: none;' %>
     <% end %>
   <% end %>
 </div>

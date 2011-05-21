@@ -47,8 +47,9 @@ class BaseController < ApplicationController
     respond_to do |format|
       format.html do
         if current_user
-          redirect_to home_user_path(current_user)
+          redirect_to home_user_path(current_user) and return
         end
+          render :layout => 'clean'
       end
     end
   end

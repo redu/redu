@@ -386,7 +386,7 @@ class UsersController < BaseController
     if @user
       flash[:notice] = t :activation_email_resent_message
       UserNotifier.signup_notification(@user).deliver
-      redirect_to login_path and return
+      redirect_to application_path and return
     else
       flash[:notice] = t :activation_email_not_sent_message
     end
