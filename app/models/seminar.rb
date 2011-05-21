@@ -119,7 +119,7 @@ class Seminar < ActiveRecord::Base
     }
 
     video_storage = Redu::Application.config.video_transcoded
-    output_path = "s3://" + video_storage[:bucket] + "/" + interpolate(vide_storage[:path], seminar_info)
+    output_path = "s3://" + video_storage[:bucket] + "/" + interpolate(video_storage[:path], seminar_info)
 
     credentials = Redu::Application.config.zencoder_credentials
     config = Redu::Application.zencoder
