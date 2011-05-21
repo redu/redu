@@ -1799,6 +1799,7 @@
   clear: both;
   color: #F37B38;
   font-size: .9em;
+  margin: 0;
   margin-bottom: 10px;
 }
 
@@ -1822,8 +1823,9 @@
   position: absolute;
   top: 0;
   left: 0;
+  margin: 0;
   height: 30px;
-  width: 200px;
+  width: 190px;
   cursor: pointer;
 
   filter: alpha(opacity=1);
@@ -1834,6 +1836,8 @@
 #folder-admin .new-folder-inner input[type=submit],
 #folder-admin .new-file-inner input[type=submit] {
   float: right;
+  clear: none;
+  margin: 0;
 }
 
 a.button,
