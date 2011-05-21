@@ -168,6 +168,9 @@ GEM
     xml-simple (1.0.15)
     yui-compressor (0.9.6)
       POpen4 (>= 0.1.4)
+    zencoder (2.3.1)
+      activesupport
+      i18n
 
 PLATFORMS
   ruby
@@ -204,3 +207,4 @@ DEPENDENCIES
   translate_routes
   whenever
   will_paginate (~> 3.0.pre2)
+  zencoder
