@@ -212,16 +212,19 @@ jQuery(function(){
     });
 
     $("a[data-remote=true]").live('ajax:before', function(){
+        $(this).css('width', $(this).width());
         $(this).addClass("link-loading");
     });
 
     $("a[data-remote=true]").live('ajax:complete', function(){
+        $(this).css('width', 'auto');
         $(this).removeClass("link-loading");
     });
 
     $.fn.loadingStart = function(){
       return this.each(function(){
           $bt = $(this);
+          $bt.css('width', $bt.width());
           $bt.addClass("bt-loading");
       });
     };
@@ -229,6 +232,7 @@ jQuery(function(){
     $.fn.loadingComplete = function(){
       return this.each(function(){
           $bt = $(this);
+          $bt.css('width', 'auto');
           $bt.removeClass("bt-loading");
       });
     };

@@ -4982,27 +4982,18 @@ div.token-input-dropdown {
 .icon-x-red_8_8{ background-position: -6831px 3px;  }
 
 /* Spinner genérico */
-.bt-loading {
-  background-image: url("../images/new/spinner.gif");
-  background-position: center center;
-  background-repeat: no-repeat;
-  color: transparent;
-
-  filter: alpha(opacity = 0);
-}
-
-/* Spinner para botoes em formulários */
+.bt-loading,
 .form-common .bt-loading,
 .form-loader .bt-loading,
 * .form-loader input.bt-loading, /* para sobrepor a precedência de input.important */
 .form-loader input.bt-loading:hover,
 .form-common .bt-loading:hover {
-  background: url("../images/new/spinner.gif") no-repeat center center;
-  color: transparent;
-  background-color: #f1f0f0;
+  background: #f1f0f0 url("../images/new/spinner.gif") no-repeat center center;
   border: 1px solid #cccbcb;
-
-  filter: alpha(opacity = 0);
+  text-indent: -9999px;
+  overflow: hidden;
+  display: table-cell;
+  filter: none;
 }
 
 .link-loading,
@@ -5014,9 +5005,9 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   background-repeat: no-repeat;
   background-position: left center;
   border: none;
-  color: transparent;
-
-  filter: alpha(opacity = 0);
+  text-indent: -9999px;
+  overflow: hidden;
+  display: table-cell;
 }
 
 /* Apenas para deixar o gif centralizado */
