@@ -5,17 +5,17 @@
     <title><%= raw(page_title) %></title>
     <%= csrf_meta_tag %>
     <%= include_stylesheets :common %>
+    <%= javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js' %>
     <%= include_javascripts :common %>
+    <!--[if (gte IE 6)&(lte IE 8)]>
+      <%= include_javascripts :ie %>
+    <![endif]-->
     <% if controller_name == 'subjects' %>
       <% if action_name == 'index' or action_name == 'new' %>
         <%= javascript_include_tag :ckeditor %>
       <% end %>
     <% end %>
     <%= yield :header_scripts_and_styles %>
-    <!--[if (gte IE 6)&(lte IE 8)]>
-      <%= include_javascripts :ie %>
-    <![endif]-->
-
     <link href='http://fonts.googleapis.com/css?family=Copse' rel='stylesheet' type='text/css' />
   </head>
    <body>
