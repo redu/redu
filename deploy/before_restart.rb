@@ -1,5 +1,5 @@
-if (Rails.env.staging? == "staging")
+if (node[:environment][:name].inclue?("staging"))
   run "echo Syncing public dir with S3:"
-  run "bundle exec jammit-s3 --config config/assets-#{Rails.env.to_s}.yml"
-  run "ln -sf config/assets-#{Rails.env.to_s}.yml config/assets.yml"
+  run "bundle exec jammit-s3 --config config/assets-#{node[:environment][:name]}.yml"
+  run "ln -sf config/assets-#{node[:environment][:name]}.yml config/assets.yml"
 end
