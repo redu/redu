@@ -224,7 +224,6 @@ jQuery(function(){
     $.fn.loadingStart = function(){
       return this.each(function(){
           $bt = $(this);
-          $bt.css('width', $bt.width());
           $bt.addClass("bt-loading");
       });
     };
@@ -232,7 +231,6 @@ jQuery(function(){
     $.fn.loadingComplete = function(){
       return this.each(function(){
           $bt = $(this);
-          $bt.css('width', 'auto');
           $bt.removeClass("bt-loading");
       });
     };

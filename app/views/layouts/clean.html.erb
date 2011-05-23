@@ -5,6 +5,9 @@
     <title><%= raw(page_title) %></title>
     <%= csrf_meta_tag %>
     <%= include_stylesheets :common %>
+    <!--[if (gte IE 6)&(lte IE 8)]>
+      <%= include_stylesheets :ie %>
+    <![endif]-->
     <link href='http://fonts.googleapis.com/css?family=Copse' rel='stylesheet' type='text/css' />
     <%= javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js' %>
     <%= include_javascripts :common %>

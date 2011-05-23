@@ -24,7 +24,7 @@ $(function(){
     });
 
     $("#do_lecture").live("ajax:before ajax:complete", function(){
-        $(this).find("label[for='Aula_finalizada']").loadingToggle();
+        $(this).find("label[for='Aula_finalizada']").toggleClass("link-loading");
     });
 });
 

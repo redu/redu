@@ -4990,10 +4990,7 @@ div.token-input-dropdown {
 .form-common .bt-loading:hover {
   background: #f1f0f0 url("../images/new/spinner.gif") no-repeat center center;
   border: 1px solid #cccbcb;
-  text-indent: -9999px;
-  overflow: hidden;
-  display: table-cell;
-  filter: none;
+  color: transparent;
 }
 
 .link-loading,
@@ -5005,9 +5002,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   background-repeat: no-repeat;
   background-position: left center;
   border: none;
-  text-indent: -9999px;
-  overflow: hidden;
-  display: table-cell;
+  color: transparent;
 }
 
 /* Apenas para deixar o gif centralizado */

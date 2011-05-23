@@ -31,5 +31,7 @@ stylesheets:
     - public/stylesheets/new-style.css
     - public/stylesheets/tipTip.css
     - public/stylesheets/ajaxful_rating.css
+  ie:
+    - public/stylesheets/ie.css
 
 
