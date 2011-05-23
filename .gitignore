@@ -14,3 +14,4 @@ public/system/*/*
 *.swo
 .DS_Store
 Gemfile.local.rb
+public/assets/*
