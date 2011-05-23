@@ -59,7 +59,7 @@ class Ability
       :waiting, :to => :manage
     alias_action :download_attachment, :rate, :done,
       :to => :read
-    alias_action :unpublished_preview, :to => :view
+    alias_action :unpublished_preview, :to => :preview
 
     # Exam
     alias_action :cancel, :add_question, :remove_question, :sort_question,
@@ -82,11 +82,7 @@ class Ability
     alias_action :confirm, :address, :pay, :upgrade, :to => :manage
 
     # Todos podem ver o preview
-    publishable = [Environment, Course, Space, Subject] # Coisas que tem published
-
-    can :view, publishable do |object|
-      object.published?
-    end
+    can :preview, [Course, Environment, Subject], :published => true
 
     # Todos podem criar usuários
     can :create, User
@@ -106,8 +102,6 @@ class Ability
       can :read, :all do |object|
         user.can_read? object
       end
-
-      can :preview, [Course, Environment], :published => true
 
       can :create, Environment
       can :join, Course
