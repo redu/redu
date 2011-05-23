@@ -31,6 +31,7 @@ gem 'ckeditor', '3.4.2.pre'
 gem 'jammit-s3'
 gem 'whenever', :require => false
 gem 'remotipart', '>= 0.3.4'
+gem 'zencoder'
 
 # Gems específicos de algum ambiente
 group :development, :test do

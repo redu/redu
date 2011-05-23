@@ -113,6 +113,7 @@
 
 #nav-account li .edit:hover {
   background: transparent;
+  filter: alpha(opacity = 0);
 }
 
 #content {
@@ -1799,6 +1800,7 @@
   clear: both;
   color: #F37B38;
   font-size: .9em;
+  margin: 0;
   margin-bottom: 10px;
 }
 
@@ -1822,8 +1824,9 @@
   position: absolute;
   top: 0;
   left: 0;
+  margin: 0;
   height: 30px;
-  width: 200px;
+  width: 190px;
   cursor: pointer;
 
   filter: alpha(opacity=1);
@@ -1834,6 +1837,8 @@
 #folder-admin .new-folder-inner input[type=submit],
 #folder-admin .new-file-inner input[type=submit] {
   float: right;
+  clear: none;
+  margin: 0;
 }
 
 a.button,
@@ -4977,23 +4982,15 @@ div.token-input-dropdown {
 .icon-x-red_8_8{ background-position: -6831px 3px;  }
 
 /* Spinner genérico */
-.bt-loading {
-  background-image: url("../images/new/spinner.gif");
-  background-position: center center;
-  background-repeat: no-repeat;
-  color: transparent;
-}
-
-/* Spinner para botoes em formulários */
+.bt-loading,
 .form-common .bt-loading,
 .form-loader .bt-loading,
 * .form-loader input.bt-loading, /* para sobrepor a precedência de input.important */
 .form-loader input.bt-loading:hover,
 .form-common .bt-loading:hover {
-  background: url("../images/new/spinner.gif") no-repeat center center;
-  color: transparent;
-  background-color: #f1f0f0;
+  background: #f1f0f0 url("../images/new/spinner.gif") no-repeat center center;
   border: 1px solid #cccbcb;
+  color: transparent;
 }
 
 .link-loading,
@@ -5004,8 +5001,8 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   background-image:  url("../images/new/loading-horizontal.gif");
   background-repeat: no-repeat;
   background-position: left center;
-  color: transparent;
   border: none;
+  color: transparent;
 }
 
 /* Apenas para deixar o gif centralizado */

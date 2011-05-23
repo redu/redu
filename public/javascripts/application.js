@@ -212,10 +212,12 @@ jQuery(function(){
     });
 
     $("a[data-remote=true]").live('ajax:before', function(){
+        $(this).css('width', $(this).width());
         $(this).addClass("link-loading");
     });
 
     $("a[data-remote=true]").live('ajax:complete', function(){
+        $(this).css('width', 'auto');
         $(this).removeClass("link-loading");
     });
 

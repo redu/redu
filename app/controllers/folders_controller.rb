@@ -48,9 +48,8 @@ class FoldersController < BaseController
         end
         format.js do
             list
-            render :update do |page|
-              page.replace_html  'materials', :partial => 'folders/index'
-            end
+            render :partial => 'folders/index'
+              #page.replace_html  'materials', :partial => 'folders/index'
         end
       else
         format.html {
