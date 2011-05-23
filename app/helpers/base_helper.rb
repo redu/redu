@@ -108,7 +108,9 @@ module BaseHelper
       when 'myfile'
         @space = item.statusable
         @myfile = item.logeable
-        link_obj = link_to @myfile.attachment_file_name, download_space_folder_url(@space, @myfile)
+        link_obj = link_to @myfile.attachment_file_name,
+          download_space_folder_url(@space, @myfile.folder,
+                                    :file_id => @myfile)
         @activity =  "adicionou o arquivo #{link_obj} a disciplina #{link_to @space.name, @space}"
       else
           @activity = " atividade? "
