@@ -1,10 +1,12 @@
 environments:
-  production:
+  production: &production
     copy_exclude:
       - .git
     branch: production
     migrate: false
     migration_command: rake db:migrate --trace
+  production_rails3:
+    <<: *production
   staging: &staging
     copy_exclude:
       - .git
