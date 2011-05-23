@@ -1,0 +1,4 @@
+var $message = $("<span/>", { "class" : "reinvited" }).text("Convite reenviado");
+
+$("#invite-<%= @invitation_id %> .reinvite").replaceWith($message);
+$("#invite-<%= @invitation_id %> span.date").text("<%= time_ago_in_words Time.now %>");

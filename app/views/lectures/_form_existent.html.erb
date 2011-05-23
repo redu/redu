@@ -1,9 +1,8 @@
 <div id="lecture_form">
-  <% form_remote_for [@space, @subject, @lecture],
-    :loading  => "$('#spinner-form-existent').show();",
-    :success  => "$('#spinner-form-existent').hide();",
-    :html => { :id => "existent-form", :class => "common" } do |f| %>
-    <% field_set_tag do %>
+  <%= form_for [@space, @subject, @lecture], :remote => true,
+    :html => { :id => "existent-form", :class => "form-common" } do |f| %>
+    <%= field_set_tag do %>
+    <%= f.label :lecture_id, "Recurso:" %>
       <% if user_existent_lectures.empty? %>
         <div class="box_notice">Você não possui nenhuma aula. Crie uma nova!</div>
       <% else %>
@@ -14,8 +13,6 @@
       <%= link_to_function "Cancelar",
         "$('#existent-form').remove(); return false;",
         :class => 'cancel vanilla' %>
-      <%= image_tag 'spinner.gif', :id => 'spinner-form-existent',
-        :style => 'display: none;' %>
     <% end %>
   <% end %>
 </div>

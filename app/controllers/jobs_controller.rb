@@ -1,10 +1,10 @@
 class JobsController < BaseController
-  require 'open-uri'  
+  require 'open-uri'
   before_filter :authenticate
 
   def notify
     job_id = params[:job][:id]
-    seminar = Seminar.find(:first, :conditions => ["job = ?", job_id])
+    seminar = Seminar.where(:job => job_id).first
 
     if seminar and seminar.state != 'converted'
       if params[:job][:state] == 'finished'
@@ -24,7 +24,8 @@ class JobsController < BaseController
 
   def authenticate
     authenticate_with_http_basic do |username, password|
-      username == ZENCODER_CREDENTIALS[:username] && password == ZENCODER_CREDENTIALS[:password]
+      credentials = Redu::Application.config.zencoder_credentials
+      username == credentials[:username] && password == credentials[:password]
     end
   end
 end

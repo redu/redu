@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'authlogic/test_case'
+include Authlogic::TestCase
 
 describe UserCourseInvitationsController do
   before do
@@ -11,8 +12,8 @@ describe UserCourseInvitationsController do
     before do
       course = Factory(:course)
       @invite = course.invite_by_email("email@example.com")
-      @params = {:locale => 'pt-BR', :environment_id => course.environment.id,
-        :course_id => course.id, :id => @invite.id }
+      @params = {:locale => 'pt-BR', :environment_id => course.environment.path,
+        :course_id => course.path, :id => @invite.id }
     end
 
     context "when the user is logged in" do

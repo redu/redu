@@ -27,7 +27,7 @@ class EnvironmentsController < BaseController
       :order => 'name ASC',
       :limit => 4,
       :include => :audiences,
-      :per_page => AppConfig.items_per_page
+      :per_page => Redu::Application.config.items_per_page
     }
 
     if can? :manage, @environment
@@ -38,7 +38,7 @@ class EnvironmentsController < BaseController
 
     respond_to do |format|
       format.html
-      format.js
+      format.js { render_endless 'courses/item', @courses, '#courses_list' }
       format.xml  { render :xml => @environment }
     end
   end
@@ -72,7 +72,7 @@ class EnvironmentsController < BaseController
       respond_to do |format|
         format.html { render :new }
       end
-    when "2"  # tela dos forms
+    when "2" # tela dos forms
       @environment.valid?
       @plan = Plan.from_preset(params[:plan].to_sym)
       @plan = params[:plan] if @plan.valid?
@@ -112,24 +112,16 @@ class EnvironmentsController < BaseController
           @environment.courses.first.create_quota
           if @plan.price > 0
             @plan.create_invoice_and_setup
-            format.js do
-              render :update do |page|
-                page.remove 'final-button'
-                page.insert_html :bottom, 'pagseguro-button',
-                  (pagseguro_form @plan.create_order,
-                   :submit => "Efetuar pagamento")
-              end
-            end
+            format.js { render :pay }
             format.html do
               redirect_to confirm_plan_path(@plan)
             end
           else
-            flash[:notice] = "Parabens, o seu ambiente de ensino foi criado"
+            format.html do
+              flash[:notice] = "Parabens, o seu ambiente de ensino foi criado"
+            end
             format.js do
-              render :update do |page|
-                page.redirect_to environment_course_path(@environment,
-                                            @environment.courses.first)
-              end
+              render :redirect
             end
           end
         else
@@ -185,11 +177,13 @@ class EnvironmentsController < BaseController
   def admin_courses
     @environment = Environment.find(params[:id])
     @courses = @environment.courses.paginate(:page => params[:page],
-                                             :per_page => AppConfig.items_per_page)
+                                             :per_page => Redu::Application.config.items_per_page)
 
     respond_to do |format|
       format.html
-      format.js
+      format.js do
+        render_endless 'courses/item_admin', @courses, '#course_list'
+      end
     end
   end
 
@@ -199,30 +193,32 @@ class EnvironmentsController < BaseController
         :include => [{ :user => {:user_course_associations => :course} }],
         :page => params[:page],
         :order => 'updated_at DESC',
-        :per_page => AppConfig.items_per_page)
+        :per_page => Redu::Application.config.items_per_page)
 
     respond_to do |format|
       format.html
-      format.js { render :template => "shared/admin_members" }
+      format.js do
+        render_endless 'environments/user_item_admin', @memberships,
+          '#user_list_table'
+      end
     end
   end
 
   def admin_bulletins
     @bulletins = @environment.bulletins.paginate(:page => params[:page],
                                                 :order => 'updated_at DESC',
-                                                :per_page => AppConfig.items_per_page)
+                                                :per_page => Redu::Application.config.items_per_page)
     respond_to do |format|
       format.html
-      format.js
+      format.js do
+        render_endless 'bulletins/item_admin', @bulletins, '#bulletin_list'
+      end
     end
   end
 
   # Remove um ou mais usuários de um Environment destruindo todos os relacionamentos
   # entre usuário e os níveis mais baixos da hierarquia.
   def destroy_members
-    #TODO verificar performance
-    @environment = Environment.find(params[:id], :include => {:courses => :spaces})
-
     # Course.id do environment
     courses = @environment.courses
     # Spaces do environment (unidimensional)
@@ -231,10 +227,9 @@ class EnvironmentsController < BaseController
     users_ids = params[:users].collect{|u| u.to_i} if params[:users]
 
     unless users_ids.empty?
-      User.with_ids(users_ids).all(
-                :include => [:user_environment_associations,
+      User.with_ids(users_ids).includes(:user_environment_associations,
                              :user_course_associations,
-                             :user_space_associations]).each do |user|
+                             :user_space_associations).each do |user|
 
         user.spaces.delete(spaces)
         user.courses.delete(courses)
@@ -256,11 +251,10 @@ class EnvironmentsController < BaseController
 
     @memberships = UserEnvironmentAssociation.with_roles(roles).
                    of_environment(@environment).with_keyword(keyword).
-                   paginate(
-                    :include => [{ :user => {:user_course_associations => :course} }],
-                    :page => params[:page],
+                   includes(:user => [{ :user_course_associations => :course }]).
+                   paginate(:page => params[:page],
                     :order => 'user_environment_associations.updated_at DESC',
-                    :per_page => AppConfig.items_per_page)
+                    :per_page => Redu::Application.config.items_per_page)
 
     respond_to do |format|
       format.js
@@ -272,12 +266,15 @@ class EnvironmentsController < BaseController
     @sidebar_preview = true if params.has_key?(:preview) &&
                               params[:preview] == 'true'
 
-    @users = @environment.users.
-      paginate(:page => params[:page], :order => 'first_name ASC', :per_page => 18)
+    @users = @environment.users.paginate(:page => params[:page],
+                                         :order => 'first_name ASC', :per_page => 18)
 
     respond_to do |format|
       format.html
-      format.js
+      format.js do
+        render_endless 'users/item', @users, '#users_list',
+          {:entity => @environment}
+      end
     end
   end
 end

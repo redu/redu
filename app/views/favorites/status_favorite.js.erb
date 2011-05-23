@@ -1,0 +1,15 @@
+var link = "<%= escape_javascript "#status-#{@favorite.favoritable.id}-rm_favorites_link" %>"
+var old_link = "<%= escape_javascript "#status-#{@favorite.favoritable.id}-favorites_link" %>"
+
+var new_link = "<%= escape_javascript( link_to 'Desfavoritar',
+                                      not_favorite_user_favorite_path(current_user,
+                                        @favorite.favoritable,
+                                        :id => @favorite.favoritable.id,
+                                        :type => @favorite.favoritable.class.to_s),
+                                      :class => 'icon icon-unfavorite-gray_8_8',
+                                      :id => "status-#{@favorite.favoritable.id}-rm_favorites_link",
+                                      :remote => true, :method => :post) %>"
+$(old_link).after(new_link);
+
+$(old_link).remove();
+$(link).show();

@@ -10,17 +10,16 @@ class BulletinsController < BaseController
   def index
     @bulletinable = find_bulletinable
 
-    @bulletins = Bulletin.paginate(:conditions => ["bulletinable_id = ?
-                                   AND bulletinable_type LIKE ?
-                                   AND state LIKE 'approved'",
-                                   @bulletinable.id, @bulletinable.class.to_s],
-                                   :page => params[:page],
-                                   :order => 'created_at DESC',
-                                   :per_page => AppConfig.items_per_page)
+    @bulletins = @bulletinable.bulletins.approved.
+                   paginate(:page => params[:page],
+                   :order => 'created_at DESC',
+                   :per_page => Redu::Application.config.items_per_page)
 
     respond_to do |format|
       format.html
-      format.js
+      format.js do
+        render_endless 'bulletins/item', @bulletins, '#bulletins > ul'
+      end
     end
   end
 

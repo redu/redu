@@ -28,11 +28,9 @@ class StatusesController < BaseController
     @status = Status.new(params[:status])
     @status.in_response_to = responds_to
     @status.user = current_user
+    @status.save
 
     respond_to do |format|
-      if @status.save
-        flash[:notice] = "Atividade enviada com sucesso"
-      end
       format.js
     end
   end

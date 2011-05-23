@@ -2,24 +2,10 @@
   <%= javascript_include_tag :ckeditor %>
 <% end %>
 
-<% if @bulletinable.class.to_s.eql? "Space" %>
-  <%= render :partial => 'spaces/sidebar', :locals => { :space => @bulletinable } %>
-<% else %>
-  <%= render :partial => "environments/sidebar", :locals => { :environment => @bulletinable } %>
-<% end %>
+<%= render :partial => 'bulletins/sidebar', :locals => { :bulletinable => @bulletinable } %>
+
 <div class="main grid_12 omega big-col">
-  <% if @bulletinable.class.to_s.eql? "Space" %>
-    <%= render :partial => "spaces/breadcrumbs", :locals => { :space => @bulletinable } %>
-  <% else %>
-    <%= render :partial => "environments/breadcrumbs", :locals => { :environment => @bulletinable } %>
-  <% end %>
-  <% if @bulletinable.class.to_s.eql? "Space" %>
-    <%= render :partial => 'spaces/header',
-      :locals => { :space => @bulletinable }%>
-  <% else %>
-    <%= render :partial => 'environments/header',
-      :locals => { :environment => @bulletinable }%>
-  <% end %>
+    <%= render :partial => 'bulletins/header', :locals => { :bulletinable => @bulletinable } %>
     <div id="bulletin-edit" class="hierarchy-listing-wrapper">
       <div class="header">
         <h4>Notícia</h4>

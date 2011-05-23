@@ -7,7 +7,6 @@ class SbPost < ActiveRecord::Base
   belongs_to :topic, :counter_cache => true
   belongs_to :space
 
-  format_attribute :body
   before_create { |r| r.forum_id = r.topic.forum_id }
   after_create  { |r| Topic.update_all(['replied_at = ?, replied_by = ?, last_post_id = ?', r.created_at, r.user_id, r.id], ['id = ?', r.topic_id]) }
   after_destroy { |r| t = Topic.find(r.topic_id) ; Topic.update_all(['replied_at = ?, replied_by = ?, last_post_id = ?', t.sb_posts.last.created_at, t.sb_posts.last.user_id, t.sb_posts.last.id], ['id = ?', t.id]) if t.sb_posts.last }
@@ -20,8 +19,8 @@ class SbPost < ActiveRecord::Base
   #after_create :notify_monitoring_users
 
 
-  named_scope :with_query_options, :select => 'sb_posts.*, topics.title as topic_title, forums.name as forum_name', :joins => 'inner join topics on sb_posts.topic_id = topics.id inner join forums on topics.forum_id = forums.id', :order => 'sb_posts.created_at desc'
-  named_scope :recent, :order => 'sb_posts.created_at'
+  scope :with_query_options, select('sb_posts.*, topics.title as topic_title, forums.name as forum_name').joins('inner join topics on sb_posts.topic_id = topics.id inner join forums on topics.forum_id = forums.id').order('sb_posts.created_at desc')
+  scope :recent, order('sb_posts.created_at')
 
   def monitor_topic
     monitorship = Monitorship.find_or_initialize_by_user_id_and_topic_id(user.id, topic.id)

@@ -24,7 +24,7 @@
       <span class="counter">Informações gerais do módulo <%= @subject.title %></span>
     </div>
 
-    <% fake_tabs ["Informações", edit_space_subject_path(@space, @subject), { :class => "icon icon-management-gray_16_16" } ],
+    <%= fake_tabs ["Informações", edit_space_subject_path(@space, @subject), { :class => "icon icon-management-gray_16_16" } ],
       ["Recursos", admin_lectures_order_space_subject_path(@space, @subject), { :class => "icon icon-resource-lightblue_16_16" } ],
       ["Membros", admin_members_space_subject_path(@space, @subject), { :class => "icon icon-members-gray_16_16" } ] do %>
 
@@ -53,7 +53,7 @@
         </div>
 
         <div class="actions">
-          <% form_tag admin_lectures_order_space_subject_path do %>
+          <%= form_tag admin_lectures_order_space_subject_path do %>
             <%= hidden_field_tag 'lectures_ordered', nil, :class => "assets" %>
             <%= submit_tag 'Salvar alterações' %>
           <% end %>

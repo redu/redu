@@ -12,28 +12,27 @@ class Environment < ActiveRecord::Base
   # environment_admins
   has_many :administrators, :through => :user_environment_associations,
     :source => :user,
-    :conditions => [ "user_environment_associations.role_id = ?", 3 ]
+    :conditions => [ "user_environment_associations.role = ?", 3 ]
   # teachers
   has_many :teachers, :through => :user_environment_associations,
     :source => :user,
-    :conditions => [ "user_environment_associations.role_id = ?", 5 ]
+    :conditions => [ "user_environment_associations.role = ?", 5 ]
   # tutors
   has_many :tutors, :through => :user_environment_associations,
     :source => :user,
-    :conditions => [ "user_environment_associations.role_id = ?", 6 ]
+    :conditions => [ "user_environment_associations.role = ?", 6 ]
   has_many :bulletins, :as => :bulletinable, :dependent => :destroy
 
   attr_protected :owner, :published
 
   acts_as_taggable
-  has_attached_file :avatar, PAPERCLIP_STORAGE_OPTIONS
+  has_attached_file :avatar, Redu::Application.config.paperclip
 
   validates_presence_of :name, :path, :initials
   validates_uniqueness_of :name, :path,
     :message => "Precisa ser único"
   validates_length_of :name, :maximum => 40
   validates_length_of :description, :maximum => 400, :allow_blank => true
-  validate :length_of_tags
   validates_length_of :initials, :maximum => 10, :allow_blank => true
   validates_format_of :path, :with => /^[-_.A-Za-z0-9]*$/
 
@@ -54,17 +53,17 @@ class Environment < ActiveRecord::Base
   end
 
   def permalink
-    "#{AppConfig.community_url}/#{self.path}"
+    "#{Redu::Application.config.url}/#{self.path}"
   end
 
   # Muda o papel do usuário levando em conta a hierarquia
   def change_role(user, role)
-    membership = self.user_environment_associations.find(:first,
-                    :conditions => {:user_id => user.id})
-    membership.update_attributes({:role_id => role.id})
+    membership =
+      self.user_environment_associations.where(:user_id => user.id).first
+    membership.update_attributes({:role => role})
 
-      user.user_course_associations.all(
-        :conditions => {:course_id => self.courses}).each do |membership|
+    user.user_course_associations.where(:course_id => self.courses).
+      each do |membership|
         membership.course.change_role(user, role)
       end
   end
@@ -92,20 +91,14 @@ class Environment < ActiveRecord::Base
   def create_environment_association
     UserEnvironmentAssociation.create(:environment => self,
                                       :user => self.owner,
-                                      :role_id => Role[:environment_admin].id)
+                                      :role => Role[:environment_admin])
   end
 
   def create_course_association
     course_assoc = UserCourseAssociation.create(
       :course => self.courses.first,
       :user => self.owner,
-      :role_id => Role[:environment_admin].id)
+      :role => Role[:environment_admin])
       course_assoc.approve!
-  end
-
-  def length_of_tags
-    tags_str = ""
-    self.tags.each {|t|  tags_str += " " + t.name }
-    self.errors.add(:tags, :too_long.l) if tags_str.length > 111
   end
 end

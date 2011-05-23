@@ -1,24 +1,13 @@
 <%# Links de Favoritar e Desfavoritar  %>
-<%= image_tag 'loading_bar.gif', :style => 'display:none;',
-  :id => 'favorite_spinner' %>
 <% if current_user.has_favorite(status) %>
-  <%= link_to_remote('Remover dos favoritos',
-                     :url =>
-  not_favorite_user_favorite_path(current_user,
-                                  status,
-                                  :type => status.class.to_s),
-                                  :loading => "$('#status-#{status.id} > div > .actions #rm_favorites_link').hide(); $('#status-#{status.id} > div > .actions #favorite_spinner').show();" ,
-  :html => {:class => 'icon icon-unfavorite-gray_8_8',
-    :id => 'rm_favorites_link'})
-  %>
+  <%= link_to('Desfavoritar',
+              not_favorite_user_favorite_path(current_user, status, :type => status.class.to_s),
+              :class => 'icon icon-unfavorite-gray_8_8', :id => "status-#{status.id}-rm_favorites_link",
+              :remote => true, :method => :post ) %>
+
 <% else %>
-  <%= link_to_remote('Adicionar a favoritos',
-                     :url =>
-  favorite_user_favorite_path(current_user,
-                              status,
-                              :type => status.class.to_s),
-                              :loading => "$('#status-#{status.id} > div > .actions #favorites_link').hide(); $('#status-#{status.id} > div > .actions #favorite_spinner').show();" ,
-  :html => {:class => 'icon icon-favorite-gray_8_8',
-    :id => 'favorites_link'})
-  %>
+  <%= link_to('Favoritar',
+               favorite_user_favorite_path(current_user, status, :type => status.class.to_s),
+               :class => 'icon icon-favorite-gray_8_8', :id => "status-#{status.id}-favorites_link",
+               :remote => true, :method => :post ) %>
 <% end %>

@@ -6,7 +6,7 @@
     <title><%= page_title %></title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <%= stylesheet_link_tag 'reset.css'	%>
-    <%= stylesheet_link_tag '960.css'	%>    
+    <%= stylesheet_link_tag '960.css'	%>
 		<%= stylesheet_link_tag 'errors.css' %>
 
 </head>
@@ -14,7 +14,7 @@
 <div class="container_16 content clearfix">
 	<h1 id="logo" class="grid_5 push_2"><a href="#" class="replacement">Redu - Rede Social Educacional</a></h1>
 
-	<%= @content_for_layout %>
+	<%= yield %>
 
 </div><!-- end content -->
 
@@ -33,4 +33,3 @@
 </script>
 </body>
 </html>
-

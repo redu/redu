@@ -2,7 +2,6 @@ class RenameCourseToLecture < ActiveRecord::Migration
   def self.up
     # Tables
     rename_table :courses, :lectures
-    rename_table :course_resources, :lecture_resources
     rename_table :course_subjects, :lecture_subjects
 
     # Attributes
@@ -17,7 +16,6 @@ class RenameCourseToLecture < ActiveRecord::Migration
 
   def self.down
     # Tables
-    rename_table :lecture_resources, :course_resources
     rename_table :lecture_subjects,:course_subjects
     rename_table :lectures, :courses
 

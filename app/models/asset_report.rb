@@ -6,12 +6,9 @@ class AssetReport < ActiveRecord::Base
   belongs_to :lecture
   belongs_to :subject
 
-  named_scope :done, :conditions => { :done => true }
-  named_scope :of_subject, lambda { |subject_id|
-    { :conditions => { :subject_id => subject_id } }
-  }
-  named_scope :of_user, lambda { |user_id|
-    {:joins => :student_profile,
-     :conditions => [ "student_profiles.user_id = ?", user_id ] }
+  scope :done, where(:done => true)
+  scope :of_subject, lambda { |subject_id| where(:subject_id => subject_id) }
+  scope :of_user, lambda { |user_id|
+    joins(:student_profile).where("student_profiles.user_id = ?", user_id)
   }
 end

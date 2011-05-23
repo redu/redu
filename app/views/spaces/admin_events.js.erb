@@ -1,0 +1,16 @@
+<% if params[:page_pending] %>
+  items = '<%= escape_javascript render(:partial => 'events/moderate_item_admin',
+                                        :collection => @pending_events) %>'
+  $('#event_moderate_list').append(items);
+
+  endless = '<%= will_paginate @pending_events, :renderer => EndlessRenderer,
+    :param_name => :page_pending, :class => 'endless_pending'%>'
+  $('.endless_pending').replaceWith(endless);
+<% else %>
+  items = '<%= escape_javascript render(:partial => 'events/item_admin',
+                                        :collection => @events) %>'
+  $('#event_list').append(items);
+
+  endless = '<%= will_paginate @events, :renderer => EndlessRenderer %>'
+  $('.endless').replaceWith(endless);
+<% end %>

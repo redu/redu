@@ -3,37 +3,22 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
     <title><%= raw(page_title) %></title>
-    <%= stylesheet_link_tag 'reset.css' %>
-    <%= stylesheet_link_tag '960.css' %>
-    <%= stylesheet_link_tag 'new-fonts.css' %>
-    <%= stylesheet_link_tag 'tipTip.css' %>
-    <%= stylesheet_link_tag 'new-style.css' %>
-    <%= javascript_include_tag 'jquery.js' %>
-    <%= javascript_include_tag 'jquery.tipTip.minified.js' %>
-    <%= javascript_include_tag 'new_common.js' %>
-    <%= javascript_include_tag 'uploadify/jquery.uploadify.v2.1.0.min' %>
-    <%= ajaxful_rating_style %>
+    <%= csrf_meta_tag %>
+    <%= include_stylesheets :common %>
+    <link href='http://fonts.googleapis.com/css?family=Copse' rel='stylesheet' type='text/css' />
+    <%= javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js' %>
+    <%= include_javascripts :common %>
+    <!--[if (gte IE 6)&(lte IE 8)]>
+      <%= include_javascripts :ie %>
+    <![endif]-->
     <% if controller_name == 'subjects' %>
-      <%= javascript_include_tag("uploadify/swfobject") %>
       <% if action_name == 'index' or action_name == 'new' %>
         <%= javascript_include_tag :ckeditor %>
       <% end %>
     <% end %>
-    <% if controller_name == 'lectures' %>
-      <% if (action_name == 'new' || action_name == 'edit') %>
-        <%= javascript_include_tag("uploadify/swfobject") %>
-      <% end %>
-      <% if (action_name == 'show' || action_name == 'edit' ) %>
-        <%= javascript_include_tag 'swfobject'%>
-      <% end %>
-    <% end %>
     <%= yield :header_scripts_and_styles %>
-    <!--[if lt IE 9]>
-    <script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script>
-    <![endif]-->
   </head>
    <body>
-    <%= clicktale_top %>
     <div id="header" class="container_16">
       <h1 id="logotipo" class="grid_3 replacement">
         <a href="<%= application_url %>" title="Página Inicial">Redu: potencializando o talento das pessoas.</a>
@@ -71,7 +56,7 @@
     <%= render :partial => 'shared/flash_message' %>
 
     <div id="content" class="container_16 clearfix">
-      <%= @content_for_layout %>
+      <%= yield :layout %>
     </div><!-- end #content -->
 
     <div id="footer" class="container_16 clearfix">
@@ -98,7 +83,6 @@
         </ul>
       </div><!-- end #nav-footer -->
     </div><!-- end #footer -->
-    <link href='http://fonts.googleapis.com/css?family=Copse' rel='stylesheet' type='text/css' />
     <script type="text/javascript">
 
       var _gaq = _gaq || [];
@@ -114,6 +98,5 @@
 
     </script>
     <%= yield :footer_scripts_and_styles %>
-    <%= clicktale_bottom %>
   </body>
 </html>

@@ -15,7 +15,7 @@
 </div>
 
 <div class="grid_6 push_1">
-  <% field_set_tag 'Tipo de Exame' do %>
+  <%= field_set_tag 'Tipo de Exame' do %>
     <div style="margin-bottom: 20px;">
       <h3><%= radio_button_tag("exam_type", "simple", checked = true, options = {}) %> Exame simples</h3>
       Contém um conjunto de questões e o resultado é exibido ao final do exame.

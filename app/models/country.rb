@@ -13,11 +13,11 @@ class Country < ActiveRecord::Base
   end
 
   def self.find_countries_with_metros
-    MetroArea.find(:all, :include => :country).collect{ |m| m.country }.sort_by{ |c| c.name }.uniq
+    MetroArea.includes(:country).collect{ |m| m.country }.sort_by{ |c| c.name }.uniq
   end
 
   def states
-    State.find(:all, :include => :metro_areas, :conditions => ["metro_areas.id in (?)", metro_area_ids ]).uniq
+    State.includes(:metro_areas).where("metro_areas.id in (?)", metro_area_ids).uniq
   end
 
   def metro_area_ids

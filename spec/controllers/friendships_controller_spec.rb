@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'authlogic/test_case'
+include Authlogic::TestCase
 
 describe FriendshipsController do
 
@@ -32,7 +33,8 @@ describe FriendshipsController do
       @new_user.be_friends_with(@user)
     end
     it "should load all pending friends" do
-      get :pending, :locale => "pt-BR", :user_id => @user.id
+      pending
+      get :pending, :locale => "pt-BR", :user_id => @user.id, :format => :js
       assigns[:friends_pending].should == [@new_user]
     end
   end

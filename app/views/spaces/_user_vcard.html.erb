@@ -1,4 +1,4 @@
-<div class="vcard<%= ( association.role_id == 6) ? ' teacher' : ''%>">
+<div class="vcard<%= ( association.role == 6) ? ' teacher' : ''%>">
     <div class="photo">
         <%= link_to image_tag( association.user.avatar.url(:thumb),
         {:width => "50", :height=>"50", :border => 0 }),  association.user %>

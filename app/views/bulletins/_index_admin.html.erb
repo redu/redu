@@ -1,7 +1,3 @@
-<div class="actions clearfix">
-<%= link_to "Criar nova notícia", new_polymorphic_path([@space || @environment, Bulletin.new]),
-      :class => 'button'%>
-</div>
 <% unless @bulletins.empty? %>
   <table width="100%" id="bulletin_list" class="common spaced">
     <thead>

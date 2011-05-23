@@ -113,6 +113,7 @@
 
 #nav-account li .edit:hover {
   background: transparent;
+  filter: alpha(opacity = 0);
 }
 
 #content {
@@ -1095,6 +1096,14 @@
   scroll: none;
 }
 
+.create-status form .errorMessageField {
+  display: block;
+  clear: both;
+  margin: 5px 0 5px 0px;
+  color: #B2B2B2;
+  font-size: .8em;
+}
+
 .create-status textarea {
   width: 100%;
   height: 25px;
@@ -1109,12 +1118,14 @@
   padding: 5px 3px;
 }
 
-.endless {
+.endless,
+.endless_pending {
   text-align: center;
   margin: 10px 0;
 }
 
-.endless a {
+.endless a,
+.endless_pending a {
   background-color: white;
   border: 1px solid #CCCBCB;
   font-weight: bold;
@@ -1130,12 +1141,16 @@
 
 }
 
-.endless a:after {
+.endless a:after,
+.endless_pending a:after {
   content: "▼";
   padding-left: 5px;
 }
 
-.endless a:hover { text-decoration: none; }
+.endless a:hover,
+.endless_pending a:hover {
+  text-decoration: none;
+}
 
 .statuses {
   font-size: .98em;
@@ -1432,25 +1447,25 @@
 }
 
 #add-resources .resources-wrapper,
-#new_subject .resources-wrapper {
+.new-subject .resources-wrapper {
   border-top: 1px dashed #A8A8A8;
   border-bottom: 1px dashed #A8A8A8;
   padding: 10px 0;
 }
 
 #add-resources .resources,
-#new_subject .resources {
+.new-subject .resources {
   float: left;
 }
 
 #add-resources .resources li,
-#new_subject .resources li {
+.new-subject .resources li {
   padding: 3px 0 3px 20px;
   margin: 5px 0;
 }
 
 #add-resources .resources li .icon,
-#new_subject .resources li .icon {
+.new-subject .resources li .icon {
   width: 16px;
   height: 16px;
   display: block;
@@ -1460,20 +1475,20 @@
 
 #add-resources .resources li a.edit,
 #add-resources .resources li a.delete,
-#new_subject .resources li a.edit,
-#new_subject .resources li a.delete {
+.new-subject .resources li a.edit,
+.new-subject .resources li a.delete {
   font-size: .9em;
 }
 
 #add-resources .new-resource,
-#new_subject .new-resource {
+.new-subject .new-resource {
   float: left;
   width: 550px;
   padding: 15px 0;
 }
 
 #add-resources .new-resource li,
-#new_subject .new-resource li {
+.new-subject .new-resource li {
   background: url("../images/new/new-resource.png") no-repeat -143px 0;
   float: left;
   margin-right: 10px;
@@ -1482,7 +1497,7 @@
   height: 90px;
 }
 
-#new_subject .new-resource li span {
+.new-subject .new-resource li span {
   display: block;
   width: 32px;
   height: 32px;
@@ -1490,7 +1505,7 @@
   margin-top: 10px;
 }
 
-#new_subject .new-resource li a {
+.new-subject .new-resource li a {
   margin: 5px 5px 0 5px;
   display: block;
   color: white;
@@ -1498,18 +1513,18 @@
   font-weight: bold;
 }
 
-#new_subject .new-resource li:hover,
-#new_subject .new-resource li.selected {
+.new-subject .new-resource li:hover,
+.new-subject .new-resource li.selected {
   background-position: 0 0;
 }
 
-#new_subject .new-resource .explanation {
+.new-subject .new-resource .explanation {
   font-size: .9em;
   height: 50px;
   display: block;
 }
 
-#new_subject .new-resource .explanation strong {
+.new-subject .new-resource .explanation strong {
   display: block;
   margin-bottom: 5px;
 }
@@ -1590,6 +1605,7 @@
 }
 
 .flash-message.error,
+.flash-message.info,
 .flash-message.notice {
   background-color: #FFEED7;
   border: solid 1px #FBC172;
@@ -1676,12 +1692,6 @@
   color: #B2B2B2;
   font-style: oblique;
   font-size: 0.9em;
-}
-
-
-/* TODO Remover quando colocar o ícone de accept */
-.friends-requisitions li .actions .accept-friend,
-.courses-requisitions li .actions .accept-invitation {
 }
 
 .courses-requisitions li .actions .waiting {
@@ -1790,6 +1800,7 @@
   clear: both;
   color: #F37B38;
   font-size: .9em;
+  margin: 0;
   margin-bottom: 10px;
 }
 
@@ -1813,8 +1824,9 @@
   position: absolute;
   top: 0;
   left: 0;
+  margin: 0;
   height: 30px;
-  width: 200px;
+  width: 190px;
   cursor: pointer;
 
   filter: alpha(opacity=1);
@@ -1825,11 +1837,14 @@
 #folder-admin .new-folder-inner input[type=submit],
 #folder-admin .new-file-inner input[type=submit] {
   float: right;
+  clear: none;
+  margin: 0;
 }
 
 a.button,
 input[type=submit],
 a.cancel,
+a.die,
 a.remove,
 a.important {
   padding: 9px 10px;
@@ -1846,6 +1861,7 @@ a.important {
 a.button:hover,
 input[type=submit]:hover,
 a.cancel:hover,
+a.die:hover,
 a.remove:hover,
 a.important:hover {
   text-decoration: none;
@@ -1900,7 +1916,8 @@ input[type=submit]:hover {
 }
 
 input[type=submit].cancel,
-a.cancel {
+a.cancel,
+a.die {
   border: 1px solid #cccbcb;
   background: white;
 
@@ -1909,6 +1926,7 @@ a.cancel {
 }
 
 input[type=submit].cancel:hover,
+a.die:hover,
 a.cancel:hover {
   border: 1px solid #4cacd5;
 
@@ -1923,7 +1941,10 @@ a.remove {
   background: white;
 }
 
-a.cancel:hover { text-decoration: none; }
+a.die:hover,
+a.cancel:hover {
+  text-decoration: none;
+}
 
 input[type=submit].clean,
 a.clean {
@@ -2039,7 +2060,7 @@ a.clean {
 }
 
 /* Form common styles */
-form.common {
+.form-common {
   clear: both;
 }
 
@@ -2053,19 +2074,20 @@ form.filter {
   border-radius: 5px;
 }
 
-form.common label,
-form.common .label,
-form.common input[type=text],
-form.common input[type=password],
-form.common input[type=file],
-form.common textarea {
+.form-common label,
+.form-common .label,
+.form-common input[type=text],
+.form-common input[type=password],
+.form-common input[type=file],
+.form-common select,
+.form-common textarea {
   float: left;
   display: block;
   margin-top: 20px;
 }
 
-form.common .label,
-form.common label {
+.form-common .label,
+.form-common label {
   clear: left;
   display: block;
   width: 150px;
@@ -2076,15 +2098,16 @@ form.common label {
   color: #6C6D6E;
 }
 
-form.common .label.small,
-form.common label.small {
+.form-common .label.small,
+.form-common label.small {
   width: 50px;
   text-align: left;
 }
 
-form.common input[type=submit],
-form.common a.remove,
-form.common a.cancel {
+.form-common input[type=submit],
+.form-common a.remove,
+.form-common a.die,
+.form-common a.cancel {
   clear: left;
   float: right;
   display: block;
@@ -2093,13 +2116,15 @@ form.common a.cancel {
 
 form.filter input[type=submit],
 form.filter a.remove,
+form.filter a.die,
 form.filter a.cancel {
   clear: none;
 }
 
-form.common textarea,
-form.common input[type=password],
-form.common input[type=text], ul.holder {
+.form-common textarea,
+.form-common input[type=password],
+.form-common input[type=text],
+ul.holder {
   width: 400px;
   padding: 8px;
 
@@ -2109,39 +2134,39 @@ form.common input[type=text], ul.holder {
   border-radius: 5px;
 }
 
-form.common .cke_editor_bulletin_description_editor,
-form.common .cke_editor_event_description_editor,
-form.common .cke_editor_page_body_editor {
+.form-common .cke_editor_bulletin_description_editor,
+.form-common .cke_editor_event_description_editor,
+.form-common .cke_editor_page_body_editor {
   float: left;
   margin: 25px 0;
 }
 
-form.common .uploadify {
+.form-common .uploadify {
   float: left;
   margin: 25px 0;
   width: 550px;
 }
 
-form.common .uploadify .cancel,
-form.common .uploadify .button {
+.form-common .uploadify .cancel,
+.form-common .uploadify .button {
   float: right;
   clear: left;
   margin: 10px 0 10px 10px;
 }
 
-form.common input[type=password].nano,
-form.common input[type=text].nano {
+.form-common input[type=password].nano,
+.form-common input[type=text].nano {
   width: 50px;
 }
 
-form.common input[type=password].small,
-form.common input[type=text].small {
+.form-common input[type=password].small,
+.form-common input[type=text].small {
   width: 220px;
 }
 
-form.common .char-limit,
-form.common .errorMessageField,
-form.common .tip {
+.form-common .char-limit,
+.form-common .errorMessageField,
+.form-common .tip {
   display: block;
   float: left;
   clear: both;
@@ -2150,22 +2175,22 @@ form.common .tip {
   font-size: .9em;
 }
 
-form.common .path {
+.form-common .path {
   color: #61be80;
   font-weight: bold;
 }
 
-form.common .errorMessageField {
+.form-common .errorMessageField {
   color: #f37b38;
 }
 
-form.common .fieldWithErrors input[type=text],
-form.common .fieldWithErrors input[type=password],
-form.common .fieldWithErrors textarea {
+.form-common .fieldWithErrors input[type=text],
+.form-common .fieldWithErrors input[type=password],
+.form-common .fieldWithErrors textarea {
   border: 1px solid #f9a737;
 }
 
-form.common .errorExplanation {
+.form-common .errorExplanation {
   padding: 10px 20px;
   border: 1px solid #f9a737;
   background-color: #ffeed7;
@@ -2177,38 +2202,29 @@ form.common .errorExplanation {
 
 }
 
-form.common .errorExplanation  p {
+.form-common .errorExplanation  p {
   padding: 5px 0;
   font-style: italic;
 }
 
-form.common .errorExplanation li {
+.form-common .errorExplanation li {
   padding: 3px 10px;
 }
 
-/*
- * Deprecated:
-  form.common fieldset fieldset {
-    float: left;
-    width: 100%;
-    margin: 10px 0;
-  }
-*/
-
-form.common fieldset {
+.form-common fieldset {
   margin-bottom: 20px;
 }
 
-form.common .wide {
+.form-common .wide {
   clear: left;
 }
 
-form.common fieldset.legend legend {
+.form-common fieldset.legend legend {
   color: #F27A38;
   font-size: 1.1em;
 }
 
-form.common .inline {
+.form-common .inline {
   float: left;
   margin: 20px 10px 0 0;
 }
@@ -2217,11 +2233,11 @@ form.filter .inline {
   margin: 5px;
 }
 
-form.common .inline label,
-form.common .inline input[type=text],
-form.common .inline input[type=password],
-form.common .inline input[type=file],
-form.common .inline textarea {
+.form-common .inline label,
+.form-common .inline input[type=text],
+.form-common .inline input[type=password],
+.form-common .inline input[type=file],
+.form-common .inline textarea {
   clear: none;
   float: none;
   display: inline;
@@ -2229,25 +2245,25 @@ form.common .inline textarea {
   margin: 0;
 }
 
-form.common .hidden legend {
+.form-common .hidden legend {
   display: none;
 }
 
-form.common .columns {
+.form-common .columns {
   float: left;
   margin-top: 25px;
   width: 480px;
 }
 
-form.common .inline .columns {
+.form-common .inline .columns {
   margin-top: 0;
 }
 
-form.common .course-plan {
+.form-common .course-plan {
   margin-top: 12px;
 }
 
-form.common .columns .plan-type {
+.form-common .columns .plan-type {
   display: block;
   margin: 13px 55px 0 7px;
   width: 115px;
@@ -2256,21 +2272,21 @@ form.common .columns .plan-type {
   font-weight: bold;
 }
 
-form.common .course-plan .tip {
+.form-common .course-plan .tip {
   float: right;
   margin-left: 0;
 }
 
-form.common .columns .plan-diff {
+.form-common .columns .plan-diff {
   margin-top: 0;
 }
 
-form.common .columns .plan-choices {
+.form-common .columns .plan-choices {
 
 }
 
-form.commom .columns-plan li,
-form.common .columns li {
+.form-commom .columns-plan li,
+.form-common .columns li {
   width: 150px;
   margin-right: 10px;
   float: left;
@@ -2285,7 +2301,7 @@ form.filter .columns {
   float: left;
 }
 
-form.common:after {
+.form-common:after {
   visibility: hidden;
   display: block;
   font-size: 0;
@@ -2294,8 +2310,8 @@ form.common:after {
   height: 0;
 }
 
-* html form.common             { zoom: 1; } /* IE6 */
-*:first-child+html form.common { zoom: 1; } /* IE7 */
+* html .form-common             { zoom: 1; } /* IE6 */
+*:first-child+html .form-common { zoom: 1; } /* IE7 */
 
 table.common {
   width: 100%;
@@ -3083,7 +3099,7 @@ label.focus {
   padding-bottom: 20px;
 }
 
-#course-manage form.common.filter .tip {
+#course-manage .form-common.filter .tip {
   margin-left: 0;
   margin-left: 40px;
 }
@@ -3470,30 +3486,30 @@ div.token-input-dropdown {
   color: #4CACD4;
 }
 
-#clean form.common legend {
+#clean .form-common legend {
   color: #F27A38;
   display: block;
   padding: 20px 0 10px 0;
   font-size: 1.2em;
 }
 
-#clean form.common .important {
+#clean .form-common .important {
   padding: 10px 65px;
   clear: both;
   margin-top: 20px;
   margin-left: 150px;
 }
 
-#clean form.common .tos {
+#clean .form-common .tos {
   width: 400px;
 }
 
-#clean form.common .tos legend {
+#clean .form-common .tos legend {
   float: left;
   margin-right: 100px;
 }
 
-#clean form.common .separator {
+#clean .form-common .separator {
   padding-bottom: 20px;
   border-bottom: 1px dotted #B2B1B2;
   width: 440px;
@@ -3911,13 +3927,16 @@ div.token-input-dropdown {
   border-radius: 5px;
 }
 
-#profile .vcard .add-as-friend {
+.vcard  .add-as-friend:hover,
+.vcard  .add-as-friend {
   width: 72px;
   height: 32px;
   text-indent: -9999px;
   background: url("../images/new/add-as-friend.png") no-repeat;
   margin-right: 5px;
+  border: none;
 }
+
 
 #profile .vcard .send-message {
   width: 72px;
@@ -4101,7 +4120,7 @@ div.token-input-dropdown {
   margin: 5px 0;
 }
 
-#clean form.common .separator {
+#clean .form-common .separator {
   padding-bottom: 20px;
   border-bottom: 1px dotted #B2B1B2;
   width: 440px;
@@ -4605,7 +4624,7 @@ div.token-input-dropdown {
   cursor: pointer;
 }
 
-form.common .question-blue_12_12 {
+.form-common .question-blue_12_12 {
   margin-right: 15px;
 }
 
@@ -4961,6 +4980,40 @@ form.common .question-blue_12_12 {
 .icon-x-orange_16_16{ background-position: -6584px -1792px;  }
 .icon-x-gray_8_8:hover,
 .icon-x-red_8_8{ background-position: -6831px 3px;  }
+
+/* Spinner genérico */
+.bt-loading,
+.form-common .bt-loading,
+.form-loader .bt-loading,
+* .form-loader input.bt-loading, /* para sobrepor a precedência de input.important */
+.form-loader input.bt-loading:hover,
+.form-common .bt-loading:hover {
+  background: #f1f0f0 url("../images/new/spinner.gif") no-repeat center center;
+  border: 1px solid #cccbcb;
+  text-indent: -9999px;
+  overflow: hidden;
+  display: table-cell;
+  filter: none;
+}
+
+.link-loading,
+a.link-loading,  /* para sobrepor a precedência de input.important */
+.new-subject .new-resource li a.link-loading, /* para sobrepor a precedência */
+a.link-loading:hover,  /* para sobrepor a precedência de input.important */
+.link-loading:hover {
+  background-image:  url("../images/new/loading-horizontal.gif");
+  background-repeat: no-repeat;
+  background-position: left center;
+  border: none;
+  text-indent: -9999px;
+  overflow: hidden;
+  display: table-cell;
+}
+
+/* Apenas para deixar o gif centralizado */
+.new-subject .new-resource li a.link-loading {
+  background-position: center center;
+}
 
 .ui-helper-clearfix:after,
 .clearfix:after {

@@ -1,4 +1,0 @@
-page.insert_html :bottom, "members", :partial => 'spaces/user_vcard',
-  :collection => @members, :as => :association
-page.replace ".endless",
-  (will_paginate @members, :renderer => EndlessRenderer)

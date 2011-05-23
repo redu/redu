@@ -9,13 +9,12 @@ class Subject < ActiveRecord::Base
     :include => :student_profiles,
     :conditions => ["student_profiles.graduaded = 1"]
   has_many :teachers, :through => :enrollments, :source => :user,
-    :conditions => ["enrollments.role_id = ?", 5] # Teacher
+    :conditions => ["enrollments.role = ?", 5] # Teacher
   has_many :statuses, :as => :statusable, :dependent => :destroy
   has_many :logs, :as => :logeable, :dependent => :destroy, :class_name => 'Status'
 
-  named_scope :recent, lambda {
-    { :conditions => ['updated_at > ?', 1.week.ago] }
-  }
+  scope :recent, lambda { where('updated_at > ?', 1.week.ago) }
+  scope :visible, lambda { where('visible = ?', true) }
 
   attr_protected :owner, :visible, :finalized
 
@@ -32,7 +31,7 @@ class Subject < ActiveRecord::Base
   # Matricula o usuário com o role especificado. Retorna true ou false
   # dependendo do resultado
   def enroll(user, role = Role[:member])
-    enrollment = self.enrollments.create(:user => user, :role_id => role.id)
+    enrollment = self.enrollments.create(:user => user, :role => role)
     enrollment.valid?
   end
 
@@ -70,18 +69,16 @@ class Subject < ActiveRecord::Base
   def recent_activity(page = 1)
     self.statuses.not_response.
       paginate(:page => page, :order => 'created_at DESC',
-               :per_page => AppConfig.items_per_page)
+               :per_page => Redu::Application.config.items_per_page)
   end
 
   def convert_lectureables!
-    documents = self.lectures.find(:all,
-      :include => "lectureable",
-      :conditions => {:lectureable_type => ["Document"]})
+    documents = self.lectures.includes(:lectureable).
+                  where(:lectureable_type => ["Document"])
     documents.each { |d| d.lectureable.upload_to_scribd }
 
-    seminars = self.lectures.find(:all,
-      :include => "lectureable",
-      :conditions => {:lectureable_type => ["Seminar"]})
+    seminars = self.lectures.includes(:lectureable).
+                  where(:lectureable_type => ["Seminar"])
     seminars.each do |s|
       s.lectureable.convert! if s.lectureable.need_transcoding?
     end

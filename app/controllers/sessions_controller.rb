@@ -1,4 +1,5 @@
 class SessionsController < BaseController
+  layout 'clean'
   before_filter :less_than_30_days_of_registration_required, :only => :create
 
   def index
@@ -25,7 +26,7 @@ class SessionsController < BaseController
           invite.accept!
         end
 
-        flash[:notice] = :thanks_youre_now_logged_in.l
+        flash[:notice] = t :thanks_youre_now_logged_in
         redirect_to home_user_path(current_user)
       else
         # Se tem um token de convite para o curso, atribui as variáveis
@@ -35,9 +36,9 @@ class SessionsController < BaseController
             params[:invitation_token])
           @course = @user_course_invitation.course
           @environment = @course.environment
-          render :layout => 'clean', :template => 'user_course_invitations/show'
+          render :template => 'user_course_invitations/show'
         else
-          render :layout => false, :template => 'base/site_index'
+          render :template => 'base/site_index'
         end
       end
     end

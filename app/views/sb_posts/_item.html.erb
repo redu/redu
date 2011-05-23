@@ -7,7 +7,7 @@
       <span class=""><%= time_ago_in_words post.created_at %></span>
       <ul>
         <li><%= link_to truncate(post.user.display_name, :length => 15) %></li>
-        <li><%= pluralize post.user.sb_posts_count, :post.l %></li>
+        <li><%= pluralize post.user.sb_posts_count, t(:post) %></li>
         <% if can? :manage, post %>
           <li><%= link_to 'Editar Postagem', edit_space_forum_topic_sb_post_path(@space, @topic, post) %></li>
           <li><%= link_to 'Deletar Postagem', space_forum_topic_sb_post_path(@space, @topic, post),

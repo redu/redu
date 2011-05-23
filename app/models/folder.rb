@@ -26,7 +26,7 @@ class Folder < ActiveRecord::Base
     folders = []
     if self.can_be_read_by(logged_in_user)
       #if logged_in_user.can_read(self.id)
-      self.children.find(:all, :order => order).each do |sub_folder|
+      self.children.order(order).each do |sub_folder|
         folders << sub_folder if sub_folder.can_be_read_by(logged_in_user)#logged_in_user.can_read(sub_folder.id)
       end
     end
@@ -41,7 +41,7 @@ class Folder < ActiveRecord::Base
     files = []
     #    if logged_in_user.can_read(self.id)
     if self.can_be_read_by(logged_in_user)
-      files = self.myfiles.find(:all, :order => order)
+      files = self.myfiles.order(order).all
     end
 
     # return the files:

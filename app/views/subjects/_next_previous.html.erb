@@ -23,7 +23,7 @@
             :class => "button"%>
         <% end %>
       <% else %>
-        <% form_tag next_lecture_space_subject_path(@space, @subject),
+        <%= form_tag next_lecture_space_subject_path(@space, @subject),
           :class => "lecture-control" do %>
           <%= hidden_field_tag :lecture_id, assetable.id %>
           <%= check_box_tag :done, "1", :checked => true %>

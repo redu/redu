@@ -1,4 +1,4 @@
-Seja bem-vindo ao <%= AppConfig.community_name %>, <%= @user.login %>!
+Seja bem-vindo ao <%= Redu::Application.config.name %>, <%= @user.login %>!
 Sua conta foi criada, mas você ainda precisa ativá-la antes de efetuar o log in.
 
   Seu usuário (login): <%= @user.login %>
@@ -9,7 +9,7 @@ Use este link para ativar a sua conta:
 
 Não consegue clicar no link? Apenas copie e cole-o na barra de endereço do seu navegador.
 
-Perguntas? Fácil: <%= AppConfig.support_email %>.
+Perguntas? Fácil: <%= Redu::Application.config.email %>.
 
-Esperamos você no <%= AppConfig.community_name %> em breve!
-Equipe <%= AppConfig.community_name %> 
+Esperamos você no <%= Redu::Application.config.name %> em breve!
+Equipe <%= Redu::Application.config.name %>

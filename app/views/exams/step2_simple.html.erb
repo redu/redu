@@ -226,7 +226,7 @@ function removeAllMce(){
    </tbody></table>
  </div>
 
- <% form_for :exam, @exam, :url => { :action => "create" },  :html => {:id => 'exam_form'} do |f| %>
+ <%= form_for :exam, @exam, :url => { :action => "create" },  :html => {:id => 'exam_form'} do |f| %>
 
    <div class="grid_16">
      <%= f.error_messages %>
@@ -277,7 +277,7 @@ function removeAllMce(){
 
        <% @exam.questions.each_with_index do |question, idx|%>
 
-         <% f.fields_for :questions, question do |builder| %>
+         <%= f.fields_for :questions, question do |builder| %>
            <%= render "question_fields", :f => builder %>
          <% end %>
 

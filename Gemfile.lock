@@ -1,118 +1,173 @@
 GIT
-  remote: git://github.com/astrails/clicktale.git
-  revision: 67e35a99328c9fd0cc50fcf5951a439ef55aec5d
+  remote: git://github.com/alto/aasm.git
+  revision: a6f77b5fa4981d92695e28d5984af56f1d79388c
   specs:
-    clicktale (0.0.1)
+    aasm (2.2.0)
 
 GIT
-  remote: git://github.com/collectiveidea/delayed_job.git
-  revision: 98bb0481ca0022f634e48c4fcbb64232bd830c6a
-  branch: v2.0
+  remote: git://github.com/edgarjs/ajaxful-rating.git
+  revision: 81b563ef4e4f7937b769ea64b589d990dc833b43
+  branch: rails3
   specs:
-    delayed_job (2.0.7)
-      activesupport (~> 2.0)
-      daemons (= 1.0.10)
-
-GIT
-  remote: git://github.com/guiocavalcanti/scribd_fu.git
-  revision: 11dcf9d8f7fc87be85bb69b5ca62a4f50e563a83
-  specs:
-    scribd_fu (2.0.9)
-      rscribd
+    ajaxful_rating (3.0.0.beta3)
 
 GEM
   remote: http://rubygems.org/
   remote: http://gems.github.com/
   specs:
-    aanand-deadweight (0.1.0)
-      css_parser
-      hpricot
+    POpen4 (0.1.4)
+      Platform (>= 0.4.0)
+      open4
+    Platform (0.4.0)
     aaronh-chronic (0.3.9)
     abstract (1.0.0)
-    actionmailer (2.3.8)
-      actionpack (= 2.3.8)
-    actionpack (2.3.8)
-      activesupport (= 2.3.8)
-      rack (~> 1.1.0)
-    activerecord (2.3.8)
-      activesupport (= 2.3.8)
-    activeresource (2.3.8)
-      activesupport (= 2.3.8)
-    activesupport (2.3.8)
-    adzap-ar_mailer (2.1.8)
-    authlogic (2.1.6)
-      activesupport
+    actionmailer (3.0.7)
+      actionpack (= 3.0.7)
+      mail (~> 2.2.15)
+    actionpack (3.0.7)
+      activemodel (= 3.0.7)
+      activesupport (= 3.0.7)
+      builder (~> 2.1.2)
+      erubis (~> 2.6.6)
+      i18n (~> 0.5.0)
+      rack (~> 1.2.1)
+      rack-mount (~> 0.6.14)
+      rack-test (~> 0.5.7)
+      tzinfo (~> 0.3.23)
+    active_enum (0.9.1)
+    activemodel (3.0.7)
+      activesupport (= 3.0.7)
+      builder (~> 2.1.2)
+      i18n (~> 0.5.0)
+    activerecord (3.0.7)
+      activemodel (= 3.0.7)
+      activesupport (= 3.0.7)
+      arel (~> 2.0.2)
+      tzinfo (~> 0.3.23)
+    activeresource (3.0.7)
+      activemodel (= 3.0.7)
+      activesupport (= 3.0.7)
+    activesupport (3.0.7)
+    acts-as-taggable-on (2.0.6)
+    ar_mailer_rails3 (2.1.12)
+    arel (2.0.9)
+    authlogic (3.0.2)
+      activerecord (~> 3.0.7)
+      activerecord (~> 3.0.7)
     aws-s3 (0.6.2)
       builder
       mime-types
       xml-simple
-    builder (3.0.0)
-    cancan (1.4.1)
-    cgi_multipart_eof_fix (2.5.0)
+    builder (2.1.2)
+    cancan (1.6.4)
+    ckeditor (3.4.2.pre)
+      mime-types (>= 1.16)
+    closure-compiler (1.1.1)
     columnize (0.3.2)
-    css_parser (1.1.6)
-    daemons (1.0.10)
-    desert (0.5.4)
+    daemons (1.1.3)
+    date_validator (0.6.1)
+      activemodel (~> 3.0.0)
+    deep_cloneable (1.2.3)
+    diff-lcs (1.1.2)
+    dynamic_form (1.1.4)
     erubis (2.6.6)
       abstract (>= 1.0.0)
+    eventmachine (0.12.10)
     factory_girl (1.3.3)
-    faker (0.9.5)
-      i18n (~> 0.4)
-    fastthread (1.0.7)
-    gem_plugin (0.2.3)
-    ghazel-daemons (1.0.13)
-    haml (3.0.25)
-    hpricot (0.8.4)
-    htmlentities (4.2.1)
-    i18n (0.4.2)
-    icalendar (1.1.6)
+    factory_girl_rails (1.0.1)
+      factory_girl (~> 1.3)
+      railties (>= 3.0.0)
+    i18n (0.5.0)
+    jammit (0.6.0)
+      closure-compiler (>= 0.1.0)
+      yui-compressor (>= 0.9.1)
+    jammit-s3 (0.6.0.2)
+      jammit (>= 0.5.4)
+      mimemagic (>= 0.1.7)
+      s3 (>= 0.3.7)
+    jquery-rails (1.0.5)
+      railties (~> 3.0)
+      thor (~> 0.14)
     linecache (0.43)
+    mail (2.2.19)
+      activesupport (>= 2.3.6)
+      i18n (>= 0.4.0)
+      mime-types (~> 1.16)
+      treetop (~> 1.4.8)
     mime-types (1.16)
-    mongrel (1.1.5)
-      cgi_multipart_eof_fix (>= 2.4)
-      daemons (>= 1.0.3)
-      fastthread (>= 1.0.1)
-      gem_plugin (>= 0.2.3)
-    mysql (2.8.1)
-    newrelic_rpm (2.13.1)
-    oauth (0.4.4)
-    packet (0.1.15)
-    paperclip (2.3.8)
-      activerecord
-      activesupport
-    parseline (1.0.3)
-    rack (1.1.2)
-    rails (2.3.8)
-      actionmailer (= 2.3.8)
-      actionpack (= 2.3.8)
-      activerecord (= 2.3.8)
-      activeresource (= 2.3.8)
-      activesupport (= 2.3.8)
-      rake (>= 0.8.3)
+    mimemagic (0.1.8)
+    mysql2 (0.2.7)
+    open4 (1.0.1)
+    pagseguro (0.1.10)
+    paperclip (2.3.11)
+      activerecord (>= 2.3.0)
+      activesupport (>= 2.3.2)
+    polyglot (0.3.1)
+    proxies (0.2.1)
+    rack (1.2.2)
+    rack-mount (0.6.14)
+      rack (>= 1.0.0)
+    rack-test (0.5.7)
+      rack (>= 1.0)
+    rails (3.0.7)
+      actionmailer (= 3.0.7)
+      actionpack (= 3.0.7)
+      activerecord (= 3.0.7)
+      activeresource (= 3.0.7)
+      activesupport (= 3.0.7)
+      bundler (~> 1.0)
+      railties (= 3.0.7)
+    railties (3.0.7)
+      actionpack (= 3.0.7)
+      activesupport (= 3.0.7)
+      rake (>= 0.8.7)
+      thor (~> 0.14.4)
     rake (0.8.7)
-    right_aws (2.0.0)
-      right_http_connection (>= 1.2.1)
-    right_http_connection (1.2.4)
-    rmagick (2.12.2)
+    rd_searchlogic (3.0.1)
+      activerecord (>= 3.0.0)
+    remotipart (0.3.4)
     rscribd (1.2.0)
       mime-types
-    rspec (1.3.1)
-    rspec-rails (1.3.3)
-      rack (>= 1.0.0)
-      rspec (= 1.3.1)
-    ruby-debug (0.10.3)
+    rspec (2.6.0)
+      rspec-core (~> 2.6.0)
+      rspec-expectations (~> 2.6.0)
+      rspec-mocks (~> 2.6.0)
+    rspec-core (2.6.0)
+    rspec-expectations (2.6.0)
+      diff-lcs (~> 1.1.2)
+    rspec-mocks (2.6.0)
+    rspec-rails (2.6.0)
+      actionpack (~> 3.0)
+      activesupport (~> 3.0)
+      railties (~> 3.0)
+      rspec (~> 2.6.0)
+    ruby-debug (0.10.4)
       columnize (>= 0.1)
-      ruby-debug-base (~> 0.10.3.0)
-    ruby-debug-base (0.10.3)
+      ruby-debug-base (~> 0.10.4.0)
+    ruby-debug-base (0.10.4)
       linecache (>= 0.3)
-    shoulda (2.11.3)
+    s3 (0.3.8)
+      proxies (~> 0.2.0)
+    scribd_fu (2.0.11)
+      rscribd
+    shoulda-matchers (1.0.0.beta2)
     shuber-sortable (1.0.6)
-    validatable (1.6.7)
+    thin (1.2.11)
+      daemons (>= 1.0.9)
+      eventmachine (>= 0.12.6)
+      rack (>= 1.0.0)
+    thor (0.14.6)
+    translate_routes (3.0.3)
+    treetop (1.4.9)
+      polyglot (>= 0.3.1)
+    tzinfo (0.3.27)
     whenever (0.6.7)
       aaronh-chronic (>= 0.3.9)
       activesupport (>= 2.3.4)
-    will_paginate (2.3.15)
+    will_paginate (3.0.pre2)
     xml-simple (1.0.15)
+    yui-compressor (0.9.6)
+      POpen4 (>= 0.1.4)
     zencoder (2.3.1)
       activesupport
       i18n
@@ -121,44 +176,35 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  aanand-deadweight
-  abstract (= 1.0.0)
-  adzap-ar_mailer
+  aasm!
+  active_enum
+  acts-as-taggable-on
+  ajaxful_rating!
+  ar_mailer_rails3
   authlogic
   aws-s3
-  cancan (= 1.4.1)
-  clicktale!
-  delayed_job!
-  desert
-  erubis (= 2.6.6)
-  factory_girl
-  faker
-  ghazel-daemons
-  haml
-  hpricot
-  htmlentities (= 4.2.1)
-  i18n (~> 0.4.0)
-  icalendar
+  cancan
+  ckeditor (= 3.4.2.pre)
+  date_validator
+  deep_cloneable
+  dynamic_form
+  factory_girl_rails
+  jammit-s3
+  jquery-rails (>= 1.0.3)
   mime-types
-  mongrel
-  mysql
-  newrelic_rpm (= 2.13.1)
-  oauth
-  packet
-  paperclip (~> 2.3)
-  parseline
-  rails (= 2.3.8)
-  rake (= 0.8.7)
-  right_aws (~> 2.0.0)
-  rmagick (= 2.12.2)
-  rscribd
-  rspec (~> 1.3)
-  rspec-rails (~> 1.3)
-  ruby-debug (= 0.10.3)
-  scribd_fu!
-  shoulda
+  mysql2 (~> 0.2.1)
+  pagseguro (~> 0.1.10)
+  paperclip
+  rails (= 3.0.7)
+  rd_searchlogic
+  remotipart (>= 0.3.4)
+  rspec-rails
+  ruby-debug
+  scribd_fu
+  shoulda-matchers
   shuber-sortable
-  validatable
+  thin
+  translate_routes
   whenever
-  will_paginate (~> 2.3.11)
+  will_paginate (~> 3.0.pre2)
   zencoder

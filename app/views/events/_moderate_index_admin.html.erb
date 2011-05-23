@@ -1,5 +1,5 @@
 <% if @pending_events && @pending_events.size > 0 %>
-  <% form_tag :action => :moderate_events do %>
+  <%= form_tag :action => :moderate_events do %>
     <table id="event_moderate_list" class="common ">
       <thead>
         <th width="8%">Aprovar</th>

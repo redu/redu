@@ -24,22 +24,22 @@ class Space < ActiveRecord::Base
   # environment_admins
   has_many :administrators, :through => :user_space_associations,
     :source => :user,
-    :conditions => [ "user_space_associations.role_id = ? AND user_space_associations.status = ?",
+    :conditions => [ "user_space_associations.role = ? AND user_space_associations.status = ?",
                       3, 'approved' ]
   # teachers
   has_many :teachers, :through => :user_space_associations,
     :source => :user,
-    :conditions => [ "user_space_associations.role_id = ? AND user_space_associations.status = ?",
+    :conditions => [ "user_space_associations.role = ? AND user_space_associations.status = ?",
                       5, 'approved' ]
   # tutors
   has_many :tutors, :through => :user_space_associations,
     :source => :user,
-    :conditions => [ "user_space_associations.role_id = ? AND user_space_associations.status = ?",
+    :conditions => [ "user_space_associations.role = ? AND user_space_associations.status = ?",
                       6, 'approved' ]
   # students (member)
   has_many :students, :through => :user_space_associations,
     :source => :user,
-    :conditions => [ "user_space_associations.role_id = ? AND user_space_associations.status = ?",
+    :conditions => [ "user_space_associations.role = ? AND user_space_associations.status = ?",
                       2, 'approved' ]
 
  # new members (form 1 week ago)
@@ -60,9 +60,7 @@ class Space < ActiveRecord::Base
   has_one :forum, :dependent => :destroy
   has_one :root_folder, :class_name => 'Folder', :foreign_key => 'space_id'
 
-  named_scope :of_course, lambda { |course_id|
-     { :conditions => {:course_id => course_id} }
-  }
+  scope :of_course, lambda { |course_id| where(:course_id => course_id) }
 
   # ACCESSORS
   attr_protected :owner, :removed, :lectures_count, :members_count,
@@ -70,8 +68,7 @@ class Space < ActiveRecord::Base
 
   # PLUGINS
   acts_as_taggable
-  acts_as_voteable
-  has_attached_file :avatar, PAPERCLIP_STORAGE_OPTIONS
+  has_attached_file :avatar, Redu::Application.config.paperclip
 
   # VALIDATIONS
   validates_presence_of :name, :description, :submission_type
@@ -79,7 +76,7 @@ class Space < ActiveRecord::Base
   validates_length_of :description, :within => 30..250
 
   def permalink
-    APP_URL + '/espacos/' + self.id.to_s + '-' + self.name.parameterize
+    "#{Redu::Application.config.url}/espacos/#{self.id.to_s}-#{self.name.parameterize}"
   end
 
   # Status relativos ao Space
@@ -87,7 +84,7 @@ class Space < ActiveRecord::Base
   def recent_activity(page = 1)
     self.statuses.not_response.
       paginate(:page => page, :order => 'created_at DESC',
-               :per_page => AppConfig.items_per_page)
+               :per_page => Redu::Application.config.items_per_page)
   end
 
   # Logs relativos ao Space (usado no Course#show).
@@ -95,36 +92,21 @@ class Space < ActiveRecord::Base
   #FIXME Refactor: Mover para Status
   def recent_log(offset = 0, limit = 3)
     logs = {}
-    logs[:folder] = self.statuses.find(:all,
-                                       :order => 'created_at DESC',
-                                       :limit => limit,
-                                       :offset => offset,
-                                       :conditions => { :log => 1,
-                                         :logeable_type => 'Myfile' })
-    logs[:topic] = self.statuses.find(:all,
-                                      :order => 'created_at DESC',
-                                      :limit => limit,
-                                      :offset => offset,
-                                      :conditions => { :log => true,
-                                        :logeable_type => %w(Topic SbPost) })
-    logs[:subject] = self.statuses.find(:all,
-                                        :order => 'created_at DESC',
-                                        :limit => limit,
-                                        :offset => offset,
-                                        :conditions => { :log => true,
-                                          :logeable_type => 'Subject' })
-    logs[:event] = self.statuses.find(:all,
-                                      :order => 'created_at DESC',
-                                      :limit => limit,
-                                      :offset => offset,
-                                      :conditions => { :log => true,
-                                        :logeable_type  => 'Event' })
-    logs[:bulletin] = self.statuses.find(:all,
-                                         :order => 'created_at DESC',
-                                         :limit => limit,
-                                        :offset => offset,
-                                         :conditions => { :log => true,
-                                           :logeable_type => 'Bulletin' })
+    logs[:folder] = self.statuses.order('created_at DESC').limit(limit).
+                      offset(offset).where(:log => 1,
+                                           :logeable_type => 'Myfile')
+    logs[:topic] = self.statuses.order('created_at DESC').limit(limit).
+                    offset(offset).where(:log => true,
+                                         :logeable_type => %w(Topic SbPost))
+    logs[:subject] = self.statuses.order('created_at DESC').limit(limit).
+                      offset(offset).where(:log => true,
+                                           :logeable_type => 'Subject')
+    logs[:event] = self.statuses.order('created_at DESC').limit(limit).
+                     offset(offset).where(:log => true,
+                                          :logeable_type  => 'Event')
+    logs[:bulletin] = self.statuses.order('created_at DESC').limit(limit).
+                        offset(offset).where(:log => true,
+                                             :logeable_type => 'Bulletin')
     return logs
   end
 
@@ -134,9 +116,8 @@ class Space < ActiveRecord::Base
 
   # Muda papeis neste ponto da hieararquia
   def change_role(user, role)
-    membership = self.user_space_associations.find(:first,
-                    :conditions => {:user_id => user.id})
-    membership.update_attributes({:role_id => role.id})
+    membership = self.user_space_associations.where(:user_id => user.id).first
+    membership.update_attributes({:role => role})
   end
 
   def publish!
@@ -163,21 +144,16 @@ class Space < ActiveRecord::Base
   # o space pertence tem que ser associados ao space
   def create_space_association_for_users_course
 
-    course_users = UserCourseAssociation.all(
-      :conditions => {:state => 'approved', :course_id => self.course })
+    course_users = UserCourseAssociation.where(:state => 'approved',
+                                               :course_id => self.course)
 
     course_users.each do |assoc|
       UserSpaceAssociation.create({:user => assoc.user,
                                   :space => self,
                                   :status => "approved",
-                                  :role_id => assoc.role_id})
+                                  :role => assoc.role})
     end
 
-  end
-
-  #FIXME Remover quando a criação deixar de ser Wizard
-  def enable_correct_validation_group!
-    self.enable_validation_group(self.current_step.to_sym)
   end
 
 end

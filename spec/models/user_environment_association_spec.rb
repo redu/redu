@@ -15,7 +15,7 @@ describe UserEnvironmentAssociation do
       assoc2 = (1..3).collect { Factory(:user_environment_association, :role => :admin) }
       t = Factory(:user_environment_association, :role => :teacher)
 
-      UserEnvironmentAssociation.with_roles([ Role[:admin].id, Role[:teacher].id ]).
+      UserEnvironmentAssociation.with_roles([ Role[:admin], Role[:teacher] ]).
         should == (assoc2 << t)
     end
 
@@ -37,8 +37,8 @@ describe UserEnvironmentAssociation do
       assoc2 = Factory(:user_environment_association, :environment => subject.environment)
       assoc3 = Factory(:user_environment_association)
 
-      UserEnvironmentAssociation.of_environment(subject.environment).
-        should == subject.environment.user_environment_associations
+      UserEnvironmentAssociation.of_environment(subject.environment).to_set.
+        should == subject.environment.user_environment_associations.to_set
     end
   end
 end

@@ -15,13 +15,13 @@ class Exam < ActiveRecord::Base
     :reject_if => lambda { |q| q[:statement].blank? },
     :allow_destroy => true
 
-  # NAMED SCOPES
-  named_scope :published, :conditions => ['published = ?', true], :include => :owner
-  named_scope :published_by, lambda { |my_id|
-    { :conditions => ["published = ? AND owner_id = ?", true, my_id] }
+  # SCOPES
+  scope :published, where('published = ?', true).includes(:owner)
+  scope :published_by, lambda { |my_id|
+    where("published = ? AND owner_id = ?", true, my_id)
   }
-  named_scope :unpublished_by, lambda { |my_id|
-    { :conditions => ["published = ? AND owner_id = ?", false, my_id] }
+  scope :unpublished_by, lambda { |my_id|
+    where("published = ? AND owner_id = ?", false, my_id)
   }
 
   # ACCESSORS
@@ -37,9 +37,10 @@ class Exam < ActiveRecord::Base
   validates_length_of :questions, :allow_nil => false, :minimum => 1
   validates_associated :questions
 
-  validation_group :general, :fields => [:name, :description]
-  validation_group :editor, :fields => [:questions]
-  validation_group :publication, :fields => [:name, :description, :questions]
+  # FIXME Verificar uso
+  #validation_group :general, :fields => [:name, :description]
+  #validation_group :editor, :fields => [:questions]
+  #validation_group :publication, :fields => [:name, :description, :questions]
 
   def get_question(qid)
     if qid
@@ -59,7 +60,7 @@ class Exam < ActiveRecord::Base
 
   # Seta respostas corretas para cada questão e salva
   def set_answers!
-    self.questions.find(:all, :include => :alternatives).each {|q| q.set_answer! }
+    self.questions.includes(:alternatives).each {|q| q.set_answer! }
     self.save!
   end
 

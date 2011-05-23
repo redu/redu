@@ -50,27 +50,27 @@ $(document).ready(function() {
 
 <h3> Favoritos</h3>
 <div class="user-tabs tabs">
-	    <ul>
-		    <li><a href="#tabs-1">Aulas</a></li>
-		    <li><a href="#tabs-2">Exames</a></li>
-				<li><a href="#tabs-3">Atividades</a></li>
-	    </ul>
-	    
-		<div id="tabs-1" class="clearfix first-page">
-			<%= render :partial => "lectures/lecture_list"%>
-		</div>
-		
-		<!-- Exams -->
-		<div id="tabs-2">
-			<%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-2-loading', :style => 'padding: 20px;'%>
-			<div id="tabs-2-content"></div>
-		</div>
-		<!-- Status -->
-		<div id="tabs-3">
-			<%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-3-loading', :style => 'padding: 20px;'%>
-			<div id="tabs-3-content"></div>
-		</div>
-		
+  <ul>
+    <li><a href="#tabs-1">Aulas</a></li>
+    <li><a href="#tabs-2">Exames</a></li>
+    <li><a href="#tabs-3">Atividades</a></li>
+  </ul>
+
+  <div id="tabs-1" class="clearfix first-page">
+    <%= render :partial => "lectures/lecture_list"%>
+  </div>
+
+  <!-- Exams -->
+  <div id="tabs-2">
+    <%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-2-loading', :style => 'padding: 20px;'%>
+    <div id="tabs-2-content"></div>
+  </div>
+  <!-- Status -->
+  <div id="tabs-3">
+    <%=  image_tag 'loadingAnimation.gif', :id=> 'tabs-3-loading', :style => 'padding: 20px;'%>
+    <div id="tabs-3-content"></div>
+  </div>
+
 </div><!-- end tabs -->
 
 </div><!-- end main -->

@@ -11,7 +11,7 @@
   <%= f.text_field :path %>
 </fieldset>
 <fieldset>
-  <% f.fields_for :courses do |builder|  %>
+  <%= f.fields_for :courses do |builder|  %>
     <div class="course-box clearfix">
       <%= builder.label :name, "Seu primeiro curso" %>
       <%= builder.text_field :name, :class => "big" %>

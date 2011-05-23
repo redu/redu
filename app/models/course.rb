@@ -18,22 +18,22 @@ class Course < ActiveRecord::Base
   # environment_admins
   has_many :administrators, :through => :user_course_associations,
     :source => :user,
-    :conditions => [ "user_course_associations.role_id = ? AND user_course_associations.state = ?",
+    :conditions => [ "user_course_associations.role = ? AND user_course_associations.state = ?",
                       3, 'approved' ]
   # teachers
   has_many :teachers, :through => :user_course_associations,
     :source => :user,
-    :conditions => [ "user_course_associations.role_id = ? AND user_course_associations.state = ?",
+    :conditions => [ "user_course_associations.role = ? AND user_course_associations.state = ?",
                       5, 'approved' ]
   # tutors
   has_many :tutors, :through => :user_course_associations,
     :source => :user,
-    :conditions => [ "user_course_associations.role_id = ? AND user_course_associations.state = ?",
+    :conditions => [ "user_course_associations.role = ? AND user_course_associations.state = ?",
                       6, 'approved' ]
   # students (member)
   has_many :students, :through => :user_course_associations,
     :source => :user,
-    :conditions => [ "user_course_associations.role_id = ? AND user_course_associations.state = ?",
+    :conditions => [ "user_course_associations.role = ? AND user_course_associations.state = ?",
                       2, 'approved' ]
 
   # new members (form 1 week ago)
@@ -45,38 +45,38 @@ class Course < ActiveRecord::Base
   has_one :quota, :dependent => :destroy, :as => :billable
   has_one :plan, :as => :billable
 
-  named_scope :of_environment, lambda { |environmnent_id|
-   { :conditions => {:environment_id => environmnent_id} }
+  scope :published, where(:published => 1)
+  scope :of_environment, lambda { |environmnent_id|
+    where(:environment_id => environmnent_id)
   }
 
-  named_scope :with_audiences, lambda { |audiences_ids|
-    {:joins => :audiences,
-      :conditions => ['audiences_courses.audience_id IN (?)',
-                        audiences_ids],
-      :group => :id }
-  }
-  named_scope :user_behave_as_administrator, lambda { |user_id|
-    { :joins => :user_course_associations,
-      :conditions => ["user_course_associations.user_id = ? AND user_course_associations.role_id = ?",
-                        user_id, 3] }
+  scope :with_audiences, lambda { |audiences_ids|
+    joins(:audiences).where('audiences_courses.audience_id IN (?)',
+                             audiences_ids).group(:id)
   }
 
-  named_scope :user_behave_as_teacher, lambda { |user_id|
-    { :joins => :user_course_associations,
-      :conditions => ["user_course_associations.user_id = ? AND user_course_associations.role_id = ?",
-                        user_id, 5] }
+  scope :user_behave_as_administrator, lambda { |user_id|
+    joins(:user_course_associations).
+      where("user_course_associations.user_id = ? AND user_course_associations.role = ?",
+             user_id, 3)
   }
 
-  named_scope :user_behave_as_tutor, lambda { |user_id|
-    { :joins => :user_course_associations,
-      :conditions => ["user_course_associations.user_id = ? AND user_course_associations.role_id = ?",
-                        user_id, 6] }
+  scope :user_behave_as_teacher, lambda { |user_id|
+    joins(:user_course_associations).
+      where("user_course_associations.user_id = ? AND user_course_associations.role = ?",
+              user_id, 5)
   }
 
-  named_scope :user_behave_as_student, lambda { |user_id|
-    { :joins => :user_course_associations,
-      :conditions => ["user_course_associations.user_id = ? AND user_course_associations.role_id = ? AND user_course_associations.state = ?",
-                        user_id, 2, 'approved'] }
+  scope :user_behave_as_tutor, lambda { |user_id|
+    joins(:user_course_associations).
+      where("user_course_associations.user_id = ? AND user_course_associations.role = ?",
+              user_id, 6)
+  }
+
+  scope :user_behave_as_student, lambda { |user_id|
+    joins(:user_course_associations).
+      where("user_course_associations.user_id = ? AND user_course_associations.role = ? AND user_course_associations.state = ?",
+              user_id, 2, 'approved')
   }
 
   attr_protected :owner, :published, :environment
@@ -88,7 +88,6 @@ class Course < ActiveRecord::Base
   validates_length_of :name, :maximum => 60
   validates_length_of :description, :maximum => 250, :allow_blank => true
   validates_format_of :path, :with => /^[-_.A-Za-z0-9]*$/
-  validate :length_of_tags
 
   # Sobreescrevendo ActiveRecord.find para adicionar capacidade de buscar por path do Space
   def self.find(*args)
@@ -105,37 +104,32 @@ class Course < ActiveRecord::Base
   end
 
   def permalink
-    "#{AppConfig.community_url}/#{self.environment.path}/cursos/#{self.path}"
-  end
-
-  def can_be_published?
-    self.spaces.published.size > 0
+    "#{Redu::Application.config.url}/#{self.environment.path}/cursos/#{self.path}"
   end
 
   # Muda papeis deste ponto para baixo na hieararquia
   def change_role(user, role)
-    membership = user.user_course_associations.find(:first,
-                    :conditions => {:course_id => self.id})
-    membership.update_attributes({:role_id => role.id})
+    membership = user.user_course_associations.
+                   where(:course_id => self.id).first
+    membership.update_attributes({:role => role})
 
-    user.user_space_associations.find(:all,
-                     :conditions => {:space_id => self.spaces},
-                     :include => [:space]).each do |membership|
-      membership.space.change_role(user, role)
-    end
+    user.user_space_associations.where(:space_id => self.spaces).
+      includes(:space).each do |membership|
+        membership.space.change_role(user, role)
+      end
   end
 
   # Verifica se o path escolhido para o Course já é utilizado por outro
   # no mesmo Environment. Caso seja, um novo path é gerado.
   def verify_path!(environment_id)
     path  = self.path
-    if Course.all(:conditions => ["environment_id = ? AND path = ?",
-                  environment_id, self.path])
+    if Course.where("environment_id = ? AND path = ?",
+                      environment_id, self.path).all
       self.path += '-' + SecureRandom.hex(1)
 
       # Mais uma tentativa para utilizar um path não existente.
-      return if Course.all(:conditions => ["environment_id = ? AND path = ?",
-                               environment_id, self.path]).empty?
+      return if Course.where("environment_id = ? AND path = ?",
+                               environment_id, self.path).empty?
       self.path = path + '-' + SecureRandom.hex(1)
     end
 
@@ -151,16 +145,10 @@ class Course < ActiveRecord::Base
     end
   end
 
-  def length_of_tags
-    tags_str = ""
-    self.tags.each {|t|  tags_str += " " + t.name }
-    self.errors.add(:tags, :too_long.l) if tags_str.length > 111
-  end
-
   def join(user, role = Role[:member])
     association = UserCourseAssociation.create(:user_id => user.id,
                                                :course_id => self.id,
-                                               :role_id => role.id)
+                                               :role => role)
 
     if self.subscription_type.eql? 1 # Todos podem participar, sem moderação
       association.approve!
@@ -188,12 +176,12 @@ class Course < ActiveRecord::Base
     # Cria as associações no Environment do Course e em todos os seus Spaces.
     UserEnvironmentAssociation.create(:user_id => user.id,
                                       :environment_id => self.environment.id,
-                                      :role_id => role.id)
+                                      :role => role)
     self.spaces.each do |space|
       #FIXME tirar status quando remover moderacao de space
       UserSpaceAssociation.create(:user_id => user.id,
                                   :space_id => space.id,
-                                  :role_id => role.id,
+                                  :role => role,
                                   :status => "approved")
 
       # Cria as associações com os subjects
@@ -222,7 +210,7 @@ class Course < ActiveRecord::Base
   # Método de alto nível que convida um determinado usuário para o curso.
   # - Caso o usuário não faça parte do curso uma UCA será criada com o estado
   #   invited.
-  # - Caso o usuário já faça parte do curso, nada irá acontece
+  # - Caso o usuário já faça parte do curso, nada irá acontecer
   # - Caso o usuário esteja na lista de moderação, seu estado será mudado para
   #   invited
   # - Caso o usuário já tenha sido convidado e não tenha aceito o convite, um
@@ -235,12 +223,15 @@ class Course < ActiveRecord::Base
       # Se já foi convidado, apenas reenvia o e-mail
       if assoc.invited?
         assoc.send_course_invitation_notification
-        assoc.updated_at = ""; assoc.save # Para atualizar o updated_at
-        return assoc
+        assoc.updated_at = Time.now
+        assoc.save
+      elsif assoc.waiting?
+        assoc.approve!
       end
+    else
+      assoc.invite!
     end
 
-    assoc.invite!
     assoc
   end
 
@@ -260,8 +251,11 @@ class Course < ActiveRecord::Base
         # Caso o e-mail seja mal-formado, não vai salvar e será ignorado.
         unless invitation.nil?
           invitation.send_external_user_course_invitation
-          invitation.updated_at = ""; invitation.save # Para atualizar o updated_at
+          invitation.updated_at = Time.now
+          invitation.save
         end
+      else
+        invitation.invite!
       end
     end
     invitation
