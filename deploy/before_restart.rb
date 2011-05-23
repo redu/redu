@@ -1,4 +1,3 @@
-if (environment.include?("staging") or environment.include?("production"))
-  run "cd config; ln -sf assets-#{environment}.yml assets.yml"
+if environment.include?("production")
   run "bundle exec jammit-s3 "
 end
