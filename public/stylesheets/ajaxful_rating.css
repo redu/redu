@@ -11,7 +11,7 @@
 }
 .ajaxful-rating{
     position: relative;
-    /*width: 125px; this is setted dynamically */
+    width: 125px; /* this is setted dynamically */
     height: 25px;
     overflow: hidden;
     list-style: none;
@@ -41,7 +41,7 @@
 
 /* This section is generated dynamically.
 Just add a call to the helper method 'ajaxful_rating_style' within
-the head tags in your main layout 
+the head tags in your main layout */
 .ajaxful-rating .stars-1{
 width: 20%;
 z-index: 6;
@@ -62,7 +62,7 @@ z-index: 3;
 width: 100%;
 z-index: 2;
 }
-*/
+
 .ajaxful-rating .show-value{
     z-index: 1;
     background-position: left center;
@@ -70,7 +70,7 @@ z-index: 2;
 
 /* smaller star */
 .ajaxful-rating.small{
-    /*width: 50px; this is setted dynamically */
+    width: 50px; /* this is setted dynamically */
     height: 10px;
 }
 .ajaxful-rating.small,

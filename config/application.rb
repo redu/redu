@@ -105,6 +105,11 @@ module Redu
                    :thumb_32 => "32x32#" }
     }
 
+    config.paperclip_documents = config.paperclip.merge({
+      :styles => {},
+      :default_url => ''
+    })
+
     config.paperclip_myfiles = config.paperclip.merge({
       :bucket => config.s3_credentials['files_bucket'], # redu-files
       :path => ":class/:attachment/:id/:style/:basename.:extension",

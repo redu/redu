@@ -130,12 +130,13 @@ class UserNotifier < ActionMailer::Base
   end
 
   def contact_redu(contact)
+    @message = contact.body
+    @abc = contact.body
+
     mail(:to => Redu::Application.config.email,
          :subject => "[#{contact.kind}] #{contact.subject}",
+         :reply_to => contact.email,
          :date => Time.now)
-
-    #FIXME não sei tranferir isso para rails 3
-    @body       = "#{contact.body} \n From #{contact.name} <#{contact.email}>"
   end
 
   def friendship_request(friendship)
