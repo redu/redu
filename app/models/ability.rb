@@ -129,8 +129,8 @@ class Ability
       end
 
       # My file
-      can :upload_file, Myfile do |myfile|
-        myfile.can_upload_file?(myfile.folder.space)
+      cannot :upload_file, Myfile do |myfile|
+        !myfile.can_upload_file?
       end
 
       # Join in a Course

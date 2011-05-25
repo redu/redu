@@ -11,7 +11,8 @@
 # [#update_permissions] save the new rights given by the user
 class FoldersController < BaseController
   load_and_authorize_resource :space
-  load_and_authorize_resource :folder, :through => :space
+  load_and_authorize_resource :folder,
+    :through => :space
 
   before_filter :load_course_and_environment
   #  skip_before_filter :authorize, :only => :feed
@@ -25,9 +26,8 @@ class FoldersController < BaseController
   after_filter :create_activity, :only => [:do_the_upload]
 
   rescue_from CanCan::AccessDenied do |exception|
-    flash[:notice] = "Você não possui espaço disponível suficiente."
-    respond_to_parent do
-      redirect_to space_folders_path(@space)
+    respond_to do |format|
+      format.js { render :error_quota }
     end
   end
 
@@ -71,6 +71,7 @@ class FoldersController < BaseController
   def do_the_upload
     @myfile = Myfile.new(params[:myfile])
     @myfile.user = current_user
+
     authorize! :upload_file, @myfile
 
     respond_to do |format|
