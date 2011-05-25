@@ -1,7 +1,7 @@
 class BulletinsController < BaseController
 
   load_and_authorize_resource :space
-  load_and_authorize_resource :environment
+  load_and_authorize_resource :environment, :find_by => :path
   load_and_authorize_resource :bulletin, :through => [:space, :environment]
 
   before_filter :find_environment_course_space

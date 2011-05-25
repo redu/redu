@@ -6,9 +6,9 @@ class SpacesController < BaseController
     :except => [:cancel]
 
   load_and_authorize_resource :environment,
-    :except => [:create, :cancel]
+    :except => [:create, :cancel], :find_by => :path
   load_and_authorize_resource :course, :through => :environment,
-    :except => [:create, :cancel]
+    :except => [:create, :cancel], :find_by => :path
   load_and_authorize_resource :space, :through => :course,
     :except => [:create, :cancel]
 

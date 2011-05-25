@@ -6,8 +6,6 @@ class CoursesController < BaseController
     :except => [:index], :find_by => :path
 
   rescue_from CanCan::AccessDenied do |exception|
-    raise if cannot? :preview, @course
-
     flash[:notice] = "Você não tem acesso a essa página"
     redirect_to preview_environment_course_path(@environment, @course)
   end

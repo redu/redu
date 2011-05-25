@@ -1,6 +1,6 @@
 class RolesController < BaseController
-  load_and_authorize_resource :environment
-  load_and_authorize_resource :user
+  load_and_authorize_resource :environment, :find_by => :path
+  load_and_authorize_resource :user, :find_by => :login
 
   def show
     @user = User.find(params[:user_id])

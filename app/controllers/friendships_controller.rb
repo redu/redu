@@ -1,6 +1,6 @@
 class FriendshipsController < BaseController
 
-  load_and_authorize_resource :user
+  load_and_authorize_resource :user, :find_by => :login
   load_and_authorize_resource :friendship, :through => :user
 
   def index
