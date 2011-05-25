@@ -4,9 +4,8 @@ class RolesController < BaseController
 
   def show
     @user = User.find(params[:user_id])
-    @environment = Environment.find(:first,
-      :conditions => ["path LIKE ?", params[:environment_id]],
-      :include => [{:courses => :spaces}])
+    @environment = Environment.includes(:courses => [:spaces]).
+      find_by_path(params[:environment_id])
 
     spaces = @environment.courses.collect{|c| c.spaces.collect{|s| s}}.flatten
 
