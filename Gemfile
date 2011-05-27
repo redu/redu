@@ -32,6 +32,7 @@ gem 'jammit-s3'
 gem 'whenever', :require => false
 gem 'remotipart', '>= 0.3.4'
 gem 'zencoder'
+gem 'pusher'
 
 # Gems específicos de algum ambiente
 group :development, :test do
