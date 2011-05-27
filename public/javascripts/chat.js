@@ -1,45 +1,31 @@
-// $(function(){
-//     // Requisiçõe c/ header pjax p/ todos os links não remotos
-//     $("a:not([data-remote])").pjax("#content", { timeout: null });
-//
-//     var Chat = {
-//       show : function(){
-//         var $chatBar = $("<div/>", { 'id' : 'chat-bar' });
-//         $("body").append($chatBar);
-//       }
-//     };
-//
-//     Chat.show();
-//
-//     // Inicializa o objeto pusher e exibe a lista de contatos
-//     Chat.init(API-KEY)
-//
-//     // Inscrever no seu canal
-//     Chat.subscribe('presence-%user')
-//
-//     // Preenche a lista de contatos
-//     Chat.loadContacts()
-//
-// });
+/*
+var mychat = buildChat({
+    key : 'XXX',
+    channel : '123',
+    timeout : '123',
+    endPoint : 'httto' });
+*/
 
+// Constrói um novo objeto Chat
 var buildChat = function(opts){
-  var generateName = function(num){
-      return "presence-x";
-  }
+  var pusher;
+  var config = {};
 
   var that = {
-    pusher : ''
-    init : function(){
-      this.pusher = new Pusher(this.key);
-    },
-    key : opts.key || 'PADRAO',
-    subscribe : function(){
-    },
-    loadContacts : function(){
-    }
+    // Inicializa o pusher e mostra a barra de chat
+    init : function(){},
+    // Inscreve no canal do usuário logado
+    subscribeMyChannel : function(){},
+    // Increve no canal dado
+    subscribeNewContact : function(channel){},
+    // Desinscreve do canal dado
+    unsubscribeContact : function(channel){},
+    // Adiciona a lista de contatos
+    uiAddContact : function(member){},
+    // Remove da lista de contatos
+    uiRemoveContact : function(userId){},
   }
 
   return that;
 }
 
-var meuChat = rchat({key : '2293'});

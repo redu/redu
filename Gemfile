@@ -2,6 +2,7 @@ source 'http://rubygems.org'
 source 'http://gems.github.com'
 
 gem 'rails', '3.0.7'
+gem 'rake', '0.8.7'
 gem 'mysql2', '~> 0.2.1'
 gem 'authlogic'
 gem 'pagseguro', '~> 0.1.10'
@@ -40,5 +41,6 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'ruby-debug'
   gem 'thin'
+  gem 'jasmine'
 end
 
