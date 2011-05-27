@@ -45,9 +45,6 @@ class Lecture < ActiveRecord::Base
 
   # VALIDATIONS
   validates_presence_of :name
-  # FIXME Vai ter description?
-  #validates_presence_of :description
-  #validates_length_of :description, :within => 30..200
   validates_presence_of :lectureable
   validates_associated :lectureable #FIXME Não foi testado, pois vai ter accepts_nested
 
@@ -82,6 +79,8 @@ class Lecture < ActiveRecord::Base
       student_profile.update_grade!
     end
   end
+
+
 
   protected
   def create_asset_report

@@ -19,4 +19,8 @@ class Document < ActiveRecord::Base
     end
   end
 
+  def need_uploading?
+    !(self.conversion_processing? or self.conversion_complete?)
+  end
+
 end

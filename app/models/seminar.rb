@@ -158,7 +158,7 @@ class Seminar < ActiveRecord::Base
   end
 
   def need_transcoding?
-    self.video? or self.audio?
+    (self.video? or self.audio?) && self.waiting?
   end
 
   # Verifica se o curso tem espaço suficiente para o arquivo
