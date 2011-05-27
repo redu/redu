@@ -50,5 +50,12 @@ Redu::Application.configure do
 
   # Só converte os 5 primeiros segundos (grátis)
   config.zencoder[:test] = 1
+
+  # Configurações do Pusher (redu-development app)
+  config.pusher = {
+    :app_id => '5702',
+    :key => 'b1cd71fd7265bea13207',
+    :secret => '106ba75d51f33d8e6cee'
+  }
 end
 
