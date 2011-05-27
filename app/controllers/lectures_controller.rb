@@ -163,7 +163,7 @@ class LecturesController < BaseController
         if @lecture.lectureable_type == 'Seminar'
           @lecture.lectureable.convert! if @lecture.lectureable.need_transcoding?
         elsif @lecture.lectureable_type == 'Document'
-          @lecture.lectureable.upload_to_scribd
+          @lecture.lectureable.upload_to_scribd if @lecture.lectureable.need_uploading?
         end
 
         @space.course.quota.refresh

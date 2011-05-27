@@ -64,15 +64,13 @@ class Myfile < ActiveRecord::Base
   end
 
   # Verifica se o curso tem espaço suficiente para o arquivo
-  def can_upload_file?(space)
+  def can_upload_file?
+    space = self.folder.space
     return false if space.course.plan.state != "active"
+
     plan = space.course.plan
     quota = space.course.quota
 
-    if quota.files > plan.file_storage_limit
-      return false
-    else
-      return true
-    end
+    quota.files <= plan.file_storage_limit
   end
 end

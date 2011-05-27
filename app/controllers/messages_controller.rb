@@ -1,6 +1,6 @@
 class MessagesController < BaseController
 
-  load_and_authorize_resource :user
+  load_and_authorize_resource :user, :find_by => :login
 
   def index
     authorize! :manage, @user

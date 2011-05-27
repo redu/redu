@@ -1,5 +1,5 @@
 class EventsController < BaseController
-  load_and_authorize_resource :environment
+  load_and_authorize_resource :environment, :find_by => :path
   load_and_authorize_resource :space
   load_and_authorize_resource :event, :through => [:space, :environment]
 

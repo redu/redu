@@ -4,7 +4,7 @@ class PlansController < BaseController
   before_filter :find_course_environment, :except => :index
 
   authorize_resource
-  load_and_authorize_resource :user, :only => :index
+  load_and_authorize_resource :user, :only => :index, :find_by => :login
   load_and_authorize_resource :plan, :only => :index, :through => :user
 
   def upgrade
