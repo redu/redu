@@ -25,6 +25,7 @@ javascripts:
   chat:
     - public/javascripts/jquery.pjax.js
     - public/javascripts/jquery-ui.js
+    - public/javascripts/pusher.js
     - public/javascripts/chat.js
   ie:
     - public/javascripts/selectivizr.js

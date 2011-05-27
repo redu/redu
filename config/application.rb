@@ -168,5 +168,9 @@ module Redu
     # Autoloads code in lib
     config.autoload_paths += %W(#{config.root}/lib)
 
+    Pusher.app_id = '5702'
+    Pusher.key = 'b1cd71fd7265bea13207'
+    Pusher.secret = '106ba75d51f33d8e6cee'
+
   end
 end
