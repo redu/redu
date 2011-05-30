@@ -10,10 +10,17 @@ var mychat = buildChat({
 var buildChat = function(opts){
   var pusher;
   var config = {};
+  var $userList = $("<div/>", { id : "chat-list" }).append("<ul/>");
 
   var that = {
     // Inicializa o pusher e mostra a barra de chat
-    init : function(){},
+    init : function(){
+      $("body").append($userList);
+      var pusher = new Pusher('API_KEY');
+      pusher.subscribe("teste");
+      //pusher.bind("pusher:")
+
+    },
     // Inscreve no canal do usuário logado
     subscribeMyChannel : function(){},
     // Increve no canal dado
