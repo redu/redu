@@ -11,7 +11,6 @@
 #   - dist/**/*.js
 #
 src_files:
-  - public/javascripts/pusher.js
   - public/javascripts/jquery.js
   - public/javascripts/chat.js
 

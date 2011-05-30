@@ -16,9 +16,12 @@ var buildChat = function(opts){
     // Inicializa o pusher e mostra a barra de chat
     init : function(){
       $("body").append($userList);
-      var pusher = new Pusher('API_KEY');
-      pusher.subscribe("teste");
-      //pusher.bind("pusher:")
+      // var pusher = new Pusher('f786a58d885e7397ecaa');
+      // var channel = pusher.subscribe("teste");
+      // channel.bind("pusher:subscription_succeeded", function(data){
+      //     console.log(data);
+      // });
+      this.subscribeMyChannel();
 
     },
     // Inscreve no canal do usuário logado

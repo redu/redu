@@ -1,14 +1,10 @@
 describe('Chat', function () {
     beforeEach(function () {
-        Pusher.prototype.subscribe = function(channel_name) {
-          this.send_event('pusher:subscribe', {
-              channel : channel_name,
-              auth : '12345',
-              channel_data : { 'opa' : '123' }
-          });
-          var channel = this.channels.add(channel_name, this);
-          console.log('olhjae');
-          return channel;
+        Pusher = function(key, args){}
+
+        Pusher.prototype.subscribe = function(channel){
+          var data = { data : "opa" }
+          return { bind : function(event, callback) { callback(data); }};
         }
     });
 
@@ -17,10 +13,11 @@ describe('Chat', function () {
     });
 
     describe('initialization', function () {
-        var chat;
+        var chat, opts;
 
         beforeEach(function () {
-            chat = buildChat({ key : 'XXX', channel : 'my-channel' })
+            opts = { key : 'XXX', channel : 'my-channel' };
+            chat = buildChat(opts)
         });
 
         it('defines init', function () {
@@ -28,9 +25,10 @@ describe('Chat', function () {
         });
 
         it('shows the user list', function() {
+            spyOn(chat, "subscribeMyChannel");
+
             chat.init();
-            //expect($("#chat-list ul")).toExist();
-            //expect($("#teste")).toExist();
+            expect(chat.subscribeMyChannel).toHaveBeenCalled();
         });
 
     });
