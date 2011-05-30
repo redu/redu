@@ -12,6 +12,22 @@ var buildChat = function(opts){
   var config = {};
   var $userList = $("<div/>", { id : "chat-list" }).append("<ul/>");
 
+  $.fn.addContact = function(opts){
+    return this.each(function(){
+        var $this = $(this);
+        var $li = $("<li/>").appendTo($this);
+        var $role = $("<span/>", { "class" : "roles" }).appendTo($li);
+        $("<img/>", { "src" : opts.thumbnail, "class" : "avatar" }).appendTo($this);
+
+        // Adicionando classe p/ papeis true
+        for(var key in opts.roles){
+          if(opts.roles[key]){ $role.addClass(key); }
+        }
+
+        $("<span/>", { 'class' : "name" }).text(opts.name).appendTo($this);
+    });
+  };
+
   $.extend(config, opts)
 
   var that = {
@@ -28,7 +44,9 @@ var buildChat = function(opts){
     // Desinscreve do canal dado
     unsubscribeContact : function(channel){},
     // Adiciona a lista de contatos
-    uiAddContact : function(member){},
+    uiAddContact : function(member){
+      $userList.find("ul").addContact(member);
+    },
     // Remove da lista de contatos
     uiRemoveContact : function(userId){},
   }
