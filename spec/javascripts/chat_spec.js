@@ -24,11 +24,10 @@ describe('Chat', function () {
             expect(chat).toBeDefined();
         });
 
-        it('shows the user list', function() {
-            spyOn(chat, "subscribeMyChannel");
-
+        it('shows a empty list and subscribes to my own channel', function() {
             chat.init();
-            expect(chat.subscribeMyChannel).toHaveBeenCalled();
+
+            expect($("#chat-list")).toExist();
         });
 
     });

@@ -12,17 +12,14 @@ var buildChat = function(opts){
   var config = {};
   var $userList = $("<div/>", { id : "chat-list" }).append("<ul/>");
 
+  $.extend(config, opts)
+
   var that = {
     // Inicializa o pusher e mostra a barra de chat
     init : function(){
+      // Initicializando layout
       $("body").append($userList);
-      // var pusher = new Pusher('f786a58d885e7397ecaa');
-      // var channel = pusher.subscribe("teste");
-      // channel.bind("pusher:subscription_succeeded", function(data){
-      //     console.log(data);
-      // });
-      this.subscribeMyChannel();
-
+      pusher = new Pusher(config.key);
     },
     // Inscreve no canal do usuário logado
     subscribeMyChannel : function(){},
