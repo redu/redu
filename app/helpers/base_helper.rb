@@ -4,13 +4,13 @@ require 'md5'
 module BaseHelper
 
   # Inclui o javascript de forma lazy
-  def async_include_javascripts(*packages)
+  def async_include_javascripts(*packages, &block)
     tags = packages.map do |pack|
       should_package? ? Jammit.asset_url(pack, :js) : Jammit.packager.individual_urls(pack.to_sym, :js)
     end
 
     javascript_tag(:type => 'text/javascript') do
-      "LazyLoad.js(#{tags.flatten.to_json});".html_safe
+      "LazyLoad.js(#{tags.flatten.to_json}, function(){ #{capture(&block)}});".html_safe
     end.html_safe
   end
 

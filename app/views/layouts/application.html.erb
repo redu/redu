@@ -21,8 +21,12 @@
     <% end %>
     <%= yield :header_scripts_and_styles %>
 
-    <%= async_include_javascripts :chat %>
     <%= async_include_css :chat %>
+    <%= async_include_javascripts :chat do %>
+      var chat = buildChat({ key : "<%= Redu::Application.config.pusher[:key] %>", channel : "<%= current_user.get_channel %>" , endPoint : "<%= presence_auth_path %>" });
+      chat.init();
+      chat.subscribeMyChannel();
+    <% end %>
   </head>
    <body>
     <div id="header" class="container_16">

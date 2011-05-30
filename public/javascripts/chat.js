@@ -9,7 +9,7 @@ var mychat = buildChat({
 // Constrói um novo objeto Chat
 var buildChat = function(opts){
   var pusher;
-  var config = {};
+  var config = { endPoint : '/presence/auth' };
   var $userList = $("<div/>", { id : "chat-list" }).append("<ul/>");
   var getCSSUserId = function(userId) {
     return "chat-user-" + userId;
@@ -39,6 +39,7 @@ var buildChat = function(opts){
     init : function(){
       // Initicializando layout
       $("body").append($userList);
+      Pusher.channel_auth_endpoint = config.endPoint;
       pusher = new Pusher(config.key);
     },
     // Inscreve no canal do usuário logado
@@ -48,29 +49,35 @@ var buildChat = function(opts){
 
       // Escuta evento de confirmação de inscrição no canal
       myPresenceCh.bind("pusher:subscription_succeeded", function(members){
+          console.log("members subs");
+          console.log(members);
           members.each(function(member) {
-              var channels = member.info.friends;
+              var channels = member.friends;
+              console.log("channels: ")
+              console.log(channels)
               // Somente o user atual tem info.friends
               if(channels){
-                for(var ch in channels) {
-                  pusher.subscribe(ch);
+                for(var i = 0; i < channels.length; i++) {
+                  pusher.subscribe(channels[i].channel);
                 }
               } else {
                 // Para o restante dos membros do canal
                 //(caso em que os contatos entram antes do dono)
-                pusher.subscribe(member.channel)
+                pusher.subscribe(member.info.channel)
               }
           });
       });
 
       // Escuta evento de adição de membro no canal
       myPresenceCh.bind("pusher:member_added", function(member){
-        uiAddContact(member);
+        that.uiAddContact(member);
+        pusher.subscribe(member.info.channel);
       });
 
       // Escuta evento de remoção de membro no canal
       myPresenceCh.bind("pusher:member_removed", function(member){
-        //uiRemoveContact(member.id);
+        that.uiRemoveContact(member.id);
+        pusher.unsubscribe(member.info.channel);
       });
     },
     // Increve no canal dado (Caso de já estar no chat e aceitar convite de contato)
