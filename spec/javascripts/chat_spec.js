@@ -24,7 +24,7 @@ describe('Chat', function () {
             expect(chat).toBeDefined();
         });
 
-        it('shows a empty list and subscribes to my own channel', function() {
+        it('shows a empty list', function() {
             chat.init();
 
             expect($("#chat-list")).toExist();
