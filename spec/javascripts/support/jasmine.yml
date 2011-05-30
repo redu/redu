@@ -12,6 +12,7 @@
 #
 src_files:
   - public/javascripts/jquery.js
+  - public/javascripts/pusher.js
   - public/javascripts/chat.js
 
 # stylesheets
