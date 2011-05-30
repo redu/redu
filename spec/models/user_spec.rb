@@ -288,6 +288,10 @@ describe User do
 
       User.with_keyword("guilherme").to_set.should == [users[0], users[1]].to_set
     end
+
+    it "should retrieve channel name" do
+      subject.get_channel.should == "presence-user-#{subject.id}"
+    end
   end
 
   context "callbacks" do

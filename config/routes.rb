@@ -1,4 +1,6 @@
 Redu::Application.routes.draw do
+  post "presence/auth"
+
   match 'clipboard/:action/:folder_or_file/:id' => 'clipboard',
     :constraints => { :action         => /(add|remove)/,
                        :folder_or_file => /(folder|file)/ }

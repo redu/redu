@@ -559,14 +559,13 @@ class User < ActiveRecord::Base
     rec_posts = Post.find_tagged_with(tags.map(&:name),
                                       :conditions => ['posts.user_id != ? AND published_at > ?', self.id, since ],
                                       :order => 'published_at DESC',
-                                      :limit => 10
-                                     )
+                                      :limit => 10)
 
-                                     if rec_posts.empty?
-                                       []
-                                     else
-                                       rec_posts.uniq
-                                     end
+    if rec_posts.empty?
+      []
+    else
+      rec_posts.uniq
+    end
   end
 
   def display_name
@@ -741,6 +740,10 @@ class User < ActiveRecord::Base
 
   def create_settings!
     self.settings = UserSetting.create(:view_mural => Privacy[:friends])
+  end
+
+  def get_channel
+    "presence-user-#{self.id}"
   end
 
   protected
