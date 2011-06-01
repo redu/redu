@@ -44,17 +44,12 @@ var buildChat = function(opts){
     },
     // Inscreve no canal do usuário logado
     subscribeMyChannel : function(){
-      console.log("subMyChannel")
       myPresenceCh = pusher.subscribe(config.channel);
 
       // Escuta evento de confirmação de inscrição no canal
       myPresenceCh.bind("pusher:subscription_succeeded", function(members){
-          console.log("members subs");
-          console.log(members);
           members.each(function(member) {
-              var channels = member.friends;
-              console.log("channels: ")
-              console.log(channels)
+              var channels = member.info.friends;
               // Somente o user atual tem info.friends
               if(channels){
                 for(var i = 0; i < channels.length; i++) {
@@ -64,6 +59,7 @@ var buildChat = function(opts){
                 // Para o restante dos membros do canal
                 //(caso em que os contatos entram antes do dono)
                 pusher.subscribe(member.info.channel)
+                that.uiAddContact(member);
               }
           });
       });
