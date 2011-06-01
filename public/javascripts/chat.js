@@ -63,8 +63,8 @@ var buildChat = function(opts){
                 }
               } else {
                 // Para o restante dos membros do canal
-                // (caso em que os contatos entram antes do dono)
-                pusher.subscribe(member.info.channel)
+                // (caso em que os contatos entram antes do dono, logo eles
+                // devem ser adicionados a interface).
                 that.uiAddContact(member);
               }
           });
@@ -73,7 +73,6 @@ var buildChat = function(opts){
       // Escuta evento de adição de membro no canal
       myPresenceCh.bind("pusher:member_added", function(member){
         that.uiAddContact(member);
-        pusher.subscribe(member.info.channel);
       });
 
       // Escuta evento de remoção de membro no canal
