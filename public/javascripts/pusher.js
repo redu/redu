@@ -38,7 +38,7 @@ var Pusher = function(application_key, options) {
     this.socket_id = data.socket_id;
     this.subscribeAll();
   }.scopedTo(this));
-  
+
   this.bind('pusher:connection_disconnected', function(){
     for(var channel_name in this.channels.channels){
       this.channels.channels[channel_name].disconnect()
@@ -48,7 +48,7 @@ var Pusher = function(application_key, options) {
   this.bind('pusher:error', function(data) {
     Pusher.log("Pusher : error : " + data.message);
   });
-  
+
 };
 
 Pusher.instances = [];
@@ -135,7 +135,7 @@ Pusher.prototype = {
       if (this.channels.channels.hasOwnProperty(channel)) this.subscribe(channel);
     }
   },
-  
+
   subscribe: function(channel_name) {
     var channel = this.channels.add(channel_name, this);
     if (this.connected) {
@@ -149,7 +149,7 @@ Pusher.prototype = {
     }
     return channel;
   },
-  
+
   unsubscribe: function(channel_name) {
     this.channels.remove(channel_name);
 
@@ -172,7 +172,7 @@ Pusher.prototype = {
     this.connection.send(JSON.stringify(payload));
     return this;
   },
-  
+
   send_local_event: function(event_name, event_data, channel_name){
     event_data = Pusher.data_decorator(event_name, event_data);
     if (channel_name) {
@@ -187,7 +187,7 @@ Pusher.prototype = {
 
     this.global_channel.dispatch_with_all(event_name, event_data);
   },
-  
+
   onmessage: function(evt) {
     var params = JSON.parse(evt.data);
     if (params.socket_id && params.socket_id == this.socket_id) return;
@@ -247,9 +247,14 @@ Pusher.prototype = {
 
 Pusher.Util = {
   extend: function(target, extensions){
-    for(var i in extensions){
-      target[i] = extensions[i]
-    };
+    for (var property in extensions) {
+      if (extensions[property] && extensions[property].constructor && extensions[property].constructor === Object) {
+        target[property] = target[property] || {};
+        arguments.callee(target[property], extensions[property]);
+      } else {
+        target[property] = extensions[property];
+      }
+    }
     return target;
   }
 };
@@ -322,18 +327,18 @@ Pusher.Channel = function(channel_name, pusher) {
 Pusher.Channel.prototype = {
   // inheritable constructor
   init: function(){
-    
+
   },
-  
+
   disconnect: function(){
-    
+
   },
-  
+
   // Activate after successful subscription. Called on top-level pusher:subscription_succeeded
   acknowledge_subscription: function(data){
     this.subscribed = true;
   },
-  
+
   bind: function(event_name, callback) {
     this.callbacks[event_name] = this.callbacks[event_name] || [];
     this.callbacks[event_name].push(callback);
@@ -375,15 +380,15 @@ Pusher.Channel.prototype = {
       this.global_callbacks[i](event_name, event_data);
     }
   },
-  
+
   is_private: function(){
     return false;
   },
-  
+
   is_presence: function(){
     return false;
   },
-  
+
   authorize: function(pusher, callback){
     callback({}); // normal channels don't require auth
   }
@@ -414,7 +419,7 @@ Pusher.authorizers = {
   },
   jsonp: function(pusher, callback){
     var qstring = 'socket_id=' + encodeURIComponent(pusher.socket_id) + '&channel_name=' + encodeURIComponent(this.name);
-    var script = document.createElement("script");  
+    var script = document.createElement("script");
     Pusher.auth_callbacks[this.name] = callback;
     var callback_name = "Pusher.auth_callbacks['" + this.name + "']";
     script.src = Pusher.channel_auth_endpoint+'?callback='+encodeURIComponent(callback_name)+'&'+qstring;
@@ -427,25 +432,25 @@ Pusher.Channel.PrivateChannel = {
   is_private: function(){
     return true;
   },
-  
+
   authorize: function(pusher, callback){
     Pusher.authorizers[Pusher.channel_auth_transport].scopedTo(this)(pusher, callback);
   }
 };
 
 Pusher.Channel.PresenceChannel = {
-  
+
   init: function(){
     this.bind('pusher_internal:subscription_succeeded', function(sub_data){
       this.acknowledge_subscription(sub_data);
       this.dispatch_with_all('pusher:subscription_succeeded', this.members);
     }.scopedTo(this));
-    
+
     this.bind('pusher_internal:member_added', function(data){
       var member = this.members.add(data.user_id, data.user_info);
       this.dispatch_with_all('pusher:member_added', member);
     }.scopedTo(this))
-    
+
     this.bind('pusher_internal:member_removed', function(data){
       var member = this.members.remove(data.user_id);
       if (member) {
@@ -453,21 +458,21 @@ Pusher.Channel.PresenceChannel = {
       }
     }.scopedTo(this))
   },
-  
+
   disconnect: function(){
     this.members.clear();
   },
-  
+
   acknowledge_subscription: function(sub_data){
     this.members._members_map = sub_data.presence.hash;
     this.members.count = sub_data.presence.count;
     this.subscribed = true;
   },
-  
+
   is_presence: function(){
     return true;
   },
-  
+
   members: {
     _members_map: {},
     count: 0,
@@ -531,7 +536,7 @@ Pusher.Channel.private_prefix = "private-";
 Pusher.Channel.presence_prefix = "presence-";
 
 var _require = (function () {
-  
+
   var handleScriptLoaded;
   if (document.addEventListener) {
     handleScriptLoaded = function (elem, callback) {
@@ -544,7 +549,7 @@ var _require = (function () {
       })
     }
   }
-  
+
   return function (deps, callback) {
     var dep_count = 0,
     dep_length = deps.length;
@@ -570,7 +575,7 @@ var _require = (function () {
       });
 
       head.appendChild(script);
-    }   
+    }
 
     for(var i = 0; i < dep_length; i++) {
       addScript(deps[i], callback);
@@ -614,7 +619,7 @@ var _require = (function () {
       }
     }
   }();
-  
+
   var ondocumentbody = function(callback) {
     var load_body = function() {
       document.body ? callback() : setTimeout(load_body, 0);
