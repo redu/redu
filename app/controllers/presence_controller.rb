@@ -1,8 +1,7 @@
-class PresenceController < ApplicationController
+class PresenceController < BaseController
 
   def auth
     if current_user
-
       if params[:channel_name] == current_user.get_channel
         payload = { :friends => Presence.
                          list_of_channels(current_user) }
