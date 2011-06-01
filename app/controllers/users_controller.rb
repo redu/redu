@@ -61,9 +61,14 @@ class UsersController < BaseController
   def activate
     redirect_to signup_path and return if params[:id].blank?
     @user = User.find_by_activation_code(params[:id])
-    if @user and @user.activate
-      self.current_user = @user
-      redirect_to user_path(@user)
+    if @user and @user.activated_at
+      flash[:notice] = "Sua conta já foi ativada. Utilize seu login e senha para entrar no Redu."
+      redirect_to application_path
+      return
+    elsif @user and @user.activate
+      UserSession.create(@user) if current_user.nil?
+
+      redirect_to home_user_path(@user)
       flash[:notice] = t :thanks_for_activating_your_account
       return
     end

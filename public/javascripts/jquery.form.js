@@ -1,5 +1,5 @@
 /*!
- * jQuery Form Plugin
+ * jQuery Form Plugin (Just ajaxSubmit function and dependencies)
  * version: 2.73 (03-MAY-2011)
  * @requires jQuery v1.3.2 or later
  *
@@ -145,7 +145,7 @@ $.fn.ajaxSubmit = function(options) {
 	}
 
 	options.success = function(data, status, xhr) { // jQuery 1.4+ passes xhr as 3rd arg
-		var context = options.context || options;   // jQuery 1.4+ supports scope context 
+		var context = options.context || options;   // jQuery 1.4+ supports scope context
 		for (var i=0, max=callbacks.length; i < max; i++) {
 			callbacks[i].apply(context, [data, status, xhr || $form, $form]);
 		}
@@ -187,7 +187,7 @@ $.fn.ajaxSubmit = function(options) {
 			alert('Error: Form elements must not have name or id of "submit".');
 			return;
 		}
-		
+
 		var s = $.extend(true, {}, $.ajaxSettings, options);
 		s.context = s.context || s;
 		var id = 'jqFormIO' + (new Date().getTime()), fn = '_'+id;
@@ -227,7 +227,7 @@ $.fn.ajaxSubmit = function(options) {
 		}
 
 		if (s.beforeSend && s.beforeSend.call(s.context, xhr, s) === false) {
-			if (s.global) { 
+			if (s.global) {
 				$.active--;
 			}
 			return;
@@ -313,7 +313,7 @@ $.fn.ajaxSubmit = function(options) {
 		else {
 			setTimeout(doSubmit, 10); // this lets dom updates render
 		}
-	
+
 		var data, doc, domCheckCount = 50, callbackProcessed;
 
 		function cb(e) {
@@ -324,7 +324,7 @@ $.fn.ajaxSubmit = function(options) {
 				xhr.abort('timeout');
 				return;
 			}
-			
+
 			var doc = io.contentWindow ? io.contentWindow.document : io.contentDocument ? io.contentDocument : io.document;
 			if (!doc || doc.location.href == s.iframeSrc) {
 				// response not received yet
@@ -355,7 +355,7 @@ $.fn.ajaxSubmit = function(options) {
 				}
 
 				//log('response detected');
-				xhr.responseText = doc.body ? doc.body.innerHTML : doc.documentElement ? doc.documentElement.innerHTML : null; 
+				xhr.responseText = doc.body ? doc.body.innerHTML : doc.documentElement ? doc.documentElement.innerHTML : null;
 				xhr.responseXML = doc.XMLDocument ? doc.XMLDocument : doc;
 				if (isXml)
 					s.dataType = 'xml';
@@ -381,12 +381,12 @@ $.fn.ajaxSubmit = function(options) {
 						else if (b) {
 							xhr.responseText = b.innerHTML;
 						}
-					}			  
+					}
 				}
 				else if (s.dataType == 'xml' && !xhr.responseXML && xhr.responseText != null) {
 					xhr.responseXML = toXml(xhr.responseText);
 				}
-				
+
 				data = httpData(xhr, s.dataType, s);
 			}
 			catch(e){
@@ -396,7 +396,7 @@ $.fn.ajaxSubmit = function(options) {
 				s.error && s.error.call(s.context, xhr, 'error', e);
 				g && $.event.trigger("ajaxError", [xhr, s, e]);
 			}
-			
+
 			if (xhr.aborted) {
 				log('upload aborted');
 				ok = false;
@@ -407,13 +407,13 @@ $.fn.ajaxSubmit = function(options) {
 				s.success && s.success.call(s.context, data, 'success', xhr);
 				g && $.event.trigger("ajaxSuccess", [xhr, s]);
 			}
-			
+
 			g && $.event.trigger("ajaxComplete", [xhr, s]);
 
 			if (g && ! --$.active) {
 				$.event.trigger("ajaxStop");
 			}
-			
+
 			s.complete && s.complete.call(s.context, xhr, ok ? 'success' : 'error');
 
 			callbackProcessed = true;
@@ -442,7 +442,7 @@ $.fn.ajaxSubmit = function(options) {
 		var parseJSON = $.parseJSON || function(s) {
 			return window['eval']('(' + s + ')');
 		};
-		
+
 		var httpData = function( xhr, type, s ) { // mostly lifted from jq1.4.4
 			var ct = xhr.getResponseHeader('content-type') || '',
 				xml = type === 'xml' || !type && ct.indexOf('xml') >= 0,
@@ -467,78 +467,6 @@ $.fn.ajaxSubmit = function(options) {
 };
 
 /**
- * ajaxForm() provides a mechanism for fully automating form submission.
- *
- * The advantages of using this method instead of ajaxSubmit() are:
- *
- * 1: This method will include coordinates for <input type="image" /> elements (if the element
- *	is used to submit the form).
- * 2. This method will include the submit element's name/value data (for the element that was
- *	used to submit the form).
- * 3. This method binds the submit() method to the form for you.
- *
- * The options argument for ajaxForm works exactly as it does for ajaxSubmit.  ajaxForm merely
- * passes the options argument along after properly binding events for submit elements and
- * the form itself.
- */
-$.fn.ajaxForm = function(options) {
-	// in jQuery 1.3+ we can fix mistakes with the ready state
-	if (this.length === 0) {
-		var o = { s: this.selector, c: this.context };
-		if (!$.isReady && o.s) {
-			log('DOM not ready, queuing ajaxForm');
-			$(function() {
-				$(o.s,o.c).ajaxForm(options);
-			});
-			return this;
-		}
-		// is your DOM ready?  http://docs.jquery.com/Tutorials:Introducing_$(document).ready()
-		log('terminating; zero elements found by selector' + ($.isReady ? '' : ' (DOM not ready)'));
-		return this;
-	}
-	
-	return this.ajaxFormUnbind().bind('submit.form-plugin', function(e) {
-		if (!e.isDefaultPrevented()) { // if event has been canceled, don't proceed
-			e.preventDefault();
-			$(this).ajaxSubmit(options);
-		}
-	}).bind('click.form-plugin', function(e) {
-		var target = e.target;
-		var $el = $(target);
-		if (!($el.is(":submit,input:image"))) {
-			// is this a child element of the submit el?  (ex: a span within a button)
-			var t = $el.closest(':submit');
-			if (t.length == 0) {
-				return;
-			}
-			target = t[0];
-		}
-		var form = this;
-		form.clk = target;
-		if (target.type == 'image') {
-			if (e.offsetX != undefined) {
-				form.clk_x = e.offsetX;
-				form.clk_y = e.offsetY;
-			} else if (typeof $.fn.offset == 'function') { // try to use dimensions plugin
-				var offset = $el.offset();
-				form.clk_x = e.pageX - offset.left;
-				form.clk_y = e.pageY - offset.top;
-			} else {
-				form.clk_x = e.pageX - target.offsetLeft;
-				form.clk_y = e.pageY - target.offsetTop;
-			}
-		}
-		// clear form vars
-		setTimeout(function() { form.clk = form.clk_x = form.clk_y = null; }, 100);
-	});
-};
-
-// ajaxFormUnbind unbinds the event handlers that were bound by ajaxForm
-$.fn.ajaxFormUnbind = function() {
-	return this.unbind('submit.form-plugin click.form-plugin');
-};
-
-/**
  * formToArray() gathers form element data into an array of objects that can
  * be passed to any of the following ajax functions: $.get, $.post, or load.
  * Each object in the array has both a 'name' and 'value' property.  An example of
@@ -560,7 +488,7 @@ $.fn.formToArray = function(semantic) {
 	if (!els) {
 		return a;
 	}
-	
+
 	var i,j,n,v,el,max,jmax;
 	for(i=0, max=els.length; i < max; i++) {
 		el = els[i];
@@ -599,90 +527,6 @@ $.fn.formToArray = function(semantic) {
 		}
 	}
 	return a;
-};
-
-/**
- * Serializes form data into a 'submittable' string. This method will return a string
- * in the format: name1=value1&amp;name2=value2
- */
-$.fn.formSerialize = function(semantic) {
-	//hand off to jQuery.param for proper encoding
-	return $.param(this.formToArray(semantic));
-};
-
-/**
- * Serializes all field elements in the jQuery object into a query string.
- * This method will return a string in the format: name1=value1&amp;name2=value2
- */
-$.fn.fieldSerialize = function(successful) {
-	var a = [];
-	this.each(function() {
-		var n = this.name;
-		if (!n) {
-			return;
-		}
-		var v = $.fieldValue(this, successful);
-		if (v && v.constructor == Array) {
-			for (var i=0,max=v.length; i < max; i++) {
-				a.push({name: n, value: v[i]});
-			}
-		}
-		else if (v !== null && typeof v != 'undefined') {
-			a.push({name: this.name, value: v});
-		}
-	});
-	//hand off to jQuery.param for proper encoding
-	return $.param(a);
-};
-
-/**
- * Returns the value(s) of the element in the matched set.  For example, consider the following form:
- *
- *  <form><fieldset>
- *	  <input name="A" type="text" />
- *	  <input name="A" type="text" />
- *	  <input name="B" type="checkbox" value="B1" />
- *	  <input name="B" type="checkbox" value="B2"/>
- *	  <input name="C" type="radio" value="C1" />
- *	  <input name="C" type="radio" value="C2" />
- *  </fieldset></form>
- *
- *  var v = $(':text').fieldValue();
- *  // if no values are entered into the text inputs
- *  v == ['','']
- *  // if values entered into the text inputs are 'foo' and 'bar'
- *  v == ['foo','bar']
- *
- *  var v = $(':checkbox').fieldValue();
- *  // if neither checkbox is checked
- *  v === undefined
- *  // if both checkboxes are checked
- *  v == ['B1', 'B2']
- *
- *  var v = $(':radio').fieldValue();
- *  // if neither radio is checked
- *  v === undefined
- *  // if first radio is checked
- *  v == ['C1']
- *
- * The successful argument controls whether or not the field element must be 'successful'
- * (per http://www.w3.org/TR/html4/interact/forms.html#successful-controls).
- * The default value of the successful argument is true.  If this value is false the value(s)
- * for each element is returned.
- *
- * Note: This method *always* returns an array.  If no valid value can be determined the
- *	   array will be empty, otherwise it will contain one or more values.
- */
-$.fn.fieldValue = function(successful) {
-	for (var val=[], i=0, max=this.length; i < max; i++) {
-		var el = this[i];
-		var v = $.fieldValue(el, successful);
-		if (v === null || typeof v == 'undefined' || (v.constructor == Array && !v.length)) {
-			continue;
-		}
-		v.constructor == Array ? $.merge(val, v) : val.push(v);
-	}
-	return val;
 };
 
 /**
@@ -725,87 +569,6 @@ $.fieldValue = function(el, successful) {
 		return a;
 	}
 	return $(el).val();
-};
-
-/**
- * Clears the form data.  Takes the following actions on the form's input fields:
- *  - input text fields will have their 'value' property set to the empty string
- *  - select elements will have their 'selectedIndex' property set to -1
- *  - checkbox and radio inputs will have their 'checked' property set to false
- *  - inputs of type submit, button, reset, and hidden will *not* be effected
- *  - button elements will *not* be effected
- */
-$.fn.clearForm = function() {
-	return this.each(function() {
-		$('input,select,textarea', this).clearFields();
-	});
-};
-
-/**
- * Clears the selected form elements.
- */
-$.fn.clearFields = $.fn.clearInputs = function() {
-	return this.each(function() {
-		var t = this.type, tag = this.tagName.toLowerCase();
-		if (t == 'text' || t == 'password' || tag == 'textarea') {
-			this.value = '';
-		}
-		else if (t == 'checkbox' || t == 'radio') {
-			this.checked = false;
-		}
-		else if (tag == 'select') {
-			this.selectedIndex = -1;
-		}
-	});
-};
-
-/**
- * Resets the form data.  Causes all form elements to be reset to their original value.
- */
-$.fn.resetForm = function() {
-	return this.each(function() {
-		// guard against an input with the name of 'reset'
-		// note that IE reports the reset function as an 'object'
-		if (typeof this.reset == 'function' || (typeof this.reset == 'object' && !this.reset.nodeType)) {
-			this.reset();
-		}
-	});
-};
-
-/**
- * Enables or disables any matching elements.
- */
-$.fn.enable = function(b) {
-	if (b === undefined) {
-		b = true;
-	}
-	return this.each(function() {
-		this.disabled = !b;
-	});
-};
-
-/**
- * Checks/unchecks any matching checkboxes or radio buttons and
- * selects/deselects and matching option elements.
- */
-$.fn.selected = function(select) {
-	if (select === undefined) {
-		select = true;
-	}
-	return this.each(function() {
-		var t = this.type;
-		if (t == 'checkbox' || t == 'radio') {
-			this.checked = select;
-		}
-		else if (this.tagName.toLowerCase() == 'option') {
-			var $sel = $(this).parent('select');
-			if (select && $sel[0] && $sel[0].type == 'select-one') {
-				// deselect all other options
-				$sel.find('option').selected(false);
-			}
-			this.selected = select;
-		}
-	});
 };
 
 // helper fn for console logging

@@ -126,7 +126,7 @@ class Seminar < ActiveRecord::Base
     config[:input] = self.original.url
     config[:output][:url] = output_path
     config[:output][:thumbnails][:base_url] = File.dirname(output_path)
-    config[:output][:notifications][:url] = "http://#{credentials[:username]}:#{credentials[:password]}@redu.com.br/jobs/notify"
+    config[:output][:notifications][:url] = "http://#{credentials[:username]}:#{credentials[:password]}@www.redu.com.br/jobs/notify"
 
     response = Zencoder::Job.create(config)
     puts response.inspect
