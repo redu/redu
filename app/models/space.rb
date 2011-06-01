@@ -61,6 +61,7 @@ class Space < ActiveRecord::Base
   has_one :root_folder, :class_name => 'Folder', :foreign_key => 'space_id'
 
   scope :of_course, lambda { |course_id| where(:course_id => course_id) }
+  scope :published, where(:published => true)
 
   # ACCESSORS
   attr_protected :owner, :removed, :lectures_count, :members_count,
