@@ -21,14 +21,14 @@ var buildChat = function(opts){
         var $li = $("<li/>").appendTo($this);
         $li.attr("id", getCSSUserId(member.id));
         var $role = $("<span/>", { "class" : "roles" }).appendTo($li);
-        $("<img/>", { "src" : member.info.thumbnail, "class" : "avatar" }).appendTo($this);
+        $("<img/>", { "src" : member.info.thumbnail, "class" : "avatar" }).appendTo($li);
 
         // Adicionando classe p/ papeis true
         for(var key in member.info.roles){
           if(member.info.roles[key]){ $role.addClass(key); }
         }
 
-        $("<span/>", { 'class' : "name" }).text(member.info.name).appendTo($this);
+        $("<span/>", { 'class' : "name" }).text(member.info.name).appendTo($li);
     });
   };
 
@@ -63,7 +63,7 @@ var buildChat = function(opts){
                 }
               } else {
                 // Para o restante dos membros do canal
-                //(caso em que os contatos entram antes do dono)
+                // (caso em que os contatos entram antes do dono)
                 pusher.subscribe(member.info.channel)
                 that.uiAddContact(member);
               }
