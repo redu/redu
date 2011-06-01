@@ -1,5 +1,5 @@
 /*!
- * Pusher JavaScript Library v1.8.0
+ * Pusher JavaScript Library v1.8.3
  * http://pusherapp.com/
  *
  * Copyright 2010, New Bamboo
@@ -38,7 +38,7 @@ var Pusher = function(application_key, options) {
     this.socket_id = data.socket_id;
     this.subscribeAll();
   }.scopedTo(this));
-
+  
   this.bind('pusher:connection_disconnected', function(){
     for(var channel_name in this.channels.channels){
       this.channels.channels[channel_name].disconnect()
@@ -48,7 +48,7 @@ var Pusher = function(application_key, options) {
   this.bind('pusher:error', function(data) {
     Pusher.log("Pusher : error : " + data.message);
   });
-
+  
 };
 
 Pusher.instances = [];
@@ -74,9 +74,11 @@ Pusher.prototype = {
 
       // Timeout for the connection to handle silently hanging connections
       // Increase the timeout after each retry in case of extreme latencies
+      var timeout = Pusher.connection_timeout + (self.retry_counter * 1000);
       var connectionTimeout = window.setTimeout(function(){
+        Pusher.log('Pusher : connection timeout after ' + timeout + 'ms');
         ws.close();
-      }, (2000 + (self.retry_counter * 1000)));
+      }, timeout);
 
       ws.onmessage = function() {
         self.onmessage.apply(self, arguments);
@@ -103,10 +105,10 @@ Pusher.prototype = {
   toggle_secure: function() {
     if (this.secure == false) {
       this.secure = true;
-      Pusher.log("Pusher: switching to wss:// connection");
+      Pusher.log("Pusher : switching to wss:// connection");
     }else{
       this.secure = false;
-      Pusher.log("Pusher: switching to ws:// connection");
+      Pusher.log("Pusher : switching to ws:// connection");
     };
   },
 
@@ -133,7 +135,7 @@ Pusher.prototype = {
       if (this.channels.channels.hasOwnProperty(channel)) this.subscribe(channel);
     }
   },
-
+  
   subscribe: function(channel_name) {
     var channel = this.channels.add(channel_name, this);
     if (this.connected) {
@@ -147,7 +149,7 @@ Pusher.prototype = {
     }
     return channel;
   },
-
+  
   unsubscribe: function(channel_name) {
     this.channels.remove(channel_name);
 
@@ -170,7 +172,7 @@ Pusher.prototype = {
     this.connection.send(JSON.stringify(payload));
     return this;
   },
-
+  
   send_local_event: function(event_name, event_data, channel_name){
     event_data = Pusher.data_decorator(event_name, event_data);
     if (channel_name) {
@@ -185,7 +187,7 @@ Pusher.prototype = {
 
     this.global_channel.dispatch_with_all(event_name, event_data);
   },
-
+  
   onmessage: function(evt) {
     var params = JSON.parse(evt.data);
     if (params.socket_id && params.socket_id == this.socket_id) return;
@@ -213,7 +215,7 @@ Pusher.prototype = {
 
     // Retry with increasing delay, with a maximum interval of 10s
     var retry_delay = Math.min(this.retry_counter * 1000, 10000);
-    Pusher.log ("Pusher: Retrying connection in " + retry_delay + "ms");
+    Pusher.log("Pusher : Retrying connection in " + retry_delay + "ms");
     var self = this;
     setTimeout(function() {
       self.connect();
@@ -224,7 +226,7 @@ Pusher.prototype = {
 
   onclose: function() {
     this.global_channel.dispatch('close', null);
-    Pusher.log ("Pusher: Socket closed")
+    Pusher.log("Pusher : Socket closed")
     if (this.connected) {
       this.send_local_event("pusher:connection_disconnected", {});
       if (Pusher.allow_reconnect) {
@@ -253,12 +255,15 @@ Pusher.Util = {
 };
 
 // Pusher defaults
-Pusher.VERSION = "1.8.0";
+Pusher.VERSION = "1.8.3";
 
 Pusher.host = "ws.pusherapp.com";
 Pusher.ws_port = 80;
 Pusher.wss_port = 443;
 Pusher.channel_auth_endpoint = '/pusher/auth';
+Pusher.connection_timeout = 5000;
+Pusher.cdn_http = 'http://js.pusherapp.com/'
+Pusher.cdn_https = 'https://d3ds63zw57jt09.cloudfront.net/'
 Pusher.log = function(msg){}; // e.g. function(m){console.log(m)}
 Pusher.data_decorator = function(event_name, event_data){ return event_data }; // wrap event_data before dispatching
 Pusher.allow_reconnect = true;
@@ -317,18 +322,18 @@ Pusher.Channel = function(channel_name, pusher) {
 Pusher.Channel.prototype = {
   // inheritable constructor
   init: function(){
-
+    
   },
-
+  
   disconnect: function(){
-
+    
   },
-
+  
   // Activate after successful subscription. Called on top-level pusher:subscription_succeeded
   acknowledge_subscription: function(data){
     this.subscribed = true;
   },
-
+  
   bind: function(event_name, callback) {
     this.callbacks[event_name] = this.callbacks[event_name] || [];
     this.callbacks[event_name].push(callback);
@@ -370,15 +375,15 @@ Pusher.Channel.prototype = {
       this.global_callbacks[i](event_name, event_data);
     }
   },
-
+  
   is_private: function(){
     return false;
   },
-
+  
   is_presence: function(){
     return false;
   },
-
+  
   authorize: function(pusher, callback){
     callback({}); // normal channels don't require auth
   }
@@ -409,7 +414,7 @@ Pusher.authorizers = {
   },
   jsonp: function(pusher, callback){
     var qstring = 'socket_id=' + encodeURIComponent(pusher.socket_id) + '&channel_name=' + encodeURIComponent(this.name);
-    var script = document.createElement("script");
+    var script = document.createElement("script");  
     Pusher.auth_callbacks[this.name] = callback;
     var callback_name = "Pusher.auth_callbacks['" + this.name + "']";
     script.src = Pusher.channel_auth_endpoint+'?callback='+encodeURIComponent(callback_name)+'&'+qstring;
@@ -422,45 +427,47 @@ Pusher.Channel.PrivateChannel = {
   is_private: function(){
     return true;
   },
-
+  
   authorize: function(pusher, callback){
     Pusher.authorizers[Pusher.channel_auth_transport].scopedTo(this)(pusher, callback);
   }
 };
 
 Pusher.Channel.PresenceChannel = {
-
+  
   init: function(){
     this.bind('pusher_internal:subscription_succeeded', function(sub_data){
       this.acknowledge_subscription(sub_data);
       this.dispatch_with_all('pusher:subscription_succeeded', this.members);
     }.scopedTo(this));
-
+    
     this.bind('pusher_internal:member_added', function(data){
       var member = this.members.add(data.user_id, data.user_info);
       this.dispatch_with_all('pusher:member_added', member);
     }.scopedTo(this))
-
+    
     this.bind('pusher_internal:member_removed', function(data){
       var member = this.members.remove(data.user_id);
-      this.dispatch_with_all('pusher:member_removed', member);
+      if (member) {
+        this.dispatch_with_all('pusher:member_removed', member);
+      }
     }.scopedTo(this))
   },
-
+  
   disconnect: function(){
     this.members.clear();
   },
-
+  
   acknowledge_subscription: function(sub_data){
     this.members._members_map = sub_data.presence.hash;
     this.members.count = sub_data.presence.count;
     this.subscribed = true;
   },
-
+  
   is_presence: function(){
     return true;
   },
-
+  
   members: {
     _members_map: {},
     count: 0,
@@ -482,8 +489,10 @@ Pusher.Channel.PresenceChannel = {
 
     remove: function(user_id) {
       member = this.get(user_id);
-      delete this._members_map[user_id];
-      this.count--;
+      if (member) {
+        delete this._members_map[user_id];
+        this.count--;
+      }
       return member;
     },
 
@@ -521,10 +530,8 @@ Pusher.Channel.factory = function(channel_name, pusher){
 Pusher.Channel.private_prefix = "private-";
 Pusher.Channel.presence_prefix = "presence-";
 
-WEB_SOCKET_SWF_LOCATION = "http://js.pusherapp.com/1.8.0/WebSocketMain.swf";
-
 var _require = (function () {
-
+  
   var handleScriptLoaded;
   if (document.addEventListener) {
     handleScriptLoaded = function (elem, callback) {
@@ -537,7 +544,7 @@ var _require = (function () {
       })
     }
   }
-
+  
   return function (deps, callback) {
     var dep_count = 0,
     dep_length = deps.length;
@@ -563,7 +570,7 @@ var _require = (function () {
       });
 
       head.appendChild(script);
-    }
+    }   
 
     for(var i = 0; i < dep_length; i++) {
       addScript(deps[i], callback);
@@ -572,40 +579,57 @@ var _require = (function () {
 })();
 
 ;(function() {
-  var root = 'http://js.pusherapp.com/1.8.0';
-  var deps = [],
-      callback = function () {
-        Pusher.ready()
-      }
-  // Check for JSON dependency
+  var cdn = (document.location.protocol == 'http:') ? Pusher.cdn_http : Pusher.cdn_https;
+  var root = cdn + Pusher.VERSION;
+
+  var deps = [];
   if (window['JSON'] == undefined) {
     deps.push(root + '/json2.js');
   }
-  // Check for Flash fallback dep. Wrap initialization.
   if (window['WebSocket'] == undefined) {
-    // Don't let WebSockets.js initialize on load. Inconsistent accross browsers.
+    // We manually initialize web-socket-js to iron out cross browser issues
     window.WEB_SOCKET_DISABLE_AUTO_INITIALIZATION = true;
     deps.push(root + '/flashfallback.js');
-    callback = function(){
-      FABridge.addInitializationCallback('webSocket', function () {
-        Pusher.ready();
-      })
-
-      if (window['WebSocket']) {
-        // This will call the FABridge callback, which initializes pusher!
-        WebSocket.__initialize();
-      } else {
-        // Flash is not installed
-        Pusher.log("Pusher : Could not connect : WebSocket is not availabe natively or via Flash")
-        // TODO: Update Pusher state in such a way that users can bind to it
-      }
-    }
   }
 
-  if( deps.length > 0){
-    _require(deps, callback);
+  var initialize = function() {
+    if (window['WebSocket'] == undefined) {
+      return function() {
+        // This runs after flashfallback.js has loaded
+        if (window['WebSocket']) {
+          window.WEB_SOCKET_SWF_LOCATION = root + "/WebSocketMain.swf";
+          WebSocket.__addTask(function() {
+            Pusher.ready();
+          })
+          WebSocket.__initialize();
+        } else {
+          // Flash must not be installed
+          Pusher.log("Pusher : Could not connect : WebSocket is not available natively or via Flash");
+          // TODO: Update Pusher state in such a way that users can bind to it
+        }
+      }
+    } else {
+      return function() {
+        Pusher.ready();
+      }
+    }
+  }();
+  
+  var ondocumentbody = function(callback) {
+    var load_body = function() {
+      document.body ? callback() : setTimeout(load_body, 0);
+    }
+    load_body();
+  };
+
+  var initializeOnDocumentBody = function() {
+    ondocumentbody(initialize);
+  }
+
+  if (deps.length > 0) {
+    _require(deps, initializeOnDocumentBody);
   } else {
-    callback();
+    initializeOnDocumentBody();
   }
 })();
 

@@ -9,7 +9,7 @@ var mychat = buildChat({
 // Constrói um novo objeto Chat
 var buildChat = function(opts){
   var pusher;
-  var config = { endPoint : '/presence/auth' };
+  var config = { "endPoint" : '/presence/auth', "log" : false };
   var $userList = $("<div/>", { id : "chat-list" }).append("<ul/>");
   var getCSSUserId = function(userId) {
     return "chat-user-" + userId;
@@ -40,6 +40,12 @@ var buildChat = function(opts){
       // Initicializando layout
       $("body").append($userList);
       Pusher.channel_auth_endpoint = config.endPoint;
+      // Informações de log
+      if(config.log){
+        Pusher.log = function(message) {
+          if (console && console.log) console.log(arguments);
+        }
+      }
       pusher = new Pusher(config.key);
     },
     // Inscreve no canal do usuário logado
