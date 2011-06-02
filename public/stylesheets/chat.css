@@ -1,9 +1,103 @@
 #chat-list {
-  width: 960px;
-  height: 50px;
-  background: red;
+  width: 180px;
+  height: 390px;
+  background: white;
+  border: 1px solid #61be80;
+
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+
+  -moz-box-shadow: 0px 1px 6px #b1b1b1;
+  -webkit-box-shadow: 0px 1px 6px #b1b1b1;
+  box-shadow: 0px 1px 6px #b1b1b1;
+
+  position: fixed;
+  bottom: 65px;
+  left: 10px;
+}
+
+#chat-list > ul {
+  overflow: scroll;
+  overflow-x: hidden;
+  width: 160px;
+  height: 345px;
+  margin: 0 10px;
+  font-size: .9em;
+}
+#chat-list li {
+  display: block;
+  clear: both;
+  width: 160px;
+  padding: 3px 0;
+}
+
+#chat-list li:hover {
+  background: #dbeff7;
+}
+
+
+#chat-list .title {
+  display: block;
+  margin: 10px;
+  font-family: Copse, Arial, sans-serif;
+  color: #4cacd5;
+}
+
+#chat-list .avatar {
+  float: left;
+  margin-right: 7px;
+}
+
+#chat-list .name {
+  color: #4cacd5;
+}
+
+#chat-list .roles {
+  color: #b3b2b3;
+}
+
+#chat-bar {
+  width: 170px;
+  height: 30px;
+  border: 1px solid #61be80;
+
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+
+  -moz-box-shadow: 0px 1px 6px #b1b1b1;
+  -webkit-box-shadow: 0px 1px 6px #b1b1b1;
+  box-shadow: 0px 1px 6px #b1b1b1;
+
+  /* Degradê */
+  background-image: -moz-linear-gradient(top, #61be80, #aed584);
+  background-image: -webkit-gradient(linear, center top, center bottom, from(#61be80), to(#aed584));
+  background-image: -o-linear-gradient(top, #61be80, #aed584);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#61be80', endColorstr='#aed584');
+  /*INNER ELEMENTS MUST NOT BREAK THIS ELEMENTS BOUNDARIES*/
+  /*Element must have a height (not auto)*/
+  /*All filters must be placed together*/
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#61be80', endColorstr='#aed584')";
+  /*Element must have a height (not auto)*/
+  /*All filters must be placed together*/
+  background-image: linear-gradient(top, #61be80, #aed584);
+
 
   position: fixed;
   bottom: 10px;
-  left: 10px;
+  left: 15px;
+}
+
+#chat-bar .count{
+  display: block;
+  text-align: center;
+  padding: 8px;
+
+  font-family: Copse, Arial, sans-serif;
+  color: white;
+}
+
+#chat-bar .count:hover{
+  text-decoration: none;
 }
