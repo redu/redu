@@ -6,11 +6,14 @@ var mychat = buildChat({
     endPoint : 'httto' });
 */
 
+// Utilizando pjax
+$("a:not([data-remote])").pjax("#content", { timeout: null });
+
 // Constrói um novo objeto Chat
 var buildChat = function(opts){
   var pusher;
   var config = { "endPoint" : '/presence/auth', "log" : false };
-  var $userList = $("<div/>", { id : "chat-list" }).append("<ul/>");
+  var $userList = $("<div/>", { id : "chat-list" }).append("<ul/>")
   var getCSSUserId = function(userId) {
     return "chat-user-" + userId;
   }
