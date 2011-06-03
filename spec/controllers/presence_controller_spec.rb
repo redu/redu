@@ -1,6 +1,10 @@
 require 'spec_helper'
+require 'authlogic/test_case'
+include Authlogic::TestCase
 
 describe PresenceController do
+  render_views
+
   before do
     @current_user = Factory(:user)
     @friend1 = Factory(:user)
@@ -36,17 +40,59 @@ describe PresenceController do
     @friend2.be_friends_with(@current_user)
     @current_user.be_friends_with(@friend3)
     @friend3.be_friends_with(@current_user)
+    activate_authlogic
+    UserSession.create @current_user
   end
 
   context "POST 'auth'" do
 
-    it "return a list of friends and user_id" do
+    context "authenticating" do
+      before do
+        post :auth, :locale => "pt-BR",
+          :channel_name => "presence-user-#{@current_user.id}",
+        :socket_id => "539.9111", :user_id => @current_user.id
+      end
+
+      it "should be successful" do
+        response.should be_success
+      end
+
+      it "should return a list of friends and user_id" do
+        response.body.should include("friends")
+        response.body.should include("user_id")
+      end
 
     end
 
-    it "return name, thumbail and channel of current_user" do
+    context "subscribe to a friend's channel" do
+      before do
+        post :auth, :locale => "pt-BR",
+          :channel_name => "presence-user-#{@friend1.id}",
+          :socket_id => "213.2312", :user_id => @current_user.id
+      end
 
+      it "should be successful" do
+        response.should be_success
+      end
+
+      it "return name, thumbail and channel of current_user" do
+        response.body.should include("name")
+        response.body.should include("thumbnail")
+        response.body.should include("channel")
+      end
     end
 
+    context "subscribe a strange channel" do
+      before do
+        post :auth, :locale => "pt-BR",
+          :channel_name => "presence-user-#{@user2.id}",
+          :socket_id => "212.2113", :user_id => @current_user.id
+      end
+
+      it "should not be success" do
+        debugger
+        response.should_not be_success
+      end
+    end
   end
 end
