@@ -102,7 +102,8 @@ module Redu
                    :thumb_120 => "120x120#",
                    :thumb_100 => "100x100#",
                    :thumb_60 => "60x60#",
-                   :thumb_32 => "32x32#" }
+                   :thumb_32 => "32x32#",
+                   :thumb_24 => "24x24#" }
     }
 
     config.paperclip_documents = config.paperclip.merge({

@@ -15,7 +15,7 @@ class PresenceController < BaseController
         render :json => json_response
       else
         payload = { :name => current_user.display_name,
-          :thumbnail => current_user.avatar.url(:thumb_32),
+          :thumbnail => current_user.avatar.url(:thumb_24),
           :channel => current_user.get_channel }
 
         if channels.include?({:channel => params[:channel_name]})
