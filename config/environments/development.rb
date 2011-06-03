@@ -53,6 +53,9 @@ Redu::Application.configure do
 
   # Configurações do Pusher (redu-development app)
   config.pusher = {
+    :app_id => '5841',
+    :key => '85e5c85be85430b8e279',
+    :secret => 'eab142f24f47cc09478a'
   }
 end
 

@@ -16,11 +16,34 @@ var buildChat = function(opts){
   var $listTitle = $("<div/>", { "class" : "title" }).text("Chat");
   var $userList = $("<div/>", { id : "chat-list" }).append($listTitle).append("<ul/>");
   $listTitle.after($("<div/>", { "class" : "minimize" }).text("Minimizar"));
-  var $barTitle = $("<a/>", { "class" : "count", "href" : "#" }).text("Chat (0)");
-  var $chatBar = $("<div/>", { id :'chat-bar' }).append($barTitle);
+  var $barTitle = $("<span/>", { "class" : "count" }).text("Chat (0)");
+  var $chatBar = $("<div/>", { id :'chat-bar', "class" : "opened" }).append($barTitle);
+  var $windowList = $("<ul/>", { id : "chat-windows-list" });
   var getCSSUserId = function(userId) {
     return "chat-user-" + userId;
   };
+
+  $("#chat-bar, .chat-window-bar").live("click", function(){
+      $(this).prev().toggle();
+      if ($(this).hasClass("opened")) {
+        $(this).removeClass("opened").addClass("closed");
+      } else {
+        $(this).removeClass("closed").addClass("opened");
+      }
+      return false;
+  });
+
+  $("#chat-list li").live("click", function(){
+      var userName = $(this).find('.name').text();
+      var $winBarTitle = $("<span/>", { "class" : "name" }).text(userName);
+      var $windowBar = $("<div/>", { "class" : "chat-window-bar"}).append($winBarTitle);
+      var $window = $("<div/>", { "class" : "chat-window" }).append($('<span/>', { "class" : "name" }).text(userName));
+      $window.append($('<ul/>', { "class" : "conversation" }));
+      $window.append($('<div/>', { "class" : "user-input" }).append($('<input/>', { "type" : "text" })));
+
+      $('#chat-windows-list').append($('<li/>').append($window, $windowBar));
+      return false;
+  });
 
   $.fn.addContact = function(member){
     return this.each(function(){
@@ -45,7 +68,7 @@ var buildChat = function(opts){
     // Inicializa o pusher e mostra a barra de chat
     init : function(){
       // Initicializando layout
-      $("body").append($userList, $chatBar);
+      $("body").append($userList, $chatBar, $windowList);
       Pusher.channel_auth_endpoint = config.endPoint;
       // Informações de log
       if(config.log){
