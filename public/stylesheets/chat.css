@@ -40,8 +40,8 @@
 #chat-list .title {
   display: block;
   margin: 10px;
-  font-family: Copse, Arial, sans-serif;
   color: #4cacd5;
+  font-weight: bold;
 }
 
 #chat-list .avatar {
@@ -50,6 +50,7 @@
 }
 
 #chat-list .name {
+  display: block;
   color: #4cacd5;
 }
 
@@ -95,8 +96,11 @@
   text-align: center;
   padding: 8px;
 
-  font-family: Copse, Arial, sans-serif;
   color: white;
+}
+
+#chat-bar .count {
+  font-weight: bold;
 }
 
 #chat-bar .count:hover,
@@ -105,7 +109,7 @@
 }
 
 #chat-windows-list .chat-window-bar .name {
-  font-size: .9em;
+  font-size: .85em;
 }
 
 #chat-windows-list {
@@ -170,6 +174,7 @@
   display: block;
   margin: 10px;
   color: #4cacd5;
+  font-weight: bold;
 }
 
 #chat-windows-list .chat-window .conversation > li {
@@ -186,6 +191,7 @@
 
 #chat-windows-list .chat-window .conversation li .messages li {
   font-size: .87em;
+  margin-bottom: 4px;
 }
 
 #chat-windows-list .chat-window .user-input {

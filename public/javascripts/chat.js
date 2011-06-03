@@ -13,41 +13,43 @@ $("a:not([data-remote])").pjax("#content", { timeout: null });
 var buildChat = function(opts){
   var pusher;
   var config = { "endPoint" : '/presence/auth', "log" : false };
-  var $userList = $("<div/>", { id : "chat-list" }).append("<ul/>")
+  var $listTitle = $("<span/>", { "class" : "title" }).text("Chat");
+  var $userList = $("<div/>", { id : "chat-list" }).append($listTitle).append("<ul/>");
+  var $barTitle = $("<a/>", { "class" : "count", "href" : "#" }).text("Chat (0)");
+  var $chatBar = $("<div/>", { id :'chat-bar' }).append($barTitle);
   var getCSSUserId = function(userId) {
     return "chat-user-" + userId;
-  }
+  };
 
   $.fn.addContact = function(member){
     return this.each(function(){
         var $this = $(this);
-        var $li = $("<li/>").appendTo($this);
+        var $li = $("<li/>", { "class" : "clearfix" }).appendTo($this);
         $li.attr("id", getCSSUserId(member.id));
-        var $role = $("<span/>", { "class" : "roles" }).appendTo($li);
         $("<img/>", { "src" : member.info.thumbnail, "class" : "avatar" }).appendTo($li);
+        $("<span/>", { 'class' : "name" }).text(member.info.name).appendTo($li);
+        var $role = $("<span/>", { "class" : "roles" }).appendTo($li);
 
         // Adicionando classe p/ papeis true
         for(var key in member.info.roles){
           if(member.info.roles[key]){ $role.addClass(key); }
         }
-
-        $("<span/>", { 'class' : "name" }).text(member.info.name).appendTo($li);
     });
   };
 
-  $.extend(config, opts)
+  $.extend(config, opts);
 
   var that = {
     // Inicializa o pusher e mostra a barra de chat
     init : function(){
       // Initicializando layout
-      $("body").append($userList);
+      $("body").append($userList, $chatBar);
       Pusher.channel_auth_endpoint = config.endPoint;
       // Informações de log
       if(config.log){
         Pusher.log = function(message) {
           if (console && console.log) console.log(arguments);
-        }
+        };
       }
       pusher = new Pusher(config.key);
     },
@@ -96,12 +98,18 @@ var buildChat = function(opts){
     // Adiciona a lista de contatos
     uiAddContact : function(member){
       $userList.find("ul").addContact(member);
+      that.uiUpdateCounter();
     },
     // Remove da lista de contatos
     uiRemoveContact : function(userId){
       $("#" + getCSSUserId(userId)).remove();
+      that.uiUpdateCounter();
     },
-  }
+    uiUpdateCounter : function(){
+      var count = $userList.find('li').length;
+      $chatBar.find('.count').text("Chat ("+ count +")");
+    }
+  };
 
   return that;
 }
