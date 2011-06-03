@@ -25,11 +25,9 @@ var buildChat = function(opts){
 
   $("#chat-bar, .chat-window-bar").live("click", function(){
       $(this).prev().toggle();
-      if ($(this).hasClass("opened")) {
-        $(this).removeClass("opened").addClass("closed");
-      } else {
-        $(this).removeClass("closed").addClass("opened");
-      }
+      $(this).toggleClass("opened");
+      $(this).toggleClass("closed");
+
       return false;
   });
 
@@ -45,6 +43,7 @@ var buildChat = function(opts){
         var $winBarTitle = $("<span/>", { "class" : "name" }).text(userName);
         var $windowBar = $("<div/>", { "class" : "chat-window-bar opened"}).append($winBarTitle);
         var $window = $("<div/>", { "class" : "chat-window" }).append($('<span/>', { "class" : "name" }).text(userName));
+        $winBarTitle.after($("<div/>", { "class" : "close" }).text("Fechar"));
         $window.append($('<ul/>', { "class" : "conversation" }));
         $window.append($('<div/>', { "class" : "user-input" }).append($('<input/>', { "type" : "text" })));
 
