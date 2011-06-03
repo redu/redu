@@ -13,8 +13,9 @@ $("a:not([data-remote])").pjax("#content", { timeout: null });
 var buildChat = function(opts){
   var pusher;
   var config = { "endPoint" : '/presence/auth', "log" : false };
-  var $listTitle = $("<span/>", { "class" : "title" }).text("Chat");
+  var $listTitle = $("<div/>", { "class" : "title" }).text("Chat");
   var $userList = $("<div/>", { id : "chat-list" }).append($listTitle).append("<ul/>");
+  $listTitle.after($("<div/>", { "class" : "minimize" }).text("Minimizar"));
   var $barTitle = $("<a/>", { "class" : "count", "href" : "#" }).text("Chat (0)");
   var $chatBar = $("<div/>", { id :'chat-bar' }).append($barTitle);
   var getCSSUserId = function(userId) {
@@ -28,7 +29,8 @@ var buildChat = function(opts){
         $li.attr("id", getCSSUserId(member.id));
         $("<img/>", { "src" : member.info.thumbnail, "class" : "avatar" }).appendTo($li);
         $("<span/>", { 'class' : "name" }).text(member.info.name).appendTo($li);
-        var $role = $("<span/>", { "class" : "roles" }).appendTo($li);
+        var $role = $("<div/>", { "class" : "roles" }).appendTo($li);
+        $role.append($("<div/>", { "class" : "status"}).text("on-line"));
 
         // Adicionando classe p/ papeis true
         for(var key in member.info.roles){

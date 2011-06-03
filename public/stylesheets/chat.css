@@ -25,20 +25,29 @@
   margin: 0 10px;
   font-size: .9em;
 }
+
 #chat-list li {
+  cursor: pointer;
   display: block;
   clear: both;
   width: 160px;
   padding: 3px 0;
 }
 
-#chat-list li:hover {
-  background: #dbeff7;
+#chat-list .minimize {
+  cursor: pointer;
+  text-indent: 9999px;
+  overflow: hidden;
+  width: 10px;
+  height: 10px;
+  background: url("../images/new/icons-chat.png") -843px 0px;
+  margin: 10px 0;
 }
 
-
 #chat-list .title {
-  display: block;
+  position: relative;
+  width: 140px;
+  float: left;
   margin: 10px;
   color: #4cacd5;
   font-weight: bold;
@@ -50,44 +59,38 @@
 }
 
 #chat-list .name {
-  display: block;
+  font-size: .95em;
   color: #4cacd5;
+}
+
+
+#chat-list .name:hover {
+  text-decoration: underline;
 }
 
 #chat-list .roles {
   color: #b3b2b3;
 }
 
+#chat-list .status {
+  width: 8px;
+  height: 8px;
+  float: left;
+  margin-top: 4px;
+  text-indent: -9999px;
+  overflow: hidden;
+  background: url("../images/new/icons-chat.png") -775px 0;
+}
+
 #chat-bar {
-  width: 170px;
-  height: 30px;
-  border: 1px solid #61be80;
-
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
-
-  -moz-box-shadow: 0px 1px 6px #b1b1b1;
-  -webkit-box-shadow: 0px 1px 6px #b1b1b1;
-  box-shadow: 0px 1px 6px #b1b1b1;
-
-  /* Degradê */
-  background-image: -moz-linear-gradient(top, #61be80, #aed584);
-  background-image: -webkit-gradient(linear, center top, center bottom, from(#61be80), to(#aed584));
-  background-image: -o-linear-gradient(top, #61be80, #aed584);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#61be80', endColorstr='#aed584');
-  /*INNER ELEMENTS MUST NOT BREAK THIS ELEMENTS BOUNDARIES*/
-  /*Element must have a height (not auto)*/
-  /*All filters must be placed together*/
-  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#61be80', endColorstr='#aed584')";
-  /*Element must have a height (not auto)*/
-  /*All filters must be placed together*/
-  background-image: linear-gradient(top, #61be80, #aed584);
-
+  width: 162px;
+  height: 52px;
 
   position: fixed;
   bottom: 10px;
   left: 15px;
+
+  background: url("../images/new/icons-chat.png") -74px -5px;
 }
 
 #chat-bar .count,
@@ -95,12 +98,17 @@
   display: block;
   text-align: center;
   padding: 8px;
-
   color: white;
+
+  text-shadow: -1px -1px 1px #99A499;
+  filter: dropshadow(color=#99A499, offx=-1, offy=-1);
 }
 
 #chat-bar .count {
   font-weight: bold;
+  width: 150px;
+  padding: 0;
+  margin-top: 18px;
 }
 
 #chat-bar .count:hover,
@@ -110,6 +118,9 @@
 
 #chat-windows-list .chat-window-bar .name {
   font-size: .85em;
+
+  text-shadow: 0px -1px 1px #CF6730;
+  filter: dropshadow(color=#CF6730, offx=0, offy=-1);
 }
 
 #chat-windows-list {
