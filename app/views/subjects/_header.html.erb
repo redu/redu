@@ -10,8 +10,10 @@
       <%= subject.description %>
      </span>
   </div>
-  <div class="start-subject">
-    <%= link_to "Deseja estudar?", space_subject_lectures_path(@space, @subject), :class => "start replacement" %>
-    <%= link_to raw("<span class='icon icon-resource-lightblue_32_32'></span>Conheça os recursos"), space_subject_lectures_path(@space, @subject), :class => "bt clearfix" %>
-  </div>
+  <% if !(current_page? space_subject_path(@space, @subject)) %>
+    <div class="start-subject">
+      <%= link_to "Deseja estudar?", space_subject_path(@space, @subject), :class => "start replacement" %>
+      <%= link_to raw("<span class='icon icon-resource-lightblue_32_32'></span>Conheça os recursos"), space_subject_path(@space, @subject), :class => "bt clearfix" %>
+    </div>
+  <% end %>
 </div><!-- end #hierarchy-header -->

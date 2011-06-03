@@ -16,21 +16,7 @@ class SubjectsController < BaseController
   end
 
   def index
-    if can? :manage, @space
-      @subjects = @space.subjects.paginate(:page => params[:page],
-                                           :order => 'updated_at DESC',
-                                           :per_page => Redu::Application.config.items_per_page)
-    else
-      @subjects = @space.subjects.visible.
-        paginate(:page => params[:page],
-                 :order => 'updated_at DESC',
-                 :per_page => Redu::Application.config.items_per_page)
-    end
-
-    respond_to do |format|
-      format.html
-      format.js { render_endless 'subjects/item', @subjects, '#subjects_list' }
-    end
+    redirect_to space_path(@space)
   end
 
   def show

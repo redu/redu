@@ -7,23 +7,23 @@
 
   <ul class="local-nav">
     <li>
+      <%
+        if space.subjects.visible.recent.count > 0
+          subjects_count = "(+#{space.subjects.visible.recent.count})"
+        end
+      %>
       <div class="<%= (current_page? space_path(space)) ?
-                    "session selected".to_s : "session".to_s %>">
-        <% selected = (current_page? space_path(space)) ? "icon-list-white_16_16" : "icon-list-lightblue_16_16" %>
-        <%= link_to 'Mural', space_path(space),
+        "session selected".to_s : "session".to_s %>">
+        <% selected = (current_page? space_path(space)) ? "icon-subject-white_16_16" : "icon-subject-lightblue_16_16" %>
+        <%= link_to "Módulos #{subjects_count}", space_path(space),
           :class => "icon #{selected}" %>
       </div>
     </li>
     <li>
-        <%
-          if space.subjects.visible.recent.count > 0
-            subjects_count = "(+#{space.subjects.visible.recent.count})"
-          end
-        %>
-      <div class="<%= (current_page? space_subjects_path(space)) ?
+      <div class="<%= (current_page? mural_space_path(space)) ?
                     "session selected".to_s : "session".to_s %>">
-        <% selected = (current_page? space_subjects_path(space)) ? "icon-subject-white_16_16" : "icon-subject-lightblue_16_16" %>
-        <%= link_to "Módulos #{subjects_count}", space_subjects_path(space),
+        <% selected = (current_page? mural_space_path(space)) ? "icon-list-white_16_16" : "icon-list-lightblue_16_16" %>
+        <%= link_to 'Mural', mural_space_path(space),
           :class => "icon #{selected}" %>
       </div>
     </li>

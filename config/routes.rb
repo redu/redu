@@ -73,6 +73,7 @@ Redu::Application.routes.draw do
       get :publish
       get :unpublish
       get :users
+      get :mural
       post :moderate_bulletins
       post :moderate_events
     end
