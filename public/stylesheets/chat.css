@@ -89,7 +89,8 @@
   left: 15px;
 }
 
-#chat-bar .count{
+#chat-bar .count,
+#chat-windows-list .chat-window-bar .name {
   display: block;
   text-align: center;
   padding: 8px;
@@ -98,6 +99,114 @@
   color: white;
 }
 
-#chat-bar .count:hover{
+#chat-bar .count:hover,
+#chat-windows-list .chat-window-bar .name:hover {
   text-decoration: none;
+}
+
+#chat-windows-list .chat-window-bar .name {
+  font-size: .9em;
+}
+
+#chat-windows-list {
+  /*border: 1px solid black;*/
+
+  position: fixed;
+  bottom: 10px;
+  left: 200px;
+}
+
+#chat-windows-list > li {
+  float: left;
+  margin-right: 5px;
+}
+
+#chat-windows-list .chat-window-bar {
+  width: 150px;
+  height: 30px;
+  border: 1px solid #f37b38;
+
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+
+  -moz-box-shadow: 0px 1px 6px #b1b1b1;
+  -webkit-box-shadow: 0px 1px 6px #b1b1b1;
+  box-shadow: 0px 1px 6px #b1b1b1;
+
+  /* Degradê */
+  background-image: -moz-linear-gradient(top, #f37b38, #f9a737);
+  background-image: -webkit-gradient(linear, center top, center bottom, from(#f37b38), to(#f9a737));
+  background-image: -o-linear-gradient(top, #f37b38, #f9a737);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f37b38', endColorstr='#f9a737');
+  /*INNER ELEMENTS MUST NOT BREAK THIS ELEMENTS BOUNDARIES*/
+  /*Element must have a height (not auto)*/
+  /*All filters must be placed together*/
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#f37b38', endColorstr='#f9a737')";
+  /*Element must have a height (not auto)*/
+  /*All filters must be placed together*/
+  background-image: linear-gradient(top, #f37b38, #f9a737);
+}
+
+#chat-windows-list .chat-window {
+  width: 250px;
+  height: 300px;
+  background: white;
+  border: 1px solid #f37b38;
+
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+
+  -moz-box-shadow: 0px 1px 6px #b1b1b1;
+  -webkit-box-shadow: 0px 1px 6px #b1b1b1;
+  box-shadow: 0px 1px 6px #b1b1b1;
+
+  position: relative;
+  bottom: 23px;
+}
+
+#chat-windows-list .chat-window .name {
+  display: block;
+  margin: 10px;
+  color: #4cacd5;
+}
+
+#chat-windows-list .chat-window .conversation > li {
+  margin: 5px;
+}
+#chat-windows-list .chat-window .conversation li .messages {
+}
+
+#chat-windows-list .chat-window .conversation li .avatar {
+  margin: 5px;
+  margin-top: 0;
+  float: left;
+}
+
+#chat-windows-list .chat-window .conversation li .messages li {
+  font-size: .87em;
+}
+
+#chat-windows-list .chat-window .user-input {
+  padding-left: 7px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  background: #f1f0f0;
+
+  border-top: 1px solid #f37b38;
+
+  -moz-border-radius:0px 0px 5px 5px;
+  -webkit-border-radius:0px 0px 5px 5px;
+  border-radius:0px 0px 5px 5px;
+
+  position: absolute;
+  bottom: 0;
+  width: 243px;
+}
+
+#chat-windows-list .chat-window .user-input input {
+  width: 180px;
+  border: none;
+  background: #f1f0f0;
 }
