@@ -58,8 +58,12 @@ describe PresenceController do
       end
 
       it "should return a list of friends and user_id" do
-        response.body.should include("friends")
-        response.body.should include("user_id")
+        payload = {:user_id => @current_user.id,
+                   :user_info => {
+          :friends => Presence.list_of_channels(@current_user) } }
+
+        user_info = JSON.parse(response.body)
+        user_info["channel_data"].should == payload.to_json
       end
 
     end
@@ -76,9 +80,11 @@ describe PresenceController do
       end
 
       it "return name, thumbail and channel of current_user" do
-        response.body.should include("name")
-        response.body.should include("thumbnail")
-        response.body.should include("channel")
+        payload = { :user_info => { :name => @current_user.display_name,
+          :thumbnail => @current_user.avatar.url(:thumb_32),
+          :channel => @current_user.get_channel }, :user_id => @current_user.id }
+        user_info = JSON.parse(response.body)
+        user_info["channel_data"].should == payload.to_json
       end
     end
 
@@ -90,7 +96,6 @@ describe PresenceController do
       end
 
       it "should not be success" do
-        debugger
         response.should_not be_success
       end
     end
