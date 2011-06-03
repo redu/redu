@@ -4,20 +4,4 @@
     <%= link_to environment.name, environment_path(environment),
       :class =>"icon icon-environment-lightblue_16_16" %>
   </div>
-  <ul class="courses">
-    <% environment.courses.each do |course| %>
-      <% if course.approved_users.include? current_user %>
-      <li>
-        <%= link_to course.name, environment_course_path(environment, course) %>
-        <ul class="spaces">
-          <% course.spaces.each do |space| %>
-            <li>
-              <%= link_to space.name, space_path(space) %>
-            </li>
-          <% end %>
-        </ul>
-      </li>
-      <% end %>
-    <% end %>
-  </ul>
 </li>
