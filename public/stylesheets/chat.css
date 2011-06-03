@@ -96,6 +96,7 @@
 
 #chat-bar .count,
 #chat-windows-list .chat-window-bar .name {
+  cursor: pointer;
   display: block;
   text-align: center;
   padding: 8px;

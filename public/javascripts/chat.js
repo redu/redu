@@ -34,15 +34,28 @@ var buildChat = function(opts){
   });
 
   $("#chat-list li").live("click", function(){
-      var userName = $(this).find('.name').text();
-      var $winBarTitle = $("<span/>", { "class" : "name" }).text(userName);
-      var $windowBar = $("<div/>", { "class" : "chat-window-bar"}).append($winBarTitle);
-      var $window = $("<div/>", { "class" : "chat-window" }).append($('<span/>', { "class" : "name" }).text(userName));
-      $window.append($('<ul/>', { "class" : "conversation" }));
-      $window.append($('<div/>', { "class" : "user-input" }).append($('<input/>', { "type" : "text" })));
+      var thisId = $(this).attr("id");
+      var $liWindow = $("#window-" + thisId );
+      if ($liWindow.length != 0) {
+        if ($liWindow.find(".chat-window-bar").hasClass("closed")) {
+          $liWindow.find(".chat-window-bar").click();
+        }
+      } else {
+        var userName = $(this).find('.name').text();
+        var $winBarTitle = $("<span/>", { "class" : "name" }).text(userName);
+        var $windowBar = $("<div/>", { "class" : "chat-window-bar opened"}).append($winBarTitle);
+        var $window = $("<div/>", { "class" : "chat-window" }).append($('<span/>', { "class" : "name" }).text(userName));
+        $window.append($('<ul/>', { "class" : "conversation" }));
+        $window.append($('<div/>', { "class" : "user-input" }).append($('<input/>', { "type" : "text" })));
 
-      $('#chat-windows-list').append($('<li/>').append($window, $windowBar));
+        $('#chat-windows-list').append($('<li/>', { "id" : "window-" + thisId }).append($window, $windowBar));
+      }
       return false;
+  });
+
+  $(".minimize").live("click", function(){
+      $(this).parent().toggle();
+      $(this).removeClass("opened").addClass("closed");
   });
 
   $.fn.addContact = function(member){
