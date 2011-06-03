@@ -83,8 +83,9 @@
 }
 
 #chat-bar {
+  cursor: pointer;
   width: 162px;
-  height: 52px;
+  height: 48px;
 
   position: fixed;
   bottom: 10px;
@@ -108,7 +109,7 @@
   font-weight: bold;
   width: 150px;
   padding: 0;
-  margin-top: 18px;
+  padding-top: 18px;
 }
 
 #chat-bar .count:hover,
@@ -137,30 +138,16 @@
 }
 
 #chat-windows-list .chat-window-bar {
-  width: 150px;
-  height: 30px;
-  border: 1px solid #f37b38;
+  width: 159px;
+  height: 52px;
 
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
+  background: url("../images/new/icons-chat.png") -290px  0px;
+}
 
-  -moz-box-shadow: 0px 1px 6px #b1b1b1;
-  -webkit-box-shadow: 0px 1px 6px #b1b1b1;
-  box-shadow: 0px 1px 6px #b1b1b1;
-
-  /* Degradê */
-  background-image: -moz-linear-gradient(top, #f37b38, #f9a737);
-  background-image: -webkit-gradient(linear, center top, center bottom, from(#f37b38), to(#f9a737));
-  background-image: -o-linear-gradient(top, #f37b38, #f9a737);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f37b38', endColorstr='#f9a737');
-  /*INNER ELEMENTS MUST NOT BREAK THIS ELEMENTS BOUNDARIES*/
-  /*Element must have a height (not auto)*/
-  /*All filters must be placed together*/
-  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#f37b38', endColorstr='#f9a737')";
-  /*Element must have a height (not auto)*/
-  /*All filters must be placed together*/
-  background-image: linear-gradient(top, #f37b38, #f9a737);
+#chat-windows-list .chat-window-bar .name {
+  cursor: pointer;
+  display: block;
+  padding-top: 22px;
 }
 
 #chat-windows-list .chat-window {
@@ -178,7 +165,7 @@
   box-shadow: 0px 1px 6px #b1b1b1;
 
   position: relative;
-  bottom: 23px;
+  bottom: 5px;
 }
 
 #chat-windows-list .chat-window .name {
