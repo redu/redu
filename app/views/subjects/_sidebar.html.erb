@@ -7,22 +7,21 @@
 
   <ul class="local-nav">
     <li>
-      <div class=" <%= (current_page? space_subject_path(@subject.space,
-        @subject) ) ?
-        "session selected" : "session" %> ">
-        <% selected = (current_page? space_subject_path(@subject.space, @subject)) ? "icon-subject-white_16_16" : "icon-subject-lightblue_16_16" %>
-        <%= link_to 'Mural', space_subject_path(@subject.space, @subject),
+      <div class=" <%= (current_page? space_subject_path(@space, @subject) ) ? "session selected" : "session" %> ">
+        <% resource_name = "Recursos: #{@subject.lectures.size}" %>
+        <% resource_name = "Recurso: #{@subject.lectures.size}" if @subject.lectures.size ==  1 %>
+
+        <% selected = (current_page? space_subject_path(@subject.space, @subject)) ? "icon-resource-white_16_16" : "icon-resource-lightblue_16_16" %>
+        <%= link_to resource_name, space_subject_path(@space, @subject),
           :class => "icon #{selected}" %>
       </div>
     </li>
     <li>
-
-      <div class=" <%= (current_page? space_subject_lectures_path(@space, @subject) ) ? "session selected" : "session" %> ">
-        <% resource_name = "Recursos: #{@subject.lectures.size}" %>
-        <% resource_name = "Recurso: #{@subject.lectures.size}" if @subject.lectures.size ==  1 %>
-          
-        <% selected = (current_page? space_subject_lectures_path(@subject.space, @subject)) ? "icon-resource-white_16_16" : "icon-resource-lightblue_16_16" %>
-        <%= link_to resource_name, space_subject_lectures_path(@space, @subject),
+      <div class=" <%= (current_page? mural_space_subject_path(@subject.space,
+        @subject) ) ?
+        "session selected" : "session" %> ">
+        <% selected = (current_page? mural_space_subject_path(@subject.space, @subject)) ? "icon-subject-white_16_16" : "icon-subject-lightblue_16_16" %>
+        <%= link_to 'Mural', mural_space_subject_path(@subject.space, @subject),
           :class => "icon #{selected}" %>
       </div>
     </li>
