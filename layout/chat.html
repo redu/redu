@@ -10,7 +10,7 @@
     <link media="all" rel="stylesheet" href="../public/stylesheets/new-style.css" type="text/css" />
     <link media="all" rel="stylesheet" href="../public/stylesheets/chat.css" type="text/css" />
     <script src="../public/javascripts/jquery.js" type="text/javascript"></script>
-    <script src="../public/javascripts/new_common.js" type="text/javascript"></script>
+    <script src="../public/javascripts/applicat.js" type="text/javascript"></script>
     <!--[if lt IE 9]>
     <script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script>
     <script src="../public/javascripts/DD_roundies_0.0.2a-min.js" type="text/javascript">
@@ -252,60 +252,125 @@
       </div><!-- end #nav-footer -->
     </div><!-- end #footer -->
   </body>
+<script type="text/javascript"  charset="utf-8">
+//<![CDATA[
+$(function(){
+  $.fn.scrollable = function(config){
+    var options = { offset : 10 };
+    options = $.extend(options, config);
+
+    return this.each(function(){
+      var $this = $(this);
+
+      $list = $this.find("ul");
+      $list.css("overflow", "hidden");
+
+      $this.find(".scroll .down").live("click", function(){
+        $list.scrollTop($list.scrollTop() + options.offset);
+      });
+
+      $this.find(".scroll .up").live("click", function(){
+        $list.scrollTop($list.scrollTop() - options.offset);
+      });
+
+    });
+  }
+
+  $("#chat-list").scrollable();
+});
+
+
+
+//]]>
+</script>
   <div id="chat-list">
     <span class="title">Chat</span>
     <ul>
       <li class="clearfix">
-        <img src="../public/images/new/missing_users_thumb_32.png" class="avatar" />
+        <img src="../public/images/new/missing_users_thumb_24.png" class="avatar" />
+      	<span class="name">Nome </span>
+      	<span class="roles tutor">Tutor</span>
+      </li>
+      <li class="clearfix">
+        <img src="../public/images/new/missing_users_thumb_24.png" class="avatar" />
       	<span class="name">Nome Sobrenome</span>
       	<span class="roles tutor">Tutor</span>
       </li>
       <li class="clearfix">
-        <img src="../public/images/new/missing_users_thumb_32.png" class="avatar" />
+        <img src="../public/images/new/missing_users_thumb_24.png" class="avatar" />
       	<span class="name">Nome Sobrenome</span>
       	<span class="roles tutor">Tutor</span>
       </li>
       <li class="clearfix">
-        <img src="../public/images/new/missing_users_thumb_32.png" class="avatar" />
+        <img src="../public/images/new/missing_users_thumb_24.png" class="avatar" />
+      	<span class="name">Nome </span>
+      	<span class="roles tutor">Tutor</span>
+      </li>
+      <li class="clearfix">
+        <img src="../public/images/new/missing_users_thumb_24.png" class="avatar" />
+      	<span class="name">Nome </span>
+      	<span class="roles tutor">Tutor</span>
+      </li>
+      <li class="clearfix">
+        <img src="../public/images/new/missing_users_thumb_24.png" class="avatar" />
       	<span class="name">Nome Sobrenome</span>
       	<span class="roles tutor">Tutor</span>
       </li>
       <li class="clearfix">
-        <img src="../public/images/new/missing_users_thumb_32.png" class="avatar" />
+        <img src="../public/images/new/missing_users_thumb_24.png" class="avatar" />
       	<span class="name">Nome Sobrenome</span>
       	<span class="roles tutor">Tutor</span>
       </li>
       <li class="clearfix">
-        <img src="../public/images/new/missing_users_thumb_32.png" class="avatar" />
+        <img src="../public/images/new/missing_users_thumb_24.png" class="avatar" />
       	<span class="name">Nome Sobrenome</span>
       	<span class="roles tutor">Tutor</span>
       </li>
       <li class="clearfix">
-        <img src="../public/images/new/missing_users_thumb_32.png" class="avatar" />
+        <img src="../public/images/new/missing_users_thumb_24.png" class="avatar" />
       	<span class="name">Nome Sobrenome</span>
       	<span class="roles tutor">Tutor</span>
       </li>
       <li class="clearfix">
-        <img src="../public/images/new/missing_users_thumb_32.png" class="avatar" />
+        <img src="../public/images/new/missing_users_thumb_24.png" class="avatar" />
       	<span class="name">Nome Sobrenome</span>
       	<span class="roles tutor">Tutor</span>
       </li>
       <li class="clearfix">
-        <img src="../public/images/new/missing_users_thumb_32.png" class="avatar" />
+        <img src="../public/images/new/missing_users_thumb_24.png" class="avatar" />
       	<span class="name">Nome Sobrenome</span>
       	<span class="roles tutor">Tutor</span>
       </li>
       <li class="clearfix">
-        <img src="../public/images/new/missing_users_thumb_32.png" class="avatar" />
+        <img src="../public/images/new/missing_users_thumb_24.png" class="avatar" />
       	<span class="name">Nome Sobrenome</span>
       	<span class="roles tutor">Tutor</span>
       </li>
       <li class="clearfix">
-        <img src="../public/images/new/missing_users_thumb_32.png" class="avatar" />
+        <img src="../public/images/new/missing_users_thumb_24.png" class="avatar" />
+      	<span class="name">Nome Sobrenome</span>
+      	<span class="roles tutor">Tutor</span>
+      </li>
+      <li class="clearfix">
+        <img src="../public/images/new/missing_users_thumb_24.png" class="avatar" />
+      	<span class="name">Nome Sobrenome</span>
+      	<span class="roles tutor">Tutor</span>
+      </li>
+      <li class="clearfix">
+        <img src="../public/images/new/missing_users_thumb_24.png" class="avatar" />
+      	<span class="name">Nome Sobrenome</span>
+      	<span class="roles tutor">Tutor</span>
+      </li>
+      <li class="clearfix">
+        <img src="../public/images/new/missing_users_thumb_24.png" class="avatar" />
       	<span class="name">Nome Sobrenome</span>
       	<span class="roles tutor">Tutor</span>
       </li>
     </ul>
+    <div class="scroll">
+    	<div class="up">Subir</div>
+    	<div class="down">Descer</div>
+    </div>
   </div>
   <div id="chat-bar">
     <a href="#" class="count">Chat (222)</a>
@@ -316,7 +381,7 @@
         <span class="name">Nome Sobrenome</span>
         <ul class="conversation">
           <li>
-            <img src="../public/images/new/missing_users_thumb_32.png" class="avatar" />
+            <img src="../public/images/new/missing_users_thumb_24.png" class="avatar" />
             <ul class="messages">
               <li>lorem ipsum</li>
               <li>dolor sit amet</li>
@@ -325,7 +390,7 @@
             </ul>
           </li>
           <li>
-            <img src="../public/images/new/missing_users_thumb_32.png" class="avatar" />
+            <img src="../public/images/new/missing_users_thumb_24.png" class="avatar" />
             <ul class="messages">
               <li>lorem ipsum</li>
               <li>dolor sit amet</li>
@@ -347,7 +412,7 @@
         <span class="name">Nome Sobrenome</span>
         <ul class="conversation">
           <li>
-            <img src="../public/images/new/missing_users_thumb_32.png" class="avatar" />
+            <img src="../public/images/new/missing_users_thumb_24.png" class="avatar" />
             <ul class="messages">
               <li>lorem ipsum</li>
               <li>dolor sit amet</li>

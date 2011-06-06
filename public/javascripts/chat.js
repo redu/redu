@@ -13,6 +13,8 @@ $("a:not([data-remote])").pjax("#content", { timeout: null });
 var buildChat = function(opts){
   var pusher;
   var config = { "endPoint" : '/presence/auth', "log" : false };
+  config = $.extend(config, opts);
+
   var $listTitle = $("<div/>", { "class" : "title" }).text("Chat");
   var $userList = $("<div/>", { id : "chat-list" }).append($listTitle).append("<ul/>");
   $listTitle.after($("<div/>", { "class" : "minimize" }).text("Minimizar"));
@@ -88,12 +90,37 @@ var buildChat = function(opts){
     });
   };
 
-  $.extend(config, opts);
+  // Adiciona scroll
+  $.fn.scrollable = function(config){
+    var options = { offset : 10 };
+    options = $.extend(options, config);
+
+    return this.each(function(){
+      var $this = $(this);
+      var $buttons = $("<div/>", { "class" : "scroll" });
+      $("<div/>", { "class" : "up" }).text("Subir").appendTo($buttons);
+      $("<div/>", { "class" : "down" }).text("Descer").appendTo($buttons);
+      $this.append($buttons);
+
+      $list = $this.find("ul");
+      $list.css("overflow", "hidden");
+
+      $this.find(".scroll .down").live("click", function(){
+        $list.scrollTop($list.scrollTop() + options.offset);
+      });
+
+      $this.find(".scroll .up").live("click", function(){
+        $list.scrollTop($list.scrollTop() - options.offset);
+      });
+
+    });
+  };
 
   var that = {
     // Inicializa o pusher e mostra a barra de chat
     init : function(){
       // Initicializando layout
+      $userList.scrollable();
       $("body").append($userList, $chatBar, $windowList);
       $userList.toggle(); // Inicia com a lista minimizada
       Pusher.channel_auth_endpoint = config.endPoint;

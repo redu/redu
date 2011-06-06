@@ -1,5 +1,5 @@
 #chat-list {
-  width: 180px;
+  width: 160px;
   height: 390px;
   background: white;
   border: 1px solid #61be80;
@@ -20,10 +20,38 @@
 #chat-list > ul {
   overflow: scroll;
   overflow-x: hidden;
-  width: 160px;
-  height: 345px;
-  margin: 0 10px;
+  width: 140px;
+  height: 295px;
+  margin: 0 10px 5px 10px;
   font-size: .9em;
+}
+
+#chat-list .scroll .up,
+#chat-list .scroll .down {
+  background: url("../images/new/icons-chat.png") no-repeat;
+  width: 140px;
+  height: 20px;
+  margin: 5px 10px;
+  cursor: pointer;
+  text-indent: -9999px;
+  overflow: hidden;
+}
+
+#chat-list .scroll::selection,
+#chat-list .scroll::-moz-selection,
+#chat-list .scroll .up::selection,
+#chat-list .scroll .up::-moz-selection,
+#chat-list .scroll .down::selection,
+#chat-list .scroll .down::-moz-selection {
+  background: transparent;
+}
+
+#chat-list .scroll .up {
+  background-position: -575px 0;
+}
+
+#chat-list .scroll .down {
+  background-position: -575px -25px;
 }
 
 #chat-list li {
@@ -46,7 +74,7 @@
 
 #chat-list .title {
   position: relative;
-  width: 140px;
+  width: 120px;
   float: left;
   margin: 10px;
   color: #4cacd5;
