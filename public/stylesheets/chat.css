@@ -103,7 +103,6 @@
   cursor: pointer;
   display: block;
   text-align: center;
-  padding: 8px;
   color: white;
 
   text-shadow: -1px -1px 1px #99A499;
@@ -150,11 +149,23 @@
   background: url("../images/new/icons-chat.png") -290px  0px;
 }
 
+#chat-windows-list .chat-window-bar .online {
+  float:left;
+  width: 8px;
+  height: 10px;
+  /* FIXME Trocar pelo ícone correto */
+  background: url("../images/new/icons-chat.png") -775px 0;
+  text-indent: -9999px;
+  overflow: hidden;
+  margin-top: 25px;
+  margin-left: 11px;
+}
+
 #chat-windows-list .chat-window-bar .name {
   cursor: pointer;
   display: block;
   float: left;
-  width: 125px;
+  width: 123px;
   padding-top: 22px;
 }
 

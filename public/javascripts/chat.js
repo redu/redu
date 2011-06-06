@@ -22,6 +22,9 @@ var buildChat = function(opts){
   var getCSSUserId = function(userId) {
     return "chat-user-" + userId;
   };
+  var getCSSWindowId = function(userLiId) {
+    return "window-" + userLiId;
+  };
 
   // Minimizar e maximizar lista/janela de contato(s)
   $("#chat-bar, .chat-window-bar").live("click", function(){
@@ -36,7 +39,7 @@ var buildChat = function(opts){
   // cria uma nova janela ou abre a minimizada.
   $("#chat-list li").live("click", function(){
       var thisId = $(this).attr("id");
-      var $liWindow = $("#window-" + thisId );
+      var $liWindow = $("#" + getCSSWindowId(thisId));
       if ($liWindow.length != 0) {
         if ($liWindow.find(".chat-window-bar").hasClass("closed")) {
           $liWindow.find(".chat-window-bar").click();
@@ -46,11 +49,12 @@ var buildChat = function(opts){
         var $winBarTitle = $("<span/>", { "class" : "name" }).text(userName);
         var $windowBar = $("<div/>", { "class" : "chat-window-bar opened"}).append($winBarTitle);
         var $window = $("<div/>", { "class" : "chat-window" }).append($('<span/>', { "class" : "name" }).text(userName));
+        $winBarTitle.before($("<div/>", { "class" : "online" }).text("on-line"));
         $winBarTitle.after($("<div/>", { "class" : "close" }).text("Fechar"));
         $window.append($('<ul/>', { "class" : "conversation" }));
         $window.append($('<div/>', { "class" : "user-input" }).append($('<input/>', { "type" : "text" })));
 
-        $('#chat-windows-list').append($('<li/>', { "id" : "window-" + thisId }).append($window, $windowBar));
+        $('#chat-windows-list').append($('<li/>', { "id" : getCSSWindowId(thisId) }).append($window, $windowBar));
       }
       return false;
   });
@@ -151,6 +155,9 @@ var buildChat = function(opts){
     // Remove da lista de contatos
     uiRemoveContact : function(userId){
       $("#" + getCSSUserId(userId)).remove();
+      var statusDiv = $("#" + getCSSWindowId(getCSSUserId(userId)) + " .chat-window-bar .online");
+      statusDiv.removeClass("online").addClass("offline");
+      statusDiv.text("off-line");
       that.uiUpdateCounter();
     },
     // Atualiza counter de usuários online
