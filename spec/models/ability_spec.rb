@@ -572,6 +572,23 @@ describe Ability do
       @user_ability = Ability.new(@user)
     end
 
+    context "pusher channels" do
+      before do
+        @friend_auth = Factory(:user)
+
+        friendship, status = @user.be_friends_with(@friend_auth)
+        friendship.accept!
+      end
+
+      it "should subscribe a channel" do
+        @user_ability.should be_able_to(:auth, @user)
+      end
+
+      it "should subscribe a friends channel" do
+        @user_ability.should be_able_to(:auth, @friend_auth)
+      end
+    end
+
     context "when friends" do
       before do
         @my_friend = Factory(:user)

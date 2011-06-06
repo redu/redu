@@ -147,6 +147,10 @@ class Ability
           (space.owner.nil? && user.teacher?(space))
       end
 
+      can :auth, User do |target|
+        (user == target) or user.friends?(target)
+      end
+
       # Caso seja o Status de usuário, apenas ele mesmo ou seus amigos
       # podem criá-lo/respondê-lo.
       can [:create, :respond], Status do |status|
