@@ -17,12 +17,13 @@ var buildChat = function(opts){
   var $userList = $("<div/>", { id : "chat-list" }).append($listTitle).append("<ul/>");
   $listTitle.after($("<div/>", { "class" : "minimize" }).text("Minimizar"));
   var $barTitle = $("<span/>", { "class" : "count" }).text("Chat (0)");
-  var $chatBar = $("<div/>", { id :'chat-bar', "class" : "opened" }).append($barTitle);
+  var $chatBar = $("<div/>", { id :'chat-bar', "class" : "closed" }).append($barTitle);
   var $windowList = $("<ul/>", { id : "chat-windows-list" });
   var getCSSUserId = function(userId) {
     return "chat-user-" + userId;
   };
 
+  // Minimizar e maximizar lista/janela de contato(s)
   $("#chat-bar, .chat-window-bar").live("click", function(){
       $(this).prev().toggle();
       $(this).toggleClass("opened");
@@ -31,6 +32,8 @@ var buildChat = function(opts){
       return false;
   });
 
+  // Evento de clicar em um usuário da lista de contatos,
+  // cria uma nova janela ou abre a minimizada.
   $("#chat-list li").live("click", function(){
       var thisId = $(this).attr("id");
       var $liWindow = $("#window-" + thisId );
@@ -52,11 +55,18 @@ var buildChat = function(opts){
       return false;
   });
 
-  $(".minimize").live("click", function(){
+  // Minimiza lista de contatos
+  $("#chat-list .minimize").live("click", function(){
       $(this).parent().toggle();
-      $(this).removeClass("opened").addClass("closed");
+      $("#chat-bar").removeClass("opened").addClass("closed");
   });
 
+  // Fecha janela de contato
+  $("#chat-windows-list .chat-window-bar .close").live("click", function(){
+      $(this).parent().parent().remove();
+  });
+
+  // Adiciona um contato à lista de contatos
   $.fn.addContact = function(member){
     return this.each(function(){
         var $this = $(this);
@@ -81,6 +91,7 @@ var buildChat = function(opts){
     init : function(){
       // Initicializando layout
       $("body").append($userList, $chatBar, $windowList);
+      $userList.toggle(); // Inicia com a lista minimizada
       Pusher.channel_auth_endpoint = config.endPoint;
       // Informações de log
       if(config.log){
@@ -142,6 +153,7 @@ var buildChat = function(opts){
       $("#" + getCSSUserId(userId)).remove();
       that.uiUpdateCounter();
     },
+    // Atualiza counter de usuários online
     uiUpdateCounter : function(){
       var count = $userList.find('li').length;
       $chatBar.find('.count').text("Chat ("+ count +")");
