@@ -121,9 +121,7 @@ class SpacesController < BaseController
     redirect_to admin_events_space_path(@space)
   end
 
-  # GET /spaces/1
-  # GET /spaces/1.xml
-  def show
+  def mural
     if @space and @space.removed
       redirect_to removed_page_path and return
     end
@@ -148,6 +146,26 @@ class SpacesController < BaseController
           redirect_to spaces_path
         }
       end
+    end
+  end
+
+  # GET /spaces/1
+  # GET /spaces/1.xml
+  def show
+    if can? :manage, @space
+      @subjects = @space.subjects.paginate(:page => params[:page],
+                                           :order => 'updated_at DESC',
+                                           :per_page => Redu::Application.config.items_per_page)
+    else
+      @subjects = @space.subjects.visible.
+        paginate(:page => params[:page],
+                 :order => 'updated_at DESC',
+                 :per_page => Redu::Application.config.items_per_page)
+    end
+
+    respond_to do |format|
+      format.html
+      format.js { render_endless 'subjects/item', @subjects, '#subjects_list' }
     end
   end
 

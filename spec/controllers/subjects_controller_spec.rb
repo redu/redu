@@ -15,21 +15,18 @@ describe SubjectsController do
     UserSession.create @user
   end
 
-  context "GET 'index'" do
+  context "GET 'mural'" do
     before do
-      subjects = (1..3).collect { Factory(:subject, :owner => @subject_owner,
-                                          :space => @space,
-                                          :visible => true,
-                                          :finalized => true) }
+      @subject = Factory(:subject, :owner => @subject_owner,
+                         :visible => true, :space => @space,
+                         :finalized => true)
     end
-
-    it "loads all space subjects" do
-      get :index, :locale => "pt-BR", :space_id => @space.id
-      assigns[:subjects].to_set.should == @space.subjects.to_set
+    it "loads that subject" do
+      get :mural, :locale => "pt-BR", :space_id => @space.id,
+        :id => @subject.id
+      assigns[:subject].should == @subject
     end
-
   end
-
 
   context "GET 'show'" do
     before do

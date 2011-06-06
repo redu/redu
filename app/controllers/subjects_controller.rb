@@ -16,33 +16,19 @@ class SubjectsController < BaseController
   end
 
   def index
-    if can? :manage, @space
-      @subjects = @space.subjects.paginate(:page => params[:page],
-                                           :order => 'updated_at DESC',
-                                           :per_page => Redu::Application.config.items_per_page)
-    else
-      @subjects = @space.subjects.visible.
-        paginate(:page => params[:page],
-                 :order => 'updated_at DESC',
-                 :per_page => Redu::Application.config.items_per_page)
-    end
-
-    respond_to do |format|
-      format.html
-      format.js { render_endless 'subjects/item', @subjects, '#subjects_list' }
-    end
+    redirect_to space_path(@space)
   end
 
   def show
-    @statuses = @subject.recent_activity(params[:page])
-    @statusable = @subject
-
+    @subject_users = @subject.members.limit(9) # sidebar
+    @lectures = @subject.lectures.paginate(:page => params[:page],
+                                           :order => 'position ASC',
+                                           :per_page => Redu::Application.config.items_per_page)
     respond_to do |format|
-      @status = Status.new
-
       format.html
-      format.js { render_endless 'statuses/item', @statuses, '#statuses > ol' }
-      format.xml { render :xml => @subject }
+      format.js do
+        render_endless 'lectures/item', @lectures, '#subject-resources > ol'
+      end
     end
   end
 
@@ -106,6 +92,19 @@ class SubjectsController < BaseController
       flash[:notice] = "O módulo foi removido."
     end
     redirect_to space_subjects_path(@subject.space)
+  end
+
+  def mural
+    @statuses = @subject.recent_activity(params[:page])
+    @statusable = @subject
+
+    respond_to do |format|
+      @status = Status.new
+
+      format.html
+      format.js { render_endless 'statuses/item', @statuses, '#statuses > ol' }
+      format.xml { render :xml => @subject }
+    end
   end
 
   def turn_visible

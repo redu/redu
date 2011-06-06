@@ -35,17 +35,7 @@ class LecturesController < BaseController
   end
 
   def index
-    authorize! :read, @subject
-    @subject_users = @subject.members.limit(9) # sidebar
-    @lectures = @subject.lectures.paginate(:page => params[:page],
-                                          :order => 'position ASC',
-                                          :per_page => Redu::Application.config.items_per_page)
-    respond_to do |format|
-      format.html
-      format.js do
-        render_endless 'lectures/item', @lectures, '#subject-resources > ol'
-      end
-    end
+    redirect_to space_subject_path(@subject.space, @subject)
   end
 
   # GET /lectures/1

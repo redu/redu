@@ -4,23 +4,27 @@
   <%= render :partial => 'spaces/header',
     :locals => { :space => @space }%>
 
-  <div id="space-statuses" class="hierarchy-listing-wrapper">
+  <div id="space-subjects" class="hierarchy-listing-wrapper">
     <div class="header">
-      <h4>Mural</h4>
-      <span class="counter">Atividades recentes</span>
+      <h4>Módulos</h4>
+      <span class="counter">
+        <% if can? :manage, @space %>
+          <%= pluralize(@space.subjects.count, 'módulo') %>
+        <% else %>
+          <%= pluralize(@space.subjects.visible.count, 'módulo') %>
+        <% end %>
+      </span>
     </div>
+    <% if can? :manage, @space %>
+      <div class="admin-actions">
+        <%= link_to "Novo módulo", new_space_subject_path(@space),
+           :id => 'link-new-subject', :class => 'button' %>
+      </div>
+    <% end %>
 
-    <div style="clear: both;">
-    <%= render :partial => 'statuses/create_status',
-      :locals => { :statusable => @space } %>
-    <div id="statuses" class="statuses">
-      <ol>
-        <%= render :partial => 'statuses/item', :collection => @statuses %>
-      </ol>
-
-      <%= will_paginate @statuses, :renderer => EndlessRenderer %>
-    </div>
-    </div><!-- end .statuses -->
+    <ul id="subjects_list" class="hierarchy-listing subjects">
+      <%= render :partial => 'subjects/item', :collection => @subjects %>
+    </ul>
+    <%= will_paginate @subjects, :renderer => EndlessRenderer %>
   </div><!-- end #environment-courses -->
-
 </div><!-- end .main -->

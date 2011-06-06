@@ -1,25 +1,37 @@
 <%= render :partial => "subjects/sidebar" %>
 <div class="main grid_12 omega big-col">
   <%= render :partial => "subjects/breadcrumbs", :locals => { :subject => @subject } %>
-  <%= render :partial => 'subjects/header',
-    :locals => { :subject => @subject, :space => @space } %>
-  <div id="space-statuses" class="hierarchy-listing-wrapper">
-    <div class="header">
-      <h4>Mural</h4>
-      <span class="counter">Atividades recentes</span>
-    </div>
-    <div style="clear: both;">
-      <%= render :partial => 'statuses/create_status',
-        :locals => { :statusable => @subject } %>
-      <div id="statuses" class="statuses">
-        <ol>
-          <%= render :partial => "statuses/item", :collection => @statuses %>
-        </ol>
 
-        <%= will_paginate @statuses, :renderer => EndlessRenderer %>
-      </div><!-- end .statuses -->
+  <%= render :partial => "subjects/header",
+    :locals => { :subject => @subject, :space => @space } %>
+
+  <div id="subject-resources" class="hierarchy-listing-wrapper">
+
+    <div class="header">
+      <h4>Recursos</h4>
+      <% if @lectures.count > 1 %>
+        <span class="counter">
+          <%= @lectures.count %> recursos disponíveis
+        </span>
+      <% else %>
+        <span class="counter">
+          <%= @lectures.count %> recurso disponível
+        </span>
+      <% end %>
     </div>
+    <% if can? :manage, @subject %>
+      <div class="admin-actions ">
+        <%= link_to "Adicionar recurso",
+          edit_space_subject_path(@subject.space, @subject),
+          :class => 'button' %>
+      </div>
+    <% end %>
+    <ol class="hierarchy-listing ordered-hierarchy-listing resources">
+      <%= render :partial => "lectures/item", :collection => @lectures %>
+    </ol>
+
+    <%= will_paginate @lectures, :renderer => EndlessRenderer %>
+
   </div><!-- end #environment-courses -->
 
 </div><!-- end .main -->
-

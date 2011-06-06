@@ -27,6 +27,7 @@ class Ability
     alias_action :admin_events, :moderate_bulletins, :moderate_events,
       :look_and_feel, :set_theme, :new_space_admin, :to => :manage
     #TODO action manage gerando recursividade
+    alias_action :mural, :to => :read
 
     # Folder
     alias_action :do_the_upload, :upload, :update_permissions, :rename,
@@ -72,7 +73,7 @@ class Ability
 
     # Subject
     alias_action :cancel, :admin_lectures_order, :to => :manage
-    alias_action :statuses, :to => :read
+    alias_action :statuses, :mural, :to => :read
 
     # Friendship
     alias_action :pending, :accept, :decline, :to => :manage
