@@ -98,13 +98,15 @@
 
 #chat-list .roles {
   color: #b3b2b3;
+  font-size: .9em;
 }
 
 #chat-list .status {
   width: 8px;
   height: 8px;
   float: left;
-  margin-top: 4px;
+  margin-top: 2px;
+  margin-right: 5px;
   text-indent: -9999px;
   overflow: hidden;
   background: url("../images/new/icons-chat.png") -775px 0;

@@ -170,17 +170,18 @@ describe Presence do
         end
         teachers_tutors_course3 = [ { :channel => "presence-user-#{@tutor3.id}" },
           { :channel => "presence-user-#{@teacher3.id}" }]
-          Presence.list_of_channels(@current_user).to_set.should ==
-            (friends + course_users + course2_users + teachers_tutors_course3).to_set
+        Presence.list_of_channels(@current_user).to_set.should ==
+          (friends + course_users + course2_users + teachers_tutors_course3).to_set
       end
   end
 
   it "should retrieve the right roles" do
+    @friend1.role = Role[:admin]
     Presence.fill_roles(@friend1).should == { "teacher" => true,
       "member" => false,
-      "admin" => false,
       "environment_admin" => false,
       "tutor" => true,
-      "course_admin" => false }
+      "course_admin" => false,
+      "admin" => true }
   end
 end

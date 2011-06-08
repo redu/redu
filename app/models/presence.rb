@@ -23,6 +23,7 @@ class Presence
     user.user_course_associations.each do |uca|
       roles[Role[uca.role]] = true
     end
+    roles["admin"] = true if user.admin?
     roles
   end
 end

@@ -21,7 +21,8 @@ class PresenceController < BaseController
     else
       payload = { :name => current_user.display_name,
         :thumbnail => current_user.avatar.url(:thumb_24),
-        :channel => current_user.get_channel }
+        :channel => current_user.get_channel,
+        :roles => Presence.fill_roles(current_user) }
 
       if channels.include?({:channel => params[:channel_name]})
         json_response = Pusher[params[:channel_name]].

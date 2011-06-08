@@ -81,12 +81,15 @@ var buildChat = function(opts){
         $("<img/>", { "src" : member.info.thumbnail, "class" : "avatar" }).appendTo($li);
         $("<span/>", { 'class' : "name" }).text(member.info.name).appendTo($li);
         var $role = $("<div/>", { "class" : "roles" }).appendTo($li);
-        $role.append($("<div/>", { "class" : "status"}).text("on-line"));
 
-        // Adicionando classe p/ papeis true
-        for(var key in member.info.roles){
-          if(member.info.roles[key]){ $role.addClass(key); }
-        }
+        // Adicionando papel do usuário (o mais relevante será mostrado)
+        if(member.info.roles["member"]){ $role.text("Aluno"); }
+        if(member.info.roles["tutor"]){ $role.text("Tutor"); }
+        if(member.info.roles["teacher"]){ $role.text("Professor"); }
+        if(member.info.roles["environment_admin"]){ $role.text("Administrador"); }
+        if(member.info.roles["admin"]){ $role.text("Staff"); }
+
+        $role.append($("<div/>", { "class" : "status"}).text("on-line"));
     });
   };
 
