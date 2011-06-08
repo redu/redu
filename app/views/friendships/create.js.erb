@@ -2,7 +2,11 @@
   $("#requisition-<%= @friend.id %>").slideToggle();
 <% end %>
 
-<% if !current_user.friends? @friend %>
+<% if current_user.friends? @friend %>
+  if (chat) {
+    chat.subscribeNewContact("<%= @friend.get_channel %>");
+  }
+<% else %>
   var link = "<%= escape_javascript( link_to 'Aguardando aceitação', nil, :class => 'waiting' ) %>"
   $('.new_friendship').after(link);
 <% end %>
