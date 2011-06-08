@@ -182,7 +182,7 @@
   width: 8px;
   height: 10px;
   /* FIXME Trocar pelo ícone correto */
-  background: url("../images/new/icons-chat.png") -775px 0;
+  background: url("../images/new/icons-chat.png") 0 0;
   text-indent: -9999px;
   overflow: hidden;
   margin-top: 25px;
