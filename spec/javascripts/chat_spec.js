@@ -2,6 +2,8 @@ describe('Chat', function () {
       afterEach(function () {
           // Limpando elementos adicionados ao DOM
           $("#chat-list").remove();
+          $("#chat-bar").remove();
+          $("#chat-windows-list").remove();
       });
 
 
@@ -14,7 +16,7 @@ describe('Chat', function () {
 
           beforeEach(function () {
               opts = { key : 'XXX', channel : 'my-channel' };
-              chat = buildChat(opts)
+              chat = buildChat(opts);
           });
 
           it('defines init', function () {
@@ -42,7 +44,7 @@ describe('Chat', function () {
                     "teacher" : true
                     ,"member" : false
                     ,"administrator" : false
-                    ,"tutor" : false
+                    ,"tutor" : true
                   }
                   ,"name" : "Test user"
                   ,"thumbnail" : "new/missing_users_thumb_32.png"
@@ -58,8 +60,9 @@ describe('Chat', function () {
                 expect($("#chat-list .name").text()).toBe(member.info.name);
             });
 
-            it('adds the correct role classes', function() {
-                expect($("#chat-list .roles")).toHaveClass("teacher");
+            it('adds the correct role text (more strong role)', function() {
+                $("#chat-list .roles .status").remove();
+                expect($("#chat-list .roles").filter(":first")).toHaveText("Professor");
             });
 
             it('creates the user link', function() {
@@ -71,7 +74,7 @@ describe('Chat', function () {
             });
 
             it('should remove the user from UI', function() {
-                chat.uiRemoveContact(member.id)
+                chat.uiRemoveContact(member.id);
                 expect($("#chat-user-" + member.id)).not.toExist();
             });
 
