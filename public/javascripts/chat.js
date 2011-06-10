@@ -12,7 +12,7 @@ $("a:not([data-remote])").pjax("#content", { timeout: null });
 // Constrói um novo objeto Chat
 var buildChat = function(opts){
   var pusher;
-  var config = { "endPoint" : '/presence/auth', "log" : false };
+  var config = { "endPoint" : '/presence/auth', "log" : false, "presence_timeout" : 20000 };
   config = $.extend(config, opts);
 
   var $listTitle = $("<div/>", { "class" : "title" }).text("Chat");
@@ -126,6 +126,7 @@ var buildChat = function(opts){
       $userList.scrollable();
       $("body").append($userList, $chatBar, $windowList);
       $userList.toggle(); // Inicia com a lista minimizada
+      Pusher.presence_timeout = config.presence_timeout;
       Pusher.channel_auth_endpoint = config.endPoint;
       // Informações de log
       if(config.log){

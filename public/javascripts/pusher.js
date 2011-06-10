@@ -267,6 +267,7 @@ Pusher.ws_port = 80;
 Pusher.wss_port = 443;
 Pusher.channel_auth_endpoint = '/pusher/auth';
 Pusher.connection_timeout = 5000;
+Pusher.presence_timeout = 10000;
 Pusher.cdn_http = 'http://js.pusherapp.com/'
 Pusher.cdn_https = 'https://d3ds63zw57jt09.cloudfront.net/'
 Pusher.log = function(msg){}; // e.g. function(m){console.log(m)}
@@ -447,15 +448,29 @@ Pusher.Channel.PresenceChannel = {
     }.scopedTo(this));
 
     this.bind('pusher_internal:member_added', function(data){
-      var member = this.members.add(data.user_id, data.user_info);
-      this.dispatch_with_all('pusher:member_added', member);
+        var timeoutMember = this.members.get(data.user_id);
+
+        if(timeoutMember && timeoutMember.info.timeoutID){ // The member is present with a timeout
+          clearTimeout(timeoutMember.info.timeoutID);
+        }else{
+          var member = this.members.add(data.user_id, data.user_info);
+          this.dispatch_with_all('pusher:member_added', member);
+        }
     }.scopedTo(this))
 
     this.bind('pusher_internal:member_removed', function(data){
-      var member = this.members.remove(data.user_id);
-      if (member) {
-        this.dispatch_with_all('pusher:member_removed', member);
-      }
+        var that = this;
+        var member = this.members.remove(data.user_id); // temporally removing
+
+        member.info.timeoutID = setTimeout(function(){
+            var member = that.members.remove(data.user_id);
+            if (member) {
+              that.dispatch_with_all('pusher:member_removed', member);
+            }
+          }, Pusher.presence_timeout);
+
+        // Adding again with the timeout attribute
+        this.members.add(member.id, member.info);
     }.scopedTo(this))
   },
 
