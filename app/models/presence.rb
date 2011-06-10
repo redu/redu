@@ -7,7 +7,7 @@ class Presence
         if uca.role.eql?(Role[:teacher]) || uca.role.eql?(Role[:tutor])
           uca.course.users
         else
-          uca.course.teachers + uca.course.tutors
+          uca.course.teachers_and_tutors
         end
       end
     # All friends

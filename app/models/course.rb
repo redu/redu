@@ -41,6 +41,10 @@ class Course < ActiveRecord::Base
     :source => :user,
     :conditions => [ "user_course_associations.state = ? AND user_course_associations.updated_at >= ?", 'approved', 1.week.ago]
 
+  has_many :teachers_and_tutors, :through => :user_course_associations,
+    :source => :user, :select => 'users.id',
+    :conditions => [ "(user_course_associations.role = ? OR user_course_associations.role = ?) AND user_course_associations.state = ?", 6, 5, 'approved']
+
   has_and_belongs_to_many :audiences
   has_one :quota, :dependent => :destroy, :as => :billable
   has_one :plan, :as => :billable
