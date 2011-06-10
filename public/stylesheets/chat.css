@@ -136,7 +136,6 @@
   color: white;
 
   text-shadow: -1px -1px 1px #99A499;
-  filter: dropshadow(color=#99A499, offx=-1, offy=-1);
 }
 
 #chat-bar .count {
@@ -155,7 +154,7 @@
   font-size: .85em;
 
   text-shadow: 0px -1px 1px #CF6730;
-  filter: dropshadow(color=#CF6730, offx=0, offy=-1);
+
 }
 
 #chat-windows-list {
