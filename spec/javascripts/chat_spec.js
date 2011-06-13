@@ -111,11 +111,15 @@ describe('Chat', function () {
 
     describe("storing state", function(){
         beforeEach(function() {
-            $.cookie("chatWindows", null);
+            $.cookie("chat_windows", null);
         });
 
         afterEach(function () {
-            $.cookie("chatWindows", null);
+            $.cookie("chat_windows", null);
+        });
+
+        it('defines $.storeChatList', function() {
+            expect($.storeChatList).toBeDefined();
         });
 
         it('defines $.storeWindow', function() {
@@ -130,8 +134,17 @@ describe('Chat', function () {
             expect($.changeWindow).toBeDefined();
         });
 
-        it('defines $.restoreWindows', function() {
-            expect($.restoreWindows).toBeDefined();
+        it('defines $.fn.restoreWindows', function() {
+            expect($.fn.restoreWindows).toBeDefined();
+        });
+
+        it("saves chat list state on empty cookie", function() {
+            infos = {
+              list : "opened",
+              windows : []
+            };
+            $.storeChatList();
+            expect($.cookie("chat_windows")).toEqual($.toJSON(infos));
         });
 
         it("saves information on empty cookie", function(){
@@ -141,8 +154,8 @@ describe('Chat', function () {
               "status" : "online",
               "state" : "opened"
             };
-            $.storeWindow(memberInfos.id, memberInfos.name);
-            expect($.cookie("chatWindows")).toEqual($.toJSON([memberInfos]));
+            $.storeWindow({ id : memberInfos.id, name : memberInfos.name });
+            expect($.cookie("chat_windows")).toEqual($.toJSON([memberInfos]));
         });
 
         it("saves information on nonempty cookie", function(){
@@ -153,7 +166,7 @@ describe('Chat', function () {
               "status" : "online",
               "state" : "opened"
             };
-            $.storeWindow(memberInfos.id, memberInfos.name);
+            $.storeWindow({ id : memberInfos.id, name : memberInfos.name });
 
             // Second window
             var memberInfos2 = {
@@ -162,8 +175,8 @@ describe('Chat', function () {
               "status" : "online",
               "state" : "opened"
             };
-            $.storeWindow(memberInfos2.id, memberInfos2.name);
-            expect($.cookie("chatWindows")).toEqual($.toJSON([memberInfos, memberInfos2]));
+            $.storeWindow({ id : memberInfos2.id, name : memberInfos2.name });
+            expect($.cookie("chat_windows")).toEqual($.toJSON([memberInfos, memberInfos2]));
         });
 
         it("removes specified window on cookie with one window", function(){
@@ -174,10 +187,10 @@ describe('Chat', function () {
               "status" : "online",
               "state" : "opened"
             };
-            $.storeWindow(memberInfos.id, memberInfos.name);
+            $.storeWindow({ id : memberInfos.id, name : memberInfos.name });
 
-            $.removeWindow(memberInfos.id);
-            expect($.cookie("chatWindows")).toEqual(null);
+            $.removeWindow({ id : memberInfos.id });
+            expect($.cookie("chat_windows")).toEqual(null);
         });
 
         it("removes specified window on cookie with more than one window", function(){
@@ -188,7 +201,7 @@ describe('Chat', function () {
               "status" : "online",
               "state" : "opened"
             };
-            $.storeWindow(memberInfos.id, memberInfos.name);
+            $.storeWindow({ id : memberInfos.id, name : memberInfos.name });
 
             // Second window
             var memberInfos1 = {
@@ -197,7 +210,7 @@ describe('Chat', function () {
               "status" : "online",
               "state" : "closed"
             };
-            $.storeWindow(memberInfos1.id, memberInfos1.name);
+            $.storeWindow({ id : memberInfos1.id, name : memberInfos1.name });
 
             // Third window
             var memberInfos2 = {
@@ -206,10 +219,10 @@ describe('Chat', function () {
               "status" : "online",
               "state" : "opened"
             };
-            $.storeWindow(memberInfos2.id, memberInfos2.name);
+            $.storeWindow({ id : memberInfos2.id, name : memberInfos2.name });
 
-            $.removeWindow(memberInfos1.id);
-            expect($.cookie("chatWindows")).toEqual($.toJSON([memberInfos, memberInfos2]));
+            $.removeWindow({ id : memberInfos1.id });
+            expect($.cookie("chat_windows")).toEqual($.toJSON([memberInfos, memberInfos2]));
         });
 
         it("changes the status of a specified user", function(){
@@ -220,7 +233,7 @@ describe('Chat', function () {
               "status" : "online",
               "state" : "opened"
             };
-            $.storeWindow(memberInfos.id, memberInfos.name);
+            $.storeWindow({ id : memberInfos.id, name : memberInfos.name });
 
             // Second window
             var memberInfos1 = {
@@ -229,11 +242,12 @@ describe('Chat', function () {
               "status" : "online",
               "state" : "opened"
             };
-            $.storeWindow(memberInfos1.id, memberInfos1.name);
+            $.storeWindow({ id : memberInfos1.id, name : memberInfos1.name });
 
-            $.changeWindow(memberInfos1.id, "status", "offline");
+            $.changeWindow({ id : memberInfos1.id, property : "status",
+                value : "offline" });
             memberInfos1["status"] = "offline";
-            expect($.cookie("chatWindows")).toEqual($.toJSON([memberInfos, memberInfos1]));
+            expect($.cookie("chat_windows")).toEqual($.toJSON([memberInfos, memberInfos1]));
         });
 
         it("changes the state of a window", function(){
@@ -244,7 +258,7 @@ describe('Chat', function () {
               "status" : "online",
               "state" : "opened"
             };
-            $.storeWindow(memberInfos.id, memberInfos.name);
+            $.storeWindow({ id : memberInfos.id, name : memberInfos.name });
 
             // Second window
             var memberInfos1 = {
@@ -253,11 +267,12 @@ describe('Chat', function () {
               "status" : "online",
               "state" : "opened"
             };
-            $.storeWindow(memberInfos1.id, memberInfos1.name);
+            $.storeWindow({ id : memberInfos1.id, name : memberInfos1.name });
 
-            $.changeWindow(memberInfos1.id, "state", "closed");
+            $.changeWindow({ id : memberInfos1.id, property : "state",
+                value : "closed" });
             memberInfos1["state"] = "closed";
-            expect($.cookie("chatWindows")).toEqual($.toJSON([memberInfos, memberInfos1]));
+            expect($.cookie("chat_windows")).toEqual($.toJSON([memberInfos, memberInfos1]));
         });
     });
 
@@ -272,7 +287,7 @@ describe('Chat', function () {
               "status" : "online",
               "state" : "opened"
             };
-            $.storeWindow(memberInfos.id, memberInfos.name);
+            $.storeWindow({ id : memberInfos.id, name : memberInfos.name });
 
             // Second window
             memberInfos1 = {
@@ -281,7 +296,7 @@ describe('Chat', function () {
               "status" : "online",
               "state" : "closed"
             };
-            $.storeWindow(memberInfos1.id, memberInfos1.name);
+            $.storeWindow({ id : memberInfos1.id, name : memberInfos1.name });
         });
 
         it("after reload", function(){

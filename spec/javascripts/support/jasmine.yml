@@ -17,6 +17,7 @@ src_files:
   - public/javascripts/jquery.cookie.js
   - public/javascripts/pusher.js
   - public/javascripts/chat.js
+  - public/javascripts/chat.jquery.js
 
 # stylesheets
 #

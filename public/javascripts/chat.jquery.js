@@ -140,7 +140,7 @@
     // Restauras janelas registradas no cookie
     $.fn.restoreWindows = function(opts) {
       var $this = $(this);
-      var cookie = $.evalJSON($.cookie("chatWindows"));
+      var cookie = $.evalJSON($.cookie("chat_windows"));
 
       for(i in cookie) {
         var win = cookie[i];
@@ -157,7 +157,7 @@
 
     // Remove janela do cookie
     $.removeWindow = function(opts) {
-      var cookie = $.evalJSON($.cookie("chatWindows"));
+      var cookie = $.evalJSON($.cookie("chat_windows"));
       var itemToRemove;
       for(i in cookie) {
         if (cookie[i].id == opts.id) { itemToRemove = i; }
@@ -165,10 +165,10 @@
       cookie.splice(itemToRemove, 1);
 
       if (cookie && cookie.length == 0) {
-        $.cookie("chatWindows", null);
+        $.cookie("chat_windows", null);
       } else {
         var windowsEncoded = $.toJSON(cookie);
-        $.cookie("chatWindows", windowsEncoded);
+        $.cookie("chat_windows", windowsEncoded);
       }
     };
 
@@ -180,7 +180,7 @@
         "status" : "online",
         "state" : "opened"
       };
-      var storedWindows = $.evalJSON($.cookie("chatWindows"));
+      var storedWindows = $.evalJSON($.cookie("chat_windows"));
       var alreadyExists = false;
 
       for(i in storedWindows) {
@@ -194,18 +194,24 @@
           storedWindows = [memberInfos];
         }
         var windowsEncoded = $.toJSON(storedWindows);
-        $.cookie("chatWindows", windowsEncoded);
+        $.cookie("chat_windows", windowsEncoded);
       }
     };
 
     // Modificar o state ou status da janela no cookie
     $.changeWindow = function(opts) {
-      var cookie = $.evalJSON($.cookie("chatWindows"));
+      var cookie = $.evalJSON($.cookie("chat_windows"));
       for(i in cookie) {
         if (cookie[i].id == opts.id) { cookie[i][opts.property] = opts.value; }
       }
       var windowsEncoded = $.toJSON(cookie);
-      $.cookie("chatWindows", windowsEncoded);
+      $.cookie("chat_windows", windowsEncoded);
     }
+
+    $.storeChatList = function() {
+      var cookie = $.evalJSON($.cookie("chat_windows"));
+
+    }
+
 
 })(jQuery);
