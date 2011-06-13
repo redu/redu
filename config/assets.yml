@@ -27,6 +27,8 @@ javascripts:
     - public/javascripts/jquery-ui.js
     - public/javascripts/pusher.js
     - public/javascripts/chat.js
+    - public/javascripts/jquery.json.js
+    - public/javascripts/jquery.cookie.js
   ie:
     - public/javascripts/selectivizr.js
 
