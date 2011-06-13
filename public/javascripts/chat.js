@@ -41,192 +41,6 @@ var buildChat = function(opts){
     return "window-" + userLiId;
   };
 
-  $.storeWindow = function(opts) {
-    var memberInfos = {
-      "id" : opts.id,
-      "name" : opts.name,
-      "status" : "online",
-      "state" : "opened"
-    };
-    var storedWindows = $.evalJSON($.cookie("chatWindows"));
-    var alreadyExists = false;
-
-    for(i in storedWindows) {
-      if (storedWindows[i].id == opts.id) { alreadyExists = true; }
-    }
-
-    if (!alreadyExists) {
-      if (storedWindows) {
-        storedWindows.push(memberInfos);
-      } else {
-        storedWindows = [memberInfos];
-      }
-      var windowsEncoded = $.toJSON(storedWindows);
-      $.cookie("chatWindows", windowsEncoded);
-    }
-  };
-
-  $.removeWindow = function(opts) {
-    var cookie = $.evalJSON($.cookie("chatWindows"));
-    var itemToRemove;
-    for(i in cookie) {
-      if (cookie[i].id == opts.id) { itemToRemove = i; }
-    }
-    cookie.splice(itemToRemove, 1);
-
-    if (cookie && cookie.length == 0) {
-      $.cookie("chatWindows", null);
-    } else {
-      var windowsEncoded = $.toJSON(cookie);
-      $.cookie("chatWindows", windowsEncoded);
-    }
-  };
-
-  $.changeWindow = function(opts) {
-    var cookie = $.evalJSON($.cookie("chatWindows"));
-    for(i in cookie) {
-      if (cookie[i].id == opts.id) { cookie[i][opts.property] = opts.value; }
-    }
-    var windowsEncoded = $.toJSON(cookie);
-    $.cookie("chatWindows", windowsEncoded);
-  }
-
-  $.restoreWindows = function(container) {
-    var cookie = $.evalJSON($.cookie("chatWindows"));
-    for(i in cookie) {
-      var win = cookie[i];
-      container.addWindow({ template : $window.clone(),
-          id : win.id,
-          name : win.name,
-          "status" : win["status"],
-          state : win.state });
-    }
-  }
-
-  $.fn.addWindow = function(opts){
-    return this.each(function(){
-        var $this = $(this);
-        var $window = $("#" + getCSSWindowId(opts.id));
-        if($window.length > 0){
-          if($window.find(".chat-window-bar").hasClass("closed")) {
-            $window.find(".chat-window-bar .name").click();
-            $.changeWindow({ id : opts.id, property : "state", value : "opened" });
-          }
-        }else{
-          var $template = opts.template;
-          $template.attr("id", getCSSWindowId(opts.id));
-          $template.find(".name").text(opts.name);
-          $template.find(".online").addClass(opts["status"]);
-          $template.find(".online").text(opts["status"]);
-          $template.find(".chat-window-bar").addClass(opts.state);
-          if (opts.state == "closed") {
-            $template.find(".chat-window").hide();
-          }
-
-          // minimizar e maximizar
-          $template.find(".name").bind("click", function(e){
-              var $bar = $template.find(".chat-window-bar");
-              $template.find(".chat-window").toggle();
-              $bar.toggleClass("opened");
-              $bar.toggleClass("closed");
-              if ($bar.hasClass("opened")) {
-                $.changeWindow({ id : opts.id, property : "state",
-                    value : "opened" });
-              } else {
-                $.changeWindow({ id : opts.id, property : "state",
-                    value : "closed" });
-              }
-              e.preventDefault();
-          });
-          // fechar janela de chat
-          $template.find(".close").bind("click", function(e){
-              $template.remove();
-              // Remove estado da janela do cookie
-              $.removeWindow({ id: opts.id });
-              e.preventDefault();
-          });
-
-          $this.append($template);
-
-          // Guarda estado da janela no cookie
-          $.storeWindow({ id: opts.id, name : opts.name });
-        }
-
-    });
-  };
-
-  // Adiciona um contato à lista de contatos
-  $.fn.addContact = function(opts){
-    return this.each(function(){
-        var $this = $(this);
-        var $template = $(opts.template);
-        var $role = $template.find(".role");
-
-        $template.attr("id", getCSSUserId(opts.member.id));
-        $template.find("img").attr("src", opts.member.info.thumbnail);
-        $template.find(".name").text(opts.member.info.name);
-
-        // Adicionando papel do usuário (o mais relevante será mostrado)
-        if(opts.member.info.roles["member"]){ $role.text("Aluno"); }
-        if(opts.member.info.roles["tutor"]){ $role.text("Tutor"); }
-        if(opts.member.info.roles["teacher"]){ $role.text("Professor"); }
-        if(opts.member.info.roles["environment_admin"]){ $role.text("Administrador"); }
-        if(opts.member.info.roles["admin"]){ $role.text("Staff"); }
-
-        $this.bind("click", function(){
-            $layout.find("#chat-windows-list").addWindow({ template : $window.clone()
-                , id : opts.member.id
-                , name : opts.member.info.name
-                , "status" : "online"
-                , state : "opened" });
-        });
-
-        $this.append($template);
-    });
-  };
-
-  // Remove contato da lista de contatos e mostra indicativo de offline na janela
-  $.fn.removeContact = function(opts){
-    var $statusDiv = $("#" + getCSSWindowId(opts.id) + " .chat-window-bar .online");
-    var $removed = $("#" + getCSSUserId(opts.id)).remove();
-
-    $statusDiv.removeClass("online").addClass("offline");
-    $statusDiv.text("off-line");
-    $(this).updateCounter();
-
-    return $removed;
-  }
-
-  // Atualiza contador de usuários online
-  $.fn.updateCounter = function(){
-    var count = $(this).find("#chat-contacts li").length;
-    $(this).find("#chat-contacts-bar .count").text("Chat ("+ count +")");
-
-    return $(this);
-  };
-
-  // Adiciona scroll
-  $.fn.scrollable = function(config){
-    var options = { offset : 10 };
-    options = $.extend(options, config);
-
-    return this.each(function(){
-        var $this = $(this);
-
-        $list = $this.find("ul");
-        $list.css("overflow", "hidden");
-
-        $this.find(".scroll .down").live("click", function(){
-            $list.scrollTop($list.scrollTop() + options.offset);
-        });
-
-        $this.find(".scroll .up").live("click", function(){
-            $list.scrollTop($list.scrollTop() - options.offset);
-        });
-
-    });
-  };
-
   // Minimiza lista de contatos
   $layout.find("#chat-contacts .minimize, #chat-contacts-bar").bind("click", function(){
       $layout.find("#chat-contacts").toggle();
@@ -239,8 +53,13 @@ var buildChat = function(opts){
       // Initicializando layout
       $("body").append($layout);
       $layout.find("#chat-contacts").scrollable();
+
       // Restaura o estado das janelas
-      $.restoreWindows($layout.find("#chat-windows-list"));
+      $layout.restoreWindows({
+          presencePartial : $presence.clone(),
+          windowPartial : $window.clone()
+      });
+
       Pusher.presence_timeout = config.presence_timeout;
       Pusher.channel_auth_endpoint = config.endPoint;
       // Informações de log
@@ -295,7 +114,9 @@ var buildChat = function(opts){
     },
     // Adiciona a lista de contatos
     uiAddContact : function(member){
-      $layout.find("#chat-contacts ul").addContact({member : member, template : $presence });
+      $layout.addContact({member : member
+          , presencePartial : $presence.clone()
+          , windowPartial : $window.clone() });
       that.uiUpdateCounter();
     },
     // Remove da lista de contatos
