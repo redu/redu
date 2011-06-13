@@ -50,24 +50,26 @@ var buildChat = function(opts){
   var that = {
     // Inicializa o pusher e mostra a barra de chat
     init : function(){
-      // Initicializando layout
-      $("body").append($layout);
-      $layout.find("#chat-contacts").scrollable();
-
-      // Restaura o estado das janelas
-      $layout.restoreWindows({
-          presencePartial : $presence.clone(),
-          windowPartial : $window.clone()
-      });
-
+      // Configurações do pusher
       Pusher.presence_timeout = config.presence_timeout;
       Pusher.channel_auth_endpoint = config.endPoint;
+
       // Informações de log
       if(config.log){
         Pusher.log = function(message) {
           if (console && console.log) console.log(arguments);
         };
       }
+
+      // Initicializando layout
+      $("body").append($layout);
+      $layout.find("#chat-contacts").scrollable();
+
+      $layout.restoreWindows({
+          presencePartial : $presence.clone(),
+          windowPartial : $window.clone()
+      });
+
       pusher = new Pusher(config.key);
     },
     // Inscreve no canal do usuário logado
@@ -122,7 +124,6 @@ var buildChat = function(opts){
     // Remove da lista de contatos
     uiRemoveContact : function(userId){
       $layout.removeContact({ id : userId });
-      // Muda status da janela no cookie
       $.changeWindow({ id : userId, property : "status",
           value : "offline" });
     },
