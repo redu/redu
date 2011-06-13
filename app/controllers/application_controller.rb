@@ -15,6 +15,14 @@ class ApplicationController < ActionController::Base
     redirect_to home_path
   end
 
+  def routing_error
+    respond_to do |format|
+      format.html {
+        render :template => 'errors/404', :layout => 'errors', :status => '404'
+      }
+    end
+  end
+
   private
 
   # Handlers para exceções (paginas de error customizadas)
