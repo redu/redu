@@ -12,15 +12,30 @@ $("a:not([data-remote])").pjax("#content", { timeout: null });
 // Constrói um novo objeto Chat
 var buildChat = function(opts){
   var pusher;
-  var config = { "endPoint" : '/presence/auth', "log" : false, "presence_timeout" : 20000 };
+  var config = { "endPoint" : '/presence/auth'
+                , "log" : false
+                , "presence_timeout" : 20000 };
   config = $.extend(config, opts);
 
-  var $listTitle = $("<div/>", { "class" : "title" }).text("Chat");
-  var $userList = $("<div/>", { id : "chat-list" }).append($listTitle).append("<ul/>");
-  $listTitle.after($("<div/>", { "class" : "minimize" }).text("Minimizar"));
-  var $barTitle = $("<span/>", { "class" : "count" }).text("Chat (0)");
-  var $chatBar = $("<div/>", { id :'chat-bar', "class" : "closed" }).append($barTitle);
-  var $windowList = $("<ul/>", { id : "chat-windows-list" });
+  var $layout;
+  if(config.layout instanceof jQuery)
+    $layout = config.layout;
+  else
+    $layout = $(config.layout);
+
+  var $window;
+  if(config.window instanceof jQuery)
+    $window = config.windowPartial;
+  else
+    $window = $(config.windowPartial);
+
+  var $presence;
+  if(config.presencePartial instanceof jQuery)
+    $presence = config.presencePartial;
+  else
+    $presence = $(config.presencePartial);
+
+
   var getCSSUserId = function(userId) {
     return "chat-user-" + userId;
   };
@@ -28,68 +43,67 @@ var buildChat = function(opts){
     return "window-" + userLiId;
   };
 
-  // Minimizar e maximizar lista/janela de contato(s)
-  $("#chat-bar, .chat-window-bar").live("click", function(){
-      $(this).prev().toggle();
-      $(this).toggleClass("opened");
-      $(this).toggleClass("closed");
-
-      return false;
-  });
-
-  // Evento de clicar em um usuário da lista de contatos,
-  // cria uma nova janela ou abre a minimizada.
-  $("#chat-list li").live("click", function(){
-      var thisId = $(this).attr("id");
-      var $liWindow = $("#" + getCSSWindowId(thisId));
-      if ($liWindow.length != 0) {
-        if ($liWindow.find(".chat-window-bar").hasClass("closed")) {
-          $liWindow.find(".chat-window-bar").click();
-        }
-      } else {
-        var userName = $(this).find('.name').text();
-        var $winBarTitle = $("<span/>", { "class" : "name" }).text(userName);
-        var $windowBar = $("<div/>", { "class" : "chat-window-bar opened"}).append($winBarTitle);
-        var $window = $("<div/>", { "class" : "chat-window" }).append($('<span/>', { "class" : "name" }).text(userName));
-        $winBarTitle.before($("<div/>", { "class" : "online" }).text("on-line"));
-        $winBarTitle.after($("<div/>", { "class" : "close" }).text("Fechar"));
-        $window.append($('<ul/>', { "class" : "conversation" }));
-        $window.append($('<div/>', { "class" : "user-input" }).append($('<input/>', { "type" : "text" })));
-
-        $('#chat-windows-list').append($('<li/>', { "id" : getCSSWindowId(thisId) }).append($window, $windowBar));
-      }
-      return false;
-  });
-
-  // Minimiza lista de contatos
-  $("#chat-list .minimize").live("click", function(){
-      $(this).parent().toggle();
-      $("#chat-bar").removeClass("opened").addClass("closed");
-  });
-
-  // Fecha janela de contato
-  $("#chat-windows-list .chat-window-bar .close").live("click", function(){
-      $(this).parent().parent().remove();
-  });
-
-  // Adiciona um contato à lista de contatos
-  $.fn.addContact = function(member){
+  $.fn.addWindow = function(opts){
     return this.each(function(){
         var $this = $(this);
-        var $li = $("<li/>", { "class" : "clearfix" }).appendTo($this);
-        $li.attr("id", getCSSUserId(member.id));
-        $("<img/>", { "src" : member.info.thumbnail, "class" : "avatar" }).appendTo($li);
-        $("<span/>", { 'class' : "name" }).text(member.info.name).appendTo($li);
-        var $role = $("<div/>", { "class" : "roles" }).appendTo($li);
+
+        var $window = $("#" + getCSSWindowId(opts.id));
+        if($window.length > 0){
+          if($window.find(".chat-window-bar").hasClass("closed"))
+            $window.find(".chat-window-bar .name").click();
+        }else{
+          var $template = opts.template;
+          $template.attr("id", getCSSWindowId(opts.id));
+          $template.find(".name").text(opts.name);
+
+          // minimizar e maximizar
+          $template.find(".name").bind("click", function(e){
+              var $bar = $template.find(".chat-window-bar");
+
+              $template.find(".chat-window").toggle();
+              $bar.toggleClass("opened");
+              $bar.toggleClass("closed");
+
+              e.preventDefault();
+          });
+
+          // fechar janela de chat
+          $template.find(".close").bind("click", function(e){
+              $template.remove();
+              e.preventDefault();
+          });
+
+          $this.append($template);
+        }
+
+    });
+  };
+
+  // Adiciona um contato à lista de contatos
+  $.fn.addContact = function(opts){
+    return this.each(function(){
+        var $this = $(this);
+        var $template = $(opts.template);
+        var $role = $template.find(".role");
+
+        $template.attr("id", getCSSUserId(opts.member.id));
+        $template.find("img").attr("src", opts.member.info.thumbnail);
+        $template.find(".name").text(opts.member.info.name);
 
         // Adicionando papel do usuário (o mais relevante será mostrado)
-        if(member.info.roles["member"]){ $role.text("Aluno"); }
-        if(member.info.roles["tutor"]){ $role.text("Tutor"); }
-        if(member.info.roles["teacher"]){ $role.text("Professor"); }
-        if(member.info.roles["environment_admin"]){ $role.text("Administrador"); }
-        if(member.info.roles["admin"]){ $role.text("Staff"); }
+        if(opts.member.info.roles["member"]){ $role.text("Aluno"); }
+        if(opts.member.info.roles["tutor"]){ $role.text("Tutor"); }
+        if(opts.member.info.roles["teacher"]){ $role.text("Professor"); }
+        if(opts.member.info.roles["environment_admin"]){ $role.text("Administrador"); }
+        if(opts.member.info.roles["admin"]){ $role.text("Staff"); }
 
-        $role.append($("<div/>", { "class" : "status"}).text("on-line"));
+        $this.bind("click", function(){
+            $layout.find("#chat-windows-list").addWindow({ template : $window.clone()
+                , id : opts.member.id
+                , name : opts.member.info.name });
+        });
+
+        $this.append($template);
     });
   };
 
@@ -100,10 +114,6 @@ var buildChat = function(opts){
 
     return this.each(function(){
       var $this = $(this);
-      var $buttons = $("<div/>", { "class" : "scroll" });
-      $("<div/>", { "class" : "up" }).text("Subir").appendTo($buttons);
-      $("<div/>", { "class" : "down" }).text("Descer").appendTo($buttons);
-      $this.append($buttons);
 
       $list = $this.find("ul");
       $list.css("overflow", "hidden");
@@ -119,13 +129,18 @@ var buildChat = function(opts){
     });
   };
 
+  // Minimiza lista de contatos
+  $layout.find("#chat-contacts .minimize, #chat-contacts-bar").bind("click", function(){
+      $layout.find("#chat-contacts").toggle();
+      $layout.find("#chat-contacts-bar").toggleClass("opened").toggleClass("closed");
+  });
+
   var that = {
     // Inicializa o pusher e mostra a barra de chat
     init : function(){
       // Initicializando layout
-      $userList.scrollable();
-      $("body").append($userList, $chatBar, $windowList);
-      $userList.toggle(); // Inicia com a lista minimizada
+      $("body").append($layout);
+      $layout.find("#chat-contacts").scrollable();
       Pusher.presence_timeout = config.presence_timeout;
       Pusher.channel_auth_endpoint = config.endPoint;
       // Informações de log
@@ -180,7 +195,7 @@ var buildChat = function(opts){
     },
     // Adiciona a lista de contatos
     uiAddContact : function(member){
-      $userList.find("ul").addContact(member);
+      $layout.find("#chat-contacts ul").addContact({member : member, template : $presence });
       that.uiUpdateCounter();
     },
     // Remove da lista de contatos
@@ -193,8 +208,8 @@ var buildChat = function(opts){
     },
     // Atualiza counter de usuários online
     uiUpdateCounter : function(){
-      var count = $userList.find('li').length;
-      $chatBar.find('.count').text("Chat ("+ count +")");
+      var count = $layout.find("#chat-contacts li").length;
+      $layout.find("#chat-contacts-bar .count").text("Chat ("+ count +")");
     }
   };
 

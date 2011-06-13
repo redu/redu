@@ -21,12 +21,21 @@
     <% end %>
     <%= yield :header_scripts_and_styles %>
 
-    <script type="text/javascript" charset="utf-8">
+    <script type="text/javascript" language="javascript" charset="utf-8">
+    //<![CDATA[
       var chat;
+    //]]>
     </script>
     <%= async_include_css :chat %>
     <%= async_include_javascripts :chat do %>
-      chat = buildChat({ key : "<%= Redu::Application.config.pusher[:key] %>", channel : "<%= current_user.get_channel %>" , endPoint : "<%= presence_auth_path %>" });
+      chat = buildChat({ key : "<%= Redu::Application.config.pusher[:key] %>"
+      , channel : "<%= current_user.get_channel %>"
+      , endPoint : "<%= presence_auth_path %>"
+      , layout : "<%= escape_javascript(render :partial => "presence/chat_list") %>"
+      , windowPartial : "<%= escape_javascript(render :partial => "presence/chat_window") %>"
+      , presencePartial : "<%= escape_javascript(render :partial => "presence/chat_presence") %>"
+      , log : true });
+
       chat.init();
       chat.subscribeMyChannel();
     <% end %>

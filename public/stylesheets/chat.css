@@ -1,4 +1,4 @@
-#chat-list {
+#chat-contacts {
   width: 160px;
   height: 390px;
   background: white;
@@ -17,7 +17,7 @@
   left: 10px;
 }
 
-#chat-list > ul {
+#chat-contacts > ul {
   overflow: scroll;
   overflow-x: hidden;
   width: 140px;
@@ -26,8 +26,8 @@
   font-size: .9em;
 }
 
-#chat-list .scroll .up,
-#chat-list .scroll .down {
+#chat-contacts .scroll .up,
+#chat-contacts .scroll .down {
   background: url("../images/new/icons-chat.png") no-repeat;
   width: 140px;
   height: 20px;
@@ -37,24 +37,24 @@
   overflow: hidden;
 }
 
-#chat-list .scroll::selection,
-#chat-list .scroll::-moz-selection,
-#chat-list .scroll .up::selection,
-#chat-list .scroll .up::-moz-selection,
-#chat-list .scroll .down::selection,
-#chat-list .scroll .down::-moz-selection {
+#chat-contacts .scroll::selection,
+#chat-contacts .scroll::-moz-selection,
+#chat-contacts .scroll .up::selection,
+#chat-contacts .scroll .up::-moz-selection,
+#chat-contacts .scroll .down::selection,
+#chat-contacts .scroll .down::-moz-selection {
   background: transparent;
 }
 
-#chat-list .scroll .up {
+#chat-contacts .scroll .up {
   background-position: -575px 0;
 }
 
-#chat-list .scroll .down {
+#chat-contacts .scroll .down {
   background-position: -575px -25px;
 }
 
-#chat-list li {
+#chat-contacts li {
   cursor: pointer;
   display: block;
   clear: both;
@@ -62,7 +62,7 @@
   padding: 3px 0;
 }
 
-#chat-list .minimize {
+#chat-contacts .minimize {
   cursor: pointer;
   text-indent: 9999px;
   overflow: hidden;
@@ -72,7 +72,7 @@
   margin: 10px 0;
 }
 
-#chat-list .title {
+#chat-contacts .title {
   position: relative;
   width: 120px;
   float: left;
@@ -81,27 +81,27 @@
   font-weight: bold;
 }
 
-#chat-list .avatar {
+#chat-contacts .avatar {
   float: left;
   margin-right: 7px;
 }
 
-#chat-list .name {
+#chat-contacts .name {
   font-size: .95em;
   color: #4cacd5;
 }
 
 
-#chat-list .name:hover {
+#chat-contacts .name:hover {
   text-decoration: underline;
 }
 
-#chat-list .roles {
+#chat-contacts .roles {
   color: #b3b2b3;
   font-size: .9em;
 }
 
-#chat-list .status {
+#chat-contacts .status {
   width: 8px;
   height: 8px;
   float: left;
@@ -112,7 +112,7 @@
   background: url("../images/new/icons-chat.png") -775px 0;
 }
 
-#chat-bar {
+#chat-contacts-bar {
   cursor: pointer;
   width: 162px;
   height: 61px;
@@ -124,11 +124,11 @@
   background: url("../images/new/icons-chat.png") -72px 0px;
 }
 
-#chat-bar.closed {
+#chat-contacts-bar.closed {
   background-position: -72px -51px;
 }
 
-#chat-bar .count,
+#chat-contacts-bar .count,
 #chat-windows-list .chat-window-bar .name {
   cursor: pointer;
   display: block;
@@ -138,14 +138,14 @@
   text-shadow: -1px -1px 1px #99A499;
 }
 
-#chat-bar .count {
+#chat-contacts-bar .count {
   font-weight: bold;
   width: 150px;
   padding: 0;
   padding-top: 23px;
 }
 
-#chat-bar .count:hover,
+#chat-contacts-bar .count:hover,
 #chat-windows-list .chat-window-bar .name:hover {
   text-decoration: none;
 }
