@@ -138,9 +138,10 @@
     };
 
     // Restauras janelas registradas no cookie
-    $.fn.restoreWindows = function(opts) {
+    $.fn.restoreChat = function(opts) {
       var $this = $(this);
-      var cookie = $.evalJSON($.cookie("chat_windows"));
+      var chatInfos = $.evalJSON($.cookie("chat_windows"));
+      var cookie = chatInfos.windows;
 
       for(i in cookie) {
         var win = cookie[i];
@@ -152,12 +153,19 @@
             state : win.state });
       }
 
+      var chatListOpen = chatInfos.listOpened;
+      if (chatListOpen) {
+        $this.find("#chat-contacts").toggle();
+        $this.find("#chat-contacts-bar").toggleClass("opened").toggleClass("closed");
+      }
+
       return $this;
-    }
+    };
 
     // Remove janela do cookie
     $.removeWindow = function(opts) {
-      var cookie = $.evalJSON($.cookie("chat_windows"));
+      var chatInfos = $.evalJSON($.cookie("chat_windows"));
+      var cookie = chatInfos.windows;
       var itemToRemove;
       for(i in cookie) {
         if (cookie[i].id == opts.id) { itemToRemove = i; }
@@ -165,11 +173,10 @@
       cookie.splice(itemToRemove, 1);
 
       if (cookie && cookie.length == 0) {
-        $.cookie("chat_windows", null);
-      } else {
-        var windowsEncoded = $.toJSON(cookie);
-        $.cookie("chat_windows", windowsEncoded);
+        chatInfos.windows = [];
       }
+
+      $.cookie("chat_windows", $.toJSON(chatInfos));
     };
 
     // Guarda o estado da janela no cookie
@@ -178,9 +185,10 @@
         "id" : opts.id,
         "name" : opts.name,
         "status" : "online",
-        "state" : "opened"
+        "state" : "opened" // Estado da janela
       };
-      var storedWindows = $.evalJSON($.cookie("chat_windows"));
+      var chatInfos = $.evalJSON($.cookie("chat_windows"));
+      var storedWindows = chatInfos.windows;
       var alreadyExists = false;
 
       for(i in storedWindows) {
@@ -188,30 +196,37 @@
       }
 
       if (!alreadyExists) {
-        if (storedWindows) {
-          storedWindows.push(memberInfos);
-        } else {
-          storedWindows = [memberInfos];
-        }
-        var windowsEncoded = $.toJSON(storedWindows);
-        $.cookie("chat_windows", windowsEncoded);
+        storedWindows.push(memberInfos);
+
+        $.cookie("chat_windows", $.toJSON(chatInfos));
       }
     };
 
     // Modificar o state ou status da janela no cookie
     $.changeWindow = function(opts) {
-      var cookie = $.evalJSON($.cookie("chat_windows"));
+      var chatInfos = $.evalJSON($.cookie("chat_windows"));
+      var cookie = chatInfos.windows;
       for(i in cookie) {
         if (cookie[i].id == opts.id) { cookie[i][opts.property] = opts.value; }
       }
-      var windowsEncoded = $.toJSON(cookie);
-      $.cookie("chat_windows", windowsEncoded);
-    }
 
-    $.storeChatList = function() {
+      $.cookie("chat_windows", $.toJSON(chatInfos));
+    };
+
+    $.initChatCookies = function() {
       var cookie = $.evalJSON($.cookie("chat_windows"));
 
-    }
+      if (!cookie) {
+        cookie = { listOpened : false, windows: [] };
+      }
+      var windowsEncoded = $.toJSON(cookie);
+      $.cookie("chat_windows", windowsEncoded);
+    };
 
+    $.changeChatList = function(opts) {
+      var chatInfos = $.evalJSON($.cookie("chat_windows"));
+      chatInfos.listOpened = opts.opened;
+      $.cookie("chat_windows", $.toJSON(chatInfos));
+    };
 
 })(jQuery);

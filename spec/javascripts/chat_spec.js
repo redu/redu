@@ -110,16 +110,27 @@ describe('Chat', function () {
     });
 
     describe("storing state", function(){
+        var infos;
         beforeEach(function() {
             $.cookie("chat_windows", null);
+            $.initChatCookies();
+
+            infos = {
+              listOpened : true,
+              windows : []
+            };
         });
 
         afterEach(function () {
             $.cookie("chat_windows", null);
         });
 
-        it('defines $.storeChatList', function() {
-            expect($.storeChatList).toBeDefined();
+        it('defines $.initChatCookies', function() {
+            expect($.initChatCookies).toBeDefined();
+        });
+
+        it('defines $.changeChatList', function() {
+            expect($.changeChatList).toBeDefined();
         });
 
         it('defines $.storeWindow', function() {
@@ -134,16 +145,42 @@ describe('Chat', function () {
             expect($.changeWindow).toBeDefined();
         });
 
-        it('defines $.fn.restoreWindows', function() {
-            expect($.fn.restoreWindows).toBeDefined();
+        it('defines $.fn.restoreChat', function() {
+            expect($.fn.restoreChat).toBeDefined();
         });
 
         it("saves chat list state on empty cookie", function() {
-            infos = {
-              list : "opened",
-              windows : []
+            $.initChatCookies();
+            expect($.cookie("chat_windows")).toEqual($.toJSON(infos));
+        });
+
+        it("saves chat list state on nonempty cookie", function() {
+            var memberInfos = {
+              "id" : "chat-user-50",
+              "name" : "Username Lastname",
+              "status" : "online",
+              "state" : "opened"
             };
-            $.storeChatList();
+            $.initChatCookies();
+            $.storeWindow({ id : memberInfos.id, name : memberInfos.name });
+
+            $.initChatCookies();
+            infos.windows = [memberInfos];
+            expect($.cookie("chat_windows")).toEqual($.toJSON(infos));
+        });
+
+        it("changes chat list state", function(){
+            var memberInfos = {
+              "id" : "chat-user-50",
+              "name" : "Username Lastname",
+              "status" : "online",
+              "state" : "opened"
+            };
+            $.storeWindow({ id : memberInfos.id, name : memberInfos.name });
+
+            $.changeChatList({ opened : false });
+            infos.listOpened = false;
+            infos.windows = [memberInfos];
             expect($.cookie("chat_windows")).toEqual($.toJSON(infos));
         });
 
@@ -154,8 +191,9 @@ describe('Chat', function () {
               "status" : "online",
               "state" : "opened"
             };
+            infos.windows = [memberInfos];
             $.storeWindow({ id : memberInfos.id, name : memberInfos.name });
-            expect($.cookie("chat_windows")).toEqual($.toJSON([memberInfos]));
+            expect($.cookie("chat_windows")).toEqual($.toJSON(infos));
         });
 
         it("saves information on nonempty cookie", function(){
@@ -176,7 +214,8 @@ describe('Chat', function () {
               "state" : "opened"
             };
             $.storeWindow({ id : memberInfos2.id, name : memberInfos2.name });
-            expect($.cookie("chat_windows")).toEqual($.toJSON([memberInfos, memberInfos2]));
+            infos.windows = [memberInfos, memberInfos2];
+            expect($.cookie("chat_windows")).toEqual($.toJSON(infos));
         });
 
         it("removes specified window on cookie with one window", function(){
@@ -190,7 +229,8 @@ describe('Chat', function () {
             $.storeWindow({ id : memberInfos.id, name : memberInfos.name });
 
             $.removeWindow({ id : memberInfos.id });
-            expect($.cookie("chat_windows")).toEqual(null);
+            infos.windows = [];
+            expect($.cookie("chat_windows")).toEqual($.toJSON(infos));
         });
 
         it("removes specified window on cookie with more than one window", function(){
@@ -222,7 +262,8 @@ describe('Chat', function () {
             $.storeWindow({ id : memberInfos2.id, name : memberInfos2.name });
 
             $.removeWindow({ id : memberInfos1.id });
-            expect($.cookie("chat_windows")).toEqual($.toJSON([memberInfos, memberInfos2]));
+            infos.windows = [memberInfos, memberInfos2];
+            expect($.cookie("chat_windows")).toEqual($.toJSON(infos));
         });
 
         it("changes the status of a specified user", function(){
@@ -247,7 +288,8 @@ describe('Chat', function () {
             $.changeWindow({ id : memberInfos1.id, property : "status",
                 value : "offline" });
             memberInfos1["status"] = "offline";
-            expect($.cookie("chat_windows")).toEqual($.toJSON([memberInfos, memberInfos1]));
+            infos.windows = [memberInfos, memberInfos1];
+            expect($.cookie("chat_windows")).toEqual($.toJSON(infos));
         });
 
         it("changes the state of a window", function(){
@@ -272,14 +314,24 @@ describe('Chat', function () {
             $.changeWindow({ id : memberInfos1.id, property : "state",
                 value : "closed" });
             memberInfos1["state"] = "closed";
-            expect($.cookie("chat_windows")).toEqual($.toJSON([memberInfos, memberInfos1]));
+            infos.windows = [memberInfos, memberInfos1];
+            expect($.cookie("chat_windows")).toEqual($.toJSON(infos));
         });
     });
 
     describe("restoring state", function(){
+        var infos;
         var memberInfos;
         var memberInfos1;
-        beforeEach(function(){
+        beforeEach(function() {
+            $.cookie("chat_windows", null);
+            $.initChatCookies();
+
+            infos = {
+              listOpened : true,
+              windows : []
+            };
+
             // First window
             memberInfos = {
               "id" : "chat-user-50",
@@ -297,6 +349,10 @@ describe('Chat', function () {
               "state" : "closed"
             };
             $.storeWindow({ id : memberInfos1.id, name : memberInfos1.name });
+        });
+
+        afterEach(function () {
+            $.cookie("chat_windows", null);
         });
 
         it("after reload", function(){

@@ -45,6 +45,11 @@ var buildChat = function(opts){
   $layout.find("#chat-contacts .minimize, #chat-contacts-bar").bind("click", function(){
       $layout.find("#chat-contacts").toggle();
       $layout.find("#chat-contacts-bar").toggleClass("opened").toggleClass("closed");
+      if ($layout.find("#chat-contacts-bar").hasClass("opened")) {
+        $.changeChatList({ opened : true });
+      } else {
+        $.changeChatList({ opened : false });
+      }
   });
 
   var that = {
@@ -65,7 +70,8 @@ var buildChat = function(opts){
       $("body").append($layout);
       $layout.find("#chat-contacts").scrollable();
 
-      $layout.restoreWindows({
+      $.initChatCookies();
+      $layout.restoreChat({
           presencePartial : $presence.clone(),
           windowPartial : $window.clone()
       });
