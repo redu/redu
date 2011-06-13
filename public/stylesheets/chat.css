@@ -1,13 +1,33 @@
 #chat {
   position: fixed;
-  height: 400px;
+  left: 50%;
+  bottom: 0;
+  width: 960px;
+  margin-left: -480px;
+  pointer-events:none;
+}
+
+#chat,
+#chat .chat-contacts-wrapper {
+  height: 460px;
+}
+
+#chat .chat-contacts-wrapper {
+  float: left;
+  position: relative;
+  pointer-events:none;
 }
 
 #chat-contacts {
+  pointer-events:auto;
   width: 160px;
   height: 390px;
   background: white;
   border: 1px solid #61be80;
+
+  position: absolute;
+  left: 0;
+  bottom: 70px;
 
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -17,9 +37,6 @@
   -webkit-box-shadow: 0px 1px 6px #b1b1b1;
   box-shadow: 0px 1px 6px #b1b1b1;
 
-  position: fixed;
-  bottom: 75px;
-  left: 10px;
 }
 
 #chat-contacts > ul {
@@ -78,7 +95,6 @@
 }
 
 #chat-contacts .title {
-  position: relative;
   width: 120px;
   float: left;
   margin: 10px;
@@ -118,13 +134,13 @@
 }
 
 #chat-contacts-bar {
+  pointer-events:auto;
   cursor: pointer;
   width: 162px;
   height: 61px;
-
-  position: fixed;
-  bottom: 10px;
-  left: 15px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
 
   background: url("../images/new/icons-chat.png") -72px 0px;
 }
@@ -163,10 +179,10 @@
 }
 
 #chat-windows-list {
+  position: absolute;
+  bottom: 0;
+  left: 180px;
   pointer-events:none;
-  position: fixed;
-  bottom: 10px;
-  left: 200px;
 }
 
 #chat-windows-list > li {
@@ -248,9 +264,6 @@
   -moz-box-shadow: 0px 1px 6px #b1b1b1;
   -webkit-box-shadow: 0px 1px 6px #b1b1b1;
   box-shadow: 0px 1px 6px #b1b1b1;
-
-  position: relative;
-  bottom: 5px;
 }
 
 #chat-windows-list .chat-window .name {
@@ -263,7 +276,8 @@
 #chat-windows-list .chat-window .conversation > li {
   margin: 5px;
 }
-#chat-windows-list .chat-window .conversation li .messages {
+#chat-windows-list .chat-window .conversation {
+  height: 242px;
 }
 
 #chat-windows-list .chat-window .conversation li .avatar {
@@ -289,8 +303,6 @@
   -webkit-border-radius:0px 0px 5px 5px;
   border-radius:0px 0px 5px 5px;
 
-  position: absolute;
-  bottom: 0;
   width: 243px;
 }
 
