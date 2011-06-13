@@ -190,6 +190,18 @@
   margin-left: 11px;
 }
 
+#chat-windows-list .chat-window-bar .offline {
+  float:left;
+  width: 8px;
+  height: 10px;
+  /* FIXME Trocar pelo ícone correto */
+  background: url("../images/new/icons-chat.png") 0 0;
+  text-indent: -9999px;
+  overflow: hidden;
+  margin-top: 25px;
+  margin-left: 11px;
+}
+
 #chat-windows-list .chat-window-bar .name {
   cursor: pointer;
   display: block;

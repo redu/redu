@@ -17,24 +17,22 @@ var buildChat = function(opts){
                 , "presence_timeout" : 20000 };
   config = $.extend(config, opts);
 
-  var $layout;
+  // Inicializando variaveis de template
+  var $layout, $window, $presence;
   if(config.layout instanceof jQuery)
     $layout = config.layout;
   else
     $layout = $(config.layout);
 
-  var $window;
   if(config.window instanceof jQuery)
     $window = config.windowPartial;
   else
     $window = $(config.windowPartial);
 
-  var $presence;
   if(config.presencePartial instanceof jQuery)
     $presence = config.presencePartial;
   else
     $presence = $(config.presencePartial);
-
 
   var getCSSUserId = function(userId) {
     return "chat-user-" + userId;
@@ -105,6 +103,26 @@ var buildChat = function(opts){
 
         $this.append($template);
     });
+  };
+
+  // Remove contato da lista de contatos e mostra indicativo de offline na janela
+  $.fn.removeContact = function(opts){
+    var $statusDiv = $("#" + getCSSWindowId(opts.id) + " .chat-window-bar .online");
+    var $removed = $("#" + getCSSUserId(opts.id)).remove();
+
+    $statusDiv.removeClass("online").addClass("offline");
+    $statusDiv.text("off-line");
+    $(this).updateCounter();
+
+    return $removed;
+  }
+
+  // Atualiza contador de usuários online
+  $.fn.updateCounter = function(){
+    var count = $(this).find("#chat-contacts li").length;
+    $(this).find("#chat-contacts-bar .count").text("Chat ("+ count +")");
+
+    return $(this);
   };
 
   // Adiciona scroll
@@ -200,16 +218,11 @@ var buildChat = function(opts){
     },
     // Remove da lista de contatos
     uiRemoveContact : function(userId){
-      $("#" + getCSSUserId(userId)).remove();
-      var statusDiv = $("#" + getCSSWindowId(getCSSUserId(userId)) + " .chat-window-bar .online");
-      statusDiv.removeClass("online").addClass("offline");
-      statusDiv.text("off-line");
-      that.uiUpdateCounter();
+      $layout.removeContact({ id : userId });
     },
     // Atualiza counter de usuários online
     uiUpdateCounter : function(){
-      var count = $layout.find("#chat-contacts li").length;
-      $layout.find("#chat-contacts-bar .count").text("Chat ("+ count +")");
+      $layout.updateCounter();
     }
   };
 
