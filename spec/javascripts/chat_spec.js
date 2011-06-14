@@ -15,69 +15,69 @@ describe('Chat', function () {
         var chat, opts;
 
         beforeEach(function () {
-            opts = { key : 'XXX', channel : 'my-channel' };
-            chat = buildChat(opts);
+            // Alias
+            this.Ch = Pusher.Channel.prototype;
+            this.opts = { key : 'XXX'
+              , channel : 'my-channel'
+              , layout : ""
+              , windowPartial : ""
+              , presencePartial : ""};
+            this.chat = buildChat(this.opts);
+
+            // Mock do bind subscription_succeeded retornando lista de amigos
+            this.bindMock = function(e, func){
+              var callbacks = {
+                "pusher:subscription_succeeded" : function(f){
+                  var members = {
+                    each: function(callback) {
+                      callback({
+                          id: 1,
+                          info: {
+                            friends : [{channel : "ch1"}, {channel : "ch2"}]
+                          },
+                      });
+                      callback({
+                          id: 1,
+                          info: {},
+                      });
+                    }
+                  }
+
+                  f(members);
+                },
+                "pusher:member_added" : function(){},
+                "pusher:member_removed" : function(){},
+                "pusher:connection_established" : function(){},
+                "pusher:connection_disconnected" : function(){},
+                "pusher:error" : function(){},
+              }
+
+              callbacks[e](func);
+            };
+
+            spyOn(Pusher.prototype, "subscribe").andReturn(new Pusher.Channel());
+            spyOn(this.Ch, "bind").andCallFake(this.bindMock);
+
+            this.chat.init();
+            this.chat.subscribeMyChannel();
         });
 
         it('defines init', function () {
-            expect(chat).toBeDefined();
+            expect(this.chat).toBeDefined();
         });
 
-        it('shows a empty list', function() {
-            chat.init();
-
-            expect($("#chat-list")).toExist();
+        it('binds subscription succeeded event', function() {
+            expect(this.Ch.bind).toHaveBeenCalledWith("pusher:subscription_succeeded", jasmine.any(Function));
         });
 
-    });
-
-    describe('ui methods', function () {
-        var chat, member;
-
-        beforeEach(function () {
-            chat = buildChat({ key : 'XXX', channel : 'my-channel' });
-            chat.init();
-
-            member = {
-              "info" : {
-                "roles" : {
-                  "teacher" : true
-                  ,"member" : false
-                  ,"administrator" : false
-                  ,"tutor" : true
-                }
-                ,"name" : "Test user"
-                ,"thumbnail" : "new/missing_users_thumb_32.png"
-              }
-              ,"id" : "1234"
-            }
-
-            chat.uiAddContact(member);
+        it('subscribes to it own channel', function() {
+            expect(Pusher.prototype.subscribe).toHaveBeenCalledWith("my-channel");
         });
 
-        it('adds contact to UI', function () {
-            expect($("#chat-list ul li").length).toBe(1);
-            expect($("#chat-list .name").text()).toBe(member.info.name);
+        it('subscribes to friends channels', function() {
+          expect(Pusher.prototype.subscribe).toHaveBeenCalledWith("ch1");
+          expect(Pusher.prototype.subscribe).toHaveBeenCalledWith("ch2");
         });
-
-        it('adds the correct role text (more strong role)', function() {
-            $("#chat-list .roles .status").remove();
-            expect($("#chat-list .roles").filter(":first")).toHaveText("Professor");
-        });
-
-        it('creates the user link', function() {
-            expect($("#chat-list img").attr("src")).toBe(member.info.thumbnail);
-        });
-
-        it('should set data-userId', function() {
-            expect($("#chat-user-" + member.id)).toExist();
-        });
-
-        it('should remove the user from UI', function() {
-            chat.uiRemoveContact(member.id);
-            expect($("#chat-user-" + member.id)).not.toExist();
-        });
-
     });
 
     describe('when subscribing', function () {
