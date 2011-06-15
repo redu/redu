@@ -21,8 +21,8 @@
             $window = opts.windowPartial;
             $window.attr("id", getCSSWindowId(opts.id));
             $window.find(".name").text(opts.name);
-            $window.find(".online").addClass(opts["status"]);
             $window.find(".online").text(opts["status"]);
+            $window.find(".online").removeClass("online").addClass(opts["status"]);
             $window.find(".chat-window-bar").addClass(opts.state);
             if (opts.state == "closed") {
               $window.find(".chat-window").hide();
@@ -64,7 +64,8 @@
       });
     };
 
-    // Adiciona um contato à lista de contatos
+    // Adiciona um contato à lista de contatos e mostra indicativo de online,
+    // caso a janela esteja aberta
     $.fn.addContact = function(opts){
       return this.each(function(){
           var $this = $(this);
@@ -85,6 +86,10 @@
 
           $contacts.find("ul").append($presence);
 
+          var $statusDiv = $("#" + getCSSWindowId(opts.member.id) + " .chat-window-bar .offline");
+          $statusDiv.removeClass("offline").addClass("online");
+          $statusDiv.text("online");
+
           $presence.bind("click", function(){
               $this.addWindow({ windowPartial : opts.windowPartial.clone()
                   , id : opts.member.id
@@ -101,7 +106,7 @@
       var $removed = $("#" + getCSSUserId(opts.id)).remove();
 
       $statusDiv.removeClass("online").addClass("offline");
-      $statusDiv.text("off-line");
+      $statusDiv.text("offline");
       $(this).updateCounter();
 
       return $removed;

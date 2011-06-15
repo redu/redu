@@ -125,6 +125,8 @@ var buildChat = function(opts){
       $layout.addContact({member : member
           , presencePartial : $presence.clone()
           , windowPartial : $window.clone() });
+      $.changeWindow({ id : member.id, property : "status",
+          value : "online" });
       that.uiUpdateCounter();
     },
     // Remove da lista de contatos

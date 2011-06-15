@@ -116,7 +116,7 @@ describe('Chat', function () {
             $.initChatCookies();
 
             infos = {
-              listOpened : true,
+              listOpened : false,
               windows : []
             };
         });
