@@ -181,19 +181,19 @@
 #chat-windows-list {
   position: absolute;
   bottom: 0;
-  left: 176px;
+  left: 178px;
   pointer-events:none;
 }
 
 #chat-windows-list > li {
   pointer-events:none;
   float: left;
-  margin-right: 5px;
 }
 
 #chat-windows-list .chat-window-bar {
   pointer-events: auto;
-  width: 159px;
+  margin-top: 302px;
+  width: 156px;
   height: 58px;
 
   background: url("../images/new/icons-chat.png") -290px  0px;
@@ -243,7 +243,6 @@
 }
 
 #chat-windows-list .closed {
-  margin-top: 302px;
   background-position: -290px -56px;
 }
 
@@ -252,6 +251,10 @@
 
 #chat-windows-list .chat-window {
   pointer-events: auto;
+  position: absolute;
+  z-index: 1;
+  bottom: 70px;
+  margin-left: 4px;
   width: 250px;
   height: 300px;
   background: white;

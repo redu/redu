@@ -59,7 +59,7 @@
               $.changeWindow({ id : opts.id, property : "state", value : "opened" });
             }
           }else{
-            $this.limitWindows({ limit : 4});
+            $this.limitWindows({ limit : 5});
 
             $window = opts.windowPartial;
             $window.attr("id", getCSSWindowId(opts.id));
