@@ -7,6 +7,24 @@
       return "window-" + userLiId;
     };
 
+    // Minimiza todas as janelas, exceto a que invocou a função
+    $.fn.minimizeOtherWindows = function(){
+      var $this = $(this);
+      var $chats = $this.parent("#chat-windows-list");
+
+      var $otherWindows = $chats.find(".chat-window-bar.opened").not("#" + $this.attr("id") + " .chat-window-bar");
+      $otherWindows.removeClass("opened").addClass("closed");
+      $otherWindows.prev(".chat-window").hide();
+
+      for (i = 0; i < $otherWindows.length; i++) {
+        var parentId = $otherWindows.parent().attr("id");
+        var userId = parentId.charAt(parentId.length - 1);
+
+        $.changeWindow({ id : userId, property : "state",
+            value : "closed" });
+      }
+    };
+
     $.fn.addWindow = function(opts){
       return this.each(function(){
           var $this = $(this);
@@ -36,6 +54,8 @@
                 $bar.toggleClass("opened");
                 $bar.toggleClass("closed");
 
+                $window.minimizeOtherWindows();
+
                 if ($bar.hasClass("opened")) {
                   $.changeWindow({ id : opts.id, property : "state",
                       value : "opened" });
@@ -60,6 +80,13 @@
 
             // Guarda estado da janela no cookie
             $.storeWindow({ id: opts.id, name : opts.name });
+          }
+
+          // Apenas minimiza as outras se ela for a janela aberta
+          // (no restoreChat() as janelas fechadas também são inseridas e
+          // chamar o minimize deixaria todas minimizadas)
+          if (opts.state == "opened") {
+            $window.minimizeOtherWindows();
           }
       });
     };
