@@ -7,7 +7,8 @@
  */
 
 // Utilizando pjax
-$("a:not([data-remote])").pjax("#content", { timeout: null });
+// Links do chat serão abertos em novas janelas (.chat-link)
+$("a:not([data-remote]):not(.chat-link)").pjax("#content", { timeout: null });
 
 // Constrói um novo objeto Chat
 var buildChat = function(opts){

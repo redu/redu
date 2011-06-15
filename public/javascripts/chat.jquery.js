@@ -11,6 +11,12 @@
       return windowId.charAt(windowId.length - 1);
     };
 
+    // Encapsula as URLs contidas no texto em links HTML
+    $.wrapURL = function(text) {
+      var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+      return text.replace(exp,"<a href='$1' class='chat-link' target='_blank'>$1</a>");
+    };
+
     // Minimiza todas as janelas, exceto a que invocou a função
     $.fn.minimizeOtherWindows = function(){
       var $this = $(this);

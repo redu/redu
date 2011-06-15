@@ -367,4 +367,21 @@ describe('Chat', function () {
             expect($(memberInfos1.id + " chat-window-bar")).toHaveClass(memberInfos1.state);
         });
     });
+
+    describe("wrapping URLs", function(){
+        it("defines $.wrapURL", function(){
+            expect($.wrapURL).toBeDefined();
+        });
+
+        it("wraps URLs on text with URLs", function(){
+            var text = "Try http://redu.com.br";
+            var textWrapped = "Try <a href='http://redu.com.br' class='chat-link' target='_blank'>http://redu.com.br</a>";
+            expect($.wrapURL(text)).toEqual(textWrapped);
+        });
+
+        it("do NOT wrap URLs on text without URLs", function(){
+            var text = "Try redu.com.br";
+            expect($.wrapURL(text)).toEqual(text);
+        });
+    });
 });
