@@ -181,7 +181,7 @@
 #chat-windows-list {
   position: absolute;
   bottom: 0;
-  left: 180px;
+  left: 176px;
   pointer-events:none;
 }
 
@@ -275,9 +275,22 @@
 
 #chat-windows-list .chat-window .conversation > li {
   margin: 5px;
+  margin-bottom: 15px;
 }
+
 #chat-windows-list .chat-window .conversation {
   height: 242px;
+}
+
+#chat-windows-list .chat-window .conversation li .time {
+  float: right;
+  margin-right: 5px;
+  font-size: .7em;
+  color: white;
+}
+
+#chat-windows-list .chat-window .conversation li:hover .time {
+  color: #6d6e6f;
 }
 
 #chat-windows-list .chat-window .conversation li .avatar {
@@ -286,6 +299,9 @@
   float: left;
 }
 
+#chat-windows-list .chat-window .conversation li .messages {
+  margin-left: 40px;
+}
 #chat-windows-list .chat-window .conversation li .messages li {
   font-size: .87em;
   margin-bottom: 4px;
