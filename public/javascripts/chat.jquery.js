@@ -6,6 +6,10 @@
     var getCSSWindowId = function(userLiId) {
       return "window-" + userLiId;
     };
+    var getUserId = function(jQueryElement){
+      var windowId = jQueryElement.attr("id");
+      return windowId.charAt(windowId.length - 1);
+    };
 
     // Minimiza todas as janelas, exceto a que invocou a função
     $.fn.minimizeOtherWindows = function(){
@@ -17,11 +21,24 @@
       $otherWindows.prev(".chat-window").hide();
 
       for (i = 0; i < $otherWindows.length; i++) {
-        var parentId = $otherWindows.parent().attr("id");
-        var userId = parentId.charAt(parentId.length - 1);
+        var userId = getUserId($otherWindows.parent());
 
         $.changeWindow({ id : userId, property : "state",
             value : "closed" });
+      }
+    };
+
+    // Remove a última janela, caso atinja o limite máximo de janelas
+    $.fn.limitWindows = function(opts){
+      $this = $(this);
+      $chats = $this.find("#chat-windows-list");
+
+      if ($chats.children().length >= opts.limit) {
+        var $lastWindow = $chats.children(":last");
+        $lastWindow.remove();
+
+        var userId = getUserId($lastWindow);
+        $.removeWindow({ id: userId });
       }
     };
 
@@ -36,6 +53,8 @@
               $.changeWindow({ id : opts.id, property : "state", value : "opened" });
             }
           }else{
+            $this.limitWindows({ limit : 4});
+
             $window = opts.windowPartial;
             $window.attr("id", getCSSWindowId(opts.id));
             $window.find(".name").text(opts.name);
@@ -76,7 +95,7 @@
                 e.preventDefault();
             });
 
-            $this.find("#chat-windows-list").append($window);
+            $this.find("#chat-windows-list").prepend($window);
 
             // Guarda estado da janela no cookie
             $.storeWindow({ id: opts.id, name : opts.name });
