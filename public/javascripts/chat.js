@@ -92,9 +92,8 @@ var buildChat = function(opts){
               // Somente o user atual tem info.contacts
               if(channels){
                 for(var i = 0; i < channels.length; i++) {
-                  // pusher.subscribe(channels[i].pre_channel);
-                  // that.subscribePrivate(channels[i].pre_channel);
                   that.subscribePresence(channels[i].pre_channel);
+                  that.subscribePrivate(channels[i].pri_channel);
                 }
               } else {
                 // Para o restante dos membros do canal

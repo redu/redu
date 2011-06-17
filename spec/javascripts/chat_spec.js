@@ -1,9 +1,52 @@
 describe('Chat', function () {
-    afterEach(function () {
-        // Limpando elementos adicionados ao DOM
-        $("#chat-list").remove();
-        $("#chat-bar").remove();
-        $("#chat-windows-list").remove();
+    beforeEach(function () {
+      // Alias
+      this.Ch = Pusher.Channel.prototype;
+      this.opts = { key : 'XXX'
+        , channel : 'my-channel'
+        , layout : ""
+        , windowPartial : ""
+        , presencePartial : ""};
+      this.chat = buildChat(this.opts);
+
+      // Mock do bind subscription_succeeded retornando lista de amigos
+      this.bindMock = function(e, func){
+        var callbacks = {
+          "pusher:subscription_succeeded" : function(f){
+            var members = {
+              each: function(callback) {
+                callback({
+                    id: 1,
+                    info: {
+                      contacts : [
+                          {pre_channel : "ch1", pri_channel : "private-1-2"}
+                        , {pre_channel : "ch2", pri_channel : "private-1-3"}]
+                    },
+                });
+                callback({
+                    id: 1,
+                    info: {},
+                });
+              }
+            }
+
+            f(members);
+          },
+          "pusher:member_added" : function(){},
+          "pusher:member_removed" : function(){},
+          "pusher:connection_established" : function(){},
+          "pusher:connection_disconnected" : function(){},
+          "pusher:error" : function(){},
+        }
+
+        callbacks[e](func);
+      };
+
+      spyOn(Pusher.prototype, "subscribe").andReturn(new Pusher.Channel());
+      spyOn(this.Ch, "bind").andCallFake(this.bindMock);
+
+      this.chat.init();
+      this.chat.subscribeMyChannel();
     });
 
 
@@ -12,55 +55,6 @@ describe('Chat', function () {
     });
 
     describe('initialization', function () {
-        var chat, opts;
-
-        beforeEach(function () {
-            // Alias
-            this.Ch = Pusher.Channel.prototype;
-            this.opts = { key : 'XXX'
-              , channel : 'my-channel'
-              , layout : ""
-              , windowPartial : ""
-              , presencePartial : ""};
-            this.chat = buildChat(this.opts);
-
-            // Mock do bind subscription_succeeded retornando lista de amigos
-            this.bindMock = function(e, func){
-              var callbacks = {
-                "pusher:subscription_succeeded" : function(f){
-                  var members = {
-                    each: function(callback) {
-                      callback({
-                          id: 1,
-                          info: {
-                            contacts : [{pre_channel : "ch1"}, {pre_channel : "ch2"}]
-                          },
-                      });
-                      callback({
-                          id: 1,
-                          info: {},
-                      });
-                    }
-                  }
-
-                  f(members);
-                },
-                "pusher:member_added" : function(){},
-                "pusher:member_removed" : function(){},
-                "pusher:connection_established" : function(){},
-                "pusher:connection_disconnected" : function(){},
-                "pusher:error" : function(){},
-              }
-
-              callbacks[e](func);
-            };
-
-            spyOn(Pusher.prototype, "subscribe").andReturn(new Pusher.Channel());
-            spyOn(this.Ch, "bind").andCallFake(this.bindMock);
-
-            this.chat.init();
-            this.chat.subscribeMyChannel();
-        });
 
         it('defines init', function () {
             expect(this.chat).toBeDefined();
@@ -77,6 +71,11 @@ describe('Chat', function () {
         it('subscribes to friends presence channels', function() {
           expect(Pusher.prototype.subscribe).toHaveBeenCalledWith("ch1");
           expect(Pusher.prototype.subscribe).toHaveBeenCalledWith("ch2");
+        });
+
+        it('subscribes to friends private channels', function(){
+          expect(Pusher.prototype.subscribe).toHaveBeenCalledWith("private-1-2")
+          expect(Pusher.prototype.subscribe).toHaveBeenCalledWith("private-1-3")
         });
     });
 
