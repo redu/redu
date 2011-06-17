@@ -319,55 +319,6 @@ describe('Chat', function () {
         });
     });
 
-    describe("restoring state", function(){
-        var infos;
-        var memberInfos;
-        var memberInfos1;
-        beforeEach(function() {
-            $.cookie("chat_windows", null);
-            $.initChatCookies();
-
-            infos = {
-              listOpened : true,
-              windows : []
-            };
-
-            // First window
-            memberInfos = {
-              "id" : "chat-user-50",
-              "name" : "Username Lastname",
-              "status" : "online",
-              "state" : "opened"
-            };
-            $.storeWindow({ id : memberInfos.id, name : memberInfos.name });
-
-            // Second window
-            memberInfos1 = {
-              "id" : "chat-user-51",
-              "name" : "Username1 Lastname1",
-              "status" : "online",
-              "state" : "closed"
-            };
-            $.storeWindow({ id : memberInfos1.id, name : memberInfos1.name });
-        });
-
-        afterEach(function () {
-            $.cookie("chat_windows", null);
-        });
-
-        it("after reload", function(){
-            expect($("chat-user-50")).toExist();
-            expect($("chat-user-51")).toExist();
-
-            expect($(memberInfos.id + " chat-window .name")).toHaveText(memberInfos.name);
-            expect($(memberInfos1.id + " chat-window .name")).toHaveText(memberInfos1.name);
-            expect($(memberInfos.id + " chat-window-bar ." + memberInfos["status"])).toHaveText(memberInfos["status"]);
-            expect($(memberInfos1.id + " chat-window-bar ." + memberInfos1["status"])).toHaveText(memberInfos1["status"]);
-            expect($(memberInfos.id + " chat-window-bar")).toHaveClass(memberInfos.state);
-            expect($(memberInfos1.id + " chat-window-bar")).toHaveClass(memberInfos1.state);
-        });
-    });
-
     describe("wrapping URLs", function(){
         it("defines $.wrapURL", function(){
             expect($.wrapURL).toBeDefined();
