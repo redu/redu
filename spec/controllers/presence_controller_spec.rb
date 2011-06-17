@@ -82,8 +82,9 @@ describe PresenceController do
           response.should be_success
         end
 
-        it "should retrive a ok answer" do
-          response.body.should == "ok"
+        it "should retrive an auth key" do
+          json_response = JSON.parse(response.body)
+          json_response.should have_key("auth")
         end
       end
 
