@@ -87,14 +87,14 @@ var buildChat = function(opts){
       myPresenceCh.bind("pusher:subscription_succeeded", function(members){
           members.each(function(member) {
               // var channels = member.info.contacts;
-              var channels = member.info.friends;
+              var channels = member.info.contacts;
               // { pri_channel : "private-13-25", pre_channel : "presence-user-1" }
-              // Somente o user atual tem info.friends
+              // Somente o user atual tem info.contacts
               if(channels){
                 for(var i = 0; i < channels.length; i++) {
                   // pusher.subscribe(channels[i].pre_channel);
                   // that.subscribePrivate(channels[i].pre_channel);
-                  that.subscribePresence(channels[i].channel);
+                  that.subscribePresence(channels[i].pre_channel);
                 }
               } else {
                 // Para o restante dos membros do canal

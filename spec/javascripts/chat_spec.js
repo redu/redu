@@ -33,7 +33,7 @@ describe('Chat', function () {
                       callback({
                           id: 1,
                           info: {
-                            friends : [{channel : "ch1"}, {channel : "ch2"}]
+                            contacts : [{pre_channel : "ch1"}, {pre_channel : "ch2"}]
                           },
                       });
                       callback({
