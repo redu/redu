@@ -47,9 +47,9 @@ var buildChat = function(opts){
       $layout.find("#chat-contacts").toggle();
       $layout.find("#chat-contacts-bar").toggleClass("opened").toggleClass("closed");
       if ($layout.find("#chat-contacts-bar").hasClass("opened")) {
-        $.changeChatList({ opened : true });
+        $.updateContactsState({ opened : true });
       } else {
-        $.changeChatList({ opened : false });
+        $.updateContactsState({ opened : false });
       }
   });
 
@@ -71,8 +71,8 @@ var buildChat = function(opts){
       $("body").append($layout);
       $layout.find("#chat-contacts").scrollable();
 
-      $.initChatCookies();
-      $layout.restoreChat({
+      $.initStates();
+      $layout.restoreStates({
           presencePartial : $presence.clone(),
           windowPartial : $window.clone()
       });
@@ -86,10 +86,14 @@ var buildChat = function(opts){
       // Escuta evento de confirmação de inscrição no canal
       myPresenceCh.bind("pusher:subscription_succeeded", function(members){
           members.each(function(member) {
+              // var channels = member.info.contacts;
               var channels = member.info.friends;
+              // { pri_channel : "private-13-25", pre_channel : "presence-user-1" }
               // Somente o user atual tem info.friends
               if(channels){
                 for(var i = 0; i < channels.length; i++) {
+                  // pusher.subscribe(channels[i].pre_channel);
+                  // that.subscribePrivate(channels[i].pre_channel);
                   pusher.subscribe(channels[i].channel);
                 }
               } else {
@@ -114,26 +118,31 @@ var buildChat = function(opts){
       });
     },
     // Increve no canal dado (Caso de já estar no chat e aceitar convite de contato)
-    subscribeNewContact : function(channel){
+    subscribePresence : function(channel){
       pusher.subscribe(channel);
     },
     // Desinscreve do canal dado
     unsubscribeContact : function(channel){
       pusher.unsubscribe(channel);
     },
+    // Se inscreve no canal privado de um usuário
+    subscribePrivate: function(channel){
+      // bind p/ nova mensagem
+      //
+    },
     // Adiciona a lista de contatos
     uiAddContact : function(member){
       $layout.addContact({member : member
           , presencePartial : $presence.clone()
           , windowPartial : $window.clone() });
-      $.changeWindow({ id : member.id, property : "status",
+      $.updateWindowState({ id : member.id, property : "status",
           value : "online" });
       that.uiUpdateCounter();
     },
     // Remove da lista de contatos
     uiRemoveContact : function(userId){
       $layout.removeContact({ id : userId });
-      $.changeWindow({ id : userId, property : "status",
+      $.updateWindowState({ id : userId, property : "status",
           value : "offline" });
     },
     // Atualiza counter de usuários online

@@ -29,7 +29,7 @@
       for (i = 0; i < $otherWindows.length; i++) {
         var userId = getUserId($otherWindows.parent());
 
-        $.changeWindow({ id : userId, property : "state",
+        $.updateWindowState({ id : userId, property : "state",
             value : "closed" });
       }
     };
@@ -44,7 +44,7 @@
         $lastWindow.remove();
 
         var userId = getUserId($lastWindow);
-        $.removeWindow({ id: userId });
+        $.clearState({ id: userId });
       }
     };
 
@@ -56,7 +56,7 @@
           if($window.length > 0){
             if($window.find(".chat-window-bar").hasClass("closed")){
               $window.find(".chat-window-bar .name").click();
-              $.changeWindow({ id : opts.id, property : "state", value : "opened" });
+              $.updateWindowState({ id : opts.id, property : "state", value : "opened" });
             }
           }else{
             $this.limitWindows({ limit : 5});
@@ -82,10 +82,10 @@
                 $window.minimizeOtherWindows();
 
                 if ($bar.hasClass("opened")) {
-                  $.changeWindow({ id : opts.id, property : "state",
+                  $.updateWindowState({ id : opts.id, property : "state",
                       value : "opened" });
                 } else {
-                  $.changeWindow({ id : opts.id, property : "state",
+                  $.updateWindowState({ id : opts.id, property : "state",
                       value : "closed" });
                 }
 
@@ -96,7 +96,7 @@
             $window.find(".close").bind("click", function(e){
                 $window.remove();
                 // Remove estado da janela do cookie
-                $.removeWindow({ id: opts.id });
+                $.clearState({ id: opts.id });
 
                 e.preventDefault();
             });
@@ -104,11 +104,11 @@
             $this.find("#chat-windows-list").prepend($window);
 
             // Guarda estado da janela no cookie
-            $.storeWindow({ id: opts.id, name : opts.name });
+            $.storeState({ id: opts.id, name : opts.name });
           }
 
           // Apenas minimiza as outras se ela for a janela aberta
-          // (no restoreChat() as janelas fechadas também são inseridas e
+          // (no restoreStates() as janelas fechadas também são inseridas e
           // chamar o minimize deixaria todas minimizadas)
           if (opts.state == "opened") {
             $window.minimizeOtherWindows();
@@ -195,7 +195,7 @@
     };
 
     // Restauras janelas registradas no cookie
-    $.fn.restoreChat = function(opts) {
+    $.fn.restoreStates = function(opts) {
       var $this = $(this);
       var chatInfos = $.evalJSON($.cookie("chat_windows"));
       var cookie = chatInfos.windows;
@@ -220,7 +220,7 @@
     };
 
     // Remove janela do cookie
-    $.removeWindow = function(opts) {
+    $.clearState = function(opts) {
       var chatInfos = $.evalJSON($.cookie("chat_windows"));
       var cookie = chatInfos.windows;
       var itemToRemove;
@@ -237,7 +237,7 @@
     };
 
     // Guarda o estado da janela no cookie
-    $.storeWindow = function(opts) {
+    $.storeState = function(opts) {
       var memberInfos = {
         "id" : opts.id,
         "name" : opts.name,
@@ -260,7 +260,7 @@
     };
 
     // Modificar o state ou status da janela no cookie
-    $.changeWindow = function(opts) {
+    $.updateWindowState = function(opts) {
       var chatInfos = $.evalJSON($.cookie("chat_windows"));
       var cookie = chatInfos.windows;
       for(i in cookie) {
@@ -270,7 +270,7 @@
       $.cookie("chat_windows", $.toJSON(chatInfos));
     };
 
-    $.initChatCookies = function() {
+    $.initStates = function() {
       var cookie = $.evalJSON($.cookie("chat_windows"));
 
       if (!cookie) {
@@ -280,7 +280,7 @@
       $.cookie("chat_windows", windowsEncoded);
     };
 
-    $.changeChatList = function(opts) {
+    $.updateContactsState = function(opts) {
       var chatInfos = $.evalJSON($.cookie("chat_windows"));
       chatInfos.listOpened = opts.opened;
       $.cookie("chat_windows", $.toJSON(chatInfos));
