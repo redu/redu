@@ -94,7 +94,7 @@ var buildChat = function(opts){
                 for(var i = 0; i < channels.length; i++) {
                   // pusher.subscribe(channels[i].pre_channel);
                   // that.subscribePrivate(channels[i].pre_channel);
-                  pusher.subscribe(channels[i].channel);
+                  that.subscribePresence(channels[i].channel);
                 }
               } else {
                 // Para o restante dos membros do canal
@@ -127,8 +127,7 @@ var buildChat = function(opts){
     },
     // Se inscreve no canal privado de um usuário
     subscribePrivate: function(channel){
-      // bind p/ nova mensagem
-      //
+      pusher.subscribe(channel);
     },
     // Adiciona a lista de contatos
     uiAddContact : function(member){

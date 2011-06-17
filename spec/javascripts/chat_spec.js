@@ -74,38 +74,9 @@ describe('Chat', function () {
             expect(Pusher.prototype.subscribe).toHaveBeenCalledWith("my-channel");
         });
 
-        it('subscribes to friends channels', function() {
+        it('subscribes to friends presence channels', function() {
           expect(Pusher.prototype.subscribe).toHaveBeenCalledWith("ch1");
           expect(Pusher.prototype.subscribe).toHaveBeenCalledWith("ch2");
-        });
-    });
-
-    describe('when subscribing', function () {
-        var chat;
-        beforeEach(function () {
-            opts = { key : 'XXX', channel : 'my-channel' };
-            chat = buildChat(opts);
-            chat.init();
-        });
-
-        it('defines subscribeMyChannel', function() {
-            expect(chat.subscribeMyChannel).toBeDefined();
-        });
-
-        it('defines subscribePresence', function() {
-            expect(chat.subscribePresence).toBeDefined();
-        });
-
-        xit('subscribes the chat owner to his own pusher channel', function() {
-            spyOn(Pusher, "Channel");
-            chat.subscribeMyChannel();
-            expect(Pusher.Channel).toHaveBeenCalled();
-        });
-
-        xit('calls subscribePresence to every friend', function(){
-            var spy = spyOn(Pusher, "Channel");
-            chat.subscribeMyChannel();
-            expect(spy.callCount).toEqual(5);
         });
     });
 
