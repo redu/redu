@@ -52,7 +52,7 @@ class PresenceController < BaseController
       json_response = Pusher[params[:channel_name]].
         authenticate(params[:socket_id])
 
-      render :text => "ok"
+      render :json => json_response
     else
 
       render :text => "Não autorizado", :status => '403'
