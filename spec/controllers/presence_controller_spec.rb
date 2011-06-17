@@ -74,16 +74,16 @@ describe PresenceController do
       context "private channel" do
         before do
           post :auth, :locale => "pt-BR",
-            :channel_name => "private-#{@current_user.id}-#{@friend.id}",
+            :channel_name => "private-#{@current_user.id}-#{@friend1.id}",
             :socket_id => "123.13865", :user_id => @current_user.id
         end
 
         it "should be successful" do
-          responde.should be_success
+          response.should be_success
         end
 
-        xit "should retrive a ok answer" do
-          responde.body.should == "ok"
+        it "should retrive a ok answer" do
+          response.body.should == "ok"
         end
       end
 

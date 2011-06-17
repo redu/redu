@@ -9,6 +9,8 @@ class PresenceController < BaseController
   def auth
     if params[:channel_name].include? "presence"
       presence
+    elsif params[:channel_name].include? "private"
+      private_chat
     else
       render :text => "Não autorizado.", :status => '403'
     end
@@ -45,7 +47,15 @@ class PresenceController < BaseController
     end
   end
 
-  def private
+  def private_chat
+    if params[:log].nil?
+      json_response = Pusher[params[:channel_name]].
+        authenticate(params[:socket_id])
 
+      render :text => "ok"
+    else
+
+      render :text => "Não autorizado", :status => '403'
+    end
   end
 end
