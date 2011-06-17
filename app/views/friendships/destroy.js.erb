@@ -9,7 +9,7 @@ $("#profile .actions").append(addFriend);
 
 // Remove contato da lista de contatos do Chat
 if (chat) {
-  chat.unsubscribeContact("<%= @friend.presence_channel %>");
+  chat.unsubscribePresence("<%= @friend.presence_channel %>");
   chat.unsubscribePrivate("<%= current_user.private_channel_with(@friend) %>");
   chat.uiRemoveContact("<%= @friend.id %>");
 }

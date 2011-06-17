@@ -121,7 +121,7 @@ var buildChat = function(opts){
       pusher.subscribe(channel);
     },
     // Desinscreve do canal dado
-    unsubscribeContact : function(channel){
+    unsubscribePresence : function(channel){
       pusher.unsubscribe(channel);
     },
     // Se inscreve no canal privado de um usuário
