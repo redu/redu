@@ -69,13 +69,20 @@ describe Presence do
     end
 
     it "should retrieve a hash of channels of friends, teachers and tutors" do
+      channels = [ {:pre_channel => "presence-user-#{@friend1.id}",
+                     :pri_channel => "private-#{@current_user.id}-#{@friend1.id}"},
+        {:pre_channel => "presence-user-#{@friend2.id}",
+         :pri_channel => "private-#{@current_user.id}-#{@friend2.id}"},
+        {:pre_channel => "presence-user-#{@friend3.id}",
+         :pri_channel => "private-#{@current_user.id}-#{@friend3.id}"},
+        {:pre_channel => "presence-user-#{@tutor2.id}",
+         :pri_channel => "private-#{@current_user.id}-#{@tutor2.id}"},
+        {:pre_channel => "presence-user-#{@tutor1_and_2.id}",
+         :pri_channel => "private-#{@current_user.id}-#{@tutor1_and_2.id}"},
+        {:pre_channel => "presence-user-#{@teacher2_and_3.id}",
+         :pri_channel => "private-#{@current_user.id}-#{@teacher2_and_3.id}"}]
       Presence.list_of_channels(@current_user).to_set.
-        should == [ {:channel => "presence-user-#{@friend1.id}" },
-          {:channel => "presence-user-#{@friend2.id}" },
-          {:channel => "presence-user-#{@friend3.id}" },
-          {:channel => "presence-user-#{@tutor2.id}" },
-          {:channel => "presence-user-#{@tutor1_and_2.id}" },
-          {:channel => "presence-user-#{@teacher2_and_3.id}" }].to_set
+        should == channels.to_set
     end
   end
 
@@ -96,15 +103,29 @@ describe Presence do
 
     it "should retrieve a hash of channels of friends, teachers, tutors and" \
       " all users that belongs to a course that he is teacher" do
-      friends = [ { :channel => "presence-user-#{@friend1.id}" },
-        { :channel => "presence-user-#{@friend2.id}" },
-        { :channel => "presence-user-#{@friend3.id}" }]
+      friends = [
+        { :pre_channel => "presence-user-#{@friend1.id}",
+          :pri_channel => "private-#{@current_user.id}-#{@friend1.id}"},
+        { :pre_channel => "presence-user-#{@friend2.id}",
+          :pri_channel => "private-#{@current_user.id}-#{@friend2.id}"},
+        { :pre_channel => "presence-user-#{@friend3.id}",
+          :pri_channel => "private-#{@current_user.id}-#{@friend3.id}"}]
+
         course_users = @course.users.collect do |u|
-          { :channel => "presence-user-#{u.id}" }
+          if @current_user.id != u.id
+            { :pre_channel => "presence-user-#{u.id}",
+              :pri_channel => "private-#{@current_user.id}-#{u.id}"}
+          end
         end
-        teachers_tutors_course2 = [ { :channel => "presence-user-#{@tutor2.id}" },
-          { :channel => "presence-user-#{@tutor1_and_2.id}" },
-          { :channel => "presence-user-#{@teacher2_and_3.id}" }]
+        course_users.delete(nil)
+
+        teachers_tutors_course2 = [
+          { :pre_channel => "presence-user-#{@tutor2.id}",
+            :pri_channel => "private-#{@current_user.id}-#{@tutor2.id}"},
+          { :pre_channel => "presence-user-#{@tutor1_and_2.id}",
+            :pri_channel => "private-#{@current_user.id}-#{@tutor1_and_2.id}"},
+          { :pre_channel => "presence-user-#{@teacher2_and_3.id}",
+            :pri_channel => "private-#{@current_user.id}-#{@teacher2_and_3.id}"}]
           Presence.list_of_channels(@current_user).to_set.
             should == (friends + course_users + teachers_tutors_course2).to_set
       end
@@ -127,15 +148,28 @@ describe Presence do
 
     it "should retrieve a hash of channels of friends, teachers, tutors and" \
       " all users that belongs to a course that he is tutor" do
-      friends = [ { :channel => "presence-user-#{@friend1.id}" },
-        { :channel => "presence-user-#{@friend2.id}" },
-        { :channel => "presence-user-#{@friend3.id}" }]
+      friends = [{ :pre_channel => "presence-user-#{@friend1.id}",
+        :pri_channel => "private-#{@current_user.id}-#{@friend1.id}"},
+        { :pre_channel => "presence-user-#{@friend2.id}",
+          :pri_channel => "private-#{@current_user.id}-#{@friend2.id}"},
+        { :pre_channel => "presence-user-#{@friend3.id}",
+          :pri_channel => "private-#{@current_user.id}-#{@friend3.id}"}]
+
         course_users = @course.users.collect do |u|
-          { :channel => "presence-user-#{u.id}" }
+          if @current_user.id != u.id
+            { :pre_channel => "presence-user-#{u.id}",
+              :pri_channel => "private-#{@current_user.id}-#{u.id}" }
+          end
         end
-        teachers_tutors_course2 = [ { :channel => "presence-user-#{@tutor2.id}" },
-          { :channel => "presence-user-#{@tutor1_and_2.id}" },
-          { :channel => "presence-user-#{@teacher2_and_3.id}" }]
+        course_users.delete(nil)
+
+        teachers_tutors_course2 = [
+          { :pre_channel => "presence-user-#{@tutor2.id}",
+            :pri_channel => "private-#{@current_user.id}-#{@tutor2.id}"},
+          { :pre_channel => "presence-user-#{@tutor1_and_2.id}",
+            :pri_channel => "private-#{@current_user.id}-#{@tutor1_and_2.id}"},
+          { :pre_channel => "presence-user-#{@teacher2_and_3.id}",
+            :pri_channel => "private-#{@current_user.id}-#{@teacher2_and_3.id}"}]
           Presence.list_of_channels(@current_user).to_set.
             should == (friends + course_users + teachers_tutors_course2).to_set
       end
@@ -159,17 +193,35 @@ describe Presence do
 
     it "should retrieve a hash of channels of friends, teachers, tutors and" \
       " all users that belongs to a course that he is tutor" do
-      friends = [ { :channel => "presence-user-#{@friend1.id}" },
-        { :channel => "presence-user-#{@friend2.id}" },
-        { :channel => "presence-user-#{@friend3.id}" }]
+      friends = [
+        { :pre_channel => "presence-user-#{@friend1.id}",
+          :pri_channel => "private-#{@current_user.id}-#{@friend1.id}"},
+        { :pre_channel => "presence-user-#{@friend2.id}",
+          :pri_channel => "private-#{@current_user.id}-#{@friend2.id}"},
+        { :pre_channel => "presence-user-#{@friend3.id}",
+          :pri_channel => "private-#{@current_user.id}-#{@friend3.id}"}]
+
         course_users = @course.users.collect do |u|
-          { :channel => "presence-user-#{u.id}" }
+          if @current_user.id != u.id
+            { :pre_channel => "presence-user-#{u.id}",
+              :pri_channel => "private-#{@current_user.id}-#{u.id}"}
+          end
         end
+        course_users.delete(nil)
         course2_users = @course2.users.collect do |u|
-          { :channel => "presence-user-#{u.id}" }
+          if @current_user.id != u.id
+            { :pre_channel => "presence-user-#{u.id}",
+              :pri_channel => "private-#{@current_user.id}-#{u.id}"}
+          end
         end
-        teachers_tutors_course3 = [ { :channel => "presence-user-#{@tutor3.id}" },
-          { :channel => "presence-user-#{@teacher3.id}" }]
+        course2_users.delete(nil)
+
+        teachers_tutors_course3 = [
+          { :pre_channel => "presence-user-#{@tutor3.id}",
+            :pri_channel => "private-#{@current_user.id}-#{@tutor3.id}"},
+          { :pre_channel => "presence-user-#{@teacher3.id}",
+            :pri_channel => "private-#{@current_user.id}-#{@teacher3.id}"}]
+
         Presence.list_of_channels(@current_user).to_set.should ==
           (friends + course_users + course2_users + teachers_tutors_course3).to_set
       end

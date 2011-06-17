@@ -29,7 +29,7 @@
     <%= async_include_css :chat %>
     <%= async_include_javascripts :chat do %>
       chat = buildChat({ key : "<%= Redu::Application.config.pusher[:key] %>"
-      , channel : "<%= current_user.get_channel %>"
+      , channel : "<%= current_user.presence_channel %>"
       , endPoint : "<%= presence_auth_path %>"
       , layout : "<%= escape_javascript(render :partial => "presence/chat_list") %>"
       , windowPartial : "<%= escape_javascript(render :partial => "presence/chat_window") %>"

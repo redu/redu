@@ -12,8 +12,12 @@ class Presence
       end
     # All friends
     users += user.friends
-    users.flatten.uniq.collect do |friend|
-      { :channel => "presence-user-#{friend.id}" }
+    users.flatten!
+    users.delete(user)
+
+    users.uniq.collect do |friend|
+      { :pre_channel => friend.presence_channel,
+        :pri_channel => user.private_channel_with(friend) }
     end
   end
 

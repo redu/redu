@@ -289,8 +289,14 @@ describe User do
       User.with_keyword("guilherme").to_set.should == [users[0], users[1]].to_set
     end
 
-    it "should retrieve channel name" do
-      subject.get_channel.should == "presence-user-#{subject.id}"
+    it "should retrieve a presence channel name" do
+      subject.presence_channel.should == "presence-user-#{subject.id}"
+    end
+
+    it "should retrive a private channel name with a contact" do
+      @contact = Factory(:user)
+      subject.private_channel_with(@contact).should ==
+        "private-#{@contact.id}-#{subject.id}"
     end
   end
 

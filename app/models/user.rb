@@ -742,8 +742,16 @@ class User < ActiveRecord::Base
     self.settings = UserSetting.create(:view_mural => Privacy[:friends])
   end
 
-  def get_channel
+  def presence_channel
     "presence-user-#{self.id}"
+  end
+
+  def private_channel_with(user)
+    if self.id < user.id
+      "private-#{self.id}-#{user.id}"
+    else
+      "private-#{user.id}-#{self.id}"
+    end
   end
 
   protected
