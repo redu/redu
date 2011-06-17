@@ -5,6 +5,7 @@
 <% if current_user.friends? @friend %>
   if (chat) {
     chat.subscribePresence("<%= @friend.presence_channel %>");
+    chat.subscribePrivate("<%= current_user.private_channel_with(@friend) %>");
   }
 <% else %>
   var link = "<%= escape_javascript( link_to 'Aguardando aceitação', nil, :class => 'waiting' ) %>"

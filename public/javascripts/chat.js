@@ -128,6 +128,10 @@ var buildChat = function(opts){
     subscribePrivate: function(channel){
       pusher.subscribe(channel);
     },
+    // Desinscreve no canal privado
+    unsubscribePrivate : function(channel){
+      pusher.unsubscribe(channel);
+    },
     // Adiciona a lista de contatos
     uiAddContact : function(member){
       $layout.addContact({member : member
