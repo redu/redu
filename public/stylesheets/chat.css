@@ -15,13 +15,14 @@
 #chat .chat-contacts-wrapper {
   float: left;
   position: relative;
+  left: 12px;
   pointer-events:none;
 }
 
 #chat-contacts {
   pointer-events:auto;
-  width: 160px;
-  height: 390px;
+  width: 158px;
+  height: 388px;
   background: white;
   border: 1px solid #61be80;
 
@@ -141,7 +142,7 @@
   width: 162px;
   height: 61px;
   position: absolute;
-  left: 0;
+  left: 4px;
   bottom: 0;
 
   background: url("../images/new/icons-chat.png") -72px 0px;
@@ -194,6 +195,7 @@
 
 #chat-windows-list .chat-window-bar {
   pointer-events: auto;
+  margin-right: 4px;
   margin-top: 302px;
   width: 156px;
   height: 58px;
@@ -245,7 +247,7 @@
 }
 
 #chat-windows-list .closed {
-  background-position: -290px -56px;
+  background-position: -290px -55px;
 }
 
 #chat-windows-list .closed .name {
@@ -257,8 +259,8 @@
   z-index: 1;
   bottom: 70px;
   margin-left: 4px;
-  width: 250px;
-  height: 300px;
+  width: 278px;
+  height: 318px;
   background: white;
   border: 1px solid #f37b38;
 
@@ -279,16 +281,17 @@
 }
 
 #chat-windows-list .chat-window .conversation > li {
-  margin: 5px;
-  margin-bottom: 15px;
+  margin: 10px;
+  margin-top: 0;
 }
 
 #chat-windows-list .chat-window .conversation {
-  height: 242px;
+  height: 256px;
 }
 
 #chat-windows-list .chat-window .conversation li .time {
-  float: right;
+  display: block;
+  text-align: right;
   margin-right: 5px;
   font-size: .7em;
   color: white;
@@ -309,13 +312,13 @@
 }
 #chat-windows-list .chat-window .conversation li .messages li {
   font-size: .87em;
-  margin-bottom: 4px;
+  margin-bottom: 3px;
 }
 
 #chat-windows-list .chat-window .user-input {
   padding-left: 7px;
-  padding-top: 3px;
-  padding-bottom: 3px;
+  padding-top: 5px;
+  padding-bottom: 5px;
   background: #f1f0f0;
 
   border-top: 1px solid #f37b38;
@@ -324,7 +327,7 @@
   -webkit-border-radius:0px 0px 5px 5px;
   border-radius:0px 0px 5px 5px;
 
-  width: 243px;
+  width: 271px;
 }
 
 #chat-windows-list .chat-window .user-input input {
