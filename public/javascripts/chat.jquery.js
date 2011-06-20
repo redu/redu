@@ -104,18 +104,22 @@
 
             // Receber confirmação do envio da mensagem
             var $form = $window.find("form.user-input");
-            var $conversation = $window.find(".conversation");
             $form.bind("ajax:beforeSend", function(){
                 var $input = $form.find(".message");
                 var text = $input.val();
                 $input.val("");
 
-                $conversation.addMessage({ messagePartial : opts.messagePartial,
-                    text : text});
+                $window.addMessage({
+                    messagePartial : opts.messagePartial.clone(),
+                    text : text,
+                    id : opts.owner_id,
+                    owner_id : opts.owner_id,
+                });
 
             });
 
             $form.bind("ajax:success", function(e, data, s){
+                var $conversation = $window.find(".conversation");
                 var $lastMessage = $conversation.children(':last');
                 $lastMessage.find(".time").html(data.time);
                 $lastMessage.find(".messages > li:last").toggleClass("pending");
@@ -136,32 +140,37 @@
       });
     };
 
-    // Adiciona uma mensagem enviada/recebida à lista de mensagens
+    // Adiciona uma mensagem enviada/recebida à janela
     $.fn.addMessage = function(opts){
       return this.each(function(){
           var $this = $(this);
+          var $conversation = $this.find(".conversation");
+          var $lastBatch = $conversation.find("> :last");
           var $message = opts.messagePartial.clone();
+          var sameUser = ($lastBatch.data("user-id") == opts.id);
+          var empty = ($lastBatch.length == 0)
 
-          // Janela vazia ou última mensagem é do contato
-          if ($this.children().length == 0
-            || !$this.children(":last").hasClass("me")) {
-            $message.find(".messages > li").text(opts.text).toggleClass("pending");
+          if(!empty && sameUser){ // Nova mensagem é do mesmo dono que a anterior
+            $lastBatch.data("user-id", opts.id);
+            $lastBatch.find(".messages").append($("<li/>").text(opts.text));
+          } else { // Primeira msg ou de um dono diferente que a anterior
+            $message.data("user-id", opts.id);
+            $message.find(".messages > li").text(opts.text);
 
-            // Se for uma mensagem de outro contato, troca o thumbnail e o alt
-            // (mensagem recebida)
-            if (opts.thumbnail) {
+            if (opts.id != opts.owner_id) {
               var $thumbnail = $message.find(".avatar");
               $thumbnail.attr("src", opts.thumbnail);
               $thumbnail.attr("alt", opts.name);
               $message.find(".time").html(opts.time);
               $message.removeClass("me").addClass("other");
             }
-            $this.append($message);
-          } else {
-            // Última mensagem é do usuário
-            var $lastMessage = $this.children(":last");
-            var $lineMessage = $("<li/>").text(opts.text).toggleClass("pending");
-            $lastMessage.find(".messages").append($lineMessage);
+
+            $conversation.append($message);
+          }
+
+          // Deixa ultima mensagem enviada pelo dono do chat como pendente
+          if(opts.owner_id == opts.id){
+            $message.addClass("pending")
           }
       });
     };
@@ -196,6 +205,7 @@
               $this.addWindow({ windowPartial : opts.windowPartial.clone()
                   , messagePartial : opts.messagePartial.clone()
                   , id : opts.member.id
+                  , owner_id : opts.owner_id
                   , name : opts.member.info.name
                   , "status" : "online"
                   , state : "opened" });
@@ -256,6 +266,7 @@
         $this.addWindow({ windowPartial : opts.windowPartial.clone(),
             messagePartial : opts.messagePartial.clone(),
             id : win.id,
+            owner_id : opts.owner_id,
             name : win.name,
             "status" : win["status"],
             state : win.state });

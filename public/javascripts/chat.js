@@ -79,7 +79,8 @@ var buildChat = function(opts){
       $.initStates();
       $layout.restoreStates({
           windowPartial : $window.clone(),
-          messagePartial : $message.clone()
+          messagePartial : $message.clone(),
+          owner_id : config.owner_id,
       });
 
       pusher = new Pusher(config.key);
@@ -133,7 +134,17 @@ var buildChat = function(opts){
     subscribePrivate: function(channel){
       var channel = pusher.subscribe(channel);
 
-      channel.bind("message_sent", function(data){
+      channel.bind("message_sent", function(message){
+          var windowId = getCSSWindowId(message.user_id);
+          $("#" + windowId).addMessage({
+              messagePartial : $message.clone(),
+              thumbnail : message.thumbnail,
+              text : message.text,
+              time : message.time,
+              name : message.name,
+              id : message.user_id,
+              owner_id : config.owner_id,
+          });
       });
     },
     // Desinscreve no canal privado
@@ -145,7 +156,9 @@ var buildChat = function(opts){
       $layout.addContact({member : member
           , presencePartial : $presence.clone()
           , windowPartial : $window.clone()
-          , messagePartial : $message.clone() });
+          , messagePartial : $message.clone()
+          , owner_id : config.owner_id
+      });
       $.updateWindowState({ id : member.id, property : "status",
           value : "online" });
       that.uiUpdateCounter();

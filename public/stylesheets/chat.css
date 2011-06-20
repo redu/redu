@@ -281,6 +281,7 @@
 
 #chat-windows-list .chat-window .conversation {
   height: 256px;
+  overflow-y: scroll;
 }
 
 #chat-windows-list .chat-window .conversation > li {
