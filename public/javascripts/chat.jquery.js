@@ -104,19 +104,22 @@
 
             // Receber confirmação do envio da mensagem
             var $form = $window.find("form.user-input");
+            var $conversation = $window.find(".conversation");
             $form.bind("ajax:beforeSend", function(){
                 var $input = $form.find(".message");
-                var message = $input.val();
+                var text = $input.val();
                 $input.val("");
 
-                $li = $("<li/>").text(message).toggleClass("pending");
-                $window.find(".chat-window .conversation").append($li);
+                $conversation.addMessage({ messagePartial : opts.messagePartial,
+                    text : text});
 
-                $form.bind("ajax:success", function(){
-                  $li.toggleClass("pending");
-                });
             });
 
+            $form.bind("ajax:success", function(e, data, s){
+                var $lastMessage = $conversation.children(':last');
+                $lastMessage.find(".time").html(data.time);
+                $lastMessage.find(".messages > li:last").toggleClass("pending");
+            });
 
             $this.find("#chat-windows-list").prepend($window);
 
@@ -129,6 +132,36 @@
           // chamar o minimize deixaria todas minimizadas)
           if (opts.state == "opened") {
             $window.minimizeOtherWindows();
+          }
+      });
+    };
+
+    // Adiciona uma mensagem enviada/recebida à lista de mensagens
+    $.fn.addMessage = function(opts){
+      return this.each(function(){
+          var $this = $(this);
+          var $message = opts.messagePartial.clone();
+
+          // Janela vazia ou última mensagem é do contato
+          if ($this.children().length == 0
+            || !$this.children(":last").hasClass("me")) {
+            $message.find(".messages > li").text(opts.text).toggleClass("pending");
+
+            // Se for uma mensagem de outro contato, troca o thumbnail e o alt
+            // (mensagem recebida)
+            if (opts.thumbnail) {
+              var $thumbnail = $message.find(".avatar");
+              $thumbnail.attr("src", opts.thumbnail);
+              $thumbnail.attr("alt", opts.name);
+              $message.find(".time").html(opts.time);
+              $message.removeClass("me").addClass("other");
+            }
+            $this.append($message);
+          } else {
+            // Última mensagem é do usuário
+            var $lastMessage = $this.children(":last");
+            var $lineMessage = $("<li/>").text(opts.text).toggleClass("pending");
+            $lastMessage.find(".messages").append($lineMessage);
           }
       });
     };
