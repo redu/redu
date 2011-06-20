@@ -37,6 +37,14 @@ describe('Chat', function () {
           "pusher:connection_established" : function(){},
           "pusher:connection_disconnected" : function(){},
           "pusher:error" : function(){},
+          "message_sent" : function(f){
+            var data = [
+              { user : 1, time : function(){ return Date.now(); }, message : "new message"},
+              { user : 1, time : function(){ return Date.now(); }, message : "new message"},
+            ]
+
+            f(data);
+          }
         }
 
         callbacks[e](func);
@@ -75,9 +83,16 @@ describe('Chat', function () {
 
         it('subscribes to friends private channels', function(){
           expect(Pusher.prototype.subscribe).toHaveBeenCalledWith("private-1-2")
-          expect(Pusher.prototype.subscribe).toHaveBeenCalledWith("private-1-3")
         });
     });
+
+    describe('when subscribing to private channel', function () {
+      it('binds to message_sent event', function () {
+        this.chat.subscribePrivate("private-1-3");
+        expect(this.Ch.bind).toHaveBeenCalledWith("message_sent", jasmine.any(Function));
+      });
+    });
+
 
     describe("storing state", function(){
         var infos;

@@ -48,7 +48,7 @@ describe PresenceController do
 
     context "authenticating" do
 
-      context "presence channel" do
+      context "own presence channel" do
 
         before do
           post :auth, :locale => "pt-BR",
@@ -88,7 +88,7 @@ describe PresenceController do
         end
       end
 
-      context "subscribe to a contact's channel" do
+      context "when subscribing to a contact's channel" do
 
         before do
           post :auth, :locale => "pt-BR",
@@ -104,12 +104,12 @@ describe PresenceController do
           payload = { :user_id => @current_user.id,
             :user_info => { :name => @current_user.display_name,
             :thumbnail => @current_user.avatar.url(:thumb_24),
-            :channel => @current_user.presence_channel,
+            :pre_channel => @current_user.presence_channel,
+            :pri_channel => @current_user.private_channel_with(@friend1),
             :roles => Presence.fill_roles(@current_user) }}
           user_info = JSON.parse(response.body)
           user_info["channel_data"].should == payload.to_json
         end
-
       end
     end
 

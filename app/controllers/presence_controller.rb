@@ -35,10 +35,11 @@ class PresenceController < BaseController
     else
       payload = { :name => current_user.display_name,
         :thumbnail => current_user.avatar.url(:thumb_24),
-        :channel => current_user.presence_channel,
+        :pre_channel => current_user.presence_channel,
+        :pri_channel => current_user.private_channel_with(contact),
         :roles => Presence.fill_roles(current_user) }
 
-      if !channels.select{|v| v.has_value? params[:channel_name] }.empty?
+      unless channels.select{|v| v.has_value? params[:channel_name] }.empty?
         json_response = Pusher[params[:channel_name]].
           authenticate(params[:socket_id],
                        :user_id => current_user.id,
@@ -61,5 +62,12 @@ class PresenceController < BaseController
 
       render :text => "Não autorizado", :status => '403'
     end
+  end
+
+  # Usuário dono do canal de presença ao qual estou me inscrevendo
+  def contact
+    # Pegar id do nome do canal
+    contact_id = /^presence-user-(\d+)$/.match(params[:channel_name])[1]
+    User.find(contact_id)
   end
 end

@@ -112,13 +112,13 @@ var buildChat = function(opts){
       // Escuta evento de adição de membro no canal
       myPresenceCh.bind("pusher:member_added", function(member){
           that.uiAddContact(member);
-          pusher.subscribe(member.info.channel);
+          pusher.subscribe(member.info.pre_channel);
       });
 
       // Escuta evento de remoção de membro no canal
       myPresenceCh.bind("pusher:member_removed", function(member){
           that.uiRemoveContact(member.id);
-          pusher.unsubscribe(member.info.channel);
+          pusher.unsubscribe(member.info.pre_channel);
       });
     },
     // Increve no canal dado (Caso de já estar no chat e aceitar convite de contato)
@@ -131,7 +131,10 @@ var buildChat = function(opts){
     },
     // Se inscreve no canal privado de um usuário
     subscribePrivate: function(channel){
-      pusher.subscribe(channel);
+      var channel = pusher.subscribe(channel);
+
+      channel.bind("message_sent", function(data){
+      });
     },
     // Desinscreve no canal privado
     unsubscribePrivate : function(channel){
