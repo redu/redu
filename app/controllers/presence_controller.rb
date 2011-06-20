@@ -26,7 +26,7 @@ class PresenceController < BaseController
       :user_id => current_user.id }
 
     begin
-      Pusher[private_channel].trigger!('message_received', {:data => payload},
+      Pusher[private_channel].trigger!('message_sent', payload,
                                       params[:owner_socket_id])
       json_response = { :status => 200, :time => Time.now }
     rescue Pusher::Error => e

@@ -123,9 +123,9 @@
                 var $lastMessage = $conversation.children(':last');
                 if (data["status"] == 200) {
                   $lastMessage.find(".time").html(data.time);
-                  $lastMessage.find(".messages > li:last").toggleClass("pending");
+                  $lastMessage.find(".messages > li:last").removeClass("pending");
                 } else {
-                  $lastMessage.find(".messages > li:last").toggleClass("pending").addClass("error");
+                  $lastMessage.find(".messages > li:last").removeClass("pending").addClass("error");
                 }
             });
 
@@ -174,7 +174,7 @@
 
           // Deixa ultima mensagem enviada pelo dono do chat como pendente
           if(opts.owner_id == opts.id){
-            $message.addClass("pending")
+            $message.find(".messages > li:last").addClass("pending")
           }
       });
     };

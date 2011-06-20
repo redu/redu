@@ -212,7 +212,7 @@ describe PresenceController do
           :name => @user.display_name,
           :user_id => @user.id }
         Pusher.any_instance.stub(:trigger!)
-        Pusher.should_receive(:trigger!).with('message_received', data)
+        Pusher.should_receive(:trigger!).with('message_sent', data)
         post :send_chat_message, @post_params
       end
     end
