@@ -33,35 +33,47 @@ class PresenceController < BaseController
 
       render :json => json_response
     else
+      authorize! :subscribe_channel, contact
+
       payload = { :name => current_user.display_name,
         :thumbnail => current_user.avatar.url(:thumb_24),
         :pre_channel => current_user.presence_channel,
         :pri_channel => current_user.private_channel_with(contact),
         :roles => Presence.fill_roles(current_user) }
 
-      unless channels.select{|v| v.has_value? params[:channel_name] }.empty?
-        json_response = Pusher[params[:channel_name]].
-          authenticate(params[:socket_id],
-                       :user_id => current_user.id,
-                       :user_info => payload )
+      json_response = Pusher[params[:channel_name]].
+        authenticate(params[:socket_id],
+                     :user_id => current_user.id,
+                     :user_info => payload )
 
-        render :json => json_response
-      else
-        render :text => "Não autorizado", :status => '403'
-      end
+      render :json => json_response
     end
   end
 
   def private_chat
+    list_channels = params[:channel_name].split('-')
+    # Verificação se o usuário e o contato estão no canal
+    if current_user.id == list_channels[1].to_i
+      contact_user = User.find(list_channels[2])
+      authorize! :subscribe_channel, contact_user
+    elsif current_user.id == list_channels[2].to_i
+      contact_user = User.find(list_channels[1])
+      authorize! :subscribe_channel, contact_user
+    else
+      raise CanCan::AccessDenied.new("Não autorizado", :auth, Presence)
+    end
+
     if params[:log].nil?
       json_response = Pusher[params[:channel_name]].
         authenticate(params[:socket_id])
 
-      render :json => json_response
     else
+      json_response = Pusher[params[:channel_name]].
+        authenticate(params[:socket_id])
 
-      render :text => "Não autorizado", :status => '403'
     end
+
+    render :json => json_response
   end
 
   # Usuário dono do canal de presença ao qual estou me inscrevendo

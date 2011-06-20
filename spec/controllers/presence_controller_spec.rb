@@ -18,7 +18,7 @@ describe PresenceController do
     course = Factory(:course, :owner => environment.owner,
                      :environment => environment)
     space = Factory(:space, :owner => environment.owner,
-                     :course => course)
+                    :course => course)
 
     # segundo curso
     course2 = Factory(:course, :environment => environment,
@@ -93,7 +93,7 @@ describe PresenceController do
         before do
           post :auth, :locale => "pt-BR",
             :channel_name => "presence-user-#{@friend1.id}",
-            :socket_id => "213.2312", :user_id => @current_user.id
+          :socket_id => "213.2312", :user_id => @current_user.id
         end
 
         it "should be successful" do
@@ -107,22 +107,54 @@ describe PresenceController do
             :pre_channel => @current_user.presence_channel,
             :pri_channel => @current_user.private_channel_with(@friend1),
             :roles => Presence.fill_roles(@current_user) }}
+
           user_info = JSON.parse(response.body)
           user_info["channel_data"].should == payload.to_json
         end
       end
     end
 
-    context "subscribe a strange channel" do
+    context "when subscribing a strange channel" do
 
-      context "presence" do
+      context "on presence -" do
         before do
           post :auth, :locale => "pt-BR",
             :channel_name => "presence-user-#{@user2.id}",
-            :socket_id => "212.2113", :user_id => @current_user.id
+          :socket_id => "212.2113", :user_id => @current_user.id
         end
 
         it "should not be success" do
+          response.should_not be_success
+        end
+
+      end
+
+      context "on private -" do
+
+        it "should not be success" do
+          strange = Factory(:user)
+          post :auth, :locale => "pt-BR",
+            :channel_name => "private-#{@friend1.id}-#{strange.id}",
+            :socket_id => "123.13865", :user_id => @current_user.id
+
+          response.should_not be_success
+        end
+
+        it "should not be success" do
+          strange = Factory(:user)
+          post :auth, :locale => "pt-BR",
+            :channel_name => "private-#{@friend1.id}-#{@friend2.id}",
+            :socket_id => "123.13865", :user_id => @current_user.id
+
+          response.should_not be_success
+        end
+
+        it "should not be success" do
+          strange = Factory(:user)
+          post :auth, :locale => "pt-BR",
+            :channel_name => "private-#{@current_user.id}-#{strange.id}",
+            :socket_id => "123.13865", :user_id => @current_user.id
+
           response.should_not be_success
         end
 
