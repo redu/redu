@@ -106,7 +106,7 @@
             // Receber confirmação do envio da mensagem
             var $form = $window.find("form.user-input");
             $form.bind("ajax:beforeSend", function(){
-                var $input = $form.find(".message");
+                var $input = $form.find(".text");
                 var text = $input.val();
                 $input.val("");
 
@@ -122,8 +122,12 @@
             $form.bind("ajax:success", function(e, data, s){
                 var $conversation = $window.find(".conversation");
                 var $lastMessage = $conversation.children(':last');
-                $lastMessage.find(".time").html(data.time);
-                $lastMessage.find(".messages > li:last").toggleClass("pending");
+                if (data["status"] == 200) {
+                  $lastMessage.find(".time").html(data.time);
+                  $lastMessage.find(".messages > li:last").removeClass("pending");
+                } else {
+                  $lastMessage.find(".messages > li:last").removeClass("pending").addClass("error");
+                }
             });
 
             // Remove o nodge quando o foco for para o input.message
@@ -176,7 +180,7 @@
 
           // Deixa ultima mensagem enviada pelo dono do chat como pendente
           if(opts.owner_id == opts.id){
-            $message.addClass("pending")
+            $message.find(".messages > li:last").addClass("pending")
           }
       });
     };
