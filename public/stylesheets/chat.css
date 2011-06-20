@@ -287,6 +287,7 @@
 #chat-windows-list .chat-window .conversation > li {
   margin: 10px;
   margin-top: 0;
+  clear: both;
 }
 
 #chat-windows-list .chat-window .conversation li .time {

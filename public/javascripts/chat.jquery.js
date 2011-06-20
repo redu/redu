@@ -54,14 +54,14 @@
           var $window = $this.find("#" + getCSSWindowId(opts.id));
 
           if($window.length > 0){
-            if($window.find(".chat-window-bar").hasClass("closed")){
+            if(opts.state == "opened" && $window.find(".chat-window-bar").hasClass("closed")){
               $window.find(".chat-window-bar .name").click();
               $.updateWindowState({ id : opts.id, property : "state", value : "opened" });
             }
           }else{
             $this.limitWindows({ limit : 5});
 
-            $window = opts.windowPartial;
+            $window = opts.windowPartial.clone();
             $window.attr("id", getCSSWindowId(opts.id));
             $window.find(".name").text(opts.name);
             $window.find(".online").text(opts["status"]);
@@ -74,6 +74,7 @@
 
             // minimizar e maximizar
             $window.find(".name").bind("click", function(e){
+                $window.unnodge();
                 var $bar = $window.find(".chat-window-bar");
 
                 $window.find(".chat-window").toggle();
@@ -125,6 +126,10 @@
                 $lastMessage.find(".messages > li:last").toggleClass("pending");
             });
 
+            // Remove o nodge quando o foco for para o input.message
+            var $input = $form.find(".message");
+            $input.bind("focus", function(){ $window.unnodge() });
+
             $this.find("#chat-windows-list").prepend($window);
 
             // Guarda estado da janela no cookie
@@ -163,6 +168,7 @@
               $thumbnail.attr("alt", opts.name);
               $message.find(".time").html(opts.time);
               $message.removeClass("me").addClass("other");
+              $this.nodge();
             }
 
             $conversation.append($message);
@@ -347,5 +353,25 @@
       chatInfos.listOpened = opts.opened;
       $.cookie("chat_windows", $.toJSON(chatInfos));
     };
+
+    // Alerta novas mensagens
+    $.fn.nodge = function(opts){
+      return this.each(function(){
+          var $this = $(this);
+          var $bar = $this.find(".chat-window-bar .online");
+
+          $bar.addClass("nodge");
+      });
+    };
+
+    // Remove Alerta de novas mensagens
+    $.fn.unnodge = function(opts){
+      return this.each(function(){
+          var $this = $(this);
+          var $bar = $this.find(".chat-window-bar .online");
+
+          $bar.removeClass("nodge");
+      });
+    }
 
 })(jQuery);

@@ -74,6 +74,8 @@ var buildChat = function(opts){
 
       // Initicializando layout
       $("body").append($layout);
+      $layout = $("#chat");
+
       $layout.find("#chat-contacts").scrollable();
 
       $.initStates();
@@ -135,8 +137,17 @@ var buildChat = function(opts){
       var channel = pusher.subscribe(channel);
 
       channel.bind("message_sent", function(message){
-          var windowId = getCSSWindowId(message.user_id);
-          $("#" + windowId).addMessage({
+          $layout.addWindow({
+              windowPartial : $window.clone(),
+              messagePartial : $message.clone(),
+              id : message.user_id,
+              owner_id : config.owner_id,
+              name : message.name,
+              "status" : "online",
+              state : "closed"
+          });
+
+          $layout.find("#" + getCSSWindowId(message.user_id)).addMessage({
               messagePartial : $message.clone(),
               thumbnail : message.thumbnail,
               text : message.text,
