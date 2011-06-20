@@ -137,25 +137,27 @@ var buildChat = function(opts){
       var channel = pusher.subscribe(channel);
 
       channel.bind("message_sent", function(message){
-          $layout.addWindow({
-              windowPartial : $window.clone(),
-              messagePartial : $message.clone(),
-              id : message.user_id,
-              owner_id : config.owner_id,
-              name : message.name,
-              "status" : "online",
-              state : "closed"
-          });
+          if (message.user_id != config.owner_id ){
+            $layout.addWindow({
+                windowPartial : $window.clone(),
+                messagePartial : $message.clone(),
+                id : message.user_id,
+                owner_id : config.owner_id,
+                name : message.name,
+                "status" : "online",
+                state : "closed"
+            });
 
-          $layout.find("#" + getCSSWindowId(message.user_id)).addMessage({
-              messagePartial : $message.clone(),
-              thumbnail : message.thumbnail,
-              text : message.text,
-              time : message.time,
-              name : message.name,
-              id : message.user_id,
-              owner_id : config.owner_id,
-          });
+            $layout.find("#" + getCSSWindowId(message.user_id)).addMessage({
+                messagePartial : $message.clone(),
+                thumbnail : message.thumbnail,
+                text : message.text,
+                time : message.time,
+                name : message.name,
+                id : message.user_id,
+                owner_id : config.owner_id,
+            });
+        }
       });
     },
     // Desinscreve no canal privado
