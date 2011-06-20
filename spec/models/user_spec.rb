@@ -43,6 +43,9 @@ describe User do
     it { should have_many(attr).dependent(:destroy)}
   end
 
+  # ChatMessages
+  it { should have_many(:chat_messages) }
+
   # Users
   it { should have_many(:recently_active_friends).through(:friendships) }
 

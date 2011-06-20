@@ -78,6 +78,9 @@ class Ability
     # Friendship
     alias_action :pending, :accept, :decline, :to => :manage
 
+    # Presence
+    alias_action :auth, :to => :manage
+
     # Plan
     alias_action :confirm, :address, :pay, :upgrade, :to => :manage
 
@@ -115,7 +118,7 @@ class Ability
       can :read, User
       can :view_mural, User do |u|
         u.settings.view_mural == Privacy[:public] or
-          (u.settings.view_mural == Privacy[:friends] && u.friends?(user))
+        (u.settings.view_mural == Privacy[:friends] && u.friends?(user))
       end
 
       # Seminar
@@ -126,6 +129,10 @@ class Ability
       # Document
       can :upload_document, Document do |document|
         document.can_upload_document?(document.lecture)
+      end
+
+      can :subscribe_channel, User do |contact|
+        Presence.list_of_contacts(user).include? contact
       end
 
       # My file
@@ -145,10 +152,6 @@ class Ability
       can :take_ownership, Space do |space|
         user.can_manage?(space.course.environment) || \
           (space.owner.nil? && user.teacher?(space))
-      end
-
-      can :auth, User do |target|
-        (user == target) or user.friends?(target)
       end
 
       # Caso seja o Status de usuário, apenas ele mesmo ou seus amigos

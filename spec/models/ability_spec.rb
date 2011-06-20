@@ -566,6 +566,7 @@ describe Ability do
       @ability.should_not be_able_to(:manage, @invoice)
     end
   end
+
   context "on user -" do
     before do
       @user = Factory(:user)
@@ -575,18 +576,28 @@ describe Ability do
     context "pusher channels" do
       before do
         @friend_auth = Factory(:user)
+        @strange = Factory(:user)
 
         friendship, status = @user.be_friends_with(@friend_auth)
         friendship.accept!
       end
 
-      it "should subscribe a channel" do
+      it "should can subscribe a channel" do
         @user_ability.should be_able_to(:auth, @user)
       end
 
-      it "should subscribe a friends channel" do
-        @user_ability.should be_able_to(:auth, @friend_auth)
+      it "should can NOT subscribe a contact channel" do
+        @user_ability.should_not be_able_to(:auth, @friend_auth)
       end
+
+      it "should can subscribe a contact channel" do
+        @user_ability.should be_able_to(:subscribe_channel, @friend_auth)
+      end
+
+      it "should can NOT subscribe a strange channel" do
+        @user_ability.should_not be_able_to(:subscribe_channel, @strange)
+      end
+
     end
 
     context "when friends" do
