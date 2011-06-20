@@ -195,7 +195,6 @@
 
 #chat-windows-list .chat-window-bar {
   pointer-events: auto;
-  margin-right: 4px;
   margin-top: 302px;
   width: 156px;
   height: 58px;
@@ -280,13 +279,17 @@
   font-weight: bold;
 }
 
+#chat-windows-list .chat-window .conversation {
+  height: 256px;
+}
+
 #chat-windows-list .chat-window .conversation > li {
   margin: 10px;
   margin-top: 0;
 }
 
-#chat-windows-list .chat-window .conversation {
-  height: 256px;
+#chat-windows-list .chat-window .conversation > li.pending {
+  color: #b3b2b3;
 }
 
 #chat-windows-list .chat-window .conversation li .time {

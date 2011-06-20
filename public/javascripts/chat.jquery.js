@@ -70,6 +70,7 @@
             if (opts.state == "closed") {
               $window.find(".chat-window").hide();
             }
+            $window.find(".user-input .contact-id").val(opts.id);
 
             // minimizar e maximizar
             $window.find(".name").bind("click", function(e){
@@ -100,6 +101,22 @@
 
                 e.preventDefault();
             });
+
+            // Receber confirmação do envio da mensagem
+            var $form = $window.find("form.user-input");
+            $form.bind("ajax:beforeSend", function(){
+                var $input = $form.find(".message");
+                var message = $input.val();
+                $input.val("");
+
+                $li = $("<li/>").text(message).toggleClass("pending");
+                $window.find(".chat-window .conversation").append($li);
+
+                $form.bind("ajax:success", function(){
+                  $li.toggleClass("pending");
+                });
+            });
+
 
             $this.find("#chat-windows-list").prepend($window);
 
@@ -144,6 +161,7 @@
 
           $presence.bind("click", function(){
               $this.addWindow({ windowPartial : opts.windowPartial.clone()
+                  , messagePartial : opts.messagePartial.clone()
                   , id : opts.member.id
                   , name : opts.member.info.name
                   , "status" : "online"
@@ -202,9 +220,9 @@
 
       for(i in cookie) {
         var win = cookie[i];
-        $this.addWindow({ id : win.id,
-            presencePartial : opts.presencePartial.clone(),
-            windowPartial : opts.windowPartial.clone(),
+        $this.addWindow({ windowPartial : opts.windowPartial.clone(),
+            messagePartial : opts.messagePartial.clone(),
+            id : win.id,
             name : win.name,
             "status" : win["status"],
             state : win.state });

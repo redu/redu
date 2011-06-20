@@ -35,6 +35,11 @@ var buildChat = function(opts){
   else
     $presence = $(config.presencePartial);
 
+  if(config.messagePartial instanceof jQuery)
+    $message = config.messagePartial;
+  else
+    $message = $(config.messagePartial);
+
   var getCSSUserId = function(userId) {
     return "chat-user-" + userId;
   };
@@ -73,8 +78,8 @@ var buildChat = function(opts){
 
       $.initStates();
       $layout.restoreStates({
-          presencePartial : $presence.clone(),
-          windowPartial : $window.clone()
+          windowPartial : $window.clone(),
+          messagePartial : $message.clone()
       });
 
       pusher = new Pusher(config.key);
@@ -136,7 +141,8 @@ var buildChat = function(opts){
     uiAddContact : function(member){
       $layout.addContact({member : member
           , presencePartial : $presence.clone()
-          , windowPartial : $window.clone() });
+          , windowPartial : $window.clone()
+          , messagePartial : $message.clone() });
       $.updateWindowState({ id : member.id, property : "status",
           value : "online" });
       that.uiUpdateCounter();

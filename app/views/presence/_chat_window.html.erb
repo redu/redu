@@ -2,9 +2,13 @@
   <div class="chat-window">
     <span class="name"></span>
     <ul class="conversation"></ul>
-    <div class="user-input">
-      <input type="text">
-    </div>
+    <%= form_tag presence_send_chat_message_path, :remote => true,
+      :class => "user-input" do %>
+      <%= hidden_field_tag :contact_id, nil,
+        { :id => "", :class => "contact-id" } %>
+      <%= text_field_tag :message, nil,
+        { :id => "", :class => "message" } %>
+    <% end %>
   </div>
   <div class="chat-window-bar">
     <div class="online">on-line</div>
