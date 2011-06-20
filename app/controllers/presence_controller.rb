@@ -16,6 +16,10 @@ class PresenceController < BaseController
     end
   end
 
+  def send_chat_message
+    render :json => { :status => '200' }
+  end
+
   protected
   def presence
     channels = Presence.list_of_channels(current_user)
