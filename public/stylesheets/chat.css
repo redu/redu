@@ -312,7 +312,7 @@
 }
 #chat-windows-list .chat-window .conversation li .messages li {
   font-size: .87em;
-  margin-bottom: 3px;
+  margin-bottom: 5px;
 }
 
 #chat-windows-list .chat-window .conversation  li.pending {
@@ -335,7 +335,7 @@
 }
 
 #chat-windows-list .chat-window .user-input input {
-  width: 180px;
+  width: 260px;
   border: none;
   background: #f1f0f0;
 }

@@ -192,16 +192,18 @@ describe PresenceController do
   context "POST send_chat_message" do
     before do
       @user = Factory(:user)
-      @friend = Factory(:user)
-      @user.be_friends_with(@friend)
-      @friend.be_friends_with(@user)
+      @contact = Factory(:user)
+      @user.be_friends_with(@contact)
+      @contact.be_friends_with(@user)
+      activate_authlogic
+      UserSession.create @user
 
       @post_params = { :locale => "pt-BR",
-        :contact_id => @friend.id, :text => "Hello, buddy!" }
-      post :send_chat_message, @post_params
+        :contact_id => @contact.id, :text => "Hello, buddy!" }
     end
 
     it "should be successful" do
+      post :send_chat_message, @post_params
       response.should be_success
     end
 
@@ -217,7 +219,18 @@ describe PresenceController do
       end
     end
 
+    it "creates a ChatMessage" do
+      expect {
+        post :send_chat_message, @post_params
+      }.should change(ChatMessage, :count).by(1)
+      message = ChatMessage.last
+      message.user.should == @user
+      message.contact.id.should == @post_params[:contact_id]
+      message.message.should == @post_params[:text]
+    end
+
     it "returns status and time" do
+      post :send_chat_message, @post_params
       payload = { :status => 200, :time => Time.now }
 
       response.body.should == payload.to_json
