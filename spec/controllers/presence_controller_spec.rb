@@ -188,4 +188,39 @@ describe PresenceController do
     end
 
   end
+
+  context "POST send_chat_message" do
+    before do
+      @user = Factory(:user)
+      @friend = Factory(:user)
+      @user.be_friends_with(@friend)
+      @friend.be_friends_with(@user)
+
+      @post_params = { :locale => "pt-BR",
+        :contact_id => @friend.id, :text => "Hello, buddy!" }
+      post :send_chat_message, @post_params
+    end
+
+    it "should be successful" do
+      response.should be_success
+    end
+
+    it "triggers an 'message_received' pusher event" do
+      pending do
+        data = { :thumbnail => @user.avatar.url(:thumb_24),
+          :text => @post_params[:text], :time => Time.now,
+          :name => @user.display_name,
+          :user_id => @user.id }
+        Pusher.any_instance.stub(:trigger!)
+        Pusher.should_receive(:trigger!).with('message_received', data)
+        post :send_chat_message, @post_params
+      end
+    end
+
+    it "returns status and time" do
+      payload = { :status => 200, :time => Time.now }
+
+      response.body.should == payload.to_json
+    end
+  end
 end

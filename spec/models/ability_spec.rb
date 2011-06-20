@@ -575,28 +575,56 @@ describe Ability do
 
     context "pusher channels" do
       before do
-        @friend_auth = Factory(:user)
-        @strange = Factory(:user)
+        @stranger = Factory(:user)
+        @friend = Factory(:user)
 
-        friendship, status = @user.be_friends_with(@friend_auth)
+        friendship, status = @user.be_friends_with(@friend)
         friendship.accept!
       end
 
-      it "should can subscribe a channel" do
+      it "can auth a channel" do
         @user_ability.should be_able_to(:auth, @user)
       end
 
-      it "should can NOT subscribe a contact channel" do
-        @user_ability.should_not be_able_to(:auth, @friend_auth)
+      it "can NOT auth a contact channel" do
+        @user_ability.should_not be_able_to(:auth, @friend)
       end
 
-      it "should can subscribe a contact channel" do
-        @user_ability.should be_able_to(:subscribe_channel, @friend_auth)
+      it "can subscribe a contact channel" do
+        @user_ability.should be_able_to(:subscribe_channel, @friend)
       end
 
-      it "should can NOT subscribe a strange channel" do
-        @user_ability.should_not be_able_to(:subscribe_channel, @strange)
+      it "can NOT subscribe a stranger channel" do
+        @user_ability.should_not be_able_to(:subscribe_channel, @stranger)
       end
+
+      context "when chatting" do
+        before do
+          course = Factory(:course)
+          @colleague = Factory(:user)
+          @teacher = Factory(:user)
+          course.join(@user)
+          course.join(@colleague)
+          course.join(@teacher, Role[:teacher])
+        end
+
+        it "can send a message to a friend" do
+          @user_ability.should be_able_to(:send_chat_message, @friend)
+        end
+
+        it "can send a message to a teacher" do
+          @user_ability.should be_able_to(:send_chat_message, @teacher)
+        end
+
+        it "can NOT send a message to a colleague" do
+          @user_ability.should_not be_able_to(:send_chat_message, @colleague)
+        end
+
+        it "can NOT send a message to a stranger" do
+          @user_ability.should_not be_able_to(:send_chat_message, @stranger)
+        end
+      end
+
 
     end
 

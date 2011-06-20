@@ -17,7 +17,23 @@ class PresenceController < BaseController
   end
 
   def send_chat_message
-    render :json => { :status => '200' }
+    contact = User.find(params[:contact_id].to_i)
+    private_channel = current_user.private_channel_with(contact)
+
+    payload = { :thumbnail => current_user.avatar.url(:thumb_24),
+      :text => params[:text], :time => Time.now,
+      :name => current_user.display_name,
+      :user_id => current_user.id }
+
+    begin
+      Pusher[private_channel].trigger!('message_received', {:data => payload},
+                                      params[:owner_socket_id])
+      json_response = { :status => 200, :time => Time.now }
+    rescue Pusher::Error => e
+      json_response = { :status => 500 }
+    end
+
+    render :json => json_response
   end
 
   protected
