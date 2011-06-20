@@ -69,8 +69,9 @@ class PresenceController < BaseController
 
     else
       json_response = Pusher[params[:channel_name]].
-        authenticate(params[:socket_id])
-
+        authenticate(params[:socket_id],
+                    :logs => ChatMessage.log(current_user, contact_user,
+                                                       1.day.ago, 20))
     end
 
     render :json => json_response

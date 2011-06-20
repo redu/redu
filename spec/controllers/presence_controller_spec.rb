@@ -72,19 +72,44 @@ describe PresenceController do
       end
 
       context "private channel" do
-        before do
-          post :auth, :locale => "pt-BR",
-            :channel_name => "private-#{@current_user.id}-#{@friend1.id}",
+        context "without logging" do
+          before do
+            post :auth, :locale => "pt-BR",
+              :channel_name => "private-#{@current_user.id}-#{@friend1.id}",
             :socket_id => "123.13865", :user_id => @current_user.id
+          end
+
+          it "should be successful" do
+            response.should be_success
+          end
+
+          it "should retrive an auth key" do
+            json_response = JSON.parse(response.body)
+            json_response.should have_key("auth")
+          end
         end
 
-        it "should be successful" do
-          response.should be_success
-        end
+        context "with logging" do
+          before do
+            @message1 = Factory(:chat_message, :user => @current_user, :contact => @friend1)
+            @message2 = Factory(:chat_message, :user => @friend1, :contact => @current_user)
+            @message3 = Factory(:chat_message, :user => @current_user, :contact => @friend2)
+            @message4 = Factory(:chat_message, :user => @friend2, :contact => @friend1)
 
-        it "should retrive an auth key" do
-          json_response = JSON.parse(response.body)
-          json_response.should have_key("auth")
+            post :auth, :locale => "pt-BR",
+              :channel_name => "private-#{@current_user.id}-#{@friend1.id}",
+              :socket_id => "123.13865", :user_id => @current_user.id,
+              :log => true
+          end
+
+          it "should be successful" do
+            response.should be_success
+          end
+
+          it "should retrive an auth key" do
+            json_response = JSON.parse(response.body)
+            JSON.parse(json_response["channel_data"]).should have_key("logs")
+          end
         end
       end
 
