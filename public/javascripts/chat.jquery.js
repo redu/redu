@@ -74,8 +74,9 @@
 
             // minimizar e maximizar
             $window.find(".name").bind("click", function(e){
-                $window.unnodge();
                 var $bar = $window.find(".chat-window-bar");
+
+                $window.unnodge();
 
                 $window.find(".chat-window").toggle();
                 $bar.toggleClass("opened");
@@ -108,8 +109,8 @@
             $form.bind("ajax:beforeSend", function(){
                 var $input = $form.find(".text");
                 var text = $input.val();
-                $input.val("");
 
+                $input.val("");
                 $window.addMessage({
                     messagePartial : opts.messagePartial.clone(),
                     text : text,
@@ -131,7 +132,7 @@
             });
 
             // Remove o nodge quando o foco for para o input.message
-            var $input = $form.find(".message");
+            var $input = $form.find(".text");
             $input.bind("focus", function(){ $window.unnodge() });
 
             $this.find("#chat-windows-list").prepend($window);
@@ -172,15 +173,19 @@
               $thumbnail.attr("alt", opts.name);
               $message.find(".time").html(opts.time);
               $message.removeClass("me").addClass("other");
-              $this.nodge();
             }
 
             $conversation.append($message);
           }
 
-          // Deixa ultima mensagem enviada pelo dono do chat como pendente
+          // Rolar automaticamente
+          $conversation.scrollTop($conversation.scrollTop() + $conversation.height())
+
           if(opts.owner_id == opts.id){
-            $message.find(".messages > li:last").addClass("pending")
+            // Deixa ultima mensagem enviada pelo dono do chat como pendente
+            $conversation.find(".messages > li:last").addClass("pending")
+          } else {
+            $this.nodge();
           }
       });
     };
@@ -364,7 +369,9 @@
           var $this = $(this);
           var $bar = $this.find(".chat-window-bar .online");
 
-          $bar.addClass("nodge");
+          if (!$this.find(".chat-window").is(":visible")) {
+            $bar.addClass("nodge");
+          }
       });
     };
 

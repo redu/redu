@@ -202,28 +202,29 @@
   background: url("../images/new/icons-chat.png") -290px  0px;
 }
 
-#chat-windows-list .chat-window-bar .online {
+#chat-windows-list .chat-window-bar .nodge,
+#chat-windows-list .chat-window-bar .online,
+#chat-windows-list .chat-window-bar .offline {
   float:left;
   width: 8px;
   height: 10px;
-  /* FIXME Trocar pelo ícone correto */
-  background: url("../images/new/icons-chat.png") 0 0;
   text-indent: -9999px;
   overflow: hidden;
   margin-top: 25px;
   margin-left: 11px;
 }
 
-#chat-windows-list .chat-window-bar .offline {
-  float:left;
-  width: 8px;
-  height: 10px;
-  /* FIXME Trocar pelo ícone correto */
+#chat-windows-list .chat-window-bar .online {
   background: url("../images/new/icons-chat.png") 0 0;
-  text-indent: -9999px;
-  overflow: hidden;
-  margin-top: 25px;
-  margin-left: 11px;
+}
+
+#chat-windows-list .chat-window-bar .nodge {
+  background: url("../images/new/chat-conv-online-new.gif") 0 0;
+  height: 8px;
+}
+
+#chat-windows-list .chat-window-bar .offline {
+  background: url("../images/new/icons-chat.png") -909px 0;
 }
 
 #chat-windows-list .chat-window-bar .name {
@@ -281,7 +282,7 @@
 
 #chat-windows-list .chat-window .conversation {
   height: 256px;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 #chat-windows-list .chat-window .conversation > li {
