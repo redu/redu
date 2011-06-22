@@ -35,8 +35,7 @@
       , layout : "<%= escape_javascript(render :partial => "presence/chat_list") %>"
       , windowPartial : "<%= escape_javascript(render :partial => "presence/chat_window") %>"
       , presencePartial : "<%= escape_javascript(render :partial => "presence/chat_presence") %>"
-      , messagePartial : "<%= escape_javascript(render :partial => "presence/chat_message") %>"
-      , log : true });
+      , messagePartial : "<%= escape_javascript(render :partial => "presence/chat_message") %>" });
 
       chat.init();
       chat.subscribeMyChannel();
