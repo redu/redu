@@ -117,6 +117,10 @@ var buildChat = function(opts){
       myPresenceCh.bind("pusher:member_added", function(member){
           that.uiAddContact(member);
           pusher.subscribe(member.info.pre_channel);
+
+          if (!pusher.channels.find(member.info.pri_channel)) {
+            that.subscribePrivate(member.info.pri_channel);
+          }
       });
 
       // Escuta evento de remoção de membro no canal
