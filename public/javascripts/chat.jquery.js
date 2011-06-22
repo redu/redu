@@ -81,6 +81,7 @@
                 $window.find(".chat-window").toggle();
                 $bar.toggleClass("opened");
                 $bar.toggleClass("closed");
+                $window.scrollBottom();
 
                 $window.minimizeOtherWindows();
 
@@ -178,8 +179,7 @@
             $conversation.append($message);
           }
 
-          // Rolar automaticamente
-          $conversation.scrollTop($conversation.scrollTop() + $conversation.height())
+          $this.scrollBottom();
 
           if(opts.owner_id == opts.id){
             // Deixa ultima mensagem enviada pelo dono do chat como pendente
@@ -391,5 +391,13 @@
       $.getJSON("/presense/last_messages_with", { id : opts.id }, function(){
       });
     }
+
+    // Rolar janela
+    $.fn.scrollBottom = function(){
+      return this.each(function(){
+        var $conversation = $(this).find(".conversation");
+        $conversation.scrollTop($conversation.scrollTop() + $conversation.height())
+      });
+    };
 
 })(jQuery);
