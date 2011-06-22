@@ -88,16 +88,8 @@ class PresenceController < BaseController
       raise CanCan::AccessDenied.new("Não autorizado", :auth, Presence)
     end
 
-    if params[:log].nil?
-      json_response = Pusher[params[:channel_name]].
-        authenticate(params[:socket_id])
-
-    else
-      json_response = Pusher[params[:channel_name]].
-        authenticate(params[:socket_id],
-                    :logs => ChatMessage.log(current_user, contact_user,
-                                                       1.day.ago, 20))
-    end
+    json_response = Pusher[params[:channel_name]].
+      authenticate(params[:socket_id])
 
     render :json => json_response
   end
