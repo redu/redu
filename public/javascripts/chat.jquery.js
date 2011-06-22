@@ -119,11 +119,14 @@
                     owner_id : opts.owner_id,
                 });
 
+                var $conversation = $window.find(".conversation");
+                var $lastMessage = $conversation.find('> :last');
+                $lastMessage.find(".messages > li:last").addClass("pending");
             });
 
             $form.bind("ajax:success", function(e, data, s){
                 var $conversation = $window.find(".conversation");
-                var $lastMessage = $conversation.children(':last');
+                var $lastMessage = $conversation.find('> :last');
                 if (data["status"] == 200) {
                   $lastMessage.find(".time").html(data.time);
                   $lastMessage.find(".messages > li:last").removeClass("pending");
@@ -136,6 +139,11 @@
             var $input = $form.find(".text");
             $input.bind("focus", function(){ $window.unnodge() });
 
+            $window.restoreConversation({
+                messagePartial : opts.messagePartial.clone(),
+                owner_id : opts.owner_id,
+                id : opts.id
+            });
             $this.find("#chat-windows-list").prepend($window);
 
             // Guarda estado da janela no cookie
@@ -159,7 +167,7 @@
           var $lastBatch = $conversation.find("> :last");
           var $message = opts.messagePartial.clone();
           var sameUser = ($lastBatch.data("user-id") == opts.id);
-          var empty = ($lastBatch.length == 0)
+          var empty = ($lastBatch.length == 0);
 
           if(!empty && sameUser){ // Nova mensagem é do mesmo dono que a anterior
             $lastBatch.data("user-id", opts.id);
@@ -181,10 +189,7 @@
 
           $this.scrollBottom();
 
-          if(opts.owner_id == opts.id){
-            // Deixa ultima mensagem enviada pelo dono do chat como pendente
-            $conversation.find(".messages > li:last").addClass("pending")
-          } else {
+          if(opts.owner_id != opts.id){
             $this.nodge();
           }
       });
@@ -386,11 +391,27 @@
     };
 
     $.fn.restoreConversation = function(opts){
-      // opts = { id : 123 }
+      return this.each(function(){
+        var $this = $(this);
+        //opts = { logs :  [{name : "Test User", user_id : 27, text : "Hoooray!",thumbnail : "/images/new/missing_users_thumb_24.png", time : "hoje, 10:03"}, {name : "Test User", user_id : 27, text : "Hoooray!", thumbnail : "/images/new/missing_users_thumb_24.png", time : "hoje, 10:03"}] }
+        $.getJSON('/presence/last_messages_with', { contact_id : opts.id },
+          function(logs){
+            for (i in logs) {
+              var msg = logs[i];
+              $this.addMessage({
+                  messagePartial : opts.messagePartial.clone(),
+                  text : msg.text,
+                  id : msg.user_id,
+                  owner_id : opts.owner_id,
+                  name : msg.name,
+                  thumbnail : msg.thumbnail,
+                  time : msg.time
+              });
+            }
 
-      $.getJSON("/presense/last_messages_with", { id : opts.id }, function(){
+        });
       });
-    }
+    };
 
     // Rolar janela
     $.fn.scrollBottom = function(){
