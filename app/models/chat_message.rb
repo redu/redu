@@ -8,10 +8,20 @@ class ChatMessage < ActiveRecord::Base
           order('created_at ASC')
   }
 
-  def self.log(curr_user, contact, time, limit)
-    logs = self.log_by_time_and_limit(curr_user, contact, time, limit).collect do |chat|
-      {:name => chat.user.display_name, :user_id => chat.user.id, :text => chat.message,
-        :thumbnail => chat.user.avatar.url(:thumb_24), :time => chat.created_at}
+  def self.log(curr_user, contact, time=1.day.ago, limit=20)
+    logs = self.log_by_time_and_limit(curr_user, contact, time, limit).
+      collect do |chat|
+      {:name => chat.user.display_name, :user_id => chat.user.id,
+        :text => chat.message, :thumbnail => chat.user.avatar.url(:thumb_24),
+        :time => self.format_time(chat.created_at)}
+    end
+  end
+
+  def self.format_time(time)
+    if time.day == Time.now.day
+      time.strftime("hoje, %H:%M")
+    else
+      time.strftime("ontem, %H:%M")
     end
   end
 end
