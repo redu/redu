@@ -383,6 +383,13 @@
 
           $bar.removeClass("nodge");
       });
+    };
+
+    $.fn.restoreConversation = function(opts){
+      // opts = { id : 123 }
+
+      $.getJSON("/presense/last_messages_with", { id : opts.id }, function(){
+      });
     }
 
 })(jQuery);

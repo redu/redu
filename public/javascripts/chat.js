@@ -1,3 +1,5 @@
+$("a:not([data-remote]):not(.chat-link)").pjax("#content", { timeout: null });
+var buildChat = (function(){
 /*
  var mychat = buildChat({
      key : 'XXX',
@@ -8,7 +10,6 @@
 
 // Utilizando pjax
 // Links do chat serão abertos em novas janelas (.chat-link)
-$("a:not([data-remote]):not(.chat-link)").pjax("#content", { timeout: null });
 
 // Constrói um novo objeto Chat
 var buildChat = function(opts){
@@ -190,3 +191,6 @@ var buildChat = function(opts){
 
   return that;
 }
+
+  return buildChat;
+})();
