@@ -67,41 +67,42 @@ class MessagesController < BaseController
       end
     end
 
-     if not params[:message_to] or  params[:message_to].empty?
-        flash[:error] = "Destinatários inexistentes!"
-        respond_to do |format|
-            format.html do
-              render :template => 'messages/new' and return
-            end
-          end
-      end
-
-
-      # If 'to' field isn't empty then make sure each recipient is valid
-      params[:message_to].each do |to|
-        @message = Message.new(params[:message])
-        @message.recipient_id = to# User.find(to)
-        @message.sender = @user
-        unless @message.valid?
-          respond_to do |format|
-            format.html do
-              render :template => 'messages/new' and return
-            end
-          end
-          return
-        else
-          messages << @message
-        end
-      end
-
-      # If all messages are valid then send messages
-      messages.each {|msg| msg.save!}
-      flash[:notice] = t :message_sent
+    if not params[:message_to] or  params[:message_to].empty?
+      @message = Message.new(params[:message])
+      @message.valid?
       respond_to do |format|
         format.html do
-          redirect_to index_sent_user_messages_path(@user) and return
+          render :template => 'messages/new' and return
         end
       end
+    end
+
+
+    # If 'to' field isn't empty then make sure each recipient is valid
+    params[:message_to].each do |to|
+      @message = Message.new(params[:message])
+      @message.recipient_id = to# User.find(to)
+      @message.sender = @user
+      unless @message.valid?
+        respond_to do |format|
+          format.html do
+            render :template => 'messages/new' and return
+          end
+        end
+        return
+      else
+        messages << @message
+      end
+    end
+
+    # If all messages are valid then send messages
+    messages.each {|msg| msg.save!}
+    flash[:notice] = t :message_sent
+    respond_to do |format|
+      format.html do
+        redirect_to index_sent_user_messages_path(@user) and return
+      end
+    end
   end
 
   def delete_selected

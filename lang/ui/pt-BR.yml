@@ -101,9 +101,10 @@ pt-BR:
     array:
       two_words_connector: "Formato inválido"
   activerecord:
+    # tradução dos atributos dos modelos
     attributes:
       photo:
-        created_at: "created at: "
+        created_at: "criado em: "
       lecture:
         lectureable_type: "O tipo de aula"
         simple_category: "A categoria"
@@ -125,12 +126,18 @@ pt-BR:
         overdue: "Vencido"
         paid: "Pago"
         closed: "Fechado"
+      message:
+        recipient: "Para"
+        body: "Mensagem"
+        subject: "Assunto"
+
+    # tradução dos erros de cada tipo
     errors:
       template:
         header:
           one: "Oops!" #"Um erro ocorreu, verifique abaixo como proceder."
           other: "Oops!" #"{{count}} erros ocorreram, veja como proceder abaixo."
-        body: "Há problemas para os seguintes campos:"
+        body: "Há problemas para os seguinte(s) campo(s):"
       messages:
         blank: "não pode ser deixado em branco."
         too_long: "Texto muito longo"
@@ -198,7 +205,7 @@ pt-BR:
             subject:
               blank: ": Por favor, digite um assunto."
             recipient:
-              blank: ": Destinatário inexistente"
+              blank: ": Destinatário inexistente, digite um válido."
         beta_candidate:
             attributes:
                 email:

@@ -16,11 +16,9 @@
 <% end %>
 
 <%= form_for [@user, @message], :html => { :class => 'form-common' } do |f| %>
-  <div id="errors"></div>
   <%= f.error_messages %>
 
   <%= label_tag :message_to, t( :to ) + ":" %>
-
 
   <div style="width: 412px; float: left;"><!-- necessario para manter o input e o sugestion alinhados -->
 
@@ -31,8 +29,6 @@
         <%= options_for_select(@aab) %>
       <% end %>
     </select>
-
-
 
   </div>
 
