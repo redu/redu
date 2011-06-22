@@ -1,3 +1,7 @@
+#chat * {
+  font-family: "Tahoma", "Arial", "Helvetica", sans-serif;
+}
+
 #chat {
   position: fixed;
   left: 50%;
@@ -101,6 +105,7 @@
   margin: 10px;
   color: #4cacd5;
   font-weight: bold;
+  font-family: "Arial", "Helvetica", sans-serif;
 }
 
 #chat-contacts .avatar {
@@ -164,6 +169,7 @@
 
 #chat-contacts-bar .count {
   font-weight: bold;
+  font-family: "Arial", "Helvetica", sans-serif;
   width: 150px;
   padding: 0;
   padding-top: 23px;
@@ -278,6 +284,7 @@
   margin: 10px;
   color: #4cacd5;
   font-weight: bold;
+  font-family: "Arial", "Helvetica", sans-serif;
 }
 
 #chat-windows-list .chat-window .conversation {
@@ -324,7 +331,7 @@
 #chat-windows-list .chat-window .user-input {
   padding-left: 7px;
   padding-top: 5px;
-  padding-bottom: 5px;
+  padding-bottom: 4px;
   background: #f1f0f0;
 
   border-top: 1px solid #f37b38;
