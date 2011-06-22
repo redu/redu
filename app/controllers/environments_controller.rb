@@ -52,7 +52,8 @@ class EnvironmentsController < BaseController
 
   # GET /environments/1/edit
   def edit
-    @header_environment = @environment.clone
+    @header_environment = @environment.clone :include => [:users,
+      :administrators, :teachers, :tutors]
 
     respond_to do |format|
       format.html

@@ -189,7 +189,7 @@ class SpacesController < BaseController
 
   # GET /spaces/1/edit
   def edit
-    @header_space = @space.clone
+    @header_space = @space.clone :include => [:teachers, :students, :tutors]
 
     respond_to do |format|
       format.html
