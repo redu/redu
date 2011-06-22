@@ -1,7 +1,8 @@
 <% if @sidebar_preview %>
   <%= render :partial => 'courses/preview_sidebar' %>
 <% else %>
-  <%= render :partial => 'courses/sidebar' %>
+  <%= render :partial => 'courses/sidebar',
+  :locals => { :course => @course }  %>
 <% end %>
 
 <div class="main grid_12 omega big-col">
@@ -19,7 +20,7 @@
     </div>
     <% if can? :manage, @course %>
       <div class="admin-actions clearfix">
-        <%= 
+        <%=
           link_to "Convidar membros", admin_invitations_environment_course_path(@environment, @course),
             :class => "button"
         %>

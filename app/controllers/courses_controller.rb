@@ -40,7 +40,8 @@ class CoursesController < BaseController
   end
 
   def update
-    @header_course = @course.clone
+    @header_course = @course.clone :include => [:new_members,
+      :approved_users, :teachers, :students, :tutors]
 
     respond_to do |format|
       if @course.update_attributes(params[:course])
@@ -56,7 +57,7 @@ class CoursesController < BaseController
         format.html { redirect_to(environment_course_path(@environment, @course)) }
         format.xml { head :ok }
       else
-        format.html { render "edit" }
+        format.html { render 'edit' }
         format.xml  { render :xml => @course.errors, :status => :unprocessable_entity }
       end
     end

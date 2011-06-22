@@ -108,6 +108,12 @@ pt-BR:
       lecture:
         lectureable_type: "O tipo de aula"
         simple_category: "A categoria"
+      course:
+        path: "Endereço"
+        name: "Nome"
+      environment:
+        path: "Endereço"
+        name: "Nome"
       space:
         name: "Nome"
         description: "Descrição"

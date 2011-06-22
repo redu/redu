@@ -1,40 +1,40 @@
 <div class="sidebar alpha grid_3">
   <div class="image-frame course-frame">
     <!-- <%# Nao setar width e height na imagem %> -->
-    <%= image_tag @course.environment.avatar.url(:thumb_100),
+    <%= image_tag course.environment.avatar.url(:thumb_100),
       :alt => 'profile' %>
   </div>
 
   <ul class="local-nav">
     <li>
-      <div class="<%= (current_page? environment_course_path(@course.environment, @course)) ? "session selected".to_s : "session".to_s %>">
-        <% selected = (current_page? environment_course_path(@course.environment, @course)) ? "icon-space-white_16_16" : "icon-space-lightblue_16_16" %>
-        <%= link_to 'Disciplinas', environment_course_path(@course.environment, @course),
+      <div class="<%= (current_page? environment_course_path(course.environment, course)) ? "session selected".to_s : "session".to_s %>">
+        <% selected = (current_page? environment_course_path(course.environment, course)) ? "icon-space-white_16_16" : "icon-space-lightblue_16_16" %>
+        <%= link_to 'Disciplinas', environment_course_path(course.environment, course),
           :class => "icon #{selected}" %>
     </li>
-    <% if can? :manage, @course %>
+    <% if can? :manage, course %>
       <li>
-        <div class="<%= (current_page? edit_environment_course_path(@environment, @course)) ?
+        <div class="<%= (current_page? edit_environment_course_path(@environment, course)) ?
                       "session selected".to_s : "session".to_s %>">
-          <% selected = (current_page? edit_environment_course_path(@course.environment, @course)) ? "icon-management-white_16_16" : "icon-management-lightblue_16_16" %>
-          <%= link_to 'Gerenciamento', edit_environment_course_path(@environment, @course),
+          <% selected = (current_page? edit_environment_course_path(course.environment, course)) ? "icon-management-white_16_16" : "icon-management-lightblue_16_16" %>
+          <%= link_to 'Gerenciamento', edit_environment_course_path(@environment, course),
             :class => "icon #{selected}" %>
         </div>
       </li>
     <% end %>
     <li>
-      <div class="<%= (current_page? users_environment_course_path(@course.environment, @course)) ?
+      <div class="<%= (current_page? users_environment_course_path(course.environment, course)) ?
                     "session selected".to_s : "session".to_s %>">
-        <% selected = (current_page? users_environment_course_path(@course.environment, @course)) ? "icon-members-white_16_16" : "icon-members-lightblue_16_16" %>
-        <%= link_to "Membros: #{@course.approved_users.length}",
-          users_environment_course_path(@course.environment, @course),
+        <% selected = (current_page? users_environment_course_path(course.environment, course)) ? "icon-members-white_16_16" : "icon-members-lightblue_16_16" %>
+        <%= link_to "Membros: #{course.approved_users.length}",
+          users_environment_course_path(course.environment, course),
             :class => "icon #{selected}" %>
       <ul class="connections clearfix">
           <%= render :partial => 'users/item_short',
-            :collection => @course.approved_users.n_recent(9) %>
+            :collection => course.approved_users.n_recent(9) %>
       </ul><!-- end .connections -->
         <%= link_to "Ver mais",
-          users_environment_course_path(@course.environment, @course),
+          users_environment_course_path(course.environment, course),
           :class => 'more'%>
     </li>
   </ul><!-- end .local-nav -->

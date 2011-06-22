@@ -1,4 +1,5 @@
-<%= render :partial => 'courses/sidebar' %>
+<%= render :partial => 'courses/sidebar',
+    :locals => { :course => @course }%>
 <div class="main grid_12 omega big-col">
   <%= render :partial => "courses/breadcrumbs",
     :locals => { :course => @course } %>
