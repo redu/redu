@@ -21,7 +21,6 @@ javascripts:
     - public/javascripts/jquery.form.js
     - public/javascripts/jquery.remotipart.js
     - public/javascripts/lazyload.js
-
   chat:
     - public/javascripts/jquery.pjax.js
     - public/javascripts/jquery-ui.js
@@ -43,6 +42,5 @@ stylesheets:
     - public/stylesheets/ajaxful_rating.css
   ie:
     - public/stylesheets/ie.css
-
   chat:
     - public/stylesheets/chat.css
