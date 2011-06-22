@@ -39,6 +39,12 @@ class PresenceController < BaseController
     render :json => json_response
   end
 
+  def last_messages_with
+    contact = User.find(params[:contact_id].to_i)
+    json_response = ChatMessage.log(current_user, contact)
+    render :json => json_response
+  end
+
   protected
   def presence
     channels = Presence.list_of_channels(current_user)

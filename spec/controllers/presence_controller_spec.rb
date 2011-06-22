@@ -231,8 +231,51 @@ describe PresenceController do
 
     it "returns status and time" do
       post :send_chat_message, @post_params
-      payload = { :status => 200, :time => Time.now }
+      payload = { :status => 200, :time => Time.now.strftime("hoje, %H:%M") }
 
+      response.body.should == payload.to_json
+    end
+  end
+
+  context "GET last_messages_with" do
+    before do
+      @user = Factory(:user)
+      @contact1 = Factory(:user)
+      @contact2 = Factory(:user)
+      @user.be_friends_with(@contact1)
+      @contact1.be_friends_with(@user)
+      @user.be_friends_with(@contact2)
+      @contact2.be_friends_with(@user)
+      activate_authlogic
+      UserSession.create @user
+
+      @message1 = Factory(:chat_message, :user => @user, :contact => @contact1, :created_at => 2.days.ago)
+      @message2 = Factory(:chat_message, :user => @user, :contact => @contact1)
+      @message5 = Factory(:chat_message, :user => @user, :contact => @contact2)
+      @message3 = Factory(:chat_message, :user => @contact1, :contact => @user)
+      @message6 = Factory(:chat_message, :user => @contact1, :contact => @contact2)
+      @message4 = Factory(:chat_message, :user => @user, :contact => @contact1)
+      @message7 = Factory(:chat_message, :user => @contact2, :contact => @user)
+
+      Factory(:chat_message, :message => "Hooray! old",
+              :user => @user, :contact => @contact1, :created_at => 2.days.ago)
+      get :last_messages_with, :locale => "pt-BR", :contact_id => @contact1.id
+    end
+
+    it "should be successful" do
+      response.should be_success
+    end
+
+    it "returns log conversation" do
+      payload = [ {:name => @user.display_name, :user_id => @user.id,
+        :text => @message2.message, :thumbnail => @user.avatar.url(:thumb_24),
+        :time => ChatMessage.format_time(@message2.created_at)},
+        {:name => @contact1.display_name, :user_id => @contact1.id,
+          :text => @message3.message, :thumbnail => @contact1.avatar.url(:thumb_24),
+          :time => ChatMessage.format_time(@message3.created_at)},
+        {:name => @user.display_name, :user_id => @user.id,
+          :text => @message4.message, :thumbnail => @user.avatar.url(:thumb_24),
+          :time => ChatMessage.format_time(@message4.created_at)} ]
       response.body.should == payload.to_json
     end
   end

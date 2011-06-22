@@ -80,7 +80,7 @@ class Ability
 
     # Presence
     alias_action :auth, :to => :manage
-    alias_action :send_chat_message, :to => :subscribe_channel
+    alias_action :send_chat_message, :last_messages_with, :to => :subscribe_channel
 
     # Plan
     alias_action :confirm, :address, :pay, :upgrade, :to => :manage

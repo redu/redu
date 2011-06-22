@@ -625,6 +625,29 @@ describe Ability do
         end
       end
 
+      context "when requesting last chat messages" do
+        before do
+          course = Factory(:course)
+          @colleague = Factory(:user)
+          @teacher = Factory(:user)
+          course.join(@user)
+          course.join(@colleague)
+          course.join(@teacher, Role[:teacher])
+        end
+
+        it "can request his messages with a teacher" do
+          @user_ability.should be_able_to(:last_messages_with, @teacher)
+        end
+
+        it "can NOT request his messages with a colleague" do
+          @user_ability.should_not be_able_to(:last_messages_with, @colleague)
+        end
+
+       it "can NOT request his messages with a stranger" do
+          @user_ability.should_not be_able_to(:last_messages_with, @stranger)
+        end
+      end
+
 
     end
 
