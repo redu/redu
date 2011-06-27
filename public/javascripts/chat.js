@@ -160,8 +160,8 @@ var buildChat = function(opts){
                 time : message.time,
                 name : message.name,
                 id : message.user_id,
-                owner_id : config.owner_id,
-            });
+                owner_id : config.owner_id
+            }).nodge();
         }
       });
     },
