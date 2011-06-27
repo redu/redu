@@ -20,6 +20,16 @@ javascripts:
     - public/javascripts/swfobject.js
     - public/javascripts/jquery.form.js
     - public/javascripts/jquery.remotipart.js
+    - public/javascripts/lazyload.js
+  chat:
+    - public/javascripts/jquery.pjax.js
+    - public/javascripts/jquery-ui.js
+    - public/javascripts/pusher.js
+    - public/javascripts/jquery.json.js
+    - public/javascripts/jquery.cookie.js
+    - public/javascripts/jquery.linkify-1.0.js
+    - public/javascripts/chat.jquery.js
+    - public/javascripts/chat.js
   ie:
     - public/javascripts/selectivizr.js
 
@@ -33,3 +43,5 @@ stylesheets:
     - public/stylesheets/ajaxful_rating.css
   ie:
     - public/stylesheets/ie.css
+  chat:
+    - public/stylesheets/chat.css

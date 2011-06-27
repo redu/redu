@@ -1,7 +1,9 @@
 source 'http://rubygems.org'
 source 'http://gems.github.com'
 
+gem 'bundler', '1.0.10'
 gem 'rails', '3.0.7'
+gem 'rake', '0.8.7'
 gem 'mysql2', '~> 0.2.1'
 gem 'authlogic'
 gem 'pagseguro', '~> 0.1.10'
@@ -32,6 +34,7 @@ gem 'jammit-s3'
 gem 'whenever', :require => false
 gem 'remotipart', '>= 0.3.4'
 gem 'zencoder'
+gem 'pusher'
 
 # Gems específicos de algum ambiente
 group :development, :test do
@@ -39,5 +42,6 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'ruby-debug'
   gem 'thin'
+  gem 'jasmine'
 end
 

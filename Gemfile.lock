@@ -60,10 +60,13 @@ GEM
       xml-simple
     builder (2.1.2)
     cancan (1.6.4)
+    childprocess (0.1.9)
+      ffi (~> 1.0.6)
     ckeditor (3.4.2.pre)
       mime-types (>= 1.16)
     closure-compiler (1.1.1)
     columnize (0.3.2)
+    crack (0.1.8)
     daemons (1.1.3)
     date_validator (0.6.1)
       activemodel (~> 3.0.0)
@@ -77,6 +80,7 @@ GEM
     factory_girl_rails (1.0.1)
       factory_girl (~> 1.3)
       railties (>= 3.0.0)
+    ffi (1.0.9)
     i18n (0.5.0)
     jammit (0.6.0)
       closure-compiler (>= 0.1.0)
@@ -85,9 +89,15 @@ GEM
       jammit (>= 0.5.4)
       mimemagic (>= 0.1.7)
       s3 (>= 0.3.7)
+    jasmine (1.0.2.1)
+      json_pure (>= 1.4.3)
+      rack (>= 1.1)
+      rspec (>= 1.3.1)
+      selenium-webdriver (>= 0.1.3)
     jquery-rails (1.0.5)
       railties (~> 3.0)
       thor (~> 0.14)
+    json_pure (1.5.1)
     linecache (0.43)
     mail (2.2.19)
       activesupport (>= 2.3.6)
@@ -96,6 +106,7 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.16)
     mimemagic (0.1.8)
+    multi_json (1.0.3)
     mysql2 (0.2.7)
     open4 (1.0.1)
     pagseguro (0.1.10)
@@ -104,7 +115,12 @@ GEM
       activesupport (>= 2.3.2)
     polyglot (0.3.1)
     proxies (0.2.1)
-    rack (1.2.2)
+    pusher (0.8.1)
+      crack (~> 0.1.0)
+      multi_json (~> 1.0)
+      ruby-hmac (~> 0.4.0)
+      signature (~> 0.1.2)
+    rack (1.2.3)
     rack-mount (0.6.14)
       rack (>= 1.0.0)
     rack-test (0.5.7)
@@ -132,7 +148,7 @@ GEM
       rspec-core (~> 2.6.0)
       rspec-expectations (~> 2.6.0)
       rspec-mocks (~> 2.6.0)
-    rspec-core (2.6.0)
+    rspec-core (2.6.4)
     rspec-expectations (2.6.0)
       diff-lcs (~> 1.1.2)
     rspec-mocks (2.6.0)
@@ -146,12 +162,21 @@ GEM
       ruby-debug-base (~> 0.10.4.0)
     ruby-debug-base (0.10.4)
       linecache (>= 0.3)
+    ruby-hmac (0.4.0)
+    rubyzip (0.9.4)
     s3 (0.3.8)
       proxies (~> 0.2.0)
     scribd_fu (2.0.11)
       rscribd
+    selenium-webdriver (0.2.1)
+      childprocess (>= 0.1.7)
+      ffi (>= 1.0.7)
+      json_pure
+      rubyzip
     shoulda-matchers (1.0.0.beta2)
     shuber-sortable (1.0.6)
+    signature (0.1.2)
+      ruby-hmac
     thin (1.2.11)
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
@@ -183,6 +208,7 @@ DEPENDENCIES
   ar_mailer_rails3
   authlogic
   aws-s3
+  bundler (= 1.0.10)
   cancan
   ckeditor (= 3.4.2.pre)
   date_validator
@@ -190,12 +216,15 @@ DEPENDENCIES
   dynamic_form
   factory_girl_rails
   jammit-s3
+  jasmine
   jquery-rails (>= 1.0.3)
   mime-types
   mysql2 (~> 0.2.1)
   pagseguro (~> 0.1.10)
   paperclip
+  pusher
   rails (= 3.0.7)
+  rake (= 0.8.7)
   rd_searchlogic
   remotipart (>= 0.3.4)
   rspec-rails

@@ -30,9 +30,9 @@ Redu::Application.configure do
 
   # Armazena no sist. de arquivos
   config.paperclip = {
-    :path => File.join(Rails.root.to_s, "public/system/:class/:attachment/:id/:style/:basename.:extension"),
+    :path => File.join(Rails.root.to_s, "public/images/:class/:attachment/:id/:style/:basename.:extension"),
     :url => "/system/:class/:attachment/:id/:style/:basename.:extension",
-    :default_url => "new/missing_:class_:style.png",
+    :default_url => "/images/new/missing_:class_:style.png",
     :styles => { :thumb_150 => "150x150#",
                  :thumb_120 => "120x120#",
                  :thumb_100 => "100x100#",
@@ -50,5 +50,9 @@ Redu::Application.configure do
 
   # Só converte os 5 primeiros segundos (grátis)
   config.zencoder[:test] = 1
+
+  # Configurações do Pusher (redu-development app)
+  config.pusher = {
+  }
 end
 

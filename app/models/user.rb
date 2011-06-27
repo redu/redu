@@ -26,6 +26,7 @@ class User < ActiveRecord::Base
   # ASSOCIATIONS
   has_many :annotations, :dependent => :destroy, :include=> :lecture
   has_many :statuses, :as => :statusable, :dependent => :destroy
+  has_many :chat_messages
   # Space
   has_many :spaces, :through => :user_space_associations
   has_many :user_space_associations, :dependent => :destroy
@@ -559,14 +560,13 @@ class User < ActiveRecord::Base
     rec_posts = Post.find_tagged_with(tags.map(&:name),
                                       :conditions => ['posts.user_id != ? AND published_at > ?', self.id, since ],
                                       :order => 'published_at DESC',
-                                      :limit => 10
-                                     )
+                                      :limit => 10)
 
-                                     if rec_posts.empty?
-                                       []
-                                     else
-                                       rec_posts.uniq
-                                     end
+    if rec_posts.empty?
+      []
+    else
+      rec_posts.uniq
+    end
   end
 
   def display_name
@@ -741,6 +741,18 @@ class User < ActiveRecord::Base
 
   def create_settings!
     self.settings = UserSetting.create(:view_mural => Privacy[:friends])
+  end
+
+  def presence_channel
+    "presence-user-#{self.id}"
+  end
+
+  def private_channel_with(user)
+    if self.id < user.id
+      "private-#{self.id}-#{user.id}"
+    else
+      "private-#{user.id}-#{self.id}"
+    end
   end
 
   protected

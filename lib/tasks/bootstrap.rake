@@ -8,6 +8,13 @@ namespace :bootstrap do
     create_privacies
   end
 
+  desc "Insert default Roles"
+  task :roles => :environment do
+    create_roles
+    #set all existing users to 'member'
+    User.update_all("role = #{Role[:member]}")
+  end
+
   desc "Insert test administrator"
   task :default_admin => :environment do
     User.reset_callbacks(:save)
@@ -21,6 +28,7 @@ namespace :bootstrap do
                         :last_name => 'Redu',
                         :activated_at => Time.now,
                         :role => Role[:admin])
+    theadmin.role = Role[:admin] # O default é member
     theadmin.save
     theadmin.create_settings!
   end
@@ -40,13 +48,6 @@ namespace :bootstrap do
                        :role => Role[:member])
     theuser.save
     theuser.create_settings!
-  end
-
-  desc "Insert default Roles"
-  task :roles => :environment do
-    create_roles
-    #set all existing users to 'member'
-    User.update_all("role = #{Role[:member]}")
   end
 
   desc "Insert default general categories"

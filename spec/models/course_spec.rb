@@ -23,6 +23,7 @@ describe Course do
   it { should have_many(:teachers).through :user_course_associations }
   it { should have_many(:tutors).through :user_course_associations }
   it { should have_many(:students).through :user_course_associations }
+  it { should have_many(:teachers_and_tutors).through :user_course_associations }
 
   it { should have_and_belong_to_many :audiences }
   it { should have_one(:quota).dependent(:destroy) }
@@ -184,6 +185,26 @@ describe Course do
 
       subject.tutors.to_set.
         should == [users[2], users[3]].to_set
+    end
+
+    it "retrieves all teachers and tutors" do
+      users = 5.times.inject([]) { |res, i| res << Factory(:user) }
+      Factory(:user_course_association, :user => users[0],
+              :course => subject, :role => :environment_admin)
+      Factory(:user_course_association, :user => users[1],
+              :course => subject, :role => :teacher)
+      Factory(:user_course_association, :user => users[2],
+              :course => subject, :role => :tutor)
+      Factory(:user_course_association, :user => users[3],
+              :course => subject, :role => :tutor)
+      Factory(:user_course_association, :user => users[4],
+              :course => subject, :role => :member)
+      subject.user_course_associations.waiting.each do |assoc|
+        assoc.approve!
+      end
+
+      subject.teachers_and_tutors.to_set.
+        should == [users[1], users[2], users[3]].to_set
     end
 
     it "retrieves all students" do

@@ -20,6 +20,26 @@
       <% end %>
     <% end %>
     <%= yield :header_scripts_and_styles %>
+
+    <script type="text/javascript" language="javascript" charset="utf-8">
+    //<![CDATA[
+      var chat;
+    //]]>
+    </script>
+    <%= async_include_css :chat %>
+    <%= async_include_javascripts :chat do %>
+      chat = buildChat({ key : "<%= Redu::Application.config.pusher[:key] %>"
+      , channel : "<%= current_user.presence_channel %>"
+      , endPoint : "<%= presence_auth_path %>"
+      , owner_id : "<%= current_user.id %>"
+      , layout : "<%= escape_javascript(render :partial => "presence/chat_list") %>"
+      , windowPartial : "<%= escape_javascript(render :partial => "presence/chat_window") %>"
+      , presencePartial : "<%= escape_javascript(render :partial => "presence/chat_presence") %>"
+      , messagePartial : "<%= escape_javascript(render :partial => "presence/chat_message") %>" });
+
+      chat.init();
+      chat.subscribeMyChannel();
+    <% end %>
   </head>
    <body>
     <div id="header" class="container_16">

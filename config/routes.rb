@@ -1,4 +1,8 @@
 Redu::Application.routes.draw do
+  post "presence/auth"
+  post "presence/send_chat_message"
+  get "presence/last_messages_with"
+
   match 'clipboard/:action/:folder_or_file/:id' => 'clipboard',
     :constraints => { :action         => /(add|remove)/,
                        :folder_or_file => /(folder|file)/ }
