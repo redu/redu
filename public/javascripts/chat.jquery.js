@@ -138,10 +138,12 @@
                 owner_id : opts.owner_id,
                 id : opts.id
             });
+
             $this.find("#chat-windows-list").prepend($window);
 
             // Guarda estado da janela no cookie
-            $.storeState({ id: opts.id, name : opts.name });
+            $.storeState({ id: opts.id, name : opts.name,
+                state : opts.state });
           }
 
           // Apenas minimiza as outras se ela for a janela aberta
@@ -177,16 +179,15 @@
               $thumbnail.attr("alt", opts.name);
               $message.find(".time").html(opts.time);
               $message.removeClass("me").addClass("other");
+            } else if (opts.time) {
+              // Mensagem do usuário no restore (precisa colocar a data)
+              $message.find(".time").html(opts.time);
             }
 
             $conversation.append($message);
           }
 
           $this.scrollBottom();
-
-          if(opts.owner_id != opts.id){
-            $this.nodge();
-          }
       });
     };
 
@@ -277,14 +278,21 @@
       var cookie = chatInfos.windows;
 
       for(i in cookie) {
-        var win = cookie[i];
+        var storedWinState = cookie[i];
         $this.addWindow({ windowPartial : opts.windowPartial.clone(),
             messagePartial : opts.messagePartial.clone(),
-            id : win.id,
+            id : storedWinState.id,
             owner_id : opts.owner_id,
-            name : win.name,
-            "status" : win["status"],
-            state : win.state });
+            name : storedWinState.name,
+            "status" : storedWinState["status"],
+            state : storedWinState.state });
+
+        var $restoredWindow = $this.find("#" + getCSSWindowId(storedWinState.id));
+        if (storedWinState.nodge) {
+          $restoredWindow.nodge();
+        } else {
+          $restoredWindow.unnodge();
+        }
       }
 
       var chatListOpen = chatInfos.listOpened;
@@ -319,7 +327,8 @@
         "id" : opts.id,
         "name" : opts.name,
         "status" : "online",
-        "state" : "opened" // Estado da janela
+        "state" : opts.state, // Estado da janela
+        "nodge" : false // Indica se está com nova mensagem
       };
       var chatInfos = $.evalJSON($.cookie("chat_windows"));
       var storedWindows = chatInfos.windows;
@@ -336,7 +345,7 @@
       }
     };
 
-    // Modificar o state ou status da janela no cookie
+    // Modificar o state, status ou nodge da janela no cookie
     $.updateWindowState = function(opts) {
       var chatInfos = $.evalJSON($.cookie("chat_windows"));
       var cookie = chatInfos.windows;
@@ -372,6 +381,10 @@
           if (!$this.find(".chat-window").is(":visible")) {
             $bar.addClass("nodge");
           }
+
+          $.updateWindowState({ id : getUserId($this),
+              property : "nodge",
+              value : true });
       });
     };
 
@@ -382,13 +395,15 @@
           var $bar = $this.find(".chat-window-bar .online");
 
           $bar.removeClass("nodge");
+          $.updateWindowState({ id : getUserId($this),
+              property : "nodge",
+              value : false });
       });
     };
 
     $.fn.restoreConversation = function(opts){
       return this.each(function(){
         var $this = $(this);
-        //opts = { logs :  [{name : "Test User", user_id : 27, text : "Hoooray!",thumbnail : "/images/new/missing_users_thumb_24.png", time : "hoje, 10:03"}, {name : "Test User", user_id : 27, text : "Hoooray!", thumbnail : "/images/new/missing_users_thumb_24.png", time : "hoje, 10:03"}] }
         $.getJSON('/presence/last_messages_with', { contact_id : opts.id },
           function(logs){
             for (i in logs) {

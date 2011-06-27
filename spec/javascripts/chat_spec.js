@@ -144,10 +144,12 @@ describe('Chat', function () {
               "id" : "chat-user-50",
               "name" : "Username Lastname",
               "status" : "online",
-              "state" : "opened"
+              "state" : "opened",
+              "nodge" : false
             };
             $.initStates();
-            $.storeState({ id : memberInfos.id, name : memberInfos.name });
+            $.storeState({ id : memberInfos.id, name : memberInfos.name,
+              state : "opened" });
 
             $.initStates();
             infos.windows = [memberInfos];
@@ -159,9 +161,11 @@ describe('Chat', function () {
               "id" : "chat-user-50",
               "name" : "Username Lastname",
               "status" : "online",
-              "state" : "opened"
+              "state" : "opened",
+              "nodge" : false
             };
-            $.storeState({ id : memberInfos.id, name : memberInfos.name });
+            $.storeState({ id : memberInfos.id, name : memberInfos.name,
+              state : "opened" });
 
             $.updateContactsState({ opened : false });
             infos.listOpened = false;
@@ -174,10 +178,12 @@ describe('Chat', function () {
               "id" : "chat-user-50",
               "name" : "Username Lastname",
               "status" : "online",
-              "state" : "opened"
+              "state" : "opened",
+              "nodge" : false
             };
             infos.windows = [memberInfos];
-            $.storeState({ id : memberInfos.id, name : memberInfos.name });
+            $.storeState({ id : memberInfos.id, name : memberInfos.name,
+              state : "opened" });
             expect($.cookie("chat_windows")).toEqual($.toJSON(infos));
         });
 
@@ -187,18 +193,22 @@ describe('Chat', function () {
               "id" : "chat-user-50",
               "name" : "Username Lastname",
               "status" : "online",
-              "state" : "opened"
+              "state" : "opened",
+              "nodge" : false
             };
-            $.storeState({ id : memberInfos.id, name : memberInfos.name });
+            $.storeState({ id : memberInfos.id, name : memberInfos.name,
+              state : "opened" });
 
             // Second window
             var memberInfos2 = {
               "id" : "chat-user-51",
               "name" : "Username1 Lastname1",
               "status" : "online",
-              "state" : "opened"
+              "state" : "closed",
+              "nodge" : false
             };
-            $.storeState({ id : memberInfos2.id, name : memberInfos2.name });
+            $.storeState({ id : memberInfos2.id, name : memberInfos2.name,
+              state : "closed" });
             infos.windows = [memberInfos, memberInfos2];
             expect($.cookie("chat_windows")).toEqual($.toJSON(infos));
         });
@@ -209,9 +219,11 @@ describe('Chat', function () {
               "id" : "chat-user-50",
               "name" : "Username Lastname",
               "status" : "online",
-              "state" : "opened"
+              "state" : "opened",
+              "nodge" : false
             };
-            $.storeState({ id : memberInfos.id, name : memberInfos.name });
+            $.storeState({ id : memberInfos.id, name : memberInfos.name,
+              state : "opened" });
 
             $.clearState({ id : memberInfos.id });
             infos.windows = [];
@@ -224,27 +236,33 @@ describe('Chat', function () {
               "id" : "chat-user-50",
               "name" : "Username Lastname",
               "status" : "online",
-              "state" : "opened"
+              "state" : "opened",
+              "nodge" : false
             };
-            $.storeState({ id : memberInfos.id, name : memberInfos.name });
+            $.storeState({ id : memberInfos.id, name : memberInfos.name,
+              state : "opened" });
 
             // Second window
             var memberInfos1 = {
               "id" : "chat-user-51",
               "name" : "Username1 Lastname1",
               "status" : "online",
-              "state" : "closed"
+              "state" : "closed",
+              "nodge" : false
             };
-            $.storeState({ id : memberInfos1.id, name : memberInfos1.name });
+            $.storeState({ id : memberInfos1.id, name : memberInfos1.name,
+              state : "opened" });
 
             // Third window
             var memberInfos2 = {
               "id" : "chat-user-52",
               "name" : "Username2 Lastname2",
               "status" : "online",
-              "state" : "opened"
+              "state" : "opened",
+              "nodge" : false
             };
-            $.storeState({ id : memberInfos2.id, name : memberInfos2.name });
+            $.storeState({ id : memberInfos2.id, name : memberInfos2.name,
+              state : "opened" });
 
             $.clearState({ id : memberInfos1.id });
             infos.windows = [memberInfos, memberInfos2];
@@ -257,18 +275,22 @@ describe('Chat', function () {
               "id" : "chat-user-50",
               "name" : "Username Lastname",
               "status" : "online",
-              "state" : "opened"
+              "state" : "opened",
+              "nodge" : false
             };
-            $.storeState({ id : memberInfos.id, name : memberInfos.name });
+            $.storeState({ id : memberInfos.id, name : memberInfos.name,
+              state : "opened" });
 
             // Second window
             var memberInfos1 = {
               "id" : "chat-user-51",
               "name" : "Username1 Lastname1",
               "status" : "online",
-              "state" : "opened"
+              "state" : "opened",
+              "nodge" : false
             };
-            $.storeState({ id : memberInfos1.id, name : memberInfos1.name });
+            $.storeState({ id : memberInfos1.id, name : memberInfos1.name,
+              state : "opened" });
 
             $.updateWindowState({ id : memberInfos1.id, property : "status",
                 value : "offline" });
@@ -283,18 +305,22 @@ describe('Chat', function () {
               "id" : "chat-user-50",
               "name" : "Username Lastname",
               "status" : "online",
-              "state" : "opened"
+              "state" : "opened",
+              "nodge" : false
             };
-            $.storeState({ id : memberInfos.id, name : memberInfos.name });
+            $.storeState({ id : memberInfos.id, name : memberInfos.name,
+              state : "opened" });
 
             // Second window
             var memberInfos1 = {
               "id" : "chat-user-51",
               "name" : "Username1 Lastname1",
               "status" : "online",
-              "state" : "opened"
+              "state" : "opened",
+              "nodge" : false
             };
-            $.storeState({ id : memberInfos1.id, name : memberInfos1.name });
+            $.storeState({ id : memberInfos1.id, name : memberInfos1.name,
+              state : "opened" });
 
             $.updateWindowState({ id : memberInfos1.id, property : "state",
                 value : "closed" });
@@ -302,22 +328,35 @@ describe('Chat', function () {
             infos.windows = [memberInfos, memberInfos1];
             expect($.cookie("chat_windows")).toEqual($.toJSON(infos));
         });
-    });
 
-    describe("wrapping URLs", function(){
-        it("defines $.wrapURL", function(){
-            expect($.wrapURL).toBeDefined();
-        });
+        it("changes the state of a window to nodge", function(){
+            // First window
+            var memberInfos = {
+              "id" : "chat-user-50",
+              "name" : "Username Lastname",
+              "status" : "online",
+              "state" : "opened",
+              "nodge" : false
+            };
+            $.storeState({ id : memberInfos.id, name : memberInfos.name,
+              state : "opened" });
 
-        it("wraps URLs on text with URLs", function(){
-            var text = "Try http://redu.com.br";
-            var textWrapped = "Try <a href='http://redu.com.br' class='chat-link' target='_blank'>http://redu.com.br</a>";
-            expect($.wrapURL(text)).toEqual(textWrapped);
-        });
+            // Second window
+            var memberInfos1 = {
+              "id" : "chat-user-51",
+              "name" : "Username1 Lastname1",
+              "status" : "online",
+              "state" : "opened",
+              "nodge" : false
+            };
+            $.storeState({ id : memberInfos1.id, name : memberInfos1.name,
+              state : "opened" });
 
-        it("do NOT wrap URLs on text without URLs", function(){
-            var text = "Try redu.com.br";
-            expect($.wrapURL(text)).toEqual(text);
+            $.updateWindowState({ id : memberInfos1.id, property : "nodge",
+                value : true });
+            memberInfos1["nodge"] = true;
+            infos.windows = [memberInfos, memberInfos1];
+            expect($.cookie("chat_windows")).toEqual($.toJSON(infos));
         });
     });
 });
