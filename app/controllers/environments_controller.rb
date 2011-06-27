@@ -136,7 +136,8 @@ class EnvironmentsController < BaseController
   # PUT /environments/1
   # PUT /environments/1.xml
   def update
-    @header_environment = @environment.clone
+    @header_environment = @environment.clone :include => [:users,
+      :administrators, :teachers, :tutors]
 
     respond_to do |format|
       if @environment.update_attributes(params[:environment])

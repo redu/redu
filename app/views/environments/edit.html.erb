@@ -15,7 +15,7 @@
   </script>
 <% end %>
 <%= render :partial => 'environments/sidebar',
-  :locals => { :environment => @environment } %>
+  :locals => { :environment => @header_environment } %>
 <div class="main grid_12 omega big-col">
   <%= render :partial => 'environments/breadcrumbs',
     :locals => { :environment => @header_environment } %>
@@ -30,14 +30,14 @@
     </div>
 
     <%=
-      fake_tabs ["Informações", edit_environment_path(@environment), {:class => 'icon icon-management-lightblue_16_16'}],
-        ["Membros", admin_members_environment_path(@environment), {:class => 'icon icon-members-gray_16_16'}],
-        ["Notícias", admin_bulletins_environment_path(@environment), {:class => 'icon icon-bulletin-gray_16_16'}],
-        ["Cursos", admin_courses_environment_path(@environment), {:class => ''}] do
+      fake_tabs ["Informações", edit_environment_path(@header_environment), {:class => 'icon icon-management-lightblue_16_16'}],
+        ["Membros", admin_members_environment_path(@header_environment), {:class => 'icon icon-members-gray_16_16'}],
+        ["Notícias", admin_bulletins_environment_path(@header_environment), {:class => 'icon icon-bulletin-gray_16_16'}],
+        ["Cursos", admin_courses_environment_path(@header_environment), {:class => ''}] do
       %>
 
     <%= form_for @environment, :html => { :class => 'form-common highlightable',
-      :multipart => true } do |f| %>
+      :multipart => true }, :url => environment_path(@header_environment) do |f| %>
       <%= f.error_messages %>
       <%= field_set_tag "Informações Gerais", :class => "hidden" do %>
         <%= f.label :name, "Nome" %>
@@ -60,7 +60,7 @@
         <%= f.label :avatar, "Imagem" %>
         <%= f.file_field :avatar %>
         <%= f.submit "Salvar alterações" %>
-        <%= link_to "Remover ambiente", environment_path(@environment),
+        <%= link_to "Remover ambiente", environment_path(@header_environment),
           :confirm => "Você tem certeza que deseja remover este ambiente?",
           :method => :delete,
           :class => "remove vanilla" %>
