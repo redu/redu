@@ -4,13 +4,14 @@ class ChatMessage < ActiveRecord::Base
 
   scope :log_by_time_and_limit, lambda { |curr_user ,contact, time, limit|
     where('created_at >= ? AND ((user_id = ? AND contact_id = ?) OR (user_id = ? AND contact_id = ?))',
-          time, curr_user.id, contact.id, contact.id, curr_user.id).limit(limit).
-          order('created_at ASC')
+          time, curr_user.id, contact.id, contact.id, curr_user.id).
+          order('created_at DESC').limit(limit)
   }
 
   def self.log(curr_user, contact, time=1.day.ago, limit=20)
-    logs = self.log_by_time_and_limit(curr_user, contact, time, limit).
-      collect do |chat|
+    logs = self.log_by_time_and_limit(curr_user, contact, time, limit)
+    logs.sort!{|a, b| a.created_at <=> b.created_at}
+    logs.collect do |chat|
       {:name => chat.user.display_name, :user_id => chat.user.id,
         :text => chat.message, :thumbnail => chat.user.avatar.url(:thumb_24),
         :time => self.format_time(chat.created_at)}
