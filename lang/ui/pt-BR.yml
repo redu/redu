@@ -114,7 +114,7 @@ pt-BR:
       environment:
         path: "Endereço"
         name: "Nome"
-        initials: "Sigla"
+        initials: "Abreviação"
       space:
         name: "Nome"
         description: "Descrição"

@@ -54,6 +54,7 @@ class EnvironmentsController < BaseController
   def edit
     @header_environment = @environment.clone :include => [:users,
       :administrators, :teachers, :tutors]
+    @header_environment.id = @environment.id
 
     respond_to do |format|
       format.html
@@ -138,6 +139,7 @@ class EnvironmentsController < BaseController
   def update
     @header_environment = @environment.clone :include => [:users,
       :administrators, :teachers, :tutors]
+    @header_environment.id = @environment.id
 
     respond_to do |format|
       if @environment.update_attributes(params[:environment])

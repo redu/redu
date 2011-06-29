@@ -12,6 +12,7 @@
         <%= link_to 'Disciplinas', environment_course_path(course.environment, course),
           :class => "icon #{selected}" %>
     </li>
+
     <% if can? :manage, course %>
       <li>
         <div class="<%= (current_page? edit_environment_course_path(@environment, course)) ?

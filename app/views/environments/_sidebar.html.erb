@@ -26,6 +26,7 @@
           :class => "icon #{selected}" %>
       </div>
     </li>
+
     <% if can? :manage, environment %>
       <li>
         <div class="<%= (current_page? edit_environment_path(environment)) ?
