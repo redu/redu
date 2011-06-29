@@ -22,6 +22,7 @@ javascripts:
     - public/javascripts/jquery.form.js
     - public/javascripts/jquery.remotipart.js
     - public/javascripts/lazyload.js
+    - public/javascripts/jquery.fcbkcomplete.min.js
   chat:
     - public/javascripts/jquery.pjax.js
     - public/javascripts/jquery-ui.js
@@ -43,6 +44,7 @@ stylesheets:
     - public/stylesheets/new-style.css
     - public/stylesheets/tipTip.css
     - public/stylesheets/ajaxful_rating.css
+    - public/stylesheets/fb_style.css
   ie:
     - public/stylesheets/ie.css
   chat:
