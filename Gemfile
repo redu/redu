@@ -45,3 +45,7 @@ group :development, :test do
   gem 'jasmine'
 end
 
+group :production do
+  gem 'newrelic_rpm', '3.0.1'
+end
+

@@ -108,6 +108,7 @@ GEM
     mimemagic (0.1.8)
     multi_json (1.0.3)
     mysql2 (0.2.7)
+    newrelic_rpm (3.0.1)
     open4 (1.0.1)
     pagseguro (0.1.10)
     paperclip (2.3.11)
@@ -220,6 +221,7 @@ DEPENDENCIES
   jquery-rails (>= 1.0.3)
   mime-types
   mysql2 (~> 0.2.1)
+  newrelic_rpm (= 3.0.1)
   pagseguro (~> 0.1.10)
   paperclip
   pusher
