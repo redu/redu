@@ -37,6 +37,8 @@ javascripts:
   ie:
     - public/javascripts/json2.js
     - public/javascripts/selectivizr.js
+  ckeditor:
+    - public/javascripts/ckeditor/ckeditor.js
 
 stylesheets:
   common:
