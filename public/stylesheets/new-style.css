@@ -1589,6 +1589,10 @@
   margin-top: 25px;
 }
 
+#home .hall .form-common .errorMessageField {
+  margin-left: 60px;
+}
+
 .flash-message {
   padding: 15px;
 
@@ -2129,10 +2133,18 @@ ul.holder {
   padding: 8px;
 
   border: 1px solid #B3B2B3;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
   border-radius: 5px;
 }
+
+.borderradius .form-common textarea,
+.borderradius .form-common input[type=password],
+.borderradius .form-common input[type=text],
+.borderradius ul.holder {
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+
+
 
 .form-common .cke_editor_bulletin_description_editor,
 .form-common .cke_editor_event_description_editor,
@@ -2196,10 +2208,12 @@ ul.holder {
   background-color: #ffeed7;
   margin: 10px 50px;
 
+}
+
+.borderradius .form-common .errorExplanation {
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
-
 }
 
 .form-common .errorExplanation  p {

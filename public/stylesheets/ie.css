@@ -28,6 +28,10 @@
   filter: none;
 }
 
+.form-common input[type="submit"] {
+  clear: none;
+}
+
 .link-loading,
 a.link-loading,  /* para sobrepor a precedência de input.important */
 .new-subject .new-resource li a.link-loading, /* para sobrepor a precedência */

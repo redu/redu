@@ -14,6 +14,7 @@ javascripts:
   common:
     - public/javascripts/rails.js
     - public/javascripts/application.js
+    - public/javascripts/modernizr.js
     - public/javascripts/jquery.tipTip.minified.js
     - public/javascripts/folders.js
     - public/javascripts/lectures.js
