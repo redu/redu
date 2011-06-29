@@ -1,4 +1,4 @@
-$("a:not([data-remote]):not(.chat-link)").pjax("#content", { timeout: null });
+$("a:not([data-remote]):not([href^='#'])").pjax("#content", { timeout: null });
 var buildChat = (function(){
 /*
  var mychat = buildChat({
