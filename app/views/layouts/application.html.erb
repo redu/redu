@@ -14,11 +14,6 @@
     <!--[if (gte IE 6)&(lte IE 8)]>
       <%= include_javascripts :ie %>
     <![endif]-->
-    <% if controller_name == 'subjects' %>
-      <% if action_name == 'index' or action_name == 'new' %>
-        <%= javascript_include_tag :ckeditor %>
-      <% end %>
-    <% end %>
     <%= yield :header_scripts_and_styles %>
 
     <script type="text/javascript" language="javascript" charset="utf-8">
@@ -40,6 +35,8 @@
       chat.init();
       chat.subscribeMyChannel();
     <% end %>
+
+    <%= async_include_javascripts :ckeditor %>
   </head>
    <body>
     <div id="header" class="container_16">

@@ -10,7 +10,15 @@ module BaseHelper
     end
 
     javascript_tag(:type => 'text/javascript') do
-      "LazyLoad.js(#{tags.flatten.to_json}, function(){ #{capture(&block)}});".html_safe
+      result = "LazyLoad.js(#{tags.flatten.to_json}"
+
+      if block.nil?
+        result << ");"
+      else
+        result << ", function(){ #{capture(&block)}});"
+      end
+
+      result.html_safe
     end.html_safe
   end
 
