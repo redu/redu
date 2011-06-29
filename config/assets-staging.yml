@@ -32,6 +32,7 @@ javascripts:
     - public/javascripts/chat.jquery.js
     - public/javascripts/chat.js
   ie:
+    - public/javascripts/json2.js
     - public/javascripts/selectivizr.js
 
 stylesheets:
