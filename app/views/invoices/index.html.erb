@@ -2,17 +2,17 @@
 <div class="main grid_10" style="width: 580px;">
   <ol id="breadcrumbs" class="clearfix">
     <li>
-      <%= link_to 'Home', home_user_path(@user), :class => 'replacement home icon icon-redu_r8_c227_s1' %>
+      <%= link_to 'Home', home_user_path(@user), :class => 'replacement home icon icon-home-lightblue_16_16' %>
     </li>
     <li>
-      <%= link_to 'Configurações', edit_user_path(@user) %>
+      <%= link_to 'Configurações', edit_user_path(@user), :class => "icon icon-management-lightblue_16_16" %>
   </ol>
   <div id="invoice-index">
     <%=
-      fake_tabs ['Perfil', edit_user_path(@user), {:class => 'icon'}],
-        ['Conta', account_user_path(@user), {:class => 'icon'}],
-        ['Planos', user_plans_path(@user), {:class => 'icon'}],
-        ['Faturas', plan_invoices_path(@plan), {:class => 'icon'}] do
+      fake_tabs ['Perfil', edit_user_path(@user), {:class => 'icon icon-profile-gray_16_16'}],
+        ['Conta', account_user_path(@user), {:class => 'icon icon-account-gray_16_16'}],
+        ['Planos', user_plans_path(@user), {:class => 'icon icon-cash-gray_16_16'}],
+        ['Faturas', plan_invoices_path(@plan), {:class => 'icon icon-cash-gray_16_16'}] do
       %>
     <div class="call">
       <span class="billable">

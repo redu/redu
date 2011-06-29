@@ -34,7 +34,7 @@
       <div class="bio-wrapper clearfix">
         <% if can? :manage, @user %>
         <%= link_to 'Editar', edit_user_path(@user),
-          :class => 'edit icon icon-redu_r12_c5_s1' %>
+          :class => 'edit icon icon-management-gray_8_8' %>
         <% end %>
         <span class="label">O que faço de melhor:</span>
         <span class="bio"><%= @user.description %></span>
@@ -74,7 +74,7 @@
           </div>
         </div>
         <%= link_to 'Preencher perfil', edit_user_path(@user),
-          :class => 'edit icon icon-redu_r12_c5_s1' %>
+          :class => 'edit icon icon-management-gray_8_8' %>
       </div>
     <% end %>
   <% end %>
