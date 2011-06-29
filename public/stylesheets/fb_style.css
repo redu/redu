@@ -11,7 +11,7 @@ ul.holder li.bit-box-focus { border-color: #598BEC; background: #598BEC; color: 
 ul.holder li.bit-input input { width: auto; overflow:visible; margin: 0; border: 0px; outline: 0; padding: 3px 0px 2px; } /* no left/right padding here please */
 ul.holder li.bit-input input.smallinput { width: 20px; }
 
-/* Facebook demo CSS */      
+/* Facebook demo CSS */
 ul.holder { width: 400px; }
 ul.holder { margin: 0 !important }
 ul.holder li.bit-box, #apple-list ul.holder li.bit-box { padding-right: 15px; position: relative; z-index:1000;}
@@ -32,7 +32,7 @@ ul.holder li.bit-box-focus a.closebutton, ul.holder li.bit-box-focus a.closebutt
 .facebook-auto ul li.auto-focus { background: #4173CC; color: #fff; }
 .facebook-auto ul li.auto-focus em { background: none; }
 .deleted { background-color:#4173CC !important; color:#ffffff !important;}
-.hidden { display:none;}
+#message_to .hidden { display:none;}
 
 #demo ul.holder li.bit-input input { padding: 2px 0 1px; border: 1px solid #999; }
 .ie6fix {height:1px;width:1px; position:absolute;top:0px;left:0px;z-index:1;}
