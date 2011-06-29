@@ -9,9 +9,6 @@
       <h4>Recursos</h4>
       <span class="counter">Adicionar recurso</span>
     </div>
-    <% content_for :header_scripts_and_styles do %>
-      <%= javascript_include_tag :ckeditor %>
-    <% end %>
     <div id="new_subject" class="new-subject form-common">
       <%= render :partial => 'lectures/index_short' %>
       <%=

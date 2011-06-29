@@ -1,6 +1,5 @@
 <div id="lights_dimmed" class="clearfix" style="display:none;">
 </div>
-<% content_for :header_scripts_and_styles do %>
 <script type="text/javascript">
   $(function(){
     $("#lights").toggle(function(e){
@@ -19,9 +18,8 @@
     });
 
     $(".statuses-wrapper").live("click", function(){
-       var docHeight = $(document).height(); 
+       var docHeight = $(document).height();
        $("#lights_dimmed:visible").css("height", docHeight)
     });
   });
 </script>
-<% end %>

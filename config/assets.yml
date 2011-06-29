@@ -23,6 +23,8 @@ javascripts:
     - public/javascripts/jquery.remotipart.js
     - public/javascripts/lazyload.js
     - public/javascripts/jquery.fcbkcomplete.min.js
+    - public/javascripts/jquery.tokeninput.js
+    - public/javascripts/jquery.filestyle.mini.js
   chat:
     - public/javascripts/jquery.pjax.js
     - public/javascripts/jquery-ui.js
@@ -45,6 +47,7 @@ stylesheets:
     - public/stylesheets/tipTip.css
     - public/stylesheets/ajaxful_rating.css
     - public/stylesheets/fb_style.css
+    - public/stylesheets/token-input.css
   ie:
     - public/stylesheets/ie.css
   chat:
