@@ -89,6 +89,10 @@
   padding: 3px 0;
 }
 
+#chat-contacts li:hover {
+  background-color: #EFF6E6;
+}
+
 #chat-contacts .minimize {
   cursor: pointer;
   text-indent: 9999px;
@@ -114,13 +118,13 @@
 }
 
 #chat-contacts .name {
+  float: left;
+  width: 105px;
+  white-space: nowrap;
   font-size: .95em;
   color: #4cacd5;
-}
-
-
-#chat-contacts .name:hover {
-  text-decoration: underline;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 #chat-contacts .role {
