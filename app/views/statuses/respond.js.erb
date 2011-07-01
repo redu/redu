@@ -3,7 +3,8 @@
   response = "<%=  escape_javascript (render :partial => 'statuses/response', :locals => { :response => @status }) %>";
   $status = $("#status-<%= status_id %>");
 
-  $status.find(".responses ol").prepend(response);
+  $status.find(".responses ol").append(response);
+  $status.find(".responses").show();
   $status.find(".create-response").toggle();
   $status.find("form textarea").val('');
 <% end %>

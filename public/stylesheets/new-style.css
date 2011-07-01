@@ -1156,11 +1156,6 @@
   font-size: .98em;
 }
 
-.statuses .status,
-.statuses .re-status {
-  margin-bottom: 10px;
-}
-
 .statuses > ol > li {
   background: url("../images/new/dots.png") repeat-x top;
   padding: 20px 0;
@@ -1174,10 +1169,6 @@
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
-}
-
-.statuses ol ol li {
-  margin-bottom: 10px;
 }
 
 .statuses li .avatar {

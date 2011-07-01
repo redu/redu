@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'authlogic/test_case'
+include Authlogic::TestCase
 
 describe UsersController do
 
@@ -113,6 +114,27 @@ describe UsersController do
 
         end
       end
+    end
+  end
+
+  context "POST destroy" do
+    before do
+      @user = Factory(:user)
+      activate_authlogic
+      UserSession.create @user
+
+      @post_params = { :locale => "pt-BR", :id => @user.login }
+    end
+
+    it "destroys the user" do
+      expect {
+        post :destroy, @post_params
+      }.should change(User, :count).by(-1)
+    end
+
+    it "redirects to site_index" do
+        post :destroy, @post_params
+        response.should redirect_to(home_path)
     end
   end
 end

@@ -34,7 +34,6 @@ Redu::Application.routes.draw do
   match 'admin/tags/:action' => 'tags', :action => :manage, :as => :admin_tags
 
   # sessions routes
-  match  '/login' => 'sessions#new', :as => :login
   match '/signup' => 'users#new', :as => :signup
   match '/logout' => 'sessions#destroy', :as => :logout
 

@@ -92,6 +92,7 @@ class CoursesController < BaseController
   end
 
   def index
+
     paginating_params = {
       :page => params[:page],
       :order => 'name ASC',
@@ -121,6 +122,8 @@ class CoursesController < BaseController
       @courses = @courses.with_audiences(params[:audiences_ids])
     end
 
+    # Workaround p bug do will_paginate
+    paginating_params[:total_entries] = @courses.group("courses.id").all.length
     @courses = @courses.paginate(paginating_params)
 
     respond_to do |format|

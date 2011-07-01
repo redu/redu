@@ -744,5 +744,17 @@ describe Ability do
       @user_ability.should be_able_to(:manage, status)
     end
 
+    context "when destroying user" do
+      before do
+        @other = Factory(:user)
+      end
+      it "can NOT destroy others user" do
+        @user_ability.should_not be_able_to(:destroy, @other)
+      end
+
+      it "can destroy its own user" do
+        @user_ability.should be_able_to(:destroy, @user)
+      end
+    end
   end
 end
