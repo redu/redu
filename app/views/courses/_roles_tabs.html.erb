@@ -1,0 +1,66 @@
+<ul class="clearfix">
+
+  <% if params.has_key? :role %>
+    <li>
+      <%= link_to "Todos", courses_index_path,
+        :class => "icon icon-course-gray_16_16" %>
+  <% else %>
+    <li class="ui-state-active">
+      <%= link_to "Todos", courses_index_path,
+        :class => "icon icon-course-lightblue_16_16" %>
+  <% end %>
+  </li>
+
+  <% unless Course.user_behave_as_student(current_user).empty? %>
+    <% if params[:role] == 'student' %>
+      <li class="ui-state-active">
+        <%= link_to "Aluno", courses_index_path(:role => 'student'),
+          :class => "icon icon-student-lightblue_16_16" %>
+    <% else %>
+      <li>
+        <%= link_to "Aluno", courses_index_path(:role => 'student'),
+          :class => "icon icon-student-gray_16_16" %>
+    <% end %>
+    </li>
+  <% end %>
+
+  <% unless Course.user_behave_as_tutor(current_user).empty? %>
+    <% if params[:role] == 'tutor' %>
+      <li class="ui-state-active">
+        <%= link_to "Tutor", courses_index_path(:role => 'tutor'),
+          :class => "icon icon-tutor-lightblue_16_16" %>
+    <% else %>
+      <li>
+        <%= link_to "Tutor", courses_index_path(:role => 'tutor'),
+          :class => "icon icon-tutor-gray_16_16" %>
+    <% end %>
+    </li>
+  <% end %>
+
+  <% unless Course.user_behave_as_teacher(current_user).empty? %>
+    <% if params[:role] == 'teacher' %>
+      <li class="ui-state-active">
+        <%= link_to "Professor", courses_index_path(:role => 'teacher'),
+          :class => "icon icon-teacher-lightblue_16_16" %>
+    <% else %>
+      <li>
+        <%= link_to "Professor", courses_index_path(:role => 'teacher'),
+          :class => "icon icon-teacher-gray_16_16" %>
+    <% end %>
+    </li>
+  <% end %>
+
+  <% unless Course.user_behave_as_administrator(current_user).empty? %>
+    <% if params[:role] == 'administrator' %>
+      <li class="ui-state-active">
+        <%= link_to "Administrador", courses_index_path(:role => 'administrator'),
+          :class => "icon icon-administrator-lightblue_16_16" %>
+    <% else %>
+      <li>
+        <%= link_to "Administrador", courses_index_path(:role => 'administrator'),
+          :class => "icon icon-administrator-gray_16_16" %>
+    <% end %>
+    </li>
+  <% end %>
+
+</ul>
