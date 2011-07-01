@@ -45,7 +45,7 @@ class SessionsController < BaseController
   end
 
   def destroy
-    current_user_session.destroy
+    current_user_session.destroy if current_user_session
     redirect_to home_path
   end
 
