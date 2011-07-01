@@ -1,4 +1,6 @@
 require 'spec_helper'
+require 'authlogic/test_case'
+include Authlogic::TestCase
 
 describe SessionsController do
   before do
@@ -55,4 +57,29 @@ describe SessionsController do
     end
   end
 
+  context "GET destroy (logout)" do
+    context "when current_user is NOT nil" do
+      before do
+        @user = Factory(:user)
+        activate_authlogic
+        UserSession.create @user
+        get :destroy, { :locale => "pt-BR" }
+      end
+
+      it "destroys the user_session" do
+        UserSession.find.should be_nil
+      end
+
+      it "redirects to home_path" do
+        response.should redirect_to(home_path)
+      end
+    end
+
+    context "when current_user is nil" do
+      it "redirects to home_path" do
+        get :destroy, { :locale => "pt-BR" }
+        response.should redirect_to(home_path)
+      end
+    end
+  end
 end

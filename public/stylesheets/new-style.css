@@ -3307,10 +3307,10 @@ div.token-input-dropdown {
 
 #global-courses .filters label {
   cursor: pointer;
+  font-size: .9em;
 }
 
 #global-courses .filter input {
-  display: none;
 }
 
 #global-courses .filters .checked {
@@ -3341,7 +3341,7 @@ div.token-input-dropdown {
 
 }
 
-#global-courses .text-filter .button{
+#global-courses .text-filter .button {
   float: left;
   margin-top: 10px;
   padding: 9px 15px;

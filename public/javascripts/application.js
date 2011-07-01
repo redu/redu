@@ -127,16 +127,13 @@ jQuery(function(){
 
     });
 
-    $("#global-courses .filters .filter").click(function(){
-        var checkbox = $(this).find("input[type=checkbox]");
+    $("#global-courses .filters input[type=checkbox]").change(function(){
+        var $wrapper = $(this).parent();
+        $wrapper.toggleClass("checked");
+    });
 
-        if(checkbox.is(":checked")) {
-          $(this).removeClass("checked");
-          checkbox.attr("checked", "");
-        } else {
-          $(this).addClass("checked");
-          checkbox.attr("checked", "checked");
-        }
+    $("#global-courses .filters .checked").each(function(){
+        $(this).find("input").attr("checked", true);
     });
 
     // Itens da listagem de cursos
