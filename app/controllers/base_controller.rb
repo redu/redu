@@ -5,6 +5,7 @@ class BaseController < ApplicationController
 
 
   rescue_from CanCan::AccessDenied do |exception|
+    flash[:notice] = "Você não tem acesso a essa página."
     redirect_to home_path
   end
 

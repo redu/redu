@@ -227,23 +227,9 @@ class UsersController < BaseController
   end
 
   def destroy
-    if current_user == @user
-      @user.destroy
-      flash[:notice] = :the_user_was_deleted
-      redirect_to :controller => 'sessions', :action => 'new' and return
-    elsif @user.admin? #|| @user.featured_writer?
-      @user.destroy
-      flash[:notice] = t :the_user_was_deleted
-    elsif current_user.admin?
-      @user.destroy
-      flash[:notice] = t :the_user_was_deleted
-      redirect_to :controller => 'admin', :action => 'users' and return
-    else
-      flash[:error] = t :you_cant_delete_that_user
-    end
-    respond_to do |format|
-      format.html { redirect_to admin_moderate_users_path }
-    end
+    @user.destroy
+    flash[:notice] = t :the_user_was_deleted
+    redirect_to home_path and return
   end
 
   def change_profile_photo
