@@ -20,7 +20,7 @@ class PresenceController < BaseController
     contact = User.find(params[:contact_id].to_i)
     private_channel = current_user.private_channel_with(contact)
 
-    time = Time.now.strftime('hoje, %H:%M')
+    time = Time.zone.now.strftime('hoje, %H:%M')
     payload = { :thumbnail => current_user.avatar.url(:thumb_24),
       :text => params[:text], :time => time,
       :name => current_user.display_name,
