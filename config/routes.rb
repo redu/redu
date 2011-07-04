@@ -206,6 +206,8 @@ Redu::Application.routes.draw do
       get :home
       get :mural
       get :account
+      get :contacts_endless
+      get :environments_endless
     end
     collection do
       get :auto_complete

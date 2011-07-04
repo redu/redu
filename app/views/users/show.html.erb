@@ -89,33 +89,18 @@
   <% end %>
   <div class="environments">
     <div class="call">
-      <span class="">Ambientes</span>
+      <span class="">Ambientes: <%= @user.environments.count %></span>
     </div>
     <ul>
-      <% @user.environments.each do |environment| %>
-      <li>
-        <%= image_tag environment.avatar.url(:thumb_32), :class => 'avatar' %>
-        <%= link_to environment.initials, environment_path(environment),
-          :class => 'initials' %>
-        <%= link_to environment.name, environment_path(environment),
-          :class => 'environment' %>
-
-        <ul class="courses">
-          <% @user.courses.of_environment(environment).each do |course| %>
-          <li>
-            <%= link_to course.name,
-              environment_course_path(environment, course),
-              :class => 'course' %>
-            <span class="role">
-              <%= Role.human_attribute_name(
-                    Role[@user.get_association_with(course).role]) %>
-            </span>
-          </li>
-          <% end %>
-        </ul>
-      </li>
-      <% end %>
+      <% @environments = @user.environments.page(params[:page]).per(4) %>
+      <%= render :partial => 'environments/item_medium',
+        :collection => @environments %>
     </ul>
+    <%= paginate @environments, :theme => 'sidebar_endless',
+      :params => { :controller => 'users', :action => 'environments_endless' },
+      :text => "Mostrando os <X> últimos ambientes de #{@user.first_name}",
+      :html_class => "sec-sidebar-endless"
+    %>
   </div>
   <% unless current_user == @user %>
     <div class="common-connections">

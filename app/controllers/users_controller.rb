@@ -96,7 +96,27 @@ class UsersController < BaseController
 
     respond_to do |format|
       format.html
-      format.js
+      format.js { render_endless 'statuses/item', @statuses, '#statuses > ol' }
+    end
+  end
+
+  def contacts_endless
+    @contacts = @user.friends.page(params[:page]).per(8)
+
+    respond_to do |format|
+      format.js { render_sidebar_endless 'users/item_medium_24', @contacts,
+        '.connections', "Mostrando os <X> últimos contatos de #{@user.first_name}" }
+    end
+  end
+
+  def environments_endless
+    @environments = @user.environments.page(params[:page]).per(4)
+
+    respond_to do |format|
+      format.js { render_sidebar_endless 'environments/item_medium',
+        @environments, '.environments > ul',
+        "Mostrando os <X> últimos ambientes de #{@user.first_name}",
+        "sec-sidebar-endless" }
     end
   end
 

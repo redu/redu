@@ -201,6 +201,16 @@
   margin: 3px 3px 0 0;
 }
 
+#content .sidebar .connections li .avatar {
+  float: left;
+  margin-right: 5px;
+}
+
+#content .sidebar .connections li .name {
+  font-weight: bold;
+  font-size: .87em;
+}
+
 #content .sidebar .more {
   display: block;
   text-align: right;
@@ -1150,6 +1160,32 @@
 .endless a:hover,
 .endless_pending a:hover {
   text-decoration: none;
+}
+
+.sidebar-endless,
+.sec-sidebar-endless {
+  background: url("../images/new/dots.png") repeat-x top;
+  padding-top: 10px;
+  margin-top: 10px;
+  text-align: right;
+  font-size: 0.87em;
+}
+
+
+.sec-sidebar-endless {
+  text-align: left;
+  margin-left: 10px;
+}
+
+.sidebar-endless a,
+.sec-sidebar-endless a {
+  display: block;
+}
+
+.sidebar-endless .counter,
+.sec-sidebar-endless .counter {
+  color: #B3B2B3;
+  font-style: italic;
 }
 
 .statuses {

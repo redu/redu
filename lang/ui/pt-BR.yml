@@ -286,6 +286,10 @@ pt-BR:
     attributes:
       user:
         login: "Login"
+  views:
+    pagination:
+      sidebar_endless: "Ver mais"
+
   #redu categories
   all: Todas
   aeronautics_and_astronautics: Aeronáutica e Astronáutica
@@ -789,6 +793,7 @@ pt-BR:
   events: Events
   #en: every_person_has_something_to_say: Every single person has something to say, something to give, something that will help someone else.  Join in!
   every_person_has_something_to_say: "Every single person has something to say, something to give, something that will help someone else.  Join in!"
+  exibitions: "Exibições"
   #en: explore_site: Explore {{site}}
   explore_site: "Explore {{site}}"
   #en: failed: failed
@@ -1675,8 +1680,6 @@ pt-BR:
   user_bio_help: "<p>Your bio is first thing people see on your profile. Some ideas:<ul><li> Describe your sense of style</li><li> Explain what you love about life.</li><li> What's the last thing you purchased for a friend?</li></ul></p>"
   #en: view: View
   view: Visualizar
-  #en: views: Views
-  views: Exibições
   #en: view_all_my_clippings: View all my clippings
   view_all_my_clippings: View all my clippings
   #en: view_all_my_friend_requests: View all my friend requests
