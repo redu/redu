@@ -3,14 +3,24 @@ require 'md5'
 # Methods added to this helper will be available to all templates in the application.
 module BaseHelper
 
-  # Inclui o javascript de forma lazy
+  # Inclui o javascript de forma lazy (usa o jammit)
   def async_include_javascripts(*packages, &block)
-    tags = packages.map do |pack|
-      should_package? ? Jammit.asset_url(pack, :js) : Jammit.packager.individual_urls(pack.to_sym, :js)
-    end
+    tags = packages.map { |pack| asset_url pack, :js }
+    build_async_script_tag(tags, &block)
+  end
 
+  # Inclui o javascript de forma lazy (usa o jammit)
+  def async_include_css(*packages)
+    tags = packages.map { |pack| asset_url pack, :css }
     javascript_tag(:type => 'text/javascript') do
-      result = "LazyLoad.js(#{tags.flatten.to_json}"
+      "LazyLoad.css(#{tags.flatten.to_json});".html_safe
+    end.html_safe
+  end
+
+  # Constrói tag script p/ incluir css/js de forma lazy
+  def build_async_script_tag(urls, &block)
+    javascript_tag(:type => 'text/javascript') do
+      result = "LazyLoad.js(#{urls.flatten.to_json}"
 
       if block.nil?
         result << ");"
@@ -20,17 +30,6 @@ module BaseHelper
 
       result.html_safe
     end.html_safe
-  end
-
-  def async_include_css(*packages)
-    tags = packages.map do |pack|
-      should_package? ? Jammit.asset_url(pack, :css) : Jammit.packager.individual_urls(pack.to_sym, :css)
-    end
-
-    javascript_tag(:type => 'text/javascript') do
-      "LazyLoad.css(#{tags.flatten.to_json});".html_safe
-    end.html_safe
-
   end
 
   # Cria lista não ordenada no formato da navegação do widget de abas (jquery UI)
@@ -376,6 +375,14 @@ module BaseHelper
 
   def should_package?
     Jammit.package_assets && !(Jammit.allow_debugging && params[:debug_assets])
+  end
+
+  def asset_url(pack, type)
+    if should_package?
+      Redu::Application.config.action_controller.asset_host + Jammit.asset_url(pack, type)
+    else
+      Jammit.packager.individual_urls(pack.to_sym, type)
+    end
   end
 
 end

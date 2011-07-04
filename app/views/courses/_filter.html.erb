@@ -10,11 +10,10 @@
           manter marcada  %>
         <% if !params[:audiences_ids].nil? and params[:audiences_ids].include?(audience.id.to_s) %>
           <span class="filter checked">
-            <%= check_box_tag "audiences_ids[]", audience.id %>
           <% else %>
             <span class="filter">
-              <%= check_box_tag "audiences_ids[]", audience.id, nil, :id => "audiences_ids_#{audience.id}" %>
             <% end %>
+            <%= check_box_tag "audiences_ids[]", audience.id, nil, :id => "audiences_ids_#{audience.id}" %>
             <%= label_tag "audiences_ids_#{audience.id}", audience.name %>
         </span>
       <% end %>
