@@ -3,11 +3,24 @@ require 'md5'
 # Methods added to this helper will be available to all templates in the application.
 module BaseHelper
 
-  # Inclui o javascript de forma lazy
+  # Inclui o javascript de forma lazy (usa o jammit)
   def async_include_javascripts(*packages, &block)
     tags = packages.map { |pack| asset_url pack, :js }
+    build_async_script_tag(tags, &block)
+  end
+
+  # Inclui o javascript de forma lazy (usa o jammit)
+  def async_include_css(*packages)
+    tags = packages.map { |pack| asset_url pack, :css }
     javascript_tag(:type => 'text/javascript') do
-      result = "LazyLoad.js(#{tags.flatten.to_json}"
+      "LazyLoad.css(#{tags.flatten.to_json});".html_safe
+    end.html_safe
+  end
+
+  # Constrói tag script p/ incluir css/js de forma lazy
+  def build_async_script_tag(urls, &block)
+    javascript_tag(:type => 'text/javascript') do
+      result = "LazyLoad.js(#{urls.flatten.to_json}"
 
       if block.nil?
         result << ");"
@@ -17,14 +30,6 @@ module BaseHelper
 
       result.html_safe
     end.html_safe
-  end
-
-  def async_include_css(*packages)
-    tags = packages.map { |pack| asset_url pack, :css }
-    javascript_tag(:type => 'text/javascript') do
-      "LazyLoad.css(#{tags.flatten.to_json});".html_safe
-    end.html_safe
-
   end
 
   # Cria lista não ordenada no formato da navegação do widget de abas (jquery UI)
