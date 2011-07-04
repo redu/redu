@@ -5,10 +5,7 @@ module BaseHelper
 
   # Inclui o javascript de forma lazy
   def async_include_javascripts(*packages, &block)
-    tags = packages.map do |pack|
-      should_package? ? Jammit.asset_url(pack, :js) : Jammit.packager.individual_urls(pack.to_sym, :js)
-    end
-
+    tags = packages.map { |pack| asset_url pack, :js }
     javascript_tag(:type => 'text/javascript') do
       result = "LazyLoad.js(#{tags.flatten.to_json}"
 
@@ -23,10 +20,7 @@ module BaseHelper
   end
 
   def async_include_css(*packages)
-    tags = packages.map do |pack|
-      should_package? ? Jammit.asset_url(pack, :css) : Jammit.packager.individual_urls(pack.to_sym, :css)
-    end
-
+    tags = packages.map { |pack| asset_url pack, :css }
     javascript_tag(:type => 'text/javascript') do
       "LazyLoad.css(#{tags.flatten.to_json});".html_safe
     end.html_safe
@@ -376,6 +370,14 @@ module BaseHelper
 
   def should_package?
     Jammit.package_assets && !(Jammit.allow_debugging && params[:debug_assets])
+  end
+
+  def asset_url(pack, type)
+    if should_package?
+      Redu::Application.config.action_controller.asset_host + Jammit.asset_url(pack, type)
+    else
+      Jammit.packager.individual_urls(pack.to_sym, type)
+    end
   end
 
 end
