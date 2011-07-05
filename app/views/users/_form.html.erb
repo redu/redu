@@ -1,71 +1,69 @@
-<%= form_for @user, :html => {:multipart =>true, :class => "form-common"}  do |f|  %>
+<%= form_for @user, :html => {:multipart =>true, :class => "concave-form" }  do |f|  %>
   <%= f.error_messages %>
 
-  <%= label_tag :avatar,
-    raw("Foto de seu perfil: <span class='snnipet'>(tamanho máximo: 100MB)</span>") %>
+  <%= f.label :avatar,
+    raw("Foto de seu perfil: <span class='snippet'>(tamanho máximo: 100MB)</span>") %>
   <%= f.file_field :avatar %>
-
 
   <% field_set_tag do %>
     <%= image_tag @user.avatar.url(:thumb_100) %>
   <% end %>
 
-  <%= label_tag :first_name, "Nome:" %>
+  <%= f.label :first_name, "Nome:" %>
   <%= f.text_field :first_name %>
   <span class="tip">11 caracteres</span>
 
-  <%= label_tag :last_name, "Sobrenome:" %>
+  <%= f.label :last_name, "Sobrenome:" %>
   <%= f.text_field :last_name %>
   <span class="tip">14 caracteres</span>
 
-  <%= label_tag :birthday, "Nascimento:" %>
+  <%= f.label :birthday, "Nascimento:" %>
   <%= field_set_tag nil, :class => "inline" do %>
     <%= f.date_select :birthday, {:start_year => 1926, :end_year => Time.now.year - 1}%>
   <% end %>
 
-  <%= label_tag "Sexo:" %>
-  <%= field_set_tag nil, :class => "inline" do %>
+  <%= field_set_tag "Sexo:", :class => "inline" do %>
     <%= f.radio_button :gender, User::MALE %>
-    Masculino
+    <%= f.label "gender_#{User::MALE}".downcase.to_sym, "Masculino" %>
     <%= f.radio_button :gender, User::FEMALE %>
-    Feminino
+    <%= f.label "gender_#{User::FEMALE}".downcase.to_sym, "Feminino" %>
   <% end %>
 
-  <%= label_tag "Localização:" %>
+  <%= f.label :localization, "Localização:" %>
   <%= f.text_field :localization %>
   <span class="tip">Ex: Recife, Pernambuco</span>
 
-  <%= label_tag "Celular:" %>
+  <hr/>
+
+  <%= f.label :mobile, "Celular:" %>
   <%= f.text_field :mobile %>
   <span class="tip">Ex: 55 81 4444-4444</span>
 
-  <%= label_tag "Papel:" %>
-  <%= field_set_tag nil, :class => "inline" do %>
+  <%= field_set_tag "Papel", :class => "inline" do %>
     <%= f.radio_button :teacher_profile, false %>
-    Aluno
+    <%= f.label :teacher_profile_false, "Alino" %>
     <%= f.radio_button :teacher_profile, true %>
-    Professor
+    <%= f.label :teacher_profile_true, "Professor" %>
   <% end %>
 
-  <%= f.label :curriculum, raw("Upload de currículo: <span class='snnipet'>(DOC[x], PDF)</span>") %>
-  <%= field_set_tag nil, :class => 'inline' do %>
-    <%= f.file_field :curriculum %>
-    <% if @user.curriculum_file_name && @user.errors["curriculum"].nil? %>
-      <%= link_to @user.curriculum_file_name, download_curriculum_user_path %>
-    <% end %>
+  <%= f.label :curriculum, raw("Upload de currículo: <span class='snippet'>(DOC[x], PDF)</span>") %>
+  <%= f.file_field :curriculum %>
+  <% if @user.curriculum_file_name && @user.errors["curriculum"].nil? %>
+    <%= link_to @user.curriculum_file_name, download_curriculum_user_path %>
   <% end %>
 
   <% random_number = get_random_number%>
-  <%= label_tag :description, "Escreva sobre você:", :size => "50x3" %>
+  <%= f.label :description, "Escreva sobre você:" %>
   <%= f.text_area :description, :rows => "4", :cols => "50",
     :class => "desc-#{random_number}"%>
   <%= render :partial => 'shared/limit_char_field',
     :locals => {:class_textarea => "desc-#{random_number}", :limit => 400} %>
 
-  <%= label_tag :tag_list,
-    raw("Áreas de seu interesse: <span class='snippet'>(separadas por vírgula)</span>") %>
-  <%= text_field_tag 'tag_list', @user.tag_list%>
+  <%= f.label :tag_list, raw("Áreas de seu interesse: <span class='snippet'>(separadas por vírgula)</span>") %>
+  <%= text_field_tag :user_tag_list, @user.tag_list.join(", ") %>
   <span class="tip">250 caracteres</span>
+
+  <hr/>
 
   <%= f.submit t(:save_changes) %>
 

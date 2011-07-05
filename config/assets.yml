@@ -25,6 +25,7 @@ javascripts:
     - public/javascripts/jquery.fcbkcomplete.min.js
     - public/javascripts/jquery.tokeninput.js
     - public/javascripts/jquery.filestyle.mini.js
+    - public/javascripts/form.redu.jquery.js
   chat:
     - public/javascripts/jquery.pjax.js
     - public/javascripts/jquery-ui.js
@@ -48,6 +49,7 @@ stylesheets:
     - public/stylesheets/ajaxful_rating.css
     - public/stylesheets/fb_style.css
     - public/stylesheets/token-input.css
+    - public/stylesheets/form.redu.css
   ie:
     - public/stylesheets/ie.css
   chat:
