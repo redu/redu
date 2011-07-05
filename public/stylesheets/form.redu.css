@@ -165,10 +165,14 @@
     color: white;
     background-color: #73C3E6;
     margin: 20px 25px 0 0;
-    float: right;
     font-weight: bold;
     background: #4CACD5;
     font-size: .9em;
+  }
+
+  .concave-form .concave-button,
+  .concave-form .concave-cancel {
+    float: right;
   }
 
   .concave-cancel {
