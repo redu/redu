@@ -174,10 +174,10 @@ describe User do
       u = Factory.build(:user, :mobile => "21312312")
       u.should_not be_valid
       u.errors[:mobile].should_not be_empty
-      u.mobile = "55 81 1231-2131"
+      u.mobile = "+55 (81) 1231-2131"
       u.should be_valid
       u.mobile = "81 2131-2123"
-      u.should be_valid
+      u.should_not be_valid
     end
   end
 

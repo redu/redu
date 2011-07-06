@@ -164,7 +164,7 @@ class User < ActiveRecord::Base
   validates_format_of :email,
     :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/
   validates_format_of :mobile,
-      :with => /^\+(\(?\d{2}\)?)?\s?\((\(?\d{2}\)?)\)?\s(\d{4}-?\d{4})/,
+      :with => /^\+\d{2}\s\(\d{2}\)\s\d{4}-\d{4}$/,
       :allow_blank => true
 
   # override activerecord's find to allow us to find by name or id transparently
