@@ -1,4 +1,5 @@
-<%= form_for @user, :html => {:multipart =>true, :class => "concave-form"}  do |f|  %>
+<%= form_for @user, :url => update_account_user_path,
+  :html => {:multipart =>true, :class => "concave-common"}  do |f|  %>
   <%= f.error_messages %>
 
   <%= field_set_tag "Configurações", :class => 'inline' do %>
@@ -42,11 +43,10 @@
     <% if @flag %>
       <%=  password_field_tag :current_password, nil %>
     <% else %>
-      <%= @current_password %>
       <%=  password_field_tag :current_password %>
     <% end %>
 
-    <%= f.label :password, "Nova senha:" %>
+    <%= f.label :password,  (t :new_password) + ":" %>
     <%=  f.password_field :password %>
     <%= f.label :password_confirmation, "Confirmação:" %>
     <%=  f.password_field :password_confirmation %>

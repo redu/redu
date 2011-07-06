@@ -117,6 +117,103 @@ describe UsersController do
     end
   end
 
+  context "POST update" do
+    before do
+      @user = Factory(:user)
+      activate_authlogic
+      UserSession.create @user
+
+      @post_params = { :locale => "pt-BR", :id => @user.login, :user => { "birthday(1i)"=>"1991",
+        "birthday(2i)"=>"6", "birthday(3i)"=>"8", :teacher_profile => false,
+        :mobile => "", :last_name => "Last", :localization => "",
+        :description => "", :first_name => "First" } }
+    end
+
+    context "when successful" do
+      before do
+        post :update, @post_params
+      end
+
+      it "updates the user" do
+        @user.reload
+        @user.first_name.should == @post_params[:user][:first_name]
+        @user.last_name.should == @post_params[:user][:last_name]
+      end
+
+      it "redirects to edit_user_path" do
+        response.should redirect_to(edit_user_path(@user))
+      end
+    end
+
+    context "when failing" do
+      before do
+        @real_name = @user.first_name
+        @post_params[:user][:first_name] = ""
+        post :update, @post_params
+      end
+
+      it "does NOT update the user" do
+        assigns[:user].errors.should_not be_empty
+        @user.reload.first_name.should == @real_name
+      end
+
+      it "re-reders users/edit" do
+        response.should render_template("users/edit")
+      end
+    end
+  end
+
+  context "POST update_account" do
+    before do
+      @user = Factory(:user)
+      activate_authlogic
+      UserSession.create @user
+
+      @post_params = { :locale => "pt-BR", :current_password => @user.password,
+        :id => @user.login, :user => {
+        :email_confirmation => "new_email@example.com",
+        :password_confirmation => "new-pass", :auto_status => "1",
+        :notify_messages => "1", :notify_community_news => "1",
+        :notify_followships => "1", :password => "new-pass",
+        :settings_attributes => { :id  =>@user.settings.id,
+          :view_mural => "1" }, :email => "new_email@example.com" } }
+    end
+
+    context "when successful" do
+      before do
+        post :update_account, @post_params
+      end
+
+      it "updates the user account informations" do
+        authenticated = UserSession.new(:login => @user.login,:password => @post_params[:user][:password]).save
+        authenticated.should be_true
+        @user.reload.email.should == @post_params[:user][:email]
+      end
+
+      it "redirects to account_user_path" do
+        response.should redirect_to(account_user_path(@user))
+      end
+    end
+
+    context "when failing" do
+      before do
+        @post_params[:current_password] = "wrong-pass"
+        post :update_account, @post_params
+      end
+
+      it "does NOT update the user account informations" do
+        assigns[:user].errors.should_not be_empty
+        authenticated = UserSession.new(:login => @user.login,:password => @post_params[:user][:password]).save
+        authenticated.should_not be_true
+        @user.reload.email.should_not == @post_params[:user][:email]
+      end
+
+      it "re-renders users/account" do
+        response.should render_template("users/account")
+      end
+    end
+  end
+
   context "POST destroy" do
     before do
       @user = Factory(:user)

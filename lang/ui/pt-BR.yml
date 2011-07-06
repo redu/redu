@@ -137,6 +137,10 @@ pt-BR:
         recipient: "Para"
         body: "Mensagem"
         subject: "Assunto"
+      user:
+        first_name: "Nome"
+        last_name: "Sobrenome"
+        password: "Senha"
 
     # tradução dos erros de cada tipo
     errors:
@@ -157,9 +161,9 @@ pt-BR:
         user:
           attributes:
             first_name:
-              blank: "Por favor, digite seu nome."
+              blank: "não pode ser deixado em branco"
             last_name:
-              blank: "Por favor, digite seu sobrenome."
+              blank: "não pode ser deixado em branco"
             login:
               blank: ": Por favor, digite um login."
               too_short: ": Login muito curto (mínimo de 5 caracteres)."
@@ -1114,6 +1118,7 @@ pt-BR:
   new_post_for_category: "Nova {{category}}"
   #en: new_post_text: New Post text
   new_post_text: New Post text
+  new_password: Nova senha
   #en: new_skill: New skill
   new_skill: New skill
   #en: new_today: New today
