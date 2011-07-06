@@ -2087,7 +2087,7 @@ a.clean {
 }
 
 .fake-tabs > .panel {
-  padding: 40px 0;
+  margin: 40px 0;
 }
 
 /* Form common styles */
@@ -4646,6 +4646,70 @@ div.token-input-dropdown {
   display: block;
   margin: 0 auto;
   margin-bottom: 10px;
+}
+
+/* Sub abas */
+.subtabs {
+}
+
+.subtabs .ui-tabs-panel {
+  margin-top: 50px;
+}
+
+.subtabs .ui-tabs-nav {
+  margin: 0px auto;
+  width: 240px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #E6E6E5;
+
+  background-image: -moz-linear-gradient(top, #e6e6e5, #f1f0f0);
+  background-image: -webkit-gradient(linear, center top, center bottom, from(#e6e6e5), to(#f1f0f0));
+  background-image: -o-linear-gradient(top, #e6e6e5, #f1f0f0);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#e6e6e5', endColorstr='#f1f0f0');
+  /*INNER ELEMENTS MUST NOT BREAK THIS ELEMENTS BOUNDARIES*/
+  /*Element must have a height (not auto)*/
+  /*All filters must be placed together*/
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#e6e6e5', endColorstr='#f1f0f0')";
+  /*Element must have a height (not auto)*/
+  /*All filters must be placed together*/
+  background-image: linear-gradient(top, #e6e6e5, #f1f0f0);
+}
+
+.subtabs .ui-tabs-nav .ui-state-default {
+  width: 120px;
+  float: left;
+  text-align: center;
+}
+
+.subtabs .ui-tabs-nav .ui-state-default a {
+  padding: 8px;
+  display: block;
+
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+}
+
+.subtabs .ui-tabs-nav .ui-state-hover a {
+  background-color: #DBEFF7;
+  color: #1789C3;
+  text-decoration: none;
+}
+
+.subtabs .ui-tabs-nav .ui-state-active a {
+  background-color: #4CACD5;
+  color: #FFFFFF;
+
+  -moz-text-shadow: 1px -1px 1px #1789C3;
+  -webkit-text-shadow: 1px -1px 1px #1789C3;
+  text-shadow: 1px -1px 1px #1789C3;
+}
+
+.subtabs .ui-tabs-nav .ui-state-active a:hover {
+  background-color: #1789C3;
+  text-decoration: none;
 }
 
 .replacement {

@@ -57,6 +57,36 @@ module BaseHelper
     render(:partial => 'shared/fake_tabs', :locals => locals)
   end
 
+  # Cria lista não ordenada no formato desejado pelo JqueryUI
+  def real_tabs_navigation(*ids)
+    lis = ids.collect do |id|
+      #href, name, class_name = id
+      href, name = id
+      content_tag :li do
+        # por enquanto que ícones não são gerados pelo design
+        # content_tag :a, :href => "##{href}", :class => "icon #{class_name}" do
+        content_tag :a, :href => "##{href}" do
+          name
+        end
+      end
+    end
+    width = lis.size * 120;
+    ul = content_tag :ul, :style => "width: #{width}px;", :class => "clearfix"  do
+      lis.join("\n").html_safe
+    end
+    ul.html_safe
+  end
+
+  # Cria código para abas do JqueryUI a partir de uma lista de id's e título
+  # [href(id), name]
+  def real_tabs(*ids, &block)
+    locals = {
+      :navigation => real_tabs_navigation(*ids),
+      :body => capture(&block)
+    }
+    render(:partial => 'shared/real_tabs', :locals => locals)
+  end
+
   def error_for(object, method = nil, options={})
     if method
       err = instance_variable_get("@#{object}").errors[method].to_sentence rescue instance_variable_get("@#{object}").errors[method]
