@@ -138,8 +138,12 @@ pt-BR:
         body: "Mensagem"
         subject: "Assunto"
       user:
+        birth_localization: "Cidade onde nasceu"
         first_name: "Nome"
+        languages: "Idiomas"
         last_name: "Sobrenome"
+        localization: "Cidade onde vive"
+        mobile: "Celular"
         password: "Senha"
 
     # tradução dos erros de cada tipo
@@ -185,7 +189,7 @@ pt-BR:
               blank: ": Por favor, digite a senha de confirmação."
               too_short: ": Senha muito curta (mínimo de 6 caracteres)."
             mobile:
-              invalid: "Telefone inválido."
+              invalid: "inválido."
             localization:
               invalid: "Localização inválida."
         exam:
