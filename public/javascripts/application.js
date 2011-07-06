@@ -1,4 +1,5 @@
 jQuery(function(){
+
     // Flash message
     $(".flash-message").parent().next().css("marginTop", "10px");
     $(".flash-message .close-flash").click(function(e){

@@ -36,6 +36,7 @@
       chat.subscribeMyChannel();
     <% end %>
 
+    <%= lazy_load(:real_tabs, :jammit => true, :clear => true) %>
     <%= lazy_load(javascript_path("ckeditor/ckeditor.js"), :jammit => false, :clear => false) %>
   </head>
    <body>

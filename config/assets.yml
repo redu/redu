@@ -38,6 +38,11 @@ javascripts:
   ie:
     - public/javascripts/json2.js
     - public/javascripts/selectivizr.js
+  real_tabs:
+    - public/javascripts/jquery.ui.core.js
+    - public/javascripts/jquery.ui.widget.js
+    - public/javascripts/jquery.ui.tabs.js
+    - public/javascripts/real_tabs.redu.jquery.js
 
 stylesheets:
   common:
