@@ -18,7 +18,7 @@
           $labels.addClass("concave-label");
 
           // Inputs de texto em geral
-          $inputs.addClass("concave-text");
+          $inputs.addClass("concave-input");
 
           // Arquivosj
           $files.addClass("concave-file");
