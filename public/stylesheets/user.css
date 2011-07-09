@@ -1,0 +1,83 @@
+#curriculum .experiences > li {
+  display: block;
+  background-color: #f1f0f0;
+  color: #6d6e6f;
+  margin: 10px 0;
+
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
+#curriculum .experiences > li:hover {
+  background-color: #dbeff7;
+}
+
+#curriculum .experiences > li form {
+  padding-bottom: 15px;
+  background-color: white;
+}
+
+#curriculum form .description {
+  height: 82px;
+}
+
+#curriculum form .start-date {
+  float: left;
+}
+
+#curriculum form .end-date {
+  display: block;
+  float: left;
+  margin-left: 5px;
+}
+
+#curriculum form .current-experience {
+  display: block;
+  clear: both;
+  margin-left: 160px;
+  padding-top: 10px;
+}
+
+#curriculum .experiences .details {
+  float: left;
+  width: 450px;
+  margin: 5px 0;
+}
+
+#curriculum .experiences .edit-experience {
+  display: block;
+  margin: 10px 30px 10px 10px;
+  float: left;
+  padding-left: 13px;
+  font-size: .87em;
+}
+
+#curriculum .experiences .remove-experience {
+  display: block;
+  float: right;
+  width: 16px;
+  margin-top: 3px;
+}
+
+#curriculum .experiences .title {
+  font-weight: bold;
+  color: black;
+}
+
+#curriculum .experiences .company {
+  color: black;
+}
+
+#curriculum .experiences .period {
+  display: block;
+  font-size: .87em;
+  color: #b3b2b3;
+  font-style: italic;
+  margin: 3px 0;
+}
+
+#curriculum .new-experience-button {
+  float: right;
+  margin-right: 0;
+}

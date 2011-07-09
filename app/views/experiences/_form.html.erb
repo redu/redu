@@ -1,0 +1,38 @@
+<%= form_for [user, experience], :remote => true,
+  :html => { :class => "edit-form clearfix concave-form",
+    :style => "display: none;" } do |f| %>
+  <%= f.label :title, "Título de sua função:" %>
+  <%= f.text_field :title %>
+  <span class="tip">Exemplo: professor, engenheiro, designer etc.</span>
+
+  <%= f.label :company, "Empresa:" %>
+  <%= f.text_field :company %>
+  <span class="tip">Nome da empresa responsável.</span>
+
+  <%= f.label :start_date, "Período:" %>
+  <div class="start-date">
+    <%= f.date_select :start_date,
+      { :start_year => (Date.today - 90.years).year,
+        :end_year => Date.today.year,
+        :discard_day => true } %>
+  </div>
+  <div class="end-date">
+    a:
+  <%= f.date_select :end_date,
+    { :start_year => (Date.today - 90.years).year,
+      :end_year => Date.today.year,
+      :discard_day => true } %>
+  </div>
+  <span class="current-experience">
+    <%= f.check_box :current %> <%= t :i_currently_work_here %>
+  </span>
+  <%= f.label :description, "Descrição:" %>
+  <%= f.text_area :description, :class => 'description' %>
+  <span class="tip">Detalhes do encargo e de suas realizações durante o período</span>
+
+  <% if experience.new_record? %>
+    <%= f.submit "+ Adicionar item" %>
+  <% else %>
+    <%= f.submit "Salvar item" %>
+  <% end %>
+<% end %>

@@ -6,6 +6,23 @@
       ['Conta', account_user_path(@user), {:class => 'icon icon-account-gray_16_16'}],
       ['Planos', user_plans_path(@user), {:class => 'icon icon-cash-gray_16_16'}] do
     %>
+  <%= real_tabs ["biography", "Biografia"], ["curriculum", "Currículo"] do %>
+    <div id="biography" class"clearfix">
       <%= render :partial => 'users/form' %>
-    <% end %>
+    </div>
+    <div id="curriculum" class="clearfix">
+      <div class="experience">
+        <ul class="experiences">
+          <%= render :partial => 'experiences/item',
+            :collection => @user.experiences %>
+        </ul>
+        <%= render :partial => 'experiences/form', :locals => {
+          :user => @user, :experience => @experience } %>
+        <a href="#" class="concave-button new-experience-button">+ Novo projeto</a>
+      </div>
+      <div class="education">
+      </div>
+    </div>
+  <% end %>
+<% end %>
 </div>

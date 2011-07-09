@@ -1,0 +1,24 @@
+<% if @experience.valid? %>
+  var newItem = "<%= escape_javascript render :partial => 'experiences/item',
+    :locals => { :item => @experience } %>"
+  var oldItem = $("#experience-<%= @experience.id %>");
+  oldItem.replaceWith(newItem);
+  $("#curriculum .new-experience-button").show();
+<% else %>
+  var $form = $("#edit_experience_<%= @experience.id %>");
+  var $errorsExplanation = $form.find('.errorExplanation');
+  if ($errorsExplanation.length == 0) {
+    var errorsExplanationTemplate = "<%= escape_javascript render 'shared/error_explanation'  %>";
+    $form.prepend(errorsExplanationTemplate);
+  }
+
+  <%# mostra todos os erros %>
+  var $errors = $('<ul \>');
+  <% @experience.errors.full_messages.each do |error| %>
+    $errors.append("<li><%= escape_javascript(error) %></li>");
+  <% end %>
+
+  $errorsExplanation = $form.find('.errorExplanation');
+  $errorsExplanation.find('ul').replaceWith($errors);
+  $errorsExplanation.show();
+<% end %>
