@@ -180,6 +180,7 @@ class UsersController < BaseController
   end
 
   def edit
+    @experience = Experience.new
     respond_to do |format|
       format.html
     end

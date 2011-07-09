@@ -117,6 +117,19 @@ describe UsersController do
     end
   end
 
+  context "GET edit" do
+    before do
+      @user = Factory(:user)
+      activate_authlogic
+      UserSession.create @user
+      get :edit, { :locale => "pt-BR", :id => @user.login }
+    end
+
+    it "assigns @experience" do
+      assigns[:experience].should_not be_nil
+    end
+  end
+
   context "POST update" do
     before do
       @user = Factory(:user)

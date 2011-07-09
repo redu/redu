@@ -735,6 +735,20 @@ describe Ability do
       end
     end
 
+    context "when experiences" do
+      before do
+        @user_experience = Factory(:experience, :user => @user)
+        @other_experience = Factory(:experience)
+      end
+      it "manages its own experiences" do
+        @user_ability.should be_able_to(:manage, @user_experience)
+      end
+
+      it "can NOT manage other experiences" do
+        @user_ability.should_not be_able_to(:manage, @other_experience)
+      end
+    end
+
     it "manages itself" do
       @user_ability.should be_able_to(:manage, @user)
     end

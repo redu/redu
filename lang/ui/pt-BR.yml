@@ -115,6 +115,12 @@ pt-BR:
         path: "Endereço"
         name: "Nome"
         initials: "Abreviação"
+      experience:
+        title: "Título de sua função"
+        company: "Empresa"
+        start_date: "Data de início"
+        end_date: "Data de término"
+        current: "Atual"
       space:
         name: "Nome"
         description: "Descrição"
@@ -918,6 +924,7 @@ pt-BR:
   how_do_i_do_that: How do I do that?
   #en: html: HTML
   html: HTML
+  i_currently_work_here: "Eu trabalho aqui atualmente"
   #en: image: Image
   image: Image
   #en: image_url: Image URL
@@ -1347,6 +1354,7 @@ pt-BR:
   #en: remember_you_can_always_change_this_later: Remember, you can always change this later.
   remember_you_can_always_change_this_later: "Remember, you can always change this later."
   #en: remove_moderator: Remove moderator
+  remove: Remover
   remove_moderator: Remover moderador
   #en: remove_this_friend: Remove this friend
   remove_this_friend: Remove this friend

@@ -52,6 +52,9 @@ describe User do
   # Plan
   it { should have_many(:plans) }
 
+  # Curriculum
+  it { should have_many(:experiences).dependent(:destroy) }
+
   it { should_not allow_mass_assignment_of :admin }
   it { should_not allow_mass_assignment_of :role }
   it { should_not allow_mass_assignment_of :activation_code }

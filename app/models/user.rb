@@ -93,6 +93,7 @@ class User < ActiveRecord::Base
 
   has_many :course_invitations, :class_name => "UserCourseAssociation",
     :conditions => ["state LIKE 'invited'"]
+  has_many :experiences, :dependent => :destroy
   has_one :settings, :class_name => "UserSetting", :dependent => :destroy
 
   # Named scopes
@@ -278,6 +279,8 @@ class User < ActiveRecord::Base
     when 'Friendship'
       # user_id necessário devido ao bug do create_time_zone
       self.id == entity.user_id
+    when 'Experience'
+      self.can_manage?(entity.user)
     end
   end
 
