@@ -55,6 +55,9 @@ describe User do
   # Curriculum
   it { should have_many(:experiences).dependent(:destroy) }
 
+  # Social networks
+  it { should have_many(:social_networks).dependent(:destroy) }
+
   it { should_not allow_mass_assignment_of :admin }
   it { should_not allow_mass_assignment_of :role }
   it { should_not allow_mass_assignment_of :activation_code }
@@ -68,6 +71,7 @@ describe User do
   it { should have_many :course_invitations }
 
   it { should accept_nested_attributes_for :settings }
+  it { should accept_nested_attributes_for :social_networks }
 
   [:first_name, :last_name].each do |attr|
     it do

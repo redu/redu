@@ -31,10 +31,7 @@
 
 /* text input inativo */
 
-  .concave-form .concave-input,
-  .concave-form input[type=text],
-  .concave-form input[type=password],
-  .concave-form textarea {
+  .concave-form .concave-input {
     padding: 7px 10px;
     border: 1px solid #cccbcb;
     width: 370px;
@@ -43,59 +40,43 @@
     margin-top: 20px;
   }
 
-  .concave-form .concave-file,
-  .concave-form .concave-select,
-  .concave-form select,
-  .concave-form input[type=file] {
-    margin-top: 20px;
+  .concave-form .concave-small {
+    width: 276px;
   }
 
-  .borderradius .concave-form .concave-input,
-  .borderradius .concave-form input[type=text],
-  .borderradius .concave-form input[type=password],
-  .borderradius .concave-form textarea {
+  .concave-form .concave-file,
+  .concave-form .concave-select {
+  }
+
+  .borderradius .concave-form .concave-input {
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
   }
 
-  .cssgradients .concave-form .concave-input,
-  .cssgradients .concave-form input[type=text],
-  .cssgradients .concave-form input[type=password],
-  .cssgradients .concave-form textarea {
+  .cssgradients .concave-form .concave-input {
     background: -webkit-gradient(linear, left top, left bottom, from(#f0f0f0), to(#ffffff)); /* webkit browsers */
     background: -moz-linear-gradient(top,  #fff,  #e6e6e5); /* firefox 3.6+ */
   }
 
-  .boxshadow .concave-form .concave-input,
-  .boxshadow .concave-form input[type=text],
-  .boxshadow .concave-form input[type=password],
-  .boxshadow .concave-form textarea {
+  .boxshadow .concave-form .concave-input {
      -moz-box-shadow: inset 1px 1px 0 #fff;
      -webkit-box-shadow: inset 1px 1px 0 #fff;
      box-shadow: inset 1px 1px 0 #fff;
   }
 
+
 /* text input ativo */
-  .concave-form .concave-input:focus,
-  .concave-form input[type=text]:focus,
-  .concave-form input[type=password]:focus,
-  .concave-form textarea:focus {
+  .concave-form .concave-input:focus {
     border: 1px solid #4CACD5;
     color: black;
   }
 
-  .cssgradients .concave-form .concave-input:focus,
-  .cssgradients .concave-form input[type=text]:focus,
-  .cssgradients .concave-form input[type=password]:focus,
-  .cssgradients .concave-form textarea:focus {
+  .cssgradients .concave-form .concave-input:focus {
     background: none;
   }
 
-  .boxshadow .concave-form .concave-input:focus,
-  .boxshadow .concave-form input[type=text]:focus,
-  .boxshadow .concave-form input[type=password]:focus,
-  .boxshadow .concave-form textarea:focus {
+  .boxshadow .concave-form .concave-input:focus {
     -moz-box-shadow: 0 0 2px #4CACD5 ;
     -webkit-box-shadow: 0 0 2px #4CACD5 ;
     box-shadow: 0 0 2px #4CACD5;
@@ -117,13 +98,16 @@
     margin-top: 20px;
   }
 
-  .concave-form .concave-fieldset-inline .concave-multiple,
-  .concave-form fieldset.inline input[type=checkbox],
-  .concave-form fieldset.inline input[type=radio] {
+  .concave-form .concave-fieldset-inline .concave-multiple {
     float: left;
     display: block;
     margin-right: 10px;
     margin-top: 20px;
+  }
+
+  .concave-form .concave-fieldset-inline .concave-indent {
+    float: left;
+    width: 390px;
   }
 
   .concave-form .concave-fieldset-inline .concave-label,

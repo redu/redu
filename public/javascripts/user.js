@@ -12,9 +12,30 @@
       });
     };
 
+    $.fn.refreshSocialNetwork = function(){
+      return this.each(function (){
+        $("#new-social-network").hide();
+        $('#select-networks .select-network').live("change", function() {
+          var $this = $(this);
+          if ($this.val() != '') {
+            if ($this.nextAll(".select-network").length == 0) {
+              $this.next().show();
+              var new_id = new Date().getTime();
+              var regexp = new RegExp("new_social_networks", "g");
+              var new_social_network = $('#new-social-network').html();
+              new_social_network = new_social_network.replace(regexp, new_id);
+              $("#new-social-network").before(new_social_network);
+            }
+          }
+        });
+      });
+    };
+
     jQuery(function(){
         $("#biography .mobile").refreshMobileMask();
         $(".current-experience #experience_current:checked").refreshEndDateVisibility();
+        $("#biography").refreshSocialNetwork();
+
         $("#experience_current").live("change", function(){
             $("#curriculum .end-date").slideToggle();
         });
@@ -41,7 +62,7 @@
         $(document).ajaxComplete(function(){
             $("#biography .mobile").refreshMobileMask();
             $(".current-experience #experience_current:checked").refreshEndDateVisibility();
+            $("#biography").refreshSocialNetwork();
         });
     });
-
 })($);

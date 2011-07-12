@@ -181,13 +181,14 @@ class UsersController < BaseController
 
   def edit
     @experience = Experience.new
+    @user.social_networks.build
     respond_to do |format|
       format.html
     end
   end
 
   def update
-    @user.attributes      = params[:user]
+    @user.attributes    = params[:user]
 
     unless params[:metro_area_id].blank?
       @user.metro_area  = MetroArea.find(params[:metro_area_id])

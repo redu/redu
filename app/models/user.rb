@@ -96,6 +96,8 @@ class User < ActiveRecord::Base
   has_many :experiences, :dependent => :destroy
   has_one :settings, :class_name => "UserSetting", :dependent => :destroy
 
+  has_many :social_networks, :dependent => :destroy
+
   # Named scopes
   scope :recent, order('users.created_at DESC')
   # FIXME Remover tudo relacionado a este named_scope,
@@ -123,6 +125,10 @@ class User < ActiveRecord::Base
     :sb_posts_count, :sb_last_seen_at
 
   accepts_nested_attributes_for :settings
+  accepts_nested_attributes_for :social_networks,
+    :reject_if => proc { |attributes| attributes['url'].blank? or
+      attributes['name'].blank? },
+    :allow_destroy => true
 
   # PLUGINS
   acts_as_authentic do |c|

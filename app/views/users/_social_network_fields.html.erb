@@ -1,0 +1,9 @@
+<%= builder.select :name,
+  options_for_select(
+    SocialNetwork::Networks.to_select,
+    :selected => builder.object.name),
+  { :include_blank => "adicionar" },
+  { :class => "select-network" } %>
+
+<%= builder.text_field :url,
+  :class => "concave-small social-url" %>
