@@ -94,14 +94,6 @@ jQuery(function(){
         $(this).parents("li:first").addClass("selected");
     })
 
-    // Expand de recursos na listagem de módulos
-    $(".expand, .unexpand", "#space-subjects .subjects").click(function(){
-        $(this).toggleClass("expand");
-        $(this).toggleClass("unexpand");
-        $(this).parents("li:first").toggleClass("open");
-        $(this).next().slideToggle("fast");
-    });
-
     // Mostra status no show de lecture
     $("#resource .student-actions .action-help").click(function(e){
         $(this).parents("li:first").toggleClass("selected");
