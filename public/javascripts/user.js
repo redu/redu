@@ -18,13 +18,13 @@
         $('#select-networks .select-network').live("change", function() {
           var $this = $(this);
           if ($this.val() != '') {
-            if ($this.nextAll(".select-network").length == 0) {
+            if ($this.parent().nextAll("li").length == 0) {
               $this.next().show();
               var new_id = new Date().getTime();
               var regexp = new RegExp("new_social_networks", "g");
               var new_social_network = $('#new-social-network').html();
               new_social_network = new_social_network.replace(regexp, new_id);
-              $("#new-social-network").before(new_social_network);
+              $("#select-networks > ul").append(new_social_network);
             }
           }
         });

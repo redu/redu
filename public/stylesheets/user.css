@@ -81,3 +81,15 @@
   float: right;
   margin-right: 0;
 }
+
+#biography .remove-network {
+  width: 16px;
+  margin-top: 30px;
+  margin-right: 5px;
+  display: block;
+  float: right;
+}
+
+#biography .concave-form .concave-select {
+  width: 90px;
+}

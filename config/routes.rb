@@ -1,4 +1,5 @@
 Redu::Application.routes.draw do
+
   post "presence/auth"
   post "presence/send_chat_message"
   get "presence/last_messages_with"
@@ -212,6 +213,8 @@ Redu::Application.routes.draw do
     collection do
       get :auto_complete
     end
+
+    resources :social_networks, :only => [:destroy]
 
     resources :friendships, :only => [:index, :create, :destroy] do
       member do

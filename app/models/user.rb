@@ -287,6 +287,8 @@ class User < ActiveRecord::Base
       self.id == entity.user_id
     when 'Experience'
       self.can_manage?(entity.user)
+    when 'SocialNetwork'
+      self.can_manage?(entity.user)
     end
   end
 
