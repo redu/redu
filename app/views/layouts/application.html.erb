@@ -32,6 +32,8 @@
       , presencePartial : "<%= escape_javascript(render :partial => "presence/chat_presence") %>"
       , messagePartial : "<%= escape_javascript(render :partial => "presence/chat_message") %>" });
 
+      chat.init();
+      chat.subscribeMyChannel();
     <% end %>
 
     <%= async_include_javascripts :real_tabs %>
