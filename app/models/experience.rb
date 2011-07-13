@@ -4,7 +4,7 @@ class Experience < ActiveRecord::Base
 
   attr_protected :user
 
-  validates :title, :company, :start_date, :presence => true
+  validates :title, :company, :start_date, :user, :presence => true
   validate :start_before_end_date,
     :unless => Proc.new { |exp| exp.end_date.nil? or exp.start_date.nil? }
   validates :end_date, :presence => true,
