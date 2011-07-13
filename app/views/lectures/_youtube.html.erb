@@ -1,4 +1,6 @@
-<%= render_player(:youtube_id => resource.external_resource) %>
+<%= lazy_load(javascript_path('jwplayer.js')) do %>
+  <%= render_player(:youtube_id => resource.external_resource) %>
+<% end %>
 
 <div id="player" class="stage">
   <span>
@@ -7,4 +9,3 @@
     para ver este vídeo.
   </span>
 </div>
-

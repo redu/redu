@@ -1,10 +1,9 @@
-  <%= javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js' %>
-  <script type="text/javascript" charset="utf-8">
+  <%= lazy_load('https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js') do %>
     jQuery(function(){
       // Abas
       $(".tabs").tabs();
     });
-  </script>
+  <% end %>
 
 <div class="table tabs">
   <ul>

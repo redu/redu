@@ -26,12 +26,9 @@ class Document < ActiveRecord::Base
   def display_ipaper(options = {})
     id = options.delete(:id)
       <<-END
-        <div id="embedded_flash#{id}">#{options.delete(:alt)}</div>
-        <script type="text/javascript">
-          var scribd_doc = scribd.Document.getDoc(#{ipaper_id}, '#{ipaper_access_key}');
-          #{js_params(options)}
-          scribd_doc.write("embedded_flash#{id}");
-        </script>
+        var scribd_doc = scribd.Document.getDoc(#{ipaper_id}, '#{ipaper_access_key}');
+        #{js_params(options)}
+        scribd_doc.write("document_stage");
       END
   end
 

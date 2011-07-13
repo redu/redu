@@ -42,7 +42,6 @@ module LecturesHelper
     }.merge(options)
 
     result = <<-END
-      <script type='text/javascript'>
         jwplayer('#{options[:id]}').setup({
           'flashplayer': '/flash/player.swf',
           'file': 'http://www.youtube.com/watch?v=#{options[:youtube_id]}',
@@ -51,7 +50,6 @@ module LecturesHelper
           'width': '#{options[:width]}',
           'height': '#{options[:height]}'
         });
-      </script>
     END
 
     result.html_safe

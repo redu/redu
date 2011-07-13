@@ -25,6 +25,7 @@ javascripts:
     - public/javascripts/jquery.fcbkcomplete.min.js
     - public/javascripts/jquery.tokeninput.js
     - public/javascripts/jquery.filestyle.mini.js
+    - public/javascripts/asyncjs.jquery.js
   chat:
     - public/javascripts/jquery.pjax.js
     - public/javascripts/jquery-ui.js
