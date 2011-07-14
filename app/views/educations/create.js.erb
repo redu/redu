@@ -1,0 +1,30 @@
+<% if @education.valid? %>
+  $("#new_education").slideToggle().remove();
+  var education_item = "<%= escape_javascript render :partial => 'educations/item',
+  :locals => { :item => @education } %>"
+  $("#curriculum .educations").append(education_item);
+
+  <%# Coloca novo form %>
+  var education_form = "<%= escape_javascript render :partial => 'educations/form',
+    :locals => { :user => @user, :high_school => HighSchool.new } %>"
+  $("#curriculum .educations").after(education_form);
+  $("#curriculum .new-education-button").show();
+<% else %>
+  var $form = $("#new_high_school");
+  var $errorsExplanation = $form.find('.errorExplanation');
+  if ($errorsExplanation.length == 0) {
+    var errorsExplanationTemplate = "<%= escape_javascript render 'shared/error_explanation'  %>";
+    $form.prepend(errorsExplanationTemplate);
+  }
+
+  <%# mostra todos os erros %>
+  var $errors = $('<ul \>');
+  <% @education.educationable.errors.full_messages.each do |error| %>
+    $errors.append("<li><%= escape_javascript(error) %></li>");
+  <% end %>
+
+  $errorsExplanation = $form.find('.errorExplanation');
+  $errorsExplanation.find('ul').replaceWith($errors);
+  $errorsExplanation.show();
+<% end %>
+

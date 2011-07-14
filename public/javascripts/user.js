@@ -36,6 +36,16 @@
         $(".current-experience #experience_current:checked").refreshEndDateVisibility();
         $("#biography").refreshSocialNetwork();
 
+        $("#curriculum .educations form").hide();
+
+        if ($("#curriculum .educations > li").length > 0) {
+          $("#new_education").hide();
+          $("#curriculum .new-education-button").show();
+        } else {
+          $("#new_education").show();
+          $("#curriculum .new-education-button").hide();
+        }
+
         $("#experience_current").live("change", function(){
             $("#curriculum .end-date").slideToggle();
         });
@@ -43,6 +53,12 @@
         $("#curriculum .new-experience-button").live("click", function(){
             $(this).hide();
             $("#new_experience").slideToggle();
+            return false;
+        });
+
+        $("#curriculum .new-education-button").live("click", function(){
+            $(this).hide();
+            $("#new_education").slideToggle();
             return false;
         });
 
@@ -59,10 +75,33 @@
             return false;
         });
 
+        $("#curriculum .edit-education").live("click", function(){
+            $educations = $("#curriculum .educations > li");
+            $educations.find(".infos").show();
+            $educations.find("form").slideUp();
+            $("#new_education").hide();
+            $("#curriculum .new-education-button").hide();
+
+            var $infos = $(this).parent();
+            $infos.slideUp();
+            $infos.siblings("form").slideDown();
+            return false;
+        });
+
         $(document).ajaxComplete(function(){
             $("#biography .mobile").refreshMobileMask();
             $(".current-experience #experience_current:checked").refreshEndDateVisibility();
             $("#biography").refreshSocialNetwork();
+
+            $("#curriculum .educations form").hide();
+            $("#curriculum .educations .infos").show();
+            if ($("#curriculum .educations > li").length > 0) {
+              $("#new_education").hide();
+              $("#curriculum .new-education-button").show();
+            } else {
+              $("#new_education").show();
+              $("#curriculum .new-education-button").hide();
+            }
         });
     });
 })($);

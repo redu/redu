@@ -121,6 +121,10 @@ pt-BR:
         start_date: "Data de início"
         end_date: "Data de término"
         current: "Atual"
+      high_school:
+        institution: "Instituição"
+        end_year: "Ano de término"
+        description: "Descrição"
       space:
         name: "Nome"
         description: "Descrição"
@@ -243,6 +247,11 @@ pt-BR:
           attributes:
            name:
             blank: ": Escolha um nome para o recurso."
+  helpers:
+    submit:
+      high_school:
+        create: "+ Adicionar item"
+        update: "Salvar item"
 
   lectureable: vídeo-aula
   lectures: aulas

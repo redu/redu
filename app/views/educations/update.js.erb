@@ -1,0 +1,24 @@
+<% if @education.valid? %>
+  var newItem = "<%= escape_javascript render :partial => 'educations/item',
+    :locals => { :item => @education } %>"
+  var oldItem = $("#education-<%= @education.id %>");
+  oldItem.replaceWith(newItem);
+  $("#curriculum .new-education-button").show();
+<% else %>
+  var $form = $("#edit_high_school_<%= @education.educationable.id %>");
+  var $errorsExplanation = $form.find('.errorExplanation');
+  if ($errorsExplanation.length == 0) {
+    var errorsExplanationTemplate = "<%= escape_javascript render 'shared/error_explanation'  %>";
+    $form.prepend(errorsExplanationTemplate);
+  }
+
+  <%# mostra todos os erros %>
+  var $errors = $('<ul \>');
+  <% @education.educationable.errors.full_messages.each do |error| %>
+    $errors.append("<li><%= escape_javascript(error) %></li>");
+  <% end %>
+
+  $errorsExplanation = $form.find('.errorExplanation');
+  $errorsExplanation.find('ul').replaceWith($errors);
+  $errorsExplanation.show();
+<% end %>
