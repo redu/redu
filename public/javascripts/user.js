@@ -31,6 +31,20 @@
       });
     };
 
+
+    $.fn.refreshShowCorrectForm = function(){
+      var $this = $(this);
+      var choosed_type = $this.val();
+      $("#new_education form").hide();
+      if (choosed_type == "high_school") {
+        $this.removeClass("higher");
+        $("#new_high_school").show();
+      } else if (choosed_type == "higher_education") {
+        $this.addClass("higher");
+        $("#new_higher_education").show();
+      }
+    };
+
     jQuery(function(){
         $("#biography .mobile").refreshMobileMask();
         $(".current-experience #experience_current:checked").refreshEndDateVisibility();
@@ -88,20 +102,27 @@
             return false;
         });
 
+        $("#education_type").refreshShowCorrectForm();
+        $("#education_type").live("change", function() {
+            $(this).refreshShowCorrectForm();
+        });
+
+
         $(document).ajaxComplete(function(){
             $("#biography .mobile").refreshMobileMask();
             $(".current-experience #experience_current:checked").refreshEndDateVisibility();
             $("#biography").refreshSocialNetwork();
+            $("#education_type").refreshShowCorrectForm();
 
-            $("#curriculum .educations form").hide();
-            $("#curriculum .educations .infos").show();
-            if ($("#curriculum .educations > li").length > 0) {
-              $("#new_education").hide();
-              $("#curriculum .new-education-button").show();
-            } else {
-              $("#new_education").show();
-              $("#curriculum .new-education-button").hide();
-            }
+            //$("#curriculum .educations form").hide();
+            //$("#curriculum .educations .infos").show();
+           // if ($("#curriculum .educations > li").length > 0) {
+           //   $("#new_education").hide();
+           //   $("#curriculum .new-education-button").show();
+           // } else {
+           //   $("#new_education").show();
+           //   $("#curriculum .new-education-button").hide();
+           // }
         });
     });
 })($);

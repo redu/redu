@@ -90,8 +90,9 @@
   float: right;
   margin-right: 0;
 }
-  float: right;
-  margin-right: 0;
+
+#education_type.higher {
+  float: left;
 }
 
 #biography .remove-network {

@@ -4,8 +4,13 @@
   var oldItem = $("#education-<%= @education.id %>");
   oldItem.replaceWith(newItem);
   $("#curriculum .new-education-button").show();
+  $("#education-9 form").hide();
 <% else %>
-  var $form = $("#edit_high_school_<%= @education.educationable.id %>");
+  <% if @education.educationable.class == HighSchool %>
+    var $form = $("#edit_high_school_<%= @education.educationable.id %>");
+    <% else @education.educationable.class == HigherEducation %>
+    var $form = $("#edit_higher_education_<%= @education.educationable.id %>");
+    <% end %>
   var $errorsExplanation = $form.find('.errorExplanation');
   if ($errorsExplanation.length == 0) {
     var errorsExplanationTemplate = "<%= escape_javascript render 'shared/error_explanation'  %>";

@@ -16,9 +16,14 @@
   </div>
 
   <%= form_for item.educationable,
-    :url => user_education_path(item.user, item.educationable), :remote => true,
+    :url => user_education_path(item.user, item), :remote => true,
     :html => { :class => "concave-form clearfix" } do |f| %>
-    <%= render :partial => 'educations/high_school_fields',
-      :locals => { :f => f } %>
+    <% if item.educationable.class == HighSchool %>
+      <%= render :partial => 'educations/high_school_fields',
+        :locals => { :f => f } %>
+    <% elsif item.educationable.class == HigherEducation %>
+      <%= render :partial => 'educations/higher_education_fields',
+        :locals => { :f => f, :higher_education => item.educationable } %>
+    <% end %>
   <% end %>
 </li>

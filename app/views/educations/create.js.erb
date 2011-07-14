@@ -6,7 +6,8 @@
 
   <%# Coloca novo form %>
   var education_form = "<%= escape_javascript render :partial => 'educations/form',
-    :locals => { :user => @user, :high_school => HighSchool.new } %>"
+    :locals => { :user => @user, :high_school => HighSchool.new,
+      :higher_education => HigherEducation.new } %>"
   $("#curriculum .educations").after(education_form);
   $("#curriculum .new-education-button").show();
 <% else %>

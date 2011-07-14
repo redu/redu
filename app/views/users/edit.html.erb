@@ -26,7 +26,8 @@
             :collection => @user.educations %>
         </ul>
         <%= render :partial => 'educations/form', :locals => {
-          :high_school => @high_school, :user => @user }%>
+          :high_school => @high_school, :higher_education => @higher_education,
+          :user => @user }%>
         <a href="#" class="concave-button new-education-button">+ Novo projeto</a>
       </div>
     </div>

@@ -125,6 +125,12 @@ pt-BR:
         institution: "Instituição"
         end_year: "Ano de término"
         description: "Descrição"
+      higher_education:
+        course: "Curso"
+        institution: "Instituição"
+        start_year: "Ano de início"
+        end_year: "Ano de término"
+        description: "Descrição"
       space:
         name: "Nome"
         description: "Descrição"
@@ -250,6 +256,9 @@ pt-BR:
   helpers:
     submit:
       high_school:
+        create: "+ Adicionar item"
+        update: "Salvar item"
+      higher_education:
         create: "+ Adicionar item"
         update: "Salvar item"
 
