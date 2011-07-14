@@ -34,14 +34,28 @@
 
     $.fn.refreshShowCorrectForm = function(){
       var $this = $(this);
-      var choosed_type = $this.val();
+      var chosen_type = $this.val();
       $("#new_education form").hide();
-      if (choosed_type == "high_school") {
+      if (chosen_type == "high_school") {
         $this.removeClass("higher");
         $("#new_high_school").show();
-      } else if (choosed_type == "higher_education") {
+      } else if (chosen_type == "higher_education") {
         $this.addClass("higher");
         $("#new_higher_education").show();
+        $("#higher_education_kind").refreshShowCorrectFields();
+      }
+    };
+
+    $.fn.refreshShowCorrectFields = function() {
+      var $this = $(this);
+      var higher_kind = $this.val();
+      if (higher_kind == "technical" || higher_kind == "degree" ||
+        higher_kind == "bachelorship") {
+        $this.nextAll(".area").hide();
+        $this.nextAll(".course").show();
+      } else {
+        $this.nextAll(".area").show();
+        $this.nextAll(".course").hide();
       }
     };
 
@@ -107,6 +121,11 @@
             $(this).refreshShowCorrectForm();
         });
 
+
+        $("#higher_education_kind").refreshShowCorrectFields();
+        $("#higher_education_kind").live("change", function() {
+            $(this).refreshShowCorrectFields();
+        });
 
         $(document).ajaxComplete(function(){
             $("#biography .mobile").refreshMobileMask();

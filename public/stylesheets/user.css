@@ -67,17 +67,19 @@
 }
 
 #curriculum .experiences .title,
-#curriculum .educations .type {
+#curriculum .educations .course-area {
   font-weight: bold;
   color: black;
 }
 
 #curriculum .experiences .company,
-#curriculum .educations .institution {
+#curriculum .educations .institution,
+#curriculum .educations .type {
   color: black;
 }
 
-#curriculum .experiences .period {
+#curriculum .experiences .period,
+#curriculum .education .period {
   display: block;
   font-size: .87em;
   color: #b3b2b3;

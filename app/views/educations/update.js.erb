@@ -4,7 +4,7 @@
   var oldItem = $("#education-<%= @education.id %>");
   oldItem.replaceWith(newItem);
   $("#curriculum .new-education-button").show();
-  $("#education-9 form").hide();
+  $("#education-<%= @education.id %> form").hide();
 <% else %>
   <% if @education.educationable.class == HighSchool %>
     var $form = $("#edit_high_school_<%= @education.educationable.id %>");

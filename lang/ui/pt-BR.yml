@@ -127,6 +127,7 @@ pt-BR:
         description: "Descrição"
       higher_education:
         course: "Curso"
+        research_area: "Área de pesquisa"
         institution: "Instituição"
         start_year: "Ano de início"
         end_year: "Ano de término"
@@ -504,6 +505,7 @@ pt-BR:
   audience: Audience
   #en: author: Author
   author: Autor
+  bachelorship: Bacharelado
   #en: back: Back
   back: Voltar
   #en: back_to_all_users: Back to all users
@@ -691,6 +693,7 @@ pt-BR:
   deactivate_confirmation: Are you sure you want to deactivate your account?
   #en: deactivate_completed: Thanks. Your account has been deactivated and you have been logged out.
   deactivate_completed: Thanks. Your account has been deactivated and you have been logged out.
+  degree: Licenciatura
   #en: delete: Delete
   delete: Remover
   #en: delete_selected: Delete selected
@@ -719,6 +722,7 @@ pt-BR:
   description: Descrição
   #en: destroy: Destroy
   destroy: Destroy
+  doctorate: Doutorado
   #en: dont_have_an_account: Don't have an account?
   dont_have_an_account: Não possui uma conta?
   #en: dont_wait_its: Don't wait! It's
@@ -926,6 +930,7 @@ pt-BR:
   have_something_to_contribute: Have something to contribute?
   #en: help: Help
   help: Help
+  high_school: "Ensino Médio"
   #en: home: Home
   home: Home
   #en: homepage_banner_download_msg: Download it now and get started
@@ -1246,6 +1251,7 @@ pt-BR:
   permanently_delete_this_event: Permanently delete this event?
   #en: permanently_delete_this_post: Permanently delete this post?
   permanently_delete_this_post: Permanently delete this post?
+  phd: PhD
   #en: photo_comments: Photo Comments
   photo_comments: Photo Comments
   #en: photo_from_user: "{{photo_description}} from {{user}}"
@@ -1280,6 +1286,8 @@ pt-BR:
   popular_polls: Popular Polls
   #en position: Position
   position: Posição
+  pos_stricto_sensu: Pós "Stricto Sensu"
+  pos_lato_sensu: Pós "Lato Sensu / MBA"
   #en: post: Post
   post: Postagem
   #en: posts: Posts
@@ -1578,6 +1586,7 @@ pt-BR:
   tagged: tagged
   #en: tags_page: tags page
   tags_page: página de tags
+  technical: Técnico
   #en: thanks_for_activating_your_account: Thanks for activating your account!
   thanks_for_activating_your_account: Obrigado por ativar a sua conta!
   #en: thanks_youre_now_logged_in: Thanks! You're now logged in.

@@ -10,8 +10,13 @@
       :higher_education => HigherEducation.new } %>"
   $("#curriculum .educations").after(education_form);
   $("#curriculum .new-education-button").show();
+  $("#education-<%= @education.id %> form").hide();
 <% else %>
-  var $form = $("#new_high_school");
+  <% if @education.educationable.class == HighSchool %>
+    var $form = $("#new_high_school");
+  <% elsif @education.educationable.class == HigherEducation %>
+    var $form = $("#new_higher_education");
+  <% end %>
   var $errorsExplanation = $form.find('.errorExplanation');
   if ($errorsExplanation.length == 0) {
     var errorsExplanationTemplate = "<%= escape_javascript render 'shared/error_explanation'  %>";
