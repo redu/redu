@@ -50,6 +50,26 @@ describe EducationsController do
         }.should_not change(HighSchool, :count)
       end
     end
+
+    context "with education of kind higher_education" do
+      before do
+        @post_params.delete :high_school
+        @post_params[:higher_education] = { :kind => "technical",
+          :course => "Course", :institution => "Inst.",
+          "start_year(1i)" => "2009", "start_year(2i)" => "1",
+          "start_year(3i)" => "1", "end_year(1i)" => "2010",
+          "end_year(2i)" => "1", "end_year(3i)" => "1",
+          :description => "Lorem ipsum dolor sit amet, consectetur magna aliqua. Ut enim ad minim veniam."}
+      end
+
+      it "creates an education" do
+        expect {
+          post :create, @post_params
+        }.should change(Education, :count).by(1)
+        Education.last.user.should == @user
+        Education.last.educationable.should == HigherEducation.last
+      end
+    end
   end
 
   describe "POST 'update'" do
@@ -88,6 +108,23 @@ describe EducationsController do
         assigns[:education].errors[:educationable].should_not be_empty
       end
     end
+
+    context "with education of kind higher_education" do
+      before do
+        higher_education = Factory(:higher_education)
+        @education = Factory(:education, :educationable => higher_education,
+                             :user => @user)
+        @post_params = { :locale => "pt-BR", :format => "js",
+          :user_id => @user.id, :id => @education.id,
+          :higher_education => { :institution => "New Inst." }}
+      end
+
+      it "updates the educationable" do
+        post :update, @post_params
+        HigherEducation.last.institution.should ==
+          @post_params[:higher_education][:institution]
+      end
+    end
   end
 
   describe "POST 'destroy'" do
@@ -112,6 +149,22 @@ describe EducationsController do
       expect {
         post :destroy, @params
       }.should change(HighSchool, :count).by(-1)
+    end
+
+    context "with education of kind higher_education" do
+      before do
+        higher_education = Factory(:higher_education)
+        @education = Factory(:education, :educationable => higher_education,
+                             :user => @user)
+        @params = {:locale => "pt-BR", :format => "js", :user_id => @user.id,
+          :id => @education.id }
+      end
+
+      it "destroys the educationable" do
+        expect {
+          post :destroy, @params
+        }.should change(HigherEducation, :count).by(-1)
+      end
     end
   end
 

@@ -5,17 +5,25 @@ class EducationsController < ApplicationController
   load_and_authorize_resource :education, :through => :user
 
   def create
-    @high_school = HighSchool.new(params[:high_school])
+    if params.has_key? :high_school
+      educationable = HighSchool.new(params[:high_school])
+    elsif params.has_key? :higher_education
+      educationable = HigherEducation.new(params[:higher_education])
+    end
     @education = Education.new
     @education.user = current_user
-    @education.educationable = @high_school
+    @education.educationable = educationable
     @education.save
 
     respond_with(@user, @education)
   end
 
   def update
-    @education.educationable.attributes = params[:high_school]
+    if params.has_key? :high_school
+      @education.educationable.attributes = params[:high_school]
+    elsif params.has_key? :higher_education
+      @education.educationable.attributes = params[:higher_education]
+    end
     @education.educationable.save
 
     respond_with(@user, @education)

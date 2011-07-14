@@ -132,6 +132,10 @@ describe UsersController do
     it "assigns @high_school" do
       assigns[:high_school].should_not be_nil
     end
+
+    it "assigns @higher_education" do
+      assigns[:higher_education].should_not be_nil
+    end
   end
 
   context "POST update" do
