@@ -128,6 +128,10 @@ describe UsersController do
     it "assigns @experience" do
       assigns[:experience].should_not be_nil
     end
+
+    it "assigns @high_school" do
+      assigns[:high_school].should_not be_nil
+    end
   end
 
   context "POST update" do

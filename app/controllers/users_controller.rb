@@ -181,6 +181,7 @@ class UsersController < BaseController
 
   def edit
     @experience = Experience.new
+    @high_school = HighSchool.new
     @user.social_networks.build
     respond_to do |format|
       format.html

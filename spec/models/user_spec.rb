@@ -54,6 +54,7 @@ describe User do
 
   # Curriculum
   it { should have_many(:experiences).dependent(:destroy) }
+  it { should have_many(:educations).dependent(:destroy) }
 
   # Social networks
   it { should have_many(:social_networks).dependent(:destroy) }

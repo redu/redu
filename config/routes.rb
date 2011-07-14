@@ -306,6 +306,7 @@ Redu::Application.routes.draw do
 
     resources :plans, :only => [:index]
     resources :experiences
+    resources :educations, :except => [:new, :edit]
     get '/:environment_id/roles' => 'roles#show', :as => :admin_roles
     post '/:environment_id/roles' => 'roles#update', :as => :update_roles
   end

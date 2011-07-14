@@ -94,6 +94,7 @@ class User < ActiveRecord::Base
   has_many :course_invitations, :class_name => "UserCourseAssociation",
     :conditions => ["state LIKE 'invited'"]
   has_many :experiences, :dependent => :destroy
+  has_many :educations, :dependent => :destroy
   has_one :settings, :class_name => "UserSetting", :dependent => :destroy
 
   has_many :social_networks, :dependent => :destroy
@@ -288,6 +289,8 @@ class User < ActiveRecord::Base
     when 'Experience'
       self.can_manage?(entity.user)
     when 'SocialNetwork'
+      self.can_manage?(entity.user)
+    when 'Education'
       self.can_manage?(entity.user)
     end
   end
