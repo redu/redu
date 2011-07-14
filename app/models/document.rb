@@ -23,4 +23,13 @@ class Document < ActiveRecord::Base
     !(self.conversion_processing? or self.conversion_complete?)
   end
 
+  def display_ipaper(options = {})
+    id = options.delete(:id)
+      <<-END
+        var scribd_doc = scribd.Document.getDoc(#{ipaper_id}, '#{ipaper_access_key}');
+        #{js_params(options)}
+        scribd_doc.write("document_stage");
+      END
+  end
+
 end

@@ -3,35 +3,6 @@ require 'md5'
 # Methods added to this helper will be available to all templates in the application.
 module BaseHelper
 
-  # Inclui o javascript de forma lazy (usa o jammit)
-  def async_include_javascripts(*packages, &block)
-    tags = packages.map { |pack| asset_url pack, :js }
-    build_async_script_tag(tags, &block)
-  end
-
-  # Inclui o javascript de forma lazy (usa o jammit)
-  def async_include_css(*packages)
-    tags = packages.map { |pack| asset_url pack, :css }
-    javascript_tag(:type => 'text/javascript') do
-      "LazyLoad.css(#{tags.flatten.to_json});".html_safe
-    end.html_safe
-  end
-
-  # Constrói tag script p/ incluir css/js de forma lazy
-  def build_async_script_tag(urls, &block)
-    javascript_tag(:type => 'text/javascript') do
-      result = "LazyLoad.js(#{urls.flatten.to_json}"
-
-      if block.nil?
-        result << ");"
-      else
-        result << ", function(){ #{capture(&block)}});"
-      end
-
-      result.html_safe
-    end.html_safe
-  end
-
   # Cria lista não ordenada no formato da navegação do widget de abas (jquery UI)
   def tabs_navigation(*paths)
     lis = paths.collect do |item|
@@ -401,13 +372,54 @@ module BaseHelper
     render :partial => "plans/plans", :locals => { :plans => plans }
   end
 
-  private
+end
 
-  def should_package?
-    Jammit.package_assets && !(Jammit.allow_debugging && params[:debug_assets])
+module AsyncJSHelper
+  # Carrega asset de forma lazy.
+  # Opções:
+  #   type: pode ser js (default) ou css
+  #   jammit: true se o package utuliza a infraestrutura do jammit (defalt false)
+  #   clear: caso o arquivo já tenha sido incluido, tenta remover antes de
+  #    adicionar novamente. Default frue
+  def lazy_load(package, options = {}, &block)
+    opts = {
+      :type => :js,
+      :jammit => false,
+      :clear => true
+    }.merge(options)
+
+    if opts[:jammit]
+      package = jammit(package, opts[:type])
+    end
+    package = package.to_a.flatten
+
+    javascript_tag(:type => 'text/javascript') do
+      result = ""
+
+      if opts[:clear]
+        result << <<-END
+          $(document).ready(function(){
+            $(document).removeLazyAssets({ paths : #{package.to_json}});
+          });
+        END
+      end
+
+      result << <<-END
+        LazyLoad.#{opts[:type].to_s}(#{package.to_json}
+      END
+
+      if block.nil?
+        result << ");"
+      else
+        result << ", function(){ #{capture(&block)}});"
+      end
+
+      result.html_safe
+    end.html_safe
   end
 
-  def asset_url(pack, type)
+  # Gera path ou lista de paths p/ um determinado asset (assets.yml)
+  def jammit(pack, type)
     if should_package?
       Redu::Application.config.action_controller.asset_host + Jammit.asset_url(pack, type)
     else
@@ -415,4 +427,11 @@ module BaseHelper
     end
   end
 
+  private
+
+  def should_package?
+    Jammit.package_assets && !(Jammit.allow_debugging && params[:debug_assets])
+  end
 end
+
+ActionView::Base.send(:include, AsyncJSHelper)

@@ -1,8 +1,7 @@
-  <script type="text/javascript">
+<%= lazy_load("http://s7.addthis.com/js/250/addthis_widget.js#username=redu") do %>
     var addthis_config = {
       "data_track_clickback": true,
       ui_click: true,
       ui_cobrand: "Redu"
     };
-  </script>
-  <%= javascript_include_tag "http://s7.addthis.com/js/250/addthis_widget.js#username=redu" %>
+<% end %>

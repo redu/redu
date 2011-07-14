@@ -32,5 +32,28 @@ module LecturesHelper
     existent_lectures
   end
 
+  def render_player(options = {})
+    options = {
+      :width => '650',
+      :height => '360',
+      :skin => '/flash/modieus.swf',
+      :flashplayer => '/flash/player.swf',
+      :id => 'player',
+    }.merge(options)
+
+    result = <<-END
+        jwplayer('#{options[:id]}').setup({
+          'flashplayer': '/flash/player.swf',
+          'file': 'http://www.youtube.com/watch?v=#{options[:youtube_id]}',
+          'skin': '#{options[:skin]}',
+          'controlbar': 'bottom',
+          'width': '#{options[:width]}',
+          'height': '#{options[:height]}'
+        });
+    END
+
+    result.html_safe
+  end
+
 
 end

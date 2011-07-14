@@ -1,3 +1,5 @@
+<%= lazy_load(:user, :jammit => true, :clear => true) %>
+<%= lazy_load(:user, :type => :css, :jammit => true, :clear => true) %>
 <%= render :partial => 'users/home_sidebar' %>
 <div class="main grid_10" style="width: 580px;">
   <%= render :partial => 'users/breadcrumbs' %>
