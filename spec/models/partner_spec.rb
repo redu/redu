@@ -6,4 +6,5 @@ describe Partner do
   it { should respond_to :name }
   it { should validate_presence_of :name }
   it { should have_many(:environments).through(:partner_environment_associations) }
+  it { should have_many(:users) }
 end
