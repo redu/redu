@@ -1,4 +1,6 @@
 class Experience < ActiveRecord::Base
+  # Representa uma experiência profissional vivida por um usuário, deste modo
+  # faz parte do currículo do mesmo.
 
   belongs_to :user
 

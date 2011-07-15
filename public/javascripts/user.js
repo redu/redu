@@ -1,4 +1,5 @@
 (function($){
+    // Coloca a máscara de celular no campo correspondente
     $.fn.refreshMobileMask = function(){
       return this.each(function(){
           var $this = $(this);
@@ -6,12 +7,15 @@
       });
     };
 
+    // Esconde a data final de uma experiência
     $.fn.refreshEndDateVisibility = function(){
       return this.each(function(){
           $(this).parent().siblings(".end-date").hide();
       });
     };
 
+    // Mostra o form de criação, caso nenhuma experiência/educação
+    // tenha sido criada. Esconde o form, caso contrário.
     refreshDefaultFormsVisibility = function() {
       if ($("#curriculum .experiences > li").length > 0) {
         $("#new_experience").hide();
@@ -30,6 +34,7 @@
       }
     };
 
+    // Adiciona um novo campo de rede social
     $.fn.refreshSocialNetwork = function(){
       return this.each(function (){
         $("#new-social-network").hide();
@@ -50,6 +55,7 @@
     };
 
 
+    // Mostra o form correto de criação de Educação
     $.fn.refreshShowCorrectForm = function(){
       var $this = $(this);
       var chosen_type = $this.val();
@@ -68,6 +74,7 @@
       }
     };
 
+    // Mostra os campos corretos no formulário de Ensino Superior
     $.fn.refreshShowCorrectFields = function() {
       var $this = $(this);
       var higher_kind = $this.val();
@@ -88,8 +95,8 @@
         refreshDefaultFormsVisibility();
         $("#biography").refreshSocialNetwork();
 
+        // Esconde os forms de edição
         $("#curriculum .educations form").hide();
-
 
         $(".experience-current").live("change", function(){
             $("#curriculum .end-date").slideToggle();
@@ -107,6 +114,7 @@
             return false;
         });
 
+        // Mostra o form de edição e esconde o item de Experiência
         $("#curriculum .edit-experience").live("click", function(){
             $experiences = $("#curriculum .experiences > li");
             $experiences.find(".infos").show();
@@ -120,6 +128,7 @@
             return false;
         });
 
+        // Mostra o form de edição e esconde o item de Educação
         $("#curriculum .edit-education").live("click", function(){
             $educations = $("#curriculum .educations > li");
             $educations.find(".infos").show();
