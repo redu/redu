@@ -279,6 +279,8 @@ class User < ActiveRecord::Base
     when 'Friendship'
       # user_id necessário devido ao bug do create_time_zone
       self.id == entity.user_id
+    when 'PartnerEnvironmentAssociation'
+      entity.partner.users.exists?(self.id)
     end
   end
 
