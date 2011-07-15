@@ -7,7 +7,8 @@
   <%# Coloca novo form %>
   var education_form = "<%= escape_javascript render :partial => 'educations/form',
     :locals => { :user => @user, :high_school => HighSchool.new,
-      :higher_education => HigherEducation.new } %>"
+      :higher_education => HigherEducation.new,
+      :complementary_course => ComplementaryCourse.new } %>"
   $("#curriculum .educations").after(education_form);
   $("#curriculum .new-education-button").show();
   $("#education-<%= @education.id %> form").hide();
@@ -16,6 +17,8 @@
     var $form = $("#new_high_school");
   <% elsif @education.educationable.class == HigherEducation %>
     var $form = $("#new_higher_education");
+  <% elsif @education.educationable.class == ComplementaryCourse %>
+    var $form = $("#new_complementary_course");
   <% end %>
   var $errorsExplanation = $form.find('.errorExplanation');
   if ($errorsExplanation.length == 0) {

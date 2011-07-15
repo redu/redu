@@ -108,6 +108,12 @@ pt-BR:
       lecture:
         lectureable_type: "O tipo de aula"
         simple_category: "A categoria"
+      complementary_course:
+        course: "Curso"
+        institution: "Instituição"
+        year: "Ano"
+        workload: "Carga horária"
+        description: "Descrição"
       course:
         path: "Endereço"
         name: "Nome"
@@ -256,6 +262,9 @@ pt-BR:
             blank: ": Escolha um nome para o recurso."
   helpers:
     submit:
+      complementary_course:
+        create: "+ Adicionar item"
+        update: "Salvar item"
       high_school:
         create: "+ Adicionar item"
         update: "Salvar item"
@@ -941,6 +950,7 @@ pt-BR:
   homepage_banner_signup_prompt: See how it works
   #en: homepage_features: Homepage Features
   homepage_features: Homepage Features
+  hour: Hora
   #en: hours_ago: hours ago
   hours_ago: horas atrás
   #en: how_do_i_do_that: How do I do that?

@@ -1,0 +1,21 @@
+<%= f.label :course, "Curso:" %>
+<%= f.text_field :course %>
+
+<%= f.label :institution, "Instituição:" %>
+<%= f.text_field :institution %>
+<span class="tip">Nome da instituição responsável.</span>
+
+<%= f.label :year, "Ano:" %>
+<%= f.date_select :year,
+  :start_year => (Date.today - 90.years).year,
+  :end_year => (Date.today + 10.years).year,
+  :discard_day => true, :discard_month => true %>
+
+<%= f.label :workload, "Carga horária:" %>
+<%= f.text_field :workload, :class => "workload" %>
+
+<%= f.label :description, "Descrição:" %>
+<%= f.text_area :description, :class => "description" %>
+<span class="tip">Detalhes do cursos e de suas realizações durante o período.</span>
+
+<%= f.submit %>

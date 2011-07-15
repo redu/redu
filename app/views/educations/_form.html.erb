@@ -15,4 +15,9 @@
      <%= render :partial => 'educations/higher_education_fields',
        :locals => { :f => f, :higher_education => higher_education } %>
    <% end %>
+   <%= form_for complementary_course, :url => user_educations_path(user),
+     :remote => true, :html => { :class => "concave-form clearfix" } do |f| %>
+     <%= render :partial => 'educations/complementary_course_fields',
+       :locals => { :f => f } %>
+   <% end %>
  </div>

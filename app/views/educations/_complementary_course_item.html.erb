@@ -1,0 +1,23 @@
+<div class="infos clearfix">
+  <a href="#" class="edit-education icon icon-management-gray_8_8"><%= t :edit %></a>
+  <%= link_to (t :remove), user_education_path(item.user, item),
+    :remote => true, :method => :delete,
+    :class => "remove-education icon icon-x-gray_8_8 replacement",
+    :confirm => "Você tem certeza que deseja excluir esta experiência? Não será mais possível recuperá-la." %>
+  <div class="details">
+    <span class='course'><%= t item.educationable.course %></span> pela <span class="institution"><%= item.educationable.institution %></span>
+    <span class="period">
+      <%= t item.educationable.year.strftime("%Y") %>
+      (<%= pluralize item.educationable.workload, (t :hour).downcase %>)
+    </span>
+
+    <div class="description"><%= item.educationable.description %></div>
+  </div>
+</div>
+
+<%= form_for item.educationable,
+  :url => user_education_path(item.user, item), :remote => true,
+  :html => { :class => "concave-form clearfix" } do |f| %>
+  <%= render :partial => 'educations/complementary_course_fields',
+    :locals => { :f => f, :higher_education => item.educationable } %>
+<% end %>

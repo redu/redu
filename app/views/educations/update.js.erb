@@ -8,9 +8,11 @@
 <% else %>
   <% if @education.educationable.class == HighSchool %>
     var $form = $("#edit_high_school_<%= @education.educationable.id %>");
-    <% else @education.educationable.class == HigherEducation %>
+  <% elsif @education.educationable.class == HigherEducation %>
     var $form = $("#edit_higher_education_<%= @education.educationable.id %>");
-    <% end %>
+  <% elsif @education.educationable.class == ComplementaryCourse %>
+    var $form = $("#edit_complementary_course_<%= @education.educationable.id %>");
+  <% end %>
   var $errorsExplanation = $form.find('.errorExplanation');
   if ($errorsExplanation.length == 0) {
     var errorsExplanationTemplate = "<%= escape_javascript render 'shared/error_explanation'  %>";

@@ -67,7 +67,8 @@
 }
 
 #curriculum .experiences .title,
-#curriculum .educations .course-area {
+#curriculum .educations .course-area,
+#curriculum .educations .course {
   font-weight: bold;
   color: black;
 }
@@ -85,6 +86,11 @@
   color: #b3b2b3;
   font-style: italic;
   margin: 3px 0;
+}
+
+#curriculum .education .workload {
+  display: block;
+  width: 40px;
 }
 
 #curriculum .new-experience-button,

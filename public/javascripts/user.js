@@ -36,13 +36,15 @@
       var $this = $(this);
       var chosen_type = $this.val();
       $("#new_education form").hide();
+      $this.removeClass("higher");
       if (chosen_type == "high_school") {
-        $this.removeClass("higher");
         $("#new_high_school").show();
       } else if (chosen_type == "higher_education") {
         $this.addClass("higher");
         $("#new_higher_education").show();
         $("#higher_education_kind").refreshShowCorrectFields();
+      } else if (chosen_type == "complementary_course") {
+        $("#new_complementary_course").show();
       }
     };
 
