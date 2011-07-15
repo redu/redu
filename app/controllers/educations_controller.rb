@@ -9,6 +9,8 @@ class EducationsController < ApplicationController
       educationable = HighSchool.new(params[:high_school])
     elsif params.has_key? :higher_education
       educationable = HigherEducation.new(params[:higher_education])
+    elsif params.has_key? :complementary_course
+      educationable = ComplementaryCourse.new(params[:complementary_course])
     end
     @education = Education.new
     @education.user = current_user
@@ -23,6 +25,8 @@ class EducationsController < ApplicationController
       @education.educationable.attributes = params[:high_school]
     elsif params.has_key? :higher_education
       @education.educationable.attributes = params[:higher_education]
+    elsif params.has_key? :complementary_course
+      @education.educationable.attributes = params[:complementary_course]
     end
     @education.educationable.save
 
