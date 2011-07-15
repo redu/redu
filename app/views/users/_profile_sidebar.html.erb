@@ -6,16 +6,18 @@
   <ul class="local-nav">
     <li>
       <div class="<%= (current_page? user_path(@user)) ?
-                       "session selected".to_s : "session".to_s %>">
-        <% selected = (current_page? user_path(@user)) ? "icon-profile-white_16_16" : "icon-profile-lightblue_16_16" %>
+        "session selected".to_s : "session".to_s %>">
+        <% selected = (current_page? user_path(@user)) ?
+          "icon-profile-white_16_16" : "icon-profile-lightblue_16_16" %>
         <%= link_to "Perfil: #{@user.first_name}", user_path(@user),
         :class => "icon #{selected}" %>
       </div>
-     </li>
+    </li>
     <li>
       <div class="<%= (current_page? user_friendships_path(@user)) ?
                        "session selected".to_s : "session".to_s %>">
-        <% selected = (current_page? user_friendships_path(@user)) ? "icon-contacts-white_16_16" : "icon-contacts-lightblue_16_16" %>
+                       <% selected = (current_page? user_friendships_path(@user)) ?
+                         "icon-contacts-white_16_16" : "icon-contacts-lightblue_16_16" %>
         <%= link_to "Contatos: #{ @user.friends.count }",
           user_friendships_path(@user, :profile => true),
           :class => "icon #{selected}"%>
@@ -30,13 +32,19 @@
                      :id  => @user.login },
         :text => "Mostrando os <X> últimos contatos de #{@user.first_name}" %>
     </li>
+    <li>
+      <% unless current_user == @user %>
+        <div class="common-connections">
+          <div class="call">
+            <span class="">Em comum:</span>
+          </div>
+          <ul class="connections clearfix">
+            <% @friends = @user.friends_in_common_with(@user) %>
+            <%= render :partial => 'users/item_medium_24',
+              :collection => @friends %>
+          </ul>
+        </div>
+      <% end %>
+    </li>
   </ul><!-- end .local-nav -->
-  <% friendship = current_user.friendship_for @user %>
-  <% if current_user.friends?(@user) %>
-    <%= link_to 'Remover conexão',
-      user_friendship_path(current_user, friendship.id),
-      :remote => true,
-      :method => :delete,
-      :class => "disconnect icon icon-x-gray_8_8"%>
-  <% end %>
 </div>

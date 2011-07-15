@@ -4,31 +4,6 @@
   <div id="profile">
     <div class="vcard clearfix">
       <h5 class="name"><%= @user.display_name %></h5>
-      <div class="actions">
-        <% unless current_user == @user %>
-          <%= link_to 'Enviar mensagem', new_user_message_path(current_user),
-            :class => 'send-message' %>
-        <% end %>
-
-        <% friendship = @user.friendship_for current_user %>
-        <% if !current_user.friends?(@user) and current_user != @user %>
-          <% if friendship %>
-            <% if friendship.status == 'pending' %>
-              <a class="waiting">Aguardando aceitação</a>
-            <% elsif current_user != @user %>
-              <%= link_to 'Aceitar pedido de conexão',
-                user_friendships_path(current_user,
-                                      :friend_id => @user.id),
-                :method => :post,
-                :class => "waiting",
-                :id => "follow_link" %>
-              <% end %>
-            <% else %>
-              <%= render :partial => 'friendships/form', :locals => {
-                :user => current_user, :friend => @user } %>
-            <% end %>
-        <% end %>
-      </div>
       <%# FIXME Mostrar ocupação  %>
       <%# <span class="occupation">Profissão</span> %>
       <div class="bio-wrapper clearfix">
@@ -61,35 +36,61 @@
       </div><!-- end .statuses -->
     <% end %>
   </div><!-- end #profile -->
-
 </div><!-- end .main -->
+
 <div class="secondary-sidebar profile-sidebar">
-  <% if can? :manage, @user %>
-    <% unless @user.completeness == 100 %>
-      <div class="incomplete-profile">
-        <em>Seu perfil ainda não está completo</em>
-        <div class="progress">
-          <div class="completed" style="width: <%= @user.completeness %>%;">
-            <span> <%= @user.completeness %>%</span>
-          </div>
-        </div>
-        <%= link_to 'Preencher perfil', edit_user_path(@user),
-          :class => 'edit icon icon-management-gray_8_8' %>
-      </div>
+  <div class="actions">
+    <% friendship = current_user.friendship_for @user %>
+    <% if current_user.friends?(@user) %>
+      <%= link_to 'Remover contato',
+        user_friendship_path(current_user, friendship.id),
+        :remote => true,
+        :method => :delete,
+        :class => "disconnect icon icon-x-gray_8_8"%>
     <% end %>
-  <% end %>
-  <% if @user.curriculum_file_name %>
-    <div class="curriculum">
-      <div class="call">
-        <span class="">Curriculum vitae</span>
-      </div>
-      <%= link_to 'Download', download_curriculum_user_path(@user),
-        :class => 'button clean download' %>
-    </div>
-  <% end %>
+    <% if can? :manage, @user %>
+      <% unless @user.completeness == 100 %>
+        <div class="incomplete-profile">
+          <em>Seu perfil ainda não está completo</em>
+          <div class="progress">
+            <div class="completed" style="width: <%= @user.completeness %>%;">
+              <span> <%= @user.completeness %>%</span>
+            </div>
+          </div>
+          <%= link_to 'Preencher perfil', edit_user_path(@user),
+            :class => 'edit icon icon-management-gray_8_8' %>
+        </div>
+      <% end %>
+    <% end %>
+
+    <% friendship = @user.friendship_for current_user %>
+    <% if !current_user.friends?(@user) and current_user != @user %>
+      <% if friendship %>
+        <% if friendship.status == 'pending' %>
+          <a class="waiting">Aguardando aceitação</a>
+        <% elsif current_user != @user %>
+          <%= link_to 'Aceitar pedido de conexão',
+            user_friendships_path(current_user,
+                                  :friend_id => @user.id),
+                                  :method => :post,
+                                  :class => "waiting",
+                                  :id => "follow_link" %>
+        <% end %>
+      <% else %>
+        <%= render :partial => 'friendships/form', :locals => {
+          :user => current_user, :friend => @user } %>
+      <% end %>
+    <% end %>
+
+    <% unless current_user == @user %>
+      <%= link_to 'Enviar mensagem', new_user_message_path(current_user),
+        :class => 'send-message' %>
+    <% end %>
+  </div>
+
   <div class="environments">
     <div class="call">
-      <span class="">Ambientes: <%= @user.environments.count %></span>
+      <span class="">Cursos inscritos: <%= @user.courses.count %></span>
     </div>
     <ul>
       <% @environments = @user.environments.page(params[:page]).per(4) %>
@@ -102,19 +103,4 @@
       :html_class => "sec-sidebar-endless"
     %>
   </div>
-  <% unless current_user == @user %>
-    <div class="common-connections">
-      <div class="call">
-        <span class="">Contatos em Comum</span>
-      </div>
-      <ul>
-        <% current_user.friends_in_common_with(@user).each do |friend| %>
-          <li class="clearfix">
-            <%= image_tag friend.avatar.url(:thumb_32), :class => 'avatar' %>
-            <%= link_to friend.display_name, user_path(friend), :class => 'name' %>
-          </li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
 </div><!-- end .offering -->
