@@ -1,9 +1,11 @@
 <%= f.label :course, "Curso:" %>
 <%= f.text_field :course %>
+<%= error_for :complementary_course, :course %>
 
 <%= f.label :institution, "Instituição:" %>
 <%= f.text_field :institution %>
 <span class="tip">Nome da instituição responsável.</span>
+<%= error_for :complementary_course, :institution %>
 
 <%= f.label :year, "Ano:" %>
 <%= f.date_select :year,
@@ -13,6 +15,7 @@
 
 <%= f.label :workload, "Carga horária:" %>
 <%= f.text_field :workload, :class => "workload" %>
+<%= error_for :complementary_course, :workload %>
 
 <%= f.label :description, "Descrição:" %>
 <%= f.text_area :description, :class => "description" %>

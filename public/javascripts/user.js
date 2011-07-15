@@ -12,6 +12,24 @@
       });
     };
 
+    refreshDefaultFormsVisibility = function() {
+      if ($("#curriculum .experiences > li").length > 0) {
+        $("#new_experience").hide();
+        $("#curriculum .new-experience-button").show();
+      } else {
+        $("#new_experience").show();
+        $("#curriculum .new-experience-button").hide();
+      }
+
+      if ($("#curriculum .educations > li").length > 0) {
+        $("#new_education").hide();
+        $("#curriculum .new-education-button").show();
+      } else {
+        $("#new_education").show();
+        $("#curriculum .new-education-button").hide();
+      }
+    };
+
     $.fn.refreshSocialNetwork = function(){
       return this.each(function (){
         $("#new-social-network").hide();
@@ -63,28 +81,23 @@
       }
     };
 
+
     jQuery(function(){
         $("#biography .mobile").refreshMobileMask();
-        $(".current-experience #experience_current:checked").refreshEndDateVisibility();
+        $(".experience-current:checked").refreshEndDateVisibility();
+        refreshDefaultFormsVisibility();
         $("#biography").refreshSocialNetwork();
 
         $("#curriculum .educations form").hide();
 
-        if ($("#curriculum .educations > li").length > 0) {
-          $("#new_education").hide();
-          $("#curriculum .new-education-button").show();
-        } else {
-          $("#new_education").show();
-          $("#curriculum .new-education-button").hide();
-        }
 
-        $("#experience_current").live("change", function(){
+        $(".experience-current").live("change", function(){
             $("#curriculum .end-date").slideToggle();
         });
 
         $("#curriculum .new-experience-button").live("click", function(){
             $(this).hide();
-            $("#new_experience").slideToggle();
+            $("#new_experience").slideDown();
             return false;
         });
 
@@ -97,13 +110,13 @@
         $("#curriculum .edit-experience").live("click", function(){
             $experiences = $("#curriculum .experiences > li");
             $experiences.find(".infos").show();
-            $experiences.find("form").fadeOut();
+            $experiences.find("form").slideUp();
             $("#new_experience").hide();
             $("#curriculum .new-experience-button").hide();
 
             var $infos = $(this).parent();
-            $infos.fadeOut();
-            $infos.siblings("form").fadeIn();
+            $infos.slideUp();
+            $infos.siblings("form").slideDown();
             return false;
         });
 
@@ -133,19 +146,9 @@
 
         $(document).ajaxComplete(function(){
             $("#biography .mobile").refreshMobileMask();
-            $(".current-experience #experience_current:checked").refreshEndDateVisibility();
+            $(".experience-current:checked").refreshEndDateVisibility();
             $("#biography").refreshSocialNetwork();
             $("#education_type").refreshShowCorrectForm();
-
-            //$("#curriculum .educations form").hide();
-            //$("#curriculum .educations .infos").show();
-           // if ($("#curriculum .educations > li").length > 0) {
-           //   $("#new_education").hide();
-           //   $("#curriculum .new-education-button").show();
-           // } else {
-           //   $("#new_education").show();
-           //   $("#curriculum .new-education-button").hide();
-           // }
         });
     });
 })($);

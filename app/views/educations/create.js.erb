@@ -6,13 +6,14 @@
 
   <%# Coloca novo form %>
   var education_form = "<%= escape_javascript render :partial => 'educations/form',
-    :locals => { :user => @user, :high_school => HighSchool.new,
-      :higher_education => HigherEducation.new,
-      :complementary_course => ComplementaryCourse.new,
-      :event_education => EventEducation.new } %>"
+    :locals => { :user => @user, :high_school => @high_school,
+      :higher_education => @higher_education,
+      :complementary_course => @complementary_course,
+      :event_education => @event_education } %>"
   $("#curriculum .educations").after(education_form);
   $("#curriculum .new-education-button").show();
   $("#education-<%= @education.id %> form").hide();
+  $("#new_education").hide();
 <% else %>
   <% if @education.educationable.class == HighSchool %>
     var $form = $("#new_high_school");
@@ -23,20 +24,11 @@
   <% elsif @education.educationable.class == EventEducation %>
     var $form = $("#new_event_education");
   <% end %>
-  var $errorsExplanation = $form.find('.errorExplanation');
-  if ($errorsExplanation.length == 0) {
-    var errorsExplanationTemplate = "<%= escape_javascript render 'shared/error_explanation'  %>";
-    $form.prepend(errorsExplanationTemplate);
-  }
 
-  <%# mostra todos os erros %>
-  var $errors = $('<ul \>');
-  <% @education.educationable.errors.full_messages.each do |error| %>
-    $errors.append("<li><%= escape_javascript(error) %></li>");
+  <%# Mostra os erros individualmente por atributo/campo  %>
+  $(".errorMessageField").hide();
+  <% @education.educationable.errors.each do |attr, error| %>
+    $form.find('#<%= @education.educationable.class.to_s.underscore %>_<%= attr %>-error').html("<%= error %>").slideDown();
   <% end %>
-
-  $errorsExplanation = $form.find('.errorExplanation');
-  $errorsExplanation.find('ul').replaceWith($errors);
-  $errorsExplanation.show();
 <% end %>
 

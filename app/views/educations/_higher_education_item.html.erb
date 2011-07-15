@@ -5,7 +5,7 @@
     :class => "remove-education icon icon-x-gray_8_8 replacement",
     :confirm => "Você tem certeza que deseja excluir esta experiência? Não será mais possível recuperá-la." %>
   <div class="details">
-    <span class='type'><%= t item.educationable.kind %></span> em <span class="course-area"><%= item.educationable.course == "" ? item.educationable.research_area : item.educationable.course %></span> pela <span class="institution"><%= item.educationable.institution %></span>
+    <span class='type'><%= t item.educationable.kind %></span> em <span class="course-area"><%= item.educationable.course == "" ? item.educationable.research_area : item.educationable.course %></span> pelo(a) <span class="institution"><%= item.educationable.institution %></span>
     <span class="period">
       <%= t item.educationable.end_year.strftime("%Y") %>
     </span>

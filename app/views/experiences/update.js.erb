@@ -6,19 +6,9 @@
   $("#curriculum .new-experience-button").show();
 <% else %>
   var $form = $("#edit_experience_<%= @experience.id %>");
-  var $errorsExplanation = $form.find('.errorExplanation');
-  if ($errorsExplanation.length == 0) {
-    var errorsExplanationTemplate = "<%= escape_javascript render 'shared/error_explanation'  %>";
-    $form.prepend(errorsExplanationTemplate);
-  }
-
-  <%# mostra todos os erros %>
-  var $errors = $('<ul \>');
-  <% @experience.errors.full_messages.each do |error| %>
-    $errors.append("<li><%= escape_javascript(error) %></li>");
+  <%# Mostra os erros individualmente por atributo/campo  %>
+  $(".errorMessageField").hide();
+  <% @experience.errors.each do |attr, error| %>
+    $form.find('#<%= @experience.class.to_s.underscore %>_<%= attr %>-error').html("<%= error %>").slideDown();
   <% end %>
-
-  $errorsExplanation = $form.find('.errorExplanation');
-  $errorsExplanation.find('ul').replaceWith($errors);
-  $errorsExplanation.show();
 <% end %>

@@ -31,6 +31,26 @@ describe EducationsController do
         Education.last.user.should == @user
         Education.last.educationable.should == HighSchool.last
       end
+
+      it "assigns @high_school" do
+        post :create, @post_params
+        assigns[:high_school].should_not be_nil
+      end
+
+      it "assigns @higher_education" do
+        post :create, @post_params
+        assigns[:higher_education].should_not be_nil
+      end
+
+      it "assigns @complementary_course" do
+        post :create, @post_params
+        assigns[:complementary_course].should_not be_nil
+      end
+
+      it "assigns @event_education" do
+        post :create, @post_params
+        assigns[:event_education].should_not be_nil
+      end
     end
 
     context "when failing" do
@@ -128,6 +148,10 @@ describe EducationsController do
         HighSchool.last.institution.should ==
           @post_params[:high_school][:institution]
       end
+
+      it "assigns @high_school" do
+        assigns[:high_school].should_not be_nil
+      end
     end
 
     context "when failing" do
@@ -152,12 +176,16 @@ describe EducationsController do
         @post_params = { :locale => "pt-BR", :format => "js",
           :user_id => @user.id, :id => @education.id,
           :higher_education => { :institution => "New Inst." }}
+        post :update, @post_params
       end
 
       it "updates the educationable" do
-        post :update, @post_params
         HigherEducation.last.institution.should ==
           @post_params[:higher_education][:institution]
+      end
+
+      it "assigns @higher_education" do
+        assigns[:higher_education].should_not be_nil
       end
     end
 
@@ -169,12 +197,16 @@ describe EducationsController do
         @post_params = { :locale => "pt-BR", :format => "js",
           :user_id => @user.id, :id => @education.id,
           :complementary_course => { :institution => "New Inst." }}
+        post :update, @post_params
       end
 
       it "updates the educationable" do
-        post :update, @post_params
         ComplementaryCourse.last.institution.should ==
           @post_params[:complementary_course][:institution]
+      end
+
+      it "assigns @complementary_course" do
+        assigns[:complementary_course].should_not be_nil
       end
     end
 
@@ -186,12 +218,16 @@ describe EducationsController do
         @post_params = { :locale => "pt-BR", :format => "js",
           :user_id => @user.id, :id => @education.id,
           :event_education => { :name => "New name" }}
+        post :update, @post_params
       end
 
       it "updates the educationable" do
-        post :update, @post_params
         EventEducation.last.name.should ==
           @post_params[:event_education][:name]
+      end
+
+      it "assigns @event_education" do
+        assigns[:event_education].should_not be_nil
       end
     end
   end

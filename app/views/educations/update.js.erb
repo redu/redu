@@ -15,19 +15,10 @@
   <% elsif @education.educationable.class == EventEducation %>
     var $form = $("#edit_event_education_<%= @education.educationable.id %>");
   <% end %>
-  var $errorsExplanation = $form.find('.errorExplanation');
-  if ($errorsExplanation.length == 0) {
-    var errorsExplanationTemplate = "<%= escape_javascript render 'shared/error_explanation'  %>";
-    $form.prepend(errorsExplanationTemplate);
-  }
 
-  <%# mostra todos os erros %>
-  var $errors = $('<ul \>');
-  <% @education.educationable.errors.full_messages.each do |error| %>
-    $errors.append("<li><%= escape_javascript(error) %></li>");
+  <%# Mostra os erros individualmente por atributo/campo  %>
+  $(".errorMessageField").hide();
+  <% @education.educationable.errors.each do |attr, error| %>
+    $form.find('#<%= @education.educationable.class.to_s.underscore %>_<%= attr %>-error').html("<%= error %>").slideDown();
   <% end %>
-
-  $errorsExplanation = $form.find('.errorExplanation');
-  $errorsExplanation.find('ul').replaceWith($errors);
-  $errorsExplanation.show();
 <% end %>

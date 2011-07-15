@@ -4,10 +4,12 @@
   <%= f.label :title, "Título de sua função:" %>
   <%= f.text_field :title %>
   <span class="tip">Exemplo: professor, engenheiro, designer etc.</span>
+  <%= error_for :experience, :title %>
 
   <%= f.label :company, "Empresa:" %>
   <%= f.text_field :company %>
   <span class="tip">Nome da empresa responsável.</span>
+  <%= error_for :experience, :company %>
 
   <%= f.label :start_date, "Período:" %>
   <div class="start-date">
@@ -24,7 +26,7 @@
       :discard_day => true } %>
   </div>
   <span class="current-experience">
-    <%= f.check_box :current %> <%= t :i_currently_work_here %>
+    <%= f.check_box :current, :id => "experience_current-#{experience.id}", :class => "experience-current" %> <%= f.label :current, (t :i_currently_work_here), :for => "experience_current-#{experience.id}", :class => "work-here" %>
   </span>
   <%= f.label :description, "Descrição:" %>
   <%= f.text_area :description, :class => 'description' %>

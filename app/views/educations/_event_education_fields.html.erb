@@ -1,9 +1,11 @@
 <%= f.label :name, "Nome do evento:" %>
 <%= f.text_field :name %>
+<%= error_for :event_education, :name %>
 
 <%= f.label :role, "Seu papel:" %>
 <%= f.select :role, (options_for_select [["Participante", "participant"],
-                     ["Palestrante", "speaker"], ["Organizador", "organizer"]]),
+                     ["Palestrante", "speaker"], ["Organizador", "organizer"]],
+                     :selected => f.object.role),
                      {}, { :class => "role" } %>
 
 <%= f.label :year, "Ano:" %>

@@ -42,6 +42,12 @@
   padding-top: 10px;
 }
 
+#curriculum .work-here {
+  display: inline;
+  font-weight: normal;
+  float: none;
+}
+
 #curriculum .experiences .details,
 #curriculum .educations .details {
   float: left;
