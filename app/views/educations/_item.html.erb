@@ -8,5 +8,8 @@
   <% elsif item.educationable.class == ComplementaryCourse %>
     <%= render :partial => 'educations/complementary_course_item',
       :locals => { :item => item } %>
+  <% elsif item.educationable.class == EventEducation %>
+    <%= render :partial => 'educations/event_education_item',
+      :locals => { :item => item } %>
   <% end %>
 </li>

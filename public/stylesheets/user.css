@@ -68,14 +68,15 @@
 
 #curriculum .experiences .title,
 #curriculum .educations .course-area,
-#curriculum .educations .course {
+#curriculum .educations .infos .course {
   font-weight: bold;
   color: black;
 }
 
 #curriculum .experiences .company,
 #curriculum .educations .institution,
-#curriculum .educations .type {
+#curriculum .educations .type,
+#curriculum .educations .name {
   color: black;
 }
 
@@ -88,9 +89,13 @@
   margin: 3px 0;
 }
 
-#curriculum .education .workload {
+#curriculum .education form .workload {
   display: block;
   width: 40px;
+}
+
+#curriculum .education form .role {
+  display: block;
 }
 
 #curriculum .new-experience-button,

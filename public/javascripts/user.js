@@ -45,6 +45,8 @@
         $("#higher_education_kind").refreshShowCorrectFields();
       } else if (chosen_type == "complementary_course") {
         $("#new_complementary_course").show();
+      } else if (chosen_type == "event_education") {
+        $("#new_event_education").show();
       }
     };
 

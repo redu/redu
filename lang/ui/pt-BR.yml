@@ -121,6 +121,10 @@ pt-BR:
         path: "Endereço"
         name: "Nome"
         initials: "Abreviação"
+      event_education:
+        name: "Nome do evento"
+        role: "Seu papel"
+        year: "Ano"
       experience:
         title: "Título de sua função"
         company: "Empresa"
@@ -263,6 +267,9 @@ pt-BR:
   helpers:
     submit:
       complementary_course:
+        create: "+ Adicionar item"
+        update: "Salvar item"
+      event_education:
         create: "+ Adicionar item"
         update: "Salvar item"
       high_school:
@@ -1229,6 +1236,7 @@ pt-BR:
   optional_keywords_describing_this_topic_separated_by_commas: palavras chaves opcionais descrevendo este tópico, separado por vírgulas
   #en: or: or
   or: ou
+  organizer: Organizador
   #en: page: page
   page: página
   #en: page_not_found: The page you are trying to view has been moved or no longer exists.
@@ -1243,6 +1251,7 @@ pt-BR:
   pages: "Páginas:"
   #en: page_tips: "Pages are a good place to put static content that you would rather not post to the blog or the forums."
   page_tips: "Pages are a good place to put static content that you would rather not post to the blog or the forums."
+  participant: Participante
   #en: password: Password
   password: Senha
   #en: pending: pending
@@ -1458,6 +1467,7 @@ pt-BR:
   #en: scrapbook: Scrapbook
    #en: space: Escola
   space: Escola
+  speaker: Palestrante
   scrapbook: Scrapbook
   #en: search: Search
   search: Search

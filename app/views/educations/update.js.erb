@@ -12,6 +12,8 @@
     var $form = $("#edit_higher_education_<%= @education.educationable.id %>");
   <% elsif @education.educationable.class == ComplementaryCourse %>
     var $form = $("#edit_complementary_course_<%= @education.educationable.id %>");
+  <% elsif @education.educationable.class == EventEducation %>
+    var $form = $("#edit_event_education_<%= @education.educationable.id %>");
   <% end %>
   var $errorsExplanation = $form.find('.errorExplanation');
   if ($errorsExplanation.length == 0) {
