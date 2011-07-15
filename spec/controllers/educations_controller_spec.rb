@@ -75,10 +75,9 @@ describe EducationsController do
       before do
         @post_params.delete :high_school
         @post_params[:complementary_course] = { :course => "Course",
-          :institution => "Inst.", "start_year(1i)" => "2009",
-          "start_year(2i)" => "1", "start_year(3i)" => "1",
-          "end_year(1i)" => "2010", "end_year(2i)" => "1",
-          "end_year(3i)" => "1", :description => "Lorem ipsum dolor sit amet, consectetur magna aliqua. Ut enim ad minim veniam."}
+          :institution => "Institution", :workload => 40,
+          "year(1i)" => "2009", "year(2i)" => "1", "year(3i)" => "1",
+          :description => "Lorem ipsum dolor sit amet, consectetur magna aliqua. Ut enim ad minim veniam."}
       end
 
       it "creates an education" do
@@ -87,6 +86,23 @@ describe EducationsController do
         }.should change(Education, :count).by(1)
         Education.last.user.should == @user
         Education.last.educationable.should == ComplementaryCourse.last
+      end
+    end
+
+    context "with education of kind event_education" do
+      before do
+        @post_params.delete :high_school
+        @post_params[:event_education] = { :name => "Event",
+          :role => "participant", "year(1i)" => "2009",
+          "year(2i)" => "1", "year(3i)" => "1" }
+      end
+
+      it "creates an education" do
+        expect {
+          post :create, @post_params
+        }.should change(Education, :count).by(1)
+        Education.last.user.should == @user
+        Education.last.educationable.should == EventEducation.last
       end
     end
   end
@@ -161,6 +177,23 @@ describe EducationsController do
           @post_params[:complementary_course][:institution]
       end
     end
+
+    context "with education of kind event_education" do
+      before do
+        event_education = Factory(:event_education)
+        @education = Factory(:education, :educationable => event_education,
+                             :user => @user)
+        @post_params = { :locale => "pt-BR", :format => "js",
+          :user_id => @user.id, :id => @education.id,
+          :event_education => { :name => "New name" }}
+      end
+
+      it "updates the educationable" do
+        post :update, @post_params
+        EventEducation.last.name.should ==
+          @post_params[:event_education][:name]
+      end
+    end
   end
 
   describe "POST 'destroy'" do
@@ -216,6 +249,22 @@ describe EducationsController do
         expect {
           post :destroy, @params
         }.should change(ComplementaryCourse, :count).by(-1)
+      end
+    end
+
+    context "with education of kind event_education" do
+      before do
+        event_education = Factory(:event_education)
+        @education = Factory(:education, :educationable => event_education,
+                             :user => @user)
+        @params = {:locale => "pt-BR", :format => "js", :user_id => @user.id,
+          :id => @education.id }
+      end
+
+      it "destroys the educationable" do
+        expect {
+          post :destroy, @params
+        }.should change(EventEducation, :count).by(-1)
       end
     end
   end

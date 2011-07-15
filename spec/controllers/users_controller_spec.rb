@@ -140,6 +140,10 @@ describe UsersController do
     it "assigns @complementary_course" do
       assigns[:complementary_course].should_not be_nil
     end
+
+    it "assigns @event_education" do
+      assigns[:event_education].should_not be_nil
+    end
   end
 
   context "POST update" do

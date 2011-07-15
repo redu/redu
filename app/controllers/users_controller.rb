@@ -184,6 +184,7 @@ class UsersController < BaseController
     @high_school = HighSchool.new
     @higher_education = HigherEducation.new
     @complementary_course = ComplementaryCourse.new
+    @event_education = EventEducation.new
     @user.social_networks.build
     respond_to do |format|
       format.html
