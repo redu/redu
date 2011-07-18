@@ -189,6 +189,28 @@ describe UsersController do
       it "re-reders users/edit" do
         response.should render_template("users/edit")
       end
+
+      context "to render form errors" do
+        it "assigns @experience" do
+          assigns[:experience].should_not be_nil
+        end
+
+        it "assigns @high_school" do
+          assigns[:high_school].should_not be_nil
+        end
+
+        it "assigns @higher_education" do
+          assigns[:higher_education].should_not be_nil
+        end
+
+        it "assigns @complementary_course" do
+          assigns[:complementary_course].should_not be_nil
+        end
+
+        it "assigns @event_education" do
+          assigns[:event_education].should_not be_nil
+        end
+      end
     end
   end
 

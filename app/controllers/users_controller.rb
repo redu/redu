@@ -212,7 +212,12 @@ class UsersController < BaseController
         end
       end
     else
-        render 'users/edit'
+      @experience = Experience.new
+      @high_school = HighSchool.new
+      @higher_education = HigherEducation.new
+      @complementary_course = ComplementaryCourse.new
+      @event_education = EventEducation.new
+      render 'users/edit'
     end
   rescue ActiveRecord::RecordInvalid
       render 'users/edit'
