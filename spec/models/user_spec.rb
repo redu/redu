@@ -112,59 +112,6 @@ describe User do
       subject.errors[:birthday].should_not be_empty
     end
 
-    context "validates a curriculum type on update if has a curriculum" do
-      before do
-        path = File.join(Rails.root,
-                         "spec",
-                         "support",
-                         "documents",
-                         "xkcd.png")
-
-        c = File.new(path)
-        subject.curriculum = c
-      end
-
-      it "when a teacher" do
-        subject.teacher_profile = true
-        subject.save
-        subject.errors[:curriculum].should_not be_empty
-      end
-
-      it "when NOT a teacher" do
-        subject.teacher_profile = false
-        subject.save
-        subject.errors[:curriculum].should_not be_empty
-      end
-    end
-
-    context "should NOT validate a curriculum type on update if it does NOT have a curriculum" do
-      it "when a teacher" do
-        subject.teacher_profile = true
-        subject.save
-        subject.errors[:curriculum].should be_empty
-      end
-
-      it "when a student" do
-        subject.teacher_profile = false
-        subject.save
-        subject.errors[:curriculum].should be_empty
-      end
-    end
-
-    context "should NOT validate a curriculum type on update if it does NOT have a curriculum" do
-      it "when a teacher" do
-        subject.teacher_profile = true
-        subject.save
-        subject.errors[:curriculum].should be_empty
-      end
-
-      it "when a student" do
-        subject.teacher_profile = false
-        subject.save
-        subject.errors[:curriculum].should be_empty
-      end
-    end
-
     it "should validate password and password_confirmation equality" do
       u = Factory.build(:user, :email => "email@email.com",
                   :email_confirmation => "different@email.com")
@@ -545,7 +492,7 @@ describe User do
   end
 
   it "retrieves completeness percentage of profile" do
-    subject.completeness.should == 45
+    subject.completeness.should == 50
   end
 
   it "creates user settings!" do

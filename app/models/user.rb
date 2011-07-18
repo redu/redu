@@ -148,7 +148,6 @@ class User < ActiveRecord::Base
   end
 
   has_attached_file :avatar, Redu::Application.config.paperclip
-  has_attached_file :curriculum, Redu::Application.config.paperclip
 
   has_friends
   ajaxful_rater
@@ -165,9 +164,6 @@ class User < ActiveRecord::Base
   validates :birthday,
       :date => { :before => Proc.new { 13.years.ago } }
   validates_acceptance_of :tos
-  validates_attachment_size :curriculum, :less_than => 10.megabytes
-  validate :accepted_curriculum_type, :on => :update,
-    :unless => "self.curriculum_file_name.nil?"
   validates_confirmation_of :email
   validates_format_of :email,
     :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/
@@ -731,12 +727,11 @@ class User < ActiveRecord::Base
   end
 
   def completeness
-    total = 11.0
+    total = 10.0
     undone = 0.0
     undone += 1 if self.description.nil?
     undone += 1 if self.avatar_file_name.nil?
     undone += 1 if self.gender.nil?
-    undone += 1 if self.curriculum_file_name.nil?
     undone += 1 if self.localization.to_s.empty?
     undone += 1 if self.mobile.to_s.empty?
 
@@ -795,12 +790,6 @@ class User < ActiveRecord::Base
 
   def password_required?
     crypted_password.blank? || !password.blank?
-  end
-
-  def accepted_curriculum_type
-    unless SUPPORTED_CURRICULUM_TYPES.include?(self.curriculum_content_type)
-      self.errors.add(:curriculum, "Formato inválido")
-    end
   end
 
   def newpass( len )

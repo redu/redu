@@ -152,8 +152,8 @@ describe UsersController do
       activate_authlogic
       UserSession.create @user
 
-      @post_params = { :locale => "pt-BR", :id => @user.login, :user => { "birthday(1i)"=>"1991",
-        "birthday(2i)"=>"6", "birthday(3i)"=>"8", :teacher_profile => false,
+      @post_params = { :locale => "pt-BR", :id => @user.login, :user => {
+        "birthday(1i)"=>"1991", "birthday(2i)"=>"6", "birthday(3i)"=>"8",
         :mobile => "", :last_name => "Last", :localization => "",
         :description => "", :first_name => "First" } }
     end

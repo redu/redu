@@ -412,16 +412,6 @@ class UsersController < BaseController
     end
   end
 
-  # Faz download do currículo previamente guardado pelo usuário.
-  def download_curriculum
-    if Rails.env == "production" || Rails.env == "staging"
-      redirect_to @user.curriculum.expiring_url(20) and return false
-    end
-
-    send_file @user.curriculum.path,
-      :type => @user.curriculum.content_type
-  end
-
   def home
     @friends = current_user.friends.paginate(:page => 1, :per_page => 9)
     @friends_requisitions = current_user.friends_pending

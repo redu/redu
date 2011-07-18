@@ -203,7 +203,6 @@ Redu::Application.routes.draw do
       put :crop_profile_photo
       get :upload_profile_photo
       put :upload_profile_photo
-      get :download_curriculum
       get :home
       get :mural
       get :account
