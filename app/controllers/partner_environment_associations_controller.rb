@@ -9,7 +9,7 @@ class PartnerEnvironmentAssociationsController < BaseController
         if @partner_environment_association.valid?
           redirect_to partner_clients_path(@partner)
         else
-          render :action => :new
+          render :new
         end
       end
     end
@@ -22,6 +22,7 @@ class PartnerEnvironmentAssociationsController < BaseController
   end
 
   def new
+    @partner_environment_association.build_environment
     respond_to do |format|
       format.html
     end

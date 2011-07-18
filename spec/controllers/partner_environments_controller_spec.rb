@@ -34,7 +34,7 @@ describe PartnerEnvironmentAssociationsController do
 
       assigns[:partner_environment_association].should_not be_nil
       assigns[:partner_environment_association].should be_valid
-      should redirect_to partner_clients_path(@partner)
+      should redirect_to partner_environments_path(@partner)
     end
 
     context "with validation error" do
