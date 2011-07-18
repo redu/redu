@@ -52,6 +52,8 @@ describe User do
   # Plan
   it { should have_many(:plans) }
 
+  it { should have_many(:partners).through(:partner_user_associations) }
+
   it { should_not allow_mass_assignment_of :admin }
   it { should_not allow_mass_assignment_of :role }
   it { should_not allow_mass_assignment_of :activation_code }

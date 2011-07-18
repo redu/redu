@@ -94,7 +94,8 @@ class User < ActiveRecord::Base
   has_many :course_invitations, :class_name => "UserCourseAssociation",
     :conditions => ["state LIKE 'invited'"]
   has_one :settings, :class_name => "UserSetting", :dependent => :destroy
-  belongs_to :partner
+  has_many :partners, :through => :partner_user_associations
+  has_many :partner_user_associations
 
   # Named scopes
   scope :recent, order('users.created_at DESC')

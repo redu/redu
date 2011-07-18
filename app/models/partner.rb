@@ -1,7 +1,8 @@
 class Partner < ActiveRecord::Base
   has_many :partner_environment_associations
   has_many :environments, :through => :partner_environment_associations
-  has_many :users
+  has_many :users, :through => :partner_user_associations
+  has_many :partner_user_associations
 
   validates_presence_of :name
 
