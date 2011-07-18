@@ -808,9 +808,9 @@ describe Ability do
         end
       end
 
-      it "cannot view" do
+      it "cannot read" do
         @peas.each do |association|
-          @user_ability.should_not be_able_to(:view, association)
+          @user_ability.should_not be_able_to(:read, association)
         end
       end
     end
@@ -842,7 +842,7 @@ describe Ability do
       end
 
       it "cannot view" do
-        @user_ability.should_not be_able_to(:view, @partner)
+        @user_ability.should_not be_able_to(:read, @partner)
       end
     end
 
@@ -856,11 +856,11 @@ describe Ability do
       end
 
       it "can view" do
-        @user_ability.should be_able_to(:view, @partner)
+        @user_ability.should be_able_to(:read, @partner)
       end
 
-      it "cannot manage" do
-        @user_ability.should_not be_able_to(:manage, @partner)
+      it "can manage" do
+        @user_ability.should be_able_to(:manage, @partner)
       end
     end
   end
