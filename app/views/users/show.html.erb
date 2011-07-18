@@ -4,103 +4,76 @@
   <div id="profile">
     <div class="vcard clearfix">
       <h5 class="name"><%= @user.display_name %></h5>
-      <%# FIXME Mostrar ocupação  %>
-      <%# <span class="occupation">Profissão</span> %>
-      <div class="bio-wrapper clearfix">
-        <% if can? :manage, @user %>
+      <div class="user-summary clearfix">
+        <ul>
+          <li>
+            <ul>
+              <% @user.experiences.actual_jobs.each do |experience| %>
+                <li>
+                  <span class="bio"><%= experience.title %></span> em
+                  <span class="bio"><%= experience.company %></span>
+                </li>
+              <% end %>
+            </ul>
+          </li>
+          <li>
+            <span class="bio"><%= t :high_school %></span> em
+            <span class="bio"><%= @user.educations.first.educationable.institution %></span>
+          </li>
+          <li>
+            <ul>
+              <li><span class="bio"><%= @user.age %></span> anos</li>
+              <li>Fala
+                <span class="bio"><%= @user.languages %></span>
+              </li>
+              <li>Natural de
+                <span class="bio"><%= @user.birth_localization %></span>
+              </li>
+              <li>Vive em
+                <span class="bio"><%= @user.localization %></span>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div><!-- end .user-summary -->
+      <% if can? :manage, @user %>
         <%= link_to 'Editar', edit_user_path(@user),
           :class => 'edit icon icon-management-gray_8_8' %>
-        <% end %>
-        <span class="label">O que faço de melhor:</span>
-        <span class="bio"><%= @user.description %></span>
+      <% end %>
+      <hr class="separator"/>
+
+      <div class="bio-wrapper clearfix">
+        <span class="label">Sobre mim:</span>
+        <span class="bio indent"><%= @user.description %></span>
         <span class="label">Interesses:</span>
-        <ul class="tags clearfix">
-          <% @user.tags.each do |tag| %>
+        <span class="bio indent"><%= @user.tag_list.join(", ") %></span>
+        <span class="label">Celular:</span>
+        <span class="bio indent"><%= @user.mobile %></span>
+      </div><!-- end .bio-wrapper -->
+
+      <hr class="separator"/>
+
+      <div class="bio-wrapper experience clearfix">
+        <span class="label">Experiência:</span>
+        <ul class="indent clearfix">
+          <% @user.experiences.each do |experience| %>
             <li>
-              <%= link_to tag, user_path(@user) %>
+              <%= render :partial => "experiences/item_detail", :locals => { :item => experience } %>
             </li>
           <% end %>
         </ul>
-      </div><!-- end .bio-wrapper -->
+      </div>
+
+      <hr class="separator"/>
+
+      <div class="bio-wrapper clearfix">
+        <span class="label">Educação:</span>
+        <span class="label">Complemento:</span>
+        <span class="label">Evento:</span>
+      </div>
+
     </div><!-- end .vcard -->
-
-    <% if (can? :manage, @user) or (can? :view_mural, @user) %>
-      <%= render :partial => 'statuses/create_status',
-        :locals => { :statusable => @user } %>
-      <div id="statuses" class="statuses">
-        <ol>
-          <%= render :partial => 'statuses/item', :collection => @statuses %>
-        </ol>
-
-        <%= will_paginate @statuses, :renderer => EndlessRenderer %>
-      </div><!-- end .statuses -->
-    <% end %>
   </div><!-- end #profile -->
 </div><!-- end .main -->
 
-<div class="secondary-sidebar profile-sidebar">
-  <div class="actions">
-    <% friendship = current_user.friendship_for @user %>
-    <% if current_user.friends?(@user) %>
-      <%= link_to 'Remover contato',
-        user_friendship_path(current_user, friendship.id),
-        :remote => true,
-        :method => :delete,
-        :class => "disconnect icon icon-x-gray_8_8"%>
-    <% end %>
-    <% if can? :manage, @user %>
-      <% unless @user.completeness == 100 %>
-        <div class="incomplete-profile">
-          <em>Seu perfil ainda não está completo</em>
-          <div class="progress">
-            <div class="completed" style="width: <%= @user.completeness %>%;">
-              <span> <%= @user.completeness %>%</span>
-            </div>
-          </div>
-          <%= link_to 'Preencher perfil', edit_user_path(@user),
-            :class => 'edit icon icon-management-gray_8_8' %>
-        </div>
-      <% end %>
-    <% end %>
-
-    <% friendship = @user.friendship_for current_user %>
-    <% if !current_user.friends?(@user) and current_user != @user %>
-      <% if friendship %>
-        <% if friendship.status == 'pending' %>
-          <a class="waiting">Aguardando aceitação</a>
-        <% elsif current_user != @user %>
-          <%= link_to 'Aceitar pedido de conexão',
-            user_friendships_path(current_user,
-                                  :friend_id => @user.id),
-                                  :method => :post,
-                                  :class => "waiting",
-                                  :id => "follow_link" %>
-        <% end %>
-      <% else %>
-        <%= render :partial => 'friendships/form', :locals => {
-          :user => current_user, :friend => @user } %>
-      <% end %>
-    <% end %>
-
-    <% unless current_user == @user %>
-      <%= link_to 'Enviar mensagem', new_user_message_path(current_user),
-        :class => 'send-message' %>
-    <% end %>
-  </div>
-
-  <div class="environments">
-    <div class="call">
-      <span class="">Cursos inscritos: <%= @user.courses.count %></span>
-    </div>
-    <ul>
-      <% @environments = @user.environments.page(params[:page]).per(4) %>
-      <%= render :partial => 'environments/item_medium',
-        :collection => @environments %>
-    </ul>
-    <%= paginate @environments, :theme => 'sidebar_endless',
-      :params => { :controller => 'users', :action => 'environments_endless' },
-      :text => "Mostrando os <X> últimos ambientes de #{@user.first_name}",
-      :html_class => "sec-sidebar-endless"
-    %>
-  </div>
-</div><!-- end .offering -->
+<%= render :partial => 'users/secondary_sidebar' %>

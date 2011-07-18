@@ -35,4 +35,24 @@ describe Experience do
       @experience.errors[:start_date]
     end
   end
+
+  context "finders" do
+    before do
+      @user = Factory(:user)
+      @experience1 = Factory(:experience, :user => @user,
+                             :start_date => 6.month.ago,
+                             :end_date => 3.month.ago)
+      @experience2 = Factory(:experience, :user => @user, :current => true,
+                             :start_date => 10.month.ago,
+                             :end_date => nil)
+
+      @experience3 = Factory(:experience, :user => @user, :current => true,
+                             :start_date => 6.month.ago,
+                             :end_date => nil)
+    end
+
+    it "should retrive all actual jobs" do
+      @user.experiences.actual_jobs.should == [@experience2, @experience3]
+    end
+  end
 end

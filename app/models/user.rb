@@ -769,6 +769,13 @@ class User < ActiveRecord::Base
     end
   end
 
+  #FIXME falta testar alguns casos
+  def age
+    dob = self.birthday
+    now = Time.now.utc.to_date
+    now.year - dob.year - ((now.month > dob.month || (now.month == dob.month && now.day >= dob.day)) ? 0 : 1)
+  end
+
   protected
   def activate_before_save
     self.activated_at = Time.now.utc

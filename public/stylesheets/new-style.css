@@ -3946,96 +3946,107 @@ div.token-input-dropdown {
   padding-bottom: 20px;
 }
 
-#profile .vcard .name,
-#profile .vcard .occupation {
-  width: 410px;
-  margin-right: 10px;
-  display: block;
-  float: left;
+#profile .vcard .separator {
+  border: none;
+  border-bottom: 1px dotted #B2B1B2;
+  width: 100%;
 }
 
 #profile .vcard .name {
+  width: 580px;
+  margin-right: 10px;
+  margin-bottom: 20px;
+  display: block;
   font-family: Copse, Arial, sans-serif;
   font-weight: normal;
   font-size: 2.1em;
+  color: #4cacd5;
 }
 
-#profile .vcard .occupation {
-  font-size: .9em;
-  font-style: oblique;
-  color: #6C6D6E;
-  text-indent: 2px;
-  margin-top: 15px;
+#profile .vcard .user-summary {
+  width: 480px;
+  float: left;
+  color: #b3b2b3;
+  font-size: 0.85em;
+  margin-bottom: 20px;
 }
 
-#profile .vcard .actions {
-  float: right;
-  width: 160px;
-}
-
-#profile .vcard .actions a {
-  overflow: hidden;
-  display: block;
-
-  float: right;
-}
-
-#profile .vcard .waiting {
-  width: 67px;
-  text-indent: 0;
-  font-size: .8em;
-  border: 1px solid #61BE80;
-  padding: 5px 3px;
-  text-align: center;
-  color: #61BE80;
-  margin-right: 5px;
-
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
-}
-
-#profile .vcard .bio-wrapper {
-  background: url("../images/new/quotes.gif") no-repeat 550px 30px;
-  clear: both;
-  padding: 0 10px;
-  padding-top: 15px;
-  padding-right: 40px;
+#profile .vcard .bio {
+  margin-bottom: 20px;
+  color: #6d6e6f;
 }
 
 #profile .vcard .edit {
   font-size: .9em;
-  clear: both;
   padding-left: 13px;
   float: right;
   display: block;
   width: 30px;
 }
 
-#profile .vcard .bio {
-  font-size: .9em;
-  color: #6C6D70;
+#profile .vcard .bio-wrapper {
+  margin-top: 20px;
+}
+
+#profile .vcard .bio-wrapper .indent {
+  width: 430px;
+  padding-right: 30px;
   display: block;
   float: left;
-  width: 465px;
-  margin-top: 10px;
-  min-height: 30px;
+}
+
+#profile .vcard .experience {
+  margin-top: 15px;
+}
+
+#profile .vcard .experience .label {
+  margin-top: 5px;
+  margin-right: 5px;
 }
 
 #profile .vcard .label {
   font-weight: bold;
   display: block;
   float: left;
-  width: 55px;
+  width: 90px;
   margin-right: 10px;
-  margin-top: 10px;
-  font-size: .8em;
-  color:#6C6D6E;
+  font-size: 1em;
+  text-align: right;
+  color: #b3b2b3;
 }
 
-#profile .vcard .tags {
-  margin-top: 10px;
-  float: left;
+#profile .vcard .details {
+  padding: 5px 0px 10px 5px;
+  color: #6d6e6f;
+  margin-bottom: 10px;
+}
+
+#profile .vcard .details:hover {
+  background-image: -moz-linear-gradient(left, #4cacd5, #ffffff);
+  background-image: -webkit-gradient(linear, left top, right top, from(#dbeff7), to(#ffffff));
+  background-image: -o-linear-gradient(left, #4cacd5, #ffffff);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4cacd5', endColorstr='#ffffff');
+
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+}
+
+#profile .vcard .details .title,
+#profile .vcard .details .company{
+  color: black;
+}
+
+#profile .vcard .details .title {
+  font-weight: bold;
+}
+
+#profile .vcard .details .period{
+  display: block;
+  font-size: .87em;
+  color: #b3b2b3;
+  font-style: italic;
+  margin: 3px 0;
 }
 
 .profile-sidebar {
