@@ -372,6 +372,13 @@ Redu::Application.routes.draw do
     end
   end
 
+  resources :partner, :only => [] do
+    resources :environments, :only => :index
+    resources :partner_environment_associations, :as => :clients,
+      :only => [:create, :index, :new]
+    resources :users, :only => :index
+  end
+
   root :to => 'base#site_index', :as => :home
   root :to => "base#site_index", :as => :application
 
