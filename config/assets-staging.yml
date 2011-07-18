@@ -44,6 +44,9 @@ javascripts:
     - public/javascripts/jquery.ui.widget.js
     - public/javascripts/jquery.ui.tabs.js
     - public/javascripts/real_tabs.redu.jquery.js
+  user:
+    - public/javascripts/jquery.maskedinput.js
+    - public/javascripts/user.js
 
 stylesheets:
   common:
@@ -60,3 +63,5 @@ stylesheets:
     - public/stylesheets/ie.css
   chat:
     - public/stylesheets/chat.css
+  user:
+    - public/stylesheets/user.css
