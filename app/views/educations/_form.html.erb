@@ -1,0 +1,28 @@
+<div id="new_education" class="concave-form">
+  <%= label_tag :education_type, "Tipo:" %>
+  <%= select_tag :education_type,
+    (options_for_select [["Ensino Médio", "high_school"],
+     ["Ensino Superior", "higher_education"],
+     ["Curso Complementar", "complementary_course"],
+     ["Evento", "event_education"]]) %>
+   <%= form_for high_school, :url => user_educations_path(user),
+     :remote => true, :html => { :class => "concave-form clearfix" } do |f| %>
+     <%= render :partial => 'educations/high_school_fields',
+       :locals => { :f => f } %>
+   <% end %>
+   <%= form_for higher_education, :url => user_educations_path(user),
+     :remote => true, :html => { :class => "concave-form clearfix" } do |f| %>
+     <%= render :partial => 'educations/higher_education_fields',
+       :locals => { :f => f, :higher_education => higher_education } %>
+   <% end %>
+   <%= form_for complementary_course, :url => user_educations_path(user),
+     :remote => true, :html => { :class => "concave-form clearfix" } do |f| %>
+     <%= render :partial => 'educations/complementary_course_fields',
+       :locals => { :f => f } %>
+   <% end %>
+   <%= form_for event_education, :url => user_educations_path(user),
+     :remote => true, :html => { :class => "concave-form clearfix" } do |f| %>
+     <%= render :partial => 'educations/event_education_fields',
+       :locals => { :f => f } %>
+   <% end %>
+ </div>

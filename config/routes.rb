@@ -1,4 +1,5 @@
 Redu::Application.routes.draw do
+
   post "presence/auth"
   post "presence/send_chat_message"
   get "presence/last_messages_with"
@@ -206,10 +207,14 @@ Redu::Application.routes.draw do
       get :home
       get :mural
       get :account
+      get :contacts_endless
+      get :environments_endless
     end
     collection do
       get :auto_complete
     end
+
+    resources :social_networks, :only => [:destroy]
 
     resources :friendships, :only => [:index, :create, :destroy] do
       member do
@@ -300,6 +305,8 @@ Redu::Application.routes.draw do
     end
 
     resources :plans, :only => [:index]
+    resources :experiences
+    resources :educations, :except => [:new, :edit]
     get '/:environment_id/roles' => 'roles#show', :as => :admin_roles
     post '/:environment_id/roles' => 'roles#update', :as => :update_roles
   end

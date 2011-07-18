@@ -93,9 +93,13 @@ class User < ActiveRecord::Base
 
   has_many :course_invitations, :class_name => "UserCourseAssociation",
     :conditions => ["state LIKE 'invited'"]
+  has_many :experiences, :dependent => :destroy
+  has_many :educations, :dependent => :destroy
   has_one :settings, :class_name => "UserSetting", :dependent => :destroy
   has_many :partners, :through => :partner_user_associations
   has_many :partner_user_associations
+
+  has_many :social_networks, :dependent => :destroy
 
   # Named scopes
   scope :recent, order('users.created_at DESC')
@@ -124,6 +128,10 @@ class User < ActiveRecord::Base
     :sb_posts_count, :sb_last_seen_at
 
   accepts_nested_attributes_for :settings
+  accepts_nested_attributes_for :social_networks,
+    :reject_if => proc { |attributes| attributes['url'].blank? or
+      attributes['name'].blank? },
+    :allow_destroy => true
 
   # PLUGINS
   acts_as_authentic do |c|
@@ -166,7 +174,7 @@ class User < ActiveRecord::Base
   validates_format_of :email,
     :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/
   validates_format_of :mobile,
-      :with => /^(\(?\d{2}\)?)?[\s|-]?(\(?\d{2}\)?)?[\s|-](\d{4}[\s|-]?\d{4})/,
+      :with => /^\+\d{2}\s\(\d{2}\)\s\d{4}-\d{4}$/,
       :allow_blank => true
 
   # override activerecord's find to allow us to find by name or id transparently
@@ -284,6 +292,12 @@ class User < ActiveRecord::Base
       entity.partner.users.exists?(self.id)
     when 'Partner'
       entity.users.exists?(self.id)
+    when 'Experience'
+      self.can_manage?(entity.user)
+    when 'SocialNetwork'
+      self.can_manage?(entity.user)
+    when 'Education'
+      self.can_manage?(entity.user)
     end
   end
 

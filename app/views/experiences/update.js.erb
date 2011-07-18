@@ -1,0 +1,14 @@
+<% if @experience.valid? %>
+  var newItem = "<%= escape_javascript render :partial => 'experiences/item',
+    :locals => { :item => @experience } %>"
+  var oldItem = $("#experience-<%= @experience.id %>");
+  oldItem.replaceWith(newItem);
+  $("#curriculum .new-experience-button").show();
+<% else %>
+  var $form = $("#edit_experience_<%= @experience.id %>");
+  <%# Mostra os erros individualmente por atributo/campo  %>
+  $(".errorMessageField").hide();
+  <% @experience.errors.each do |attr, error| %>
+    $form.find('#<%= @experience.class.to_s.underscore %>_<%= attr %>-error').html("<%= error %>").slideDown();
+  <% end %>
+<% end %>

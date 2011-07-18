@@ -1,0 +1,24 @@
+<% if @education.valid? %>
+  var newItem = "<%= escape_javascript render :partial => 'educations/item',
+    :locals => { :item => @education } %>"
+  var oldItem = $("#education-<%= @education.id %>");
+  oldItem.replaceWith(newItem);
+  $("#curriculum .new-education-button").show();
+  $("#education-<%= @education.id %> form").hide();
+<% else %>
+  <% if @education.educationable.class == HighSchool %>
+    var $form = $("#edit_high_school_<%= @education.educationable.id %>");
+  <% elsif @education.educationable.class == HigherEducation %>
+    var $form = $("#edit_higher_education_<%= @education.educationable.id %>");
+  <% elsif @education.educationable.class == ComplementaryCourse %>
+    var $form = $("#edit_complementary_course_<%= @education.educationable.id %>");
+  <% elsif @education.educationable.class == EventEducation %>
+    var $form = $("#edit_event_education_<%= @education.educationable.id %>");
+  <% end %>
+
+  <%# Mostra os erros individualmente por atributo/campo  %>
+  $(".errorMessageField").hide();
+  <% @education.educationable.errors.each do |attr, error| %>
+    $form.find('#<%= @education.educationable.class.to_s.underscore %>_<%= attr %>-error').html("<%= error %>").slideDown();
+  <% end %>
+<% end %>

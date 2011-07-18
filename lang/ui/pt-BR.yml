@@ -108,6 +108,12 @@ pt-BR:
       lecture:
         lectureable_type: "O tipo de aula"
         simple_category: "A categoria"
+      complementary_course:
+        course: "Curso"
+        institution: "Instituição"
+        year: "Ano"
+        workload: "Carga horária"
+        description: "Descrição"
       course:
         path: "Endereço"
         name: "Nome"
@@ -115,6 +121,27 @@ pt-BR:
         path: "Endereço"
         name: "Nome"
         initials: "Abreviação"
+      event_education:
+        name: "Nome do evento"
+        role: "Seu papel"
+        year: "Ano"
+      experience:
+        title: "Título de sua função"
+        company: "Empresa"
+        start_date: "Data de início"
+        end_date: "Data de término"
+        current: "Atual"
+      high_school:
+        institution: "Instituição"
+        end_year: "Ano de término"
+        description: "Descrição"
+      higher_education:
+        course: "Curso"
+        research_area: "Área de pesquisa"
+        institution: "Instituição"
+        start_year: "Ano de início"
+        end_year: "Ano de término"
+        description: "Descrição"
       space:
         name: "Nome"
         description: "Descrição"
@@ -137,6 +164,14 @@ pt-BR:
         recipient: "Para"
         body: "Mensagem"
         subject: "Assunto"
+      user:
+        birth_localization: "Cidade onde nasceu"
+        first_name: "Nome"
+        languages: "Idiomas"
+        last_name: "Sobrenome"
+        localization: "Cidade onde vive"
+        mobile: "Celular"
+        password: "Senha"
 
     # tradução dos erros de cada tipo
     errors:
@@ -157,9 +192,9 @@ pt-BR:
         user:
           attributes:
             first_name:
-              blank: "Por favor, digite seu nome."
+              blank: "não pode ser deixado em branco"
             last_name:
-              blank: "Por favor, digite seu sobrenome."
+              blank: "não pode ser deixado em branco"
             login:
               blank: ": Por favor, digite um login."
               too_short: ": Login muito curto (mínimo de 5 caracteres)."
@@ -181,7 +216,7 @@ pt-BR:
               blank: ": Por favor, digite a senha de confirmação."
               too_short: ": Senha muito curta (mínimo de 6 caracteres)."
             mobile:
-              invalid: "Telefone inválido."
+              invalid: "inválido."
             localization:
               invalid: "Localização inválida."
         exam:
@@ -229,6 +264,20 @@ pt-BR:
           attributes:
            name:
             blank: ": Escolha um nome para o recurso."
+  helpers:
+    submit:
+      complementary_course:
+        create: "+ Adicionar item"
+        update: "Salvar item"
+      event_education:
+        create: "+ Adicionar item"
+        update: "Salvar item"
+      high_school:
+        create: "+ Adicionar item"
+        update: "Salvar item"
+      higher_education:
+        create: "+ Adicionar item"
+        update: "Salvar item"
 
   lectureable: vídeo-aula
   lectures: aulas
@@ -286,6 +335,10 @@ pt-BR:
     attributes:
       user:
         login: "Login"
+  views:
+    pagination:
+      sidebar_endless: "Ver mais"
+
   #redu categories
   all: Todas
   aeronautics_and_astronautics: Aeronáutica e Astronáutica
@@ -468,6 +521,7 @@ pt-BR:
   audience: Audience
   #en: author: Author
   author: Autor
+  bachelorship: Bacharelado
   #en: back: Back
   back: Voltar
   #en: back_to_all_users: Back to all users
@@ -655,6 +709,7 @@ pt-BR:
   deactivate_confirmation: Are you sure you want to deactivate your account?
   #en: deactivate_completed: Thanks. Your account has been deactivated and you have been logged out.
   deactivate_completed: Thanks. Your account has been deactivated and you have been logged out.
+  degree: Licenciatura
   #en: delete: Delete
   delete: Remover
   #en: delete_selected: Delete selected
@@ -683,6 +738,7 @@ pt-BR:
   description: Descrição
   #en: destroy: Destroy
   destroy: Destroy
+  doctorate: Doutorado
   #en: dont_have_an_account: Don't have an account?
   dont_have_an_account: Não possui uma conta?
   #en: dont_wait_its: Don't wait! It's
@@ -789,6 +845,7 @@ pt-BR:
   events: Events
   #en: every_person_has_something_to_say: Every single person has something to say, something to give, something that will help someone else.  Join in!
   every_person_has_something_to_say: "Every single person has something to say, something to give, something that will help someone else.  Join in!"
+  exibitions: "Exibições"
   #en: explore_site: Explore {{site}}
   explore_site: "Explore {{site}}"
   #en: failed: failed
@@ -889,6 +946,7 @@ pt-BR:
   have_something_to_contribute: Have something to contribute?
   #en: help: Help
   help: Help
+  high_school: "Ensino Médio"
   #en: home: Home
   home: Home
   #en: homepage_banner_download_msg: Download it now and get started
@@ -899,12 +957,14 @@ pt-BR:
   homepage_banner_signup_prompt: See how it works
   #en: homepage_features: Homepage Features
   homepage_features: Homepage Features
+  hour: Hora
   #en: hours_ago: hours ago
   hours_ago: horas atrás
   #en: how_do_i_do_that: How do I do that?
   how_do_i_do_that: How do I do that?
   #en: html: HTML
   html: HTML
+  i_currently_work_here: "Eu trabalho aqui atualmente"
   #en: image: Image
   image: Image
   #en: image_url: Image URL
@@ -1109,6 +1169,7 @@ pt-BR:
   new_post_for_category: "Nova {{category}}"
   #en: new_post_text: New Post text
   new_post_text: New Post text
+  new_password: Nova senha
   #en: new_skill: New skill
   new_skill: New skill
   #en: new_today: New today
@@ -1175,6 +1236,7 @@ pt-BR:
   optional_keywords_describing_this_topic_separated_by_commas: palavras chaves opcionais descrevendo este tópico, separado por vírgulas
   #en: or: or
   or: ou
+  organizer: Organizador
   #en: page: page
   page: página
   #en: page_not_found: The page you are trying to view has been moved or no longer exists.
@@ -1189,6 +1251,7 @@ pt-BR:
   pages: "Páginas:"
   #en: page_tips: "Pages are a good place to put static content that you would rather not post to the blog or the forums."
   page_tips: "Pages are a good place to put static content that you would rather not post to the blog or the forums."
+  participant: Participante
   #en: password: Password
   password: Senha
   #en: pending: pending
@@ -1207,6 +1270,7 @@ pt-BR:
   permanently_delete_this_event: Permanently delete this event?
   #en: permanently_delete_this_post: Permanently delete this post?
   permanently_delete_this_post: Permanently delete this post?
+  phd: PhD
   #en: photo_comments: Photo Comments
   photo_comments: Photo Comments
   #en: photo_from_user: "{{photo_description}} from {{user}}"
@@ -1241,6 +1305,8 @@ pt-BR:
   popular_polls: Popular Polls
   #en position: Position
   position: Posição
+  pos_stricto_sensu: Pós "Stricto Sensu"
+  pos_lato_sensu: Pós "Lato Sensu / MBA"
   #en: post: Post
   post: Postagem
   #en: posts: Posts
@@ -1333,6 +1399,7 @@ pt-BR:
   #en: remember_you_can_always_change_this_later: Remember, you can always change this later.
   remember_you_can_always_change_this_later: "Remember, you can always change this later."
   #en: remove_moderator: Remove moderator
+  remove: Remover
   remove_moderator: Remover moderador
   #en: remove_this_friend: Remove this friend
   remove_this_friend: Remove this friend
@@ -1400,6 +1467,7 @@ pt-BR:
   #en: scrapbook: Scrapbook
    #en: space: Escola
   space: Escola
+  speaker: Palestrante
   scrapbook: Scrapbook
   #en: search: Search
   search: Search
@@ -1538,6 +1606,7 @@ pt-BR:
   tagged: tagged
   #en: tags_page: tags page
   tags_page: página de tags
+  technical: Técnico
   #en: thanks_for_activating_your_account: Thanks for activating your account!
   thanks_for_activating_your_account: Obrigado por ativar a sua conta!
   #en: thanks_youre_now_logged_in: Thanks! You're now logged in.
@@ -1675,8 +1744,6 @@ pt-BR:
   user_bio_help: "<p>Your bio is first thing people see on your profile. Some ideas:<ul><li> Describe your sense of style</li><li> Explain what you love about life.</li><li> What's the last thing you purchased for a friend?</li></ul></p>"
   #en: view: View
   view: Visualizar
-  #en: views: Views
-  views: Exibições
   #en: view_all_my_clippings: View all my clippings
   view_all_my_clippings: View all my clippings
   #en: view_all_my_friend_requests: View all my friend requests

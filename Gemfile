@@ -35,6 +35,7 @@ gem 'whenever', :require => false
 gem 'remotipart', '>= 0.3.4'
 gem 'zencoder'
 gem 'pusher'
+gem 'kaminari'
 
 # Gems específicos de algum ambiente
 group :development, :test do

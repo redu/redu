@@ -1,0 +1,52 @@
+<% if higher_education.new_record? %>
+  <%= f.select :kind,
+    options_for_select([["Técnico", "technical"], ["Licenciatura", "degree"],
+                       ["Bacharelado", "bachelorship"],
+                       ["Pós \"Lato Sensu / MBA\"", "pos_lato_sensu"],
+                       ["Pós \"Stricto Sensu\"", "pos_stricto_sensu"],
+                       ["Doutorado", "doctorate"],
+                       ["PhD", "phd"]]) %>
+<% end %>
+
+<%# Mostra apenas se for dos tipos que possuem curso (momento da edição)  %>
+<% unless !higher_education.new_record? && higher_education.course == "" %>
+  <div class="course">
+    <%= f.label :course, "Curso:", :class => "course" %>
+    <%= f.text_field :course %>
+    <span class="tip">Exemplo: engenharia civil, direito, medicina etc.</span>
+  </div>
+  <%= error_for :higher_education, :course %>
+<% end %>
+
+<%# Mostra apenas se for dos tipos que possuem area (momento da edição)  %>
+<% unless !higher_education.new_record? && higher_education.research_area == "" %>
+  <div class="area">
+    <%= f.label :research_area, "Área de pesquisa:" %>
+    <%= f.text_field :research_area %>
+    <span class="tip">Exemplo: inovação, direito tributário, cardiologia etc.</span>
+  </div>
+  <%= error_for :higher_education, :research_area %>
+<% end %>
+
+<%= f.label :institution, "Instituição:" %>
+<%= f.text_field :institution %>
+<span class="tip">Nome da instituição responsável.</span>
+<%= error_for :higher_education, :institution %>
+
+<%= label_tag :start_year, "Período:" %>
+<%= f.date_select :start_year,
+  :start_year => (Date.today - 90.years).year,
+  :end_year => (Date.today + 10.years).year,
+  :discard_day => true, :discard_month => true %>
+
+a:
+<%= f.date_select :end_year,
+  :start_year => (Date.today - 90.years).year,
+  :end_year => (Date.today + 10.years).year,
+  :discard_day => true, :discard_month => true %>
+
+<%= f.label :description, "Descrição:" %>
+<%= f.text_area :description, :class => "description" %>
+<span class="tip">Detalhes do cursos e de suas realizações durante o período.</span>
+
+<%= f.submit %>

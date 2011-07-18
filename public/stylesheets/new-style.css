@@ -173,13 +173,6 @@
   margin-left: 40px;
 }
 
-#content .sidebar .disconnect {
-  margin-left: 56px;
-  padding-left: 12px;
-  display: block;
-  font-size: .9em;
-}
-
 #content .sidebar .courses {
   font-size: .85em;
 }
@@ -199,6 +192,16 @@
 #content .sidebar .connections li {
   float: left;
   margin: 3px 3px 0 0;
+}
+
+#content .sidebar .connections li .avatar {
+  float: left;
+  margin-right: 5px;
+}
+
+#content .sidebar .connections li .name {
+  font-weight: bold;
+  font-size: .87em;
 }
 
 #content .sidebar .more {
@@ -1152,6 +1155,32 @@
   text-decoration: none;
 }
 
+.sidebar-endless,
+.sec-sidebar-endless {
+  background: url("../images/new/dots.png") repeat-x top;
+  padding-top: 10px;
+  margin-top: 10px;
+  text-align: right;
+  font-size: 0.87em;
+}
+
+
+.sec-sidebar-endless {
+  text-align: left;
+  margin-left: 10px;
+}
+
+.sidebar-endless a,
+.sec-sidebar-endless a {
+  display: block;
+}
+
+.sidebar-endless .counter,
+.sec-sidebar-endless .counter {
+  color: #B3B2B3;
+  font-style: italic;
+}
+
 .statuses {
   font-size: .98em;
 }
@@ -1228,6 +1257,11 @@
   width: 155px;
 }
 
+#content .secondary-sidebar .separator {
+  border: none;
+  border-bottom: 1px dotted #B2B1B2;
+}
+
 #content .secondary-sidebar .call {
   background-color: #F0F0F0;
   padding: 10px;
@@ -1246,6 +1280,35 @@
 
 #content .secondary-sidebar .call .icon {
   padding: 2px 0 2px 25px;
+}
+
+#content .actions {
+  margin-left: 10px;
+}
+#content .actions .add-as-friend:hover,
+#content .actions .add-as-friend {
+  width: 72px;
+  height: 32px;
+  text-indent: -9999px;
+  background: url("../images/new/add-as-friend.png") no-repeat;
+  margin-right: 5px;
+  border: none;
+}
+
+#content .actions .send-message {
+  width: 72px;
+  height: 32px;
+  margin-top: 5px;
+  display: block;
+  text-indent: -9999px;
+  background: url("../images/new/send-message.png") no-repeat;
+}
+
+#content .actions .disconnect {
+  margin-bottom: 20px;
+  padding-left: 12px;
+  display: block;
+  font-size: .9em;
 }
 
 #content .course-offering {
@@ -3932,24 +3995,6 @@ div.token-input-dropdown {
   border-radius: 5px;
 }
 
-.vcard  .add-as-friend:hover,
-.vcard  .add-as-friend {
-  width: 72px;
-  height: 32px;
-  text-indent: -9999px;
-  background: url("../images/new/add-as-friend.png") no-repeat;
-  margin-right: 5px;
-  border: none;
-}
-
-
-#profile .vcard .send-message {
-  width: 72px;
-  height: 32px;
-  text-indent: -9999px;
-  background: url("../images/new/send-message.png") no-repeat;
-}
-
 #profile .vcard .bio-wrapper {
   background: url("../images/new/quotes.gif") no-repeat 550px 30px;
   clear: both;
@@ -3999,14 +4044,12 @@ div.token-input-dropdown {
 
 .profile-sidebar .incomplete-profile {
   margin-left: 10px;
-  text-align: right;
 }
 
 .profile-sidebar .incomplete-profile em {
   font-size: .9em;
   color: #B2B2B2;
   display: block;
-  text-align: right;
 }
 
 .profile-sidebar .incomplete-profile .progress {
@@ -4068,6 +4111,7 @@ div.token-input-dropdown {
 .profile-sidebar .environments .role {
   color: #B2B2B2;
   display: block;
+  padding-top: 3px;
   font-size: .9em;
 }
 
@@ -4083,7 +4127,7 @@ div.token-input-dropdown {
 }
 
 .profile-sidebar .environments > ul > li {
-  padding: 5px 0 10px 5px;
+  padding: 5px 0 5px 5px;
 
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -4092,11 +4136,10 @@ div.token-input-dropdown {
 
 .profile-sidebar .environments > ul > li:hover {
   background-color: #DBEFF7;
-
 }
 
 .profile-sidebar .environments .courses {
-  padding-top: 15px;
+  padding-top: 5px;
   clear: both;
 }
 

@@ -53,6 +53,12 @@ describe User do
   it { should have_many(:plans) }
 
   it { should have_many(:partners).through(:partner_user_associations) }
+  # Curriculum
+  it { should have_many(:experiences).dependent(:destroy) }
+  it { should have_many(:educations).dependent(:destroy) }
+
+  # Social networks
+  it { should have_many(:social_networks).dependent(:destroy) }
 
   it { should_not allow_mass_assignment_of :admin }
   it { should_not allow_mass_assignment_of :role }
@@ -67,6 +73,7 @@ describe User do
   it { should have_many :course_invitations }
 
   it { should accept_nested_attributes_for :settings }
+  it { should accept_nested_attributes_for :social_networks }
 
   [:first_name, :last_name].each do |attr|
     it do
@@ -176,10 +183,10 @@ describe User do
       u = Factory.build(:user, :mobile => "21312312")
       u.should_not be_valid
       u.errors[:mobile].should_not be_empty
-      u.mobile = "55 81 1231-2131"
+      u.mobile = "+55 (81) 1231-2131"
       u.should be_valid
       u.mobile = "81 2131-2123"
-      u.should be_valid
+      u.should_not be_valid
     end
   end
 

@@ -15,7 +15,7 @@ describe PlansController do
 
     context "when GET index" do
       before do
-        get :index, :user_id => @user.id, :locale => "pt-BR"
+        get :index, :user_id => @user.login, :locale => "pt-BR"
       end
 
       it "should assign plans" do

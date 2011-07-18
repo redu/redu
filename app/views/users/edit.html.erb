@@ -1,3 +1,5 @@
+<%= lazy_load(:user, :jammit => true, :clear => true) %>
+<%= lazy_load(:user, :type => :css, :jammit => true, :clear => true) %>
 <%= render :partial => 'users/home_sidebar' %>
 <div class="main grid_10" style="width: 580px;">
   <%= render :partial => 'users/breadcrumbs' %>
@@ -6,6 +8,32 @@
       ['Conta', account_user_path(@user), {:class => 'icon icon-account-gray_16_16'}],
       ['Planos', user_plans_path(@user), {:class => 'icon icon-cash-gray_16_16'}] do
     %>
+  <%= real_tabs ["biography", "Biografia"], ["curriculum", "Currículo"] do %>
+    <div id="biography" class"clearfix">
       <%= render :partial => 'users/form' %>
-    <% end %>
+    </div>
+    <div id="curriculum" class="clearfix">
+      <div class="experience clearfix">
+        <ul class="experiences">
+          <%= render :partial => 'experiences/item',
+            :collection => @user.experiences %>
+        </ul>
+        <%= render :partial => 'experiences/form', :locals => {
+          :user => @user, :experience => @experience } %>
+        <a href="#" class="concave-button new-experience-button">+ Novo projeto</a>
+      </div>
+      <div class="education">
+        <ul class="educations">
+          <%= render :partial => "educations/item",
+            :collection => @user.educations %>
+        </ul>
+        <%= render :partial => 'educations/form', :locals => {
+          :high_school => @high_school, :higher_education => @higher_education,
+          :complementary_course => @complementary_course,
+          :event_education => @event_education, :user => @user }%>
+        <a href="#" class="concave-button new-education-button">+ Novo projeto</a>
+      </div>
+    </div>
+  <% end %>
+<% end %>
 </div>
