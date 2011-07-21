@@ -37,5 +37,50 @@ describe Partner do
     it "creates the association to partner" do
       subject.users.should include(@collaborator)
     end
+
+    context "when adding duplicated user" do
+      it "doesnt change anything on partner admins" do
+        expect {
+          subject.add_collaborator(@collaborator)
+        }.should_not change { subject.users }
+      end
+
+      it "doesnt change anything on environment admins" do
+        expect {
+          subject.add_collaborator(@collaborator)
+        }.should_not change {
+          subject.environments.collect { |e| e.administrators }
+        }
+      end
+
+      it "doesnt change anything on course admins" do
+        expect {
+          subject.add_collaborator(@collaborator)
+        }.should_not change {
+          environments = subject.environments
+          environments.collect { |e| e.courses }.flatten.collect { |c| c.administrators }
+        }
+      end
+
+
+
+    end
+  end
+
+  context "when adding existend environments" do
+    before do
+      @environment = Factory(:environment)
+
+      @users = 3.times.inject([]) do |acc,i|
+        user = Factory(:user)
+        subject.add_collaborator(user)
+        acc << user
+      end
+    end
+
+    it "assigns the current collaborators as new environment admins" do
+      subject.add_environment(@environment, "12.123.123/1234-12")
+      subject.users.to_set.should be_subset(@environment.administrators.to_set)
+    end
   end
 end
