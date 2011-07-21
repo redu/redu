@@ -170,7 +170,7 @@
 }
 
 #content .sidebar .local-nav ul {
-  margin-left: 40px;
+  margin-left: 23px;
 }
 
 #content .sidebar .courses {
@@ -185,8 +185,23 @@
   margin: 5px 0;
 }
 
+#content .sidebar .separator {
+  border: none;
+  display: block;
+  margin-top: 10px;
+  border-bottom: 1px dotted #B2B1B2;
+}
+
 #content .sidebar .connections {
   margin-top: 10px;
+}
+
+#content .sidebar .call {
+  color: #B2B2B2;
+  display: block;
+  padding-top: 3px;
+  padding-left: 23px;
+  font-size: .9em;
 }
 
 #content .sidebar .connections li {
@@ -1262,20 +1277,28 @@
   border-bottom: 1px dotted #B2B1B2;
 }
 
+#content .secondary-sidebar .separator:last-child {
+  border: none;
+}
+
 #content .secondary-sidebar .call {
-  background-color: #F0F0F0;
+  background-color: #aed584;
   padding: 10px;
   font-weight: bold;
-  font-size: .9em;
+  color: white;
   display: block;
   margin: 20px 0 10px 0;
 
-  -webkit-border-top-right-radius: 5px;
-  -webkit-border-bottom-right-radius: 5px;
-  -moz-border-radius-topright: 5px;
-  -moz-border-radius-bottomright: 5px;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
+  -moz-text-shadow: 1px -1px 1px #61be80;
+  -webkit-text-shadow: 1px -1px 1px #61be80;
+  text-shadow: 1px -1px 1px #61be80;
+
+  -webkit-border-top-right-radius: 3px;
+  -webkit-border-bottom-right-radius: 3px;
+  -moz-border-radius-topright: 3px;
+  -moz-border-radius-bottomright: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
 }
 
 #content .secondary-sidebar .call .icon {
@@ -3943,16 +3966,18 @@ div.token-input-dropdown {
 }
 
 #profile .vcard {
+  min-height: 700px;
   padding-bottom: 20px;
 }
 
 #profile .vcard .separator {
   border: none;
   border-bottom: 1px dotted #B2B1B2;
+  clear: both;
   width: 100%;
 }
 
-#profile .vcard .name {
+#profile .vcard .user-name {
   width: 580px;
   margin-right: 10px;
   margin-bottom: 20px;
@@ -4032,11 +4057,18 @@ div.token-input-dropdown {
   border-radius: 3px;
 }
 
+#profile .vcard .details .name,
 #profile .vcard .details .title,
+#profile .vcard .details .institution,
+#profile .vcard .details .course,
+#profile .vcard .details .course-area,
+#profile .vcard .details .type,
 #profile .vcard .details .company{
   color: black;
 }
 
+#profile .vcard .details .course,
+#profile .vcard .details .course-area,
 #profile .vcard .details .title {
   font-weight: bold;
 }
@@ -4177,6 +4209,10 @@ div.token-input-dropdown {
 .profile-sidebar .common-connections li {
   clear: both;
   margin: 5px 0;
+}
+
+.profile-sidebar .common-connections .call {
+
 }
 
 #clean .form-common .separator {
@@ -5151,4 +5187,3 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 *:first-child+html .ui-helper-clearfix {
   zoom: 1;
 } /* IE7 */
-

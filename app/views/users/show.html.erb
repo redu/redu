@@ -3,7 +3,7 @@
 <div class="main grid_10 omega" style="width: 580px;">
   <div id="profile">
     <div class="vcard clearfix">
-      <h5 class="name"><%= @user.display_name %></h5>
+      <h5 class="user-name"><%= @user.display_name %></h5>
       <div class="user-summary clearfix">
         <ul>
           <li>
@@ -16,22 +16,30 @@
               <% end %>
             </ul>
           </li>
-          <li>
-            <span class="bio"><%= t :high_school %></span> em
-            <span class="bio"><%= @user.educations.first.educationable.institution %></span>
-          </li>
+          <% if !@user.educations.empty? %>
+            <li>
+              <span class="bio"><%= t :high_school %></span> em
+              <span class="bio"><%= @user.educations.first.educationable.institution %></span>
+            </li>
+          <% end %>
           <li>
             <ul>
               <li><span class="bio"><%= @user.age %></span> anos</li>
-              <li>Fala
-                <span class="bio"><%= @user.languages %></span>
-              </li>
-              <li>Natural de
-                <span class="bio"><%= @user.birth_localization %></span>
-              </li>
-              <li>Vive em
-                <span class="bio"><%= @user.localization %></span>
-              </li>
+              <% if @user.languages %>
+                <li>Fala
+                  <span class="bio"><%= @user.languages %></span>
+                </li>
+              <% end %>
+              <% if @user.birth_localization %>
+                <li>Natural de
+                  <span class="bio"><%= @user.birth_localization %></span>
+                </li>
+              <% end %>
+              <% if @user.localization %>
+                <li>Vive em
+                  <span class="bio"><%= @user.localization %></span>
+                </li>
+              <% end %>
             </ul>
           </li>
         </ul>
@@ -40,37 +48,72 @@
         <%= link_to 'Editar', edit_user_path(@user),
           :class => 'edit icon icon-management-gray_8_8' %>
       <% end %>
-      <hr class="separator"/>
 
+      <hr class="separator"/>
       <div class="bio-wrapper clearfix">
-        <span class="label">Sobre mim:</span>
-        <span class="bio indent"><%= @user.description %></span>
-        <span class="label">Interesses:</span>
-        <span class="bio indent"><%= @user.tag_list.join(", ") %></span>
-        <span class="label">Celular:</span>
-        <span class="bio indent"><%= @user.mobile %></span>
+        <% if @user.description %>
+          <span class="label">Sobre mim:</span>
+          <span class="bio indent"><%= @user.description %></span>
+        <% end %>
+        <% if !@user.tag_list.empty? %>
+          <span class="label">Interesses:</span>
+          <span class="bio indent"><%= @user.tag_list.join(", ") %></span>
+        <% end %>
+        <% if @user.mobile %>
+          <span class="label">Celular:</span>
+          <span class="bio indent"><%= @user.mobile %></span>
+        <% end %>
+        <%= render :partial => "users/social_network", :collection => @user.social_networks %>
       </div><!-- end .bio-wrapper -->
 
-      <hr class="separator"/>
+      <% if !@user.experiences.empty? %>
+        <hr class="separator"/>
+        <div class="bio-wrapper experience clearfix">
+          <span class="label">Experiência:</span>
+          <ul class="indent clearfix">
+            <% @user.experiences.each do |experience| %>
+              <li>
+                <%= render :partial => "experiences/item_detail", :locals => { :item => experience } %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
 
-      <div class="bio-wrapper experience clearfix">
-        <span class="label">Experiência:</span>
-        <ul class="indent clearfix">
-          <% @user.experiences.each do |experience| %>
-            <li>
-              <%= render :partial => "experiences/item_detail", :locals => { :item => experience } %>
-            </li>
+      <% if !@user.educations.empty? %>
+        <hr class="separator"/>
+        <div class="bio-wrapper experience clearfix">
+          <% if !@user.educations.higher_educations.empty? and
+                !@user.educations.high_schools.empty? %>
+            <span class="label">Educação:</span>
+            <ul class="indent clearfix">
+              <% @user.educations.higher_educations.each do |higher| %>
+                <%= render :partial => "educations/higher_education_detail", :locals => { :item => higher } %>
+              <% end %>
+              <% @user.educations.high_schools.each do |high| %>
+                <%= render :partial => "educations/high_school_detail", :locals => { :item => high } %>
+              <% end %>
+            </ul>
           <% end %>
-        </ul>
-      </div>
-
-      <hr class="separator"/>
-
-      <div class="bio-wrapper clearfix">
-        <span class="label">Educação:</span>
-        <span class="label">Complemento:</span>
-        <span class="label">Evento:</span>
-      </div>
+          <% if !@user.educations.complementary_courses.empty? %>
+            <span class="label">Complemento:</span>
+            <ul class="indent clearfix">
+              <% @user.educations.complementary_courses.each do |compl_course| %>
+                <%= render :partial => "educations/complementary_course_detail",
+                  :locals => { :item => compl_course }%>
+              <% end %>
+            </ul>
+          <% end %>
+          <% if !@user.educations.event_educations.empty? %>
+            <span class="label">Evento:</span>
+            <ul class="indent clearfix">
+              <% @user.educations.event_educations.each do |event| %>
+                <%= render :partial => "educations/event_education_detail", :locals => { :item => event } %>
+              <% end %>
+            </ul>
+          <% end %>
+        </div> <!-- end. experiences(education) -->
+      <% end %>
 
     </div><!-- end .vcard -->
   </div><!-- end #profile -->

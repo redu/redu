@@ -90,22 +90,18 @@ class UsersController < BaseController
       redirect_to removed_page_path and return
     end
 
-    @statuses = @user.profile_activity(params[:page])
-    @statusable = @user
-    @status = Status.new
-
     respond_to do |format|
       format.html
-      format.js { render_endless 'statuses/item', @statuses, '#statuses > ol' }
     end
   end
 
   def contacts_endless
-    @contacts = @user.friends.page(params[:page]).per(8)
+    @contacts = Kaminari::paginate_array(@user.friends_not_in_common_with(current_user)).
+      page(params[:page]).per(8)
 
     respond_to do |format|
       format.js { render_sidebar_endless 'users/item_medium_24', @contacts,
-        '.connections', "Mostrando os <X> últimos contatos de #{@user.first_name}" }
+        '.con-endless', "Mostrando os <X> últimos contatos de #{@user.first_name}" }
     end
   end
 
@@ -471,6 +467,21 @@ class UsersController < BaseController
       format.js do
         render :json => @users
       end
+    end
+  end
+
+  def show_mural
+    if @user.removed
+      redirect_to removed_page_path and return
+    end
+
+    @statuses = @user.profile_activity(params[:page])
+    @statusable = @user
+    @status = Status.new
+
+    respond_to do |format|
+      format.html
+      format.js { render_endless 'statuses/item', @statuses, '#statuses > ol' }
     end
   end
 end
