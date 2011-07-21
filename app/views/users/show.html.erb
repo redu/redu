@@ -51,7 +51,7 @@
 
       <hr class="separator"/>
       <div class="bio-wrapper clearfix">
-        <% if @user.description %>
+        <% if @user.description and !@user.description.empty? %>
           <span class="label">Sobre mim:</span>
           <span class="bio indent"><%= @user.description %></span>
         <% end %>
@@ -59,7 +59,7 @@
           <span class="label">Interesses:</span>
           <span class="bio indent"><%= @user.tag_list.join(", ") %></span>
         <% end %>
-        <% if @user.mobile %>
+        <% if @user.mobile and !@user.mobile.empty? %>
           <span class="label">Celular:</span>
           <span class="bio indent"><%= @user.mobile %></span>
         <% end %>

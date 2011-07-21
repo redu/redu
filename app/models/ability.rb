@@ -46,7 +46,7 @@ class Ability
     alias_action :learning,
       :show_log_activity, :log, :welcome_complete, :list_subjects,
       :show_log_activity, :activity_xml, :download_curriculum,
-      :show_mural, :contacts_endless, :to => :read
+      :show_mural, :contacts_endless, :environments_endless, :to => :read
 
     alias_action :assume, :edit_account,
       :update_account, :edit_pro_details, :update_pro_details,

@@ -38,7 +38,7 @@
             :collection => @contacts %>
         </ul><!-- end .connections -->
       <% else %>
-        <% @friends = @user.friends_in_common_with(current_user) %>
+        <% @friends = @user.friends_in_common_with(current_user).shuffle %>
         <span class="call">Em comum:<%= @friends.count %></span>
         <ul class="connections clearfix">
           <%= render :partial => 'users/item_medium_24',
