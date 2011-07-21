@@ -1,0 +1,3 @@
+var $items = $("<%= escape_javascript( render :partial => "partner_user_associations/item", :collection => @partner_user_associations ) %>");
+
+$("#partner-admins-list").append($items);

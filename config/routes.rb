@@ -340,7 +340,7 @@ Redu::Application.routes.draw do
     resources :environments, :only => :index
     resources :partner_environment_associations, :as => :clients,
       :only => [:create, :index, :new]
-    resources :users, :only => :index
+    resources :partner_user_associations, :as => :collaborators, :only => :index
   end
 
   resources :environments, :path => '', :except => [:index] do

@@ -1,24 +1,9 @@
 class EnvironmentsController < BaseController
   load_and_authorize_resource :except => :index, :find_by => :path
 
-  load_and_authorize_resource :partner, :only => :index
-  load_and_authorize_resource :environment, :only => :index,
-    :through => :partner
-
   rescue_from CanCan::AccessDenied do |exception|
     flash[:notice] = "Você não tem acesso a essa página"
     redirect_to preview_environment_path(@environment)
-  end
-
-  # GET /environments
-  # GET /environments.xml
-  def index
-    @environments = @partner.environments
-
-    respond_to do |format|
-      format.html { render :template => "partners/environments/index" }
-      format.xml  { render :xml => @environments }
-    end
   end
 
   # GET /environments/1

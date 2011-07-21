@@ -37,8 +37,9 @@ describe PartnersController do
     it "assigns the admins" do
       get :show, :id => @partner.id, :locale => "pt-BR"
 
-      assigns[:users].should_not be_nil
-      assigns[:users].to_set.should == @users.push(@user).to_set
+      assigns[:partner_user_associations].should_not be_nil
+      associations = @partner.partner_user_associations.to_set
+      assigns[:partner_user_associations].to_set.should == associations
 
     end
 
