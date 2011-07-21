@@ -96,6 +96,8 @@ class User < ActiveRecord::Base
   has_many :experiences, :dependent => :destroy
   has_many :educations, :dependent => :destroy
   has_one :settings, :class_name => "UserSetting", :dependent => :destroy
+  has_many :partners, :through => :partner_user_associations
+  has_many :partner_user_associations
 
   has_many :social_networks, :dependent => :destroy
 
@@ -296,6 +298,10 @@ class User < ActiveRecord::Base
     when 'Friendship'
       # user_id necessário devido ao bug do create_time_zone
       self.id == entity.user_id
+    when 'PartnerEnvironmentAssociation'
+      entity.partner.users.exists?(self.id)
+    when 'Partner'
+      entity.users.exists?(self.id)
     when 'Experience'
       self.can_manage?(entity.user)
     when 'SocialNetwork'
@@ -340,6 +346,10 @@ class User < ActiveRecord::Base
         self.has_access_to? entity.subject
       when 'Exam'
         self.has_access_to? entity.subject
+      when 'PartnerEnvironmentAssociation'
+        self.has_access_to? entity.partner
+      when 'Partner'
+        entity.users.exists?(self)
       else
         return false
       end
@@ -358,7 +368,8 @@ class User < ActiveRecord::Base
        (object.class.to_s.eql? 'Event') || (object.class.to_s.eql? 'Bulletin') ||
        (object.class.to_s.eql? 'Status') || (object.class.to_s.eql? 'User') ||
        (object.class.to_s.eql? 'Friendship') || (object.class.to_s.eql? 'Plan') ||
-       (object.class.to_s.eql? 'Invoice')
+       (object.class.to_s.eql? 'Invoice') || (object.class.to_s.eql? 'PartnerEnvironmentAssociation') ||
+       (object.class.to_s.eql? 'Partner')
 
        self.has_access_to?(object)
     else

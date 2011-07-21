@@ -336,6 +336,13 @@ Redu::Application.routes.draw do
     :as => :payment_callback
   match '/payment/success' => 'payment_gateway#success', :as => :payment_success
 
+  resources :partners, :only => [:show] do
+    resources :environments, :only => :index
+    resources :partner_environment_associations, :as => :clients,
+      :only => [:create, :index, :new]
+    resources :users, :only => :index
+  end
+
   resources :environments, :path => '', :except => [:index] do
     member do
       get :preview
@@ -378,6 +385,7 @@ Redu::Application.routes.draw do
       end
     end
   end
+
 
   root :to => 'base#site_index', :as => :home
   root :to => "base#site_index", :as => :application

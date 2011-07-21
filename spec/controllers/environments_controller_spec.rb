@@ -189,4 +189,36 @@ describe EnvironmentsController do
     end
   end
 
+  context "when listing environments from the partner" do
+    before do
+      @user = Factory(:user)
+      activate_authlogic
+      UserSession.create @user
+
+      @partner = Factory(:partner)
+      3.times do
+        environment = Factory(:environment)
+        Factory(:partner_environment_association,
+                :environment => environment,
+                :partner => @partner)
+      end
+
+      @partner.add_collaborator(@user)
+    end
+
+    it "assigns the environments" do
+      get :index, :partner_id => @partner.id, :locale => "pt-BR"
+
+      assigns[:partner].should_not be_nil
+      assigns[:environments].should_not be_nil
+      assigns[:environments].to_set == @partner.environments.to_set
+    end
+
+    it "renders the correct template" do
+      get :index, :partner_id => @partner.id, :locale => "pt-BR"
+
+      response.should render_template 'partners/environments/index'
+    end
+  end
+
 end

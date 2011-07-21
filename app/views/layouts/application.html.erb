@@ -32,10 +32,17 @@
       , presencePartial : "<%= escape_javascript(render :partial => "presence/chat_presence") %>"
       , messagePartial : "<%= escape_javascript(render :partial => "presence/chat_message") %>" });
 
+      chat.init();
+      chat.subscribeMyChannel();
     <% end %>
 
     <%= lazy_load(:real_tabs, :jammit => true, :clear => true) %>
     <%= lazy_load(javascript_path("ckeditor/ckeditor.js"), :jammit => false, :clear => false) %>
+    <%= lazy_load("http://use.typekit.com/lpo4rgu.js", :jammit => false) do %>
+      try{
+        Typekit.load();
+      }catch(e){}
+    <% end %>
   </head>
    <body>
     <div id="header" class="container_16">

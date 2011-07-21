@@ -44,3 +44,6 @@ pt-BR:
     plans: "planos"
     admin_invitations: "administrar_convites"
     invite_members: "convidar_membros"
+    partner: "parceiro"
+    partners: "parceiros"
+    partner_environment_associations: "clientes"
