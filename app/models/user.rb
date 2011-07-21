@@ -108,6 +108,9 @@ class User < ActiveRecord::Base
   scope :featured, where("users.featured_writer = ?", true)
   scope :active, where("users.activated_at IS NOT NULL")
   scope :with_ids, lambda { |ids| where(:id => ids) }
+  scope :without_ids, lambda {|ids|
+    where("users.id NOT IN (?)", ids)
+  }
   scope :n_recent, lambda { |limit|
     order('users.last_request_at DESC').limit(limit)
   }
@@ -118,6 +121,17 @@ class User < ActiveRecord::Base
       "CONCAT(LOWER(first_name), ' ', LOWER(last_name)) LIKE :keyword OR " +\
       "LOWER(email) LIKE :keyword", { :keyword => "%#{keyword.downcase}%" }).
       limit(10).select("users.id, users.first_name, users.last_name, users.login, users.email, users.avatar_file_name")
+  }
+  scope :popular, lambda { |quantity|
+    order('friends_count desc').limit(quantity)
+  }
+
+  scope :popular_teachers, lambda { |quantity|
+    includes(:user_course_associations).
+      where("user_course_associations.role" => Role[:teacher]).popular(quantity)
+  }
+  scope :with_email_domain_like, lambda { |email|
+    where("email LIKE ?", "%#{email.split("@")[1]}%")
   }
 
   attr_accessor :email_confirmation
@@ -150,7 +164,6 @@ class User < ActiveRecord::Base
   end
 
   has_attached_file :avatar, Redu::Application.config.paperclip
-  has_attached_file :curriculum, Redu::Application.config.paperclip
 
   has_friends
   ajaxful_rater
@@ -167,9 +180,6 @@ class User < ActiveRecord::Base
   validates :birthday,
       :date => { :before => Proc.new { 13.years.ago } }
   validates_acceptance_of :tos
-  validates_attachment_size :curriculum, :less_than => 10.megabytes
-  validate :accepted_curriculum_type, :on => :update,
-    :unless => "self.curriculum_file_name.nil?"
   validates_confirmation_of :email
   validates_format_of :email,
     :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/
@@ -742,12 +752,11 @@ class User < ActiveRecord::Base
   end
 
   def completeness
-    total = 11.0
+    total = 10.0
     undone = 0.0
     undone += 1 if self.description.nil?
     undone += 1 if self.avatar_file_name.nil?
     undone += 1 if self.gender.nil?
-    undone += 1 if self.curriculum_file_name.nil?
     undone += 1 if self.localization.to_s.empty?
     undone += 1 if self.mobile.to_s.empty?
 
@@ -780,6 +789,50 @@ class User < ActiveRecord::Base
     end
   end
 
+  #FIXME falta testar alguns casos
+  def age
+    dob = self.birthday
+    now = Time.now.utc.to_date
+    now.year - dob.year - ((now.month > dob.month || (now.month == dob.month && now.day >= dob.day)) ? 0 : 1)
+  end
+
+  # Retrieves five contacts recommendations
+  def recommended_contacts(quantity)
+    if self.friends_count == 0
+      users = User.select('users.login').without_ids(self).popular(20) |
+        User.select('users.login').without_ids(self).popular_teachers(20) |
+        User.select('users.login').without_ids(self).with_email_domain_like(self.email).limit(20)
+    else
+      users = colleagues(20) | self.friends_of_friends
+    end
+
+    # Choosing randomly
+    if quantity >= (users.length - 1)
+      quantity = (users.length - 1)
+    end
+    (1..quantity).collect do
+      users.delete_at(SecureRandom.random_number(users.length - 1))
+    end
+  end
+
+  def colleagues(quantity)
+    friends_ids = self.friends.select("users.id")
+    User.select("DISTINCT users.login").includes(:user_course_associations).
+      where("user_course_associations.state = 'approved' AND " \
+      "user_course_associations.user_id NOT IN (?, ?)", friends_ids, self.id).
+      limit(quantity)
+  end
+
+  def friends_of_friends
+    friends_ids = self.friends.select("users.id")
+    User.select("DISTINCT users.login").
+      joins("LEFT OUTER JOIN `friendships`" \
+            " ON `friendships`.`friend_id` = `users`.`id`").
+      where("friendships.status = 'accepted' AND friendships.user_id IN (?)" \
+            " AND friendships.friend_id NOT IN (?, ?)",
+            friends_ids, friends_ids, self.id)
+  end
+
   protected
   def activate_before_save
     self.activated_at = Time.now.utc
@@ -799,12 +852,6 @@ class User < ActiveRecord::Base
 
   def password_required?
     crypted_password.blank? || !password.blank?
-  end
-
-  def accepted_curriculum_type
-    unless SUPPORTED_CURRICULUM_TYPES.include?(self.curriculum_content_type)
-      self.errors.add(:curriculum, "Formato inválido")
-    end
   end
 
   def newpass( len )

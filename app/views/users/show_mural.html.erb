@@ -1,0 +1,18 @@
+<%= render :partial => 'users/profile_sidebar' %>
+
+<div class="main grid_10 omega" style="width: 580px;">
+  <% if (can? :manage, @user) or (can? :view_mural, @user) %>
+    <%= render :partial => 'statuses/create_status',
+      :locals => { :statusable => @user } %>
+    <div id="statuses" class="statuses">
+      <ol>
+        <%= render :partial => 'statuses/item', :collection => @statuses %>
+      </ol>
+
+      <%= will_paginate @statuses, :renderer => EndlessRenderer %>
+    </div><!-- end .statuses -->
+  <% end %>
+
+</div>
+
+<%= render :partial => 'users/secondary_sidebar' %>

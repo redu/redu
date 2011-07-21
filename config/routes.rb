@@ -203,12 +203,12 @@ Redu::Application.routes.draw do
       put :crop_profile_photo
       get :upload_profile_photo
       put :upload_profile_photo
-      get :download_curriculum
       get :home
       get :mural
       get :account
       get :contacts_endless
       get :environments_endless
+      get :show_mural
     end
     collection do
       get :auto_complete

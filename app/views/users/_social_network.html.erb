@@ -1,0 +1,14 @@
+<% if social_network.name == 'facebook' %>
+
+<% elsif social_network.name == 'linkedin' %>
+
+<% elsif social_network.name == 'orkut' %>
+
+<% elsif social_network.name == 'twitter' %>
+
+<% elsif social_network.name == 'google+' %>
+
+<% end %>
+<span class="bio indent">
+  <%= link_to social_network.url, social_network.url %>
+</span>

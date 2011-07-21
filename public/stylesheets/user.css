@@ -108,10 +108,31 @@
 #curriculum .new-education-button {
   float: right;
   margin-right: 0;
+  margin-top: 10px;
+  width: 128px;
 }
 
 #education_type.higher {
   float: left;
+}
+
+#curriculum .header {
+  margin: 40px 0;
+}
+
+#curriculum .header > .title {
+  font-size: 1.3em;
+  float: left;
+  font-family: Copse;
+  color: #73C3E6;
+}
+
+#curriculum .separator {
+  border: none;
+  border-top: 1px dotted #B3B2B3;
+  width: 448px;
+  float: right;
+  margin-top: 10px;
 }
 
 #biography .remove-network {

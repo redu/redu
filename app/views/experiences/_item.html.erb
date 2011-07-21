@@ -5,20 +5,7 @@
       :remote => true, :method => :delete,
       :class => "remove-experience icon icon-x-gray_8_8 replacement",
       :confirm => "Você tem certeza que deseja excluir esta experiência? Não será mais possível recuperá-la." %>
-    <div class="details">
-      <span class='title'><%= item.title %></span> em <span class="company"><%= item.company %></span>
-      <span class="period">
-        <% if item.current? %>
-          <%= t item.start_date.strftime("%B %Y") %> -  Atual
-          (<%= distance_of_time_in_words item.start_date, Date.today %>)
-        <% else %>
-          <%= t item.start_date.strftime("%B %Y") %> - <%= t item.end_date.strftime("%B %Y") %>
-          (<%= distance_of_time_in_words item.start_date, item.end_date %>)
-        <% end %>
-      </span>
-
-      <div class="description"><%= item.description %></div>
-    </div>
+    <%= render :partial => "experiences/item_detail", :locals => { :item => item } %>
   </div>
 
   <%= render :partial => 'experiences/form', :locals => { :user => item.user,

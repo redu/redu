@@ -52,7 +52,7 @@
     :locals => {:class_textarea => "desc-#{random_number}", :limit => 400} %>
 
   <%= f.label :tag_list, raw("Áreas de seu interesse: <span class='snippet'>(separadas por vírgula)</span>") %>
-  <%= text_field_tag :user_tag_list, @user.tag_list.join(", ") %>
+  <%= text_field_tag :tag_list, @user.tag_list.join(", ") %>
   <span class="tip">Exemplo: redes sociais, compartilhamento, tecnologia, etc.</span>
 
   <%= f.label :mobile, "Celular:" %>

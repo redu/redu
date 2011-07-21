@@ -4,14 +4,7 @@
     :remote => true, :method => :delete,
     :class => "remove-education icon icon-x-gray_8_8 replacement",
     :confirm => "Você tem certeza que deseja excluir esta experiência? Não será mais possível recuperá-la." %>
-  <div class="details">
-    <span class='type'><%= t :high_school %></span> em <span class="institution"><%= item.educationable.institution %></span>
-    <span class="period">
-      <%= t item.educationable.end_year.strftime("%Y") %>
-    </span>
-
-    <div class="description"><%= item.educationable.description %></div>
-  </div>
+  <%= render :partial => "educations/high_school_detail", :locals => { :item => item } %>
 </div>
 
 <%= form_for item.educationable,

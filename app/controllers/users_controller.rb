@@ -90,22 +90,18 @@ class UsersController < BaseController
       redirect_to removed_page_path and return
     end
 
-    @statuses = @user.profile_activity(params[:page])
-    @statusable = @user
-    @status = Status.new
-
     respond_to do |format|
       format.html
-      format.js { render_endless 'statuses/item', @statuses, '#statuses > ol' }
     end
   end
 
   def contacts_endless
-    @contacts = @user.friends.page(params[:page]).per(8)
+    @contacts = Kaminari::paginate_array(@user.friends_not_in_common_with(current_user)).
+      page(params[:page]).per(4)
 
     respond_to do |format|
       format.js { render_sidebar_endless 'users/item_medium_24', @contacts,
-        '.connections', "Mostrando os <X> últimos contatos de #{@user.first_name}" }
+        '.con-endless', "Mostrando os <X> últimos contatos de #{@user.first_name}" }
     end
   end
 
@@ -216,7 +212,12 @@ class UsersController < BaseController
         end
       end
     else
-        render 'users/edit'
+      @experience = Experience.new
+      @high_school = HighSchool.new
+      @higher_education = HigherEducation.new
+      @complementary_course = ComplementaryCourse.new
+      @event_education = EventEducation.new
+      render 'users/edit'
     end
   rescue ActiveRecord::RecordInvalid
       render 'users/edit'
@@ -411,16 +412,6 @@ class UsersController < BaseController
     end
   end
 
-  # Faz download do currículo previamente guardado pelo usuário.
-  def download_curriculum
-    if Rails.env == "production" || Rails.env == "staging"
-      redirect_to @user.curriculum.expiring_url(20) and return false
-    end
-
-    send_file @user.curriculum.path,
-      :type => @user.curriculum.content_type
-  end
-
   def home
     @friends = current_user.friends.paginate(:page => 1, :per_page => 9)
     @friends_requisitions = current_user.friends_pending
@@ -471,6 +462,21 @@ class UsersController < BaseController
       format.js do
         render :json => @users
       end
+    end
+  end
+
+  def show_mural
+    if @user.removed
+      redirect_to removed_page_path and return
+    end
+
+    @statuses = @user.profile_activity(params[:page])
+    @statusable = @user
+    @status = Status.new
+
+    respond_to do |format|
+      format.html
+      format.js { render_endless 'statuses/item', @statuses, '#statuses > ol' }
     end
   end
 end
