@@ -49,4 +49,22 @@ describe PartnerEnvironmentAssociationsController do
     end
   end
 
+  context "when listing partner environments" do
+    before do
+      @partner = Factory(:partner)
+      @partner.add_collaborator(@user)
+
+      3.times.inject([]) do |acc,i|
+        environment = Factory(:environment)
+        @partner.add_environment(environment, "12.123.123/1234-12")
+      end
+    end
+
+    it "assigns the partner_environment_associations" do
+      get :index, :partner_id => @partner.id, :locale => "pt-BR"
+      assigns[:partner_environment_associations].should_not be_nil
+      assigns[:partner_environment_associations].to_set.should == \
+        @partner.partner_environment_associations.to_set
+    end
+  end
 end

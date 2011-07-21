@@ -7,7 +7,7 @@ class PartnerEnvironmentAssociationsController < BaseController
     respond_to do |format|
       format.html do
         if @partner_environment_association.valid?
-          redirect_to partner_clients_path(@partner)
+          redirect_to partner_environments_path(@partner)
         else
           render :new
         end
@@ -16,8 +16,17 @@ class PartnerEnvironmentAssociationsController < BaseController
   end
 
   def index
+    paginating = {
+      :page => params[:page],
+      :per_page =>Redu::Application.config.items_per_page
+    }
+
+    @partner_environment_associations = \
+      @partner.partner_environment_associations.paginate(paginating)
+
     respond_to do |format|
       format.html
+      format.js
     end
   end
 
