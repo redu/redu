@@ -1,10 +1,18 @@
-<%= f.label :name, "Seu ambiente de ensino" %>
+<%= f.label :name, "Nome do ambiente:" %>
 <%= f.text_field :name, :class => "big" %>
-<%= f.label :initials, "Abreviação" %>
+<span class="tip">O nome do ambiente de estudo, instituição ou empresa</span>
+<%= f.label :initials, "Abreviação:" %>
 <%= f.text_field :initials %>
-<%= f.label :path, "Endereço eletrônico", :class => "big"%>
+<span class="tip">A abreviatura das iniciais do ambiente ou a sigla da instituição / empresa</span>
+<%= f.label :path, "Endereço eletrônico:", :class => "big"%>
 <%= f.text_field :path %>
-<%= f.label :description, "Descrição" %>
+<span class="tip">O endereço da página inicial do ambiente</span>
+<%= f.label :description, "Descrição:" %>
 <%= f.text_area :description %>
-<%= f.label :tags, "Marcadores" %>
+<span class="tip">
+Descreva as características, história ou informações adicionais do
+ambiente de estudo.
+</span>
+<%= f.label :tags, "Marcadores:" %>
 <%= f.text_field :tags %>
+<span class="tip">Descreva o ambiente em palavras-chaves</span>

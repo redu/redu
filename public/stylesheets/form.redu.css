@@ -226,9 +226,9 @@
     background: -moz-linear-gradient(top,  #FF6D6D,  #C1272D); /* firefox 3.6+ */
   }
 
-  .cssgradients .concave-form .concave-button:hover,
-  .cssgradients .concave-form button:hover,
-  .cssgradients .concave-form input[type=submit]:hover {
+  .cssgradients .concave-button:hover,
+  .cssgradients  button:hover,
+  .cssgradients  input[type=submit]:hover {
     background: -webkit-gradient(linear, left top, left bottom, from(#73C3E6), to(#1789C3)); /* webkit browsers */
     background: -moz-linear-gradient(top,  #73C3E6,  #1789C3); /* firefox 3.6+ */
   }
@@ -246,7 +246,7 @@
   .concave-form .tip,
   .concave-form .char-limit {
     display: block;
-    margin: 5px 0 5px 160px;
+    margin: 5px 0 0 160px;
     font-size: .8em;
     color: #B2B2B2;
     padding: 0;

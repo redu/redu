@@ -336,7 +336,7 @@ Redu::Application.routes.draw do
     :as => :payment_callback
   match '/payment/success' => 'payment_gateway#success', :as => :payment_success
 
-  resources :partner, :only => [] do
+  resources :partners, :only => [:show] do
     resources :environments, :only => :index
     resources :partner_environment_associations, :as => :clients,
       :only => [:create, :index, :new]
