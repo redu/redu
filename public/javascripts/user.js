@@ -17,7 +17,8 @@
     // Mostra o form de criação, caso nenhuma experiência/educação
     // tenha sido criada. Esconde o form, caso contrário.
     refreshDefaultFormsVisibility = function() {
-      if ($("#curriculum .experiences > li").length > 0) {
+      if ($("#curriculum .experiences > li").length > 0
+        && $("#new_experience .field_with_errors").length == 0) {
         $("#new_experience").hide();
         $("#curriculum .new-experience-button").show();
       } else {
@@ -25,7 +26,8 @@
         $("#curriculum .new-experience-button").hide();
       }
 
-      if ($("#curriculum .educations > li").length > 0) {
+      if ($("#curriculum .educations > li").length > 0
+        && $("#new_education .field_with_errors").length == 0) {
         $("#new_education").hide();
         $("#curriculum .new-education-button").show();
       } else {

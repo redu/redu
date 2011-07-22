@@ -9,7 +9,8 @@
 <% end %>
 
 <%# Mostra apenas se for dos tipos que possuem curso (momento da edição)  %>
-<% unless !higher_education.new_record? && higher_education.course == "" %>
+<% unless !higher_education.new_record? and
+  (higher_education.course == "" and higher_education.errors[:course].empty?) %>
   <div class="course">
     <%= f.label :course, "Curso:", :class => "course" %>
     <%= f.text_field :course %>
@@ -19,7 +20,9 @@
 <% end %>
 
 <%# Mostra apenas se for dos tipos que possuem area (momento da edição)  %>
-<% unless !higher_education.new_record? && higher_education.research_area == "" %>
+<% unless !higher_education.new_record? and
+  (higher_education.research_area == "" and
+   higher_education.errors[:research_area].empty?) %>
   <div class="area">
     <%= f.label :research_area, "Área de pesquisa:" %>
     <%= f.text_field :research_area %>

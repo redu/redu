@@ -5,15 +5,25 @@ class EducationsController < ApplicationController
   load_and_authorize_resource :education, :through => :user
 
   def create
+    @high_school = HighSchool.new
+    @higher_education = HigherEducation.new
+    @complementary_course = ComplementaryCourse.new
+    @event_education = EventEducation.new
+
     if params.has_key? :high_school
       educationable = HighSchool.new(params[:high_school])
+      @high_school = educationable
     elsif params.has_key? :higher_education
       educationable = HigherEducation.new(params[:higher_education])
+      @higher_education = educationable
     elsif params.has_key? :complementary_course
       educationable = ComplementaryCourse.new(params[:complementary_course])
+      @complementary_course = educationable
     elsif params.has_key? :event_education
       educationable = EventEducation.new(params[:event_education])
+      @event_education = educationable
     end
+
     @education = Education.new
     @education.user = current_user
     @education.educationable = educationable
@@ -24,6 +34,11 @@ class EducationsController < ApplicationController
       @higher_education = HigherEducation.new
       @complementary_course = ComplementaryCourse.new
       @event_education = EventEducation.new
+    else
+      @high_school ||= HighSchool.new
+      @higher_education ||= HigherEducation.new
+      @complementary_course ||= ComplementaryCourse.new
+      @event_education ||= EventEducation.new
     end
 
     respond_with(@user, @education)

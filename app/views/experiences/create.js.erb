@@ -11,10 +11,9 @@ var $form = $("#new_experience");
   $("#curriculum .experiences").after(experience_form);
   $("#curriculum .new-experience-button").show();
 <% else %>
-  <%# Mostra os erros individualmente por atributo/campo  %>
-  $(".errorMessageField").hide();
-  <% @experience.errors.each do |attr, error| %>
-    $form.find('#<%= @experience.class.to_s.underscore %>_<%= attr %>-error').html("<%= error %>").slideDown();
-  <% end %>
+  var experience_form = "<%= escape_javascript render :partial => 'experiences/form',
+    :locals => { :user => @experience.user, :experience => @experience } %>"
+  $("#new_experience").replaceWith(experience_form);
+  $("#new_experience").show();
 <% end %>
 
