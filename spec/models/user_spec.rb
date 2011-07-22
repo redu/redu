@@ -345,10 +345,8 @@ describe User do
         u.be_friends_with(user)
       end
 
-      alo = user.reload.colleagues(30).collect {|u| u.id}.sort
-      alo2 = (colleagues1 + colleagues2 << owner).collect {|u| u.id }.sort
-      alo.should ==
-        alo2
+      user.reload.colleagues(30).to_set.should ==
+        (colleagues1 + colleagues2 << owner).to_set
     end
 
     it "retrieves all friends of friends (exclude pending friends)" do

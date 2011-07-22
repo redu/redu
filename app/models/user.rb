@@ -843,10 +843,12 @@ class User < ActiveRecord::Base
   def colleagues(quantity)
     contacts_ids = User.contacts_and_pending_contacts_ids.
       where("friendships.user_id = ?", self.id)
-    User.select("DISTINCT users.login, users.avatar_file_name, users.first_name, users.last_name").
-includes(:user_course_associations).
+    User.select("DISTINCT users.login, users.avatar_file_name," \
+                " users.first_name, users.last_name").
+      includes(:user_course_associations).
       where("user_course_associations.state = 'approved' AND " \
-      "user_course_associations.user_id NOT IN (?, ?)", contacts_ids, self.id).
+            "user_course_associations.user_id NOT IN (?, ?)",
+            contacts_ids, self.id).
       limit(quantity)
   end
 
@@ -854,7 +856,8 @@ includes(:user_course_associations).
     contacts_ids = self.friends.select("users.id")
     contacts_and_pending_ids = User.contacts_and_pending_contacts_ids.
       where("friendships.user_id = ?", self.id)
-    User.select("DISTINCT users.login, users.avatar_file_name, users.first_name, users.last_name").
+    User.select("DISTINCT users.login, users.avatar_file_name," \
+                " users.first_name, users.last_name").
       joins("LEFT OUTER JOIN `friendships`" \
             " ON `friendships`.`friend_id` = `users`.`id`").
       where("friendships.status = 'accepted' AND friendships.user_id IN (?)" \

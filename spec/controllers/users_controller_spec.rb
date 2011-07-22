@@ -310,8 +310,6 @@ describe UsersController do
 
     it "renders the correct template" do
       response.should render_template 'partners/users/index'
-      @params = { :locale => "pt-BR", :id => @user.login }
-      get :home, @params
     end
   end
 
@@ -320,6 +318,9 @@ describe UsersController do
       @user = Factory(:user)
       activate_authlogic
       UserSession.create @user
+
+      @params = { :locale => "pt-BR", :id => @user.login }
+      get :home, @params
     end
 
     [:friends, :friends_requisitions, :course_invitations, :statuses, :status,
