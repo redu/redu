@@ -283,7 +283,7 @@
   .concave-form .error_explanation {
     border: 1px solid #F9A737;
     background-color: #FFEED7;
-    padding: 10px 10px 10px 140px;
+    padding: 10px 10px 10px 160px;
     overflow: hidden;
     position: relative;
     margin-bottom: 20px;
@@ -292,7 +292,7 @@
 
   .concave-form .error_explanation h2 {
     position: absolute;
-    left: 60px;
+    left: 85px;
     float: left;
     font-family: museo-slab, serif;
     font-weight: 900;
