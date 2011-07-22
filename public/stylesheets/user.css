@@ -1,5 +1,5 @@
 #curriculum .experiences > li,
-#curriculum .educations li {
+#curriculum .educations > li {
   display: block;
   background-color: #f1f0f0;
   color: #6d6e6f;

@@ -16,7 +16,7 @@
     <%= f.text_field :course %>
     <span class="tip">Exemplo: engenharia civil, direito, medicina etc.</span>
   </div>
-  <%= error_for :higher_education, :course %>
+  <%= concave_errors_for higher_education, :course %>
 <% end %>
 
 <%# Mostra apenas se for dos tipos que possuem area (momento da edição)  %>
@@ -28,13 +28,13 @@
     <%= f.text_field :research_area %>
     <span class="tip">Exemplo: inovação, direito tributário, cardiologia etc.</span>
   </div>
-  <%= error_for :higher_education, :research_area %>
+  <%= concave_errors_for higher_education, :research_area %>
 <% end %>
 
 <%= f.label :institution, "Instituição:" %>
 <%= f.text_field :institution %>
 <span class="tip">Nome da instituição responsável.</span>
-<%= error_for :higher_education, :institution %>
+<%= concave_errors_for higher_education, :institution %>
 
 <%= label_tag :start_year, "Período:" %>
 <%= f.date_select :start_year,
