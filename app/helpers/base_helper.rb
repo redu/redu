@@ -69,6 +69,15 @@ module BaseHelper
     content_tag("p", err || "", options )
   end
 
+  # Mostra todos os erros de um determinado atributo em forma de lista
+  def concave_errors_for(object, method)
+    errors = object.errors.get(method).collect do |msg|
+      content_tag(:li, msg)
+    end.join.html_safe
+
+    content_tag(:ul, errors, :class => 'errors_on_field')
+  end
+
   def type_class(resource)
     icons = ['3gp', 'bat', 'bmp', 'doc', 'css', 'exe', 'gif', 'jpg', 'jpeg', 'jar','zip',
              'mp3', 'mp4', 'avi', 'mpeg', 'mov', 'm4p', 'ogg', 'pdf', 'png', 'psd', 'ppt', 'txt', 'swf', 'wmv', 'xls', 'xml', 'zip']
@@ -125,7 +134,7 @@ module BaseHelper
           object.errors.collect { |attr, error| attr }.map do |attr|
             object.class.human_attribute_name(attr, :default => attr)
           end
-        end.join(", ").html_safe
+        end.uniq.join(", ").html_safe
 
 
 

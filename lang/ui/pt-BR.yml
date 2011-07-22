@@ -96,12 +96,10 @@ pt-BR:
           mb: "MB"
           gb: "GB"
           tb: "TB"
-
   support:
     array:
       two_words_connector: "Formato inválido"
   activerecord:
-    # tradução dos atributos dos modelos
     attributes:
       photo:
         created_at: "criado em: "
@@ -172,8 +170,8 @@ pt-BR:
         localization: "Cidade onde vive"
         mobile: "Celular"
         password: "Senha"
-
-    # tradução dos erros de cada tipo
+      partner:
+        name: "Nome"
     errors:
       template:
         header:
@@ -264,6 +262,11 @@ pt-BR:
           attributes:
            name:
             blank: ": Escolha um nome para o recurso."
+        partner_environment_association:
+          attributes:
+            cnpj:
+              invalid: "formato inválido"
+
   helpers:
     submit:
       complementary_course:

@@ -5,6 +5,7 @@
   <%= f.label :avatar,
     raw("Foto de seu perfil: <span class='snippet'>(tamanho máximo: 100MB)</span>") %>
   <%= f.file_field :avatar %>
+  <%= concave_errors_for(f.object, :avatar) %>
 
   <% field_set_tag do %>
     <%= image_tag @user.avatar.url(:thumb_100) %>
@@ -12,15 +13,18 @@
 
   <%= f.label :first_name, "Nome:" %>
   <%= f.text_field :first_name %>
+  <%= concave_errors_for(f.object, :first_name) %>
   <span class="tip">11 caracteres</span>
 
   <%= f.label :last_name, "Sobrenome:" %>
   <%= f.text_field :last_name %>
+  <%= concave_errors_for(f.object, :last_name) %>
   <span class="tip">14 caracteres</span>
 
   <%= f.label :birthday, "Nascimento:" %>
   <%= field_set_tag nil, :class => "inline" do %>
     <%= f.date_select :birthday, {:start_year => 1926, :end_year => Time.now.year - 1}%>
+    <%= concave_errors_for(f.object, :birthday) %>
   <% end %>
 
   <%= field_set_tag "Sexo:", :class => "inline" do %>
@@ -28,18 +32,22 @@
     <%= f.label "gender_#{User::MALE}".downcase.to_sym, "Masculino" %>
     <%= f.radio_button :gender, User::FEMALE %>
     <%= f.label "gender_#{User::FEMALE}".downcase.to_sym, "Feminino" %>
+    <%= concave_errors_for(f.object, :gender) %>
   <% end %>
 
   <%= f.label :birth_localization, "Cidade onde nasceu:"%>
   <%= f.text_field :birth_localization %>
+  <%= concave_errors_for(f.object, :birth_localization) %>
   <span class="tip">Cidade natal</span>
 
   <%= f.label :localization, "Cidade onde vive:" %>
   <%= f.text_field :localization %>
+  <%= concave_errors_for(f.object, :localization) %>
   <span class="tip">Cidade atual</span>
 
   <%= f.label :languages, "Idiomas:" %>
   <%= f.text_field :languages %>
+  <%= concave_errors_for(f.object, :languages) %>
   <span class="tip">Idiomas bem compreendidos por você</span>
 
   <hr/>

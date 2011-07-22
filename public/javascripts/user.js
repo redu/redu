@@ -155,9 +155,11 @@
 
         $(document).ajaxComplete(function(){
             $("#biography .mobile").refreshMobileMask();
+            refreshDefaultFormsVisibility();
             $(".experience-current:checked").refreshEndDateVisibility();
             $("#biography").refreshSocialNetwork();
             $("#education_type").refreshShowCorrectForm();
+            $("#higher_education_kind").refreshShowCorrectFields();
         });
     });
 })($);
