@@ -125,7 +125,7 @@ module BaseHelper
           object.errors.collect { |attr, error| attr }.map do |attr|
             object.class.human_attribute_name(attr, :default => attr)
           end
-        end.join(", ").html_safe
+        end.uniq.join(", ").html_safe
 
 
 
