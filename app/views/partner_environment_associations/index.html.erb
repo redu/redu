@@ -18,6 +18,9 @@
         :renderer => EndlessRenderer %>
     </div>
     <div id="admins">
+      <%= render :partial => 'partner_user_associations/admin_list',
+        :locals => { :partner_user_associations => @partner_user_associations,
+                     :partner => @partner } %>
     </div>
   <% end %>
 </div>

@@ -4,6 +4,14 @@ class PartnerEnvironmentAssociationsController < BaseController
     :through => :partner
 
   def create
+    paginating = {
+      :page => params[:page],
+      :per_page =>Redu::Application.config.items_per_page
+    }
+
+    @partner_user_associations = \
+      @partner.partner_user_associations.paginate(paginating)
+
     respond_to do |format|
       format.html do
         if @partner_environment_association.valid?
@@ -23,6 +31,9 @@ class PartnerEnvironmentAssociationsController < BaseController
 
     @partner_environment_associations = \
       @partner.partner_environment_associations.paginate(paginating)
+    #FIXME necessário por causa das sub-abas
+    @partner_user_associations = \
+      @partner.partner_user_associations.paginate(paginating)
 
     respond_to do |format|
       format.html
@@ -31,7 +42,16 @@ class PartnerEnvironmentAssociationsController < BaseController
   end
 
   def new
+    paginating = {
+      :page => params[:page],
+      :per_page =>Redu::Application.config.items_per_page
+    }
+
     @partner_environment_association.build_environment
+    #FIXME necessário por causa das sub-abas
+    @partner_user_associations = \
+      @partner.partner_user_associations.paginate(paginating)
+
     respond_to do |format|
       format.html
     end

@@ -23,10 +23,19 @@
     font-size: .9em;
   }
 
+  .concave-form  .field_with_errors .concave-label {
+    color: #FF6D6D;
+  }
+
 /* labels ativos */
   .concave-form .concave-label-focus {
     color: #4CACD5;
   }
+
+  .concave-form  .field_with_errors .concave-label-focus {
+    color: #4CACD5;
+  }
+
 
 
 /* text input inativo */
@@ -39,6 +48,11 @@
     font-size: 1em;
     margin-top: 20px;
   }
+
+  .concave-form .field_with_errors .concave-input {
+    border-color: #FF6D6D;
+  }
+
 
   .concave-form .concave-small {
     width: 274px;
@@ -67,6 +81,12 @@
      -moz-box-shadow: inset 1px 1px 0 #fff;
      -webkit-box-shadow: inset 1px 1px 0 #fff;
      box-shadow: inset 1px 1px 0 #fff;
+  }
+
+  .boxshadow .concave-form .field_with_errors .concave-input {
+    -moz-box-shadow: 0 0 2px #FF6D6D ;
+    -webkit-box-shadow: 0 0 2px #FF6D6D ;
+    box-shadow: 0 0 2px #FF6D6D;
   }
 
 
@@ -257,4 +277,48 @@
     display: block;
     font-weight: normal;
     font-size: .9em;
+  }
+
+/* Erros de validação */
+  .concave-form .error_explanation {
+    border: 1px solid #F9A737;
+    background-color: #FFEED7;
+    padding: 10px 10px 10px 160px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 20px;
+  }
+
+
+  .concave-form .error_explanation h2 {
+    position: absolute;
+    left: 85px;
+    float: left;
+    font-family: museo-slab, serif;
+    font-weight: 900;
+    font-size: 2.2em;
+    color: #C0262C;
+    text-align: right;
+  }
+
+  .concave-form .error_explanation p {
+    color: #6C6D6E;
+    margin-bottom: 3px;
+  }
+
+  .concave-form .error_explanation .invalid_fields {
+    color: #C0262C;
+    margin: 0;
+  }
+
+  .borderradius .concave-form .error_explanation {
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+  }
+
+  .boxshadow .concave-form .error_explanation {
+     -moz-box-shadow: inset 1px 1px 0 #fff;
+     -webkit-box-shadow: inset 1px 1px 0 #fff;
+     box-shadow: inset 1px 1px 0 #fff;
   }

@@ -1,6 +1,6 @@
 <%= form_for @user,
   :html => {:multipart =>true, :class => "concave-form" }  do |f|  %>
-  <%= f.error_messages %>
+  <%= concave_error_messages_for(@user) %>
 
   <%= f.label :avatar,
     raw("Foto de seu perfil: <span class='snippet'>(tamanho máximo: 100MB)</span>") %>

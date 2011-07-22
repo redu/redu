@@ -286,33 +286,6 @@ describe UsersController do
     end
   end
 
-  context "when listing collaborators from a partner" do
-    before do
-      @partner = Factory(:partner)
-      environment = Factory(:environment)
-      Factory(:partner_environment_association,
-              :environment => environment,
-              :partner => @partner)
-      @partner.add_collaborator(@user)
-
-      get :index, :partner_id => @partner.id, :locale => "pt-BR"
-    end
-
-    it "assigns the correct collaborators" do
-      assigns[:users].should_not be_nil
-      assigns[:users].to_set.should == @partner.users.to_set
-    end
-
-    it "loads the partner" do
-      assigns[:partner].should_not be_nil
-      assigns[:partner].should == @partner
-    end
-
-    it "renders the correct template" do
-      response.should render_template 'partners/users/index'
-    end
-  end
-
   context "GET home" do
     before do
       @user = Factory(:user)

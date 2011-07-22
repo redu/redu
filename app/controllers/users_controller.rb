@@ -5,20 +5,6 @@ class UsersController < BaseController
     :forgot_username, :resend_activation, :activate],
     :find_by => :login
 
-  load_and_authorize_resource :partner, :only => [:index]
-  load_and_authorize_resource :user, :only => [:index], :through => :partner
-
-  def index
-    @users = @partner.users
-
-    respond_to do |format|
-      format.html do
-        render :template => "partners/users/index"
-      end
-    end
-
-  end
-
   def annotations
     @annotations = User.find(params[:id]).annotations
 

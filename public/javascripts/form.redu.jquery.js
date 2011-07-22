@@ -50,10 +50,10 @@
           // Highlight do label
           $inputs.live("focus", function(){
               var id = $(this).attr("id") || null;
-              $(this).prev("[for=" + id+ "]").addClass("concave-label-focus");
+              $("[for=" + id + "]").addClass("concave-label-focus");
           }).blur(function(){
               var id = $(this).attr("id") || null;
-              $(this).prev("[for=" + id+ "]").removeClass("concave-label-focus");
+              $("[for=" + id+ "]").removeClass("concave-label-focus");
           });
       });
     };

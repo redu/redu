@@ -5227,6 +5227,19 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   border-bottom: none;
 }
 
+#partner .back-to-environments {
+  display: block;
+  float: right;
+  margin-right: 30px;
+  font-size: .9em;
+  overflow: hidden;
+}
+
+#partner .back-to-environments:hover {
+  text-decoration: none;
+}
+
+
 #partner-header {
   background-color: #F0F0F0;
   padding: 20px 20px 20px 140px;
@@ -5321,4 +5334,46 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 #partner-environments-list .owner {
   font-size: .85em;
   color: #4CACD4;
+}
+
+#partner-admins-list {
+  margin-bottom: 40px;
+}
+
+#partner-admins-list li {
+  margin-bottom: 5px;
+  overflow: hidden;
+}
+
+#partner-admins-list .date {
+  display: block;
+  float: left;
+  width: 125px;
+  margin-right: 10px;
+  padding: 5px 0 5px 25px;
+  font-size: .85em;
+  color: #B2B2B2;
+}
+
+#partner-admins-list .user-box {
+  width: 390px;
+  padding: 5px;
+  background-color: #E1F1E1;
+  overflow: hidden;
+  float: left;
+
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
+#partner-admins-list .avatar {
+  float: left;
+  margin-right: 10px;
+}
+
+#partner-admins-list .user-name {
+  font-size: .9em;
+  margin-top: 5px;
+  display: block;
 }
