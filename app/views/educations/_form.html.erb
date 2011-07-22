@@ -8,21 +8,21 @@
    <%= form_for high_school, :url => user_educations_path(user),
      :remote => true, :html => { :class => "concave-form clearfix" } do |f| %>
      <%= render :partial => 'educations/high_school_fields',
-       :locals => { :f => f, :high_school => high_school } %>
+       :locals => { :f => f } %>
    <% end %>
    <%= form_for higher_education, :url => user_educations_path(user),
      :remote => true, :html => { :class => "concave-form clearfix" } do |f| %>
      <%= render :partial => 'educations/higher_education_fields',
-       :locals => { :f => f, :higher_education => higher_education } %>
+       :locals => { :f => f } %>
    <% end %>
    <%= form_for complementary_course, :url => user_educations_path(user),
      :remote => true, :html => { :class => "concave-form clearfix" } do |f| %>
      <%= render :partial => 'educations/complementary_course_fields',
-       :locals => { :f => f, :complementary_course => complementary_course } %>
+       :locals => { :f => f } %>
    <% end %>
    <%= form_for event_education, :url => user_educations_path(user),
      :remote => true, :html => { :class => "concave-form clearfix" } do |f| %>
      <%= render :partial => 'educations/event_education_fields',
-       :locals => { :f => f, :event_education => event_education } %>
+       :locals => { :f => f } %>
    <% end %>
  </div>

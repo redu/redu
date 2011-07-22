@@ -1,6 +1,6 @@
 <%= f.label :name, "Nome do evento:" %>
 <%= f.text_field :name %>
-<%= concave_errors_for event_education, :name %>
+<%= concave_errors_for f.object, :name %>
 
 <%= f.label :role, "Seu papel:" %>
 <%= f.select :role, (options_for_select [["Participante", "participant"],

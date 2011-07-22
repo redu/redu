@@ -1,4 +1,4 @@
-<% if higher_education.new_record? %>
+<% if f.object.new_record? %>
   <%= f.select :kind,
     options_for_select([["Técnico", "technical"], ["Licenciatura", "degree"],
                        ["Bacharelado", "bachelorship"],
@@ -9,32 +9,32 @@
 <% end %>
 
 <%# Mostra apenas se for dos tipos que possuem curso (momento da edição)  %>
-<% unless !higher_education.new_record? and
-  (higher_education.course == "" and higher_education.errors[:course].empty?) %>
+<% unless !f.object.new_record? and
+  (f.object.course == "" and f.object.errors[:course].empty?) %>
   <div class="course">
     <%= f.label :course, "Curso:", :class => "course" %>
     <%= f.text_field :course %>
     <span class="tip">Exemplo: engenharia civil, direito, medicina etc.</span>
   </div>
-  <%= concave_errors_for higher_education, :course %>
+  <%= concave_errors_for f.object, :course %>
 <% end %>
 
 <%# Mostra apenas se for dos tipos que possuem area (momento da edição)  %>
-<% unless !higher_education.new_record? and
-  (higher_education.research_area == "" and
-   higher_education.errors[:research_area].empty?) %>
+<% unless !f.object.new_record? and
+  (f.object.research_area == "" and
+   f.object.errors[:research_area].empty?) %>
   <div class="area">
     <%= f.label :research_area, "Área de pesquisa:" %>
     <%= f.text_field :research_area %>
     <span class="tip">Exemplo: inovação, direito tributário, cardiologia etc.</span>
   </div>
-  <%= concave_errors_for higher_education, :research_area %>
+  <%= concave_errors_for f.object, :research_area %>
 <% end %>
 
 <%= f.label :institution, "Instituição:" %>
 <%= f.text_field :institution %>
 <span class="tip">Nome da instituição responsável.</span>
-<%= concave_errors_for higher_education, :institution %>
+<%= concave_errors_for f.object, :institution %>
 
 <%= label_tag :start_year, "Período:" %>
 <%= f.date_select :start_year,

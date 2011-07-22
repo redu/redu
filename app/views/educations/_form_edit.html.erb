@@ -1,17 +1,6 @@
 <%= form_for education.educationable,
   :url => user_education_path(education.user, education), :remote => true,
   :html => { :class => "concave-form clearfix" } do |f| %>
-  <% if education.educationable.class == HighSchool %>
-    <%= render :partial => 'educations/high_school_fields',
-      :locals => { :f => f, :high_school => education.educationable } %>
-  <% elsif education.educationable.class == HigherEducation %>
-    <%= render :partial => 'educations/higher_education_fields',
-      :locals => { :f => f, :higher_education => education.educationable } %>
-  <% elsif education.educationable.class == ComplementaryCourse %>
-    <%= render :partial => 'educations/complementary_course_fields',
-      :locals => { :f => f, :complementary_course => education.educationable } %>
-  <% elsif education.educationable.class == EventEducation %>
-    <%= render :partial => 'educations/event_education_fields',
-      :locals => { :f => f, :event_education => education.educationable } %>
-  <% end %>
+    <%= render :partial => "educations/#{education.educationable.class.to_s.underscore}_fields",
+    :locals => { :f => f } %>
 <% end %>

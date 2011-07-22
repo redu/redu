@@ -1,7 +1,7 @@
 <%= f.label :institution, "Instituição:" %>
 <%= f.text_field :institution %>
 <span class="tip">Nome da instituição responsável.</span>
-<%= concave_errors_for high_school, :institution %>
+<%= concave_errors_for f.object, :institution %>
 
 <%= f.label :end_year, "Ano de término:" %>
 <%= f.date_select :end_year,
