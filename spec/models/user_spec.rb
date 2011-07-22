@@ -307,7 +307,7 @@ describe User do
       User.without_ids(users[0..1]).should == users[2..10]
     end
 
-    it "retrieves all colleagues (same course but not friends)" do
+    it "retrieves all colleagues (same course but not friends or pending friends)" do
       user = Factory(:user)
       owner = Factory(:user)
       env = Factory(:environment, :owner => owner)
@@ -318,6 +318,8 @@ describe User do
       colleagues2 = (1..10).collect { Factory(:user) }
       friends2 = (1..5).collect { Factory(:user) }
       course2 = Factory(:course, :environment => env, :owner => owner)
+
+      pending_friends = (1..10).collect { Factory(:user) }
 
       course1.join user
       course2.join user
@@ -338,12 +340,18 @@ describe User do
         user.be_friends_with(u)
         u.be_friends_with(user)
       end
+      pending_friends.each do |u|
+        course2.join u
+        u.be_friends_with(user)
+      end
 
-      user.reload.colleagues(30).to_set.should ==
-        (colleagues1 + colleagues2 << owner).to_set
+      alo = user.reload.colleagues(30).collect {|u| u.id}.sort
+      alo2 = (colleagues1 + colleagues2 << owner).collect {|u| u.id }.sort
+      alo.should ==
+        alo2
     end
 
-    it "retrieves all friends of friends" do
+    it "retrieves all friends of friends (exclude pending friends)" do
       vader = Factory(:user, :login => "darth_vader")
       luke = Factory(:user, :login => "luke_skywalker")
       leia = Factory(:user, :login => "princess_leia")
@@ -355,10 +363,11 @@ describe User do
       create_friendship luke, leia
       create_friendship luke, yoda
       create_friendship leia, han_solo
+      vader.be_friends_with han_solo
       han_solo = User.select("login").find_by_login("han_solo")
       yoda = User.select("login").find_by_login("yodaa")
 
-      vader.friends_of_friends.should == [yoda, han_solo]
+      vader.friends_of_friends.should == [yoda]
     end
   end
 

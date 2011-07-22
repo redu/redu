@@ -432,6 +432,7 @@ class UsersController < BaseController
     @course_invitations = current_user.course_invitations
     @statuses = current_user.home_activity(params[:page])
     @status = Status.new
+    @contacts_recommendations = current_user.recommended_contacts(5)
 
     respond_to do |format|
       format.html

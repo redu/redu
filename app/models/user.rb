@@ -133,7 +133,12 @@ class User < ActiveRecord::Base
   scope :with_email_domain_like, lambda { |email|
     where("email LIKE ?", "%#{email.split("@")[1]}%")
   }
-
+  scope :contacts_and_pending_contacts_ids , select("users.id").
+    joins("LEFT OUTER JOIN `friendships`" \
+            " ON `friendships`.`friend_id` = `users`.`id`").
+    where("friendships.status = 'accepted'" \
+          " OR friendships.status = 'pending'" \
+          " OR friendships.status = 'requested'")
   attr_accessor :email_confirmation
 
   # Accessors
@@ -799,10 +804,28 @@ class User < ActiveRecord::Base
   # Retrieves five contacts recommendations
   def recommended_contacts(quantity)
     if self.friends_count == 0
-      users = User.select('users.login').without_ids(self).popular(20) |
-        User.select('users.login').without_ids(self).popular_teachers(20) |
-        User.select('users.login').without_ids(self).with_email_domain_like(self.email).limit(20)
+      contacts_and_pending_ids = User.contacts_and_pending_contacts_ids.
+        where("friendships.user_id = ?", self.id)
+      # Populares da rede exceto o próprio usuário e os usuários que ele,
+      # requisitou/foi requisitada a amizade.
+      users = User.select('users.login, users.avatar_file_name,' \
+                          ' users.first_name, users.last_name').
+                          without_ids(contacts_and_pending_ids << self).
+                          popular(20) |
+      # Professores populares da rede exceto o próprio usuário e os usuários,
+      # que ele requisitou/foi requisitada a amizade.
+        User.select('users.login, users.avatar_file_name,'\
+                    ' users.first_name, users.last_name').
+                    without_ids(contacts_and_pending_ids << self).
+                    popular_teachers(20) |
+      # Usuários com o mesmo domínio de email exceto o próprio usuário e os,
+      # usuários que ele requisitou/foi requisitada a amizade.
+        User.select('users.login, users.avatar_file_name,' \
+                    ' users.first_name, users.last_name').
+                    without_ids(contacts_and_pending_ids << self).
+                    with_email_domain_like(self.email).limit(20)
     else
+      # Colegas de curso e amigos de amigos
       users = colleagues(20) | self.friends_of_friends
     end
 
@@ -815,22 +838,28 @@ class User < ActiveRecord::Base
     end
   end
 
+  # Participam do mesmo curso, mas não são contatos nem possuem requisição
+  # de contato pendente.
   def colleagues(quantity)
-    friends_ids = self.friends.select("users.id")
-    User.select("DISTINCT users.login").includes(:user_course_associations).
+    contacts_ids = User.contacts_and_pending_contacts_ids.
+      where("friendships.user_id = ?", self.id)
+    User.select("DISTINCT users.login, users.avatar_file_name, users.first_name, users.last_name").
+includes(:user_course_associations).
       where("user_course_associations.state = 'approved' AND " \
-      "user_course_associations.user_id NOT IN (?, ?)", friends_ids, self.id).
+      "user_course_associations.user_id NOT IN (?, ?)", contacts_ids, self.id).
       limit(quantity)
   end
 
   def friends_of_friends
-    friends_ids = self.friends.select("users.id")
-    User.select("DISTINCT users.login").
+    contacts_ids = self.friends.select("users.id")
+    contacts_and_pending_ids = User.contacts_and_pending_contacts_ids.
+      where("friendships.user_id = ?", self.id)
+    User.select("DISTINCT users.login, users.avatar_file_name, users.first_name, users.last_name").
       joins("LEFT OUTER JOIN `friendships`" \
             " ON `friendships`.`friend_id` = `users`.`id`").
       where("friendships.status = 'accepted' AND friendships.user_id IN (?)" \
             " AND friendships.friend_id NOT IN (?, ?)",
-            friends_ids, friends_ids, self.id)
+            contacts_ids, contacts_and_pending_ids, self.id)
   end
 
   protected

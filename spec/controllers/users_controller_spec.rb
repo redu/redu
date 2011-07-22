@@ -288,10 +288,6 @@ describe UsersController do
 
   context "when listing collaborators from a partner" do
     before do
-      @user = Factory(:user)
-      activate_authlogic
-      UserSession.create @user
-
       @partner = Factory(:partner)
       environment = Factory(:environment)
       Factory(:partner_environment_association,
@@ -314,6 +310,23 @@ describe UsersController do
 
     it "renders the correct template" do
       response.should render_template 'partners/users/index'
+      @params = { :locale => "pt-BR", :id => @user.login }
+      get :home, @params
+    end
+  end
+
+  context "GET home" do
+    before do
+      @user = Factory(:user)
+      activate_authlogic
+      UserSession.create @user
+    end
+
+    [:friends, :friends_requisitions, :course_invitations, :statuses, :status,
+      :contacts_recommendations].each do |var|
+      it "assigns @#{var}" do
+        assigns[var].should_not be_nil
+      end
     end
   end
 end

@@ -4700,6 +4700,41 @@ div.token-input-dropdown {
   margin-bottom: 10px;
 }
 
+.home-sidebar .contact-recommendations ul {
+  padding-left: 10px;
+}
+
+.home-sidebar .contact-recommendations ul li {
+  padding: 1px 5px 5px 5px;
+  font-size: .87em;
+}
+
+.home-sidebar .contact-recommendations ul li:hover {
+  background-color: #dbeff7;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+}
+
+.home-sidebar .contact-recommendations ul .avatar {
+  float: left;
+  margin: 5px;
+}
+
+.home-sidebar .contact-recommendations ul .name {
+  font-weight: bold;
+  display: block;
+  margin-top: 4px;
+  margin-bottom: 2px;
+}
+
+.home-sidebar .contact-recommendations ul .count {
+  font-style: italic;
+  color: #b3b2b3;
+  display: block;
+  margin-bottom: 2px;
+}
+
 /* Sub abas */
 .subtabs {
 }
