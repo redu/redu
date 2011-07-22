@@ -1,6 +1,5 @@
-.concave-form input,
-.concave-form textarea,
-.concave-form label {
+.concave-form .concave-input,
+.concave-form .concave-label {
   padding: 0;
   margin: 0;
   float: none;
@@ -10,8 +9,7 @@
 }
 
 /* labels inativos */
-  .concave-form .concave-label,
-  .concave-form label {
+  .concave-form .concave-label {
     display: block;
     color: #b3b2b3;
     font-weight: bold;
@@ -161,9 +159,7 @@
 
 /* botoes */
   .concave-button,
-  .concave-cancel,
-  .concave-form button,
-  .concave-form input[type=submit] {
+  .concave-cancel {
     display: inline-block;
     line-height: 1;
     padding: 9px 0;
@@ -188,24 +184,18 @@
   }
 
   .concave-button:hover,
-  .concave-cancel:hover,
-  .concave-form button:hover,
-  .concave-form input[type=submit]:hover {
+  .concave-cancel:hover {
     text-decoration: none;
   }
 
   .borderradius .concave-button,
-  .borderradius .concave-cancel,
-  .borderradius .concave-form button,
-  .borderradius .concave-form input[type=submit] {
+  .borderradius .concave-cancel {
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
   }
 
-  .cssgradients .concave-button,
-  .cssgradients .concave-form button,
-  .cssgradients .concave-form input[type=submit] {
+  .cssgradients .concave-button {
     background: -webkit-gradient(linear, left top, left bottom, from(#73C3E6), to(#4CACD5)); /* webkit browsers */
     background: -moz-linear-gradient(top,  #73C3E6,  #4CACD5); /* firefox 3.6+ */
   }
@@ -215,9 +205,7 @@
     background: -moz-linear-gradient(top,  #FF6D6D,  #E83B3B); /* firefox 3.6+ */
   }
 
-  .textshadow .concave-button,
-  .textshadow .concave-form button,
-  .textshadow .concave-form input[type=submit] {
+  .textshadow .concave-button {
      -moz-text-shadow: -1px -1px 0 #4CACD5;
      -webkit-text-shadow: -1px -1px 0 #4CACD5;
      text-shadow: -1px -1px 0 #4CACD5;
@@ -229,9 +217,7 @@
      text-shadow: -1px -1px 0 #E83B3B;
   }
 
-  .concave-button:hover,
-  .concave-form button:hover,
-  .concave-form input[type=submit]:hover {
+  .concave-button:hover {
     border: 1px solid #1789C3;
     background: #1789C3;
   }
@@ -246,9 +232,7 @@
     background: -moz-linear-gradient(top,  #FF6D6D,  #C1272D); /* firefox 3.6+ */
   }
 
-  .cssgradients .concave-button:hover,
-  .cssgradients  button:hover,
-  .cssgradients  input[type=submit]:hover {
+  .cssgradients .concave-button:hover {
     background: -webkit-gradient(linear, left top, left bottom, from(#73C3E6), to(#1789C3)); /* webkit browsers */
     background: -moz-linear-gradient(top,  #73C3E6,  #1789C3); /* firefox 3.6+ */
   }
@@ -331,4 +315,17 @@
 
   .concave-form .errors_on_field li {
     margin-top: 5px;
+  }
+
+/* Indicador de estado de carregamento */
+  .concave-form .concave-loading,
+  .concave-form .concave-loading:hover {
+    background: #f1f0f0 url("../images/new/spinner.gif") no-repeat center center;
+    color: transparent;
+  }
+
+  .textshadow .concave-loading {
+     -moz-text-shadow: none;
+     -webkit-text-shadow: none;
+     text-shadow: none;
   }

@@ -55,6 +55,16 @@
               var id = $(this).attr("id") || null;
               $("[for=" + id+ "]").removeClass("concave-label-focus");
           });
+
+          // Padrão de spinner
+          $(".concave-form").live('ajax:before', function(){
+              $(this).find("input[type=submit]").loadingStart({ "className" : "concave-loading" });
+          });
+
+          $(".concave-form").live('ajax:complete', function(){
+              $(this).find("input[type=submit]").loadingComplete({ "className" : "concave-loading" });
+          });
+
       });
     };
 
