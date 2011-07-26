@@ -59,6 +59,7 @@ stylesheets:
     - public/stylesheets/fb_style.css
     - public/stylesheets/token-input.css
     - public/stylesheets/form.redu.css
+    - public/stylesheets/icons.big.redu.css
   ie:
     - public/stylesheets/ie.css
   chat:

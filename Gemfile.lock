@@ -211,7 +211,7 @@ DEPENDENCIES
   ar_mailer_rails3
   authlogic
   aws-s3
-  bundler (= 1.0.10)
+  bundler (= 1.0.15)
   cancan
   ckeditor (= 3.4.2.pre)
   date_validator

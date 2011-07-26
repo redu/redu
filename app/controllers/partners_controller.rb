@@ -17,4 +17,19 @@ class PartnersController < BaseController
     end
 
   end
+
+  def contact
+    @environment = Environment.new(params[:environment])
+    @partner_contact = PartnerContact.new(params[:partner_contact])
+
+    @partner_contact.deliver if @partner_contact.valid?
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def success
+
+  end
 end

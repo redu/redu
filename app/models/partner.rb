@@ -4,7 +4,7 @@ class Partner < ActiveRecord::Base
   has_many :users, :through => :partner_user_associations
   has_many :partner_user_associations
 
-  validates_presence_of :name
+  validates_presence_of :name, :email
 
   # Adiciona colaborador ao parcendo, dando acesso de administrador a todos os
   # ambientes associados.

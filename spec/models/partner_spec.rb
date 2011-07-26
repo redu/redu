@@ -3,8 +3,8 @@ require 'spec_helper'
 describe Partner do
   subject { Factory(:partner) }
 
-  it { should respond_to :name }
   it { should validate_presence_of :name }
+  it { should validate_presence_of :email }
   it { should have_many(:environments).through(:partner_environment_associations) }
   it { should have_many(:users).through(:partner_user_associations) }
 
@@ -61,13 +61,10 @@ describe Partner do
           environments.collect { |e| e.courses }.flatten.collect { |c| c.administrators }
         }
       end
-
-
-
     end
   end
 
-  context "when adding existend environments" do
+  context "when adding existing environments" do
     before do
       @environment = Factory(:environment)
 

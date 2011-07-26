@@ -31,9 +31,6 @@
       , windowPartial : "<%= escape_javascript(render :partial => "presence/chat_window") %>"
       , presencePartial : "<%= escape_javascript(render :partial => "presence/chat_presence") %>"
       , messagePartial : "<%= escape_javascript(render :partial => "presence/chat_message") %>" });
-
-      chat.init();
-      chat.subscribeMyChannel();
     <% end %>
 
     <%= lazy_load(:real_tabs, :jammit => true, :clear => true) %>

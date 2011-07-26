@@ -872,6 +872,10 @@ describe Ability do
       it "cannot view" do
         @user_ability.should_not be_able_to(:read, @partner)
       end
+
+      it "can contact" do
+        @user_ability.should be_able_to(:contact, @partner)
+      end
     end
 
     context "the collbarator" do

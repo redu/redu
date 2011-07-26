@@ -1,4 +1,4 @@
-<fieldset>
+<fieldset class="environment-fields">
   <div class="environment-box clearfix">
     <%= f.label :name, "Seu ambiente de ensino" %>
     <%= f.text_field :name, :class => "big" %>
@@ -10,7 +10,8 @@
   <%= f.label :path, "Endereço eletrônico", :class => "big"%>
   <%= f.text_field :path %>
 </fieldset>
-<fieldset>
+<hr/>
+<fieldset class="course-fields">
   <%= f.fields_for :courses do |builder|  %>
     <div class="course-box clearfix">
       <%= builder.label :name, "Seu primeiro curso" %>

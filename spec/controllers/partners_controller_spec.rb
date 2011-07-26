@@ -50,4 +50,31 @@ describe PartnersController do
       assigns[:partner].should == @partner
     end
   end
+
+  context "when contacting a partner" do
+    before do
+      @partner = Factory(:partner)
+      @environment_params = {:name => "Centro de Infromática",
+                             :courses_attributes => {"0"=> {:name => "Ciência da Computação", :path => "ciencia-da-computacao" }},
+                             :initials => "", :path => "centro-de-infromatica"}
+
+      @contact_params = {:category => "institution",
+                         :details => "Mensagem",
+                         :environment_name => "Centro de Infromática",
+                         :course_name => "Ciência da Computação",
+                         :email => "guilhermec@redu.com.br"}
+
+      post :contact, :id => @partner.id, :environment => @environment_params,
+        :partner_contact => @contact_params, :locale => "pt-BR", :format => :js
+    end
+
+    it "assigns envronment" do
+      assigns[:environment].should_not be_nil
+    end
+
+    it "creates PartnerContact" do
+      assigns[:partner_contact].should_not be_nil
+      assigns[:partner_contact].should be_valid
+    end
+  end
 end

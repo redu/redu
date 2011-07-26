@@ -96,7 +96,7 @@
   }
 
   .cssgradients .concave-form .concave-input:focus {
-    background: none;
+    background: white;
   }
 
   .boxshadow .concave-form .concave-input:focus {

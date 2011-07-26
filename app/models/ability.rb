@@ -165,6 +165,9 @@ class Ability
           # Caso geral (Spaces, Subjects, etc.)
           (user.has_access_to? status.statusable)
       end
+
+      # Parceiros
+      can :contact, Partner
     end
   end
 end

@@ -337,6 +337,11 @@ Redu::Application.routes.draw do
   match '/payment/success' => 'payment_gateway#success', :as => :payment_success
 
   resources :partners, :only => [:show] do
+    member do
+      post :contact
+      get :success
+    end
+
     resources :environments, :only => :index
     resources :partner_environment_associations, :as => :clients,
       :only => [:create, :index, :new]
