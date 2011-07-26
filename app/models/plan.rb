@@ -109,7 +109,7 @@ class Plan < ActiveRecord::Base
   end
 
   aasm_event :activate do
-    transitions :to => :active, :from => [:blocked]
+    transitions :to => :active, :from => [:blocked, :active]
   end
 
   aasm_event :migrate do

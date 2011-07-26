@@ -31,6 +31,12 @@ describe Plan do
       subject.state.should == "active"
     end
 
+    it "shoould reactivate withdout error" do
+      expect {
+        subject.activate!
+      }.should_not change { subject.state }
+    end
+
     it "blocks" do
       expect {
         subject.block!
