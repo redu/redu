@@ -89,7 +89,7 @@ module Redu
       :domain => 'redu.com.br',
       :authentication => :login,
       :user_name => 'no-reply@redu.com.br',
-      :password => '7987Y5'
+      :password => 'penn441\boob'
     }
 
     config.paperclip = {
