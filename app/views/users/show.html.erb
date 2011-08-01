@@ -25,17 +25,17 @@
           <li>
             <ul>
               <li><span class="bio"><%= @user.age %></span> anos</li>
-              <% if @user.languages %>
+              <% if !@user.languages.blank? %>
                 <li>Fala
                   <span class="bio"><%= @user.languages %></span>
                 </li>
               <% end %>
-              <% if @user.birth_localization %>
+              <% if !@user.birth_localization.blank? %>
                 <li>Natural de
                   <span class="bio"><%= @user.birth_localization %></span>
                 </li>
               <% end %>
-              <% if @user.localization %>
+              <% if !@user.localization.blank? %>
                 <li>Vive em
                   <span class="bio"><%= @user.localization %></span>
                 </li>
@@ -51,7 +51,7 @@
 
       <hr class="separator"/>
       <div class="bio-wrapper clearfix">
-        <% if @user.description and !@user.description.empty? %>
+        <% if !@user.description.blank? %>
           <span class="label">Sobre mim:</span>
           <span class="bio indent"><%= @user.description %></span>
         <% end %>
@@ -59,11 +59,13 @@
           <span class="label">Interesses:</span>
           <span class="bio indent"><%= @user.tag_list.join(", ") %></span>
         <% end %>
-        <% if @user.mobile and !@user.mobile.empty? %>
+        <% if !@user.mobile.blank? %>
           <span class="label">Celular:</span>
           <span class="bio indent"><%= @user.mobile %></span>
         <% end %>
-        <%= render :partial => "users/social_network", :collection => @user.social_networks %>
+        <ul>
+          <%= render :partial => "users/social_network", :collection => @user.social_networks %>
+        </ul>
       </div><!-- end .bio-wrapper -->
 
       <% if !@user.experiences.empty? %>
