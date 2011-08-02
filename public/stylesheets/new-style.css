@@ -5456,12 +5456,17 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 
 #partner-header {
   background-color: #F0F0F0;
-  padding: 20px 20px 20px 140px;
+  padding: 20px 20px 20px 40px;
   margin-left: -20px;
   margin-right: -20px;
   margin-bottom: 20px;
   overflow: hidden;
 }
+
+#partner-header .icon-partner-lightblue_64_64-before:before {
+  margin-right: 40px;
+}
+
 #partner-header .partner-title {
   font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 500;
