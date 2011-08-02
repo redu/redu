@@ -1,4 +1,5 @@
 jQuery(function(){
+
     // Flash message
     $(".flash-message").parent().next().css("marginTop", "10px");
     $(".flash-message .close-flash").click(function(e){
@@ -223,25 +224,40 @@ jQuery(function(){
         $(this).removeClass("link-loading");
     });
 
-    $.fn.loadingStart = function(){
+    $.fn.loadingStart = function(options){
+      var config = {
+        "className" : "bt-loading"
+      }
+      $.extend(config, options);
+
       return this.each(function(){
           $bt = $(this);
-          $bt.addClass("bt-loading");
+          $bt.addClass(config.className);
       });
     };
 
-    $.fn.loadingComplete = function(){
+    $.fn.loadingComplete = function(options){
+      var config = {
+        "className" : "bt-loading"
+      }
+      $.extend(config, options);
+
       return this.each(function(){
           $bt = $(this);
-          $bt.removeClass("bt-loading");
+          $bt.removeClass(config.className);
       });
     };
 
-    $.fn.loadingToggle = function(){
+    $.fn.loadingToggle = function(options){
+      var config = {
+        "className" : "bt-loading"
+      }
+      $.extend(config, options);
+
       return this.each(function(){
           $bt = $(this);
 
-          if( $bt.hasClass('bt-loading') ) {
+          if( $bt.hasClass(config.className) ) {
             $bt.loadingComplete();
           } else {
             $bt.loadingStart();

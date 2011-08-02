@@ -43,9 +43,9 @@ class Ability
     # Status
 
     # User
-    alias_action :learning,
-      :show_log_activity, :log, :welcome_complete, :list_subjects,
-      :show_log_activity, :activity_xml, :download_curriculum, :to => :read
+    alias_action :learning, :show_log_activity, :log, :welcome_complete,
+      :list_subjects, :activity_xml, :show_mural, :contacts_endless,
+      :environments_endless, :to => :read
 
     alias_action :assume, :edit_account,
       :update_account, :edit_pro_details, :update_pro_details,
@@ -165,6 +165,9 @@ class Ability
           # Caso geral (Spaces, Subjects, etc.)
           (user.has_access_to? status.statusable)
       end
+
+      # Parceiros
+      can :contact, Partner
     end
   end
 end

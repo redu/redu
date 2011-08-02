@@ -1,0 +1,13 @@
+<% if @experience.valid? %>
+  var newItem = "<%= escape_javascript render :partial => 'experiences/item',
+    :locals => { :item => @experience } %>"
+  var oldItem = $("#experience-<%= @experience.id %>");
+  oldItem.replaceWith(newItem);
+  $("#curriculum .new-experience-button").show();
+<% else %>
+  var experience_form = "<%= escape_javascript render :partial => 'experiences/form',
+    :locals => { :user => @experience.user, :experience => @experience } %>"
+  var $form = $("#edit_experience_<%= @experience.id %>");
+  $form.replaceWith(experience_form);
+  $("#edit_experience_<%= @experience.id %>").show();
+<% end %>

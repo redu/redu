@@ -6,33 +6,56 @@
   <ul class="local-nav">
     <li>
       <div class="<%= (current_page? user_path(@user)) ?
-                       "session selected".to_s : "session".to_s %>">
-        <% selected = (current_page? user_path(@user)) ? "icon-profile-white_16_16" : "icon-profile-lightblue_16_16" %>
-        <%= link_to "Perfil: #{@user.first_name}", user_path(@user),
+        "session selected".to_s : "session".to_s %>">
+        <% selected = (current_page? user_path(@user)) ?
+          "icon-profile-white_16_16" : "icon-profile-lightblue_16_16" %>
+        <%= link_to @user.display_name, user_path(@user),
         :class => "icon #{selected}" %>
       </div>
-     </li>
+    </li>
+    <li>
+      <div class="<%= (current_page? show_mural_user_path(@user)) ?
+        "session selected".to_s : "session".to_s %>">
+        <% selected = (current_page? show_mural_user_path(@user)) ?
+          "icon-list-white_16_16" : "icon-list-lightblue_16_16"%>
+        <%= link_to "Mural", show_mural_user_path(@user),
+          :class => "icon #{selected}" %>
+      </div>
+    </li>
     <li>
       <div class="<%= (current_page? user_friendships_path(@user)) ?
                        "session selected".to_s : "session".to_s %>">
-        <% selected = (current_page? user_friendships_path(@user)) ? "icon-contacts-white_16_16" : "icon-contacts-lightblue_16_16" %>
-        <%= link_to 'Contatos', user_friendships_path(@user, :profile => true),
+        <% selected = (current_page? user_friendships_path(@user)) ?
+         "icon-contacts-white_16_16" : "icon-contacts-lightblue_16_16" %>
+        <%= link_to "Contatos: #{ @user.friends.count }",
+          user_friendships_path(@user, :profile => true),
           :class => "icon #{selected}"%>
       </div>
-      <ul class="connections clearfix">
-        <%= render :partial => 'users/item_short',
-          :collection => @user.friends.n_recent(9) %>
-      </ul><!-- end .connections -->
-      <%= link_to 'Ver mais', user_friendships_path(@user, :profile => true),
-          :class => "more"%>
+      <% if current_user == @user %>
+        <ul class="connections con-endless clearfix">
+          <% @contacts = @user.friends.page(params[:page]).per(8) %>
+          <%= render :partial => 'users/item_medium_24',
+            :collection => @contacts %>
+        </ul><!-- end .connections -->
+      <% else %>
+        <% @friends = @user.friends_in_common_with(current_user).shuffle %>
+        <span class="call">Em comum:<%= @friends.count %></span>
+        <ul class="connections clearfix">
+          <%= render :partial => 'users/item_medium_24',
+            :collection => @friends[0..3] %>
+        </ul><!-- end .connections -->
+        <hr class="separator"/>
+        <ul class="connections con-endless clearfix">
+          <% @contacts = Kaminari::paginate_array(@user.friends_not_in_common_with(current_user)).
+            page(params[:page]).per(4) %>
+          <%= render :partial => 'users/item_medium_24',
+            :collection => @contacts %>
+        </ul><!-- end .connections -->
+      <% end %>
+      <%= paginate @contacts, :theme => 'sidebar_endless',
+        :params => { :controller => 'users', :action => 'contacts_endless',
+                     :id  => @user.login },
+        :text => "Mostrando os <X> últimos contatos de #{@user.first_name}" %>
     </li>
   </ul><!-- end .local-nav -->
-  <% friendship = current_user.friendship_for @user %>
-  <% if current_user.friends?(@user) %>
-    <%= link_to 'Remover conexão',
-      user_friendship_path(current_user, friendship.id),
-      :remote => true,
-      :method => :delete,
-      :class => "disconnect icon icon-x-gray_8_8"%>
-  <% end %>
 </div>

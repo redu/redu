@@ -6,20 +6,18 @@
   <% end %>
 
 <div class="table tabs">
-  <ul>
-    <li>
-      <a href="#teacher" class="teacher">Professor</a>
+  <ul class="menu">
+    <li class="vanila-plan">
+      <a href="#teacher-plan" class="teacher icons-big icon-checkout-teacher-lightblue_100_100">Professor</a>
     </li>
-    <li>
-      <a href="#instituition" class="instituition">Instituição de ensino</a>
-    </li>
-    <li>
-      <a href="#company" class="company">Empresa</a>
+    <li class="partner">
+      <a href="#partner-plan" class="instituition icons-big icon-checkout-institution-lightblue_100_100">Instituição de ensino</a>
+      <a href="#partner-plan" class="company icons-big icon-checkout-company-lightblue_100_100">Empresa</a>
     </li>
   </ul>
-  <div id="teacher" class="clearfix wide">
+  <div id="teacher-plan" class="plan-container clearfix wide">
     <ul class="plans clearfix">
-      <li class="free">
+      <li class="free plan">
         <strong class="name tiptip-lite" title="Este plano é dedicado a professores que desejam criar seu primeiro ambiente virtual de ensino e interessados em testar o Redu." >Grátis</strong>
         <ul class="features">
           <li>
@@ -51,7 +49,7 @@
           </div>
         <% end %>
       </li>
-      <li>
+      <li class="plan">
         <strong class="name">Lite</strong>
         <ul class="features">
           <li>
@@ -100,7 +98,7 @@
           </div>
         <% end %>
       </li>
-      <li>
+      <li class="plan no-sep">
         <strong class="name">Standard</strong>
         <ul class="features">
           <li>
@@ -149,7 +147,7 @@
           </div>
         <% end %>
       </li>
-      <li class="last best-choice">
+      <li class="last plan best-choice">
         <strong class="name">Plus</strong>
         <ul class="features">
           <li>
@@ -200,306 +198,14 @@
       </li>
     </ul>
   </div><!-- end #teacher -->
-  <div id="instituition">
-    <ul class="plans clearfix">
-      <li>
-        <strong class="name">Lite</strong>
-        <ul class="features">
-          <li>
-            <strong>100</strong>
-            alunos
-          </li>
-          <li>Vídeos do YouTube <strong>ilimitados</strong></li>
-          <li>Documentos no Scribd <strong>ilimitados</strong></li>
-          <li>
-            <strong>25 MB</strong>
-            de armazenamento de documentos no Redu
-          </li>
-          <li>
-            <strong>500 MB</strong>
-            de aramazenamento de vídeo no Redu
-          </li>
-        </ul>
-        <div class="pricing">
-          <div class="setup">
-            <span class="currency">R$</span>
-            <span class="value">251,99</span>
-            (adesão)
-          </div>
-          <span class="plus">+</span>
-          <span class="monthly">
-            <span class="currency">R$</span>
-            <span class="value">251,99</span>
-            /mês
-          </span>
-          <!--
-          <span class="yearly">
-            <span class="currency">R$</span>
-            <span class="value">2519,90</span>
-            /ano
-            <span class="tip">(2 meses grátis)</span>
-          </span>
-          -->
-        </div>
-
-        <%= form_for @environment,
-          :url => environments_path(:step => 2) do |f| %>
-          <%= hidden_field_tag :plan, 'instituicao_lite' %>
-          <%= f.submit "Assinar", :class => "important" %>
-          <div style="display:none;">
-            <%= render :partial => 'form', :locals => { :f => f } %>
-          </div>
-        <% end %>
-      </li>
-      <li>
-        <strong class="name">Standard</strong>
-        <ul class="features">
-          <li>
-            <strong>300</strong>
-            alunos
-          </li>
-          <li>Vídeos do YouTube <strong>ilimitados</strong></li>
-          <li>Documentos no Scribd <strong>ilimitados</strong></li>
-          <li>
-            <strong>50 MB</strong>
-            de armazenamento de documentos no Redu
-          </li>
-          <li>
-            <strong>800 MB</strong>
-            de aramazenamento de vídeo no Redu
-          </li>
-        </ul>
-        <div class="pricing">
-          <div class="setup">
-            <span class="currency">R$</span>
-            <span class="value">730,99</span>
-            (adesão)
-          </div>
-          <span class="plus">+</span>
-          <span class="monthly">
-            <span class="currency">R$</span>
-            <span class="value">730,99</span>
-            /mês
-          </span>
-          <!--
-          <span class="yearly">
-            <span class="currency">R$</span>
-            <span class="value">7309,90</span>
-            /ano
-            <span class="tip">(2 meses grátis)</span>
-          </span>
-          -->
-        </div>
-
-        <%= form_for @environment,
-          :url => environments_path(:step => 2) do |f| %>
-          <%= hidden_field_tag :plan, 'instituicao_standard' %>
-          <%= f.submit "Assinar", :class => "important" %>
-          <div style="display:none;">
-            <%= render :partial => 'form', :locals => { :f => f } %>
-          </div>
-        <% end %>
-      </li>
-      <li class="last best-choice">
-        <strong class="name">Plus</strong>
-        <ul class="features">
-          <li>
-            <strong>600</strong>
-            alunos
-          </li>
-          <li>Vídeos do YouTube <strong>ilimitados</strong></li>
-          <li>Documentos no Scribd <strong>ilimitados</strong></li>
-          <li>
-            <strong>75 MB</strong>
-            de armazenamento de documentos no Redu
-          </li>
-          <li>
-            <strong>800 MB</strong>
-            de aramazenamento de vídeo no Redu
-          </li>
-        </ul>
-        <div class="pricing">
-          <div class="setup">
-            <span class="currency">R$</span>
-            <span class="value">1280,99</span>
-            (adesão)
-          </div>
-          <span class="plus">+</span>
-          <span class="monthly">
-            <span class="currency">R$</span>
-            <span class="value">1280,99</span>
-            /mês
-          </span>
-          <!--
-          <span class="yearly">
-            <span class="currency">R$</span>
-            <span class="value">12809,90</span>
-            /ano
-            <span class="tip">(2 meses grátis)</span>
-          </span>
-          -->
-        </div>
-
-        <%= form_for @environment,
-          :url => environments_path(:step => 2) do |f| %>
-          <%= hidden_field_tag :plan, 'instituicao_plus' %>
-          <%= f.submit "Assinar", :class => "important" %>
-          <div style="display:none;">
-            <%= render :partial => 'form', :locals => { :f => f } %>
-          </div>
-        <% end %>
-      </li>
-    </ul>
-  </div><!-- end #instituition -->
-  <div id="company">
-    <ul class="plans clearfix">
-      <li>
-        <strong class="name">Lite</strong>
-        <ul class="features">
-          <li>
-            <strong>30</strong>
-            alunos
-          </li>
-          <li>Vídeos do YouTube <strong>ilimitados</strong></li>
-          <li>Documentos no Scribd <strong>ilimitados</strong></li>
-          <li>
-            <strong>250 MB</strong>
-            de armazenamento de documentos no Redu
-          </li>
-          <li>
-            <strong>500 MB</strong>
-            de aramazenamento de vídeo no Redu
-          </li>
-        </ul>
-        <div class="pricing">
-          <div class="setup">
-            <span class="currency">R$</span>
-            <span class="value">210,99</span>
-            (adesão)
-          </div>
-          <span class="plus">+</span>
-          <span class="monthly">
-            <span class="currency">R$</span>
-            <span class="value">210,99</span>
-            /mês
-          </span>
-          <!--
-          <span class="yearly">
-            <span class="currency">R$</span>
-            <span class="value">2109,90</span>
-            /ano
-            <span class="tip">(2 meses grátis)</span>
-          </span>
-          -->
-        </div>
-
-        <%= form_for @environment,
-          :url => environments_path(:step => 2) do |f| %>
-          <%= hidden_field_tag :plan, 'empresas_lite' %>
-          <%= f.submit "Assinar", :class => "important" %>
-          <div style="display:none;">
-            <%= render :partial => 'form', :locals => { :f => f } %>
-          </div>
-        <% end %>
-      </li>
-      <li>
-        <strong class="name">Standard</strong>
-        <ul class="features">
-          <li>
-            <strong>50</strong>
-            alunos
-          </li>
-          <li>Vídeos do YouTube <strong>ilimitados</strong></li>
-          <li>Documentos no Scribd <strong>ilimitados</strong></li>
-          <li>
-            <strong>250 MB</strong>
-            de armazenamento de documentos no Redu
-          </li>
-          <li>
-            <strong>500 MB</strong>
-            de aramazenamento de vídeo no Redu
-          </li>
-        </ul>
-        <div class="pricing">
-          <div class="setup">
-            <span class="currency">R$</span>
-            <span class="value">248,99</span>
-            (adesão)
-          </div>
-          <span class="plus">+</span>
-          <span class="monthly">
-            <span class="currency">R$</span>
-            <span class="value">248,99</span>
-            /mês
-          </span>
-          <!--
-          <span class="yearly">
-            <span class="currency">R$</span>
-            <span class="value">2489,90</span>
-            /ano
-            <span class="tip">(2 meses grátis)</span>
-          </span>
-          -->
-        </div>
-
-        <%= form_for @environment,
-          :url => environments_path(:step => 2) do |f| %>
-          <%= hidden_field_tag :plan, 'empresas_standard' %>
-          <%= f.submit "Assinar", :class => "important" %>
-          <div style="display:none;">
-            <%= render :partial => 'form', :locals => { :f => f } %>
-          </div>
-        <% end %>
-      </li>
-      <li class="last best-choice">
-        <strong class="name">Plus</strong>
-        <ul class="features">
-          <li>
-            <strong>200</strong>
-            alunos
-          </li>
-          <li>Vídeos do YouTube <strong>ilimitados</strong></li>
-          <li>Documentos no Scribd <strong>ilimitados</strong></li>
-          <li>
-            <strong>250 MB</strong>
-            de armazenamento de documentos no Redu
-          </li>
-          <li>
-            <strong>1000 MB</strong>
-            de aramazenamento de vídeo no Redu
-          </li>
-        </ul>
-        <div class="pricing">
-          <div class="setup">
-            <span class="currency">R$</span>
-            <span class="value">858,99</span>
-            (adesão)
-          </div>
-          <span class="plus">+</span>
-          <span class="monthly">
-            <span class="currency">R$</span>
-            <span class="value">858,99</span>
-            /mês
-          </span>
-          <!--
-          <span class="yearly">
-            <span class="currency">R$</span>
-            <span class="value">8589,90</span>
-            /ano
-            <span class="tip">(2 meses grátis)</span>
-          </span>
-          -->
-        </div>
-
-        <%= form_for @environment,
-          :url => environments_path(:step => 2) do |f| %>
-          <%= hidden_field_tag :plan, 'empresas_plus' %>
-          <%= f.submit "Assinar", :class => "important" %>
-          <div style="display:none;">
-            <%= render :partial => 'form', :locals => { :f => f } %>
-          </div>
-        <% end %>
-      </li>
-    </ul>
-  </div><!-- end #company -->
+  <div id="partner-plan" class="plan-container">
+    <%= image_tag "new/thumbnail-cns.png", :size => "130x130", :class => "partner-avatar" %>
+    <h3 class="partner-call">
+      A parceria certa para a sua empresa
+    </h3>
+    <p class="partner-details">
+      A CNS Consultores Associados, em parceria com o Redu,  traz uma nova concepção de educação a distância, oferecendo soluções pedagógicas adequadas, por meio de um ambiente virtual de aprendizagem (A.v.A.) inovador, com conteúdos personalizados e metodologias motivadoras.
+    </p>
+    <%= render :partial => 'partners/partner_contacts/new', :locals => { :environment => @environment } %>
+  </div><!-- end #partner -->
 </div>

@@ -1,4 +1,5 @@
 Redu::Application.routes.draw do
+
   post "presence/auth"
   post "presence/send_chat_message"
   get "presence/last_messages_with"
@@ -202,14 +203,18 @@ Redu::Application.routes.draw do
       put :crop_profile_photo
       get :upload_profile_photo
       put :upload_profile_photo
-      get :download_curriculum
       get :home
       get :mural
       get :account
+      get :contacts_endless
+      get :environments_endless
+      get :show_mural
     end
     collection do
       get :auto_complete
     end
+
+    resources :social_networks, :only => [:destroy]
 
     resources :friendships, :only => [:index, :create, :destroy] do
       member do
@@ -300,6 +305,8 @@ Redu::Application.routes.draw do
     end
 
     resources :plans, :only => [:index]
+    resources :experiences
+    resources :educations, :except => [:new, :edit]
     get '/:environment_id/roles' => 'roles#show', :as => :admin_roles
     post '/:environment_id/roles' => 'roles#update', :as => :update_roles
   end
@@ -328,6 +335,17 @@ Redu::Application.routes.draw do
   match '/payment/callback' => 'payment_gateway#callback',
     :as => :payment_callback
   match '/payment/success' => 'payment_gateway#success', :as => :payment_success
+
+  resources :partners, :only => [:show] do
+    member do
+      post :contact
+      get :success
+    end
+
+    resources :partner_environment_associations, :as => :clients,
+      :only => [:create, :index, :new]
+    resources :partner_user_associations, :as => :collaborators, :only => :index
+  end
 
   resources :environments, :path => '', :except => [:index] do
     member do
@@ -371,6 +389,7 @@ Redu::Application.routes.draw do
       end
     end
   end
+
 
   root :to => 'base#site_index', :as => :home
   root :to => "base#site_index", :as => :application

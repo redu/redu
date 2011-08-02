@@ -22,6 +22,8 @@ class Environment < ActiveRecord::Base
     :source => :user,
     :conditions => [ "user_environment_associations.role = ?", 6 ]
   has_many :bulletins, :as => :bulletinable, :dependent => :destroy
+  has_one :partner, :through => :partner_environment_association
+  has_one :partner_environment_association
 
   attr_protected :owner, :published
 

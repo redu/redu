@@ -1,5 +1,5 @@
 <%= render :partial => 'users/home_sidebar' %>
-<div class="main grid_10" style="width: 580px;">
+<div class="main grid_10 omega" style="width: 580px;">
   <ol id="breadcrumbs" class="clearfix">
     <li>
       <%= link_to 'Home', home_user_path(current_user),
@@ -28,3 +28,14 @@
     <%= will_paginate @statuses, :renderer => EndlessRenderer %>
   </div><!-- end .statuses -->
 </div><!-- end .main -->
+<div class="secondary-sidebar home-sidebar">
+  <div class="contact-recommendations">
+    <div class="call">
+      <span class="">Conecte-se</span>
+    </div>
+    <ul>
+      <%= render :partial => 'users/recommendation_item',
+        :collection => @contacts_recommendations %>
+    </ul>
+  </div>
+</div><!-- end .offering -->

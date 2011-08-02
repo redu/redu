@@ -284,7 +284,7 @@ class UserNotifier < ActionMailer::Base
     @new_plan = new_plan
 
     mail(:to => Redu::Application.config.email,
-         :subject => "[upgrade] user.id",
+         :subject => "[upgrade] #{@user.id}",
          :date => Time.now)
   end
 
@@ -304,6 +304,14 @@ class UserNotifier < ActionMailer::Base
     mail(:to => user_course_invitation.email,
          :subject => "Você foi convidado para um curso no Redu",
          :date => Time.now)
+  end
+
+  def partner_environment_notice(partner_contact)
+    @contact = partner_contact
+
+    mail(:to => [Redu::Application.config.email, "cns@redu.com.br"],
+         :subject => "[Redu] Criação de ambiente",
+         :date => Time.zone.now)
   end
 
 end

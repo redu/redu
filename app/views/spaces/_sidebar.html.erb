@@ -55,7 +55,8 @@
       <li>
         <div class="<%= (current_page? edit_space_path(space)) ?
                       "session selected".to_s : "session".to_s %>">
-        <% selected = (current_page? edit_space_path(space)) ? "icon-management-white_16_16" : "icon-management-lightblue_16_16" %>
+          <% selected = (current_page? edit_space_path(space)) ?
+            "icon-management-white_16_16" : "icon-management-lightblue_16_16" %>
           <%= link_to 'Gerenciamento', edit_space_path(space),
             :class => "icon #{selected}" %>
         </div>
@@ -64,7 +65,8 @@
     <li>
       <div class="<%= (current_page? users_space_path(space)) ?
                     "session selected".to_s : "session".to_s %>">
-        <% selected = (current_page? users_space_path(space)) ? "icon-members-white_16_16" : "icon-members-lightblue_16_16" %>
+        <% selected = (current_page? users_space_path(space)) ?
+          "icon-members-white_16_16" : "icon-members-lightblue_16_16" %>
         <%= link_to "Membros: #{space.users.size}", users_space_path(space),
           :class => "icon #{selected}" %>
       </div>

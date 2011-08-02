@@ -1,0 +1,332 @@
+.concave-form .concave-input,
+.concave-form .concave-label {
+  padding: 0;
+  margin: 0;
+  float: none;
+  background: none;
+  border: none;
+  color: black;
+}
+
+/* labels inativos */
+  .concave-form .concave-label {
+    display: block;
+    color: #b3b2b3;
+    font-weight: bold;
+    float: left;
+    text-align: right;
+    width: 150px;
+    margin: 20px 10px 0 0;
+    clear: left;
+    height: 16px;
+    font-size: .9em;
+  }
+
+  .concave-form  .field_with_errors .concave-label {
+    color: #FF6D6D;
+  }
+
+/* labels ativos */
+  .concave-form .concave-label-focus {
+    color: #4CACD5;
+  }
+
+  .concave-form  .field_with_errors .concave-label-focus {
+    color: #4CACD5;
+  }
+
+
+
+/* text input inativo */
+
+  .concave-form .concave-input {
+    padding: 7px 10px;
+    border: 1px solid #cccbcb;
+    width: 370px;
+    color: #6c6d6e;
+    font-size: 1em;
+    margin-top: 20px;
+  }
+
+  .concave-form .field_with_errors .concave-input {
+    border-color: #FF6D6D;
+  }
+
+
+  .concave-form .concave-small {
+    width: 274px;
+  }
+
+  .concave-form .concave-select {
+    margin-top: 16px;
+  }
+
+  .concave-form .concave-file,
+  .concave-form .concave-select {
+  }
+
+  .borderradius .concave-form .concave-input {
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+  }
+
+  .cssgradients .concave-form .concave-input {
+    background: -webkit-gradient(linear, left top, left bottom, from(#f0f0f0), to(#ffffff)); /* webkit browsers */
+    background: -moz-linear-gradient(top,  #fff,  #e6e6e5); /* firefox 3.6+ */
+  }
+
+  .boxshadow .concave-form .concave-input {
+     -moz-box-shadow: inset 1px 1px 0 #fff;
+     -webkit-box-shadow: inset 1px 1px 0 #fff;
+     box-shadow: inset 1px 1px 0 #fff;
+  }
+
+  .boxshadow .concave-form .field_with_errors .concave-input {
+    -moz-box-shadow: 0 0 2px #FF6D6D ;
+    -webkit-box-shadow: 0 0 2px #FF6D6D ;
+    box-shadow: 0 0 2px #FF6D6D;
+  }
+
+
+/* text input ativo */
+  .concave-form .concave-input:focus {
+    border: 1px solid #4CACD5;
+    color: black;
+  }
+
+  .cssgradients .concave-form .concave-input:focus {
+    background: white;
+  }
+
+  .boxshadow .concave-form .concave-input:focus {
+    -moz-box-shadow: 0 0 2px #4CACD5 ;
+    -webkit-box-shadow: 0 0 2px #4CACD5 ;
+    box-shadow: 0 0 2px #4CACD5;
+  }
+
+/* radio, checkbox e selects (coisas inline) */
+  .concave-form .concave-fieldset-group .concave-legend,
+  .concave-form .concave-fieldset-inline .concave-legend,
+  .concave-form fieldset.group legend,
+  .concave-form fieldset.inline legend {
+    display: block;
+    color: #b3b2b3;
+    font-weight: bold;
+    float: left;
+    text-align: right;
+    width: 150px;
+    margin-right: 10px;
+    font-size: .9em;
+    margin-top: 20px;
+  }
+
+  .concave-form .concave-fieldset-inline .concave-multiple {
+    float: left;
+    display: block;
+    margin-right: 10px;
+    margin-top: 20px;
+  }
+
+  .concave-form .concave-fieldset-inline .concave-indent {
+    float: left;
+    width: 420px;
+  }
+
+  .concave-form .concave-fieldset-inline .concave-label,
+  .concave-form fieldset.inline label {
+    width: auto;
+    clear: none;
+    color: #6C6D6E;
+    font-weight: normal;
+    padding-top: 0;
+  }
+
+  .concave-form .linebreak .concave-break {
+    clear: left;
+    margin-left: 160px;
+  }
+
+  .concave-form .concave-fieldset {
+    display: block;
+    margin-top: 20px;
+  }
+
+  .concave-form .concave-fieldset .concave-fieldset-legend,
+  .concave-form .concave-fieldset legend {
+    color: #73C3E6;
+  }
+
+
+/* botoes */
+  .concave-button,
+  .concave-cancel {
+    display: inline-block;
+    line-height: 1;
+    padding: 9px 0;
+    text-align: center;
+    width: 150px;
+    border: 1px solid #4CACD5;
+    color: white;
+    background-color: #73C3E6;
+    margin: 20px 25px 0 0;
+    font-weight: bold;
+    background: #4CACD5;
+    font-size: .9em;
+  }
+
+  .concave-form .concave-button,
+  .concave-form .concave-cancel {
+    float: right;
+  }
+
+  .concave-cancel {
+    border: 1px solid #E83B3B;
+  }
+
+  .concave-button:hover,
+  .concave-cancel:hover {
+    text-decoration: none;
+  }
+
+  .borderradius .concave-button,
+  .borderradius .concave-cancel {
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+  }
+
+  .cssgradients .concave-button {
+    background: -webkit-gradient(linear, left top, left bottom, from(#73C3E6), to(#4CACD5)); /* webkit browsers */
+    background: -moz-linear-gradient(top,  #73C3E6,  #4CACD5); /* firefox 3.6+ */
+  }
+
+  .cssgradients .concave-cancel {
+    background: -webkit-gradient(linear, left top, left bottom, from(#FF6D6D), to(#E83B3B)); /* webkit browsers */
+    background: -moz-linear-gradient(top,  #FF6D6D,  #E83B3B); /* firefox 3.6+ */
+  }
+
+  .textshadow .concave-button {
+     -moz-text-shadow: -1px -1px 0 #4CACD5;
+     -webkit-text-shadow: -1px -1px 0 #4CACD5;
+     text-shadow: -1px -1px 0 #4CACD5;
+  }
+
+  .textshadow .concave-cancel {
+     -moz-text-shadow: -1px -1px 0 #E83B3B;
+     -webkit-text-shadow: -1px -1px 0 #E83B3B;
+     text-shadow: -1px -1px 0 #E83B3B;
+  }
+
+  .concave-button:hover {
+    border: 1px solid #1789C3;
+    background: #1789C3;
+  }
+
+  .concave-cancel:hover {
+    border: 1px solid #C1272D;
+    background: #FF6D6D;
+  }
+
+  .cssgradients .concave-cancel:hover {
+    background: -webkit-gradient(linear, left top, left bottom, from(#FF6D6D), to(#C1272D)); /* webkit browsers */
+    background: -moz-linear-gradient(top,  #FF6D6D,  #C1272D); /* firefox 3.6+ */
+  }
+
+  .cssgradients .concave-button:hover {
+    background: -webkit-gradient(linear, left top, left bottom, from(#73C3E6), to(#1789C3)); /* webkit browsers */
+    background: -moz-linear-gradient(top,  #73C3E6,  #1789C3); /* firefox 3.6+ */
+  }
+
+
+.concave-form .concave-separator,
+.concave-form hr {
+  border: none;
+  border-top: 1px dotted #B3B2B3;
+  margin-top: 20px;
+}
+
+
+/* dicas */
+  .concave-form .tip,
+  .concave-form .char-limit {
+    display: block;
+    margin: 5px 0 0 160px;
+    font-size: .8em;
+    color: #B2B2B2;
+    padding: 0;
+  }
+
+  .concave-form .concave-label .snippet,
+  .concave-form label .snippet {
+    display: block;
+    font-weight: normal;
+    font-size: .9em;
+  }
+
+/* Erros de validação */
+  .concave-form .error_explanation {
+    border: 1px solid #F9A737;
+    background-color: #FFEED7;
+    padding: 10px 10px 10px 160px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 20px;
+  }
+
+
+  .concave-form .error_explanation h2 {
+    position: absolute;
+    left: 85px;
+    font-family: museo-slab, helvetica, arial, sans-serif;
+    font-weight: 900;
+    font-size: 2.2em;
+    color: #C0262C;
+    text-align: right;
+  }
+
+  .concave-form .error_explanation p {
+    color: #6C6D6E;
+    margin-bottom: 3px;
+  }
+
+  .concave-form .error_explanation .invalid_fields {
+    color: #C0262C;
+    margin: 0;
+  }
+
+  .borderradius .concave-form .error_explanation {
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+  }
+
+  .boxshadow .concave-form .error_explanation {
+     -moz-box-shadow: inset 1px 1px 0 #fff;
+     -webkit-box-shadow: inset 1px 1px 0 #fff;
+     box-shadow: inset 1px 1px 0 #fff;
+  }
+
+  .concave-form .errors_on_field {
+    font-size: .8em;
+    color: #FF6D6D;
+    overflow: hidden;
+    margin-left: 160px;
+  }
+
+  .concave-form .errors_on_field li {
+    margin-top: 5px;
+  }
+
+/* Indicador de estado de carregamento */
+  .concave-form .concave-loading,
+  .concave-form .concave-loading:hover {
+    background: #f1f0f0 url("../images/new/spinner.gif") no-repeat center center;
+    color: transparent;
+  }
+
+  .textshadow .concave-loading {
+     -moz-text-shadow: none;
+     -webkit-text-shadow: none;
+     text-shadow: none;
+  }

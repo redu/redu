@@ -6,17 +6,6 @@ class EnvironmentsController < BaseController
     redirect_to preview_environment_path(@environment)
   end
 
-  # GET /environments
-  # GET /environments.xml
-  def index
-    @environments = Environment.all
-
-    respond_to do |format|
-      format.html
-      format.xml  { render :xml => @environments }
-    end
-  end
-
   # GET /environments/1
   # GET /environments/1.xml
   def show

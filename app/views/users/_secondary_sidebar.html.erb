@@ -1,0 +1,68 @@
+<div class="secondary-sidebar profile-sidebar">
+  <div class="actions">
+    <% friendship = current_user.friendship_for @user %>
+    <% if current_user.friends?(@user) %>
+      <%= link_to 'Remover contato',
+        user_friendship_path(current_user, friendship.id),
+        :remote => true,
+        :method => :delete,
+        :class => "disconnect icon icon-x-gray_8_8"%>
+    <% end %>
+    <% if can? :manage, @user %>
+      <% unless @user.completeness == 100 %>
+        <div class="incomplete-profile">
+          <em>Seu perfil ainda não está completo</em>
+          <div class="progress">
+            <div class="completed" style="width: <%= @user.completeness %>%;">
+              <span> <%= @user.completeness %>%</span>
+            </div>
+          </div>
+          <%= link_to 'Preencher perfil', edit_user_path(@user),
+            :class => 'edit icon icon-management-gray_8_8' %>
+        </div>
+      <% end %>
+    <% end %>
+
+    <% friendship = @user.friendship_for current_user %>
+    <% if !current_user.friends?(@user) and current_user != @user %>
+      <% if friendship %>
+        <% if friendship.status == 'pending' %>
+          <a class="waiting">Aguardando aceitação</a>
+        <% elsif current_user != @user %>
+          <%= link_to 'Aceitar pedido de conexão',
+            user_friendships_path(current_user,
+                                  :friend_id => @user.id),
+                                  :method => :post,
+                                  :class => "waiting",
+                                  :id => "follow_link" %>
+        <% end %>
+      <% else %>
+        <%= render :partial => 'friendships/form', :locals => {
+          :user => current_user, :friend => @user } %>
+      <% end %>
+    <% end %>
+
+    <% unless current_user == @user %>
+      <%= link_to (new_user_message_path(current_user),
+                   :class => 'send-message cancel') do %>
+        <span>Escrever Mensagem</span>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="environments">
+    <div class="call">
+      <span class="">Cursos inscritos: <%= @user.courses.count %></span>
+    </div>
+    <ul>
+      <% @environments = @user.environments.page(params[:page]).per(4) %>
+      <%= render :partial => 'environments/item_medium',
+        :collection => @environments %>
+    </ul>
+    <%= paginate @environments, :theme => 'sidebar_endless',
+      :params => { :controller => 'users', :action => 'environments_endless' },
+      :text => "Mostrando os <X> últimos ambientes de #{@user.first_name}",
+      :html_class => "sec-sidebar-endless"
+    %>
+  </div>
+</div><!-- end .offering -->

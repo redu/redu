@@ -90,13 +90,29 @@ class UsersController < BaseController
       redirect_to removed_page_path and return
     end
 
-    @statuses = @user.profile_activity(params[:page])
-    @statusable = @user
-    @status = Status.new
-
     respond_to do |format|
       format.html
-      format.js
+    end
+  end
+
+  def contacts_endless
+    @contacts = Kaminari::paginate_array(@user.friends_not_in_common_with(current_user)).
+      page(params[:page]).per(4)
+
+    respond_to do |format|
+      format.js { render_sidebar_endless 'users/item_medium_24', @contacts,
+        '.con-endless', "Mostrando os <X> últimos contatos de #{@user.first_name}" }
+    end
+  end
+
+  def environments_endless
+    @environments = @user.environments.page(params[:page]).per(4)
+
+    respond_to do |format|
+      format.js { render_sidebar_endless 'environments/item_medium',
+        @environments, '.environments > ul',
+        "Mostrando os <X> últimos ambientes de #{@user.first_name}",
+        "sec-sidebar-endless" }
     end
   end
 
@@ -160,18 +176,19 @@ class UsersController < BaseController
   end
 
   def edit
+    @experience = Experience.new
+    @high_school = HighSchool.new
+    @higher_education = HigherEducation.new
+    @complementary_course = ComplementaryCourse.new
+    @event_education = EventEducation.new
+    @user.social_networks.build
     respond_to do |format|
       format.html
     end
   end
 
   def update
-    case params[:element_id]
-    when 'user-description'
-      params[:user] = {:description => params[:update_value]}
-    end
-
-    @user.attributes      = params[:user]
+    @user.attributes    = params[:user]
 
     unless params[:metro_area_id].blank?
       @user.metro_area  = MetroArea.find(params[:metro_area_id])
@@ -183,47 +200,60 @@ class UsersController < BaseController
 
     @user.tag_list = params[:tag_list] || ''
 
-    # alteracao de senha na conta do usuario
-    if params.has_key? "current_password" and !params[:current_password].empty?
-
-      @flag = false
-      authenticated = UserSession.new(:login => @user.login, :password => params[:current_password]).save
-
-      unless authenticated
-        @current_password = params[:current_password]
-        @user.errors.add_to_base("A senha atual está incorreta")
-        @flag = true
-      end
-
-    end
-
     if @user.errors.empty? && @user.save
       respond_to do |format|
         format.html do
           flash[:notice] = t :your_changes_were_saved
           unless params[:welcome]
-
-            redirect_to(user_path(@user))
+            redirect_to(edit_user_path(@user))
           else
             redirect_to(:action => "welcome_#{params[:welcome]}", :id => @user)
           end
         end
-        format.js do
-          render :update do |page|
-            page.replace_html '#user-description', params[:update_value]
-          end
-        end
       end
     else
-    if (@user.errors.on(:password) or @user.errors.on(:email) or
-       !params[:current_password].nil?)
-        render 'users/account'
-      else
-        render 'users/edit'
-      end
+      @experience = Experience.new
+      @high_school = HighSchool.new
+      @higher_education = HigherEducation.new
+      @complementary_course = ComplementaryCourse.new
+      @event_education = EventEducation.new
+      render 'users/edit'
     end
   rescue ActiveRecord::RecordInvalid
       render 'users/edit'
+  end
+
+  def update_account
+    # alteracao de senha na conta do usuario
+    if params.has_key? "current_password" and !params[:current_password].empty?
+      @flag = false
+      authenticated = UserSession.new(:login => @user.login,
+                                      :password => params[:current_password]).save
+
+      if authenticated
+        @user.attributes  = params[:user]
+        @user.save
+      else
+        @current_password = params[:current_password]
+        @user.errors.add(:base, "A senha atual está incorreta")
+        @flag = true
+      end
+
+      if params[:user].has_key? "password" and params[:user][:password].empty?
+        @user.errors.add(:base, "A nova senha não pode ser em branco")
+      end
+    else
+      params[:user][:password] = @user.password
+      @user.attributes  = params[:user]
+      @user.save
+    end
+
+    if @user.errors.empty?
+      flash[:notice] = t :your_changes_were_saved
+      redirect_to(account_user_path(@user))
+    else
+      render 'users/account'
+    end
   end
 
   def destroy
@@ -280,24 +310,6 @@ class UsersController < BaseController
   def edit_account
     @user             = current_user
     @is_current_user  = true
-  end
-
-  def update_account
-    @user             = current_user
-    @user.attributes  = params[:user]
-
-    if @user.save
-      flash[:notice] = t :your_changes_were_saved
-      respond_to do |format|
-        format.html {redirect_to user_path(@user)}
-        format.js
-      end
-    else
-      respond_to do |format|
-        format.html {render :action => 'edit_account'}
-        format.js
-      end
-    end
   end
 
   def edit_pro_details
@@ -400,22 +412,13 @@ class UsersController < BaseController
     end
   end
 
-  # Faz download do currículo previamente guardado pelo usuário.
-  def download_curriculum
-    if Rails.env == "production" || Rails.env == "staging"
-      redirect_to @user.curriculum.expiring_url(20) and return false
-    end
-
-    send_file @user.curriculum.path,
-      :type => @user.curriculum.content_type
-  end
-
   def home
     @friends = current_user.friends.paginate(:page => 1, :per_page => 9)
     @friends_requisitions = current_user.friends_pending
     @course_invitations = current_user.course_invitations
     @statuses = current_user.home_activity(params[:page])
     @status = Status.new
+    @contacts_recommendations = current_user.recommended_contacts(5)
 
     respond_to do |format|
       format.html
@@ -460,6 +463,21 @@ class UsersController < BaseController
       format.js do
         render :json => @users
       end
+    end
+  end
+
+  def show_mural
+    if @user.removed
+      redirect_to removed_page_path and return
+    end
+
+    @statuses = @user.profile_activity(params[:page])
+    @statusable = @user
+    @status = Status.new
+
+    respond_to do |format|
+      format.html
+      format.js { render_endless 'statuses/item', @statuses, '#statuses > ol' }
     end
   end
 end

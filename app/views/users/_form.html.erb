@@ -1,71 +1,86 @@
-<%= form_for @user, :html => {:multipart =>true, :class => "form-common"}  do |f|  %>
-  <%= f.error_messages %>
+<%= form_for @user,
+  :html => {:multipart =>true, :class => "concave-form" }  do |f|  %>
+  <%= concave_error_messages_for(@user) %>
 
-  <%= label_tag :avatar,
-    raw("Foto de seu perfil: <span class='snnipet'>(tamanho máximo: 100MB)</span>") %>
+  <%= f.label :avatar,
+    raw("Foto de seu perfil: <span class='snippet'>(tamanho máximo: 100MB)</span>") %>
   <%= f.file_field :avatar %>
-
+  <%= concave_errors_for(f.object, :avatar) %>
 
   <% field_set_tag do %>
     <%= image_tag @user.avatar.url(:thumb_100) %>
   <% end %>
 
-  <%= label_tag :first_name, "Nome:" %>
+  <%= f.label :first_name, "Nome:" %>
   <%= f.text_field :first_name %>
+  <%= concave_errors_for(f.object, :first_name) %>
   <span class="tip">11 caracteres</span>
 
-  <%= label_tag :last_name, "Sobrenome:" %>
+  <%= f.label :last_name, "Sobrenome:" %>
   <%= f.text_field :last_name %>
+  <%= concave_errors_for(f.object, :last_name) %>
   <span class="tip">14 caracteres</span>
 
-  <%= label_tag :birthday, "Nascimento:" %>
+  <%= f.label :birthday, "Nascimento:" %>
   <%= field_set_tag nil, :class => "inline" do %>
     <%= f.date_select :birthday, {:start_year => 1926, :end_year => Time.now.year - 1}%>
+    <%= concave_errors_for(f.object, :birthday) %>
   <% end %>
 
-  <%= label_tag "Sexo:" %>
-  <%= field_set_tag nil, :class => "inline" do %>
+  <%= field_set_tag "Sexo:", :class => "inline" do %>
     <%= f.radio_button :gender, User::MALE %>
-    Masculino
+    <%= f.label "gender_#{User::MALE}".downcase.to_sym, "Masculino" %>
     <%= f.radio_button :gender, User::FEMALE %>
-    Feminino
+    <%= f.label "gender_#{User::FEMALE}".downcase.to_sym, "Feminino" %>
+    <%= concave_errors_for(f.object, :gender) %>
   <% end %>
 
-  <%= label_tag "Localização:" %>
+  <%= f.label :birth_localization, "Cidade onde nasceu:"%>
+  <%= f.text_field :birth_localization %>
+  <%= concave_errors_for(f.object, :birth_localization) %>
+  <span class="tip">Cidade natal</span>
+
+  <%= f.label :localization, "Cidade onde vive:" %>
   <%= f.text_field :localization %>
-  <span class="tip">Ex: Recife, Pernambuco</span>
+  <%= concave_errors_for(f.object, :localization) %>
+  <span class="tip">Cidade atual</span>
 
-  <%= label_tag "Celular:" %>
-  <%= f.text_field :mobile %>
-  <span class="tip">Ex: 55 81 4444-4444</span>
+  <%= f.label :languages, "Idiomas:" %>
+  <%= f.text_field :languages %>
+  <%= concave_errors_for(f.object, :languages) %>
+  <span class="tip">Idiomas bem compreendidos por você</span>
 
-  <%= label_tag "Papel:" %>
-  <%= field_set_tag nil, :class => "inline" do %>
-    <%= f.radio_button :teacher_profile, false %>
-    Aluno
-    <%= f.radio_button :teacher_profile, true %>
-    Professor
-  <% end %>
-
-  <%= f.label :curriculum, raw("Upload de currículo: <span class='snnipet'>(DOC[x], PDF)</span>") %>
-  <%= field_set_tag nil, :class => 'inline' do %>
-    <%= f.file_field :curriculum %>
-    <% if @user.curriculum_file_name && @user.errors["curriculum"].nil? %>
-      <%= link_to @user.curriculum_file_name, download_curriculum_user_path %>
-    <% end %>
-  <% end %>
+  <hr/>
 
   <% random_number = get_random_number%>
-  <%= label_tag :description, "Escreva sobre você:", :size => "50x3" %>
+  <%= f.label :description, "Sobre você:" %>
   <%= f.text_area :description, :rows => "4", :cols => "50",
     :class => "desc-#{random_number}"%>
   <%= render :partial => 'shared/limit_char_field',
     :locals => {:class_textarea => "desc-#{random_number}", :limit => 400} %>
 
-  <%= label_tag :tag_list,
-    raw("Áreas de seu interesse: <span class='snippet'>(separadas por vírgula)</span>") %>
-  <%= text_field_tag 'tag_list', @user.tag_list%>
-  <span class="tip">250 caracteres</span>
+  <%= f.label :tag_list, raw("Áreas de seu interesse: <span class='snippet'>(separadas por vírgula)</span>") %>
+  <%= text_field_tag :tag_list, @user.tag_list.join(", ") %>
+  <span class="tip">Exemplo: redes sociais, compartilhamento, tecnologia, etc.</span>
+
+  <%= f.label :mobile, "Celular:" %>
+  <%= f.text_field :mobile, :class => "mobile" %>
+  <span class="tip">Exemplo: +55 (81) 4444-4444</span>
+
+  <%= field_set_tag "Perfil em outra rede social:", :class => "inline" do %>
+    <div class="concave-indent" id="select-networks">
+      <ul>
+        <%= f.fields_for :social_networks do |builder| %>
+          <%= render :partial => 'social_networks/social_network_fields',
+            :locals => { :f => builder } %>
+        <% end %>
+      </ul>
+      <div id="new-social-network">
+        <%= new_social_network f, :social_networks %>
+      </div>
+    </div>
+  <% end %>
+  <hr/>
 
   <%= f.submit t(:save_changes) %>
 
