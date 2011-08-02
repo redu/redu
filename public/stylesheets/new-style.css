@@ -1308,23 +1308,47 @@
 #content .actions {
   margin-left: 10px;
 }
+
 #content .actions .add-as-friend:hover,
 #content .actions .add-as-friend {
-  width: 72px;
-  height: 32px;
-  text-indent: -9999px;
-  background: url("../images/new/add-as-friend.png") no-repeat;
-  margin-right: 5px;
-  border: none;
+  width: 140px;
+  height: 30px;
+  font-size: 1em;
+  cursor: pointer;
+
+  -moz-text-shadow: 0 -1px 1px #1789c3;
+  -webkit-text-shadow: 0 -1px 1px #1789c3;
+  text-shadow: 0 -1px 1px #1789c3;
+}
+
+#content .actions .concave-button {
+  padding: 0;
+  margin: 0;
+
+  -webkit-border-top-right-radius: 3px;
+  -webkit-border-bottom-right-radius: 3px;
+  -moz-border-radius-topright: 3px;
+  -moz-border-radius-bottomright: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
 }
 
 #content .actions .send-message {
-  width: 72px;
-  height: 32px;
-  margin-top: 5px;
   display: block;
-  text-indent: -9999px;
-  background: url("../images/new/send-message.png") no-repeat;
+  margin-top: 5px;
+  padding: 0;
+  width: 138px;
+  height: 28px;
+}
+
+
+#content .actions .send-message > span {
+  display: block;
+  margin-top: 7px;
+
+  -moz-text-shadow: 0 1px 1px #ffffff;
+  -webkit-text-shadow: 0 1px 1px #ffffff;
+  text-shadow: 0 1px 1px #ffffff;
 }
 
 #content .actions .disconnect {
