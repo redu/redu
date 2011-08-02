@@ -284,7 +284,7 @@ class UserNotifier < ActionMailer::Base
     @new_plan = new_plan
 
     mail(:to => Redu::Application.config.email,
-         :subject => "[upgrade] user.id",
+         :subject => "[upgrade] #{@user.id}",
          :date => Time.now)
   end
 

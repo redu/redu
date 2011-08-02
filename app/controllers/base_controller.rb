@@ -74,7 +74,9 @@ class BaseController < ApplicationController
 
     case params[:controller]
     when 'lectures'
-      if @lecture and @lecture.published
+      # Caso em quem a aula é criada quando o Subject
+      # já foi anteriormente criado.
+      if @lecture and @lecture.published and @lecture.subject.finalized?
         Status.create({:log => true,
                       :logeable_name => @lecture.name,
                       :logeable_type => 'Lecture',
@@ -132,6 +134,17 @@ class BaseController < ApplicationController
                       :statusable_id => @subject.space.id,
                       :user_id => current_user.id
         })
+        @subject.lectures.each do |l|
+          Status.create({:log => true,
+                        :logeable_name => l.name,
+                        :logeable_type => 'Lecture',
+                        :logeable_id => l.id,
+                        :log_action => 'create',
+                        :statusable_type => 'Subject',
+                        :statusable_id => l.subject.id,
+                        :user_id => current_user.id
+          })
+        end
       end
     when 'topics'
       if @topic and @topic.created_at
