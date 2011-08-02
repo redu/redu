@@ -51,24 +51,27 @@
           :class => 'edit icon icon-management-gray_8_8' %>
       <% end %>
 
-      <hr class="separator icon-bio-blue_32_34-after"/>
-      <div class="bio-wrapper clearfix">
-        <% if !@user.description.blank? %>
-          <span class="label">Sobre mim:</span>
-          <span class="bio indent"><%= @user.description %></span>
-        <% end %>
-        <% if !@user.tag_list.empty? %>
-          <span class="label">Interesses:</span>
-          <span class="bio indent"><%= @user.tag_list.join(", ") %></span>
-        <% end %>
-        <% if !@user.mobile.blank? %>
-          <span class="label">Celular:</span>
-          <span class="bio indent"><%= @user.mobile %></span>
-        <% end %>
-        <ul class="social-networks clearfix">
-          <%= render :partial => "users/social_network", :collection => @user.social_networks %>
-        </ul>
-      </div><!-- end .bio-wrapper -->
+      <% unless @user.description.blank? and @user.tag_list.empty? and
+        @user.mobile.blank? %>
+        <hr class="separator icon-bio-blue_32_34-after"/>
+        <div class="bio-wrapper clearfix">
+          <% unless @user.description.blank? %>
+            <span class="label">Sobre mim:</span>
+            <span class="bio indent"><%= @user.description %></span>
+          <% end %>
+          <% unless @user.tag_list.empty? %>
+            <span class="label">Interesses:</span>
+            <span class="bio indent"><%= @user.tag_list.join(", ") %></span>
+          <% end %>
+          <% unless @user.mobile.blank? %>
+            <span class="label">Celular:</span>
+            <span class="bio indent"><%= @user.mobile %></span>
+          <% end %>
+          <ul class="social-networks clearfix">
+            <%= render :partial => "users/social_network", :collection => @user.social_networks %>
+          </ul>
+        </div><!-- end .bio-wrapper -->
+    <% end %>
 
       <% if !@user.experiences.empty? %>
         <hr class="separator icon-experience-blue_32_34-after"/>
