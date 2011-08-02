@@ -1,6 +1,7 @@
 class Partner < ActiveRecord::Base
-  has_many :partner_environment_associations
-  has_many :environments, :through => :partner_environment_associations
+  has_many :partner_environment_associations, :order => "partner_environment_associations.created_at DESC"
+  has_many :environments, :through => :partner_environment_associations,
+    :order => "partner_environment_associations.created_at DESC"
   has_many :users, :through => :partner_user_associations
   has_many :partner_user_associations
 

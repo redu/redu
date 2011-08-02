@@ -342,7 +342,6 @@ Redu::Application.routes.draw do
       get :success
     end
 
-    resources :environments, :only => :index
     resources :partner_environment_associations, :as => :clients,
       :only => [:create, :index, :new]
     resources :partner_user_associations, :as => :collaborators, :only => :index

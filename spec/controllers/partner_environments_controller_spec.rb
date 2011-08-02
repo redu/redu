@@ -34,7 +34,13 @@ describe PartnerEnvironmentAssociationsController do
 
       assigns[:partner_environment_association].should_not be_nil
       assigns[:partner_environment_association].should be_valid
-      should redirect_to partner_environments_path(@partner)
+      should redirect_to partner_path(@partner)
+    end
+
+    it "save correctly" do
+      expect {
+        post :create, @params
+      }.should change(Environment, :count).by(1)
     end
 
     context "with validation error" do

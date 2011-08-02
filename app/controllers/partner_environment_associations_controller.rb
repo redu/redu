@@ -4,6 +4,8 @@ class PartnerEnvironmentAssociationsController < BaseController
     :through => :partner
 
   def create
+    @partner_environment_association.environment.owner = current_user
+
     paginating = {
       :page => params[:page],
       :per_page =>Redu::Application.config.items_per_page
@@ -14,8 +16,8 @@ class PartnerEnvironmentAssociationsController < BaseController
 
     respond_to do |format|
       format.html do
-        if @partner_environment_association.valid?
-          redirect_to partner_environments_path(@partner)
+        if @partner_environment_association.save
+          redirect_to partner_path(@partner)
         else
           render :new
         end
