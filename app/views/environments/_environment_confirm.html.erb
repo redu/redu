@@ -1,20 +1,21 @@
 <div class="clearfix" id="checkout">
   <%= render :partial => 'environments/wizard_breadcrumbs' %>
 
-  <div class="grid_4 alpha">
-    <h3>Etapa 3: <span>Confirmar dados</span></h3>
-    <em class="description">Confirme os dados e realize o pagamento.</em>
-  </div>
-  <div id="url_preview">
-    <span class="label">O seu endereço completo será:</span>
-    <span class="base">redu.com.br/</span>
-    <span class="environment"><%= @environment.path %></span>/
-    <span class="base">cursos/</span>
-    <span class="course"><%= @environment.courses.first.path %></span>
+  <div class="step-info">
+    <h3>3 <span>Confirmar</span></h3>
+    <em class="description">Confirme os dados e realize o pagamento (se necessário).</em>
   </div>
 
   <div class="confirmation">
-    <table class="environment">
+    <div id="url_preview">
+      <span class="base">redu.com.br</span>
+      <span class="customizable">
+        <span class="environment"><%= @environment.path %></span>
+        <span class="course-base">cursos</span>
+        <span class="course"><%= @environment.courses.first.path %></span>
+      </span>
+    </div>
+    <table class="environment-table concave-form">
       <thead>
         <tr>
           <th>Informação</th>
@@ -23,20 +24,16 @@
       </thead>
       <tbody>
         <tr>
-          <td class="label">Seu ambiente de ensino:</td>
+          <td class="concave-label">Seu ambiente de ensino:</td>
           <td class="value"> <%= @environment.name %> </td>
         </tr>
         <tr>
-          <td class="label">Abreviação:</td>
+          <td class="concave-label">Abreviação:</td>
           <td class="value"> <%= @environment.initials %> </td>
-        </tr>
-        <tr>
-          <td class="label">Endereço eltrônico:</td>
-          <td class="value"><span class="domain">redu.com.br/</span><span class="path"> <%= @environment.path %> </span></td>
         </tr>
       </tbody>
     </table>
-    <table class="course">
+    <table class="course-table concave-form">
       <thead>
         <tr>
           <th>Informação</th>
@@ -45,45 +42,29 @@
       </thead>
       <tbody>
         <tr>
-          <td class="label">Seu primeiro curso:</td>
+          <td class="concave-label">Seu primeiro curso:</td>
           <td class="value"> <%= @environment.courses.first.name %> </td>
         </tr>
         <tr>
-          <td class="label">Endereço eletrônico:</td>
-          <td class="value"><span class="domain">redu.com.br/<%= @environment.path %>/cursos</span><span class="path"> <%= @environment.courses.first.path %> </span></td>
-        </tr>
-      </tbody>
-    </table>
-    <table class="plan-box">
-      <thead>
-        <tr>
-          <th>Informação</th>
-          <th>Valor</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="label">Seu plano:</td>
-          <td class="value"><%= @plan_humanize.name %></td>
+          <td class="concave-label">Seu plano:</td>
+          <td class="value plan"><%= @plan_humanize.name %></td>
         </tr>
       </tbody>
     </table>
     <%= form_for @environment,
       :url => environments_path(:step => 4),
       :remote => true,
-      :html => { :class => "clearfix form-loader" } do |f| %>
+      :html => { :class => "clearfix concave-form" } do |f| %>
       <%= f.error_messages %>
       <div style='display: none;'>
         <%= render :partial => 'environments/form', :locals => { :f => f } %>
       </div>
       <%= hidden_field_tag :plan, @plan %>
       <div id="pagseguro-button"></div>
-      <%= f.submit "Finalizar", :class => "important next",
-        :id => "final-button"%>
+      <%= f.submit "Finalizar", :id => "final-button"%>
 
       <%= image_tag 'spinner.gif', :id => 'spinner-form',
         :style => 'display: none; float: right;'  %>
-
     <% end %>
   </div>
 </div>

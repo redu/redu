@@ -2962,6 +2962,7 @@ table.spaced tr td {
 #partner-plan .partner-avatar {
   float: left;
   margin-right: 20px;
+  margin-bottom: 20px;
 }
 
 #partner-plan .partner-details {
@@ -2981,7 +2982,9 @@ table.spaced tr td {
 #partner-plan .concave-form .course-name {
   font-family: museo-slab, serif;
   font-weight: 500;
-  margin-top: 20px;
+  margin-top: 17px;
+  width: 400px;
+  float: left;
   display: block;
   color: #4CACD4;
   font-size: 1.4em;
@@ -3016,7 +3019,7 @@ table.spaced tr td {
 
 #checkout .confirmation {
   float: left;
-  width: 670px;
+  width: 590px;
   padding-bottom: 50px;
   position: relative;
 }
@@ -3063,24 +3066,41 @@ table.spaced tr td {
 }
 
 #checkout .confirmation tbody td {
-  padding: 10px 0;
   vertical-align: middle;
 }
 
 #checkout .confirmation tbody .value {
-  font-size: 1.1em;
+  font-family: museo-sans, serif;
+  font-size: 1.2em;
+  font-weight: 500px;
+  padding-top: 18px;
+  color: #4CACD4;
 }
 
-#checkout .confirmation .environment {
-  background: url("../images/new/icon-environment-blue_48_48.png") no-repeat center right;
+#checkout .confirmation tbody .plan {
+  color: #60BE7F;
 }
 
-#checkout .confirmation .course {
-  background: url("../images/new/icon-course-blue_48_48.png") no-repeat center right;
+#checkout .confirmation .environment-table:after {
+  content: "";
+  display: block;
+  float: right;
+  margin-top: -80px;
+  margin-right: -100px;
+  background: url("../images/new/icons-checkout-confirmation2.png") no-repeat 0 0;
+  width: 66px;
+  height: 67px;
 }
 
-#checkout .confirmation .plan-box {
-  background: url("../images/new/icon-teacher-blue_48_48.png") no-repeat center right;
+#checkout .confirmation .course-table:after {
+  content: "";
+  display: block;
+  float: right;
+  margin-top: -60px;
+  margin-right: -100px;
+  background: url("../images/new/icons-checkout-confirmation2.png") no-repeat 0 -118px;
+  width: 66px;
+  height: 67px;
 }
 
 #checkout .confirmation .domain {
