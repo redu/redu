@@ -32,30 +32,35 @@ describe EducationsController do
         Education.last.educationable.should == HighSchool.last
       end
 
-      it "assigns @high_school" do
+      it "@high_school should be a new one (HighSchool.new)" do
         post :create, @post_params
-        assigns[:high_school].should_not be_nil
+        assigns[:high_school].institution.should be_nil
+        assigns[:high_school].description.should be_nil
+        assigns[:high_school].end_year.should be_nil
+        assigns[:high_school].created_at.should be_nil
+        assigns[:high_school].updated_at.should be_nil
       end
 
-      it "assigns @higher_education" do
-        post :create, @post_params
-        assigns[:higher_education].should_not be_nil
-      end
-
-      it "assigns @complementary_course" do
-        post :create, @post_params
-        assigns[:complementary_course].should_not be_nil
-      end
-
-      it "assigns @event_education" do
-        post :create, @post_params
-        assigns[:event_education].should_not be_nil
+      [:high_school, :higher_education, :complementary_course,
+        :event_education].each do |var|
+        it "assigns @#{var}" do
+          post :create, @post_params
+          assigns[var].should_not be_nil
+        end
       end
     end
 
     context "when failing" do
       before do
         @post_params[:high_school][:institution] = ""
+      end
+
+      [:high_school, :higher_education, :complementary_course,
+        :event_education].each do |var|
+        it "assigns @#{var}" do
+          post :create, @post_params
+          assigns[var].should_not be_nil
+        end
       end
 
       it "does NOT create an education" do
@@ -68,6 +73,12 @@ describe EducationsController do
         expect {
           post :create, @post_params
         }.should_not change(HighSchool, :count)
+      end
+
+      it "@high_school is the educationable" do
+        post :create, @post_params
+        assigns[:high_school].description.should ==
+          @post_params[:high_school][:description]
       end
     end
 

@@ -1,5 +1,14 @@
-<%= lazy_load(:user, :jammit => true, :clear => true) %>
-<%= lazy_load(:user, :type => :css, :jammit => true, :clear => true) %>
+<%= lazy_load(:user, :jammit => true, :clear => true) do %>
+    // Coloca a máscara de celular no campo correspondente
+    $.fn.refreshMobileMask = function(){
+      return this.each(function(){
+          var $this = $(this);
+          $this.mask("+99 (99) 9999-9999", { placeholder:" " });
+      });
+    };
+
+    $("#biography .mobile").refreshMobileMask();
+<% end %>
 <%= render :partial => 'users/home_sidebar' %>
 <div class="main grid_10" style="width: 580px;">
   <%= render :partial => 'users/breadcrumbs' %>
@@ -15,7 +24,7 @@
     <div id="curriculum" class="clearfix">
       <div class="experience clearfix">
         <div class="header clearfix">
-          <h3 class="title"><span class="icon"></span>Experiência</h3>
+          <h3 class="title"><span class="icon-small icon-experience-lightblue_32_34"></span>Experiência</h3>
           <hr class="separator">
         </div>
         <ul class="experiences">
@@ -28,7 +37,7 @@
       </div>
       <div class="education">
         <div class="header clearfix">
-          <h3 class="title"><span class="icon"></span>Educação</h3>
+          <h3 class="title"><span class="icon-small icon-diploma-lightblue_32_34"></span>Educação</h3>
           <hr class="separator">
         </div>
         <ul class="educations">

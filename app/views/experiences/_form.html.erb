@@ -4,12 +4,12 @@
   <%= f.label :title, "Título de sua função:" %>
   <%= f.text_field :title %>
   <span class="tip">Exemplo: professor, engenheiro, designer etc.</span>
-  <%= error_for :experience, :title %>
+  <%= concave_errors_for experience, :title %>
 
   <%= f.label :company, "Empresa:" %>
   <%= f.text_field :company %>
   <span class="tip">Nome da empresa responsável.</span>
-  <%= error_for :experience, :company %>
+  <%= concave_errors_for experience, :company %>
 
   <%= f.label :start_date, "Período:" %>
   <div class="start-date">

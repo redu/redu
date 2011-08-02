@@ -16,9 +16,6 @@
     var $form = $("#edit_event_education_<%= @education.educationable.id %>");
   <% end %>
 
-  <%# Mostra os erros individualmente por atributo/campo  %>
-  $(".errorMessageField").hide();
-  <% @education.educationable.errors.each do |attr, error| %>
-    $form.find('#<%= @education.educationable.class.to_s.underscore %>_<%= attr %>-error').html("<%= error %>").slideDown();
-  <% end %>
+  var educationable_form = "<%= escape_javascript render :partial => 'educations/form_edit', :locals => { :education => @education } %>"
+  $form.replaceWith(educationable_form);
 <% end %>

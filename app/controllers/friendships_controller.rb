@@ -27,8 +27,8 @@ class FriendshipsController < BaseController
         end
       end
       format.js do
-        @show_user = false
-        @show_user = true if params[:show_user]
+        @show_user = params.has_key? :show_user
+        @recommendation = params.has_key? :recommendation
       end
     end
   end

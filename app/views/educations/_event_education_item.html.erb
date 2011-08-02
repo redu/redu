@@ -2,14 +2,9 @@
   <a href="#" class="edit-education icon icon-management-gray_8_8"><%= t :edit %></a>
   <%= link_to (t :remove), user_education_path(item.user, item),
     :remote => true, :method => :delete,
-    :class => "remove-education icon icon-x-gray_8_8 replacement",
+    :class => "remove-education icon-small icon-delete-gray_16_18 replacement",
     :confirm => "Você tem certeza que deseja excluir esta experiência? Não será mais possível recuperá-la." %>
   <%= render :partial => "educations/event_education_detail", :locals => { :item => item } %>
 </div>
 
-<%= form_for item.educationable,
-  :url => user_education_path(item.user, item), :remote => true,
-  :html => { :class => "concave-form clearfix" } do |f| %>
-  <%= render :partial => 'educations/event_education_fields',
-    :locals => { :f => f, :event_education => item.educationable } %>
-<% end %>
+<%= render :partial => 'educations/form_edit', :locals => { :education => item } %>

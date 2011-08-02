@@ -1,3 +1,4 @@
+    @partner_contact.daliver if @partner_contact.valid?
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" class="no-js">
   <head>
@@ -31,6 +32,7 @@
       , windowPartial : "<%= escape_javascript(render :partial => "presence/chat_window") %>"
       , presencePartial : "<%= escape_javascript(render :partial => "presence/chat_presence") %>"
       , messagePartial : "<%= escape_javascript(render :partial => "presence/chat_message") %>" });
+
     <% end %>
 
     <%= lazy_load(:real_tabs, :jammit => true, :clear => true) %>

@@ -1,12 +1,4 @@
 (function($){
-    // Coloca a máscara de celular no campo correspondente
-    $.fn.refreshMobileMask = function(){
-      return this.each(function(){
-          var $this = $(this);
-          $this.mask("+99 (99) 9999-9999", { placeholder:" " });
-      });
-    };
-
     // Esconde a data final de uma experiência
     $.fn.refreshEndDateVisibility = function(){
       return this.each(function(){
@@ -17,20 +9,28 @@
     // Mostra o form de criação, caso nenhuma experiência/educação
     // tenha sido criada. Esconde o form, caso contrário.
     refreshDefaultFormsVisibility = function() {
-      if ($("#curriculum .experiences > li").length > 0) {
-        $("#new_experience").hide();
-        $("#curriculum .new-experience-button").show();
-      } else {
-        $("#new_experience").show();
-        $("#curriculum .new-experience-button").hide();
+      var experiences = $("#curriculum .experiences > li");
+      if (experiences.find(".field_with_errors").length == 0) {
+        if (experiences.length > 0
+          && $("#new_experience .field_with_errors").length == 0) {
+          $("#new_experience").hide();
+          $("#curriculum .new-experience-button").show();
+        } else {
+          $("#new_experience").show();
+          $("#curriculum .new-experience-button").hide();
+        }
       }
 
-      if ($("#curriculum .educations > li").length > 0) {
-        $("#new_education").hide();
-        $("#curriculum .new-education-button").show();
-      } else {
-        $("#new_education").show();
-        $("#curriculum .new-education-button").hide();
+      var educations = $("#curriculum .educations > li");
+      if (educations.find(".field_with_errors").length == 0) {
+        if (educations.length > 0
+          && $("#new_education .field_with_errors").length == 0) {
+          $("#new_education").hide();
+          $("#curriculum .new-education-button").show();
+        } else {
+          $("#new_education").show();
+          $("#curriculum .new-education-button").hide();
+        }
       }
     };
 
@@ -53,7 +53,6 @@
         });
       });
     };
-
 
     // Mostra o form correto de criação de Educação
     $.fn.refreshShowCorrectForm = function(){
@@ -90,11 +89,9 @@
 
 
     jQuery(function(){
-        $("#biography .mobile").refreshMobileMask();
         $(".experience-current:checked").refreshEndDateVisibility();
         refreshDefaultFormsVisibility();
         $("#biography").refreshSocialNetwork();
-
         // Esconde os forms de edição
         $("#curriculum .educations form").hide();
 
@@ -154,10 +151,11 @@
         });
 
         $(document).ajaxComplete(function(){
-            $("#biography .mobile").refreshMobileMask();
             refreshDefaultFormsVisibility();
             $(".experience-current:checked").refreshEndDateVisibility();
             $("#biography").refreshSocialNetwork();
+            // Esconde os forms de edição
+            $("#curriculum .educations form").hide();
             $("#education_type").refreshShowCorrectForm();
             $("#higher_education_kind").refreshShowCorrectFields();
         });

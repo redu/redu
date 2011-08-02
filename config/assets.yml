@@ -27,6 +27,7 @@ javascripts:
     - public/javascripts/jquery.filestyle.mini.js
     - public/javascripts/form.redu.jquery.js
     - public/javascripts/asyncjs.jquery.js
+    - public/javascripts/user.js
   chat:
     - public/javascripts/jquery.pjax.js
     - public/javascripts/jquery-ui.js
@@ -46,7 +47,6 @@ javascripts:
     - public/javascripts/real_tabs.redu.jquery.js
   user:
     - public/javascripts/jquery.maskedinput.js
-    - public/javascripts/user.js
 
 stylesheets:
   common:
@@ -60,9 +60,9 @@ stylesheets:
     - public/stylesheets/token-input.css
     - public/stylesheets/form.redu.css
     - public/stylesheets/icons.big.redu.css
+    - public/stylesheets/icons.redu.css
+    - public/stylesheets/user.css
   ie:
     - public/stylesheets/ie.css
   chat:
     - public/stylesheets/chat.css
-  user:
-    - public/stylesheets/user.css

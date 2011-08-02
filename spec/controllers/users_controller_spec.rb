@@ -286,4 +286,21 @@ describe UsersController do
     end
   end
 
+  context "GET home" do
+    before do
+      @user = Factory(:user)
+      activate_authlogic
+      UserSession.create @user
+
+      @params = { :locale => "pt-BR", :id => @user.login }
+      get :home, @params
+    end
+
+    [:friends, :friends_requisitions, :course_invitations, :statuses, :status,
+      :contacts_recommendations].each do |var|
+      it "assigns @#{var}" do
+        assigns[var].should_not be_nil
+      end
+    end
+  end
 end
