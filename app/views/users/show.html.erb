@@ -7,7 +7,8 @@
       <div class="user-summary clearfix">
         <ul>
           <li>
-            <ul>
+            <% unless @user.experiences.empty? %>
+            <ul class="actual-jobs icon-experience-gray_8_10-before ">
               <% @user.experiences.actual_jobs.each do |experience| %>
                 <li>
                   <span class="bio"><%= experience.title %></span> em
@@ -15,27 +16,28 @@
                 </li>
               <% end %>
             </ul>
+          <% end %>
           </li>
-          <% if !@user.educations.empty? %>
-            <li>
+          <% unless @user.educations.empty? %>
+            <li class="education icon-education-gray_8_10-before">
               <span class="bio"><%= t :high_school %></span> em
               <span class="bio"><%= @user.educations.first.educationable.institution %></span>
             </li>
           <% end %>
           <li>
-            <ul>
+            <ul class="biography icon-bio-gray_8_10">
               <li><span class="bio"><%= @user.age %></span> anos</li>
-              <% if !@user.languages.blank? %>
+              <% unless @user.languages.blank? %>
                 <li>Fala
                   <span class="bio"><%= @user.languages %></span>
                 </li>
               <% end %>
-              <% if !@user.birth_localization.blank? %>
+              <% unless @user.birth_localization.blank? %>
                 <li>Natural de
                   <span class="bio"><%= @user.birth_localization %></span>
                 </li>
               <% end %>
-              <% if !@user.localization.blank? %>
+              <% unless @user.localization.blank? %>
                 <li>Vive em
                   <span class="bio"><%= @user.localization %></span>
                 </li>
@@ -49,7 +51,7 @@
           :class => 'edit icon icon-management-gray_8_8' %>
       <% end %>
 
-      <hr class="separator"/>
+      <hr class="separator icon-bio-blue_32_34-after"/>
       <div class="bio-wrapper clearfix">
         <% if !@user.description.blank? %>
           <span class="label">Sobre mim:</span>
@@ -63,13 +65,13 @@
           <span class="label">Celular:</span>
           <span class="bio indent"><%= @user.mobile %></span>
         <% end %>
-        <ul>
+        <ul class="social-networks clearfix">
           <%= render :partial => "users/social_network", :collection => @user.social_networks %>
         </ul>
       </div><!-- end .bio-wrapper -->
 
       <% if !@user.experiences.empty? %>
-        <hr class="separator"/>
+        <hr class="separator icon-experience-blue_32_34-after"/>
         <div class="bio-wrapper experience clearfix">
           <span class="label">Experiência:</span>
           <ul class="indent clearfix">
@@ -83,7 +85,7 @@
       <% end %>
 
       <% if !@user.educations.empty? %>
-        <hr class="separator"/>
+        <hr class="separator icon-education-blue_32_34-after"/>
         <div class="bio-wrapper experience clearfix">
           <% if !@user.educations.higher_educations.empty? and
                 !@user.educations.high_schools.empty? %>

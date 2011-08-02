@@ -293,7 +293,7 @@
   .concave-form .error_explanation h2 {
     position: absolute;
     left: 85px;
-    font-family: museo-slab, serif;
+    font-family: museo-slab, helvetica, arial, sans-serif;
     font-weight: 900;
     font-size: 2.2em;
     color: #C0262C;

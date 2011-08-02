@@ -3987,8 +3987,8 @@ div.token-input-dropdown {
   margin-right: 10px;
   margin-bottom: 20px;
   display: block;
-  font-family: Copse, Arial, sans-serif;
-  font-weight: normal;
+  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-weight: 500;
   font-size: 2.1em;
   color: #4cacd5;
 }
@@ -4001,9 +4001,53 @@ div.token-input-dropdown {
   margin-bottom: 20px;
 }
 
+#profile .vcard .user-summary ul > li {
+  margin-bottom: 2px;
+}
+
+#profile .vcard .user-summary .actual-jobs:before {
+  float: left;
+  margin-right: 5px;
+}
+
 #profile .vcard .bio {
   margin-bottom: 20px;
   color: #6d6e6f;
+}
+
+#profile .vcard .user-summary .education:before {
+  content: "";
+
+  width: 8px;
+  height: 10px;
+
+  background: url("../images/new/icons-small.png") -240px -2800px no-repeat;
+  float: left;
+  margin-right: 5px;
+}
+
+#profile .vcard .user-summary .biography:before {
+  float: left;
+  margin-right: 5px;
+}
+
+#profile .vcard .user-summary .biography > li,
+#profile .vcard .user-summary .actual-jobs > li {
+  margin-left: 13px;
+}
+
+#profile .vcard .bio-wrapper .social-networks {
+  clear: both;
+  margin-left: 75px;
+}
+
+#profile .vcard .bio-wrapper .social-networks > li {
+  margin-bottom: 10px;
+}
+
+#profile .vcard .bio-wrapper .social-networks > li:before {
+  float: left;
+  margin-right: 10px;
 }
 
 #profile .vcard .edit {
@@ -4015,6 +4059,12 @@ div.token-input-dropdown {
 }
 
 #profile .vcard .bio-wrapper {
+  margin-top: 20px;
+}
+
+#profile .vcard .separator:after {
+  float: right;
+  margin-left: -200px;
   margin-top: 20px;
 }
 
@@ -5251,7 +5301,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   overflow: hidden;
 }
 #partner-header .partner-title {
-  font-family: museo-slab, serif;
+  font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 500;
   font-size: 2.2em;
   margin-bottom: 5px;
@@ -5259,7 +5309,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 #partner-header .environments-title {
-  font-family: museo-slab, serif;
+  font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 100;
   font-style: italic;
   font-size: 2.2em;
@@ -5312,7 +5362,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 #partner-environments-list .environment-name {
-  font-family: museo-sans, sans-serif;
+  font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 500;
   font-size: 1.2em;
 
