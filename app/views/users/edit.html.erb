@@ -1,5 +1,14 @@
-<%= lazy_load(:user, :jammit => true, :clear => true) %>
-<%= lazy_load(:user, :type => :css, :jammit => true, :clear => true) %>
+<%= lazy_load(:user, :jammit => true, :clear => true) do %>
+    // Coloca a máscara de celular no campo correspondente
+    $.fn.refreshMobileMask = function(){
+      return this.each(function(){
+          var $this = $(this);
+          $this.mask("+99 (99) 9999-9999", { placeholder:" " });
+      });
+    };
+
+    $("#biography .mobile").refreshMobileMask();
+<% end %>
 <%= render :partial => 'users/home_sidebar' %>
 <div class="main grid_10" style="width: 580px;">
   <%= render :partial => 'users/breadcrumbs' %>

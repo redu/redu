@@ -1,12 +1,4 @@
 (function($){
-    // Coloca a máscara de celular no campo correspondente
-    $.fn.refreshMobileMask = function(){
-      return this.each(function(){
-          var $this = $(this);
-          $this.mask("+99 (99) 9999-9999", { placeholder:" " });
-      });
-    };
-
     // Esconde a data final de uma experiência
     $.fn.refreshEndDateVisibility = function(){
       return this.each(function(){
@@ -62,7 +54,6 @@
       });
     };
 
-
     // Mostra o form correto de criação de Educação
     $.fn.refreshShowCorrectForm = function(){
       var $this = $(this);
@@ -98,11 +89,9 @@
 
 
     jQuery(function(){
-        $("#biography .mobile").refreshMobileMask();
         $(".experience-current:checked").refreshEndDateVisibility();
         refreshDefaultFormsVisibility();
         $("#biography").refreshSocialNetwork();
-
         // Esconde os forms de edição
         $("#curriculum .educations form").hide();
 
@@ -162,10 +151,11 @@
         });
 
         $(document).ajaxComplete(function(){
-            $("#biography .mobile").refreshMobileMask();
             refreshDefaultFormsVisibility();
             $(".experience-current:checked").refreshEndDateVisibility();
             $("#biography").refreshSocialNetwork();
+            // Esconde os forms de edição
+            $("#curriculum .educations form").hide();
             $("#education_type").refreshShowCorrectForm();
             $("#higher_education_kind").refreshShowCorrectFields();
         });
