@@ -814,19 +814,19 @@ class User < ActiveRecord::Base
         where("friendships.user_id = ?", self.id)
       # Populares da rede exceto o próprio usuário e os usuários que ele,
       # requisitou/foi requisitada a amizade.
-      users = User.select('users.login, users.avatar_file_name,' \
+      users = User.select('users.id, users.login, users.avatar_file_name,' \
                           ' users.first_name, users.last_name').
                           without_ids(contacts_and_pending_ids << self).
                           popular(20) |
       # Professores populares da rede exceto o próprio usuário e os usuários,
       # que ele requisitou/foi requisitada a amizade.
-        User.select('users.login, users.avatar_file_name,'\
+        User.select('users.id, users.login, users.avatar_file_name,'\
                     ' users.first_name, users.last_name').
                     without_ids(contacts_and_pending_ids << self).
                     popular_teachers(20) |
       # Usuários com o mesmo domínio de email exceto o próprio usuário e os,
       # usuários que ele requisitou/foi requisitada a amizade.
-        User.select('users.login, users.avatar_file_name,' \
+        User.select('users.id, users.login, users.avatar_file_name,' \
                     ' users.first_name, users.last_name').
                     without_ids(contacts_and_pending_ids << self).
                     with_email_domain_like(self.email).limit(20)
@@ -849,7 +849,7 @@ class User < ActiveRecord::Base
   def colleagues(quantity)
     contacts_ids = User.contacts_and_pending_contacts_ids.
       where("friendships.user_id = ?", self.id)
-    User.select("DISTINCT users.login, users.avatar_file_name," \
+    User.select("DISTINCT users.id, users.login, users.avatar_file_name," \
                 " users.first_name, users.last_name").
       includes(:user_course_associations).
       where("user_course_associations.state = 'approved' AND " \
@@ -862,7 +862,7 @@ class User < ActiveRecord::Base
     contacts_ids = self.friends.select("users.id")
     contacts_and_pending_ids = User.contacts_and_pending_contacts_ids.
       where("friendships.user_id = ?", self.id)
-    User.select("DISTINCT users.login, users.avatar_file_name," \
+    User.select("DISTINCT users.id, users.login, users.avatar_file_name," \
                 " users.first_name, users.last_name").
       joins("LEFT OUTER JOIN `friendships`" \
             " ON `friendships`.`friend_id` = `users`.`id`").

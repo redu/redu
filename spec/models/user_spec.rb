@@ -362,8 +362,6 @@ describe User do
       create_friendship luke, yoda
       create_friendship leia, han_solo
       vader.be_friends_with han_solo
-      han_solo = User.select("login").find_by_login("han_solo")
-      yoda = User.select("login").find_by_login("yodaa")
 
       vader.friends_of_friends.should == [yoda]
     end
