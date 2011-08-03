@@ -7,7 +7,7 @@
       <div class="user-summary clearfix">
         <ul>
           <li>
-            <% unless @user.experiences.empty? %>
+            <% unless @user.experiences.actual_jobs.empty? %>
             <ul class="actual-jobs icon-experience-gray_8_10-before ">
               <% @user.experiences.actual_jobs.each do |experience| %>
                 <li>

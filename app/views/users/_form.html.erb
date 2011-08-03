@@ -2,14 +2,14 @@
   :html => {:multipart =>true, :class => "concave-form" }  do |f|  %>
   <%= concave_error_messages_for(@user) %>
 
+  <%= field_set_tag do %>
+    <%= image_tag @user.avatar.url(:thumb_120), :class => "actual-avatar" %>
+  <% end %>
+
   <%= f.label :avatar,
     raw("Foto de seu perfil: <span class='snippet'>(tamanho máximo: 100MB)</span>") %>
   <%= f.file_field :avatar %>
   <%= concave_errors_for(f.object, :avatar) %>
-
-  <% field_set_tag do %>
-    <%= image_tag @user.avatar.url(:thumb_100) %>
-  <% end %>
 
   <%= f.label :first_name, "Nome:" %>
   <%= f.text_field :first_name %>

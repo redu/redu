@@ -1,3 +1,10 @@
+/* Biografia */
+#biography .actual-avatar {
+  margin: 0 0 20px 160px;
+}
+
+/* Curriculum Vitae */
+
 #curriculum .experiences > li,
 #curriculum .educations > li {
   display: block;
