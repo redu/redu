@@ -45,6 +45,8 @@
         Typekit.load();
       }catch(e){}
     <% end %>
+
+    <%= render :partial => "shared/analytics" %>
   </head>
    <body>
     <div id="header" class="container_16">
@@ -111,20 +113,6 @@
         </ul>
       </div><!-- end #nav-footer -->
     </div><!-- end #footer -->
-    <script type="text/javascript">
-
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-13202852-1']);
-      _gaq.push(['_setDomainName', '.redu.com.br']);
-      _gaq.push(['_trackPageview']);
-
-      (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();
-
-    </script>
     <%= yield :footer_scripts_and_styles %>
   </body>
 </html>
