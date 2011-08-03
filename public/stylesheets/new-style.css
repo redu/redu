@@ -2729,8 +2729,18 @@ table.spaced tr td {
 }
 
 /* Devido a precedência do background do .concave-form .concave-label */
+#teach-index .concave-form .environment.concave-label-focus {
+  background: url("../images/new/icons-small.png") -80px 0 no-repeat;
+}
+
+/* Devido a precedência do background do .concave-form .concave-label */
 #teach-index .concave-form .course {
   background: url("../images/new/icons-small.png") 0 -80px no-repeat;
+}
+
+/* Devido a precedência do background do .concave-form .concave-label */
+#teach-index .concave-form .course.concave-label-focus {
+  background: url("../images/new/icons-small.png") -80px -80px no-repeat;
 }
 
 #teach-index .concave-form .tip {
