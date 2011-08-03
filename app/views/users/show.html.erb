@@ -73,7 +73,7 @@
         </div><!-- end .bio-wrapper -->
     <% end %>
 
-      <% if !@user.experiences.empty? %>
+      <% unless @user.experiences.empty? %>
         <hr class="separator icon-experience-blue_32_34-after"/>
         <div class="bio-wrapper experience clearfix">
           <span class="label">Experiência:</span>
@@ -87,11 +87,11 @@
         </div>
       <% end %>
 
-      <% if !@user.educations.empty? %>
+      <% unless @user.educations.empty? %>
         <hr class="separator icon-education-blue_32_34-after"/>
         <div class="bio-wrapper experience clearfix">
-          <% if !@user.educations.higher_educations.empty? and
-                !@user.educations.high_schools.empty? %>
+          <% unless @user.educations.higher_educations.empty? and
+                @user.educations.high_schools.empty? %>
             <span class="label">Educação:</span>
             <ul class="indent clearfix">
               <% @user.educations.higher_educations.each do |higher| %>
@@ -102,7 +102,7 @@
               <% end %>
             </ul>
           <% end %>
-          <% if !@user.educations.complementary_courses.empty? %>
+          <% unless @user.educations.complementary_courses.empty? %>
             <span class="label">Complemento:</span>
             <ul class="indent clearfix">
               <% @user.educations.complementary_courses.each do |compl_course| %>
@@ -111,7 +111,7 @@
               <% end %>
             </ul>
           <% end %>
-          <% if !@user.educations.event_educations.empty? %>
+          <% unless @user.educations.event_educations.empty? %>
             <span class="label">Evento:</span>
             <ul class="indent clearfix">
               <% @user.educations.event_educations.each do |event| %>
