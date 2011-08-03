@@ -217,6 +217,7 @@ class UsersController < BaseController
       @higher_education = HigherEducation.new
       @complementary_course = ComplementaryCourse.new
       @event_education = EventEducation.new
+      @user.social_networks.build
       render 'users/edit'
     end
   rescue ActiveRecord::RecordInvalid
