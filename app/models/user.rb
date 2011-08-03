@@ -757,13 +757,19 @@ class User < ActiveRecord::Base
   end
 
   def completeness
-    total = 10.0
+    total = 16.0
     undone = 0.0
-    undone += 1 if self.description.nil?
+    undone += 1 if self.description.to_s.empty?
     undone += 1 if self.avatar_file_name.nil?
     undone += 1 if self.gender.nil?
     undone += 1 if self.localization.to_s.empty?
+    undone += 1 if self.birth_localization.to_s.empty?
+    undone += 1 if self.languages.to_s.empty?
+    undone += 1 if self.tags.empty?
     undone += 1 if self.mobile.to_s.empty?
+    undone += 1 if self.social_networks.empty?
+    undone += 1 if self.experiences.empty?
+    undone += 1 if self.educations.empty?
 
     done = total - undone
     (done/total*100).round

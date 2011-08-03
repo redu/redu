@@ -3,7 +3,8 @@
   <%= concave_error_messages_for(@user) %>
 
   <%= field_set_tag do %>
-    <%= image_tag @user.avatar.url(:thumb_120), :class => "actual-avatar" %>
+    <%= image_tag @user.avatar.url(:thumb_120), :size => "120x120",
+      :class => "actual-avatar" %>
   <% end %>
 
   <%= f.label :avatar,

@@ -625,7 +625,7 @@ describe User do
   end
 
   it "retrieves completeness percentage of profile" do
-    subject.completeness.should == 50
+    subject.completeness.should == 31
   end
 
   it "creates user settings!" do
