@@ -206,12 +206,22 @@ jQuery(function(){
     });
 
     // Padrão de spinner
-    $(".form-common, .form-loader").live('ajax:before', function(){
-        $(this).find("input[type=submit]").loadingStart();
+    $(".form-common, .form-loader").live('ajax:before', function(e){
+        var $this = $(this);
+        var $target = $(e.target);
+
+        if($target.is($this)){
+          $(this).find("input[type=submit]").loadingStart();
+        }
     });
 
-    $(".form-common, .form-loader").live('ajax:complete', function(){
-        $(this).find("input[type=submit]").loadingComplete();
+    $(".form-common, .form-loader").live('ajax:complete', function(e){
+        var $this = $(this);
+        var $target = $(e.target);
+
+        if($target.is($this)){
+          $(this).find("input[type=submit]").loadingComplete();
+        }
     });
 
     $("a[data-remote=true]").live('ajax:before', function(){
