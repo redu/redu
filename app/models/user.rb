@@ -97,7 +97,7 @@ class User < ActiveRecord::Base
   has_many :educations, :dependent => :destroy
   has_one :settings, :class_name => "UserSetting", :dependent => :destroy
   has_many :partners, :through => :partner_user_associations
-  has_many :partner_user_associations
+  has_many :partner_user_associations, :dependent => :destroy
 
   has_many :social_networks, :dependent => :destroy
 
