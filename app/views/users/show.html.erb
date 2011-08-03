@@ -52,7 +52,7 @@
       <% end %>
 
       <% unless @user.description.blank? and @user.tag_list.empty? and
-        @user.mobile.blank? %>
+        @user.mobile.blank? and @user.social_networks.empty? %>
         <hr class="separator icon-bio-blue_32_34-after"/>
         <div class="bio-wrapper clearfix">
           <% unless @user.description.blank? %>
