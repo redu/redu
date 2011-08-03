@@ -15,4 +15,3 @@ public/system/*/*
 .DS_Store
 Gemfile.local.rb
 public/assets/*
-public/images/*
