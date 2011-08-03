@@ -2718,7 +2718,19 @@ table.spaced tr td {
 
 #teach-index .concave-form .concave-label {
   width: 16px;
-  height: 16px;
+  height: 18px;
+  text-align: left;
+  margin-top: 26px;
+}
+
+/* Devido a precedência do background do .concave-form .concave-label */
+#teach-index .concave-form .environment {
+  background: url("../images/new/icons-small.png") 0 0 no-repeat;
+}
+
+/* Devido a precedência do background do .concave-form .concave-label */
+#teach-index .concave-form .course {
+  background: url("../images/new/icons-small.png") 0 -80px no-repeat;
 }
 
 #teach-index .concave-form .tip {

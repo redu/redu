@@ -20,6 +20,7 @@
   background: url("../images/new/icons-small.png") 0px -2800px no-repeat;
 }
 
+.icon-course-gray_16_18 { background-position: 0px -80px;}
 .icon-delete-gray_16_18 { background-position: 0 -2160px; }
 .icon-delete-gray_16_18:hover,
 .icon-delete-red-red_16_18 { background-position: -80px -2161px; }
@@ -38,6 +39,7 @@
   height: 10px;
   background-position: url("../images/new/icons-small.png") -240px -2800px no-repeat;
 }
+.icon-environment-gray_16_18 { background-position: 0 0;}
 .icon-experience-blue_32_34 { background-position: -240px -3280px; }
 .icon-experience-blue_32_34-after:after {
   content: "";
