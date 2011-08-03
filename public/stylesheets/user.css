@@ -174,3 +174,27 @@
 #biography .concave-form .concave-select {
   width: 90px;
 }
+
+.explanation-sidebar {
+  width: 145px;
+  float: left;
+}
+
+.explanation-sidebar .title {
+  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-weight: 300;
+  font-size: 1.2em;
+  color: #f37b38;
+  display: block;
+  margin-top: 20px;
+}
+
+.explanation-sidebar p {
+  margin: 15px 0;
+  font-size: .87em;
+  color: #b3b2b3;
+}
+
+.explanation-sidebar p .featured {
+  font-weight: bold;
+}
