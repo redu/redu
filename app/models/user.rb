@@ -93,7 +93,13 @@ class User < ActiveRecord::Base
 
   has_many :course_invitations, :class_name => "UserCourseAssociation",
     :conditions => ["state LIKE 'invited'"]
+  has_many :experiences, :dependent => :destroy
+  has_many :educations, :dependent => :destroy
   has_one :settings, :class_name => "UserSetting", :dependent => :destroy
+  has_many :partners, :through => :partner_user_associations
+  has_many :partner_user_associations
+
+  has_many :social_networks, :dependent => :destroy
 
   # Named scopes
   scope :recent, order('users.created_at DESC')
@@ -102,6 +108,9 @@ class User < ActiveRecord::Base
   scope :featured, where("users.featured_writer = ?", true)
   scope :active, where("users.activated_at IS NOT NULL")
   scope :with_ids, lambda { |ids| where(:id => ids) }
+  scope :without_ids, lambda {|ids|
+    where("users.id NOT IN (?)", ids)
+  }
   scope :n_recent, lambda { |limit|
     order('users.last_request_at DESC').limit(limit)
   }
@@ -113,7 +122,23 @@ class User < ActiveRecord::Base
       "LOWER(email) LIKE :keyword", { :keyword => "%#{keyword.downcase}%" }).
       limit(10).select("users.id, users.first_name, users.last_name, users.login, users.email, users.avatar_file_name")
   }
+  scope :popular, lambda { |quantity|
+    order('friends_count desc').limit(quantity)
+  }
 
+  scope :popular_teachers, lambda { |quantity|
+    includes(:user_course_associations).
+      where("user_course_associations.role" => Role[:teacher]).popular(quantity)
+  }
+  scope :with_email_domain_like, lambda { |email|
+    where("email LIKE ?", "%#{email.split("@")[1]}%")
+  }
+  scope :contacts_and_pending_contacts_ids , select("users.id").
+    joins("LEFT OUTER JOIN `friendships`" \
+            " ON `friendships`.`friend_id` = `users`.`id`").
+    where("friendships.status = 'accepted'" \
+          " OR friendships.status = 'pending'" \
+          " OR friendships.status = 'requested'")
   attr_accessor :email_confirmation
 
   # Accessors
@@ -122,6 +147,10 @@ class User < ActiveRecord::Base
     :sb_posts_count, :sb_last_seen_at
 
   accepts_nested_attributes_for :settings
+  accepts_nested_attributes_for :social_networks,
+    :reject_if => proc { |attributes| attributes['url'].blank? or
+      attributes['name'].blank? },
+    :allow_destroy => true
 
   # PLUGINS
   acts_as_authentic do |c|
@@ -140,7 +169,6 @@ class User < ActiveRecord::Base
   end
 
   has_attached_file :avatar, Redu::Application.config.paperclip
-  has_attached_file :curriculum, Redu::Application.config.paperclip
 
   has_friends
   ajaxful_rater
@@ -157,14 +185,11 @@ class User < ActiveRecord::Base
   validates :birthday,
       :date => { :before => Proc.new { 13.years.ago } }
   validates_acceptance_of :tos
-  validates_attachment_size :curriculum, :less_than => 10.megabytes
-  validate :accepted_curriculum_type, :on => :update,
-    :unless => "self.curriculum_file_name.nil?"
   validates_confirmation_of :email
   validates_format_of :email,
     :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/
   validates_format_of :mobile,
-      :with => /^(\(?\d{2}\)?)?[\s|-]?(\(?\d{2}\)?)?[\s|-](\d{4}[\s|-]?\d{4})/,
+      :with => /^\+\d{2}\s\(\d{2}\)\s\d{4}-\d{4}$/,
       :allow_blank => true
 
   # override activerecord's find to allow us to find by name or id transparently
@@ -278,6 +303,16 @@ class User < ActiveRecord::Base
     when 'Friendship'
       # user_id necessário devido ao bug do create_time_zone
       self.id == entity.user_id
+    when 'PartnerEnvironmentAssociation'
+      entity.partner.users.exists?(self.id)
+    when 'Partner'
+      entity.users.exists?(self.id)
+    when 'Experience'
+      self.can_manage?(entity.user)
+    when 'SocialNetwork'
+      self.can_manage?(entity.user)
+    when 'Education'
+      self.can_manage?(entity.user)
     end
   end
 
@@ -316,6 +351,10 @@ class User < ActiveRecord::Base
         self.has_access_to? entity.subject
       when 'Exam'
         self.has_access_to? entity.subject
+      when 'PartnerEnvironmentAssociation'
+        self.has_access_to? entity.partner
+      when 'Partner'
+        entity.users.exists?(self)
       else
         return false
       end
@@ -334,7 +373,8 @@ class User < ActiveRecord::Base
        (object.class.to_s.eql? 'Event') || (object.class.to_s.eql? 'Bulletin') ||
        (object.class.to_s.eql? 'Status') || (object.class.to_s.eql? 'User') ||
        (object.class.to_s.eql? 'Friendship') || (object.class.to_s.eql? 'Plan') ||
-       (object.class.to_s.eql? 'Invoice')
+       (object.class.to_s.eql? 'Invoice') || (object.class.to_s.eql? 'PartnerEnvironmentAssociation') ||
+       (object.class.to_s.eql? 'Partner')
 
        self.has_access_to?(object)
     else
@@ -717,14 +757,19 @@ class User < ActiveRecord::Base
   end
 
   def completeness
-    total = 11.0
+    total = 16.0
     undone = 0.0
-    undone += 1 if self.description.nil?
+    undone += 1 if self.description.to_s.empty?
     undone += 1 if self.avatar_file_name.nil?
     undone += 1 if self.gender.nil?
-    undone += 1 if self.curriculum_file_name.nil?
     undone += 1 if self.localization.to_s.empty?
+    undone += 1 if self.birth_localization.to_s.empty?
+    undone += 1 if self.languages.to_s.empty?
+    undone += 1 if self.tags.empty?
     undone += 1 if self.mobile.to_s.empty?
+    undone += 1 if self.social_networks.empty?
+    undone += 1 if self.experiences.empty?
+    undone += 1 if self.educations.empty?
 
     done = total - undone
     (done/total*100).round
@@ -755,6 +800,77 @@ class User < ActiveRecord::Base
     end
   end
 
+  #FIXME falta testar alguns casos
+  def age
+    dob = self.birthday
+    now = Time.now.utc.to_date
+    now.year - dob.year - ((now.month > dob.month || (now.month == dob.month && now.day >= dob.day)) ? 0 : 1)
+  end
+
+  # Retrieves five contacts recommendations
+  def recommended_contacts(quantity)
+    if self.friends_count == 0
+      contacts_and_pending_ids = User.contacts_and_pending_contacts_ids.
+        where("friendships.user_id = ?", self.id)
+      # Populares da rede exceto o próprio usuário e os usuários que ele,
+      # requisitou/foi requisitada a amizade.
+      users = User.select('users.login, users.avatar_file_name,' \
+                          ' users.first_name, users.last_name').
+                          without_ids(contacts_and_pending_ids << self).
+                          popular(20) |
+      # Professores populares da rede exceto o próprio usuário e os usuários,
+      # que ele requisitou/foi requisitada a amizade.
+        User.select('users.login, users.avatar_file_name,'\
+                    ' users.first_name, users.last_name').
+                    without_ids(contacts_and_pending_ids << self).
+                    popular_teachers(20) |
+      # Usuários com o mesmo domínio de email exceto o próprio usuário e os,
+      # usuários que ele requisitou/foi requisitada a amizade.
+        User.select('users.login, users.avatar_file_name,' \
+                    ' users.first_name, users.last_name').
+                    without_ids(contacts_and_pending_ids << self).
+                    with_email_domain_like(self.email).limit(20)
+    else
+      # Colegas de curso e amigos de amigos
+      users = colleagues(20) | self.friends_of_friends
+    end
+
+    # Choosing randomly
+    if quantity >= (users.length - 1)
+      quantity = (users.length - 1)
+    end
+    (1..quantity).collect do
+      users.delete_at(SecureRandom.random_number(users.length - 1))
+    end
+  end
+
+  # Participam do mesmo curso, mas não são contatos nem possuem requisição
+  # de contato pendente.
+  def colleagues(quantity)
+    contacts_ids = User.contacts_and_pending_contacts_ids.
+      where("friendships.user_id = ?", self.id)
+    User.select("DISTINCT users.login, users.avatar_file_name," \
+                " users.first_name, users.last_name").
+      includes(:user_course_associations).
+      where("user_course_associations.state = 'approved' AND " \
+            "user_course_associations.user_id NOT IN (?, ?)",
+            contacts_ids, self.id).
+      limit(quantity)
+  end
+
+  def friends_of_friends
+    contacts_ids = self.friends.select("users.id")
+    contacts_and_pending_ids = User.contacts_and_pending_contacts_ids.
+      where("friendships.user_id = ?", self.id)
+    User.select("DISTINCT users.login, users.avatar_file_name," \
+                " users.first_name, users.last_name").
+      joins("LEFT OUTER JOIN `friendships`" \
+            " ON `friendships`.`friend_id` = `users`.`id`").
+      where("friendships.status = 'accepted' AND friendships.user_id IN (?)" \
+            " AND friendships.friend_id NOT IN (?, ?)",
+            contacts_ids, contacts_and_pending_ids, self.id)
+  end
+
   protected
   def activate_before_save
     self.activated_at = Time.now.utc
@@ -774,12 +890,6 @@ class User < ActiveRecord::Base
 
   def password_required?
     crypted_password.blank? || !password.blank?
-  end
-
-  def accepted_curriculum_type
-    unless SUPPORTED_CURRICULUM_TYPES.include?(self.curriculum_content_type)
-      self.errors.add(:curriculum, "Formato inválido")
-    end
   end
 
   def newpass( len )

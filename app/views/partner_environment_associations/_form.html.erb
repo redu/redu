@@ -1,0 +1,8 @@
+<%= f.label :cnpj, "CNPJ:" %>
+<%= f.text_field :cnpj %>
+<%= concave_errors_for(f.object, :cnpj) %>
+
+<%= f.fields_for :environment do |builder| %>
+  <%= render :partial => "environments/complete_form", :locals => { :f => builder }%>
+  <%= builder.hidden_field :owner,  :value => current_user.id %>
+<% end %>

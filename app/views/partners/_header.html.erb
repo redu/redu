@@ -1,0 +1,8 @@
+<% title ||= "Ambientes" %>
+<div id="partner-header">
+  <h3 class="partner-title icons-big-before icon-partner-lightblue_64_64-before">Parceiro</h3>
+  <em class="environments-title"><%= title %></em>
+  <%= link_to_unless_current "Criar novo ambiente", new_partner_client_path(@partner),
+    :class => "concave-button create-environment" do %>
+  <% end %>
+</div>

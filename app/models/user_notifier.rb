@@ -306,4 +306,12 @@ class UserNotifier < ActionMailer::Base
          :date => Time.now)
   end
 
+  def partner_environment_notice(partner_contact)
+    @contact = partner_contact
+
+    mail(:to => [Redu::Application.config.email, "cns@redu.com.br"],
+         :subject => "[Redu] Criação de ambiente",
+         :date => Time.zone.now)
+  end
+
 end

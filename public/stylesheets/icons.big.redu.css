@@ -1,0 +1,67 @@
+.icons-big {
+  background-image: url("../images/new/icons-big.png");
+  background-repeat: no-repeat;
+  background-position: 0 0;
+}
+
+.icons-big-before:before {
+  background-image: url("../images/new/icons-big.png");
+  background-repeat: no-repeat;
+  background-position: 0 0;
+}
+
+.icon-checkout-teacher-white_100_100,
+.ui-tabs-selected .icon-checkout-teacher-lightblue_100_100,
+.ui-tabs-selected .icon-checkout-teacher-lightblue_100_100:hover {
+  background-position: -320px -240px;
+}
+
+.icon-checkout-teacher-lightblue_100_100 {
+  background-position: 0 -240px;
+}
+
+.icon-checkout-teacher-lightblue_100_100:hover,
+.icon-checkout-teacher-blue_100_100 {
+  background-position: -160px -240px;
+}
+
+.icon-checkout-institution-lightblue_100_100 {
+  background-position: 0 -400px;
+}
+
+.icon-checkout-institution-white_100_100,
+.ui-tabs-selected .icon-checkout-institution-lightblue_100_100:hover,
+.ui-tabs-selected .icon-checkout-institution-lightblue_100_100 {
+  background-position: -320px -400px;
+}
+
+.icon-checkout-institution-lightblue_100_100:hover,
+.icon-checkout-institution-blue_100_100 {
+  background-position: -160px -400px;
+}
+
+.icon-checkout-company-lightblue_100_100 {
+  background-position: 0 -560px;
+}
+
+.icon-checkout-company-white_100_100,
+.ui-tabs-selected .icon-checkout-company-lightblue_100_100,
+.ui-tabs-selected .icon-checkout-company-lightblue_100_100:hover {
+  background-position: -320px -560px;
+}
+
+.icon-checkout-company-lightblue_100_100:hover,
+.icon-checkout-company-blue_100_100 {
+  background-position: -160px -560px;
+}
+
+.icon-partner-lightblue_64_64-before:before {
+  content: "";
+  width: 64px;
+  height: 64px;
+  display: block;
+  float: left;
+  margin-right: 10px;
+
+  background-position:  -480px -161px;
+}

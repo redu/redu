@@ -52,6 +52,14 @@ describe User do
   # Plan
   it { should have_many(:plans) }
 
+  it { should have_many(:partners).through(:partner_user_associations) }
+  # Curriculum
+  it { should have_many(:experiences).dependent(:destroy) }
+  it { should have_many(:educations).dependent(:destroy) }
+
+  # Social networks
+  it { should have_many(:social_networks).dependent(:destroy) }
+
   it { should_not allow_mass_assignment_of :admin }
   it { should_not allow_mass_assignment_of :role }
   it { should_not allow_mass_assignment_of :activation_code }
@@ -65,6 +73,7 @@ describe User do
   it { should have_many :course_invitations }
 
   it { should accept_nested_attributes_for :settings }
+  it { should accept_nested_attributes_for :social_networks }
 
   [:first_name, :last_name].each do |attr|
     it do
@@ -104,59 +113,6 @@ describe User do
       subject.errors[:birthday].should_not be_empty
     end
 
-    context "validates a curriculum type on update if has a curriculum" do
-      before do
-        path = File.join(Rails.root,
-                         "spec",
-                         "support",
-                         "documents",
-                         "xkcd.png")
-
-        c = File.new(path)
-        subject.curriculum = c
-      end
-
-      it "when a teacher" do
-        subject.teacher_profile = true
-        subject.save
-        subject.errors[:curriculum].should_not be_empty
-      end
-
-      it "when NOT a teacher" do
-        subject.teacher_profile = false
-        subject.save
-        subject.errors[:curriculum].should_not be_empty
-      end
-    end
-
-    context "should NOT validate a curriculum type on update if it does NOT have a curriculum" do
-      it "when a teacher" do
-        subject.teacher_profile = true
-        subject.save
-        subject.errors[:curriculum].should be_empty
-      end
-
-      it "when a student" do
-        subject.teacher_profile = false
-        subject.save
-        subject.errors[:curriculum].should be_empty
-      end
-    end
-
-    context "should NOT validate a curriculum type on update if it does NOT have a curriculum" do
-      it "when a teacher" do
-        subject.teacher_profile = true
-        subject.save
-        subject.errors[:curriculum].should be_empty
-      end
-
-      it "when a student" do
-        subject.teacher_profile = false
-        subject.save
-        subject.errors[:curriculum].should be_empty
-      end
-    end
-
     it "should validate password and password_confirmation equality" do
       u = Factory.build(:user, :email => "email@email.com",
                   :email_confirmation => "different@email.com")
@@ -174,10 +130,10 @@ describe User do
       u = Factory.build(:user, :mobile => "21312312")
       u.should_not be_valid
       u.errors[:mobile].should_not be_empty
-      u.mobile = "55 81 1231-2131"
+      u.mobile = "+55 (81) 1231-2131"
       u.should be_valid
       u.mobile = "81 2131-2123"
-      u.should be_valid
+      u.should_not be_valid
     end
   end
 
@@ -301,6 +257,116 @@ describe User do
       subject.private_channel_with(@contact).should ==
         "private-#{@contact.id}-#{subject.id}"
     end
+
+    it "retrieves the 5 most popular users (more friends)" do
+      @popular = (1..3).collect { |i| Factory(:user, :friends_count => 20 + i) }
+      @less_popular = (1..3).collect {|i| Factory(:user, :friends_count => 10 - i) }
+      @not_popular = (1..5).collect {|i| Factory(:user, :friends_count => 3) }
+
+      User.popular(5).to_set.should == (@popular + @less_popular[0..1]).to_set
+    end
+
+    it "retrieves the 3 most popular teachers" do
+      @popular = (1..3).collect { |i| Factory(:user, :friends_count => 20 + i) }
+      @less_popular = (1..3).collect {|i| Factory(:user, :friends_count => 10 - i) }
+      @not_popular = (1..5).collect {|i| Factory(:user, :friends_count => 3) }
+
+      @course = Factory(:course)
+      @course2 = Factory(:course)
+
+      @course.join @popular[1], Role[:teacher]
+      @course2.join @less_popular[1], Role[:teacher]
+      @course2.join @not_popular[1], Role[:teacher]
+
+      @course.join @popular[0]
+      @course.join @popular[2]
+      @course2.join @less_popular[0]
+
+      User.popular_teachers(3).should == [@popular[1], @less_popular[1],
+        @not_popular[1]]
+    end
+
+    it "retrieves users with email domain like 'redu.com.br'" do
+      @hotmail_users = (1..3).collect do |n|
+        Factory(:user, :email => "#{n}@hotmail.com")
+      end
+
+      @gmail_users =  (1..3).collect do |n|
+        Factory(:user, :email => "#{n}@gmail.com")
+      end
+
+      @redu_users =  (1..3).collect do |n|
+        Factory(:user, :email => "#{n}@redu.com")
+      end
+
+      User.with_email_domain_like("administrator@redu.com").should == @redu_users
+    end
+
+    it "retrieves all users except the specified users" do
+      users = (1..10).collect { Factory(:user) }
+      User.without_ids(users[0..1]).should == users[2..10]
+    end
+
+    it "retrieves all colleagues (same course but not friends or pending friends)" do
+      user = Factory(:user)
+      owner = Factory(:user)
+      env = Factory(:environment, :owner => owner)
+      colleagues1 = (1..10).collect { Factory(:user) }
+      friends1 = (1..5).collect { Factory(:user) }
+      course1 = Factory(:course, :environment => env, :owner => owner)
+
+      colleagues2 = (1..10).collect { Factory(:user) }
+      friends2 = (1..5).collect { Factory(:user) }
+      course2 = Factory(:course, :environment => env, :owner => owner)
+
+      pending_friends = (1..10).collect { Factory(:user) }
+
+      course1.join user
+      course2.join user
+      colleagues1.each do |u|
+        course1.join u
+      end
+      friends1.each do |u|
+        course1.join u
+        user.be_friends_with(u)
+        u.be_friends_with(user)
+      end
+
+      colleagues2.each do |u|
+        course2.join u
+      end
+      friends2.each do |u|
+        course2.join u
+        user.be_friends_with(u)
+        u.be_friends_with(user)
+      end
+      pending_friends.each do |u|
+        course2.join u
+        u.be_friends_with(user)
+      end
+
+      user.reload.colleagues(30).to_set.should ==
+        (colleagues1 + colleagues2 << owner).to_set
+    end
+
+    it "retrieves all friends of friends (exclude pending friends)" do
+      vader = Factory(:user, :login => "darth_vader")
+      luke = Factory(:user, :login => "luke_skywalker")
+      leia = Factory(:user, :login => "princess_leia")
+      han_solo = Factory(:user, :login => "han_solo")
+      yoda = Factory(:user, :login => "yodaa")
+
+      create_friendship vader, luke
+      create_friendship vader, leia
+      create_friendship luke, leia
+      create_friendship luke, yoda
+      create_friendship leia, han_solo
+      vader.be_friends_with han_solo
+      han_solo = User.select("login").find_by_login("han_solo")
+      yoda = User.select("login").find_by_login("yodaa")
+
+      vader.friends_of_friends.should == [yoda]
+    end
   end
 
   context "callbacks" do
@@ -320,6 +386,28 @@ describe User do
 
     it "updates last login after create" do
       subject.last_login_at.should_not be_nil
+    end
+  end
+
+  context "when recommending friends" do
+    context "when does not have friends" do
+      it "retrieves five contacts" do
+        new_user = Factory(:user, :email => "user@example.com")
+        teachers = (1..10).collect { Factory(:user) }
+        populars = (1..20).collect { |n| Factory(:user, :friends_count => 23 + n) }
+        same_domain = Factory(:user, :email => "user2@example.com")
+
+        course = Factory(:course)
+        teachers.each {|t| course.join(t, Role[:teacher])}
+
+        new_user.recommended_contacts(5).length.should == 5
+      end
+
+      it "the user is not included" do
+        new_user = Factory(:user, :email => "user@example.com")
+        populars = (1..2).collect { |n| Factory(:user, :friends_count => 23 + n) }
+        new_user.recommended_contacts(5).should_not include(new_user)
+      end
     end
   end
 
@@ -537,12 +625,18 @@ describe User do
   end
 
   it "retrieves completeness percentage of profile" do
-    subject.completeness.should == 45
+    subject.completeness.should == 31
   end
 
   it "creates user settings!" do
     subject.create_settings!
     subject.reload.settings.should_not be_nil
     subject.settings.view_mural.should == Privacy[:friends]
+  end
+
+  private
+  def create_friendship(user1, user2)
+    user1.be_friends_with(user2)
+    user2.be_friends_with(user1)
   end
 end

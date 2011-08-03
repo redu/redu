@@ -3,133 +3,127 @@
 <div class="main grid_10 omega" style="width: 580px;">
   <div id="profile">
     <div class="vcard clearfix">
-      <h5 class="name"><%= @user.display_name %></h5>
-      <div class="actions">
-        <% unless current_user == @user %>
-          <%= link_to 'Enviar mensagem', new_user_message_path(current_user),
-            :class => 'send-message' %>
-        <% end %>
-
-        <% friendship = @user.friendship_for current_user %>
-        <% if !current_user.friends?(@user) and current_user != @user %>
-          <% if friendship %>
-            <% if friendship.status == 'pending' %>
-              <a class="waiting">Aguardando aceitação</a>
-            <% elsif current_user != @user %>
-              <%= link_to 'Aceitar pedido de conexão',
-                user_friendships_path(current_user,
-                                      :friend_id => @user.id),
-                :method => :post,
-                :class => "waiting",
-                :id => "follow_link" %>
+      <h5 class="user-name"><%= @user.display_name %></h5>
+      <div class="user-summary clearfix">
+        <ul>
+          <li>
+            <% unless @user.experiences.actual_jobs.empty? %>
+            <ul class="actual-jobs icon-experience-gray_8_10-before ">
+              <% @user.experiences.actual_jobs.each do |experience| %>
+                <li>
+                  <span class="bio"><%= experience.title %></span> em
+                  <span class="bio"><%= experience.company %></span>
+                </li>
               <% end %>
-            <% else %>
-              <%= render :partial => 'friendships/form', :locals => {
-                :user => current_user, :friend => @user } %>
-            <% end %>
-        <% end %>
-      </div>
-      <%# FIXME Mostrar ocupação  %>
-      <%# <span class="occupation">Profissão</span> %>
-      <div class="bio-wrapper clearfix">
-        <% if can? :manage, @user %>
-        <%= link_to 'Editar', edit_user_path(@user),
-          :class => 'edit icon icon-management-gray_8_8' %>
-        <% end %>
-        <span class="label">O que faço de melhor:</span>
-        <span class="bio"><%= @user.description %></span>
-        <span class="label">Interesses:</span>
-        <ul class="tags clearfix">
-          <% @user.tags.each do |tag| %>
-            <li>
-              <%= link_to tag, user_path(@user) %>
+            </ul>
+          <% end %>
+          </li>
+          <% unless @user.educations.empty? %>
+            <li class="education icon-education-gray_8_10-before">
+              <span class="bio"><%= t :high_school %></span> em
+              <span class="bio"><%= @user.educations.first.educationable.institution %></span>
             </li>
           <% end %>
-        </ul>
-      </div><!-- end .bio-wrapper -->
-    </div><!-- end .vcard -->
-
-    <% if (can? :manage, @user) or (can? :view_mural, @user) %>
-      <%= render :partial => 'statuses/create_status',
-        :locals => { :statusable => @user } %>
-      <div id="statuses" class="statuses">
-        <ol>
-          <%= render :partial => 'statuses/item', :collection => @statuses %>
-        </ol>
-
-        <%= will_paginate @statuses, :renderer => EndlessRenderer %>
-      </div><!-- end .statuses -->
-    <% end %>
-  </div><!-- end #profile -->
-
-</div><!-- end .main -->
-<div class="secondary-sidebar profile-sidebar">
-  <% if can? :manage, @user %>
-    <% unless @user.completeness == 100 %>
-      <div class="incomplete-profile">
-        <em>Seu perfil ainda não está completo</em>
-        <div class="progress">
-          <div class="completed" style="width: <%= @user.completeness %>%;">
-            <span> <%= @user.completeness %>%</span>
-          </div>
-        </div>
-        <%= link_to 'Preencher perfil', edit_user_path(@user),
-          :class => 'edit icon icon-management-gray_8_8' %>
-      </div>
-    <% end %>
-  <% end %>
-  <% if @user.curriculum_file_name %>
-    <div class="curriculum">
-      <div class="call">
-        <span class="">Curriculum vitae</span>
-      </div>
-      <%= link_to 'Download', download_curriculum_user_path(@user),
-        :class => 'button clean download' %>
-    </div>
-  <% end %>
-  <div class="environments">
-    <div class="call">
-      <span class="">Ambientes</span>
-    </div>
-    <ul>
-      <% @user.environments.each do |environment| %>
-      <li>
-        <%= image_tag environment.avatar.url(:thumb_32), :class => 'avatar' %>
-        <%= link_to environment.initials, environment_path(environment),
-          :class => 'initials' %>
-        <%= link_to environment.name, environment_path(environment),
-          :class => 'environment' %>
-
-        <ul class="courses">
-          <% @user.courses.of_environment(environment).each do |course| %>
           <li>
-            <%= link_to course.name,
-              environment_course_path(environment, course),
-              :class => 'course' %>
-            <span class="role">
-              <%= Role.human_attribute_name(
-                    Role[@user.get_association_with(course).role]) %>
-            </span>
+            <ul class="biography icon-bio-gray_8_10">
+              <li><span class="bio"><%= @user.age %></span> anos</li>
+              <% unless @user.languages.blank? %>
+                <li>Fala
+                  <span class="bio"><%= @user.languages %></span>
+                </li>
+              <% end %>
+              <% unless @user.birth_localization.blank? %>
+                <li>Natural de
+                  <span class="bio"><%= @user.birth_localization %></span>
+                </li>
+              <% end %>
+              <% unless @user.localization.blank? %>
+                <li>Vive em
+                  <span class="bio"><%= @user.localization %></span>
+                </li>
+              <% end %>
+            </ul>
           </li>
-          <% end %>
         </ul>
-      </li>
+      </div><!-- end .user-summary -->
+      <% if can? :manage, @user %>
+        <%= link_to 'Editar', edit_user_path(@user),
+          :class => 'edit icon icon-management-gray_8_8' %>
       <% end %>
-    </ul>
-  </div>
-  <% unless current_user == @user %>
-    <div class="common-connections">
-      <div class="call">
-        <span class="">Contatos em Comum</span>
-      </div>
-      <ul>
-        <% current_user.friends_in_common_with(@user).each do |friend| %>
-          <li class="clearfix">
-            <%= image_tag friend.avatar.url(:thumb_32), :class => 'avatar' %>
-            <%= link_to friend.display_name, user_path(friend), :class => 'name' %>
-          </li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-</div><!-- end .offering -->
+
+      <% unless @user.description.blank? and @user.tag_list.empty? and
+        @user.mobile.blank? and @user.social_networks.empty? %>
+        <hr class="separator icon-bio-blue_32_34-after"/>
+        <div class="bio-wrapper clearfix">
+          <% unless @user.description.blank? %>
+            <span class="label">Sobre mim:</span>
+            <span class="bio indent"><%= @user.description %></span>
+          <% end %>
+          <% unless @user.tag_list.empty? %>
+            <span class="label">Interesses:</span>
+            <span class="bio indent"><%= @user.tag_list.join(", ") %></span>
+          <% end %>
+          <% unless @user.mobile.blank? %>
+            <span class="label">Celular:</span>
+            <span class="bio indent"><%= @user.mobile %></span>
+          <% end %>
+          <ul class="social-networks clearfix">
+            <%= render :partial => "users/social_network", :collection => @user.social_networks %>
+          </ul>
+        </div><!-- end .bio-wrapper -->
+    <% end %>
+
+      <% unless @user.experiences.empty? %>
+        <hr class="separator icon-experience-blue_32_34-after"/>
+        <div class="bio-wrapper experience clearfix">
+          <span class="label">Experiência:</span>
+          <ul class="indent clearfix">
+            <% @user.experiences.each do |experience| %>
+              <li>
+                <%= render :partial => "experiences/item_detail", :locals => { :item => experience } %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <% unless @user.educations.empty? %>
+        <hr class="separator icon-education-blue_32_34-after"/>
+        <div class="bio-wrapper experience clearfix">
+          <% unless @user.educations.higher_educations.empty? and
+                @user.educations.high_schools.empty? %>
+            <span class="label">Educação:</span>
+            <ul class="indent clearfix">
+              <% @user.educations.higher_educations.each do |higher| %>
+                <%= render :partial => "educations/higher_education_detail", :locals => { :item => higher } %>
+              <% end %>
+              <% @user.educations.high_schools.each do |high| %>
+                <%= render :partial => "educations/high_school_detail", :locals => { :item => high } %>
+              <% end %>
+            </ul>
+          <% end %>
+          <% unless @user.educations.complementary_courses.empty? %>
+            <span class="label">Complemento:</span>
+            <ul class="indent clearfix">
+              <% @user.educations.complementary_courses.each do |compl_course| %>
+                <%= render :partial => "educations/complementary_course_detail",
+                  :locals => { :item => compl_course }%>
+              <% end %>
+            </ul>
+          <% end %>
+          <% unless @user.educations.event_educations.empty? %>
+            <span class="label">Evento:</span>
+            <ul class="indent clearfix">
+              <% @user.educations.event_educations.each do |event| %>
+                <%= render :partial => "educations/event_education_detail", :locals => { :item => event } %>
+              <% end %>
+            </ul>
+          <% end %>
+        </div> <!-- end. experiences(education) -->
+      <% end %>
+
+    </div><!-- end .vcard -->
+  </div><!-- end #profile -->
+</div><!-- end .main -->
+
+<%= render :partial => 'users/secondary_sidebar' %>

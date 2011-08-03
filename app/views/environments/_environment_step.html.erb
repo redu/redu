@@ -48,21 +48,25 @@ $(document).ready(function(){
 <div class="clearfix" id="checkout">
   <%= render :partial => 'environments/wizard_breadcrumbs' %>
 
-  <div class="grid_4 alpha">
-    <h3>Etapa 2: <span>Informações</span></h3>
-    <em class="description">Escreva as informações básicas do seu ambiente de estudo e do primeiro curso.</em>
-  </div>
-  <div id="url_preview">
-    <span class="label">O seu endereço completo será:</span>
-    <span class="base">redu.com.br/</span>
-    <span class="environment"><%= @environment.path %></span>/
-    <span class="base">cursos/</span>
-    <span class="course"><%= @environment.courses.first.path %></span>
+  <div class="step-info">
+    <h3>3 <span>Confirmar</span></h3>
+    <em class="description">Confirme os dados e realize o pagamento (se necessário).</em>
   </div>
   <div class="customizing">
     <%= form_for @environment, :url => environments_path(:step => 3),
-        :html => { :class => "highlightable form-common" } do |f| %>
-        <%= f.error_messages %>
+        :html => { :class => "highlightable concave-form" } do |f| %>
+        <%= concave_error_messages_for(@environment) %>
+        <%= field_set_tag nil, :class => "inline" do %>
+          <div id="url_preview">
+            <span class="base">redu.com.br</span>
+            <span class="customizable">
+              <span class="environment"><%= @environment.path %></span>
+              <span class="course-base">cursos</span>
+              <span class="course"><%= @environment.courses.first.path %></span>
+            </span>
+          </div>
+        <% end %>
+        <hr/>
         <%= render :partial => 'environments/form', :locals => { :f => f } %>
         <%= hidden_field_tag :plan, @plan %>
         <%= f.submit "Assinar", :class => "important next"%>

@@ -9,6 +9,7 @@
         <%= link_to 'editar', edit_user_path(current_user),
           :title => 'editar', :class => 'edit' %>
       </li>
+      <%= render :partial => 'shared/user_partner_item', :locals => { :user => current_user } %>
       <li>
         <%= link_to "Mensagens (#{current_user.unread_message_count})",
           user_messages_path(current_user) %>

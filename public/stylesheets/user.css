@@ -1,0 +1,200 @@
+/* Biografia */
+#biography .actual-avatar {
+  margin: 0 0 20px 160px;
+}
+
+/* Curriculum Vitae */
+
+#curriculum .experiences > li,
+#curriculum .educations > li {
+  display: block;
+  background-color: #f1f0f0;
+  color: #6d6e6f;
+  margin: 10px 0;
+
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
+#curriculum .experiences > li:hover,
+#curriculum .educations > li:hover {
+  background-color: #dbeff7;
+}
+
+#curriculum .experiences > li form,
+#curriculum .educations > li form {
+  padding-bottom: 15px;
+  background-color: white;
+}
+
+#curriculum form .description {
+  height: 82px;
+}
+
+#curriculum form .start-date {
+  float: left;
+}
+
+#curriculum form .end-date {
+  display: block;
+  float: left;
+  margin-left: 5px;
+}
+
+#curriculum form .current-experience {
+  display: block;
+  clear: both;
+  margin-left: 160px;
+  padding-top: 10px;
+}
+
+#curriculum .work-here {
+  display: inline;
+  font-weight: normal;
+  float: none;
+}
+
+#curriculum .experiences .details,
+#curriculum .educations .details {
+  float: left;
+  width: 450px;
+  margin: 5px 0;
+}
+
+#curriculum .experiences .edit-experience,
+#curriculum .educations .edit-education {
+  display: block;
+  margin: 10px 30px 10px 10px;
+  float: left;
+  padding-left: 13px;
+  font-size: .87em;
+}
+
+#curriculum .experiences .remove-experience,
+#curriculum .educations .remove-education {
+  display: block;
+  float: right;
+  width: 16px;
+  height: 18px;
+}
+
+
+#curriculum .experiences .title,
+#curriculum .educations .course-area,
+#curriculum .educations .infos .course {
+  font-weight: bold;
+  color: black;
+}
+
+#curriculum .experiences .company,
+#curriculum .educations .institution,
+#curriculum .educations .type,
+#curriculum .educations .name {
+  color: black;
+}
+
+#curriculum .experiences .period,
+#curriculum .education .period {
+  display: block;
+  font-size: .87em;
+  color: #b3b2b3;
+  font-style: italic;
+  margin: 3px 0;
+}
+
+#curriculum .education form .workload {
+  display: block;
+  width: 40px;
+}
+
+#curriculum .education form .role {
+  display: block;
+}
+
+#curriculum .new-experience-button,
+#curriculum .new-education-button {
+  float: right;
+  margin-right: 0;
+  margin-top: 10px;
+  width: 128px;
+
+  border: 1px solid #cccbcb;
+  background: white;
+
+  background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#f1f0f0)); /* webkit browsers */
+  background: -moz-linear-gradient(top, #ffffff, #f1f0f0); /* Firefox 3.6+ */
+}
+
+#curriculum .new-experience-button:hover,
+#curriculum .new-education-button:hover {
+  border: 1px solid #4cacd5;
+
+  background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#dbeff7)); /* webkit browsers */
+  background: -moz-linear-gradient(top, #ffffff, #dbeff7); /* Firefox 3.6+ */
+}
+
+#education_type.higher {
+  float: left;
+}
+
+#curriculum .header {
+  margin: 40px 0;
+}
+
+#curriculum .header > .title {
+  font-size: 1.3em;
+  float: left;
+  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-weight: 500;
+  color: #73C3E6;
+}
+
+#curriculum .header > .title span {
+  padding: 8px 16px 7px 16px;
+  margin-right: 10px;
+}
+
+#curriculum .separator {
+  border: none;
+  border-top: 1px dotted #B3B2B3;
+  width: 430px;
+  float: right;
+  margin-top: 10px;
+}
+
+#biography .remove-network {
+  width: 16px;
+  margin-top: 30px;
+  margin-right: 5px;
+  display: block;
+  float: right;
+}
+
+#biography .concave-form .concave-select {
+  width: 90px;
+}
+
+.explanation-sidebar {
+  width: 145px;
+  float: left;
+}
+
+.explanation-sidebar .title {
+  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-weight: 300;
+  font-size: 1.2em;
+  color: #f37b38;
+  display: block;
+  margin-top: 20px;
+}
+
+.explanation-sidebar p {
+  margin: 15px 0;
+  font-size: .87em;
+  color: #b3b2b3;
+}
+
+.explanation-sidebar p .featured {
+  font-weight: bold;
+}

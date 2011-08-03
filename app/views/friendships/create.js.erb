@@ -1,4 +1,9 @@
-<% if !@show_user %>
+<% if @recommendation %>
+  $("#recommendation-<%= @friend.id %>").slideUp();
+  var new_recommendation = "<%= escape_javascript render :partial => 'users/recommendation_item',
+    :collection => current_user.recommended_contacts(1) %>"
+  $(".contact-recommendations > ul").append(new_recommendation);
+<% elsif !@show_user %>
   $("#requisition-<%= @friend.id %>").slideToggle();
 <% end %>
 

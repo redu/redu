@@ -1,47 +1,21 @@
-<div class="clearfix" id="checkout">
-  <ol id="breadcrumbs" class="wizard clearfix">
-    <li>
-      <%= link_to "Home", home_path, :class => "replacement home icon icon-redu_r8_c227_s1" %>
-    </li>
-    <li>
-      <%= link_to "Ensine", teach_index_path %>
-    </li>
-    <li>
-      <a href="#" class="disabled">Etapa 1: Planos</a>
-    </li>
-    <li>
-      <a href="#" class="disabled">Etapa 2: Informações</a>
-    </li>
-    <li>
-      <a href="#" class="disabled">Etapa 3: Confirmar Dados</a>
-    </li>
-  </ol>
+<style type="text/css">
+  body {
+    background: #F6F6F6 url("<%= url_for "/images/new/teach-background2.png" %>") repeat-x 0 110px;
+  }
+</style>
+<div class="clearfix" id="teach-index">
+  <h3 class="teach-call">Ensinar nunca foi tão conveniente</h3>
 
-  <div class="grid_8 alpha">
-    <h3>Ensine</h3>
-    <em class="slogan">Educação a distância nunca foi tão simples.</em>
-
+  <div class="grid_10 alpha">
+    <em class="teach-steps">Crie um ambiente em 3 passos</em>
     <ol class="flow">
-      <li>
-        <strong>Ambiente de Ensino</strong>
-        <p>Áreas privadas e seguras para dispor seus conteúdos e animar a aprendizagem de seus alunos</p>
-      </li>
-      <li>
-        <strong>Curso</strong>
-        <p>Planeje sua atividade de ensino por disciplina, turmas ou áreas temáticas.</p>
-      </li>
-      <li>
-        <strong>Disciplina</strong>
-        <p>Espaço de interação específica do curso e rico em materiais nos quais formadores e aprendizes colaboram numa dinâmica de rede social.</p>
-      </li>
-      <li>
-        <strong>Módulo</strong>
-        <p>Organize seus materiais (do tipo vídeo, texto ou documento) em unidades de aprendizagem flexíveis.  </p>
-      </li>
+      <li class="first"> Escolha um plano que atenda às suas necessidades </li>
+      <li class="second">Descreva as informações básicas do ambiente e do curso</li>
+      <li class="third">Confirme os dados e realize o pagamento</li>
     </ol>
   </div>
 
-  <div class="grid_7 omega wizard-0">
+  <div class="grid_6 omega wizard-0">
     <%= render :partial => "environments/environment_simple_form" %>
   </div>
 </div>

@@ -28,6 +28,36 @@ module BaseHelper
     render(:partial => 'shared/fake_tabs', :locals => locals)
   end
 
+  # Cria lista não ordenada no formato desejado pelo JqueryUI
+  def real_tabs_navigation(*ids)
+    lis = ids.collect do |id|
+      #href, name, class_name = id
+      href, name = id
+      content_tag :li do
+        # por enquanto que ícones não são gerados pelo design
+        # content_tag :a, :href => "##{href}", :class => "icon #{class_name}" do
+        content_tag :a, :href => "##{href}" do
+          name
+        end
+      end
+    end
+    width = lis.size * 120;
+    ul = content_tag :ul, :style => "width: #{width}px;", :class => "clearfix"  do
+      lis.join("\n").html_safe
+    end
+    ul.html_safe
+  end
+
+  # Cria código para abas do JqueryUI a partir de uma lista de id's e título
+  # [href(id), name]
+  def real_tabs(*ids, &block)
+    locals = {
+      :navigation => real_tabs_navigation(*ids),
+      :body => capture(&block)
+    }
+    render(:partial => 'shared/real_tabs', :locals => locals)
+  end
+
   def error_for(object, method = nil, options={})
     if method
       err = instance_variable_get("@#{object}").errors[method].to_sentence rescue instance_variable_get("@#{object}").errors[method]
@@ -37,6 +67,15 @@ module BaseHelper
     options.merge!(:class=>'errorMessageField',:id=>"#{[object,method].compact.join('_')}-error",
     :style=> (err ? "#{options[:style]}":"#{options[:style]};display: none;"))
     content_tag("p", err || "", options )
+  end
+
+  # Mostra todos os erros de um determinado atributo em forma de lista
+  def concave_errors_for(object, method)
+    errors = object.errors.get(method).collect do |msg|
+      content_tag(:li, msg)
+    end.join.html_safe
+
+    content_tag(:ul, errors, :class => 'errors_on_field')
   end
 
   def type_class(resource)
@@ -50,6 +89,67 @@ module BaseHelper
       'ext_blank'
     end
   end
+
+  # Sobrescrito para exibir mensagem de erro apenas com o nome
+  # dos campos inválidos.
+  def concave_error_messages_for(*params)
+    options = params.extract_options!.symbolize_keys
+
+    objects = Array.wrap(options.delete(:object) || params).map do |object|
+      object = instance_variable_get("@#{object}") unless object.respond_to?(:to_model)
+      object = convert_to_model(object)
+
+      if object.class.respond_to?(:model_name)
+        options[:object_name] ||= object.class.model_name.human.downcase
+      end
+
+      object
+    end
+
+    objects.compact!
+    count = objects.inject(0) {|sum, object| sum + object.errors.count }
+
+    unless count.zero?
+      html = {}
+      [:id, :class].each do |key|
+        if options.include?(key)
+          value = options[key]
+          html[key] = value unless value.blank?
+        else
+          html[key] = 'error_explanation'
+        end
+      end
+      options[:object_name] ||= params.first
+
+      I18n.with_options :locale => options[:locale], :scope => [:activerecord, :errors, :template] do |locale|
+        header_message = if options.include?(:header_message)
+                           options[:header_message]
+                         else
+                           locale.t :header, :count => count, :model => options[:object_name].to_s.gsub('_', ' ')
+                         end
+
+        message = options.include?(:message) ? options[:message] : locale.t(:body)
+
+        error_messages = objects.sum do |object|
+          object.errors.collect { |attr, error| attr }.map do |attr|
+            object.class.human_attribute_name(attr, :default => attr)
+          end
+        end.uniq.join(", ").html_safe
+
+
+
+        contents = ''
+        contents << content_tag(options[:header_tag] || :h2, header_message) unless header_message.blank?
+        contents << content_tag(:p, message) unless message.blank?
+        contents << content_tag(:p, error_messages, :class => "invalid_fields")
+
+        content_tag(:div, contents.html_safe, html)
+      end
+    else
+      ''
+    end
+  end
+
 
 
   def activity_name(item)

@@ -1,0 +1,106 @@
+.icon-small {
+  background-image: url("../images/new/icons-small.png");
+  background-repeat: no-repeat;
+  background-position: top left;
+}
+
+.icon-bio-blue_32_34 { background-position: -160px -3280px }
+.icon-bio-blue_32_34-after:after {
+  content: "";
+  width: 32px;
+  height: 34px;
+  background: url("../images/new/icons-small.png") -160px -3280px no-repeat;
+}
+
+.icon-bio-gray_8_10 { background-position: 0px -2800px; }
+.icon-bio-gray_8_10:before {
+  content: "";
+  width: 8px;
+  height: 10px;
+  background: url("../images/new/icons-small.png") 0px -2800px no-repeat;
+}
+
+.icon-course-gray_16_18 { background-position: 0px -80px;}
+.icon-delete-gray_16_18 { background-position: 0 -2160px; }
+.icon-delete-gray_16_18:hover,
+.icon-delete-red-red_16_18 { background-position: -80px -2161px; }
+.icon-diploma-lightblue_32_34 { background-position: -80px -3280px; }
+.icon-education-blue_32_34 { background-position: -320px -3280px; }
+.icon-education-blue_32_34-after:after {
+  content: "";
+  width: 32px;
+  height: 34px;
+  background: url("../images/new/icons-small.png") -320px -3280px no-repeat;
+}
+.icon-education-gray_8_10 { background-position: -240px -2800px; }
+.icon-education-gray_8_10-before:before {
+  content: "";
+  width: 8px;
+  height: 10px;
+  background-position: url("../images/new/icons-small.png") -240px -2800px no-repeat;
+}
+.icon-environment-gray_16_18 { background-position: 0 0;}
+.icon-experience-blue_32_34 { background-position: -240px -3280px; }
+.icon-experience-blue_32_34-after:after {
+  content: "";
+  width: 32px;
+  height: 34px;
+  background: url("../images/new/icons-small.png") -240px -3280px no-repeat;
+}
+.icon-experience-gray_8_10 { background-position: -160px -2800px; }
+.icon-experience-gray_8_10-before:before {
+  content: "";
+  width: 8px;
+  height: 10px;
+  background: url("../images/new/icons-small.png") -160px -2800px no-repeat;
+}
+.icon-experience-lightblue_32_34 { background-position: 0 -3280px; }
+
+/* Social Networks */
+.icon-facebook_16_18 { background-position: 0px -1920px }
+.icon-facebook_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") 0px -1920px no-repeat;
+}
+
+.icon-googleplus_16_18 { background-position: -320px -1920px }
+.icon-googleplus_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -320px -1920px no-repeat;
+}
+
+.icon-linkedin_16_18 { background-position: -240px -1920px }
+.icon-linkedin_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -240px -1920px no-repeat;
+}
+
+.icon-orkut_16_18 { background-position: -400px -1920px }
+.icon-orkut_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -400px -1920px no-repeat;
+}
+
+.icon-skype_16_18 { background-position: -160px -1920px }
+.icon-skype_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -160px -1920px no-repeat;
+}
+
+.icon-twitter_16_18 { background-position:  -80px -1920px }
+.icon-twitter_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -80px -1920px no-repeat;
+}

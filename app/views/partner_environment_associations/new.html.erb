@@ -1,0 +1,22 @@
+<%= render :partial => 'users/home_sidebar' %>
+<div class="main grid_10" id="partner" style="width: 580px;">
+  <%= render :partial => 'partners/breadcrumbs', :locals => { :partner => @partner} %>
+  <%= render :partial => 'partners/header', :locals => { :partner => @partner, :title => "Ambientes: criar um novo" } %>
+  <%= real_tabs ["environments", "Ambientes"], ["admins", "Admins"] do %>
+    <div id="environments">
+      <%= link_to raw("&lt; voltar"), partner_clients_path(@partner), :class =>  'back-to-environments' %>
+      <%= form_for @partner_environment_association, :url => partner_clients_path(@partner),
+        :html => {:class => "concave-form"} do |f| %>
+        <%= concave_error_messages_for(@partner_environment_association) %>
+        <%= render :partial => 'partner_environment_associations/form',
+          :locals => { :f => f} %>
+        <%= f.submit "Criar ambiente" %>
+      <% end %>
+    </div>
+    <div id="admins">
+      <%= render :partial => 'partner_user_associations/admin_list',
+        :locals => { :partner_user_associations => @partner_user_associations,
+                     :partner => @partner } %>
+    </div>
+  <% end %>
+</div>

@@ -25,7 +25,9 @@ javascripts:
     - public/javascripts/jquery.fcbkcomplete.min.js
     - public/javascripts/jquery.tokeninput.js
     - public/javascripts/jquery.filestyle.mini.js
+    - public/javascripts/form.redu.jquery.js
     - public/javascripts/asyncjs.jquery.js
+    - public/javascripts/user.js
   chat:
     - public/javascripts/jquery.pjax.js
     - public/javascripts/jquery-ui.js
@@ -38,6 +40,13 @@ javascripts:
   ie:
     - public/javascripts/json2.js
     - public/javascripts/selectivizr.js
+  real_tabs:
+    - public/javascripts/jquery.ui.core.js
+    - public/javascripts/jquery.ui.widget.js
+    - public/javascripts/jquery.ui.tabs.js
+    - public/javascripts/real_tabs.redu.jquery.js
+  user:
+    - public/javascripts/jquery.maskedinput.js
 
 stylesheets:
   common:
@@ -49,6 +58,10 @@ stylesheets:
     - public/stylesheets/ajaxful_rating.css
     - public/stylesheets/fb_style.css
     - public/stylesheets/token-input.css
+    - public/stylesheets/form.redu.css
+    - public/stylesheets/icons.big.redu.css
+    - public/stylesheets/icons.redu.css
+    - public/stylesheets/user.css
   ie:
     - public/stylesheets/ie.css
   chat:

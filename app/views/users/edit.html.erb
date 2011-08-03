@@ -1,3 +1,14 @@
+<%= lazy_load(:user, :jammit => true, :clear => true) do %>
+    // Coloca a máscara de celular no campo correspondente
+    $.fn.refreshMobileMask = function(){
+      return this.each(function(){
+          var $this = $(this);
+          $this.mask("+99 (99) 9999-9999", { placeholder:" " });
+      });
+    };
+
+    $("#biography .mobile").refreshMobileMask();
+<% end %>
 <%= render :partial => 'users/home_sidebar' %>
 <div class="main grid_10" style="width: 580px;">
   <%= render :partial => 'users/breadcrumbs' %>
@@ -6,6 +17,48 @@
       ['Conta', account_user_path(@user), {:class => 'icon icon-account-gray_16_16'}],
       ['Planos', user_plans_path(@user), {:class => 'icon icon-cash-gray_16_16'}] do
     %>
+  <%= real_tabs ["biography", "Biografia"], ["curriculum", "Currículo"] do %>
+    <div id="biography" class"clearfix">
       <%= render :partial => 'users/form' %>
-    <% end %>
+    </div>
+    <div id="curriculum" class="clearfix">
+      <div class="experience clearfix">
+        <div class="header clearfix">
+          <h3 class="title"><span class="icon-small icon-experience-lightblue_32_34"></span>Experiência</h3>
+          <hr class="separator">
+        </div>
+        <ul class="experiences">
+          <%= render :partial => 'experiences/item',
+            :collection => @user.experiences %>
+        </ul>
+        <%= render :partial => 'experiences/form', :locals => {
+          :user => @user, :experience => @experience } %>
+        <a href="#" class="new-experience-button cancel">+ Novo projeto</a>
+      </div>
+      <div class="education">
+        <div class="header clearfix">
+          <h3 class="title"><span class="icon-small icon-diploma-lightblue_32_34"></span>Educação</h3>
+          <hr class="separator">
+        </div>
+        <ul class="educations">
+          <%= render :partial => "educations/item",
+            :collection => @user.educations %>
+        </ul>
+        <%= render :partial => 'educations/form', :locals => {
+          :high_school => @high_school, :higher_education => @higher_education,
+          :complementary_course => @complementary_course,
+          :event_education => @event_education, :user => @user }%>
+        <a href="#" class="new-education-button cancel">+ Novo projeto</a>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+</div>
+<div class="profile-sidebar explanation-sidebar">
+  <%= render :partial => 'users/completeness_bar' %>
+  <span class="title">Currículo</span>
+  <p>Nesta seção, você pode alocar informações a respeito de sua formação escolar e acadêmica, bem como sua experiência no mercado de trabalho.</p>
+  <p>Em educação há quatro categorias: ensino médio, superior, complementar e eventos.</p>
+  <p><span class="featured">Médio</span> corresponde à sua educação básica escolar; <span class="featured">superior</span> a academia e correlatos; <span class="featured">complementar</span> a cursos extras; <span class="featured">eventos</span> a seminários e palestras.</p>
+  <p>Exponha seu currículo de forma simples e divulgue-o junto a sua rede de contatos.</p>
 </div>

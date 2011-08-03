@@ -1,0 +1,22 @@
+<li>
+  <%= image_tag item_medium.avatar.url(:thumb_32), :class => 'avatar' %>
+  <%= link_to item_medium.initials, environment_path(item_medium),
+    :class => 'initials' %>
+  <%= link_to item_medium.name, environment_path(item_medium),
+    :class => 'environment' %>
+
+  <ul class="courses">
+    <% @user.courses.of_environment(item_medium).each do |course| %>
+    <li>
+      <%= link_to course.name,
+        environment_course_path(item_medium, course),
+        :class => 'course' %>
+      <span class="role">
+        <%= Role.human_attribute_name(
+              Role[@user.get_association_with(course).role]) %>
+      </span>
+    </li>
+    <% end %>
+  </ul>
+</li>
+<hr class="separator"/>

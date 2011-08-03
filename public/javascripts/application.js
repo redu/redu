@@ -1,4 +1,5 @@
 jQuery(function(){
+
     // Flash message
     $(".flash-message").parent().next().css("marginTop", "10px");
     $(".flash-message .close-flash").click(function(e){
@@ -205,12 +206,22 @@ jQuery(function(){
     });
 
     // Padrão de spinner
-    $(".form-common, .form-loader").live('ajax:before', function(){
-        $(this).find("input[type=submit]").loadingStart();
+    $(".form-common, .form-loader").live('ajax:before', function(e){
+        var $this = $(this);
+        var $target = $(e.target);
+
+        if($target.is($this)){
+          $(this).find("input[type=submit]").loadingStart();
+        }
     });
 
-    $(".form-common, .form-loader").live('ajax:complete', function(){
-        $(this).find("input[type=submit]").loadingComplete();
+    $(".form-common, .form-loader").live('ajax:complete', function(e){
+        var $this = $(this);
+        var $target = $(e.target);
+
+        if($target.is($this)){
+          $(this).find("input[type=submit]").loadingComplete();
+        }
     });
 
     $("a[data-remote=true]").live('ajax:before', function(){
@@ -223,25 +234,40 @@ jQuery(function(){
         $(this).removeClass("link-loading");
     });
 
-    $.fn.loadingStart = function(){
+    $.fn.loadingStart = function(options){
+      var config = {
+        "className" : "bt-loading"
+      }
+      $.extend(config, options);
+
       return this.each(function(){
           $bt = $(this);
-          $bt.addClass("bt-loading");
+          $bt.addClass(config.className);
       });
     };
 
-    $.fn.loadingComplete = function(){
+    $.fn.loadingComplete = function(options){
+      var config = {
+        "className" : "bt-loading"
+      }
+      $.extend(config, options);
+
       return this.each(function(){
           $bt = $(this);
-          $bt.removeClass("bt-loading");
+          $bt.removeClass(config.className);
       });
     };
 
-    $.fn.loadingToggle = function(){
+    $.fn.loadingToggle = function(options){
+      var config = {
+        "className" : "bt-loading"
+      }
+      $.extend(config, options);
+
       return this.each(function(){
           $bt = $(this);
 
-          if( $bt.hasClass('bt-loading') ) {
+          if( $bt.hasClass(config.className) ) {
             $bt.loadingComplete();
           } else {
             $bt.loadingStart();

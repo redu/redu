@@ -1,0 +1,12 @@
+<% unless @user.completeness == 100 %>
+  <div class="incomplete-profile">
+    <em>Seu perfil ainda não está completo</em>
+    <div class="progress">
+      <div class="completed" style="width: <%= @user.completeness %>%;">
+        <span> <%= @user.completeness %>%</span>
+      </div>
+    </div>
+    <%= link_to 'Preencher perfil', edit_user_path(@user),
+      :class => 'edit icon icon-management-gray_8_8' %>
+  </div>
+<% end %>

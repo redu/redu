@@ -1,10 +1,11 @@
 require "active_record"
 require "rspec"
-require File.dirname(__FILE__) + "/../init"
 
-ActiveRecord::Base.establish_connection(:adapter => "sqlite3", :database => ":memory:")
+ActiveRecord::Base.configurations = {'test' => {:adapter => 'sqlite3', :database => ":memory:"}}
+ActiveRecord::Base.establish_connection(ActiveRecord::Base.configurations["test"])
 
 load("schema.rb")
+require File.dirname(__FILE__) + "/../init"
 
 class Object
   def self.unset_class(*args)
