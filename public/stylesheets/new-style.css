@@ -4217,6 +4217,7 @@ div.token-input-dropdown {
 }
 
 #profile .vcard .user-summary .biography > li,
+#profile .vcard .user-summary .education > li,
 #profile .vcard .user-summary .actual-jobs > li {
   margin-left: 13px;
 }

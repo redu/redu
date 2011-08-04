@@ -632,6 +632,20 @@ describe User do
     subject.settings.view_mural.should == Privacy[:friends]
   end
 
+  it "should retrieve educations most important \
+    in order > higher_education > complementary_course > high_school" do
+
+    edu1 = Factory(:education, :user => subject,
+                   :educationable => Factory(:high_school))
+    edu2 = Factory(:education, :user => subject,
+                   :educationable => Factory(:higher_education))
+    edu3 = Factory(:education, :user => subject,
+                   :educationable => Factory(:complementary_course))
+
+    subject.reload
+    subject.most_important_education.should == [edu2, edu3, edu1]
+  end
+
   private
   def create_friendship(user1, user2)
     user1.be_friends_with(user2)

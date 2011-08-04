@@ -871,6 +871,13 @@ class User < ActiveRecord::Base
             contacts_ids, contacts_and_pending_ids, self.id)
   end
 
+  def most_important_education
+    educations = [] << self.educations.higher_educations.first <<
+      self.educations.complementary_courses.first <<
+      self.educations.high_schools.first
+    educations
+  end
+
   protected
   def activate_before_save
     self.activated_at = Time.now.utc
