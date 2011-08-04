@@ -185,6 +185,10 @@
   float: left;
 }
 
+.explanation-sidebar .explanation {
+  margin-left: 10px;
+}
+
 .explanation-sidebar .title {
   font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 300;

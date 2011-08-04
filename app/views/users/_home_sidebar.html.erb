@@ -12,7 +12,7 @@
         <% selected = (current_page? home_user_path(current_user)) ?
                        "icon-home-white_16_16" : "icon-home-lightblue_16_16"
                        %>
-      <%= link_to current_user.display_name, home_user_path(current_user),
+      <%= link_to 'Visão Geral', home_user_path(current_user),
         :class => "icon #{selected}" %>
       </div>
     </li>
@@ -44,8 +44,6 @@
           :class => "icon #{selected}" %>
       </div>
     </li>
-    <%= render :partial => 'users/sidebar_environment_item',
-      :collection => current_user.environments, :as => :environment %>
     <li>
       <div class="<%= (current_page? edit_user_path(current_user)) ?
         "session selected".to_s : "session".to_s %>">
@@ -57,6 +55,8 @@
           :class => "icon #{selected}" %>
       </div>
     </li>
+    <%= render :partial => 'users/sidebar_environment_item',
+      :collection => current_user.environments, :as => :environment %>
     <li>
       <div class="<%= (current_page? user_friendships_path(current_user)) ?
         "session selected".to_s : "session".to_s %>">
