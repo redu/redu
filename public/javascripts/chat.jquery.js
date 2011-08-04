@@ -318,7 +318,7 @@
         chatInfos.windows = [];
       }
 
-      $.cookie("chat_windows", $.toJSON(chatInfos));
+      $.cookie("chat_windows", $.toJSON(chatInfos), { path: "/" });
     };
 
     // Guarda o estado da janela no cookie
@@ -341,7 +341,7 @@
       if (!alreadyExists) {
         storedWindows.push(memberInfos);
 
-        $.cookie("chat_windows", $.toJSON(chatInfos));
+        $.cookie("chat_windows", $.toJSON(chatInfos), { path: "/" });
       }
     };
 
@@ -353,7 +353,7 @@
         if (cookie[i].id == opts.id) { cookie[i][opts.property] = opts.value; }
       }
 
-      $.cookie("chat_windows", $.toJSON(chatInfos));
+      $.cookie("chat_windows", $.toJSON(chatInfos), { path: "/" });
     };
 
     $.initStates = function() {
@@ -363,13 +363,13 @@
         cookie = { listOpened : false, windows: [] };
       }
       var windowsEncoded = $.toJSON(cookie);
-      $.cookie("chat_windows", windowsEncoded);
+      $.cookie("chat_windows", windowsEncoded, { path: "/" });
     };
 
     $.updateContactsState = function(opts) {
       var chatInfos = $.evalJSON($.cookie("chat_windows"));
       chatInfos.listOpened = opts.opened;
-      $.cookie("chat_windows", $.toJSON(chatInfos));
+      $.cookie("chat_windows", $.toJSON(chatInfos), { path: "/" });
     };
 
     // Alerta novas mensagens
