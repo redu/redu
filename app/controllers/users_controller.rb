@@ -96,8 +96,12 @@ class UsersController < BaseController
   end
 
   def contacts_endless
-    @contacts = Kaminari::paginate_array(@user.friends_not_in_common_with(current_user)).
-      page(params[:page]).per(4)
+    @contacts = if current_user == @user
+      Kaminari::paginate_array(@user.friends).page(params[:page]).per(8)
+    else
+      Kaminari::paginate_array(@user.friends_not_in_common_with(current_user)).
+        page(params[:page]).per(4)
+    end
 
     respond_to do |format|
       format.js { render_sidebar_endless 'users/item_medium_24', @contacts,
