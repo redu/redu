@@ -872,9 +872,12 @@ class User < ActiveRecord::Base
   end
 
   def most_important_education
-    educations = [] << self.educations.higher_educations.first <<
-      self.educations.complementary_courses.first <<
-      self.educations.high_schools.first
+    educations = []
+    edu = self.educations
+    educations << edu.higher_educations.first unless edu.higher_educations.empty?
+    educations << edu.complementary_courses.first unless edu.complementary_courses.empty?
+    educations << edu.high_schools.first unless edu.high_schools.empty?
+
     educations
   end
 
