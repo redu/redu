@@ -1,8 +1,6 @@
 class BaseController < ApplicationController
   layout :choose_layout, :except => [:site_index]
   # Work around (ver método self.login_required_base)
-  before_filter :login_required_base, :only => [:learn_index]
-
 
   rescue_from CanCan::AccessDenied do |exception|
     flash[:notice] = "Você não tem acesso a essa página."
@@ -28,14 +26,6 @@ class BaseController < ApplicationController
 
   def teach_index
     authorize! :teach_index, :base
-
-    respond_to do |format|
-      format.html
-    end
-  end
-
-  def learn_index
-    @spaces = current_user.spaces
 
     respond_to do |format|
       format.html

@@ -58,15 +58,9 @@
         <li>
             <%= link_to 'Início', home_user_path(current_user) %>
         </li>
-        <li>
-            <%= link_to "Aprenda", user_path(current_user) %>
-        </li>
         <% else %>
         <li>
             <%= link_to 'Início', application_path %>
-        </li>
-        <li>
-            <%= link_to "Aprenda", new_user_path %>
         </li>
         <% end %>
         <li>
