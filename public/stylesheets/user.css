@@ -3,6 +3,22 @@
   margin: 0 0 20px 160px;
 }
 
+#biography .remove-network {
+  width: 16px;
+  margin-top: 30px;
+  margin-right: 5px;
+  display: block;
+  float: right;
+}
+
+#biography .concave-form .concave-select {
+  width: 90px;
+}
+
+#select-networks .tip {
+  margin-left: 95px
+}
+
 /* Curriculum Vitae */
 
 #curriculum .experiences > li,
@@ -161,18 +177,6 @@
   width: 430px;
   float: right;
   margin-top: 10px;
-}
-
-#biography .remove-network {
-  width: 16px;
-  margin-top: 30px;
-  margin-right: 5px;
-  display: block;
-  float: right;
-}
-
-#biography .concave-form .concave-select {
-  width: 90px;
 }
 
 .explanation-sidebar {
