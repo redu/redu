@@ -176,7 +176,8 @@
 }
 
 .explanation-sidebar {
-  width: 145px;
+  width: 160px;
+  padding-left: 10px;
   float: left;
 }
 

@@ -124,6 +124,7 @@
 
 #content .sidebar {
   margin-top: 40px;
+  margin-right: 0;
 
 }
 
@@ -142,7 +143,7 @@
 #content .sidebar .local-nav > li > .session {
   display: block;
   position: relative;
-  width: 161px;
+  width: 151px;
   padding: 8px 10px;
   -moz-border-radius: 5px 0 0 5px;
   -webkit-border-radius: 5px 0 0 5px;
@@ -251,8 +252,8 @@
   -moz-border-radius: 12px;
   -webkit-border-radius: 12px;
   border-radius: 12px;
-
-  padding: 10px 20px;
+  margin-right: 0;
+  padding: 10px 19px;
 }
 
 #content .big-col {
@@ -1270,7 +1271,7 @@
 #content .secondary-sidebar {
   margin: 0;
   float: left;
-  width: 155px;
+  width: 170px;
 }
 
 #content .secondary-sidebar .separator {
@@ -1694,7 +1695,7 @@
 
 .global-messages .flash-message {
   margin-top: 10px;
-  margin-left: 180px;
+  margin-left: 170px;
   width: 590px;
   position: relative;
 }
