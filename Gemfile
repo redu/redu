@@ -44,6 +44,7 @@ group :development, :test do
   gem 'ruby-debug'
   gem 'thin'
   gem 'jasmine'
+  gem 'sqlite3'
 end
 
 group :production do
