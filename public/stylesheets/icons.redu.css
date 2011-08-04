@@ -4,6 +4,22 @@
   background-position: top left;
 }
 
+.icon-add-contact-white-blue_16_18 { background-position: -160px -2480px }
+.icon-add-contact-white-blue_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -160px -2480px no-repeat;
+}
+
+.icon-add-message-lightblue_16_18 { background-position: -80px -2640px; }
+.icon-add-message-lightblue_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -80px -2640px no-repeat;
+}
+
 .icon-bio-blue_32_34 { background-position: -160px -3280px }
 .icon-bio-blue_32_34-after:after {
   content: "";
@@ -12,15 +28,31 @@
   background: url("../images/new/icons-small.png") -160px -3280px no-repeat;
 }
 
-.icon-bio-gray_8_10 { background-position: 0px -2800px; }
+.icon-bio-gray_8_10 { background-position: 0 -2800px; }
 .icon-bio-gray_8_10:before {
   content: "";
   width: 8px;
   height: 10px;
-  background: url("../images/new/icons-small.png") 0px -2800px no-repeat;
+  background: url("../images/new/icons-small.png") 0 -2800px no-repeat;
 }
 
-.icon-course-gray_16_18 { background-position: 0px -80px;}
+.icon-contacts-gray_16_18 { background-position: 0 -2400px; }
+.icon-contacts-gray_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") 0 -2400px no-repeat;
+}
+
+.icon-contacts-white-green_16_18 { background-position: -320px -2400px; }
+.icon-contacts-white-green_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -320px -2400px no-repeat;
+}
+
+.icon-course-gray_16_18 { background-position: 0 -80px;}
 .icon-delete-gray_16_18 { background-position: 0 -2160px; }
 .icon-delete-gray_16_18:hover,
 .icon-delete-red-red_16_18 { background-position: -80px -2161px; }
@@ -32,14 +64,32 @@
   height: 34px;
   background: url("../images/new/icons-small.png") -320px -3280px no-repeat;
 }
+
 .icon-education-gray_8_10 { background-position: -240px -2800px; }
 .icon-education-gray_8_10-before:before {
   content: "";
   width: 8px;
   height: 10px;
-  background-position: url("../images/new/icons-small.png") -240px -2800px no-repeat;
+  background: url("../images/new/icons-small.png") -240px -2800px no-repeat;
 }
+
 .icon-environment-gray_16_18 { background-position: 0 0;}
+.icon-environment-white-green_16_18 { background-position: -560px 0;}
+.icon-environment-white-green_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -560px 0 no-repeat;
+}
+
+.icon-environment_admin-gray_16_18 { background-position; 0 -800px; }
+.icon-environment_admin-gray_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") 0 -800px no-repeat;
+}
+
 .icon-experience-blue_32_34 { background-position: -240px -3280px; }
 .icon-experience-blue_32_34-after:after {
   content: "";
@@ -47,6 +97,7 @@
   height: 34px;
   background: url("../images/new/icons-small.png") -240px -3280px no-repeat;
 }
+
 .icon-experience-gray_8_10 { background-position: -160px -2800px; }
 .icon-experience-gray_8_10-before:before {
   content: "";
@@ -54,15 +105,47 @@
   height: 10px;
   background: url("../images/new/icons-small.png") -160px -2800px no-repeat;
 }
+
 .icon-experience-lightblue_32_34 { background-position: 0 -3280px; }
+.icon-member-gray_16_18 { background-position; 0 -1040px; }
+.icon-member-gray_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") 0 -1040px no-repeat;
+}
+
+.icon-redu_admin-gray_16_18 { background-position; 0 -720px; }
+.icon-redu_admin-gray_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") 0 -720px no-repeat;
+}
+
+.icon-teacher-gray_16_18 { background-position: 0 -880px }
+.icon-teacher-gray_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") 0 -880px no-repeat;
+}
+
+.icon-tutor-gray_16_18 { background-position; 0 -960px; }
+.icon-tutor-gray_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") 0 -960px no-repeat;
+}
 
 /* Social Networks */
-.icon-facebook_16_18 { background-position: 0px -1920px }
+.icon-facebook_16_18 { background-position: 0 -1920px }
 .icon-facebook_16_18-before:before {
   content: "";
   width: 16px;
   height: 18px;
-  background: url("../images/new/icons-small.png") 0px -1920px no-repeat;
+  background: url("../images/new/icons-small.png") 0 -1920px no-repeat;
 }
 
 .icon-googleplus_16_18 { background-position: -320px -1920px }

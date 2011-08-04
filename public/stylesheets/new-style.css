@@ -123,9 +123,11 @@
 }
 
 #content .sidebar {
+  width: 150px;
+  padding-right: 10px;
+  float: left;
   margin-top: 40px;
   margin-right: 0;
-
 }
 
 #content .sidebar .image-frame {
@@ -143,8 +145,8 @@
 #content .sidebar .local-nav > li > .session {
   display: block;
   position: relative;
-  width: 151px;
-  padding: 8px 10px;
+  width: 141px;
+  padding: 8px 20px 8px 10px;
   -moz-border-radius: 5px 0 0 5px;
   -webkit-border-radius: 5px 0 0 5px;
   border-radius: 5px 0 0 5px;
@@ -169,6 +171,7 @@
 #content .sidebar .local-nav > li > .selected:hover a {
   color: white;
   padding-left: 25px;
+  font-size: .9em;
 }
 
 #content .sidebar .local-nav ul {
@@ -202,8 +205,17 @@
   color: #B2B2B2;
   display: block;
   padding-top: 3px;
-  padding-left: 23px;
-  font-size: .9em;
+  font-size: .87em;
+}
+
+#content .sidebar .call:before {
+  float:left;
+  margin-top: -2px;
+  margin-right: 6px;
+}
+
+#content .sidebar .call .count {
+  color: #158AC4;
 }
 
 #content .sidebar .connections li {
@@ -1289,7 +1301,7 @@
   font-weight: bold;
   color: white;
   display: block;
-  margin: 20px 0 10px 0;
+  margin: 20px 0 5px 0;
 
   -moz-text-shadow: 1px -1px 1px #61be80;
   -webkit-text-shadow: 1px -1px 1px #61be80;
@@ -1313,7 +1325,7 @@
 
 #content .actions .add-as-friend:hover,
 #content .actions .add-as-friend {
-  width: 140px;
+  width: 150px;
   height: 30px;
   font-size: 1em;
   cursor: pointer;
@@ -1321,6 +1333,12 @@
   -moz-text-shadow: 0 -1px 1px #1789c3;
   -webkit-text-shadow: 0 -1px 1px #1789c3;
   text-shadow: 0 -1px 1px #1789c3;
+}
+
+#content .actions .add-as-friend .add-contact:before {
+  float: left;
+  margin-left: 5px;
+  margin-top: -2px;
 }
 
 #content .actions .concave-button {
@@ -1335,11 +1353,16 @@
   border-bottom-right-radius: 3px;
 }
 
+#content .actions .send-message .write-message:before {
+  float: left;
+  margin: -3px 5px 0 5px;
+}
+
 #content .actions .send-message {
   display: block;
   margin-top: 5px;
   padding: 0;
-  width: 138px;
+  width: 148px;
   height: 28px;
 }
 
@@ -4434,7 +4457,7 @@ div.token-input-dropdown {
 }
 
 .profile-sidebar .environments > ul > li {
-  padding: 5px 0 5px 5px;
+  padding: 5px 10px;
 
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -4451,7 +4474,17 @@ div.token-input-dropdown {
 }
 
 .profile-sidebar .environments .courses li {
-  margin: 5px 0 5px 5px;
+  margin: 5px 0 10px 5px;
+  padding-bottom: 7px;
+}
+
+.profile-sidebar .environments .courses li:last-child {
+  margin-bottom: 0;
+}
+
+.profile-sidebar .environments .courses li .role:before {
+  float: left;
+  margin-right: 5px;
 }
 
 .profile-sidebar .common-connections ul {
@@ -4964,6 +4997,13 @@ div.token-input-dropdown {
   display: block;
   margin: 0 auto;
   margin-bottom: 10px;
+}
+
+.home-sidebar .call span:before,
+.secondary-sidebar .call span:before {
+  float:left;
+  margin-right: 10px;
+  margin-top: -2px;
 }
 
 .home-sidebar .contact-recommendations ul {

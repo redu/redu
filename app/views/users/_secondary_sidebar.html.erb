@@ -33,15 +33,15 @@
 
     <% unless current_user == @user %>
       <%= link_to (new_user_message_path(current_user),
-                   :class => 'send-message cancel') do %>
-        <span>Escrever Mensagem</span>
+                   :class => 'send-message cancel ') do %>
+        <span class="write-message icon-add-message-lightblue_16_18-before">Escrever Mensagem</span>
       <% end %>
     <% end %>
   </div>
 
   <div class="environments">
     <div class="call">
-      <span class="">Cursos inscritos: <%= @user.courses.count %></span>
+      <span class="icon-environment-white-green_16_18-before">Cursos inscritos: <%= @user.courses.count %></span>
     </div>
     <ul>
       <% @environments = @user.environments.page(params[:page]).per(4) %>
