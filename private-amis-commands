@@ -1,2 +1,0 @@
-ec2-bundle-vol -k ~/pk-RDW5X5FKR5Q7IOSBJMNQ5FEDF7VXJIFD.pem -u 670086610786 -c ~/cert-RDW5X5FKR5Q7IOSBJMNQ5FEDF7VXJIFD.pem -d /mnt/ami/
-ec2-upload-bundle -b redu-amis -m /mnt/ami/image.manifest.xml -a AKIAIRKVQDTWT2NN4J4Q -s fd34osN7Is0gckllFl8OxZgOuZieeaiSHZg1TpAM
