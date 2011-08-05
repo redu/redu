@@ -4,7 +4,7 @@ namespace :ci do
   end
 
   task :rspec do
-    system("bundle exec rake -s spec; echo $?")
+    Rake::Task["spec"].invoke
   end
 
   desc "Prepare CI"
