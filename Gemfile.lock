@@ -180,7 +180,6 @@ GEM
     shuber-sortable (1.0.6)
     signature (0.1.2)
       ruby-hmac
-    sqlite3 (1.3.4)
     thin (1.2.11)
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
@@ -238,7 +237,6 @@ DEPENDENCIES
   scribd_fu
   shoulda-matchers
   shuber-sortable
-  sqlite3
   thin
   translate_routes
   whenever

@@ -1,4 +1,6 @@
 test:
-  adapter: sqlite3
-  database: db/test.sqlite
-  timeout: 5000
+  adapter: mysql2
+  username: root
+  password:
+  database: integrity
+  host: localhost

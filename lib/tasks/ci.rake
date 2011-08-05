@@ -4,6 +4,6 @@ namespace :ci do
   end
 
   desc "Prepare CI"
-  task :build => ["ci:copy_yml", "db:migrate", "spec"] do
+  task :build => ["ci:copy_yml", "db:create", "db:migrate", "spec"] do
   end
 end
