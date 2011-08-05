@@ -4,7 +4,7 @@ namespace :ci do
   end
 
   task :rspec do
-    system("bundle exec rspec #{Rails.root}/spec")
+    system("bundle exec rake -s spec -s")
   end
 
   desc "Prepare CI"
