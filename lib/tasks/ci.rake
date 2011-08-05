@@ -3,7 +3,11 @@ namespace :ci do
     system("cp #{Rails.root}/config/database.yml.ci #{Rails.root}/config/database.yml")
   end
 
+  task :rspec do
+    system("bundle exec rspec #{Rails.root}/spec")
+  end
+
   desc "Prepare CI"
-  task :build => ["ci:copy_yml", "db:create", "db:migrate", "spec"] do
+  task :build => ["ci:copy_yml", "db:create", "db:migrate", "ci:rspec"] do
   end
 end
