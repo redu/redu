@@ -28,12 +28,13 @@ javascripts:
     - public/javascripts/form.redu.jquery.js
     - public/javascripts/asyncjs.jquery.js
     - public/javascripts/user.js
+    - public/javascripts/browserdetection.js
+    - public/javascripts/jquery.cookie.js
   chat:
     - public/javascripts/jquery.pjax.js
     - public/javascripts/jquery-ui.js
     - public/javascripts/pusher.js
     - public/javascripts/jquery.json.js
-    - public/javascripts/jquery.cookie.js
     - public/javascripts/jquery.linkify-1.0.js
     - public/javascripts/chat.jquery.js
     - public/javascripts/chat.js

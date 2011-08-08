@@ -1,3 +1,114 @@
+#outdated-browser {
+  height: 100px;
+  background: url("../images/new/error-top-bkg-line.png") repeat-x;
+}
+
+#outdated-browser .content .title {
+  width: 140px;
+  margin-top: 3px;
+  text-align: right;
+  float: left;
+  margin-left: 30px;
+}
+
+#outdated-browser .content .ops {
+  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-weight: 900;
+  font-size: 3.9em;
+  color: white;
+
+  filter: dropshadow(color=#f9a537, offx=0, offy=-1);
+}
+
+.textshadow #outdated-browser .content .ops {
+  text-shadow: 0px -1px 0px rgb(249, 167, 55);
+}
+
+#outdated-browser .content .warning {
+  display: block;
+  margin-top: 5px;
+  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-weight: 700;
+  font-size: 1.2em;
+  color: rgb(193, 39, 45);
+
+  filter: dropshadow(color=#ffeed7, offx=0, offy=1);
+}
+
+.textshadow #outdated-browser .content .warning {
+  text-shadow: 0px 1px 0px rgb(255, 238, 215);
+}
+
+#outdated-browser .content .message {
+  width: 340px;
+  height: 60px;
+  float: left;
+  margin: 20px 140px 0 20px;
+  color: white;
+
+  filter: dropshadow(color=#f9a837, offx=0, offy=-1);
+}
+
+.textshadow #outdated-browser .content .message {
+  text-shadow: 0px -1px 0px rgb(249, 167, 55);
+}
+
+#outdated-browser .content .close {
+  display: block;
+  width: 16px;
+  height: 18px;
+  float: right;
+  margin-top: 40px;
+  cursor: pointer;
+}
+
+#outdated-browser .content .suggestions {
+  width: 240px;
+  float: left;
+  margin-top: 20px;
+}
+
+#outdated-browser .content .suggestions li {
+  float:left;
+  margin-right: 20px;
+}
+
+#outdated-browser .content .suggestions li:hover .name {
+  color: white;
+}
+
+#outdated-browser .content .suggestions .logo {
+  display: block;
+  width: 100px;
+  height: 62px;
+}
+
+#outdated-browser .content .suggestions .chrome {
+  background: url("../images/new/browsers-buttons.png") 0 0 no-repeat;
+}
+
+#outdated-browser .content .suggestions .chrome:hover {
+  background: url("../images/new/browsers-buttons.png") -160px 0 no-repeat;
+}
+
+#outdated-browser .content .suggestions .firefox {
+  background: url("../images/new/browsers-buttons.png") -320px 0 no-repeat;
+}
+
+#outdated-browser .content .suggestions .firefox:hover {
+  background: url("../images/new/browsers-buttons.png") -480px 0 no-repeat;
+}
+
+#outdated-browser .content .suggestions .name {
+  font-size: .87em;
+  font-style: italic;
+  color: rgb(249, 167, 55);
+  display: block;
+  margin-top: 3px;
+  width: 100px;
+  text-align: center;
+}
+
 #header a:hover {
   text-decoration: none;
 }
@@ -167,7 +278,7 @@
 }
 
 #content .sidebar .local-nav > li > .session > a {
-  padding: 2px 0 1px 25px;
+  padding: 2px 0 2px 25px;
   display: block;
   font-size: .9em;
 }
@@ -2053,7 +2164,7 @@ input[type=submit] {
 a.important,
 input[type=submit].important {
   border: 1px solid #61BE80;
-  font-family: museo-slab, serif;
+  font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 500;
   color: white;
   font-size: 1em;
@@ -2694,7 +2805,7 @@ table.spaced tr td {
 
 #teach-index .teach-steps,
 #teach-index .teach-call {
-  font-family: museo-slab, serif;
+  font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 300;
 }
 
@@ -2732,7 +2843,7 @@ table.spaced tr td {
 #teach-index .first:before,
 #teach-index .second:before,
 #teach-index .third:before {
-  font-family: museo-slab, serif;
+  font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 900;
   font-size: 5.2em;
   color: white;
@@ -2897,13 +3008,13 @@ table.spaced tr td {
 }
 
 #checkout .step-info h3 {
-  font-family: museo-slab, serif;
+  font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 300;
   font-size: 7em;
 }
 
 #checkout .step-info h3 span {
-  font-family: museo-slab, serif;
+  font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 300;
   font-size: .3em;
   display: block;
@@ -2942,7 +3053,7 @@ table.spaced tr td {
 }
 
 #checkout .table .menu a {
-  font-family: museo-slab, serif;
+  font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 500;
   font-size: 1.3em;
   display: block;
@@ -3096,7 +3207,7 @@ table.spaced tr td {
 }
 
 .plan-container .name {
-  font-family: museo-slab, serif;
+  font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 500;
   font-size: 1.3em;
   color: #60BE7F;
@@ -3130,7 +3241,7 @@ table.spaced tr td {
 }
 
 .plan-container .plus {
-  font-family: museo-slab, serif;
+  font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 300;
   color: #F27A38;
   display: block;
@@ -3139,7 +3250,7 @@ table.spaced tr td {
 }
 
 .plan-container .value {
-  font-family: museo-slab, serif;
+  font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 300;
   font-size: 1.4em;
   color: #F27A38;
@@ -3162,7 +3273,7 @@ table.spaced tr td {
 }
 
 #partner-plan .partner-call {
-  font-family: museo-slab, serif;
+  font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 300;
   color: #F25E00;
   font-size: 1.5em;
@@ -3190,7 +3301,7 @@ table.spaced tr td {
 
 #partner-plan .concave-form .environment-name,
 #partner-plan .concave-form .course-name {
-  font-family: museo-slab, serif;
+  font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 500;
   margin-top: 17px;
   width: 400px;
@@ -3206,7 +3317,7 @@ table.spaced tr td {
 }
 
 #url_preview span {
-  font-family: museo-slab, serif;
+  font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 100;
   font-size: 1em;
 }
@@ -3280,7 +3391,7 @@ table.spaced tr td {
 }
 
 #checkout .confirmation tbody .value {
-  font-family: museo-sans, serif;
+  font-family: museo-slab, helvetica, arial, sans-serif;
   font-size: 1.2em;
   font-weight: 500px;
   padding-top: 18px;
