@@ -1235,7 +1235,7 @@
 
 .create-status {
   background-color: #F0F0F0;
-  padding: 11px;
+  padding: 10px;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   border-radius: 3px;
@@ -1283,11 +1283,28 @@
 
 .create-status .concave-form .concave-input {
   margin: 0;
-  width: 508px;
+  height: 16px;
+  width: 510px;
 }
 
 .create-response .concave-form .concave-input {
   width: 468px;
+}
+
+.status-medium .create-status .concave-form .concave-input {
+  width: 525px;
+}
+
+.status-medium .create-response .concave-form .concave-input {
+  width: 483px;
+}
+
+.status-large .create-status .concave-form .concave-input {
+  width: 665px;
+}
+
+.status-large .create-response .concave-form .concave-input {
+  width: 623px;
 }
 
 .create-status .concave-form .cancel,
@@ -1298,13 +1315,14 @@
 .create-status .concave-form .concave-button {
   float: right;
   margin-right: 5px;
-  width: 70px;
-  height: 30px;
+  width: 68px;
+  height: 28px;
+  padding: 0;
 }
 
 .create-status .concave-form .cancel {
   float: left;
-  padding: 7px 0 9px 0;
+  padding: 8px 0 8px 0;
   width: 68px;
   height: 12px;
   color: #4cacd5;
