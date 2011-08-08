@@ -18,7 +18,8 @@ describe PartnerEnvironmentAssociationsController do
       environment = {:name => "Faculdade mauricio de nassau",
           :initials => "FMN",
           :path => "faculdade-mauricio-de-nassau",
-          :owner => @user.id }
+          :owner => @user.id,
+          :tag_list => "minhas, tags de, teste"}
 
       @params = {
           :partner_environment_association => { :cnpj => "12.123.123/1234-12",
