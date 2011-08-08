@@ -1,12 +1,14 @@
-<%# Cabeçalho do environment (contém título, estatísticas, descrição e tags)  %>
+<%# Cabeçalho do environment (contém título, descrição e tags)  %>
 
 <div id="hierarchy-header" class="clearfix">
   <h3 class="call environment-name"><%= h(environment.name) %></h3>
-  <div class="grid_9 alpha">
-    <span class="description">
+  <%= link_to "Gerenciar ambiente", edit_environment_path(environment),
+    :class => "manage icon-manage-gray_8_10-before" %>
+  <div class="details">
+    <span class="description icon-bio-gray_16_18-before">
       <%= environment.description %>
     </span>
-    <ul class="tags clearfix">
+    <ul class="tags icon-tag-gray_16_18-before clearfix">
       <% environment.tags.each do |tag| %>
       <li>
         <%= link_to tag, environment_path(environment) %>
@@ -14,22 +16,4 @@
       <% end %>
     </ul>
   </div>
-  <ul class="statistics grid_3 omega">
-    <li>
-      <em class="icon icon-student-gray_16_16">Membros:</em>
-      <span><%= environment.users.length %></span>
-    </li>
-    <li>
-      <em class="icon icon-administrator-gray_16_16">Administradores:</em>
-      <span><%= environment.administrators.length %></span>
-    </li>
-    <li>
-      <em class="icon icon-teacher-gray_16_16">Professores:</em>
-      <span><%= environment.teachers.length %></span>
-    </li>
-    <li>
-      <em class="icon icon-tutor-gray_16_16">Tutores:</em>
-      <span><%= environment.tutors.length %></span>
-    </li>
-  </ul>
 </div><!-- end #hierarchy-header -->

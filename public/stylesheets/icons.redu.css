@@ -36,6 +36,14 @@
   background: url("../images/new/icons-small.png") 0 -2800px no-repeat;
 }
 
+.icon-bio-gray_16_18 { background-position: 0 -1360px; }
+.icon-bio-gray_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") 0 -1360px no-repeat;
+}
+
 .icon-contacts-gray_16_18 { background-position: 0 -2400px; }
 .icon-contacts-gray_16_18-before:before {
   content: "";
@@ -74,7 +82,24 @@
   background: url("../images/new/icons-small.png") -240px -2800px no-repeat;
 }
 
+.icon-environment-blue_16_18,
+.icon-environment-lightblue_16_18:hover { background-position: -160px 0; }
+.icon-environment-blue_16_18-before:before,
+.icon-environment-lightblue_16_18-before:hover:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -160px 0 no-repeat;
+}
 .icon-environment-gray_16_18 { background-position: 0 0;}
+.icon-environment-lightblue_16_18 { background-position: -80px 0 }
+.icon-environment-lightblue_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -80px 0 no-repeat;
+}
+
 .icon-environment-white-green_16_18 { background-position: -560px 0;}
 .icon-environment-white-green_16_18-before:before {
   content: "";
@@ -91,6 +116,13 @@
   background: url("../images/new/icons-small.png") 0 -800px no-repeat;
 }
 
+.icon-expand-gray_16_18 { background-position: -560px -800px; }
+.icon-expand-gray_16_18-after:after {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -560px -800px no-repeat;
+}
 .icon-experience-blue_32_34 { background-position: -240px -3280px; }
 .icon-experience-blue_32_34-after:after {
   content: "";
@@ -108,6 +140,25 @@
 }
 
 .icon-experience-lightblue_32_34 { background-position: 0 -3280px; }
+.icon-home-blue_16_18,
+.icon-home-lightblue_16_18:hover { background-position: -80px -2240px; }
+.icon-home-lightblue_16_18 { background-position: 0 -2240px; }
+.icon-manage-blue_8_10,
+.icon-manage-gray_8_10:hover { background-position: -80px -2880px }
+.icon-manage-blue_8_10-before,
+.icon-manage-gray_8_10-before:hover:before {
+  content: "";
+  width: 8px;
+  height: 10px;
+  background: url("../images/new/icons-small.png") -80px -2880px no-repeat;
+}
+.icon-manage-gray_8_10 { background-position: 0 -2880px }
+.icon-manage-gray_8_10-before:before {
+  content: "";
+  width: 8px;
+  height: 10px;
+  background: url("../images/new/icons-small.png") 0 -2880px no-repeat;
+}
 .icon-member-gray_16_18 { background-position; 0 -1040px; }
 .icon-member-gray_16_18-before:before {
   content: "";
@@ -122,6 +173,14 @@
   width: 16px;
   height: 18px;
   background: url("../images/new/icons-small.png") 0 -720px no-repeat;
+}
+
+.icon-tag-gray_16_18 { background-position: -320px -1360px; }
+.icon-tag-gray_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -320px -1360px no-repeat;
 }
 
 .icon-teacher-gray_16_18 { background-position: 0 -880px }
