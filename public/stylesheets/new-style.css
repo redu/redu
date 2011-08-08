@@ -1268,6 +1268,14 @@
   background: url("../images/new/icons-small.png") -160px -560px no-repeat;
 }
 
+.create-status .concave-form .status-icon-answer {
+  background: url("../images/new/icons-small.png") -480px -640px no-repeat;
+}
+
+.create-status .concave-form .status-icon-answer.concave-label-focus {
+  background: url("../images/new/icons-small.png") -560px -640px no-repeat;
+}
+
 .create-status .status-buttons {
   float: right;
   margin-top: 10px;
@@ -1276,6 +1284,10 @@
 .create-status .concave-form .concave-input {
   margin: 0;
   width: 508px;
+}
+
+.create-response .concave-form .concave-input {
+  width: 468px;
 }
 
 .create-status .concave-form .cancel,
@@ -1398,6 +1410,10 @@
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
+}
+
+.statuses ol .create-response {
+  margin: 0 0 10px 42px;
 }
 
 .statuses li .avatar {
