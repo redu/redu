@@ -30,6 +30,8 @@ javascripts:
     - public/javascripts/user.js
     - public/javascripts/browserdetection.js
     - public/javascripts/jquery.cookie.js
+    - public/javascripts/ytpreview.jquery.js
+    - public/javascripts/subjects.js
   chat:
     - public/javascripts/jquery.pjax.js
     - public/javascripts/jquery-ui.js

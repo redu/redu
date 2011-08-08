@@ -104,11 +104,6 @@ jQuery(function(){
         e.preventDefault();
     });
 
-    // Carrega preview do Youtube (new Seminar)
-    $('#seminar_external_resource').live("change", function(){
-        youtubePreview($('#seminar_external_resource'));
-    })
-
     // Padrão de tabelas
     $("table.common tr:even:not(.invite):not(.message)").addClass("odd");
 
@@ -315,25 +310,6 @@ function stripAccent(str) {
   return str;
 }
 
-/* Carrega o preview do Youtube */
-function youtubePreview(textfield){
-  regex = /youtube\.com\/watch\?v=([A-Za-z0-9._%-]*)[&\w;=\+_\-]*/;
-
-  id = textfield.val().match(regex)
-  if (id != null) {
-    youtube_id = id[1];
-    url = "http://www.youtube.com/v/" + youtube_id + "&hl=en&fs=1";
-
-    jQuery('#yt_preview_param').attr("value",url);
-    jQuery('embed').attr("src",url);
-    jQuery('#youtube_preview').show();
-
-  }  else {
-    $('#youtube_preview').hide();
-  }
-
-}
-
 /* Alterna entre o formulário de Youtube e Upload (new Seminar) */
 function switchCourseFields(fieldType){
   if (fieldType == 1) {
@@ -344,7 +320,6 @@ function switchCourseFields(fieldType){
   } else {
     $('#upload_resource_field').hide();
     $('#external_resource_field').show();
-    youtubePreview($('#seminar_external_resource'));
     $('#seminar_submit').show();
   }
 
