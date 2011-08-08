@@ -140,11 +140,8 @@
   background: url("../images/new/icons-small.png") 0 -960px no-repeat;
 }
 
-.icon-wall-gray_16_18 { background-position: 0 -560px; }
-.icon-wall-blue_16_18 { background-position: -160px -560px; }
-
 /* Social Networks */
-.icon-facebook_16_18 { background-position: 0 -1920px; }
+.icon-facebook_16_18 { background-position: 0 -1920px }
 .icon-facebook_16_18-before:before {
   content: "";
   width: 16px;

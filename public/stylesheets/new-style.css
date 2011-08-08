@@ -1230,81 +1230,22 @@
 .create-status {
   background-color: #F0F0F0;
   padding: 11px;
-  -moz-border-radius: 3px;
-  -webkit-border-radius: 3px;
-  border-radius: 3px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
   margin: 20px 0;
   clear: both;
 }
 
-.create-status .concave-form {
-  margin: 0;
-  padding: 0;
-}
-
-.create-status .concave-form .concave-fieldset {
-  margin: 0;
-  padding: 0;
-}
-
-.create-status .concave-form .concave-label {
-  margin: 8px 5px 0 0;
-  height: 24px;
-  width: 18px;
-  text-align: left;
-}
-
-.create-status .concave-form .status-icon {
-  background: url("../images/new/icons-small.png") 0 -560px no-repeat;
-}
-
-.create-status .concave-form .status-icon.concave-label-focus {
-  background: url("../images/new/icons-small.png") -160px -560px no-repeat;
-}
-
-.create-status .status-buttons {
-  float: right;
-  margin-top: 10px;
-}
-
-.create-status .concave-form .concave-input {
-  margin: 0;
-  width: 508px;
-}
-
-.create-status .concave-form .cancel,
-.create-status .concave-form .concave-button {
-  margin: 0 0 0 5px;
-}
-
-.create-status .concave-form .concave-button {
-  float: right;
-  margin-right: 5px;
-  width: 70px;
+.create-status .textarea {
+  background-color: white;
+  border: 1px solid #4DADD6;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
   height: 30px;
-}
-
-.create-status .concave-form .cancel {
-  float: left;
-  padding: 7px 0 9px 0;
-  width: 68px;
-  height: 12px;
-  color: #4cacd5;
-}
-
-.create-status .concave-form .char-limit {
-  width: 200px;
-  margin-left: 28px;
-  margin-top: 10px;
-  clear: both;
-  float: left;
-  font-style: italic;
-}
-
-.char-limit {
-  font-size: .8em;
-  color: #B2B2B2;
-  padding: 5px 3px;
+  padding: 5px;
+  scroll: none;
 }
 
 .create-status form .errorMessageField {
@@ -1313,6 +1254,20 @@
   margin: 5px 0 5px 0px;
   color: #B2B2B2;
   font-size: .8em;
+}
+
+.create-status textarea {
+  width: 100%;
+  height: 25px;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+}
+
+.char-limit {
+  font-size: .8em;
+  color: #B2B2B2;
+  padding: 5px 3px;
 }
 
 .endless,
