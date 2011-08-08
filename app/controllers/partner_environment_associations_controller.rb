@@ -17,6 +17,8 @@ class PartnerEnvironmentAssociationsController < BaseController
     respond_to do |format|
       format.html do
         if @partner_environment_association.save
+          admins = @partner.users.reject { |u| u.eql?(current_user) }
+          admins.each { |u| @partner.join_hierarchy(u) }
           redirect_to partner_path(@partner)
         else
           render :new

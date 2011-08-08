@@ -9,21 +9,9 @@ class Partner < ActiveRecord::Base
 
   # Adiciona colaborador ao parcendo, dando acesso de administrador a todos os
   # ambientes associados.
-  def add_collaborator(user)
+  def add_collaborator(user, role=Role[:environment_admin])
     self.users << user
-    self.environments.all(:include => :courses).each do |e|
-      UserEnvironmentAssociation.create(:environment => e,
-                                        :user => user,
-                                        :role => Role[:environment_admin])
-
-      e.courses.each do |c|
-        c.create_hierarchy_associations(user, Role[:environment_admin])
-        ass = UserCourseAssociation.create(:user => user,
-                                     :course => c,
-                                     :role => Role[:environment_admin])
-        ass.approve!
-      end
-    end
+    join_hierarchy(user, role)
   end
 
   # Adiciona environment existente ao conjunto de environments do parceiro.
@@ -32,15 +20,21 @@ class Partner < ActiveRecord::Base
     ass = self.partner_environment_associations.create(:cnpj => cnpj,
                                                        :environment => environment)
     self.users.each do |user|
-      UserEnvironmentAssociation.create(:environment => environment,
-                                        :user => user,
-                                        :role => Role[:environment_admin])
+      join_hierarchy(user)
+    end
+  end
 
-      environment.courses.each do |c|
-        c.create_hierarchy_associations(user, Role[:environment_admin])
+  def join_hierarchy(user, role=Role[:environment_admin])
+    self.environments.all(:include => :courses).each do |e|
+      UserEnvironmentAssociation.create(:environment => e,
+                                        :user => user,
+                                        :role => role)
+
+      e.courses.each do |c|
+        c.create_hierarchy_associations(user, role)
         ass = UserCourseAssociation.create(:user => user,
                                      :course => c,
-                                     :role => Role[:environment_admin])
+                                     :role => role)
         ass.approve!
       end
     end
