@@ -353,7 +353,7 @@ function switchCourseFields(fieldType){
 /* Verifica se o browser é compatível e esconde o aviso, caso seja. */
 $.verifyCompatibleBrowser = function(){
   var myBrowser = $.browserInfos();
-  var minVersion;
+  var minVersion = 0; // Para o caso de ser um browser não usual
 
   if (myBrowser.isChrome()) {
     minVersion = 11;
