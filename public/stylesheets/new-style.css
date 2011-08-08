@@ -1229,31 +1229,97 @@
 
 .create-status {
   background-color: #F0F0F0;
-  padding: 11px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
+  padding: 10px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
   margin: 20px 0;
   clear: both;
 }
 
-.create-status .textarea {
-  background-color: white;
-  border: 1px solid #4DADD6;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
-  height: 30px;
-  padding: 5px;
-  scroll: none;
+.create-status .concave-form {
+  margin: 0;
+  padding: 0;
 }
 
-.create-status form .errorMessageField {
-  display: block;
-  clear: both;
-  margin: 5px 0 5px 0px;
-  color: #B2B2B2;
-  font-size: .8em;
+.create-status .concave-form .concave-fieldset {
+  margin: 0;
+  padding: 0;
+}
+
+.create-status .concave-form .concave-label {
+  margin: 8px 5px 0 0;
+  height: 24px;
+  width: 18px;
+  text-align: left;
+}
+
+.create-status .concave-form .status-icon {
+  background: url("../images/new/icons-small.png") 0 -560px no-repeat;
+}
+
+.create-status .concave-form .status-icon.concave-label-focus {
+  background: url("../images/new/icons-small.png") -160px -560px no-repeat;
+}
+
+.create-status .concave-form .status-icon-answer {
+  background: url("../images/new/icons-small.png") -480px -640px no-repeat;
+}
+
+.create-status .concave-form .status-icon-answer.concave-label-focus {
+  background: url("../images/new/icons-small.png") -560px -640px no-repeat;
+}
+
+.create-status .status-buttons {
+  float: right;
+  margin-top: 10px;
+}
+
+.create-status .concave-form .concave-input {
+  margin: 0;
+  height: 16px;
+  width: 510px;
+}
+
+.create-response .concave-form .concave-input {
+  width: 468px;
+}
+
+.status-medium .create-status .concave-form .concave-input {
+  width: 525px;
+}
+
+.status-medium .create-response .concave-form .concave-input {
+  width: 483px;
+}
+
+.status-large .create-status .concave-form .concave-input {
+  width: 665px;
+}
+
+.status-large .create-response .concave-form .concave-input {
+  width: 623px;
+}
+
+.create-status .concave-form .cancel,
+.create-status .concave-form .concave-button {
+  margin: 0 0 0 5px;
+}
+
+.create-status .concave-form .concave-button {
+  float: right;
+  margin-right: 5px;
+  width: 68px;
+  height: 28px;
+  padding: 0;
+}
+
+.create-status .concave-form .cancel {
+  float: left;
+  padding: 8px 0 8px 0;
+  width: 68px;
+  height: 12px;
+  color: #4cacd5;
 }
 
 .create-status textarea {
@@ -1347,6 +1413,10 @@
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
+}
+
+.statuses ol .create-response {
+  margin: 0 0 10px 42px;
 }
 
 .statuses li .avatar {
