@@ -16,8 +16,6 @@
   font-weight: 900;
   font-size: 3.9em;
   color: white;
-
-  filter: dropshadow(color=#f9a537, offx=0, offy=-1);
 }
 
 .textshadow #outdated-browser .content .ops {
@@ -31,8 +29,6 @@
   font-weight: 700;
   font-size: 1.2em;
   color: rgb(193, 39, 45);
-
-  filter: dropshadow(color=#ffeed7, offx=0, offy=1);
 }
 
 .textshadow #outdated-browser .content .warning {
@@ -45,8 +41,6 @@
   float: left;
   margin: 20px 140px 0 20px;
   color: white;
-
-  filter: dropshadow(color=#f9a837, offx=0, offy=-1);
 }
 
 .textshadow #outdated-browser .content .message {
@@ -2812,7 +2806,6 @@ table.spaced tr td {
 #teach-index .teach-call {
   font-size: 3em;
   color: white;
-  filter: dropshadow(color=#333333, offx=1, offy=1)
 }
 
 #teach-index .teach-steps {
@@ -2822,7 +2815,6 @@ table.spaced tr td {
   margin-top: 20px;
   margin-bottom: 20px;
   display: block;
-  filter: dropshadow(color=#ffffff, offx=0, offy=1);
 }
 
 .textshadow .teach-steps {
@@ -2847,7 +2839,6 @@ table.spaced tr td {
   font-weight: 900;
   font-size: 5.2em;
   color: white;
-  filter: dropshadow(color=#, offx=0, offy=-1);
   float: left;
   margin-right: 10px;
   margin-top: -10px;
