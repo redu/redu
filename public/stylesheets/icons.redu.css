@@ -60,6 +60,22 @@
   background: url("../images/new/icons-small.png") -320px -2400px no-repeat;
 }
 
+.icon-course-blue_16_18,
+.icon-course-lightblue_16_18:hover { background-position: -160px -80px }
+.icon-course-blue_16_18-before:before,
+.icon-course-lightblue_16_18-before:hover:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -160px -80px no-repeat;
+}
+.icon-course-lightblue_16_18 { background-position: -80px -80px }
+.icon-course-lightblue_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -80px -80px no-repeat;
+}
 .icon-course-gray_16_18 { background-position: 0 -80px;}
 .icon-delete-gray_16_18 { background-position: 0 -2160px; }
 .icon-delete-gray_16_18:hover,
@@ -117,7 +133,7 @@
 }
 
 .icon-expand-gray_16_18 { background-position: -560px -800px; }
-.icon-expand-gray_16_18-after:after {
+.icon-expand-gray_16_18-before:before {
   content: "";
   width: 16px;
   height: 18px;
@@ -167,6 +183,7 @@
   background: url("../images/new/icons-small.png") 0 -1040px no-repeat;
 }
 
+.icon-privacy-orange_16_18 { background-position: -320px -1520px; }
 .icon-redu_admin-gray_16_18 { background-position; 0 -720px; }
 .icon-redu_admin-gray_16_18-before:before {
   content: "";

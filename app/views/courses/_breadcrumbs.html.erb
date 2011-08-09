@@ -1,17 +1,17 @@
-<div id="breadcrumbs" class="clearfix">
+<div id="concave-breadcrumbs" class="clearfix">
   <ol class="course clearfix">
-    <li>
+    <li class="compact">
       <%= link_to 'Home', home_user_path(current_user),
-        :class => 'replacement home icon icon-home-lightblue_16_16' %>
+        :class => 'replacement icon-small icon-home-lightblue_16_18' %>
     </li>
-    <li>
+    <li class="icon-expand-gray_16_18-before">
       <%= link_to course.environment.name, environment_path(course.environment),
-        :class => 'replacement icon icon-environment-lightblue_16_16' %>
+        :class => 'icon-environment-lightblue_16_18-before' %>
     </li>
-    <li>
+    <li class="icon-expand-gray_16_18-before">
       <%= link_to course.name,
         environment_course_path(course.environment, course),
-        :class => 'icon icon-course-lightblue_16_16' %>
+        :class => 'icon-course-lightblue_16_18-before' %>
     </li>
   </ol>
   <%= render :partial => 'courses/moderatorship',
