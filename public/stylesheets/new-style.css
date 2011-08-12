@@ -1322,18 +1322,27 @@
   color: #4cacd5;
 }
 
-.create-status textarea {
-  width: 100%;
-  height: 25px;
-  background-color: transparent;
-  border: none;
-  padding: 0;
+.create-status .concave-form .char-limit {
+  width: 200px;
+  margin-left: 28px;
+  margin-top: 10px;
+  clear: both;
+  float: left;
+  font-style: italic;
 }
 
 .char-limit {
   font-size: .8em;
   color: #B2B2B2;
   padding: 5px 3px;
+}
+
+.create-status form .errorMessageField {
+  display: block;
+  clear: both;
+  margin: 5px 0 5px 0px;
+  color: #B2B2B2;
+  font-size: .8em;
 }
 
 .endless,
