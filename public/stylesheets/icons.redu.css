@@ -156,9 +156,23 @@
 }
 
 .icon-experience-lightblue_32_34 { background-position: 0 -3280px; }
+.icon-file-gray_16_18 { background-position: 0 -1280px; }
+.icon-file-gray_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") 0 -1280px no-repeat;
+}
 .icon-home-blue_16_18,
 .icon-home-lightblue_16_18:hover { background-position: -80px -2240px; }
 .icon-home-lightblue_16_18 { background-position: 0 -2240px; }
+.icon-lecture-gray_16_18 { background-position: 0 -1760px; }
+.icon-lecture-gray_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") 0 -1760px no-repeat;
+}
 .icon-manage-blue_8_10,
 .icon-manage-gray_8_10:hover { background-position: -80px -2880px }
 .icon-manage-blue_8_10-before,
@@ -183,13 +197,32 @@
   background: url("../images/new/icons-small.png") 0 -1040px no-repeat;
 }
 
+.icon-privacy-grey_16_18 { background-position: 0 -1520px; }
+.icon-privacy-lightblue_16_18 { background-position: -80px -1520px; }
+.icon-privacy-lightred_16_18 { background-position: -160px -1520px; }
 .icon-privacy-orange_16_18 { background-position: -320px -1520px; }
+.icon-privacy-red_16_18 { background-position: -240px -1520px; }
 .icon-redu_admin-gray_16_18 { background-position; 0 -720px; }
 .icon-redu_admin-gray_16_18-before:before {
   content: "";
   width: 16px;
   height: 18px;
   background: url("../images/new/icons-small.png") 0 -720px no-repeat;
+}
+
+.icon-space-gray_16_18 { background-position: 0 -160px; }
+.icon-space-gray_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") 0 -160px no-repeat;
+}
+.icon-subject-gray_16_18 { background-position: 0 -320px; }
+.icon-subject-gray_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") 0 -320px no-repeat;
 }
 
 .icon-tag-gray_16_18 { background-position: -320px -1360px; }
@@ -217,6 +250,12 @@
 }
 
 .icon-wall-gray_16_18 { background-position: 0 -560px; }
+.icon-wall-gray_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") 0 -560px no-repeat;
+}
 .icon-wall-blue_16_18 { background-position: -160px -560px; }
 
 /* Social Networks */

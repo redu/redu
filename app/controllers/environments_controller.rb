@@ -18,9 +18,11 @@ class EnvironmentsController < BaseController
     }
 
     if can? :manage, @environment
-      @courses = @environment.courses.paginate(paginating_params)
+      @courses = @environment.courses.includes(:user_course_associations).
+        includes(:spaces).paginate(paginating_params)
     else
-      @courses = @environment.courses.published.paginate(paginating_params)
+      @courses = @environment.courses.includes(:user_course_associations).
+        includes(:spaces).published.paginate(paginating_params)
     end
 
     respond_to do |format|

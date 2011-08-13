@@ -156,6 +156,16 @@ describe Space do
       subject.new_members.to_set.
         should == [subject.course.environment.owner, users[4]].to_set
     end
+
+    it "retrieves myfiles" do
+      spaces = (1..5).collect { Factory(:space) }
+      other_files = (0..4).collect do |n|
+        Factory(:myfile, :folder => spaces[n].root_folder)
+      end
+      files = (1..4).collect { Factory(:myfile,
+                                       :folder => subject.root_folder) }
+      subject.myfiles.should == files
+    end
   end
 
   it "generates a permalink" do

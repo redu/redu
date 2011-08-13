@@ -157,4 +157,7 @@ class Space < ActiveRecord::Base
 
   end
 
+  def myfiles
+    Myfile.where("folder_id IN (?)", self.folders)
+  end
 end

@@ -540,6 +540,7 @@
 #hierarchy-header .manage:before {
   float: left;
   margin-right: 5px;
+  margin-top: 1px;
 }
 
 #hierarchy-header .details {
@@ -742,8 +743,15 @@
 
 .hierarchy-listing-wrapper .admin-actions,
 .body .admin-actions {
-  width: 145px;
-  float: left;
+  float: right;
+  margin-right: 20px;
+  margin-top: 20px;
+}
+
+.body .admin-actions .button{
+  display: block;
+  width: 148px;
+  padding: 8px 0;
 }
 
 .hierarchy-preview {
@@ -1221,39 +1229,56 @@
 }
 
 .hierarchy-listing {
-  clear: both;
   margin-bottom: 20px;
 }
 
-.hierarchy-listing > li {
+.hierarchy-listing .child {
   position: relative;
   display: block;
-  padding: 15px 10px;
-  margin-bottom: 10px;
+  padding: 20px 10px;
+  margin-bottom: 20px;
 
-  border: 1px solid #B3B2B3;
+  border: 1px solid rgb(204, 204, 204);
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
+
+  background: rgb(240,240,240); /* Old browsers */
 }
 
-.hierarchy-listing > li img {
+.cssgradients .hierarchy-listing .child {
+  background: -moz-linear-gradient(top, rgb(240,240,240) 0%, rgb(255,255,255) 50%, rgb(240,240,240) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(240,240,240)), color-stop(50%,rgb(255,255,255)), color-stop(100%,rgb(240,240,240))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgb(240,240,240) 0%,rgb(255,255,255) 50%,rgb(240,240,240) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgb(240,240,240) 0%,rgb(255,255,255) 50%,rgb(240,240,240) 100%); /* Opera11.10+ */
+  background: -ms-linear-gradient(top, rgb(240,240,240) 0%,rgb(255,255,255) 50%,rgb(240,240,240) 100%); /* IE10+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0f0f0', endColorstr='#f0f0f0',GradientType=0 ); /* IE6-9 */
+  background: linear-gradient(top, rgb(240,240,240) 0%,rgb(255,255,255) 50%,rgb(240,240,240) 100%); /* W3C */
+}
+
+.hierarchy-listing .child:hover {
+  border: 1px solid rgb(77, 173, 214);
+  background: rgb(219,239,247); /* Old browsers */
+}
+
+.cssgradients .hierarchy-listing .child:hover {
+  background: -moz-linear-gradient(top, rgb(219,239,247) 0%, rgb(255,255,255) 50%, rgb(219,239,247) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(219,239,247)), color-stop(50%,rgb(255,255,255)), color-stop(100%,rgb(219,239,247))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgb(219,239,247) 0%,rgb(255,255,255) 50%,rgb(219,239,247) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgb(219,239,247) 0%,rgb(255,255,255) 50%,rgb(219,239,247) 100%); /* Opera11.10+ */
+  background: -ms-linear-gradient(top, rgb(219,239,247) 0%,rgb(255,255,255) 50%,rgb(219,239,247) 100%); /* IE10+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dbeff7', endColorstr='#dbeff7',GradientType=0 ); /* IE6-9 */
+  background: linear-gradient(top, rgb(219,239,247) 0%,rgb(255,255,255) 50%,rgb(219,239,247) 100%); /* W3C */
+}
+
+.hierarchy-listing .child img {
   float: left;
   margin: 0 10px;
 }
 
-.hierarchy-listing > li .statistics,
-.hierarchy-listing > li .info,
-.hierarchy-listing > li .activities,
-.hierarchy-listing > li .audience {
+.hierarchy-listing .child .info,
+.hierarchy-listing .child .activities,
+.hierarchy-listing .child .audience {
   float: left;
-}
-
-.hierarchy-listing .description {
-  display: block;
-  margin: 5px 0;
-  width: 555px;
-  min-height: 40px;
-  font-size: .9em;
 }
 
 .hierarchy-listing .resources li {
@@ -1281,20 +1306,20 @@
   padding-left: 12px;
 }
 
-.hierarchy-listing > li:hover {
+.hierarchy-listing .child:hover {
   border: 1px solid #DBEFF7;
   background-color: #DBEFF7;
 }
 
-.hierarchy-listing > li .activities,
-.hierarchy-listing > li .audience {
+.hierarchy-listing .child .activities,
+.hierarchy-listing .child .audience {
   width: 125px;
   margin-right: 20px;
   background: url("../images/new/vertical-dots.png") repeat-y right;
   padding: 10px 0;
 }
 
-.hierarchy-listing > li em {
+.hierarchy-listing .child em {
   color: #B2B2B2;
   font-size: .8em;
   font-style: oblique;
@@ -1319,25 +1344,158 @@
   font-size: .8em;
 }
 
-.hierarchy-listing > li .info {
-  width: 400px;
+.hierarchy-listing .child .info {
+  width: 520px;
   margin-right: 20px;
-  background: url("../images/new/vertical-dots.png") repeat-y right;
-  padding: 10px 0;
 }
 
-.hierarchy-listing > li .name {
+.hierarchy-listing .child .name {
+  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-height: 500;
   font-size: 1.3em;
   letter-spacing: .005em;
 }
 
-.hierarchy-listing .statistics span {
-  font-size: .8em;
-  font-weight: bold;
+.hierarchy-listing .child .manage {
+  font-size: .9em;
+  float: right;
 }
 
-.hierarchy-listing .statistics li {
-  margin-bottom: 2px;
+.hierarchy-listing .child .manage:before {
+  float: left;
+  margin-right: 5px;
+  margin-top: 1px;
+}
+
+.hierarchy-listing .child .workload {
+  display: block;
+  font-style: italic;
+  font-size: .87em;
+  color: rgb(179, 179, 179);
+}
+
+.hierarchy-listing .child .description,
+.hierarchy-listing .child .tags a {
+  font-size: .87em;
+  color: rgb(109, 110, 111);
+  width: inherit;
+  margin: 5px 0 3px 0;
+}
+
+.hierarchy-listing .child .tags a{
+  color: rgb(179, 179, 179);
+}
+
+.hierarchy-listing .child .spaces {
+  margin: 25px 0 0 30px;
+  float: left;
+}
+
+.hierarchy-listing .child .spaces .title {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: rgb(179, 179, 179);
+}
+
+.hierarchy-listing .child .spaces .title:before {
+  float: left;
+  margin-right: 5px;
+  margin-top: -2px;
+}
+
+.hierarchy-listing .child .spaces > li {
+  margin-top: 10px;
+  margin-left: 20px;
+  padding: 6px 11px;
+  clear: left;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+
+.hierarchy-listing .child .spaces > li:hover {
+  padding: 5px 10px;
+  border: 1px solid rgb(230, 230, 230);
+  background-color: rgb(240, 240, 240);
+}
+
+.hierarchy-listing .child .spaces .name {
+  font-size: 1.2em;
+}
+
+.hierarchy-listing .child .spaces .resources {
+  margin-top: 10px;
+}
+
+.hierarchy-listing .child .spaces .resources li {
+  float: left;
+  color: rgb(179, 179, 179);
+}
+
+.hierarchy-listing .child .spaces .resources li:before {
+  float: left;
+  margin-right: 5px;
+  margin-top: -2px;
+}
+
+.hierarchy-listing .child .spaces .resources li.subjects {
+  width: 95px;
+}
+
+.hierarchy-listing .child .spaces .resources li.lectures {
+  width: 80px;
+}
+
+.hierarchy-listing .child .spaces .resources li.comments {
+  width: 175px;
+}
+
+.hierarchy-listing .child .spaces .resources li.files {
+  width: 150px;
+}
+
+.textshadow .hierarchy-listing .child .spaces .resources li {
+  text-shadow: 0px 1px 0px #ffffff;
+}
+
+.hierarchy-listing .statistics {
+  width: 118px;
+  padding: 5px 10px;
+  float: right;
+  background-color: rgb(240, 240, 240);
+  border: 1px solid white;
+
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+
+.hierarchy-listing .statistics .numbers {
+  float: right;
+}
+
+.hierarchy-listing .statistics .privacy {
+  display: block;
+  width: 16px;
+  height: 18px;
+  float: left;
+  margin-left: 5px;
+  margin-top: 15px;
+}
+
+.hierarchy-listing .statistics .numbers .count {
+  font-size: .87em;
+  font-weight: bold;
+  color: rgb(109, 110, 111);
+}
+
+.hierarchy-listing .statistics .numbers .role {
+  font-size: .87em;
+  color: rgb(179, 179, 179);
+}
+
+.textshadow .hierarchy-listing .statistics .numbers {
+  text-shadow: 0px 1px 0px #ffffff;
 }
 
 .hierarchy-listing-wrapper > .resources .info{
@@ -3939,6 +4097,10 @@ div.token-input-dropdown {
 #global-courses .main {
   padding: 0;
   border: none;
+}
+
+#global-courses .big-col {
+  width: 738px;
 }
 
 #global-courses .filters {
