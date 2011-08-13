@@ -11,7 +11,7 @@ class Subject < ActiveRecord::Base
   has_many :teachers, :through => :enrollments, :source => :user,
     :conditions => ["enrollments.role = ?", 5] # Teacher
   has_many :statuses, :as => :statusable, :dependent => :destroy
-  has_many :logs, :as => :logeable, :dependent => :destroy, :class_name => 'Status'
+  has_many :logs, :as => :logeable
 
   scope :recent, lambda { where('updated_at > ?', 1.week.ago) }
   scope :visible, lambda { where('visible = ?', true) }

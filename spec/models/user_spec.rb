@@ -4,7 +4,7 @@ describe User do
   subject { Factory(:user) }
 
   it { should have_many(:annotations).dependent(:destroy) }
-  it { should have_many(:statuses).dependent(:destroy) }
+  it { should have_many(:statuses) }
   [:lectures, :exams, :exam_users, :questions, :favorites, :statuses,
     :subjects, :student_profiles, :subjects].each do |attr|
     it { should have_many attr }
@@ -74,6 +74,9 @@ describe User do
 
   it { should accept_nested_attributes_for :settings }
   it { should accept_nested_attributes_for :social_networks }
+
+  it { should have_many(:overview).through :status_user_associations }
+  it { should have_many(:logs) }
 
   [:first_name, :last_name].each do |attr|
     it do

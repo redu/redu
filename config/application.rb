@@ -175,5 +175,9 @@ module Redu
       :key => 'f786a58d885e7397ecaa',
       :secret => '1de7afbc11094fcfa16b'
     }
+
+    unless File.basename($0) == 'rake'
+      config.active_record.observers = :logging_observer
+    end
   end
 end

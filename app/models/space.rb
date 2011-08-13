@@ -59,6 +59,7 @@ class Space < ActiveRecord::Base
   has_many :sb_posts # Apenas para facilitar a busca.
   has_one :forum, :dependent => :destroy
   has_one :root_folder, :class_name => 'Folder', :foreign_key => 'space_id'
+  has_many :logs, :as => :logeable
 
   scope :of_course, lambda { |course_id| where(:course_id => course_id) }
   scope :published, where(:published => true)

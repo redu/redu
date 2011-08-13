@@ -7,6 +7,7 @@ class Education < ActiveRecord::Base
 
   belongs_to :educationable, :polymorphic => true, :dependent => :destroy
   belongs_to :user
+  has_many :logs, :as => :logeable
 
   attr_protected :user
 

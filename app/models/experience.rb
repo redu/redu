@@ -3,6 +3,7 @@ class Experience < ActiveRecord::Base
   # faz parte do currículo do mesmo.
 
   belongs_to :user
+  has_many :logs, :as => :logeable
 
   attr_protected :user
 

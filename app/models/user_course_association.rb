@@ -2,6 +2,7 @@ class UserCourseAssociation < ActiveRecord::Base
   include AASM
   belongs_to :user
   belongs_to :course
+  has_many :logs, :as => :logeable
   enumerate :role
 
   # Filtra por papéis (lista)

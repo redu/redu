@@ -38,10 +38,12 @@ describe Course do
   it { should ensure_length_of(:name).is_at_most 60 }
   it { should ensure_length_of(:description).is_at_most 250 }
   it { should validate_format_of(:path).with("teste-medio")}
+  it { should have_many :logs }
 
   it { should_not allow_mass_assignment_of :owner }
   it { should_not allow_mass_assignment_of :published }
   it { should_not allow_mass_assignment_of :environment }
+
 
   context "validations" do
     it "ensure format for path: doesn't accept no ascii" do
