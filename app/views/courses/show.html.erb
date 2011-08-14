@@ -7,50 +7,18 @@
   <%= render :partial => 'courses/header',
     :locals => { :course => @course } %>
 
-  <div id="course-spaces" class="hierarchy-listing-wrapper">
-    <div class="header">
-      <h4>Disciplinas</h4>
-      <span class="counter">
-        <%= pluralize(@course.spaces.length, 'disciplina')%>
-      </span>
-    </div>
+<div id="course-spaces" class="body clearfix">
+  <%= render :partial => 'courses/actions',
+    :locals => { :course => @course }%>
 
-    <div class="actions">
-      <% unless @course.users.include?(current_user) %>
-        <% if (current_page? preview_environment_course_path(@course.environment,
-          course)) || @sidebar_preview %>
-          <% if @course.can_add_entry? %>
-            <%= link_to 'Participar',
-              join_environment_course_path(@course.environment, @course),
-              :method => :post, :class => 'join important'%>
-          <% else %>
-            <span class="join waiting">Limite de vagas atingido</span>
-          <% end %>
-        <% end %>
-      <% else %>
-        <% if @course.waiting_approval?(current_user) %>
-          <span class="join waiting">Aguardando moderação</span>
-        <% else %>
-          <%= link_to 'Abandonar curso',
-            unjoin_environment_course_path(@course.environment, @course),
-            :method => :post,
-            :confirm => 'Você perderá o vínculo e o acesso a este curso e isso não poderá ser desfeito. Tem certeza?',
-            :class => 'leave icon icon-x-gray_8_8' %>
-        <% end %>
-      <% end %>
-    </div>
-
-    <% if can?(:manage, @course) %>
-    <div class="admin-actions clearfix">
-      <%= link_to 'Criar nova disciplina', new_space_path(:course_id => @course.id), :class => "button" %>
-    </div>
-    <% end %>
-
-    <ul id="spaces_list" class="hierarchy-listing">
+  <% fake_tabs ["Disciplinas", environment_course_path(@course.environment,
+    @course)],
+    ["Membros", users_environment_course_path(@course.environment, @course)] do %>
+    <ul id="spaces_list" class="hierarchy-listing spaces">
       <%= render :partial => 'spaces/item', :collection => @spaces %>
     </ul>
-
     <%= will_paginate @spaces, :renderer => EndlessRenderer %>
-  </div><!-- end #environment-courses -->
+  <% end %>
+</div>
 
 </div><!-- end .main -->

@@ -9,7 +9,8 @@
     <div class="header">
       <h4>Pré-visualização</h4>
     </div>
-
+    <%= render :partial => 'courses/actions',
+      :locals => { :course => @course }%>
     <h3 class="call icon icon-space-lightblue_16_16">Disciplinas</h3>
     <span class="count">
       (<%= pluralize(@course.spaces.length, 'disciplina') + " " +

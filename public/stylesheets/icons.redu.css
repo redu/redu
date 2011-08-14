@@ -60,6 +60,24 @@
   background: url("../images/new/icons-small.png") -320px -2400px no-repeat;
 }
 
+.icon-content-blue_16_18,
+.icon-content-lightblue_16_18:hover { background-position: -160px -240px; }
+.icon-content-blue_16_18-before:before,
+.icon-content-lightblue_16_18-before:hover:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -160px -240px no-repeat;
+}
+
+.icon-content-lightblue_16_18 { background-position: -80px -240px; }
+.icon-content-lightblue_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -80px -240px no-repeat;
+}
+
 .icon-course-blue_16_18,
 .icon-course-lightblue_16_18:hover { background-position: -160px -80px }
 .icon-course-blue_16_18-before:before,
@@ -76,6 +94,25 @@
   height: 18px;
   background: url("../images/new/icons-small.png") -80px -80px no-repeat;
 }
+
+.icon-delete-gray_8_10 { background-position: -400px -2800px; }
+.icon-delete-gray_8_10-before:before {
+  content: "";
+  width: 8px;
+  height: 10px;
+  background: url("../images/new/icons-small.png") -400px -2800px no-repeat;
+}
+
+.icon-delete-red_8_10,
+.icon-delete-gray_8_10:hover { background-position: -480px -2800px; }
+.icon-delete-red_8_10-before:before,
+.icon-delete-gray_8_10-before:hover:before {
+  content: "";
+  width: 8px;
+  height: 10px;
+  background: url("../images/new/icons-small.png") -480px -2800px no-repeat;
+}
+
 .icon-course-gray_16_18 { background-position: 0 -80px;}
 .icon-delete-gray_16_18 { background-position: 0 -2160px; }
 .icon-delete-gray_16_18:hover,
@@ -163,6 +200,24 @@
   height: 18px;
   background: url("../images/new/icons-small.png") 0 -1280px no-repeat;
 }
+
+.icon-file-blue_16_18,
+.icon-file-lightblue_16_18:hover { background-position: -160px -1280px; }
+.icon-file-blue_16_18-before:before,
+.icon-file-lightblue_16_18-before:hover:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -160px -1280px no-repeat;
+}
+.icon-file-lightblue_16_18 { background-position: -80px -1280px; }
+.icon-file-lightblue_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -80px -1280px no-repeat;
+}
+
 .icon-home-blue_16_18,
 .icon-home-lightblue_16_18:hover { background-position: -80px -2240px; }
 .icon-home-lightblue_16_18 { background-position: 0 -2240px; }
@@ -256,7 +311,22 @@
   height: 18px;
   background: url("../images/new/icons-small.png") 0 -560px no-repeat;
 }
-.icon-wall-blue_16_18 { background-position: -160px -560px; }
+.icon-wall-blue_16_18,
+.icon-wall-lightblue_16_18:hover { background-position: -160px -560px; }
+.icon-wall-blue_16_18-before:before,
+.icon-wall-lightblue_16_18-before:hover:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -160px -560px no-repeat;
+}
+.icon-wall-lightblue_16_18 { background-position: -80px -560px; }
+.icon-wall-lightblue_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -80px -560px no-repeat;
+}
 
 /* Social Networks */
 .icon-facebook_16_18 { background-position: 0 -1920px; }
