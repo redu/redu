@@ -91,6 +91,14 @@
   background: url("../images/new/icons-small.png") 0 -800px no-repeat;
 }
 
+.icon-expand-gray_8_10 { background-position: -480px -1840px }
+.icon-expand-gray_8_10-after:after {
+  content: "";
+  width: 8px;
+  height: 10px;
+  background: url("../images/new/icons-small.png") -480px -1840px no-repeat;
+}
+
 .icon-experience-blue_32_34 { background-position: -240px -3280px; }
 .icon-experience-blue_32_34-after:after {
   content: "";
@@ -108,7 +116,7 @@
 }
 
 .icon-experience-lightblue_32_34 { background-position: 0 -3280px; }
-.icon-member-gray_16_18 { background-position; 0 -1040px; }
+.icon-member-gray_16_18 { background-position: 0 -1040px; }
 .icon-member-gray_16_18-before:before {
   content: "";
   width: 16px;
@@ -116,13 +124,15 @@
   background: url("../images/new/icons-small.png") 0 -1040px no-repeat;
 }
 
-.icon-redu_admin-gray_16_18 { background-position; 0 -720px; }
+.icon-redu_admin-gray_16_18 { background-position: 0 -720px; }
 .icon-redu_admin-gray_16_18-before:before {
   content: "";
   width: 16px;
   height: 18px;
   background: url("../images/new/icons-small.png") 0 -720px no-repeat;
 }
+
+.icon-space-lightblue_32_34 { background-position: -400px -160px; }
 
 .icon-teacher-gray_16_18 { background-position: 0 -880px }
 .icon-teacher-gray_16_18-before:before {

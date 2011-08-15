@@ -1409,6 +1409,10 @@
   font-size: .98em;
 }
 
+.statuses a {
+  color: #4CACD5;
+}
+
 .statuses > ol > li {
   background: url("../images/new/dots.png") repeat-x top;
   padding: 20px 0;
@@ -1416,7 +1420,7 @@
 
 .statuses ol .responses,
 .statuses ol .create-response {
-  margin-left: 42px;
+  margin-left: 37px;
   background: #F0F0F0 url("../images/new/gray-nipple.png") no-repeat left top;
   padding: 20px 10px 10px 10px;
   -moz-border-radius: 5px;
@@ -1425,42 +1429,44 @@
 }
 
 .statuses ol .create-response {
-  margin: 0 0 10px 42px;
+  margin: 0 0 10px 37px;
 }
 
+.statuses .friend-avatar,
 .statuses li .avatar {
-  clear: left;
   float: left;
-  margin-right: 10px;
-}
-
-.statuses li .message {
-  padding-left: 42px;
-  display: block;
-  line-height: 130%;
+  margin-right: 5px;
 }
 
 .statuses .username {
   font-weight: bold;
 }
 
+.statuses .friend-summary,
 .statuses .date {
+  display: block;
   font-size: .9em;
   color: #B2B2B2;
+  overflow: hidden;
+}
+
+.statuses .status-info {
+  color: #6d6e6f;
 }
 
 .statuses .toggle-statuses {
   display: block;
   border-top: 1px solid white;
   padding-top: 10px;
-  margin-left: 42px;
+  margin-left: 37px;
   text-align: center;
   font-size: .9em;
 }
 
-.statuses .actions {
+#statuses .responses .actions,
+#statuses .status .actions {
   font-size: .9em;
-  margin-left: 32px;
+  margin-left: 27px;
   padding: 10px 0;
 }
 
@@ -1477,6 +1483,77 @@
 
 .statuses .actions li:last-child {
   border: none;
+}
+
+.statuses li .message {
+  padding-left: 37px;
+  display: block;
+  line-height: 130%;
+}
+
+.statuses .status-text {
+  line-height: 130%;
+  overflow: hidden;
+}
+
+.statuses .status-message {
+  clear: both;
+  margin-top: 10px;
+  margin-left: 32px;
+  line-height: 130%;
+}
+
+.statuses .re-status .status-message {
+  margin-top: 0;
+}
+
+.statuses .status-message p {
+  margin-left: 5px;
+}
+
+.statuses .status-content {
+  overflow: hidden;
+  line-height: 130%;
+  margin: 10px 0 0 38px;
+}
+
+.statuses .status-subject {
+  float: left;
+  width: 32px;
+  height: 34px;
+  margin-right: 5px;
+  display: block;
+  overflow: hidden;
+}
+
+.statuses .status-context {
+  line-height: 130%;
+  overflow: hidden;
+}
+
+.statuses .status-context .status-main {
+  overflow: hidden;
+  font-weight: bold;
+  float: left;
+  display: block;
+}
+
+.statuses .status-context .status-main:after {
+  content: "";
+  margin: -12px 10px 0 10px;
+  float: right;
+}
+
+.statuses .status-log {
+  overflow: hidden;
+  line-height: 130%;
+  margin-left: 38px;
+}
+
+.statuses .status-icon:before {
+  content: "";
+  float: left;
+  margin-right: 5px;
 }
 
 #content .secondary-sidebar {

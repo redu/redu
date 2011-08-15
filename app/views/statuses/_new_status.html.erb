@@ -1,0 +1,95 @@
+<%# Layout de adição de amizade %>
+<li>
+  <div class="status">
+    <div class="status-text">
+      <%= image_tag current_user.avatar.url(:thumb_32),
+        :class => "avatar", :width => 32, :height => 32 %>
+      <a href="#" class="username" >Nome Sobrenome</a>
+      <span class="status-info">adicionou a sua rede de contatos:</span>
+      <span class="date">
+        <%= time_ago_in_words current_user.created_at %>
+      </span>
+    </div>
+    <div class="status-content">
+      <%= image_tag current_user.avatar.url(:thumb_32),
+        :width => 32, :height => 32, :class => 'friend-avatar' %>
+      <a href="#" class="username" >Nome Sobrenome</a>
+      <span class="friend-summary">
+        22 contatos e 2 disciplinas em comum
+      </span>
+    </div>
+  </div>
+</li>
+
+<%# Layout de comentário no mural: %>
+<li>
+  <div class="status">
+    <div class="status-text">
+      <%= image_tag current_user.avatar.url(:thumb_32), :class => "avatar",
+        :width => 32, :height => 32 %>
+      <a href="#" class="username" >Nome Sobrenome</a>
+      <span class="status-info">
+        comentou em <a href="#">seu Mural</a>:
+      </span>
+      <span class="date">
+        há 2 dias
+      </span>
+    </div>
+    <div class="status-message">
+      <p>
+        lorem ipsum dolor sit amet
+      </p>
+    </div>
+  </div>
+</li>
+
+<%# Layout de publicação em um módulo %>
+<li>
+  <div class="status">
+    <div class="status-context">
+      <span class="status-subject icon-small icon-space-lightblue_32_34">
+      </span>
+      <a href="#" class="status-main icon-expand-gray_8_10-after">
+        Disciplina Ipsum Dolor
+      </a>
+      <a href="#" >Nome do módulo</a>
+    </div>
+    <div class="status-log">
+      <%= image_tag current_user.avatar.url(:thumb_32),
+        :width => 32, :height => 32, :class => 'friend-avatar' %>
+      <div class="status-icon icon-teacher-gray_16_18-before">
+        <a href="#" class="username" >Nome Sobrenome</a>
+        <span class="status-info">publicou a aula</span>
+        <a href="#">Lorem Ipsum</a>
+        <span class="date">
+          há 3 dias atrás
+        </span>
+      </div>
+    </div>
+  </div>
+</li>
+
+<li>
+  <div class="status">
+    <div class="status-context">
+      <span class="status-subject icon-small icon-space-lightblue_32_34">
+      </span>
+      <a href="#" class="status-main icon-expand-gray_8_10-after">
+        Disciplina Ipsum Dolor
+      </a>
+      <a href="#" >Nome do módulo</a>
+    </div>
+    <div class="status-log">
+      <%= image_tag current_user.avatar.url(:thumb_32),
+        :width => 32, :height => 32, :class => 'friend-avatar' %>
+      <div class="status-icon icon-teacher-gray_16_18-before">
+        <a href="#" class="username" >Nome Sobrenome</a>
+        <span class="status-info">publicou a aula</span>
+        <a href="#">Lorem Ipsum</a>
+        <span class="date">
+          há 3 dias atrás
+        </span>
+      </div>
+    </div>
+  </div>
+</li>
