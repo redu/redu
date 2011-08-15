@@ -36,7 +36,7 @@ class Environment < ActiveRecord::Base
   validates_length_of :name, :maximum => 40
   validates_length_of :description, :maximum => 400, :allow_blank => true
   validates_length_of :initials, :maximum => 10, :allow_blank => true
-  validates_format_of :path, :with => /^[-_.A-Za-z0-9]*$/
+  validates_format_of :path, :with => /^[-_A-Za-z0-9]*$/
 
   accepts_nested_attributes_for :courses
 
@@ -68,19 +68,6 @@ class Environment < ActiveRecord::Base
       each do |membership|
         membership.course.change_role(user, role)
       end
-  end
-
-  # Verifica se o path escolhido para o Environment já é utilizado por
-  # outro, caso seja, um novo path é gerado.
-  def verify_path!
-    path  = self.path
-    if Environment.find_by_path(self.path)
-      self.path += '-' + SecureRandom.hex(1)
-
-      # Mais uma tentativa para utilizar um path não existente.
-      return unless Environment.find_by_path(self.path)
-      self.path = path + '-' + SecureRandom.hex(1)
-    end
   end
 
   # Retorna as iniciais ou, se não houver, o nome
