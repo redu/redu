@@ -86,7 +86,8 @@ class Ability
     alias_action :confirm, :address, :pay, :upgrade, :to => :manage
 
     # Todos podem ver o preview
-    can :preview, [Course, Environment, Subject], :published => true
+    can :preview, [Course, Environment], :published => true
+    can :preview, Subject, :visible => true
 
     # Todos podem criar usuários
     can :create, User

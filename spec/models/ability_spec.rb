@@ -514,6 +514,32 @@ describe Ability do
       end
     end
 
+    context "on subject" do
+      before do
+        @environment = Factory(:environment, :owner => @env_admin)
+        @course = Factory(:course, :owner => @env_admin,
+                          :environment => @environment)
+        @space = Factory(:space, :owner => @env_admin, :course => @course)
+        @subject = Factory(:subject, :owner => @env_admin, :space => @space)
+      end
+      context "member" do
+        before do
+          @course.join @member
+          @ability = Ability.new(@member)
+        end
+
+        it "can preview a visible subject" do
+          @subject.visible = true
+          @ability.should be_able_to(:preview, @subject)
+        end
+
+        it "can not preview a invisible subject" do
+          @subject.visible = false
+          @ability.should_not be_able_to(:preview, @subject)
+        end
+      end
+    end
+
     context "on plan" do
       before do
         @plan = Factory(:plan)
