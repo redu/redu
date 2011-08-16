@@ -189,4 +189,21 @@ describe EnvironmentsController do
     end
   end
 
+  context "GET users" do
+    before do
+      course = Factory(:course)
+      user = Factory(:user)
+      course.join user
+      activate_authlogic
+      UserSession.create user
+
+      get :users, :id => course.environment.path, :locale => "pt-BR"
+    end
+
+    [:users, :teachers, :tutors, :students].each do |v|
+      it "assigns #{v}" do
+        assigns[v].should_not be_nil
+      end
+    end
+  end
 end

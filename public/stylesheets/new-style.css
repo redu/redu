@@ -1189,39 +1189,75 @@
 
 }
 
-.hierarchy-listing-wrapper .members > li {
-  width: 215px;
-  margin: 0 10px 10px 0;
+.body .members > li {
+  width: 230px;
+  height: 43px;
   padding: 10px;
   float: left;
-
-  border: 1px solid #B3B2B3;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
 }
 
-.hierarchy-listing-wrapper .members > li.omega {
+.body .members > li.even {
+  background-color: rgb(247, 247, 247);
+}
+
+.body .members > li.omega {
   margin-right: 0;
 }
 
+.body .members > li:hover,
+.body .members > li.even:hover {
+  background-color: rgb(219, 239, 247);
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
 
-.hierarchy-listing-wrapper .members > li img {
+.body .members > li img {
   float: left;
 }
 
-.hierarchy-listing-wrapper .members > li a,
-.hierarchy-listing-wrapper .members > li .role {
+.body .members > li .infos {
+  margin-left: 25px;
+}
+
+.textshadow .body .members > li .infos {
+  text-shadow: 0px 1px 0px #ffffff;
+}
+
+.body .members > li .name,
+.body .members > li .courses-count,
+.body .members > li .role {
   display: block;
 }
 
-.hierarchy-listing-wrapper .members > li .role {
-  font-size: .9em;
-  font-style: oblique;
-  color:#B2B2B2;
-  margin-top: 5px;
-  padding: 3px 0 3px 20px;
+.body .members > li .name {
+  font-weight: bold;
 }
 
+.body .members > li .role,
+.body .members > li .courses-count,
+.body .members > li .friends-common {
+  font-size: .87em;
+  color:#B2B2B2;
+  padding: 3px 0;
+}
+
+.body .members > li .role:before {
+  float: left;
+  margin: -2px 5px 0 -20px;
+}
+
+.body .members .separator {
+  width: 750px;
+  margin: 1px;
+  float: left;
+  border: none;
+  border-bottom: 1px solid rgb(204, 204, 204);
+}
+
+.body .members .separator:last-child {
+  border: none;
+}
 
 .hierarchy-listing-wrapper .header h4,
 .body .header h4 {
@@ -1739,7 +1775,10 @@
 .endless,
 .endless_pending {
   text-align: center;
-  margin: 10px 0;
+  padding: 26px 10px 6px 10px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  background: url("../images/new/dots.png") repeat-x top;
 }
 
 .endless a,
@@ -5743,6 +5782,12 @@ div.token-input-dropdown {
   -moz-text-shadow: 1px -1px 1px #1789C3;
   -webkit-text-shadow: 1px -1px 1px #1789C3;
   text-shadow: 1px -1px 1px #1789C3;
+}
+
+.subtabs .ui-tabs-nav .ui-state-default a:before {
+  float: left;
+  margin-top: -3px;
+  margin-left: 5px;
 }
 
 .subtabs .ui-tabs-nav .ui-state-active a:hover {

@@ -10,29 +10,13 @@
     :locals => { :course => @course }%>
   <%= render :partial => 'courses/header',
     :locals => { :course => @course }%>
-  <div id="course-users" class="hierarchy-listing-wrapper">
-    <div class="header">
-      <h4>Membros</h4>
-      <span class="counter">
-        <%= @course.approved_users.length %> pessoas fazem parte de
-        <%= @course.name %>
-      </span>
-    </div>
-    <% if can? :manage, @course %>
-      <div class="admin-actions clearfix">
-        <%=
-          link_to "Convidar membros", admin_invitations_environment_course_path(@environment, @course),
-            :class => "button"
-        %>
-      </div>
-    <% end %>
-
-    <ul id="users_list" class="members clearfix">
-      <%= render :partial => 'users/item',
-        :collection => @users, :locals => {:entity => @course} %>
-    </ul>
-
-    <%= will_paginate @users, :renderer => EndlessRenderer %>
+  <div id="course-users" class="body">
+    <%= fake_tabs ["Disciplinas",
+      environment_course_path(@course.environment, @course)],
+      ["Membros", users_environment_course_path(@course.environment, @course)] do %>
+      <%= render :partial => "users/list",
+        :locals => { :entity => @course, :users => @users,
+          :teachers => @teachers, :tutors => @tutors, :students => @students } %>
+      <% end %>
   </div><!-- end #environment-courses -->
-
 </div><!-- end .main -->

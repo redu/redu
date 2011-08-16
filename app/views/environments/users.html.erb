@@ -11,21 +11,13 @@
   <%= render :partial => 'environments/header',
     :locals => { :environment => @environment } %>
 
-  <div id="environment-users" class="hierarchy-listing-wrapper">
-    <div class="header">
-      <h4>Membros</h4>
-      <span class="counter">
-        <%= @environment.users.length %> pessoas fazem parte da
-        <%= @environment.initials_or_name %>
-      </span>
-    </div>
-
-    <ul id="users_list" class="members clearfix">
-      <%= render :partial => 'users/item',
-        :collection => @users, :locals => {:entity => @environment} %>
-    </ul>
-
-    <%= will_paginate @users, :renderer => EndlessRenderer %>
+  <div id="environment-users" class="body">
+    <%= fake_tabs ["Cursos", environment_path(@environment)],
+      ["Membros", users_environment_path(@environment)] do %>
+      <%= render :partial => "users/list",
+        :locals => { :entity => @environment, :users => @users,
+          :teachers => @teachers, :tutors => @tutors, :students => @students } %>
+    <% end %>
   </div><!-- end #environment-courses -->
 
 </div><!-- end .main -->

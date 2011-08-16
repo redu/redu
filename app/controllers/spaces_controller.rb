@@ -275,8 +275,9 @@ class SpacesController < BaseController
 
   # Listagem de usuários do Space
   def users
-    @users = @space.users.
-      paginate(:page => params[:page], :order => 'first_name ASC', :per_page => 18)
+    @users = @space.users.includes(:user_course_associations).
+      paginate(:page => params[:page], :order => 'first_name ASC',
+               :per_page => 18)
 
     respond_to do |format|
       format.html

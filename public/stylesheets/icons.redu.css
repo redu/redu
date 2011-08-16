@@ -244,12 +244,40 @@
   height: 10px;
   background: url("../images/new/icons-small.png") 0 -2880px no-repeat;
 }
-.icon-member-gray_16_18 { background-position; 0 -1040px; }
+
+.icon-member-blue_16_18,
+.icon-member-lightblue_16_18:hover { background-position: -160px -1040px; }
+.icon-member-blue_16_18-before:before,
+.icon-member-lightblue_16_18-before:hover:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -160px -1040px no-repeat;
+}
+
+.icon-member-gray_16_18 { background-position: 0 -1040px; }
 .icon-member-gray_16_18-before:before {
   content: "";
   width: 16px;
   height: 18px;
   background: url("../images/new/icons-small.png") 0 -1040px no-repeat;
+}
+
+.icon-member-lightblue_16_18 { background-position: -80px -1040px; }
+.icon-member-lightblue_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -80px -1040px no-repeat;
+}
+
+.icon-member-white_16_18 { background-position: -240px -1040px; }
+.icon-member-white_16_18-before:before,
+.ui-tabs-selected .icon-member-lightblue_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -240px -1040px no-repeat;
 }
 
 .icon-privacy-grey_16_18 { background-position: 0 -1520px; }
@@ -288,12 +316,49 @@
   background: url("../images/new/icons-small.png") -320px -1360px no-repeat;
 }
 
+.icon-teacher-blue_16_18,
+.icon-teacher-lightblue_16_18:hover { background-position: -160px -880px }
+.icon-teacher-blue_16_18-before:before,
+.icon-teacher-lightblue_16_18-before:hover:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -160px -880px no-repeat;
+}
+
 .icon-teacher-gray_16_18 { background-position: 0 -880px }
 .icon-teacher-gray_16_18-before:before {
   content: "";
   width: 16px;
   height: 18px;
   background: url("../images/new/icons-small.png") 0 -880px no-repeat;
+}
+
+.icon-teacher-lightblue_16_18 { background-position: -80px -880px }
+.icon-teacher-lightblue_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -80px -880px no-repeat;
+}
+
+.icon-teacher-white_16_18 { background-position: -240px -880px }
+.icon-teacher-white_16_18-before:before,
+.ui-tabs-selected .icon-teacher-lightblue_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -240px -880px no-repeat;
+}
+
+.icon-tutor-blue_16_18,
+.icon-tutor-lightblue_16_18:hover { background-position; -160px -960px; }
+.icon-tutor-blue_16_18-before:before,
+.icon-tutor-lightblue_16_18-before:hover:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -160px -960px no-repeat;
 }
 
 .icon-tutor-gray_16_18 { background-position; 0 -960px; }
@@ -304,6 +369,23 @@
   background: url("../images/new/icons-small.png") 0 -960px no-repeat;
 }
 
+.icon-tutor-lightblue_16_18 { background-position; -80px -960px; }
+.icon-tutor-lightblue_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -80px -960px no-repeat;
+}
+
+.icon-tutor-white_16_18 { background-position; -240px -960px; }
+.icon-tutor-white_16_18-before:before,
+.ui-tabs-selected .icon-tutor-lightblue_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -240px -960px no-repeat;
+}
+
 .icon-wall-gray_16_18 { background-position: 0 -560px; }
 .icon-wall-gray_16_18-before:before {
   content: "";
@@ -311,6 +393,7 @@
   height: 18px;
   background: url("../images/new/icons-small.png") 0 -560px no-repeat;
 }
+
 .icon-wall-blue_16_18,
 .icon-wall-lightblue_16_18:hover { background-position: -160px -560px; }
 .icon-wall-blue_16_18-before:before,

@@ -259,14 +259,43 @@ class EnvironmentsController < BaseController
     @sidebar_preview = true if params.has_key?(:preview) &&
                               params[:preview] == 'true'
 
-    @users = @environment.users.paginate(:page => params[:page],
-                                         :order => 'first_name ASC', :per_page => 18)
+    @users = @environment.users.includes(:user_course_associations).
+      includes(:user_environment_associations).
+      paginate(:page => params[:users_page], :order => 'first_name ASC',
+               :per_page => 18)
+    @teachers = @environment.teachers.includes(:user_course_associations).
+      includes(:user_environment_associations).
+      paginate(:page => params[:teachers_page], :order => 'first_name ASC',
+               :per_page => 18)
+    @tutors = @environment.tutors.includes(:user_course_associations).
+      includes(:user_environment_associations).
+      paginate(:page => params[:tutors_page], :order => 'first_name ASC',
+               :per_page => 18)
+    @students = @environment.students.includes(:user_course_associations).
+      includes(:user_environment_associations).
+      paginate(:page => params[:students_page], :order => 'first_name ASC',
+               :per_page => 18)
 
     respond_to do |format|
       format.html
       format.js do
-        render_endless 'users/item', @users, '#users_list',
-          {:entity => @environment}
+        if params.has_key? :users_page
+          render_endless 'users/item', @users, '#users-list',
+            { :entity => @environment },
+            { :param_name => "users_page", :id => "users-endless" }
+        elsif params.has_key? :teachers_page
+          render_endless 'users/item', @teachers, '#teachers-list',
+            { :entity => @environment },
+            { :param_name => "teachers_page", :id => "teachers-endless" }
+        elsif params.has_key? :tutors_page
+          render_endless 'users/item', @tutors, '#tutors-list',
+            { :entity => @environment },
+            { :param_name => "tutors_page", :id => "tutors-endless" }
+        elsif params.has_key? :students_page
+          render_endless 'users/item', @students, '#students-list',
+            { :entity => @environment },
+            { :param_name => "students_page", :id => "students-endless" }
+        end
       end
     end
   end

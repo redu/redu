@@ -32,13 +32,11 @@ module BaseHelper
   def real_tabs_navigation(*ids)
     lis = ids.collect do |id|
       #href, name, class_name = id
-      href, name = id
+      href, name, options = id
       content_tag :li do
         # por enquanto que ícones não são gerados pelo design
         # content_tag :a, :href => "##{href}", :class => "icon #{class_name}" do
-        content_tag :a, :href => "##{href}" do
-          name
-        end
+        link_to name, "##{href}", options
       end
     end
     width = lis.size * 120;
