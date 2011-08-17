@@ -7,7 +7,5 @@
      <% end %>
    <% end %>
 
-   <% if course.subscription_type.eql? 2 %>
-     <span class="icon-small icon-privacy-orange_16_18 moderated replacement">Moderado</span>
-   <% end %>
+   <%= render :partial => 'courses/privacy', :locals => { :course => course } %>
 </div>

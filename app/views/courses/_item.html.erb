@@ -20,17 +20,7 @@
     </ul>
   </div>
   <div class="statistics">
-    <% unless item.subscription_type == 1 %>
-      <% if can?(:manage, item) %>
-        <% if item.user_course_associations.waiting.exists? %>
-          <span class="privacy icon-small icon-privacy-orange_16_18 replacement">Curso fechado, existem alunos na fila de moderação.</span>
-        <% end %>
-      <% elsif can?(:show, item) %>
-        <span class="privacy icon-small icon-privacy-grey_16_18 replacement">Curso fechado e você tem acesso.</span>
-      <% else %>
-        <span class="privacy icon-small icon-privacy-red_16_18 replacement">Curso fechado</span>
-      <% end %>
-    <% end %>
+    <%= render :partial => 'courses/privacy', :locals => { :course => item } %>
     <ul class="numbers clearfix">
       <li>
         <span class="count"><%= item.approved_users.length %></span>

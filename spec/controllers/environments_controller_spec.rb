@@ -191,13 +191,14 @@ describe EnvironmentsController do
 
   context "GET users" do
     before do
-      course = Factory(:course)
+      environment = Factory(:environment, :published => true)
+      course = Factory(:course, :environment => environment)
       user = Factory(:user)
       course.join user
       activate_authlogic
       UserSession.create user
 
-      get :users, :id => course.environment.path, :locale => "pt-BR"
+      get :users, :id => environment.path, :locale => "pt-BR"
     end
 
     [:users, :teachers, :tutors, :students].each do |v|
