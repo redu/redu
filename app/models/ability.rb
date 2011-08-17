@@ -27,7 +27,7 @@ class Ability
     alias_action :admin_events, :moderate_bulletins, :moderate_events,
       :look_and_feel, :set_theme, :new_space_admin, :to => :manage
     #TODO action manage gerando recursividade
-    alias_action :mural, :to => :read
+    alias_action :mural, :students_endless , :to => :read
 
     # Folder
     alias_action :do_the_upload, :upload, :update_permissions, :rename,

@@ -288,6 +288,19 @@ class SpacesController < BaseController
     end
   end
 
+  # Utilizado pelo endless do sidebar
+  def students_endless
+    @sidebar_students = @space.students.page(params[:page]).per(4)
+
+    respond_to do |format|
+      format.js do
+        render_sidebar_endless 'users/item_medium_24',
+          @sidebar_students, '.connections.students',
+          "Mostrando os <X> últimos alunos da disciplina"
+      end
+    end
+  end
+
   protected
 
   def find_space_course_environment

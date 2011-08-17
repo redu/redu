@@ -78,6 +78,7 @@ Redu::Application.routes.draw do
       get :unpublish
       get :users
       get :mural
+      get :students_endless
       post :moderate_bulletins
       post :moderate_events
     end

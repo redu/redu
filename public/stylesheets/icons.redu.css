@@ -193,6 +193,17 @@
 }
 
 .icon-experience-lightblue_32_34 { background-position: 0 -3280px; }
+
+.icon-file-blue_16_18,
+.icon-file-lightblue_16_18:hover { background-position: -160px -1280px; }
+.icon-file-blue_16_18-before:before,
+.icon-file-lightblue_16_18-before:hover:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -160px -1280px no-repeat;
+}
+
 .icon-file-gray_16_18 { background-position: 0 -1280px; }
 .icon-file-gray_16_18-before:before {
   content: "";
@@ -210,12 +221,21 @@
   height: 18px;
   background: url("../images/new/icons-small.png") -160px -1280px no-repeat;
 }
+
 .icon-file-lightblue_16_18 { background-position: -80px -1280px; }
 .icon-file-lightblue_16_18-before:before {
   content: "";
   width: 16px;
   height: 18px;
   background: url("../images/new/icons-small.png") -80px -1280px no-repeat;
+}
+
+.icon-file-white_16_18 { background-position: -240px -1280px; }
+.icon-file-white_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -240px -1280px no-repeat;
 }
 
 .icon-home-blue_16_18,
@@ -280,6 +300,32 @@
   background: url("../images/new/icons-small.png") -240px -1040px no-repeat;
 }
 
+.icon-members-blue_16_18,
+.icon-members-lightblue_16_18:hover { background-position: -160px -480px; }
+.icon-members-blue_16_18-before:before,
+.icon-members-lightblue_16_18-before:hover:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -160px -480px no-repeat;
+}
+
+.icon-members-lightblue_16_18 { background-position: -80px -480px; }
+.icon-members-lightblue_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -80px -480px no-repeat;
+}
+
+.icon-members-white_16_18 { background-position: -240px -480px; }
+.icon-members-white_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -240px -480px no-repeat;
+}
+
 .icon-privacy-grey_16_18 { background-position: 0 -1520px; }
 .icon-privacy-lightblue_16_18 { background-position: -80px -1520px; }
 .icon-privacy-lightred_16_18 { background-position: -160px -1520px; }
@@ -300,12 +346,39 @@
   height: 18px;
   background: url("../images/new/icons-small.png") 0 -160px no-repeat;
 }
+
+.icon-subject-blue_16_18,
+.icon-subject-lightblue_16_18:hover { background-position: -160px -320px; }
+.icon-subject-blue_16_18-before:before,
+.icon-subject-lightblue_16_18-before:hover:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -160px -320px no-repeat;
+}
+
 .icon-subject-gray_16_18 { background-position: 0 -320px; }
 .icon-subject-gray_16_18-before:before {
   content: "";
   width: 16px;
   height: 18px;
   background: url("../images/new/icons-small.png") 0 -320px no-repeat;
+}
+
+.icon-subject-lightblue_16_18 { background-position: -80px -320px; }
+.icon-subject-lightblue_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -80px -320px no-repeat;
+}
+
+.icon-subject-white_16_18 { background-position: -240px -320px; }
+.icon-subject-white_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -240px -320px no-repeat;
 }
 
 .icon-tag-gray_16_18 { background-position: -320px -1360px; }
@@ -386,14 +459,6 @@
   background: url("../images/new/icons-small.png") -240px -960px no-repeat;
 }
 
-.icon-wall-gray_16_18 { background-position: 0 -560px; }
-.icon-wall-gray_16_18-before:before {
-  content: "";
-  width: 16px;
-  height: 18px;
-  background: url("../images/new/icons-small.png") 0 -560px no-repeat;
-}
-
 .icon-wall-blue_16_18,
 .icon-wall-lightblue_16_18:hover { background-position: -160px -560px; }
 .icon-wall-blue_16_18-before:before,
@@ -403,12 +468,29 @@
   height: 18px;
   background: url("../images/new/icons-small.png") -160px -560px no-repeat;
 }
+
+.icon-wall-gray_16_18 { background-position: 0 -560px; }
+.icon-wall-gray_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") 0 -560px no-repeat;
+}
+
 .icon-wall-lightblue_16_18 { background-position: -80px -560px; }
 .icon-wall-lightblue_16_18-before:before {
   content: "";
   width: 16px;
   height: 18px;
   background: url("../images/new/icons-small.png") -80px -560px no-repeat;
+}
+
+.icon-wall-white_16_18 { background-position: -240px -560px; }
+.icon-wall-white_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -240px -560px no-repeat;
 }
 
 /* Social Networks */

@@ -374,6 +374,13 @@ describe Ability do
                                                            :course => @course))
         end
 
+        it "can use students_endless on a space" do
+          space = Factory(:space, :course => @course)
+          Factory(:user_space_association, :space => space,
+                  :user => @member, :role => :member)
+          @ability.should be_able_to(:students_endless, space)
+        end
+
         it "cannot create a subject"
         it "cannot destroy any subject"
         it "cannot create a lecture"
