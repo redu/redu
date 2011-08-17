@@ -134,6 +134,12 @@ describe Log do
         @log.should be_valid
       end
 
+      it "cannot double log" do
+        expect {
+          Log.setup(@subject)
+        }.should_not change(@subject.logs, :count)
+      end
+
       it "sets Space as statusable" do
         @log.statusable.should == @subject.space
       end
@@ -246,7 +252,7 @@ describe Log do
     end
   end
 
-  context "when updating Education" do
+  context "when creating Education" do
     before do
       @education = Factory(:education)
       @log = Log.setup(@education, :action => :update)

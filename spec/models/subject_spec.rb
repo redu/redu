@@ -21,7 +21,7 @@ describe Subject do
   it { should have_many(:graduated_members).through :enrollments }
   it { should have_many(:members).through(:enrollments) }
   it { should have_many(:statuses).dependent(:destroy) }
-  it { should have_many(:logs).dependent(:destroy) }
+  it { should have_many(:logs) }
 
   it { should validate_presence_of :title }
   #FIXME falhando por problema de tradução

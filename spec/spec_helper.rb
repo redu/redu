@@ -34,4 +34,7 @@ RSpec.configure do |config|
   # Adiciona os papéis ao BD, pois estes são necessários nos testes.
   create_roles
   create_privacies
+
+  # Desabilita criação de logs nos specs
+  ActiveRecord::Observer.disable_observers
 end

@@ -39,7 +39,7 @@ class Log < Status
                              :user => model.owner,
                              :statusable => model.owner)
     when "UserCourseAssociation"
-      if model.approved?
+      if (model.approved? && model.logs.empty?)
         model.logs.new(:action => settings[:action],
                        :user => model.user,
                        :statusable => model.course)
@@ -49,7 +49,7 @@ class Log < Status
                              :user => model.owner,
                              :statusable => model.course)
     when "Subject"
-      if (model.finalized && model.visible)
+      if (model.finalized && model.visible && !model.logs.exists?)
         model.logs.new(:action => settings[:action],
                        :user => model.owner,
                        :statusable => model.space)

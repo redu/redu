@@ -1,4 +1,12 @@
 GIT
+  remote: git://github.com/alindeman/no_peeping_toms.git
+  revision: 83dbd4cb993ae8e78a38a0f5cad784ca58bb0dcd
+  specs:
+    no_peeping_toms (2.1.0)
+      activerecord (>= 3.0.0)
+      activesupport (>= 3.0.0)
+
+GIT
   remote: git://github.com/alto/aasm.git
   revision: a6f77b5fa4981d92695e28d5984af56f1d79388c
   specs:
@@ -225,6 +233,7 @@ DEPENDENCIES
   mime-types
   mysql2 (~> 0.2.1)
   newrelic_rpm (= 3.0.1)
+  no_peeping_toms!
   pagseguro (~> 0.1.10)
   paperclip
   pusher

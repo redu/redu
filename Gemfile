@@ -44,6 +44,7 @@ group :development, :test do
   gem 'ruby-debug'
   gem 'thin'
   gem 'jasmine'
+  gem 'no_peeping_toms', :git => 'git://github.com/alindeman/no_peeping_toms.git'
 end
 
 group :production do

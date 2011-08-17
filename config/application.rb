@@ -176,8 +176,15 @@ module Redu
       :secret => '1de7afbc11094fcfa16b'
     }
 
+    # Observers
     unless File.basename($0) == 'rake'
-      config.active_record.observers = :logging_observer
+      config.active_record.observers = [:course_observer,
+                                        :space_observer,
+                                        :subject_observer,
+                                        :user_course_association_observer,
+                                        :lecture_observer,
+                                        :user_observer,
+                                        :friendship_observer]
     end
   end
 end

@@ -40,6 +40,12 @@ describe Environment do
       subject.should_not be_valid
       subject.errors[:path].should_not be_empty
     end
+
+    it "doesnt accept ." do
+      subject.path = "www.redu.com.br"
+      subject.should_not be_valid
+      subject.errors[:path].should_not be_empty
+    end
   end
 
   context "finders" do
