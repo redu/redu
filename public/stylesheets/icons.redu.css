@@ -91,12 +91,12 @@
   background: url("../images/new/icons-small.png") 0 -800px no-repeat;
 }
 
-.icon-expand-gray_8_10 { background-position: -480px -1840px }
-.icon-expand-gray_8_10-after:after {
+.icon-expand-gray_8_10 { background-position: -560px -720px }
+.icon-expand-gray_8_10-before:before {
   content: "";
   width: 8px;
   height: 10px;
-  background: url("../images/new/icons-small.png") -480px -1840px no-repeat;
+  background: url("../images/new/icons-small.png") -560px -720px no-repeat;
 }
 
 .icon-experience-blue_32_34 { background-position: -240px -3280px; }
@@ -116,12 +116,20 @@
 }
 
 .icon-experience-lightblue_32_34 { background-position: 0 -3280px; }
+
 .icon-member-gray_16_18 { background-position: 0 -1040px; }
 .icon-member-gray_16_18-before:before {
   content: "";
   width: 16px;
   height: 18px;
   background: url("../images/new/icons-small.png") 0 -1040px no-repeat;
+}
+.icon-member-orange_16_18 { background-position: 320px -1040px; }
+.icon-member-orange_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") 320px -1040px no-repeat;
 }
 
 .icon-redu_admin-gray_16_18 { background-position: 0 -720px; }
@@ -141,6 +149,13 @@
   height: 18px;
   background: url("../images/new/icons-small.png") 0 -880px no-repeat;
 }
+.icon-teacher-orange_16_18 { background-position: -320px -880px }
+.icon-teacher-orange_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -320px -880px no-repeat;
+}
 
 .icon-tutor-gray_16_18 { background-position; 0 -960px; }
 .icon-tutor-gray_16_18-before:before {
@@ -148,6 +163,13 @@
   width: 16px;
   height: 18px;
   background: url("../images/new/icons-small.png") 0 -960px no-repeat;
+}
+.icon-tutor-orange_16_18 { background-position: -320px -960px }
+.icon-tutor-orange_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -320px -960px no-repeat;
 }
 
 .icon-wall-gray_16_18 { background-position: 0 -560px; }

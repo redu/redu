@@ -1420,7 +1420,7 @@
 
 .statuses ol .responses,
 .statuses ol .create-response {
-  margin-left: 37px;
+  margin-left: 32px;
   background: #F0F0F0 url("../images/new/gray-nipple.png") no-repeat left top;
   padding: 20px 10px 10px 10px;
   -moz-border-radius: 5px;
@@ -1473,7 +1473,6 @@
 .statuses .actions a {
   padding-left: 12px;
 }
-
 
 .statuses .actions li {
   float: left;
@@ -1538,10 +1537,15 @@
   display: block;
 }
 
-.statuses .status-context .status-main:after {
-  content: "";
-  margin: -12px 10px 0 10px;
-  float: right;
+.statuses .status-context .status-secondary {
+  overflow: hidden;
+  display: block;
+  float: left;
+}
+
+.statuses .status-context .status-secondary:before {
+  margin: 4px 10px 0 10px;
+  float: left;
 }
 
 .statuses .status-log {
@@ -1550,11 +1554,45 @@
   margin-left: 38px;
 }
 
+.statuses .status-log .status-message {
+  margin-left: 53px;
+}
+
+.statuses .status-log .status-help {
+  color: #f37b38;
+}
+
+.status-log .concave-form .concave-input {
+  width: 435px;
+}
+
+.statuses .status-log .create-response,
+.statuses .status-log .responses {
+  margin-left: 37px;
+}
+
+#statuses .status-log .actions {
+  margin-left: 37px;
+}
+
+#statuses .status-log .re-status .actions {
+  margin-left: 27px;
+}
+
+#statuses .status-log .actions {
+  line-height: 100%;
+}
+
+.statuses .status-log .re-status .status-message {
+  margin-left: 32px;
+}
+
 .statuses .status-icon:before {
   content: "";
   float: left;
   margin-right: 5px;
 }
+
 
 #content .secondary-sidebar {
   margin: 0;
