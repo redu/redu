@@ -149,4 +149,8 @@ describe Environment do
     subject.errors[:path].should_not be_empty
   end
 
+  it "by default is published" do
+    subject.should be_published
+  end
+
 end
