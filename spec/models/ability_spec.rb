@@ -368,10 +368,18 @@ describe Ability do
                                                           :owner => @member,
                                                           :course => @course))
         end
+
         it "cannot destroy a space" do
           @ability.should_not be_able_to(:destroy, Factory(:space,
                                                            :owner => @member,
                                                            :course => @course))
+        end
+
+        it "can see users of a space" do
+          space = Factory(:space, :course => @course)
+          Factory(:user_space_association, :space => space,
+                  :user => @member, :role => :member)
+          @ability.should be_able_to(:users, space)
         end
 
         it "cannot create a subject"

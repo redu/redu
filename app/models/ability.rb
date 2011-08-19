@@ -108,6 +108,11 @@ class Ability
         user.can_read? object
       end
 
+      # Caso especial de :users (não deve ser mapeado para :preview)
+      can :users, Space do |space|
+        user.can_read? space
+      end
+
       can :create, Environment
       can :join, Course
 
