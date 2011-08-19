@@ -20,18 +20,18 @@
             <ul class="tags clearfix">
               <% @course.tags.each do |tag| %>
                 <li>
-                  <%= link_to tag,
-                    course_user_course_invitation_path(@course, @invitation) %>
+                  <%= link_to tag, environment_course_user_course_invitation_path(
+                    @course.environment, @course, @user_course_invitation) %>
                 </li>
               <% end %>
             </ul>
           <% end %>
         </div>
         <span class="description">
-          <% if @course.description %>
-            <%= @course.description%>
-          <% else %>
+          <% if @course.description.empty? %>
             Sem descrição.
+          <% else %>
+            <%= @course.description %>
           <% end %>
         </span>
         <ul class="statistics">

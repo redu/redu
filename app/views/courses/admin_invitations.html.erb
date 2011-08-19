@@ -68,7 +68,7 @@
     <% end %>
     <%= form_tag invite_members_environment_course_path(@environment, @course),
       :class => 'form-common', :id => "invite-members" do %>
-      <%= link_to "Clique aqui para convidar este endereço de e-mail", nil,
+      <%= link_to "Clique aqui para convidar este endereço de e-mail", "#",
         :class => 'button', :id => 'invite_email', :style => 'display: none; margin-left: 265px;' %>
       <%= label_tag "name", "Nome ou e-mail:" %>
       <%= text_field_tag "users" %>

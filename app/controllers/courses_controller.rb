@@ -75,7 +75,6 @@ class CoursesController < BaseController
     @course.owner = current_user
     @plan = Plan.from_preset(params[:plan].to_sym)
     @plan.user = current_user
-    @course.verify_path! @environment.id
 
     respond_to do |format|
       if @course.save

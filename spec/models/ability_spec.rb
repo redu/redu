@@ -368,6 +368,7 @@ describe Ability do
                                                           :owner => @member,
                                                           :course => @course))
         end
+
         it "cannot destroy a space" do
           @ability.should_not be_able_to(:destroy, Factory(:space,
                                                            :owner => @member,
@@ -379,6 +380,13 @@ describe Ability do
           Factory(:user_space_association, :space => space,
                   :user => @member, :role => :member)
           @ability.should be_able_to(:students_endless, space)
+        end
+
+        it "can see users of a space" do
+          space = Factory(:space, :course => @course)
+          Factory(:user_space_association, :space => space,
+                  :user => @member, :role => :member)
+          @ability.should be_able_to(:users, space)
         end
 
         it "cannot create a subject"
@@ -518,6 +526,32 @@ describe Ability do
         it "uploads a file"
         it "destroys any file"
         it "crates a post"
+      end
+    end
+
+    context "on subject" do
+      before do
+        @environment = Factory(:environment, :owner => @env_admin)
+        @course = Factory(:course, :owner => @env_admin,
+                          :environment => @environment)
+        @space = Factory(:space, :owner => @env_admin, :course => @course)
+        @subject = Factory(:subject, :owner => @env_admin, :space => @space)
+      end
+      context "member" do
+        before do
+          @course.join @member
+          @ability = Ability.new(@member)
+        end
+
+        it "can preview a visible subject" do
+          @subject.visible = true
+          @ability.should be_able_to(:preview, @subject)
+        end
+
+        it "can not preview a invisible subject" do
+          @subject.visible = false
+          @ability.should_not be_able_to(:preview, @subject)
+        end
       end
     end
 

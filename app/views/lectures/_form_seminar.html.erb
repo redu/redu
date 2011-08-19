@@ -7,7 +7,7 @@
 
     <%= field_set_tag do %>
       <%= label_tag :name, t( :title ) %>
-      <%= text_field_tag :name %>
+      <%= text_field_tag :name, nil, :class => "yt-title" %>
       <%= hidden_field_tag "subject_id", @subject.id %>
       <%= error_for :name %>
 
@@ -47,15 +47,8 @@
         <%= error_for :seminar, :external_resource %>
       <% end %>
 
-      <%= field_set_tag nil, :id => 'youtube_preview',
-        :style => 'display: none;' do %>
+      <%= field_set_tag nil, :id => 'youtube_preview' do %>
         <legend class="label">Prévia</legend>
-        <object width="420" height="300">
-          <param name="movie" value="none" id="yt_preview_param"/>
-          <param name="allowFullScreen" value="true"/>
-          <param name="allowscriptaccess" value="always"/>
-          <embed src="none" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="420" height="300"/>
-        </object>
       <% end %>
       <%= f.submit "Criar", :class => 'vanilla' %>
       <%= link_to_function "Cancelar",

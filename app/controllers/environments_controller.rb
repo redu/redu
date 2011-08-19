@@ -97,7 +97,6 @@ class EnvironmentsController < BaseController
         @environment.courses.first.plan = @plan
         @environment.owner = current_user
         @environment.courses.first.owner = current_user
-        @environment.published = true
         @environment.color = "4DADD6"
         if @environment.save && @plan.save
           @environment.courses.first.create_quota

@@ -144,11 +144,6 @@ describe Environment do
       subject.user_environment_associations.last.role }.to(Role[:environment_admin])
   end
 
-  it "choose another path if the specified already exists" do
-    @environment = Factory.build(:environment, :path => subject.path)
-    @environment.verify_path!
-    @environment.path.should_not == subject.path
-  end
   context "callbacks" do
     it "creates an environment association" do
       subject.users.last.should == subject.owner
@@ -163,4 +158,15 @@ describe Environment do
       user.user_course_associations.last.state.should == 'approved'
     end
   end
+
+  it "doesnt accept ." do
+    subject.path = "www.redu.com.br"
+    subject.should_not be_valid
+    subject.errors[:path].should_not be_empty
+  end
+
+  it "by default is published" do
+    subject.should be_published
+  end
+
 end

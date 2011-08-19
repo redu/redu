@@ -494,7 +494,7 @@
 }
 
 /* Social Networks */
-.icon-facebook_16_18 { background-position: 0 -1920px; }
+.icon-facebook_16_18 { background-position: 0 -1920px }
 .icon-facebook_16_18-before:before {
   content: "";
   width: 16px;
