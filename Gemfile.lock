@@ -68,7 +68,7 @@ GEM
       xml-simple
     builder (2.1.2)
     cancan (1.6.4)
-    childprocess (0.1.9)
+    childprocess (0.2.2)
       ffi (~> 1.0.6)
     ckeditor (3.4.2.pre)
       mime-types (>= 1.16)
@@ -79,7 +79,7 @@ GEM
     date_validator (0.6.1)
       activemodel (~> 3.0.0)
     deep_cloneable (1.2.3)
-    diff-lcs (1.1.2)
+    diff-lcs (1.1.3)
     dynamic_form (1.1.4)
     erubis (2.6.6)
       abstract (>= 1.0.0)
@@ -105,7 +105,8 @@ GEM
     jquery-rails (1.0.5)
       railties (~> 3.0)
       thor (~> 0.14)
-    json_pure (1.5.1)
+    json_pure (1.5.4)
+      spruz (~> 0.2.8)
     kaminari (0.12.4)
       rails (>= 3.0.0)
     linecache (0.43)
@@ -179,8 +180,8 @@ GEM
       proxies (~> 0.2.0)
     scribd_fu (2.0.11)
       rscribd
-    selenium-webdriver (0.2.1)
-      childprocess (>= 0.1.7)
+    selenium-webdriver (2.5.0)
+      childprocess (>= 0.2.1)
       ffi (>= 1.0.7)
       json_pure
       rubyzip
@@ -188,6 +189,7 @@ GEM
     shuber-sortable (1.0.6)
     signature (0.1.2)
       ruby-hmac
+    spruz (0.2.13)
     thin (1.2.11)
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
@@ -219,7 +221,7 @@ DEPENDENCIES
   ar_mailer_rails3
   authlogic
   aws-s3
-  bundler (= 1.0.15)
+  bundler (= 1.0.18)
   cancan
   ckeditor (= 3.4.2.pre)
   date_validator

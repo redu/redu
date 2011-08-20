@@ -75,8 +75,9 @@ describe User do
   it { should accept_nested_attributes_for :settings }
   it { should accept_nested_attributes_for :social_networks }
 
-  it { should have_many(:overview).through :status_user_associations }
   it { should have_many(:logs) }
+  it { should have_many(:overview).through(:status_user_associations) }
+  it { should have_many(:statuses) }
 
   [:first_name, :last_name].each do |attr|
     it do

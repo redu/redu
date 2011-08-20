@@ -29,6 +29,8 @@ describe Course do
   it { should have_one(:quota).dependent(:destroy) }
   it { should have_one(:plan) }
 
+  it { should have_many :logs }
+  it { should have_many :statuses }
 
   it { should validate_presence_of :name }
   it { should validate_presence_of :path }
@@ -38,7 +40,6 @@ describe Course do
   it { should ensure_length_of(:name).is_at_most 60 }
   it { should ensure_length_of(:description).is_at_most 250 }
   it { should validate_format_of(:path).with("teste-medio")}
-  it { should have_many :logs }
 
   it { should_not allow_mass_assignment_of :owner }
   it { should_not allow_mass_assignment_of :published }

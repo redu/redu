@@ -47,19 +47,19 @@ class Space < ActiveRecord::Base
     :source => :user,
     :conditions => [ "user_space_associations.status = ? AND user_space_associations.updated_at >= ?", 'approved', 1.week.ago]
 
-  has_many :logs, :as => :logeable, :dependent => :destroy, :class_name => 'Status'
 
   has_many :folders, :dependent => :destroy
   has_many :bulletins, :as => :bulletinable, :dependent => :destroy
   has_many :events, :as => :eventable, :dependent => :destroy
-  has_many :statuses, :as => :statusable, :dependent => :destroy
   has_many :subjects, :dependent => :destroy,
     :conditions => { :finalized => true }
   has_many :topics # Apenas para facilitar a busca.
   has_many :sb_posts # Apenas para facilitar a busca.
   has_one :forum, :dependent => :destroy
   has_one :root_folder, :class_name => 'Folder', :foreign_key => 'space_id'
+
   has_many :logs, :as => :logeable
+  has_many :statuses, :as => :statusable
 
   scope :of_course, lambda { |course_id| where(:course_id => course_id) }
   scope :published, where(:published => true)

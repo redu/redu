@@ -48,7 +48,9 @@ class Course < ActiveRecord::Base
   has_and_belongs_to_many :audiences
   has_one :quota, :dependent => :destroy, :as => :billable
   has_one :plan, :as => :billable
+
   has_many :logs, :as => :logeable
+  has_many :statuses, :as => :statusable
 
   scope :published, where(:published => 1)
   scope :of_environment, lambda { |environmnent_id|

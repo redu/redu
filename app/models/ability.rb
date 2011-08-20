@@ -157,7 +157,7 @@ class Ability
 
       # Caso seja o Status de usuário, apenas ele mesmo ou seus amigos
       # podem criá-lo/respondê-lo.
-      can [:create, :respond], Status do |status|
+      can [:create, :respond], [Status, Activity] do |status|
         # Caso seja no mural de um usuário
         ((status.statusable.class.to_s.eql? 'User') && \
          ((can? :manage, status.statusable) ||

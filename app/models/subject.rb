@@ -10,7 +10,7 @@ class Subject < ActiveRecord::Base
     :conditions => ["student_profiles.graduaded = 1"]
   has_many :teachers, :through => :enrollments, :source => :user,
     :conditions => ["enrollments.role = ?", 5] # Teacher
-  has_many :statuses, :as => :statusable, :dependent => :destroy
+  has_many :statuses, :as => :statusable
   has_many :logs, :as => :logeable
 
   scope :recent, lambda { where('updated_at > ?', 1.week.ago) }

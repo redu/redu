@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
 
   # ASSOCIATIONS
   has_many :annotations, :dependent => :destroy, :include=> :lecture
-  has_many :statuses, :as => :statusable, :dependent => :destroy
+  has_many :statuses, :as => :statusable
   has_many :chat_messages
   # Space
   has_many :spaces, :through => :user_space_associations
@@ -101,10 +101,10 @@ class User < ActiveRecord::Base
 
   has_many :social_networks, :dependent => :destroy
 
-  has_many :overview, :through => :status_user_associations
-  has_many :status_user_associations
   has_many :logs, :as => :logeable
-  has_many :statuses
+  has_many :statuses, :as => :statusable
+  has_many :overview, :through => :status_user_associations, :source => :status
+  has_many :status_user_associations
 
   # Named scopes
   scope :recent, order('users.created_at DESC')
@@ -144,6 +144,7 @@ class User < ActiveRecord::Base
     where("friendships.status = 'accepted'" \
           " OR friendships.status = 'pending'" \
           " OR friendships.status = 'requested'")
+
   attr_accessor :email_confirmation
 
   # Accessors
@@ -282,7 +283,7 @@ class User < ActiveRecord::Base
       self.member?(entity.space)
     when 'SbPost'
       self.member?(entity.space)
-    when 'Status'
+    when 'Status', 'Activity'
       if self == entity.user
         true
       else

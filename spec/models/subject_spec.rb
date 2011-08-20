@@ -20,7 +20,7 @@ describe Subject do
   it { should have_many(:enrollments).dependent(:destroy) }
   it { should have_many(:graduated_members).through :enrollments }
   it { should have_many(:members).through(:enrollments) }
-  it { should have_many(:statuses).dependent(:destroy) }
+  it { should have_many(:statuses) }
   it { should have_many(:logs) }
 
   it { should validate_presence_of :title }

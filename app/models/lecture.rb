@@ -7,13 +7,14 @@ class Lecture < ActiveRecord::Base
   after_create :create_asset_report
 
   # ASSOCIATIONS
-  has_many :statuses, :as => :statusable, :dependent => :destroy
+  has_many :statuses, :as => :statusable
+  has_many :logs, :as => :logeable
+
   #FIXME Falta testar
   has_many :acess_key
   has_many :acquisitions
   has_many :favorites, :as => :favoritable, :dependent => :destroy
   has_many :annotations
-  has_many :logs, :as => :logeable, :dependent => :destroy
   has_many :asset_reports, :dependent => :destroy
   has_many :student_profiles, :through => :asset_reports, :dependent => :destroy
   belongs_to :owner , :class_name => "User" , :foreign_key => "owner"

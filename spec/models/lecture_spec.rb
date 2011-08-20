@@ -20,9 +20,10 @@ describe Lecture do
   it { should belong_to :owner }
   it { should belong_to(:lectureable).dependent(:destroy) }
 
-  it { should have_many(:statuses).dependent(:destroy) }
   it { should have_many(:favorites).dependent(:destroy) }
-  it { should have_many(:logs).dependent(:destroy) }
+
+  it { should have_many(:logs) }
+  it { should have_many(:statuses) }
 
   it { should belong_to :subject }
 
