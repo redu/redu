@@ -1,8 +1,10 @@
 <li class="child clearfix">
   <%= image_tag item.avatar.url(:thumb_32), :alt => 'disciplina' %>
   <%= link_to item.name, space_path(item), :class => "name" %>
-  <%= link_to "Gerenciar", edit_space_path(item),
-    :class => "manage icon-manage-gray_8_10-before" %>
+  <% if can?(:manage, item) %>
+    <%= link_to "Gerenciar", edit_space_path(item),
+      :class => "manage icon-manage-gray_8_10-before" %>
+  <% end %>
   <div class="info">
     <ul class="resources clearfix">
       <%= link_to "Conteúdo:", space_path(item),

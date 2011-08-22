@@ -25,4 +25,23 @@ describe SpacesController do
       assigns[:sidebar_students].should_not be_nil
     end
   end
+
+  context "GET users" do
+    before do
+      course = Factory(:course)
+      space = Factory(:space, :course => course)
+      user = Factory(:user)
+      course.join user
+      activate_authlogic
+      UserSession.create user
+
+      get :users, :id => space.id, :locale => "pt-BR"
+    end
+
+    [:users, :teachers, :tutors, :students].each do |v|
+      it "assigns #{v}" do
+        assigns[v].should_not be_nil
+      end
+    end
+  end
 end

@@ -1,25 +1,18 @@
 <%= render :partial => 'spaces/sidebar', :locals => { :space => @space } %>
 
-<div class="main grid_12 omega big-col">
+<div class="main space grid_12 omega big-col">
   <%= render :partial => 'spaces/breadcrumbs', :locals => { :space => @space } %>
   <%= render :partial => 'spaces/header',
     :locals => { :space => @space }%>
 
-  <div id="space-users" class="hierarchy-listing-wrapper">
-    <div class="header">
-      <h4>Membros</h4>
-      <span class="counter">
-        <%= @space.users.length %> pessoas fazem parte de
-        <%= @space.name %>
-      </span>
+  <div id="space-users" class="body">
+    <div class="header clearfix">
+      <h4 class="title">Membros da disciplina</h4>
+      <span class="detail">(<%= pluralize @space.subjects.count, "módulo" %> , <%= pluralize @space.lectures_count, "aula" %>)</span>
     </div>
-
-    <ul id="users_list" class="members clearfix">
-      <%= render :partial => 'users/item',
-        :collection => @users, :locals => {:entity => @space} %>
-    </ul>
-
-    <%= will_paginate @users, :renderer => EndlessRenderer %>
+    <%= render :partial => "users/list",
+      :locals => { :entity => @space, :users => @users,
+        :teachers => @teachers, :tutors => @tutors, :students => @students } %>
   </div><!-- end #environment-courses -->
 
 </div><!-- end .main -->

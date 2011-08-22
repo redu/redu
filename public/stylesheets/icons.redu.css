@@ -339,12 +339,30 @@
   background: url("../images/new/icons-small.png") 0 -720px no-repeat;
 }
 
+.icon-space-blue_16_18,
+.icon-space-lightblue_16_18:hover { background-position: -160px -160px; }
+.icon-space-blue_16_18-before:before,
+.icon-space-lightblue_16_18-before:hover:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -160px -160px no-repeat;
+}
+
 .icon-space-gray_16_18 { background-position: 0 -160px; }
 .icon-space-gray_16_18-before:before {
   content: "";
   width: 16px;
   height: 18px;
   background: url("../images/new/icons-small.png") 0 -160px no-repeat;
+}
+
+.icon-space-lightblue_16_18 { background-position: -80px -160px; }
+.icon-space-lightblue_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -80px -160px no-repeat;
 }
 
 .icon-subject-blue_16_18,
