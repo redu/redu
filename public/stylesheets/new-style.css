@@ -1418,6 +1418,17 @@
   padding: 20px 0;
 }
 
+.statuses .icon-seminar-lightblue_64_66-after:after,
+.statuses .icon-page-lightblue_64_66-after:after,
+.statuses .icon-exercise-lightblue_64_66-after:after,
+.statuses .icon-document-lightblue_64_66-after:after,
+.statuses .icon-gruping-lightblue_64_66-after:after,
+.statuses .icon-contact-lightblue_64_66-after:after {
+  margin-top: -70px;
+}
+
+
+
 .statuses ol .responses,
 .statuses ol .create-response {
   margin-left: 32px;
@@ -1525,9 +1536,19 @@
   overflow: hidden;
 }
 
+.status {
+  position: relative;
+}
+
 .statuses .status-context {
   line-height: 130%;
-  overflow: hidden;
+  width: 490px;
+  float: left;
+}
+
+.statuses .status-context:after {
+  position: absolute;
+  right: 0;
 }
 
 .statuses .status-context .status-main {
@@ -1549,7 +1570,7 @@
 }
 
 .statuses .status-log {
-  overflow: hidden;
+  clear: left;
   line-height: 130%;
   margin-left: 38px;
 }
@@ -1587,11 +1608,16 @@
   margin-left: 32px;
 }
 
+.statuses .status-icon {
+  width: 480px;
+}
+
 .statuses .status-icon:before {
   content: "";
   float: left;
   margin-right: 5px;
 }
+
 
 
 #content .secondary-sidebar {
