@@ -6,18 +6,28 @@
     :locals => { :subject => @subject, :space => @space } %>
 
   <div id="resource" class="hierarchy-listing-wrapper">
-    <div class="header">
-      <h4>Recursos</h4>
-      <span class="counter">
-        <%= @subject.lectures.length %> recursos disponíveis
-      </span>
-    </div>
-    <%= render :partial => 'lectures/context',
-      :locals => { :student_grade => @student_grade, :done => @done } %>
     <%= render :partial => 'lectures/info',
       :locals => { :lecture => @lecture } %>
+    <%= render :partial => 'lectures/context',
+      :locals => { :student_grade => @student_grade, :done => @done } %>
     <%= render :partial => 'lectures/details',
       :locals => { :lecture => @lecture} %>
+    <% if can? :manage, @lecture %>
+      <div class="admin-actions">
+        <%# FIXME Mostrar link quando o editar de Lecture estiver ok  %>
+        <%#= link_to 'Editar',
+        edit_space_subject_lecture_path(lecture.subject.space, lecture.subject,
+                                        lecture),
+                                        :class => "edit icon icon-redu_r12_c5_s1" %>
+        <%= link_to 'Remover',
+                    space_subject_lecture_path(@lecture.subject.space,
+                                               @lecture.subject,
+                                               @lecture),
+                    :method => :delete,
+                    :confirm => "Você tem certeza que deseja remover esta aula? Não será possível recuperá-la.",
+                    :class => "delete icon icon-x-gray_8_8" %>
+      </div>
+    <% end %>
     <div class="pretty-text stage page-content content">
       <h2><%= @lecture.name %></h2>
       <%= raw @lecture.lectureable.body %>
