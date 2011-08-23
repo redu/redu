@@ -73,3 +73,11 @@
 
   background-position:  -480px -161px;
 }
+
+.icon-privacy-lightred_64_66-before:before {
+  content: "";
+  width: 64px;
+  height: 66px;
+
+  background-position:  -240px 0;
+}

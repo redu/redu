@@ -9,7 +9,8 @@
       <% role =  Role[item.get_association_with(entity).role] %>
       <span class="role icon-<%= role %>-gray_16_18-before">Aluno</span>
     <% end %>
-    <% if item.get_association_with(entity).role == Role[:member] %>
+    <% if current_user and
+      item.get_association_with(entity).role == Role[:member] %>
       <% unless item.friends_in_common_with(current_user).count == 0 %>
         <span class="friends-common"><%= pluralize item.friends_in_common_with(current_user).count, "contato" %> em comum</span>
       <% end %>

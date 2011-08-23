@@ -1,26 +1,28 @@
-<%= render :partial => 'courses/preview_sidebar' %>
+<%= render :partial => 'courses/sidebar',
+  :locals => { :course => @course }  %>
 
 <div class="main grid_12 omega big-col">
   <%= render :partial => "courses/breadcrumbs",
     :locals => { :course => @course } %>
   <%= render :partial => 'courses/header',
     :locals => { :course => @course }  %>
-  <div id="course-preview" class="hierarchy-preview body">
-    <div class="header">
-      <h4>Pré-visualização</h4>
-    </div>
+
+  <div id="course-spaces" class="body preview clearfix">
     <%= render :partial => 'courses/actions',
       :locals => { :course => @course }%>
-    <h3 class="call icon icon-space-lightblue_16_16">Disciplinas</h3>
-    <span class="count">
-      (<%= pluralize(@course.spaces.length, 'disciplina') + " " +
-       (pluralize @course.spaces.length,'disponível').split(' ')[1] %>)
-    </span>
-    <ul class="preview-listing">
-      <%= render :partial => 'spaces/item_short',
-        :collection => @spaces %>
-    </ul>
-    <%= will_paginate @spaces, :renderer => EndlessRenderer %>
-  </div><!-- end #environment-courses -->
+
+    <% fake_tabs ["Disciplinas",
+      environment_course_path(@course.environment,@course)],
+      ["Membros", users_environment_course_path(@course.environment, @course)] do %>
+      <div class="flash-message notice ">
+        <ul class="message icons-big-before icon-privacy-lightred_64_66-before">
+          <li>O conteúdo desta página é restrito para quem não é membro do grupo.</li>
+          <li>Para visualizar as disciplinas do curso, matricule-se e aguarde a confirmação.</li>
+
+          <li>Você também pode ver os atuais <%= link_to "membros do curso", users_environment_course_path(@course.environment, @course)%>.</li>
+          <ul>
+      </div>
+    <% end %>
+  </div>
 
 </div><!-- end .main -->

@@ -1390,6 +1390,24 @@
   font-weight: normal;
 }
 
+.body.preview .notice {
+  padding: 40px 50px;
+}
+
+.textshadow .body.preview .notice {
+  text-shadow: 0px 1px 0px #ffffff;
+}
+
+.body.preview .notice .message {
+  color: rgb(109, 110, 111);
+}
+
+.body.preview .notice .message:before {
+  float: left;
+  margin-top: -15px;
+  margin-right: 45px;
+}
+
 .hierarchy-listing {
   margin-bottom: 20px;
   clear: both;

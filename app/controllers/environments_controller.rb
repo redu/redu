@@ -13,7 +13,6 @@ class EnvironmentsController < BaseController
       :page => params[:page],
       :order => 'name ASC',
       :limit => 4,
-      :include => :audiences,
       :per_page => Redu::Application.config.items_per_page
     }
 
@@ -161,8 +160,19 @@ class EnvironmentsController < BaseController
       redirect_to environment_path(@environment) and return
     end
 
+    paginating_params = {
+      :page => params[:page],
+      :order => 'name ASC',
+      :per_page => Redu::Application.config.items_per_page
+    }
+
+    @courses = @environment.courses.includes(:user_course_associations).
+      includes(:spaces).published.paginate(paginating_params)
+
     respond_to do |format|
       format.html
+      format.js { render_endless 'courses/item', @courses, '#courses_list' }
+      format.xml  { render :xml => @environment }
     end
   end
 
@@ -255,9 +265,6 @@ class EnvironmentsController < BaseController
 
   # Listagem de usuários do Environment
   def users
-    @sidebar_preview = true if params.has_key?(:preview) &&
-                              params[:preview] == 'true'
-
     @users = @environment.users.includes(:user_course_associations).
       includes(:user_environment_associations).
       paginate(:page => params[:users_page], :order => 'first_name ASC',

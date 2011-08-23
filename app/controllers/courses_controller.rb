@@ -341,8 +341,6 @@ class CoursesController < BaseController
 
   # Listagem de usuários do Course
   def users
-    @sidebar_preview = true if params.has_key?(:preview) &&
-                              params[:preview] == 'true'
     @users = @course.approved_users.includes(:user_course_associations).
       paginate(:page => params[:users_page], :order => 'first_name ASC',
                :per_page => 18)

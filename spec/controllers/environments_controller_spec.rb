@@ -207,4 +207,17 @@ describe EnvironmentsController do
       end
     end
   end
+
+  context "GET preview" do
+    before do
+      environment = Factory(:environment)
+      courses = (1..5).collect { Factory(:course, :environment => environment) }
+
+      get :preview, :id => environment.path, :locale => "pt-BR"
+    end
+
+    it "assigns courses" do
+      assigns[:courses].should_not be_nil
+    end
+  end
 end
