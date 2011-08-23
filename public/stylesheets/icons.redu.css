@@ -237,7 +237,6 @@
   height: 18px;
   background: url("../images/new/icons-small.png") -560px -800px no-repeat;
 }
-<<<<<<< HEAD
 
 .icon-expand_down-blue_16_18,
 .icon-expand_down-gray_16_18:hover { background-position: -480px -1040px; }
@@ -273,7 +272,8 @@
   width: 16px;
   height: 18px;
   background: url("../images/new/icons-small.png") -480px -800px no-repeat;
-=======
+}
+
 .icon-expand-left-gray_8_10 { background-position: -480px -1920px }
 .icon-expand-left-gray_8_10-before:before {
   content: "";
@@ -287,7 +287,6 @@
   width: 8px;
   height: 10px;
   background: url("../images/new/icons-small.png") -480px -1840px no-repeat;
->>>>>>> Details e Context de aulas de acordo com o novo layout.
 }
 
 .icon-experience-blue_32_34 { background-position: -240px -3280px; }
