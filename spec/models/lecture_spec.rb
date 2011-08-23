@@ -43,6 +43,10 @@ describe Lecture do
     should respond_to :mark_as_done_for!
   end
 
+  it "responds to done?" do
+    should respond_to :done?
+  end
+
   context "callbacks" do
     context "creates a AssertReport between the StudentProfile and the Lecture after create" do
       it "when the owner is the subject owner" do
@@ -219,5 +223,19 @@ describe Lecture do
                                            {:subject_id => subject.subject.id})
       grade.should == 0
     end
+  end
+
+  it "verifies if a lecture was done by a user" do
+    subject_owner = Factory(:user)
+    space = Factory(:space)
+    space.course.join subject_owner
+    subject1 = Factory(:subject, :owner => subject_owner,
+                       :space => space)
+    lectures = (1..3).collect { Factory(:lecture, :subject => subject1) }
+
+    user = Factory(:user)
+    subject1.enroll user
+
+    lectures[0].done?(user).should be_false
   end
 end

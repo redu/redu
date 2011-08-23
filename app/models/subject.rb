@@ -41,6 +41,10 @@ class Subject < ActiveRecord::Base
     enrollment.destroy
   end
 
+  def enrolled?(user)
+    !user.get_association_with(self).nil?
+  end
+
   def turn_visible!
    self.visible = true
    self.save
@@ -89,6 +93,11 @@ class Subject < ActiveRecord::Base
       self.enrollments.create(:user => users_space.user, :subject => self,
                               :role => users_space.role)
     end
+  end
+
+  def graduated?(user)
+    self.enrolled?(user) and
+      user.get_association_with(self).student_profile.graduaded?
   end
 
 end

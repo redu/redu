@@ -522,12 +522,12 @@
 }
 
 #hierarchy-header {
-  background: url("../images/new/dots.png") repeat-x bottom;
   margin: 20px;
 }
 
 #hierarchy-header .parent {
   display: block;
+  float: left;
   margin-bottom: 3px;
   font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 500;
@@ -548,6 +548,7 @@
 #hierarchy-header .name,
 #hierarchy-header .space-name {
   width: 600px;
+  clear: left;
   float: left;
   font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 500;
@@ -763,8 +764,7 @@
 }
 
 .main.space .body {
-  margin: 20px;
-  margin-bottom: 60px;
+  margin: 25px 20px 60px 20px;
 }
 
 .hierarchy-listing-wrapper,
@@ -783,6 +783,7 @@
 
 .body .header {
   margin-bottom: 20px;
+  float: left;
 }
 
 .body .header .title {
@@ -816,6 +817,10 @@
 .body .actions {
   float: right;
   margin-right: 20px;
+}
+
+.main.space .body .admin-actions {
+  margin-right: 0;
 }
 
 .body .actions .leave:before {
@@ -943,10 +948,6 @@
 #space-manage .header,
 #environment-manage .header {
   background: url("../images/new/icon-configurations-gray_32_32.png") no-repeat 20px center;
-}
-
-#space-subjects .header {
-  background: url("../images/new/icon-subject-black_32_32.png") no-repeat 20px center;
 }
 
 #space-new .header,
@@ -1336,6 +1337,7 @@
 
 .hierarchy-listing {
   margin-bottom: 20px;
+  clear: both;
 }
 
 .hierarchy-listing .child {
@@ -1397,7 +1399,6 @@
 }
 
 .hierarchy-listing .details {
-  background: url("../images/new/dots.png") repeat-x top;
   clear: both;
   display: block;
   padding: 10px 10px 0 20px;
@@ -1406,14 +1407,6 @@
 
 .hierarchy-listing .details .resources li span {
   padding: 2px 0 2px 20px;
-}
-
-.hierarchy-listing .edit {
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  font-size: .9em;
-  padding-left: 12px;
 }
 
 .hierarchy-listing .child:hover {
@@ -1464,11 +1457,20 @@
   font-weight: 500;
   font-size: 1.3em;
   letter-spacing: .005em;
+  margin-right: 20px;
+}
+
+.hierarchy-listing .child .name:before {
+  float: left;
+  margin-right: 15px;
+  margin-left: 5px;
+  margin-top: 5px;
 }
 
 .hierarchy-listing .child .manage {
-  font-size: .9em;
+  font-size: .87em;
   float: right;
+  margin-top: 3px;
 }
 
 .hierarchy-listing .child .manage:before {
@@ -1490,6 +1492,14 @@
   color: rgb(109, 110, 111);
   width: inherit;
   margin: 5px 0 3px 0;
+}
+
+.hierarchy-listing.subjects .child > .description,
+.hierarchy-listing .child > .lectures {
+  margin-top: 20px;
+  margin-left: 55px;
+  margin-right: 60px;
+  clear: both;
 }
 
 .hierarchy-listing .child .tags a{
@@ -1703,56 +1713,104 @@
   margin-left: 23px;
 }
 
-.hierarchy-listing-wrapper > .resources .info{
-  background-image: none;
-}
-
-.hierarchy-listing-wrapper > .resources .ratings,
-.hierarchy-listing-wrapper > .resources .type {
+.hierarchy-listing.subjects .child .name {
   float: left;
-  padding: 10px 0;
 }
 
-.hierarchy-listing-wrapper > .resources .ordering {
-  font-size: 1.2em;
-  font-weight: bold;
+.hierarchy-listing .child .visible {
+  display: block;
+  width: 16px;
+  height: 18px;
+  float: right;
   margin-right: 10px;
 }
 
-.hierarchy-listing-wrapper > .resources .ratings {
-  width: 150px;
+.hierarchy-listing .child .graduated,
+.hierarchy-listing .child .done {
+  display: block;
+  width: 16px;
+  height: 18px;
+  margin-right: 20px;
 }
 
-.hierarchy-listing-wrapper > .resources .type {
-  width: 90px;
-  text-align: right;
-  font-size: .9em;
-  color: #B2B2B2;
+.hierarchy-listing .child .graduated {
+  float: left;
+}
+
+.hierarchy-listing .child .done {
+  float: right;
+}
+
+.hierarchy-listing .child .lectures > .title {
   font-weight: bold;
+  color: rgb(179, 179, 179);
+  display: block;
+  margin-bottom: 10px;
 }
 
-.hierarchy-listing-wrapper > .resources .video,
-.hierarchy-listing-wrapper > .resources .exam,
-.hierarchy-listing-wrapper > .resources .document,
-.hierarchy-listing-wrapper > .resources .page {
-  background-repeat: no-repeat;
-  background-position: 682px center;
+.hierarchy-listing .child .lectures > .title:before {
+  float: left;
+  margin-right: 5px;
+  margin-top: -2px;
 }
 
-.hierarchy-listing-wrapper > .resources .video {
-  background-image: url("../images/new/icon-video-gray_32_32.png")
+.hierarchy-listing .child .lectures > li {
+  margin-bottom: 1px;
+  padding: 5px 10px;
+
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
 }
 
-.hierarchy-listing-wrapper > .resources .exam {
-  background-image: url("../images/new/icon-exam-gray_32_32.png");
+.textshadow .hierarchy-listing .child .lectures > li {
+  text-shadow: 0px 1px 0px #ffffff;
 }
 
-.hierarchy-listing-wrapper > .resources .document {
-  background-image: url("../images/new/icon-document-gray_32_32.png");
+.hierarchy-listing .child .lectures > li:hover {
+  background-color: rgb(240, 240, 240);
+  padding: 4px 9px;
+  border: 1px solid white;
 }
 
-.hierarchy-listing-wrapper > .resources .page {
-  background-image: url("../images/new/icon-page-gray_32_32.png");
+.hierarchy-listing .child .lectures > li .position {
+  font-weight: bold;
+  color: rgb(21, 138, 196);
+  display: block;
+  float: left;
+  margin-right: 5px;
+  margin-top: 3px;
+}
+
+.hierarchy-listing .child .lectures > li .title {
+  float: left;
+  margin-top: 3px;
+}
+
+.hierarchy-listing .child .lectures > li .title:before {
+  float: left;
+  margin-right: 3px;
+  margin-top: -3px;
+}
+
+.hierarchy-listing .child .lectures > li .type,
+.hierarchy-listing .child .grade {
+  font-size: .87em;
+  font-style: italic;
+  color: rgb(179, 179, 179);
+  float: left;
+  margin-left: 5px;
+  margin-top: 4px;
+}
+
+.hierarchy-listing .child .grade {
+  display: block;
+  margin-top: 4px;
+}
+
+.hierarchy-listing .child .lectures > li .ratings {
+  float: right;
+  margin-top: 4px;
 }
 
 .create-status {
@@ -2226,47 +2284,36 @@
   margin-top: 0;
 }
 
-#space-subjects  .expand {
-  background: url("../images/new/arrow-down.png") no-repeat;
-}
-
-#space-subjects  .unexpand {
-  background: url("../images/new/arrow-up.png") no-repeat;
-}
-
-#space-subjects .unexpand,
 #space-subjects .expand {
   cursor: pointer;
-  position: absolute;
   display: block;
-  width: 20px;
-  height: 20px;
-  top: 80px;
-  right: 20px;
+  width: 16px;
+  height: 18px;
+  margin: auto;
+  margin-top: 10px;
 }
 
-#space-subjects .subjects > li {
-  background-image: url("../images/new/icon-subject-closed-gray_32_32.png");
-  background-repeat: no-repeat;
-  background-position: 685px 40px;
+#space-subjects .subjects > .child {
   min-height: 75px;
 }
 
-#space-subjects .subjects > li.open {
-  background-image: url("../images/new/icon-subject-open-gray_32_32.png");
-}
-
-#space-subjects .subjects > li .new {
-  color: white;
-  font-size: .7em;
+#space-subjects .subjects > .child .new {
+  color: rgb(77, 173, 214);
+  font-size: .8em;
   text-transform: uppercase;
-  background-color: #61BE80;
+  background-color: rgb(230, 230, 230);
   padding: 3px 5px;
-  vertical-align: text-top;
+  display: block;
+  float: left;
+  margin-top: 2px;
 
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   border-radius: 3px;
+}
+
+.textshadow #space-subjects .subjects > .child .new {
+  text-shadow: 0px 1px 0px #ffffff;
 }
 
 #add-resources {

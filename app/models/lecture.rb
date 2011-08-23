@@ -64,6 +64,10 @@ class Lecture < ActiveRecord::Base
     asset_report.save
   end
 
+  def done?(user)
+    self.asset_reports.of_user(user).last.done?
+  end
+
   def clone_for_subject!(subject_id)
     clone = self.clone :include => :lectureable,
       :except => [:rating_average, :view_count, :position, :subject_id]

@@ -74,7 +74,7 @@ describe Subject do
   context "finders" do
     it "retrieves visibles subjects" do
       subjects = (1..3).collect { Factory(:subject, :owner => @user,
-                                          :space => @space) }
+                                          :space => @space, :visible => false) }
       visible_subjects = (1..3).collect { Factory(:subject, :owner => @user,
                                                     :space => @space,
                                                     :visible => true) }
@@ -114,9 +114,9 @@ describe Subject do
     should respond_to :recent?
   end
 
-  it "defaults to not visible" do
+  it "defaults to visible" do
     subject { Factory(:subject, :visible => nil) }
-    subject.visible.should be_false
+    subject.visible.should be_true
   end
 
   it "responds to turn_visible!" do
@@ -160,6 +160,14 @@ describe Subject do
     should respond_to :unenroll
   end
 
+  it "responds to enrolled?" do
+    should respond_to :enrolled?
+  end
+
+  it "responds to graduated?" do
+    should respond_to :graduated?
+  end
+
   context "enrollments" do
     before :each do
       @enrolled_user = Factory(:user)
@@ -184,6 +192,15 @@ describe Subject do
         subject.unenroll(@enrolled_user)
       }.should change(subject.enrollments, :count).by(-1)
     end
+
+    it "verifies if an user is enrolled" do
+      subject.enroll(@enrolled_user)
+      subject.enrolled?(@enrolled_user).should be_true
+    end
+
+    it "verifies if an user is not enrolled" do
+      subject.enrolled?(@enrolled_user).should be_false
+    end
   end
 
   context "lectures" do
@@ -195,6 +212,25 @@ describe Subject do
       subject.reload.lectures.should == [lectures[1], lectures[0],
                                     lectures[3], lectures[2]]
     end
+  end
+
+  it "verifies if a user completed the subject" do
+    graduated = Factory(:user)
+    subject.enroll(graduated)
+    subject.lectures.each { |l| l.mark_as_done_for!(graduated, true) }
+    graduated.get_association_with(subject).student_profile.update_grade!
+    subject.graduated?(graduated).should be_true
+  end
+
+  it "verifies if a user did not complete the subject" do
+    enrolled_user = Factory(:user)
+    subject.enroll(enrolled_user)
+    subject.graduated?(enrolled_user).should be_false
+  end
+
+  it "verifies if a not enrolled user did not complete the subject" do
+    unenrolled_user = Factory(:user)
+    subject.graduated?(unenrolled_user).should be_false
   end
 
 end

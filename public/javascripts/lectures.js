@@ -32,11 +32,16 @@ $(function(){
     }
 
     // Expand de recursos na listagem de módulos
-    $(".expand, .unexpand", "#space-subjects .subjects").live("click", function(){
-        $(this).toggleClass("expand");
-        $(this).toggleClass("unexpand");
-        $(this).parents("li:first").toggleClass("open");
-        $(this).next().slideToggle("fast");
+    $(".expand, .subject-name", "#space-subjects .subjects").live("click", function(){
+        var item = $(this).parents("li:first");
+        var expand = item.find(".expand");
+        expand.toggleClass("icon-expand_down-gray_16_18");
+        expand.toggleClass("icon-expand_up-gray_16_18");
+        var itemName = item.find("> .name");
+        itemName.toggleClass("icon-content-lightblue_32_34-before");
+        itemName.toggleClass("icon-subject-lightblue_32_34-before");
+        item.find(".lectures").slideToggle("fast");
+        return false;
     });
 
     $(document).ready(function(){
