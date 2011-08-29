@@ -414,12 +414,6 @@
   font-size: .9em;
 }
 
-#content .sidebar .subject-frame {
-  text-align: left;
-  padding: 0 48px 48px 0;
-  background: url("../images/new/icon-subject-gray_48_48.png") no-repeat right bottom;
-}
-
 #content .concave-sidebar {
   margin-top: 35px;
 }
@@ -454,8 +448,11 @@
 }
 
 #content .concave-sidebar .roles li {
-  float: left;
+  display: block;
+  width: 140px;
+  height: 18px;
   margin-top: 5px;
+  text-align: left;
 }
 
 #content .concave-sidebar .roles li .role:before {
@@ -463,6 +460,7 @@
 }
 
 #content .concave-sidebar .course-frame,
+#content .sidebar .subject-frame,
 #content .sidebar .space-frame {
   width: 150px;
   height: 150px;
@@ -474,6 +472,7 @@
 }
 
 .boxshadow #content .concave-sidebar .course-frame,
+.boxshadow #content .sidebar .subject-frame,
 .boxshadow #content .sidebar .space-frame {
   -webkit-box-shadow: 0px 1px 0px 0px #ffffff;
   -moz-box-shadow: 0px 1px 0px 0px #ffffff;
@@ -481,6 +480,7 @@
 }
 
 #content .concave-sidebar .course-frame .environment,
+#content .sidebar .subject-frame .environment,
 #content .sidebar .space-frame .environment {
   float: left;
   margin-top: 10px;
@@ -494,6 +494,7 @@
 }
 
 #content .concave-sidebar .course-frame .course,
+#content .sidebar .subject-frame .subject,
 #content .sidebar .space-frame .space {
   display: block;
   float: right;

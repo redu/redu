@@ -2,7 +2,8 @@
   <div class="image-frame subject-frame">
     <!-- <%# Nao setar width e height na imagem %> -->
     <%= image_tag @course.environment.avatar.url(:thumb_100),
-      :alt => 'profile' %>
+    :alt => 'profile', :size => "90x90", :class => "environment"%>
+    <span class="subject icons-big icon-space-white_64_64 replacement"><%=  @subject.title %></span>
   </div>
 
   <ul class="local-nav">
