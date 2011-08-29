@@ -4,5 +4,5 @@
   $('#done').val('0');
 <% end %>
 
-$('#progress_bar > div').attr('style', "width: <%= @student_grade %>%");
-$('#progress_bar > div > span').html("<%= @student_grade  %>%");
+$('#progress_bar > div > .completed').attr('style', "width: <%= @student_grade %>%");
+$('#progress_bar > .progress-value').html("<%= @student_grade  %>%");

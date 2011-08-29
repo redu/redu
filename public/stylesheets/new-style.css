@@ -1059,11 +1059,13 @@
   display: block;
   float: left;
   font-weight: bold;
-  margin: 12px 5px 0 5px;
+  margin: 0 5px;
 }
 
 #resource .context .progress-type {
   font-style: italic;
+  margin: 0 0 2px 30px;
+  display: block;
 }
 
 #resource .context .progress-completed {
