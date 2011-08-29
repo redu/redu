@@ -462,6 +462,13 @@
   height: 18px;
   background: url("../images/new/icons-small.png") -80px -1120px no-repeat;
 }
+.icon-page-gray_32_34 { background-position: 0px  -3040px; }
+.icon-page-gray_32_34-before:before {
+  content: "";
+  width: 32px;
+  height: 34px;
+  background: url("../images/new/icons-small.png") 0px -3040px no-repeat;
+}
 
 .icon-redu_admin-gray_16_18 { background-position; 0 -720px; }
 .icon-redu_admin-gray_16_18-before:before {

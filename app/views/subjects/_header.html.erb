@@ -1,19 +1,29 @@
 <%# Locals: space e subject %>
 <div id="hierarchy-header" class="clearfix subject-header">
-  <span class="prefix"><%= subject.space.course.environment.name %> > <%= subject.space.course.name %>
-    > <%= subject.space.name %>
+  <span class="parent">
+    <%= subject.space.course.environment.initials_or_name %> / <%= subject.space.course.name %>
   </span>
-  <h3 class="call subject-name"><%= subject.title %></h3>
+  <h3 class="call name">
+    <%= subject.space.name %> /
+    <span class="subject-name"><%= subject.title %></span>
+  </h3>
 
-  <div class="grid_9 alpha">
-    <span class="description">
-      <%= subject.description %>
-     </span>
-  </div>
-  <% if !(current_page? space_subject_path(@space, @subject)) %>
-    <div class="start-subject">
-      <%= link_to "Deseja estudar?", space_subject_path(@space, @subject), :class => "start replacement" %>
-      <%= link_to raw("<span class='icon icon-resource-lightblue_32_32'></span>Conheça os recursos"), space_subject_path(@space, @subject), :class => "bt clearfix" %>
+  <% unless subject.description.blank? && subject.tags.empty? %>
+    <div class="details">
+      <% unless subject.description.blank? %>
+        <span class="description icon-bio-gray_16_18-before">
+          <%= subject.description %>
+        </span>
+      <% end %>
+      <% unless subject.tags.empty? %>
+        <ul class="tags icon-tag-gray_16_18-before clearfix <%= subject.description.empty? ? "" : "separator" %>" >
+          <% subject.tags.each do |tag| %>
+            <li>
+              <%= link_to tag, nil %>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
     </div>
   <% end %>
 </div><!-- end #hierarchy-header -->

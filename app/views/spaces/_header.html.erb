@@ -9,15 +9,15 @@
       :class => "manage icon-manage-gray_8_10-before" %>
   <% end %>
   <h3 class="call name"><%= space.name %></h3>
-  <% unless space.description.empty? && space.tags.empty? %>
+  <% unless space.description.blank? && space.tags.empty? %>
     <div class="details">
-      <% unless space.description.empty? %>
+      <% unless space.description.blank? %>
         <span class="description icon-bio-gray_16_18-before">
           <%= space.description %>
         </span>
       <% end %>
       <% unless space.tags.empty? %>
-        <ul class="tags icon-tag-gray_16_18-before clearfix <%= space.description.empty? ? "" : "separator" %>">
+        <ul class="tags icon-tag-gray_16_18-before clearfix <%= space.description.blank? ? "" : "separator" %>">
           <% space.tags.each do |tag| %>
             <li>
               <%= link_to tag, nil %>

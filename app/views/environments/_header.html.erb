@@ -6,24 +6,22 @@
     <%= link_to "Gerenciar ambiente", edit_environment_path(environment),
       :class => "manage icon-manage-gray_8_10-before" %>
   <% end %>
-  <% unless environment.description.nil? %>
-    <% unless environment.description.empty? && environment.tags.empty? %>
-      <div class="details">
-        <% unless environment.description.empty? %>
-          <span class="description icon-bio-gray_16_18-before">
-            <%= environment.description %>
-          </span>
-        <% end %>
-        <% unless environment.tags.empty? %>
-          <ul class="tags icon-tag-gray_16_18-before clearfix <%= environment.description.empty? ? "" : "separator" %>">
-            <% environment.tags.each do |tag| %>
-              <li>
-                <%= link_to tag, environment_path(environment) %>
-              </li>
-            <% end %>
-          </ul>
-        <% end %>
-      </div>
-    <% end %>
+  <% unless environment.description.blank? && environment.tags.empty? %>
+    <div class="details">
+      <% unless environment.description.blank? %>
+        <span class="description icon-bio-gray_16_18-before">
+          <%= environment.description %>
+        </span>
+      <% end %>
+      <% unless environment.tags.empty? %>
+        <ul class="tags icon-tag-gray_16_18-before clearfix <%= environment.description.empty? ? "" : "separator" %>">
+          <% environment.tags.each do |tag| %>
+            <li>
+              <%= link_to tag, environment_path(environment) %>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
   <% end %>
 </div><!-- end #hierarchy-header -->

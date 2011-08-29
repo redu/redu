@@ -1,19 +1,7 @@
 <div class="context">
-  <div class="context-nav">
-    <% unless @lecture.last_item? %>
-      <%= link_to "Próxima aula",
-        space_subject_lecture_path(@lecture.subject.space, @lecture.subject,
-                                   @lecture.next_item),
-        :class => "next icon-expand-right-gray_8_10-before" %>
-    <% end %>
-    <% unless @lecture.first_item? %>
-      <%= link_to "Aula anterior",
-        space_subject_lecture_path(@lecture.subject.space, @lecture.subject,
-                                   @lecture.previous_item),
-        :class => "previous icon-expand-left-gray_8_10-before" %>
-    <% end %>
-  </div>
   <% if current_user.get_association_with(@lecture.subject) %>
+    <%= render :partial => 'subjects/progress_bar',
+      :locals => { :student_grade => student_grade } %>
     <%= form_tag done_space_subject_lecture_path(@lecture.subject.space,
                                                  @lecture.subject,
                                                  @lecture),
@@ -31,7 +19,20 @@
         <%= label_tag 'Aula finalizada?', nil, :class => "icon-class-gray_16_18-before" %>
       <% end %>
     <% end %>
-    <%= render :partial => 'subjects/progress_bar',
-      :locals => { :student_grade => student_grade } %>
   <% end %>
+  <div class="context-nav">
+    <% unless @lecture.last_item? %>
+      <%= link_to "Próxima aula",
+        space_subject_lecture_path(@lecture.subject.space, @lecture.subject,
+                                   @lecture.next_item),
+        :class => "next icon-expand-right-gray_8_10-before" %>
+    <% end %>
+    <% unless @lecture.first_item? %>
+      <%= link_to "Aula anterior",
+        space_subject_lecture_path(@lecture.subject.space, @lecture.subject,
+                                   @lecture.previous_item),
+        :class => "previous icon-expand-left-gray_8_10-before" %>
+    <% end %>
+  </div>
+
 </div><!-- end #context -->
