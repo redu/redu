@@ -158,7 +158,7 @@
 .icon-course-gray_16_18 { background-position: 0 -80px;}
 .icon-delete-gray_16_18 { background-position: 0 -2160px; }
 .icon-delete-gray_16_18:hover,
-.icon-delete-red-red_16_18 { background-position: -80px -2161px; }
+.icon-delete-red-red_16_18 { background-position: -80px -2160px; }
 .icon-delete-white-gray_16_18 { background-position: -240px -2160px; }
 .icon-diploma-lightblue_32_34 { background-position: -80px -3280px; }
 
@@ -351,6 +351,13 @@
   background: url("../images/new/icons-small.png") -240px -1280px no-repeat;
 }
 
+.icon-hierarchy_elem-gray_8_10 { background-position: -560px -880px; }
+.icon-hierarchy_elem-gray_8_10-before:before {
+  content: "";
+  width: 8px;
+  height: 10px;
+  background: url("../images/new/icons-small.png") -560px -880px no-repeat;
+}
 .icon-home-blue_16_18,
 .icon-home-lightblue_16_18:hover { background-position: -80px -2240px; }
 .icon-home-lightblue_16_18 { background-position: 0 -2240px; }

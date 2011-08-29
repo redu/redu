@@ -16,3 +16,4 @@ public/system/*/*
 Gemfile.local.rb
 public/assets/*
 public/images/users/*
+public/images/myfiles/*

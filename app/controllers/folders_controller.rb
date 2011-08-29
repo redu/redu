@@ -252,8 +252,7 @@ class FoldersController < BaseController
     respond_to do |format|
       # back to the list
       format.js {
-        params[:id] = @folder.parent_id
-        list
+        list @folder.parent_id
       }
     end
 

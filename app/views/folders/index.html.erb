@@ -1,17 +1,19 @@
 <%= render :partial => 'spaces/sidebar', :locals => { :space => @space } %>
-<div class="main grid_12 omega big-col">
+<div class="main space grid_12 omega big-col">
   <%= render :partial => 'spaces/breadcrumbs', :locals => { :space => @space } %>
   <%= render :partial => 'spaces/header',
     :locals => { :space => @space }%>
-  <div id="space-materials" class="hierarchy-listing-wrapper">
-    <div class="header">
-      <h4>Material de apoio</h4>
-      <span class="counter"><%= @files_count %> arquivos no total</span>
+
+  <div id="space-subjects" class="body clearfix">
+    <div class="header clearfix">
+      <h4 class="title">Arquivos de Apoio</h4>
+      <span class="detail">(<%= pluralize @files_count, "arquivo" %>)</span>
     </div>
-  </div>
-  <div>
-    <div id="materials">
-      <%= render :partial => 'folders/index' %>
+    <%= render :partial => 'folders/admin',
+      :locals => { :space => @space, :folder => @folder, :myfile => @myfile } %>
+    <div id="materials" class="main-content">
+      <%= render :partial => 'folders/list' %>
     </div>
-  </div>
+  </div><!-- end #environment-courses -->
+
 </div><!-- end main -->

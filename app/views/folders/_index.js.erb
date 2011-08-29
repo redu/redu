@@ -1,4 +1,4 @@
-$('#file_list').html("<%= escape_javascript (
+$('#folder-index').html("<%= escape_javascript (
   render :partial => "folders/list") %>")
 $('#folder-context').html("<%= escape_javascript (
   render :partial => "folders/context", :locals => { :folder => @folder }) %>")

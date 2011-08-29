@@ -4,7 +4,7 @@
   <%= render :partial => 'spaces/header',
     :locals => { :space => @space }%>
 
-  <div id="space-subjects" class="body">
+  <div id="space-subjects" class="body clearfix">
     <div class="header clearfix">
       <h4 class="title">Conteúdo</h4>
       <span class="detail">(<%= pluralize @space.subjects.count, "módulo" %> , <%= pluralize @space.lectures_count, "aula" %>)</span>
@@ -16,7 +16,7 @@
       </div>
     <% end %>
 
-    <ul id="subjects_list" class="hierarchy-listing subjects">
+    <ul id="subjects_list" class="hierarchy-listing subjects main-content">
       <%= render :partial => 'subjects/item', :collection => @subjects %>
     </ul>
     <%= will_paginate @subjects, :renderer => EndlessRenderer %>
