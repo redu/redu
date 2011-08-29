@@ -20,7 +20,7 @@
     <h3 class="name icon-page-gray_32_34-before"><%= lecture.name %></h3>
     <ul class="statistics">
       <li><%= time_ago_in_words lecture.created_at %></li>
-      <li>Visualizado <%= lecture.view_count %> <%= lecture.view_count > 0 ? "vezes" : "vez" %></li>
+      <li>Visualizado <%= lecture.view_count %> <%= lecture.view_count > 1 ? "vezes" : "vez" %></li>
     </ul>
   </div>
 </div>

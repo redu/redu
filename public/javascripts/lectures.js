@@ -9,7 +9,7 @@ $(function(){
               var docHeight = $(document).height();
 
               $(".student-actions").css("position", "relative");
-              $(".stage").css("position", "relative");
+              $(".stage").css("position", "relative").css("backgroundColor", "white");
               $(".statuses-wrapper").css("position", "relative").css("backgroundColor", "white");
               $("#lights_dimmed").css("height", docHeight).fadeIn();
               $(this).html("Acender luzes");
