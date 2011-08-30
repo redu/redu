@@ -13,8 +13,7 @@ GIT
 
 GIT
   remote: git://github.com/guiocavalcanti/scribd_fu.git
-  revision: 185f54df917ec18e58f018869eac433a540bf2ab
-  branch: correct_sanitization
+  revision: 98444ca51d32f9b1052f4b7b85686b3e4ef97561
   specs:
     scribd_fu (2.0.11)
       rscribd
