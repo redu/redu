@@ -11,6 +11,14 @@ GIT
   specs:
     ajaxful_rating (3.0.0.beta3)
 
+GIT
+  remote: git://github.com/guiocavalcanti/scribd_fu.git
+  revision: 185f54df917ec18e58f018869eac433a540bf2ab
+  branch: correct_sanitization
+  specs:
+    scribd_fu (2.0.11)
+      rscribd
+
 GEM
   remote: http://rubygems.org/
   remote: http://gems.github.com/
@@ -169,8 +177,6 @@ GEM
     rubyzip (0.9.4)
     s3 (0.3.8)
       proxies (~> 0.2.0)
-    scribd_fu (2.0.11)
-      rscribd
     selenium-webdriver (0.2.1)
       childprocess (>= 0.1.7)
       ffi (>= 1.0.7)
@@ -234,7 +240,7 @@ DEPENDENCIES
   remotipart (>= 0.3.4)
   rspec-rails
   ruby-debug
-  scribd_fu
+  scribd_fu!
   shoulda-matchers
   shuber-sortable
   thin
