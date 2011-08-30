@@ -13,7 +13,7 @@ GIT
 
 GIT
   remote: git://github.com/guiocavalcanti/scribd_fu.git
-  revision: 98444ca51d32f9b1052f4b7b85686b3e4ef97561
+  revision: ce15af925afbab9f5806d4038ec0ac5e05b18d2e
   specs:
     scribd_fu (2.0.11)
       rscribd
