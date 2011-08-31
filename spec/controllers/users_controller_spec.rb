@@ -117,35 +117,6 @@ describe UsersController do
     end
   end
 
-  context "GET edit" do
-    before do
-      @user = Factory(:user)
-      activate_authlogic
-      UserSession.create @user
-      get :edit, { :locale => "pt-BR", :id => @user.login }
-    end
-
-    it "assigns @experience" do
-      assigns[:experience].should_not be_nil
-    end
-
-    it "assigns @high_school" do
-      assigns[:high_school].should_not be_nil
-    end
-
-    it "assigns @higher_education" do
-      assigns[:higher_education].should_not be_nil
-    end
-
-    it "assigns @complementary_course" do
-      assigns[:complementary_course].should_not be_nil
-    end
-
-    it "assigns @event_education" do
-      assigns[:event_education].should_not be_nil
-    end
-  end
-
   context "POST update" do
     before do
       @user = Factory(:user)
@@ -300,6 +271,22 @@ describe UsersController do
       :contacts_recommendations].each do |var|
       it "assigns @#{var}" do
         assigns[var].should_not be_nil
+      end
+    end
+  end
+
+  context "GET curriculum" do
+    before do
+      @user = Factory(:user)
+      activate_authlogic
+      UserSession.create @user
+      get :curriculum, { :locale => "pt-BR", :id => @user.login }
+    end
+
+    [:experience, :high_school, :higher_education,
+      :complementary_course, :event_education].each do |v|
+      it "assigns #{v}" do
+        assigns[v].should_not be_nil
       end
     end
   end

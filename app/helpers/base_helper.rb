@@ -3,57 +3,26 @@ require 'md5'
 # Methods added to this helper will be available to all templates in the application.
 module BaseHelper
 
-  # Cria lista não ordenada no formato da navegação do widget de abas (jquery UI)
-  def tabs_navigation(*paths)
-    lis = paths.collect do |item|
-      name, path, options = item
-      class_name = "ui-state-active" if current_page?(path)
-
-      content_tag :li, :class => class_name do
-        link_to name, path, options
-      end
-    end
-
-    lis.join("\n").html_safe
-  end
-
-  # Cria markup das abas fake a partir de uma ou mais listas do tipo
-  # [nome, path, options] (mesmo parâmetros passados para o link_to)
-  def fake_tabs(*paths, &block)
+  # Cria markup das abas (compatível com o jQuery UI) a partir da navegação
+  # do contexto passado
+  def tabs(context, &block)
     locals = {
-      :navigation => tabs_navigation(*paths),
+      :navigation => render_navigation(:context => context, :level => 1),
       :body => capture(&block)
     }
 
-    render(:partial => 'shared/fake_tabs', :locals => locals)
+    render(:partial => 'shared/tabs', :locals => locals)
   end
 
-  # Cria lista não ordenada no formato desejado pelo JqueryUI
-  def real_tabs_navigation(*ids)
-    lis = ids.collect do |id|
-      #href, name, class_name = id
-      href, name, options = id
-      content_tag :li do
-        # por enquanto que ícones não são gerados pelo design
-        # content_tag :a, :href => "##{href}", :class => "icon #{class_name}" do
-        link_to name, "##{href}", options
-      end
-    end
-    width = lis.size * 120;
-    ul = content_tag :ul, :style => "width: #{width}px;", :class => "clearfix"  do
-      lis.join("\n").html_safe
-    end
-    ul.html_safe
-  end
-
-  # Cria código para abas do JqueryUI a partir de uma lista de id's e título
-  # [href(id), name]
-  def real_tabs(*ids, &block)
+  # Cria markup das sub abas (compatível com jQuery UI) a partir da navegação
+  # do contexto passado
+  def subtabs(context, &block)
     locals = {
-      :navigation => real_tabs_navigation(*ids),
+      :navigation => render_navigation(:context => context, :level => 2),
       :body => capture(&block)
     }
-    render(:partial => 'shared/real_tabs', :locals => locals)
+
+    render(:partial => 'shared/subtabs', :locals => locals)
   end
 
   def error_for(object, method = nil, options={})

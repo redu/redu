@@ -4,6 +4,35 @@
   background-position: top left;
 }
 
+.icon-account-blue_16_18,
+.icon-account-lightblue_16_18:hover { background-position: -400px  -2720px; }
+.icon-account-blue_16_18-before:before,
+.icon-account-lightblue_16_18-before:hover:before,
+.tabs .ui-state-default .icon-account_16_18-before:hover:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -400px -2720px no-repeat;
+}
+
+.icon-account-gray_16_18 { background-position: -240px  -2720px; }
+.icon-account-gray_16_18-before:before,
+.tabs .ui-state-default .icon-account_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -240px -2720px no-repeat;
+}
+
+.icon-account-lightblue_16_18 { background-position: -320px  -2720px; }
+.icon-account-lightblue_16_18-before:before,
+.tabs .ui-state-active .icon-account_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -320px -2720px no-repeat;
+}
+
 .icon-add-contact-white-blue_16_18 { background-position: -160px -2480px }
 .icon-add-contact-white-blue_16_18-before:before {
   content: "";
@@ -36,12 +65,42 @@
   background: url("../images/new/icons-small.png") 0 -2800px no-repeat;
 }
 
+.icon-bio-blue_16_18,
+.icon-bio-lightblue_16_18:hover { background-position: -160px  -1360px; }
+.icon-bio-blue_16_18-before:before,
+.icon-bio-lightblue_16_18-before:hover:before,
+.subtabs .ui-state-default .icon-bio_16_18-before:hover:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -160px -1360px no-repeat;
+}
+
 .icon-bio-gray_16_18 { background-position: 0 -1360px; }
 .icon-bio-gray_16_18-before:before {
   content: "";
   width: 16px;
   height: 18px;
   background: url("../images/new/icons-small.png") 0 -1360px no-repeat;
+}
+
+.icon-bio-lightblue_16_18 { background-position: -80px  -1360px; }
+.icon-bio-lightblue_16_18-before:before,
+.subtabs .ui-state-default .icon-bio_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -80px -1360px no-repeat;
+}
+
+.icon-bio-white_16_18 { background-position: -240px  -1360px; }
+.icon-bio-white_16_18-before:before,
+.subtabs .ui-state-active .icon-bio_16_18-before:before,
+.subtabs .ui-state-active .icon-bio_16_18-before:hover:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -240px -1360px no-repeat;
 }
 
 .icon-class-gray_16_18 { background-position: 0 -1760px; }
@@ -142,6 +201,35 @@
   background: url("../images/new/icons-small.png") -80px -80px no-repeat;
 }
 
+.icon-cv-blue_16_18,
+.icon-cv-lightblue_16_18:hover { background-position: -400px  -2560px; }
+.icon-cv-blue_16_18-before:before,
+.icon-cv-lightblue_16_18-before:hover:before,
+.subtabs .ui-state-default .icon-cv_16_18-before:hover:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -400px -2560px no-repeat;
+}
+
+.icon-cv-lightblue_16_18 { background-position: -320px  -2560px; }
+.icon-cv-lightblue_16_18-before:before,
+.subtabs .ui-state-default .icon-cv_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -320px -2560px no-repeat;
+}
+
+.icon-cv-white_16_18 { background-position: -480px  -2560px; }
+.icon-cv-white_16_18-before:before,
+.subtabs .ui-state-active .icon-cv_16_18-before:before,
+.subtabs .ui-state-active .icon-cv_16_18-before:hover:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -480px -2560px no-repeat;
+}
 .icon-delete-gray_8_10 { background-position: -400px -2800px; }
 .icon-delete-gray_8_10-before:before {
   content: "";
@@ -472,6 +560,35 @@
   background: url("../images/new/icons-small.png") -240px -480px no-repeat;
 }
 
+.icon-plans-blue_16_18,
+.icon-plans-lightblue_16_18:hover { background-position: -160px  -2720px; }
+.icon-plans-blue_16_18-before:before,
+.icon-plans-lightblue_16_18-before:hover:before,
+.tabs .ui-state-default .icon-plans_16_18-before:hover:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -160px -2720px no-repeat;
+}
+
+.icon-plans-gray_16_18 { background-position: 0  -2720px; }
+.icon-plans-gray_16_18-before:before,
+.tabs .ui-state-default .icon-plans_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") 0 -2720px no-repeat;
+}
+
+.icon-plans-lightblue_16_18 { background-position: -80px  -2720px; }
+.icon-plans-lightblue_16_18-before:before,
+.tabs .ui-state-active .icon-plans_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -80px -2720px no-repeat;
+}
+
 .icon-privacy-grey_16_18 { background-position: 0 -1520px; }
 .icon-privacy-lightblue_16_18 { background-position: -80px -1520px; }
 .icon-privacy-lightred_16_18 { background-position: -160px -1520px; }
@@ -503,7 +620,36 @@
   background: url("../images/new/icons-small.png") 0px -3040px no-repeat;
 }
 
-.icon-redu_admin-gray_16_18 { background-position: 0 -720px; }
+.icon-profile-blue_16_18,
+.icon-profile-lightblue_16_18:hover { background-position: -160px  -2320px; }
+.icon-profile-blue_16_18-before:before,
+.icon-profile-lightblue_16_18-before:hover:before,
+.tabs .ui-state-default .icon-profile_16_18-before:hover:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -160px -2320px no-repeat;
+}
+
+.icon-profile-gray_16_18 { background-position: 0px  -2320px; }
+.icon-profile-gray_16_18-before:before,
+.tabs .ui-state-default .icon-profile_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") 0px -2320px no-repeat;
+}
+
+.icon-profile-lightblue_16_18 { background-position: -80px  -2320px; }
+.icon-profile-lightblue_16_18-before:before,
+.tabs .ui-state-active .icon-profile_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -80px -2320px no-repeat;
+}
+
+.icon-redu_admin-gray_16_18 { background-position; 0 -720px; }
 .icon-redu_admin-gray_16_18-before:before {
   content: "";
   width: 16px;

@@ -210,6 +210,7 @@ Redu::Application.routes.draw do
       get :contacts_endless
       get :environments_endless
       get :show_mural
+      get :curriculum
     end
     collection do
       get :auto_complete

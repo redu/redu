@@ -1,0 +1,39 @@
+<%= render :partial => 'users/home_sidebar' %>
+<div class="main grid_10" style="width: 580px;">
+  <%= render :partial => 'users/breadcrumbs' %>
+  <%= tabs :users do %>
+    <%= subtabs :users do %>
+      <div id="curriculum" class="clearfix">
+        <div class="experience clearfix">
+          <div class="header clearfix">
+            <h3 class="title"><span class="icon-small icon-experience-lightblue_32_34"></span>Experiência</h3>
+            <hr class="separator">
+          </div>
+          <ul class="experiences">
+            <%= render :partial => 'experiences/item',
+              :collection => @user.experiences %>
+          </ul>
+          <%= render :partial => 'experiences/form', :locals => {
+            :user => @user, :experience => @experience } %>
+          <a href="#" class="new-experience-button cancel">+ Novo projeto</a>
+        </div>
+        <div class="education">
+          <div class="header clearfix">
+            <h3 class="title"><span class="icon-small icon-diploma-lightblue_32_34"></span>Educação</h3>
+            <hr class="separator">
+          </div>
+          <ul class="educations">
+            <%= render :partial => "educations/item",
+              :collection => @user.educations %>
+          </ul>
+          <%= render :partial => 'educations/form', :locals => {
+            :high_school => @high_school, :higher_education => @higher_education,
+            :complementary_course => @complementary_course,
+            :event_education => @event_education, :user => @user }%>
+          <a href="#" class="new-education-button cancel">+ Novo projeto</a>
+        </div>
+      </div>
+    <% end %>
+<% end %>
+</div>
+<%= render :partial => 'users/sidebar_explanation' %>

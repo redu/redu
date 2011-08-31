@@ -180,6 +180,8 @@ GEM
     shuber-sortable (1.0.6)
     signature (0.1.2)
       ruby-hmac
+    simple-navigation (3.5.0)
+      activesupport (>= 2.3.2)
     thin (1.2.11)
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
@@ -237,6 +239,7 @@ DEPENDENCIES
   scribd_fu
   shoulda-matchers
   shuber-sortable
+  simple-navigation
   thin
   translate_routes
   whenever
