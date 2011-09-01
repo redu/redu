@@ -19,10 +19,11 @@
           <% end %>
           </li>
           <% unless @user.educations.empty? %>
-            <li class="education icon-education-gray_8_10-before">
-              <span class="bio"><%= t :high_school %></span> em
-              <span class="bio"><%= @user.educations.first.educationable.institution %></span>
-            </li>
+            <ul class="education icon-education-gray_8_10-before">
+              <%= render :partial => "important_education",
+                :collection => @user.most_important_education,
+                :as => :education %>
+            </ul>
           <% end %>
           <li>
             <ul class="biography icon-bio-gray_8_10">
@@ -52,7 +53,7 @@
       <% end %>
 
       <% unless @user.description.blank? and @user.tag_list.empty? and
-        @user.mobile.blank? %>
+        @user.mobile.blank? and @user.social_networks.empty? %>
         <hr class="separator icon-bio-blue_32_34-after"/>
         <div class="bio-wrapper clearfix">
           <% unless @user.description.blank? %>

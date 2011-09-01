@@ -3,6 +3,22 @@
   margin: 0 0 20px 160px;
 }
 
+#biography .remove-network {
+  width: 16px;
+  margin-top: 30px;
+  margin-right: 5px;
+  display: block;
+  float: right;
+}
+
+#biography .concave-form .concave-select {
+  width: 90px;
+}
+
+#select-networks .tip {
+  margin-left: 95px
+}
+
 /* Curriculum Vitae */
 
 #curriculum .experiences > li,
@@ -163,14 +179,32 @@
   margin-top: 10px;
 }
 
-#biography .remove-network {
-  width: 16px;
-  margin-top: 30px;
-  margin-right: 5px;
-  display: block;
-  float: right;
+.explanation-sidebar {
+  margin-top: 20px;
+  width: 160px;
+  padding-left: 10px;
+  float: left;
 }
 
-#biography .concave-form .concave-select {
-  width: 90px;
+.explanation-sidebar .explanation {
+  margin-left: 10px;
+}
+
+.explanation-sidebar .title {
+  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-weight: 300;
+  font-size: 1.2em;
+  color: #f37b38;
+  display: block;
+  margin-top: 20px;
+}
+
+.explanation-sidebar p {
+  margin: 15px 0;
+  font-size: .87em;
+  color: #b3b2b3;
+}
+
+.explanation-sidebar p .featured {
+  font-weight: bold;
 }

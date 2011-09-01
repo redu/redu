@@ -1,5 +1,5 @@
-<div class="sidebar alpha grid_3">
-  <div class="image-frame ">
+<div class="sidebar">
+  <div class="image-user">
     <%= image_tag @user.avatar.url(:thumb_120), :alt => 'user' %>
   </div>
 
@@ -39,7 +39,7 @@
         </ul><!-- end .connections -->
       <% else %>
         <% @friends = @user.friends_in_common_with(current_user).shuffle %>
-        <span class="call">Em comum:<%= @friends.count %></span>
+        <span class="call icon-contacts-gray_16_18-before">Em comum: <span class="count"><%= @friends.count %></span></span>
         <ul class="connections clearfix">
           <%= render :partial => 'users/item_medium_24',
             :collection => @friends[0..3] %>

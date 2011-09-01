@@ -94,6 +94,7 @@
         $("#biography").refreshSocialNetwork();
         // Esconde os forms de edição
         $("#curriculum .educations form").hide();
+        $(".explanation-sidebar .incomplete-profile .edit").hide();
 
         $(".experience-current").live("change", function(){
             $("#curriculum .end-date").slideToggle();
@@ -156,6 +157,8 @@
             $("#biography").refreshSocialNetwork();
             // Esconde os forms de edição
             $("#curriculum .educations form").hide();
+            // Esconde link para editar perfil na barra de completude
+            $(".explanation-sidebar .incomplete-profile .edit").hide();
             $("#education_type").refreshShowCorrectForm();
             $("#higher_education_kind").refreshShowCorrectFields();
         });

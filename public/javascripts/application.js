@@ -1,5 +1,7 @@
 jQuery(function(){
 
+    $.verifyCompatibleBrowser();
+
     // Flash message
     $(".flash-message").parent().next().css("marginTop", "10px");
     $(".flash-message .close-flash").click(function(e){
@@ -102,11 +104,6 @@ jQuery(function(){
         e.preventDefault();
     });
 
-    // Carrega preview do Youtube (new Seminar)
-    $('#seminar_external_resource').live("change", function(){
-        youtubePreview($('#seminar_external_resource'));
-    })
-
     // Padrão de tabelas
     $("table.common tr:even:not(.invite):not(.message)").addClass("odd");
 
@@ -206,12 +203,22 @@ jQuery(function(){
     });
 
     // Padrão de spinner
-    $(".form-common, .form-loader").live('ajax:before', function(){
-        $(this).find("input[type=submit]").loadingStart();
+    $(".form-common, .form-loader").live('ajax:before', function(e){
+        var $this = $(this);
+        var $target = $(e.target);
+
+        if($target.is($this)){
+          $(this).find("input[type=submit]").loadingStart();
+        }
     });
 
-    $(".form-common, .form-loader").live('ajax:complete', function(){
-        $(this).find("input[type=submit]").loadingComplete();
+    $(".form-common, .form-loader").live('ajax:complete', function(e){
+        var $this = $(this);
+        var $target = $(e.target);
+
+        if($target.is($this)){
+          $(this).find("input[type=submit]").loadingComplete();
+        }
     });
 
     $("a[data-remote=true]").live('ajax:before', function(){
@@ -303,25 +310,6 @@ function stripAccent(str) {
   return str;
 }
 
-/* Carrega o preview do Youtube */
-function youtubePreview(textfield){
-  regex = /youtube\.com\/watch\?v=([A-Za-z0-9._%-]*)[&\w;=\+_\-]*/;
-
-  id = textfield.val().match(regex)
-  if (id != null) {
-    youtube_id = id[1];
-    url = "http://www.youtube.com/v/" + youtube_id + "&hl=en&fs=1";
-
-    jQuery('#yt_preview_param').attr("value",url);
-    jQuery('embed').attr("src",url);
-    jQuery('#youtube_preview').show();
-
-  }  else {
-    $('#youtube_preview').hide();
-  }
-
-}
-
 /* Alterna entre o formulário de Youtube e Upload (new Seminar) */
 function switchCourseFields(fieldType){
   if (fieldType == 1) {
@@ -332,8 +320,37 @@ function switchCourseFields(fieldType){
   } else {
     $('#upload_resource_field').hide();
     $('#external_resource_field').show();
-    youtubePreview($('#seminar_external_resource'));
     $('#seminar_submit').show();
   }
 
 }
+
+/* Verifica se o browser é compatível e esconde o aviso, caso seja. */
+$.verifyCompatibleBrowser = function(){
+  var myBrowser = $.browserInfos();
+  var minVersion = 0; // Para o caso de ser um browser não usual
+
+  if (myBrowser.isChrome()) {
+    minVersion = 11;
+  }else if(myBrowser.isSafari()){
+    minVersion = 4;
+  }else if(myBrowser.isOpera()){
+    minVersion = 11;
+  }else if(myBrowser.isFirefox()){
+    minVersion = 3.6;
+  }else if (myBrowser.isIE()){
+    minVersion = 8;
+  }
+
+  var warned = $.cookie("boring_browser");
+  if(!warned && !(myBrowser.version >= minVersion &&
+    swfobject.hasFlashPlayerVersion("10"))){
+    $("#outdated-browser").show();
+  }
+
+  $("#outdated-browser .close").click(function(){
+      $.cookie("boring_browser", true, { path: "/" });
+      $("#outdated-browser").fadeOut();
+  });
+}
+

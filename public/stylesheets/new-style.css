@@ -1,3 +1,108 @@
+#outdated-browser {
+  height: 100px;
+  background: url("../images/new/error-top-bkg-line.png") repeat-x;
+}
+
+#outdated-browser .content .title {
+  width: 140px;
+  margin-top: 3px;
+  text-align: right;
+  float: left;
+  margin-left: 30px;
+}
+
+#outdated-browser .content .ops {
+  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-weight: 900;
+  font-size: 3.9em;
+  color: white;
+}
+
+.textshadow #outdated-browser .content .ops {
+  text-shadow: 0px -1px 0px rgb(249, 167, 55);
+}
+
+#outdated-browser .content .warning {
+  display: block;
+  margin-top: 5px;
+  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-weight: 700;
+  font-size: 1.2em;
+  color: rgb(193, 39, 45);
+}
+
+.textshadow #outdated-browser .content .warning {
+  text-shadow: 0px 1px 0px rgb(255, 238, 215);
+}
+
+#outdated-browser .content .message {
+  width: 340px;
+  height: 60px;
+  float: left;
+  margin: 20px 140px 0 20px;
+  color: white;
+}
+
+.textshadow #outdated-browser .content .message {
+  text-shadow: 0px -1px 0px rgb(249, 167, 55);
+}
+
+#outdated-browser .content .close {
+  display: block;
+  width: 16px;
+  height: 18px;
+  float: right;
+  margin-top: 40px;
+  cursor: pointer;
+}
+
+#outdated-browser .content .suggestions {
+  width: 240px;
+  float: left;
+  margin-top: 20px;
+}
+
+#outdated-browser .content .suggestions li {
+  float:left;
+  margin-right: 20px;
+}
+
+#outdated-browser .content .suggestions li:hover .name {
+  color: white;
+}
+
+#outdated-browser .content .suggestions .logo {
+  display: block;
+  width: 100px;
+  height: 62px;
+}
+
+#outdated-browser .content .suggestions .chrome {
+  background: url("../images/new/browsers-buttons.png") 0 0 no-repeat;
+}
+
+#outdated-browser .content .suggestions .chrome:hover {
+  background: url("../images/new/browsers-buttons.png") -160px 0 no-repeat;
+}
+
+#outdated-browser .content .suggestions .firefox {
+  background: url("../images/new/browsers-buttons.png") -320px 0 no-repeat;
+}
+
+#outdated-browser .content .suggestions .firefox:hover {
+  background: url("../images/new/browsers-buttons.png") -480px 0 no-repeat;
+}
+
+#outdated-browser .content .suggestions .name {
+  font-size: .87em;
+  font-style: italic;
+  color: rgb(249, 167, 55);
+  display: block;
+  margin-top: 3px;
+  width: 100px;
+  text-align: center;
+}
+
 #header a:hover {
   text-decoration: none;
 }
@@ -123,14 +228,31 @@
 }
 
 #content .sidebar {
+  width: 150px;
+  padding-right: 10px;
+  float: left;
   margin-top: 40px;
+  margin-right: 0;
+}
 
+#content .sidebar .image-user {
+  width: 130px;
+  height: 130px;
+  text-align: center;
+  margin: 0 25px 0 15px;
+
+  -webkit-box-shadow: 0px 0px 20px 0px #888888;
+  -moz-box-shadow: 0px 0px 20px 0px #888888;
+  box-shadow: 0px 0px 20px 0px #888888;
 }
 
 #content .sidebar .image-frame {
-  text-align: right;
+ text-align: right;
 }
 
+#content .sidebar .image-user img {
+  margin-top: 5px;
+}
 #content .sidebar .local-nav {
   margin-top: 17px;
 }
@@ -142,16 +264,17 @@
 #content .sidebar .local-nav > li > .session {
   display: block;
   position: relative;
-  width: 161px;
-  padding: 8px 10px;
+  width: 141px;
+  padding: 8px 20px 8px 10px;
   -moz-border-radius: 5px 0 0 5px;
   -webkit-border-radius: 5px 0 0 5px;
   border-radius: 5px 0 0 5px;
 }
 
 #content .sidebar .local-nav > li > .session > a {
-  padding: 2px 0 1px 25px;
+  padding: 2px 0 2px 25px;
   display: block;
+  font-size: .9em;
 }
 
 #content .sidebar .local-nav > li > .session:hover {
@@ -168,6 +291,7 @@
 #content .sidebar .local-nav > li > .selected:hover a {
   color: white;
   padding-left: 25px;
+  font-size: .9em;
 }
 
 #content .sidebar .local-nav ul {
@@ -201,8 +325,17 @@
   color: #B2B2B2;
   display: block;
   padding-top: 3px;
-  padding-left: 23px;
-  font-size: .9em;
+  font-size: .87em;
+}
+
+#content .sidebar .call:before {
+  float:left;
+  margin-top: -2px;
+  margin-right: 6px;
+}
+
+#content .sidebar .call .count {
+  color: #158AC4;
 }
 
 #content .sidebar .connections li {
@@ -251,8 +384,8 @@
   -moz-border-radius: 12px;
   -webkit-border-radius: 12px;
   border-radius: 12px;
-
-  padding: 10px 20px;
+  margin-right: 0;
+  padding: 10px 19px;
 }
 
 #content .big-col {
@@ -1268,9 +1401,9 @@
 }
 
 #content .secondary-sidebar {
-  margin: 0;
+  margin: 20px 0 0 0;
   float: left;
-  width: 155px;
+  width: 170px;
 }
 
 #content .secondary-sidebar .separator {
@@ -1288,7 +1421,7 @@
   font-weight: bold;
   color: white;
   display: block;
-  margin: 20px 0 10px 0;
+  margin: 20px 0 5px 0;
 
   -moz-text-shadow: 1px -1px 1px #61be80;
   -webkit-text-shadow: 1px -1px 1px #61be80;
@@ -1312,7 +1445,7 @@
 
 #content .actions .add-as-friend:hover,
 #content .actions .add-as-friend {
-  width: 140px;
+  width: 150px;
   height: 30px;
   font-size: 1em;
   cursor: pointer;
@@ -1320,6 +1453,12 @@
   -moz-text-shadow: 0 -1px 1px #1789c3;
   -webkit-text-shadow: 0 -1px 1px #1789c3;
   text-shadow: 0 -1px 1px #1789c3;
+}
+
+#content .actions .add-as-friend .add-contact:before {
+  float: left;
+  margin-left: 5px;
+  margin-top: -2px;
 }
 
 #content .actions .concave-button {
@@ -1334,11 +1473,16 @@
   border-bottom-right-radius: 3px;
 }
 
+#content .actions .send-message .write-message:before {
+  float: left;
+  margin: -3px 5px 0 5px;
+}
+
 #content .actions .send-message {
   display: block;
   margin-top: 5px;
   padding: 0;
-  width: 138px;
+  width: 148px;
   height: 28px;
 }
 
@@ -1694,7 +1838,7 @@
 
 .global-messages .flash-message {
   margin-top: 10px;
-  margin-left: 180px;
+  margin-left: 170px;
   width: 590px;
   position: relative;
 }
@@ -1969,7 +2113,7 @@ input[type=submit] {
 a.important,
 input[type=submit].important {
   border: 1px solid #61BE80;
-  font-family: museo-slab, serif;
+  font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 500;
   color: white;
   font-size: 1em;
@@ -2610,14 +2754,13 @@ table.spaced tr td {
 
 #teach-index .teach-steps,
 #teach-index .teach-call {
-  font-family: museo-slab, serif;
+  font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 300;
 }
 
 #teach-index .teach-call {
   font-size: 3em;
   color: white;
-  filter: dropshadow(color=#333333, offx=1, offy=1)
 }
 
 #teach-index .teach-steps {
@@ -2627,7 +2770,6 @@ table.spaced tr td {
   margin-top: 20px;
   margin-bottom: 20px;
   display: block;
-  filter: dropshadow(color=#ffffff, offx=0, offy=1);
 }
 
 .textshadow .teach-steps {
@@ -2648,11 +2790,10 @@ table.spaced tr td {
 #teach-index .first:before,
 #teach-index .second:before,
 #teach-index .third:before {
-  font-family: museo-slab, serif;
+  font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 900;
   font-size: 5.2em;
   color: white;
-  filter: dropshadow(color=#, offx=0, offy=-1);
   float: left;
   margin-right: 10px;
   margin-top: -10px;
@@ -2718,7 +2859,29 @@ table.spaced tr td {
 
 #teach-index .concave-form .concave-label {
   width: 16px;
-  height: 16px;
+  height: 18px;
+  text-align: left;
+  margin-top: 26px;
+}
+
+/* Devido a precedência do background do .concave-form .concave-label */
+#teach-index .concave-form .environment {
+  background: url("../images/new/icons-small.png") 0 0 no-repeat;
+}
+
+/* Devido a precedência do background do .concave-form .concave-label */
+#teach-index .concave-form .environment.concave-label-focus {
+  background: url("../images/new/icons-small.png") -80px 0 no-repeat;
+}
+
+/* Devido a precedência do background do .concave-form .concave-label */
+#teach-index .concave-form .course {
+  background: url("../images/new/icons-small.png") 0 -80px no-repeat;
+}
+
+/* Devido a precedência do background do .concave-form .concave-label */
+#teach-index .concave-form .course.concave-label-focus {
+  background: url("../images/new/icons-small.png") -80px -80px no-repeat;
 }
 
 #teach-index .concave-form .tip {
@@ -2791,13 +2954,13 @@ table.spaced tr td {
 }
 
 #checkout .step-info h3 {
-  font-family: museo-slab, serif;
+  font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 300;
   font-size: 7em;
 }
 
 #checkout .step-info h3 span {
-  font-family: museo-slab, serif;
+  font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 300;
   font-size: .3em;
   display: block;
@@ -2836,7 +2999,7 @@ table.spaced tr td {
 }
 
 #checkout .table .menu a {
-  font-family: museo-slab, serif;
+  font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 500;
   font-size: 1.3em;
   display: block;
@@ -2990,7 +3153,7 @@ table.spaced tr td {
 }
 
 .plan-container .name {
-  font-family: museo-slab, serif;
+  font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 500;
   font-size: 1.3em;
   color: #60BE7F;
@@ -3024,7 +3187,7 @@ table.spaced tr td {
 }
 
 .plan-container .plus {
-  font-family: museo-slab, serif;
+  font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 300;
   color: #F27A38;
   display: block;
@@ -3033,7 +3196,7 @@ table.spaced tr td {
 }
 
 .plan-container .value {
-  font-family: museo-slab, serif;
+  font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 300;
   font-size: 1.4em;
   color: #F27A38;
@@ -3056,7 +3219,7 @@ table.spaced tr td {
 }
 
 #partner-plan .partner-call {
-  font-family: museo-slab, serif;
+  font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 300;
   color: #F25E00;
   font-size: 1.5em;
@@ -3084,7 +3247,7 @@ table.spaced tr td {
 
 #partner-plan .concave-form .environment-name,
 #partner-plan .concave-form .course-name {
-  font-family: museo-slab, serif;
+  font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 500;
   margin-top: 17px;
   width: 400px;
@@ -3100,7 +3263,7 @@ table.spaced tr td {
 }
 
 #url_preview span {
-  font-family: museo-slab, serif;
+  font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 100;
   font-size: 1em;
 }
@@ -3174,7 +3337,7 @@ table.spaced tr td {
 }
 
 #checkout .confirmation tbody .value {
-  font-family: museo-sans, serif;
+  font-family: museo-slab, helvetica, arial, sans-serif;
   font-size: 1.2em;
   font-weight: 500px;
   padding-top: 18px;
@@ -4194,6 +4357,7 @@ div.token-input-dropdown {
 }
 
 #profile .vcard .user-summary .biography > li,
+#profile .vcard .user-summary .education > li,
 #profile .vcard .user-summary .actual-jobs > li {
   margin-left: 13px;
 }
@@ -4314,29 +4478,59 @@ div.token-input-dropdown {
 
 .profile-sidebar .incomplete-profile .progress {
   margin-top: 10px;
+  height: 10px;
   border: 1px solid #cccbcb;
   padding: 2px;
   margin-bottom: 10px;
 
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+}
+
+.profile-sidebar .incomplete-profile .progress-value {
+  float: left;
+  margin: 0 4px;
+  width: 25px;
+  font-weight: bold;
+  font-size: .8em;
+  color: #B2B2B2;
+ }
+
+.profile-sidebar .incomplete-profile .progress-completed {
+  margin-right: 0;
+  margin-left: 5px;
+  width: 90px;
+  overflow: hidden;
 }
 
 .profile-sidebar .incomplete-profile .completed {
   background-color: #aed584;
-  padding: 3px 0;
-  font-size: .8em;
-  color: #6d6e6f;
-  font-weight: bold;
-  text-align: right;
+  padding: 5px 0;
   overflow: hidden;
 
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
+
+  background: #61be80; /* Old browsers */
+  background: -moz-linear-gradient(top, #61be80 0%,
+              #aed584 50%, #61be80 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom,
+              color-stop(0%,#61be80), color-stop(50%,#aed584),
+              color-stop(100%,#61be80)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #61be80 0%, #aed584 50%,
+              #61be80 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #61be80 0%,
+              #aed584 50%,#61be80 100%); /* Opera11.10+ */
+  background: -ms-linear-gradient(top, #61be80 0%,
+              #aed584 50%,#61be80 100%); /* IE10+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b4e391',
+          endColorstr='#b4e391',GradientType=0 ); /* IE6-9 */
+  background: linear-gradient(top, #61be80 0%,
+              #aed584 50%,#61be80 100%); /* W3C */
 }
 
 .profile-sidebar .incomplete-profile .completed span {
-  margin: 0 7px;
+  display: none;
 }
 
 .profile-sidebar .incomplete-profile .edit {
@@ -4380,7 +4574,7 @@ div.token-input-dropdown {
 }
 
 .profile-sidebar .environments > ul > li {
-  padding: 5px 0 5px 5px;
+  padding: 5px 10px;
 
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -4397,7 +4591,17 @@ div.token-input-dropdown {
 }
 
 .profile-sidebar .environments .courses li {
-  margin: 5px 0 5px 5px;
+  margin: 5px 0 10px 5px;
+  padding-bottom: 7px;
+}
+
+.profile-sidebar .environments .courses li:last-child {
+  margin-bottom: 0;
+}
+
+.profile-sidebar .environments .courses li .role:before {
+  float: left;
+  margin-right: 5px;
 }
 
 .profile-sidebar .common-connections ul {
@@ -4910,6 +5114,13 @@ div.token-input-dropdown {
   display: block;
   margin: 0 auto;
   margin-bottom: 10px;
+}
+
+.home-sidebar .call span:before,
+.secondary-sidebar .call span:before {
+  float:left;
+  margin-right: 10px;
+  margin-top: -2px;
 }
 
 .home-sidebar .contact-recommendations ul {

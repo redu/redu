@@ -362,8 +362,6 @@ describe User do
       create_friendship luke, yoda
       create_friendship leia, han_solo
       vader.be_friends_with han_solo
-      han_solo = User.select("login").find_by_login("han_solo")
-      yoda = User.select("login").find_by_login("yodaa")
 
       vader.friends_of_friends.should == [yoda]
     end
@@ -625,13 +623,27 @@ describe User do
   end
 
   it "retrieves completeness percentage of profile" do
-    subject.completeness.should == 50
+    subject.completeness.should == 31
   end
 
   it "creates user settings!" do
     subject.create_settings!
     subject.reload.settings.should_not be_nil
     subject.settings.view_mural.should == Privacy[:friends]
+  end
+
+  it "should retrieve educations most important \
+    in order > higher_education > complementary_course > high_school" do
+
+    edu1 = Factory(:education, :user => subject,
+                   :educationable => Factory(:high_school))
+    edu2 = Factory(:education, :user => subject,
+                   :educationable => Factory(:higher_education))
+    edu3 = Factory(:education, :user => subject,
+                   :educationable => Factory(:complementary_course))
+
+    subject.reload
+    subject.most_important_education.should == [edu2, edu3, edu1]
   end
 
   private

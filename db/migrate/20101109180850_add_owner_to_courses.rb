@@ -1,6 +1,6 @@
 class AddOwnerToCourses < ActiveRecord::Migration
   def self.up
-    add_column :courses, :owner, :integer, :null => false
+    add_column :courses, :owner, :integer
 
   end
 

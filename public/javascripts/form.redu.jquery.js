@@ -57,9 +57,15 @@
           });
 
           // Padrão de spinner
-          $(".concave-form").live('ajax:before', function(){
-              $(this).find("input[type=submit]").loadingStart({ "className" : "concave-loading" });
-          });
+          $(".concave-form").live('ajax:before', function(e){
+              var $this = $(this);
+              var $target = $(e.target);
+
+              if($this.is($target)){
+                var $submit = $(this).find("input[type=submit]");
+                $submit.loadingStart({ "className" : "concave-loading" });
+              }
+        });
 
           $(".concave-form").live('ajax:complete', function(){
               $(this).find("input[type=submit]").loadingComplete({ "className" : "concave-loading" });

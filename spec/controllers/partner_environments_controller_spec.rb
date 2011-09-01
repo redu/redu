@@ -18,7 +18,8 @@ describe PartnerEnvironmentAssociationsController do
       environment = {:name => "Faculdade mauricio de nassau",
           :initials => "FMN",
           :path => "faculdade-mauricio-de-nassau",
-          :owner => @user.id }
+          :owner => @user.id,
+          :tag_list => "minhas, tags de, teste"}
 
       @params = {
           :partner_environment_association => { :cnpj => "12.123.123/1234-12",
@@ -53,24 +54,41 @@ describe PartnerEnvironmentAssociationsController do
         should render_template 'partner_environment_associations/new'
       end
     end
-  end
 
-  context "when listing partner environments" do
-    before do
-      @partner = Factory(:partner)
-      @partner.add_collaborator(@user)
+    context "when there are other collaborators" do
+      before do
+        @users = 3.times.inject([]) do |acc, el|
+          u = Factory(:user)
+          @partner.add_collaborator(u)
+          acc << u
+        end
+      end
 
-      3.times.inject([]) do |acc,i|
-        environment = Factory(:environment)
-        @partner.add_environment(environment, "12.123.123/1234-12")
+      it "makes all collaborators environment admin" do
+        post :create, @params
+        @partner.environments.each do |e|
+          @users.to_set.should be_subset(e.administrators.to_set)
+        end
       end
     end
 
-    it "assigns the partner_environment_associations" do
-      get :index, :partner_id => @partner.id, :locale => "pt-BR"
-      assigns[:partner_environment_associations].should_not be_nil
-      assigns[:partner_environment_associations].to_set.should == \
-        @partner.partner_environment_associations.to_set
+    context "when listing partner environments" do
+      before do
+        @partner = Factory(:partner)
+        @partner.add_collaborator(@user)
+
+        3.times.inject([]) do |acc,i|
+          environment = Factory(:environment)
+          @partner.add_environment(environment, "12.123.123/1234-12")
+        end
+      end
+
+      it "assigns the partner_environment_associations" do
+        get :index, :partner_id => @partner.id, :locale => "pt-BR"
+        assigns[:partner_environment_associations].should_not be_nil
+        assigns[:partner_environment_associations].to_set.should == \
+          @partner.partner_environment_associations.to_set
+      end
     end
   end
 end

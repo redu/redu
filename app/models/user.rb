@@ -97,7 +97,7 @@ class User < ActiveRecord::Base
   has_many :educations, :dependent => :destroy
   has_one :settings, :class_name => "UserSetting", :dependent => :destroy
   has_many :partners, :through => :partner_user_associations
-  has_many :partner_user_associations
+  has_many :partner_user_associations, :dependent => :destroy
 
   has_many :social_networks, :dependent => :destroy
 
@@ -757,13 +757,19 @@ class User < ActiveRecord::Base
   end
 
   def completeness
-    total = 10.0
+    total = 16.0
     undone = 0.0
-    undone += 1 if self.description.nil?
+    undone += 1 if self.description.to_s.empty?
     undone += 1 if self.avatar_file_name.nil?
     undone += 1 if self.gender.nil?
     undone += 1 if self.localization.to_s.empty?
+    undone += 1 if self.birth_localization.to_s.empty?
+    undone += 1 if self.languages.to_s.empty?
+    undone += 1 if self.tags.empty?
     undone += 1 if self.mobile.to_s.empty?
+    undone += 1 if self.social_networks.empty?
+    undone += 1 if self.experiences.empty?
+    undone += 1 if self.educations.empty?
 
     done = total - undone
     (done/total*100).round
@@ -808,19 +814,19 @@ class User < ActiveRecord::Base
         where("friendships.user_id = ?", self.id)
       # Populares da rede exceto o próprio usuário e os usuários que ele,
       # requisitou/foi requisitada a amizade.
-      users = User.select('users.login, users.avatar_file_name,' \
+      users = User.select('users.id, users.login, users.avatar_file_name,' \
                           ' users.first_name, users.last_name').
                           without_ids(contacts_and_pending_ids << self).
                           popular(20) |
       # Professores populares da rede exceto o próprio usuário e os usuários,
       # que ele requisitou/foi requisitada a amizade.
-        User.select('users.login, users.avatar_file_name,'\
+        User.select('users.id, users.login, users.avatar_file_name,'\
                     ' users.first_name, users.last_name').
                     without_ids(contacts_and_pending_ids << self).
                     popular_teachers(20) |
       # Usuários com o mesmo domínio de email exceto o próprio usuário e os,
       # usuários que ele requisitou/foi requisitada a amizade.
-        User.select('users.login, users.avatar_file_name,' \
+        User.select('users.id, users.login, users.avatar_file_name,' \
                     ' users.first_name, users.last_name').
                     without_ids(contacts_and_pending_ids << self).
                     with_email_domain_like(self.email).limit(20)
@@ -843,7 +849,7 @@ class User < ActiveRecord::Base
   def colleagues(quantity)
     contacts_ids = User.contacts_and_pending_contacts_ids.
       where("friendships.user_id = ?", self.id)
-    User.select("DISTINCT users.login, users.avatar_file_name," \
+    User.select("DISTINCT users.id, users.login, users.avatar_file_name," \
                 " users.first_name, users.last_name").
       includes(:user_course_associations).
       where("user_course_associations.state = 'approved' AND " \
@@ -856,13 +862,23 @@ class User < ActiveRecord::Base
     contacts_ids = self.friends.select("users.id")
     contacts_and_pending_ids = User.contacts_and_pending_contacts_ids.
       where("friendships.user_id = ?", self.id)
-    User.select("DISTINCT users.login, users.avatar_file_name," \
+    User.select("DISTINCT users.id, users.login, users.avatar_file_name," \
                 " users.first_name, users.last_name").
       joins("LEFT OUTER JOIN `friendships`" \
             " ON `friendships`.`friend_id` = `users`.`id`").
       where("friendships.status = 'accepted' AND friendships.user_id IN (?)" \
             " AND friendships.friend_id NOT IN (?, ?)",
             contacts_ids, contacts_and_pending_ids, self.id)
+  end
+
+  def most_important_education
+    educations = []
+    edu = self.educations
+    educations << edu.higher_educations.first unless edu.higher_educations.empty?
+    educations << edu.complementary_courses.first unless edu.complementary_courses.empty?
+    educations << edu.high_schools.first unless edu.high_schools.empty?
+
+    educations
   end
 
   protected
