@@ -1276,6 +1276,8 @@
   margin-top: 20px;
 }
 
+#resource .details .icon-document-gray_32_34-before:before,
+#resource .details .icon-seminar-gray_32_34-before:before,
 #resource .details .icon-page-gray_32_34-before:before {
   float: left;
   margin-right: 20px;
@@ -1309,7 +1311,7 @@
   margin-right: 5px;
 }
 
-#resource .pretty-text {
+#resource .stage {
   margin: 20px 10px;
   padding: 20px 40px;
 }
@@ -2414,6 +2416,10 @@
 
 .textshadow #space-subjects .subjects > .child .new {
   text-shadow: 0px 1px 0px #ffffff;
+}
+
+#space-subjects .subjects .tags {
+  margin-left: 55px;
 }
 
 #add-resources {

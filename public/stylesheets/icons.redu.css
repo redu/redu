@@ -179,6 +179,13 @@
   height: 18px;
   background: url("../images/new/icons-small.png") -480px -1120px no-repeat;
 }
+.icon-document-gray_32_34 { background-position: -240px -3040px; }
+.icon-document-gray_32_34-before:before {
+  content: "";
+  width: 32px;
+  height: 34px;
+  background: url("../images/new/icons-small.png") -240px -3040px no-repeat;
+}
 
 .icon-document-lightblue_16_18 { background-position: -400px -1120px; }
 .icon-document-lightblue_16_18-before:before {
@@ -488,7 +495,7 @@
   height: 18px;
   background: url("../images/new/icons-small.png") -80px -1120px no-repeat;
 }
-.icon-page-gray_32_34 { background-position: 0px  -3040px; }
+.icon-page-gray_32_34 { background-position: 0px -3040px; }
 .icon-page-gray_32_34-before:before {
   content: "";
   width: 32px;
@@ -525,6 +532,13 @@
   width: 16px;
   height: 18px;
   background: url("../images/new/icons-small.png") -400px -1200px no-repeat;
+}
+.icon-seminar-gray_32_34 { background-position: -240px -3120px; }
+.icon-seminar-gray_32_34-before:before {
+  content: "";
+  width: 32px;
+  height: 34px;
+  background: url("../images/new/icons-small.png") -240px -3120px no-repeat;
 }
 
 .icon-share-blue_32_34,
