@@ -3,51 +3,11 @@
     <!-- <%# Nao setar width e height na imagem %> -->
     <%= image_tag @course.environment.avatar.url(:thumb_100),
     :alt => 'profile', :size => "90x90", :class => "environment"%>
-    <span class="subject icons-big icon-space-white_64_64 replacement"><%=  @subject.title %></span>
+    <span class="subject icons-big icon-subject-white_64_66 replacement"><%=  @subject.title %></span>
   </div>
 
+  <%= render :partial => "lectures/student_actions" %>
   <ul class="local-nav">
-    <li>
-      <div class=" <%= (current_page? space_subject_path(@space, @subject) ) ? "session selected" : "session" %> ">
-        <% resource_name = "Recursos: #{@subject.lectures.size}" %>
-        <% resource_name = "Recurso: #{@subject.lectures.size}" if @subject.lectures.size ==  1 %>
-
-        <% selected = (current_page? space_subject_path(@subject.space, @subject)) ? "icon-resource-white_16_16" : "icon-resource-lightblue_16_16" %>
-        <%= link_to resource_name, space_subject_path(@space, @subject),
-          :class => "icon #{selected}" %>
-      </div>
-    </li>
-    <li>
-      <div class=" <%= (current_page? mural_space_subject_path(@subject.space,
-        @subject) ) ?
-        "session selected" : "session" %> ">
-        <% selected = (current_page? mural_space_subject_path(@subject.space, @subject)) ? "icon-subject-white_16_16" : "icon-subject-lightblue_16_16" %>
-        <%= link_to 'Mural', mural_space_subject_path(@subject.space, @subject),
-          :class => "icon #{selected}" %>
-      </div>
-    </li>
-    <% if can? :manage, @subject %>
-      <li>
-        <% selected = (current_page? edit_space_subject_path(@subject.space, @subject)) ? "icon-management-white_16_16" : "icon-management-lightblue_16_16" %>
-        <div class="<%= (current_page? edit_space_subject_path(@space, @subject) ) ? "session selected" : "session" %>">
-                         <%= link_to 'Gerenciamento', edit_space_subject_path(@space, @subject),
-                           :class => "icon #{selected}" %>
-        </div>
-      </li>
-    <% end %>
-    <li>
-      <div class="<%= (current_page? users_space_subject_path(@space, @subject) ) ? "session selected" : "session" %>">
-        <% selected = (current_page? users_space_subject_path(@subject.space, @subject)) ? "icon-members-white_16_16" : "icon-members-lightblue_16_16" %>
-        <%= link_to "Membros: #{@subject.members.length}", users_space_subject_path(@space, @subject),
-        :class => "icon #{selected}" %>
-      </div>
-      <ul class="connections clearfix">
-        <%= render :partial => 'users/item_short',
-            :collection => @subject.members.n_recent(9) %>
-      </ul> <!-- end .coonections -->
-        <%= link_to "Ver mais", users_space_subject_path(@space, @subject),
-          :class => 'more'%>
-    </li>
   </ul><!-- end .local-nav -->
 </div>
 

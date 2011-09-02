@@ -52,6 +52,10 @@
   background: url("../images/new/icons-small.png") 0 -1760px no-repeat;
 }
 
+.icon-comment-blue_32_34,
+.sidebar .action-comment:hover .icon-comment-lightblue_32_34 { background-position: -400px -640px; }
+.icon-comment-lightblue_32_34 { background-position: -320px -640px; }
+
 .icon-confirm-gray_16_18 { background-position: -240px -2080px; }
 .icon-confirm-gray_16_18-before:before {
   content: "";
@@ -120,6 +124,7 @@
   background: url("../images/new/icons-small.png") -400px -240px no-repeat;
 }
 
+.icon-course-gray_16_18 { background-position: 0 -80px;}
 .icon-course-blue_16_18,
 .icon-course-lightblue_16_18:hover { background-position: -160px -80px }
 .icon-course-blue_16_18-before:before,
@@ -155,11 +160,14 @@
   background: url("../images/new/icons-small.png") -480px -2800px no-repeat;
 }
 
-.icon-course-gray_16_18 { background-position: 0 -80px;}
 .icon-delete-gray_16_18 { background-position: 0 -2160px; }
 .icon-delete-gray_16_18:hover,
 .icon-delete-red-red_16_18 { background-position: -80px -2160px; }
 .icon-delete-white-gray_16_18 { background-position: -240px -2160px; }
+
+.icon-desfavorite-blue_32_34 { background-position: -240px -3360px; }
+.icon-desfavorite-lightblue_32_34 { background-position: -160px -3360px; }
+
 .icon-diploma-lightblue_32_34 { background-position: -80px -3280px; }
 
 .icon-document-blue_16_18,
@@ -307,6 +315,9 @@
 
 .icon-experience-lightblue_32_34 { background-position: 0 -3280px; }
 
+.icon-favorite-blue_32_34 { background-position: -80 -3360px; }
+.icon-favorite-lightblue_32_34 { background-position: 0 -3360px; }
+
 .icon-file-blue_16_18,
 .icon-file-lightblue_16_18:hover { background-position: -160px -1280px; }
 .icon-file-blue_16_18-before:before,
@@ -368,6 +379,14 @@
   height: 18px;
   background: url("../images/new/icons-small.png") 0 -1760px no-repeat;
 }
+
+.icon-light-on-blue_32_34,
+.sidebar .lights_link:hover .icon-light-on-lightblue_32_34 { background-position: -400px -3360px; }
+.icon-light-on-lightblue_32_34 { background-position: -320px -3360px; }
+.icon-light-off-blue_32_34,
+.sidebar .lights_link:hover .icon-light-off-lightblue_32_34 { background-position: -560px -3360px; }
+.icon-light-off-lightblue_32_34 { background-position: -480px -3360px; }
+
 .icon-manage-blue_8_10,
 .icon-manage-gray_8_10:hover { background-position: -80px -2880px }
 .icon-manage-blue_8_10-before,
@@ -477,13 +496,40 @@
   background: url("../images/new/icons-small.png") 0px -3040px no-repeat;
 }
 
-.icon-redu_admin-gray_16_18 { background-position; 0 -720px; }
+.icon-redu_admin-gray_16_18 { background-position: 0 -720px; }
 .icon-redu_admin-gray_16_18-before:before {
   content: "";
   width: 16px;
   height: 18px;
   background: url("../images/new/icons-small.png") 0 -720px no-repeat;
 }
+
+.icon-request-help-blue_32_34,
+.icon-request-help-lightblue_32_34:hover,
+.action-help:hover .icon-request-help-lightblue_32_34 { background-position: -560px -3040px; }
+.icon-request-help-lightblue_32_34 { background-position: -480px -3040px; }
+
+.icon-seminar-blue_16_18,
+.icon-seminar-lightblue_16_18:hover { background-position: -480px -1200px; }
+.icon-seminar-blue_16_18-before:before,
+.icon-seminar-lightblue_16_18-before:hover:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -480px -1200px no-repeat;
+}
+
+.icon-seminar-lightblue_16_18 { background-position: -400px -1200px; }
+.icon-seminar-lightblue_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -400px -1200px no-repeat;
+}
+
+.icon-share-blue_32_34,
+.sidebar .share_link:hover .icon-share-lightblue_32_34 { background-position: -480px -3280px; }
+.icon-share-lightblue_32_34 { background-position: -400px -3280px; }
 
 .icon-space-blue_16_18,
 .icon-space-lightblue_16_18:hover { background-position: -160px -160px; }
@@ -639,24 +685,6 @@
   width: 16px;
   height: 18px;
   background: url("../images/new/icons-small.png") -240px -960px no-repeat;
-}
-
-.icon-seminar-blue_16_18,
-.icon-seminar-lightblue_16_18:hover { background-position: -480px -1200px; }
-.icon-seminar-blue_16_18-before:before,
-.icon-seminar-lightblue_16_18-before:hover:before {
-  content: "";
-  width: 16px;
-  height: 18px;
-  background: url("../images/new/icons-small.png") -480px -1200px no-repeat;
-}
-
-.icon-seminar-lightblue_16_18 { background-position: -400px -1200px; }
-.icon-seminar-lightblue_16_18-before:before {
-  content: "";
-  width: 16px;
-  height: 18px;
-  background: url("../images/new/icons-small.png") -400px -1200px no-repeat;
 }
 
 .icon-visible-gray_16_18 { background-position: 0 -1840px; }

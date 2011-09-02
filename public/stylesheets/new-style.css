@@ -249,8 +249,7 @@
   box-shadow: 0px 0px 20px 0px #888888;
 }
 
-#content .sidebar .image-frame,
-#content .concave-sidebar .image-frame {
+#content .sidebar .image-frame {
  text-align: right;
 }
 
@@ -412,6 +411,33 @@
   margin-top: 10px;
   margin-bottom: 20px;
   font-size: .9em;
+}
+
+#content .sidebar .student-actions {
+  margin: 40px 20px 30px 20px;
+}
+
+#content .sidebar .student-actions li {
+  margin-bottom: 10px;
+}
+
+#content .sidebar .student-actions li > a {
+  width: 108px;
+  height: 71px;
+  font-size: 1em;
+  text-align: center;
+}
+
+#content .sidebar .comment,
+#content .sidebar .share,
+#content .sidebar .lights,
+#content .sidebar .help {
+  width: 32px;
+  height: 34px;
+  display: block;
+  margin: auto;
+  margin-top: 5px;
+  margin-bottom: 10px;
 }
 
 #content .concave-sidebar {
@@ -1288,61 +1314,6 @@
   padding: 20px 40px;
 }
 
-#resource .student-actions {
-  float: left;
-  padding: 15px 110px;
-}
-
-#resource .student-actions li {
-  background: url("../images/new/new-resource.png") no-repeat -143px 0;
-  float: left;
-  margin-right: 15px;
-  text-align: center;
-  width: 97px;
-  height: 90px;
-}
-
-#resource .student-actions li span {
-  display: block;
-  width: 16px;
-  height: 16px;
-  margin-left: 40px;
-  margin-top: 20px;
-}
-
-#resource .student-actions li .help {
-  background: url("../images/new/icon-help-white_16_16.png") no-repeat;
-}
-
-#resource .student-actions li .annotations {
-  background: url("../images/new/icon-annotations-white_16_16.png") no-repeat;
-}
-
-#resource .student-actions li .lights {
-  background: url("../images/new/icon-lights-white_16_16.png") no-repeat;
-}
-
-#resource .student-actions li .favorite {
-  background: url("../images/new/icon-favorite-white_16_16.png") no-repeat;
-}
-
-#resource .student-actions li .share {
-  background: url("../images/new/icon-share-white_16_16.png") no-repeat;
-}
-
-#resource .student-actions li a {
-  margin: 5px 5px 0 5px;
-  display: block;
-  color: white;
-  font-size: .9em;
-  font-weight: bold;
-}
-
-#resource .student-actions li:hover,
-#resource .student-actions li.selected {
-  background-position: 0 0;
-}
-
 #resource .statuses-counter {
   font-size: .9em;
   clear: both;
@@ -1353,7 +1324,8 @@
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   clear: both;
-  padding: 5px 70px;
+  padding: 5px 50px;
+  margin: 0 20px;
 }
 
 #lights_dimmed {
