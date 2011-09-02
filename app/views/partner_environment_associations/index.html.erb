@@ -2,7 +2,7 @@
 <div class="main grid_10" id="partner" style="width: 580px;">
   <%= render :partial => 'partners/breadcrumbs', :locals => { :partner => @partner} %>
   <%= render :partial => 'partners/header', :locals => { :partner => @partner } %>
-  <%= real_tabs ["environments", "Ambientes"], ["admins", "Admins"] do %>
+  <%= subtabs :partners do %>
     <div id="environments">
       <% unless @partner_environment_associations.empty? %>
         <ul id="partner-environments-list">
@@ -16,11 +16,6 @@
                      :partner_id => @partner.id,
                      :action => :index },
         :renderer => EndlessRenderer %>
-    </div>
-    <div id="admins">
-      <%= render :partial => 'partner_user_associations/admin_list',
-        :locals => { :partner_user_associations => @partner_user_associations,
-                     :partner => @partner } %>
     </div>
   <% end %>
 </div>
