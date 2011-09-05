@@ -560,39 +560,48 @@
   margin-bottom: 3px;
   font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 500;
-  font-size: 1.3em;
   color: rgb(179, 179, 179);
 }
 
-#hierarchy-header.space-header .parent,
-#hierarchy-header.subject-header .parent {
+#hierarchy-header .parent a {
+  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-weight: 500;
+  color: rgb(179, 179, 179);
+}
+
+#hierarchy-header.space-header .parent a,
+#hierarchy-header.subject-header .parent a {
   font-family: arial, sans-serif;
-  font-size: 1em;
 }
 
 #hierarchy-header .call {
-  font-size: 2.2em;
   margin-bottom: 15px;
+  width: 600px;
+  clear: left;
+  float: left;
+  font-size: 2.1em;
+  color: rgb(179, 179, 179);
+  font-weight: normal;
 }
 
-#hierarchy-header.subject-header .call {
+#hierarchy-header.subject-header .call a {
   color: rgb(179, 179, 179)
 }
 
 #hierarchy-header.subject-header .subject-name {
   font-size: .7em;
-  color: rgb(115, 195, 239);
   float: none;
 }
 
-#hierarchy-header .name,
+#hierarchy-header.subject-header .subject-name a{
+  color: rgb(115, 195, 239);
+  font-family: "Arial", "Helvetica", sans-serif;
+}
+
+#hierarchy-header .name a,
 #hierarchy-header .space-name {
-  width: 600px;
-  clear: left;
-  float: left;
   font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 500;
-  font-size: 2.1em;
   color: rgb(77, 173, 214);
 }
 

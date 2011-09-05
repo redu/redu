@@ -1,11 +1,14 @@
 <%# Locals: space e subject %>
 <div id="hierarchy-header" class="clearfix subject-header">
   <span class="parent">
-    <%= subject.space.course.environment.initials_or_name %> / <%= subject.space.course.name %>
+    <%= link_to subject.space.course.environment.initials_or_name,
+      environment_path(subject.space.course.environment)%> /
+    <%= link_to subject.space.course.name,
+      environment_course_path(subject.space.course.environment, subject.space.course)%>
   </span>
   <h3 class="call name">
-    <%= subject.space.name %> /
-    <span class="subject-name"><%= subject.title %></span>
+    <%= link_to subject.space.name, space_path(subject.space) %> /
+    <span class="subject-name"><%= link_to subject.title, space_path(subject.space) %></span>
   </h3>
 
   <% unless subject.description.blank? && subject.tags.empty? %>
