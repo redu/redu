@@ -1,18 +1,20 @@
 <%# Status resposta %>
 <li id="status-<%= response.id %>">
   <div class="re-status">
-    <%= image_tag response.user.avatar.url(:thumb_32), :width => 32, :height => 32,
-      :class => 'avatar'%>
-   <span class="message">
+    <div class="status-text">
+      <%= image_tag response.user.avatar.url(:thumb_32), :width => 32,
+        :height => 32, :class => 'avatar'%>
       <%= link_to response.user.display_name, user_path(response.user),
         { :class => 'username' } %>
       <span class="date">
         há <%= time_ago_in_words response.created_at %>
-    </span>
+      </span>
+    </div>
+  <div class="status-message">
     <p>
       <%= raw auto_link(response.text) %>
     </p>
-  </span>
+  </div>
   <ul class="actions clearfix">
     <li>
       <%= render :partial => 'statuses/favorite',
