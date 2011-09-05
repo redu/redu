@@ -36,28 +36,28 @@
       </div>
     </li>
     <li>
-      <div class="<%= (current_page? users_space_path(space)) ?
+      <div class="<%= (current_page? space_users_path(space)) ?
                     "session selected".to_s : "session".to_s %> big-separator">
-        <% selected = (current_page? users_space_path(space)) ?
+        <% selected = (current_page? space_users_path(space)) ?
           "icon-members-white_16_18-before" : "icon-members-lightblue_16_18-before" %>
-        <%= link_to "Membros: #{space.users.size}", users_space_path(space),
+        <%= link_to "Membros: #{space.users.size}", space_users_path(space),
           :class => "#{selected}" %>
       </div>
       <% unless space.teachers.count == 0 %>
-        <span class="call icon-teacher-gray_16_18-before">Professores: <%= link_to space.teachers.count, users_space_path(space), :class => "count" %></span>
+        <span class="call icon-teacher-gray_16_18-before">Professores: <%= link_to space.teachers.count, space_users_path(space), :class => "count" %></span>
         <ul class="connections clearfix">
           <%= render :partial => 'users/item_medium_24',
             :collection => space.teachers.n_recent(2) %>
         </ul><!-- end .connections -->
       <% end %>
       <% unless space.tutors.count == 0 %>
-        <span class="call icon-tutor-gray_16_18-before">Tutores: <%= link_to space.tutors.count, users_space_path(space), :class => "count" %></span>
+        <span class="call icon-tutor-gray_16_18-before">Tutores: <%= link_to space.tutors.count, space_users_path(space), :class => "count" %></span>
         <ul class="connections clearfix">
           <%= render :partial => 'users/item_medium_24',
             :collection => space.tutors.n_recent(2) %>
         </ul><!-- end .connections -->
       <% end %>
-      <span class="call icon-member-gray_16_18-before">Alunos: <%= link_to space.students.count, users_space_path(space), :class => "count" %></span>
+      <span class="call icon-member-gray_16_18-before">Alunos: <%= link_to space.students.count, space_users_path(space), :class => "count" %></span>
       <ul class="connections students clearfix">
         <% @sidebar_students = space.students.n_recent.page(params[:page]).per(4) %>
         <%= render :partial => 'users/item_medium_24',

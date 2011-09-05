@@ -147,12 +147,12 @@ pt-BR:
       role:
         admin: "Administrador"
         moderator: "Moderador"
-        member: "Estudante"
+        member: "Aluno"
         environment_admin: "Administrador do ambiente"
-        course_admin: "Administrador dos cursos"
+        course_admin: "Administrador do curso"
         teacher: "Professor"
         tutor: "Tutor"
-        student: "Estudante"
+        student: "Aluno"
       invoice:
         pending: "Pendente"
         overdue: "Vencido"

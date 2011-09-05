@@ -546,7 +546,8 @@
 .icon-member-blue_16_18,
 .icon-member-lightblue_16_18:hover { background-position: -160px -1040px; }
 .icon-member-blue_16_18-before:before,
-.icon-member-lightblue_16_18-before:hover:before {
+.icon-member-lightblue_16_18-before:hover:before,
+.subtabs .ui-state-default .icon-member_16_18-before:hover:before {
   content: "";
   width: 16px;
   height: 18px;
@@ -562,7 +563,8 @@
 }
 
 .icon-member-lightblue_16_18 { background-position: -80px -1040px; }
-.icon-member-lightblue_16_18-before:before {
+.icon-member-lightblue_16_18-before:before,
+.subtabs .ui-state-default .icon-member_16_18-before:before {
   content: "";
   width: 16px;
   height: 18px;
@@ -571,7 +573,8 @@
 
 .icon-member-white_16_18 { background-position: -240px -1040px; }
 .icon-member-white_16_18-before:before,
-.ui-tabs-selected .icon-member-lightblue_16_18-before:before {
+.subtabs .ui-state-active .icon-member_16_18-before:before,
+.subtabs .ui-state-active .icon-member_16_18-before:hover:before {
   content: "";
   width: 16px;
   height: 18px;
@@ -824,7 +827,8 @@
 .icon-teacher-blue_16_18,
 .icon-teacher-lightblue_16_18:hover { background-position: -160px -880px }
 .icon-teacher-blue_16_18-before:before,
-.icon-teacher-lightblue_16_18-before:hover:before {
+.icon-teacher-lightblue_16_18-before:hover:before,
+.subtabs .ui-state-default .icon-teacher_16_18-before:hover:before {
   content: "";
   width: 16px;
   height: 18px;
@@ -840,7 +844,8 @@
 }
 
 .icon-teacher-lightblue_16_18 { background-position: -80px -880px }
-.icon-teacher-lightblue_16_18-before:before {
+.icon-teacher-lightblue_16_18-before:before,
+.subtabs .ui-state-default .icon-teacher_16_18-before:before {
   content: "";
   width: 16px;
   height: 18px;
@@ -849,7 +854,8 @@
 
 .icon-teacher-white_16_18 { background-position: -240px -880px }
 .icon-teacher-white_16_18-before:before,
-.ui-tabs-selected .icon-teacher-lightblue_16_18-before:before {
+.subtabs .ui-state-active .icon-teacher_16_18-before:before,
+.subtabs .ui-state-active .icon-teacher_16_18-before:hover:before {
   content: "";
   width: 16px;
   height: 18px;
@@ -859,7 +865,8 @@
 .icon-tutor-blue_16_18,
 .icon-tutor-lightblue_16_18:hover { background-position; -160px -960px; }
 .icon-tutor-blue_16_18-before:before,
-.icon-tutor-lightblue_16_18-before:hover:before {
+.icon-tutor-lightblue_16_18-before:hover:before,
+.subtabs .ui-state-default .icon-tutor_16_18-before:hover:before {
   content: "";
   width: 16px;
   height: 18px;
@@ -875,7 +882,8 @@
 }
 
 .icon-tutor-lightblue_16_18 { background-position; -80px -960px; }
-.icon-tutor-lightblue_16_18-before:before {
+.icon-tutor-lightblue_16_18-before:before,
+.subtabs .ui-state-default .icon-tutor_16_18-before:before {
   content: "";
   width: 16px;
   height: 18px;
@@ -884,7 +892,8 @@
 
 .icon-tutor-white_16_18 { background-position; -240px -960px; }
 .icon-tutor-white_16_18-before:before,
-.ui-tabs-selected .icon-tutor-lightblue_16_18-before:before {
+.subtabs .ui-state-active .icon-tutor_16_18-before:before,
+.subtabs .ui-state-active .icon-tutor_16_18-before:hover:before {
   content: "";
   width: 16px;
   height: 18px;

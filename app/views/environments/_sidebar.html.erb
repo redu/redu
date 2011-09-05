@@ -14,21 +14,24 @@
     <li>
       <span class="role icon-environment_admin-gray_16_18-before">Administradores:</span>
       <%= link_to environment.administrators.count,
-        users_environment_path(environment), :class => "count" %>
+        environment_users_path(environment), :class => "count" %>
     </li>
     <li>
       <span class="role icon-teacher-gray_16_18-before">Professores:</span>
       <%= link_to environment.teachers.count,
-        users_environment_path(environment), :class => "count" %>
+        environment_users_path(environment, :role => "teachers"),
+        :class => "count" %>
     </li>
     <li>
       <span class="role icon-tutor-gray_16_18-before">Tutores:</span>
-      <%= link_to environment.tutors.count, users_environment_path(environment),
+      <%= link_to environment.tutors.count,
+        environment_users_path(environment, :role => "tutors"),
         :class => "count" %>
     </li>
     <li>
       <span class="role icon-member-gray_16_18-before">Alunos:</span>
-      <%= link_to environment.students.count, users_environment_path(environment),
+      <%= link_to environment.students.count,
+        environment_users_path(environment, :role => "students"),
         :class => "count" %>
     </li>
   </ul><!-- end .roles -->

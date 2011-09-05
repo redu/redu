@@ -7,12 +7,15 @@
   <%= render :partial => 'courses/header',
     :locals => { :course => @course }%>
   <div id="course-users" class="body">
-    <%= fake_tabs ["Disciplinas",
-      environment_course_path(@course.environment, @course)],
-      ["Membros", users_environment_course_path(@course.environment, @course)] do %>
-      <%= render :partial => "users/list",
-        :locals => { :entity => @course, :users => @users,
-          :teachers => @teachers, :tutors => @tutors, :students => @students } %>
+    <%= tabs :courses do %>
+      <%= subtabs :courses do %>
+        <ul id="users-list" class="members clearfix">
+          <%= render :partial => 'users/item',
+            :collection => @users, :locals => { :entity => @course } %>
+          <% reset_cycle "users_cycle" %>
+        </ul>
+        <%= will_paginate @users, :renderer => EndlessRenderer %>
       <% end %>
+    <% end %>
   </div><!-- end #environment-courses -->
 </div><!-- end .main -->

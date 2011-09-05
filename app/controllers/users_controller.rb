@@ -1,9 +1,13 @@
 class UsersController < BaseController
+  respond_to :html, :js
 
   after_filter :create_activity, :only => [:update]
   load_and_authorize_resource :except => [:forgot_password,
     :forgot_username, :resend_activation, :activate],
     :find_by => :login
+  load_and_authorize_resource :environment, :only => [:index], :find_by => :path
+  load_and_authorize_resource :course, :only => [:index], :find_by => :path
+  load_and_authorize_resource :space, :only => [:index]
 
   def annotations
     @annotations = User.find(params[:id]).annotations
@@ -489,6 +493,41 @@ class UsersController < BaseController
     respond_to do |format|
       format.html
       format.js { render_endless 'statuses/item', @statuses, '#statuses > ol' }
+    end
+  end
+
+  def index
+    entity = @space || @course || @environment
+
+    @users = if params[:role].eql? "teachers"
+      entity.teachers
+    elsif params[:role].eql? "tutors"
+      entity.tutors
+    elsif params[:role].eql? "students"
+      entity.students
+    else
+      if @course
+        entity.approved_users
+      else
+        entity.users
+      end
+    end
+
+
+    @users = @users.includes(:user_environment_associations).
+      includes(:user_course_associations).
+      includes(:user_space_associations).
+      paginate(:page => params[:page], :order => 'first_name ASC',
+               :per_page => 18)
+
+    respond_to do |format|
+      format.html do
+        render "#{entity.class.to_s.downcase.pluralize}/users/index"
+      end
+      format.js do
+          render_endless 'users/item', @users, '#users-list',
+            { :entity => entity }
+      end
     end
   end
 end

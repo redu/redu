@@ -10,9 +10,14 @@
       <h4 class="title">Membros da disciplina</h4>
       <span class="detail">(<%= pluralize @space.subjects.count, "módulo" %> , <%= pluralize @space.lectures_count, "aula" %>)</span>
     </div>
-    <%= render :partial => "users/list",
-      :locals => { :entity => @space, :users => @users,
-        :teachers => @teachers, :tutors => @tutors, :students => @students } %>
+    <%= subtabs :spaces do %>
+      <ul id="users-list" class="members clearfix">
+        <%= render :partial => 'users/item',
+          :collection => @users, :locals => { :entity => @space } %>
+        <% reset_cycle "users_cycle" %>
+      </ul>
+      <%= will_paginate @users, :renderer => EndlessRenderer %>
+    <% end %>
   </div><!-- end #environment-courses -->
 
 </div><!-- end .main -->

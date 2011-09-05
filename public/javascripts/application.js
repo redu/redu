@@ -1,6 +1,7 @@
 jQuery(function(){
 
     $.verifyCompatibleBrowser();
+    $.refreshSubtabs();
 
     // Flash message
     $(".flash-message").parent().next().css("marginTop", "10px");
@@ -272,6 +273,9 @@ jQuery(function(){
       });
     };
 
+    $(document).ajaxComplete(function(){
+        $.refreshSubtabs();
+    });
 });
 
 /* Limita a quantidade de caracteres de um campo */
@@ -352,5 +356,12 @@ $.verifyCompatibleBrowser = function(){
       $.cookie("boring_browser", true, { path: "/" });
       $("#outdated-browser").fadeOut();
   });
-}
 
+
+};
+
+// Seta o tamanho correto das subtabs
+$.refreshSubtabs = function() {
+  var subtabsNav = $(".subtabs .ui-tabs-nav");
+  subtabsNav.css("width", subtabsNav.find("li").length * 120);
+};

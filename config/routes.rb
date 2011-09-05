@@ -76,7 +76,6 @@ Redu::Application.routes.draw do
       get :take_ownership
       get :publish
       get :unpublish
-      get :users
       get :mural
       get :students_endless
       post :moderate_bulletins
@@ -179,6 +178,7 @@ Redu::Application.routes.draw do
       end
       resources :sb_posts, :except => [:new, :edit, :create, :update, :destroy]
     end
+    resources :users, :only => [:index]
  end
 
   # Users
@@ -356,7 +356,6 @@ Redu::Application.routes.draw do
       get :admin_bulletins
       post :destroy_members
       post :search_users_admin
-      get :users
     end
     resources :courses do
       member do
@@ -376,12 +375,12 @@ Redu::Application.routes.draw do
         post :destroy_invitations
         post :search_users_admin
         post :moderate_members_requests
-        get :users
         post :accept
         post :deny
       end
 
       resources :user_course_invitations, :only => [:show]
+      resources :users, :only => [:index]
     end
     resources :bulletins do
       member do
@@ -389,6 +388,7 @@ Redu::Application.routes.draw do
         post :vote
       end
     end
+     resources :users, :only => [:index]
   end
 
 

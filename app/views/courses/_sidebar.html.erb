@@ -14,19 +14,22 @@
     <li>
       <span class="role icon-teacher-gray_16_18-before">Professores:</span>
       <%= link_to course.teachers.count,
-        users_environment_course_path(course.environment, course),
+        environment_course_users_path(course.environment, course,
+                                      :role => "teachers"),
         :class => "count" %>
     </li>
     <li>
       <span class="role icon-tutor-gray_16_18-before">Tutores:</span>
       <%= link_to course.tutors.count,
-        users_environment_course_path(course.environment, course),
+        environment_course_users_path(course.environment, course,
+                                      :role => "tutors"),
         :class => "count" %>
     </li>
     <li>
       <span class="role icon-member-gray_16_18-before">Alunos:</span>
       <%= link_to course.students.count,
-        users_environment_course_path(course.environment, course),
+        environment_course_users_path(course.environment, course,
+                                      :role => "students"),
         :class => "count" %>
     </li>
   </ul><!-- end .roles -->
