@@ -6,7 +6,8 @@ class Status < ActiveRecord::Base
   has_many :status_user_associations
 
   scope :from_hierarchy, lambda { |c|
-    where(build_conditions(c))
+    where(build_conditions(c)).includes(:user, :statusable, :answers) \
+      .order("created_at DESC")
   }
 
   # Constrói as condições de busca de status dentro da hierarquia. Aceita
