@@ -78,6 +78,7 @@ describe User do
   it { should have_many(:logs) }
   it { should have_many(:overview).through(:status_user_associations) }
   it { should have_many(:statuses) }
+  it { should have_many(:status_user_associations).dependent(:destroy) }
 
   [:first_name, :last_name].each do |attr|
     it do
