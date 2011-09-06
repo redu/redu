@@ -561,6 +561,7 @@
   font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 500;
   color: rgb(179, 179, 179);
+  font-size: 1.4em;
 }
 
 #hierarchy-header .parent a {
@@ -574,12 +575,21 @@
   font-family: arial, sans-serif;
 }
 
+#hierarchy-header.space-header .parent {
+  font-size: 1em;
+}
+
+#hierarchy-header.subject-header .parent {
+  font-size: .9em;
+}
+
 #hierarchy-header .call {
   margin-bottom: 15px;
   width: 600px;
   clear: left;
   float: left;
-  font-size: 2.1em;
+  font-size: 2.4em;
+  letter-spacing: -1px;
   color: rgb(179, 179, 179);
   font-weight: normal;
 }
@@ -589,7 +599,7 @@
 }
 
 #hierarchy-header.subject-header .subject-name {
-  font-size: .7em;
+  font-size: .6em;
   float: none;
 }
 
