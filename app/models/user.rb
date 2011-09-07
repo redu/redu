@@ -103,7 +103,8 @@ class User < ActiveRecord::Base
 
   has_many :logs, :as => :logeable
   has_many :statuses, :as => :statusable
-  has_many :overview, :through => :status_user_associations, :source => :status
+  has_many :overview, :through => :status_user_associations, :source => :status,
+    :includes => [:statusable, :answers, :logeable, :user]
   has_many :status_user_associations, :dependent => :destroy
 
   # Named scopes

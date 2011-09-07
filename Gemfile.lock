@@ -19,6 +19,13 @@ GIT
   specs:
     ajaxful_rating (3.0.0.beta3)
 
+GIT
+  remote: git://github.com/guiocavalcanti/has_friends.git
+  revision: 513b20baafd1607383e718053c184d497bc3f5c4
+  branch: gem
+  specs:
+    has_friends (0.0.1)
+
 GEM
   remote: http://rubygems.org/
   remote: http://gems.github.com/
@@ -228,6 +235,7 @@ DEPENDENCIES
   deep_cloneable
   dynamic_form
   factory_girl_rails
+  has_friends!
   jammit-s3
   jasmine
   jquery-rails (>= 1.0.3)

@@ -25,7 +25,7 @@ class StatusesController < BaseController
 
   def respond
     responds_to = Status.find(params[:id])
-    @status = Status.new(params[:status])
+    @status = Answer.new(params[:status])
     @status.in_response_to = responds_to
     @status.user = current_user
     @status.save

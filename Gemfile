@@ -36,6 +36,9 @@ gem 'remotipart', '>= 0.3.4'
 gem 'zencoder'
 gem 'pusher'
 gem 'kaminari'
+gem 'has_friends',
+  :git => 'git://github.com/guiocavalcanti/has_friends.git',
+  :branch => 'gem'
 
 # Gems específicos de algum ambiente
 group :development, :test do
