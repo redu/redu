@@ -290,4 +290,81 @@ describe UsersController do
       end
     end
   end
+
+  context "GET index" do
+    context "an strange" do
+      context "when viewing Environment users" do
+        before do
+          environment = Factory(:environment)
+          get :index, { :locale => "pt-BR", :environment_id => environment.path }
+        end
+
+        it "has access, so assigns users" do
+          assigns[:users].should_not be_nil
+        end
+
+        it "renders environments/users/index" do
+          response.should render_template("environments/users/index")
+        end
+      end
+
+      context "when viewing Course users" do
+        before do
+          environment = Factory(:environment)
+          course = Factory(:course, :environment => environment)
+          get :index, { :locale => "pt-BR", :environment_id => environment.path,
+            :course_id => course.path }
+        end
+
+        it "has access" do
+          assigns[:users].should_not be_nil
+        end
+
+        it "renders courses/users/index" do
+          response.should render_template("courses/users/index")
+        end
+      end
+
+      context "when viewing Space users" do
+        before do
+          @environment = Factory(:environment)
+          @course = Factory(:course, :environment => @environment)
+          space = Factory(:space, :course => @course)
+          get :index, { :locale => "pt-BR", :space_id => space.id }
+        end
+
+        it "does NOT have access, so does not assigns users" do
+          assigns[:users].should be_nil
+        end
+
+        it "redirect to Courses#Preview" do
+          response.should redirect_to(preview_environment_course_path(@environment,
+                                                                      @course))
+        end
+      end
+    end
+
+    context "a member" do
+      context "when viewing Space users" do
+        before do
+          @environment = Factory(:environment)
+          @course = Factory(:course, :environment => @environment)
+          space = Factory(:space, :course => @course)
+          user = Factory(:user)
+          activate_authlogic
+          @course.join user
+          UserSession.create user
+          get :index, { :locale => "pt-BR", :space_id => space.id }
+        end
+
+        it "has access" do
+          assigns[:users].should_not be_nil
+        end
+
+        it "renders spaces/users/index" do
+          response.should render_template("spaces/users/index")
+        end
+      end
+    end
+  end
 end

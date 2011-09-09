@@ -3,11 +3,13 @@ class UsersController < BaseController
 
   after_filter :create_activity, :only => [:update]
   load_and_authorize_resource :except => [:forgot_password,
-    :forgot_username, :resend_activation, :activate],
+    :forgot_username, :resend_activation, :activate, :index],
     :find_by => :login
-  load_and_authorize_resource :environment, :only => [:index], :find_by => :path
-  load_and_authorize_resource :course, :only => [:index], :find_by => :path
-  load_and_authorize_resource :space, :only => [:index]
+  load_resource :environment, :only => [:index], :find_by => :path
+  load_resource :course, :only => [:index], :find_by => :path
+  load_resource :space, :only => [:index]
+
+  rescue_from CanCan::AccessDenied, :with => :deny_access
 
   def annotations
     @annotations = User.find(params[:id]).annotations
@@ -498,6 +500,7 @@ class UsersController < BaseController
 
   def index
     entity = @space || @course || @environment
+    authorize! :preview, entity
 
     @users = if params[:role].eql? "teachers"
       entity.teachers
@@ -528,6 +531,17 @@ class UsersController < BaseController
           render_endless 'users/item', @users, '#users-list',
             { :entity => entity }
       end
+    end
+  end
+
+  protected
+  def deny_access(exception)
+    if exception.action == :preview && exception.subject.class == Space
+      flash[:notice] = "Você não tem acesso a essa página"
+      redirect_to preview_environment_course_path(@space.course.environment,
+                                                  @space.course)
+    else
+      super
     end
   end
 end

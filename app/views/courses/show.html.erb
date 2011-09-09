@@ -11,9 +11,7 @@
   <%= render :partial => 'courses/actions',
     :locals => { :course => @course }%>
 
-  <% fake_tabs ["Disciplinas", environment_course_path(@course.environment,
-    @course)],
-    ["Membros", users_environment_course_path(@course.environment, @course)] do %>
+  <% tabs :courses do %>
     <ul id="spaces_list" class="hierarchy-listing spaces">
       <%= render :partial => 'spaces/item', :collection => @spaces %>
     </ul>

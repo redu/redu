@@ -55,6 +55,12 @@ describe Ability do
                                          Factory.build(:environment,
                                                        :owner => @redu_admin))
         end
+
+        it "can preview a environment" do
+          Factory(:user_environment_association, :environment => @environment,
+                  :user => @member, :role => :member)
+          @ability.should be_able_to(:preview, @environment)
+        end
       end
 
       context "teacher" do
@@ -115,11 +121,21 @@ describe Ability do
           @ability.should be_able_to(:destroy, Factory(:environment,
                                                        :owner => @redu_admin))
         end
-        it "cannot destroy a strange environment" do
+        it "can destroy a strange environment" do
           @ability.should be_able_to(:destroy, @environment)
         end
       end
 
+      context "strange" do
+        before do
+          @strange = Factory(:user)
+          @ability = Ability.new(@strange)
+        end
+
+        it "can preview a environment" do
+          @ability.should be_able_to(:preview, @environment)
+        end
+      end
     end
 
     context "on course -" do
@@ -166,6 +182,13 @@ describe Ability do
         it "cannot invite users" do
           course = Factory(:course)
           @ability.should_not be_able_to(:invite_members, course)
+        end
+
+        it "can preview a course" do
+          course = Factory(:course, :environment => @environment)
+          Factory(:user_course_association, :course => course,
+                  :user => @member, :role => :member)
+          @ability.should be_able_to(:preview, course)
         end
       end
 
@@ -346,6 +369,17 @@ describe Ability do
         it "destroy any bulletin"
       end
 
+      context "strange" do
+        before do
+          @strange = Factory(:user)
+          @ability = Ability.new(@strange)
+        end
+
+        it "can preview a course" do
+          course = Factory(:course, :environment => @environment)
+          @ability.should be_able_to(:preview, course)
+        end
+      end
     end
 
     context "on space -" do
@@ -382,11 +416,11 @@ describe Ability do
           @ability.should be_able_to(:students_endless, space)
         end
 
-        it "can see users of a space" do
+        it "can preview a space" do
           space = Factory(:space, :course => @course)
           Factory(:user_space_association, :space => space,
                   :user => @member, :role => :member)
-          @ability.should be_able_to(:users, space)
+          @ability.should be_able_to(:preview, space)
         end
 
         it "cannot create a subject"
@@ -526,6 +560,18 @@ describe Ability do
         it "uploads a file"
         it "destroys any file"
         it "crates a post"
+      end
+
+      context "strange" do
+        before do
+          @strange = Factory(:user)
+          @ability = Ability.new(@strange)
+        end
+
+        it "can NOT preview a space" do
+          space = Factory(:space, :course => @course)
+          @ability.should_not be_able_to(:preview, space)
+        end
       end
     end
 

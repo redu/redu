@@ -2,10 +2,7 @@ class BaseController < ApplicationController
   layout :choose_layout, :except => [:site_index]
   # Work around (ver método self.login_required_base)
 
-  rescue_from CanCan::AccessDenied do |exception|
-    flash[:notice] = "Você não tem acesso a essa página."
-    redirect_to home_path
-  end
+  rescue_from CanCan::AccessDenied, :with => :deny_access
 
   caches_action :site_index, :if => Proc.new{|c| c.cache_action? }
   def cache_action?
@@ -286,5 +283,10 @@ class BaseController < ApplicationController
       :partial_locals => partial_locals # Locals necessários no partial do item
     }
       render :template => 'shared/sidebar_endless', :locals => locals
+  end
+
+  def deny_access(exception)
+    flash[:notice] = "Você não tem acesso a essa página."
+    redirect_to home_path
   end
 end

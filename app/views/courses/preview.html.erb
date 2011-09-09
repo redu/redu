@@ -11,15 +11,13 @@
     <%= render :partial => 'courses/actions',
       :locals => { :course => @course }%>
 
-    <% fake_tabs ["Disciplinas",
-      environment_course_path(@course.environment,@course)],
-      ["Membros", users_environment_course_path(@course.environment, @course)] do %>
+    <%= tabs :courses do %>
       <div class="flash-message notice ">
         <ul class="message icons-big-before icon-privacy-lightred_64_66-before">
           <li>O conteúdo desta página é restrito para quem não é membro do grupo.</li>
           <li>Para visualizar as disciplinas do curso, matricule-se e aguarde a confirmação.</li>
 
-          <li>Você também pode ver os atuais <%= link_to "membros do curso", users_environment_course_path(@course.environment, @course)%>.</li>
+          <li>Você também pode ver os atuais <%= link_to "membros do curso", environment_course_users_path(@course.environment, @course)%>.</li>
           <ul>
       </div>
     <% end %>

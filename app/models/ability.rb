@@ -11,9 +11,6 @@ class Ability
     # Overall Read
     alias_action :vote, :rate, :more, :to => :read
 
-    # Overall Preview
-    alias_action :users, :to => :preview
-
     # Environment
     alias_action :admin_courses, :destroy_members, :to => :manage
 
@@ -108,11 +105,6 @@ class Ability
         user.can_read? object
       end
 
-      # Caso especial de :users (não deve ser mapeado para :preview)
-      can :users, Space do |space|
-        user.can_read? space
-      end
-
       can :create, Environment
       can :join, Course
 
@@ -126,6 +118,11 @@ class Ability
       can :view_mural, User do |u|
         u.settings.view_mural == Privacy[:public] or
         (u.settings.view_mural == Privacy[:friends] && u.friends?(user))
+      end
+
+      # Space
+      can :preview, Space do |space|
+        user.can_read? space
       end
 
       # Seminar

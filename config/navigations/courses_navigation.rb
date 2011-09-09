@@ -13,6 +13,7 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.dom_class = 'clearfix ui-tabs-nav'
     primary.item :spaces, 'Disciplinas',
       environment_course_path(@course.environment, @course),
+      :highlights_on => action_matcher(['courses'], ['show', 'preview']),
       :class => 'ui-state-default'
     primary.item :account, 'Membros',
       environment_course_users_path(@course.environment, @course),
@@ -21,7 +22,8 @@ SimpleNavigation::Configuration.run do |navigation|
       users_nav.dom_class = 'clearfix ui-tabs-nav'
       users_nav.item :all, "Todos",
         environment_course_users_path(@course.environment, @course),
-        :highlights_on => Proc.new { !params.has_key? :role },
+        :highlights_on => Proc.new { !params.has_key?(:role) &&
+          action_matcher('users', 'index').call },
         :class => 'ui-state-default'
       users_nav.item :teachers, "Professores",
         environment_course_users_path(@course.environment, @course,

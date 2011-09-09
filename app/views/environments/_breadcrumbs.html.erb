@@ -1,10 +1,14 @@
 <div id="concave-breadcrumbs" class="clearfix">
   <ol class="clearfix">
-    <li class="compact">
-      <%= link_to 'Home', home_user_path(current_user),
-        :class => 'replacement icon-small icon-home-lightblue_16_18' %>
-    </li>
+    <% if current_user %>
+      <li class="compact">
+        <%= link_to 'Home', home_user_path(current_user),
+          :class => 'replacement icon-small icon-home-lightblue_16_18' %>
+      </li>
     <li class="icon-expand-gray_16_18-before">
+    <% else %>
+      <li>
+    <% end %>
       <%= link_to environment.name, environment_path(environment),
         :class => 'icon-environment-lightblue_16_18-before' %>
     </li>

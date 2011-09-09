@@ -13,8 +13,7 @@
     <% end %>
 
     <ul id="courses_list" class="hierarchy-listing">
-      <% fake_tabs ["Cursos", environment_path(@environment)],
-        ["Membros", users_environment_path(@environment)] do %>
+      <% tabs :environments do %>
         <%= render :partial => 'courses/item_preview',
           :collection => @courses %>
       <% end %>
