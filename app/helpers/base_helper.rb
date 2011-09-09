@@ -7,7 +7,8 @@ module BaseHelper
   # do contexto passado
   def tabs(context, &block)
     locals = {
-      :navigation => render_navigation(:context => context, :level => 1),
+      :navigation => render_navigation(:context => context, :level => 1,
+                                       :renderer => ListDetailed),
       :body => capture(&block)
     }
 

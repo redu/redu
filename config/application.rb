@@ -166,6 +166,9 @@ module Redu
     # Usado pelo WYSIWYG CKEditor
     config.autoload_paths += %W( #{config.root}/app/models/ckeditor )
 
+    # Usado pelo simple-navigation (renderer customizado)
+    config.autoload_paths += %W( #{config.root}/app/navigation_renderers )
+
     # Autoloads code in lib
     config.autoload_paths += %W(#{config.root}/lib)
 

@@ -3236,6 +3236,15 @@ a.clean:hover {
   margin-top: -3px;
 }
 
+.tabs > ul li .details{
+  display: block;
+  margin-top: -10px;
+  margin-left: 30px;
+  font-size: .87em;
+  color: rgb(204, 204, 204);
+  font-style: italic;
+}
+
 .tabs > .panel {
   margin: 40px 0;
 }

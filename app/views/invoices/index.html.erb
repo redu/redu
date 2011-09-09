@@ -1,19 +1,8 @@
 <%= render :partial => 'users/home_sidebar' %>
 <div class="main grid_10" style="width: 580px;">
-  <ol id="breadcrumbs" class="clearfix">
-    <li>
-      <%= link_to 'Home', home_user_path(@user), :class => 'replacement home icon icon-home-lightblue_16_16' %>
-    </li>
-    <li>
-      <%= link_to 'Configurações', edit_user_path(@user), :class => "icon icon-management-lightblue_16_16" %>
-  </ol>
+  <%= render :partial => 'users/breadcrumbs' %>
   <div id="invoice-index">
-    <%=
-      fake_tabs ['Perfil', edit_user_path(@user), {:class => 'icon icon-profile-gray_16_16'}],
-        ['Conta', account_user_path(@user), {:class => 'icon icon-account-gray_16_16'}],
-        ['Planos', user_plans_path(@user), {:class => 'icon icon-cash-gray_16_16'}],
-        ['Faturas', plan_invoices_path(@plan), {:class => 'icon icon-cash-gray_16_16'}] do
-      %>
+    <%= tabs :users do %>
     <div class="call">
       <span class="billable">
         <%= link_to @plan.billable.name,

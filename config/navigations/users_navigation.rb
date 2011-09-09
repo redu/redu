@@ -29,7 +29,10 @@ SimpleNavigation::Configuration.run do |navigation|
       :class => 'ui-state-default',
       :link => { :class => 'icon-account_16_18-before' }
     primary.item :plans, 'Planos', user_plans_path(@user),
+      :highlights_on => action_matcher(['plans', 'invoices'], 'index'),
       :class => 'ui-state-default',
-      :link => { :class => 'icon-plans_16_18-before'}
+      :link => { :class => 'icon-plans_16_18-before'},
+      :details => { :text => 'detalhes', :class => "details",
+        :if => action_matcher('invoices', 'index') }
   end
 end
