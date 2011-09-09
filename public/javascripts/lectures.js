@@ -52,6 +52,16 @@ $(function(){
       $(".create-status .textarea textarea").focus();
     });
 
+    // Scroll os botões de student-actions de acordo com o #resource
+    $(document).scroll(function(){
+        if($("#resource").offset().top - $(window).scrollTop() < 30) {
+          $(".student-actions").css({'position': 'fixed', 'top':'10px'})
+        } else {
+          $(".student-actions").css({'position': 'relative'})
+        }
+
+    });
+
     $(document).ready(function(){
         $(document).refreshLectures();
 
