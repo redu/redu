@@ -3,11 +3,17 @@ require 'md5'
 # Methods added to this helper will be available to all templates in the application.
 module BaseHelper
 
+  # Cria markup do sidebar a partir da navegação do contexto passado
+  def sidebar(context)
+    render_navigation(:context => context, :level => 1,
+                      :renderer => ListSidebar)
+  end
+
   # Cria markup das abas (compatível com o jQuery UI) a partir da navegação
   # do contexto passado
   def tabs(context, &block)
     locals = {
-      :navigation => render_navigation(:context => context, :level => 1,
+      :navigation => render_navigation(:context => context, :level => 2,
                                        :renderer => ListDetailed),
       :body => capture(&block)
     }
@@ -19,7 +25,7 @@ module BaseHelper
   # do contexto passado
   def subtabs(context, &block)
     locals = {
-      :navigation => render_navigation(:context => context, :level => 2),
+      :navigation => render_navigation(:context => context, :level => 3),
       :body => capture(&block)
     }
 

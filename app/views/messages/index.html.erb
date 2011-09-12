@@ -2,7 +2,7 @@
 <div class="main grid_10" style="width: 580px;">
   <%= render :partial => 'messages/breadcrumb' %>
   <div id="messages">
-    <%= tabs :user_messages do %>
+    <%= tabs :users do %>
       <%= render :partial => 'messages/index',
         :locals => { :mailbox => :inbox, :messages => @messages } %>
     <% end %>

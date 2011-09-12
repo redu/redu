@@ -2,7 +2,7 @@
 <div class="main grid_10" style="width: 580px;">
   <%= render :partial => 'messages/breadcrumb' %>
   <div id="messages">
-    <%= tabs :user_messages do %>
+    <%= tabs :users do %>
       <div class="actions">
         <% if @message.sender == @user %>
           <%= link_to "< voltar", index_sent_user_messages_path(@user),
