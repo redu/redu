@@ -1162,7 +1162,8 @@
   height: 28px;
 }
 
-#resource .context .done {
+#resource .context .done,
+#resource .context .undone {
   width: 150px;
   float: right;
   font-size: .9em;
@@ -1170,7 +1171,7 @@
   margin-right: 5px;
 }
 
-#resource .context .done fieldset {
+#resource .context .undone fieldset {
   border: 1px solid #cccbcb;
   height: 28px;
 
@@ -1180,19 +1181,48 @@
   border-radius: 3px;
 }
 
-#resource .done .icon-class-gray_16_18-before:before {
+#resource .done .icon-class-green_16_18-before:before,
+#resource .undone .icon-class-gray_16_18-before:before {
   float: left;
   margin-right: 5px;
 }
 
+#resource .context .done fieldset {
+  border: 1px solid rgb(179, 213, 132);
+  height: 28px;
+  color: rgb(97, 190, 128);
+
+  background: rgb(225,241,225); /* Old browsers */
+  background: -moz-linear-gradient(top, rgb(225,241,225) 0%,
+              rgb(247,247,247) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom,
+              color-stop(0%,rgb(225,241,225)),
+              color-stop(100%,rgb(247,247,247))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,
+              rgb(225,241,225) 0%,rgb(247,247,247) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgb(225,241,225) 0%,
+              rgb(247,247,247) 100%); /* Opera11.10+ */
+  background: -ms-linear-gradient(top, rgb(225,241,225) 0%,
+              rgb(247,247,247) 100%); /* IE10+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e1f1e1', endColorstr='#f7f7f7',GradientType=0 ); /* IE6-9 */
+  background: linear-gradient(top, rgb(225,241,225) 0%,rgb(247,247,247) 100%); /* W3C */
+
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+}
+
 #resource .context .done input,
-#resource .context .done label {
+#resource .context .done label,
+#resource .context .undone input,
+#resource .context .undone label {
   display: block;
   float: left;
   margin-top: 7px;
 }
 
-#resource .context .done label {
+#resource .context .done label,
+#resource .context .undone label {
   width: 120px;
   margin-left: 2px;
 }
@@ -1257,6 +1287,12 @@
   -webkit-box-shadow: 0px 0px 20px 0px #888888;
   -moz-box-shadow: 0px 0px 20px 0px #888888;
   box-shadow: 0px 0px 20px 0px #888888;
+}
+
+.boxshadow #resource .resource-content.boxshadow-lights {
+  -webkit-box-shadow: 0px 0px 20px 0px #FFFFFF;
+  -moz-box-shadow: 0px 0px 20px 0px #FFFFFF;
+  box-shadow: 0px 0px 20px 0px #FFFFFF;
 }
 
 #resource .admin-actions {

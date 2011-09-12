@@ -160,6 +160,13 @@
   height: 18px;
   background: url("../images/new/icons-small.png") 0 -1760px no-repeat;
 }
+.icon-class-green_16_18 { background-position: -320px -1760px; }
+.icon-class-green_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -320px -1760px no-repeat;
+}
 
 .icon-comment-blue_32_34,
 .sidebar .action-comment:hover .icon-comment-lightblue_32_34 { background-position: -400px -640px; }
