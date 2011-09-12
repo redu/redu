@@ -1289,6 +1289,12 @@
   box-shadow: 0px 0px 20px 0px #888888;
 }
 
+.boxshadow #resource .resource-content.boxshadow-lights {
+  -webkit-box-shadow: 0px 0px 20px 0px #FFFFFF;
+  -moz-box-shadow: 0px 0px 20px 0px #FFFFFF;
+  box-shadow: 0px 0px 20px 0px #FFFFFF;
+}
+
 #resource .admin-actions {
   margin-top: 5px;
   font-size: 0.9em;

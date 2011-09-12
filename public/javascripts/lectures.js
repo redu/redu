@@ -10,6 +10,7 @@ $(function(){
 
               $(".student-actions").css("position", "relative");
               $(".resource-content").css("position", "relative").css("backgroundColor", "white");
+              $(".resource-content").addClass("boxshadow-lights");
               $(".statuses-wrapper").css("position", "relative").css("backgroundColor", "white");
               $("#lights_dimmed").css("height", docHeight).fadeIn();
               $(this).html("<span class=\"lights icon-small icon-light-on-lightblue_32_34\"></span>Acender luzes");
@@ -17,6 +18,7 @@ $(function(){
             },
             function(){
               $("#lights_dimmed").fadeOut();
+              $(".resource-content").removeClass("boxshadow-lights");
               $(this).html("<span class=\"lights icon-small icon-light-off-lightblue_32_34\"></span>Apagar luzes");
           });
 
