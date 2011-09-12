@@ -10,29 +10,34 @@ SimpleNavigation::Configuration.run do |navigation|
 
   # Define the primary navigation
   navigation.items do |primary|
-    primary.dom_class = 'clearfix ui-tabs-nav'
-    primary.item :primary, 'Primary', space_users_path(@space),
-      :class => 'ui-state-default' do |users_nav|
-      # Sub abas
-      users_nav.dom_class = 'clearfix ui-tabs-nav'
-      users_nav.item :all, "Todos", space_users_path(@space),
-        :highlights_on => Proc.new { !params.has_key? :role },
-        :class => 'ui-state-default'
-      users_nav.item :teachers, "Professores",
-        space_users_path(@space, :role => "teachers"),
-        :highlights_on => Proc.new { params[:role].eql? "teachers" },
-        :class => 'ui-state-default',
-        :link => { :class => 'icon-teacher_16_18-before' }
-      users_nav.item :tutors, "Tutores",
-        space_users_path(@space, :role => "tutors"),
-        :highlights_on => Proc.new { params[:role].eql? "tutors" },
-        :class => 'ui-state-default',
-        :link => { :class => 'icon-tutor_16_18-before' }
-      users_nav.item :students, "Alunos",
-        space_users_path(@space, :role => "students"),
-        :highlights_on => Proc.new { params[:role].eql? "students" },
-        :class => 'ui-state-default',
-        :link => { :class => 'icon-member_16_18-before' }
-      end
+    # FIXME Bloco apenas para manter o padrão, enquanto o sidebar é
+    # modificado para utilizar o simple-navigation
+    primary.item :sidebar, 'Sidebar', home_path do |tabs|
+      # A navegação de Space não possui tabs, bloco apenas para manter
+      # o padrão
+      tabs.item :primary, 'Primary', space_users_path(@space),
+        :class => 'ui-state-default' do |users_nav|
+        # Sub abas
+        users_nav.dom_class = 'clearfix ui-tabs-nav'
+        users_nav.item :all, "Todos", space_users_path(@space),
+          :highlights_on => Proc.new { !params.has_key? :role },
+          :class => 'ui-state-default'
+        users_nav.item :teachers, "Professores",
+          space_users_path(@space, :role => "teachers"),
+          :highlights_on => Proc.new { params[:role].eql? "teachers" },
+          :class => 'ui-state-default',
+          :link => { :class => 'icon-teacher_16_18-before' }
+        users_nav.item :tutors, "Tutores",
+          space_users_path(@space, :role => "tutors"),
+          :highlights_on => Proc.new { params[:role].eql? "tutors" },
+          :class => 'ui-state-default',
+          :link => { :class => 'icon-tutor_16_18-before' }
+        users_nav.item :students, "Alunos",
+          space_users_path(@space, :role => "students"),
+          :highlights_on => Proc.new { params[:role].eql? "students" },
+          :class => 'ui-state-default',
+          :link => { :class => 'icon-member_16_18-before' }
+        end
+    end
   end
 end

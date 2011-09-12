@@ -10,22 +10,23 @@ SimpleNavigation::Configuration.run do |navigation|
 
   # Define the primary navigation
   navigation.items do |primary|
-    primary.dom_class = 'clearfix ui-tabs-nav'
-    # Aba inexistente no layout, criada apenas para seguir o padrão
-    primary.item :primary, 'Primary', partner_path(@partner),
-      :highlights_on => Proc.new { action_matcher(['partners', 'partner_environment_associations'], ['show', 'index']).call ||
-        create_action_matcher('partner_environment_associations').call } do |subtabs|
-      # Sub abas
-      subtabs.dom_class = 'clearfix ui-tabs-nav'
-      subtabs.item :environments, "Ambientes", partner_path(@partner),
-        :highlights_on => Proc.new { action_matcher('partners','show').call ||
-          create_action_matcher('partner_environment_associations').call },
-        :class => 'ui-state-default',
-        :link => { :class => 'icon-environment_16_18-before' }
-      subtabs.item :admins, "Admins", partner_collaborators_path(@partner),
-        :class => 'ui-state-default',
-        :link => { :class => 'icon-environment_admin_16_18-before' }
+    # A navegação de Partner não possui sidebar, bloco apenas para
+    # manter o padrão
+    primary.item :sidebar, 'Sidebar', home_path do |tabs|
+      # A navegação de Partner não possui tabs, bloco apenas para manter
+      # o padrão
+      tabs.item :tabs, 'Primary', partner_path(@partner) do |subtabs|
+        # Sub abas
+        subtabs.dom_class = 'clearfix ui-tabs-nav'
+        subtabs.item :environments, "Ambientes", partner_path(@partner),
+          :highlights_on => Proc.new { action_matcher('partners','show').call ||
+            create_action_matcher('partner_environment_associations').call },
+            :class => 'ui-state-default',
+            :link => { :class => 'icon-environment_16_18-before' }
+        subtabs.item :admins, "Admins", partner_collaborators_path(@partner),
+          :class => 'ui-state-default',
+          :link => { :class => 'icon-environment_admin_16_18-before' }
       end
+    end
   end
 end
-

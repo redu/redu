@@ -8,6 +8,10 @@ SimpleNavigation::Configuration.run do |navigation|
   # This setting turns that off
   navigation.autogenerate_item_ids = false
 
+  # Caso alguma view que não tenha uma relação direta com usuário
+  # utilize esta navegação (por utilizar o sidebar da home). Ex.: Partners
+  @user = current_user unless @user
+
   # Define the primary navigation
   navigation.items do |primary|
     primary.dom_class = 'local-nav'
@@ -49,7 +53,7 @@ SimpleNavigation::Configuration.run do |navigation|
       :link => { :class => 'icon-wall_16_18-before' }
 
     primary.item :configurations, 'Configurações',
-      edit_user_path(@user),
+      edit_user_path(current_user),
       :link => { :class => 'icon-manage_16_18-before' } do |config_nav|
       config_nav.dom_class = 'clearfix ui-tabs-nav'
       config_nav.item :edit, 'Perfil', edit_user_path(@user),
