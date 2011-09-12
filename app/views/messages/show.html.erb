@@ -2,20 +2,16 @@
 <div class="main grid_10" style="width: 580px;">
   <%= render :partial => 'messages/breadcrumb' %>
   <div id="messages">
-    <%=
-      fake_tabs ['Recebidas', user_messages_path(@user), {:class => 'icon icon-message-gray_16_16'}],
-        ['Enviadas', index_sent_user_messages_path(@user),  {:class => 'icon icon-messagereply-gray_16_16'}],
-        ['Nova', new_user_message_path(@user), {:class => 'icon icon-messagecreate-gray_16_16'}] do
-    %>
-    <div class="actions">
-      <% if @message.sender == @user %>
-        <%= link_to "< voltar", index_sent_user_messages_path(@user),
-          :class => 'back' %>
-      <% else %>
-        <%= link_to "< voltar", user_messages_path(@user),
-          :class => 'back' %>
-      <% end %>
-    </div>
+    <%= tabs :user_messages do %>
+      <div class="actions">
+        <% if @message.sender == @user %>
+          <%= link_to "< voltar", index_sent_user_messages_path(@user),
+            :class => 'back' %>
+        <% else %>
+          <%= link_to "< voltar", user_messages_path(@user),
+            :class => 'back' %>
+        <% end %>
+      </div>
       <ul class="messages clearfix">
         <li>
           <div class="title"> <%= @message.subject %> </div>

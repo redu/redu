@@ -2392,7 +2392,8 @@
   margin-top: 2px;
 }
 
-#concave-breadcrumbs li a:before {
+#concave-breadcrumbs li a:before,
+#breadcrumbs li a:before {
   float: left;
   margin-left: -25px;
   margin-top: -2px;

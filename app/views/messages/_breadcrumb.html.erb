@@ -1,10 +1,12 @@
-<ol id="breadcrumbs" class="clearfix">
-  <li>
-    <%= link_to 'Home', home_user_path(current_user),
-      :class => 'replacement home icon icon-home-lightblue_16_16' %>
-  </li>
-  <li>
-    <%= link_to 'Mensagens', user_messages_path(@user),
-      :class => 'icon icon-message-lightblue_16_16'%>
-  </li>
-</ol>
+<div id="breadcrumbs" class="clearfix">
+  <ol class="clearfix">
+    <li class="compact">
+      <%= link_to 'Home', home_user_path(current_user),
+        :class => 'replacement icon-small icon-home-lightblue_16_18' %>
+    </li>
+    <li class="icon-expand-gray_16_18-before">
+      <%= link_to 'Mensagens', user_messages_path(@user),
+        :class => 'icon-message-lightblue_16_18-before' %>
+    </li>
+  </ol>
+</div>
