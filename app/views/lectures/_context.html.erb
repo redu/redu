@@ -6,7 +6,7 @@
                                                  @lecture.subject,
                                                  @lecture),
                  :remote => true, :method => :post,
-                 :id => 'do_lecture', :class => 'done' do %>
+                 :id => 'do_lecture', :class => (done ? "done" : "undone") do %>
       <%= field_set_tag do %>
         <%= hidden_field_tag 'lecture_id', @lecture.id %>
         <% if done %>
@@ -16,7 +16,7 @@
         <% end %>
         <%= check_box_tag '', nil, done,
           { :onclick => "$('#do_lecture').submit()" } %>
-        <%= label_tag 'Aula finalizada?', nil, :class => "icon-class-gray_16_18-before" %>
+        <%= label_tag 'Aula finalizada?', nil, :class => ( done ? "icon-class-green_16_18-before" : "icon-class-gray_16_18-before") %>
       <% end %>
     <% end %>
   <% end %>
