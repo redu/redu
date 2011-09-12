@@ -81,7 +81,7 @@ class LecturesController < BaseController
           render :show_document
         end
       end
-
+      format.js { render_endless 'statuses/item', @statuses, '#statuses > ol' }
       format.html
       format.xml  { render :xml => @lecture }
     end
