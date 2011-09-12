@@ -14,7 +14,7 @@ gem 'cancan'
 gem 'aasm', :require => "aasm",
   :git => "git://github.com/alto/aasm.git"
 gem 'shuber-sortable'
-gem 'scribd_fu'
+gem 'scribd_fu', :git => 'git://github.com/guiocavalcanti/scribd_fu.git'
 gem 'factory_girl_rails'
 gem 'ar_mailer_rails3'
 gem 'active_enum'
@@ -36,9 +36,6 @@ gem 'remotipart', '>= 0.3.4'
 gem 'zencoder'
 gem 'pusher'
 gem 'kaminari'
-gem 'has_friends',
-  :git => 'git://github.com/guiocavalcanti/has_friends.git',
-  :branch => 'gem'
 
 # Gems específicos de algum ambiente
 group :development, :test do

@@ -12,8 +12,6 @@ class SpacesController < BaseController
   load_and_authorize_resource :space, :through => :course,
     :except => [:create, :cancel]
 
-  after_filter :create_activity, :only => [:create]
-
   rescue_from CanCan::AccessDenied do |exception|
     flash[:notice] = "Você não tem acesso a essa página"
     redirect_to preview_environment_course_path(@environment, @course)
@@ -154,12 +152,12 @@ class SpacesController < BaseController
   def show
     if can? :manage, @space
       @subjects = @space.subjects.paginate(:page => params[:page],
-                                           :order => 'updated_at DESC',
+                                           :order => 'updated_at ASC',
                                            :per_page => Redu::Application.config.items_per_page)
     else
       @subjects = @space.subjects.visible.
         paginate(:page => params[:page],
-                 :order => 'updated_at DESC',
+                 :order => 'updated_at ASC',
                  :per_page => Redu::Application.config.items_per_page)
     end
 

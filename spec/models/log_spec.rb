@@ -5,7 +5,6 @@ describe Log do
 
   it { should validate_presence_of :action }
   it { should belong_to(:logeable) }
-  it { should_not allow_mass_assignment_of :text }
 
   it "assigns type" do
     subject.type.should == subject.class.to_s
@@ -217,6 +216,7 @@ describe Log do
   context "when updating User" do
     before do
       @user = Factory(:user)
+      @user.first_name = "New name"
       @log = Log.setup(@user, :action => :update)
     end
 
@@ -301,7 +301,7 @@ describe Log do
       end
 
       it "sets User as logeable and statusable" do
-        @log.logeable.should == @user1
+        @log.logeable.should == @user1.friendship_for(@user2)
         @log.statusable.should == @user1
       end
     end

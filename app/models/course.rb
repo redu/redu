@@ -94,7 +94,7 @@ class Course < ActiveRecord::Base
   validates_uniqueness_of :name, :path, :scope => :environment_id
   validates_length_of :name, :maximum => 60
   validates_length_of :description, :maximum => 250, :allow_blank => true
-  validates_format_of :path, :with => /^[-_.A-Za-z0-9]*$/
+  validates_format_of :path, :with => /^[-_A-Za-z0-9]*$/
 
   # Sobreescrevendo ActiveRecord.find para adicionar capacidade de buscar por path do Space
   def self.find(*args)
@@ -124,22 +124,6 @@ class Course < ActiveRecord::Base
       includes(:space).each do |membership|
         membership.space.change_role(user, role)
       end
-  end
-
-  # Verifica se o path escolhido para o Course já é utilizado por outro
-  # no mesmo Environment. Caso seja, um novo path é gerado.
-  def verify_path!(environment_id)
-    path  = self.path
-    if Course.where("environment_id = ? AND path = ?",
-                      environment_id, self.path).all
-      self.path += '-' + SecureRandom.hex(1)
-
-      # Mais uma tentativa para utilizar um path não existente.
-      return if Course.where("environment_id = ? AND path = ?",
-                               environment_id, self.path).empty?
-      self.path = path + '-' + SecureRandom.hex(1)
-    end
-
   end
 
   def create_user_course_association

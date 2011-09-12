@@ -80,6 +80,8 @@ class UserCourseAssociation < ActiveRecord::Base
   protected
 
   def create_hierarchy_associations
-    self.course.create_hierarchy_associations(self.user) if self.invited?
+    if self.invited? || self.waiting?
+      self.course.create_hierarchy_associations(self.user)
+    end
   end
 end

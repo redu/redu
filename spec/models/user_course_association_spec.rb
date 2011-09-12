@@ -70,11 +70,30 @@ describe UserCourseAssociation do
         }.should change {
           subject.course.environment.user_environment_associations.count
         }.by(1)
+
+        subject.course.environment.users.should include(subject.user)
       end
 
       it "should create hierachy associations" do
         subject.course.should_receive(:create_hierarchy_associations).with(subject.user)
         subject.accept!
+      end
+    end
+
+    context "when approving" do
+      it "should create environment association" do
+        expect {
+          subject.approve!
+        }.should change {
+          subject.course.environment.user_environment_associations.count
+        }.by(1)
+
+        subject.course.environment.users.should include(subject.user)
+      end
+
+      it "should create hierachy associations" do
+        subject.course.should_receive(:create_hierarchy_associations).with(subject.user)
+        subject.approve!
       end
     end
   end

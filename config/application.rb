@@ -181,11 +181,12 @@ module Redu
       config.active_record.observers = [:course_observer,
                                         :space_observer,
                                         :subject_observer,
-                                        :user_course_association_observer,
                                         :lecture_observer,
                                         :user_observer,
                                         :friendship_observer,
-                                        :status_observer]
+                                        :status_observer,
+                                        :education_observer,
+                                        :experience_observer]
     end
   end
 end

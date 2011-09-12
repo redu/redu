@@ -1,5 +1,5 @@
 class UserObserver < ActiveRecord::Observer
-  def after_update(user)
-    Log.setup(user, :action => :update)
+  def before_update(user)
+    Log.setup(user, :action => :update, :text => "atualizou o perfil")
   end
 end

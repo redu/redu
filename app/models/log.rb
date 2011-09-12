@@ -25,56 +25,64 @@ class Log < Status
 
   validates_presence_of :action
 
-  attr_protected :text
-
   def self.setup(model, options={})
     settings = {
       :action => :create,
-      :save => true
+      :save => true,
+      :text => ''
     }.merge(options)
 
     log = case model.class.to_s
-    when "Course"
-      model.logs.new(:action => settings[:action],
-                             :user => model.owner,
-                             :statusable => model.owner)
-    when "UserCourseAssociation"
-      if (model.approved? && model.logs.empty?)
-        model.logs.new(:action => settings[:action],
-                       :user => model.user,
-                       :statusable => model.course)
-      end
-    when "Space"
-      model.logs.new(:action => settings[:action],
-                             :user => model.owner,
-                             :statusable => model.course)
-    when "Subject"
-      if (model.finalized && model.visible && !model.logs.exists?)
-        model.logs.new(:action => settings[:action],
-                       :user => model.owner,
-                       :statusable => model.space)
-      end
-    when "Lecture"
-      if (model.subject.finalized && model.subject.visible)
-        model.logs.new(:action => settings[:action],
-                       :user => model.owner,
-                       :statusable => model.subject.space)
-      end
-    when "User"
-      model.logs.new(:action => settings[:action],
-                             :user => model,
-                             :statusable => model)
-    when "Experience", "Education"
-      model.logs.new(:action => settings[:action],
+          when "Course"
+            model.logs.new(:action => settings[:action],
+                           :user => model.owner,
+                           :statusable => model.owner,
+                           :text => settings[:text])
+          when "UserCourseAssociation"
+            if (model.approved? && model.logs.empty?)
+              model.logs.new(:action => settings[:action],
                              :user => model.user,
-                             :statusable => model.user)
-    when "Friendship"
-      if model.accepted?
-        user = model.user
-        user.logs.new(:action => settings[:action],
-                      :user => model.user,
-                      :statusable => model.user)
-      end
+                             :statusable => model.course,
+                             :text => settings[:text])
+            end
+          when "Space"
+            model.logs.new(:action => settings[:action],
+                           :user => model.owner,
+                           :statusable => model.course,
+                           :text => settings[:text])
+          when "Subject"
+            if (model.finalized && model.visible && !model.logs.exists?)
+              model.logs.new(:action => settings[:action],
+                             :user => model.owner,
+                             :statusable => model.space,
+                             :text => settings[:text])
+            end
+          when "Lecture"
+            if (model.subject.finalized && model.subject.visible)
+              model.logs.new(:action => settings[:action],
+                             :user => model.owner,
+                             :statusable => model.subject.space,
+                             :text => settings[:text])
+            end
+          when "User"
+            unless (model.changed & User::LOGEABLE_ATTRS).empty?
+              model.logs.new(:action => settings[:action],
+                             :user => model,
+                             :statusable => model,
+                             :text => settings[:text])
+            end
+          when "Experience", "Education"
+            model.logs.new(:action => settings[:action],
+                           :user => model.user,
+                           :statusable => model.user,
+                           :text => settings[:text])
+          when "Friendship"
+            if model.accepted?
+              model.logs.new(:action => settings[:action],
+                             :user => model.user,
+                             :statusable => model.user,
+                             :text => settings[:text])
+            end
     else
       nil
     end

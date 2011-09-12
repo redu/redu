@@ -322,11 +322,6 @@ describe Course do
       subject.user_course_associations.last.role }.to(Role[:tutor])
 
   end
-  it "choose another path if the specified already exists" do
-    @course = Factory.build(:course, :path => subject.path)
-    @course.verify_path!(subject.environment)
-    @course.path.should_not == subject.path
-  end
 
   it "accepts a user (join)" do
     @space = Factory(:space, :course => subject)
@@ -648,6 +643,12 @@ describe Course do
     it "retrieve a percentage of a members" do
       subject.percentage_quota_members == 50
     end
+  end
+
+  it "doesnt accept ." do
+    subject.path = "www.redu.com.br"
+    subject.should_not be_valid
+    subject.errors[:path].should_not be_empty
   end
 
 end

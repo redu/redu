@@ -3,7 +3,6 @@ class ExamsController < BaseController
 
   load_and_authorize_resource :exam, :except => [:new, :create]
   before_filter :find_subject_space_course_environment
-  after_filter :create_activity, :only => [:create, :results]
 
   def publish_score
     ExamUser.update(params[:exam_user_id], :public => true)

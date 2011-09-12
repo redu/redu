@@ -1,6 +1,5 @@
 class UsersController < BaseController
 
-  after_filter :create_activity, :only => [:update]
   load_and_authorize_resource :except => [:forgot_password,
     :forgot_username, :resend_activation, :activate],
     :find_by => :login

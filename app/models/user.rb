@@ -12,7 +12,10 @@ class User < ActiveRecord::Base
   SUPPORTED_CURRICULUM_TYPES = [ 'application/pdf', 'application/msword',
                                  'text/plain', 'application/rtf', 'text/rtf',
                                  'application/vnd.openxmlformats-officedocument.wordprocessingml.document' # docx
-                               ]
+  ]
+
+  LOGEABLE_ATTRS = [ 'name', 'email', 'description', 'birthday', 'first_name',
+  'last_name', 'avatar_file_name' ]
 
   # CALLBACKS
   before_create :make_activation_code
@@ -104,7 +107,7 @@ class User < ActiveRecord::Base
   has_many :logs, :as => :logeable
   has_many :statuses, :as => :statusable
   has_many :overview, :through => :status_user_associations, :source => :status,
-    :includes => [:statusable, :answers, :logeable, :user]
+    :include => [:user]
   has_many :status_user_associations, :dependent => :destroy
 
   # Named scopes
@@ -729,11 +732,10 @@ class User < ActiveRecord::Base
                :per_page => Redu::Application.config.items_per_page)
   end
 
-  # FIXME Não foi testado devido a futura reformulação de Status
   def home_activity(page = 1)
-    Status.home_activity(self).paginate(:page => page,
-                                        :order => 'created_at DESC',
-                                        :per_page => Redu::Application.config.items_per_page)
+    overview.paginate(:page => page,
+                      :order => 'created_at DESC',
+                      :per_page => Redu::Application.config.items_per_page)
   end
 
   def add_favorite(favoritable_type, favoritable_id)

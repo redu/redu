@@ -20,11 +20,11 @@ GIT
     ajaxful_rating (3.0.0.beta3)
 
 GIT
-  remote: git://github.com/guiocavalcanti/has_friends.git
-  revision: 513b20baafd1607383e718053c184d497bc3f5c4
-  branch: gem
+  remote: git://github.com/guiocavalcanti/scribd_fu.git
+  revision: ce15af925afbab9f5806d4038ec0ac5e05b18d2e
   specs:
-    has_friends (0.0.1)
+    scribd_fu (2.0.11)
+      rscribd
 
 GEM
   remote: http://rubygems.org/
@@ -161,7 +161,7 @@ GEM
     rd_searchlogic (3.0.1)
       activerecord (>= 3.0.0)
     remotipart (0.3.4)
-    rscribd (1.2.0)
+    rscribd (1.3.0)
       mime-types
     rspec (2.6.0)
       rspec-core (~> 2.6.0)
@@ -185,10 +185,8 @@ GEM
     rubyzip (0.9.4)
     s3 (0.3.8)
       proxies (~> 0.2.0)
-    scribd_fu (2.0.11)
-      rscribd
-    selenium-webdriver (2.5.0)
-      childprocess (>= 0.2.1)
+    selenium-webdriver (0.2.1)
+      childprocess (>= 0.1.7)
       ffi (>= 1.0.7)
       json_pure
       rubyzip
@@ -235,7 +233,6 @@ DEPENDENCIES
   deep_cloneable
   dynamic_form
   factory_girl_rails
-  has_friends!
   jammit-s3
   jasmine
   jquery-rails (>= 1.0.3)
@@ -253,7 +250,7 @@ DEPENDENCIES
   remotipart (>= 0.3.4)
   rspec-rails
   ruby-debug
-  scribd_fu
+  scribd_fu!
   shoulda-matchers
   shuber-sortable
   thin
