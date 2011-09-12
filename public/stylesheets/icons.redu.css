@@ -74,6 +74,7 @@
   background: url("../images/new/icons-small.png") -240px -2800px no-repeat;
 }
 
+.icon-environment-lightblue_32_34 { background-position: -400px 0px;}
 .icon-environment-gray_16_18 { background-position: 0 0;}
 .icon-environment-white-green_16_18 { background-position: -560px 0;}
 .icon-environment-white-green_16_18-before:before {
