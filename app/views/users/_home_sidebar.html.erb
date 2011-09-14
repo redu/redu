@@ -4,7 +4,7 @@
     <%= image_tag current_user.avatar.url(:thumb_120),
       :alt => 'profile', :width => 120, :height => 120 %>
   </div>
-  <%= sidebar :users %>
+  <%= local_nav :users %>
   <ul class="connections user-contacts clearfix">
     <%= render :partial => 'users/item_short',
       :collection => current_user.recently_active_friends %>

@@ -3,8 +3,8 @@ require 'md5'
 # Methods added to this helper will be available to all templates in the application.
 module BaseHelper
 
-  # Cria markup do sidebar a partir da navegação do contexto passado
-  def sidebar(context)
+  # Cria markup da navegação local a partir da navegação do contexto passado
+  def local_nav(context)
     render_navigation(:context => context, :level => 1,
                       :renderer => ListSidebar)
   end

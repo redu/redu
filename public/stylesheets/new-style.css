@@ -344,13 +344,14 @@
   }
 
   #content .concave-sidebar .connections:before,
-  #content .sidebar.space .session.big-separator:after {
+  #content .sidebar.space .big-separator:after {
     content: "";
     width: 150px;
     height: 17px;
     background: url("../images/new/separators.png") -160px 0 no-repeat;
     float: left;
     margin-left: -3px;
+    margin-top: 2px;
     margin-bottom: 5px;
   }
 
