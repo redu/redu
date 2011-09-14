@@ -852,7 +852,8 @@
 .icon-profile-lightblue_16_18:hover { background-position: -160px  -2320px; }
 .icon-profile-blue_16_18-before:before,
 .icon-profile-lightblue_16_18-before:hover:before,
-.tabs .ui-state-default .icon-profile_16_18-before:hover:before {
+.tabs .ui-state-default .icon-profile_16_18-before:hover:before,
+.local-nav .icon-profile_16_18-before:hover:before {
   content: "";
   width: 16px;
   height: 18px;
@@ -870,11 +871,21 @@
 
 .icon-profile-lightblue_16_18 { background-position: -80px  -2320px; }
 .icon-profile-lightblue_16_18-before:before,
-.tabs .ui-state-active .icon-profile_16_18-before:before {
+.tabs .ui-state-active .icon-profile_16_18-before:before,
+.local-nav .icon-profile_16_18-before:before {
   content: "";
   width: 16px;
   height: 18px;
   background: url("../images/new/icons-small.png") -80px -2320px no-repeat;
+}
+
+.icon-profile-white_16_18 { background-position: -240px  -2320px; }
+.icon-profile-white_16_18-before:before,
+.local-nav .ui-state-active .icon-profile_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -240px -2320px no-repeat;
 }
 
 .icon-redu_admin-gray_16_18 { background-position; 0 -720px; }
