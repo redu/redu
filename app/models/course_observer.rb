@@ -1,5 +1,5 @@
 class CourseObserver < ActiveRecord::Observer
   def after_create(course)
-    Log.setup(course, :action => :create, :text => "criou o curso")
+    Log.setup(course, :action => :create)
   end
 end

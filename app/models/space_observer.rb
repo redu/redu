@@ -1,5 +1,5 @@
 class SpaceObserver < ActiveRecord::Observer
   def after_create(space)
-    Log.setup(space, :action => :create, :text => "criou a disciplina")
+    Log.setup(space, :action => :create)
   end
 end

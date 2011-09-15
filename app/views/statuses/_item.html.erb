@@ -8,7 +8,7 @@
           <%= image_tag item.user.avatar.url(:thumb_32),
             :class => "avatar", :width => 32, :height => 32 %>
           <%= link_to item.user.display_name, user_path(item.user), :class => "username" %>
-          <span class="status-info"> <%= raw auto_link(item.text) %></span>
+          <span class="status-info"> <%= raw auto_link(item.action_text) %></span>
           <span class="date">
             <%= time_ago_in_words item.created_at %>
           </span>
@@ -20,7 +20,7 @@
           <%= image_tag item.user.avatar.url(:thumb_32),
             :class => "avatar", :width => 32, :height => 32 %>
           <%= link_to item.user.display_name, user_path(item.user), :class => "username" %>
-          <span class="status-info"> <%= raw auto_link(item.text) %></span>
+          <span class="status-info"> <%= raw auto_link(item.action_text) %></span>
           <span class="date">
             <%= time_ago_in_words item.created_at %>
           </span>
@@ -45,9 +45,9 @@
         <div class="status-log">
           <%= image_tag item.user.avatar.url(:thumb_32),
             :width => 32, :height => 32, :class => 'friend-avatar' %>
-          <div class="status-icon icon-environment_admin-gray_16_18-before">
+          <div class="status-icon icon-<%= role_at(item.user, item.logeable) %>-gray_16_18-before">
             <%= link_to item.user.display_name, user_path(item.user), :class => "username" %>
-          <span class="status-info"> <%= raw auto_link(item.text) %></span>
+          <span class="status-info"> <%= raw auto_link(item.action_text) %></span>
           <%= link_to item.logeable.name, environment_course_path(item.logeable.environment, item.logeable), :class => "status-secondary icon-expand-gray_16_18-before" %>
             <span class="date">
             <%= time_ago_in_words item.created_at %>
@@ -66,10 +66,10 @@
         <div class="status-log">
           <%= image_tag item.user.avatar.url(:thumb_32),
             :width => 32, :height => 32, :class => 'friend-avatar' %>
-          <div class="status-icon icon-environment_admin-gray_16_18-before">
+          <div class="status-icon icon-<%= role_at(item.user, item.logeable) %>-gray_16_18-before">
             <%= link_to item.user.display_name, user_path(item.user), :class => "username" %>
-          <span class="status-info"> <%= raw auto_link(item.text) %></span>
-          <%= link_to item.logeable.name, environment_course_path(item.logeable.course.environment, item.logeable), :class => "status-secondary icon-expand-gray_16_18-before" %>
+          <span class="status-info"> <%= raw auto_link(item.action_text) %></span>
+          <%= link_to item.logeable.name, space_path(item.logeable), :class => "status-secondary icon-expand-gray_16_18-before" %>
             <span class="date">
             <%= time_ago_in_words item.created_at %>
             </span>
@@ -87,9 +87,9 @@
         <div class="status-log">
           <%= image_tag item.user.avatar.url(:thumb_32),
             :width => 32, :height => 32, :class => 'friend-avatar' %>
-          <div class="status-icon icon-environment_admin-gray_16_18-before">
+          <div class="status-icon icon-<%= role_at(item.user, item.logeable) %>-gray_16_18-before">
             <%= link_to item.user.display_name, user_path(item.user), :class => "username" %>
-          <span class="status-info"> <%= raw auto_link(item.text) %></span>
+          <span class="status-info"> <%= raw auto_link(item.action_text) %></span>
           <%= link_to item.logeable.title, space_subject_path(item.logeable.space, item.logeable), :class => "status-secondary icon-expand-gray_16_18-before" %>
             <span class="date">
             <%= time_ago_in_words item.created_at %>
@@ -108,9 +108,9 @@
         <div class="status-log">
           <%= image_tag item.user.avatar.url(:thumb_32),
             :width => 32, :height => 32, :class => 'friend-avatar' %>
-          <div class="status-icon icon-teacher-gray_16_18-before">
-            <%= link_to item.user.display_name, user_path(item.logeable.owner) %>
-            <span class="status-info"><%= raw item.text %></span>
+          <div class="status-icon icon-<%= role_at(item.user, item.logeable) %>-gray_16_18-before">
+            <%= link_to item.user.display_name, user_path(item.logeable.owner), :class => "username" %>
+            <span class="status-info"><%= raw item.action_text %></span>
             <%= link_to item.logeable.name, space_subject_lecture_path(item.logeable.subject.space, item.logeable.subject, item.logeable) %>
             <span class="date">
               <%= time_ago_in_words item.created_at %>

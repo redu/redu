@@ -21,6 +21,8 @@ class Log < Status
   #   - Atualização de User
   #   - Criação de Friendship
 
+  CONFIG = Redu::Application.config.overview_logger
+
   belongs_to :logeable, :polymorphic => true
 
   validates_presence_of :action
@@ -65,7 +67,7 @@ class Log < Status
                              :text => settings[:text])
             end
           when "User"
-            unless (model.changed & User::LOGEABLE_ATTRS).empty?
+            if changed_relevant_attrs?(model)
               model.logs.new(:action => settings[:action],
                              :user => model,
                              :statusable => model,
@@ -92,5 +94,28 @@ class Log < Status
     end
 
     return log
+  end
+
+  # Consulta o logs.yml e carrega a mensagem apropriada
+  def action_text
+    msgs = CONFIG[logeable_type.parameterize].try(:fetch, 'messages')
+    msgs ||= {}
+    msgs.fetch(action.to_s, "")
+  end
+
+  protected
+
+  # Verifica se o atributo especificado nas configs foi atualizado
+  def self.changed_relevant_attrs?(model)
+    !(model.changed & tracked_attrs(model)).empty?
+  end
+
+  # Atributos relevantes para o log. Se não foi especificado nas configs. retorna
+  # todos os atributos
+  def self.tracked_attrs(model)
+    config = CONFIG[model.class.to_s.parameterize]
+    config ||= {}
+
+    config.fetch('attrs', model.attribute_names)
   end
 end

@@ -14,9 +14,6 @@ class User < ActiveRecord::Base
                                  'application/vnd.openxmlformats-officedocument.wordprocessingml.document' # docx
   ]
 
-  LOGEABLE_ATTRS = [ 'name', 'email', 'description', 'birthday', 'first_name',
-  'last_name', 'avatar_file_name' ]
-
   # CALLBACKS
   before_create :make_activation_code
   after_create {|user| UserNotifier.signup_notification(user).deliver }

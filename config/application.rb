@@ -188,5 +188,9 @@ module Redu
                                         :education_observer,
                                         :experience_observer]
     end
+
+    # Redu logger
+    config.overview_logger = YAML.load_file("#{Rails.root}/config/logs.yml")
+    config.overview_logger = config.overview_logger['config']
   end
 end

@@ -230,6 +230,10 @@ describe Log do
       @log.logeable.should == @user
       @log.statusable.should == @user
     end
+
+    it "sets the correct message" do
+      @log.action_text.should =~ /atualizou o perfil/
+    end
   end
 
   context "when updating Experience" do
