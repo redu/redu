@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
 
   # ASSOCIATIONS
   has_many :annotations, :dependent => :destroy, :include=> :lecture
-  has_many :statuses, :as => :statusable
+  has_many :statuses, :as => :statusable, :order => "created_at DESC"
   has_many :chat_messages
   # Space
   has_many :spaces, :through => :user_space_associations
@@ -101,10 +101,12 @@ class User < ActiveRecord::Base
 
   has_many :social_networks, :dependent => :destroy
 
-  has_many :logs, :as => :logeable
-  has_many :statuses, :as => :statusable
+  has_many :logs, :as => :logeable, :order => "created_at DESC",
+    :dependent => :destroy
+  has_many :statuses, :as => :statusable, :order => "created_at DESC",
+    :dependent => :destroy
   has_many :overview, :through => :status_user_associations, :source => :status,
-    :include => [:user]
+    :include => [:user], :order => "created_at DESC"
   has_many :status_user_associations, :dependent => :destroy
 
   # Named scopes

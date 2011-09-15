@@ -58,8 +58,10 @@ class Space < ActiveRecord::Base
   has_one :forum, :dependent => :destroy
   has_one :root_folder, :class_name => 'Folder', :foreign_key => 'space_id'
 
-  has_many :logs, :as => :logeable
-  has_many :statuses, :as => :statusable
+  has_many :logs, :as => :logeable, :order => "created_at DESC",
+    :dependent => :destroy
+  has_many :statuses, :as => :statusable, :order => "created_at DESC",
+    :dependent => :destroy
 
   scope :of_course, lambda { |course_id| where(:course_id => course_id) }
   scope :published, where(:published => true)

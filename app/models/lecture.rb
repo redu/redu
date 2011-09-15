@@ -7,8 +7,9 @@ class Lecture < ActiveRecord::Base
   after_create :create_asset_report
 
   # ASSOCIATIONS
-  has_many :statuses, :as => :statusable
-  has_many :logs, :as => :logeable
+  has_many :statuses, :as => :statusable, :order => "created_at DESC"
+  has_many :logs, :as => :logeable, :order => "created_at DESC",
+    :dependent => :destroy
 
   #FIXME Falta testar
   has_many :acess_key

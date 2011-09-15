@@ -41,7 +41,6 @@ class Myfile < ActiveRecord::Base
 
   belongs_to :folder
   belongs_to :user
-  has_many :logs, :as => :logeable
 
   validates_attachment_presence :attachment
   validates_attachment_size :attachment,
