@@ -81,35 +81,11 @@ class Space < ActiveRecord::Base
     "#{Redu::Application.config.url}/espacos/#{self.id.to_s}-#{self.name.parameterize}"
   end
 
-  # Status relativos ao Space
-  #FIXME Refactor: Mover para Status
-  def recent_activity(page = 1)
-    self.statuses.not_response.
-      paginate(:page => page, :order => 'created_at DESC',
-               :per_page => Redu::Application.config.items_per_page)
-  end
-
   # Logs relativos ao Space (usado no Course#show).
   # Retorna hash do tipo :topoic => [status1, status2, status3], :myfile => ...
   #FIXME Refactor: Mover para Status
   def recent_log(offset = 0, limit = 3)
     logs = {}
-    logs[:folder] = self.statuses.order('created_at DESC').limit(limit).
-                      offset(offset).where(:log => 1,
-                                           :logeable_type => 'Myfile')
-    logs[:topic] = self.statuses.order('created_at DESC').limit(limit).
-                    offset(offset).where(:log => true,
-                                         :logeable_type => %w(Topic SbPost))
-    logs[:subject] = self.statuses.order('created_at DESC').limit(limit).
-                      offset(offset).where(:log => true,
-                                           :logeable_type => 'Subject')
-    logs[:event] = self.statuses.order('created_at DESC').limit(limit).
-                     offset(offset).where(:log => true,
-                                          :logeable_type  => 'Event')
-    logs[:bulletin] = self.statuses.order('created_at DESC').limit(limit).
-                        offset(offset).where(:log => true,
-                                             :logeable_type => 'Bulletin')
-    return logs
   end
 
   def create_root_folder

@@ -432,7 +432,7 @@ class UsersController < BaseController
 
   def mural
     @friends = current_user.friends.paginate(:page => 1, :per_page => 9)
-    @statuses = current_user.statuses.not_response.
+    @statuses = current_user.statuses.
       paginate(:page => params[:page], :per_page => 10)
     @status = Status.new
 

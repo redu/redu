@@ -64,14 +64,6 @@ class Subject < ActiveRecord::Base
     end
   end
 
-  #TODO colocar esse metodo em status passando apenas o objeto
-  # Não foi testado, pois haverá reformulação de subject
-  def recent_activity(page = 1)
-    self.statuses.not_response.
-      paginate(:page => page, :order => 'created_at DESC',
-               :per_page => Redu::Application.config.items_per_page)
-  end
-
   def convert_lectureables!
     documents = self.lectures.includes(:lectureable).
                   where(:lectureable_type => ["Document"])

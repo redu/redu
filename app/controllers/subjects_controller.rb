@@ -94,7 +94,8 @@ class SubjectsController < BaseController
   end
 
   def mural
-    @statuses = @subject.recent_activity(params[:page])
+    @statuses = Status.from_hierarchy(@subject).
+      paginate(:page => params[:page], :per_page => Redu::Application.config.items_per_page)
     @statusable = @subject
 
     respond_to do |format|

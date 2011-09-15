@@ -125,7 +125,8 @@ class SpacesController < BaseController
     end
 
     if @space
-      @statuses = @space.recent_activity(params[:page])
+      @statuses = Status.from_hierarchy(@space).
+      paginate(:page => params[:page], :per_page => Redu::Application.config.items_per_page)
       @statusable = @space
     end
 

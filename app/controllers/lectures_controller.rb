@@ -55,7 +55,7 @@ class LecturesController < BaseController
       order('rating_average DESC')
 
     @status = Status.new
-    @statuses = @lecture.statuses.not_response.
+    @statuses = Status.from_hierarchy(@lecture).
       paginate(:page => params[:page],:order => 'created_at DESC',
                :per_page => Redu::Application.config.items_per_page)
 
