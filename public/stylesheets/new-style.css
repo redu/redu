@@ -1025,10 +1025,6 @@
   -webkit-border-radius: 5px;
 }
 
-#space-statuses .header {
-  background: url("../images/new/icon-status-black_32_32.png") no-repeat 20px center;
-}
-
 #bulletin .header,
 #bulletin-edit .header,
 #bulletin-new .header,
