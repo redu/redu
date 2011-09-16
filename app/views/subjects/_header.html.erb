@@ -6,9 +6,12 @@
     <%= link_to subject.space.course.name,
       environment_course_path(subject.space.course.environment, subject.space.course)%>
   </span>
-  <h3 class="call name">
+  <span class="parent subject-name">
     <%= link_to subject.space.name, space_path(subject.space) %> /
-    <span class="subject-name"><%= link_to subject.title, space_path(subject.space) %></span>
+  </span>
+
+  <h3 class="call name lecture-name">
+    <%= link_to subject.title, space_path(subject.space) %>
   </h3>
 
   <% unless subject.description.blank? && subject.tags.empty? %>
