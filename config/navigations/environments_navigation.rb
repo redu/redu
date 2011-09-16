@@ -16,9 +16,12 @@ SimpleNavigation::Configuration.run do |navigation|
       tabs.dom_class = 'clearfix ui-tabs-nav'
       tabs.item :courses, 'Cursos', environment_path(@environment),
         :highlights_on => action_matcher(['environments'], ['show', 'preview']),
-        :class => 'ui-state-default'
+        :class => 'ui-state-default',
+        :link => { :class => "icon-course-gray_32_34-before" }
       tabs.item :account, 'Membros', environment_users_path(@environment),
-        :class => 'ui-state-default' do |users_nav|
+        :class => 'ui-state-default',
+        :link => { :class => "icon-members-gray_32_34-before" } do |users_nav|
+
         # Sub abas
         users_nav.dom_class = 'clearfix ui-tabs-nav'
         users_nav.item :all, "Todos", environment_users_path(@environment),

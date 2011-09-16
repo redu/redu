@@ -9,7 +9,7 @@
     :locals => { :environment => @environment } %>
 
   <div id="environment-users" class="body">
-    <%= tabs :environments do %>
+    <%= big_tabs :environments do %>
       <%= subtabs :environments do %>
         <ul id="users-list" class="members clearfix">
           <%= render :partial => 'users/item',

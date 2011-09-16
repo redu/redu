@@ -9,6 +9,17 @@ module BaseHelper
                       :renderer => ListSidebar)
   end
 
+  # Cria markup das big abas
+  def big_tabs(context, &block)
+    locals = {
+      :navigation => render_navigation(:context => context, :level => 2,
+                                       :renderer => ListDetailed),
+      :body => capture(&block)
+    }
+
+    render :partial => "shared/big_tabs", :locals => locals
+  end
+
   # Cria markup das abas (compatível com o jQuery UI) a partir da navegação
   # do contexto passado
   def tabs(context, &block)

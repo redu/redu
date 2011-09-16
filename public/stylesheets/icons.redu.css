@@ -286,6 +286,13 @@
   height: 18px;
   background: url("../images/new/icons-small.png") -80px -80px no-repeat;
 }
+.icon-course-gray_32_34 { background-position: -320px -80px; }
+.icon-course-gray_32_34-before:before {
+  content: "";
+  width: 32px;
+  height: 34px;
+  background: url("../images/new/icons-small.png") -320px -80px no-repeat;
+}
 
 .icon-cv-blue_16_18,
 .icon-cv-lightblue_16_18:hover { background-position: -400px  -2560px; }
@@ -747,6 +754,15 @@
   height: 18px;
   background: url("../images/new/icons-small.png") -240px -480px no-repeat;
 }
+
+.icon-members-gray_32_34 { background-position: -320px -480px; }
+.icon-members-gray_32_34-before:before {
+  content: "";
+  width: 32px;
+  height: 34px;
+  background: url("../images/new/icons-small.png") -320px -480px no-repeat;
+}
+
 
 .icon-message-blue_16_18,
 .icon-message-lightblue_16_18:hover { background-position: -400px  -2240px; }

@@ -3288,6 +3288,98 @@ a.clean:hover {
   margin: 40px 0;
 }
 
+.big-tabs {
+  clear: both;
+}
+
+.big-tabs > ul {
+  margin-bottom: -1px;
+}
+
+.big-tabs > ul li {
+  float: left;
+  border: 1px solid rgb(179, 179, 179);
+  border-bottom: none;
+
+  -moz-border-radius-topleft: 10px;
+  -moz-border-radius-topright: 10px;
+  -moz-border-radius-bottomright: 0px;
+  -moz-border-radius-bottomleft: 0px;
+  -webkit-border-radius: 10px 10px 0px 0px;
+  border-radius: 10px 10px 0px 0px;
+}
+
+.big-tabs > ul li.ui-state-active {
+  display: block;
+  background-color: white;
+  border-bottom: 1px solid white;
+}
+
+.big-tabs > ul li.ui-state-default {
+  margin-left: -1px;
+}
+
+.big-tabs > ul li.ui-state-default:first-child {
+  margin-left: 0px;
+}
+
+.big-tabs > ul li.ui-state-default {
+  background-color: rgb(230, 230, 230);
+}
+
+.big-tabs > ul li a {
+  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-size: 2.1em;
+  font-weight: 100;
+  color: rgb(76, 172, 213);
+
+  display: block;
+  padding: 15px 15px 10px 15px;
+
+  -moz-border-radius-topleft: 10px;
+  -moz-border-radius-topright: 10px;
+  -moz-border-radius-bottomright: 0px;
+  -moz-border-radius-bottomleft: 0px;
+  -webkit-border-radius: 10px 10px 0px 0px;
+  border-radius: 10px 10px 0px 0px;
+}
+
+.big-tabs > ul li.ui-state-default a {
+  width: 32px;
+  height: 34px;
+  text-indent: -999999px;
+}
+
+.big-tabs > ul li.ui-state-active a {
+  background-color: white;
+  text-indent: 0px;
+  width: auto;
+}
+
+.big-tabs .ui-state-default .icon-course-gray_32_34-before:before,
+.big-tabs .ui-state-default .icon-members-gray_32_34-before:before {
+  float: left;
+  display: block;
+}
+
+.big-tabs .ui-state-active .icon-course-gray_32_34-before:before,
+.big-tabs .ui-state-active .icon-members-gray_32_34-before:before {
+  float: none;
+  display: inline;
+}
+
+.big-tabs > .panel {
+  border: 1px solid rgb(179, 179, 179);
+  padding: 40px 60px;
+  background-color: white;
+
+  -moz-border-radius-bottomright: 10px;
+  -moz-border-radius-topright: 10px;
+  -moz-border-radius-bottomleft: 10px;
+  -webkit-border-radius: 0px 10px 10px 10px;
+  border-radius: 0px 10px 10px 10px;
+}
+
 /* Form common styles */
 .form-common {
   clear: both;
