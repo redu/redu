@@ -17,8 +17,7 @@
     <% elsif item.logeable_type.eql? 'Friendship' %>
       <div class="status icons-big-after icon-contact-lightblue_64_66-after">
         <div class="status-text">
-          <%= image_tag item.user.avatar.url(:thumb_32),
-            :class => "avatar", :width => 32, :height => 32 %>
+          <%= image_tag item.user.avatar.url(:thumb_32), :class => "avatar", :width => 32, :height => 32 %>
           <%= link_to item.user.display_name, user_path(item.user), :class => "username" %>
           <span class="status-info"> <%= raw auto_link(item.action_text) %></span>
           <span class="date">
@@ -26,9 +25,8 @@
           </span>
         </div>
         <div class="status-content">
-          <%= image_tag item.logeable.friend.avatar.url(:thumb_32),
-            :width => 32, :height => 32, :class => 'friend-avatar' %>
-          <a href="#" class="username" ><%= item.logeable.friend.display_name %></a>
+          <%= image_tag item.logeable.friend.avatar.url(:thumb_32), :width => 32, :height => 32, :class => 'friend-avatar' %>
+          <%= link_to item.logeable.friend.display_name, user_path(item.logeable.friend), :class => "username" %>
           <span class="friend-summary">
             22 contatos e 2 disciplinas em comum
           </span>
@@ -120,5 +118,55 @@
       </div>
     <% end %>
   <% else %>
+    <div class="status">
+      <div class="status-text">
+        <%= image_tag item.user.avatar.url(:thumb_32), :class => "avatar", :width => 32, :height => 32 %>
+        <%= link_to item.user.display_name, user_path(item.user), :class => "username" %>
+        <span class="status-info">
+          <% if item.statusable_type.eql?('User') %>
+            <% unless item.statusable.eql?(current_user) %>
+              comentou no mural de <%= link_to item.statusable.display_name, mural_user_path(item.statusable) %>
+          <% end %>
+        <% end %>
+      </span>
+        <span class="date">
+          <%= time_ago_in_words item.created_at %>
+        </span>
+      </div>
+      <div class="status-message">
+        <p>
+          <%= raw auto_link(item.text) %>
+        </p>
+      </div>
+      <ul class="actions clearfix">
+        <% if can? :respond, item %>
+          <li>
+            <a href="#" class="icon icon-spinner-gray_8_8 reply-status">Responder</a>
+          </li>
+          <li>
+            <%= render :partial => 'statuses/favorite',
+              :locals => { :status => item } %>
+          </li>
+        <% end %>
+        <% if can? :manage, item %>
+          <li>
+            <%= link_to 'Apagar',
+              status_path(item),
+              :confirm => 'Deseja remover a postagem?',
+              :method => :delete,
+              :remote => true,
+              :class => "icon icon-x-gray_8_8" %>
+          </li>
+        <% end %>
+      </ul>
+      <%= render :partial => 'statuses/create_response',
+        :locals => { :statusable => item, :status_id => item.id }%>
+      <div class="responses">
+        <ol>
+          <%= render :partial => "statuses/response", :collection => item.answers %>
+        </ol>
+        <a href="#" class="toggle-statuses">Ver todos os <span class="qty"></span> comentários</a>
+      </div>
+    </div>
   <% end %>
 </li>

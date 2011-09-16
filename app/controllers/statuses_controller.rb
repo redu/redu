@@ -3,7 +3,7 @@ class StatusesController < BaseController
   load_and_authorize_resource :status, :except => [:index]
 
   def create
-    @status = Status.new(params[:status])
+    @status = Activity.new(params[:status])
 
     @status.user = current_user
 
@@ -31,7 +31,16 @@ class StatusesController < BaseController
     @status.save
 
     respond_to do |format|
-      format.js
+      if @status.save
+        format.html { redirect_to :back }
+        format.js
+      else
+        format.html {
+          flash[:statuses_errors] = @status.errors.full_messages.to_sentence
+          redirect_to :back
+        }
+        format.js { render :template => 'statuses/errors', :locals => { :status => @status } }
+      end
     end
   end
 

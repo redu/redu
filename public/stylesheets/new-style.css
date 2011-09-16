@@ -1322,7 +1322,8 @@
   color: #4cacd5;
 }
 
-.create-status .concave-form .char-limit {
+.create-status .concave-form .char-limit,
+.create-status .concave-form .errorMessageField {
   width: 200px;
   margin-left: 28px;
   margin-top: 10px;
