@@ -475,7 +475,8 @@ class UsersController < BaseController
       redirect_to removed_page_path and return
     end
 
-    @statuses = @user.profile_activity(params[:page])
+    @statuses = @user.statuses.paginate(:page => params[:page],
+               :per_page => Redu::Application.config.items_per_page)
     @statusable = @user
     @status = Status.new
 

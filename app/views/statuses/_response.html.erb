@@ -16,10 +16,6 @@
     </p>
   </div>
   <ul class="actions clearfix">
-    <li>
-      <%= render :partial => 'statuses/favorite',
-        :locals => { :status => response } %>
-    </li>
     <% if can? :manage, response %>
       <li>
       <%= link_to 'Apagar',

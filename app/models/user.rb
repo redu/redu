@@ -286,7 +286,7 @@ class User < ActiveRecord::Base
       self.member?(entity.space)
     when 'SbPost'
       self.member?(entity.space)
-    when 'Status', 'Activity'
+    when 'Status', 'Activity', 'Answer'
       if self == entity.user
         true
       else
@@ -723,12 +723,6 @@ class User < ActiveRecord::Base
   # FIXME Não foi testado devido a futura reformulação de Status
   def teaching
     self.statuses.log_action_eq(TEACHING_ACTIONS).descend_by_created_at
-  end
-
-  def profile_activity(page = 1)
-    Status.profile_activity(self).
-      paginate(:page => page, :order => 'created_at DESC',
-               :per_page => Redu::Application.config.items_per_page)
   end
 
   def home_activity(page = 1)

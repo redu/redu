@@ -6,5 +6,6 @@
   $status.find(".responses ol").prepend(response);
   $status.find(".responses").show();
   $status.find(".create-response").toggle();
+  $status.find(".toggle-statuses .qty").text($status.find(".responses > ol > li").length);
   $status.find("form textarea").val('');
 <% end %>

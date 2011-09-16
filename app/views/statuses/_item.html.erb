@@ -125,7 +125,7 @@
         <span class="status-info">
           <% if item.statusable_type.eql?('User') %>
             <% unless item.statusable.eql?(current_user) %>
-              comentou no mural de <%= link_to item.statusable.display_name, mural_user_path(item.statusable) %>
+              comentou no mural de <%= link_to item.statusable.display_name, show_mural_user_path(item.statusable) %>
           <% end %>
         <% end %>
       </span>
@@ -142,10 +142,6 @@
         <% if can? :respond, item %>
           <li>
             <a href="#" class="icon icon-spinner-gray_8_8 reply-status">Responder</a>
-          </li>
-          <li>
-            <%= render :partial => 'statuses/favorite',
-              :locals => { :status => item } %>
           </li>
         <% end %>
         <% if can? :manage, item %>
