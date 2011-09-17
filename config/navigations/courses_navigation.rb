@@ -17,10 +17,12 @@ SimpleNavigation::Configuration.run do |navigation|
       tabs.item :spaces, 'Disciplinas',
         environment_course_path(@course.environment, @course),
         :highlights_on => action_matcher(['courses'], ['show', 'preview']),
-        :class => 'ui-state-default'
+        :class => 'ui-state-default',
+        :link => { :class => "icon-space-gray_32_34-before" }
       tabs.item :account, 'Membros',
         environment_course_users_path(@course.environment, @course),
-        :class => 'ui-state-default' do |users_nav|
+        :class => 'ui-state-default',
+        :link => { :class => "icon-members-gray_32_34-before" } do |users_nav|
         # Sub abas
         users_nav.dom_class = 'clearfix ui-tabs-nav'
         users_nav.item :all, "Todos",

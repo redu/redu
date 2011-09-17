@@ -971,6 +971,13 @@
   height: 18px;
   background: url("../images/new/icons-small.png") -80px -160px no-repeat;
 }
+.icon-space-gray_32_34 { background-position: -320px -160px; }
+.icon-space-gray_32_34-before:before {
+  content: "";
+  width: 32px;
+  height: 34px;
+  background: url("../images/new/icons-small.png") -320px -160px no-repeat;
+}
 
 .icon-subject-blue_16_18,
 .icon-subject-lightblue_16_18:hover { background-position: -160px -320px; }

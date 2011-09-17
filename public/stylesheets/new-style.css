@@ -1503,7 +1503,7 @@
 .hierarchy-listing .child {
   position: relative;
   display: block;
-  padding: 20px 10px;
+  padding: 10px 10px 20px 10px;
   margin-bottom: 20px;
 
   border: 1px solid rgb(204, 204, 204);
@@ -1540,7 +1540,7 @@
 
 .hierarchy-listing .child img {
   float: left;
-  margin: 0 10px;
+  margin: 10px 10px 0px 10px;
 }
 
 .hierarchy-listing .child .info,
@@ -1608,7 +1608,8 @@
 }
 
 .hierarchy-listing .child .info {
-  width: 520px;
+  width: 430px;
+  margin-top: 10px;
   margin-right: 20px;
 }
 
@@ -1617,7 +1618,7 @@
   font-weight: 500;
   font-size: 1.3em;
   letter-spacing: .005em;
-  margin-right: 20px;
+  margin-right: 5px;
 }
 
 .hierarchy-listing .child .name:before {
@@ -1640,7 +1641,6 @@
 }
 
 .hierarchy-listing .child .workload {
-  display: block;
   font-style: italic;
   font-size: .87em;
   color: rgb(179, 179, 179);
@@ -3331,12 +3331,12 @@ a.clean:hover {
 
 .big-tabs > ul li a {
   font-family: museo-slab, helvetica, arial, sans-serif;
-  font-size: 2.1em;
+  font-size: 2.4em;
   font-weight: 100;
   color: rgb(76, 172, 213);
-
+  height: 34px;
   display: block;
-  padding: 15px 15px 10px 15px;
+  padding: 10px 15px 7px 15px;
 
   -moz-border-radius-topleft: 10px;
   -moz-border-radius-topright: 10px;
@@ -3348,22 +3348,24 @@ a.clean:hover {
 
 .big-tabs > ul li.ui-state-default a {
   width: 32px;
-  height: 34px;
   text-indent: -999999px;
 }
 
 .big-tabs > ul li.ui-state-active a {
+  padding: 13px 15px 5px 15px;
   background-color: white;
   text-indent: 0px;
   width: auto;
 }
 
+.big-tabs .ui-state-default .icon-space-gray_32_34-before:before,
 .big-tabs .ui-state-default .icon-course-gray_32_34-before:before,
 .big-tabs .ui-state-default .icon-members-gray_32_34-before:before {
   float: left;
   display: block;
 }
 
+.big-tabs .ui-state-active .icon-space-gray_32_34-before:before,
 .big-tabs .ui-state-active .icon-course-gray_32_34-before:before,
 .big-tabs .ui-state-active .icon-members-gray_32_34-before:before {
   float: none;

@@ -7,7 +7,7 @@
   <%= render :partial => 'courses/header',
     :locals => { :course => @course }%>
   <div id="course-users" class="body">
-    <%= tabs :courses do %>
+    <%= big_tabs :courses do %>
       <%= subtabs :courses do %>
         <ul id="users-list" class="members clearfix">
           <%= render :partial => 'users/item',

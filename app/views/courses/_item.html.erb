@@ -3,12 +3,12 @@
   <div class="info">
     <%= link_to item.name, environment_course_path(item.environment, item),
       :class => 'name' %>
+    <% unless item.workload.nil? %>
+      <span class="workload">(<%= item.workload %> horas)</span>
+    <% end %>
     <% if can?(:manage, item) %>
       <%= link_to "Editar", edit_environment_course_path(item.environment, item),
         :class => "manage icon-manage-gray_8_10-before"%>
-    <% end %>
-    <% unless item.workload.nil? %>
-      <span class="workload"><%= item.workload %> horas</span>
     <% end %>
     <p class="description"><%= item.description %></p>
     <ul class="tags clearfix">
