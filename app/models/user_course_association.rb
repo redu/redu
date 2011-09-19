@@ -81,8 +81,12 @@ class UserCourseAssociation < ActiveRecord::Base
   protected
 
   def create_hierarchy_associations
-    if self.invited? || self.waiting?
+    if self.invited? || (has_environment? && self.waiting?)
       self.course.create_hierarchy_associations(self.user)
     end
+  end
+
+  def has_environment?
+    !course.try(:environment).nil?
   end
 end
