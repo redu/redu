@@ -293,7 +293,7 @@ class UserNotifier < ActionMailer::Base
     @course = course
 
     mail(:to => user.email,
-        :subject => "Você foi convidado para um curso no Redu",
+        :subject => "Você foi convidado para realizar um curso a distância",
         :date => Time.now)
   end
 
@@ -302,7 +302,7 @@ class UserNotifier < ActionMailer::Base
     @course = course
 
     mail(:to => user_course_invitation.email,
-         :subject => "Você foi convidado para um curso no Redu",
+         :subject => "Você foi convidado para realizar um curso a distância",
          :date => Time.now)
   end
 
