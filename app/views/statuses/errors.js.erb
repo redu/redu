@@ -1,5 +1,5 @@
-<% if @status.type.eql? 'Answer' %>
-  var $text = $("textarea:visible", "#status-<%= @status.in_response_to.id %>");
+<% if @answer %>
+  var $text = $("textarea:visible", "#status-<%= @answer.in_response_to.id %>");
 <% else %>
   var $text = $(".textarea:visible");
 <% end %>
