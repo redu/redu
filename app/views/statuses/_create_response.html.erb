@@ -1,12 +1,11 @@
 <%# Form de Status resposta %>
 <div class="create-status create-response" style = "display: none;">
   <%= form_for :status,
-    :url => respond_user_status_path(current_user, status_id),
+    :url => respond_status_path(in_response_to),
     :remote => true, :html => { :class => "form-loader concave-form" } do |f| %>
 
-    <%= hidden_field :status, :statusable_id, :value => statusable.id %>
-    <%= hidden_field :status, :statusable_type, :value => statusable.class.to_s %>
-    <%= hidden_field_tag "status[type]", "Answer" %>
+    <%= hidden_field :status, :in_response_to_id, :value => in_response_to.id %>
+    <%= hidden_field :status, :in_response_to_type, :value => in_response_to.class.to_s %>
 
     <%= f.error_messages %>
     <%= field_set_tag do %>

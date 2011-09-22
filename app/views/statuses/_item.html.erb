@@ -118,6 +118,106 @@
       </div>
     <% end %>
   <% else %>
+    <% if item.statusable_type.eql?('Lecture') %>
+      <div class="status">
+        <div class="status-context icons-big-after icon-request-help-orange_64_66-after">
+          <span class="status-subject icon-small icon-space-lightblue_32_34">
+          </span>
+          <%= link_to item.statusable.subject.space.name, space_path(item.statusable.subject.space), :class => "status-main" %>
+          <%= link_to item.statusable.subject.title, space_subject_path(item.statusable.subject.space, item.statusable.subject), :class => "status-secondary icon-expand-gray_8_10-before" %>
+        </div>
+        <div class="status-log">
+          <%= image_tag current_user.avatar.url(:thumb_32),
+            :width => 32, :height => 32, :class => 'friend-avatar' %>
+          <div class="status-icon icon-<%= role_at(item.user, item.statusable.subject) %>-gray_16_18-before ">
+            <%= link_to item.user.display_name, show_mural_user_path(item.user), :class => "username" %>
+            <span class="status-info">solicitou <span class="status-help">ajuda</span> em</span>
+            <%= link_to item.statusable.name, space_subject_lecture_path(item.statusable.subject.space, item.statusable.subject, item.statusable) %>
+            <span class="date">
+              <%= time_ago_in_words item.created_at %>
+            </span>
+            <div class="status-message">
+              <p>
+                <%= raw auto_link(item.text) %>
+              </p>
+            </div>
+          </div>
+          <ul class="actions clearfix">
+            <% if can? :respond, item %>
+              <li>
+                <a href="#" class="icon icon-spinner-gray_8_8 reply-status">Responder</a>
+              </li>
+            <% end %>
+            <% if can? :manage, item %>
+              <li>
+                <%= link_to 'Apagar',
+                  status_path(item),
+                  :confirm => 'Deseja remover a postagem?',
+                  :method => :delete,
+                  :remote => true,
+                  :class => "icon icon-x-gray_8_8" %>
+              </li>
+            <% end %>
+          </ul>
+          <%= render :partial => 'statuses/create_response',
+            :locals => { :in_response_to => item }%>
+          <div class="responses">
+            <ol>
+              <%= render :partial => "statuses/response", :collection => item.answers %>
+            </ol>
+          </div>
+        </div>
+      </div>
+    <% elsif item.statusable_type.eql?('Space') %>
+      <div class="status">
+        <div class="status-context">
+          <span class="status-subject icon-small icon-course-lightblue_32_34">
+          </span>
+          <%= link_to item.statusable.course.name, environment_course_path(item.statusable.course.environment, item.statusable.course), :class => "status-main" %>
+          <%= link_to item.statusable.name, space_path(item.statusable), :class => "status-secondary icon-expand-gray_8_10-before" %>
+        </div>
+        <div class="status-log">
+          <%= image_tag current_user.avatar.url(:thumb_32),
+            :width => 32, :height => 32, :class => 'friend-avatar' %>
+          <div class="status-icon icon-<%= role_at(item.user, item.statusable) %>-gray_16_18-before ">
+            <%= link_to item.user.display_name, show_mural_user_path(item.user), :class => "username" %>
+            <span class="status-info">comentou no mural da disciplina  <%= link_to item.statusable.name, mural_space_path(item.statusable) %></span>
+            <span class="date">
+              <%= time_ago_in_words item.created_at %>
+            </span>
+            <div class="status-message">
+              <p>
+                <%= raw auto_link(item.text) %>
+              </p>
+            </div>
+          </div>
+          <ul class="actions clearfix">
+            <% if can? :respond, item %>
+              <li>
+                <a href="#" class="icon icon-spinner-gray_8_8 reply-status">Responder</a>
+              </li>
+            <% end %>
+            <% if can? :manage, item %>
+              <li>
+                <%= link_to 'Apagar',
+                  status_path(item),
+                  :confirm => 'Deseja remover a postagem?',
+                  :method => :delete,
+                  :remote => true,
+                  :class => "icon icon-x-gray_8_8" %>
+              </li>
+            <% end %>
+          </ul>
+          <%= render :partial => 'statuses/create_response',
+            :locals => { :in_response_to => item }%>
+          <div class="responses">
+            <ol>
+              <%= render :partial => "statuses/response", :collection => item.answers %>
+            </ol>
+          </div>
+        </div>
+      </div>
+    <% else %>
     <div class="status">
       <div class="status-text">
         <%= image_tag item.user.avatar.url(:thumb_32), :class => "avatar", :width => 32, :height => 32 %>
@@ -126,9 +226,11 @@
           <% if item.statusable_type.eql?('User') %>
             <% unless item.statusable.eql?(current_user) %>
               comentou no mural de <%= link_to item.statusable.display_name, show_mural_user_path(item.statusable) %>
-          <% end %>
+          <% else %>
+            comentou no <%= link_to "seu próprio mural", show_mural_user_path(current_user) %>
         <% end %>
-      </span>
+      <% end %>
+    </span>
         <span class="date">
           <%= time_ago_in_words item.created_at %>
         </span>
@@ -156,7 +258,7 @@
         <% end %>
       </ul>
       <%= render :partial => 'statuses/create_response',
-        :locals => { :statusable => item, :status_id => item.id }%>
+        :locals => { :in_response_to => item }%>
       <div class="responses">
         <ol>
           <%= render :partial => "statuses/response", :collection => item.answers %>
@@ -164,5 +266,6 @@
         <a href="#" class="toggle-statuses">Ver todos os <span class="qty"></span> comentários</a>
       </div>
     </div>
+    <% end %>
   <% end %>
 </li>

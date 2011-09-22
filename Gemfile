@@ -42,9 +42,13 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'shoulda-matchers'
   gem 'ruby-debug'
-  gem 'thin'
   gem 'jasmine'
   gem 'no_peeping_toms', :git => 'git://github.com/alindeman/no_peeping_toms.git'
+end
+
+group :development do
+  gem 'thin'
+  gem 'rails-footnotes', '>= 3.7.5.rc4'
 end
 
 group :production do

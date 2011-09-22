@@ -122,7 +122,7 @@
         <% end %>
       </ul>
       <%= render :partial => 'statuses/create_response',
-        :locals => { :statusable => item.statusable, :status_id => item.id }%>
+        :locals => { :in_response_to => item }%>
       <div class="responses">
         <ol>
           <li id="status-22">

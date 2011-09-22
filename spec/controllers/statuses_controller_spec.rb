@@ -54,11 +54,12 @@ describe StatusesController do
       activate_authlogic
       UserSession.create(@author)
 
-      @params = {:id => subject.id, "status" => {"statusable_type"=>"User", "text"=>"Lorem ipsum dolor sit amet, consectetur magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation", "statusable_id"=> subject.id, "type"=>"Answer" }, "locale" => "pt-BR"}
+      @params = {:id => subject.id, "status" => { "in_response_to_type"=>"Activity", "text"=>"Lorem ipsum dolor sit amet, consectetur magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation", "in_response_to_id"=> subject.id, "type"=>"Answer" }, "locale" => "pt-BR"}
     end
 
     it "creates successfully" do
       expect {
+        request.env["HTTP_REFERER"] = user_url(@statusable)
         post :respond, @params
       }.should change(subject.answers, :count).by(1)
 

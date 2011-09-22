@@ -51,7 +51,7 @@ class Course < ActiveRecord::Base
 
   has_many :logs, :as => :logeable, :order => "created_at DESC",
     :dependent => :destroy
-  has_many :statuses, :as => :statusable, :order => "created_at DESC",
+  has_many :statuses, :as => :statusable, :order => "updated_at DESC",
     :dependent => :destroy
 
   scope :published, where(:published => 1)
