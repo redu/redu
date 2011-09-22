@@ -16,15 +16,6 @@
           :class => "icon #{selected}" %>
       </div>
     </li>
-    <li>
-      <div class=" <%= (current_page? mural_space_subject_path(@subject.space,
-        @subject) ) ?
-        "session selected" : "session" %> ">
-        <% selected = (current_page? mural_space_subject_path(@subject.space, @subject)) ? "icon-subject-white_16_16" : "icon-subject-lightblue_16_16" %>
-        <%= link_to 'Mural', mural_space_subject_path(@subject.space, @subject),
-          :class => "icon #{selected}" %>
-      </div>
-    </li>
     <% if can? :manage, @subject %>
       <li>
         <% selected = (current_page? edit_space_subject_path(@subject.space, @subject)) ? "icon-management-white_16_16" : "icon-management-lightblue_16_16" %>

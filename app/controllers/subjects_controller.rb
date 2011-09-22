@@ -93,20 +93,6 @@ class SubjectsController < BaseController
     redirect_to space_subjects_path(@subject.space)
   end
 
-  def mural
-    @statuses = Status.from_hierarchy(@subject).
-      paginate(:page => params[:page], :per_page => Redu::Application.config.items_per_page)
-    @statusable = @subject
-
-    respond_to do |format|
-      @status = Status.new
-
-      format.html
-      format.js { render_endless 'statuses/item', @statuses, '#statuses > ol' }
-      format.xml { render :xml => @subject }
-    end
-  end
-
   def turn_visible
     @subject.turn_visible!
     flash[:notice] = "O módulo está visível para todos."

@@ -5,7 +5,7 @@ config:
       update: 'atualizou o perfil'
   education:
     messages:
-      create: "adicinou uma nova formação"
+      create: "adicionou uma nova formação"
   experience:
     messages:
       create: "adicionou uma nova experiência no currículo"

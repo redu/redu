@@ -15,19 +15,6 @@ describe SubjectsController do
     UserSession.create @user
   end
 
-  context "GET 'mural'" do
-    before do
-      @subject = Factory(:subject, :owner => @subject_owner,
-                         :visible => true, :space => @space,
-                         :finalized => true)
-    end
-    it "loads that subject" do
-      get :mural, :locale => "pt-BR", :space_id => @space.id,
-        :id => @subject.id
-      assigns[:subject].should == @subject
-    end
-  end
-
   context "GET 'show'" do
     before do
       @subject = Factory(:subject, :owner => @subject_owner,
