@@ -339,45 +339,6 @@ class CoursesController < BaseController
       end
   end
 
-  # Listagem de usuários do Course
-  def users
-    @users = @course.approved_users.includes(:user_course_associations).
-      paginate(:page => params[:users_page], :order => 'first_name ASC',
-               :per_page => 18)
-    @teachers = @course.teachers.includes(:user_course_associations).
-      paginate(:page => params[:teachers_page], :order => 'first_name ASC',
-               :per_page => 18)
-    @tutors = @course.tutors.includes(:user_course_associations).
-      paginate(:page => params[:tutors_page], :order => 'first_name ASC',
-               :per_page => 18)
-    @students = @course.students.includes(:user_course_associations).
-      paginate(:page => params[:students_page], :order => 'first_name ASC',
-               :per_page => 18)
-
-    respond_to do |format|
-      format.html
-      format.js do
-        if params.has_key? :users_page
-          render_endless 'users/item', @users, '#users-list',
-            { :entity => @course },
-            { :param_name => "users_page", :id => "users-endless" }
-        elsif params.has_key? :teachers_page
-          render_endless 'users/item', @teachers, '#teachers-list',
-            { :entity => @course },
-            { :param_name => "teachers_page", :id => "teachers-endless" }
-        elsif params.has_key? :tutors_page
-          render_endless 'users/item', @tutors, '#tutors-list',
-            { :entity => @course },
-            { :param_name => "tutors_page", :id => "tutors-endless" }
-        elsif params.has_key? :students_page
-          render_endless 'users/item', @students, '#students-list',
-            { :entity => @course },
-            { :param_name => "students_page", :id => "students-endless" }
-        end
-      end
-    end
-  end
-
   # Aceitar convite para o Course
   def accept
     authorize! :add_entry, @course

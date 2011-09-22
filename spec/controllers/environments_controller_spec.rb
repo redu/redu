@@ -189,25 +189,6 @@ describe EnvironmentsController do
     end
   end
 
-  context "GET users" do
-    before do
-      environment = Factory(:environment, :published => true)
-      course = Factory(:course, :environment => environment)
-      user = Factory(:user)
-      course.join user
-      activate_authlogic
-      UserSession.create user
-
-      get :users, :id => environment.path, :locale => "pt-BR"
-    end
-
-    [:users, :teachers, :tutors, :students].each do |v|
-      it "assigns #{v}" do
-        assigns[v].should_not be_nil
-      end
-    end
-  end
-
   context "GET preview" do
     before do
       environment = Factory(:environment)
