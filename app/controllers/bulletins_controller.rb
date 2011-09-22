@@ -5,7 +5,6 @@ class BulletinsController < BaseController
   load_and_authorize_resource :bulletin, :through => [:space, :environment]
 
   before_filter :find_environment_course_space
-  after_filter :create_activity, :only => [:create]
 
   def index
     @bulletinable = find_bulletinable

@@ -1,6 +1,5 @@
 class SbPost < ActiveRecord::Base
 
-  has_many :logs, :as => :logeable, :dependent => :destroy, :class_name => 'Status'
   belongs_to :forum, :counter_cache => true
   belongs_to :user,  :counter_cache => true
   alias :owner :user

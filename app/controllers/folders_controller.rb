@@ -23,8 +23,6 @@ class FoldersController < BaseController
   #  before_filter :authorize_updating, :only => [:rename, :update, :update_rights]
   #  before_filter :authorize_deleting, :only => :destroy
 
-  after_filter :create_activity, :only => [:do_the_upload]
-
   rescue_from CanCan::AccessDenied do |exception|
     respond_to do |format|
       format.js { render :error_quota }

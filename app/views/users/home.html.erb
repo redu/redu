@@ -22,7 +22,12 @@
     :locals => { :statusable => current_user } %>
   <div id="statuses" class="statuses">
     <ol>
+      <%# partial para novos layouts de status %>
       <%= render :partial => 'statuses/item', :collection => @statuses %>
+      <% unless @statuses.empty? %>
+        <%= render :partial => "statuses/new_status",
+          :locals => {:item => @statuses.first}%>
+      <% end %>
     </ol>
 
     <%= will_paginate @statuses, :renderer => EndlessRenderer %>

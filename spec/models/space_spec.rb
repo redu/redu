@@ -16,6 +16,9 @@ describe Space do
   it { should have_one :forum }
   it { should have_one :root_folder}
 
+  it { should have_many :logs }
+  it { should have_many :statuses }
+
   it { should validate_presence_of :name}
   it { should validate_presence_of :description }
   it { should validate_presence_of :submission_type }

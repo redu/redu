@@ -2,7 +2,6 @@ class Event < ActiveRecord::Base
   include AASM
 
   # ASSOCIATIONS
-  has_many :logs, :as => :logeable, :dependent => :destroy, :class_name => 'Status'
   belongs_to :owner, :class_name => "User", :foreign_key => 'owner'
   belongs_to :eventable, :polymorphic => true
 

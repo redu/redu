@@ -5,6 +5,7 @@ describe UserCourseAssociation do
 
   it { should belong_to :user }
   it { should belong_to :course }
+  it { should have_many :logs }
 
   #FIXME Problema de tradução
   xit { should validate_uniqueness_of(:user_id).scoped_to(:course_id) }

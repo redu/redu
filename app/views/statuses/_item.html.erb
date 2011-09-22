@@ -1,54 +1,271 @@
 <%# Status e suas respostas  %>
+
 <li id="status-<%= item.id %>">
-  <div class="status">
-    <%= image_tag item.user.avatar.url(:thumb_32), :class => "avatar", :width => 32, :height => 32 %>
-    <span class="message">
-      <%= link_to item.user.display_name, user_path(item.user),
-        { :class => 'username' } %>
-      <span class="date">
-        há <%= time_ago_in_words item.created_at %>
+  <% if item.type.eql? 'Log' %>
+    <% if item.logeable_type.eql?('User') || item.logeable_type.eql?('Education') || item.logeable_type.eql?('Experience') %>
+      <div class="status">
+        <div class="status-text">
+          <%= image_tag item.user.avatar.url(:thumb_32),
+            :class => "avatar", :width => 32, :height => 32 %>
+          <%= link_to item.user.display_name, user_path(item.user), :class => "username" %>
+          <span class="status-info"> <%= raw auto_link(item.action_text) %></span>
+          <span class="date">
+            <%= time_ago_in_words item.created_at %>
+          </span>
+        </div>
+      </div>
+    <% elsif item.logeable_type.eql? 'Friendship' %>
+      <div class="status icons-big-after icon-contact-lightblue_64_66-after">
+        <div class="status-text">
+          <%= image_tag item.user.avatar.url(:thumb_32), :class => "avatar", :width => 32, :height => 32 %>
+          <%= link_to item.user.display_name, user_path(item.user), :class => "username" %>
+          <span class="status-info"> <%= raw auto_link(item.action_text) %></span>
+          <span class="date">
+            <%= time_ago_in_words item.created_at %>
+          </span>
+        </div>
+        <div class="status-content">
+          <%= image_tag item.logeable.friend.avatar.url(:thumb_32), :width => 32, :height => 32, :class => 'friend-avatar' %>
+          <%= link_to item.logeable.friend.display_name, user_path(item.logeable.friend), :class => "username" %>
+          <span class="friend-summary">
+            22 contatos e 2 disciplinas em comum
+          </span>
+        </div>
+      </div>
+    <% elsif item.logeable_type.eql? 'Course' %>
+      <div class="status icons-big-after icon-course-lightblue_64_66-after">
+        <div class="status-context">
+          <span class="status-subject icon-small icon-environment-lightblue_32_34">
+          </span>
+          <%= link_to item.logeable.environment.name, environment_path(item.logeable.environment), :class => "status-main" %>
+          <%= link_to item.logeable.name, environment_course_path(item.logeable.environment, item.logeable), :class => "status-secondary icon-expand-gray_8_10-before" %>
+        </div>
+        <div class="status-log">
+          <%= image_tag item.user.avatar.url(:thumb_32),
+            :width => 32, :height => 32, :class => 'friend-avatar' %>
+          <div class="status-icon icon-<%= role_at(item.user, item.logeable) %>-gray_16_18-before">
+            <%= link_to item.user.display_name, user_path(item.user), :class => "username" %>
+          <span class="status-info"> <%= raw auto_link(item.action_text) %></span>
+          <%= link_to item.logeable.name, environment_course_path(item.logeable.environment, item.logeable), :class => "status-secondary icon-expand-gray_16_18-before" %>
+            <span class="date">
+            <%= time_ago_in_words item.created_at %>
+            </span>
+          </div>
+        </div>
+      </div>
+    <% elsif item.logeable_type.eql? 'Space' %>
+      <div class="status icons-big-after icon-course-lightblue_64_66-after">
+        <div class="status-context">
+          <span class="status-subject icon-small icon-environment-lightblue_32_34">
+          </span>
+          <%= link_to item.logeable.course.environment.name, environment_path(item.logeable.course.environment), :class => "status-main" %>
+          <%= link_to item.logeable.course.name, environment_course_path(item.logeable.course.environment, item.logeable.course), :class => "status-secondary icon-expand-gray_8_10-before" %>
+        </div>
+        <div class="status-log">
+          <%= image_tag item.user.avatar.url(:thumb_32),
+            :width => 32, :height => 32, :class => 'friend-avatar' %>
+          <div class="status-icon icon-<%= role_at(item.user, item.logeable) %>-gray_16_18-before">
+            <%= link_to item.user.display_name, user_path(item.user), :class => "username" %>
+          <span class="status-info"> <%= raw auto_link(item.action_text) %></span>
+          <%= link_to item.logeable.name, space_path(item.logeable), :class => "status-secondary icon-expand-gray_16_18-before" %>
+            <span class="date">
+            <%= time_ago_in_words item.created_at %>
+            </span>
+          </div>
+        </div>
+      </div>
+    <% elsif item.logeable_type.eql? 'Subject' %>
+      <div class="status icons-big-after icon-space-lightblue_64_66-after">
+        <div class="status-context">
+          <span class="status-subject icon-small icon-course-lightblue_32_34">
+          </span>
+          <%= link_to item.logeable.space.course.name, environment_course_path(item.logeable.space.course.environment, item.logeable.space.course), :class => "status-main" %>
+          <%= link_to item.logeable.space.name, space_path(item.logeable.space), :class => "status-secondary icon-expand-gray_8_10-before" %>
+        </div>
+        <div class="status-log">
+          <%= image_tag item.user.avatar.url(:thumb_32),
+            :width => 32, :height => 32, :class => 'friend-avatar' %>
+          <div class="status-icon icon-<%= role_at(item.user, item.logeable) %>-gray_16_18-before">
+            <%= link_to item.user.display_name, user_path(item.user), :class => "username" %>
+          <span class="status-info"> <%= raw auto_link(item.action_text) %></span>
+          <%= link_to item.logeable.title, space_subject_path(item.logeable.space, item.logeable), :class => "status-secondary icon-expand-gray_16_18-before" %>
+            <span class="date">
+            <%= time_ago_in_words item.created_at %>
+            </span>
+          </div>
+        </div>
+      </div>
+    <% elsif item.logeable_type.eql? 'Lecture' %>
+      <div class="status icons-big-after icon-document-lightblue_64_66-after">
+        <div class="status-context">
+          <span class="status-subject icon-small icon-space-lightblue_32_34">
+          </span>
+          <%= link_to item.logeable.subject.space.name, space_path(item.logeable.subject.space), :class => "status-main" %>
+          <%= link_to item.logeable.subject.title, space_subject_lecture_path(item.logeable.subject.space, item.logeable.subject, item.logeable), :class => "status-secondary icon-expand-gray_8_10-before" %>
+        </div>
+        <div class="status-log">
+          <%= image_tag item.user.avatar.url(:thumb_32),
+            :width => 32, :height => 32, :class => 'friend-avatar' %>
+          <div class="status-icon icon-<%= role_at(item.user, item.logeable) %>-gray_16_18-before">
+            <%= link_to item.user.display_name, user_path(item.logeable.owner), :class => "username" %>
+            <span class="status-info"><%= raw item.action_text %></span>
+            <%= link_to item.logeable.name, space_subject_lecture_path(item.logeable.subject.space, item.logeable.subject, item.logeable) %>
+            <span class="date">
+              <%= time_ago_in_words item.created_at %>
+            </span>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <% if item.statusable_type.eql?('Lecture') %>
+      <div class="status">
+        <div class="status-context icons-big-after icon-request-help-orange_64_66-after">
+          <span class="status-subject icon-small icon-space-lightblue_32_34">
+          </span>
+          <%= link_to item.statusable.subject.space.name, space_path(item.statusable.subject.space), :class => "status-main" %>
+          <%= link_to item.statusable.subject.title, space_subject_path(item.statusable.subject.space, item.statusable.subject), :class => "status-secondary icon-expand-gray_8_10-before" %>
+        </div>
+        <div class="status-log">
+          <%= image_tag current_user.avatar.url(:thumb_32),
+            :width => 32, :height => 32, :class => 'friend-avatar' %>
+          <div class="status-icon icon-<%= role_at(item.user, item.statusable.subject) %>-gray_16_18-before ">
+            <%= link_to item.user.display_name, show_mural_user_path(item.user), :class => "username" %>
+            <span class="status-info">solicitou <span class="status-help">ajuda</span> em</span>
+            <%= link_to item.statusable.name, space_subject_lecture_path(item.statusable.subject.space, item.statusable.subject, item.statusable) %>
+            <span class="date">
+              <%= time_ago_in_words item.created_at %>
+            </span>
+            <div class="status-message">
+              <p>
+                <%= raw auto_link(item.text) %>
+              </p>
+            </div>
+          </div>
+          <ul class="actions clearfix">
+            <% if can? :respond, item %>
+              <li>
+                <a href="#" class="icon icon-spinner-gray_8_8 reply-status">Responder</a>
+              </li>
+            <% end %>
+            <% if can? :manage, item %>
+              <li>
+                <%= link_to 'Apagar',
+                  status_path(item),
+                  :confirm => 'Deseja remover a postagem?',
+                  :method => :delete,
+                  :remote => true,
+                  :class => "icon icon-x-gray_8_8" %>
+              </li>
+            <% end %>
+          </ul>
+          <%= render :partial => 'statuses/create_response',
+            :locals => { :in_response_to => item }%>
+          <div class="responses">
+            <ol>
+              <%= render :partial => "statuses/response", :collection => item.answers %>
+            </ol>
+          </div>
+        </div>
+      </div>
+    <% elsif item.statusable_type.eql?('Space') %>
+      <div class="status">
+        <div class="status-context">
+          <span class="status-subject icon-small icon-course-lightblue_32_34">
+          </span>
+          <%= link_to item.statusable.course.name, environment_course_path(item.statusable.course.environment, item.statusable.course), :class => "status-main" %>
+          <%= link_to item.statusable.name, space_path(item.statusable), :class => "status-secondary icon-expand-gray_8_10-before" %>
+        </div>
+        <div class="status-log">
+          <%= image_tag current_user.avatar.url(:thumb_32),
+            :width => 32, :height => 32, :class => 'friend-avatar' %>
+          <div class="status-icon icon-<%= role_at(item.user, item.statusable) %>-gray_16_18-before ">
+            <%= link_to item.user.display_name, show_mural_user_path(item.user), :class => "username" %>
+            <span class="status-info">comentou no mural da disciplina  <%= link_to item.statusable.name, mural_space_path(item.statusable) %></span>
+            <span class="date">
+              <%= time_ago_in_words item.created_at %>
+            </span>
+            <div class="status-message">
+              <p>
+                <%= raw auto_link(item.text) %>
+              </p>
+            </div>
+          </div>
+          <ul class="actions clearfix">
+            <% if can? :respond, item %>
+              <li>
+                <a href="#" class="icon icon-spinner-gray_8_8 reply-status">Responder</a>
+              </li>
+            <% end %>
+            <% if can? :manage, item %>
+              <li>
+                <%= link_to 'Apagar',
+                  status_path(item),
+                  :confirm => 'Deseja remover a postagem?',
+                  :method => :delete,
+                  :remote => true,
+                  :class => "icon icon-x-gray_8_8" %>
+              </li>
+            <% end %>
+          </ul>
+          <%= render :partial => 'statuses/create_response',
+            :locals => { :in_response_to => item }%>
+          <div class="responses">
+            <ol>
+              <%= render :partial => "statuses/response", :collection => item.answers %>
+            </ol>
+          </div>
+        </div>
+      </div>
+    <% else %>
+    <div class="status">
+      <div class="status-text">
+        <%= image_tag item.user.avatar.url(:thumb_32), :class => "avatar", :width => 32, :height => 32 %>
+        <%= link_to item.user.display_name, user_path(item.user), :class => "username" %>
+        <span class="status-info">
+          <% if item.statusable_type.eql?('User') %>
+            <% unless item.statusable.eql?(current_user) %>
+              comentou no mural de <%= link_to item.statusable.display_name, show_mural_user_path(item.statusable) %>
+          <% else %>
+            comentou no <%= link_to "seu próprio mural", show_mural_user_path(current_user) %>
+        <% end %>
+      <% end %>
     </span>
-    <p>
-      <% if item.log %>
-        <%= raw activity_name(item) %>
-      <% else %>
-        <%= raw auto_link(item.text) %>
-      <% end %>
-    </p>
-  </span>
-  <ul class="actions clearfix">
-    <% if can? :respond, item %>
-      <li>
-        <a href="#" class="icon icon-spinner-gray_8_8 reply-status">Responder</a>
-      </li>
-      <li>
-        <%= render :partial => 'statuses/favorite',
-          :locals => { :status => item } %>
-      </li>
+        <span class="date">
+          <%= time_ago_in_words item.created_at %>
+        </span>
+      </div>
+      <div class="status-message">
+        <p>
+          <%= raw auto_link(item.text) %>
+        </p>
+      </div>
+      <ul class="actions clearfix">
+        <% if can? :respond, item %>
+          <li>
+            <a href="#" class="icon icon-spinner-gray_8_8 reply-status">Responder</a>
+          </li>
+        <% end %>
+        <% if can? :manage, item %>
+          <li>
+            <%= link_to 'Apagar',
+              status_path(item),
+              :confirm => 'Deseja remover a postagem?',
+              :method => :delete,
+              :remote => true,
+              :class => "icon icon-x-gray_8_8" %>
+          </li>
+        <% end %>
+      </ul>
+      <%= render :partial => 'statuses/create_response',
+        :locals => { :in_response_to => item }%>
+      <div class="responses">
+        <ol>
+          <%= render :partial => "statuses/response", :collection => item.answers %>
+        </ol>
+        <a href="#" class="toggle-statuses">Ver todos os <span class="qty"></span> comentários</a>
+      </div>
+    </div>
     <% end %>
-
-    <% if can? :manage, item %>
-      <li>
-      <%= link_to 'Apagar',
-        status_path(item),
-        :confirm => 'Deseja remover a postagem?',
-        :method => :delete,
-        :remote => true,
-        :class => "icon icon-x-gray_8_8" %>
-      </li>
-    <% end %>
-  </ul>
-  <%= render :partial => 'statuses/create_response',
-    :locals => { :statusable => item.statusable, :status_id => item.id }%>
-</div>
-  <div class="responses">
-    <ol>
-      <% unless item.responses.empty? %>
-        <%= render :partial => 'statuses/response',
-          :collection => item.statuses %>
-      <% end %>
-    </ol>
-    <a href="#" class="toggle-statuses">Ver todos os <span class="qty"></span> comentários</a>
-  </div><!-- end .responses -->
+  <% end %>
 </li>
-

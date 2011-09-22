@@ -6,7 +6,6 @@ class SubjectsController < BaseController
   load_and_authorize_resource :subject, :only => [:update, :destroy]
 
   before_filter :load_course_and_environment
-  after_filter :create_activity, :only => [:update]
 
   rescue_from CanCan::AccessDenied do |exception|
     flash[:notice] = "Você não tem acesso a essa página"
@@ -95,7 +94,8 @@ class SubjectsController < BaseController
   end
 
   def mural
-    @statuses = @subject.recent_activity(params[:page])
+    @statuses = Status.from_hierarchy(@subject).
+      paginate(:page => params[:page], :per_page => Redu::Application.config.items_per_page)
     @statusable = @subject
 
     respond_to do |format|

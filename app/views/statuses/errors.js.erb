@@ -1,4 +1,8 @@
-var $text = $(".textarea:visible");
+<% if @status.type.eql? 'Answer' %>
+  var $text = $("textarea:visible", "#status-<%= @status.in_response_to.id %>");
+<% else %>
+  var $text = $(".textarea:visible");
+<% end %>
 var $errors = $("<div/>", { "class" : 'fieldWithErrors' });
 var $message = $("<p/>", { "class" : "errorMessageField" }).html("<%= status.errors.full_messages.to_sentence %>");
 

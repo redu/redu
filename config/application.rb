@@ -175,5 +175,22 @@ module Redu
       :key => 'f786a58d885e7397ecaa',
       :secret => '1de7afbc11094fcfa16b'
     }
+
+    # Observers
+    unless File.basename($0) == 'rake'
+      config.active_record.observers = [:course_observer,
+                                        :space_observer,
+                                        :subject_observer,
+                                        :lecture_observer,
+                                        :user_observer,
+                                        :friendship_observer,
+                                        :status_observer,
+                                        :education_observer,
+                                        :experience_observer]
+    end
+
+    # Redu logger
+    config.overview_logger = YAML.load_file("#{Rails.root}/config/logs.yml")
+    config.overview_logger = config.overview_logger['config']
   end
 end

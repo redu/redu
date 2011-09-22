@@ -29,6 +29,8 @@ describe Course do
   it { should have_one(:quota).dependent(:destroy) }
   it { should have_one(:plan) }
 
+  it { should have_many :logs }
+  it { should have_many :statuses }
 
   it { should validate_presence_of :name }
   it { should validate_presence_of :path }
@@ -42,6 +44,7 @@ describe Course do
   it { should_not allow_mass_assignment_of :owner }
   it { should_not allow_mass_assignment_of :published }
   it { should_not allow_mass_assignment_of :environment }
+
 
   context "validations" do
     it "ensure format for path: doesn't accept no ascii" do

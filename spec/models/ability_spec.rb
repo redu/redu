@@ -803,7 +803,7 @@ describe Ability do
       end
 
       it "manages its own statuses" do
-        status = Factory(:status, :user => @user)
+        status = Factory(:activity, :user => @user)
         @user_ability.should be_able_to(:manage, status)
       end
 

@@ -5,7 +5,6 @@ class SbPostsController < BaseController
   load_and_authorize_resource :sb_post, :except => [:create], :through => :space
 
   before_filter :find_environmnet_course, :except => [:index, :new, :create]
-  after_filter :create_activity, :only => [:create]
 
   def index
     conditions = []

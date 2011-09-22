@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   SUPPORTED_CURRICULUM_TYPES = [ 'application/pdf', 'application/msword',
                                  'text/plain', 'application/rtf', 'text/rtf',
                                  'application/vnd.openxmlformats-officedocument.wordprocessingml.document' # docx
-                               ]
+  ]
 
   # CALLBACKS
   before_create :make_activation_code
@@ -25,7 +25,6 @@ class User < ActiveRecord::Base
 
   # ASSOCIATIONS
   has_many :annotations, :dependent => :destroy, :include=> :lecture
-  has_many :statuses, :as => :statusable, :dependent => :destroy
   has_many :chat_messages
   # Space
   has_many :spaces, :through => :user_space_associations
@@ -101,6 +100,14 @@ class User < ActiveRecord::Base
 
   has_many :social_networks, :dependent => :destroy
 
+  has_many :logs, :as => :logeable, :order => "created_at DESC",
+    :dependent => :destroy
+  has_many :statuses, :as => :statusable, :order => "updated_at DESC",
+    :dependent => :destroy
+  has_many :overview, :through => :status_user_associations, :source => :status,
+    :include => [:user, :answers], :order => "updated_at DESC"
+  has_many :status_user_associations, :dependent => :destroy
+
   # Named scopes
   scope :recent, order('users.created_at DESC')
   # FIXME Remover tudo relacionado a este named_scope,
@@ -139,6 +146,7 @@ class User < ActiveRecord::Base
     where("friendships.status = 'accepted'" \
           " OR friendships.status = 'pending'" \
           " OR friendships.status = 'requested'")
+
   attr_accessor :email_confirmation
 
   # Accessors
@@ -277,7 +285,7 @@ class User < ActiveRecord::Base
       self.member?(entity.space)
     when 'SbPost'
       self.member?(entity.space)
-    when 'Status'
+    when 'Status', 'Activity', 'Answer'
       if self == entity.user
         true
       else
@@ -716,17 +724,10 @@ class User < ActiveRecord::Base
     self.statuses.log_action_eq(TEACHING_ACTIONS).descend_by_created_at
   end
 
-  def profile_activity(page = 1)
-    Status.profile_activity(self).
-      paginate(:page => page, :order => 'created_at DESC',
-               :per_page => Redu::Application.config.items_per_page)
-  end
-
-  # FIXME Não foi testado devido a futura reformulação de Status
   def home_activity(page = 1)
-    Status.home_activity(self).paginate(:page => page,
-                                        :order => 'created_at DESC',
-                                        :per_page => Redu::Application.config.items_per_page)
+    overview.paginate(:page => page,
+                      :order => 'created_at DESC',
+                      :per_page => Redu::Application.config.items_per_page)
   end
 
   def add_favorite(favoritable_type, favoritable_id)

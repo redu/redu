@@ -10,8 +10,9 @@ class Subject < ActiveRecord::Base
     :conditions => ["student_profiles.graduaded = 1"]
   has_many :teachers, :through => :enrollments, :source => :user,
     :conditions => ["enrollments.role = ?", 5] # Teacher
-  has_many :statuses, :as => :statusable, :dependent => :destroy
-  has_many :logs, :as => :logeable, :dependent => :destroy, :class_name => 'Status'
+  has_many :statuses, :as => :statusable, :order => "created_at DESC"
+  has_many :logs, :as => :logeable, :order => "created_at DESC",
+    :dependent => :destroy
 
   scope :recent, lambda { where('updated_at > ?', 1.week.ago) }
   scope :visible, lambda { where('visible = ?', true) }
@@ -62,14 +63,6 @@ class Subject < ActiveRecord::Base
       lecture.position = i + 1 # Para não ficar índice zero.
       lecture.save
     end
-  end
-
-  #TODO colocar esse metodo em status passando apenas o objeto
-  # Não foi testado, pois haverá reformulação de subject
-  def recent_activity(page = 1)
-    self.statuses.not_response.
-      paginate(:page => page, :order => 'created_at DESC',
-               :per_page => Redu::Application.config.items_per_page)
   end
 
   def convert_lectureables!

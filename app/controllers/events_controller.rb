@@ -6,7 +6,6 @@ class EventsController < BaseController
   before_filter :find_environment_course_and_space
 
   cache_sweeper :event_sweeper, :only => [:create, :update, :destroy]
-  after_filter :create_activity, :only => [:create]
 
   rescue_from CanCan::AccessDenied do |exception|
     flash[:notice] = "Você não tem acesso a essa página"
