@@ -29,6 +29,8 @@ jQuery(function(){
         $(this).parents("ul:first").next(".create-response").slideToggle();
         $(this).parents(".create-response:first").slideToggle();
         $(this).parents("ul:first").next(".create-response").find("textarea").focus();
+        $(this).parents("ul:first").next(".create-status").find("textarea:first").val("");
+        $(this).parents(".create-status").find("textarea:first").val("");
         e.preventDefault();
     });
 
