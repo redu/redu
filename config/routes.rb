@@ -111,7 +111,6 @@ Redu::Application.routes.draw do
         get :statuses
         get :users
         get :admin_members
-        get :mural
       end
       collection do
         get :cancel
