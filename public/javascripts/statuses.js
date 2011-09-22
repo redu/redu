@@ -42,7 +42,6 @@ jQuery(function(){
         $(document).refreshStatuses();
 
         $(document).ajaxComplete(function(){
-            console.log("refresh!");
             $(document).refreshStatuses();
         });
     });
