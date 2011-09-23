@@ -181,6 +181,8 @@ Redu::Application.routes.draw do
       end
       resources :sb_posts, :except => [:new, :edit, :create, :update, :destroy]
     end
+
+    resources :users, :only => [:index]
  end
 
   # Users
@@ -376,6 +378,7 @@ Redu::Application.routes.draw do
       end
 
       resources :user_course_invitations, :only => [:show]
+      resources :users, :only => [:index]
     end
     resources :bulletins do
       member do
@@ -383,6 +386,7 @@ Redu::Application.routes.draw do
         post :vote
       end
     end
+    resources :users, :only => [:index]
   end
 
 
