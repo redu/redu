@@ -72,7 +72,7 @@ describe UserCourseInvitation do
 
       it "sends an email" do
         subject.reload
-        UserNotifier.deliveries.last.subject.should =~ /Você foi convidado para um curso no Redu/
+        UserNotifier.deliveries.last.subject.should =~ /Você foi convidado para realizar um curso a distância/
         UserNotifier.deliveries.last.body.should =~ /#{subject.course.name}/
       end
     end
