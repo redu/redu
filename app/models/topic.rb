@@ -10,7 +10,6 @@ class Topic < ActiveRecord::Base
   alias :owner :user
   has_many :monitorships
   has_many :monitors, :through => :monitorships, :conditions => ['monitorships.active = ?', true], :source => :user
-  has_many :logs, :as => :logeable, :dependent => :destroy, :class_name => 'Status'
 
   has_many :sb_posts, :order => 'sb_posts.created_at', :dependent => :destroy do
     def last

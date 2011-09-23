@@ -2,6 +2,8 @@ class UserCourseAssociation < ActiveRecord::Base
   include AASM
   belongs_to :user
   belongs_to :course
+  has_many :logs, :as => :logeable, :order => "created_at DESC",
+    :dependent => :destroy
   enumerate :role
 
   # Filtra por papéis (lista)
@@ -79,6 +81,12 @@ class UserCourseAssociation < ActiveRecord::Base
   protected
 
   def create_hierarchy_associations
-    self.course.create_hierarchy_associations(self.user) if self.invited?
+    if self.invited? || (has_environment? && self.waiting?)
+      self.course.create_hierarchy_associations(self.user)
+    end
+  end
+
+  def has_environment?
+    !course.try(:environment).nil?
   end
 end

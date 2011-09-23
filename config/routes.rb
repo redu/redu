@@ -8,7 +8,11 @@ Redu::Application.routes.draw do
     :constraints => { :action         => /(add|remove)/,
                        :folder_or_file => /(folder|file)/ }
   match '/jobs/notify' => 'jobs#notify', :as => :notify
-  resources :statuses
+  resources :statuses, :only => [:create, :destroy] do
+    member do
+      post :respond
+    end
+  end
   resources :profiles
   resources :questions do
     collection do
@@ -107,7 +111,6 @@ Redu::Application.routes.draw do
         get :statuses
         get :users
         get :admin_members
-        get :mural
       end
       collection do
         get :cancel
@@ -296,12 +299,6 @@ Redu::Application.routes.draw do
             get :slideshow
           end
         end
-      end
-    end
-
-    resources :statuses do
-      member do
-        post :respond
       end
     end
 

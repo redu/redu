@@ -5,6 +5,7 @@ describe Education do
 
   it { should belong_to :user }
   it { should belong_to(:educationable).dependent(:destroy)}
+  it { should have_many :logs }
 
   it { should validate_presence_of :user }
   it { should validate_presence_of :educationable }

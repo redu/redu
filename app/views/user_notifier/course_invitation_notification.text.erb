@@ -1,6 +1,8 @@
-Olá, <%= @user.display_name %>,
+Olá <%= @user.display_name %>, parabéns!
 
-você foi convidado para participar do curso <%= @course.name %>. Para aceitar o convite, visite sua página inicial clicando no link abaixo:
+Você foi convidado para participar do curso <%= @course.name %> em <%= @course.environment.name %>.
+
+Para aceitar o convite, visite sua página inicial clicando no link abaixo:
 
   <%= home_user_url(@user) %>
 

@@ -1,7 +1,6 @@
 class UsersController < BaseController
   respond_to :html, :js
 
-  after_filter :create_activity, :only => [:update]
   load_and_authorize_resource :except => [:forgot_password,
     :forgot_username, :resend_activation, :activate, :index],
     :find_by => :login
@@ -445,7 +444,7 @@ class UsersController < BaseController
 
   def mural
     @friends = current_user.friends.paginate(:page => 1, :per_page => 9)
-    @statuses = current_user.statuses.not_response.
+    @statuses = current_user.statuses.
       paginate(:page => params[:page], :per_page => 10)
     @status = Status.new
 
@@ -488,7 +487,8 @@ class UsersController < BaseController
       redirect_to removed_page_path and return
     end
 
-    @statuses = @user.profile_activity(params[:page])
+    @statuses = @user.statuses.paginate(:page => params[:page],
+               :per_page => Redu::Application.config.items_per_page)
     @statusable = @user
     @status = Status.new
 

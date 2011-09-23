@@ -5,6 +5,7 @@ describe UserCourseAssociation do
 
   it { should belong_to :user }
   it { should belong_to :course }
+  it { should have_many :logs }
 
   #FIXME Problema de tradução
   xit { should validate_uniqueness_of(:user_id).scoped_to(:course_id) }
@@ -69,11 +70,30 @@ describe UserCourseAssociation do
         }.should change {
           subject.course.environment.user_environment_associations.count
         }.by(1)
+
+        subject.course.environment.users.should include(subject.user)
       end
 
       it "should create hierachy associations" do
         subject.course.should_receive(:create_hierarchy_associations).with(subject.user)
         subject.accept!
+      end
+    end
+
+    context "when approving" do
+      it "should create environment association" do
+        expect {
+          subject.approve!
+        }.should change {
+          subject.course.environment.user_environment_associations.count
+        }.by(1)
+
+        subject.course.environment.users.should include(subject.user)
+      end
+
+      it "should create hierachy associations" do
+        subject.course.should_receive(:create_hierarchy_associations).with(subject.user)
+        subject.approve!
       end
     end
   end

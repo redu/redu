@@ -3,8 +3,6 @@ class LecturesController < BaseController
   respond_to :html, :js
 
   before_filter :find_subject_space_course_environment
-  after_filter :create_activity, :only => [:create]
-
 
   include Viewable # atualiza o view_count
   load_and_authorize_resource :subject
@@ -54,10 +52,10 @@ class LecturesController < BaseController
 
     #relacionados
     @related_lectures = Lecture.related_to(@lecture).limit(3).
-                          order('rating_average DESC')
+      order('rating_average DESC')
 
     @status = Status.new
-    @statuses = @lecture.statuses.not_response.
+    @statuses = Status.from_hierarchy(@lecture).
       paginate(:page => params[:page],:order => 'created_at DESC',
                :per_page => Redu::Application.config.items_per_page)
 
@@ -81,7 +79,7 @@ class LecturesController < BaseController
           render :show_document
         end
       end
-
+      format.js { render_endless 'statuses/item', @statuses, '#statuses > ol' }
       format.html
       format.xml  { render :xml => @lecture }
     end

@@ -3,7 +3,7 @@ class StatusesController < BaseController
   load_and_authorize_resource :status, :except => [:index]
 
   def create
-    @status = Status.new(params[:status])
+    @status = Activity.new(params[:status])
 
     @status.user = current_user
 
@@ -18,20 +18,31 @@ class StatusesController < BaseController
           redirect_to :back
         }
         format.xml { render :xml => @status.errors.to_xml }
-        format.js { render :template => 'statuses/errors', :locals => { :status => @status } }
+        format.js do
+          render :template => 'statuses/errors',
+            :locals => { :status => @status }
+        end
       end
     end
   end
 
   def respond
-    responds_to = Status.find(params[:id])
-    @status = Status.new(params[:status])
-    @status.in_response_to = responds_to
-    @status.user = current_user
-    @status.save
+    @answer = @status.respond(params[:status], current_user)
+    @status.answers << @answer # Sem isso o teste não passa
 
     respond_to do |format|
-      format.js
+      unless @answer.new_record?
+        format.html { redirect_to :back }
+        format.js
+      else
+        format.html {
+          flash[:statuses_errors] = @answer.errors.full_messages.to_sentence
+          redirect_to :back
+        }
+        format.js do
+          render :template => 'statuses/errors', :locals => { :status => @answer }
+        end
+      end
     end
   end
 

@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 source 'http://gems.github.com'
 
-gem 'bundler', '1.0.15'
+gem 'bundler', '~> 1.0.15'
 gem 'rails', '3.0.7'
 gem 'rake', '0.8.7'
 gem 'mysql2', '~> 0.2.1'
@@ -14,7 +14,7 @@ gem 'cancan'
 gem 'aasm', :require => "aasm",
   :git => "git://github.com/alto/aasm.git"
 gem 'shuber-sortable'
-gem 'scribd_fu'
+gem 'scribd_fu', :git => 'git://github.com/guiocavalcanti/scribd_fu.git'
 gem 'factory_girl_rails'
 gem 'ar_mailer_rails3'
 gem 'active_enum'
@@ -43,8 +43,13 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'shoulda-matchers'
   gem 'ruby-debug'
-  gem 'thin'
   gem 'jasmine'
+  gem 'no_peeping_toms', :git => 'git://github.com/alindeman/no_peeping_toms.git'
+end
+
+group :development do
+  gem 'thin'
+  gem 'rails-footnotes', '>= 3.7.5.rc4'
 end
 
 group :production do

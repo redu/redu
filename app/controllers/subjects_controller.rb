@@ -6,7 +6,6 @@ class SubjectsController < BaseController
   load_and_authorize_resource :subject, :only => [:update, :destroy]
 
   before_filter :load_course_and_environment
-  after_filter :create_activity, :only => [:update]
 
   rescue_from CanCan::AccessDenied do |exception|
     flash[:notice] = "Você não tem acesso a essa página"
@@ -92,19 +91,6 @@ class SubjectsController < BaseController
       flash[:notice] = "O módulo foi removido."
     end
     redirect_to space_subjects_path(@subject.space)
-  end
-
-  def mural
-    @statuses = @subject.recent_activity(params[:page])
-    @statusable = @subject
-
-    respond_to do |format|
-      @status = Status.new
-
-      format.html
-      format.js { render_endless 'statuses/item', @statuses, '#statuses > ol' }
-      format.xml { render :xml => @subject }
-    end
   end
 
   def turn_visible

@@ -8,6 +8,38 @@
 
   <%= render :partial => "lectures/student_actions" %>
   <ul class="local-nav">
+    <li>
+      <div class=" <%= (current_page? space_subject_path(@space, @subject) ) ? "session selected" : "session" %> ">
+        <% resource_name = "Recursos: #{@subject.lectures.size}" %>
+        <% resource_name = "Recurso: #{@subject.lectures.size}" if @subject.lectures.size ==  1 %>
+
+        <% selected = (current_page? space_subject_path(@subject.space, @subject)) ? "icon-resource-white_16_16" : "icon-resource-lightblue_16_16" %>
+        <%= link_to resource_name, space_subject_path(@space, @subject),
+          :class => "icon #{selected}" %>
+      </div>
+    </li>
+    <% if can? :manage, @subject %>
+      <li>
+        <% selected = (current_page? edit_space_subject_path(@subject.space, @subject)) ? "icon-management-white_16_16" : "icon-management-lightblue_16_16" %>
+        <div class="<%= (current_page? edit_space_subject_path(@space, @subject) ) ? "session selected" : "session" %>">
+                         <%= link_to 'Gerenciamento', edit_space_subject_path(@space, @subject),
+                           :class => "icon #{selected}" %>
+        </div>
+      </li>
+    <% end %>
+    <li>
+      <div class="<%= (current_page? users_space_subject_path(@space, @subject) ) ? "session selected" : "session" %>">
+        <% selected = (current_page? users_space_subject_path(@subject.space, @subject)) ? "icon-members-white_16_16" : "icon-members-lightblue_16_16" %>
+        <%= link_to "Membros: #{@subject.members.length}", users_space_subject_path(@space, @subject),
+        :class => "icon #{selected}" %>
+      </div>
+      <ul class="connections clearfix">
+        <%= render :partial => 'users/item_short',
+            :collection => @subject.members.n_recent(9) %>
+      </ul> <!-- end .coonections -->
+        <%= link_to "Ver mais", users_space_subject_path(@space, @subject),
+          :class => 'more'%>
+    </li>
   </ul><!-- end .local-nav -->
 </div>
 

@@ -1,0 +1,27 @@
+config:
+  user:
+    attrs: ['name', 'email', 'description', 'birthday', 'first_name', 'last_name', 'avatar_file_name']
+    messages:
+      update: 'atualizou o perfil'
+  education:
+    messages:
+      create: "adicionou uma nova formação"
+  experience:
+    messages:
+      create: "adicionou uma nova experiência no currículo"
+  course:
+    messages:
+      create: "criou o curso"
+  friendship:
+    messages:
+      update: "adicionou a sua rede de contatos"
+  lecture:
+    messages:
+      create: "publicou a aula"
+  subject:
+    messages:
+      update: "publicou o módulo"
+  space:
+    messages:
+      create: "criou a disciplina"
+

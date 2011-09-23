@@ -4,7 +4,6 @@ class TopicsController < BaseController
   load_and_authorize_resource :topic, :except => [:new, :create], :through => :space
 
   before_filter :find_environmnet_course
-  after_filter :create_activity, :only => [:create]
 
   def new
     authorize! :read, @space

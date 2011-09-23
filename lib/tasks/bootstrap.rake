@@ -96,7 +96,13 @@ namespace :bootstrap do
     Audience.create(:name => "Diversos")
   end
 
+  desc "Inser standard partner"
+  task :partner => :environment do
+    Partner.create(:name => "CNS", :email => "cns@redu.com.br")
+  end
+
   desc "Run all bootstrapping tasks"
   task :all => [:roles, :privacies, :audiences, :redu_categories,
-                :simple_categories, :default_user, :default_admin]
+                :simple_categories, :default_user, :default_admin,
+                :partner]
 end
