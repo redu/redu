@@ -4363,6 +4363,11 @@ table.spaced tr td {
   display: block;
 }
 
+#checkout .table {
+  clear: none;
+  padding: 0;
+}
+
 #checkout .step-info {
   width: 155px;
   height: 160px;
@@ -4406,10 +4411,14 @@ table.spaced tr td {
 #checkout .menu {
   overflow: hidden;
   margin-bottom: 20px;
+  border: none;
+  padding: 0;
 }
 
 #checkout .table .menu li {
   float: left;
+  width: auto;
+  height: auto;
 }
 
 .borderradius #checkout .table .menu li {
@@ -4431,6 +4440,7 @@ table.spaced tr td {
 
 #checkout .table .vanila-plan {
   margin-right: 80px;
+  border: 1px solid #CCCBCB;
 }
 
 #checkout .table .menu .vanila-plan a {
@@ -4440,13 +4450,27 @@ table.spaced tr td {
   text-align: center;
 }
 
+
+#checkout .table .ui-tabs-default {
+  border: 1px solid #CCCBCB;
+}
+
 #checkout .table .ui-tabs-selected {
   border: 1px solid #4CACD5;
   background-color: #4CACD5;
 }
 
+#checkout .table .ui-state-default a {
+  color: #158ac4;
+}
+
+.textshadow #checkout .table .ui-state-default a {
+  text-shadow: none;
+}
+
 #checkout .table .ui-tabs-selected a {
   color: white;
+  background-color: transparent;
 }
 
 .boxshadow #checkout .table .menu .ui-tabs-selected {
@@ -4471,7 +4495,7 @@ table.spaced tr td {
   display: block;
 }
 
-#checkout .partner {
+#checkout .table li.partner {
   width: 340px;
   height: 160px;
   background-color: #F0F0F0;
