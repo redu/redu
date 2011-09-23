@@ -126,7 +126,7 @@
           <%= link_to item.statusable.subject.title, space_subject_path(item.statusable.subject.space, item.statusable.subject), :class => "status-secondary icon-expand-gray_8_10-before" %>
         </div>
         <div class="status-log">
-          <%= image_tag current_user.avatar.url(:thumb_32),
+          <%= image_tag item.user.avatar.url(:thumb_32),
             :width => 32, :height => 32, :class => 'friend-avatar' %>
           <div class="status-icon icon-<%= role_at(item.user, item.statusable.subject) %>-gray_16_18-before ">
             <%= link_to item.user.display_name, show_mural_user_path(item.user), :class => "username" %>
@@ -177,7 +177,7 @@
           <%= link_to item.statusable.name, space_path(item.statusable), :class => "status-secondary icon-expand-gray_8_10-before" %>
         </div>
         <div class="status-log">
-          <%= image_tag current_user.avatar.url(:thumb_32),
+          <%= image_tag item.user.avatar.url(:thumb_32),
             :width => 32, :height => 32, :class => 'friend-avatar' %>
           <div class="status-icon icon-<%= role_at(item.user, item.statusable) %>-gray_16_18-before ">
             <%= link_to item.user.display_name, show_mural_user_path(item.user), :class => "username" %>
