@@ -47,7 +47,7 @@ class EnvironmentsController < BaseController
     @header_environment.id = @environment.id
 
     respond_to do |format|
-      format.html
+      format.html { render 'environments/admin/edit' }
     end
   end
 
@@ -136,7 +136,7 @@ class EnvironmentsController < BaseController
         format.html { redirect_to(@environment) }
         format.xml  { head :ok }
       else
-        format.html { render :edit }
+        format.html { render 'environments/admin/edit' }
         format.xml  { render :xml => @environment.errors, :status => :unprocessable_entity }
       end
     end

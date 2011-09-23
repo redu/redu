@@ -14,7 +14,8 @@
   <% if item.recent? %>
     <span class="new">Novo</span>
   <% end %>
-  <% unless item.graduated? current_user %>
+  <% if !item.graduated?(current_user) &&
+    !current_user.get_association_with(item).nil?  %>
     <span class="grade">(<%= current_user.get_association_with(item).student_profile.grade.to_i %>% cursado)</span>
   <% end %>
   <p class="description"><%= item.description %></p>

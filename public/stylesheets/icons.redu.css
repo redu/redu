@@ -119,7 +119,8 @@
 .icon-bio-lightblue_16_18:hover { background-position: -160px  -1360px; }
 .icon-bio-blue_16_18-before:before,
 .icon-bio-lightblue_16_18-before:hover:before,
-.subtabs .ui-state-default .icon-bio_16_18-before:hover:before {
+.subtabs .ui-state-default .icon-bio_16_18-before:hover:before,
+.tabs .ui-state-default .icon-bio_16_18-before:hover:before {
   content: "";
   width: 16px;
   height: 18px;
@@ -127,7 +128,8 @@
 }
 
 .icon-bio-gray_16_18 { background-position: 0 -1360px; }
-.icon-bio-gray_16_18-before:before {
+.icon-bio-gray_16_18-before:before,
+.tabs .ui-state-default .icon-bio_16_18-before:before {
   content: "";
   width: 16px;
   height: 18px;
@@ -136,7 +138,8 @@
 
 .icon-bio-lightblue_16_18 { background-position: -80px  -1360px; }
 .icon-bio-lightblue_16_18-before:before,
-.subtabs .ui-state-default .icon-bio_16_18-before:before {
+.subtabs .ui-state-default .icon-bio_16_18-before:before,
+.tabs .ui-state-active .icon-bio_16_18-before:before {
   content: "";
   width: 16px;
   height: 18px;
@@ -269,17 +272,33 @@
   background: url("../images/new/icons-small.png") -400px -240px no-repeat;
 }
 
+.icon-course-gray_16_18 { background-position: 0 -80px;}
+.icon-course-gray_16_18,
+.tabs .ui-state-default .icon-course_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") 0 -80px no-repeat;
+}
+
 .icon-course-blue_16_18,
 .icon-course-lightblue_16_18:hover { background-position: -160px -80px }
 .icon-course-blue_16_18-before:before,
-.icon-course-lightblue_16_18-before:hover:before {
+.icon-course-lightblue_16_18-before:hover:before,
+.tabs .ui-state-default .icon-course_16_18-before:hover:before {
   content: "";
   width: 16px;
   height: 18px;
   background: url("../images/new/icons-small.png") -160px -80px no-repeat;
 }
-
-.icon-course-gray_16_18 { background-position: 0 -80px;}
+.icon-course-lightblue_16_18 { background-position: -80px -80px }
+.icon-course-lightblue_16_18-before:before,
+.tabs .ui-state-active .icon-course_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -80px -80px no-repeat;
+}
 
 .icon-course-gray_32_34 { background-position: -320px -80px; }
 .icon-course-gray_32_34-before:before {
@@ -287,14 +306,6 @@
   width: 32px;
   height: 34px;
   background: url("../images/new/icons-small.png") -320px -80px no-repeat;
-}
-
-.icon-course-lightblue_16_18 { background-position: -80px -80px }
-.icon-course-lightblue_16_18-before:before {
-  content: "";
-  width: 16px;
-  height: 18px;
-  background: url("../images/new/icons-small.png") -80px -80px no-repeat;
 }
 
 .icon-cv-blue_16_18,
@@ -737,6 +748,14 @@
   background: url("../images/new/icons-small.png") -80px -400px no-repeat;
 }
 
+.icon-manage-lightblue_32_34 { background-position: -400px -400px; }
+.icon-manage-lightblue_32_34-before:before {
+  content: "";
+  width: 32px;
+  height: 34px;
+  background: url("../images/new/icons-small.png") -400px -400px no-repeat;
+}
+
 .icon-manage-white_16_18 { background-position: -240px -400px; }
 .icon-manage-white_16_18:before,
 .local-nav .ui-state-active .icon-manage_16_18-before:before {
@@ -788,16 +807,28 @@
 .icon-members-lightblue_16_18:hover { background-position: -160px -480px; }
 .icon-members-blue_16_18-before:before,
 .icon-members-lightblue_16_18-before:hover:before,
-.local-nav .icon-members_16_18-before:hover:before {
+.local-nav .icon-members_16_18-before:hover:before,
+.tabs .ui-state-default .icon-members_16_18-before:hover:before {
   content: "";
   width: 16px;
   height: 18px;
   background: url("../images/new/icons-small.png") -160px -480px no-repeat;
 }
 
+.icon-members-gray_16_18 { background-position: 0 -480px; }
+.icon-members-gray_16_18-before:before,
+.local-nav .ui-state-active .icon-members_16_18-before:before,
+.tabs .ui-state-default .icon-members_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") 0 -480px no-repeat;
+}
+
 .icon-members-lightblue_16_18 { background-position: -80px -480px; }
 .icon-members-lightblue_16_18-before:before,
-.local-nav .icon-members_16_18-before:before {
+.local-nav .icon-members_16_18-before:before,
+.tabs .ui-state-active .icon-members_16_18-before:before {
   content: "";
   width: 16px;
   height: 18px;
@@ -820,7 +851,6 @@
   height: 34px;
   background: url("../images/new/icons-small.png") -320px -480px no-repeat;
 }
-
 
 .icon-message-blue_16_18,
 .icon-message-lightblue_16_18:hover { background-position: -400px  -2240px; }

@@ -1,0 +1,68 @@
+  <script type="text/javascript">
+    $(document).ready(function(){
+        $("#environment_name").bind('keyup blur', function(e){
+          $("#environment_path").val($(this).slug());
+          $(".form-common .path .environment").html($(this).slug());
+          })
+
+        $("#environment_path").bind('keyup blur', function(e){
+          $("#environment_path").val($(this).slug());
+          $(".form-common .path .environment").html($(this).slug());
+          })
+
+        })
+</script>
+<style type="text/css">
+  body {
+    background-color: rgb(230, 230, 230);
+  }
+</style>
+<%= render :partial => 'environments/sidebar',
+  :locals => { :environment => @header_environment } %>
+<div class="main grid_12 omega big-col">
+  <%= render :partial => 'environments/breadcrumbs',
+    :locals => { :environment => @header_environment } %>
+
+  <%= render :partial => 'environments/admin/header',
+    :locals => { :environment => @header_environment } %>
+
+  <div id="environment-manage" class="body management">
+    <div class="header">
+      <h4 class="title icon-manage-lightblue_32_34-before">Gerenciamento do ambiente</h4>
+    </div>
+
+    <%= tabs :environments_admin do %>
+
+      <%= form_for @environment, :html => { :class => 'concave-form',
+        :multipart => true }, :url => environment_path(@header_environment) do |f| %>
+        <%= concave_error_messages_for(@environment) %>
+        <%= f.label :name, "Nome" %>
+        <%= f.text_field :name  %>
+        <span class="tip">Nome do ambiente virtual de aprendizagem</span>
+        <%= f.label :initials, "Abreviação" %>
+        <%= f.text_field :initials  %>
+        <span class="tip">Abreviação ou sigla</span>
+        <%= f.label :path, t(:path) %>
+        <%= f.text_field :path %>
+        <%= f.label :description, "Descrição" %>
+        <%= f.text_area :description, :size=>'102x4' %>
+        <span class="tip">Informações acerca do ambiente virtual de aprendizagem</span>
+        <%= f.label :tag_list,
+          raw("Palavras-chave <span class='snippet'>(separadas por vírgula)</span>") %>
+        <%= f.text_field :tag_list %>
+        <span class="tip">O ambiente resumido em palavras elementares</span>
+        <%= f.label :avatar, "Imagem" %>
+        <%= f.file_field :avatar %>
+        <hr/>
+
+        <%= f.submit "Salvar alterações" %>
+        <%= link_to "Remover ambiente", environment_path(@header_environment),
+          :confirm => "Você tem certeza que deseja remover este ambiente?",
+          :method => :delete,
+          :class => "remove vanilla" %>
+      <%= link_to "Sair", environment_path(@header_environment),
+        :class => "manage icon-manage-gray_8_10-before" %>
+      <% end %>
+    <% end %>
+  </div>
+</div><!-- end #environment-edit -->

@@ -1,3 +1,7 @@
+body {
+  background-color: rgb(247, 247, 247);
+}
+
 #outdated-browser {
   height: 100px;
   background: url("../images/new/error-top-bkg-line.png") repeat-x;
@@ -594,6 +598,18 @@
   font-weight: normal;
 }
 
+#hierarchy-header.management .call {
+  margin-bottom: 0;
+}
+
+.textshadow #hierarchy-header.management .call {
+  text-shadow: 0px -1px 0px rgb(179, 178, 179);
+}
+
+#hierarchy-header.management .call a {
+  color: rgb(255, 255, 255);
+}
+
 #hierarchy-header.subject-header .call a {
   color: rgb(179, 179, 179)
 }
@@ -635,14 +651,21 @@
   margin: 10px 0;
 }
 
-#hierarchy-header .manage {
+#hierarchy-header .manage,
+.body.management .manage {
   float: right;
   font-size: .9em;
   color: rgb(77, 173, 214);
 }
 
+#hierarchy-header.management .manage,
+.body.management .manage {
+  margin-right: 90px;
+}
+
 #hierarchy-header .manage:before,
-#folder-index .manage:before {
+#folder-index .manage:before,
+.body.management .manage:before {
   float: left;
   margin-right: 5px;
   margin-top: 1px;
@@ -841,9 +864,35 @@
   width: 520px;
 }
 
+.body {
+  background-color: white;
+}
+
+.body.management {
+  border: 1px solid rgb(179, 178, 179);
+
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+}
+
 .body .header {
   margin-bottom: 20px;
   float: left;
+}
+
+.body.management .header {
+  display: block;
+  width: 100%;
+  background-color: rgb(240, 240, 240);
+  padding: 20px 0;
+
+  -moz-border-radius-topleft: 15px;
+  -moz-border-radius-topright: 15px;
+  -moz-border-radius-bottomright: 0px;
+  -moz-border-radius-bottomleft: 0px;
+  -webkit-border-radius: 15px 15px 0px 0px;
+  border-radius: 15px 15px 0px 0px;
 }
 
 .body .header .title {
@@ -853,6 +902,16 @@
   color: rgb(77, 173, 214);
   float: left;
   margin-right: 10px;
+}
+
+.body.management .header .title {
+  margin-left: 20px;
+}
+
+.body.management .header .title:before {
+  float: left;
+  margin-right: 10px;
+  margin-top: -3px;
 }
 
 .body .header .detail {
@@ -1001,13 +1060,6 @@
 #environment-courses .header,
 #course-new .header {
   background: url("../images/new/icon-course-gray_32_32.png") no-repeat 20px center;
-}
-
-#course-manage .header,
-#subject-edit .header,
-#space-manage .header,
-#environment-manage .header {
-  background: url("../images/new/icon-configurations-gray_32_32.png") no-repeat 20px center;
 }
 
 #space-new .header,
@@ -3400,6 +3452,11 @@ a.clean:hover {
 
 .tabs {
   clear: both;
+}
+
+.management .tabs {
+  padding: 0 20px;
+  margin-bottom: 30px;
 }
 
 .tabs .actions {
