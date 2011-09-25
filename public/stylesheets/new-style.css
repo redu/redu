@@ -4924,7 +4924,7 @@ table.spaced tr td {
 }
 
 #course-manage .exit {
-  margin: 20px 25px 20px 0;
+  margin: 20px 45px 20px 0;
   width: 40px;
   float: right;
   display: block;
@@ -4960,6 +4960,31 @@ table.spaced tr td {
 
 #course-manage .concave-button {
   clear: left;
+}
+
+#course-manage .actions {
+  margin-right: 60px;
+}
+
+#course-manage .space-info {
+  width: 350px;
+}
+
+#course-manage .concave-admin-table .icon-space-gray_16_18-before:before {
+  float: left;
+  display: block;
+  margin: 15px 10px 15px 0;
+}
+
+#course-manage .space-detail {
+  display: block;
+  font-size: .85em;
+  font-style: italic;
+  color: rgb(179,178,179);
+}
+
+#course-manage .space-name {
+  font-weight: bold;
 }
 
 #admin-invitations .header {

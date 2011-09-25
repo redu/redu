@@ -1,0 +1,16 @@
+<tr class="row">
+  <td class="cell cell-400">
+    <div class="space-info icon-space-gray_16_18-before">
+      <%= link_to item_admin.name, space_path(item_admin), :class => "space-name" %>
+      <span class="space-detail members"><%= item_admin.users.count %> membros</span>
+      <span class="space-detail subject-count"><%= item_admin.subjects.count %> módulos</span>
+      <span class="space-detail created-at">criado em <%= time_ago_in_words item_admin.created_at %></span>
+    </div>
+  </td>
+  <td class="cell centered-cell"><%= link_to 'Gerenciar disciplina', edit_space_path(item_admin),
+        :class => "option icon icon-management-gray_8_8" %> </td>
+      <td class="cell centered-cell"><%= link_to 'Remover', space_path(item_admin),
+        :confirm => 'Você tem certeza que deseja remover este curso?',
+        :method => :delete,
+        :class => "option icon icon-x-gray_8_8" %> </td>
+</tr>

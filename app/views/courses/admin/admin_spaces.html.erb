@@ -1,0 +1,28 @@
+  <script type="text/javascript">
+    function showLoadingUsers(){
+            document.getElementById('loading_bar').style.display = 'block';
+            $('user_list_table').remove();
+    }
+  </script>
+<%= render :partial => 'courses/sidebar',
+  :locals => { :course => @course }  %>
+<div class="main grid_12 omega big-col">
+  <%= render :partial => 'courses/breadcrumbs',
+    :locals => { :course => @course } %>
+  <%= render :partial => 'courses/header',
+    :locals => { :course => @course } %>
+  <div id="course-manage" class="body management">
+    <div class="header">
+      <h4 class="title icon-manage-lightblue_32_34-before">
+        Gerenciamento do curso
+      </h4>
+    </div>
+    <%= tabs :courses_admin do %>
+      <h3 class="form-header">
+        <%= @course.spaces.count %> disciplina(s)
+      </h3>
+      <%= render :partial => 'spaces/admin/index_admin' %>
+      <%= link_to "Sair", environment_course_path(@environment, @course), :class => "manage exit icon-manage-gray_8_10-before" %>
+    <% end %>
+  </div>
+</div>

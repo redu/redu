@@ -1,10 +1,12 @@
 <% if @spaces && @spaces.size > 0 %>
-  <div class="actions"><%= link_to 'Criar Disciplina', new_space_path(:course_id => @course.id), :class => 'button' %>
-  </div>  <table id="spaces_list" class="common spaced" width="100%">
-    <thead>
+  <div class="actions">
+    <%= link_to 'Criar Disciplina', new_space_path(:course_id => @course.id), :class => 'button' %>
+  </div>
+  <table id="spaces_list" class="concave-admin-table">
+    <thead style="display: none;">
       <th>Nome</th><th>Gerenciar</th><th>Remover</th>
     </thead>
-    <%= render :partial => 'spaces/item_admin', :collection => @spaces %>
+    <%= render :partial => 'spaces/admin/item_admin', :collection => @spaces %>
   </table>
   <%= will_paginate @spaces, :renderer => EndlessRenderer %>
 <% else %>

@@ -155,15 +155,15 @@ class CoursesController < BaseController
 
   # Aba Disciplinas.
   def admin_spaces
-    # FIXME Refatorar para o modelo (conditions)
-    @spaces = @course.spaces.includes(:owner).paginate(:page => params[:page],
-                                                       :order => 'updated_at DESC',
-                                                       :per_page => Redu::Application.config.items_per_page)
+    @spaces = @course.spaces.includes(:owner, :user_space_associations, :subjects).
+      paginate(:page => params[:page],
+               :order => 'updated_at DESC',
+               :per_page => Redu::Application.config.items_per_page)
 
     respond_to do |format|
-      format.html
+      format.html { render "courses/admin/admin_spaces" }
       format.js do
-        render_endless 'spaces/item_admin', @spaces, '#spaces_list'
+        render_endless 'spaces/admin/item_admin', @spaces, '#spaces_list'
       end
     end
   end
