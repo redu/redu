@@ -8,6 +8,11 @@
   color: black;
 }
 
+.concave-form {
+  clear: both;
+  overflow: hidden;
+}
+
 /* labels inativos */
   .concave-form .concave-label {
     display: block;
@@ -241,6 +246,7 @@
 
 .concave-form .concave-separator,
 .concave-form hr {
+  clear: both;
   border: none;
   border-top: 1px dotted #B3B2B3;
   margin-top: 20px;

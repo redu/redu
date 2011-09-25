@@ -869,6 +869,7 @@ body {
 }
 
 .body.management {
+  overflow: hidden;
   border: 1px solid rgb(179, 178, 179);
 
   -webkit-border-radius: 15px;
@@ -3034,16 +3035,6 @@ body {
 .courses-requisitions li .actions form {
   display: inline;
 }
-#space-new .common .tos {
-  padding: 30px 160px;
-}
-
-#space-new .common .tos strong {
-  display: block;
-  margin-bottom: 20px;
-  text-transform: uppercase;
-  text-align: center;
-}
 
 #folder-index {
   clear: both;
@@ -4926,47 +4917,49 @@ table.spaced tr td {
   display: block;
 }
 
-#course-manage .tabs .ui-tabs-hide {
-  display: none;
+#course-manage .back {
+  font-size: .85em;
+  float: right;
+  display: block;
 }
 
-#course-manage .tabs .ui-tabs-nav {
-  margin-left: 100px;
+#course-manage .exit {
+  margin: 20px 25px 20px 0;
+  width: 40px;
+  float: right;
+  display: block;
 }
 
-#course-manage .tabs .ui-tabs-nav li {
-  padding: 9px 10px 18px 10px;
-  width: 90px;
-  float: left;
-  text-align: center;
-  margin-right: 10px;
-}
-
-#course-manage .tabs .ui-state-active,
-#course-manage .tabs .ui-state-hover {
-  background: url("../images/new/blue-ballon.png") no-repeat;
-}
-
-#course-manage .tabs .ui-state-active a,
-#course-manage .tabs .ui-state-hover a {
-  color: white;
-}
-
-#course-manage .tabs .ui-tabs-nav li a {
-  padding: 2px 0 2px 20px;
-}
-
-#course-manage .tabs .ui-tabs-panel {
-  padding: 20px 0;
-}
-
-#course-manage .tabs .actions {
-  padding-bottom: 20px;
-}
-
-#course-manage .form-common.filter .tip {
-  margin-left: 0;
+#course-manage .form-header {
+  font-size: 1.3em;
+  color: rgb(179,178,179);
   margin-left: 40px;
+  margin-bottom: 20px;
+  width: 265px;
+  display: block;
+  float: left;
+
+}
+
+#course-manage .form-header .strong,
+#course-manage .form-header {
+  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-weight: 500;
+}
+
+#course-manage .form-header .strong {
+  color: rgb(77,173,214);
+}
+
+#course-manage .tos {
+  margin: 20px 0;
+  width: 390px;
+  float: left;
+  font-size: .85em;
+}
+
+#course-manage .concave-button {
+  clear: left;
 }
 
 #admin-invitations .header {

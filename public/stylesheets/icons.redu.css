@@ -1036,8 +1036,11 @@
 
 .icon-space-blue_16_18,
 .icon-space-lightblue_16_18:hover { background-position: -160px -160px; }
+
 .icon-space-blue_16_18-before:before,
-.icon-space-lightblue_16_18-before:hover:before {
+.icon-space-lightblue_16_18-before:hover:before,
+.tabs .ui-state-active .icon-space_16_18-before:hover:before,
+.tabs .ui-state-default .icon-space_16_18-before:hover:before {
   content: "";
   width: 16px;
   height: 18px;
@@ -1045,7 +1048,8 @@
 }
 
 .icon-space-gray_16_18 { background-position: 0 -160px; }
-.icon-space-gray_16_18-before:before {
+.icon-space-gray_16_18-before:before,
+.tabs .ui-state-default .icon-space_16_18-before:before {
   content: "";
   width: 16px;
   height: 18px;
@@ -1053,7 +1057,8 @@
 }
 
 .icon-space-lightblue_16_18 { background-position: -80px -160px; }
-.icon-space-lightblue_16_18-before:before {
+.icon-space-lightblue_16_18-before:before,
+.tabs .ui-state-active .icon-space_16_18-before:before {
   content: "";
   width: 16px;
   height: 18px;

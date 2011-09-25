@@ -182,7 +182,7 @@ class SpacesController < BaseController
     @environment = @course.environment
 
     respond_to do |format|
-      format.html
+      format.html { render "spaces/admin/new" }
     end
   end
 
@@ -191,7 +191,7 @@ class SpacesController < BaseController
     @header_space = @space.clone :include => [:teachers, :students, :tutors]
 
     respond_to do |format|
-      format.html
+      format.html { render "spaces/admin/edit" }
     end
   end
 
@@ -203,8 +203,6 @@ class SpacesController < BaseController
     authorize! :manage, @course
     @environment = @course.environment
     @space.owner = current_user
-    # FIXME o submission_type deve ser escolhido pela interface, por
-    # enquanto todos tem a permissão de postar
     @space.submission_type = '3'
 
     if @space.valid?
@@ -213,9 +211,7 @@ class SpacesController < BaseController
 
     respond_to do |format|
       if @space.new_record?
-        format.html do
-          render :template => 'spaces/new'
-        end
+        format.html { render :template => 'spaces/admin/new' }
       else
         format.html do
           flash[:notice] = "Disciplina criada!"
