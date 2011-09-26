@@ -34,13 +34,13 @@
       </div>
     </li>
     <li>
-      <div class="<%= (current_page? mural_user_path(current_user)) ?
+      <div class="<%= (current_page? my_wall_user_path(current_user)) ?
         "session selected".to_s : "session".to_s %>">
         <%
-          selected = (current_page? mural_user_path(current_user)) ?
+          selected = (current_page? my_wall_user_path(current_user)) ?
           "icon-list-white_16_16" : "icon-list-lightblue_16_16"
         %>
-        <%= link_to 'Meu Mural', mural_user_path(current_user),
+        <%= link_to 'Meu Mural', my_wall_user_path(current_user),
           :class => "icon #{selected}" %>
       </div>
     </li>
