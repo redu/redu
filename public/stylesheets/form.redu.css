@@ -48,13 +48,17 @@
 
 /* text input inativo */
 
+  .concave-form .concave-file,
   .concave-form .concave-input {
-    padding: 7px 10px;
-    border: 1px solid #cccbcb;
-    width: 370px;
-    color: #6c6d6e;
-    font-size: 1em;
     margin-top: 20px;
+    font-size: 1em;
+    width: 370px;
+  }
+
+  .concave-form .concave-input {
+    border: 1px solid #cccbcb;
+    padding: 7px 10px;
+    color: #6c6d6e;
   }
 
   .concave-form .field_with_errors .concave-input {
