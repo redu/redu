@@ -1,4 +1,4 @@
-$("a:not([data-remote]):not([href^='#'])").pjax("#content", { timeout: null });
+$("a:not([data-remote]):not([href^='#']):not([rel='nofollow'])").pjax("#content", { timeout: null });
 var buildChat = (function(){
 /*
  var mychat = buildChat({
