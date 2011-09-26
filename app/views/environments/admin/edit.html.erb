@@ -12,11 +12,7 @@
 
         })
 </script>
-<style type="text/css">
-  body {
-    background-color: rgb(230, 230, 230);
-  }
-</style>
+<%= render :partial => 'shared/management_background' %>
 <%= render :partial => 'environments/sidebar',
   :locals => { :environment => @header_environment } %>
 <div class="main grid_12 omega big-col">
@@ -27,9 +23,7 @@
     :locals => { :environment => @header_environment } %>
 
   <div id="environment-manage" class="body management">
-    <div class="header">
-      <h4 class="title icon-manage-lightblue_32_34-before">Gerenciamento do ambiente</h4>
-    </div>
+    <%= render :partial => 'environments/admin/clean_header' %>
 
     <%= tabs :environments_admin do %>
 

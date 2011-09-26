@@ -1073,11 +1073,6 @@ body {
   display: none;
 }
 
-#environment-courses .header,
-#course-new .header {
-  background: url("../images/new/icon-course-gray_32_32.png") no-repeat 20px center;
-}
-
 #space-new .header,
 #course-spaces .header {
   background: url("../images/new/icon-space-gray_32_32.png") no-repeat 20px center;
