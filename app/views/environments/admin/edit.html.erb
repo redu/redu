@@ -44,9 +44,8 @@
         <span class="tip">Abreviação ou sigla</span>
         <%= f.label :path, t(:path) %>
         <%= f.text_field :path %>
-        <%= f.label :description, "Descrição" %>
+        <%= f.label :description, "Descrição", :class => "concave-label-high" %>
         <%= f.text_area :description, :size=>'102x4' %>
-        <span class="tip">Informações acerca do ambiente virtual de aprendizagem</span>
         <%= f.label :tag_list,
           raw("Palavras-chave <span class='snippet'>(separadas por vírgula)</span>") %>
         <%= f.text_field :tag_list %>
