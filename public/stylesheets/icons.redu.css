@@ -274,6 +274,7 @@
 
 .icon-course-gray_16_18 { background-position: 0 -80px;}
 .icon-course-gray_16_18,
+.icon-course-gray_16_18-before:before,
 .tabs .ui-state-default .icon-course_16_18-before:before {
   content: "";
   width: 16px;

@@ -182,9 +182,9 @@ class EnvironmentsController < BaseController
                                              :per_page => Redu::Application.config.items_per_page)
 
     respond_to do |format|
-      format.html
+      format.html { render "environments/admin/admin_courses" }
       format.js do
-        render_endless 'courses/item_admin', @courses, '#course_list'
+        render_endless 'courses/admin/item_admin', @courses, '#course_list'
       end
     end
   end

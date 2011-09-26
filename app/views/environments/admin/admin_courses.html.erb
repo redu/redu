@@ -1,0 +1,26 @@
+<%= render :partial => 'environments/sidebar', :locals => { :environment => @environment } %>
+<div class="main grid_12 omega big-col">
+  <%= render :partial => 'environments/breadcrumbs',
+    :locals => { :environment => @environment } %>
+
+  <%= render :partial => 'environments/header',
+    :locals => { :environment => @environment } %>
+
+  <div id="environment-manage" class="body management">
+    <div class="header">
+      <h4 class="title icon-manage-lightblue_32_34-before">Gerenciamento do ambiente</h4>
+    </div>
+
+    <%= tabs :environments_admin do %>
+      <h3 class="form-header">
+        <%= @environment.courses.count %> curso(s)
+      </h3>
+      <div class="management-actions">
+            <%= link_to "Criar novo curso", new_environment_course_path(@environment),
+                  :class => "button" %>
+      </div>
+      <%= render :partial => 'courses/admin/index_admin' %>
+      <%= link_to "Sair", environment_path(@environment), :class => "manage exit icon-manage-gray_8_10-before" %>
+    <% end %>
+  </div><!-- end #environment-manage -->
+</div>
