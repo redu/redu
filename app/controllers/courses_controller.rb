@@ -308,10 +308,8 @@ class CoursesController < BaseController
 
     unless users_ids.empty?
       User.where(:id => users_ids).
-        includes(:user_course_associations,:user_space_associations).
-        each do |user|
-          user.spaces.delete(spaces)
-          user.courses.delete(@course)
+        includes(:user_course_associations,:user_space_associations).each do |user|
+          @course.unjoin user
         end
       flash[:notice] = "Os usuários foram removidos do curso #{@course.name}"
     end

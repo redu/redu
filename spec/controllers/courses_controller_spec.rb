@@ -431,6 +431,57 @@ describe CoursesController do
 
     end
 
+    context "when destroying members" do
+      before do
+        @owner = Factory(:user)
+
+        @environment = Factory(:environment, :owner => @owner)
+
+        @course = Factory(:course,:environment => @environment, :owner => @owner)
+        @spaces = (1..2).collect { Factory(:space, :course => @course,
+                                           :owner => @owner)}
+        @subjects = []
+        @spaces.each do |s|
+          @subjects << Factory(:subject, :space => s, :owner => @owner,
+                  :finalized => true)
+        end
+
+        @users = 3.times.inject([]) { |acc,i| acc << Factory(:user) }
+        @users.each { |u| @course.join u }
+
+        activate_authlogic
+        UserSession.create @owner
+
+        @params = { :locale => 'pt-BR', :environment_id => @environment.path,
+          :id => @course.path, "users" => @users.collect { |u| u.id } }
+        post :destroy_members, @params
+      end
+
+      it "destroys UCA" do
+        @users.each do |u|
+          u.get_association_with(@course).should be_nil
+        end
+      end
+
+      it "destroys USA" do
+        usas = @spaces.collect do |s|
+          @users.collect { |u| u.get_association_with(s) }
+        end.flatten
+
+        usas.inject(true) { |acc,i| acc && (i.nil?) }.should be_true
+      end
+
+      it "destroys enrollments" do
+        enrollments = @spaces.collect do |s|
+          s.subjects.collect do |subj|
+            @users.collect { |u| u.get_association_with(subj) }
+          end
+        end.flatten
+
+        enrollments.inject(true) { |acc,i| acc && (i.nil?) }.should be_true
+      end
+    end
+
     context "when responding a course invitation" do
       before do
         @owner = Factory(:user)
