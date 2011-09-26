@@ -417,12 +417,12 @@ class UsersController < BaseController
   end
 
   def home
-    @friends = current_user.friends.paginate(:page => 1, :per_page => 9)
-    @friends_requisitions = current_user.friends_pending
-    @course_invitations = current_user.course_invitations
-    @statuses = current_user.home_activity(params[:page])
+    @friends = @user.friends.paginate(:page => 1, :per_page => 9)
+    @friends_requisitions = @user.friends_pending
+    @course_invitations = @user.course_invitations
+    @statuses = @user.home_activity(params[:page])
     @status = Status.new
-    @contacts_recommendations = current_user.recommended_contacts(5)
+    @contacts_recommendations = @user.recommended_contacts(5)
 
     respond_to do |format|
       format.html
@@ -430,9 +430,9 @@ class UsersController < BaseController
     end
   end
 
-  def mural
-    @friends = current_user.friends.paginate(:page => 1, :per_page => 9)
-    @statuses = current_user.statuses.
+  def my_wall
+    @friends = @user.friends.paginate(:page => 1, :per_page => 9)
+    @statuses = @user.statuses.
       paginate(:page => params[:page], :per_page => 10)
     @status = Status.new
 

@@ -303,4 +303,29 @@ describe UsersController do
       end
     end
   end
+
+  context "GET my_wall" do
+    before do
+      @contact = Factory(:user)
+      @user = Factory(:user)
+      activate_authlogic
+      UserSession.create @user
+
+    end
+
+    [:friends, :statuses, :status].each do |var|
+      it "assigns @#{var}" do
+        @params = { :locale => "pt-BR", :id => @user.login }
+        get :my_wall, @params
+        assigns[var].should_not be_nil
+      end
+    end
+
+    it "when strange/contact access my_wall redirects to home" do
+      @params = { :locale => "pt-BR", :id => @contact.login }
+      get :my_wall, @params
+      response.should redirect_to(home_path)
+    end
+  end
+
 end

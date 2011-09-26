@@ -207,7 +207,7 @@ Redu::Application.routes.draw do
       get :upload_profile_photo
       put :upload_profile_photo
       get :home
-      get :mural
+      get :my_wall
       get :account
       get :contacts_endless
       get :environments_endless

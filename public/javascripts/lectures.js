@@ -28,8 +28,17 @@ $(function(){
           $("#do_lecture").live("ajax:before ajax:complete", function(){
               $(this).find("label[for='Aula_finalizada']").toggleClass("link-loading");
           });
+
+          // Mostra status no show de lecture
+          $("#resource .student-actions .action-help").click(function(e){
+              $(this).parents("li:first").toggleClass("selected");
+              $(".statuses-wrapper", "#resource").slideToggle();
+              $(".statuses-wrapper #new_status #status_text").focus();
+              e.preventDefault();
+          });
       });
     }
+
 
     // Expand de recursos na listagem de módulos
     $(".expand, .unexpand", "#space-subjects .subjects").live("click", function(){
