@@ -2161,6 +2161,7 @@ body {
 
 .endless,
 .endless_pending {
+  clear: both;
   text-align: center;
   padding: 26px 10px 6px 10px;
   margin-top: 20px;
@@ -3678,16 +3679,6 @@ a.clean:hover {
   clear: both;
 }
 
-form.filter {
-  background-color: #F0F0F0;
-  padding: 10px;
-  margin-bottom: 20px;
-
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
-}
-
 .form-common label,
 .form-common .label,
 .form-common input[type=text],
@@ -3726,13 +3717,6 @@ form.filter {
   float: right;
   display: block;
   margin: 10px 0 10px 10px;
-}
-
-form.filter input[type=submit],
-form.filter a.remove,
-form.filter a.die,
-form.filter a.cancel {
-  clear: none;
 }
 
 .form-common textarea,
@@ -3853,10 +3837,6 @@ ul.holder {
   margin: 20px 10px 0 0;
 }
 
-form.filter .inline {
-  margin: 5px;
-}
-
 .form-common .inline label,
 .form-common .inline input[type=text],
 .form-common .inline input[type=password],
@@ -3913,15 +3893,6 @@ form.filter .inline {
 .form-common .columns li {
   width: 150px;
   margin-right: 10px;
-  float: left;
-}
-
-form.filter .columns li {
-  width: 115px;
-}
-
-form.filter .columns {
-  width: 350px;
   float: left;
 }
 
@@ -4945,6 +4916,10 @@ table.spaced tr td {
   display: block;
 }
 
+#course-manage .remove-actions {
+  margin: 10px 20px 20px 40px;
+}
+
 #environment-manage .form-header,
 #course-manage .form-header {
   font-size: 1.3em;
@@ -4992,17 +4967,145 @@ table.spaced tr td {
   margin: 15px 10px 15px 0;
 }
 
+#environment-manage .user-admin-table .row,
+#course-manage .user-admin-table .row {
+  height: 52px;
+}
+
 #course-manage .space-detail,
-#environment-manage .course-detail {
+#environment-manage .course-detail,
+#course-manage .member-detail {
   display: block;
   font-size: .85em;
   font-style: italic;
   color: rgb(179,178,179);
 }
 
+#course-manage .member-detail .icon-space-gray_16_18-before:before {
+  margin: 0;
+  margin-top: -2px;
+  margin-right: 5px;
+}
+
 #course-manage .space-name,
+#course-manage .member-name,
 #environment-manage .course-name {
   font-weight: bold;
+}
+
+#course-manage .concave-admin-table .avatar {
+  float: left;
+  margin-right: 10px;
+}
+
+#course-manage .member-info {
+}
+
+#course-manage .member-cell {
+  width: 240px;
+}
+
+#course-manage .role-cell {
+  width: 105px;
+}
+
+#course-manage .role:before {
+  float: left;
+  margin-right: 5px;
+  margin-top: -3px;
+}
+
+#course-manahe .admin-remove-user {
+  overflow: hidden;
+}
+
+.admin-filter-form {
+  background-color: rgb(247,247,247);
+  padding: 10px 80px;
+  width: 625px;
+  margin-left: -20px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.borderradius .admin-filter-form .text-input {
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
+.cssgradients .admin-filter-form .text-input {
+  background: -webkit-gradient(linear, left top, left bottom, from(#f0f0f0), to(#ffffff)); /* webkit browsers */
+  background: -moz-linear-gradient(top,  #fff,  #e6e6e5); /* firefox 3.6+ */
+}
+
+.admin-filter-form .reset-text-input {
+  border: none;
+  background: transparent;
+  padding: 8px 10px;
+  width: 110px;
+  font-size: .85em;
+  font-style: italic;
+  color: rgb(179,178,179);
+  float: left;
+  display: block;
+}
+
+.admin-filter-form .text-input {
+  border: 1px solid rgb(204,204,204);
+  width: 160px;
+  float: left;
+  overflow: hidden;
+  margin-right: 30px;
+}
+
+.admin-filter-form .search-input label {
+  display: block;
+  overflow: hidden;
+  text-indent: -99999px;
+  width: 16px;
+  height: 18px;
+  float: left;
+  margin: 6px 5px;
+}
+
+.admin-filter-form .options {
+  display: block;
+  float: left;
+}
+
+.admin-filter-form legend,
+.admin-filter-form label {
+  color: rgb(179,178,179);
+}
+
+.admin-filter-form .options legend {
+  font-weight: bold;
+  float: left;
+  margin: 10px 10px 10px 0;
+}
+
+.admin-filter-form label {
+  font-size: .85em;
+}
+
+.admin-filter-form .options .columns {
+  display: block;
+  float: left;
+  width: 220px;
+  overflow: hidden;
+}
+
+.admin-filter-form .options .columns li {
+  width: 100px;
+  float: left;
+  margin-right: 10px;
+}
+
+.admin-filter-form .concave-loading,
+.admin-filter-form .concave-form .concave-loading:hover {
+  background: #f1f0f0 url("../images/new/spinner.gif") no-repeat center center;
+  color: transparent;
 }
 
 #admin-invitations .header {
