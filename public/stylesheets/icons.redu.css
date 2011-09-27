@@ -1231,6 +1231,14 @@
   background: url("../images/new/icons-small.png") -160px -560px no-repeat;
 }
 
+.icon-list-white_16_18,
+.subtabs .ui-state-active .icon-list_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -560px -1600px no-repeat;
+}
+
 .icon-wall-gray_16_18 { background-position: 0 -560px; }
 .icon-wall-gray_16_18-before:before {
   content: "";
@@ -1266,6 +1274,12 @@
 
 .icon-wall-gray_16_18 { background-position: 0 -560px; }
 .icon-wall-blue_16_18 { background-position: -160px -560px; }
+
+.icon-search-gray_16_18 {
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -400px -2400px no-repeat;
+}
 
 /* Social Networks */
 .icon-facebook_16_18 { background-position: 0 -1920px; }

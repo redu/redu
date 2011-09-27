@@ -1,0 +1,21 @@
+<%= form_tag destroy_members_environment_course_path(),
+  :method => :post, :class => "admin-remove-user" do %>
+<table id="user_list_table" class="concave-admin-table">
+  <thead style="display: none;">
+    <tr>
+      <th>
+        <input type="checkbox" id="select_all"  >
+      </th>
+      <th >Usuário</th>
+      <th >Papel</th>
+      <th >Disciplinas</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render :partial => 'courses/admin/user_item_admin', :collection => @memberships %>
+  </tbody>
+</table>
+<div class="remove-actions">
+  <%= submit_tag "Remover selecionados", :class => "concave-remove" %>
+</div>
+<% end %>

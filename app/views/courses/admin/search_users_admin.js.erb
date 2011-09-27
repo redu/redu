@@ -1,0 +1,7 @@
+<% if @memberships.empty? %>
+  $notice = $("<div/>", { "class" : "box_notice" }).html("Nenhum usuário encontrado");
+  $("#user_list_table tbody").html($notice);
+<% else %>
+  $users = $("<%= escape_javascript(render :partial => 'courses/admin/user_item_admin', :collection => @memberships) %>");
+  $("#user_list_table tbody").html($users)
+<% end %>

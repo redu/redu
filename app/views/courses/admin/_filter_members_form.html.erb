@@ -1,0 +1,28 @@
+<div class="filters ">
+  <div class="search-input text-input">
+    <%= text_field_tag :search_user, nil, :class => "reset-text-input" %>
+    <%= label_tag :search_user, "Nome", :class => "icon-search-gray_16_18" %>
+  </div>
+    <%= field_set_tag "Filtrar por categoria:", :class => "options" do %>
+    <ul class="columns">
+      <li>
+        <%= check_box_tag "role_filter[]" , Role[:member], false, :id => "role_filter_#{Role[:member]}" %>
+        <%= label_tag "role_filter_#{Role[:member]}", "Membro" %>
+      </li>
+      <li>
+        <%= check_box_tag  "role_filter[]", Role[:tutor], false, :id => "role_filter_#{Role[:tutor]}" %>
+        <%= label_tag "role_filter_#{Role[:tutor]}", "Tutor" %>
+      </li>
+      <li>
+        <%= check_box_tag "role_filter[]", Role[:teacher], false, :id => "role_filter_#{Role[:teacher]}" %>
+        <%= label_tag "role_filter_#{Role[:teacher]}", "Professor" %>
+      </li>
+      <li>
+        <%= check_box_tag "role_filter[]", Role[:environment_admin], false, :id => "role_filter_#{Role[:environment_admin]}" %>
+        <%= label_tag "role_filter_#{Role[:environment_admin]}", "Administrador" %>
+      </li>
+    </ul>
+
+  <% end %>
+  <%= submit_tag 'Buscar' %>
+</div>

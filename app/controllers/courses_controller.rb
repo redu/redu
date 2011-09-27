@@ -290,9 +290,9 @@ class CoursesController < BaseController
                               :per_page => Redu::Application.config.items_per_page)
 
       respond_to do |format|
-        format.html
+        format.html { render "courses/admin/admin_members" }
         format.js do
-          render_endless 'courses/user_item_admin', @memberships,
+          render_endless 'courses/admin/user_item_admin', @memberships,
             '#user_list_table'
         end
       end
@@ -335,7 +335,7 @@ class CoursesController < BaseController
       :per_page => Redu::Application.config.items_per_page)
 
       respond_to do |format|
-        format.js
+        format.js { render "courses/admin/search_users_admin" }
       end
   end
 

@@ -33,6 +33,7 @@ javascripts:
     - public/javascripts/ytpreview.jquery.js
     - public/javascripts/subjects.js
     - public/javascripts/statuses.js
+    - public/javascripts/admin.js
   chat:
     - public/javascripts/jquery.pjax.js
     - public/javascripts/jquery-ui.js

@@ -29,7 +29,6 @@
   border: 0px solid rgb(204,204,204);
   border-top-width: 1px;
   border-bottom-width: 1px;
-  height: 52px;
   padding: 10px;
 }
 
@@ -80,5 +79,9 @@
 
 .concave-admin-table .centered-cell {
   vertical-align: middle;
+}
+
+.concave-admin-table .checkbox-cell {
+  width: 15px;
 }
 

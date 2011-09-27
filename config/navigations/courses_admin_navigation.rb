@@ -29,7 +29,21 @@ SimpleNavigation::Configuration.run do |navigation|
       tabs.item :members, 'Membros',
         admin_members_environment_course_path(@environment, @course),
         :class => 'ui-state-default',
-        :link => { :class => "icon-members_16_18-before" }
+        :link => { :class => "icon-members_16_18-before" } do |subtabs|
+          subtabs.dom_class = 'clearfix ui-tabs-nav'
+          subtabs.item :admin_members, "Lista",
+            admin_members_environment_course_path(@environment, @course),
+            :class => 'ui-state-default',
+            :link => { :class => 'icon-list_16_18-before' }
+          subtabs.item :invite_members, "Convites",
+            invite_members_environment_course_path(@environment, @course),
+            :class => 'ui-state-default',
+            :link => { :class => 'icon-bio_16_18-before' }
+          subtabs.item :moderate_members, "Moderação",
+            moderate_members_requests_environment_course_path(@environment, @course),
+            :class => 'ui-state-default',
+            :link => { :class => 'icon-bio_16_18-before' }
+        end
     end
   end
 end
