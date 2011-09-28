@@ -172,20 +172,31 @@
 
 
 /* botoes */
+  .concave-remove,
+  input[type="submit"].concave-button,
   .concave-button,
   .concave-cancel {
-    display: inline-block;
-    line-height: 1;
-    padding: 9px 0;
-    text-align: center;
-    width: 150px;
-    border: 1px solid #4CACD5;
+    padding: 5px 20px 6px 20px;
     color: white;
-    background-color: #73C3E6;
-    margin: 20px 25px 0 0;
+    display: inline-block;
+    line-height: 17px;
     font-weight: bold;
-    background: #4CACD5;
-    font-size: .9em;
+    font-size: 1em;
+    text-align: center;
+  }
+
+  .concave-button,
+  .concave-cancel {
+    margin: 20px 20px 0 0;
+    border: 1px solid #4CACD5;
+    background-color: #73C3E6;
+  }
+
+  .concave-remove {
+    margin: 20px 0px 0px 20px;
+    border: 1px solid rgb(232, 59, 59);
+    color: white;
+    background-color: rgb(255 109, 109);
   }
 
   .concave-form .concave-button,
@@ -193,25 +204,31 @@
     float: right;
   }
 
+  .concave-form .concave-remove {
+    float: left;
+  }
+
   .concave-cancel {
     border: 1px solid #E83B3B;
   }
 
+  .concave-remove:hover,
   .concave-button:hover,
   .concave-cancel:hover {
     text-decoration: none;
   }
 
+  .borderradius .concave-remove,
   .borderradius .concave-button,
   .borderradius .concave-cancel {
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
   }
 
   .cssgradients .concave-button {
-    background: -webkit-gradient(linear, left top, left bottom, from(#73C3E6), to(#4CACD5)); /* webkit browsers */
-    background: -moz-linear-gradient(top,  #73C3E6,  #4CACD5); /* firefox 3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, from(rgb(115, 195, 230)), to(rgb(77, 173, 214))); /* webkit browsers */
+    background: -moz-linear-gradient(top, rgb(115, 195, 230), rgb(77, 172, 214)); /* firefox 3.6+ */
   }
 
   .cssgradients .concave-cancel {
@@ -219,16 +236,27 @@
     background: -moz-linear-gradient(top,  #FF6D6D,  #E83B3B); /* firefox 3.6+ */
   }
 
+  .cssgradients .concave-remove {
+    background: -webkit-gradient(linear, left top, left bottom, from(rgb(255, 109, 109)), to(rgb(232, 59, 59))); /* webkit browsers */
+    background: -moz-linear-gradient(top, rgb(255, 109, 109), rgb(232, 59, 59)); /* Firefox 3.6+ */
+  }
+
   .textshadow .concave-button {
-     -moz-text-shadow: -1px -1px 0 #4CACD5;
-     -webkit-text-shadow: -1px -1px 0 #4CACD5;
-     text-shadow: -1px -1px 0 #4CACD5;
+     -moz-text-shadow: 0px -1px 0 rgb(21, 138, 196);
+     -webkit-text-shadow: 0px -1px 0 rgb(21, 138, 196);
+     text-shadow: 0px -1px 0 rgb(21, 138, 196);
   }
 
   .textshadow .concave-cancel {
-     -moz-text-shadow: -1px -1px 0 #E83B3B;
-     -webkit-text-shadow: -1px -1px 0 #E83B3B;
-     text-shadow: -1px -1px 0 #E83B3B;
+     -moz-text-shadow: 0px -1px 0 #E83B3B;
+     -webkit-text-shadow: 0px -1px 0 #E83B3B;
+     text-shadow: 0px -1px 0 #E83B3B;
+  }
+
+  .textshadow .concave-remove {
+    -moz-text-shadow: 0px -1px 0 rgb(193, 39, 45);
+    -webkit-text-shadow: 0px -1px 0 rgb(193, 39, 45);
+    text-shadow: 0px -1px 0px rgb(193, 39, 45);
   }
 
   .concave-button:hover {
@@ -241,15 +269,25 @@
     background: #FF6D6D;
   }
 
+  .concave-remove:hover {
+    background: rgb(255, 109, 109);
+  }
+
   .cssgradients .concave-cancel:hover {
     background: -webkit-gradient(linear, left top, left bottom, from(#FF6D6D), to(#C1272D)); /* webkit browsers */
     background: -moz-linear-gradient(top,  #FF6D6D,  #C1272D); /* firefox 3.6+ */
   }
 
   .cssgradients .concave-button:hover {
-    background: -webkit-gradient(linear, left top, left bottom, from(#73C3E6), to(#1789C3)); /* webkit browsers */
-    background: -moz-linear-gradient(top,  #73C3E6,  #1789C3); /* firefox 3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, from(rgb(115, 195, 230)), to(rgb(21, 138, 196))); /* webkit browsers */
+    background: -moz-linear-gradient(top,  rgb(115, 195, 230), rgb(21, 138, 196)); /* firefox 3.6+ */
   }
+
+  .cssgradients .concave-remove:hover {
+    background: -webkit-gradient(linear, left top, left bottom, from(rgb(255, 109, 109)), to(rgb(193, 39, 45))); /* webkit browsers */
+    background: -moz-linear-gradient(top, rgb(255, 109, 109), rgb(193, 39, 45)); /* Firefox 3.6+ */
+  }
+
 
 
 .concave-form .concave-separator,
