@@ -285,7 +285,7 @@ class CoursesController < BaseController
   # Aba Membros.
   def admin_members
     @memberships = @course.user_course_associations.approved.
-                     includes(:user => [{:user_space_associations => :space}]).
+                     includes(:user => [{:user_space_associations => {:space => :course}}]).
                      paginate(:page => params[:page],:order => 'updated_at DESC',
                               :per_page => Redu::Application.config.items_per_page)
 
