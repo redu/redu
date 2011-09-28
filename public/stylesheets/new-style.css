@@ -273,6 +273,9 @@ body {
   position: relative;
   width: 141px;
   padding: 8px 23px 8px 7px;
+}
+
+.borderradius #content .sidebar .local-nav > li > .session {
   -moz-border-radius: 5px 0 0 5px;
   -webkit-border-radius: 5px 0 0 5px;
   border-radius: 5px 0 0 5px;
@@ -3490,14 +3493,16 @@ a.clean:hover {
   border-bottom: none;
   height: 32px;
 
+  background: rgb(255,255,255); /* Old browsers */
+}
+
+.borderradius .tabs > ul li {
   -webkit-border-top-left-radius: 3px;
   -webkit-border-top-right-radius: 3px;
   -moz-border-radius-topleft: 3px;
   -moz-border-radius-topright: 3px;
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
-
-  background: rgb(255,255,255); /* Old browsers */
 }
 
 .cssgradients .tabs > ul li {
@@ -3506,7 +3511,6 @@ a.clean:hover {
   background: -webkit-linear-gradient(top, rgb(255,255,255) 0%,rgb(240,240,240) 99%); /* Chrome10+,Safari5.1+ */
   background: -o-linear-gradient(top, rgb(255,255,255) 0%,rgb(240,240,240) 99%); /* Opera11.10+ */
   background: -ms-linear-gradient(top, rgb(255,255,255) 0%,rgb(240,240,240) 99%); /* IE10+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f0f0f0',GradientType=0 ); /* IE6-9 */
   background: linear-gradient(top, rgb(255,255,255) 0%,rgb(240,240,240) 99%); /* W3C */
 }
 
@@ -3524,7 +3528,9 @@ a.clean:hover {
   padding-bottom: 10px;
   background-color: white;
   color: #1788C3;
+}
 
+.borderradius .tabs > ul li.ui-state-active a {
   -webkit-border-top-left-radius: 3px;
   -webkit-border-top-right-radius: 3px;
   -moz-border-radius-topleft: 3px;
@@ -3537,7 +3543,11 @@ a.clean:hover {
   color: #1788C3;
 }
 
-.tabs > ul li:hover {
+.cssgradients .tabs > ul li:hover {
+  background-color: #fff; /* Old browsers */
+}
+
+.cssgradients .tabs > ul li:hover {
   background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#DFF0F8)); /* webkit browsers */
   background: -moz-linear-gradient(top,  #fff,  #DFF0F8); /* Firefox 3.6+ */
 }
@@ -3579,7 +3589,9 @@ a.clean:hover {
   float: left;
   border: 1px solid rgb(179, 179, 179);
   border-bottom: none;
+}
 
+.borderradius .big-tabs > ul li {
   -moz-border-radius-topleft: 10px;
   -moz-border-radius-topright: 10px;
   -moz-border-radius-bottomright: 0px;
@@ -3614,7 +3626,9 @@ a.clean:hover {
   height: 34px;
   display: block;
   padding: 10px 15px 8px 15px;
+}
 
+.borderradius .big-tabs > ul li a {
   -moz-border-radius-topleft: 10px;
   -moz-border-radius-topright: 10px;
   -moz-border-radius-bottomright: 0px;
@@ -3635,16 +3649,12 @@ a.clean:hover {
   width: auto;
 }
 
-.big-tabs .ui-state-default .icon-space-gray_32_34-before:before,
-.big-tabs .ui-state-default .icon-course-gray_32_34-before:before,
-.big-tabs .ui-state-default .icon-members-gray_32_34-before:before {
+.big-tabs .ui-state-default a:before {
   float: left;
   display: block;
 }
 
-.big-tabs .ui-state-active .icon-space-gray_32_34-before:before,
-.big-tabs .ui-state-active .icon-course-gray_32_34-before:before,
-.big-tabs .ui-state-active .icon-members-gray_32_34-before:before {
+.big-tabs .ui-state-active a:before {
   float: none;
   display: inline;
 }
@@ -3653,7 +3663,9 @@ a.clean:hover {
   border: 1px solid rgb(179, 179, 179);
   padding: 40px 60px;
   background-color: white;
+}
 
+.borderradius .big-tabs > .panel {
   -moz-border-radius-bottomright: 10px;
   -moz-border-radius-topright: 10px;
   -moz-border-radius-bottomleft: 10px;
@@ -6640,19 +6652,19 @@ div.token-input-dropdown {
   margin: 0px auto;
   margin-bottom: 40px;
   width: 240px;
+  background-color: #E6E6E5; /* Old browsers */
+}
+
+.borderradius .subtabs .ui-tabs-nav {
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   border-radius: 3px;
-  background-color: #E6E6E5;
+}
 
+.cssgradients .subtabs .ui-tabs-nav {
   background-image: -moz-linear-gradient(top, #e6e6e5, #f1f0f0);
   background-image: -webkit-gradient(linear, center top, center bottom, from(#e6e6e5), to(#f1f0f0));
   background-image: -o-linear-gradient(top, #e6e6e5, #f1f0f0);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#e6e6e5', endColorstr='#f1f0f0');
-  /*INNER ELEMENTS MUST NOT BREAK THIS ELEMENTS BOUNDARIES*/
-  /*Element must have a height (not auto)*/
-  /*All filters must be placed together*/
-  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#e6e6e5', endColorstr='#f1f0f0')";
   /*Element must have a height (not auto)*/
   /*All filters must be placed together*/
   background-image: linear-gradient(top, #e6e6e5, #f1f0f0);
@@ -6667,7 +6679,9 @@ div.token-input-dropdown {
 .subtabs .ui-tabs-nav .ui-state-default a {
   padding: 8px;
   display: block;
+}
 
+.borderradius .subtabs .ui-tabs-nav .ui-state-default a {
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   border-radius: 3px;
@@ -6682,7 +6696,9 @@ div.token-input-dropdown {
 .subtabs .ui-tabs-nav .ui-state-active a {
   background-color: #4CACD5;
   color: #FFFFFF;
+}
 
+.textshadow .subtabs .ui-tabs-nav .ui-state-active a {
   -moz-text-shadow: 1px -1px 1px #1789C3;
   -webkit-text-shadow: 1px -1px 1px #1789C3;
   text-shadow: 1px -1px 1px #1789C3;
