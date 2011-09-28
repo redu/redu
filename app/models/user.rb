@@ -676,6 +676,9 @@ class User < ActiveRecord::Base
     when 'Subject'
       association = Enrollment.where('user_id = ? AND subject_id = ?', self.id,
                                        entity.id).first
+    when 'Lecture'
+      association = Enrollment.where('user_id = ? AND subject_id = ?', self.id,
+                                      entity.subject.id).first
     end
   end
 

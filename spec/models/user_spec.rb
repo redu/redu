@@ -524,26 +524,29 @@ describe User do
   it "verifies if he can post on a space"
   it "retrieves his association with a thing" do
     environment = Factory(:environment)
-    environment.users << subject
+    course = Factory(:course, :environment => environment,
+                     :owner => environment.owner)
+    space = Factory(:space, :owner => environment.owner,
+                    :course => course)
+    course.join(subject)
+
     subject.get_association_with(environment).
       should == subject.user_environment_associations.last
-
-    course = Factory(:course)
-    course.users << subject
     subject.get_association_with(course).
       should == subject.user_course_associations.last
-
-    space = Factory(:space)
-    space.users << subject
     subject.get_association_with(space).
       should == subject.user_space_associations.last
 
-    pending "Need subject factory" do
-      subject_entity = Factory(:subject)
-      subject_entity.students << subject
-      subject.get_association_with(subject_entity).
-        should == subject.enrollments.last
-    end
+    subject_entity = Factory(:subject, :owner => subject,
+                             :space => space, :finalized => true)
+    subject_entity.create_enrollment_associations
+    subject.get_association_with(subject_entity).
+      should == subject.enrollments.last
+
+    lecture_entity = Factory(:lecture, :subject => subject_entity,
+                             :owner => subject)
+    subject.get_association_with(lecture_entity).
+      should == subject.enrollments.last
   end
 
   it "verifies if he is redu admin" do

@@ -12,7 +12,7 @@ class CoursesController < BaseController
 
   def show
     @spaces = @course.spaces.published.
-      paginate(:page => params[:page], :order => 'name ASC',
+      paginate(:page => params[:page], :order => 'created_at ASC',
                :per_page => Redu::Application.config.items_per_page)
 
     respond_with(@environment, @course) do |format|

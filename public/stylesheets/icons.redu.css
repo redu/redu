@@ -135,8 +135,8 @@
   background: url("../images/new/icons-small.png") 320px -1040px no-repeat;
 }
 
-.icon-redu_admin-gray_16_18 { background-position: 0 -720px; }
-.icon-redu_admin-gray_16_18-before:before {
+.icon-admin-gray_16_18 { background-position: 0 -720px; }
+.icon-admin-gray_16_18-before:before {
   content: "";
   width: 16px;
   height: 18px;
