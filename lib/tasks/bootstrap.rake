@@ -27,6 +27,7 @@ namespace :bootstrap do
                         :first_name => 'Admin',
                         :last_name => 'Redu',
                         :activated_at => Time.now,
+                        :last_login_at => Time.now,
                         :role => Role[:admin])
     theadmin.role = Role[:admin] # O default é member
     theadmin.save
@@ -44,6 +45,7 @@ namespace :bootstrap do
                        :birthday => 20.years.ago,
                        :first_name => 'Test',
                        :activated_at => Time.now,
+                       :last_login_at => Time.now,
                        :last_name => 'User',
                        :role => Role[:member])
     theuser.save
