@@ -1,11 +1,3 @@
-<script type="text/javascript" language="javascript" charset="utf-8">
-  function showLoadingUsers(){
-    if (document.getElementById('loading_bar')){
-	document.getElementById('loading_bar').style.display = 'block';
-        $('user_list_table').remove();
-    }
-}
-</script>
 <%= render :partial => 'shared/management_background' %>
 <%= render :partial => 'environments/sidebar', :locals => { :environment => @environment } %>
 <div class="main grid_12 omega big-col">
