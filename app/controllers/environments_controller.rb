@@ -192,15 +192,15 @@ class EnvironmentsController < BaseController
   def admin_members
     @memberships = UserEnvironmentAssociation.of_environment(@environment).
       paginate(
-        :include => [{ :user => {:user_course_associations => :course} }],
+        :include => [{ :user => {:user_course_associations => { :course => :environment }} }],
         :page => params[:page],
         :order => 'updated_at DESC',
         :per_page => Redu::Application.config.items_per_page)
 
     respond_to do |format|
-      format.html
+      format.html { render "environments/admin/admin_members" }
       format.js do
-        render_endless 'environments/user_item_admin', @memberships,
+        render_endless 'environments/admin/user_item_admin', @memberships,
           '#user_list_table'
       end
     end
@@ -259,7 +259,7 @@ class EnvironmentsController < BaseController
                     :per_page => Redu::Application.config.items_per_page)
 
     respond_to do |format|
-      format.js
+      format.js { render "environments/admin/search_users_admin" }
     end
   end
 end

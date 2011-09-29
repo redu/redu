@@ -12,7 +12,7 @@
       <%= subtabs :courses_admin do %>
         <% if @memberships && @memberships.size > 0 %>
           <%= form_tag search_users_admin_environment_course_path( @environment, @course), :remote => true, :class => "admin-filter-form" do %>
-          <%= render :partial => 'courses/admin/filter_members_form' %>
+          <%= render :partial => 'shared/admin/filter_members_form' %>
           <% end %>
           <div id="user_list">
             <%= render :partial => 'courses/admin/user_list_admin',

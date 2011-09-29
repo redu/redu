@@ -4851,11 +4851,6 @@ table.spaced tr td {
   font-weight: bold;
 }
 
-#environment-manage table .edit,
-#environment-manage table .delete {
-  font-size: .9em;
-}
-
 #environment-manage .roles {
   margin: 15px 50px;
   width: 630px;
@@ -4920,8 +4915,8 @@ table.spaced tr td {
   margin: 10px 20px 20px 40px;
 }
 
-#environment-manage .form-header,
-#course-manage .form-header {
+.management .form-header-closer,
+.management .form-header {
   font-size: 1.3em;
   color: rgb(179,178,179);
   margin-left: 40px;
@@ -4932,16 +4927,19 @@ table.spaced tr td {
 
 }
 
-#environment-manage .form-header .strong,
-#environment-manage .form-header,
-#course-manage .form-header .strong,
-#course-manage .form-header {
+.management .form-header .strong,
+.management .form-header-closer,
+.management .form-header{
   font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 500;
 }
 
-#course-manage .form-header .strong {
+.management .form-header .strong {
   color: rgb(77,173,214);
+}
+
+.management .form-header-closer {
+  margin-top: -15px;
 }
 
 #course-manage .tos {
@@ -4955,68 +4953,61 @@ table.spaced tr td {
   clear: left;
 }
 
-#course-manage .space-info,
-#environment-manage .course-info {
+.management .concave-admin-table .space-info,
+.management .concave-admin-table .course-info {
   width: 350px;
 }
 
-#course-manage .concave-admin-table .icon-space-gray_16_18-before:before,
-#environment-manage .concave-admin-table .icon-course-gray_16_18-before:before {
+.management .concave-admin-table .icon-space-gray_16_18-before:before,
+.management .concave-admin-table .icon-course-gray_16_18-before:before {
   float: left;
   display: block;
   margin: 15px 10px 15px 0;
 }
 
-#environment-manage .user-admin-table .row,
-#course-manage .user-admin-table .row {
+.management .user-admin-table .row {
   height: 52px;
 }
 
-#course-manage .space-detail,
-#environment-manage .course-detail,
-#course-manage .member-detail {
+.management .concave-admin-table .space-detail,
+.management .concave-admin-table .course-detail,
+.management .concave-admin-table .member-detail {
   display: block;
   font-size: .85em;
   font-style: italic;
   color: rgb(179,178,179);
 }
 
-#course-manage .member-detail .icon-space-gray_16_18-before:before {
+.management .concave-admin-table .member-detail .icon-space-gray_16_18-before:before,
+.management .concave-admin-table .member-detail .icon-course-gray_16_18-before:before {
   margin: 0;
   margin-top: -2px;
   margin-right: 5px;
 }
 
-#course-manage .space-name,
-#course-manage .member-name,
-#environment-manage .course-name {
+.management .concave-admin-table .space-name,
+.management .concave-admin-table .member-name,
+.management .concave-admin-table .course-name {
   font-weight: bold;
 }
 
-#course-manage .concave-admin-table .avatar {
+.management .concave-admin-table .avatar {
   float: left;
   margin-right: 10px;
 }
 
-#course-manage .member-info {
-}
-
-#course-manage .member-cell {
+.management .concave-admin-table .member-cell {
   width: 240px;
 }
 
-#course-manage .role-cell {
+.management .concave-admin-table .role-cell {
   width: 105px;
 }
 
-#course-manage .role:before {
+.management .concave-admin-table .role:before {
   float: left;
   margin-right: 5px;
   margin-top: -3px;
-}
-
-#course-manahe .admin-remove-user {
-  overflow: hidden;
 }
 
 .admin-filter-form {

@@ -65,9 +65,19 @@
   border-radius: 0px 5px 5px 0px;
 }
 
-.concave-admin-table .cell-400 {
+.concave-admin-table .row .cell-400 {
   width: 400px;
 }
+
+.concave-admin-table .row .centered-cell {
+  vertical-align: middle;
+}
+
+.concave-admin-table .row .checkbox-cell {
+  width: 10px;
+  padding-right: 0px;
+}
+
 
 .concave-admin-table .icon {
   padding-left: 13px;
@@ -75,13 +85,5 @@
 
 .concave-admin-table .option {
   font-size: .85em;
-}
-
-.concave-admin-table .centered-cell {
-  vertical-align: middle;
-}
-
-.concave-admin-table .checkbox-cell {
-  width: 15px;
 }
 

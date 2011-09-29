@@ -1,0 +1,38 @@
+<tr id="user-<%= user_item_admin.user_id %>" class="row">
+  <td class="cell checkbox-cell centered-cell"><%= check_box_tag 'users[]', user_item_admin.user.id, false,
+    {:class => "autoCheck", :id => "remove-#{user_item_admin.user.id}"}  %></td>
+  <td class="cell member-cell centered-cell">
+    <%= image_tag user_item_admin.user.avatar(:thumb_32), :class => "avatar" %>
+    <div class="member-info">
+      <%= link_to user_item_admin.user.display_name, user_item_admin.user,
+        :rarget => "_blank", :class => "member-name" %>
+      <span class="member-detail">Último login <%= time_ago_in_words user_item_admin.user.last_login_at %></span>
+      <span class="member-detail">Incrito em <%= time_ago_in_words user_item_admin.created_at %></span>
+    </div>
+  </td>
+  <td class="cell centered-cell">
+    <span class="member-detail">
+      <span class="icon-course-gray_16_18-before">
+        Matriculado em <%= user_item_admin.user.courses.of_environment(@environment).count %> curso(s)
+      </span>
+    </span>
+  </td>
+  <td class="cell centered-cell">
+    <%= link_to "Papéis", user_admin_roles_path(user_item_admin.user, @environment),
+      :class => "icon option icon-management-gray_8_8"%>
+  </td>
+  <!--
+  <td class="administrator cell" id="administrator-<%= user_item_admin.user_id %>">
+  <%= link_to "Tornar usuário comum", user_update_roles_path(user_item_admin.user, @environment, :type => 'environment', :roles => Role[:member]),
+      :remote => true,
+      :method => :post,
+      :style => "display: #{user_item_admin.role.eql?(Role[:environment_admin]) ? "inline" : "none"};",
+      :class => "option" %>
+    <%= link_to "Tornar administrador", user_update_roles_path(user_item_admin.user, @environment, :type => 'environment', :roles => Role[:environment_admin]),
+      :remote => true,
+      :method => :post,
+      :style => "display: #{user_item_admin.role.eql?(Role[:environment_admin]) ? "none" : "inline"};",
+      :class => "option" %>
+  </td>
+  -->
+</tr>
