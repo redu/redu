@@ -452,6 +452,12 @@ body {
   margin-top: 35px;
 }
 
+.borderradius #content .concave-sidebar .environment-avatar {
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
 #content .concave-sidebar .total-count,
 #content .concave-sidebar .roles {
   display: block;
@@ -521,10 +527,22 @@ body {
   margin-left: 10px;
   position: absolute;
   z-index: 1;
+}
 
+.boxshadow #content .concave-sidebar .course-frame .environment,
+.boxshadow #content .sidebar .subject-frame .environment,
+.boxshadow #content .sidebar .space-frame .environment {
   -webkit-box-shadow: 0px 0px 5px 0px #000000;
   -moz-box-shadow: 0px 0px 5px 0px #000000;
   box-shadow: 0px 0px 5px 0px #000000;
+}
+
+.borderradius #content .concave-sidebar .course-frame .environment,
+.borderradius #content .sidebar .subject-frame .environment,
+.borderradius #content .sidebar .space-frame .environment {
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
 }
 
 #content .concave-sidebar .course-frame .course,
