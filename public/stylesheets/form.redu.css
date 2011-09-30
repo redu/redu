@@ -89,8 +89,12 @@
   }
 
   .cssgradients .concave-form .concave-input {
-    background: -webkit-gradient(linear, left top, left bottom, from(#f0f0f0), to(#ffffff)); /* webkit browsers */
-    background: -moz-linear-gradient(top,  #fff,  #e6e6e5); /* firefox 3.6+ */
+    background: -moz-linear-gradient(top, #f0f0f0 0%, #ffffff 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f0f0f0), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #f0f0f0 0%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #f0f0f0 0%,#ffffff 100%); /* Opera11.10+ */
+    background: -ms-linear-gradient(top, #f0f0f0 0%,#ffffff 100%); /* IE10+ */
+    background: linear-gradient(top, #f0f0f0 0%,#ffffff 100%); /* W3C */
   }
 
   .boxshadow .concave-form .concave-input {
