@@ -21,18 +21,4 @@
     <%= link_to "Papéis", user_admin_roles_path(user_item_admin.user, @environment),
       :class => "icon option icon-management-gray_8_8"%>
   </td>
-  <!--
-  <td class="administrator cell" id="administrator-<%= user_item_admin.user_id %>">
-  <%= link_to "Tornar usuário comum", user_update_roles_path(user_item_admin.user, @environment, :type => 'environment', :roles => Role[:member]),
-      :remote => true,
-      :method => :post,
-      :style => "display: #{user_item_admin.role.eql?(Role[:environment_admin]) ? "inline" : "none"};",
-      :class => "option" %>
-    <%= link_to "Tornar administrador", user_update_roles_path(user_item_admin.user, @environment, :type => 'environment', :roles => Role[:environment_admin]),
-      :remote => true,
-      :method => :post,
-      :style => "display: #{user_item_admin.role.eql?(Role[:environment_admin]) ? "none" : "inline"};",
-      :class => "option" %>
-  </td>
-  -->
 </tr>

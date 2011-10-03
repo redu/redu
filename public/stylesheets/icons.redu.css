@@ -456,6 +456,9 @@
 
 .icon-environment_admin-blue_16_18,
 .icon-environment_admin-lightblue_16_18:hover { background-position: -160px -800px; }
+.icon-environment_admin-blue_16_18-after:after,
+.icon-environment_admin-lightblue_16_18-afterhover:after,
+.subtabs .ui-state-default .icon-environment_admin_16_18-after:hover:after,
 .icon-environment_admin-blue_16_18-before:before,
 .icon-environment_admin-lightblue_16_18-before:hover:before,
 .subtabs .ui-state-default .icon-environment_admin_16_18-before:hover:before {
@@ -466,6 +469,7 @@
 }
 
 .icon-environment_admin-gray_16_18 { background-position; 0 -800px; }
+.icon-environment_admin-gray_16_18-after:after,
 .icon-environment_admin-gray_16_18-before:before {
   content: "";
   width: 16px;
@@ -475,6 +479,7 @@
 
 .icon-environment_admin-lightblue_16_18 { background-position: -80px -800px }
 .icon-environment_admin-lightblue_16_18-before:before,
+.icon-environment_admin-lightblue_16_18-after:after,
 .subtabs .ui-state-default .icon-environment_admin_16_18-before:before {
   content: "";
   width: 16px;
@@ -636,6 +641,7 @@
 .icon-space-lightblue_32_34 { background-position: -400px -160px; }
 
 .icon-teacher-gray_16_18 { background-position: 0 -880px }
+.icon-teacher-gray_16_18-after:after,
 .icon-teacher-gray_16_18-before:before {
   content: "";
   width: 16px;
@@ -768,6 +774,9 @@
 
 .icon-member-blue_16_18,
 .icon-member-lightblue_16_18:hover { background-position: -160px -1040px; }
+.icon-member-blue_16_18-after:after,
+.icon-member-lightblue_16_18-after:hover:after,
+.subtabs .ui-state-default .icon-member_16_18-after:hover:after,
 .icon-member-blue_16_18-before:before,
 .icon-member-lightblue_16_18-before:hover:before,
 .subtabs .ui-state-default .icon-member_16_18-before:hover:before {
@@ -787,6 +796,7 @@
 
 .icon-member-lightblue_16_18 { background-position: -80px -1040px; }
 .icon-member-lightblue_16_18-before:before,
+.icon-member-lightblue_16_18-after:after,
 .subtabs .ui-state-default .icon-member_16_18-before:before {
   content: "";
   width: 16px;

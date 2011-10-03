@@ -4923,6 +4923,105 @@ table.spaced tr td {
   display: block;
 }
 
+#environment-manage .role-user-info {
+  clear: left;
+  width: 390px;
+  margin-left: 40px;
+  margin-bottom: 25px;
+}
+
+#environment-manage .role-user-info .avatar {
+  float: left;
+  margin-right: 10px;
+}
+
+#environment-manage .role-user-info a,
+#environment-manage .role-user-info .info {
+  color: rgb(179,178,179);
+  font-size: .9em;
+  display: block;
+}
+
+#environment-manage .admin-role-table {
+  margin: 0 40px;
+  width: 660px;
+}
+
+#environment-manage .admin-role-table td {
+  padding: 10px;
+}
+
+#environment-manage .admin-role-table .edit-roles {
+  width: 130px;
+  text-align: right;
+}
+
+#environment-manage .admin-role-table .label {
+  color: rgb(179,178,179);
+  width: 80px;
+  display: block;
+  float: left;
+  margin-right: 10px;
+}
+
+#environment-manage .admin-role-table  .input-checkbox {
+  float: left;
+}
+
+#environment-manage .admin-role-table  .course-cell {
+  width: 400px;
+  vertical-align: middle;
+}
+
+#environment-manage .admin-role-table  .concave-button {
+  margin: 0;
+}
+
+#environment-manage .admin-role-table  .edit-cell {
+  vertical-align: middle;
+  text-align: right;
+}
+
+#environment-manage .admin-role-table  .course-name {
+  font-weight: bold;
+}
+
+#environment-manage .admin-role-table .even td {
+  background-color: rgb(247,247,247);
+}
+
+#environment-manage .admin-role-table .box_notice {
+  font-size: .85em;
+  color: rgb(179,178,179);
+  text-align: left;
+}
+
+#environment-manage .make-admin {
+  width: 360px;
+  float: left;
+  text-align: right;
+}
+
+#environment-manage .make-admin:after {
+  float: right;
+  margin-right: -20px;
+  margin-top: -23px;
+  display: block;
+}
+
+#environment-manage .make-admin .current-role {
+  display: block;
+  color: rgb(109,110,111);
+}
+
+#environment-manage .make-admin .option {
+  font-size: .85em;
+}
+
+#environment-manage .strong {
+  font-weight: bold;
+}
+
 #course-manage .back {
   font-size: .85em;
   float: right;
@@ -4939,7 +5038,7 @@ table.spaced tr td {
   color: rgb(179,178,179);
   margin-left: 40px;
   margin-bottom: 20px;
-  width: 265px;
+  width: 315px;
   display: block;
   float: left;
 

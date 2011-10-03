@@ -13,4 +13,17 @@
     $(".admin-filter-form").live('ajax:complete', function(){
         $(this).find("input[type=submit]").loadingComplete({ "className" : "concave-loading" });
     });
+
+    // Colorindo tabela de roles
+    $.fn.refreshRoleTable = function(){
+      return $("#environment-manage .admin-role-table tr:even").addClass("even");
+    };
+
+    $(document).ready(function(){
+        $(document).refreshRoleTable();
+
+        $(document).ajaxComplete(function(){
+            $(document).refreshRoleTable();
+        });
+    });
 })(jQuery);
