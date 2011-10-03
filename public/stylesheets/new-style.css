@@ -5091,10 +5091,6 @@ table.spaced tr td {
   font-size: .85em;
 }
 
-#course-manage .concave-button {
-  clear: left;
-}
-
 .management .concave-admin-table .space-info,
 .management .concave-admin-table .course-info {
   width: 350px;
@@ -5154,8 +5150,8 @@ table.spaced tr td {
 
 .admin-filter-form {
   background-color: rgb(247,247,247);
-  padding: 10px 80px;
-  width: 625px;
+  padding: 10px 60px;
+  width: 665px;
   margin-left: -20px;
   margin-bottom: 10px;
   overflow: hidden;
@@ -5184,12 +5180,31 @@ table.spaced tr td {
   display: block;
 }
 
+.admin-filter-form .filters {
+  overflow: hidden;
+}
+
 .admin-filter-form .text-input {
   border: 1px solid rgb(204,204,204);
   width: 160px;
   float: left;
   overflow: hidden;
   margin-right: 30px;
+}
+
+.admin-filter-form .text-input:hover {
+  border-color: rgb(95,192,128);
+}
+
+.boxshadow .admin-filter-form .text-input:focus {
+  -moz-box-shadow: 0 0 2px rgb(95,192,128);
+  -webkit-box-shadow: 0 0 2px rgb(95,192,128);
+  box-shadow: 0 0 2px rgb(95,192,128);
+}
+
+.admin-filter-form .concave-button {
+  margin: 0;
+  float: right;
 }
 
 .admin-filter-form .search-input label {

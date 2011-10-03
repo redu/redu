@@ -1291,6 +1291,19 @@
   background: url("../images/new/icons-small.png") -400px -2400px no-repeat;
 }
 
+.icon-search-gray_16_18:hover,
+.icon-search-lightgreen_16_18 {
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -480px -2400px no-repeat;
+}
+
+.icon-search-green_16_18 {
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -560px -2400px no-repeat;
+}
+
 /* Social Networks */
 .icon-facebook_16_18 { background-position: 0 -1920px; }
 .icon-facebook_16_18-before:before {
