@@ -4869,6 +4869,28 @@ table.spaced tr td {
   font-weight: bold;
 }
 
+#environment-manage .course-path {
+  clear: left;
+  font-size: 1.3em;
+  color: rgb(179, 179, 179);
+  display: block;
+  margin-left: 160px;
+  margin-top: 5px;
+}
+
+#environment-manage .course-path .course-name {
+  font-family: inherit;
+  display: block;
+  margin-top: 5px;
+  height: 17px;
+}
+
+#environment-manage .concave-form .hours {
+  font-size: .87em;
+  color: rgb(179, 178, 179);
+  font-style: italic;
+}
+
 #environment-manage .roles {
   margin: 15px 50px;
   width: 630px;
@@ -5022,6 +5044,7 @@ table.spaced tr td {
   font-weight: bold;
 }
 
+#environment-manage .back,
 #course-manage .back {
   font-size: .85em;
   float: right;
@@ -5046,12 +5069,14 @@ table.spaced tr td {
 
 .management .form-header .strong,
 .management .form-header-closer,
-.management .form-header{
-  font-family: museo-slab, helvetica, arial, sans-serif;
+.management .form-header,
+#environment-manage .course-path {
+  font-family: museo-sans, helvetica, arial, sans-serif;
   font-weight: 500;
 }
 
-.management .form-header .strong {
+.management .form-header .strong,
+.management .course-path .strong {
   color: rgb(77,173,214);
 }
 
@@ -6925,6 +6950,43 @@ div.token-input-dropdown {
   background-color: #1789C3;
   text-decoration: none;
   color: #FFFFFF;
+}
+
+.concave-form .columns,
+.concave-form .single-column {
+  float: left;
+  margin-top: 20px;
+  width: 480px;
+}
+
+.concave-form .columns li {
+  width: 150px;
+  margin-right: 10px;
+  float: left;
+}
+
+.concave-form .columns li .concave-label,
+.concave-form .single-column li .concave-label {
+  display: inline;
+  float: none;
+  font-weight: normal;
+  text-align: left;
+  margin: 0;
+}
+
+.concave-form .course-plan .plan-type {
+  font-family: museo-sans, helvetica, arial, sans-serif;
+  font-weight: 500;
+  color: rgb(115, 195, 230);
+  font-size: 1.2em;
+  display: block;
+  margin-bottom: 5px;
+  margin-top: -3px;
+}
+
+.concave-form .course-plan .price {
+  font-size: .87em;
+  color: rgb(109, 110, 111);
 }
 
 .replacement {
