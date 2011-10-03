@@ -66,13 +66,6 @@ jQuery(function(){
         $(this).parents("li:first").addClass("selected");
     })
 
-    // Mostra status no show de lecture
-    $("#resource .student-actions .action-help").click(function(e){
-        $(this).parents("li:first").toggleClass("selected");
-        $(".statuses-wrapper", "#resource").slideToggle();
-        e.preventDefault();
-    });
-
     // Padrão de tabelas
     $("table.common tr:even:not(.invite):not(.message)").addClass("odd");
 

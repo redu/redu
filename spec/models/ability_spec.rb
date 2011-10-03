@@ -654,223 +654,235 @@ describe Ability do
         @ability.should_not be_able_to(:manage, @invoice)
       end
     end
+  end
 
-    context "on user -" do
+  context "on user -" do
+    before do
+      @user = Factory(:user)
+      @user_ability = Ability.new(@user)
+    end
+
+    context "pusher channels" do
       before do
-        @user = Factory(:user)
-        @user_ability = Ability.new(@user)
+        @stranger = Factory(:user)
+        @friend = Factory(:user)
+
+        friendship, status = @user.be_friends_with(@friend)
+        friendship.accept!
       end
 
-      context "pusher channels" do
+      it "can auth a channel" do
+        @user_ability.should be_able_to(:auth, @user)
+      end
+
+      it "can NOT auth a contact channel" do
+        @user_ability.should_not be_able_to(:auth, @friend)
+      end
+
+      it "can subscribe a contact channel" do
+        @user_ability.should be_able_to(:subscribe_channel, @friend)
+      end
+
+      it "can NOT subscribe a stranger channel" do
+        @user_ability.should_not be_able_to(:subscribe_channel, @stranger)
+      end
+
+      context "when chatting" do
         before do
-          @stranger = Factory(:user)
-          @friend = Factory(:user)
-
-          friendship, status = @user.be_friends_with(@friend)
-          friendship.accept!
+          course = Factory(:course)
+          @colleague = Factory(:user)
+          @teacher = Factory(:user)
+          course.join(@user)
+          course.join(@colleague)
+          course.join(@teacher, Role[:teacher])
         end
 
-        it "can auth a channel" do
-          @user_ability.should be_able_to(:auth, @user)
+        it "can send a message to a friend" do
+          @user_ability.should be_able_to(:send_chat_message, @friend)
         end
 
-        it "can NOT auth a contact channel" do
-          @user_ability.should_not be_able_to(:auth, @friend)
+        it "can send a message to a teacher" do
+          @user_ability.should be_able_to(:send_chat_message, @teacher)
         end
 
-        it "can subscribe a contact channel" do
-          @user_ability.should be_able_to(:subscribe_channel, @friend)
+        it "can NOT send a message to a colleague" do
+          @user_ability.should_not be_able_to(:send_chat_message, @colleague)
         end
 
-        it "can NOT subscribe a stranger channel" do
-          @user_ability.should_not be_able_to(:subscribe_channel, @stranger)
+        it "can NOT send a message to a stranger" do
+          @user_ability.should_not be_able_to(:send_chat_message, @stranger)
+        end
+      end
+
+      context "when requesting last chat messages" do
+        before do
+          course = Factory(:course)
+          @colleague = Factory(:user)
+          @teacher = Factory(:user)
+          course.join(@user)
+          course.join(@colleague)
+          course.join(@teacher, Role[:teacher])
         end
 
-        context "when chatting" do
+        it "can request his messages with a teacher" do
+          @user_ability.should be_able_to(:last_messages_with, @teacher)
+        end
+
+        it "can NOT request his messages with a colleague" do
+          @user_ability.should_not be_able_to(:last_messages_with, @colleague)
+        end
+
+        it "can NOT request his messages with a stranger" do
+          @user_ability.should_not be_able_to(:last_messages_with, @stranger)
+        end
+      end
+    end
+
+    context "when friends" do
+      before do
+        @my_friend = Factory(:user)
+        @my_friend_ability = Ability.new(@my_friend)
+
+        friendship, status = @user.be_friends_with(@my_friend)
+        friendship.accept!
+      end
+
+      it "should read each other" do
+        @user_ability.should be_able_to(:read, @my_friend)
+        @my_friend_ability.should be_able_to(:read, @user)
+      end
+
+      it "should not manage each other" do
+        @user_ability.should_not be_able_to(:manage, @my_friend)
+        @my_friend_ability.should_not be_able_to(:manage, @user)
+      end
+    end
+
+    context "when user privacy" do
+      context "let everyone see his statuses" do
+        before do
+          @user.settings.view_mural = Privacy[:public]
+        end
+
+        context "and they are friends," do
           before do
-            course = Factory(:course)
-            @colleague = Factory(:user)
-            @teacher = Factory(:user)
-            course.join(@user)
-            course.join(@colleague)
-            course.join(@teacher, Role[:teacher])
+            @my_friend = Factory(:user)
+            @my_friend_ability = Ability.new(@my_friend)
+
+            friendship, status = @user.be_friends_with(@my_friend)
+            friendship.accept!
           end
 
-          it "can send a message to a friend" do
-            @user_ability.should be_able_to(:send_chat_message, @friend)
-          end
-
-          it "can send a message to a teacher" do
-            @user_ability.should be_able_to(:send_chat_message, @teacher)
-          end
-
-          it "can NOT send a message to a colleague" do
-            @user_ability.should_not be_able_to(:send_chat_message, @colleague)
-          end
-
-          it "can NOT send a message to a stranger" do
-            @user_ability.should_not be_able_to(:send_chat_message, @stranger)
+          it "a friend can view user's statuses" do
+            @my_friend_ability.should be_able_to(:view_mural, @user)
           end
         end
 
-        context "when requesting last chat messages" do
+        context "and they are NOT friends," do
           before do
-            course = Factory(:course)
-            @colleague = Factory(:user)
-            @teacher = Factory(:user)
-            course.join(@user)
-            course.join(@colleague)
-            course.join(@teacher, Role[:teacher])
+            @someone = Factory(:user)
+            @someone_ability = Ability.new(@someone)
           end
 
-          it "can request his messages with a teacher" do
-            @user_ability.should be_able_to(:last_messages_with, @teacher)
-          end
-
-          it "can NOT request his messages with a colleague" do
-            @user_ability.should_not be_able_to(:last_messages_with, @colleague)
-          end
-
-         it "can NOT request his messages with a stranger" do
-            @user_ability.should_not be_able_to(:last_messages_with, @stranger)
+          it "someone can view user's statuses" do
+            @someone_ability.should be_able_to(:view_mural, @user)
           end
         end
-
-
       end
 
-      context "when friends" do
+      context "let ONLY friends see his statuses" do
         before do
-          @my_friend = Factory(:user)
-          @my_friend_ability = Ability.new(@my_friend)
-
-          friendship, status = @user.be_friends_with(@my_friend)
-          friendship.accept!
+          @user.settings.view_mural = Privacy[:friends]
         end
 
-        it "should read each other" do
-          @user_ability.should be_able_to(:read, @my_friend)
-          @my_friend_ability.should be_able_to(:read, @user)
-        end
-
-        it "should not manage each other" do
-          @user_ability.should_not be_able_to(:manage, @my_friend)
-          @my_friend_ability.should_not be_able_to(:manage, @user)
-        end
-      end
-
-      context "when user privacy" do
-        context "let everyone see his statuses" do
+        context "and they are friends," do
           before do
-            @user.settings.view_mural = Privacy[:public]
+            @my_friend = Factory(:user)
+            @my_friend_ability = Ability.new(@my_friend)
+
+            friendship, status = @user.be_friends_with(@my_friend)
+            friendship.accept!
           end
 
-          context "and they are friends," do
-            before do
-              @my_friend = Factory(:user)
-              @my_friend_ability = Ability.new(@my_friend)
-
-              friendship, status = @user.be_friends_with(@my_friend)
-              friendship.accept!
-            end
-
-            it "a friend can view user's statuses" do
-              @my_friend_ability.should be_able_to(:view_mural, @user)
-            end
-          end
-
-          context "and they are NOT friends," do
-            before do
-              @someone = Factory(:user)
-              @someone_ability = Ability.new(@someone)
-            end
-
-            it "someone can view user's statuses" do
-              @someone_ability.should be_able_to(:view_mural, @user)
-            end
+          it "a friend can view user's statuses" do
+            @my_friend_ability.should be_able_to(:view_mural, @user)
           end
         end
 
-        context "let ONLY friends see his statuses" do
+        context "and they are NOT friends," do
           before do
-            @user.settings.view_mural = Privacy[:friends]
+            @someone = Factory(:user)
+            @someone_ability = Ability.new(@someone)
           end
 
-          context "and they are friends," do
-            before do
-              @my_friend = Factory(:user)
-              @my_friend_ability = Ability.new(@my_friend)
-
-              friendship, status = @user.be_friends_with(@my_friend)
-              friendship.accept!
-            end
-
-            it "a friend can view user's statuses" do
-              @my_friend_ability.should be_able_to(:view_mural, @user)
-            end
-          end
-
-          context "and they are NOT friends," do
-            before do
-              @someone = Factory(:user)
-              @someone_ability = Ability.new(@someone)
-            end
-
-            it "someone can NOT view user's statuses" do
-              @someone_ability.should_not be_able_to(:view_mural, @user)
-            end
+          it "someone can NOT view user's statuses" do
+            @someone_ability.should_not be_able_to(:view_mural, @user)
           end
         end
       end
+    end
 
-      context "when experiences" do
-        before do
-          @user_experience = Factory(:experience, :user => @user)
-          @other_experience = Factory(:experience)
-        end
-        it "manages its own experiences" do
-          @user_ability.should be_able_to(:manage, @user_experience)
-        end
-
-        it "can NOT manage other experiences" do
-          @user_ability.should_not be_able_to(:manage, @other_experience)
-        end
+    context "when experiences" do
+      before do
+        @user_experience = Factory(:experience, :user => @user)
+        @other_experience = Factory(:experience)
+      end
+      it "manages its own experiences" do
+        @user_ability.should be_able_to(:manage, @user_experience)
       end
 
-      context "when educations" do
-        before do
-          @user_education = Factory(:education, :user => @user)
-          @other_education = Factory(:education)
-        end
-        it "manages its own educations" do
-          @user_ability.should be_able_to(:manage, @user_education)
-        end
+      it "can NOT manage other experiences" do
+        @user_ability.should_not be_able_to(:manage, @other_experience)
+      end
+    end
 
-        it "can NOT manage other educations" do
-          @user_ability.should_not be_able_to(:manage, @other_education)
-        end
+    context "when educations" do
+      before do
+        @user_education = Factory(:education, :user => @user)
+        @other_education = Factory(:education)
+      end
+      it "manages its own educations" do
+        @user_ability.should be_able_to(:manage, @user_education)
       end
 
-      it "manages itself" do
-        @user_ability.should be_able_to(:manage, @user)
+      it "can NOT manage other educations" do
+        @user_ability.should_not be_able_to(:manage, @other_education)
+      end
+    end
+
+    it "manages itself" do
+      @user_ability.should be_able_to(:manage, @user)
+    end
+
+    it "manages its own statuses" do
+      status = Factory(:activity, :user => @user)
+      @user_ability.should be_able_to(:manage, status)
+    end
+
+    context "when destroying user" do
+      before do
+        @other = Factory(:user)
+      end
+      it "can NOT destroy others user" do
+        @user_ability.should_not be_able_to(:destroy, @other)
       end
 
-      it "manages its own statuses" do
-        status = Factory(:activity, :user => @user)
-        @user_ability.should be_able_to(:manage, status)
+      it "can destroy its own user" do
+        @user_ability.should be_able_to(:destroy, @user)
+      end
+    end
+
+    context "when seeing my wall" do
+      before do
+        @other = Factory(:user)
       end
 
-      context "when destroying user" do
-        before do
-          @other = Factory(:user)
-        end
-        it "can NOT destroy others user" do
-          @user_ability.should_not be_able_to(:destroy, @other)
-        end
+      it "others can NOT access my wall" do
+        @user_ability.should_not be_able_to(:my_wall, @other)
+      end
 
-        it "can destroy its own user" do
-          @user_ability.should be_able_to(:destroy, @user)
-        end
+      it "can access my wall" do
+        @user_ability.should be_able_to(:my_wall, @user)
       end
     end
   end

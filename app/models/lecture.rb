@@ -7,7 +7,8 @@ class Lecture < ActiveRecord::Base
   after_create :create_asset_report
 
   # ASSOCIATIONS
-  has_many :statuses, :as => :statusable, :order => "updated_at DESC"
+  has_many :statuses, :as => :statusable, :order => "updated_at DESC",
+    :dependent => :destroy
   has_many :logs, :as => :logeable, :order => "created_at DESC",
     :dependent => :destroy
 

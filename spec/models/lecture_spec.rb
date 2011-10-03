@@ -23,7 +23,7 @@ describe Lecture do
   it { should have_many(:favorites).dependent(:destroy) }
 
   it { should have_many(:logs) }
-  it { should have_many(:statuses) }
+  it { should have_many(:statuses).dependent(:destroy) }
 
   it { should belong_to :subject }
 
