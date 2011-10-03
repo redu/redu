@@ -49,19 +49,20 @@ $(function(){
     // Ao clicar em Comentar ir direto para criar status
     $(".student-actions .action-comment").live("click", function(){
       $('html,body').animate({
-          scrollTop: $(".create-status .textarea textarea").offset().top
+          scrollTop: $(".create-status textarea.textarea").offset().top
         }, "slow");
-      $(".create-status .textarea textarea").focus();
+      $(".create-status textarea.textarea").focus();
     });
 
     // Scroll os botões de student-actions de acordo com o #resource
     $(document).scroll(function(){
-        if($("#resource").offset().top - $(window).scrollTop() < 30) {
+      if ($("#resource").length > 0) {
+        if(($("#resource").offset().top - $(window).scrollTop() < 30)) {
           $(".student-actions").css({'position': 'fixed', 'top':'10px'})
         } else {
           $(".student-actions").css({'position': 'relative'})
         }
-
+      }
     });
 
     $(document).ready(function(){
