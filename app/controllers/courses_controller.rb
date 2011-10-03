@@ -65,7 +65,7 @@ class CoursesController < BaseController
 
   def new
     respond_to do |format|
-      format.html
+      format.html { render 'courses/admin/new' }
     end
   end
 
@@ -84,7 +84,7 @@ class CoursesController < BaseController
         @environment.courses << @course
         format.html { redirect_to environment_course_path(@environment, @course) }
       else
-        format.html { render "new" }
+        format.html { render 'courses/admin/new' }
       end
     end
 

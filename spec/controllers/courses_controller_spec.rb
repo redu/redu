@@ -782,4 +782,75 @@ describe CoursesController do
       end
     end
   end
+
+  # admin actions (management panel)
+  context "on management panel" do
+    before  do
+      @environment = Factory(:environment)
+      @course = Factory(:course, :environment => @environment)
+      @user = Factory(:user)
+      UserEnvironmentAssociation.create(:environment => @environment,
+                                        :user => @user,
+                                        :role => Role[:environment_admin])
+      UserCourseAssociation.create(:course => @course,
+                                   :user => @user,
+                                   :role => Role[:environment_admin])
+      activate_authlogic
+      UserSession.create @user
+    end
+
+    context "GET new" do
+      before do
+        get :new, :locale => "pt-BR", :environment_id => @environment.path
+      end
+
+      it "assigns environment" do
+        assigns[:environment].should_not be_nil
+      end
+
+      it "assigns course" do
+        assigns[:course].should_not be_nil
+      end
+
+      it "renders admin/new" do
+        response.should render_template "courses/admin/new"
+      end
+    end
+
+    context "POST create" do
+      context "when successful" do
+        before do
+          @post_params = { :plan => "free",
+                           :course => { :name => "course", :workload => "",
+                                        :path => "course-path", :tag_list => "",
+                                        :description => "",
+                                        :subscription_type => "1" } }
+          @post_params[:locale] = "pt-BR"
+          @post_params[:environment_id] = @environment.path
+          post :create, @post_params
+        end
+
+        it "redirects to Courses#show" do
+          response.should redirect_to(environment_course_path(@environment, Course.last))
+        end
+      end
+
+      context "when failing" do
+        before do
+          @post_params = { :plan => "free",
+                           :course => { :name => "", :workload => "",
+                                        :path => "", :tag_list => "",
+                                        :description => "",
+                                        :subscription_type => "1" } }
+          @post_params[:locale] = "pt-BR"
+          @post_params[:environment_id] = @environment.path
+          post :create, @post_params
+        end
+
+        it "re-renders course/admin/new" do
+          response.should render_template "courses/admin/new"
+        end
+      end
+    end
+  end
 end
