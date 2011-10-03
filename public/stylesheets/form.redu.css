@@ -181,6 +181,7 @@
 
 /* botoes */
   .concave-remove,
+  input[type="submit"].concave-remove,
   input[type="submit"].concave-button,
   .concave-button,
   .concave-cancel {
@@ -200,6 +201,7 @@
     background-color: #73C3E6;
   }
 
+  input[type="submit"].concave-remove,
   .concave-remove {
     margin: 20px 0px 0px 20px;
     border: 1px solid rgb(232, 59, 59);
