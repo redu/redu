@@ -1,63 +1,44 @@
-  <script type="text/javascript" charset="utf-8">
-    //<![CDATA[
-  $(document).ready(function(){
-      $("#course_path").bind('keyup blur', function(e){
-        var slug = $(this).slug()
-        $(this).val(slug);
-        })
-
-      $("#course_path").bind('keyup blur', function(){
-        var slug = $(this).slug()
-        $("#url_preview .course").html(slug);
-        })
-
-      $("#course_name").bind('keyup blur', function(e){
-        var slug = $(this).slug()
-        $("#course_path").val(slug);
-        $("#url_preview .course").html(slug);
-        })
-
-      })
-//]]>
-</script>
-
+<%= render :partial => 'shared/management_background' %>
 <%= render :partial => 'courses/sidebar',
   :locals => { :course => @header_course } %>
 <div class="main grid_12 omega big-col">
   <%= render :partial => 'courses/breadcrumbs',
     :locals => { :course => @header_course } %>
-  <%= render :partial => 'courses/header',
+  <%= render :partial => 'courses/admin/header',
     :locals => { :course => @header_course } %>
-  <div id="course-manage" class="body">
-    <div class="header">
-      <h4>Gerenciamento</h4>
-      <span class="counter">Informações gerais do Curso</span>
-    </div>
-    <%=
-      fake_tabs ["Informações", edit_environment_course_path(@environment, @header_course), {:class => 'icon icon-management-lightblue_16_16'}],
-        ["Membros", admin_members_environment_course_path(@environment, @header_course), {:class => 'icon icon-members-gray_16_16'}],
-        ["Moderação", admin_members_requests_environment_course_path(@environment, @header_course), {:class => 'icon icon-moderation-gray_16_16'}],
-        ["Convites", admin_manage_invitations_environment_course_path(@environment, @header_course), {:class => ''}],
-        ["Disciplinas", admin_spaces_environment_course_path(@environment, @header_course), {:class => 'icon icon-space-gray_16_16'}] do
-    %>
+  <div id="course-manage" class="body management">
+    <%= render :partial => 'courses/admin/clean_header' %>
+    <%= tabs :courses_admin do %>
+      <div class="plan-use">
+        <span class="plan-type"><%= @course.plan.name %></span>
+        <%= render :partial => "invoices/quotas",
+          :locals => { :quota_file => @course.percentage_quota_file,
+                       :plan => @course.plan,
+                       :quota_multimedia => @course.percentage_quota_multimedia,
+                       :quota_members => @course.percentage_quota_members,
+                       :quota => @course.quota } %>
+      </div>
       <%= form_for @course,
         :url => environment_course_path(@environment, @header_course),
-        :html => { :class => "form-common" } do |f| %>
-        <%= f.error_messages %>
-        <%= render :partial => 'courses/form', :locals => { :f => f, :edit => true } %>
+        :html => { :class => "concave-form" } do |f| %>
+        <%= concave_error_messages_for @course %>
+        <%= render :partial => 'courses/admin/form', :locals => { :f => f, :edit => true } %>
         <%= f.submit "Salvar alterações" %>
         <% if @course.published? %>
           <%= link_to 'Despublicar', unpublish_environment_course_path(@environment, @course),
             :confirm => 'Você tem certeza que deseja deixar este curso invisível?',
-            :class => "vanilla cancel" %>
+            :class => "concave-clean" %>
         <% else %>
           <%= link_to 'Publicar', publish_environment_course_path(@environment, @course),
-            :confirm => 'Você tem certeza que deseja deixar este curso visível?' %>
+            :confirm => 'Você tem certeza que deseja deixar este curso visível?',
+            :class => "concave-clean" %>
         <% end %>
-        <%= link_to 'Remover', environment_course_path(@environment, @course),
+        <%= link_to 'Remover curso', environment_course_path(@environment, @course),
           :confirm => 'Você tem certeza que deseja remover este curso?', :method => :delete,
-          :class => "vanilla remove" %>
+          :class => "concave-remove" %>
       <% end %>
+      <%= link_to "Sair", environment_course_path(@environment, @header_course),
+        :class => "manage exit icon-manage-gray_8_10-before" %>
     <% end %>
   </div>
 </div>

@@ -377,6 +377,15 @@
   height: 18px;
   background: url("../images/new/icons-small.png") -480px -1120px no-repeat;
 }
+
+.icon-document-gray_16_18 { background-position: -320px -1120px; }
+.icon-document-gray_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -320px -1120px no-repeat;
+}
+
 .icon-document-gray_32_34 { background-position: -240px -3040px; }
 .icon-document-gray_32_34-before:before {
   content: "";
@@ -597,6 +606,13 @@
   background: url("../images/new/icons-small.png") -160px -1280px no-repeat;
 }
 
+.icon-file-gray_16_18 { background-position: 0 -1280px; }
+.icon-file-gray_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") 0 -1280px no-repeat;
+}
 .icon-member-gray_16_18 { background-position: 0 -1040px; }
 .icon-member-gray_16_18-before:before {
   content: "";
@@ -948,6 +964,14 @@
   background: url("../images/new/icons-small.png") -160px -1120px no-repeat;
 }
 
+.icon-page-gray_16_18 { background-position: 0 -1120px; }
+.icon-page-gray_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") 0 -1120px no-repeat;
+}
+
 .icon-page-lightblue_16_18 { background-position: -80px -1120px; }
 .icon-page-lightblue_16_18-before:before {
   content: "";
@@ -955,6 +979,7 @@
   height: 18px;
   background: url("../images/new/icons-small.png") -80px -1120px no-repeat;
 }
+
 .icon-page-gray_32_34 { background-position: 0px -3040px; }
 .icon-page-gray_32_34-before:before {
   content: "";
@@ -1026,6 +1051,14 @@
   background: url("../images/new/icons-small.png") -480px -1200px no-repeat;
 }
 
+.icon-seminar-gray_16_18 { background-position: -320px -1200px; }
+.icon-seminar-gray_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -320px -1200px no-repeat;
+}
+
 .icon-seminar-lightblue_16_18 { background-position: -400px -1200px; }
 .icon-seminar-lightblue_16_18-before:before {
   content: "";
@@ -1033,6 +1066,7 @@
   height: 18px;
   background: url("../images/new/icons-small.png") -400px -1200px no-repeat;
 }
+
 .icon-seminar-gray_32_34 { background-position: -240px -3120px; }
 .icon-seminar-gray_32_34-before:before {
   content: "";

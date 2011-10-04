@@ -4869,7 +4869,8 @@ table.spaced tr td {
   font-weight: bold;
 }
 
-#environment-manage .course-path {
+#environment-manage .course-path,
+#course-manage .course-path {
   clear: left;
   font-size: 1.3em;
   color: rgb(179, 179, 179);
@@ -4878,14 +4879,16 @@ table.spaced tr td {
   margin-top: 5px;
 }
 
-#environment-manage .course-path .course-name {
+#environment-manage .course-path .course-name,
+#course-manage .course-path .course-name {
   font-family: inherit;
   display: block;
   margin-top: 5px;
   height: 17px;
 }
 
-#environment-manage .concave-form .hours {
+#environment-manage .concave-form .hours,
+#course-manage .concave-form .hours {
   font-size: .87em;
   color: rgb(179, 178, 179);
   font-style: italic;
@@ -5040,10 +5043,6 @@ table.spaced tr td {
   font-size: .85em;
 }
 
-#environment-manage .strong {
-  font-weight: bold;
-}
-
 #environment-manage .back,
 #course-manage .back {
   font-size: .85em;
@@ -5070,7 +5069,8 @@ table.spaced tr td {
 .management .form-header .strong,
 .management .form-header-closer,
 .management .form-header,
-#environment-manage .course-path {
+#environment-manage .course-path,
+#course-manage .course-path {
   font-family: museo-sans, helvetica, arial, sans-serif;
   font-weight: 500;
 }
@@ -6734,55 +6734,11 @@ div.token-input-dropdown {
   color: #B2B2B2;
 }
 
-#invoice-index {
-}
-
-#invoice-index .progress {
-  float: right;
-  border: 1px solid #cccbcb;
-  margin-bottom: 10px;
-  padding: 2px;
-  width: 130px;
-
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-}
-
-#invoice-index .progress .completed {
-  background-color: #aed584;
-  padding: 5px 0;
-  font-size: .8em;
-  color: #6d6e6f;
-  font-weight: bold;
-  text-align: right;
-  overflow: hidden;
-
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-}
-
-#invoice-index .progress .completed span {
-  margin: 0 7px;
-}
-
-#invoice-index .quotas {
-  float: right;
-  width: 300px;
-}
-
-#invoice-index .quotas .label {
-  color: #B2B2B2;
-}
-
-#invoice-index .quotas .numeric {
-  color: #6C6D6E;
-  font-weight: bold;
-}
-
 #invoice-index .call {
   width: 250px;
   float: left;
   margin-left: 20px;
+  margin-bottom: 25px;
 }
 
 #invoice-index .call .name {
@@ -6796,30 +6752,6 @@ div.token-input-dropdown {
   display: block;
   margin-bottom: 10px;
   color: black;
-}
-
-#invoice-index .quotas .meta {
-  width: 155px;
-  display: block;
-  text-align: right;
-  float: left;
-  font-size: .9em;
-  margin: 8px 5px 0 0;
-}
-
-#invoice-index .common .date {
-  font-size: .9em;
-}
-
-#invoice-index .common .value,
-#invoice-index .common .state {
-  font-size: .9em;
-  font-style: italic;
-  color: #B2B2B2;
-}
-
-#contacts {
-
 }
 
 #contacts ul {
@@ -7002,6 +6934,134 @@ div.token-input-dropdown {
 .concave-form .course-plan .price {
   font-size: .87em;
   color: rgb(109, 110, 111);
+}
+
+.plan-use {
+  background: #f0f0f0; /* Old browsers */
+  padding: 10px 20px;
+  width: 420px;
+  margin: auto;
+}
+
+#course-manage .plan-use {
+  height: 114px;
+}
+
+#invoice-index .plan-use {
+  clear: both;
+}
+
+.cssgradients .plan-use {
+  background: -moz-linear-gradient(top, #f0f0f0 0%, #ffffff 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f0f0f0), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #f0f0f0 0%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #f0f0f0 0%,#ffffff 100%); /* Opera11.10+ */
+  background: -ms-linear-gradient(top, #f0f0f0 0%,#ffffff 100%); /* IE10+ */
+  background: linear-gradient(top, #f0f0f0 0%,#ffffff 100%); /* W3C */
+}
+
+.boxshadow .plan-use {
+  -webkit-box-shadow: 0px -1px 0px 0px rgba(230, 230, 230, 100);
+  -moz-box-shadow: 0px -1px 0px 0px rgba(230, 230, 230, 100);
+  box-shadow: 0px -1px 0px 0px rgba(230, 230, 230, 100)
+}
+
+.borderradius .plan-use {
+  -webkit-border-radius: 7px;
+  -moz-border-radius: 7px;
+  border-radius: 7px;
+}
+
+.plan-use .plan-type {
+  display: block;
+  text-align: center;
+  font-family: museo-sans, helvetica, arial, sans-serif;
+  font-weight: 500;
+  color: rgb(109, 110, 111);
+  font-size: 1.3em;
+  margin-bottom: 15px;
+}
+
+.textshadow .plan-use .plan-type {
+  text-shadow: 0px 1px 0px #ffffff;
+}
+
+.plan-use .quotas > li {
+  margin-bottom: 5px;
+}
+
+.plan-use .quotas > li .meta {
+  float: left;
+}
+
+.plan-use .quotas > li .meta,
+.plan-use .quotas > li .used {
+  margin-top: 3px;
+}
+
+.plan-use .quotas > li .meta .label,
+.plan-use .quotas > li .meta .numeric,
+.plan-use .quotas > li .used .percentage {
+  font-size: .87em;
+  color: rgb(179, 179, 179);
+}
+
+.plan-use .quotas > li .meta .numeric,
+.plan-use .quotas > li .used .percentage {
+  font-weight: bold;
+}
+
+.plan-use .quotas > li .meta .numeric .strong {
+  color: rgb(109, 110, 111);
+}
+
+.plan-use .quotas > li .resources .icon-small {
+  display: block;
+  width: 16px;
+  height: 18px;
+  float: left;
+  margin-left: 5px;
+}
+
+.plan-use .quotas > li .used,
+.plan-use .quotas > li .resources {
+  float: right;
+}
+
+.plan-use .quotas > li .used {
+  margin-left: 10px;
+}
+
+.plan-use .quotas > li .used .percentage {
+  float: left;
+  margin-right: 5px;
+}
+
+.plan-use .quotas > li .used .progress {
+  width: 100px;
+  float: left;
+}
+
+.plan-use .quotas > li .used .progress .completed {
+  background: #61be80; /* Old browsers */
+  height: 10px;
+  text-indent: -9999px;
+  overflow: hidden;
+}
+
+.cssgradients .plan-use .quotas > li .used .progress .completed {
+  background: -moz-linear-gradient(top, #61be80 0%, #aed584 50%, #61be80 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#61be80), color-stop(50%,#aed584), color-stop(100%,#61be80)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #61be80 0%,#aed584 50%,#61be80 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #61be80 0%,#aed584 50%,#61be80 100%); /* Opera11.10+ */
+  background: -ms-linear-gradient(top, #61be80 0%,#aed584 50%,#61be80 100%); /* IE10+ */
+  background: linear-gradient(top, #61be80 0%,#aed584 50%,#61be80 100%); /* W3C */
+}
+
+.borderradius .plan-use .quotas >li .used .progress .completed {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
 }
 
 .replacement {

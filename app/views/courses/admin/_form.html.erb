@@ -1,6 +1,10 @@
 <%# Utilizado para a crição de um Course. A flag edit deve ser true quando o form
     estiver sendo utilizado para editar uma entrada já existente %>
 
+<span class="course-path">
+  redu.com.br<%= environment_path(@environment) %>/cursos/<span class="course-name strong"><%= @course.path %></span>
+</span>
+
 <%= f.label :name, "Nome" %>
 <%= f.text_field :name %>
 <span class="tip">Nome do curso</span>
@@ -38,9 +42,9 @@
     <%= f.label :subscription_type_2, "Entrada moderada" %>
   </li>
 </ul>
+<hr />
 
 <% if edit == false %>
-  <hr />
   <%= label :plan, "Planos" %>
   <ul class="single-column course-plan">
     <li>

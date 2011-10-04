@@ -10,12 +10,14 @@
       </span>
       <span class="name"><%= @plan.name %></span>
     </div>
-    <%= render :partial => "invoices/quotas",
-      :locals => { :quota_file => @plan.billable.percentage_quota_file,
-        :plan => @plan,
-        :quota_multimedia => @plan.billable.percentage_quota_multimedia,
-        :quota_members => @plan.billable.percentage_quota_members,
-        :quota => @quota } %>
+    <div class="plan-use">
+      <%= render :partial => "invoices/quotas",
+        :locals => { :quota_file => @plan.billable.percentage_quota_file,
+                     :plan => @plan,
+                     :quota_multimedia => @plan.billable.percentage_quota_multimedia,
+                     :quota_members => @plan.billable.percentage_quota_members,
+                     :quota => @quota } %>
+    </div>
     <table class="common spaced">
       <thead>
         <tr>

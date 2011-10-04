@@ -13,13 +13,12 @@
         :url => environment_courses_path(@environment),
         :html => { :class => 'concave-form clearfix' } do |f| %>
         <%= concave_error_messages_for @course %>
-        <span class="course-path">
-          redu.com.br<%= environment_path(@environment) %>/cursos/<span class="course-name strong"><%= @course.path %></span>
-        </span>
         <%= render :partial => 'courses/admin/form', :locals => { :f => f, :edit => false } %>
         <hr />
         <%= f.submit "Salvar alterações" %>
       <% end %>
+      <%= link_to "Sair", environment_path(@environment),
+        :class => "manage exit icon-manage-gray_8_10-before" %>
     <% end %>
   </div>
 </div>

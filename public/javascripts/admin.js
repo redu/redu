@@ -17,7 +17,7 @@
   $("#course_name, #course_path").live('keyup blur', function(e){
     var slugedPath = $(this).slug();
     $("#course_path").val(slugedPath);
-    $("#environment-manage .course-path .course-name").html(slugedPath);
+    $("#environment-manage .course-path .course-name, #course-manage .course-path .course-name").html(slugedPath);
   });
 
   // Colorindo tabela de roles

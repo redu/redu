@@ -852,5 +852,67 @@ describe CoursesController do
         end
       end
     end
+
+    context "GET edit" do
+      before do
+        get :edit, :locale => "pt-BR", :environment_id => @environment.path,
+          :id => @course.path
+      end
+
+      it "assigns environment" do
+        assigns[:environment].should_not be_nil
+      end
+
+      it "assigns course" do
+        assigns[:course].should_not be_nil
+      end
+
+      it "assigns header_course" do
+        assigns[:header_course].should_not be_nil
+      end
+
+      it "renders admin/edit" do
+        response.should render_template "courses/admin/edit"
+      end
+    end
+
+    context "POST update" do
+      context "when successful" do
+        before do
+          @post_params = { :plan => "free",
+                           :course => { :name => "course", :workload => "",
+                                        :path => "course-path-changed",
+                                        :tag_list => "", :description => "",
+                                        :subscription_type => "1" } }
+          @post_params[:locale] = "pt-BR"
+          @post_params[:environment_id] = @environment.path
+          @post_params[:id] = @course.path
+          post :update, @post_params
+        end
+
+        it "redirects to Environments#show" do
+          response.should redirect_to(environment_course_path(@environment,
+                                                              @course.reload))
+        end
+      end
+
+      context "when failing" do
+        before do
+          @post_params = { :plan => "free",
+                           :course => { :name => "course", :workload => "",
+                                        :path => "",
+                                        :tag_list => "", :description => "",
+                                        :subscription_type => "1" } }
+          @post_params[:locale] = "pt-BR"
+          @post_params[:environment_id] = @environment.path
+          @post_params[:id] = @course.path
+          post :update, @post_params
+        end
+
+        it "re-renders courses/admin/edit" do
+          response.should render_template "courses/admin/edit"
+        end
+      end
+    end
   end
 end
