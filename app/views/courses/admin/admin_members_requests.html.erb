@@ -4,12 +4,13 @@
             $('user_list_table').remove();
     }
   </script>
+<%= render :partial => "shared/management_background" %>
 <%= render :partial => 'courses/sidebar',
   :locals => { :course => @course }  %>
 <div class="main grid_12 omega big-col">
   <%= render :partial => 'courses/breadcrumbs',
     :locals => { :course => @course } %>
-  <%= render :partial => 'courses/header',
+  <%= render :partial => 'courses/admin/header',
     :locals => { :course => @course } %>
   <div id="course-manage" class="management body">
     <%= render :partial => "courses/admin/clean_header" %>
