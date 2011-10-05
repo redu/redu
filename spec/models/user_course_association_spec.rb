@@ -75,7 +75,7 @@ describe UserCourseAssociation do
       end
 
       it "should create hierachy associations" do
-        subject.course.should_receive(:create_hierarchy_associations).with(subject.user)
+        subject.course.should_receive(:create_hierarchy_associations).with(subject.user, Role[:member])
         subject.accept!
       end
     end
@@ -92,7 +92,7 @@ describe UserCourseAssociation do
       end
 
       it "should create hierachy associations" do
-        subject.course.should_receive(:create_hierarchy_associations).with(subject.user)
+        subject.course.should_receive(:create_hierarchy_associations).with(subject.user, Role[:member])
         subject.approve!
       end
     end
