@@ -145,7 +145,6 @@ class Course < ActiveRecord::Base
 
     if self.subscription_type.eql? 1 # Todos podem participar, sem moderação
       association.approve!
-      self.create_hierarchy_associations(user, role)
     end
   end
 

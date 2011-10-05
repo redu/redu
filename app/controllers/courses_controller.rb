@@ -240,15 +240,10 @@ class CoursesController < BaseController
   # Associa um usuário a um Course (Ação de participar).
   def join
     authorize! :add_entry, @course
-    association = UserCourseAssociation.create(:user_id => current_user.id,
-                                               :course_id => @course.id,
-                                               :role => Role[:member])
+
+    @course.join(current_user)
 
     if @course.subscription_type.eql? 1 # Todos podem participar, sem moderação
-      association.approve!
-
-      @course.create_hierarchy_associations(current_user, Role[:member])
-
       flash[:notice] = "Você agora faz parte do curso #{@course.name}"
       redirect_to environment_course_path(@course.environment, @course)
     else
