@@ -41,6 +41,38 @@
   background: url("../images/new/icons-small.png") -160px -2480px no-repeat;
 }
 
+.icon-add-contact-gray_16_18 { background-position: 0px -2480px; }
+
+.icon-add-contact-blue_16_18,
+.icon-add-contact-lightblue_16_18:hover { background-position: -160px -2480px; }
+.icon-add-contact-blue_16_18-before:before,
+.icon-add-contact-lightblue_16_18-before:hover:before,
+.subtabs .ui-state-default .icon-add-contact_16_18-before:hover:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -160px -2480px no-repeat;
+}
+
+.icon-add-contact-lightblue_16_18 { background-position: -80px -2480px; }
+.icon-add-contact-lightblue_16_18-before:before,
+.subtabs .ui-state-default .icon-add-contact_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -80px -2480px no-repeat;
+}
+
+.icon-add-contact-white_16_18 { background-position: -240px -2480px; }
+.icon-add-contact-white_16_18-before:before,
+.subtabs .ui-state-active .icon-add-contact_16_18-before:before,
+.subtabs .ui-state-active .icon-add-contact_16_18-before:hover:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -240px -2480px no-repeat;
+}
+
 .icon-add_message-blue_16_18,
 .icon-add_message-lightblue_16_18:hover { background-position: -160px  -2640px; }
 .icon-add_message-blue_16_18-before:before,
@@ -891,6 +923,38 @@
   width: 16px;
   height: 18px;
   background: url("../images/new/icons-small.png") -480px -2240px no-repeat;
+}
+
+.icon-moderation-gray_16_18 { background-position: 0px -1600px; }
+
+.icon-moderation-blue_16_18,
+.icon-moderation-lightblue_16_18:hover { background-position: -160px -1600px; }
+.icon-moderation-blue_16_18-before:before,
+.icon-moderation-lightblue_16_18-before:hover:before,
+.subtabs .ui-state-default .icon-moderation_16_18-before:hover:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -160px -1600px no-repeat;
+}
+
+.icon-moderation-lightblue_16_18 { background-position: -80px -1600px; }
+.icon-moderation-lightblue_16_18-before:before,
+.subtabs .ui-state-default .icon-moderation_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -80px -1600px no-repeat;
+}
+
+.icon-moderation-white_16_18 { background-position: -240px -1600px; }
+.icon-moderation-white_16_18-before:before,
+.subtabs .ui-state-active .icon-moderation_16_18-before:before,
+.subtabs .ui-state-active .icon-moderation_16_18-before:hover:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -240px -1600px no-repeat;
 }
 
 .icon-plans-blue_16_18,

@@ -5256,6 +5256,136 @@ table.spaced tr td {
   color: transparent;
 }
 
+.moderate-members-form .concave-button {
+  margin: 10px 45px 0px 0px;
+}
+
+.moderate-members-form .form-header {
+  font-weight: 300;
+  margin-left: 50px;
+  width: 300px;
+}
+
+.moderate-members-table {
+  border-collapse: separate;
+  border-spacing: 10px 10px;
+  margin: 0px 40px;
+}
+
+.moderate-members-table tr {
+}
+
+.moderate-members-table tr td {
+  vertical-align: 0px;
+}
+
+.moderate-members-table .accept-row,
+.moderate-members-table .reject-row {
+  font-size: .77em;
+  text-align: center;
+  width: 45px;
+  color: rgb(179, 179, 179);
+}
+
+.accept-row .accept-radio,
+.reject-row .reject-radio {
+  background-color: white;
+  margin-top: 5px;
+  width: 40px;
+  height: 40px;
+}
+
+
+.accept-row .accept-radio:hover,
+.reject-row .reject-radio:hover {
+  background-color: rgb(219, 239, 247);
+}
+
+.borderradius .accept-row .accept-radio:hover,
+.borderradius .reject-row .reject-radio:hover {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+
+.moderate-member {
+  overflow: hidden;
+  background-color: #f1f0f0;
+  width: 550px;
+}
+
+.borderradius .moderate-member {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+
+.moderate-member img {
+  margin: 15px 10px 15px 20px;
+  float: left;
+}
+
+.moderate-member .member-info {
+  margin-top: 10px;
+  width: 245px;
+  overflow: hidden;
+  display: block;
+  float: left;
+}
+
+.moderate-member .member-info span {
+  display: block;
+}
+
+.moderate-member .user a {
+  color: rgb(76, 172, 213);
+  display: block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-weight: bold;
+  margin-bottom: 3px;
+}
+
+.moderate-member .member-info .date,
+.moderate-member .member-info .email {
+  color: rgb(179, 179, 179);
+  font-size: .9em;
+  font-style: italic;
+}
+
+.moderate-member .member-info .date {
+  margin-top: 2px;
+}
+
+.textshadow .member-info .date,
+.textshadow .member-spaces span,
+.textshadow .member-info .email {
+  -moz-text-shadow: 0px 1px 0px white;
+  -webkit-text-shadow: 0px 1px 0px white;
+  text-shadow: 0px 1px 0px white;
+}
+
+.moderate-member .member-spaces {
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+.moderate-member .member-spaces .icon-space-gray_16_18-before::before {
+  margin-right: 5px;
+  display: block;
+  float: left;
+}
+
+.moderate-member .member-spaces span {
+  font-size: .9em;
+  color: rgb(179, 179, 179);
+}
+
+.moderate-members-table input[type="radio"] {
+  margin: 13px 0px 0px 0px;
+  padding: 10px;
+}
+
 #admin-invitations .header {
   float: none;
 }

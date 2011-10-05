@@ -1,0 +1,23 @@
+  <script type="text/javascript">
+    function showLoadingUsers(){
+            document.getElementById('loading_bar').style.display = 'block';
+            $('user_list_table').remove();
+    }
+  </script>
+<%= render :partial => 'courses/sidebar',
+  :locals => { :course => @course }  %>
+<div class="main grid_12 omega big-col">
+  <%= render :partial => 'courses/breadcrumbs',
+    :locals => { :course => @course } %>
+  <%= render :partial => 'courses/header',
+    :locals => { :course => @course } %>
+  <div id="course-manage" class="management body">
+    <%= render :partial => "courses/admin/clean_header" %>
+    <%= tabs :courses_admin do %>
+      <%= subtabs :courses_admin do %>
+        <%= render :partial => 'courses/admin/pending_member_list_admin',
+          :locals => { :pending_members => @pending_members }%>
+      <% end %>
+    <% end %>
+  </div>
+</div>

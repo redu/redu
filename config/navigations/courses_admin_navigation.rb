@@ -38,11 +38,11 @@ SimpleNavigation::Configuration.run do |navigation|
           subtabs.item :invite_members, "Convites",
             invite_members_environment_course_path(@environment, @course),
             :class => 'ui-state-default',
-            :link => { :class => 'icon-bio_16_18-before' }
+            :link => { :class => 'icon-add-contact_16_18-before' }
           subtabs.item :moderate_members, "Moderação",
-            moderate_members_requests_environment_course_path(@environment, @course),
+            admin_members_requests_environment_course_path(@environment, @course),
             :class => 'ui-state-default',
-            :link => { :class => 'icon-bio_16_18-before' }
+            :link => { :class => 'icon-moderation_16_18-before' }
         end
     end
   end

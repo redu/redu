@@ -175,9 +175,9 @@ class CoursesController < BaseController
       paginate(:page => params[:page],:order => 'updated_at DESC',
                :per_page => Redu::Application.config.items_per_page)
     respond_to do |format|
-      format.html
+      format.html { render "courses/admin/admin_members_requests" }
       format.js do
-        render_endless 'courses/pending_member_item_admin', @pending_members,
+        render_endless 'courses/admin/pending_member_item_admin', @pending_members,
           '#pending_member_list'
       end
     end
