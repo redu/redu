@@ -323,19 +323,74 @@ describe Course do
 
   end
 
-  it "accepts a user (join)" do
-    @space = Factory(:space, :course => subject)
-    subject_space = Factory(:subject, :space => @space,
-                            :owner => subject.owner,
-                            :finalized => true)
-    user = Factory(:user)
-    user2 = Factory(:user)
-    subject.join(user)
-    subject.join(user2)
-    subject.users.should include(user)
-    @space.users.should include(user)
-    subject_space.members.to_set.should == [user, user2].to_set
-    subject.environment.users.should include(user)
+  context "when joining an user" do
+    before do
+      @space = Factory(:space, :course => subject)
+      @subj = Factory(:subject, :space => @space,
+                              :owner => subject.owner,
+                              :finalized => true)
+      @user = Factory(:user)
+    end
+
+    context "without a role" do
+      before do
+        subject.join(@user)
+      end
+
+      it "creates environment association" do
+        assoc = @user.get_association_with(@environment)
+        assoc.should_not be_nil
+        assoc.role.should == Role[:member]
+      end
+
+      it "creates course association" do
+        assoc = @user.get_association_with(subject)
+        assoc.should_not be_nil
+        assoc.role.should == Role[:member]
+      end
+
+      it "creates space association" do
+        assoc = @user.get_association_with(@space)
+        assoc.should_not be_nil
+        assoc.role == Role[:member]
+      end
+
+      it "enrolls the user" do
+        assoc = @user.get_association_with(@subj)
+        assoc.should_not be_nil
+        assoc.role == Role[:member]
+      end
+    end
+
+    context "whit a role" do
+      before do
+        subject.join(@user, Role[:environment_admin])
+      end
+
+      it "creates environment association" do
+        assoc = @user.get_association_with(@environment)
+        assoc.should_not be_nil
+        assoc.role.should == Role[:environment_admin]
+      end
+
+      it "creates course association" do
+        assoc = @user.get_association_with(subject)
+        assoc.should_not be_nil
+        assoc.role.should == Role[:environment_admin]
+      end
+
+      it "creates space association" do
+        assoc = @user.get_association_with(@space)
+        assoc.should_not be_nil
+        assoc.role == Role[:environment_admin]
+      end
+
+      it "enrolls the user" do
+        assoc = @user.get_association_with(@subj)
+        assoc.should_not be_nil
+        assoc.role == Role[:environment_admin]
+      end
+    end
   end
 
   context "removes a user (unjoin)" do
@@ -384,28 +439,44 @@ describe Course do
     subject.rejected_participation?(user).should be_true
   end
 
-  it "creates hierarchy associations for a specified user" do
-    space = Factory(:space, :course => subject)
-    subject.spaces << space
-    user = Factory(:user)
+  context "when creating hierarchy associations" do
+    before do
+      @space = Factory(:space, :course => subject)
+      subject.spaces << @space
+      @user = Factory(:user)
+    end
 
-    subject.create_hierarchy_associations(user)
-    user.user_environment_associations.last.environment.
-      should == subject.environment
-    user.user_space_associations.last.space.should == space
-  end
+    it "creates hierarchy associations for a specified user" do
+      subject.create_hierarchy_associations(@user)
+      @user.user_environment_associations.last.environment.
+        should == subject.environment
+      @user.user_space_associations.last.space.should == @space
+    end
 
-  it "creates hierarchy associations for a specified user with a given role" do
-    space = Factory(:space, :course => subject)
-    subject.spaces << space
-    user = Factory(:user)
+    it "creates hierarchy associations for a specified user with a given role" do
+      subject.create_hierarchy_associations(@user, Role[:tutor])
+      @user.user_environment_associations.last.environment.
+        should == subject.environment
+      @user.user_space_associations.last.space.should == @space
+      @user.user_environment_associations.last.role.should == Role[:tutor]
+      @user.user_space_associations.last.role.should == Role[:tutor]
+    end
 
-    subject.create_hierarchy_associations(user, Role[:tutor])
-    user.user_environment_associations.last.environment.
-      should == subject.environment
-    user.user_space_associations.last.space.should == space
-    user.user_environment_associations.last.role.should == Role[:tutor]
-    user.user_space_associations.last.role.should == Role[:tutor]
+    it "should not double create environment association" do
+      expect {
+        2.times do
+          subject.create_hierarchy_associations(@user, Role[:tutor])
+        end
+      }.should change(UserEnvironmentAssociation, :count).by(1)
+    end
+
+    it "should not double create space association" do
+      expect {
+        2.times do
+          subject.create_hierarchy_associations(@user, Role[:tutor])
+        end
+      }.should change(UserSpaceAssociation, :count).by(1)
+    end
   end
 
   context "when inviting an user" do
