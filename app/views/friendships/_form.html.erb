@@ -1,5 +1,5 @@
 <%= form_for [user, Friendship.new],
-  :remote => true, :html => { :method => :post, :class => 'form-loader' } do %>
+  :remote => true, :html => { :method => :post, :class => 'form-loader new-friendship' } do %>
   <%= hidden_field_tag "friend_id", friend.id %>
   <%= hidden_field_tag "show_user", true %>
   <button class='add-as-friend concave-button' >
