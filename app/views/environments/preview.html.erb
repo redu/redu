@@ -13,7 +13,7 @@
     <% end %>
 
     <ul id="courses_list" class="hierarchy-listing">
-      <% tabs :environments do %>
+      <% big_tabs :environments do %>
         <%= render :partial => 'courses/item_preview',
           :collection => @courses %>
       <% end %>

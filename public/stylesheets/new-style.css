@@ -707,6 +707,13 @@ body {
   margin-top: 1px;
 }
 
+#course-users.body,
+#course-spaces.body,
+#environment-users.body,
+#environment-courses.body {
+  background-color: rgb(247, 247, 247);
+}
+
 #hierarchy-header .details {
   border: 1px solid rgb(230, 230, 230);
   padding: 10px;
@@ -1107,6 +1114,10 @@ body {
 
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
+}
+
+#course-spaces.preview {
+  background-color: rgb(247, 247, 247);
 }
 
 #bulletin .header,
