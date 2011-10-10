@@ -2161,11 +2161,11 @@ body {
 }
 
 .status-large .create-status .concave-form .concave-input {
-  width: 665px;
+  width: 678px;
 }
 
 .status-large .create-response .concave-form .concave-input {
-  width: 590px;
+  width: 603px;
 }
 
 .create-status .concave-form .cancel,
@@ -2351,6 +2351,7 @@ body {
   font-size: .9em;
   margin-left: 27px;
   padding: 10px 0;
+  float: none;
 }
 
 .statuses .actions a {
