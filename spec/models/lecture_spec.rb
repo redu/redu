@@ -239,4 +239,17 @@ describe Lecture do
 
     lectures[0].done?(user).should be_false
   end
+
+  it "says that a it is new" do
+    lecture = Factory(:lecture)
+    lecture.should be_new
+
+    lecture = Factory(:lecture, :created_at => Time.now - 5.days)
+    lecture.should be_new
+  end
+
+  it "says that a it is NOT new" do
+    lecture = Factory(:lecture, :created_at => Time.now - 25.days)
+    lecture.should_not be_new
+  end
 end

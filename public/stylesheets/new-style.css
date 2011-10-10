@@ -1598,7 +1598,7 @@ body {
 .hierarchy-listing .child {
   position: relative;
   display: block;
-  padding: 10px 10px 20px 10px;
+  padding: 20px 10px 20px 15px;
   margin-bottom: 20px;
 
   border: 1px solid rgb(204, 204, 204);
@@ -1752,9 +1752,12 @@ body {
 .hierarchy-listing.subjects .child > .description,
 .hierarchy-listing .child > .lectures {
   margin-top: 20px;
-  margin-left: 55px;
   margin-right: 60px;
   clear: both;
+}
+
+.hierarchy-listing.subjects .child > .description {
+  margin-left: 55px;
 }
 
 .hierarchy-listing .child .tags a{
@@ -2002,6 +2005,7 @@ body {
   color: rgb(179, 179, 179);
   display: block;
   margin-bottom: 10px;
+  margin-left: 55px;
 }
 
 .hierarchy-listing .child .lectures > .title:before {
@@ -2010,7 +2014,7 @@ body {
   margin-top: -2px;
 }
 
-.hierarchy-listing .child .lectures > li {
+.hierarchy-listing .child .lectures > li .infos {
   margin-bottom: 1px;
   padding: 5px 10px;
 
@@ -2019,17 +2023,33 @@ body {
   border-radius: 5px;
 }
 
-.textshadow .hierarchy-listing .child .lectures > li {
+.textshadow .hierarchy-listing .child .lectures > li .infos {
   text-shadow: 0px 1px 0px #ffffff;
 }
 
-.hierarchy-listing .child .lectures > li:hover {
+.hierarchy-listing .child .lectures > li .infos:hover {
   background-color: rgb(240, 240, 240);
   padding: 4px 9px;
   border: 1px solid white;
 }
 
-.hierarchy-listing .child .lectures > li .position {
+#space-subjects .hierarchy-listing .child .lectures > li .new {
+  background: none;
+  margin-right: 13px;
+  margin-top: 7px;
+}
+
+#space-subjects .hierarchy-listing .child .lectures > li .infos {
+  float: left;
+  width: 508px;
+  margin-left: 54px;
+}
+
+#space-subjects .hierarchy-listing .child .lectures > li .infos.new-lecture {
+  margin-left: 0;
+}
+
+.hierarchy-listing .child .lectures > li .infos .position {
   font-weight: bold;
   color: rgb(21, 138, 196);
   display: block;
@@ -2038,18 +2058,19 @@ body {
   margin-top: 3px;
 }
 
-.hierarchy-listing .child .lectures > li .title {
+.hierarchy-listing .child .lectures > li .infos .title {
   float: left;
   margin-top: 3px;
+  max-width: 365px;
 }
 
-.hierarchy-listing .child .lectures > li .title:before {
+.hierarchy-listing .child .lectures > li .infos .title:before {
   float: left;
   margin-right: 3px;
   margin-top: -3px;
 }
 
-.hierarchy-listing .child .lectures > li .type,
+.hierarchy-listing .child .lectures > li .infos .type,
 .hierarchy-listing .child .grade {
   font-size: .87em;
   font-style: italic;
@@ -2064,7 +2085,7 @@ body {
   margin-top: 4px;
 }
 
-.hierarchy-listing .child .lectures > li .ratings {
+.hierarchy-listing .child .lectures > li .infos .ratings {
   float: right;
   margin-top: 4px;
 }

@@ -85,6 +85,9 @@ class Lecture < ActiveRecord::Base
     end
   end
 
+  def new?
+    self.created_at > (Time.now - 15.days)
+  end
 
 
   protected
