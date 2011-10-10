@@ -36,6 +36,9 @@ gem 'remotipart', '>= 0.3.4'
 gem 'zencoder'
 gem 'pusher'
 gem 'kaminari'
+gem 'actionmailer_inline_css',
+  :git => '/Users/guiocavalcanti/workspace/play/actionmailer_inline_css',
+  :branch => 'issue-4'
 
 # Gems específicos de algum ambiente
 group :development, :test do

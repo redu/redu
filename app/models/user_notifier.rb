@@ -8,7 +8,8 @@ class UserNotifier < ActionMailer::Base
 
   default :from => "\"Equipe Redu\" <#{Redu::Application.config.email}>",
       :content_type => "text/plain",
-      :reply_to => "#{Redu::Application.config.email}"
+      :reply_to => "#{Redu::Application.config.email}",
+      :host => "http://0.0.0.0:3000"
 
   ### SENT BY MEMBERS OF SCHOOL
   def pending_membership(user,space)
@@ -312,6 +313,27 @@ class UserNotifier < ActionMailer::Base
     mail(:to => [Redu::Application.config.email, "cns@redu.com.br"],
          :subject => "[Redu] Criação de ambiente",
          :date => Time.zone.now)
+  end
+
+  def subject_added(user, subject)
+    @user = user
+    @subj = subject
+    @environment = subject.space.course.environment
+    @course = @subj.space.course
+
+    mail(:subject => "Novo módulo #{@subj.title}", :to => @user.email) do |format|
+      format.html
+    end
+  end
+
+  def space_added(user, space)
+    @user, @space, @course = user, space, space.course
+    @environment = space.course.environment
+
+    mail(:subject => "Nova disciplina: #{@space.name}",
+         :to => @user.email) do |format|
+      format.html
+    end
   end
 
 end

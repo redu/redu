@@ -136,4 +136,17 @@ class Space < ActiveRecord::Base
 
   end
 
+  # Verifica se space está pronto para ser enviado por notificações
+  def notificable?; true end
+
+  # Envia notificação por e-mail de criação de Space para todos os usuários
+  # do Course
+  def notify_space_added
+    if self.notificable?
+      self.course.approved_users.each do |u|
+        UserNotifier.space_added(u, self).deliver
+      end
+    end
+  end
+
 end
