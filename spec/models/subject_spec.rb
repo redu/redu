@@ -81,10 +81,10 @@ describe Subject do
       Subject.visible.should == visible_subjects
     end
 
-    it "retrieves recent subjects (updated until 1 week ago)" do
+    it "retrieves recent subjects (created until 1 week ago)" do
       subjects = (1..3).collect { |i| Factory(:subject, :owner => @user,
                                               :space => @space,
-                                              :updated_at => (i*3).day.ago) }
+                                              :created_at => (i*3).day.ago) }
       Subject.recent.should == subjects[0..1]
     end
 
@@ -127,10 +127,10 @@ describe Subject do
     should respond_to :turn_invisible!
   end
 
-  it "indicates if it is recent (updated until 1 week ago)" do
+  it "indicates if it is recent (created until 1 week ago)" do
     subject.should be_recent
 
-    subject.updated_at = 10.day.ago
+    subject.created_at = 10.day.ago
     subject.save
     subject.should_not be_recent
   end

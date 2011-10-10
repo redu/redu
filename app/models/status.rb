@@ -13,6 +13,12 @@ class Status < ActiveRecord::Base
       .order("updated_at DESC")
   }
 
+  # Não utilizar o recent em consultas sem include e posteriomente,
+  # na view, fazer as consultas
+  scope :recent_from_hierarchy, lambda { |c|
+    where(build_conditions(c)).where('created_at > ?', 1.week.ago)
+  }
+
   # Constrói as condições de busca de status dentro da hierarquia. Aceita
   # Course, Space e Lecture como raíz
   def self.build_conditions(entity)

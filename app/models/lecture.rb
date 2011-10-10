@@ -34,6 +34,7 @@ class Lecture < ActiveRecord::Base
   scope :related_to, lambda { |lecture|
     where("name LIKE ? AND id != ?", "%#{lecture.name}%", lecture.id)
   }
+  scope :recent, lambda { where('created_at > ?', 1.week.ago) }
 
 
   attr_protected :owner, :published, :view_count, :removed, :is_clone
@@ -85,8 +86,8 @@ class Lecture < ActiveRecord::Base
     end
   end
 
-  def new?
-    self.created_at > (Time.now - 15.days)
+  def recent?
+    self.created_at > 1.week.ago
   end
 
 

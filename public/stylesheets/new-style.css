@@ -1953,6 +1953,10 @@ body {
   font-size: .87em;
 }
 
+.hierarchy-listing.spaces .child .resources li .new {
+  display: block;
+}
+
 .hierarchy-listing.spaces .child .resources li.subjects {
   width: 85px;
 }

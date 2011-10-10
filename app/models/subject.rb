@@ -14,7 +14,7 @@ class Subject < ActiveRecord::Base
   has_many :logs, :as => :logeable, :order => "created_at DESC",
     :dependent => :destroy
 
-  scope :recent, lambda { where('updated_at > ?', 1.week.ago) }
+  scope :recent, lambda { where('created_at > ?', 1.week.ago) }
   scope :visible, lambda { where('visible = ?', true) }
 
   attr_protected :owner, :visible, :finalized
@@ -26,7 +26,7 @@ class Subject < ActiveRecord::Base
   validates_length_of :lectures, :minimum => 1, :on => :update
 
   def recent?
-    self.updated_at > 1.week.ago
+    self.created_at > 1.week.ago
   end
 
   # Matricula o usuário com o role especificado. Retorna true ou false

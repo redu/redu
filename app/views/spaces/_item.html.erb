@@ -9,18 +9,26 @@
     <ul class="resources clearfix">
       <%= link_to "Conteúdo:", space_path(item),
         :class => "title icon-content-lightblue_16_18-before" %>
-      <li class="subjects icon-subject-gray_16_18-before"><%= pluralize item.subjects.visible.count,  "módulo" %></li>
-      <li class="lectures icon-lecture-gray_16_18-before"><%= pluralize item.lectures_count, "aula" %></li>
+      <li class="subjects icon-subject-gray_16_18-before">
+        <span class="all"><%= pluralize item.subjects.visible.count,  "módulo" %></span>
+        <span class="new"><%= pluralize item.subjects.visible.recent.count,  "novo" %></span>
+      </li>
+      <li class="lectures icon-lecture-gray_16_18-before">
+        <span class="all"><%= pluralize item.lectures_count, "aula" %></span>
+      </li>
     </ul>
     <ul class="resources clearfix">
       <%= link_to "Mural da Disciplina:", mural_space_path(item),
         :class => "title icon-wall-lightblue_16_18-before" %>
-    <li class="comments"><%= pluralize item.statuses.count, "comentário" %></li>
+      <li class="comments">
+        <span class="all"><%= pluralize item.statuses.count, "comentário" %></span>
+        <span class="new"><%= pluralize Status.recent_from_hierarchy(item).count,  "novo" %></span>
+      </li>
     </ul>
     <ul class="resources clearfix">
       <%= link_to "Arquivos de Apoio:", space_folders_path(item),
         :class => "title icon-file-lightblue_16_18-before" %>
-    <li class="files"><%= pluralize item.myfiles.count, "arquivo" %></li>
+      <li class="files"><span class="all"><%= pluralize item.myfiles.count, "arquivo" %></span></li>
     </ul>
   </div>
 </li>

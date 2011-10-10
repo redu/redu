@@ -48,6 +48,10 @@ describe Lecture do
     should respond_to :done?
   end
 
+  it "responds to recent?" do
+    should respond_to :recent?
+  end
+
   context "callbacks" do
     context "creates a AssertReport between the StudentProfile and the Lecture after create" do
       it "when the owner is the subject owner" do
@@ -139,6 +143,12 @@ describe Lecture do
       lecture2 = Factory(:lecture, :subject => @sub, :name => "Item")
 
       Lecture.related_to(lecture2).should == [lecture]
+    end
+
+    it "retrieves recent lectures (created until 1 week ago)" do
+      lectures = (1..3).collect { |i| Factory(:lecture,
+                                              :created_at => (i*3).day.ago) }
+      Lecture.recent.should == lectures[0..1]
     end
   end
 
@@ -240,16 +250,11 @@ describe Lecture do
     lectures[0].done?(user).should be_false
   end
 
-  it "says that a it is new" do
-    lecture = Factory(:lecture)
-    lecture.should be_new
+  it "indicates if it is recent (created until 1 week ago)" do
+    subject.should be_recent
 
-    lecture = Factory(:lecture, :created_at => Time.now - 5.days)
-    lecture.should be_new
-  end
-
-  it "says that a it is NOT new" do
-    lecture = Factory(:lecture, :created_at => Time.now - 25.days)
-    lecture.should_not be_new
+    subject.created_at = 10.day.ago
+    subject.save
+    subject.should_not be_recent
   end
 end
