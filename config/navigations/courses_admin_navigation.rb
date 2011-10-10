@@ -13,12 +13,12 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :sidebar, 'Sidebar', home_path do |tabs|
       tabs.dom_class = 'clearfix ui-tabs-nav'
       tabs.item :infos, 'Informações',
-        edit_environment_course_path(@environment, @course),
+        edit_environment_course_path(@environment, @header_course || @course),
         :highlights_on => action_matcher('courses', ['edit', 'update']),
         :class => 'ui-state-default',
         :link => { :class => "icon-bio_16_18-before" }
       tabs.item :spaces, 'Disciplinas',
-        admin_spaces_environment_course_path(@environment, @course),
+        admin_spaces_environment_course_path(@environment, @header_course || @course),
         :highlights_on => action_matcher(['courses', 'spaces'],
                                          ['admin_spaces', 'new', 'create']),
         :class => 'ui-state-default',
@@ -27,7 +27,7 @@ SimpleNavigation::Configuration.run do |navigation|
                       :class => 'details ',
                       :if => action_matcher('spaces', ['new', 'create'])}
       tabs.item :members, 'Membros',
-        admin_members_environment_course_path(@environment, @course),
+        admin_members_environment_course_path(@environment, @header_course || @course),
         :class => 'ui-state-default',
         :link => { :class => "icon-members_16_18-before" } do |subtabs|
           subtabs.dom_class = 'clearfix ui-tabs-nav'
