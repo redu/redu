@@ -5123,6 +5123,107 @@ table.spaced tr td {
   font-size: .85em;
 }
 
+#course-manage table.concave-invitation-table {
+  margin: 0px 50px;
+  width: 646px;
+  border-collapse: separate;
+  border-spacing: 0px 10px;
+}
+
+table.concave-invitation-table tr {
+  height: 64px;
+  background-color: rgb(240, 240, 240);
+}
+
+table.concave-invitation-table tr:hover {
+  background-color: rgb(219, 239, 247);
+}
+
+.borderradius table.concave-invitation-table tr td:first-child {
+  -moz-border-radius: 3px 0px 0px 3px;
+  -webkit-border-radius: 3px 0px 0px 3px;
+  border-radius: 3px 0px 0px 3px;
+}
+
+.borderradius table.concave-invitation-table tr td:last-child {
+  -moz-border-radius: 0px 3px 3px 0px;
+  -webkit-border-radius: 0px 3px 3px 0px;
+  border-radius: 0px 3px 3px 0px;
+}
+
+table.concave-invitation-table tr td {
+  vertical-align: 0px;
+}
+
+table.concave-invitation-table .cell-checkbox input {
+  margin: 25px 5px 0px 10px;
+}
+
+table.concave-invitation-table .cell-user-info img {
+  margin-top: 16px;
+  float: left;
+}
+
+table.concave-invitation-table .cell-user-info {
+  width: 490px;
+}
+
+table.concave-invitation-table .cell-user-info .user {
+  width: 440px;
+  display: block;
+  float: left;
+  color: rgb(23, 137, 195);
+  margin: 15px 0px 5px 10px;
+}
+
+table.concave-invitation-table .cell-user-info .user a{
+  font-weight: bold;
+}
+
+table.concave-invitation-table .cell-user-info .tip {
+  width: 440px;
+  display: block;
+  float: left;
+  margin-left: 10px;
+  color: rgb(179, 179, 179);
+  font-size: .9em;
+  font-style: italic;
+}
+
+.textshadow .cell-reinvite .reinvited,
+.textshadow .cell-user-info .tip {
+  -moz-text-shadow: 0px 1px 0px white;
+  -webkit-text-shadow: 0px 1px 0px white;
+  text-shadow: 0px 1px 0px white;
+}
+
+table.concave-invitation-table tr td.cell-reinvite {
+  vertical-align: middle;
+  text-align: right;
+  font-size: .87em;
+  margin-right: 15px;
+}
+
+table.concave-invitation-table .cell-reinvite .reinvite {
+  margin-right: 15px;
+}
+
+table.concave-invitation-table .cell-reinvite .reinvited {
+  color: rgb(179, 179, 179);
+  margin-right: 15px;
+}
+
+#course-manage .invitation-list input[type="submit"].concave-remove {
+  margin-left: 50px;
+}
+
+#course-manage .invitation-list .form-header {
+  white-space: nowrap;
+  display: block;
+  margin-left: 50px;
+  margin-bottom: 10px;
+}
+
 .management .concave-admin-table .space-info,
 .management .concave-admin-table .course-info {
   width: 350px;

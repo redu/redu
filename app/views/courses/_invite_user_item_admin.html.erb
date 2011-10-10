@@ -1,28 +1,25 @@
 <tr id="invite-<%= invite_user_item_admin.id %>" class="invite">
-  <td><%= check_box_tag 'user_invitations[]', invite_user_item_admin.id, false,
+  <td class="cell-checkbox"><%= check_box_tag 'user_invitations[]', invite_user_item_admin.id, false,
     {:class => "autoCheck", :id => "remove-#{invite_user_item_admin.id}"}  %></td>
-  <td>
+  <td class="cell-user-info">
     <%= image_tag invite_user_item_admin.user.avatar(:thumb_32),
       :class => "avatar" %>
     <span class="user">
       <%= link_to invite_user_item_admin.user.display_name,
         invite_user_item_admin.user,
         :rarget => "_blank"%>
-      <span class="tip">O membro ainda não aceitou o convite.</span>
-  </span>
-  </td>
-  <td>
-    <span class="date">
-      <%= time_ago_in_words invite_user_item_admin.updated_at %>
+    </span>
+    <span class="tip">
+      O usuário ainda não aceitou o convite para o curso.
     </span>
   </td>
-  <td>
-    <%= link_to 'Reconvidar',
+  <td class="cell-reinvite">
+    <%= link_to 'Reenviar convite',
         invite_members_environment_course_path(@environment, @course,
            :users => "#{invite_user_item_admin.user.id}",
            :invitation_id => invite_user_item_admin.id),
         :remote => true,
         :method => :post,
-      :class => 'important reinvite' %>
+      :class => 'reinvite' %>
   </td>
 </tr>

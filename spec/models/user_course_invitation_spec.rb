@@ -49,6 +49,14 @@ describe UserCourseInvitation do
 
       UserCourseInvitation.with_email(email).should == same_email_invites
     end
+
+    it "retrivers invitations with state 'approved'" do
+      @invites[0..2].each do |i|
+        i.user = Factory(:user)
+        i.accept!
+      end
+      UserCourseInvitation.invitations_approved.should == @invites[0..2]
+    end
   end
 
   context "states" do

@@ -9,6 +9,7 @@ class UserCourseInvitation < ActiveRecord::Base
 
   scope :invited, where(:state => 'invited')
   scope :with_email, lambda { |email| where( :email => email) }
+  scope :invitations_approved, where(:state => 'approved')
 
   aasm_column :state
 
