@@ -1066,6 +1066,12 @@
   background: url("../images/new/icons-small.png") -240px -2320px no-repeat;
 }
 
+.icon-question-blue_12_12 {
+  background-position: -400px -2160px;
+  padding: 0px 6px;
+  cursor: pointer;
+}
+
 .icon-redu_admin-gray_16_18 { background-position: 0 -720px; }
 .icon-redu_admin-gray_16_18-before:before {
   content: "";

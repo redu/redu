@@ -134,8 +134,10 @@ jQuery(function(){
 
     // Tooltips
     $(".tiptip").tipTip();
+    $(".tiptip-right").tipTip({defaultPosition: "right"});
     $(".form-common").ajaxComplete(function(){
       $(".tiptip").tipTip();
+      $(".tiptip-right").tipTip({defaultPosition: "right"});
     });
 
     $(".form-common .tiptip").each(function(){

@@ -44,30 +44,73 @@
 </ul>
 <hr />
 
-<% if edit == false %>
-  <%= label :plan, "Planos" %>
-  <ul class="single-column course-plan">
-    <li>
-      <span class="plan-type">Professor</span>
-    </li>
-    <li>
-      <%= radio_button_tag :plan, 'free', :checked => true %>
-      <%= label_tag :plan_free, "Grátis" %>
-    </li>
-    <li>
-      <%= radio_button_tag :plan, 'professor_lite' %>
-      <%= label_tag :plan_professor_lite, "Lite" %>
-      <span class="price">R$13,99</span>
-    </li>
-    <li>
-      <%= radio_button_tag :plan, 'professor_standard' %>
-      <%= label_tag :plan_professor_standard, "Standard" %>
-      <span class="price">R$56,99</span>
-    </li>
-    <li>
-      <%= radio_button_tag :plan, 'professor_plus' %>
-      <%= label_tag :plan_professor_plus, "Plus" %>
-      <span class="price">R$243,99</span>
-    </li>
-  </ul>
+<% unless edit %>
+  <%= label :plan, "Plano" %>
+  <% if partner %>
+    <ul class="single-column course-plan">
+      <li>
+        <span class="plan-type">Empresa</span>
+      </li>
+      <li>
+        <%= radio_button_tag :plan, 'empresas_lite' %>
+        <%= label_tag :plan_empresas_lite, "Lite" %>
+        <span class="tiptip-right icon-small icon-question-blue_12_12" title="<%= "#{render 'plans/admin/details', :name => 'Empresa', :type => 'Lite', :plan => Plan.from_preset(:empresas_lite)}" %>"></span>
+      </li>
+      <li>
+        <%= radio_button_tag :plan, 'empresas_standard' %>
+        <%= label_tag :plan_empresas_standard, "Standard" %>
+        <span class="tiptip-right icon-small icon-question-blue_12_12" title="<%= "#{render 'plans/admin/details', :name => 'Empresa', :type => 'Standard', :plan => Plan.from_preset(:empresas_standard)}" %>"></span>
+      </li>
+      <li>
+        <%= radio_button_tag :plan, 'empresas_plus' %>
+        <%= label_tag :plan_empresas_plus, "Plus" %>
+        <span class="tiptip-right icon-small icon-question-blue_12_12" title="<%= "#{render 'plans/admin/details', :name => 'Empresa', :type => 'Plus', :plan => Plan.from_preset(:empresas_plus)}" %>"></span>
+      </li>
+    </ul>
+    <ul class="single-column course-plan">
+      <li>
+        <span class="plan-type">Inst. de Ensino</span>
+      </li>
+      <li>
+        <%= radio_button_tag :plan, 'instituicao_lite' %>
+        <%= label_tag :plan_instituicao_lite, "Lite" %>
+        <span class="tiptip-right icon-small icon-question-blue_12_12" title="<%= "#{render 'plans/admin/details', :name => 'Instituição de Ensino', :type => 'Lite', :plan => Plan.from_preset(:instituicao_lite)}" %>"></span>
+      </li>
+      <li>
+        <%= radio_button_tag :plan, 'instituicao_standard' %>
+        <%= label_tag :plan_instituicao_standard, "Standard" %>
+        <span class="tiptip-right icon-small icon-question-blue_12_12" title="<%= "#{render 'plans/admin/details', :name => 'Instituição de Ensino', :type => 'Standard', :plan => Plan.from_preset(:instituicao_standard)}" %>"></span>
+      </li>
+      <li>
+        <%= radio_button_tag :plan, 'instituicao_plus' %>
+        <%= label_tag :plan_instituicao_plus, "Plus" %>
+        <span class="tiptip-right icon-small icon-question-blue_12_12" title="<%= "#{render 'plans/admin/details', :name => 'Instituição de Ensino', :type => 'Plus', :plan => Plan.from_preset(:instituicao_plus)}" %>"></span>
+      </li>
+    </ul>
+  <% else %>
+    <ul class="single-column course-plan">
+      <li>
+        <span class="plan-type">Professor</span>
+      </li>
+      <li>
+        <%= radio_button_tag :plan, 'free', :checked => true %>
+        <%= label_tag :plan_free, "Grátis" %>
+      </li>
+      <li>
+        <%= radio_button_tag :plan, 'professor_lite' %>
+        <%= label_tag :plan_professor_lite, "Lite" %>
+        <span class="tiptip-right icon-small icon-question-blue_12_12" title="<%= "#{render 'plans/admin/details', :name => 'Professor', :type => 'Lite', :plan => Plan.from_preset(:professor_lite)}" %>"></span>
+      </li>
+      <li>
+        <%= radio_button_tag :plan, 'professor_standard' %>
+        <%= label_tag :plan_professor_standard, "Standard" %>
+        <span class="tiptip-right icon-small icon-question-blue_12_12" title="<%= "#{render 'plans/admin/details', :name => 'Professor', :type => 'Standard', :plan => Plan.from_preset(:professor_standard)}" %>"></span>
+      </li>
+      <li>
+        <%= radio_button_tag :plan, 'professor_plus' %>
+        <%= label_tag :plan_professor_plus, "Plus" %>
+        <span class="tiptip-right icon-small icon-question-blue_12_12" title="<%= "#{render 'plans/admin/details', :name => 'Professor', :type => 'Plus', :plan => Plan.from_preset(:professor_plus)}" %>"></span>
+      </li>
+    </ul>
+  <% end %>
 <% end %>

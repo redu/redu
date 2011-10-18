@@ -7189,6 +7189,10 @@ div.token-input-dropdown {
   margin: 0;
 }
 
+.concave-form .course-plan {
+  width: 140px;
+}
+
 .concave-form .course-plan .plan-type {
   font-family: museo-sans, helvetica, arial, sans-serif;
   font-weight: 500;
@@ -7936,3 +7940,37 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   margin-top: 5px;
   display: block;
 }
+
+/* Tiptip usado para mostrar os detalhes dos planos (Courses#new) */
+#tiptip_holder #tiptip_content .name,
+#tiptip_holder #tiptip_content .type {
+  display: block;
+  font-family: museo-sans, helvetica, arial, sans-serif;
+  font-weight: 500;
+}
+
+#tiptip_holder #tiptip_content .name {
+  font-size: 1.3em;
+  margin-bottom: 2px;
+}
+
+#tiptip_holder #tiptip_content .type {
+  font-size: 1.2em;
+}
+
+#tiptip_holder #tiptip_content .features {
+  list-style: circle;
+  margin-top: 10px;
+  margin-bottom: 8px;
+}
+
+#tiptip_holder #tiptip_content .pricing .value {
+  font-size: 1.3em;
+  font-family: museo-sans, helvetica, arial, sans-serif;
+  font-weight: 500;
+}
+
+#tiptip_holder #tiptip_content .pricing .period{
+  font-style: italic;
+}
+
