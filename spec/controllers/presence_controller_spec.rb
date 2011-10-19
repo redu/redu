@@ -206,7 +206,7 @@ describe PresenceController do
 
     it "returns status and time" do
       post :send_chat_message, @post_params
-      payload = { :status => 200, :time => Time.now.strftime("hoje, %H:%M") }
+      payload = { :status => 200, :time => Time.zone.now.strftime("hoje, %H:%M") }
 
       response.body.should == payload.to_json
     end
