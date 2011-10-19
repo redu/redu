@@ -22,7 +22,8 @@ class Ability
 
     # Space
     alias_action :admin_events, :moderate_bulletins, :moderate_events,
-      :look_and_feel, :set_theme, :new_space_admin, :to => :manage
+      :look_and_feel, :set_theme, :new_space_admin,
+      :admin_subjects, :to => :manage
     #TODO action manage gerando recursividade
     alias_action :mural, :students_endless , :to => :read
 

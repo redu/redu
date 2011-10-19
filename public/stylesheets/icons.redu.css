@@ -1171,6 +1171,8 @@
 .icon-subject-lightblue_16_18:hover { background-position: -160px -320px; }
 .icon-subject-blue_16_18-before:before,
 .icon-subject-lightblue_16_18-before:hover:before,
+.tabs .ui-state-default .icon-subject_16_18-before:hover:before,
+.tabs .ui-state-active .icon-subject_16_18-before:hover:before,
 .local-nav .icon-subject_16_18-before:hover:before {
   content: "";
   width: 16px;
@@ -1189,7 +1191,8 @@
 }
 
 .icon-subject-gray_16_18 { background-position: 0 -320px; }
-.icon-subject-gray_16_18-before:before {
+.icon-subject-gray_16_18-before:before,
+.tabs .ui-state-default .icon-subject_16_18-before:before {
   content: "";
   width: 16px;
   height: 18px;
@@ -1198,6 +1201,7 @@
 
 .icon-subject-lightblue_16_18 { background-position: -80px -320px; }
 .icon-subject-lightblue_16_18-before:before,
+.tabs .ui-state-active .icon-subject_16_18-before:before,
 .local-nav .icon-subject_16_18-before:before {
   content: "";
   width: 16px;

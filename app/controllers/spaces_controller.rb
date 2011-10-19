@@ -40,6 +40,12 @@ class SpacesController < BaseController
     end
   end
 
+  def admin_subjects
+    respond_to do |format|
+       format.html { render "spaces/admin/admin_subjects" }
+    end
+  end
+
   def admin_bulletins
     paginating_params = {
       :order => 'updated_at ASC',

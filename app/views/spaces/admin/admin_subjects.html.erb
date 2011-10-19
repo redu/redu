@@ -1,0 +1,15 @@
+<%= render :partial => 'spaces/sidebar', :locals => { :space => @space } %>
+<div class="main grid_12 omega big-col">
+  <%= render :partial => 'spaces/breadcrumbs',
+    :locals => { :space => @space } %>
+  <%= render :partial => 'spaces/header',
+    :locals => { :space => @space }%>
+
+    <div id="space-manage" class="body management">
+      <%= tabs :spaces_admin do %>
+        <p>
+            Futura tela de listagem de módulos.
+        </p>
+      <% end %>
+    </div><!-- end #space-manage -->
+</div><!-- end .main -->
