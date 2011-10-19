@@ -184,6 +184,7 @@
   input[type="submit"].concave-remove,
   input[type="submit"].concave-button,
   .concave-button,
+  .concave-clean,
   .concave-cancel {
     padding: 5px 20px 6px 20px;
     color: white;
@@ -192,6 +193,12 @@
     font-weight: bold;
     font-size: 1em;
     text-align: center;
+  }
+
+  .concave-clean {
+    color: rgb(77, 173, 214);
+    border: 1px solid rgb(204, 204, 204);
+    background: rgb(255,255,255); /* Old browsers */
   }
 
   .concave-button,
@@ -222,12 +229,14 @@
     border: 1px solid #E83B3B;
   }
 
+  .concave-clean:hover,
   .concave-remove:hover,
   .concave-button:hover,
   .concave-cancel:hover {
     text-decoration: none;
   }
 
+  .borderradius .concave-clean,
   .borderradius .concave-remove,
   .borderradius .concave-button,
   .borderradius .concave-cancel {
@@ -251,6 +260,16 @@
     background: -moz-linear-gradient(top, rgb(255, 109, 109), rgb(232, 59, 59)); /* Firefox 3.6+ */
   }
 
+  .cssgradients .concave-clean {
+    background: -moz-linear-gradient(top, rgb(255,255,255) 0%, rgb(240,240,240) 97%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(255,255,255)), color-stop(97%,rgb(240,240,240))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, rgb(255,255,255) 0%,rgb(240,240,240) 97%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, rgb(255,255,255) 0%,rgb(240,240,240) 97%); /* Opera11.10+ */
+    background: -ms-linear-gradient(top, rgb(255,255,255) 0%,rgb(240,240,240) 97%); /* IE10+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f0f0f0',GradientType=0 ); /* IE6-9 */
+    background: linear-gradient(top, rgb(255,255,255) 0%,rgb(240,240,240) 97%); /* W3C */
+  }
+
   .textshadow .concave-button {
      -moz-text-shadow: 0px -1px 0 rgb(21, 138, 196);
      -webkit-text-shadow: 0px -1px 0 rgb(21, 138, 196);
@@ -269,6 +288,10 @@
     text-shadow: 0px -1px 0px rgb(193, 39, 45);
   }
 
+  .textshadow .concave-clean {
+    text-shadow: 0px 1px 0px #ffffff;
+  }
+
   .concave-button:hover {
     border: 1px solid #1789C3;
     background: #1789C3;
@@ -281,6 +304,13 @@
 
   .concave-remove:hover {
     background: rgb(255, 109, 109);
+  }
+
+  .concave-clean:hover {
+    color: rgb(23, 137, 195);
+    border: 1px solid rgb(76, 172, 213);
+
+    background: rgb(255,255,255); /* Old browsers */
   }
 
   .cssgradients .concave-cancel:hover {
@@ -296,6 +326,16 @@
   .cssgradients .concave-remove:hover {
     background: -webkit-gradient(linear, left top, left bottom, from(rgb(255, 109, 109)), to(rgb(193, 39, 45))); /* webkit browsers */
     background: -moz-linear-gradient(top, rgb(255, 109, 109), rgb(193, 39, 45)); /* Firefox 3.6+ */
+  }
+
+  .cssgradients .concave-clean:hover {
+    background: -moz-linear-gradient(top, rgb(255,255,255) 0%, rgb(219,239,247) 97%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(255,255,255)), color-stop(97%,rgb(219,239,247))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, rgb(255,255,255) 0%,rgb(219,239,247) 97%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, rgb(255,255,255) 0%,rgb(219,239,247) 97%); /* Opera11.10+ */
+    background: -ms-linear-gradient(top, rgb(255,255,255) 0%,rgb(219,239,247) 97%); /* IE10+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#dbeff7',GradientType=0 ); /* IE6-9 */
+    background: linear-gradient(top, rgb(255,255,255) 0%,rgb(219,239,247) 97%); /* W3C */
   }
 
 
