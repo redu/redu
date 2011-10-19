@@ -83,6 +83,13 @@ class UserCourseAssociation < ActiveRecord::Base
     self.approved? && self.logs.empty?
   end
 
+  # Notifica adimistradores do curso a respeito de moderações pendentes
+  def notify_pending_moderation
+    self.course.administrators.each do |u|
+      UserNotifier.course_moderation_requested(self.course, u).deliver
+    end
+  end
+
   protected
 
   def create_hierarchy_associations

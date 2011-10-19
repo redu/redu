@@ -31,7 +31,6 @@ describe UserObserver do
     end
 
     it "notifies the signup" do
-      ActionMailer::Base.register_observer(UserNotifierObserver)
       ActiveRecord::Observer.with_observers(:user_observer) do
         expect {
           Factory(:user)

@@ -346,6 +346,14 @@ class UserNotifier < ActionMailer::Base
     end
   end
 
+  def course_moderation_requested(course, user)
+    @course, @user = course, user
+    @environment = @course.environment
 
+    mail(:to => @user.email,
+         :subject => "Moderação pendente em #{@course.name}") do |format|
+      format.html
+    end
 
+  end
 end

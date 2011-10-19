@@ -109,6 +109,10 @@ a {
   margin-right: 10px;
 }
 
+#email .call {
+  color: #6C6D6E;
+}
+
 /* Friendship */
 #email .friendship-request {
   width: 562px;
@@ -142,7 +146,6 @@ a {
 
 #email .friendship-request .call {
   font-size: 12px;
-  color: #6C6D6E;
 }
 
 #email .friendship-request .acceptance-cell {
@@ -221,4 +224,58 @@ a {
 #email .user-data .plain-text {
   color: #6C6D6E;
   font-weight: normal;
+}
+
+/* Course moderation */
+#email .course-moderation {
+  font-size: 12px;
+  width: 562px;
+  margin: 15px 20px;
+}
+
+#email .course-moderation .first-cell {
+  width: 42px;
+}
+
+#email .course-moderation .lock {
+  margin-right: 5px;
+}
+
+#email .course-moderation .user-name em {
+  color: #B2B2B2;
+  font-weight: normal;
+}
+
+#email .course-moderation .call {
+  margin-top: 5px;
+  display: block;
+}
+
+#email .course-moderation .user-cell {
+  width: 370px;
+}
+
+#email .course-moderation .environment-name {
+  display: block;
+}
+
+#email .course-moderation .accept ,
+#email .course-moderation .config {
+  font-weight: normal;
+  display: block;
+}
+
+#email .course-moderation .config {
+  font-size: 11px;
+}
+
+#email .course-moderation .acceptance-cell {
+  text-align: right;
+  vertical-align: top;
+  padding-top: 15px;
+}
+
+#email .course-moderation .big-icon-cell {
+  text-align: right;
+  vertical-align: top;
 }
