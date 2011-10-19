@@ -56,6 +56,14 @@
   background-position: -160px -560px;
 }
 
+.icon-contact-blue_100_66-before:before {
+  content: "";
+  width: 100px;
+  height: 66px;
+
+  background-position: 0px -160px;
+}
+
 .icon-environment-white_64_64 {
   background-position: 0 0;
 }

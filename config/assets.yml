@@ -53,11 +53,11 @@ stylesheets:
     - public/stylesheets/reset.css
     - public/stylesheets/960.css
     - public/stylesheets/new-fonts.css
+    - public/stylesheets/token-input.css
     - public/stylesheets/new-style.css
     - public/stylesheets/tipTip.css
     - public/stylesheets/ajaxful_rating.css
     - public/stylesheets/fb_style.css
-    - public/stylesheets/token-input.css
     - public/stylesheets/form.redu.css
     - public/stylesheets/table.redu.css
     - public/stylesheets/icons.big.redu.css

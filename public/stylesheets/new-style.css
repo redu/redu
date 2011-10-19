@@ -707,6 +707,7 @@ body {
   margin-top: 1px;
 }
 
+#admin-invitations,
 #course-users.body,
 #course-spaces.body,
 #environment-users.body,
@@ -3716,6 +3717,7 @@ a.clean:hover {
 }
 
 .big-tabs > .panel {
+  overflow: hidden;
   border: 1px solid rgb(179, 179, 179);
   padding: 40px 60px;
   background-color: white;
@@ -5524,24 +5526,95 @@ table.concave-invitation-table .cell-reinvite .reinvited {
   padding: 10px;
 }
 
-#admin-invitations .header {
-  float: none;
-}
-
-#admin-invitations .actions {
-  float: right;
-}
-
 #admin-invitations .flash-message {
   margin-left: 62px;
   width: 478px;
+  margin-bottom: 10px;
+}
+
+#admin-invitations .invite-header {
+  margin-bottom: 30px;
+}
+
+#admin-invitations .icon-contact-blue_100_66-before:before {
+  display: block;
+  float: left;
+  margin-right: 20px;
+}
+
+#admin-invitations .invite-title,
+#admin-invitations .invite-description {
+  color: rgb(179, 179, 179);
+}
+
+#admin-invitations .invite-title {
+  font-family: museo-sans, helvetica, arial, sans-serif;
+  font-size: 2.2em;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+#admin-invitations .invite-description {
+  font-size: 1em;
+}
+
+#admin-invitations .invite-title .course {
+  color: rgb(97, 160, 128);
+  font-weight: 500px;
+}
+
+#admin-invitations .course-info {
+  float: left;
+  width: 130px;
+  margin-top: 11px;
+  margin-left: 10px;
+}
+
+#admin-invitations .info-title:before {
+  display: block;
+  float: left;
+  margin-right: 5px;
+  margin-top: 5px;
+}
+
+#admin-invitations .info-title {
+  color: rgb(179, 179, 179);
+  font-weight: bold;
+  display: block;
+  line-height: 1.3;
+}
+
+#admin-invitations .info-qty {
+  display: block;
+  margin-bottom: 25px;
+  color: rgb(203, 203, 203);
+}
+
+#admin-invitations .info-qty-members {
+  color: rgb(97, 190, 128);
+}
+
+#admin-invitations .form-common {
+  float: left;
+  width: 520px;
+}
+
+#admin-invitations .form-common label {
+  width: 110px;
+  margin-top: 20px;
+  color: rgb(179, 179, 179);
+  font-size: 1em;
+}
+
+#admin-invitations .form-common .concave-button {
+  margin-right: 3px;
 }
 
 #admin-invitations .token-input-list {
   clear: none;
   float: left;
-  margin-top: 40px;
-  width: 410px;
+  margin-top: 10px;
+  width: 395px;
   height: 25px;
 
   border: 1px solid #B3B2B3;
@@ -5563,8 +5636,6 @@ table.concave-invitation-table .cell-reinvite .reinvited {
 }
 
 #admin-invitations .token-input-list .token-input-token {
-  background-color: #eff6e6;
-  padding: 8px;
 }
 
 #admin-invitations .token-input-dropdown,
@@ -5575,7 +5646,7 @@ table.concave-invitation-table .cell-reinvite .reinvited {
 }
 
 div.token-input-dropdown {
-  width: 420px;
+  width: 385px;
 }
 
 #admin-invitations .token-input-list input {
@@ -5592,7 +5663,7 @@ div.token-input-dropdown {
 }
 
 #admin-invitations .users-holder li {
-  width: 410px;
+  width: 390px;
   height: 13px;
   position: relative;
   background-color: #eff6e6;
@@ -5630,7 +5701,7 @@ div.token-input-dropdown {
   border: 1px solid #b3b2b3;
   background-color: #e6ece5;
   padding: 10px;
-  width: 316px;
+  width: 300px;
   max-height: 100px;
   overflow-y: auto;
   overflow-x: hidden;

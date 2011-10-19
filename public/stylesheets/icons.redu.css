@@ -42,6 +42,12 @@
 }
 
 .icon-add-contact-gray_16_18 { background-position: 0px -2480px; }
+.icon-add-contact-gray_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -0px -2480px no-repeat;
+}
 
 .icon-add-contact-blue_16_18,
 .icon-add-contact-lightblue_16_18:hover { background-position: -160px -2480px; }

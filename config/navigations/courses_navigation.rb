@@ -21,6 +21,7 @@ SimpleNavigation::Configuration.run do |navigation|
         :link => { :class => "icon-space-gray_32_34-before" }
       tabs.item :account, 'Membros',
         environment_course_users_path(@course.environment, @course),
+        :highlights_on => action_matcher(['courses', 'users'], ['admin_invitations', 'index']),
         :class => 'ui-state-default',
         :link => { :class => "icon-members-gray_32_34-before" } do |users_nav|
         # Sub abas
