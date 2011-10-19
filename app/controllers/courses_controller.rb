@@ -412,7 +412,7 @@ class CoursesController < BaseController
     @user_invitations = @course.user_course_associations.invited
 
     respond_to do |format|
-      format.html
+      format.html { render "courses/admin/admin_manage_invitations" }
     end
   end
 
