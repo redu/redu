@@ -169,15 +169,6 @@ class UserNotifier < ActionMailer::Base
          :subject => "[#{Redu::Application.config.name}] #{post.user.login} has posted in a thread you are monitoring.")
   end
 
-  def signup_notification(user)
-    @url = activate_url user.activation_code
-    @user = user
-
-    mail(:to => user.email,
-         :subject => "[#{Redu::Application.config.name}] Por favor ative a sua nova conta #{Redu::Application.config.name}",
-         :date => Time.now)
-  end
-
   def message_notification(message)
     @user = message.recipient
     @message = message
@@ -208,22 +199,6 @@ class UserNotifier < ActionMailer::Base
 
     mail(:to => user.email,
          :subject => "Your #{Redu::Application.config.name} account has been activated!",
-         :date => Time.now)
-  end
-
-  def reset_password(user)
-    @user = user
-
-    mail(:to => user.email,
-         :subject => "Sua senha do #{Redu::Application.config.name} foi redefinida!",
-         :date => Time.now)
-  end
-
-  def forgot_username(user)
-    @user = user
-
-    mail(:to => user.email,
-         :subject => "Lembrete de login do #{Redu::Application.config.name}",
          :date => Time.now)
   end
 
@@ -343,5 +318,34 @@ class UserNotifier < ActionMailer::Base
       format.html
      end
   end
+
+  def user_signedup(user)
+    @user = user
+
+    mail(:to => user.email,
+         :subject => "Ative sua conta") do |format|
+      format.html
+     end
+  end
+
+  def user_forgot_username(user)
+    @user = user
+    email_subject = "Lembrete de login do #{Redu::Application.config.name}"
+
+    mail(:to => user.email, :subject => email_subject) do |format|
+      format.html
+    end
+  end
+
+  def user_reseted_password(user)
+    @user = user
+
+    mail(:to => user.email,
+         :subject => "Redefinição de senha") do |format|
+      format.html
+    end
+  end
+
+
 
 end

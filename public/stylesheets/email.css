@@ -200,7 +200,7 @@ a {
 }
 
 #email .user-data .username-cell {
-  height: 35px;
+  padding-bottom: 15px;
 }
 
 #email .user-data .username {
@@ -211,10 +211,14 @@ a {
   width: 170px;
   text-align: right;
   color: #6C6D6E;
-  height: 25px;
+  padding: 5px 0;
 }
 
 #email .user-data .value-cell {
-  padding-left: 20px;
-  height: 25px;
+  padding: 5px 0  5px 20px;
+}
+
+#email .user-data .plain-text {
+  color: #6C6D6E;
+  font-weight: normal;
 }
