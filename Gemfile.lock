@@ -1,14 +1,4 @@
 GIT
-  remote: /Users/guiocavalcanti/workspace/play/actionmailer_inline_css
-  revision: 7e843829df20b906f3bff67115a1948fd98d2284
-  branch: issue-4
-  specs:
-    actionmailer_inline_css (1.2.1)
-      actionmailer (>= 3.0.0)
-      nokogiri (>= 1.4.4)
-      premailer (>= 1.7.1)
-
-GIT
   remote: git://github.com/alindeman/no_peeping_toms.git
   revision: 83dbd4cb993ae8e78a38a0f5cad784ca58bb0dcd
   specs:
@@ -35,6 +25,16 @@ GIT
   specs:
     scribd_fu (2.0.11)
       rscribd
+
+GIT
+  remote: git://github.com/ndbroadbent/actionmailer_inline_css.git
+  revision: 037a5340aa235802c6c093a21be87b95176ee83e
+  branch: master
+  specs:
+    actionmailer_inline_css (1.4.0)
+      actionmailer (>= 3.0.0)
+      nokogiri (>= 1.4.4)
+      premailer (>= 1.7.1)
 
 GEM
   remote: http://rubygems.org/

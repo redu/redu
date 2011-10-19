@@ -5,4 +5,8 @@ class Friendship < ActiveRecord::Base
   def notificable?
     self.accepted?
   end
+
+  def notify_request
+    UserNotifier.friendship_requested(user, friend).deliver
+  end
 end

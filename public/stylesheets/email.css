@@ -108,3 +108,113 @@ a {
 #email .right-space {
   margin-right: 10px;
 }
+
+/* Friendship */
+#email .friendship-request {
+  width: 562px;
+  margin: 15px 20px;
+}
+
+#email .friendship-request .avatar-cell {
+  width: 120px;
+}
+
+#email .friendship-request .friendship-icon,
+#email .friendship-request .course-icon {
+  margin-right: 5px;
+}
+
+#email .friendship-request .contact-avatar {
+  margin-right: 10px;
+}
+
+#email .friendship-request .connection-name-cell {
+  width: 260px;
+  vertical-align: top;
+}
+
+#email .friendship-request .contact-name {
+  font-size: 25px;
+  font-weight: normal;
+  display: block;
+  margin-bottom: 10px;
+}
+
+#email .friendship-request .call {
+  font-size: 12px;
+  color: #6C6D6E;
+}
+
+#email .friendship-request .acceptance-cell {
+  vertical-align: top;
+  text-align: right;
+}
+
+#email .friendship-request .statistics-cell {
+  padding-top: 25px;
+}
+
+#email .friendship-request .accept-contact {
+  display: block;
+  margin-top: 20px;
+  font-size: 12px;
+  font-weight: normal;
+}
+
+/* Ativação, recuperação de login e recuperação de senha */
+
+#email .user-common {
+  font-size: 12px;
+  width: 562px;
+  margin: 15px 20px 0 20px;
+}
+
+#email .user-common td {
+  vertical-align: top;
+}
+
+#email .user-data a,
+#email .user-common a {
+  font-weight: normal;
+}
+
+#email .common-message-cell {
+  width: 370px;
+  color: #6C6D6E;
+  line-height: 125%;
+}
+
+#email .common-action-cell {
+  text-align: right;
+}
+
+#email .common-action {
+  display: block;
+  margin-top: 20px;
+}
+
+#email .user-data {
+  font-size: 12px;
+  width: 562px;
+  margin: 0 20px 15px 20px;
+}
+
+#email .user-data .username-cell {
+  height: 35px;
+}
+
+#email .user-data .username {
+  font-size: 25px;
+}
+
+#email .user-data .field-cell {
+  width: 170px;
+  text-align: right;
+  color: #6C6D6E;
+  height: 25px;
+}
+
+#email .user-data .value-cell {
+  padding-left: 20px;
+  height: 25px;
+}

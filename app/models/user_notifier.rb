@@ -140,15 +140,6 @@ class UserNotifier < ActionMailer::Base
          :date => Time.now)
   end
 
-  def friendship_request(friendship)
-    @user = friendship.friend
-    @requester = friendship.user
-
-    mail(:to => @user.email,
-         :subject => "[#{Redu::Application.config.name}] #{friendship.user.login} would like to be friends with you!",
-        :date => Time.now)
-    end
-
   def friendship_accepted(friendship)
     @user = friendship.friend
     @requester = friendship.user
@@ -334,6 +325,23 @@ class UserNotifier < ActionMailer::Base
          :to => @user.email) do |format|
       format.html
     end
+  end
+
+  def friendship_requested(user, friend)
+    @user, @friend = user, friend
+    uca = UserCourseAssociation.where(:user_id => user).approved
+
+    @contacts = { :total => @user.friends.count,
+                  :in_common => user.friends_in_common_with(friend).count }
+    @courses = { :total => @user.courses.count,
+                 :environment_admin => uca.with_roles([:environment_admin]).count,
+                 :tutor => uca.with_roles([:tutor]).count,
+                 :teacher => uca.with_roles([:teacher]).count }
+
+    mail(:subject => "#{friend.display_name} quer se conectar",
+         :to => @user.email) do |format|
+      format.html
+     end
   end
 
 end

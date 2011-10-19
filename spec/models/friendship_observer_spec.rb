@@ -14,4 +14,26 @@ describe FriendshipObserver do
       end
     end
   end
+
+  context "mailer" do
+    before do
+      UserNotifier.delivery_method = :test
+      UserNotifier.perform_deliveries = true
+      UserNotifier.deliveries = []
+    end
+
+    it "notifies the request" do
+      neo = Factory(:user)
+      smith = Factory(:user)
+
+      ActionMailer::Base.register_observer(UserNotifierObserver)
+      ActiveRecord::Observer.with_observers(:friendship_observer) do
+        expect {
+          neo.be_friends_with(smith)
+        }.should change(UserNotifier.deliveries, :count).by(1)
+        UserNotifier.deliveries.last.subject.should \
+          == "#{neo.display_name} quer se conectar"
+      end
+    end
+  end
 end

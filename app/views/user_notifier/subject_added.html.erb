@@ -1,28 +1,30 @@
-<table class="context">
-  <tr>
-    <td rowspan="2">
-      <%= image_tag @environment.avatar(:thumb_32), :class => "right-space", :size => "32x32" %>
-    </td>
-    <td rowspan="2">
-      <% unless @course.subscription_type.eql?(1) %>
-        <%= image_tag "new/mail/icon-lock-small.png", :class => "right-space", :size => "12x17" %>
-      <% end %>
-    </td>
-    <td><%= @environment.initials_or_name %> &rsaquo; <%= @course.name %></td>
-  </tr>
-  <tr>
-    <td><%= link_to @subj.space.name, space_url(@subj.space) %></td>
-  </tr>
-</table>
-<table id="new-subject" class="action">
-  <tr>
-    <td rowspan="3"> <%= image_tag "new/mail/icon-subject-medium.png", :class => "right-space", :size => "30x19" %></td>
-    <td>Um novo módulo da disciplina foi criado:</td>
-  </tr>
-  <tr>
-    <td><%= link_to @subj.title, space_subject_url(@subj.space, @subj) %></td>
-  </tr>
-</table>
-<%= image_tag "new/mail/braces.png", :class => "braces", :size => "514x16" %>
-<%= render :partial => 'user_notifier/meta',
-  :locals => { :description => @subj.description, :tags => @subj.tags } %>
+<td class="body-cell" colspan="2">
+  <table class="context">
+    <tr>
+      <td rowspan="2">
+        <%= image_tag @environment.avatar(:thumb_32), :class => "right-space", :size => "32x32" %>
+      </td>
+      <td rowspan="2">
+        <% unless @course.subscription_type.eql?(1) %>
+          <%= image_tag "new/mail/icon-lock-small.png", :class => "right-space", :size => "12x17" %>
+        <% end %>
+      </td>
+      <td><%= @environment.initials_or_name %> &rsaquo; <%= @course.name %></td>
+    </tr>
+    <tr>
+      <td><%= link_to @subj.space.name, space_url(@subj.space) %></td>
+    </tr>
+  </table>
+  <table id="new-subject" class="action">
+    <tr>
+      <td rowspan="3"> <%= image_tag "new/mail/icon-subject-medium.png", :class => "right-space", :size => "30x19" %></td>
+      <td>Um novo módulo da disciplina foi criado:</td>
+    </tr>
+    <tr>
+      <td><%= link_to @subj.title, space_subject_url(@subj.space, @subj) %></td>
+    </tr>
+  </table>
+  <%= image_tag "new/mail/braces.png", :class => "braces", :size => "514x16" %>
+  <%= render :partial => 'user_notifier/meta',
+    :locals => { :description => @subj.description, :tags => @subj.tags } %>
+</td>

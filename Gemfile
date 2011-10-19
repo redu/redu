@@ -37,8 +37,8 @@ gem 'zencoder'
 gem 'pusher'
 gem 'kaminari'
 gem 'actionmailer_inline_css',
-  :git => '/Users/guiocavalcanti/workspace/play/actionmailer_inline_css',
-  :branch => 'issue-4'
+  :git => 'git://github.com/ndbroadbent/actionmailer_inline_css.git',
+  :branch => 'master'
 
 # Gems específicos de algum ambiente
 group :development, :test do
