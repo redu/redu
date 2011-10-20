@@ -1,23 +1,15 @@
-<tr id="user-<%= user_item_admin.user_id %>">
-  <td>
+<tr id="user-<%= user_item_admin.user_id %>" class="row">
+  <td class="cell centered-cell">
     <%= image_tag user_item_admin.user.avatar(:thumb_32),
           :class => "avatar" %>
-    <%= link_to user_item_admin.user.display_name, user_item_admin.user,
-      :rarget => "_blank", :class => "user" %>
+    <div class="member-info">
+      <%= link_to user_item_admin.user.display_name, user_item_admin.user,
+        :rarget => "_blank", :class => "member-name" %>
+      <span class="member-detail">Último login em <%= l user_item_admin.user.last_login_at %></span>
+      <span class="member-detail">Incrito em <%= l user_item_admin.created_at %></span>
+    </div>
   </td>
-  <td>
-    <% if user_item_admin.role == Role[:member] %>
-      <span class="role icon icon-student-gray_16_16">Aluno</span>
-    <% elsif user_item_admin.role == Role[:teacher] %>
-      <span class="role icon icon-teacher-gray_16_16">Professor</span>
-    <% elsif user_item_admin.role == Role[:tutor] %>
-      <span class="role icon icon-tutor-gray_16_16">Tutor</span>
-    <% elsif user_item_admin.role == Role[:environment_admin] %>
-      <span class="role icon icon-administrator-gray_16_16">Administrador</span>
-    <% end %>
-  </td>
-  <td>
-    <span class="date"><%= time_ago_in_words(user_item_admin.created_at) %></span>
-  </td>
+  <% role =  Role[user_item_admin.user.get_association_with(@space).role] %>
+  <td class="cell role-info centered-cell"><span class="member-detail role icon-<%= role %>-gray_16_18-before"><%= Role.human_attribute_name(role) %></span></td>
 </tr>
 
