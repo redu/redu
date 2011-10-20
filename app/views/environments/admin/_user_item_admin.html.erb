@@ -6,8 +6,8 @@
     <div class="member-info">
       <%= link_to user_item_admin.user.display_name, user_item_admin.user,
         :rarget => "_blank", :class => "member-name" %>
-      <span class="member-detail">Último login <%= time_ago_in_words user_item_admin.user.last_login_at %></span>
-      <span class="member-detail">Incrito em <%= time_ago_in_words user_item_admin.created_at %></span>
+      <span class="member-detail">Último login <%= l(user_item_admin.user.last_login_at, :format => :admin) %></span>
+      <span class="member-detail">Incrito em <%= l(user_item_admin.created_at, :format => :admin) %></span>
     </div>
   </td>
   <td class="cell centered-cell">

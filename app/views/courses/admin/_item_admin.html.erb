@@ -6,7 +6,7 @@
         :class => "course-info" %>
       <span class="course-detail members"><%= item_admin.users.count %> membros</span>
       <span class="course-detail subject-count"><%= item_admin.spaces.count %> disciplinas</span>
-      <span class="course-detail created-at">criado em <%= time_ago_in_words item_admin.created_at %></span>
+      <span class="course-detail created-at">criado em <%= l(item_admin.created_at, :format => :admin) %></span>
     </div>
   </td>
   <td class="cell centered-cell">

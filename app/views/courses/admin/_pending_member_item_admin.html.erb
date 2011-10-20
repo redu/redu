@@ -22,7 +22,7 @@
             :rarget => "_blank" %>
         </span>
         <span class="email"><%= pending_member_item_admin.user.email %></span>
-        <span class="date">Increveu-se em <%= l pending_member_item_admin.created_at %></span>
+        <span class="date">Increveu-se em <%= l(pending_member_item_admin.created_at, :format => :admin) %></span>
       </div>
       <div class="member-spaces">
         <span class="icon-space-gray_16_18-before">
