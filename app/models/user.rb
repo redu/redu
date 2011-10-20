@@ -565,6 +565,7 @@ class User < ActiveRecord::Base
   end
 
   def update_last_login
+    self.save #FIXME necessário para que o last_login_at seja atualizado, #419
     self.update_attribute(:last_login_at, Time.now)
   end
 

@@ -9,7 +9,7 @@ class Status < ActiveRecord::Base
   has_many :status_user_associations, :dependent => :destroy
 
   scope :from_hierarchy, lambda { |c|
-    where(build_conditions(c)).includes(:user, :statusable, :answers) \
+    where(build_conditions(c)).includes(:user) \
       .order("updated_at DESC")
   }
 

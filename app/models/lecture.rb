@@ -90,6 +90,10 @@ class Lecture < ActiveRecord::Base
     self.created_at > 1.week.ago
   end
 
+  # Diz se a instância está pronta para ser divulgada via mural ou e-mail
+  def notificable?
+    self.subject.finalized && self.subject.visible
+  end
 
   protected
   def create_asset_report

@@ -89,8 +89,13 @@ class Subject < ActiveRecord::Base
   end
 
   def graduated?(user)
-    self.enrolled?(user) and
-      user.get_association_with(self).student_profile.graduaded?
+    self.enrolled?(user) and user.get_association_with(self).student_profile.graduaded?
+  end
+
+  # Verifica se o módulo está pronto para ser publicado via
+  # visão geral ou e-mail
+  def notificable?
+    self.finalized && self.visible && !self.logs.exists?
   end
 
 end

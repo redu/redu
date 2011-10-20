@@ -31,13 +31,16 @@ describe UsersController do
       context "when successfull" do
         before do
           post :create, @post_params
+          @created_user = User.find_by_email(@post_params[:user][:email])
         end
 
         it "creates a user_setting" do
-          created_user = User.find_by_email(@post_params[:user][:email])
-          created_user.should_not be_nil
-          created_user.settings.should_not be_nil
-          created_user.settings.view_mural.should == Privacy[:friends]
+          @created_user.settings.should_not be_nil
+          @created_user.settings.view_mural.should == Privacy[:friends]
+        end
+
+        it "creates a user with last_login_at" do
+          @created_user.last_login_at.should_not be_nil
         end
       end
 
