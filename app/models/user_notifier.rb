@@ -115,14 +115,14 @@ class UserNotifier < ActionMailer::Base
   end
 
   # Enviado ao convidar um usuário para um Course
-  def course_invitation_notification(user, course)
-    @user = user
-    @course = course
+  def course_invitation(user, course)
+    @user, @course = user, course
+    @environment = @course.environment
 
     mail(:to => user.email,
         :subject => "Você foi convidado para realizar um curso a distância",
         :date => Time.now) do |format|
-      format.text
+      format.html
     end
   end
 

@@ -114,50 +114,50 @@ a {
 }
 
 /* Friendship */
-#email .friendship-request {
+#email .request-common {
   width: 562px;
   margin: 15px 20px;
 }
 
-#email .friendship-request .avatar-cell {
+#email .request-common .avatar-cell {
   width: 120px;
 }
 
-#email .friendship-request .friendship-icon,
-#email .friendship-request .course-icon {
+#email .request-common .friendship-icon,
+#email .request-common .course-icon {
   margin-right: 5px;
 }
 
-#email .friendship-request .contact-avatar {
+#email .request-common .contact-avatar {
   margin-right: 10px;
 }
 
-#email .friendship-request .connection-name-cell {
+#email .request-common .connection-name-cell {
   width: 260px;
   vertical-align: top;
 }
 
-#email .friendship-request .contact-name {
+#email .request-common .contact-name {
   font-size: 25px;
   font-weight: normal;
   display: block;
   margin-bottom: 10px;
 }
 
-#email .friendship-request .call {
+#email .request-common .call {
   font-size: 12px;
 }
 
-#email .friendship-request .acceptance-cell {
+#email .request-common .acceptance-cell {
   vertical-align: top;
   text-align: right;
 }
 
-#email .friendship-request .statistics-cell {
+#email .request-common .statistics-cell {
   padding-top: 25px;
 }
 
-#email .friendship-request .accept-contact {
+#email .request-common .accept-contact {
   display: block;
   margin-top: 20px;
   font-size: 12px;
@@ -278,4 +278,20 @@ a {
 #email .course-moderation .big-icon-cell {
   text-align: right;
   vertical-align: top;
+}
+
+/* Convite para curso */
+#email .course-invitation {
+  font-size: 12px;
+  width: 562px;
+  margin: 15px 20px;
+}
+
+#email .course-invitation .meta {
+  margin: 10px 15px 0 15px;
+}
+
+#email .course-invitation .request-common {
+  margin: 0;
+  margin-bottom: 20px;
 }

@@ -185,7 +185,6 @@ module Redu
                                         :user_observer,
                                         :friendship_observer,
                                         :status_observer,
-                                        :user_course_association_observer,
                                         :education_observer,
                                         :experience_observer]
     end
