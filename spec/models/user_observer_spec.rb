@@ -22,4 +22,28 @@ describe UserObserver do
       end
     end
   end
+
+  context "Redu Course" do
+    it "associates to Redu environment" do
+      ActiveRecord::Observer.with_observers(:user_observer) do
+        environment = Factory(:environment, :path => "ava-redu")
+        courses = 3.times.inject([]) do |acc,i|
+          acc << Factory(:course,
+                         :environment => environment,
+                         :owner => environment.owner)
+        end
+
+        user = Factory(:user)
+        user.courses.to_set.should == courses.to_set
+      end
+    end
+
+    context "when there are no environment" do
+      it "associates to Redu environment" do
+        expect {
+          user = Factory(:user)
+        }.should_not raise_error
+      end
+    end
+  end
 end
