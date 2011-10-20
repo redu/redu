@@ -32,9 +32,9 @@ class SpacesController < BaseController
                :per_page => Redu::Application.config.items_per_page)
 
     respond_to do |format|
-      format.html
+      format.html { render 'spaces/admin/admin_members' }
       format.js do
-        render_endless 'spaces/user_item_admin', @memberships,
+        render_endless 'spaces/admin/user_item_admin', @memberships,
           '#user_list_table'
       end
     end

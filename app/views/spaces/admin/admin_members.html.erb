@@ -11,7 +11,7 @@
         <h3 class="form-header-closer">
           <%= @space.users.count %> membro(s) cursam a disciplina
         </h3>
-        <%= render :partial => 'spaces/user_list_admin',
+        <%= render :partial => 'spaces/admin/user_list_admin',
           :locals => {:memberships => @memberships}%>
       </div>
 
