@@ -2,7 +2,7 @@
   <div class="course-invitation">
     <table class="request-common">
       <tr>
-        <td rowspan="3" class="avatar-cell"><%= image_tag @environment.avatar(:thumb_110), :size => "110x110", :class => "contact-avatar" %></td>
+        <td rowspan="3" class="avatar-cell"><%= image_tag @environment.avatar(:thumb_90), :size => "90x90", :class => "contact-avatar" %></td>
         <td class="connection-name-cell">
           <span class="call">Você foi convidado para o curso:</span>
           <%= link_to @course.name, environment_course_url(@environment, @course), :class => "contact-name" %>
