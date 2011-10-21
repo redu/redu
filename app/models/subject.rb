@@ -84,4 +84,10 @@ class Subject < ActiveRecord::Base
     end
   end
 
+  # Verifica se o módulo está pronto para ser publicado via
+  # visão geral ou e-mail
+  def notificable?
+    self.finalized && self.visible && !self.logs.exists?
+  end
+
 end

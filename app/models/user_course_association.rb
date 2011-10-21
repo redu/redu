@@ -78,6 +78,11 @@ class UserCourseAssociation < ActiveRecord::Base
     UserNotifier.course_invitation_notification(self.user, self.course).deliver
   end
 
+  # Verifica se UserCourseAssociation é capaz de gerar log ou e-mail.
+  def notificable?
+    self.approved? && self.logs.empty?
+  end
+
   protected
 
   def create_hierarchy_associations

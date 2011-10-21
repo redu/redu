@@ -27,6 +27,8 @@ class Log < Status
 
   validates_presence_of :action
 
+  # Faz setup do Log e salva (a não ser quer :save => false). É assumido
+  # que o model é uma instância válida (com relacionamentos, e etc).
   def self.setup(model, options={})
     settings = {
       :action => :create,
@@ -41,7 +43,7 @@ class Log < Status
                            :statusable => model.owner,
                            :text => settings[:text])
           when "UserCourseAssociation"
-            if (model.approved? && model.logs.empty?)
+            if model.notificable?
               model.logs.new(:action => settings[:action],
                              :user => model.user,
                              :statusable => model.course,
@@ -53,14 +55,14 @@ class Log < Status
                            :statusable => model.course,
                            :text => settings[:text])
           when "Subject"
-            if (model.finalized && model.visible && !model.logs.exists?)
+            if model.notificable?
               model.logs.new(:action => settings[:action],
                              :user => model.owner,
                              :statusable => model.space,
                              :text => settings[:text])
             end
           when "Lecture"
-            if (model.subject.finalized && model.subject.visible)
+            if model.notificable?
               model.logs.new(:action => settings[:action],
                              :user => model.owner,
                              :statusable => model.subject.space,
@@ -79,7 +81,7 @@ class Log < Status
                            :statusable => model.user,
                            :text => settings[:text])
           when "Friendship"
-            if model.accepted?
+            if model.notificable?
               model.logs.new(:action => settings[:action],
                              :user => model.user,
                              :statusable => model.user,
