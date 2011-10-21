@@ -5641,6 +5641,8 @@ table.concave-invitation-table .cell-reinvite .reinvited {
 }
 
 #admin-invitations .token-input-list .token-input-token {
+  background-color: #EFF6E6;
+  padding: 8px;
 }
 
 #admin-invitations .token-input-dropdown,
