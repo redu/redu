@@ -5198,7 +5198,7 @@ table.concave-invitation-table .cell-user-info .tip {
   float: left;
   margin-left: 10px;
   color: rgb(179, 179, 179);
-  font-size: .9em;
+  font-size: .87em;
   font-style: italic;
 }
 
@@ -5229,7 +5229,7 @@ table.concave-invitation-table .cell-reinvite .reinvited {
   margin-left: 50px;
 }
 
-#course-manage .invitation-list .form-header {
+#course-manage .form-header {
   white-space: nowrap;
   display: block;
   margin-left: 50px;
@@ -7244,6 +7244,22 @@ div.token-input-dropdown {
   text-decoration: none;
   color: #FFFFFF;
 }
+
+#course-manage .subtabs .invite-tab.ui-state-active a {
+  background-color: rgb(95, 192, 128);
+}
+
+#course-manage .subtabs .invite-tab.ui-state-active a:hover {
+  background-color: rgb(97, 160, 128);
+}
+
+.textshadow #course-manage .subtabs .invite-tab.ui-state-active a {
+  -moz-text-shadow: 1px -1px 1px rgb(97, 160, 128);
+  -webkit-text-shadow: 1px -1px 1px rgb(97, 160, 128);
+  text-shadow: 1px -1px 1px rgb(97, 160, 128);
+}
+
+
 
 .concave-form .columns,
 .concave-form .single-column {
