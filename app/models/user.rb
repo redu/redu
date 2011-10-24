@@ -43,10 +43,6 @@ class User < ActiveRecord::Base
     :conditions => {:is_clone => false, :published => true}
   has_many :courses_owned, :class_name => "Course",
     :foreign_key => "owner"
-  has_many :exams, :foreign_key => "owner_id", :conditions => {:is_clone => false}
-  has_many :exam_users#, :dependent => :destroy
-  has_many :exam_history, :through => :exam_users, :source => :exam
-  has_many :questions, :foreign_key => :author_id
   has_many :favorites, :order => "created_at desc", :dependent => :destroy
   # FIXME Verificar necessidade (Suggestion.rb não existe). Não foi testado.
   has_many :suggestions

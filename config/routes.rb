@@ -115,31 +115,6 @@ Redu::Application.routes.draw do
           get :published
         end
       end
-
-      resources :exams do
-        member do
-          get :add_question
-          get :add_resource
-          post :rate
-          get :answer
-          post :answer
-          get :compute_results
-          get :results
-          get :review_question
-        end
-        collection do
-          get :unpublished
-          get :published
-          get :history
-          get :new_exam
-          get :cancel
-          get :exam_history
-          get :sort
-          get :order
-          get :questions_database
-          get :review_question
-        end
-      end
     end
 
     resource :forum, :except => [:new, :edit, :create, :update, :destroy] do

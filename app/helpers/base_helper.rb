@@ -223,12 +223,6 @@ module BaseHelper
       else
         title = 'Mostrando Aulas' +' - ' + app_base + tagline
       end
-      when 'exams'
-      if @exam and @exam.name
-        title = 'Exame: ' + @exam.name + ' - ' + app_base + tagline
-      else
-        title = 'Mostrando Exames' +' - ' + app_base + tagline
-      end
       when 'spaces'
       if @space and @space.name
         title = @space.name + ' - ' + app_base + tagline

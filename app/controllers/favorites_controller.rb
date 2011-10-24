@@ -6,15 +6,6 @@ class FavoritesController < BaseController
 
     respond_to do |format|
       case params[:type]
-      when 'exams'
-
-        @exams = current_user.favorites.where(:favoritable_type => 'Exam')
-                  paginate(:page => params[:page], :order => 'created_at DESC',
-                           :per_page => Redu::Application.config.items_per_page)
-
-        format.js do
-          render :template => 'favorites/exams.rjs'
-        end
       when 'statuses'
         format.js do
           render :template => 'favorites/statuses.rjs'

@@ -5,7 +5,7 @@ describe User do
 
   it { should have_many(:annotations).dependent(:destroy) }
   it { should have_many(:statuses) }
-  [:lectures, :exams, :exam_users, :questions, :favorites, :statuses,
+  [:lectures, :favorites, :statuses,
     :subjects, :student_profiles, :subjects].each do |attr|
     it { should have_many attr }
     end
@@ -141,15 +141,6 @@ describe User do
   end
 
   context "associations" do
-    it "retrieves exams that are not clones" do
-      pending "Need exam factory" do
-        exam = Factory(:exame, :is_clone => false, :owner => subject)
-        exam2 = Factory(:exame, :is_clone => true, :owner => subject)
-
-        subject.exams.should == exam
-      end
-    end
-
     it "retrieves lectures that are not clones" do
       environment = Factory(:environment, :owner => subject)
       course = Factory(:course, :owner => environment.owner,
