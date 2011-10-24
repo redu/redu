@@ -27,6 +27,7 @@ Redu::Application.configure do
   config.url = "http://0.0.0.0:3000"
 
   config.action_mailer.default_url_options = { :host => config.url }
+  config.action_mailer.asset_host = config.url
 
   # Armazena no sist. de arquivos
   config.paperclip = {
