@@ -4,10 +4,11 @@ class UserObserver < ActiveRecord::Observer
   end
 
   def after_create(user)
+    UserNotifier.user_signedup(user).deliver
+
     environment = Environment.find_by_path('ava-redu')
     return nil unless environment
 
     environment.courses.each { |c| c.join(user) }
-    UserNotifier.user_signedup(user).deliver
   end
 end
