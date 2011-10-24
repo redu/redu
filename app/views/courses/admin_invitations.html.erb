@@ -80,7 +80,7 @@
           <span class="info-qty-members"><%= @course.users.count %></span> / <%= @course.plan.members_limit %> (<%= @course.percentage_quota_members %>%)
         </span>
         <span class="info-title icon-add-contact-gray_16_18-before">Convite(s):</span>
-        <span class="info-qty"><span class="info-qty-members"><%= @course.user_course_invitations.count %></span></span>
+        <span class="info-qty"><span class="info-qty-members"><%= @course.user_course_invitations.count + @course.user_course_associations.invited.count %></span></span>
       </div>
     </div><!-- end admin-invitations -->
   <% end %>
