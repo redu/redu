@@ -317,9 +317,9 @@ Redu::Application.routes.draw do
       end
 
       resources :users, :only => [:index]
+      resources :user_course_invitations, :only => [:show]
     end
 
-    resources :user_course_invitations, :only => [:show]
     resources :users, :only => [:index]
   end
 
