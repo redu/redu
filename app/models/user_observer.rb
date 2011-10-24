@@ -8,5 +8,6 @@ class UserObserver < ActiveRecord::Observer
     return nil unless environment
 
     environment.courses.each { |c| c.join(user) }
+    UserNotifier.user_signedup(user).deliver
   end
 end

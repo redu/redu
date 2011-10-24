@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<%= stylesheet_link_tag "reset", "email" %>
+</head>
+<body>
+<table id="email">
+  <thead class="head">
+    <tr>
+      <td colspan="2"> &nbsp; </td>
+    </tr>
+  </thead>
+  <tbody class="body">
+    <tr>
+      <%= yield :layout %>
+    </tr>
+  </tbody>
+  <tr class="footer">
+    <td class="footer-info-wrapper">
+      <div class="footer-info">
+        Esta notificação foi enviada para <a href="mailto:<%= @user.email %>"><%= @user.email %></a>.
+        Não é necessário responder a este e-mail.
+      </div>
+    </td>
+    <td class="logo">
+      <%= image_tag "new/mail/logo.png", :size => "144x33" %>
+    </td>
+  </tr>
+</table>
+</body>
+</html>
+

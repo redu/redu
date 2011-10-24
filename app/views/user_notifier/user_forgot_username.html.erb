@@ -1,0 +1,30 @@
+<td colspan="2">
+  <table class="user-common">
+    <tr>
+      <td class="common-message-cell">
+        Olá, esta notificação foi requisitada para lhe lembrar o seu login.
+      </td>
+      <td class="common-action-cell">
+        <%= image_tag "new/mail/icon-friendship-big.png", :size => "64x64" %>
+        <%= link_to "Ativar o cadastro", activate_url(@user), :class => "common-action" %>
+      </td>
+    </tr>
+  </table>
+  <table class="user-data">
+    <tr>
+      <td colspan="2" class="username-cell">
+        <%= link_to @user.display_name, user_url(@user), :class => "username" %>
+      </td>
+    </tr>
+    <tr>
+      <td class="field-cell">Email:</td>
+      <td class="value-cell">
+        <a href="mailto:<%= @user.email %>" class="plain-text"><%= @user.email %></a>
+      </td>
+    </tr>
+    <tr>
+      <td class="field-cell">Login:</td>
+      <td class="value-cell"><%= @user.login %></td>
+    </tr>
+  </table>
+</td>

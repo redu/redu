@@ -75,7 +75,19 @@ class UserCourseAssociation < ActiveRecord::Base
   end
 
   def send_course_invitation_notification
-    UserNotifier.course_invitation_notification(self.user, self.course).deliver
+    UserNotifier.course_invitation(self.user, self.course).deliver
+  end
+
+  # Verifica se UserCourseAssociation é capaz de gerar log ou e-mail.
+  def notificable?
+    self.approved? && self.logs.empty?
+  end
+
+  # Notifica adimistradores do curso a respeito de moderações pendentes
+  def notify_pending_moderation
+    self.course.administrators.each do |u|
+      UserNotifier.course_moderation_requested(self.course, u).deliver
+    end
   end
 
   # Verifica se UserCourseAssociation é capaz de gerar log ou e-mail.
