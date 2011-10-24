@@ -382,9 +382,12 @@ describe User do
       UserNotifier.perform_deliveries = true
       UserNotifier.deliveries = []
 
-      subject = Factory(:user)
+      ActiveRecord::Observer.with_observers(:user_observer) do
+        subject = Factory(:user)
+      end
+
       UserNotifier.deliveries.size.should == 1
-      UserNotifier.deliveries.last.subject.should =~ /ative a sua nova conta/
+      UserNotifier.deliveries.last.subject.should =~ /Ative sua conta/
     end
 
     it "updates last login after create" do

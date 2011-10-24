@@ -101,6 +101,8 @@ module Redu
       :styles => { :thumb_150 => "150x150#",
                    :thumb_120 => "120x120#",
                    :thumb_100 => "100x100#",
+                   :thumb_110 => "110x110#",
+                   :thumb_90 => "90x90#",
                    :thumb_60 => "60x60#",
                    :thumb_32 => "32x32#",
                    :thumb_24 => "24x24#" }

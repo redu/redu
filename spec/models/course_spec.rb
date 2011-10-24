@@ -588,7 +588,6 @@ describe Course do
         invitation = subject.invite(@already_invited)
         UserNotifier.deliveries.should_not be_empty
         UserNotifier.deliveries.last.subject.should =~ /Você foi convidado para realizar um curso a distância/
-        UserNotifier.deliveries.last.body.should =~ /#{invitation.user.display_name}/
       end
     end
 
