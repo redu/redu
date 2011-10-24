@@ -21,8 +21,8 @@
 .concave-admin-table {
   border-collapse: separate;
   border-spacing: 0 10px;
-  width: 665px;
-  margin: 0 40px;
+  width: 648px;
+  margin: 0 50px;
 }
 
 .concave-admin-table .row .cell {
@@ -67,6 +67,10 @@
 
 .concave-admin-table .row .cell-400 {
   width: 400px;
+}
+
+.concave-admin-table .row .cell-280 {
+  width: 280px;
 }
 
 .concave-admin-table .row .centered-cell {

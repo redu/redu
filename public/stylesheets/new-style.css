@@ -694,10 +694,14 @@ body {
 
 .body.management .management-actions {
   float:  right;
-  width: 150px;
+  width: 200px;
   text-align: right;
   margin-bottom: 20px;
-  margin-right: 60px;
+  margin-right: 50px;
+}
+
+#space-manage .management-actions .concave-button {
+  margin: 0;
 }
 
 #hierarchy-header.management .manage,
@@ -3661,7 +3665,7 @@ a.clean:hover {
 }
 
 .tabs > .panel {
-  margin: 40px 0;
+  margin: 20px 0;
 }
 
 .big-tabs {
@@ -5132,7 +5136,7 @@ table.spaced tr td {
 .management .form-header {
   font-size: 1.3em;
   color: rgb(179,178,179);
-  margin-left: 40px;
+  margin-left: 50px;
   margin-bottom: 20px;
   width: 315px;
   display: block;
@@ -5152,10 +5156,6 @@ table.spaced tr td {
 .management .form-header .strong,
 .management .course-path .strong {
   color: rgb(77,173,214);
-}
-
-.management .form-header-closer {
-  margin-top: -15px;
 }
 
 #course-manage .tos {
@@ -5271,6 +5271,11 @@ table.concave-invitation-table .cell-reinvite .reinvited {
   width: 350px;
 }
 
+.management .concave-admin-table .subject-info {
+  width: 280px;
+  margin-left: 10px;
+}
+
 .management .concave-admin-table .icon-space-gray_16_18-before:before,
 .management .concave-admin-table .icon-course-gray_16_18-before:before {
   float: left;
@@ -5282,6 +5287,7 @@ table.concave-invitation-table .cell-reinvite .reinvited {
   height: 52px;
 }
 
+.management .concave-admin-table .subject-detail,
 .management .concave-admin-table .space-detail,
 .management .concave-admin-table .course-detail,
 .management .concave-admin-table .member-detail {
@@ -5298,10 +5304,44 @@ table.concave-invitation-table .cell-reinvite .reinvited {
   margin-right: 5px;
 }
 
+.management .concave-admin-table .subject-name,
 .management .concave-admin-table .space-name,
 .management .concave-admin-table .member-name,
 .management .concave-admin-table .course-name {
   font-weight: bold;
+}
+
+.management .concave-admin-table .subject-name {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.management .concave-admin-table .lecture-count {
+  display: block;
+  margin-bottom: 3px;
+}
+
+.management .concave-admin-table .subject-invisible,
+.management .concave-admin-table .subject-visible {
+  margin-right: 20px;
+  display: block;
+  font-size: .85em;
+  font-style: italic;
+  width: 40px;
+}
+
+.management .concave-admin-table .subject-visible {
+  float: left;
+  color: rgb(179, 178, 179);
+}
+.management .concave-admin-table .subject-visible:before {
+  float: left;
+  margin-left: 9px;
+  display: block;
+}
+
+.management .concave-admin-table .subject-invisible {
+  color: rgb(225, 39, 45);
 }
 
 .management .concave-admin-table .avatar {

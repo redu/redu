@@ -41,6 +41,8 @@ class SpacesController < BaseController
   end
 
   def admin_subjects
+    @subjects = @space.subjects
+
     respond_to do |format|
        format.html { render "spaces/admin/admin_subjects" }
     end

@@ -12,9 +12,7 @@
         <h3 class="form-header">
           <%= @space.subjects.count %> módulos(s)
         </h3>
-        <ul id="subjects_list" class="hierarchy-listing subjects">
-          <%= render :partial => "subjects/item", :collection => @space.subjects %>
-        </ul>
+        <%= render :partial => "subjects/admin/index_admin" %>
         <%= link_to "Sair", space_path(@space), :class => "manage exit icon-manage-gray_8_10-before" %>
       <% end %>
     </div><!-- end #space-manage -->
