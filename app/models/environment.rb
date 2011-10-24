@@ -21,7 +21,6 @@ class Environment < ActiveRecord::Base
   has_many :tutors, :through => :user_environment_associations,
     :source => :user,
     :conditions => [ "user_environment_associations.role = ?", 6 ]
-  has_many :bulletins, :as => :bulletinable, :dependent => :destroy
   has_one :partner, :through => :partner_environment_association
   has_one :partner_environment_association, :dependent => :destroy
 

@@ -5,7 +5,6 @@ describe Environment do
 
   it { should have_many(:courses).dependent(:destroy) }
   it { should have_many(:user_environment_associations).dependent(:destroy) }
-  it { should have_many(:bulletins).dependent(:destroy) }
   it { should have_many(:users).through(:user_environment_associations)}
   it { should have_many(:administrators).through(:user_environment_associations)}
   it { should have_many(:users).through(:user_environment_associations)}

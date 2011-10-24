@@ -35,22 +35,6 @@
           :class => "icon #{selected}" %>
       </div>
     </li>
-    <li>
-      <div class="<%= (current_page? space_bulletins_path(space)) ?
-                    "session selected".to_s : "session".to_s %>">
-        <% selected = (current_page? space_bulletins_path(space)) ? "icon-bulletin-white_16_16" : "icon-bulletin-lightblue_16_16" %>
-        <%= link_to 'Notícias', space_bulletins_path(space),
-          :class => "icon #{selected}" %>
-      </div>
-    </li>
-    <li>
-      <div class="<%= (current_page? space_events_path(space)) ?
-                    "session selected".to_s : "session".to_s %>">
-        <% selected = (current_page? space_events_path(space)) ? "icon-event-white_16_16" : "icon-event-lightblue_16_16" %>
-        <%= link_to 'Eventos', space_events_path(space),
-          :class => "icon #{selected}" %>
-      </div>
-    </li>
     <% if can? :manage, space %>
       <li>
         <div class="<%= (current_page? edit_space_path(space)) ?

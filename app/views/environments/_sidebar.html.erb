@@ -16,17 +16,6 @@
           :class => "icon #{selected}" %>
       </div>
     </li>
-    <li>
-      <div class="<%= (current_page? environment_bulletins_path(environment)) ?
-                    "session selected".to_s : "session".to_s %>">
-                    <% selected = (current_page? environment_bulletins_path(environment)) ?
-                       "icon-bulletin-white_16_16" : "icon-bulletin-lightblue_16_16"
-                       %>
-        <%= link_to 'Notícias', environment_bulletins_path(environment),
-          :class => "icon #{selected}" %>
-      </div>
-    </li>
-
     <% if can? :manage, environment %>
       <li>
         <div class="<%= (current_page? edit_environment_path(environment)) ?
