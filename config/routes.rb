@@ -77,7 +77,7 @@ Redu::Application.routes.draw do
       get :cancel
     end
 
-    resources :folders do
+    resources :folders, :only => [:update, :create, :index] do
       member do
         get :upload
         get :download
@@ -86,7 +86,6 @@ Redu::Application.routes.draw do
         delete :destroy_file
         post :do_the_upload
         put :do_the_upload
-        post :update_permissions
       end
     end
 
