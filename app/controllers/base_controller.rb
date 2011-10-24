@@ -9,10 +9,6 @@ class BaseController < ApplicationController
     !logged_in? && controller_name.eql?('base') && params[:format].blank?
   end
 
-  def removed_item
-    @type = params[:type]
-  end
-
   def tos
     #TODO
   end
@@ -42,49 +38,10 @@ class BaseController < ApplicationController
     end
   end
 
-  def homepage_features
-    @homepage_features = HomepageFeature.find_features
-    @homepage_features.shift
-    render :partial => 'homepage_feature', :collection => @homepage_features and return
-  end
-
-  def admin_required
-    current_user && current_user.admin? ? true : (raise CanCan::AccessDenied)
-  end
-
-  def space_admin_required(space_id)
-    (current_user && current_user.space_admin?(space_id) || Space.find(space_id).owner == current_user) ? true : access_denied
-  end
-
-  def find_user
-    # if @user = User.active.find(params[:user_id] || params[:id])
-    if @user = User.find(params[:user_id] || params[:id])
-      @is_current_user = (@user && @user.eql?(current_user))
-      unless logged_in? || @user.profile_public?
-        flash[:error] = t :this_users_profile_is_not_public_youll_need_to_create_an_account_and_log_in_to_access_it
-        redirect_to :controller => 'sessions', :action => 'new'
-      end
-      return @user
-    else
-      flash[:error] = t :please_log_in
-      redirect_to :controller => 'sessions', :action => 'new'
-      return false
-    end
-  end
-
-  def require_current_user
-    @user ||= User.find(params[:user_id] || params[:id] )
-    unless admin? || (@user && (@user.eql?(current_user)))
-      redirect_to :controller => 'sessions', :action => 'new' and return false
-    end
-    return @user
-  end
-
   def contact
     if request.get?
       @contact = Contact.new
     else
-      #TODO Criar initialize para deixar essa parte menos nojenta
       @contact = Contact.new
       @contact.name = params[:contact][:name]
       @contact.email = params[:contact][:email]

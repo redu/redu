@@ -13,16 +13,7 @@ Redu::Application.routes.draw do
       post :respond
     end
   end
-  resources :profiles
-  resources :questions do
-    collection do
-      get :search
-      post :search
-      get :add
-    end
-  end
   resources :folders
-  resources :annotations
   resources :metro_areas
 
   resources :tags
@@ -42,15 +33,9 @@ Redu::Application.routes.draw do
   match '/account/edit' => 'users#edit_account', :as => :edit_account_from_email
   resources :sessions
 
-  # RSS
-  match '/featured' => 'posts#featured', :as => :featured
-  match '/popular' => 'posts#popular', :as => :popular
-  match '/recent' => 'posts#recent', :as => :recent
-
   # site routes
   match '/about' => 'base#about', :as => :about
   match '/faq' => 'base#faq', :as => :faq
-  match '/removed_item' => 'base#removed_item', :as => :removed_page
   match 'contact' => 'base#contact', :as => :contact
 
   # Space
@@ -115,7 +100,6 @@ Redu::Application.routes.draw do
   # Users
   resources :users, :except => [:index] do
     member do
-      get :annotations
       get :activity_xml
       get :logs
       get :assume
@@ -159,24 +143,6 @@ Redu::Application.routes.draw do
       end
     end
 
-    resources :photos do
-      collection do
-        post :swfupload
-        get :slideshow
-      end
-    end
-
-    resources :posts do
-      collection do
-        get :manage
-      end
-      member do
-        get :contest
-        match :send_to_friend
-        match :update_views
-      end
-    end
-
     resources :activities do
       collection do
         get :network
@@ -184,13 +150,6 @@ Redu::Application.routes.draw do
     end
 
     resources :invitations
-
-    resources :questions
-    resources :offerings do
-      collection do
-        put :replace
-      end
-    end
 
     resources :favorites, :only => [:index] do
       member do
@@ -206,28 +165,7 @@ Redu::Application.routes.draw do
       end
     end
 
-    resources :comments
-
     resources :photo_manager, :only => ['index']
-
-    scope ":user_id/photo_manager" do
-      resources :albums do
-        member do
-          get :add_photos
-          post :photos_added
-        end
-        collection do
-          get :paginate_photos
-        end
-
-        resources :photos do
-          collection do
-            post :swfupload
-            get :slideshow
-          end
-        end
-      end
-    end
 
     resources :plans, :only => [:index]
     resources :experiences
