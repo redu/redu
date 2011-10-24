@@ -45,9 +45,10 @@ Redu::Application.configure do
   config.i18n.fallbacks = true
 
   # Nome e URL do app
-  config.url = "www.redu.com.br"
+  config.url = "http://www.redu.com.br"
 
-  config.action_mailer.default_url_options = { :host => config.url }
+  config.action_mailer.default_url_options = \
+    { :host => config.action_controller.asset_host }
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify

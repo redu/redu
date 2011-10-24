@@ -23,11 +23,6 @@ Redu::Application.routes.draw do
   end
   resources :folders
   resources :annotations
-  resources :bulletins do
-    member do
-      post :rate
-    end
-  end
   resources :sb_posts
   resources :topics
   resources :metro_areas
@@ -66,15 +61,11 @@ Redu::Application.routes.draw do
   match '/removed_item' => 'base#removed_item', :as => :removed_page
   match 'contact' => 'base#contact', :as => :contact
 
-  resources :events
-
   # Space
   resources :spaces, :except => [:index] do
     member do
       get :manage
       get :admin_members
-      get :admin_bulletins
-      get :admin_events
       get :look_and_feel
       get :teachers
       get :take_ownership
@@ -83,8 +74,6 @@ Redu::Application.routes.draw do
       get :mural
       get :students_endless
       get :admin_subjects
-      post :moderate_bulletins
-      post :moderate_events
     end
     collection do
       get :cancel
@@ -153,26 +142,6 @@ Redu::Application.routes.draw do
           get :questions_database
           get :review_question
         end
-      end
-    end
-
-    resources :bulletins do
-      member do
-        get :vote
-        post :vote
-      end
-    end
-
-    resources :events do
-      member do
-        get :vote
-        post :vote
-        post :notify
-      end
-      collection do
-        get :past
-        get :ical
-        get :day
       end
     end
 
@@ -250,8 +219,6 @@ Redu::Application.routes.draw do
         match :update_views
       end
     end
-
-    resources :events # Needed this to make comments work
 
     resources :activities do
       collection do
@@ -352,7 +319,6 @@ Redu::Application.routes.draw do
       get :preview
       get :admin_courses
       get :admin_members
-      get :admin_bulletins
       post :destroy_members
       post :search_users_admin
     end
@@ -381,13 +347,6 @@ Redu::Application.routes.draw do
       resources :user_course_invitations, :only => [:show]
       resources :users, :only => [:index]
     end
-    resources :bulletins do
-      member do
-        get :vote
-        post :vote
-      end
-    end
-    resources :users, :only => [:index]
   end
 
 

@@ -16,7 +16,6 @@ class User < ActiveRecord::Base
 
   # CALLBACKS
   before_create :make_activation_code
-  after_create {|user| UserNotifier.signup_notification(user).deliver }
   after_create  :update_last_login
   # FIXME Verificar necessidade (não foi testado)
   after_save    :recount_metro_area_users
@@ -62,9 +61,6 @@ class User < ActiveRecord::Base
                 "users.avatar_file_name, users.avatar_file_size, " + \
                 "users.avatar_content_type"]
 
-  #bulletins
-  has_many :bulletins, :foreign_key => "owner"
-  #enrollments
   has_many :enrollments, :dependent => :destroy
 
   #subject
@@ -269,16 +265,6 @@ class User < ActiveRecord::Base
       self.teacher?(entity.subject.space) || self.can_manage?(entity.subject)
     when 'Exam'
       self.teacher?(entity.subject.space) || self.can_manage?(entity.space)
-    when 'Event'
-      self.teacher?(entity.eventable) || self.tutor?(entity.eventable) || self.can_manage?(entity.eventable)
-    when 'Bulletin'
-      case entity.bulletinable.class.to_s
-      when 'Environment'
-        self.environment_admin?(entity.bulletinable)
-      when 'Space'
-        self.teacher?(entity.bulletinable) || self.tutor?(entity.bulletinable) ||
-          self.can_manage?(entity.bulletinable)
-      end
     when 'Folder'
       self.teacher?(entity.space) || self.tutor?(entity.space) || self.can_manage?(entity.space)
     when 'Topic'
@@ -337,10 +323,6 @@ class User < ActiveRecord::Base
       end
     else
       case entity.class.to_s
-      when 'Event'
-        self.get_association_with(entity.eventable).nil? ? false : true
-      when 'Bulletin'
-        self.get_association_with(entity.bulletinable).nil? ? false : true
       when 'Forum'
         self.get_association_with(entity.space).nil? ? false : true
       when 'Topic'

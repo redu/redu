@@ -37,7 +37,6 @@ describe UserCourseAssociation do
       it "should send mail" do
         subject.invite!
         UserNotifier.deliveries.last.subject.should =~ /Você foi convidado para realizar um curso a distância/
-        UserNotifier.deliveries.last.body.should =~ /#{subject.user.display_name}/
       end
     end
 

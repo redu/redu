@@ -21,6 +21,7 @@ class Environment < ActiveRecord::Base
   has_many :tutors, :through => :user_environment_associations,
     :source => :user,
     :conditions => [ "user_environment_associations.role = ?", 6 ]
+
   # students (role member)
   has_many :students, :through => :user_environment_associations,
     :source => :user,

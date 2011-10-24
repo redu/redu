@@ -369,7 +369,7 @@ class UsersController < BaseController
     @user = User.find_by_email(params[:email])
 
     if @user && @user.reset_password
-      UserNotifier.reset_password(@user).deliver
+      UserNotifier.user_reseted_password(@user).deliver
       @user.save
 
       # O usuario estava ficando logado, apos o comando @user.save.
@@ -388,7 +388,7 @@ class UsersController < BaseController
   def forgot_username
     return unless request.post?
     if @user = User.find_by_email(params[:email])
-      UserNotifier.forgot_username(@user).deliver
+      UserNotifier.user_forgot_username(@user).deliver
       redirect_to home_path
       flash[:info] = t :your_username_was_emailed_to_you
     else
@@ -405,7 +405,7 @@ class UsersController < BaseController
     end
     if @user
       flash[:notice] = t :activation_email_resent_message
-      UserNotifier.signup_notification(@user).deliver
+      UserNotifier.user_signedup(@user).deliver
       redirect_to application_path and return
     else
       flash[:notice] = t :activation_email_not_sent_message

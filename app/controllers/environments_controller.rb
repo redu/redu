@@ -206,18 +206,6 @@ class EnvironmentsController < BaseController
     end
   end
 
-  def admin_bulletins
-    @bulletins = @environment.bulletins.paginate(:page => params[:page],
-                                                :order => 'updated_at DESC',
-                                                :per_page => Redu::Application.config.items_per_page)
-    respond_to do |format|
-      format.html
-      format.js do
-        render_endless 'bulletins/item_admin', @bulletins, '#bulletin_list'
-      end
-    end
-  end
-
   # Remove um ou mais usuários de um Environment destruindo todos os relacionamentos
   # entre usuário e os níveis mais baixos da hierarquia.
   def destroy_members

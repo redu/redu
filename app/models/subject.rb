@@ -98,4 +98,11 @@ class Subject < ActiveRecord::Base
     self.finalized && self.visible && !self.logs.exists?
   end
 
+  # Notifica todos alunos matriculados sobre a adição de Subject
+  def notify_subject_added
+    if self.notificable?
+      self.space.users.each { |u| UserNotifier.subject_added(u, self).deliver }
+    end
+  end
+
 end

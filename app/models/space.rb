@@ -4,7 +4,7 @@ class Space < ActiveRecord::Base
   # para muitos entre os usuários (Status e Forum).
   #
   # Além disso, o Space fornece mecanismos para compartilhamento de arquivos
-  # (MyFile), veículação de comunicados (Bulletin e Forum) e eventos (Event).
+  # (MyFile).
 
   # CALLBACKS
   after_create :create_root_folder
@@ -49,8 +49,6 @@ class Space < ActiveRecord::Base
 
 
   has_many :folders, :dependent => :destroy
-  has_many :bulletins, :as => :bulletinable, :dependent => :destroy
-  has_many :events, :as => :eventable, :dependent => :destroy
   has_many :subjects, :dependent => :destroy,
     :conditions => { :finalized => true }
   has_many :topics # Apenas para facilitar a busca.
@@ -139,4 +137,18 @@ class Space < ActiveRecord::Base
   def myfiles
     Myfile.where("folder_id IN (?)", self.folders)
   end
+
+  # Verifica se space está pronto para ser enviado por notificações
+  def notificable?; true end
+
+  # Envia notificação por e-mail de criação de Space para todos os usuários
+  # do Course
+  def notify_space_added
+    if self.notificable?
+      self.course.approved_users.each do |u|
+        UserNotifier.space_added(u, self).deliver
+      end
+    end
+  end
+
 end

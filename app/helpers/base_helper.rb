@@ -341,10 +341,6 @@ module BaseHelper
         "#{qty > 1 ? "novos" : "novo"} #{pluralize(qty, 'arquivo').split(' ')[1]}"
     when :folder
         "#{qty > 1 ? "novos" : "novo"} #{pluralize(qty, 'arquivo').split(' ')[1]}"
-    when :bulletin
-        "#{qty > 1 ? "novas" : "nova"} #{pluralize(qty, 'notícia').split(' ')[1]}"
-    when :event
-        "#{qty > 1 ? "novos" : "novo"} #{pluralize(qty, 'evento').split(' ')[1]}"
     when :topic
         "#{qty > 1 ? "novos" : "novo"} #{pluralize(qty, 'tópico').split(' ')[1]} "
     when :subject

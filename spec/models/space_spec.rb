@@ -5,7 +5,7 @@ describe Space do
   subject { Factory(:space) }
 
   [:user_space_associations, :users, :teachers, :students,
-    :logs, :folders, :bulletins, :events, :statuses, :subjects,
+    :logs, :folders, :statuses, :subjects,
     :topics, :sb_posts].each do |attr|
       it { should have_many(attr) }
   end

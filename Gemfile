@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 source 'http://gems.github.com'
 
 gem 'bundler', '~> 1.0.15'
-gem 'rails', '3.0.7'
+gem 'rails', '3.0.10'
 gem 'rake', '0.8.7'
 gem 'mysql2', '~> 0.2.1'
 gem 'authlogic'
@@ -37,6 +37,9 @@ gem 'zencoder'
 gem 'pusher'
 gem 'kaminari'
 gem 'simple-navigation'
+gem 'actionmailer_inline_css',
+  :git => 'git://github.com/ndbroadbent/actionmailer_inline_css.git',
+  :branch => 'master'
 
 # Gems específicos de algum ambiente
 group :development, :test do
