@@ -49,25 +49,30 @@
   background: url("../images/new/icons-small.png") -0px -2480px no-repeat;
 }
 
-.icon-add-contact-blue_16_18,
-.icon-add-contact-lightblue_16_18:hover { background-position: -160px -2480px; }
-.icon-add-contact-blue_16_18-before:before,
-.icon-add-contact-lightblue_16_18-before:hover:before,
-.subtabs .ui-state-default .icon-add-contact_16_18-before:hover:before {
-  content: "";
-  width: 16px;
-  height: 18px;
-  background: url("../images/new/icons-small.png") -160px -2480px no-repeat;
-}
-
-.icon-add-contact-lightblue_16_18 { background-position: -80px -2480px; }
-.icon-add-contact-lightblue_16_18-before:before,
+.icon-add-contact-lightgreen_16_18 { background-position: -320px -2480px; }
+.icon-add-contact-lightgreen_16_18-before:before,
 .subtabs .ui-state-default .icon-add-contact_16_18-before:before {
   content: "";
   width: 16px;
   height: 18px;
-  background: url("../images/new/icons-small.png") -80px -2480px no-repeat;
+  background: url("../images/new/icons-small.png") -320px -2480px no-repeat;
 }
+
+.icon-add-contact-green_16_18,
+.icon-add-contact-lightgreen_16_18:hover { background-position: -400px -2480px; }
+.icon-add-contact-green_16_18-before:before,
+.icon-add-contact-lightgreen_16_18-before:hover:before,
+.subtabs .ui-state-default .icon-add-contact_16_18-before:hover:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -400px -2480px no-repeat;
+}
+
+.icon-add-contact-blue_16_18,
+.icon-add-contact-lightblue_16_18:hover { background-position: -160px -2480px; }
+
+.icon-add-contact-lightblue_16_18 { background-position: -80px -2480px; }
 
 .icon-add-contact-white_16_18 { background-position: -240px -2480px; }
 .icon-add-contact-white_16_18-before:before,

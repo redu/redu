@@ -10,6 +10,7 @@
     <%= render :partial => "courses/admin/clean_header" %>
     <%= tabs :courses_admin do %>
       <%= subtabs :courses_admin do %>
+        <h3 class="form-header">Aguardando a resposta de <%= (@email_invitations.count + @user_invitations.count) %> membro(s)</h3>
         <% unless @email_invitations.empty? && @user_invitations.invited.empty? %>
           <div id="user_list" class="invitation-list">
             <%= render :partial => 'courses/invitations_list_admin',
@@ -21,6 +22,8 @@
           </div>
         <% end %>
         <%#= will_paginate  @memberships, :renderer => EndlessRenderer %>
+        <%= link_to "Sair", environment_course_path(@environment, @course),
+        :class => "manage exit icon-manage-gray_8_10-before" %>
       <% end %>
     <% end %>
   </div>

@@ -1,6 +1,5 @@
 <%= form_tag destroy_invitations_environment_course_path(),
   :method => :post, :id => "remove" do %>
-  <h3 class="form-header"><%= @course.user_course_invitations.invitations_approved.count %> membro(s) já foram convidado(s); aguardando a respota de <%= (email_invitations.count + user_invitations.count) %></h3>
   <table id="user_list_table" class="concave-invitation-table">
     <thead>
       <tr style="display: none;">

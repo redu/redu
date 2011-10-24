@@ -18,6 +18,8 @@
       <%= subtabs :courses_admin do %>
         <%= render :partial => 'courses/admin/pending_member_list_admin',
           :locals => { :pending_members => @pending_members }%>
+        <%= link_to "Sair", environment_course_path(@environment, @course),
+          :class => "manage exit icon-manage-gray_8_10-before" %>
       <% end %>
     <% end %>
   </div>

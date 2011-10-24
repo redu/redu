@@ -41,7 +41,7 @@ SimpleNavigation::Configuration.run do |navigation|
             :link => { :class => 'icon-moderation_16_18-before' }
           subtabs.item :invite_members, "Convites",
             admin_manage_invitations_environment_course_path(@environment, @course),
-            :class => 'ui-state-default',
+            :class => 'ui-state-default invite-tab',
             :link => { :class => 'icon-add-contact_16_18-before' }
         end
     end
