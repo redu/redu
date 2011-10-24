@@ -17,45 +17,43 @@ class Space < ActiveRecord::Base
   # USERS
   belongs_to :owner , :class_name => "User" , :foreign_key => "owner"
   has_many :user_space_associations, :dependent => :destroy
-  #FIXME retirar o conditions, o status de user_space_associations será
-  # retirado
   has_many :users, :through => :user_space_associations,
     :conditions => ["user_space_associations.status LIKE 'approved'"]
   # environment_admins
   has_many :administrators, :through => :user_space_associations,
     :source => :user,
-    :conditions => [ "user_space_associations.role = ? AND user_space_associations.status = ?",
-                      3, 'approved' ]
+    :conditions => \
+    [ "user_space_associations.role = ? AND user_space_associations.status = ?",
+      3, 'approved' ]
   # teachers
   has_many :teachers, :through => :user_space_associations,
     :source => :user,
-    :conditions => [ "user_space_associations.role = ? AND user_space_associations.status = ?",
-                      5, 'approved' ]
+    :conditions => \
+    [ "user_space_associations.role = ? AND user_space_associations.status = ?",
+      5, 'approved' ]
   # tutors
   has_many :tutors, :through => :user_space_associations,
     :source => :user,
-    :conditions => [ "user_space_associations.role = ? AND user_space_associations.status = ?",
-                      6, 'approved' ]
+    :conditions => \
+    [ "user_space_associations.role = ? AND user_space_associations.status = ?",
+      6, 'approved' ]
   # students (member)
   has_many :students, :through => :user_space_associations,
     :source => :user,
-    :conditions => [ "user_space_associations.role = ? AND user_space_associations.status = ?",
-                      2, 'approved' ]
+    :conditions => \
+    [ "user_space_associations.role = ? AND user_space_associations.status = ?",
+      2, 'approved' ]
 
  # new members (form 1 week ago)
   has_many :new_members, :through => :user_space_associations,
     :source => :user,
-    :conditions => [ "user_space_associations.status = ? AND user_space_associations.updated_at >= ?", 'approved', 1.week.ago]
-
-
+    :conditions => [ "user_space_associations.status = ? " + \
+                     "AND user_space_associations.updated_at >= ?",
+                     'approved', 1.week.ago]
   has_many :folders, :dependent => :destroy
   has_many :subjects, :dependent => :destroy,
     :conditions => { :finalized => true }
-  has_many :topics # Apenas para facilitar a busca.
-  has_many :sb_posts # Apenas para facilitar a busca.
-  has_one :forum, :dependent => :destroy
   has_one :root_folder, :class_name => 'Folder', :foreign_key => 'space_id'
-
   has_many :logs, :as => :logeable, :order => "created_at DESC",
     :dependent => :destroy
   has_many :statuses, :as => :statusable, :order => "updated_at DESC",
@@ -79,13 +77,6 @@ class Space < ActiveRecord::Base
 
   def permalink
     "#{Redu::Application.config.url}/espacos/#{self.id.to_s}-#{self.name.parameterize}"
-  end
-
-  # Logs relativos ao Space (usado no Course#show).
-  # Retorna hash do tipo :topoic => [status1, status2, status3], :myfile => ...
-  #FIXME Refactor: Mover para Status
-  def recent_log(offset = 0, limit = 3)
-    logs = {}
   end
 
   def create_root_folder

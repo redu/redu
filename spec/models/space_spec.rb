@@ -5,15 +5,13 @@ describe Space do
   subject { Factory(:space) }
 
   [:user_space_associations, :users, :teachers, :students,
-    :logs, :folders, :statuses, :subjects,
-    :topics, :sb_posts].each do |attr|
+    :logs, :folders, :statuses, :subjects ].each do |attr|
       it { should have_many(attr) }
   end
 
   it { should belong_to :course }
   it { should belong_to :owner }
 
-  it { should have_one :forum }
   it { should have_one :root_folder}
 
   it { should have_many :logs }

@@ -66,8 +66,6 @@ Redu::Application.routes.draw do
     member do
       get :manage
       get :admin_members
-      get :look_and_feel
-      get :teachers
       get :take_ownership
       get :publish
       get :unpublish
