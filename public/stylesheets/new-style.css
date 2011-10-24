@@ -574,6 +574,7 @@ body {
 
 #content .big-col.space {
   border: 1px solid rgb(179, 179, 179);
+  background-color: white;
 }
 
 #hierarchy-header {
@@ -640,6 +641,11 @@ body {
   font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 500;
   color: rgb(77, 173, 214);
+}
+
+#space-manage #hierarchy-header .name a,
+#space-manage #hierarchy-header .space-name {
+  color: rgb(179, 179, 179);
 }
 
 .textshadow #hierarchy-header .name,
@@ -887,6 +893,11 @@ body {
   margin: 25px 20px 60px 20px;
 }
 
+.main.space .body.management {
+  margin: 0;
+  border: none;
+}
+
 .main.space .body .main-content {
   width: 668px;
   float: left;
@@ -921,6 +932,15 @@ body {
   border-radius: 15px;
 }
 
+#space-manage.body.management {
+  -moz-border-radius-topleft: 0px;
+  -moz-border-radius-topright: 0px;
+  -moz-border-radius-bottomright: 15px;
+  -moz-border-radius-bottomleft: 15px;
+  -webkit-border-radius: 0px 0px 15px 15px;
+  border-radius: 0px 0px 15px 15px;
+}
+
 .body .header {
   margin-bottom: 20px;
   float: left;
@@ -938,6 +958,16 @@ body {
   -moz-border-radius-bottomleft: 0px;
   -webkit-border-radius: 15px 15px 0px 0px;
   border-radius: 15px 15px 0px 0px;
+}
+
+#space-manage.body.management .header {
+  -moz-border-radius-topleft: 0px;
+  -moz-border-radius-topright: 0px;
+  -moz-border-radius-bottomright: 0px;
+  -moz-border-radius-bottomleft: 0px;
+  -webkit-border-radius: 0px 0px 0px 0px;
+  border-radius: 0px 0px 0px 0px;
+  margin-bottom: 30px;
 }
 
 .body .header .title {
@@ -7406,6 +7436,8 @@ div.token-input-dropdown {
 .plan-use .quotas > li .used .percentage {
   float: left;
   margin-right: 5px;
+  width: 28px;
+  text-align: right;
 }
 
 .plan-use .quotas > li .used .progress {

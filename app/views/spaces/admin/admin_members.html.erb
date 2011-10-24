@@ -1,11 +1,12 @@
 <%= render :partial => 'spaces/sidebar', :locals => { :space => @space } %>
-<div class="main grid_12 omega big-col">
+<div class="main space grid_12 omega big-col">
   <%= render :partial => "spaces/breadcrumbs", :locals => { :space => @space } %>
-  <%= render :partial => 'spaces/header',
-    :locals => { :space => @space }%>
 
   <div id="space-manage" class="body management">
+    <%= render :partial => 'spaces/admin/header',
+      :locals => { :space => @space }%>
     <%= render :partial => 'spaces/admin/clean_header' %>
+
     <%= tabs :spaces_admin do %>
       <div id="user_list">
         <h3 class="form-header-closer">
