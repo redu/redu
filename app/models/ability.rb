@@ -5,7 +5,7 @@ class Ability
   def initialize(user)
     # Aliases para acoes não padrão
     # Overall Manage
-    alias_action :publish, :unpublish, :admin_members, :admin_bulletins,
+    alias_action :publish, :unpublish, :admin_members,
       :search_users_admin, :to => :manage
 
     # Overall Read
@@ -24,8 +24,8 @@ class Ability
     alias_action :unjoin, :to => :read
 
     # Space
-    alias_action :admin_events, :moderate_bulletins, :moderate_events,
-      :look_and_feel, :set_theme, :new_space_admin, :to => :manage
+    alias_action :look_and_feel, :set_theme,
+      :new_space_admin, :to => :manage
     #TODO action manage gerando recursividade
     alias_action :mural, :to => :read
 

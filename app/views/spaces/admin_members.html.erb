@@ -11,9 +11,7 @@
       </div>
 
       <%= fake_tabs ["Informações", edit_space_path(@space), { :class => "icon icon-management-gray_16_16" }],
-        ["Eventos", admin_events_space_path(@space), { :class => "icon icon-event-gray_16_16" }],
-        ["Membros", admin_members_space_path(@space), { :class => "icon icon-members-lightblue_16_16" }],
-        ["Notícias", admin_bulletins_space_path(@space), { :class => "icon icon-bulletin-gray_16_16" }] do %>
+        ["Membros", admin_members_space_path(@space), { :class => "icon icon-members-lightblue_16_16" }] do %>
 
       <div id="user_list">
         <%= render :partial => 'spaces/user_list_admin',

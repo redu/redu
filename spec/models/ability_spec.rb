@@ -160,9 +160,6 @@ describe Ability do
           @ability.should be_able_to(:deny, course)
         end
 
-        it "cannot create a bulletin"
-        it "cannot destroy a bulletin"
-
         it "cannot invite users" do
           course = Factory(:course)
           @ability.should_not be_able_to(:invite_members, course)
@@ -236,9 +233,6 @@ describe Ability do
           it "can NOT upload file"
         end
 
-        it "creates a bulletin"
-        it "destroy a bulletin when he is a environment admin"
-
         it "invites members" do
           course = Factory(:course, :owner => @env_admin,
                            :environment => @environment)
@@ -274,8 +268,6 @@ describe Ability do
                                  :environment => @environment)
           @ability.should_not be_able_to(:destroy, course)
         end
-        it "cannot create a bulletin"
-        it "cannot destroy a bulletin"
 
         it "cannot invite members" do
           course = Factory.build(:course,:owner => @teacher,
@@ -313,9 +305,6 @@ describe Ability do
           @ability.should_not be_able_to(:destroy, course)
         end
 
-        it "cannot create a bulletin"
-        it "cannot destroy a bulletin"
-
         it "cannot invite members" do
           course = Factory.build(:course,:owner => @tutor,
                                  :environment => @environment)
@@ -342,8 +331,6 @@ describe Ability do
                                  :environment => @environment)
           @ability.should be_able_to(:destroy, course)
         end
-        it "creates a bulletin"
-        it "destroy any bulletin"
       end
 
     end
@@ -386,10 +373,6 @@ describe Ability do
         it "cannot destroy any subject"
         it "cannot create a lecture"
         it "cannot destroy any lecture"
-        it "cannot create an event"
-        it "cannot destroy any event"
-        it "cannot create a bulletin"
-        it "cannot destroy any bulletin"
         it "cannot upload a file"
         it "cannot destroy any file"
         it "crates a post"
@@ -425,10 +408,6 @@ describe Ability do
         it "destroys any subject"
         it "creates a lecture"
         it "destroys any lecture"
-        it "creates an event"
-        it "destroys any event"
-        it "creates a bulletin"
-        it "destroys any bulletin"
         it "uploads a file"
         it "destroys any file"
         it "crates a post"
@@ -458,10 +437,6 @@ describe Ability do
         it "cannot destroy any subject"
         it "cannot create a lecture"
         it "cannot destroy any lecture"
-        it "cannot create an event"
-        it "cannot destroy any event"
-        it "cannot create a bulletin"
-        it "cannot destroy any bulletin"
         it "cannot upload a file"
         it "cannot destroy any file"
         it "crates a post"
@@ -485,10 +460,6 @@ describe Ability do
         it "destroys any subject"
         it "creates a lecture"
         it "destroys any lecture"
-        it "creates an event"
-        it "destroys any event"
-        it "creates a bulletin"
-        it "destroys any bulletin"
         it "uploads a file"
         it "destroys any file"
         it "crates a post"
@@ -512,10 +483,6 @@ describe Ability do
         it "destroys any subject"
         it "creates a lecture"
         it "destroys any lecture"
-        it "creates an event"
-        it "destroys any event"
-        it "creates a bulletin"
-        it "destroys any bulletin"
         it "uploads a file"
         it "destroys any file"
         it "crates a post"

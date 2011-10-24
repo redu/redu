@@ -77,18 +77,6 @@ module SpacesHelper
     [icon, color, post  ]
   end
 
-  def waiting_bulletins_count
-    Bulletin.count(:conditions => ["bulletinable_type LIKE 'Space'" \
-                                   " AND bulletinable_id = ?" \
-                                   " AND state LIKE ?", @space.id, "waiting"])
-  end
-
-  def waiting_events_count
-    Event.count(:conditions => ["eventable_id = ?" \
-                                " AND eventable_type LIKE 'Space'" \
-                                " AND state LIKE ?", @space.id, "waiting"])
-  end
-
   def space_association_pending?
     (current_user.spaces.include?(@space) && current_user.get_association_with(@space).status == "pending")
   end
