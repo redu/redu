@@ -7245,8 +7245,13 @@ div.token-input-dropdown {
   color: #FFFFFF;
 }
 
+#course-manage .subtabs .invite-tab.ui-state-default a {
+  color: rgb(97, 190, 128);
+}
+
 #course-manage .subtabs .invite-tab.ui-state-active a {
   background-color: rgb(95, 192, 128);
+  color: white;
 }
 
 #course-manage .subtabs .invite-tab.ui-state-active a:hover {
