@@ -343,6 +343,8 @@ Redu::Application.routes.draw do
         post :accept
         post :deny
       end
+
+      resources :users, :only => [:index]
     end
 
     resources :user_course_invitations, :only => [:show]
