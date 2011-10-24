@@ -8,7 +8,6 @@ class Space < ActiveRecord::Base
 
   # CALLBACKS
   after_create :create_root_folder
-  after_create :create_forum
   after_create :create_space_association_for_users_course
 
   # ASSOCIATIONS
@@ -97,16 +96,6 @@ class Space < ActiveRecord::Base
   def unpublish!
     self.published = 0
     self.save
-  end
-
-  # Cria um forum logo após a criação do space através do callback after_create
-  def create_forum
-    Forum.create(:name => "Fórum da disciplina #{self.name}",
-                 :description => "Este fórum pertence a disciplina " + \
-                 "#{self.name}. " + \
-                 "Apenas os participantes desta disciplina podem " + \
-                 "visualizá-lo. Troque ideias, participe!",
-                 :space_id => self.id)
   end
 
   # Após a criação do space, todos os usuários do course ao qual

@@ -1,8 +1,0 @@
-<div class="alt first_alt">
-  <%= link_to @forum.name, space_forum_path(@space) %>
-  -
-  <%= :new_topic.l %>
-</div>
-
-<%= render :partial => 'topics/form', :locals => {:topic => @topic, :form_new => true} %>
-

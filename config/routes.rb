@@ -23,8 +23,6 @@ Redu::Application.routes.draw do
   end
   resources :folders
   resources :annotations
-  resources :sb_posts
-  resources :topics
   resources :metro_areas
 
   resources :tags
@@ -46,14 +44,8 @@ Redu::Application.routes.draw do
 
   # RSS
   match '/featured' => 'posts#featured', :as => :featured
-  match '/featured.rss' => 'posts#featured', :format => 'rss', :as => :featured_rss
   match '/popular' => 'posts#popular', :as => :popular
-  match '/popular.rss' => 'posts#popular', :format => 'rss', :as => :popular_rss
   match '/recent' => 'posts#recent', :as => :recent
-  match '/recent.rss' => 'posts#recent', :format => 'rss', :as => :recent_rss
-  match '/rss' => 'base#rss_site_index', :as => :rss_redirect
-  match '/site_index.rss' => 'base#site_index', :format => 'rss', :as => :rss
-
 
   # site routes
   match '/about' => 'base#about', :as => :about
@@ -115,13 +107,6 @@ Redu::Application.routes.draw do
           get :published
         end
       end
-    end
-
-    resource :forum, :except => [:new, :edit, :create, :update, :destroy] do
-      resources :topics do
-        resources :sb_posts
-      end
-      resources :sb_posts, :except => [:new, :edit, :create, :update, :destroy]
     end
 
     resources :users, :only => [:index]

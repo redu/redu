@@ -37,12 +37,6 @@ describe Space do
       }.should change(Folder, :count).by(1)
     end
 
-    it "creates a forum" do
-      expect{
-        s = Factory(:space)
-      }.should change(Forum, :count).by(1)
-    end
-
     it "creates a space association with all users of course's spaces" do
       c = Factory(:course)
       users = (1..4).collect { Factory(:user) }

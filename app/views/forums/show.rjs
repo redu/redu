@@ -1,1 +1,0 @@
-page.replace_html 'tabs-6', :partial => 'show'

@@ -70,18 +70,7 @@ class User < ActiveRecord::Base
 
   #student_profile
   has_many :student_profiles
-
-  #forums
-  has_many :moderatorships, :dependent => :destroy
-  has_many :forums, :through => :moderatorships, :order => 'forums.name'
-  has_many :sb_posts, :dependent => :destroy
-  has_many :topics, :dependent => :destroy
-  has_many :monitorships, :dependent => :destroy
-  # FIXME Verificar necessidade (não foi testado)
-  has_many :monitored_topics, :through => :monitorships, :conditions => ['monitorships.active = ?', true], :order => 'topics.replied_at desc', :source => :topic
-
   has_many :plans
-
   has_many :course_invitations, :class_name => "UserCourseAssociation",
     :conditions => ["state LIKE 'invited'"]
   has_many :experiences, :dependent => :destroy
@@ -143,8 +132,7 @@ class User < ActiveRecord::Base
 
   # Accessors
   attr_protected :admin, :featured, :role, :activation_code,
-    :friends_count, :score, :removed,
-    :sb_posts_count, :sb_last_seen_at
+    :friends_count, :score, :removed
 
   accepts_nested_attributes_for :settings
   accepts_nested_attributes_for :social_networks,
@@ -319,12 +307,6 @@ class User < ActiveRecord::Base
       end
     else
       case entity.class.to_s
-      when 'Forum'
-        self.get_association_with(entity.space).nil? ? false : true
-      when 'Topic'
-        self.get_association_with(entity.forum.space).nil? ? false : true
-      when 'SbPost'
-        self.get_association_with(entity.topic.forum.space).nil? ? false : true
       when 'Folder'
         self.get_association_with(entity.space).nil? ? false : true
       when 'Status'
@@ -375,16 +357,6 @@ class User < ActiveRecord::Base
   # FIXME Verificar necessidade (não foi testado)
   def can_be_owner?(entity)
     self.admin? || self.space_admin?(entity.id) || self.teacher?(entity) || self.coordinator?(entity)
-  end
-
-  # FIXME Verificar necessidade (não foi testado)
-  def moderator_of?(forum)
-    moderatorships.where('forum_id = ?', (forum.is_a?(Forum) ? forum.id : forum)).count == 1
-  end
-
-  # FIXME Verificar necessidade (não foi testado)
-  def monitoring_topic?(topic)
-    monitored_topics.find_by_id(topic.id)
   end
 
   # FIXME Criar teste ao definir lógica dos Redu points.

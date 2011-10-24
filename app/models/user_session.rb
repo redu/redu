@@ -13,10 +13,4 @@ class UserSession < Authlogic::Session::Base
                           :authorize_url => "http://twitter.com/oauth/authenticate" })
   end
 
-  def update_user_activity
-    controller.session[:last_active] = self.record.sb_last_seen_at
-    controller.session[:topics] = controller.session[:forums] = {}
-    self.record.update_last_seen_at
-  end
-
 end
