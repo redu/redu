@@ -135,39 +135,9 @@ module BaseHelper
     end
   end
 
-  def forum_page?
-    %w(forums topics sb_posts spaces).include?(controller.controller_name)
-  end
-
-  def block_to_partial(partial_name, html_options = {}, &block)
-    concat(render(:partial => partial_name, :locals => {:body => capture(&block), :html_options => html_options}))
-  end
-
   def truncate_chars(text, length = 30, end_string = '...')
      return if text.blank?
      (text.length > length) ? text[0..length] + end_string  : text
-  end
-
-  def truncate_words(text, length = 30, end_string = '...')
-    return if text.blank?
-    words = strip_tags(text).split()
-    words[0..(length-1)].join(' ') + (words.length > length ? end_string : '')
-  end
-
-  def truncate_words_with_highlight(text, phrase)
-    t = excerpt(text, phrase)
-    highlight truncate_words(t, 18), phrase
-  end
-
-  def excerpt_with_jump(text, end_string = ' ...')
-    return if text.blank?
-    doc = Hpricot( text )
-    paragraph = doc.at("p")
-    if paragraph
-      paragraph.to_html + end_string
-    else
-      truncate_words(text, 150, end_string)
-    end
   end
 
   def page_title
@@ -247,23 +217,6 @@ module BaseHelper
     title.html_safe
   end
 
-  def activities_line_graph(options = {})
-    line_color = "0x628F6C"
-    prefix  = ''
-    postfix = ''
-    start_at_zero = false
-    swf = "/images/swf/line_grapher.swf?file_name=/statistics.xml;activities&line_color=#{line_color}&prefix=#{prefix}&postfix=#{postfix}&start_at_zero=#{start_at_zero}"
-
-    code = <<-EOF
-    <object width="100%" height="400">
-    <param name="movie" value="#{swf}">
-    <embed src="#{swf}" width="100%" height="400">
-    </embed>
-    </object>
-    EOF
-    code
-  end
-
   def last_active
     session[:last_active] ||= Time.now.utc
   end
@@ -274,72 +227,8 @@ module BaseHelper
     super
   end
 
-  def avatar_for(user, size=32)
-    image_tag user.avatar.url(:medium), :size => "#{size}x#{size}", :class => 'photo'
-  end
-
-  def feed_icon_tag(title, url)
-    (@feed_icons ||= []) << { :url => url, :title => title }
-    link_to image_tag('feed.png', :size => '14x14', :alt => t( :subscribe_to ) + " #{title}"), url
-  end
-
-  def search_posts_title
-    returning(params[:q].blank? ? t(:recent_posts) : t(:searching_for) + " '#{h params[:q]}'") do |title|
-      title << " by #{h User.find(params[:user_id]).display_name}" if params[:user_id]
-      title << " in #{h Forum.find(params[:forum_id]).name}"       if params[:forum_id]
-    end
-  end
-
-  def search_user_posts_path(rss = false)
-    options = params[:q].blank? ? {} : {:q => params[:q]}
-    options[:format] = :rss if rss
-    [[:user, :user_id], [:forum, :forum_id]].each do |(route_key, param_key)|
-      return send("#{route_key}_sb_posts_path", options.update(param_key => params[param_key])) if params[param_key]
-    end
-    options[:q] ? search_all_sb_posts_path(options) : send("all_#{prefix}sb_posts_path", options)
-  end
-
-  def time_ago_in_words_or_date(date)
-    if date.to_date.eql?(Time.now.to_date)
-      display = I18n.l(date.to_time, :format => :time_ago)
-    elsif date.to_date.eql?(Time.now.to_date - 1)
-      display = t(:yesterday)
-    else
-      display = I18n.l(date.to_date, :format => :date_ago)
-    end
-  end
-
-  def owner_link
-    if @space.owner
-      link_to @space.owner.display_name, @space.owner
-    else
-      if current_user.can_be_owner? @space
-        'Sem dono ' + link_to("(pegar)", take_ownership_space_path)
-      else
-        'Sem dono'
-      end
-      #TODO e se ninguem estiver apto a pegar ownership?
-    end
-
-  end
-
   def get_random_number
     SecureRandom.hex(4)
-  end
-
-  # Gera o nome do recurso (class_name) devidamente pluralizado de acordo com
-  # a quantidade (qty)
-  def resource_name(class_name, qty)
-    case class_name
-    when :myfile
-        "#{qty > 1 ? "novos" : "novo"} #{pluralize(qty, 'arquivo').split(' ')[1]}"
-    when :folder
-        "#{qty > 1 ? "novos" : "novo"} #{pluralize(qty, 'arquivo').split(' ')[1]}"
-    when :topic
-        "#{qty > 1 ? "novos" : "novo"} #{pluralize(qty, 'tópico').split(' ')[1]} "
-    when :subject
-        "#{qty > 1 ? "novos" : "novo"} #{pluralize(qty, 'módulo').split(' ')[1]} "
-    end
   end
 
   # Mostra tabela de preço de planos
