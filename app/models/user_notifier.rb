@@ -9,7 +9,7 @@ class UserNotifier < ActionMailer::Base
   default :from => "\"Equipe Redu\" <#{Redu::Application.config.email}>",
       :content_type => "text/plain",
       :reply_to => "#{Redu::Application.config.email}",
-      :host => "http://0.0.0.0:3000"
+      :host => Redu::Application.config.action_controller.asset_host
 
   # Enviado ao aprovar a participação de um usuário num Course
   def approve_membership(user, course)
