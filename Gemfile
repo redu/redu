@@ -39,6 +39,7 @@ gem 'kaminari'
 gem 'actionmailer_inline_css',
   :git => 'git://github.com/ndbroadbent/actionmailer_inline_css.git',
   :branch => 'master'
+gem 'exceptional'
 
 # Gems específicos de algum ambiente
 group :development, :test do

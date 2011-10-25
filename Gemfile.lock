@@ -104,6 +104,8 @@ GEM
     erubis (2.6.6)
       abstract (>= 1.0.0)
     eventmachine (0.12.10)
+    exceptional (2.0.32)
+      rack
     factory_girl (1.3.3)
     factory_girl_rails (1.0.1)
       factory_girl (~> 1.3)
@@ -257,6 +259,7 @@ DEPENDENCIES
   date_validator
   deep_cloneable
   dynamic_form
+  exceptional
   factory_girl_rails
   jammit-s3
   jasmine
