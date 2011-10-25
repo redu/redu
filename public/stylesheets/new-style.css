@@ -704,6 +704,44 @@ body {
   margin: 0;
 }
 
+#space-manage .concave-form .concave-fieldset {
+  margin-top: 0;
+}
+
+#space-manage .plan-info {
+  margin-left: 120px;
+  color: rgb(179, 179, 179);
+  line-height: 1.3;
+}
+
+#space-manage .plan-info .call {
+  display: block;
+  color: rgb(179, 179, 179);
+  font-weight: bold;
+  margin-right: 10px;
+  float: left;
+  font-size: .9em;
+}
+
+#space-manage .plan-info .course-name,
+#space-manage .plan-info .plan-name{
+  color: rgb(76, 172, 213);
+}
+
+#space-manage .plan-info .course-name {
+  font-weight: bold;
+}
+
+#space-manage .plan-info .plan-data {
+  color: rgb(179, 179, 179);
+  margin-left: 51px;
+  font-size: 0.85em;
+}
+
+#space-manage .plan-info .plan-data .featured {
+  color: rgb(109, 110, 111);
+}
+
 #hierarchy-header.management .manage,
 .body.management .manage {
   margin-right: 90px;
@@ -7633,4 +7671,3 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 #tiptip_holder #tiptip_content .pricing .period{
   font-style: italic;
 }
-
