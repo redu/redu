@@ -13,7 +13,6 @@ Redu::Application.routes.draw do
       post :respond
     end
   end
-  resources :folders
   resources :metro_areas
 
   resources :tags
