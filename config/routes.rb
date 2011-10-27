@@ -1,6 +1,7 @@
 Redu::Application.routes.draw do
 
   post "presence/auth"
+  post "presence/multiauth"
   post "presence/send_chat_message"
   get "presence/last_messages_with"
 

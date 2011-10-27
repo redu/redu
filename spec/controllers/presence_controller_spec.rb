@@ -162,6 +162,32 @@ describe PresenceController do
 
     end
 
+    context "when subscribing to multiple channels" do
+      before do
+        @chs = ["presence-user-#{@friend1.id}",
+                "private-#{@current_user.id}-#{@friend1.id}",
+                "presence-user-#{@friend2.id}",
+                "private-#{@current_user.id}-#{@friend2.id}"]
+      end
+
+      it "should be successful" do
+        post :multiauth, :locale => "pt-BR", :channels => @chs,
+          :socket_id => "123.13865", :user_id => @current_user.id
+
+        response.should be_success
+      end
+
+      it "should return a multiresponse" do
+        post :multiauth, :locale => "pt-BR", :channels => @chs,
+          :socket_id => "123.13865", :user_id => @current_user.id
+
+        user_info = JSON.parse(response.body)
+        user_info.should have_key "presence-user-#{@friend1.id}"
+        user_info.should have_key "presence-user-#{@friend2.id}"
+        user_info.should have_key "private-#{@current_user.id}-#{@friend1.id}"
+        user_info.should have_key "private-#{@current_user.id}-#{@friend2.id}"
+      end
+    end
   end
 
   context "POST send_chat_message" do

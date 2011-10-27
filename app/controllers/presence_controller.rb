@@ -8,12 +8,42 @@ class PresenceController < BaseController
 
   def auth
     if params[:channel_name].include? "presence"
-      presence
+      response_body = presence_auth(params[:channel_name], current_user,
+                                    params[:socket_id])
+
+      render :json => response_body
     elsif params[:channel_name].include? "private"
-      private_chat
+      response_body = private_auth(params[:channel_name], current_user,
+                                   params[:socket_id])
+      render :json => response_body
     else
       render :text => "Não autorizado.", :status => '403'
     end
+  end
+
+  def multiauth
+    response_body = params[:channels].collect do |ch|
+      payload = case
+      when ch.include?('presence')
+        begin
+          presence_auth(ch, current_user, params[:socket_id])
+        rescue CanCan::AccessDenied
+          next
+        end
+      when ch.include?('private')
+        begin
+          private_auth(ch, current_user, params[:socket_id])
+        rescue CanCan::AccessDenied
+          next
+        end
+      else
+        next
+      end
+
+      { ch => prepare_for_multiauth(payload, ch) }
+    end
+
+    render :json => response_body.inject({}) { |acc,hash| acc.merge(hash) }
   end
 
   def send_chat_message
@@ -46,58 +76,70 @@ class PresenceController < BaseController
   end
 
   protected
-  def presence
-    channels = Presence.list_of_channels(current_user)
-    if params[:channel_name] == current_user.presence_channel
+
+  # Autentica usuário no canal de presença. Retorna o payload para ser
+  # enviado ao cliente ou nil para caso de acesso negado.
+  def presence_auth(channel_name, user, socket_id)
+    channels = Presence.list_of_channels(user)
+    if channel_name == user.presence_channel
       payload = { :contacts => channels }
 
-      json_response = Pusher[params[:channel_name]].
-        authenticate(params[:socket_id],
-                     :user_id => current_user.id,
+      response_body = Pusher[channel_name].
+        authenticate(socket_id,
+                     :user_id => user.id,
                      :user_info => payload )
 
-      render :json => json_response
+      return response_body.stringify_keys!
     else
-      authorize! :subscribe_channel, contact
+      authorize! :subscribe_channel, contact(channel_name)
 
-      payload = { :name => current_user.display_name,
-        :thumbnail => current_user.avatar.url(:thumb_24),
-        :pre_channel => current_user.presence_channel,
-        :pri_channel => current_user.private_channel_with(contact),
-        :roles => Presence.fill_roles(current_user) }
+      payload = { :name => user.display_name,
+        :thumbnail => user.avatar.url(:thumb_24),
+        :pre_channel => user.presence_channel,
+        :pri_channel => user.private_channel_with(contact(channel_name)),
+        :roles => Presence.fill_roles(user) }
 
-      json_response = Pusher[params[:channel_name]].
-        authenticate(params[:socket_id],
-                     :user_id => current_user.id,
+      response_body = Pusher[channel_name].
+        authenticate(socket_id,
+                     :user_id => user.id,
                      :user_info => payload )
 
-      render :json => json_response
+      return response_body.stringify_keys!
     end
   end
 
-  def private_chat
-    list_channels = params[:channel_name].split('-')
+  # Autentica usuário no canal de privado. Retorna o payload para ser
+  # enviado ao cliente ou nil para caso de acesso negado.
+  def private_auth(channel_name, user, socket_id)
+    ids = /^private-(\d+)-(\d+)/.match(channel_name)
     # Verificação se o usuário e o contato estão no canal
-    if current_user.id == list_channels[1].to_i
-      contact_user = User.find(list_channels[2])
+    if user.id == ids[1].to_i
+      contact_user = User.find(ids[2])
       authorize! :subscribe_channel, contact_user
-    elsif current_user.id == list_channels[2].to_i
-      contact_user = User.find(list_channels[1])
+    elsif user.id == ids[2].to_i
+      contact_user = User.find(ids[1])
       authorize! :subscribe_channel, contact_user
     else
       raise CanCan::AccessDenied.new("Não autorizado", :auth, Presence)
     end
 
-    json_response = Pusher[params[:channel_name]].
-      authenticate(params[:socket_id])
+    response_body = Pusher[channel_name].
+      authenticate(socket_id)
 
-    render :json => json_response
+    return response_body
   end
 
   # Usuário dono do canal de presença ao qual estou me inscrevendo
-  def contact
+  def contact(channel)
     # Pegar id do nome do canal
-    contact_id = /^presence-user-(\d+)$/.match(params[:channel_name])[1]
+    contact_id = /^presence-user-(\d+)$/.match(channel)[1]
     User.find(contact_id)
+  end
+
+  # Transforma uma resposta de autenticação no formato apropriado para
+  # autenticação multipla (adiciona channel_name)
+  def prepare_for_multiauth(common_response, channel_name)
+    common_response['channel_name'] = channel_name
+    common_response
   end
 end
