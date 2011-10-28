@@ -132,15 +132,7 @@ Redu::Application.routes.draw do
 
     resources :social_networks, :only => [:destroy]
 
-    resources :friendships, :only => [:index, :create, :destroy] do
-      member do
-        post :accept
-        post :decline
-      end
-      collection do
-        get :pending
-      end
-    end
+    resources :friendships, :only => [:index, :create, :destroy]
 
     resources :activities do
       collection do
