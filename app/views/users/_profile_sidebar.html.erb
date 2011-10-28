@@ -2,30 +2,60 @@
   <div class="image-user">
     <%= image_tag @user.avatar.url(:thumb_120), :alt => 'user' %>
   </div>
-  <%= local_nav :user_profile %>
-  <% if current_user == @user %>
-    <ul class="connections con-endless clearfix">
-      <% @contacts = @user.friends.page(params[:page]).per(8) %>
-      <%= render :partial => 'users/item_medium_24',
-        :collection => @contacts %>
-    </ul><!-- end .connections -->
-  <% else %>
-    <% @friends = @user.friends_in_common_with(current_user).shuffle %>
-    <span class="call icon-contacts-gray_16_18-before">Em comum: <span class="count"><%= @friends.count %></span></span>
-    <ul class="connections clearfix">
-      <%= render :partial => 'users/item_medium_24',
-        :collection => @friends[0..3] %>
-    </ul><!-- end .connections -->
-    <hr class="separator"/>
-    <ul class="connections con-endless clearfix">
-      <% @contacts = Kaminari::paginate_array(@user.friends_not_in_common_with(current_user)).
-        page(params[:page]).per(4) %>
-      <%= render :partial => 'users/item_medium_24',
-        :collection => @contacts %>
-    </ul><!-- end .connections -->
-  <% end %>
-  <%= paginate @contacts, :theme => 'sidebar_endless',
-    :params => { :controller => 'users', :action => 'contacts_endless',
-      :id  => @user.login },
-      :text => "Mostrando os <X> últimos contatos de #{@user.first_name}" %>
-</div>
+
+  <ul class="local-nav">
+    <li>
+      <div class="<%= (current_page? user_path(@user)) ?
+        "session selected".to_s : "session".to_s %>">
+        <% selected = (current_page? user_path(@user)) ?
+          "icon-profile-white_16_16" : "icon-profile-lightblue_16_16" %>
+        <%= link_to @user.display_name, user_path(@user),
+          :class => "icon #{selected}" %>
+      </div>
+    </li>
+    <li>
+      <div class="<%= (current_page? show_mural_user_path(@user)) ?
+        "session selected".to_s : "session".to_s %>">
+        <% selected = (current_page? show_mural_user_path(@user)) ?
+          "icon-list-white_16_16" : "icon-list-lightblue_16_16"%>
+        <%= link_to "Mural", show_mural_user_path(@user),
+          :class => "icon #{selected}" %>
+      </div>
+    </li>
+    <li>
+      <div class="<%= (current_page? user_friendships_path(@user)) ?
+        "session selected".to_s : "session".to_s %>">
+        <% selected = (current_page? user_friendships_path(@user)) ?
+          "icon-contacts-white_16_16" : "icon-contacts-lightblue_16_16" %>
+        <%= link_to "Contatos: #{ @user.friends.count }",
+        user_friendships_path(@user, :profile => true),
+          :class => "icon #{selected}"%>
+      </div>
+      <% if current_user == @user %>
+        <ul class="connections con-endless clearfix">
+          <% @contacts = @user.friends.page(params[:page]).per(8) %>
+          <%= render :partial => 'users/item_medium_24',
+            :collection => @contacts %>
+        </ul><!-- end .connections -->
+      <% else %>
+        <% @friends_in_common = @user.friends_in_common_with(current_user).shuffle %>
+        <span class="call icon-contacts-gray_16_18-before">Em comum: <span class="count"><%= @friends_in_common.count %></span></span>
+        <ul class="connections clearfix">
+          <%= render :partial => 'users/item_medium_24',
+            :collection => @friends_in_common[0..3] %>
+        </ul><!-- end .connections -->
+        <hr class="separator"/>
+        <ul class="connections con-endless clearfix">
+          <% @contacts = Kaminari::paginate_array(@user.friends_not_in_common_with(current_user)).
+            page(params[:page]).per(4) %>
+          <%= render :partial => 'users/item_medium_24',
+            :collection => @contacts %>
+        </ul><!-- end .connections -->
+      <% end %>
+      <%= paginate @contacts, :theme => 'sidebar_endless',
+        :params => { :controller => 'users', :action => 'contacts_endless',
+                     :id  => @user.login },
+                     :text => "Mostrando os <X> últimos contatos de #{@user.first_name}" %>
+                 </li>
+               </ul><!-- end .local-nav -->
+             </div>
