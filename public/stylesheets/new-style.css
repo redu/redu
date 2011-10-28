@@ -7071,29 +7071,40 @@ div.token-input-dropdown {
 .tabs > ul > li .icon-administrator-gray_16_16:hover { background-position: 9px -1080px;  }
 .icon-administrator-gray_16_16{ background-position: 1px -1296px;  }
 .tabs > ul > li .icon-administrator-gray_16_16{ background-position: 9px -1296px;  }
-.icon-home-lightblue_16_16 { background-position: -2616px 0;  }
-.icon-home-lightblue_16_16:hover,
-.icon-home-blue_16_16 { background-position: -2368px -1344px;  }
 .icon-contacts-lightblue_16_16{ background-position: -896px -1080px;  }
 .icon-contacts-lightblue_16_16:hover,
 .icon-contacts-blue_16_16{ background-position: -896px -648px;  }
+.icon-environment-lightblue_16_16:hover,
+.icon-environment-blue_16_16{ background-position: -1376px -1776px;  }
+.icon-environment-lightblue_16_16{ background-position: -1624px -248px;  }
+.icon-home-lightblue_16_16 { background-position: -2616px 0;  }
+.icon-home-lightblue_16_16:hover,
+.icon-home-blue_16_16 { background-position: -2368px -1344px;  }
+#clean .icon-home-lightblue_48_48:hover { background-position: -2157px -1560px;  }
+#clean .icon-home-lightblue_48_48 { background-position: -2405px -216px;  }
+.icon-home-lightblue_48_48{ background-position: -2616px -216px;  }
+.icon-lock-gray_16_16{ background-position: -2864px -1560px;  }
+.icon-management-gray_16_16{ background-position: -3112px -656px;  }
 .icon-management-lightblue_16_16:hover,
 .icon-management-blue_16_16{ background-position: -3112px 0;  }
 .icon-management-lightblue_16_16{ background-position: -3112px -1312px;  }
 .tabs > ul > li .icon-management-lightblue_16_16 { background-position: -3104px -1312px;  }
-.icon-management-lightblue_32_32{ background-position: -3112px -1528px;  }
 .tabs > ul > li .icon-management-gray_16_16:hover { background-position: -3104px 0;  }
 .tabs > ul > li .icon-management-gray_16_16{ background-position: -3104px -656px;  }
+.icon-members-lightblue_16_16:hover,
+.icon-members-blue_16_16{ background-position: -3360px -696px;  }
+.icon-members-lightblue_16_16{ background-position: -3360px -1592px;  }
+.tabs > ul > li .icon-members-lightblue_16_16{ background-position: -3352px -1592px;  }
 .icon-page-lightblue_16_16{ background-position: -4104px -1112px;  }
 .icon-slides-lightblue_16_16{ background-position: -5344px 0;  }
 .icon-video-lightblue_16_16{ background-position: -6584px -688px;  }
 .icon-resource-gray_16_16{ background-position: -4848px -232px;  }
 .tabs > ul > li .icon-resource-gray_16_16{ background-position: -4840px -232px;  }
 .tabs > ul > li .icon-resource-gray_16_16:hover { background-position: -4592px -1544px;  }
-.icon-members-lightblue_16_16:hover,
-.icon-members-blue_16_16{ background-position: -3360px -696px;  }
-.icon-members-lightblue_16_16{ background-position: -3360px -1592px;  }
-.tabs > ul > li .icon-members-lightblue_16_16{ background-position: -3352px -1592px;  }
+.icon-resource-lightblue_16_16:hover,
+.icon-resource-blue_16_16{ background-position: -4600px -1544px;  }
+.icon-resource-lightblue_16_16{ background-position: -4848px -680px;  }
+.tabs > ul > li .icon-resource-lightblue_16_16 { background-position: -4840px -680px;  }
 .tabs > ul > li .icon-student-gray_16_16:hover { background-position: -5832px 0;  }
 .icon-student-gray_16_16{ background-position: -5840px -216px;  }
 .tabs > ul > li .icon-student-gray_16_16{ background-position: -5832px -216px;  }
@@ -7103,110 +7114,22 @@ div.token-input-dropdown {
 .tabs > ul > li .icon-tutor-gray_16_16:hover { background-position: -6080px -1776px;  }
 .icon-tutor-gray_16_16{ background-position: -6336px 0;  }
 .tabs > ul > li .icon-tutor-gray_16_16{ background-position: -6328px 0;  }
-.icon-resource-lightblue_16_16:hover,
-.icon-resource-blue_16_16{ background-position: -4600px -1544px;  }
-.icon-resource-lightblue_16_16{ background-position: -4848px -680px;  }
-.tabs > ul > li .icon-resource-lightblue_16_16 { background-position: -4840px -680px;  }
-.icon-environment-lightblue_16_16:hover,
-.icon-environment-blue_16_16{ background-position: -1376px -1776px;  }
-.icon-environment-lightblue_16_16{ background-position: -1624px -248px;  }
-.icon-lock-gray_16_16{ background-position: -2864px -1560px;  }
-.icon-management-gray_16_16{ background-position: -3112px -656px;  }
 
-.icon-arrowdown-blue_8_8{ background-position: -216px -864px;  }
-.icon-arrowdown-lightblue_8_8{ background-position: -216px -1288px;  }
-.icon-arrowup-blue_8_8{ background-position: -216px -1712px;  }
-.icon-arrowup-lightblue_8_8{ background-position: -432px -216px;  }
-.icon-course-blue_32_32{ background-position: -1128px 0;  }
-.icon-course-gray_32_32{ background-position: -1128px -232px;  }
-.icon-course-gray_48_48{ background-position: -1128px -464px;  }
-.icon-course-lightblue_32_32{ background-position: -1128px -928px;  }
-.icon-cv-blue_32_32{ background-position: -1376px 0;  }
-.icon-cv-gray_32_32{ background-position: -1376px -232px;  }
-.icon-cv-lightblue_32_32{ background-position: -1376px -680px;  }
-.icon-environment-gray_48_48{ background-position: -1624px 0;  }
-.icon-event-blue_32_32{ background-position: -1624px -896px;  }
-.icon-event-gray_32_32{ background-position: -1624px -1344px;  }
-.icon-event-lightblue_32_32{ background-position: -1624px -1792px;  }
-.icon-exam-blue_24_24{ background-position: -1872px -432px;  }
-.icon-exam-blue_32_32{ background-position: -1872px -656px;  }
-.icon-exam-gray_32_32{ background-position: -1872px -888px;  }
-.icon-exam-lightblue_24_24{ background-position: -1872px -1336px;  }
-.icon-exam-lightblue_32_32{ background-position: -1872px -1560px;  }
-.icon-exam-white_24_24{ background-position: -2120px 0;  }
-.icon-favorite-blue_8_8{ background-position: -2120px -656px;  }
 .icon-favorite-gray_8_8{ background-position: -2120px -862px;  }
 .icon-favorite-gray_8_8:hover,
 .icon-favorite-orange_8_8{ background-position: -2120px -1286px;  }
-.icon-forum-blue_32_32{ background-position: -2368px 0;  }
-.icon-forum-gray_32_32{ background-position: -2368px -448px;  }
-.icon-forum-lightblue_32_32{ background-position: -2368px -896px;  }
-.icon-home-blue_48_48 { background-position: -2368px -1560px;  }
-#clean .icon-home-lightblue_48_48:hover { background-position: -2157px -1560px;  }
-#clean .icon-home-lightblue_48_48 { background-position: -2405px -216px;  }
-.icon-home-lightblue_48_48{ background-position: -2616px -216px;  }
-.icon-list-blue_32_32{ background-position: -2864px -216px;  }
-.icon-list-gray_32_32{ background-position: -2864px -664px;  }
-.icon-list-lightblue_32_32{ background-position: -2864px -1112px;  }
-.icon-management-blue_32_32{ background-position: -3112px -216px;  }
-.icon-management-blue_8_8{ background-position: -3112px -448px;  }
-.icon-management-gray_32_32{ background-position: -3112px -872px;  }
+.icon-management-gray_8_8:hover,
+.icon-management-blue_8_8{ background-position: -3111px -445px;  }
 .icon-management-gray_8_8{ background-position: -3111px -1101px;  }
-.icon-material-blue_32_32{ background-position: -3360px 0;  }
-.icon-material-gray_32_32{ background-position: -3360px -232px;  }
-.icon-material-lightblue_32_32{ background-position: -3360px -464px;  }
-.icon-members-blue_32_32{ background-position: -3360px -912px;  }
-.icon-members-gray_32_32{ background-position: -3360px -1360px;  }
-.icon-members-lightblue_32_32{ background-position: -3608px 0;  }
-.icon-newmessage-green_8_8{ background-position: -3856px -1728px;  }
-.icon-newmessage-lightgreen_8_8{ background-position: -4104px 0;  }
-.icon-page-blue_16_16{ background-position: -4104px -208px;  }
-.icon-page-blue_24_24{ background-position: -4104px -424px;  }
-.icon-page-blue_32_32{ background-position: -4104px -648px;  }
-.icon-page-gray_32_32{ background-position: -4104px -880px;  }
-.icon-page-lightblue_24_24{ background-position: -4104px -1328px;  }
-.icon-page-lightblue_32_32{ background-position: -4104px -1552px;  }
 .icon-page-white_24_24{ background-position: -4104px -1784px;  }
-.icon-preview-blue_32_32{ background-position: -4352px -216px;  }
-.icon-preview-gray_32_32{ background-position: -4352px -448px;  }
-.icon-preview-lightblue_32_32{ background-position: -4352px -896px;  }
-.icon-profile-blue_32_32{ background-position: -4352px -1560px;  }
-.icon-profile-gray_32_32{ background-position: -4600px 0;  }
-.icon-profile-lightblue_32_32{ background-position: -4600px -448px;  }
-.icon-resource-blue_24_24{ background-position: -4600px -1760px;  }
-.icon-resource-blue_32_32{ background-position: -4848px 0;  }
-.icon-resource-lightblue_24_24{ background-position: -4848px -896px;  }
-.icon-resource-lightblue_32_32{ background-position: -4848px -1120px;  }
-.icon-resource-gray_32_32{ background-position: -4848px -448px;  }
-.icon-resource-white_24_24{ background-position: -4848px -1568px;  }
-.icon-slides-blue_24_24{ background-position: -5096px -1296px;  }
-.icon-slides-blue_32_32{ background-position: -5096px -1520px;  }
-.icon-slides-gray_32_32{ background-position: -5096px -1752px;  }
-.icon-slides-lightblue_24_24{ background-position: -5344px -216px;  }
-.icon-slides-lightblue_32_32{ background-position: -5344px -440px;  }
 .icon-slides-white_24_24{ background-position: -5344px -672px;  }
-.icon-space-blue_32_32{ background-position: -5344px -1112px;  }
-.icon-space-gray_32_32{ background-position: -5344px -1344px;  }
-.icon-space-gray_48_48{ background-position: -5344px -1576px;  }
-.icon-space-lightblue_32_32{ background-position: -5592px -216px;  }
+.icon-resource-white_24_24{ background-position: -4848px -1568px;  }
 .icon-spinner-gray_8_8:hover,
 .icon-spinner-blue_8_8{ background-position: -5592px -877px;  }
 .icon-spinner-gray_8_8{ background-position: -5592px -1301px;  }
-.icon-spinner-lightblue_8_8{ background-position: -5592px -1728px;  }
-.icon-subitem-blue_8_8{ background-position: -5840px -864px;  }
-.icon-subitem-gray_8_8{ background-position: -5840px -1072px;  }
-.icon-subject-blue_32_32{ background-position: -5840px -1496px;  }
-.icon-subject-gray_32_32{ background-position: -5840px -1728px;  }
-.icon-subject-gray_48_48{ background-position: -6088px 0;  }
-.icon-subject-lightblue_32_32{ background-position: -6088px -464px;  }
 .icon-unfavorite-gray_8_8:hover,
 .icon-unfavorite-blue_8_8{ background-position: -6336px -862px;  }
 .icon-unfavorite-gray_8_8{ background-position: -6336px -1070px;  }
-.icon-video-blue_24_24{ background-position: -6584px 0;  }
-.icon-video-blue_32_32{ background-position: -6584px -224px;  }
-.icon-video-gray_32_32{ background-position: -6584px -456px;  }
-.icon-video-lightblue_24_24{ background-position: -6584px -904px;  }
-.icon-video-lightblue_32_32{ background-position: -6584px -1128px;  }
 .icon-video-white_24_24{ background-position: -6584px -1360px;  }
 .icon-x-gray_8_8{ background-position: -6583px -1581px;  }
 .icon-x-gray_8_8:hover,
