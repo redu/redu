@@ -29,14 +29,21 @@ describe Invoice do
       end
     end
 
-    it "defaults to pending" do
-      subject.state.should == "pending"
+    it "defaults to waiting" do
+      subject.state.should == "waiting"
     end
 
     it "closes" do
       expect {
+        subject.pend!
         subject.close!
       }.should change(subject, :state).to("closed")
+    end
+
+    it "pends" do
+      expect {
+        subject.pend!
+      }.should change(subject, :state).to("pending")
     end
 
     context "when it pays" do
@@ -221,11 +228,15 @@ describe Invoice do
       # pending
       @invoices = 3.times.inject([]) do |acc,i|
         if i % 2 == 0
-          acc << Factory(:invoice,
+          invoice = Factory(:invoice,
                          :period_start => @period_start,
                          :period_end => @period_end)
+          invoice.pend!
+          acc << invoice
         else
-          acc << Factory(:invoice)
+          invoice = Factory(:invoice)
+          invoice.pend!
+          acc << invoice
         end
       end
     end

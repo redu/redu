@@ -12,10 +12,12 @@ describe InvoicesController do
       period_start = Date.today.advance(:days => (i+1) * -30)
       period_end = period_start.advance(:days => 30)
 
-      result << Factory(:invoice,
+      invoice = Factory(:invoice,
         :plan => @plan,
         :period_start => period_start,
         :period_end => period_end)
+      invoice.pend!
+      result << invoice
     end
 
     activate_authlogic

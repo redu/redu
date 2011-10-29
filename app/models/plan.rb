@@ -159,7 +159,10 @@ class Plan < ActiveRecord::Base
       :amount => self.price
     }.merge(opts)
 
-    self.invoices.create(invoice_options)
+    invoice = self.invoices.create(invoice_options)
+    invoice.pend!
+
+    invoice
   end
 
   # Cria o primeiro invoice para os primeiros 30 dias mas dobra seu valor

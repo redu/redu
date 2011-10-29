@@ -14,8 +14,9 @@ class Invoice < ActiveRecord::Base
   attr_protected :state
 
   aasm_column :state
-  aasm_initial_state :pending
+  aasm_initial_state :waiting
 
+  aasm_state :waiting
   aasm_state :pending, :enter => :send_pending_notice
   aasm_state :closed
   # send_overdue_notice não é chamado na transição do autorelacionamento:
@@ -25,7 +26,7 @@ class Invoice < ActiveRecord::Base
   aasm_state :paid, :after_enter => [ :register_time, :send_confirmation_and_unlock_plan ]
 
   aasm_event :pend do
-    transitions :to => :pending, :from => [:pending]
+    transitions :to => :pending, :from => [:pending, :waiting]
   end
 
   aasm_event :close do
@@ -37,7 +38,7 @@ class Invoice < ActiveRecord::Base
   end
 
   aasm_event :overdue do
-    transitions :to => :overdue, :from => [:pending, :overdue]
+    transitions :to => :overdue, :from => [:pending, :overdue, :waiting]
   end
 
   # Data limite para o pagamento

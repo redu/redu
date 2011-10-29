@@ -1,6 +1,6 @@
 development: &development
   developer: true
-  base: "http://localhost:3000"
+  base: "http://0.0.0.0:3000"
   return_to: "/payment/callback"
   email: guilhermec@redu.com.br
 

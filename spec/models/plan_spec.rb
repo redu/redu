@@ -69,6 +69,11 @@ describe Plan do
       invoice.should be_valid
     end
 
+    it "should default to pending" do
+      invoice = subject.create_invoice
+      invoice.state.should == "pending"
+    end
+
     it "should be successfully" do
       expected_amount = subject.price
 
@@ -110,15 +115,31 @@ describe Plan do
 
     context "when setting up the plan" do
       before do
+        UserNotifier.delivery_method = :test
+        UserNotifier.perform_deliveries = true
+        UserNotifier.deliveries = []
+
         subject {
           Plan.from_preset(:empresas_plus).save
         }
       end
 
-       it "should creante one invoice" do
+       it "should create one invoice" do
          expect {
            subject.create_invoice_and_setup
          }.should change(Invoice, :count).by(1)
+       end
+
+       it "sends the pending invoice e-mail correctly" do
+         invoice = nil
+
+         expect {
+           invoice = subject.create_invoice_and_setup
+         }.should change(UserNotifier.deliveries, :size).by(1)
+
+        mail = UserNotifier.deliveries.last
+        mail.should_not be_nil
+        mail.subject.should =~ /Pagamento N\. #{invoice.id} pendente/
        end
 
        context "the only invoice" do
@@ -282,7 +303,9 @@ describe Plan do
     context "the order" do
       before do
         invoices = 3.times.inject([]) { |res,i|
-          res << Factory(:invoice, :plan => subject)
+          invoice = Factory(:invoice, :plan => subject)
+          invoice.pend!
+          res << invoice
         }
 
         @products = subject.create_order.products
@@ -309,7 +332,9 @@ describe Plan do
   context "when pending payment" do
     before do
       invoices = 3.times.inject([]) do |res,i|
-        res << Factory(:invoice, :plan => subject)
+        invoice = Factory(:invoice, :plan => subject)
+        invoice.pend!
+        res << invoice
       end
     end
 
