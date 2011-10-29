@@ -139,8 +139,10 @@ class Ability
       end
 
       can :subscribe_channel, User do |contact|
-        Presence.list_of_contacts(user).include? contact
+        Presence.new(user).contacts.include?(contact)
       end
+
+      can :multiauth, User
 
       # My file
       cannot :upload_file, Myfile do |myfile|

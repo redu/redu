@@ -41,6 +41,10 @@ var buildChat = function(opts){
     return "window-" + userLiId;
   };
 
+  var startsWith = function(check, startsWith){
+    return (check.indexOf(startsWith) === 0);
+  }
+
   // Minimiza lista de contatos
   $layout.find("#chat-contacts .minimize, #chat-contacts-bar").bind("click", function(){
       $layout.find("#chat-contacts").toggle();
@@ -91,19 +95,9 @@ var buildChat = function(opts){
           members.each(function(member) {
               // var channels = member.info.contacts;
               var channels = member.info.contacts;
-              // { pri_channel : "private-13-25", pre_channel : "presence-user-1" }
               // Somente o user atual tem info.contacts
               if(channels){
-                var allChannels = [];
-
-                for(var i = 0; i < channels.length; i++) {
-                  // that.subscribePresence(channels[i].pre_channel);
-                  // that.subscribePrivate(channels[i].pri_channel);
-                  allChannels.push(channels[i].pre_channel);
-                  allChannels.push(channels[i].pri_channel);
-                }
-
-                that.multiSubscribe(allChannels);
+                that.multiSubscribe(channels);
               } else {
                 // Para o restante dos membros do canal
                 // (caso em que os contatos entram antes do dono, logo eles

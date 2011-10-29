@@ -50,15 +50,16 @@ describe Presence do
   end
 
 
-  context "when retrieving a list of channels" do
+  context "when retrieving the list of channels" do
     before do
       @course.join(@current_user)
       @course2.join(@current_user)
+
+      @presence = Presence.new(@current_user)
     end
 
     it "should NOT retrieve repeated elements" do
-      Presence.list_of_channels(@current_user).should ==
-        Presence.list_of_channels(@current_user).uniq
+      @presence.channels.should == @presence.channels.uniq
     end
   end
 
@@ -66,22 +67,24 @@ describe Presence do
     before do
       @course.join(@current_user)
       @course2.join(@current_user)
+
+      @presence = Presence.new(@current_user)
     end
 
     it "should retrieve a hash of channels of friends, teachers and tutors" do
-      channels = [ {:pre_channel => "presence-user-#{@friend1.id}",
-                     :pri_channel => "private-#{@current_user.id}-#{@friend1.id}"},
-        {:pre_channel => "presence-user-#{@friend2.id}",
-         :pri_channel => "private-#{@current_user.id}-#{@friend2.id}"},
-        {:pre_channel => "presence-user-#{@friend3.id}",
-         :pri_channel => "private-#{@current_user.id}-#{@friend3.id}"},
-        {:pre_channel => "presence-user-#{@tutor2.id}",
-         :pri_channel => "private-#{@current_user.id}-#{@tutor2.id}"},
-        {:pre_channel => "presence-user-#{@tutor1_and_2.id}",
-         :pri_channel => "private-#{@current_user.id}-#{@tutor1_and_2.id}"},
-        {:pre_channel => "presence-user-#{@teacher2_and_3.id}",
-         :pri_channel => "private-#{@current_user.id}-#{@teacher2_and_3.id}"}]
-      Presence.list_of_channels(@current_user).to_set.
+      channels = ["presence-user-#{@friend1.id}",
+                  "private-#{@current_user.id}-#{@friend1.id}",
+                  "presence-user-#{@friend2.id}",
+                  "private-#{@current_user.id}-#{@friend2.id}",
+                  "presence-user-#{@friend3.id}",
+                  "private-#{@current_user.id}-#{@friend3.id}",
+                  "presence-user-#{@tutor2.id}",
+                  "private-#{@current_user.id}-#{@tutor2.id}",
+                  "presence-user-#{@tutor1_and_2.id}",
+                  "private-#{@current_user.id}-#{@tutor1_and_2.id}",
+                  "presence-user-#{@teacher2_and_3.id}",
+                  "private-#{@current_user.id}-#{@teacher2_and_3.id}"]
+      @presence.channels.to_set.
         should == channels.to_set
     end
   end
@@ -99,35 +102,31 @@ describe Presence do
 
       @course3_students = (1..3).collect { Factory(:user) }
       @course3_students.each { |s| @course3.join(s) }
+
+      @presence = Presence.new(@current_user)
     end
 
     it "should retrieve a hash of channels of friends, teachers, tutors and" \
       " all users that belongs to a course that he is teacher" do
-      friends = [
-        { :pre_channel => "presence-user-#{@friend1.id}",
-          :pri_channel => "private-#{@current_user.id}-#{@friend1.id}"},
-        { :pre_channel => "presence-user-#{@friend2.id}",
-          :pri_channel => "private-#{@current_user.id}-#{@friend2.id}"},
-        { :pre_channel => "presence-user-#{@friend3.id}",
-          :pri_channel => "private-#{@current_user.id}-#{@friend3.id}"}]
+      friends = ["presence-user-#{@friend1.id}",
+                 "private-#{@current_user.id}-#{@friend1.id}",
+                 "presence-user-#{@friend2.id}",
+                 "private-#{@current_user.id}-#{@friend2.id}",
+                 "presence-user-#{@friend3.id}",
+                 "private-#{@current_user.id}-#{@friend3.id}"]
 
-        course_users = @course.users.collect do |u|
-          if @current_user.id != u.id
-            { :pre_channel => "presence-user-#{u.id}",
-              :pri_channel => "private-#{@current_user.id}-#{u.id}"}
-          end
-        end
-        course_users.delete(nil)
+      course_users = @course.users.reject { |u| u == @current_user}.collect do |u|
+        ["presence-user-#{u.id}", "private-#{@current_user.id}-#{u.id}"]
+      end.flatten!
 
-        teachers_tutors_course2 = [
-          { :pre_channel => "presence-user-#{@tutor2.id}",
-            :pri_channel => "private-#{@current_user.id}-#{@tutor2.id}"},
-          { :pre_channel => "presence-user-#{@tutor1_and_2.id}",
-            :pri_channel => "private-#{@current_user.id}-#{@tutor1_and_2.id}"},
-          { :pre_channel => "presence-user-#{@teacher2_and_3.id}",
-            :pri_channel => "private-#{@current_user.id}-#{@teacher2_and_3.id}"}]
-          Presence.list_of_channels(@current_user).to_set.
-            should == (friends + course_users + teachers_tutors_course2).to_set
+      teachers_tutors_course2 = ["presence-user-#{@tutor2.id}",
+        "private-#{@current_user.id}-#{@tutor2.id}",
+        "presence-user-#{@tutor1_and_2.id}",
+        "private-#{@current_user.id}-#{@tutor1_and_2.id}",
+        "presence-user-#{@teacher2_and_3.id}",
+        "private-#{@current_user.id}-#{@teacher2_and_3.id}"]
+      @presence.channels.to_set.should == \
+        (friends + course_users + teachers_tutors_course2).to_set
       end
   end
 
@@ -144,34 +143,33 @@ describe Presence do
 
       @course3_students = (1..3).collect { Factory(:user) }
       @course3_students.each { |s| @course3.join(s) }
+
+      @presence = Presence.new(@current_user)
     end
 
     it "should retrieve a hash of channels of friends, teachers, tutors and" \
       " all users that belongs to a course that he is tutor" do
-      friends = [{ :pre_channel => "presence-user-#{@friend1.id}",
-        :pri_channel => "private-#{@current_user.id}-#{@friend1.id}"},
-        { :pre_channel => "presence-user-#{@friend2.id}",
-          :pri_channel => "private-#{@current_user.id}-#{@friend2.id}"},
-        { :pre_channel => "presence-user-#{@friend3.id}",
-          :pri_channel => "private-#{@current_user.id}-#{@friend3.id}"}]
+      friends = ["presence-user-#{@friend1.id}",
+        "private-#{@current_user.id}-#{@friend1.id}",
+        "presence-user-#{@friend2.id}",
+        "private-#{@current_user.id}-#{@friend2.id}",
+        "presence-user-#{@friend3.id}",
+        "private-#{@current_user.id}-#{@friend3.id}"]
 
-        course_users = @course.users.collect do |u|
-          if @current_user.id != u.id
-            { :pre_channel => "presence-user-#{u.id}",
-              :pri_channel => "private-#{@current_user.id}-#{u.id}" }
-          end
-        end
-        course_users.delete(nil)
+      course_users = @course.users.reject { |u| u == @current_user}.collect do |u|
+        ["presence-user-#{u.id}", "private-#{@current_user.id}-#{u.id}"]
+      end.flatten!
 
-        teachers_tutors_course2 = [
-          { :pre_channel => "presence-user-#{@tutor2.id}",
-            :pri_channel => "private-#{@current_user.id}-#{@tutor2.id}"},
-          { :pre_channel => "presence-user-#{@tutor1_and_2.id}",
-            :pri_channel => "private-#{@current_user.id}-#{@tutor1_and_2.id}"},
-          { :pre_channel => "presence-user-#{@teacher2_and_3.id}",
-            :pri_channel => "private-#{@current_user.id}-#{@teacher2_and_3.id}"}]
-          Presence.list_of_channels(@current_user).to_set.
-            should == (friends + course_users + teachers_tutors_course2).to_set
+      teachers_tutors_course2 = [
+        "presence-user-#{@tutor2.id}",
+        "private-#{@current_user.id}-#{@tutor2.id}",
+        "presence-user-#{@tutor1_and_2.id}",
+        "private-#{@current_user.id}-#{@tutor1_and_2.id}",
+        "presence-user-#{@teacher2_and_3.id}",
+        "private-#{@current_user.id}-#{@teacher2_and_3.id}"]
+
+      @presence.channels.to_set.should == \
+        (friends + course_users + teachers_tutors_course2).to_set
       end
   end
 
@@ -189,47 +187,44 @@ describe Presence do
 
       @course3_students = (1..3).collect { Factory(:user) }
       @course3_students.each { |s| @course3.join(s) }
+
+      @presence = Presence.new(@current_user)
     end
 
     it "should retrieve a hash of channels of friends, teachers, tutors and" \
       " all users that belongs to a course that he is tutor" do
       friends = [
-        { :pre_channel => "presence-user-#{@friend1.id}",
-          :pri_channel => "private-#{@current_user.id}-#{@friend1.id}"},
-        { :pre_channel => "presence-user-#{@friend2.id}",
-          :pri_channel => "private-#{@current_user.id}-#{@friend2.id}"},
-        { :pre_channel => "presence-user-#{@friend3.id}",
-          :pri_channel => "private-#{@current_user.id}-#{@friend3.id}"}]
+        "presence-user-#{@friend1.id}",
+        "private-#{@current_user.id}-#{@friend1.id}",
+        "presence-user-#{@friend2.id}",
+        "private-#{@current_user.id}-#{@friend2.id}",
+        "presence-user-#{@friend3.id}",
+        "private-#{@current_user.id}-#{@friend3.id}"]
 
-        course_users = @course.users.collect do |u|
-          if @current_user.id != u.id
-            { :pre_channel => "presence-user-#{u.id}",
-              :pri_channel => "private-#{@current_user.id}-#{u.id}"}
-          end
-        end
-        course_users.delete(nil)
-        course2_users = @course2.users.collect do |u|
-          if @current_user.id != u.id
-            { :pre_channel => "presence-user-#{u.id}",
-              :pri_channel => "private-#{@current_user.id}-#{u.id}"}
-          end
-        end
-        course2_users.delete(nil)
+      course_users = @course.users.reject { |u| u == @current_user}.collect do |u|
+        ["presence-user-#{u.id}", "private-#{@current_user.id}-#{u.id}"]
+      end.flatten!
 
-        teachers_tutors_course3 = [
-          { :pre_channel => "presence-user-#{@tutor3.id}",
-            :pri_channel => "private-#{@current_user.id}-#{@tutor3.id}"},
-          { :pre_channel => "presence-user-#{@teacher3.id}",
-            :pri_channel => "private-#{@current_user.id}-#{@teacher3.id}"}]
+      course2_users = @course2.users.reject { |u| u == @current_user}.collect do |u|
+        ["presence-user-#{u.id}", "private-#{@current_user.id}-#{u.id}"]
+      end.flatten!
 
-        Presence.list_of_channels(@current_user).to_set.should ==
-          (friends + course_users + course2_users + teachers_tutors_course3).to_set
+      teachers_tutors_course3 = [
+       "presence-user-#{@tutor3.id}",
+       "private-#{@current_user.id}-#{@tutor3.id}",
+       "presence-user-#{@teacher3.id}",
+       "private-#{@current_user.id}-#{@teacher3.id}"]
+
+       @presence.channels.to_set.should == \
+         (friends + course_users + course2_users + teachers_tutors_course3).to_set
       end
   end
 
   it "should retrieve the right roles" do
     @friend1.role = Role[:admin]
-    Presence.fill_roles(@friend1).should == { "teacher" => true,
+    @presence = Presence.new(@friend1)
+
+    @presence.fill_roles.should == { "teacher" => true,
       "member" => false,
       "environment_admin" => false,
       "tutor" => true,
