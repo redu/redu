@@ -42,6 +42,8 @@ describe PresenceController do
     @friend3.be_friends_with(@current_user)
     activate_authlogic
     UserSession.create @current_user
+
+    @presence = Presence.new(@current_user)
   end
 
   context "POST 'auth'" do
@@ -54,6 +56,7 @@ describe PresenceController do
           post :auth, :locale => "pt-BR",
             :channel_name => "presence-user-#{@current_user.id}",
           :socket_id => "539.9111", :user_id => @current_user.id
+
         end
 
         it "should be successful" do
@@ -63,7 +66,7 @@ describe PresenceController do
         it "should return a list of contacts and user_id" do
           payload = {:user_id => @current_user.id,
             :user_info => {
-            :contacts => Presence.list_of_channels(@current_user)} }
+            :contacts => @presence.channels} }
 
           user_info = JSON.parse(response.body)
           user_info["channel_data"].should == payload.to_json
@@ -106,7 +109,7 @@ describe PresenceController do
             :thumbnail => @current_user.avatar.url(:thumb_24),
             :pre_channel => @current_user.presence_channel,
             :pri_channel => @current_user.private_channel_with(@friend1),
-            :roles => Presence.fill_roles(@current_user) }}
+            :roles => @presence.fill_roles }}
 
           user_info = JSON.parse(response.body)
           user_info["channel_data"].should == payload.to_json
@@ -162,6 +165,32 @@ describe PresenceController do
 
     end
 
+    context "when subscribing to multiple channels" do
+      before do
+        @chs = ["presence-user-#{@friend1.id}",
+                "private-#{@current_user.id}-#{@friend1.id}",
+                "presence-user-#{@friend2.id}",
+                "private-#{@current_user.id}-#{@friend2.id}"]
+      end
+
+      it "should be successful" do
+        post :multiauth, :locale => "pt-BR", :channels => @chs,
+          :socket_id => "123.13865", :user_id => @current_user.id
+
+        response.should be_success
+      end
+
+      it "should return a multiresponse" do
+        post :multiauth, :locale => "pt-BR", :channels => @chs,
+          :socket_id => "123.13865", :user_id => @current_user.id
+
+        user_info = JSON.parse(response.body)
+        user_info.should have_key "presence-user-#{@friend1.id}"
+        user_info.should have_key "presence-user-#{@friend2.id}"
+        user_info.should have_key "private-#{@current_user.id}-#{@friend1.id}"
+        user_info.should have_key "private-#{@current_user.id}-#{@friend2.id}"
+      end
+    end
   end
 
   context "POST send_chat_message" do

@@ -1,21 +1,14 @@
-$("a:not([data-remote]):not([href^='#']):not([rel='nofollow'])").pjax("#content", { timeout: null });
-var buildChat = (function(){
-/*
- var mychat = buildChat({
-     key : 'XXX',
-     channel : '123',
-     timeout : '123',
-     endPoint : 'httto' });
- */
-
 // Utilizando pjax
 // Links do chat serão abertos em novas janelas (.chat-link)
+$("a:not([data-remote]):not([href^='#']):not([rel='nofollow'])").pjax("#content", { timeout: null });
 
+var buildChat = (function(){
 // Constrói um novo objeto Chat
 var buildChat = function(opts){
   var pusher;
   var config = { "endPoint" : '/presence/auth'
     , "log" : false
+    , "multiAuthEndPoint" : '/presence/multiauth'
     , "presence_timeout" : 20000 };
   config = $.extend(config, opts);
 
@@ -48,6 +41,10 @@ var buildChat = function(opts){
     return "window-" + userLiId;
   };
 
+  var startsWith = function(check, startsWith){
+    return (check.indexOf(startsWith) === 0);
+  }
+
   // Minimiza lista de contatos
   $layout.find("#chat-contacts .minimize, #chat-contacts-bar").bind("click", function(){
       $layout.find("#chat-contacts").toggle();
@@ -65,6 +62,7 @@ var buildChat = function(opts){
       // Configurações do pusher
       Pusher.presence_timeout = config.presence_timeout;
       Pusher.channel_auth_endpoint = config.endPoint;
+      Pusher.channel_multiauth_endpoint = config.multiAuthEndPoint;
 
       // Informações de log
       if(config.log){
@@ -97,13 +95,9 @@ var buildChat = function(opts){
           members.each(function(member) {
               // var channels = member.info.contacts;
               var channels = member.info.contacts;
-              // { pri_channel : "private-13-25", pre_channel : "presence-user-1" }
               // Somente o user atual tem info.contacts
               if(channels){
-                for(var i = 0; i < channels.length; i++) {
-                  that.subscribePresence(channels[i].pre_channel);
-                  that.subscribePrivate(channels[i].pri_channel);
-                }
+                that.multiSubscribe(channels);
               } else {
                 // Para o restante dos membros do canal
                 // (caso em que os contatos entram antes do dono, logo eles
@@ -140,7 +134,10 @@ var buildChat = function(opts){
     // Se inscreve no canal privado de um usuário
     subscribePrivate: function(channel){
       var channel = pusher.subscribe(channel);
-
+      that.bindMessage(channel);
+    },
+    // Escuta evento de mensagem enviada no canal privado
+    bindMessage : function(channel) {
       channel.bind("message_sent", function(message){
           if (message.user_id != config.owner_id ){
             $layout.addWindow({
@@ -168,6 +165,14 @@ var buildChat = function(opts){
     // Desinscreve no canal privado
     unsubscribePrivate : function(channel){
       pusher.unsubscribe(channel);
+    },
+    multiSubscribe : function(channels){
+      var channels = pusher.multiSubscribe(channels);
+      for(var prop in channels) {
+        if(channels.hasOwnProperty(prop)) {
+          that.bindMessage(channels[prop]);
+        }
+      }
     },
     // Adiciona a lista de contatos
     uiAddContact : function(member){

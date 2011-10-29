@@ -1,36 +1,167 @@
 class Presence
+  # Responsável pela autenticação no Pusher e carregamento da lista de contatos
 
-  def self.list_of_channels(user)
-    self.list_of_contacts(user).uniq.collect do |friend|
-      { :pre_channel => friend.presence_channel,
-        :pri_channel => user.private_channel_with(friend) }
-    end
+  attr_reader :contacts, :channels
+
+  def initialize(user)
+    @user = user
+    @contacts = list_of_contacts || []
+    @contacts_by_pre = build_index(@contacts)
+    @channels = list_of_channels || []
+    @roles = fill_roles || {}
   end
 
-  def self.fill_roles(user)
-    roles = {}
-    Role.select('DISTINCT name').each { |role| roles.merge!({role.name => false}) }
-    user.user_course_associations.each do |uca|
-      roles[Role[uca.role]] = true
+  def fill_roles
+    roles = nil
+
+    ActiveRecord::Base.transaction do
+      roles = Role.select('DISTINCT name').all.inject({}) do |acc, role|
+        acc[role.name] = false
+        acc
+      end
+
+      roles['admin'] = true if @user.admin?
+      @user.user_course_associations.approved.group('role').count.each do |k,v|
+        roles[Role[k]] = true
+      end
     end
-    roles["admin"] = true if user.admin?
+
     roles
   end
 
-  def self.list_of_contacts(user)
-    # All teachers and tutors
-    users = user.user_course_associations.approved.includes(:course).
-      collect do |uca|
-      if uca.role.eql?(Role[:teacher]) || uca.role.eql?(Role[:tutor])
-        uca.course.users
-      else
-        uca.course.teachers_and_tutors
-      end
-      end
-    # All friends
-    users += user.friends
-    users.flatten!
-    users.delete(user)
-    users
+  # Autentica usuário no canal de presença. Retorna o payload para ser
+  # enviado ao cliente ou nil para caso de acesso negado.
+  def presence_auth(channel_name, socket_id)
+    if own_channel?(channel_name)
+      payload = { :contacts => @channels }
+
+      response_body = Pusher[channel_name].
+        authenticate(socket_id,
+                     :user_id => @user.id,
+                     :user_info => payload )
+
+      return response_body.stringify_keys!
+    elsif can_subscribe?(channel_name)
+      payload = { :name => @user.display_name,
+        :thumbnail => @user.avatar.url(:thumb_24),
+        :pre_channel => @user.presence_channel,
+        :pri_channel => @user.private_channel_with(@contacts_by_pre[channel_name]),
+        :roles => @roles }
+
+      response_body = Pusher[channel_name].
+        authenticate(socket_id,
+                     :user_id => @user.id,
+                     :user_info => payload )
+
+      return response_body.stringify_keys!
+    else
+      return nil
+    end
+  end
+
+  # Autentica usuário no canal de privado. Retorna o payload para ser
+  # enviado ao cliente ou nil para caso de acesso negado.
+  def private_auth(channel_name, socket_id)
+    return nil unless can_subscribe?(channel_name)
+
+    response_body = Pusher[channel_name].
+      authenticate(socket_id)
+
+    response_body
+  end
+
+  # Verifica se @user é dono do canal de presenca
+  def own_channel?(channel_name)
+    @user.presence_channel == channel_name
+  end
+
+  # Verifica se @user pode se increver em um determinado canal ou usuário.
+  def can_subscribe?(channel_or_user)
+    case channel_or_user
+    when String
+      own_channel?(channel_or_user) || @channels.include?(channel_or_user)
+    when User
+      @user == channel_or_user || @contacts.include?(channel_or_user)
+    else
+      false
+    end
+  end
+
+  protected
+
+  def list_of_channels
+    @contacts.collect do |contact|
+      [contact.presence_channel, @user.private_channel_with(contact)]
+    end.flatten!
+  end
+
+  # Retorna todos os contatos do chat. Isto inclui amigos e algumas pessoas
+  # dos cursos que o usuário participa. Caso ele seja professor ou tutor num
+  # curso todos os membros desse curso serão contatos no chat. Caso ele seja
+  # um membro normal de um curso, todos os professores e tutores serão
+  # contatos no chat.
+  #
+  # A legibilidade deste método está comprometida por questões de performance:
+  # a lista de contatos é carregada num número de consultas constante.
+  def list_of_contacts
+    ActiveRecord::Base.transaction do
+    teacher_or_tutor = [ Role[:teacher], Role[:tutor] ]
+    member = Role[:member]
+
+    # Cursos nos quais ele é professor ou tutor
+    teaching_courses = Course.select("courses.id").
+      joins(:user_course_associations).
+      where(:user_course_associations =>
+            { :state => 'approved', :user_id => @user.id, :role => teacher_or_tutor }).all
+
+    # Curso nos quais ele é membro
+    enrolled_courses = Course.select("courses.id").
+      joins(:user_course_associations).
+      where(:user_course_associations =>
+            { :state => 'approved', :user_id => @user.id, :role => member }).all
+
+    # Condições para usuários de cursos
+    sql = <<-eos
+     `user_course_associations`.`state` = 'approved' AND
+     `user_course_associations`.`user_id` != ? AND
+        (
+         user_course_associations.course_id IN (?) OR
+         (user_course_associations.course_id IN (?)
+          AND user_course_associations.role IN (?))
+        )
+    eos
+    course_cond = [sql, @user.id, teaching_courses, enrolled_courses,
+                   teacher_or_tutor]
+    course_cond = ActiveRecord::Base.send(:sanitize_sql_array, course_cond)
+
+    # Condições para contatos (friendship)
+    sql = <<-eos
+     ((`friendships`.user_id = ?) AND ((friendships.status = 'accepted')))
+    eos
+    friends_cond = [sql, @user.id]
+    friends_cond = ActiveRecord::Base.send(:sanitize_sql_array, friends_cond)
+
+    # União de usuários amigos (friendship) e usuários do curso
+    sql = <<-eos
+     SELECT `users`.* FROM `users` INNER JOIN
+       `user_course_associations` ON
+       `user_course_associations`.`user_id` = `users`.`id`
+      WHERE #{course_cond}
+     UNION
+     SELECT `users`.* FROM `users` INNER JOIN
+      `friendships` ON `users`.id = `friendships`.friend_id
+      WHERE #{friends_cond}
+    eos
+
+    User.find_by_sql(sql)
+    end
+  end
+
+  # Indexa contatos por nome de canal de presença
+  def build_index(contacts)
+    contacts.inject({}) do |acc,contact|
+      acc[contact.presence_channel] = contact
+      acc
+    end
   end
 end
