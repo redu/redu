@@ -5893,6 +5893,7 @@ table.concave-invitation-table .cell-reinvite .reinvited {
   display: block;
   white-space: nowrap;
   text-overflow: ellipsis;
+  overflow: hidden;
   font-weight: bold;
   margin-bottom: 3px;
 }
@@ -5900,7 +5901,7 @@ table.concave-invitation-table .cell-reinvite .reinvited {
 .moderate-member .member-info .date,
 .moderate-member .member-info .email {
   color: rgb(179, 179, 179);
-  font-size: .9em;
+  font-size: .85em;
   font-style: italic;
 }
 
@@ -5928,7 +5929,7 @@ table.concave-invitation-table .cell-reinvite .reinvited {
 }
 
 .moderate-member .member-spaces span {
-  font-size: .9em;
+  font-size: .85em;
   color: rgb(179, 179, 179);
 }
 
