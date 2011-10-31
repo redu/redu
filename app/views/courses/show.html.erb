@@ -15,7 +15,7 @@
       </span>
     </div>
 
-    <% if can?(:manage, @course) %>
+    <% if can?(:teach, @course) %>
     <div class="admin-actions clearfix">
       <%= link_to 'Criar nova disciplina', new_space_path(:course_id => @course.id), :class => "button" %>
     </div>

@@ -114,7 +114,13 @@ class Ability
       end
 
       can :create, Environment
+
+      # Course
       can :join, Course
+
+      can :teach, Course do |course|
+        user.teacher?(course)
+      end
 
       can [:accept, :deny], Course do |course|
         assoc = user.get_association_with(course)

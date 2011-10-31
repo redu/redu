@@ -5,12 +5,12 @@ class SpacesController < BaseController
   before_filter :find_space_course_environment,
     :except => [:cancel]
 
-  load_and_authorize_resource :environment,
-    :except => [:create, :cancel], :find_by => :path
-  load_and_authorize_resource :course, :through => :environment,
-    :except => [:create, :cancel], :find_by => :path
+  load_resource :environment,
+    :except => [:cancel], :find_by => :path
+  load_resource :course, :through => :environment,
+    :except => [:cancel], :find_by => :path
   load_and_authorize_resource :space, :through => :course,
-    :except => [:create, :cancel]
+    :except => [:cancel]
 
   rescue_from CanCan::AccessDenied do |exception|
     flash[:notice] = "Você não tem acesso a essa página"
@@ -99,7 +99,6 @@ class SpacesController < BaseController
   def new
     @space = Space.new(params[:space])
     @course = Course.find(params[:course_id])
-    authorize! :manage, @course
     @environment = @course.environment
 
     respond_to do |format|
@@ -121,7 +120,6 @@ class SpacesController < BaseController
   def create
     @space = Space.new(params[:space])
     @space.course = @course
-    authorize! :manage, @course
     @environment = @course.environment
     @space.owner = current_user
     # FIXME o submission_type deve ser escolhido pela interface, por

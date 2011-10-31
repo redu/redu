@@ -286,6 +286,13 @@ describe Ability do
                            :environment => @environment)
           @ability.should_not be_able_to(:destroy_invitations, course)
         end
+
+        it "can teach course" do
+          course = Factory(:course, :owner => @env_admin,
+                           :environment => @environment)
+          course.join(@teacher, Role[:teacher])
+          @ability.should be_able_to(:teach, course)
+        end
       end
 
       context "tutor" do
