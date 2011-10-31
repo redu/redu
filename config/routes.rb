@@ -41,7 +41,6 @@ Redu::Application.routes.draw do
   # Space
   resources :spaces, :except => [:index] do
     member do
-      get :manage
       get :admin_members
       get :take_ownership
       get :publish

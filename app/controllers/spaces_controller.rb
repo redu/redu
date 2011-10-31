@@ -23,9 +23,6 @@ class SpacesController < BaseController
     redirect_to @space
   end
 
-  def manage
-  end
-
   def admin_members
     @memberships = @space.user_space_associations.approved.
       paginate(:page => params[:page],:order => 'updated_at DESC',
