@@ -41,7 +41,7 @@
     </ul>
   </div>
   <% if can?(:show, item) %>
-    <ul class="spaces">
+    <ul class="spaces <%= "no-description" if item.description.blank? %>">
       <span class="title icon-space-gray_16_18-before"><%= item.spaces.published.count %> disciplinas matriculadas</span>
       <%= render :partial => 'spaces/item_medium',
         :collection => item.spaces.published %>

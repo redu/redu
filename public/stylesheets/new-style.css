@@ -1053,6 +1053,7 @@ body {
 .body .actions {
   float: right;
   margin-right: 20px;
+  margin-bottom: -25px;
 }
 
 .main.space .body .admin-actions {
@@ -1701,7 +1702,7 @@ body {
 
 .hierarchy-listing .child img {
   float: left;
-  margin: 10px 10px 0px 10px;
+  margin: 0px 10px 0px 10px;
 }
 
 .hierarchy-listing .child .info,
@@ -1769,8 +1770,7 @@ body {
 }
 
 .hierarchy-listing .child .info {
-  width: 430px;
-  margin-top: 10px;
+  width: 427px;
   margin-right: 20px;
 }
 
@@ -1833,6 +1833,10 @@ body {
 .hierarchy-listing .child .spaces {
   margin: 25px 0 0 30px;
   float: left;
+}
+
+.hierarchy-listing .child .spaces.no-description {
+  margin-top: 0px;
 }
 
 .hierarchy-listing .child .spaces .title {
