@@ -100,7 +100,6 @@ Redu::Application.routes.draw do
   resources :users, :except => [:index] do
     member do
       get :activity_xml
-      get :logs
       get :assume
       put :change_profile_photo
       get :edit_account
@@ -149,7 +148,7 @@ Redu::Application.routes.draw do
       end
     end
 
-    resources :messages do
+    resources :messages, :except => [:destroy, :edit, :update] do
       collection do
         get :index_sent
         post :delete_selected

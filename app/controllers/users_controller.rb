@@ -58,10 +58,6 @@ class UsersController < BaseController
     @user = params[:id]
   end
 
-  def logs
-    #TODO
-  end
-
   ## User
   def activate
     redirect_to signup_path and return if params[:id].blank?

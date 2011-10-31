@@ -100,52 +100,6 @@ class FoldersController < BaseController
     end
   end
 
-  # List the files and sub-folders in a folder.
-  def list(id=nil)
-    # Get the folder
-    if id
-      @folder = Folder.find(id)
-    else
-      @folder = @space.root_folder
-      @folder = @myfile.folder if @myfile
-    end
-
-    @myfile ||= Myfile.new
-
-    # Set if the user is allowed to update or delete in this folder;
-    # these instance variables are used in the view.
-    @can_update = @folder.can_be_updated_by(current_user, @space)
-    @can_delete = @folder.can_be_deleted_by(current_user, @space)
-
-    # determine the order in which files are shown
-    file_order = 'attachment_file_name '
-    if params[:order_by]
-      file_order = params[:order_by].sub('name', 'attachment_file_name') + ' ' if params[:order_by] == 'name'
-      file_order = params[:order_by].sub('filesize', 'attachment_file_size') + ' ' if params[:order_by] == 'filesize'
-      file_order = params[:order_by].sub('date_modified', 'attachment_updated_at') + ' ' if params[:order_by] == 'date_modified'
-    end
-    file_order += params[:order] if params[:order]
-
-    # determine the order in which folders are shown
-    folder_order = 'name '
-    if params[:order_by] and params[:order_by] != 'filesize'
-      folder_order = params[:order_by] + ' '
-      folder_order += params[:order] if params[:order]
-    end
-
-    @files_count = Myfile.includes(:folder).where('folders.space_id' => @space.id).count
-    bytes = Myfile.includes(:folder).where('folders.space_id' => @space.id).
-              sum(:attachment_file_size)
-    @total_size = "%0.2f" % (bytes / (1024.0 * 1024));
-    gigabytes = 2
-    @use_percentage = "%0.2f" % (bytes / ( gigabytes * 1024.0 * 1024.0 * 1024.0))
-
-    # List of subfolders
-    @folders = @folder.list_subfolders(current_user, folder_order.rstrip)
-
-    # List of files in the folder
-    @myfiles = @folder.list_files(current_user, file_order.rstrip)
-  end
 
   # Create a new folder with the posted variables from the 'new' view.
   def create
@@ -204,6 +158,53 @@ class FoldersController < BaseController
   end
 
   private
+
+  # List the files and sub-folders in a folder.
+  def list(id=nil)
+    # Get the folder
+    if id
+      @folder = Folder.find(id)
+    else
+      @folder = @space.root_folder
+      @folder = @myfile.folder if @myfile
+    end
+
+    @myfile ||= Myfile.new
+
+    # Set if the user is allowed to update or delete in this folder;
+    # these instance variables are used in the view.
+    @can_update = @folder.can_be_updated_by(current_user, @space)
+    @can_delete = @folder.can_be_deleted_by(current_user, @space)
+
+    # determine the order in which files are shown
+    file_order = 'attachment_file_name '
+    if params[:order_by]
+      file_order = params[:order_by].sub('name', 'attachment_file_name') + ' ' if params[:order_by] == 'name'
+      file_order = params[:order_by].sub('filesize', 'attachment_file_size') + ' ' if params[:order_by] == 'filesize'
+      file_order = params[:order_by].sub('date_modified', 'attachment_updated_at') + ' ' if params[:order_by] == 'date_modified'
+    end
+    file_order += params[:order] if params[:order]
+
+    # determine the order in which folders are shown
+    folder_order = 'name '
+    if params[:order_by] and params[:order_by] != 'filesize'
+      folder_order = params[:order_by] + ' '
+      folder_order += params[:order] if params[:order]
+    end
+
+    @files_count = Myfile.includes(:folder).where('folders.space_id' => @space.id).count
+    bytes = Myfile.includes(:folder).where('folders.space_id' => @space.id).
+      sum(:attachment_file_size)
+    @total_size = "%0.2f" % (bytes / (1024.0 * 1024));
+    gigabytes = 2
+    @use_percentage = "%0.2f" % (bytes / ( gigabytes * 1024.0 * 1024.0 * 1024.0))
+
+    # List of subfolders
+    @folders = @folder.list_subfolders(current_user, folder_order.rstrip)
+
+    # List of files in the folder
+    @myfiles = @folder.list_files(current_user, file_order.rstrip)
+  end
 
   def load_course_and_environment
     @course = @space.course
