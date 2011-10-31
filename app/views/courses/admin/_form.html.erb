@@ -95,6 +95,7 @@
       <li>
         <%= radio_button_tag :plan, 'free', :checked => true %>
         <%= label_tag :plan_free, "Grátis" %>
+        <span class="tiptip-right icon-small icon-question-blue_12_12" title="<%= "#{render 'plans/admin/details', :name => 'Professor', :type => 'Grátis', :plan => Plan.from_preset(:free)}" %>"></span>
       </li>
       <li>
         <%= radio_button_tag :plan, 'professor_lite' %>

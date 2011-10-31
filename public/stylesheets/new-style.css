@@ -7681,9 +7681,12 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 #tiptip_holder #tiptip_content .features {
-  list-style: circle;
   margin-top: 10px;
   margin-bottom: 8px;
+}
+
+#tiptip_holder #tiptip_content ul.features {
+  list-style: outside disc;
 }
 
 #tiptip_holder #tiptip_content .pricing .value {
