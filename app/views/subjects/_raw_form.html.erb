@@ -1,17 +1,17 @@
 <%# Form de Subject (e somente ele) %>
-<span class="question question-blue_12_12 tiptip" title="O título aparecerá na página do modulo e nas listagens quando o mesmo for publicado"></span>
-<%= f.label :title, t( :title ) %>
+<%= f.label :title, "Nome", :class => "icon-content-gray_32_34-before" %>
 <%= f.text_field :title, { :class => 'big' } %>
-<%= error_for :subject, :title %>
+<span class="tip">Nome do módulo</span>
+<%= concave_errors_for(f.object, :title) %>
 
-<span class="question question-blue_12_12 tiptip" title="Assuntos que serão abordados no módulo"></span>
-<%= f.label :description, t(:description), :size => '10x30' %>
+<%= f.label :description, t(:description) %>
 <%= f.text_area :description, :class => 'subject-description' %>
+<span class="tip">Informações acerca do módulo e suas aulas</span>
 <%= render :partial => 'shared/limit_char_field',
   :locals => { :class_textarea => "subject-description",
                :limit => 250 }%>
-  <%= error_for :subject, :description %>
-<span class="question question-blue_12_12 tiptip" title="Termos que descrevem o módulo. Quanto mais fieis ao conteúdo os termos forem, mais fácil será de encontrar o seu módulo."></span>
-<%= f.label :tag_list, t(:tag_list), { :class => 'big' } %>
-<%= f.text_field :tag_list %>
+<%= concave_errors_for(f.object, :description) %>
 
+<%= f.label :tag_list, raw("#{t(:tag_list)} <span class='snippet'>(separadas por vírgula)</span>"), { :class => 'big' } %>
+<%= f.text_field :tag_list %>
+<span class="tip">Palavras-chave que caracterizam o módulo e suas aulas</span>

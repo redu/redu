@@ -1,5 +1,11 @@
 var $lectureItem = $("<%= escape_javascript(render :partial => 'lectures/item_short', :locals => { :item_short => @lecture}) %>");
-$('#<%= @lecture.id %>-item').after($lectureItem);
 
-$('#<%= @lecture.id %>-item').remove();
-$('#edit-<%= @lecture.id %>-item').remove();
+<% # Insere novo item mantendo a ordem dele na lista %>
+var $editingItem = $('#<%= @lecture.id %>-item');
+$editingItem.after($lectureItem);
+$editingItem.remove();
+
+<% if @lecture.lectureable.class == Page %>
+  var $editPageForm = $("<%= escape_javascript render 'lectures/edit', :lecture => @lecture, :subject => @subject, :space => @space %>");
+  $('#<%= @lecture.id %>-item-edition').replaceWith($editPageForm);
+<% end %>

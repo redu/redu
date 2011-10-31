@@ -1218,22 +1218,6 @@ body {
   color: #b3b2b3;
 }
 
-#subject-resources .header,
-#resource-new .header {
-  background: url("../images/new/icon-resource-black_32_32.png") no-repeat 20px center;
-}
-
-#event .header,
-#space-events .header {
-  background: url("../images/new/icon-event-gray_32_32.png") no-repeat 20px center;
-}
-
-#course-preview .header,
-#environment-preview .header {
-  background: url("../images/new/icon-preview-gray_32_32.png") no-repeat 20px center;
-}
-
-
 #resource .admin-actions,
 #resource .context {
   float: right;
@@ -2113,7 +2097,7 @@ body {
   margin-top: 7px;
 }
 
-#space-subjects .hierarchy-listing .child .lectures > li .infos {
+#space-subjects .hierarchy-listing .child .lectures > li .infos{
   float: left;
   width: 508px;
   margin-left: 54px;
@@ -2123,7 +2107,8 @@ body {
   margin-left: 0;
 }
 
-.hierarchy-listing .child .lectures > li .infos .position {
+.hierarchy-listing .child .lectures > li .infos .position,
+#space-manage .resources > li .position {
   font-weight: bold;
   color: rgb(21, 138, 196);
   display: block;
@@ -2132,13 +2117,16 @@ body {
   margin-top: 3px;
 }
 
-.hierarchy-listing .child .lectures > li .infos .title {
+.hierarchy-listing .child .lectures > li .infos .title,
+#space-manage .resources > li .title {
   float: left;
   margin-top: 3px;
   max-width: 365px;
 }
 
-.hierarchy-listing .child .lectures > li .infos .title:before {
+
+.hierarchy-listing .child .lectures > li .infos .title:before,
+#space-manage .resources > li .title:before {
   float: left;
   margin-right: 3px;
   margin-top: -3px;
@@ -2893,91 +2881,159 @@ body {
   margin-left: 55px;
 }
 
-#add-resources {
-  clear: both;
-}
-
-#add-resources .resources-wrapper,
-.new-subject .resources-wrapper {
-  border-top: 1px dashed #A8A8A8;
-  border-bottom: 1px dashed #A8A8A8;
-  padding: 10px 0;
-}
-
-#add-resources .resources,
-.new-subject .resources {
+#space-manage .new-resource .resources-types,
+#space-manage .edit-resource .resources-types {
   float: left;
 }
 
-#add-resources .resources li,
-.new-subject .resources li {
-  padding: 3px 0 3px 20px;
-  margin: 5px 0;
+#space-manage .new-resource .resources-types ul,
+#space-manage .edit-resource .resources-types ul {
+  float: left;
 }
 
-#add-resources .resources li .icon,
-.new-subject .resources li .icon {
-  width: 16px;
-  height: 16px;
-  display: block;
+#space-manage .new-resource .resources-types li,
+#space-manage .edit-resource .resources-types li {
+  background: rgb(230,230,230); /* Old browsers */
+  border: 1px solid rgb(204, 204, 204);
+  width: 96px;
+  height: 87px;
   float: left;
   margin-right: 5px;
 }
 
-#add-resources .resources li a.edit,
-#add-resources .resources li a.delete,
-.new-subject .resources li a.edit,
-.new-subject .resources li a.delete {
-  font-size: .9em;
+.borderradius #space-manage .new-resource .resources-types li,
+.borderradius #space-manage .edit-resource .resources-types li {
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
 }
 
-#add-resources .new-resource,
-.new-subject .new-resource {
-  float: left;
-  width: 550px;
-  padding: 15px 0;
+.cssgradients #space-manage .new-resource .resources-types li,
+.cssgradients #space-manage .edit-resource .resources-types li {
+  background: -moz-linear-gradient(top, rgb(255,255,255) 0%, rgb(230,230,230) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(255,255,255)), color-stop(100%,rgb(230,230,230))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgb(255,255,255) 0%,rgb(230,230,230) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgb(255,255,255) 0%,rgb(230,230,230) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, rgb(255,255,255) 0%,rgb(230,230,230) 100%); /* IE10+ */
+  background: linear-gradient(top, rgb(255,255,255) 0%,rgb(230,230,230) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e6e6e6',GradientType=0 ); /* IE6-9 */
 }
 
-#add-resources .new-resource li,
-.new-subject .new-resource li {
-  background: url("../images/new/new-resource.png") no-repeat -143px 0;
-  float: left;
-  margin-right: 10px;
+#space-manage .new-resource .resources-types li a,
+#space-manage .edit-resource .resources-types li a {
+  margin: 50px 5px 10px 5px;
+  display: block;
   text-align: center;
-  width: 97px;
-  height: 90px;
-}
-
-.new-subject .new-resource li span {
-  display: block;
-  width: 32px;
-  height: 32px;
-  margin-left: 35px;
-  margin-top: 10px;
-}
-
-.new-subject .new-resource li a {
-  margin: 5px 5px 0 5px;
-  display: block;
-  color: white;
+  color: rgb(77, 173, 214);
   font-size: .9em;
   font-weight: bold;
 }
 
-.new-subject .new-resource li:hover,
-.new-subject .new-resource li.selected {
-  background-position: 0 0;
+.textshadow #space-manage .new-resource .resources-types li a,
+.textshadow #space-manage .edit-resource .resources-types li a {
+  text-shadow: 0px 1px 0px #ffffff;
 }
 
-.new-subject .new-resource .explanation {
-  font-size: .9em;
-  height: 50px;
-  display: block;
+#space-manage .new-resource .resources-types li a:before,
+#space-manage .edit-resource .resources-types li a:before {
+  float: left;
+  margin-top: -40px;
+  margin-left: 25px;
 }
 
-.new-subject .new-resource .explanation strong {
+#space-manage .new-resource .resources-types li:hover,
+#space-manage .edit-resource .resources-types li:hover {
+  border: 1px solid rgb(115, 195, 230);
+  background: rgb(219,239,247); /* Old browsers */
+}
+
+.cssgradients #space-manage .new-resource .resources-types li:hover,
+.cssgradients #space-manage .edit-resource .resources-types li:hover {
+  background: -moz-linear-gradient(top, rgb(255,255,255) 0%, rgb(219,239,247) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(255,255,255)), color-stop(100%,rgb(219,239,247))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgb(255,255,255) 0%,rgb(219,239,247) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgb(255,255,255) 0%,rgb(219,239,247) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, rgb(255,255,255) 0%,rgb(219,239,247) 100%); /* IE10+ */
+  background: linear-gradient(top, rgb(255,255,255) 0%,rgb(219,239,247) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#dbeff7',GradientType=0 ); /* IE6-9 */
+}
+
+#space-manage .new-resource .resources-types li.selected,
+#space-manage .new-resource .resources-types li.selected:hover,
+#space-manage .edit-resource .resources-types li.selected,
+#space-manage .edit-resource .resources-types li.selected:hover {
+  background: none;
+  background-color: rgb(77, 173, 214);
+  border-color: rgb(77, 173, 214)
+}
+
+.cssgradients #space-manage .new-resource .resources-types li.selected,
+.cssgradients #space-manage .new-resource .resources-types li.selected:hover,
+.cssgradients #space-manage .edit-resource .resources-types li.selected,
+.cssgradients #space-manage .edit-resource .resources-types li.selected:hover {
+  background: rgb(115,195,230); /* Old browsers */
+  background: -moz-linear-gradient(top,  rgb(115,195,230) 0%, rgb(77,173,214) 98%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(115,195,230)), color-stop(98%,rgb(77,173,214))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgb(115,195,230) 0%,rgb(77,173,214) 98%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgb(115,195,230) 0%,rgb(77,173,214) 98%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgb(115,195,230) 0%,rgb(77,173,214) 98%); /* IE10+ */
+  background: linear-gradient(top,  rgb(115,195,230) 0%,rgb(77,173,214) 98%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#73c3e6', endColorstr='#4dadd6',GradientType=0 ); /* IE6-9 */
+}
+
+#space-manage .new-resource .resources-types li.selected a,
+#space-manage .new-resource .resources-types li.selected:hover a,
+#space-manage .edit-resource .resources-types li.selected a,
+#space-manage .edit-resource .resources-types li.selected:hover a {
+  color: white;
+}
+
+#space-manage .new-resource .resources-types li.selected a.icon-page-lightblue_32_34-before:before,
+#space-manage .edit-resource .resources-types li.selected a.icon-page-lightblue_32_34-before:before {
+  background-position: -80px -2960px;
+}
+
+#space-manage .new-resource .resources-types li.selected a.icon-document-lightblue_32_34-before:before {
+  background-position: -160px -2960px;
+}
+
+#space-manage .new-resource .resources-types li.selected a.icon-seminar-lightblue_32_34-before:before {
+  background-position: -240px -2960px;
+}
+
+#space-manage .new-resource .resources-types li.selected a.icon-lecture-lightblue_32_34-before:before {
+  background-position: -320px -3440px;
+}
+
+.textshadow #space-manage .new-resource .resources-types li.selected a,
+.textshadow #space-manage .edit-resource .resources-types li.selected a {
+  text-shadow: none;
+}
+
+#space-manage .new-resource .resources-types .explanation,
+#space-manage .edit-resource .resources-types .explanation {
   display: block;
+  float: left;
+  margin-top: 15px;
+  margin-left: 105px;
+  font-size: .87em;
+  color: rgb(179, 179, 179);
+}
+
+#space-manage .new-resource .resources-types .explanation .type,
+#space-manage .edit-resource .resources-types .explanation .type {
   margin-bottom: 5px;
+  font-weight: bold;
+}
+
+#space-manage .new-resource .resources-types .explanation .type a,
+#space-manage .edit-resource .resources-types .explanation .type a {
+  color: rgb(179, 179, 179);
+}
+
+#space-manage #lecture_form,
+#space-manage .edit-resource {
+  display: none;
 }
 
 #home {
@@ -5152,7 +5208,8 @@ table.spaced tr td {
 }
 
 #environment-manage .back,
-#course-manage .back {
+#course-manage .back,
+#space-manage .back {
   font-size: .85em;
   float: right;
   display: block;
@@ -5168,22 +5225,31 @@ table.spaced tr td {
 }
 
 .management .form-header-closer,
-.management .form-header {
+.management .form-header,
+#space-manage .concave-form .section-detail {
   font-size: 1.3em;
   color: rgb(179,178,179);
-  margin-left: 50px;
-  margin-bottom: 20px;
+  margin-left: 40px;
   width: 315px;
   display: block;
   float: left;
+}
 
+.management .form-header-closer,
+.management .form-header {
+  margin-bottom: 20px;
+}
+
+#space-manage .form-header {
+  margin-bottom: 10px;
 }
 
 .management .form-header .strong,
 .management .form-header-closer,
 .management .form-header,
 #environment-manage .course-path,
-#course-manage .course-path {
+#course-manage .course-path,
+#space-manage .concave-form .section-detail {
   font-family: museo-sans, helvetica, arial, sans-serif;
   font-weight: 500;
 }
@@ -5301,6 +5367,225 @@ table.concave-invitation-table .cell-reinvite .reinvited {
   margin-bottom: 10px;
 }
 
+#space-manage .concave-form .concave-label:before {
+  float: left;
+  margin-top: -5px;
+  margin-left: 40px;
+}
+
+#space-manage .concave-form .section-detail {
+  float: none;
+}
+
+#space-manage .concave-form .concave-label.added-lectures {
+  height: auto;
+}
+
+#space-manage .concave-form .concave-clean {
+  float: right;
+  margin: 20px 5px 0 0;
+  float: right;
+}
+
+#space-manage .concave-form .subject-description {
+  height: 112px;
+}
+
+#space-manage .resources {
+  float: left;
+  margin-top: 20px;
+}
+
+#space-manage .resources .no-lectures {
+  margin-left: 45px;
+  width: 400px;
+  background: none;
+  border: none;
+}
+
+#space-manage .resources .no-lectures:hover {
+  background: none;
+}
+
+#space-manage .resources > li {
+  width: 535px;
+  height: 20px;
+  padding: 0 2px;
+  border: solid 1px white;
+}
+
+.borderradius #space-manage .resources > li {
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+
+#space-manage .resources > li:hover {
+  background-color: rgb(240, 240, 240);
+  border-color: rgb(240, 240, 240);
+}
+
+#space-manage .resources .no-lectures,
+#space-manage .resources > li .position,
+#space-manage .resources > li .title {
+  color: rgb(179, 179, 179);
+}
+
+#space-manage .resources > li .title:before {
+  margin-right: 5px;
+}
+
+#space-manage .resources > li .position {
+  width: 20px;
+  text-align: right;
+}
+
+#space-manage .resources > li:hover .position,
+#space-manage .resources > li:hover .title {
+  color: rgb(21, 138, 196);
+}
+
+#space-manage .resources > li:hover .icon-document-gray_16_18-before:before {
+  background-position: -480px -1120px;
+}
+
+#space-manage .resources > li:hover .icon-page-gray_16_18-before:before,
+#space-manage .resources > li.editing .icon-page-gray_16_18-before:before {
+  background-position: -160px -1120px;
+}
+
+#space-manage .resources > li:hover .icon-seminar-gray_16_18-before:before {
+  background-position: -480px -1200px;
+}
+
+#space-manage .resources > li .edit,
+#space-manage .resources > li .delete {
+  font-size: .87em;
+  float: right;
+}
+
+#space-manage .resources > li .edit {
+  margin-top: 3px;
+  margin-right: 10px;
+}
+
+#space-manage .resources > li .delete {
+  margin-top: 1px;
+}
+
+#space-manage .resources > li .edit:before {
+  float: left;
+  margin-right: 5px;
+  margin-top: 1px;
+}
+
+#space-manage .resources > li .delete {
+  width: 16px;
+  height: 18px;
+}
+
+#space-manage .resources > li.editing {
+  background-color: rgb(219, 239, 247);
+  border-color: rgb(77, 173, 214);
+}
+
+#space-manage .resources > li.editing .position,
+#space-manage .resources > li.editing .title {
+  color: rgb(77, 173, 214);
+}
+
+#space-manage .new-resource,
+#space-manage .edit-resource {
+  background-color: rgb(247, 247, 247);
+  border: 1px solid rgb(230, 230, 230);
+  margin-top: 30px;
+  margin-left: 60px;
+  padding: 20px 20px 40px 20px;
+}
+
+.borderradius #space-manage .new-resource,
+.borderradius #space-manage .edit-resource {
+  -webkit-border-radius: 7px;
+  -moz-border-radius: 7px;
+  border-radius: 7px;
+}
+
+.borderradius #space-manage .new-resource .resource-numbering,
+.borderradius #space-manage .edit-resource .resource-numbering {
+  float: left;
+  margin-right: 15px;
+}
+
+.borderradius #space-manage .new-resource .resource-numbering .concave-label,
+.borderradius #space-manage .edit-resource .resource-numbering .concave-label {
+  margin-right: 0;
+}
+
+.borderradius #space-manage .new-resource .resource-numbering .position,
+.borderradius #space-manage .edit-resource .resource-numbering .position {
+  font-family: museo-sans, helvetica, arial, sans-serif;
+  font-weight: 100;
+  font-size: 4.5em;
+  display: block;
+  text-align: right;
+  color: rgb(179, 179, 179);
+}
+
+#space-manage .new-resource .concave-label,
+#space-manage .new-resource .concave-label,
+#space-manage .edit-resource .concave-label,
+#space-manage .edit-resource .concave-label {
+  width: 90px;
+}
+
+#space-manage .new-resource .resources-types .concave-label,
+#space-manage .edit-resource .resources-types .concave-label {
+  display: block;
+  color: #b3b2b3;
+  font-weight: bold;
+  float: left;
+  text-align: right;
+  margin: 20px 10px 0 0;
+  clear: left;
+  height: 30px;
+  font-size: .9em;
+}
+
+#space-manage .new-resource .resources-types .concave-label,
+#space-manage .edit-resource .resources-types .concave-label {
+  margin-top: 0;
+}
+
+#space-manage .new-resource .concave-form .tip,
+#space-manage .new-resource .concave-form .errors_on_field,
+#space-manage .edit-resource .concave-form .tip,
+#space-manage .edit-resource .concave-form .errors_on_field {
+  margin-left: 100px;
+  clear: both;
+  float: left;
+}
+
+#space-manage .new-resource .concave-form .cke_skin_kama,
+#space-manage .edit-resource .concave-form .cke_skin_kama,
+#space-manage .new-resource .concave-form #youtube_preview iframe {
+  margin-top: 20px;
+  float: left;
+}
+
+#space-manage .new-resource .concave-form .concave-file {
+  float: left;
+  width: 450px;
+}
+
+#space-manage .new-resource .concave-form .seminar-field {
+  overflow: hidden;
+  clear: both;
+}
+
+#space-manage .new-resource .concave-form .existent-lectures {
+  margin-right: 150px;
+}
+
 .management .concave-admin-table .space-info,
 .management .concave-admin-table .course-info {
   width: 350px;
@@ -5396,6 +5681,20 @@ table.concave-invitation-table .cell-reinvite .reinvited {
   float: left;
   margin-right: 5px;
   margin-top: -3px;
+}
+
+.management .tabs .ui-tabs-nav {
+  padding-left: 40px;
+}
+
+.management .concave-form .concave-label {
+  width: 170px;
+}
+
+.management .concave-form .tip,
+.management .concave-form .char-limit,
+.management .concave-form .errors_on_field {
+  margin-left: 180px;
 }
 
 .admin-filter-form {
@@ -5501,7 +5800,9 @@ table.concave-invitation-table .cell-reinvite .reinvited {
 }
 
 .admin-filter-form .concave-loading,
-.admin-filter-form .concave-form .concave-loading:hover {
+.admin-filter-form .concave-form .concave-loading:hover,
+#space-manage .concave-loading,
+#space-manage .concave-form .concave-loading:hover {
   background: #f1f0f0 url("../images/new/spinner.gif") no-repeat center center;
   color: transparent;
 }
@@ -7153,7 +7454,10 @@ div.token-input-dropdown {
 
 .link-loading,
 a.link-loading,  /* para sobrepor a precedência de input.important */
-.new-subject .new-resource li a.link-loading, /* para sobrepor a precedência */
+#space-manage .new-resource .resources-types li a.link-loading, /* para sobrepor a precedência */
+#space-manage .new-resource .resources-types li:hover a.link-loading, /* para sobrepor a precedência */
+#space-manage .new-resource .resources-types .explanation .type a.link-loading, /* para sobrepor a precedência */
+#space-manage .new-resource .resources-types .explanation .type a.link-loading:hover, /* para sobrepor a precedência */
 a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 .link-loading:hover {
   background-image:  url("../images/new/loading-horizontal.gif");
@@ -7165,14 +7469,15 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 
 .textshadow .link-loading,
 .textshadow a.link-loading,  /* para sobrepor a precedência de input.important */
-.textshadow .new-subject .new-resource li a.link-loading, /* para sobrepor a precedência */
+.textshadow #space-manage .new-resource .resources-types li a.link-loading, /* para sobrepor a precedência */
 .textshadow a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 .textshadow .link-loading:hover {
   text-shadow: none;
 }
 
 /* Apenas para deixar o gif centralizado */
-.new-subject .new-resource li a.link-loading {
+#space-manage .new-resource .resources-types li a.link-loading,
+#space-manage .new-resource .resources-types li:hover a.link-loading {
   background-position: center center;
 }
 

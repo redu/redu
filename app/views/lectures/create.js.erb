@@ -1,17 +1,15 @@
 <%= remotipart_response do %>
-  var $item_short = $("<%= escape_javascript(render :partial => 'lectures/item_short', :locals => { :item_short => @lecture }) %>");
-  $('#resources_list').append($item_short);
+  var $itemShort = $("<%= escape_javascript(render :partial => 'lectures/item_short', :locals => { :item_short => @lecture }) %>");
+  $('#resources_list').append($itemShort);
 
-  <% if @lecture.is_clone %>
-    $('#existent-form').remove();
-  <% else %>
-    <% case @lecture.lectureable.class.to_s %>
-    <% when "Page" %>
-      $('#page_form').remove();
-    <% when "Seminar" %>
-      $('#seminar-form').remove();
-    <% when "Document" %>
-      $('#document-form').remove();
-    <% end %>
+  $('#lecture_form').slideUp(function(){ $(this).remove(); });
+  <%# Tira efeito de selecionado do choo_lectures %>
+  $("#space-manage .new-resource .resources-types li").removeClass("selected");
+
+  <% if @lecture.lectureable.class == Page %>
+    var $editPageForm = $("<%= escape_javascript render 'lectures/edit', :lecture => @lecture, :subject => @subject, :space => @space %>");
+    $('#resources-edition').append($editPageForm);
   <% end %>
+
+  $("#space-manage .new-resource .resource-numbering").refreshResourcesNumbering();
 <% end %>

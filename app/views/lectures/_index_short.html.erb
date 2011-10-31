@@ -1,7 +1,12 @@
-<fieldset id="lectures_index" class="resources-wrapper">
-  <legend class="label">Recursos adicionados</legend>
+<span class="section-detail">Aulas</span>
+<div id="lectures_index" class="clearfix">
+  <%= f.label :lectures, raw("Adicionadas <span class='snippet'>Arraste cada aula para alterar sua ordem de exibição</span>"),
+    :class => "icon-lecture-gray_32_34-before added-lectures" %>
   <ul id="resources_list" class="resources">
-    <%= render :partial => "lectures/item_short", :collection => @subject.lectures %>
+    <% if @subject.lectures.empty? %>
+      <li class="no-lectures">Nenhuma aula foi adicionada ainda.</li>
+    <% else %>
+      <%= render :partial => "lectures/item_short", :collection => @subject.lectures %>
+    <% end %>
   </ul>
-  <%= error_for :subject, :lectures %>
-</fieldset>
+</div>

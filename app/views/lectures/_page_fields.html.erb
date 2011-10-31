@@ -1,25 +1,17 @@
-<%= field_set_tag do %>
-  <%= label_tag :name, t(:title) %>
-  <%= text_field_tag :name, @lecture.name %>
-  <%= error_for :name %>
-  <%= hidden_field_tag "subject_id", @subject.id %>
-  <% if @lecture.id %>
-    <%= hidden_field_tag "lecture_id", @lecture.id %>
-  <% end %>
-  <%= f.label :body, t( :body ) %>
-  <%= f.cktext_area :body,
-    :width => '570', :height => '500',
-    :swf_params => { :assetable_type => 'Space', :assetable_id => @space.id } %>
-  <%= error_for :page, :body %>
-  <% if action_name == 'new' %>
-    <%= f.submit 'Criar' %>
-  <%= link_to_function "Cancelar",
-    "$('#page_form').remove(); return false;",
-    :class => 'cancel vanilla' %>
-  <% else %>
-    <%= f.submit 'Salvar' %>
-  <%= link_to_function "Cancelar",
-    "$('#page_form').remove(); $('#edit-#{@lecture.id}-item').remove(); return false;",
-    :class => 'cancel vanilla' %>
-  <% end %>
+<%= label_tag :name, t(:title) %>
+<%= text_field_tag :name, @lecture.name %>
+<span class="tip">Nome da aula</span>
+<%= concave_errors_for(@lecture, :name) %>
+<%= hidden_field_tag "subject_id", @subject.id %>
+<% if @lecture.id %>
+  <%= hidden_field_tag "lecture_id", @lecture.id %>
 <% end %>
+<%= f.label :body, "Texto" %>
+<%= f.cktext_area :body,
+  :width => '525px', :height => '495px',
+  :index => Time.now.to_i, # Necessário por mostrar mais de um ckeditor
+  :swf_params => { :assetable_type => 'Space', :assetable_id => @space.id } %>
+<span class="tip">Conteúdo da aula</span>
+<%= concave_errors_for(f.object, :body) %>
+<%= f.submit %>
+<%= link_to_function "Cancelar", "#", :class => 'concave-clean cancel-lecture' %>

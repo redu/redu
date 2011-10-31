@@ -23,7 +23,6 @@ class Subject < ActiveRecord::Base
 
   validates_presence_of :title
   validates_length_of :description, :within => 30..250
-  validates_length_of :lectures, :minimum => 1, :on => :update
 
   def recent?
     self.created_at > 1.week.ago

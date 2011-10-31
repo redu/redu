@@ -35,16 +35,6 @@ describe Subject do
     should respond_to :tag_list
   end
 
-  context "validations" do
-    it "validates that it has at least one lecture on update" do
-      subject = Factory(:subject, :owner => @user, :space => @space)
-      subject.lectures = []
-      subject.save
-      subject.should_not be_valid
-      subject.errors[:lectures].should_not be_empty
-    end
-  end
-
   context "callbacks" do
 
     it "creates an Enrollment between the Subject and the owner after create" do

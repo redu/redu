@@ -1,13 +1,14 @@
 $('#lecture_form').remove();
 <% case params[:type].to_s %>
 <% when 'Page' %>
-  var $form = $("<%= escape_javascript(render :partial => 'lectures/form_page') %>");
+  var $form = $("<%= escape_javascript(render 'lectures/form_page', :page => @page) %>");
 <% when 'Seminar' %>
-  var $form = $("<%= escape_javascript(render :partial => 'lectures/form_seminar') %>")
+  var $form = $("<%= escape_javascript(render 'lectures/form_seminar', :seminar => @seminar) %>")
 <% when 'Document' %>
-  var $form = $("<%= escape_javascript(render :partial => 'lectures/form_document') %>")
+  var $form = $("<%= escape_javascript(render 'lectures/form_document', :document => @document) %>")
 <% when 'Existent' %>
-  var $form = $("<%= escape_javascript(render :partial => 'lectures/form_existent') %>")
+  var $form = $("<%= escape_javascript(render 'lectures/form_existent', :lecture => @lecture) %>")
 <% end %>
 
-$('#lectures_types').after($form);
+$form.appendTo($('#lectures_types')).slideDown();
+$("#space-manage .new-resource .resource-numbering").refreshResourcesNumbering();

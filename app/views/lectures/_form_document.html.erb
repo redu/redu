@@ -1,23 +1,18 @@
 <div id="lecture_form">
-  <%= form_for @document, :as => :document, :url => space_subject_lectures_path,
-    :html => { :id => "document-form", :class => "form-common",
+  <%= form_for document, :as => :document, :url => space_subject_lectures_path,
+    :html => { :id => "document-form", :class => "concave-form",
                :multipart => true }, :remote => true do |f| %>
-   <%= f.error_messages %>
-   <%= field_set_tag do %>
      <%= label_tag :name, t(:title) %>
      <%= text_field_tag :name %>
-     <%= error_for :name %>
+     <span class="tip">Nome da aula</span>
+     <%= concave_errors_for(@lecture, :name) %>
      <%= f.label :attachment, "Arquivo" %>
-     <div id="upload_resource_field">
-       <%= f.file_field :attachment  %>
-       <span class="tip">Tamanho máximo: 100 mb</span>
-       <%= error_for :document, :attachment %>
+     <%= f.file_field :attachment  %>
+     <% unless @document.errors[:attachment_content_type].empty? %>
+       <ul class="errors_on_field"><li>Formato de arquivo inválido</li></ul>
+     <% end %>
 
-       <%= f.submit "Criar" %>
-       <%= link_to_function "Cancelar",
-         "$('#document-form').remove(); return false;",
-         :class => "cancel vanilla"%>
-     </div>
-   <% end %>
+     <%= f.submit %>
+     <%= link_to "Cancelar", "#", :class => 'concave-clean cancel-lecture' %>
  <% end %>
 </div>

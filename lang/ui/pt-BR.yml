@@ -237,8 +237,6 @@ pt-BR:
           attributes:
             description:
               too_short: "Descrição muito curta. Deve ter pelo menos 30 caracteres."
-            lectures:
-              too_short: "Um módulo deve ter ao menos uma aula."
         lecture:
           attributes:
             description:
@@ -277,15 +275,30 @@ pt-BR:
       complementary_course:
         create: "+ Adicionar item"
         update: "Salvar item"
+      document:
+        create: "Adicionar"
+        update: "Salvar"
       event_education:
         create: "+ Adicionar item"
         update: "Salvar item"
+      lecture:
+        create: "Adicionar"
+        update: "Salvar"
       high_school:
         create: "+ Adicionar item"
         update: "Salvar item"
       higher_education:
         create: "+ Adicionar item"
         update: "Salvar item"
+      page:
+        create: "Adicionar"
+        update: "Salvar"
+      seminar:
+        create: "Adicionar"
+        update: "Salvar"
+      subject:
+        create: "Adicionar aulas"
+        update: "Finalizar módulo"
 
   lectureable: vídeo-aula
   lectures: aulas

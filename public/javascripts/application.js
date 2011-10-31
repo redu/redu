@@ -50,22 +50,6 @@ jQuery(function(){
       return slugcontent_hyphens.replace(/[^a-zA-Z0-9\-]/g,'').toLowerCase();
     };
 
-    // Explicação de tipos de recursos (utilizado na criação de módulo)
-    $(".new-resource li").live('hover', function(){
-        var explanation = "<strong>" + $(this).html() + "</strong>";
-        explanation += $(this).find("a").attr("title");
-
-        $(".new-resource .explanation").html(explanation);
-        // Evita que o explanation fique com o spinner
-        $(".new-resource .explanation").find("a").removeClass("link-loading");
-    });
-
-    // Adiciona classe selected ao li do recurso clicado
-    $("#new_subject .new-resource li a").live("click", function(){
-        $("#new_subject .new-resource li").removeClass("selected");
-        $(this).parents("li:first").addClass("selected");
-    })
-
     // Padrão de tabelas
     $("table.common tr:even:not(.invite):not(.message)").addClass("odd");
 
@@ -135,7 +119,7 @@ jQuery(function(){
     // Tooltips
     $(".tiptip").tipTip();
     $(".tiptip-right").tipTip({defaultPosition: "right"});
-    $(".form-common").ajaxComplete(function(){
+    $(document).ajaxComplete(function(){
       $(".tiptip").tipTip();
       $(".tiptip-right").tipTip({defaultPosition: "right"});
     });
@@ -275,21 +259,6 @@ function stripAccent(str) {
     str = str.replace(rExps[i].re, rExps[i].ch);
 
   return str;
-}
-
-/* Alterna entre o formulário de Youtube e Upload (new Seminar) */
-function switchCourseFields(fieldType){
-  if (fieldType == 1) {
-    $('#upload_resource_field').show();
-    $('#external_resource_field').hide();
-    $('#youtube_preview').hide();
-    $('#seminar_submit').hide();
-  } else {
-    $('#upload_resource_field').hide();
-    $('#external_resource_field').show();
-    $('#seminar_submit').show();
-  }
-
 }
 
 /* Verifica se o browser é compatível e esconde o aviso, caso seja. */

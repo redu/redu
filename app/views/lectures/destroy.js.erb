@@ -1,1 +1,7 @@
 $('#<%= @lecture.id %>-item').remove();
+
+<% if @lecture.lectureable.class == Page %>
+  $('#<%= @lecture.id %>-item-edition').remove();
+<% end %>
+
+$("#space-manage .new-resource .resource-numbering").refreshResourcesNumbering();

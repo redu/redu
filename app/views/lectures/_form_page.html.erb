@@ -1,7 +1,7 @@
 <div id="lecture_form">
-  <%= form_for @page, :as => :page, :remote => true,
+  <%= form_for page, :as => :page, :remote => true,
     :url => space_subject_lectures_path(@space, @subject),
-    :html => { :id => "page_form", :class => "form-common" } do |f| %>
+    :html => { :class => "concave-form page-form" } do |f| %>
     <%= render :partial => 'lectures/page_fields', :locals => { :f => f } %>
   <% end %>
 </div>

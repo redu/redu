@@ -1,24 +1,5 @@
-var $form = $('#new_subject');
-
-<%# Mostra todos os erros %>
-var $errors = $('<ul \>');
-<% @subject.errors.full_messages.each do |error| %>
-  $errors.append("<li><%= escape_javascript(error) %></li>");
-<% end %>
-
-var $errorsExplanation = $form.find('.errorExplanation');
-$errorsExplanation.find('ul').replaceWith($errors);
-$errorsExplanation.show();
-
-<%# Mostra os errors individualmente %>
-var $titleError = $('#subject_title-error');
-$titleError.html("<%= escape_javascript(@subject.errors[:title].join(",")) %>");
-$titleError.show();
-
-var $descError = $('#subject_description-error');
-$descError.html("<%= escape_javascript(@subject.errors[:description].join(",")) %>");
-$descError.show();
-
-var $lectures = $('#subject_lectures-error');
-$lectures.html("<%= escape_javascript(@subject.errors[:lectures].join(",")) %>");
-$lectures.show();
+var $form = $('.new-subject');
+var $newForm = $("<%= escape_javascript render 'subjects/form', :subject => @subject %>");
+$newForm.find("#create_button").remove();
+$("#lectures_types").remove();
+$form.replaceWith($newForm);

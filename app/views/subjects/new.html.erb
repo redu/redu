@@ -1,50 +1,18 @@
+<%= render :partial => 'shared/management_background' %>
 <%= render :partial => 'spaces/sidebar', :locals => { :space => @space } %>
-<div class="main grid_12 omega big-col">
+<div class="main space grid_12 omega big-col">
   <%= render :partial => "spaces/breadcrumbs", :locals => { :space => @space } %>
-    <div id="hierarchy-header" class="clearfix space-header">
-      <span class="prefix">
-        <% if @space.course.environment.initials == '' %>
-          <%= @space.course.environment.name %>
-        <% else %>
-          <%= @space.course.environment.initials %>
-        <% end %>
-        > <%= @space.course.name  %>
-    </span>
-    <h3 class="call space-name"><%= @space.name %></h3>
-    <div class="grid_9 alpha">
-      <span class="description">
-        <%= @space.description %>
-      </span>
-      <ul class="tags clearfix">
-        <% @space.tags.each do |tag| %>
-          <li>
-            <%= link_to tag,
-              space_path(@space) %>
-          </li>
-        <% end %>
-      </ul>
-    </div>
-    <ul class="statistics grid_3 omega">
-      <li>
-        <em class="icon icon-teacher-gray_16_16">Professores:</em>
-        <span><%= @space.teachers.length %></span>
-      </li>
-      <li>
-        <em class="icon icon-tutor-gray_16_16">Tutores:</em>
-        <span><%= @space.tutors.length %></span>
-      </li>
-      <li>
-        <em class="icon icon-student-gray_16_16">Alunos:</em>
-        <span><%= @space.students.length %></span>
-      </li>
-    </ul>
+  <div id="space-manage" class="body management">
+    <%= render :partial => "spaces/admin/header",
+      :locals => { :space => @space } %>
+    <%= render :partial => 'spaces/admin/clean_header' %>
 
-  </div><!-- end #hierarchy-header -->
-  <div id="space-subjects" class="hierarchy-listing-wrapper">
-    <div class="header">
-      <h4>Módulos</h4>
-      <span class="counter">Novo módulo</span>
-    </div>
-  <%= render :partial => 'subjects/form' %>
-  </div><!-- end #space-subjects -->
+    <%= tabs :spaces_admin do %>
+      <h3 class="form-header">Criação de um <strong class="strong">novo módulo</strong></h3>
+      <%= link_to "< voltar para a listagem de modulos",
+        admin_subjects_space_path(@space), :class => "back" %>
+      <%= render 'subjects/form', :subject => @subject %>
+      <%= link_to "Sair", environment_course_path(@environment, @course), :class => "manage exit icon-manage-gray_8_10-before" %>
+    <% end %>
+  </div><!-- end #space-management -->
 </div><!-- end .main -->

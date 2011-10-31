@@ -1,6 +1,0 @@
-<%= form_for @page, :as => :page,
-  :url => space_subject_lecture_path(@space, @subject, @page.lecture),
-  :remote => :true, :method => :put,
-  :html => { :id => "page_form", :class => "form-common" } do |f| %>
-  <%= render :partial => 'lectures/page_fields', :locals => { :f => f }%>
-<% end %>

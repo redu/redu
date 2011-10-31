@@ -1,7 +1,6 @@
 SimpleNavigation::Configuration.run do |navigation|
 
   navigation.selected_class = 'ui-state-active'
-
   navigation.autogenerate_item_ids = false
 
   # Define the primary navigation
@@ -15,7 +14,7 @@ SimpleNavigation::Configuration.run do |navigation|
         :link => { :class => "icon-bio_16_18-before" }
       tabs.item :subject, 'Módulos',
         admin_subjects_space_path(@space),
-        :highlights_on => action_matcher(['subject', 'spaces'],
+        :highlights_on => action_matcher(['subjects', 'spaces'],
                                          ['admin_subjects', 'new', 'create']),
         :class => 'ui-state-default',
         :link => { :class => "icon-subject_16_18-before" },
