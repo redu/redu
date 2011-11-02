@@ -1,7 +1,0 @@
-<% if @subjects && @subjects.size > 0 %>
-  <ul id="subject_list" class="default subjects">
-    <%= render :partial => 'subjects/item', :collection => @subjects, :as => :subject %>
-  </ul>
-<% else %>
-  <div class="box_notice">(Nenhum módulo)</div>
-<% end %>
