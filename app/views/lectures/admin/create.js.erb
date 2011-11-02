@@ -1,5 +1,5 @@
 <%= remotipart_response do %>
-  var $itemShort = $("<%= escape_javascript(render :partial => 'lectures/item_short', :locals => { :item_short => @lecture }) %>");
+  var $itemShort = $("<%= escape_javascript(render :partial => 'lectures/admin/item_short', :locals => { :item_short => @lecture }) %>");
   $('#resources_list').append($itemShort);
 
   $('#lecture_form').slideUp(function(){ $(this).remove(); });
@@ -7,13 +7,13 @@
   $("#space-manage .new-resource .resources-types li").removeClass("selected");
 
   <% if @lecture.lectureable.class == Page %>
-    var $editPageForm = $("<%= escape_javascript render 'lectures/edit', :lecture => @lecture, :subject => @subject, :space => @space %>");
+    var $editPageForm = $("<%= escape_javascript render 'lectures/admin/edit', :lecture => @lecture, :subject => @subject, :space => @space %>");
     $('#resources-edition').append($editPageForm);
   <% end %>
 
   $("#space-manage .new-resource .resource-numbering").refreshResourcesNumbering();
 
   <%# Atualiza quotas %>
-  var $quotas = $("<%= escape_javascript render 'subjects/quotas', :quota => @quota, :plan => @plan %>");
+  var $quotas = $("<%= escape_javascript render 'subjects/admin/quotas', :quota => @quota, :plan => @plan %>");
   $("#space-manage .concave-form .quotas").replaceWith($quotas);
 <% end %>

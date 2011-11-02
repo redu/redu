@@ -1,0 +1,8 @@
+var $form = $('#new_subject');
+var subject_form;
+<% if @subject.valid? %>
+  subject_form = "<%= escape_javascript render 'subjects/admin/edit', :space => @space, :subject => @subject, :quota => @quota, :plan => @plan %>";
+<% else %>
+  subject_form = "<%= escape_javascript render 'subjects/admin/new', :space => @space, :subject => @subject, :quota => @quota, :plan => @plan %>";
+<% end %>
+$form.replaceWith(subject_form);

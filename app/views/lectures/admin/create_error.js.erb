@@ -2,14 +2,14 @@
   var $form = $("#lecture_form");
   var $newForm;
   <% if @page %>
-    $newForm = $("<%= escape_javascript render "lectures/form_page", :page => @page %>");
+    $newForm = $("<%= escape_javascript render "lectures/admin/form_page", :page => @page %>");
     $form.replaceWith($newForm);
   <% elsif @seminar %>
-    $newForm = $("<%= escape_javascript render "lectures/form_seminar", :seminar => @seminar %>");
+    $newForm = $("<%= escape_javascript render "lectures/admin/form_seminar", :seminar => @seminar %>");
     $newForm = $newForm.find("form").html();
     $form.find('form').html($newForm);
   <% elsif @document %>
-    $newForm = $("<%= escape_javascript render "lectures/form_document", :document => @document %>");
+    $newForm = $("<%= escape_javascript render "lectures/admin/form_document", :document => @document %>");
     $form.replaceWith($newForm);
   <% end %>
   $("#lecture_form").show();

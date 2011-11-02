@@ -1,5 +1,5 @@
 <span class="section-detail lectures">Aulas</span>
-<%= render 'subjects/quotas', :quota => quota, :plan => plan %>
+<%= render 'subjects/admin/quotas', :quota => quota, :plan => plan %>
 <div id="lectures_index" class="clearfix">
   <%= f.label :lectures, raw("Adicionadas <span class='snippet'>Arraste cada aula para alterar sua ordem de exibição</span>"),
     :class => "icon-lecture-gray_32_34-before added-lectures" %>
@@ -7,7 +7,7 @@
     <% if @subject.lectures.empty? %>
       <li class="no-lectures">Nenhuma aula foi adicionada ainda.</li>
     <% else %>
-      <%= render :partial => "lectures/item_short", :collection => @subject.lectures %>
+      <%= render :partial => "lectures/admin/item_short", :collection => @subject.lectures %>
     <% end %>
   </ul>
 </div>

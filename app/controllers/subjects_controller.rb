@@ -20,7 +20,7 @@ class SubjectsController < BaseController
     @plan = @course.plan
 
     respond_to do |format|
-      format.html
+      format.html { render "subjects/admin/new" }
     end
   end
 
@@ -33,7 +33,9 @@ class SubjectsController < BaseController
     @quota = @course.quota
     @plan = @course.plan
 
-    respond_with(@subject.space, @subject, :layout => !request.xhr?)
+    respond_with(@subject.space, @subject, :layout => !request.xhr?) do |format|
+      format.js { render "subjects/admin/create" }
+    end
   end
 
   def edit
@@ -41,7 +43,7 @@ class SubjectsController < BaseController
     @plan = @course.plan
 
     respond_to do |format|
-      format.html
+      format.html { render "subjects/admin/edit" }
     end
   end
 
@@ -64,7 +66,7 @@ class SubjectsController < BaseController
         format.html { redirect_to space_path(@space) }
       else
         format.html do
-          render :edit
+          render "subjects/admin/edit"
         end
       end
     end
@@ -77,7 +79,7 @@ class SubjectsController < BaseController
     else
       flash[:notice] = "O módulo foi removido."
     end
-    redirect_to space_subjects_path(@subject.space)
+    redirect_to space_path(@subject.space)
   end
 
   #FIXME evitar usar GET e POST no mesmo action

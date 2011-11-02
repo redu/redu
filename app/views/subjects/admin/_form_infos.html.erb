@@ -2,7 +2,7 @@
 
 <span class="section-detail">Informações</span>
 <%= hidden_field_tag 'space_id', space.id %>
-<%= render 'subjects/raw_form', :f => f %>
+<%= render 'subjects/admin/raw_form', :f => f %>
 <hr />
 
-<%= render 'lectures/index_short', :f => f, :quota => quota, :plan => plan %>
+<%= render 'lectures/admin/index_short', :f => f, :quota => quota, :plan => plan %>
