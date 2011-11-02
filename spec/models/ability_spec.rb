@@ -125,24 +125,32 @@ describe Ability do
     context "on course -" do
       before do
         @environment = Factory(:environment, :owner => @env_admin)
-        Factory(:user_environment_association, :environment => @environment,
-                :user => @member, :role => :member)
       end
 
       context "member" do
         before do
           @ability = Ability.new(@member)
+          Factory(:user_environment_association, :environment => @environment,
+                  :user => @member, :role => :member)
         end
 
         it "cannot create a course" do
-          course = Factory.build(:course,:owner => @member,
+          course = Factory.build(:course,:owner => @environment.owner,
                                  :environment => @environment)
+          Factory(:user_course_association, :course => course,
+                  :user => @member, :role => :member,
+                  :state => "approved")
+
           @ability.should_not be_able_to(:create, course)
         end
 
         it "cannot destroy a course" do
-          course = Factory.build(:course, :owner => @env_admin,
+          course = Factory.build(:course,:owner => @environment.owner,
                                  :environment => @environment)
+          Factory(:user_course_association, :course => course,
+                  :user => @member, :role => :member,
+                  :state => "approved")
+
           @ability.should_not be_able_to(:destroy, course)
         end
 
@@ -161,7 +169,9 @@ describe Ability do
         end
 
         it "cannot invite users" do
-          course = Factory(:course)
+          course = Factory.build(:course,:owner => @environment.owner,
+                                 :environment => @environment)
+
           @ability.should_not be_able_to(:invite_members, course)
         end
       end
@@ -169,17 +179,22 @@ describe Ability do
       context "environment admin" do
         before  do
           @ability = Ability.new(@env_admin)
+          @course = Factory.build(:course, :owner => @env_admin,
+                                 :environment => @environment)
+
+          Factory(:user_course_association, :course => @course,
+                  :user => @env_admin, :role => :environment_admin,
+                  :state => "approved")
         end
+
         it "creates a course"  do
-          course = Factory.build(:course, :owner => @env_admin,
-                                 :environment => @environment)
-          @ability.should be_able_to(:create, course)
+          @ability.should be_able_to(:create, @course)
         end
+
         it "destroys his course" do
-          course = Factory.build(:course, :owner => @env_admin,
-                                 :environment => @environment)
-          @ability.should be_able_to(:destroy, course)
+          @ability.should be_able_to(:destroy, @course)
         end
+
         it "destroys a strange course when he is a environment admin" do
           cur_user = Factory(:user)
           Factory(:user_environment_association, :environment => @environment,
@@ -234,21 +249,15 @@ describe Ability do
         end
 
         it "invites members" do
-          course = Factory(:course, :owner => @env_admin,
-                           :environment => @environment)
-          @ability.should be_able_to(:invite_members, course)
+          @ability.should be_able_to(:invite_members, @course)
         end
 
         it "views not accepted invitations" do
-          course = Factory(:course, :owner => @env_admin,
-                           :environment => @environment)
-          @ability.should be_able_to(:admin_manage_invitations, course)
+          @ability.should be_able_to(:admin_manage_invitations, @course)
         end
 
         it "destroys invitations" do
-          course = Factory(:course, :owner => @env_admin,
-                           :environment => @environment)
-          @ability.should be_able_to(:destroy_invitations, course)
+          @ability.should be_able_to(:destroy_invitations, @course)
         end
       end
 
@@ -257,41 +266,34 @@ describe Ability do
           @ability = Ability.new(@teacher)
           Factory(:user_environment_association, :environment => @environment,
                   :user => @teacher, :role => :teacher)
-        end
-        it "cannot create a course" do
-          course = Factory.build(:course,:owner => @teacher,
+          @course = Factory(:course,:owner => @environment.owner,
                                  :environment => @environment)
-          @ability.should_not be_able_to(:create, course)
+          Factory(:user_course_association, :course => @course,
+                  :user => @teacher, :role => :teacher,
+                  :state => "approved")
+        end
+
+        it "cannot create a course" do
+          @ability.should_not be_able_to(:create, @course)
         end
         it "cannot destroy a course" do
-          course = Factory.build(:course,:owner => @teacher,
-                                 :environment => @environment)
-          @ability.should_not be_able_to(:destroy, course)
+          @ability.should_not be_able_to(:destroy, @course)
         end
 
         it "cannot invite members" do
-          course = Factory.build(:course,:owner => @teacher,
-                                 :environment => @environment)
-          @ability.should_not be_able_to(:invite_members, course)
+          @ability.should_not be_able_to(:invite_members, @course)
         end
 
         it "cannot view not accepted invitations" do
-          course = Factory(:course, :owner => @env_admin,
-                           :environment => @environment)
-          @ability.should_not be_able_to(:admin_manage_invitations, course)
+          @ability.should_not be_able_to(:admin_manage_invitations, @course)
         end
 
         it "cannot destroy invitations" do
-          course = Factory(:course, :owner => @env_admin,
-                           :environment => @environment)
-          @ability.should_not be_able_to(:destroy_invitations, course)
+          @ability.should_not be_able_to(:destroy_invitations, @course)
         end
 
         it "can teach course" do
-          course = Factory(:course, :owner => @env_admin,
-                           :environment => @environment)
-          course.join(@teacher, Role[:teacher])
-          @ability.should be_able_to(:teach, course)
+          @ability.should be_able_to(:teach, @course)
         end
       end
 
@@ -299,23 +301,22 @@ describe Ability do
         before do
           @ability = Ability.new(@tutor)
           Factory(:user_environment_association, :environment => @environment,
-                  :user => @tutor, :role => :teacher)
+                  :user => @tutor, :role => :tutor)
+          @course = Factory(:course,:owner => @environment.owner,
+                                 :environment => @environment)
+          Factory(:user_course_association, :course => @course,
+                  :user => @tutor, :role => :tutor,
+                  :state => "approved")
         end
         it "cannot create a course" do
-          course = Factory.build(:course,:owner => @tutor,
-                                 :environment => @environment)
-          @ability.should_not be_able_to(:create, course)
+          @ability.should_not be_able_to(:create, @course)
         end
         it "cannot destroy a course" do
-          course = Factory.build(:course,:owner => @tutor,
-                                 :environment => @environment)
-          @ability.should_not be_able_to(:destroy, course)
+          @ability.should_not be_able_to(:destroy, @course)
         end
 
         it "cannot invite members" do
-          course = Factory.build(:course,:owner => @tutor,
-                                 :environment => @environment)
-          @ability.should_not be_able_to(:invite_members, course)
+          @ability.should_not be_able_to(:invite_members, @course)
         end
       end
 
