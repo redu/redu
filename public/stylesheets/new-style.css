@@ -1590,7 +1590,7 @@ body {
   width: 100%;
 }
 
-.body #users_list .members {
+.body #users-list.members {
   width: 666px;
   margin: auto;
 }
