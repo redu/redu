@@ -15,19 +15,6 @@ describe SubjectsController do
     UserSession.create @user
   end
 
-  context "GET 'show'" do
-    before do
-      @subject = Factory(:subject, :owner => @subject_owner,
-                         :visible => true, :space => @space,
-                         :finalized => true)
-    end
-    it "loads that subject" do
-      get :show, :locale => "pt-BR", :space_id => @space.id,
-                                     :id => @subject.id
-      assigns[:subject].should == @subject
-    end
-  end
-
   context "GET 'new'" do
     before do
       get :new, :locale => "pt-BR", :space_id => @space.id
@@ -208,59 +195,6 @@ describe SubjectsController do
 
     it "redirects to GET admin_lectures_order" do
       response.should redirect_to(admin_lectures_order_space_subject_path(@space, @subject))
-    end
-  end
-
-  context "GET 'admin_members'" do
-    before do
-      @subject = Factory(:subject, :owner => @subject_owner,
-                         :space => @space, :finalized => true)
-    end
-    it "assigns the subject" do
-      get :admin_members, :locale => "pt-BR", :id => @subject.id,
-        :space_id => @space.id
-      assigns[:subject].should == @subject
-    end
-
-    it "assigns the memberships" do
-      get :admin_members, :locale => "pt-BR", :id => @subject.id,
-        :space_id => @space.id
-      assigns[:memberships].should == @subject.members
-    end
-  end
-
-  context "POST 'turn_visible'" do
-    before do
-      @subject = Factory(:subject, :owner => @subject_owner,
-                         :finalized => true ,:space => @space)
-      lecture = Factory(:lecture, :owner => @user, :subject => @subject)
-      post :turn_visible, :locale => "pt-BR", :id => @subject.id,
-        :space_id => @space.id
-    end
-
-    it "assigns the subject" do
-      assigns[:subject].should == @subject
-    end
-
-    it "redirects to 'show'" do
-      response.should redirect_to(space_subject_path(@space, @subject))
-    end
-  end
-
-  context "POST 'turn_invisible'" do
-    before do
-      @subject = Factory(:subject, :owner => @subject_owner,
-                         :space => @space, :finalized => true)
-      lecture = Factory(:lecture, :owner => @user, :subject => @subject)
-      post :turn_invisible, :locale => "pt-BR", :id => @subject.id, :space_id => @space.id
-    end
-
-    it "assigns the subject" do
-      assigns[:subject].should == @subject
-    end
-
-    it "redirects to 'show'" do
-      response.should redirect_to(space_subject_path(@space, @subject))
     end
   end
 end

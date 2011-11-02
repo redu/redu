@@ -19,13 +19,6 @@
     <span class="grade">(<%= current_user.get_association_with(item).student_profile.grade.to_i %>% cursado)</span>
   <% end %>
   <p class="description"><%= item.description %></p>
-  <ul class="tags clearfix">
-    <% item.tags.each do |tag| %>
-      <li>
-        <%= link_to tag.name, space_subjects_path(item.space) %>
-      </li>
-    <% end %>
-  </ul>
   <span class="expand icon-small icon-expand_down-gray_16_18 replacement">Mais detalhes</span>
   <ol class="lectures clearfix" style="display: none;">
     <strong class="title icon-lecture-gray_16_18-before">Aulas (<%= item.lectures.count %>)</strong>

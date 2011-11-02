@@ -19,8 +19,6 @@ class Subject < ActiveRecord::Base
 
   attr_protected :owner, :finalized
 
-  acts_as_taggable
-
   validates_presence_of :title
   validates_length_of :description, :within => 30..250
 
@@ -43,16 +41,6 @@ class Subject < ActiveRecord::Base
 
   def enrolled?(user)
     !user.get_association_with(self).nil?
-  end
-
-  def turn_visible!
-   self.visible = true
-   self.save
-  end
-
-  def turn_invisible!
-    self.visible = false
-    self.save
   end
 
   def change_lectures_order!(lectures_ordered)

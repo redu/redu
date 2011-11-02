@@ -65,18 +65,10 @@ Redu::Application.routes.draw do
       end
     end
 
-    resources :subjects do
+    resources :subjects, :except => [:show, :index] do
       member do
-        post :turn_visible
-        post :turn_invisible
         get :admin_lectures_order
         post :admin_lectures_order
-        get :statuses
-        get :users
-        get :admin_members
-      end
-      collection do
-        get :cancel
       end
 
       resources :lectures do

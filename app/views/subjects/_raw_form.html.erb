@@ -12,8 +12,6 @@
                :limit => 250 }%>
 <%= concave_errors_for(f.object, :description) %>
 
-<%= f.label :tag_list, raw("#{t(:tag_list)} <span class='snippet'>(separadas por vírgula)</span>"), { :class => 'big' } %>
-<%= f.text_field :tag_list %>
 <span class="tip">Palavras-chave que caracterizam o módulo e suas aulas</span>
 
 <%= f.label :visible, "Disponibilidade" %>

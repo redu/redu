@@ -103,37 +103,12 @@ describe Subject do
     should respond_to :recent?
   end
 
-  it "responds to turn_visible!" do
-    should respond_to :turn_visible!
-  end
-
-  it "responds to turn_invisible!" do
-    should respond_to :turn_invisible!
-  end
-
   it "indicates if it is recent (created until 1 week ago)" do
     subject.should be_recent
 
     subject.created_at = 10.day.ago
     subject.save
     subject.should_not be_recent
-  end
-
-  it "visibles itself" do
-    subject = Factory(:subject, :owner => @user,
-                      :space => @space, :visible => false)
-    subject.turn_visible!
-    subject.should be_visible
-  end
-
-  it "invisibles itself and removes all enrollments" do
-    users = (1..4).collect { Factory(:user) }
-    subject = Factory(:subject, :owner => @user,
-                      :space => @space, :visible => true)
-    users.each { |u| subject.enroll(u) }
-
-    subject.turn_invisible!
-    subject.should_not be_visible
   end
 
   it "responds to enroll" do

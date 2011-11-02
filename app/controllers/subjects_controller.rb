@@ -14,23 +14,6 @@ class SubjectsController < BaseController
                                                 @space.course)
   end
 
-  def index
-    redirect_to space_path(@space)
-  end
-
-  def show
-    @subject_users = @subject.members.limit(9) # sidebar
-    @lectures = @subject.lectures.paginate(:page => params[:page],
-                                           :order => 'position ASC',
-                                           :per_page => Redu::Application.config.items_per_page)
-    respond_to do |format|
-      format.html
-      format.js do
-        render_endless 'lectures/item', @lectures, '#subject-resources > ol'
-      end
-    end
-  end
-
   def new
     @subject = Subject.new
     @quota = @course.quota
@@ -54,8 +37,9 @@ class SubjectsController < BaseController
   end
 
   def edit
-    @subject_header = @subject.clone
-    @admin_panel = true if params[:admin_panel]
+    @quota = @course.quota
+    @plan = @course.plan
+
     respond_to do |format|
       format.html
     end
@@ -96,18 +80,6 @@ class SubjectsController < BaseController
     redirect_to space_subjects_path(@subject.space)
   end
 
-  def turn_visible
-    @subject.turn_visible!
-    flash[:notice] = "O módulo está visível para todos."
-    redirect_to space_subject_path(@space, @subject)
-  end
-
-  def turn_invisible
-    @subject.turn_invisible!
-    flash[:notice] = "O módulo está invisível, apenas administradores podem visualizá-lo."
-    redirect_to space_subject_path(@space, @subject)
-  end
-
   #FIXME evitar usar GET e POST no mesmo action
   def admin_lectures_order
     unless request.post?
@@ -128,52 +100,6 @@ class SubjectsController < BaseController
       end
     end
   end
-
-  def admin_members
-    @memberships = @subject.members.paginate(:page => params[:page],
-                                :order => 'first_name ASC',
-                                :per_page => Redu::Application.config.items_per_page)
-    respond_to do |format|
-      format.html
-      format.js do
-        render_endless 'subjects/user_item_admin', @memberships, '#user_list_table'
-      end
-    end
-  end
-
-  def next_lecture
-    if params[:done] == "0"
-      done = false
-    else
-      done = true
-    end
-    lecture = Lecture.find(params[:lecture_id])
-    @lecture = lecture.next_for(current_user, done)
-    enrollment = current_user.get_association_with(@subject)
-    enrollment.student_profile.update_grade!
-
-    if @lecture
-      redirect_to space_subject_lecture_path(@space, @subject, @lecture)
-    else
-      redirect_to space_subject_lecture_path(@space, @subject)
-    end
-  end
-
-  # Listagem de usuários do Space
-  def users
-    @users = @subject.members.paginate(:page => params[:page],
-                                       :order => 'first_name ASC',
-                                       :per_page => 18)
-
-    respond_to do |format|
-      format.html
-      format.js do
-        render_endless 'users/item', @users, '#users_list',
-          { :entity => @subject }
-    end
-    end
-  end
-
 
   protected
 
