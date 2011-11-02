@@ -100,11 +100,11 @@ class CoursesController < BaseController
 
     if params.has_key? :role
       if params[:role] == 'student'
-        @courses = Course.user_behave_as_student(current_user)
+        @courses = Course.published.user_behave_as_student(current_user)
       elsif params[:role] == 'tutor'
-        @courses = Course.user_behave_as_tutor(current_user)
+        @courses = Course.published.user_behave_as_tutor(current_user)
       elsif params[:role] == 'teacher'
-        @courses = Course.user_behave_as_teacher(current_user)
+        @courses = Course.published.user_behave_as_teacher(current_user)
       elsif params[:role] == 'administrator'
         @courses = Course.user_behave_as_administrator(current_user)
       end
