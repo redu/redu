@@ -1,7 +1,7 @@
 <li class="<%= cycle('odd', 'odd ', 'odd omega', 'even', 'even', 'even omega',
                      :name => "users_cycle") %>">
   <%= image_tag item.avatar.url(:thumb_32), :size => "32x32" %>
-  <div class="infos grid_3 omega">
+  <div class="infos omega">
     <%= link_to item.display_name, user_path(item), :class => "name" %>
     <% if entity.class == Environment %>
       <span class="courses-count"><%= pluralize item.user_course_associations.approved.count, "curso matriculado", "cursos matriculados" %></span>
