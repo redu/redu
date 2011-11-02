@@ -1,11 +1,8 @@
 var $form = $('#new_subject');
-var subject_form = "<%= escape_javascript render 'subjects/form', :subject => @subject  %>";
-$form.replaceWith(subject_form);
-
-<% if @subject.errors.empty? %>
-  $('#subject_submit').attr("value", "Finalizar módulo");
-
-  <%# Colocando botões para fora do form devido ao layout. %>
-  var $buttons = $('#subject_submit, #cancel_link').remove().removeClass("bt-loading");
-  $('<div/>', {'class': 'concave-form'}).append($buttons).insertAfter('#lectures_types');
+var subject_form;
+<% if @subject.valid? %>
+  subject_form = "<%= escape_javascript render 'subjects/edit', :space => @space, :subject => @subject, :quota => @quota, :plan => @plan %>";
+<% else %>
+  subject_form = "<%= escape_javascript render 'subjects/new', :space => @space, :subject => @subject, :quota => @quota, :plan => @plan %>";
 <% end %>
+$form.replaceWith(subject_form);

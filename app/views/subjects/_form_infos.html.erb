@@ -1,0 +1,8 @@
+<%= concave_error_messages_for(f.object) %>
+
+<span class="section-detail">Informações</span>
+<%= hidden_field_tag 'space_id', space.id %>
+<%= render 'subjects/raw_form', :f => f %>
+<hr />
+
+<%= render 'lectures/index_short', :f => f, :quota => quota, :plan => plan %>

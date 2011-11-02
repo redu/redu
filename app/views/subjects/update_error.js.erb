@@ -1,5 +1,0 @@
-var $form = $('.new-subject');
-var $newForm = $("<%= escape_javascript render 'subjects/form', :subject => @subject %>");
-$newForm.find("#create_button").remove();
-$("#lectures_types").remove();
-$form.replaceWith($newForm);

@@ -2129,7 +2129,7 @@ body {
 #space-manage .resources > li .title:before {
   float: left;
   margin-right: 3px;
-  margin-top: -3px;
+  margin-top: -2px;
 }
 
 .hierarchy-listing .child .lectures > li .infos .type,
@@ -5209,10 +5209,15 @@ table.spaced tr td {
 
 #environment-manage .back,
 #course-manage .back,
-#space-manage .back {
+#space-manage .back,
+#space-manage .back-down {
   font-size: .85em;
   float: right;
   display: block;
+}
+
+#space-manage .back-down {
+  margin: 28px 10px 0 0;
 }
 
 #course-manage .remove-actions {
@@ -5367,7 +5372,7 @@ table.concave-invitation-table .cell-reinvite .reinvited {
   margin-bottom: 10px;
 }
 
-#space-manage .concave-form .concave-label:before {
+#space-manage .concave-form .concave-label.added-lectures:before {
   float: left;
   margin-top: -5px;
   margin-left: 40px;
@@ -5389,6 +5394,36 @@ table.concave-invitation-table .cell-reinvite .reinvited {
 
 #space-manage .concave-form .subject-description {
   height: 112px;
+}
+
+#space-manage .concave-form .single-column .visible-radio {
+  float: left;
+}
+
+#space-manage .concave-form .single-column .visible-label:before {
+  float: left;
+  margin: -3px 5px 0 3px;
+}
+
+#space-manage .concave-form .single-column li.invisible {
+  clear: left;
+}
+
+#space-manage .concave-form .section-detail.lectures {
+  float: left;
+  width: 55px;
+}
+
+#space-manage .concave-form .quotas {
+  display: block;
+  margin-top: 10px;
+  font-size: .87em;
+  color: rgb(179, 179, 179);
+}
+
+#space-manage .concave-form .quotas .strong {
+  color: rgb(109, 110, 111);
+  font-weight: bold;
 }
 
 #space-manage .resources {

@@ -1,31 +1,19 @@
-<%= render :partial => "subjects/sidebar" %>
-<div class="main grid_12 omega big-col">
-  <%= render :partial => 'subjects/breadcrumbs', :locals => { :subject => @subject } %>
-  <%= render :partial => 'subjects/header',
-    :locals => { :subject => @subject_header, :space => @space } %>
-  <div id="subject-edit" class="hierarchy-listing-wrapper">
-    <div class="header">
-      <h4>Gerenciamento</h4>
-      <span class="counter">Informações gerais do módulo <%= @subject_header.title %></span>
-    </div>
+<%= render 'shared/management_background' %>
+<%= render 'spaces/sidebar', :space => @space %>
+<div class="main space grid_12 omega big-col">
+  <%= render :partial => 'spaces/breadcrumbs', :locals => { :space => @space } %>
+  <div id="space-manage" class="body management">
+    <%= render :partial => "spaces/admin/header",
+      :locals => { :space => @space } %>
+    <%= render :partial => 'spaces/admin/clean_header' %>
 
-    <%= fake_tabs ["Informações", edit_space_subject_path(@space, @subject), { :class => "icon icon-management-lightblue_16_16" } ],
-      ["Recursos", admin_lectures_order_space_subject_path(@space, @subject), { :class => "icon icon-resource-gray_16_16" } ],
-      ["Membros", admin_members_space_subject_path(@space, @subject), { :class => "icon icon-members-gray_16_16" } ] do %>
+    <%= tabs :spaces_admin do %>
+      <h3 class="form-header">Edição de <strong class="strong">módulo</strong></h3>
+      <%= link_to "< voltar para a listagem de modulos",
+        admin_subjects_space_path(@space), :class => "back" %>
+      <%= render 'subjects/edit', :space => @space, :subject => @subject, :quota => @quota, :plan => @plan %>
 
-        <%= form_for [@space, @subject],
-            :html => { :class => "form-common", :multipart => true } do |f| %>
-          <%= render :partial => "subjects/raw_form", :locals => { :f => f } %>
-          <%= f.submit "Salvar alterações" %>
-          <%= link_to "Remover",
-            space_subject_path(@space, @subject),
-            :method => :delete,
-            :class => "remove",
-            :confirm => "Você tem certeza que deseja deletar deste módulo? Todas as informações serão perdidas."  %>
-          <%= render :partial => "subjects/visible_invisible",
-              :locals => { :space => @space, :subject => @subject } %>
-        <% end %>
-
+    <%= link_to "Sair", environment_course_path(@environment, @course), :class => "manage exit icon-manage-gray_8_10-before" %>
     <% end %>
-  </div><!-- end #subjec-edit -->
+  </div><!-- end #space-manage -->
 </div><!-- end .main -->

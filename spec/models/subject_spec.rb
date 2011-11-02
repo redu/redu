@@ -28,7 +28,6 @@ describe Subject do
   xit { should ensure_length_of(:description).is_at_least(30).is_at_most(250) }
 
   it { should_not allow_mass_assignment_of(:owner) }
-  it { should_not allow_mass_assignment_of(:visible) }
   it { should_not allow_mass_assignment_of(:finalized) }
 
   it "responds to tags" do
@@ -102,11 +101,6 @@ describe Subject do
 
   it "responds to recent?" do
     should respond_to :recent?
-  end
-
-  it "defaults to visible" do
-    subject { Factory(:subject, :visible => nil) }
-    subject.visible.should be_true
   end
 
   it "responds to turn_visible!" do

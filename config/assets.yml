@@ -47,6 +47,8 @@ javascripts:
     - public/javascripts/selectivizr.js
   user:
     - public/javascripts/jquery.maskedinput.js
+  ckeditor:
+    - public/javascripts/ckeditor/ckeditor.js
 
 stylesheets:
   common:

@@ -17,7 +17,7 @@ class Subject < ActiveRecord::Base
   scope :recent, lambda { where('created_at > ?', 1.week.ago) }
   scope :visible, lambda { where('visible = ?', true) }
 
-  attr_protected :owner, :visible, :finalized
+  attr_protected :owner, :finalized
 
   acts_as_taggable
 

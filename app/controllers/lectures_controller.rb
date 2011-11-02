@@ -157,6 +157,9 @@ class LecturesController < BaseController
         @space.course.quota.refresh
         @lecture.published = 1
         @lecture.save
+
+        @quota = @course.quota
+        @plan = @course.plan
         format.js
       else
         format.js { render :create_error }
@@ -212,6 +215,9 @@ class LecturesController < BaseController
     @lecture.destroy
     @lecture.subject.space.course.quota.refresh
     @lecture.refresh_students_profiles
+
+    @quota = @course.quota
+    @plan = @course.plan
 
    respond_with(@space, @subject, @lecture) do |format|
       format.html do

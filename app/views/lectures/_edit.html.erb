@@ -22,6 +22,6 @@
     :url => space_subject_lecture_path(@space, @subject, lecture),
     :remote => :true, :method => :put,
     :html => { :class => "concave-form page-form" } do |f| %>
-    <%= render :partial => 'lectures/page_fields', :locals => { :f => f }%>
+    <%= render 'lectures/page_fields', :f => f, :lecture => lecture%>
   <% end %>
 </div>

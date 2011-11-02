@@ -15,12 +15,13 @@ SimpleNavigation::Configuration.run do |navigation|
       tabs.item :subject, 'Módulos',
         admin_subjects_space_path(@space),
         :highlights_on => action_matcher(['subjects', 'spaces'],
-                                         ['admin_subjects', 'new', 'create']),
+                                         ['admin_subjects', 'new',
+                                          'create', 'edit', 'update']),
         :class => 'ui-state-default',
         :link => { :class => "icon-subject_16_18-before" },
-        :details => { :text => 'novo módulo',
+        :details => { :text => "novo módulo",
                       :class => 'details ',
-                      :if => action_matcher('subject', ['new', 'create'])}
+                      :if => action_matcher('subjects', ['new', 'create'])}
       tabs.item :members, 'Membros',
         admin_members_space_path(@space),
         :class => 'ui-state-default',

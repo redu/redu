@@ -33,6 +33,8 @@ class SubjectsController < BaseController
 
   def new
     @subject = Subject.new
+    @quota = @course.quota
+    @plan = @course.plan
 
     respond_to do |format|
       format.html
@@ -44,6 +46,9 @@ class SubjectsController < BaseController
     @subject.owner = current_user
     @subject.space = Space.find(params[:space_id])
     @subject.save
+
+    @quota = @course.quota
+    @plan = @course.plan
 
     respond_with(@subject.space, @subject, :layout => !request.xhr?)
   end
@@ -57,7 +62,8 @@ class SubjectsController < BaseController
   end
 
   def update
-    @subject_header = @subject.clone
+    @quota = @course.quota
+    @plan = @course.plan
 
     respond_to do |format|
       if @subject.update_attributes(params[:subject])
@@ -65,17 +71,14 @@ class SubjectsController < BaseController
           flash[:notice] = "As atualizações foram salvas."
         else
           @subject.finalized = true
-          @subject.visible = true
           @subject.save
           # cria as associações com o subject, replicando a do space
           @subject.create_enrollment_associations
           flash[:notice] = "O Módulo foi criado."
         end
 
-        format.js
-        format.html { redirect_to space_subject_path(@space, @subject) }
+        format.html { redirect_to space_path(@space) }
       else
-        format.js { render :template => 'subjects/update_error' }
         format.html do
           render :edit
         end

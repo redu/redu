@@ -156,14 +156,6 @@ describe SubjectsController do
           :subject => { :description => "short description" }
         assigns[:subject].should == @subject
       end
-
-      it "re-renders 'edit'" do
-        put :update, :locale => "pt-BR", :format => 'js',
-          :id => @subject.id,
-          :space_id => @space.id,
-          :subject => { :description => "short description" }
-        response.should render_template('subjects/update_error')
-      end
     end
   end
 

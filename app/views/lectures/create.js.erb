@@ -12,4 +12,8 @@
   <% end %>
 
   $("#space-manage .new-resource .resource-numbering").refreshResourcesNumbering();
+
+  <%# Atualiza quotas %>
+  var $quotas = $("<%= escape_javascript render 'subjects/quotas', :quota => @quota, :plan => @plan %>");
+  $("#space-manage .concave-form .quotas").replaceWith($quotas);
 <% end %>

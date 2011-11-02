@@ -15,3 +15,15 @@
 <%= f.label :tag_list, raw("#{t(:tag_list)} <span class='snippet'>(separadas por vírgula)</span>"), { :class => 'big' } %>
 <%= f.text_field :tag_list %>
 <span class="tip">Palavras-chave que caracterizam o módulo e suas aulas</span>
+
+<%= f.label :visible, "Disponibilidade" %>
+<ul class="single-column">
+  <li>
+    <%= f.radio_button :visible, true, :class => "visible-radio" %>
+    <%= f.label :visible, "Visível", :class => "visible-label icon-visible-gray_16_18-before" %>
+  </li>
+  <li class="invisible">
+    <%= f.radio_button :visible, false %>
+    <%= f.label :visible, "Invisível" %>
+  </li>
+</ul>

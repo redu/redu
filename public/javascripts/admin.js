@@ -103,16 +103,17 @@
   };
 
   // Pede confirmação do usuário para finalizar o módulo
-  $("#subject_submit").live("click", function(){
+  $("#subject_submit").live("click", function(e){
     var $openForms = $("form:not(:hidden):not([class~='new-subject'])");
     if($openForms.length > 0){
       var answer = confirm("As aulas que não foram adicionadas e/ou salvas serão perdidas. Deseja continuar?")
-    if(answer == true){
-      $(".new-subject").submit();
-    }
+      if(answer == true){
+        $(".new-subject").submit();
+      }
     }else{
       $(".new-subject").submit();
     }
+    e.preventDefault();
   });
 
   $(document).ready(function(){
