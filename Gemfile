@@ -45,11 +45,12 @@ gem 'exceptional'
 
 # Gems específicos de algum ambiente
 group :development, :test do
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~> 2.6'
   gem 'shoulda-matchers'
   gem 'ruby-debug'
   gem 'jasmine'
   gem 'no_peeping_toms', :git => 'git://github.com/alindeman/no_peeping_toms.git'
+  gem 'rails3-generators'
 end
 
 group :development do
