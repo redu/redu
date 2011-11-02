@@ -5229,7 +5229,7 @@ table.spaced tr td {
 #space-manage .concave-form .section-detail {
   font-size: 1.3em;
   color: rgb(179,178,179);
-  margin-left: 40px;
+  margin-left: 50px;
   width: 315px;
   display: block;
   float: left;
@@ -5683,10 +5683,6 @@ table.concave-invitation-table .cell-reinvite .reinvited {
   margin-top: -3px;
 }
 
-.management .tabs .ui-tabs-nav {
-  padding-left: 40px;
-}
-
 .management .concave-form .concave-label {
   width: 170px;
 }
@@ -5699,8 +5695,8 @@ table.concave-invitation-table .cell-reinvite .reinvited {
 
 .admin-filter-form {
   background-color: rgb(247,247,247);
-  padding: 10px 60px;
-  width: 665px;
+  padding: 10px 70px;
+  width: 648px;
   margin-left: -20px;
   margin-bottom: 10px;
   overflow: hidden;
