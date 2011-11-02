@@ -13,8 +13,10 @@
         })
 </script>
 <%= render :partial => 'shared/management_background' %>
-<%= render :partial => 'environments/sidebar',
-  :locals => { :environment => @header_environment } %>
+<div class="management-sidebar">
+  <%= render :partial => 'environments/sidebar',
+    :locals => { :environment => @header_environment } %>
+ </div>
 <div class="main grid_12 omega big-col management-wrapper">
   <%= render :partial => 'environments/breadcrumbs',
     :locals => { :environment => @header_environment } %>

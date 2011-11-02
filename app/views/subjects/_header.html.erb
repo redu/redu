@@ -21,15 +21,6 @@
           <%= subject.description %>
         </span>
       <% end %>
-      <% unless subject.tags.empty? %>
-        <ul class="tags icon-tag-gray_16_18-before clearfix <%= subject.description.empty? ? "" : "separator" %>" >
-          <% subject.tags.each do |tag| %>
-            <li>
-              <%= link_to tag, nil %>
-            </li>
-          <% end %>
-        </ul>
-      <% end %>
     </div>
   <% end %>
 </div><!-- end #hierarchy-header -->

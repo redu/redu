@@ -376,10 +376,18 @@ body {
 #content .sidebar.space .call {
   margin-top: 10px;
   margin-left: 10px;
+  color: rgb(179, 179, 179);
+}
+
+#content .management-sidebar .sidebar.space .call {
   color: white;
 }
 
 .textshadow .sidebar.space .call {
+  text-shadow: 0px -1px 0px white;
+}
+
+.textshadow .management-sidebar .sidebar.space .call {
   text-shadow: 0px -1px 0px rgb(179, 179, 179);
 }
 
@@ -471,6 +479,11 @@ body {
   margin-left: 10px;
   text-align: center;
   font-size: .9em;
+  color: rgb(179, 179, 179);
+}
+
+#content .management-sidebar .concave-sidebar .total-count,
+#content .management-sidebar .concave-sidebar .roles {
   color: white;
 }
 
@@ -489,6 +502,11 @@ body {
 
 .textshadow #content .concave-sidebar .total-count .members,
 .textshadow #content .concave-sidebar .roles .role {
+  text-shadow: 0px -1px 0px white;
+}
+
+.textshadow #content .management-sidebar .concave-sidebar .total-count .members,
+.textshadow #content .management-sidebar .concave-sidebar .roles .role {
   text-shadow: 0px -1px 0px rgb(179, 179, 179);
 }
 
@@ -616,6 +634,12 @@ body {
 #hierarchy-header.space-header .parent a,
 #hierarchy-header.subject-header .parent a {
   font-family: arial, sans-serif;
+  color: rgb(179, 179, 179);
+}
+
+.textshadow #hierarchy-header.space-header .parent a,
+.textshadow #hierarchy-header.subject-header .parent a {
+  text-shadow: none;
 }
 
 #hierarchy-header.space-header .parent {
@@ -641,7 +665,7 @@ body {
 }
 
 .textshadow #hierarchy-header.management .call {
-  text-shadow: 0px -1px 0px rgb(179, 178, 179);
+  text-shadow: 0px -1px 0px rgb(179, 179, 179);
 }
 
 #hierarchy-header.management .call a {
@@ -1295,7 +1319,7 @@ body {
 }
 
 #resource .context .progress-completed {
-  width: 110px;
+  width: 105px;
   float: left;
   margin-top: 2px;
 }
@@ -2235,11 +2259,11 @@ body {
 }
 
 .status-medium .create-status .concave-form .concave-input {
-  width: 525px;
+  width: 577px;
 }
 
 .status-medium .create-response .concave-form .concave-input {
-  width: 451px;
+  width: 503px;
 }
 
 .status-large .create-status .concave-form .concave-input {
