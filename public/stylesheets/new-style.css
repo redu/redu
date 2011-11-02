@@ -2573,6 +2573,7 @@ body {
 
 #statuses .status-log .actions {
   margin-left: 37px;
+  margin-bottom: 0px;
 }
 
 #statuses .status-log .re-status .actions {
