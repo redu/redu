@@ -43,7 +43,7 @@
      var CKEDITOR_BASEPATH = "<%= Redu::Application.config.action_controller.asset_host || '/javascripts/ckeditor/' %>";
   //]]>
   </script>
-    <%= include_javascripts :ckeditor %>
+  <%= include_javascripts :ckeditor %>
 
     <%= lazy_load("http://use.typekit.com/lpo4rgu.js", :jammit => false) do %>
       try{

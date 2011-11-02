@@ -9,3 +9,5 @@ $editingItem.remove();
   var $editPageForm = $("<%= escape_javascript render 'lectures/admin/edit', :lecture => @lecture, :subject => @subject, :space => @space %>");
   $('#<%= @lecture.id %>-item-edition').replaceWith($editPageForm);
 <% end %>
+
+$("#space-manage .new-resource .resource-numbering").refreshResourcesNumbering();

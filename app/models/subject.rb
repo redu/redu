@@ -43,16 +43,13 @@ class Subject < ActiveRecord::Base
     !user.get_association_with(self).nil?
   end
 
-  def change_lectures_order!(lectures_ordered)
-    ids_ordered = []
-    lectures_ordered.each do |lecture|
-      ids_ordered << lecture.split("-")[0].to_i
-    end
-
-    ids_ordered.each_with_index do |id, i|
-      lecture = Lecture.find(id)
-      lecture.position = i + 1 # Para não ficar índice zero.
-      lecture.save
+  def change_lectures_order!(ids_order)
+    ids_order.each_with_index do |id, i|
+      unless !Lecture.exists?(id)
+        lecture = Lecture.find(id)
+        lecture.position = i + 1 # Para não ficar índice zero.
+        lecture.save
+      end
     end
   end
 

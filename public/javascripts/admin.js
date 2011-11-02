@@ -79,6 +79,8 @@
   // Ação do botão cancelar (edição de recurso)
   $("#space-manage .edit-resource .concave-form .cancel-lecture").live("click", function(e){
     $(this).parents(".edit-resource").slideUp();
+    var itemId = $(this).parent().parent().attr("id").split("-edition")[0];
+    $("#" + itemId).toggleClass("editing");
     e.preventDefault();
   });
 
@@ -92,11 +94,15 @@
 
   // Atualiza a numeração dos recursos
   $.fn.refreshResourcesNumbering = function(){
-    var qttResources = $("#resources_list > li:not(.no-lectures)").length;
+    var $resources = $("#resources_list > li:not(.no-lectures)");
+    var qttResources = $resources.length;
     $(this).find(".position").text(qttResources + 1);
 
     if(qttResources > 0){
       $("#resources_list > li.no-lectures").remove();
+      $resources.each(function(index){
+        $(this).find(".position").text((index + 1) + ".")
+      });
     }else{
       $("#resources_list").html($("<li/>", { "class" : "no-lectures", "text" : "Nenhuma aula foi adicionada ainda."}))
     }

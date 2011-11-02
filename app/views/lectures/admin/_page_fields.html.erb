@@ -10,9 +10,9 @@
 <%= f.label :body, "Texto" %>
 <%= f.cktext_area :body,
   :width => '525px', :height => '495px',
-  :index => Time.now.to_i, # Necessário por mostrar mais de um ckeditor
+  :index => get_random_number, # Necessário por mostrar mais de um ckeditor
   :swf_params => { :assetable_type => 'Space', :assetable_id => @space.id } %>
 <span class="tip">Conteúdo da aula</span>
 <%= concave_errors_for(f.object, :body) %>
 <%= f.submit %>
-<%= link_to_function "Cancelar", "#", :class => 'concave-clean cancel-lecture' %>
+<%= link_to "Cancelar", "#", :class => 'concave-clean cancel-lecture' %>

@@ -54,6 +54,15 @@ class SubjectsController < BaseController
     respond_to do |format|
       if @subject.update_attributes(params[:subject])
         if @subject.finalized?
+
+          unless params[:lectures_order].blank?
+            lectures_order = params[:lectures_order].split(",")
+            ids_order = lectures_order.collect do |item|
+              item.split("-")[0].to_i # Remove '-item'
+            end
+            @subject.change_lectures_order!(ids_order)
+          end
+
           flash[:notice] = "As atualizações foram salvas."
         else
           @subject.finalized = true
