@@ -30,7 +30,8 @@ gem 'ajaxful_rating',
   :branch => 'rails3'
 gem 'acts-as-taggable-on'
 gem 'ckeditor', '3.4.2.pre'
-gem 'jammit-s3'
+gem 'jammit-s3',
+  :git => 'git://github.com/guiocavalcanti/jammit-s3.git'
 gem 'whenever', :require => false
 gem 'remotipart', '>= 0.3.4'
 gem 'zencoder'
