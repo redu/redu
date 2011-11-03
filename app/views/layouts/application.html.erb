@@ -40,7 +40,8 @@
 
   <script type="text/javascript" language="javascript" charset="utf-8">
   //<![CDATA[
-     var CKEDITOR_BASEPATH = "<%= Redu::Application.config.action_controller.asset_host || '/javascripts/ckeditor/' %>";
+    <% asset_host =  Redu::Application.config.action_controller.asset_host || "" %>
+    var CKEDITOR_BASEPATH = "<%=  "#{asset_host}/javascripts/ckeditor/" %>";
   //]]>
   </script>
   <%= include_javascripts :ckeditor %>
