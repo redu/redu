@@ -547,7 +547,7 @@
   background: url("../images/new/icons-small.png") -160px -800px no-repeat;
 }
 
-.icon-environment_admin-gray_16_18 { background-position; 0 -800px; }
+.icon-environment_admin-gray_16_18 { background-position: 0 -800px; }
 .icon-environment_admin-gray_16_18-after:after,
 .icon-environment_admin-gray_16_18-before:before,
 .tabs .ui-state-default .icon-environment_admin_16_18-before:before {
@@ -568,7 +568,7 @@
   background: url("../images/new/icons-small.png") -80px -800px no-repeat;
 }
 
-.icon-environment_admin-white_16_18 { background-position; -240px -800px; }
+.icon-environment_admin-white_16_18 { background-position: -240px -800px; }
 .icon-environment_admin-white_16_18-before:before,
 .subtabs .ui-state-active .icon-environment_admin_16_18-before:before,
 .subtabs .ui-state-active .icon-environment_admin_16_18-before:hover:before {
@@ -1378,7 +1378,7 @@
 }
 
 .icon-tutor-blue_16_18,
-.icon-tutor-lightblue_16_18:hover { background-position; -160px -960px; }
+.icon-tutor-lightblue_16_18:hover { background-position: -160px -960px; }
 .icon-tutor-blue_16_18-before:before,
 .icon-tutor-lightblue_16_18-before:hover:before,
 .tabs .ui-state-default .icon-tutor_16_18-before:hover:before,
@@ -1389,7 +1389,7 @@
   background: url("../images/new/icons-small.png") -160px -960px no-repeat;
 }
 
-.icon-tutor-gray_16_18 { background-position; 0 -960px; }
+.icon-tutor-gray_16_18 { background-position: 0 -960px; }
 .icon-tutor-gray_16_18-before:before,
 .tabs .ui-state-default .icon-tutor_16_18-before:before {
   content: "";
@@ -1398,7 +1398,7 @@
   background: url("../images/new/icons-small.png") 0 -960px no-repeat;
 }
 
-.icon-tutor-lightblue_16_18 { background-position; -80px -960px; }
+.icon-tutor-lightblue_16_18 { background-position: -80px -960px; }
 .icon-tutor-lightblue_16_18-before:before,
 .tabs .ui-state-active .icon-tutor_16_18-before:before,
 .subtabs .ui-state-default .icon-tutor_16_18-before:before {
@@ -1408,7 +1408,7 @@
   background: url("../images/new/icons-small.png") -80px -960px no-repeat;
 }
 
-.icon-tutor-white_16_18 { background-position; -240px -960px; }
+.icon-tutor-white_16_18 { background-position: -240px -960px; }
 .icon-tutor-white_16_18-before:before,
 .subtabs .ui-state-active .icon-tutor_16_18-before:before,
 .subtabs .ui-state-active .icon-tutor_16_18-before:hover:before {

@@ -7529,7 +7529,7 @@ div.token-input-dropdown {
 .icon-x-gray_8_8:hover,
 .icon-x-red_8_8{ background-position: -6831px 3px;  }
 
-/* Spinner genérico */
+/* Spinner generico */
 .bt-loading,
 .form-common .bt-loading,
 .form-loader .bt-loading,
@@ -7589,7 +7589,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
     zoom: 1;
 } /* IE7 */
 
-/* Página de parceiros */
+/* Pagina de parceiros */
 #partner .partner-breadcrumbs {
   margin-bottom: 0;
   border-bottom: none;
@@ -7661,7 +7661,6 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
   background: -ms-linear-gradient(top, #ffffff 1%,#f0f0f0 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f0f0f0',GradientType=0 );
   background: linear-gradient(top, #ffffff 1%,#f0f0f0 100%);
-  background: li<h3 class="partner">Parceiro</h3>near-gradient(top, #ffffff 1%,#f0f0f0 100%);
 }
 
 #partner-environments-list li:hover {
