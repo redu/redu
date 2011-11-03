@@ -20,16 +20,6 @@ GIT
     ajaxful_rating (3.0.0.beta3)
 
 GIT
-  remote: git://github.com/guiocavalcanti/jammit-s3.git
-  revision: c1ef58b48ec3c37917d703ad37b7b67e1a8f2b61
-  specs:
-    jammit-s3 (0.6.0.2)
-      jammit (>= 0.6.0)
-      mimemagic (>= 0.1.7)
-      ruby-hmac
-      s3 (>= 0.3.7)
-
-GIT
   remote: git://github.com/guiocavalcanti/scribd_fu.git
   revision: ce15af925afbab9f5806d4038ec0ac5e05b18d2e
   specs:
@@ -101,6 +91,7 @@ GEM
       ffi (~> 1.0.6)
     ckeditor (3.4.2.pre)
       mime-types (>= 1.16)
+    closure-compiler (1.1.1)
     columnize (0.3.2)
     crack (0.1.8)
     css_parser (1.2.5)
@@ -123,8 +114,13 @@ GEM
     ffi (1.0.9)
     htmlentities (4.3.0)
     i18n (0.5.0)
-    jammit (0.6.3)
-      yui-compressor (>= 0.9.3)
+    jammit (0.6.0)
+      closure-compiler (>= 0.1.0)
+      yui-compressor (>= 0.9.1)
+    jammit-s3 (0.6.0.2)
+      jammit (>= 0.5.4)
+      mimemagic (>= 0.1.7)
+      s3 (>= 0.3.7)
     jasmine (1.1.0)
       jasmine-core (>= 1.1.0)
       rack (>= 1.1)
@@ -150,7 +146,7 @@ GEM
     mysql2 (0.2.7)
     newrelic_rpm (3.0.1)
     nokogiri (1.5.0)
-    open4 (1.2.0)
+    open4 (1.0.1)
     pagseguro (0.1.12)
     paperclip (2.3.11)
       activerecord (>= 2.3.0)
@@ -269,7 +265,7 @@ DEPENDENCIES
   dynamic_form
   exceptional
   factory_girl_rails
-  jammit-s3!
+  jammit-s3
   jasmine
   jquery-rails (>= 1.0.3)
   kaminari
