@@ -123,7 +123,7 @@
           <span class="status-subject icon-small icon-space-lightblue_32_34">
           </span>
           <%= link_to item.statusable.subject.space.name, space_path(item.statusable.subject.space), :class => "status-main" %>
-          <%= link_to item.statusable.subject.title, space_subject_path(item.statusable.subject.space, item.statusable.subject), :class => "status-secondary icon-expand-gray_8_10-before" %>
+          <%= link_to item.statusable.subject.title, space_path(item.statusable.subject.space), :class => "status-secondary icon-expand-gray_8_10-before" %>
         </div>
         <div class="status-log">
           <%= image_tag item.user.avatar.url(:thumb_32),
