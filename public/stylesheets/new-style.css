@@ -2972,11 +2972,10 @@ body {
   background: -o-linear-gradient(top, rgb(255,255,255) 0%,rgb(230,230,230) 100%); /* Opera 11.10+ */
   background: -ms-linear-gradient(top, rgb(255,255,255) 0%,rgb(230,230,230) 100%); /* IE10+ */
   background: linear-gradient(top, rgb(255,255,255) 0%,rgb(230,230,230) 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e6e6e6',GradientType=0 ); /* IE6-9 */
 }
 
-#space-manage .new-resource .resources-types li a,
-#space-manage .edit-resource .resources-types li a {
+#space-manage .new-resource .resources-types li .option,
+#space-manage .edit-resource .resources-types li .option {
   margin: 50px 5px 10px 5px;
   display: block;
   text-align: center;
@@ -2985,13 +2984,13 @@ body {
   font-weight: bold;
 }
 
-.textshadow #space-manage .new-resource .resources-types li a,
-.textshadow #space-manage .edit-resource .resources-types li a {
+.textshadow #space-manage .new-resource .resources-types li .option,
+.textshadow #space-manage .edit-resource .resources-types li .option {
   text-shadow: 0px 1px 0px #ffffff;
 }
 
-#space-manage .new-resource .resources-types li a:before,
-#space-manage .edit-resource .resources-types li a:before {
+#space-manage .new-resource .resources-types li .option:before,
+#space-manage .edit-resource .resources-types li .option:before {
   float: left;
   margin-top: -40px;
   margin-left: 25px;
@@ -3037,32 +3036,32 @@ body {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#73c3e6', endColorstr='#4dadd6',GradientType=0 ); /* IE6-9 */
 }
 
-#space-manage .new-resource .resources-types li.selected a,
-#space-manage .new-resource .resources-types li.selected:hover a,
-#space-manage .edit-resource .resources-types li.selected a,
-#space-manage .edit-resource .resources-types li.selected:hover a {
+#space-manage .new-resource .resources-types li.selected .option,
+#space-manage .new-resource .resources-types li.selected:hover .option,
+#space-manage .edit-resource .resources-types li.selected .option,
+#space-manage .edit-resource .resources-types li.selected:hover .option {
   color: white;
 }
 
-#space-manage .new-resource .resources-types li.selected a.icon-page-lightblue_32_34-before:before,
-#space-manage .edit-resource .resources-types li.selected a.icon-page-lightblue_32_34-before:before {
+#space-manage .new-resource .resources-types li.selected .option.icon-page-lightblue_32_34-before:before,
+#space-manage .edit-resource .resources-types li.selected .option.icon-page-lightblue_32_34-before:before {
   background-position: -80px -2960px;
 }
 
-#space-manage .new-resource .resources-types li.selected a.icon-document-lightblue_32_34-before:before {
+#space-manage .new-resource .resources-types li.selected .option.icon-document-lightblue_32_34-before:before {
   background-position: -160px -2960px;
 }
 
-#space-manage .new-resource .resources-types li.selected a.icon-seminar-lightblue_32_34-before:before {
+#space-manage .new-resource .resources-types li.selected .option.icon-seminar-lightblue_32_34-before:before {
   background-position: -240px -2960px;
 }
 
-#space-manage .new-resource .resources-types li.selected a.icon-lecture-lightblue_32_34-before:before {
+#space-manage .new-resource .resources-types li.selected .option.icon-lecture-lightblue_32_34-before:before {
   background-position: -320px -3440px;
 }
 
-.textshadow #space-manage .new-resource .resources-types li.selected a,
-.textshadow #space-manage .edit-resource .resources-types li.selected a {
+.textshadow #space-manage .new-resource .resources-types li.selected .option,
+.textshadow #space-manage .edit-resource .resources-types li.selected .option {
   text-shadow: none;
 }
 
@@ -3082,10 +3081,6 @@ body {
   font-weight: bold;
 }
 
-#space-manage .new-resource .resources-types .explanation .type a,
-#space-manage .edit-resource .resources-types .explanation .type a {
-  color: rgb(179, 179, 179);
-}
 
 #space-manage #lecture_form,
 #space-manage .edit-resource {
@@ -7544,10 +7539,8 @@ div.token-input-dropdown {
 
 .link-loading,
 a.link-loading,  /* para sobrepor a precedência de input.important */
-#space-manage .new-resource .resources-types li a.link-loading, /* para sobrepor a precedência */
-#space-manage .new-resource .resources-types li:hover a.link-loading, /* para sobrepor a precedência */
-#space-manage .new-resource .resources-types .explanation .type a.link-loading, /* para sobrepor a precedência */
-#space-manage .new-resource .resources-types .explanation .type a.link-loading:hover, /* para sobrepor a precedência */
+#space-manage .new-resource .resources-types li .option.link-loading, /* para sobrepor a precedência */
+#space-manage .new-resource .resources-types li:hover .option.link-loading, /* para sobrepor a precedência */
 a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 .link-loading:hover {
   background-image:  url("../images/new/loading-horizontal.gif");
@@ -7566,8 +7559,8 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 /* Apenas para deixar o gif centralizado */
-#space-manage .new-resource .resources-types li a.link-loading,
-#space-manage .new-resource .resources-types li:hover a.link-loading {
+#space-manage .new-resource .resources-types li .option.link-loading,
+#space-manage .new-resource .resources-types li:hover .option.link-loading {
   background-position: center center;
 }
 

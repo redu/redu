@@ -11,25 +11,25 @@
       <li>
         <%= link_to "Página de texto",
           new_space_subject_lecture_path(space, subject, :type => "Page"),
-          :remote => true, :class => "icon-page-lightblue_32_34-before",
+          :remote => true, :class => "option icon-page-lightblue_32_34-before",
           :title => 'Permite a postagem de conteúdo de leitura rápida como um tutorial ou um texto introdutório.' %>
       </li>
       <li>
         <%= link_to "Documento e apresentação",
           new_space_subject_lecture_path(space, subject, :type => "Document"),
-          :remote => true, :class => "icon-document-lightblue_32_34-before",
+          :remote => true, :class => "option icon-document-lightblue_32_34-before",
           :title => 'Permite anexar e visualizar documentos complementares ao conteúdo.' %>
       </li>
       <li>
         <%= link_to "Vídeo",
           new_space_subject_lecture_path(space, subject, :type => "Seminar"),
-          :remote => true, :class => "icon-seminar-lightblue_32_34-before",
+          :remote => true, :class => "option icon-seminar-lightblue_32_34-before",
           :title => 'Permite a postagem de conteúdo através do upload de vídeo ou link do Youtube.' %>
       </li>
       <li>
         <%= link_to "Aula já existente",
           new_space_subject_lecture_path(space, subject, :type => "Existent"),
-          :remote => true, :class => "icon-lecture-lightblue_32_34-before",
+          :remote => true, :class => "option icon-lecture-lightblue_32_34-before",
           :title => 'Permite a postagem de um recurso já adicionado ao Redu, porém em outro módulo.' %>
       </li>
     </ul>
