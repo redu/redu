@@ -25,8 +25,7 @@ describe Space do
   xit { should ensure_length_of(:description).is_at_least(30).is_at_most(250) }
 
 
-  [:owner, :removed, :lectures_count,
-   :members_count, :course_id, :published].each do |attr|
+  [:owner, :removed, :members_count, :course_id, :published].each do |attr|
     it { should_not allow_mass_assignment_of attr }
   end
 
@@ -194,6 +193,24 @@ describe Space do
     expect{
       space.unpublish!
     }.should change { space.published }.to(false)
+  end
+
+  context "when counting lectures" do
+    before do
+      @lectures = 3.times.inject([]) do |acc,i|
+        subj = Factory(:subject, :owner => subject.owner,
+                       :space => subject,
+                       :visible => true, :finalized => true)
+        lectures = 3.times.inject([]) do |mem, i|
+          mem << Factory(:lecture, :subject => subj)
+        end
+        acc << lectures
+      end.flatten!
+    end
+
+    it "should count correctly" do
+      subject.lectures_count.should == @lectures.size
+    end
   end
 
 end

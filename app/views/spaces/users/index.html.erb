@@ -8,7 +8,7 @@
   <div id="space-users" class="body">
     <div class="header clearfix">
       <h4 class="title">Membros da disciplina</h4>
-      <span class="detail">(<%= pluralize @space.subjects.count, "módulo" %> , <%= pluralize @space.lectures_count, "aula" %>)</span>
+      <span class="detail">(<%= pluralize @space.subjects.visible.count, "módulo" %> , <%= pluralize @space.lectures_count, "aula" %>)</span>
     </div>
     <%= subtabs :spaces do %>
       <ul id="users-list" class="members clearfix">
