@@ -443,7 +443,7 @@ pt-BR:
   #en: account: account
   account: account
   #en: account_activation_error: Account activation failed. Your account may already be active. Try logging in or e-mail {{email}} for help.
-  account_activation_error: "Account activation failed. Your account may already be active. Try logging in or e-mail {{email}} for help."
+  account_activation_error: "A ativação da sua conta falhou, talvez ela já esteja ativa. Tente acessar com sua senha ou entre em contato."
   #en: account_settings: Account settings
   account_settings: Account settings
   #en: actions: Actions

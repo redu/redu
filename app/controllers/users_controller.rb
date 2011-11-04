@@ -73,7 +73,7 @@ class UsersController < BaseController
       flash[:notice] = t :thanks_for_activating_your_account
       return
     end
-    flash[:error] = t(:account_activation_error, :email => Redu::Application.config.email)
+    flash[:error] = t(:account_activation_error)
     redirect_to signup_path
   end
 
