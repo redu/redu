@@ -156,7 +156,7 @@ class User < ActiveRecord::Base
     c.validates_format_of_email_field_options = { :with => /^([^@\s]+)@((?:[-a-z0-9A-Z]+\.)+[a-zA-Z]{2,})$/ }
   end
 
-  has_attached_file :avatar, Redu::Application.config.paperclip
+  has_attached_file :avatar, Redu::Application.config.paperclip_user
 
   has_friends
   ajaxful_rater

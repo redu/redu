@@ -98,15 +98,20 @@ module Redu
       :bucket => config.s3_credentials['bucket'], # redu-uploads
       :path => ":class/:attachment/:id/:style/:basename.:extension",
       :default_url => "http://#{config.s3_credentials['assets_bucket']}.s3.amazonaws.com/images/new/missing_:class_:style.png",
-      :styles => { :thumb_150 => "150x150#",
-                   :thumb_120 => "120x120#",
-                   :thumb_100 => "100x100#",
-                   :thumb_110 => "110x110#",
-                   :thumb_90 => "90x90#",
-                   :thumb_60 => "60x60#",
-                   :thumb_32 => "32x32#",
-                   :thumb_24 => "24x24#" }
     }
+
+    config.paperclip_environment = config.paperclip.merge({
+      :styles => { :thumb_32 => "32x32#",
+                   :thumb_90 => "90x90#",
+                   :thumb_140 => "140x140#" }
+    })
+
+    config.paperclip_user = config.paperclip.merge({
+      :styles => { :thumb_24 => "24x24#",
+                   :thumb_32 => "32x32#",
+                   :thumb_90 => "90x90#",
+                   :thumb_110 => "110x110#" }
+    })
 
     config.paperclip_documents = config.paperclip.merge({
       :styles => {},

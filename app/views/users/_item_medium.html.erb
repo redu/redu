@@ -1,7 +1,7 @@
-<%# Usuário representado pelo avatar (thumb_60) e o link do nome  %>
+<%# Usuário representado pelo avatar (thumb_90) e o link do nome  %>
 <li>
   <%= link_to item_medium, :title => item_medium.display_name do %>
-    <%= image_tag item_medium.avatar.url(:thumb_60), :class => 'avatar' %>
+    <%= image_tag item_medium.avatar.url(:thumb_90), :class => 'avatar', :size => "90x90" %>
   <% end %>
   <%= link_to item_medium.display_name, user_path(item_medium) %>
 </li>
