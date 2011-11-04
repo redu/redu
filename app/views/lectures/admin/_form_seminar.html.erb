@@ -1,6 +1,6 @@
 <div id="lecture_form">
   <%= form_for seminar, :as => :seminar,
-    :url => space_subject_lectures_path,
+    :url => space_subject_lectures_path(@space, @subject),
     :remote => true,
     :html => { :id => "seminar-form", :class => "concave-form",
                :multipart => true } do |f| %>
