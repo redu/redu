@@ -16,12 +16,13 @@ SimpleNavigation::Configuration.run do |navigation|
       tabs.dom_class = 'clearfix ui-tabs-nav'
       tabs.item :spaces, 'Disciplinas',
         environment_course_path(@course.environment, @course),
-        :highlights_on => action_matcher(['courses'], ['show', 'preview']),
+        :highlights_on => action_matcher({'courses' => ['show', 'preview']}),
         :class => 'ui-state-default',
         :link => { :class => "icon-space-gray_32_34-before" }
       tabs.item :account, 'Membros',
         environment_course_users_path(@course.environment, @course),
-        :highlights_on => action_matcher(['courses', 'users'], ['admin_invitations', 'index']),
+        :highlights_on => action_matcher({'courses' => ['admin_invitations'],
+                                          'users' => ['index']}),
         :class => 'ui-state-default',
         :link => { :class => "icon-members-gray_32_34-before" } do |users_nav|
         # Sub abas
@@ -29,7 +30,7 @@ SimpleNavigation::Configuration.run do |navigation|
         users_nav.item :all, "Todos",
           environment_course_users_path(@course.environment, @course),
           :highlights_on => Proc.new { !params.has_key?(:role) &&
-            action_matcher('users', 'index').call },
+            action_matcher({'users' => ['index']}).call },
           :class => 'ui-state-default'
         users_nav.item :teachers, "Professores",
           environment_course_users_path(@course.environment, @course,

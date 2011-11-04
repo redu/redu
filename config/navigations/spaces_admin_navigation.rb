@@ -9,19 +9,18 @@ SimpleNavigation::Configuration.run do |navigation|
       tabs.dom_class = 'clearfix ui-tabs-nav'
       tabs.item :infos, 'Informações',
         edit_space_path(@space),
-        :highlights_on => action_matcher('spaces', ['edit', 'update']),
+        :highlights_on => action_matcher({'spaces' => ['edit', 'update']}),
         :class => 'ui-state-default',
         :link => { :class => "icon-bio_16_18-before" }
       tabs.item :subject, 'Módulos',
         admin_subjects_space_path(@space),
-        :highlights_on => action_matcher(['subjects', 'spaces'],
-                                         ['admin_subjects', 'new',
-                                          'create', 'edit', 'update']),
+        :highlights_on => action_matcher({'subjects' => ['new', 'create', 'edit', 'update'],
+                                          'spaces' => ['admin_subjects']}),
         :class => 'ui-state-default',
         :link => { :class => "icon-subject_16_18-before" },
         :details => { :text => "novo módulo",
                       :class => 'details ',
-                      :if => action_matcher('subjects', ['new', 'create'])}
+                      :if => action_matcher({'subjects' => ['new', 'create']})}
       tabs.item :members, 'Membros',
         admin_members_space_path(@space),
         :class => 'ui-state-default',

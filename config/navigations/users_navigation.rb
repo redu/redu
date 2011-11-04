@@ -23,25 +23,25 @@ SimpleNavigation::Configuration.run do |navigation|
       messages_env.dom_class = 'clearfix ui-tabs-nav'
       messages_env.item :received, 'Recebidas', user_messages_path(@user),
         :highlights_on => Proc.new {
-        action_matcher('messages', ['index', 'show']).call &&
-        (action_matcher('messages', 'show').call ?
+        action_matcher({'messages' => ['index', 'show']}).call &&
+        (action_matcher({'messages' => ['show']}).call ?
          @message.sender != @user : true)
       },
         :class => 'ui-state-default',
         :link => { :class => 'icon-message_16_18-before'},
         :details => { :text => 'visualização', :class => 'details',
-          :if => Proc.new { action_matcher('messages', 'show').call &&
+          :if => Proc.new { action_matcher({'messages' => ['show']}).call &&
             @message.sender != @user } }
       messages_env.item :sent, 'Enviadas', index_sent_user_messages_path(@user),
         :highlights_on => Proc.new {
-        action_matcher('messages', ['index_sent', 'show']).call &&
-        (action_matcher('messages', 'show').call ?
+        action_matcher({'messages' => ['index_sent', 'show']}).call &&
+        (action_matcher({'messages' => ['show']}).call ?
          @message.sender == @user : true)
       },
         :class => 'ui-state-default',
         :link => { :class => 'icon-answer_message_16_18-before' },
         :details => { :text => 'visualização', :class => 'details',
-          :if => Proc.new { action_matcher('messages', 'show').call &&
+          :if => Proc.new { action_matcher({'messages' => ['show']}).call &&
             @message.sender == @user } }
       messages_env.item :new, "Nova", new_user_message_path(@user),
         :highlights_on => create_action_matcher('messages'),
@@ -71,15 +71,15 @@ SimpleNavigation::Configuration.run do |navigation|
           :link => { :class => 'icon-cv_16_18-before' }
         end
       config_nav.item :account, 'Conta', account_user_path(@user),
-        :highlights_on => action_matcher('users', ['account', 'update_account']),
+        :highlights_on => action_matcher({'users' => ['account', 'update_account']}),
         :class => 'ui-state-default',
         :link => { :class => 'icon-account_16_18-before' }
       config_nav.item :plans, 'Planos', user_plans_path(@user),
-        :highlights_on => action_matcher(['plans', 'invoices'], 'index'),
+        :highlights_on => action_matcher({'plans' => ['index'], 'invoices' => ['index']}),
         :class => 'ui-state-default',
         :link => { :class => 'icon-plans_16_18-before'},
         :details => { :text => 'detalhes', :class => "details",
-          :if => action_matcher('invoices', 'index') }
+          :if => action_matcher({'invoices' => ['index']}) }
       end
 
     current_user.environments.each do |env|

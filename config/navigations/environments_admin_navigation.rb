@@ -15,23 +15,23 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :sidebar, 'Sidebar', home_path do |tabs|
       tabs.dom_class = 'clearfix ui-tabs-nav'
       tabs.item :infos, 'Informações', edit_environment_path(@header_environment || @environment),
-        :highlights_on => action_matcher('environments', ['edit', 'update']),
+        :highlights_on => action_matcher({'environments' => ['edit', 'update']}),
         :class => 'ui-state-default',
         :link => { :class => "icon-bio_16_18-before" }
       tabs.item :infos, 'Cursos', admin_courses_environment_path(@header_environment || @environment),
-        :highlights_on => action_matcher(['environments', 'courses'],
-                                         ['admin_courses', 'new', 'create']),
+        :highlights_on => action_matcher({'environments' => ['admin_courses'],
+                                         'courses' => ['new', 'create']}),
         :class => 'ui-state-default',
         :link => { :class => "icon-course_16_18-before" },
         :details => { :text => 'novo curso', :class => 'details',
-          :if => action_matcher('courses', ['new', 'create'])}
+          :if => action_matcher({'courses' => ['new', 'create']})}
       tabs.item :members, 'Membros', admin_members_environment_path(@header_environment || @environment),
-        :highlights_on => action_matcher(['environments', 'roles'],
-                                         ['admin_members', 'show']),
+        :highlights_on => action_matcher({'environments' => ['admin_members'],
+                                          'roles' => ['show']}),
         :class => 'ui-state-default',
         :link => { :class => "icon-members_16_18-before" },
         :details => { :text => 'papéis', :class => 'details',
-          :if => action_matcher('roles', 'show')}
+          :if => action_matcher({'roles' => ['show']})}
     end
   end
 end

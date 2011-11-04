@@ -15,7 +15,7 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :sidebar, 'Sidebar', home_path do |tabs|
       tabs.dom_class = 'clearfix ui-tabs-nav'
       tabs.item :courses, 'Cursos', environment_path(@environment),
-        :highlights_on => action_matcher(['environments'], ['show', 'preview']),
+        :highlights_on => action_matcher({'environments' => ['show', 'preview']}),
         :class => 'ui-state-default',
         :link => { :class => "icon-course-gray_32_34-before" }
       tabs.item :account, 'Membros', environment_users_path(@environment),
@@ -26,7 +26,7 @@ SimpleNavigation::Configuration.run do |navigation|
         users_nav.dom_class = 'clearfix ui-tabs-nav'
         users_nav.item :all, "Todos", environment_users_path(@environment),
           :highlights_on => Proc.new { !params.has_key?(:role) &&
-            action_matcher('users', 'index').call },
+            action_matcher({'users' => ['index']}).call },
           :class => 'ui-state-default'
         users_nav.item :teachers, "Professores",
           environment_users_path(@environment, :role => "teachers"),

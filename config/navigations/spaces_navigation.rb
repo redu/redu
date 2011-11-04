@@ -28,7 +28,7 @@ SimpleNavigation::Configuration.run do |navigation|
           users_nav.dom_class = 'clearfix ui-tabs-nav'
           users_nav.item :all, "Todos", space_users_path(@space),
             :highlights_on => Proc.new {
-            action_matcher('users', 'index').call && !params.has_key?(:role)
+            action_matcher({'users' => ['index']}).call && !params.has_key?(:role)
           },
             :class => 'ui-state-default'
           users_nav.item :teachers, "Professores",
