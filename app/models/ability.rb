@@ -31,15 +31,10 @@ class Ability
     alias_action :download, :to => :read
 
     # User
-    alias_action :learning, :show_log_activity, :welcome_complete,
-      :list_subjects, :activity_xml, :show_mural, :contacts_endless,
-      :environments_endless, :to => :read
+    alias_action :show_mural, :contacts_endless, :environments_endless, :to => :read
 
     alias_action :assume, :edit_account,
-      :update_account, :edit_pro_details, :update_pro_details,
-      :invite, :activate, :deactivate,
-      :change_profile_photo, :crop_profile_photo,
-      :upload_profile_photo, :activity_xml, :annotations,
+      :update_account, :invite, :activate, :deactivate,
       :account, :home, :my_wall, :to => :manage
 
     # Lecture
