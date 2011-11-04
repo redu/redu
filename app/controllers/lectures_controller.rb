@@ -189,19 +189,11 @@ class LecturesController < BaseController
 
    if params[:page]
      @page = @lecture.lectureable
-      valid = @page.update_attributes(params[:page]) && @lecture.save
-    elsif params[:seminar]
-      @seminar.update_attributes(params[:seminar]) && @lecture.save
-    elsif params[:document]
-      @document.update_attributes(params[:document]) && @lecture.save
+      @valid = @page.update_attributes(params[:page]) && @lecture.save
     end
-    @lecture.subject.space.course.quota.refresh
+
     respond_to do |format|
-      if valid
-        format.js { render 'lectures/admin/update' }
-      else
-        format.js { render 'lectures/admin/create_error'}
-      end
+      format.js { render 'lectures/admin/update' }
     end
 
   end
