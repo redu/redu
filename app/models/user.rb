@@ -43,8 +43,6 @@ class User < ActiveRecord::Base
   # FIXME Verificar necessidade (Suggestion.rb não existe). Não foi testado.
   has_many :suggestions
   enumerate :role
-  belongs_to  :state
-  belongs_to  :country
   has_many :recently_active_friends, :through => :friendships, :source => :friend,
     :order => "users.last_request_at ASC", :limit => 9,
     :conditions => "friendships.status = 'accepted'",
