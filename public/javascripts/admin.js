@@ -28,11 +28,7 @@
 
   // Alterna entre o formulário de Youtube e Upload (new Seminar)
   $.fn.refreshFormUpload = function(){
-    $("label[for='seminar_external_resource_type_youtube']").click(function(){
-      $('#youtube_preview, #upload_resource_field, #external_resource_field').toggle();
-    });
-
-    $("label[for='seminar_external_resource_type_upload']").click(function(){
+    $("#seminar_external_resource_type_youtube, #seminar_external_resource_type_upload").change(function(){
       $('#youtube_preview, #upload_resource_field, #external_resource_field').toggle();
     });
   }

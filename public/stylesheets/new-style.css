@@ -5499,6 +5499,7 @@ table.concave-invitation-table .cell-reinvite .reinvited {
   height: 20px;
   padding: 0 2px;
   border: solid 1px white;
+  clear: left;
 }
 
 .borderradius #space-manage .resources > li {
