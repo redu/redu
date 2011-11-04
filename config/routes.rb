@@ -14,8 +14,6 @@ Redu::Application.routes.draw do
       post :respond
     end
   end
-  resources :metro_areas
-
   resources :tags
   match '/tags/:id/:type' => 'tags#show', :as => :show_tag_type
   match '/search/tags' => 'tags#show', :as => :search_tags

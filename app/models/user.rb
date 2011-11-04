@@ -17,10 +17,6 @@ class User < ActiveRecord::Base
   # CALLBACKS
   before_create :make_activation_code
   after_create  :update_last_login
-  # FIXME Verificar necessidade (não foi testado)
-  after_save    :recount_metro_area_users
-  # FIXME Verificar necessidade (não foi testado)
-  after_destroy :recount_metro_area_users
 
   # ASSOCIATIONS
   has_many :annotations, :dependent => :destroy, :include=> :lecture
@@ -47,7 +43,6 @@ class User < ActiveRecord::Base
   # FIXME Verificar necessidade (Suggestion.rb não existe). Não foi testado.
   has_many :suggestions
   enumerate :role
-  belongs_to  :metro_area
   belongs_to  :state
   belongs_to  :country
   has_many :recently_active_friends, :through => :friendships, :source => :friend,
@@ -166,8 +161,6 @@ class User < ActiveRecord::Base
   # VALIDATIONS
   validates_presence_of     :login, :email, :first_name, :last_name,
     :email_confirmation
-  # FIXME Verificar necessidade (não foi testado)
-  validates_presence_of     :metro_area,                 :if => Proc.new { |user| user.state }
   validates_uniqueness_of   :login, :email, :case_sensitive => false
   validates_exclusion_of    :login, :in => Redu::Application.config.extras["reserved_logins"]
   validates :birthday,
@@ -371,14 +364,6 @@ class User < ActiveRecord::Base
     super
   end
 
-  # FIXME Verificar necessidade (não foi testado)
-  def recount_metro_area_users
-    return unless self.metro_area
-    ma = self.metro_area
-    ma.users_count = User.where( "metro_area_id = ?", ma.id ).count
-    ma.save
-  end
-
   def to_param
     login
   end
@@ -478,12 +463,10 @@ class User < ActiveRecord::Base
 
   # FIXME Verificar necessidade (não foi testado)
   def location
-    metro_area && metro_area.name || ""
   end
 
   # FIXME Verificar necessidade (não foi testado)
   def full_location
-    "#{metro_area.name if self.metro_area}#{" , #{self.country.name}" if self.country}"
   end
 
   def reset_password

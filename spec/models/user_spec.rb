@@ -14,7 +14,6 @@ describe User do
 
   it { should have_one(:settings).dependent(:destroy) }
 
-  it { should belong_to :metro_area }
   it { should belong_to :state }
   it { should belong_to :country }
 

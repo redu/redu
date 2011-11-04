@@ -147,7 +147,7 @@
 #en: date_published: Date Published
 #en: days_ago: days ago
 #en: deactivate_link: Click here to deactivate your account
-#en: deactivate_tip: Deactivating your account will remove your profile from the site. 
+#en: deactivate_tip: Deactivating your account will remove your profile from the site.
 #en: deactivate_confirmation: Are you sure you want to deactivate your account?
 #en: deactivate_completed: Thanks. Your account has been deactivated and you have been logged out.
 #en: delete: Delete
@@ -191,7 +191,6 @@
 #en: editing_category: Editing category
 #en: editing_clipping: Editing clipping
 #en: editing_homepage_feature: Editing homepage feature
-#en: editing_metro_area: Editing Metro Area
 #en: editing_photo: Editing photo
 #en: editing_post: Editing post
 #en: editing_skill: Editing skill
@@ -309,7 +308,7 @@
 #en: log_in_to_vote: Log in to vote
 #en: log_in_to_your: Log in to your
 #en: log_out: Log Out
-#en: log_out_of_your: Log out of your 
+#en: log_out_of_your: Log out of your
 #en: logged_in: "Logged in:"
 #en: logged_into_the_site: logged into the site
 #en: login: Login
@@ -338,9 +337,6 @@
 #en: messages_deleted: Messages deleted
 #en: messages_sent: Messages sent!
 #en: message_sent: Message sent!
-#en: metro_area: Metro Area
-#en: metro_areas: Metro Areas
-#en: metro_area_was_successfully_created: MetroArea was successfully created.
 #en: minutes_ago: minutes ago
 #en: moderator: Moderator
 #en: moderators: Moderators
@@ -388,7 +384,7 @@
 #en: no_profile_photo: "No profile photo?"
 #en: no_recent_activity: No recent activity
 #en: no_tags: No tags
-#en: notify_me_of_follow_ups_via_email: Notify me of follow ups via e-mail  
+#en: notify_me_of_follow_ups_via_email: Notify me of follow ups via e-mail
 #en: notify_email_updates: Notify of community news
 #en: notify_of_comments: Notify of comments
 #en: notify_of_friend_requests: Notify of friend requests
@@ -610,7 +606,7 @@
 #en: to: To
 #en: to_accept: to accept
 #en: to_get_recommended_content_on_your_dashboard: to start getting recommended content on your dashboard.
-#en: to_get_started_with_clippings_first: To get started with clippings, first 
+#en: to_get_started_with_clippings_first: To get started with clippings, first
 #en: to_start_adding_friends: To start adding friends, you can
 #en: to_you: You
 #en: toggle: Toggle
@@ -750,7 +746,7 @@
 #en: album_comments: "Comentarios de álbum"
 #en: album_tip: "Albums let you organize yout photos. Share whole experiencies with other {{community_name}} users"
 #en: delete_album_and_photos: Delete album and its associated photos?
-#en: album_was_successfully_created: "Album was successfully created"  
+#en: album_was_successfully_created: "Album was successfully created"
 #en: album: "Album"
 #en: view_more: "View more"
 #en: assign_album: "Assign album"

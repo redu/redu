@@ -1,7 +1,6 @@
 class Country < ActiveRecord::Base
 
   # ASSOCIATIONS
-  has_many :metro_areas
   has_many :states
 
   def self.get(name)
@@ -17,10 +16,5 @@ class Country < ActiveRecord::Base
   end
 
   def states
-    State.includes(:metro_areas).where("metro_areas.id in (?)", metro_area_ids).uniq
-  end
-
-  def metro_area_ids
-    metro_areas.map{|m| m.id }
   end
 end
