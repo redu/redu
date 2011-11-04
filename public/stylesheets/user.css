@@ -154,6 +154,11 @@
   float: left;
 }
 
+.education .concave-form {
+  clear: none;
+  overflow: visible;
+}
+
 #curriculum .header {
   margin: 40px 0;
 }
