@@ -49,7 +49,7 @@ describe SubjectsController do
       before do
         @post_params = {:title => "Subject 1",
           :description => "Lorem ipsum dolor sit amet, consectetur magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-          :tag_list => "list, of, tags", :space_id => @space.id.to_s}
+          :space_id => @space.id.to_s}
       end
 
       it "creates a record with the current user as owner" do
@@ -72,19 +72,19 @@ describe SubjectsController do
       before do
         @post_params = {:title => "",
           :description => "Lorem ipsum dolor sit amet, consectetur magna aliqua.",
-          :tag_list => "list, of, tags", :space_id => @space.id.to_s}
+          :space_id => @space.id.to_s}
       end
 
       it "does NOT create a record" do
         lambda {
-          post :create, :locale => "pt-BR", :subject => @post_params,
-          :space_id => @space.id
+          post :create, :locale => "pt-BR", :format => "js",
+          :subject => @post_params, :space_id => @space.id
         }.should_not change(Subject, :count)
       end
 
       it "assigns the subject" do
-        post :create, :locale => "pt-BR", :subject => @post_params,
-          :space_id => @space.id
+        post :create, :locale => "pt-BR", :format => "js",
+          :subject => @post_params, :space_id => @space.id
         assigns[:subject].should_not be_nil
         assigns[:subject].should be_kind_of(Subject)
       end
@@ -162,7 +162,7 @@ describe SubjectsController do
     it "redirects to index" do
       delete :destroy, :locale => "pt-BR", :id => @subject.id,
              :space_id => @space.id
-      response.should redirect_to(space_subjects_path(@subject.space))
+      response.should redirect_to(space_path(@subject.space))
     end
   end
 

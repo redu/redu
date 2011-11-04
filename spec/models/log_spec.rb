@@ -109,8 +109,7 @@ describe Log do
     end
 
     it "accepts extra options" do
-      @subject = Factory(:subject)
-      @subject.turn_visible!
+      @subject = Factory(:subject, :visible => true)
       @subject.finalized = true
       @subject.save
       log = Log.setup(@subject, :save => false)
@@ -120,8 +119,7 @@ describe Log do
 
     context "when finalized and public" do
       before do
-        @subject = Factory(:subject)
-        @subject.turn_visible!
+        @subject = Factory(:subject, :visible => true)
         @subject.finalized = true
         @subject.save
 
@@ -163,10 +161,9 @@ describe Log do
     end
 
     it "accepts extra options" do
-      sub = Factory(:subject)
+      sub = Factory(:subject, :visible => true)
       @lecture = Factory(:lecture, :subject => sub,
                          :owner => sub.owner)
-      @lecture.subject.turn_visible!
       @lecture.subject.finalized = true
       @lecture.subject.save
       log = Log.setup(@lecture, :save => false)
@@ -183,11 +180,11 @@ describe Log do
                         :course => course)
         user = Factory(:user)
         course.join(user)
-        sub = Factory(:subject, :owner => user, :space => @space)
+        sub = Factory(:subject, :owner => user, :space => @space,
+                      :visible => true)
         sub.create_enrollment_associations
         @lecture = Factory(:lecture, :subject => sub,
                          :owner => sub.owner)
-        @lecture.subject.turn_visible!
         @lecture.subject.finalized = true
         @lecture.subject.save
         @seminar = Factory(:seminar_youtube, :lecture => @lecture)

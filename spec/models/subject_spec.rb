@@ -30,10 +30,6 @@ describe Subject do
   it { should_not allow_mass_assignment_of(:owner) }
   it { should_not allow_mass_assignment_of(:finalized) }
 
-  it "responds to tags" do
-    should respond_to :tag_list
-  end
-
   context "callbacks" do
 
     it "creates an Enrollment between the Subject and the owner after create" do
