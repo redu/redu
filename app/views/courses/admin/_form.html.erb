@@ -52,7 +52,7 @@
         <span class="plan-type">Empresa</span>
       </li>
       <li>
-        <%= radio_button_tag :plan, 'empresas_lite' %>
+        <%= radio_button_tag :plan, 'empresas_lite', :checked => true %>
         <%= label_tag :plan_empresas_lite, "Lite" %>
         <span class="tiptip-right icon-small icon-question-blue_12_12" title="<%= "#{render 'plans/admin/details', :name => 'Empresa', :type => 'Lite', :plan => Plan.from_preset(:empresas_lite)}" %>"></span>
       </li>
