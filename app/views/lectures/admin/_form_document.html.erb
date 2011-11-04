@@ -1,5 +1,5 @@
 <div id="lecture_form">
-  <%= form_for document, :as => :document, :url => space_subject_lectures_path,
+  <%= form_for document, :as => :document, :url => space_subject_lectures_path(@space, @subject),
     :html => { :id => "document-form", :class => "concave-form",
                :multipart => true }, :remote => true do |f| %>
      <%= label_tag :name, t(:title) %>
