@@ -14,19 +14,16 @@ class Subject < ActiveRecord::Base
   has_many :logs, :as => :logeable, :order => "created_at DESC",
     :dependent => :destroy
 
-  scope :recent, lambda { where('updated_at > ?', 1.week.ago) }
+  scope :recent, lambda { where('created_at > ?', 1.week.ago) }
   scope :visible, lambda { where('visible = ?', true) }
 
-  attr_protected :owner, :visible, :finalized
-
-  acts_as_taggable
+  attr_protected :owner, :finalized
 
   validates_presence_of :title
   validates_length_of :description, :within => 30..250
-  validates_length_of :lectures, :minimum => 1, :on => :update
 
   def recent?
-    self.updated_at > 1.week.ago
+    self.created_at > 1.week.ago
   end
 
   # Matricula o usuário com o role especificado. Retorna true ou false
@@ -42,26 +39,17 @@ class Subject < ActiveRecord::Base
     enrollment.destroy
   end
 
-  def turn_visible!
-   self.visible = true
-   self.save
+  def enrolled?(user)
+    !user.get_association_with(self).nil?
   end
 
-  def turn_invisible!
-    self.visible = false
-    self.save
-  end
-
-  def change_lectures_order!(lectures_ordered)
-    ids_ordered = []
-    lectures_ordered.each do |lecture|
-      ids_ordered << lecture.split("-")[0].to_i
-    end
-
-    ids_ordered.each_with_index do |id, i|
-      lecture = Lecture.find(id)
-      lecture.position = i + 1 # Para não ficar índice zero.
-      lecture.save
+  def change_lectures_order!(ids_order)
+    ids_order.each_with_index do |id, i|
+      unless !Lecture.exists?(id)
+        lecture = Lecture.find(id)
+        lecture.position = i + 1 # Para não ficar índice zero.
+        lecture.save
+      end
     end
   end
 
@@ -82,6 +70,10 @@ class Subject < ActiveRecord::Base
       self.enrollments.create(:user => users_space.user, :subject => self,
                               :role => users_space.role)
     end
+  end
+
+  def graduated?(user)
+    self.enrolled?(user) and user.get_association_with(self).student_profile.graduaded?
   end
 
   # Verifica se o módulo está pronto para ser publicado via

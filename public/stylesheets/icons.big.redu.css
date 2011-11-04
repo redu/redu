@@ -56,6 +56,26 @@
   background-position: -160px -560px;
 }
 
+.icon-contact-blue_100_66-before:before {
+  content: "";
+  width: 100px;
+  height: 66px;
+
+  background-position: 0px -160px;
+}
+
+.icon-environment-white_64_64 {
+  background-position: 0 0;
+}
+
+.icon-space-white_64_64 {
+  background-position: -80px 0;
+}
+
+.icon-subject-white_64_66 {
+  background-position: -160px 0;
+}
+
 .icon-partner-lightblue_64_64-before:before {
   content: "";
   width: 64px;
@@ -65,6 +85,14 @@
   margin-right: 10px;
 
   background-position:  -480px -161px;
+}
+
+.icon-privacy-lightred_64_66-before:before {
+  content: "";
+  width: 64px;
+  height: 66px;
+
+  background-position:  -240px 0;
 }
 
 .icon-contact-lightblue_64_66-after:after {
@@ -136,4 +164,3 @@
 
   background-position: -400px -80px;
 }
-

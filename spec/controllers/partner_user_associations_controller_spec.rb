@@ -31,7 +31,7 @@ describe PartnerUserAssociationsController do
     end
 
     it "renders the correct template" do
-      response.should render_template 'partner_environment_associations/index'
+      response.should render_template 'partner_user_associations/index'
     end
   end
 

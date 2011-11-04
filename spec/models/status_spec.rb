@@ -60,6 +60,8 @@ describe Status do
         statuses = @space_statuses.select { |s| s.statusable == @spaces.first }
         Status.from_hierarchy(@spaces.first).to_set.should \
           be_superset(statuses.to_set)
+        Status.from_hierarchy(@lectures.first).to_set.should \
+          be_subset(@lecture_statuses.to_set)
       end
     end
 
@@ -67,6 +69,26 @@ describe Status do
       it "retrieves lecture statuses" do
         Status.from_hierarchy(@lectures.first).to_set.should \
           be_subset(@lecture_statuses.to_set)
+      end
+    end
+
+    context "recent" do
+      before do
+        @old_space_statuses = (1..3).collect do
+          Factory(:activity, :statusable => @spaces.first, :user => @course.owner,
+                  :created_at => 3.weeks.ago)
+        end
+
+        @recent_space_statuses = (1..3).collect do
+          Factory(:activity, :statusable => @spaces.first, :user => @course.owner,
+                  :created_at => 5.days.ago)
+        end
+      end
+
+      it "retrieves recent space statuses" do
+        statuses = @space_statuses.select { |s| s.statusable == @spaces.first }
+        Status.recent_from_hierarchy(@spaces.first).to_set.should \
+          be_superset((statuses | @recent_space_statuses).to_set)
       end
     end
   end

@@ -6,77 +6,54 @@ class Ability
     # Aliases para acoes não padrão
     # Overall Manage
     alias_action :publish, :unpublish, :admin_members,
-      :search_users_admin, :to => :manage
+      :search_users_admin, :destroy_members, :to => :manage
 
     # Overall Read
-    alias_action :vote, :rate, :more, :to => :read
-
-    # Overall Preview
-    alias_action :users, :to => :preview
+    alias_action :rate, :to => :read
 
     # Environment
-    alias_action :admin_courses, :destroy_members, :to => :manage
+    alias_action :admin_courses, :to => :manage
 
     # Course
     alias_action :admin_spaces, :admin_members_request,
       :moderate_members_requests, :invite_members, :admin_manage_invitations,
-      :destroy_invitations, :to => :manage
+      :admin_invitations, :destroy_invitations, :to => :manage
     alias_action :unjoin, :to => :read
 
     # Space
-    alias_action :look_and_feel, :set_theme,
-      :new_space_admin, :to => :manage
+    alias_action :admin_subjects, :to => :manage
     #TODO action manage gerando recursividade
-    alias_action :mural, :to => :read
+    alias_action :mural, :students_endless , :to => :read
 
     # Folder
-    alias_action :do_the_upload, :upload, :update_permissions, :rename,
-      :destroy_folder, :to => :manage
-    alias_action :download, :feed, :feed_warning, :to => :read
-
-    # Post
-    alias_action :monitored, :search, :to => :read
-
-    # Event
-    alias_action :ical, :past, :notify, :day, :to => :read
-
-    # Status
+    alias_action :do_the_upload, :upload, :rename,
+      :destroy_folder, :destroy_file, :to => :manage
+    alias_action :download, :to => :read
 
     # User
-    alias_action :learning, :show_log_activity, :log, :welcome_complete,
+    alias_action :learning, :show_log_activity, :welcome_complete,
       :list_subjects, :activity_xml, :show_mural, :contacts_endless,
       :environments_endless, :to => :read
 
     alias_action :assume, :edit_account,
       :update_account, :edit_pro_details, :update_pro_details,
-      :invite, :activate, :deactivate, :groups,
+      :invite, :activate, :deactivate,
       :change_profile_photo, :crop_profile_photo,
       :upload_profile_photo, :activity_xml, :annotations,
       :account, :home, :my_wall, :to => :manage
 
     # Lecture
-    alias_action :embed_content, :upload_video, :cancel, :unpublished,
-      :waiting, :to => :manage
+    alias_action :cancel, :unpublished, :to => :manage
     alias_action :download_attachment, :rate, :done,
       :to => :read
     alias_action :unpublished_preview, :to => :preview
 
-    # Exam
-    alias_action :cancel, :add_question, :remove_question, :sort_question,
-      :questions_database, :unpublished, :unpublished_preview,
-      :to => :manage
-    alias_action :results, :answer, :compute_results, :search, :published,
-      :get_query, :review_question, :to => :read
-
     # Message
-    alias_action :delete_selected, :more, :to => :manage
+    alias_action :delete_selected, :to => :manage
 
     # Subject
     alias_action :cancel, :admin_lectures_order, :to => :manage
     alias_action :statuses, :mural, :to => :read
-
-    # Friendship
-    alias_action :pending, :accept, :decline, :to => :manage
 
     # Presence
     alias_action :auth, :to => :manage
@@ -108,11 +85,6 @@ class Ability
         user.can_read? object
       end
 
-      # Caso especial de :users (não deve ser mapeado para :preview)
-      can :users, Space do |space|
-        user.can_read? space
-      end
-
       can :create, Environment
 
       # Course
@@ -132,6 +104,11 @@ class Ability
       can :view_mural, User do |u|
         u.settings.view_mural == Privacy[:public] or
         (u.settings.view_mural == Privacy[:friends] && u.friends?(user))
+      end
+
+      # Space
+      can :preview, Space do |space|
+        user.can_read? space
       end
 
       # Seminar

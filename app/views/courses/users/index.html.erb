@@ -1,0 +1,24 @@
+<%= render :partial => 'courses/sidebar',
+  :locals => { :course => @course }  %>
+
+<div class="main grid_12 omega big-col">
+  <%= render :partial => 'courses/breadcrumbs',
+    :locals => { :course => @course }%>
+  <%= render :partial => 'courses/header',
+    :locals => { :course => @course }%>
+  <div id="course-users" class="body">
+    <div class="actions clearfix">
+      <%= link_to "Convidar membros", admin_invitations_environment_course_path(@environment, @course), :class => "button" %>
+    </div>
+    <%= big_tabs :courses do %>
+      <%= subtabs :courses do %>
+        <ul id="users-list" class="members clearfix">
+          <%= render :partial => 'users/item',
+            :collection => @users, :locals => { :entity => @course } %>
+          <% reset_cycle "users_cycle" %>
+        </ul>
+        <%= will_paginate @users, :renderer => EndlessRenderer %>
+      <% end %>
+    <% end %>
+  </div><!-- end #environment-courses -->
+</div><!-- end .main -->

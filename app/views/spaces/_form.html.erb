@@ -1,28 +1,29 @@
-<%= f.error_messages %>
+<%= concave_error_messages_for(@space) %>
 
-<%= field_set_tag 'Informações Gerais', :class => "hidden" do %>
+<%= field_set_tag nil, :class => "hidden" do %>
   <%= hidden_field_tag "course_id", @course.id %>
 
   <%= f.label :name, "Nome" %>
   <%= f.text_field :name ,  :onkeyup => ((edit) ? nil : "generatePath(this)") %>
-  <%= error_for :space, :name %>
+  <span class="tip">Nome da disciplina</span>
+  <%= concave_errors_for(f.object, :name) %>
 
   <% random_number = get_random_number%>
-  <%= f.label :description, "Descrição:" %>
-  <%= f.text_area :description, :size => "50x3", :class => "desc-#{random_number}" %>
-  <%= error_for :space, :description %>
+  <%= f.label :description, "Descrição" %>
+  <%= f.text_area :description, :size => "50x7", :class => "desc-#{random_number}" %>
+  <span class="tip">Informações da disciplina</span>
+  <%= concave_errors_for(f.object, :description) %>
   <%= render :partial => 'shared/limit_char_field', :locals => { :class_textarea => "desc-#{random_number}" }%>
 
   <%= f.label :tag_list, raw("Palavras-chaves <span class='snippet'>(separadas por vírgula)</span> ") %>
   <%= f.text_field :tag_list %>
+  <span class="tip">Áreas de estudo e interesses relacionados ao curso</span>
 <% end %>
-
+<hr />
 <% unless edit %>
-  <div class="tos">
-    <strong>TERMOS E CONDIÇÕES DO REDU</strong>
+    <strong class="concave-label">Termos e condições do Redu</strong>
 
-    Por favor não publique conteúdo que esteja protegido por direitos autoriais, conteúdo obsceno ou que viole os termos e condições do Redu. Ao clicar no botão abaixo, você estará concordando com esses termos.
-
-  </div>
+    <div class="tos">
+      Por favor não publique conteúdo que esteja protegido por direitos autoriais, conteúdo obsceno ou que viole os termos e condições do Redu. Ao clicar no botão abaixo, você estará concordando com esses termos.
+    </div>
 <% end %>
-

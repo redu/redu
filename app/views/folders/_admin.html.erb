@@ -2,7 +2,7 @@
   <% if current_user.can_manage? space %>
     <div style="position: relative;">
       <div class="new-folder">
-        <a href="#" class="button" >Criar nova pasta</a>
+        <a href="#" class="button clean" >Criar nova pasta</a>
         <div class="new-folder-inner holder" style="display:none;">
           <% @new_folder = Folder.new %>
           <%= form_for [space, @new_folder],
@@ -17,7 +17,7 @@
       </div>
 
       <div class="new-file">
-        <a href="#" class="button">Upload de Arquivo</a>
+        <a href="#" class="button upload">Upload de arquivo</a>
         <div class="new-file-inner holder" style="display:none;">
           <%= form_for(myfile,
                        :url => do_the_upload_space_folder_path(space.id,
@@ -26,7 +26,7 @@
                                           :class => 'form-common' }) do |f| %>
             <div class="file-wrapper clearfix">
               <%= f.file_field :attachment %>
-              <%= link_to "Procurar", "#", :class => "browse button" %>
+            <%= link_to "Procurar", "#", :class => "browse button clean" %>
             </div>
             <%= f.hidden_field :folder_id, :value => folder.id %>
             <%= hidden_field_tag :space_id,  space.id %>

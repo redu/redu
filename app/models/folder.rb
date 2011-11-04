@@ -51,42 +51,21 @@ class Folder < ActiveRecord::Base
   # Use this method to determine if a user is permitted to create in the given folder
   def can_be_created_by(user, space)
     user.can_manage? space
-
-    #    self.groups.each do |group|
-    #      group_permission = group.group_permissions.find_by_folder_id(folder_id)
-    #      return true unless group_permission.blank? or not group_permission.can_create
-    #    end
-    #    return false
   end
 
   # Use this method to determine if a user is permitted to read in the given folder
   def can_be_read_by(user)
     true
-    #    self.groups.each do |group|
-    #      group_permission = group.group_permissions.find_by_folder_id(folder_id)
-    #      return true unless group_permission.blank? or not group_permission.can_read
-    #    end
-    #    return false
   end
 
   # Use this method to determine if a user is permitted to update in the given folder
   def can_be_updated_by(user, space)
     user.can_manage? space
-    #    self.groups.each do |group|
-    #      group_permission = group.group_permissions.find_by_folder_id(folder_id)
-    #      return true unless group_permission.blank? or not group_permission.can_update
-    #    end
-    #    return false
   end
 
   # Use this method to determine if a user is permitted to delete in the given folder
   def can_be_deleted_by(user, space)
     user.can_manage? space
-    #    self.groups.each do |group|
-    #      group_permission = group.group_permissions.find_by_folder_id(folder_id)
-    #      return true unless group_permission.blank? or not group_permission.can_delete
-    #    end
-    #    return false
   end
 
   def is_root

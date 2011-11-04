@@ -1,0 +1,8 @@
+<%=  form_for [space, subject], :remote => true,
+  :html => { :class => 'concave-form new-subject' } do |f| %>
+  <%= render 'subjects/admin/form_infos', :f => f, :space => space, :quota => quota, :plan => plan %>
+
+  <%= f.submit :class => 'add'%>
+  <%= link_to "< voltar para a listagem de modulos",
+    admin_subjects_space_path(space), :class => "back-down" %>
+<% end %>

@@ -28,22 +28,7 @@ describe Subject do
   xit { should ensure_length_of(:description).is_at_least(30).is_at_most(250) }
 
   it { should_not allow_mass_assignment_of(:owner) }
-  it { should_not allow_mass_assignment_of(:visible) }
   it { should_not allow_mass_assignment_of(:finalized) }
-
-  it "responds to tags" do
-    should respond_to :tag_list
-  end
-
-  context "validations" do
-    it "validates that it has at least one lecture on update" do
-      subject = Factory(:subject, :owner => @user, :space => @space)
-      subject.lectures = []
-      subject.save
-      subject.should_not be_valid
-      subject.errors[:lectures].should_not be_empty
-    end
-  end
 
   context "callbacks" do
 
@@ -74,17 +59,17 @@ describe Subject do
   context "finders" do
     it "retrieves visibles subjects" do
       subjects = (1..3).collect { Factory(:subject, :owner => @user,
-                                          :space => @space) }
+                                          :space => @space, :visible => false) }
       visible_subjects = (1..3).collect { Factory(:subject, :owner => @user,
                                                     :space => @space,
                                                     :visible => true) }
       Subject.visible.should == visible_subjects
     end
 
-    it "retrieves recent subjects (updated until 1 week ago)" do
+    it "retrieves recent subjects (created until 1 week ago)" do
       subjects = (1..3).collect { |i| Factory(:subject, :owner => @user,
                                               :space => @space,
-                                              :updated_at => (i*3).day.ago) }
+                                              :created_at => (i*3).day.ago) }
       Subject.recent.should == subjects[0..1]
     end
 
@@ -114,42 +99,12 @@ describe Subject do
     should respond_to :recent?
   end
 
-  it "defaults to not visible" do
-    subject { Factory(:subject, :visible => nil) }
-    subject.visible.should be_false
-  end
-
-  it "responds to turn_visible!" do
-    should respond_to :turn_visible!
-  end
-
-  it "responds to turn_invisible!" do
-    should respond_to :turn_invisible!
-  end
-
-  it "indicates if it is recent (updated until 1 week ago)" do
+  it "indicates if it is recent (created until 1 week ago)" do
     subject.should be_recent
 
-    subject.updated_at = 10.day.ago
+    subject.created_at = 10.day.ago
     subject.save
     subject.should_not be_recent
-  end
-
-  it "visibles itself" do
-    subject = Factory(:subject, :owner => @user,
-                      :space => @space, :visible => false)
-    subject.turn_visible!
-    subject.should be_visible
-  end
-
-  it "invisibles itself and removes all enrollments" do
-    users = (1..4).collect { Factory(:user) }
-    subject = Factory(:subject, :owner => @user,
-                      :space => @space, :visible => true)
-    users.each { |u| subject.enroll(u) }
-
-    subject.turn_invisible!
-    subject.should_not be_visible
   end
 
   it "responds to enroll" do
@@ -158,6 +113,14 @@ describe Subject do
 
   it "responds to unenroll" do
     should respond_to :unenroll
+  end
+
+  it "responds to enrolled?" do
+    should respond_to :enrolled?
+  end
+
+  it "responds to graduated?" do
+    should respond_to :graduated?
   end
 
   context "enrollments" do
@@ -184,6 +147,15 @@ describe Subject do
         subject.unenroll(@enrolled_user)
       }.should change(subject.enrollments, :count).by(-1)
     end
+
+    it "verifies if an user is enrolled" do
+      subject.enroll(@enrolled_user)
+      subject.enrolled?(@enrolled_user).should be_true
+    end
+
+    it "verifies if an user is not enrolled" do
+      subject.enrolled?(@enrolled_user).should be_false
+    end
   end
 
   context "lectures" do
@@ -195,6 +167,25 @@ describe Subject do
       subject.reload.lectures.should == [lectures[1], lectures[0],
                                     lectures[3], lectures[2]]
     end
+  end
+
+  it "verifies if a user completed the subject" do
+    graduated = Factory(:user)
+    subject.enroll(graduated)
+    subject.lectures.each { |l| l.mark_as_done_for!(graduated, true) }
+    graduated.get_association_with(subject).student_profile.update_grade!
+    subject.graduated?(graduated).should be_true
+  end
+
+  it "verifies if a user did not complete the subject" do
+    enrolled_user = Factory(:user)
+    subject.enroll(enrolled_user)
+    subject.graduated?(enrolled_user).should be_false
+  end
+
+  it "verifies if a not enrolled user did not complete the subject" do
+    unenrolled_user = Factory(:user)
+    subject.graduated?(unenrolled_user).should be_false
   end
 
 end

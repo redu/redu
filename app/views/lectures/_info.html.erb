@@ -1,20 +1,7 @@
 <div class="info">
   <%= image_tag lecture.owner.avatar(:thumb_32), :class => "avatar" %>
-  <span class="label">Autor:</span>
-  <%= link_to lecture.owner.display_name, user_path(lecture.owner) %>
-</div>
-<% if can? :manage, @lecture %>
-  <div class="admin-actions">
-    <%# FIXME Mostrar link quando o editar de Lecture estiver ok  %>
-    <%#= link_to 'Editar',
-      edit_space_subject_lecture_path(lecture.subject.space, lecture.subject,
-                                      lecture),
-      :class => "edit icon icon-redu_r12_c5_s1" %>
-    <%= link_to 'Remover',
-      space_subject_lecture_path(lecture.subject.space, lecture.subject,
-                                 lecture),
-      :method => :delete,
-      :confirm => "Você tem certeza que deseja remover esta aula? Não será possível recuperá-la.",
-      :class => "delete icon icon-x-gray_8_8" %>
+  <div class="info-icon icon-teacher-gray_16_18-before">
+    <span class="label">Autor:</span>
+    <%= link_to lecture.owner.display_name, user_path(lecture.owner) %>
   </div>
-<% end %>
+</div>

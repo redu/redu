@@ -1,42 +1,40 @@
-<div class="sidebar alpha grid_3">
+<div class="concave-sidebar alpha grid_3">
   <div class="image-frame course-frame">
-    <!-- <%# Nao setar width e height na imagem %> -->
-    <%= image_tag course.environment.avatar.url(:thumb_100),
-      :alt => 'profile' %>
+    <%= image_tag course.environment.avatar.url(:thumb_90),
+      :size => "90x90", :alt => 'profile', :class => "environment" %>
+    <span class="course icons-big icon-environment-white_64_64 replacement"><%= course.name %></span>
   </div>
 
-  <ul class="local-nav">
-    <li>
-      <div class="<%= (current_page? environment_course_path(course.environment, course)) ? "session selected".to_s : "session".to_s %>">
-        <% selected = (current_page? environment_course_path(course.environment, course)) ? "icon-space-white_16_16" : "icon-space-lightblue_16_16" %>
-        <%= link_to 'Disciplinas', environment_course_path(course.environment, course),
-          :class => "icon #{selected}" %>
-    </li>
+  <div class="total-count">
+    <span class="count"><%= course.approved_users.count %></span>
+    <span class="members">membros</span>
+  </div>
 
-    <% if can? :manage, course %>
-      <li>
-        <div class="<%= (current_page? edit_environment_course_path(@environment, course)) ?
-                      "session selected".to_s : "session".to_s %>">
-          <% selected = (current_page? edit_environment_course_path(course.environment, course)) ? "icon-management-white_16_16" : "icon-management-lightblue_16_16" %>
-          <%= link_to 'Gerenciamento', edit_environment_course_path(@environment, course),
-            :class => "icon #{selected}" %>
-        </div>
-      </li>
-    <% end %>
+  <ul class="roles clearfix">
     <li>
-      <div class="<%= (current_page? users_environment_course_path(course.environment, course)) ?
-                    "session selected".to_s : "session".to_s %>">
-        <% selected = (current_page? users_environment_course_path(course.environment, course)) ? "icon-members-white_16_16" : "icon-members-lightblue_16_16" %>
-        <%= link_to "Membros: #{course.approved_users.length}",
-          users_environment_course_path(course.environment, course),
-            :class => "icon #{selected}" %>
-      <ul class="connections clearfix">
-          <%= render :partial => 'users/item_short',
-            :collection => course.approved_users.n_recent(9) %>
-      </ul><!-- end .connections -->
-        <%= link_to "Ver mais",
-          users_environment_course_path(course.environment, course),
-          :class => 'more'%>
+      <span class="role icon-teacher-gray_16_18-before">Professores:</span>
+      <%= link_to course.teachers.count,
+        environment_course_users_path(course.environment, course,
+                                      :role => "teachers"),
+        :class => "count" %>
     </li>
-  </ul><!-- end .local-nav -->
+    <li>
+      <span class="role icon-tutor-gray_16_18-before">Tutores:</span>
+      <%= link_to course.tutors.count,
+        environment_course_users_path(course.environment, course,
+                                      :role => "tutors"),
+        :class => "count" %>
+    </li>
+    <li>
+      <span class="role icon-member-gray_16_18-before">Alunos:</span>
+      <%= link_to course.students.count,
+        environment_course_users_path(course.environment, course,
+                                      :role => "students"),
+        :class => "count" %>
+    </li>
+  </ul><!-- end .roles -->
+  <ul class="connections clearfix">
+    <%= render :partial => 'users/item_short',
+      :collection => course.approved_users.n_recent(16) %>
+  </ul><!-- end .connections -->
 </div>

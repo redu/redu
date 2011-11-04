@@ -1,0 +1,18 @@
+<% lecture ||= @lecture %>
+<%= label_tag :name, t(:title) %>
+<%= text_field_tag :name, lecture.name %>
+<span class="tip">Nome da aula</span>
+<%= concave_errors_for(lecture, :name) %>
+<%= hidden_field_tag "subject_id", @subject.id %>
+<% if lecture.id %>
+  <%= hidden_field_tag "lecture_id", lecture.id %>
+<% end %>
+<%= f.label :body, "Texto" %>
+<%= f.cktext_area :body,
+  :width => '525px', :height => '495px',
+  :index => get_random_number, # Necessário por mostrar mais de um ckeditor
+  :swf_params => { :assetable_type => 'Space', :assetable_id => @space.id } %>
+<span class="tip">Conteúdo da aula</span>
+<%= concave_errors_for(f.object, :body) %>
+<%= f.submit %>
+<%= link_to "Cancelar", "#", :class => 'concave-clean cancel-lecture' %>

@@ -15,19 +15,6 @@ describe SubjectsController do
     UserSession.create @user
   end
 
-  context "GET 'show'" do
-    before do
-      @subject = Factory(:subject, :owner => @subject_owner,
-                         :visible => true, :space => @space,
-                         :finalized => true)
-    end
-    it "loads that subject" do
-      get :show, :locale => "pt-BR", :space_id => @space.id,
-                                     :id => @subject.id
-      assigns[:subject].should == @subject
-    end
-  end
-
   context "GET 'new'" do
     before do
       get :new, :locale => "pt-BR", :space_id => @space.id
@@ -62,7 +49,7 @@ describe SubjectsController do
       before do
         @post_params = {:title => "Subject 1",
           :description => "Lorem ipsum dolor sit amet, consectetur magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-          :tag_list => "list, of, tags", :space_id => @space.id.to_s}
+          :space_id => @space.id.to_s}
       end
 
       it "creates a record with the current user as owner" do
@@ -85,19 +72,19 @@ describe SubjectsController do
       before do
         @post_params = {:title => "",
           :description => "Lorem ipsum dolor sit amet, consectetur magna aliqua.",
-          :tag_list => "list, of, tags", :space_id => @space.id.to_s}
+          :space_id => @space.id.to_s}
       end
 
       it "does NOT create a record" do
         lambda {
-          post :create, :locale => "pt-BR", :subject => @post_params,
-          :space_id => @space.id
+          post :create, :locale => "pt-BR", :format => "js",
+          :subject => @post_params, :space_id => @space.id
         }.should_not change(Subject, :count)
       end
 
       it "assigns the subject" do
-        post :create, :locale => "pt-BR", :subject => @post_params,
-          :space_id => @space.id
+        post :create, :locale => "pt-BR", :format => "js",
+          :subject => @post_params, :space_id => @space.id
         assigns[:subject].should_not be_nil
         assigns[:subject].should be_kind_of(Subject)
       end
@@ -156,14 +143,6 @@ describe SubjectsController do
           :subject => { :description => "short description" }
         assigns[:subject].should == @subject
       end
-
-      it "re-renders 'edit'" do
-        put :update, :locale => "pt-BR", :format => 'js',
-          :id => @subject.id,
-          :space_id => @space.id,
-          :subject => { :description => "short description" }
-        response.should render_template('subjects/update_error')
-      end
     end
   end
 
@@ -183,7 +162,7 @@ describe SubjectsController do
     it "redirects to index" do
       delete :destroy, :locale => "pt-BR", :id => @subject.id,
              :space_id => @space.id
-      response.should redirect_to(space_subjects_path(@subject.space))
+      response.should redirect_to(space_path(@subject.space))
     end
   end
 
@@ -216,59 +195,6 @@ describe SubjectsController do
 
     it "redirects to GET admin_lectures_order" do
       response.should redirect_to(admin_lectures_order_space_subject_path(@space, @subject))
-    end
-  end
-
-  context "GET 'admin_members'" do
-    before do
-      @subject = Factory(:subject, :owner => @subject_owner,
-                         :space => @space, :finalized => true)
-    end
-    it "assigns the subject" do
-      get :admin_members, :locale => "pt-BR", :id => @subject.id,
-        :space_id => @space.id
-      assigns[:subject].should == @subject
-    end
-
-    it "assigns the memberships" do
-      get :admin_members, :locale => "pt-BR", :id => @subject.id,
-        :space_id => @space.id
-      assigns[:memberships].should == @subject.members
-    end
-  end
-
-  context "POST 'turn_visible'" do
-    before do
-      @subject = Factory(:subject, :owner => @subject_owner,
-                         :finalized => true ,:space => @space)
-      lecture = Factory(:lecture, :owner => @user, :subject => @subject)
-      post :turn_visible, :locale => "pt-BR", :id => @subject.id,
-        :space_id => @space.id
-    end
-
-    it "assigns the subject" do
-      assigns[:subject].should == @subject
-    end
-
-    it "redirects to 'show'" do
-      response.should redirect_to(space_subject_path(@space, @subject))
-    end
-  end
-
-  context "POST 'turn_invisible'" do
-    before do
-      @subject = Factory(:subject, :owner => @subject_owner,
-                         :space => @space, :finalized => true)
-      lecture = Factory(:lecture, :owner => @user, :subject => @subject)
-      post :turn_invisible, :locale => "pt-BR", :id => @subject.id, :space_id => @space.id
-    end
-
-    it "assigns the subject" do
-      assigns[:subject].should == @subject
-    end
-
-    it "redirects to 'show'" do
-      response.should redirect_to(space_subject_path(@space, @subject))
     end
   end
 end

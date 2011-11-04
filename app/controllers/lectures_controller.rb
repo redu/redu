@@ -101,7 +101,9 @@ class LecturesController < BaseController
       @document = Document.new
     end
 
-    respond_with(@space, @subject, @lecture)
+    respond_with(@space, @subject, @lecture) do |format|
+      format.js { render "lectures/admin/new" }
+    end
   end
 
   # GET /lectures/1/edit
@@ -122,11 +124,6 @@ class LecturesController < BaseController
       @lecture.owner = current_user
       @lecture.subject = Subject.find(params[:subject_id])
     end
-
-    quota_files = @space.course.quota.files
-    quota_multimedia = @space.course.quota.multimedia
-    plan_files_limit = @space.course.plan.file_storage_limit
-    plan_multimedia_limit = @space.course.plan.video_storage_limit
 
     if @lecture.name
       if params[:page]
@@ -157,9 +154,12 @@ class LecturesController < BaseController
         @space.course.quota.refresh
         @lecture.published = 1
         @lecture.save
-        format.js
+
+        @quota = @course.quota
+        @plan = @course.plan
+        format.js { render "lectures/admin/create" }
       else
-        format.js { render :create_error }
+        format.js { render 'lectures/admin/create_error'}
       end
     end
   end
@@ -189,19 +189,11 @@ class LecturesController < BaseController
 
    if params[:page]
      @page = @lecture.lectureable
-      valid = @page.update_attributes(params[:page]) && @lecture.save
-    elsif params[:seminar]
-      @seminar.update_attributes(params[:seminar]) && @lecture.save
-    elsif params[:document]
-      @document.update_attributes(params[:document]) && @lecture.save
+      @valid = @page.update_attributes(params[:page]) && @lecture.save
     end
-    @lecture.subject.space.course.quota.refresh
+
     respond_to do |format|
-      if valid
-        format.js
-      else
-        format.js { render :template => 'lectures/create_error'}
-      end
+      format.js { render 'lectures/admin/update' }
     end
 
   end
@@ -213,7 +205,11 @@ class LecturesController < BaseController
     @lecture.subject.space.course.quota.refresh
     @lecture.refresh_students_profiles
 
+    @quota = @course.quota
+    @plan = @course.plan
+
    respond_with(@space, @subject, @lecture) do |format|
+     format.js { render "lectures/admin/destroy" }
       format.html do
         flash[:notice] = "A aula foi removida."
         redirect_to space_subject_path(@space, @subject)

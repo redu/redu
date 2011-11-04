@@ -1,48 +1,34 @@
-<li class="clearfix">
+<li class="child clearfix">
+  <%= image_tag item.avatar.url(:thumb_32), :alt => 'disciplina' %>
+  <%= link_to item.name, space_path(item), :class => "name" %>
+  <% if can?(:manage, item) %>
+    <%= link_to "Gerenciar", edit_space_path(item),
+      :class => "manage icon-manage-gray_8_10-before" %>
+  <% end %>
   <div class="info">
-    <%= image_tag item.avatar.url(:thumb_32),
-      :alt => 'disciplina' %>
-    <%= link_to item.name, space_path(item) %>
-    <ul class="tags">
-        <% item.tags.each do |tag| %>
-          <li>
-            <%= link_to tag,
-              environment_course_path(item.course.environment, item.course) %>
-          </li>
-        <% end %>
+    <ul class="resources clearfix">
+      <%= link_to "Conteúdo:", space_path(item),
+        :class => "title icon-content-lightblue_16_18-before" %>
+      <li class="subjects icon-subject-gray_16_18-before">
+        <span class="all"><%= pluralize item.subjects.visible.count,  "módulo" %></span>
+        <span class="new"><%= pluralize item.subjects.visible.recent.count,  "novo" %></span>
+      </li>
+      <li class="lectures icon-lecture-gray_16_18-before">
+        <span class="all"><%= pluralize item.lectures_count, "aula" %></span>
+      </li>
     </ul>
-  </div>
-  <div class="activities">
-    <ul>
-      <% item.recent_log.each do |type, logs| %>
-        <% unless logs.size == 0 %>
-      <li>
-        <span class="qty">+<%= logs.size %></span>
-        <%= link_to resource_name(type, logs.size),
-          polymorphic_path([item, type.to_s.camelize.constantize.new]) %>
+    <ul class="resources clearfix">
+      <%= link_to "Mural da Disciplina:", mural_space_path(item),
+        :class => "title icon-wall-lightblue_16_18-before" %>
+      <li class="comments">
+        <span class="all"><%= pluralize item.statuses.count, "comentário" %></span>
+        <span class="new"><%= pluralize Status.recent_from_hierarchy(item).count,  "novo" %></span>
       </li>
-    <% end %>
-      <% end %>
     </ul>
-  </div>
-  <div class="statistics">
-    <ul class="statistics">
-      <li>
-        <em>Membros:</em>
-        <span><%= item.users.length %></span>
-      </li>
-      <li>
-        <em>Professores:</em>
-        <span><%= item.teachers.length %></span>
-      </li>
-      <li>
-        <em>Tutores:</em>
-        <span><%= item.tutors.length %></span>
-      </li>
-      <li>
-        <em>Alunos:</em>
-        <span><%= item.students.length %></span>
-      </li>
+    <ul class="resources clearfix">
+      <%= link_to "Arquivos de Apoio:", space_folders_path(item),
+        :class => "title icon-file-lightblue_16_18-before" %>
+      <li class="files"><span class="all"><%= pluralize item.myfiles.count, "arquivo" %></span></li>
     </ul>
   </div>
 </li>

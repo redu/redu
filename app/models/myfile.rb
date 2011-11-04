@@ -34,7 +34,6 @@ class Myfile < ActiveRecord::Base
     'image/gif'
   ]
 
-  before_destroy :delete_file_on_disk
   before_create :overwrite
 
   has_attached_file :attachment, Redu::Application.config.paperclip_myfiles
@@ -48,14 +47,7 @@ class Myfile < ActiveRecord::Base
   validates_uniqueness_of :attachment_file_name, :scope => 'folder_id'
   validates_attachment_content_type :attachment, :content_type => CONTENT_TYPES
 
-  # When removing a myfile record from the database,
-  # the actual file on disk has to be removed too.
-  # That is exactly what this method does.
-  def delete_file_on_disk
-    # File.delete self.path
-  end
-
-  def overwrite # TODO ao fazer o upload verificar e perguntar se sobrescreve ou nao
+  def overwrite
     existing = Myfile.find_by_attachment_file_name(self.attachment_file_name)
     if existing
       existing.destroy

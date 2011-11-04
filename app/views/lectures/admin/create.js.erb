@@ -1,0 +1,19 @@
+<%= remotipart_response do %>
+  var $itemShort = $("<%= escape_javascript(render :partial => 'lectures/admin/item_short', :locals => { :item_short => @lecture }) %>");
+  $('#resources_list').append($itemShort);
+
+  $('#lecture_form').slideUp(function(){ $(this).remove(); });
+  <%# Tira efeito de selecionado do choo_lectures %>
+  $("#space-manage .new-resource .resources-types li").removeClass("selected");
+
+  <% if @lecture.lectureable.class == Page %>
+    var $editPageForm = $("<%= escape_javascript render 'lectures/admin/edit', :lecture => @lecture, :subject => @subject, :space => @space %>");
+    $('#resources-edition').append($editPageForm);
+  <% end %>
+
+  $("#space-manage #resources_list").refreshResourcesNumbering();
+
+  <%# Atualiza quotas %>
+  var $quotas = $("<%= escape_javascript render 'subjects/admin/quotas', :quota => @quota, :plan => @plan %>");
+  $("#space-manage .concave-form .quotas").replaceWith($quotas);
+<% end %>

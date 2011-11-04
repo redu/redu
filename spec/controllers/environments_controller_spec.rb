@@ -189,4 +189,76 @@ describe EnvironmentsController do
     end
   end
 
+  context "GET preview" do
+    before do
+      environment = Factory(:environment)
+      courses = (1..5).collect { Factory(:course, :environment => environment) }
+
+      get :preview, :id => environment.path, :locale => "pt-BR"
+    end
+
+    it "assigns courses" do
+      assigns[:courses].should_not be_nil
+    end
+  end
+
+  # admin actions (management panel)
+  context "on management panel" do
+    before  do
+      @environment = Factory(:environment)
+      @courses = (1..3).collect { Factory(:course, :environment => @environment) }
+      @user = Factory(:user)
+      @courses.each {|c| c.join @user, :environment_admin }
+      activate_authlogic
+      UserSession.create @user
+    end
+
+    context "GET edit" do
+      before do
+        get :edit, :locale => "pt-BR", :id => @environment.path
+      end
+
+      it "assigns environment" do
+        assigns[:environment].should_not be_nil
+      end
+
+      it "assigns header_environment" do
+        assigns[:header_environment].should_not be_nil
+      end
+
+      it "renders admin/edit" do
+        response.should render_template "environments/admin/edit"
+      end
+    end
+
+    context "POST update" do
+      context "when successful" do
+        before do
+          @post_params = { :environment => { :name => "Pe" , :initials => "PE",
+            :path => @environment.path, :tag_list => "", :description => "" } }
+          @post_params[:locale] = "pt-BR"
+          @post_params[:id] = @environment.path
+          post :update, @post_params
+        end
+
+        it "redirects to Environments#show" do
+          response.should redirect_to(environment_path(@environment))
+        end
+      end
+
+      context "when failing" do
+        before do
+          @post_params = { :environment => { :name => "" , :initials => "PE",
+            :path => "", :tag_list => "", :description => "" } }
+          @post_params[:locale] = "pt-BR"
+          @post_params[:id] = @environment.path
+          post :update, @post_params
+        end
+
+        it "re-renders environments/admin/edit" do
+          response.should render_template "environments/admin/edit"
+        end
+      end
+    end
+  end
 end

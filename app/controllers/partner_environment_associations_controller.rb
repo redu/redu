@@ -35,9 +35,6 @@ class PartnerEnvironmentAssociationsController < BaseController
 
     @partner_environment_associations = \
       @partner.partner_environment_associations.paginate(paginating)
-    #FIXME necessário por causa das sub-abas
-    @partner_user_associations = \
-      @partner.partner_user_associations.paginate(paginating)
 
     respond_to do |format|
       format.html
@@ -52,9 +49,6 @@ class PartnerEnvironmentAssociationsController < BaseController
     }
 
     @partner_environment_association.build_environment
-    #FIXME necessário por causa das sub-abas
-    @partner_user_associations = \
-      @partner.partner_user_associations.paginate(paginating)
 
     respond_to do |format|
       format.html

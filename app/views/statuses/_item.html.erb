@@ -87,7 +87,7 @@
           <div class="status-icon icon-<%= role_at(item.user, item.logeable) %>-gray_16_18-before">
             <%= link_to item.user.display_name, user_path(item.user), :class => "username" %>
           <span class="status-info"> <%= raw auto_link(item.action_text) %></span>
-          <%= link_to item.logeable.title, space_subject_path(item.logeable.space, item.logeable), :class => "status-secondary icon-expand-gray_16_18-before" %>
+          <%= link_to item.logeable.title, space_path(item.logeable.space), :class => "status-secondary icon-expand-gray_16_18-before" %>
             <span class="date">
             <%= time_ago_in_words item.created_at %>
             </span>
@@ -123,7 +123,7 @@
           <span class="status-subject icon-small icon-space-lightblue_32_34">
           </span>
           <%= link_to item.statusable.subject.space.name, space_path(item.statusable.subject.space), :class => "status-main" %>
-          <%= link_to item.statusable.subject.title, space_subject_path(item.statusable.subject.space, item.statusable.subject), :class => "status-secondary icon-expand-gray_8_10-before" %>
+          <%= link_to item.statusable.subject.title, space_path(item.statusable.subject.space), :class => "status-secondary icon-expand-gray_8_10-before" %>
         </div>
         <div class="status-log">
           <%= image_tag item.user.avatar.url(:thumb_32),

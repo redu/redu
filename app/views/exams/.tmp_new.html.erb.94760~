@@ -1,6 +1,0 @@
-<% form_for @exam do |f| %>
-  <%= f.error_messages %>
-  <%= render "#{@exam.current_step}_step", :f => f, :edit => false %>
-  <p><%= f.submit "Continue" %></p>
-  <p><%= f.submit "Back", :name => "back_button" unless @exam.first_step? %></p>
-<% end %>

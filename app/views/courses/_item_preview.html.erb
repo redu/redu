@@ -1,0 +1,40 @@
+<li class="child clearfix">
+    <%= image_tag 'new/missing_courses_thumb_32.png', :alt => 'curso' %>
+  <div class="info">
+    <%= link_to item_preview.name,
+      environment_course_path(item_preview.environment, item_preview),
+      :class => 'name' %>
+    <% unless item_preview.workload.nil? %>
+      <span class="workload"><%= item_preview.workload %> horas</span>
+    <% end %>
+    <p class="description"><%= item_preview.description %></p>
+    <ul class="tags clearfix">
+      <% item_preview.tags.each do |tag| %>
+        <li>
+          <%= link_to tag, nil %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+  <div class="statistics">
+    <span class="privacy icon-small icon-privacy-lightred_16_18 replacement">Curso fechado</span>
+    <ul class="numbers clearfix">
+      <li>
+        <span class="count"><%= item_preview.approved_users.length %></span>
+        <em class="role">membros</em>
+      </li>
+      <li>
+        <span class="count"><%= item_preview.teachers.length %></span>
+        <em class="role">professores</em>
+      </li>
+      <li>
+        <span class="count"><%= item_preview.tutors.length %></span>
+        <em class="role">tutores</em>
+      </li>
+      <li>
+        <span class="count"><%= item_preview.students.length %></span>
+        <em class="role">alunos</em>
+      </li>
+    </ul>
+  </div>
+</li>

@@ -1,0 +1,36 @@
+<%= render :partial => "shared/management_background" %>
+<div class="management-sidebar">
+  <%= render :partial => 'courses/sidebar',
+    :locals => { :course => @course } %>
+</div>
+<div class="main grid_12 omega big-col management-wrapper">
+  <%= render :partial => "courses/breadcrumbs",
+    :locals => { :course => @course } %>
+  <%= render :partial => "courses/admin/header",
+    :locals => { :course => @course }  %>
+  <div id="course-manage" class="management body">
+    <%= render :partial => "courses/admin/clean_header" %>
+    <%= tabs :courses_admin do %>
+      <%= subtabs :courses_admin do %>
+        <div class="management-actions">
+          <%= link_to "Convidar membros", admin_invitations_environment_course_path(@environment, @course), :class => "button" %>
+        </div>
+        <h3 class="form-header">Aguardando a resposta de <%= (@email_invitations.count + @user_invitations.count) %> membro(s)</h3>
+        <% unless @email_invitations.empty? && @user_invitations.invited.empty? %>
+          <div id="user_list" class="invitation-list">
+            <%= render :partial => 'courses/invitations_list_admin',
+              :locals => {:user_invitations => @user_invitations, :email_invitations => @email_invitations}%>
+          </div>
+        <% else %>
+          <div class="box_notice">
+            Não há convites em aberto.
+          </div>
+        <% end %>
+        <%#= will_paginate  @memberships, :renderer => EndlessRenderer %>
+        <%= link_to "Sair", environment_course_path(@environment, @course),
+        :class => "manage exit icon-manage-gray_8_10-before" %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+

@@ -48,39 +48,6 @@ class FriendshipsController < BaseController
     end
   end
 
-  # Controlador não acessível a partir das views
-  def pending
-    @friends_pending = @user.friends_pending.
-      paginate({:page => params[:page], :per_page => 10})
-
-    respond_to do |format|
-      format.html
-      format.js do
-        render_endless 'friendships/item_pending', @friends_pending, '#pending_list'
-      end
-    end
-  end
-
-  def accept
-    @friend = User.find(params[:friend_id])
-    current_user.be_friends_with(@friend)
-    respond_to do |format|
-      format.html do
-        redirect_to pending_user_friendships_path(current_user)
-      end
-      format.js
-    end
-  end
-
-  def decline
-    destroy_friendship(@friendship.friend)
-    respond_to do |format|
-      format.html do
-        redirect_to user_path(@friendship.friend)
-      end
-    end
-  end
-
   protected
   def destroy_friendship(choosen_user)
     friendship_in = current_user.friendship_for(choosen_user)

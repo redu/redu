@@ -1,30 +1,28 @@
-<li class="clearfix">
+<li class="child clearfix">
   <% if(can? :manage, item) %>
     <%= link_to 'Editar', edit_space_subject_path(item.space, item),
-      :class => "edit icon icon-management-gray_8_8" %>
+      :class => "manage icon-manage-gray_8_10-before" %>
+    <% if item.visible? %>
+      <span class="visible icon-small icon-visible-gray_16_18 replacement">Visível para os alunos</span>
+    <% end %>
   <% end %>
-  <%= link_to item.title, space_subject_path(item.space, item),
-    :class => 'name' %>
+  <%= link_to item.title, "#",
+    :class => 'subject-name name icon-content-lightblue_32_34-before' %>
+  <% if item.graduated? current_user %>
+    <span class="graduated icon-small icon-confirm-green_16_18 replacement">Módulo finalizado</span>
+  <% end %>
   <% if item.recent? %>
     <span class="new">Novo</span>
   <% end %>
-  <% if !item.visible? %>
-    <span style="color: #C02200; font-weight: bold; font-size: 0.7em;">INVISÍVEL</span>
+  <% if !item.graduated?(current_user) &&
+    !current_user.get_association_with(item).nil?  %>
+    <span class="grade">(<%= current_user.get_association_with(item).student_profile.grade.to_i %>% cursado)</span>
   <% end %>
-  <span class="description"><%= item.description %></span>
-  <ul class="tags clearfix">
-    <% item.tags.each do |tag| %>
-      <li>
-        <%= link_to tag.name, space_subjects_path(item.space) %>
-      </li>
-    <% end %>
-  </ul>
-  <span class="expand replacement">Mais detalhes</span>
-  <div class="details" style="display: none;">
-    <strong>Recursos</strong>
-    <ul class="resources">
-      <%= render :partial => 'lectures/item_preview',
-        :collection => item.lectures %>
-    </ul>
-  </div>
+  <p class="description"><%= item.description %></p>
+  <span class="expand icon-small icon-expand_down-gray_16_18 replacement">Mais detalhes</span>
+  <ol class="lectures clearfix" style="display: none;">
+    <strong class="title icon-lecture-gray_16_18-before">Aulas (<%= item.lectures.count %>)</strong>
+    <%= render :partial => 'lectures/item_preview',
+      :collection => item.lectures %>
+  </ol>
 </li>

@@ -1,0 +1,25 @@
+<%# Form de Subject (e somente ele) %>
+<%= f.label :title, "Nome", :class => "icon-content-gray_32_34-before" %>
+<%= f.text_field :title, { :class => 'big' } %>
+<span class="tip">Nome do módulo</span>
+<%= concave_errors_for(f.object, :title) %>
+
+<%= f.label :description, t(:description) %>
+<%= f.text_area :description, :class => 'subject-description' %>
+<span class="tip">Informações acerca do módulo e suas aulas</span>
+<%= render :partial => 'shared/limit_char_field',
+  :locals => { :class_textarea => "subject-description",
+               :limit => 250 }%>
+<%= concave_errors_for(f.object, :description) %>
+
+<%= f.label :visible, "Disponibilidade" %>
+<ul class="single-column">
+  <li>
+    <%= f.radio_button :visible, true, :class => "visible-radio" %>
+    <%= f.label :visible, "Visível", :class => "visible-label icon-visible-gray_16_18-before" %>
+  </li>
+  <li class="invisible">
+    <%= f.radio_button :visible, false %>
+    <%= f.label :visible, "Invisível" %>
+  </li>
+</ul>

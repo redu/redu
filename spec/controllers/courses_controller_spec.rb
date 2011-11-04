@@ -124,123 +124,153 @@ describe CoursesController do
         @params = {:course => { :subscription_type => "1" },
           :id => @course.path,:environment_id => @course.environment.path,
           :locale => "pt-BR"}
-          post :update, @params
-        end
+        post :update, @params
+      end
 
-        it "should update a course" do
-          assigns[:course].should_not be_nil
-          assigns[:course].should be_valid
-        end
+      it "should update a course" do
+        assigns[:course].should_not be_nil
+        assigns[:course].should be_valid
+      end
 
-        it "should create associations with all members that are waiting" do
-          @course.approved_users.to_set.should == (@users << @user).to_set
-          @course.pending_users.should == []
-        end
+      it "should create associations with all members that are waiting" do
+        @course.approved_users.to_set.should == (@users << @user).to_set
+        @course.pending_users.should == []
+      end
+    end
+  end
+
+  context "when moderating a course" do
+    before do
+      @user = Factory(:user)
+      activate_authlogic
+      UserSession.create @user
+
+      @environment = Factory(:environment, :owner => @user)
+
+      @course = Factory(:course,:environment => @environment,
+                        :owner => @user,
+                        :subscription_type => 2)
+
+      plan = Factory(:plan, :billable => @course,
+                     :user => @course.owner)
+      @course.create_quota
+
+      @space = Factory(:space, :course => @course, :owner => @user)
+      @users = 5.times.inject([]) { |res, i| res << Factory(:user) }
+      @course.join(@users[0])
+      @course.join(@users[1])
+      @course.join(@users[2])
+      @course.join(@users[3])
+      @course.join(@users[4])
+
+      UserSession.create @user
+    end
+
+    context "POST - rejecting members" do
+      before do
+        @params = { :member => { @users[1].id.to_s => "reject",
+          @users[2].id.to_s => "reject",
+          @users[3].id.to_s => "approve"},
+          :id => @course.path, :environment_id => @environment.path,
+          :locale => "pt-BR"}
+        post :moderate_members_requests, @params
+      end
+
+      it "should assign course" do
+        assigns[:course].should_not be_nil
+        assigns[:course].should be_valid
+      end
+
+      it "should destroy association" do
+        @users[1].get_association_with(@course).should be_nil
+        @users[2].get_association_with(@course).should be_nil
+        @users[1].get_association_with(@course.environment).should be_nil
+        @users[2].get_association_with(@course.environment).should be_nil
+        @users[1].get_association_with(@space).should be_nil
+        @users[2].get_association_with(@space).should be_nil
+        @course.approved_users.to_set.should == [@user, @users[3]].to_set
       end
     end
 
-    context "when moderating a course" do
+    context "POST - accepting member" do
       before do
+        @params = { :member => { @users[1].id.to_s => "approve",
+          @users[2].id.to_s => "approve"},
+          :id => @course.path, :environment_id => @environment.path,
+          :locale => "pt-BR"}
+        post :moderate_members_requests, @params
+      end
+
+      it "should assign course" do
+        assigns[:course].should_not be_nil
+        assigns[:course].should be_valid
+      end
+
+      it "should approve association" do
+        @course.approved_users.to_set.should == [@users[1], @users[2], @user].to_set
+      end
+
+      it "should create environment and space associations" do
+        @course.environment.users.to_set.should == [@users[1], @users[2], @user].to_set
+        @space.users.to_set.should == [@users[1], @users[2], @user].to_set
+      end
+    end
+
+  end
+
+  context "when viewing existent courses list" do
+    before do
+      @courses = (1..10).collect { Factory(:course) }
+      @audiences = (1..5).collect { Factory(:audience) }
+
+      @courses[0..3].each_with_index do |c, i|
+        c.audiences << @audiences[i] << @audiences[i+1]
+      end
+
+      @courses[4..7].each_with_index do |c, i|
+        c.audiences << @audiences.reverse[i] << @audiences.reverse[i+1]
+      end
+    end
+
+    context "GET index" do
+      before do
+        get :index, :locale => 'pt-BR'
+      end
+
+      it "should assign all courses" do
+        assigns[:courses].should_not be_nil
+        assigns[:courses].to_set.
+          should == Course.published.all(:limit => 10).to_set
+      end
+
+      it "should render courses/index" do
+        response.should render_template('courses/index')
+      end
+    end
+
+    context "where the user is" do
+      before  do
+        User.maintain_sessions = false
         @user = Factory(:user)
         activate_authlogic
         UserSession.create @user
 
-        @environment = Factory(:environment, :owner => @user)
+        @courses[0].join @user
+        @courses[5].join @user
+        @courses[1..3].each { |c| c.join @user, Role[:tutor] }
+        @courses[6].join @user, Role[:teacher]
+        @courses[7].join @user, Role[:environment_admin]
 
-        @course = Factory(:course,:environment => @environment,
-                          :owner => @user,
-                          :subscription_type => 2)
-
-        plan = Factory(:plan, :billable => @course,
-                       :user => @course.owner)
-        @course.create_quota
-
-        @space = Factory(:space, :course => @course, :owner => @user)
-        @users = 5.times.inject([]) { |res, i| res << Factory(:user) }
-        @course.join(@users[0])
-        @course.join(@users[1])
-        @course.join(@users[2])
-        @course.join(@users[3])
-        @course.join(@users[4])
-
-        UserSession.create @user
       end
 
-      context "POST - rejecting members" do
+      context "student" do
         before do
-          @params = { :member => { @users[1].id.to_s => "reject",
-                                   @users[2].id.to_s => "reject",
-                                   @users[3].id.to_s => "approve"},
-                      :id => @course.path, :environment_id => @environment.path,
-                      :locale => "pt-BR"}
-          post :moderate_members_requests, @params
+          get :index, :locale => 'pt-BR', :role => 'student'
         end
 
-        it "should assign course" do
-          assigns[:course].should_not be_nil
-          assigns[:course].should be_valid
-        end
-
-        it "should destroy association" do
-          @users[1].get_association_with(@course).should be_nil
-          @users[2].get_association_with(@course).should be_nil
-          @users[1].get_association_with(@course.environment).should be_nil
-          @users[2].get_association_with(@course.environment).should be_nil
-          @users[1].get_association_with(@space).should be_nil
-          @users[2].get_association_with(@space).should be_nil
-          @course.approved_users.to_set.should == [@user, @users[3]].to_set
-        end
-      end
-
-      context "POST - accepting member" do
-        before do
-          @params = { :member => { @users[1].id.to_s => "approve",
-                                   @users[2].id.to_s => "approve"},
-                      :id => @course.path, :environment_id => @environment.path,
-                      :locale => "pt-BR"}
-          post :moderate_members_requests, @params
-        end
-
-        it "should assign course" do
-          assigns[:course].should_not be_nil
-          assigns[:course].should be_valid
-        end
-
-        it "should approve association" do
-          @course.approved_users.to_set.should == [@users[1], @users[2], @user].to_set
-        end
-
-        it "should create environment and space associations" do
-          @course.environment.users.to_set.should == [@users[1], @users[2], @user].to_set
-          @space.users.to_set.should == [@users[1], @users[2], @user].to_set
-        end
-      end
-
-    end
-
-    context "when viewing existent courses list" do
-      before do
-        @courses = (1..10).collect { Factory(:course) }
-        @audiences = (1..5).collect { Factory(:audience) }
-
-        @courses[0..3].each_with_index do |c, i|
-          c.audiences << @audiences[i] << @audiences[i+1]
-        end
-
-        @courses[4..7].each_with_index do |c, i|
-          c.audiences << @audiences.reverse[i] << @audiences.reverse[i+1]
-        end
-      end
-
-      context "GET index" do
-        before do
-          get :index, :locale => 'pt-BR'
-        end
-
-        it "should assign all courses" do
+        it "should assign all these courses" do
           assigns[:courses].should_not be_nil
-          assigns[:courses].to_set.
-            should == Course.published.all(:limit => 10).to_set
+          assigns[:courses].to_set.should == [@courses[0], @courses[5]].to_set
         end
 
         it "should render courses/index" do
@@ -248,493 +278,460 @@ describe CoursesController do
         end
       end
 
-      context "where the user is" do
+      context "tutor" do
+        before do
+          get :index, :locale => 'pt-BR', :role => 'tutor'
+        end
+
+        it "should assign all these courses" do
+          assigns[:courses].should_not be_nil
+          assigns[:courses].to_set.should == @courses[1..3].to_set
+        end
+
+        it "should render courses/index" do
+          response.should render_template('courses/index')
+        end
+      end
+
+      context "teacher" do
+        before do
+          get :index, :locale => 'pt-BR', :role => 'teacher'
+        end
+
+        it "should assign all these courses" do
+          assigns[:courses].should_not be_nil
+          assigns[:courses].to_set.should == [@courses[6]].to_set
+        end
+
+        it "should render courses/index" do
+          response.should render_template('courses/index')
+        end
+      end
+
+      context "administrator" do
+        before do
+          get :index, :locale => 'pt-BR', :role => 'administrator'
+        end
+
+        it "should assign all these courses" do
+          assigns[:courses].should_not be_nil
+          assigns[:courses].to_set.should == [@courses[7]].to_set
+        end
+
+        it "should render courses/index" do
+          response.should render_template('courses/index')
+        end
+      end
+    end
+
+    context "GET index with js format" do
+      before do
+        get :index, :locale => 'pt-BR', :format =>'js'
+      end
+
+      it "should assign all courses" do
+        assigns[:courses].should_not be_nil
+        assigns[:courses].to_set.
+          should == Course.published.all(:limit => 10).to_set
+      end
+
+      it "should render courses/index" do
+        response.should render_template('courses/index')
+      end
+    end
+
+    context "POST index" do
+      context "with specified audiences" do
+        before do
+          post :index, :locale => 'pt-BR',
+            :audiences_ids => [@audiences[0].id, @audiences[3].id]
+        end
+
+        it "should assign all courses with one of specified audiences" do
+          assigns[:courses].should_not be_nil
+          assigns[:courses].to_set.should == Course.
+            with_audiences([@audiences[0].id, @audiences[3].id]).to_set
+        end
+      end
+
+      context "with specified keyword" do
         before  do
-          User.maintain_sessions = false
-          @user = Factory(:user)
-          activate_authlogic
-          UserSession.create @user
-
-          @courses[0].join @user
-          @courses[5].join @user
-          @courses[1..3].each { |c| c.join @user, Role[:tutor] }
-          @courses[6].join @user, Role[:teacher]
-          @courses[7].join @user, Role[:environment_admin]
-
+          @c1 = Factory(:course, :name => 'keyword')
+          @c2 = Factory(:course, :name => 'another key')
+          @c3 = Factory(:course, :name => 'key 2')
+          post :index, :locale => 'pt-BR', :search => 'key'
         end
 
-        context "student" do
-          before do
-            get :index, :locale => 'pt-BR', :role => 'student'
-          end
-
-          it "should assign all these courses" do
-            assigns[:courses].should_not be_nil
-            assigns[:courses].to_set.should == [@courses[0], @courses[5]].to_set
-          end
-
-          it "should render courses/index" do
-            response.should render_template('courses/index')
-          end
-        end
-
-        context "tutor" do
-          before do
-            get :index, :locale => 'pt-BR', :role => 'tutor'
-          end
-
-          it "should assign all these courses" do
-            assigns[:courses].should_not be_nil
-            assigns[:courses].to_set.should == @courses[1..3].to_set
-          end
-
-          it "should render courses/index" do
-            response.should render_template('courses/index')
-          end
-        end
-
-        context "teacher" do
-          before do
-            get :index, :locale => 'pt-BR', :role => 'teacher'
-          end
-
-          it "should assign all these courses" do
-            assigns[:courses].should_not be_nil
-            assigns[:courses].to_set.should == [@courses[6]].to_set
-          end
-
-          it "should render courses/index" do
-            response.should render_template('courses/index')
-          end
-        end
-
-        context "administrator" do
-          before do
-            get :index, :locale => 'pt-BR', :role => 'administrator'
-          end
-
-          it "should assign all these courses" do
-            assigns[:courses].should_not be_nil
-            assigns[:courses].to_set.should == [@courses[7]].to_set
-          end
-
-          it "should render courses/index" do
-            response.should render_template('courses/index')
-          end
-        end
-      end
-
-      context "GET index with js format" do
-        before do
-          get :index, :locale => 'pt-BR', :format =>'js'
-        end
-
-        it "should assign all courses" do
+        it "should assign all courses with name LIKE the keyword" do
           assigns[:courses].should_not be_nil
-          assigns[:courses].to_set.
-            should == Course.published.all(:limit => 10).to_set
-        end
-
-        it "should render courses/index" do
-          response.should render_template('courses/index')
+          assigns[:courses].to_set.should == [@c1, @c2, @c3].to_set
         end
       end
 
-      context "POST index" do
-        context "with specified audiences" do
-          before do
-            post :index, :locale => 'pt-BR',
-              :audiences_ids => [@audiences[0].id, @audiences[3].id]
-          end
+      context "with specified audiences AND with specified keyword" do
+        before  do
+          @c1 = Factory(:course, :name => 'keyword')
+          @c2 = Factory(:course, :name => 'another key')
+          @c3 = Factory(:course, :name => 'key 2')
+          @a1 = Factory(:audience)
+          @a2 = Factory(:audience)
 
-          it "should assign all courses with one of specified audiences" do
-            assigns[:courses].should_not be_nil
-            assigns[:courses].to_set.should == Course.
-              with_audiences([@audiences[0].id, @audiences[3].id]).to_set
-          end
+          @c1.audiences << @a1
+          @c2.audiences << @a1 << @a2
+          post :index, :locale => 'pt-BR', :search => 'key',
+            :audiences_ids => [@a1.id, @a2.id]
         end
 
-        context "with specified keyword" do
-          before  do
-            @c1 = Factory(:course, :name => 'keyword')
-            @c2 = Factory(:course, :name => 'another key')
-            @c3 = Factory(:course, :name => 'key 2')
-            post :index, :locale => 'pt-BR', :search => 'key'
-          end
-
-          it "should assign all courses with name LIKE the keyword" do
-            assigns[:courses].should_not be_nil
-            assigns[:courses].to_set.should == [@c1, @c2, @c3].to_set
-          end
-        end
-
-        context "with specified audiences AND with specified keyword" do
-          before  do
-            @c1 = Factory(:course, :name => 'keyword')
-            @c2 = Factory(:course, :name => 'another key')
-            @c3 = Factory(:course, :name => 'key 2')
-            @a1 = Factory(:audience)
-            @a2 = Factory(:audience)
-
-            @c1.audiences << @a1
-            @c2.audiences << @a1 << @a2
-            post :index, :locale => 'pt-BR', :search => 'key',
-              :audiences_ids => [@a1.id, @a2.id]
-          end
-
-          it "should assign all courses with one of specified audience AND name LIKE the keyword" do
-            assigns[:courses].should_not be_nil
-            assigns[:courses].to_set.should == [@c1, @c2].to_set
-          end
+        it "should assign all courses with one of specified audience AND name LIKE the keyword" do
+          assigns[:courses].should_not be_nil
+          assigns[:courses].to_set.should == [@c1, @c2].to_set
         end
       end
     end
+  end
 
-    context "when unjoin from a course (POST unjoin)" do
+  context "when unjoin from a course (POST unjoin)" do
+    before do
+      @owner = Factory(:user)
+
+      @environment = Factory(:environment, :owner => @owner)
+
+      @course = Factory(:course,:environment => @environment, :owner => @owner)
+      @spaces = (1..2).collect { Factory(:space, :course => @course,
+                                         :owner => @owner)}
+      @subjects = []
+      @spaces.each do |s|
+        @subjects << Factory(:subject, :space => s, :owner => @owner,
+                             :finalized => true)
+      end
+
+      @user = Factory(:user)
+      @course.join @user
+      @subjects.each { |sub| sub.enroll @user }
+      activate_authlogic
+      UserSession.create @user
+
+      @params = { :locale => 'pt-BR', :environment_id => @environment.path,
+        :id => @course.path }
+      post :unjoin, @params
+    end
+
+    it "assigns course" do
+    end
+
+    it "removes the user from itself" do
+      @course.users.should_not include(@user)
+    end
+    it "removes the user from all spaces" do
+      @spaces.collect { |s| s.users.should_not include(@user) }
+    end
+    it "removes the user from all enrolled subjects" do
+      @subjects.collect { |s| s.members.should_not include(@user) }
+    end
+
+  end
+
+  context "when responding a course invitation" do
+    before do
+      @owner = Factory(:user)
+      @environment = Factory(:environment, :owner => @owner)
+      @course = Factory(:course,:environment => @environment, :owner => @owner)
+      plan = Factory( :plan, :billable => @course,
+                     :user => @course.owner,
+                     :members_limit => 5)
+      @course.create_quota
+
+      @invited_user = Factory(:user)
+      activate_authlogic
+      UserSession.create @invited_user
+
+      @course.invite @invited_user
+      @params = { :locale => 'pt-BR', :environment_id => @environment.path,
+        :id => @course.path }
+    end
+
+    context "and accepting" do
       before do
-        @owner = Factory(:user)
-
-        @environment = Factory(:environment, :owner => @owner)
-
-        @course = Factory(:course,:environment => @environment, :owner => @owner)
-        @spaces = (1..2).collect { Factory(:space, :course => @course,
-                                           :owner => @owner)}
-        @subjects = []
-        @spaces.each do |s|
-          @subjects << Factory(:subject, :space => s, :owner => @owner,
-                  :finalized => true)
-        end
-
-        @user = Factory(:user)
-        @course.join @user
-        @subjects.each { |sub| sub.enroll @user }
-        activate_authlogic
-        UserSession.create @user
-
-        @params = { :locale => 'pt-BR', :environment_id => @environment.path,
-          :id => @course.path }
-        post :unjoin, @params
+        post :accept, @params
       end
 
       it "assigns course" do
+        assigns[:course].should_not be_nil
       end
 
-      it "removes the user from itself" do
-        @course.users.should_not include(@user)
-      end
-      it "removes the user from all spaces" do
-        @spaces.collect { |s| s.users.should_not include(@user) }
-      end
-      it "removes the user from all enrolled subjects" do
-        @subjects.collect { |s| s.members.should_not include(@user) }
-      end
-
-    end
-
-    context "when destroying members" do
-      before do
-        @owner = Factory(:user)
-
-        @environment = Factory(:environment, :owner => @owner)
-
-        @course = Factory(:course,:environment => @environment, :owner => @owner)
-        @spaces = (1..2).collect { Factory(:space, :course => @course,
-                                           :owner => @owner)}
-        @subjects = []
-        @spaces.each do |s|
-          @subjects << Factory(:subject, :space => s, :owner => @owner,
-                  :finalized => true)
-        end
-
-        @users = 3.times.inject([]) { |acc,i| acc << Factory(:user) }
-        @users.each { |u| @course.join u }
-
-        activate_authlogic
-        UserSession.create @owner
-
-        @params = { :locale => 'pt-BR', :environment_id => @environment.path,
-          :id => @course.path, "users" => @users.collect { |u| u.id } }
-        post :destroy_members, @params
-      end
-
-      it "destroys UCA" do
-        @users.each do |u|
-          u.get_association_with(@course).should be_nil
-        end
-      end
-
-      it "destroys USA" do
-        usas = @spaces.collect do |s|
-          @users.collect { |u| u.get_association_with(s) }
-        end.flatten
-
-        usas.inject(true) { |acc,i| acc && (i.nil?) }.should be_true
-      end
-
-      it "destroys enrollments" do
-        enrollments = @spaces.collect do |s|
-          s.subjects.collect do |subj|
-            @users.collect { |u| u.get_association_with(subj) }
-          end
-        end.flatten
-
-        enrollments.inject(true) { |acc,i| acc && (i.nil?) }.should be_true
+      it "accepts the invitation" do
+        @invited_user.get_association_with(@course).state.
+          should == "approved"
+        @course.approved_users.should include(@invited_user)
       end
     end
 
-    context "when responding a course invitation" do
-      before do
-        @owner = Factory(:user)
-        @environment = Factory(:environment, :owner => @owner)
-        @course = Factory(:course,:environment => @environment, :owner => @owner)
-        plan = Factory( :plan, :billable => @course,
-                       :user => @course.owner,
-                       :members_limit => 5)
-        @course.create_quota
-
-        @invited_user = Factory(:user)
-        activate_authlogic
-        UserSession.create @invited_user
-
-        @course.invite @invited_user
-        @params = { :locale => 'pt-BR', :environment_id => @environment.path,
-          :id => @course.path }
+    context "and denying" do
+      it "assigns course" do
+        post :deny, @params
+        assigns[:course].should_not be_nil
       end
 
-      context "and accepting" do
-        before do
-          post :accept, @params
-        end
-
-        it "assigns course" do
-          assigns[:course].should_not be_nil
-        end
-
-        it "accepts the invitation" do
-          @invited_user.get_association_with(@course).state.
-            should == "approved"
-          @course.approved_users.should include(@invited_user)
-        end
+      it "denies the invitation" do
+        post :deny, @params
+        @course.approved_users.should_not include(@invited_user)
       end
 
-      context "and denying" do
-        before do
-        end
-
-        it "assigns course" do
+      it "detroys the UCA" do
+        expect {
           post :deny, @params
-          assigns[:course].should_not be_nil
-        end
+        }.should change(UserCourseAssociation, :count).by(-1)
+      end
+    end
+  end
 
-        it "denies the invitation" do
-          post :deny, @params
-          @course.approved_users.should_not include(@invited_user)
-        end
+  context "when destroying members" do
+    before do
+      @owner = Factory(:user)
 
-        it "detroys the UCA" do
-          expect {
-            post :deny, @params
-          }.should change(UserCourseAssociation, :count).by(-1)
-        end
+      @environment = Factory(:environment, :owner => @owner)
+
+      @course = Factory(:course,:environment => @environment, :owner => @owner)
+      @spaces = (1..2).collect { Factory(:space, :course => @course,
+                                         :owner => @owner)}
+      @subjects = []
+      @spaces.each do |s|
+        @subjects << Factory(:subject, :space => s, :owner => @owner,
+                             :finalized => true)
+      end
+
+      @users = 3.times.inject([]) { |acc,i| acc << Factory(:user) }
+      @users.each { |u| @course.join u }
+
+      activate_authlogic
+      UserSession.create @owner
+
+      @params = { :locale => 'pt-BR', :environment_id => @environment.path,
+                  :id => @course.path, "users" => @users.collect { |u| u.id } }
+      post :destroy_members, @params
+    end
+
+    it "destroys UCA" do
+      @users.each do |u|
+        u.get_association_with(@course).should be_nil
       end
     end
 
-    context "when inviting users (POST invite_members)" do
-      before do
-        @users = 3.times.inject([]) do |acc,e|
-          acc << Factory(:user)
-        end
-        @emails = ["email@example.com", "email2@example.com",
-                   "email3@example.com"]
+    it "destroys USA" do
+      usas = @spaces.collect do |s|
+        @users.collect { |u| u.get_association_with(s) }
+      end.flatten
 
-        @environment = Factory(:environment)
-        @course = Factory(:course, :environment => @environment,
-                          :owner => @environment.owner)
-
-        activate_authlogic
-        UserSession.create @course.owner
-
-        @params = { :locale => 'pt-BR', :environment_id => @course.environment.path,
-          :id => @course.path, :users => @users.collect { |u| u.id }.join(","),
-          :emails => @emails.collect { |e| e }.join(",") }
-
-      end
-
-      it "creates invitations" do
-        post :invite_members, @params
-
-        @users.each do |u|
-          @course.user_course_associations.reload
-          u.reload
-          u.has_course_invitation?(@course).should be_true
-        end
-
-        @emails.each do |e|
-          u = User.find_by_email(e)
-          u.should be_nil
-          @course.invited?(e).should be_true
-        end
-      end
+      usas.inject(true) { |acc,i| acc && (i.nil?) }.should be_true
     end
 
-    context "POST - join" do
+    it "destroys enrollments" do
+      enrollments = @spaces.collect do |s|
+        s.subjects.collect do |subj|
+          @users.collect { |u| u.get_association_with(subj) }
+        end
+      end.flatten
+
+      enrollments.inject(true) { |acc,i| acc && (i.nil?) }.should be_true
+    end
+  end
+
+  context "when inviting users (POST invite_members)" do
+    before do
+      @users = 3.times.inject([]) do |acc,e|
+        acc << Factory(:user)
+      end
+      @emails = ["email@example.com", "email2@example.com",
+        "email3@example.com"]
+
+      @environment = Factory(:environment)
+      @course = Factory(:course, :environment => @environment,
+                        :owner => @environment.owner)
+
+      activate_authlogic
+      UserSession.create @course.owner
+
+      @params = { :locale => 'pt-BR', :environment_id => @course.environment.path,
+        :id => @course.path, :users => @users.collect { |u| u.id }.join(","),
+        :emails => @emails.collect { |e| e }.join(",") }
+
+    end
+
+    it "creates invitations" do
+      post :invite_members, @params
+
+      @users.each do |u|
+        @course.user_course_associations.reload
+        u.reload
+        u.has_course_invitation?(@course).should be_true
+      end
+
+      @emails.each do |e|
+        u = User.find_by_email(e)
+        u.should be_nil
+        @course.invited?(e).should be_true
+      end
+    end
+  end
+
+  context "POST - join" do
+    before do
+      @user = Factory(:user)
+      activate_authlogic
+      UserSession.create @user
+
+      @environment = Factory(:environment, :owner => @user)
+
+      @course = Factory(:course,:environment => @environment,
+                        :owner => @user)
+
+      plan = Factory( :plan, :billable => @course,
+                     :user => @course.owner)
+      @course.create_quota
+
+      @space = Factory(:space, :course => @course)
+      @subject_space = Factory(:subject, :space => @space,
+                               :owner => @course.owner,
+                               :finalized => true)
+
+      @params = { :locale => 'pt-BR',
+        :environment_id => @environment.path,
+        :id => @course.path }
+    end
+
+    it "should create all hieararchy" do
+      @new_user = Factory(:user)
+      UserSession.create @new_user
+
+      post :join, @params
+
+      @course.users.should include(@new_user)
+      @space.users.should include(@new_user)
+      @subject_space.members.should include(@new_user)
+      @course.environment.users.should include(@new_user)
+    end
+  end
+
+  context "when the limit of members is full" do
+    before do
+      @user = Factory(:user)
+      activate_authlogic
+      UserSession.create @user
+
+      @environment = Factory(:environment, :owner => @user)
+
+      @course = Factory(:course,:environment => @environment,
+                        :owner => @user)
+
+      plan = Factory( :plan, :billable => @course,
+                     :user => @course.owner,
+                     :members_limit => 5)
+      @course.create_quota
+
+      @users = 4.times.inject([]) { |res, i| res << Factory(:user) }
+      @course.join(@users[0])
+      @course.join(@users[1])
+      @course.join(@users[2])
+      @course.join(@users[3])
+    end
+
+    context "and course isn't moderated" do
       before do
-        @user = Factory(:user)
-        activate_authlogic
-        UserSession.create @user
-
-        @environment = Factory(:environment, :owner => @user)
-
-        @course = Factory(:course,:environment => @environment,
-                          :owner => @user)
-
-        plan = Factory( :plan, :billable => @course,
-                       :user => @course.owner)
-        @course.create_quota
-
-        @space = Factory(:space, :course => @course)
-        @subject_space = Factory(:subject, :space => @space,
-                                :owner => @course.owner,
-                                :finalized => true)
-
         @params = { :locale => 'pt-BR',
           :environment_id => @environment.path,
           :id => @course.path }
       end
 
-      it "should create all hieararchy" do
+      it "should not authorize more 1 user" do
         @new_user = Factory(:user)
         UserSession.create @new_user
-
-        post :join, @params
-
-        @course.users.should include(@new_user)
-        @space.users.should include(@new_user)
-        @subject_space.members.should include(@new_user)
-        @course.environment.users.should include(@new_user)
+        expect {
+          post :join, @params
+        }.should_not change(UserCourseAssociation, :count).by(1)
       end
     end
 
-    context "when the limit of members is full" do
+    context "and course is moderated" do
       before do
-        @user = Factory(:user)
-        activate_authlogic
-        UserSession.create @user
+        @course.subscription_type = 2
+        @course.save
 
-        @environment = Factory(:environment, :owner => @user)
-
-        @course = Factory(:course,:environment => @environment,
-                          :owner => @user)
-
-        plan = Factory( :plan, :billable => @course,
-                       :user => @course.owner,
-                       :members_limit => 5)
-        @course.create_quota
-
-        @users = 4.times.inject([]) { |res, i| res << Factory(:user) }
-        @course.join(@users[0])
-        @course.join(@users[1])
-        @course.join(@users[2])
-        @course.join(@users[3])
+        @new_user = Factory(:user)
+        @params = { :locale => 'pt-BR',
+          :environment_id => @environment.path,
+          :id => @course.path }
       end
 
-      context "and course isn't moderated" do
-        before do
-          @params = { :locale => 'pt-BR',
-                      :environment_id => @environment.path,
-                      :id => @course.path }
-        end
-
+      context "POST accept" do
         it "should not authorize more 1 user" do
-          @new_user = Factory(:user)
+          UserSession.create @user
+          @course.invite(@new_user)
+
           UserSession.create @new_user
           expect {
-            post :join, @params
-          }.should_not change(UserCourseAssociation, :count).by(1)
+            post :accept, @params
+          }.should_not change(@course.approved_users, :count).by(1)
         end
       end
 
-      context "and course is moderated" do
-        before do
-          @course.subscription_type = 2
-          @course.save
-
-          @new_user = Factory(:user)
-          @params = { :locale => 'pt-BR',
-            :environment_id => @environment.path,
-            :id => @course.path }
-        end
-
-        context "POST accept" do
-          it "should not authorize more 1 user" do
-            UserSession.create @user
-            @course.invite(@new_user)
-
-            UserSession.create @new_user
-            expect {
-              post :accept, @params
-            }.should_not change(@course.approved_users, :count).by(1)
-          end
-        end
-
-        context "POST moderate_members" do
-          it "should not authorize more 1 user" do
-            UserSession.create @user
-            @course.join(@new_user)
-            @params = { :member => { @new_user.id.to_s => "approve"},
-              :id => @course.path, :environment_id => @environment.path,
-              :locale => "pt-BR"}
-            expect {
-              post :moderate_members_requests, @params
-            }.should_not change(@course.approved_users, :count).by(1)
-          end
+      context "POST moderate_members" do
+        it "should not authorize more 1 user" do
+          UserSession.create @user
+          @course.join(@new_user)
+          @params = { :member => { @new_user.id.to_s => "approve"},
+            :id => @course.path, :environment_id => @environment.path,
+            :locale => "pt-BR"}
+          expect {
+            post :moderate_members_requests, @params
+          }.should_not change(@course.approved_users, :count).by(1)
         end
       end
     end
+  end
 
-    context "when viewing sent invitations (GET admin_manage_invitations)" do
-      before do
-        environment = Factory(:environment)
-        course = Factory(:course, :environment => environment,
-                         :owner => environment.owner)
-        User.maintain_sessions = false
-        activate_authlogic
-        UserSession.create course.owner
-        user_invitations = (1..3).collect { course.invite Factory(:user) }
-        email_invitations = (1..3).collect do |i|
-          course.invite_by_email "email#{i}@example.com"
-        end
-
-        @params = { :locale => 'pt-BR', :environment_id => course.environment.path,
-          :id => course.path }
-        get :admin_manage_invitations, @params
+  context "when viewing sent invitations (GET admin_manage_invitations)" do
+    before do
+      environment = Factory(:environment)
+      course = Factory(:course, :environment => environment,
+                       :owner => environment.owner)
+      User.maintain_sessions = false
+      activate_authlogic
+      UserSession.create course.owner
+      user_invitations = (1..3).collect { course.invite Factory(:user) }
+      email_invitations = (1..3).collect do |i|
+        course.invite_by_email "email#{i}@example.com"
       end
 
-      it "assigns user_invitations" do
-        assigns[:user_invitations].should_not be_nil
-      end
-
-      it "assigns email_invitations" do
-        assigns[:email_invitations].should_not be_nil
-      end
+      @params = { :locale => 'pt-BR', :environment_id => course.environment.path,
+        :id => course.path }
+      get :admin_manage_invitations, @params
     end
 
-    context "when removing invitations (POST destroy_invitations)" do
-      before do
-        @environment = Factory(:environment)
-        @course = Factory(:course, :environment => @environment,
-                         :owner => @environment.owner)
-        User.maintain_sessions = false
-        activate_authlogic
-        UserSession.create @course.owner
-        @user_invitations = (1..4).collect { @course.invite Factory(:user) }
-        @email_invitations = (1..4).collect do |i|
-          @course.invite_by_email "email#{i}@example.com"
-        end
+    it "assigns user_invitations" do
+      assigns[:user_invitations].should_not be_nil
+    end
 
-          @params = { :locale => 'pt-BR', :environment_id => @environment.path,
-            :id => @course.path }
+    it "assigns email_invitations" do
+      assigns[:email_invitations].should_not be_nil
+    end
+  end
+
+  context "when removing invitations (POST destroy_invitations)" do
+    before do
+      @environment = Factory(:environment)
+      @course = Factory(:course, :environment => @environment,
+                        :owner => @environment.owner)
+      User.maintain_sessions = false
+      activate_authlogic
+      UserSession.create @course.owner
+      @user_invitations = (1..4).collect { @course.invite Factory(:user) }
+      @email_invitations = (1..4).collect do |i|
+        @course.invite_by_email "email#{i}@example.com"
       end
+
+      @params = { :locale => 'pt-BR', :environment_id => @environment.path,
+        :id => @course.path }
+    end
 
     context "when email_invitations is empty" do
       before do
@@ -751,7 +748,7 @@ describe CoursesController do
     context "when email_invitations is NOT empty" do
       before do
         @params[:email_invitations] = [@email_invitations[0].id,
-                                       @email_invitations[1].id]
+          @email_invitations[1].id]
         post :destroy_invitations, @params
       end
 
@@ -776,12 +773,145 @@ describe CoursesController do
     context "when user_invitations is NOT empty" do
       before do
         @params[:user_invitations] = [@user_invitations[0].id,
-                                       @user_invitations[1].id]
+          @user_invitations[1].id]
         post :destroy_invitations, @params
       end
 
       it "destroys specified user invitations" do
         @course.user_course_associations.invited.should == @user_invitations[2..3]
+      end
+    end
+  end
+
+  # admin actions (management panel)
+  context "on management panel" do
+    before  do
+      @environment = Factory(:environment)
+      @course = Factory(:course, :environment => @environment)
+      @user = Factory(:user)
+      UserEnvironmentAssociation.create(:environment => @environment,
+                                        :user => @user,
+                                        :role => Role[:environment_admin])
+      UserCourseAssociation.create(:course => @course,
+                                   :user => @user,
+                                   :role => Role[:environment_admin])
+      activate_authlogic
+      UserSession.create @user
+    end
+
+    context "GET new" do
+      before do
+        get :new, :locale => "pt-BR", :environment_id => @environment.path
+      end
+
+      it "assigns environment" do
+        assigns[:environment].should_not be_nil
+      end
+
+      it "assigns course" do
+        assigns[:course].should_not be_nil
+      end
+
+      it "renders admin/new" do
+        response.should render_template "courses/admin/new"
+      end
+    end
+
+    context "POST create" do
+      context "when successful" do
+        before do
+          @post_params = { :plan => "free",
+                           :course => { :name => "course", :workload => "",
+                                        :path => "course-path", :tag_list => "",
+                                        :description => "",
+                                        :subscription_type => "1" } }
+          @post_params[:locale] = "pt-BR"
+          @post_params[:environment_id] = @environment.path
+          post :create, @post_params
+        end
+
+        it "redirects to Courses#show" do
+          response.should redirect_to(environment_course_path(@environment, Course.last))
+        end
+      end
+
+      context "when failing" do
+        before do
+          @post_params = { :plan => "free",
+                           :course => { :name => "", :workload => "",
+                                        :path => "", :tag_list => "",
+                                        :description => "",
+                                        :subscription_type => "1" } }
+          @post_params[:locale] = "pt-BR"
+          @post_params[:environment_id] = @environment.path
+          post :create, @post_params
+        end
+
+        it "re-renders course/admin/new" do
+          response.should render_template "courses/admin/new"
+        end
+      end
+    end
+
+    context "GET edit" do
+      before do
+        get :edit, :locale => "pt-BR", :environment_id => @environment.path,
+          :id => @course.path
+      end
+
+      it "assigns environment" do
+        assigns[:environment].should_not be_nil
+      end
+
+      it "assigns course" do
+        assigns[:course].should_not be_nil
+      end
+
+      it "assigns header_course" do
+        assigns[:header_course].should_not be_nil
+      end
+
+      it "renders admin/edit" do
+        response.should render_template "courses/admin/edit"
+      end
+    end
+
+    context "POST update" do
+      context "when successful" do
+        before do
+          @post_params = { :plan => "free",
+                           :course => { :name => "course", :workload => "",
+                                        :path => "course-path-changed",
+                                        :tag_list => "", :description => "",
+                                        :subscription_type => "1" } }
+          @post_params[:locale] = "pt-BR"
+          @post_params[:environment_id] = @environment.path
+          @post_params[:id] = @course.path
+          post :update, @post_params
+        end
+
+        it "redirects to Environments#show" do
+          response.should redirect_to(environment_course_path(@environment,
+                                                              @course.reload))
+        end
+      end
+
+      context "when failing" do
+        before do
+          @post_params = { :plan => "free",
+                           :course => { :name => "course", :workload => "",
+                                        :path => "",
+                                        :tag_list => "", :description => "",
+                                        :subscription_type => "1" } }
+          @post_params[:locale] = "pt-BR"
+          @post_params[:environment_id] = @environment.path
+          @post_params[:id] = @course.path
+          post :update, @post_params
+        end
+
+        it "re-renders courses/admin/edit" do
+          response.should render_template "courses/admin/edit"
+        end
       end
     end
   end

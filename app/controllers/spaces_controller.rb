@@ -23,20 +23,25 @@ class SpacesController < BaseController
     redirect_to @space
   end
 
-  def manage
-  end
-
   def admin_members
     @memberships = @space.user_space_associations.approved.
       paginate(:page => params[:page],:order => 'updated_at DESC',
                :per_page => Redu::Application.config.items_per_page)
 
     respond_to do |format|
-      format.html
+      format.html { render 'spaces/admin/admin_members' }
       format.js do
-        render_endless 'spaces/user_item_admin', @memberships,
+        render_endless 'spaces/admin/user_item_admin', @memberships,
           '#user_list_table'
       end
+    end
+  end
+
+  def admin_subjects
+    @subjects = @space.subjects
+
+    respond_to do |format|
+       format.html { render "spaces/admin/admin_subjects" }
     end
   end
 
@@ -102,16 +107,17 @@ class SpacesController < BaseController
     @environment = @course.environment
 
     respond_to do |format|
-      format.html
+      format.html { render "spaces/admin/new" }
     end
   end
 
   # GET /spaces/1/edit
   def edit
     @header_space = @space.clone :include => [:teachers, :students, :tutors]
+    @plan = @space.course.plan
 
     respond_to do |format|
-      format.html
+      format.html { render "spaces/admin/edit" }
     end
   end
 
@@ -122,8 +128,6 @@ class SpacesController < BaseController
     @space.course = @course
     @environment = @course.environment
     @space.owner = current_user
-    # FIXME o submission_type deve ser escolhido pela interface, por
-    # enquanto todos tem a permissão de postar
     @space.submission_type = '3'
 
     if @space.valid?
@@ -132,9 +136,7 @@ class SpacesController < BaseController
 
     respond_to do |format|
       if @space.new_record?
-        format.html do
-          render :template => 'spaces/new'
-        end
+        format.html { render :template => 'spaces/admin/new' }
       else
         format.html do
           flash[:notice] = "Disciplina criada!"
@@ -148,6 +150,7 @@ class SpacesController < BaseController
   # PUT /spaces/1.xml
   def update
     @header_space = @space.clone
+    @plan = @space.course.plan
 
     respond_to do |format|
       if @space.update_attributes(params[:space])
@@ -159,7 +162,7 @@ class SpacesController < BaseController
         format.xml  { head :ok }
       else
         format.html do
-          render :template => 'spaces/edit'
+          render :template => 'spaces/admin/edit'
         end
         format.xml  { render :xml => @space.errors, :status => :unprocessable_entity }
       end
@@ -191,17 +194,16 @@ class SpacesController < BaseController
     redirect_to space_path(@space)
   end
 
-  # Listagem de usuários do Space
-  def users
-    @users = @space.users.
-      paginate(:page => params[:page], :order => 'first_name ASC', :per_page => 18)
+  # Utilizado pelo endless do sidebar
+  def students_endless
+    @sidebar_students = @space.students.page(params[:page]).per(4)
 
     respond_to do |format|
-      format.html
       format.js do
-        render_endless 'users/item', @users, '#users_list',
-          { :entity => @space }
-    end
+        render_sidebar_endless 'users/item_medium_24',
+          @sidebar_students, '.connections.students',
+          "Mostrando os <X> últimos alunos da disciplina"
+      end
     end
   end
 

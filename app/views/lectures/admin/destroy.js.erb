@@ -1,0 +1,11 @@
+$('#<%= @lecture.id %>-item').remove();
+
+<% if @lecture.lectureable.class == Page %>
+  $('#<%= @lecture.id %>-item-edition').remove();
+<% end %>
+
+$("#space-manage #resources_list").refreshResourcesNumbering();
+
+<%# Atualiza quotas %>
+var $quotas = $("<%= escape_javascript render 'subjects/admin/quotas', :quota => @quota, :plan => @plan %>");
+$("#space-manage .concave-form .quotas").replaceWith($quotas);

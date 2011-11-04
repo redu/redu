@@ -1,0 +1,24 @@
+<div id="<%= lecture.id %>-item-edition" class="clearfix edit-resource">
+  <div class="resources-types">
+    <div class="resource-numbering">
+      <label class="concave-label">Editar aula</label>
+      <span class="position"><%= lecture.position %></span>
+    </div>
+    <ul>
+      <li class="selected">
+        <span class="option icon-page-lightblue_32_34-before" title="Permite a postagem de conteúdo de leitura rápida como um tutorial ou um texto introdutório.">Página de texto</span>
+      </li>
+    </ul>
+    <span class="explanation">
+      <strong class="type">Página simples:</strong>
+      Permite a postagem de conteúdo de leitura rápida como um tutorial ou um texto introdutório.
+    </span>
+  </div>
+
+  <%= form_for lecture.lectureable, :as => :page,
+    :url => space_subject_lecture_path(@space, @subject, lecture),
+    :remote => :true, :method => :put,
+    :html => { :class => "concave-form page-form" } do |f| %>
+    <%= render 'lectures/admin/page_fields', :f => f, :lecture => lecture%>
+  <% end %>
+</div>

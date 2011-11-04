@@ -1,0 +1,23 @@
+<%= render :partial => 'spaces/sidebar', :locals => { :space => @space } %>
+
+<div class="main space grid_12 omega big-col">
+  <%= render :partial => 'spaces/breadcrumbs', :locals => { :space => @space } %>
+  <%= render :partial => 'spaces/header',
+    :locals => { :space => @space }%>
+
+  <div id="space-users" class="body">
+    <div class="header clearfix">
+      <h4 class="title">Membros da disciplina</h4>
+      <span class="detail">(<%= pluralize @space.subjects.visible.count, "módulo" %> , <%= pluralize @space.lectures_count, "aula" %>)</span>
+    </div>
+    <%= subtabs :spaces do %>
+      <ul id="users-list" class="members clearfix">
+        <%= render :partial => 'users/item',
+          :collection => @users, :locals => { :entity => @space } %>
+        <% reset_cycle "users_cycle" %>
+      </ul>
+      <%= will_paginate @users, :renderer => EndlessRenderer %>
+    <% end %>
+  </div><!-- end #environment-courses -->
+
+</div><!-- end .main -->

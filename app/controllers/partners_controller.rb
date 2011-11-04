@@ -9,8 +9,6 @@ class PartnersController < BaseController
 
     @partner_environment_associations = \
       @partner.partner_environment_associations.paginate(pagitating)
-    @partner_user_associations = \
-      @partner.partner_user_associations.paginate(pagitating)
 
     respond_to do |format|
       format.html { render :template => 'partner_environment_associations/index' }

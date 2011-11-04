@@ -1,8 +1,14 @@
 class UsersController < BaseController
+  respond_to :html, :js
 
   load_and_authorize_resource :except => [:forgot_password,
-    :forgot_username, :resend_activation, :activate],
+    :forgot_username, :resend_activation, :activate, :index],
     :find_by => :login
+  load_resource :environment, :only => [:index], :find_by => :path
+  load_resource :course, :only => [:index], :find_by => :path
+  load_resource :space, :only => [:index]
+
+  rescue_from CanCan::AccessDenied, :with => :deny_access
 
   def annotations
     @annotations = User.find(params[:id]).annotations
@@ -52,10 +58,6 @@ class UsersController < BaseController
     @user = params[:id]
   end
 
-  def logs
-    #TODO
-  end
-
   ## User
   def activate
     redirect_to signup_path and return if params[:id].blank?
@@ -71,7 +73,7 @@ class UsersController < BaseController
       flash[:notice] = t :thanks_for_activating_your_account
       return
     end
-    flash[:error] = t(:account_activation_error, :email => Redu::Application.config.email)
+    flash[:error] = t(:account_activation_error)
     redirect_to signup_path
   end
 
@@ -179,12 +181,18 @@ class UsersController < BaseController
   end
 
   def edit
+    @user.social_networks.build
+    respond_to do |format|
+      format.html
+    end
+  end
+
+  def curriculum
     @experience = Experience.new
     @high_school = HighSchool.new
     @higher_education = HigherEducation.new
     @complementary_course = ComplementaryCourse.new
     @event_education = EventEducation.new
-    @user.social_networks.build
     respond_to do |format|
       format.html
     end
@@ -483,6 +491,53 @@ class UsersController < BaseController
     respond_to do |format|
       format.html
       format.js { render_endless 'statuses/item', @statuses, '#statuses > ol' }
+    end
+  end
+
+  def index
+    entity = @space || @course || @environment
+    authorize! :preview, entity
+
+    @users = if params[:role].eql? "teachers"
+      entity.teachers
+    elsif params[:role].eql? "tutors"
+      entity.tutors
+    elsif params[:role].eql? "students"
+      entity.students
+    else
+      if @course
+        entity.approved_users
+      else
+        entity.users
+      end
+    end
+
+
+    @users = @users.includes(:user_environment_associations).
+      includes(:user_course_associations).
+      includes(:user_space_associations).
+      paginate(:page => params[:page], :order => 'first_name ASC',
+               :per_page => 18)
+
+    respond_to do |format|
+      format.html do
+        render "#{entity.class.to_s.downcase.pluralize}/users/index"
+      end
+      format.js do
+          render_endless 'users/item', @users, '#users-list',
+            { :entity => entity }
+      end
+    end
+  end
+
+  protected
+  def deny_access(exception)
+    if exception.action == :preview && exception.subject.class == Space
+      flash[:notice] = "Você não tem acesso a essa página"
+      redirect_to preview_environment_course_path(@space.course.environment,
+                                                  @space.course)
+    else
+      super
     end
   end
 end

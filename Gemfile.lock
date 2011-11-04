@@ -74,6 +74,7 @@ GEM
       activesupport (= 3.0.10)
     activesupport (3.0.10)
     acts-as-taggable-on (2.0.6)
+    acts_as_tree (0.1.1)
     addressable (2.2.6)
     ar_mailer_rails3 (2.1.12)
     arel (2.0.10)
@@ -220,6 +221,8 @@ GEM
     shuber-sortable (1.0.6)
     signature (0.1.2)
       ruby-hmac
+    simple-navigation (3.5.0)
+      activesupport (>= 2.3.2)
     thin (1.2.11)
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
@@ -249,6 +252,7 @@ DEPENDENCIES
   actionmailer_inline_css!
   active_enum
   acts-as-taggable-on
+  acts_as_tree (~> 0.1.1)
   ajaxful_rating!
   ar_mailer_rails3
   authlogic
@@ -282,6 +286,7 @@ DEPENDENCIES
   scribd_fu!
   shoulda-matchers
   shuber-sortable
+  simple-navigation
   thin
   translate_routes
   whenever

@@ -13,14 +13,15 @@ class EnvironmentsController < BaseController
       :page => params[:page],
       :order => 'name ASC',
       :limit => 4,
-      :include => :audiences,
       :per_page => Redu::Application.config.items_per_page
     }
 
     if can? :manage, @environment
-      @courses = @environment.courses.paginate(paginating_params)
+      @courses = @environment.courses.includes(:user_course_associations).
+        includes(:spaces).paginate(paginating_params)
     else
-      @courses = @environment.courses.published.paginate(paginating_params)
+      @courses = @environment.courses.includes(:user_course_associations).
+        includes(:spaces).published.paginate(paginating_params)
     end
 
     respond_to do |format|
@@ -46,7 +47,7 @@ class EnvironmentsController < BaseController
     @header_environment.id = @environment.id
 
     respond_to do |format|
-      format.html
+      format.html { render 'environments/admin/edit' }
     end
   end
 
@@ -135,7 +136,7 @@ class EnvironmentsController < BaseController
         format.html { redirect_to(@environment) }
         format.xml  { head :ok }
       else
-        format.html { render :edit }
+        format.html { render 'environments/admin/edit' }
         format.xml  { render :xml => @environment.errors, :status => :unprocessable_entity }
       end
     end
@@ -159,8 +160,19 @@ class EnvironmentsController < BaseController
       redirect_to environment_path(@environment) and return
     end
 
+    paginating_params = {
+      :page => params[:page],
+      :order => 'name ASC',
+      :per_page => Redu::Application.config.items_per_page
+    }
+
+    @courses = @environment.courses.includes(:user_course_associations).
+      includes(:spaces).published.paginate(paginating_params)
+
     respond_to do |format|
       format.html
+      format.js { render_endless 'courses/item', @courses, '#courses_list' }
+      format.xml  { render :xml => @environment }
     end
   end
 
@@ -170,9 +182,9 @@ class EnvironmentsController < BaseController
                                              :per_page => Redu::Application.config.items_per_page)
 
     respond_to do |format|
-      format.html
+      format.html { render "environments/admin/admin_courses" }
       format.js do
-        render_endless 'courses/item_admin', @courses, '#course_list'
+        render_endless 'courses/admin/item_admin', @courses, '#course_list'
       end
     end
   end
@@ -180,15 +192,15 @@ class EnvironmentsController < BaseController
   def admin_members
     @memberships = UserEnvironmentAssociation.of_environment(@environment).
       paginate(
-        :include => [{ :user => {:user_course_associations => :course} }],
+        :include => [{ :user => {:user_course_associations => { :course => :environment }} }],
         :page => params[:page],
         :order => 'updated_at DESC',
         :per_page => Redu::Application.config.items_per_page)
 
     respond_to do |format|
-      format.html
+      format.html { render "environments/admin/admin_members" }
       format.js do
-        render_endless 'environments/user_item_admin', @memberships,
+        render_endless 'environments/admin/user_item_admin', @memberships,
           '#user_list_table'
       end
     end
@@ -235,24 +247,7 @@ class EnvironmentsController < BaseController
                     :per_page => Redu::Application.config.items_per_page)
 
     respond_to do |format|
-      format.js
-    end
-  end
-
-  # Listagem de usuários do Environment
-  def users
-    @sidebar_preview = true if params.has_key?(:preview) &&
-                              params[:preview] == 'true'
-
-    @users = @environment.users.paginate(:page => params[:page],
-                                         :order => 'first_name ASC', :per_page => 18)
-
-    respond_to do |format|
-      format.html
-      format.js do
-        render_endless 'users/item', @users, '#users_list',
-          {:entity => @environment}
-      end
+      format.js { render "environments/admin/search_users_admin" }
     end
   end
 end

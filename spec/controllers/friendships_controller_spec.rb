@@ -27,18 +27,6 @@ describe FriendshipsController do
     end
   end
 
-  describe "GET 'pending'" do
-    before do
-      @new_user = Factory(:user)
-      @new_user.be_friends_with(@user)
-    end
-    it "should load all pending friends" do
-      pending
-      get :pending, :locale => "pt-BR", :user_id => @user.login, :format => :js
-      assigns[:friends_pending].should == [@new_user]
-    end
-  end
-
   describe "POST 'create'" do
     before do
       @new_user = Factory(:user)
@@ -108,45 +96,4 @@ describe FriendshipsController do
 
   end
 
-  describe "POST 'accept'"  do
-    before do
-      @new_user = Factory(:user)
-      @new_user.be_friends_with(@user)
-      @friendship = @user.friendship_for(@new_user)
-    end
-
-    it "accepts a friendship" do
-      expect {
-        post :accept, :locale => "pt-BR", :user_id => @user.login,
-          :id => @friendship.id, :friend_id => @new_user.id
-      }.should change(@user.friends, :count).by(1)
-    end
-
-    it "redirects to user notifications" do
-      post :accept, :locale => "pt-BR", :user_id => @user.login,
-        :id => @friendship.id, :friend_id => @new_user.id
-      response.should redirect_to(pending_user_friendships_path(@user))
-    end
-  end
-
-  describe "POST 'decline'" do
-    before do
-      @new_user = Factory(:user)
-      @new_user.be_friends_with(@user)
-      @friendship = @user.friendship_for(@new_user)
-    end
-
-    it "decline and destroy a friendship" do
-      expect {
-        post :decline, :locale => "pt-BR", :user_id => @user.login,
-        :id => @friendship.id, :friend_id => @new_user.id
-      }.should change(Friendship, :count).by(-2)
-    end
-
-    it "redirects to user notifications" do
-       post :decline, :locale => "pt-BR", :user_id => @user.login,
-        :id => @friendship.id, :friend_id => @new_user.id
-       response.should redirect_to(user_path(@new_user))
-    end
-  end
 end

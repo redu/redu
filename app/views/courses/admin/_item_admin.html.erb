@@ -1,0 +1,22 @@
+<tr class="row">
+  <td class="cell cell-400">
+    <div class="course-info icon-course-gray_16_18-before">
+      <%= link_to item_admin.name,
+        environment_course_path(@environment, item_admin),
+        :class => "course-info" %>
+      <span class="course-detail members"><%= item_admin.users.count %> membros</span>
+      <span class="course-detail subject-count"><%= item_admin.spaces.count %> disciplinas</span>
+      <span class="course-detail created-at">criado em <%= l(item_admin.created_at, :format => :admin) %></span>
+    </div>
+  </td>
+  <td class="cell centered-cell">
+    <%= link_to "Editar", edit_environment_course_path(@environment, item_admin),
+      :class => "option icon icon-management-gray_8_8 edit" %>
+  </td>
+  <td class="cell centered-cell">
+    <%= link_to 'Remover', environment_course_path(@environment, item_admin),
+      :confirm => 'Todas as informações dos usuários, disciplinas e dados referente ao curso serão perdidas. Você tem certeza disso?',
+      :method => :delete,
+      :class => "option icon icon-x-gray_8_8 delete" %>
+  </td>
+</tr>

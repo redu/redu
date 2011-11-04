@@ -115,6 +115,22 @@ describe Environment do
       subject.tutors.to_set.
         should == [users[0], users[1]].to_set
     end
+
+    it "retrieves all students (role member)" do
+      users = 5.times.inject([]) { |res, i| res << Factory(:user) }
+      Factory(:user_environment_association, :user => users[0],
+              :environment => subject, :role => :tutor)
+      Factory(:user_environment_association, :user => users[1],
+              :environment => subject, :role => :tutor)
+      Factory(:user_environment_association, :user => users[2],
+              :environment => subject, :role => :teacher)
+      Factory(:user_environment_association, :user => users[3],
+              :environment => subject, :role => :member)
+      Factory(:user_environment_association, :user => users[4],
+              :environment => subject, :role => :member)
+      subject.students.to_set.
+        should == [users[3], users[4]].to_set
+    end
   end
 
   it "generates a permalink" do

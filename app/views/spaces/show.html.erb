@@ -1,28 +1,22 @@
 <%= render :partial => 'spaces/sidebar', :locals => { :space => @space } %>
-<div class="main grid_12 omega big-col">
+<div class="main space grid_12 omega big-col">
   <%= render :partial => 'spaces/breadcrumbs', :locals => { :space => @space } %>
   <%= render :partial => 'spaces/header',
     :locals => { :space => @space }%>
 
-  <div id="space-subjects" class="hierarchy-listing-wrapper">
-    <div class="header">
-      <h4>Módulos</h4>
-      <span class="counter">
-        <% if can? :manage, @space %>
-          <%= pluralize(@space.subjects.count, 'módulo') %>
-        <% else %>
-          <%= pluralize(@space.subjects.visible.count, 'módulo') %>
-        <% end %>
-      </span>
+  <div id="space-subjects" class="body clearfix">
+    <div class="header clearfix">
+      <h4 class="title">Conteúdo</h4>
+      <span class="detail">(<%= pluralize @space.subjects.visible.count, "módulo" %> , <%= pluralize @space.lectures_count, "aula" %>)</span>
     </div>
     <% if can? :manage, @space %>
       <div class="admin-actions">
-        <%= link_to "Novo módulo", new_space_subject_path(@space),
+        <%= link_to "Criar novo módulo", new_space_subject_path(@space),
            :id => 'link-new-subject', :class => 'button' %>
       </div>
     <% end %>
 
-    <ul id="subjects_list" class="hierarchy-listing subjects">
+    <ul id="subjects_list" class="hierarchy-listing subjects main-content">
       <%= render :partial => 'subjects/item', :collection => @subjects %>
     </ul>
     <%= will_paginate @subjects, :renderer => EndlessRenderer %>

@@ -1,0 +1,21 @@
+<%= render :partial => 'shared/management_background' %>
+<div class="management-sidebar">
+  <%= render :partial => 'courses/sidebar',
+    :locals => { :course => @course }  %>
+</div>
+<div class="main grid_12 omega big-col management-wrapper">
+  <%= render :partial => 'courses/breadcrumbs',
+    :locals => { :course => @course } %>
+  <%= render :partial => 'courses/admin/header',
+    :locals => { :course => @course } %>
+  <div id="course-manage" class="body management">
+    <%= render :partial => 'courses/admin/clean_header' %>
+    <%= tabs :courses_admin do %>
+      <h3 class="form-header">
+        <%= @course.spaces.count %> disciplina(s)
+      </h3>
+      <%= render :partial => 'spaces/admin/index_admin' %>
+      <%= link_to "Sair", environment_course_path(@environment, @course), :class => "manage exit icon-manage-gray_8_10-before" %>
+    <% end %>
+  </div>
+</div>

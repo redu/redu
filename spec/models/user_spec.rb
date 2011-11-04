@@ -5,12 +5,11 @@ describe User do
 
   it { should have_many(:annotations).dependent(:destroy) }
   it { should have_many(:statuses) }
-  [:lectures, :exams, :exam_users, :questions, :favorites, :statuses,
+  [:lectures, :favorites, :statuses,
     :subjects, :student_profiles, :subjects].each do |attr|
     it { should have_many attr }
     end
 
-  it { should have_many(:exam_history).through :exam_users}
   it { should have_many(:enrollments).dependent :destroy}
 
   it { should have_one(:settings).dependent(:destroy) }
@@ -33,13 +32,6 @@ describe User do
   it { should have_many(:environments).through(:user_environment_associations) }
   it { should have_many(:user_environment_associations).dependent(:destroy) }
   it { should have_many(:environments_owned) }
-
-  # Forum
-  it { should have_many(:forums).through(:moderatorships) }
-  it { should have_many(:monitored_topics).through(:monitorships) }
-  [:moderatorships, :monitorships, :sb_posts, :topics].each do |attr|
-    it { should have_many(attr).dependent(:destroy)}
-  end
 
   # ChatMessages
   it { should have_many(:chat_messages) }
@@ -64,8 +56,6 @@ describe User do
   it { should_not allow_mass_assignment_of :friends_count }
   it { should_not allow_mass_assignment_of :score }
   it { should_not allow_mass_assignment_of :removed }
-  it { should_not allow_mass_assignment_of :sb_posts_count }
-  it { should_not allow_mass_assignment_of :sb_last_seen_at }
 
   # UserCourseAsssociation with invited state (Course invitations)
   it { should have_many :course_invitations }
@@ -141,15 +131,6 @@ describe User do
   end
 
   context "associations" do
-    it "retrieves exams that are not clones" do
-      pending "Need exam factory" do
-        exam = Factory(:exame, :is_clone => false, :owner => subject)
-        exam2 = Factory(:exame, :is_clone => true, :owner => subject)
-
-        subject.exams.should == exam
-      end
-    end
-
     it "retrieves lectures that are not clones" do
       environment = Factory(:environment, :owner => subject)
       course = Factory(:course, :owner => environment.owner,

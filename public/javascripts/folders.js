@@ -17,7 +17,7 @@ $(function(){
     };
 
     utils.toggleFields = function(el){
-      var $row = $(el).parents("tr:first");
+      var $row = $(el).parents("li:first");
       $row.find(".folder-name, .rename-folder").toggle();
     };
 

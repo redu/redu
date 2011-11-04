@@ -61,6 +61,7 @@ pt-BR:
       literal_date: "%d %B %Y"
       short_literal_date: "%d %b %Y"
       time_ago: "%e %b %Y às %H:%M"
+      admin: "%d %b, %Y, %H:%M"
     pm: pm
     am: am
   number:
@@ -149,12 +150,12 @@ pt-BR:
       role:
         admin: "Administrador"
         moderator: "Moderador"
-        member: "Estudante"
+        member: "Aluno"
         environment_admin: "Administrador do ambiente"
-        course_admin: "Administrador dos cursos"
+        course_admin: "Administrador do curso"
         teacher: "Professor"
         tutor: "Tutor"
-        student: "Estudante"
+        student: "Aluno"
       invoice:
         pending: "Pendente"
         overdue: "Vencido"
@@ -236,8 +237,6 @@ pt-BR:
           attributes:
             description:
               too_short: "Descrição muito curta. Deve ter pelo menos 30 caracteres."
-            lectures:
-              too_short: "Um módulo deve ter ao menos uma aula."
         lecture:
           attributes:
             description:
@@ -276,15 +275,30 @@ pt-BR:
       complementary_course:
         create: "+ Adicionar item"
         update: "Salvar item"
+      document:
+        create: "Adicionar"
+        update: "Salvar"
       event_education:
         create: "+ Adicionar item"
         update: "Salvar item"
+      lecture:
+        create: "Adicionar"
+        update: "Salvar"
       high_school:
         create: "+ Adicionar item"
         update: "Salvar item"
       higher_education:
         create: "+ Adicionar item"
         update: "Salvar item"
+      page:
+        create: "Adicionar"
+        update: "Salvar"
+      seminar:
+        create: "Adicionar"
+        update: "Salvar"
+      subject:
+        create: "Adicionar aulas"
+        update: "Finalizar módulo"
 
   lectureable: vídeo-aula
   lectures: aulas
@@ -429,7 +443,7 @@ pt-BR:
   #en: account: account
   account: account
   #en: account_activation_error: Account activation failed. Your account may already be active. Try logging in or e-mail {{email}} for help.
-  account_activation_error: "Account activation failed. Your account may already be active. Try logging in or e-mail {{email}} for help."
+  account_activation_error: "A ativação da sua conta falhou, talvez ela já esteja ativa. Tente acessar com sua senha ou entre em contato."
   #en: account_settings: Account settings
   account_settings: Account settings
   #en: actions: Actions

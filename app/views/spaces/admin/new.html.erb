@@ -1,0 +1,25 @@
+<%= render :partial => 'shared/management_background' %>
+<div class="management-sidebar">
+  <%= render :partial => 'courses/sidebar',
+    :locals => { :course => @course }%>
+</div>
+<div class="main grid_12 omega big-col management-wrapper">
+  <%= render :partial => "courses/breadcrumbs",
+    :locals => { :course => @course } %>
+  <%= render :partial => 'courses/admin/header',
+    :locals => { :course => @course }%>
+
+  <div id="course-manage" class="body management">
+    <%= render 'courses/admin/clean_header' %>
+    <%= tabs :courses_admin do %>
+      <h3 class="form-header">Criação de uma <strong class="strong">nova disciplina</strong></h3>
+      <%= link_to "< voltar para a listagem de disciplinas",
+        admin_spaces_environment_course_path(@environment, @course), :class => "back" %>
+      <%= form_for @space, :html => {:class => "concave-form", :id => "form_school"} do |f|%>
+        <%= render "spaces/form", :f => f, :edit => false %>
+        <%= f.submit "Criar disciplina" %>
+      <% end %>
+      <%= link_to "Sair", environment_course_path(@environment, @course), :class => "manage exit icon-manage-gray_8_10-before" %>
+    <% end %>
+  </div><!-- end #space-new -->
+</div><!-- end main -->

@@ -1,0 +1,15 @@
+<li id=<%= "#{item_short.id}-item" %> class="clearfix">
+  <span class="position"><%= item_short.position %>.</span>
+  <span class="title <%="icon-#{item_short.lectureable.class.to_s.underscore}-gray_16_18-before"  %>"><%= item_short.name %></span>
+  <% if can? :manage, item_short.subject %>
+    <%= link_to "Remover",
+      space_subject_lecture_path(item_short.subject.space,
+                                 item_short.subject, item_short),
+      :remote => true, :method => :delete,
+      :confirm => "Você tem certeza que deseja excluir essa aula? Não será mais possível recuperá-la.",
+      :class => 'delete icon-small icon-delete-gray_16_18 replacement' %>
+    <% if item_short.lectureable.class.to_s == 'Page' %>
+      <%= link_to "Editar", "#", :class => 'edit icon-manage-gray_8_10-before' %>
+    <% end %>
+<% end %>
+</li>

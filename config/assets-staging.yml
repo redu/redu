@@ -33,9 +33,9 @@ javascripts:
     - public/javascripts/ytpreview.jquery.js
     - public/javascripts/subjects.js
     - public/javascripts/statuses.js
+    - public/javascripts/admin.js
   chat:
     - public/javascripts/jquery.pjax.js
-    - public/javascripts/jquery-ui.js
     - public/javascripts/pusher.js
     - public/javascripts/jquery.json.js
     - public/javascripts/jquery.linkify-1.0.js
@@ -44,13 +44,10 @@ javascripts:
   ie:
     - public/javascripts/json2.js
     - public/javascripts/selectivizr.js
-  real_tabs:
-    - public/javascripts/jquery.ui.core.js
-    - public/javascripts/jquery.ui.widget.js
-    - public/javascripts/jquery.ui.tabs.js
-    - public/javascripts/real_tabs.redu.jquery.js
   user:
     - public/javascripts/jquery.maskedinput.js
+  ckeditor:
+    - public/javascripts/ckeditor/ckeditor.js
 
 stylesheets:
   common:
@@ -63,6 +60,7 @@ stylesheets:
     - public/stylesheets/fb_style.css
     - public/stylesheets/token-input.css
     - public/stylesheets/form.redu.css
+    - public/stylesheets/table.redu.css
     - public/stylesheets/icons.big.redu.css
     - public/stylesheets/icons.redu.css
     - public/stylesheets/user.css

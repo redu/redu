@@ -1,6 +1,0 @@
-<%  if logged_in? %>
-  <div id="task_bar_exames"><%= link_to 'Novo Exame', :action => 'new' %> |
-    <%= link_to 'Meus Exames', published_user_exams_path(current_user.id) %> |
-    <%= link_to 'Exames Favoritos', favorites_exams_path %>
-  </div>
-<% end %>

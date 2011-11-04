@@ -1,6 +1,5 @@
 class MetroAreasController < BaseController
   before_filter :login_required
-  before_filter :admin_required
 
   def index
     @metro_areas = MetroArea.find :all, :page => {:current => params[:page]}, :order => "countries.name, metro_areas.name", :include => :country

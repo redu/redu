@@ -9,15 +9,17 @@ $(function(){
               var docHeight = $(document).height();
 
               $(".student-actions").css("position", "relative");
-              $(".stage").css("position", "relative");
+              $(".resource-content").css("position", "relative").css("backgroundColor", "white");
+              $(".resource-content").addClass("boxshadow-lights");
               $(".statuses-wrapper").css("position", "relative").css("backgroundColor", "white");
               $("#lights_dimmed").css("height", docHeight).fadeIn();
-              $(this).html("Acender luzes");
+              $(this).html("<span class=\"lights icon-small icon-light-on-lightblue_32_34\"></span>Acender luzes");
               e.preventDefault();
             },
             function(){
               $("#lights_dimmed").fadeOut();
-              $(this).html("Apagar luzes");
+              $(".resource-content").removeClass("boxshadow-lights");
+              $(this).html("<span class=\"lights icon-small icon-light-off-lightblue_32_34\"></span>Apagar luzes");
           });
 
           $(".statuses-wrapper").live("click", function(){
@@ -41,11 +43,35 @@ $(function(){
 
 
     // Expand de recursos na listagem de módulos
-    $(".expand, .unexpand", "#space-subjects .subjects").live("click", function(){
-        $(this).toggleClass("expand");
-        $(this).toggleClass("unexpand");
-        $(this).parents("li:first").toggleClass("open");
-        $(this).next().slideToggle("fast");
+    $(".expand, .subject-name", "#space-subjects .subjects").live("click", function(){
+        var item = $(this).parents("li:first");
+        var expand = item.find(".expand");
+        expand.toggleClass("icon-expand_down-gray_16_18");
+        expand.toggleClass("icon-expand_up-gray_16_18");
+        var itemName = item.find("> .name");
+        itemName.toggleClass("icon-content-lightblue_32_34-before");
+        itemName.toggleClass("icon-subject-lightblue_32_34-before");
+        item.find(".lectures").slideToggle("fast");
+        return false;
+    });
+
+    // Ao clicar em Comentar ir direto para criar status
+    $(".student-actions .action-comment").live("click", function(){
+      $('html,body').animate({
+          scrollTop: $(".create-status textarea.textarea").offset().top
+        }, "slow");
+      $(".create-status textarea.textarea").focus();
+    });
+
+    // Scroll os botões de student-actions de acordo com o #resource
+    $(document).scroll(function(){
+      if ($("#resource").length > 0) {
+        if(($("#resource").offset().top - $(window).scrollTop() < 30)) {
+          $(".student-actions").css({'position': 'fixed', 'top':'10px'})
+        } else {
+          $(".student-actions").css({'position': 'relative'})
+        }
+      }
     });
 
     $(document).ready(function(){

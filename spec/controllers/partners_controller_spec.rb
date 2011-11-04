@@ -34,15 +34,6 @@ describe PartnersController do
       assigns[:partner_environment_associations].to_set.should == @associations.to_set
     end
 
-    it "assigns the admins" do
-      get :show, :id => @partner.id, :locale => "pt-BR"
-
-      assigns[:partner_user_associations].should_not be_nil
-      associations = @partner.partner_user_associations.to_set
-      assigns[:partner_user_associations].to_set.should == associations
-
-    end
-
     it "assigns partner" do
       get :show, :id => @partner.id, :locale => "pt-BR"
 

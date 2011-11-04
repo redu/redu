@@ -7,13 +7,9 @@
   <%= render :partial => 'courses/header',
     :locals => { :course => @course } %>
 
-  <div id="course-spaces" class="hierarchy-listing-wrapper">
-    <div class="header">
-      <h4>Disciplinas</h4>
-      <span class="counter">
-        <%= pluralize(@course.spaces.length, 'disciplina')%>
-      </span>
-    </div>
+<div id="course-spaces" class="body clearfix">
+  <%= render :partial => 'courses/actions',
+    :locals => { :course => @course }%>
 
     <% if can?(:teach, @course) %>
     <div class="admin-actions clearfix">
@@ -21,11 +17,12 @@
     </div>
     <% end %>
 
-    <ul id="spaces_list" class="hierarchy-listing">
+  <%= big_tabs :courses do %>
+    <ul id="spaces_list" class="hierarchy-listing spaces">
       <%= render :partial => 'spaces/item', :collection => @spaces %>
     </ul>
-
     <%= will_paginate @spaces, :renderer => EndlessRenderer %>
-  </div><!-- end #environment-courses -->
+  <% end %>
+</div>
 
 </div><!-- end .main -->

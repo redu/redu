@@ -36,9 +36,11 @@ gem 'remotipart', '>= 0.3.4'
 gem 'zencoder'
 gem 'pusher'
 gem 'kaminari'
+gem 'simple-navigation'
 gem 'actionmailer_inline_css',
   :git => 'git://github.com/ndbroadbent/actionmailer_inline_css.git',
   :branch => 'master'
+gem "acts_as_tree", "~> 0.1.1"
 gem 'exceptional'
 
 # Gems específicos de algum ambiente

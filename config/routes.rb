@@ -14,18 +14,6 @@ Redu::Application.routes.draw do
       post :respond
     end
   end
-  resources :profiles
-  resources :questions do
-    collection do
-      get :search
-      post :search
-      get :add
-    end
-  end
-  resources :folders
-  resources :annotations
-  resources :sb_posts
-  resources :topics
   resources :metro_areas
 
   resources :tags
@@ -45,41 +33,27 @@ Redu::Application.routes.draw do
   match '/account/edit' => 'users#edit_account', :as => :edit_account_from_email
   resources :sessions
 
-  # RSS
-  match '/featured' => 'posts#featured', :as => :featured
-  match '/featured.rss' => 'posts#featured', :format => 'rss', :as => :featured_rss
-  match '/popular' => 'posts#popular', :as => :popular
-  match '/popular.rss' => 'posts#popular', :format => 'rss', :as => :popular_rss
-  match '/recent' => 'posts#recent', :as => :recent
-  match '/recent.rss' => 'posts#recent', :format => 'rss', :as => :recent_rss
-  match '/rss' => 'base#rss_site_index', :as => :rss_redirect
-  match '/site_index.rss' => 'base#site_index', :format => 'rss', :as => :rss
-
-
   # site routes
   match '/about' => 'base#about', :as => :about
   match '/faq' => 'base#faq', :as => :faq
-  match '/removed_item' => 'base#removed_item', :as => :removed_page
   match 'contact' => 'base#contact', :as => :contact
 
   # Space
   resources :spaces, :except => [:index] do
     member do
-      get :manage
       get :admin_members
-      get :look_and_feel
-      get :teachers
       get :take_ownership
       get :publish
       get :unpublish
-      get :users
       get :mural
+      get :students_endless
+      get :admin_subjects
     end
     collection do
       get :cancel
     end
 
-    resources :folders do
+    resources :folders, :only => [:update, :create, :index] do
       member do
         get :upload
         get :download
@@ -88,22 +62,13 @@ Redu::Application.routes.draw do
         delete :destroy_file
         post :do_the_upload
         put :do_the_upload
-        post :update_permissions
       end
     end
 
-    resources :subjects do
+    resources :subjects, :except => [:show, :index] do
       member do
-        post :turn_visible
-        post :turn_invisible
         get :admin_lectures_order
         post :admin_lectures_order
-        get :statuses
-        get :users
-        get :admin_members
-      end
-      collection do
-        get :cancel
       end
 
       resources :lectures do
@@ -118,47 +83,15 @@ Redu::Application.routes.draw do
           get :published
         end
       end
-
-      resources :exams do
-        member do
-          get :add_question
-          get :add_resource
-          post :rate
-          get :answer
-          post :answer
-          get :compute_results
-          get :results
-          get :review_question
-        end
-        collection do
-          get :unpublished
-          get :published
-          get :history
-          get :new_exam
-          get :cancel
-          get :exam_history
-          get :sort
-          get :order
-          get :questions_database
-          get :review_question
-        end
-      end
     end
 
-    resource :forum, :except => [:new, :edit, :create, :update, :destroy] do
-      resources :topics do
-        resources :sb_posts
-      end
-      resources :sb_posts, :except => [:new, :edit, :create, :update, :destroy]
-    end
+    resources :users, :only => [:index]
  end
 
   # Users
   resources :users, :except => [:index] do
     member do
-      get :annotations
       get :activity_xml
-      get :logs
       get :assume
       put :change_profile_photo
       get :edit_account
@@ -182,6 +115,7 @@ Redu::Application.routes.draw do
       get :contacts_endless
       get :environments_endless
       get :show_mural
+      get :curriculum
     end
     collection do
       get :auto_complete
@@ -189,33 +123,7 @@ Redu::Application.routes.draw do
 
     resources :social_networks, :only => [:destroy]
 
-    resources :friendships, :only => [:index, :create, :destroy] do
-      member do
-        post :accept
-        post :decline
-      end
-      collection do
-        get :pending
-      end
-    end
-
-    resources :photos do
-      collection do
-        post :swfupload
-        get :slideshow
-      end
-    end
-
-    resources :posts do
-      collection do
-        get :manage
-      end
-      member do
-        get :contest
-        match :send_to_friend
-        match :update_views
-      end
-    end
+    resources :friendships, :only => [:index, :create, :destroy]
 
     resources :activities do
       collection do
@@ -225,13 +133,6 @@ Redu::Application.routes.draw do
 
     resources :invitations
 
-    resources :questions
-    resources :offerings do
-      collection do
-        put :replace
-      end
-    end
-
     resources :favorites, :only => [:index] do
       member do
         post :favorite
@@ -239,35 +140,14 @@ Redu::Application.routes.draw do
       end
     end
 
-    resources :messages do
+    resources :messages, :except => [:destroy, :edit, :update] do
       collection do
         get :index_sent
         post :delete_selected
       end
     end
 
-    resources :comments
-
     resources :photo_manager, :only => ['index']
-
-    scope ":user_id/photo_manager" do
-      resources :albums do
-        member do
-          get :add_photos
-          post :photos_added
-        end
-        collection do
-          get :paginate_photos
-        end
-
-        resources :photos do
-          collection do
-            post :swfupload
-            get :slideshow
-          end
-        end
-      end
-    end
 
     resources :plans, :only => [:index]
     resources :experiences
@@ -318,7 +198,6 @@ Redu::Application.routes.draw do
       get :admin_members
       post :destroy_members
       post :search_users_admin
-      get :users
     end
     resources :courses do
       member do
@@ -338,13 +217,15 @@ Redu::Application.routes.draw do
         post :destroy_invitations
         post :search_users_admin
         post :moderate_members_requests
-        get :users
         post :accept
         post :deny
       end
 
+      resources :users, :only => [:index]
       resources :user_course_invitations, :only => [:show]
     end
+
+    resources :users, :only => [:index]
   end
 
 

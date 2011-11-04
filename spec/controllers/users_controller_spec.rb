@@ -120,35 +120,6 @@ describe UsersController do
     end
   end
 
-  context "GET edit" do
-    before do
-      @user = Factory(:user)
-      activate_authlogic
-      UserSession.create @user
-      get :edit, { :locale => "pt-BR", :id => @user.login }
-    end
-
-    it "assigns @experience" do
-      assigns[:experience].should_not be_nil
-    end
-
-    it "assigns @high_school" do
-      assigns[:high_school].should_not be_nil
-    end
-
-    it "assigns @higher_education" do
-      assigns[:higher_education].should_not be_nil
-    end
-
-    it "assigns @complementary_course" do
-      assigns[:complementary_course].should_not be_nil
-    end
-
-    it "assigns @event_education" do
-      assigns[:event_education].should_not be_nil
-    end
-  end
-
   context "POST update" do
     before do
       @user = Factory(:user)
@@ -307,6 +278,99 @@ describe UsersController do
     end
   end
 
+  context "GET curriculum" do
+    before do
+      @user = Factory(:user)
+      activate_authlogic
+      UserSession.create @user
+      get :curriculum, { :locale => "pt-BR", :id => @user.login }
+    end
+
+    [:experience, :high_school, :higher_education,
+      :complementary_course, :event_education].each do |v|
+      it "assigns #{v}" do
+        assigns[v].should_not be_nil
+      end
+    end
+  end
+
+  context "GET index" do
+    context "an strange" do
+      context "when viewing Environment users" do
+        before do
+          environment = Factory(:environment)
+          get :index, { :locale => "pt-BR", :environment_id => environment.path }
+        end
+
+        it "has access, so assigns users" do
+          assigns[:users].should_not be_nil
+        end
+
+        it "renders environments/users/index" do
+          response.should render_template("environments/users/index")
+        end
+      end
+
+      context "when viewing Course users" do
+        before do
+          environment = Factory(:environment)
+          course = Factory(:course, :environment => environment)
+          get :index, { :locale => "pt-BR", :environment_id => environment.path,
+            :course_id => course.path }
+        end
+
+        it "has access" do
+          assigns[:users].should_not be_nil
+        end
+
+        it "renders courses/users/index" do
+          response.should render_template("courses/users/index")
+        end
+      end
+
+      context "when viewing Space users" do
+        before do
+          @environment = Factory(:environment)
+          @course = Factory(:course, :environment => @environment)
+          space = Factory(:space, :course => @course)
+          get :index, { :locale => "pt-BR", :space_id => space.id }
+        end
+
+        it "does NOT have access, so does not assigns users" do
+          assigns[:users].should be_nil
+        end
+
+        it "redirect to Courses#Preview" do
+          response.should redirect_to(preview_environment_course_path(@environment,
+                                                                      @course))
+        end
+      end
+    end
+
+    context "a member" do
+      context "when viewing Space users" do
+        before do
+          @environment = Factory(:environment)
+          @course = Factory(:course, :environment => @environment)
+          space = Factory(:space, :course => @course)
+          user = Factory(:user)
+          activate_authlogic
+          @course.join user
+          UserSession.create user
+          get :index, { :locale => "pt-BR", :space_id => space.id }
+        end
+
+        it "has access" do
+          assigns[:users].should_not be_nil
+        end
+
+        it "renders spaces/users/index" do
+          response.should render_template("spaces/users/index")
+        end
+      end
+    end
+  end
+
   context "GET my_wall" do
     before do
       @contact = Factory(:user)
@@ -330,5 +394,4 @@ describe UsersController do
       response.should redirect_to(home_path)
     end
   end
-
 end

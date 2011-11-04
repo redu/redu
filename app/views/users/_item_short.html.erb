@@ -1,8 +1,8 @@
 <%# Usuário representado apenas pelo avatar %>
-<li>
-  <%= link_to item_short, :title => item_short.display_name, :class => "tooltipable" do %>
-    <%= image_tag(item_short.avatar.url(:thumb_32),
-                  :alt => "#{item_short.login}")
-      %>
+<li class="<%= cycle("", "",  "", "last-column") %>">
+  <%= link_to item_short, :title => item_short.display_name,
+    :class => "tooltipable" do %>
+    <%= image_tag item_short.avatar.url(:thumb_32),
+                  :size => "32x32", :alt => "#{item_short.login}" %>
   <% end %>
 </li>

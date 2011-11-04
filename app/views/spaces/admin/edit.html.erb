@@ -1,0 +1,55 @@
+<%= render :partial => 'shared/management_background' %>
+<div class="management-sidebar">
+  <%= render :partial => 'spaces/sidebar', :locals => { :space => @space } %>
+</div>
+<div class="main space grid_12 omega big-col">
+  <%= render :partial => 'spaces/breadcrumbs',
+    :locals => { :space => @space, :header_space => @header_space } %>
+
+  <div id="space-manage" class="body management">
+    <%= render :partial => 'spaces/admin/header',
+      :locals => { :header_space => @header_space, :space => @space }%>
+    <%= render :partial => 'spaces/admin/clean_header' %>
+
+    <%= tabs :spaces_admin do %>
+      <div class="plan-info">
+        <span class="call">Plano</span>
+        <span>
+          <%= link_to @space.course.name,
+            environment_course_path(@space.course.environment, @space.course),
+            :class => "course-name" %> /
+          <%= link_to @plan.name, plan_invoices_path(@plan),
+            :class => "plan-name" %>
+          </span>
+        <ul class="plan-data">
+          <li>membros:
+            <strong class="featured"><%= @plan.billable.users.count %></strong> /
+            <%= @plan.members_limit %>
+            <span class="featured">(<%= @space.course.percentage_quota_members.round %>%)</span>
+          </li>
+          <li>documentos:
+            <strong class="featured"><%= number_to_human_size(@space.course.quota.files) %></strong> /
+            <%= number_to_human_size(@plan.file_storage_limit, :precision => 0) %>
+            <span class="featured">(<%= @space.course.percentage_quota_file.round %>%)</span>
+          </li>
+          <li>vídeos:
+            <strong class="featured"><%= number_to_human_size(@space.course.quota.multimedia) %></strong> /
+            <%= number_to_human_size(@plan.video_storage_limit, :precision => 0) %>
+            <span class="featured">(<%= @space.course.percentage_quota_multimedia.round %>%)</span>
+          </li>
+        </ul>
+      </div>
+      <%= form_for(@space, :html => { :class => "concave-form", :multipart => true }) do |f| %>
+        <%= render :partial => "spaces/form",
+          :locals => { :f => f, :edit => true} %>
+
+        <%= f.submit 'Salvar alterações' %>
+        <%= link_to 'Remover disciplina', @space,
+          :confirm => 'Você tem certeza que deseja remover esta disciplina?', :method => :delete,
+          :class => "concave-remove" %>
+      <% end %>
+
+    <% end %>
+  </div><!-- end #space-manage -->
+
+</div><!-- end .main -->

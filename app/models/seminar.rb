@@ -1,53 +1,7 @@
 class Seminar < ActiveRecord::Base
-  include AASM
   # Lectureable que representa um objeto multimídia simples, podendo ser aúdio,
   # vídeo ou mídia externa (e.g youtube).
-
-  # Utilizado na validação
-  #FIXME mover par arquivos de configuração
-  SUPPORTED_VIDEOS = [ 'application/x-mp4',
-    'video/x-flv',
-    'application/x-flv',
-    'video/mpeg',
-    'video/quicktime',
-    'video/x-la-asf',
-    'video/x-ms-asf',
-    'video/x-msvideo',
-    'video/x-sgi-movie',
-    'video/x-flv',
-    'flv-application/octet-stream',
-    'video/3gpp',
-    'video/3gpp2',
-    'video/3gpp-tt',
-    'video/BMPEG',
-    'video/BT656',
-    'video/CelB',
-    'video/DV',
-    'video/H261',
-    'video/H263',
-    'video/H263-1998',
-    'video/H263-2000',
-    'video/H264',
-    'video/JPEG',
-    'video/MJ2',
-    'video/MP1S',
-    'video/MP2P',
-    'video/MP2T',
-    'video/mp4',
-    'video/MP4V-ES',
-    'video/MPV',
-    'video/mpeg4',
-    'video/mpeg',
-    'video/avi',
-    'video/mpeg4-generic',
-    'video/nv',
-    'video/vnd.objectvideo',
-    'video/parityfec',
-    'video/pointer',
-    'video/raw',
-    'video/rtx' ]
-
-  SUPPORTED_AUDIO = ['audio/mpeg', 'audio/mp3']
+  include AASM
 
   # Video convertido
   has_attached_file :media, Redu::Application.config.video_transcoded
@@ -138,11 +92,11 @@ class Seminar < ActiveRecord::Base
   end
 
   def video?
-    SUPPORTED_VIDEOS.include?(self.original_content_type)
+    Redu::Application.config.mimetypes['video'].include?(original_content_type)
   end
 
   def audio?
-    SUPPORTED_AUDIO.include?(self.original_content_type)
+    Redu::Application.config.mimetypes['audio'].include?(original_content_type)
   end
 
   def external?
@@ -175,14 +129,6 @@ class Seminar < ActiveRecord::Base
   end
 
   protected
-  # Deriva o content type olhando diretamente para o arquivo. Workaround para
-  # problemas decorrentes da integração uploadify/rails
-  # http://github.com/alainbloch/uploadify_rails
-  # Deve ser chamado antes de salvar
-  def define_content_type
-    self.original_content_type = MIME::Types.type_for(self.original_file_name).to_s
-  end
-
   def interpolate(text, mapping)
     mapping.each do |k,v|
       text = text.gsub(':'.concat(k.to_s), v.to_s)

@@ -2,11 +2,7 @@
 <div class="main grid_10" style="width: 580px;">
   <%= render :partial => 'messages/breadcrumb' %>
   <div id="messages">
-    <%=
-      fake_tabs ['Recebidas', user_messages_path(@user), {:class => 'icon icon-message-gray_16_16'}],
-        ['Enviadas', index_sent_user_messages_path(@user),  {:class => 'icon icon-messagereply-lightblue_16_16'}],
-        ['Nova', new_user_message_path(@user), {:class => 'icon icon-messagecreate-gray_16_16'}] do
-    %>
+    <%= tabs :users do %>
       <%= render :partial => 'messages/index',
         :locals => { :mailbox => :outbox, :messages => @messages } %>
     <% end %>

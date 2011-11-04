@@ -34,6 +34,7 @@ class Lecture < ActiveRecord::Base
   scope :related_to, lambda { |lecture|
     where("name LIKE ? AND id != ?", "%#{lecture.name}%", lecture.id)
   }
+  scope :recent, lambda { where('created_at > ?', 1.week.ago) }
 
 
   attr_protected :owner, :published, :view_count, :removed, :is_clone
@@ -65,6 +66,10 @@ class Lecture < ActiveRecord::Base
     asset_report.save
   end
 
+  def done?(user)
+    self.asset_reports.of_user(user).last.done?
+  end
+
   def clone_for_subject!(subject_id)
     clone = self.clone :include => :lectureable,
       :except => [:rating_average, :view_count, :position, :subject_id]
@@ -79,6 +84,10 @@ class Lecture < ActiveRecord::Base
     student_profiles.each do |student_profile|
       student_profile.update_grade!
     end
+  end
+
+  def recent?
+    self.created_at > 1.week.ago
   end
 
   # Diz se a instância está pronta para ser divulgada via mural ou e-mail

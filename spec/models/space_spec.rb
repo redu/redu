@@ -5,15 +5,13 @@ describe Space do
   subject { Factory(:space) }
 
   [:user_space_associations, :users, :teachers, :students,
-    :logs, :folders, :statuses, :subjects,
-    :topics, :sb_posts].each do |attr|
+    :logs, :folders, :statuses, :subjects ].each do |attr|
       it { should have_many(attr) }
   end
 
   it { should belong_to :course }
   it { should belong_to :owner }
 
-  it { should have_one :forum }
   it { should have_one :root_folder}
 
   it { should have_many :logs }
@@ -27,8 +25,7 @@ describe Space do
   xit { should ensure_length_of(:description).is_at_least(30).is_at_most(250) }
 
 
-  [:owner, :removed, :lectures_count,
-   :members_count, :course_id, :published].each do |attr|
+  [:owner, :removed, :members_count, :course_id, :published].each do |attr|
     it { should_not allow_mass_assignment_of attr }
   end
 
@@ -37,12 +34,6 @@ describe Space do
       expect {
         space = Factory(:space)
       }.should change(Folder, :count).by(1)
-    end
-
-    it "creates a forum" do
-      expect{
-        s = Factory(:space)
-      }.should change(Forum, :count).by(1)
     end
 
     it "creates a space association with all users of course's spaces" do
@@ -159,6 +150,16 @@ describe Space do
       subject.new_members.to_set.
         should == [subject.course.environment.owner, users[4]].to_set
     end
+
+    it "retrieves myfiles" do
+      spaces = (1..5).collect { Factory(:space) }
+      other_files = (0..4).collect do |n|
+        Factory(:myfile, :folder => spaces[n].root_folder)
+      end
+      files = (1..4).collect { Factory(:myfile,
+                                       :folder => subject.root_folder) }
+      subject.myfiles.should == files
+    end
   end
 
   it "generates a permalink" do
@@ -192,6 +193,24 @@ describe Space do
     expect{
       space.unpublish!
     }.should change { space.published }.to(false)
+  end
+
+  context "when counting lectures" do
+    before do
+      @lectures = 3.times.inject([]) do |acc,i|
+        subj = Factory(:subject, :owner => subject.owner,
+                       :space => subject,
+                       :visible => true, :finalized => true)
+        lectures = 3.times.inject([]) do |mem, i|
+          mem << Factory(:lecture, :subject => subj)
+        end
+        acc << lectures
+      end.flatten!
+    end
+
+    it "should count correctly" do
+      subject.lectures_count.should == @lectures.size
+    end
   end
 
 end

@@ -1,0 +1,25 @@
+<%= lazy_load('https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js') do %>
+  jQuery(function(){
+    $(".sortable-resources").sortable({
+      stop: function(event, ui) {
+      var lectures_ordered = $(this).sortable('toArray');
+        $('.lectures-order').val(lectures_ordered);
+        $("#space-manage #resources_list").refreshResourcesNumbering();
+      }
+    });
+  });
+<% end %>
+<span class="section-detail lectures">Aulas</span>
+<%= render 'subjects/admin/quotas', :quota => quota, :plan => plan %>
+<div id="lectures_index" class="clearfix">
+  <%= f.label :lectures, raw("Adicionadas <span class='snippet'>Arraste cada aula para alterar sua ordem de exibição</span>"),
+    :class => "icon-lecture-gray_32_34-before added-lectures" %>
+  <ul id="resources_list" class="resources sortable-resources">
+    <% if @subject.lectures.empty? %>
+      <li class="no-lectures">Nenhuma aula foi adicionada ainda.</li>
+    <% else %>
+      <%= render :partial => "lectures/admin/item_short", :collection => @subject.lectures %>
+    <% end %>
+  </ul>
+  <%= hidden_field_tag 'lectures_order', nil, :class => "lectures-order" %>
+</div>

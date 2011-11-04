@@ -22,10 +22,10 @@ class CoursesController < BaseController
 
   def edit
     @header_course = @course.clone :include => [:new_members,
-      :approved_users, :teachers, :students, :tutors]
+      :approved_users, :teachers, :students, :tutors, :plan, :quota]
 
     respond_to do |format|
-      format.html
+      format.html { render 'courses/admin/edit' }
     end
   end
 
@@ -57,7 +57,7 @@ class CoursesController < BaseController
         format.html { redirect_to(environment_course_path(@environment, @course)) }
         format.xml { head :ok }
       else
-        format.html { render 'edit' }
+      format.html { render 'courses/admin/edit' }
         format.xml  { render :xml => @course.errors, :status => :unprocessable_entity }
       end
     end
@@ -65,7 +65,7 @@ class CoursesController < BaseController
 
   def new
     respond_to do |format|
-      format.html
+      format.html { render 'courses/admin/new' }
     end
   end
 
@@ -84,7 +84,7 @@ class CoursesController < BaseController
         @environment.courses << @course
         format.html { redirect_to environment_course_path(@environment, @course) }
       else
-        format.html { render "new" }
+        format.html { render 'courses/admin/new' }
       end
     end
 
@@ -100,11 +100,11 @@ class CoursesController < BaseController
 
     if params.has_key? :role
       if params[:role] == 'student'
-        @courses = Course.user_behave_as_student(current_user)
+        @courses = Course.published.user_behave_as_student(current_user)
       elsif params[:role] == 'tutor'
-        @courses = Course.user_behave_as_tutor(current_user)
+        @courses = Course.published.user_behave_as_tutor(current_user)
       elsif params[:role] == 'teacher'
-        @courses = Course.user_behave_as_teacher(current_user)
+        @courses = Course.published.user_behave_as_teacher(current_user)
       elsif params[:role] == 'administrator'
         @courses = Course.user_behave_as_administrator(current_user)
       end
@@ -155,15 +155,15 @@ class CoursesController < BaseController
 
   # Aba Disciplinas.
   def admin_spaces
-    # FIXME Refatorar para o modelo (conditions)
-    @spaces = @course.spaces.includes(:owner).paginate(:page => params[:page],
-                                                       :order => 'updated_at DESC',
-                                                       :per_page => Redu::Application.config.items_per_page)
+    @spaces = @course.spaces.includes(:owner, :user_space_associations, :subjects).
+      paginate(:page => params[:page],
+               :order => 'updated_at DESC',
+               :per_page => Redu::Application.config.items_per_page)
 
     respond_to do |format|
-      format.html
+      format.html { render "courses/admin/admin_spaces" }
       format.js do
-        render_endless 'spaces/item_admin', @spaces, '#spaces_list'
+        render_endless 'spaces/admin/item_admin', @spaces, '#spaces_list'
       end
     end
   end
@@ -175,9 +175,9 @@ class CoursesController < BaseController
       paginate(:page => params[:page],:order => 'updated_at DESC',
                :per_page => Redu::Application.config.items_per_page)
     respond_to do |format|
-      format.html
+      format.html { render "courses/admin/admin_members_requests" }
       format.js do
-        render_endless 'courses/pending_member_item_admin', @pending_members,
+        render_endless 'courses/admin/pending_member_item_admin', @pending_members,
           '#pending_member_list'
       end
     end
@@ -281,14 +281,14 @@ class CoursesController < BaseController
   # Aba Membros.
   def admin_members
     @memberships = @course.user_course_associations.approved.
-                     includes(:user => [{:user_space_associations => :space}]).
+                     includes(:user => [{:user_space_associations => {:space => :course}}]).
                      paginate(:page => params[:page],:order => 'updated_at DESC',
                               :per_page => Redu::Application.config.items_per_page)
 
       respond_to do |format|
-        format.html
+        format.html { render "courses/admin/admin_members" }
         format.js do
-          render_endless 'courses/user_item_admin', @memberships,
+          render_endless 'courses/admin/user_item_admin', @memberships,
             '#user_list_table'
         end
       end
@@ -329,25 +329,8 @@ class CoursesController < BaseController
       :per_page => Redu::Application.config.items_per_page)
 
       respond_to do |format|
-        format.js
+        format.js { render "courses/admin/search_users_admin" }
       end
-  end
-
-  # Listagem de usuários do Course
-  def users
-    @sidebar_preview = true if params.has_key?(:preview) &&
-                              params[:preview] == 'true'
-    @users = @course.approved_users.
-      paginate(:page => params[:page], :order => 'first_name ASC',
-               :per_page => 18)
-
-    respond_to do |format|
-      format.html
-      format.js do
-        render_endless 'users/item', @users, '#users_list',
-                       {:entity => @course}
-      end
-    end
   end
 
   # Aceitar convite para o Course
@@ -430,7 +413,7 @@ class CoursesController < BaseController
     @user_invitations = @course.user_course_associations.invited
 
     respond_to do |format|
-      format.html
+      format.html { render "courses/admin/admin_manage_invitations" }
     end
   end
 

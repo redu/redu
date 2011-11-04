@@ -1,9 +1,17 @@
-<li class="clearfix">
-  <div class="info">
+<li class="child clearfix">
     <%= image_tag 'new/missing_courses_thumb_32.png', :alt => 'curso' %>
+  <div class="info">
     <%= link_to item.name, environment_course_path(item.environment, item),
       :class => 'name' %>
-    <ul class="tags">
+    <% unless item.workload.nil? %>
+      <span class="workload">(<%= item.workload %> horas)</span>
+    <% end %>
+    <% if can?(:manage, item) %>
+      <%= link_to "Editar", edit_environment_course_path(item.environment, item),
+        :class => "manage icon-manage-gray_8_10-before"%>
+    <% end %>
+    <p class="description"><%= item.description %></p>
+    <ul class="tags clearfix">
       <% item.tags.each do |tag| %>
         <li>
           <%= link_to tag, environment_path(item.environment) %>
@@ -11,34 +19,32 @@
       <% end %>
     </ul>
   </div>
-  <div class="audience">
-    <em>Audiência</em>
-    <ul>
-      <% item.audiences.each do |audience| %>
-        <li>
-          <%= link_to audience.name, environment_path(item.environment) %>
-        </li>
-      <% end %>
-    </ul>
-  </div>
   <div class="statistics">
-    <ul class="statistics">
+    <%= render :partial => 'courses/privacy', :locals => { :course => item } %>
+    <ul class="numbers clearfix">
       <li>
-        <em>Membros:</em>
-        <span><%= item.approved_users.length %></span>
+        <span class="count"><%= item.approved_users.length %></span>
+        <em class="role">membros</em>
       </li>
       <li>
-        <em>Administradores:</em>
-        <span><%= item.administrators.length %></span>
+        <span class="count"><%= item.teachers.length %></span>
+        <em class="role">professores</em>
       </li>
       <li>
-        <em>Professores:</em>
-        <span><%= item.teachers.length %></span>
+        <span class="count"><%= item.tutors.length %></span>
+        <em class="role">tutores</em>
       </li>
       <li>
-        <em>Tutores:</em>
-        <span><%= item.tutors.length %></span>
+        <span class="count"><%= item.students.length %></span>
+        <em class="role">alunos</em>
       </li>
     </ul>
   </div>
+  <% if can?(:show, item) %>
+    <ul class="spaces <%= "no-description" if item.description.blank? %>">
+      <span class="title icon-space-gray_16_18-before"><%= item.spaces.published.count %> disciplinas matriculadas</span>
+      <%= render :partial => 'spaces/item_medium',
+        :collection => item.spaces.published %>
+    </ul>
+  <% end %>
 </li>

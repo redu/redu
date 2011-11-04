@@ -1,0 +1,20 @@
+<%= render :partial => 'shared/management_background' %>
+<div class="management-sidebar">
+  <%= render :partial => 'spaces/sidebar', :locals => { :space => @space } %>
+</div>
+<div class="main space grid_12 omega big-col">
+  <%= render :partial => "spaces/breadcrumbs", :locals => { :space => @space } %>
+  <div id="space-manage" class="body management">
+    <%= render :partial => "spaces/admin/header",
+      :locals => { :space => @space } %>
+    <%= render :partial => 'spaces/admin/clean_header' %>
+
+    <%= tabs :spaces_admin do %>
+      <h3 class="form-header">Criação de um <strong class="strong">novo módulo</strong></h3>
+      <%= link_to "< voltar para a listagem de modulos",
+        admin_subjects_space_path(@space), :class => "back" %>
+      <%= render 'subjects/admin/new', :space => @space, :subject => @subject, :quota => @quota, :plan => @plan %>
+      <%= link_to "Sair", environment_course_path(@environment, @course), :class => "manage exit icon-manage-gray_8_10-before" %>
+    <% end %>
+  </div><!-- end #space-management -->
+</div><!-- end .main -->

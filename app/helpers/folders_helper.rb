@@ -63,7 +63,7 @@ module FoldersHelper
                             :method => :get ) + ' > ' + path
     end
 
-    return path.sub("root", "raiz")
+    return path.sub("root", "Arquivos de Apoio")
   end
 
 end

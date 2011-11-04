@@ -3,14 +3,12 @@ require 'spec_helper'
 describe SubjectObserver do
   context "Logger" do
     it "logs the creation" do
-      sub = Factory(:subject)
+      sub = Factory(:subject, :visible => true)
       Factory(:lecture, :subject => sub)
 
       ActiveRecord::Observer.with_observers(:subject_observer) do
         expect {
           sub.finalized = true
-          sub.turn_visible!
-          sub.save
           sub.save
         }.should change(sub.logs, :count).by(1)
       end
@@ -25,7 +23,7 @@ describe SubjectObserver do
     end
 
     it "notifies creation" do
-      sub = Factory(:subject)
+      sub = Factory(:subject, :visible => true)
       space = Factory(:space, :owner => sub.owner)
       Factory(:lecture, :subject => sub, :owner => sub.owner)
       sub.enroll(sub.owner)
@@ -33,7 +31,7 @@ describe SubjectObserver do
       ActiveRecord::Observer.with_observers(:subject_observer) do
         expect {
           sub.finalized = true
-          sub.turn_visible!
+          sub.save
         }.should change(UserNotifier.deliveries, :count).by(1)
       end
     end

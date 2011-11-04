@@ -1,0 +1,37 @@
+<%= image_tag("loadingAnimation.gif", :id => "loading-files", :style =>"display: none;" ) %>
+<li id="folder_<%= item.id %>" class="clearfix">
+  <span class="directory ext_folder"></span>
+  <%=
+    link_to h(item.name),
+      space_folders_path(space, :id => item.id),
+      :remote => true,
+      :class => "folder-name icon-hierarchy_elem-gray_8_10-before"
+    %>
+  <div class="rename-folder" style="display:none;">
+    <%= form_for item, :as => :folder,
+      :url => space_folder_path(space, item),
+      :remote => true, :html => { :method => :put, :class => 'form-loader' } do |f| %>
+      <%= f.text_field :name %>
+      <%= f.submit 'Ok' %>
+      <%= link_to "Cancelar", "#", :class => "cancel" %>
+      <%= image_tag 'spinner.gif', :id => "rename-folder-spinner_#{item.id}", :style => 'display: none' %><BR>
+    <% end %>
+  </div>
+
+  <% if can_delete %>
+    <%=
+      link_to "Excluir",
+        destroy_folder_space_folder_path(space, item),
+        :confirm => "Todos os arquivos e subpastas serão removidos.\nDeseja continuar?",
+        :method => :delete,
+        :remote => true,
+        :class => "delete icon-delete-gray_8_10-before"
+      %>
+  <% end %>
+
+  <% if can_update %>
+    <%= link_to "Renomear", '#',
+      :class => "rename manage icon-manage-gray_8_10-before",
+      :id => "#{item.id}" %>
+  <% end %>
+</li>

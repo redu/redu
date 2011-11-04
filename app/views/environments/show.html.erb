@@ -6,22 +6,19 @@
         :locals => { :environment => @environment } %>
 
   <div id="environment-courses" class="body">
-    <div class="header">
-      <h4>Cursos</h4>
-      <span class="counter"><%= pluralize(@environment.courses.length, 'curso') %></span>
-    </div>
-
     <% if can?(:manage, @environment) %>
       <div class="admin-actions">
         <%= link_to 'Criar novo curso', new_environment_course_path(@environment), :class => "button" %>
       </div>
     <% end %>
 
-    <ul id="courses_list" class="hierarchy-listing">
-      <%= render :partial => 'courses/item',
-        :collection => @courses %>
-    </ul>
-  <%= will_paginate @courses, :renderer => EndlessRenderer %>
+    <%= big_tabs :environments do %>
+      <ul id="courses_list" class="hierarchy-listing">
+        <%= render :partial => 'courses/item',
+          :collection => @courses %>
+      </ul>
+      <%= will_paginate @courses, :renderer => EndlessRenderer %>
+    <% end %>
   </div><!-- end #environment-courses -->
 
 </div><!-- end .main -->

@@ -1,0 +1,28 @@
+  <script type="text/javascript">
+    function showLoadingUsers(){
+            document.getElementById('loading_bar').style.display = 'block';
+            $('user_list_table').remove();
+    }
+  </script>
+<%= render :partial => "shared/management_background" %>
+<div class="management-sidebar">
+  <%= render :partial => 'courses/sidebar',
+    :locals => { :course => @course }  %>
+</div>
+<div class="main grid_12 omega big-col management-wrapper">
+  <%= render :partial => 'courses/breadcrumbs',
+    :locals => { :course => @course } %>
+  <%= render :partial => 'courses/admin/header',
+    :locals => { :course => @course } %>
+  <div id="course-manage" class="management body">
+    <%= render :partial => "courses/admin/clean_header" %>
+    <%= tabs :courses_admin do %>
+      <%= subtabs :courses_admin do %>
+        <%= render :partial => 'courses/admin/pending_member_list_admin',
+          :locals => { :pending_members => @pending_members }%>
+        <%= link_to "Sair", environment_course_path(@environment, @course),
+          :class => "manage exit icon-manage-gray_8_10-before" %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
