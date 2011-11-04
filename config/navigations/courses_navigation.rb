@@ -19,7 +19,7 @@ SimpleNavigation::Configuration.run do |navigation|
         :highlights_on => action_matcher({'courses' => ['show', 'preview']}),
         :class => 'ui-state-default',
         :link => { :class => "icon-space-gray_32_34-before" }
-      tabs.item :account, 'Membros',
+      tabs.item :account, 'Membros do Curso',
         environment_course_users_path(@course.environment, @course),
         :highlights_on => action_matcher({'courses' => ['admin_invitations'],
                                           'users' => ['index']}),
