@@ -12,6 +12,9 @@
     <%= render :partial => "courses/admin/clean_header" %>
     <%= tabs :courses_admin do %>
       <%= subtabs :courses_admin do %>
+        <div class="management-actions">
+          <%= link_to "Convidar membros", admin_invitations_environment_course_path(@environment, @course), :class => "button" %>
+        </div>
         <h3 class="form-header">Aguardando a resposta de <%= (@email_invitations.count + @user_invitations.count) %> membro(s)</h3>
         <% unless @email_invitations.empty? && @user_invitations.invited.empty? %>
           <div id="user_list" class="invitation-list">

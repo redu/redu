@@ -7,6 +7,9 @@
   <%= render :partial => 'courses/header',
     :locals => { :course => @course }%>
   <div id="course-users" class="body">
+    <div class="actions clearfix">
+      <%= link_to "Convidar membros", admin_invitations_environment_course_path(@environment, @course), :class => "button" %>
+    </div>
     <%= big_tabs :courses do %>
       <%= subtabs :courses do %>
         <ul id="users-list" class="members clearfix">
