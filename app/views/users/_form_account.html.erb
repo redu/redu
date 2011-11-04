@@ -1,6 +1,6 @@
 <%= form_for @user, :url => update_account_user_path,
   :html => {:multipart =>true, :class => "concave-form"}  do |f|  %>
-  <%= f.error_messages %>
+  <%= concave_error_messages_for(@user) %>
 
   <%= field_set_tag "Configurações", :class => 'inline' do %>
     <%= f.check_box :auto_status %>
