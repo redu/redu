@@ -90,17 +90,22 @@
 
   // Atualiza a numeração dos recursos
   $.fn.refreshResourcesNumbering = function(){
-    var $resources = $("#resources_list > li:not(.no-lectures)");
+    var $resources = $(this).find("> li:not(.no-lectures)");
     var qttResources = $resources.length;
-    $(this).find(".position").text(qttResources + 1);
+    // Atualiza número da próxima aula a ser criada
+    $("#lectures_types").find(".position").text(qttResources + 1);
 
     if(qttResources > 0){
-      $("#resources_list > li.no-lectures").remove();
+      $(this).find("> li.no-lectures").remove();
+      // Atualiza o número das aulas na listagem e nos forms de edição
       $resources.each(function(index){
-        $(this).find(".position").text((index + 1) + ".")
+        newPosition = (index + 1);
+        $(this).find(".position").text(newPosition + ".");
+        formId = "#" + $(this).attr("id") + "-edition";
+        $(formId).find(".position").text(newPosition);
       });
     }else{
-      $("#resources_list").html($("<li/>", { "class" : "no-lectures", "text" : "Nenhuma aula foi adicionada ainda."}))
+      $(this).html($("<li/>", { "class" : "no-lectures", "text" : "Nenhuma aula foi adicionada ainda."}))
     }
   };
 

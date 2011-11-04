@@ -11,7 +11,7 @@
     $('#resources-edition').append($editPageForm);
   <% end %>
 
-  $("#space-manage .new-resource .resource-numbering").refreshResourcesNumbering();
+  $("#space-manage #resources_list").refreshResourcesNumbering();
 
   <%# Atualiza quotas %>
   var $quotas = $("<%= escape_javascript render 'subjects/admin/quotas', :quota => @quota, :plan => @plan %>");

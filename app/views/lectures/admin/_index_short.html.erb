@@ -4,7 +4,7 @@
       stop: function(event, ui) {
       var lectures_ordered = $(this).sortable('toArray');
         $('.lectures-order').val(lectures_ordered);
-        $("#space-manage .new-resource .resource-numbering").refreshResourcesNumbering();
+        $("#space-manage #resources_list").refreshResourcesNumbering();
       }
     });
   });
