@@ -67,7 +67,10 @@ class Lecture < ActiveRecord::Base
   end
 
   def done?(user)
-    self.asset_reports.of_user(user).last.done?
+    assets = asset_reports.of_user(user)
+    return false if assets.empty?
+
+    asset_reports.of_user(user).last.done?
   end
 
   def clone_for_subject!(subject_id)
