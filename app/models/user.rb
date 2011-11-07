@@ -17,13 +17,8 @@ class User < ActiveRecord::Base
   # CALLBACKS
   before_create :make_activation_code
   after_create  :update_last_login
-  # FIXME Verificar necessidade (não foi testado)
-  after_save    :recount_metro_area_users
-  # FIXME Verificar necessidade (não foi testado)
-  after_destroy :recount_metro_area_users
 
   # ASSOCIATIONS
-  has_many :annotations, :dependent => :destroy, :include=> :lecture
   has_many :chat_messages
   # Space
   has_many :spaces, :through => :user_space_associations
@@ -44,12 +39,7 @@ class User < ActiveRecord::Base
   has_many :courses_owned, :class_name => "Course",
     :foreign_key => "owner"
   has_many :favorites, :order => "created_at desc", :dependent => :destroy
-  # FIXME Verificar necessidade (Suggestion.rb não existe). Não foi testado.
-  has_many :suggestions
   enumerate :role
-  belongs_to  :metro_area
-  belongs_to  :state
-  belongs_to  :country
   has_many :recently_active_friends, :through => :friendships, :source => :friend,
     :order => "users.last_request_at ASC", :limit => 9,
     :conditions => "friendships.status = 'accepted'",
@@ -91,9 +81,6 @@ class User < ActiveRecord::Base
 
   # Named scopes
   scope :recent, order('users.created_at DESC')
-  # FIXME Remover tudo relacionado a este named_scope,
-  # featured_writer não existe no BD.
-  scope :featured, where("users.featured_writer = ?", true)
   scope :active, where("users.activated_at IS NOT NULL")
   scope :with_ids, lambda { |ids| where(:id => ids) }
   scope :without_ids, lambda {|ids|
@@ -131,8 +118,8 @@ class User < ActiveRecord::Base
   attr_accessor :email_confirmation
 
   # Accessors
-  attr_protected :admin, :featured, :role, :activation_code,
-    :friends_count, :score, :removed
+  attr_protected :admin, :role, :activation_code, :friends_count, :score,
+    :removed
 
   accepts_nested_attributes_for :settings
   accepts_nested_attributes_for :social_networks,
@@ -166,8 +153,6 @@ class User < ActiveRecord::Base
   # VALIDATIONS
   validates_presence_of     :login, :email, :first_name, :last_name,
     :email_confirmation
-  # FIXME Verificar necessidade (não foi testado)
-  validates_presence_of     :metro_area,                 :if => Proc.new { |user| user.state }
   validates_uniqueness_of   :login, :email, :case_sensitive => false
   validates_exclusion_of    :login, :in => Redu::Application.config.extras["reserved_logins"]
   validates :birthday,
@@ -193,11 +178,6 @@ class User < ActiveRecord::Base
     User.find_by_login(login) || User.find_by_email(login)
   end
 
-  # FIXME Relacionado com featured, verificar necessidade.
-  def self.find_featured
-    self.featured
-  end
-
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
   def self.authenticate(login, password)
     # hide records with a nil activated_at
@@ -208,23 +188,6 @@ class User < ActiveRecord::Base
 
   def self.encrypt(password, salt)
     Digest::SHA1.hexdigest("--#{salt}--#{password}--")
-  end
-
-  # FIXME Verificar necessidade (não foi testado)
-  def self.currently_online
-    User.where("sb_last_seen_at > ?", Time.now.utc-5.minutes)
-  end
-
-  # FIXME Verificar necessidade (não foi testado)
-  def self.search(query, options = {})
-    with_scope :find => { :conditions => build_search_conditions(query) } do
-      find :all, options
-    end
-  end
-
-  # FIXME Verificar necessidade (não foi testado)
-  def self.build_search_conditions(query)
-    query
   end
 
   ## Instance Methods
@@ -354,31 +317,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  # FIXME Verificar necessidade (não foi testado)
-  def can_be_owner?(entity)
-    self.admin? || self.space_admin?(entity.id) || self.teacher?(entity) || self.coordinator?(entity)
-  end
-
-  # FIXME Criar teste ao definir lógica dos Redu points.
-  def earn_points(activity)
-    thepoints = AppConfig.points[activity]
-    self.update_attribute(:score, self.score + thepoints)
-  end
-
-  # FIXME Verificar necessidade (não foi testado)
-  def to_xml(options = {})
-    options[:except] ||= []
-    super
-  end
-
-  # FIXME Verificar necessidade (não foi testado)
-  def recount_metro_area_users
-    return unless self.metro_area
-    ma = self.metro_area
-    ma.users_count = User.where( "metro_area_id = ?", ma.id ).count
-    ma.save
-  end
-
   def to_param
     login
   end
@@ -391,20 +329,6 @@ class User < ActiveRecord::Base
     self.posts.where("published_at > ? and published_at < ?",
                       DateTime.now.to_time.at_beginning_of_month.months_ago(1),
                       DateTime.now.to_time.at_beginning_of_month).all
-  end
-
-  # FIXME Falar com Guila
-  def avatar_photo_url(size = nil)
-    if avatar
-      avatar.public_filename(size)
-    else
-      case size
-      when :thumb
-        AppConfig.photo['missing_thumb']
-      else
-        AppConfig.photo['missing_medium']
-      end
-    end
   end
 
   def deactivate
@@ -445,12 +369,6 @@ class User < ActiveRecord::Base
   end
 
   # FIXME Verificar necessidade (não foi testado)
-  # remember_token_expires_at não existe no BD.
-  def remember_token?
-    remember_token_expires_at && Time.now.utc < remember_token_expires_at
-  end
-
-  # FIXME Verificar necessidade (não foi testado)
   # remember_token_expires_at e remember_token não existem no BD.
   # These create and unset the fields required for remembering users between browser closes
   def remember_me
@@ -467,25 +385,6 @@ class User < ActiveRecord::Base
     save(false)
   end
 
-  # FIXME Verificar necessidade (não foi testado)
-  def valid_invite_code?(code)
-    code == invite_code
-  end
-
-  def invite_code
-    Digest::SHA1.hexdigest("#{self.id}--#{self.email}--#{self.password_salt}")
-  end
-
-  # FIXME Verificar necessidade (não foi testado)
-  def location
-    metro_area && metro_area.name || ""
-  end
-
-  # FIXME Verificar necessidade (não foi testado)
-  def full_location
-    "#{metro_area.name if self.metro_area}#{" , #{self.country.name}" if self.country}"
-  end
-
   def reset_password
     new_password = newpass(8)
     self.password = new_password
@@ -498,74 +397,9 @@ class User < ActiveRecord::Base
     self
   end
 
-  def staff?
-    featured_writer?
-  end
-
-  # FIXME Verificar necessidade (não foi testado)
-  # A tabela Frienship não existe
-  def can_request_friendship_with(user)
-    !self.eql?(user) && !self.friendship_exists_with?(user)
-  end
-
-  # FIXME Verificar necessidade (não foi testado)
-  # A tabela Frienship não existe
-  def friendship_exists_with?(friend)
-    Friendship.where("user_id = ? AND friend_id = ?", self.id, friend.id).first
-  end
-
   def update_last_login
     self.save #FIXME necessário para que o last_login_at seja atualizado, #419
     self.update_attribute(:last_login_at, Time.now)
-  end
-
-  # FIXME Verificar necessidade (não foi testado)
-  def add_offerings(skills)
-    skills.each do |skill_id|
-      offering = Offering.new(:skill_id => skill_id)
-      offering.user = self
-      if self.under_offering_limit? && !self.has_skill?(offering.skill)
-        if offering.save
-          self.offerings << offering
-        end
-      end
-    end
-  end
-
-  # FIXME Verificar necessidade (não foi testado)
-  def under_offering_limit?
-    self.offerings.size < 3
-  end
-
-  # FIXME Verificar necessidade (não foi testado)
-  def has_skill?(skill)
-    self.offerings.collect{|o| o.skill }.include?(skill)
-  end
-
-  # FIXME Verificar necessidade (não foi testado)
-  # A tabela Frienship não existe
-  def has_reached_daily_friend_request_limit?
-    friendships_initiated_by_me.where('created_at > ?', Time.now.beginning_of_day).count >= Friendship.daily_request_limit
-  end
-
-  # FIXME Verificar necessidade (não foi testado)
-  def friends_ids
-    return [] if accepted_friendships.empty?
-    accepted_friendships.map{|fr| fr.friend_id }
-  end
-
-  def recommended_posts(since = 1.week.ago)
-    return [] if tags.empty?
-    rec_posts = Post.find_tagged_with(tags.map(&:name),
-                                      :conditions => ['posts.user_id != ? AND published_at > ?', self.id, since ],
-                                      :order => 'published_at DESC',
-                                      :limit => 10)
-
-    if rec_posts.empty?
-      []
-    else
-      rec_posts.uniq
-    end
   end
 
   def display_name
@@ -587,26 +421,6 @@ class User < ActiveRecord::Base
     else
       login
     end
-  end
-
-  # FIXME Não foi testado
-  # space roles
-  def can_post?(space)
-    if not self.get_association_with(space)
-      return false
-    end
-
-    if space.submission_type == 1 or space.submission_type == 2 # all
-      return true
-    elsif space.submission_type == 3 #teachers and admin
-      user_role = self.get_association_with(space).role
-      if user_role.eql?(Role[:teacher]) or user_role.eql?(Role[:space_admin])
-        return true
-      else
-        return false
-      end
-    end
-
   end
 
   # Pega associação com Entity (aplica-se a Environment, Course, Space e Subject)
@@ -668,16 +482,6 @@ class User < ActiveRecord::Base
     gender && gender.eql?(FEMALE)
   end
 
-  # FIXME Não foi testado devido a futura reformulação de Status
-  def learning
-    self.statuses.log_action_eq(LEARNING_ACTIONS).descend_by_created_at
-  end
-
-  # FIXME Não foi testado devido a futura reformulação de Status
-  def teaching
-    self.statuses.log_action_eq(TEACHING_ACTIONS).descend_by_created_at
-  end
-
   def home_activity(page = 1)
     overview.paginate(:page => page,
                       :order => 'created_at DESC',
@@ -700,11 +504,6 @@ class User < ActiveRecord::Base
     def has_favorite(favoritable)
     Favorite.where("favoritable_id = ? AND favoritable_type = ? AND user_id = ?",
                      favoritable.id, favoritable.class.to_s,self.id).first
-  end
-
-  def update_last_seen_at
-    User.update_all ['sb_last_seen_at = ?', Time.now.utc], ['id = ?', self.id]
-    self.sb_last_seen_at = Time.now.utc
   end
 
   def profile_for(subject)

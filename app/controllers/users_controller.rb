@@ -10,54 +10,6 @@ class UsersController < BaseController
 
   rescue_from CanCan::AccessDenied, :with => :deny_access
 
-  def annotations
-    @annotations = User.find(params[:id]).annotations
-
-    respond_to do |format|
-      format.js do
-        render :update do |page|
-          page.replace_html  'tabs-5-content', :partial => 'annotations'
-        end
-      end
-    end
-  end
-
-  def learning
-    paginating_params = {
-      :page => params[:page],
-      :order => (params[:sort]) ? params[:sort] + ' DESC' : 'created_at DESC',
-      :per_page => 6
-    }
-
-    if params[:search] # search
-      @courses = @user.courses.name_like_all(params[:search].to_s.split).ascend_by_name
-      @courses = @courses.published if cannot? :manage, @user
-      @courses = @courses.paginate(paginating_params)
-    else
-      @courses = @user.courses
-      @courses = @courses.published if cannot? :manage, @user
-      @courses = @courses.paginate(paginating_params)
-    end
-
-    respond_to do |format|
-      if params[:page]
-        format.js { render :template => "courses/index" }
-      else
-      format.js
-      end
-    end
-  end
-
-  def show_log_activity
-    current_user.log_activity
-    format.js { render_endless 'statuses/item', @statuses, '#statuses > ol' }
-  end
-
-  def list_subjects
-    @subjects = Subject.all
-    @user = params[:id]
-  end
-
   ## User
   def activate
     redirect_to signup_path and return if params[:id].blank?
@@ -201,14 +153,6 @@ class UsersController < BaseController
   def update
     @user.attributes    = params[:user]
 
-    unless params[:metro_area_id].blank?
-      @user.metro_area  = MetroArea.find(params[:metro_area_id])
-      @user.state       = (@user.metro_area && @user.metro_area.state) ? @user.metro_area.state : nil
-      @user.country     = @user.metro_area.country if (@user.metro_area && @user.metro_area.country)
-    else
-      @user.metro_area = @user.state = @user.country = nil
-    end
-
     @user.tag_list = params[:tag_list] || ''
 
     if @user.errors.empty? && @user.save
@@ -274,77 +218,9 @@ class UsersController < BaseController
     redirect_to home_path and return
   end
 
-  def change_profile_photo
-    #@user   = User.find(params[:id])
-    @photo  = Photo.find(params[:photo_id])
-    @user.avatar = @photo
-
-    if @user.save!
-      flash[:notice] = t :your_changes_were_saved
-      redirect_to user_photo_path(@user, @photo)
-    end
-  rescue ActiveRecord::RecordInvalid
-    render :action => 'edit'
-  end
-
-  def crop_profile_photo
-    unless @photo = @user.avatar
-      flash[:notice] = t :no_profile_photo
-      redirect_to upload_profile_photo_user_path(@user) and return
-    end
-    return unless request.put?
-
-    if @photo
-      if params[:x1]
-        img = Magick::Image::read(@photo.path_or_s3_url_for_image).first.crop(params[:x1].to_i, params[:y1].to_i,params[:width].to_i, params[:height].to_i, true)
-        img.format = @photo.content_type.split('/').last
-        crop = {'tempfile' => StringIO.new(img.to_blob), 'content_type' => @photo.content_type, 'filename' => "custom_#{@photo.filename}"}
-        @photo.uploaded_data = crop
-        @photo.save!
-      end
-    end
-
-    redirect_to user_path(@user)
-  end
-
-  def upload_profile_photo
-    @avatar       = Photo.new(params[:avatar])
-    return unless request.put?
-
-    @avatar.user  = @user
-    if @avatar.save
-      @user.avatar  = @avatar
-      @user.save
-      redirect_to crop_profile_photo_user_path(@user)
-    end
-  end
-
   def edit_account
     @user             = current_user
     @is_current_user  = true
-  end
-
-  def edit_pro_details
-  end
-
-  def update_pro_details
-    @user.add_offerings(params[:offerings]) if params[:offerings]
-    @user.attributes = params[:user]
-
-    if @user.save!
-      respond_to do |format|
-        format.html {
-          flash[:notice] = t :your_changes_were_saved
-          redirect_to edit_pro_details_user_path(@user)
-        }
-        format.js {
-          render :text => 'success'
-        }
-      end
-
-    end
-  rescue ActiveRecord::RecordInvalid
-    render :action => 'edit_pro_details'
   end
 
   def signup_completed
@@ -353,11 +229,6 @@ class UsersController < BaseController
   end
 
   def invite
-  end
-
-  def welcome_complete
-    flash[:notice] = t(:walkthrough_complete, :site => Redu::Application.config.name)
-    redirect_to user_path
   end
 
   def forgot_password
@@ -411,17 +282,6 @@ class UsersController < BaseController
   def assume
     self.current_user = User.find(params[:id])
     redirect_to user_path(current_user)
-  end
-
-  def activity_xml
-    # talvez seja necessario setar o atributo depth nos nós para que funcione corretamente.
-    # ver: http://asterisq.com/products/constellation/roamer/integration#data_rest_tree
-
-    @user = User.find((params[:node_id]) ?  params[:node_id] :  params[:id] )
-    @activities = Status.activities(@user)
-    respond_to do |format|
-      format.xml
-    end
   end
 
   def home
