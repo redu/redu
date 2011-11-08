@@ -1070,7 +1070,7 @@ body {
 }
 
 .body .header .title {
-  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-family: museo-sans, helvetica, arial, sans-serif;
   font-weight: 100;
   font-size: 2.1em;
   color: rgb(77, 173, 214);
@@ -3862,7 +3862,7 @@ a.clean:hover {
 }
 
 .big-tabs > ul li a {
-  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-family: museo-sans, helvetica, arial, sans-serif;
   font-size: 2.4em;
   font-weight: 100;
   color: rgb(76, 172, 213);
@@ -4934,7 +4934,7 @@ table.spaced tr td {
 }
 
 #url_preview span {
-  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-family: museo-sans, helvetica, arial, sans-serif;
   font-weight: 100;
   font-size: 1em;
 }
@@ -7650,7 +7650,7 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 }
 
 #partner-header .environments-title {
-  font-family: museo-slab, helvetica, arial, sans-serif;
+  font-family: museo-sans, helvetica, arial, sans-serif;
   font-weight: 100;
   font-size: 2.2em;
   color: #B2B2B2;
