@@ -690,6 +690,8 @@ body {
   font-family: museo-slab, helvetica, arial, sans-serif;
   font-weight: 500;
   color: rgb(77, 173, 214);
+  display: block;
+  width: 630px;
 }
 
 #space-manage #hierarchy-header .name a,
@@ -1829,6 +1831,9 @@ body {
   font-size: 1.3em;
   letter-spacing: .005em;
   margin-right: 5px;
+  float: left;
+  display: block;
+  width: 380px;
 }
 
 .hierarchy-listing .child .name:before {
@@ -1854,6 +1859,9 @@ body {
   font-style: italic;
   font-size: .87em;
   color: rgb(179, 179, 179);
+  float: left;
+  display:block;
+  margin: 3px 0px;
 }
 
 .hierarchy-listing .child .description,
@@ -1861,7 +1869,8 @@ body {
   font-size: .87em;
   color: rgb(109, 110, 111);
   width: inherit;
-  margin: 5px 0 3px 0;
+  margin: 40px 0 3px 0;
+  clear: left;
 }
 
 .hierarchy-listing.subjects .child > .description,
