@@ -3280,7 +3280,7 @@ body {
 }
 
 
-#space-manage #lecture_form,
+#space-manage .new-resource .resource-form,
 #space-manage .edit-resource {
   display: none;
 }

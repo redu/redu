@@ -275,9 +275,6 @@ pt-BR:
       complementary_course:
         create: "+ Adicionar item"
         update: "Salvar item"
-      document:
-        create: "Adicionar"
-        update: "Salvar"
       event_education:
         create: "+ Adicionar item"
         update: "Salvar item"
@@ -290,10 +287,7 @@ pt-BR:
       higher_education:
         create: "+ Adicionar item"
         update: "Salvar item"
-      page:
-        create: "Adicionar"
-        update: "Salvar"
-      seminar:
+      lecture[lectureable_attributes]:
         create: "Adicionar"
         update: "Salvar"
       subject:

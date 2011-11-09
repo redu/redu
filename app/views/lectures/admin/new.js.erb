@@ -1,13 +1,9 @@
-$('#lecture_form').remove();
-<% case params[:type].to_s %>
-<% when 'Page' %>
-  var $form = $("<%= escape_javascript(render 'lectures/admin/form_page', :page => @page) %>");
-<% when 'Seminar' %>
-  var $form = $("<%= escape_javascript(render 'lectures/admin/form_seminar', :seminar => @seminar) %>")
-<% when 'Document' %>
-  var $form = $("<%= escape_javascript(render 'lectures/admin/form_document', :document => @document) %>")
-<% when 'Existent' %>
-  var $form = $("<%= escape_javascript(render 'lectures/admin/form_existent', :lecture => @lecture) %>")
+$('.new-resource .resource-form').remove();
+var $form;
+<% if params[:type] == "Existent" %>
+  $form = $("<%= escape_javascript(render 'lectures/admin/form_existent', :space => @space, :subject => @subject, :lecture => @lecture) %>");
+<% else %>
+  $form = $("<%= escape_javascript(render 'lectures/admin/form', :space => @space, :subject => @subject, :lecture => @lecture) %>");
 <% end %>
 
 $form.appendTo($('#lectures_types')).slideDown();

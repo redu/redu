@@ -14,11 +14,5 @@
       Permite a postagem de conteúdo de leitura rápida como um tutorial ou um texto introdutório.
     </span>
   </div>
-
-  <%= form_for lecture.lectureable, :as => :page,
-    :url => space_subject_lecture_path(@space, @subject, lecture),
-    :remote => :true, :method => :put,
-    :html => { :class => "concave-form page-form" } do |f| %>
-    <%= render 'lectures/admin/page_fields', :f => f, :lecture => lecture%>
-  <% end %>
+  <%= render 'lectures/admin/form', :space => space, :subject => subject, :lecture => lecture %>
 </div>

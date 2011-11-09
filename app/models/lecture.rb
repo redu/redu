@@ -22,6 +22,8 @@ class Lecture < ActiveRecord::Base
   belongs_to :lectureable, :polymorphic => true, :dependent => :destroy
   belongs_to :subject
 
+  accepts_nested_attributes_for :lectureable
+
   # SCOPES
   scope :unpublished, where(:published => false)
   scope :published, where(:published => true)
@@ -92,6 +94,17 @@ class Lecture < ActiveRecord::Base
   # Diz se a instância está pronta para ser divulgada via mural ou e-mail
   def notificable?
     self.subject.finalized && self.subject.visible
+  end
+
+  def build_lectureable(params)
+    self.lectureable = case params.delete(:_type)
+                       when "Page"
+                         Page.new(params)
+                       when "Seminar"
+                         Seminar.new(params)
+                       when "Document"
+                         Document.new(params)
+                       end
   end
 
   protected
