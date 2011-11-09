@@ -1,4 +1,4 @@
-<% if @valid %>
+<% if @lecture.valid? %>
   var $lectureItem = $("<%= escape_javascript(render :partial => 'lectures/admin/item_short', :locals => { :item_short => @lecture}) %>");
 
   <% # Insere novo item mantendo a ordem dele na lista %>
@@ -6,7 +6,7 @@
   $editingItem.after($lectureItem);
   $editingItem.remove();
 
-  <% if @lecture.lectureable.class == Page %>
+  <% if @lecture.lectureable.is_a? Page %>
     var $editPageForm = $("<%= escape_javascript render 'lectures/admin/edit', :lecture => @lecture, :subject => @subject, :space => @space %>");
     $('#<%= @lecture.id %>-item-edition').replaceWith($editPageForm);
   <% end %>
@@ -14,7 +14,7 @@
   $("#space-manage #resources_list").refreshResourcesNumbering();
 <% else %>
   var $form = $("#<%= @lecture.id %>-item-edition");
-  <% if @lecture.lectureable.class == Page %>
+  <% if @lecture.lectureable.is_a? Page %>
     var $editPageForm = $("<%= escape_javascript render 'lectures/admin/edit', :lecture => @lecture, :subject => @subject, :space => @space %>");
     $form.replaceWith($editPageForm);
     $editPageForm.show()

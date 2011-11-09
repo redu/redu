@@ -28,7 +28,7 @@
 
   // Alterna entre o formulário de Youtube e Upload (new Seminar)
   $.fn.refreshFormUpload = function(){
-    $("#seminar_external_resource_type_youtube, #seminar_external_resource_type_upload").change(function(){
+    $("#lecture_lectureable_attributes_external_resource_type_youtube, #lecture_lectureable_attributes_external_resource_type_upload").change(function(){
       $('#youtube_preview, #upload_resource_field, #external_resource_field').toggle();
     });
   }
@@ -67,7 +67,7 @@
 
   // Ação do botão cancelar (criação de recurso)
   $("#space-manage .new-resource .concave-form .cancel-lecture").live("click", function(e){
-    $(this).parents("#lecture_form").slideUp();
+    $(this).parents('.new-resource .resource-form').slideUp();
     $("#space-manage .new-resource .resources-types li").removeClass("selected");
     e.preventDefault();
   });

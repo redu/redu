@@ -7,7 +7,7 @@ describe LecturesController do
     User.maintain_sessions = false
     @space = Factory(:space)
     @subject_owner = Factory(:user)
-    @space.course.join @subject_owner
+    @space.course.join @subject_owner, Role[:teacher]
     activate_authlogic
 
     @subject = Factory(:subject, :owner => @subject_owner,
@@ -109,4 +109,86 @@ describe LecturesController do
     end
   end
 
+  context "admin panel" do
+    before do
+      UserSession.create @subject_owner
+    end
+
+    context "GET new" do
+      before do
+        get :new, :locale => "pt-BR", :format => "js",
+          :space_id => @space, :subject_id => @subject, :type => "Page"
+      end
+
+      it "assigns a lecture" do
+        assigns[:lecture].should_not be_nil
+      end
+
+      it "assigns a lecture with a lectureable (Page)" do
+        lectureable = assigns[:lecture].lectureable
+        lectureable.should_not be_nil
+        lectureable.should be_kind_of(Page)
+      end
+    end
+
+    context "POST create" do
+      before do
+        @post_params = { :locale => "pt-BR", :format => "js" }
+        @post_params.merge!({ :space_id => @space, :subject_id => @subject,
+                              :lecture => { :name => "Cool lecture",
+                                            :lectureable_attributes => {
+                                              :_type => "Page",
+                                              :body => "Bunch of words."
+                                            } } })
+      end
+
+      it "creates a lecture" do
+        expect {
+          post :create, @post_params
+        }.should change(Lecture, :count).by(1)
+      end
+
+      it "creates a lectureable (Page)" do
+        expect {
+          post :create, @post_params
+        }.should change(Page, :count).by(1)
+      end
+
+      it "associates a lectureable (Page) to a lecture" do
+        post :create, @post_params
+        lecture = Lecture.last
+        lectureable = Page.last
+        # Para garantir que não é uma Lecture criada anteriormente
+        lecture.name.should == @post_params[:lecture][:name]
+        lectureable.body.should ==
+          @post_params[:lecture][:lectureable_attributes][:body]
+
+        Lecture.last.lectureable.should == Page.last
+      end
+    end
+
+    context "POST update" do
+      before do
+        @lecture = @subject.lectures.first
+        @post_params = { :locale => "pt-BR", :format => "js" }
+        @post_params.merge!({ :space_id => @space, :subject_id => @subject,
+                              :id => @lecture,
+                              :lecture => { :name => "Cool lecture",
+                                            :lectureable_attributes => {
+                                              :id => @lecture.lectureable.id,
+                                              :_type => "Page",
+                                              :body => "Bunch of words."} } })
+        post :update, @post_params
+      end
+
+      it "updates a lecture" do
+        @lecture.reload.name.should == @post_params[:lecture][:name]
+      end
+
+      it "updates a lectureable (Page)" do
+        @lecture.lectureable.reload.body.should ==
+          @post_params[:lecture][:lectureable_attributes][:body]
+      end
+    end
+    end
 end

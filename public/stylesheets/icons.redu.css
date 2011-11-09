@@ -227,6 +227,7 @@
 }
 
 .icon-confirm-green_16_18 { background-position: -80px -2080px; }
+.icon-confirm-green_16_18-after:after,
 .icon-confirm-green_16_18-before:before {
   content: "";
   width: 16px;

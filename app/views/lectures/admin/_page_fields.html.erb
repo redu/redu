@@ -1,12 +1,4 @@
-<% lecture ||= @lecture %>
-<%= label_tag :name, t(:title) %>
-<%= text_field_tag :name, lecture.name %>
-<span class="tip">Nome da aula</span>
-<%= concave_errors_for(lecture, :name) %>
-<%= hidden_field_tag "subject_id", @subject.id %>
-<% if lecture.id %>
-  <%= hidden_field_tag "lecture_id", lecture.id %>
-<% end %>
+<%= hidden_field_tag "lecture[lectureable_attributes][_type]", "Page" %>
 <%= f.label :body, "Texto" %>
 <%= f.cktext_area :body,
   :width => '525px', :height => '495px',

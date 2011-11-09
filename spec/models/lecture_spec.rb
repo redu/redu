@@ -26,6 +26,7 @@ describe Lecture do
   it { should have_many(:statuses).dependent(:destroy) }
 
   it { should belong_to :subject }
+  it { should accept_nested_attributes_for :lectureable }
 
   it { should validate_presence_of :name }
   # Descrição não está sendo utilizada
@@ -256,5 +257,66 @@ describe Lecture do
     subject.created_at = 10.day.ago
     subject.save
     subject.should_not be_recent
+  end
+
+  context "nested lectureable" do
+    before do
+      @owner = Factory(:user)
+      @sub = Factory(:subject)
+    end
+    context "when valid" do
+      before do
+        @lecture = Lecture.new({ :name => "Name", :subject => @sub,
+                                "lectureable_attributes" => {
+                                  "_type" => "Page", "body" => "Cool letters"} })
+        @lecture.owner = @owner
+      end
+
+      it "builds a lecture within a lectureable" do
+        @lecture.should_not be_nil
+        @lecture.lectureable.should_not be_nil
+      end
+
+      it "saves a lecture" do
+        expect {
+          @lecture.save
+        }.should change(Lecture, :count).by(1)
+      end
+
+      it "saves a lectureable (Page)" do
+        expect {
+          @lecture.save
+        }.should change(Page, :count).by(1)
+      end
+    end
+
+    context "when invalid" do
+      before do
+        @lecture = Lecture.new({ :name => "Name", :subject => @sub,
+                                 "lectureable_attributes" => {"_type" => "Page"}})
+        @lecture.owner = @owner
+      end
+
+      it "builds a lecture within a lectureable" do
+        @lecture.should_not be_nil
+        @lecture.lectureable.should_not be_nil
+      end
+
+      it "validates lectureable" do
+        @lecture.lectureable.should_not be_valid
+      end
+
+      it "does NOT save a lecture" do
+        expect {
+          @lecture.save
+        }.should_not change(Lecture, :count)
+      end
+
+      it "does NOT save a lectureable (Page)" do
+        expect {
+          @lecture.save
+        }.should_not change(Page, :count)
+      end
+    end
   end
 end
