@@ -1843,6 +1843,10 @@ body {
   margin-top: 5px;
 }
 
+.hierarchy-listing .child .enrolled{
+  float: none;
+}
+
 .hierarchy-listing .child .manage {
   font-size: .87em;
   float: right;
