@@ -1,0 +1,30 @@
+<li class="child clearfix">
+  <% if(can? :manage, item) %>
+    <%= link_to 'Editar', edit_space_subject_path(item.space, item),
+      :class => "manage icon-manage-gray_8_10-before" %>
+    <% if item.visible? %>
+      <span class="visible icon-small icon-visible-gray_16_18 replacement">Visível para os alunos</span>
+    <% end %>
+  <% end %>
+  <%= link_to item.title, "#",
+    :class => 'subject-name name icon-content-lightblue_32_34-before' %>
+  <% if item.graduated? current_user %>
+    <span class="graduated icon-small icon-confirm-green_16_18 replacement">Módulo finalizado</span>
+  <% end %>
+  <% if item.recent? %>
+    <span class="new">Novo</span>
+  <% end %>
+  <% if !item.graduated?(current_user) &&
+    !current_user.get_association_with(item).nil?  %>
+    <span class="grade">(<%= current_user.get_association_with(item).student_profile.grade.to_i %>% cursado)</span>
+  <% end %>
+  <p class="description"><%= item.description %></p>
+  <%# Expande apenas o Subject passado (Subjects#show)  %>
+  <% display_css, expand_css= item_expander(item, subject) %>
+  <span class="expand icon-small icon-expand_<%= expand_css %>-gray_16_18 replacement">Mais detalhes</span>
+  <ol class="lectures clearfix" style="display: <%= display_css %>;">
+    <strong class="title icon-lecture-gray_16_18-before">Aulas (<%= item.lectures.count %>)</strong>
+    <%= render :partial => 'lectures/item_preview',
+      :collection => item.lectures %>
+  </ol>
+</li>

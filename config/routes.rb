@@ -14,8 +14,6 @@ Redu::Application.routes.draw do
       post :respond
     end
   end
-  resources :metro_areas
-
   resources :tags
   match '/tags/:id/:type' => 'tags#show', :as => :show_tag_type
   match '/search/tags' => 'tags#show', :as => :search_tags
@@ -65,7 +63,7 @@ Redu::Application.routes.draw do
       end
     end
 
-    resources :subjects, :except => [:show, :index] do
+    resources :subjects, :except => [:index] do
       member do
         get :admin_lectures_order
         post :admin_lectures_order
@@ -91,24 +89,14 @@ Redu::Application.routes.draw do
   # Users
   resources :users, :except => [:index] do
     member do
-      get :activity_xml
       get :assume
-      put :change_profile_photo
       get :edit_account
       put :update_account
-      get :edit_pro_details
-      put :update_pro_details
       get :forgot_password
       post :forgot_password
       get :signup_completed
       get :invite
-      get :welcome_complete
-      get :learning
       put :deactivate
-      get :crop_profile_photo
-      put :crop_profile_photo
-      get :upload_profile_photo
-      put :upload_profile_photo
       get :home
       get :my_wall
       get :account

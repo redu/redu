@@ -3,7 +3,6 @@ require 'spec_helper'
 describe User do
   subject { Factory(:user) }
 
-  it { should have_many(:annotations).dependent(:destroy) }
   it { should have_many(:statuses) }
   [:lectures, :favorites, :statuses,
     :subjects, :student_profiles, :subjects].each do |attr|
@@ -13,10 +12,6 @@ describe User do
   it { should have_many(:enrollments).dependent :destroy}
 
   it { should have_one(:settings).dependent(:destroy) }
-
-  it { should belong_to :metro_area }
-  it { should belong_to :state }
-  it { should belong_to :country }
 
   # Space
   it { should have_many(:spaces).through(:user_space_associations) }

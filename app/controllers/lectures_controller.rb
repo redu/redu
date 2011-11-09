@@ -46,9 +46,6 @@ class LecturesController < BaseController
     end
 
     @subject_users = @subject.members
-    # anotações
-    @annotation = @lecture.annotations.by_user(current_user)
-    @annotation = Annotation.new if @annotation.empty?
 
     #relacionados
     @related_lectures = Lecture.related_to(@lecture).limit(3).

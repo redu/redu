@@ -166,6 +166,27 @@ describe SubjectsController do
     end
   end
 
+  context "GET show" do
+    before do
+      @subjects  = (1..40).collect do
+        Factory(:subject, :owner => @subject_owner, :finalized => true,
+                :space => @space)
+      end
+      @subject = @subjects[15]
+
+      get :show, :locale => "pt-BR", :id => @subject,
+        :space_id => @subject.space
+    end
+
+    it "assigns subject" do
+      assigns[:subject].should == @subject
+    end
+
+    it "assigns subject" do
+      assigns[:subjects].should_not be_nil
+    end
+  end
+
   context "GET 'admin_lectures_order'" do
     before do
       @subject = Factory(:subject, :owner => @subject_owner,

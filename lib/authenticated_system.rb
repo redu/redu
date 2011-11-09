@@ -1,19 +1,13 @@
 module AuthenticatedSystem
-  def update_last_seen_at
-     return unless logged_in?
-     User.update_all ['sb_last_seen_at = ?', Time.now.utc], ['id = ?', current_user.id] 
-     current_user.sb_last_seen_at = Time.now.utc
-  end
-  
   def login_by_token
   end
-      
+
   protected
     # Returns true or false if the user is logged in.
     def logged_in?
       current_user ? true : false
     end
-    
+
     # Accesses the current user from the session.
     def current_user
       return @current_user if defined?(@current_user)
@@ -75,9 +69,9 @@ module AuthenticatedSystem
      logged_in? && current_user.admin?
     end
     def moderator?
-     logged_in? && current_user.moderator?      
+     logged_in? && current_user.moderator?
     end
-    
+
     # Redirect as appropriate when an access request fails.
     #
     # The default action is to redirect to the login screen.
@@ -89,7 +83,7 @@ module AuthenticatedSystem
     def access_denied
       respond_to do |accepts|
         accepts.html do
-          
+
           flash[:notice] = "Você não tem permissão para acessar esse conteúdo"
           if params[:controller] == 'spaces' and params[:id] and current_user
             redirect_to space_path(:id => params[:id])
@@ -104,15 +98,15 @@ module AuthenticatedSystem
           render :text => "Could't authenticate you", :status => '401 Unauthorized'
         end
         accepts.js do
-          store_location 
+          store_location
           render :update do |page|
             page.redirect_to login_path and return false
           end
-        end        
+        end
       end
       false
-    end  
-    
+    end
+
     # Inclusion hook to make #current_user and #logged_in?
     # available as ActionView helper methods.
     def self.included(base)

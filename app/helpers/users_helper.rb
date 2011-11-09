@@ -9,20 +9,6 @@ module UsersHelper
     "#{greetings.sort_by {rand}.first} #{user.login}!"
   end
 
-  # helper que imprime o link ou nome da aula, caso ela tenha sido removida
-  # (persistimos as anotações do usuário mesmo quando a aula não existe mais)
-  def link_to_or_name(annotation)
-    if annotation.lecture
-      subject = annotation.lecture.subject
-      link_to image_tag(annotation.lecture.avatar.url(:thumb), :height => '24',
-                        :width => '24'),
-                        space_subject_lecture_path(subject.space, subject, annotation.lecture),
-                        :rel => 'bookmark', :title => annotation.lecture.name
-    else
-      annotation.asset_name
-    end
-  end
-
   # criação de novos campos para social_network através do fields_for
   def new_social_network(f, association)
     new_object = f.object.class.reflect_on_association(association).klass.new

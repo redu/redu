@@ -16,7 +16,6 @@ class Lecture < ActiveRecord::Base
   has_many :acess_key
   has_many :acquisitions
   has_many :favorites, :as => :favoritable, :dependent => :destroy
-  has_many :annotations
   has_many :asset_reports, :dependent => :destroy
   has_many :student_profiles, :through => :asset_reports, :dependent => :destroy
   belongs_to :owner , :class_name => "User" , :foreign_key => "owner"
