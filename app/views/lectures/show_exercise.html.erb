@@ -17,12 +17,13 @@
       <%= render :partial => 'lectures/details',
         :locals => { :lecture => @lecture} %>
       <div class="stage exercise">
+        <form action="action" method="post" accept-charset="utf-8" >
+          <%= render :partial => "lectures/exercise_navigation" %>
+          <div class="question">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ac lectus sapien. Cras vulputate turpis sed arcu tincidunt tincidunt congue elit egestas. Morbi facilisis blandit sem et porttitor. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Quisque semper orci ultrices neque bibendum sit amet varius arcu dictum. In quis ligula sit amet erat pulvinar viverra. Duis fringilla fringilla facilisis? </p>
+          </div>
 
-        <div class="question">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ac lectus sapien. Cras vulputate turpis sed arcu tincidunt tincidunt congue elit egestas. Morbi facilisis blandit sem et porttitor. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Quisque semper orci ultrices neque bibendum sit amet varius arcu dictum. In quis ligula sit amet erat pulvinar viverra. Duis fringilla fringilla facilisis? </p>
-        </div>
-        <div class="alternatives">
-          <form action="action" method="post" accept-charset="utf-8">
+          <div class="alternatives">
             <ol class="">
               <li>
                 <span class="choice">A:</span>
@@ -45,8 +46,8 @@
                 <p>Vivamus fermentum adipiscing gravida. Duis et diam magna. Curabitur at diam non metus congue semper.</p>
               </li>
             </ol>
+          </div>
           </form>
-        </div>
 
       </div>
     </div>

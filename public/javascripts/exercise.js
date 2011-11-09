@@ -4,6 +4,7 @@ $(function(){
         $(".alternatives li input[type='radio']").live("click", function(){
           $(".alternatives li").removeClass("selected");
           $(this).parent().addClass("selected");
+          $(".exercise-nav li a.actual").parent().addClass("question-answered");
         });
     });
   }

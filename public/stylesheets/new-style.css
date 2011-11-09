@@ -1592,12 +1592,105 @@ body {
   margin: 0 20px;
 }
 
+#resource .exercise-nav {
+  height: 70px;
+  background-color: rgb(247, 247, 247);
+  border: solid 1px rgb(230, 230, 230)
+}
+
+.borderradius #resource .exercise-nav {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+
+#resource .exercise-nav ol {
+  margin: 15px 10px 5px 10px;
+  overflow: hidden;
+  float: right;
+  width: 586px;
+}
+
+#resource .exercise-nav ol li {
+  float: left;
+  width: 55px;
+  height: 35px;
+  text-align: center;
+}
+
+#resource .exercise-nav ol li.endless-lecture {
+  width: 21px;
+  font-weight: bold;
+}
+
+#resource .exercise-nav ol li.lecture-buttons {
+  width: 79px;
+}
+
+#resource .exercise-nav ol li.lecture-buttons {
+  display: block;
+}
+
+#resource .exercise-nav ol li.question-answered a {
+  color: rgb(77, 173, 214);
+}
+
+#resource .exercise-nav ol li.question-right a {
+  color: rgb(95, 192, 128);
+}
+
+#resource .exercise-nav ol li.question-wrong a {
+  color: rgb(232, 59, 59);
+}
+
+#resource .exercise-nav .concave-clean {
+  padding: 5px 12px 6px 12px;
+  color: rgb(77, 173, 214);
+  border: 1px solid rgb(204, 204, 204);
+  font-size: 1em;
+}
+
+#resource .exercise-nav .concave-clean:hover {
+  color: rgb(23, 137, 195);
+  border: 1px solid rgb(76, 172, 213);
+}
+
+#resource .exercise-nav li a {
+  color: rgb(179, 179, 179);
+  font-size: 2.3em;
+  font-weight: 100;
+  font-family: museo-slab, helvetica, arial, sans-serif;
+}
+
+.textshadow #resource .exercise-nav li a {
+  text-shadow: 0px 2px 0px white;
+}
+
+#resource .exercise-nav li a.actual {
+  font-weight: 900;
+}
+
+#resource .exercise-nav .first-question,
+#resource .exercise-nav .last-question {
+  font-size: .87em;
+}
+
+#resource .exercise-nav .first-question {
+  float: left;
+  margin-left: 10px;
+}
+
+#resource .exercise-nav .last-question {
+  float: right;
+  margin-right: 10px;
+
+}
 #resource .exercise {
   line-height: 1.3;
 }
 
 #resource .exercise .question {
-  margin: 20px 0px 12px 0px;
+  margin: 35px 0px 12px 0px;
 }
 
 #resource .justification {
