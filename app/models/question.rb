@@ -9,6 +9,8 @@ class Question < ActiveRecord::Base
 
   sortable :scope => :exercise_id
 
+  accepts_nested_attributes_for :alternatives
+
   # Cria uma instância de Choice com o usuário e a alternativa especificada
   def choose_alternative(alternative, user)
     alt = find_alternative(alternative)

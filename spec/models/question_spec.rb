@@ -8,6 +8,7 @@ describe Question do
   it { should have_one(:correct_alternative) }
   it { should validate_presence_of(:statement) }
   it { should have_many(:choices).dependent(:destroy) }
+  it { should accept_nested_attributes_for(:alternatives) }
 
   context "sortable" do
     before do

@@ -24,6 +24,9 @@ class Exercise < ActiveRecord::Base
   has_many :explained_questions,
     :conditions => 'questions.explanation IS NOT NULL',
     :class_name => 'Question', :foreign_key => :exercise_id
+  has_one :lecture, :as => :lectureable
+
+  accepts_nested_attributes_for :questions
 
   # Utiliza o maximum_grade para calcular o peso por questão
   def question_weight

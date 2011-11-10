@@ -131,7 +131,7 @@ describe LecturesController do
       end
     end
 
-    context "POST create" do
+    context "POST create (Page)" do
       before do
         @post_params = { :locale => "pt-BR", :format => "js" }
         @post_params.merge!({ :space_id => @space, :subject_id => @subject,
@@ -164,6 +164,75 @@ describe LecturesController do
           @post_params[:lecture][:lectureable_attributes][:body]
 
         Lecture.last.lectureable.should == Page.last
+      end
+    end
+
+    context "POST create (Exercise)" do
+      before do
+        @alternatives = 3.times.collect { {:text => "Lorem ipsum dolor"} }
+        @alternatives.first[:correct] = true
+
+        @questions = 3.times.collect do
+          { :statement => "Lorem ipsum dolor sit amet, consectetur?",
+            :explanation => "Lorem ipsum dolor sit amet.",
+            :alternatives_attributes => @alternatives.clone }
+        end
+
+        @params = { :locale => 'pt-BR', :format => 'js', :space_id => @space.id,
+                    :subject_id => @subject.id }
+        @params.merge!(:lecture =>
+                       { :name => "Cool lecture",
+                         :lectureable_attributes =>
+                       { :_type => 'Exercise',
+                         :questions_attributes => @questions }})
+      end
+
+      it "creates the lecture" do
+        expect {
+          post :create, @params
+        }.should change(Lecture, :count).by(1)
+      end
+
+      it "creates the Exercise" do
+        expect {
+          post :create, @params
+        }.should change(Exercise, :count).by(1)
+      end
+
+      it "associates the Exercise to the Lecture" do
+        post :create, @params
+        assigns[:lecture].should_not be_nil
+        assigns[:lecture].lectureable.should_not be_nil
+      end
+    end
+
+    context "POST update (Exercise)" do
+      subject { Factory(:lecture,
+                        :lectureable => Factory(:complete_exercise),
+                        :subject => @subject ) }
+
+      before do
+        @params = { :locale => 'pt-BR', :format => 'js', :space_id => @space.id,
+                    :subject_id => @subject.id, :id => subject.id }
+        @questions = subject.lectureable.questions.collect do |q|
+          alternatives = q.alternatives.collect(&:attributes)
+          { :id => q.id, :statement => "new statement",
+            :alternatives_attributes => alternatives }
+        end
+
+        @params.merge!(:lecture =>
+                       { :name => "Cool lecture",
+                         :lectureable_attributes =>
+                       { :_type => 'Exercise',
+                         :id => subject.lectureable.id,
+                         :questions_attributes => @questions }})
+      end
+
+      it "creates the lecture" do
+        expect {
+          post :update, @params
+        }.should change { subject.lectureable.questions.first.reload.statement }.
+          to("new statement")
       end
     end
 

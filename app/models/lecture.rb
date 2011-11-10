@@ -100,14 +100,14 @@ class Lecture < ActiveRecord::Base
   end
 
   def build_lectureable(params)
-    self.lectureable = case params.delete(:_type)
-                       when "Page"
-                         Page.new(params)
-                       when "Seminar"
-                         Seminar.new(params)
-                       when "Document"
-                         Document.new(params)
-                       end
+    return if params[:_type].blank?
+
+    klass = params.delete(:_type).constantize
+    relation = klass.reflections[:lecture].try(:options)
+
+    if relation && relation[:as] == :lectureable
+      self.lectureable = klass.new(params)
+    end
   end
 
   protected
