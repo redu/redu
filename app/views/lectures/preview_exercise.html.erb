@@ -1,0 +1,88 @@
+<%= render :partial => 'lectures/javascripts' %>
+<%= render :partial => 'subjects/sidebar' %>
+<div class="main space grid_12 omega big-col">
+  <%= render :partial => "subjects/breadcrumbs", :locals => { :subject => @subject } %>
+  <%= render :partial => 'subjects/header',
+    :locals => { :subject => @subject, :space => @space } %>
+
+  <div id="resource" class="hierarchy-listing-wrapper">
+    <div class="resource-head">
+      <%= render :partial => 'lectures/info',
+        :locals => { :lecture => @lecture } %>
+      <%= render :partial => 'lectures/context',
+        :locals => { :student_grade => @student_grade, :done => @done } %>
+    </div>
+
+    <div class="resource-content clearfix">
+      <%= render :partial => 'lectures/details',
+        :locals => { :lecture => @lecture} %>
+      <div class="stage exercise">
+
+        <div class="start-exercise">
+          <%= link_to (space_subject_lecture_path(@space, @subject, @lecture),
+                       :class => "concave-button") do  %>
+            <span class="do-exercise icon-exercise-white_16_18-before">Fazer exercícios</span>
+          <% end %>
+        </div>
+
+        <div class="exercise-overview">
+          <span class="exercise-call exercise-name">Exercício 1:</span>
+          <span class="qty-questions">22</span>
+          <span class="qty-questions-tip">questões (múltipla ecolha)</span>
+          <span class="qty-questions">22</span>
+          <span class="qty-questions-tip">questões explicadas</span>
+        </div>
+
+        <div class="exercise-result">
+          <span class="exercise-call">Média Geral</span>
+          <span class="average-grade">8,0</span>
+          <span class="exercise-call">Compartilhe dúvidas com</span>
+          <ol class="list-users-exercise">
+            <li>
+              <img alt="Missing_users_thumb_32" class="avatar" src="/images/new/missing_users_thumb_32.png?1320452178">
+              <a href="#">Nome Sobrenome</a>
+            </li>
+            <li>
+              <img alt="Missing_users_thumb_32" class="avatar" src="/images/new/missing_users_thumb_32.png?1320452178">
+              <a href="#">Nome Sobrenome</a>
+            </li>
+            <li>
+              <img alt="Missing_users_thumb_32" class="avatar" src="/images/new/missing_users_thumb_32.png?1320452178">
+              <a href="#">Nome Sobrenome</a>
+            </li>
+          </ol>
+        </div>
+
+        <div class="users-exercise">
+          <span class="exercise-call">Quem já fez</span>
+          <span class="qty-users-exercise">560</span>
+          <span class="qty-users-tip">pessoas</span>
+          <ul class="list-users-exercise">
+            <li>
+              <img alt="Missing_users_thumb_32" class="avatar" src="/images/new/missing_users_thumb_32.png?1320452178">
+              <a href="#">Nome Sobrenome</a>
+              <span class="qty-list-users-tip">há dois minutos atrás</span>
+            </li>
+            <li>
+              <img alt="Missing_users_thumb_32" class="avatar" src="/images/new/missing_users_thumb_32.png?1320452178">
+              <a href="#">Nome Sobrenome</a>
+              <span class="qty-list-users-tip">há dois minutos atrás</span>
+            </li>
+            <li>
+              <img alt="Missing_users_thumb_32" class="avatar" src="/images/new/missing_users_thumb_32.png?1320452178">
+              <a href="#">Nome Sobrenome</a>
+              <span class="qty-list-users-tip">há dois minutos atrás</span>
+            </li>
+            <li>
+              <img alt="Missing_users_thumb_32" class="avatar" src="/images/new/missing_users_thumb_32.png?1320452178">
+              <a href="#">Nome Sobrenome</a>
+              <span class="qty-list-users-tip">há dois minutos atrás</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end #resource -->
+
+</div><!-- end .main -->
