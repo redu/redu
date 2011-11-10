@@ -134,11 +134,6 @@ describe Lecture do
         Lecture.documents.should == documents
     end
 
-    it "retrieves a specified limited number of lectures" do
-      lectures = (1..10).collect { Factory(:lecture, :subject => @sub) }
-      Lecture.limited(5).should have(5).items
-    end
-
     it "retrieves lectures related to a specified lecture" do
       lecture = Factory(:lecture, :subject => @sub, :name => "Item com nome")
       lecture2 = Factory(:lecture, :subject => @sub, :name => "Item")

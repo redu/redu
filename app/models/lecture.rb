@@ -31,7 +31,6 @@ class Lecture < ActiveRecord::Base
   scope :iclasses, where("lectureable_type LIKE 'InteractiveClass'")
   scope :pages, where("lectureable_type LIKE 'Page'")
   scope :documents, where("lectureable_type LIKE 'Document'")
-  scope :limited, lambda { |num| limit(num) }
   scope :related_to, lambda { |lecture|
     where("name LIKE ? AND id != ?", "%#{lecture.name}%", lecture.id)
   }
