@@ -6,17 +6,16 @@
   $editingItem.after($lectureItem);
   $editingItem.remove();
 
-  <% if @lecture.lectureable.is_a? Page %>
-    var $editPageForm = $("<%= escape_javascript render 'lectures/admin/edit', :lecture => @lecture, :subject => @subject, :space => @space %>");
-    $('#<%= @lecture.id %>-item-edition').replaceWith($editPageForm);
-  <% end %>
+  var $editForm = $("<%= escape_javascript render 'lectures/admin/edit', :lecture => @lecture, :subject => @subject, :space => @space %>");
+  $('#<%= @lecture.id %>-item-edition').replaceWith($editForm);
 
-  $("#space-manage #resources_list").refreshResourcesNumbering();
 <% else %>
   var $form = $("#<%= @lecture.id %>-item-edition");
-  <% if @lecture.lectureable.is_a? Page %>
-    var $editPageForm = $("<%= escape_javascript render 'lectures/admin/edit', :lecture => @lecture, :subject => @subject, :space => @space %>");
-    $form.replaceWith($editPageForm);
-    $editPageForm.show()
-  <% end %>
+  var $editForm = $("<%= escape_javascript render 'lectures/admin/edit', :lecture => @lecture, :subject => @subject, :space => @space %>");
+  $form.replaceWith($editForm);
+  $editForm.show();
+  $editForm.refreshNestedFields();
+  $editForm.find(".question-item").refreshExerciseSummary();
+  $editForm.find(".question-item:first-child").refreshQuestionsNumbering();
+  $editForm.find(".alternative-item:first-child").refreshAlternativesNumbering();
 <% end %>

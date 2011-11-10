@@ -191,6 +191,30 @@ describe LecturesController do
       end
     end
 
+    context "GET new (Exercise)" do
+      before do
+        get :new, :locale => "pt-BR", :format => "js",
+          :space_id => @space, :subject_id => @subject, :type => "Exercise"
+      end
+
+      it "assigns lecture" do
+        assigns[:lecture].should_not be_nil
+      end
+
+      it "builds a lecture" do
+        assigns[:lecture].lectureable.is_a?(Exercise).should be_true
+      end
+
+      it "builds a lecture within a question" do
+        assigns[:lecture].lectureable.questions.should_not be_empty
+      end
+
+      it "builds a question within an alternative" do
+        assigns[:lecture].lectureable.questions.first.alternatives.
+          should_not be_empty
+      end
+    end
+
     context "POST create (Exercise)" do
       before do
         @alternatives = 3.times.collect { {:text => "Lorem ipsum dolor"} }

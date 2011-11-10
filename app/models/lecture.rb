@@ -31,6 +31,7 @@ class Lecture < ActiveRecord::Base
   scope :iclasses, where("lectureable_type LIKE 'InteractiveClass'")
   scope :pages, where("lectureable_type LIKE 'Page'")
   scope :documents, where("lectureable_type LIKE 'Document'")
+  scope :exercises, where("lectureable_type LIKE 'Exercise'")
   scope :related_to, lambda { |lecture|
     where("name LIKE ? AND id != ?", "%#{lecture.name}%", lecture.id)
   }
@@ -107,6 +108,11 @@ class Lecture < ActiveRecord::Base
     if relation && relation[:as] == :lectureable
       self.lectureable = klass.new(params)
     end
+  end
+
+  def build_question_and_alternative
+    self.lectureable.questions.build
+    self.lectureable.questions.first.alternatives.build
   end
 
   protected

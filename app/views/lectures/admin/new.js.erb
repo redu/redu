@@ -7,4 +7,6 @@ var $form;
 <% end %>
 
 $form.appendTo($('#lectures_types')).slideDown();
+$form.refreshNestedFields();
+$form.find(".alternative-item").refreshAlternativesNumbering();
 $("#space-manage #resources_list").refreshResourcesNumbering();

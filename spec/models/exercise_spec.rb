@@ -9,6 +9,8 @@ describe Exercise do
   it { should have_one(:lecture) }
   it { should accept_nested_attributes_for(:questions) }
 
+  it { should accept_nested_attributes_for(:questions) }
+
   it "should respond to question weight" do
     subject.should respond_to(:question_weight)
   end

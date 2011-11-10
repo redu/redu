@@ -42,6 +42,7 @@ gem 'actionmailer_inline_css',
   :branch => 'master'
 gem "acts_as_tree", "~> 0.1.1"
 gem 'exceptional'
+gem 'awesome_nested_fields'
 
 # Gems específicos de algum ambiente
 group :development, :test do

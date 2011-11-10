@@ -579,22 +579,40 @@
   background: url("../images/new/icons-small.png") -240px -800px no-repeat;
 }
 
-.icon-exercise-white_16_18 { background-position: -240px -1200px; }
-.icon-exercise-white_16_18-before:before {
-  content: "";
-  width: 16px;
-  height: 18px;
-  background: url("../images/new/icons-small.png") -240px -1200px no-repeat;
-}
-
 .icon-exercise-blue_16_18,
-.icon-exercise-lightblue_16_18:hover { background-position: -160px -1200px; }
+.icon-exercise-lightblue_16_18{ background-position: -160px -1200px; }
 .icon-exercise-blue_16_18-before:before,
-.icon-exercise-lightblue_16_18-before:hover:before {
+.icon-exercise-lightblue_16_18-before:before {
   content: "";
   width: 16px;
   height: 18px;
   background: url("../images/new/icons-small.png") -160px -1200px no-repeat;
+}
+
+.icon-exercise-blue_32_34,
+.icon-exercise-lightblue_32_34:hover { background-position: -160px -3120px; }
+.icon-exercise-blue_32_34-before:before,
+.icon-exercise-lightblue_32_34-before:hover:before {
+  content: "";
+  width: 32px;
+  height: 34px;
+  background: url("../images/new/icons-small.png") -160px -3120px no-repeat;
+}
+
+.icon-exercise-gray_16_18 { background-position: 0 -1200px; }
+.icon-exercise-gray_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") 0 -1200px no-repeat;
+}
+
+.icon-exercise-gray_32_34 { background-position: 0 -3120px; }
+.icon-exercise-gray_32_34-before:before {
+  content: "";
+  width: 32px;
+  height: 34px;
+  background: url("../images/new/icons-small.png") 0 -3120px no-repeat;
 }
 
 .icon-exercise-lightblue_16_18 { background-position: -80px -1200px; }
@@ -605,12 +623,28 @@
   background: url("../images/new/icons-small.png") -80px -1200px no-repeat;
 }
 
-.icon-exercise-gray_32_34 { background-position: 0px -3120px; }
-.icon-exercise-gray_32_34-before:before {
+.icon-exercise-lightblue_32_34 { background-position: -80px -3120px; }
+.icon-exercise-lightblue_32_34-before:before {
   content: "";
   width: 32px;
   height: 34px;
-  background: url("../images/new/icons-small.png") 0px -3120px no-repeat;
+  background: url("../images/new/icons-small.png") -80px -3120px no-repeat;
+}
+
+.icon-exercise-white_16_18 { background-position: -240px -1200px; }
+.icon-exercise-white_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -240px -1200px no-repeat;
+}
+
+.icon-exercise-white_32_34 { background-position: 0 -2960px; }
+.icon-exercise-white_32_34-before:before {
+  content: "";
+  width: 32px;
+  height: 34px;
+  background: url("../images/new/icons-small.png") 0 -2960px no-repeat;
 }
 
 .icon-expand-gray_16_18 { background-position: -560px -800px; }

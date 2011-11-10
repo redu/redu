@@ -354,5 +354,21 @@ describe Lecture do
         subject.build_lectureable({ :_type => '' }).should be_nil
       end
     end
+
+    context "when building one question with an alternative" do
+      before do
+        @lecture = Lecture.new
+        @lecture.build_lectureable(:_type => 'Exercise')
+        @lecture.build_question_and_alternative
+      end
+
+      it "builds a question" do
+        @lecture.lectureable.questions.should_not be_empty
+      end
+
+      it "builds a question within an alternative" do
+        @lecture.lectureable.questions.first.alternatives.should_not be_empty
+      end
+    end
   end
 end

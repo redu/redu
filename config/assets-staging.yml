@@ -35,6 +35,7 @@ javascripts:
     - public/javascripts/subjects.js
     - public/javascripts/statuses.js
     - public/javascripts/admin.js
+    - public/javascripts/jquery.nested-fields.js
   chat:
     - public/javascripts/jquery.pjax.js
     - public/javascripts/pusher.js

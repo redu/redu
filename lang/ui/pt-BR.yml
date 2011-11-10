@@ -147,6 +147,9 @@ pt-BR:
         name: "Nome"
         description: "Descrição"
         submission_type: "Tipo de Moderação"
+      question:
+        statement: "Enunciado"
+        explanation: "Justificativa"
       role:
         admin: "Administrador"
         moderator: "Moderador"

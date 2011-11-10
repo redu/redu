@@ -1,6 +1,6 @@
 $('#<%= @lecture.id %>-item').remove();
 
-<% if @lecture.lectureable.class == Page %>
+<% if @lecture.lectureable.is_a? Page or @lecture.lectureable.is_a? Exercise %>
   $('#<%= @lecture.id %>-item-edition').remove();
 <% end %>
 

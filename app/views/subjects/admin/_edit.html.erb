@@ -3,7 +3,7 @@
   <%= render 'subjects/admin/form_infos', :f => f, :space => space, :quota => quota, :plan => plan%>
 <% end %>
 <div id="resources-edition">
-  <%= render :partial => 'lectures/admin/edit', :collection => subject.lectures.pages, :as => :lecture, :locals => {:subject => subject, :space => space } %>
+  <%= render :partial => 'lectures/admin/edit', :collection => @editable_lectures, :as => :lecture, :locals => {:subject => subject, :space => space } %>
 </div>
 
 <%= render :partial => 'lectures/admin/choose_type',

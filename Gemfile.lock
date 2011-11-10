@@ -81,6 +81,8 @@ GEM
     authlogic (3.0.2)
       activerecord (~> 3.0.7)
       activerecord (~> 3.0.7)
+    awesome_nested_fields (0.5.3)
+      rails (>= 3.0.0)
     aws-s3 (0.6.2)
       builder
       mime-types
@@ -259,6 +261,7 @@ DEPENDENCIES
   ajaxful_rating!
   ar_mailer_rails3
   authlogic
+  awesome_nested_fields
   aws-s3
   bundler (~> 1.0.15)
   cancan

@@ -6,12 +6,16 @@
   <%= concave_errors_for(lecture, :name) %>
   <%= f.fields_for :lectureable do |builder| %>
     <% case builder.object.class.to_s
-       when "Page" %>
+    when "Page" %>
       <%= render :partial => 'lectures/admin/page_fields', :locals => { :f => builder } %>
     <% when "Seminar" %>
       <%= render :partial => 'lectures/admin/seminar_fields', :locals => { :f => builder } %>
     <% when "Document" %>
       <%= render :partial => 'lectures/admin/document_fields', :locals => { :f => builder } %>
+    <% when "Exercise" %>
+      <%= render :partial => 'lectures/admin/exercise_fields', :locals => { :f => builder } %>
     <% end %>
   <% end %>
+  <%= f.submit :class => "submit-lecture" %>
+  <%= link_to "Cancelar", "#", :class => 'concave-clean cancel-lecture' %>
 <% end %>

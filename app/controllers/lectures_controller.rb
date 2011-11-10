@@ -99,6 +99,10 @@ class LecturesController < BaseController
     lectureable_params = { :_type => params.fetch(:type, 'Page') }
     @lecture.build_lectureable(lectureable_params)
 
+    if @lecture.lectureable.is_a? Exercise
+      @lecture.build_question_and_alternative
+    end
+
     respond_with(@space, @subject, @lecture) do |format|
       format.js { render "lectures/admin/new" }
     end
