@@ -5,10 +5,9 @@ $(function(){
           $("body").prepend($overlay);
 
           // Luzes
-          $("#lights").toggle(function(e){
+          $("#lights").toggle(
+            function(e){
               var docHeight = $(document).height();
-
-              $(".student-actions").css("position", "relative");
               $(".resource-content").css("position", "relative").css("backgroundColor", "white");
               $(".resource-content").addClass("boxshadow-lights");
               $(".statuses-wrapper").css("position", "relative").css("backgroundColor", "white");
@@ -20,7 +19,8 @@ $(function(){
               $("#lights_dimmed").fadeOut();
               $(".resource-content").removeClass("boxshadow-lights");
               $(this).html("<span class=\"lights icon-small icon-light-off-lightblue_32_34\"></span>Apagar luzes");
-          });
+            }
+          );
 
           $(".statuses-wrapper").live("click", function(){
               var docHeight = $(document).height();
