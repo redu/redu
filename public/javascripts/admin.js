@@ -123,6 +123,10 @@
     e.preventDefault();
   });
 
+  $(".ui-sortable").live("mousedown mouseup", function(){
+    $(this).toggleClass("grabbing");
+  });
+
   $(document).ready(function(){
     $(document).refreshRoleTable();
     $(document).refreshFormUpload();

@@ -3042,7 +3042,6 @@ body {
   background: -o-linear-gradient(top,  rgb(115,195,230) 0%,rgb(77,173,214) 98%); /* Opera 11.10+ */
   background: -ms-linear-gradient(top,  rgb(115,195,230) 0%,rgb(77,173,214) 98%); /* IE10+ */
   background: linear-gradient(top,  rgb(115,195,230) 0%,rgb(77,173,214) 98%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#73c3e6', endColorstr='#4dadd6',GradientType=0 ); /* IE6-9 */
 }
 
 #space-manage .new-resource .resources-types li.selected .option,
@@ -7802,4 +7801,19 @@ a.link-loading:hover,  /* para sobrepor a precedência de input.important */
 
 #tiptip_holder #tiptip_content .pricing .period{
   font-style: italic;
+}
+
+.ui-sortable {
+  cursor: move;
+  cursor: hand;
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
+
+.ui-sortable.grabbing {
+  cursor: move;
+  cursor: grabbing;
+  cursor: -moz-grabbing;
+  cursor: -webkit-grabbing;
 }
