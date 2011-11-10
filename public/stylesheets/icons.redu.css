@@ -579,6 +579,14 @@
   background: url("../images/new/icons-small.png") -240px -800px no-repeat;
 }
 
+.icon-exercise-white_16_18 { background-position: -240px -1200px; }
+.icon-exercise-white_16_18-before:before {
+  content: "";
+  width: 16px;
+  height: 18px;
+  background: url("../images/new/icons-small.png") -240px -1200px no-repeat;
+}
+
 .icon-expand-gray_16_18 { background-position: -560px -800px; }
 .icon-expand-gray_16_18-before:before {
   content: "";
