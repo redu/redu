@@ -18,29 +18,62 @@
         :locals => { :lecture => @lecture} %>
       <div class="stage exercise">
 
-        <div class="start-exercise">
-          <%= link_to (space_subject_lecture_path(@space, @subject, @lecture),
-                       :class => "concave-button") do  %>
-            <span class="do-exercise icon-exercise-white_16_18-before">Fazer exercícios</span>
-          <% end %>
+        <div class="review-exercise">
+          <div class="review-info">
+            <div class="review-user">
+              <img alt="Missing_users_thumb_32" class="avatar" src="/images/new/missing_users_thumb_32.png?1320452178">
+              <a href="#">Nome Sobrenome</a>
+              <span class="user-tip">há dois minutos atrás</span>
+            </div>
+            <%= link_to (space_subject_lecture_path(@space, @subject, @lecture),
+             :class => "concave-button") do  %>
+             <span class="do-exercise icon-exercise-white_16_18-before">Rever exercícios</span>
+            <% end %>
+          </div>
+
+          <div class="review-score">
+            <span class="exercise-call">Sua pontuação:</span>
+            <ul>
+              <li>
+                <span class="score-type">Acertos</span>
+                <span class="score-value">16</span>
+              </li>
+              <li>
+                <span class="score-type">Erros</span>
+                <span class="score-value">4</span>
+              </li>
+              <li>
+                <span class="score-type">Não marcadas</span>
+                <span class="score-value">2</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="review-grade">
+            <span class="exercise-call">Sua nota:</span>
+            <span class="exercise-grade">7,2</span>
+          </div>
         </div>
 
-        <div class="exercise-overview undone">
-          <span class="exercise-call exercise-name undone">Exercício 1:</span>
-          <span class="qty-questions undone">22</span>
+        <div class="exercise-overview done">
+          <span class="exercise-call exercise-name done">Exercício 1:</span>
+          <span class="qty-questions done">22</span>
           <span class="qty-questions-tip">questões (múltipla ecolha)</span>
-          <span class="qty-questions">22</span>
-          <span class="qty-questions-tip undone">questões explicadas</span>
+          <span class="qty-questions done">22</span>
+          <span class="qty-questions-tip">questões explicadas</span>
+          <span class="qty-questions right">16</span>
+          <span class="qty-questions-tip">questões acertadas</span>
         </div>
 
         <div class="exercise-result">
-          <span class="exercise-call">Média Geral</span>
+          <span class="exercise-call">Média Geral:</span>
           <span class="average-grade">8,0</span>
           <span class="exercise-call">Compartilhe dúvidas com</span>
           <ol class="list-users-exercise">
             <li>
               <img alt="Missing_users_thumb_32" class="avatar" src="/images/new/missing_users_thumb_32.png?1320452178">
               <a href="#">Nome Sobrenome</a>
+              <span class="user-grade">9,5</span>
             </li>
             <li>
               <img alt="Missing_users_thumb_32" class="avatar" src="/images/new/missing_users_thumb_32.png?1320452178">
@@ -54,7 +87,7 @@
         </div>
 
         <div class="users-exercise">
-          <span class="exercise-call">Quem já fez</span>
+          <span class="exercise-call">Quem já fez:</span>
           <span class="qty-users-exercise">560</span>
           <span class="qty-users-tip">pessoas</span>
           <ul class="list-users-exercise">
