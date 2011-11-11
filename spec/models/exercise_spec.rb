@@ -225,4 +225,24 @@ describe Exercise do
       subject.choices_for(@user).to_set == @choices.to_set
     end
   end
+
+  context "when getting info" do
+    subject { Factory(:complete_exercise) }
+
+    it "should return the correct number of questions" do
+      subject.info[:questions_count].should == 3
+    end
+
+    it "should return the correct number of explained questions" do
+      subject.info[:explained_count].should == 0
+    end
+
+    it "should return the grade average" do
+      subject.info[:average_grade].round(2) == BigDecimal.new("0.0")
+    end
+
+    it "should return the duration average" do
+      subject.info[:average_duration] == 0
+    end
+  end
 end

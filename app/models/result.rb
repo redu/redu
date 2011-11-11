@@ -23,7 +23,8 @@ class Result < ActiveRecord::Base
   aasm_state :finalized, :enter => lambda { |r|
     r.update_attributes({:finalized_at => Time.zone.now})
     r.assign_dangling_choices
-    r.update_attribute(:grade, r.calculate_grade)
+    r.update_attributes({ :grade => r.calculate_grade,
+                          :duration => r.calculate_duration })
   }
 
   aasm_event :start do
@@ -44,10 +45,12 @@ class Result < ActiveRecord::Base
   end
 
   # finalized_at - started_at caso o result esteja finalizado
-  def duration
-    return (finalized_at - started_at) if finalized?
-
-    0
+  def calculate_duration
+    if finalized_at && started_at
+      return (finalized_at - started_at)
+    else
+      return 0
+    end
   end
 
   def assign_dangling_choices

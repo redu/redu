@@ -86,6 +86,13 @@ Redu::Application.routes.draw do
     resources :users, :only => [:index]
  end
 
+  resources :exercises, :only => :show do
+    resources :results, :only => [:index, :create, :update]
+    resources :questions, :only => :show do
+      resources :choices, :only => [:create, :update]
+    end
+  end
+
   # Users
   resources :users, :except => [:index] do
     member do

@@ -8,6 +8,7 @@ class CreateResults < ActiveRecord::Migration
       t.string :state
       t.decimal :grade, :precision => 4, :scale => 2,
         :default => BigDecimal.new("0.0")
+      t.integer :duration, :default => 0
 
       t.timestamps
     end

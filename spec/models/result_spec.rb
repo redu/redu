@@ -74,21 +74,29 @@ describe Result do
         subject.exercise = Factory(:exercise, :maximum_grade => 10)
         subject.user = Factory(:user)
 
-        subject.start! && subject.finalize!
+        subject.start!
 
         subject.choices << 3.times.collect { Factory(:choice, :correct => true )}
         subject.exercise.stub(:question_weight) { BigDecimal.new("1.0") }
       end
 
       it "should calculate the grade" do
+        subject.finalize!
         subject.exercise.should_receive(:question_weight)
         subject.calculate_grade.round(2).should == BigDecimal.new("3.0")
       end
 
       it "should calculate correct choices number" do
+        subject.finalize!
         # Um pouco de ruído
         subject.choices << 3.times.collect { Factory(:choice, :correct => false )}
         subject.choices.correct.count.should == 3
+      end
+
+      it "should assing duration" do
+        subject.finalize!
+        subject.duration.should == (subject.finalized_at - subject.started_at).
+          to_i
       end
     end
   end
@@ -107,11 +115,11 @@ describe Result do
       subject.update_attributes({ :started_at => started_at })
       subject.update_attributes({ :finalized_at => finalized_at })
 
-      subject.duration.should == (finalized_at - started_at)
+      subject.calculate_duration.should == (finalized_at - started_at)
     end
 
     it "should return 0 if is not finalized" do
-      subject.duration.should == 0
+      subject.calculate_duration.should == 0
     end
   end
 

@@ -75,6 +75,10 @@ class LecturesController < BaseController
         format.html do
           render :show_document
         end
+      elsif @lecture.lectureable_type == 'Exercise'
+        format.html do
+          render :show_exercise
+        end
       end
       format.js { render_endless 'statuses/item', @statuses, '#statuses > ol' }
       format.html

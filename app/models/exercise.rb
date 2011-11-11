@@ -84,4 +84,12 @@ class Exercise < ActiveRecord::Base
   def result_for(user)
     results.finalized.find(:first, :user_id => user.id)
   end
+
+  def info
+    { :questions_count => questions.count,
+      :explained_count => explained_questions.count,
+      :average_grade => (results.finalized.average(:grade) || BigDecimal.new("0")),
+      :average_duration => results.finalized.average(:duration) || 0
+    }
+  end
 end

@@ -13,23 +13,26 @@ describe LecturesController do
     @subject = Factory(:subject, :owner => @subject_owner,
                        :space => @space, :finalized => true,
                        :visible => true)
-    @lectures = (1..3).collect { Factory(:lecture,:subject => @subject ,:owner => @subject_owner) }
+    @lectures = (1..3).collect { Factory(:lecture,:subject => @subject ,
+                                         :owner => @subject_owner) }
     @enrolled_user = Factory(:user)
     @space.course.join @enrolled_user
     @subject.enroll @enrolled_user
     UserSession.create @enrolled_user
   end
 
-  context "GET 'show'" do
+  context "when GET 'show'" do
     context "when Page" do
       before do
         post :show, :locale => "pt-BR", :id => @lectures[0].id,
           :subject_id => @subject.id, :space_id => @space.id
       end
+
       it "renders show_page" do
         response.should render_template('lectures/show_page')
       end
     end
+
     context "when Seminar" do
       before do
         lectureable = @lectures[0].lectureable
@@ -44,6 +47,7 @@ describe LecturesController do
         end
       end
     end
+
     context "when Document" do
       before do
         @lectures[0].lectureable = Factory(:document)
@@ -56,6 +60,26 @@ describe LecturesController do
         it "renders show_page" do
           response.should render_template('lectures/show_document')
         end
+      end
+    end
+
+    context "when Exercise" do
+      before do
+        @exercise = Factory(:complete_exercise)
+        @lectures[0].lectureable = @exercise
+        @lectures[0].save
+
+        get :show, :locale => "pt-BR", :id => @lectures[0].id,
+          :subject_id => @subject.id, :space_id => @space.id
+      end
+
+      it "assigns the exercise" do
+        assigns[:lecture].should_not be_nil
+        assigns[:lecture].lectureable.should == @exercise
+      end
+
+      it "renders ther correct template" do
+        response.should render_template('lectures/show_exercise')
       end
     end
   end
