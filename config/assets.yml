@@ -65,6 +65,7 @@ stylesheets:
     - public/stylesheets/icons.big.redu.css
     - public/stylesheets/icons.redu.css
     - public/stylesheets/user.css
+    - public/stylesheets/exercise.css
   ie:
     - public/stylesheets/ie.css
   chat:
