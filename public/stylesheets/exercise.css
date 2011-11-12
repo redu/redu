@@ -194,15 +194,16 @@
 #resource .start-exercise {
   height: 98px;
   background-color: rgb(247, 247, 247);
-  border: solid 1px rgb(230, 230, 230);
+  border: solid 1px rgb(204, 204, 204);
   margin-bottom: 20px;
 }
 
 #resource .review-exercise {
-  height: 85px;
+  height: 105px;
   padding: 20px 10px;
 }
 
+.borderradius #resource .review-exercise,
 .borderradius #resource .start-exercise {
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -216,14 +217,25 @@
   margin: 20px auto;
 }
 
-#resource .start-exercise .concave-button .review-questions-button,
-#resource .start-exercise .concave-button .report-button {
+#resource .start-exercise .concave-button.question-button,
+#resource .start-exercise .concave-button.report-button {
   padding: 5px;
+  float: left;
+  width: auto;
+  margin-top: 33px;
 }
 
+#resource .concave-button.question-button {
+  margin-left: 180px;
+  margin-right: 10px;
+}
 
-#resource .concave-button .review-questions-button:before,
-#resource .concave-button .report-button:before,
+#resource .start-exercise .concave-button.report-button {
+  padding: 5px 25px;
+}
+
+#resource .concave-button.question-button span:before,
+#resource .concave-button.report-button span:before,
 #resource .concave-button .do-exercise:before {
   float: left;
   margin-right: 5px;
@@ -235,8 +247,8 @@
 }
 
 #resource .review-exercise .concave-button {
-  padding: 8px 5px 9px 5px;
-  margin: 20px 0px 0px 15px;
+  padding: 7px 7px 6px 7px;
+  margin: 40px 0px 0px 15px;
 }
 
 
@@ -270,13 +282,14 @@
 }
 
 #resource .review-score ul {
-  margin-top: 20px;
+  margin-top: 15px;
 }
 
 #resource .review-score ul li {
   font-family: museo-sans, helvetica, arial, sans-serif;
   font-weight: 300;
   font-size: 1.3em;
+  line-height: 1.1;
   color: rgb(179, 179, 179);
 }
 
