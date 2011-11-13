@@ -564,25 +564,91 @@
   color: rgb(179, 179, 179);
 }
 
-.exercise-report .exercise-call {
+#resource .exercise-report .exercise-call {
   display: inline;
 }
+
 
 .exercise-report .table-report-students {
   width: 100%;
   margin-top: 20px;
 }
 
+.table-report-students .row-head {
+  height: 30px;
+}
+
+.table-report-students .row-head .head {
+  color: rgb(179, 179, 179);
+}
+
 .exercise-report .table-report-students .row {
-  text-align: center;
   border-bottom: 1px solid rgb(179, 179, 179);
 }
 
-.exercise-report .table-report-students .row:first-child {
+.exercise-report .table-report-students .row:last-child {
+  border: none;
+}
+
+.table-report-students .row.odd {
+  background-color: rgb(247, 247, 247);
+}
+
+.table-report-students .row .cell {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.table-report-students .row .cell:first-child {
   text-align: left;
 }
 
-.table-report-students .row img {
-  padding: 10px 10px 10px 0px;
+.table-report-students .member-info {
+  overflow: hidden;
+}
+
+.table-report-students .member-info .avatar {
+  padding: 5px 10px 5px 0px;
   float: left;
+}
+
+.table-report-students .member-name {
+  font-weight: bold;
+  color: rgb(77, 173, 214);
+  margin-top: 5px;
+  display: block;
+  float: left;
+  vertical-align: top;
+  width: 221px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.table-report-students .member-detail {
+  font-size: .85em;
+  color: rgb(179, 179, 179);
+  float: left;
+  margin-top: 3px;
+}
+
+.textshadow .table-report-students .cell {
+  text-shadow: 0px 1px 0px white;
+}
+
+.table-report-students .cell .student-null,
+.table-report-students .cell .student-time {
+  color: rgb(179, 179, 179);
+}
+
+.table-report-students .cell .student-score {
+  color: rgb(109, 110, 111);
+}
+
+.table-report-students .cell .student-correct {
+  color: rgb(97, 160, 128);
+}
+
+.table-report-students .cell .student-wrong {
+  color: rgb(229, 39, 45);
 }

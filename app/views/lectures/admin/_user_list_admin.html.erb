@@ -1,15 +1,16 @@
 <table class="table-report-students">
   <thead>
-    <tr>
-      <th style="width: 258px;">Nome</th>
-      <th style="width: 120px;">Tempo</th>
-      <th style="width: 60px;">Nota</th>
-      <th style="width: 60px;">Acertos</th>
-      <th style="width: 60px;">Erros</th>
-      <th style="width: 60px;">Nulas</th>
+    <tr class="row-head">
+      <th style="width: 258px;" class="head">Nome</th>
+      <th style="width: 120px;" class="head">Tempo</th>
+      <th style="width: 60px;" class="head">Nota</th>
+      <th style="width: 60px;" class="head">Acertos</th>
+      <th style="width: 60px;" class="head">Erros</th>
+      <th style="width: 60px;" class="head">Nulas</th>
     </tr>
   </thead>
   <tbody>
+    <%= render :partial => 'lectures/admin/user_item_admin' %>
     <%= render :partial => 'lectures/admin/user_item_admin' %>
   </tbody>
 </table>
