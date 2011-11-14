@@ -232,7 +232,7 @@ Redu::Application.routes.draw do
   root :to => 'base#site_index', :as => :home
   root :to => "base#site_index", :as => :application
 
-  match '/:anything', :to => "application#routing_error", :constraints => { :anything => /.*/ }
+  # match '/:anything', :to => "application#routing_error", :constraints => { :anything => /.*/ }
 end
 
 ActionDispatch::Routing::Translator.translate_from_file('lang','i18n-routes.yml')
