@@ -88,8 +88,9 @@ class Exercise < ActiveRecord::Base
   def info
     { :questions_count => questions.count,
       :explained_count => explained_questions.count,
+      :results_count => results.finalized.count,
       :average_grade => (results.finalized.average(:grade) || BigDecimal.new("0")),
-      :average_duration => results.finalized.average(:duration) || 0
+      :average_duration => results.finalized.average(:duration) || 0,
     }
   end
 end
