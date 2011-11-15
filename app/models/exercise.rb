@@ -81,8 +81,12 @@ class Exercise < ActiveRecord::Base
     Choice.where(:question_id => ids, :user_id => user.id)
   end
 
-  def result_for(user)
-    results.finalized.find(:first, :user_id => user.id)
+  def result_for(user, finalized=true)
+    if finalized
+      results.finalized.find(:first, :conditions => { :user_id => user.id })
+    else
+      results.find(:first, :conditions => { :user_id => user.id })
+    end
   end
 
   def info

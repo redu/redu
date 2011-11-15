@@ -56,6 +56,8 @@ class LecturesController < BaseController
       paginate(:page => params[:page],:order => 'created_at DESC',
                :per_page => Redu::Application.config.items_per_page)
 
+    @can_manage_lecture = can?(:manage, @lecture)
+
     if current_user.get_association_with(@lecture.subject)
       asset_report = @lecture.asset_reports.of_user(current_user).first
       @student_grade = asset_report.student_profile.grade.to_i

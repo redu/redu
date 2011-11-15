@@ -1,0 +1,55 @@
+<%= render :partial => 'lectures/javascripts' %>
+<%= render :partial => 'subjects/sidebar' %>
+<div class="main space grid_12 omega big-col">
+  <%= render :partial => "subjects/breadcrumbs", :locals => { :subject => @subject } %>
+  <%= render :partial => 'subjects/header',
+    :locals => { :subject => @subject, :space => @space } %>
+
+  <div id="resource" class="hierarchy-listing-wrapper">
+    <div class="resource-head">
+      <%= render :partial => 'lectures/info',
+        :locals => { :lecture => @lecture } %>
+      <%= render :partial => 'lectures/context',
+        :locals => { :student_grade => @student_grade, :done => @done } %>
+    </div>
+
+    <div class="resource-content clearfix">
+      <%= render :partial => 'lectures/details',
+        :locals => { :lecture => @lecture} %>
+      <div class="stage exercise">
+        <% if @question.last_item? %>
+          <%= form_tag exercise_result_path(@exercise, @exercise.result_for(current_user, false)), :method => :put do %>
+            <button type="submit" class="concave-button">
+              <span class="do-exercise icon-exercise-white_16_18-before">Finalizar</span>
+            </button>
+          <% end %>
+        <% end %>
+        <form action="action" method="post" accept-charset="utf-8" >
+          <%= render :partial => "questions/navigation",
+            :locals => { :f => nil, :exercise => @exercise, :current => @question, :first => @first_question, :last => @last_question } %>
+          <div class="question">
+            <p>
+              <%= @question.statement %>
+            </p>
+          </div>
+
+          <div class="alternatives">
+            <ol class="">
+              <% @question.alternatives.each_with_index do |alternative, index| %>
+                <li class="<%= (index % 2 == 0) ? "" : "odd" %>">
+                  <span class="choice"><%= (index + 97).chr %>:</span>
+                  <input type="radio" name="exercise" value="true" />
+                  <p><%= alternative.text %></p>
+                </li>
+              <% end %>
+            </ol>
+          </div>
+          </form>
+
+      </div>
+    </div>
+
+  </div><!-- end #resource -->
+
+</div><!-- end .main -->
+

@@ -245,4 +245,17 @@ describe Exercise do
       subject.info[:average_duration] == 0
     end
   end
+
+  context "when getting results" do
+    subject { Factory(:complete_exercise) }
+    before do
+      @user = Factory(:user)
+      subject.start_for(@user)
+    end
+
+    it "should return the correct result" do
+      subject.finalize_for(@user)
+      subject.result_for(@user).user.should == @user
+    end
+  end
 end
