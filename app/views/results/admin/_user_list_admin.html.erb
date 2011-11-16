@@ -10,7 +10,6 @@
     </tr>
   </thead>
   <tbody>
-    <%= render :partial => 'lectures/admin/user_item_admin' %>
-    <%= render :partial => 'lectures/admin/user_item_admin' %>
+    <%= render :partial => 'results/admin/user_item_admin', :collection => results, :as => :item %>
   </tbody>
 </table>

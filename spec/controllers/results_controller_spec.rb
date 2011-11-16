@@ -63,4 +63,28 @@ describe ResultsController do
         space_subject_lecture_path(@space, @subject, @lecture)
     end
   end
+
+  context "get index" do
+    before do
+      @results = 5.times.collect {
+        Factory(:result, :exercise => @exercise, :state => 'finalized',
+                :grade => 10, :started_at => Time.zone.now,
+                :finalized_at => Time.zone.now.advance(:minutes => 30),
+                :duration => 30 * 60 * 60)
+      }
+
+      @params = { :locale => 'pt-BR', :format => :html }
+      @params.merge!({ :exercise_id => @exercise.id })
+    end
+
+    it "should load the resulst" do
+      post :index, @params
+      assigns[:results].should_not be_nil
+    end
+
+    it "should load the correct results" do
+      post :index, @params
+      assigns[:results].to_set.should == @results.to_set
+    end
+  end
 end

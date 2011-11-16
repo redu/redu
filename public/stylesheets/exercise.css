@@ -130,7 +130,7 @@
   overflow: hidden;
 }
 
-#resource .alternatives li.odd {
+#resource .alternatives li:nth-child(odd) {
   background-color: rgb(247, 247, 247);
 }
 
@@ -572,6 +572,10 @@
 }
 
 
+.exercise-report {
+  min-height: 600px;
+}
+
 .exercise-report .table-report-students {
   width: 100%;
   margin-top: 20px;
@@ -593,7 +597,7 @@
   border: none;
 }
 
-.table-report-students .row.odd {
+.table-report-students .row:nth-child(odd) {
   background-color: rgb(247, 247, 247);
 }
 

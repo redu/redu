@@ -1,4 +1,6 @@
 class ResultsController < BaseController
+  before_filter :load_hierarchy, :only => :index
+
   load_resource :exercise
   load_resource :result
 
@@ -23,5 +25,25 @@ class ResultsController < BaseController
           space_subject_lecture_path(@space, @subject, @exercise.lecture)
       end
     end
+  end
+
+  def index
+    @results = @exercise.results.finalized.includes(:user, :choices,
+                                                    :exercise => :questions)
+
+    respond_to do |format|
+      format.html { render 'results/admin/index' }
+    end
+  end
+
+  protected
+
+  def load_hierarchy
+    @exercise = Exercise.find(params[:exercise_id])
+    @lecture = @exercise.lecture
+    @subject = @lecture.subject
+    @space = @subject.space
+    @course = @space.course
+    @environment = @course.environment
   end
 end

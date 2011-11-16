@@ -10,6 +10,12 @@ class QuestionsController < BaseController
     @can_manage_lecture = can?(:manage, @lecture)
     @review = !@result.nil? || @can_manage_lecture
 
+    if current_user.get_association_with(@lecture.subject)
+      asset_report = @lecture.asset_reports.of_user(current_user).first
+      @student_grade = asset_report.student_profile.grade.to_i
+      @done = asset_report.done
+    end
+
     respond_to do |format|
       format.html
     end

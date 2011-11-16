@@ -5,9 +5,9 @@
     <%= link_to exercise_question_path(exercise, first_question), :class => "concave-button question-button" do %>
       <span class="icon-exercise-white_16_18-before">Rever questões</span>
     <% end %>
-    <a href="#" class="concave-button report-button">
+    <%= link_to exercise_results_path(exercise), :class => "concave-button report-button" do %>
       <span class="icon-exercise-white_16_18-before">Relatório</span>
-    </a>
+    <% end %>
   </div>
 <% elsif result %>
   <div class="review-exercise">
@@ -17,9 +17,9 @@
         <%= link_to result.user.display_name, user_path(result.user) %>
         <span class="user-tip"><%= time_ago_in_words(result.finalized_at) %></span>
       </div>
-    <%= link_to exercise_question_path(exercise, first_question), :class => "concave-button question-button" do %>
-      <span class="icon-exercise-white_16_18-before">Rever questões</span>
-    <% end %>
+      <%= link_to exercise_question_path(exercise, first_question), :class => "concave-button question-button" do %>
+        <span class="icon-exercise-white_16_18-before">Rever questões</span>
+      <% end %>
 
     </div>
     <%= render 'lectures/exercise/grade', :result => result %>
