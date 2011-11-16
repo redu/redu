@@ -1,0 +1,35 @@
+<%# Acoes que podem ser realizadas num exercicio (rever, realizar, etc).
+    Locals: can_manage_lecture (booleano), exercise, result (pode ser nil) %>
+<% if can_manage_lecture %>
+  <div class="start-exercise">
+    <a href="#" class="concave-button question-button">
+      <span class="icon-exercise-white_16_18-before">Rever questões</span>
+    </a>
+    <a href="#" class="concave-button report-button">
+      <span class="icon-exercise-white_16_18-before">Relatório</span>
+    </a>
+  </div>
+<% elsif result %>
+  <div class="review-exercise">
+    <div class="review-info">
+      <div class="review-user">
+        <%= image_tag result.user.avatar(:thumb_32), :size => "32x32", :class => "avatar" %>
+        <%= link_to result.user.display_name, user_path(result.user) %>
+        <span class="user-tip"><%= time_ago_in_words(result.finalized_at) %></span>
+      </div>
+      <%= link_to (space_subject_lecture_path(@space, @subject, @lecture), :class => "concave-button") do  %>
+        <span class="do-exercise icon-exercise-white_16_18-before">Rever questões</span>
+      <% end %>
+
+    </div>
+    <%= render 'lectures/exercise/grade', :result => result %>
+  </div>
+<% else %>
+  <div class="start-exercise">
+    <%= form_tag exercise_results_path(exercise), :method => :post do %>
+      <button type="submit" class="concave-button">
+        <span class="do-exercise icon-exercise-white_16_18-before">Fazer exercício</span>
+      </button>
+    <% end %>
+  </div>
+<% end %>

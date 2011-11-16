@@ -44,4 +44,23 @@ describe ResultsController do
       }.should_not change(Result, :count)
     end
   end
+
+  context "POST update" do
+    before do
+      @result = @exercise.start_for(@user)
+      @params = { :locale => 'pt-BR', :format => :html }
+      @params.merge!({:exercise_id => @exercise.id, :id => @result.id})
+    end
+
+    it "should call finalize for" do
+      Exercise.any_instance.should_receive(:finalize_for).with(@user)
+      post :update, @params
+    end
+
+    it "should redirect to lectures#show" do
+      post :update, @params
+      response.should redirect_to \
+        space_subject_lecture_path(@space, @subject, @lecture)
+    end
+  end
 end

@@ -79,6 +79,7 @@ class LecturesController < BaseController
         end
       elsif @lecture.lectureable_type == 'Exercise'
         format.html do
+          @result = @lecture.lectureable.result_for(current_user)
           render :show_exercise
         end
       end

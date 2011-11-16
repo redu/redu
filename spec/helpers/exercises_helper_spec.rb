@@ -17,11 +17,11 @@ describe ExercisesHelper do
     end
 
     it "should generate time in second if less than a minute" do
-      helper.period_of_time(3000).should == { :unit => 'segundos', :value => 3}
+      helper.period_of_time(30).should == { :unit => 'segundos', :value => 30}
     end
 
     it "should generate time in minutes if more than a minute" do
-      helper.period_of_time(60000).should == { :unit => 'minutos', :value => 1}
+      helper.period_of_time(61).should == { :unit => 'minutos', :value => 1}
     end
   end
 end

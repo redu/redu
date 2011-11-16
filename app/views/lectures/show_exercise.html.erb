@@ -17,77 +17,8 @@
       <%= render :partial => 'lectures/details',
         :locals => { :lecture => @lecture} %>
       <div class="stage exercise">
-        <div class="start-exercise">
-          <% if @can_manage_lecture %>
-            <a href="#" class="concave-button question-button">
-              <span class="icon-exercise-white_16_18-before">Rever questões</span>
-            </a>
-            <a href="#" class="concave-button report-button">
-              <span class="icon-exercise-white_16_18-before">Relatório</span>
-            </a>
-          <% else %>
-            <%= form_tag exercise_results_path(@lecture.lectureable), :method => :post do %>
-              <button type="submit" class="concave-button">
-                <span class="do-exercise icon-exercise-white_16_18-before">Fazer exercício</span>
-              </button>
-            <% end %>
-          <% end %>
-        </div>
-
-        <div class="exercise-overview undone">
-          <span class="exercise-call exercise-name undone"><%= @lecture.name %>:</span>
-          <span class="qty-questions undone"><%= @lecture.lectureable.info[:questions_count] %></span>
-          <span class="qty-questions-tip">questões (múltipla ecolha)</span>
-          <span class="qty-questions undone"><%= @lecture.lectureable.info[:explained_count] %></span>
-          <span class="qty-questions-tip undone">questões explicadas</span>
-        </div>
-
-        <% if @lecture.lectureable.results.count > 1 %>
-          <div class="exercise-result">
-            <span class="exercise-call">Quantos já fizeram</span>
-            <span class="qty-users-exercise"><%= @lecture.lectureable.info[:results_count] %></span>
-            <span class="qty-users-tip">pessoas</span>
-            <span class="exercise-call over">Média geral</span>
-            <span class="average"><%= @lecture.lectureable.info[:average_grade].round(2).to_s %></span>
-            <span class="exercise-call over">Tempo médio</span>
-            <span class="average"><%= period_of_time(@lecture.lectureable.info[:average_duration])[:value] %></span>
-            <span class="qty-users-tip"><%= period_of_time(@lecture.lectureable.info[:average_duration])[:unit] %></span>
-          </div>
-
-          <div class="users-exercise">
-            <span class="exercise-call">Recentemente</span>
-            <ul class="list-users-exercise">
-              <% @lecture.lectureable.results.finalized.n_recents(3).includes(:user).each do |result| %>
-                <li>
-                  <%= image_tag result.user.avatar(:thumb_32), :size => "32x32", :class => "avatar" %>
-                  <%= link_to result.user.display_name, user_path(result.user) %>
-                  <span class="qty-list-users-tip"><%= time_ago_in_words(result.finalized_at) %></span>
-                </li>
-              <% end %>
-            </ul>
-
-            <% if @can_manage_lecture %>
-              <span class="exercise-call">Melhores notas</span>
-            <% else %>
-              <span class="exercise-call">Compartilhe dúvidas com</span>
-            <% end %>
-            <ol class="list-users-exercise over">
-              <% @lecture.lectureable.results.finalized.n_best_grades(3).includes(:user).each do |result| %>
-                <li>
-                  <%= image_tag result.user.avatar(:thumb_32), :size => "32x32", :class => "avatar" %>
-                  <%= link_to result.user.display_name, user_path(result.user) %>
-                  <% if @can_manage_lecture %>
-                    <span class="user-grade"><%= result.grade.round(2).to_s %></span>
-                  <% end %>
-                </li>
-              <% end %>
-            </ol>
-          </div>
-        <% else %>
-          <div class="exercise-clean">
-            <span class="exercise-note">Este exercício ainda não foi resolvido</span>
-          </div>
-        <% end %>
+        <%= render 'lectures/exercise/actions', :can_manage_lecture => @can_manage_lecture, :exercise => @lecture.lectureable, :result => @result  %>
+        <%= render 'lectures/exercise/info', :exercise => @lecture.lectureable, :can_manage_lecture => @can_manage_lecture, :result => @result %>
       </div>
     </div>
 
