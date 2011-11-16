@@ -549,7 +549,6 @@ body {
   margin-top: 10px;
   margin-left: 10px;
   position: absolute;
-  z-index: 1;
 }
 
 .boxshadow #content .concave-sidebar .course-frame .environment,
