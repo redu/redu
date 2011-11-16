@@ -1537,9 +1537,7 @@ body {
   margin-top: 20px;
 }
 
-#resource .details .icon-document-gray_32_34-before:before,
-#resource .details .icon-seminar-gray_32_34-before:before,
-#resource .details .icon-page-gray_32_34-before:before {
+#resource .details .name:before {
   float: left;
   margin-right: 12px;
   margin-left: -4px;
