@@ -80,6 +80,8 @@ class LecturesController < BaseController
       elsif @lecture.lectureable_type == 'Exercise'
         format.html do
           @result = @lecture.lectureable.result_for(current_user)
+          @first_question = @lecture.lectureable.questions.
+            first(:conditions => { :position => 1 })
           render :show_exercise
         end
       end

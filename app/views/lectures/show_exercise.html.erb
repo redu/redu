@@ -17,7 +17,7 @@
       <%= render :partial => 'lectures/details',
         :locals => { :lecture => @lecture} %>
       <div class="stage exercise">
-        <%= render 'lectures/exercise/actions', :can_manage_lecture => @can_manage_lecture, :exercise => @lecture.lectureable, :result => @result  %>
+        <%= render 'lectures/exercise/actions', :can_manage_lecture => @can_manage_lecture, :exercise => @lecture.lectureable, :result => @result, :first_question => @first_question  %>
         <%= render 'lectures/exercise/info', :exercise => @lecture.lectureable, :can_manage_lecture => @can_manage_lecture, :result => @result %>
       </div>
     </div>

@@ -17,7 +17,7 @@
       <%= render :partial => 'lectures/details',
         :locals => { :lecture => @lecture} %>
       <div class="stage exercise">
-        <% if @question.last_item? %>
+        <% if @question.last_item? && !@review %>
           <%= form_tag exercise_result_path(@exercise, @exercise.result_for(current_user, false)), :method => :put do %>
             <button type="submit" class="concave-button">
               <span class="do-exercise icon-exercise-white_16_18-before">Finalizar</span>
@@ -25,23 +25,33 @@
           <% end %>
         <% end %>
         <%= form_for :choice, :url => exercise_question_choices_path(@exercise, @question), :method => :post do |f| %>
-          <%= render :partial => "questions/navigation",
-            :locals => { :f => f, :exercise => @exercise, :current => @question, :first => @first_question, :last => @last_question } %>
+          <%= render"questions/navigation",
+            :f => f, :exercise => @exercise, :current => @question, :first => @first_question, :last => @last_question, :review => @review %>
           <div class="question">
             <p><%= @question.statement %></p>
           </div>
 
-          <div class="alternatives">
-            <ol>
-              <% @question.alternatives.each_with_index do |alternative, index| %>
-                <li class="<%= (index % 2 == 0) ? "" : "odd" %>">
-                  <span class="choice"><%= (index + 97).chr %>:</span>
-                  <%= f.radio_button :alternative_id, alternative.id %>
-                  <p><%= alternative.text %></p>
-                </li>
-              <% end %>
-            </ol>
-          </div>
+          <% if @review %>
+            <div class="justification">
+              <span class="call">Justificativa:</span>
+              <p><%= @question.explanation || "Não há" %></p>
+            </div>
+            <div class="alternatives review">
+              <ol>
+                <% @question.alternatives.each_with_index do |alternative, index| %>
+                  <%= render 'alternatives/answered', :index => index, :alternative => alternative, :choosed => @choice.alternative %>
+                <% end %>
+              </ol>
+            </div>
+          <% else %>
+            <div class="alternatives">
+              <ol>
+                <% @question.alternatives.each_with_index do |alternative, index| %>
+                  <%= render 'alternatives/item', :f => f, :index => index, :alternative => alternative %>
+                <% end %>
+              </ol>
+            </div>
+          <% end %>
         <% end %>
       </div>
     </div>

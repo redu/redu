@@ -2,9 +2,9 @@
     Locals: can_manage_lecture (booleano), exercise, result (pode ser nil) %>
 <% if can_manage_lecture %>
   <div class="start-exercise">
-    <a href="#" class="concave-button question-button">
+    <%= link_to exercise_question_path(exercise, first_question), :class => "concave-button question-button" do %>
       <span class="icon-exercise-white_16_18-before">Rever questões</span>
-    </a>
+    <% end %>
     <a href="#" class="concave-button report-button">
       <span class="icon-exercise-white_16_18-before">Relatório</span>
     </a>
@@ -17,9 +17,9 @@
         <%= link_to result.user.display_name, user_path(result.user) %>
         <span class="user-tip"><%= time_ago_in_words(result.finalized_at) %></span>
       </div>
-      <%= link_to (space_subject_lecture_path(@space, @subject, @lecture), :class => "concave-button") do  %>
-        <span class="do-exercise icon-exercise-white_16_18-before">Rever questões</span>
-      <% end %>
+    <%= link_to exercise_question_path(exercise, first_question), :class => "concave-button question-button" do %>
+      <span class="icon-exercise-white_16_18-before">Rever questões</span>
+    <% end %>
 
     </div>
     <%= render 'lectures/exercise/grade', :result => result %>

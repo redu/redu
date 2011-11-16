@@ -13,9 +13,15 @@
         </li>
       <% end %>
       <% choice = question.choice_for(current_user) %>
-      <li class="<%= question == current ? "actual" : "" %> <%= choice ? "question-answered" : "" %>">
-        <%= link_to question.position, exercise_question_path(exercise, question)  %>
-      </li>
+      <% if review %>
+        <li class="<%= question == current ? "actual" : "" %> <%= right_or_wrong(choice) %>">
+          <%= link_to question.position, exercise_question_path(exercise, question)  %>
+        </li>
+      <% else %>
+        <li class="<%= question == current ? "actual" : "" %> <%= choice ? "question-answered" : "" %>">
+          <%= link_to question.position, exercise_question_path(exercise, question)  %>
+        </li>
+      <% end %>
       <% if question == current && question != last %>
         <li class="lecture-buttons">
           <%= submit_tag "Próxima", :class => "concave-clean" %>

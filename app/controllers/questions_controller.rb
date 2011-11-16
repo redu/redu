@@ -6,6 +6,9 @@ class QuestionsController < BaseController
     @last_question = @question.last_item
     @choice = @question.choices.
       first(:conditions => { :user_id => current_user.id}) || @question.choices.build
+    @result = @exercise.result_for(current_user)
+    @can_manage_lecture = can?(:manage, @lecture)
+    @review = !@result.nil? || @can_manage_lecture
 
     respond_to do |format|
       format.html
