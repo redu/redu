@@ -21,6 +21,10 @@ class Question < ActiveRecord::Base
     choice
   end
 
+  def choice_for(user)
+    choices.first(:conditions => { :user_id => user.id })
+  end
+
   protected
 
   def find_alternative(alternative_or_id)

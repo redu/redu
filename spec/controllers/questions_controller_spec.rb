@@ -52,5 +52,17 @@ describe QuestionsController do
       assigns[:first_question].should_not be_nil
       assigns[:last_question].should_not be_nil
     end
+
+    context "when there is a choice" do
+      before do
+        @alternative = @questions.first.alternatives[1]
+        @questions.first.choose_alternative(@alternative, @user)
+      end
+
+      it "should load the choice" do
+        assigns[:choice].should_not be_nil
+        assigns[:choice].should_not be_new_record
+      end
+    end
   end
 end

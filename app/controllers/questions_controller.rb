@@ -4,6 +4,8 @@ class QuestionsController < BaseController
   def show
     @first_question = @question.first_item
     @last_question = @question.last_item
+    @choice = @question.choices.
+      first(:conditions => { :user_id => current_user.id}) || @question.choices.build
 
     respond_to do |format|
       format.html

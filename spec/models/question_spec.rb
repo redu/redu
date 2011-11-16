@@ -89,4 +89,23 @@ describe Question do
       new_choice.correct.should be_false
     end
   end
+
+  context "when trying to get the choice" do
+    before do
+      @alternatives = 3.times.collect {
+        Factory(:alternative, :question => subject, :correct => false)
+      }
+      @alternatives.first.update_attribute(:correct, true)
+      @user = Factory(:user)
+    end
+
+    it "returns nil if there is no choice" do
+      subject.choice_for(@user).should be_nil
+    end
+
+    it "return the choice if it already exists" do
+      choice = subject.choose_alternative(@alternatives.first, @user)
+      subject.choice_for(@user).should == choice
+    end
+  end
 end

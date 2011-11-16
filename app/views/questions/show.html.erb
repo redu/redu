@@ -24,28 +24,25 @@
             </button>
           <% end %>
         <% end %>
-        <form action="action" method="post" accept-charset="utf-8" >
+        <%= form_for :choice, :url => exercise_question_choices_path(@exercise, @question), :method => :post do |f| %>
           <%= render :partial => "questions/navigation",
-            :locals => { :f => nil, :exercise => @exercise, :current => @question, :first => @first_question, :last => @last_question } %>
+            :locals => { :f => f, :exercise => @exercise, :current => @question, :first => @first_question, :last => @last_question } %>
           <div class="question">
-            <p>
-              <%= @question.statement %>
-            </p>
+            <p><%= @question.statement %></p>
           </div>
 
           <div class="alternatives">
-            <ol class="">
+            <ol>
               <% @question.alternatives.each_with_index do |alternative, index| %>
                 <li class="<%= (index % 2 == 0) ? "" : "odd" %>">
                   <span class="choice"><%= (index + 97).chr %>:</span>
-                  <input type="radio" name="exercise" value="true" />
+                  <%= f.radio_button :alternative_id, alternative.id %>
                   <p><%= alternative.text %></p>
                 </li>
               <% end %>
             </ol>
           </div>
-          </form>
-
+        <% end %>
       </div>
     </div>
 
