@@ -13,8 +13,6 @@ class Lecture < ActiveRecord::Base
     :dependent => :destroy
 
   #FIXME Falta testar
-  has_many :acess_key
-  has_many :acquisitions
   has_many :favorites, :as => :favoritable, :dependent => :destroy
   has_many :annotations
   has_many :asset_reports, :dependent => :destroy
