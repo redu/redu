@@ -352,9 +352,6 @@ class UsersController < BaseController
     render :template => "users/signup_completed", :layout => "clean"
   end
 
-  def invite
-  end
-
   def welcome_complete
     flash[:notice] = t(:walkthrough_complete, :site => Redu::Application.config.name)
     redirect_to user_path

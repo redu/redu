@@ -468,15 +468,6 @@ class User < ActiveRecord::Base
   end
 
   # FIXME Verificar necessidade (não foi testado)
-  def valid_invite_code?(code)
-    code == invite_code
-  end
-
-  def invite_code
-    Digest::SHA1.hexdigest("#{self.id}--#{self.email}--#{self.password_salt}")
-  end
-
-  # FIXME Verificar necessidade (não foi testado)
   def location
     metro_area && metro_area.name || ""
   end
