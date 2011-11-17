@@ -140,12 +140,6 @@ class Ability
       # Plan (payment gateway)
       can :read, :success
 
-      # Admin do environment ou teacher, caso o space não tenha owner
-      can :take_ownership, Space do |space|
-        user.can_manage?(space.course.environment) || \
-          (space.owner.nil? && user.teacher?(space))
-      end
-
       # Caso seja o Status de usuário, apenas ele mesmo ou seus amigos
       # podem criá-lo/respondê-lo.
       can [:create, :respond], [Status, Activity, Answer] do |status|

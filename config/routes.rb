@@ -42,7 +42,6 @@ Redu::Application.routes.draw do
   resources :spaces, :except => [:index] do
     member do
       get :admin_members
-      get :take_ownership
       get :publish
       get :unpublish
       get :mural
