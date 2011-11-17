@@ -11,4 +11,22 @@ module SubjectsHelper
     end
     [question_visibility, summary_visibility, fields_visibility]
   end
+
+  def correct_alternative_order_for(question)
+    # Questão apenas no form
+    i = if question.new_record?
+      question.alternatives.collect { |a| a.correct }.index(true)
+    else
+      # Questão já existente
+      correct = question.correct_alternative
+      question.alternatives.index(correct) if correct
+    end
+
+    if i
+      ('A'..'Z').to_a[i]
+    else
+      # Questão sem alternativa correta assinalada
+      "(não marcada)"
+    end
+  end
 end

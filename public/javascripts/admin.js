@@ -119,7 +119,7 @@
 
   // Pede confirmação do usuário para finalizar o módulo
   $("#subject_submit").live("click", function(e){
-    var $openForms = $("form:not(:hidden):not([class~='new-subject'])");
+    var $openForms = $("form:visible:not([class~='new-subject'])");
     if($openForms.length > 0){
       var answer = confirm("As aulas que não foram adicionadas e/ou salvas serão perdidas. Deseja continuar?")
       if(answer == true){
@@ -222,7 +222,7 @@
       var $fields = $(this).find(".fields")
       var $summary = $(this).find(".summary");
 
-      var qttAlternatives = $fields.find(".alternative-container .alternative-item:not(:hidden)").length;
+      var qttAlternatives = $fields.find(".alternative-container .alternative-item:visible").length;
     $summary.find(".alternatives .qtt").text(qttAlternatives);
     var statement = $fields.find(".question-statement").val();
     if (statement != ""){
@@ -243,7 +243,7 @@
   // Atualiza numeração das questões
   $.fn.refreshQuestionsNumbering = function(){
     return this.each(function(){
-      var $questions = $(this).parent().find(".question-item:not(:hidden)");
+      var $questions = $(this).parent().find(".question-item:visible");
       $questions.each(function(index){
         $(this).find(".position").text(index + 1);
       });
@@ -253,7 +253,7 @@
   // Atualiza letras das alternativas
   $.fn.refreshAlternativesNumbering = function(){
     return this.each(function(){
-      var $alternatives = $(this).parent().find(".alternative-item:not(:hidden)");
+      var $alternatives = $(this).parent().find(".alternative-item:visible");
       var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
       $alternatives.each(function(index){
         var letter = alphabet[index];
@@ -266,7 +266,6 @@
   $.fn.refreshNestedFieldsEdition = function(){
     $("#resources-edition .edit-resource.exercise").each(function(){
       $(this).refreshNestedFields();
-      $(this).find(".question-item").refreshExerciseSummary();
     });
   };
 

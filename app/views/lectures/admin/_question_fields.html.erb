@@ -2,9 +2,9 @@
 <li class="question-item <%= question_visibility %>">
   <span class="position">1</span>
   <div class="summary clearfix" style="display: <%= summary_visibility %>;">
-    <span class="statement">(Enunciado não informado)</span>
+    <span class="statement"><%= f.object.statement or "(Enunciado não informado)" %></span>
     <span class="alternatives">
-      <span class="qtt">1</span> alternativas. Correta: <span class="correct">(não marcada)</span>
+      <span class="qtt"><%= f.object.alternatives.size %></span> alternativas. Correta: <span class="correct"><%= correct_alternative_order_for(f.object) %></span>
     </span>
     <span class="expand icon-small icon-expand_down-gray_16_18 replacement">Mais detalhes</span>
   </div>

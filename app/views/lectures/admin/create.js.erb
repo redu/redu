@@ -11,7 +11,6 @@
       var $editPageForm = $("<%= escape_javascript render 'lectures/admin/edit', :lecture => @lecture, :subject => @subject, :space => @space %>");
       $('#resources-edition').append($editPageForm);
       $editPageForm.refreshNestedFields();
-      $editPageForm.find(".question-item").refreshExerciseSummary();
     <% end %>
 
     $("#space-manage #resources_list").refreshResourcesNumbering();
@@ -26,7 +25,6 @@
     $('.new-resource .resource-form').show();
     <% if @lecture.lectureable.is_a? Exercise %>
       $newForm.refreshNestedFields();
-      $newForm.find(".question-item").refreshExerciseSummary();
       $newForm.find(".question-item:first-child").refreshQuestionsNumbering();
       $newForm.find(".alternative-item:first-child").refreshAlternativesNumbering();
     <% end %>
